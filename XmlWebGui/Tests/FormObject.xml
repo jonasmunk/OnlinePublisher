@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Stylesheet.xsl"?>
+<xmlwebgui xmlns="uri:XmlWebGui">
+<configuration path="../../"/>
+<interface background="Desktop">
+<window xmlns="uri:Window" width="100%">
+<titlebar title="x" icon="Element/User"/>
+<content background="true">
+		<form xmlns="uri:Form">
+			<group size="Large">
+				<object badge="Test:" name="arne">
+					<translation choose="Vælg"/>
+					<entity title="Mit billede" value="6" icon="Element/Image" description="300Kb, JPEG"/>
+					<source list="FormObjectList.xml"/>
+				</object>
+				<object badge="Vælg person:" name="bjarne" empty="false">
+					<source list="FormObjectList.xml"/>
+				</object>
+				<object badge="Vælg billede:" name="bjarne" empty="true">
+					<entity title="Mit billede" value="6" image="../../util/images/?id=40&amp;maxwidth=32&amp;maxheight=32" description="300Kb, JPEG"/>
+					<source list="FormObjectList.xml"/>
+				</object>
+			</group>
+		</form>
+	</content>
+</window>
+<script xmlns="uri:Script">
+//alert(document.body.innerHTML);
+</script>
+</interface>
+</xmlwebgui>
+
+

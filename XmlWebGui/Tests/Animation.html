@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>untitled</title>
+	<script src="../Scripts/In2iScripts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Scripts/In2iAnimation.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+	#test {width: 200px; height: 200px; top: 100px; position: absolute; background: red;}
+	</style>
+</head>
+
+<body>
+
+<div id="test">test</div>
+<input type="button" onclick="go()">
+<input type="button" onclick="hide()">
+<input type="button" onclick="show()">
+<input type="button" onclick="test()">
+
+<script type="text/javascript" charset="utf-8">
+	function go() {
+		N2i.Animation.get('test').animate(null,1,'opacity',null,3000);
+		N2i.Animation.get('test').animate(null,500,'width','px',1000);
+		N2i.Animation.get('test').animate(null,100,'top','px',500);
+		N2i.Animation.get('test').animate(null,200,'left','px',1500);
+		N2i.Animation.get('test').animate(null,100,'font-size','px',1500);
+	}
+	function hide() {
+		N2i.Animation.get('test').animate(null,0.5,'opacity',null,3000);
+		N2i.Animation.get('test').animate(null,300,'left','px',1500);
+		N2i.Animation.get('test').animate(null,200,'top','px',500);
+		N2i.Animation.get('test').animate(null,50,'font-size','px',500);
+	}
+	function show() {
+		N2i.Animation.get('test').animate(null,0,'opacity',null,3000);
+	}
+	function test() {
+		alert(N2i.Element.getStyle('test','font-size'));
+	}
+</script>
+</body>
+</html>

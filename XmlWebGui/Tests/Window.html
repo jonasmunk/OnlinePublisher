@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Window</title>
+	<script src="../Scripts/In2iScripts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Scripts/In2iWindow.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Scripts/In2iAnimation.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="../Scripts/In2iWindow.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<script type="text/javascript" charset="utf-8">
+		var delegate = {
+			position:{left: 200, top: 200},
+			size:{width: 200, height: 200},
+			title:'Attach item...',
+			getContent: function() {
+				var body = document.createElement('div');
+				var list = [];
+				for (var i=0;i<20;i++) {
+					list[list.length] = {id:i,image:'../Iconsets/Basic/Basic/InternetStandard2.png',title:'Eat my shorts'};
+				}
+				body.appendChild(N2i.Window.createList(list,this));
+				body.appendChild(N2i.Window.createButton('Test'));
+				return body;
+			},
+			itemWasClicked: function(id) {
+				alert(id);
+			}
+		};
+	</script>
+	<style>
+		body {padding: 0px; margin: 0px;}
+	</style>
+</head>
+
+<body>
+<div class="in2iwindow" style="top: 200px;">
+<div class="titlebar"><div><div><div class="close"></div><strong>abc</strong></div></div></div>
+<div class="body">
+<div class="body"><div class="body" style="height: 300px; width: 200px; overflow: auto;">
+<table class="list">
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+<tr>
+	<td><img src="../Iconsets/Basic/Basic/InternetStandard2.png"/></td>
+	<td>Eat my shorts</td>
+</tr>
+</table>
+<a class="button" href="#"><span><span>Choose</span></span></a>
+</div></div>
+</div>
+<div class="bottom"><div><div></div></div></div>
+</div>
+
+<input type="button" value="Build window" onclick="new N2i.Window(delegate).show();"/>
+</body>
+</html>

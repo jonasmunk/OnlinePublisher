@@ -1,0 +1,636 @@
+@import url('../../Scripts/In2iScripts/In2iWindow.css');
+
+/* Background */
+/*CAE0F3*/
+.BackgroundDesktop {background-color: #dae0e9;}
+.BackgroundWindow {background-color: #EAEEF1;}
+.BackgroundArea {background-color: #fefefe;}
+
+
+
+/* General */
+
+* {font-family: Lucida Grande, Verdana;}
+.Divider {width: 0; height: 100%; border-left: 1px solid #ccc; border-right: 1px solid #eee;}
+input.Searchfield {border-width: 0px; font-family: Verdana; font-size: 10px; background-color: transparent; width: 100%;}
+body { width:100%; overflow-x:auto; overflow-y:auto;} 
+body,html {height: 100%;}
+.clear {clear: both;}
+
+
+/* Text */
+
+div.Text {font-size: 9pt;}
+strong.Text {}
+em.Text {}
+small.Text {font-size: 8pt;}
+big.Text {font-size: 11pt;}
+a.Text {color: navy;}
+
+
+
+/* Button */
+
+a.ButtonLargeHilited {color: #fff; border: solid 1px #8ba0c1; background-image: url('Graphics/ButtonLargeHilitedBG.gif');}
+a:hover.ButtonLargeHilited {background-image: url('Graphics/ButtonLargeHilitedBGHover.gif'); border-color: #567fc1;}
+a.ButtonLargeStandard {color: #666; border: solid 1px #c7c7c7; background-image: url('Graphics/ButtonLargeStandardBG.gif');}
+a:hover.ButtonLargeStandard {background-image: url('Graphics/ButtonLargeStandardBGHover.gif'); border-color: #bbb; color: #000;}
+a.ButtonLargeDisabled {color: #ccc; border: solid 1px #ddd; background-image: url('Graphics/ButtonLargeDisabledBG.gif');}
+
+a.ButtonSmallHilited {color: #fff; border: solid 1px #8ba0c1; background-image: url('Graphics/ButtonLargeHilitedBG.gif');}
+a:hover.ButtonSmallHilited {background-image: url('Graphics/ButtonSmallHilitedBGHover.gif'); border-color: #567fc1;}
+a.ButtonSmallStandard {color: #666; border: solid 1px #c7c7c7; background-image: url('Graphics/ButtonLargeStandardBG.gif');}
+a:hover.ButtonSmallStandard {background-image: url('Graphics/ButtonSmallStandardBGHover.gif'); border-color: #bbb; color: #000;}
+a.ButtonSmallDisabled {color: #ccc; border: solid 1px #ddd; background-image: url('Graphics/ButtonLargeDisabledBG.gif');}
+
+a.ButtonLarge {display: block; font-size: 12px; font-weight: bold; padding: 3px 8px 3px 8px; white-space: nowrap; text-decoration: none;}
+a.ButtonSmall {display: block; font-size: 10px; padding: 3px 8px 3px 8px; white-space: nowrap; text-decoration: none;}
+
+
+
+
+/* Tabs */
+
+a.TabSmallDisabled, a.TabLargeDisabled {color: #ccc;}
+a.TabSmallHilited, a.TabLargeHilited {color: #fff;}
+a.TabSmallStandard, a.TabLargeStandard {color: #555;}
+
+a.TabLarge {display: block; font-size: 12px; padding: 3px 7px 2px 7px; text-decoration: none;}
+a.TabSmall {display: block; font-size: 10px; padding: 2px 5px 2px 5px; text-decoration: none;}
+
+
+td.TabSmall {border-left: solid 1px #bbb;}
+td.TabSmallLast {border-right: solid 1px #bbb;}
+td.TabSmallHilited { background-image: url('Graphics/TabSmallHilitedBG.gif');}
+td.TabSmallStandard { background-image: url('Graphics/TabSmallStandardBG.gif');}
+td.TabSmallDisabled { background-image: url('Graphics/TabSmallDisabledBG.gif');}
+
+
+td.TabLarge {border-left: solid 1px #bbb;}
+td.TabLargeLast {border-right: solid 1px #bbb;}
+td.TabLargeHilited { background-image: url('Graphics/TabLargeHilitedBG.gif');}
+td.TabLargeStandard { background-image: url('Graphics/TabLargeStandardBG.gif');}
+td.TabLargeDisabled { background-image: url('Graphics/TabLargeDisabledBG.gif');}
+
+a.TabSmallStandard:hover {color: #555; text-decoration: none; background-image: url('Graphics/TabSmallStandardBGHover.gif');}
+a.TabLargeStandard:hover {color: #555; text-decoration: none; background-image: url('Graphics/TabLargeStandardBGHover.gif');}
+
+
+/* Super/sub - tabs */
+
+a.TabSuper {font-size: 13px; display: block; margin: 2px; text-decoration: none;}
+a.TabSub {font-size: 10px; margin: 2px 6px 1px 6px; display: block; text-decoration: none;}
+
+a.TabSuperDisabled {color: #ccc; text-decoration: none;}
+a.TabSuperHilited {color: #fff; text-decoration: none;}
+a.TabSuperStandard {color: #222; text-decoration: none;}
+
+a.TabSubDisabled {color: #ccc; text-decoration: none;}
+a.TabSubHilited {color: #fff; text-decoration: none;}
+a.TabSubStandard {color: #222; text-decoration: none;}
+
+
+/* Icon */
+
+a.IconDisabled {color: #ccc; text-decoration: none; font-size: 10px; text-align: center;}
+a.IconHilited {color: #333; font-weight: bold; text-decoration: none; font-size: 10px; text-align: center;}
+a.IconStandard {color: #333; text-decoration: none; font-size: 10px; text-align: center;}
+
+a.IconBadge {position: absolute; margin-left: 1px; padding-left: 1px; padding-right: 1px; font-size: 9px; font-family: Verdana; text-decoration: none;}
+a.IconBadgeHilited {background-color: #e00; color: white;}
+a.IconBadgeStandard {background-color: #666; color: white;}
+a.IconBadgeDisabled {background-color: #bbb; color: white;}
+
+a.Icon1 {font-size: 10px; text-decoration: none;}
+a.Icon2 {font-size: 11px; text-decoration: none;}
+a.Icon3 {font-size: 12px; text-decoration: none;}
+
+span.IconDescription1 {font-size: 9px; color: #bbb; font-family: Tahoma; font-weight: normal;}
+span.IconDescription2 {font-size: 9px; color: #999; font-weight: normal;}
+span.IconDescription3 {font-size: 10px; color: #999; font-weight: normal;}
+
+table.IconPile {display: inline; float: left;}
+
+
+
+
+/* Toolbar */
+
+td.ToolbarWindow {background-color: #F2FAFF; border-style: solid; border-width: 0px 1px 0px 1px; border-color: #c7c7c7; padding: 0 5px 0 5px; border-bottom-color: #ccc; background-image: url('Graphics/ToolbarBG.gif')}
+td.ToolbarArea {background-color: #fefefe; border-style: solid; border-width: 0px 1px 1px 1px; border-color: #999; padding: 0 5px 0 5px; border-bottom-color: #ccc;}
+.ToolbarSelect {font-size: 10px; border-style: solid; border-width: 1px; border-color: #888 #ddd #ddd #888; background-color: #fff;}
+a.Toolbar {display: block; margin-bottom: 3px;}
+td.ToolbarToolBG {padding-left: 5px; padding-right: 5px;}
+td.ToolbarToolBGSelected {padding-left: 5px; padding-right: 5px; border-color: #ccc; border-width: 1px; border-style: solid; background-color: #dde;}
+
+.ViewGroup
+{
+	padding-bottom: 4px;
+	text-align: center;
+}
+
+.ViewGroup img
+{
+	border-right: 1px solid #d1d1d1;
+}
+
+.ViewGroup img.First
+{
+	border-left: 1px solid #d1d1d1;
+}
+
+.ViewGroup img.Hilited
+{
+	border-color: #9bb0cd;
+}
+
+/* Window */
+
+div.WindowTitle {font-size: 13px; cursor: default;}
+
+a.WindowParent {display: block; padding: 3px; padding-top: 4px; vertical-align: middle; font-size: 10px; color: #aaa; text-align: center; text-decoration: none; font-weight: bold;}
+a:hover.WindowParent {color: #666;}
+
+td.WindowTabgroup {border-style: solid; border-width: 0px 1px 0px 1px; border-color: #c7c7c7; background-color: #FAFBFC;}
+td.WindowTabgroupWindow {border-style: solid; border-width: 0px 1px 0px 1px; border-color: #c7c7c7; background-color: #f9fbfc;}
+td.WindowTabgroupToolbar {border-style: solid; border-width: 0px 1px 0px 1px; border-color: #c7c7c7; background-color: #f9fbfc;}
+td.WindowTabgroupStatusbar {border-style: solid; border-width: 0px 1px 0px 1px; border-color: #c7c7c7; background-color: #D1E3ED;}
+
+td.WindowContent {height: 100%; border-style: solid; border-width: 0px 1px 1px 1px; border-color: #c7c7c7; border-bottom-color: #999; background-color: #fff;}
+td.WindowContentTop {border-top-width: 1px; border-top-color: #bbb; border-top-style: solid;}
+td.WindowContentBackground {background-color: #EAEEF1; background-image: url('Graphics/ToolbarBG.gif'); background-repeat: repeat-x;}
+td.WindowContentBackgroundToolbar {background-color: #EAEEF1;}
+td.WindowContentWindow {background-color: #D1E3ED;}
+
+.WindowStatusbarStandard {background-color: #f9f9f9; border-style: solid; border-width: 1px 1px 1px 1px; border-color: #eee #c7c7c7 #eee #c7c7c7; font-size: 10px; cursor: default; padding: 2px;}
+.WindowStatusbarHilited {background-color: #f9f9f9; border-style: solid; border-width: 1px 1px 1px 1px; border-color: #eee #c7c7c7 #eee #c7c7c7; font-size: 10px; cursor: default; font-weight: bold; padding: 2px;}
+.WindowStatusbarAttention {background-color: #f9f9f9; border-style: solid; border-width: 1px 1px 1px 1px; border-color: #eee #c7c7c7 #eee #c7c7c7; font-size: 10px; cursor: default; color: f00; padding: 2px;}
+img.WindowStatusbarStatus {vertical-align: text-top; margin-right: 3px;}
+.WindowStatusbarToolbar {background-color: #EAEEF1; border-top-color: #e3e4e6; border-bottom-color: #e3e4e6;}
+div.WindowSheet {opacity:.90; position: absolute; top: 0px; z-index: 1;  border: solid 1px #999; background-color: #fefefe; border-top-color: #eee;}
+
+.WindowPathbar {background-color: #EAEEF1; color: #aaa; border-style: solid; border-width: 1px 1px 0px 1px; border-color: #e3e3e3 #c7c7c7 #eee #c7c7c7; font-size: 10px; cursor: default; padding: 2px 2px 2px 7px; text-align: left;}
+.WindowPathbar a {text-decoration: none; color: #666; margin: 0px 3px 0px 3px;}
+
+
+/* Area */
+td.AreaTitlebar {border-width: 1px; border-color: #bbb #c7c7c7 #ccc #c7c7c7; border-style: solid; font-size: 9pt; color: #333; text-align: center; background-image: url('Graphics/AreaTitlebar.gif'); padding: 2px;}
+
+td.AreaContentHasBottom
+{
+	border-bottom-width: 0px;
+}
+td.AreaBottom
+{
+	border: 1px solid #c7c7c7;
+	border-color: #e0e0e0 #c7c7c7 #999 #c7c7c7;
+	background-color: #f6f6f6;
+	height: 1px;
+}
+
+td.AreaTitlebarTabgroup
+{
+	background: url('Graphics/AreaTitlebarTabStandardBG.gif');
+	height: 22px;
+	border: 1px solid #c7c7c7;
+	border-width: 0px 1px 0px 1px;
+}
+td.AreaTitlebarTabgroup a
+{
+	display: block;
+	font-size: 11px;
+	float: left;
+	height: 22px;
+	text-decoration: none;
+}
+
+td.AreaTitlebarTabgroup a.Hilited
+{
+	background: #fff url('Graphics/AreaTitlebarTabLeft.gif') no-repeat left;
+}
+td.AreaTitlebarTabgroup a.Standard
+{
+	background: url('Graphics/AreaTitlebarTabStandardBG.gif');
+	border-right: 1px solid #c7c7c7;
+	color: #666;
+}
+td.AreaTitlebarTabgroup a.FirstHilited {
+	margin-left: 2px;
+}
+td.AreaTitlebarTabgroup a.Standard:hover
+{
+	background: url('Graphics/AreaTitlebarTabStandardBGHover.gif');
+}
+td.AreaTitlebarTabgroup a.Standard span
+{
+	display: block;
+	height: 18px;
+	padding: 4px 7px 0px 7px;
+}
+td.AreaTitlebarTabgroup a.Hilited span
+{
+	display: block;
+	height: 18px;
+	padding: 4px 7px 0px 7px;
+	background: url('Graphics/AreaTitlebarTabRight.gif') no-repeat right;
+}
+td.AreaTitlebarTabgroup a.PreceedsHilited {
+	border-right-width: 0px;
+}
+td.AreaTitlebarTabgroup a.PreceedsHilited span {
+	padding-right: 8px;
+}
+td.AreaTitlebarTabgroup a.FirstHilited span {
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+/* Dock */
+
+.DockContent {background-color: #EAEEF1; background-image: url('Graphics/ToolbarBG.gif'); background-repeat: repeat-x;}
+.DockContentTop {border-color: #999; border-width: 0 0 1px 0; border-style: solid;}
+.DockContentBottom {border-color: #999; border-width: 1px 0 0 0; border-style: solid;}
+.DockFormBadge {font-size: 9px; color: #222;}
+.DockForm {font-size: 9px; border-style: solid; border-width: 1px; border-top-color: #888; border-bottom-color: #ddd; border-left-color: #888; border-right-color: #ddd;}
+
+
+/* Selection */
+
+.Selection {font-family: Verdana,Tahoma,sans-serif; padding-top: 4px;}
+.Selection .Item {padding: 2px; height: 16px; cursor: pointer;}
+.Selection .Over {background-color: #eee;}
+.Selection .Selected {background-image: url('Graphics/ResultGroupTitle.png'); color: white;}
+.Selection .Item img {float: left; margin: 0px 5px 0px 8px;}
+.Selection .Item span {float: left; font-size: 9pt; position: relative; top: 1px;}
+.Selection .Item strong {float: right; font-size: 9pt; background-color: #b2c3e5; color: #fff; padding: 0px 2px 0px 2px; margin-right: 8px;}
+.Selection .Selected strong {background-color: #fff; color: #68c;}
+.Selection .Title {border-bottom: 1px solid #c6d9ff; margin: 15px 10px 7px 10px;}
+.Selection .Title div {position: absolute;}
+.Selection .Title span {position: relative; top: -8px; left: 17px; font-size: 9pt; padding: 0px 2px 0px 2px; color: #68c; background-color: #fff;}
+
+
+/* Result */
+
+.ResultGroupTitle
+{
+	background-image: url('Graphics/ResultGroupTitle.png');
+	border-bottom: solid 1px #fff;
+	color: #fff;
+	font: 9pt Verdana,Tahoma,sans-serif;
+	padding: 2px 6px;
+	-moz-user-select: none;
+	cursor: pointer;
+}
+.ResultSidebar
+{
+	background-color: #f4f4f4;
+	border-left: solid 1px #ccc;
+	padding: 8px 1px 2px 3px;
+	width: 140px;
+}
+.ResultSidebar .Fixed
+{
+	position: fixed;
+	width: 135px;
+}
+
+.ResultSidebar .Block
+{
+	padding: 2px 0px 2px 6px;
+}
+
+.ResultSidebar .Selection a
+{
+	color: #888;
+	display: block;
+	padding: 2px 0px;
+	font: 8.5pt Verdana,Tahoma,sans-serif;
+	cursor: pointer;
+}
+.ResultSidebar .Selection a.Selected
+{
+	color: #3b69d7;
+	font-weight: bold;
+	background-image: none;
+}
+.ResultSidebar .Selection a:hover
+{
+	/*color: #000;*/
+}
+.ResultSidebar hr
+{
+	border-color: #ddd;
+	border-style: solid;
+	border-width: 0px 0px 1px 0px;
+}
+.ResultSidebar .Block strong
+{
+	color: #333;
+	display: block;
+	font: 8.5pt Verdana,Tahoma,sans-serif;
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+/* List */
+
+.List {border-left: 1px solid #aaa; border-bottom: 1px solid #999; empty-cells: show;}
+
+.ListTitle {color: #777; cursor: default; height: 16px; font-weight: bold; text-align: center; border-width: 1px 1px 0 1px; font-size: 10px; border-style: solid; border-color: #aaa; padding: 0 3px 0 3px; background-color: #eee;}
+.ListTabgroupText {font-size: 9px; text-align: right; padding-right: 4px; color: #999;}
+
+a.ListTab {display: block; font-family: Tahoma,Helvetica,Verdana,sans-serif; font-size: 10px; padding: 2px 4px 1px 4px; text-decoration: none; border-width: 0 1px 0 1px; border-style: solid;}
+
+a.ListTabHilited { background-image: url('Graphics/TabSmallHilitedBG.gif');color: #fff; border-color: #8ba0c1;}
+a.ListTabStandard { background-image: url('Graphics/TabSmallStandardBG.gif');color: #555; border-color: #c7c7c7;}
+a.ListTabDisabled { background-image: url('Graphics/TabSmallDisabledBG.gif');color: #ccc; border-color: #ddd;}
+
+a.ListTabStandard:hover {color: #333; text-decoration: none; background-image: url('Graphics/TabSmallStandardBGHover.gif');}
+
+.List td.ListHeaderStandard {height: 17px; border-width: 1px 1px 1px 0; border-style: solid; border-color: #aaa; background-color: #f6f6f6; white-space: nowrap; clear: none; background-image:url(Graphics/ListHeaderStandardBG.gif);}
+.List td.ListHeaderHilited {height: 17px; border-width: 1px 1px 1px 0; border-style: solid; border-color: #939499; background-color: #f6f6f6; white-space: nowrap; clear: none; background-image:url(Graphics/ListHeaderHilitedBG.gif);}
+
+.List a.ListHeader  {height: 14px; font-size: 10px; padding: 1px 3px 0px 3px;  text-decoration: none; display: block;}
+.List a.ListHeaderStandard { color: #555;}
+.List a.ListHeaderHilited { color: #fff; font-weight: bold;}
+span.ListHeaderCheck {cursor: pointer; color: #555;}
+
+img.ListHeaderDirection {margin-top: 2px; margin-left: 2px; float: right; clear: none;}
+
+.List td.Cell {padding: 1px 4px 1px 3px; border-style: solid; border-width: 0px 1px 0px 0px; height: 17px; vertical-align: top;}
+
+.List tr.Disabled1 td.Standard {background-color: #fff; border-right-color: #ddd;}
+.List tr.Disabled2 td.Standard {background-color: #f6f6f6; border-right-color: #ccc;}
+.List tr.Disabled1 td.Hilited {background-color: #fafafa; border-right-color: #bbe;}
+.List tr.Disabled2 td.Hilited {background-color: #eee; border-right-color: #bbe;}
+
+.List tr.Standard1 td.Standard {background-color: #fff; border-right-color: #ddd;}
+.List tr.Standard2 td.Standard {background-color: #eef; border-right-color: #ccc;}
+.List tr.Standard1 td.Hilited {background-color: #f6f6ff; border-right-color: #bbe;}
+.List tr.Standard2 td.Hilited {background-color: #ddf; border-right-color: #bbe;}
+
+.List tr.Hilited1 td.Standard {background-color: #3D80DF; border-right-color: #aae; border-bottom-width: 1px; border-bottom-color: #dde;}
+.List tr.Hilited2 td.Standard {background-color: #3D80DF; border-right-color: #aae; border-bottom-width: 1px; border-bottom-color: #dde;}
+.List tr.Hilited1 td.Hilited {background-color: #2D70cF; border-right-color: #aae; border-bottom-width: 1px; border-bottom-color: #dde;}
+.List tr.Hilited2 td.Hilited {background-color: #2D70cF; border-right-color: #aae; border-bottom-width: 1px; border-bottom-color: #dde;}
+
+.List td.Last {border-right-color: #aaa;}
+
+td.ListStatus {padding-top: 2px;}
+
+.List a.ListText {font-size: 10px; text-decoration: none;}
+
+tr.Disabled1 td.Standard a.ListText {color: #bbb; display: block;}
+tr.Disabled2 td.Standard a.ListText {color: #bbb; display: block;}
+a.ListTextDisabledHilited {color: #bbb; display: block;}
+
+td.Standard a.ListText {color: #333; display: block;}
+td.Hilited a.ListText {color: #123; display: block;}
+
+tr.Hilited a.ListText {color: #fff; font-weight: bold; display: block;}
+tr.Hilited a.ListText {color: #fff; font-weight: bold; display: block;}
+
+
+.ListIcon {margin-top: 2px; margin-right: 0px;}
+.ListStatus {margin: 1px;}
+
+.ListProgressBG {width: 100%; height: 11px; margin-top: 1px; font-size: 1px; border: #7AA8C6 solid; border-width: 1; background-image: url(Graphics/ProgressBG.gif);}
+.ListProgress {height: 11px; font-size: 1px; background-image: url(Graphics/Progress.gif);}
+
+.ListForm {margin: 1px; font-size: 9px; border-style: solid; border-width: 1px; border-color: #888 #ddd #ddd #888; width: 100%;}
+
+/* Light */
+
+.ListLight {empty-cells: show;}
+.ListLight td.ListHeaderStandard {border-bottom: solid 1px #eeeeee;}
+.ListLight td.ListHeaderHilited {border-bottom: solid 1px #fff; background-color: #ecf0ff;}
+
+.ListLight td.Cell {border-bottom: solid 1px #eeeeee; font: 9pt Verdana,Tahoma,sans-serif; padding: 1px 4px 1px 4px; vertical-align: top;}
+.ListLight a.ListHeader  {font-size: 9pt; padding: 0px 0px 1px 3px; text-decoration: none; display: block; color: #999;}
+.ListLight a.ListHeaderStandard {}
+.ListLight a.ListHeaderHilited {font-weight: bold; color: #039;}
+.ListLight a.ListText {font-size: 9pt; text-decoration: none;}
+.ListLight tr.Standard1 td.Hilited {background-color: #ecf0ff; border-bottom-color: #fff;}
+.ListLight tr.Standard2 td.Hilited {background-color: #ecf0ff; border-bottom-color: #fff;}
+.ListLight tr.Disabled1 td.Hilited {background-color: #ecf0ff; border-bottom-color: #fff;}
+.ListLight tr.Disabled2 td.Hilited {background-color: #ecf0ff; border-bottom-color: #fff;}
+
+
+/* Hierarchy */
+
+
+.HierarchyContainer {margin: 0px; padding: 0px; white-space: nowrap;}
+
+.HierarchyItem {padding: 0px; margin: 0px; white-space: nowrap;}
+
+.HierarchyItem a {color: black; text-decoration: none; padding: 1px 2px 1px 2px; font-size: 12px; position: relative; top: -1px;}
+
+.HierarchyItem img {vertical-align: text-top; border: 0px;}
+
+.HierarchyIcon {width: 16px;height: 16px; margin-top: 1px; margin-bottom: 1px; margin-right: 2px;}
+
+.HierarchyItemHilited a {font-weight: bold;}
+
+.HierarchyItemDisabled a {color: #666;}
+
+.Hierarchy {padding: 3px;}
+
+.Hierarchy .highlighted {background-image: url('Graphics/ResultGroupTitle.png');}
+
+.Hierarchy .highlighted a {color: #fff;}
+
+
+/* Form */
+
+.FormBadgeLarge {font-size: 12px; font-weight: bold; color: #425A90; cursor: default;}
+.FormBadgeSmall {font-size: 10px; font-weight: bold; color: #425A90; cursor: default;}
+
+.FormTextLarge {font-size: 12px; color: #222; cursor: default;}
+.FormTextSmall {font-size: 10px; color: #222; cursor: default;}
+
+select.FormInputLarge {font-size: 9pt; border-style: solid; border-width: 1px; border-color: #999 #ccc #eee #ccc; width: 100%; background-color: #fff;}
+input.FormInputLarge {font-size: 9pt; border-style: solid; border-width: 1px; border-color: #999 #ccc #eee #ccc; width: 100%; background-color: #fff; padding: 2px; height: 20px;}
+textarea.FormInputLarge {font-size: 9pt; border-style: solid; border-width: 1px; border-color: #999 #ccc #eee #ccc; width: 100%; background-color: #fff; padding: 2px;}
+.FormInputSmall {font-size: 10px; border-style: solid; border-width: 1px; border-color: #999 #ccc #eee #ccc; width: 100%; background-color: #fff;}
+
+.FormDivider {height: 1px; background-color: #aaa; border-style: none; border-width: 0px;}
+
+.FormBoxBadgeLarge {font-weight: bold; padding: 0 2px 0 2px; font-size: 12px; cursor: default; color: #425A90;}
+.FormBoxBadgeSmall {font-weight: bold; padding: 0 2px 0 2px; font-size: 10px; cursor: default; color: #425A90;}
+
+.FormDisclosure {font-weight: bold; font-size: 12px; color: #425A90; padding-left:  3px;}
+
+div.FormHint {font-size: 10px; color: #666; cursor: default; margin-top: 1px;}
+div.FormError {font-size: 10px; color: #f00; cursor: default; margin-top: 1px;}
+
+.form .object
+{
+	border: 1px solid #e0e0e0; background: #EEF2F5; padding: 3px; font: 12px 'Lucida Grande',Verdana;
+	border-bottom-color: #F2F6F9;
+	border-top-color: #d6d6d6;
+}
+
+.form .object img
+{
+	border: none; width: 32px; height: 32px; float: left;
+}
+
+.form .object .title
+{
+	padding-top: 2px;
+}
+
+.form .object .description
+{
+	font-size: 9px; color: #abc;
+}
+
+.form .object a
+{
+	float: right;
+	margin-left: 3px;
+}
+
+.form .object .objectList
+{
+	border: 1px solid #ddd; background: #fff; position: absolute; display: none; max-height: 200px; overflow:  auto;
+	width: 200px;
+	height: 200px;
+}
+
+.form .object .objectList div
+{
+	padding: 2px 10px 2px 5px; cursor: pointer;
+}
+
+.form .object .objectList .icon
+{
+	padding-left: 39px;
+	height: 34px;
+	background-position: 3px 50%;
+	background-repeat: no-repeat;
+}
+.form .object .image
+{
+	border: none; width: 32px; height: 32px; float: left; margin-right: 3px; background-position: center center; background-repeat: no-repeat;
+}
+
+.form .object .objectList table
+{
+	border-spacing: 0 0;
+}
+
+.form .object .objectList strong
+{
+	font-size: 12px;
+}
+.form .object .objectList span
+{
+	font-size: 10px;
+	color: #abc;
+	white-space: nowrap;
+}
+
+.form .object .objectList .hover
+{
+	background-color: #eee;
+}
+
+/* BarForm */
+
+input.BarForm {font-size: 10px; border-style: solid; border-width: 1px; border-color: #888 #ddd #ddd #888; width: 100%; background-color: #fff;}
+select.BarForm {font-size: 10px; border-style: solid; border-width: 1px; border-color: #888 #ddd #ddd #888; background-color: #fff;}
+textarea.BarForm {font-size: 10px; border-style: solid; border-width: 1px; border-color: #888 #ddd #ddd #888; width: 100%; height: 38px; background-color: #fff;}
+a.BarFormBadge {font-size: 10px; font-weight: bold; color: #425A90; cursor: default; margin: 0px 1px 0px 4px;}
+td.BarForm {padding: 0 2px 0 2px;}
+
+/* Overview */
+
+.Overview {border: 1px solid #ddd; background-color: #fff;}
+.OverviewBadge {cursor: default; color: #abc; font-weight: bold; padding: 3px 4px 3px 8px; font-size: 12px;}
+.OverviewContent {cursor: default; padding: 2px 2px 2px 4px; font-size: 12px;}
+
+
+
+/* Tile */
+
+table.Tile {border-top: 1px solid #bbb;}
+td.Tile {padding-left: 3px;}
+a.Tile {font-size: 10px; text-decoration: none; color: #000;}
+a.TileLink {font-size: 10px; text-decoration: none; color: #000; margin-right: 5px; display: block; float: right;}
+.Tiles {border: 1px solid #aaa; border-top-width: 0;}
+.TileContent {border: 0px solid #aaa; border-top-width: 1px;}
+
+
+
+/* Menu */
+
+.Menu, .Menu * {}
+.Menu {position: absolute; z-index: 100; visibility: hidden; width: 100px; border: 1px solid #888; padding: 1px; background: white;}
+.Menu-empty {display: block; border: 1px solid white; padding: 2px 5px 2px 5px; font-size: 11px; color: black;}
+.Menu a {display: block; width: auto; overflow: visible; padding: 2px 0px 2px 5px; font-size: 11px; font-family: Tahoma, Verdan, Helvetica, Sans-Serfif; text-decoration: none; vertical-align: middle; text-align: left; color: #333;}	
+.Menu a:visited, .Menu a:visited:hover {color: #333;}
+.Menu a:hover {color: #fff; background-color: #3D80DF;}	
+.Menu a .arrow {float: right; border: 0; width: 3px; margin-right: 3px; margin-top: 4px;}
+.Menu div {height: 0; height: 0; border-top: 1px solid #bbb;  border-bottom: 1px solid #eee; overflow: hidden; margin: 2px 0px 2px 0px; font-size: 0mm;}
+
+/*//////////////// In2iScripts /////////////////*/
+
+.in2i-menu {
+	position: absolute;
+	z-index: 100;
+	visibility: hidden;
+	width: 100px;
+	border: 1px solid #888;
+	border-color: #ddd #888 #888 #ddd;
+	padding: 1px; background: white;
+}
+
+.in2i-menu-empty {
+	display: block;
+	border: 1px solid white;
+	padding: 2px 5px 2px 5px;
+	font-size: 11px;
+	color: black;
+}
+
+.in2i-menu a {
+	display: block;
+	width: auto;
+	overflow: visible;
+	padding: 2px 0px 2px 5px;
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	text-decoration: none;
+	vertical-align: middle;
+	text-align: left;
+	color: #333;
+}
+
+.in2i-menu a:visited, .Menu a:visited:hover {
+	color: #333;
+}
+
+.in2i-menu a:hover {
+	color: #333;
+	background: rgb(180,200,255);
+	background-image: url('Graphics/ResultGroupTitle.png');
+	color: white;
+}
+
+.in2i-menu a .arrow {
+	float: right;
+	border: 0;
+	width: 3px;
+	margin-right: 3px;
+	margin-top: 4px;
+}
+
+.in2i-menu div {
+	height: 0;
+	border-top: 1px solid #bbb; 
+	border-bottom: 1px solid #eee;
+	overflow: hidden;
+	margin: 2px 0px 2px 0px;
+	font-size: 0mm;
+}
