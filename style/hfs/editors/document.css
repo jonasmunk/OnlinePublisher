@@ -1,0 +1,28 @@
+@import url("part_text.css");
+@import url("part_news.css");
+@import url("part_person.css");
+@import url("part_html.css");
+@import url("part_header.css");
+@import url("part_listing.css");
+@import url("part_richtext.css");
+@import url("part_horizontalrule.css");
+
+body
+{
+	background: #fff;
+}
+
+/* =========================== Links ======================= */
+
+a.TextLink
+{
+	color: #3366ff;
+}
+	
+a.TextLink:hover
+{
+	color: #0000aa;
+}
+
+
+

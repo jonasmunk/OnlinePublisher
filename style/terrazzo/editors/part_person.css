@@ -1,0 +1,42 @@
+div.PartPersonProperty
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 11px;
+	margin: 0px;
+	padding: 0px;
+	color: #444;
+}
+
+div.PartPersonName
+{
+	color: #398595;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+div.PartPersonAddress {
+	font-style: italic;
+}
+
+div.PartPersonProperty a {
+	color: #3366ff;
+	}
+
+div.PartPersonProperty a:hover {
+	color: #0000aa;
+}
+
+span.PartPersonExtra {
+	font-size: 8pt;
+	color: #888;
+}
+
+span.PartPersonLabel {
+	font-weight: bold;
+}
+
+img.PartPerson {
+	border: 0px;
+	margin: 3px 4px 0 0;
+}

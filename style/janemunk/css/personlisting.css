@@ -1,0 +1,41 @@
+table.Personlisting tr
+{
+	height: 100px;
+	border-bottom: solid 1px red;
+}
+
+table.Personlisting td
+{
+	padding: 15px 0 15px 0;
+	border-top: solid 1px #eee;
+}
+
+.PersonlistingTitle
+{
+	text-align: left;
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	color: #3080CB;
+	font-size: 12pt;
+	height: 14px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.PersonlistingProperty
+{
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	padding-top: 2px;
+}
+
+.PersonlistingPropertyExtra
+{
+	font-style: italic;
+	font-size: 8pt;
+}
+
+.PersonlistingPropertyLabel
+{
+	font-weight: bold;
+	color: #555;
+}

@@ -1,0 +1,39 @@
+ul.navigation a.soccer
+{
+	width: 45px;
+}
+
+ul.navigation a.handball
+{
+	width: 45px;
+}
+
+ul.navigation a.badminton
+{
+	width: 54px;
+}
+
+ul.navigation a.tennis
+{
+	width: 47px;
+}
+
+ul.navigation a.volleyball
+{
+	width: 45px;
+}
+
+ul.navigation a.floorball
+{
+	width: 45px;
+}
+
+ul.navigation a.gymnastics
+{
+	width: 45px;
+}
+
+div.PartNewsBoxTitle, div.PartNewsTitle
+{
+	height: 1%; /*Holly hack!*/
+}

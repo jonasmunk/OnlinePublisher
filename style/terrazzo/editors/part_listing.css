@@ -1,0 +1,36 @@
+.part-section-listing { padding-bottom: 5px; padding-top: 5px;}
+
+ul.Part-listing, ol.Part-listing
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 10pt;
+	margin: 0px;
+}
+
+textarea.Part-listing
+{
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	margin: 0px;
+	width: 100%;
+	height: 200px;
+	color: #333;
+}
+
+.part-section-listing li
+{
+	color: #3080CB;
+	margin-bottom: 10px;
+}
+
+.part-section-listing li span
+{
+	color: #333;
+}
+
+.part-section-listing li span span
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color: ##398595;
+	font-size: 11pt;
+}

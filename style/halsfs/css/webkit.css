@@ -1,0 +1,15 @@
+chrome_placards
+{
+	overflow: none;
+}
+
+div.chrome_placard
+{
+  	-webkit-transition-property: opacity, -webkit-transform;
+  	-webkit-transition-duration: 1s;
+	-webkit-transform-origin: top left;
+}
+
+div.chrome_placard:hover {
+	-webkit-transform: scale(1.1) rotate(5deg);
+}

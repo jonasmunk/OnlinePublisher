@@ -1,0 +1,587 @@
+
+/********************** Base ***********************/
+
+
+img
+{
+	border: none;
+}
+
+body
+{
+	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	margin: 0px;
+	text-align: center;
+}
+
+body,html
+{
+	min-height: 100%;
+}
+
+form
+{
+	margin: 0px;
+}
+
+div.case
+{
+	margin: 0px auto;
+	width: 930px;
+	position: relative;
+	text-align: left;
+	padding: 0 0 40px;
+}
+
+/****************** Front *****************/
+
+div.case_front
+{
+	margin-top: 50px;
+	background: url('../gfx/easel.jpg') 40px 10px no-repeat;
+	min-height: 580px;
+	position: relative;
+}
+
+div.case_front_content
+{
+	background: url('../gfx/front_title.png') left top no-repeat;
+	margin-left: 400px;
+	padding-right: 160px;
+	padding-top: 65px;
+}
+
+#paintings
+{
+	left: 39px;
+	top: 69px;
+	position: absolute;
+	width: 250px;
+	height: 250px;
+}
+
+#paintings div
+{
+	width: 250px;
+	height: 250px;
+	display: none;
+	position: absolute;
+}
+
+div.painting1
+{
+	background: url('../gfx/painting1.jpg');
+}
+
+div.painting2
+{
+	background: url('../gfx/painting2.jpg');
+}
+
+div.painting3
+{
+	background: url('../gfx/painting3.jpg');
+}
+
+div.painting4
+{
+	background: url('../gfx/painting4.jpg');
+}
+
+div.painting5
+{
+	background: url('../gfx/painting5.jpg');
+}
+
+div.painting6
+{
+	background: url('../gfx/painting6.jpg');
+}
+
+div.painting7
+{
+	background: url('../gfx/painting7.jpg');
+}
+
+/*************** head **************/
+
+div.case_head
+{
+	height: 80px;
+	background: url('../gfx/header.png') left bottom no-repeat;
+}
+
+div.case_head h1
+{
+	display: none;
+}
+
+div.case_content
+{
+	min-height: 250px;
+}
+
+/************* Sidebar ************/
+
+
+div.case_sidebar
+{
+	float: right;
+	width: 260px;
+	padding-top: 10px;
+}
+
+div.case_sidebar_content
+{
+	border-right: 1px solid #DDDDDD;
+	margin-right: 260px;
+	padding: 20px;
+}
+
+/************ Contact *********/
+
+div.case_contact
+{
+	padding: 0 20px 0 20px;
+}
+
+div.case_contact h2
+{
+	font-size: 12pt;
+	margin: 0;
+}
+
+div.case_contact p
+{
+	font-size: 10pt;
+	margin: 5px 0;
+}
+
+div.case_contact em
+{
+	font-style: normal;
+	color: #999;
+}
+
+div.case_contact a
+{
+	color: #ddd;
+}
+
+div.case_contact a span
+{
+	color: #000;
+}
+
+div.case_contact a:hover, div.case_contact a:hover span
+{
+	color: #36f;
+}
+
+div.case_contact blockquote
+{
+	text-indent: -8px;
+	margin: 25px 8px;
+	font-size: 14pt;
+	line-height: 30px;
+	font-style: italic;
+	color: #666;
+}
+
+/******** Footer ********/
+
+div.case_footer
+{
+	background: url('../gfx/footer.png') no-repeat;
+	width: 960px;
+	height: 40px;
+	margin: 0 auto;
+	font-size: 9pt;
+	text-align: center;
+	padding-top: 20px;
+}
+
+div.case_footer span
+{
+	color: #666;
+}
+
+a.case_design
+{
+	background: url('../gfx/designedby.png');
+	text-indent: -10000px;
+	width: 149px;
+	height: 47px;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+
+div.case_links
+{
+	height: 30px;
+}
+
+/***************** Top navigation *************/
+
+
+ul.case_navigation
+{
+	margin: 0;
+	position: absolute;
+	left: 280px;
+	top: 30px;
+	display: block;
+	padding: 0 0 0 10px;
+	overflow: hidden;
+	cursor: default;
+	font-family: Palatino;
+}
+
+ul.case_navigation li
+{
+	float: left;
+	list-style: none;
+}
+
+ul.case_navigation li a
+{
+	display: block;
+	float: left;
+	color: #333;
+	text-decoration: none;
+	font-size: 12pt;
+	height: 32px;
+	line-height: 31px;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+ul.case_navigation li span
+{
+	display: block;
+	float: left;
+	height: 32px;
+	padding: 0px 10px;
+}
+
+ul.case_navigation li.highlighted, ul.case_navigation li.selected
+{
+	font-weight: bold;
+}
+
+/***************** Sub navigation *************/
+
+
+ul.case_sub_navigation
+{
+	margin: -2px 0 0 0;
+	padding: 0 0 0 13px;
+	display: block;
+	overflow: hidden;
+	height: 28px;
+	line-height: 24px;
+	list-style: none;
+	font-size: 10pt;
+	cursor: default;
+}
+
+ul.case_sub_navigation li
+{
+	float: left;
+}
+
+ul.case_sub_navigation a
+{
+	text-decoration: none;
+	color: #333;
+	height: 25px;
+	display: inline-block;
+	margin-right: 4px;
+	cursor: pointer;
+}
+
+ul.case_sub_navigation a span
+{
+	display: inline-block;
+	height: 25px;
+	padding: 0 8px;
+}
+
+ul.case_sub_navigation a.selected
+{
+	font-weight: bold;
+}
+
+/***************** Side navigation *************/
+
+ul.chrome_side_navigation
+{
+	list-style: none;
+	margin: 0 0 30px 15px;
+	padding: 0px;
+	font-size: 9pt;
+	line-height: 22px;
+}
+
+ul.chrome_side_navigation a
+{
+	color: #333;
+	text-decoration: none;
+	padding: 1px 5px;
+}
+
+ul.chrome_side_navigation a:hover
+{
+	color: #0169b2;
+	text-decoration: underline;
+}
+
+ul.chrome_side_navigation a.selected
+{
+	color: #0072BC;
+	font-weight: bold;
+}
+
+ul.chrome_side_navigation a.highlighted
+{
+	font-weight: bold;
+}
+
+ul.chrome_side_navigation ul
+{
+	list-style: none;
+	padding-left: 15px;
+}
+
+/********************** Box *********************/
+
+div.chrome_box_top, div.chrome_box_top div
+{
+	font-size: 0;
+	background: url('../gfx/chrome_box.png') no-repeat;
+	height: 7px;
+}
+
+div.chrome_box_top div
+{
+	background-position: right -7px;
+}
+
+div.chrome_box_top div div
+{
+	background-position: left -14px;
+	background-repeat: repeat-x;
+	margin: 0 8px;
+}
+
+div.chrome_box_bottom, div.chrome_box_bottom div
+{
+	font-size: 0;
+	background: url('../gfx/chrome_box.png') left -21px no-repeat;
+	height: 10px;
+}
+
+div.chrome_box_bottom div
+{
+	background-position: right -31px;
+}
+
+div.chrome_box_bottom div div
+{
+	background-position: left -41px;
+	background-repeat: repeat-x;
+	margin: 0 8px;
+}
+
+div.chrome_box_middle
+{
+	background: url('../gfx/chrome_box_middle.png') repeat-y;
+}
+
+div.chrome_box_middle div.chrome_box_middle
+{
+	background: url('../gfx/chrome_box_middle.png') right repeat-y;
+}
+
+div.chrome_box_body
+{
+	margin: 0 3px;
+	background: #fff;
+	padding: 1px 0;
+	overflow: hidden;
+}
+
+div.chrome_box_head
+{
+	border-bottom: 1px solid #ddd;
+	height: 27px;
+}
+
+div.chrome_box_foot
+{
+	border-top: 1px solid #ddd;
+	height: 27px;
+}
+
+/********************** Poster *********************/
+
+#poster
+{
+	width: 900px;
+	height: 310px;
+	background: url('../gfx/poster_bg.png');
+	cursor: pointer;
+}
+#poster .left
+{
+	float: left;
+	height: 310px;
+	width: 450px;
+	overflow: hidden;
+}
+
+#poster .right
+{
+	float: left;
+	height: 310px;
+	width: 450px;
+	overflow: hidden;
+}
+
+#poster .left div
+{
+	width: 900px;
+	height: 310px;
+	background: 200px 0px no-repeat;
+}
+#poster .right div
+{
+	width: 900px;
+	height: 310px;
+	background: 450px 0px no-repeat;
+}
+
+#poster_loader
+{
+	background: #000;
+	color:#FFFFFF;
+	left: 50%;
+	margin-left: -25px;
+	padding: 2px 5px;
+	position: absolute;
+	text-align: center;
+	top: 200px;
+	width: 50px;
+}
+
+
+/************************** Search *********************/
+
+form.search
+{
+	background: url('../gfx/search.png') top left repeat-x;
+	margin-right: 13px;
+	margin-top: 13px;
+	float: right;
+	height: 24px;
+	font-size: 0px;
+}
+
+form.search div
+{
+	background: url('../gfx/search.png') bottom right no-repeat;
+	height: 24px;
+	padding-left: 8px;
+}
+
+form.search input.text
+{
+	border: none;
+	background: none;
+	padding-top: 4px;
+	font-size: 9pt;
+	color: #999;
+	width: 140px;
+	font: Verdana, tahoma,sans-serif;
+}
+
+form.search input.text:focus
+{
+	color: #333;
+}
+
+form.search .submit
+{
+	position: absolute;
+	top: 0px;
+	left: -1000px;
+	width: 1px;
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+/********** News **********/
+
+div.chrome_news
+{
+	padding: 0 5px 10px;
+}
+
+div.chrome_news h2
+{
+	font-weight: normal;
+	margin: 0 0 5px;
+	font-size: 11pt;
+	color: #999;
+	border-bottom: 1px solid #ddd;
+	padding: 0 10px 3px;
+}
+
+div.chrome_news_item
+{
+	padding: 4px 10px 8px;
+	overflow: hidden;
+}
+
+div.chrome_news_item h3
+{
+	font-size: 9pt;
+	color: #456;
+	font-weight: normal;
+	padding-bottom: 3px;
+	margin: 0;
+}
+
+p.chrome_news_text
+{
+	color:#678;
+	font-size:8pt;
+	line-height:10pt;
+	margin: 0 0 3px;
+}
+
+p.chrome_news_date
+{
+	font-weight: normal;
+	color: #bbb;
+	font-size: 8pt;
+	margin: 2px 0 0;
+	float: left;
+}
+
+p.chrome_news_links
+{
+	text-align: right;
+	font-size: 8pt;
+	margin-top: 3px;
+	margin: 0;
+}

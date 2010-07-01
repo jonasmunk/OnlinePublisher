@@ -1,0 +1,14 @@
+.PartHeader
+{
+	margin: 0px;
+	color: #9FDD56;
+	font-family: 'Lucida Grande', Geneva, Tahoma, Verdana, Arial, sans-serif;
+	font-weight: normal;
+}
+
+h1.PartHeader { font-size: 24pt; }
+h2.PartHeader { font-size: 21pt; }
+h3.PartHeader { font-size: 18pt; }
+h4.PartHeader { font-size: 16pt; }
+h5.PartHeader { font-size: 14pt; }
+h6.PartHeader { font-size: 13pt; }

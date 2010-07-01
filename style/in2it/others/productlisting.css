@@ -1,0 +1,41 @@
+h1.Productlisting {
+	margin: 0 0 20px 0;
+	color: #73A2C9;
+	font-family: Tahoma,Verdana;
+	border-bottom: solid 1px #ddd;
+	font-weight: normal;
+	}
+
+p.Productlisting {
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	margin: 0px 0px 10px 0px;
+	}
+	
+div.ProductlistingProduct {
+	margin-top: 30px;
+	}
+	
+strong.ProductlistingProduct {
+	font-family: Tahoma,Verdana;
+	font-size: 12pt;
+	color: #73A2C9;
+	}
+	
+p.ProductlistingProduct {
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	margin: 0px;
+	}
+	
+dl.ProductlistingProduct {
+	font-family: Tahoma,Verdana;
+	font-size: 9pt;
+	margin: 0px;
+	}
+
+dt.ProductlistingProduct {
+	}
+	
+dd.ProductlistingProduct {
+	}

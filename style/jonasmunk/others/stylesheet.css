@@ -1,0 +1,392 @@
+body {
+	background-color: #eee;
+	padding: 0px;
+	margin: 0px;
+	font: 12px 'Lucida Grande', Geneva, Tahoma, Verdana, Arial, sans-serif;
+	}	
+
+
+
+a.common {
+	color: #2266ff;
+	text-decoration: none;
+	border-bottom: solid 1px #9FDD56;
+	}
+	
+a.common:hover {
+	color: #0033FF;
+	border-bottom-color: #8D9Cff;
+}
+
+h1.common, h2.common, h3.common, h4.common, h5.common, h6.common
+{
+	margin: 0px;
+	color: #9FDD56;
+	font-family: 'Lucida Grande', Geneva, Tahoma, Verdana, Arial, sans-serif;
+	font-weight: normal;
+}
+
+h1.common
+{
+	font-size: 32px;
+}
+
+div.Frame {
+	background-color: #fff;
+	width: 80%;
+	margin: 20px 0px 20px 10%;
+	position: relative;
+	left: -15px;
+	padding: 15px;
+	border: 1px solid #e9e9e9;
+}
+
+div.FrameTop {
+	background-color: #569908;
+	height: 40px;
+	border-bottom: solid 4px #89C245;
+}
+
+div.FrameSub {
+	background-color: #9FDD56;
+	height: 30px;
+	display: block;
+}
+
+div.FrameMiddle {
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+}
+
+
+div.FrameSidebar {
+	vertical-align: top;
+	width: 200px;
+	margin-left: -200px;
+}
+
+div.FrameContent {
+	padding: 15px;
+	margin-right: 215px;
+	min-height: 400px;
+}
+
+/******************* Footer ********************/
+
+div.FrameFooter {
+	margin-top: 15px;
+	background-color: #eee;
+	height: 18px;
+	padding: 6px;
+	border-top: solid 3px #ddd;
+}
+
+span.FrameFlag {
+	float: left;
+	opacity: .3;
+}
+
+img.FrameFlag {
+	border-width: 0;
+	margin-right: 3px;
+}
+
+a.FrameFlag {
+}
+
+
+
+/******************* Logo ********************/
+
+span.FrameLogo {
+	font-size: 20px;
+	margin: 7px 0 0 10px;
+	float: left;
+	color: white;
+}
+
+/**************** Top Menu *******************/
+
+ul.FrameTopMenu {
+	font-size: 12pt;
+	_font-size: 11pt;
+	list-style: none;
+	margin: 14px 5px 0 0;
+	padding: 0;
+	float: right;
+	position: relative;
+	_top: 4px;
+}
+
+li.FrameTopMenu {
+	float: left;
+	margin: 0 2px 0 2px;
+	height: 30px;
+	padding: 0;
+}
+
+a.FrameTopMenu {
+	color: #fff;
+	text-decoration: none;
+	padding: 5px 6px 4px 6px;
+	display: block;
+	float: left;
+}
+
+a.FrameTopMenuStandard:hover {
+	color: #569908;
+	background-color: #89C245;
+}
+
+a.FrameTopMenuSelected {
+	background-color: #9FDD56;
+	padding-bottom: 8px;
+	position: relative;
+	color: #569908;
+}
+
+a.FrameTopMenuHilited {
+	background-color: #9FDD56;
+	padding-bottom: 8px;
+	color: #569908;
+}
+
+a.FrameTopMenuSelected:hover {
+	color: #fff;
+}
+
+
+/**************** Second Menu *******************/
+
+
+ul.FrameSecondMenu {
+	font-size: 10pt;
+	list-style: none;
+	margin: 7px 5px 0 0;
+	padding: 0;
+	float: right;
+}
+
+li.FrameSecondMenu {
+	display: inline;
+	margin: 0;
+	padding: 0 2px 0 2px;
+}
+
+a.FrameSecondMenu {
+	color: #569908;
+	text-decoration: none;
+	padding: 2px 3px 2px 3px;
+}
+
+a.FrameSecondMenuStandard:hover {
+	color: #fff;
+}
+
+a.FrameSecondMenuSelected, a.FrameSecondMenuHilited {
+	color: #fff;
+}
+	
+	
+/****************** Menu *********************/
+
+div.FrameMenuTitle {
+	margin-top: 15px;
+	padding: 3px 0 3px 5px;
+	font-size: 12pt;
+	color: white;
+	background-color: #459EE0;
+	border-bottom: solid 4px #80C9FF;
+}
+
+ul.FrameMenu {
+	margin: 0;
+	background-color: #80C9FF;
+	padding: 6px 0 6px 0;
+	list-style: none;
+	background-image: url('../grafik/BlueGradient.gif');
+	background-repeat: repeat-x;
+}
+
+ul.FrameMenu li {
+	font-size: 10pt;
+}
+
+ul.FrameMenu li li {
+	margin-left: 10px;
+	font-size: 8pt;
+}
+
+ul.FrameMenuSub {
+	padding: 0px;
+	list-style: none;
+}
+
+a.FrameMenu {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	}
+	
+a.FrameMenu:hover {
+	color: #fff;
+	}
+	
+a.FrameMenuSelected {
+	color: #fff;
+	}
+
+
+/****************** Search ***************/
+
+
+div.FrameSearchTitle {
+	margin-top: 15px;
+	padding: 3px 0 3px 5px;
+	font-size: 12pt;
+	color: white;
+	background-color: #bbb;
+	border-bottom: solid 4px #ddd;
+}
+
+div.FrameSearchBody {
+	margin: 0;
+	background-color: #eee;
+	padding: 6px 6px 6px 6px;
+	height: 26px;
+}
+
+input.FrameSearchButton {
+	float: right;
+}
+
+input.FrameSearchField {
+	color: #459EE0;
+	font-size: 10pt;
+	margin: 0;
+	float: left;
+	width: 150px;
+	padding: 2px;
+	border: solid 1px #ddd;
+}
+
+/************************* Links *******************/
+
+span.FrameLinksTop {
+	text-align: right;
+	font-size: 11px;
+	color: #fff;
+	padding-left: 6px;
+	padding-top: 7px;
+	float: left;
+	position: absolute;
+}
+
+span.FrameLinksBottom {
+	display: block;
+	text-align: right;
+	font-size: 10pt;
+	color: #aaa;
+	margin-right: 3px;
+}
+
+a.FrameLinkTop {
+	color: #fff;
+	text-decoration: none;
+}
+
+a.FrameLinkBottom {
+	color: #666;
+	text-decoration: none;
+}
+
+a.FrameLinkTop:hover, a.FrameLinkBottom:hover {
+	color: #0000FF;
+	border-bottom: solid 1px #0066FF;
+}
+
+/************************* News *********************/
+
+div.FrameNewsBlock {
+	margin-top: 15px;
+	opacity: 0.5;
+}
+
+div.FrameNewsBlock:hover {
+	opacity: .99;
+}
+
+div.FrameNewsBlockTitle {
+	margin-top: 15px;
+	padding: 3px 0 3px 5px;
+	font-size: 12pt;
+	color: white;
+	background-color: #94CE50;
+	border-bottom: solid 3px #AAE06B;
+}
+
+div.FrameNewsBlockBody {
+	background-color: #C9F695;
+	background-image: url('../grafik/GreenGradient.gif');
+	background-position: bottom left;
+	background-repeat: repeat-x;
+}
+
+div.FrameNews {
+	padding: 8px 12px 12px 12px;
+}
+
+div.FrameNewsDescription {
+	font-size: 10px;
+	height: 50px;
+	overflow: hidden;
+}
+
+div.FrameNews:hover div.FrameNewsDescription {
+	font-size: 10px;
+	height: auto;
+	overflow: visible;
+}
+
+div.FrameNewsTitle {
+	font-size: 12px;
+	color: #569908;
+	font-weight: bold;
+}
+
+span.FrameNewsDate {
+	font-weight: bold;
+	color: #94CE50;
+	font-size: 20px;
+	top: -5px;
+	float: right;
+	margin: 0 0 0px 4px;
+}
+
+div.FrameNewsLinks {
+	text-align: right;
+	font-size: 11px;
+	margin-top: 3px;
+}
+
+
+a.FrameNewsLink {
+	color: #0066FF;
+	text-decoration: none;
+	border-bottom: solid 1px #66aaFF;
+	}
+/*
+a.FrameNewsLink:after {
+	content: '>>';
+	border-width: 0;
+	margin-left: 3px;
+	color: white;
+}
+*/
+a.FrameNewsLink:hover {
+	color: #0000FF;
+	border-bottom-color: #0066FF;
+}

@@ -1,0 +1,59 @@
+.ImageGallery
+{
+	font-family: Tahoma,Verdana,sans-serif;
+}
+
+.ImageGallery h1
+{
+	margin-bottom: 10px;
+}
+	
+.ImageGallery p
+{
+	margin-bottom: 10px;
+}
+
+.ImageGallery table
+{
+	display: inline;
+	float: left;
+	margin: 10px 10px 0px 0;
+}
+
+.ImageGallery table td
+{
+}
+
+.ImageGallery table td div
+{
+	overflow: hidden;
+	position: absolute;
+	text-align: left;
+	height: 20px;
+}
+
+.ImageGallery span
+{
+	background-color: #333;
+	color: #fff;
+	font-size: 12px;
+	overflow: hidden;
+	padding: 1px 3px 2px 3px;
+}
+
+td.ImageGallery {
+	cursor: pointer;
+	padding: 0px;
+}
+
+td.ImageGallery img
+{
+	
+}
+.ImageGallery small
+{
+	color: #666;
+	display: block;
+	font-size: 9pt;
+	text-align: center;
+}

@@ -1,0 +1,53 @@
+div.DocumentSectionPart-news {padding-bottom: 10px;}
+
+div.PartNewsBox {
+}
+
+div.PartNewsBoxTitle {
+	color: #3A497A;
+	font-family: Helvetica,Tahoma,Verdana;
+	font-weight: normal;
+	font-size: 14pt;
+	text-align: left;
+	padding: 4px 4px 6px 2px;
+	border-bottom: 1px solid #eee;
+}
+
+div.PartNews {
+	padding: 8px 2px 7px 2px;
+	font-family: Tahoma,Verdana,sans-serif;
+	border-bottom: 1px solid #eee;
+}
+
+div.PartNews1 {
+	
+}
+div.PartNews2 {
+	
+}
+
+div.PartNewsTitle {
+	color: #3A497A;
+	font-family: Helvetica,Tahoma,Verdana;
+	font-size: 11pt;
+}
+
+div.PartNewsDescription {
+	font-size: 9pt;
+	color: #333;
+}
+
+span.PartNewsDate {
+	color: #aaa;
+	font-size: 9pt;
+}
+
+div.PartNewsLinks {
+	color: #3A497A;
+	font-size: 9pt;
+}
+
+div.PartNewsLinks a {
+	margin-right: 4px;
+	margin-left: 2px;
+}

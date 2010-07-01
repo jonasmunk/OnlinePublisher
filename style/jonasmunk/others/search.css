@@ -1,0 +1,233 @@
+h1.Search {
+	margin: 0 0 10px 0;
+	}
+
+p.Search {
+	font-family: Tahoma,Verdana;
+	font-size: 9pt;
+	margin: 0px 0px 10px 0px;
+	color: #333;
+	}
+
+
+
+
+
+/*            Input               */
+
+
+#SearchBox
+{
+	background-color: #F8F8F8;
+	border: solid 1px #DEDEDE;
+	padding: 5px;
+}
+
+fieldset.SearchTypes
+{
+	display: inline;
+	border: solid 1px #DEDEDE;
+	padding: 4px;
+	float: right;
+	width: 120px;
+}
+
+div.SearchMethod
+{
+	font-size: 10pt;
+	font-family: Tahoma,Verdana;
+	padding-top: 4px;
+	color: #666;
+}
+
+div.SearchMethod input
+{
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+	top: 3px;
+	margin-left: 4px;
+}
+
+legend.SearchTypes
+{
+	font-size: 13px;
+	font-family: Tahoma,Verdana;
+}
+
+span.SearchTypes
+{
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	margin-right: 4px;
+}
+
+input.SearchField
+{
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	border: solid 1px #bbb;
+	border-color: #bbb #ddd #ddd #bbb;
+	padding: 3px;
+	width: 200px;
+}
+
+input.SearchButton
+{
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	color: #3080CB;
+	border: solid 1px #ddd;
+	background-color: #eee;
+	background-image: url('../grafik/ButtonBG.gif');
+	margin: 4px 0px 0px 6px;
+	height: 22px;
+	cursor: pointer;
+}
+
+input.SearchButton:hover
+{
+	background-image: url('../grafik/ButtonBGHover.gif');
+}
+
+
+
+/*           Results            */
+
+
+div.SearchResultBox {
+	margin-top: 15px;
+}
+
+
+div.SearchResultHeader {
+	padding: 4px 6px 4px 6px;
+	height: 15px;
+	color: white;
+	background-color: #459EE0;
+	border-bottom: solid 4px #80C9FF;
+	}
+	
+span.SearchResultHeaderTitle {
+	color: #fff;
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	float: left;
+}
+
+span.SearchResultCount {
+	float: right;
+	font-family: Tahoma,Verdana;
+	color: #fff;
+	font-size: 9pt;
+}
+
+div.SearchResult {
+	padding: 3px 5px 3px 5px;
+	background-color: #80C9FF;
+}
+
+div.SearchResultTitle {
+	text-align: left;
+	padding: 2px;
+	font-family: Tahoma,Verdana;
+	color: #3080CB;
+	font-size: 12px;
+	height: 14px;
+	font-weight: bold;
+	}
+
+div.SearchResultSummary {
+	text-align: left;
+	padding: 2px;
+	font-family: Tahoma,Verdana,sans-serif;
+	color: #555;
+	font-size: 9pt;
+	padding-left: 20px;
+	}
+	
+div.SearchResultNote {
+	text-align: left;
+	padding: 2px;
+	font-family: Tahoma,Verdana;
+	font-size: 8pt;
+	color: #666;
+	}
+	
+span.SearchResultTitle {
+	float: left;
+	}
+span.SearchResultProps {
+	color: #666;
+	font-family: Tahoma,Verdana;
+	font-size: 9px;
+	float: right;
+	font-weight: normal;
+	}
+	
+div.SearchResultProperty {
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	padding-top: 2px;
+}
+span.SearchResultPropertyLabel {
+	font-weight: bold;
+	color: #555;
+}
+span.SearchResultPropertyExtra {
+	font-style: italic;
+	font-size: 8pt;
+}
+td.SearchResultPreview {
+	padding: 5px 10px 5px 2px;
+	border-right: solid 2px white;
+	width: 140px;
+}
+
+strong.SearchHighlight {
+	color: #74ae04;
+	margin: 0 1px 0 1px;
+	letter-spacing: 1px;
+	}
+	
+
+
+
+/*             Links          */
+
+span.SearchResultLink {
+	font-weight: bold;
+	color: #e97e00;
+	margin-right: 2px;
+}
+
+a.SearchResultTitle {
+	float: left;
+	font-family: Tahoma,Verdana;
+	font-size: 9pt;
+	color: #3366ff;
+	text-decoration: none;
+	border-bottom: solid 1px #A9D61D;
+}
+
+a.SearchResultTitle:hover {
+	color: #0000aa;
+	border-bottom-color: #3366ff;
+}
+
+div.SearchResultLinks {
+	text-align: left;
+	padding: 2px;
+}
+
+a.SearchResultLink, div.SearchResultProperty a {
+	font-family: Tahoma,Verdana;
+	font-size: 9pt;
+	color: #3366ff;
+	text-decoration: none;
+	border-bottom: solid 1px #A9D61D;
+}
+
+a.SearchResultLink:hover, div.SearchResultProperty a:hover {
+	color: #0000aa;
+	border-bottom-color: #3366ff;
+}

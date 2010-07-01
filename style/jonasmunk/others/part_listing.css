@@ -1,0 +1,30 @@
+.PartListing
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	padding: 5px 0 5px 0;
+}
+
+.PartListing ul,.PartListing ol
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.PartListing li
+{
+	color: #3080CB;
+	margin-bottom: 10px;
+}
+
+.PartListing li span
+{
+	color: #333;	
+}
+
+.PartListing li span span
+{
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	color: #74ae04;
+	font-size: 11pt;
+}

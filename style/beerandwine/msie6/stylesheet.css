@@ -1,0 +1,106 @@
+body {background-color: #C7AD5F; padding: 10px 20px 20px 20px;}	
+
+td.content {
+	background-color: white;
+	border-top: solid 1px #DAA832;
+	padding: 0px 10px 10px 10px;
+}
+
+td.bar {
+	padding: 1px 2px 0px 0px;
+}
+
+a.bar {
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-size: 14px;
+	color: #7F4000;
+	display: block;
+	text-decoration: none;
+	float: left;
+	padding: 1px 5px 2px 5px;
+	margin-left: 2px;
+	height: 18px;
+	background-color: #FCF7BE;
+	border: solid 1px #C2AE70;
+}
+
+a.bar:hover {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+}
+
+a.bar_selected {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+}
+
+a.bar_hilited {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+}
+
+td.menu {
+}
+
+a.menu {
+	display: block;
+	font-size: 12px;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	color: white;
+	text-decoration: none;
+	padding: 1px 2px 1px 6px;
+	}
+
+a.menuSmall {
+	display: block;
+	font-size: 10px;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	color: white;
+	text-decoration: none;
+	padding: 1px 2px 1px 6px;
+	}
+
+a.menu_selected {
+	text-decoration: underline;
+	}
+	
+a.menu_hilited {
+	}
+	
+a.menu:hover {
+	text-decoration: underline;
+	}
+
+
+a.print {
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-style: italic;
+	font-size: 11px;
+	color: #666;
+	text-decoration: none;
+	margin-top: 5px;
+}
+
+a.print:hover {
+	text-decoration: underline;
+}
+
+input.FrameSearchButton {
+	font-family: Verdana;
+	font-size: 12px;
+	border-width: solid 1px #aaf;
+	background-color: #cdf;
+	margin: 0px;
+}
+
+input.FrameSearchField {
+	font-size: 10px;
+	margin-right: 1px;
+	margin-top: 1px;
+	width: 80px;
+	border-width: 0px;
+	background-color: transparent;
+}

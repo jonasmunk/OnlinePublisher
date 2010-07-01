@@ -1,0 +1,63 @@
+@import url('../../../In2iGui/css/common.css');
+@import url('../../../In2iGui/css/imageviewer.css');
+
+.productlisting .product
+{
+	overflow: hidden;
+	padding-top: 10px;
+	font-size: 10pt;
+}
+
+.productlisting dl dt
+{
+	float: left;
+	font-weight: bold;
+	margin-right: 8px;
+}
+
+.productlisting .list .product
+{
+	border-top: 1px solid #ddd;
+}
+
+.productlisting img
+{
+	margin: 0px 0px 10px 10px;
+}
+
+/***************************** Offer ***************************/
+
+.productlisting .offer h2
+{
+	font-size: 13pt;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.productlisting .offer th
+{
+	text-align: right;
+}
+
+.productlisting .offer label
+{
+	font-size: 10pt;
+}
+
+.productlisting .offer input.submit
+{
+	float: right;
+	margin-top: 10px;
+}
+
+.productlisting .offer .error
+{
+	font-size: 10pt;
+	color: red;
+}
+
+.productlisting .offer .success
+{
+	font-size: 10pt;
+	color: green;
+}

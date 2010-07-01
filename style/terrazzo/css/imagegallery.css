@@ -1,0 +1,34 @@
+@import url('../../../In2iGui/css/common.css');
+@import url('../../../In2iGui/css/imageviewer.css');
+
+.imagegallery
+{
+}
+
+.imagegallery h1
+{
+	margin-bottom: 10px;
+}
+	
+.imagegallery p
+{
+	margin-bottom: 10px;
+}
+
+.imagegallery .image
+{
+	float: left;
+	margin: 0px 20px 20px 0px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.imagegallery .image div.title
+{
+	position: absolute;
+	background: #333;
+	color: #fff;
+	font-size: 10px;
+	padding: 1px 3px;
+	font-family: Verdana, Geneva, sans-serif;
+}

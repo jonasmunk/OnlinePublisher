@@ -1,0 +1,511 @@
+/********************* Common *******************/
+	
+a.common
+{
+	color: #ddd;
+}
+
+a.common span
+{
+	color: #3366ff;
+}
+	
+a.common:hover, a.common:hover span
+{
+	color: #0000aa;
+}
+
+h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
+{
+	margin: 0px;
+	color: #3080CB;
+	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: normal;
+}
+
+p.common, ul.common
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-size: 9pt;
+	line-height: 160%;
+	text-align: justify;
+}
+
+.clear
+{
+	clear: both;
+}
+
+/********************** Base ***********************/
+
+
+img
+{
+	border: none;
+}
+
+body
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
+	padding: 0px;
+	margin: 0px;
+	background: #36507d;
+}
+
+body,html
+{
+	height: 100%;
+}
+
+form
+{
+	margin: 0px;
+}
+
+.root
+{
+	margin: 0px auto;
+	width: 908px;
+	min-height: 100%;
+	position: relative;
+	_left: 50%;
+	_margin-left: -459px;
+	background: url('../gfx/bg2.png') top left repeat-y;
+}
+
+.root_sidebar
+{
+	background: url('../gfx/bg_sidebar.png') top left repeat-y;
+}
+
+.base
+{
+	padding-bottom: 140px;
+	width: 100%;
+}
+
+.head
+{
+	background: #36507d;
+	padding: 10px 0px 5px;
+}
+
+
+
+.bar
+{
+	height: 54px;
+	background: url('../gfx/top_bg.png') top left repeat-x;
+	margin: 0px auto;
+	width: 904px;
+	margin-top: 0px;
+}
+.bar .bar
+{
+	height: 54px;
+	background: url('../gfx/top_right.png') top right no-repeat;
+	margin: 0px;
+}
+
+.bar .bar .bar
+{
+	background: url('../gfx/top_left.png') top left no-repeat;
+}
+
+.bar img
+{
+	width: 82px;
+	height: 24px;
+	margin-top: 10px;
+}
+
+/***************** Horizontal navigation *************/
+
+
+ul.navigation
+{
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	padding-left: 15px;
+	display: block;
+	overflow: hidden;
+	height: 54px;
+}
+
+ul.navigation li
+{
+	float: left;
+	list-style: none;
+	_width: 1%;
+	height: 54px;
+}
+
+ul.navigation li a
+{
+	display: block;
+	color: #333;
+	text-decoration: none;
+	font-size: 13pt;
+	padding: 0px 6px;
+	height: 52px;
+	line-height: 52px;
+}
+ul.navigation li a:hover
+{
+	text-decoration: underline;
+}
+
+ul.navigation li.selected a
+{
+	color: #3080CB;
+}
+
+/********************** Poster *********************/
+
+#poster
+{
+	width: 900px;
+	height: 310px;
+	margin-left: 4px;
+	background: url('../gfx/bg.png');
+	cursor: pointer;
+}
+#poster .left
+{
+	float: left;
+	height: 310px;
+	width: 450px;
+	overflow: hidden;
+}
+
+#poster .right
+{
+	float: left;
+	height: 310px;
+	width: 450px;
+	overflow: hidden;
+}
+
+#poster .left div
+{
+	width: 900px;
+	height: 310px;
+	background: 200px 0px no-repeat;
+}
+#poster .right div
+{
+	width: 900px;
+	height: 310px;
+	background: 450px 0px no-repeat;
+}
+
+#poster_loader
+{
+	background: #000;
+	color:#FFFFFF;
+	left: 50%;
+	margin-left: -25px;
+	padding: 2px 5px;
+	position: absolute;
+	text-align: center;
+	top: 200px;
+	width: 50px;
+}
+
+
+/********************** Layout *********************/
+
+.top
+{
+	padding-top: 5px;
+	height: 20px;
+	padding-bottom: 5px;
+}
+
+.brand
+{
+	background: url('../gfx/logo.png') center left no-repeat;
+	height: 60px;
+}
+
+.content_top
+{
+	background: url('../gfx/bg_top.png') left top repeat-x;
+	height: 4px;
+	font-size: 0px;
+}
+
+.content_top div
+{
+	background: url('../gfx/bg_top.png') left -4px no-repeat;
+	height: 4px;
+	font-size: 0px;
+}
+
+.content_top div div
+{
+	background: url('../gfx/bg_top.png') right -8px no-repeat;
+}
+
+.content
+{
+	padding: 15px 10px 10px 20px;
+	_width: 100%;
+}
+
+.sidebar
+{
+	width: 170px;
+	padding: 0px 10px 0px 10px;
+	_width: 190px;
+	float: right;
+	font-size: 11pt;
+}
+
+.content_sidebar
+{
+}
+
+.content_sidebar .inner_content
+{
+	margin-right: 210px;
+	_width: 100%;
+}
+
+.side_block
+{
+	margin-bottom: 20px;
+}
+.side_block .title
+{
+	color: #bbb;
+}
+
+/****************** Links ********************/
+
+.links_top
+{
+	display: block;
+	color: #ddd;
+	position: absolute;
+	text-align: right;
+	display: block;
+	z-index: 1;
+	font-size: 10pt;
+	width: 100%;
+}
+
+.links_top div
+{
+}
+
+.footer
+{
+	margin: 0px auto;
+	width: 908px;
+	_left: 50%;
+	_margin-left: -459px;
+	background: #ebebe9;
+	color: #ddd;
+	text-align: right;
+	height: 140px;
+	position: relative;
+	margin-top: -80px;
+	background: #36507d url('../gfx/bg_footer.png') top center repeat-y;;
+}
+
+.footer .text
+{
+	float: left;
+	color: #fff;
+	margin: 10px 20px;
+	font-size: 9pt;
+}
+
+.footer .links
+{
+	float: right;
+	margin: 10px 20px;
+	font-size: 9pt;
+}
+
+.footer .links a
+{
+	color: #fff;
+	text-decoration: none;
+}
+
+.footer .links a:hover
+{
+	color: #fff;
+	text-decoration: underline;
+}
+
+
+
+
+/************************* User status ***********************/
+
+
+.userstatus
+{
+	color: #333;
+}
+
+
+/********************** Navigation *******************/
+
+
+a.navigation
+{
+	display: block;
+	font-size: 13px;
+	color: #122f3f;
+	text-decoration: none;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+a.navigation:hover span
+{
+	text-decoration: underline;
+}
+
+a.navigation_sub
+{
+	font-size: 11px;
+	color: #3080CB;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+a.navigation_sub:hover
+{
+	text-decoration: underline;
+}
+
+div.navigation span
+{
+	color: #3080CB;
+}
+
+a.navigation_selected
+{
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+/************************** Search *********************/
+
+form.search
+{
+	background: url('../gfx/search_bg.png') top left repeat-x;
+	margin-right: 13px;
+	_margin-right: 7px;
+	margin-top: 16px;
+	float: right;
+	height: 22px;
+	font-size: 0px;
+}
+
+form.search div
+{
+	background: url('../gfx/search_left.png') top left no-repeat;
+	height: 22px;
+	_width: 180px;
+}
+
+form.search div div
+{
+	background: url('../gfx/search_right.png') top right no-repeat;
+	padding-left: 8px;
+}
+
+form.search input.text
+{
+	border: none;
+	background: none;
+	padding-top: 3px;
+	font-size: 9pt;
+	color: #999;
+	width: 175px;
+	font: Verdana, tahoma,sans-serif;
+}
+
+form.search input.text:focus
+{
+	color: #333;
+}
+
+form.search .submit
+{
+	position: absolute;
+	top: 0px;
+	left: -1000px;
+	width: 1px;
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+/* ======================== News ==================== */
+
+
+div.news
+{
+	padding: 4px 0px 8px 0px;
+}
+
+div.news .title
+{
+	font-size: 9pt;
+	color: #3080CB;
+	font-weight: normal;
+	padding-bottom: 3px;
+}
+
+div.news .note
+{
+	color:#8899AA;
+	font-size:8pt;
+	line-height:10pt;
+	max-height:54px;
+	overflow:hidden;
+}
+
+div.news:hover div.note
+{
+	max-height: 100%;
+	overflow: visible;
+	color: #516D8C;
+}
+
+div.news span.date
+{
+	font-weight: normal;
+	color: #bbb;
+	float: right;
+	font-size: 15pt;
+	padding-left: 4px;
+	line-height: 20pt;
+}
+
+div.news .links
+{
+	text-align: right;
+	font-size: 8pt;
+	margin-top: 3px;
+}

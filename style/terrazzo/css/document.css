@@ -1,0 +1,27 @@
+@import url("parts.css");
+
+td.document_column
+{
+	padding-left: 10px;
+}
+
+td.document_column_first
+{
+	padding-left: 0px;
+}
+
+div.document_section_text
+{
+	padding-bottom: 10px;
+}
+
+.document_section_header {}
+.document_section_header_1 { padding-bottom: 20px; }
+.document_section_header_2 { padding-bottom: 5px; padding-top: 15px; }
+.document_section_header_3 { padding-bottom: 5px; padding-top: 10px; }
+.document_section_header_4 { padding-bottom: 5px; padding-top: 10px; }
+.document_section_header_5 { padding-bottom: 5px; padding-top: 10px; }
+.document_section_header_6 { padding-bottom: 5px; padding-top: 10px; }
+
+div.document_section_news {padding-bottom: 10px;}
+.part-section-news{padding-bottom: 10px;}

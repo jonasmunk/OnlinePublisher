@@ -1,0 +1,159 @@
+body {background-color: #C7AD5F; padding: 10px 20px 20px 20px;}	
+
+td.content {
+	background-color: white;
+	padding: 5px 20px 5px 15px;
+}
+
+td.bar {
+	padding: 1px 2px 0px 0px;
+}
+
+a.bar {
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-size: 14px;
+	color: #7F4000;
+	display: block;
+	text-decoration: none;
+	float: left;
+	padding: 2px 5px 0px 5px;
+	margin-left: 2px;
+	height: 18px;
+	background-color: #FCF7BE;
+	border: solid 1px #C2AE70;
+}
+
+a.bar:hover {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+}
+
+a.bar_selected {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+}
+
+a.bar_hilited {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+}
+
+td.menu {
+	width: 140px;
+}
+
+td.menuBox {
+	padding-right: 10px;
+	padding-left: 3px;
+	padding-top: 6px;
+}
+
+a.menu {
+	margin: 1px 0 1px 0;
+	display: block;
+	font-size: 12px;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	color: #7F4000;
+	text-decoration: none;
+	padding: 1px 1px 1px 2px;
+	background-color: #FCF7BE;
+	border: solid 1px #C2AE70;
+	}
+
+a.menuSmall {
+	display: block;
+	font-size: 11px;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	color: #7F4000;
+	text-decoration: none;
+	padding: 1px 2px 1px 6px;
+	background-color: #FCF7BE;
+	border: solid 1px #C2AE70;
+	}
+
+a.menu_selected {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+	}
+	
+a.menu_hilited {
+	color: #000;
+	}
+	
+a.menu:hover {
+	color: #000;
+	background-color: #EAE4A2;
+	border-color: #867657;
+	}
+
+
+a.print {
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-style: italic;
+	font-size: 11px;
+	color: #666;
+	text-decoration: none;
+	margin-top: 5px;
+}
+
+a.print:hover {
+	text-decoration: underline;
+}
+
+input.FrameSearchButton {
+	font-family: Verdana;
+	font-size: 12px;
+	border-width: solid 1px #aaf;
+	background-color: #cdf;
+	margin: 0px;
+}
+
+input.FrameSearchField {
+	font-size: 10px;
+	margin-right: 1px;
+	margin-top: 1px;
+	width: 80px;
+	border-width: 0px;
+	background-color: transparent;
+}
+
+span.FrameLinksTop {
+	float: right;
+	font-family: Verdana;
+	font-size: 10px;
+	margin-top: 10px;
+	margin-right: 8px;
+	color: #f7eD9F;
+}
+
+span.FrameLinksBottom {
+	float: right;
+	font-family: Verdana;
+	font-size: 10px;
+	margin-top: 1px;
+	margin-right: 3px;
+	color: #f7eD9F;
+}
+
+a.FrameLink {
+	color: #f7eD9F;
+	text-decoration: none;
+}
+
+a.FrameLink:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+span.FrameTextBottom {
+	float: left;
+	font-family: Verdana;
+	font-size: 10px;
+	margin-top: 1px;
+	margin-left: 3px;
+	color: #f7eD9F;
+}

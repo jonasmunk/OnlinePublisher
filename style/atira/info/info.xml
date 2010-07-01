@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<design>
+	<name>Atira</name>
+	<description>Design til atira.dk</description>
+	<parameters>
+		<parameter name="Variant" key="variant" type="options">
+			<option name="Nyhed" value="news"/>
+		</parameter>
+	</parameters>
+</design>

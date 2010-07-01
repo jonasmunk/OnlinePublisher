@@ -1,0 +1,45 @@
+div.PartPersonProperty
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 9pt;
+	margin: 0px;
+	padding: 0px;
+	color: #444;
+}
+
+div.PartPersonName
+{
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	font-size: 10.5pt;
+	font-weight: bold;
+	color: #3080CB;
+}
+
+div.PartPersonAddress {
+	font-style: italic;
+}
+
+div.PartPersonProperty a {
+	color: #3366ff;
+	text-decoration: none;
+	border-bottom: solid 1px #A9D61D;
+	}
+
+div.PartPersonProperty a:hover {
+	color: #0000aa;
+	border-bottom-color: #3366ff;
+}
+
+span.PartPersonExtra {
+	font-size: 8pt;
+	color: #888;
+}
+
+span.PartPersonLabel {
+	font-weight: bold;
+}
+
+img.PartPerson {
+	border: 0px;
+	margin: 3px 4px 0 0;
+}

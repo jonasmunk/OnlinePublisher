@@ -1,0 +1,47 @@
+.part-section-richtext
+{
+	padding: 0px;
+	margin: 0px;
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10.5pt;
+	color: #333;
+}
+
+.part-section-richtext p
+{
+	margin: 0px 0px 5px 0px;
+	line-height: 160%;
+}
+
+.part-section-richtext a
+{
+	color: #3366ff;
+	text-decoration: none;
+	border-bottom: solid 1px #A9D61D;
+}
+
+.part-section-richtext a:hover
+{
+	color: #0000aa;
+	border-bottom-color: #3366ff;
+}
+
+.part-section-richtext h1,
+.part-section-richtext h2,
+.part-section-richtext h3,
+.part-section-richtext h4,
+.part-section-richtext h5,
+.part-section-richtext h6
+{
+	margin: 0px;
+	color: #3080CB;
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	font-weight: normal;
+}
+
+.part-section-richtext h1 { font-size: 24pt; margin-bottom: 20px; }
+.part-section-richtext h2 { font-size: 21pt; margin-bottom: 15px; }
+.part-section-richtext h3 { font-size: 18pt; margin-bottom: 10px; }
+.part-section-richtext h4 { font-size: 16pt; margin-bottom: 10px; }
+.part-section-richtext h5 { font-size: 14pt; margin-bottom: 10px; }
+.part-section-richtext h6 { font-size: 13pt; margin-bottom: 10px; }

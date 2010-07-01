@@ -1,0 +1,33 @@
+.part-section-listing { padding-bottom: 5px; padding-top: 5px;}
+
+ul.Part-listing, ol.Part-listing
+{
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+textarea.Part-listing
+{
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	margin: 0px;
+	width: 100%;
+	height: 200px;
+}
+
+.part-section-listing li
+{
+	margin-bottom: 10px;
+}
+
+.part-section-listing li span
+{
+}
+
+.part-section-listing li span span
+{
+	font-weight: bold;
+	color: #3A497A;
+}

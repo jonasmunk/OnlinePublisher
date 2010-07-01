@@ -1,0 +1,103 @@
+@import url("part_text.css");
+@import url("part_news.css");
+@import url("part_person.css");
+@import url("part_html.css");
+@import url("part_header.css");
+@import url("part_listing.css");
+@import url("part_richtext.css");
+@import url("part_horizontalrule.css");
+
+body
+{
+	background: #F3F2E4;
+}
+
+/* =========================== Links ======================= */
+
+a.TextLink
+{
+	color: #3366ff;
+	text-decoration: none;
+	border-bottom: solid 1px #A9D61D;
+}
+	
+a.TextLink:hover
+{
+	color: #0000aa;
+	border-bottom-color: #3366ff;
+}
+
+
+
+
+
+
+
+/* ===================== Deprecated junk ================== */
+
+/* Header */
+textarea.HeaderEditor{font-weight: normal; font-family: Tahoma,Verdana; color: #73A2C9; margin: 0px;}
+textarea.HeaderEditor1{font-size: 24pt;}
+textarea.HeaderEditor2{font-size: 18pt;}
+textarea.HeaderEditor3{font-size: 14pt;}
+textarea.HeaderEditor4{font-size: 12pt;}
+textarea.HeaderEditor5{font-size: 10pt;}
+textarea.HeaderEditor6{font-size: 9pt;}
+td.sectionTDheader1{padding-bottom: 20px;}
+td.sectionTDheader2 {padding-bottom: 15px; padding-top: 5px;}
+td.sectionTDheader3 {padding-bottom: 10px; padding-top: 5px;}
+td.sectionTDheader4 {padding-bottom: 10px; padding-top: 5px;}
+td.sectionTDheader5 {padding-bottom: 10px; padding-top: 5px;}
+td.sectionTDheader6 {padding-bottom: 10px; padding-top: 5px;}
+
+.HeaderDisplay{font-weight: normal; font-family: Tahoma,Verdana; color: #73A2C9; margin: 0px;}
+h1.HeaderDisplay{font-size: 24pt; border-bottom: solid 1px #ddd; font-weight: normal;}
+h2.HeaderDisplay{font-size: 18pt;}
+h3.HeaderDisplay{font-size: 14pt;}
+h4.HeaderDisplay{font-size: 12pt;}
+h5.HeaderDisplay{font-size: 10pt;}
+h6.HeaderDisplay{font-size: 9pt;}
+
+
+
+/* Text */
+
+textarea.TextEditor, div.TextDisplay
+{
+	font-family: Tahoma,Verdana;
+	font-size: 10.5pt;
+	line-height: 160%;
+	text-align: justify;
+}
+
+td.sectionTDtext{
+	padding-bottom: 10px;
+}
+
+/* ======================== List ==================== */
+
+textarea.ListEditor {
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+}
+
+div.ListDisplay{
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+}
+
+.List {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-family: Tahoma,Verdana;
+}
+
+li.ListItem {
+	margin-bottom: 10px;
+}
+
+span.ListItemFirst {
+	font-weight: bold; color: #99CC33;
+}
+
+td.sectionTDnews{padding-bottom: 10px;}

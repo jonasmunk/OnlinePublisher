@@ -1,0 +1,118 @@
+h1.Search {
+	margin: 0 0 20px 0;
+	color: #7F4000;
+	font-weight: normal;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-variant: small-caps;
+	}
+
+p.Search {
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-size: 10pt;
+	margin: 0px 0px 20px 0px;
+	}
+
+#SearchBox {
+	background-color: #FCF7BE;
+	border: solid 1px #C2AE70;
+	padding: 5px;
+}
+fieldset.SearchTypes {
+	display: inline;
+	border: solid 1px #C2AE70;
+	width: 120px;
+	padding: 4px;
+	margin-left: 10px;
+	float: right;
+}
+div.SearchMethod {
+	padding-top: 2px;
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+}
+legend.SearchTypes {
+	font-size: 11px;
+	font-family: Tahoma,Verdana;
+}
+span.SearchTypes {
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	margin-right: 2px;
+}
+input.SearchField {
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	border: solid 1px #bbb;
+	padding: 3px;
+	width: 200px;
+}
+input.SearchButton {
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	border: solid 1px #bbb;
+	padding: 2px;
+	margin-left: 3px;
+}
+form.Search {
+	margin: 0px;
+}
+div.SearchResultBox {
+	padding: 3px 3px 0px 3px;
+	margin-top: 20px;
+}
+
+div.SearchResult {
+	padding: 1px 1px 0px 1px;
+	margin-bottom: 3px;
+	margin-top: 3px;
+	background-color: #FCF7BE;
+}
+
+div.SearchResultHeader {
+	text-align: center;
+	padding: 2px;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	color: #7F4000;
+	font-size: 11pt;
+	border-bottom: double 3px #C2AE70;
+	}
+div.SearchResultTitle {
+	text-align: left;
+	padding: 2px;
+	color: #7F4000;
+	font-weight: normal;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-variant: small-caps;
+	font-size: 13pt;
+	height: 16px;
+	}
+div.SearchResultSummary {
+	text-align: left;
+	padding: 2px;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	color: #555;
+	font-size: 10px;
+	padding-left: 20px;
+	}
+div.SearchResultDescription {
+	text-align: left;
+	padding: 2px;
+	font-family: Georgia,Book Antiqua,Palatino,serif;
+	font-size: 9pt;
+	}
+a.SearchResultTitle {
+	float: left;
+	color: #7F4000;
+	}
+span.SearchResultProps {
+	color: #666;
+	font-family: Tahoma,Verdana;
+	font-size: 9px;
+	float: right;
+	}
+td.SearchResultPreview {
+	padding: 3px;
+}
+strong.SearchHighlight {
+	color: red;
+	}

@@ -1,0 +1,33 @@
+textarea.HeaderEditor{font-family: Georgia,Book Antiqua,Palatino,serif; color: #7F4000; margin: 0px;}
+textarea.HeaderEditor1{font-size: 24pt; font-variant: small-caps;}
+textarea.HeaderEditor2{font-size: 18pt;}
+textarea.HeaderEditor3{font-size: 14pt;}
+textarea.HeaderEditor4{font-size: 12pt;}
+textarea.HeaderEditor5{font-size: 10pt;}
+textarea.HeaderEditor6{font-size: 9pt;}
+td.sectionTDheader1{padding-bottom: 20px;}
+td.sectionTDheader2 {padding-bottom: 15px; padding-top: 5px;}
+td.sectionTDheader3 {padding-bottom: 10px; padding-top: 5px;}
+td.sectionTDheader4 {padding-bottom: 10px; padding-top: 5px;}
+td.sectionTDheader5 {padding-bottom: 10px; padding-top: 5px;}
+td.sectionTDheader6 {padding-bottom: 10px; padding-top: 5px;}
+
+.HeaderDisplay{font-family: Georgia,Book Antiqua,Palatino,serif; color: #7F4000; margin: 0px; font-weight: normal;}
+h1.HeaderDisplay{font-size: 24pt; font-variant: small-caps;}
+h2.HeaderDisplay{font-size: 18pt;}
+h3.HeaderDisplay{font-size: 14pt;}
+h4.HeaderDisplay{font-size: 12pt;}
+h5.HeaderDisplay{font-size: 10pt;}
+h6.HeaderDisplay{font-size: 9pt;}
+
+textarea.TextEditor{font-family: Georgia,Book Antiqua,Palatino,serif; font-size: 10pt;}
+div.TextDisplay{font-family: Georgia,Book Antiqua,Palatino,serif; font-size: 10pt;}
+
+img.ImageEditor{}
+img.ImageDisplay{}
+
+textarea.ListEditor{font-family: Georgia,Book Antiqua,Palatino,serif; font-size: 10pt;}
+div.ListDisplay{font-family: Georgia,Book Antiqua,Palatino,serif; font-size: 10pt;}
+.List {margin-top: 0px; margin-bottom: 0px; font-family: Georgia,Book Antiqua,Palatino,serif;}
+li.ListItem {margin-bottom: 10px;}
+span.ListItemFirst {font-weight: bold;}

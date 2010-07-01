@@ -1,0 +1,587 @@
+/*************** Header *************/
+
+.part_header
+{
+	color: #333;
+	font-family: Georgia,serif;
+	font-weight: normal;
+	font-style: italic;
+	margin: 0;
+}
+
+h1.part_header, textarea.part_header_1
+{
+	font-size: 20pt;
+}
+
+h2.part_header, textarea.part_header_2
+{
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+h3.part_header, textarea.part_header_3
+{
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+h4.part_header, textarea.part_header_4
+{
+	font-size:11pt;
+	font-weight: bold;
+}
+
+h5.part_header, textarea.part_header_5
+{
+	font-size:10pt;
+	font-weight: bold;
+}
+
+h6.part_header, textarea.part_header_6
+{
+	font-size:9pt;
+	font-weight: bold;
+}
+
+.part_section_header_1
+{
+	padding-bottom: 20px;
+}
+
+.part_section_header_2
+{
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+.part_section_header_3
+{
+	padding-top: 10px;
+}
+
+.part_section_header_4
+{
+	padding-top: 10px;
+}
+
+.part_section_header_5
+{
+	padding-top: 10px;
+}
+
+.part_section_header_6
+{
+	padding-top: 10px;
+}
+
+/*************** Text *************/
+
+div.part_text, textarea.part_text
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	font-size: 9pt;
+	line-height: 1.4em;
+	color: #333;
+}
+
+div.part_text p
+{
+	margin: 10px 0px 0px;
+}
+
+div.part_text p.part_text_first
+{
+	margin: 0;
+}
+
+.part_section_text
+{
+	padding-bottom: 5px;
+}
+
+/****************** Listing ***************/
+
+.part_section_listing
+{
+	padding: 10px 0px;
+}
+
+div.part_listing, textarea.part_listing
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	font-size: 9pt;
+	color: #333;
+}
+
+div.part_listing ul
+{
+	margin: 0px;
+	color: #aaa;
+}
+
+div.part_listing span
+{
+	color: #333;
+}
+
+div.part_listing li
+{
+	margin-bottom: 5px;
+}
+
+/****************** Image ******************/
+
+div.part_image
+{
+	font-size: 0;
+}
+
+div.part_image img
+{
+	border-width: 0;
+}
+
+div.part_image p
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	margin: 0px;
+	font-size: 8pt;
+	color: #999;
+}
+
+/******************** News ******************/
+
+div.part_news
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+.part_news_box_top
+{
+	background: url('../../basic/gfx/box.png') left top repeat-x;
+	height: 5px;
+	font-size: 0px;
+}
+
+.part_news_box_top div
+{
+	background: url('../../basic/gfx/box.png') left -5px no-repeat;
+	height: 5px;
+	font-size: 0px;
+}
+
+.part_news_box_top div div
+{
+	background: url('../../basic/gfx/box.png') right -10px no-repeat;
+}
+
+.part_news_box_bottom
+{
+	background: url('../../basic/gfx/box.png') left -15px repeat-x;
+	height: 5px;
+	font-size: 0px;
+}
+
+.part_news_box_bottom div
+{
+	background: url('../../basic/gfx/box.png') left -20px no-repeat;
+	height: 5px;
+	font-size: 0px;
+}
+
+.part_news_box_bottom div div
+{
+	background: url('../../basic/gfx/box.png') right -25px no-repeat;
+}
+
+.part_news_box_middle
+{
+	border: 1px solid #e1e1e1;
+	border-width: 0px 1px;
+	padding: 0px 8px;
+}
+
+.part_news_title
+{
+	font-size: 12pt;
+	color: #738fa5;
+	padding-bottom: 3px;
+}
+
+.part_news_item
+{
+	font-size: 9pt;
+	line-height: 13pt;
+	border-top: 1px solid #eee;
+	padding: 6px 0px;
+	overflow: hidden;
+}
+
+.part_news_item_title
+{
+	color: #122f3f;
+}
+
+.part_news_item_description
+{
+	color: #7894a5;
+}
+
+.part_news_item_date
+{
+	float: left;
+	font-size: 10px;
+	color: #aaa;
+}
+
+.part_news_item_links
+{
+	color: #7894a5;
+	text-align: right;
+}
+
+.part_news_item_links a
+{
+	margin-left: 2px;
+}
+
+/********************* Mailinglist *********************/
+
+div.part_mailinglist form
+{
+	margin: 0px;
+}
+
+div.part_mailinglist_subscribe
+{
+	margin-bottom: 10px;
+}
+
+div.part_mailinglist h2
+{
+	color:#000000;
+	font-family:"Tahoma","Geneva","Helvetica","Arial",sans-serif;
+	font-weight:normal;
+	margin:0;
+	font-size: 12pt;
+}
+
+div.part_mailinglist p.success, div.part_mailinglist p.error
+{
+	background:#FFF0B4 url('../../basic/gfx/message.gif') repeat-x left top;
+	border: 1px solid #F1E9B3;
+	color: #605140;
+	font-size: 10pt;
+	overflow: hidden;
+	padding: 5px 10px;
+	text-align: left;
+}
+
+div.part_mailinglist p.error
+{
+	color: #f00;
+}
+
+div.part_mailinglist p
+{
+	margin: 5px 0px 0px;
+}
+
+div.part_mailinglist label
+{
+	display: block;
+	font-size: 9pt;
+	color: #666;
+}
+
+div.part_mailinglist p.buttons
+{
+	text-align: right;
+	padding-bottom: 3px;
+}
+
+div.part_mailinglist_box_top
+{
+	font-size: 0px;
+	background: url('../../basic/gfx/input_box.png') repeat-x;
+	height: 6px;
+}
+
+div.part_mailinglist_box_top div
+{
+	background: url('../../basic/gfx/input_box.png') left -6px no-repeat;
+	height: 6px;	
+}
+
+div.part_mailinglist_box_top div div
+{
+	background: url('../../basic/gfx/input_box.png') right -12px no-repeat;
+}
+
+div.part_mailinglist_box_bottom
+{
+	font-size: 0px;
+	background: url('../../basic/gfx/input_box.png') left -18px repeat-x;
+	height: 6px;
+}
+
+div.part_mailinglist_box_bottom div
+{
+	background: url('../../basic/gfx/input_box.png') left -24px no-repeat;
+	height: 6px;	
+}
+
+div.part_mailinglist_box_bottom div div
+{
+	background: url('../../basic/gfx/input_box.png') right -30px no-repeat;
+}
+
+div.part_mailinglist_box_middle
+{
+	background: #f6f6f6 url('../../basic/gfx/input_box.png') left -36px repeat-y;
+}
+
+div.part_mailinglist_box_middle div.part_mailinglist_box_middle
+{
+	background: url('../../basic/gfx/input_box.png') right -236px repeat-y;
+	padding: 6px 12px;
+}
+
+div.part_mailinglist span.common_field
+{
+	display: block;
+	height: 24px;
+	background: url('../../basic/gfx/field.png') repeat-x;
+}
+
+div.part_mailinglist span.common_field span
+{
+	display: block;
+	height: 24px;
+	background: url('../../basic/gfx/field.png') left -24px no-repeat;
+}
+
+div.part_mailinglist span.common_field span span
+{
+	height: 24px;
+	background: url('../../basic/gfx/field.png') right -48px no-repeat;
+}
+
+div.part_mailinglist span.common_field input
+{
+	background: none;
+	font-size: 10pt;
+	width: 100%;
+	border: 0px;
+	text-indent: 2px;
+	padding: 2px 0px;
+}
+
+/************************ Image gallery ************************/
+
+div.part_imagegallery
+{
+	overflow: hidden;
+}
+
+div.part_imagegallery a
+{
+	float: left;
+	margin: 0px 10px 10px 0px;
+	text-decoration: none;
+}
+
+div.part_imagegallery_framed a
+{
+	float: left;
+	margin: 0px 10px 10px 0px;
+	border: 1px solid #DDDDDD;
+	border-bottom: 1px solid #bbb;
+	border-top: 1px solid #eee;
+	padding: 4px;
+	font-size: 0;
+	line-height: 0;
+	overflow: hidden;
+	position: relative;
+}
+
+div.part_imagegallery span
+{
+	background: #fff;
+	background: rgba(255,255,255,.5);
+	position: absolute;
+	color: #333333;
+	font-size: 10px;
+	padding: 1px 2px;
+	position: absolute;
+	line-height: 12px;
+}
+
+div.part_imagegallery img
+{
+	border: 0px;
+}
+
+/**************************** File ****************************/
+
+div.part_file
+{
+	overflow: hidden;
+	font-family: Verdana,Tahoma,sans-serif;
+}
+
+div.part_file div
+{
+	background: url('../../basic/gfx/file_bg.png') top left repeat-x;
+	height: 55px;
+	float: left;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+div.part_file div div
+{
+	background: url('../../basic/gfx/file_left.png') top left no-repeat;
+	height: 55px;
+}
+
+div.part_file div div div
+{
+	background: url('../../basic/gfx/file_right.png') top right no-repeat;
+	height: 55px;
+	padding-right: 20px;
+}
+
+div.part_file p
+{
+	margin: 0px;
+	padding-left: 60px;;
+}
+
+div.part_file p.part_file_title
+{
+	margin-top: 10px;
+	font-size: 10pt;
+}
+
+div.part_file p.part_file_info
+{
+	font-size: 10px;
+	color: #888;
+	padding-top: 2px;
+}
+
+div.part_file a
+{
+	color: #ccc;
+}
+
+div.part_file a span
+{
+	color: #004EFF;
+}
+
+div.part_file a:hover, div.part_file a:hover span
+{
+	color: #0033AA;
+}
+
+
+/************************************ Horizontal rule *****************************/
+
+hr.part_horizontalrule
+{
+	border: none;
+	border-bottom: solid 2px #ddd;
+}
+
+/*********************************** List **********************************/
+
+div.part_list_box_top
+{
+	background: url('../../basic/gfx/box.png') left top repeat-x;
+	height: 5px;
+	font-size: 0px;
+}
+
+div.part_list_box_top div
+{
+	background: url('../../basic/gfx/box.png') left -5px no-repeat;
+	height: 5px;
+	font-size: 0px;
+}
+
+div.part_list_box_top div div
+{
+	background: url('../../basic/gfx/box.png') right -10px no-repeat;
+}
+
+div.part_list_box_bottom
+{
+	background: url('../../basic/gfx/box.png') left -15px repeat-x;
+	height: 5px;
+	font-size: 0px;
+}
+
+div.part_list_box_bottom div
+{
+	background: url('../../basic/gfx/box.png') left -20px no-repeat;
+	height: 5px;
+	font-size: 0px;
+}
+
+div.part_list_box_bottom div div
+{
+	background: url('../../basic/gfx/box.png') right -25px no-repeat;
+}
+
+div.part_list_box_middle
+{
+	border: 1px solid #e1e1e1;
+	border-width: 0px 1px;
+	padding: 0px 8px;
+}
+
+div.part_list
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.part_list_item
+{
+	padding: 5px 0;
+	border-top: 1px solid #ddd;
+}
+
+div.part_list h2
+{
+	margin: 0;
+	font-size: 12pt;
+	color: #738fa5;
+	font-weight: normal;
+	padding-bottom: 3px;
+}
+
+div.part_list h3
+{
+	margin: 0;
+	font-size: 13px;
+	color: #333;
+	font-weight: normal;
+	padding-bottom: 3px;
+}
+
+p.part_list_text
+{
+	margin: 0;
+	font-size: 12px;
+	color: #333;
+}
+
+p.part_list_date
+{
+	margin: 0;
+	font-size: 11px;
+	color: #999;
+}

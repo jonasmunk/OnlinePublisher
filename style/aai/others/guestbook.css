@@ -1,0 +1,82 @@
+.GuestBook {
+	font-family: Tahoma,Verdana;
+	}
+	
+h1.GuestBook {
+	margin: 0px; 
+	color: red; 
+	border-bottom: solid 1px #ddd; 
+	font-weight: normal;
+	}
+	
+p.GuestBook {
+	font-size: 10.5pt;
+	line-height: 160%;
+	text-align: justify;
+	}
+
+table.GuestBook {
+	border: solid 1px red;
+	margin-top: 15px;
+}
+
+th.GuestBook {
+	font-size: 10pt;
+	color: white;
+	background-color: red;
+}
+
+td.GuestBook {
+	font-size: 10pt;
+	vertical-align: top;
+}
+
+td.GuestBookTime {
+	white-space: nowrap;
+}
+
+/* Link */
+
+a.GuestBook {
+	color: #8D9Cff;
+	text-decoration: none;
+	border-bottom: solid 1px #faa;
+	font-size: 11pt;
+	}
+	
+a.GuestBook:hover {
+	color: #0066FF;
+	border-bottom-color: #8D9Cff;
+}
+
+/* New item */
+
+
+table.GuestBookNewItem {
+	width: 1%;
+}
+
+th.GuestBookNewItem {
+	font-size: 10pt;
+	vertical-align: top;
+	font-family: Tahoma,Verdana;
+	text-align: right;
+	width: 70px;
+	color: red;
+}
+
+input.GuestBookName, textarea.GuestBookMessage {
+	font-size: 10pt;
+	font-family: Tahoma,Verdana;
+	width: 250px;
+	border: solid 1px grey;
+}
+
+input.GuestBookCancel, input.GuestBookSubmit {
+	border: solid 1px grey;
+	margin-left: 4px;
+}
+
+td.GuestBookButtons {
+	text-align: right;
+}

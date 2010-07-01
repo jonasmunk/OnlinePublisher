@@ -1,0 +1,11 @@
+div.sidebar
+{
+	margin: 0px;
+	margin-left: -15px;
+	padding-right: 15px;
+}
+
+div.box_body
+{
+	height: 1%;
+}

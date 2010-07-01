@@ -1,0 +1,17 @@
+.part-section-text { padding-bottom: 10px; }
+
+div.Part-text, textarea.Part-text
+{
+	font-family: 'Lucida Grande', Geneva, Tahoma, Verdana, Arial, sans-serif;
+	font-size: 10.5pt;
+	margin: 0px;
+	line-height: 160%;
+	text-align: justify;
+	color: #666;
+}
+
+textarea.Part-text
+{
+	width: 100%;
+	height: 200px;
+}

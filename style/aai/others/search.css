@@ -1,0 +1,204 @@
+h1.Search {
+	color: #3A497A;
+	margin: 0 0 15px 0;
+	font-family: Tahoma,Verdana;
+	font-weight: normal;
+	border-bottom: solid 1px #ddd;
+	}
+
+p.Search {
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	margin: 0px 0px 20px 0px;
+	}
+
+
+
+
+
+/*            Input               */
+
+
+#SearchBox {
+	background-color: #F8F8F8;
+	border: solid 1px #DEDEDE;
+	vertical-align: top;
+}
+fieldset.SearchTypes {
+	display: inline;
+	border: solid 1px #DEDEDE;
+	padding: 4px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	float: right;
+	width: 100%;
+	_width: auto;
+}
+div.SearchMethod {
+	margin-left: 5px;
+	font-size: 10px;
+	font-family: Tahoma,Verdana;
+}
+legend.SearchTypes {
+	font-size: 10px;
+	font-family: Tahoma,Verdana;
+	clear: left;
+}
+span.SearchTypes {
+	font-size: 10px;
+	font-family: Tahoma,Verdana;
+	margin-right: 4px;
+}
+input.SearchField {
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	border: solid 1px #bbb;
+	padding: 3px;
+	width: 200px;
+	height: 22px;
+	margin-left: 5px;
+}
+input.SearchButton {
+	font-size: 11px;
+	font-family: Tahoma,Verdana;
+	border: solid 1px #bbb;
+	padding: 2px;
+	margin-left: 3px;
+	background-color: eef;
+}
+form.Search {
+	margin: 0px;
+}
+
+
+
+
+/*           Results            */
+
+
+div.SearchResultBox {
+	border: solid 1px #eee;
+	padding: 3px 3px 3px 3px;
+	margin-top: 20px;
+}
+
+
+div.SearchResultHeader {
+	background-color: #eee;
+	padding: 4px;
+	height: 15px;
+	}
+	
+span.SearchResultHeaderTitle {
+	float: left;
+	font-family: Tahoma,Verdana;
+	color: #3A497A;
+	font-size: 11pt;
+}
+
+span.SearchResultCount {
+	float: right;
+	font-family: Tahoma,Verdana;
+	color: #aaa;
+	font-size: 9pt;
+}
+
+div.SearchResult {
+	border: solid 1px #eee;
+	padding: 1px 1px 0px 1px;
+	margin-top: 3px;
+}
+
+div.SearchResultTitle {
+	text-align: left;
+	background-color: #f6f6f6;
+	padding: 2px;
+	font-family: Tahoma,Verdana;
+	color: #000;
+	font-size: 12px;
+	height: 14px;
+	font-weight: bold;
+	}
+
+div.SearchResultSummary {
+	text-align: left;
+	background-color: #fefefe;
+	padding: 2px;
+	font-family: Tahoma,Verdana;
+	color: #555;
+	font-size: 10px;
+	padding-left: 20px;
+	}
+	
+div.SearchResultNote {
+	text-align: left;
+	background-color: #fefefe;
+	padding: 2px;
+	font-family: Tahoma,Verdana;
+	font-size: 11px;
+	}
+	
+span.SearchResultTitle {
+	float: left;
+	}
+span.SearchResultProps {
+	color: #666;
+	font-family: Tahoma,Verdana;
+	font-size: 9px;
+	float: right;
+	font-weight: normal;
+	}
+	
+div.SearchResultProperty {
+	font-family: Tahoma,Verdana;
+	font-size: 10pt;
+	padding-top: 2px;
+}
+span.SearchResultPropertyLabel {
+	font-weight: bold;
+	color: #555;
+}
+span.SearchResultPropertyExtra {
+	font-style: italic;
+	font-size: 8pt;
+}
+td.SearchResultPreview {
+	padding: 3px;
+}
+
+strong.SearchHighlight {
+	background-color: yellow;
+	font-weight: normal;
+	}
+	
+
+
+
+/*             Links          */
+
+
+a.SearchResultTitle {
+	float: left;
+	font-family: Tahoma,Verdana;
+	font-size: 9pt;
+	color: #0066ff;
+}
+
+a.SearchResultTitle:hover {
+	color: #0000aa;
+}
+
+div.SearchResultLinks {
+	text-align: right;
+	padding: 2px;
+}
+
+a.SearchResultLink, div.SearchResultProperty a {
+	font-family: Tahoma,Verdana;
+	font-size: 9pt;
+	color: #0066ff;
+}
+
+a.SearchResultLink:hover, div.SearchResultProperty a:hover {
+	color: #0000aa;
+}

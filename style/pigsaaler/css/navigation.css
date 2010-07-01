@@ -1,0 +1,168 @@
+/***************** Top navigation *************/
+
+
+ul.case_navigation
+{
+	margin: 0;
+	display: block;
+	padding: 0;
+	overflow: hidden;
+	cursor: default;
+	font-family: Arial;
+	font-size: 12px;
+	position: absolute;
+	left: 50%;
+	text-align: right;
+	top: 30px;
+	width: 450px;
+}
+
+ul.case_navigation li
+{
+	display: inline-block;
+	list-style: none;
+	margin-left: 5px;
+}
+
+ul.case_navigation li a
+{
+	background: url('../gfx/navigation.png') left top no-repeat;
+	display: inline-block;
+	color: #333;
+	text-decoration: none;
+	font-size: 12pt;
+	height: 37px;
+	cursor: pointer;
+}
+
+ul.case_navigation li span
+{
+	background: url('../gfx/navigation.png') right -74px no-repeat;
+	display: inline-block;
+	height: 37px;
+}
+
+ul.case_navigation li span span
+{
+	background: url('../gfx/navigation.png') left -37px repeat-x;
+	margin: 0 8px;
+	line-height: 37px;
+	padding: 0 8px;
+	color: #fff;
+}
+
+
+ul.case_navigation li a:hover
+{
+	background-position: 0 -111px;
+}
+
+ul.case_navigation li a:hover span
+{
+	background-position: right -185px;
+}
+
+ul.case_navigation li a:hover span span
+{
+	background-position: left -148px;
+}
+
+ul.case_navigation li.highlighted a, ul.case_navigation li.selected a
+{
+	background-position: 0 -222px;
+}
+
+ul.case_navigation li.highlighted a span, ul.case_navigation li.selected a span
+{
+	background-position: right -296px;
+}
+
+ul.case_navigation li.highlighted a span span, ul.case_navigation li.selected a span span
+{
+	background-position: right -259px;
+	color: #333;
+}
+
+/***************** Sub navigation *************/
+
+
+ul.case_sub_navigation
+{
+	margin: -10px 0 0 -8px;
+	padding: 0 0 10px;
+	display: block;
+	overflow: hidden;
+	height: 25px;
+	line-height: 24px;
+	list-style: none;
+	font-size: 10pt;
+	cursor: default;
+}
+
+ul.case_sub_navigation li
+{
+	float: left;
+}
+
+ul.case_sub_navigation a
+{
+	text-decoration: none;
+	color: #333;
+	height: 25px;
+	display: inline-block;
+	margin-right: 4px;
+	cursor: pointer;
+}
+
+ul.case_sub_navigation a span
+{
+	display: inline-block;
+	height: 25px;
+	padding: 0 8px;
+}
+
+ul.case_sub_navigation a.selected
+{
+	font-weight: bold;
+}
+
+/***************** Side navigation *************/
+
+ul.case_side_navigation
+{
+	list-style: none;
+	margin: 0 0 30px 15px;
+	padding: 0px;
+	font-size: 13px;
+	line-height: 22px;
+}
+
+ul.case_side_navigation a
+{
+	color: #333;
+	text-decoration: none;
+	padding: 1px 5px;
+}
+
+ul.case_side_navigation a:hover
+{
+	color: #0169b2;
+	text-decoration: underline;
+}
+
+ul.case_side_navigation a.selected
+{
+	color: #0072BC;
+	font-weight: bold;
+}
+
+ul.case_side_navigation a.highlighted
+{
+	font-weight: bold;
+}
+
+ul.case_side_navigation ul
+{
+	list-style: none;
+	padding-left: 15px;
+}

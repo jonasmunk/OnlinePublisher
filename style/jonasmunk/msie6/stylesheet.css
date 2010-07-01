@@ -1,0 +1,24 @@
+div.Frame {
+	margin-left: 0px;
+	position: relative;
+	left: 10%;
+}
+
+
+ul.FrameTopMenu {
+	font-size: 11pt;
+}
+
+div.FrameMiddle {
+	width: 100%;
+}
+
+div.FrameContent {
+	width: 100%;
+	height: 400px;
+}
+
+div.FrameSideBar
+{
+	height: 400px;
+}

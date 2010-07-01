@@ -1,0 +1,62 @@
+td.FrontPageCell {
+}
+
+div.FrontPageCellTitle {
+	border-bottom: solid 1px #eee;
+	font-size: 12pt;
+	font-weight: bold;
+	color: #172984;
+	font-family: Helvetica,Tahoma,Verdana,sans-serif;
+	padding: 8px 3px 2px 4px;
+}
+
+td.FrontPageCellBox {
+	border: solid 1px #e4ebee;
+	background-color: #f9f9f9;
+	padding: 1px 4px 4px 4px;
+}
+
+div.FrontPageCellBoxTitle {
+	border-top: solid 2px #fefefe;
+	font-size: 12pt;
+	font-weight: bold;
+	color: #172984;
+	font-family: Helvetica,Tahoma,Verdana,sans-serif;
+	padding: 8px 3px 4px 4px;
+	text-align: left;
+}
+
+div.FrontPageSection {
+}
+
+
+/************ Text-Part **************/
+
+div.FrontPageSection .PartText {
+	font-size: 10pt;
+	font-family: Helvetica,Tahoma,Verdana,sans-serif;
+	padding: 4px;
+}
+
+/************ Posters ****************/
+
+a.Poster {
+	color: white;
+	font-family: Helvetica,Tahoma,Verdana,sans-serif;
+	height: 87px;
+	padding-top: 5px;
+	_height: 92px;
+	width: auto;
+	_width: 100%;
+	display: block;
+	text-decoration: none;
+	_padding: 4px;
+	padding-right: 50px;
+}
+
+a.Poster strong {
+	font-size: 11pt;
+}
+a.Poster span {
+	font-size: 10px;
+}

@@ -1,0 +1,38 @@
+@import url("part_news.css");
+@import url("part_person.css");
+@import url("part_richtext.css");
+@import url("part_horizontalrule.css");
+@import url("part_listing.css");
+@import url("part_header.css");
+@import url("part_text.css");
+
+
+.DocumentSectionPart-header {}
+.DocumentSectionPart-header-1 { padding-bottom: 20px; }
+.DocumentSectionPart-header-2 { padding-bottom: 15px; padding-top: 5px; }
+.DocumentSectionPart-header-3 { padding-bottom: 10px; padding-top: 5px; }
+.DocumentSectionPart-header-4 { padding-bottom: 10px; padding-top: 5px; }
+.DocumentSectionPart-header-5 { padding-bottom: 10px; padding-top: 5px; }
+.DocumentSectionPart-header-6 { padding-bottom: 10px; padding-top: 5px; }
+
+/* Text */
+/* ========================= Text ====================== */
+
+
+
+div.DocumentSectionPart-text
+{
+	padding-bottom: 10px;
+}
+
+/* List */
+
+ul.DocumentList {margin-top: 0px; margin-bottom: 0px; font-family: Georgia,Book Antiqua,Palatino,serif; font-size: 10pt;}
+ol.DocumentList {margin-top: 0px; margin-bottom: 0px; font-family: Georgia,Book Antiqua,Palatino,serif; font-size: 10pt;}
+li.DocumentList {margin-bottom: 10px;}
+span.DocumentList {font-weight: bold}
+
+/* Link */
+
+a.DocumentLink {color: #7F4000;}
+a.DocumentLink:hover {color: blue;}

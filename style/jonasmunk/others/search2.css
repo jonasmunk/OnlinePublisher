@@ -1,0 +1,119 @@
+h1.Search {
+	margin: 0 0 20px 0;
+	color: #9FDD56;
+	font-family: 'Lucida Grande', Geneva, Tahoma, Verdana, Arial, sans-serif;
+	font-weight: normal;
+	}
+
+p.Search {
+	font-family: 'Lucida Grande', Geneva, Tahoma, Verdana, Arial, sans-serif;
+	font-size: 10.5pt;
+	line-height: 160%;
+	text-align: justify;
+	color: #666;
+	}
+
+#SearchBox {
+	background-color: #F8F8F8;
+	border: solid 1px #DEDEDE;
+	padding: 5px;
+}
+fieldset.SearchTypes {
+	display: inline;
+	border: solid 1px #DEDEDE;
+	width: 120px;
+	padding: 4px;
+	margin-left: 10px;
+	float: right;
+}
+div.SearchMethod {
+	font-size: 10px;
+	font-family: Tahoma,Verdana;
+}
+legend.SearchTypes {
+	font-size: 10px;
+	font-family: Tahoma,Verdana;
+}
+span.SearchTypes {
+	font-size: 10px;
+	font-family: Tahoma,Verdana;
+}
+input.SearchField {
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	border: solid 1px #bbb;
+	padding: 3px;
+	width: 200px;
+}
+input.SearchButton {
+	font-size: 12px;
+	font-family: Tahoma,Verdana;
+	border: solid 1px #bbb;
+	padding: 2px;
+	margin-left: 3px;
+}
+form.Search {
+	margin: 0px;
+}
+div.SearchResultBox {
+	margin-top: 20px;
+}
+
+div.SearchResultHeader {
+	margin-top: 15px;
+	padding: 3px 0 3px 5px;
+	font-size: 12pt;
+	color: white;
+	background-color: #459EE0;
+	border-bottom: solid 4px #80C9FF;
+	}
+
+div.SearchResult {
+	background-color: #80C9FF;
+	padding: 1px 1px 0px 1px;
+}
+
+div.SearchResultTitle {
+	text-align: left;
+	padding-right: 4px;
+	padding-left: 4px;
+	font-size: 11pt;
+	clear: left;
+	float: left;
+	}
+a.SearchResultTitle {
+	text-decoration: none;
+	color: #fff;
+	border-bottom: solid 1px #aaeeFF;
+	float: left;
+}
+
+a.SearchResultTitle:hover {
+	color: #0033FF;
+	border-bottom-color: #8D9Cff;
+}
+div.SearchResultSummary {
+	text-align: left;
+	padding: 2px;
+	font-family: Tahoma,Verdana;
+	color: #169;
+	font-size: 10px;
+	padding-left: 20px;
+	}
+div.SearchResultDescription {
+	text-align: left;
+	padding: 2px;
+	font-family: Tahoma,Verdana;
+	font-size: 11px;
+	}
+span.SearchResultProps {
+	color: #fff;
+	font-size: 9pt;
+	float: right;
+	}
+td.SearchResultPreview {
+	padding: 3px;
+}
+strong.SearchHighlight {
+	color: #f34;
+	}

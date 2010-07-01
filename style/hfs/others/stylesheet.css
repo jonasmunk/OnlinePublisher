@@ -1,0 +1,620 @@
+/********************* Common *******************/
+	
+a.common
+{
+	color: #3366ff;
+}
+	
+a.common:hover
+{
+	color: #0000aa;
+}
+
+h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
+{
+	margin: 0px;
+	color: #666;
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	font-weight: normal;
+}
+
+p.common, ul.common
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	line-height: 160%;
+	text-align: justify;
+}
+
+.preload
+{
+	display: none;
+}
+
+.clear
+{
+	clear: both;
+}
+
+/********************** Base ***********************/
+
+img
+{
+	border: none;
+}
+
+body
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	background-color: #dadada;
+	padding: 0px;
+	margin: 0px;
+}
+body,html
+{
+	height: 100%;
+}
+
+.body
+{
+	padding: 0px 17px;
+}
+
+.content
+{
+	background: #fff url('../graphics/SidebarBG.gif') repeat-y right;
+	_width: 100%;
+}
+
+.inner_content
+{
+	padding: 20px;
+	padding-left: 24px;
+	margin-right: 150px;
+	_width: 100%;
+}
+
+.sidebar
+{
+	width: 150px;
+	float: right;
+}
+
+
+div.side_block
+{
+	margin-top: 10px;
+}
+
+div.side_block strong.title
+{
+	padding: 3px 5px 1px 5px;
+	display: block;
+	font-weight: normal;
+	font-size: 10pt;
+	color: #999;
+	border-bottom: 2px solid #ddd;
+	margin-bottom: 2px;
+}
+form
+{
+	margin: 0px;
+}
+
+/*************************** Bar **************************/
+
+.bar_bg
+{
+	background: #dadada;
+	padding: 0px 20px;
+}
+
+.bar_base
+{
+	background: #fff url('../graphics/BaseDarkLeft.gif') repeat-y left;
+}
+
+.bar_base .bar_base
+{
+	background: url('../graphics/BaseDarkRight.gif') repeat-y right;
+}
+
+.bar
+{
+	background: url('../graphics/SidebarDarkBG.gif') repeat-y right;
+	background-color: #f2f2f2;
+	height: 46px;
+	margin: 0px 17px;
+	overflow: hidden;
+}
+
+/************************** Top ************************/
+
+
+.top_bg
+{
+	background-color: #e6e6e6;
+	padding: 15px 20px 0px 20px;
+}
+
+.top_base
+{
+	background: #fff url('../graphics/BaseLeft.gif') repeat-y left;
+}
+
+.top_base .top_base
+{
+	margin: 0px;
+	background: url('../graphics/BaseRight.gif') repeat-y right;
+}
+
+.top
+{
+	background: url('../graphics/BaseTop.gif') repeat-x top;
+	height: 18px;
+	width: 100%;
+}
+
+.top .left
+{
+	background: url('../graphics/BaseTopLeft.gif') no-repeat top left;
+	height: 18px;
+}
+
+.top .right
+{
+	background: url('../graphics/BaseTopRight.gif') no-repeat top right;
+	height: 18px;
+	font-size: 1px;
+}
+
+
+/****************************** middle *****************************/
+
+.middle
+{
+	background-color: #e6e6e6;
+	padding: 0px 20px;
+	_width: 100%;
+}
+
+.base_middle
+{
+	background: #fff url('../graphics/BaseLeft.gif') repeat-y left;
+}
+
+.base_middle .base_middle
+{
+	background: url('../graphics/BaseRight.gif') repeat-y right;
+}
+
+
+/******************************** Bottom *************************/
+
+.end
+{
+	background: #fff url('../graphics/BaseBottom.gif') repeat-x bottom;
+	height: 18px;
+	margin: 0px 20px;
+}
+
+.end .left
+{
+	background: url('../graphics/BaseBottomLeft.gif') no-repeat top left;
+	height: 15px;
+}
+
+.end .right
+{
+	background: url('../graphics/BaseBottomRight.gif') no-repeat top right;
+	height: 15px;
+	font-size: 1px;
+}
+
+/********************* Brand *****************/
+
+.brand
+{
+	background: #fff url('../graphics/SidebarBG.gif') repeat-y right;
+	/*background: #fff url('../graphics/BrandBG.gif') repeat-x top;*/
+	height: 46px;
+	margin: 0px 17px 0px 17px;
+}
+
+
+.logo
+{
+	background: url('../graphics/Logo.gif') no-repeat top left;
+	width: 84px;
+	height: 54px;
+	position: absolute;
+	top: 22px;
+	left: 40px;
+}
+
+.logo_text
+{
+	background: url('../graphics/LogoText.gif') no-repeat top left;
+	width: 446px;
+	height: 26px;
+	top: 40px;
+	left: 130px;
+	position: absolute;
+}
+
+
+.football .brand
+{
+	background: #fff url('../graphics/HeaderFootball.jpg') repeat-x top left;
+}
+.football .logo, .football .logo_text
+{
+	display: none;
+}
+
+/***************** Vertical navigation *************/
+
+
+ul.navigation
+{
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	margin-top: 4px;
+	margin-left: 18px;
+	_margin-left: 10px;
+	overflow: hidden;
+}
+
+ul.navigation li
+{
+	float: left;
+	list-style: none;
+	_width: 1%;
+}
+
+ul.navigation li a
+{
+	display: block;
+	color: #666;
+	text-decoration: none;
+	font: 13pt "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+	height: 36px;
+	padding: 0px 4px;
+}
+ul.navigation li a:hover
+{
+	color: #3366ff;
+	text-decoration: underline;
+}
+
+ul.navigation li a.text span
+{
+	display: block;
+	padding-top: 7px;
+}
+
+ul.navigation li.selected a
+{
+	color: #f00;
+}
+
+
+/************************** Balls ***********************/
+
+
+
+ul.navigation a.icon
+{
+	float: left;
+	padding: 0px  4px;
+}
+
+ul.navigation .icon span
+{
+	display: none;
+}
+
+ul.navigation a.soccer 
+{
+	width: 37px;
+	height: 37px;
+	background: url('../graphics/BallSoccer.gif') no-repeat center center;
+}
+ul.navigation a.soccer:hover
+{
+	background-image: url('../graphics/BallSoccerHover.gif');
+}
+
+ul.navigation .selected a.soccer, ul.navigation .highlighted a.soccer
+{
+	background-image: url('../graphics/BallSoccerSelected.gif');
+}
+
+ul.navigation a.handball 
+{
+	width: 37px;
+	height: 37px;
+	background: url('../graphics/BallHandball.gif') no-repeat center center;
+}
+ul.navigation a.handball:hover
+{
+	background-image: url('../graphics/BallHandballHover.gif');
+}
+ul.navigation .selected a.handball, ul.navigation .highlighted a.handball
+{
+	background-image: url('../graphics/BallHandballSelected.gif');
+}
+
+ul.navigation a.badminton 
+{
+	width: 46px;
+	height: 37px;
+	background: url('../graphics/BallBadminton.gif') no-repeat center center;
+}
+ul.navigation a.badminton:hover
+{
+	background-image: url('../graphics/BallBadmintonHover.gif');
+}
+ul.navigation .selected a.badminton, ul.navigation .highlighted a.badminton
+{
+	background-image: url('../graphics/BallBadmintonSelected.gif');
+}
+
+ul.navigation a.tennis 
+{
+	width: 39px;
+	height: 37px;
+	background: url('../graphics/BallTennis.gif') no-repeat center center;
+}
+ul.navigation a.tennis:hover
+{
+	background-image: url('../graphics/BallTennisHover.gif');
+}
+ul.navigation .selected a.tennis, ul.navigation .highlighted a.tennis
+{
+	background-image: url('../graphics/BallTennisSelected.gif');
+}
+
+ul.navigation a.volleyball 
+{
+	width: 37px;
+	height: 37px;
+	background: url('../graphics/BallVolleyball.gif') no-repeat center center;
+}
+ul.navigation a.volleyball:hover
+{
+	background-image: url('../graphics/BallVolleyballHover.gif');
+}
+ul.navigation .selected a.volleyball, ul.navigation .highlighted a.volleyball
+{
+	background-image: url('../graphics/BallVolleyballSelected.gif');
+}
+
+ul.navigation a.floorball 
+{
+	width: 37px;
+	height: 37px;
+	background: url('../graphics/BallFloorball.gif') no-repeat center center;
+}
+ul.navigation a.floorball:hover
+{
+	background-image: url('../graphics/BallFloorballHover.gif');
+}
+ul.navigation .selected a.floorball, ul.navigation .highlighted a.floorball
+{
+	background-image: url('../graphics/BallFloorballSelected.gif');
+}
+
+ul.navigation a.gymnastics 
+{
+	width: 37px;
+	height: 37px;
+	background: url('../graphics/BallGymnastics.gif') no-repeat center center;
+}
+ul.navigation a.gymnastics:hover
+{
+	background-image: url('../graphics/BallGymnasticsHover.gif');
+}
+ul.navigation .selected a.gymnastics, ul.navigation .highlighted a.gymnastics
+{
+	background-image: url('../graphics/BallGymnasticsSelected.gif');
+}
+
+
+/************************* User status ***********************/
+
+
+.userstatus
+{
+	color: #333;
+}
+
+
+/********************** Navigation *******************/
+
+
+a.navigation
+{
+	display: block;
+	font-size: 13px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-family: Tahoma, Geneva, sans-serif;
+	color: #333;
+	text-decoration: none;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+}
+
+a.navigation:hover span
+{
+	text-decoration: underline;
+	color: #36f;
+}
+
+a.navigation_sub
+{
+	font-size: 11px;
+	color: #3080CB;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+a.navigation_sub:hover
+{
+	text-decoration: underline;
+}
+
+div.navigation span
+{
+	color: #3080CB;
+}
+
+a.navigation_selected
+{
+	color: #f00;
+}
+
+a.navigation_selected span {
+	color: #f00;
+}
+
+
+
+/****************** Links ********************/
+
+.links_top
+{
+	display: block;
+	color: #ddd;
+	position: absolute;
+	text-align: right;
+	display: block;
+	z-index: 1;
+	font-size: 10pt;
+	width: 100%;
+}
+.links_top div
+{
+	padding-top: 4px;
+	padding-right: 42px;
+}
+
+.footer
+{
+	color: #ddd;
+	text-align: right;
+	display: block;
+	z-index: 1;
+	font-size: 10pt;
+	padding: 0px 42px 10px 42px;
+}
+
+.footer .text
+{
+	float: left;
+	color: #888;
+}
+
+.links_top a, .links_bottom a
+{
+	color: #888;
+}
+
+.links_top a:hover, .links_bottom a:hover
+{
+	color: #24f;
+}
+
+
+
+/************************** Search *********************/
+
+.brand form.search
+{
+	float: right;
+	margin-top: 7px;
+}
+
+.brand form.search .field
+{
+	border: solid 1px #ddd;
+	background-color: white;
+	width: 100px;
+	_width: 104px;
+	margin: 4px 4px 0px 0px;
+	padding-left: 2px;
+	color: #000;
+}
+
+.brand form.search .button
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	border: solid 1px #ddd;
+	background-color: #eee;
+	color: #3080CB;
+	margin: 4px 5px 0px 0px;
+	height: 20px;
+	cursor: pointer;
+	padding: 0px 2px;
+	font-size: 11px;
+}
+
+
+
+
+
+
+
+
+
+
+/* ======================== News ==================== */
+
+
+div.news
+{
+	padding: 4px 6px 8px 4px;
+	font-family: Tahoma,Verdana,sans-serif;
+}
+
+div.news .title
+{
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	color: #3080CB;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+
+div.news .note
+{
+	font-size: 8pt;
+	color: #89a;
+	max-height: 50px;
+	overflow: hidden;
+}
+
+div.news:hover div.note
+{
+	max-height: 100%;
+	overflow: visible;
+	color: #347;
+}
+
+div.news span.date
+{
+	font-weight: normal;
+	color: #bcd5e6;
+	float: right;
+	font-size: 15pt;
+	padding-left: 4px;
+}
+
+div.news .links
+{
+	text-align: right;
+	font-size: 8pt;
+	margin-top: 3px;
+}

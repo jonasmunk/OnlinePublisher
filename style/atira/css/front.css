@@ -1,0 +1,428 @@
+/********************* Placard ********************/
+
+.placard
+{
+	border: 1px solid #eee;
+	background: #fff;
+	height: 315px;
+	width: 898px;
+	overflow: hidden;
+}
+
+.inner_placard
+{
+	visibility: hidden;
+}
+
+.placard .poster
+{
+	width: 898px;
+	float: left;
+	height: 315px;
+}
+
+.placard .poster .left, .placard .poster .center, .placard .poster .right
+{
+	float: left;
+	height: 315px;
+}
+
+.placard .poster .right
+{
+	background: right top no-repeat;
+	width: 320px;
+	cursor: pointer;
+}
+
+.placard .poster .center
+{
+	width: 258px;
+}
+
+.placard .poster .left
+{
+	background: left top no-repeat;
+	width: 320px;
+	cursor: pointer;
+}
+
+.placard .news
+{
+	font-size: 9pt;
+	margin-top: 13px;
+}
+
+.placard .news .date
+{
+	float: right;
+	padding: 1px 0px 5px 5px;
+	color: #999;
+	font-size: 9pt;
+}
+
+.placard .news p
+{
+	margin: 0px;
+	line-height: 14px;
+}
+
+div.lang_da div.placard div.poster_1 div.left
+{
+	background-image: url('../../../images/pure_left_da.png');
+}
+
+div.lang_en div.placard div.poster_1 div.left
+{
+	background-image: url('../../../images/pure_left_en.png');
+}
+
+div.placard div.poster_1 div.right
+{
+	background-image: url('../gfx/front/poster/pure_right_en.png');
+}
+
+div.lang_da div.placard div.poster_2 div.left
+{
+	background-image: url('../../../images/software_left_da.png');
+}
+
+div.lang_en div.placard div.poster_2 div.left
+{
+	background-image: url('../../../images/software_left_en.png');
+}
+
+div.placard div.poster_2 div.right
+{
+	background-image: url('../gfx/front/poster/software_right.jpg');
+}
+
+/********************* Posters ********************/
+
+.big_poster
+{
+	height: 317px;
+	width: 850px;
+	background: url('../gfx/front/pure_poster.png');
+	background-position: 0px;
+	cursor: pointer;
+}
+
+.big_poster_da
+{
+	background: url('../gfx/front/pure_poster_da.png');
+}
+
+.big_poster_en
+{
+	background: url('../gfx/front/pure_poster_en.png');
+}
+
+.posters
+{
+	padding-top: 15px;
+	overflow: hidden;
+}
+
+.posters .left
+{
+	float: left;
+	width: 287px;
+	margin-right: 20px;
+}
+
+.posters .center
+{
+	float: left;
+	width: 286px;
+	margin-right: 20px;
+}
+
+.posters .right
+{
+	float: left;
+	width: 287px;
+}
+
+.small_poster
+{
+	height: 140px;
+	padding: 0px 10px;
+}
+
+.small_poster h2
+{
+	margin: 0px;
+	margin-top: 1px;
+	color: #bebebe;
+	font-weight: normal;
+	font-size: 26px;
+	font-family: Helvetica, Arial, sans-serif;
+}
+.small_poster h2 strong
+{
+	font-weight: normal;
+}
+
+.small_poster p
+{
+	color: #848484;
+	width: 155px;
+	font-size: 12px;
+	margin: 0px;
+	height: 75px;
+	margin-top: 5px;
+}
+.small_poster:hover p
+{
+	/*color: #000;*/
+}
+.small_poster .links
+{
+	float: left;
+	color: #848484;
+	font-size: 10pt;
+}
+
+.small_poster .links a
+{
+	color: #ddd;
+}
+
+.small_poster .links a span
+{
+	color: #848484;
+}
+
+.small_poster:hover .links a span
+{
+	color: #004EFF;
+}
+.small_poster .links a:hover, .small_poster .links a:hover span
+{
+	color: #0033AA;
+}
+
+.small_poster .button
+{
+	float: right;
+	height: 25px;
+}
+
+.small_poster .button span
+{
+	display: none;
+}
+
+.posters .pure
+{
+	background: #fff url('../gfx/front/pure_silhouette.png') 180px 10px no-repeat;
+	background: #fff url('../gfx/front/pure_background.png') right top no-repeat;
+	background: #fff url('../gfx/front/pure_background_grey.png') right top no-repeat;
+}
+
+.posters .pure:hover
+{
+	background: #fff url('../gfx/front/pure_background.png') right top no-repeat;
+}
+
+.posters .pure strong
+{
+	color: #0054a6;
+}
+.posters .pure p
+{
+	width: 160px;
+}
+.lang_en .pure .button
+{
+	width: 64px;
+	background: url('../gfx/front/pure_button_en.png') no-repeat;
+}
+.lang_da .pure .button
+{
+	width: 64px;
+	background: url('../gfx/front/pure_button_da.png') no-repeat;
+}
+
+.posters .technology
+{
+	background: #fff url('../gfx/front/technology_silhouette.png') 170px 10px no-repeat;
+	background: #fff url('../gfx/front/technology_background.png') right top no-repeat;
+	background: #fff url('../gfx/front/technology_background_grey.png') right top no-repeat;
+}
+
+.posters .technology:hover
+{
+	background: #fff url('../gfx/front/technology_background.png') right top no-repeat;
+}
+
+
+.posters .technology strong
+{
+	color: #04a900;
+}
+.lang_en .technology .button
+{
+	width: 58px;
+	background: url('../gfx/front/technology_button_en.png') no-repeat;
+}
+.lang_da .technology .button
+{
+	width: 71px;
+	background: url('../gfx/front/technology_button_da.png') no-repeat;
+}
+
+.posters .software
+{
+	background: #fff url('../gfx/front/software_silhouette.png') 160px 10px no-repeat;
+	background: #fff url('../gfx/front/software_background.png') right top no-repeat;
+	background: #fff url('../gfx/front/software_background_grey.png') right top no-repeat;
+}
+
+.posters .software:hover
+{
+	background: #fff url('../gfx/front/software_background.png') right top no-repeat;
+}
+.posters .software strong
+{
+	color: #ed1414;
+}
+.posters .software p
+{
+	width: 140px;
+}
+.lang_en .software .button
+{
+	width: 64px;
+	background: url('../gfx/front/software_button_en.png') no-repeat;
+}
+.lang_da .software .button
+{
+	width: 64px;
+	background: url('../gfx/front/software_button_da.png') no-repeat;
+}
+
+/**************************** Ticker *************************/
+
+.ticker
+{
+	height: 25px;
+	margin-top: 15px;
+	background: url('../gfx/front/ticker_bg.png') right top repeat-x;
+	overflow: hidden;
+}
+
+.ticker .left
+{
+	float: left;
+	background: url('../gfx/front/ticker_left_bg.png') right top repeat-x;
+}
+.ticker .left div
+{
+	background: url('../gfx/front/ticker_left_left.png') left top no-repeat;
+	height: 25px;
+	float: left;
+}
+
+.ticker .left .feed
+{
+	float: left;
+	width: 16px;
+	height: 16px;
+	margin: 5px 0px 0px 8px;
+}
+.ticker .left strong
+{
+	font-weight: normal;
+	font-size: 10pt;
+	color: #fff;
+	float: left;
+	margin: 4px 0px 0px 10px;
+}
+.ticker .left .arrow
+{
+	float: left;
+	width: 12px;
+	height: 14px;
+	padding: 6px 3px;
+	cursor: pointer;
+}
+.ticker .left .previous
+{
+	padding-left: 6px;
+}
+.ticker .left .next
+{
+	padding-right: 6px;
+}
+.ticker .right
+{
+	float: right;
+	background: url('../gfx/front/ticker_right.png') right top no-repeat;
+	padding-right: 8px;
+	height: 25px;
+	line-height: 21px;
+}
+
+.ticker .right a
+{
+	color: #888;
+	font-size: 9pt;
+}
+
+
+.ticker .news
+{
+	float: left;
+	padding-left: 8px;
+	height: 25px;
+}
+
+.ticker .news a
+{
+	font-size: 10pt;
+	color: #555;
+	text-decoration: none;
+	float: left;
+	padding-top: 4px;
+}
+
+.ticker .news a.technology
+{
+	padding-right: 80px;
+	background: url('../gfx/front/technology_badge.png') right 5px no-repeat;
+}
+
+.ticker .news a.pure
+{
+	padding-right: 51px;
+	background: url('../gfx/front/pure_badge.png') right 5px no-repeat;
+}
+
+.ticker .news a.software
+{
+	padding-right: 73px;
+	background: url('../gfx/front/software_badge.png') right 5px no-repeat;
+}
+
+.ticker .news a.ignite
+{
+	padding-right: 53px;
+	background: url('../gfx/front/ignite_badge.png') right 5px no-repeat;
+}
+
+.ticker .news a.atira
+{
+	padding-right: 50px;
+	background: url('../gfx/front/atira_badge.png') right 5px no-repeat;
+}
+
+.ticker:hover a
+{
+	color: #333;
+	text-decoration: underline;
+}
+.ticker a:hover
+{
+	color: #004EFF;
+}

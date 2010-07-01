@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<design>
+	<name>Aalborg Aluminium Industri</name>
+	<description>Design til Aalborg Aluminium Industri</description>
+	<parameters>
+		<parameter name="Skiftende billeder" key="images" type="images"/>
+	</parameters>
+</design>
