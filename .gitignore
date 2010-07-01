@@ -3,3 +3,9 @@ CVS
 .DS_Store
 .project
 .settings
+.cvsignore
+files/*
+images/*
+local/cache/images/*
+local/cache/temp/*
+.svn
