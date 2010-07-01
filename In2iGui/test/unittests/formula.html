@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/In2iScripts/In2iDate.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Formula.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/LocationPicker.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/BoundPanel.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var win,formula;
+		var now = new Date();
+		ui.test.run([
+			function() {
+				win = ui.Window.create({title:'This is the window title',width:200,padding:10,name:'myWindow'});
+				formula = ui.Formula.create({name:'myForm'});
+				win.add(formula);
+				win.show();
+				ui.assert.equals(ui.get('myForm'),formula,'Could get form by name');
+				formula.buildGroup(null,[
+					{type:'Text',options:{key:'text',value:'This is some text',label:'Text label'}},
+					{type:'DateTime',options:{key:'date',value:now,label:'Date label'}},
+					{type:'Number',options:{key:'number',value:10.56,label:'Number label'}},
+					{type:'DropDown',options:{key:'drop',value:'da',label:'Drop label',items:[{value:'da',label:'Danish'},{value:'en',title:'English'},{value:'abc',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}]}},
+					{type:'Location',options:{key:'location',value:{latitude:57.535354,longitude:10.7428479},label:'Location label'}}
+				]);
+			},
+			function() {
+				var values = formula.getValues();
+				ui.assert.equals(values.text,'This is some text','The text field has value');
+				ui.assert.equals(values.date,now,'The date field has value');
+				ui.assert.equals(values.number,10.56,'The number field has value');
+				ui.assert.equals(values.drop,'da','The drop down has value');
+				ui.assert.equals(values.location.latitude,57.535354,'The latitude has value');
+				ui.assert.equals(values.location.longitude,10.7428479,'The longitude has value');
+			},
+			1000,
+			function() {
+				ui.test.mouseDown($$('.in2igui_number_up')[0]);
+				ui.assert.equals(formula.getValues().number,11.56,'The number field has incremented value');
+				ui.test.mouseDown($$('.in2igui_number_down')[0]);
+				ui.assert.equals(formula.getValues().number,10.56,'The number field has decremented value');
+			}
+		]);
+	</script>
+</body>
+</html>

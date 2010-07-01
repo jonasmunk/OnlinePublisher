@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:In2iGui" padding="10" title="Drop down">
+	<box width="600" title="Drop down" variant="textured" padding="10">
+		<toolbar>
+			<icon icon="common/folder" title="Show values" name="showValues"/>
+			<icon icon="common/color" title="Refresh source" action="itemsSource.refresh()"/>
+			<icon icon="common/folder" title="Build" name="build"/>
+		</toolbar>
+		<button name="one" title="Simple button"/>
+		<button name="disabledButton" title="Disabled button" disabled="true"/>
+		<button name="disabledButton" title="Highlighted button" highlighted="true"/>
+		<button title="Confirmation" click="ui.showMessage({text:'Action approved!',duration:2000})">
+			<confirm text="Are you sure?" ok="Yes" cancel="No"/>
+		</button>
+		<button name="disabledButton" icon="common/delete"/>
+	</box>
+</gui>

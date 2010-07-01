@@ -1,0 +1,86 @@
+div.in2igui_bar
+{
+	background: url('../gfx/bar_light.png');
+	height: 30px;
+}
+
+div.in2igui_bar_body
+{
+	height: 30px;
+	font-size: 0;
+	background: url('../gfx/bar_light.png') left -30px no-repeat;
+}
+
+div.in2igui_bar_right
+{
+	float: right;
+	height: 30px;
+	background: url('../gfx/bar_light.png') right -30px no-repeat;
+}
+
+div.in2igui_bar_left
+{
+	height: 30px;
+}
+
+/*************** Button **************/
+
+a.in2igui_bar_button
+{
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+	background: url('../gfx/bar_light.png') right -30px no-repeat;
+	text-decoration: none;
+}
+
+a.in2igui_bar_button:focus
+{
+	outline: none;
+}
+
+div.in2igui_bar_right a.in2igui_bar_button
+{
+	background-position: left -30px;
+}
+
+span.in2igui_bar_button_text
+{
+	color: #444;
+	vertical-align: middle;
+	font-size: 13px;
+	margin-left: 5px;
+	text-shadow: 0 1px 0 #eee;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.in2igui_bar a.in2igui_bar_button:hover
+{
+	background: url('../gfx/bar_light.png') left -60px repeat-x;
+}
+
+a.in2igui_bar_button:hover span.in2igui_icon_1
+{
+	background-position: 0 -16px;
+}
+
+a.in2igui_bar_button:hover span.in2igui_bar_button_text
+{
+	color: #000;
+}
+
+div.in2igui_bar  a.in2igui_bar_button_highlighted, div.in2igui_bar a.in2igui_bar_button_highlighted:hover
+{
+	background: url('../gfx/bar_light.png') left -90px repeat-x;
+}
+
+a.in2igui_bar_button_highlighted span.in2igui_icon_1
+{
+	background-position: 0 -32px;
+}
+
+a.in2igui_bar_button_highlighted span.in2igui_bar_button_text
+{
+	color: #0054a6;	
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:In2iGui" padding="10" title="System">
+	<controller name="controller" source="windows.js"/>
+	<layout>
+		<top>
+		<toolbar>
+			<icon icon="common/folder" title="Mørk" overlay="new" action="dark.toggle()"/>
+			<icon icon="common/folder" title="Standard" action="standard.toggle()"/>
+			<icon icon="common/folder" title="Lys" action="light.toggle()"/>
+		</toolbar>
+		</top>
+		<middle>
+			</middle>
+		<bottom/>
+	</layout>
+	<window name="dark" width="300" title="Bruger" pad="5" variant="dark">
+		<formula>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:"/>
+				<text label="Notat:" lines="6"/>
+				<checkbox label="Intern adgang:"/>
+				<checkbox label="Ekstern adgang:"/>
+				<tokens label="Tokens:"/>
+				<buttons top="10">
+					<button title="Gem" highlighted="true"/>
+					<button title="Slet"/>
+					<button title="Annuller"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
+	<window name="standard" width="300" title="Bruger" pad="5">
+		<formula>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:"/>
+				<text label="Notat:" lines="6"/>
+				<checkbox label="Intern adgang:"/>
+				<checkbox label="Ekstern adgang:"/>
+				<tokens label="Tokens:"/>
+				<buttons top="10">
+					<button title="Gem" highlighted="true"/>
+					<button title="Slet"/>
+					<button title="Annuller"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
+	<window name="light" width="300" title="Bruger" pad="5" variant="light">
+		<formula>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:"/>
+				<text label="Notat:" lines="6"/>
+				<checkbox label="Intern adgang:"/>
+				<checkbox label="Ekstern adgang:"/>
+				<tokens label="Tokens:"/>
+				<buttons top="10">
+					<button title="Gem" highlighted="true"/>
+					<button title="Slet"/>
+					<button title="Annuller"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
+</gui>

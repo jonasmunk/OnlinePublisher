@@ -1,0 +1,76 @@
+div.in2igui_videoplayer
+{
+	font-size: 0;
+	position: relative;
+}
+
+
+div.in2igui_videoplayer_controller
+{
+	background:none repeat scroll 0 0 #000000;
+	color:#FFFFFF;
+	font-size: 11px;
+	height: 20px;
+	margin-top: -20px;
+}
+
+div.in2igui_videoplayer_placeholder
+{
+	background: #f6f6f6;
+	border: 1px solid #eee;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+}
+
+span.in2igui_videoplayer_placeholder_height
+{
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+span.in2igui_videoplayer_placeholder_info
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+span.in2igui_videoplayer_placeholder_info strong
+{
+	display: block;
+	font-weight: normal;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	color: #fff;
+	margin-top: 10px;
+	font-size: 14px;
+	padding: 2px 6px;
+	background: rgba(0,0,0,.3);
+	-moz-border-radius: 4px;
+}
+
+span.in2igui_videoplayer_play
+{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background: url('../icons/transparent/playstroke64.png');
+}
+
+span.in2igui_videoplayer_warning
+{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background: url('../icons/transparent/warning64.png');
+}
+
+div.in2igui_videoplayer_placeholder:hover span.in2igui_videoplayer_play
+{
+	background-position: 0 -64px;
+}
+
+div.in2igui_videoplayer_placeholder:hover span.in2igui_videoplayer_placeholder_info strong
+{
+	background: rgba(0,0,0,.5);
+}

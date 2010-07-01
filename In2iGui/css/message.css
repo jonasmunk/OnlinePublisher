@@ -1,0 +1,27 @@
+
+div.in2igui_message
+{
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	height: 40px;
+	background: url('../gfx/overlay_24.png') left top no-repeat;
+	padding-left: 7px;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	line-height: 38px;
+	font-size: 14px;
+	color: #fff;
+}
+
+div.in2igui_message div
+{
+	background: url('../gfx/overlay_24.png') right -40px no-repeat;
+	padding-right: 7px;
+	height: 40px;
+}
+
+div.in2igui_message div div
+{
+	background: url('../gfx/overlay_24.png') left -80px repeat-x;
+	padding: 0px 10px;
+}

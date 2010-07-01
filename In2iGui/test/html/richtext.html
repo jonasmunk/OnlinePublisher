@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>In2iGui</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/wysihat.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/RichText.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ColorPicker.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		In2iGui.state = '';
+		In2iGui.context = '../../..';
+	</script>
+</head>
+
+<body>
+<script type="text/javascript" charset="utf-8">
+	In2iGui.onDomReady(function() {
+		var normal = In2iGui.Window.create({width:'300'});
+		var editor = In2iGui.RichText.create()
+		var button = In2iGui.Button.create({text:'View source'})
+		button.listen({click:function() {
+			alert(editor.getValue())
+		}});
+		normal.add(editor);
+		normal.add(button);
+		normal.show();
+	})
+</script>
+
+</body>
+</html>

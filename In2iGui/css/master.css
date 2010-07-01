@@ -1,0 +1,261 @@
+html.in2igui
+{
+	height: 100%;
+}
+
+body.in2igui
+{
+	margin: 0px;
+	background: #f3f5f7;
+	overflow: auto;
+	min-height: 100%;
+	height: 100%;
+}
+
+body.in2igui, body.in2igui textarea
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.in2igui_body
+{
+	height: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+/************************* Links ********************/
+/*
+a.in2igui_link
+{
+	color: #ccc;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+a.in2igui_link span
+{
+	color: #3366FF;
+}
+
+a.in2igui_link:hover, a.in2igui_link:hover span
+{
+	color: #0033aa;
+}
+*/
+/*********************** text **********************/
+
+div.in2igui_text
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.in2igui_text h1
+{
+	margin: 0px;
+	font-size: 12pt;
+}
+
+div.in2igui_text p
+{
+	font-size: 9pt;
+	margin: 5px 0px;
+}
+
+/************************* icons **********************/
+
+span.in2igui_icon_1, span.in2igui_icon_16
+{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+}
+
+span.in2igui_icon_2, span.in2igui_icon_32
+{
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+}
+
+/************************* disclosure **********************/
+
+span.in2igui_disclosure
+{
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	vertical-align: middle;
+	background: url('../gfx/disclosure.png');
+	font-size: 0;
+	line-height: 0;
+	cursor: default;
+}
+
+span.in2igui_disclosure:hover
+{
+	background-position: 0 -11px;
+}
+
+span.in2igui_disclosure_open
+{
+	background-position: 0 -22px;
+}
+
+span.in2igui_disclosure_open:hover
+{
+	background-position: 0 -33px;
+}
+
+/*********************** tooltip **********************/
+
+div.in2igui_tooltip
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 31px;
+	background: url('../gfx/tooltip.png') -7px top no-repeat;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	line-height: 28px;
+	color: #433909;
+	font-size: 9pt;
+	opacity: 0;
+	cursor: default;
+}
+
+div.in2igui_tooltip div
+{
+	background: url('../gfx/tooltip.png') right -62px no-repeat;
+	height: 31px;
+}
+
+div.in2igui_tooltip div div
+{
+	background: url('../gfx/tooltip.png') left -31px repeat-x;
+	margin: 0px 18px 0px 11px;
+}
+
+/************************* Split ********************/
+
+table.split
+{
+	height: 100%;
+	width: 100%;
+	border-spacing: 0px 0px;
+}
+
+td.split_content
+{
+	vertical-align: top;
+	width: 100%;
+	background: #fff;
+}
+
+td.split_sidebar
+{
+	background: #EBF0F7;
+	border-right: 1px solid #bbb;
+	vertical-align: top;
+}
+
+div.split_sidebar
+{
+	width: 200px;
+}
+
+
+/*********************** browser ********************/
+div.browser
+{
+	height: 417px;
+	overflow: auto;
+}
+div.browser .contents
+{
+	height: 400px;
+}
+
+div.browser .column
+{
+	background: #fff;
+	float:left;
+	height:400px;
+	overflow-x:auto;
+	overflow-y:auto;
+	width:198px;
+	font-size: 10pt;
+	border: 1px solid #ddd;
+}
+
+div.browser .column .element
+{
+	padding: 1px 4px;
+	overflow: hidden;
+	cursor: default;
+	white-space: nowrap;
+}
+
+div.browser .column .element:hover
+{
+	background: #eee;
+}
+
+div.browser .column div.selected, div.browser .column div.selected:hover
+{
+	background: #3875D7;
+	color: #fff;
+}
+
+/****************************************** Info view ******************************/
+
+div.in2igui_infoview
+{
+	overflow-y: hidden;
+}
+
+div.in2igui_infoview_busy
+{
+	background: url('../gfx/spinner_large.gif') center center no-repeat;
+}
+
+div.in2igui_infoview table
+{
+	width: 100%;
+	font-size: 8pt;
+	line-height: 14px;
+}
+
+div.in2igui_infoview th
+{
+	vertical-align: top;
+	text-align: right;
+	padding: 2px 8px 0px 0px;
+	color: #666;
+	font-weight: normal;
+}
+
+div.in2igui_infoview td
+{
+	vertical-align: top;
+	padding: 2px 0px 0px 0px;
+}
+
+div.in2igui_infoview th.in2igui_infoview_header
+{
+	font-size: 13pt;
+	padding-bottom: 5px;
+	text-align: left;
+	color: #333;
+	line-height: 19px;
+	padding-top: 0px;
+}
+
+div.in2igui_infoview_click:hover
+{
+	cursor: pointer;
+	text-decoration: underline;
+}

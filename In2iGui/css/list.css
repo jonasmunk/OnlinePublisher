@@ -1,0 +1,213 @@
+div.in2igui_list
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	/*padding-right: 10px;*/
+}
+
+div.in2igui_list_body
+{
+}
+
+div.in2igui_list table
+{
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+}
+
+div.in2igui_list table thead th
+{
+	text-align: left;
+	font-size: 9pt;
+	background: #fafafa;
+	color: #334455;
+	vertical-align: top;
+	line-height: 21px;
+	height: 22px;
+	background: url('../gfx/list_header.png') repeat-x;
+	cursor: default;
+	padding: 0px 5px;
+	font-weight: normal;
+}
+
+div.in2igui_list table thead th span
+{
+	display: block;
+}
+
+div.in2igui_list th.sortable:hover
+{
+	cursor: pointer;
+	background: url('../gfx/list_header.png') left -21px repeat-x;
+}
+
+div.in2igui_list th.sort_ascending, div.in2igui_list th.sort_descending
+{
+	background: url('../gfx/list_header.png') left -42px repeat-x;
+	color: #000;
+}
+
+div.in2igui_list th.sort_ascending:hover, div.in2igui_list th.sort_descending:hover
+{
+	background: url('../gfx/list_header.png') left -63px repeat-x;
+}
+
+div.in2igui_list th.sort_ascending span
+{
+	background: url('../gfx/list_ascending.png') right center no-repeat;
+}
+
+div.in2igui_list th.sort_descending span
+{
+	background: url('../gfx/list_descending.png') right center no-repeat;
+}
+
+div.in2igui_list table tbody td
+{
+	font-size: 9pt;
+	border-bottom: 1px solid #eee;
+	padding: 2px 5px;
+	vertical-align: top;
+}
+
+div.in2igui_list table tbody td .object
+{
+	overflow: hidden;
+	padding-bottom: 2px;
+}
+
+div.in2igui_list .in2igui_icon
+{
+	margin-right: 3px;
+	float: left;
+}
+
+span.in2igui_list_icons
+{
+	white-space: nowrap;
+	font-size: 0;
+	vertical-align: top;
+	margin-top: 2px;
+	display: inline-block;
+}
+
+span.in2igui_list_icons .in2igui_icon
+{
+	float: none;
+}
+
+
+div.in2igui_list table tbody tr:hover
+{
+	background-color: #EBF0F7;
+	cursor: pointer;
+}
+
+div.in2igui_list table tbody tr:hover .in2igui_icon_1
+{
+	background-position: 0px -16px;
+}
+
+div.in2igui_list table tbody tr.selected
+{
+	background-color: #3875d7;
+	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
+	background: -webkit-gradient(linear, left top, left bottom, from(#92BCFA), to(#5580ee));
+	color: #fff;
+	text-shadow: 0 1px 2px #5070cc;
+}
+
+div.in2igui_list table tbody tr.selected p.in2igui_list_dimmed
+{
+	color: #abd;
+}
+
+div.in2igui_list .window_page
+{
+	display: none;
+}
+
+div.in2igui_list_navigation
+{
+	display: none;
+	background: url('../gfx/list_navigation.png');
+	border-bottom: 1px solid #ccc;
+	height: 26px;
+	padding: 0px 3px;
+}
+
+span.in2igui_list_count
+{
+	float: right;
+	color: #666;
+	height: 26px;
+	line-height: 26px;
+	font-size: 12px;
+	padding-right: 7px;
+}
+
+div.in2igui_list_selection
+{
+	margin-top: 1px;
+	float: left;
+	height: 24px;
+	background: url('../gfx/list_box.png') repeat-x;
+}
+
+div.in2igui_list_selection div
+{
+	height: 24px;
+	background: url('../gfx/list_box.png') left -24px no-repeat;
+}
+
+div.in2igui_list_selection div div
+{
+	height: 24px;
+	background: url('../gfx/list_box.png') right -48px no-repeat;
+	padding: 0px 12px;
+}
+
+div.in2igui_list_selection a
+{
+	font-size: 11px;
+	cursor: pointer;
+	color: #666;
+	float: left;
+	height: 16px;
+	margin-top: 4px;
+	line-height: 16px;
+	padding: 0px 2px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+div.in2igui_list_selection span
+{
+	float: left;
+	height: 16px;
+	margin-top: 4px;
+	line-height: 16px;
+}
+
+div.in2igui_list_selection a:hover
+{
+	background: #aaa;
+	color: #000;
+}
+
+div.in2igui_list_selection a.selected
+{
+	background: #3875D7;
+	color: #fff;
+}
+
+p.in2igui_list_line
+{
+	margin: 0;
+}
+
+p.in2igui_list_dimmed
+{
+	font-size: 9px;
+	color: #999;
+}

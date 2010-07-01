@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:In2iGui" title="Box">
+	<source name="pageSource" url="data/page_items.xml"/>
+	<source name="fileSource" url="data/source_items.xml"/>
+	<box width="300">
+		<links name="myLinks" pageSource="pageSource" fileSource="fileSource"/>
+		<button click="myLinks.addLink()" title="Add link"/>
+		<button name="button" title="Set links!"/>
+	</box>
+	<script>
+		ui.listen({
+			$click$button : function() {
+				myLinks.setValue([
+					{id:1,text:'My link',kind:'url',value:'http://www.in2isoft.dk/',info:'http://www.in2isoft.dk/',icon:'common/internet'},
+					{id:1,text:'My mail',kind:'email',value:'jonasmunk@mac.com',info:'jonasmunk@mac.com',icon:'common/email'},
+					{id:2,text:'My other link',kind:'page',value:1,info:'My page',icon:'common/page'},
+					{id:2,text:'My other link',kind:'file',value:5,info:'My page',icon:'file/generic'}
+				])
+			}
+		})
+	</script>
+</gui>

@@ -1,0 +1,142 @@
+div.in2igui_selection
+{
+	font-family: 'Lucida Grande','Verdana',sans-serif;
+}
+
+.split_sidebar div.in2igui_selection
+{
+	padding: 5px 0px;
+}
+
+.in2igui_selection_item
+{
+	background: 7px center no-repeat;
+	font-size: 9pt;
+	min-height: 18px;
+	padding: 1px 5px 1px 6px;
+	overflow: hidden;
+}
+
+div.in2igui_selection span.in2igui_disclosure
+{
+	margin-right: 2px;
+}
+
+div.in2igui_selection_item span.in2igui_selection_label
+{
+	margin: 0 0 0 1px;
+	padding: 1px 3px;
+	vertical-align: middle;
+}
+
+strong.in2igui_selection_badge
+{
+	float: right;
+	background: #bcd;
+	color: #fff;
+	font-size: 11px;
+	padding: 0 4px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 7px;
+	min-width: 10px;
+	text-align: center;
+	height: 14px;
+	margin-top: 2px;
+}
+
+div.in2igui_selection div.in2igui_selected strong.in2igui_selection_badge
+{
+	background: #fff;
+	color: #3875d7;
+}
+
+.in2igui_selection_item:hover
+{
+	background-color: #eee;
+	cursor: pointer;
+}
+
+td.in2igui_layout_left .in2igui_selection_item:hover
+{
+	background-color: #d4dce9;
+	cursor: pointer;
+}
+
+.in2igui_selection_item:hover .icon
+{
+	background-position: 0px -16px;
+}
+
+div.in2igui_selection div.in2igui_selected, div.in2igui_selection div.in2igui_selected:hover
+{
+	background-color: #3875d7;
+	background: url('../gfx/selection_blue.png') left top repeat-x;
+	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
+	background: -webkit-gradient(linear, left top, left bottom, from(#92BCFA), to(#5580ee));
+	color: #fff;
+}
+
+div.in2igui_selection div.in2igui_selected span.in2igui_selection_label
+{
+	text-shadow: 0 1px 0 #5070cc;
+}
+
+div.in2igui_selection_inline div.in2igui_selected span.in2igui_selection_label
+{
+	background-color: #3875d7;
+	color: #fff;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	text-shadow: none;
+}
+
+.in2igui_selection .title
+{
+	background: url('../gfx/selection_separator.png') 3px 9px repeat-x;
+	color:#334455;
+	font-size:13px;
+	margin:3px 5px;
+	padding-left:16px;
+}
+.in2igui_selection .title span
+{
+	background: #EBF0F7;
+	padding: 0px 3px;
+}
+
+.in2igui_selection div.in2igui_drop, .in2igui_selection div.in2igui_drop:hover
+{
+	background: #779cd6 url('../gfx/hover_bg.png');
+	-webkit-border-radius: 4px;
+}
+
+
+/********************** Dark ************************/
+
+div.in2igui_window_dark div.in2igui_selection
+{
+	border-left: 1px solid #404040;
+	border-right: 1px solid #404040;
+}
+
+div.in2igui_window_dark div.in2igui_selection_item
+{
+	color: #fff;
+	background: url('../gfx/selection_dark.png');
+	height: 24px;
+}
+
+div.in2igui_window_dark div.in2igui_selection_item:hover
+{
+	background: url('../gfx/selection_dark.png') left -24px;
+}
+
+div.in2igui_window_dark div.in2igui_selection div.in2igui_selected, div.in2igui_window_dark div.in2igui_selection div.in2igui_selected:hover
+{
+	background: #3875d7;
+}
+
+div.in2igui_window_dark .in2igui_selection_item span
+{
+	margin-top: 4px;
+}

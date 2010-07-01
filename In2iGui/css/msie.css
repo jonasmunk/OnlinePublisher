@@ -1,0 +1,61 @@
+div,h1,h2,h3,h4,h5,h6,ol,ul,li
+{
+	zoom: 1;
+}
+
+div.in2igui_toolbar_icon div.in2igui_icon
+{
+	margin: 0px;
+}
+
+form.in2igui_formula input.text, form.in2igui_formula textarea
+{
+	text-indent: 0px;
+}
+
+form.in2igui_formula table.group label
+{
+	line-height: 16px;
+}
+
+table.in2igui_objectlist thead th.in2igui_objectlist
+{
+	line-height: 11pt;
+}
+
+form.in2igui_formula .checkbox 
+{
+	padding: 2px 0px;
+}
+
+
+span.in2igui_field_singleline
+{
+	position: relative;
+	height: 16px;
+}
+
+span.in2igui_field_singleline input
+{
+	position: absolute;
+}
+
+a.in2igui_button
+{
+	line-height: 28px;
+}
+
+a.in2igui_button_small_rounded
+{
+	line-height: 23px;
+}
+
+/*********** Search field ***************/
+
+span.in2igui_searchfield input
+{
+	margin-top: 4px;
+	margin-left: -21px;
+	margin-right: -13px;
+	padding: 0;
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:In2iGui" pad="10" title="Formula">
+	<controller name="controller" source="formula.js"/>
+	<source name="itemsSource" url="data/source_items.xml"/>
+	<box width="600" variant="textured">
+		<toolbar>
+			<number label="Style length:" key="style" value="15px"/>
+			<style-length label="Style length:" key="style" value="15px"/>
+			<segmented label="Alignment" value="left" name="segmentedBar">
+				<item icon="edit/text_align_left" value="left"/>
+				<item icon="edit/text_align_center" value="center"/>
+				<item icon="edit/text_align_right" value="right"/>
+			</segmented>
+			<segmented label="Alignment (allow null)" value="left" name="segmentedBarNull" allow-null="true">
+				<item icon="edit/text_align_left" value="left"/>
+				<item icon="edit/text_align_center" value="center"/>
+				<item icon="edit/text_align_right" value="right"/>
+			</segmented>
+		</toolbar>
+		<tabs>
+			<tab title="Formula 1" padding="10">
+				<formula name="formula1">
+					<group labels="above">
+						<style-length label="Style length:" key="style" value="15px"/>
+						<buttons top="10">
+							<button title="Gem" highlighted="true"/>
+							<button title="Slet"/>
+							<button title="Annuller"/>
+						</buttons>
+					</group>
+				</formula>
+				<segmented value="left" name="segmented">
+					<item icon="edit/text_align_left" value="left"/>
+					<item icon="edit/text_align_right" value="right"/>
+					<item title="Click me!"/>
+				</segmented>
+				<button click="segmented.setValue('right')" title="Set right" small="true" rounded="true"/>
+				<button click="alert(segmented.getValue())" title="Alert value" small="true" rounded="true"/>
+			</tab>
+		</tabs>
+	</box>
+</gui>

@@ -1,0 +1,832 @@
+form.in2igui_formula
+{
+	padding: 0px;
+	margin: 0px;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	text-align: left;
+}
+
+.in2igui_formula_header
+{
+	color: #0077cd;
+	font-size: 13pt;
+	padding-bottom: 5px;
+}
+
+table.in2igui_formula_group
+{
+	width: 100%;
+	font-size: 0;
+}
+
+table.in2igui_formula_group_above
+{
+	border-spacing: 0px;
+}
+
+form.in2igui_formula table.split
+{
+	border-spacing: 5px 0px;
+}
+
+table.in2igui_formula_group label
+{
+	color: #004A80;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+table.in2igui_formula_group_above label
+{
+	line-height: 13px;
+	display: inline-block;
+	padding-left: 2px;
+}
+
+table.in2igui_formula_group th label
+{
+	font-size: 9pt;
+}
+
+table.in2igui_formula_group th
+{
+	width: 1%;
+	vertical-align: top;
+	padding: 0px 5px 0px 0px;
+	text-align: right;
+	line-height: 20px;
+	white-space: nowrap;
+}
+
+table.in2igui_formula_group_above th
+{
+	text-align: left;
+}
+
+table.in2igui_formula_group_above div.in2igui_tokens
+{
+	margin-bottom: 2px;
+}
+
+form.in2igui_formula div.in2igui_field
+{
+	font-size: 0;
+}
+
+form.in2igui_formula select
+{
+	font-size: 9pt;
+	margin: 0;
+	width: 100%;
+}
+
+.in2igui_formula_text
+{
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+	margin-top: -1px;
+	font-size: 9pt;
+	width: 100%;
+	background: transparent;
+	font-family: Verdana,sans-serif;
+	outline: none;
+}
+
+div.in2igui_textarea_dummy
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	font-size: 9pt;
+	line-height:16px;
+	position: absolute;
+	visibility: hidden;
+	left: -10000px;
+	top: -10000px;
+	word-wrap: break-word;
+	padding: 1px 0px;
+}
+
+input.in2igui_formula_text
+{
+	height: 18px;
+}
+
+textarea.in2igui_formula_text
+{
+	text-indent: 0;
+	line-height: 16px;
+	padding: 0px;
+	margin: 0;
+	padding: 1px 0px;
+	resize: none;
+	overflow-x: hidden;
+}
+
+form.in2igui_formula fieldset
+{
+	border: 1px solid #ccc;
+	margin: 0px;
+	padding: 0px 8px 5px 6px;
+}
+
+form.in2igui_formula fieldset legend
+{
+	font-size: 9pt;
+	color: #999;
+}
+
+td.in2igui_formula_group
+{
+	padding: 0;
+}
+
+div.in2igui_formula_item
+{
+	padding-bottom: 5px;
+	font-size: 0;
+	line-height: 0;
+}
+
+/*************************************** Field **********************************/
+
+span.in2igui_field
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+span.in2igui_field_top, span.in2igui_field_top span
+{
+	display: block;
+	font-size: 0;
+	background: url('../gfx/field.png') left -5px no-repeat;
+	height: 5px;
+}
+
+span.in2igui_field_top span
+{
+	background-position: 100% -10px;
+}
+
+span.in2igui_field_top span span
+{
+	background-position: 0 0;
+	background-repeat: repeat;
+	margin: 0 5px;
+}
+
+span.in2igui_field_bottom, span.in2igui_field_bottom span
+{
+	display: block;
+	font-size: 0;
+	background: url('../gfx/field.png') 0 -19px no-repeat;
+	height: 4px;
+}
+
+span.in2igui_field_bottom span
+{
+	background-position: 100% -23px;
+	background-repeat: no-repeat;
+}
+
+span.in2igui_field_bottom span span
+{
+	background-position: 0 -15px;
+	background-repeat: repeat-x;
+	margin: 0 5px;
+}
+
+span.in2igui_field_middle
+{
+	display: block;
+	background: url('../gfx/field.png') 0 -27px no-repeat;
+}
+
+span.in2igui_field_middle span.in2igui_field_middle
+{
+	display: block;
+	background: url('../gfx/field.png') 100% -427px no-repeat;
+}
+
+span.in2igui_field_content
+{
+	display: block;
+	margin: 0 5px;
+	background: #fff;
+}
+
+.in2igui_field_focused span.in2igui_field_top
+{
+	background-position: 0 -832px;
+}
+
+.in2igui_field_focused span.in2igui_field_top span
+{
+	background-position: 100% -837px;
+}
+
+.in2igui_field_focused span.in2igui_field_top span span
+{
+	background-position: 100% -827px;
+}
+
+.in2igui_field_focused span.in2igui_field_bottom
+{
+	background-position: 0 -846px;
+}
+
+.in2igui_field_focused span.in2igui_field_bottom span
+{
+	background-position: 100% -850px;
+}
+
+.in2igui_field_focused span.in2igui_field_bottom span span
+{
+	background-position: 100% -842px;
+}
+
+.in2igui_field_focused span.in2igui_field_middle
+{
+	background-position: 0 -854px;
+}
+
+.in2igui_field_focused span.in2igui_field_middle span.in2igui_field_middle
+{
+	background-position: 100% -1254px;
+}
+
+span.in2igui_field_singleline
+{
+	background: none;
+	height: 16px;
+	font-size: 0;
+	display: block;
+}
+
+em.in2igui_field_placeholder
+{
+	position: absolute;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	color: #999;
+	font-style: normal;
+	font-size: 12px;
+	margin-left: 7px;
+	margin-top: 5px;
+}
+
+.in2igui_field_focused em.in2igui_field_placeholder, .in2igui_field_dirty em.in2igui_field_placeholder
+{
+	display: none;
+}
+
+/*********************************** Number **********************************/
+
+span.in2igui_number
+{
+	display: inline-block;
+	background: url('../gfx/number.png') -11px top no-repeat;
+	height: 25px;
+	position: relative;
+}
+
+span.in2igui_number span
+{
+	display: inline-block;
+	background: url('../gfx/number.png') right -50px no-repeat;
+	height: 25px;
+}
+
+span.in2igui_number span span
+{
+	margin: 0 17px 0 6px;
+	background: url('../gfx/number.png') left -25px repeat-x;
+}
+
+span.in2igui_number input
+{
+	border: none;
+	background: none;
+	width: 80px;
+	font-family: Verdana, sans-serif;
+	font-size: 9pt;
+	padding: 3px 4px 0;
+	position: relative;
+	top: 1px;
+	margin: 0;
+	text-align: right;
+}
+
+span.in2igui_number input:focus
+{
+	outline: none;
+}
+
+a.in2igui_number_up
+{
+	position: absolute;
+	width: 15px;
+	height: 10px;
+	right: 2px;
+	top: 2px;
+}
+
+a.in2igui_number_down
+{
+	position: absolute;
+	width: 15px;
+	height: 10px;
+	right: 2px;
+	bottom: 3px;
+}
+
+span.in2igui_number_focused
+{
+	background-position: -11px -75px;
+}
+
+span.in2igui_number_focused span
+{
+	background-position: right -125px;
+}
+
+span.in2igui_number_focused span span
+{
+	background-position: left -100px;
+}
+
+em.in2igui_number_units
+{
+	vertical-align: middle;
+}
+
+span.in2igui_number_adaptive
+{
+	width: 100%;
+}
+
+span.in2igui_number_adaptive input
+{
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+	margin-left: -2px;
+}
+
+/******* Special lenght for style *******/
+
+span.in2igui_style_length input
+{
+	width: 50px;
+}
+
+/************************************* Drop down ********************************/
+
+a.in2igui_dropdown
+{
+	display: inline-block;
+	height: 26px;
+	background: url('../gfx/dropdown.png') -19px top no-repeat;
+	outline: none;
+	text-decoration: none;
+	color: #333;
+	font-size: 13px;
+	line-height: 26px;
+	vertical-align: middle;
+	text-align: left;
+}
+
+a.in2igui_dropdown span
+{
+	display: block;
+	height: 26px;
+	background: url('../gfx/dropdown.png') right -52px no-repeat;
+}
+
+a.in2igui_dropdown span span
+{
+	margin: 0 25px 0 6px;
+	background: url('../gfx/dropdown.png') left -26px repeat-x;
+	padding-left: 2px;
+	padding-right: 10px;
+}
+
+a.in2igui_dropdown:hover
+{
+	background-position: -19px -156px;
+}
+
+a.in2igui_dropdown:hover span
+{
+	background-position: right -208px;
+}
+
+a.in2igui_dropdown:hover span span
+{
+	background-position: left -182px;
+}
+
+a.in2igui_dropdown_focused
+{
+	background-position: -19px -78px;
+}
+
+a.in2igui_dropdown_focused span
+{
+	background-position: right -130px;
+}
+
+a.in2igui_dropdown_focused span span
+{
+	background-position: left -104px;
+}
+
+a.in2igui_dropdown_focused:hover
+{
+	background-position: -19px -234px;
+}
+
+a.in2igui_dropdown_focused:hover span
+{
+	background-position: right -286px;
+}
+
+a.in2igui_dropdown_focused:hover span span
+{
+	background-position: left -260px;
+}
+
+a.in2igui_dropdown strong
+{
+	display: block;
+	overflow: hidden;
+	font-weight: normal;
+	height: 26px;
+	width: 100%;
+}
+
+a.in2igui_dropdown em
+{
+	color: #456;
+}
+
+div.in2igui_dropdown_selector
+{
+	position: absolute;
+	display: none;
+	top: 0;
+	left: 0;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 12px;
+	-webkit-box-shadow: 0px 3px 5px #999;
+	-webkit-border: none;
+	-moz-box-shadow: 0px 3px 5px #999;
+	overflow: auto;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.in2igui_dropdown_selector a
+{
+	padding: 2px 5px;
+	display: block;
+	text-decoration: none;
+	color: #333;
+}
+
+div.in2igui_dropdown_selector a.in2igui_selected
+{
+	background: #eee;
+	color: #000;
+	font-weight: bold;
+}
+
+div.in2igui_dropdown_selector a:hover
+{
+	background-color: #3875d7;
+	color: #fff;
+}
+
+/* Adaptive */
+
+a.in2igui_dropdown_adaptive
+{
+	width: 100%;
+}
+
+/************************************** Buttons *********************************/
+
+form.in2igui_formula div.in2igui_buttons_body
+{
+	float: right;
+}
+
+form.in2igui_formula a.in2igui_button
+{
+	margin-left: 2px;
+	margin-right: 0px;
+}
+
+/******************************* Radio button **************************/
+
+div.in2igui_radiobuttons
+{
+	overflow: hidden;
+	margin-bottom: 5px;
+	padding-top: 4px;
+}
+
+div.in2igui_radiobutton
+{
+	overflow: hidden;
+	margin-right: 10px;
+	font-size: 10pt;
+	cursor: default;
+	color: #004A80;
+	float: left;
+	line-height: 15px;
+}
+
+div.in2igui_radiobutton div
+{
+	float: left;
+	background: url('../gfx/radiobutton.png') no-repeat;
+	width: 18px;
+	height: 18px;
+	margin-right: 3px;
+	cursor: pointer;
+}
+
+div.in2igui_radiobuttons div.in2igui_selected div
+{
+	background-position: 0px -18px;
+}
+
+/******************************* Checkboxes **************************/
+
+
+a.in2igui_checkbox
+{
+	overflow: hidden;
+	font-size: 10pt;
+	line-height: 20px;
+	cursor: pointer;
+	color: #004A80;
+	display: inline-block;
+	outline: none;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+div.in2igui_checkboxes
+{
+	margin-bottom: 5px;
+	font-size: 0;
+}
+
+div.in2igui_checkboxes a.in2igui_checkbox
+{
+	margin-right: 10px;
+}
+
+div.in2igui_checkboxes_vertical a.in2igui_checkbox
+{
+	display: block;
+	padding: 1px 5px 0px 0px;
+}
+
+a.in2igui_checkbox span
+{
+	float: left;
+	width: 20px;
+	height: 20px;
+	margin-right: 2px;
+}
+
+a.in2igui_checkbox span span
+{
+	background: url('../gfx/checkbox.png') no-repeat;
+	margin: 0;
+}
+
+a.in2igui_checkbox:hover span span
+{
+	background-position: 0 -20px;
+}
+
+a.in2igui_checkbox:active span span
+{
+	background-position: 0 -40px;
+}
+
+a.in2igui_checkbox_focused
+{
+	text-shadow: #3366ff 0px 0px 2px;
+	color: #002244;
+}
+
+a.in2igui_checkbox_focused span
+{
+	background: url('../gfx/checkbox.png') 0 -120px no-repeat;
+}
+
+a.in2igui_checkbox_selected span span
+{
+	background-position: 0px -60px;
+}
+
+a.in2igui_checkbox_selected:hover span span
+{
+	background-position: 0px -80px;
+}
+
+a.in2igui_checkbox_selected:active span span
+{
+	background-position: 0px -100px;
+}
+
+/******************************* Object list **************************/
+
+table.in2igui_objectlist
+{
+	margin-top: 1px;
+	width: 100%;
+}
+
+table.in2igui_objectlist th
+{
+	text-align: left;
+	font-size: 11px;
+	line-height: 13px;
+	color: #004A80;
+	font-weight: normal;
+	padding-left: 4px;
+}
+
+table.in2igui_objectlist th.in2igui_objectlist1
+{
+	padding-left: 2px;
+}
+
+.in2igui_objectlist tbody input.text
+{
+	border-color: #ccc #ddd #eee #ddd;
+	width: 100%;
+}
+.in2igui_objectlist tbody td
+{
+	padding: 0px 0px 0px 2px;
+	vertical-align: top;
+}
+
+.in2igui_objectlist tbody td.first
+{
+	padding-left: 0px;
+}
+
+/******************************** Tokens *************************/
+
+div.in2igui_tokens
+{
+	overflow: hidden;
+	padding-left:3px;
+	padding-top:3px;
+}
+
+input.in2igui_tokens_token
+{
+	border-color:#BBBBBB #CCCCCC #DDDDDD;
+	border-style:solid;
+	border-width:1px;
+	width: 50px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	float: left;
+	padding: 1px 0px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+input.in2igui_tokens_token:focus
+{
+	border-color: #68f;
+}
+
+/******************************** Location *************************/
+
+div.in2igui_location
+{
+	padding-right: 18px;
+	position: relative;
+}
+
+div.in2igui_location input
+{
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: none;
+	height: 16px;
+}
+
+a.in2igui_location_picker
+{
+	background-image: url('../icons/geo/map1.png');
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	right: 0;
+	top: 4px;
+	font-size: 0;
+}
+
+span.in2igui_location_latitude, span.in2igui_location_longitude
+{
+	display: inline-block;
+	height: 16px;
+	width: 49%;
+	position: relative;
+}
+
+span.in2igui_location_latitude
+{
+	width: 50%;
+}
+
+span.in2igui_location_latitude span, span.in2igui_location_longitude span
+{
+	display: block;
+	width: 100%;
+	height: 16px;
+	padding-left: 16px;
+}
+
+span.in2igui_location_latitude
+{
+	background: url('../icons/monochrome/latitude1.png') left top no-repeat;
+}
+
+span.in2igui_location_longitude
+{
+	background: url('../icons/monochrome/longitude1.png') left top no-repeat;
+}
+
+/************************* Override for windows *******************/
+
+
+div.in2igui_window table.in2igui_formula_group label
+{
+	background: rgb(231,231,231);
+	padding: 0px 2px;
+}
+
+div.in2igui_window_light table.in2igui_formula_group label
+{
+	color: #004A80;
+	background: rgb(229,229,229);
+}
+
+
+div.in2igui_window_dark table.in2igui_formula_group label, div.in2igui_window_dark div.in2igui_checkbox, div.in2igui_window_dark div.in2igui_radiobutton, div.in2igui_window_dark th.in2igui_objectlist
+{
+	color: #fff;
+	background: none;
+}
+
+div.in2igui_window_dark .in2igui_formula_text
+{
+	color: #fff;
+}
+
+div.in2igui_window_dark div.in2igui_field span
+{
+	background-image: url('../gfx/field_dark.png');
+}
+
+div.in2igui_window_dark div.in2igui_field span.in2igui_formula_text_singleline, div.in2igui_window_dark div.in2igui_field span.in2igui_formula_text_multiline
+{
+	background: none;
+}
+
+div.in2igui_window_dark div.in2igui_field span.in2igui_field_content
+{
+	background: #222222;
+}
+
+div.in2igui_window_dark div.in2igui_field span.in2igui_field_singleline
+{
+	background: none;
+}
+
+div.in2igui_window_dark input.in2igui_tokens_token
+{
+	background: #222;
+	border: 1px solid #444;
+	color: #fff;
+}
+
+div.in2igui_window_dark a.in2igui_checkbox
+{
+	color: #fff;
+}

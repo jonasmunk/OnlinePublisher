@@ -1,0 +1,30 @@
+div.in2igui_colorpicker
+{
+	width: 256px;
+	height: 256px;
+}
+
+div.in2igui_colorpicker_content
+{
+	overflow: hidden;
+	width: 256px;
+	height: 256px;
+}
+
+div.in2igui_colorpicker_inner_content
+{
+	width: 512px;
+	height: 256px;	
+}
+
+div.in2igui_colorpicker_page
+{
+	float: left;
+	width: 256px;
+	height: 256px;
+}
+
+div.in2igui_colorpicker_wheel1
+{
+	background-image: url('../gfx/colorwheel1.png');
+}

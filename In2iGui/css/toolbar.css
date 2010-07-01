@@ -1,0 +1,375 @@
+div.in2igui_toolbar
+{
+	padding: 0px;
+	font-family: "Lucida Grande","Tahoma",sans-serif;
+	position: relative;
+	font-size: 0;
+}
+
+div.in2igui_revealing_toolbar
+{
+	left: 0px;
+	overflow: hidden;
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	height: 0px;
+	background: #eee;
+	border-bottom: 1px solid #aaa;
+}
+
+div.in2igui_toolbar span.in2igui_divider
+{
+	vertical-align: middle;
+	display: inline-block;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #ccc;
+	height: 45px;
+	margin: 1px 5px 0px;
+}
+
+div.in2igui_toolbar_centered
+{
+	text-align: center;
+}
+
+div.in2igui_toolbar_right
+{
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+/********************************** Icon ************************/
+
+
+a.in2igui_toolbar_icon
+{
+	margin-top: 1px;
+	height: 55px;
+	vertical-align: middle;
+	display: inline-block;
+	font-size: 0px;
+	text-align: center;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+a.in2igui_toolbar_icon:focus
+{
+	background: url('../gfx/toolbar_bg.png') left 0 no-repeat;
+	outline: none;
+}
+
+a.in2igui_toolbar_icon:focus span.in2igui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') right -55px no-repeat;
+}
+
+a.in2igui_toolbar_icon:focus span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') left -110px repeat-x;
+}
+
+a.in2igui_toolbar_icon span.in2igui_toolbar_inner_icon
+{
+	display: block;
+}
+
+a.in2igui_toolbar_icon span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+{
+	padding: 5px 0 0;
+	height: 50px;
+	margin: 0 7px;
+}
+
+a.in2igui_toolbar_icon_selected
+{
+	background: url('../gfx/toolbar_bg.png') left -165px no-repeat;
+}
+
+a.in2igui_toolbar_icon_selected span.in2igui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') right -220px no-repeat;
+	height: 55px;
+}
+
+a.in2igui_toolbar_icon_selected span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') left -275px repeat-x;
+	height: 51px;
+}
+
+a.in2igui_toolbar_icon span.in2igui_icon
+{
+	height: 32px;
+	width: 32px;
+	margin: 0px auto 2px auto;
+	display: inline-block;
+}
+
+span.in2igui_icon_overlay
+{
+	height: 32px;
+	width: 32px;
+	background: right bottom no-repeat;
+	display:inline-block;
+}
+
+
+a.in2igui_toolbar_icon:hover span.in2igui_icon
+{
+	background-position: 0px -32px;
+}
+
+a.in2igui_toolbar_icon strong
+{
+	font-size: 11px;
+	color: #345;
+	font-weight: normal;
+	display: block;
+}
+
+a.in2igui_toolbar_icon_disabled
+{
+	opacity: 0.5;
+	cursor: default;
+}
+
+a.in2igui_toolbar_icon_disabled:hover span.in2igui_icon
+{
+	background-position: 0 0;
+}
+
+/********************************* Search *************************/
+
+span.in2igui_toolbar_search
+{
+	height: 58px;
+	vertical-align: middle;
+	display: inline-block;
+	text-align: center;
+}
+
+span.in2igui_toolbar_search span.in2igui_searchfield
+{
+	margin: 12px 0px 3px;
+}
+
+span.in2igui_toolbar_search_label
+{
+	display: block;
+	color:#334455;
+	font-size:11px;
+	text-align: center;
+}
+
+/********************** Buttons ********************/
+
+div.in2igui_toolbar a.in2igui_button
+{
+	margin: 0;
+	font-size: 12px;
+}
+
+/********************** Buttons ********************/
+
+div.in2igui_toolbar_badge
+{
+	vertical-align: middle;
+	display: inline-block;
+	background: url('../gfx/toolbar_badge.png') left top no-repeat;
+	height: 25px;
+	line-height: 22px;
+	font-size: 9pt;
+	padding-left: 8px;
+	margin: 15px 4px 0px 4px;
+}
+
+div.in2igui_toolbar_inner_badge
+{
+	background: url('../gfx/toolbar_badge.png') right -25px no-repeat;
+	padding-right: 8px;
+	height: 25px;
+	float: left;
+}
+
+div.in2igui_toolbar_inner_badge div.in2igui_toolbar_inner_badge
+{
+	background: url('../gfx/toolbar_badge.png') right -50px repeat-x;
+	padding: 0px 8px;
+}
+
+div.in2igui_toolbar_badge strong
+{
+	margin-right: 4px;
+	color: #666;
+}
+
+div.in2igui_toolbar_badge_icon
+{
+	width: 16px;
+	height: 16px;
+	float: left;
+	margin: 4px 3px 0px 0px;
+}
+
+/********************************* No labels **************************/
+
+div.in2igui_toolbar_nolabels
+{
+	height: auto;
+}
+
+div.in2igui_toolbar_nolabels a.in2igui_toolbar_icon
+{
+	height: 34px;	
+}
+
+div.in2igui_toolbar_nolabels a.in2igui_toolbar_icon strong
+{
+	display: none;
+}
+
+div.in2igui_toolbar_nolabels span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+{
+	padding-top: 0;
+}
+
+div.in2igui_toolbar_nolabels .in2igui_toolbar_search
+{
+	height: 34px;
+}
+
+div.in2igui_toolbar_nolabels .in2igui_toolbar_search .in2igui_searchfield  
+{
+	margin-top: 4px;
+}
+
+div.in2igui_toolbar_nolabels div.in2igui_toolbar_search span
+{
+	display: none;
+}
+
+div.in2igui_toolbar_nolabels div.in2igui_divider 
+{
+	height: 30px;
+	margin-top: 3px;
+}
+
+/************************************ Border *****************************/
+
+div.in2igui_toolbar_border_top
+{
+	border-top: 1px solid #ddd;
+	padding: 0;
+}
+
+div.in2igui_toolbar_border_top div.in2igui_toolbar_body
+{
+	border-top: 1px solid #fff;
+	background: #f2f2f3;
+}
+
+div.in2igui_toolbar_border_bottom
+{
+	border-bottom: 1px solid #ddd;
+	padding: 0;
+}
+
+div.in2igui_toolbar_border_bottom div.in2igui_toolbar_body
+{
+	border-top: 1px solid #fff;
+	background: #f2f2f3;
+}
+
+div.in2igui_layout_top div.in2igui_toolbar_border_top, div.in2igui_layout_top div.in2igui_toolbar_border_top div.in2igui_toolbar_body
+{
+	padding: 0 6px;
+	width: 100%;
+	margin-left: -6px;
+}
+
+/************************************ Items *****************************/
+
+span.in2igui_toolbar_item
+{
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0 5px;
+	height: 56px;
+}
+
+span.in2igui_toolbar_item_body
+{
+	display:block;
+	height: 38px;
+	text-align: center;
+}
+
+span.in2igui_toolbar_item span.in2igui_number
+{
+	top: 8px;
+}
+
+span.in2igui_toolbar_item a.in2igui_dropdown
+{
+	margin-top: 7px;
+}
+
+span.in2igui_toolbar_item span.in2igui_segmented
+{
+	margin-top: 9px;
+}
+
+
+span.in2igui_toolbar_label
+{
+	color:#334455;
+	display:block;
+	font-size:11px;
+	text-align:center;
+}
+
+/********************************* Grid ******************************/
+
+span.in2igui_toolbar_grid
+{
+	height: 56px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+table.in2igui_toolbar_grid
+{
+	display: inline-table;
+	border-collapse: collapse;
+	vertical-align: middle;
+	position: relative;
+	top: 1px;
+}
+
+table.in2igui_toolbar_grid td
+{
+	padding: 0px;
+	height: 27px;
+}
+
+table.in2igui_toolbar_grid th
+{
+	color: #334455;
+	font-size: 11px;
+	font-weight: normal;
+	padding-right: 2px;
+	padding-left: 5px;
+	text-align: right;
+	height: 27px;
+	padding: 0px;
+}
+
+label.in2igui_toolbar_grid
+{
+	font-size: 11px;
+	color: #334455;
+	vertical-align: middle;
+}

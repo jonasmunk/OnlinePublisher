@@ -1,0 +1,39 @@
+span.in2igui_segmented
+{
+	-moz-border-radius: 3px;
+	background: #fff;
+	border: 1px solid #AAAAAA;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 0;
+	height: 20px;
+}
+
+span.in2igui_segmented a
+{
+	display: inline-block;
+	height: 20px;
+	vertical-align: top;
+	text-decoration: none;
+	color: #333;
+	padding: 0 3px;
+	-moz-border-radius: 2px;
+	outline: none;
+}
+
+span.in2igui_segmented .in2igui_icon_16
+{
+	margin-top: 2px;
+}
+
+span.in2igui_segmented_text
+{
+	font-size: 12px;
+	line-height: 20px;
+	padding: 0 4px;
+}
+
+a.in2igui_segmented_selected
+{
+	background: #ddd;
+}

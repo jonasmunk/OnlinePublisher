@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>In2iGui</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Tabs.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Formula.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Toolbar.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/List.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		ui.context='../../..';
+	</script>
+</head>
+
+<body>
+	<button onclick="test1()">Test 1</button>
+<script type="text/javascript" charset="utf-8">
+		
+		var toolWin = ui.Window.create({width:300,top:50,left:300});
+		var toolbar = ui.Toolbar.create({labels:false});
+		toolbar.add(ui.Toolbar.SearchField.create({title:'Test',adaptive:true}));
+		toolWin.add(toolbar);
+		toolWin.add(ui.List.create({url:'../xml/data/list_users.xml'}));
+		toolWin.show();
+</script>
+
+</body>
+</html>

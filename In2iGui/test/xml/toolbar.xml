@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:In2iGui" title="List" padding="10">
+	<source name="itemsSource" url="data/source_items.xml"/>
+	<layout>
+		<top>
+			<toolbar>
+				<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
+				<divider/>
+				<icon icon="common/user" title="List users" action="list.setUrl('data/list_users.xml')"/>
+				<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')"/>
+				<icon icon="common/color" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
+				<number title="Venstre"/>
+				<dropdown title="Billedgruppe" placeholder="Vælg..." source="itemsSource">
+				</dropdown>
+				<grid>
+					<row>
+						<cell label="Max antal:">
+							<number/>
+						</cell>
+						<cell label="Gruppe:">
+							<dropdown value="1">
+								<item title="Lorem inpsum" value="1"/>
+								<item title="Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" value="2"/>
+								<item title="Ut enim ad minim veniam" value="3"/>
+								<item title="Excepteur sint occaecat" value="4"/>
+							</dropdown>
+						</cell>
+					</row>
+					<row>
+						<cell label="Min antal:">
+							<number/>
+						</cell>
+						<cell label="">
+							<textfield/>
+						</cell>
+					</row>
+				</grid>
+				<button title="Click me" small="true" rounded="true"/>
+				<button title="Click me"/>
+				<right>
+					<searchfield title="Søgning" expandedWidth="200" placeholder="Search"/>
+				</right>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<selection value="user" name="selector">
+					<item icon="common/person" title="Brugere" value="user"/>
+					<item icon="common/folder" title="Database" value="database" kind="folder"/>
+					<item icon="common/person" title="Alle objekter" value="object"/>
+					<title>Hey</title>
+					<items source="itemsSource"/>
+				</selection>
+			</left>
+			<center>
+				<toolbar border="bottom">
+					<button title="Click me" small="true" rounded="true"/>
+					<dropdown placeholder="Vælg..." source="itemsSource"/>
+					<textfield/>
+					<right>
+						<searchfield expandedWidth="200" placeholder="Search"/>
+					</right>
+				</toolbar>
+				<overflow>
+					<list name="list" url="data/list_users.xml"/>
+				</overflow>
+				<toolbar border="top">
+					<button title="Click me" small="true" rounded="true"/>
+					<dropdown placeholder="Vælg..." source="itemsSource"/>
+					<right>
+						<searchfield expandedWidth="200" placeholder="Search"/>
+					</right>
+				</toolbar>
+			</center>
+		</middle>
+		<bottom>
+			<toolbar>
+				<button title="Click me" small="true" rounded="true"/>
+				<button title="Click me" small="true" rounded="true"/>
+				<right>
+					<searchfield expandedWidth="200" placeholder="Search"/>
+				</right>
+			</toolbar>
+		</bottom>
+	</layout>
+</gui>

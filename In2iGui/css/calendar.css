@@ -1,0 +1,245 @@
+div.in2igui_calendar
+{
+	overflow-x: hidden;
+	width: 100%;
+}
+
+div.in2igui_calendar_busy div.in2igui_toolbar
+{
+	background: url('../gfx/spinner_small.gif') 220px center no-repeat;
+}
+
+div.in2igui_calendar_bar
+{
+	background: url('../gfx/calendar_bar.png');
+	height: 30px;
+	border-bottom: 1px solid #ccc;
+}
+
+table.in2igui_calendar_weekview
+{
+	border-collapse: collapse;
+	
+}
+
+table.in2igui_calendar_weekview
+{
+	background: #fff;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+}
+
+table.in2igui_calendar_weekview th
+{
+	background: url('../gfx/list_header.png');
+	height: 22px;
+	line-height: 21px;
+	font-size: 8pt;
+	font-weight: normal;
+	white-space: nowrap;
+	vertical-align: top;
+	padding: 0px;
+}
+
+table.in2igui_calendar_weekview th.time
+{
+	width: 10%;
+	text-align: left;
+}
+
+table.in2igui_calendar_weekview th div
+{
+	position: absolute;
+	margin-left: 5px;
+}
+
+table.in2igui_calendar_weekview td.time
+{
+	/*background-image: url('../gfx/calendar_time_bg.gif');*/
+	border-left:1px solid #DDDDDD;
+	border-right:1px solid #DDDDDD;
+}
+
+div.in2igui_calendar_time
+{
+	color: #666;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	height: 40px;
+}
+
+div.in2igui_calendar_time span
+{
+	margin-top: -10px;
+	padding: 0 2px;
+	margin-left: 2px;
+	position: absolute;
+	background: #fff;
+}
+
+div.in2igui_calendar_time_first span
+{
+	margin-top: -2px;
+	background: none;
+}
+
+div.in2igui_calendar_time_list span
+{
+	margin-top: -13px;
+	line-height: 12px;
+}
+
+table.in2igui_calendar_weekview td.time em
+{
+	background: #fff;
+	font-style: normal;
+}
+
+div.in2igui_calendar_day
+{
+	position: relative;
+}
+
+table.in2igui_calendar_weekview tbody td
+{
+	background-image: url('../gfx/calendar_bg.gif');
+	border-right: 1px solid #DDDDDD;
+	vertical-align:top;
+	width: 14%;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+}
+
+table.in2igui_calendar_weekview div.in2igui_calendar_event
+{
+	position: absolute;
+	background: #caddfd;
+	background: rgba(180, 200, 255, 0.5);
+	border: 1px solid #acbbd4;
+	width: 100%;
+	margin-left: -1px;
+	/*-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;*/
+	box-sizing: border-box;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	color: #112039;
+	font-size: 9pt;
+	line-height: 12px;
+	cursor: pointer;
+}
+
+table.in2igui_calendar_weekview div.in2igui_calendar_event:hover
+{
+	background: rgb(180, 200, 255);
+	border-color: rgb(120, 160, 230);
+}
+
+table.in2igui_calendar_weekview div.in2igui_calendar_event div
+{
+	padding: 2px 4px;
+}
+
+table.in2igui_calendar_weekview div.in2igui_calendar_event p
+{
+	margin: 0px;
+}
+
+p.in2igui_calendar_event_time
+{
+	float: right;
+}
+
+p.in2igui_calendar_event_location
+{
+	font-size: 8pt;
+}
+
+/****************************** Date picker **************************/
+
+div.in2igui_datepicker
+{
+	padding-left: 1px;
+}
+
+div.in2igui_datepicker table
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+
+div.in2igui_datepicker th
+{
+	font-size: 8pt;
+	line-height: 13px;
+	padding: 0px;
+	width: 14.2%;
+	font-weight: normal;
+	color: #40474D;
+}
+
+div.in2igui_datepicker td
+{
+	border: 1px solid #ddd;
+	height: 22px;
+	padding: 0px;
+	text-align: center;
+	font-size: 11px;
+	line-height: 12px;
+	cursor: pointer;
+	background: #fff;
+}
+
+td.in2igui_datepicker_dimmed
+{
+	color: #aaa;
+}
+
+div.in2igui_datepicker td.in2igui_datepicker_selected
+{
+	background: #3875d7;
+	color: #fff;
+}
+
+td.in2igui_datepicker_today
+{
+	font-weight: bold;
+}
+
+div.in2igui_datepicker_header
+{
+	font-size: 9pt;
+	overflow: hidden;
+	line-height: 13px;
+	height: 16px;
+}
+
+div.in2igui_datepicker_header strong
+{
+	display: block;
+	text-align: center;
+	font-family: Helvetica;
+	color: rgb(64, 71, 77);
+	text-shadow: rgba(255, 255, 255, 1) 0px 1px 0px;
+}
+
+a.in2igui_datepicker_previous
+{
+	float: left;
+	background: url('../icons/monochrome/previous1.png') -1px -2px no-repeat;
+	width: 12px;
+	height: 12px;
+	margin-left: 6px;
+	cursor: pointer;
+}
+
+a.in2igui_datepicker_next
+{
+	float: right;
+	background: url('../icons/monochrome/next1.png') -3px -2px no-repeat;
+	width: 12px;
+	height: 12px;
+	margin-right:10px;
+	cursor: pointer;
+}

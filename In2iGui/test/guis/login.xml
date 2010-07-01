@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:In2iGui" padding="10" title="Box">
+	<box width="300" padding="10" top="100" variant="textured">
+		<formula>
+			<header>OnlinePublisher Login</header>
+			<space height="5"/>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:" secret="true"/>
+				<buttons top="5">
+					<button title="Annuller"/>
+					<button title="Log in" highlighted="true" action="In2iGui.get().alert({title:'The user does not exist',emotion:'gasp',button:'Hey!'});"/>
+				</buttons>
+			</group>
+		</formula>
+	</box>
+</gui>

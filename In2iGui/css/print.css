@@ -1,0 +1,40 @@
+@import url('calendar.css');
+
+body.in2igui
+{
+	margin: 0px;
+	font-size: 11pt;
+	background: #fff;
+	overflow: auto;
+	min-height: 100%;
+}
+
+body.in2igui, textarea
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+td
+{
+	padding: 0px;
+}
+
+table
+{
+	border-spacing: 0px 0px;
+}
+
+tr.view_toolbar
+{
+	display: none;
+}
+
+div.in2igui_calendar_bar
+{
+	display: none;
+}
+
+table.in2igui_view
+{
+	width: 100%;
+}

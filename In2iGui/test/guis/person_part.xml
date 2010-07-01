@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:In2iGui" padding="10" title="Box">
+	<layout>
+		<top>
+			<toolbar>
+				<icon icon="common/stop" title="Annuler"/>
+				<icon icon="common/delete" title="Slet"/>
+				<icon icon="common/save" title="Gem"/>
+				<divider/>
+				<icon icon="common/person" title="Vælg person"/>
+				<dropdown label="Justering">
+					<item value="left" title="Venstre"/>
+					<item value="left" title="Højre"/>
+				</dropdown>
+				<divider/>
+				<grid>
+					<row>
+						<cell right="5"><checkbox/><label>Fornavn</label></cell>
+						<cell right="5"><checkbox/><label>Mellemnavn</label></cell>
+						<cell right="5"><checkbox/><label>Efternavn</label></cell>
+					</row>
+					<row>
+						<cell right="5"><checkbox/><label>Initialer</label></cell>
+						<cell right="5"><checkbox/><label>Kaldenavn</label></cell>
+						<cell right="5"><checkbox/><label>Køn</label></cell>
+					</row>
+				</grid>
+				<divider/>
+				<grid>
+					<row>
+						<cell right="5"><checkbox/><label>Gade</label></cell>
+						<cell right="5"><checkbox/><label>By</label></cell>
+					</row>
+					<row>
+						<cell right="5"><checkbox/><label>Postnummer</label></cell>
+						<cell right="5"><checkbox/><label>Land</label></cell>
+					</row>
+				</grid>
+			</toolbar>
+		</top>
+		<middle><checkbox/></middle>
+	</layout>
+</gui>

@@ -1,0 +1,71 @@
+table.in2igui_wizard, td.in2igui_wizard
+{
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+td.in2igui_wizard
+{
+	vertical-align: top;
+}
+
+th.in2igui_wizard
+{
+	width: 1%;
+	text-align: left;
+	vertical-align: top;
+	padding: 0 10px 0 0;
+}
+
+ul.in2igui_wizard
+{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #fff;
+}
+
+ul.in2igui_wizard a
+{
+	display: block;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #ddd;
+	padding: 0px 20px 0px 5px;
+	font-weight: normal;
+	white-space: nowrap;
+	height: 30px;
+	line-height: 28px;
+	text-decoration: none;
+	color: #333;
+}
+
+div.in2igui_wizard_steps
+{
+	overflow: hidden;
+}
+
+div.in2igui_wizard_step_frame
+{
+	background: #fff;
+	border: 1px solid #ccc;
+}
+
+ul.in2igui_wizard span
+{
+	vertical-align: middle;
+}
+
+ul.in2igui_wizard span.in2igui_icon_1
+{
+	margin: 1px 5px 0px 0px;
+}
+
+ul.in2igui_wizard a.in2igui_selected
+{
+	background-color:#bcd;
+	border-color:#abc;
+	color: #000;
+}

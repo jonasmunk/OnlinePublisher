@@ -1,0 +1,296 @@
+
+div.in2igui_buttons
+{
+	overflow: hidden;
+	font-size: 0;
+	line-height: 0;
+}
+
+div.in2igui_buttons_right div.in2igui_buttons_body
+{
+	text-align: right;
+}
+
+div.in2igui_buttons_center div.in2igui_buttons_body
+{
+	text-align: center;
+}
+
+div.in2igui_buttons a.in2igui_button
+{
+	margin-right: 2px;
+}
+
+div.in2igui_buttons_right a.in2igui_button
+{
+	margin: 0px 0px 0px 2px;
+}
+
+a.in2igui_button
+{
+	background: url('../gfx/button2.png') top left no-repeat;
+	color: #004a80;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 12px;
+	height: 30px;
+	line-height: 29px;
+	cursor: pointer;
+	text-decoration: none;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
+
+a.in2igui_button span
+{
+	background-image: url('../gfx/button2.png');	
+	background-repeat: no-repeat;
+	display: inline-block;
+	background-position: right -30px;
+	background-repeat: no-repeat;
+	height: 30px;
+}
+
+a.in2igui_button span span
+{
+	background-position: 0px -60px;
+	background-repeat: repeat-x;
+	margin: 0px 6px;
+	padding: 0px 6px;
+}
+
+a.in2igui_button_highlighted, a.in2igui_button_highlighted span
+{
+	color: #094100;
+	background-image: url('../gfx/button_highlighted.png');
+	background-repeat: no-repeat;
+}
+
+em.in2igui_button_icon
+{
+	padding: 0px;
+	margin: -1px 3px 0px -2px;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+em.in2igui_button_icon_notext
+{
+	margin: -1px -3px 0px -3px;
+}
+
+a.in2igui_button:hover
+{
+	background-position: 0px -90px;
+}
+
+a.in2igui_button:hover span
+{
+	background-position: 100% -120px;
+}
+
+a.in2igui_button:hover span span
+{
+	background-position: 0px -150px;
+	background-repeat: repeat-x;
+}
+
+a.in2igui_button:focus
+{
+	background-position: 0px -180px;
+	outline: none;
+}
+
+a.in2igui_button:focus span
+{
+	background-position: 100% -210px;
+}
+
+a.in2igui_button:focus span span
+{
+	background-position: 0px -240px;
+	background-repeat: repeat-x;
+}
+
+a.in2igui_button:focus:hover
+{
+	background-position: 0px -270px;
+	outline: none;
+}
+
+a.in2igui_button:focus:hover span
+{
+	background-position: 100% -300px;
+}
+
+a.in2igui_button:focus:hover span span
+{
+	background-position: 0px -330px;
+	background-repeat: repeat-x;
+}
+
+a.in2igui_button:active
+{
+	background-position: 0px -360px;
+	outline: none;
+}
+
+a.in2igui_button:active span
+{
+	background-position: 100% -390px;
+}
+
+a.in2igui_button:active span span
+{
+	background-position: 0px -420px;
+	background-repeat: repeat-x;
+}
+
+a.in2igui_button:active:focus
+{
+	background-position: 0px -450px;
+	outline: none;
+}
+
+a.in2igui_button:active:focus span
+{
+	background-position: 100% -480px;
+}
+
+a.in2igui_button:active:focus span span
+{
+	background-position: 0px -510px;
+	background-repeat: repeat-x;
+}
+
+a.in2igui_button_highlighted, a.in2igui_button_highlighted span
+{
+	background-image: url('../gfx/button_highlighted2.png');
+	color: #fff;
+}
+
+a.in2igui_button_disabled
+{
+	color: #666;
+	opacity: .5;
+	cursor: default;
+}
+
+a.in2igui_button_disabled:hover
+{
+	background-position: top left;
+}
+
+a.in2igui_button_disabled:hover span
+{
+	background-position: 100% -30px;
+}
+
+a.in2igui_button_disabled:hover span span
+{
+	background-position: 0px -60px;
+}
+
+a.in2igui_button_small_rounded
+{
+	height: 24px;
+	background-image: url('../gfx/button_small_rounded.png');
+	line-height: 0;
+	font-size: 0;
+}
+
+a.in2igui_button_small_rounded span
+{
+	height: 24px;
+	background-image: url('../gfx/button_small_rounded.png');
+	background-position: right -24px;
+}
+
+a.in2igui_button_small_rounded span span
+{
+	background-position: left -48px;
+	margin: 0 12px;
+	padding: 0 3px;
+	font-size: 12px;
+	line-height: 23px;
+	text-shadow: 0 1px 0 #FFFFFF;
+}
+
+a.in2igui_button_small_rounded:hover
+{
+	background-position: left -72px;
+}
+
+a.in2igui_button_small_rounded:hover span
+{
+	background-position: right -96px;
+}
+
+a.in2igui_button_small_rounded:hover span span
+{
+	background-position: left -120px;
+}
+
+a.in2igui_button_small_rounded:active
+{
+	background-position: left -144px;
+}
+
+a.in2igui_button_small_rounded:active span
+{
+	background-position: right -168px;
+}
+
+a.in2igui_button_small_rounded:active span span
+{
+	background-position: left -192px;
+}
+
+
+a.in2igui_button_small_rounded:focus
+{
+	background-position: left -216px;
+}
+
+a.in2igui_button_small_rounded:focus span
+{
+	background-position: right -240px;
+}
+
+a.in2igui_button_small_rounded:focus span span
+{
+	background-position: left -264px;
+}
+
+a.in2igui_button_small_rounded:focus:hover
+{
+	background-position: left -288px;
+}
+
+a.in2igui_button_small_rounded:focus:hover span
+{
+	background-position: right -312px;
+}
+
+a.in2igui_button_small_rounded:focus:hover span span
+{
+	background-position: left -336px;
+}
+
+a.in2igui_button_small_rounded:focus:active
+{
+	background-position: left -360px;
+}
+
+a.in2igui_button_small_rounded:focus:active span
+{
+	background-position: right -384px;
+}
+
+a.in2igui_button_small_rounded:focus:active span span
+{
+	background-position: left -408px;
+}

@@ -1,0 +1,163 @@
+.in2igui_window
+{
+	position: absolute;
+	top: 50px;
+	left: 300px;
+	display: none;
+	opacity: 0;
+}
+
+.in2igui_window_titlebar
+{
+	font-family: 'Lucida Grande','Verdana',sans-serif;
+	background: url('../gfx/window_grey.png') left -27px no-repeat;
+	font-size: 0;
+	height:27px;
+	cursor: default;
+	text-align:center;
+}
+
+.in2igui_window_titlebar div
+{
+	height:27px;
+	background: url('../gfx/window_grey.png') left -27px no-repeat;
+	background-position: right -54px;
+}
+
+.in2igui_window_titlebar div div
+{
+	background-position: left 0px;
+	background-repeat: repeat-x;
+	margin: 0px 13px;
+}
+
+span.in2igui_window_title
+{
+	font-size: 10pt;
+	line-height: 27px;
+	color:#000;
+	vertical-align: middle;
+}
+
+span.in2igui_window_icon
+{
+	font-size: 0;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 3px;
+	vertical-align: middle;
+}
+
+.in2igui_window_content
+{
+	background: url('../gfx/window_grey_middle_right.png') right top repeat-y;
+	padding-right: 8px;
+}
+
+.in2igui_window_content .in2igui_window_content
+{
+	background: url('../gfx/window_grey_middle.png') top left repeat-y;
+	padding: 0px 0px 0px 8px;
+}
+
+div.in2igui_window_body
+{
+	overflow: hidden;
+	margin: 0 -3px;
+}
+
+
+.in2igui_window_bottom
+{
+	background: url('../gfx/window_grey.png') left -92px no-repeat;
+	font-size: 0px;
+	height: 11px;
+}
+
+.in2igui_window_bottom div
+{
+	background: url('../gfx/window_grey.png') right -103px no-repeat;
+	height: 11px;
+}
+
+.in2igui_window_bottom div div
+{
+	background-position: left -81px;
+	background-repeat: repeat-x;
+	margin: 0px 13px;
+}
+
+
+.in2igui_window_close
+{
+	font-size: 0;
+	position: absolute;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	margin-left: 8px;
+	margin-top: 7px;
+	background: url('../gfx/window_close.png') top left no-repeat;
+}
+
+.in2igui_window_close:hover
+{
+	background-position: left -16px;
+}
+
+
+/********************************** Light **************************/
+
+div.in2igui_window_light div.in2igui_window_titlebar, div.in2igui_window_light div.in2igui_window_titlebar div
+{
+	background-image: url('../gfx/window_light.png');
+}
+
+div.in2igui_window_light .in2igui_window_titlebar span
+{
+	color: #333;
+}
+
+div.in2igui_window_light div.in2igui_window_bottom
+{
+	background-image: url('../gfx/window_light.png');
+}
+
+div.in2igui_window_light div.in2igui_window_content
+{
+	background-image: url('../gfx/window_light_middle_right.png');
+}
+
+div.in2igui_window_light div.in2igui_window_content div.in2igui_window_content
+{
+	background-image: url('../gfx/window_light_middle.png');
+}
+
+
+/********************************** Dark **************************/
+
+div.in2igui_window_dark div.in2igui_window_titlebar, div.in2igui_window_dark div.in2igui_window_titlebar div
+{
+	background-image: url('../gfx/window_dark.png');
+}
+
+div.in2igui_window_dark .in2igui_window_titlebar span
+{
+	color: #fff;
+}
+
+div.in2igui_window_dark div.in2igui_window_bottom
+{
+	background-image: url('../gfx/window_dark.png');
+}
+
+div.in2igui_window_dark div.in2igui_window_content
+{
+	background-image: url('../gfx/window_dark_middle_right.png');
+}
+
+div.in2igui_window_dark div.in2igui_window_content div.in2igui_window_content
+{
+	background-image: url('../gfx/window_dark_middle.png');
+}

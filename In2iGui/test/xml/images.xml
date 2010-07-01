@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:In2iGui" title="System">
+	<controller name="controller" source="list.js"/>
+	<source name="itemsSource" url="data/source_items.xml"/>
+	<source name="listSource" url="data/list_icons.xml"/>
+	<source name="languagesSource" url="data/items_languages.xml"/>
+	<view>
+		<toolbar>
+			<icon icon="common/page" title="Opret side" overlay="new" action="newPage.show()"/>
+			<divider/>
+			<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>
+			<search title="Søgning"/>
+		</toolbar>
+		<content>
+			<split>
+				<sidebar>
+					<selection value="user" name="selector">
+						<item icon="file/generic" title="Alle sider" value="user"/>
+						<title>Hierarkier</title>
+						<item icon="common/hierarchy" title="Hovedsite" value="danish" kind="hierarchy"/>
+						<item icon="common/hierarchy" title="Support" value="english" kind="hierarchy"/>
+						<title>Sprog</title>
+						<item icon="flag/dk" title="Dansk" value="da"/>
+						<item icon="flag/gb" title="Engelsk" value="en"/>
+						<title>Grupper</title>
+						<items source="itemsSource"/>
+						<title>Oversigter</title>
+						<item icon="part/news" title="Nyheder" value="news"/>
+						<item icon="common/warning" title="Advarsler" value="warnings"/>
+						<item icon="common/edit" title="Ændret" value="changed"/>
+						<item icon="common/delete" title="Uden menupunk" value="nomenu"/>
+						<item icon="common/time" title="Arkiveret" value="archive"/>
+					</selection>
+				</sidebar>
+				<content>
+					<overflow height="300" resize="-58">
+						<list name="list" source="listSource"/>
+					</overflow>
+				</content>
+			</split>
+		</content>
+	</view>
+	<window name="newPage" width="300" title="Ny side" padding="5">
+		<formula>
+			<tabs>
+				<tab title="Tab 1">
+					<group labels="besides">
+						<text label="Titel:"/>
+						<text label="Beskrivelse:" lines="6"/>
+						<text label="Sti:"/>
+						<text label="Nøgleord:"/>
+						<datetime label="Dato:"/>
+						<dropdown label="Sprog:" source="languagesSource"/>
+						<dropdown label="Design:" source="languagesSource"/>
+						<dropdown label="Opsætning:" source="languagesSource"/>
+						<checkbox label="Inaktiv:"/>
+						<checkbox label="Søgbar:"/>
+						<buttons top="10">
+							<button title="Annuller"/>
+							<button title="Gem" highlighted="true"/>
+						</buttons>
+					</group>
+				</tab>
+				<tab title="Tab 2">
+				</tab>
+			</tabs>
+		</formula>
+	</window>
+	<box absolute="true" name="box" padding="10" modal="true" width="500" variant="textured" title="Ny side">
+		<wizard>
+			<step title="Vælg skabelon" icon="file/generic">
+				<picker title="Vælg skabelon"/>
+			</step>
+			<step title="Egenskaber">
+				<formula>
+					<group labels="above">
+						<text label="Titel:"/>
+						<text label="Sti:"/>
+						<select label="Sprog:"/>
+					</group>
+				</formula>
+			</step>
+		</wizard>
+		<buttons top="10" align="right">
+			<button title="Forrige" action="box.hide()"/>
+			<button title="Næste" action="box.hide()"/>
+			<button title="Annuller" action="box.hide()"/>
+			<button title="Gem" highlighted="true"/>
+		</buttons>
+	</box>
+</gui>

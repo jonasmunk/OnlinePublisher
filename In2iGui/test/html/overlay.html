@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>In2iGui</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Overlay.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		ui.context='../../..';
+	</script>
+</head>
+
+<body>
+<button onclick="ui.showMessage({text:'This is a message'})">Show message</button>
+<button onclick="ui.showMessage({text:'This is a another message (1 sec.)',duration:1000})">Another message</button>
+<button onclick="ui.hideMessage()">hide message</button>
+<button onclick="test1()">Test</button>
+<button onclick="testConfirm(this)">Confirm</button>
+<button onclick="ui.confirmOverlay({element:this,text:'Do you want to delete?',okText:'Yes delete!',cancelText:'Oops, no not really',onOk:function() {alert('OK!')}})">Confirm native</button>
+<button onclick="testButtonConfirm()">Confirm button</button>
+<div id="a">A</div>
+<script type="text/javascript" charset="utf-8">
+	
+	function test1() {
+		var overlay = ui.Overlay.create();
+		overlay.addIcon('x','common/delete');
+		overlay.addIcon('x','common/save');
+		overlay.showAtElement($('a'));
+	}
+	
+	function testConfirm(node) {
+		var overlay = ui.Overlay.create({modal:true});
+		overlay.addText('Are you sure?')
+		overlay.add(ui.Button.create({text:'Save',highlighted:'true'}));
+		var cancel = ui.Button.create({text:'Cancel'});
+		cancel.onClick(function() {
+			overlay.hide();
+		});
+		overlay.add(cancel);
+		overlay.show({element:node});
+	}
+	
+	function testButtonConfirm(node) {
+		var win = ui.Window.create({width:400});
+		var button = ui.Button.create({text:'I need confirmation!',confirm:{text:'Are you confident in yourself?'}});
+		button.click(function() {
+			alert('Yes!');
+		});
+		win.add(button);
+		win.show();
+	}
+</script>
+</body>
+</html>

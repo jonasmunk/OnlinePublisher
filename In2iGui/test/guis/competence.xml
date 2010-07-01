@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:In2iGui" pad="10" title="Box">
+	<box width="400" padding="10" top="100" variant="textured">
+		<formula name="formula">
+			<header>Ny begvienhed</header>
+			<space height="5"/>
+			<group>
+				<text label="Betegnelse:"/>
+				<text label="Sted:"/>
+				<dropdown label="Type:">
+					<item title="Anden" value="0"/>
+					<item title="Arbejdsfunktion" value="0"/>
+				</dropdown>
+				<datetime label="Startdato:"/>
+				<datetime label="Slutdato:"/>
+				<buttons top="5">
+					<button title="Annuller" action="n2i.log(formula.getValues());"/>
+					<button title="Opret" highlighted="true"/>
+				</buttons>
+			</group>
+		</formula>
+	</box>
+</gui>

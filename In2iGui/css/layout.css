@@ -1,0 +1,155 @@
+/************************ overflow **********************/
+
+
+.in2igui_overflow
+{
+	overflow: auto;
+	width: 100%;
+	position: relative;
+}
+
+/******************** Columns *********************/
+
+table.in2igui_columns
+{
+	border-spacing: 0;
+	width: 100%;
+	table-layout: fixed; 
+}
+
+td.in2igui_columns_column
+{
+	vertical-align: top;
+}
+
+/******************** Header *********************/
+
+h2.in2igui_header
+{
+	font-weight: normal;
+	margin: 0;
+	color: #666;
+	height: 32px;
+	line-height: 32px;
+	font-size: 20px;
+}
+
+h2.in2igui_header span.in2igui_icon_2
+{
+	margin-right: 3px;
+	vertical-align: top;
+}
+
+/********************** Layout ******************/
+
+table.in2igui_layout
+{
+	height: 100%;
+	width: 100%;
+	border-spacing: 0;
+}
+
+thead.in2igui_layout
+{
+	height: 1%;
+}
+
+div.in2igui_layout_top
+{
+	background: url('../gfx/layout.png') left top no-repeat;
+}
+
+div.in2igui_layout_top div.in2igui_layout_top
+{
+	background: url('../gfx/layout.png') right -100px no-repeat;
+}
+
+div.in2igui_layout_top div.in2igui_layout_top div.in2igui_layout_top
+{
+	background: url('../gfx/layout.png') left -200px repeat-x;
+	margin: 0 9px;
+}
+
+td.in2igui_layout_top
+{
+	padding: 0;
+}
+
+td.in2igui_layout_top div.in2igui_toolbar
+{
+	height: 56px;
+}
+
+table.in2igui_layout_middle
+{
+	height: 100%;
+	width: 100%;
+	border-spacing: 0;
+	background: #fff;
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+tr.in2igui_layout_middle
+{
+	background: url(../gfx/layout_middle.png) repeat-y scroll 100% 0;
+}
+
+td.in2igui_layout_middle
+{
+	padding: 0;
+	background: url(../gfx/layout_middle.png) repeat-y scroll 0 0;
+	padding: 0 3px;
+}
+
+td.in2igui_layout_left
+{
+	background: #EBF0F7 none repeat scroll 0 0;
+	border-right: 1px solid #BBBBBB;
+	vertical-align: top;
+	padding: 0;
+	width: 200px;
+}
+
+div.in2igui_layout_left
+{
+	width: 200px;
+	font-size: 0;
+	line-height: 0;
+}
+
+td.in2igui_layout_center
+{
+	background: #fff;
+	vertical-align: top;
+	padding: 0;
+	width:100%;
+}
+
+tfoot.in2igui_layout
+{
+	height: 1%;
+}
+
+
+div.in2igui_layout_bottom
+{
+	background: url('../gfx/layout.png') left 230px repeat-y;
+	min-height: 30px;
+}
+
+div.in2igui_layout_bottom div.in2igui_layout_bottom
+{
+	background: url('../gfx/layout.png') right 130px repeat-y;
+}
+
+div.in2igui_layout_bottom div.in2igui_layout_bottom div.in2igui_layout_bottom
+{
+	background: url('../gfx/layout.png') left -570px repeat-x;
+	margin: 0 9px;
+}
+
+td.in2igui_layout_bottom
+{
+	padding: 0;
+}

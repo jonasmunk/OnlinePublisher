@@ -1,0 +1,32 @@
+div.in2igui_articles div.in2igui_article
+{
+	padding: 5px 0;
+}
+
+div.in2igui_article h2
+{
+	margin: 0;
+	font-weight: normal;
+	font-size: 14px;
+}
+
+div.in2igui_article p
+{
+	font-size: 11px;
+	margin: 0;
+	color: #333;
+}
+
+div.in2igui_article p.in2igui_dimmed
+{
+	color: #999;
+}
+
+div.in2igui_articles_loading
+{
+	background: url('../gfx/progress/spinner_white_16.gif') left center no-repeat;
+	padding: 0px 0 0 20px;
+	margin-top: 10px;
+	color:#444444;
+	font-size:13px;
+}

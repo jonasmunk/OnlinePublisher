@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>In2iGui</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Tabs.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Formula.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Toolbar.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Bar.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/List.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/SearchField.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		ui.context='../../..';
+	</script>
+</head>
+
+<body>
+	<button onclick="test1()">Test 1</button>
+<script type="text/javascript" charset="utf-8">
+		var normal = ui.Window.create();
+		normal.add(new Element('div',{style:'width: 200px; height: 200px;'}));
+		normal.show();
+		
+		var light = ui.Window.create({variant:'light'});
+		light.add(new Element('div',{style:'width: 200px; height: 200px;'}));
+		light.show();
+		
+		var dark = ui.Window.create({variant:'dark'});
+		dark.add(new Element('div',{style:'width: 200px; height: 200px;'}));
+		dark.show();
+		
+		var tabWindow = ui.Window.create({variant:'dark',title:'Window with tabs',width:300});
+		var tabs = ui.Tabs.create();
+		var tab1 = tabs.createTab({title:'My first tab',padding:10});
+		var tab2 = tabs.createTab({title:'My second tab'});
+		tab1.add(ui.Button.create({title:'Button'}));
+		tab1.add(ui.Formula.Text.create({value:'Lorem ipsum'}));
+		tabWindow.add(tabs);
+		tabWindow.show();
+		
+		var toolWin = ui.Window.create({width:300,top:50,left:300});
+		var toolbar = ui.Toolbar.create({labels:false});
+		toolbar.add(ui.Toolbar.Icon.create({icon:'common/folder',title:'Test'}));
+		toolbar.add(ui.SearchField.create({title:'Test'}));
+		toolbar.addDivider();
+		toolbar.add(ui.Button.create({icon:'monochrome/previous'}));
+		toolbar.add(ui.Button.create({icon:'monochrome/next'}));
+		toolbar.add(ui.Button.create({icon:'common/delete',text:'Delete'}));
+		toolWin.add(toolbar);
+		toolWin.add(ui.List.create({url:'../xml/data/list_users.xml'}));
+		toolWin.show();
+</script>
+
+</body>
+</html>

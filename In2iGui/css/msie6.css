@@ -1,0 +1,63 @@
+@import url('msie.css');
+
+.in2igui_window_bottom, .in2igui_window_bottom div, .in2igui_window .titlebar
+{
+	background-image: url('../gfx/window_bg.gif');
+}
+
+.in2igui_window_content 
+{
+	background-image: url('../gfx/window_bg_middle.gif');
+}
+
+div.in2igui_list .navigation .selection div
+{
+	width: 1%;
+	white-space: nowrap;
+}
+
+div.in2igui_list .navigation .selection a
+{
+	float: none;
+}
+
+div.in2igui_alert div.in2igui_buttons
+{
+}
+
+div.in2igui_alert_body
+{
+}
+
+div.in2igui_box_top, div.in2igui_box_top div, div.in2igui_box_top div div, div.in2igui_box_bottom, div.in2igui_box_bottom div, div.in2igui_box_bottom div div, div.in2igui_box_middle, div.in2igui_box_middle div.in2igui_box_middle
+{
+	background: none;
+}
+
+.in2igui_imageviewer_controller
+{
+	width: auto;
+}
+
+a.in2igui_box_close
+{
+	background: url('../gfx/box_close.gif') left top no-repeat;
+	margin: 5px 0 0 -8px;
+}
+
+div.in2igui_imageviewer_controller a
+{
+	background-image: url('../gfx/imageviewer_controls.gif');
+}
+
+div.in2igui_imageviewer_controller, div.in2igui_imageviewer_controller div, div.in2igui_imageviewer_controller div div
+{
+	background-image: url('../gfx/overlay.gif');
+}
+
+/*********** Search field ***************/
+
+span.in2igui_searchfield, span.in2igui_searchfield span, a.in2igui_searchfield_reset
+{
+	background-image: url('../gfx/search_field.gif');
+}

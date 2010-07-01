@@ -1,0 +1,52 @@
+body.in2igui
+{
+	font-size: 0;
+}
+
+table.in2igui_layout
+{
+	height: 100%;
+	border-collapse: collapse;
+}
+
+a.in2igui_toolbar_icon_disabled
+{
+	filter: alpha(opacity = 50);
+	background-color: #F2F2F3;
+}
+
+a.in2igui_button_disabled
+{
+	filter: alpha(opacity = 50);
+	background-color: #e7e7e7;
+}
+
+div.in2igui_window_dark a.in2igui_button_disabled
+{
+	background-color: #333;
+}
+
+.in2igui_formula_text
+{
+	background: url('#');
+}
+
+input.in2igui_formula_text
+{
+	padding-top: 2px;
+}
+
+span.in2igui_upload_button_input input
+{
+	filter: alpha(opacity = 0);
+}
+
+span.in2igui_number input
+{
+	padding-top: 4px;
+}
+
+div.in2igui_list_body
+{
+	overflow-y: hidden;
+}
