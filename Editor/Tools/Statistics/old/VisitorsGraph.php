@@ -1,0 +1,62 @@
+<?php
+/**
+ * @package OnlinePublisher
+ * @subpackage Tools.Statistics
+ */
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Security.php';
+require_once '../../Include/Functions.php';
+require_once '../../Include/XmlWebGui.php';
+require_once '../../Include/Session.php';
+require_once 'Functions.php';
+require_once "../../Libraries/charts/charts.php";
+
+
+$mode = getRequestToolSessionVar('statistics','visitors.mode','mode','weeks');
+
+$labels = array("");
+$hits = array("Hits");
+$sessions = array("Sessions");
+
+$sql=buildVisitorsSql($mode);
+$max = findMaxHit($sql);
+$max = round($max*1.1,-1);
+$result = Database::select($sql);	
+while($row = Database::next($result)) {
+	$labels[] = $row['label'];
+	$hits[] = $row['hits'];
+	$sessions[] = $row['sessions'];
+}
+Database::free($result);
+
+
+if (count($labels)>50) {
+    $skip = round(count($labels)/50)-1;
+} else {
+    $skip = 0;
+}
+
+$chart[ 'axis_category' ] = array ( 'size'=>9, 'color'=>"000000", 'alpha'=>40, 'font'=>"arial", 'bold'=>true, 'skip'=>$skip ,'orientation'=>"vertical_down" ); 
+
+$chart[ 'axis_ticks' ] = array ( 'value_ticks'=>true, 'category_ticks'=>true, 'major_thickness'=>2, 'minor_thickness'=>1, 'minor_count'=>1, 'major_color'=>"aaaaaa", 'minor_color'=>"aaaaaa" ,'position'=>"outside" );
+$chart[ 'axis_value' ] = array (  'min'=>0,'max'=>$max, 'font'=>"arial", 'bold'=>true, 'size'=>10, 'color'=>"aaaaaa", 'alpha'=>100, 'steps'=>10, 'prefix'=>"", 'suffix'=>"", 'decimals'=>0, 'separator'=>"", 'show_min'=>true );
+
+$chart[ 'chart_border' ] = array ( 'color'=>"999999", 'top_thickness'=>1, 'bottom_thickness'=>1, 'left_thickness'=>1, 'right_thickness'=>1 );
+$chart[ 'chart_grid_h' ] = array ( 'alpha'=>5, 'color'=>"000000", 'thickness'=>1, 'type'=>"solid" );
+$chart[ 'chart_grid_v' ] = array ( 'alpha'=>10, 'color'=>"000000", 'thickness'=>1, 'type'=>"solid" );
+$chart[ 'chart_pref' ] = array ( 'line_thickness'=>3, 'point_shape'=>"none", 'fill_shape'=>false );
+$chart[ 'chart_rect' ] = array ( 'x'=>30, 'y'=>5, 'width'=>545, 'height'=>300, 'positive_color'=>"eeeeee", 'positive_alpha'=>50, 'negative_color'=>"ff0000",  'negative_alpha'=>100 );
+if ($mode=='years') {
+	$chart[ 'chart_type' ] = "Column";
+}
+else {
+	$chart[ 'chart_type' ] = "Line";
+}
+$chart[ 'chart_value' ] = array ( 'prefix'=>"", 'suffix'=>"", 'decimals'=>0, 'separator'=>"", 'position'=>"cursor", 'hide_zero'=>true, 'as_percentage'=>false, 'font'=>"arial", 'bold'=>true, 'size'=>12, 'color'=>"000000", 'alpha'=>75 );
+$chart[ 'chart_data' ] = array ($labels,$hits,$sessions);
+$chart[ 'legend_rect' ] = array ( 'x'=>-100, 'y'=>-100, 'width'=>10, 'height'=>10, 'margin'=>10 ); 
+
+$chart[ 'series_color' ] = array ( "3366ff", "66ff99", "ff0000" ); 
+
+SendChartData ( $chart );
+?>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tool>
+	<icon>common/color</icon>
+	<name>Designer</name>
+	<description>Ændring af hjemmesidens design</description>
+	<category>setup</category>
+	<priority>0</priority>
+</tool>

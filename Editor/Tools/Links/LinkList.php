@@ -1,0 +1,48 @@
+<?php
+/**
+ * @package OnlinePublisher
+ * @subpackage Tools.Links
+ */
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Security.php';
+require_once '../../Classes/Design.php';
+require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Request.php';
+require_once 'LinksController.php';
+
+$subset = Request::getString('subset');
+$pair = split('-',$subset);
+
+$query = array();
+if ($pair[0]=='source') {
+	$query['source'] = $pair[1];
+} else {
+	$query['source'] = 'all';
+}
+
+$writer = new ListWriter();
+
+$writer->startList();
+$writer->startHeaders();
+$writer->header(array('title'=>'Kilde'));
+$writer->header();
+$writer->header(array('title'=>'Mål'));
+$writer->header(array('title'=>'Status'));
+$writer->endHeaders();
+
+$sql = LinksController::buildSQL($query);
+error_log($sql);
+$result = Database::select($sql);
+while ($row = Database::next($result)) {
+    $analyzed = LinksController::analyzeLink($row);
+	$writer->startRow();
+	$writer->startCell(array('icon'=>$analyzed['sourceIcon']))->text($analyzed['sourceTitle'])->endCell();
+	$writer->startCell()->text($analyzed['sourceData'])->endCell();
+	$writer->startCell(array('icon'=>$analyzed['targetIcon']))->text($analyzed['targetTitle'])->endCell();
+	$writer->startCell()->text($analyzed['message'])->endCell();
+	$writer->endRow();
+}
+Database::free($result);
+
+$writer->endList();
+?>

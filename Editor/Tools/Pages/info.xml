@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tool>
+	<icon>application/pages</icon>
+	<name>Sider</name>
+	<description>Oversigt over og redigering af sider på hjemmesiden</description>
+	<category>edit</category>
+	<priority>0</priority>
+	<actions>
+		<action>
+			<unique>newpage</unique>
+			<name>Opret ny side</name>
+			<description>Guide til oprettelse af en ny side</description>
+			<icon>Template/Generic</icon>
+			<overlay>New</overlay>
+		</action>
+	</actions>
+</tool>

@@ -1,0 +1,142 @@
+html
+{
+	height: 100%;
+}
+
+body {
+	margin: 0px;
+	min-height: 100%;
+}
+
+div.editor_body
+{
+	padding: 8px;
+}
+
+form {
+	margin: 0px;
+}
+
+img.Minicon {
+	margin: 1px;
+}
+
+td.rowButtonCell {
+	width: 34px;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+td.colButtonCell {
+	width: 10px;
+	height: 10px;
+}
+
+td.column {
+	border: 1px solid #eee;
+	vertical-align: top;
+}
+
+td.columnSelected {
+	border: 1px solid #33e;
+	vertical-align: top;
+}
+
+td.columnDesign {
+	border: 1px solid #ccc;
+	vertical-align: top;
+}
+
+td.columnHover
+{
+	border: 1px solid #abf;
+}
+
+td.secButtonCell {
+	width: 34px;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+td.sectionSelected {
+	border: 1px solid #33e;
+}
+
+td.sectionNotSelected {
+	border: 1px solid white;
+}
+
+tr.in2igui_overlay_bound td.sectionNotSelected
+{
+	border: dashed 1px #abf;
+}
+
+table.row {
+	margin-bottom: 1px;
+}
+
+
+.Disabled {
+	opacity: 0.5;
+}
+/*//////////////// In2iScripts /////////////////*/
+
+
+.in2i-menu {
+	position: absolute;
+	z-index: 100;
+	visibility: hidden;
+	width: 100px;
+	border: 1px solid #888;
+	border-color: #ddd #888 #888 #ddd;
+	padding: 1px; background: white;
+}
+
+.in2i-menu-empty {
+	display: block;
+	border: 1px solid white;
+	padding: 2px 5px 2px 5px;
+	font-size: 11px;
+	color: black;
+}
+
+.in2i-menu a {
+	display: block;
+	width: auto;
+	overflow: visible;
+	padding: 2px 0px 2px 5px;
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	text-decoration: none;
+	vertical-align: middle;
+	text-align: left;
+	color: #333;
+}
+
+.in2i-menu a:visited, .Menu a:visited:hover {
+	color: #333;
+}
+
+.in2i-menu a:hover {
+	color: #333;
+	background: rgb(180,200,255);
+	background-image: url('../../../XmlWebGui/Skins/In2ition/Graphics/ResultGroupTitle.png');
+	color: white;
+}
+
+.in2i-menu a .arrow {
+	float: right;
+	border: 0;
+	width: 3px;
+	margin-right: 3px;
+	margin-top: 4px;
+}
+
+.in2i-menu div {
+	height: 0;
+	border-top: 1px solid #bbb; 
+	border-bottom: 1px solid #eee;
+	overflow: hidden;
+	margin: 2px 0px 2px 0px;
+	font-size: 0mm;
+}

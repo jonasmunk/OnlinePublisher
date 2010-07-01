@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tool>
+	<icon>common/news</icon>
+	<name>Nyheder</name>
+	<description>Oprettelse og redigering af nyheder</description>
+	<category>edit</category>
+	<priority>3</priority>
+	<actions>
+		<action>
+			<unique>newnews</unique>
+			<name>Opret ny nyhed</name>
+			<description>Oprettelse af en nyhed der kan vises på hjemmesiden</description>
+			<icon>Part/News</icon>
+			<overlay>New</overlay>
+		</action>
+	</actions>
+</tool>

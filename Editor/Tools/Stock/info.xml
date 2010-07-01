@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tool>
+	<icon>Basic/Close</icon>
+	<name>Lager</name>
+	<description>Oprettelse af lager og tilføjelse af produkter</description>
+	<category>edit</category>
+	<priority>6</priority>
+</tool>

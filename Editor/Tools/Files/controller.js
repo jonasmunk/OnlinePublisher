@@ -1,0 +1,193 @@
+ui.listen({
+	
+	dragDrop : [
+		{drag:'file',drop:'filegroup'}
+	],
+	uploadWindow : null,
+	groupId : null,
+	fileId : null,
+	
+	$interfaceIsReady : function() {
+		//this.$click$newFile();
+	},
+	$selectionChanged$list : function(item) {
+		ui.get('delete').setEnabled(true);
+		ui.get('view').setEnabled(true);
+		ui.get('download').setEnabled(true);
+		ui.get('info').setEnabled(true);
+		ui.get('replace').setEnabled(true);
+	},
+	$selectionReset$list : function() {
+		ui.get('delete').setEnabled(false);
+		ui.get('view').setEnabled(false);
+		ui.get('download').setEnabled(false);
+		ui.get('info').setEnabled(false);
+		ui.get('replace').setEnabled(false);
+	},
+	$listRowWasOpened$list : function(obj) {
+		this.loadFile(obj.id);
+	},
+	
+	//////////////////////// Dragging ////////////////////////
+	
+	$drop$file$filegroup : function(dragged,dropped) {
+		In2iGui.request({url:'AddFileToGroup.php',onSuccess:'fileMoved',json:{data:{file:dragged.id,group:dropped.value}}});
+	},
+	$success$fileMoved : function() {
+		filesSource.refresh();
+		groupSource.refresh();
+	},
+	
+	///////////////////////// Uoload /////////////////////////
+	
+	$click$newFile : function() {
+		uploadWindow.show();
+	},
+	$click$cancelUpload : function() {
+		uploadWindow.hide();
+	},
+	$uploadDidCompleteQueue$file : function() {
+		filesSource.refresh();
+		typesSource.refresh();
+	},
+	
+	////////////////////////// Fetch /////////////////////////
+	
+	$click$fetchFile : function() {
+		fetchFile.setEnabled(false);
+		ui.showMessage({text:'Henter fil...'});
+		In2iGui.request({url:'FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
+	},
+	$success$fileFetched : function(data) {
+		if (data.success) {
+			fetchFormula.reset();
+			ui.showMessage({text:'Filen er hentet',duration:2000});
+		} else {
+			ui.showMessage({text:data.message,duration:2000});
+		}
+		fetchFile.setEnabled(true);
+		filesSource.refresh();
+		groupSource.refresh();
+		typesSource.refresh();
+	},
+	
+	//////////////////////// Actions /////////////////////////
+	
+	$click$delete : function() {
+		var obj = list.getFirstSelection();
+		if (obj.id===this.fileId) {
+			this.closeFileAfterDeletion = true;
+		}
+		ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:obj.id}});
+	},
+	$success$fileDeleted : function(response) {
+		if (this.closeFileAfterDeletion) {
+			this.$click$cancelFile();
+		}
+		this.closeFileAfterDeletion = false;
+		filesSource.refresh();
+		groupSource.refresh();
+		typesSource.refresh();
+		ui.showMessage({text:'Filen er nu slettet',duration:2000});
+	},
+	$click$view : function() {
+		var obj = list.getFirstSelection();
+		window.open('../../../?file='+obj.id,"filewindow"+obj.id);
+	},
+	$click$download : function() {
+		var obj = list.getFirstSelection();
+		document.location = 'DownloadFile.php?id='+obj.id;
+	},
+	$click$info : function() {
+		var obj = list.getFirstSelection();
+		this.loadFile(obj.id);
+	},
+	
+	//////////////////////// Properties //////////////////////
+	
+	loadFile : function(id) {
+		ui.request({url:'LoadFile.php',onSuccess:'fileLoaded',parameters:{id:id}});
+	},
+	
+	$success$fileLoaded : function(data) {
+		this.fileId = data.file.id;
+		fileFormula.setValues(data.file);
+		fileGroups.setValue(data.groups);
+		fileWindow.show();
+	},
+	$click$cancelFile : function() {
+		this.fileId = null;
+		fileFormula.reset();
+		fileWindow.hide();
+	},
+	$click$updateFile : function() {
+		var data = fileFormula.getValues();
+		data.id = this.fileId;
+		ui.request({url:'UpdateFile.php',onSuccess:'fileUpdated',json:{data:data}});
+	},
+	$success$fileUpdated : function() {
+		this.fileId = null;
+		fileFormula.reset();
+		fileWindow.hide();
+		filesSource.refresh();
+		groupSource.refresh();
+		typesSource.refresh();
+	},
+	$click$deleteFile : function() {
+		this.closeFileAfterDeletion = true;
+		ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:this.fileId}});
+	},
+	
+	////////////////////////// Group /////////////////////////
+	
+	$click$newGroup : function() {
+		this.groupId = null;
+		deleteGroup.setEnabled(false);
+		groupFormula.reset();
+		groupWindow.show();
+		groupFormula.focus();
+	},
+	$click$cancelGroup : function() {
+		this.groupId = null;
+		groupFormula.reset();
+		groupWindow.hide();
+	},
+	$click$saveGroup : function() {
+		var values = groupFormula.getValues();
+		if (n2i.isBlank(values.title)) {
+			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
+			groupFormula.focus();
+		} else {
+			values.id = this.groupId;
+			ui.request({json:{data:values},url:'SaveGroup.php',onSuccess:'groupSaved'});
+		}
+	},
+	$submit$groupFormula : function() {
+		this.$click$saveGroup();
+	},
+	$success$groupSaved : function() {
+		groupSource.refresh();
+		this.groupId = null;
+		groupFormula.reset();
+		groupWindow.hide();
+	},
+	$selectionWasOpened$selector : function(item) {
+		ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+	},
+	$success$loadGroup : function(data) {
+		this.groupId = data.id;
+		groupFormula.setValues(data);
+		deleteGroup.setEnabled(true);
+		groupWindow.show();
+		groupFormula.focus();
+	},
+	$click$deleteGroup : function() {
+		ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
+	},
+	$success$deleteGroup : function() {
+		groupSource.refresh();
+		this.groupId = null;
+		groupFormula.reset();
+		groupWindow.hide();
+	}
+});

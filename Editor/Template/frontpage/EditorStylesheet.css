@@ -1,0 +1,87 @@
+body {
+	margin: 5px;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+img.Icon {
+	margin: 1px;
+}
+td.CellNonexisting {
+	border: solid 1px #fee;
+}
+
+td.Cell {
+	border: solid 1px #eee;
+}
+
+td.CellSelected {
+	border: solid 1px #00f;
+}
+
+td.SectionSelected {border: 1px solid #00f;}
+td.Section {border: 1px dashed white;}
+
+
+/*//////////////// In2iScripts /////////////////*/
+
+
+.in2i-menu {
+	position: absolute;
+	z-index: 100;
+	visibility: hidden;
+	width: 100px;
+	border: 1px solid #888;
+	border-color: #ddd #888 #888 #ddd;
+	padding: 1px; background: white;
+}
+
+.in2i-menu-empty {
+	display: block;
+	border: 1px solid white;
+	padding: 2px 5px 2px 5px;
+	font-size: 11px;
+	color: black;
+}
+
+.in2i-menu a {
+	display: block;
+	width: auto;
+	overflow: visible;
+	padding: 2px 0px 2px 5px;
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	text-decoration: none;
+	vertical-align: middle;
+	text-align: left;
+	color: #333;
+}
+
+.in2i-menu a:visited, .Menu a:visited:hover {
+	color: #333;
+}
+
+.in2i-menu a:hover {
+	color: #333;
+	background: rgb(180,200,255);
+	background-image: url('../../../XmlWebGui/Skins/In2ition/Graphics/ResultGroupTitle.png');
+	color: white;
+}
+
+.in2i-menu a .arrow {
+	float: right;
+	border: 0;
+	width: 3px;
+	margin-right: 3px;
+	margin-top: 4px;
+}
+
+.in2i-menu div {
+	height: 0;
+	border-top: 1px solid #bbb; 
+	border-bottom: 1px solid #eee;
+	overflow: hidden;
+	margin: 2px 0px 2px 0px;
+	font-size: 0mm;
+}

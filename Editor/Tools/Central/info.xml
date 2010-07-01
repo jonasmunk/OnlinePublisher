@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tool>
+	<icon>common/internet</icon>
+	<name>Central</name>
+	<description>Kommunikation med andre hjemmesider</description>
+	<category>analyse</category>
+	<priority>3</priority>
+</tool>

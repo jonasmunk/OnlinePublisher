@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tool>
+	<icon>Template/FrontPage</icon>
+	<name>Forside</name>
+	<description>En side velegnet som forside til hjemmesiden eller et underområde</description>
+	<category>security</category>
+	<priority>0</priority>
+	<status>active</status>
+</tool>
