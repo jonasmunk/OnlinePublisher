@@ -6,7 +6,11 @@ var controller = {
 			username.focus();
 		}
 		if (n2i.browser.msie && !n2i.browser.msie8) {
-			ui.alert({emotion:'gasp',title:'Din software er forældet',text:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'});
+			ui.alert({
+				emotion:'gasp',
+				title:'Din software er forældet',
+				text:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
+			});
 		}
 	},
 	$submit$formula : function() {
