@@ -1,0 +1,173 @@
+<?
+/**
+ * @package OnlinePublisher
+ * @subpackage Classes
+ */
+require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/File.php');
+require_once($basePath.'Editor/Classes/Log.php');
+
+class FileService {
+	
+	public static $types = array(
+		 array('kind' => 'unknown.any', 'label' => 'Ukendt', 'category' => 'unknown',
+			'mimetypes' => array('application/octet-stream'),
+			'extensions' => array()
+		),
+		 array('kind' => 'document.microsoft-word', 'label' => 'Microsoft Word', 'category' => 'document',
+			'mimetypes' => array('application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+			'extensions' => array('doc','docx')
+		),
+		array('kind' => 'image.jpeg', 'category' => 'image', 'label' => 'JPEG billede',
+			'mimetypes' => array('image/jpeg','image/pjpeg'),
+			'extensions'=>array('jpg','jpeg','pjpeg')
+		),
+		array('kind' => 'image.png', 'category' => 'image', 'label' => 'PNG billede',
+			'mimetypes' => array('image/png'),
+			'extensions'=>array('png')
+		),
+		array('kind' => 'image.gif', 'category' => 'image', 'label' => 'GIF billede',
+			'mimetypes' => array('image/gif'),
+			'extensions'=>array('gif')
+		),
+		array('kind' => 'image.tiff', 'category' => 'image', 'label' => 'TIFF billede',
+			'mimetypes' => array('image/tif','image/tiff'),
+			'extensions'=>array('tif','tiff')
+		),
+		array('kind' => 'image.photoshop', 'category' => 'image', 'label' => 'Adobe Photoshop',
+			'mimetypes' => array('application/x-photoshop'),
+			'extensions'=>array('psd')
+		),
+		array('kind' => 'multimedia.flash', 'category' => 'multimedia', 'label' => 'Adobe Flash',
+			'mimetypes' => array('application/x-shockwave-flash'),
+			'extensions'=>array('swf')
+		),
+		array('kind' => 'document.html', 'category' => 'document', 'label' => 'HTML-dokument',
+			'mimetypes' => array('text/html','application/xhtml+xml'),
+			'extensions'=>array('html','htm','xhtml')
+		),
+		array('kind' => 'document.pdf', 'category' => 'document', 'label' => 'PDF-dokument',
+			'mimetypes' => array('application/pdf'),
+			'extensions'=>array('pdf')
+		),
+		array('kind' => 'archive.zip', 'category' => 'archive', 'label' => 'ZIP-arkiv',
+			'mimetypes' => array('application/zip','application/x-gzip'),
+			'extensions'=>array('zip','gz')
+		),
+		array('kind' => 'data.xml', 'category' => 'data', 'label' => 'XML-data',
+			'mimetypes' => array('text/xml'),
+			'extensions'=>array('xml','xsl')
+		),
+		array('kind' => 'document.text', 'category' => 'document', 'label' => 'Tekst',
+			'mimetypes' => array('text/plain'),
+			'extensions'=>array('txt')
+		),
+		array('kind' => 'document.rtf', 'category' => 'document', 'label' => 'RTF-dokument',
+			'mimetypes' => array('text/rtf'),
+			'extensions'=>array('rtf')
+		),
+		array('kind' => 'document.excel', 'category' => 'document', 'label' => 'Microsoft Excel',
+			'mimetypes' => array('application/vnd.ms-excel'),
+			'extensions'=>array('xls')
+		),
+		array('kind' => 'document.powerpoint', 'category' => 'document', 'label' => 'Microsoft PowerPoint',
+			'mimetypes' => array('application/vnd.ms-powerpoint'),
+			'extensions'=>array('ppt')
+		)
+		
+	);
+	
+	public static $categories = array(
+		 'document' => 'Dokument'
+		,'image' => 'Billede'
+		,'multimedia' => 'Multimedie'
+		,'movie' => 'Film'
+		,'text' => 'Tekst'
+	);
+	
+	function mimeTypeToInfo($mime) {
+		foreach (FileService::$types as $type) {
+			foreach ($type['mimetypes'] as $mimeType) {
+				if ($mime===$mimeType) {
+					return $type;
+				}
+			}
+		}
+		return null;
+	}
+	
+	function mimeTypeToLabel($mime) {
+		if ($info = FileService::mimeTypeToInfo($mime)) {
+			return $info['label'];
+		}
+		return $mime;
+	}
+	
+	function mimeTypeToKind($mime) {
+		if ($info = FileService::mimeTypeToInfo($mime)) {
+			return $info['kind'];
+		}
+		return '';
+	}
+	
+	function kindToMimeTypes($kind) {
+		foreach (FileService::$types as $type) {
+			if ($type['kind']===$kind) {
+				return $type['mimetypes'];
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Replaces an existing file object based on an uploaded file
+	 * @param int $id The ID of the existing File object
+	 * @return array An array describing the success of the procedure
+	 */
+	function replaceUploadedFile($id) {
+		global $basePath;
+		Log::debug($_FILES);
+		$fileName=FileSystemUtil::safeFilename($_FILES['file']['name']);
+		$fileType=$_FILES["file"]["type"];
+		$tempFile=$_FILES['file']['tmp_name'];
+		$uploadDir = $basePath.'files/';
+		$filePath = $uploadDir . $fileName;
+		$fileSize=$_FILES["file"]["size"];
+
+		$filePath = FileSystemUtil::findFreeFilePath($filePath);
+		$fileName = FileSystemUtil::findFilePathName($filePath);
+
+		$errorMessage=false;
+		$errorDetails='';
+
+		if (file_exists($filePath)) {
+			$errorMessage='Filen findes allerede';
+		}
+		else if (!move_uploaded_file($tempFile, $filePath)) {
+			$errorMessage='Kunne ikke flytte filen fra cachen';
+		}
+
+		if (!$errorMessage) {
+		
+			$file = File::load($id);
+			if ($file) {
+				// Delete old file
+				$oldFilename=$file->getFilename();
+		
+				if (!unlink ($basePath.'files/'.$oldFilename)) {
+					$errorMessage='Kunne ikke slette alt fra serveren';
+				}
+				$file->setFilename($fileName);
+				$file->setSize($fileSize);
+				$file->setMimetype($fileType);
+				$file->update();
+				$file->publish();
+			} else {
+				$errorMessage='Kunne ikke finde fil med id='.$id;
+			}
+		}
+		$response = array('success' => ($errorMessage===false),'errorMessage' => $errorMessage,'errorDetails' => $errorDetails);
+		Log::debug($response);
+		return $response;
+	}
+}

@@ -1,0 +1,101 @@
+h1.Authentication
+{
+	margin:  0 0 20px 0;
+}
+
+form.Authentication
+{
+	text-align: right;
+	margin: 10px 0 10px 0;
+	border: solid 1px #eee;
+	background-color: #f9f9f9;
+	padding: 10px;
+	width: 302px;
+	_width: 312px;
+}
+
+label.Authentication
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	display: block;
+	float: left;
+	width: 95px;
+	font-weight: bold;
+	font-size: 10pt;
+	color: #73A2C9;
+	text-align: right;
+	padding-right: 5px;
+}
+
+input.AuthenticationTextfield
+{
+	border: solid 1px #ccc;
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	margin-bottom: 5px;
+	width: 200px;
+	_width: 180px;
+}
+
+input.AuthenticationButton
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	color: #3080CB;
+	border: solid 1px #ddd;
+	background-image: url('../grafik/ButtonBG.gif');
+	padding: 2px 6px 2px 6px;
+	cursor: pointer;
+}
+
+input.AuthenticationButton:hover
+{
+	background-image: url('../grafik/ButtonBGHover.gif');
+}
+
+div.AuthenticationMessage
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	color: #c98417;
+	width: 312px;
+	padding: 5px;
+	margin: 10px 0 0px 0;
+	text-align: center;
+	border: solid 1px #ece59b;
+	background-color: #fff8ab;
+}
+
+div.AuthenticationStatus
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	color: #666;
+	border: solid 1px #eee;
+	background-color: #f9f9f9;
+	width: 312px;
+	padding: 5px;
+	margin: 10px 0 0px 0;
+}
+
+div.AuthenticationStatus strong
+{
+	color: #73A2C9;
+	font-weight: normal;
+}
+
+div.AuthenticationStatus a
+{
+	font-size: 9pt;
+	color: #3080CB;
+	text-decoration: none;
+	background-image: url('../grafik/ButtonSmallBG.gif');
+	border: solid 1px #ddd;
+	margin-left: 6px;
+	padding: 2px 6px 3px 6px;
+	}
+	
+div.AuthenticationStatus a:hover
+{
+	background-image: url('../grafik/ButtonSmallBGHover.gif');
+}

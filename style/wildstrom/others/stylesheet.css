@@ -1,0 +1,443 @@
+/********************* Common *******************/
+	
+a.common
+{
+	color: #3366ff;
+}
+	
+a.common:hover
+{
+	color: #0000aa;
+}
+
+h1.common, h2.common, h3.common, h4.common, h5.common, h6.common
+{
+	margin: 0px;
+	color: #3080CB;
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	font-weight: normal;
+}
+
+p.common, ul.common
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	line-height: 160%;
+	text-align: justify;
+}
+
+/********************** Base ***********************/
+
+body
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	background: url('../graphics/Background.gif');
+	padding: 0px;
+	margin: 0px;
+}
+body,html
+{
+	height: 100%;
+}
+
+form
+{
+	margin: 0px;
+}
+
+.base
+{
+	border: 1px solid #a3bd60;
+	position: relative;
+	left: 50%;
+	top: 20px;
+	margin-left: -400px;
+	background: #fff;
+	width: 800px;
+}
+
+.body
+{
+	padding: 0px 10px;
+}
+
+.content
+{
+	padding: 20px 15px 20px 10px;
+}
+
+.bottom
+{
+	border-top: 1px solid #eee;
+	height: 30px;
+	margin: 20px 10px 0px 10px;
+}
+
+.bottom .left
+{
+	height: 15px;
+}
+
+.bottom .right
+{
+	height: 15px;
+	font-size: 1px;
+}
+
+.brand
+{
+	background: #fff url('../graphics/BrandBG.gif') repeat-x bottom;
+	height: 80px;
+	margin: 10px 10px 0px 10px;
+}
+
+.logo
+{
+	float: left;
+	background: url('../graphics/Logo.gif') no-repeat;
+	height: 38px;
+	width: 210px;
+	margin: 10px 10px 0px 10px;
+	clear: left;
+}
+
+.underlay_left
+{
+	position: absolute;
+	height: 329px;
+	width: 22px;
+	background: url('../graphics/UnderlayLeft.gif') no-repeat;
+	left:  50%;
+	top: 35px;
+	margin-left: -422px;
+}
+.underlay_top
+{
+	position: absolute;
+	height: 17px;
+	width: 249px;
+	background: url('../graphics/UnderlayTop.gif') no-repeat;
+	left: 50%;
+	top: 3px;
+	margin-left: 82px;
+}
+
+/***************** Standard tabs *************/
+
+
+ul.tabs
+{
+	margin: 0px;
+	padding: 0px;
+	display: block;
+	height: 30px;
+	background: #e7f5c8;
+	margin: 1px 10px;
+	padding-left: 5px;
+}
+
+ul.tabs li
+{
+	float: left;
+	list-style: none;
+}
+
+ul.tabs li a
+{
+	display: block;
+	color: #2c7515;
+	text-decoration: none;
+	font: 11pt "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+	padding: 5px 6px 0px 6px;
+}
+
+ul.tabs li a span
+{
+	display: block;
+}
+
+
+ul.tabs li.hover a
+{
+	color: #fff;
+}
+
+/***************** Selected tabs *************/
+
+ul.tabs li.selected, ul.tabs li.hilited, ul.tabs li.hover
+{
+}
+
+ul.tabs li.selected a, ul.tabs li.hilited a, ul.tabs li.hover a
+{
+	color: #e97e00;
+}
+
+ul.tabs li.selected a
+{
+	color: #e97e00;
+}
+
+ul.tabs li.selected a span, ul.tabs li.hilited a span, ul.tabs li.hover a span
+{
+}
+
+
+
+/*********************** Box **********************/
+
+div.box
+{
+	background: url('../graphics/BoxBG.gif') repeat-y top left;
+	width: 200px;
+	margin-bottom: 20px;
+}
+
+div.box strong.title
+{
+	display: block;
+	color: #65c0e2;
+	font: normal 12pt "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	padding-bottom: 8px;
+}
+
+div.box div.top, div.box div.bottom
+{
+	display: block;
+	float: none;
+	height: auto;
+}
+
+div.box div.top
+{
+	background: url('../graphics/BoxTop.gif') no-repeat top left;
+}
+
+div.box div.bottom
+{
+	background: url('../graphics/BoxBottom.gif') no-repeat bottom left;
+	padding: 10px;
+	width: 180px;
+	margin: 0px;
+	border: none;
+}
+
+
+
+
+/************************* User status ***********************/
+
+
+.userstatus
+{
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 9pt;
+	color: #74ae04;
+}
+
+.userstatus em
+{
+	color: #e97e00;
+}
+
+.userstatus a
+{
+	margin-left: 5px;
+}
+
+
+/********************** Navigation *******************/
+
+
+div.navigation
+{
+	margin-bottom: 15px;
+	padding: 8px;
+	background-color: #f4f7f9;
+	border: solid 1px #e7eef2;
+}
+
+a.navigation
+{
+	display: block;
+	font-size: 14px;
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	color: #74ae04;
+	text-decoration: none;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 2px;
+}
+
+a.navigation:hover span
+{
+	text-decoration: underline;
+}
+
+a.navigation_sub
+{
+	font-size: 12px;
+	color: #74ae04;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+a.navigation_sub:hover
+{
+	text-decoration: underline;
+}
+
+div.navigation span
+{
+	color: #3080CB;
+}
+
+a.navigation_selected
+{
+	color: #3080CB;
+}
+
+a.navigation_selected span {
+	color: #3080CB;
+}
+
+
+
+/****************** Links ********************/
+
+.links_top
+{
+	color: #bcf;
+	font-size: 10pt;
+	margin-left: 10px;
+	margin-top: 5px;
+	float: left;
+}
+
+.footer
+{
+	color: #ddd;
+	position: relative;
+	left: 50%;
+	top: -5px;
+	margin-left: -375px;
+	text-align: right;
+	display: block;
+	width: 750px;
+	z-index: 1;
+	font-size: 10pt;
+	padding-bottom: 10px;
+}
+
+.footer .text
+{
+	float: left;
+	color: #888;
+}
+
+.links_top a
+{
+	color: #fff;
+	text-decoration: none;
+}
+.links_bottom a
+{
+	color: #999;
+}
+
+.links_top a:hover, .links_bottom a:hover
+{
+	color: #24f;
+	text-decoration: underline;
+}
+
+
+
+/************************** Search *********************/
+
+.brand form.search
+{
+	margin-top: 5px;
+	float: right;
+	font-size: 12px;
+}
+
+.brand form.search .field
+{
+	border: solid 1px #ddd;
+	background-color: white;
+	width: 100px;
+	margin: 4px 4px 0px 0px;
+	padding-left: 2px;
+	color: #000;
+}
+
+.brand form.search .button
+{
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	border: solid 1px #ddd;
+	background-color: #eee;
+	color: #3080CB;
+	margin: 4px 13px 0px 0px;
+	height: 20px;
+	cursor: pointer;
+	font-size: 10pt;
+}
+
+
+
+
+
+
+
+
+
+
+/* ======================== News ==================== */
+
+
+div.news
+{
+	padding: 4px 2px 8px 2px;
+	font-family: Tahoma,Verdana,sans-serif;
+}
+
+div.news .title
+{
+	font-family: "Trebuchet MS",Tahoma,Verdana,sans-serif;
+	font-size: 10pt;
+	color: #3080CB;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+
+div.news .note
+{
+	font-size: 8pt;
+	color: #89a;
+	max-height: 50px;
+	overflow: hidden;
+}
+
+div.news:hover div.note
+{
+	max-height: 100%;
+	overflow: visible;
+	color: #347;
+}
+
+div.news span.date
+{
+	font-weight: normal;
+	color: #bcd5e6;
+	float: right;
+	font-size: 15pt;
+	padding-left: 4px;
+}
+
+div.news .links
+{
+	text-align: right;
+	font-size: 8pt;
+	margin-top: 3px;
+}
