@@ -14,6 +14,9 @@ class DateUtil {
 		return mktime(0,0,0,$month,$date,$year);
 	}
 	
+	/**
+	 * Gets the start time of the week of the provided timestamp
+	 */
 	function getWeekStart($timestamp) {
 		$year = date('Y',$timestamp);
 		$weekday = date('w',$timestamp);
