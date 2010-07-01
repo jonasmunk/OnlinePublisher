@@ -1,0 +1,58 @@
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+	background: #eee;
+}
+
+.base
+{
+	width: 600px;
+	margin: 40px auto;
+	background: #fff;
+	border: 2px solid #ddd;
+	padding: 30px 0px;
+	overflow: hidden;
+}
+
+div.error
+{
+	color: red;
+	font-size: 10pt;
+}
+
+h1
+{
+	font-size: 16pt;	
+	margin-top: 0px;
+}
+
+h2
+{
+	font-size: 13pt;
+	margin-bottom: 5px;
+	color: #999;
+}
+
+input.text
+{
+	border: 1px solid #ddd;
+	font-size: 14pt;
+	text-align: center;
+}
+
+input.submit
+{
+	margin-top: 10px;
+}
+
+form
+{
+	float: left;
+	width: 50%;
+}
+
+label
+{
+	display: block;
+}
