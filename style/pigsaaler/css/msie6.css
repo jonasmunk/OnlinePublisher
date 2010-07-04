@@ -1,14 +1,4 @@
-div.case_content
+ul.case_navigation li
 {
-	background: none;
-}
-
-div.part_imagegallery
-{
-	zoom: 1;
-}
-
-div.case_front
-{
-	height: 580px;
+	display: inline;
 }
