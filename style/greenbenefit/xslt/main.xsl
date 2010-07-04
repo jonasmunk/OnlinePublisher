@@ -32,7 +32,7 @@
 		<div class="chrome_head">
 			<div class="chrome_container">
 				<a class="chrome_logo"><xsl:comment/></a>
-			<xsl:call-template name="search"/>
+				<xsl:call-template name="search"/>
 			</div>
 		</div>
 		<div class="chrome_middle">

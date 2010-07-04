@@ -37,7 +37,8 @@
 	<div class="case">
 		<div class="case_head">
 			<div class="case_head_body">
-			<ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
+				<a class="layout_logo"><xsl:comment/></a>
+				<ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
 			</div>
 		</div>
 		<xsl:call-template name="search"/>
@@ -102,9 +103,12 @@
 <xsl:if test="not(@hidden='true')">
 <xsl:variable name="style">
 <xsl:choose>
-<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-<xsl:otherwise>normal</xsl:otherwise>
+<xsl:when test="position()=1 and (//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id)"><xsl:text>first_selected</xsl:text></xsl:when>
+<xsl:when test="position()=last() and (//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id)"><xsl:text>last_selected</xsl:text></xsl:when>
+<xsl:when test="//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id"><xsl:text>selected</xsl:text></xsl:when>
+<xsl:when test="position()=1"><xsl:text>first</xsl:text></xsl:when>
+<xsl:when test="position()=last()"><xsl:text>last</xsl:text></xsl:when>
+<xsl:otherwise><xsl:text>middle</xsl:text></xsl:otherwise>
 </xsl:choose>
 </xsl:variable>
 <li class="{$style}">
