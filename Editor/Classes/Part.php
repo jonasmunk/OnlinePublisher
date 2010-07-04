@@ -1,7 +1,9 @@
 <?
 require_once($basePath.'Editor/Include/Session.php');
+require_once($basePath.'Editor/Include/Functions.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/XmlUtils.php');
+require_once($basePath.'Editor/Classes/Services/XslService.php');
 /**
  * @package OnlinePublisher
  * @subpackage Classes
@@ -246,20 +248,7 @@ class Part {
 		'<xsl:variable name="highquality">false</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-		
-	
-		if (function_exists('xslt_create')) {
-			$arguments = array('/_xml' => $xmlData,'/_xsl' => $xslData);
-			$xp = xslt_create();
-			$result = xslt_process($xp, 'arg:/_xml', 'arg:/_xsl', NULL, $arguments );
-			xslt_free($xp);
-		}
-		else {
-			$xslt = new xsltProcessor;
-			$xslt->importStyleSheet(DomDocument::loadXML($xslData));
-			$result = $xslt->transformToXML(DomDocument::loadXML($xmlData));
-		}
-		return $result;
+		return XslService::transform($xmlData,$xslData);
 	}
 
 	
