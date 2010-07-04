@@ -35,7 +35,7 @@ if ($part->isIn2iGuiEnabled()) {
 				<toolbar>
 					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
 					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
-					<icon icon="common/delete" title="Delete" click="partToolbar.deletePart()"/>
+					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()"/>
 					'.$part->getMainToolbarBody().'
 				</toolbar>
 			</tab>
@@ -43,7 +43,7 @@ if ($part->isIn2iGuiEnabled()) {
 				<toolbar>
 					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
 					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
-					<icon icon="common/delete" title="Delete" click="partToolbar.deletePart()"/>
+					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()"/>
 					<divider/>
 					<style-length label="Venstre" name="marginLeft"/>
 					<style-length label="H&#248;jre" name="marginRight"/>
@@ -63,7 +63,7 @@ if ($part->isIn2iGuiEnabled()) {
 				<toolbar>
 					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
 					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
-					<icon icon="common/delete" title="Delete" click="partToolbar.deletePart()"/>
+					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()"/>
 					<divider/>'.$body.
 				'</toolbar>
 				</tab>';

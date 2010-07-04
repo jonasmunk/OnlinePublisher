@@ -447,7 +447,7 @@ class PartImage extends Part {
 		$_SESSION['part.image.latest_upload_id'] = $id;
 	}
 	
-	function getLatestUploadId($id) {
+	function getLatestUploadId() {
 		return $_SESSION['part.image.latest_upload_id'];
 	}
 }
