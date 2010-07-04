@@ -44,27 +44,6 @@ function getDomXpathText($doc,$xpath) {
 	}
 }
 
-/**
- * Transforms some XML data using some XSLT data
- * @param string $xmlData The XML to transform
- * @param string $xslData The XSLT to use
- * @return string The result of the transformation
- */
-function transformXml($xmlData,$xslData) {
-	if (function_exists('xslt_create')) {
-		$arguments = array('/_xml' => $xmlData,'/_xsl' => $xslData);
-		$xp = xslt_create();
-		$result = xslt_process($xp, 'arg:/_xml', 'arg:/_xsl', NULL, $arguments );
-		xslt_free($xp);
-	}
-	else {
-		$xslt = new xsltProcessor;
-		$xslt->importStyleSheet(DomDocument::loadXML($xslData));
-		$result = $xslt->transformToXML(DomDocument::loadXML($xmlData));
-	}
-	return $result;
-}
-
 ///////////////////// Compatibility ///////////////////////
 
 /**
@@ -371,45 +350,6 @@ function getUserId() {
 	else {
 		return -1;
 	}
-}
-
-
-
-
-//////////////////////// Database /////////////////////////
-
-
-/**
- * Find all tables in the database
- * @return array Array of table names
- */
-function getDatabaseTables() {
-	global $database;
-	$out = array();
-	$sql = "show tables from ".$database;
-	$result = Database::select($sql);
-	while ($row = Database::next($result)) {
-		$out[] = $row[0];
-	}
-	Database::free($result);
-	return $out;
-}
-
-/**
- * Find all columns of database table
- * @param string $table The name of the table
- * @return array An array of column info TODO: Format of array??
- */
-function getDatabaseTableColumns($table) {
-	global $database;
-	$sql = "SHOW FULL COLUMNS FROM ".$table." FROM ".$database;
-	$out = array();
-	$result = Database::select($sql);
-	while ($row = Database::next($result)) {
-		$out[] = $row;
-	}
-	Database::free($result);
-	return $out;
 }
 
 

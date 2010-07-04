@@ -4,6 +4,7 @@
  * @subpackage Parts.Listing
  */
 require_once($basePath.'Editor/Classes/Part.php');
+require_once($basePath.'Editor/Classes/Services/XslService.php');
 
 class PartListing extends Part {
 
@@ -190,7 +191,7 @@ class PartListing extends Part {
 
 			</xsl:stylesheet>';
 
-			$text = transformXml($xml,$xsl);
+			$text = XslService::transform($xml,$xsl);
 			// Fix line feeds
 			$text = str_replace("\n","\r\n",$text);
 			

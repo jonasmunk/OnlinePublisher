@@ -4,6 +4,8 @@
  * @subpackage Parts.Text
  */
 require_once($basePath.'Editor/Classes/Part.php');
+require_once($basePath.'Editor/Classes/Services/XslService.php');
+
 class PartText extends Part{
 
 	var $id;
@@ -128,7 +130,7 @@ class PartText extends Part{
 
 		</xsl:stylesheet>';
 		
-		$text = transformXml($xml,$xsl);
+		$text = XslService::transform($xml,$xsl);
 		
 		$style = $this->_parseXMLStyle($node->selectNodes('style',1));
 		

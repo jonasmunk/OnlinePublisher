@@ -7,18 +7,6 @@
 	$sql="select * from document_person, person where document_person.person_id = person.object_id AND section_id=".$sectionId;
 	if ($row = Database::selectFirst($sql)) {
 
-		/*
-		$xslData='<?xml version="1.0" encoding="ISO-8859-1"?>
-		<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-		xmlns:p="http://uri.in2isoft.com/onlinepublisher/class/person/1.0/"
-		xmlns:i="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
-		xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/">
-		<xsl:output method="html" indent="no" encoding="ISO-8859-1"/>
-		<xsl:template match="o:object"><table><tr></tr></table></xsl:template>
-		</xsl:stylesheet>
-		';
-		$output.=transformXml('<?xml version="1.0" encoding="ISO-8859-1"?>'.$row['data'],$xslData);
-		*/
 		$output.='<table align="'.$row['align'].'"><TR>';
 		if($row['image_id']>0 && $row['show_image']){
 			$sql="select filename from image where object_id =".$row['image_id'];
