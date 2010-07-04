@@ -13,7 +13,9 @@ class PartService {
 		global $basePath;
 		$class = ucfirst($type);
 		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
-		return $class::load($id);
+		$instance = new $class;
+		$part = $instance->load($id);
+		return $part;
 	}
 
 	function buildPartContext($pageId) {
