@@ -53,7 +53,7 @@ class PartFile extends Part {
 	
 	function sub_update() {
 		$fileId = Request::getInt('fileId');
-		$sql = "update part_file set file_id=".sqlInt($fileId)." where part_id=".$this->id;
+		$sql = "update part_file set file_id=".Database::int($fileId)." where part_id=".$this->id;
 		Database::update($sql);
 	}
 	

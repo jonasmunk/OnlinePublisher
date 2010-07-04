@@ -14,9 +14,9 @@ $close = "index.php";
 $id = requestGetNumber('id');
 $sql = "select UNIX_TIMESTAMP(page_history.time) as time,page_id from page_history where id=".$id;
 $row = Database::selectFirst($sql);
-$sql = "select id from page_history where page_id=".$row['page_id']." and time<".sqlTimestamp($row['time'])." order by time desc limit 1";
+$sql = "select id from page_history where page_id=".$row['page_id']." and time<".Database::datetime($row['time'])." order by time desc limit 1";
 $previous = Database::selectFirst($sql);
-$sql = "select id from page_history where page_id=".$row['page_id']." and time>".sqlTimestamp($row['time'])." order by time asc limit 1";
+$sql = "select id from page_history where page_id=".$row['page_id']." and time>".Database::datetime($row['time'])." order by time asc limit 1";
 $next = Database::selectFirst($sql);
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.

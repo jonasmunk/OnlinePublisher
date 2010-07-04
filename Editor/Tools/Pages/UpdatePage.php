@@ -38,10 +38,10 @@ $sql="update page set".
 ",design_id=".$design.
 ",frame_id=".$frame.
 ",language=".Database::text($language).
-",searchable=".sqlBoolean($searchable).
-",disabled=".sqlBoolean($disabled).
-",next_page=".sqlInt($nextPage).
-",previous_page=".sqlInt($previousPage).
+",searchable=".Database::boolean($searchable).
+",disabled=".Database::boolean($disabled).
+",next_page=".Database::int($nextPage).
+",previous_page=".Database::int($previousPage).
 " where id=".$id;
 Database::update($sql);
 

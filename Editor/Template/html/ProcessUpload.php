@@ -21,7 +21,7 @@ if ($fileType=='text/html') {
 
 	$sql="update html set".
 	" html=".Database::text($body).
-	",valid=".sqlBoolean(false).
+	",valid=".Database::boolean(false).
 	" where page_id=".$id;
 	Database::update($sql);
 

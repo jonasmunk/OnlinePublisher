@@ -19,7 +19,7 @@ $extended = (getToolSessionVar('pages','listTab') == 'extended');
 $pair = PagesController::getSearchPair();
 $freeText = getToolSessionVar('pages','freeTextSearch');
 if ($freeText!='' && $freeText!=NULL) {
-	$freeTextSql=" and (page.title like ".sqlSearch($freeText)." or page.`index` like ".sqlSearch($freeText)." or page.description like ".sqlSearch($freeText)." or page.keywords like ".sqlSearch($freeText).")";
+	$freeTextSql=" and (page.title like ".Database::search($freeText)." or page.`index` like ".Database::search($freeText)." or page.description like ".Database::search($freeText)." or page.keywords like ".Database::search($freeText).")";
 }
 else {
 	$freeTextSql="";

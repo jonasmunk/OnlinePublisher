@@ -600,7 +600,7 @@ class Object {
 			$where[] = "type=".Database::text($query['type']);
 		}
 		if (isset($query['query'])) {
-			$where[] = "`index` like ".sqlSearch($query['query']);
+			$where[] = "`index` like ".Database::search($query['query']);
 		}
 		if (count($where)>0) {
 			$sql.=' where '.implode(' and ',$where);

@@ -44,7 +44,7 @@ class Part {
 	}
 	
 	function create() {
-		$sql = "insert into part (type,created,updated,dynamic) values ('".$this->type."',now(),now(),".sqlBoolean($this->isDynamic()).")";
+		$sql = "insert into part (type,created,updated,dynamic) values ('".$this->type."',now(),now(),".Database::boolean($this->isDynamic()).")";
 		$this->id = Database::insert($sql);
 		if (method_exists($this,'sub_create')) {
 			$this->sub_create();
@@ -60,7 +60,7 @@ class Part {
 	}
 	
 	function update() {
-		$sql = "update part set updated=now(),dynamic=".sqlBoolean($this->isDynamic())." where id=".$this->id;
+		$sql = "update part set updated=now(),dynamic=".Database::boolean($this->isDynamic())." where id=".$this->id;
 		Database::update($sql);
 		if (method_exists($this,'sub_update')) {
 			$this->sub_update();

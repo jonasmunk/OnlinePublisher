@@ -413,64 +413,6 @@ function getDatabaseTableColumns($table) {
 }
 
 
-////////////////////////// SQL ////////////////////////////
-
-/**
- * Formats a floating point number for use in an SQL-sentence
- * @param float $value The number to format
- * @return string The formattet string
- */
-function sqlFloat($value) {
-	return floatval($value);
-}
-
-/**
- * Formats an integer for use in an SQL-sentence
- * @param int $value The number to format
- * @return string The formattet string
- */
-function sqlInt($value) {
-	return intval($value);
-}
-
-/**
- * Formats a string for use as a search parameter in an SQL-sentence
- * @param string $text The text to format
- * @return string The formattet string
- */
-function sqlSearch($text) {
-	return "'%".mysql_escape_string($text)."%'";
-}
-
-/**
- * Formats a unix timestamp for use in an SQL-sentence
- * @param int $stamp The number to format
- * @return string The formattet string
- */
-function sqlTimestamp($stamp) {
-	if (is_numeric($stamp)) {
-		return "'".date('Y-m-d H:i:s',intval($stamp))."'";
-	}
-	else {
-		return "NULL";
-	}
-}
-
-/**
- * Formats a boolean for use in an SQL-sentence
- * @param boolean $bool The boolean to format
- * @return string The formattet string
- */
-function sqlBoolean($bool) {
-	if ($bool) {
-		return '1';
-	}
-	else {
-		return '0';
-	}
-}
-
-
 ///////////////////// Formula parsing /////////////////////
 
 /**

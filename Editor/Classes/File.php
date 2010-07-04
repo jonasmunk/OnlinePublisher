@@ -64,7 +64,7 @@ class File extends Object {
 		$sql="insert into file (object_id,filename,size,type) values (".
 		$this->id.
 		",".Database::text($this->filename).
-		",".sqlInt($this->size).
+		",".Database::int($this->size).
 		",".Database::text($this->mimetype).
 		")";
 		Database::insert($sql);
@@ -73,7 +73,7 @@ class File extends Object {
 	function sub_update() {
 		$sql = "update file set ".
 		"filename=".Database::text($this->filename).
-		",size=".sqlInt($this->size).
+		",size=".Database::int($this->size).
 		",type=".Database::text($this->mimetype).
 		" where object_id=".$this->id;
 		Database::update($sql);

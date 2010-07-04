@@ -44,7 +44,7 @@ $sql="update hierarchy_item set".
 ",target_id=".$targetId.
 ",target_value=".Database::text($targetValue).
 ",target=".Database::text($target).
-",hidden=".sqlBoolean($hidden).
+",hidden=".Database::boolean($hidden).
 " where id=".$id;
 Database::update($sql);
 

@@ -19,10 +19,10 @@ $rotate = requestPostNumber('rotate');
 
 $sql="update imagegallery set title=".Database::text($title).
 ",`text`=".Database::text($text).
-",imagesize=".sqlInt($imagesize).
-",showtitle=".sqlBoolean($showtitle).
-",shownote=".sqlBoolean($shownote).
-",rotate=".sqlInt($rotate).
+",imagesize=".Database::int($imagesize).
+",showtitle=".Database::boolean($showtitle).
+",shownote=".Database::boolean($shownote).
+",rotate=".Database::int($rotate).
 " where page_id=".$id;
 Database::update($sql);
 

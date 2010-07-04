@@ -76,22 +76,22 @@ class Task extends Object {
 	function sub_create() {
 		$sql="insert into task (object_id,deadline,containing_object_id,milestone_id,completed,priority) values (".
 		$this->id.
-		",".sqlTimestamp($this->deadline).
-		",".sqlInt($this->containingObjectId).
-		",".sqlInt($this->milestoneId).
-		",".sqlBoolean($this->completed).
-		",".sqlFloat($this->priority).
+		",".Database::datetime($this->deadline).
+		",".Database::int($this->containingObjectId).
+		",".Database::int($this->milestoneId).
+		",".Database::boolean($this->completed).
+		",".Database::float($this->priority).
 		")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update task set ".
-		"deadline=".sqlTimestamp($this->deadline).
-		",containing_object_id=".sqlInt($this->containingObjectId).
-		",milestone_id=".sqlInt($this->milestoneId).
-		",completed=".sqlBoolean($this->completed).
-		",priority=".sqlFloat($this->priority).
+		"deadline=".Database::datetime($this->deadline).
+		",containing_object_id=".Database::int($this->containingObjectId).
+		",milestone_id=".Database::int($this->milestoneId).
+		",completed=".Database::boolean($this->completed).
+		",priority=".Database::float($this->priority).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

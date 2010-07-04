@@ -370,8 +370,8 @@ class Order extends Object {
 				"delivery_country,billing_name,billing_company,billing_street_address,billing_city,billing_postcode,billing_country,payment_method,".
 				"cc_type,cc_owner,cc_number,cc_controle_number,cc_expires,orders_status,orders_date_finished,currency,currency_value,total_amount,total_tax) values (".
 				$this->id.
-				",".sqlInt($this->order_no).
-				",".sqlInt($this->customers_id).
+				",".Database::int($this->order_no).
+				",".Database::int($this->customers_id).
 				",".Database::text($this->customers_name).
 				",".Database::text($this->customers_company).
 				",".Database::text($this->customers_street_address).
@@ -398,7 +398,7 @@ class Order extends Object {
 				",".Database::text($this->cc_number).
 				",".Database::text($this->cc_controle_number).
 				",".Database::text($this->cc_expires).
-				",".sqlInt($this->orders_status).
+				",".Database::int($this->orders_status).
 				",".$this->orders_date_finished.
 				",".Database::text($this->currency).
 				",".Database::text($this->currency_value).
@@ -410,7 +410,7 @@ class Order extends Object {
 	
 	function sub_update() {
 		$sql="update orders set".
-			" order_no=".sqlInt($this->order_no).
+			" order_no=".Database::int($this->order_no).
 			",customers_id=".Database::text($this->customers_id).
 			",customers_name=".Database::text($this->customers_name).
 			",customers_company=".Database::text($this->customers_company).

@@ -66,18 +66,18 @@ class PageBlueprint extends Object {
 	function sub_create() {
 		$sql="insert into pageblueprint (object_id,frame_id,design_id,template_id) values (".
 		$this->id.
-		",".sqlInt($this->frameId).
-		",".sqlInt($this->designId).
-		",".sqlInt($this->templateId).
+		",".Database::int($this->frameId).
+		",".Database::int($this->designId).
+		",".Database::int($this->templateId).
 		")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update pageblueprint set ".
-		"frame_id=".sqlInt($this->frameId).
-		",design_id=".sqlInt($this->designId).
-		",template_id=".sqlInt($this->templateId).
+		"frame_id=".Database::int($this->frameId).
+		",design_id=".Database::int($this->designId).
+		",template_id=".Database::int($this->templateId).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

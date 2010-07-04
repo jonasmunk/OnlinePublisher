@@ -154,7 +154,7 @@ class PartImage extends Part {
 		$sql = "update part_image set".
 		" image_id=".$imageId.
 		",align=".Database::text($align).
-		",greyscale=".sqlBoolean($greyscale).
+		",greyscale=".Database::boolean($greyscale).
 		",scalemethod=".Database::text($scalemethod).
 		",scalepercent=".Database::text($scalepercent).
 		",scalewidth=".Database::text($scalewidth).
@@ -224,9 +224,9 @@ class PartImage extends Part {
 			$scaleHeight = $height;
 		}
 		$sql = "update part_image set".
-		" image_id=".sqlInt($object->getAttribute('id')).
+		" image_id=".Database::int($object->getAttribute('id')).
 		",align=".Database::text($align).
-		",greyscale=".sqlBoolean($greyscale=='true').
+		",greyscale=".Database::boolean($greyscale=='true').
 		",scalemethod=".Database::text($scaleMethod).
 		",scalepercent=".Database::text($scalePercent).
 		",scalewidth=".Database::text($scaleWidth).

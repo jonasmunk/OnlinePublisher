@@ -91,7 +91,7 @@ class PhoneNumber extends Object {
 		$this->id.
 		",".Database::text($this->number).
 		",".Database::text($this->context).
-		",".sqlInt($this->containingObjectId).
+		",".Database::int($this->containingObjectId).
 		")";
 		Database::insert($sql);
 	}
@@ -100,7 +100,7 @@ class PhoneNumber extends Object {
 		$sql = "update phonenumber set ".
 		"number=".Database::text($this->number).
 		",context=".Database::text($this->context).
-		",containing_object_id=".sqlInt($this->containingObjectId).
+		",containing_object_id=".Database::int($this->containingObjectId).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

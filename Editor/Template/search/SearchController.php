@@ -84,10 +84,10 @@ class SearchController extends TemplateController {
 					$sql="select id,title,description,`index` from page where searchable=1 and secure=0 and disabled=0";
 					if ($method=='sentence') {
 						$highlight = array($query);
-						$sql.=" and (title like ".sqlSearch($query);
-						$sql.=" or keywords like ".sqlSearch($query);
-						$sql.=" or description like ".sqlSearch($query);
-						$sql.=" or `index` like ".sqlSearch($query).")";
+						$sql.=" and (title like ".Database::search($query);
+						$sql.=" or keywords like ".Database::search($query);
+						$sql.=" or description like ".Database::search($query);
+						$sql.=" or `index` like ".Database::search($query).")";
 					}
 					else {
 						$words = explode(' ',$query);
@@ -107,10 +107,10 @@ class SearchController extends TemplateController {
 										}
 									}
 									$first=false;
-									$sql.="(title like ".sqlSearch($words[$i]);
-									$sql.=" or keywords like ".sqlSearch($words[$i]);
-									$sql.=" or description like ".sqlSearch($words[$i]);
-									$sql.=" or `index` like ".sqlSearch($words[$i]).")";
+									$sql.="(title like ".Database::search($words[$i]);
+									$sql.=" or keywords like ".Database::search($words[$i]);
+									$sql.=" or description like ".Database::search($words[$i]);
+									$sql.=" or `index` like ".Database::search($words[$i]).")";
 								}
 							}
 							$sql.=')';
@@ -174,7 +174,7 @@ class SearchController extends TemplateController {
 		$sql='';
 		if ($method=='sentence') {
 			//$highlight = array($query);
-			$sql.=" and `index` like ".sqlSearch($query);
+			$sql.=" and `index` like ".Database::search($query);
 		}
 		else {
 			$words = explode(' ',$query);
@@ -193,7 +193,7 @@ class SearchController extends TemplateController {
 							}
 						}
 						$first=false;
-						$sql.="`index` like ".sqlSearch($words[$i]);
+						$sql.="`index` like ".Database::search($words[$i]);
 					}
 				}
 				$sql.=")";

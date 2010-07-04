@@ -12,7 +12,7 @@ $enabled = requestPostCheckbox('enabled');
 $page = requestPostNumber('page',0);
 
 $sql="update frame set".
-" userstatusenabled=".sqlBoolean($enabled).
+" userstatusenabled=".Database::boolean($enabled).
 ",userstatuspage_id=".$page.
 ",changed=now()".
 " where id=".$id;

@@ -38,10 +38,10 @@ elseif ($mode=='automatic') {
 
 
 $sql="update search set".
-" imagesenabled=".sqlBoolean($enabled).
+" imagesenabled=".Database::boolean($enabled).
 ",imageslabel=".Database::text($label).
-",imagesdefault=".sqlBoolean($default).
-",imageshidden=".sqlBoolean($hidden).
+",imagesdefault=".Database::boolean($default).
+",imageshidden=".Database::boolean($hidden).
 " where page_id=".$id;
 Database::update($sql);
 

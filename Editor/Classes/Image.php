@@ -141,9 +141,9 @@ class Image extends Object {
 		$sql="insert into image (object_id,filename,size,width,height,type) values (".
 		$this->id.
 		",".Database::text($this->filename).
-		",".sqlInt($this->size).
-		",".sqlInt($this->width).
-		",".sqlInt($this->height).
+		",".Database::int($this->size).
+		",".Database::int($this->width).
+		",".Database::int($this->height).
 		",".Database::text($this->mimetype).
 		")";
 		Database::insert($sql);
@@ -152,9 +152,9 @@ class Image extends Object {
 	function sub_update() {
 		$sql = "update image set ".
 		"filename=".Database::text($this->filename).
-		",size=".sqlInt($this->size).
-		",width=".sqlInt($this->width).
-		",height=".sqlInt($this->height).
+		",size=".Database::int($this->size).
+		",width=".Database::int($this->width).
+		",height=".Database::int($this->height).
 		",type=".Database::text($this->mimetype).
 		" where object_id=".$this->id;
 		Database::update($sql);

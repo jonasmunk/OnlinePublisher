@@ -270,8 +270,8 @@ class Page {
 		",".$this->frameId.
 		",".$this->designId.
 		",".Database::text($this->language).
-		",".sqlInt($this->nextPage).
-		",".sqlInt($this->previousPage).
+		",".Database::int($this->nextPage).
+		",".Database::int($this->previousPage).
 		")";
 		$this->id=Database::insert($sql);
 		$this->_createTemplate();

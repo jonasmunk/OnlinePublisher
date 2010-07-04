@@ -46,14 +46,14 @@ class Project extends Object {
 	function sub_create() {
 		$sql="insert into project (object_id,parent_project_id) values (".
 		$this->id.
-		",".sqlInt($this->parentProjectId).
+		",".Database::int($this->parentProjectId).
 		")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update project set ".
-		"parent_project_id=".sqlInt($this->parentProjectId).
+		"parent_project_id=".Database::int($this->parentProjectId).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}
@@ -140,7 +140,7 @@ class Project extends Object {
 		$ids[] = $this->id;
 		
 		$sql = "select object_id from task,object where task.object_id = object.id and containing_object_id in (".implode(",",$ids).")".
-		(isset($filter['completed']) ? " and task.completed=".sqlBoolean($filter['completed']) : "").
+		(isset($filter['completed']) ? " and task.completed=".Database::boolean($filter['completed']) : "").
 		" order by object.title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -161,7 +161,7 @@ class Project extends Object {
 		$ids[] = $this->id;
 		
 		$sql = "select object_id from problem,object where problem.object_id = object.id and containing_object_id in (".implode(",",$ids).")".
-		(isset($filter['completed']) ? " and problem.completed=".sqlBoolean($filter['completed']) : "").
+		(isset($filter['completed']) ? " and problem.completed=".Database::boolean($filter['completed']) : "").
 		" order by object.title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {

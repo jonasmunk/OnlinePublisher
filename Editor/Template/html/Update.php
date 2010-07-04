@@ -17,7 +17,7 @@ $valid = validateXML($html);
 $sql="update html set".
 " html=".Database::text($html).
 ",title=".Database::text($title).
-",valid=".sqlBoolean($valid).
+",valid=".Database::boolean($valid).
 " where page_id=".$id;
 Database::update($sql);
 

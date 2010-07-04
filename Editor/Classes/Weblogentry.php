@@ -77,8 +77,8 @@ class Weblogentry extends Object {
 		$sql="insert into weblogentry (object_id,text,date,page_id) values (".
 		$this->id.
 		",".Database::text($this->text).
-		",".sqlTimestamp($this->date).
-		",".sqlInt($this->pageId).
+		",".Database::datetime($this->date).
+		",".Database::int($this->pageId).
 		")";
 		Database::insert($sql);
 	}
@@ -86,8 +86,8 @@ class Weblogentry extends Object {
 	function sub_update() {
 		$sql = "update weblogentry set ".
 		"text=".Database::text($this->text).
-		",date=".sqlTimestamp($this->date).
-		",page_id=".sqlInt($this->pageId).
+		",date=".Database::datetime($this->date).
+		",page_id=".Database::int($this->pageId).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

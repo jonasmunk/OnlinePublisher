@@ -19,15 +19,15 @@ $persons = requestPostCheckbox('persons');
 $products = requestPostCheckbox('products');
 
 $sql="update frame set".
-" searchenabled=".sqlBoolean($enabled).
+" searchenabled=".Database::boolean($enabled).
 ",searchbuttontitle=".Database::text($buttontitle).
 ",searchpage_id=".$page.
-",searchpages=".sqlBoolean($pages).
-",searchimages=".sqlBoolean($images).
-",searchfiles=".sqlBoolean($files).
-",searchnews=".sqlBoolean($news).
-",searchpersons=".sqlBoolean($persons).
-",searchproducts=".sqlBoolean($products).
+",searchpages=".Database::boolean($pages).
+",searchimages=".Database::boolean($images).
+",searchfiles=".Database::boolean($files).
+",searchnews=".Database::boolean($news).
+",searchpersons=".Database::boolean($persons).
+",searchproducts=".Database::boolean($products).
 " where id=".$id;
 
 Database::update($sql);

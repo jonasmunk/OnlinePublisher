@@ -33,13 +33,13 @@ class SecurityZone extends Object {
 	}
 
 	function sub_create() {
-		$sql = "insert into securityzone (object_id,authentication_page_id) values (".$this->id.",".sqlInt($this->authenticationPageId).")";
+		$sql = "insert into securityzone (object_id,authentication_page_id) values (".$this->id.",".Database::int($this->authenticationPageId).")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update securityzone set ".
-		"authentication_page_id=".sqlInt($this->authenticationPageId).
+		"authentication_page_id=".Database::int($this->authenticationPageId).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

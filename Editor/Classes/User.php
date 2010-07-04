@@ -91,9 +91,9 @@ class User extends Object {
 		",".Database::text($this->username).
 		",".Database::text($this->password).
 		",".Database::text($this->email).
-		",".sqlBoolean($this->internal).
-		",".sqlBoolean($this->external).
-		",".sqlBoolean($this->administrator).
+		",".Database::boolean($this->internal).
+		",".Database::boolean($this->external).
+		",".Database::boolean($this->administrator).
 		")";
 		Database::insert($sql);
 	}
@@ -103,9 +103,9 @@ class User extends Object {
 		"username=".Database::text($this->username).
 		",password=".Database::text($this->password).
 		",email=".Database::text($this->email).
-		",internal=".sqlBoolean($this->internal).
-		",external=".sqlBoolean($this->external).
-		",administrator=".sqlBoolean($this->administrator).
+		",internal=".Database::boolean($this->internal).
+		",external=".Database::boolean($this->external).
+		",administrator=".Database::boolean($this->administrator).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

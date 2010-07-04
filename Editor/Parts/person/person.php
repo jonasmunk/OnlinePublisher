@@ -86,25 +86,25 @@ class PartPerson extends Part {
 		$align = requestPostText('align');
 
 		$sql="update part_person set".
-		" person_id=".sqlInt($person_id).
+		" person_id=".Database::int($person_id).
 		" ,align=".Database::text($align).
-		" ,show_firstname=".sqlBoolean($show_firstname).
-		" ,show_middlename=".sqlBoolean($show_middlename).
-		" ,show_surname=".sqlBoolean($show_surname).
-		" ,show_initials=".sqlBoolean($show_initials).
-		" ,show_streetname=".sqlBoolean($show_streetname).
-		" ,show_zipcode=".sqlBoolean($show_zipcode).
-		" ,show_city=".sqlBoolean($show_city).
-		" ,show_country=".sqlBoolean($show_country).
-		" ,show_nickname=".sqlBoolean($show_nickname).
-		" ,show_jobtitle=".sqlBoolean($show_jobtitle).
-		" ,show_sex=".sqlBoolean($show_sex).
-		" ,show_email_job=".sqlBoolean($show_emailjob).
-		" ,show_email_private=".sqlBoolean($show_emailprivate).
-		" ,show_phone_job=".sqlBoolean($show_phonejob).
-		" ,show_phone_private=".sqlBoolean($show_phoneprivate).
-		" ,show_webaddress=".sqlBoolean($show_webaddress).
-		" ,show_image=".sqlBoolean($show_image).
+		" ,show_firstname=".Database::boolean($show_firstname).
+		" ,show_middlename=".Database::boolean($show_middlename).
+		" ,show_surname=".Database::boolean($show_surname).
+		" ,show_initials=".Database::boolean($show_initials).
+		" ,show_streetname=".Database::boolean($show_streetname).
+		" ,show_zipcode=".Database::boolean($show_zipcode).
+		" ,show_city=".Database::boolean($show_city).
+		" ,show_country=".Database::boolean($show_country).
+		" ,show_nickname=".Database::boolean($show_nickname).
+		" ,show_jobtitle=".Database::boolean($show_jobtitle).
+		" ,show_sex=".Database::boolean($show_sex).
+		" ,show_email_job=".Database::boolean($show_emailjob).
+		" ,show_email_private=".Database::boolean($show_emailprivate).
+		" ,show_phone_job=".Database::boolean($show_phonejob).
+		" ,show_phone_private=".Database::boolean($show_phoneprivate).
+		" ,show_webaddress=".Database::boolean($show_webaddress).
+		" ,show_image=".Database::boolean($show_image).
 		" where part_id=".$this->id;
 		Database::update($sql);
 	}
@@ -177,7 +177,7 @@ class PartPerson extends Part {
 	function sub_import(&$node) {
 		$object =& $node->selectNodes('object',1);
 		$sql = "update part_person set".
-		" person_id=".sqlInt($object->getAttribute('id')).
+		" person_id=".Database::int($object->getAttribute('id')).
 		" where part_id=".$this->id;
 		Database::update($sql);
 	}

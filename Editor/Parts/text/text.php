@@ -106,7 +106,7 @@ class PartText extends Part{
 		",texttransform=".Database::text($textTransform).
 		",fontvariant=".Database::text($fontVariant).
 		",textdecoration=".Database::text($textDecoration).
-		",image_id=".sqlInt($imageId).
+		",image_id=".Database::int($imageId).
 		",imagefloat=".Database::text($imageFloat).
 		" where part_id=".$this->id;
 		Database::insert($sql);

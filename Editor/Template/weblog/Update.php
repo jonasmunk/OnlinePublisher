@@ -15,14 +15,14 @@ $title = Request::getPostString('title');
 $groups = Request::getPostArray('group');
 $id = getPageId();
 
-$sql = "update weblog set pageblueprint_id=".sqlInt($blueprint).",title=".Database::text($title)." where page_id=".$id;
+$sql = "update weblog set pageblueprint_id=".Database::int($blueprint).",title=".Database::text($title)." where page_id=".$id;
 Database::update($sql);
 
 $sql = "delete from weblog_webloggroup where page_id=".$id;
 Database::delete($sql);
 
 foreach ($groups as $group) {
-	$sql = "insert into weblog_webloggroup (page_id,webloggroup_id) values (".sqlInt($id).",".sqlInt($group).")";
+	$sql = "insert into weblog_webloggroup (page_id,webloggroup_id) values (".Database::int($id).",".Database::int($group).")";
 	Database::insert($sql);
 }
 

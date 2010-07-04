@@ -78,22 +78,22 @@ class Problem extends Object {
 	function sub_create() {
 		$sql="insert into problem (object_id,deadline,containing_object_id,completed,milestone_id,priority) values (".
 		$this->id.
-		",".sqlTimestamp($this->deadline).
-		",".sqlInt($this->containingObjectId).
-		",".sqlBoolean($this->completed).
-		",".sqlInt($this->milestoneId).
-		",".sqlFloat($this->priority).
+		",".Database::datetime($this->deadline).
+		",".Database::int($this->containingObjectId).
+		",".Database::boolean($this->completed).
+		",".Database::int($this->milestoneId).
+		",".Database::float($this->priority).
 		")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update problem set ".
-		"deadline=".sqlTimestamp($this->deadline).
-		",containing_object_id=".sqlInt($this->containingObjectId).
-		",completed=".sqlBoolean($this->completed).
-		",milestone_id=".sqlInt($this->milestoneId).
-		",priority=".sqlFloat($this->priority).
+		"deadline=".Database::datetime($this->deadline).
+		",containing_object_id=".Database::int($this->containingObjectId).
+		",completed=".Database::boolean($this->completed).
+		",milestone_id=".Database::int($this->milestoneId).
+		",priority=".Database::float($this->priority).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

@@ -66,7 +66,7 @@
 					$start = mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y")-$count);
 					$end = mktime();
 				}
-				$timeSql=" and ((news.startdate is null and news.enddate is null) or (news.startdate>=".sqlTimestamp($start)." and news.startdate<=".sqlTimestamp($end).") or (news.enddate>=".sqlTimestamp($start)." and news.enddate<=".sqlTimestamp($end).") or (news.enddate>=".sqlTimestamp($start)." and news.startdate is null) or (news.startdate<=".sqlTimestamp($end)." and news.enddate is null))";
+				$timeSql=" and ((news.startdate is null and news.enddate is null) or (news.startdate>=".Database::datetime($start)." and news.startdate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.enddate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.startdate is null) or (news.startdate<=".Database::datetime($end)." and news.enddate is null))";
 			}
 			$sql = "select distinct object.note,object.title from object,news, newsgroup_news, document_news_newsgroup where object.id=news.object_id and news.object_id=newsgroup_news.news_id and newsgroup_news.newsgroup_id=document_news_newsgroup.newsgroup_id and document_news_newsgroup.section_id=".$row['section_id'].$timeSql." order by ".$sortBy." ".$sortDir;
 			$groupResult = Database::select($sql);

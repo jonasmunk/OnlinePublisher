@@ -14,7 +14,7 @@ $newsViewStartHour = requestPostNumber('weekview_starthour');
 
 $id = getPageId();
 
-$sql="update calendarviewer set title=".Database::text($title).",weekview_starthour=".sqlInt($newsViewStartHour)." where page_id=".$id;
+$sql="update calendarviewer set title=".Database::text($title).",weekview_starthour=".Database::int($newsViewStartHour)." where page_id=".$id;
 Database::update($sql);
 
 $sql="delete from calendarviewer_object where page_id=".$id;

@@ -54,7 +54,7 @@ class Path extends Object {
 		$sql="insert into path (object_id,path,page_id) values (".
 		$this->id.
 		",".Database::text($this->path).
-		",".sqlInt($this->pageId).
+		",".Database::int($this->pageId).
 		")";
 		Database::insert($sql);
 	}
@@ -62,7 +62,7 @@ class Path extends Object {
 	function sub_update() {
 		$sql = "update path set ".
 		"path=".Database::text($this->path).
-		",page_id=".sqlInt($this->pageId).
+		",page_id=".Database::int($this->pageId).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

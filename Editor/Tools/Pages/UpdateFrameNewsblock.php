@@ -33,8 +33,8 @@ $sql="update frame_newsblock set title=".Database::text($title).
 ",maxitems=".$maxitems.
 ",timetype=".Database::text($timetype).
 ",timecount=".$timecount.
-",startdate=".sqlTimestamp($startdate).
-",enddate=".sqlTimestamp($enddate).
+",startdate=".Database::datetime($startdate).
+",enddate=".Database::datetime($enddate).
 " where id=".$id;
 
 Database::update($sql);

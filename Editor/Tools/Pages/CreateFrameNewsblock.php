@@ -46,8 +46,8 @@ $frame.
 ",".$maxitems.
 ",".Database::text($timetype).
 ",".$timecount.
-",".sqlTimestamp($startdate).
-",".sqlTimestamp($enddate).
+",".Database::datetime($startdate).
+",".Database::datetime($enddate).
 ")";
 $newId=Database::insert($sql);
 
