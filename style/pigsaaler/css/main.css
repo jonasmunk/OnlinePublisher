@@ -53,6 +53,8 @@ div.case_head_body
 	height: 96px;
 	background: url('../gfx/header.jpg') center top no-repeat;
 	position: relative;
+	width: 900px;
+	margin: 0 auto;
 }
 
 div.case_content
