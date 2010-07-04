@@ -33,29 +33,29 @@ $fontVariant = requestPostText('fontVariant');
 
 
 $sql="update document_header set".
-" text=".sqlText($text).
+" text=".Database::text($text).
 " ,level=".$level.
-" ,fontsize=".sqlText($fontSize).
-" ,fontfamily=".sqlText($fontFamily).
-" ,textalign=".sqlText($textAlign).
-" ,lineheight=".sqlText($lineHeight).
-" ,fontweight=".sqlText($fontWeight).
-" ,color=".sqlText($color).
-" ,fontstyle=".sqlText($fontStyle).
-" ,wordspacing=".sqlText($wordSpacing).
-" ,letterspacing=".sqlText($letterSpacing).
-" ,textdecoration=".sqlText($textDecoration).
-" ,textindent=".sqlText($textIndent).
-" ,texttransform=".sqlText($textTransform).
-" ,fontvariant=".sqlText($fontVariant).
+" ,fontsize=".Database::text($fontSize).
+" ,fontfamily=".Database::text($fontFamily).
+" ,textalign=".Database::text($textAlign).
+" ,lineheight=".Database::text($lineHeight).
+" ,fontweight=".Database::text($fontWeight).
+" ,color=".Database::text($color).
+" ,fontstyle=".Database::text($fontStyle).
+" ,wordspacing=".Database::text($wordSpacing).
+" ,letterspacing=".Database::text($letterSpacing).
+" ,textdecoration=".Database::text($textDecoration).
+" ,textindent=".Database::text($textIndent).
+" ,texttransform=".Database::text($textTransform).
+" ,fontvariant=".Database::text($fontVariant).
 " where section_id=".$id;
 Database::update($sql);
 
 $sql="update document_section set".
-" `left`=".sqlText($left).
-",`right`=".sqlText($right).
-",`top`=".sqlText($top).
-",`bottom`=".sqlText($bottom).
+" `left`=".Database::text($left).
+",`right`=".Database::text($right).
+",`top`=".Database::text($top).
+",`bottom`=".Database::text($bottom).
 " where id=".$id;
 Database::update($sql);
 

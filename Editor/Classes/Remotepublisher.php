@@ -37,14 +37,14 @@ class RemotePublisher extends Object {
 	function sub_create() {
 		$sql="insert into remotepublisher (object_id,url) values (".
 		$this->id.
-		",".sqlText($this->url).
+		",".Database::text($this->url).
 		")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update remotepublisher set ".
-		"url=".sqlText($this->url).
+		"url=".Database::text($this->url).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

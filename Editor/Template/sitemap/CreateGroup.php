@@ -19,7 +19,7 @@ if ($row = Database::selectFirst($sql)) {
     $position = 1;
 }
 
-$sql = "insert into sitemap_group (page_id,title,position,hierarchy_id) values (".$id.",".sqlText($title).",".$position.",".$hierarchy.")";
+$sql = "insert into sitemap_group (page_id,title,position,hierarchy_id) values (".$id.",".Database::text($title).",".$position.",".$hierarchy.")";
 Database::insert($sql);
 
 

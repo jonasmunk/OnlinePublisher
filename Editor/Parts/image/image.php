@@ -153,20 +153,20 @@ class PartImage extends Part {
 		}
 		$sql = "update part_image set".
 		" image_id=".$imageId.
-		",align=".sqlText($align).
+		",align=".Database::text($align).
 		",greyscale=".sqlBoolean($greyscale).
-		",scalemethod=".sqlText($scalemethod).
-		",scalepercent=".sqlText($scalepercent).
-		",scalewidth=".sqlText($scalewidth).
-		",scaleheight=".sqlText($scaleheight).
-		",`text`=".sqlText($text).
+		",scalemethod=".Database::text($scalemethod).
+		",scalepercent=".Database::text($scalepercent).
+		",scalewidth=".Database::text($scalewidth).
+		",scaleheight=".Database::text($scaleheight).
+		",`text`=".Database::text($text).
 		" where part_id=".$this->id;
 		Database::update($sql);
 		$sql = "select * from part_link where source_type='entireimage' and part_id=".$this->id;
 		if ($row=Database::selectFirst($sql)) {
 		    if ($linkType!="") {
-		        $sql = "update part_link set target_type=".sqlText($linkType).
-		        ",target_value=".sqlText($linkValue)." where source_type='entireimage'".
+		        $sql = "update part_link set target_type=".Database::text($linkType).
+		        ",target_value=".Database::text($linkValue)." where source_type='entireimage'".
 		        " and part_id=".$this->id;
 		        Database::update($sql);
 		    } else {
@@ -175,7 +175,7 @@ class PartImage extends Part {
 		    }
 		} elseif ($linkType!="") {
 	        $sql = "insert into part_link (target_type,target_value,source_type,part_id)".
-	        " values (".sqlText($linkType).",".sqlText($linkValue).",'entireimage',".$this->id.")";
+	        " values (".Database::text($linkType).",".Database::text($linkValue).",'entireimage',".$this->id.")";
 	        Database::insert($sql);
 		}
 	}
@@ -225,12 +225,12 @@ class PartImage extends Part {
 		}
 		$sql = "update part_image set".
 		" image_id=".sqlInt($object->getAttribute('id')).
-		",align=".sqlText($align).
+		",align=".Database::text($align).
 		",greyscale=".sqlBoolean($greyscale=='true').
-		",scalemethod=".sqlText($scaleMethod).
-		",scalepercent=".sqlText($scalePercent).
-		",scalewidth=".sqlText($scaleWidth).
-		",scaleheight=".sqlText($scaleHeight).
+		",scalemethod=".Database::text($scaleMethod).
+		",scalepercent=".Database::text($scalePercent).
+		",scalewidth=".Database::text($scaleWidth).
+		",scaleheight=".Database::text($scaleHeight).
 		" where part_id=".$this->id;
 		Database::update($sql);
 	}

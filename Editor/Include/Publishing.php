@@ -237,7 +237,7 @@ function buildPage($id,$allowDisabled=true,$path=null) {
 	if ($path==null) {
 		$sql.=" and page.id=".$id;
 	} else {
-		$sql.=" and page.path=".sqlText($path);
+		$sql.=" and page.path=".Database::text($path);
 	}
 	// If disabled pages are not allowed
 	if (!$allowDisabled) {
@@ -368,13 +368,13 @@ function publishPage($id) {
 	    }
 	}
 	$sql="update page set".
-		" data=".sqlText($data).
-		",`index`=".sqlText($index).
+		" data=".Database::text($data).
+		",`index`=".Database::text($index).
 		",dynamic=".sqlBoolean($dynamic).
 		",published=now()".
 		" where id=".$id;
 	Database::update($sql);
-	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".getUserId().",".sqlText($data).",now())";
+	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".getUserId().",".Database::text($data).",now())";
 	Database::insert($sql);
 	
 	// Clear page previews
@@ -384,7 +384,7 @@ function publishPage($id) {
 }
 
 function createPageHistory($id,&$data) {
-	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".getUserId().",".sqlText($data).",now())";
+	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".getUserId().",".Database::text($data).",now())";
 	Database::insert($sql);
 }
 
@@ -406,7 +406,7 @@ function buildDateTag($tag,$stamp) {
 
 
 function logInExternalUser($username,$password) {
-	$sql = "select * from user,object where object.id=user.object_id and username=".sqlText($username)." and password=".sqlText($password)." and external=1";
+	$sql = "select * from user,object where object.id=user.object_id and username=".Database::text($username)." and password=".Database::text($password)." and external=1";
 	if ($row=Database::selectFirst($sql)) {
 		$user = array('id'=>$row['id'],'username'=>$row['username'],'title'=>$row['title']);
 		$_SESSION['external.user']=$user;

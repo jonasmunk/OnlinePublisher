@@ -259,17 +259,17 @@ class Page {
 
 	function create() {
 		$sql="insert into page (title,description,keywords,path,template_id,created,changed,published,frame_id,design_id,language,next_page,previous_page) values (".
-		sqlText($this->title).
-		",".sqlText($this->description).
-		",".sqlText($this->keywords).
-		",".sqlText($this->path).
+		Database::text($this->title).
+		",".Database::text($this->description).
+		",".Database::text($this->keywords).
+		",".Database::text($this->path).
 		",".$this->templateId.
 		",now()".
 		",now()".
 		",now()".
 		",".$this->frameId.
 		",".$this->designId.
-		",".sqlText($this->language).
+		",".Database::text($this->language).
 		",".sqlInt($this->nextPage).
 		",".sqlInt($this->previousPage).
 		")";
@@ -359,7 +359,7 @@ class Page {
 
 	function translateToTemplateId($unique) {
 		$out = false;
-		$sql = "select id from template where `unique`=".sqlText($unique);
+		$sql = "select id from template where `unique`=".Database::text($unique);
 		if ($row = Database::selectFirst($sql)) {
 			$out = $row['id'];
 		}

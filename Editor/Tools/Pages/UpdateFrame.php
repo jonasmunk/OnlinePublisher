@@ -14,9 +14,9 @@ $bottomtext = requestPostText('bottomtext');
 $hierarchy = requestPostNumber('hierarchy',0);
 
 $sql="update frame set".
-" name=".sqlText($name).
-",title=".sqlText($title).
-",bottomtext=".sqlText($bottomtext).
+" name=".Database::text($name).
+",title=".Database::text($title).
+",bottomtext=".Database::text($bottomtext).
 ",hierarchy_id=".$hierarchy.
 " where id=".$id;
 

@@ -30,11 +30,11 @@ else if ($targetType=='email') {
 	$targetValue = requestPostText('email');
 }
 
-$sql="update frame_link set title=".sqlText($title).
-",alternative=".sqlText($alternative).
-",target_type=".sqlText($targetType).
+$sql="update frame_link set title=".Database::text($title).
+",alternative=".Database::text($alternative).
+",target_type=".Database::text($targetType).
 ",target_id=".$targetId.
-",target_value=".sqlText($targetValue).
+",target_value=".Database::text($targetValue).
 " where id = ".$id;
 Database::update($sql);
 

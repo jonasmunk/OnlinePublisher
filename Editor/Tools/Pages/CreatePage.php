@@ -58,16 +58,16 @@ if ($hierarchy>0) {
 	Database::free($result);
 	
 	$sql="insert into hierarchy_item (title,alternative,type,hierarchy_id,parent,`index`,target_type,target_id,target_value,target) values (".
-	sqlText($title).
-	",".sqlText('').
+	Database::text($title).
+	",".Database::text('').
 	",'item'".
 	",".$hierarchy.
 	",".$hierarchyParent.
 	",".$index.
-	",".sqlText('page').
+	",".Database::text('page').
 	",".$pageId.
-	",".sqlText('').
-	",".sqlText('').
+	",".Database::text('').
+	",".Database::text('').
 	")";
 	Database::insert($sql);
 	

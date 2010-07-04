@@ -39,7 +39,7 @@ elseif ($mode=='automatic') {
 
 $sql="update search set".
 " newsenabled=".sqlBoolean($enabled).
-",newslabel=".sqlText($label).
+",newslabel=".Database::text($label).
 ",newsdefault=".sqlBoolean($default).
 ",newshidden=".sqlBoolean($hidden).
 " where page_id=".$id;

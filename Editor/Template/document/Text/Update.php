@@ -33,30 +33,30 @@ $imageId = requestPostNumber('imageId',0);
 $imageFloat = requestPostText('imageFloat');
 
 $sql="update document_text set".
-" text=".sqlText($text).
-" ,fontsize=".sqlText($fontSize).
-" ,fontfamily=".sqlText($fontFamily).
-" ,textalign=".sqlText($textAlign).
-" ,lineheight=".sqlText($lineHeight).
-" ,fontweight=".sqlText($fontWeight).
-" ,color=".sqlText($color).
-" ,fontstyle=".sqlText($fontStyle).
-" ,wordspacing=".sqlText($wordSpacing).
-" ,letterspacing=".sqlText($letterSpacing).
-" ,textdecoration=".sqlText($textDecoration).
-" ,textindent=".sqlText($textIndent).
-" ,texttransform=".sqlText($textTransform).
-" ,fontvariant=".sqlText($fontVariant).
+" text=".Database::text($text).
+" ,fontsize=".Database::text($fontSize).
+" ,fontfamily=".Database::text($fontFamily).
+" ,textalign=".Database::text($textAlign).
+" ,lineheight=".Database::text($lineHeight).
+" ,fontweight=".Database::text($fontWeight).
+" ,color=".Database::text($color).
+" ,fontstyle=".Database::text($fontStyle).
+" ,wordspacing=".Database::text($wordSpacing).
+" ,letterspacing=".Database::text($letterSpacing).
+" ,textdecoration=".Database::text($textDecoration).
+" ,textindent=".Database::text($textIndent).
+" ,texttransform=".Database::text($textTransform).
+" ,fontvariant=".Database::text($fontVariant).
 " ,image_id=".$imageId.
-" ,imagefloat=".sqlText($imageFloat).
+" ,imagefloat=".Database::text($imageFloat).
 " where section_id=".$id;
 Database::update($sql);
 
 $sql="update document_section set".
-" `left`=".sqlText($left).
-",`right`=".sqlText($right).
-",`top`=".sqlText($top).
-",`bottom`=".sqlText($bottom).
+" `left`=".Database::text($left).
+",`right`=".Database::text($right).
+",`top`=".Database::text($top).
+",`bottom`=".Database::text($bottom).
 " where id=".$id;
 Database::update($sql);
 

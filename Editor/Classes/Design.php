@@ -111,7 +111,7 @@ class Design extends Object {
 		$sql = "delete from design_parameter where design_id=".$this->id;
 		Database::delete($sql);
 		foreach ($this->parameters as $parm) {
-			$sql = "insert into design_parameter (design_id,`key`,`type`,value) values (".$this->id.",".sqlText($parm['key']).",".sqlText($parm['type']).",".sqlText($parm['value']).")";
+			$sql = "insert into design_parameter (design_id,`key`,`type`,value) values (".$this->id.",".Database::text($parm['key']).",".Database::text($parm['type']).",".Database::text($parm['value']).")";
 			Database::insert($sql);
 		}
 	}
@@ -134,7 +134,7 @@ class Design extends Object {
 	function sub_create() {
 		$sql="insert into design (object_id,`unique`) values (".
 		$this->id.
-		",".sqlText($this->unique).
+		",".Database::text($this->unique).
 		")";
 		Database::insert($sql);
 		$this->_saveParameters();
@@ -149,14 +149,14 @@ class Design extends Object {
 
 	function sub_update() {
 		$sql = "update design set ".
-		"`unique`=".sqlText($this->unique).
+		"`unique`=".Database::text($this->unique).
 		" where object_id=".$this->id;
 		Database::update($sql);
 		$this->_saveParameters();
 	}
 	
 	function sub_publish() {
-		$sql = "update design set parameters=".sqlText($this->_buildParameterXml())." where object_id=".$this->id;
+		$sql = "update design set parameters=".Database::text($this->_buildParameterXml())." where object_id=".$this->id;
 		Database::update($sql);
 		return '';
 	}

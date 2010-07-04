@@ -12,7 +12,7 @@ class SearchController extends TemplateController {
     }
 
 	function create($page) {
-		$sql="insert into search (page_id,title) values (".$page->getId().",".sqlText($page->getTitle()).")";
+		$sql="insert into search (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
 	
@@ -154,7 +154,7 @@ class SearchController extends TemplateController {
 
 	function searchObjects($type,$query,$method) {
 		$words = explode(' ',$query);
-		$sql="select object.data,object.index from object where searchable=1 and type=".sqlText($type).$this->buildObjectSearchSql($query,$method)." order by object.title";
+		$sql="select object.data,object.index from object where searchable=1 and type=".Database::text($type).$this->buildObjectSearchSql($query,$method)." order by object.title";
 		$result = Database::select($sql);
 		$num = mysql_num_rows($result);
 		$xml='<group type="'.$type.'" count="'.$num.'">';

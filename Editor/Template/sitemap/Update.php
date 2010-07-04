@@ -18,8 +18,8 @@ $height = requestPostNumber('height',0);
 
 
 $sql="update sitemap set".
-" title=".sqlText($title).
-",text=".sqlText($text).
+" title=".Database::text($title).
+",text=".Database::text($text).
 " where page_id=".$id;
 Database::update($sql);
 

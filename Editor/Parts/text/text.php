@@ -92,22 +92,22 @@ class PartText extends Part{
 		
 		
 		$sql = "update part_text set".
-		" text=".sqlText($text).
-		",fontsize=".sqlText($fontSize).
-		",fontfamily=".sqlText($fontFamily).
-		",textalign=".sqlText($textAlign).
-		",lineheight=".sqlText($lineHeight).
-		",color=".sqlText($color).
-		",fontweight=".sqlText($fontWeight).
-		",fontstyle=".sqlText($fontStyle).
-		",wordspacing=".sqlText($wordSpacing).
-		",letterspacing=".sqlText($letterSpacing).
-		",textindent=".sqlText($textIndent).
-		",texttransform=".sqlText($textTransform).
-		",fontvariant=".sqlText($fontVariant).
-		",textdecoration=".sqlText($textDecoration).
+		" text=".Database::text($text).
+		",fontsize=".Database::text($fontSize).
+		",fontfamily=".Database::text($fontFamily).
+		",textalign=".Database::text($textAlign).
+		",lineheight=".Database::text($lineHeight).
+		",color=".Database::text($color).
+		",fontweight=".Database::text($fontWeight).
+		",fontstyle=".Database::text($fontStyle).
+		",wordspacing=".Database::text($wordSpacing).
+		",letterspacing=".Database::text($letterSpacing).
+		",textindent=".Database::text($textIndent).
+		",texttransform=".Database::text($textTransform).
+		",fontvariant=".Database::text($fontVariant).
+		",textdecoration=".Database::text($textDecoration).
 		",image_id=".sqlInt($imageId).
-		",imagefloat=".sqlText($imageFloat).
+		",imagefloat=".Database::text($imageFloat).
 		" where part_id=".$this->id;
 		Database::insert($sql);
 	}
@@ -133,20 +133,20 @@ class PartText extends Part{
 		$style = $this->_parseXMLStyle($node->selectNodes('style',1));
 		
 		$sql = "update part_text set".
-		" text=".sqlText($text).
-		",textalign=".sqlText($style['textalign']).
-		",fontsize=".sqlText($style['fontsize']).
-		",fontfamily=".sqlText($style['fontfamily']).
-		",lineheight=".sqlText($style['lineheight']).
-		",fontweight=".sqlText($style['fontweight']).
-		",wordspacing=".sqlText($style['wordspacing']).
-		",letterspacing=".sqlText($style['letterspacing']).
-		",textdecoration=".sqlText($style['textdecoration']).
-		",textindent=".sqlText($style['textindent']).
-		",texttransform=".sqlText($style['texttransform']).
-		",fontstyle=".sqlText($style['fontstyle']).
-		",fontvariant=".sqlText($style['fontvariant']).
-		",color=".sqlText($style['color']).
+		" text=".Database::text($text).
+		",textalign=".Database::text($style['textalign']).
+		",fontsize=".Database::text($style['fontsize']).
+		",fontfamily=".Database::text($style['fontfamily']).
+		",lineheight=".Database::text($style['lineheight']).
+		",fontweight=".Database::text($style['fontweight']).
+		",wordspacing=".Database::text($style['wordspacing']).
+		",letterspacing=".Database::text($style['letterspacing']).
+		",textdecoration=".Database::text($style['textdecoration']).
+		",textindent=".Database::text($style['textindent']).
+		",texttransform=".Database::text($style['texttransform']).
+		",fontstyle=".Database::text($style['fontstyle']).
+		",fontvariant=".Database::text($style['fontvariant']).
+		",color=".Database::text($style['color']).
 		" where part_id=".$this->id;
 		Database::update($sql);
 	}

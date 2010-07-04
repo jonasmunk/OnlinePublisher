@@ -7,7 +7,7 @@ class InternalSession {
     }
     
     function logIn($username,$password) {
-    	$sql="select object_id,username,administrator from user where internal=1 and username=".sqlText($username)." and password=".sqlText($password);
+    	$sql="select object_id,username,administrator from user where internal=1 and username=".Database::text($username)." and password=".Database::text($password);
     	if ($row = Database::selectFirst($sql)) {
     	    startSession();
     		$_SESSION['core.user.id']=$row['object_id'];

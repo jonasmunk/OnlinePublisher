@@ -10,7 +10,7 @@ require_once '../../Include/Functions.php';
 
 $id = requestPostNumber('id');
 $message = requestPostText('message');
-$sql = "update page_history set message=".sqlText($message)." where id=".$id;
+$sql = "update page_history set message=".Database::text($message)." where id=".$id;
 $row = Database::update($sql);
 
 redirect('index.php');

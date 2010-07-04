@@ -194,7 +194,7 @@ class DocumentController extends TemplateController {
 				$columnPosition++;
 				$column =& $columns->item($j);
 				$width = $column->getAttribute('width');
-				$sql = "insert into document_column (row_id,width,`index`,page_id) values (".$rowId.",".sqlText($width).",".$columnPosition.",".$this->id.")";
+				$sql = "insert into document_column (row_id,width,`index`,page_id) values (".$rowId.",".Database::text($width).",".$columnPosition.",".$this->id.")";
 				$columnId = Database::insert($sql);
 				
 				$sectionPosition = 0;

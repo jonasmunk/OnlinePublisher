@@ -12,7 +12,7 @@ class GuestbookController extends TemplateController {
     }
 
 	function create($page) {
-		$sql="insert into guestbook (page_id,title) values (".$page->getId().",".sqlText($page->getTitle()).")";
+		$sql="insert into guestbook (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
 	
@@ -53,7 +53,7 @@ class GuestbookController extends TemplateController {
 			if (requestPost() && requestPostBoolean('userinteraction')) {
 				$name = Request::getUnicodeString('name');
 				$text = Request::getUnicodeString('text');
-				$sql = "insert into guestbook_item (page_id,time,name,text) values (".$this->id.",now(),".sqlText($name).",".sqlText($text).")";
+				$sql = "insert into guestbook_item (page_id,time,name,text) values (".$this->id.",now(),".Database::text($name).",".Database::text($text).")";
 				Database::insert($sql);
 			}
 			$sql="select *,UNIX_TIMESTAMP(time) as unix from guestbook_item where page_id=".$this->id." order by time desc";

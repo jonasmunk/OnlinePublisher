@@ -39,7 +39,7 @@ elseif ($mode=='automatic') {
 
 $sql="update search set".
 " filesenabled=".sqlBoolean($enabled).
-",fileslabel=".sqlText($label).
+",fileslabel=".Database::text($label).
 ",filesdefault=".sqlBoolean($default).
 ",fileshidden=".sqlBoolean($hidden).
 " where page_id=".$id;

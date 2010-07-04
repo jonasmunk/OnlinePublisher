@@ -30,14 +30,14 @@ $hierarchyItemTitle=requestPostText('hierarchyItemTitle');
 
 
 $sql="update page set".
-" title=".sqlText($title).
-",description=".sqlText($description).
-",keywords=".sqlText($keywords).
-",name=".sqlText($name).
-",path=".sqlText($path).
+" title=".Database::text($title).
+",description=".Database::text($description).
+",keywords=".Database::text($keywords).
+",name=".Database::text($name).
+",path=".Database::text($path).
 ",design_id=".$design.
 ",frame_id=".$frame.
-",language=".sqlText($language).
+",language=".Database::text($language).
 ",searchable=".sqlBoolean($searchable).
 ",disabled=".sqlBoolean($disabled).
 ",next_page=".sqlInt($nextPage).
@@ -46,7 +46,7 @@ $sql="update page set".
 Database::update($sql);
 
 if ($hierarchyItemId>0) {
-    $sql = "update hierarchy_item set title=".sqlText($hierarchyItemTitle)." where id=".$hierarchyItemId;
+    $sql = "update hierarchy_item set title=".Database::text($hierarchyItemTitle)." where id=".$hierarchyItemId;
     Database::update($sql);
     Hierarchy::markHierarchyOfItemChanged($hierarchyItemId);
 }

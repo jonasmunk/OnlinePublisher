@@ -138,16 +138,16 @@ class PartNews extends Part {
 
 		// Build sql sentence
 		$sql="update part_news set".
-		" align=".sqlText($align).
-		",title=".sqlText($title).
-		",mode=".sqlText($mode).
-		",sortby=".sqlText($sortby).
-		",sortdir=".sqlText($sortdir).
-		",timetype=".sqlText($timetype).
+		" align=".Database::text($align).
+		",title=".Database::text($title).
+		",mode=".Database::text($mode).
+		",sortby=".Database::text($sortby).
+		",sortdir=".Database::text($sortdir).
+		",timetype=".Database::text($timetype).
 		",timecount=".$timecount.
 		",maxitems=".$maxitems.
 		",news_id=".$news.
-		",variant=".sqlText($variant).
+		",variant=".Database::text($variant).
 		" where part_id=".$this->id;
 		Database::update($sql);
 		

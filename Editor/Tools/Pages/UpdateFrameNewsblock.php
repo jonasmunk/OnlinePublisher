@@ -27,11 +27,11 @@ if ($timetype=='interval') {
 	$enddate = requestPostDateTime('enddate');
 }
 
-$sql="update frame_newsblock set title=".sqlText($title).
-",sortby=".sqlText($sortby).
-",sortdir=".sqlText($sortdir).
+$sql="update frame_newsblock set title=".Database::text($title).
+",sortby=".Database::text($sortby).
+",sortdir=".Database::text($sortdir).
 ",maxitems=".$maxitems.
-",timetype=".sqlText($timetype).
+",timetype=".Database::text($timetype).
 ",timecount=".$timecount.
 ",startdate=".sqlTimestamp($startdate).
 ",enddate=".sqlTimestamp($enddate).

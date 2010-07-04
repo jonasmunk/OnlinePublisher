@@ -87,7 +87,7 @@ class PartPerson extends Part {
 
 		$sql="update part_person set".
 		" person_id=".sqlInt($person_id).
-		" ,align=".sqlText($align).
+		" ,align=".Database::text($align).
 		" ,show_firstname=".sqlBoolean($show_firstname).
 		" ,show_middlename=".sqlBoolean($show_middlename).
 		" ,show_surname=".sqlBoolean($show_surname).

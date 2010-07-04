@@ -19,7 +19,7 @@ class CalendarController extends TemplateController {
     }
 
 	function create($page) {
-		$sql="insert into calendarviewer (page_id,title) values (".$page->getId().",".sqlText($page->getTitle()).")";
+		$sql="insert into calendarviewer (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
 	

@@ -12,7 +12,7 @@ $title = requestPostText('title');
 $hierarchy = requestPostNumber('hierarchy',0);
 
 $sql="insert into frame (name,title,hierarchy_id) values (".
-sqlText($name).",".sqlText($title).",".$hierarchy.")";
+Database::text($name).",".Database::text($title).",".$hierarchy.")";
 $id=Database::insert($sql);
 
 redirect('EditFrame.php?id='.$id);

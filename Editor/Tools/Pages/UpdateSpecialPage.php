@@ -13,8 +13,8 @@ $language = requestPostText('language');
 $page = requestPostNumber('page',0);
 
 $sql="update specialpage set".
-" `type`=".sqlText($type).
-",language=".sqlText($language).
+" `type`=".Database::text($type).
+",language=".Database::text($language).
 ",page_id=".$page.
 " where id=".$id;
 

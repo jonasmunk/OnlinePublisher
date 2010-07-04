@@ -164,7 +164,7 @@ function statistics($type,$id) {
 	geoip_close($gi);
 
 	$sql="insert into statistics (time,type,value,ip,country,agent,method,uri,language,session,referer,host) values (".
-	"now(),".sqlText($type).",".$id.",".sqlText($ip).",".sqlText($country).",".sqlText($agent).",".sqlText($method).",".sqlText($uri).",".sqlText($language).",".sqlText($session).",".sqlText($referer).",".sqlText($userhost).")";
+	"now(),".Database::text($type).",".$id.",".Database::text($ip).",".Database::text($country).",".Database::text($agent).",".Database::text($method).",".Database::text($uri).",".Database::text($language).",".Database::text($session).",".Database::text($referer).",".Database::text($userhost).")";
 	Database::insert($sql);
 	error_reporting($oldErrorLevel);
 }

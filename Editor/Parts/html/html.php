@@ -52,7 +52,7 @@ class PartHtml extends Part {
 	
 	function sub_update() {
 		$html = requestPostText('html');
-		$sql = "update part_html set html=".sqlText($html)." where part_id=".$this->id;
+		$sql = "update part_html set html=".Database::text($html)." where part_id=".$this->id;
 		Database::update($sql);
 	}
 	
@@ -60,7 +60,7 @@ class PartHtml extends Part {
 		$html = $node->getText();
 		
 		$sql = "update part_html set".
-		" html=".sqlText($html).
+		" html=".Database::text($html).
 		" where part_id=".$this->id;
 		Database::update($sql);
 	}

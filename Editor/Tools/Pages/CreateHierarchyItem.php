@@ -48,16 +48,16 @@ else {
 Database::free($result);
 
 $sql="insert into hierarchy_item (title,alternative,type,hierarchy_id,parent,`index`,target_type,target_id,target_value,target) values (".
-sqlText($title).
-",".sqlText($alternative).
+Database::text($title).
+",".Database::text($alternative).
 ",'item'".
 ",".$hierarchyId.
 ",".$parent.
 ",".$index.
-",".sqlText($targetType).
+",".Database::text($targetType).
 ",".$targetId.
-",".sqlText($targetValue).
-",".sqlText($target).
+",".Database::text($targetValue).
+",".Database::text($target).
 ")";
 Database::insert($sql);
 

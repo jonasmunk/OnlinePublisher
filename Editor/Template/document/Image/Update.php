@@ -21,15 +21,15 @@ $align = requestPostText('align');
 
 $sql="update document_image set".
 " image_id=".$imageId.
-",align=".sqlText($align).
+",align=".Database::text($align).
 " where section_id=".$id;
 Database::update($sql);
 
 $sql="update document_section set".
-" `left`=".sqlText($left).
-",`right`=".sqlText($right).
-",`top`=".sqlText($top).
-",`bottom`=".sqlText($bottom).
+" `left`=".Database::text($left).
+",`right`=".Database::text($right).
+",`top`=".Database::text($top).
+",`bottom`=".Database::text($bottom).
 " where id=".$id;
 Database::update($sql);
 

@@ -14,7 +14,7 @@ $width=requestPostText('width');
 
 
 $sql="update document_column set".
-" width=".sqlText($width).
+" width=".Database::text($width).
 " where id=".$id;
 Database::update($sql);
 

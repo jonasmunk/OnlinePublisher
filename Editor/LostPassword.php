@@ -16,7 +16,7 @@ require_once 'Classes/Request.php';
 if (Request::exists('id')) {
     $id = requestText('id');
     $time = time();
-    $sql = "select * from email_validation_session where timelimit>".sqlTimestamp($time)." and `unique`=".sqlText($id);
+    $sql = "select * from email_validation_session where timelimit>".sqlTimestamp($time)." and `unique`=".Database::text($id);
     if ($row = Database::selectFirst($sql)) {
         if (requestPostExists('password1') && requestPostExists('password2')) {
             processPasswordChange($row['user_id'],requestPostText('password1'));
@@ -29,7 +29,7 @@ if (Request::exists('id')) {
 }
 else if (requestPost()) {
 	$username=requestPostText('username');
-	$sql="select * from user where username=".sqlText($username)." or email=".sqlText($username);
+	$sql="select * from user where username=".Database::text($username)." or email=".Database::text($username);
 	$row = Database::selectFirst($sql);
 	if ($row && $row['email']!='') {
 		createValidationSession($row['email'],$row['object_id'],$row['username']);
@@ -123,7 +123,7 @@ function createValidationSession($email,$userId,$userName) {
     
     $sql = "insert into email_validation_session (`unique`,`user_id`,`email`,`timelimit`)".
     " values (".
-    sqlText($unique).",".$userId.",".sqlText($email).",".sqlTimestamp($limit).
+    Database::text($unique).",".$userId.",".Database::text($email).",".sqlTimestamp($limit).
     ")";
     Database::insert($sql);
     // Create the email

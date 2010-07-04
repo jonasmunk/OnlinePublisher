@@ -19,15 +19,15 @@ $bottom = requestPostText('bottom');
 
 
 $sql="update document_richtext set".
-" data=".sqlText($data).
+" data=".Database::text($data).
 " where section_id=".$id;
 Database::update($sql);
 
 $sql="update document_section set".
-" `left`=".sqlText($left).
-",`right`=".sqlText($right).
-",`top`=".sqlText($top).
-",`bottom`=".sqlText($bottom).
+" `left`=".Database::text($left).
+",`right`=".Database::text($right).
+",`top`=".Database::text($top).
+",`bottom`=".Database::text($bottom).
 " where id=".$id;
 Database::update($sql);
 

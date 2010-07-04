@@ -372,38 +372,38 @@ class Order extends Object {
 				$this->id.
 				",".sqlInt($this->order_no).
 				",".sqlInt($this->customers_id).
-				",".sqlText($this->customers_name).
-				",".sqlText($this->customers_company).
-				",".sqlText($this->customers_street_address).
-				",".sqlText($this->customers_city).
-				",".sqlText($this->customers_zipcode).
-				",".sqlText($this->customers_country).
-				",".sqlText($this->customers_telephone).
-				",".sqlText($this->customers_email).
-				",".sqlText($this->delivery_name).
-				",".sqlText($this->delivery_company).
-				",".sqlText($this->delivery_street_address).
-				",".sqlText($this->delivery_city).
-				",".sqlText($this->delivery_zipcode).
-				",".sqlText($this->delivery_country).
-				",".sqlText($this->billing_name).
-				",".sqlText($this->billing_company).
-				",".sqlText($this->billing_street_address).
-				",".sqlText($this->billing_city).
-				",".sqlText($this->billing_zipcode).
-				",".sqlText($this->billing_country).
-				",".sqlText($this->payment_method).
-				",".sqlText($this->cc_type).
-				",".sqlText($this->cc_owner).
-				",".sqlText($this->cc_number).
-				",".sqlText($this->cc_controle_number).
-				",".sqlText($this->cc_expires).
+				",".Database::text($this->customers_name).
+				",".Database::text($this->customers_company).
+				",".Database::text($this->customers_street_address).
+				",".Database::text($this->customers_city).
+				",".Database::text($this->customers_zipcode).
+				",".Database::text($this->customers_country).
+				",".Database::text($this->customers_telephone).
+				",".Database::text($this->customers_email).
+				",".Database::text($this->delivery_name).
+				",".Database::text($this->delivery_company).
+				",".Database::text($this->delivery_street_address).
+				",".Database::text($this->delivery_city).
+				",".Database::text($this->delivery_zipcode).
+				",".Database::text($this->delivery_country).
+				",".Database::text($this->billing_name).
+				",".Database::text($this->billing_company).
+				",".Database::text($this->billing_street_address).
+				",".Database::text($this->billing_city).
+				",".Database::text($this->billing_zipcode).
+				",".Database::text($this->billing_country).
+				",".Database::text($this->payment_method).
+				",".Database::text($this->cc_type).
+				",".Database::text($this->cc_owner).
+				",".Database::text($this->cc_number).
+				",".Database::text($this->cc_controle_number).
+				",".Database::text($this->cc_expires).
 				",".sqlInt($this->orders_status).
 				",".$this->orders_date_finished.
-				",".sqlText($this->currency).
-				",".sqlText($this->currency_value).
-				",".sqlText($this->total_amount).
-				",".sqlText($this->total_tax).
+				",".Database::text($this->currency).
+				",".Database::text($this->currency_value).
+				",".Database::text($this->total_amount).
+				",".Database::text($this->total_tax).
 				")";
 		Database::insert($sql);
 	}
@@ -411,37 +411,37 @@ class Order extends Object {
 	function sub_update() {
 		$sql="update orders set".
 			" order_no=".sqlInt($this->order_no).
-			",customers_id=".sqlText($this->customers_id).
-			",customers_name=".sqlText($this->customers_name).
-			",customers_company=".sqlText($this->customers_company).
-			",customers_street_address=".sqlText($this->customers_street_address).
-			",customers_city=".sqlText($this->customers_city).
-			",customers_zipcode=".sqlText($this->customers_postcode).
-			",customers_country=".sqlText($this->customers_country).
-			",customers_telephone=".sqlText($this->customers_telephone).
-			",customers_email=".sqlText($this->customers_email).
-			",delivery_name=".sqlText($this->delivery_name).
-			",delivery_company=".sqlText($this->delivery_company).
-			",delivery_street_address=".sqlText($this->delivery_street_address).
-			",delivery_city=".sqlText($this->delivery_city).
-			",delivery_zipcode=".sqlText($this->delivery_postcode).
-			",delivery_country=".sqlText($this->delivery_country).
-			",billing_name=".sqlText($this->billing_name).
-			",billing_company=".sqlText($this->billing_company).
-			",billing_street_address=".sqlText($this->billing_street_address).
-			" billing_city=".sqlText($this->billing_city).
-			",billing_zipcode=".sqlText($this->billing_postcode).
-			",billing_country=".sqlText($this->billing_country).
-			",payment_method=".sqlText($this->payment_method).
-			",cc_type=".sqlText($this->cc_type).
-			",cc_owner=".sqlText($this->cc_owner).
-			",cc_number=".sqlText($this->cc_number).
-			",cc_controle_number=".sqlText($this->cc_controle_number).
-			",orders_date_finished=".sqlText($this->orders_date_finished).
-			",currency=".sqlText($this->currency).
-			",currency_value=".sqlText($this->currency_value).
-			",total_amount=".sqlText($this->total_amount).
-			",total_tax=".sqlText($this->total_tax).			
+			",customers_id=".Database::text($this->customers_id).
+			",customers_name=".Database::text($this->customers_name).
+			",customers_company=".Database::text($this->customers_company).
+			",customers_street_address=".Database::text($this->customers_street_address).
+			",customers_city=".Database::text($this->customers_city).
+			",customers_zipcode=".Database::text($this->customers_postcode).
+			",customers_country=".Database::text($this->customers_country).
+			",customers_telephone=".Database::text($this->customers_telephone).
+			",customers_email=".Database::text($this->customers_email).
+			",delivery_name=".Database::text($this->delivery_name).
+			",delivery_company=".Database::text($this->delivery_company).
+			",delivery_street_address=".Database::text($this->delivery_street_address).
+			",delivery_city=".Database::text($this->delivery_city).
+			",delivery_zipcode=".Database::text($this->delivery_postcode).
+			",delivery_country=".Database::text($this->delivery_country).
+			",billing_name=".Database::text($this->billing_name).
+			",billing_company=".Database::text($this->billing_company).
+			",billing_street_address=".Database::text($this->billing_street_address).
+			" billing_city=".Database::text($this->billing_city).
+			",billing_zipcode=".Database::text($this->billing_postcode).
+			",billing_country=".Database::text($this->billing_country).
+			",payment_method=".Database::text($this->payment_method).
+			",cc_type=".Database::text($this->cc_type).
+			",cc_owner=".Database::text($this->cc_owner).
+			",cc_number=".Database::text($this->cc_number).
+			",cc_controle_number=".Database::text($this->cc_controle_number).
+			",orders_date_finished=".Database::text($this->orders_date_finished).
+			",currency=".Database::text($this->currency).
+			",currency_value=".Database::text($this->currency_value).
+			",total_amount=".Database::text($this->total_amount).
+			",total_tax=".Database::text($this->total_tax).			
 			" where object_id=".$this->id;
 		Database::update($sql);
 	}

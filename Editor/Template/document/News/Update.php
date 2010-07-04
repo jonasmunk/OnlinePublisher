@@ -28,12 +28,12 @@ $title = requestPostText('title');
 
 
 $sql="update document_news set".
-" align=".sqlText($align).
-",title=".sqlText($title).
-",mode=".sqlText($mode).
-",sortby=".sqlText($sortby).
-",sortdir=".sqlText($sortdir).
-",timetype=".sqlText($timetype).
+" align=".Database::text($align).
+",title=".Database::text($title).
+",mode=".Database::text($mode).
+",sortby=".Database::text($sortby).
+",sortdir=".Database::text($sortdir).
+",timetype=".Database::text($timetype).
 ",timecount=".$timecount.
 ",maxitems=".$maxitems.
 ",news_id=".$news.
@@ -53,10 +53,10 @@ if ($mode=='groups') {
 	}
 }
 $sql="update document_section set".
-" `left`=".sqlText($left).
-",`right`=".sqlText($right).
-",`top`=".sqlText($top).
-",`bottom`=".sqlText($bottom).
+" `left`=".Database::text($left).
+",`right`=".Database::text($right).
+",`top`=".Database::text($top).
+",`bottom`=".Database::text($bottom).
 " where id=".$id;
 Database::update($sql);
 

@@ -38,12 +38,12 @@ else if ($targetType=='email') {
 
 
 $sql="update hierarchy_item set".
-" title=".sqlText($title).
-",alternative=".sqlText($alternative).
-",target_type=".sqlText($targetType).
+" title=".Database::text($title).
+",alternative=".Database::text($alternative).
+",target_type=".Database::text($targetType).
 ",target_id=".$targetId.
-",target_value=".sqlText($targetValue).
-",target=".sqlText($target).
+",target_value=".Database::text($targetValue).
+",target=".Database::text($target).
 ",hidden=".sqlBoolean($hidden).
 " where id=".$id;
 Database::update($sql);

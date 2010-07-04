@@ -144,30 +144,30 @@ class Customer extends Object {
 				"email, phone, streetname , zipcode , city ,".
 				"country ) values (".
 				$this->id.
-				",".sqlText($this->firstname).
-				",".sqlText($this->middlename).
-				",".sqlText($this->surname).
-				",".sqlText($this->email).
-				",".sqlText($this->phone).
-				",".sqlText($this->streetname).
-				",".sqlText($this->zipcode).
-				",".sqlText($this->city).
-				",".sqlText($this->country).
+				",".Database::text($this->firstname).
+				",".Database::text($this->middlename).
+				",".Database::text($this->surname).
+				",".Database::text($this->email).
+				",".Database::text($this->phone).
+				",".Database::text($this->streetname).
+				",".Database::text($this->zipcode).
+				",".Database::text($this->city).
+				",".Database::text($this->country).
 				")";
 		Database::insert($sql);
 	}
 	
 	function sub_update() {
 		$sql="update customer set".
-		" firstname=".sqlText($this->firstname).
-		",middlename=".sqlText($this->middlename).
-		",surname=".sqlText($this->surname).
-		",email=".sqlText($this->email).
-		",phone=".sqlText($this->phone).
-		",streetname=".sqlText($this->streetname).
-		",zipcode=".sqlText($this->zipcode).
-		",city=".sqlText($this->city).
-		",country=".sqlText($this->country).
+		" firstname=".Database::text($this->firstname).
+		",middlename=".Database::text($this->middlename).
+		",surname=".Database::text($this->surname).
+		",email=".Database::text($this->email).
+		",phone=".Database::text($this->phone).
+		",streetname=".Database::text($this->streetname).
+		",zipcode=".Database::text($this->zipcode).
+		",city=".Database::text($this->city).
+		",country=".Database::text($this->country).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

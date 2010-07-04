@@ -63,18 +63,18 @@ class File extends Object {
 	function sub_create() {
 		$sql="insert into file (object_id,filename,size,type) values (".
 		$this->id.
-		",".sqlText($this->filename).
+		",".Database::text($this->filename).
 		",".sqlInt($this->size).
-		",".sqlText($this->mimetype).
+		",".Database::text($this->mimetype).
 		")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update file set ".
-		"filename=".sqlText($this->filename).
+		"filename=".Database::text($this->filename).
 		",size=".sqlInt($this->size).
-		",type=".sqlText($this->mimetype).
+		",type=".Database::text($this->mimetype).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

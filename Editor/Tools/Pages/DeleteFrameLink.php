@@ -20,7 +20,7 @@ $sql="delete from frame_link where id=".$id;
 Database::delete($sql);
 
 // Fix indexes
-$sql="select id from frame_link where frame_id=".$frame." and position=".sqlText($position)." order by `index`";
+$sql="select id from frame_link where frame_id=".$frame." and position=".Database::text($position)." order by `index`";
 $result = Database::select($sql);
 $index=1;
 while ($row = Database::next($result)) {

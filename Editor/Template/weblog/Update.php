@@ -15,7 +15,7 @@ $title = Request::getPostString('title');
 $groups = Request::getPostArray('group');
 $id = getPageId();
 
-$sql = "update weblog set pageblueprint_id=".sqlInt($blueprint).",title=".sqlText($title)." where page_id=".$id;
+$sql = "update weblog set pageblueprint_id=".sqlInt($blueprint).",title=".Database::text($title)." where page_id=".$id;
 Database::update($sql);
 
 $sql = "delete from weblog_webloggroup where page_id=".$id;

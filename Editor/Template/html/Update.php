@@ -15,8 +15,8 @@ $html = requestPostText('html');
 $valid = validateXML($html);
 
 $sql="update html set".
-" html=".sqlText($html).
-",title=".sqlText($title).
+" html=".Database::text($html).
+",title=".Database::text($title).
 ",valid=".sqlBoolean($valid).
 " where page_id=".$id;
 Database::update($sql);

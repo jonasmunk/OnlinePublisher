@@ -20,7 +20,7 @@ $products = requestPostCheckbox('products');
 
 $sql="update frame set".
 " searchenabled=".sqlBoolean($enabled).
-",searchbuttontitle=".sqlText($buttontitle).
+",searchbuttontitle=".Database::text($buttontitle).
 ",searchpage_id=".$page.
 ",searchpages=".sqlBoolean($pages).
 ",searchimages=".sqlBoolean($images).

@@ -39,12 +39,12 @@ Database::free($result);
 
 $sql="insert into frame_newsblock (frame_id,title,`index`,sortby,sortdir,maxitems,timetype,timecount,startdate,enddate) values (".
 $frame.
-",".sqlText($title).
+",".Database::text($title).
 ",".$index.
-",".sqlText($sortby).
-",".sqlText($sortdir).
+",".Database::text($sortby).
+",".Database::text($sortdir).
 ",".$maxitems.
-",".sqlText($timetype).
+",".Database::text($timetype).
 ",".$timecount.
 ",".sqlTimestamp($startdate).
 ",".sqlTimestamp($enddate).

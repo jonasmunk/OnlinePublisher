@@ -79,7 +79,7 @@ class EmailAddress extends Object {
 	function sub_create() {
 		$sql="insert into emailaddress (object_id,address,containing_object_id) values (".
 		$this->id.
-		",".sqlText($this->address).
+		",".Database::text($this->address).
 		",".sqlInt($this->containingObjectId).
 		")";
 		Database::insert($sql);
@@ -87,7 +87,7 @@ class EmailAddress extends Object {
 
 	function sub_update() {
 		$sql = "update emailaddress set ".
-		"address=".sqlText($this->address).
+		"address=".Database::text($this->address).
 		",containing_object_id=".sqlInt($this->containingObjectId).
 		" where object_id=".$this->id;
 		Database::update($sql);

@@ -12,7 +12,7 @@ $language=requestPostText('language');
 $page=requestPostNumber('page',0);
 
 $sql="insert into specialpage (`type`,language,page_id) values (".
-sqlText($type).",".sqlText($language).",".$page.")";
+Database::text($type).",".Database::text($language).",".$page.")";
 
 Database::insert($sql);
 

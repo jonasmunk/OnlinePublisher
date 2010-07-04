@@ -76,7 +76,7 @@ class Weblogentry extends Object {
 	function sub_create() {
 		$sql="insert into weblogentry (object_id,text,date,page_id) values (".
 		$this->id.
-		",".sqlText($this->text).
+		",".Database::text($this->text).
 		",".sqlTimestamp($this->date).
 		",".sqlInt($this->pageId).
 		")";
@@ -85,7 +85,7 @@ class Weblogentry extends Object {
 
 	function sub_update() {
 		$sql = "update weblogentry set ".
-		"text=".sqlText($this->text).
+		"text=".Database::text($this->text).
 		",date=".sqlTimestamp($this->date).
 		",page_id=".sqlInt($this->pageId).
 		" where object_id=".$this->id;

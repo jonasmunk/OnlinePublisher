@@ -12,7 +12,7 @@ class SitemapController extends TemplateController {
     }
 
 	function create($page) {
-		$sql="insert into sitemap (page_id,title) values (".$page->getId().",".sqlText($page->getTitle()).")";
+		$sql="insert into sitemap (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
 	

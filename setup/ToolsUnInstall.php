@@ -12,7 +12,7 @@ require_once 'Security.php';
 
 $unique = requestGetText('unique');
 
-$sql="delete from tool where `unique`=".sqlText($unique);
+$sql="delete from tool where `unique`=".Database::text($unique);
 Database::delete($sql);
 
 header("Location: Tools.php");

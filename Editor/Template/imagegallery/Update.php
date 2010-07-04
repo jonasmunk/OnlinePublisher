@@ -17,8 +17,8 @@ $showtitle = requestPostCheckbox('showtitle');
 $shownote = requestPostCheckbox('shownote');
 $rotate = requestPostNumber('rotate');
 
-$sql="update imagegallery set title=".sqlText($title).
-",`text`=".sqlText($text).
+$sql="update imagegallery set title=".Database::text($title).
+",`text`=".Database::text($text).
 ",imagesize=".sqlInt($imagesize).
 ",showtitle=".sqlBoolean($showtitle).
 ",shownote=".sqlBoolean($shownote).

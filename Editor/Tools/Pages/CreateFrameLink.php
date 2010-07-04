@@ -42,13 +42,13 @@ Database::free($result);
 
 $sql="insert into frame_link (frame_id,`position`,title,alternative,`index`,target_type,target_id,target_value) values (".
 $frame.
-",".sqlText($position).
-",".sqlText($title).
-",".sqlText($alternative).
+",".Database::text($position).
+",".Database::text($title).
+",".Database::text($alternative).
 ",".$index.
-",".sqlText($targetType).
+",".Database::text($targetType).
 ",".$targetId.
-",".sqlText($targetValue).
+",".Database::text($targetValue).
 ")";
 Database::insert($sql);
 

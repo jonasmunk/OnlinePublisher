@@ -98,12 +98,12 @@ class Object {
 	
 	function create() {
 		$sql = "insert into `object` (title,type,note,created,updated,searchable,owner_id) values (".
-		sqlText($this->title).",".
-		sqlText($this->type).",".
-		sqlText($this->note).",".
+		Database::text($this->title).",".
+		Database::text($this->type).",".
+		Database::text($this->note).",".
 		"now(),now(),".
-		sqlBoolean($this->searchable).",".
-		sqlInt($this->ownerId).
+		Database::boolean($this->searchable).",".
+		Database::int($this->ownerId).
 		")";		
 		$this->id = Database::insert($sql);
 		$schema = Object::$schema[$this->type];
@@ -136,11 +136,11 @@ class Object {
 	
 	function update() {
 		$sql = "update `object` set ".
-		"title=".sqlText($this->title).
-		",note=".sqlText($this->note).
+		"title=".Database::text($this->title).
+		",note=".Database::text($this->note).
 		",updated=now()".
-		",searchable=".sqlBoolean($this->searchable).
-		",owner_id=".sqlInt($this->ownerId).
+		",searchable=".Database::boolean($this->searchable).
+		",owner_id=".Database::int($this->ownerId).
 		" where id=".$this->id;		
 		Database::update($sql);
 		$schema = Object::$schema[$this->type];
@@ -198,8 +198,8 @@ class Object {
 		$index = $this->getIndex();
 		$xml = $this->getCurrentXml();
 		$sql = "update `object` set ".
-		"data=".sqlText($xml).
-		",`index`=".sqlText($index).
+		"data=".Database::text($xml).
+		",`index`=".Database::text($index).
 		",published=now()".
 		" where id=".$this->id;		
 		Database::update($sql);
@@ -359,12 +359,12 @@ class Object {
 		
 		$sql="insert into object_link (object_id,title,alternative,target,position,target_type,target_value) values (".
 		$this->id.
-		",".sqlText($title).
-		",".sqlText($alternative).
-		",".sqlText($target).
+		",".Database::text($title).
+		",".Database::text($alternative).
+		",".Database::text($target).
 		",".$pos.
-		",".sqlText($targetType).
-		",".sqlText($targetValue).
+		",".Database::text($targetType).
+		",".Database::text($targetValue).
 		")";
 		Database::insert($sql);
 		
@@ -374,11 +374,11 @@ class Object {
 	
 	function updateLink($id,$title,$alternative,$target,$targetType,$targetValue) {
 		
-		$sql="update object_link set title=".sqlText($title).
-		",alternative=".sqlText($alternative).
-		",target_type=".sqlText($targetType).
-		",target=".sqlText($target).
-		",target_value=".sqlText($targetValue).
+		$sql="update object_link set title=".Database::text($title).
+		",alternative=".Database::text($alternative).
+		",target_type=".Database::text($targetType).
+		",target=".Database::text($target).
+		",target_value=".Database::text($targetValue).
 		" where id = ".$id;
 		Database::update($sql);
 		
@@ -480,7 +480,7 @@ class Object {
 	function loadAllByType($type) {
     	global $basePath;
 		$objects = array();
-    	$sql = "select id from object where type =".sqlText($type)." order by title";
+    	$sql = "select id from object where type =".Database::text($type)." order by title";
 		$result = Database::select($sql);
     	while ($row = Database::next($result)) {
 			$unique = ucfirst($type);
@@ -597,7 +597,7 @@ class Object {
     	$sql = "select id,type from object";
 		$where = array();
 		if (isset($query['type'])) {
-			$where[] = "type=".sqlText($query['type']);
+			$where[] = "type=".Database::text($query['type']);
 		}
 		if (isset($query['query'])) {
 			$where[] = "`index` like ".sqlSearch($query['query']);

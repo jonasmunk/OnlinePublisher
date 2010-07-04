@@ -11,7 +11,7 @@ class GuiUtils {
 	 */
 	function buildObjectOptions($type,$maxSize=100) {
 		$output='';
-		$sql="select id,title from object where type=".sqlText($type)." order by title";
+		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$output.='<option title="'.encodeXML(shortenString($row['title'],$maxSize)).'" value="'.$row['id'].'"/>';
@@ -28,7 +28,7 @@ class GuiUtils {
 	 */
 	function buildObjectItems($type) {
 		$output='';
-		$sql="select id,title from object where type=".sqlText($type)." order by title";
+		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$output.='<item title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';

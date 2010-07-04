@@ -68,7 +68,7 @@ class Milestone extends Object {
 			$sql.=" and containing_object_id in (".implode(",",$options['projects']).")";
 		}
 		if (isset($options['completed'])) {
-			$sql.=" and milestone.completed=".sqlBoolean($options['completed']);
+			$sql.=" and milestone.completed=".Database::boolean($options['completed']);
 		}
 		if ($options['sort'] == 'deadline') {
 			$sql.=' order by deadline';
@@ -98,18 +98,18 @@ class Milestone extends Object {
 	function sub_create() {
 		$sql="insert into milestone (object_id,deadline,containing_object_id,completed) values (".
 		$this->id.
-		",".sqlTimestamp($this->deadline).
-		",".sqlInt($this->containingObjectId).
-		",".sqlBoolean($this->completed).
+		",".Database::datetime($this->deadline).
+		",".Database::int($this->containingObjectId).
+		",".Database::boolean($this->completed).
 		")";
 		Database::insert($sql);
 	}
 
 	function sub_update() {
 		$sql = "update milestone set ".
-		"deadline=".sqlTimestamp($this->deadline).
-		",containing_object_id=".sqlInt($this->containingObjectId).
-		",completed=".sqlBoolean($this->completed).
+		"deadline=".Database::datetime($this->deadline).
+		",containing_object_id=".Database::int($this->containingObjectId).
+		",completed=".Database::boolean($this->completed).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}

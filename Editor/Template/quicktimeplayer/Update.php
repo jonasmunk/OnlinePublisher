@@ -17,8 +17,8 @@ $width = requestPostNumber('width',0);
 $height = requestPostNumber('height',0);
 
 $sql="update quicktimeplayer set".
-" title=".sqlText($title).
-",text=".sqlText($text).
+" title=".Database::text($title).
+",text=".Database::text($text).
 ",file_id=".$file.
 ",width=".$width.
 ",height=".$height.

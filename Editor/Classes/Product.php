@@ -71,13 +71,13 @@ class Product extends Object {
 	}
 	
 	function sub_create() {
-		$sql = "insert into product (object_id,number,image_id,producttype_id,allow_offer) values (".$this->id.",".sqlText($this->number).",".$this->imageId.",".$this->productTypeId.",".Database::boolean($this->allowOffer).")";
+		$sql = "insert into product (object_id,number,image_id,producttype_id,allow_offer) values (".$this->id.",".Database::text($this->number).",".$this->imageId.",".$this->productTypeId.",".Database::boolean($this->allowOffer).")";
 		Database::insert($sql);
 	}
 	
 	function sub_update() {
 		$sql = "update product set ".
-		"number=".sqlText($this->number).
+		"number=".Database::text($this->number).
 		",image_id=".$this->imageId.
 		",producttype_id=".$this->productTypeId.
 		",allow_offer=".Database::boolean($this->allowOffer).

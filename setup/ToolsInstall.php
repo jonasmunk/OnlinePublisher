@@ -12,7 +12,7 @@ require_once 'Security.php';
 
 $unique = requestGetText('unique');
 
-$sql="insert into tool (`unique`) values (".sqlText($unique).")";
+$sql="insert into tool (`unique`) values (".Database::text($unique).")";
 Database::insert($sql);
 
 header("Location: Tools.php");

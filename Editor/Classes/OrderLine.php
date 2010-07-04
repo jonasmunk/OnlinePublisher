@@ -99,13 +99,13 @@ class OrderLine extends Object {
 	
 	function sub_create() {
 		$sql = 	"insert into orderLine (object_id, orders_id, product_id, product_model, product_name, product_price, final_price,product_tax, product_quantity)".
-				" values (".$this->id.",".sqlText($this->orders_id).",".$this->product_id.",".$this->product_model.",".sqlText($this->product_name).",".$this->product_price.",".$this->final_price.",".$this->product_tax.",".$this->product_quantity.")";
+				" values (".$this->id.",".Database::text($this->orders_id).",".$this->product_id.",".$this->product_model.",".Database::text($this->product_name).",".$this->product_price.",".$this->final_price.",".$this->product_tax.",".$this->product_quantity.")";
 		Database::insert($sql);
 	}
 	orders_id, product_id, product_model, product_name,	product_price, final_price,product_tax, product_quantity,
 	function sub_update() {
 		$sql = "update orderLine set ".
-		"orders_id=".sqlText($this->orders_id).
+		"orders_id=".Database::text($this->orders_id).
 		",product_id=".$this->product_id.
 		",product_model=".$this->product_model.
 		",product_name=".$this->product_name.

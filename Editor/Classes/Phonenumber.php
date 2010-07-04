@@ -89,8 +89,8 @@ class PhoneNumber extends Object {
 	function sub_create() {
 		$sql="insert into phonenumber (object_id,number,context,containing_object_id) values (".
 		$this->id.
-		",".sqlText($this->number).
-		",".sqlText($this->context).
+		",".Database::text($this->number).
+		",".Database::text($this->context).
 		",".sqlInt($this->containingObjectId).
 		")";
 		Database::insert($sql);
@@ -98,8 +98,8 @@ class PhoneNumber extends Object {
 
 	function sub_update() {
 		$sql = "update phonenumber set ".
-		"number=".sqlText($this->number).
-		",context=".sqlText($this->context).
+		"number=".Database::text($this->number).
+		",context=".Database::text($this->context).
 		",containing_object_id=".sqlInt($this->containingObjectId).
 		" where object_id=".$this->id;
 		Database::update($sql);

@@ -37,34 +37,34 @@ $bottom = requestPostText('bottom');
 
 
 $sql="update document_person set".
-" person_id=".sqlText($person_id).
-" ,align=".sqlText($align).
-" ,show_firstname=".sqlText($show_firstname).
-" ,show_middlename=".sqlText($show_middlename).
-" ,show_surname=".sqlText($show_surname).
-" ,show_initials=".sqlText($show_initials).
-" ,show_streetname=".sqlText($show_streetname).
-" ,show_zipcode=".sqlText($show_zipcode).
-" ,show_city=".sqlText($show_city).
-" ,show_country=".sqlText($show_country).
-" ,show_nickname=".sqlText($show_nickname).
-" ,show_jobtitle=".sqlText($show_jobtitle).
-" ,show_sex=".sqlText($show_sex).
-" ,show_email_job=".sqlText($show_emailjob).
-" ,show_email_private=".sqlText($show_emailprivate).
-" ,show_phone_job=".sqlText($show_phonejob).
-" ,show_phone_private=".sqlText($show_phoneprivate).
-" ,show_webaddress=".sqlText($show_webaddress).
-" ,show_image=".sqlText($show_image).
+" person_id=".Database::text($person_id).
+" ,align=".Database::text($align).
+" ,show_firstname=".Database::text($show_firstname).
+" ,show_middlename=".Database::text($show_middlename).
+" ,show_surname=".Database::text($show_surname).
+" ,show_initials=".Database::text($show_initials).
+" ,show_streetname=".Database::text($show_streetname).
+" ,show_zipcode=".Database::text($show_zipcode).
+" ,show_city=".Database::text($show_city).
+" ,show_country=".Database::text($show_country).
+" ,show_nickname=".Database::text($show_nickname).
+" ,show_jobtitle=".Database::text($show_jobtitle).
+" ,show_sex=".Database::text($show_sex).
+" ,show_email_job=".Database::text($show_emailjob).
+" ,show_email_private=".Database::text($show_emailprivate).
+" ,show_phone_job=".Database::text($show_phonejob).
+" ,show_phone_private=".Database::text($show_phoneprivate).
+" ,show_webaddress=".Database::text($show_webaddress).
+" ,show_image=".Database::text($show_image).
 " where section_id=".$id;
 //echo $sql;
 Database::update($sql);
 
 $sql="update document_section set".
-" `left`=".sqlText($left).
-",`right`=".sqlText($right).
-",`top`=".sqlText($top).
-",`bottom`=".sqlText($bottom).
+" `left`=".Database::text($left).
+",`right`=".Database::text($right).
+",`top`=".Database::text($top).
+",`bottom`=".Database::text($bottom).
 " where id=".$id;
 Database::update($sql);
 

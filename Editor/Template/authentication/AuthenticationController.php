@@ -12,7 +12,7 @@ class AuthenticationController extends TemplateController {
     }
 
 	function create($page) {
-		$sql="insert into authentication (page_id,title) values (".$page->getId().",".sqlText($page->getTitle()).")";
+		$sql="insert into authentication (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
 	
@@ -81,7 +81,7 @@ class AuthenticationController extends TemplateController {
 			$title = $titles->item(0)->getText();
 		}
 		
-		$sql="update authentication set title=".sqlText($title)." where page_id=".$this->id;
+		$sql="update authentication set title=".Database::text($title)." where page_id=".$this->id;
 		Database::update($sql);
 	}
 }

@@ -23,12 +23,12 @@ $width = requestPostText('width');
 
 // update the section
 $sql="update document_section set".
-" `left`=".sqlText($left).
-",`right`=".sqlText($right).
-",`top`=".sqlText($top).
-",`bottom`=".sqlText($bottom).
-",`float`=".sqlText($float).
-",`width`=".sqlText($width).
+" `left`=".Database::text($left).
+",`right`=".Database::text($right).
+",`top`=".Database::text($top).
+",`bottom`=".Database::text($bottom).
+",`float`=".Database::text($float).
+",`width`=".Database::text($width).
 " where id=".$section;
 Database::update($sql);
 

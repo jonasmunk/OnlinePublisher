@@ -32,7 +32,7 @@ $alternative=requestPostText('alternative');
 
 if (strlen($text)>0) {
 
-	$sql="update link set source_text=".sqlText($text).",target_type=".sqlText($targetType).",target_value=".sqlText($targetValue).",target_id=".$targetId.",target=".sqlText($target).",alternative=".sqlText($alternative)." where id=".$id;
+	$sql="update link set source_text=".Database::text($text).",target_type=".Database::text($targetType).",target_value=".Database::text($targetValue).",target_id=".$targetId.",target=".Database::text($target).",alternative=".Database::text($alternative)." where id=".$id;
 	Database::update($sql);
 
 	$sql="update page set changed=now() where id=".$pageId;

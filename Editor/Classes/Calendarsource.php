@@ -73,7 +73,7 @@ class Calendarsource extends Object {
 		} else {
 			$this->synchronizeVCal();
 		}
-		$sql = "update calendarsource set synchronized=".sqlTimestamp(time())." where object_id=".$this->id;
+		$sql = "update calendarsource set synchronized=".Database::datetime(time())." where object_id=".$this->id;
 		Database::update($sql);
 	}
 	
@@ -123,10 +123,10 @@ class Calendarsource extends Object {
 				"calendarsource_id,summary,location,startdate,enddate".
 				") values (".
 				$this->id.",".
-				sqlText($summary).",".
-				sqlText($event->getLocation()).",".
-				sqlTimestamp($event->getStartDate()).",".
-				sqlTimestamp($event->getEndDate()).
+				Database::text($summary).",".
+				Database::text($event->getLocation()).",".
+				Database::datetime($event->getStartDate()).",".
+				Database::datetime($event->getEndDate()).
 				")";
 				Database::insert($sql);
 			}
@@ -186,24 +186,24 @@ class Calendarsource extends Object {
 				"calendarsource_id,summary,description,location,startdate,enddate,duration,uniqueid,recurring,frequency,until,`interval`,`count`,weekstart,bymonth,bymonthday,byday,byyearday,byweeknumber".
 				") values (".
 				$this->id.",".
-				sqlText($event->getSummary()).",".
-				sqlText($event->getDescription()).",".
-				sqlText($event->getLocation()).",".
-				sqlTimestamp($event->getStartDate()).",".
-				sqlTimestamp($event->getEndDate()).",".
-				sqlInt($event->getDuration()).",".
-				sqlText($event->getUniqueId()).",".
-				sqlBoolean($recurring).",".
-				sqlText($frequency).",".
-				sqlTimestamp($until).",".
-				sqlInt($interval).",".
-				sqlInt($count).",".
-				sqlText($weekstart).",".
-				sqlText($bymonth).",".
-				sqlText($bymonthday).",".
-				sqlText($byday).",".
-				sqlText($byyearday).",".
-				sqlText($byweeknumber).
+				Database::text($event->getSummary()).",".
+				Database::text($event->getDescription()).",".
+				Database::text($event->getLocation()).",".
+				Database::datetime($event->getStartDate()).",".
+				Database::datetime($event->getEndDate()).",".
+				Database::int($event->getDuration()).",".
+				Database::text($event->getUniqueId()).",".
+				Database::boolean($recurring).",".
+				Database::text($frequency).",".
+				Database::datetime($until).",".
+				Database::int($interval).",".
+				Database::int($count).",".
+				Database::text($weekstart).",".
+				Database::text($bymonth).",".
+				Database::text($bymonthday).",".
+				Database::text($byday).",".
+				Database::text($byyearday).",".
+				Database::text($byweeknumber).
 				")";
 				Database::insert($sql);
 			}
@@ -215,7 +215,7 @@ class Calendarsource extends Object {
 		$sql = "select id,summary,description,recurring,uniqueid,location,unix_timestamp(startdate) as startdate,unix_timestamp(enddate) as enddate,`duration`".
 		" from calendarsource_event where calendarsource_id=".$this->id." and recurring=0";
 		if ($query['startDate'] && $query['endDate']) {
-			$sql.=" and not (startdate>".sqlTimestamp($query['endDate'])." or endDate<".sqlTimestamp($query['startDate']).")";
+			$sql.=" and not (startdate>".Database::datetime($query['endDate'])." or endDate<".Database::datetime($query['startDate']).")";
 		}
 		$sql.=" order by startdate desc";
 

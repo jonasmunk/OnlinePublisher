@@ -12,7 +12,7 @@ require_once '../../Include/Session.php';
 $id = requestGetText('id');
 
 require_once 'Functions.php';
-$sql="SELECT DATE_FORMAT(min(time),\"%d.%m.%Y %H:%i:%s\") as min,DATE_FORMAT(max(time),\"%d.%m.%Y %H:%i:%s\") as max from statistics where session=".sqlText($id);
+$sql="SELECT DATE_FORMAT(min(time),\"%d.%m.%Y %H:%i:%s\") as min,DATE_FORMAT(max(time),\"%d.%m.%Y %H:%i:%s\") as max from statistics where session=".Database::text($id);
 $row = Database::selectFirst($sql);
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui">'.
@@ -33,7 +33,7 @@ $total=getTotalCount('page');
 $parms = buildSql();
 
 
-$sql="SELECT statistics.referer,statistics.type,page.title as pagetitle,object.title as filetitle,DATE_FORMAT(time,\"%H:%i:%s\") as time FROM statistics left join page on page.id = statistics.value left join object on object.id = statistics.value and object.type='file' where session=".sqlText($id)." order by time";
+$sql="SELECT statistics.referer,statistics.type,page.title as pagetitle,object.title as filetitle,DATE_FORMAT(time,\"%H:%i:%s\") as time FROM statistics left join page on page.id = statistics.value left join object on object.id = statistics.value and object.type='file' where session=".Database::text($id)." order by time";
 $max = findMaxHit($sql);
 $result = Database::select($sql);	
 while($row = Database::next($result)) {

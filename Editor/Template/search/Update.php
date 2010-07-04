@@ -15,9 +15,9 @@ $text = requestPostText('text');
 $buttontitle = requestPostText('buttontitle');
 
 $sql="update search set".
-" title=".sqlText($title).
-",`text`=".sqlText($text).
-",buttontitle=".sqlText($buttontitle).
+" title=".Database::text($title).
+",`text`=".Database::text($text).
+",buttontitle=".Database::text($buttontitle).
 " where page_id=".$id;
 Database::update($sql);
 

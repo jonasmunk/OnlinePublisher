@@ -15,7 +15,7 @@ class HtmlController extends TemplateController {
     }
 
 	function create($page) {
-		$sql="insert into html (page_id,html,valid) values (".$page->getId().",".sqlText('<h1>'.encodeXML($page->getTitle()).'</h1>').",1)";
+		$sql="insert into html (page_id,html,valid) values (".$page->getId().",".Database::text('<h1>'.encodeXML($page->getTitle()).'</h1>').",1)";
 		Database::insert($sql);
 	}
 	
@@ -55,8 +55,8 @@ class HtmlController extends TemplateController {
 		}
 		
 		$sql = "update html set".
-		" html=".sqlText($html).
-		",valid=".sqlText($valid).
+		" html=".Database::text($html).
+		",valid=".Database::text($valid).
 		" where page_id=".$this->id;
 		Database::update($sql);
     }

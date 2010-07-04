@@ -13,7 +13,7 @@ $title = requestPostText('title');
 
 
 $sql="update authentication set".
-" title=".sqlText($title).
+" title=".Database::text($title).
 " where page_id=".$id;
 Database::update($sql);
 

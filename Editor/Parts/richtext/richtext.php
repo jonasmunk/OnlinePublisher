@@ -74,7 +74,7 @@ class PartRichtext extends Part {
 	
 	function sub_update() {
 		$html = requestPostText('html');
-		$sql = "update part_richtext set html=".sqlText($html)." where part_id=".$this->id;
+		$sql = "update part_richtext set html=".Database::text($html)." where part_id=".$this->id;
 		Database::update($sql);
 	}
 	
@@ -99,7 +99,7 @@ class PartRichtext extends Part {
 			$html.=$c[$i]->toString();
 		}
 		$sql = "update part_richtext set".
-		" html=".sqlText($html).
+		" html=".Database::text($html).
 		" where part_id=".$this->id;
 		Database::update($sql);
 	}

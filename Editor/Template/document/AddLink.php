@@ -30,7 +30,7 @@ else if ($targetType=='email') {
 $alternative=requestPostText('alternative');
 if (strlen($text)>0) {
 
-	$sql="insert into link (page_id,source_type,source_text,target_type,target_value,target_id,target,alternative) values (".$pageId.",'text',".sqlText($text).",'".$targetType."',".sqlText($targetValue).",".$targetId.",".sqlText($target).",".sqlText($alternative).")";
+	$sql="insert into link (page_id,source_type,source_text,target_type,target_value,target_id,target,alternative) values (".$pageId.",'text',".Database::text($text).",'".$targetType."',".Database::text($targetValue).",".$targetId.",".Database::text($target).",".Database::text($alternative).")";
 	Database::insert($sql);
 
 	$sql="update page set changed=now() where id=".$pageId;

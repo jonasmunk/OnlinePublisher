@@ -48,7 +48,7 @@ $data.=$news;
 if (strlen($news)>0) {
 	$dynamic=1;
 }
-$sql="update frame set data=".sqlText($data).",published=now(),dynamic=".$dynamic." where id=".$id;
+$sql="update frame set data=".Database::text($data).",published=now(),dynamic=".$dynamic." where id=".$id;
 Database::update($sql);
 
 

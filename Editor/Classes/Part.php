@@ -305,7 +305,7 @@ class Part {
 	function getSingleLink($sourceType=null) {
 	    $sql = "select part_link.*,page.path from part_link left join page on page.id=part_link.target_value and part_link.target_type='page' where part_id=".$this->id;
 	    if (!is_null($sourceType)) {
-	        $sql.=" and source_type=".sqlText($sourceType); 
+	        $sql.=" and source_type=".Database::text($sourceType); 
 	    }
 	    if ($row = Database::selectFirst($sql)) {
 	        return $row;

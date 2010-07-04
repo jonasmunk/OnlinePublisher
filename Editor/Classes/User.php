@@ -88,9 +88,9 @@ class User extends Object {
 	function sub_create() {
 		$sql="insert into user (object_id,username,password,email,internal,external,administrator) values (".
 		$this->id.
-		",".sqlText($this->username).
-		",".sqlText($this->password).
-		",".sqlText($this->email).
+		",".Database::text($this->username).
+		",".Database::text($this->password).
+		",".Database::text($this->email).
 		",".sqlBoolean($this->internal).
 		",".sqlBoolean($this->external).
 		",".sqlBoolean($this->administrator).
@@ -100,9 +100,9 @@ class User extends Object {
 
 	function sub_update() {
 		$sql = "update user set ".
-		"username=".sqlText($this->username).
-		",password=".sqlText($this->password).
-		",email=".sqlText($this->email).
+		"username=".Database::text($this->username).
+		",password=".Database::text($this->password).
+		",email=".Database::text($this->email).
 		",internal=".sqlBoolean($this->internal).
 		",external=".sqlBoolean($this->external).
 		",administrator=".sqlBoolean($this->administrator).

@@ -95,9 +95,9 @@ class Hierarchy {
         $data='<hierarchy xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"/>';
 
 		$sql = "insert into hierarchy (name,language,data,changed,published) values (".
-		sqlText($this->name).",".
-		sqlText($this->language).",".
-		sqlText($data).",".
+		Database::text($this->name).",".
+		Database::text($this->language).",".
+		Database::text($data).",".
 		"now(),now()".
 		")";		
 		$this->id = Database::insert($sql);
@@ -114,8 +114,8 @@ class Hierarchy {
     
     function update() {
         $sql="update hierarchy set ".
-        "name=".sqlText($this->name).
-        ",language=".sqlText($this->language).
+        "name=".Database::text($this->name).
+        ",language=".Database::text($this->language).
         " where id=".$this->id;
         return Database::update($sql);
     }
@@ -131,7 +131,7 @@ class Hierarchy {
 		}
 		
 		$sql="insert into hierarchy_item (title,type,hierarchy_id,parent,`index`,target_type,target_id) values (".
-		sqlText($title).
+		Database::text($title).
 		",'item'".
 		",".$this->id.
 		",".$parentId.
@@ -151,7 +151,7 @@ class Hierarchy {
     
     function publish($allowDisabled=false) {
 	    $data = $this->build($this->id,$allowDisabled);
-	    $sql="update hierarchy set published=now(),data=".sqlText($data)." where id=".$this->id;
+	    $sql="update hierarchy set published=now(),data=".Database::text($data)." where id=".$this->id;
 	    Database::update($sql);
     }
     

@@ -29,7 +29,7 @@ class Stock extends Object {
 	
 	function sub_update() {
 		/*$sql = "update stock set ".
-		"number=".sqlText($this->number).
+		"number=".Database::text($this->number).
 		",image_id=".$this->imageId.
 		",producttype_id=".$this->productTypeId.
 		" where object_id=".$this->id;

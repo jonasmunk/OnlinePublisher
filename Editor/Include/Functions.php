@@ -416,15 +416,6 @@ function getDatabaseTableColumns($table) {
 ////////////////////////// SQL ////////////////////////////
 
 /**
- * Formats a string of text for use in an SQL-sentence
- * @param string $text The text to format
- * @return string The formattet string
- */
-function sqlText($text) {
-	return "'".mysql_escape_string($text)."'";
-}
-
-/**
  * Formats a floating point number for use in an SQL-sentence
  * @param float $value The number to format
  * @return string The formattet string

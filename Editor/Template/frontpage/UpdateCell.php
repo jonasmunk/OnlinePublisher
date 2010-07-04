@@ -20,10 +20,10 @@ $height = requestPostText('height');
 $sql="update frontpage_cell set".
 " rows=".$rows.
 ",`columns`=".$columns.
-",`title`=".sqlText($title).
-",`type`=".sqlText($type).
-",`width`=".sqlText($width).
-",`height`=".sqlText($height).
+",`title`=".Database::text($title).
+",`type`=".Database::text($type).
+",`width`=".Database::text($width).
+",`height`=".Database::text($height).
 " where id=".$id;
 Database::update($sql);
 

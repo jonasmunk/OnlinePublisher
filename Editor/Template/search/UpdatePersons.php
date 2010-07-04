@@ -39,7 +39,7 @@ elseif ($mode=='automatic') {
 
 $sql="update search set".
 " personsenabled=".sqlBoolean($enabled).
-",personslabel=".sqlText($label).
+",personslabel=".Database::text($label).
 ",personsdefault=".sqlBoolean($default).
 ",personshidden=".sqlBoolean($hidden).
 " where page_id=".$id;

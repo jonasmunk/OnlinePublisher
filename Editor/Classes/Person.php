@@ -362,46 +362,46 @@ class Person extends Object {
 				"sex , email_job , email_private , phone_job , phone_private , streetname , zipcode , city ,".
 				"country , webaddress , image_id ) values (".
 				$this->id.
-				",".sqlText($this->firstname).
-				",".sqlText($this->middlename).
-				",".sqlText($this->surname).
-				",".sqlText($this->initials).
-				",".sqlText($this->nickname).
-				",".sqlText($this->jobtitle).
-				",".sqlText($this->sex).
-				",".sqlText($this->email_job).
-				",".sqlText($this->email_private).
-				",".sqlText($this->phone_job).
-				",".sqlText($this->phone_private).
-				",".sqlText($this->streetname).
-				",".sqlText($this->zipcode).
-				",".sqlText($this->city).
-				",".sqlText($this->country).
-				",".sqlText($this->webaddress).
-				",".sqlText($this->image_id).
+				",".Database::text($this->firstname).
+				",".Database::text($this->middlename).
+				",".Database::text($this->surname).
+				",".Database::text($this->initials).
+				",".Database::text($this->nickname).
+				",".Database::text($this->jobtitle).
+				",".Database::text($this->sex).
+				",".Database::text($this->email_job).
+				",".Database::text($this->email_private).
+				",".Database::text($this->phone_job).
+				",".Database::text($this->phone_private).
+				",".Database::text($this->streetname).
+				",".Database::text($this->zipcode).
+				",".Database::text($this->city).
+				",".Database::text($this->country).
+				",".Database::text($this->webaddress).
+				",".Database::text($this->image_id).
 				")";
 		Database::insert($sql);
 	}
 	
 	function sub_update() {
 		$sql="update person set".
-		" firstname=".sqlText($this->firstname).
-		",middlename=".sqlText($this->middlename).
-		",surname=".sqlText($this->surname).
-		",initials=".sqlText($this->initials).
-		",nickname=".sqlText($this->nickname).
-		",jobtitle=".sqlText($this->jobtitle).
-		",sex=".sqlText($this->sex).
-		",email_job=".sqlText($this->email_job).
-		",email_private=".sqlText($this->email_private).
-		",phone_job=".sqlText($this->phone_job).
-		",phone_private=".sqlText($this->phone_private).
-		",streetname=".sqlText($this->streetname).
-		",zipcode=".sqlText($this->zipcode).
-		",city=".sqlText($this->city).
-		",country=".sqlText($this->country).
-		",webaddress=".sqlText($this->webaddress).
-		",image_id=".sqlText($this->image_id).
+		" firstname=".Database::text($this->firstname).
+		",middlename=".Database::text($this->middlename).
+		",surname=".Database::text($this->surname).
+		",initials=".Database::text($this->initials).
+		",nickname=".Database::text($this->nickname).
+		",jobtitle=".Database::text($this->jobtitle).
+		",sex=".Database::text($this->sex).
+		",email_job=".Database::text($this->email_job).
+		",email_private=".Database::text($this->email_private).
+		",phone_job=".Database::text($this->phone_job).
+		",phone_private=".Database::text($this->phone_private).
+		",streetname=".Database::text($this->streetname).
+		",zipcode=".Database::text($this->zipcode).
+		",city=".Database::text($this->city).
+		",country=".Database::text($this->country).
+		",webaddress=".Database::text($this->webaddress).
+		",image_id=".Database::text($this->image_id).
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}
