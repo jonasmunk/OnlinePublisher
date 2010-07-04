@@ -1,4 +1,6 @@
 <?
+require_once($basePath.'Editor/Classes/InternalSession.php');
+
 class Settings {
 
 	/**
@@ -33,11 +35,11 @@ class Settings {
 	}
 	
 	function setServiceSetting($service,$key,$value) {
-		Settings::setSetting('service',$service,$key,$value,getUserId());
+		Settings::setSetting('service',$service,$key,$value,InternalSession::getUserId());
 	}
 	
 	function getServiceSetting($service,$key) {
-		return Settings::getSetting('service',$service,$key,getUserId());
+		return Settings::getSetting('service',$service,$key,InternalSession::getUserId());
 	}
 	
 	/**

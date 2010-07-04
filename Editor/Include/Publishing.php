@@ -5,6 +5,7 @@
  */
 
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/InternalSession.php');
 
 
 function resolveUserAgent() {
@@ -374,7 +375,7 @@ function publishPage($id) {
 		",published=now()".
 		" where id=".$id;
 	Database::update($sql);
-	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".getUserId().",".Database::text($data).",now())";
+	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".InternalSession::getUserId().",".Database::text($data).",now())";
 	Database::insert($sql);
 	
 	// Clear page previews
@@ -384,7 +385,7 @@ function publishPage($id) {
 }
 
 function createPageHistory($id,&$data) {
-	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".getUserId().",".Database::text($data).",now())";
+	$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".InternalSession::getUserId().",".Database::text($data).",now())";
 	Database::insert($sql);
 }
 

@@ -337,21 +337,6 @@ function getPageDesign() {
 	}
 }
 
-// ******************* User *******************
-
-/**
- * Get the ID of the active internal user
- * @return int ID of the user
- */
-function getUserId() {
-	if (isset($_SESSION['core.user.id'])) {
-		return $_SESSION['core.user.id'];
-	}
-	else {
-		return -1;
-	}
-}
-
 
 ///////////////////// Formula parsing /////////////////////
 
