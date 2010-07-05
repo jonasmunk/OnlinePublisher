@@ -606,6 +606,11 @@ $databaseTables = array(
 			array("file_id","int(11)","","","0",""),
 			array("text","varchar(255)","YES","","","")
 		),
+	'part_formula' => array(
+			array("part_id","int(11)","","","0",""),
+			array("receivername","varchar(255)","YES","","",""),
+			array("receiveremail","varchar(255)","YES","","","")
+		),
 	'part_header' => array(
 			array("part_id","int(11)","","","0",""),
 			array("level","int(11)","","","1",""),

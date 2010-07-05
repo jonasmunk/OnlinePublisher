@@ -244,7 +244,7 @@ class Part {
 		'<xsl:variable name="username"></xsl:variable>'.
 		'<xsl:variable name="usertitle"></xsl:variable>'.
 		'<xsl:variable name="preview"></xsl:variable>'.
-		'<xsl:variable name="editor"></xsl:variable>'.
+		'<xsl:variable name="editor">true</xsl:variable>'.
 		'<xsl:variable name="highquality">false</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
@@ -275,20 +275,7 @@ class Part {
 		'<xsl:variable name="highquality">false</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-		
-	
-		if (function_exists('xslt_create')) {
-			$arguments = array('/_xml' => $xmlData,'/_xsl' => $xslData);
-			$xp = xslt_create();
-			$result = xslt_process($xp, 'arg:/_xml', 'arg:/_xsl', NULL, $arguments );
-			xslt_free($xp);
-		}
-		else {
-			$xslt = new xsltProcessor;
-			$xslt->importStyleSheet(DomDocument::loadXML($xslData));
-			$result = $xslt->transformToXML(DomDocument::loadXML($xmlData));
-		}
-		return $result;
+		return XslService::transform($xmlData,$xslData);
 	}
 	
 	function getSingleLink($sourceType=null) {

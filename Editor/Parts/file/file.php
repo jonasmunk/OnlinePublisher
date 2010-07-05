@@ -16,13 +16,6 @@ class PartFile extends Part {
 	
 	function sub_display($context) {
 		return $this->render();
-		$data='';
-		$sql = "select * from part_file where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			$data=
-			'<div class="part_file">'.$this->render().'</div>';
-		}
-		return $data;
 	}
 	
 	function _display($id) {

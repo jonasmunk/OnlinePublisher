@@ -368,7 +368,6 @@ class PartImage extends Part {
 	
 	
 	// Toolbar stuff
-	// Toolbar stuff
 	
 	function isIn2iGuiEnabled() {
 		return true;

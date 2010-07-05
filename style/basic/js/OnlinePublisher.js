@@ -115,6 +115,37 @@ op.part.ImageGallery.prototype = {
 	}
 }
 
+op.part.Formula = function(options) {
+	this.element = $(options.element);
+	this.id = options.id;
+	this.element.observe('submit',this._send.bind(this));
+}
+
+op.part.Formula.prototype = {
+	_send : function(e) {
+		e.stop();
+		var name = this.element.name.value;
+		var email = this.element.email.value;
+		var message = this.element.message.value;
+		if (n2i.isBlank(name) || n2i.isBlank(email) || n2i.isBlank(message)) {
+			ui.showMessage({text:'Alle felter skal udfyldes',duration:2000});
+			this.element.name.focus();
+			return;
+		}
+		ui.showMessage({text:'Sender besked...'});
+		var url = op.page.path+'services/parts/formula/';
+		var parms = {name:name,email:email,message:message,id:this.id};
+		ui.request({url:url,parameters:parms,onSuccess:this._onSuccess.bind(this),onFailure:this._onFailure.bind(this)});
+	},
+	_onSuccess : function() {
+		ui.showMessage({text:'Beskeden er nu sendt',duration:2000});
+		this.element.reset();
+	},
+	_onFailure : function() {
+		ui.showMessage({text:'Beskeden kunne desværre ikke afleveres',duration:5000});
+	}
+}
+
 op.SearchField = function(o) {
 	o = this.options = n2i.override({placeholderClass:'placeholder',placeholder:''},o);
 	this.field = $(o.element);
