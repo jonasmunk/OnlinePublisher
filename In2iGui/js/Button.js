@@ -79,7 +79,7 @@ In2iGui.Button.prototype = {
 			if (form) {form.submit();}
 		}
 	},
-	/** Registers a function as a click listener or issue a click */
+	/** Registers a function as a click listener or issues a click */
 	click : function(func) {
 		if (func) {
 			this.listen({$click:func});

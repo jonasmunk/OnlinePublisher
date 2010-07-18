@@ -156,6 +156,15 @@ n2i.dom = {
 			}
 		};
 		return txt;
+	},
+	isVisible : function(node) {
+		while (node) {
+			if (node.style && (node.getStyle('display')==='none' || node.getStyle('visibility')==='hidden')) {
+				return false;
+			}
+			node = node.parentNode;
+		}
+		return true;
 	}
 }
 
@@ -5595,11 +5604,12 @@ In2iGui.Formula.Text.prototype = {
 	// Expanding
 	
 	$visibilityChanged : function() {
-		window.setTimeout(this.expand.bind(this));
+		window.setTimeout(this.expand.bind(this),1000);
 	},
 	/** @private */
 	expand : function(animate) {
-		if (!this.multiline) return;
+		if (!this.multiline) {return};
+		if (!n2i.dom.isVisible(this.element)) {return};
 		var textHeight = In2iGui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
 		textHeight = Math.min(textHeight,this.options.maxHeight);
@@ -7635,7 +7645,7 @@ In2iGui.Button.prototype = {
 			if (form) {form.submit();}
 		}
 	},
-	/** Registers a function as a click listener or issue a click */
+	/** Registers a function as a click listener or issues a click */
 	click : function(func) {
 		if (func) {
 			this.listen({$click:func});

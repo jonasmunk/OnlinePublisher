@@ -156,6 +156,15 @@ n2i.dom = {
 			}
 		};
 		return txt;
+	},
+	isVisible : function(node) {
+		while (node) {
+			if (node.style && (node.getStyle('display')==='none' || node.getStyle('visibility')==='hidden')) {
+				return false;
+			}
+			node = node.parentNode;
+		}
+		return true;
 	}
 }
 

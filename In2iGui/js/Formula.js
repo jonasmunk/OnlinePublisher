@@ -294,7 +294,6 @@ In2iGui.Formula.Text.prototype = {
 			In2iGui.hideToolTip({key:this.name});
 		}
 	},
-	
 	// Expanding
 	
 	$visibilityChanged : function() {
@@ -302,7 +301,8 @@ In2iGui.Formula.Text.prototype = {
 	},
 	/** @private */
 	expand : function(animate) {
-		if (!this.multiline) return;
+		if (!this.multiline) {return};
+		if (!n2i.dom.isVisible(this.element)) {return};
 		var textHeight = In2iGui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
 		textHeight = Math.min(textHeight,this.options.maxHeight);
