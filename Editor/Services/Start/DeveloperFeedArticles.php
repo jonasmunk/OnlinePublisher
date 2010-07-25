@@ -13,6 +13,10 @@ $url = 'http://twitter.com/statuses/user_timeline/16827706.rss';
 $parser = new FeedParser();
 $feed = $parser->parseURL($url);
 
+if (!$feed) {
+	exit;
+}
+
 $writer = new ArticlesWriter();
 
 $writer->startArticles();

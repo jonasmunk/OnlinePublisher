@@ -14,6 +14,10 @@ $url = 'http://www.in2isoft.dk/services/news/rss/?group=373';
 $parser = new FeedParser();
 $feed = $parser->parseURL($url);
 
+if (!$feed) {
+	exit;
+}
+
 $writer = new ArticlesWriter();
 
 $writer->startArticles();
