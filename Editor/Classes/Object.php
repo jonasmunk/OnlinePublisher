@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/EventManager.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class Object {
 	var $id;
@@ -219,8 +220,8 @@ class Object {
 	function getCurrentXml() {
 		$ns = 'http://uri.in2isoft.com/onlinepublisher/class/object/1.0/';
 		$xml = '<object xmlns="'.$ns.'" id="'.$this->id.'" type="'.$this->type.'">'.
-		'<title>'.encodeXML($this->title).'</title>'.
-		'<note>'.encodeXMLBreak($this->note,'<break/>').'</note>'.
+		'<title>'.StringUtils::escapeNumericXML($this->title).'</title>'.
+		'<note>'.StringUtils::escapeNumericXMLBreak($this->note,'<break/>').'</note>'.
 		$this->_builddate('created',$this->created).
 		$this->_builddate('updated',$this->updated).
 		$this->_builddate('published',$this->published);
@@ -228,27 +229,27 @@ class Object {
 		$sql = "select object_link.*,page.path from object_link left join page on page.id=object_link.target_value and object_link.target_type='page' where object_id=".$this->id." order by position";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$links.='<link title="'.encodeXML($row['title']).'"';
+			$links.='<link title="'.StringUtils::escapeNumericXML($row['title']).'"';
 			if ($row['alternative']!='') {
-				$links.=' alternative="'.encodeXML($row['alternative']).'"';
+				$links.=' alternative="'.StringUtils::escapeNumericXML($row['alternative']).'"';
 			}
 			if ($row['target']!='') {
-				$links.=' target="'.encodeXML($row['target']).'"';
+				$links.=' target="'.StringUtils::escapeNumericXML($row['target']).'"';
 			}
 			if ($row['path']!='') {
-				$links.=' path="'.encodeXML($row['path']).'"';
+				$links.=' path="'.StringUtils::escapeNumericXML($row['path']).'"';
 			}
 			if ($row['target_type']=='page') {
-				$links.=' page="'.encodeXML($row['target_value']).'"';
+				$links.=' page="'.StringUtils::escapeNumericXML($row['target_value']).'"';
 			}
 			elseif ($row['target_type']=='file') {
-				$links.=' file="'.encodeXML($row['target_value']).'" filename="'.encodeXML($this->_getFilename($row['target_value'])).'"';
+				$links.=' file="'.StringUtils::escapeNumericXML($row['target_value']).'" filename="'.StringUtils::escapeNumericXML($this->_getFilename($row['target_value'])).'"';
 			}
 			elseif ($row['target_type']=='url') {
-				$links.=' url="'.encodeXML($row['target_value']).'"';
+				$links.=' url="'.StringUtils::escapeNumericXML($row['target_value']).'"';
 			}
 			elseif ($row['target_type']=='email') {
-				$links.=' email="'.encodeXML($row['target_value']).'"';
+				$links.=' email="'.StringUtils::escapeNumericXML($row['target_value']).'"';
 			}
 			$links.='/>';
 		}

@@ -82,6 +82,7 @@ mailto:<xsl:value-of select="@email"/>
 	<xsl:if test="$preview='true'">
 		<script src="{$path}In2iGui/js/Window.js" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}In2iGui/js/Formula.js" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}In2iGui/js/Button.js" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}In2iGui/js/Overlay.js" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}In2iGui/js/Editor.js" type="text/javascript"><xsl:comment/></script>
 		<script src="editor.js" type="text/javascript"><xsl:comment/></script>

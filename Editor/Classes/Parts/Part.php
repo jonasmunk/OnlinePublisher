@@ -59,9 +59,9 @@ class Part
 			$sql.=",part_".$type.".".$field;
 		}
 		$sql.=" from part,part_".$type." where part.id=part_".$type.".part_id and part.id=".$id;
-		Log::debug($sql);
+		//Log::debug($sql);
 		$row = Database::selectFirst($sql);
-		Log::debug($row);
+		//Log::debug($row);
 		$class = ucfirst($type);
 		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
 		$part = new $class();

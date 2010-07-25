@@ -1,5 +1,6 @@
 op.Editor = {
 	$interfaceIsReady : function() {
+		this.getToolbarController().pageDidLoad(op.page.id);
 		var editor = ui.Editor.get();
 		editor.setOptions({
 			partClass:'part_section'
@@ -10,17 +11,54 @@ op.Editor = {
 		editor.ignite();
 		editor.activate();
 	},
+	getToolbarController : function() {
+		return window.parent.parent.frames[0].controller;
+	},
+	$partChanged : function() {
+		this.getToolbarController().pageDidChange();
+	},
+	
 	editProperties : function() {
 		if (!this.propertiesWindow) {
 			var win = this.propertiesWindow = ui.Window.create({width:300,title:'Egenskaber',icon:'common/info',padding:10,variant:'dark'});
-			var form = ui.Formula.create();
-			form.buildGroup({above:true},[
+			var form = this.propertiesFormula = ui.Formula.create();
+			var group = form.buildGroup({above:true},[
 				{type:'Text',options:{label:'Titel:',key:'title'}},
-				{type:'Text',options:{label:'Beskrivelse:',key:'title',multiline:true}}
+				{type:'Text',options:{label:'Beskrivelse:',key:'description',multiline:true}},
+				{type:'Text',options:{label:'Nøgelord:',key:'keywords'}},
+				{type:'Text',options:{label:'Sti:',key:'path'}},
+				{type:'DropDown',options:{
+					label:'Sprog:',
+					key:'language',
+					items:[{value:'',title:'Intet'},{value:'DA',title:'Dansk'},{value:'EN',title:'Engelsk'},{value:'DE',title:'Tysk'}]
+				}}
 			]);
+			var buttons = group.createButtons();
+			var more = ui.Button.create({text:'Mere...'});
+			more.click(this.moreProperties.bind(this));
+			buttons.add(more);
+
+			var update = ui.Button.create({text:'Opdater',highlighted:true});
+			update.click(this.saveProperties.bind(this));
+			buttons.add(update);
 			win.add(form);
 		}
-		this.propertiesWindow.show();
+		ui.request({url:'data/LoadPageProperties.php',parameters:{id:op.page.id},onJSON:function(obj) {
+			n2i.log(obj);
+			this.propertiesFormula.setValues(obj);
+			this.propertiesWindow.show();
+		}.bind(this)})
+	},
+	saveProperties : function() {
+		var values = this.propertiesFormula.getValues();
+		values.id = op.page.id;
+		ui.request({url:'data/SavePageProperties.php',parameters:values,onSuccess:function() {
+			this.propertiesFormula.reset();
+			this.propertiesWindow.hide();
+		}.bind(this)});
+	},
+	moreProperties : function() {
+		window.parent.parent.location='../../../Tools/Pages/?action=pageproperties';
 	}
 }
 

@@ -18,9 +18,8 @@ $gui='
 				<icon icon="common/edit" title="Rediger" name="edit"/>
 				<icon icon="common/view" title="Vis udgivet" name="view"/>
 				<icon icon="common/info" title="Egenskaber" name="properties"/>
-				<icon icon="common/info" title="Egenskaber (beta)" name="beta"/>
 				<divider/>
-				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" name="publish"/>
+				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" name="publish" disabled="true"/>
 			</toolbar>
 		</tab>
 	</tabs>

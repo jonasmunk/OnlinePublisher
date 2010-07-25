@@ -283,6 +283,7 @@ class Page {
 			" title=".Database::text($this->title).
 			",description=".Database::text($this->description).
 			",path=".Database::text($this->path).
+			",keywords=".Database::text($this->keywords).
 			",language=".Database::text($this->language).
 			",searchable=".Database::boolean($this->searchable).
 			",disabled=".Database::boolean($this->disabled).

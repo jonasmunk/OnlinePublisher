@@ -6,6 +6,7 @@
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/PartContext.php');
 require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class PartService {
 	
@@ -25,7 +26,15 @@ class PartService {
 
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$context -> addBuildLink(escapeXML($row['source_text']),$row['target_type'],$row['target_id'],$row['target_value'],$row['target'],$row['alternative'],$row['path']);
+			$context -> addBuildLink(
+				StringUtils::escapeXML($row['source_text']),
+				$row['target_type'],
+				$row['target_id'],
+				$row['target_value'],
+				$row['target'],
+				$row['alternative'],
+				$row['path']
+			);
 		}
 		Database::free($result);
 

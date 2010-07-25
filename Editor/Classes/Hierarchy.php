@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/EventManager.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Include/Publishing.php');
 
 class Hierarchy {
@@ -173,31 +174,31 @@ class Hierarchy {
     	$result = Database::select($sql);
     	while ($row = Database::next($result)) {
     	    if ($row['disabled']!=1 || $allowDisabled) {
-        		$output.='<item title="'.encodeXML($row['title']).
-        					'" alternative="'.encodeXML($row['alternative']).'"';
+        		$output.='<item title="'.StringUtils::escapeNumericXML($row['title']).
+        					'" alternative="'.StringUtils::escapeNumericXML($row['alternative']).'"';
         		if ($row['target_type']=='page') {
         			$output.=' page="'.$row['target_id'].'"';
 					if (strlen($row['path'])>0) {
-        				$output.=' path="'.encodeXML($row['path']).'"';
+        				$output.=' path="'.StringUtils::escapeNumericXML($row['path']).'"';
 					}
         		}
         		if ($row['target_type']=='pageref') {
         			$output.=' page-reference="'.$row['target_id'].'"';
 					if (strlen($row['path'])>0) {
-        				$output.=' path="'.encodeXML($row['path']).'"';
+        				$output.=' path="'.StringUtils::escapeNumericXML($row['path']).'"';
 					}
         		}
         		else if ($row['target_type']=='file') {
-        			$output.=' file="'.$row['target_id'].'" filename="'.encodeXML(getFileFilename($row['target_id'])).'"';
+        			$output.=' file="'.$row['target_id'].'" filename="'.StringUtils::escapeNumericXML(getFileFilename($row['target_id'])).'"';
         		}
         		else if ($row['target_type']=='url') {
-        			$output.=' url="'.encodeXML($row['target_value']).'"';
+        			$output.=' url="'.StringUtils::escapeNumericXML($row['target_value']).'"';
         		}
         		else if ($row['target_type']=='email') {
-        			$output.=' email="'.encodeXML($row['target_value']).'"';
+        			$output.=' email="'.StringUtils::escapeNumericXML($row['target_value']).'"';
         		}
         		if ($row['target']!='') {
-        			$output.=' target="'.encodeXML($row['target']).'"';
+        			$output.=' target="'.StringUtils::escapeNumericXML($row['target']).'"';
         		}
         		if ($row['hidden']) {
         			$output.=' hidden="true"';

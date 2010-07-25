@@ -41,7 +41,9 @@ class In2iGui {
 	function render(&$gui) {
 		global $basePath,$baseUrl;
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
-		//$xhtml=false;
+		if ($_GET['xhtml']=='false') {
+			$xhtml=false;
+		}
 		$dev = $_GET['dev']=='true' ? 'true' : 'false';
 		//$dev='true';
 		$xmlData='<?xml version="1.0" encoding="UTF-8"?>'.$gui;
