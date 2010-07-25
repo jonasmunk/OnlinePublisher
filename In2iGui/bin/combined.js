@@ -10496,11 +10496,10 @@ In2iGui.Formula.Text.prototype = {
 			In2iGui.hideToolTip({key:this.name});
 		}
 	},
-	
 	// Expanding
 	
 	$visibilityChanged : function() {
-		window.setTimeout(this.expand.bind(this),1000);
+		window.setTimeout(this.expand.bind(this));
 	},
 	/** @private */
 	expand : function(animate) {
@@ -11931,7 +11930,7 @@ In2iGui.List.prototype = {
 				th.observe('click',function() {this.sort(i)}.bind(this));
 				th.addClassName('sortable');
 			}
-			th.insert(new Element('span').update(h.title));
+			th.insert(new Element('span').update(h.title || ''));
 			tr.insert(th);
 			this.columns.push(h);
 		}.bind(this));

@@ -7,6 +7,7 @@ div.in2igui_tabs_bar
 {
 	padding-top: 4px;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	font-size: 0;
 }
 
 div.in2igui_tabs_bar ul

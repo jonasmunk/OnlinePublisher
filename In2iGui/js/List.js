@@ -255,7 +255,7 @@ In2iGui.List.prototype = {
 			th.className=className;
 			var span = new Element('span');
 			th.appendChild(span);
-			span.appendChild(document.createTextNode(headers[i].getAttribute('title')));
+			span.appendChild(document.createTextNode(headers[i].getAttribute('title') || ''));
 			headTr.appendChild(th);
 			this.columns.push({'key':key,'sortable':sortable,'width':width});
 		};
