@@ -27,23 +27,6 @@ function redirect($url) {
 	exit;
 }
 
-//////////////////// XML /////////////////////
-
-/**
- * Retrieves the text of the first node of an XPath query on a DOM document
- * @param object $doc The document to search in
- * @param string $xpath The xpath expression to evaluate
- * @return string The content of the first found node
- */
-function getDomXpathText($doc,$xpath) {
-	if ($node =& $doc->selectNodes($xpath, 1)) {
-		return $node->getText();
-	}
-	else {
-		return null;
-	}
-}
-
 ///////////////////// Compatibility ///////////////////////
 
 /**

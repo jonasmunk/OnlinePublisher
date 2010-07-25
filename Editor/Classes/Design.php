@@ -217,8 +217,8 @@ class Design extends Object {
 			$info = array();
 			$doc =& new DOMIT_Document();
 			if ($doc->loadXML($file)) {
-				$info['name'] = getDomXpathText($doc,"/design/name");
-				$info['description'] = getDomXpathText($doc,"/design/description");
+				$info['name'] = Design::getDomXpathText($doc,"/design/name");
+				$info['description'] = Design::getDomXpathText($doc,"/design/description");
 				$info['parameters'] = array();
 				$parms =& $doc->selectNodes("design/parameters/parameter");
 				$len = $parms->getLength();
@@ -249,6 +249,21 @@ class Design extends Object {
 		}
 		else {
 			return false;
+		}
+	}
+	
+	/**
+	 * Retrieves the text of the first node of an XPath query on a DOM document
+	 * @param object $doc The document to search in
+	 * @param string $xpath The xpath expression to evaluate
+	 * @return string The content of the first found node
+	 */
+	function getDomXpathText($doc,$xpath) {
+		if ($node =& $doc->selectNodes($xpath, 1)) {
+			return $node->getText();
+		}
+		else {
+			return null;
 		}
 	}
 
