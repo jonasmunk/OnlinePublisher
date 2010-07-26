@@ -46,9 +46,10 @@
 			<div class="case_sidebar">
 				<xsl:call-template name="thirdlevel"/>
 				<div class="case_contact">
-					<h2>Green Benefit</h2>
+					<h2>Green Benefit ApS</h2>
 					<p>Maren Hemmings Vej 13</p>
 					<p>9000 Aalborg, Denmark</p>
+					<p><em>CVR:</em> 320 682 71</p>
 					<p><em>Tlf:</em> 70 20 60 77</p>
 					<p><em>E-post: </em> <a href="mailto:janemunk@stofanet.dk"><span>info@greenbenefit.dk</span></a></p>
 					
