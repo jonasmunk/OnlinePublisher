@@ -137,39 +137,6 @@ function showFile($id) {
 	}
 }
 
-/*
-function statistics($type,$id) {
-	if (requestGetExists('preview')) {
-		return;
-	}
-	require_once 'Editor/Include/GeoIP.php';
-	global $basePath;
-	$ip = getenv("REMOTE_ADDR");
-	$method = getenv('REQUEST_METHOD');
-	$uri = getenv('REQUEST_URI');
-	$language = getenv('HTTP_ACCEPT_LANGUAGE');
-	$session = session_id();
-	$agent = $_SERVER['HTTP_USER_AGENT'];
-	if (isset($_SERVER['HTTP_REFERER'])) {
-		$referer = $_SERVER['HTTP_REFERER'];
-	} else {
-		$referer = '';
-	}
-	$userhost = '';
-	if(isset($_SERVER['REMOTE_HOST'])) $userhost = $_SERVER['REMOTE_HOST'];
-	$country='';
-	$oldErrorLevel = error_reporting(0);
-	$gi = geoip_open($basePath."Editor/Resources/GeoIP.dat",GEOIP_STANDARD);
-	$country = geoip_country_code_by_addr($gi, $ip);
-	geoip_close($gi);
-
-	$sql="insert into statistics (time,type,value,ip,country,agent,method,uri,language,session,referer,host) values (".
-	"now(),".Database::text($type).",".$id.",".Database::text($ip).",".Database::text($country).",".Database::text($agent).",".Database::text($method).",".Database::text($uri).",".Database::text($language).",".Database::text($session).",".Database::text($referer).",".Database::text($userhost).")";
-	Database::insert($sql);
-	error_reporting($oldErrorLevel);
-}
-*/
-
 function getCacheFile($id) {
 	global $basePath;
 	return $basePath.'cache/pages/'.$id.'.xml';

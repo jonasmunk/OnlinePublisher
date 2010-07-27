@@ -3,7 +3,6 @@
  * @package OnlinePublisher
  * @subpackage Classes
  */
-require_once($basePath."Editor/Libraries/ga/analytics.class.php");
 require_once($basePath."Editor/Libraries/gapi/gapi.class.php");
 require_once($basePath."Editor/Classes/Settings.php");
 
