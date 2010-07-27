@@ -4,6 +4,7 @@
  * @subpackage Templates.Search
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class QuicktimeplayerController extends TemplateController {
     
@@ -26,10 +27,10 @@ class QuicktimeplayerController extends TemplateController {
 		$sql="select * from quicktimeplayer where page_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
 			if ($row['title']!='') {
-				$data.='<title>'.encodeXML($row['title']).'</title>';
+				$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 			}
 			if ($row['text']!='') {
-				$data.='<text>'.encodeXMLBreak($row['text'],'<break/>').'</text>';
+				$data.='<text>'.StringUtils::escapeXMLBreak($row['text'],'<break/>').'</text>';
 			}
 			$data.='<display width="'.$row['width'].'" height="'.$row['height'].'"/>';
 			$sql="select data from object where id=".$row['file_id'];

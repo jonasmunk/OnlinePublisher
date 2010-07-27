@@ -4,6 +4,7 @@
  * @subpackage Templates.Search
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class PersonlistingController extends TemplateController {
     
@@ -28,8 +29,8 @@ class PersonlistingController extends TemplateController {
 		$sql="select * from personlisting where page_id=".$this->id;
 		$row = Database::selectFirst($sql);
 		$data.=
-		'<title>'.encodeXML($row['title']).'</title>'.
-		'<text>'.encodeXMLBreak($row['text'],'<break/>').'</text>'.
+		'<title>'.StringUtils::escapeXML($row['title']).'</title>'.
+		'<text>'.StringUtils::escapeXMLBreak($row['text'],'<break/>').'</text>'.
 		'<!--dynamic-->'.
 		'</personlisting>';
         return array('data' => $data, 'dynamic' => true, 'index' => '');

@@ -15,7 +15,7 @@ class GuiUtils {
 		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<option title="'.StringUtils::escapeNumericXML(shortenString($row['title'],$maxSize)).'" value="'.$row['id'].'"/>';
+			$output.='<option title="'.StringUtils::escapeXML(shortenString($row['title'],$maxSize)).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;
@@ -32,18 +32,18 @@ class GuiUtils {
 		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<item title="'.StringUtils::escapeNumericXML($row['title']).'" value="'.$row['id'].'"/>';
+			$output.='<item title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;
 	}
 	
 	function buildEntity($object) {
-		return '<entity icon="'.$object->getIcon().'" title="'.StringUtils::escapeNumericXML($object->getTitle()).'" value="'.$object->getId().'"/>';
+		return '<entity icon="'.$object->getIcon().'" title="'.StringUtils::escapeXML($object->getTitle()).'" value="'.$object->getId().'"/>';
 	}
 	
 	function buildImageEntity($image) {
-		return '<entity image="../../../util/images/?id='.$image->getId().'&amp;maxwidth=32&amp;maxheight=32&amp;format=jpg&amp;timestamp='.$image->getUpdated().'" title="'.StringUtils::escapeNumericXML($image->getTitle()).'" value="'.$image->getId().'"/>';
+		return '<entity image="../../../util/images/?id='.$image->getId().'&amp;maxwidth=32&amp;maxheight=32&amp;format=jpg&amp;timestamp='.$image->getUpdated().'" title="'.StringUtils::escapeXML($image->getTitle()).'" value="'.$image->getId().'"/>';
 	}
 	
 	/**
@@ -57,7 +57,7 @@ class GuiUtils {
 		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "");
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<option title="'.StringUtils::escapeNumericXML($row['title']).'" value="'.$row['id'].'"/>';
+			$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;
@@ -74,7 +74,7 @@ class GuiUtils {
 		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "");
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<item title="'.StringUtils::escapeNumericXML($row['title']).'" value="'.$row['id'].'"/>';
+			$output.='<item title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;

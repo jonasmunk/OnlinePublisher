@@ -4,6 +4,7 @@
  * @subpackage Templates.ImageGallery
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class ImagegalleryController extends TemplateController {
     
@@ -30,8 +31,8 @@ class ImagegalleryController extends TemplateController {
         if ($row = Database::selectFirst($sql)) {
             $data=
             '<imagegallery xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/imagegallery/1.0/">'.
-            '<title>'.encodeXML($row['title']).'</title>'.
-            '<text>'.encodeXMLBreak($row['text'],'<break/>').'</text>'.
+            '<title>'.StringUtils::escapeXML($row['title']).'</title>'.
+            '<text>'.StringUtils::escapeXMLBreak($row['text'],'<break/>').'</text>'.
             '<display'.
             ' size="'.$row['imagesize'].'"'.
             ' rotate="'.$row['rotate'].'"'.
@@ -44,8 +45,8 @@ class ImagegalleryController extends TemplateController {
             while ($row = Database::next($result)) {
                 $data.=
                 '<image id="'.$row['image_id'].'">'.
-                '<title>'.encodeXML($row['title']).'</title>'.
-                '<note>'.encodeXMLBreak($row['note'],'<break/>').'</note>'.
+                '<title>'.StringUtils::escapeXML($row['title']).'</title>'.
+                '<note>'.StringUtils::escapeXMLBreak($row['note'],'<break/>').'</note>'.
                 '</image>';
             }
             Database::free($result);

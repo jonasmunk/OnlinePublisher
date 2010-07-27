@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
 require_once($basePath.'Editor/Classes/Product.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class ProductlistingController extends TemplateController {
     
@@ -30,8 +31,8 @@ class ProductlistingController extends TemplateController {
 		$sql="select * from productlisting where page_id=".$this->id;
 		$row = Database::selectFirst($sql);
 		$data.=
-		'<title>'.encodeXML($row['title']).'</title>'.
-		'<text>'.encodeXMLBreak($row['text'],'<break/>').'</text>'.
+		'<title>'.StringUtils::escapeXML($row['title']).'</title>'.
+		'<text>'.StringUtils::escapeXMLBreak($row['text'],'<break/>').'</text>'.
 		'<!--dynamic-->'.
 		'</productlisting>';
         return array('data' => $data, 'dynamic' => true, 'index' => '');

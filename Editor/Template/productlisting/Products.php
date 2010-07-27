@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once 'Functions.php';
 
 $id = getProductListingId();
@@ -50,9 +51,9 @@ while ($row = Database::next($result)) {
 	'<cell><checkbox name="group[]" value="'.$row['id'].'" selected="'.(in_array($row['id'],$selected) ? 'true' : 'false').'"/></cell>'.
 	'<cell>'.
 	'<icon size="1" icon="Element/Folder"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXMLBreak($row['title'],'<break>').'</cell>'.
+	'<cell>'.StringUtils::escapeXMLBreak($row['title'],'<break>').'</cell>'.
 	'</row>';
 }
 Database::free($result);

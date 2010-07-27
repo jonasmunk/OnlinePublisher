@@ -10,14 +10,6 @@ class StringUtils {
 		return $str===null && strlen(trim($str))>0;
 	}
 	
-	function escapeXML($input) {
-		$output=$input;
-		$output=str_replace('&', '&amp;', $output);
-		$output=str_replace('<', '&lt;', $output);
-		$output=str_replace('>', '&gt;', $output);
-		return $output;
-	}
-	
 	function escapeSimpleXML($input) {
 		$output=$input;
 		$output=str_replace('&', '&amp;', $output);
@@ -43,7 +35,7 @@ class StringUtils {
 		return $output;
 	}
 	
-	function escapeNumericXML(&$input) {
+	function escapeXML(&$input) {
 		$output = StringUtils::htmlNumericEntities($input);
 		$output = str_replace('&#151;', '-', $output);
 		$output = str_replace('&#146;', '&#39;', $output);
@@ -58,8 +50,8 @@ class StringUtils {
 	  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
 	}
 	
-	function escapeNumericXMLBreak($input,$break) {
-		$output = StringUtils::escapeNumericXML($input);
+	function escapeXMLBreak($input,$break) {
+		$output = StringUtils::escapeXML($input);
 		$output = str_replace("&#13;&#10;", $break, $output);
 		$output = str_replace("&#13;", $break, $output);
 		$output = str_replace("&#10;", $break, $output);

@@ -4,6 +4,7 @@
  * @subpackage Templates.Sitemap
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class SitemapController extends TemplateController {
     
@@ -28,17 +29,17 @@ class SitemapController extends TemplateController {
 		$sql="select * from sitemap where page_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
 			if ($row['title']!='') {
-				$data.='<title>'.encodeXML($row['title']).'</title>';
+				$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 			}
 			if ($row['text']!='') {
-				$data.='<text>'.encodeXMLBreak($row['text'],'<break/>').'</text>';
+				$data.='<text>'.StringUtils::escapeXMLBreak($row['text'],'<break/>').'</text>';
 			}
 		}
 
 		$sql="select sitemap_group.title,hierarchy.data from sitemap_group left join hierarchy on sitemap_group.hierarchy_id=hierarchy.id where page_id=".$this->id." order by sitemap_group.position";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-		    $data.='<group title="'.encodeXML($row['title']).'">'.
+		    $data.='<group title="'.StringUtils::escapeXML($row['title']).'">'.
 		    $row['data'].
 		    '</group>';
 		}

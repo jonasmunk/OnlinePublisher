@@ -69,7 +69,7 @@ class PartContext {
 		$this->buildLinks[] = array('text' => $text, 'type' => $type, 'id' => $id, 'value' => $value , 'target' => $target, 'title' => $title);
 		$atts='';
 		if ($type=='url') {
-			$atts.=' url="'.StringUtils::escapeNumericXML($value).'"';
+			$atts.=' url="'.StringUtils::escapeXML($value).'"';
 		}
 		else if ($type=='page') {
 			$atts.=' page="'.$id.'"';

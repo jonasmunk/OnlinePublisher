@@ -55,6 +55,16 @@ $gui.=
 $elements = array("Dock","Script","Style","BarForm","DockForm");
 writeGui($xwg_skin,$elements,$gui);
 
+function browserIsGecko() {
+	$agent=strtolower($_SERVER['HTTP_USER_AGENT']);
+	$pos = strpos($agent, 'gecko');
+	if ($pos === false) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
 function newsTab() {
 	$sectionId = getDocumentSection();
 	return

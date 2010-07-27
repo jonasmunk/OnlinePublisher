@@ -10,6 +10,7 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/VCal.php';
 require_once '../../Classes/UserInterface.php';
 require_once '../../Classes/Calendarsource.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once 'CalendarsController.php';
 
 $force = requestGetBoolean('force');
@@ -67,11 +68,11 @@ foreach ($events as $event) {
 	$gui.='<row>'.
 	'<cell>'.
 	'<icon icon="Template/Generic"/>'.
-	'<text>'.encodeXMLBreak($event['summary'],'<break/>').'</text>'.
+	'<text>'.StringUtils::escapeXMLBreak($event['summary'],'<break/>').'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXML($event['location']).'</cell>'.
-	'<cell nowrap="true">'.encodeXML(UserInterface::presentLongDateTime($event['startDate'])).'</cell>'.
-	'<cell nowrap="true">'.encodeXML(UserInterface::presentLongDateTime($event['endDate'])).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($event['location']).'</cell>'.
+	'<cell nowrap="true">'.StringUtils::escapeXML(UserInterface::presentLongDateTime($event['startDate'])).'</cell>'.
+	'<cell nowrap="true">'.StringUtils::escapeXML(UserInterface::presentLongDateTime($event['endDate'])).'</cell>'.
 	'<cell nowrap="true">'.($event['recurring'] ? '<icon icon="Basic/Refresh"/>' : '').'</cell>'.
 	'</row>';
 }

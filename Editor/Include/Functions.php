@@ -27,22 +27,6 @@ function redirect($url) {
 	exit;
 }
 
-///////////////////// Compatibility ///////////////////////
-
-/**
- * Checks whether the browser is Gecko based
- * @return boolean True if browser is Gecko based, false otherwise
- */
-function browserIsGecko() {
-	$agent=strtolower($_SERVER['HTTP_USER_AGENT']);
-	$pos = strpos($agent, 'gecko');
-	if ($pos === false) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
 ///////////////////////// Strings /////////////////////////
 
 /**
@@ -149,15 +133,6 @@ function encodeXML(&$input) {
 	$output = str_replace('&#128;', '&#243;', $output);
 	$output = str_replace('&#128;', '&#243;', $output);
 	$output=str_replace('"', '&quot;', $output);
-	return $output;
-}
-
-function encodeXMLBreak($input,$break) {
-	$output=encodeXML($input);
-	$output=str_replace("&#13;&#10;", $break, $output);
-	$output=str_replace("&#13;", $break, $output);
-	$output=str_replace("&#10;", $break, $output);
-	$output=str_replace("\n", $break, $output);
 	return $output;
 }
 
