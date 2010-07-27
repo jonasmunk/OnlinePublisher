@@ -301,6 +301,7 @@ span.in2igui_number span span
 {
 	margin: 0 17px 0 6px;
 	background: url('../gfx/number.png') left -25px repeat-x;
+	line-height: 32px;
 }
 
 span.in2igui_number input
