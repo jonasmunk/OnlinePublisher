@@ -188,10 +188,9 @@ class PartPerson extends Part {
 		return true;
 	}
 	
-	function getMainToolbarBody() {
-		return '
+	function getToolbars() {
+		return array('Person' => '
 			<script source="../../Parts/person/toolbar.js"/>
-			<divider/>
 			<segmented label="Placering" name="alignment" allow-null="true">
 				<item icon="style/align_left" value="left"/>
 				<item icon="style/align_center" value="center"/>
@@ -241,7 +240,7 @@ class PartPerson extends Part {
 					<cell right="5"><checkbox name="showPhoneJob"/><label>Telefon (job)</label></cell>
 				</row>
 			</grid>
-		';
+		');
 	}
 }
 ?>

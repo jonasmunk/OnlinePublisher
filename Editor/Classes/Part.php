@@ -133,10 +133,6 @@ class Part {
 		return false;
 	}
 	
-	function getMainToolbarBody() {
-		return '';
-	}
-	
 	function getToolbars() {
 		return array();
 	}

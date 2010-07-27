@@ -30,15 +30,18 @@ if ($part->isIn2iGuiEnabled()) {
 		partToolbar.sectionId='.$sectionId.';
 		partToolbar.partId='.$partId.';
 		</script>
-		<tabs small="true" below="true">
-			<tab title="Part" background="light">
+		<tabs small="true" below="true">';
+			foreach ($part->getToolbars() as $title => $body) {
+				$gui.='<tab title="'.$title.'" background="light">
 				<toolbar>
 					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
 					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
 					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()"/>
-					'.$part->getMainToolbarBody().'
-				</toolbar>
-			</tab>
+					<divider/>'.$body.
+				'</toolbar>
+				</tab>';
+			}
+			$gui.='
 			<tab title="Afstande" background="light">
 				<toolbar>
 					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
@@ -57,18 +60,7 @@ if ($part->isIn2iGuiEnabled()) {
 						<item icon="style/float_right" value="right"/>
 					</segmented>
 				</toolbar>
-			</tab>';
-			foreach ($part->getToolbars() as $title => $body) {
-				$gui.='<tab title="'.$title.'" background="light">
-				<toolbar>
-					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
-					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
-					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()"/>
-					<divider/>'.$body.
-				'</toolbar>
-				</tab>';
-			}
-			$gui.='
+			</tab>
 		</tabs>
 	</gui>';
 	In2iGui::render($gui);

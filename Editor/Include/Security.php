@@ -32,4 +32,9 @@ else if (InternalSession::isTimedOut()) {
 else {
 	InternalSession::registerActivity();
 }
+
+function __autoload($class_name) {
+	global $basePath;
+    require_once $basePath.'Editor/Classes/'.$class_name . '.php';
+}
 ?>

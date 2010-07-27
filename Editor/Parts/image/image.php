@@ -373,10 +373,10 @@ class PartImage extends Part {
 		return true;
 	}
 	
-	function getMainToolbarBody() {
-		return '
-			<script source="../../Parts/image/toolbar.js"/>
-			<divider/>
+	function getToolbars() {
+		return array(
+			'Billede' =>
+			'<script source="../../Parts/image/toolbar.js"/>
 			<icon icon="common/new" title="Upload billede" name="addImage"/>
 			<icon icon="common/search" title="V&#230;lg billede" name="chooseImage"/>
 			<divider/>
@@ -411,12 +411,9 @@ class PartImage extends Part {
 				<row>
 					<cell right="5" label="Gr&#229;tone:"><checkbox name="greyscale"/></cell>
 				</row>
-			</grid>
-		';
-	}
-	
-	function getToolbars() {
-		return array('Link' =>
+			</grid>'
+			,
+			'Link' =>
 			'<grid>
 				<row>
 					<cell label="Side:" width="200" right="5">

@@ -59,10 +59,10 @@ class PartFormula extends Part {
 		return true;
 	}
 	
-	function getMainToolbarBody() {
-		return '
+	function getToolbars() {
+		return array(
+			'Formular' => '
 			<script source="../../Parts/formula/toolbar.js"/>
-			<divider/>
 			<grid>
 				<row>
 					<cell label="Modtager:" width="180">
@@ -75,7 +75,7 @@ class PartFormula extends Part {
 					</cell>
 				</row>
 			</grid>
-		';
+		');
 	}
 }
 ?>

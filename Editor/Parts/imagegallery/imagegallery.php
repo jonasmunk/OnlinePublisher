@@ -101,10 +101,10 @@ class PartImagegallery extends Part {
 		return true;
 	}
 	
-	function getMainToolbarBody() {
-		return '
-			<script source="../../Parts/imagegallery/toolbar.js"/>
-			<divider/>
+	function getToolbars() {
+		return array(
+			'Billedgalleri' =>
+			'<script source="../../Parts/imagegallery/toolbar.js"/>
 			<dropdown label="Billedgruppe" width="200" name="group">
 			'.GuiUtils::buildObjectItems('imagegroup').'
 			</dropdown>
@@ -117,8 +117,8 @@ class PartImagegallery extends Part {
 				<row>
 					<cell right="5"><checkbox name="framed"/><label>Indrammet</label></cell>
 				</row>
-			</grid>
-		';
+			</grid>'
+			);
 	}
 	
 }
