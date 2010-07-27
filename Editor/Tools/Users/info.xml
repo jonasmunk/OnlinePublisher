@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <tool>
-	<icon>common/user</icon>
+	<icon>common/close</icon>
 	<name>Brugere</name>
 	<description>Oprettelse og konfigurering af systemets brugere</description>
 	<category>setup</category>
