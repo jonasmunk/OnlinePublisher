@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Part.php');
 require_once($basePath.'Editor/Classes/Services/XslService.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class PartHeader extends Part {
 
@@ -163,7 +164,7 @@ class PartHeader extends Part {
 		$sql = "select * from part_header where part_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
 			$text = $row['text'];
-			$text = escapeXML($text);
+			$text = StringUtils::escapeSimpleXML($text);
 			$text = $context->decorateForBuild($text);
 			$text = insertLineBreakTags($text,'<break/>');
 			return 

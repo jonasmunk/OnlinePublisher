@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Part.php');
 require_once($basePath.'Editor/Classes/Services/XslService.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class PartListing extends Part {
 
@@ -52,7 +53,7 @@ class PartListing extends Part {
 	}
 
 	function _formatBuildText($text,$context) {
-		$text = escapeXML($text);
+		$text = StringUtils::escapeSimpleXML($text);
 		$text = $context->decorateForBuild($text);
 		$text = insertLineBreakTags($text,'<break/>');
 		return $text;

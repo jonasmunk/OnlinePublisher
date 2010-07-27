@@ -18,6 +18,31 @@ class StringUtils {
 		return $output;
 	}
 	
+	function escapeSimpleXML($input) {
+		$output=$input;
+		$output=str_replace('&', '&amp;', $output);
+		$output=str_replace('<', '&lt;', $output);
+		$output=str_replace('>', '&gt;', $output);
+		return $output;
+	}
+
+	/**
+	 * Escapes special XML characters and inserts break tags
+	 * @param string $input The text to escape
+	 * @param string $tag The break tag to use
+	 * @return string Escaped XML string with break tags
+	 */
+	function escapeSimpleXMLwithLineBreak($input,$tag) {
+		$output=$input;
+		$output=str_replace('&', '&amp;', $output);
+		$output=str_replace('<', '&lt;', $output);
+		$output=str_replace('>', '&gt;', $output);
+		$output=str_replace("\r\n", $tag, $output);
+		$output=str_replace("\r", $tag, $output);
+		$output=str_replace("\n", $tag, $output);
+		return $output;
+	}
+	
 	function escapeNumericXML(&$input) {
 		$output = StringUtils::htmlNumericEntities($input);
 		$output = str_replace('&#151;', '-', $output);

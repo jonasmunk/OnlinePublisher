@@ -4,6 +4,7 @@
  * @subpackage Templates.Search
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class SearchController extends TemplateController {
     
@@ -27,7 +28,7 @@ class SearchController extends TemplateController {
 		$sql="select * from search where page_id=".$this->id;
 		$row = Database::selectFirst($sql);
 		$data.='<title>'.encodeXML($row['title']).'</title>';
-		$data.='<text>'.escapeXMLwithLineBreak($row['text'],'<break/>').'</text>';
+		$data.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 		$data.='<buttontitle>'.encodeXML($row['buttontitle']).'</buttontitle>';
 		$data.='<types>';
 		if ($row['pagesenabled']) {
@@ -123,7 +124,7 @@ class SearchController extends TemplateController {
 					while ($row = Database::next($result)) {
 						$xml.='<page id="'.$row['id'].'">';
 						$xml.='<title>'.encodeXML($row['title']).'</title>';
-						$xml.='<description>'.escapeXMLwithLineBreak($row['description'],'<break/>').'</description>';
+						$xml.='<description>'.StringUtils::escapeSimpleXMLwithLineBreak($row['description'],'<break/>').'</description>';
 						$xml.='<summary>'.summarizeAndHighligt($highlight,$row['index']).'</summary>';
 						$xml.='</page>';
 					}

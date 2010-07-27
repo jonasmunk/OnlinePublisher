@@ -4,6 +4,7 @@
  * @subpackage Templates.GuestBook
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class GuestbookController extends TemplateController {
     
@@ -38,7 +39,7 @@ class GuestbookController extends TemplateController {
 		$sql="select title,text from guestbook where page_id=".$this->id;
 		$row = Database::selectFirst($sql);
 		$data.='<title>'.encodeXML($row['title']).'</title>';
-		$data.='<text>'.escapeXMLwithLineBreak($row['text'],'<break/>').'</text>';
+		$data.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 		$data.='<!--dynamic-->';
 		$data.= '</guestbook>';
 		$index = $row['title'].' '.$row['text'];
@@ -64,7 +65,7 @@ class GuestbookController extends TemplateController {
 				$xml.='<item id="'.$row['id'].'">';
 				$xml.=buildDateTag('time',$row['unix']);
 				$xml.='<name>'.encodeXML($row['name']).'</name>';
-				$xml.='<text>'.escapeXMLwithLineBreak($row['text'],'<break/>').'</text>';
+				$xml.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 				$xml.='</item>';
 			}
 			$xml.='</list>';

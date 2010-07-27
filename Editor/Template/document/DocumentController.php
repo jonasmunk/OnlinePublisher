@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/TemplateController.php');
 require_once $basePath.'Editor/Classes/PartContext.php';
 require_once $basePath.'Editor/Classes/Part.php';
 require_once $basePath.'Editor/Template/document/Functions.php';
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class DocumentController extends TemplateController {
     
@@ -113,7 +114,7 @@ class DocumentController extends TemplateController {
 		//$sql="select * from link where page_id=".$pageId." and source_type='text'";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$context -> addBuildLink(escapeXML($row['source_text']),$row['target_type'],$row['target_id'],$row['target_value'],$row['target'],$row['alternative'],$row['path']);
+			$context -> addBuildLink(StringUtils::escapeSimpleXML($row['source_text']),$row['target_type'],$row['target_id'],$row['target_value'],$row['target'],$row['alternative'],$row['path']);
 		}
 		Database::free($result);
 	

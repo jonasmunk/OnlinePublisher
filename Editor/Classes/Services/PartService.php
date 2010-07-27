@@ -27,7 +27,7 @@ class PartService {
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$context -> addBuildLink(
-				StringUtils::escapeXML($row['source_text']),
+				StringUtils::escapeSimpleXML($row['source_text']),
 				$row['target_type'],
 				$row['target_id'],
 				$row['target_value'],

@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Services/XslService.php');
 require_once($basePath.'Editor/Classes/Services/PartService.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/PartContext.php');
 
 class PartController
@@ -31,14 +32,6 @@ class PartController
 		return 'http://uri.in2isoft.com/onlinepublisher/part/'.$this->type.'/'.$version.'/';
 	}
 
-	function escapeXML($input) {
-		$output=$input;
-		$output=str_replace('&', '&amp;', $output);
-		$output=str_replace('<', '&lt;', $output);
-		$output=str_replace('>', '&gt;', $output);
-		return $output;
-	}
-
 	function insertLineBreakTags($input,$tag) {
 		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
 	}
@@ -58,7 +51,7 @@ class PartController
 		'<xsl:variable name="navigation-path"></xsl:variable>'.
 		'<xsl:variable name="page-path"></xsl:variable>'.
 		'<xsl:variable name="template"></xsl:variable>'.
-		'<xsl:variable name="agent">'.$this->escapeXML($_SERVER['HTTP_USER_AGENT']).'</xsl:variable>'.
+		'<xsl:variable name="agent">'.StringUtils::escapeSimpleXML($_SERVER['HTTP_USER_AGENT']).'</xsl:variable>'.
 		'<xsl:variable name="userid"></xsl:variable>'.
 		'<xsl:variable name="username"></xsl:variable>'.
 		'<xsl:variable name="usertitle"></xsl:variable>'.

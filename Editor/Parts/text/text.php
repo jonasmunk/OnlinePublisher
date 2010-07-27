@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Part.php');
 require_once($basePath.'Editor/Classes/Services/XslService.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class PartText extends Part{
 
@@ -157,7 +158,7 @@ class PartText extends Part{
 		$sql = "select * from part_text where part_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
 			$text = $row['text'];
-			$text = escapeXML($text);
+			$text = StringUtils::escapeSimpleXML($text);
 			$text = $context->decorateForBuild($text);
 			$text = insertLineBreakTags($text,'<break/>');
 			
@@ -177,7 +178,7 @@ class PartText extends Part{
 		if ($row['image_id']>0) {
 			$sql = "select data from object where id=".$row['image_id'];
 			if ($row2 = Database::selectFirst($sql)) {
-				return '<image float="'.escapeXML($row['imagefloat']).'">'.
+				return '<image float="'.StringUtils::escapeSimpleXML($row['imagefloat']).'">'.
 				$row2['data'].
 				'</image>';
 			}

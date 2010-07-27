@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/Text.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class TextController extends PartController
 {
@@ -23,7 +24,7 @@ class TextController extends PartController
 	
 	function buildSub($part,$context) {
 		$text = $part->getText();
-		$text = $this->escapeXML($text);
+		$text = StringUtils::escapeSimpleXML($text);
 		$text = $context->decorateForBuild($text);
 		$text = $this->insertLineBreakTags($text,'<break/>');
 		return 
