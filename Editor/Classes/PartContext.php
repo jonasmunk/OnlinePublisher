@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/TextDecorator.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class PartContext {
 	
@@ -68,7 +69,7 @@ class PartContext {
 		$this->buildLinks[] = array('text' => $text, 'type' => $type, 'id' => $id, 'value' => $value , 'target' => $target, 'title' => $title);
 		$atts='';
 		if ($type=='url') {
-			$atts.=' url="'.encodeXML($value).'"';
+			$atts.=' url="'.StringUtils::escapeNumericXML($value).'"';
 		}
 		else if ($type=='page') {
 			$atts.=' page="'.$id.'"';
