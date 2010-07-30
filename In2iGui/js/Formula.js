@@ -196,7 +196,7 @@ In2iGui.Formula.Text.create = function(options) {
 	var node,input;
 	if (options.lines>1 || options.multiline) {
 		input = new Element('textarea',
-			{'class':'in2igui_formula_text','rows':options.lines}
+			{'class':'in2igui_formula_text','rows':options.lines,style:'height: 32px;'}
 		);
 		node = new Element('span',{'class':'in2igui_formula_text_multiline'}).insert(input);
 	} else {
@@ -302,6 +302,7 @@ In2iGui.Formula.Text.prototype = {
 	/** @private */
 	expand : function(animate) {
 		if (!this.multiline) {return};
+		n2i.log('Visible:'+n2i.dom.isVisible(this.element));
 		if (!n2i.dom.isVisible(this.element)) {return};
 		var textHeight = In2iGui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
@@ -916,6 +917,13 @@ In2iGui.Formula.Checkboxes.prototype = {
 	registerSource : function(source) {
 		source.parent = this;
 		this.sources.push(source);
+	},
+	registerItem : function(item) {
+		// If it is a number, treat it as such
+		if (parseInt(item.value)==item.value) {
+			item.value = parseInt(item.value);
+		}
+		this.items.push(item);
 	},
 	registerItems : function(items) {
 		items.parent = this;

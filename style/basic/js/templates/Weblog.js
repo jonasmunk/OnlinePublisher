@@ -37,14 +37,14 @@ op.WeblogTemplate = {
 		n2i.override(parms,this.newForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
 		if (parms.title.blank()) {
-			alert('Der skal skrives en titel');
+			ui.showMessage({text:'Der skal skrives en titel',duration:2000});
 			return;
 		} else if (parms['group[]'].length<1) {
-			alert('Der skal vælges mindst een gruppe');
+			ui.showMessage({text:'Der skal vælges mindst een gruppe',duration:2000});
 			return;
 		}
-		new Ajax.Request(op.page.pagePath, {
-			method: 'post',
+		ui.request({
+			url: op.page.pagePath,
 			parameters:parms,
 			onSuccess: function(transport) {
 		    	document.location.reload();
@@ -65,20 +65,22 @@ op.WeblogTemplate = {
 			}.bind(this)
 		});
 	},
-	deleteEntry : function(id) {
-		if (!confirm('Er du sikker på at du vil slette indlægget?')) {
-			return;
-		}
-		var parms = {ajax:true,action:'deleteEntry',entryId:id};
-		new Ajax.Request(op.page.pagePath, {
-			method: 'post',
-			parameters:parms,
-			onSuccess: function(t) {
-		    	document.location.reload();
-			}.bind(this),
-			onException: function(t,e) {
-				n2i.log(e);
-			}.bind(this)
+	deleteEntry : function(id,element) {
+		ui.confirmOverlay({
+			element:element,
+			text:'Er du sikker?',
+			okText:'Ja, slet',
+			cancelText:'Nej',
+			onOk:function() {
+				var parms = {ajax:true,action:'deleteEntry',entryId:id};
+				ui.request({
+					url : op.page.pagePath,
+					parameters:parms,
+					onSuccess: function(t) {
+				    	document.location.reload();
+					}
+				});
+			}
 		});
 	},
 	editEntry : function(obj) {
@@ -100,9 +102,9 @@ op.WeblogTemplate = {
 			box.addToDocument();
 		}
 		this.activeEntry = obj;
-		this.editBox.show();
 		this.editForm.setValues(obj);
 		In2iGui.get('editEntryGroups').setValue(obj.groups);
+		this.editBox.show();
 		this.editForm.focus();
 	},
 	$click$cancelEditEntry : function() {
@@ -113,16 +115,16 @@ op.WeblogTemplate = {
 		n2i.override(parms,this.editForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
 		if (parms.title.blank()) {
-			alert('Der skal skrives en titel');
+			ui.showMessage({text:'Der skal skrives en titel',duration:2000});
 			return;
 		} else if (parms['group[]'].length<1) {
-			alert('Der skal vælges mindst een gruppe');
+			ui.showMessage({text:'Der skal vælges mindst een gruppe',duration:2000});
 			return;
 		}
-		new Ajax.Request(op.page.pagePath, {
-			method: 'post',
-			parameters:parms,
-			onSuccess: function(transport) {
+		ui.request({
+			url : op.page.pagePath,
+			parameters : parms,
+			onSuccess : function(transport) {
 				this.editBox.hide();
 		    	window.setTimeout(function() {document.location.reload()},500);
 			}.bind(this)

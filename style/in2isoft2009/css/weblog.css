@@ -5,7 +5,7 @@
 
 .weblog h1
 {
-	margin-bottom: 10px;
+	margin: 0 0 10px;
 }
 
 .weblog .list
@@ -16,7 +16,7 @@
 
 .weblog .entry
 {
-	padding: 5px 0 10px;
+	padding: 15px 0;
 	border-top: 1px solid #eee;
 	overflow: hidden;
 }
@@ -48,8 +48,9 @@
 .weblog .entry .text
 {
 	padding-top: 5px;
-	font-size:10pt;
-	line-height:130%;
+	font-size: 13px;
+	line-height: 18px;
+	color: #333;
 }
 
 .weblog div.message {

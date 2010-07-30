@@ -95,6 +95,17 @@ n2i.inArray = function(arr,value) {
 	return false;
 }
 
+n2i.intOrString = function(str) {
+	if (n2i.isDefined(str)) {
+		var result = /[0-9]+/.exec(str);
+		if (result!==null && result[0]==str) {
+			if (parseInt(str,10)==str) {
+				return parseInt(str,10);
+			}
+		}
+	}
+	return str;
+}
 
 n2i.flipInArray = function(arr,value) {
 	if (n2i.inArray(arr,value)) {

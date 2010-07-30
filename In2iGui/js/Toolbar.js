@@ -110,6 +110,14 @@ In2iGui.Toolbar.Icon.prototype = {
 		this.element.tabIndex=enabled ? 0 : -1;
 		this.element.setClassName('in2igui_toolbar_icon_disabled',!this.enabled);
 	},
+	/** Disables the icon */
+	disable : function() {
+		this.setEnabled(false);
+	},
+	/** Enables the icon */
+	enable : function() {
+		this.setEnabled(true);
+	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
 		this.element.setClassName('in2igui_toolbar_icon_selected',selected);

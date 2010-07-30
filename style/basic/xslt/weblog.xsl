@@ -18,6 +18,7 @@
 <script type="text/javascript" charset="utf-8" src="{$path}In2iGui/lib/In2iScripts/In2iDate.js"><xsl:comment/></script>
 <script type="text/javascript" charset="utf-8" src="{$path}In2iGui/js/Button.js"><xsl:comment/></script>
 <script type="text/javascript" charset="utf-8" src="{$path}In2iGui/js/Formula.js"><xsl:comment/></script>
+<script type="text/javascript" charset="utf-8" src="{$path}In2iGui/js/Overlay.js"><xsl:comment/></script>
 <script type="text/javascript" charset="utf-8" src="{$path}style/basic/js/templates/Weblog.js"><xsl:comment/></script>
 <script	type="text/javascript">
 <xsl:for-each select="wl:group">
@@ -89,7 +90,7 @@
 <xsl:if test="$username!=''">
 <div class="operations">
 	<a href="#" onclick="op.WeblogTemplate.edit({o:object/@id}); return false;" class="in2igui_button in2igui_button_small_rounded"><span><span>Rediger</span></span></a>
-	<a href="#" onclick="op.WeblogTemplate.deleteEntry({o:object/@id}); return false;" class="in2igui_button in2igui_button_small_rounded"><span><span>Slet</span></span></a></div>
+	<a href="#" onclick="op.WeblogTemplate.deleteEntry({o:object/@id},this); return false;" class="in2igui_button in2igui_button_small_rounded"><span><span>Slet</span></span></a></div>
 </xsl:if>
 </div>
 </xsl:template>

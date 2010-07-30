@@ -261,7 +261,7 @@
 		});
 		with(<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:item">
-				addItem({title:'<xsl:value-of select="@title"/>',value:'<xsl:value-of select="@value"/>'});
+				addItem({title:'<xsl:value-of select="@title"/>',value:n2i.intOrString('<xsl:value-of select="@value"/>')});
 			</xsl:for-each>
 		}
 		<xsl:call-template name="gui:createobject"/>
@@ -373,6 +373,9 @@
 			<xsl:for-each select="gui:items">
 				registerItems(<xsl:value-of select="generate-id()"/>_obj);
 			</xsl:for-each>
+			<xsl:for-each select="gui:item">
+				registerItem({title:'<xsl:value-of select="@title"/>',value:n2i.intOrString('<xsl:value-of select="@value"/>')});
+			</xsl:for-each>
 		}
 		<xsl:call-template name="gui:createobject"/>
 	</script>
@@ -386,6 +389,12 @@
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Checkboxes.Items({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',source:<xsl:value-of select="@source"/>});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
+</xsl:template>
+
+<xsl:template match="gui:checkboxes/gui:item">
+	<a class="in2igui_checkbox" href="javascript:void(0);">
+		<span><span></span></span><xsl:value-of select="@title"/>
+	</a>
 </xsl:template>
 
 <!-- Buttons -->

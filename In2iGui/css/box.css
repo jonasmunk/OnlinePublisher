@@ -22,6 +22,7 @@ div.in2igui_box_absolute
 	left: 50%;
 	top: -10000px;
 	margin-left: -1000px;
+	visibility: hidden;
 }
 
 div.in2igui_box_top

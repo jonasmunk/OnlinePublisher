@@ -20,7 +20,7 @@ op.Editor = {
 	
 	editProperties : function() {
 		if (!this.propertiesWindow) {
-			var win = this.propertiesWindow = ui.Window.create({width:300,title:'Egenskaber',icon:'common/info',padding:10,variant:'dark'});
+			var win = this.propertiesWindow = ui.Window.create({width:300,title:'Info',icon:'common/info',padding:10,variant:'dark'});
 			var form = this.propertiesFormula = ui.Formula.create();
 			var group = form.buildGroup({above:true},[
 				{type:'Text',options:{label:'Titel:',key:'title'}},

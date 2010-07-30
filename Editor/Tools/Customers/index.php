@@ -32,8 +32,9 @@ $gui='
 		<top>
 		<toolbar>
 			<icon icon="common/person" title="Ny person" name="newPerson" overlay="new"/>
-			<icon icon="common/email" title="Ny postliste" name="newMailinglist" overlay="new"/>
 			<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
+			<icon icon="common/email" title="Ny postliste" name="newMailinglist" overlay="new"/>
+			<divider/>
 			<icon icon="common/letter" title="Send email" name="sendEmail"/>
 			<right>
 				<searchfield title="Søgning" name="search" expandedWidth="200"/>

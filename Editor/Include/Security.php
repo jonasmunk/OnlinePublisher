@@ -35,6 +35,13 @@ else {
 
 function __autoload($class_name) {
 	global $basePath;
-    require_once $basePath.'Editor/Classes/'.$class_name . '.php';
+	$folders = array('','Templates/','Services/','Utilities/','Parts/');
+	foreach ($folders as $folder) {
+		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';
+		if (file_exists($path)) {
+	    	require_once $path;
+			break;
+		}
+	}
 }
 ?>

@@ -28,14 +28,14 @@ $gui='
 	<layout>
 		<top>
 			<toolbar>
-				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
 				<icon icon="common/news" title="Ny nyhed" name="newNews" overlay="new"/>
+				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
 				<divider/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
 				<icon icon="common/delete" title="Slet" name="delete" disabled="true">
 					<confirm text="Er du sikker?" ok="Ja, slet nyheden" cancel="Annuller"/>
 				</icon>
-				<icon icon="common/info" title="Kopier" name="duplicate" disabled="true"/>
+				<icon icon="common/page" title="Kopier" name="duplicate" disabled="true"/>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 				</right>

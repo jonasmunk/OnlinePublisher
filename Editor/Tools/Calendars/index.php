@@ -63,7 +63,6 @@ $gui='
 				</segmented>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
-					<icon icon="common/settings" title="Alternativ" click="document.location=\'legacy.php\'"/>
 				</right>
 			</toolbar>
 		</top>

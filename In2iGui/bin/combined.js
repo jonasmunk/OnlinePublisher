@@ -4991,6 +4991,17 @@ n2i.inArray = function(arr,value) {
 	return false;
 }
 
+n2i.intOrString = function(str) {
+	if (n2i.isDefined(str)) {
+		var result = /[0-9]+/.exec(str);
+		if (result!==null && result[0]==str) {
+			if (parseInt(str,10)==str) {
+				return parseInt(str,10);
+			}
+		}
+	}
+	return str;
+}
 
 n2i.flipInArray = function(arr,value) {
 	if (n2i.inArray(arr,value)) {
@@ -10398,7 +10409,7 @@ In2iGui.Formula.Text.create = function(options) {
 	var node,input;
 	if (options.lines>1 || options.multiline) {
 		input = new Element('textarea',
-			{'class':'in2igui_formula_text','rows':options.lines}
+			{'class':'in2igui_formula_text','rows':options.lines,style:'height: 32px;'}
 		);
 		node = new Element('span',{'class':'in2igui_formula_text_multiline'}).insert(input);
 	} else {
@@ -10504,6 +10515,7 @@ In2iGui.Formula.Text.prototype = {
 	/** @private */
 	expand : function(animate) {
 		if (!this.multiline) {return};
+		n2i.log('Visible:'+n2i.dom.isVisible(this.element));
 		if (!n2i.dom.isVisible(this.element)) {return};
 		var textHeight = In2iGui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
@@ -11118,6 +11130,13 @@ In2iGui.Formula.Checkboxes.prototype = {
 	registerSource : function(source) {
 		source.parent = this;
 		this.sources.push(source);
+	},
+	registerItem : function(item) {
+		// If it is a number, treat it as such
+		if (parseInt(item.value)==item.value) {
+			item.value = parseInt(item.value);
+		}
+		this.items.push(item);
 	},
 	registerItems : function(items) {
 		items.parent = this;
@@ -13018,6 +13037,14 @@ In2iGui.Toolbar.Icon.prototype = {
 		this.enabled = enabled;
 		this.element.tabIndex=enabled ? 0 : -1;
 		this.element.setClassName('in2igui_toolbar_icon_disabled',!this.enabled);
+	},
+	/** Disables the icon */
+	disable : function() {
+		this.setEnabled(false);
+	},
+	/** Enables the icon */
+	enable : function() {
+		this.setEnabled(true);
 	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
