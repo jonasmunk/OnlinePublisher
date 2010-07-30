@@ -5,18 +5,12 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
 
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface xmlns="uri:Frame">'.
-'<dock align="top" id="Root" tabs="true">'.
-'<frame name="Toolbar" source="Toolbar.php" scrolling="false"/>'.
-'<frame name="Editor" source="Editor.php"/>'.
-'</dock>'.
-'</interface>'.
-'</xmlwebgui>';
+$gui='
+<frames xmlns="uri:In2iGui">
+	<frame source="Toolbar.php" scrolling="false" name="Toolbar"/>
+	<frame source="Editor.php" name="Frame"/>
+</frames>';
 
-$elements = array("Frame");
-writeGui($xwg_skin,$elements,$gui);
+In2iGui::render($gui);
 ?>

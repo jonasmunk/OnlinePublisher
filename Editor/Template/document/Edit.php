@@ -28,17 +28,4 @@ $gui='
 </frames>';
 
 In2iGui::render($gui);
-exit;
-
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface xmlns="uri:Frame">'.
-'<dock align="top" tabs="true" id="Root">'.
-'<frame name="Toolbar" source="Toolbar.php" scrolling="false"/>'.
-'<frame name="Frame" source="Frame.php" object="EditorFrame"/>'.
-'</dock>'.
-'</interface>'.
-'</xmlwebgui>';
-
-$elements = array("Frame");
-writeGui($xwg_skin,$elements,$gui);
 ?>
