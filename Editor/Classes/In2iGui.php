@@ -81,6 +81,19 @@ class In2iGui {
 		echo In2iGui::toJSON($obj);
 	}
 	
+	function sendUnicodeObject($obj) {
+		foreach ($obj as $key => $value) {
+			if (is_string($value)) {
+				if (is_array($obj)) {
+					$obj[$key] = Request::toUnicode($value);
+				} else {
+					$obj->$key = Request::toUnicode($value);
+				}
+			}
+		}
+		In2iGui::sendObject($obj);
+	}
+	
 	function toJSON($obj) {
 		global $basePath;
 		require_once($basePath.'Editor/Libraries/json/JSON2.php');

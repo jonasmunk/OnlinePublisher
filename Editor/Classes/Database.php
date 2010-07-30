@@ -138,6 +138,7 @@ class Database {
 		$result = Database::select($sql);
 		$ids = array();
 		while($row = Database::next($result)) {
+			// TODO intval this
 			$ids[] = $row['id'];
 		}
 		Database::free($result);

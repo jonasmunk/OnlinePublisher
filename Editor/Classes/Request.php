@@ -52,6 +52,13 @@ class Request {
 	}
 	
 	/**
+	 * Gets an int with name id;
+	 */
+	function getId() {
+		return Request::getInt('id');
+	}
+	
+	/**
 	 * Gets "1,9,3" as array(1,9,3)
 	 */
 	function getIntArrayComma($key) {
@@ -117,6 +124,18 @@ class Request {
 		$json = new Services_JSON();
 		//return $json->decode(Request::getString($key));
 		return json_decode(Request::getString($key));
+	}
+	
+	function getUnicodeObject($key) {
+		$obj = Request::getObject($key);
+		if ($obj!==null) {
+			foreach ($obj as $key => $value) {
+				if (is_string($value)) {
+					$obj->$key = Request::fromUnicode($value);
+				}
+			}
+		}
+		return $obj;
 	}
 
 	/**
