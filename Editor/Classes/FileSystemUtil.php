@@ -50,7 +50,7 @@ class FileSystemUtil {
 		if (is_dir($dir)) {
 			if ($dh = opendir($dir)) {
 				while (($file = readdir($dh)) !== false) {
-					if (is_dir($dir.$file) && !($file=='.' || $file=='..') ) {
+					if (is_dir($dir.$file) && !($file=='.' || $file=='..' || $file=='CVS') ) {
 						array_push($out,$file);
 					}
 				}

@@ -3,10 +3,6 @@
  * @package OnlinePublisher
  * @subpackage Tests.Model
  */
-require_once('../../Config/Setup.php');
-require_once('../Include/Security.php');
-
-require_once('../Classes/News.php');
 
 class TestNews extends UnitTestCase {
     

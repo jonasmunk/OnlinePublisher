@@ -4,13 +4,6 @@
  * @subpackage Tests.General
  */
 
-require_once('../../Config/Setup.php');
-require_once('../Include/Security.php');
-
-require_once('../Libraries/simpletest/unit_tester.php');
-require_once('../Libraries/simpletest/reporter.php');
-require_once('../Classes/HtmlDocument.php');
-
 class TestHtmlDocument extends UnitTestCase {
     
     function testGetBodyContents() {
