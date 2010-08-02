@@ -5,30 +5,34 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
 
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface background="Desktop">'.
-'<layout xmlns="uri:Layout" width="100%" height="100%" spacing="10">'.
-'<row><cell width="250">'.
-'<area xmlns="uri:Area" width="100%" height="100%">'.
-'<content padding="3">'.
-'<tiles xmlns="uri:Tile" height="auto" width="100%">'.
-'<tile title="Udvikler"/>'.
-'<content>'.
-'<iframe xmlns="uri:Frame" source="Hierarchy.php"/>'.
-'</content>'.
-'</tiles>'.
-'</content>'.
-'</area>'.
-'</cell><cell>'.
-'<iframe xmlns="uri:Frame" source="PhpInfo.php" name="Right"/>'.
-'</cell></row>'.
-'</layout>'.
-'</interface>'.
-'</xmlwebgui>';
-
-$elements = array("Layout","Frame","Area","Tile");
-writeGui($xwg_skin,$elements,$gui);
+$gui='
+<gui xmlns="uri:In2iGui" padding="10" title="Customers">
+	<controller source="controller.js"/>
+	<source name="testsSource" url="ListTests.php"/>
+	<layout>
+		<top>
+		<toolbar>
+			<!--divider/-->
+		</toolbar>
+		</top>
+		<middle>
+			<left>
+				<overflow>
+					<selection value="phpInfo" name="selector">
+						<item icon="common/info" title="PHP info" value="phpInfo"/>
+						<item icon="common/info" title="Session" value="session"/>
+						<title>Tests</title>
+						<items name="testSelection" source="testsSource"/>
+					</selection>
+				</overflow>
+			</left>
+			<center>
+				<iframe source="PhpInfo.php" name="xyz"/>
+			</center>
+		</middle>
+		<bottom/>
+	</layout>
+</gui>';
+In2iGui::render($gui);
 ?>

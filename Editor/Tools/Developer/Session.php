@@ -5,20 +5,20 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
 
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface background="Desktop">'.
-'<window xmlns="uri:Window" width="100%" height="100%" align="center">'.
-'<titlebar title="Session" icon="Basic/Time"/>'.
-'<content padding="3">'.
-'<iframe xmlns="uri:Frame" source="SessionContent.php"/>'.
-'</content>'.
-'</window>'.
-'</interface>'.
-'</xmlwebgui>';
-
-$elements = array("Window","Frame");
-writeGui($xwg_skin,$elements,$gui);
+header('Content-Type: text/html; charset=iso-8859-1');
 ?>
+<html>
+<head>
+<meta xmlns="http://www.w3.org/1999/xhtml" http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+<pre>
+<?
+$s = $_SESSION;
+ksort($s);
+print_r($s);
+?>
+</pre>
+</body>
+</html>
