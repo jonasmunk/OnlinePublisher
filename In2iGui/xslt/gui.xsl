@@ -233,7 +233,13 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 			<xsl:otherwise><xsl:value-of select="generate-id()"/></xsl:otherwise>
 		</xsl:choose>
 	</xsl:variable>
-	<iframe id="{$id}" name="{$id}" src="{@source}" style="width: 100%; height: 100%; border: 1px solid #ddd; background: #fff; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;" frameborder="0">
+	<iframe id="{$id}" name="{$id}" src="{@source}" frameborder="0">
+		<xsl:attribute name="style">
+			<xsl:text>width: 100%; height: 100%; background: #fff;</xsl:text>
+			<xsl:if test="@border='true'">
+				<xsl:text> -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:comment/>
 	</iframe>
 	<script type="text/javascript">
