@@ -16,7 +16,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Menu.js"></script>
 	<style>
 		html,body {
-			margin: 0px;
+			margin: 20px;
 			padding: 0px;
 			height: 100%;
 		}
@@ -30,7 +30,7 @@
 			window.menu = In2iGui.Menu.create();
 			window.menu.addItem({title:'Slet kolonne',value:'removeColumn'});
 			window.menu.addItem({title:'Tilføj kolonne',value:'addColumn'});
-			window.menu.listen({itemWasClicked:function(value) {alert(value)}});
+			window.menu.listen({$itemWasClicked:function(value) {alert(value)}});
 		}
 		menu.showAtElement(element,e);
 	}
@@ -43,7 +43,7 @@
 					{title:'Consectetur',value:'xyz'}
 				]}
 			]);
-			window.menu2.listen({itemWasClicked:function(value) {alert(value)}});
+			window.menu2.listen({$itemWasClicked:function(value) {alert(value)}});
 		}
 		menu2.showAtElement(element,e,'vertical');
 	}
@@ -70,7 +70,7 @@
 					]}
 				]}
 			]);
-			window.menu3.listen({itemWasClicked:function(value) {alert(value)}});
+			window.menu3.listen({$itemWasClicked:function(value) {alert(value)}});
 		}
 		menu3.showAtElement(element,e,'horizontal');
 	}
