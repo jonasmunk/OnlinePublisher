@@ -5,19 +5,6 @@
  */
 // Layout mode
 
-function getDocumentLayoutMode() {
-	if (isset($_SESSION['template.document.layoutmode'])) {
-		return $_SESSION['template.document.layoutmode'];
-	}
-	else {
-		return false;
-	}
-}
-	
-function setDocumentLayoutMode($value) {
-	$_SESSION['template.document.layoutmode']=$value;
-}
-
 
 
 

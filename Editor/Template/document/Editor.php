@@ -13,9 +13,6 @@ require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-if (Request::getBoolean('toggleLayoutMode')) {
-	setDocumentLayoutMode(!getDocumentLayoutMode());
-}
 header('Content-Type: text/html; charset=iso-8859-1');
 
 $design = getPageDesign();
@@ -114,9 +111,6 @@ $lastRowIndex=displayRows();
 <table border="0" width="100%" cellpadding="0" cellspacing="0" id="bottom">
 <tr><td class="rowButtonCell">
 <?
-if (getDocumentLayoutMode()) {
-	echo '<a href="AddRow.php?index='.($lastRowIndex+1).'"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a>';
-}
 if (getDocumentScroll()!='') {
 	echo '<script>n2i.scrollTo("'.getDocumentScroll().'");</script>';
 }
@@ -160,29 +154,13 @@ function displayRows() {
 	$sql="select * from document_row where page_id=".$pageId." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		if (getDocumentLayoutMode()) {
-			echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'">'.
-			'<tr>'.
-			'<td class="rowButtonCell">'.
-			'<a href="AddRow.php?index='.$row['index'].'"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			'<a href="MoveRow.php?row='.$row['id'].'&dir=-1"><img src="Graphics/Up.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			'<br/>'.
-			'<a href="DeleteRow.php?row='.$row['id'].'" onclick="return confirm(\'Er du sikker p\u00e5 at du vil slette r\u00e6kken?\');"><img src="Graphics/Delete.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			'<a href="MoveRow.php?row='.$row['id'].'&dir=1"><img src="Graphics/Down.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			'</td>'.
-			'<td valign="top" height="100%">';
-			displayColumns($row['id'],$row['index']);
-			echo '</td></tr></table>';
-		}
-		else {
-			echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'">'.
-			'<tr>'.
-			'<td valign="top" height="100%">'.			
-			'<table border="0" width="100%" cellpadding="0" cellspacing="0">'.
-			'<tr>';
-			displayColumns($row['id'],$row['index']);
-			echo '</td></tr></table>';
-		}
+		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'">'.
+		'<tr>'.
+		'<td valign="top" height="100%">'.			
+		'<table border="0" width="100%" cellpadding="0" cellspacing="0">'.
+		'<tr>';
+		displayColumns($row['id'],$row['index']);
+		echo '</td></tr></table>';
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
@@ -191,9 +169,6 @@ function displayRows() {
 
 function displayColumns($rowId,$rowIndex) {
 	$buttonData='';
-	if (getDocumentLayoutMode()) {
-		$buttonData.='<tr>';
-	}
 	$columnData='<tr>';
 	$lastIndex = 0;
 	$pageId = getPageId();
@@ -201,23 +176,6 @@ function displayColumns($rowId,$rowIndex) {
 	$sql="select * from document_column where page_id=".$pageId." and row_id=".$rowId." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		if (getDocumentLayoutMode()) {
-			$buttonData.='<td class="colButtonCell">'.
-			'<a href="AddColumn.php?index='.$row['index'].'&row='.$rowId.'"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			'</td>'.
-			'<td align="center">'.
-			'<div style="width: 70px;">'.
-			'<a href="MoveColumn.php?column='.$row['id'].'&dir=-1"><img src="Graphics/Left.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			($selectedColumn==$row['id']
-			? '<a href="Editor.php?column=0"><img src="Graphics/Close.gif" width="14" height="14" border="0" class="Minicon"/></a>'
-			: '<a href="Editor.php?column='.$row['id'].'"><img src="Graphics/Edit.gif" width="14" height="14" border="0" class="Minicon"/></a>'
-			).
-			//'<a href="DeleteColumn.php?column='.$row['id'].'"><img src="Graphics/Delete.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			'<a href="MoveColumn.php?column='.$row['id'].'&dir=1"><img src="Graphics/Right.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			'</div>'.
-			'</td>';
-			$columnData.='<td></td>';
-		}
 		$columnWidth=$row['width'];
 		if ($columnWidth!='') {
 			if ($columnWidth=='min') {
@@ -230,23 +188,14 @@ function displayColumns($rowId,$rowIndex) {
 				$columnWidth=' width="'.$columnWidth.'"';
 			}
 		}
-		$columnData.='<td class="column'.($selectedColumn==$row['id'] ? 'Selected' : (getDocumentLayoutMode() ? 'Design' : '')).'" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');return false;">';
+		$columnData.='<td class="column'.($selectedColumn==$row['id'] ? 'Selected' : '').'" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');return false;">';
 		$columnData.=displaySections($row['id'],$row['index'],$rowId,$rowIndex).
 		'<div style="width:1px;height:1px;"></div>'.
 		'</td>';
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
-	if (getDocumentLayoutMode()) {
-		$buttonData.='<td class="colButtonCell">'.
-		'<a href="AddColumn.php?index='.($lastIndex+1).'&row='.$rowId.'"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-		'</td></tr>';
-		$columnData.='<td></td>';
-	}
 	echo $buttonData.$columnData;
-	/*echo '<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">'.
-	$buttonData.$columnData.
-	'</table>';*/
 	return $lastIndex;
 }
 
@@ -262,48 +211,20 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 		if ($row['id']==$selected) {
 			$output.=
 			'<tr id="section'.$row['id'].'">'.
-			//'<td class="secButtonCell" id="section'.$row['id'].'" nowrap="nowrap">'.
-			//'<a href="Editor.php?section=" title="Luk afsnittet uden at gemme ændriger"><img src="Graphics/Close.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			//'<a href="javascript: saveSection();" title="Gem ændringer i afsnittet" style="cursor: pointer;"><img src="Graphics/Save.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-			//'<div style="width: 34px;"/>'.
-			//'</td>'.
 			sectionEditor($row['id'],$row['type'],$style,$row['part_id'],$row['part_type'],$row);
 		}
 		else {
 			$output.='<tr id="section'.$row['id'].'" onmouseover="controller.sectionOver(this,'.$row['id'].','.$columnId.','.$row['index'].')" onmouseout="controller.sectionOut(this,event)">';
-			if (getDocumentLayoutMode()) {
-				$output.=
-				'<td class="secButtonCell" nowrap="nowrap">'.
-				'<div style="width: 34px;">'.
-				'<a href="MoveSection.php?section='.$row['id'].'&dir=-1"><img src="Graphics/Up.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-				'<a href="MoveSection.php?section='.$row['id'].'&dir=1"><img src="Graphics/Down.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-				'</div>'.
-				'</td>';
-/*			}
-			else {
-				if ($selected==0) {
-					$output.=
-					'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.$row['index'].'); return false" title="Opret et nyt afsnit" style="cursor: pointer;"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a>'.
-					'<a href="Editor.php?section='.$row['id'].'" title="Rediger afsnittet"><img src="Graphics/Edit.gif" width="14" height="14" border="0" class="Minicon"/></a>';
-				} else {
-					$output.=
-					'<img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon Disabled"/>'.
-					'<img src="Graphics/Edit.gif" width="14" height="14" border="0" class="Minicon Disabled"/>';
-				}
-			}*/
-			}
 			$output.=displaySection($row['id'],$row['type'],$row['index'],$style,$row['part_id'],$row['part_type'],$columnId,$columnIndex,$rowId,$rowIndex);
 		}
 		$output.='</tr>';
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
-	if (!getDocumentLayoutMode()) {
-		if ($selected==0) {
-			$output.='<tr><td><a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" title="Opret et nyt afsnit" style="cursor: pointer;"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a></td></tr>';
-		} else {
-			$output.='<tr><td><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon Disabled"/>';
-		}
+	if ($selected==0) {
+		$output.='<tr><td><a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" title="Opret et nyt afsnit" style="cursor: pointer;"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a></td></tr>';
+	} else {
+		$output.='<tr><td><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon Disabled"/>';
 	}
 	$output.='</table>';
 	return $output;
