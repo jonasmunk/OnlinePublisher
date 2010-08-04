@@ -57,7 +57,7 @@ var controller = {
 			this.partEditControls = In2iGui.Overlay.create({name:'sectionEditActions'});
 			this.partEditControls.addIcon('save','common/save');
 			this.partEditControls.addIcon('cancel','common/stop');
-			this.partEditControls.showAtElement($$('.sectionSelected')[0],{'horizontal':'left','vertical':'topOutside'});
+			this.partEditControls.showAtElement($$('.section_selected')[0],{'horizontal':'left','vertical':'topOutside'});
 			//alert($$('.sectionSelected')[0]);
 		}
 		this.ready = true;
@@ -115,12 +115,14 @@ var controller = {
 	
 	sectionOver : function(cell,sectionId,columnId,indexVal) {
 		if (this.activeSection || !this.ready) return;
+		cell.addClassName('section_hover');
 		this.sectionId=sectionId;
 		document.forms.SectionAdder.column.value=columnId;
 		document.forms.SectionAdder.index.value=indexVal;
 		this.partControls.showAtElement(cell,{'horizontal':'right',autoHide:true});
 	},
 	sectionOut : function(cell,event) {
+		cell.removeClassName('section_hover');
 		return;
 	},
 	showSectionMenu : function(element,event,sectionId,sectionIndex,columnId,columnIndex,rowId,rowIndex) {

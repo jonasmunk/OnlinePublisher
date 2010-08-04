@@ -82,9 +82,9 @@ class File extends Object {
 	function sub_publish() {
 		$data =
 		'<file xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<filename>'.encodeXML($this->filename).'</filename>'.
-		'<size>'.encodeXML($this->size).'</size>'.
-		'<mimetype>'.encodeXML($this->mimetype).'</mimetype>'.
+		'<filename>'.StringUtils::escapeXML($this->filename).'</filename>'.
+		'<size>'.StringUtils::escapeXML($this->size).'</size>'.
+		'<mimetype>'.StringUtils::escapeXML($this->mimetype).'</mimetype>'.
 		'</file>';
 		return $data;
 	}

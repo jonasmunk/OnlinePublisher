@@ -49,13 +49,13 @@ class RemoteFile {
 			return '';
 		}
 		$path = $parsed['path'];
-		$splitted = split('/',$path);
+		$splitted = explode('/',$path);
 		return $splitted[count($splitted)-1];
 	}
 	
 	function getContentType() {
 		$type = $this->info['content_type'];
-		$splitted = split(';',$type);
+		$splitted = explode(';',$type);
 		return $splitted[0];
 	}
 

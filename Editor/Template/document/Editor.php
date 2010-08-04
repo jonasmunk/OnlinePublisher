@@ -108,14 +108,11 @@ else if (getDocumentSection()!=0) {
 $partContext = buildPartContext();
 $lastRowIndex=displayRows();
 ?>
-<table border="0" width="100%" cellpadding="0" cellspacing="0" id="bottom">
-<tr><td class="rowButtonCell">
 <?
 if (getDocumentScroll()!='') {
 	echo '<script>n2i.scrollTo("'.getDocumentScroll().'");</script>';
 }
 ?>
-</td></tr></table>
 </div>
 </body>
 </html>
@@ -154,13 +151,10 @@ function displayRows() {
 	$sql="select * from document_row where page_id=".$pageId." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'">'.
-		'<tr>'.
-		'<td valign="top" height="100%">'.			
-		'<table border="0" width="100%" cellpadding="0" cellspacing="0">'.
-		'<tr>';
+		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'"><tr>';
 		displayColumns($row['id'],$row['index']);
-		echo '</td></tr></table>';
+		echo '</tr></table>';
+		echo "\n";
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
@@ -168,8 +162,6 @@ function displayRows() {
 }
 
 function displayColumns($rowId,$rowIndex) {
-	$buttonData='';
-	$columnData='<tr>';
 	$lastIndex = 0;
 	$pageId = getPageId();
 	$selectedColumn = getDocumentColumn();
@@ -188,46 +180,42 @@ function displayColumns($rowId,$rowIndex) {
 				$columnWidth=' width="'.$columnWidth.'"';
 			}
 		}
-		$columnData.='<td class="column'.($selectedColumn==$row['id'] ? 'Selected' : '').'" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');return false;">';
-		$columnData.=displaySections($row['id'],$row['index'],$rowId,$rowIndex).
-		'<div style="width:1px;height:1px;"></div>'.
-		'</td>';
+		echo "\n";
+		echo '<td class="column'.($selectedColumn==$row['id'] ? 'Selected' : '').'" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');return false;">';
+		displaySections($row['id'],$row['index'],$rowId,$rowIndex);
+		echo '</td>';
+		echo "\n";
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
-	echo $buttonData.$columnData;
 	return $lastIndex;
 }
 
 function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	$selected = getDocumentSection();
 	$lastIndex=0;
-	$output='<table border="0" width="100%" cellpadding="0" cellspacing="0">';
 	
 	$sql="select document_section.*,part.type as part_type from document_section left join part on document_section.part_id=part.id where column_id=".$columnId." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$style=buildSectionStyle($row);
 		if ($row['id']==$selected) {
-			$output.=
-			'<tr id="section'.$row['id'].'">'.
+			echo '<div id="section'.$row['id'].'">';
 			sectionEditor($row['id'],$row['type'],$style,$row['part_id'],$row['part_type'],$row);
 		}
 		else {
-			$output.='<tr id="section'.$row['id'].'" onmouseover="controller.sectionOver(this,'.$row['id'].','.$columnId.','.$row['index'].')" onmouseout="controller.sectionOut(this,event)">';
-			$output.=displaySection($row['id'],$row['type'],$row['index'],$style,$row['part_id'],$row['part_type'],$columnId,$columnIndex,$rowId,$rowIndex);
+			echo '<div id="section'.$row['id'].'">';
+			displaySection($row['id'],$row['type'],$row['index'],$style,$row['part_id'],$row['part_type'],$columnId,$columnIndex,$rowId,$rowIndex);
 		}
-		$output.='</tr>';
+		echo '</div>';
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
 	if ($selected==0) {
-		$output.='<tr><td><a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" title="Opret et nyt afsnit" style="cursor: pointer;"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a></td></tr>';
+		echo '<div><a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" title="Opret et nyt afsnit" style="cursor: pointer;"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a></div>';
 	} else {
-		$output.='<tr><td><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon Disabled"/>';
+		echo '<div><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon Disabled"/></div>';
 	}
-	$output.='</table>';
-	return $output;
 }
 
 function buildSectionStyle(&$row) {
@@ -241,23 +229,23 @@ function buildSectionStyle(&$row) {
 
 function displaySection($sectionId,$type,$sectionIndex,$sectionStyle,$partId,$partType,$columnId,$columnIndex,$rowId,$rowIndex) {
 	if ($type=='part') {
-		return ''.displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex).'</td>';
+		displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex);
 	}
 }
 
 function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex) {
 	global $partContext;
 	$part = Part::load($partType,$partId);
-	return 
-		'<td style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$part->getSectionClass().' sectionNotSelected"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;">'.
+	echo 
+		'<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$part->getSectionClass().' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">'.
 		$part->display($partContext).
-		'</td>';
+		'</div>';
 }
 
 function sectionEditor($sectionId,$type,$sectionStyle,$partId,$partType,$row) {
 	global $baseUrl, $design;
 	if ($type=='part') {
-		return partEditor($partId,$partType,$sectionId,$sectionStyle,$row);
+		partEditor($partId,$partType,$sectionId,$sectionStyle,$row);
 	}
 }
 
@@ -267,25 +255,24 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	setPartContextSessionVar('part.type',$partType);
 	setPartContextSessionVar('form.path','parent.Frame.EditorFrame.getDocument().forms.PartForm');
 	$part = Part::load($partType,$partId);
-	$data = 
-	'<td style="'.$sectionStyle.'" id="selectedSectionTD" class="part_section_'.$partType.' '.$part->getSectionClass().' sectionSelected">'.
+	echo
+	'<div style="'.$sectionStyle.'" id="selectedSectionTD" class="part_section_'.$partType.' '.$part->getSectionClass().' section_selected">'.
 	'<form name="PartForm" action="UpdatePart.php" method="post">'.
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
 	'<input type="hidden" name="section" value="'.$sectionId.'"/>'.
-	'<input type="hidden" name="left" value="'.encodeXML($row['left']).'"/>'.
-	'<input type="hidden" name="right" value="'.encodeXML($row['right']).'"/>'.
-	'<input type="hidden" name="bottom" value="'.encodeXML($row['bottom']).'"/>'.
-	'<input type="hidden" name="top" value="'.encodeXML($row['top']).'"/>'.
-	'<input type="hidden" name="width" value="'.encodeXML($row['width']).'"/>'.
-	'<input type="hidden" name="float" value="'.encodeXML($row['float']).'"/>'.
+	'<input type="hidden" name="left" value="'.StringUtils::escapeXML($row['left']).'"/>'.
+	'<input type="hidden" name="right" value="'.StringUtils::escapeXML($row['right']).'"/>'.
+	'<input type="hidden" name="bottom" value="'.StringUtils::escapeXML($row['bottom']).'"/>'.
+	'<input type="hidden" name="top" value="'.StringUtils::escapeXML($row['top']).'"/>'.
+	'<input type="hidden" name="width" value="'.StringUtils::escapeXML($row['width']).'"/>'.
+	'<input type="hidden" name="float" value="'.StringUtils::escapeXML($row['float']).'"/>'.
 	$part->editor($partContext).
-	'</form></td>'.
+	'</form></div>'.
 	'<script type="text/javascript">'.
 	'parent.parent.Toolbar.location=\'PartToolbar.php?section='.$sectionId.'&amp;\'+Math.random();'.
 	'function saveSection() {
 		document.forms.PartForm.submit();
 	}'.
 	'</script>';
-	return $data;
 }
 ?>
