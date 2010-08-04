@@ -11895,7 +11895,7 @@ In2iGui.List.prototype = {
 				} else {
 					var a = document.createElement('a');
 					a.appendChild(document.createTextNode(i+1));
-					a.onclick = function() {
+					a.onmousedown = function() {
 						self.windowPageWasClicked(this,i);
 						return false;
 					}
