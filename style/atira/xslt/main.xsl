@@ -27,14 +27,6 @@
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[style/atira/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
 	<script src="{$path}style/{$design}/js/AtiraWebsite.js?1" type="text/javascript"><xsl:comment/></script>
-	<script	type="text/javascript">
-		/*In2iGui.onDomReady(function() {
-			var e = In2iGui.Editor.get();
-			e.addPartController('html','Tekst',In2iGui.Editor.Html);
-			e.ignite();
-			e.activate();
-		});*/
-	</script>
 </head>
 <body>
 	<xsl:if test="//p:design/p:parameter[@key='variant']/.='news'">
@@ -82,11 +74,9 @@
 		<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
 		<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
 	</div>
-	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"><xsl:text> </xsl:text></script>
-	<script type="text/javascript">
-	    _uacct = "UA-183873-1";
-	    urchinTracker();
-	</script>
+	<xsl:call-template name="util:googleanalytics">
+		<xsl:with-param name="code" select="'UA-183873-1'"/>
+	</xsl:call-template>
 </body>
 </html>
 </xsl:template>
