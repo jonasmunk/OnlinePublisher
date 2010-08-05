@@ -14,7 +14,9 @@ var controller = {
 		}
 	},
 	$submit$formula : function() {
-		ui.request({url:'Services/Core/Authentication.php',onSuccess:'login',parameters:formula.getValues()});
+		ui.request({url:'Services/Core/Authentication.php',onSuccess:'login',parameters:formula.getValues(),onFailure:function() {
+			ui.showMessage({text:'Der skete en fejl internt i systemet!',duration:2000});
+		}});
 	},
 	$success$login : function(data) {
 		if (data.success) {

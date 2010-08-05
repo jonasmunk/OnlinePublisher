@@ -31,7 +31,7 @@ if (!Database::testConnection()) {
 }
 
 if (Request::exists('designsession')) {
-	$_SESSION['debug.design']=requestGetText('designsession');
+	$_SESSION['debug.design']=Request::getString('designsession');
 }
 if (Request::getBoolean('resetdesign')) {
 	unset($_SESSION['debug.design']);
@@ -39,7 +39,7 @@ if (Request::getBoolean('resetdesign')) {
 
 $file = Request::getInt('file',-1);
 $id = Request::getInt('id',-1);
-$path = Request::getText('path');
+$path = Request::getString('path');
 if (strlen($path)>0) {
 	$relative = str_repeat('../',substr_count($path,'/'));
 	$samePageBaseUrl = $relative.$path.'?';
@@ -146,7 +146,7 @@ function getCacheFile($id) {
 
 function getDesign($design) {
 	if (Request::exists('design')) {
-		$design = Request::getText('design');
+		$design = Request::getString('design');
 	}
 	else if (isset($_SESSION['debug.design'])) {
 		$design = $_SESSION['debug.design'];

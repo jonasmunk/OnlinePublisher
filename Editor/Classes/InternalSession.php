@@ -5,11 +5,20 @@ class InternalSession {
     
     function InternalSession() {
     }
+
+	/**
+	 * Starts a session in the appropriate way, should be used instead
+	 * of calling session_start() directly
+	 */
+	function startSession() {
+		session_set_cookie_params(0);
+		session_start();
+	}
     
     function logIn($username,$password) {
     	$sql="select object_id,username,administrator from user where internal=1 and username=".Database::text($username)." and password=".Database::text($password);
     	if ($row = Database::selectFirst($sql)) {
-    	    startSession();
+    	    InternalSession::startSession();
     		$_SESSION['core.user.id']=$row['object_id'];
     		$_SESSION['core.user.username']=$row['username'];
     		$_SESSION['core.user.administrator']=($row['administrator']==1);
