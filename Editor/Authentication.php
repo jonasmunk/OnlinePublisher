@@ -2,8 +2,8 @@
 /**
  * @package OnlinePublisher
  */
-date_default_timezone_set('Europe/Copenhagen');
 require_once '../Config/Setup.php';
+require_once 'Include/Public.php';
 require_once 'Classes/Request.php';
 require_once 'Classes/In2iGui.php';
 require_once 'Classes/DatabaseUtil.php';
