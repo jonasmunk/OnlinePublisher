@@ -66,19 +66,59 @@
 	line-height: 14px;
 }
 
-div.lang_da div.placard div.poster_1 div.left
+div.lang_da div.placard div.poster_pure div.left
 {
 	background-image: url('../../../images/pure_left_da.png');
 }
 
-div.lang_en div.placard div.poster_1 div.left
+div.lang_en div.placard div.poster_pure_1 div.left
 {
-	background-image: url('../../../images/pure_left_en.png');
+	background-image: url('../gfx/front/poster/pure_left_1_en.png?2');
 }
 
-div.placard div.poster_1 div.right
+div.lang_en div.placard div.poster_pure_2 div.left
 {
-	background-image: url('../gfx/front/poster/pure_right_en.png');
+	background-image: url('../gfx/front/poster/pure_left_2_en.png?1');
+}
+
+div.lang_en div.placard div.poster_pure_3 div.left
+{
+	background-image: url('../gfx/front/poster/pure_left_3_en.png?1');
+}
+
+div.lang_en div.placard div.poster_pure_4 div.left
+{
+	background-image: url('../gfx/front/poster/pure_left_4_en.png?1');
+}
+
+div.lang_en div.placard div.poster_pure_5 div.left
+{
+	background-image: url('../gfx/front/poster/pure_left_5_en.png?1');
+}
+
+div.lang_en div.placard div.poster_pure_6 div.left
+{
+	background-image: url('../gfx/front/poster/pure_left_6_en.png?1');
+}
+
+div.lang_en div.placard div.poster_pure_7 div.left
+{
+	background-image: url('../gfx/front/poster/pure_left_7_en.png?1');
+}
+
+div.lang_en div.placard div.poster_pure_8 div.left
+{
+	background-image: url('../gfx/front/poster/pure_left_8_en.png?1');
+}
+
+div.lang_en div.placard div.poster_pure_9 div.left
+{
+	background-image: url('../gfx/front/poster/pure_left_9_en.png?1');
+}
+
+div.placard div.poster_pure div.right
+{
+	background-image: url('../gfx/front/poster/pure_right_en.png?1');
 }
 
 div.lang_da div.placard div.poster_2 div.left
@@ -249,11 +289,13 @@ div.placard div.poster_2 div.right
 	background: #fff url('../gfx/front/technology_silhouette.png') 170px 10px no-repeat;
 	background: #fff url('../gfx/front/technology_background.png') right top no-repeat;
 	background: #fff url('../gfx/front/technology_background_grey.png') right top no-repeat;
+	background: #fff url('../gfx/front/atira_background_grey.png') right top no-repeat;
 }
 
 .posters .technology:hover
 {
 	background: #fff url('../gfx/front/technology_background.png') right top no-repeat;
+	background: #fff url('../gfx/front/atira_background.png') right top no-repeat;
 }
 
 
@@ -274,14 +316,16 @@ div.placard div.poster_2 div.right
 
 .posters .software
 {
+	/*
 	background: #fff url('../gfx/front/software_silhouette.png') 160px 10px no-repeat;
 	background: #fff url('../gfx/front/software_background.png') right top no-repeat;
 	background: #fff url('../gfx/front/software_background_grey.png') right top no-repeat;
+	*/
 }
 
 .posters .software:hover
 {
-	background: #fff url('../gfx/front/software_background.png') right top no-repeat;
+	/*background: #fff url('../gfx/front/software_background.png') right top no-repeat;*/
 }
 .posters .software strong
 {

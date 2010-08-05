@@ -26,7 +26,7 @@
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[style/atira/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
-	<script src="{$path}style/{$design}/js/AtiraWebsite.js" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}style/{$design}/js/AtiraWebsite.js?1" type="text/javascript"><xsl:comment/></script>
 	<script	type="text/javascript">
 		/*In2iGui.onDomReady(function() {
 			var e = In2iGui.Editor.get();
@@ -82,13 +82,11 @@
 		<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
 		<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
 	</div>
-	<!--
 	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"><xsl:text> </xsl:text></script>
 	<script type="text/javascript">
 	    _uacct = "UA-183873-1";
 	    urchinTracker();
 	</script>
-	-->
 </body>
 </html>
 </xsl:template>
@@ -275,7 +273,7 @@
 <xsl:template name="front-placard-da">
 	<div class="placard">
 		<div class="inner_placard" style="width: 1796px;">
-			<div class="poster poster_1">
+			<div class="poster poster_pure">
 				<div onclick="document.location='/da/pure/';" class="left"><xsl:comment/></div>
 				<div class="center">
 					<xsl:for-each select="//pn:news">
@@ -319,8 +317,8 @@
 
 <xsl:template name="front-placard-en">
 	<div class="placard">
-		<div class="inner_placard" style="width: 1796px;">
-			<div class="poster poster_1">
+		<div class="inner_placard" style="width: 8082px;">
+			<div class="poster poster_pure poster_pure_1">
 				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
 				<div class="center">
 					<xsl:for-each select="//pn:news">
@@ -332,6 +330,103 @@
 				</div>
 				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
 			</div>
+			<div class="poster poster_pure poster_pure_2">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<div class="poster poster_pure poster_pure_3">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<div class="poster poster_pure poster_pure_4">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<div class="poster poster_pure poster_pure_5">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<div class="poster poster_pure poster_pure_6">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<div class="poster poster_pure poster_pure_7">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<div class="poster poster_pure poster_pure_8">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<div class="poster poster_pure poster_pure_9">
+				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
+				<div class="center">
+					<xsl:for-each select="//pn:news">
+						<xsl:if test="position()=2">
+							<xsl:call-template name="poster-news"/>
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:comment/>
+				</div>
+				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
+			</div>
+			<!--
 			<div class="poster poster_2">
 				<div onclick="document.location='/en/solutions/';" class="left"><xsl:comment/></div>
 				<div class="center">
@@ -344,6 +439,7 @@
 				</div>
 				<div onclick="document.location='/en/solutions/';" class="right"><xsl:comment/></div>
 			</div>
+			-->
 		</div>
 	</div>
 </xsl:template>
@@ -401,7 +497,7 @@
 								<div class="links">
 									<a href="{$path}en/solutions/"><span>Solutions</span></a>
 									<xsl:text> · </xsl:text>
-									<a href="{$path}en/solutions/method/"><span>Method</span></a>
+									<a href="{$path}en/method/"><span>Method</span></a>
 								</div>
 								<a href="{$path}en/solutions/" class="button"><span>Mere</span></a>
 							</xsl:when>
@@ -428,22 +524,22 @@
 					<div class="small_poster">
 						<xsl:choose>
 							<xsl:when test="$language='en'">
-								<h2><strong>pure</strong> repository</h2>
+								<h2><strong>pure</strong> version 4</h2>
 								<p>Enterprise repository platform for registering, archiving, e-publishing and managing research.</p>
 								<div class="links">
 									<a href="{$path}en/pure/references.html"><span>References</span></a>
 									<xsl:text> · </xsl:text>
-									<a href="{$path}en/pure/"><span>Latest</span></a>
+									<a href="{$path}en/latest/"><span>News</span></a>
 								</div>
 								<a href="{$navigation-path}en/pure/" class="button"><span>Visit</span></a>
 							</xsl:when>
 							<xsl:otherwise>
-								<h2><strong>pure</strong> repository</h2>
+								<h2><strong>pure</strong> version 4</h2>
 								<p>Forskningsbase til registrering, arkivering, e-publisering og rapportering af forskning.</p>
 								<div class="links">
 									<a href="{$path}da/pure/referencer.html"><span>Referencer</span></a>
 									<xsl:text> · </xsl:text>
-									<a href="{$path}da/pure/"><span>Aktuelt</span></a>
+									<a href="{$path}da/aktuelt/"><span>Aktuelt</span></a>
 								</div>
 								<a href="{$path}da/pure/" class="button"><span>Besøg</span></a>
 							</xsl:otherwise>
@@ -460,14 +556,14 @@
 					<div class="small_poster">
 						<xsl:choose>
 							<xsl:when test="$language='en'">
-								<h2><strong>atira</strong> ignite</h2>
-								<p>Internal projects, blog posts, background articles, network, downloads.</p>
-								<a href="{$path}en/ignite/" class="button"><span>Visit</span></a>
+								<h2><strong>about</strong> atira</h2>
+								<p>Company profile, Legal and financial profile, Technical profile, Organisation</p>
+								<a href="{$path}en/about/" class="button"><span>Visit</span></a>
 							</xsl:when>
 							<xsl:otherwise>
-								<h2><strong>atira</strong> ignite</h2>
+								<h2><strong>om</strong> atira</h2>
 								<p>Interne projekter, blogposts, baggrunds-artikler, netværk, downloads.</p>
-								<a href="{$path}da/ignite/" class="button"><span>Besøg</span></a>
+								<a href="{$path}da/om/" class="button"><span>Besøg</span></a>
 							</xsl:otherwise>
 						</xsl:choose>
 					</div>
