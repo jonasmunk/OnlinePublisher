@@ -37,9 +37,9 @@ if (Request::getBoolean('resetdesign')) {
 	unset($_SESSION['debug.design']);
 }
 
-$file = requestGetNumber('file',-1);
-$id = requestGetNumber('id',-1);
-$path = requestGetText('path');
+$file = Request::getInt('file',-1);
+$id = Request::getInt('id',-1);
+$path = Request::getText('path');
 if (strlen($path)>0) {
 	$relative = str_repeat('../',substr_count($path,'/'));
 	$samePageBaseUrl = $relative.$path.'?';
@@ -51,7 +51,7 @@ if (strlen($relative)==0) {
 	$relative = './';
 }
 
-if (requestGetBoolean('logout')) {
+if (Request::getBoolean('logout')) {
 	logOutExternalUser();
 }
 
@@ -62,7 +62,7 @@ if ($file>0) {
 	showFile($file);
 }
 else {
-	$allowDisabled = requestGetExists('preview');
+	$allowDisabled = Request::exists('preview');
 	if ($path=='') {
 		$page = buildPage($id,$allowDisabled);
 	} else {
@@ -75,7 +75,7 @@ else {
 	}
 	// If the page is secure
 	else if ($page && $page['secure']) {
-		if (requestGetExists('preview')) {
+		if (Request::exists('preview')) {
 			writePage($id,$page,$relative,$samePageBaseUrl);
 		}
 		else if ($user = getExternalUser()) {
@@ -131,7 +131,6 @@ function writePage($id,&$page,$relative,$samePageBaseUrl) {
 function showFile($id) {
 	$sql = "select * from file where object_id = ".$id;
 	if ($row = Database::selectFirst($sql)) {
-		//statistics('file',$id);
 		Response::redirect('files/'.$row['filename']);
 	} else {
 		$error = '<title>Filen findes ikke!</title>'.
@@ -146,8 +145,8 @@ function getCacheFile($id) {
 }
 
 function getDesign($design) {
-	if (requestGetExists('design')) {
-		$design = requestGetText('design');
+	if (Request::exists('design')) {
+		$design = Request::getText('design');
 	}
 	else if (isset($_SESSION['debug.design'])) {
 		$design = $_SESSION['debug.design'];
