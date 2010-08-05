@@ -41,7 +41,7 @@ Atira.Website.Poster.prototype = {
 		}
 		var self = this;
 		this.active = true;
-			n2i.ani(this.poster,'scrollLeft',(this.num-1)*898,2000,{ease:n2i.ease.bounce,onComplete:function() {self.active = false;self.next()}});
+			n2i.ani(this.poster,'scrollLeft',(this.num-1)*898,2000,{ease:n2i.ease.slowFastSlow,onComplete:function() {self.active = false;self.next()}});
 	},
 	pause : function() {
 		this.paused = true;

@@ -121,7 +121,6 @@ function writePage($id,&$page,$relative,$samePageBaseUrl) {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
 		header("Content-Type: text/html; charset=UTF-8");
 		echo $html;
-		//statistics('page',$id);
 	}
 }
 
