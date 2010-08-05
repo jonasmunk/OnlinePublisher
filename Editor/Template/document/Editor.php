@@ -62,24 +62,15 @@ if (requestGetExists('row')) {
 	setDocumentRow(requestGetNumber('row',0));
 	setDocumentColumn(0);
 	setDocumentSection(0);
-	if (requestGetNumber('row',0)>0) {
-		setDocumentScroll('row'.requestGetNumber('row',0));
-	}
 }
 if (requestGetExists('section')) {
 	setDocumentSection(requestGetNumber('section',0));
 	setDocumentColumn(0);
 	setDocumentRow(0);
-	if (requestGetNumber('section',0)>0) {
-		setDocumentScroll('section'.requestGetNumber('section',0));
-	}
 }
 if (requestGetExists('column')) {
 	setDocumentColumn(requestGetNumber('column',0));
 	setDocumentSection(0);
-	if (requestGetNumber('column',0)>0) {
-		setDocumentScroll('column'.requestGetNumber('column',0));
-	}
 }
 if (getDocumentColumn()>0) {
 ?>
@@ -108,25 +99,11 @@ else if (getDocumentSection()!=0) {
 $partContext = buildPartContext();
 $lastRowIndex=displayRows();
 ?>
-<?
-if (getDocumentScroll()!='') {
-	echo '<script>n2i.scrollTo("'.getDocumentScroll().'");</script>';
-}
-?>
 </div>
 </body>
 </html>
 
 <?
-
-
-
-
-
-
-
-
-
 
 function buildPartContext() {
 	$context = new PartContext();

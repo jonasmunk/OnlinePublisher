@@ -13,6 +13,29 @@ class Database {
 		return Database::getConnection()!==false;
 	}
 	
+	function testServerConnection($host,$user,$password) {
+		$con = mysql_connect($host, $user,$password);
+		if (!$con) {
+			return false;
+		}
+		if (mysql_errno($con)>0) {
+			return false;
+		}
+		return true;
+	}
+	
+	function testDatabaseConnection($host,$user,$password,$name) {
+		$con = mysql_connect($host, $user,$password);
+		if (!$con) {
+			return false;
+		}
+		@mysql_select_db($name,$con);
+		if (mysql_errno($con)>0) {
+			return false;
+		}
+		return true;
+	}
+	
 	function getConnection() {
 		global $database_host, $database_user,$database_password,$database;
 		if (!isset($GLOBALS['OP_CON'])) {
@@ -20,7 +43,10 @@ class Database {
 			if (!$con) {
 				return false;
 			}
-			mysql_select_db($database,$con);
+			@mysql_select_db($database,$con);
+			if (mysql_errno($con)>0) {
+				return false;
+			}
 			$GLOBALS['OP_CON'] = $con;
 		}
 		return $GLOBALS['OP_CON'];
@@ -107,11 +133,11 @@ class Database {
 	}
 	
 	function next($result) {
-		return mysql_fetch_array($result);
+		return @mysql_fetch_array($result);
 	}
 	
 	function free($result) {
-		mysql_free_result($result);
+		@mysql_free_result($result);
 	}
 	
 	function selectArray($sql) {

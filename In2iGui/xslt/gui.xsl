@@ -632,10 +632,6 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 	</script>
 </xsl:template>
 
-<xsl:template match="html:html">
-	<xsl:copy-of select="child::*|child::text()"/>
-</xsl:template>
-
 <xsl:template match="gui:articles">
 	<div class="in2igui_articles" id="{generate-id()}"><xsl:comment/></div>
 	<script type="text/javascript">
@@ -648,13 +644,17 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 	</script>
 </xsl:template>
 
+<xsl:template match="html:html">
+	<xsl:copy-of select="child::*|child::text()"/>
+</xsl:template>
+
 <xsl:template match="gui:text">
 	<div class="in2igui_text">
 		<xsl:apply-templates/>
 	</div>
 </xsl:template>
 
-<xsl:template match="gui:text/gui:header">
+<xsl:template match="gui:text/gui:header | gui:text/gui:h">
 	<h1><xsl:apply-templates/></h1>
 </xsl:template>
 

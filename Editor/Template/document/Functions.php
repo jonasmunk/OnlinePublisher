@@ -62,19 +62,6 @@ function setDocumentSection($id) {
 	$_SESSION['template.document.section']=$id;
 }
 
-function getDocumentScroll() {
-	if (isset($_SESSION['template.document.scroll'])) {
-		return $_SESSION['template.document.scroll'];
-	}
-	else {
-		return -1;
-	}
-}
-	
-function setDocumentScroll($id) {
-	$_SESSION['template.document.scroll']=$id;
-}
-
 function getDocumentDesign() {
 	if (isset($_SESSION['template.document.design'])) {
 		return $_SESSION['template.document.design'];

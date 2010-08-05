@@ -4,6 +4,7 @@
  * @subpackage Public
  */
 require_once '../../../Config/Setup.php';
+require_once '../../../Editor/Include/Public.php';
 require_once '../../../Editor/Classes/Page.php';
 require_once '../../../Editor/Classes/BumbleBee.php';
 require_once '../../../Editor/Include/Functions.php';

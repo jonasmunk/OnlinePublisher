@@ -12,10 +12,7 @@ $database_user='root';
 $database_password='';
 $database='onlinepublisher';
 
-$basePath='/path/on/disk/';
 $baseUrl='/~username/path/to/site/';
 
 $feedbackEmail = 'name@domain.com';
-
-$xwg_skin='In2ition';
 ?>

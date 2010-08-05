@@ -3,13 +3,18 @@
  * @package OnlinePublisher
  * @subpackage Public
  */
+if (!ini_get('display_errors')) {
+    ini_set('display_errors', 1);
+}
+//error_reporting(E_PARSE);
 if (!file_exists('Config/Setup.php')) {
-	header('Location: setup/initial/');
+	header('Location: '.dirname($_SERVER['PHP_SELF']).'/setup/initial/');
 	exit;
 }
-date_default_timezone_set('Europe/Copenhagen');
-require_once 'Config/Setup.php';	
+require_once 'Config/Setup.php';
+require_once 'Editor/Include/Public.php';
 require_once 'Editor/Include/Functions.php';
+//exit;
 require_once 'Editor/Include/XmlWebGui.php';
 require_once 'Editor/Include/Publishing.php';
 require_once 'Editor/Classes/Request.php';
@@ -19,17 +24,16 @@ require_once 'Editor/Classes/Database.php';
 startSession();
 
 if (!Database::testConnection()) {
-	error_log('dasdadsaaa');
 	$error = '<title>Siden er ikke tilgængelig i øjeblikket.</title>'.
 	'<note>Prøv venligst igen senere.</note>';
 	displayError($error);
 	exit;
 }
 
-if (requestGetExists('designsession')) {
+if (Request::exists('designsession')) {
 	$_SESSION['debug.design']=requestGetText('designsession');
 }
-if (requestGetBoolean('resetdesign')) {
+if (Request::getBoolean('resetdesign')) {
 	unset($_SESSION['debug.design']);
 }
 

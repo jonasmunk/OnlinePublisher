@@ -4,6 +4,7 @@
  * @subpackage Include
  */
 
+$xwg_skin='In2ition';
 
 function writeGui($skin,&$elements,&$xmlData) {
 	global $basePath;

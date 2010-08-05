@@ -31,6 +31,5 @@ Database::update($sql);
 setDocumentRow($rowId);
 setDocumentColumn(0);
 setDocumentSection(0);
-setDocumentScroll('row'.$rowId);
 redirect('Editor.php');
 ?>

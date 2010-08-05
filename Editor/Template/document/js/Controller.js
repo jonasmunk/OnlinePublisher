@@ -64,6 +64,14 @@ var controller = {
 		$(document.body).observe('mouseup',function() {
 			this.selectedText = n2i.getSelectedText();
 		}.bind(this));
+		$(document).observe('scroll',this.saveScroll);
+		var scroll = n2i.cookie.get('document.scroll');
+		if (scroll) {
+			window.scrollTo(0,parseInt(scroll,10));
+		}
+	},
+	saveScroll : function() {
+		n2i.cookie.set('document.scroll',document.body.scrollTop);
 	},
 	$iconWasClicked$sectionActions : function(value,event) {
 		if (value=='edit') {

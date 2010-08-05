@@ -78,7 +78,6 @@
 </xsl:template>
 
 <xsl:template name="gui:text" match="gui:textfield">
-	<xsl:value-of select="@value"/>
 	<xsl:choose>
 		<xsl:when test="@lines>1 or @multiline='true'">
 			<div class="in2igui_field in2igui_longfield" id="{generate-id()}">

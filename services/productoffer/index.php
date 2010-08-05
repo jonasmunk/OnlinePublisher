@@ -1,5 +1,6 @@
 <?
 require_once '../../Config/Setup.php';
+require_once '../../Editor/Include/Public.php';
 require_once '../../Editor/Include/Functions.php';
 require_once('../../Editor/Classes/Product.php');
 require_once('../../Editor/Classes/Person.php');

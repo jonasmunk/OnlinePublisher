@@ -35,5 +35,5 @@ $sql="update page set changed=now() where id=".$pageId;
 Database::update($sql);
 
 
-redirect('Editor.php');
+Response::redirect('Editor.php');
 ?>

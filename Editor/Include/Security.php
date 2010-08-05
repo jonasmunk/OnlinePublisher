@@ -6,7 +6,10 @@
 session_set_cookie_params(0);
 session_start();
 date_default_timezone_set('Europe/Copenhagen');
+$basePath = strstr(__FILE__, 'Editor', true);
+
 require_once($basePath."Editor/Classes/InternalSession.php");
+
 
 // If not logged in
 if (!InternalSession::isLoggedIn()) {

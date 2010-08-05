@@ -45,6 +45,5 @@ if ($type=='part') {
 
 
 setDocumentSection(0);
-setDocumentScroll('column'.$columnId);
 redirect('Editor.php');
 ?>

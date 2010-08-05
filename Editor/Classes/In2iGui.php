@@ -106,6 +106,12 @@ class In2iGui {
 		echo '<?xml version="1.0" encoding="UTF-8"?><success/>';
 	}
 
+	function respondFailure() {
+		Response::badRequest();
+		header('Content-Type: text/xml');
+		echo '<?xml version="1.0" encoding="UTF-8"?><failure/>';
+	}
+
 	function respondUploadSuccess() {
 		header('Content-Type: text/plain');
 		echo 'SUCCESS';
@@ -113,6 +119,7 @@ class In2iGui {
 
 	function respondUploadFailure() {
 		Response::badRequest();
+		header('Content-Type: text/plain');
 		echo 'FAILURE';
 	}
 	

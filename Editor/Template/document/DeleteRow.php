@@ -28,7 +28,7 @@ while ($row = Database::next($result)) {
 }
 Database::free($result);
 
-$sql="select document_section.*,part.type as part_type from document_section,document_column left join part on part.id=document_section.part_id where document_section.column_id=document_column.id and document_column.row_id=".$rowId;
+//$sql="select document_section.*,part.type as part_type from document_section,document_column left join part on part.id=document_section.part_id where document_section.column_id=document_column.id and document_column.row_id=".$rowId;
 $sql="select document_section.*,part.type as part_type from document_section left join part on part.id=document_section.part_id left join document_column on document_section.column_id=document_column.id where document_column.row_id=".$rowId;
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
@@ -59,11 +59,5 @@ Database::update($sql);
 
 setDocumentColumn(0);
 setDocumentSection(0);
-if ($latestRow>0) {
-	setDocumentScroll('row'.$latestRow);
-}
-else {
-	setDocumentScroll('bottom');
-}
 redirect('Editor.php');
 ?>

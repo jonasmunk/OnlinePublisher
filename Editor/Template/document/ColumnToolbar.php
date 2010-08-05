@@ -30,8 +30,8 @@ $gui='
 				<divider/>
 				<dropdown label="Bredde" name="width" value="'.$row['width'].'">
 					<item value="" title="Tilpas indhold"/>
-					<item value="1%" title="Mindst mulig"/>
-					<item value="100%" title="Størst mulig"/>
+					<item value="min" title="Mindst mulig"/>
+					<item value="max" title="Størst mulig"/>
 					'.buildWidths().'
 				</dropdown>
 			</toolbar>

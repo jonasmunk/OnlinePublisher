@@ -1,5 +1,6 @@
 <?
 // Pull in the NuSOAP code
+require_once '../../Editor/Include/Public.php';
 require_once('../../Editor/Libraries/nusoap/nusoap.php');
 require_once('../../Editor/Classes/SystemInfo.php');
 // Create the server instance
