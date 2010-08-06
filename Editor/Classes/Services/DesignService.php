@@ -39,6 +39,7 @@ class DesignService {
 		} else {
 			$valid = false;
 		}
+		$valid = $valid && !file_exists($basePath."style/".$name."/info/info.xml");
 		$valid = $valid && file_exists($basePath."style/".$name."/info/Preview128.png");
 		$valid = $valid && file_exists($basePath."style/".$name."/info/Preview64.png");
 		return $valid;

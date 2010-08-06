@@ -21,4 +21,8 @@ class XmlService {
 			return false;
 		}
 	}
+	
+	function readFile($path) {
+		return simplexml_load_file($path);
+	}
 }

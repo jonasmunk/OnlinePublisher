@@ -30,7 +30,6 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../"/>'.
 '<content>'.
 '<headergroup>'.
 '<header title="Mappe" width="45%"/>'.
-'<header title="Forventet skrivbar" width="10%" align="center"/>'.
 '<header title="Rettigheder" width="10%" align="center"/>'.
 '<header title="Problemer" width="35%"/>'.
 '</headergroup>';
@@ -39,8 +38,7 @@ foreach ($result as $path => $folder) {
 	$gui.=
 	'<row>'.
 	'<cell><icon icon="Element/Folder"/><text>'.encodeXML($path).'</text></cell>'.
-	'<cell>'.($folder['writable'] ? '<status type="Finished"/>' : '<status type="Stopped"/>').'</cell>'.
-	'<cell>'.$folder['permissions'].' ('.$folder['owner'].'/'.$folder['group'].')</cell>'.
+	'<cell>'.$folder['permissions'].'</cell>'.
 	'<cell>'.($folder['problem'] ? '<status type="Error"/><text>'.encodeXML($folder['problem']).'</text>' : '').'</cell>'.
 	'</row>';
 }
@@ -58,24 +56,20 @@ function checkFolders($fix=false) {
 	global $basePath;
 	error_reporting(E_ALL ^ E_WARNING);
 	$output = array();
-	$parsed = parseFolders();
+	$parsed = array("files","images","local/cache/images","local/cache/urls","local/cache/temp");
 	asort($parsed);
 	$count = count($parsed);
-	foreach ($parsed as $path => $writable) {
-		$checked = array('writable' => $writable, 'problem' => false, 'permissions' => 'ukendt', 'owner' => 'ukendt', 'group' => 'ukendt');
+	foreach ($parsed as $path) {
+		$checked = array('problem' => false, 'permissions' => 'ukendt', 'owner' => 'ukendt', 'group' => 'ukendt');
 		$fullPath = $basePath.$path;
 		if (file_exists($fullPath)) {
-			if ($writable && !is_writable($fullPath)) {
+			if (!is_writable($fullPath)) {
 				$checked['problem'] = 'Er ikke skrivbar';
 				if ($fix) {
 					@chmod($fullPath,0777);
 				}
-			} elseif (!$writable && is_writable($fullPath)) {
-				$checked['problem'] = 'Er skrivbar';
 			}
 			$checked['permissions'] = parsePermissions(fileperms($fullPath));
-			$checked['owner'] = resolveOwner($fullPath);
-			$checked['group'] = resolveGroup($fullPath);
 		} else {
 			if ($fix) {
 				if (!mkdir($fullPath)) {
@@ -89,42 +83,6 @@ function checkFolders($fix=false) {
 	}
 	ksort($output);
 	return $output;
-}
-
-function parseFolders() {
-	global $basePath;
-	$parsed = array();
-	$file = $basePath."Editor/Info/Folders.xml";
-	if (file_exists($file)) {
-		$doc =& new DOMIT_Document();
-		if ($doc->loadXML($file)) {
-			folderIterator($doc->documentElement,$parsed);
-		}
-		else {
-			error_log('checkFolders: '.$doc->getErrorString());
-		}
-	}
-	else {
-		error_log('The folder info file does not exist!');
-	}
-	return $parsed;
-}
-
-function folderIterator(&$node,&$parsed,$path='') {
-	if ($nodes =& $node->selectNodes('folder')) {
-		$num = $nodes->getLength();
-		for ($i=0;$i<$num;$i++) {
-			$folder = $nodes->item($i);
-			$name = $folder->getAttribute('name');
-			$newPath = appendWordToString($path,$name,'/');
-			if ($folder->getAttribute('write')==='true') {
-				$parsed[$newPath] = true;
-			} else {
-				$parsed[$newPath] = false;
-			}
-			folderIterator($folder,$parsed,$newPath);
-		}
-	}
 }
 
 function parsePermissions($perms) {
@@ -149,25 +107,5 @@ function parsePermissions($perms) {
             (($perms & 0x0200) ? 't' : 'x' ) :
             (($perms & 0x0200) ? 'T' : '-'));
 	return $info;
-}
-
-function resolveOwner($fullPath) {
-	$name = '';
-	if ($id = fileowner($fullPath)) {
-		if ($info = posix_getpwuid($id)) {
-			$name = $info['name'];
-		}
-	}
-	return $name;
-}
-
-function resolveGroup($fullPath) {
-	$name = '';
-	if ($id = filegroup($fullPath)) {
-		if ($info = posix_getgrgid($id)) {
-			$name = $info['name'];
-		}
-	}
-	return $name;
 }
 ?>
