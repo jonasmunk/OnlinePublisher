@@ -47,15 +47,15 @@ $gui.=
 '<overflow xmlns="uri:Layout" height="300">'.
 '<group xmlns="uri:Icon" size="3" titles="right" spacing="5" wrapping="true">';
 
-$sql="select * from design order by `unique`";
+$sql="select * from design,object where object.id=design.object_id order by `unique`";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$props = Design::getDesignInfo($row['unique']);
+	$props = DesignService::getInfo($row['unique']);
 	$gui.='<row><icon'.
 	' link="NewPageFrame.php?design='.$row['object_id'].'"'.
 	' image="../../../style/'.$row['unique'].'/info/Preview128.png"'.
-	' title="'.encodeXML($row['name']).'"'.
-	' description="'.encodeXML($props['description']).'"'.
+	' title="'.encodeXML($row['title']).'"'.
+	' description="'.encodeXML($props->description).'"'.
 	($row['id']==$info['design'] ? ' style="Hilited"' : '').
 	'/></row>';
 }

@@ -10,7 +10,7 @@ class Log {
 	
 	function debug($object) {
 		global $baseUrl;
-		if ($baseUrl=='/~jbm/onlinepublisher/') {
+		if (strpos('/~jbm/',$baseUrl)!==false || true) {
 			error_log(print_r($object,true));
 		}
 	}

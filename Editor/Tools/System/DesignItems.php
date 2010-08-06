@@ -5,17 +5,16 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Design.php';
 require_once '../../Classes/In2iGui.php';
+
+$designs = DesignService::getAvailableDesigns();
 
 $writer = new ItemsWriter();
 
 $writer->startItems();
-$designs = Design::getAvailableDesigns();
-foreach($designs as $unique) {
-	$info = Design::getDesignInfo($unique);
-	$name = strlen($info['name'])>0 ? $info['name'] : $unique;
-	$writer->startItem(array('value'=>$unique,'title'=>$name))->endItem();
+foreach($designs as $name => $info) {
+	$title = StringUtils::isNotBlank($info->name) ? $info->name : $name;
+	$writer->startItem(array('value'=>$name,'title'=>$title))->endItem();
 }
 $writer->endItems();
 ?>
