@@ -7,7 +7,11 @@
 class StringUtils {
 	
 	function isBlank($str) {
-		return $str===null && strlen(trim($str))>0;
+		return $str===null || strlen(trim($str))==0;
+	}
+	
+	function isNotBlank($str) {
+		return !StringUtils::isBlank($str);
 	}
 	
 	function escapeSimpleXML($input) {
@@ -35,7 +39,15 @@ class StringUtils {
 		return $output;
 	}
 	
-	function escapeXML(&$input) {
+	function toUnicode($str) {
+		return mb_convert_encoding($str, "UTF-8","ISO-8859-1");
+	}
+	
+	function fromUnicode($str) {
+		return mb_convert_encoding($str,"ISO-8859-1", "UTF-8");
+	}
+	
+	function escapeXML($input) {
 		$output = StringUtils::htmlNumericEntities($input);
 		$output = str_replace('&#151;', '-', $output);
 		$output = str_replace('&#146;', '&#39;', $output);

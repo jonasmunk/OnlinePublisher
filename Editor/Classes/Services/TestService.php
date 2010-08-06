@@ -22,7 +22,7 @@ class TestService {
 		require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
 		require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 		$path = $basePath.'Editor/Tests/'.$test.'.php';
-		$test = &new GroupTest($test);
+		$test = new GroupTest($test);
 		$test->addTestFile($path);
 		$test->run(new HtmlReporter());
 	}
@@ -38,7 +38,7 @@ class TestService {
 		
 		require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
 		require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
-		$test = &new GroupTest($group);
+		$test = new GroupTest($group);
 		foreach ($paths as $path) {
 			$test->addTestFile($path);
 		}
@@ -58,7 +58,7 @@ class TestService {
 		}
 		require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
 		require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
-		$test = &new GroupTest('All tests');
+		$test = new GroupTest('All tests');
 		foreach ($paths as $path) {
 			$test->addTestFile($path);
 		}
