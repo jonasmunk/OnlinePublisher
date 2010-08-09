@@ -6,7 +6,7 @@
 session_set_cookie_params(0);
 session_start();
 date_default_timezone_set('Europe/Copenhagen');
-$basePath = strstr(__FILE__, 'Editor', true);
+$basePath = substr(__FILE__, 0,strpos(__FILE__,'Editor'));
 
 require_once($basePath."Editor/Classes/InternalSession.php");
 
