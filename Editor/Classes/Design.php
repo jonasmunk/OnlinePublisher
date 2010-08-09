@@ -58,19 +58,6 @@ class Design extends Object {
         }
         return $out;
     }
-    
-	function getInfo() {
-		return Design::getDesignInfo($this->unique);
-	}
-	
-	function getParameterInfo($key) {
-		$info = $this->getInfo();
-		if (isset($info['parameters'][$key])) {
-			return $info['parameters'][$key];
-		} else {
-			return false;
-		}
-	}
 
     ////////////////// Persistence //////////////////
     
@@ -151,13 +138,12 @@ class Design extends Object {
 		Database::update($sql);
 		$this->_saveParameters();
 	}
-	
+	/*
 	function sub_publish() {
-		$sql = "update design set parameters=".Database::text($this->_buildParameterXml())." where object_id=".$this->id;
-		Database::update($sql);
-		return '';
+		//$sql = "update design set parameters=".Database::text($this->_buildParameterXml())." where object_id=".$this->id;
+		//Database::update($sql);
+		//return '';
 	}
-	
 	
 	function _buildParameterXml() {
 		global $basePath;
@@ -182,6 +168,6 @@ class Design extends Object {
 		}
 		return $out;
 	}
-
+	*/
 }
 ?>
