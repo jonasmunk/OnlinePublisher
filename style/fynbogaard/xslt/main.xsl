@@ -20,7 +20,6 @@
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
-	<xsl:call-template name="oo-script"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
@@ -32,6 +31,7 @@
 	<xsl:comment><![CDATA[[if gt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
 	<![endif]]]></xsl:comment>
+	<xsl:call-template name="oo-script"/>
 </head>
 <body>
 	<div class="case">
@@ -47,7 +47,7 @@
 			Fynbogaard · Bjerrevej 318 · Bjerre · 8783 Hornsyld · Mobil 26 14 87 36
 		</div>
 	</div>
-	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-8'"/></xsl:call-template>
+	<!--xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-8'"/></xsl:call-template-->
 </body>
 </html>
 </xsl:template>
