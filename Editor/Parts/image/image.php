@@ -416,23 +416,31 @@ class PartImage extends Part {
 			'Link' =>
 			'<grid>
 				<row>
-					<cell label="Side:" width="200" right="5">
+					<cell label="Side:" width="200" right="10">
 						<dropdown name="page" adaptive="true">
 							'.GuiUtils::buildPageItems().'
 						</dropdown>
 					</cell>
-					<cell label="URL:" width="100">
+					<cell label="URL:" width="100" right="10">
 						<textfield name="url"/>
+					</cell>
+					<cell label="Billede:" width="200" right="10">
+						<dropdown name="image" adaptive="true">
+							'.GuiUtils::buildObjectItems('image').'
+						</dropdown>
 					</cell>
 				</row>
 				<row>
-					<cell label="Fil:" width="200" right="5">
+					<cell label="Fil:" width="200" right="10">
 						<dropdown name="file" adaptive="true">
 							'.GuiUtils::buildObjectItems('file').'
 						</dropdown>
 					</cell>
-					<cell label="E-mail:" width="100">
+					<cell label="E-mail:" width="100" right="10">
 						<textfield name="email"/>
+					</cell>
+					<cell label="Samme billede:" right="10">
+						<checkbox name="sameimage"/>
 					</cell>
 				</row>
 			</grid>'

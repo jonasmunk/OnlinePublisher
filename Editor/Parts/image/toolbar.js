@@ -15,6 +15,10 @@ ui.get().listen({
 			url.setValue(form.linkValue.value);
 		} else if (form.linkType.value=='email') {
 			email.setValue(form.linkValue.value);
+		} else if (form.linkType.value=='image') {
+			image.setValue(form.linkValue.value);
+		} else if (form.linkType.value=='sameimage') {
+			sameimage.setValue(true);
 		}
 	},
 	$valueChanged$page : function() {
@@ -23,6 +27,8 @@ ui.get().listen({
 		file.reset();
 		url.reset();
 		email.reset();
+		image.reset();
+		sameimage.reset();
 	},
 	$valueChanged$file : function() {
 		partToolbar.partForm.linkType.value='file';
@@ -30,6 +36,8 @@ ui.get().listen({
 		page.reset();
 		url.reset();
 		email.reset();
+		image.reset();
+		sameimage.reset();
 	},
 	$valueChanged$url : function() {
 		partToolbar.partForm.linkType.value='url';
@@ -37,6 +45,8 @@ ui.get().listen({
 		file.reset();
 		page.reset();
 		email.reset();
+		image.reset();
+		sameimage.reset();
 	},
 	$valueChanged$email : function() {
 		partToolbar.partForm.linkType.value='email';
@@ -44,6 +54,26 @@ ui.get().listen({
 		file.reset();
 		page.reset();
 		url.reset();
+		image.reset();
+		sameimage.reset();
+	},
+	$valueChanged$image : function() {
+		partToolbar.partForm.linkType.value='image';
+		partToolbar.partForm.linkValue.value=image.getValue();
+		file.reset();
+		page.reset();
+		url.reset();
+		email.reset();
+		sameimage.reset();
+	},
+	$valueChanged$sameimage : function() {
+		partToolbar.partForm.linkType.value='sameimage';
+		partToolbar.partForm.linkValue.value='';
+		file.reset();
+		page.reset();
+		url.reset();
+		email.reset();
+		image.reset();
 	},
 	$valueChanged$alignment : function() {
 		this.update();
