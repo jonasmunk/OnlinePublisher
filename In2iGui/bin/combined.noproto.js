@@ -12500,12 +12500,12 @@ In2iGui.Links.prototype = {
 			link.kind='email';
 			link.value=values.email;
 			link.info=values.email;
-			link.icon='common/email';
+			link.icon='monochrome/email';
 		} else if (values.url!='') {
 			link.kind='url';
 			link.value=values.url;
 			link.info=values.url;
-			link.icon='common/internet';
+			link.icon='monochrome/globe';
 		} else if (n2i.isDefined(values.page)) {
 			link.kind='page';
 			link.value=values.page;
@@ -12515,7 +12515,7 @@ In2iGui.Links.prototype = {
 			link.kind='file';
 			link.value=values.file;
 			link.info=this.inputs.get('file').getItem().title;
-			link.icon='file/generic';
+			link.icon='monochrome/file';
 		}
 		return link;
 	},
