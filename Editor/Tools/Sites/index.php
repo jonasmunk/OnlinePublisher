@@ -52,6 +52,7 @@ $gui='
 				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>-->
 				<icon icon="common/edit" title="Rediger" name="edit" disabled="true"/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
+				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
 				<icon icon="common/delete" title="Slet" name="delete" disabled="true"/>
 				<divider/>
 				<icon icon="common/page" title="Nyt underpunkt" overlay="new" name="newSubPage" disabled="true"/>

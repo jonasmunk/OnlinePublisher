@@ -19,15 +19,21 @@ ui.listen({
 		In2iGui.get('edit').setEnabled(item.kind=='page');
 		In2iGui.get('info').setEnabled(true);
 		In2iGui.get('delete').setEnabled(item.kind=='page');
+		In2iGui.get('view').setEnabled(item.kind=='page');
 	},
 	$selectionReset$list : function() {
 		In2iGui.get('edit').setEnabled(false);
 		In2iGui.get('info').setEnabled(false);
 		In2iGui.get('delete').setEnabled(false);
+		In2iGui.get('view').setEnabled(false);
 	},
 	$click$edit : function() {
 		var obj = list.getFirstSelection();
 		document.location='../../Template/Edit.php?id='+obj.id;
+	},
+	$click$view : function() {
+		var obj = list.getFirstSelection();
+		document.location='../../Services/Preview/?id='+obj.id;
 	},
 	$click$delete : function() {
 		In2iGui.get().confirm({

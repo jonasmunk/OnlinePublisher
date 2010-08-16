@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <tool>
-	<icon>common/close</icon>
+	<icon>common/folder</icon>
 	<name>Projekter</name>
 	<description>Styring af projekter</description>
 	<category>edit</category>
