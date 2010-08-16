@@ -10802,7 +10802,7 @@ In2iGui.Formula.DropDown.prototype = {
 	clicked : function(e) {
 		e.stop();
 		this.buildSelector();
-		var el = this.element,s=this.selector;
+		var el = this.element, s=this.selector;
 		el.focus();
 		if (!this.items) return;
 		var docHeight = n2i.getDocumentHeight();
@@ -10817,7 +10817,7 @@ In2iGui.Formula.DropDown.prototype = {
 		}
 		s.setStyle({visibility:'hidden',display:'block',width:''});
 		var height = Math.min(docHeight-s.cumulativeOffset().top-5,200);
-		var width = Math.max(el.getWidth()-5,100,s.getWidth());
+		var width = Math.max(el.getWidth()-5,100,s.getWidth()+20);
 		var space = n2i.getDocumentWidth()-el.cumulativeOffset().left-20;
 		width = Math.min(width,space);
 		s.setStyle({visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
@@ -10875,6 +10875,7 @@ In2iGui.Formula.DropDown.prototype = {
 		if (!this.selector) {
 			this.selector = new Element('div',{'class':'in2igui_dropdown_selector'});
 			document.body.appendChild(this.selector);
+			this.selector.observe('mousedown',function(e) {e.stop()});
 		} else {
 			this.selector.update();
 		}
