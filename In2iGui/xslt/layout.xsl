@@ -101,7 +101,7 @@
 		</xsl:attribute>
 		<xsl:attribute name="style">
 		<xsl:if test="@width">width: <xsl:value-of select="@width"/>px;</xsl:if>
-		<xsl:if test="@top">margin-top: <xsl:value-of select="@top"/>px;</xsl:if>
+		<xsl:if test="@top">padding-top: <xsl:value-of select="@top"/>px;</xsl:if>
 		</xsl:attribute>
 		<xsl:if test="@closable='true'"><a class="in2igui_box_close" href="#"><xsl:comment/></a></xsl:if>
 		<div class="in2igui_box_top"><div><div><xsl:comment/></div></div></div>
@@ -247,9 +247,17 @@
 
 
 <xsl:template match="gui:fragment">
-<div class="in2igui_fragment" id="{generate-id()}">
-	<xsl:if test="@state and @state!=//gui:gui/@state">
-		<xsl:attribute name="style">display:none</xsl:attribute>
+<div id="{generate-id()}">
+	<xsl:attribute name="style">
+		<xsl:if test="@state and @state!=//gui:gui/@state">
+			<xsl:text>display:none;</xsl:text>
+		</xsl:if>
+		<xsl:if test="@height='full'">
+			<xsl:text>height: 100%;</xsl:text>
+		</xsl:if>
+	</xsl:attribute>
+	<xsl:if test="@background='brushed'">
+		<xsl:attribute name="class">in2igui_fragment_brushed</xsl:attribute>
 	</xsl:if>
 	<xsl:apply-templates/>
 </div>

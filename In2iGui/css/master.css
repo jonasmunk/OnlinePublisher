@@ -210,6 +210,13 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 	color: #fff;
 }
 
+/****************************************** Fragment *******************************/
+
+div.in2igui_fragment_brushed
+{
+	background: url('../gfx/backgrounds/brushed.png');
+}
+
 /****************************************** Info view ******************************/
 
 div.in2igui_infoview

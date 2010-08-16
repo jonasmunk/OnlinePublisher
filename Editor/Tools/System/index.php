@@ -50,7 +50,7 @@ $gui='
 			<center>
 				<overflow>
 					<list name="list" source="allObjectsSource" state="list"/>
-					<fragment state="settings">
+					<fragment state="settings" height="full" background="brushed">
 						<box width="360" top="30" variant="rounded">
 							<tabs small="true" centered="true">
 								<tab title="E-mail">

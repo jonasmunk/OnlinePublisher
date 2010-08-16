@@ -78,7 +78,10 @@ foreach ($objects as $object) {
 	$writer->text(UserInterface::presentDateTime($object->getStartdate()))->endCell();
 	$writer->startCell()->text(UserInterface::presentDateTime($object->getEnddate()))->endCell();
 	$writer->startCell()->startIcons();
-	$writer->icon(array('icon'=>($active ? 'monochrome/play' : 'monochrome/stop')));
+	if (!$active) {
+		$writer->icon(array('icon'=>'monochrome/invisible'));	
+	}
+	//$writer->icon(array('icon'=>($active ? 'monochrome/play' : 'monochrome/invisible')));
 	if ($linkCounts[$object->getId()]>0) {
 		$writer->icon(array('icon'=>"monochrome/attachment"));
 	}
