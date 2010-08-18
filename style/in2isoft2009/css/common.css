@@ -1,4 +1,4 @@
-@import url('http://fonts.googleapis.com/css?family=Cantarell');
+/*@import url('http://fonts.googleapis.com/css?family=Cantarell');*/
 
 /********************* Common *******************/
 	
@@ -22,7 +22,7 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
 	color: #3080CB;
-	font-family: "Cantarell","Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: normal;
 }
 
@@ -32,4 +32,9 @@ p.common, ul.common
 	font-size: 9pt;
 	line-height: 160%;
 	text-align: justify;
+}
+
+.common_font
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
 }
