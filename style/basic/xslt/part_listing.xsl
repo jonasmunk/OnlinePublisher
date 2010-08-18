@@ -7,7 +7,7 @@
  >
 
 <xsl:template match="l:listing">
-<div class="part_listing"><xsl:apply-templates/></div>
+<div class="part_listing common_font"><xsl:apply-templates/></div>
 </xsl:template>
 
 <xsl:template match="l:list">

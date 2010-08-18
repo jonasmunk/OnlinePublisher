@@ -26,7 +26,7 @@ class PartText extends Part{
 			$text = insertLineBreakTags($text,'<br/>');
 			$text = str_replace('<br/><br/>', '</p><p>', $text);;
 			$data=
-			'<div class="part_text" style="'.$this->_buildCSSStyle($row).'">'.
+			'<div class="part_text common_font" style="'.$this->_buildCSSStyle($row).'">'.
 			($row['image_id']>0 ? '<img src="../../../util/images/?id='.$row['image_id'].'" style="float: '.$row['imagefloat'].';"/>' : '').
 			'<p class="part_text_first">'.$text.'</p>'.
 			'</div>';
@@ -38,7 +38,7 @@ class PartText extends Part{
 		$sql = "select * from part_text where part_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
 			return
-			'<textarea class="part_text" name="text" id="PartTextTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent;'.$this->_buildCSSStyle($row).'">'.
+			'<textarea class="part_text common_font" name="text" id="PartTextTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent;'.$this->_buildCSSStyle($row).'">'.
 			encodeXML($row['text']).
 			'</textarea>'.
 			'<input type="hidden" name="fontSize" value="'.encodeXML($row['fontsize']).'"/>'.

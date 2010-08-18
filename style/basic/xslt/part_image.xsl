@@ -50,7 +50,7 @@ op.registerImageViewer('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-o
 
 
 <xsl:template match="img:text">
-	<p><xsl:apply-templates/></p>
+	<p class="common_font"><xsl:apply-templates/></p>
 </xsl:template>
 
 <xsl:template name="img:buildlink">

@@ -8,7 +8,7 @@
  >
 
 <xsl:template match="txt:text">
-<div class="PartText part_text">
+<div class="PartText part_text common_font">
 <xsl:apply-templates/>
 </div>
 </xsl:template>

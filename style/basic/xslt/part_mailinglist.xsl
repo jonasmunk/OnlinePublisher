@@ -6,7 +6,7 @@
 	exclude-result-prefixes="ml p">
 	
 	<xsl:template match="ml:mailinglist">
-		<div class="part_mailinglist">
+		<div class="part_mailinglist common_font">
 			<xsl:apply-templates/>
 		</div>
 	</xsl:template>

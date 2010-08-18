@@ -9,7 +9,7 @@
  >
 
 <xsl:template match="pn:news">
-	<div class="part_news">
+	<div class="part_news common_font">
 	<xsl:apply-templates/>
 	</div>
 </xsl:template>

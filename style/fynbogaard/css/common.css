@@ -29,3 +29,8 @@ p.common, ul.common
 	line-height: 160%;
 	text-align: justify;
 }
+
+.common_font
+{
+	font-family: Arial,Helvetica,sans-serif;
+}

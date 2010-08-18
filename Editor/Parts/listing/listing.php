@@ -25,7 +25,7 @@ class PartListing extends Part {
 			} else {
 				$tag='ol';
 			}
-			$data.= '<div class="part_listing"><'.$tag.' type="'.$row['type'].'" style="'.$this->_buildCSSStyle($row).'">';
+			$data.= '<div class="part_listing common_font"><'.$tag.' type="'.$row['type'].'" style="'.$this->_buildCSSStyle($row).'">';
 			$parsed = $this->_parse($row['text']);
 			foreach ($parsed as $point) {
 				$data.='<li><span>';
@@ -63,7 +63,7 @@ class PartListing extends Part {
 		$sql = "select * from part_listing where part_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
 			return
-			'<textarea class="part_listing" name="text" id="PartListingTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent;'.$this->_buildCSSStyle($row).'">'.
+			'<textarea class="part_listing common_font" name="text" id="PartListingTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent;'.$this->_buildCSSStyle($row).'">'.
 			encodeXML($row['text']).
 			'</textarea>'.
 			'<input type="hidden" name="type" value="'.encodeXML($row['type']).'"/>'.

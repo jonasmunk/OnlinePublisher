@@ -8,7 +8,7 @@
  >
 
 <xsl:template match="l:list">
-	<div class="part_list">
+	<div class="part_list common_font">
 		<div class="part_list_box">
 		<div class="part_list_box_top"><div><div><xsl:comment/></div></div></div>
 		<div class="part_list_box_middle">

@@ -40,7 +40,9 @@
 		<xsl:value-of select="round(number(o:sub/i:image/i:width) div number(o:sub/i:image/i:height) * $height)"/>
 	</xsl:variable>
 	<a href="{$path}util/images/?id={@id}">
-		<xsl:if test="../ig:display/@show-title='true'"><span><xsl:value-of select="o:title"/></span></xsl:if>
+		<xsl:if test="../ig:display/@show-title='true'">
+			<span class="common_font"><xsl:value-of select="o:title"/></span>
+		</xsl:if>
 		<img src="{$path}util/images/?id={@id}&amp;maxheight={$height}" style="height: {$height}px; width: {$width}px;" alt="" id="{generate-id()}"/>
 	</a>
 </xsl:template>
