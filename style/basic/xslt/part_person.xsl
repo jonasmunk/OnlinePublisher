@@ -10,7 +10,7 @@
  >
 
 <xsl:template match="pp:person">
-	<div class="part_person">
+	<div class="part_person common_font">
 		<xsl:apply-templates select="o:object/o:sub/p:person"/>
 	</div>
 </xsl:template>

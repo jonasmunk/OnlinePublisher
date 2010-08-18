@@ -20,12 +20,19 @@
 <head>
 	<title><xsl:choose><xsl:when test="//p:page/@id=//p:context/p:home/@page">In2iSoft : Intuitive Internet Software</xsl:when><xsl:otherwise><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></xsl:otherwise></xsl:choose></title>
 	<xsl:call-template name="util:metatags"/>
-	<xsl:call-template name="oo-script"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+	<xsl:choose>
+		<xsl:when test="$template='document'">
+			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+		</xsl:otherwise>
+	</xsl:choose>
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
+	<xsl:call-template name="oo-script"/>
 </head>
 <body>
 	<div class="chrome">

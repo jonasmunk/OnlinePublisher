@@ -10,12 +10,12 @@
 
 <xsl:template match="p:formula">
 	<xsl:if test="$editor='true'">
-		<div class="part_formula">
+		<div class="part_formula common_font">
 			<xsl:call-template name="p:content"/>
 		</div>
 	</xsl:if>
 	<xsl:if test="$editor!='true'">
-		<form class="part_formula" id="{generate-id()}">
+		<form class="part_formula common_font" id="{generate-id()}">
 			<xsl:call-template name="p:content"/>
 		</form>
 		<script type="text/javascript">

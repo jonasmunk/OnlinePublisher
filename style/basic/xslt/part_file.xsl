@@ -10,7 +10,7 @@
 
 <xsl:template match="p:file">
 	<xsl:variable name="href"><xsl:value-of select="$path"/>files/<xsl:value-of select=".//f:file/f:filename"/></xsl:variable>
-	<div class="part_file" id="{generate-id()}"><div><div><div>
+	<div class="part_file common_font" id="{generate-id()}"><div><div><div>
 		<p class="part_file_title"><a href="{$href}"><span><xsl:value-of select=".//o:title"/></span></a></p>
 		<p class="part_file_info"><xsl:call-template name="p:size"/><xsl:if test=".//f:file/f:mimetype">, <xsl:call-template name="p:type"/></xsl:if><xsl:comment/></p>
 	</div></div></div></div>
