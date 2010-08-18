@@ -14827,7 +14827,8 @@ In2iGui.Menu.prototype = {
 		var top = Math.max(0,Math.min(pos.top,innerHeight-height-20+scrollTop));
 		this.element.setStyle({'top':top+'px','left':left+'px','visibility':'visible',zIndex:In2iGui.nextTopIndex(),'width':(width-2)+'px'});
 		if (!this.visible) {
-			n2i.ani(this.element,'opacity',1,200);
+			//n2i.ani(this.element,'opacity',1,200);
+			this.element.setStyle({opacity:1});
 			this.addHider();
 			this.visible = true;
 		}
