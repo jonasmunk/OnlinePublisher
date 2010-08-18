@@ -37,7 +37,7 @@
 </xsl:template>
 
 <xsl:template match="l:item">
-	<li><xsl:attribute name="class">part_listing_<xsl:value-of select="position()"/></xsl:attribute><span><xsl:apply-templates/></span></li>
+	<li><xsl:attribute name="class">part_listing_<xsl:value-of select="position()"/></xsl:attribute><span class="part_listing"><xsl:apply-templates/></span></li>
 </xsl:template>
 
 <xsl:template match="l:style">

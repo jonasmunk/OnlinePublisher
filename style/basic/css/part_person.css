@@ -1,0 +1,54 @@
+div.part_section_person
+{
+	padding-bottom: 10px;
+}
+
+div.part_person table
+{
+	border-spacing: 0;
+	font-size: 11px;
+	line-height: 15px;
+}
+
+div.part_person div.fn
+{
+	font-weight: bold;
+	font-size: 13px;
+}
+
+div.part_person div.adr
+{
+	font-style: italic;
+}
+
+div.part_person table td
+{
+	vertical-align: top;
+	padding: 0;
+}
+
+div.part_person img
+{
+	border: none;
+}
+
+span.part_person_label
+{
+	color: #999;
+}
+
+td.part_person_image
+{
+	width: 75px;
+}
+
+td.part_person_image a
+{
+	border: 1px solid #DDDDDD;
+	border-bottom: 1px solid #bbb;
+	border-top: 1px solid #eee;
+	padding: 4px;
+	display: inline-block;
+	font-size: 0;
+	line-height: 0;
+}

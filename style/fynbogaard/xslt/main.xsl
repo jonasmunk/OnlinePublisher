@@ -20,8 +20,8 @@
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.php"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>

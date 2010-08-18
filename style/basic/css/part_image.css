@@ -1,0 +1,16 @@
+div.part_image
+{
+	font-size: 0;
+}
+
+div.part_image img
+{
+	border-width: 0;
+}
+
+div.part_image p, div.part_image textarea
+{
+	margin: 0px;
+	font-size: 8pt;
+	color: #999;
+}

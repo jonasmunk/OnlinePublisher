@@ -1,0 +1,30 @@
+form.part_formula
+{
+	margin: 0;
+}
+
+.part_formula p
+{
+	margin: 0 0 5px;
+}
+
+.part_formula p.part_formula_label
+{
+	margin: 0;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+input.part_formula_text, textarea.part_formula_text
+{
+	width: 200px;
+	border: 1px solid #eee;
+	border-color: #ccc #ddd #eee;
+	font-size: 11px;
+	padding: 1px 0;
+}
+
+textarea.part_formula_text
+{
+	height: 100px;
+}

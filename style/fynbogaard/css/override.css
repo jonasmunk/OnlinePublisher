@@ -1,0 +1,41 @@
+.part_text
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+.part_header
+{
+	color: #DDAF3E;
+	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	font-weight: normal;
+}
+
+div.part_image p, div.part_image textarea
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+div.part_imagegallery span
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+div.part_list
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+div.part_listing, textarea.part_listing
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+div.part_mailinglist
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+div.part_news
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
