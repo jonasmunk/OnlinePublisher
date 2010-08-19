@@ -59,7 +59,7 @@
 
 
 <xsl:template match="p:content">
-	<div class="case_content">
+	<div class="layout_content">
 		<xsl:apply-templates/>
 		<xsl:comment/>
 	</div>
