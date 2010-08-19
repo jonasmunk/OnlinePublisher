@@ -170,7 +170,7 @@ mailto:<xsl:value-of select="@email"/>
 <xsl:template name="util:languages">
 	<span class="layout_languages">
 		<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=//p:page/p:meta/p:language and not(@language=//p:page/p:context/p:translation/@language)]">
-			<xsl:call-template name="language"/>
+			<xsl:call-template name="util:language"/>
 		</xsl:for-each>
 		<xsl:for-each select="//p:page/p:context/p:translation">
 			<xsl:call-template name="util:language"/>
