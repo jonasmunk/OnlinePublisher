@@ -276,7 +276,7 @@ function buildPage($id,$allowDisabled=true,$path=null) {
 		buildDateTag('published',$row['published']).
 		'<language>'.encodeXML(strtolower($row['language'])).'</language>'.
 		'</meta>'.
-		buildPageContext($id,$row['next_page'],$row['previous_page']).
+		buildPageContext($row['id'],$row['next_page'],$row['previous_page']).
 		'<design>'.
 		$row['parameters'].
 		'</design>'.
@@ -326,6 +326,7 @@ function buildPageContext($id,$nextPage,$previousPage) {
 	$sql="select page.id,page.language,page.path from page_translation,page".
 	" where page.id=page_translation.translation_id and page.disabled=0".
 	" and page_translation.page_id=".$id." order by language";
+	error_log($sql);
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$output.='<translation page="'.$row['id'].'"'.($row['path']!='' ? ' path="'.encodeXML($row['path']).'"' : '').($row['language']!='' ? ' language="'.encodeXML(strtolower($row['language'])).'"' : '').'/>';
