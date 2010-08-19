@@ -6,7 +6,7 @@ body
 	font-family: Arial,Helvetica,Verdana,sans-serif;
 }
 
-div.case
+div.layout
 {
 	width: 800px;
 	margin: 0 auto;
@@ -14,13 +14,13 @@ div.case
 	border: 5px solid #fff;
 }
 
-div.case_top
+div.layout_top
 {
 	background: url('../gfx/top.jpg');
 	height: 84px;
 }
 
-div.case_bottom
+div.layout_bottom
 {
 	text-align: center;
 	border-top: 6px solid #9E3B24;
@@ -30,14 +30,51 @@ div.case_bottom
 	font-size: 12px;
 }
 
-div.case_front
+div.layout_front
 {
 	background: url('../gfx/front.jpg');
 	height: 221px;
 	margin: 3px 0;
 }
 
-ul.case_navigation
+/****************** Laguages ******************/
+
+span.layout_languages
+{
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+
+a.layout_language_en
+{
+	background: url('../../basic/gfx/flags/gb.gif') no-repeat;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+}
+
+a.layout_language_da
+{
+	background: url('../../basic/gfx/flags/dk.gif') no-repeat;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+}
+
+span.layout_languages span
+{
+	display: none;
+}
+
+/***************** Navigation *****************/
+
+div.layout_navigation
+{
+	position: relative;
+}
+
+ul.layout_navigation
 {
 	list-style: none;
 	margin: 0;
@@ -46,7 +83,7 @@ ul.case_navigation
 	height: 22px;
 }
 
-ul.case_navigation li
+ul.layout_navigation li
 {
 	height: 20px;
 	float: left;
@@ -54,7 +91,7 @@ ul.case_navigation li
 	line-height: 20px;
 }
 
-ul.case_navigation a
+ul.layout_navigation a
 {
 	padding: 0 20px;
 	color: #333;
@@ -68,7 +105,7 @@ ul.case_navigation a
 	vertical-align: middle;
 }
 
-div.case_content
+div.layout_content
 {
 	padding: 20px;
 }

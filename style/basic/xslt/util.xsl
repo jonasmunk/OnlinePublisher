@@ -167,4 +167,29 @@ mailto:<xsl:value-of select="@email"/>
 	<meta name="robots" content="index,follow"></meta>
 </xsl:template>
 
+<xsl:template name="util:languages">
+	<span class="layout_languages">
+		<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=//p:page/p:meta/p:language and not(@language=//p:page/p:context/p:translation/@language)]">
+			<xsl:call-template name="language"/>
+		</xsl:for-each>
+		<xsl:for-each select="//p:page/p:context/p:translation">
+			<xsl:call-template name="util:language"/>
+		</xsl:for-each>
+		<xsl:comment/>
+	</span>
+</xsl:template>
+
+<xsl:template name="util:language">
+	<a class="layout_language_{@language}">
+		<xsl:call-template name="link"/>
+		<span>
+		<xsl:choose>
+			<xsl:when test="@language='da'">Dansk version</xsl:when>
+			<xsl:when test="@language='en'">English version</xsl:when>
+			<xsl:otherwise><xsl:value-of select="@language"/></xsl:otherwise>
+		</xsl:choose>
+		</span>
+	</a><xsl:text> </xsl:text>
+</xsl:template>
+
 </xsl:stylesheet>

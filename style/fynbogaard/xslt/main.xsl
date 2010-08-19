@@ -34,16 +34,21 @@
 	<xsl:call-template name="oo-script"/>
 </head>
 <body>
-	<div class="case">
-		<div class="case_top">
+	<div class="layout">
+		<div class="layout_top">
 			<xsl:comment/>
 		</div>
-		<ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
+		<div class="layout_navigation">
+			<xsl:call-template name="util:languages"/>
+			<ul class="layout_navigation">
+				<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
+			</ul>
+		</div>
 		<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
-			<div class="case_front"><xsl:comment/></div>
+			<div class="layout_front"><xsl:comment/></div>
 		</xsl:if>
 		<xsl:apply-templates select="p:content"/>
-		<div class="case_bottom">
+		<div class="layout_bottom">
 			Fynbogaard · Bjerrevej 318 · Bjerre · 8783 Hornsyld · Mobil 26 14 87 36
 		</div>
 	</div>
