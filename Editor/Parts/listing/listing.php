@@ -28,7 +28,7 @@ class PartListing extends Part {
 			$data.= '<div class="part_listing common_font"><'.$tag.' type="'.$row['type'].'" style="'.$this->_buildCSSStyle($row).'">';
 			$parsed = $this->_parse($row['text']);
 			foreach ($parsed as $point) {
-				$data.='<li><span>';
+				$data.='<li><span class="part_listing">';
 				$lines = count($point);
 				for ($i=0;$i<$lines;$i++) {
 					$formatted = $this->_formatDisplayText($point[$i],$context);
