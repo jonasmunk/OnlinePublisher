@@ -253,7 +253,7 @@
 			<xsl:text>display:none;</xsl:text>
 		</xsl:if>
 		<xsl:if test="@height='full'">
-			<xsl:text>height: 100%;</xsl:text>
+			<xsl:text>min-height: 100%;</xsl:text>
 		</xsl:if>
 	</xsl:attribute>
 	<xsl:if test="@background='brushed'">
