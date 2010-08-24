@@ -70,4 +70,8 @@ class StringUtils {
 		$output = str_replace("\n", $break, $output);
 		return $output;
 	}
+	
+	function insertLineBreakTags($input,$tag) {
+		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
+	}
 }

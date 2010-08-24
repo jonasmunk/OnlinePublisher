@@ -160,7 +160,9 @@ class PartText extends Part{
 			$text = $row['text'];
 			$text = StringUtils::escapeSimpleXML($text);
 			$text = $context->decorateForBuild($text);
-			$text = insertLineBreakTags($text,'<break/>');
+			// Important that line breaks are after decorate
+			// Or else 
+			$text = StringUtils::insertLineBreakTags($text,'<break/>');
 			
 			$text = str_replace('<break/><break/>', '</p><p>', $text);;
 			return 
