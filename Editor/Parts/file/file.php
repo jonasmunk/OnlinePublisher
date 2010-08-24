@@ -57,8 +57,9 @@ class PartFile extends Part {
 		$sql = "select * from part_file where part_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
 			$xml='<file xmlns="'.$this->_buildnamespace('1.0').'">';
-			$sql="select object.data from object,file where file.object_id = object.id and object.id=".$row['file_id'];
+			$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".$row['file_id'];
 			if ($file = Database::selectFirst($sql)) {
+				$xml.='<info type="'.GuiUtils::mimeTypeToKind($file['type']).'"/>';
 				$xml.=$file['data'];
 			}
 			$xml.='</file>';
@@ -70,8 +71,9 @@ class PartFile extends Part {
 	
 	function sub_preview() {
 		$xml='<file xmlns="'.$this->_buildnamespace('1.0').'">';
-		$sql="select object.data from object,file where file.object_id = object.id and object.id=".Request::getInt('fileId');
+		$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".Request::getInt('fileId');
 		if ($file = Database::selectFirst($sql)) {
+			$xml.='<info type="'.GuiUtils::mimeTypeToKind($file['type']).'"/>';
 			$xml.=$file['data'];
 		}
 		$xml.='</file>';

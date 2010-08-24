@@ -53,7 +53,6 @@ div.part_list h2
 {
 	margin: 0;
 	font-size: 12pt;
-	color: #738fa5;
 	font-weight: normal;
 	padding-bottom: 3px;
 }
@@ -63,7 +62,6 @@ div.part_list h3
 	margin: 0;
 	font-size: 13px;
 	color: #333;
-	font-weight: normal;
 	padding-bottom: 3px;
 }
 
@@ -71,7 +69,7 @@ p.part_list_text
 {
 	margin: 0;
 	font-size: 12px;
-	color: #333;
+	color: #666;
 }
 
 p.part_list_nodata

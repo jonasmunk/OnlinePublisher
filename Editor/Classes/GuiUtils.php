@@ -168,14 +168,16 @@ class GuiUtils {
 			case 'text/html' : return "HTML-dokument";
 			case 'application/xhtml+xml' : return 'XHTML-dokument';
 			case 'application/zip' : return "ZIP-fil";
+			case 'application/x-gzip' : return 'ZIP-fil';
 			case 'application/pdf' : return "PDF-dokument";
 			case 'audio/x-ms-wma' : return "Windows Media-lyd";
-			case 'application/x-photoshop' : return "Photoshop";
+			case 'application/x-photoshop' : return "Adobe Photoshop";
 			case 'application/octet-stream' : return "Ukendt";
 			case 'application/vnd.ms-wpl' : return "Windows Media playlist";
 			case 'application/x-shockwave-flash' : return "Adobe Flash";
 			case 'text/rtf' : return "RTF-dokument";
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'Microsoft Word';
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : return 'Microsoft Word';
+			case 'application/vnd.ms-excel' : return 'Microsoft Excel';
 			default: return (string)$mimeType;
 		} 
 	}
