@@ -52,14 +52,7 @@
 					</ul>
 				</div>
 				<div class="layout_left">
-					<div class="layout_menu">
-						<div class="layout_menu_top"><xsl:comment/></div>
-						<div class="layout_menu_middle">
-							<p>Om Benevita</p>
-							<xsl:call-template name="secondlevel"/>
-						</div>
-						<div class="layout_menu_bottom"><xsl:comment/></div>
-					</div>
+					<xsl:call-template name="secondlevel"/>
 					<div class="layout_box layout_contact">
 						<div class="layout_box_top"><xsl:comment/></div>
 						<div class="layout_box_middle">
@@ -93,6 +86,7 @@
 					<div class="layout_content_top"><xsl:comment/></div>
 					<div class="layout_content_middle">
 						<xsl:apply-templates select="p:content"/>
+						<xsl:comment/>
 					</div>
 					<div class="layout_content_bottom"><xsl:comment/></div>
 				</div>
@@ -149,9 +143,16 @@
 
 <xsl:template name="secondlevel">
 	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul>
-			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-		</ul>
+		<div class="layout_menu">
+			<div class="layout_menu_top"><xsl:comment/></div>
+			<div class="layout_menu_middle">
+				<p><xsl:value-of select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/@title"/></p>
+				<ul>
+					<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
+				</ul>
+			</div>
+			<div class="layout_menu_bottom"><xsl:comment/></div>
+		</div>
 	</xsl:if>
 </xsl:template>
 
