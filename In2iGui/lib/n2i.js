@@ -179,6 +179,21 @@ n2i.dom = {
 	}
 }
 
+n2i.get = function(str) {
+	if (n.nodeType==n2i.ELEMENT_NODE) {
+		return str;
+	}
+	return document.getElementById(str);
+}
+
+n2i.build = function(tag,options) {
+	var e = document.createElement(tag);
+	if (options.className) {
+		e.className = options.className;
+	}
+	return e;
+}
+
 ///////////////////// Style ///////////////////
 
 n2i.getStyle = function(element, style) {

@@ -2437,7 +2437,6 @@ span.in2igui_list_icons
 	white-space: nowrap;
 	font-size: 0;
 	vertical-align: top;
-	margin-top: 2px;
 	display: inline-block;
 }
 
@@ -4571,6 +4570,14 @@ div.in2igui_bar_right
 div.in2igui_bar_left
 {
 	height: 30px;
+}
+
+div.in2igui_bar_absolute
+{
+	position: absolute;
+	visibility: hidden;
+	left: -1000px;
+	top: -1000px;
 }
 
 /*************** Button **************/

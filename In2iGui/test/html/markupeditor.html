@@ -11,12 +11,11 @@
 	<![endif]-->
 	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../lib/wysihat.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Bar.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/RichText.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/MarkupEditor.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ColorPicker.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		In2iGui.state = '';
@@ -26,10 +25,10 @@
 
 <body>
 <script type="text/javascript" charset="utf-8">
-	In2iGui.onDomReady(function() {
-		var normal = In2iGui.Window.create({width:'300'});
-		var editor = In2iGui.RichText.create()
-		var button = In2iGui.Button.create({text:'View source'})
+	ui.onDomReady(function() {
+		var normal = ui.Window.create({width:'300'});
+		var editor = ui.MarkupEditor.create()
+		var button = ui.Button.create({text:'View source'})
 		button.listen({$click:function() {
 			$('source').value=editor.getValue();
 		}});

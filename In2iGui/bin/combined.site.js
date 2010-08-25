@@ -5075,6 +5075,21 @@ n2i.dom = {
 	}
 }
 
+n2i.get = function(str) {
+	if (n.nodeType==n2i.ELEMENT_NODE) {
+		return str;
+	}
+	return document.getElementById(str);
+}
+
+n2i.build = function(tag,options) {
+	var e = document.createElement(tag);
+	if (options.className) {
+		e.className = options.className;
+	}
+	return e;
+}
+
 ///////////////////// Style ///////////////////
 
 n2i.getStyle = function(element, style) {
@@ -6656,7 +6671,7 @@ In2iGui.getIconUrl = function(icon,size) {
 	return In2iGui.context+'/In2iGui/icons/'+icon+size+'.png';
 };
 
-In2iGui.createIcon = function(icon,size) {
+ In2iGui.createIcon = function(icon,size) {
 	return new Element('span',{'class':'in2igui_icon in2igui_icon_'+size}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(icon,size)+')'});
 };
 

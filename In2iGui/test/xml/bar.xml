@@ -5,6 +5,7 @@
 		<button icon="common/delete" text="Hep hey!"/>
 		<button icon="common/delete" text="Hep hey!"/>
 		<button icon="common/delete" text="Hep hey!"/>
+		<button icon="common/internet"/>
 		<checkbox text="djslkfjksdjl"/>
 		<right>
 			<button icon="common/delete" text="Hep hey!" highlighted="true"/>
