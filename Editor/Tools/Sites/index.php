@@ -47,7 +47,7 @@ $gui='
 	<layout>
 		<top>
 			<toolbar>
-				<icon icon="common/page" title="Opret side" overlay="new" name="newPage"/>
+				<icon icon="common/page" title="Ny side" overlay="new" name="newPage"/>
 				<divider/>
 				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>-->
 				<icon icon="common/edit" title="Rediger" name="edit" disabled="true"/>
