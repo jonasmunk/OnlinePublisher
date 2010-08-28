@@ -48,7 +48,7 @@ class TestStringUtils extends UnitTestCase {
 	
 	function testInsertEmail() {
 		$this->assertEqual('lorem ipsum <a href="mailto:me@my.com">me@my.com</a> hep hep',StringUtils::insertEmailLinks('lorem ipsum me@my.com hep hep'));
-		$this->assertEqual('lorem ipsum me@my @my.com hep hepGG',StringUtils::insertEmailLinks('lorem ipsum me@my @my.com hep hep'));
+		$this->assertEqual('lorem ipsum me@my @my.com hep hep',StringUtils::insertEmailLinks('lorem ipsum me@my @my.com hep hep'));
 	}
 }
 ?>
