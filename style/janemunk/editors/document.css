@@ -1,1 +1,3 @@
-@import url("../css/parts.css");
+@import url("../css/document.php");
+@import url("../css/common.css");
+@import url("../css/override.css");
