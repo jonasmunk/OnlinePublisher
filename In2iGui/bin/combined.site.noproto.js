@@ -1775,7 +1775,7 @@ In2iGui.getIconUrl = function(icon,size) {
 	return In2iGui.context+'/In2iGui/icons/'+icon+size+'.png';
 };
 
- In2iGui.createIcon = function(icon,size) {
+In2iGui.createIcon = function(icon,size) {
 	return new Element('span',{'class':'in2igui_icon in2igui_icon_'+size}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(icon,size)+')'});
 };
 
