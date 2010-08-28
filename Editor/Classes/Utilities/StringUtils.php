@@ -74,4 +74,83 @@ class StringUtils {
 	function insertLineBreakTags($input,$tag) {
 		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
 	}
+	
+	
+	/**
+	 * Creates a summary of a text based on some keywords.
+	 * Keywords will be enclosed in <highlight> tags.
+	 * @param array $keywords Array of keywords to highlight
+	 * @param string $text The text to analyze
+	 * @return string A highlighted summary of the text
+	 */
+	function summarizeAndHighlight($keywords,$text) {
+		$lower=strtolower($text);
+		$positions = array();
+		$out = '';
+		for ($i=0;$i<count($keywords);$i++) {
+			$word=strtolower($keywords[$i]);
+			$index=0;
+			$endIsReached = false;
+			while(!$endIsReached) {
+				$pos = strpos($lower, $word,$index);
+				if ($pos!==false) {
+					$positions[$pos] = $word;
+					$index=$pos+strlen($word);
+				}
+				else {
+					$endIsReached = true;
+				}
+			}
+		}
+		ksort($positions);
+		$lastPos=0;
+		foreach ($positions as $pos => $word) {
+			if ($pos>=$lastPos) {
+				$dist = $pos-$lastPos;
+				if ($lastPos==0) {
+					if ($dist>17) {
+						$out.='... '.StringUtils::escapeXML(substr($text,$dist-14,14));
+					}
+					else {
+						$out.=StringUtils::escapeXML(substr($text,0,$dist));
+					}
+				}
+				else {
+					$middle = substr($text,$lastPos,$dist);
+					if (strlen($middle)>30) {
+						$out.=
+						StringUtils::escapeXML(substr($middle,0,14)).
+						' ... '.
+						StringUtils::escapeXML(substr($middle,strlen($middle)-14,14));
+					}
+					else {
+						$out.=StringUtils::escapeXML($middle);
+					}
+				}
+				$out.='<highlight>'.StringUtils::escapeXML($word).'</highlight>';
+			}
+			$lastPos=$pos+strlen($word);
+		}
+		if ((strlen($text)-$lastPos)>14) {
+			$out.=StringUtils::escapeXML(substr($text,$lastPos,14)).' ...';
+		}
+		else {
+			$out.=StringUtils::escapeXML(substr($text,$lastPos));
+		}
+		return $out;
+	}
+
+	/**
+	 * Converts email addresses of a text to links
+	 * @param string $string The text to analyze
+	 * @param string $tag The name of the tag to insert, fx: a
+	 * @param string $attr The name of attribute to use, fx: href
+	 * @param string $protocol The protocol prefix to use, fx: mailto: og "nothing"
+	 * @return string The text with inserted email links
+	 */
+	function insertEmailLinks($string,$tag='a',$attr='href',$protocol='mailto:',$class='') {
+		$pattern = "/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4}))\b/i";
+		$replacement = '<'.$tag.' '.$attr.'="'.$protocol.'${1}"'.($class!='' ? ' class="'.$class.'"' : '').'>${1}</'.$tag.'>';
+		return preg_replace($pattern, $replacement, $string);
+	}
 }

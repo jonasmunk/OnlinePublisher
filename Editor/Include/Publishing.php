@@ -86,8 +86,6 @@ function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationP
 		$userName=$user['username'];
 		$userTitle=$user['title'];
 	}
-	//echo '<xsl:include href="'.$incPath.'style/'.$mainDesign.'/'.$mainFolder.'/'.$mainFile.'.xsl"/>'.
-	//'<xsl:include href="'.$incPath.'style/'.$contentDesign.'/'.$agent.'/'.$template.'.xsl"/>';
 	$xslData='<?xml version="1.0" encoding="ISO-8859-1"?>'.
 	'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 	'<xsl:output method="html" indent="no" encoding="ISO-8859-1"/>'.
@@ -326,7 +324,6 @@ function buildPageContext($id,$nextPage,$previousPage) {
 	$sql="select page.id,page.language,page.path from page_translation,page".
 	" where page.id=page_translation.translation_id and page.disabled=0".
 	" and page_translation.page_id=".$id." order by language";
-	error_log($sql);
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$output.='<translation page="'.$row['id'].'"'.($row['path']!='' ? ' path="'.encodeXML($row['path']).'"' : '').($row['language']!='' ? ' language="'.encodeXML(strtolower($row['language'])).'"' : '').'/>';

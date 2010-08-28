@@ -56,14 +56,14 @@ class SearchController extends TemplateController {
     }
 
 	function dynamic(&$state) {
-		if (requestGetExists('query')) {
-			$searchPages = requestGetCheckbox('page');
-			$searchImages = requestGetCheckbox('image');
-			$searchFiles = requestGetCheckbox('file');
-			$searchPersons = requestGetCheckbox('person');
-			$searchNews = requestGetCheckbox('news');
-			$searchProducts = requestGetCheckbox('product');
-			$method = requestGetText('method');
+		if (Request::exists('query')) {
+			$searchPages = Request::getCheckbox('page');
+			$searchImages = Request::getCheckbox('image');
+			$searchFiles = Request::getCheckbox('file');
+			$searchPersons = Request::getCheckbox('person');
+			$searchNews = Request::getCheckbox('news');
+			$searchProducts = Request::getCheckbox('product');
+			$method = Request::getString('method');
 			if ($method=='') {
 				$method='all';
 			}
@@ -125,7 +125,7 @@ class SearchController extends TemplateController {
 						$xml.='<page id="'.$row['id'].'">';
 						$xml.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 						$xml.='<description>'.StringUtils::escapeSimpleXMLwithLineBreak($row['description'],'<break/>').'</description>';
-						$xml.='<summary>'.summarizeAndHighligt($highlight,$row['index']).'</summary>';
+						$xml.='<summary>'.StringUtils::summarizeAndHighlight($highlight,$row['index']).'</summary>';
 						$xml.='</page>';
 					}
 					Database::free($result);
@@ -163,7 +163,7 @@ class SearchController extends TemplateController {
 			$xml.=
 			'<result>'.
 			$row['data'].
-			'<summary>'.summarizeAndHighligt($words,$row['index']).'</summary>'.
+			'<summary>'.StringUtils::summarizeAndHighlight($words,$row['index']).'</summary>'.
 			'</result>';
 		}
 		Database::free($result);

@@ -28,6 +28,15 @@ class Request {
 		$output=str_replace('\\\\', '\\', $output);
 		return $output;
 	}
+
+	/**
+	 * Gets the value of a checkbox
+	 * @param string $key The name of the checkbox
+	 * @return boolean True if the checkbox was checked, false otherwise
+	 */
+	function getCheckbox($key) {
+		return Request::getString($key)=='on';
+	}
 	
 	function getUnicodeString($key) {
 		$value = Request::getString($key);

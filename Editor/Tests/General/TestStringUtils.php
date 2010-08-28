@@ -4,6 +4,8 @@
  * @subpackage Tests.General
  */
 
+// THE ENCODING OF THIS FILE SHOULD BE UTF-8
+
 class TestStringUtils extends UnitTestCase {
     
     function testEscaping() {
@@ -39,5 +41,14 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertFalse(StringUtils::isBlank("abc"));
 		$this->assertTrue(StringUtils::isNotBlank("abc"));
     }
+
+    function testSummarize() {
+		$this->assertEqual("onc<highlight>e</highlight> upon a tim<highlight>e</highlight>",StringUtils::summarizeAndHighlight(array("e"),"once upon a time"));
+	}
+	
+	function testInsertEmail() {
+		$this->assertEqual('lorem ipsum <a href="mailto:me@my.com">me@my.com</a> hep hep',StringUtils::insertEmailLinks('lorem ipsum me@my.com hep hep'));
+		$this->assertEqual('lorem ipsum me@my @my.com hep hep',StringUtils::insertEmailLinks('lorem ipsum me@my @my.com hep hep'));
+	}
 }
 ?>

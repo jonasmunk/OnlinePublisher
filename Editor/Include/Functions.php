@@ -30,70 +30,6 @@ function redirect($url) {
 ///////////////////////// Strings /////////////////////////
 
 /**
- * Creates a summary of a text based on some keywords.
- * Keywords will be enclosed in <highlight> tags.
- * @param array $keywords Array of keywords to highlight
- * @param string $text The text to analyze
- * @return string A highlighted summary of the text
- */
-function summarizeAndHighligt($keywords,$text) {
-	$lower=strtolower($text);
-	$positions = array();
-	$out = '';
-	for ($i=0;$i<count($keywords);$i++) {
-		$word=strtolower($keywords[$i]);
-		$index=0;
-		$endIsReached = false;
-		while(!$endIsReached) {
-			$pos = strpos($lower, $word,$index);
-			if ($pos!==false) {
-				$positions[$pos] = $word;
-				$index=$pos+strlen($word);
-			}
-			else {
-				$endIsReached = true;
-			}
-		}
-	}
-	ksort($positions);
-	$lastPos=0;
-	foreach ($positions as $pos => $word) {
-		if ($pos>=$lastPos) {
-			$dist = $pos-$lastPos;
-			if ($lastPos==0) {
-				if ($dist>17) {
-					$out.='... '.encodeXML(substr($text,$dist-14,14));
-				}
-				else {
-					$out.=encodeXML(substr($text,0,$dist));
-				}
-			}
-			else {
-				$middle = substr($text,$lastPos,$dist);
-				if (strlen($middle)>30) {
-					$out.=
-					encodeXML(substr($middle,0,14)).
-					' ... '.
-					encodeXML(substr($middle,strlen($middle)-14,14));
-				}
-				else {
-					$out.=encodeXML($middle);
-				}
-			}
-			$out.='<highlight>'.encodeXML($word).'</highlight>';
-		}
-		$lastPos=$pos+strlen($word);
-	}
-	if ((strlen($text)-$lastPos)>14) {
-		$out.=encodeXML(substr($text,$lastPos,14)).' ...';
-	}
-	else {
-		$out.=encodeXML(substr($text,$lastPos));
-	}
-	return $out;
-}
-
-/**
  * Escapes special HTML characters and inserts break tags as <br/>
  * @param string $input The text to escape
  * @return string Escaped HTML string with break tags
@@ -144,45 +80,6 @@ function htmlnumericentities(&$str){
 
 
 
-/**
- * Converts email addresses of a text to links
- * @param string $string The text to analyze
- * @param string $tag The name of the tag to insert, fx: a
- * @param string $attr The name of attribute to use, fx: href
- * @param string $protocol The protocol prefix to use, fx: mailto: og "nothing"
- * @return string The text with inserted email links
- */
-function insertEmailLinks($string,$tag='a',$attr='href',$protocol='mailto:',$class='') {
-	$pattern = "/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4}))\b/i";
-	$replacement = '<'.$tag.' '.$attr.'="'.$protocol.'${1}"'.($class!='' ? ' class="'.$class.'"' : '').'>${1}</'.$tag.'>';
-	return preg_replace($pattern, $replacement, $string);
-}
-
-/**
- * Converts http addresses of a text to links
- * @param string $string The text to analyze
- * @param string $tag The name of the tag to insert, fx: a
- * @param string $attr The name of the attribute to use, fx: href
- * @return string The text with inserted links
- */
-function insertUrlLinks($string,$tag='a',$attr='href',$class='') {
-	$pattern = "/((http:\/\/[a-z0-9\-\.]+\.[a-z0-9]{2,3})((\/[a-z0-9.\?&\/\#=_\-\)\(;]*)| |\r\n))/mi";
-	$replacement = '<'.$tag.' '.$attr.'="${2}${4}"'.($class!='' ? ' class="'.$class.'"' : '').'>${1}</'.$tag.'>';
-	return preg_replace($pattern, $replacement, $string);
-}
-
-/**
- * Converts markup of type: [tag]..[tag] to: <tag>...</tag>
- * @param string $orig The name of the existing tag
- * @param string $result The name of the resulting tag
- * @param string $string The text to analyze
- * @return string The text with converted tags
- */
-function convertToTags($orig,$result,$string) {
-	$pattern = "/\[".$orig."\]([^\[\]]+)\[".$orig."\]/i";
-	$replacement = "<".$result.">\${1}</".$result.">";
-	return preg_replace($pattern, $replacement, $string);
-}
 
 /**
  * Appends a word to a string using a separator if neither are empty
@@ -460,20 +357,6 @@ function requestGetDate($key) {
 	}
 	else {
 		return '';
-	}
-}
-
-/**
- * Gets the value of a checkbox passed thru the get protocol
- * @param string $key The name of the checkbox
- * @return boolean True if the checkbox was checked, false otherwise
- */
-function requestGetCheckbox($key) {
-	if (isset($_GET[$key]) && $_GET[$key]=='on') {
-		return true;
-	}
-	else {
-		return false;
 	}
 }
 
