@@ -94,16 +94,16 @@
 </xsl:template>
 
 <xsl:template match="s:results/s:group">
-<xsl:variable name="type" select="@type"/>
-<div class="search_result_group">
-<h2>
-<xsl:value-of select="//s:type[@unique=$type]/@label"/>
-</h2>
-<xsl:call-template name="s:counter"/>
-<ol>
-<xsl:apply-templates/>
-</ol>
-</div>
+	<xsl:variable name="type" select="@type"/>
+	<div class="search_result_group">
+		<xsl:if test="//s:type[@unique=$type]/@label!=''">
+			<h2><xsl:value-of select="//s:type[@unique=$type]/@label"/></h2>
+		</xsl:if>
+		<xsl:call-template name="s:counter"/>
+		<ol>
+		<xsl:apply-templates/>
+		</ol>
+	</div>
 </xsl:template>
 
 <xsl:template match="s:page">

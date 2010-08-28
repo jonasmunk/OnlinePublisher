@@ -26,7 +26,7 @@
 			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
 		</xsl:when>
 		<xsl:otherwise>
-			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+			<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
 		</xsl:otherwise>
 	</xsl:choose>
 	<xsl:comment><![CDATA[[if lt IE 7]>

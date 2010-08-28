@@ -1,115 +1,154 @@
-h1.Search {
-	margin: 0px 0px 10px 0px;
-	color: lightgrey;
-	font-family: Tahoma,Verdana;
-	}
+div.search h1
+{
+	margin-bottom: 10px;
+}
 
-p.Search {
-	font-family: Tahoma,Verdana;
-	font-size: 10pt;
-	margin: 0px 0px 10px 0px;
-	}
+div.search form
+{
+	margin: 0;
+	padding: 5px 0;
+}
 
-#SearchBox {
-	background-color: #F8F8F8;
-	border: solid 1px #DEDEDE;
-	padding: 5px;
-}
-fieldset.SearchTypes {
-	display: inline;
-	border: solid 1px #DEDEDE;
-	width: 120px;
-	padding: 4px;
-	margin-left: 10px;
-	float: right;
-}
-div.SearchMethod {
-	font-size: 10px;
-	font-family: Tahoma,Verdana;
-}
-legend.SearchTypes {
-	font-size: 10px;
-	font-family: Tahoma,Verdana;
-}
-span.SearchTypes {
-	font-size: 10px;
-	font-family: Tahoma,Verdana;
-}
-input.SearchField {
-	font-size: 12px;
-	font-family: Tahoma,Verdana;
-	border: solid 1px #bbb;
-	padding: 3px;
+div.search form input.text
+{
 	width: 200px;
 }
-input.SearchButton {
-	font-size: 12px;
-	font-family: Tahoma,Verdana;
-	border: solid 1px #bbb;
-	padding: 2px;
-	margin-left: 3px;
+
+div.search form input.submit
+{
+	margin-left: 5px;
 }
-form.Search {
+
+div.search_method
+{
+	padding-top: 3px;
+	margin-left: 5px;
+}
+
+div.search_method label
+{
+	font-size: 9pt;
+	vertical-align: middle;
+	margin: 0px 10px 0px 0px;
+}
+
+div.search_method input
+{
+	vertical-align: middle;
+	margin: 0px 3px 0px 0px;
+}
+
+
+div.search_types
+{
+	padding: 5px;
+	font-size: 9pt;
+	margin-top: 5px;
+}
+
+div.search_types input
+{
+	vertical-align: middle;
+	margin: 0px 3px 0px 0px;
+}
+
+div.search_types label
+{
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+/*********************** Group *********************/
+
+div.search_result_group
+{
+	margin-top: 15px;
+}
+
+div.search_result_group h2
+{
+	font-size: 10pt;
+	color: #333;
+	font-weight: normal;
+	float: left;
+	margin: 0px 0px 0px 5px;
+	padding-bottom: 5px;
+}
+
+p.search_result_count
+{
+	float: right;
+	margin: 0px 5px 0px 0px;
+	font-size: 9pt;
+	color: #666;
+}
+
+div.search_result_group ol
+{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	border-top: 1px solid #eee;
+}
+
+/*********************** Items *********************/
+
+li.search_result_item
+{
+	border-bottom: 1px solid #eee;
+	padding: 5px 5px;
+	overflow: hidden;
+}
+
+li.search_result_item h3
+{
+	font-size: 10pt;
 	margin: 0px;
 }
-div.SearchResultBox {
-	border: solid 1px #eee;
-	padding: 3px 3px 0px 3px;
-	margin-top: 20px;
+
+p.search_result_description
+{
+	font-size: 9pt;
+	font-style: italic;
 }
 
-div.SearchResult {
-	border: solid 1px #eee;
-	padding: 1px 1px 0px 1px;
-	margin-bottom: 3px;
-	margin-top: 3px;
+p.search_result_summary
+{
+	font-size: 9pt;
+	margin: 5px 0px 0px;
 }
 
-div.SearchResultHeader {
-	text-align: center;
-	background-color: #eee;
-	padding: 2px;
-	font-family: Tahoma,Verdana;
-	color: #aaa;
-	font-size: 10px;
-	}
-div.SearchResultTitle {
-	text-align: left;
-	background-color: #f6f6f6;
-	padding: 2px;
-	font-family: Tahoma,Verdana;
-	color: #000;
-	font-size: 12px;
-	height: 14px;
-	}
-div.SearchResultSummary {
-	text-align: left;
-	background-color: #fefefe;
-	padding: 2px;
-	font-family: Tahoma,Verdana;
-	color: #555;
-	font-size: 10px;
-	padding-left: 20px;
-	}
-div.SearchResultDescription {
-	text-align: left;
-	background-color: #fefefe;
-	padding: 2px;
-	font-family: Tahoma,Verdana;
-	font-size: 11px;
-	}
-a.SearchResultTitle {
-	float: left;
-	}
-span.SearchResultProps {
+p.search_result_note
+{
 	color: #666;
-	font-family: Tahoma,Verdana;
-	font-size: 9px;
-	float: right;
-	}
-td.SearchResultPreview {
-	padding: 3px;
+	font-size: 9pt;
+	margin: 5px 0px 0px 20px;
+	font-style: italic;
 }
-strong.SearchHighlight {
-	color: red;
-	}
+
+em.search_result_highlight
+{
+	background: #ff0;
+	padding: 0px 3px;
+	font-style: normal;
+	-moz-border-radius: 2px;
+}
+
+p.search_result_metadata
+{
+	color: #666;
+	margin: 0px;
+	font-size: 9pt;
+}
+
+li.search_result_item img
+{
+	float: left;
+	margin-right: 10px;
+}
+
+div.search_result_links
+{
+	margin-top: 5px;
+	font-size: 9pt;
+}
