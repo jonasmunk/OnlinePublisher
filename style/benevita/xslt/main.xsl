@@ -75,9 +75,12 @@
 					<div class="layout_box">
 						<div class="layout_box_top"><xsl:comment/></div>
 						<div class="layout_box_middle">
-							<blockquote>The shy is the limit</blockquote>
-							<blockquote>If you can dream it, you can do it</blockquote>
-							<blockquote>Hvis det du gør ikke virker, så gør noget andet</blockquote>
+							<xsl:for-each select="//f:newsblock//o:object">
+								<blockquote>
+									<p class="title"><xsl:value-of select="o:title"/></p>
+									<p class="note"><xsl:value-of select="o:note"/></p>
+								</blockquote>
+							</xsl:for-each>
 						</div>
 						<div class="layout_box_bottom"><xsl:comment/></div>
 					</div>
@@ -91,9 +94,10 @@
 					<div class="layout_content_bottom"><xsl:comment/></div>
 				</div>
 				<div class="layout_bottom">
-					Fynbogaard · Bjerrevej 318 · Bjerre · 8783 Hornsyld · Mobil 26 14 87 36
+					Benevita, Dalby Allé, Dall Villaby, 9230 Svenstrup, (+45) 22 41 44 47, <a href="mailto:kontakt@benevita.dk">kontakt@benevita.dk</a>
 				</div>
 			</div>
+			<script src="{$path}style/{$design}/js/layout.js" type="text/javascript"><xsl:text> </xsl:text></script>
 		</body>
 	</html>
 </xsl:template>
@@ -199,155 +203,6 @@
 <ul><xsl:apply-templates/></ul>
 </xsl:if>
 </li>
-</xsl:if>
-</xsl:template>
-
-
-
-
-
-<!--            Links              -->
-
-
-<xsl:template match="f:links/f:top">
-<div class="links_top">
-<div>
-<xsl:apply-templates select="//f:frame/f:userstatus"/> · 
-<a title="Udskriv siden" class="common" href="?id={//p:page/@id}&amp;print=true">Udskriv</a>
-<xsl:apply-templates/>
-</div>
-</div>
-</xsl:template>
-
-<xsl:template match="f:links/f:bottom">
-<div class="case_links">
-<xsl:apply-templates/>
-<xsl:if test="f:link"><span>&#160;&#183;&#160;</span></xsl:if>
-<a title="XHTML 1.1" class="common" href="http://validator.w3.org/check?uri=referer"><span>XHTML 1.1</span></a>
-</div>
-</xsl:template>
-
-<xsl:template match="f:links/f:bottom/f:link">
-<xsl:if test="position()>1"><span>&#160;&#183;&#160;</span></xsl:if>
-<a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
-</xsl:template>
-
-<xsl:template match="f:links/f:top/f:link">
-<span>&#160;&#183;&#160;</span>
-<a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
-</xsl:template>
-
-
-
-<!--            Text              -->
-
-
-
-
-
-<xsl:template match="f:text/f:bottom">
-<span class="text">
-	<xsl:comment/>
-<xsl:apply-templates/>
-</span>
-</xsl:template>
-
-<xsl:template match="f:text/f:bottom/f:break">
-	<br/>
-</xsl:template>
-
-
-<xsl:template match="f:text/f:bottom/f:link">
-<a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
-<span><xsl:apply-templates/></span>
-</a>
-</xsl:template>
-
-
-
-
-<!--            News              -->
-
-
-
-
-
-<xsl:template match="f:newsblock">
-<div class="case_news">
-<h2><xsl:value-of select="@title"/></h2>
-<xsl:apply-templates/>
-</div>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:object">
-<div class="case_news_item">
-<h3>
-<xsl:value-of select="o:title"/>
-</h3>
-<p class="case_news_text">
-<xsl:apply-templates select="o:note"/>
-</p>
-<xsl:apply-templates select="o:sub/n:news/n:startdate"/>
-<xsl:apply-templates select="o:links"/>
-</div>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:links">
-<p class="case_news_links">
-<xsl:apply-templates/>
-</p>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:note">
-<xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:break">
-<br/>
-</xsl:template>
-
-<xsl:template match="f:newsblock//n:startdate">
-<p class="case_news_date"> <xsl:value-of select="@day"/>/<xsl:value-of select="@month"/><!--/<xsl:value-of select="substring(@year,3,2)"/>--></p>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:link">
-<xsl:if test="position()>1"><xsl:text> </xsl:text></xsl:if>
-<a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
-<span>
-<xsl:value-of select="@title"/>
-</span>
-</a>
-</xsl:template>
-
-
-
-<!--                  Search                     -->
-
-
-<xsl:template name="search">
-<xsl:if test="f:frame/f:search">
-<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
-<div>
-<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
-<xsl:for-each select="f:frame/f:search/f:types/f:type">
-<input type="hidden" name="{@unique}" value="on"/>
-</xsl:for-each>
-<input type="text" class="text" name="query" id="searchfield"/>
-<input type="submit" class="submit" value="Søg"/>
-</div>
-</form>
-<script type="text/javascript"><xsl:comment>
-new op.SearchField({element:'searchfield',placeholder:'Søg her!'});
-</xsl:comment>
-</script>
 </xsl:if>
 </xsl:template>
 

@@ -9,6 +9,7 @@
 <xsl:template match="rt:richtext">
 <div class="PartRichtext">
 <xsl:apply-templates mode="copy-no-ns" select="node()"/>
+<xsl:comment/>
 </div>
 </xsl:template>
 

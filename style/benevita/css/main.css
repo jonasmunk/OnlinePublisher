@@ -31,6 +31,11 @@ div.layout_bottom
 	margin: 15px 0;
 }
 
+div.layout_bottom a
+{
+	color: #fff;
+}
+
 div.layout_front
 {
 	background: url('../gfx/front.jpg');
@@ -240,6 +245,18 @@ div.layout_box blockquote
 	margin: 10px 0;
 	font-style: italic;
 	font-size: 13px;
+	display: none;
+}
+
+div.layout_box blockquote p
+{
+	margin: 0;
+}
+
+div.layout_box blockquote p.note
+{
+	margin: 0;
+	text-indent: 20px;
 }
 
 div.layout_contact p
