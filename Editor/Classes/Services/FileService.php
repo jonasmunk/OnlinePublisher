@@ -73,7 +73,16 @@ class FileService {
 		array('kind' => 'document.powerpoint', 'category' => 'document', 'label' => 'Microsoft PowerPoint',
 			'mimetypes' => array('application/vnd.ms-powerpoint'),
 			'extensions'=>array('ppt')
+		),
+		array('kind' => 'audio.windowsmedia', 'category' => 'audio', 'label' => 'Windows Media Audio',
+			'mimetypes' => array('audio/x-ms-wma'),
+			'extension'=>array()
+		),
+		array('kind' => 'audio.windowsmedia.playlist', 'category' => 'audio', 'label' => 'Windows Media Playlist',
+			'mimetypes' => array('application/vnd.ms-wpl'),
+			'extension'=>array('wpl')
 		)
+		
 		
 	);
 	

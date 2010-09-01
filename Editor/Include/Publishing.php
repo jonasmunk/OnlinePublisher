@@ -43,12 +43,7 @@ function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationP
 	else {
 		$incPath=$path;
 	}
-	if (file_exists($basePath.'style/'.$design.'/'.$agent.'/'.$template.'.xsl')) {
-		$contentDesign=$design;
-	} else if (file_exists($basePath.'style/'.$design.'/others/'.$template.'.xsl')) {
-		$contentDesign=$design;
-		$agent='others';
-	} else if (file_exists($basePath.'style/'.$design.'/xslt/'.$template.'.xsl')) {
+	if (file_exists($basePath.'style/'.$design.'/xslt/'.$template.'.xsl')) {
 		$contentDesign=$design;
 		$agent='xslt';
 	} else if (file_exists($basePath.'style/basic/xslt/'.$template.'.xsl')) {
@@ -57,26 +52,22 @@ function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationP
 	} else {
 		$contentDesign='basic';
 	}
-	if (file_exists($basePath.'style/'.$design.'/xslt/main.xsl')) {
-		$mainFile='main';
-		$mainDesign=$design;
-		$mainFolder='xslt';
-	} else if (file_exists($basePath.'style/'.$design.'/'.$agent.'/stylesheet.xsl')) {
+	error_log($agent);
+	if (file_exists($basePath.'style/'.$design.'/'.$agent.'/stylesheet.xsl')) {
 		$mainFile='stylesheet';
 		$mainDesign=$design;
-		$mainFolder=$agent;
+	} else if (file_exists($basePath.'style/'.$design.'/xslt/main.xsl')) {
+		$mainFile='main';
+		$mainDesign=$design;
 	} else if (file_exists($basePath.'style/'.$design.'/others/stylesheet.xsl')) {
 		$mainFile='stylesheet';
 		$mainDesign=$design;
-		$mainFolder='others';
 	} else if (file_exists($basePath.'style/'.$design.'/xslt/stylesheet.xsl')) {
 		$mainFile='stylesheet';
 		$mainDesign=$design;
-		$mainFolder='xslt';
 	} else {
 		$mainFile='stylesheet';
 		$mainDesign='basic';
-		$mainFolder=$agent;
 	}
 	$userId=0;
 	$userName='';
@@ -86,11 +77,17 @@ function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationP
 		$userName=$user['username'];
 		$userTitle=$user['title'];
 	}
+	$mainPath = $incPath.'style/'.$mainDesign.'/xslt/'.$mainFile.'.xsl';
+	if (Request::getBoolean('print')) {
+		$mainPath = $incPath.'style/'.$mainDesign.'/xslt/print.xsl';
+	}
+	$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
+	
 	$xslData='<?xml version="1.0" encoding="ISO-8859-1"?>'.
 	'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 	'<xsl:output method="html" indent="no" encoding="ISO-8859-1"/>'.
-	'<xsl:include href="'.$incPath.'style/'.$mainDesign.'/'.$mainFolder.'/'.$mainFile.'.xsl"/>'.
-	'<xsl:include href="'.$incPath.'style/'.$contentDesign.'/'.$agent.'/'.$template.'.xsl"/>'.
+	'<xsl:include href="'.$mainPath.'"/>'.
+	'<xsl:include href="'.$templatePath.'"/>'.
 	'<xsl:variable name="design">'.$design.'</xsl:variable>'.
 	'<xsl:variable name="path">'.$urlPath.'</xsl:variable>'.
 	'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.

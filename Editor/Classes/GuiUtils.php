@@ -178,6 +178,7 @@ class GuiUtils {
 			case 'text/rtf' : return "RTF-dokument";
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : return 'Microsoft Word';
 			case 'application/vnd.ms-excel' : return 'Microsoft Excel';
+			case 'audio/x-ms-wma' : return 'Windows media lyd';
 			default: return (string)$mimeType;
 		} 
 	}
