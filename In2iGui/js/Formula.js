@@ -557,13 +557,16 @@ In2iGui.Formula.DropDown.prototype = {
 		In2iGui.addFocusClass({element:this.element,'class':'in2igui_dropdown_focused'});
 		this.element.observe('click',this.clicked.bind(this));
 		this.element.observe('blur',this.hideSelector.bind(this));
+		this.element.observe('keydown',this._keyDown.bind(this));
 	},
 	/** @private */
 	updateIndex : function() {
 		this.index=-1;
-		this.items.each(function(item,i) {
-			if (item.value==this.value) this.index=i;
-		}.bind(this));
+		for (var i=0; i < this.items.length; i++) {
+			if (this.items[i].value==this.value) {
+				this.index=i;
+			}
+		};
 	},
 	/** @private */
 	updateUI : function() {
@@ -611,6 +614,29 @@ In2iGui.Formula.DropDown.prototype = {
 	},
 	getValue : function() {
 		return this.value;
+	},
+	/** @private */
+	_keyDown : function(e) {
+		if (this.items.length==0) {
+			return;
+		}
+		if (e.keyCode==40) {
+			if (this.index>=this.items.length-1) {
+				this.value=this.items[0].value;
+			} else {
+				this.value=this.items[this.index+1].value;
+			}
+			this.updateIndex();
+			this.updateUI();
+		} else if (e.keyCode==38) {
+			if (this.index>0) {
+				this.index--;
+			} else {
+				this.index = this.items.length-1;
+			}
+			this.value = this.items[this.index].value;
+			this.updateUI();
+		}
 	},
 	setValue : function(value) {
 		this.value = value;
