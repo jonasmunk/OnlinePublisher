@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Services/FileService.php';
 
 $id = requestGetNumber('id',0);
 $return = requestGetText('return');
@@ -78,7 +79,7 @@ function buildLinks($id,$position) {
 			$out.=' page="'.$row['target_id'].'"';
 		}
 		else if ($row['target_type']=='file') {
-			$out.=' file="'.$row['target_id'].'" filename="'.StringUtils::escapeXML(getFileFilename($row['target_id'])).'"';
+			$out.=' file="'.$row['target_id'].'" filename="'.StringUtils::escapeXML(FileService::getFileFilename($row['target_id'])).'"';
 		}
 		else if ($row['target_type']=='url') {
 			$out.=' url="'.StringUtils::escapeXML($row['target_value']).'"';
@@ -103,16 +104,5 @@ function buildNews($id) {
 	}
 	Database::free($result);
 	return $out;
-}
-
-function getFileFilename($id) {
-	$output=NULL;
-	$sql = "select filename from file where id=".$id;
-	$result = Database::select($sql);
-	if ($row = Database::next($result)) {
-		$output=$row['filename'];
-	}
-	Database::free($result);
-	return $output;
 }
 ?>

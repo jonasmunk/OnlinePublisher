@@ -6,6 +6,7 @@
 
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/Database.php');
+require_once($basePath.'Editor/Classes/TemplateController.php');
 
 class PublishingService {
 	
@@ -18,7 +19,7 @@ class PublishingService {
 		$index='';
 		$sql="select template.unique from page,template where page.template_id=template.id and page.id=".$id;
 		if ($row = Database::selectFirst($sql)) {
-		    if ($controller = PublishingService::getTemplateController($row['unique'],$id)) {
+		    if ($controller = TemplateController::getController($row['unique'],$id)) {
 		        $result = $controller->build();
 		        $data = $result['data'];
 		        $index = $result['index'];
@@ -63,19 +64,6 @@ class PublishingService {
 			$object->publish();
 		}
 		
-	}
-	
-	function getTemplateController($unique,$id) {
-		global $basePath;
-	    $controllerPath = $basePath.'Editor/Template/'.$unique.'/'.ucfirst($unique).'Controller.php';
-	    if (file_exists($controllerPath)) {
-		    require_once $controllerPath;
-		    $controllerClassName = ucfirst($unique).'Controller';
-	        $controller = new $controllerClassName($id);
-	        return $controller;
-	    } else {
-	        return false;
-	    }
 	}
 	
 	function getUnpublishedPages() {

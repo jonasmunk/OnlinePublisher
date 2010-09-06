@@ -8,20 +8,21 @@
 <xsl:template match="e:message">
 <html>
 <head>
-<title>Fejlbesked</title>
+<title><xsl:value-of select="e:title"/></title>
 <style>
 	* {font-family: Tahoma,Verdana,sans-serif}
-	body {background-color: #eee;}
+	body {background-color: #fafafa;}
 	div {
 		border: solid 1px #ddd;
 		width: 400px;
 		margin: 30px auto 0 auto;
 		background-color: #fff;
 		padding: 30px 20px 30px 20px;
+		border-radius: 5px;
 		}
 	h1 {font-size: 14pt; color: #aaa; margin: 0px;}
 	p {font-size: 10pt; margin: 5px 0px 0px 0px; color: #333;}
-	strong {display: block; width: 440px; font-weight: normal; font-size: 8pt; color: #aab; text-align: right; margin: 2px auto 0px auto; letter-spacing: 1px;}
+	strong {display: block; width: 440px; font-weight: normal; font-size: 8pt; color: #aab; text-align: center; margin: 2px auto 0px auto; letter-spacing: 1px;}
 </style>
 </head>
 <body>

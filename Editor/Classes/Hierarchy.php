@@ -5,7 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/EventManager.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Include/Publishing.php');
+require_once($basePath.'Editor/Classes/Services/FileService.php');
 
 class Hierarchy {
     
@@ -189,7 +189,7 @@ class Hierarchy {
 					}
         		}
         		else if ($row['target_type']=='file') {
-        			$output.=' file="'.$row['target_id'].'" filename="'.StringUtils::escapeXML(getFileFilename($row['target_id'])).'"';
+        			$output.=' file="'.$row['target_id'].'" filename="'.StringUtils::escapeXML(FileService::getFileFilename($row['target_id'])).'"';
         		}
         		else if ($row['target_type']=='url') {
         			$output.=' url="'.StringUtils::escapeXML($row['target_value']).'"';

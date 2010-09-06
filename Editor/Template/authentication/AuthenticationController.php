@@ -4,6 +4,7 @@
  * @subpackage Templates.Authentication
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/ExternalSession.php');
 
 class AuthenticationController extends TemplateController {
     
@@ -58,7 +59,7 @@ class AuthenticationController extends TemplateController {
 					$xml .= '<message type="nopassword"/>';
 			}
 			else {
-				if ($user = logInExternalUser(requestPostText('username'),requestPostText('password'))) {
+				if ($user = ExternalSession::logIn(requestPostText('username'),requestPostText('password'))) {
 					if (requestPostExists('page')) {
 						$state['redirect'] = './?id='.requestPostNumber('page');
 					}

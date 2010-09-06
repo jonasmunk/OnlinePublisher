@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/TemplateController.php');
 require_once $basePath.'Editor/Classes/Part.php';
 require_once $basePath.'Editor/Classes/News.php';
 require_once($basePath.'Editor/Classes/Request.php');
+require_once($basePath.'Editor/Classes/ExternalSession.php');
 
 class NewseditorController extends TemplateController {
     
@@ -79,7 +80,7 @@ class NewseditorController extends TemplateController {
 		$props = array('title','note','startdate','enddate','groups');
 		$xml .= $this->generateProperties($props,$response);
 		
-		$sql="select data from object where type='news' and owner_id=".intval(getExternalUser()).' order by title';
+		$sql="select data from object where type='news' and owner_id=".intval(ExternalSession::getUser()).' order by title';
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$xml.=$row['data'];
@@ -136,7 +137,7 @@ class NewseditorController extends TemplateController {
 			$news->setNote($note);
 			$news->setStartdate($parsedStartdate);
 			$news->setEnddate($parsedEnddate);
-			$news->setOwnerId(getExternalUser());
+			$news->setOwnerId(ExternalSession::getUser());
 			$news->create();
 			$news->updateGroupIds($groups);
 			$news->publish();

@@ -179,4 +179,12 @@ class FileService {
 		Log::debug($response);
 		return $response;
 	}
+	
+	function getFileFilename($id) {
+		$sql = "select filename from file where object_id=".$id;
+		if ($row = Database::selectFirst($sql)) {
+			return $row['filename'];
+		}
+		return NULL;
+	}
 }

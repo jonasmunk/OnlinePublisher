@@ -7,15 +7,16 @@ require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
 require_once '../../../Include/Functions.php';
 require_once '../../../Include/XmlWebGui.php';
-require_once '../../../Include/Publishing.php';
 require_once '../../../Classes/Hierarchy.php';
 require_once '../../../Classes/Request.php';
+require_once '../../../Classes/Services/RenderingService.php';
+require_once '../../../Classes/Services/PageService.php';
 require_once '../Functions.php';
 
 if (requestGetExists('designsession')) {
 	$_SESSION['debug.design']=requestGetText('designsession');
 }
-if (requestGetBoolean('resetdesign')) {
+if (Request::getBoolean('resetdesign')) {
 	unset($_SESSION['debug.design']);
 }
 
@@ -35,7 +36,7 @@ if ($id==0) {
 		$id=getPageId();
 	}
 	else {
-		$id=findPage('home','../../../../');
+		$id=RenderingService::findPage('home','../../../../');
 	}
 }
 setPageId($id);
@@ -60,19 +61,18 @@ if ($row = Database::next($result)) {
 		if ($hist = Database::selectFirst($sql)) {
 			$data = $hist['data'];
 		} else {
-			$data = getPagePreview($id,$template);
+			$data = PageService::getPagePreview($id,$template);
 		}
 	} else {
-		$data = getPagePreview($id,$template);
+		$data = PageService::getPagePreview($id,$template);
 	}
-	//if ($row['dynamic']) {
 		
-		$stuff = applyContentDynamism($id,$template,$data);
-		$data = $stuff['data'];
-	//}
+	$stuff = RenderingService::applyContentDynamism($id,$template,$data);
+	$data = $stuff['data'];
+	
 	$framedata = $row['framedata'];
 	if ($row['framedynamic']) {
-		$framedata = applyFrameDynamism($row['frameid'],$framedata);
+		$framedata = RenderingService::applyFrameDynamism($row['frameid'],$framedata);
 	}
 	$design = $row['design'];
 	if (requestGetExists('design')) {
@@ -86,13 +86,13 @@ if ($row = Database::next($result)) {
 	'<meta>'.
 	'<description>'.encodeXML($row['description']).'</description>'.
 	'<keywords>'.encodeXML($row['keywords']).'</keywords>'.
-	buildDateTag('published',$row['published']).
+	RenderingService::buildDateTag('published',$row['published']).
 	'<language>'.encodeXML(strtolower($row['language'])).'</language>'.
 	'</meta>'.
 		'<design>'.
 		$row['parameters'].
 		'</design>'.
-	buildPageContext($id,$row['next_page'],$row['previous_page']).
+	RenderingService::buildPageContext($id,$row['next_page'],$row['previous_page']).
 	'<frame xmlns="'.$frameNS.'" title="'.encodeXML($row['frametitle']).'">'.
 	Hierarchy::build($row['hierarchy']).
 	$framedata.
@@ -106,7 +106,7 @@ if ($row = Database::next($result)) {
 		echo $xml;
 	}
 	else {
-		$html = applyStylesheet($xml,$design,$template,'../../../../','../../../../','','?id='.$id.'&amp;',true);
+		$html = RenderingService::applyStylesheet($xml,$design,$template,'../../../../','../../../../','','?id='.$id.'&amp;',true);
 		header("Content-Type: text/html; charset=UTF-8");
 		echo $html;
 	}

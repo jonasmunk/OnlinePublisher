@@ -6,7 +6,6 @@
 if (!ini_get('display_errors')) {
     ini_set('display_errors', 1);
 }
-//error_reporting(E_PARSE);
 if (!file_exists('Config/Setup.php')) {
 	header('Location: '.dirname($_SERVER['PHP_SELF']).'/setup/initial/');
 	exit;
@@ -14,19 +13,19 @@ if (!file_exists('Config/Setup.php')) {
 require_once 'Config/Setup.php';
 require_once 'Editor/Include/Public.php';
 require_once 'Editor/Include/Functions.php';
-//exit;
 require_once 'Editor/Include/XmlWebGui.php';
-require_once 'Editor/Include/Publishing.php';
 require_once 'Editor/Classes/Request.php';
 require_once 'Editor/Classes/Response.php';
 require_once 'Editor/Classes/Database.php';
+require_once 'Editor/Classes/Services/RenderingService.php';
+require_once 'Editor/Classes/ExternalSession.php';
 
 startSession();
 
 if (!Database::testConnection()) {
 	$error = '<title>Siden er ikke tilgængelig i øjeblikket.</title>'.
 	'<note>Prøv venligst igen senere.</note>';
-	displayError($error);
+	RenderingService::displayError($error);
 	exit;
 }
 
@@ -52,11 +51,11 @@ if (strlen($relative)==0) {
 }
 
 if (Request::getBoolean('logout')) {
-	logOutExternalUser();
+	ExternalSession::logOut();
 }
 
 if ($id==-1) {
-	$id=findPage('home',"");
+	$id=RenderingService::findPage('home',"");
 }
 if ($file>0) {
 	showFile($file);
@@ -64,9 +63,9 @@ if ($file>0) {
 else {
 	$allowDisabled = Request::exists('preview');
 	if ($path=='') {
-		$page = buildPage($id,$allowDisabled);
+		$page = RenderingService::buildPage($id,$allowDisabled);
 	} else {
-		$page = buildPage(-1,$allowDisabled,$path);
+		$page = RenderingService::buildPage(-1,$allowDisabled,$path);
 	}
     // If the page has redirect
 	if ($page && $page['redirect']!==false) {
@@ -78,16 +77,16 @@ else {
 		if (Request::exists('preview')) {
 			writePage($id,$page,$relative,$samePageBaseUrl);
 		}
-		else if ($user = getExternalUser()) {
-			if (userHasAccessToPage($user['id'],$id)) {
+		else if ($user = ExternalSession::getUser()) {
+			if (RenderingService::userHasAccessToPage($user['id'],$id)) {
 				writePage($id,$page,$relative,$samePageBaseUrl);
 			}
 			else {
-				goToAuthenticationPage($id);
+				RenderingService::goToAuthenticationPage($id);
 			}
 		}
 		else {
-			goToAuthenticationPage($id);
+			RenderingService::goToAuthenticationPage($id);
 		}
 	}
 	// If nothing special about page
@@ -106,12 +105,12 @@ else {
 			} else {
 				$error = '<title>Siden findes ikke!</title>'.
 				'<note>Den forespurgte side findes ikke på dette website.</note>';
-				displayError($error);
+				RenderingService::displayError($error);
 			}
 		} else {
 			$error = '<title>Siden findes ikke!</title>'.
 			'<note>Den forespurgte side findes ikke på dette website.</note>';
-			displayError($error);
+			RenderingService::displayError($error);
 		}
 	}
 }
@@ -121,7 +120,7 @@ function writePage($id,&$page,$relative,$samePageBaseUrl) {
 		header('Content-type: text/xml');
 		echo $page['xml'];
 	} else {
-		$html = applyStylesheet($page['xml'],getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
+		$html = RenderingService::applyStylesheet($page['xml'],getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
 		header("Content-Type: text/html; charset=UTF-8");
 		echo $html;
@@ -135,7 +134,7 @@ function showFile($id) {
 	} else {
 		$error = '<title>Filen findes ikke!</title>'.
 		'<note>Den forespurgte fil findes ikke på dette website.</note>';
-		displayError($error);
+		RenderingService::displayError($error);
 	}
 }
 

@@ -6,14 +6,14 @@
 require_once '../../Config/Setup.php';
 require_once '../Include/Security.php';
 require_once '../Include/Functions.php';
-require_once '../Include/Publishing.php';
+require_once '../Classes/Services/RenderingService.php';
 
 $id=requestGetNumber('id',-1);
 if (!($id>0)) {
 	$id = getPageId();
 }
 if (!($id>0)) {
-	$id=findPage('home');
+	$id=RenderingService::findPage('home');
 }
 if ($id>0) {
 	setPageId($id);

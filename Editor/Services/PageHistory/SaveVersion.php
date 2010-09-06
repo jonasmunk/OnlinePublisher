@@ -4,21 +4,13 @@
  * @subpackage Services.PageHistory
  */
 require_once '../../../Config/Setup.php';
-
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/Publishing.php';
-require_once '../../Classes/Page.php';
+require_once '../../Classes/Services/PageService.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Response.php';
 
-$id = requestGetNumber('id');
+$id = Request::getId();
+PageService::saveSnapshot($id);
 
-$page = Page::load($id);
-$template = $page->getTemplateUnique();
-
-
-$data = getPagePreview($id,$template);
-createPageHistory($id,$data);
-
-
-redirect('index.php');
+Response::redirect('index.php');
 ?>

@@ -1,4 +1,6 @@
 <?
+require_once($basePath.'Editor/Classes/Services/PublishingService.php');
+		
 class Page {
 
     var $id;
@@ -170,6 +172,7 @@ class Page {
     }
 	
 	function getTemplateController() {
+		// TODO: use method on TemplateController
 		global $basePath;
 		$unique = $this->templateUnique;
 	    $controllerPath = $basePath.'Editor/Template/'.$unique.'/'.ucfirst($unique).'Controller.php';
@@ -304,9 +307,7 @@ class Page {
 	}
 
 	function publish() {
-		global $basePath;
-		require_once($basePath.'Editor/Include/Publishing.php');
-		publishPage($this->id);
+		PublishingService::publishPage($this->id);
 	}
 
 	function delete() {

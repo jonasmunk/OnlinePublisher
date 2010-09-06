@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Services/RenderingService.php');
 
 class GuestbookController extends TemplateController {
     
@@ -63,7 +64,7 @@ class GuestbookController extends TemplateController {
 			$xml='<list>';
 			while ($row = Database::next($result)) {
 				$xml.='<item id="'.$row['id'].'">';
-				$xml.=buildDateTag('time',$row['unix']);
+				$xml.=RenderingService::buildDateTag('time',$row['unix']);
 				$xml.='<name>'.encodeXML($row['name']).'</name>';
 				$xml.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 				$xml.='</item>';
