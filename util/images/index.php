@@ -35,11 +35,12 @@ function sendImage() {
 	$rotate = requestGetNumber('rotate');
 	$quality = requestGetNumber('quality');
 	$greyscale = requestGetBoolean('greyscale');
+	$blur = requestGetBoolean('blur');
 	$format = requestGetText('format');
 	if ($format=='') $format='png';
 	$nocache = requestGetBoolean('nocache');
 
-	$cache = 'local/cache/images/'.$id.($max>0 ? 'm'.$max : '').($maxwidth>0 ? 'mw'.$maxwidth : '').($maxheight>0 ? 'mh'.$maxheight : '').($width>0 ? 'w'.$width : '').($height>0 ? 'h'.$height : '').($percent>0 ? 'p'.$percent : '').($rotate>0 ? 'r'.$rotate : '').($quality>0 ? 'q'.$quality : '').($greyscale ? 'G' : '').'.'.$format;
+	$cache = 'local/cache/images/'.$id.($max>0 ? 'm'.$max : '').($maxwidth>0 ? 'mw'.$maxwidth : '').($maxheight>0 ? 'mh'.$maxheight : '').($width>0 ? 'w'.$width : '').($height>0 ? 'h'.$height : '').($percent>0 ? 'p'.$percent : '').($rotate>0 ? 'r'.$rotate : '').($quality>0 ? 'q'.$quality : '').($greyscale ? 'G' : '').($blur ? 'B' : '').'.'.$format;
 	
 	if (!file_exists($basePath.$cache) || $nocache) {
 		$sql = 'select * from image where object_id='.$id;
@@ -135,6 +136,10 @@ function sendImage() {
 				greyscale($thumb);
 				//convertToGrayscale($image);
 			}
+			if ($blur) {
+				blur($thumb);
+				//convertToGrayscale($image);
+			}
 			if ($nocache) {
 				if ($format=='png') {
 					header('Content-Type: image/png');
@@ -217,6 +222,11 @@ function greyscale(&$image) {
             imagesetpixel($image, $x, $y, $newcol);
         }
     }
+}
+
+function blur(&$image) {
+	$gaussian = array(array(1.0, 2.0, 1.0), array(2.0, 4.0, 2.0), array(1.0, 2.0, 1.0));
+	ImageConvolution($image, $gaussian, 16, 0);
 }
 
 function duotone (&$image, $rplus, $gplus, $bplus) {
