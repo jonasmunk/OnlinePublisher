@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/International.php';
+require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Hierarchy.php';
 
 $id = requestGetNumber('id',0);
@@ -34,6 +34,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<textfield badge="Navn:" name="name">'.encodeXML($hier->getName()).'</textfield>'.
 '<select badge="Sprog" name="language" selected="'.$hier->getLanguage().'">'.
 '<option title="" value=""/>';
+$languages = GuiUtils::getLanguages();
 while ($language = current($languages)) {
     $gui.='<option value="'.key($languages).'" title="'.$language.'"/>';
     next($languages);

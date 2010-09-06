@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Templates.php';
-require_once '../../Include/International.php';
+require_once '../../Classes/GuiUtils.php';
 require_once '../../Include/Session.php';
 require_once 'PagesController.php';
 
@@ -73,6 +73,7 @@ else {
 '<textfield badge="Nølgeord:" name="keywords" hint="Ekstra ord til brug i søgning"/>'.
 '<select badge="Sprog" name="language" hint="Sidens primære sprog">'.
 '<option title="" value=""/>';
+$languages = GuiUtils::getLanguages();
 while ($language = current($languages)) {
     $gui.='<option value="'.key($languages).'" title="'.$language.'"/>';
     next($languages);

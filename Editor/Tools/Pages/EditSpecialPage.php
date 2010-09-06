@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/International.php';
+require_once '../../Classes/GuiUtils.php';
 
 $id=requestGetNumber('id',0);
 
@@ -18,6 +18,8 @@ $page=$row['page_id'];
 $language=$row['language'];
 $pages = buildPages();
 $sql="select * from page where design_id=".$id;
+
+$languages = GuiUtils::getLanguages();
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.

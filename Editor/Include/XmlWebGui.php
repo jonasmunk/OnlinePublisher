@@ -55,7 +55,7 @@ function xwgBuildOptions($array) {
 }
 
 function xwgBuildListLanguageIcon($lang,$alt='auto') {
-	global $languages;
+	$languages = GuiUtils::getLanguages();
 	$out = '';
 	if ($lang!='') {
 		if ($lang=='DA') {

@@ -7,9 +7,9 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Templates.php';
-require_once '../../Include/International.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
+require_once '../../Classes/GuiUtils.php';
 
 $sql="select language,count(id) as count from page group by language order by language";
 $result = Database::select($sql);
@@ -19,8 +19,8 @@ while ($row = Database::next($result)) {
 		$icon = 'monochrome/round_question';
 		$language = 'Intet sprog';
 	} else {
-		$icon = $languageIcons[$row['language']];
-		$language = $languages[$row['language']];
+		$icon = GuiUtils::getLanguageIcon($row['language']);
+		$language = GuiUtils::getLanguageName($row['language']);
 	}
 	if (array_key_exists($row['language'],$items)) {
 		$items[$row['language']]['count']+=$row['count'];

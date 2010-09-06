@@ -7,7 +7,6 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/International.php';
 require_once '../../Include/Session.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/BumbleBee.php';
@@ -130,6 +129,7 @@ $frames.
 '</select>'.
 '<select badge="Sprog:" name="language" selected="'.$page->getLanguage().'">'.
 '<option value="" title=""/>';
+$languages = GuiUtils::getLanguages();
 while ($language = current($languages)) {
     $gui.='<option value="'.key($languages).'" title="'.$language.'"/>';
     next($languages);

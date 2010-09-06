@@ -7,10 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Template.php';
-require_once '../../Include/International.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/GuiUtils.php';
 
 
 $windowSize = Request::getInt('windowSize',30);
@@ -87,7 +87,7 @@ function buildHierarchySql() {
 }
 
 function listPages() {
-	global $windowSize,$windowPage,$query,$sort,$kind,$value,$direction,$languageIcons;
+	global $windowSize,$windowPage,$query,$sort,$kind,$value,$direction;
 	
 	if ($sort=='') $sort='page.title';
 
@@ -110,18 +110,16 @@ function listPages() {
 	$writer->endHeaders();
 
 	$templates = Template::getTemplatesKeyed();
-
 	$result = Database::select($sql['list']);
 	while ($row = Database::next($result)) {
 		$modified = $row['publishdelta']>0;
-		$language = $row['language'] ? $languages[$row['language']] : '';
 		echo '<row id="'.$row['id'].'" title="'.In2iGui::escape($row['title']).'" kind="page" icon="common/page">'.
 		'<cell icon="common/page"><line>'.In2iGui::escape($row['title']).'</line>'.
 		($row['path'] ? '<line dimmed="true">'.In2iGui::escape($row['path']).'</line>' : '').
 		'</cell>'.
 		'<cell>'.In2iGui::escape($templates[$row['unique']]['name']).'</cell>'.
 		'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.In2iGui::escape($row['path']).'</line></cell>'.
-		'<cell icon="'.$languageIcons[$row['language']].'"></cell>'.
+		'<cell icon="'.GuiUtils::getLanguageIcon($row['language']).'"></cell>'.
 		'<cell'.($modified ? ' icon="monochrome/warning"' : '').'>'.In2iGui::escape($row['changed']).'</cell>'.
 		'</row>';
 	}

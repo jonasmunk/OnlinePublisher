@@ -9,7 +9,6 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Templates.php';
 require_once '../../Include/Session.php';
-require_once '../../Include/International.php';
 require_once 'PagesController.php';
 
 if (requestGetExists('tab')) {

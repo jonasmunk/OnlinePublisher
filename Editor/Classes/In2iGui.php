@@ -5,8 +5,8 @@ require_once($basePath.'Editor/Classes/Log.php');
 class In2iGui {
 
 	function display($elements,&$xmlData) {
-		global $basePath,$xwg_skin;
-		$skin = $xwg_skin;
+		global $basePath;
+		$skin = 'In2ition';
 		$xmlData='<?xml version="1.0" encoding="ISO-8859-1"?>'.$xmlData;
 		$xslData='<?xml version="1.0" encoding="ISO-8859-1"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.

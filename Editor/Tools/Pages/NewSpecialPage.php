@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/International.php';
+require_once '../../Classes/GuiUtils.php';
 require_once '../../Include/XmlWebGui.php';
 
 $pages = buildPages();
@@ -19,6 +19,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</titlebar>'.
 '<content padding="5" background="true">';
 if (strlen($pages)>0) {
+	$languages = GuiUtils::getLanguages();
 	$gui.='<form xmlns="uri:Form" action="CreateSpecialPage.php" method="post" name="Formula" focus="name">'.
 	'<group size="Large">'.
 	'<select badge="Type:" name="type">'.
