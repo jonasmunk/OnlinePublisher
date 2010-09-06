@@ -1053,140 +1053,6 @@ span.in2igui_style_length input
 	width: 50px;
 }
 
-/************************************* Drop down ********************************/
-
-a.in2igui_dropdown
-{
-	display: inline-block;
-	height: 26px;
-	background: url('../gfx/dropdown.png') -19px top no-repeat;
-	outline: none;
-	text-decoration: none;
-	color: #333;
-	font-size: 13px;
-	line-height: 26px;
-	vertical-align: middle;
-	text-align: left;
-}
-
-a.in2igui_dropdown span
-{
-	display: block;
-	height: 26px;
-	background: url('../gfx/dropdown.png') right -52px no-repeat;
-}
-
-a.in2igui_dropdown span span
-{
-	margin: 0 25px 0 6px;
-	background: url('../gfx/dropdown.png') left -26px repeat-x;
-	padding-left: 2px;
-	padding-right: 10px;
-}
-
-a.in2igui_dropdown:hover
-{
-	background-position: -19px -156px;
-}
-
-a.in2igui_dropdown:hover span
-{
-	background-position: right -208px;
-}
-
-a.in2igui_dropdown:hover span span
-{
-	background-position: left -182px;
-}
-
-a.in2igui_dropdown_focused
-{
-	background-position: -19px -78px;
-}
-
-a.in2igui_dropdown_focused span
-{
-	background-position: right -130px;
-}
-
-a.in2igui_dropdown_focused span span
-{
-	background-position: left -104px;
-}
-
-a.in2igui_dropdown_focused:hover
-{
-	background-position: -19px -234px;
-}
-
-a.in2igui_dropdown_focused:hover span
-{
-	background-position: right -286px;
-}
-
-a.in2igui_dropdown_focused:hover span span
-{
-	background-position: left -260px;
-}
-
-a.in2igui_dropdown strong
-{
-	display: block;
-	overflow: hidden;
-	font-weight: normal;
-	height: 26px;
-	width: 100%;
-}
-
-a.in2igui_dropdown em
-{
-	color: #456;
-}
-
-div.in2igui_dropdown_selector
-{
-	position: absolute;
-	display: none;
-	top: 0;
-	left: 0;
-	background: #fff;
-	border: 1px solid #ddd;
-	font-size: 12px;
-	-webkit-box-shadow: 0px 3px 5px #999;
-	-webkit-border: none;
-	-moz-box-shadow: 0px 3px 5px #999;
-	overflow: auto;
-	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
-}
-
-div.in2igui_dropdown_selector a
-{
-	padding: 2px 5px;
-	display: block;
-	text-decoration: none;
-	color: #333;
-}
-
-div.in2igui_dropdown_selector a.in2igui_selected
-{
-	background: #eee;
-	color: #000;
-	font-weight: bold;
-}
-
-div.in2igui_dropdown_selector a:hover
-{
-	background-color: #3875d7;
-	color: #fff;
-}
-
-/* Adaptive */
-
-a.in2igui_dropdown_adaptive
-{
-	width: 100%;
-}
-
 /************************************** Buttons *********************************/
 
 form.in2igui_formula div.in2igui_buttons_body
@@ -1502,6 +1368,136 @@ div.in2igui_window_dark input.in2igui_tokens_token
 div.in2igui_window_dark a.in2igui_checkbox
 {
 	color: #fff;
+}a.in2igui_dropdown
+{
+	display: inline-block;
+	height: 26px;
+	background: url('../gfx/dropdown.png') -19px top no-repeat;
+	outline: none;
+	text-decoration: none;
+	color: #333;
+	font-size: 13px;
+	line-height: 26px;
+	vertical-align: middle;
+	text-align: left;
+}
+
+a.in2igui_dropdown span
+{
+	display: block;
+	height: 26px;
+	background: url('../gfx/dropdown.png') right -52px no-repeat;
+}
+
+a.in2igui_dropdown span span
+{
+	margin: 0 25px 0 6px;
+	background: url('../gfx/dropdown.png') left -26px repeat-x;
+	padding-left: 2px;
+	padding-right: 10px;
+}
+
+a.in2igui_dropdown:hover
+{
+	background-position: -19px -156px;
+}
+
+a.in2igui_dropdown:hover span
+{
+	background-position: right -208px;
+}
+
+a.in2igui_dropdown:hover span span
+{
+	background-position: left -182px;
+}
+
+a.in2igui_dropdown_focused
+{
+	background-position: -19px -78px;
+}
+
+a.in2igui_dropdown_focused span
+{
+	background-position: right -130px;
+}
+
+a.in2igui_dropdown_focused span span
+{
+	background-position: left -104px;
+}
+
+a.in2igui_dropdown_focused:hover
+{
+	background-position: -19px -234px;
+}
+
+a.in2igui_dropdown_focused:hover span
+{
+	background-position: right -286px;
+}
+
+a.in2igui_dropdown_focused:hover span span
+{
+	background-position: left -260px;
+}
+
+a.in2igui_dropdown strong
+{
+	display: block;
+	overflow: hidden;
+	font-weight: normal;
+	height: 100%;
+	width: 100%;
+}
+
+a.in2igui_dropdown em
+{
+	color: #456;
+}
+
+div.in2igui_dropdown_selector
+{
+	position: absolute;
+	display: none;
+	top: 0;
+	left: 0;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 12px;
+	-webkit-box-shadow: 0px 3px 5px #999;
+	-webkit-border: none;
+	-moz-box-shadow: 0px 3px 5px #999;
+	overflow: auto;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.in2igui_dropdown_selector a
+{
+	padding: 2px 5px;
+	display: block;
+	text-decoration: none;
+	color: #333;
+}
+
+div.in2igui_dropdown_selector a.in2igui_selected
+{
+	background: #eee;
+	color: #000;
+	font-weight: bold;
+}
+
+div.in2igui_dropdown_selector a:hover
+{
+	background-color: #3875d7;
+	color: #fff;
+}
+
+/* Adaptive */
+
+a.in2igui_dropdown_adaptive
+{
+	width: 100%;
 }/************************ overflow **********************/
 
 

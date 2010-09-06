@@ -578,14 +578,16 @@ In2iGui.Formula.DropDown.prototype = {
 		} else if (this.options.placeholder) {
 			this.inner.update(new Element('em').update(this.options.placeholder.escapeHTML()));
 		} else {
-			this.inner.update();
+			this.inner.innerHTML='';
 		}
-		if (!this.selector) return;
+		if (!this.selector) {
+			return;
+		}
 		this.selector.select('a').each(function(a,i) {
 			if (this.index==i) {
 				a.addClassName('in2igui_selected');
 			}
-			else a.className='';
+			else {a.className=''};
 		}.bind(this));
 	},
 	/** @private */
