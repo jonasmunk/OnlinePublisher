@@ -11,7 +11,7 @@ ui.onReady(function() {
 			index = 0;
 		}
 		blocks[index].style.display='block';
-		window.setTimeout(timer,4000);
+		window.setTimeout(timer,6000);
 	}
 	timer();
 })

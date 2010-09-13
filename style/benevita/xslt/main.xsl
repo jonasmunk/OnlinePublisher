@@ -62,7 +62,7 @@
 								Dall Villaby<br/>
 								9230 Svenstrup<br/>
 								(+45) 22 41 44 47<br/>
-								kontakt@benevita.dk
+								<a href="mailto:kontakt@benevita.dk">kontakt@benevita.dk</a>
 							</p>
 						</div>
 						<div class="layout_box_bottom"><xsl:comment/></div>

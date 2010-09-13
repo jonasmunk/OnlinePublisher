@@ -1,18 +1,18 @@
 div.part_imagegallery
 {
 	overflow: hidden;
+	font-size: 0;
 }
 
 div.part_imagegallery a
 {
-	float: left;
+	display: inline-block;
 	margin: 0px 10px 10px 0px;
 	text-decoration: none;
 }
 
 div.part_imagegallery_framed a
 {
-	float: left;
 	margin: 0px 10px 10px 0px;
 	border: 1px solid #DDDDDD;
 	border-bottom: 1px solid #bbb;
@@ -40,4 +40,11 @@ div.part_imagegallery span
 div.part_imagegallery img
 {
 	border: 0px;
+}
+
+div.part_imagegallery_changing a
+{
+	display: none;
+	float: none;
+	position: absolute;
 }

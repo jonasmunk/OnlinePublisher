@@ -28,6 +28,7 @@ class PartImagegallery extends Part {
 		    '<input type="hidden" name="height" value="'.$row['height'].'"/>'.
 		    '<input type="hidden" name="framed" value="'.($row['framed'] ? 'true' : 'false').'"/>'.
 		    '<input type="hidden" name="showTitle" value="'.($row['show_title'] ? 'true' : 'false').'"/>'.
+		    '<input type="hidden" name="variant" value="'.$row['variant'].'"/>'.
 			'<script src="'.$baseUrl.'Editor/Parts/imagegallery/script.js" type="text/javascript" charset="utf-8"></script>'.
 			'<div id="part_imagegallery_container">'.$this->render().'</div>';
 		}
@@ -49,11 +50,13 @@ class PartImagegallery extends Part {
 		$group = Request::getInt('group');
 		$framed = Request::getBoolean('framed');
 		$showTitle = Request::getBoolean('showTitle');
+		$variant = Request::getString('variant');
 		$sql = "update part_imagegallery set".
 		" imagegroup_id=".$group.
 		",height=".$height.
 		",framed=".Database::boolean($framed).
 		",show_title=".Database::boolean($showTitle).
+		",variant=".Database::text($variant).
 		" where part_id=".$this->id;
 		Database::update($sql);
 		error_log($sql);
@@ -63,7 +66,7 @@ class PartImagegallery extends Part {
 	}
 	
 	function sub_build($context) {
-		$sql = "select height,imagegroup_id as `group`,framed,show_title from part_imagegallery where part_id=".$this->id;
+		$sql = "select height,imagegroup_id as `group`,framed,show_title,variant from part_imagegallery where part_id=".$this->id;
 		if ($data = Database::selectFirst($sql)) {
 			return $this->generate($data);
 		} else {
@@ -76,14 +79,15 @@ class PartImagegallery extends Part {
 			'height'=>Request::getInt('height'),
 			'group'=>Request::getInt('group'),
 			'framed'=>Request::getBoolean('framed'),
-			'show_title'=>Request::getBoolean('showTitle')
+			'show_title'=>Request::getBoolean('showTitle'),
+			'variant'=>Request::getString('variant')
 		);
 		return $this->generate($params);
 	}
 		
 	function generate($params) {
 		$data = '<imagegallery xmlns="'.$this->_buildnamespace('1.0').'">';
-		$data.='<display height="'.$params['height'].'" framed="'.($params['framed'] ? 'true' : 'false').'" show-title="'.($params['show_title'] ? 'true' : 'false').'"/>';
+		$data.='<display height="'.$params['height'].'" variant="'.StringUtils::escapeXML($params['variant']).'" framed="'.($params['framed'] ? 'true' : 'false').'" show-title="'.($params['show_title'] ? 'true' : 'false').'"/>';
 		$sql="select object.data from object,imagegroup_image where imagegroup_image.image_id = object.id and imagegroup_image.imagegroup_id=".$params['group']." order by object.title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -110,6 +114,10 @@ class PartImagegallery extends Part {
 			</dropdown>
 			<number label="H&#248;jde" name="height"/>
 			<divider/>
+			<dropdown label="Variant" name="variant">
+				<item value="floating" title="Flydende"/>
+				<item value="changing" title="Skiftende"/>
+			</dropdown>
 			<grid>
 				<row>
 					<cell right="5"><checkbox name="showTitle"/><label>Vis titel</label></cell>

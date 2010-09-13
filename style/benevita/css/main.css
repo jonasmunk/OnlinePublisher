@@ -274,3 +274,8 @@ div.layout_contact strong
 	display: block;
 	margin-bottom: 10px;
 }
+
+div.layout_contact a
+{
+	color: #fff;
+}

@@ -91,7 +91,11 @@ op.VideoViewer.prototype = {
 
 op.part = {};
 
-op.part.ImageGallery = function() {
+/************* Image gallery *************/
+
+op.part.ImageGallery = function(options) {
+	this.options = options;
+	this.element = $(options.element);
 	this.images = [];
 }
 
@@ -112,6 +116,41 @@ op.part.ImageGallery.prototype = {
 		this.imageViewer.clearImages();
 		this.imageViewer.addImages(this.images);
 		this.imageViewer.showById(id);
+	},
+	init : function() {
+		if (this.options.variant=='changing') {
+			op.part.ImageGallery.changing.init(this.element);
+			//new op.Dissolver({elements:this.element.select('a')});
+		}
+	}
+}
+
+op.part.ImageGallery.changing = {
+	init : function(element) {
+		var nodes = element.getElementsByTagName('a');
+		var timer;
+		var index = -1;
+		var zIndex = 1000;
+		var first = true;
+		timer = function() {
+			if (index>-1) {
+				n2i.animate(nodes[index],'opacity',0,200,{hideOnComplete:true,delay:800});
+			}
+			index++;
+			if (index>nodes.length-1) {
+				index = 0;
+			}
+			if (!first) {
+			n2i.setOpacity(nodes[index],0)
+			nodes[index].style.zIndex=zIndex;
+			nodes[index].style.display='block';
+			n2i.animate(nodes[index],'opacity',1,1000,{ease:n2i.ease.slowFastSlow});
+			}
+			window.setTimeout(timer,3000);
+			zIndex++;
+			first = false;
+		}
+		timer();
 	}
 }
 
@@ -166,12 +205,12 @@ op.SearchField = function(o) {
 	this.field.onblur();
 }
 
-op.Dissolver = function(o) {
-	o = this.options = n2i.override({wait:4000,transition:2000,delay:0},o);
-	this.pos = Math.floor(Math.random()*(o.elements.length-.00001));
+op.Dissolver = function(options) {
+	options = this.options = n2i.override({wait:4000,transition:2000,delay:0},options);
+	this.pos = Math.floor(Math.random()*(options.elements.length-.00001));
 	this.z = 1;
-	o.elements[this.pos].setStyle({display:'block'});
-	window.setTimeout(this.next.bind(this),o.wait+o.delay);
+	options.elements[this.pos].setStyle({display:'block'});
+	window.setTimeout(this.next.bind(this),options.wait+options.delay);
 }
 
 op.Dissolver.prototype = {
@@ -179,7 +218,9 @@ op.Dissolver.prototype = {
 		this.pos++;
 		this.z++;
 		var elm = this.options.elements;
-		if (this.pos==elm.length) this.pos=0;
+		if (this.pos==elm.length) {
+			this.pos=0;
+		}
 		var e = elm[this.pos];
 		n2i.setOpacity(e,0);
 		e.setStyle({display:'block',zIndex:this.z});

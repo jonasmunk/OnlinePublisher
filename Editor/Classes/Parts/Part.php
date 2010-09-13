@@ -11,6 +11,7 @@ class Part
 	static $schema = array();
 	protected $id;
 	protected $type;
+	protected $dynamic;
 	
 	function Part($type) {
 		$this->type = $type;
@@ -30,7 +31,22 @@ class Part
 	
 	
 	function save() {
-		$this->update();
+		if ($this->isPersistent()) {
+			$this->update();
+		} else {
+			$sql = "insert into part (type,dynamic,created,updated) values (".
+			Database::text($this->type).",".
+			Database::boolean($this->dynamic).",".
+			"now(),now()".
+			")";
+			$this->id = Database::insert($sql);
+			$sql = "insert into part_".$this->type." (part_id,".
+			SchemaService::buildSqlColumns(Part::$schema[$this->type]).
+			") values (".$this->id.",".
+			SchemaService::buildSqlValues($this,Part::$schema[$this->type]).
+			")";
+			Database::insert($sql);
+		}
 	}
 	
 	function update() {
@@ -51,26 +67,39 @@ class Part
 		return false;
 	}
 	
+	function remove() {
+		$sql = "delete from part where id=".$this->id;
+		Database::delete($sql);
+		$sql = "delete from part_".$this->type." where part_id=".$this->id;
+		Database::delete($sql);
+	}
+	
+	function isPersistent() {
+		return $this->id!=null;
+	}
+	
 	function load($type,$id) {
 		global $basePath;
 		$sql = "select part.id";
 		$schema = Part::$schema[$type];
 		foreach ($schema['fields'] as $field => $info) {
-			$sql.=",part_".$type.".".$field;
+			$column = $info['column'] ? $info['column'] : $field;
+			$sql.=",part_".$type.".".$column;
 		}
 		$sql.=" from part,part_".$type." where part.id=part_".$type.".part_id and part.id=".$id;
-		//Log::debug($sql);
-		$row = Database::selectFirst($sql);
-		//Log::debug($row);
-		$class = ucfirst($type);
-		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
-		$part = new $class();
-		$part->setId($row['id']);
-		foreach ($schema['fields'] as $field => $info) {
-			$setter = 'set'.ucfirst($field);
-			$part->$setter($row[$field]);
+		if ($row = Database::selectFirst($sql)) {
+			$class = ucfirst($type);
+			require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
+			$part = new $class();
+			$part->setId($row['id']);
+			foreach ($schema['fields'] as $field => $info) {
+				$setter = 'set'.ucfirst($field);
+				$column = $info['column'] ? $info['column'] : $field;
+				$part->$setter($row[$column]);
+			}
+			return $part;
 		}
-		return $part;
+		return null;
 	}
 }
 
