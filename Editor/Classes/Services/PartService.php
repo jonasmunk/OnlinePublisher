@@ -18,6 +18,17 @@ class PartService {
 		$part = $instance->load($id);
 		return $part;
 	}
+	
+	function getController($type) {
+		global $basePath;
+		$class = ucfirst($type).'Controller';
+		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
+		if (!file_exists($path)) {
+			return null;
+		}
+		require_once $path;
+		return new $class;
+	}
 
 	function buildPartContext($pageId) {
 		$context = new PartContext();

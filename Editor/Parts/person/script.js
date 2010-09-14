@@ -29,7 +29,7 @@ var partController = {
 		list.setSource(src);
 	},
 	preview : function() {
-		op.part.updatePreview({
+		op.part.utils.updatePreview({
 			node:$('part_person_container'),
 			form:$(document.forms.PartForm),
 			type:'person'

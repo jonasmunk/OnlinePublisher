@@ -75,6 +75,10 @@ class StringUtils {
 		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
 	}
 	
+	function toBoolean($var) {
+		return $var ? 'true' : 'false';
+	}
+	
 	
 	/**
 	 * Creates a summary of a text based on some keywords.

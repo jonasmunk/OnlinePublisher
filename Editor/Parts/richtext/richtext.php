@@ -3,12 +3,12 @@
  * @package OnlinePublisher
  * @subpackage Parts.Richtext
  */
-require_once($basePath.'Editor/Classes/Part.php');
+require_once($basePath.'Editor/Classes/Parts/LegacyPartController.php');
 
-class PartRichtext extends Part {
+class PartRichtext extends LegacyPartController {
 	
 	function PartRichtext($id=0) {
-		parent::Part('richtext');
+		parent::LegacyPartController('richtext');
 		$this->id = $id;
 	}
 	

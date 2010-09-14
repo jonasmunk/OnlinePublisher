@@ -4,9 +4,6 @@
  * @subpackage Templates.Document
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
-require_once $basePath.'Editor/Classes/PartContext.php';
-require_once $basePath.'Editor/Classes/Part.php';
-require_once $basePath.'Editor/Template/document/Functions.php';
 
 class HtmlController extends TemplateController {
     

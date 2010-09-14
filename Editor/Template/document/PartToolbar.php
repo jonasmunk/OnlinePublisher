@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Classes/Part.php';
+require_once '../../Classes/Parts/LegacyPartController.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Session.php';
@@ -18,7 +18,7 @@ $formPath = getPartContextSessionVar('form.path');
 
 $sectionId = getRequestTemplateSessionVar('document','selectedSection','section',0);
 
-$part = Part::load($partType,$partId);
+$part = LegacyPartController::load($partType,$partId);
 
 if ($part->isIn2iGuiEnabled()) {
 	$gui='

@@ -3,12 +3,12 @@
  * @package OnlinePublisher
  * @subpackage Parts.Html
  */
-require_once($basePath.'Editor/Classes/Part.php');
+require_once($basePath.'Editor/Classes/Parts/LegacyPartController.php');
 
-class PartPerson extends Part {
+class PartPerson extends LegacyPartController {
 	
 	function PartPerson($id=0) {
-		parent::Part('person');
+		parent::LegacyPartController('person');
 		$this->id = $id;
 	}
 	

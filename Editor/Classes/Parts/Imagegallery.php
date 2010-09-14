@@ -7,13 +7,14 @@ require_once($basePath.'Editor/Classes/Parts/Part.php');
 
 Part::$schema['imagegallery'] = array(
 	'fields' => array(
-		'variant'   	=> array('type'=>'text'),
-		'height'		=> array('type'=>'int'),
-		'imageGroupId'	=> array('type'=>'int','column'=>'imagegroup_id'),
-		'framed'		=> array('type'=>'boolean'),
-		'showTitle'		=> array('type'=>'boolean','column'=>'show_title')
+		'variant'   	=> array( 'type' => 'text' ),
+		'height'		=> array( 'type' => 'int' ),
+		'imageGroupId'	=> array( 'type' => 'int', 'column' => 'imagegroup_id' ),
+		'framed'		=> array( 'type' => 'boolean' ),
+		'showTitle'		=> array( 'type' => 'boolean', 'column' => 'show_title' )
 	)
 );
+
 class Imagegallery extends Part
 {
 	var $variant;
@@ -24,6 +25,10 @@ class Imagegallery extends Part
 	
 	function Imagegallery() {
 		parent::Part('imagegallery');
+	}
+	
+	function load($id) {
+		return Part::load('imagegallery',$id);
 	}
 	
 	function setVariant($variant) {
@@ -64,10 +69,6 @@ class Imagegallery extends Part
 
 	function getFramed() {
 	    return $this->framed;
-	}
-	
-	function load($id) {
-		return Part::load('imagegallery',$id);
 	}
 }
 ?>

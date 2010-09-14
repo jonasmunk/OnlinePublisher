@@ -36,6 +36,10 @@ class PartController
 		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
 	}
 	
+	function getNewPart() {
+		Log::debug('You must override getNewPart');
+	}
+	
 	function render($part,$pageId) {
 		global $basePath;
 		$context = PartService::buildPartContext($pageId);

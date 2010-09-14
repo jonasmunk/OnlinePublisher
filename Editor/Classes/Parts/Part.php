@@ -59,7 +59,6 @@ class Part
 		$sql.=SchemaService::buildSqlSetters($this,$schema);
 		
 		$sql.=" where part_id=".$this->id;
-		Log::debug($sql);
 		Database::update($sql);
 	}
 	
@@ -80,16 +79,23 @@ class Part
 	
 	function load($type,$id) {
 		global $basePath;
+		$class = ucfirst($type);
+		if (!file_exists($basePath.'Editor/Classes/Parts/'.$class.'.php')) {
+			return null;
+		}
+		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
 		$sql = "select part.id";
 		$schema = Part::$schema[$type];
+		if (!$schema) {
+			Log::debug('No schema for '.$type);
+			return null;
+		}
 		foreach ($schema['fields'] as $field => $info) {
 			$column = $info['column'] ? $info['column'] : $field;
 			$sql.=",part_".$type.".".$column;
 		}
 		$sql.=" from part,part_".$type." where part.id=part_".$type.".part_id and part.id=".$id;
 		if ($row = Database::selectFirst($sql)) {
-			$class = ucfirst($type);
-			require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
 			$part = new $class();
 			$part->setId($row['id']);
 			foreach ($schema['fields'] as $field => $info) {

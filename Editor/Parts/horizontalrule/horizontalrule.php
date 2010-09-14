@@ -3,12 +3,12 @@
  * @package OnlinePublisher
  * @subpackage Parts.Html
  */
-require_once($basePath.'Editor/Classes/Part.php');
+require_once($basePath.'Editor/Classes/Parts/LegacyPartController.php');
 
-class PartHorizontalrule extends Part {
+class PartHorizontalrule extends LegacyPartController {
 	
 	function PartHorizontalrule($id=0) {
-		parent::Part('horizontalrule');
+		parent::LegacyPartController('horizontalrule');
 		$this->id = $id;
 	}
 	

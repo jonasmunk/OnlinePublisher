@@ -54,7 +54,7 @@ op.part.List = {
 		this.preview();
 	},
 	preview : function() {
-		op.part.updatePreview({
+		op.part.utils.updatePreview({
 			node:$('part_list_container'),
 			form:$(document.forms.PartForm),
 			type:'list'

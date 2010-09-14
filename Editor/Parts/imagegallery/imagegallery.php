@@ -3,14 +3,15 @@
  * @package OnlinePublisher
  * @subpackage Parts.Imagegallery
  */
-require_once($basePath.'Editor/Classes/Part.php');
+require_once($basePath.'Editor/Classes/Parts/LegacyPartController.php');
+require_once($basePath.'Editor/Classes/Parts/Imagegallery.php');
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/GuiUtils.php');
 
-class PartImagegallery extends Part {
+class PartImagegallery extends LegacyPartController {
 	
 	function PartImagegallery($id=0) {
-		parent::Part('imagegallery');
+		parent::LegacyPartController('imagegallery');
 		$this->id = $id;
 	}
 	
@@ -20,80 +21,58 @@ class PartImagegallery extends Part {
 	
 	function sub_editor($context) {
 		global $baseUrl;
-		$out = '';
-		$sql = "select * from part_imagegallery where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			$out.=
-		    '<input type="hidden" name="group" value="'.$row['imagegroup_id'].'"/>'.
-		    '<input type="hidden" name="height" value="'.$row['height'].'"/>'.
-		    '<input type="hidden" name="framed" value="'.($row['framed'] ? 'true' : 'false').'"/>'.
-		    '<input type="hidden" name="showTitle" value="'.($row['show_title'] ? 'true' : 'false').'"/>'.
-		    '<input type="hidden" name="variant" value="'.$row['variant'].'"/>'.
+		if ($part = Imagegallery::load($this->id)) {
+			return
+		    '<input type="hidden" name="group" value="'.$part->getImageGroupId().'"/>'.
+		    '<input type="hidden" name="height" value="'.$part->getHeight().'"/>'.
+		    '<input type="hidden" name="framed" value="'.StringUtils::toBoolean($part->getFramed()).'"/>'.
+		    '<input type="hidden" name="showTitle" value="'.StringUtils::toBoolean($part->getShowTitle()).'"/>'.
+		    '<input type="hidden" name="variant" value="'.$part->getVariant().'"/>'.
 			'<script src="'.$baseUrl.'Editor/Parts/imagegallery/script.js" type="text/javascript" charset="utf-8"></script>'.
 			'<div id="part_imagegallery_container">'.$this->render().'</div>';
 		}
-		return $out;
-	}
-	
-	function sub_create() {
-		$sql = "insert into part_imagegallery (part_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_imagegallery where part_id=".$this->id;
-		Database::delete($sql);
+		return '';
 	}
 	
 	function sub_update() {
-		$height = Request::getInt('height',64);
-		$group = Request::getInt('group');
-		$framed = Request::getBoolean('framed');
-		$showTitle = Request::getBoolean('showTitle');
-		$variant = Request::getString('variant');
-		$sql = "update part_imagegallery set".
-		" imagegroup_id=".$group.
-		",height=".$height.
-		",framed=".Database::boolean($framed).
-		",show_title=".Database::boolean($showTitle).
-		",variant=".Database::text($variant).
-		" where part_id=".$this->id;
-		Database::update($sql);
-		error_log($sql);
+		$part = Imagegallery::load($this->id);
+		$this->populate($part);
+		$part->save();
 	}
 	
-	function sub_import(&$node) {
+	function populate(&$part) {
+		$part->setHeight(Request::getInt('height',64));
+		$part->setImageGroupId(Request::getInt('group'));
+		$part->setFramed(Request::getBoolean('framed'));
+		$part->setShowTitle(Request::getBoolean('showTitle'));
+		$part->setVariant(Request::getString('variant'));
 	}
 	
 	function sub_build($context) {
-		$sql = "select height,imagegroup_id as `group`,framed,show_title,variant from part_imagegallery where part_id=".$this->id;
-		if ($data = Database::selectFirst($sql)) {
-			return $this->generate($data);
-		} else {
-			return '';
+		$part = Imagegallery::load($this->id);
+		if ($part) {
+			return $this->generate($part);
 		}
+		return '';
 	}
 		
 	function sub_preview() {
-		$params = array(
-			'height'=>Request::getInt('height'),
-			'group'=>Request::getInt('group'),
-			'framed'=>Request::getBoolean('framed'),
-			'show_title'=>Request::getBoolean('showTitle'),
-			'variant'=>Request::getString('variant')
-		);
-		return $this->generate($params);
+		$part = new Imagegallery();
+		$this->populate($part);
+		return $this->generate($part);
 	}
 		
-	function generate($params) {
+	function generate($part) {
 		$data = '<imagegallery xmlns="'.$this->_buildnamespace('1.0').'">';
-		$data.='<display height="'.$params['height'].'" variant="'.StringUtils::escapeXML($params['variant']).'" framed="'.($params['framed'] ? 'true' : 'false').'" show-title="'.($params['show_title'] ? 'true' : 'false').'"/>';
-		$sql="select object.data from object,imagegroup_image where imagegroup_image.image_id = object.id and imagegroup_image.imagegroup_id=".$params['group']." order by object.title";
-		$result = Database::select($sql);
-		while ($row = Database::next($result)) {
-			$data.=$row['data'];
+		$data.='<display height="'.$part->getHeight().'" variant="'.StringUtils::escapeXML($part->getVariant()).'" framed="'.($part->getFramed() ? 'true' : 'false').'" show-title="'.($part->getShowTitle() ? 'true' : 'false').'"/>';
+		if ($part->getImageGroupId()) {
+			$sql="SELECT object.data from object,imagegroup_image where imagegroup_image.image_id = object.id and imagegroup_image.imagegroup_id=".$part->getImageGroupId()." order by object.title";
+			$result = Database::select($sql);
+			while ($row = Database::next($result)) {
+				$data.=$row['data'];
+			}
+			Database::free($result);
 		}
-		Database::free($result);
 		$data.='</imagegallery>';
 		return $data;
 	}

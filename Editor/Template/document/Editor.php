@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Classes/Part.php';
+require_once '../../Classes/Parts/LegacyPartController.php';
 require_once '../../Include/Session.php';
 require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
@@ -50,7 +50,7 @@ In2iGui.context='../../../';
 <script type="text/javascript">
 controller.context='<?=$baseUrl?>';
 <?
-$parts = Part::getParts();
+$parts = LegacyPartController::getParts();
 foreach ($parts as $part => $info) {
 ?>
 controller.parts.push({value:'<?=$part?>',title:'<?=$info['name']?>'});
@@ -213,7 +213,7 @@ function displaySection($sectionId,$type,$sectionIndex,$sectionStyle,$partId,$pa
 
 function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex) {
 	global $partContext;
-	$part = Part::load($partType,$partId);
+	$part = LegacyPartController::load($partType,$partId);
 	echo 
 		'<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$part->getSectionClass().' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">'.
 		$part->display($partContext).
@@ -232,7 +232,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	setPartContextSessionVar('part.id',$partId);
 	setPartContextSessionVar('part.type',$partType);
 	setPartContextSessionVar('form.path','parent.Frame.EditorFrame.getDocument().forms.PartForm');
-	$part = Part::load($partType,$partId);
+	$part = LegacyPartController::load($partType,$partId);
 	echo
 	'<div style="'.$sectionStyle.'" id="selectedSectionTD" class="part_section_'.$partType.' '.$part->getSectionClass().' section_selected">'.
 	'<form name="PartForm" action="UpdatePart.php" method="post">'.

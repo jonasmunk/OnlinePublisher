@@ -4,7 +4,6 @@
  * @subpackage Templates.Weblog
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
-require_once $basePath.'Editor/Classes/Part.php';
 require_once $basePath.'Editor/Classes/Weblogentry.php';
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Page.php');

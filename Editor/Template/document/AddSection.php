@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Part.php';
+require_once '../../Classes/Parts/LegacyPartController.php';
 require_once 'Functions.php';
 
 $pageId = getPageId();
@@ -53,8 +53,13 @@ redirect('Editor.php');
  * Creates a new part of the provided type and returns its id
  */
 function createNewPart($unique) {
-	$part = Part::getNewPart($unique);
-	$part->create();
-	return $part->getId();
+	if ($ctrl = PartService::getController($unique)) {
+		$part = $ctrl->createPart();
+		return $part->getId();
+	} else {
+		$part = LegacyPartController::getNewPart($unique);
+		$part->create();
+		return $part->getId();
+	}
 }
 ?>

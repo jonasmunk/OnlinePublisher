@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Classes/Part.php';
+require_once '../../Classes/Parts/LegacyPartController.php';
 require_once '../../Classes/Page.php';
 require_once '../../Include/XmlWebGui.php';
 
@@ -35,7 +35,7 @@ Database::update($sql);
 // Update the part
 $sql="select * from part where id=".$id;
 if ($row = Database::selectFirst($sql)) {
-	$part = Part::load($row['type'],$id);
+	$part = LegacyPartController::load($row['type'],$id);
 	$part -> update();
 }
 

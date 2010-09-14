@@ -15,7 +15,6 @@ class EventManager {
 	function fireEvent($event,$type,$subType,$id) {
 		global $basePath;
 		require($basePath.'Editor/Template/document/Events.php');
-		require($basePath.'Editor/Template/frontpage/Events.php');
 		require($basePath.'Editor/Template/sitemap/Events.php');
 		if ($type=='object' && $subType=='image' && ($event=='publish' || $event=='delete')) {
 			// Update persons and news with images	

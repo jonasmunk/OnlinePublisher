@@ -29,7 +29,7 @@ op.part.File = {
 		list.setSource(src);
 	},
 	preview : function() {
-		op.part.updatePreview({
+		op.part.utils.updatePreview({
 			node:$('part_file_container'),
 			form:$(document.forms.PartForm),
 			type:'file'

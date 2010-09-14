@@ -5,7 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/TemplateController.php');
 require_once $basePath.'Editor/Classes/PartContext.php';
-require_once $basePath.'Editor/Classes/Part.php';
+require_once $basePath.'Editor/Classes/Parts/LegacyPartController.php';
 require_once $basePath.'Editor/Template/document/Functions.php';
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
@@ -35,7 +35,7 @@ class DocumentController extends TemplateController {
 		$sql = "select part.id,part.type from document_section,part where part.id=document_section.part_id and document_section.page_id=".$this->id;
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$part = Part::load($row['type'],$row['id']);
+			$part = LegacyPartController::load($row['type'],$row['id']);
 			$part->delete();
 		}
 		Database::free($result);
@@ -130,7 +130,7 @@ class DocumentController extends TemplateController {
 		if ($type!='part') {
 			require $basePath.'Editor/Template/document/'.ucfirst($type).'/Publish.php';
 		} else {
-			$part = Part::load($partType,$partId);
+			$part = LegacyPartController::load($partType,$partId);
 			if ($part->isDynamic()) {
 				$dynamic = true;
 				$output = "<!-- dynamic:part#".$partId." -->";
@@ -152,7 +152,7 @@ class DocumentController extends TemplateController {
 		$sql = "select part.id,part.type from document_section,part where part.id=document_section.part_id and document_section.page_id=".$id;
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$part = Part::load($row['type'],$row['id']);
+			$part = LegacyPartController::load($row['type'],$row['id']);
 			$part->delete();
 		}
 		Database::free($result);
@@ -208,7 +208,7 @@ class DocumentController extends TemplateController {
 						$sectionPosition++;
 						$type = $part->getAttribute('type');
 						// Get a new Part objects
-						$partObj = Part::getNewPart($type);
+						$partObj = LegacyPartController::getNewPart($type);
 						// Create the part
 						$partObj->create();
 						// Insert section into DB
@@ -240,7 +240,7 @@ class DocumentController extends TemplateController {
 		$sql = "select page_id,part_id,part.type,part.dynamic from document_section,part where page_id=".$this->id." and document_section.part_id=part.id and part.dynamic=1";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$part = Part::load($row['type'],$row['part_id']);
+			$part = LegacyPartController::load($row['type'],$row['part_id']);
 			$partData = $part->build($context);
 			$state['data']=str_replace('<!-- dynamic:part#'.$row['part_id'].' -->', $partData, $state['data']);
 		}

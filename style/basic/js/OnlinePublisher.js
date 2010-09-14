@@ -1,7 +1,9 @@
-var op = {
-	preview : false,
-	page : {id:null,path:null,template:null}
+if (!op) {
+	var op = {};
 }
+
+op.preview = false;
+op.page = {id:null,path:null,template:null};
 
 op.ignite = function() {
 	if (!this.preview) {
@@ -89,7 +91,9 @@ op.VideoViewer.prototype = {
 	}
 }
 
-op.part = {};
+if (op.part===undefined) {
+	op.part = {};
+}
 
 /************* Image gallery *************/
 

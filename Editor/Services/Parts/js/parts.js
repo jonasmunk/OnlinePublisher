@@ -1,6 +1,8 @@
 if (!op) {var op={}};
 
-op.part = {
+if (!op.part) {op.part={}};
+
+op.part.utils = {
 	previewTimer : null,
 	
 	updatePreview : function(options) {

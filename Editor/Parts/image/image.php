@@ -3,15 +3,15 @@
  * @package OnlinePublisher
  * @subpackage Parts.Image
  */
-require_once($basePath.'Editor/Classes/Part.php');
+require_once($basePath.'Editor/Classes/Parts/LegacyPartController.php');
 require_once($basePath.'Editor/Classes/Image.php');
 require_once($basePath.'Editor/Classes/GuiUtils.php');
 require_once($basePath.'Editor/Classes/Log.php');
 
-class PartImage extends Part {
+class PartImage extends LegacyPartController {
 	
 	function PartImage($id=0) {
-		parent::Part('image');
+		parent::LegacyPartController('image');
 		$this->id = $id;
 	}
 	

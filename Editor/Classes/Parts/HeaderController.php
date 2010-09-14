@@ -13,6 +13,14 @@ class HeaderController extends PartController
 		parent::PartController('header');
 	}
 	
+	function createPart() {
+		$part = new Header();
+		$part->setText('Velkommen');
+		$part->setLevel(1);
+		$part->save();
+		return $part;
+	}
+	
 	function getFromRequest() {
 		$id = Request::getInt('id');
 		$text = Request::getUnicodeString('text');
