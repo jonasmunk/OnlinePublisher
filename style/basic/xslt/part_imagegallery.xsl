@@ -23,19 +23,17 @@
 			</xsl:if>
 			<xsl:apply-templates/>
 		</div>
-		<xsl:if test="not($editor='true')">
-			<script type="text/javascript">
-				(function() {
-					var part = new op.part.ImageGallery({element:'<xsl:value-of select="generate-id()"/>',variant:'<xsl:value-of select="ig:display/@variant"/>'});
-					with (part) {
-						<xsl:for-each select="o:object">
-							registerImage('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="@id"/>,width:<xsl:value-of select="o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:sub/i:image/i:height"/>,text:'<xsl:value-of select="o:note"/>'});
-						</xsl:for-each>
-						init();
-					}
-				})();
-			</script>
-		</xsl:if>
+		<script type="text/javascript">
+			(function() {
+				var part = new op.part.ImageGallery({element:'<xsl:value-of select="generate-id()"/>',variant:'<xsl:value-of select="ig:display/@variant"/>',editor:<xsl:value-of select="$editor='true'"/>});
+				with (part) {
+					<xsl:for-each select="o:object">
+						registerImage('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="@id"/>,width:<xsl:value-of select="o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:sub/i:image/i:height"/>,text:'<xsl:value-of select="o:note"/>'});
+					</xsl:for-each>
+					init();
+				}
+			})();
+		</script>
 	</xsl:template>
 
 	<xsl:template match="o:object[@type='image']">

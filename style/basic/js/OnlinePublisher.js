@@ -101,6 +101,9 @@ op.part.ImageGallery = function(options) {
 
 op.part.ImageGallery.prototype = {
 	registerImage : function(node,image) {
+		if (this.options.editor) {
+			return;
+		}
 		this.images.push(image);
 		var self = this;
 		$(node).onclick = function() {

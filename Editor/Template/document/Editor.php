@@ -46,6 +46,7 @@ In2iGui.context='../../../';
 </script>
 <script type="text/javascript" src="js/Controller.js"></script>
 <script type="text/javascript" src="../../Services/Parts/js/parts.js"></script>
+<script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js"></script>
 <script type="text/javascript">
 controller.context='<?=$baseUrl?>';
 <?
