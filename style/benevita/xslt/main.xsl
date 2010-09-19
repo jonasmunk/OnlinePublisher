@@ -84,6 +84,13 @@
 						</div>
 						<div class="layout_box_bottom"><xsl:comment/></div>
 					</div>
+					<div class="layout_box">
+						<div class="layout_box_top"><xsl:comment/></div>
+						<div class="layout_box_middle">
+							<img src="{$path}style/{$design}/gfx/photo.jpg" style="width: 175px; height: 210px; border: 0px;"/>
+						</div>
+						<div class="layout_box_bottom"><xsl:comment/></div>
+					</div>
 				</div>
 				<div class="layout_content">
 					<div class="layout_content_top"><xsl:comment/></div>
