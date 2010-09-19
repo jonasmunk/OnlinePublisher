@@ -10,7 +10,7 @@ var controller = {
 	ready : false,
 	selectedText : '',
 	
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.sectionMenu = In2iGui.Menu.create({name:'sectionMenu'});
 		this.sectionMenu.addItems([
 			{title:'Rediger afsnit',value:'editSection'},

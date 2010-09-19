@@ -1,5 +1,5 @@
 var partController = {
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.buildWindow();
 	},
 	buildWindow : function() {

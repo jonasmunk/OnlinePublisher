@@ -11,16 +11,16 @@ require_once '../../../../Classes/Log.php';
 
 $pageId = Request::getInt('pageId');
 $type = Request::getString('type');
-$controllerClass = ucfirst($type).'Controller';
-require_once '../../../../Classes/Parts/'.$controllerClass.'.php';
 
-$ctrl = new $controllerClass();
+if ($ctrl = PartService::getController($type)) {
+	$part = $ctrl->getFromRequest();
+	$part->save();
 
-$part = $ctrl->getFromRequest();
-$part->save();
+	Page::markChanged($pageId);
 
-Page::markChanged($pageId);
-
-header("Content-Type: text/html; charset=UTF-8");
-echo $ctrl->render($part,$pageId);
+	header("Content-Type: text/html; charset=UTF-8");
+	echo $ctrl->render($part,$pageId);
+} else {
+	Log::debug("Unable to find controller for $type");
+}
 ?>

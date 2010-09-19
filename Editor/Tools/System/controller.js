@@ -1,7 +1,7 @@
 ui.listen({
 	weblogGroupId : 0,
 	userId : 0,
-	interfaceIsReady : function() {
+	$ready : function() {
 		list.setUrl('ListUsers.php');
 	},
 	

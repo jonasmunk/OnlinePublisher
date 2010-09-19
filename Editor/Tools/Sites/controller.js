@@ -6,10 +6,6 @@ ui.listen({
 		{drag:'page',drop:'subset'}
 	],
 	
-	$interfaceIsReady : function() {
-		
-	},
-	
 	///////////////// List ///////////////
 	
 	$selectionChanged$selector : function(item) {

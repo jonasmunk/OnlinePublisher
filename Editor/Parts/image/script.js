@@ -1,5 +1,5 @@
 var partController = {
-	$interfaceIsReady : function() {
+	$ready : function() {
 		var form = document.forms.PartForm;
 		if (form.imageId.value==='0') {
 			this.showChooserWindow();

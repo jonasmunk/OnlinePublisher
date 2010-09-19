@@ -4,7 +4,7 @@ op.part.List = {
 	setData : function(data) {
 		this.data = data;
 	},
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.buildWindow();
 	},
 	buildWindow : function() {

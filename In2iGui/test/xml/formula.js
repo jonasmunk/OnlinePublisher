@@ -1,5 +1,5 @@
 var controller = {
-	$interfaceIsReady : function() {
+	$ready : function() {
 		formula1.setValues({username:'john',password:'pass',radios:'ipsum',tokens:['hep','hop','hey']});
 	},
 	$click$showValues : function() {

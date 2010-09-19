@@ -1,7 +1,7 @@
 var controller = {
 	id : null,
 	editorFrame : null,
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.editorFrame = window.parent.Frame.EditorFrame;
 		if (this.id===0) {
 			var win = this.editorFrame.getWindow();

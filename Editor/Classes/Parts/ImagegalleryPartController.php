@@ -4,17 +4,17 @@
  * @subpackage Classes.Part
  */
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
-require_once($basePath.'Editor/Classes/Parts/Text.php');
+require_once($basePath.'Editor/Classes/Parts/ImagegalleryPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class ImagegalleryController extends PartController
+class ImagegalleryPartController extends PartController
 {
-	function ImagegalleryController() {
+	function ImagegalleryPartController() {
 		parent::PartController('imagegallery');
 	}
 	
 	function createPart() {
-		$part = new Imagegallery();
+		$part = new ImagegalleryPart();
 		$part->setHeight(100);
 		$part->setVariant('floating');
 		$part->save();
@@ -23,7 +23,7 @@ class ImagegalleryController extends PartController
 	
 	function getFromRequest() {
 		$id = Request::getInt('id');
-		$part = Imagegallery::load($id);
+		$part = ImagegalleryPart::load($id);
 		return $part;
 	}
 	

@@ -8,7 +8,7 @@ In2iGui.Segmented = function(options) {
 	this.name = options.name;
 	this.value = this.options.value;
 	In2iGui.extend(this);
-	this.element.observe('click',this.onClick.bind(this));
+	this.element.observe('mousedown',this.onClick.bind(this));
 }
 
 In2iGui.Segmented.prototype = {

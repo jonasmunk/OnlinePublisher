@@ -15,7 +15,7 @@ Part::$schema['imagegallery'] = array(
 	)
 );
 
-class Imagegallery extends Part
+class ImagegalleryPart extends Part
 {
 	var $variant;
 	var $height;
@@ -23,7 +23,7 @@ class Imagegallery extends Part
 	var $framed;
 	var $showTitle;
 	
-	function Imagegallery() {
+	function ImagegalleryPart() {
 		parent::Part('imagegallery');
 	}
 	

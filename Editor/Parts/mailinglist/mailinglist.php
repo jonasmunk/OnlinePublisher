@@ -57,7 +57,7 @@ class PartMailinglist extends LegacyPartController {
 	}
 	
 	function sub_update() {
-		$lists = split(',',Request::getString('mailinglists'));
+		$lists = explode(',',Request::getString('mailinglists'));
 		$sql = "delete from part_mailinglist_mailinglist where part_id=".$this->id;
 		Database::delete($sql);
 		foreach ($lists as $list) {
@@ -161,60 +161,17 @@ class PartMailinglist extends LegacyPartController {
 	
 	// Toolbar stuff
 	
-	function getToolbarTabs() {
+	function isIn2iGuiEnabled() {
+		return true;
+	}
+	
+	function getToolbars() {
 		return array(
-				 'mailinglist' => array('title' => 'Postliste')
+			'Postliste' =>
+				'<checkboxes name="lists" label="Postlister">
+				'.GuiUtils::buildObjectItems('mailinglist').'
+				</checkboxes>'
 			);
-	}
-	
-	function getToolbarDefaultTab() {
-		return 'mailinglist';
-	}
-	
-	function getToolbarContent($tab) {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Mailinglist.php');
-		$gui=
-		'<group xmlns="uri:BarForm">'.
-		'<top>';
-		$lists = Mailinglist::search();
-		foreach ($lists as $list) {
-			$gui.=
-				'<checkbox object="List'.$list->getId().'" value="'.$list->getId().'" onclick="updateFormula()"/>'.
-				'<badge>'.encodeXML($list->getTitle()).'</badge>';
-		}
-		$gui.=
-		'</top>
-		</group>
-		<script xmlns="uri:Script">
-		function updateFormula() {
-			var ids = [];
-			var inputs = document.getElementsByTagName("input");
-			for (var i=0;i&lt;inputs.length;i++) {
-				if (inputs[i].type=="checkbox" &amp;&amp; inputs[i].checked) {
-					ids[ids.length] = inputs[i].value;
-				}
-			}
-			formula["mailinglists"].value=ids.join(",");
-		}
-		function updateTab() {
-			var ids = formula["mailinglists"].value.split(",");
-			var inputs = document.getElementsByTagName("input");
-			for (var i=0;i&lt;inputs.length;i++) {
-				if (inputs[i].type=="checkbox") {
-					inputs[i].checked = contains(inputs[i].value,ids);
-				}
-			}
-		}
-		function contains(value,arr) {
-			for (var i=0;i&lt;arr.length;i++) {
-				if (arr[i]==value) return true;
-			}
-			return false;
-		}
-		updateTab();
-		</script>';
-		return $gui;
 	}
 }
 ?>

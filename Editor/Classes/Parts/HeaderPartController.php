@@ -4,17 +4,17 @@
  * @subpackage Classes.Part
  */
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
-require_once($basePath.'Editor/Classes/Parts/Header.php');
+require_once($basePath.'Editor/Classes/Parts/HeaderPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class HeaderController extends PartController
+class HeaderPartController extends PartController
 {
-	function HeaderController() {
+	function HeaderPartController() {
 		parent::PartController('header');
 	}
 	
 	function createPart() {
-		$part = new Header();
+		$part = new HeaderPart();
 		$part->setText('Velkommen');
 		$part->setLevel(1);
 		$part->save();
@@ -25,7 +25,7 @@ class HeaderController extends PartController
 		$id = Request::getInt('id');
 		$text = Request::getUnicodeString('text');
 
-		$part = Header::load($id);
+		$part = HeaderPart::load($id);
 		$part->setText($text);
 		return $part;
 	}

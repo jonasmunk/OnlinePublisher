@@ -1,5 +1,5 @@
 ui.listen({
-	$interfaceIsReady : function() {
+	$ready : function() {
 		formula.focus();
 	},
 	$click$save : function() {

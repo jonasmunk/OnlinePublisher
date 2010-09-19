@@ -6,7 +6,7 @@ ui.listen({
 		{drag:'product',drop:'producttype'}
 	],
 	
-	$interfaceIsReady : function() {
+	$ready : function() {
 		list.loadData('ListProducts.php');
 	},
 	

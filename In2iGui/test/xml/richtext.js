@@ -1,8 +1,8 @@
 var controller = {
-	interfaceIsReady : function() {
+	$ready : function() {
 		win.show();
 	},
-	click$viewSource : function() {
+	$click$viewSource : function() {
 		alert(richText.getValue());
 	}
 }

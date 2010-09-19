@@ -11,12 +11,12 @@ Part::$schema['formula'] = array(
 		'receiverEmail'   => array('type'=>'text','column'=>'receiveremail')
 	)
 );
-class Formula extends Part
+class FormulaPart extends Part
 {
 	var $receiverName;
 	var $receiverEmail;
 	
-	function Formula() {
+	function FormulaPart() {
 		parent::Part('formula');
 	}
 	
@@ -40,9 +40,5 @@ class Formula extends Part
 	    return $this->receiverEmail;
 	}
 	
-	
-	function toUnicode() {
-		$this->text = mb_convert_encoding($this->text, "UTF-8","ISO-8859-1");
-	}
 }
 ?>

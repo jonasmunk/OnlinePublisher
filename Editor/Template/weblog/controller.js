@@ -1,7 +1,7 @@
 ui.listen({
 	id:null,
 	
-	$interfaceIsReady : function() {
+	$ready : function() {
 		ui.request({url:'Load.php',onJSON:function(values) {
 			this.id = values.id;
 			formula.setValues(values);

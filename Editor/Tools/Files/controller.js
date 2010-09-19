@@ -7,7 +7,7 @@ ui.listen({
 	groupId : null,
 	fileId : null,
 	
-	$interfaceIsReady : function() {
+	$ready : function() {
 		//this.$click$newFile();
 	},
 	$selectionChanged$list : function(item) {

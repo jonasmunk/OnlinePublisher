@@ -317,6 +317,16 @@ span.in2igui_toolbar_item a.in2igui_dropdown
 	margin-top: 7px;
 }
 
+span.in2igui_toolbar_item .in2igui_checkboxes
+{
+	padding-top: 11px;
+}
+
+span.in2igui_toolbar_item .in2igui_field
+{
+	padding-top: 8px;
+}
+
 span.in2igui_toolbar_item span.in2igui_segmented
 {
 	margin-top: 9px;

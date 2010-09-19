@@ -6,7 +6,7 @@ var partToolbar = {
 	partForm : null,
 	section : null,
 	
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.editorFrame = window.parent.Frame.EditorFrame;
 		var doc = this.editorFrame.getDocument();
 		this.partForm = doc.forms['PartForm'];
@@ -58,4 +58,4 @@ var partToolbar = {
 	}
 };
 
-ui.get().listen(partToolbar);
+ui.listen(partToolbar);

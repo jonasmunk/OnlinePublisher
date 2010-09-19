@@ -4,7 +4,7 @@
  * @subpackage Parts.Imagegallery
  */
 require_once($basePath.'Editor/Classes/Parts/LegacyPartController.php');
-require_once($basePath.'Editor/Classes/Parts/Imagegallery.php');
+require_once($basePath.'Editor/Classes/Parts/ImagegalleryPart.php');
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/GuiUtils.php');
 
@@ -21,7 +21,7 @@ class PartImagegallery extends LegacyPartController {
 	
 	function sub_editor($context) {
 		global $baseUrl;
-		if ($part = Imagegallery::load($this->id)) {
+		if ($part = ImagegalleryPart::load($this->id)) {
 			return
 		    '<input type="hidden" name="group" value="'.$part->getImageGroupId().'"/>'.
 		    '<input type="hidden" name="height" value="'.$part->getHeight().'"/>'.
@@ -35,7 +35,7 @@ class PartImagegallery extends LegacyPartController {
 	}
 	
 	function sub_update() {
-		$part = Imagegallery::load($this->id);
+		$part = ImagegalleryPart::load($this->id);
 		$this->populate($part);
 		$part->save();
 	}
@@ -49,7 +49,7 @@ class PartImagegallery extends LegacyPartController {
 	}
 	
 	function sub_build($context) {
-		$part = Imagegallery::load($this->id);
+		$part = ImagegalleryPart::load($this->id);
 		if ($part) {
 			return $this->generate($part);
 		}
@@ -57,7 +57,7 @@ class PartImagegallery extends LegacyPartController {
 	}
 		
 	function sub_preview() {
-		$part = new Imagegallery();
+		$part = new ImagegalleryPart();
 		$this->populate($part);
 		return $this->generate($part);
 	}

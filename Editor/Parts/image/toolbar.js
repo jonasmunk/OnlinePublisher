@@ -1,5 +1,5 @@
 ui.get().listen({
-	$interfaceIsReady : function() {
+	$ready : function() {
 		var form = partToolbar.partForm;
 		alignment.setValue(form.align.value);
 		greyscale.setValue(form.greyscale.value);

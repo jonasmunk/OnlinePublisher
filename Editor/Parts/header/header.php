@@ -71,16 +71,6 @@ class PartHeader extends LegacyPartController {
 		}
 	}
 	
-	function sub_create() {
-		$sql = "insert into part_header (part_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_header where part_id=".$this->id;
-		Database::delete($sql);
-	}
-	
 	function sub_update() {
 		$level = requestPostNumber('level',1);
 		$text = requestPostText('text');

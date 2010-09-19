@@ -13,70 +13,47 @@ class PartHtml extends LegacyPartController {
 	}
 	
 	function sub_display($context) {
-		$data='';
-		$sql = "select * from part_html where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			$data=
-			'<div class="Part-html">'.
-			$row['html'].
-			'</div>';
-		}
-		return $data;
+		return $this->render();
 	}
 	
 	function sub_editor($context) {
-		$sql = "select * from part_html where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
+		if ($part = HtmlPart::load($this->id)) {
 			return
-			'<textarea class="Part-html" id="PartHtmlTextarea" name="html" style="width: 100%; height: 300px; border: none;">'.
-			encodeXML($row['html']).
+			'<textarea id="PartHtmlTextarea" name="html" style="width: 100%; height: 300px; border: none;">'.
+			StringUtils::escapeXML($part->getHtml()).
 			'</textarea>'.
 			'<script type="text/javascript">'.
 			'document.getElementById("PartHtmlTextarea").focus();'.
 			'document.getElementById("PartHtmlTextarea").select();'.
 			'</script>';
-		} else {
-			return '';
 		}
-	}
-	
-	function sub_create() {
-		$sql = "insert into part_html (part_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_html where part_id=".$this->id;
-		Database::delete($sql);
+		return '';
 	}
 	
 	function sub_update() {
-		$html = requestPostText('html');
-		$sql = "update part_html set html=".Database::text($html)." where part_id=".$this->id;
-		Database::update($sql);
+		$html = Request::getString('html');
+		if ($part = HtmlPart::load($this->id)) {
+			$part->setHtml($html);
+			$part->save();
+		}
 	}
 	
 	function sub_import(&$node) {
 		$html = $node->getText();
-		
-		$sql = "update part_html set".
-		" html=".Database::text($html).
-		" where part_id=".$this->id;
-		Database::update($sql);
+		if ($part = HtmlPart::load($this->id)) {
+			$part->setHtml($html);
+			$part->save();
+		}
 	}
 	
 	function sub_build($context) {
-		$sql = "select * from part_html where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
+		if ($part = HtmlPart::load($this->id)) {
 			return 
 			'<html xmlns="'.$this->_buildnamespace('1.0').'">'.
-			'<![CDATA['.
-			$row['html'].
-			']]>'.
+			'<![CDATA['.$part->getHtml().']]>'.
 			'</html>';
-		} else {
-			return '';
 		}
+		return '';
 	}
 	
 	function isIn2iGuiEnabled() {

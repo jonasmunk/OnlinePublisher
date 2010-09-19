@@ -1478,6 +1478,7 @@ div.in2igui_dropdown_selector a
 	display: block;
 	text-decoration: none;
 	color: #333;
+	min-height: 15px;
 }
 
 div.in2igui_dropdown_selector a.in2igui_selected
@@ -2125,6 +2126,16 @@ span.in2igui_toolbar_item span.in2igui_number
 span.in2igui_toolbar_item a.in2igui_dropdown
 {
 	margin-top: 7px;
+}
+
+span.in2igui_toolbar_item .in2igui_checkboxes
+{
+	padding-top: 11px;
+}
+
+span.in2igui_toolbar_item .in2igui_field
+{
+	padding-top: 8px;
 }
 
 span.in2igui_toolbar_item span.in2igui_segmented
@@ -4741,6 +4752,7 @@ div.in2igui_message div div
 }span.in2igui_segmented
 {
 	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	background: #fff;
 	border: 1px solid #AAAAAA;
 	display: inline-block;
@@ -4758,6 +4770,7 @@ span.in2igui_segmented a
 	color: #333;
 	padding: 0 3px;
 	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 	outline: none;
 }
 
@@ -4776,6 +4789,8 @@ span.in2igui_segmented_text
 a.in2igui_segmented_selected
 {
 	background: #ddd;
+	background: -moz-linear-gradient(top, #EFF2F4, #C0C9CF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#EFF2F4), to(#C0C9CF));
 }div.in2igui_links
 {
 	border-top: 1px solid #eee;

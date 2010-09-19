@@ -57,6 +57,7 @@ function createNewPart($unique) {
 		$part = $ctrl->createPart();
 		return $part->getId();
 	} else {
+		Log::debug("Unable to find controller for $unique");
 		$part = LegacyPartController::getNewPart($unique);
 		$part->create();
 		return $part->getId();

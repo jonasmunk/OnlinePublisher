@@ -146,6 +146,13 @@
 </xsl:template>
 <!-- Inputs -->
 
+<xsl:template match="gui:toolbar//gui:checkboxes">
+	<span class="in2igui_toolbar_item">
+		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:checkboxes"/></span>
+		<span class="in2igui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
+	</span>
+</xsl:template>
+
 <xsl:template match="gui:toolbar//gui:number">
 	<span class="in2igui_toolbar_item">
 		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:number"/></span>
@@ -170,6 +177,13 @@
 <xsl:template match="gui:toolbar//gui:segmented[@label]">
 	<span class="in2igui_toolbar_item">
 		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:segmented"/></span>
+		<span class="in2igui_toolbar_label"><xsl:value-of select="@label"/></span>
+	</span>
+</xsl:template>
+
+<xsl:template match="gui:toolbar//gui:textfield">
+	<span class="in2igui_toolbar_item">
+		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:text"/></span>
 		<span class="in2igui_toolbar_label"><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>

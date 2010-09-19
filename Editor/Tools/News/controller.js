@@ -7,9 +7,6 @@ ui.listen({
 	groupId : null,
 	fileId : null,
 	
-	$interfaceIsReady : function() {
-		
-	},
 	$selectionChanged$list : function(item) {
 		ui.get('delete').setEnabled(true);
 		ui.get('info').setEnabled(true);

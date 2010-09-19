@@ -12,7 +12,7 @@ class PartService {
 	
 	function load($type,$id) {
 		global $basePath;
-		$class = ucfirst($type);
+		$class = ucfirst($type).'Part';
 		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
 		$instance = new $class;
 		$part = $instance->load($id);
@@ -21,7 +21,7 @@ class PartService {
 	
 	function getController($type) {
 		global $basePath;
-		$class = ucfirst($type).'Controller';
+		$class = ucfirst($type).'PartController';
 		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
 		if (!file_exists($path)) {
 			return null;

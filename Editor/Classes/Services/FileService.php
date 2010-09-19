@@ -180,6 +180,14 @@ class FileService {
 		return $response;
 	}
 	
+	function getLatestFileId() {
+		$sql = "select max(object_id) as id from file";
+		if ($row = Database::selectFirst($sql)) {
+			return intval($row['id']);
+		}
+		return null;
+	}
+	
 	function getFileFilename($id) {
 		$sql = "select filename from file where object_id=".$id;
 		if ($row = Database::selectFirst($sql)) {

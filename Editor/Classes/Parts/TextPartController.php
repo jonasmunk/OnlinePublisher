@@ -4,17 +4,17 @@
  * @subpackage Classes.Part
  */
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
-require_once($basePath.'Editor/Classes/Parts/Text.php');
+require_once($basePath.'Editor/Classes/Parts/TextPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class TextController extends PartController
+class TextPartController extends PartController
 {
-	function TextController() {
+	function TextPartController() {
 		parent::PartController('text');
 	}
 	
 	function createPart() {
-		$part = new Text();
+		$part = new TextPart();
 		$part->setText('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 		$part->save();
 		return $part;
@@ -24,7 +24,7 @@ class TextController extends PartController
 		$id = Request::getInt('id');
 		$text = Request::getUnicodeString('text');
 
-		$part = Text::load($id);
+		$part = TextPart::load($id);
 		$part->setText($text);
 		return $part;
 	}

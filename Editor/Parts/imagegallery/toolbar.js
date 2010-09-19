@@ -1,5 +1,5 @@
 ui.get().listen({
-	$interfaceIsReady : function() {
+	$ready : function() {
 		group.setValue(partToolbar.partForm.group.value);
 		height.setValue(partToolbar.partForm.height.value);
 		showTitle.setValue(partToolbar.partForm.showTitle.value);

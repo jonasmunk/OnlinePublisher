@@ -3,7 +3,7 @@ var controller = {
 		{drag:'user',drop:'folder'},
 		{drag:'icon',drop:'folder'}
 	],
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.loadUser();
 	},
 	loadUser : function() {

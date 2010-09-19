@@ -5,23 +5,21 @@
  */
 require_once($basePath.'Editor/Classes/Parts/Part.php');
 
-Part::$schema['header'] = array(
+Part::$schema['text'] = array(
 	'fields' => array(
-		'text'   => array('type'=>'text'),
-		'level'   => array('type'=>'int')
+		'text'   => array('type'=>'text')
 	)
 );
-class Header extends Part
+class TextPart extends Part
 {
 	var $text;
-	var $level;
 	
-	function Header() {
-		parent::Part('header');
+	function TextPart() {
+		parent::Part('text');
 	}
 	
 	function load($id) {
-		return Part::load('header',$id);
+		return Part::load('text',$id);
 	}
 	
 	function setText($text) {
@@ -30,14 +28,6 @@ class Header extends Part
 
 	function getText() {
 	    return $this->text;
-	}
-	
-	function setLevel($level) {
-	    $this->level = $level;
-	}
-
-	function getLevel() {
-	    return $this->level;
 	}
 	
 	function toUnicode() {

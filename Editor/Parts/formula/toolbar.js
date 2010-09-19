@@ -1,5 +1,5 @@
 ui.get().listen({
-	$interfaceIsReady : function() {
+	$ready : function() {
 		var form = partToolbar.partForm;
 		receiverName.setValue(form.receiverName.value);
 		receiverEmail.setValue(form.receiverEmail.value);

@@ -1,5 +1,5 @@
 var controller = {
-	interfaceIsReady : function() {
+	$ready : function() {
 		dark.show();
 		standard.show();
 		light.show();

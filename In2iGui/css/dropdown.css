@@ -108,6 +108,7 @@ div.in2igui_dropdown_selector a
 	display: block;
 	text-decoration: none;
 	color: #333;
+	min-height: 15px;
 }
 
 div.in2igui_dropdown_selector a.in2igui_selected

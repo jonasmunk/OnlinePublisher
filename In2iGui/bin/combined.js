@@ -8972,7 +8972,8 @@ In2iGui.prototype = {
 		this.domLoaded = true;
 		In2iGui.domReady = true;
 		this.resize();
-		In2iGui.callSuperDelegates(this,'interfaceIsReady');
+		//In2iGui.callSuperDelegates(this,'interfaceIsReady');
+		In2iGui.callSuperDelegates(this,'ready');
 
 		this.reLayout();
 		Event.observe(window,'resize',this.reLayout.bind(this));
@@ -10851,6 +10852,7 @@ In2iGui.Formula.DropDown.prototype = {
 			return;
 		}
 		if (e.keyCode==40) {
+			e.stop();
 			if (this.index>=this.items.length-1) {
 				this.value=this.items[0].value;
 			} else {
@@ -10858,7 +10860,9 @@ In2iGui.Formula.DropDown.prototype = {
 			}
 			this.updateIndex();
 			this.updateUI();
+			this.fireChange();
 		} else if (e.keyCode==38) {
+			e.stop();
 			if (this.index>0) {
 				this.index--;
 			} else {
@@ -10866,6 +10870,7 @@ In2iGui.Formula.DropDown.prototype = {
 			}
 			this.value = this.items[this.index].value;
 			this.updateUI();
+			this.fireChange();
 		}
 	},
 	setValue : function(value) {
@@ -10941,9 +10946,12 @@ In2iGui.Formula.DropDown.prototype = {
 		this.updateUI();
 		this.hideSelector();
 		if (changed) {
-			In2iGui.callAncestors(this,'childValueChanged',this.value);
-			this.fire('valueChanged',this.value);
+			this.fireChange();
 		}
+	},
+	fireChange : function() {
+		In2iGui.callAncestors(this,'childValueChanged',this.value);
+		this.fire('valueChanged',this.value);
 	}
 }
 
@@ -17122,7 +17130,7 @@ In2iGui.Segmented = function(options) {
 	this.name = options.name;
 	this.value = this.options.value;
 	In2iGui.extend(this);
-	this.element.observe('click',this.onClick.bind(this));
+	this.element.observe('mousedown',this.onClick.bind(this));
 }
 
 In2iGui.Segmented.prototype = {

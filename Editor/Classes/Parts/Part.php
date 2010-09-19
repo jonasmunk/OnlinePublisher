@@ -40,11 +40,17 @@ class Part
 			"now(),now()".
 			")";
 			$this->id = Database::insert($sql);
-			$sql = "insert into part_".$this->type." (part_id,".
-			SchemaService::buildSqlColumns(Part::$schema[$this->type]).
-			") values (".$this->id.",".
-			SchemaService::buildSqlValues($this,Part::$schema[$this->type]).
-			")";
+			$sql = "insert into part_".$this->type." (part_id";
+			$columns = SchemaService::buildSqlColumns(Part::$schema[$this->type]);
+			if (strlen($columns)>0) {
+				$sql.=",".$columns;
+			}
+			$sql.=") values (".$this->id;
+			$values = SchemaService::buildSqlValues($this,Part::$schema[$this->type]);
+			if (strlen($values)>0) {
+				$sql.=",".$values;
+			}
+			$sql.=")";
 			Database::insert($sql);
 		}
 	}
@@ -79,7 +85,7 @@ class Part
 	
 	function load($type,$id) {
 		global $basePath;
-		$class = ucfirst($type);
+		$class = ucfirst($type).'Part';
 		if (!file_exists($basePath.'Editor/Classes/Parts/'.$class.'.php')) {
 			return null;
 		}

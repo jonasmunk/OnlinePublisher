@@ -18,39 +18,28 @@ class PartFormula extends LegacyPartController {
 	}
 	
 	function sub_editor($context) {
-		$sql = "SELECT * from part_formula where part_id=".$this->id;
-		$row = Database::selectFirst($sql);
-		return 
-			'<input type="hidden" name="receiverName" value="'.escapeHTML($row['receivername']).'"/>'.
-			'<input type="hidden" name="receiverEmail" value="'.escapeHTML($row['receiveremail']).'"/>'.
+		if ($part=FormulaPart::load($this->id)) {
+			return 
+			'<input type="hidden" name="receiverName" value="'.escapeHTML($part->getReceiverName()).'"/>'.
+			'<input type="hidden" name="receiverEmail" value="'.escapeHTML($part->getReceiverEmail()).'"/>'.
 			$this->render();
-	}
-	
-	function sub_create() {
-		$sql = "insert into part_formula (part_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_formula where part_id=".$this->id;
-		Database::delete($sql);
+		}
+		Log::debug($this->id);
+		return '';
 	}
 	
 	function sub_update() {
 		$name = Request::getString('receiverName');
 		$email = Request::getString('receiverEmail');
-		$sql = "update part_formula set receivername=".Database::text($name).",receiveremail=".Database::text($email)." where part_id=".$this->id;
-		Database::update($sql);
+		if ($part=FormulaPart::load($this->id)) {
+			$part->setReceiverName($name);
+			$part->setReceiverEmail($email);
+			$part->save();
+		}
 	}
 	
 	function sub_build($context) {
-		$sql = "select * from part_formula where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			return 
-			'<formula xmlns="'.$this->_buildnamespace('1.0').'"/>';
-		} else {
-			return '';
-		}
+		return '<formula xmlns="'.$this->_buildnamespace('1.0').'"/>';
 	}
 	
 	// Toolbar stuff

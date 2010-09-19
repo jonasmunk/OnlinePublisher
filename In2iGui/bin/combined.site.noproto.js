@@ -1383,7 +1383,8 @@ In2iGui.prototype = {
 		this.domLoaded = true;
 		In2iGui.domReady = true;
 		this.resize();
-		In2iGui.callSuperDelegates(this,'interfaceIsReady');
+		//In2iGui.callSuperDelegates(this,'interfaceIsReady');
+		In2iGui.callSuperDelegates(this,'ready');
 
 		this.reLayout();
 		Event.observe(window,'resize',this.reLayout.bind(this));

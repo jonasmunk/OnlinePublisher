@@ -6,7 +6,7 @@ ui.listen({
 		{drag:'person',drop:'persongroup'}
 	],
 	
-	$interfaceIsReady : function() {
+	$ready : function() {
 		sendEmail.setEnabled(false);
 	},
 	

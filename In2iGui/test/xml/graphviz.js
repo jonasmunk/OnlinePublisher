@@ -1,5 +1,5 @@
 var controller = {
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.refresh();
 	},
 	refresh : function() {

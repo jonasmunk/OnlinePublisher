@@ -1,5 +1,5 @@
 op.Editor = {
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.getToolbarController().pageDidLoad(op.page.id);
 		var editor = ui.Editor.get();
 		editor.setOptions({

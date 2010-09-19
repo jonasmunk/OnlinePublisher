@@ -1,5 +1,5 @@
 op.part.File = {
-	$interfaceIsReady : function() {
+	$ready : function() {
 		this.buildWindow();
 	},
 	buildWindow : function() {

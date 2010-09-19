@@ -1,5 +1,5 @@
 ui.get().listen({
-	$interfaceIsReady : function() {
+	$ready : function() {
 		showStreetname.setValue(partToolbar.partForm.show_streetname.value);
 		showCity.setValue(partToolbar.partForm.show_city.value);
 		showCountry.setValue(partToolbar.partForm.show_country.value);
