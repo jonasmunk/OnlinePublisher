@@ -54,7 +54,7 @@
 					<p>9000 Aalborg, Denmark</p>
 					<p><em>CVR:</em> 320 682 71</p>
 					<p><em>Tlf:</em> 70 20 60 77</p>
-					<p><em>E-post: </em> <a href="mailto:janemunk@stofanet.dk"><span>info@greenbenefit.dk</span></a></p>
+					<p><em>E-post: </em> <a href="mailto:info@greenbenefit.dk"><span>info@greenbenefit.dk</span></a></p>
 					<blockquote>
 						"Kontakt os venligst hvis du er interesseret."
 					</blockquote>
@@ -67,9 +67,7 @@
 		</div>
 	</div>
 	<div class="layout_footer"><xsl:comment/></div>
-	<!--
-	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'????????'"/></xsl:call-template>
-	-->
+	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-9'"/></xsl:call-template>
 </body>
 </html>
 </xsl:template>
