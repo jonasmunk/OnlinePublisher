@@ -11,6 +11,10 @@ require_once($basePath.'Editor/Libraries/Zend/Mail/Transport/Smtp.php');
 
 class EmailUtil {
 	
+	function sendToStandard($subject,$body) {
+		EmailUtil::send(EmailUtil::getStandardEmail(), EmailUtil::getStandardName(),$subject,$body);
+	}
+	
 	function send($email,$name,$subject,$body) {
 		
 		

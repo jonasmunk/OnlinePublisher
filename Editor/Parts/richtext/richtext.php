@@ -106,14 +106,8 @@ class PartRichtext extends LegacyPartController {
 	
 	// Toolbar stuff
 	
-	function getToolbarTabs() {
-		return array(
-				 'richtext' => array('title' => 'Rig tekst')
-			);
-	}
-	
-	function getToolbarDefaultTab() {
-		return 'richtext';
+	function isIn2iGuiEnabled() {
+		return true;
 	}
 }
 ?>

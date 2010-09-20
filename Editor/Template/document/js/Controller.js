@@ -207,6 +207,12 @@ var controller = {
 		if (confirm('Er du sikker p\u00e5 at du vil slette r\u00e6kken?\nHandlingen kan ikke fortrydes')) {
 			document.location='DeleteRow.php?row='+this.rowId;
 		}
+	},
+	
+	////////////////////////////////// Links //////////////////////////
+	
+	linkWasClicked : function(id) {
+		parent.parent.Toolbar.location='Toolbar.php?link=true&id='+id+'&'+Math.random();
 	}
 };
 

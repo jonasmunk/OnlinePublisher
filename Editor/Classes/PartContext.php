@@ -65,8 +65,8 @@ class PartContext {
 		$this->displayDecorator->addReplacement($text,'<a href="'.$href.'" target="'.$target.'" class="'.$class.'" title="'.$title.'"><span>','</span></a>');
 	}
 	
-	function addBuildLink($text,$type,$id,$value,$target,$title,$path) {
-		$this->buildLinks[] = array('text' => $text, 'type' => $type, 'id' => $id, 'value' => $value , 'target' => $target, 'title' => $title);
+	function addBuildLink($text,$type,$id,$value,$target,$title,$path,$linkId=0) {
+		$this->buildLinks[] = array('text' => $text, 'type' => $type, 'id' => $id, 'value' => $value , 'target' => $target, 'title' => $title, 'linkId' => $linkId);
 		$atts='';
 		if ($type=='url') {
 			$atts.=' url="'.StringUtils::escapeXML($value).'"';
@@ -85,6 +85,9 @@ class PartContext {
 		}
 		if ($path!='') {
 			$atts.=' path="'.$path.'"';
+		}
+		if ($linkId>0) {
+			$atts.=' id="'.$linkId.'"';
 		}
 		$this->buildDecorator->addReplacement($text,'<link'.$atts.'>','</link>');
 	}

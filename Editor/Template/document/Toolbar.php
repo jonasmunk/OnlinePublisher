@@ -24,12 +24,12 @@ if (Request::getBoolean('link')) {
 		<tabs small="true" below="true">
 			<tab title="'.($new ? 'Nyt link' : 'Rediger link').'" background="light">
 				<toolbar>
-					<grid>
+					<grid left="10">
 						<row>
 							<cell label="Tekst:" width="200" right="10">
 								<textfield name="text" value="'.In2iGui::escape($link->getText()).'"/>
 							</cell>
-							<cell label="Side:" width="200">
+							<cell label="Side:" width="200" right="10">
 								<dropdown name="page" adaptive="true" value="'.$link->getPage().'">
 									'.GuiUtils::buildPageItems().'
 								</dropdown>
@@ -50,7 +50,7 @@ if (Request::getBoolean('link')) {
 							<cell label="Beskrivelse:" right="10">
 								<textfield name="alternative" value="'.In2iGui::escape($link->getAlternative()).'"/>
 							</cell>
-							<cell label="Fil:" width="200">
+							<cell label="Fil:" width="200" right="10">
 								<dropdown name="file" adaptive="true" value="'.$link->getFile().'">
 									'.GuiUtils::buildObjectItems('file').'
 								</dropdown>

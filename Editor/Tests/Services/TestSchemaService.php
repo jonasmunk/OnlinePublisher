@@ -7,7 +7,7 @@
 class TestSchemaService extends UnitTestCase {
     
     function testIt() {
-		$obj = new Imagegallery();
+		$obj = new ImagegalleryPart();
 	
 		$sql = SchemaService::buildSqlColumns(Part::$schema['imagegallery']);
 		$this->assertEqual($sql,'`variant`,`height`,`imagegroup_id`,`framed`,`show_title`');

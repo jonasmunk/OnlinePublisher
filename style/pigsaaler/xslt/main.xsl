@@ -32,6 +32,9 @@
 	<xsl:comment><![CDATA[[if gt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
 	<![endif]]]></xsl:comment>
+	<script type="text/javascript" src="{$path}style/{$design}/js/bestilling.js" charset="utf-8"><xsl:comment/></script>
+	<script type="text/javascript" src="{$path}In2iGui/js/Alert.js"><xsl:comment/></script>
+	<script type="text/javascript" src="{$path}In2iGui/js/Button.js"><xsl:comment/></script>
 </head>
 <body>
 	<div class="case">
@@ -52,7 +55,6 @@
 					<p><em>CVR:</em> 320 682 71</p>
 					<p><em>Tlf:</em> 70 20 60 77</p>
 					<p><em>E-post: </em> <a href="mailto:janemunk@stofanet.dk"><span>info@greenbenefit.dk</span></a></p>
-					
 					<blockquote>
 						"Kontakt os venligst hvis du er interesseret."
 					</blockquote>

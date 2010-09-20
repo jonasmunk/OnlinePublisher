@@ -6,35 +6,44 @@
  >
 
 <xsl:template name="link">
-<xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
-<xsl:choose>
-<xsl:when test="@path and $preview='false'">
-<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="@page">
-<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="@page-reference">
-<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="@url">
-<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="@file">
-<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if></xsl:attribute>
-</xsl:when>
-<xsl:when test="@email">
-<xsl:attribute name="href">mailto:<xsl:value-of select="@email"/></xsl:attribute>
-</xsl:when>
-</xsl:choose>
-<xsl:choose>
-<xsl:when test="@target='_blank'">
-<xsl:attribute name="onclick">try {window.open(this.getAttribute('href')); return false;} catch (igonre) {}</xsl:attribute>
-</xsl:when>
-<xsl:when test="@target and @target!='_self' and @target!='_download'">
-<xsl:attribute name="target"><xsl:value-of select="@target"/></xsl:attribute>
-</xsl:when>
-</xsl:choose>
+	
+	<xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
+	<xsl:choose>
+		<xsl:when test="$editor='true'">
+			<xsl:attribute name="href">#</xsl:attribute>
+			<xsl:attribute name="onclick">controller.linkWasClicked('<xsl:value-of select="@id"/>');return false;</xsl:attribute>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:choose>
+				<xsl:when test="@path and $preview='false'">
+					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/></xsl:attribute>
+				</xsl:when>
+				<xsl:when test="@page">
+					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/></xsl:attribute>
+				</xsl:when>
+				<xsl:when test="@page-reference">
+					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/></xsl:attribute>
+				</xsl:when>
+				<xsl:when test="@url">
+					<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
+				</xsl:when>
+				<xsl:when test="@file">
+					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if></xsl:attribute>
+				</xsl:when>
+				<xsl:when test="@email">
+					<xsl:attribute name="href">mailto:<xsl:value-of select="@email"/></xsl:attribute>
+				</xsl:when>
+			</xsl:choose>
+			<xsl:choose>
+				<xsl:when test="@target='_blank'">
+					<xsl:attribute name="onclick">try {window.open(this.getAttribute('href')); return false;} catch (igonre) {}</xsl:attribute>
+				</xsl:when>
+				<xsl:when test="@target and @target!='_self' and @target!='_download'">
+					<xsl:attribute name="target"><xsl:value-of select="@target"/></xsl:attribute>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template name="link-href">

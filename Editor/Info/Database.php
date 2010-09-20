@@ -258,6 +258,12 @@ $databaseTables = array(
 			array("enddate","datetime","","","0000-00-00 00:00:00",""),
 			array("location","varchar(255)","YES","","","")
 		),
+	'feedback' => array(
+			array("object_id","int(11)","YES","","",""),
+			array("name","varchar(255)","","","",""),
+			array("email","varchar(255)","","","",""),
+			array("message","text","","","","")
+		),
 	'file' => array(
 			array("object_id","int(11)","YES","","",""),
 			array("filename","varchar(255)","","","",""),

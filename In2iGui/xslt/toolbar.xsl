@@ -116,6 +116,9 @@
 <xsl:template match="gui:toolbar//gui:grid">
 	<span class="in2igui_toolbar_grid">
 	<table class="in2igui_toolbar_grid">
+		<xsl:if test="@left">
+			<xsl:attribute name="style">margin-left:<xsl:value-of select="@left"/>px;</xsl:attribute>
+		</xsl:if>
 		<xsl:apply-templates/>
 	</table>
 	</span>

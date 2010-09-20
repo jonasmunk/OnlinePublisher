@@ -17,21 +17,7 @@ class PartText extends LegacyPartController {
 	}
 	
 	function sub_display($context) {
-		$data='';
-		$sql = "select * from part_text where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			$text = $row['text'];
-			$text = escapeHTML($text);
-			$text = $context->decorateForDisplay($text);
-			$text = insertLineBreakTags($text,'<br/>');
-			$text = str_replace('<br/><br/>', '</p><p>', $text);;
-			$data=
-			'<div class="part_text common_font" style="'.$this->_buildCSSStyle($row).'">'.
-			($row['image_id']>0 ? '<img src="../../../util/images/?id='.$row['image_id'].'" style="float: '.$row['imagefloat'].';"/>' : '').
-			'<p class="part_text_first">'.$text.'</p>'.
-			'</div>';
-		}
-		return $data;
+		return $this->render($context);
 	}
 	
 	function sub_editor($context) {
@@ -65,54 +51,25 @@ class PartText extends LegacyPartController {
 		}
 	}
 	
-	function sub_create() {
-		$sql = "insert into part_text (part_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_text where part_id=".$this->id;
-		Database::delete($sql);
-	}
-	
 	function sub_update() {
-		$text = requestPostText('text');
-		$fontSize = requestPostText('fontSize');
-		$fontFamily = requestPostText('fontFamily');
-		$textAlign = requestPostText('textAlign');
-		$lineHeight = requestPostText('lineHeight');
-		$color = requestPostText('color');
-		$fontWeight = requestPostText('fontWeight');
-		$fontStyle = requestPostText('fontStyle');
-		$wordSpacing = requestPostText('wordSpacing');
-		$letterSpacing = requestPostText('letterSpacing');
-		$textIndent = requestPostText('textIndent');
-		$textTransform = requestPostText('textTransform');
-		$fontVariant = requestPostText('fontVariant');
-		$textDecoration = requestPostText('textDecoration');
-		$imageId = requestPostNumber('imageId');
-		$imageFloat = requestPostText('imageFloat');
-		
-		
-		$sql = "update part_text set".
-		" text=".Database::text($text).
-		",fontsize=".Database::text($fontSize).
-		",fontfamily=".Database::text($fontFamily).
-		",textalign=".Database::text($textAlign).
-		",lineheight=".Database::text($lineHeight).
-		",color=".Database::text($color).
-		",fontweight=".Database::text($fontWeight).
-		",fontstyle=".Database::text($fontStyle).
-		",wordspacing=".Database::text($wordSpacing).
-		",letterspacing=".Database::text($letterSpacing).
-		",textindent=".Database::text($textIndent).
-		",texttransform=".Database::text($textTransform).
-		",fontvariant=".Database::text($fontVariant).
-		",textdecoration=".Database::text($textDecoration).
-		",image_id=".Database::int($imageId).
-		",imagefloat=".Database::text($imageFloat).
-		" where part_id=".$this->id;
-		Database::insert($sql);
+		if ($part = TextPart::load($this->id)) {
+			$part->setText(Request::getString('text'));
+			$part->setFontSize(Request::getString('fontSize'));
+			$part->setFontFamily(Request::getString('fontFamily'));
+			$part->setTextAlign(Request::getString('textAlign'));
+			$part->setLineHeight(Request::getString('lineHeight'));
+			$part->setFontWeight(Request::getString('fontWeight'));
+			$part->setFontStyle(Request::getString('fontStyle'));
+			$part->setWordSpacing(Request::getString('wordSpacing'));
+			$part->setLetterSpacing(Request::getString('letterSpacing'));
+			$part->setTextIndent(Request::getString('textIndent'));
+			$part->setTextTransform(Request::getString('textTransform'));
+			$part->setFontVariant(Request::getString('fontVariant'));
+			$part->setTextDecoration(Request::getString('textDecoration'));
+			$part->setImageId(Request::getInt('imageId'));
+			$part->setImageFloat(Request::getString('imageFloat'));
+			$part->save();
+		}
 	}
 	
 	function sub_import(&$node) {
@@ -161,7 +118,6 @@ class PartText extends LegacyPartController {
 			$text = StringUtils::escapeSimpleXML($text);
 			$text = $context->decorateForBuild($text);
 			// Important that line breaks are after decorate
-			// Or else 
 			$text = StringUtils::insertLineBreakTags($text,'<break/>');
 			
 			$text = str_replace('<break/><break/>', '</p><p>', $text);;
@@ -189,9 +145,8 @@ class PartText extends LegacyPartController {
 	}
 	
 	function sub_index() {
-		$sql = "select * from part_text where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			return $row['text'];
+		if ($part = TextPart::load($this->id)) {
+			return $part->getText();
 			// TODO: Strip special tags from index
 		} else {
 			return '';

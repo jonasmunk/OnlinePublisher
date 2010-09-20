@@ -7,9 +7,9 @@ require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/HtmlPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class HtmlController extends PartController
+class HtmlPartController extends PartController
 {
-	function HtmlController() {
+	function HtmlPartController() {
 		parent::PartController('html');
 	}
 	

@@ -44,7 +44,7 @@ $design = getPageDesign();
 <script type="text/javascript">
 In2iGui.context='../../../';
 </script>
-<script type="text/javascript" src="js/Controller.js"></script>
+<script type="text/javascript" src="js/Controller.js?1"></script>
 <script type="text/javascript" src="../../Services/Parts/js/parts.js"></script>
 <script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js"></script>
 <script type="text/javascript">
@@ -115,6 +115,7 @@ function buildPartContext() {
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$context -> addDisplayLink(escapeHTML($row['source_text']),'Toolbar.php?link=true&amp;id='.$row['id'],'Toolbar','common',$row['alternative']);
+		$context -> addBuildLink(StringUtils::escapeSimpleXML($row['source_text']),$row['target_type'],$row['target_id'],$row['target_value'],$row['target'],$row['alternative'],$row['path'],$row['id']);
 	}
 	Database::free($result);
 	
