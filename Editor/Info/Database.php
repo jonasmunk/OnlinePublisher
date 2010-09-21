@@ -703,7 +703,7 @@ $databaseTables = array(
 			array("texttransform","varchar(50)","YES","","",""),
 			array("fontstyle","varchar(50)","YES","","",""),
 			array("fontvariant","varchar(50)","YES","","",""),
-			array("type","varchar(10)","YES","","","")
+			array("type","varchar(20)","YES","","","")
 		),
 	'part_mailinglist' => array(
 			array("part_id","int(11)","","","0",""),

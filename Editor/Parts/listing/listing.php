@@ -25,7 +25,7 @@ class PartListing extends LegacyPartController {
 			} else {
 				$tag='ol';
 			}
-			$data.= '<div class="part_listing common_font"><'.$tag.' type="'.$row['type'].'" style="'.$this->_buildCSSStyle($row).'">';
+			$data.= '<div class="part_listing common_font"><'.$tag.' style="list-style: '.$row['type'].';'.$this->_buildCSSStyle($row).'">';
 			$parsed = $this->_parse($row['text']);
 			foreach ($parsed as $point) {
 				$data.='<li><span class="part_listing">';
@@ -234,173 +234,94 @@ class PartListing extends LegacyPartController {
 		}
 		return $parsed;
 	}
-	// Toolbar stuff
 	
-	function getToolbarTabs() {
+	function isIn2iGuiEnabled() {
+		return true;
+	}
+	
+	function getToolbars() {
 		return array(
-				 'text' => array('title' => 'Punktopstilling')
-				,'advanced' => array('title' => 'Avanceret')
+			'Punktopstilling' =>
+			'
+			<segmented label="Symbol" name="listStyle">
+				<item icon="style/list-style-disc" value="disc"/>
+				<item icon="style/list-style-square" value="square"/>
+				<item icon="style/list-style-circle" value="circle"/>
+				<item icon="style/list-style-decimal" value="decimal"/>
+				<item icon="style/list-style-lower-alpha" value="lower-alpha"/>
+				<item icon="style/list-style-upper-alpha" value="upper-alpha"/>
+				<item icon="style/list-style-lower-roman" value="lower-roman"/>
+				<item icon="style/list-style-upper-roman" value="upper-roman"/>
+			</segmented>
+			<style-length label="St&#248;rrelse" name="fontSize"/>
+			<segmented label="Placering" name="textAlign" allow-null="true">
+				<item icon="style/text_align_left" value="left"/>
+				<item icon="style/text_align_center" value="center"/>
+				<item icon="style/text_align_right" value="right"/>
+				<item icon="style/text_align_justify" value="justify"/>
+			</segmented>
+			<divider/>
+			<dropdown label="Skrift" name="fontFamily" width="180">
+				<item value="" title=""/>
+				<item value="sans-serif" title="*Sans-serif*"/>
+				<item value="Verdana,sans-serif" title="Verdana"/>
+				<item value="Tahoma,Geneva,sans-serif" title="Tahoma"/>
+				<item value="Trebuchet MS,Helvetica,sans-serif" title="Trebuchet"/>
+				<item value="Geneva,Tahoma,sans-serif" title="Geneva"/>
+				<item value="Helvetica,sans-serif" title="Helvetica"/>
+				<item value="Arial,Helvetica,sans-serif" title="Arial"/>
+				<item value="Arial Black,Gadget,Arial,sans-serif" title="Arial Black"/>
+				<item value="Impact,Charcoal,Arial Black,Gadget,Arial,sans-serif" title="Impact"/>
+				<item value="serif" title="*Serif*"/>
+				<item value="Times New Roman,Times,serif" title="Times New Roman"/>
+				<item value="Times,Times New Roman,serif" title="Times"/>
+				<item value="Book Antiqua,Palatino,serif" title="Book Antiqua"/>
+				<item value="Palatino,Book Antiqua,serif" title="Palatino"/>
+				<item value="Georgia,Book Antiqua,Palatino,serif" title="Georgia"/>
+				<item value="Garamond,Times New Roman,Times,serif" title="Garamond"/>
+				<item value="cursive" title="*Kursiv*"/>
+				<item value="Comic Sans MS,cursive" title="Comic Sans"/>
+				<item value="monospace" title="*Monospace*"/>
+				<item value="Courier New,Courier,monospace" title="Courier New"/>
+				<item value="Courier,Courier New,monospace" title="Courier"/>
+				<item value="Lucida Console,Monaco,monospace" title="Lucida Console"/>
+				<item value="Monaco,Lucida Console,monospace" title="Monaco"/>
+				<item value="fantasy" title="*Fantasi*"/>
+			</dropdown>
+			<style-length label="Linjeh&#248;jde" name="lineHeight"/>
+			<textfield label="Farve" name="color" width="60"/>
+			<segmented label="Fed" name="fontWeight" allow-null="true">
+				<item icon="style/text_normal" value="normal"/>
+				<item icon="style/text_bold" value="bold"/>
+			</segmented>
+			<segmented label="Kursiv" name="fontStyle" allow-null="true">
+				<item icon="style/text_normal" value="normal"/>
+				<item icon="style/text_italic" value="italic"/>
+			</segmented>',
+			
+		'Avanceret' =>
+			'
+			<style-length label="Ord-mellemrum" name="wordSpacing"/>
+			<style-length label="Tegn-mellemrum" name="letterSpacing"/>
+			<style-length label="Indrykning" name="textIndent"/>
+			<segmented label="Bogstaver" name="textTransform" allow-null="true">
+				<item icon="style/text_normal" value="normal"/>
+				<item icon="style/text_transform_capitalize" value="capitalize"/>
+				<item icon="style/text_transform_uppercase" value="uppercase"/>
+				<item icon="style/text_transform_lowercase" value="lowercase"/>
+			</segmented>
+			<segmented label="Variant" name="fontVariant" allow-null="true">
+				<item icon="style/font_variant_normal" value="normal"/>
+				<item icon="style/font_variant_smallcaps" value="small-caps"/>
+			</segmented>
+			<segmented label="Variant" name="textDecoration" allow-null="true">
+				<item icon="style/text_normal" value="none"/>
+				<item icon="style/text_decoration_underline" value="underline"/>
+				<item icon="style/text_decoration_linethrough" value="line-through"/>
+				<item icon="style/text_decoration_overline" value="overline"/>
+			</segmented>
+			'
 			);
-	}
-	
-	function getToolbarDefaultTab() {
-		return 'text';
-	}
-	
-	function getToolbarContent($tab) {
-		if ($tab=='text') {
-			return $this->_textTab();
-		} elseif ($tab=='advanced') {
-			return $this->_advancedTab();
-		} else {
-			return '';
-		}
-	}
-	
-	function _textTab() {
-		return
-		'<list-type xmlns="uri:Style" title="Type" value="disc" object="ListType" onchange="updateListType();"/>'.
-		'<size xmlns="uri:Style" title="Størrelse" object="FontSize" onchange="updateFontSize();"/>'.
-		'<font-family xmlns="uri:Style" title="Skrift" object="FontFamily" onchange="updateFontFamily();">'.
-		$this->fontFamilyOptions().
-		'</font-family>'.
-		'<text-align xmlns="uri:Style" title="Justering" object="TextAlign" onchange="updateTextAlign();"/>'.
-		'<size xmlns="uri:Style" title="Linjehøjde" object="LineHeight" onchange="updateLineHeight();"/>'.
-		'<color xmlns="uri:Style" title="Farve" object="Color" onchange="updateColor();"/>'.
-		'<font-weight xmlns="uri:Style" title="Tykkelse" object="FontWeight" onchange="updateFontWeight();"/>'.
-		'<font-style xmlns="uri:Style" title="Kursiv" object="FontStyle" onchange="updateFontStyle();"/>'.
-		'<script xmlns="uri:Script">
-		function updateListType() {
-			formula.type.value=ListType.getValue();
-		}
-		function updateFontSize() {
-			var value = FontSize.getValue();
-			formula.fontSize.value=value;
-			formula.text.style.fontSize = value;
-		}
-		function updateColor() {
-			var colorValue = Color.getValue();
-			formula.color.value=colorValue;
-			formula.text.style.color = colorValue;
-		}
-		function updateFontFamily() {
-			var fontFamilyValue = FontFamily.getValue();
-			formula.fontFamily.value= fontFamilyValue;
-			formula.text.style.fontFamily = fontFamilyValue;
-		}
-		function updateTextAlign() {
-			var textAlignValue = TextAlign.getValue();
-			formula.textAlign.value= textAlignValue;
-			formula.text.style.textAlign = textAlignValue;
-		}
-		function updateLineHeight() {
-			var lineHeightValue = LineHeight.getValue();
-			formula.lineHeight.value= lineHeightValue;
-			formula.text.style.lineHeight = lineHeightValue;
-		}
-		function updateFontWeight() {
-			var fontWeightValue = FontWeight.getValue();
-			formula.fontWeight.value= fontWeightValue;
-			formula.text.style.fontWeight = fontWeightValue;
-		}
-		function updateFontStyle() {
-			var fontStyleValue = FontStyle.getValue();
-			formula.fontStyle.value= fontStyleValue;
-			formula.text.style.fontStyle = fontStyleValue;	
-		}
-		function updateThis() {
-			ListType.setValue(formula.type.value);
-			FontSize.setValue(formula.fontSize.value);
-			FontFamily.setValue(formula.fontFamily.value);
-			Color.setValue(formula.color.value);
-			TextAlign.setValue(formula.textAlign.value);
-			LineHeight.setValue(formula.lineHeight.value);
-			FontWeight.setValue(formula.fontWeight.value);
-			FontStyle.setValue(formula.fontStyle.value);
-		}
-		updateThis();
-		</script>';
-	}
-	
-	
-	function _advancedTab() {
-		return
-		'<size xmlns="uri:Style" title="Ord-mellemrum" object="WordSpacing" onchange="updateWordSpacing();"/>'.
-		'<size xmlns="uri:Style" title="Tegn-mellemrum" object="LetterSpacing" onchange="updateLetterSpacing();"/>'.
-		'<size xmlns="uri:Style" title="Indrykning" object="TextIndent" onchange="updateTextIndent();"/>'.
-		'<text-transform xmlns="uri:Style" title="Bogstaver" object="TextTransform" onchange="updateTextTransform();"/>'.
-		'<font-variant xmlns="uri:Style" title="Variant" object="FontVariant" onchange="updateFontVariant();"/>'.
-		'<text-decoration xmlns="uri:Style" title="Streg" object="TextDecoration" onchange="updateTextDecoration();"/>'.
-		'<script xmlns="uri:Script">
-		function updateWordSpacing() {
-			var value = WordSpacing.getValue();
-			formula.wordSpacing.value=value;
-			formula.text.style.wordSpacing = value;
-		}
-		function updateLetterSpacing() {
-			var value = LetterSpacing.getValue();
-			formula.letterSpacing.value=value;
-			formula.text.style.letterSpacing = value;
-		}
-		function updateTextIndent() {
-			var value = TextIndent.getValue();
-			formula.textIndent.value= value;
-			formula.text.style.textIndent = value;
-		}
-		function updateTextTransform() {
-			var value = TextTransform.getValue();
-			formula.textTransform.value= value;
-			formula.text.style.textTransform = value;
-		}
-		function updateFontVariant() {
-			var value = FontVariant.getValue();
-			formula.fontVariant.value= value;
-			formula.text.style.fontVariant = value;
-		}
-		function updateTextDecoration() {
-			var value = TextDecoration.getValue();
-			formula.textDecoration.value= value;
-			formula.text.style.textDecoration = value;
-		}
-		function updateThis() {
-			WordSpacing.setValue(formula.wordSpacing.value);
-			LetterSpacing.setValue(formula.letterSpacing.value);
-			TextIndent.setValue(formula.textIndent.value);
-			TextTransform.setValue(formula.textTransform.value);
-			FontVariant.setValue(formula.fontVariant.value);
-			TextDecoration.setValue(formula.textDecoration.value);
-		}
-		updateThis();
-		</script>';
-	}
-	
-	function fontFamilyOptions() {
-		return
-		'<font value="sans-serif" title="*Sans-serif*"/>'.
-		'<font value="Verdana,sans-serif" title="Verdana"/>'.
-		'<font value="Tahoma,Geneva,sans-serif" title="Tahoma"/>'.
-		'<font value="Trebuchet MS,Helvetica,sans-serif" title="Trebuchet"/>'.
-		'<font value="Geneva,Tahoma,sans-serif" title="Geneva"/>'.
-		'<font value="Helvetica,sans-serif" title="Helvetica"/>'.
-		'<font value="Arial,Helvetica,sans-serif" title="Arial"/>'.
-		'<font value="Arial Black,Gadget,Arial,sans-serif" title="Arial Black"/>'.
-		'<font value="Impact,Charcoal,Arial Black,Gadget,Arial,sans-serif" title="Impact"/>'.
-		'<font value="serif" title="*Serif*"/>'.
-		'<font value="Times New Roman,Times,serif" title="Times New Roman"/>'.
-		'<font value="Times,Times New Roman,serif" title="Times"/>'.
-		'<font value="Book Antiqua,Palatino,serif" title="Book Antiqua"/>'.
-		'<font value="Palatino,Book Antiqua,serif" title="Palatino"/>'.
-		'<font value="Georgia,Book Antiqua,Palatino,serif" title="Georgia"/>'.
-		'<font value="Garamond,Times New Roman,Times,serif" title="Garamond"/>'.
-		'<font value="cursive" title="*Kursiv*"/>'.
-		'<font value="Comic Sans MS,cursive" title="Comic Sans"/>'.
-		'<font value="monospace" title="*Monospace*"/>'.
-		'<font value="Courier New,Courier,monospace" title="Courier New"/>'.
-		'<font value="Courier,Courier New,monospace" title="Courier"/>'.
-		'<font value="Lucida Console,Monaco,monospace" title="Lucida Console"/>'.
-		'<font value="Monaco,Lucida Console,monospace" title="Monaco"/>'.
-		'<font value="fantasy" title="*Fantasi*"/>'
-		;
 	}
 }
 ?>

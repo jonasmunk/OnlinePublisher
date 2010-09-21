@@ -95,6 +95,9 @@ n2i.inArray = function(arr,value) {
 	return false;
 }
 
+/**
+ * Converts a string to an int if it is only digits, otherwise remains a string
+ */
 n2i.intOrString = function(str) {
 	if (n2i.isDefined(str)) {
 		var result = /[0-9]+/.exec(str);
