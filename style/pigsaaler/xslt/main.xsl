@@ -54,7 +54,8 @@
 					<p>9000 Aalborg, Denmark</p>
 					<p><em>CVR:</em> 320 682 71</p>
 					<p><em>Tlf:</em> 70 20 60 77</p>
-					<p><em>E-post: </em> <a href="mailto:info@greenbenefit.dk"><span>info@greenbenefit.dk</span></a></p>
+					<p><em>E-post: </em> <a href="mailto:pigsaaler@greenbenefit.dk"><span>pigsaaler@greenbenefit.dk</span></a></p>
+					<p><em>Åben: </em>Alle dage, kl.8.00-20.00</p>
 					<blockquote>
 						"Kontakt os venligst hvis du er interesseret."
 					</blockquote>
