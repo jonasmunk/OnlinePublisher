@@ -24,25 +24,24 @@
 <title><xsl:value-of select="@title"/></title>
 <xsl:choose>
 	<xsl:when test="$dev='true'">
-		<link rel="stylesheet" href="{$context}/In2iGui/css/dev.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="{$context}/In2iGui/css/dev.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	</xsl:when>
 	<xsl:otherwise>
-		<link rel="stylesheet" href="{$context}/In2iGui/bin/minimized.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="{$context}/In2iGui/bin/minimized.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	</xsl:otherwise>
 </xsl:choose>
-<link rel="stylesheet" href="{$context}/In2iGui/css/print.css" type="text/css" media="print" title="no title" charset="utf-8"/>
 <!--
 <xsl:comment><![CDATA[[if lt IE 8]>
 	<script src="]]><xsl:value-of select="$context"/><![CDATA[/In2iGui/lib/IE8.js" type="text/javascript"></script>
 <![endif]]]></xsl:comment>-->
 <xsl:comment><![CDATA[[if IE 8]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/In2iGui/css/msie8.css"> </link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/In2iGui/css/msie8.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
 <![endif]]]></xsl:comment>
 <xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/In2iGui/css/msie6.css"> </link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/In2iGui/css/msie6.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
 <![endif]]]></xsl:comment>
 <xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/In2iGui/css/msie7.css"> </link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/In2iGui/css/msie7.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
 <![endif]]]></xsl:comment>
 <xsl:for-each select="//gui:css">
 	<link rel="stylesheet" href="{@url}" type="text/css" media="screen" title="no title" charset="utf-8"/>
@@ -96,7 +95,7 @@
 		<script src="{$context}/In2iGui/js/Links.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:when>
 	<xsl:otherwise>
-		<script src="{$context}/In2iGui/bin/minimized.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:otherwise>
 </xsl:choose>
 <xsl:if test="//gui:graphviz">

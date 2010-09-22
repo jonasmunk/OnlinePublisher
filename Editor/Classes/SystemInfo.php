@@ -2,7 +2,7 @@
 require_once('UserInterface.php');
 class SystemInfo {
 	
-	private static $date = 19;
+	private static $date = 22;
 	private static $month = 9;
 	private static $year = 2010;
 	private static $feedbackMail = "jonasmunk@mac.com";

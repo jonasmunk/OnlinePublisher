@@ -11,6 +11,7 @@ require_once '../../Classes/Parts/LegacyPartController.php';
 require_once '../../Include/Session.php';
 require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
+require_once '../../Classes/SystemInfo.php';
 require_once 'Functions.php';
 
 header('Content-Type: text/html; charset=iso-8859-1');
@@ -21,32 +22,32 @@ $design = getPageDesign();
 <html>
 <head>
 <title>Editor</title>
-<link rel="stylesheet" type="text/css" href="../../../In2iGui/bin/minimized.css" />
-<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/editors/document.css" />
-<link rel="stylesheet" type="text/css" href="Stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="../../../In2iGui/bin/minimized.css?version=<?=SystemInfo::getDate()?>" />
+<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/editors/document.css?version=<?=SystemInfo::getDate()?>" />
+<link rel="stylesheet" type="text/css" href="Stylesheet.css?version=<?=SystemInfo::getDate()?>" />
 <!--[if IE]>
-<link rel="stylesheet" type="text/css" href="StylesheetIE.css" />
+<link rel="stylesheet" type="text/css" href="StylesheetIE.css?version=<?=SystemInfo::getDate()?>" />
 <![endif]-->
 <? if (Request::getBoolean('dev')) { ?>
-<script type="text/javascript" src="../../../In2iGui/bin/combined.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../In2iGui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } else { ?>
-<script type="text/javascript" src="../../../In2iGui/bin/minimized.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../In2iGui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } ?>
 <!--[if IE 8]>
-<link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie8.css"> </link>
+<link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
 <![endif]-->
 <!--[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie6.css"> </link>
+	<link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie6.css?version=<?=SystemInfo::getDate()?>"> </link>
 <![endif]-->
 <!--[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie7.css"> </link>
+	<link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie7.css?version=<?=SystemInfo::getDate()?>"> </link>
 <![endif]-->
 <script type="text/javascript">
 In2iGui.context='../../../';
 </script>
-<script type="text/javascript" src="js/Controller.js?1"></script>
-<script type="text/javascript" src="../../Services/Parts/js/parts.js"></script>
-<script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js"></script>
+<script type="text/javascript" src="js/Controller.js?version=<?=SystemInfo::getDate()?>"></script>
+<script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?=SystemInfo::getDate()?>"></script>
+<script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js?version=<?=SystemInfo::getDate()?>"></script>
 <script type="text/javascript">
 controller.context='<?=$baseUrl?>';
 <?

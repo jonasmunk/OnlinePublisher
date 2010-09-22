@@ -63,6 +63,8 @@ $gui='
 												<text key="password" secret="true" label="Kodeord:"/>
 												<text key="standardName" label="Navn:"/>
 												<text key="standardEmail" label="E-mail:"/>
+												<text key="feedbackName" label="Feedback-navn:"/>
+												<text key="feedbackEmail" label="Feedback E-mail:"/>
 												<buttons>
 													<button title="Test" name="showEmailTest"/>
 													<button title="Opdater" name="saveEmail" highlighted="true"/>

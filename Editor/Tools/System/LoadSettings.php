@@ -17,7 +17,9 @@ $settings = array(
 		'username' => EmailUtil::getUsername(),
 		'password' => EmailUtil::getPassword(),
 		'standardEmail' => EmailUtil::getStandardEmail(),
-		'standardName' => EmailUtil::getStandardName()
+		'standardName' => EmailUtil::getStandardName(),
+		'feedbackEmail' => EmailUtil::getFeedbackEmail(),
+		'feedbackName' => EmailUtil::getFeedbackName()
 	),
 	'onlineobjects' => array(
 		'url' => Settings::getOnlineObjectsUrl()

@@ -1,6 +1,7 @@
 <?
 require_once($basePath.'Editor/Classes/Response.php');
 require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/SystemInfo.php');
 
 class In2iGui {
 
@@ -51,6 +52,7 @@ class In2iGui {
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="'.($xhtml ? 'xml' : 'html').'"/>'.
 		'<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
+		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
 		'<xsl:include href="'.$basePath.'In2iGui/xslt/gui.xsl"/>';
 		$xslData.='<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.

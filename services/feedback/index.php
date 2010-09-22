@@ -18,5 +18,5 @@ $feedback->setMessage($message);
 $feedback->save();
 
 $body = "Besked fra ".$name." (".$email.")\n\n".$message;
-EmailUtil::sendToStandard("Feedback fra website (".$name.")",$body);
+EmailUtil::sendToFeedback("Feedback fra website (".$name.")",$body);
 ?>

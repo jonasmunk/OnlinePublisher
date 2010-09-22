@@ -23,6 +23,8 @@ if ($data->email) {
 	EmailUtil::setPassword($data->email->password);
 	EmailUtil::setStandardEmail($data->email->standardEmail);
 	EmailUtil::setStandardName($data->email->standardName);	
+	EmailUtil::setFeedbackEmail($data->email->feedbackEmail);
+	EmailUtil::setFeedbackName($data->email->feedbackName);	
 }
 if ($data->analytics) {
 	GoogleAnalytics::setUsername($data->analytics->username);

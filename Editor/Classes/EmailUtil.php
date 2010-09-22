@@ -15,6 +15,10 @@ class EmailUtil {
 		EmailUtil::send(EmailUtil::getStandardEmail(), EmailUtil::getStandardName(),$subject,$body);
 	}
 	
+	function sendToFeedback($subject,$body) {
+		EmailUtil::send(EmailUtil::getFeedbackEmail(), EmailUtil::getFeedbackName(),$subject,$body);
+	}
+	
 	function send($email,$name,$subject,$body) {
 		
 		
@@ -87,6 +91,22 @@ class EmailUtil {
 	
 	function setStandardName($value) {
 		Settings::setSetting('system','mail','standard-name',$value);
+	}
+	
+	function getFeedbackEmail() {
+		return Settings::getSetting('system','mail','feedback-email');
+	}
+	
+	function setFeedbackEmail($value) {
+		Settings::setSetting('system','mail','feedback-email',$value);
+	}
+	
+	function getFeedbackName() {
+		return Settings::getSetting('system','mail','feedback-name');
+	}
+	
+	function setFeedbackName($value) {
+		Settings::setSetting('system','mail','feedback-name',$value);
 	}
 }
 ?>
