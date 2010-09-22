@@ -76,7 +76,7 @@
 						<div class="layout_box_top"><xsl:comment/></div>
 						<div class="layout_box_middle">
 							<xsl:for-each select="//f:newsblock//o:object">
-								<blockquote>
+								<blockquote style="height: 60px;">
 									<p class="title"><xsl:value-of select="o:title"/></p>
 									<p class="note"><xsl:value-of select="o:note"/></p>
 								</blockquote>
@@ -87,7 +87,7 @@
 					<div class="layout_box">
 						<div class="layout_box_top"><xsl:comment/></div>
 						<div class="layout_box_middle">
-							<img src="{$path}style/{$design}/gfx/photo.jpg" style="width: 175px; height: 210px; border: 0px;"/>
+							<img src="{$path}util/images/?id=16&amp;maxwidth=175" style="width: 175px; border: 0px;"/>
 						</div>
 						<div class="layout_box_bottom"><xsl:comment/></div>
 					</div>
@@ -111,26 +111,9 @@
 
 
 <xsl:template match="p:content">
-		<xsl:apply-templates/>
+	<xsl:apply-templates/>
 </xsl:template>
 
-
-<!--            User status                 -->
-
-
-
-<xsl:template match="f:userstatus">
-	<xsl:choose>
-		<xsl:when test="$userid>0">
-		<span class="userstatus">Bruger: <strong><xsl:value-of select="$usertitle"/></strong></span>
-		<xsl:text> · </xsl:text>
-		<a href="./?id={@page}&amp;logout=true" class="common">Log ud</a>
-		</xsl:when>
-		<xsl:otherwise>
-		<a href="./?id={@page}" class="common">Log ind</a>
-		</xsl:otherwise>
-	</xsl:choose>
-</xsl:template>
 
 
 
