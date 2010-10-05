@@ -11,7 +11,14 @@
 	<xsl:choose>
 		<xsl:when test="$editor='true'">
 			<xsl:attribute name="href">#</xsl:attribute>
-			<xsl:attribute name="onclick">controller.linkWasClicked('<xsl:value-of select="@id"/>');return false;</xsl:attribute>
+			<xsl:choose>
+				<xsl:when test="@id">
+					<xsl:attribute name="onclick">controller.linkWasClicked('<xsl:value-of select="@id"/>');return false;</xsl:attribute>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:attribute name="onclick">return false;</xsl:attribute>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:when>
 		<xsl:otherwise>
 			<xsl:choose>

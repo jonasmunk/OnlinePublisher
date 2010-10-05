@@ -17,45 +17,13 @@ class PartListing extends LegacyPartController {
 	}
 
 	function sub_display($context) {
-		$data='';
-		$sql = "select * from part_listing where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			if ($row['type']=='disc' || $row['type']=='circle' || $row['type']=='square') {
-				$tag='ul';
-			} else {
-				$tag='ol';
-			}
-			$data.= '<div class="part_listing common_font"><'.$tag.' style="list-style: '.$row['type'].';'.$this->_buildCSSStyle($row).'">';
-			$parsed = $this->_parse($row['text']);
-			foreach ($parsed as $point) {
-				$data.='<li><span class="part_listing">';
-				$lines = count($point);
-				for ($i=0;$i<$lines;$i++) {
-					$formatted = $this->_formatDisplayText($point[$i],$context);
-					if ($i>0) {
-						$data.='<br/>'.$formatted;
-					} else {
-						$data.='<span class="part_listing_first">'.$formatted.'</span>';
-					}
-				}
-				$data.='</span></li>';
-			}
-			$data.= '</'.$tag.'></div>';
-		}
-		return $data;
-	}
-	
-	function _formatDisplayText($text,$context) {
-		$text = escapeHTML($text);
-		$text = $context->decorateForDisplay($text);
-		$text = insertLineBreakTags($text,'<br/>');
-		return $text;
+		return $this->render($context);
 	}
 
 	function _formatBuildText($text,$context) {
 		$text = StringUtils::escapeSimpleXML($text);
 		$text = $context->decorateForBuild($text);
-		$text = insertLineBreakTags($text,'<break/>');
+		$text = StringUtils::insertLineBreakTags($text,'<break/>');
 		return $text;
 	}
 	
@@ -87,16 +55,6 @@ class PartListing extends LegacyPartController {
 		} else {
 			return '';
 		}
-	}
-	
-	function sub_create() {
-		$sql = "insert into part_listing (part_id,type) values (".$this->id.",'disc')";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_listing where part_id=".$this->id;
-		Database::delete($sql);
 	}
 	
 	function sub_update() {

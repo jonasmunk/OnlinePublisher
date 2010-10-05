@@ -78,6 +78,25 @@ class In2iGui {
 		}
 	}
 	
+	function renderFragment($gui) {
+		global $basePath,$baseUrl;
+		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:In2iGui">'.$gui.'</subgui>';
+		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
+		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
+		'<xsl:output method="xml"/>'.
+		'<xsl:variable name="dev">false</xsl:variable>'.
+		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
+		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
+		'<xsl:include href="'.$basePath.'In2iGui/xslt/gui.xsl"/>'.
+		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
+		'</xsl:stylesheet>';
+		$result = XslService::transform($gui,$xsl);
+		$result = str_replace(
+			array('<!DOCTYPE div PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">','xmlns="http://www.w3.org/1999/xhtml"','xmlns:html="http://www.w3.org/1999/xhtml"')
+			,'',$result);
+		return $result;
+	}
+	
 	function sendObject($obj) {
 		header('Content-Type: text/plain; charset=utf-8');
 		echo In2iGui::toJSON($obj);

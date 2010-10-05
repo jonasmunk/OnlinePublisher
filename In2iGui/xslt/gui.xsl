@@ -171,6 +171,12 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 </script>
 </xsl:template>
 
+<xsl:template name="gui:subgui">
+	<div>
+	<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
 <xsl:template match="gui:script">
 <script type="text/javascript">
 	<xsl:apply-templates/>

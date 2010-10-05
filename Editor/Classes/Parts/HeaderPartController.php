@@ -34,7 +34,7 @@ class HeaderPartController extends PartController
 		$text = $part->getText();
 		$text = StringUtils::escapeSimpleXML($text);
 		$text = $context->decorateForBuild($text);
-		$text = $this->insertLineBreakTags($text,'<break/>');
+		$text = StringUtils::insertLineBreakTags($text,'<break/>');
 		return 
 			'<header level="'.$part->getLevel().'" xmlns="'.$this->getNamespace().'">'.
 			$this->buildXMLStyle($part).

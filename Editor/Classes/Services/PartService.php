@@ -13,7 +13,11 @@ class PartService {
 	function load($type,$id) {
 		global $basePath;
 		$class = ucfirst($type).'Part';
-		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
+		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
+		if (!file_exists($path)) {
+			return null;
+		}
+		require_once $path;
 		$instance = new $class;
 		$part = $instance->load($id);
 		return $part;

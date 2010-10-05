@@ -17,19 +17,7 @@ class PartHeader extends LegacyPartController {
 	}
 	
 	function sub_display($context) {
-		$data='';
-		$sql = "select * from part_header where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			$text = $row['text'];
-			$text = escapeHTML($text);
-			$text = $context->decorateForDisplay($text);
-			$text = insertLineBreakTags($text,'<br/>');
-			$data=
-			'<h'.$row['level'].' class="part_header common" style="'.$this->_buildCSSStyle($row).'">'.
-			$text.
-			'</h'.$row['level'].'>';
-		}
-		return $data;
+		return $this->render($context);
 	}
 	
 	function sub_getSectionClass() {
@@ -46,22 +34,22 @@ class PartHeader extends LegacyPartController {
 		if ($row = Database::selectFirst($sql)) {
 			return
 			'<textarea class="part_header part_header_'.$row['level'].'" name="text" id="PartHeaderTextarea" style="border: 1px solid lightgrey; width: 100%; background: transparent; '.$this->_buildCSSStyle($row).'">'.
-			encodeXML($row['text']).
+			StringUtils::escapeXML($row['text']).
 			'</textarea>'.
 			'<input type="hidden" name="level" value="'.$row['level'].'"/>'.
-			'<input type="hidden" name="fontSize" value="'.encodeXML($row['fontsize']).'"/>'.
-			'<input type="hidden" name="fontFamily" value="'.encodeXML($row['fontfamily']).'"/>'.
-			'<input type="hidden" name="textAlign" value="'.encodeXML($row['textalign']).'"/>'.
-			'<input type="hidden" name="lineHeight" value="'.encodeXML($row['lineheight']).'"/>'.
-			'<input type="hidden" name="fontWeight" value="'.encodeXML($row['fontweight']).'"/>'.
-			'<input type="hidden" name="fontStyle" value="'.encodeXML($row['fontstyle']).'"/>'.
-			'<input type="hidden" name="color" value="'.encodeXML($row['color']).'"/>'.
-			'<input type="hidden" name="wordSpacing" value="'.encodeXML($row['wordspacing']).'"/>'.
-			'<input type="hidden" name="letterSpacing" value="'.encodeXML($row['letterspacing']).'"/>'.
-			'<input type="hidden" name="textIndent" value="'.encodeXML($row['textindent']).'"/>'.
-			'<input type="hidden" name="textTransform" value="'.encodeXML($row['texttransform']).'"/>'.
-			'<input type="hidden" name="fontVariant" value="'.encodeXML($row['fontvariant']).'"/>'.
-			'<input type="hidden" name="textDecoration" value="'.encodeXML($row['textdecoration']).'"/>'.
+			'<input type="hidden" name="fontSize" value="'.StringUtils::escapeXML($row['fontsize']).'"/>'.
+			'<input type="hidden" name="fontFamily" value="'.StringUtils::escapeXML($row['fontfamily']).'"/>'.
+			'<input type="hidden" name="textAlign" value="'.StringUtils::escapeXML($row['textalign']).'"/>'.
+			'<input type="hidden" name="lineHeight" value="'.StringUtils::escapeXML($row['lineheight']).'"/>'.
+			'<input type="hidden" name="fontWeight" value="'.StringUtils::escapeXML($row['fontweight']).'"/>'.
+			'<input type="hidden" name="fontStyle" value="'.StringUtils::escapeXML($row['fontstyle']).'"/>'.
+			'<input type="hidden" name="color" value="'.StringUtils::escapeXML($row['color']).'"/>'.
+			'<input type="hidden" name="wordSpacing" value="'.StringUtils::escapeXML($row['wordspacing']).'"/>'.
+			'<input type="hidden" name="letterSpacing" value="'.StringUtils::escapeXML($row['letterspacing']).'"/>'.
+			'<input type="hidden" name="textIndent" value="'.StringUtils::escapeXML($row['textindent']).'"/>'.
+			'<input type="hidden" name="textTransform" value="'.StringUtils::escapeXML($row['texttransform']).'"/>'.
+			'<input type="hidden" name="fontVariant" value="'.StringUtils::escapeXML($row['fontvariant']).'"/>'.
+			'<input type="hidden" name="textDecoration" value="'.StringUtils::escapeXML($row['textdecoration']).'"/>'.
 			'<script type="text/javascript">'.
 			'document.getElementById("PartHeaderTextarea").focus();'.
 			'document.getElementById("PartHeaderTextarea").select();'.
@@ -156,7 +144,7 @@ class PartHeader extends LegacyPartController {
 			$text = $row['text'];
 			$text = StringUtils::escapeSimpleXML($text);
 			$text = $context->decorateForBuild($text);
-			$text = insertLineBreakTags($text,'<break/>');
+			$text = StringUtils::insertLineBreakTags($text,'<break/>');
 			return 
 			'<header level="'.$row['level'].'" xmlns="'.$this->_buildnamespace('1.0').'">'.
 			$this->_buildXMLStyle($row).
@@ -179,175 +167,91 @@ class PartHeader extends LegacyPartController {
 	
 	// Toolbar stuff
 	
-	function getToolbarTabs() {
+	function isIn2iGuiEnabled() {
+		return true;
+	}
+	
+	function getToolbars() {
 		return array(
-				 'text' => array('title' => 'Overskrift')
-				,'advanced' => array('title' => 'Avanceret')
+			'Punktopstilling' =>
+			'
+			<dropdown label="Niveau" name="level">
+				<item value="1" title="Niveau 1"/>
+				<item value="2" title="Niveau 2"/>
+				<item value="3" title="Niveau 3"/>
+				<item value="4" title="Niveau 4"/>
+				<item value="5" title="Niveau 5"/>
+				<item value="6" title="Niveau 6"/>
+			</dropdown>
+			<style-length label="St&#248;rrelse" name="fontSize"/>
+			<segmented label="Placering" name="textAlign" allow-null="true">
+				<item icon="style/text_align_left" value="left"/>
+				<item icon="style/text_align_center" value="center"/>
+				<item icon="style/text_align_right" value="right"/>
+				<item icon="style/text_align_justify" value="justify"/>
+			</segmented>
+			<divider/>
+			<dropdown label="Skrift" name="fontFamily" width="180">
+				<item value="" title=""/>
+				<item value="sans-serif" title="*Sans-serif*"/>
+				<item value="Verdana,sans-serif" title="Verdana"/>
+				<item value="Tahoma,Geneva,sans-serif" title="Tahoma"/>
+				<item value="Trebuchet MS,Helvetica,sans-serif" title="Trebuchet"/>
+				<item value="Geneva,Tahoma,sans-serif" title="Geneva"/>
+				<item value="Helvetica,sans-serif" title="Helvetica"/>
+				<item value="Arial,Helvetica,sans-serif" title="Arial"/>
+				<item value="Arial Black,Gadget,Arial,sans-serif" title="Arial Black"/>
+				<item value="Impact,Charcoal,Arial Black,Gadget,Arial,sans-serif" title="Impact"/>
+				<item value="serif" title="*Serif*"/>
+				<item value="Times New Roman,Times,serif" title="Times New Roman"/>
+				<item value="Times,Times New Roman,serif" title="Times"/>
+				<item value="Book Antiqua,Palatino,serif" title="Book Antiqua"/>
+				<item value="Palatino,Book Antiqua,serif" title="Palatino"/>
+				<item value="Georgia,Book Antiqua,Palatino,serif" title="Georgia"/>
+				<item value="Garamond,Times New Roman,Times,serif" title="Garamond"/>
+				<item value="cursive" title="*Kursiv*"/>
+				<item value="Comic Sans MS,cursive" title="Comic Sans"/>
+				<item value="monospace" title="*Monospace*"/>
+				<item value="Courier New,Courier,monospace" title="Courier New"/>
+				<item value="Courier,Courier New,monospace" title="Courier"/>
+				<item value="Lucida Console,Monaco,monospace" title="Lucida Console"/>
+				<item value="Monaco,Lucida Console,monospace" title="Monaco"/>
+				<item value="fantasy" title="*Fantasi*"/>
+			</dropdown>
+			<style-length label="Linjeh&#248;jde" name="lineHeight"/>
+			<textfield label="Farve" name="color" width="60"/>
+			<segmented label="Fed" name="fontWeight" allow-null="true">
+				<item icon="style/text_normal" value="normal"/>
+				<item icon="style/text_bold" value="bold"/>
+			</segmented>
+			<segmented label="Kursiv" name="fontStyle" allow-null="true">
+				<item icon="style/text_normal" value="normal"/>
+				<item icon="style/text_italic" value="italic"/>
+			</segmented>',
+			
+		'Avanceret' =>
+			'
+			<style-length label="Ord-mellemrum" name="wordSpacing"/>
+			<style-length label="Tegn-mellemrum" name="letterSpacing"/>
+			<style-length label="Indrykning" name="textIndent"/>
+			<segmented label="Bogstaver" name="textTransform" allow-null="true">
+				<item icon="style/text_normal" value="normal"/>
+				<item icon="style/text_transform_capitalize" value="capitalize"/>
+				<item icon="style/text_transform_uppercase" value="uppercase"/>
+				<item icon="style/text_transform_lowercase" value="lowercase"/>
+			</segmented>
+			<segmented label="Variant" name="fontVariant" allow-null="true">
+				<item icon="style/font_variant_normal" value="normal"/>
+				<item icon="style/font_variant_smallcaps" value="small-caps"/>
+			</segmented>
+			<segmented label="Variant" name="textDecoration" allow-null="true">
+				<item icon="style/text_normal" value="none"/>
+				<item icon="style/text_decoration_underline" value="underline"/>
+				<item icon="style/text_decoration_linethrough" value="line-through"/>
+				<item icon="style/text_decoration_overline" value="overline"/>
+			</segmented>
+			'
 			);
-	}
-	
-	function getToolbarDefaultTab() {
-		return 'text';
-	}
-	
-	function getToolbarContent($tab) {
-		if ($tab=='text') {
-			return $this->_textTab();
-		} elseif ($tab=='advanced') {
-			return $this->_advancedTab();
-		} else {
-			return '';
-		}
-	}
-	
-	function _textTab() {
-		return
-		'<number xmlns="uri:Style" title="Niveau" value="1" min="1" max="6" object="Level" onchange="updateLevel();"/>'.
-		'<size xmlns="uri:Style" title="Størrelse" object="FontSize" onchange="updateFontSize();"/>'.
-		'<font-family xmlns="uri:Style" title="Skrift" object="FontFamily" onchange="updateFontFamily();">'.
-		$this->fontFamilyOptions().
-		'</font-family>'.
-		'<text-align xmlns="uri:Style" title="Justering" object="TextAlign" onchange="updateTextAlign();"/>'.
-		'<size xmlns="uri:Style" title="Linjehøjde" object="LineHeight" onchange="updateLineHeight();"/>'.
-		'<color xmlns="uri:Style" title="Farve" object="Color" onchange="updateColor();"/>'.
-		'<font-weight xmlns="uri:Style" title="Tykkelse" object="FontWeight" onchange="updateFontWeight();"/>'.
-		'<font-style xmlns="uri:Style" title="Kursiv" object="FontStyle" onchange="updateFontStyle();"/>'.
-		'<script xmlns="uri:Script">
-		function updateLevel() {
-			var levelValue = Level.getValue();
-			formula.level.value=levelValue;
-			formula.text.className="part_header part_header_"+levelValue;
-			section.className="part_section_header part_section_header_"+levelValue+" sectionSelected";
-		}
-		function updateFontSize() {
-			var value = FontSize.getValue();
-			formula.fontSize.value=value;
-			formula.text.style.fontSize = value;
-		}
-		function updateColor() {
-			var colorValue = Color.getValue();
-			formula.color.value=colorValue;
-			formula.text.style.color = colorValue;
-		}
-		function updateFontFamily() {
-			var fontFamilyValue = FontFamily.getValue();
-			formula.fontFamily.value= fontFamilyValue;
-			formula.text.style.fontFamily = fontFamilyValue;
-		}
-		function updateTextAlign() {
-			var textAlignValue = TextAlign.getValue();
-			formula.textAlign.value= textAlignValue;
-			formula.text.style.textAlign = textAlignValue;
-		}
-		function updateLineHeight() {
-			var lineHeightValue = LineHeight.getValue();
-			formula.lineHeight.value= lineHeightValue;
-			formula.text.style.lineHeight = lineHeightValue;
-		}
-		function updateFontWeight() {
-			var fontWeightValue = FontWeight.getValue();
-			formula.fontWeight.value= fontWeightValue;
-			formula.text.style.fontWeight = fontWeightValue;
-		}
-		function updateFontStyle() {
-			var fontStyleValue = FontStyle.getValue();
-			formula.fontStyle.value= fontStyleValue;
-			formula.text.style.fontStyle = fontStyleValue;	
-		}
-		function updateThis() {
-			section.className="part_section_header part_section_header_"+formula.level.value+" sectionSelected";
-			Level.setValue(formula.level.value);
-			FontSize.setValue(formula.fontSize.value);
-			FontFamily.setValue(formula.fontFamily.value);
-			Color.setValue(formula.color.value);
-			TextAlign.setValue(formula.textAlign.value);
-			LineHeight.setValue(formula.lineHeight.value);
-			FontWeight.setValue(formula.fontWeight.value);
-			FontStyle.setValue(formula.fontStyle.value);
-		}
-		updateThis();
-		</script>';
-	}
-	
-	
-	function _advancedTab() {
-		return
-		'<size xmlns="uri:Style" title="Ord-mellemrum" object="WordSpacing" onchange="updateWordSpacing();"/>'.
-		'<size xmlns="uri:Style" title="Tegn-mellemrum" object="LetterSpacing" onchange="updateLetterSpacing();"/>'.
-		'<size xmlns="uri:Style" title="Indrykning" object="TextIndent" onchange="updateTextIndent();"/>'.
-		'<text-transform xmlns="uri:Style" title="Bogstaver" object="TextTransform" onchange="updateTextTransform();"/>'.
-		'<font-variant xmlns="uri:Style" title="Variant" object="FontVariant" onchange="updateFontVariant();"/>'.
-		'<text-decoration xmlns="uri:Style" title="Streg" object="TextDecoration" onchange="updateTextDecoration();"/>'.
-		'<script xmlns="uri:Script">
-		function updateWordSpacing() {
-			var value = WordSpacing.getValue();
-			formula.wordSpacing.value=value;
-			formula.text.style.wordSpacing = value;
-		}
-		function updateLetterSpacing() {
-			var value = LetterSpacing.getValue();
-			formula.letterSpacing.value=value;
-			formula.text.style.letterSpacing = value;
-		}
-		function updateTextIndent() {
-			var value = TextIndent.getValue();
-			formula.textIndent.value= value;
-			formula.text.style.textIndent = value;
-		}
-		function updateTextTransform() {
-			var value = TextTransform.getValue();
-			formula.textTransform.value= value;
-			formula.text.style.textTransform = value;
-		}
-		function updateFontVariant() {
-			var value = FontVariant.getValue();
-			formula.fontVariant.value= value;
-			formula.text.style.fontVariant = value;
-		}
-		function updateTextDecoration() {
-			var value = TextDecoration.getValue();
-			formula.textDecoration.value= value;
-			formula.text.style.textDecoration = value;
-		}
-		function updateThis() {
-			WordSpacing.setValue(formula.wordSpacing.value);
-			LetterSpacing.setValue(formula.letterSpacing.value);
-			TextIndent.setValue(formula.textIndent.value);
-			TextTransform.setValue(formula.textTransform.value);
-			FontVariant.setValue(formula.fontVariant.value);
-			TextDecoration.setValue(formula.textDecoration.value);
-		}
-		updateThis();
-		</script>';
-	}
-	
-	function fontFamilyOptions() {
-		return
-		'<font value="sans-serif" title="*Sans-serif*"/>'.
-		'<font value="Verdana,sans-serif" title="Verdana"/>'.
-		'<font value="Tahoma,Geneva,sans-serif" title="Tahoma"/>'.
-		'<font value="Trebuchet MS,Helvetica,sans-serif" title="Trebuchet"/>'.
-		'<font value="Geneva,Tahoma,sans-serif" title="Geneva"/>'.
-		'<font value="Helvetica,sans-serif" title="Helvetica"/>'.
-		'<font value="Arial,Helvetica,sans-serif" title="Arial"/>'.
-		'<font value="Arial Black,Gadget,Arial,sans-serif" title="Arial Black"/>'.
-		'<font value="Impact,Charcoal,Arial Black,Gadget,Arial,sans-serif" title="Impact"/>'.
-		'<font value="serif" title="*Serif*"/>'.
-		'<font value="Times New Roman,Times,serif" title="Times New Roman"/>'.
-		'<font value="Times,Times New Roman,serif" title="Times"/>'.
-		'<font value="Book Antiqua,Palatino,serif" title="Book Antiqua"/>'.
-		'<font value="Palatino,Book Antiqua,serif" title="Palatino"/>'.
-		'<font value="Georgia,Book Antiqua,Palatino,serif" title="Georgia"/>'.
-		'<font value="Garamond,Times New Roman,Times,serif" title="Garamond"/>'.
-		'<font value="cursive" title="*Kursiv*"/>'.
-		'<font value="Comic Sans MS,cursive" title="Comic Sans"/>'.
-		'<font value="monospace" title="*Monospace*"/>'.
-		'<font value="Courier New,Courier,monospace" title="Courier New"/>'.
-		'<font value="Courier,Courier New,monospace" title="Courier"/>'.
-		'<font value="Lucida Console,Monaco,monospace" title="Lucida Console"/>'.
-		'<font value="Monaco,Lucida Console,monospace" title="Monaco"/>'.
-		'<font value="fantasy" title="*Fantasi*"/>'
-		;
 	}
 }
 ?>

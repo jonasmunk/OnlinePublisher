@@ -171,7 +171,9 @@ class GuiUtils {
 		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<item title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
+			$title = $row['title'];
+			$title = str_replace("'","",$title);
+			$output.='<item title="'.StringUtils::escapeXML($title).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;

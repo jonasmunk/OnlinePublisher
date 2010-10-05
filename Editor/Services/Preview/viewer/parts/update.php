@@ -19,7 +19,8 @@ if ($ctrl = PartService::getController($type)) {
 	Page::markChanged($pageId);
 
 	header("Content-Type: text/html; charset=UTF-8");
-	echo $ctrl->render($part,$pageId);
+	$context = PartService::buildPartContext($pageId);
+	echo $ctrl->render($part,$context);
 } else {
 	Log::debug("Unable to find controller for $type");
 }

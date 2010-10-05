@@ -6,19 +6,22 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Services/PartService.php';
 require_once '../../Classes/Parts/LegacyPartController.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 require_once '../../Include/XmlWebGui.php';
 
+$type = Request::getString('part_type');
 $pageId = getPageId();
-$id = requestPostNumber('id');
-$section = requestPostNumber('section');
-$top = requestPostText('top');
-$left = requestPostText('left');
-$bottom = requestPostText('bottom');
-$right = requestPostText('right');
-$float = requestPostText('float');
-$width = requestPostText('width');
+$id = Request::getInt('id');
+$section = Request::getInt('section');
+$top = Request::getString('top');
+$left = Request::getString('left');
+$bottom = Request::getString('bottom');
+$right = Request::getString('right');
+$float = Request::getString('float');
+$width = Request::getString('width');
 
 
 // update the section
@@ -32,11 +35,17 @@ $sql="update document_section set".
 " where id=".$section;
 Database::update($sql);
 
-// Update the part
-$sql="select * from part where id=".$id;
-if ($row = Database::selectFirst($sql)) {
-	$part = LegacyPartController::load($row['type'],$id);
-	$part -> update();
+$controller = PartService::getController($type);
+if ($controller && method_exists($controller,'getFromRequest')) {
+	$part = $controller->getFromRequest($id);
+	$part->save();
+} else {
+	// Update the part
+	$sql="select * from part where id=".$id;
+	if ($row = Database::selectFirst($sql)) {
+		$part = LegacyPartController::load($row['type'],$id);
+		$part -> update();
+	}
 }
 
 // Mark the page as changed

@@ -6,6 +6,38 @@ form.in2igui_formula
 	text-align: left;
 }
 
+div.in2igui_formula_fieldset
+{
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-top: 4px;
+	background: #f6f6f6;
+}
+
+strong.in2igui_formula_fieldset
+{
+	position: absolute;
+	margin-top: -19px;
+	background: #f3f3f3;
+	font-size: 12px;
+	padding: 0 4px;
+	margin-left: -2px;
+	color: #666;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+div.in2igui_window strong.in2igui_formula_fieldset
+{
+	background: #E7E7E7;
+}
+
+div.in2igui_window div.in2igui_formula_fieldset
+{
+	background: #eee;
+	border: 1px solid #ccc;
+}
+
 .in2igui_formula_header
 {
 	color: #0077cd;

@@ -43,10 +43,6 @@ function escapeHTMLwithLineBreak($input) {
 	return $output;
 }
 
-function insertLineBreakTags($input,$tag) {
-	return str_replace(array("\r\n","\r","\n"), $tag, $input);;
-}
-
 /**
  * Escapes special HTML characters of a string
  * @param string $input The text to escape

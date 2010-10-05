@@ -5,10 +5,10 @@
  */
 require_once($basePath.'Editor/Classes/Parts/Part.php');
 
-Part::$schema['header'] = array(
+Part::$schema['listing'] = array(
 	'fields' => array(
 		'text'   => array('type'=>'text'),
-		'level'   => array('type'=>'int' , 'column' => 'level'),
+		'listStyle'   => array('type'=>'text' , 'column' => 'type'),
 		'textAlign' => array( 'type' => 'text', 'column' => 'textalign' ),
 		'fontFamily' => array( 'type' => 'text', 'column' => 'fontfamily' ),
 		'fontSize' => array( 'type' => 'text', 'column' => 'fontsize' ),
@@ -24,10 +24,10 @@ Part::$schema['header'] = array(
 		'fontVariant' => array( 'type' => 'text', 'column' => 'fontvariant' )
 	)
 );
-class HeaderPart extends Part
+class ListingPart extends Part
 {
 	var $text;
-	var $level;
+	var $listStyle;
 	var $textAlign;
 	var $fontFamily;
 	var $fontSize;
@@ -42,8 +42,8 @@ class HeaderPart extends Part
 	var $fontStyle;
 	var $fontVariant;
 	
-	function HeaderPart() {
-		parent::Part('header');
+	function ListingPart() {
+		parent::Part('listing');
 	}
 	
 	function toUnicode() {
@@ -51,7 +51,7 @@ class HeaderPart extends Part
 	}
 	
 	function load($id) {
-		return Part::load('header',$id);
+		return Part::load('listing',$id);
 	}
 	
 	function setText($text) {
@@ -62,13 +62,14 @@ class HeaderPart extends Part
 	    return $this->text;
 	}
 	
-	function setLevel($level) {
-	    $this->level = $level;
+	function setListStyle($listStyle) {
+	    $this->listStyle = $listStyle;
 	}
 
-	function getLevel() {
-	    return $this->level;
+	function getListStyle() {
+	    return $this->listStyle;
 	}
+	
 	
 	function setTextAlign($textAlign) {
 	    $this->textAlign = $textAlign;

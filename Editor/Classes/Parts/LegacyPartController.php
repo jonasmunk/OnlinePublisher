@@ -44,6 +44,14 @@ class LegacyPartController {
 			return '';
 		}
 	}
+
+	function editorExtra($context,$part) {
+		if (method_exists($this,'sub_editor_extra')) {
+			return $this->sub_editor_extra($context,$part);
+		} else {
+			return '';
+		}
+	}
 	
 	function create() {
 		$sql = "insert into part (type,created,updated,dynamic) values ('".$this->type."',now(),now(),".Database::boolean($this->isDynamic()).")";

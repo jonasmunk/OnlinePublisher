@@ -30,6 +30,8 @@ class SchemaService {
 				$sql.=Database::int($value);
 			} else if ($info['type']=='boolean') {
 				$sql.=Database::boolean($value);
+			} else if ($info['type']=='datetime') {
+				$sql.=Database::datetime($value);
 			}
 		}
 		return $sql;
@@ -71,6 +73,8 @@ class SchemaService {
 				$sql.=Database::int($value);
 			} else if ($info['type']=='boolean') {
 				$sql.=Database::boolean($value);
+			} else if ($info['type']=='datetime') {
+				$sql.=Database::datetime($value);
 			}
 		}
 		return $sql;

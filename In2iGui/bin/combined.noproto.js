@@ -140,6 +140,14 @@ n2i.addToArray = function(arr,value) {
 	}
 }
 
+n2i.toIntArray = function(str) {
+	var array = str.split(',');
+	for (var i = array.length - 1; i >= 0; i--){
+		array[i] = parseInt(array[i]);
+	};
+	return array;
+}
+
 n2i.scrollTo = function(element) {
 	element = $(element);
 	if (element) {
@@ -6106,6 +6114,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 		var self = this;
 		element.onclick = function() {
 			self.setValue(radio.value);
+			self.fire('valueChanged',radio.value);
 		}
 	}
 }

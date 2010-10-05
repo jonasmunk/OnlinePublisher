@@ -6,6 +6,7 @@
 require_once($basePath.'Editor/Classes/TemplateController.php');
 require_once $basePath.'Editor/Classes/PartContext.php';
 require_once $basePath.'Editor/Classes/Parts/LegacyPartController.php';
+require_once $basePath.'Editor/Classes/Services/PartService.php';
 require_once $basePath.'Editor/Template/document/Functions.php';
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
@@ -126,7 +127,18 @@ class DocumentController extends TemplateController {
 		$output='';
 		$index='';
 		$dynamic=false;
-		if ($type!='part') {
+		
+		$ctrl = PartService::getController($partType);
+		if ($ctrl && method_exists($ctrl,'buildSub')) {
+			$part = PartService::load($partType,$partId);
+			$dynamic = $ctrl->isDynamic($part);
+			if ($dynamic) {
+				$output = "<!-- dynamic:part#".$partId." -->";
+			} else {
+				$output = $ctrl->build($part,$context);
+			}
+			$index = $ctrl->getIndex($part);
+		} else if ($type!='part') {
 			require $basePath.'Editor/Template/document/'.ucfirst($type).'/Publish.php';
 		} else {
 			$part = LegacyPartController::load($partType,$partId);
@@ -239,9 +251,16 @@ class DocumentController extends TemplateController {
 		$sql = "select page_id,part_id,part.type,part.dynamic from document_section,part where page_id=".$this->id." and document_section.part_id=part.id and part.dynamic=1";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$part = LegacyPartController::load($row['type'],$row['part_id']);
-			$partData = $part->build($context);
+			$ctrl = PartService::getController($row['type']);
+			if ($ctrl && method_exists($ctrl,'buildSub')) {
+				$part = PartService::load($row['type'],$row['part_id']);
+				$partData = $ctrl->build($part,$context);
+			} else {
+				$legacy = LegacyPartController::load($row['type'],$row['part_id']);
+				$partData = $legacy->build($context);
+			}
 			$state['data']=str_replace('<!-- dynamic:part#'.$row['part_id'].' -->', $partData, $state['data']);
+			Log::debug($partData);
 		}
 		Database::free($result);
 	}

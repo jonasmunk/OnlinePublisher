@@ -33,7 +33,7 @@ class TextPartController extends PartController
 		$text = $part->getText();
 		$text = StringUtils::escapeSimpleXML($text);
 		$text = $context->decorateForBuild($text);
-		$text = $this->insertLineBreakTags($text,'<break/>');
+		$text = StringUtils::insertLineBreakTags($text,'<break/>');
 		return 
 			'<text xmlns="'.$this->getNamespace().'">'.
 			$this->buildXMLStyle($part).

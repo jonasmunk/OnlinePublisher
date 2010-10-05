@@ -31,18 +31,13 @@ class PartController
 	function getNamespace($version='1.0') {
 		return 'http://uri.in2isoft.com/onlinepublisher/part/'.$this->type.'/'.$version.'/';
 	}
-
-	function insertLineBreakTags($input,$tag) {
-		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
-	}
 	
 	function getNewPart() {
 		Log::debug('You must override getNewPart');
 	}
 	
-	function render($part,$pageId) {
+	function render($part,$context) {
 		global $basePath;
-		$context = PartService::buildPartContext($pageId);
 		$xmlData = '<?xml version="1.0" encoding="ISO-8859-1"?>'.$this->build($part,$context);
 		
 		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
@@ -66,6 +61,20 @@ class PartController
 		'</xsl:stylesheet>';
 		
 		return XslService::transform($xmlData,$xslData);
+	}
+	
+	function getIndex($part) {
+		return '';
+	}
+	
+	// Overwrite this
+	function getSectionClass($part) {
+		return '';
+	}
+	
+	// Override this
+	function isDynamic($part) {
+		return false;
 	}
 	
 	function buildXMLStyle($part) {

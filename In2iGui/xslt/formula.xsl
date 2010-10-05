@@ -47,6 +47,13 @@
 	</fieldset>
 </xsl:template>
 
+<xsl:template match="gui:formula//gui:fieldset">
+	<div class="in2igui_formula_fieldset">
+		<strong class="in2igui_formula_fieldset"><xsl:value-of select="@legend"/></strong>
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
 <xsl:template match="gui:group/gui:custom">
 	<tr>
 		<th><label><xsl:value-of select="@label"/></label></th>
@@ -168,7 +175,7 @@
 			<xsl:text>in2igui_number</xsl:text>
 			<xsl:if test="@adaptive='true'"><xsl:text> in2igui_number_adaptive</xsl:text></xsl:if>
 		</xsl:attribute>
-		<span><span><input type="text"/><em class="in2igui_number_units"><xsl:comment/></em><a class="in2igui_number_up"><xsl:comment/></a><a class="in2igui_number_down"><xsl:comment/></a></span></span>
+		<span><span><input type="text" value="{@value}"/><em class="in2igui_number_units"><xsl:comment/></em><a class="in2igui_number_up"><xsl:comment/></a><a class="in2igui_number_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Number({
@@ -181,6 +188,7 @@
 			<xsl:if test="@max">,max:<xsl:value-of select="@max"/></xsl:if>
 			<xsl:if test="@decimals">,decimals:<xsl:value-of select="@decimals"/></xsl:if>
 			<xsl:if test="@allow-null">,allowNull:true</xsl:if>
+			<xsl:if test="@value">,value:parseInt(<xsl:value-of select="@value"/>)</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
@@ -260,7 +268,7 @@
 		});
 		with(<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:item">
-				addItem({title:'<xsl:value-of select="@title"/>',value:n2i.intOrString('<xsl:value-of select="@value"/>')});
+				addItem({title:'<xsl:value-of select="@title"/><xsl:value-of select="@label"/>',value:n2i.intOrString('<xsl:value-of select="@value"/>')});
 			</xsl:for-each>
 		}
 		<xsl:call-template name="gui:createobject"/>
@@ -292,7 +300,7 @@
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Radiobuttons({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>','value':'<xsl:value-of select="@value"/>','key':'<xsl:value-of select="@key"/>'});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
-			<xsl:for-each select="gui:radiobutton">
+			<xsl:for-each select="gui:radiobutton | gui:item">
 				registerRadiobutton({id:'<xsl:value-of select="generate-id()"/>','value':'<xsl:value-of select="@value"/>'});
 			</xsl:for-each>
 		}
@@ -300,7 +308,7 @@
 	</script>
 </xsl:template>
 
-<xsl:template match="gui:radiobuttons/gui:radiobutton">
+<xsl:template match="gui:radiobuttons/gui:radiobutton | gui:radiobuttons/gui:item">
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">in2igui_radiobutton <xsl:if test="@value=../@value">in2igui_selected</xsl:if></xsl:attribute>
 		<div><xsl:comment/></div><xsl:value-of select="@label"/>

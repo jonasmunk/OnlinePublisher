@@ -770,6 +770,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 		var self = this;
 		element.onclick = function() {
 			self.setValue(radio.value);
+			self.fire('valueChanged',radio.value);
 		}
 	}
 }

@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Parts/LegacyPartController.php';
+require_once '../../Classes/Services/PartService.php';
 require_once '../../Include/Session.php';
 require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
@@ -76,12 +77,12 @@ if (requestGetExists('column')) {
 }
 if (getDocumentColumn()>0) {
 ?>
-<script>parent.parent.Toolbar.location='ColumnToolbar.php?'+Math.random();</script>
+<script>try {parent.parent.Toolbar.location='ColumnToolbar.php?'+Math.random();} catch (e) {}</script>
 <?
 }
 else if (getDocumentSection()==0) {
 ?>
-<script>parent.parent.Toolbar.location='Toolbar.php?'+Math.random();</script>
+<script>try {parent.parent.Toolbar.location='Toolbar.php?'+Math.random();} catch (e) {}</script>
 <?
 }
 else if (getDocumentSection()!=0) {
@@ -215,11 +216,19 @@ function displaySection($sectionId,$type,$sectionIndex,$sectionStyle,$partId,$pa
 
 function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex) {
 	global $partContext;
-	$part = LegacyPartController::load($partType,$partId);
-	echo 
-		'<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$part->getSectionClass().' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">'.
-		$part->display($partContext).
-		'</div>';
+	$ctrl = PartService::getController($partType);
+	if ($ctrl && method_exists($ctrl,'display')) {
+		$part = PartService::load($partType,$partId);
+		echo '<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">';
+		echo StringUtils::fromUnicode($ctrl->display($part,$partContext));
+		echo '</div>';
+	} else {
+		$part = LegacyPartController::load($partType,$partId);
+		echo 
+			'<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$part->getSectionClass().' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">'.
+			$part->display($partContext).
+			'</div>';
+	}
 }
 
 function sectionEditor($sectionId,$type,$sectionStyle,$partId,$partType,$row) {
@@ -234,22 +243,33 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	setPartContextSessionVar('part.id',$partId);
 	setPartContextSessionVar('part.type',$partType);
 	setPartContextSessionVar('form.path','parent.Frame.EditorFrame.getDocument().forms.PartForm');
-	$part = LegacyPartController::load($partType,$partId);
+	$ctrl = PartService::getController($partType);
+	$controller = LegacyPartController::load($partType,$partId);
 	echo
-	'<div style="'.$sectionStyle.'" id="selectedSectionTD" class="part_section_'.$partType.' '.$part->getSectionClass().' section_selected">'.
+	'<div style="'.$sectionStyle.'" id="selectedSectionTD" class="part_section_'.$partType.' '.$controller->getSectionClass().' section_selected">'.
 	'<form name="PartForm" action="UpdatePart.php" method="post">'.
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
+	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.
 	'<input type="hidden" name="section" value="'.$sectionId.'"/>'.
 	'<input type="hidden" name="left" value="'.StringUtils::escapeXML($row['left']).'"/>'.
 	'<input type="hidden" name="right" value="'.StringUtils::escapeXML($row['right']).'"/>'.
 	'<input type="hidden" name="bottom" value="'.StringUtils::escapeXML($row['bottom']).'"/>'.
 	'<input type="hidden" name="top" value="'.StringUtils::escapeXML($row['top']).'"/>'.
 	'<input type="hidden" name="width" value="'.StringUtils::escapeXML($row['width']).'"/>'.
-	'<input type="hidden" name="float" value="'.StringUtils::escapeXML($row['float']).'"/>'.
-	$part->editor($partContext).
-	'</form></div>'.
-	'<script type="text/javascript">'.
-	'parent.parent.Toolbar.location=\'PartToolbar.php?section='.$sectionId.'&amp;\'+Math.random();'.
+	'<input type="hidden" name="float" value="'.StringUtils::escapeXML($row['float']).'"/>';
+	$part = null;
+	if ($ctrl && method_exists($ctrl,'editor')) {
+		$part = PartService::load($partType,$partId);
+		echo $ctrl->editor($part,$partContext);
+	} else {
+		echo $controller->editor($partContext);
+	}
+	echo '</form></div>';
+	if ($ctrl && method_exists($ctrl,'editorGui')) {
+		echo $ctrl->editorGui($part,$partContext);
+	}
+	echo '<script type="text/javascript">'.
+	'try {parent.parent.Toolbar.location=\'PartToolbar.php?section='.$sectionId.'&amp;\'+Math.random();} catch(e) {};'.
 	'function saveSection() {
 		document.forms.PartForm.submit();
 	}'.
