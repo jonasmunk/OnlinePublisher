@@ -89,7 +89,7 @@ class NewsPartController extends PartController
 		'<input type="hidden" name="timecount" value="'.$part->getTimeCount().'"/>'.
 		'<input type="hidden" name="variant" value="'.$part->getVariant().'"/>'.
 		'<div id="part_news_preview">'.
-		$this->render($part,$context).
+		StringUtils::fromUnicode($this->render($part,$context)).
 		'</div>'.
 		'<script src="'.$baseUrl.'Editor/Parts/news/Script.js"></script>';
 	}
