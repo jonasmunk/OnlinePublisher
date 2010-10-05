@@ -104,7 +104,7 @@ function listPages() {
 	$writer->startHeaders();
 	$writer->header(array('title'=>'Titel','width'=>40,'key'=>'page.title','sortable'=>'true'));
 	$writer->header(array('title'=>'Skabelon','key'=>'template.unique','sortable'=>'true'));
-	$writer->header(array('title'=>'Sti','key'=>'page.path','sortable'=>'true'));
+	//$writer->header(array('title'=>'Sti','key'=>'page.path','sortable'=>'true'));
 	$writer->header(array('title'=>'Sprog','key'=>'page.language','sortable'=>'true'));
 	$writer->header(array('title'=>'Ændret','key'=>'page.changed','sortable'=>'true'));
 	$writer->endHeaders();
@@ -118,7 +118,7 @@ function listPages() {
 		($row['path'] ? '<line dimmed="true">'.In2iGui::escape($row['path']).'</line>' : '').
 		'</cell>'.
 		'<cell>'.In2iGui::escape($templates[$row['unique']]['name']).'</cell>'.
-		'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.In2iGui::escape($row['path']).'</line></cell>'.
+		//'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.In2iGui::escape($row['path']).'</line></cell>'.
 		'<cell icon="'.GuiUtils::getLanguageIcon($row['language']).'"></cell>'.
 		'<cell'.($modified ? ' icon="monochrome/warning"' : '').'>'.In2iGui::escape($row['changed']).'</cell>'.
 		'</row>';
