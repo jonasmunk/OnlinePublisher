@@ -77,15 +77,15 @@ mailto:<xsl:value-of select="@email"/>
 </xsl:template>
 
 <xsl:template name="oo-script">
-	<link rel="stylesheet" type="text/css" href="{$path}In2iGui/bin/minimized.css"/>
+	<link rel="stylesheet" type="text/css" href="{$path}In2iGui/bin/minimized.css?version={$timestamp}"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie6.css"> </link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie6.css?verson=]]><xsl:value-of select="$timestamp"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie7.css"> </link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie7.css?verson=]]><xsl:value-of select="$timestamp"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
-	<script src="{$path}In2iGui/bin/minimized.site.js" type="text/javascript"><xsl:comment/></script>
-	<script src="{$path}style/basic/js/OnlinePublisher.js" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}In2iGui/bin/minimized.site.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}style/basic/js/OnlinePublisher.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
 		In2iGui.context = '<xsl:value-of select="$path"/>';
 		op.page.id=<xsl:value-of select="@id"/>;
@@ -96,12 +96,12 @@ mailto:<xsl:value-of select="@email"/>
 		op.ignite();
 	</xsl:comment></script>
 	<xsl:if test="$preview='true'">
-		<script src="{$path}In2iGui/js/Window.js" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Formula.js" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Button.js" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Overlay.js" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Editor.js" type="text/javascript"><xsl:comment/></script>
-		<script src="editor.js" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}In2iGui/js/Window.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}In2iGui/js/Formula.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}In2iGui/js/Button.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}In2iGui/js/Overlay.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}In2iGui/js/Editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
 </xsl:template>
 
@@ -111,8 +111,8 @@ mailto:<xsl:value-of select="@email"/>
 </xsl:template>
 
 <xsl:template name="oo-style">
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css?version={$timestamp}"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css?version={$timestamp}"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>

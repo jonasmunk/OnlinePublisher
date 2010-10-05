@@ -4,6 +4,7 @@ require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/TemplateController.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
+require_once($basePath.'Editor/Classes/SystemInfo.php');
 
 class RenderingService {
 	
@@ -112,7 +113,8 @@ class RenderingService {
 		'<xsl:variable name="usertitle">'.StringUtils::escapeXML($userTitle).'</xsl:variable>'.
 		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="editor">false</xsl:variable>'.
-		'<xsl:variable name="highquality">'.(requestGetBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
 	
