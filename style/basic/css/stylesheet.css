@@ -15,7 +15,6 @@ div.layout
 div.layout_top
 {
 	height: 60px;
-	border-bottom: 1px dashed #99f;
 }
 
 div.layout_middle
@@ -28,21 +27,18 @@ div.layout_middle
 div.layout_left
 {
 	float: left;
-	width: 25%;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+	width: 20%;
 }
 
 div.layout_center
 {
 	float: left;
-	width: 50%;
+	width: 60%;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	border-right: 1px dashed #9af;
-	border-left: 1px dashed #9af;
+	border-right: 1px solid #eee;
+	border-left: 1px solid #eee;
 	padding: 0 20px;
 	height: 100%;
 }
@@ -50,13 +46,48 @@ div.layout_center
 div.layout_right
 {
 	float: left;
-	width: 25%;
+	width: 20%;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	padding-left: 10px;
 }
 
+/************************ Navigaiton *********************/
+
+div.layout_navigation
+{
+	background: #f9f9f9;
+	border: 1px solid #eee;
+	border-width: 1px 0;
+}
+
+div.layout_navigation ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+div.layout_navigation li
+{
+	display: inline-block;
+}
+
+div.layout_navigation a
+{
+	display: inline-block;
+	padding: 0 10px;
+	height: 26px;
+	line-height: 26px;
+	text-decoration: none;
+	color: #333;
+}
+
+div.layout_navigation li.selected a
+{
+	background: #eee;
+}
 
 /*************************** News ************************/
 

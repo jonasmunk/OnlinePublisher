@@ -2,6 +2,8 @@
 <xsl:stylesheet version="1.0"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
+ xmlns:f="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/"
+ xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  >
 
@@ -206,6 +208,80 @@ mailto:<xsl:value-of select="@email"/>
 		</xsl:choose>
 		</span>
 	</a><xsl:text> </xsl:text>
+</xsl:template>
+
+<xsl:template name="util:userstatus">
+	<xsl:if test="//f:userstatus">
+		<div class="layout_userstatus">
+			<xsl:choose>
+				<xsl:when test="$userid>0">
+					<strong><xsl:text>Bruger: </xsl:text></strong><xsl:value-of select="$usertitle"/>
+					<xsl:text> </xsl:text>
+					<a href="{$path}?id={//f:userstatus/@page}&amp;logout=true"><xsl:text>log ud</xsl:text></a>
+				</xsl:when>
+				<xsl:otherwise>
+				<span>Ikke logget ind</span>
+				<xsl:text> </xsl:text>
+				<a href="{$path}?id={//f:userstatus/@page}">log ind</a>
+				</xsl:otherwise>
+			</xsl:choose>
+		</div>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="util:hierarchy-first-level">
+	<ul>
+		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
+			<xsl:variable name="class">
+				<xsl:choose>
+					<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:if test="not(@hidden='true')">
+				<li class="{$class}">
+				<a>
+					<xsl:call-template name="link"/>
+					<span><xsl:value-of select="@title"/></span>
+				</a>
+				</li>
+			</xsl:if>
+		</xsl:for-each>
+	</ul>
+</xsl:template>
+
+<xsl:template name="util:hierarchy-after-first-level">
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+		<ul>
+			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+				<xsl:call-template name="util:hierarchy-item-iterator"/>
+			</xsl:for-each>
+		</ul>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="util:hierarchy-item-iterator">
+	<xsl:variable name="class">
+		<xsl:choose>
+			<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:if test="not(@hidden='true')">
+		<li class="{$class}">
+			<a>
+				<xsl:call-template name="link"/>
+				<span><xsl:value-of select="@title"/></span>
+			</a>
+			<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
+				<ul>
+					<xsl:for-each select="h:item">
+						<xsl:call-template name="util:hierarchy-item-iterator"/>
+					</xsl:for-each>
+				</ul>
+			</xsl:if>
+		</li>
+	</xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>

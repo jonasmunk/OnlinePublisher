@@ -6,7 +6,8 @@
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
- exclude-result-prefixes="p f h n o"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="p f h n o util"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
 
@@ -15,24 +16,30 @@
 <xsl:template match="p:page">
 <html>
 	<head>
-	<title><xsl:value-of select="@title"/> :: <xsl:value-of select="f:frame/@title"/></title>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
-	<meta name="robots" content="index,follow"></meta>
-	<xsl:call-template name="oo-script"/>
-	<link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+		<title><xsl:value-of select="@title"/> :: <xsl:value-of select="f:frame/@title"/></title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+		<meta name="robots" content="index,follow"></meta>
+		<xsl:call-template name="oo-script"/>
+		<link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'/>
+		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css"/>
+		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
 	</head>
 	<body>
 		<div class="layout">
 			<div class="layout_top">
 				<xsl:apply-templates select="f:frame/f:links/f:top"/>
+				<xsl:call-template name="util:userstatus"/>
+			</div>
+			<div class="layout_navigation">
+				<xsl:call-template name="util:hierarchy-first-level"/>
 			</div>
 			<div class="layout_middle">
 				<xsl:call-template name="search"/>
 				<xsl:apply-templates select="f:frame/f:userstatus"/>
 				<div class="layout_left">
-					<xsl:apply-templates select="f:frame/h:hierarchy"/>
+					<xsl:call-template name="util:hierarchy-after-first-level"/>
+					<xsl:comment/>
+					&#160;
 				</div>
 				<div class="layout_center">
 					<xsl:apply-templates select="p:content"/>
@@ -49,63 +56,6 @@
 	</body>
 </html>
 </xsl:template>
-
-
-
-<!--            User status                 -->
-
-
-
-<xsl:template match="f:userstatus">
-<div>
-	<xsl:choose>
-	<xsl:when test="$userid>0">
-	<strong>Bruger: </strong><xsl:value-of select="$usertitle"/>
-	<xsl:text> </xsl:text>
-	<a href="./?id={@page}&amp;logout=true">log ud</a>
-	</xsl:when>
-	<xsl:otherwise>
-	<span>Ikke logget ind</span>
-	<xsl:text> </xsl:text>
-	<a href="./?id={@page}">log ind</a>
-	</xsl:otherwise>
-	</xsl:choose>
-</div>
-</xsl:template>
-
-
-
-<xsl:template match="h:hierarchy">
-<ul>
-	<xsl:apply-templates select="h:item"/>
-</ul>
-</xsl:template>
-
-<xsl:template match="h:item">
-<xsl:variable name="style">
-<xsl:choose>
-<xsl:when test="//p:page/@id=@page"><xsl:text>Selected</xsl:text></xsl:when>
-<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>Hilited</xsl:text></xsl:when>
-<xsl:otherwise>Standard</xsl:otherwise>
-</xsl:choose>
-</xsl:variable>
-<xsl:if test="not(@hidden='true')">
-<li class="{$style}">
-<a>
-<xsl:call-template name="link"/>
-<xsl:value-of select="@title"/>
-</a>
-<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
-<ul>
-	<xsl:apply-templates select="h:item"/>
-</ul>
-</xsl:if>
-</li>
-</xsl:if>
-</xsl:template>
-
-
-
 
 
 <!--            Links              -->
