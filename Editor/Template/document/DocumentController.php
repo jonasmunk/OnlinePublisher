@@ -260,7 +260,6 @@ class DocumentController extends TemplateController {
 				$partData = $legacy->build($context);
 			}
 			$state['data']=str_replace('<!-- dynamic:part#'.$row['part_id'].' -->', $partData, $state['data']);
-			Log::debug($partData);
 		}
 		Database::free($result);
 	}
