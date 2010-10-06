@@ -20,14 +20,22 @@ class FilePartController extends PartController
 		return $part;
 	}
 	
-	function getFromRequest() {
-		$id = Request::getInt('id');
+	function getFromRequest($id) {
+		$fileId = Request::getInt('fileId');
 		$part = FilePart::load($id);
+		$part->setFileId($fileId);
 		return $part;
 	}
 	
 	function buildSub($part,$context) {
-		return '';
+		$xml='<file xmlns="'.$this->getNamespace().'">';
+		$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".Database::int($part->getFileId());
+		if ($row = Database::selectFirst($sql)) {
+			$xml.='<info type="'.GuiUtils::mimeTypeToKind($row['type']).'"/>';
+			$xml.=$row['data'];
+		}
+		$xml.='</file>';
+		return $xml;
 	}
 }
 ?>
