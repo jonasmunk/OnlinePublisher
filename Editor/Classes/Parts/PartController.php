@@ -107,5 +107,35 @@ class PartController
 		$xml.='/>';
 		return $xml;
 	}
+	
+	function buildCSSStyle($part) {
+		$array = array(
+			'getColor' => 'color',
+			'getFontFamily' => 'font-family',
+			'getFontSize' => 'font-size',
+			'getFontWeight' => 'font-weight',
+			'getFontStyle' => 'font-style',
+			'getFontVariant' => 'font-variant',
+			'getLineHeight' => 'line-height',
+			'getTextAlign' => 'text-align',
+			'getWordSpacing' => 'word-spacing',
+			'getLetterSpacing' => 'letter-spacing',
+			'getTextDecoration' => 'text-decoration',
+			'getTextIndent' => 'text-indent',
+			'getTextTransform' => 'text-transform',
+			'getFontStyle' => 'font-style',
+			'getFontVariant' => 'font-variant'
+		);
+		$css = '';
+		foreach ($array as $method => $attribute) {
+			if (method_exists($part,$method)) {
+				$value = $part->$method();
+				if (StringUtils::isNotBlank($value)) {
+					$css.=$attribute.': '.StringUtils::escapeXML($value).';';
+				}
+			}
+		}
+		return $css;
+	}
 }
 ?>

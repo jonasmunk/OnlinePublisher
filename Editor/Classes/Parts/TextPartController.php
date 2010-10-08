@@ -20,6 +20,41 @@ class TextPartController extends PartController
 		return $part;
 	}
 	
+	function display($part,$context) {
+		return $this->render($part,$context);
+	}
+	
+	function getIndex($part) {
+		// TODO Strip tags etc.
+		return $part->getText();
+	}
+	
+	function editor($part,$context) {
+		return
+		'<textarea class="part_text common_font" name="text" id="PartTextTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;'.$this->buildCSSStyle($part).'">'.
+		StringUtils::escapeXML($part->getText()).
+		'</textarea>'.
+		'<input type="hidden" name="fontSize" value="'.StringUtils::escapeXML($part->getFontSize()).'"/>'.
+		'<input type="hidden" name="fontFamily" value="'.StringUtils::escapeXML($part->getFontfamily()).'"/>'.
+		'<input type="hidden" name="textAlign" value="'.StringUtils::escapeXML($part->getTextAlign()).'"/>'.
+		'<input type="hidden" name="lineHeight" value="'.StringUtils::escapeXML($part->getLineHeight()).'"/>'.
+		'<input type="hidden" name="fontWeight" value="'.StringUtils::escapeXML($part->getFontWeight()).'"/>'.
+		'<input type="hidden" name="fontStyle" value="'.StringUtils::escapeXML($part->getFontWeight()).'"/>'.
+		'<input type="hidden" name="color" value="'.StringUtils::escapeXML($part->getColor()).'"/>'.
+		'<input type="hidden" name="wordSpacing" value="'.StringUtils::escapeXML($part->getWordSpacing()).'"/>'.
+		'<input type="hidden" name="letterSpacing" value="'.StringUtils::escapeXML($part->getLetterSpacing()).'"/>'.
+		'<input type="hidden" name="textIndent" value="'.StringUtils::escapeXML($part->getTextIndent()).'"/>'.
+		'<input type="hidden" name="textTransform" value="'.StringUtils::escapeXML($part->getTextTransform()).'"/>'.
+		'<input type="hidden" name="fontVariant" value="'.StringUtils::escapeXML($part->getFontVariant()).'"/>'.
+		'<input type="hidden" name="textDecoration" value="'.StringUtils::escapeXML($part->getTextDecoration()).'"/>'.
+		'<input type="hidden" name="imageId" value="'.StringUtils::escapeXML($part->getImageId()).'"/>'.
+		'<input type="hidden" name="imageFloat" value="'.StringUtils::escapeXML($part->getImageFloat()).'"/>'.
+		'<script type="text/javascript">'.
+		'document.getElementById("PartTextTextarea").focus();'.
+		'document.getElementById("PartTextTextarea").select();'.
+		'</script>';
+	}
+	
 	function getFromRequest($id) {
 		$part = TextPart::load($id);
 		$part->setText(Request::getEncodedString('text'));

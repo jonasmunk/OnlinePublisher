@@ -17,7 +17,7 @@ class TestNewsPartController extends UnitTestCase {
 		
 		$ctrl = new NewsPartController();
 		$this->assertTrue($ctrl->isDynamic($part));
-		$this->assertEqual($ctrl->getIndex($part),'');
+		$this->assertEqual($ctrl->getIndex($part),'Todays news');
 		
 		$xml = $ctrl->build($part,new PartContext());
 		$expected = '<part xmlns="http://uri.in2isoft.com/onlinepublisher/part/1.0/" type="news" id="">'.

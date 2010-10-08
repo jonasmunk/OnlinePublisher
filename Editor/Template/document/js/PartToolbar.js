@@ -10,7 +10,7 @@ var partToolbar = {
 		this.editorFrame = window.parent.Frame.EditorFrame;
 		var doc = this.editorFrame.getDocument();
 		this.partForm = doc.forms['PartForm'];
-		this.section = $(doc.getElementById('selectedSectionTD'));
+		this.section = $(doc.getElementById('selectedSection'));
 		
 		marginLeft.setValue(this.partForm.left.value);
 		marginRight.setValue(this.partForm.right.value);

@@ -73,6 +73,10 @@ class NewsPartController extends PartController
 		return $this->render($part,$context);
 	}
 	
+	function getIndex($part) {
+		return $part->getTitle();
+	}
+	
 	function editor($part,$context) {
 		global $baseUrl;
 

@@ -240,13 +240,10 @@ function sectionEditor($sectionId,$type,$sectionStyle,$partId,$partType,$row) {
 
 function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	global $partContext;
-	setPartContextSessionVar('part.id',$partId);
-	setPartContextSessionVar('part.type',$partType);
-	setPartContextSessionVar('form.path','parent.Frame.EditorFrame.getDocument().forms.PartForm');
 	$ctrl = PartService::getController($partType);
 	$controller = LegacyPartController::load($partType,$partId);
 	echo
-	'<div style="'.$sectionStyle.'" id="selectedSectionTD" class="part_section_'.$partType.' '.$controller->getSectionClass().' section_selected">'.
+	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$controller->getSectionClass().' section_selected">'.
 	'<form name="PartForm" action="UpdatePart.php" method="post">'.
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
 	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.
@@ -269,7 +266,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 		echo $ctrl->editorGui($part,$partContext);
 	}
 	echo '<script type="text/javascript">'.
-	'try {parent.parent.Toolbar.location=\'PartToolbar.php?section='.$sectionId.'&amp;\'+Math.random();} catch(e) {};'.
+	'try {parent.parent.Toolbar.location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"} catch(e) {};'.
 	'function saveSection() {
 		document.forms.PartForm.submit();
 	}'.
