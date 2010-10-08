@@ -61,7 +61,6 @@ class Part
 						foreach ($ids as $id) {
 							$sql = "insert into ".$info['table']." (".$info['fromColumn'].",".$info['toColumn'].") values (".$this->id.",".$id.")";
 							Database::insert($sql);
-							Log::debug($sql);
 						}
 					}
 				}
@@ -86,14 +85,12 @@ class Part
 			foreach ($schema['relations'] as $field => $info) {
 				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".$this->id;
 				Database::delete($sql);
-				Log::debug($sql);
 				$getter = 'get'.ucfirst($field);
 				$ids = $this->$getter();
 				if ($ids!==null) {
 					foreach ($ids as $id) {
 						$sql = "insert into ".$info['table']." (".$info['fromColumn'].",".$info['toColumn'].") values (".$this->id.",".$id.")";
 						Database::insert($sql);
-						Log::debug($sql);
 					}
 				}
 			}

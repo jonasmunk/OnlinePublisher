@@ -12,12 +12,20 @@ class TestNewsPartController extends UnitTestCase {
 
 	function testBuild() {
 		$part = new NewsPart();
-		$context = new PartContext();
+		$part->setVariant('list');
+		$part->setTitle('Todays news');
 		
 		$ctrl = new NewsPartController();
-		Log::debug($ctrl->build($part,$context));
 		$this->assertTrue($ctrl->isDynamic($part));
 		$this->assertEqual($ctrl->getIndex($part),'');
+		
+		$xml = $ctrl->build($part,new PartContext());
+		$expected = '<part xmlns="http://uri.in2isoft.com/onlinepublisher/part/1.0/" type="news" id="">'.
+		'<sub><news xmlns="http://uri.in2isoft.com/onlinepublisher/part/news/1.0/">'.
+		'<list><title>Todays news</title></list>'.
+		'</news></sub>'.
+		'</part>';
+		$this->assertEqual($xml,$expected);
 	}
 }
 ?>

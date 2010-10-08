@@ -9,7 +9,7 @@ require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class HorizontalrulePartController extends PartController
 {
-	function ImagegalleryPartController() {
+	function HorizontalrulePartController() {
 		parent::PartController('horizontalrule');
 	}
 	
@@ -19,14 +19,20 @@ class HorizontalrulePartController extends PartController
 		return $part;
 	}
 	
-	function getFromRequest() {
-		$id = Request::getInt('id');
-		$part = HorizontalrulePart::load($id);
-		return $part;
+	function getFromRequest($id) {
+		return HorizontalrulePart::load($id);
+	}
+	
+	function display($part,$context) {
+		return $this->render($part,$context);
+	}
+	
+	function editor($part,$context) {
+		return $this->render($part,$context);
 	}
 	
 	function buildSub($part,$context) {
-		return '';
+		return '<horizontalrule xmlns="'.$this->getNamespace().'"/>';
 	}
 }
 ?>

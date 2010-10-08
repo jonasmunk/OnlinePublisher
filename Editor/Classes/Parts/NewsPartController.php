@@ -27,23 +27,25 @@ class NewsPartController extends PartController
 	
 	function buildSub($part,$context) {
 		$data='<news xmlns="'.$this->getNamespace().'">';
-		$data.='<'.$part->getVariant().'>';
-		if ($part->getTitle()!='') {
-			$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
-		}
-		$maxitems = $part->getMaxItems(); // TODO: Build this into sql PERFORMANCE!
-		$sql = $this->buildSql($part);
-		if ($sql!='') {
-			$result = Database::select($sql);
-			while ($newsRow = Database::next($result)) {
-				$data.=$newsRow['data'];
-				$maxitems--;
-				if ($maxitems==0) break;
+		if (StringUtils::isNotBlank($part->getVariant())) {
+			$data.='<'.$part->getVariant().'>';
+			if (StringUtils::isNotBlank($part->getTitle())) {
+				$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
 			}
-			Database::free($result);
-		}
+			$maxitems = $part->getMaxItems(); // TODO: Build this into sql PERFORMANCE!
+			$sql = $this->buildSql($part);
+			if ($sql!='') {
+				$result = Database::select($sql);
+				while ($newsRow = Database::next($result)) {
+					$data.=$newsRow['data'];
+					$maxitems--;
+					if ($maxitems==0) break;
+				}
+				Database::free($result);
+			}
 
-		$data.='</'.$part->getVariant().'>';
+			$data.='</'.$part->getVariant().'>';
+		}
 		$data.='</news>';
 		return $data;
 	}

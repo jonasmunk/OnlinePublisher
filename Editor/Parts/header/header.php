@@ -59,44 +59,6 @@ class PartHeader extends LegacyPartController {
 		}
 	}
 	
-	function sub_update() {
-		$level = requestPostNumber('level',1);
-		$text = requestPostText('text');
-		$fontSize = requestPostText('fontSize');
-		$fontFamily = requestPostText('fontFamily');
-		$textAlign = requestPostText('textAlign');
-		$lineHeight = requestPostText('lineHeight');
-		$color = requestPostText('color');
-		$fontWeight = requestPostText('fontWeight');
-		$fontStyle = requestPostText('fontStyle');
-		$wordSpacing = requestPostText('wordSpacing');
-		$letterSpacing = requestPostText('letterSpacing');
-		$textIndent = requestPostText('textIndent');
-		$textTransform = requestPostText('textTransform');
-		$fontVariant = requestPostText('fontVariant');
-		$textDecoration = requestPostText('textDecoration');
-		
-		
-		$sql = "update part_header set".
-		" level=".$level.
-		",text=".Database::text($text).
-		",fontsize=".Database::text($fontSize).
-		",fontfamily=".Database::text($fontFamily).
-		",textalign=".Database::text($textAlign).
-		",lineheight=".Database::text($lineHeight).
-		",color=".Database::text($color).
-		",fontweight=".Database::text($fontWeight).
-		",fontstyle=".Database::text($fontStyle).
-		",wordspacing=".Database::text($wordSpacing).
-		",letterspacing=".Database::text($letterSpacing).
-		",textindent=".Database::text($textIndent).
-		",texttransform=".Database::text($textTransform).
-		",fontvariant=".Database::text($fontVariant).
-		",textdecoration=".Database::text($textDecoration).
-		" where part_id=".$this->id;
-		Database::insert($sql);
-	}
-	
 	function sub_import(&$node) {
 		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.$node->toString();
 		$xsl = '<?xml version="1.0" encoding="ISO-8859-1"?>

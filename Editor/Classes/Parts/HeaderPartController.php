@@ -21,12 +21,26 @@ class HeaderPartController extends PartController
 		return $part;
 	}
 	
-	function getFromRequest() {
-		$id = Request::getInt('id');
-		$text = Request::getUnicodeString('text');
-
+	function getFromRequest($id) {
 		$part = HeaderPart::load($id);
-		$part->setText($text);
+		$part->setText(Request::getEncodedString('text'));
+		// Until Ajax posts all vars
+		if (Request::exists('level')) {
+			$part->setLevel(Request::getInt('level'));
+			$part->setFontSize(Request::getString('fontSize'));
+			$part->setFontFamily(Request::getString('fontFamily'));
+			$part->setTextAlign(Request::getString('textAlign'));
+			$part->setLineHeight(Request::getString('lineHeight'));
+			$part->setColor(Request::getString('color'));
+			$part->setLetterSpacing(Request::getString('letterSpacing'));
+			$part->setFontWeight(Request::getString('fontWeight'));
+			$part->setFontStyle(Request::getString('fontStyle'));
+			$part->setWordSpacing(Request::getString('wordSpacing'));
+			$part->setTextIndent(Request::getString('textIndent'));
+			$part->setTextTransform(Request::getString('textTransform'));
+			$part->setFontVariant(Request::getString('fontVariant'));
+			$part->setTextDecoration(Request::getString('textDecoration'));
+		}
 		return $part;
 	}
 	

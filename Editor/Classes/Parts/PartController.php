@@ -78,9 +78,31 @@ class PartController
 	}
 	
 	function buildXMLStyle($part) {
+		$array = array(
+			'getColor' => 'color',
+			'getFontFamily' => 'font-family',
+			'getFontSize' => 'font-size',
+			'getFontWeight' => 'font-weight',
+			'getFontStyle' => 'font-style',
+			'getFontVariant' => 'font-variant',
+			'getLineHeight' => 'line-height',
+			'getTextAlign' => 'text-align',
+			'getWordSpacing' => 'word-spacing',
+			'getLetterSpacing' => 'letter-spacing',
+			'getTextDecoration' => 'text-decoration',
+			'getTextIndent' => 'text-indent',
+			'getTextTransform' => 'text-transform',
+			'getFontStyle' => 'font-style',
+			'getFontVariant' => 'font-variant'
+		);
 		$xml = '<style';
-		if (method_exists($part,'getColor')) {
-			$xml.=' color="'.$part->getColor().'"';
+		foreach ($array as $method => $attribute) {
+			if (method_exists($part,$method)) {
+				$value = $part->$method();
+				if (StringUtils::isNotBlank($value)) {
+					$xml.=' '.$attribute.'="'.StringUtils::escapeXML($value).'"';
+				}
+			}
 		}
 		$xml.='/>';
 		return $xml;

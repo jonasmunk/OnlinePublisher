@@ -37,6 +37,17 @@ class Request {
 	function getCheckbox($key) {
 		return Request::getString($key)=='on';
 	}
+
+	/**
+	 * Gets a string and converts it to ISO-8859-1 if it is in Unicode
+	 */
+	function getEncodedString($key) {
+		$value = Request::getString($key);
+		if (strpos($_SERVER['CONTENT_TYPE'],'UTF-8')!==false) {
+			return mb_convert_encoding($value, "ISO-8859-1","UTF-8");
+		}
+		return $value;
+	}
 	
 	function getUnicodeString($key) {
 		$value = Request::getString($key);

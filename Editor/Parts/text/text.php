@@ -51,27 +51,6 @@ class PartText extends LegacyPartController {
 		}
 	}
 	
-	function sub_update() {
-		if ($part = TextPart::load($this->id)) {
-			$part->setText(Request::getString('text'));
-			$part->setFontSize(Request::getString('fontSize'));
-			$part->setFontFamily(Request::getString('fontFamily'));
-			$part->setTextAlign(Request::getString('textAlign'));
-			$part->setLineHeight(Request::getString('lineHeight'));
-			$part->setFontWeight(Request::getString('fontWeight'));
-			$part->setFontStyle(Request::getString('fontStyle'));
-			$part->setWordSpacing(Request::getString('wordSpacing'));
-			$part->setLetterSpacing(Request::getString('letterSpacing'));
-			$part->setTextIndent(Request::getString('textIndent'));
-			$part->setTextTransform(Request::getString('textTransform'));
-			$part->setFontVariant(Request::getString('fontVariant'));
-			$part->setTextDecoration(Request::getString('textDecoration'));
-			$part->setImageId(Request::getInt('imageId'));
-			$part->setImageFloat(Request::getString('imageFloat'));
-			$part->save();
-		}
-	}
-	
 	function sub_import(&$node) {
 		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.$node->toString();
 		$xsl = '<?xml version="1.0" encoding="ISO-8859-1"?>
@@ -109,39 +88,6 @@ class PartText extends LegacyPartController {
 		",color=".Database::text($style['color']).
 		" where part_id=".$this->id;
 		Database::update($sql);
-	}
-	
-	function sub_build($context) {
-		$sql = "select * from part_text where part_id=".$this->id;
-		if ($row = Database::selectFirst($sql)) {
-			$text = $row['text'];
-			$text = StringUtils::escapeSimpleXML($text);
-			$text = $context->decorateForBuild($text);
-			// Important that line breaks are after decorate
-			$text = StringUtils::insertLineBreakTags($text,'<break/>');
-			
-			$text = str_replace('<break/><break/>', '</p><p>', $text);;
-			return 
-			'<text xmlns="'.$this->_buildnamespace('1.0').'">'.
-			$this->_buildXMLStyle($row).
-			$this->_buildImage($row).
-			'<p>'.$text.'</p>'.
-			'</text>';
-		} else {
-			return '';
-		}
-	}
-	
-	function _buildImage($row) {
-		if ($row['image_id']>0) {
-			$sql = "select data from object where id=".$row['image_id'];
-			if ($row2 = Database::selectFirst($sql)) {
-				return '<image float="'.StringUtils::escapeSimpleXML($row['imagefloat']).'">'.
-				$row2['data'].
-				'</image>';
-			}
-		}
-		return '';
 	}
 	
 	function sub_index() {
