@@ -20,15 +20,5 @@ class ImagegalleryPartController extends PartController
 		$part->save();
 		return $part;
 	}
-	
-	function getFromRequest() {
-		$id = Request::getInt('id');
-		$part = ImagegalleryPart::load($id);
-		return $part;
-	}
-	
-	function buildSub($part,$context) {
-		return '';
-	}
 }
 ?>

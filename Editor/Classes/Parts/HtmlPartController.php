@@ -20,14 +20,32 @@ class HtmlPartController extends PartController
 		return $part;
 	}
 	
-	function getFromRequest() {
-		$id = Request::getInt('id');
+	function display($part,$context) {
+		return $this->render($part,$context);
+	}
+	
+	function editor($part,$context) {
+		return
+		'<textarea id="PartHtmlTextarea" name="html" style="width: 100%; height: 300px; border: none; padding: 0;">'.
+		StringUtils::escapeXML($part->getHtml()).
+		'</textarea>'.
+		'<script type="text/javascript">'.
+		'document.getElementById("PartHtmlTextarea").focus();'.
+		'document.getElementById("PartHtmlTextarea").select();'.
+		'</script>';
+	}
+	
+	function getFromRequest($id) {
 		$part = HtmlPart::load($id);
+		$part->setHtml(Request::getString('html'));
 		return $part;
 	}
 	
 	function buildSub($part,$context) {
-		return '';
+		return 
+		'<html xmlns="'.$this->getNamespace().'">'.
+		'<![CDATA['.$part->getHtml().']]>'.
+		'</html>';
 	}
 }
 ?>

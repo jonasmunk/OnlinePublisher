@@ -17,15 +17,5 @@ class FormulaPartController extends PartController
 		$part->save();
 		return $part;
 	}
-	
-	function getFromRequest() {
-		$id = Request::getInt('id');
-		$part = FormulaPart::load($id);
-		return $part;
-	}
-	
-	function buildSub($part,$context) {
-		return '';
-	}
 }
 ?>
