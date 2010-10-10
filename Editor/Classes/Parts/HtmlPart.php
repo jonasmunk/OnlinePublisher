@@ -14,10 +14,6 @@ Part::$schema['html'] = array(
 class HtmlPart extends Part
 {
 	var $html;
-	var $height;
-	var $imageGroupId;
-	var $framed;
-	var $showTitle;
 	
 	function HtmlPart() {
 		parent::Part('html');
