@@ -241,7 +241,7 @@ class PartImage extends LegacyPartController {
 				$xml.=$image['data'];
 			}
 			if ($row['text']!='') {
-				$xml.='<text>'.encodeXML($row['text']).'</text>';
+				$xml.='<text>'.StringUtils::escapeXML($row['text']).'</text>';
 			}
 			$xml.='</image>';
 			return $xml;
@@ -272,13 +272,10 @@ class PartImage extends LegacyPartController {
 		$sql="select object.data,image.* from object,image where image.object_id = object.id and object.id=".$params['image_id'];
 		if ($image = Database::selectFirst($sql)) {
 			$xml.=$this->buildTransformTag($image,$params);
-			//if ($link = $this->getSingleLink('entireimage')) {
-			//    $xml.=$this->_buildLinkTag($link,$row['image_id']);
-			//}
 			$xml.=$image['data'];
 		}
 		if ($params['text']) {
-			$xml.='<text>'.encodeXML($params['text']).'</text>';
+			$xml.='<text>'.StringUtils::escapeXML($params['text']).'</text>';
 		}
 		$xml.='</image>';
 		return $xml;
@@ -287,31 +284,31 @@ class PartImage extends LegacyPartController {
 	function _buildLinkTag($link,$imageId) {
 	    $atts = '';
 	    if ($link['target_type']=='url') {
-			$atts.=' url="'.encodeXML($link['target_value']).'"';
+			$atts.=' url="'.StringUtils::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='page') {
-			$atts.=' page="'.encodeXML($link['target_value']).'"';
+			$atts.=' page="'.StringUtils::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='email') {
-			$atts.=' email="'.encodeXML($link['target_value']).'"';
+			$atts.=' email="'.StringUtils::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='file') {
-			$atts.=' file="'.encodeXML($link['target_value']).'"';
+			$atts.=' file="'.StringUtils::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='image') {
 			$image = Image::load($link['target_value']);
 			if ($image) {
-				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.encodeXML($image->getNote()).'"';
+				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.StringUtils::escapeXML($image->getNote()).'"';
 			}
 		}
 		else if ($link['target_type']=='sameimage') {
 			$image = Image::load($imageId);
 			if ($image) {
-				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.encodeXML($image->getNote()).'"';
+				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.StringUtils::escapeXML($image->getNote()).'"';
 			}
 		}
 	    if ($link['path']!='') {
-			$atts.=' path="'.encodeXML($link['path']).'"';
+			$atts.=' path="'.StringUtils::escapeXML($link['path']).'"';
 		}
 	    return '<link'.$atts.'/>';
 	}
