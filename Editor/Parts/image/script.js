@@ -80,9 +80,9 @@ var partController = {
 			uploadTab.add(upload);
 			uploadTab.add(buttons);
 			var linkTab = tabs.createTab({title:'Fra nettet',padding:10});
-			var form = ui.Formula.create({name:'videoUrlForm'});
+			var form = ui.Formula.create({name:'urlForm'});
 			form.buildGroup({above:true},[
-				{type:'Text',options:{label:'Internetaddresse (URL):',key:'url'}}
+				{type:'Text',options:{label:'Internetaddresse:',key:'url'}}
 			]);
 			linkTab.add(form);
 			var create = ui.Button.create({name:'createFromUrl',title:'Hent'});
@@ -98,7 +98,23 @@ var partController = {
 		}.bind(this)});
 	},
 	$click$createFromUrl : function() {
-		ui.showMessage({text:'Denne funktion virker endnu ikke :-(',duration:2000});
+		var form = ui.get('urlForm');
+		var url = form.getValues()['url'];
+		ui.showMessage({text:'Henter billede...'});
+		ui.request({
+			url : '../../Parts/image/Fetch.php',
+			parameters : {url:url},
+			onJSON : function(status) {
+				if (status.success) {
+					ui.showMessage({text:'Billedet er nu hentet',duration:2000});
+					document.forms.PartForm.imageId.value = status.id;
+					this.preview();
+				} else {
+					ui.showMessage({text:'Det lykkedes ikke at hente billedet',duration:2000});
+				}
+			}.bind(this)
+		});
+		
 	}
 }
 

@@ -98,7 +98,11 @@ class Part
 	}
 	
 	function isDynamic() {
-		return PartService::getController($this->type)->isDynamic($this);
+		$ctrl = PartService::getController($this->type);
+		if ($ctrl) {
+			return $ctrl->isDynamic($this);
+		}
+		return false;
 	}
 	
 	function remove() {

@@ -127,16 +127,6 @@ class PartImage extends LegacyPartController {
 		return '';
 	}
 	
-	function sub_create() {
-		$sql = "insert into part_image (part_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_image where part_id=".$this->id;
-		Database::delete($sql);
-	}
-	
 	function sub_update() {
 		$imageId = requestPostNumber('imageId');
 		$align = requestPostText('align');

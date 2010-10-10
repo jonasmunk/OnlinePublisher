@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class Image extends Object {
 	var $filename;
@@ -163,11 +164,11 @@ class Image extends Object {
 	function sub_publish() {
 		$data =
 		'<image xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<filename>'.encodeXML($this->filename).'</filename>'.
-		'<size>'.encodeXML($this->size).'</size>'.
-		'<width>'.encodeXML($this->width).'</width>'.
-		'<height>'.encodeXML($this->height).'</height>'.
-		'<mimetype>'.encodeXML($this->mimetype).'</mimetype>'.
+		'<filename>'.StringUtils::escapeXML($this->filename).'</filename>'.
+		'<size>'.StringUtils::escapeXML($this->size).'</size>'.
+		'<width>'.StringUtils::escapeXML($this->width).'</width>'.
+		'<height>'.StringUtils::escapeXML($this->height).'</height>'.
+		'<mimetype>'.StringUtils::escapeXML($this->mimetype).'</mimetype>'.
 		'</image>';
 		return $data;
 	}

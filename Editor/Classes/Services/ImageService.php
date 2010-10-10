@@ -16,9 +16,10 @@ class ImageService {
 		$error = false;
 
 		if (strlen($url)=="") {
-			$error = array(
-				"title" => "Adressen er ikke angivet",
-				"description" => "Du skal udfylde hvilken adresse billedet skal hentes fra."
+			return array(
+				'success' => false,
+				'errorMessage' => 'Adressen er ikke angivet',
+				'errorDetails' => 'Du skal udfylde hvilken adresse billedet skal hentes fra.'
 			);
 		}
 		else if ($file = fopen ($url, "rb")) {
@@ -31,12 +32,13 @@ class ImageService {
 			$result = ImageService::createImageFromFile($tempFilename,basename($url),null,filesize($tempFilename),null,$group);
 			unlink($tempFilename);
 			fclose($file);
-		} else {
-			$error = array(
-				"title" => "Kunne ikke hente billede",
-				"description" => "Den angivne adresse kunne ikke kontaktes."
-			);
+			return $result;
 		}
+		return array(
+			'success' => false,
+			'errorMessage' => 'Kunne ikke hente billede',
+			'errorDetails' => 'Den angivne adresse kunne ikke kontaktes.'
+		);
 	}
 
 	/**
@@ -118,7 +120,13 @@ class ImageService {
 						,'errorDetails' => $errorDetails,'id'=>$imageId);
 	}
 	
-	
+	function getLatestImageId() {
+		$sql = "select max(object_id) as id from image";
+		if ($row = Database::selectFirst($sql)) {
+			return intval($row['id']);
+		}
+		return null;
+	}
 
 	/**
 	 * Checks whether the file is a valid file for image creation.
