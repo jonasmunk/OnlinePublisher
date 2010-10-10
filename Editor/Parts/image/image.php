@@ -265,7 +265,6 @@ class PartImage extends LegacyPartController {
 	}
 	
 	function buildXML($params) {
-		Log::debug($params);
 		$xml = '<image xmlns="'.$this->_buildnamespace('1.0').'">';
            if ($params['align']) {
                $xml.='<style align="'.$params['align'].'"/>';
@@ -367,7 +366,7 @@ class PartImage extends LegacyPartController {
 		return array(
 			'Billede' =>
 			'<script source="../../Parts/image/toolbar.js"/>
-			<icon icon="common/new" title="Upload billede" name="addImage"/>
+			<icon icon="common/new" title="Tilf&#248;j billede" name="addImage"/>
 			<icon icon="common/search" title="V&#230;lg billede" name="chooseImage"/>
 			<divider/>
 			<segmented label="Placering" name="alignment" allow-null="true">
