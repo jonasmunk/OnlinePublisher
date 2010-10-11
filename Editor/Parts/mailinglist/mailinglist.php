@@ -46,16 +46,6 @@ class PartMailinglist extends LegacyPartController {
 		}
 	}
 	
-	function sub_create() {
-		$sql = "insert into part_mailinglist (part_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-	
-	function sub_delete() {
-		$sql = "delete from part_mailinglist where part_id=".$this->id;
-		Database::delete($sql);
-	}
-	
 	function sub_update() {
 		$lists = explode(',',Request::getString('mailinglists'));
 		$sql = "delete from part_mailinglist_mailinglist where part_id=".$this->id;
@@ -160,18 +150,6 @@ class PartMailinglist extends LegacyPartController {
 	}
 	
 	// Toolbar stuff
-	
-	function isIn2iGuiEnabled() {
-		return true;
-	}
-	
-	function getToolbars() {
-		return array(
-			'Postliste' =>
-				'<checkboxes name="lists" label="Postlister">
-				'.GuiUtils::buildObjectItems('mailinglist').'
-				</checkboxes>'
-			);
-	}
+		
 }
 ?>

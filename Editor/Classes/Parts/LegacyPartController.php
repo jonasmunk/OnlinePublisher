@@ -137,10 +137,6 @@ class LegacyPartController {
 
 ////////////////////////// In2iGui ////////////////////////
 	
-	function isIn2iGuiEnabled() {
-		return false;
-	}
-	
 	function getToolbars() {
 		return array();
 	}

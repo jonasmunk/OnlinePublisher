@@ -217,17 +217,6 @@ class PartList extends LegacyPartController {
 	
 	// Toolbar stuff
 	
-	function isIn2iGuiEnabled() {
-		return true;
-	}
-	
-	function getToolbarTabs() {
-		return array('list' => array('title' => 'Liste'));
-	}
-	
-	function getToolbarDefaultTab() {
-		return 'list';
-	}
 }
 
 class PartListItem {

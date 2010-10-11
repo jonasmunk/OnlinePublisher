@@ -10,12 +10,6 @@ class PartHorizontalrule extends LegacyPartController {
 	function PartHorizontalrule($id=0) {
 		parent::LegacyPartController('horizontalrule');
 		$this->id = $id;
-	}
-	
-	// Toolbar stuff
-	
-	function isIn2iGuiEnabled() {
-		return true;
-	}
+	}	
 }
 ?>

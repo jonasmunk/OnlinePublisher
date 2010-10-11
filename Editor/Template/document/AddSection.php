@@ -53,7 +53,8 @@ redirect('Editor.php');
  * Creates a new part of the provided type and returns its id
  */
 function createNewPart($unique) {
-	if ($ctrl = PartService::getController($unique)) {
+	$ctrl = PartService::getController($unique);
+	if ($ctrl && method_exists($ctrl,'createPart')) {
 		$part = $ctrl->createPart();
 		return $part->getId();
 	} else {

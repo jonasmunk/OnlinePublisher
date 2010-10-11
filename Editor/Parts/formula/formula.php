@@ -41,30 +41,6 @@ class PartFormula extends LegacyPartController {
 	function sub_build($context) {
 		return '<formula xmlns="'.$this->_buildnamespace('1.0').'"/>';
 	}
-	
-	// Toolbar stuff
-	
-	function isIn2iGuiEnabled() {
-		return true;
-	}
-	
-	function getToolbars() {
-		return array(
-			'Formular' => '
-			<script source="../../Parts/formula/toolbar.js"/>
-			<grid>
-				<row>
-					<cell label="Modtager:" width="180">
-						<textfield adaptive="true" name="receiverName"/>
-					</cell>
-				</row>
-				<row>
-					<cell label="E-mail:" width="180">
-						<textfield adaptive="true" name="receiverEmail"/>
-					</cell>
-				</row>
-			</grid>
-		');
-	}
+
 }
 ?>

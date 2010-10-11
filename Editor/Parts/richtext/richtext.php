@@ -104,10 +104,5 @@ class PartRichtext extends LegacyPartController {
 		Database::update($sql);
 	}
 	
-	// Toolbar stuff
-	
-	function isIn2iGuiEnabled() {
-		return true;
-	}
 }
 ?>

@@ -137,5 +137,9 @@ class PartController
 		}
 		return $css;
 	}
+	
+	function getToolbars() {
+		return null;
+	}
 }
 ?>

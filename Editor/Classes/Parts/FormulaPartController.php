@@ -17,5 +17,24 @@ class FormulaPartController extends PartController
 		$part->save();
 		return $part;
 	}
+	
+	function getToolbars() {
+		return array(
+			'Formular' => '
+			<script source="../../Parts/formula/toolbar.js"/>
+			<grid>
+				<row>
+					<cell label="Modtager:" width="180">
+						<textfield adaptive="true" name="receiverName"/>
+					</cell>
+				</row>
+				<row>
+					<cell label="E-mail:" width="180">
+						<textfield adaptive="true" name="receiverEmail"/>
+					</cell>
+				</row>
+			</grid>
+		');
+	}
 }
 ?>

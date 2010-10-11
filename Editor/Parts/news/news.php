@@ -17,11 +17,5 @@ class PartNews extends LegacyPartController {
 		return true;
 	}
 	
-	// Toolbar stuff
-	
-	function isIn2iGuiEnabled() {
-		return true;
-	}
-
 }
 ?>

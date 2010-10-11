@@ -20,8 +20,5 @@ class PartHtml extends LegacyPartController {
 		}
 	}
 	
-	function isIn2iGuiEnabled() {
-		return true;
-	}
 }
 ?>

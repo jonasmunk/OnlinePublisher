@@ -5,7 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Parts/LegacyPartController.php';
+require_once '../../Classes/Services/PartService.php';
 require_once '../../Classes/In2iGui.php';
 
 // Get variables
@@ -18,7 +18,7 @@ if (!$partType) {
 	exit;
 }
 
-$part = LegacyPartController::load($partType,$partId);
+$part = PartService::getController($partType);
 
 $gui='
 <gui xmlns="uri:In2iGui" title="Toolbar">
