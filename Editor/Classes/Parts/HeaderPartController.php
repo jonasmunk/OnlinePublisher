@@ -44,6 +44,44 @@ class HeaderPartController extends PartController
 		return $part;
 	}
 	
+	function display($part,$context) {
+		return $this->render($part,$context);
+	}
+	
+	function editor($part,$context) {
+		return
+		'<textarea class="part_header part_header_'.$part->getLevel().'" name="text" id="PartHeaderTextarea" style="border: 1px solid lightgrey; width: 100%; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; '.$this->buildCSSStyle($part).'">'.
+		StringUtils::escapeXML($part->getText()).
+		'</textarea>'.
+		'<input type="hidden" name="level" value="'.$part->getLevel().'"/>'.
+		'<input type="hidden" name="fontSize" value="'.StringUtils::escapeXML($part->getFontSize()).'"/>'.
+		'<input type="hidden" name="fontFamily" value="'.StringUtils::escapeXML($part->getFontFamily()).'"/>'.
+		'<input type="hidden" name="textAlign" value="'.StringUtils::escapeXML($part->getTextAlign()).'"/>'.
+		'<input type="hidden" name="lineHeight" value="'.StringUtils::escapeXML($part->getLineHeight()).'"/>'.
+		'<input type="hidden" name="fontWeight" value="'.StringUtils::escapeXML($part->getFontWeight()).'"/>'.
+		'<input type="hidden" name="fontStyle" value="'.StringUtils::escapeXML($part->getFontStyle()).'"/>'.
+		'<input type="hidden" name="color" value="'.StringUtils::escapeXML($part->getColor()).'"/>'.
+		'<input type="hidden" name="wordSpacing" value="'.StringUtils::escapeXML($part->getWordSpacing()).'"/>'.
+		'<input type="hidden" name="letterSpacing" value="'.StringUtils::escapeXML($part->getLetterSpacing()).'"/>'.
+		'<input type="hidden" name="textIndent" value="'.StringUtils::escapeXML($part->getTextIndent()).'"/>'.
+		'<input type="hidden" name="textTransform" value="'.StringUtils::escapeXML($part->getTextTransform()).'"/>'.
+		'<input type="hidden" name="fontVariant" value="'.StringUtils::escapeXML($part->getFontVariant()).'"/>'.
+		'<input type="hidden" name="textDecoration" value="'.StringUtils::escapeXML($part->getTextDecoration()).'"/>'.
+		'<script type="text/javascript">'.
+		'document.getElementById("PartHeaderTextarea").focus();'.
+		'document.getElementById("PartHeaderTextarea").select();'.
+		'</script>';
+	}
+	
+	function getIndex($part) {
+		// TODO Strip tags etc.
+		return $part->getText();
+	}
+	
+	function getSectionClass($part) {
+		return 'part_section_header_'.$part->getLevel();
+	}
+	
 	function buildSub($part,$context) {
 		$text = $part->getText();
 		$text = StringUtils::escapeSimpleXML($text);
