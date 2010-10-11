@@ -14,8 +14,5 @@ class PartFile extends LegacyPartController {
 		$this->id = $id;
 	}
 	
-	function sub_import(&$node) {
-	}
-	
 }
 ?>

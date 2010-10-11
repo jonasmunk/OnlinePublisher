@@ -36,7 +36,7 @@ class PartController
 		Log::debug('You must override getNewPart');
 	}
 	
-	function render($part,$context) {
+	function render($part,$context,$editor=true) {
 		global $basePath;
 		$xmlData = '<?xml version="1.0" encoding="ISO-8859-1"?>'.$this->build($part,$context);
 		
@@ -55,7 +55,7 @@ class PartController
 		'<xsl:variable name="username"></xsl:variable>'.
 		'<xsl:variable name="usertitle"></xsl:variable>'.
 		'<xsl:variable name="preview"></xsl:variable>'.
-		'<xsl:variable name="editor"></xsl:variable>'.
+		'<xsl:variable name="editor">'.($editor ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="highquality">false</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';

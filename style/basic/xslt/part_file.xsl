@@ -9,7 +9,16 @@
  >
 
 <xsl:template match="p:file">
-	<xsl:variable name="href"><xsl:value-of select="$path"/>files/<xsl:value-of select=".//f:file/f:filename"/></xsl:variable>
+	<xsl:variable name="href">
+		<xsl:choose>
+			<xsl:when test="$editor='true'">
+				<xsl:text>javascript:void(0);</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$path"/>files/<xsl:value-of select=".//f:file/f:filename"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
 	<div class="part_file common_font" id="{generate-id()}"><div><div><div>
 		<p class="part_file_title"><a href="{$href}"><span><xsl:value-of select=".//o:title"/></span></a></p>
 		<p class="part_file_info"><xsl:call-template name="p:size"/><xsl:if test="p:info/@type!=''">, <xsl:value-of select="p:info/@type"/></xsl:if><xsl:comment/></p>
