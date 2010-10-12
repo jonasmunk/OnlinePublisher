@@ -9,11 +9,12 @@ require_once '../../../../Classes/Request.php';
 require_once '../../../../Classes/Page.php';
 require_once '../../../../Classes/Log.php';
 
+$id = Request::getInt('id');
 $pageId = Request::getInt('pageId');
 $type = Request::getString('type');
 
 if ($ctrl = PartService::getController($type)) {
-	$part = $ctrl->getFromRequest();
+	$part = $ctrl->getFromRequest($id);
 	$part->save();
 
 	Page::markChanged($pageId);
