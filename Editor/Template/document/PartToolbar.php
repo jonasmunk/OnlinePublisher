@@ -30,7 +30,7 @@ $gui='
 	partToolbar.partId='.$partId.';
 	</script>
 	<tabs small="true" below="true">';
-		if (is_array($part->getToolbars())) {
+		if ($part!=null && is_array($part->getToolbars())) {
 			foreach ($part->getToolbars() as $title => $body) {
 				$gui.='<tab title="'.$title.'" background="light">
 				<toolbar>
