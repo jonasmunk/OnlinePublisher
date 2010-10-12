@@ -30,17 +30,19 @@ $gui='
 	partToolbar.partId='.$partId.';
 	</script>
 	<tabs small="true" below="true">';
-		foreach ($part->getToolbars() as $title => $body) {
-			$gui.='<tab title="'.$title.'" background="light">
-			<toolbar>
-				<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
-				<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
-				<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()">
-					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
-				</icon>
-				<divider/>'.$body.
-			'</toolbar>
-			</tab>';
+		if (is_array($part->getToolbars())) {
+			foreach ($part->getToolbars() as $title => $body) {
+				$gui.='<tab title="'.$title.'" background="light">
+				<toolbar>
+					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
+					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
+					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()">
+						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
+					</icon>
+					<divider/>'.$body.
+				'</toolbar>
+				</tab>';
+			}
 		}
 		$gui.='
 		<tab title="Afstande" background="light">
