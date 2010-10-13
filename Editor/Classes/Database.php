@@ -99,6 +99,9 @@ class Database {
 	}
 	
 	function update($sql) {
+		if (is_array($sql)) {
+			$sql = Database::buildUpdateSql($sql);
+		}
 		$con = Database::getConnection();
 		mysql_query($sql,$con);
 		return Database::_checkError($sql,$con);
@@ -112,6 +115,9 @@ class Database {
 	}
 
 	function insert($sql) {
+		if (is_array($sql)) {
+			$sql = Database::buildInsertSql($sql);
+		}
 		$con = Database::getConnection();
 		mysql_query($sql,$con);
 		$id=mysql_insert_id();
@@ -246,6 +252,50 @@ class Database {
 	 */
 	function search($text) {
 		return "'%".mysql_escape_string($text)."%'";
+	}
+	
+	function buildUpdateSql($arr) {
+		$sql = "update ".$arr['table']." set ";
+		$num = 0;
+		foreach ($arr['values'] as $column => $value) {
+			if ($num>0) {
+				$sql.=',';
+			}
+			$sql.="`".$column."`=".$value;
+			$num++;
+		}
+		$sql.=" where ";
+		$num = 0;
+		foreach ($arr['where'] as $column => $value) {
+			if ($num>0) {
+				$sql.=' and ';
+			}
+			$sql.="`".$column."`=".$value;
+		}
+		return $sql;
+	}
+	
+	function buildInsertSql($arr) {
+		$sql = "insert into ".$arr['table']." (";
+		$num = 0;
+		foreach ($arr['values'] as $column => $value) {
+			if ($num>0) {
+				$sql.=',';
+			}
+			$sql.="`".$column."`";
+			$num++;
+		}
+		$sql.=") values (";
+		$num = 0;
+		foreach ($arr['values'] as $column => $value) {
+			if ($num>0) {
+				$sql.=',';
+			}
+			$sql.=$value;
+			$num++;
+		}
+		$sql.=")";
+		return $sql;
 	}
 }
 ?>
