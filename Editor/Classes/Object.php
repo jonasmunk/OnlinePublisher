@@ -497,10 +497,12 @@ class Object {
     
     function getObjectData($id) {
     	$data = null;
-    	$sql = "select data from object where id =".$id;
-    	if ($row = Database::selectFirst($sql)) {
-    		$data = $row['data'];
-    	}
+		if ($id) {
+	    	$sql = "select data from object where id =".$id;
+	    	if ($row = Database::selectFirst($sql)) {
+	    		$data = $row['data'];
+	    	}
+		}
     	return $data;
     }
 
