@@ -405,6 +405,7 @@
 				</div>
 				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
 			</div>
+			<!--
 			<div class="poster poster_pure poster_pure_9">
 				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
 				<div class="center">
@@ -417,7 +418,6 @@
 				</div>
 				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
 			</div>
-			<!--
 			<div class="poster poster_2">
 				<div onclick="document.location='/en/solutions/';" class="left"><xsl:comment/></div>
 				<div class="center">
