@@ -23,6 +23,17 @@ class PartService {
 		return $part;
 	}
 	
+	function newInstance($type) {
+		global $basePath;
+		$class = ucfirst($type).'Part';
+		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
+		if (!file_exists($path)) {
+			return null;
+		}
+		require_once $path;
+		return new $class;
+	}
+	
 	function getController($type) {
 		global $basePath;
 		$class = ucfirst($type).'PartController';

@@ -47,5 +47,14 @@ class HtmlPartController extends PartController
 		'<![CDATA['.$part->getHtml().']]>'.
 		'</html>';
 	}
+	
+	function importSub($node,$part) {
+		if ($html = DOMUtils::getFirstDescendant($node,'html')) {
+			if ($child = $html->firstChild) {
+				$part->setHtml($child->data);
+			}
+		}
+		
+	}
 }
 ?>

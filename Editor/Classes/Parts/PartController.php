@@ -28,11 +28,31 @@ class PartController
 		return $xml;
 	}
 	
+	function importFromString($xml) {
+		if ($doc = DOMUtils::parse($xml)) {
+			return $this->importFromNode($doc->documentElement);
+		}
+		return null;
+	}
+	
+	function importFromNode($node) {
+		$part = PartService::newInstance($this->type);
+		if ($subNode = DOMUtils::getFirstDescendant($node,'sub')) {
+			if (method_exists($this,'importSub')) {
+				$this->importSub($subNode,$part);
+			}
+		} else {
+			Log::debug('The mode has no "sub" element');
+		}
+		return $part;
+	}
+	
 	function getNamespace($version='1.0') {
 		return 'http://uri.in2isoft.com/onlinepublisher/part/'.$this->type.'/'.$version.'/';
 	}
 	
 	function getNewPart() {
+		// TODO is this ever used?
 		Log::debug('You must override getNewPart');
 	}
 	

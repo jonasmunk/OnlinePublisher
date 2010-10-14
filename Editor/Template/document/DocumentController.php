@@ -163,8 +163,8 @@ class DocumentController extends TemplateController {
 		$sql = "select part.id,part.type from document_section,part where part.id=document_section.part_id and document_section.page_id=".$id;
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$part = LegacyPartController::load($row['type'],$row['id']);
-			$part->delete();
+			$part = PartService::load($row['type'],$row['id']);
+			$part->remove();
 		}
 		Database::free($result);
 

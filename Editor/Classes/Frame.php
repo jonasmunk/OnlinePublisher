@@ -12,9 +12,14 @@ class Frame {
 	var $title;
 	var $name;
 	var $hierarchyId;
+	var $changed;
 
     function Frame() {
     }
+
+	function isPersistent() {
+		return $this->id>0;
+	}
 
 	function setId($id) {
 	    $this->id = $id;
@@ -47,20 +52,50 @@ class Frame {
 	function getHierarchyId() {
 	    return $this->hierarchyId;
 	}
+	
+	function getChanged() {
+		return $this->changed;
+	}
 
 	function load($id) {
-		$sql = "select id,title,name,hierarchy_id from frame where id=".$id;
-		$result = Database::select($sql);
-		$frame = null;
-		if ($row = Database::next($result)) {
+		$sql = "select id,title,name,hierarchy_id,UNIX_TIMESTAMP(changed) as changed from frame where id=".Database::int($id);
+		if ($row = Database::selectFirst($sql)) {
 			$frame = new Frame();
 			$frame->setId($row['id']);
 			$frame->setTitle($row['title']);
 			$frame->setName($row['name']);
 			$frame->setHierarchyId($row['hierarchy_id']);
+			$frame->changed = $row['changed'];
+			return $frame;
 		}
-		Database::free($result);
-		return $frame;
+		return null;
+	}
+
+	function save() {
+		$sql = array(
+			'table' => 'frame',
+			'values' => array(
+				'title' => Database::text($this->title),
+				'name' => Database::text($this->name),
+				'hierarchy_id' => Database::int($this->hierarchyId),
+				'changed' => Database::datetime(time())
+			),
+			'where' => array( 'id' => $this->id)
+		);
+		
+		if ($this->id>0) {
+			Database::update($sql);
+		} else {
+			$this->id = Database::insert($sql);
+		}
+	}
+	
+	function remove() {
+		if ($this->id>0) {
+			$sql = "delete from frame where id=".Database::int($this->id);
+			return Database::delete($sql)>0;
+		}
+		return false;
 	}
 
 	function search() {

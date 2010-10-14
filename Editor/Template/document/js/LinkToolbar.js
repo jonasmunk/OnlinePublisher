@@ -44,7 +44,7 @@ var controller = {
 		}.bind(this)});
 	},
 	$click$delete : function() {
-		ui.request({url:'DeleteLink.php',parameters:{id:this.id},onSuccess:function() {
+		ui.request({url:'Links/DeleteLink.php',parameters:{id:this.id},onSuccess:function() {
 			this.editorFrame.reload();
 		}.bind(this)});
 	},

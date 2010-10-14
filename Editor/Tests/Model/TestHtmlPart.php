@@ -31,5 +31,20 @@ class TestHtmlPart extends UnitTestCase {
 		
 		$obj2->remove();
 	}
+
+	function testImport() {
+		$obj = new HtmlPart();
+		$obj->setHtml('<h1>Please get me back!</h1>');
+		$ctrl = new HtmlPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getHtml(),$obj->getHtml());
+	}
 }
 ?>
