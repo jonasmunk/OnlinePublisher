@@ -37,6 +37,8 @@
 .placard .poster .center
 {
 	width: 258px;
+	height: 307px;
+	padding-top: 8px;
 }
 
 .placard .poster .left
@@ -66,6 +68,11 @@
 	line-height: 14px;
 }
 
+div.lang_en div.placard div.left
+{
+	background-position: 0 -2px;
+}
+
 div.lang_da div.placard div.poster_pure div.left
 {
 	background-image: url('../../../images/pure_left_da.png');
@@ -73,47 +80,82 @@ div.lang_da div.placard div.poster_pure div.left
 
 div.lang_en div.placard div.poster_pure_1 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_1_en.png?2');
+	background-image: url('../gfx/front/v2/researchers.png');
+}
+
+div.lang_en div.placard div.poster_pure_1 div.right
+{
+	background-image: url('../gfx/front/v2/michael.jpg');
 }
 
 div.lang_en div.placard div.poster_pure_2 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_2_en.png?1');
+	background-image: url('../gfx/front/v2/primary_investigators.png');
+}
+
+div.lang_en div.placard div.poster_pure_2 div.right
+{
+	background-image: url('../gfx/front/v2/jakob.jpg');
 }
 
 div.lang_en div.placard div.poster_pure_3 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_3_en.png?1');
+	background-image: url('../gfx/front/v2/heads_of_schools.png');
+}
+
+div.lang_en div.placard div.poster_pure_3 div.right
+{
+	background-image: url('../gfx/front/v2/eskild.jpg');
 }
 
 div.lang_en div.placard div.poster_pure_4 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_4_en.png?1');
+	background-image: url('../gfx/front/v2/librarians.png');
+}
+
+div.lang_en div.placard div.poster_pure_4 div.right
+{
+	background-image: url('../gfx/front/v2/anne.jpg');
 }
 
 div.lang_en div.placard div.poster_pure_5 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_5_en.png?1');
+	background-image: url('../gfx/front/v2/bibliometricians.png');
+}
+
+div.lang_en div.placard div.poster_pure_5 div.right
+{
+	background-image: url('../gfx/front/v2/malene.jpg');
 }
 
 div.lang_en div.placard div.poster_pure_6 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_6_en.png?1');
+	background-image: url('../gfx/front/v2/research_support_offices.png');
+}
+
+div.lang_en div.placard div.poster_pure_6 div.right
+{
+	background-image: url('../gfx/front/v2/kirsten.jpg');
 }
 
 div.lang_en div.placard div.poster_pure_7 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_7_en.png?1');
+	background-image: url('../gfx/front/v2/sysadmins.png');
+}
+
+div.lang_en div.placard div.poster_pure_7 div.right
+{
+	background-image: url('../gfx/front/v2/nils.jpg');
 }
 
 div.lang_en div.placard div.poster_pure_8 div.left
 {
-	background-image: url('../gfx/front/poster/pure_left_8_en.png?1');
+	background-image: url('../gfx/front/v2/full_cerif_datamodel.png');
 }
 
-div.lang_en div.placard div.poster_pure_9 div.left
+div.lang_en div.placard div.poster_pure_8 div.right
 {
-	background-image: url('../gfx/front/poster/pure_left_9_en.png?1');
+	background-image: url('../gfx/front/v2/malene.jpg');
 }
 
 div.placard div.poster_pure div.right
