@@ -113,7 +113,8 @@ class PartController
 			'getTextIndent' => 'text-indent',
 			'getTextTransform' => 'text-transform',
 			'getFontStyle' => 'font-style',
-			'getFontVariant' => 'font-variant'
+			'getFontVariant' => 'font-variant',
+			'getListStyle' => 'list-style'
 		);
 		$xml = '<style';
 		foreach ($array as $method => $attribute) {
@@ -144,7 +145,8 @@ class PartController
 			'getTextIndent' => 'text-indent',
 			'getTextTransform' => 'text-transform',
 			'getFontStyle' => 'font-style',
-			'getFontVariant' => 'font-variant'
+			'getFontVariant' => 'font-variant',
+			'getListStyle' => 'list-style'
 		);
 		$css = '';
 		foreach ($array as $method => $attribute) {
