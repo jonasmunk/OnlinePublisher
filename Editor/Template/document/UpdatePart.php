@@ -39,6 +39,7 @@ $controller = PartService::getController($type);
 if ($controller && method_exists($controller,'getFromRequest')) {
 	$part = $controller->getFromRequest($id);
 	$part->save();
+	$controller->updateAdditional($part);
 } else {
 	// Update the part
 	$sql="select * from part where id=".$id;

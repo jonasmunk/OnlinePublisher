@@ -28,6 +28,18 @@ class PartController
 		return $xml;
 	}
 	
+	function getSingleLink($part,$sourceType=null) {
+	    $sql = "select part_link.*,page.path from part_link left join page on page.id=part_link.target_value and part_link.target_type='page' where part_id=".$part->getId();
+	    if (!is_null($sourceType)) {
+	        $sql.=" and source_type=".Database::text($sourceType); 
+	    }
+	    if ($row = Database::selectFirst($sql)) {
+	        return $row;
+	    } else {
+	        return false;
+	    }
+	}
+	
 	function importFromString($xml) {
 		if ($doc = DOMUtils::parse($xml)) {
 			return $this->importFromNode($doc->documentElement);
@@ -83,8 +95,20 @@ class PartController
 		return XslService::transform($xmlData,$xslData);
 	}
 	
+	function buildHiddenFields($items) {
+		$str = '';
+		foreach ($items as $key => $value) {
+			$str.='<input type="hidden" name="'.$key.'" value="'.StringUtils::escapeXML($value).'"/>';
+		}
+		return $str;
+	}
+	
 	function getIndex($part) {
 		return '';
+	}
+	
+	function updateAdditional($part) {
+		// Overwrite this
 	}
 	
 	// Overwrite this
