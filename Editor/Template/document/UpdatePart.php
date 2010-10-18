@@ -7,7 +7,6 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Services/PartService.php';
-require_once '../../Classes/Parts/LegacyPartController.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/Request.php';
 require_once '../../Include/XmlWebGui.php';
@@ -40,13 +39,6 @@ if ($controller && method_exists($controller,'getFromRequest')) {
 	$part = $controller->getFromRequest($id);
 	$part->save();
 	$controller->updateAdditional($part);
-} else {
-	// Update the part
-	$sql="select * from part where id=".$id;
-	if ($row = Database::selectFirst($sql)) {
-		$part = LegacyPartController::load($row['type'],$id);
-		$part -> update();
-	}
 }
 
 // Mark the page as changed

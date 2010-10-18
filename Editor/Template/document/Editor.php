@@ -217,17 +217,11 @@ function displaySection($sectionId,$type,$sectionIndex,$sectionStyle,$partId,$pa
 function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex) {
 	global $partContext;
 	$ctrl = PartService::getController($partType);
-	if ($ctrl && method_exists($ctrl,'display')) {
+	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
 		echo '<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">';
 		echo StringUtils::fromUnicode($ctrl->display($part,$partContext));
 		echo '</div>';
-	} else {
-		$part = LegacyPartController::load($partType,$partId);
-		echo 
-			'<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$part->getSectionClass().' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">'.
-			$part->display($partContext).
-			'</div>';
 	}
 }
 
@@ -241,9 +235,8 @@ function sectionEditor($sectionId,$type,$sectionStyle,$partId,$partType,$row) {
 function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	global $partContext;
 	$ctrl = PartService::getController($partType);
-	$controller = LegacyPartController::load($partType,$partId);
 	echo
-	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$controller->getSectionClass().' section_selected">'.
+	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section_selected">'.
 	'<form name="PartForm" action="UpdatePart.php" method="post">'.
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
 	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.
@@ -255,11 +248,9 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	'<input type="hidden" name="width" value="'.StringUtils::escapeXML($row['width']).'"/>'.
 	'<input type="hidden" name="float" value="'.StringUtils::escapeXML($row['float']).'"/>';
 	$part = null;
-	if ($ctrl && method_exists($ctrl,'editor')) {
+	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
 		echo $ctrl->editor($part,$partContext);
-	} else {
-		echo $controller->editor($partContext);
 	}
 	echo '</form></div>';
 	if ($ctrl && method_exists($ctrl,'editorGui')) {

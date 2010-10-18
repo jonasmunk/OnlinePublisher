@@ -36,8 +36,9 @@ class DocumentController extends TemplateController {
 		$sql = "select part.id,part.type from document_section,part where part.id=document_section.part_id and document_section.page_id=".$this->id;
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$part = LegacyPartController::load($row['type'],$row['id']);
-			$part->delete();
+			if ($part = Part::load($row['type'],$row['id'])) {
+				$part->remove();
+			}
 		}
 		Database::free($result);
 
@@ -129,7 +130,7 @@ class DocumentController extends TemplateController {
 		$dynamic=false;
 		
 		$ctrl = PartService::getController($partType);
-		if ($ctrl && method_exists($ctrl,'buildSub')) {
+		if ($ctrl) {
 			$part = PartService::load($partType,$partId);
 			$dynamic = $ctrl->isDynamic($part);
 			if ($dynamic) {
@@ -138,17 +139,6 @@ class DocumentController extends TemplateController {
 				$output = $ctrl->build($part,$context);
 			}
 			$index = $ctrl->getIndex($part);
-		} else if ($type!='part') {
-			require $basePath.'Editor/Template/document/'.ucfirst($type).'/Publish.php';
-		} else {
-			$part = LegacyPartController::load($partType,$partId);
-			if ($part->isDynamic()) {
-				$dynamic = true;
-				$output = "<!-- dynamic:part#".$partId." -->";
-			} else {
-				$output = $part->build($context);
-			}
-			$index = $part->index();
 		}
 		return array('output' => $output,'index' => $index,'dynamic' => $dynamic);
 	}
@@ -252,12 +242,9 @@ class DocumentController extends TemplateController {
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$ctrl = PartService::getController($row['type']);
-			if ($ctrl && method_exists($ctrl,'buildSub')) {
+			if ($ctrl) {
 				$part = PartService::load($row['type'],$row['part_id']);
 				$partData = $ctrl->build($part,$context);
-			} else {
-				$legacy = LegacyPartController::load($row['type'],$row['part_id']);
-				$partData = $legacy->build($context);
 			}
 			$state['data']=str_replace('<!-- dynamic:part#'.$row['part_id'].' -->', $partData, $state['data']);
 		}
