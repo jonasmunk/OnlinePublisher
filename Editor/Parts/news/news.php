@@ -13,9 +13,5 @@ class PartNews extends LegacyPartController {
 		$this->id = $id;
 	}
 	
-	function sub_isDynamic() {
-		return true;
-	}
-	
 }
 ?>
