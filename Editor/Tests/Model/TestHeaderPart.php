@@ -33,5 +33,26 @@ class TestHeaderPart extends UnitTestCase {
 		
 		$obj2->remove();
 	}
+
+	function testImport() {
+		$obj = new HeaderPart();
+		$obj->setText('Lorem [s]ipsum[s] dolor [e]sit[e] amet,\n consectetur<tag> [slet]adipisicing[slet] elit\n\nNew paragraph\n\n\nThree & new lines');
+		$obj->setColor('#eee');
+		$obj->setFontFamily('Verdana');
+		$obj->setLevel(3);
+		$ctrl = new HeaderPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getText(),$obj->getText());
+		$this->assertIdentical($imported->getColor(),$obj->getColor());
+		$this->assertIdentical($imported->getFontFamily(),$obj->getFontFamily());
+		$this->assertIdentical($imported->getLevel(),$obj->getLevel());
+	}
 }
 ?>

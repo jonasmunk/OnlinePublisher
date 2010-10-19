@@ -3,13 +3,13 @@
  * @package OnlinePublisher
  * @subpackage Templates.ImageGallery
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class ImagegalleryController extends TemplateController {
+class ImagegalleryController extends LegacyTemplateController {
     
     function ImagegalleryController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

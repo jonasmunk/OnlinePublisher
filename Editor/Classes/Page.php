@@ -216,7 +216,14 @@ class Page {
 		require_once($basePath.'Editor/Libraries/domit/xml_domit_include.php');
 		
 		$success = false;
-		if ($controller = $this->getTemplateController()) {
+		if ($controller = TemplateService::getController($this->templateUnique)) {
+			$sql = "select data from page_history where id=".$historyId;
+			if ($row = Database::selectFirst($sql)) {
+				if ($doc = DOMUtils::parse($row['data'])) {
+					$controller->import($this->id,$doc);
+				}
+			}
+		} else if ($controller = $this->getTemplateController()) {
 			$sql = "select data from page_history where id=".$historyId;
 			if ($row = Database::selectFirst($sql)) {
 				$document = new DOMIT_Document();

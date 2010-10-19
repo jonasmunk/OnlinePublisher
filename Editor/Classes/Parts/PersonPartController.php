@@ -13,6 +13,30 @@ class PersonPartController extends PartController
 		parent::PartController('person');
 	}
 	
+	function createPart() {
+		$part = new PersonPart();
+		$part->setPersonId(ObjectService::getLatestId('person'));
+		$part->setShowFirstName(true);
+		$part->setShowMiddleName(true);
+		$part->setShowLastName(true);
+		$part->setShowInitials(false);
+		$part->setShowStreetname(true);
+		$part->setShowZipcode(true);
+		$part->setShowCity(true);
+		$part->setShowCountry(true);
+		$part->setShowNickname(false);
+		$part->setShowJobTitle(true);
+		$part->setShowSex(false);
+		$part->setShowEmailJob(true);
+		$part->setShowEmailPrivate(true);
+		$part->setShowPhoneJob(true);
+		$part->setShowPhonePrivate(true);
+		$part->setShowWebAddress(true);
+		$part->setShowImage(true);
+		$part->save();
+		return $part;
+	}
+	
 	function display($part,$context) {
 		return $this->render($part,$context);
 	}
@@ -64,7 +88,7 @@ class PersonPartController extends PartController
 		'<input type="hidden" name="show_image" value="'.$this->_intToBool($part->getShowImage()).'"/>'.
 		'<input type="hidden" name="personId" value="'.$part->getPersonId().'"/>'.
 		'<div align="'.$part->getAlign().'">'.
-		'<div id="part_person_container">'.$this->render($part,$context).'</div>'.
+		'<div id="part_person_container">'.StringUtils::fromUnicode($this->render($part,$context)).'</div>'.
 		'</div>'.
 		'<script src="'.$baseUrl.'Editor/Parts/person/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
@@ -102,6 +126,36 @@ class PersonPartController extends PartController
 		}
 		$data.='</person>';
 		return $data;
+	}
+	
+	function importSub($node,$part) {
+		if ($object = DOMUtils::getFirstDescendant($node,'object')) {
+			if ($id = intval($object->getAttribute('id'))) {
+				$part->setPersonId($id);
+			}
+		}
+		if ($display = DOMUtils::getFirstDescendant($node,'display')) {
+			$part->setShowFirstName($display->getAttribute('firstname')=='true');
+			$part->setShowMiddleName($display->getAttribute('middlename')=='true');
+			$part->setShowLastName($display->getAttribute('surname')=='true');
+			$part->setShowInitials($display->getAttribute('initials')=='true');
+			$part->setShowStreetname($display->getAttribute('streetname')=='true');
+			$part->setShowZipcode($display->getAttribute('zipcode')=='true');
+			$part->setShowCity($display->getAttribute('city')=='true');
+			$part->setShowCountry($display->getAttribute('country')=='true');
+			$part->setShowNickname($display->getAttribute('nickname')=='true');
+			$part->setShowJobTitle($display->getAttribute('jobtitle')=='true');
+			$part->setShowSex($display->getAttribute('sex')=='true');
+			$part->setShowEmailJob($display->getAttribute('email_job')=='true');
+			$part->setShowEmailPrivate($display->getAttribute('email_private')=='true');
+			$part->setShowPhoneJob($display->getAttribute('phone_job')=='true');
+			$part->setShowPhonePrivate($display->getAttribute('phone_private')=='true');
+			$part->setShowWebAddress($display->getAttribute('webaddress')=='true');
+			$part->setShowImage($display->getAttribute('image')=='true');
+		}
+		if ($style = DOMUtils::getFirstDescendant($node,'style')) {
+			$part->setAlign($style->getAttribute('align'));
+		}
 	}
 	
 	function getToolbars() {

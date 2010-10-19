@@ -1,7 +1,7 @@
 <?
 require_once($basePath.'Editor/Classes/Services/XslService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
@@ -189,7 +189,7 @@ class RenderingService {
 	function applyContentDynamism($id,$template,&$data) {
 		global $basePath,$baseUrl;
 		$state = array('data' => $data,'redirect' => false,'override' => false);
-		$controller = TemplateController::getController($template,$id);
+		$controller = LegacyTemplateController::getController($template,$id);
 		if (method_exists($controller,'dynamic')) {
 			$controller->dynamic($state);
 		}
@@ -217,7 +217,7 @@ class RenderingService {
 	
 		if ($row = Database::selectFirst($sql)) {
 			if (Request::getBoolean('ajax')) {
-				$ctrl = TemplateController::getController($row['template'],$id);
+				$ctrl = LegacyTemplateController::getController($row['template'],$id);
 				$ctrl->ajax();
 				exit;
 			}

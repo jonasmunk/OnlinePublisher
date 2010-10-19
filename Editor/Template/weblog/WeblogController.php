@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Weblog
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once $basePath.'Editor/Classes/Weblogentry.php';
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Page.php');
@@ -11,10 +11,10 @@ require_once($basePath.'Editor/Classes/Pageblueprint.php');
 require_once($basePath.'Editor/Classes/Webloggroup.php');
 require_once($basePath.'Editor/Classes/In2iGui.php');
 
-class WeblogController extends TemplateController {
+class WeblogController extends LegacyTemplateController {
     
     function WeblogController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

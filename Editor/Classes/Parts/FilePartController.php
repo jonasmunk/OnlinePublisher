@@ -26,7 +26,7 @@ class FilePartController extends PartController
 	
 	function editor($part,$context) {
 		global $baseUrl;
-		return '<div id="part_file_container">'.$this->render($part,$context).'</div>'.
+		return '<div id="part_file_container">'.StringUtils::fromUnicode($this->render($part,$context)).'</div>'.
 		'<input type="hidden" name="fileId" value="'.$part->getFileId().'"/>'.
 		'<script src="'.$baseUrl.'Editor/Parts/file/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
@@ -47,6 +47,14 @@ class FilePartController extends PartController
 		}
 		$xml.='</file>';
 		return $xml;
+	}
+	
+	function importSub($node,$part) {
+		if ($object = DOMUtils::getFirstDescendant($node,'object')) {
+			if ($id = intval($object->getAttribute('id'))) {
+				$part->setFileId($id);
+			}
+		}
 	}
 }
 ?>

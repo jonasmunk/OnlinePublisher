@@ -3,13 +3,13 @@
  * @package OnlinePublisher
  * @subpackage Templates.Search
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class QuicktimeplayerController extends TemplateController {
+class QuicktimeplayerController extends LegacyTemplateController {
     
     function QuicktimeplayerController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

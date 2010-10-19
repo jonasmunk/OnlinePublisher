@@ -6,7 +6,7 @@
 
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 
 class PublishingService {
 	
@@ -19,7 +19,7 @@ class PublishingService {
 		$index='';
 		$sql="select template.unique from page,template where page.template_id=template.id and page.id=".$id;
 		if ($row = Database::selectFirst($sql)) {
-		    if ($controller = TemplateController::getController($row['unique'],$id)) {
+		    if ($controller = LegacyTemplateController::getController($row['unique'],$id)) {
 		        $result = $controller->build();
 		        $data = $result['data'];
 		        $index = $result['index'];

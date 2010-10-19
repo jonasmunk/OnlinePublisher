@@ -31,5 +31,25 @@ class TestFilePart extends UnitTestCase {
 		
 		$obj2->remove();
 	}
+
+	function testImport() {
+		$obj = new FilePart();
+		$latest = FileService::getLatestFileId();
+		if ($latest==null) {
+			Log::debug('This test can only run with at least one file present');
+			return;
+		}
+		$obj->setFileId($latest);
+		$ctrl = new FilePartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getFileId(),$obj->getFileId());
+	}
 }
 ?>

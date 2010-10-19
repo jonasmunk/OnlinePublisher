@@ -77,7 +77,7 @@ class ImagePartController extends PartController
 			'scaleheight' => $part->getScaleHeight()>0 ? $part->getScaleHeight() : '',
 			'text' => $part->getText()
 		)).
-		'<div id="part_image_container">'.$this->render($part,$context).'</div>'.
+		'<div id="part_image_container">'.StringUtils::fromUnicode($this->render($part,$context)).'</div>'.
 		'<script src="'.$baseUrl.'Editor/Parts/image/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
@@ -149,6 +149,7 @@ class ImagePartController extends PartController
 		if ($part->getGreyscale() || $part->getScaleMethod()) {
 			$dims = $this->calculateComputedDimensions($part,$image);
 			$tag.='<transform display-width="'.$dims['width'].'" display-height="'.$dims['height'].'"';
+			$tag.=' scale-method="'.$part->getScaleMethod().'" scale-width="'.$part->getScaleWidth().'" scale-height="'.$part->getScaleHeight().'"';
 			if ($part->getGreyscale()) {
 				$tag.=' greyscale="true"';
 			}
@@ -221,6 +222,31 @@ class ImagePartController extends PartController
 			}
 		}
 		return array('width' => $width, 'height' => $height);
+	}
+	
+	function importSub($node,$part) {
+		$image = $object = DOMUtils::getFirstDescendant($node,'image');
+		if (!$image) {
+			return;
+		}
+		if ($object = DOMUtils::getFirstDescendant($node,'object')) {
+			if ($imageId = intval($object->getAttribute('id'))) {
+				$part->setImageId($imageId);
+			}
+		}
+		if ($transform = DOMUtils::getFirstDescendant($node,'transform')) {
+			$part->setGreyscale($transform->getAttribute('greyscale')==='true');
+			$part->setScaleMethod($transform->getAttribute('scale-method'));
+			$part->setScaleWidth(intval($transform->getAttribute('scale-width')));
+			$part->setScaleHeight(intval($transform->getAttribute('scale-height')));
+			$part->setScalePercent(intval($transform->getAttribute('scale-percent')));
+		}
+		if ($transform = DOMUtils::getFirstDescendant($node,'style')) {
+			$part->setAlign($transform->getAttribute('align'));
+		}
+		if ($text = DOMUtils::getFirstChildElement($image,'text')) {
+			$part->setText(DOMUtils::getText($text));
+		}
 	}
 	
 	function getToolbars() {

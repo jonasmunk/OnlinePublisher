@@ -3,13 +3,13 @@
  * @package OnlinePublisher
  * @subpackage Templates.Authentication
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
 
-class AuthenticationController extends TemplateController {
+class AuthenticationController extends LegacyTemplateController {
     
     function AuthenticationController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

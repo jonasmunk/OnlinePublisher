@@ -24,6 +24,33 @@ class DOMUtils {
 		}
 	}
 	
+	function getChildElements($node,$name=null) {
+		$result = array();
+		for ($i=0; $i < $node->childNodes->length; $i++) { 
+			$child = $node->childNodes->item($i);
+			if ($child->nodeType == XML_ELEMENT_NODE) {
+ 				if ($name!=null && $child->nodeName!=$name) {
+					continue;
+				}
+				$result[] = $child;
+			}
+		}
+		return $result;
+	}
+	
+	function getFirstChildElement($node,$name=null) {
+		for ($i=0; $i < $node->childNodes->length; $i++) { 
+			$child = $node->childNodes->item($i);
+			if ($child->nodeType == XML_ELEMENT_NODE) {
+ 				if ($name!=null && $child->nodeName!=$name) {
+					continue;
+				}
+				return $child;
+			}
+		}
+		return null;
+	}
+	
 	function getText($node) {
 		return $node->textContent;
 	}
@@ -33,12 +60,20 @@ class DOMUtils {
 	}
 	
 	function getInnerXML($node) {
-		Log::debug($node->childNodes->length);
 		$doc = DOMUtils::parse('<xml></xml>');
 		for ($i=0; $i < $node->childNodes->length; $i++) { 
 			$clone = $doc->importNode($node->childNodes->item($i),true);
 			$doc->documentElement->appendChild($clone);
 		}
+		$xml = $doc->saveXML();
+		
+		return substr($xml, 27, -7);
+	}
+	
+	function getXML($node) {
+		$doc = DOMUtils::parse('<xml></xml>');
+		$clone = $doc->importNode($node,true);
+		$doc->documentElement->appendChild($clone);
 		$xml = $doc->saveXML();
 		
 		return substr($xml, 27, -7);

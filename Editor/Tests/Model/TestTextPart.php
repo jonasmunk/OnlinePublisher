@@ -50,5 +50,24 @@ class TestTextPart extends UnitTestCase {
 			'</part>';
 		$this->assertEqual($xml,$expected);
 	}
+
+	function testImport() {
+		$obj = new TextPart();
+		$obj->setText('Lorem [s]ipsum[s] dolor [e]sit[e] amet,\n consectetur<tag> [slet]adipisicing[slet] elit\n\nNew paragraph\n\n\nThree & new lines');
+		$obj->setColor('#eee');
+		$obj->setFontFamily('Verdana');
+		$ctrl = new TextPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getText(),$obj->getText());
+		$this->assertIdentical($imported->getColor(),$obj->getColor());
+		$this->assertIdentical($imported->getFontFamily(),$obj->getFontFamily());
+	}
 }
 ?>

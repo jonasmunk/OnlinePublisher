@@ -3,15 +3,15 @@
  * @package OnlinePublisher
  * @subpackage Templates.Newseditor
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once $basePath.'Editor/Classes/News.php';
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
 
-class NewseditorController extends TemplateController {
+class NewseditorController extends LegacyTemplateController {
     
     function NewseditorController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

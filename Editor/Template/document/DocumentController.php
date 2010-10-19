@@ -3,17 +3,17 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once $basePath.'Editor/Classes/PartContext.php';
 require_once $basePath.'Editor/Classes/Parts/LegacyPartController.php';
 require_once $basePath.'Editor/Classes/Services/PartService.php';
 require_once $basePath.'Editor/Template/document/Functions.php';
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class DocumentController extends TemplateController {
+class DocumentController extends LegacyTemplateController {
     
     function DocumentController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

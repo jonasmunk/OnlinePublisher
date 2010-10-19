@@ -11,12 +11,33 @@ require_once($basePath.'Editor/Classes/PartContext.php');
 class PartController
 {
 	var $type;
+	static $methodToAttribute = array(
+		'getColor' => 'color',
+		'getFontFamily' => 'font-family',
+		'getFontSize' => 'font-size',
+		'getFontWeight' => 'font-weight',
+		'getFontStyle' => 'font-style',
+		'getFontVariant' => 'font-variant',
+		'getLineHeight' => 'line-height',
+		'getTextAlign' => 'text-align',
+		'getWordSpacing' => 'word-spacing',
+		'getLetterSpacing' => 'letter-spacing',
+		'getTextDecoration' => 'text-decoration',
+		'getTextIndent' => 'text-indent',
+		'getTextTransform' => 'text-transform',
+		'getFontStyle' => 'font-style',
+		'getFontVariant' => 'font-variant',
+		'getListStyle' => 'list-style'
+	);
 	
 	function PartController($type) {
 		$this->type = $type;
 	}
 	
 	function build($part,$context) {
+		if (!$part) {
+			return '';
+		}
 		$xml = '<part xmlns="http://uri.in2isoft.com/onlinepublisher/part/1.0/" type="'.$part->getType().'" id="'.$part->getId().'">'.
 		'<sub>';
 		if (method_exists($this,'buildSub')) {
@@ -29,7 +50,7 @@ class PartController
 	}
 	
 	function getSingleLink($part,$sourceType=null) {
-	    $sql = "select part_link.*,page.path from part_link left join page on page.id=part_link.target_value and part_link.target_type='page' where part_id=".$part->getId();
+	    $sql = "select part_link.*,page.path from part_link left join page on page.id=part_link.target_value and part_link.target_type='page' where part_id=".Database::int($part->getId());
 	    if (!is_null($sourceType)) {
 	        $sql.=" and source_type=".Database::text($sourceType); 
 	    }
@@ -54,7 +75,7 @@ class PartController
 				$this->importSub($subNode,$part);
 			}
 		} else {
-			Log::debug('The mode has no "sub" element');
+			Log::debug('The node has no "sub" element');
 		}
 		return $part;
 	}
@@ -91,7 +112,6 @@ class PartController
 		'<xsl:variable name="highquality">false</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-		
 		return XslService::transform($xmlData,$xslData);
 	}
 	
@@ -121,27 +141,25 @@ class PartController
 		return false;
 	}
 	
+	function parseXMLStyle($part,$node) {
+		if (!$node)	{
+			return;
+		}
+		foreach (PartController::$methodToAttribute as $method => $attribute) {
+			if (method_exists($part,$method)) {
+				$value = $node->getAttribute($attribute);
+				if (StringUtils::isNotBlank($value)) {
+					$method = str_replace('get','set',$method);
+					$part->$method($value);
+				}
+			}
+		}
+	}
+	
 	function buildXMLStyle($part) {
-		$array = array(
-			'getColor' => 'color',
-			'getFontFamily' => 'font-family',
-			'getFontSize' => 'font-size',
-			'getFontWeight' => 'font-weight',
-			'getFontStyle' => 'font-style',
-			'getFontVariant' => 'font-variant',
-			'getLineHeight' => 'line-height',
-			'getTextAlign' => 'text-align',
-			'getWordSpacing' => 'word-spacing',
-			'getLetterSpacing' => 'letter-spacing',
-			'getTextDecoration' => 'text-decoration',
-			'getTextIndent' => 'text-indent',
-			'getTextTransform' => 'text-transform',
-			'getFontStyle' => 'font-style',
-			'getFontVariant' => 'font-variant',
-			'getListStyle' => 'list-style'
-		);
+		
 		$xml = '<style';
-		foreach ($array as $method => $attribute) {
+		foreach (PartController::$methodToAttribute as $method => $attribute) {
 			if (method_exists($part,$method)) {
 				$value = $part->$method();
 				if (StringUtils::isNotBlank($value)) {
@@ -154,26 +172,8 @@ class PartController
 	}
 	
 	function buildCSSStyle($part) {
-		$array = array(
-			'getColor' => 'color',
-			'getFontFamily' => 'font-family',
-			'getFontSize' => 'font-size',
-			'getFontWeight' => 'font-weight',
-			'getFontStyle' => 'font-style',
-			'getFontVariant' => 'font-variant',
-			'getLineHeight' => 'line-height',
-			'getTextAlign' => 'text-align',
-			'getWordSpacing' => 'word-spacing',
-			'getLetterSpacing' => 'letter-spacing',
-			'getTextDecoration' => 'text-decoration',
-			'getTextIndent' => 'text-indent',
-			'getTextTransform' => 'text-transform',
-			'getFontStyle' => 'font-style',
-			'getFontVariant' => 'font-variant',
-			'getListStyle' => 'list-style'
-		);
 		$css = '';
-		foreach ($array as $method => $attribute) {
+		foreach (PartController::$methodToAttribute as $method => $attribute) {
 			if (method_exists($part,$method)) {
 				$value = $part->$method();
 				if (StringUtils::isNotBlank($value)) {

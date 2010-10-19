@@ -1,5 +1,5 @@
 <?
-class TemplateController {
+class LegacyTemplateController {
 	
 	var $id;
 	
@@ -7,7 +7,7 @@ class TemplateController {
 	 * Should be overridden
 	 * @protected
 	 */
-    function TemplateController($id) {
+    function LegacyTemplateController($id) {
 		$this->id = $id;
     }
     

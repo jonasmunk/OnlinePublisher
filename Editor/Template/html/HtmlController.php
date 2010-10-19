@@ -3,12 +3,12 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 
-class HtmlController extends TemplateController {
+class HtmlController extends LegacyTemplateController {
     
     function HtmlController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

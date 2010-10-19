@@ -29,5 +29,15 @@ class TestPersonPart extends UnitTestCase {
 		
 		$obj2->remove();
 	}
+	
+
+	function testDisplay() {
+		$obj = new PersonPart();
+		$obj->setPersonId(ObjectService::getLatestId('person'));
+		$ctrl = new PersonPartController();
+		
+		$html = $ctrl->display($obj,new PartContext());
+		$this->assertNotNull($html);
+	}
 }
 ?>

@@ -46,7 +46,7 @@ while ($row = Database::next($result)) {
 	'<text>'.encodeXML($row['title']).'</text></cell>'.
 	'<cell><text>'.encodeXML($row['message']).'</text><icon icon="Basic/Edit" link="EditHistory.php?id='.$row['id'].'"/></cell>'.
 	'<cell>'.
-	'<button title="Gendan" link="Reconstruct.php?id='.$row['id'].'"/>'.
+	'<button title="Gendan" link="Reconstruct.php?id='.$row['id'].'" target="Desktop"/>'.
 	'<button title="Vis" link="Viewer.php?id='.$row['id'].'"/>'.
 	'</cell>'.
 	'</row>';

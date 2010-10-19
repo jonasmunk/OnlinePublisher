@@ -96,6 +96,29 @@ class TextPartController extends PartController
 		return $xml;
 	}
 	
+	function importSub($node,$part) {
+		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.DOMUtils::getInnerXML($node);
+		$xsl = '<?xml version="1.0" encoding="ISO-8859-1"?>
+		<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		 xmlns:t="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/" exclude-result-prefixes="t">
+		<xsl:output method="text" encoding="ISO-8859-1"/>
+
+		<xsl:template match="t:text"><xsl:apply-templates/></xsl:template>
+		<xsl:template match="t:break"><xsl:text>'."\n".'</xsl:text></xsl:template>
+		<xsl:template match="t:strong">[s]<xsl:apply-templates/>[s]</xsl:template>
+		<xsl:template match="t:em">[e]<xsl:apply-templates/>[e]</xsl:template>
+		<xsl:template match="t:del">[slet]<xsl:apply-templates/>[slet]</xsl:template>
+		<xsl:template match="t:link"><xsl:apply-templates/></xsl:template>
+
+		</xsl:stylesheet>';
+		
+		$text = XslService::transform($xml,$xsl);
+		
+		$this->parseXMLStyle($part,DOMUtils::getFirstDescendant($node,'style'));
+		
+		$part->setText($text);
+	}
+	
 	
 	function getToolbars() {
 		return array(

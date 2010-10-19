@@ -1,6 +1,6 @@
 <?
 require_once($basePath.'Editor/Classes/Page.php');
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 
 class PageService {
 	
@@ -11,7 +11,7 @@ class PageService {
 	
 	function getPagePreview($id,$template) {
 		$data = '';
-	    if ($controller = TemplateController::getController($template,$id)) {
+	    if ($controller = LegacyTemplateController::getController($template,$id)) {
 	        $result = $controller->build($id);
 	        $data = $result['data'];
 	    }

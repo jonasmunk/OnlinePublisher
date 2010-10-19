@@ -3,13 +3,13 @@
  * @package OnlinePublisher
  * @subpackage Templates.Sitemap
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class SitemapController extends TemplateController {
+class SitemapController extends LegacyTemplateController {
     
     function SitemapController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

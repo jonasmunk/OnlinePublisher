@@ -52,4 +52,28 @@ class TestDOMUtils extends UnitTestCase {
 		$this->assertEqual(DOMUtils::getInnerXML($doc->documentElement),'<h1>title</h1><p>text</p>');
 		$this->assertEqual(DOMUtils::stripNamespaces('<h1 xmlns="http://uri.in2isoft.com/onlinepublisher/part/richtext/1.0/"><span xmlns="http://ns2.dk/">Please get me back!</span></h1>'),'<h1><span>Please get me back!</span></h1>');
 	}
+	
+	function testChildren() {
+		
+		$doc = DOMUtils::parse("
+			<people>
+				<person>
+					<name initials='jbm'><first>Jonas</first><last>Munk</last></name>
+				</person>
+				<dog>
+					<name>Pluto</name>
+				</dog>
+				<person>
+					<name>Michael Laudrup</name>
+				</person>
+				<![CDATA[hephey]]>
+			</people>
+		");
+		$people = $doc->documentElement;
+		$this->assertEqual(DOMUtils::getFirstChildElement($people)->tagName,'person');
+		$this->assertEqual(DOMUtils::getFirstChildElement($people,'dog')->tagName,'dog');
+		$this->assertEqual(count(DOMUtils::getChildElements($people,'person')),2);
+		$this->assertEqual(count(DOMUtils::getChildElements($people)),3);
+		
+	}
 }

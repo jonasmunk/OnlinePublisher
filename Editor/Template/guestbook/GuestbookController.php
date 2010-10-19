@@ -3,14 +3,14 @@
  * @package OnlinePublisher
  * @subpackage Templates.GuestBook
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Services/RenderingService.php');
 
-class GuestbookController extends TemplateController {
+class GuestbookController extends LegacyTemplateController {
     
     function GuestbookController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

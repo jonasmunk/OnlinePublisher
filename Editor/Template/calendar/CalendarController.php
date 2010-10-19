@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/DateUtil.php');
 require_once($basePath.'Editor/Classes/EventUtil.php');
 require_once($basePath.'Editor/Classes/UserInterface.php');
@@ -12,10 +12,10 @@ require_once($basePath.'Editor/Classes/Event.php');
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/XmlUtils.php');
 
-class CalendarController extends TemplateController {
+class CalendarController extends LegacyTemplateController {
     
     function CalendarController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

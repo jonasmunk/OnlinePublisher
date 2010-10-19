@@ -226,7 +226,6 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 }
 
 function sectionEditor($sectionId,$type,$sectionStyle,$partId,$partType,$row) {
-	global $baseUrl, $design;
 	if ($type=='part') {
 		partEditor($partId,$partType,$sectionId,$sectionStyle,$row);
 	}
@@ -235,6 +234,13 @@ function sectionEditor($sectionId,$type,$sectionStyle,$partId,$partType,$row) {
 function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	global $partContext;
 	$ctrl = PartService::getController($partType);
+	if (!$ctrl) {
+		return;
+	}
+	$part = PartService::load($partType,$partId);
+	if (!$part) {
+		return;
+	}
 	echo
 	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section_selected">'.
 	'<form name="PartForm" action="UpdatePart.php" method="post">'.
@@ -247,11 +253,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	'<input type="hidden" name="top" value="'.StringUtils::escapeXML($row['top']).'"/>'.
 	'<input type="hidden" name="width" value="'.StringUtils::escapeXML($row['width']).'"/>'.
 	'<input type="hidden" name="float" value="'.StringUtils::escapeXML($row['float']).'"/>';
-	$part = null;
-	if ($ctrl) {
-		$part = PartService::load($partType,$partId);
-		echo $ctrl->editor($part,$partContext);
-	}
+	echo $ctrl->editor($part,$partContext);
 	echo '</form></div>';
 	if ($ctrl && method_exists($ctrl,'editorGui')) {
 		echo $ctrl->editorGui($part,$partContext);

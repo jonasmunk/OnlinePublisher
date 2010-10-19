@@ -3,14 +3,14 @@
  * @package OnlinePublisher
  * @subpackage Templates.Search
  */
-require_once($basePath.'Editor/Classes/TemplateController.php');
+require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/Product.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class ProductlistingController extends TemplateController {
+class ProductlistingController extends LegacyTemplateController {
     
     function ProductlistingController($id) {
-        parent::TemplateController($id);
+        parent::LegacyTemplateController($id);
     }
 
 	function create($page) {

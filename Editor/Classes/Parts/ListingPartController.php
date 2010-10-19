@@ -45,7 +45,6 @@ class ListingPartController extends PartController
 		}
 		$data.='</list>';
 		$data.='</listing>';
-		Log::debug($data);
 		return $data;
 	}
 
@@ -57,12 +56,13 @@ class ListingPartController extends PartController
 	}
 
 	function _parse($list) {
-		$list="\r\n".$list;
-		$items = preg_split("/\r\n\*/",$list);
+		$list = str_replace("\r\n","\n",$list);
+		$list="\n".$list;
+		$items = preg_split("/\n\*/",$list);
 		$parsed = array();
 		for ($i=1;$i<count($items);$i++) {
 			$item=$items[$i];
-			$lines=preg_split("/\r\n/",$item);
+			$lines=preg_split("/\n/",$item);
 			$parsed[]=$lines;
 		}
 		return $parsed;
@@ -117,6 +117,51 @@ class ListingPartController extends PartController
 		'document.getElementById("PartListingTextarea").focus();'.
 		'document.getElementById("PartListingTextarea").select();'.
 		'</script>';
+	}
+	
+	function importSub($node,$part) {
+		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.DOMUtils::getInnerXML($node);
+		$xsl = '<?xml version="1.0" encoding="ISO-8859-1"?>
+		<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		 xmlns:t="http://uri.in2isoft.com/onlinepublisher/part/listing/1.0/" exclude-result-prefixes="t">
+		<xsl:output method="text" encoding="ISO-8859-1"/>
+
+		<xsl:template match="t:listing"><xsl:apply-templates/></xsl:template>
+		<xsl:template match="t:break"><xsl:text>'."\n".'</xsl:text></xsl:template>
+		<xsl:template match="t:strong">[s]<xsl:apply-templates/>[s]</xsl:template>
+		<xsl:template match="t:em">[e]<xsl:apply-templates/>[e]</xsl:template>
+		<xsl:template match="t:del">[slet]<xsl:apply-templates/>[slet]</xsl:template>
+		<xsl:template match="t:link"><xsl:apply-templates/></xsl:template>
+		<xsl:template match="t:item"><xsl:if test="position()>1">'."<xsl:text>\n</xsl:text>".'</xsl:if>*<xsl:apply-templates/></xsl:template>
+
+		</xsl:stylesheet>';
+		$text = XslService::transform($xml,$xsl);
+		$text = str_replace("\n","\r\n",$text);
+		
+		$types = array(
+			'disc' => 'disc',
+			'square' => 'square',
+			'circle' => 'circle',
+			'decimal' => 'decimal',
+			'lower-alpha' => 'lower-alpha',
+			'upper-alpha' => 'upper-alpha',
+			'lower-roman' => 'lower-roman',
+			'upper-roman' => 'upper-roman',
+			'1' => 'decimal',
+			'a' => 'lower-alpha',
+			'A' => 'upper-alpha',
+			'i' => 'lower-roman',
+			'I' => 'upper-roman'
+		);
+		if ($listing = DOMUtils::getFirstChildElement($node,'listing')) {
+			$type = $types[$listing->getAttribute('type')];
+		}
+		if (!$type) {
+			$type='disc';
+		}
+		$this->parseXMLStyle($part,DOMUtils::getFirstDescendant($node,'style'));
+		$part->setListStyle($type);
+		$part->setText($text);
 	}
 	
 	function getToolbars() {
