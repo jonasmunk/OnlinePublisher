@@ -12,13 +12,5 @@ class PartPerson extends LegacyPartController {
 		$this->id = $id;
 	}
 	
-	function sub_import(&$node) {
-		$object =& $node->selectNodes('object',1);
-		$sql = "update part_person set".
-		" person_id=".Database::int($object->getAttribute('id')).
-		" where part_id=".$this->id;
-		Database::update($sql);
-	}
-	
 }
 ?>

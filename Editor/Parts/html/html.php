@@ -12,13 +12,5 @@ class PartHtml extends LegacyPartController {
 		$this->id = $id;
 	}
 	
-	function sub_import(&$node) {
-		$html = $node->getText();
-		if ($part = HtmlPart::load($this->id)) {
-			$part->setHtml($html);
-			$part->save();
-		}
-	}
-	
 }
 ?>

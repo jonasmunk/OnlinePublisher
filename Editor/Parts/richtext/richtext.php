@@ -11,18 +11,6 @@ class PartRichtext extends LegacyPartController {
 		parent::LegacyPartController('richtext');
 		$this->id = $id;
 	}
-
-	function sub_import(&$node) {
-		$html = '';
-		$c =& $node->childNodes;
-		for ($i=0;$i<$node->childCount;$i++) {
-			$html.=$c[$i]->toString();
-		}
-		$sql = "update part_richtext set".
-		" html=".Database::text($html).
-		" where part_id=".$this->id;
-		Database::update($sql);
-	}
 	
 }
 ?>
