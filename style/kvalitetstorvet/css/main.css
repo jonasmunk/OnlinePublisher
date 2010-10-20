@@ -29,11 +29,18 @@ div.layout_top strong
 div.layout_bottom
 {
 	text-align: center;
-	border-top: 1px solid #eee;
-	color: #26354A;
-	height: 16px;
-	line-height: 16px;
-	font-size: 12px;
+	height: 100px;
+	padding-top: 20px;
+}
+
+div.layout_bottom a.layout_designed
+{
+	background: url('../gfx/designed.png');
+	display: inline-block;
+	width: 149px;
+	height: 47px;
+	color: rgba(0,0,0,0);
+	font-size: 0;
 }
 
 div.layout_centered
@@ -130,4 +137,5 @@ ul.layout_navigation a
 div.layout_content
 {
 	padding: 20px 0;
+	overflow: hidden;
 }
