@@ -20,6 +20,12 @@
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
+	<link href='http://fonts.googleapis.com/css?family=Nobile:regular,bold|Reenie+Beanie&amp;subset=latin' rel='stylesheet' type='text/css'/>
+	<!--
+	<link href='http://fonts.googleapis.com/css?family=Molengo&amp;subset=latin' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Neucha&amp;subset=latin' rel='stylesheet' type='text/css'/>
+	-->
+
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.php"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
@@ -36,23 +42,33 @@
 <body>
 	<div class="layout">
 		<div class="layout_top">
-			<xsl:comment/>
+			<div class="layout_centered">
+				<strong>Kvalitetstorvet</strong>
+				<ul class="layout_navigation">
+					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
+				</ul>
+			</div>
 		</div>
-		<div class="layout_navigation">
-			<xsl:call-template name="util:languages"/>
-			<ul class="layout_navigation">
-				<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
-			</ul>
+		<div class="layout_header">
+			<div class="layout_centered">
+				<strong>Hver onsdag og lørdag i Ågade, Aalborg</strong>
+			</div>
 		</div>
-		<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
-			<div class="layout_front"><xsl:comment/></div>
-		</xsl:if>
-		<xsl:apply-templates select="p:content"/>
+		<div class="layout_middle layout_centered">
+			<div class="layout_navigation">
+				<xsl:call-template name="util:languages"/>
+				
+			</div>
+			<!--xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
+				<div class="layout_front"><xsl:comment/></div>
+			</xsl:if-->
+			<xsl:apply-templates select="p:content"/>
+		</div>
 		<div class="layout_bottom">
-			Fynbogaard · Bjerrevej 318 · Bjerre · 8783 Hornsyld · Mobil 26 14 87 36
+			Bla bla bla.
 		</div>
 	</div>
-	<!--xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-8'"/></xsl:call-template-->
+	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-10'"/></xsl:call-template>
 </body>
 </html>
 </xsl:template>

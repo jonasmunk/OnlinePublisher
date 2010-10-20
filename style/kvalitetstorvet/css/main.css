@@ -1,40 +1,64 @@
 body
 {
-	background: url('../gfx/background.jpg');
 	margin: 0;
 	padding: 0;
 	font-family: Arial,Helvetica,Verdana,sans-serif;
 }
 
-div.layout
-{
-	width: 800px;
-	margin: 0 auto;
-	background: #fff;
-	border: 5px solid #fff;
-}
-
 div.layout_top
 {
-	background: url('../gfx/top.jpg');
-	height: 84px;
+	/*'Neucha','*/
+	font-family: 'Nobile',Arial,Helvetica,sans-serif;
+	background: #87c221 url('../gfx/top.png') left top repeat-x;
+	height: 39px;
+}
+
+div.layout_top strong
+{
+	font-size: 20px;
+	letter-spacing: 1px;
+	color: #fff;
+	background: url('../gfx/top.png') left -39px no-repeat;
+	padding-left: 40px;
+	position: absolute;
+	height: 39px;
+	font-weight: bold;
+	line-height: 37px;
 }
 
 div.layout_bottom
 {
 	text-align: center;
-	border-top: 6px solid #9E3B24;
+	border-top: 1px solid #eee;
 	color: #26354A;
 	height: 16px;
 	line-height: 16px;
 	font-size: 12px;
 }
 
-div.layout_front
+div.layout_centered
 {
-	background: url('../gfx/front.jpg');
-	height: 221px;
-	margin: 3px 0;
+	width: 960px;
+	margin: 0 auto;
+}
+
+div.layout_header
+{
+	height: 175px;
+	background: url('../gfx/header.jpg') center top;
+}
+
+div.layout_header strong
+{
+	background: url('../gfx/header.png');
+	width: 541px;
+	height: 108px;
+	position: absolute;
+	left: 50%;
+	margin-left: -480px;
+	margin-top: 30px;
+	font-size: 0;
+	color: rgba(0,0,0,0);
 }
 
 /****************** Laguages ******************/
@@ -76,36 +100,34 @@ div.layout_navigation
 
 ul.layout_navigation
 {
+	float: right;
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border-bottom: 6px solid #9E3B24;
-	height: 22px;
+	height: 39px;
 }
 
 ul.layout_navigation li
 {
-	height: 20px;
+	height: 39px;
 	float: left;
-	font-size: 10px;
-	line-height: 20px;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 ul.layout_navigation a
 {
-	padding: 0 20px;
-	color: #333;
+	padding: 0 10px;
+	color: #fff;
 	text-decoration: none;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	border-right: 1px solid #F60;
 	height: 14px;
-	line-height: 14px;
+	line-height: 37px;
+	height: 39px;
 	display: inline-block;
 	vertical-align: middle;
 }
 
 div.layout_content
 {
-	padding: 20px;
+	padding: 20px 0;
 }
