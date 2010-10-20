@@ -4,7 +4,7 @@
  * @subpackage Tests.General
  */
 
-class TestFeedback extends UnitTestCase {
+class TestDatabase extends UnitTestCase {
 	
 	function testIt() {
 		$query = array(

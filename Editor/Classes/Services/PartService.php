@@ -66,4 +66,87 @@ class PartService {
 
 		return $context;
 	}
+	
+
+	
+	function getAvailableParts() {
+		global $basePath;
+		$arr = FileSystemUtil::listDirs($basePath."Editor/Parts/");
+		for ($i=0;$i<count($arr);$i++) {
+			if (substr($arr[$i],0,3)=='CVS') {
+				unset($arr[$i]);
+			}
+		}
+		return $arr;
+	}
+
+	function getParts() {
+		return array(
+			'header' => array ( 'name' => 'Overskrift', 'description' => '', 'priority' => 0 ),
+			 'text' => array ( 'name' => 'Tekst', 'description' => '', 'priority' => 1 ),
+			'listing' => array ( 'name' => 'Punktopstilling', 'description' => '', 'priority' => 2 ),
+			'image' => array ( 'name' => 'Billede', 'description' => '', 'priority' => 3 ),
+			'horizontalrule' => array ( 'name' => 'Adskiller', 'description' => '', 'priority' => 4 ),
+			'list' => array ( 'name' => 'Liste', 'description' => '', 'priority' => 4 ),
+			'person' => array ( 'name' => 'Person', 'description' => '', 'priority' => 5 ),
+			'news' => array ( 'name' => 'Nyheder', 'description' => '', 'priority' => 6 ),
+			'file' => array ( 'name' => 'Fil', 'description' => '', 'priority' => 7 ),
+			'html' => array ( 'name' => 'HTML', 'description' => '', 'priority' => 7 ),
+			'richtext' => array ( 'name' => 'Rig tekst', 'description' => '', 'priority' => 8 ),
+			'imagegallery' => array ( 'name' => 'Billedgalleri', 'description' => '', 'priority' => 8 ),
+			'formula' => array ( 'name' => 'Formular', 'description' => '', 'priority' => 10 ),
+			'mailinglist' => array ( 'name' => 'Postliste', 'description' => '', 'priority' => 10 )
+		);
+		
+		
+		
+		$out = null;
+		if ($out == null) {
+			$out = array();	
+			$parts = PartService::getAvailableParts();
+			foreach ($parts as $part) {
+				$info = PartService::getPartInfo($part);
+				if ($info) {
+					$out[$part] = $info;
+				}
+			}
+			uasort($out,array("PartService", "compareParts"));
+		}
+		print_r($out);
+		return $out;
+	}
+
+	/**
+	 * Used to sort arrays of tools
+	 */
+	function compareParts($partA, $partB) {
+		$a = $partA['priority'];
+		$b = $partB['priority'];
+		if ($a == $b) {
+			return 0;
+		}
+		return ($a < $b) ? -1 : 1;
+	}
+
+
+	function getPartInfo($unique) {
+		global $basePath;
+		$file = $basePath."Editor/Parts/".$unique."/info.xml";
+		if (file_exists($file)) {
+			$info = array();
+			$doc = new DOMDocument();
+			if ($doc->load($file)) {
+				$info['name'] = XmlUtils::getPathText($doc->documentElement,"/part/name");
+				$info['description'] = XmlUtils::getPathText($doc->documentElement,"/part/description");
+				$info['priority'] = XmlUtils::getPathText($doc->documentElement,"/part/priority");
+			}
+			else {
+				error_log('getPartInfo: '.$doc->getErrorString());
+			}
+			return $info;
+		}
+		else {
+			return false;
+		}
+	}
 }

@@ -13,6 +13,5 @@ require_once '../../Classes/Services/ImageService.php';
 $url = Request::getString('url');
 
 $response = ImageService::createImageFromUrl($url);
-Log::debug($response);
 In2iGui::sendObject($response);
 ?>

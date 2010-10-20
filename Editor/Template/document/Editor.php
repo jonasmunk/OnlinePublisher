@@ -7,7 +7,6 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Classes/Parts/LegacyPartController.php';
 require_once '../../Classes/Services/PartService.php';
 require_once '../../Include/Session.php';
 require_once '../../Classes/PartContext.php';
@@ -52,7 +51,7 @@ In2iGui.context='../../../';
 <script type="text/javascript">
 controller.context='<?=$baseUrl?>';
 <?
-$parts = LegacyPartController::getParts();
+$parts = PartService::getParts();
 foreach ($parts as $part => $info) {
 ?>
 controller.parts.push({value:'<?=$part?>',title:'<?=$info['name']?>'});

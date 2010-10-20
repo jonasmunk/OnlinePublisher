@@ -12,6 +12,14 @@ class ImagePartController extends PartController
 	function ImagePartController() {
 		parent::PartController('image');
 	}
+		
+	function setLatestUploadId($id) {
+		$_SESSION['part.image.latest_upload_id'] = $id;
+	}
+	
+	function getLatestUploadId() {
+		return $_SESSION['part.image.latest_upload_id'];
+	}
 	
 	function createPart() {
 		$part = new ImagePart();

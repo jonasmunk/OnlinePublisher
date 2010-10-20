@@ -7,7 +7,6 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Parts/LegacyPartController.php';
 require_once 'Functions.php';
 
 $pageId = getPageId();
@@ -25,13 +24,8 @@ while ($row = Database::next($result)) {
 Database::free($result);
 
 // Not a part
-if ($type!='part') {
-	$sql="insert into document_section (`page_id`,`column_id`,`index`,`type`) values (".$pageId.",".$columnId.",".$index.",'".$type."')";
-	$sectionId=Database::insert($sql);
-	require $basePath.'Editor/Template/document/'.ucfirst($type).'/Add.php';
-} else {
-	$partId = createNewPart($part);
-	if ($partId) {
+if ($type=='part') {
+	if ($partId = createNewPart($part)) {
 		$sql="insert into document_section (`page_id`,`column_id`,`index`,`type`,`part_id`) values (".$pageId.",".$columnId.",".$index.",'part',".$partId.")";
 		$sectionId=Database::insert($sql);
 	}
@@ -57,11 +51,8 @@ function createNewPart($unique) {
 	if ($ctrl && method_exists($ctrl,'createPart')) {
 		$part = $ctrl->createPart();
 		return $part->getId();
-	} else {
-		Log::debug("Unable to find controller for $unique");
-		$part = LegacyPartController::getNewPart($unique);
-		$part->create();
-		return $part->getId();
 	}
+	Log::debug("Unable to find controller for $unique");
+	return null;
 }
 ?>

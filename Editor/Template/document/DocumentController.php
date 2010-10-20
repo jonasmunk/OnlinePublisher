@@ -5,7 +5,6 @@
  */
 require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once $basePath.'Editor/Classes/PartContext.php';
-require_once $basePath.'Editor/Classes/Parts/LegacyPartController.php';
 require_once $basePath.'Editor/Classes/Services/PartService.php';
 require_once $basePath.'Editor/Template/document/Functions.php';
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
@@ -174,58 +173,6 @@ class DocumentController extends LegacyTemplateController {
 		Database::delete($sql);
 		
 	}
-
-    function import(&$node) {
-		// First clear the document
-		$this->removeAll();
-		$rows =& $node->getElementsByPath('row');
-		$rowPosition = $this->getLastRowPosition();
-		// Lopp through all rows
-  		for ($i = 0; $i < $rows->getLength(); $i++) {
-			$rowPosition++;
-			$row =& $rows->item($i);
-			
-			
-			$sql = "insert into document_row (`index`,page_id) values (".$rowPosition.",".$this->id.")";
-			$rowId = Database::insert($sql);
-			
-			$columns =& $row->getElementsByPath('column');
-			$columnPosition = 0;
-			// Lopp through all columns
-  			for ($j = 0; $j < $columns->getLength(); $j++) {
-				$columnPosition++;
-				$column =& $columns->item($j);
-				$width = $column->getAttribute('width');
-				$sql = "insert into document_column (row_id,width,`index`,page_id) values (".$rowId.",".Database::text($width).",".$columnPosition.",".$this->id.")";
-				$columnId = Database::insert($sql);
-				
-				$sectionPosition = 0;
-				$sections =& $column->getElementsByPath('section');
-				// Lopp through all sections
-  				for ($k = 0; $k < $sections->getLength(); $k++) {
-					$section =& $sections->item($k);
-					$part =& $section->getElementsByPath('part',1);
-					if ($part!=null) {
-						$sectionPosition++;
-						$type = $part->getAttribute('type');
-						// Get a new Part objects
-						$partObj = LegacyPartController::getNewPart($type);
-						// Create the part
-						$partObj->create();
-						// Insert section into DB
-						$sql = "insert into document_section (column_id,type,part_id,`index`,page_id) values (".$columnId.",'part',".$partObj->getId().",".$sectionPosition.",".$this->id.")";
-						$sectionId = Database::insert($sql);
-						// Import data into part
-						$sub =& $part->getElementsByPath('sub',1);
-						$partObj->import($sub->firstChild);
-					} else {
-						// The section is not a part
-						// TODO: Do something intelligent
-					}
-				}
-			}
-		}
-    }
 
 	function getLastRowPosition() {
 		$sql = "select max(`index`) as position from document_row where page_id=".$this->id;
