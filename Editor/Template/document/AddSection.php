@@ -6,14 +6,14 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Response.php';
 require_once 'Functions.php';
 
 $pageId = getPageId();
-$columnId = requestGetNumber('column',0);
-$index = requestGetNumber('index',0);
-$type = requestGetText('type');
-$part = requestGetText('part');
+$columnId = Request::getInt('column');
+$index = Request::getInt('index');
+$part = Request::getString('part');
 
 $sql="select * from document_section where column_id=".$columnId." and `index`>=".$index;
 $result = Database::select($sql);
@@ -23,14 +23,12 @@ while ($row = Database::next($result)) {
 }
 Database::free($result);
 
-// Not a part
-if ($type=='part') {
-	if ($partId = createNewPart($part)) {
-		$sql="insert into document_section (`page_id`,`column_id`,`index`,`type`,`part_id`) values (".$pageId.",".$columnId.",".$index.",'part',".$partId.")";
+if ($ctrl = PartService::getController($part)) {
+	if ($part = $ctrl->createPart()) {
+		$sql="insert into document_section (`page_id`,`column_id`,`index`,`type`,`part_id`) values (".$pageId.",".$columnId.",".$index.",'part',".$part->getId().")";
 		$sectionId=Database::insert($sql);
 	}
 }
-
 
 $sql="update page set changed=now() where id=".$pageId;
 Database::update($sql);
@@ -39,20 +37,6 @@ Database::update($sql);
 setDocumentSection($sectionId);
 setDocumentRow(0);
 setDocumentColumn(0);
-redirect('Editor.php');
+Response::redirect('Editor.php');
 
-
-
-/**
- * Creates a new part of the provided type and returns its id
- */
-function createNewPart($unique) {
-	$ctrl = PartService::getController($unique);
-	if ($ctrl && method_exists($ctrl,'createPart')) {
-		$part = $ctrl->createPart();
-		return $part->getId();
-	}
-	Log::debug("Unable to find controller for $unique");
-	return null;
-}
 ?>
