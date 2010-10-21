@@ -278,7 +278,7 @@ class Calendarsource extends Object {
 			if ($row['byday']) {
 				$dayNums = array('MO'=>0, 'TU'=>1, 'WE'=>2, 'TH'=>3,'FR'=>4,'SA'=>5,'SU'=>6);
 				$weekday = DateUtil::getWeekDay($row['startdate']);
-				$byDays = split(",",$row['byday']);
+				$byDays = @split(",",$row['byday']);
 				foreach ($byDays as $day) {
 					$new = $row;
 					$extra = $dayNums[$day]-$weekday;
