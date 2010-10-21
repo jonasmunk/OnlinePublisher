@@ -192,9 +192,9 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	}
 	Database::free($result);
 	if ($selected==0) {
-		echo '<div><a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" title="Opret et nyt afsnit" style="cursor: pointer;"><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon"/></a></div>';
+		echo '<div style="padding-top: 5px;"><a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" title="Opret et nyt afsnit" href="#" class="in2igui_button in2igui_button_small_rounded"><span><span>Tilf&oslash;j afsnit</span></span></a></div>';
 	} else {
-		echo '<div><img src="Graphics/Add.gif" width="14" height="14" border="0" class="Minicon Disabled"/></div>';
+		echo '<div style="padding-top: 5px;"><a class="in2igui_button in2igui_button_small_rounded in2igui_button_disabled"><span><span>Tilf&oslash;j afsnit</span></span></a></div>';
 	}
 }
 
