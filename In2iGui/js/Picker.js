@@ -70,7 +70,7 @@ In2iGui.Picker.prototype = {
 			if (self.value!=null && object[self.options.valueProperty]==self.value) item.addClassName('in2igui_picker_item_selected');
 			item.update(
 				'<div class="in2igui_picker_item_middle"><div class="in2igui_picker_item_middle">'+
-				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px;background-image:url(\''+object.image+'\')"></div>'+
+				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+object.title+'</strong></div>'+
 				'</div></div>'+
 				'<div class="in2igui_picker_item_bottom"><div><div></div></div></div>'
 			);

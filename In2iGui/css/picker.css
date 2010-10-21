@@ -73,6 +73,21 @@ div.in2igui_picker_title
 	cursor: pointer;
 	padding: 5px;
 	margin: 1px 2px 0px;
+	font-size: 0;
+}
+
+.in2igui_picker_item strong
+{
+	font-size: 10px;
+	display: inline-block;
+	height: 15px;
+	line-height: 15px;
+	padding: 0 5px;
+	background: #FAFcFF;
+	border-bottom: 1px solid #DDD;
+	border-right: 1px solid #eee;
+	font-weight: normal;
+	color: #456;
 }
 
 .in2igui_picker_item:hover

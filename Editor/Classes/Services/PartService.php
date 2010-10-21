@@ -83,19 +83,19 @@ class PartService {
 	function getParts() {
 		return array(
 			'header' => array ( 'name' => 'Overskrift', 'description' => '', 'priority' => 0 ),
-			 'text' => array ( 'name' => 'Tekst', 'description' => '', 'priority' => 1 ),
+			'text' => array ( 'name' => 'Tekst', 'description' => '', 'priority' => 1 ),
 			'listing' => array ( 'name' => 'Punktopstilling', 'description' => '', 'priority' => 2 ),
 			'image' => array ( 'name' => 'Billede', 'description' => '', 'priority' => 3 ),
 			'horizontalrule' => array ( 'name' => 'Adskiller', 'description' => '', 'priority' => 4 ),
-			'list' => array ( 'name' => 'Liste', 'description' => '', 'priority' => 4 ),
 			'person' => array ( 'name' => 'Person', 'description' => '', 'priority' => 5 ),
 			'news' => array ( 'name' => 'Nyheder', 'description' => '', 'priority' => 6 ),
 			'file' => array ( 'name' => 'Fil', 'description' => '', 'priority' => 7 ),
-			'html' => array ( 'name' => 'HTML', 'description' => '', 'priority' => 7 ),
 			'richtext' => array ( 'name' => 'Rig tekst', 'description' => '', 'priority' => 8 ),
 			'imagegallery' => array ( 'name' => 'Billedgalleri', 'description' => '', 'priority' => 8 ),
 			'formula' => array ( 'name' => 'Formular', 'description' => '', 'priority' => 10 ),
-			'mailinglist' => array ( 'name' => 'Postliste', 'description' => '', 'priority' => 10 )
+			'list' => array ( 'name' => 'Liste', 'description' => '', 'priority' => 4 ),
+			'mailinglist' => array ( 'name' => 'Postliste', 'description' => '', 'priority' => 10 ),
+			'html' => array ( 'name' => 'HTML', 'description' => '', 'priority' => 7 )
 		);
 		
 		

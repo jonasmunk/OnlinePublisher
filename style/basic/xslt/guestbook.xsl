@@ -71,7 +71,9 @@
 <xsl:template match="gb:item">
 	<div class="guestbook_item">
 		<p>
-			<strong><xsl:value-of select="gb:name"/></strong>
+			<xsl:if test="gb:name!=''">
+				<strong><xsl:value-of select="gb:name"/></strong>
+			</xsl:if>
 			<xsl:text> </xsl:text>
 			<span class="guestbook_time">
 				<xsl:value-of select="gb:time/@day"/>-<xsl:value-of select="gb:time/@month"/>-<xsl:value-of select="gb:time/@year"/><xsl:text> </xsl:text><xsl:value-of select="gb:time/@hour"/>:<xsl:value-of select="gb:time/@minute"/>:<xsl:value-of select="gb:time/@second"/>

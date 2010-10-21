@@ -25,7 +25,8 @@ foreach ($frames as $frame) {
 $templateItems='';
 $templates = Template::getInstalledTemplates();
 foreach ($templates as $template) {
-	$templateItems.='<item title="'.$template['unique'].'" image="../../Template/'.$template['unique'].'/thumbnail128.jpg" value="'.$template['id'].'"/>';
+	$info = Template::getInfo($template['unique']);
+	$templateItems.='<item title="'.StringUtils::toUnicode($info['name']).'" image="../../Template/'.$template['unique'].'/thumbnail128.jpg" value="'.$template['id'].'"/>';
 }
 
 $gui='
