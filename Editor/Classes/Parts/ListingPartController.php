@@ -239,7 +239,7 @@ class ListingPartController extends PartController
 				<item icon="style/font_variant_normal" value="normal"/>
 				<item icon="style/font_variant_smallcaps" value="small-caps"/>
 			</segmented>
-			<segmented label="Variant" name="textDecoration" allow-null="true">
+			<segmented label="Streg" name="textDecoration" allow-null="true">
 				<item icon="style/text_normal" value="none"/>
 				<item icon="style/text_decoration_underline" value="underline"/>
 				<item icon="style/text_decoration_linethrough" value="line-through"/>

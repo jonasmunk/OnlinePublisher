@@ -30,6 +30,7 @@ class TextPartController extends PartController
 	}
 	
 	function editor($part,$context) {
+		global $baseUrl;
 		return
 		'<textarea class="part_text common_font" name="text" id="PartTextTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;'.$this->buildCSSStyle($part).'">'.
 		StringUtils::escapeXML($part->getText()).
@@ -49,10 +50,7 @@ class TextPartController extends PartController
 		'<input type="hidden" name="textDecoration" value="'.StringUtils::escapeXML($part->getTextDecoration()).'"/>'.
 		'<input type="hidden" name="imageId" value="'.StringUtils::escapeXML($part->getImageId()).'"/>'.
 		'<input type="hidden" name="imageFloat" value="'.StringUtils::escapeXML($part->getImageFloat()).'"/>'.
-		'<script type="text/javascript">'.
-		'document.getElementById("PartTextTextarea").focus();'.
-		'document.getElementById("PartTextTextarea").select();'.
-		'</script>';
+		'<script src="'.$baseUrl.'Editor/Parts/text/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function getFromRequest($id) {
@@ -185,7 +183,7 @@ class TextPartController extends PartController
 				<item icon="style/font_variant_normal" value="normal"/>
 				<item icon="style/font_variant_smallcaps" value="small-caps"/>
 			</segmented>
-			<segmented label="Variant" name="textDecoration" allow-null="true">
+			<segmented label="Streg" name="textDecoration" allow-null="true">
 				<item icon="style/text_normal" value="none"/>
 				<item icon="style/text_decoration_underline" value="underline"/>
 				<item icon="style/text_decoration_linethrough" value="line-through"/>
