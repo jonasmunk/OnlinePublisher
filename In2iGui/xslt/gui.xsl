@@ -14,6 +14,7 @@
 <!--xsl:include href="view.xsl"/--> <!-- TODO: remove this -->
 <xsl:include href="toolbar.xsl"/>
 <xsl:include href="links.xsl"/>
+<xsl:include href="other.xsl"/>
 
 <xsl:output encoding="UTF-8" omit-xml-declaration="yes" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
 
@@ -100,6 +101,10 @@
 </xsl:choose>
 <xsl:if test="//gui:graphviz">
 	<script src="{$context}/In2iGui/ext/Graphviz.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
+<xsl:if test="//gui:graph">
+	<script type="text/javascript" src="{$context}/In2iGui/lib/protovis-3.2/protovis-r3.2.js"><xsl:comment/></script>
+	<script src="{$context}/In2iGui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:chart">
 	<script src="{$context}/In2iGui/lib/swfobject.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
