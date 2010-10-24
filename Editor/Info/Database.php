@@ -1021,7 +1021,8 @@ $databaseTables = array(
 			array("email","varchar(50)","","","",""),
 			array("internal","tinyint(1)","","","0",""),
 			array("external","tinyint(1)","","","0",""),
-			array("administrator","tinyint(1)","","","0","")
+			array("administrator","tinyint(1)","","","0",""),
+			array("secure","tinyint(1)","","","0","")
 		),
 	'user_permission' => array(
 			array("id","int(11)","","PRI","","auto_increment"),

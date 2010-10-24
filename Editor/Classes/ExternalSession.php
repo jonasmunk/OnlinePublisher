@@ -1,13 +1,14 @@
 <?
 require_once($basePath.'Editor/Classes/Database.php');
+require_once($basePath.'Editor/Classes/Services/AuthenticationService.php');
+require_once($basePath.'Editor/Classes/User.php');
 
 class ExternalSession {
 	
 	function logIn($username,$password) {
-		$sql = "select * from user,object where object.id=user.object_id and username=".Database::text($username)." and password=".Database::text($password)." and external=1";
-		if ($row=Database::selectFirst($sql)) {
-			$user = array('id'=>$row['id'],'username'=>$row['username'],'title'=>$row['title']);
-			$_SESSION['external.user']=$user;
+		
+		if ($user = AuthenticationService::getExternalUser($username,$password)) {
+			$_SESSION['external.user']=array('id'=>$user->getId(),'username'=>$user->getUsername(),'title'=>$user->getTitle());
 			return $user;
 		}
 		else {

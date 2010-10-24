@@ -68,6 +68,7 @@ In2iGui.Alert.prototype = {
 			this.content.appendChild(this.title);
 		}
 		this.title.innerHTML = text;
+		
 	},
 	/** Sets the alert text */
 	setText : function(/**String*/ text) {

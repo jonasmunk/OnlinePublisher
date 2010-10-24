@@ -1,6 +1,8 @@
 <?
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Tool.php');
+require_once($basePath.'Editor/Classes/Services/AuthenticationService.php');
+
 class InternalSession {
     
     function InternalSession() {
@@ -16,12 +18,11 @@ class InternalSession {
 	}
     
     function logIn($username,$password) {
-    	$sql="select object_id,username,administrator from user where internal=1 and username=".Database::text($username)." and password=".Database::text($password);
-    	if ($row = Database::selectFirst($sql)) {
+    	if ($user = AuthenticationService::getInternalUser($username,$password)) {
     	    InternalSession::startSession();
-    		$_SESSION['core.user.id']=$row['object_id'];
-    		$_SESSION['core.user.username']=$row['username'];
-    		$_SESSION['core.user.administrator']=($row['administrator']==1);
+    		$_SESSION['core.user.id']=$user->getId();
+    		$_SESSION['core.user.username']=$user->getUsername();
+    		$_SESSION['core.user.administrator']=$user->getAdministrator();
     		InternalSession::registerActivity();
     		Log::logUser('login','');
     		return true;

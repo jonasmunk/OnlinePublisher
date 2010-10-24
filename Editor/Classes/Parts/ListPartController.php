@@ -6,6 +6,9 @@
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/ListPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/DateUtil.php');
+require_once($basePath.'Editor/Classes/Calendarsource.php');
+require_once($basePath.'Editor/Classes/News.php');
 
 class ListPartController extends PartController
 {

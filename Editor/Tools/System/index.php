@@ -127,7 +127,9 @@ $gui='
 			<group>
 				<buttons>
 					<button name="cancelUser" title="Annuller"/>
-					<button name="deleteUser" title="Slet"/>
+					<button name="deleteUser" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja, slet brugeren" cancel="Nej, jeg fortryder"/>
+					</button>
 					<button name="saveUser" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>

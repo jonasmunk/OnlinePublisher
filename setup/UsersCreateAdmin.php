@@ -9,17 +9,19 @@ require_once '../Editor/Include/Public.php';
 require_once '../Editor/Include/Functions.php';
 require_once '../Editor/Include/XmlWebGui.php';
 require_once '../Editor/Classes/User.php';
+require_once '../Editor/Classes/Request.php';
+require_once '../Editor/Classes/Services/AuthenticationService.php';
 require_once 'Functions.php';
 require_once 'Security.php';
 
-$fullname = requestPostText('fullname');
-$username = requestPostText('username');
-$password = requestPostText('password');
+$fullname = Request::getString('fullname');
+$username = Request::getString('username');
+$password = Request::getString('password');
 
 $user = new User();
 $user->setUsername($username);
 $user->setTitle($fullname);
-$user->setPassword($password);
+AuthenticationService::setPassword($user,$password);
 $user->setInternal(true);
 $user->setAdministrator(true);
 $user->create();

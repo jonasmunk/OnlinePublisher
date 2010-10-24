@@ -58,7 +58,7 @@ ui.listen({
 		this.userId = data.id;
 		userTitle.setValue(data.title);
 		userUsername.setValue(data.username);
-		userPassword.setValue(data.password);
+		//userPassword.setValue(data.password);
 		userEmail.setValue(data.email);
 		userAdministrator.setValue(data.administrator);
 		userInternal.setValue(data.internal);
@@ -84,11 +84,11 @@ ui.listen({
 			In2iGui.showMessage({text:'Brugernavnet er ikke udfyldt',duration:2000});
 			userUsername.focus();
 			return;
-		} else if (userPassword.isEmpty()) {
+		}/* else if (userPassword.isEmpty()) {
 			In2iGui.showMessage({text:'Kodeordet er ikke udfyldt',duration:2000});
 			userUsername.focus();
 			return;
-		}
+		}*/
 		var data = {
 			id:this.userId,
 			title:userTitle.getValue(),
@@ -108,13 +108,7 @@ ui.listen({
 		list.refresh();
 	},
 	$click$deleteUser : function() {
-		In2iGui.get().confirm('confirmDeleteUser',{title:'Er du sikker på at du vil slette brugeren?',text:'Handlingen kan ikke fortrydes',ok:'Ja, slet brugeren',cancel:'Nej, jeg fortryder',highlighted:'cancel',variant:'gasp'});
-	},
-	$ok$confirmDeleteUser : function() {
 		In2iGui.json({data:{id:this.userId}},'../../Services/Model/DeleteObject.php','deleteUser');
-	},
-	$cancel$confirmDeleteUser : function() {
-		//alert('cancel');
 	},
 	$success$deleteUser : function() {
 		userEditor.hide();

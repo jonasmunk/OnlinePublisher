@@ -5,18 +5,33 @@
  */
 require_once($basePath.'Editor/Classes/Object.php');
 
+Object::$schema['user'] = array(
+	'username'   => array('type'=>'text'),
+	'password'  => array('type'=>'text'),
+	'email'  => array('type'=>'text'),
+	'internal'  => array('type'=>'boolean'),
+	'external'  => array('type'=>'boolean'),
+	'administrator'  => array('type'=>'boolean'),
+	'secure'  => array('type'=>'boolean')
+);
 class User extends Object {
+	
 	var $username;
 	var $password;
 	var $email;
 	var $internal = false;
 	var $external = false;
 	var $administrator = false;
+	var $secure = false;
 
 	function User() {
 		parent::Object('user');
 	}
 	
+	function load($id) {
+		return Object::get($id,'user');
+	}
+
 	function getIn2iGuiIcon() {
 		return 'common/user';
 	}
@@ -68,46 +83,20 @@ class User extends Object {
 	function getAdministrator() {
 		return $this->administrator;
 	}
-
-	function load($id) {
-		$obj = new User();
-		$obj->_load($id);
-		$sql = "select * from user where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj->username=$row['username'];
-			$obj->password=$row['password'];
-			$obj->email=$row['email'];
-			$obj->internal=($row['internal']==1);
-			$obj->external=($row['external']==1);
-			$obj->administrator=($row['administrator']==1);
-		}
-		return $obj;
+	
+	function setSecure($secure) {
+	    $this->secure = $secure;
 	}
 
-	function sub_create() {
-		$sql="insert into user (object_id,username,password,email,internal,external,administrator) values (".
-		$this->id.
-		",".Database::text($this->username).
-		",".Database::text($this->password).
-		",".Database::text($this->email).
-		",".Database::boolean($this->internal).
-		",".Database::boolean($this->external).
-		",".Database::boolean($this->administrator).
-		")";
-		Database::insert($sql);
+	function getSecure() {
+	    return $this->secure;
 	}
-
-	function sub_update() {
-		$sql = "update user set ".
-		"username=".Database::text($this->username).
-		",password=".Database::text($this->password).
-		",email=".Database::text($this->email).
-		",internal=".Database::boolean($this->internal).
-		",external=".Database::boolean($this->external).
-		",administrator=".Database::boolean($this->administrator).
-		" where object_id=".$this->id;
-		Database::update($sql);
+	
+	function removeMode() {
+		$sql = "delete from securityzone_user where user_id=".Database::int($this->id);
+		Database::delete($sql);
+		$sql = "delete from user_permission where user_id=".Database::int($this->id);
+		Database::delete($sql);
 	}
 
 	function sub_publish() {
@@ -116,15 +105,6 @@ class User extends Object {
 		'<username>'.encodeXML($this->username).'</username>'.
 		'</user>';
 		return $data;
-	}
-
-	function sub_remove() {
-		$sql = "delete from user where object_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from securityzone_user where user_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from user_permission where user_id=".$this->id;
-		Database::delete($sql);
 	}
 }
 ?>

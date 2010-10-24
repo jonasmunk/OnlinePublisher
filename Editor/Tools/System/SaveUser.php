@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/User.php';
+require_once '../../Classes/Services/AuthenticationService.php';
 
 $data = Request::getObject('data');
 
@@ -19,7 +20,10 @@ if ($data->id>0) {
 $user->setTitle(Request::fromUnicode($data->title));
 $user->setNote(Request::fromUnicode($data->note));
 $user->setUsername(Request::fromUnicode($data->username));
-$user->setPassword(Request::fromUnicode($data->password));
+$password = Request::fromUnicode($data->password);
+if (StringUtils::isNotBlank($password)) {
+	AuthenticationService::setPassword($user,$password);
+}
 $user->setEmail(Request::fromUnicode($data->email));
 $user->setInternal($data->internal);
 $user->setExternal($data->external);
