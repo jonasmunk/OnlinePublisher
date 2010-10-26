@@ -2,6 +2,7 @@
 require_once($basePath.'Editor/Classes/Response.php');
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
+require_once($basePath.'Editor/Classes/InternalSession.php');
 
 class In2iGui {
 
@@ -47,7 +48,7 @@ class In2iGui {
 		}
 		$dev = $_GET['dev']=='true' ? 'true' : 'false';
 		//$dev='true';
-		$xmlData='<?xml version="1.0" encoding="UTF-8"?>'.$gui;
+		$xmlData='<?xml version="1.0" encoding="UTF-8"?>'.In2iGui::localize($gui,InternalSession::getLanguage());
 		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="'.($xhtml ? 'xml' : 'html').'"/>'.
@@ -59,7 +60,7 @@ class In2iGui {
 		'</xsl:stylesheet>';
 	
 		if (function_exists('xslt_create')) {
-			$arguments = array('/_xml' => &$gui,'/_xsl' => &$xslData);
+			$arguments = array('/_xml' => &$xmlData,'/_xsl' => &$xslData);
 			$xp = xslt_create();
 			header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html'));
 			echo xslt_process($xp, 'arg:/_xml', 'arg:/_xsl', NULL, $arguments );
@@ -74,13 +75,45 @@ class In2iGui {
 			header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html'));
 			$xslt = new xsltProcessor;
 			$xslt->importStyleSheet(DomDocument::loadXML($xslData));
-			echo $xslt->transformToXML(DomDocument::loadXML($gui));
+			echo $xslt->transformToXML(DomDocument::loadXML($xmlData));
 		}
+	}
+	
+	function localize($xml,$language='en') {
+		
+		$pattern = "/({[^}]+})/mi";
+		preg_match_all($pattern, $xml, $matches,PREG_OFFSET_CAPTURE);
+		$diff = 0;
+		for ($i=0;$i<count($matches[0]);$i++) {
+			$pos = $matches[0][$i][1];
+			$old = $matches[0][$i][0];
+			$parts = In2iGui::extract($old);
+			$new = array_key_exists($language,$parts) ? $parts[$language] : $parts['any'];
+			$xml = substr_replace ( $xml , $new , $pos+$diff ,strlen($old));
+			
+			$diff = $diff + strlen($new)-strlen($old);
+		}
+		return $xml;
+	}
+	
+	function extract($str) {
+		$parsed = array();
+		$str = substr($str,1,-1);
+		$parts = explode(';',$str);
+		foreach ($parts as $part) {
+			$pos = strpos($part,':');
+			if ($pos===false) {
+				$parsed['any'] = trim($part);
+			} else {
+				$parsed[trim(substr($part,0,$pos))] = trim(substr($part,$pos+1));
+			}
+		}
+		return $parsed;
 	}
 	
 	function renderFragment($gui) {
 		global $basePath,$baseUrl;
-		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:In2iGui">'.$gui.'</subgui>';
+		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:In2iGui">'.In2iGui::localize($gui).'</subgui>';
 		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="xml"/>'.

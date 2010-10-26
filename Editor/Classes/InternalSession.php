@@ -44,6 +44,11 @@ class InternalSession {
         $_SESSION['core.user.lastaccesstime']=time();
     }
 
+	function getLanguage() {
+		//return 'en';
+		return 'da';
+	}
+
 	/**
 	 * Get the ID of the active internal user
 	 * @return int ID of the user

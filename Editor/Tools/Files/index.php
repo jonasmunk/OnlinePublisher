@@ -27,8 +27,8 @@ $gui='
 	<layout>
 		<top>
 			<toolbar>
-				<icon icon="file/generic" title="Tilføj fil" overlay="upload" name="newFile"/>
-				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
+				<icon icon="file/generic" title="{Add file ; da:Tilføj fil}" overlay="upload" name="newFile"/>
+				<icon icon="common/folder" title="{New group; da:Ny gruppe}" name="newGroup" overlay="new"/>
 				<divider/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
 				<icon icon="common/delete" title="Slet" name="delete" disabled="true">
