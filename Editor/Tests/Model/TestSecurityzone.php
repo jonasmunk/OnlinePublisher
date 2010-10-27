@@ -4,7 +4,7 @@
  * @subpackage Tests.Model
  */
 
-class TestUser extends UnitTestCase {
+class TestSecurityzone extends UnitTestCase {
     
     function testLoad() {
         $this->assertNull(Securityzone::load(0));
