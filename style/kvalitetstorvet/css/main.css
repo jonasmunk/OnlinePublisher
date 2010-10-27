@@ -3,6 +3,7 @@ body
 	margin: 0;
 	padding: 0;
 	font-family: Arial,Helvetica,Verdana,sans-serif;
+	text-align: center;
 }
 
 div.layout_top
@@ -47,6 +48,7 @@ div.layout_centered
 {
 	width: 960px;
 	margin: 0 auto;
+	text-align: left;
 }
 
 div.layout_header
