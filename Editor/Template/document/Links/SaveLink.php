@@ -12,8 +12,8 @@ require_once '../../../Classes/Page.php';
 
 $id = Request::getInt('id');
 $pageId=InternalSession::getPageId();
-$text=Request::getString('text');
-$value=Request::getString('value');
+$text=Request::getEncodedString('text');
+$value=Request::getEncodedString('value');
 $type=Request::getString('type');
 $target=Request::getString('target');
 $alternative=Request::getString('alternative');
