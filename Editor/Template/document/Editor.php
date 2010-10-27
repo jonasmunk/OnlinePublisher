@@ -179,12 +179,15 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$style=buildSectionStyle($row);
+		echo '<div id="section'.$row['id'].'"';
+		if ($row['width']) {
+			echo ' style="width: '.$row['width'].'"';
+		}
+		echo '>';
 		if ($row['id']==$selected) {
-			echo '<div id="section'.$row['id'].'">';
 			sectionEditor($row['id'],$row['type'],$style,$row['part_id'],$row['part_type'],$row);
 		}
 		else {
-			echo '<div id="section'.$row['id'].'">';
 			displaySection($row['id'],$row['type'],$row['index'],$style,$row['part_id'],$row['part_type'],$columnId,$columnIndex,$rowId,$rowIndex);
 		}
 		echo '</div>';

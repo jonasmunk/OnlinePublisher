@@ -68,7 +68,18 @@ var partToolbar = {
 		
 	},
 	$valueChanged$sectionWidth : function(value) {
+		if (parseInt(value)===0) {
+			value='';
+		}
 		this.partForm.width.value=value;
+		if (value==='') {
+			this.section.style.width='';
+				this.syncSize();
+		} else {
+			n2i.animate(this.section,'width',value,200,{ease:n2i.ease.slowFastSlow,onComplete : function() {
+				this.syncSize();
+			}.bind(this)})
+		}
 	},
 	$valueChanged$sectionFloat : function(value) {
 		this.partForm['float'].value=value;

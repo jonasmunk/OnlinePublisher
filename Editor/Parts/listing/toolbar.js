@@ -19,10 +19,12 @@ ui.listen({
 	$valueChanged$fontWeight : function(value) {
 		this.form.fontWeight.value=value || '';
 		this.form.text.style.fontWeight=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$fontSize : function(value) {
 		this.form.fontSize.value=value || '';
 		this.form.text.style.fontSize=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$textAlign : function(value) {
 		this.form.textAlign.value=value || '';
@@ -31,10 +33,12 @@ ui.listen({
 	$valueChanged$fontFamily : function(value) {
 		this.form.fontFamily.value=value || '';
 		this.form.text.style.fontFamily=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$lineHeight : function(value) {
 		this.form.lineHeight.value=value || '';
 		this.form.text.style.lineHeight=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$color : function(value) {
 		this.form.color.value=value || '';
@@ -43,14 +47,17 @@ ui.listen({
 	$valueChanged$fontStyle : function(value) {
 		this.form.fontStyle.value=value || '';
 		this.form.text.style.fontStyle=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$textTransform : function(value) {
 		this.form.textTransform.value=value || '';
 		this.form.text.style.textTransform=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$fontVariant : function(value) {
 		this.form.fontVariant.value=value || '';
 		this.form.text.style.fontVariant=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$textDecoration : function(value) {
 		this.form.textDecoration.value=value || '';
@@ -59,14 +66,17 @@ ui.listen({
 	$valueChanged$wordSpacing : function(value) {
 		this.form.wordSpacing.value=value || '';
 		this.form.text.style.wordSpacing=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$letterSpacing : function(value) {
 		this.form.letterSpacing.value=value || '';
 		this.form.text.style.letterSpacing=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$textIndent : function(value) {
 		this.form.textIndent.value=value || '';
 		this.form.text.style.textIndent=value || '';
+		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$listStyle : function(value) {
 		this.form.type.value=value || '';

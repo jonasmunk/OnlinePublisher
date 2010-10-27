@@ -230,11 +230,12 @@ op.FieldResizer = function(options) {
 	this.dummy.style.top='-999999px';
 	this.dummy.style.visibility='hidden';
 	var self = this;
-	options.field.observe('keyup',function(){self.resize()});
+	options.field.observe('keyup',function(){self.resize(false,true)});
+	options.field.observe('keydown',function(){self.options.field.scrollTop=0;});
 }
 
 op.FieldResizer.prototype = {
-	resize : function(instantly) {
+	resize : function(instantly,focused) {
 				
 		var field = this.options.field;		n2i.copyStyle(field,this.dummy,[
 			'fontSize','lineHeight','fontWeight','letterSpacing','wordSpacing','fontFamily','textTransform','fontVariant','textIndent'
@@ -244,10 +245,11 @@ op.FieldResizer.prototype = {
 			html+='x';
 		}
 		// Force webkit redraw
-		field.style.display='none';
-		field.offsetHeight; // no need to store this anywhere, the reference is enough
-		field.style.display='block';
-		
+		if (!focused) {
+			field.style.display='none';
+			field.offsetHeight; // no need to store this anywhere, the reference is enough
+			field.style.display='block';
+		}
 		this.dummy.innerHTML = html.replace(/\n/g,'<br/>');
 		this.options.field.style.webkitTransform = 'scale(1)';
 		this.dummy.style.width=this.options.field.clientWidth+'px';
@@ -255,6 +257,7 @@ op.FieldResizer.prototype = {
 		if (instantly) {
 			this.options.field.style.height=height;
 		} else {
+			//this.options.field.scrollTop=0;
 			n2i.animate(this.options.field,'height',height,200,{ease:n2i.ease.slowFastSlow});
 		}
 	}
