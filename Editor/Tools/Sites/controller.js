@@ -174,7 +174,7 @@ ui.listen({
 		var design = designPicker.getValue();
 		var template = templatePicker.getValue();
 		var frame = frameSelection.getValue();
-		var menuItem = menuItemSelection.getValue();
+		var menuItem = menuItemSelection.getValue() || {};
 		var form = newPageFormula.getValues();
 		if (template===null) {
 			newPageWizard.goToStep(0);
