@@ -9,12 +9,13 @@
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="p f h n o util"
  >
-<xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
+<xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
 
 <xsl:include href="util.xsl"/>
 
 <xsl:template match="p:page">
 <html>
+	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
 	<head>
 		<title><xsl:value-of select="@title"/> :: <xsl:value-of select="f:frame/@title"/></title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
