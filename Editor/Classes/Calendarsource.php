@@ -399,7 +399,7 @@ class Calendarsource extends Object {
 	
 	function sub_publish() {
 		$data = '<calendarsource xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<url>'.encodeXML($this->url).'</url>'.
+		'<url>'.StringUtils::escapeXML($this->url).'</url>'.
 		'</calendarsource>';
 		return $data;
 	}
