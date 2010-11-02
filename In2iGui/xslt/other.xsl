@@ -8,10 +8,11 @@
 >
 
 <xsl:template match="gui:graph">
-	<div class="in2igui_graph" id="{generate-id()}"><xsl:comment/></div>
+	<div class="in2igui_graph" id="{generate-id()}" style="height: 400px;"><xsl:comment/></div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Graph({
-			element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'
+			element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',layout:'<xsl:value-of select="@layout"/>'
+			<xsl:if test="@source">,source:<xsl:value-of select="@source"/></xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

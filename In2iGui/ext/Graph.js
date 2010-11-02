@@ -2,378 +2,208 @@ In2iGui.Graph = function(options) {
 	this.options = options;
 	this.name = options.name;
 	this.element = $(options.element);
-	this.init();
+	
+	var impls = {force:In2iGui.Graph.Protoviz,graffle:In2iGui.Graph.Raphael};
+	
+	this.impl = impls[this.options.layout];
+	
+	this.impl.init(this);
+	
+	//this.setData();
+	In2iGui.extend(this);
+	if (options.source) {
+		options.source.listen(this);
+	}
 }
 
 In2iGui.Graph.prototype = {
-	init : function() {
-		var w = document.body.clientWidth,
-  			h = document.body.clientHeight,
-		    colors = pv.Colors.category19();
+	setData : function(data) {
+		this.impl.setData(data);
+	},
+	$objectsLoaded : function(data) {
+		this.setData(data);
+	}
+}
 
-		var vis = new pv.Panel()
-		    .width(w)
-		    .height(h)
+In2iGui.Graph.Protoviz = {
+	init : function(parent) {
+		this.parent = parent;
+		var w = document.body.clientWidth,
+  			h = document.body.clientHeight;
+
+		this.vis = new pv.Panel()
+			.canvas(this.parent.element)
+		    .width(this.parent.element.clientWidth)
+		    .height(this.parent.element.clientHeight)
 		    .fillStyle("white")
 		    .event("mousedown", pv.Behavior.pan())
 		    .event("mousewheel", pv.Behavior.zoom());
 
-		var force = vis.add(pv.Layout.Force)
-		    .nodes(miserables.nodes)
-		    .links(miserables.links);
-
-		force.link.add(pv.Line);
+		
+	},
+	convert : function(data) {
+		var result = {nodes:[],links:[]};
+		for (var i=0; i < data.nodes.length; i++) {
+			var node = data.nodes[i];
+			result.nodes.push(node)
+		};
+		for (var i=0; i < data.edges.length; i++) {
+			var edge = data.edges[i];
+			result.links.push({source:this.getIndex(edge.from,data.nodes),target:this.getIndex(edge.to,data.nodes),label:edge.label});
+		};
+		return result;
+	},
+	getIndex : function(id,nodes) {
+		for (var i=0; i < nodes.length; i++) {
+			if (id===nodes[i].id) {
+				return i;
+			}
+		};
+	},
+	setData : function(data) {
+		var colors = pv.Colors.category19();
+		data = this.convert(data);
+		
+		var force = this.vis.add(pv.Layout.Force)
+		    .nodes(data.nodes)
+		    .links(data.links);
+		
+		
+		force.link.add(pv.Line).lineWidth(2).anchor("center").add(pv.Label).text(function() {this.anchorTarget.label});
 
 		force.node.add(pv.Dot)
-		    .size(function(d) {return (d.linkDegree + 4) * Math.pow(this.scale, -1.5)})
+		    .size(function(d) {return 40;return (d.linkDegree + 4) * Math.pow(this.scale, -1.5)})
 		    .fillStyle(function(d) {return d.fix ? "brown" : colors(d.group)})
 		    .strokeStyle(function() {return this.fillStyle().darker()})
 		    .lineWidth(1)
-		    .title(function(d) {return d.nodeName})
+		    .title(function(d) {return d.label})
 		    .event("mousedown", pv.Behavior.drag())
-		    .event("click", function(x) {console.log(x.index)})
+		    .event("click", function(x) {console.log(data.nodes[x.index])})
 		    .event("drag", force);
 
-		force.node.add(pv.Label).text(function(d) {return d.nodeName}).textAlign('center').textBaseline('middle');
+		force.node.add(pv.Label).text(function(d) {return d.label}).textAlign('center').textBaseline('middle');
+		
+		//force.link.add(pv.Label).text(function(d) {return d.label}).textAlign('left').textBaseline('middle');
 
-		vis.render();
+		this.vis.render();
 	}
+	
 }
 
-var miserables = {
-  nodes:[
-    {nodeName:"Myriel", group:1},
-    {nodeName:"Napoleon", group:1},
-    {nodeName:"Mlle. Baptistine", group:1},
-    {nodeName:"Mme. Magloire", group:1},
-    {nodeName:"Countess de Lo", group:1},
-    {nodeName:"Geborand", group:1},
-    {nodeName:"Champtercier", group:1},
-    {nodeName:"Cravatte", group:1},
-    {nodeName:"Count", group:1},
-    {nodeName:"Old Man", group:1},
-    {nodeName:"Labarre", group:2},
-    {nodeName:"Valjean", group:2},
-    {nodeName:"Marguerite", group:3},
-    {nodeName:"Mme. de R", group:2},
-    {nodeName:"Isabeau", group:2},
-    {nodeName:"Gervais", group:2},
-    {nodeName:"Tholomyes", group:3},
-    {nodeName:"Listolier", group:3},
-    {nodeName:"Fameuil", group:3},
-    {nodeName:"Blacheville", group:3},
-    {nodeName:"Favourite", group:3},
-    {nodeName:"Dahlia", group:3},
-    {nodeName:"Zephine", group:3},
-    {nodeName:"Fantine", group:3},
-    {nodeName:"Mme. Thenardier", group:4},
-    {nodeName:"Thenardier", group:4},
-    {nodeName:"Cosette", group:5},
-    {nodeName:"Javert", group:4},
-    {nodeName:"Fauchelevent", group:0},
-    {nodeName:"Bamatabois", group:2},
-    {nodeName:"Perpetue", group:3},
-    {nodeName:"Simplice", group:2},
-    {nodeName:"Scaufflaire", group:2},
-    {nodeName:"Woman 1", group:2},
-    {nodeName:"Judge", group:2},
-    {nodeName:"Champmathieu", group:2},
-    {nodeName:"Brevet", group:2},
-    {nodeName:"Chenildieu", group:2},
-    {nodeName:"Cochepaille", group:2},
-    {nodeName:"Pontmercy", group:4},
-    {nodeName:"Boulatruelle", group:6},
-    {nodeName:"Eponine", group:4},
-    {nodeName:"Anzelma", group:4},
-    {nodeName:"Woman 2", group:5},
-    {nodeName:"Mother Innocent", group:0},
-    {nodeName:"Gribier", group:0},
-    {nodeName:"Jondrette", group:7},
-    {nodeName:"Mme. Burgon", group:7},
-    {nodeName:"Gavroche", group:8},
-    {nodeName:"Gillenormand", group:5},
-    {nodeName:"Magnon", group:5},
-    {nodeName:"Mlle. Gillenormand", group:5},
-    {nodeName:"Mme. Pontmercy", group:5},
-    {nodeName:"Mlle. Vaubois", group:5},
-    {nodeName:"Lt. Gillenormand", group:5},
-    {nodeName:"Marius", group:8},
-    {nodeName:"Baroness T", group:5},
-    {nodeName:"Mabeuf", group:8},
-    {nodeName:"Enjolras", group:8},
-    {nodeName:"Combeferre", group:8},
-    {nodeName:"Prouvaire", group:8},
-    {nodeName:"Feuilly", group:8},
-    {nodeName:"Courfeyrac", group:8},
-    {nodeName:"Bahorel", group:8},
-    {nodeName:"Bossuet", group:8},
-    {nodeName:"Joly", group:8},
-    {nodeName:"Grantaire", group:8},
-    {nodeName:"Mother Plutarch", group:9},
-    {nodeName:"Gueulemer", group:4},
-    {nodeName:"Babet", group:4},
-    {nodeName:"Claquesous", group:4},
-    {nodeName:"Montparnasse", group:4},
-    {nodeName:"Toussaint", group:5},
-    {nodeName:"Child 1", group:10},
-    {nodeName:"Child 2", group:10},
-    {nodeName:"Brujon", group:4},
-    {nodeName:"Mme. Hucheloup", group:8}
-  ],
-  links:[
-    {source:1, target:0, value:1},
-    {source:2, target:0, value:8},
-    {source:3, target:0, value:10},
-    {source:3, target:2, value:6},
-    {source:4, target:0, value:1},
-    {source:5, target:0, value:1},
-    {source:6, target:0, value:1},
-    {source:7, target:0, value:1},
-    {source:8, target:0, value:2},
-    {source:9, target:0, value:1},
-    {source:11, target:10, value:1},
-    {source:11, target:3, value:3},
-    {source:11, target:2, value:3},
-    {source:11, target:0, value:5},
-    {source:12, target:11, value:1},
-    {source:13, target:11, value:1},
-    {source:14, target:11, value:1},
-    {source:15, target:11, value:1},
-    {source:17, target:16, value:4},
-    {source:18, target:16, value:4},
-    {source:18, target:17, value:4},
-    {source:19, target:16, value:4},
-    {source:19, target:17, value:4},
-    {source:19, target:18, value:4},
-    {source:20, target:16, value:3},
-    {source:20, target:17, value:3},
-    {source:20, target:18, value:3},
-    {source:20, target:19, value:4},
-    {source:21, target:16, value:3},
-    {source:21, target:17, value:3},
-    {source:21, target:18, value:3},
-    {source:21, target:19, value:3},
-    {source:21, target:20, value:5},
-    {source:22, target:16, value:3},
-    {source:22, target:17, value:3},
-    {source:22, target:18, value:3},
-    {source:22, target:19, value:3},
-    {source:22, target:20, value:4},
-    {source:22, target:21, value:4},
-    {source:23, target:16, value:3},
-    {source:23, target:17, value:3},
-    {source:23, target:18, value:3},
-    {source:23, target:19, value:3},
-    {source:23, target:20, value:4},
-    {source:23, target:21, value:4},
-    {source:23, target:22, value:4},
-    {source:23, target:12, value:2},
-    {source:23, target:11, value:9},
-    {source:24, target:23, value:2},
-    {source:24, target:11, value:7},
-    {source:25, target:24, value:13},
-    {source:25, target:23, value:1},
-    {source:25, target:11, value:12},
-    {source:26, target:24, value:4},
-    {source:26, target:11, value:31},
-    {source:26, target:16, value:1},
-    {source:26, target:25, value:1},
-    {source:27, target:11, value:17},
-    {source:27, target:23, value:5},
-    {source:27, target:25, value:5},
-    {source:27, target:24, value:1},
-    {source:27, target:26, value:1},
-    {source:28, target:11, value:8},
-    {source:28, target:27, value:1},
-    {source:29, target:23, value:1},
-    {source:29, target:27, value:1},
-    {source:29, target:11, value:2},
-    {source:30, target:23, value:1},
-    {source:31, target:30, value:2},
-    {source:31, target:11, value:3},
-    {source:31, target:23, value:2},
-    {source:31, target:27, value:1},
-    {source:32, target:11, value:1},
-    {source:33, target:11, value:2},
-    {source:33, target:27, value:1},
-    {source:34, target:11, value:3},
-    {source:34, target:29, value:2},
-    {source:35, target:11, value:3},
-    {source:35, target:34, value:3},
-    {source:35, target:29, value:2},
-    {source:36, target:34, value:2},
-    {source:36, target:35, value:2},
-    {source:36, target:11, value:2},
-    {source:36, target:29, value:1},
-    {source:37, target:34, value:2},
-    {source:37, target:35, value:2},
-    {source:37, target:36, value:2},
-    {source:37, target:11, value:2},
-    {source:37, target:29, value:1},
-    {source:38, target:34, value:2},
-    {source:38, target:35, value:2},
-    {source:38, target:36, value:2},
-    {source:38, target:37, value:2},
-    {source:38, target:11, value:2},
-    {source:38, target:29, value:1},
-    {source:39, target:25, value:1},
-    {source:40, target:25, value:1},
-    {source:41, target:24, value:2},
-    {source:41, target:25, value:3},
-    {source:42, target:41, value:2},
-    {source:42, target:25, value:2},
-    {source:42, target:24, value:1},
-    {source:43, target:11, value:3},
-    {source:43, target:26, value:1},
-    {source:43, target:27, value:1},
-    {source:44, target:28, value:3},
-    {source:44, target:11, value:1},
-    {source:45, target:28, value:2},
-    {source:47, target:46, value:1},
-    {source:48, target:47, value:2},
-    {source:48, target:25, value:1},
-    {source:48, target:27, value:1},
-    {source:48, target:11, value:1},
-    {source:49, target:26, value:3},
-    {source:49, target:11, value:2},
-    {source:50, target:49, value:1},
-    {source:50, target:24, value:1},
-    {source:51, target:49, value:9},
-    {source:51, target:26, value:2},
-    {source:51, target:11, value:2},
-    {source:52, target:51, value:1},
-    {source:52, target:39, value:1},
-    {source:53, target:51, value:1},
-    {source:54, target:51, value:2},
-    {source:54, target:49, value:1},
-    {source:54, target:26, value:1},
-    {source:55, target:51, value:6},
-    {source:55, target:49, value:12},
-    {source:55, target:39, value:1},
-    {source:55, target:54, value:1},
-    {source:55, target:26, value:21},
-    {source:55, target:11, value:19},
-    {source:55, target:16, value:1},
-    {source:55, target:25, value:2},
-    {source:55, target:41, value:5},
-    {source:55, target:48, value:4},
-    {source:56, target:49, value:1},
-    {source:56, target:55, value:1},
-    {source:57, target:55, value:1},
-    {source:57, target:41, value:1},
-    {source:57, target:48, value:1},
-    {source:58, target:55, value:7},
-    {source:58, target:48, value:7},
-    {source:58, target:27, value:6},
-    {source:58, target:57, value:1},
-    {source:58, target:11, value:4},
-    {source:59, target:58, value:15},
-    {source:59, target:55, value:5},
-    {source:59, target:48, value:6},
-    {source:59, target:57, value:2},
-    {source:60, target:48, value:1},
-    {source:60, target:58, value:4},
-    {source:60, target:59, value:2},
-    {source:61, target:48, value:2},
-    {source:61, target:58, value:6},
-    {source:61, target:60, value:2},
-    {source:61, target:59, value:5},
-    {source:61, target:57, value:1},
-    {source:61, target:55, value:1},
-    {source:62, target:55, value:9},
-    {source:62, target:58, value:17},
-    {source:62, target:59, value:13},
-    {source:62, target:48, value:7},
-    {source:62, target:57, value:2},
-    {source:62, target:41, value:1},
-    {source:62, target:61, value:6},
-    {source:62, target:60, value:3},
-    {source:63, target:59, value:5},
-    {source:63, target:48, value:5},
-    {source:63, target:62, value:6},
-    {source:63, target:57, value:2},
-    {source:63, target:58, value:4},
-    {source:63, target:61, value:3},
-    {source:63, target:60, value:2},
-    {source:63, target:55, value:1},
-    {source:64, target:55, value:5},
-    {source:64, target:62, value:12},
-    {source:64, target:48, value:5},
-    {source:64, target:63, value:4},
-    {source:64, target:58, value:10},
-    {source:64, target:61, value:6},
-    {source:64, target:60, value:2},
-    {source:64, target:59, value:9},
-    {source:64, target:57, value:1},
-    {source:64, target:11, value:1},
-    {source:65, target:63, value:5},
-    {source:65, target:64, value:7},
-    {source:65, target:48, value:3},
-    {source:65, target:62, value:5},
-    {source:65, target:58, value:5},
-    {source:65, target:61, value:5},
-    {source:65, target:60, value:2},
-    {source:65, target:59, value:5},
-    {source:65, target:57, value:1},
-    {source:65, target:55, value:2},
-    {source:66, target:64, value:3},
-    {source:66, target:58, value:3},
-    {source:66, target:59, value:1},
-    {source:66, target:62, value:2},
-    {source:66, target:65, value:2},
-    {source:66, target:48, value:1},
-    {source:66, target:63, value:1},
-    {source:66, target:61, value:1},
-    {source:66, target:60, value:1},
-    {source:67, target:57, value:3},
-    {source:68, target:25, value:5},
-    {source:68, target:11, value:1},
-    {source:68, target:24, value:1},
-    {source:68, target:27, value:1},
-    {source:68, target:48, value:1},
-    {source:68, target:41, value:1},
-    {source:69, target:25, value:6},
-    {source:69, target:68, value:6},
-    {source:69, target:11, value:1},
-    {source:69, target:24, value:1},
-    {source:69, target:27, value:2},
-    {source:69, target:48, value:1},
-    {source:69, target:41, value:1},
-    {source:70, target:25, value:4},
-    {source:70, target:69, value:4},
-    {source:70, target:68, value:4},
-    {source:70, target:11, value:1},
-    {source:70, target:24, value:1},
-    {source:70, target:27, value:1},
-    {source:70, target:41, value:1},
-    {source:70, target:58, value:1},
-    {source:71, target:27, value:1},
-    {source:71, target:69, value:2},
-    {source:71, target:68, value:2},
-    {source:71, target:70, value:2},
-    {source:71, target:11, value:1},
-    {source:71, target:48, value:1},
-    {source:71, target:41, value:1},
-    {source:71, target:25, value:1},
-    {source:72, target:26, value:2},
-    {source:72, target:27, value:1},
-    {source:72, target:11, value:1},
-    {source:73, target:48, value:2},
-    {source:74, target:48, value:2},
-    {source:74, target:73, value:3},
-    {source:75, target:69, value:3},
-    {source:75, target:68, value:3},
-    {source:75, target:25, value:3},
-    {source:75, target:48, value:1},
-    {source:75, target:41, value:1},
-    {source:75, target:70, value:1},
-    {source:75, target:71, value:1},
-    {source:76, target:64, value:1},
-    {source:76, target:65, value:1},
-    {source:76, target:66, value:1},
-    {source:76, target:63, value:1},
-    {source:76, target:62, value:1},
-    {source:76, target:48, value:1},
-    {source:76, target:58, value:1}
-  ]
-};
+In2iGui.Graph.Raphael = {
+	init : function(parent) {
+		this.parent = parent;
+		
+		Raphael.fn.connection = function (obj1, obj2, line, bg, text) {
+			if (obj1.line && obj1.from && obj1.to) {
+				line = obj1;
+				obj1 = line.from;
+				obj2 = line.to;
+			}
+			var bb1 = obj1.getBBox(),
+				bb2 = obj2.getBBox(),
+				p = [{x: bb1.x + bb1.width / 2, y: bb1.y - 1},
+				{x: bb1.x + bb1.width / 2, y: bb1.y + bb1.height + 1},
+				{x: bb1.x - 1, y: bb1.y + bb1.height / 2},
+				{x: bb1.x + bb1.width + 1, y: bb1.y + bb1.height / 2},
+				{x: bb2.x + bb2.width / 2, y: bb2.y - 1},
+				{x: bb2.x + bb2.width / 2, y: bb2.y + bb2.height + 1},
+				{x: bb2.x - 1, y: bb2.y + bb2.height / 2},
+				{x: bb2.x + bb2.width + 1, y: bb2.y + bb2.height / 2}],
+				d = {}, dis = [];
+			for (var i = 0; i < 4; i++) {
+				for (var j = 4; j < 8; j++) {
+					var dx = Math.abs(p[i].x - p[j].x),
+						dy = Math.abs(p[i].y - p[j].y);
+					if ((i == j - 4) || (((i != 3 && j != 6) || p[i].x < p[j].x) && ((i != 2 && j != 7) || p[i].x > p[j].x) && ((i != 0 && j != 5) || p[i].y > p[j].y) && ((i != 1 && j != 4) || p[i].y < p[j].y))) {
+						dis.push(dx + dy);
+						d[dis[dis.length - 1]] = [i, j];
+					}
+				}
+			}
+			if (dis.length == 0) {
+				var res = [0, 4];
+			} else {
+				res = d[Math.min.apply(Math, dis)];
+			}
+			var x1 = p[res[0]].x,
+				y1 = p[res[0]].y,
+				x4 = p[res[1]].x,
+				y4 = p[res[1]].y;
+			dx = Math.max(Math.abs(x1 - x4) / 2, 10);
+			dy = Math.max(Math.abs(y1 - y4) / 2, 10);
+			var x2 = [x1, x1, x1 - dx, x1 + dx][res[0]].toFixed(3),
+				y2 = [y1 - dy, y1 + dy, y1, y1][res[0]].toFixed(3),
+				x3 = [0, 0, 0, 0, x4, x4, x4 - dx, x4 + dx][res[1]].toFixed(3),
+				y3 = [0, 0, 0, 0, y1 + dy, y1 - dy, y4, y4][res[1]].toFixed(3);
+			var path = ["M", x1.toFixed(3), y1.toFixed(3), "C", x2, y2, x3, y3, x4.toFixed(3), y4.toFixed(3)].join(",");
+			if (line && line.line) {
+				line.bg && line.bg.attr({path: path});
+				n2i.log(path);
+				line.line.attr({path: path});
+				line.text.attr({x:x1+(x4-x1)/2,y:y4+(y1-y4)/2});
+			} else {
+				var color = typeof line == "string" ? line : "#000";
+				return {
+					line: this.path(path).attr({stroke: color, fill: "none", "stroke-width": 2, "stroke-opacity": .5}),
+					from: obj1,
+					to: obj2,
+					text : this.text(x1+(x4-x1)/2, y4+(y1-y4)/2,text).attr({fill:'#fff'})
+				};
+			}
+		};
+	},
+
+
+ 	setData : function (data) {
+	    var dragger = function () {
+	        this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
+	        this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
+	        this.animate({"fill-opacity": .8}, 500);
+	    },
+        move = function (dx, dy) {
+			var x = this.ox + dx,
+				y = this.oy + dy;
+            var att = this.type == "rect" ? {x: x, y: y} : {cx: this.ox + dx, cy: this.oy + dy};
+            this.attr(att);
+            for (var i = connections.length; i--;) {
+                r.connection(connections[i]);
+            }
+			this.text.attr({x:x+(this.getBBox().width/2),y:y+15});
+            r.safari();
+        },
+        up = function () {
+            this.animate({"fill-opacity": .1}, 500);
+        },
+		el = this.parent.element,
+		width = el.clientWidth,
+		height = el.clientHeight,
+        r = Raphael(el, width, height),
+        connections = [],
+		shapes = [],
+		idsToShape = {};
+		for (var i=0; i < data.nodes.length; i++) {
+			var node = data.nodes[i],
+				left = Math.random()*(width-100)+50,
+				top = Math.random()*(height-100)+50,
+				shape = r.rect(left, top, 20, 30, 5),
+				text = r.text(left,top+15,node.label),
+				box = text.getBBox()
+			text.attr({x:left+(box.width+20)/2,fill:'#fff'});
+			shape.attr({width:box.width+20});
+			shape.text = text;
+			shapes.push(shape)
+			idsToShape[node.id] = shape;
+		};
+	    for (var i = 0, ii = shapes.length; i < ii; i++) {
+	        var color = "#fff";//Raphael.getColor();
+	        shapes[i].attr({fill: "#559DFF", stroke: color, "fill-opacity": .1, "stroke-width": 2, cursor: "move"});
+	        shapes[i].drag(move, dragger, up);
+	    }
+		
+		for (var i=0; i < data.edges.length; i++) {
+			var edge = data.edges[i];
+			connections.push(r.connection(idsToShape[edge.from], idsToShape[edge.to], "#fff",null,edge.label));
+		};
+	}
+}

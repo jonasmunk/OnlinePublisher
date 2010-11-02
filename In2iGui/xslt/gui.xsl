@@ -103,7 +103,9 @@
 	<script src="{$context}/In2iGui/ext/Graphviz.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:graph">
+	<link rel="stylesheet" href="{$context}/In2iGui/ext/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script type="text/javascript" src="{$context}/In2iGui/lib/protovis-3.2/protovis-r3.2.js"><xsl:comment/></script>
+	<script type="text/javascript" src="{$context}/In2iGui/lib/raphael-min.js"><xsl:comment/></script>
 	<script src="{$context}/In2iGui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:chart">
