@@ -9,7 +9,6 @@ In2iGui.Graph = function(options) {
 	
 	this.impl.init(this);
 	
-	//this.setData();
 	In2iGui.extend(this);
 	if (options.source) {
 		options.source.listen(this);
@@ -21,6 +20,7 @@ In2iGui.Graph.prototype = {
 		this.impl.setData(data);
 	},
 	$objectsLoaded : function(data) {
+		n2i.log('Data loaded');
 		this.setData(data);
 	}
 }
@@ -93,6 +93,7 @@ In2iGui.Graph.Protoviz = {
 In2iGui.Graph.Raphael = {
 	init : function(parent) {
 		this.parent = parent;
+		n2i.log('Initializing');
 		
 		Raphael.fn.connection = function (obj1, obj2, line, bg, text) {
 			if (obj1.line && obj1.from && obj1.to) {
@@ -139,7 +140,6 @@ In2iGui.Graph.Raphael = {
 			var path = ["M", x1.toFixed(3), y1.toFixed(3), "C", x2, y2, x3, y3, x4.toFixed(3), y4.toFixed(3)].join(",");
 			if (line && line.line) {
 				line.bg && line.bg.attr({path: path});
-				n2i.log(path);
 				line.line.attr({path: path});
 				line.text.attr({x:x1+(x4-x1)/2,y:y4+(y1-y4)/2});
 			} else {
@@ -188,11 +188,11 @@ In2iGui.Graph.Raphael = {
 				top = Math.random()*(height-100)+50,
 				shape = r.rect(left, top, 20, 30, 5),
 				text = r.text(left,top+15,node.label),
-				box = text.getBBox()
+				box = text.getBBox();
 			text.attr({x:left+(box.width+20)/2,fill:'#fff'});
 			shape.attr({width:box.width+20});
 			shape.text = text;
-			shapes.push(shape)
+			shapes.push(shape);
 			idsToShape[node.id] = shape;
 		};
 	    for (var i = 0, ii = shapes.length; i < ii; i++) {
