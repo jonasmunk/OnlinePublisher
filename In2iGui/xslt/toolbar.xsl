@@ -21,7 +21,13 @@
 			<xsl:if test="@border='bottom'"><xsl:text> in2igui_toolbar_border_bottom</xsl:text></xsl:if>
 			<xsl:if test="@centered='true'"><xsl:text> in2igui_toolbar_centered</xsl:text></xsl:if>
 		</xsl:attribute>
-		<div class="in2igui_toolbar_body">
+		<div>
+			<xsl:attribute name="class">
+				<xsl:text>in2igui_toolbar_body</xsl:text>
+				<xsl:if test="@fixed-height='true'">
+					<xsl:text> in2igui_toolbar_body_fixed_height</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
 			<xsl:apply-templates select="child::*[not(name()='right')]"/>
 			<xsl:apply-templates select="gui:right"/>
 		</div>

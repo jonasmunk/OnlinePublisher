@@ -40,6 +40,12 @@ div.in2igui_toolbar_right
 	top: 0;
 }
 
+div.in2igui_toolbar_body_fixed_height
+{
+	height: 56px;
+	overflow: hidden;
+}
+
 /********************************** Icon ************************/
 
 

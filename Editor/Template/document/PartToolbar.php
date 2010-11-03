@@ -33,7 +33,7 @@ $gui='
 		if ($part!=null && is_array($part->getToolbars())) {
 			foreach ($part->getToolbars() as $title => $body) {
 				$gui.='<tab title="'.$title.'" background="light">
-				<toolbar>
+				<toolbar fixed-height="true">
 					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
 					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
 					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()">
@@ -46,7 +46,7 @@ $gui='
 		}
 		$gui.='
 		<tab title="Afstande" background="light">
-			<toolbar>
+			<toolbar fixed-height="true">
 				<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
 				<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
 				<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()">
