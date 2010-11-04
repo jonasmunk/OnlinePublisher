@@ -5134,7 +5134,7 @@ In2iGui.Source.prototype = {
 	},
 	/** @private */
 	parse : function(t) {
-		if (t.responseXML) {
+		if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror') {
 			this.parseXML(t.responseXML);
 		} else {
 			var str = t.responseText.replace(/^\s+|\s+$/g, '');
@@ -7610,6 +7610,7 @@ In2iGui.Alert.prototype = {
 			this.content.appendChild(this.title);
 		}
 		this.title.innerHTML = text;
+		
 	},
 	/** Sets the alert text */
 	setText : function(/**String*/ text) {
