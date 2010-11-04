@@ -137,7 +137,7 @@ op.part.ImageGallery.changing = {
 		var nodes = element.getElementsByTagName('a');
 		var timer;
 		var index = -1;
-		var zIndex = 1000;
+		var zIndex = 1;
 		var first = true;
 		timer = function() {
 			if (index>-1) {
