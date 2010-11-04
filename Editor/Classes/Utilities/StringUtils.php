@@ -71,6 +71,12 @@ class StringUtils {
 		return $output;
 	}
 	
+	function escapeJavaScriptXML($input) {
+		$output = StringUtils::escapeXML($input);
+		$output = str_replace("'", "\'", $output);
+		return $output;
+	}
+	
 	function insertLineBreakTags($input,$tag) {
 		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
 	}
