@@ -294,3 +294,26 @@ a.in2igui_button_small_rounded:focus:active span span
 {
 	background-position: left -408px;
 }
+
+/*****************************************/
+
+a.in2igui_button_highlighted {
+    -webkit-animation-name: in2igui_pulse;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+
+
+@-webkit-keyframes in2igui_pulse {
+	0% {
+	  opacity: 1;
+	}
+	50% {
+	  opacity: .8;
+	}
+	100% {
+	  opacity: 1;
+	}
+}
