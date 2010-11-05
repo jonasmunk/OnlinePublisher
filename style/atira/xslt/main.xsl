@@ -23,7 +23,14 @@
 	<meta name="robots" content="index,follow"></meta>
 	<xsl:call-template name="oo-script"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+	<xsl:choose>
+		<xsl:when test="$template='document'">
+			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/document.php"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+		</xsl:otherwise>
+	</xsl:choose>
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[style/atira/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>

@@ -123,7 +123,7 @@ div.part_image img
 }
 
 /************************ Image gallery ************************/
-
+/*
 div.part_imagegallery
 {
 	overflow: hidden;
@@ -166,7 +166,7 @@ div.part_imagegallery img
 {
 	border: 0px;
 }
-
+*/
 /**************************** File ****************************/
 
 div.part_file
