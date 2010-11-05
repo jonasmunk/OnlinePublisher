@@ -15,6 +15,7 @@ $parser = new FeedParser();
 $feed = $parser->parseURL($url);
 
 if (!$feed) {
+	In2iGui::respondFailure();
 	exit;
 }
 

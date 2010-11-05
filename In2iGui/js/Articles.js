@@ -36,6 +36,9 @@ In2iGui.Articles.prototype = {
 			this.element.insert(e);
 		};
 	},
+	$sourceFailed : function() {
+		this.element.update('<div>Failed!</div>');
+	},
 	/** @private */
 	$sourceIsBusy : function() {
 		this.element.update('<div class="in2igui_articles_loading">Loading...</div>');

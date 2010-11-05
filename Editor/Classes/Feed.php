@@ -20,7 +20,7 @@ class FeedParser {
 	function parseURL($url) {
 		$feed = new Feed();
 		$doc = new DOMDocument('1.0','UTF-8');
-		if ($doc->load($url)) {
+		if (@$doc->load($url)) {
 			$this->analyze(&$doc,$feed);
 			$this->parseItems(&$doc,$feed);
 			return $feed;

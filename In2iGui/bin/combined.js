@@ -10003,7 +10003,14 @@ In2iGui.Source.prototype = {
 			};
 			this.busy=true;
 			In2iGui.callDelegates(this,'sourceIsBusy');
-			new Ajax.Request(this.options.url, {parameters:prms,onSuccess: function(t) {self.parse(t)},onException:function(t,e) {n2i.log(e)}});
+			new Ajax.Request(this.options.url, {
+				parameters:prms,
+				onSuccess: function(t) {self.parse(t)},
+				onException:function(t,e) {n2i.log(e)},
+				onFailure:function(t,e) {
+					In2iGui.callDelegates(self,'sourceFailed');
+				}
+			});
 		} else if (this.options.dwr) {
 			var pair = this.options.dwr.split('.');
 			var facade = eval(pair[0]);
@@ -16379,6 +16386,9 @@ In2iGui.Articles.prototype = {
 			};
 			this.element.insert(e);
 		};
+	},
+	$sourceFailed : function() {
+		this.element.update('<div>Failed!</div>');
 	},
 	/** @private */
 	$sourceIsBusy : function() {
