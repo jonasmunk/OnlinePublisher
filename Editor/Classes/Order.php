@@ -450,103 +450,103 @@ class Order extends Object {
 	
 		$data = '<order xmlns="'.parent::_buildnamespace('1.0').'">';
 		if ($this->order_no!='') {
-			$data.='<order_no>'.encodeXML($this->order_no).'</order_no>';
+			$data.='<order_no>'.StringUtils::escapeXML($this->order_no).'</order_no>';
 		}		
 		if ($this->customers_id!='') {
-			$data.='<customers_id>'.encodeXML($this->customers_id).'</customers_id>';
+			$data.='<customers_id>'.StringUtils::escapeXML($this->customers_id).'</customers_id>';
 		}
 		if ($this->customers_name!='') {
-			$data.='<customers_name>'.encodeXML($this->customers_name).'</customers_name>';
+			$data.='<customers_name>'.StringUtils::escapeXML($this->customers_name).'</customers_name>';
 		}
 		if ($this->customers_company!='') {
-			$data.='<customers_company>'.encodeXML($this->customers_company).'</customers_company>';
+			$data.='<customers_company>'.StringUtils::escapeXML($this->customers_company).'</customers_company>';
 		}
 		if ($this->customers_street_address!='') {
-			$data.='<customers_street_address>'.encodeXML($this->customers_street_address).'</customers_street_address>';
+			$data.='<customers_street_address>'.StringUtils::escapeXML($this->customers_street_address).'</customers_street_address>';
 		}
 		if ($this->customers_zipcode!='') {
-			$data.='<customers_zipcode>'.encodeXML($this->customers_zipcode).'</customers_zipcode>';
+			$data.='<customers_zipcode>'.StringUtils::escapeXML($this->customers_zipcode).'</customers_zipcode>';
 		}
 		if ($this->customers_country!='') {
-			$data.='<customers_country>'.encodeXML($this->customers_country).'</customers_country>';
+			$data.='<customers_country>'.StringUtils::escapeXML($this->customers_country).'</customers_country>';
 		}
 		if (isset($this->customers_telephone)) {
 			$data.='<customers_telephone>'.($this->customers_telephone).'</customers_telephone>';
 		}
 		if ($this->customers_email!='') {
-			$data.='<customers_email>'.encodeXML($this->customers_email).'</customers_email>';
+			$data.='<customers_email>'.StringUtils::escapeXML($this->customers_email).'</customers_email>';
 		}
 		if ($this->delivery_name!='') {
-			$data.='<delivery_name>'.encodeXML($this->delivery_name).'</delivery_name>';
+			$data.='<delivery_name>'.StringUtils::escapeXML($this->delivery_name).'</delivery_name>';
 		}
 		if ($this->delivery_company!='') {
-			$data.='<delivery_company>'.encodeXML($this->delivery_company).'</delivery_company>';
+			$data.='<delivery_company>'.StringUtils::escapeXML($this->delivery_company).'</delivery_company>';
 		}
 		if ($this->delivery_street_address!='') {
-			$data.='<delivery_street_address>'.encodeXML($this->delivery_street_address).'</delivery_street_address>';
+			$data.='<delivery_street_address>'.StringUtils::escapeXML($this->delivery_street_address).'</delivery_street_address>';
 		}
 		if ($this->delivery_city!='') {
-			$data.='<delivery_city>'.encodeXML($this->delivery_city).'</delivery_city>';
+			$data.='<delivery_city>'.StringUtils::escapeXML($this->delivery_city).'</delivery_city>';
 		}
 		if ($this->delivery_zipcode!='') {
-			$data.='<delivery_zipcode>'.encodeXML($this->delivery_zipcode).'</delivery_zipcode>';
+			$data.='<delivery_zipcode>'.StringUtils::escapeXML($this->delivery_zipcode).'</delivery_zipcode>';
 		}				
 		if ($this->delivery_country!='') {
-			$data.='<delivery_country>'.encodeXML($this->delivery_country).'</delivery_country>';
+			$data.='<delivery_country>'.StringUtils::escapeXML($this->delivery_country).'</delivery_country>';
 		}
 		if ($this->billing_name!='') {
-			$data.='<billing_name>'.encodeXML($this->billing_name).'</billing_name>';
+			$data.='<billing_name>'.StringUtils::escapeXML($this->billing_name).'</billing_name>';
 		}
 		if ($this->billing_company!='') {
-			$data.='<billing_company>'.encodeXML($this->billing_company).'</billing_company>';
+			$data.='<billing_company>'.StringUtils::escapeXML($this->billing_company).'</billing_company>';
 		}
 		if ($this->billing_street_address!='') {
-			$data.='<billing_street_address>'.encodeXML($this->billing_street_address).'</billing_street_address>';
+			$data.='<billing_street_address>'.StringUtils::escapeXML($this->billing_street_address).'</billing_street_address>';
 		}
 		if ($this->billing_city!='') {
-			$data.='<billing_city>'.encodeXML($this->billing_city).'</billing_city>';
+			$data.='<billing_city>'.StringUtils::escapeXML($this->billing_city).'</billing_city>';
 		}
 		if ($this->billing_zipcode!='') {
-			$data.='<billing_zipcode>'.encodeXML($this->billing_zipcode).'</billing_zipcode>';
+			$data.='<billing_zipcode>'.StringUtils::escapeXML($this->billing_zipcode).'</billing_zipcode>';
 		}
 		if ($this->billing_country!='') {
-			$data.='<billing_country>'.encodeXML($this->billing_country).'</billing_country>';
+			$data.='<billing_country>'.StringUtils::escapeXML($this->billing_country).'</billing_country>';
 		}
 		if ($this->payment_method!='') {
-			$data.='<payment_method>'.encodeXML($this->payment_method).'</payment_method>';
+			$data.='<payment_method>'.StringUtils::escapeXML($this->payment_method).'</payment_method>';
 		}
 		if ($this->cc_type!='') {
-			$data.='<cc_type>'.encodeXML($this->cc_type).'</cc_type>';
+			$data.='<cc_type>'.StringUtils::escapeXML($this->cc_type).'</cc_type>';
 		}
 		if ($this->cc_owner!='') {
-			$data.='<cc_owner>'.encodeXML($this->cc_owner).'</cc_owner>';
+			$data.='<cc_owner>'.StringUtils::escapeXML($this->cc_owner).'</cc_owner>';
 		}
 		if ($this->cc_number!='') {
-			$data.='<cc_number>'.encodeXML($this->cc_number).'</cc_number>';
+			$data.='<cc_number>'.StringUtils::escapeXML($this->cc_number).'</cc_number>';
 		}
 		if ($this->cc_controle_number!='') {
-			$data.='<cc_controle_number>'.encodeXML($this->cc_controle_number).'</cc_controle_number>';
+			$data.='<cc_controle_number>'.StringUtils::escapeXML($this->cc_controle_number).'</cc_controle_number>';
 		}
 		if ($this->cc_expires!='') {
-			$data.='<cc_expires>'.encodeXML($this->cc_expires).'</cc_expires>';
+			$data.='<cc_expires>'.StringUtils::escapeXML($this->cc_expires).'</cc_expires>';
 		}
 		if ($this->orders_status!='') {
-			$data.='<orders_status>'.encodeXML($this->orders_status).'</orders_status>';
+			$data.='<orders_status>'.StringUtils::escapeXML($this->orders_status).'</orders_status>';
 		}
 		if ($this->orders_date_finished!='') {
-			$data.='<orders_date_finished>'.encodeXML($this->orders_date_finished).'</orders_date_finished>';
+			$data.='<orders_date_finished>'.StringUtils::escapeXML($this->orders_date_finished).'</orders_date_finished>';
 		}
 		if ($this->currency!='') {
-			$data.='<currency>'.encodeXML($this->currency).'</currency>';
+			$data.='<currency>'.StringUtils::escapeXML($this->currency).'</currency>';
 		}
 		if ($this->currency_value!='') {
-			$data.='<currency_value>'.encodeXML($this->currency_value).'</currency_value>';
+			$data.='<currency_value>'.StringUtils::escapeXML($this->currency_value).'</currency_value>';
 		}
 		if ($this->total_amount!='') {
-			$data.='<total_amount>'.encodeXML($this->total_amount).'</total_amount>';
+			$data.='<total_amount>'.StringUtils::escapeXML($this->total_amount).'</total_amount>';
 		}
 		if ($this->total_tax!='') {
-			$data.='<total_tax>'.encodeXML($this->total_tax).'</total_tax>';
+			$data.='<total_tax>'.StringUtils::escapeXML($this->total_tax).'</total_tax>';
 		}
 		$data.='</order>';
 		return $data;		

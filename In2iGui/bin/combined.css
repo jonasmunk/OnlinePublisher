@@ -309,6 +309,7 @@ a.in2igui_button
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	-webkit-user-select: none;
 	-moz-user-select: none;
+	white-space: nowrap;
 }
 
 a.in2igui_button span

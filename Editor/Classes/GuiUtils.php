@@ -173,7 +173,7 @@ class GuiUtils {
 		while ($row = Database::next($result)) {
 			$title = $row['title'];
 			$title = str_replace("'","",$title);
-			$output.='<item title="'.StringUtils::escapeXML($title).'" value="'.$row['id'].'"/>';
+			$output.='<item title="'.StringUtils::escapeJavaScriptXML($title).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;
@@ -215,7 +215,7 @@ class GuiUtils {
 		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "");
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<item title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
+			$output.='<item title="'.StringUtils::escapeJavaScriptXML($row['title']).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;

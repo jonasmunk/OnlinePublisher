@@ -119,14 +119,14 @@ class OrderLine extends Object {
 	
 	function sub_publish() {
 		$data = '<orderLine xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<orders_id>'.encodeXML($this->orders_id).'</orders_id>'.
-		'<product_id>'.encodeXML($this->product_id).'</product_id>'.
-		'<product_model>'.encodeXML($this->product_model).'</product_model>'.
-		'<product_name>'.encodeXML($this->product_name).'</product_name>'.
-		'<product_price>'.encodeXML($this->product_price).'</product_price>'.
-		'<final_price>'.encodeXML($this->final_price).'</final_price>'.
-		'<product_tax>'.encodeXML($this->product_tax).'</product_tax>'.
-		'<product_quantity>'.encodeXML($this->product_quantity).'</product_quantity>'.
+		'<orders_id>'.StringUtils::escapeXML($this->orders_id).'</orders_id>'.
+		'<product_id>'.StringUtils::escapeXML($this->product_id).'</product_id>'.
+		'<product_model>'.StringUtils::escapeXML($this->product_model).'</product_model>'.
+		'<product_name>'.StringUtils::escapeXML($this->product_name).'</product_name>'.
+		'<product_price>'.StringUtils::escapeXML($this->product_price).'</product_price>'.
+		'<final_price>'.StringUtils::escapeXML($this->final_price).'</final_price>'.
+		'<product_tax>'.StringUtils::escapeXML($this->product_tax).'</product_tax>'.
+		'<product_quantity>'.StringUtils::escapeXML($this->product_quantity).'</product_quantity>'.
 		}
 		$data.='</orderLine>';
 		return $data;

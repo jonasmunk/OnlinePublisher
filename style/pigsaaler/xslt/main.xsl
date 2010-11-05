@@ -49,13 +49,13 @@
 			<div class="case_sidebar">
 				<xsl:call-template name="thirdlevel"/>
 				<div class="case_contact">
-					<h2>Green Benefit ApS</h2>
+					<h2>GB Pigsåler</h2>
 					<p>Maren Hemmings Vej 13</p>
 					<p>9000 Aalborg, Denmark</p>
 					<p><em>CVR:</em> 320 682 71</p>
 					<p><em>Tlf:</em> 70 20 60 77</p>
 					<p><em>E-post: </em> <a href="mailto:pigsaaler@greenbenefit.dk"><span>pigsaaler@greenbenefit.dk</span></a></p>
-					<p><em>Åben: </em>Alle dage, kl.8.00-20.00</p>
+					<p><em>Åben:</em> Alle dage, 8-20</p>
 					<blockquote>
 						"Kontakt os venligst hvis du er interesseret."
 					</blockquote>
