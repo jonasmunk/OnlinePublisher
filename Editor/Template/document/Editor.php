@@ -115,7 +115,7 @@ function buildPartContext() {
 	$sql="select * from link where page_id=".$pageId." and source_type='text'";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$context -> addDisplayLink(escapeHTML($row['source_text']),'Toolbar.php?link=true&amp;id='.$row['id'],'Toolbar','common',$row['alternative']);
+		$context -> addDisplayLink(StringUtils::escapeSimpleXML($row['source_text']),'Toolbar.php?link=true&amp;id='.$row['id'],'Toolbar','common',$row['alternative']);
 		$context -> addBuildLink(StringUtils::escapeSimpleXML($row['source_text']),$row['target_type'],$row['target_id'],$row['target_value'],$row['target'],$row['alternative'],$row['path'],$row['id']);
 	}
 	Database::free($result);

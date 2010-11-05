@@ -29,35 +29,9 @@ function redirect($url) {
 
 ///////////////////////// Strings /////////////////////////
 
-/**
- * Escapes special HTML characters and inserts break tags as <br/>
- * @param string $input The text to escape
- * @return string Escaped HTML string with break tags
- */
-function escapeHTMLwithLineBreak($input) {
-	$output=$input;
-	$output=str_replace('&', '&amp;', $output);
-	$output=str_replace('<', '&lt;', $output);
-	$output=str_replace('>', '&gt;', $output);
-	$output=str_replace("\r\n", '<br/>', $output);
-	return $output;
-}
-
-/**
- * Escapes special HTML characters of a string
- * @param string $input The text to escape
- * @return string Escaped HTML string
- */
-function escapeHTML($input) {
-	$output=$input;
-	$output=str_replace('&', '&amp;', $output);
-	$output=str_replace('<', '&lt;', $output);
-	$output=str_replace('>', '&gt;', $output);
-	return $output;
-}
 
 function encodeXML(&$input) {
-	$output = htmlnumericentities($input);
+	$output = preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $input);
 	$output = str_replace('&#151;', '-', $output);
 	$output = str_replace('&#146;', '&#39;', $output);
 	$output = str_replace('&#147;', '&#8220;', $output);
@@ -66,34 +40,6 @@ function encodeXML(&$input) {
 	$output = str_replace('&#128;', '&#243;', $output);
 	$output=str_replace('"', '&quot;', $output);
 	return $output;
-}
-
-function htmlnumericentities(&$str){
-  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
-}
-
-
-
-
-
-
-/**
- * Appends a word to a string using a separator if neither are empty
- * @param string $str The text to append to
- * @param string $word The word to append
- * @param string $separator The separator to use (may be more than 1 char)
- * @return string The resulting text
- */
-function appendWordToString($str,$word,$separator) {
-	if (strlen($word)==0) {
-		return $str;
-	}
-	else if (strlen($str)>0) {
-		return $str.$separator.$word;
-	}
-	else {
-		return $word;
-	}
 }
 
 /**

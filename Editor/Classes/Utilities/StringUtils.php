@@ -85,6 +85,25 @@ class StringUtils {
 		return $var ? 'true' : 'false';
 	}
 	
+	/**
+	 * Appends a word to a string using a separator if neither are empty
+	 * @param string $str The text to append to
+	 * @param string $word The word to append
+	 * @param string $separator The separator to use (may be more than 1 char)
+	 * @return string The resulting text
+	 */
+	function appendWordToString($str,$word,$separator) {
+		if (strlen($word)==0) {
+			return $str;
+		}
+		else if (strlen($str)>0) {
+			return $str.$separator.$word;
+		}
+		else {
+			return $word;
+		}
+	}
+	
 	
 	/**
 	 * Creates a summary of a text based on some keywords.

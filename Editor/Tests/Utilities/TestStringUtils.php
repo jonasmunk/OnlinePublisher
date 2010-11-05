@@ -50,5 +50,15 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual('lorem ipsum <a href="mailto:me@my.com">me@my.com</a> hep hep',StringUtils::insertEmailLinks('lorem ipsum me@my.com hep hep'));
 		$this->assertEqual('lorem ipsum me@my @my.com hep hep',StringUtils::insertEmailLinks('lorem ipsum me@my @my.com hep hep'));
 	}
+	
+	function testAppendWordToString() {
+		$this->assertEqual('Jonas Munk',StringUtils::appendWordToString('Jonas','Munk',' '));
+		$this->assertEqual('Jonas  Munk',StringUtils::appendWordToString('Jonas ','Munk',' '));
+		$this->assertEqual('Munk',StringUtils::appendWordToString('','Munk',' '));
+		$this->assertEqual('Munk',StringUtils::appendWordToString(null,'Munk',' '));
+		$this->assertEqual('0 Munk',StringUtils::appendWordToString(0,'Munk',' '));
+		$this->assertEqual('',StringUtils::appendWordToString(null,'',' '));
+		$this->assertEqual('',StringUtils::appendWordToString(null,null,' '));
+	}
 }
 ?>
