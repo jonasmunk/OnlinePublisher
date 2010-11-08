@@ -24,6 +24,7 @@ In2iGui.Gallery.prototype = {
 	setObjects : function(objects) {
 		this.objects = objects;
 		this.render();
+		this.fire('selectionReset');
 	},
 	getObjects : function() {
 		return this.objects;

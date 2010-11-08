@@ -15181,8 +15181,8 @@ In2iGui.Upload.prototype = {
 	},
 	/** @private */
 	iframeUploadComplete : function() {
-		n2i.log('iframeUploadComplete uploading: '+this.uploading+' ('+this.name+')');
 		if (!this.uploading) return;
+		n2i.log('iframeUploadComplete uploading: '+this.uploading+' ('+this.name+')');
 		this.uploading = false;
 		this.form.reset();
 		var doc = n2i.getFrameDocument(this.iframe);
@@ -15577,6 +15577,7 @@ In2iGui.Gallery.prototype = {
 	setObjects : function(objects) {
 		this.objects = objects;
 		this.render();
+		this.fire('selectionReset');
 	},
 	getObjects : function() {
 		return this.objects;
