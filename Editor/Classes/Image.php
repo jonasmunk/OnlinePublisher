@@ -7,6 +7,13 @@ require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
+Object::$schema['image'] = array(
+	'filename'   => array('type'=>'text'),
+	'size'  => array('type'=>'int'),
+	'width'  => array('type'=>'int'),
+	'height'  => array('type'=>'int'),
+	'mimetype'  => array('type'=>'text', 'column' => 'type')
+);
 class Image extends Object {
 	var $filename;
 	var $size;
@@ -118,10 +125,20 @@ class Image extends Object {
 		}
 		return $list;
 	}
+	
+	function addCustomSearch($query,&$parts) {
+		$custom = $query->getCustom();
+		if (isset($custom['group'])) {
+			$parts['tables'][] = 'imagegroup_image';
+			$parts['limits'][] = 'imagegroup_image.image_id=object.id';
+			$parts['limits'][] = 'imagegroup_image.imagegroup_id='.$custom['group'];
+		}
+	}
 
 //////////////////////////// Persistence //////////////////////////
-
 	function load($id) {
+		return Object::get($id,'image');
+/*
 		$sql = "select * from image where object_id=".$id;
 		$row = Database::selectFirst($sql);
 		if ($row) {
@@ -135,9 +152,9 @@ class Image extends Object {
 			return $obj;
 		} else {
 			return null;
-		}
+		}*/
 	}
-
+/*
 	function sub_create() {
 		$sql="insert into image (object_id,filename,size,width,height,type) values (".
 		$this->id.
@@ -160,7 +177,7 @@ class Image extends Object {
 		" where object_id=".$this->id;
 		Database::update($sql);
 	}
-
+*/
 	function sub_publish() {
 		$data =
 		'<image xmlns="'.parent::_buildnamespace('1.0').'">'.
@@ -172,7 +189,7 @@ class Image extends Object {
 		'</image>';
 		return $data;
 	}
-
+/*
 	function sub_remove() {
         global $basePath;
 		@unlink ($basePath.'images/'.$this->filename);
@@ -184,6 +201,16 @@ class Image extends Object {
 		Database::delete($sql);
 		$sql = "delete from image where object_id=".$this->id;
 		Database::delete($sql);
+	}
+*/	
+	function removeMore() {
+		@unlink ($basePath.'images/'.$this->filename);
+	    $this->clearCache();
+
+		$this->fireRelationChangeEventOnGroups();
+		
+		$sql="delete from imagegroup_image where image_id=".$this->id;
+		Database::delete($sql);		
 	}
 	
 	function fireRelationChangeEventOnGroups() {

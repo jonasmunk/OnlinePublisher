@@ -3,7 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Classes.Services
  */
+require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
+require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
 
 class TestService {
 	
@@ -19,8 +22,6 @@ class TestService {
 	
 	function runTest($test) {
 		global $basePath;
-		require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
-		require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 		$path = $basePath.'Editor/Tests/'.$test.'.php';
 		$test = new GroupTest($test);
 		$test->addTestFile($path);
@@ -36,8 +37,6 @@ class TestService {
 			$paths[] = $basePath.'Editor/Tests/'.$group.'/'.$test;
 		}
 		
-		require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
-		require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 		$test = new GroupTest($group);
 		foreach ($paths as $path) {
 			$test->addTestFile($path);

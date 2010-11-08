@@ -307,7 +307,7 @@ class Object {
 		$schema = Object::$schema[$type];
 		if (is_array($schema)) {
 			
-			$sql = "select object.id,object.title,object.note,object.type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable";
+			$sql = "select object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable";
 			foreach ($schema as $property => $info) {
 				$column = Object::getColumn($property,$info);
 				if ($info['type']=='datetime') {
@@ -320,7 +320,7 @@ class Object {
 			$sql.="`".$type."` where `".$type."`.object_id=object.id and object.id=".$id;
 		
 			if ($row = Database::selectFirst($sql)) {
-		    	$unique = ucfirst($row['type']);
+		    	$unique = ucfirst($row['object_type']);
 	    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
 	    		$obj = new $unique;
 				$obj->id = $row['id'];
@@ -328,7 +328,7 @@ class Object {
 				$obj->created = $row['created'];
 				$obj->updated = $row['updated'];
 				$obj->published = $row['published'];
-				$obj->type = $row['type'];
+				$obj->type = $row['object_type'];
 				$obj->note = $row['note'];
 				$obj->ownerId = $row['owner_id'];
 				$obj->searchable = ($row['searchable']==1);
@@ -468,7 +468,7 @@ class Object {
     function load($id) {
     	global $basePath;
     	$object = false;
-    	$sql = "select type from object where id =".$id;
+    	$sql = "select type from object where id =".Database::int($id);
     	if ($row = Database::selectFirst($sql)) {
     		$unique = ucfirst($row['type']);
     		require_once($basePath.'Editor/Classes/'.$unique.'.php');
@@ -534,8 +534,6 @@ class Object {
 		}
 		$num = 1;
 		$size = 0;
-		Log::debug($parts);
-		Log::debug($sql);
 		$result = Database::select($sql);
 		$list['total'] = Database::size($result);
     	while ($row = Database::next($result)) {
@@ -626,13 +624,15 @@ class Object {
     	return $list;
     }
 
+	// This is the moast modern implementation
 	function retrieve($query = array()) {
     	global $basePath;
 		$type = $query['type'];
 		$schema = Object::$schema[$type];
 		
     	$parts = array(
-			'columns' => 'object.id,object.title,object.note,object.type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable',
+			// It is important to name type "object_type" since the image class also has a column named type
+			'columns' => 'object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable',
 			'tables' => 'object,`'.$type.'`',
 			'ordering' => 'object.title',
 			'limits' => array(
@@ -674,21 +674,23 @@ class Object {
 		$list = Object::_find($parts,$query);
 		
 		foreach ($list['rows'] as $row) {
-	    	$unique = ucfirst($row['type']);
+	    	$unique = ucfirst($row['object_type']);
     		require_once($basePath.'Editor/Classes/'.$unique.'.php');
     		$obj = new $unique;
-			$obj->id = $row['id'];
+			$obj->id = intval($row['id']);
 			$obj->title = $row['title'];
-			$obj->created = $row['created'];
-			$obj->updated = $row['updated'];
-			$obj->published = $row['published'];
-			$obj->type = $row['type'];
+			$obj->created = intval($row['created']);
+			$obj->updated = intval($row['updated']);
+			$obj->published = intval($row['published']);
+			$obj->type = $row['object_type'];
 			$obj->note = $row['note'];
-			$obj->ownerId = $row['owner_id'];
+			$obj->ownerId = intval($row['owner_id']);
 			$obj->searchable = ($row['searchable']==1);
 			foreach ($schema as $property => $info) {
 				$column = Object::getColumn($property,$info);
-				if ($info['type']=='datetime') {
+				if ($info['type']=='int') {
+					$obj->$property = intval($row[$column]);
+				} else if ($info['type']=='datetime') {
 					$obj->$property = $row[$column] ? intval($row[$column]) : null;
 				} else {
 					$obj->$property = $row[$column];

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tests.Model
+ * @subpackage Tests.Parts
  */
 
 class TestHorizontalRulePart extends UnitTestCase {

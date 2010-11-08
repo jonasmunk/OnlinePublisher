@@ -40,7 +40,7 @@ if ($type) {
 if ($main=='latest') {
 	$query['createdMin']=DateUtil::addDays(mktime(),-1);
 }
-Log::debug($query);
+
 $list = File::find($query);
 $objects = $list['result'];
 

@@ -15,4 +15,25 @@ class ObjectService {
 		}
 		return null;
 	}
+	
+	function getClass($type) {
+		global $basePath;
+		$class = ucfirst($type);
+		$path = $basePath.'Editor/Classes/'.$class.'.php';
+		if (!file_exists($path)) {
+			return null;
+		}
+		require_once $path;
+		return $class;
+	}
+	
+	function search($query) {
+		$parts = array('type' => $query->getType(), 'query' => $query->getText());
+		if ($class = ObjectService::getClass($query->getType())) {
+			$class::addCustomSearch($query,$parts);
+		} else {
+			Log::debug('Unable to get class for type='.$query->getType());
+		}
+		return Object::retrieve($parts);
+	}
 }

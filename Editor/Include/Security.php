@@ -38,7 +38,7 @@ else {
 
 function __autoload($class_name) {
 	global $basePath;
-	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/');
+	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/','Model/');
 	foreach ($folders as $folder) {
 		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';
 		if (file_exists($path)) {

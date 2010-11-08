@@ -4,22 +4,11 @@
  * @subpackage Tests.Model
  */
 
-class TestFeedback extends UnitTestCase {
+class TestFeedback extends AbstractObjectTest {
     
-    function testLoad() {
-        $this->assertNull(Feedback::load(0));
-    }
-
-    function testCreate() {
-        $obj = new Feedback();
-		$this->assertFalse($obj->isPersistent());
-		$obj->save();
-		$this->assertTrue($obj->isPersistent());
-		$id = $obj->getId();
-        $this->assertNotNull(Feedback::load($id));
-		$obj->remove();
-        $this->assertNull(Feedback::load($id));
-    }
+	function TestFeedback() {
+		parent::AbstractObjectTest('feedback');
+	}
 
 	function testProperties() {
 		$obj = new Feedback();
