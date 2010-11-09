@@ -7,6 +7,41 @@ require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Image.php');
 
 class ImageService {
+	
+	function getUsedImageIds() {
+	    $sql = "select image_id as id from part_image".
+	    " union select image.object_id as id from imagegallery_object,image".
+	        " where imagegallery_object.object_id = image.object_id".
+	    " union select image_id as id from person,image".
+	        " where person.image_id=image.object_id".
+	    " union select image_id as id from product,image".
+	        " where product.image_id=image.object_id".
+	    " union select image_id as id from imagegallery_object,imagegroup_image".
+	        " where imagegroup_image.imagegroup_id = imagegallery_object.object_id";
+        return Database::getIds($sql);
+	}
+	
+	function getTotalImageCount() {
+    	$sql= "SELECT count(object.id) as num FROM object,image where image.object_id=object.id";
+        if ($row = Database::selectFirst($sql)) {
+            return intval($row['num']);
+        } else {
+            return 0;
+        }
+	}
+	
+	function getUnusedImagesCount() {
+        $used = ImageService::getUsedImageIds();
+    	$sql= "SELECT count(object.id) as num FROM object,image".
+    	" where image.object_id=object.id".
+    	(count($used)>0 ? " and object.id not in (".implode(",",$used).")" : "").
+    	" order by title";
+        if ($row = Database::selectFirst($sql)) {
+            return $row['num'];
+        } else {
+            return 0;
+        }
+	}
 
 	function createImageFromUrl($url) {
 		global $basePath;

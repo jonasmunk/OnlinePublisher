@@ -6,15 +6,17 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
-require_once '../../Classes/Image.php';
+require_once '../../Classes/File.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id');
 
-$image = Image::load($id);
+$file = Image::load($id);
 
-header("Content-Disposition: attachment; filename=".$image->getFilename());
-header("Content-Type: ".$image->getMimeType());
-header("Content-Length: " . filesize('../../../images/'.$image->getFilename()));
-readfile('../../../images/'.$image->getFilename());
+$path = '../../../../images/'.$file->getFilename();
+
+header("Content-Disposition: attachment; filename=".$file->getFilename());
+header("Content-Type: ".$file->getMimeType());
+header("Content-Length: " . filesize($path));
+readfile($path);
 ?>

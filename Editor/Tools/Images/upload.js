@@ -11,6 +11,7 @@ ui.listen({
 	$uploadDidCompleteQueue$file : function() {
 		imagesSource.refresh();
 		groupSource.refresh();
+		subsetSource.refresh();
 	},
 	
 	////////////////////////// Fetch /////////////////////////
@@ -29,6 +30,7 @@ ui.listen({
 		}
 		fetchImage.setEnabled(true);
 		imagesSource.refresh();
+		subsetSource.refresh();
 		groupSource.refresh();
 	}
 	

@@ -133,6 +133,12 @@ class Image extends Object {
 			$parts['limits'][] = 'imagegroup_image.image_id=object.id';
 			$parts['limits'][] = 'imagegroup_image.imagegroup_id='.$custom['group'];
 		}
+		if ($custom['unused']===true) {
+			$ids = ImageService::getUsedImageids();
+			if (count($ids)>0) {
+				$parts['limits'][] = 'object.id not in ('.implode(',',$ids).')';
+			}
+		}
 	}
 
 //////////////////////////// Persistence //////////////////////////

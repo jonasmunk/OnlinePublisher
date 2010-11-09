@@ -2335,7 +2335,9 @@ In2iGui.parseSubItems = function(parent,array) {
 	var children = parent.childNodes;
 	for (var i=0; i < children.length; i++) {
 		var node = children[i];
-		if (node.nodeType==1 && node.nodeName=='item') {
+		if (node.nodeType==1 && node.nodeName=='title') {
+			array.push({title:node.getAttribute('title'),type:'title'})
+		} else if (node.nodeType==1 && node.nodeName=='item') {
 			var sub = [];
 			In2iGui.parseSubItems(node,sub);
 			array.push({

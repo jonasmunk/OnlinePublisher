@@ -304,6 +304,9 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 </xsl:template>
 
 <xsl:template match="gui:selection/gui:items">
+	<xsl:if test="@title">
+		<div class="in2igui_selection_title" id="{generate-id()}_title" style="display: none;"><span><xsl:value-of select="@title"/></span></div>
+	</xsl:if>
 	<div id="{generate-id()}">
 		<xsl:comment/>
 	</div>
@@ -328,7 +331,7 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 </xsl:template>
 
 <xsl:template match="gui:selection/gui:title">
-	<div class="title"><span><xsl:value-of select="."/></span></div>
+	<div class="in2igui_selection_title"><span><xsl:value-of select="."/></span></div>
 </xsl:template>
 
 <!--             List            -->

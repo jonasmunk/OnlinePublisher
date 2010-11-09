@@ -1,18 +1,18 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Files
+ * @subpackage Tools.Images
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
-require_once '../../../Classes/In2iGui.php';
-require_once '../../../Classes/Image.php';
-require_once '../../../Classes/Services/FileService.php';
-require_once '../../../Classes/Request.php';
-require_once '../../../Classes/UserInterface.php';
-require_once '../../../Classes/GuiUtils.php';
-require_once '../../../Classes/DateUtil.php';
-require_once '../../../Classes/Log.php';
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Security.php';
+require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Image.php';
+require_once '../../Classes/Services/FileService.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/DateUtil.php';
+require_once '../../Classes/Log.php';
 
 $main = Request::getString('main');
 $group = Request::getInt('group');

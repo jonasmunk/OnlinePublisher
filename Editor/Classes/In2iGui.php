@@ -381,6 +381,12 @@ class ItemsWriter {
 		echo '</items>';
 		return $this;
 	}
+
+	function title($title) {
+		echo '<title title="'.In2iGui::escape($title).'"/>';
+		return $this;
+	}
+
 }
 
 class ArticlesWriter {

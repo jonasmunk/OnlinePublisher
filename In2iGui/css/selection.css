@@ -90,7 +90,7 @@ div.in2igui_selection_inline div.in2igui_selected span.in2igui_selection_label
 	text-shadow: none;
 }
 
-.in2igui_selection .title
+.in2igui_selection_title
 {
 	background: url('../gfx/selection_separator.png') 3px 9px repeat-x;
 	color:#334455;
@@ -98,7 +98,7 @@ div.in2igui_selection_inline div.in2igui_selected span.in2igui_selection_label
 	margin:3px 5px;
 	padding-left:16px;
 }
-.in2igui_selection .title span
+.in2igui_selection_title span
 {
 	background: #EBF0F7;
 	padding: 0px 3px;

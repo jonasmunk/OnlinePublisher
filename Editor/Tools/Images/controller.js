@@ -2,7 +2,7 @@ ui.listen({
 	imageId : null,
 		
 	$resolveImageUrl : function(img,width,height) {
-		return '../../../../util/images/?id='+img.id+'&maxwidth='+width+'&maxheight='+height+'&format=jpg';
+		return '../../../util/images/?id='+img.id+'&maxwidth='+width+'&maxheight='+height+'&format=jpg';
 	},
 	
 	$selectionChanged$gallery : function() {
@@ -10,19 +10,17 @@ ui.listen({
 		ui.get('view').setEnabled(true);
 		ui.get('download').setEnabled(true);
 		ui.get('info').setEnabled(true);
-		ui.get('replace').setEnabled(true);
 	},
 	$selectionReset$gallery : function() {
 		ui.get('delete').setEnabled(false);
 		ui.get('view').setEnabled(false);
 		ui.get('download').setEnabled(false);
 		ui.get('info').setEnabled(false);
-		ui.get('replace').setEnabled(false);
 	},
 	
 	$click$view : function() {
 		var obj = gallery.getFirstSelection();
-		window.open('../../../../util/images/?id='+obj.id,"filewindow"+obj.id);
+		window.open('../../../util/images/?id='+obj.id,"filewindow"+obj.id);
 	},
 	$click$download : function() {
 		var obj = gallery.getFirstSelection();
@@ -47,7 +45,7 @@ ui.listen({
 		this._cancelImage();
 	},
 	
-	$click$saveImage : function() {
+	$submit$imageFormula : function() {
 		var self = this;
 		var data = imageFormula.getValues();
 		data.id = this.imageId;
@@ -70,6 +68,7 @@ ui.listen({
 			imageFormula.setValues(data.image);
 			imageGroups.setValue(data.groups);
 			imageWindow.show();
+			imageFormula.focus();
 		}});
 	},
 	_deleteImage : function(id) {
@@ -79,6 +78,7 @@ ui.listen({
 		ui.request({url:'DeleteImage.php',parameters:{id:id},onSuccess:function() {
 			imagesSource.refresh();
 			groupSource.refresh();
+			subsetSource.refresh();
 			ui.showMessage({text:'Billedet er nu slettet',duration:2000});
 		}});
 	}

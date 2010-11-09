@@ -20,8 +20,7 @@ div.in2igui_gallery_item:hover
 div.in2igui_gallery_item_selected, div.in2igui_gallery_item_selected:hover
 {
 	border-color: #3875d7;
-	/*border-color: rgba(56,117,215,.7);*/
-	/*border-color: #F5CC40;*/
 	background: url('../gfx/hover_bg.png');
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }

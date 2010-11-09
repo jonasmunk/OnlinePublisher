@@ -9924,7 +9924,9 @@ In2iGui.parseSubItems = function(parent,array) {
 	var children = parent.childNodes;
 	for (var i=0; i < children.length; i++) {
 		var node = children[i];
-		if (node.nodeType==1 && node.nodeName=='item') {
+		if (node.nodeType==1 && node.nodeName=='title') {
+			array.push({title:node.getAttribute('title'),type:'title'})
+		} else if (node.nodeType==1 && node.nodeName=='item') {
 			var sub = [];
 			In2iGui.parseSubItems(node,sub);
 			array.push({
@@ -12878,6 +12880,7 @@ In2iGui.Selection.prototype = {
 In2iGui.Selection.Items = function(options) {
 	this.options = n2i.override({source:null},options);
 	this.element = $(options.element);
+	this.title = $(this.element.id+'_title');
 	this.name = options.name;
 	this.parent = null;
 	this.items = [];
@@ -12905,6 +12908,9 @@ In2iGui.Selection.Items.prototype = {
 		this.items = [];
 		this.element.update();
 		this.buildLevel(this.element,items,0);
+		if (this.title) {
+			this.title.style.display=this.items.length>0 ? 'block' : 'none';
+		}
 		this.parent.updateUI();
 	},
 	/** @private */
@@ -12915,6 +12921,12 @@ In2iGui.Selection.Items.prototype = {
 		var level = new Element('div',{'class':'in2igui_selection_level'}).setStyle({display:open ? 'block' : 'none'});
 		parent.insert(level);
 		items.each(function(item) {
+			if (item.type=='title') {
+				var div = new Element('div',{'class':'in2igui_selection_title'});
+				div.update('<span>'+item.title+'</span>');
+				level.insert(div)
+				return;
+			}
 			var hasChildren = item.children && item.children.length>0;
 			var left = inc*16+6;
 			if (!hierarchical && inc>0 || hierarchical && !hasChildren) left+=13;
