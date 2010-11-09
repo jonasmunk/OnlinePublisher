@@ -16,7 +16,7 @@ class ObjectService {
 		return null;
 	}
 	
-	function getClass($type) {
+	function getInstance($type) {
 		global $basePath;
 		$class = ucfirst($type);
 		$path = $basePath.'Editor/Classes/'.$class.'.php';
@@ -24,13 +24,13 @@ class ObjectService {
 			return null;
 		}
 		require_once $path;
-		return $class;
+		return new $class;
 	}
 	
 	function search($query) {
 		$parts = array('type' => $query->getType(), 'query' => $query->getText());
-		if ($class = ObjectService::getClass($query->getType())) {
-			$class::addCustomSearch($query,$parts);
+		if ($class = ObjectService::getInstance($query->getType())) {
+			$class->addCustomSearch($query,$parts);
 		} else {
 			Log::debug('Unable to get class for type='.$query->getType());
 		}
