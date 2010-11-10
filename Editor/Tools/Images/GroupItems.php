@@ -12,6 +12,8 @@ require_once '../../Classes/Request.php';
 
 $writer = new ItemsWriter();
 
+$notInGroup = ImageService::getNumberOfImagesNotInGroup();
+
 $writer->startItems();
 $sql="select distinct object.id,object.title,count(image.object_id) as imagecount from imagegroup, imagegroup_image, image,object  where imagegroup_image.imagegroup_id=imagegroup.object_id and imagegroup_image.image_id = image.object_id and object.id=imagegroup.object_id group by imagegroup.object_id union select object.id,object.title,'0' from object left join imagegroup_image on imagegroup_image.imagegroup_id=object.id where object.type='imagegroup' and imagegroup_image.image_id is null order by title";
 $result = Database::select($sql);
@@ -28,6 +30,17 @@ while ($row = Database::next($result)) {
 	$writer->startItem($options)->endItem();
 }
 Database::free($result);
+
+if ($notInGroup>0) {
+	$options = array(
+		'value'=>-1,
+		'title'=>'Ikke i gruppe',
+		'icon'=>'common/folder_grey',
+		'kind'=>'imagegroup',
+		'badge' => $notInGroup,
+	);
+	$writer->startItem($options)->endItem();
+}
 
 $writer->endItems();
 ?>

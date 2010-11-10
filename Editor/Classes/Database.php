@@ -85,7 +85,7 @@ class Database {
 	}
 	
 	function size($result) {
-		return mysql_num_rows($result);
+		return @mysql_num_rows($result);
 	}
 	
 	function isEmpty($sql) {

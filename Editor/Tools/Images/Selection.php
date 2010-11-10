@@ -14,6 +14,6 @@ $writer = new ItemsWriter();
 
 $writer->startItems();
 $writer->startItem(array('title'=>'Alle','badge'=>ImageService::getTotalImageCount(),'icon'=>'common/files','value'=>'all'))->endItem();
-$writer->startItem(array('title'=>'Ubrugte billeder','badge'=>ImageService::getUnusedImagesCount(),'icon'=>'monochrome/round_question','value'=>'unused'))->endItem();
+$writer->startItem(array('title'=>'Ikke anvendt','badge'=>ImageService::getUnusedImagesCount(),'icon'=>'monochrome/round_question','value'=>'unused'))->endItem();
 $writer->endItems();
 ?>

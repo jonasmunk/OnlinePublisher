@@ -30,6 +30,18 @@ class ImageService {
         }
 	}
 	
+	function getNumberOfImagesNotInGroup() {
+		$sql = "select count(object.id) as num from object,image".
+			" left join imagegroup_image on imagegroup_image.image_id=image.object_id".
+        	" where object.id = image.object_id and imagegroup_image.imagegroup_id is null".
+        	" order by object.title";
+        if ($row = Database::selectFirst($sql)) {
+            return intval($row['num']);
+        } else {
+            return 0;
+        }
+	}
+	
 	function getUnusedImagesCount() {
         $used = ImageService::getUsedImageIds();
     	$sql= "SELECT count(object.id) as num FROM object,image".

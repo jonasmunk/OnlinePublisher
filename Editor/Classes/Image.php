@@ -140,6 +140,11 @@ class Image extends Object {
 			$parts['limits'][] = 'imagegroup_image.image_id=object.id';
 			$parts['limits'][] = 'imagegroup_image.imagegroup_id='.$custom['group'];
 		}
+		if ($custom['nogroup']===true) {
+			$parts['joins'][] = 'left join imagegroup_image on imagegroup_image.image_id=image.object_id';
+			$parts['limits'][] = 'object.id = image.object_id';
+			$parts['limits'][] = 'imagegroup_image.imagegroup_id is null';
+		}
 		if ($custom['unused']===true) {
 			$ids = ImageService::getUsedImageids();
 			if (count($ids)>0) {

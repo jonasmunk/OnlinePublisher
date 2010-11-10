@@ -510,6 +510,9 @@ class Object {
 		$list = array('result' => array(),'rows' => array(),'windowPage' => 0,'windowSize' => 0,'total' => 0);
 
 		$sql = "select ".$parts['columns']." from ".$parts['tables'];
+		if (is_array($parts['joins']) && count($parts['joins'])>0) {
+			$sql.=" ".implode(' ',$parts['joins']);
+		}
 		if (is_array($parts['limits']) && count($parts['limits'])>0) {
 			$sql.=" where ".implode(' and ',$parts['limits']);
 		}
@@ -637,7 +640,8 @@ class Object {
 			'ordering' => 'object.title',
 			'limits' => array(
 				'`'.$type.'`.object_id=object.id'
-			)
+			),
+			'joins' => array()
 		);
 		if (isset($query['ordering'])) {
 			$parts['ordering'] = $query['ordering'];
@@ -648,13 +652,18 @@ class Object {
 		if (is_array($query['limits'])) {
 			$parts['limits'] = array_merge($parts['limits'],$query['limits']);
 		}
+		if (is_array($query['joins'])) {
+			$parts['joins'] = array_merge($parts['joins'],$query['joins']);
+		}
 		if (isset($query['tables']) && is_array($query['tables']) && count($query['tables'])>0) {
 			$parts['tables'].=','.implode(',',$query['tables']);
 		}
 		if (isset($query['query'])) {
 			$words = preg_split("/[\s,]+/", $query['query']);
 			foreach ($words as $word) {
-				$parts['limits'][] = '`index` like '.Database::search($word);
+				if ($word!='') {
+					$parts['limits'][] = '`index` like '.Database::search($word);
+				}
 			}
 		}
 		if (isset($query['createdMin'])) {

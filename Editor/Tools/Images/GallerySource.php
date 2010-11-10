@@ -20,7 +20,9 @@ $query = Query::after('image')->withText($text);
 if ($subset=='unused') {
 	$query->withCustom('unused',true);
 }
-if ($group) {
+if ($group===-1) {
+	$query->withCustom('nogroup',true);
+} else if ($group) {
 	$query->withCustom('group',$group);
 }
 $list = $query->search();
