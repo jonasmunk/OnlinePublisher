@@ -15626,6 +15626,7 @@ In2iGui.Gallery.prototype = {
 	/** @private */
 	render : function() {
 		this.nodes = [];
+		this.maxRevealed=0;
 		this.element.update();
 		var self = this;
 		this.objects.each(function(object,i) {
