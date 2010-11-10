@@ -1,5 +1,15 @@
 ui.listen({
 	imageId : null,
+	dragDrop : [
+		{drag:'image',drop:'imagegroup'}
+	],
+	
+	$drop$image$imagegroup : function(dragged,dropped) {
+		In2iGui.request({url:'AddImageToGroup.php',json:{data:{image:dragged.id,group:dropped.value}},onSuccess:function() {
+			imagesSource.refresh();
+			groupSource.refresh();
+		}});
+	},
 		
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../util/images/?id='+img.id+'&maxwidth='+width+'&maxheight='+height+'&format=jpg';

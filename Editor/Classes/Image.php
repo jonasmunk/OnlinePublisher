@@ -83,6 +83,13 @@ class Image extends Object {
             }
         }
     }
+	
+	function addGroupId($id) {
+		$sql = "delete from imagegroup_image where image_id=".Database::int($this->id)." and imagegroup_id=".Database::int($id);
+		Database::delete($sql);
+		$sql = "insert into imagegroup_image (imagegroup_id,image_id) values (".Database::int($id).",".Database::int($this->id).")";
+		Database::insert($sql);
+	}
 
 	function getGroupIds() {
 		$ids = array();

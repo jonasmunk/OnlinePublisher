@@ -49,6 +49,7 @@ ui.listen({
 		this.groupId = null;
 		groupFormula.reset();
 		groupWindow.hide();
+		selector.setValue('all');
 	}
 	
 });
