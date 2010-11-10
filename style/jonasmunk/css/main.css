@@ -102,32 +102,37 @@ span.layout_languages span
 
 /***************** Navigation *****************/
 
+div.layout
+{
+	margin: 0 auto;
+	width: 990px;
+	text-align: left;
+}
+
 div.layout_navigation
 {
 	position: relative;
 }
 
-ul.layout_navigation
+div.layout_navigation ul
 {
-	float: right;
 	list-style: none;
-	margin: 0;
+	margin: 0 0 0 -10px;
 	padding: 0;
 	height: 39px;
 }
 
-ul.layout_navigation li
+div.layout_navigation li
 {
 	height: 39px;
 	float: left;
 	font-size: 14px;
-	font-weight: bold;
 }
 
-ul.layout_navigation a
+div.layout_navigation a
 {
 	padding: 0 10px;
-	color: #fff;
+	color: #000;
 	text-decoration: none;
 	height: 14px;
 	line-height: 37px;
@@ -136,8 +141,13 @@ ul.layout_navigation a
 	vertical-align: middle;
 }
 
+div.layout_navigation li.selected
+{
+	font-weight: bold;
+}
+
 div.layout_content
 {
-	padding: 40px 0 20px 0;
+	padding: 20px 0 20px 0;
 	overflow: hidden;
 }
