@@ -25,51 +25,56 @@
 </xsl:template>
 
 <xsl:template match="c:weekview">
-<div class="weekview">
-<div class="navigation">
-<xsl:call-template name="c:views"/>
-<div class="jumps">
-<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=week" class="common"><span>Forrige uge</span></a>
- &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=week" class="common"><span>Idag</span></a>
- &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=week" class="common"><span>Naeste uge</span></a>
-</div>
-</div>
-<table cellspacing="0" cellpadding="0">
-<thead>
-<tr>
-<td></td>
-<xsl:for-each select="c:day">
-<th>
-<xsl:if test="@date=concat(../../c:state/c:date/@year,../../c:state/c:date/@month,../../c:state/c:date/@day)">
-<xsl:attribute name="class">selected</xsl:attribute>
-</xsl:if>
-<a href="?id={//p:page/@id}&amp;date={@date}"><span><xsl:value-of select="@title"/></span></a></th>
-</xsl:for-each>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="time">
-<xsl:attribute name="style">height: <xsl:value-of select="(count(c:hour)-1)*45+1"/>px;</xsl:attribute>
-<xsl:for-each select="c:hour">
-<div>
-<xsl:attribute name="style">margin-top: <xsl:value-of select="(position()-1)*45-6"/>px;</xsl:attribute>
-<xsl:if test="number(@value)&lt;10">0</xsl:if>
-<xsl:value-of select="@value"/>:00</div>
-</xsl:for-each>
-</td>
-<xsl:apply-templates select="c:day"/>
-</tr>
-</tbody>
-</table>
-</div>
+	<div class="weekview">
+	<div class="navigation">
+	<xsl:call-template name="c:views"/>
+	<div class="jumps">
+	<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=week" class="common"><span>Forrige uge</span></a>
+	 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=week" class="common"><span>Idag</span></a>
+	 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=week" class="common"><span>Naeste uge</span></a>
+	</div>
+	</div>
+	<table cellspacing="0" cellpadding="0" class="calendar_weekview">
+	<thead>
+		<tr>
+		<td></td>
+		<xsl:for-each select="c:day">
+		<th>
+		<xsl:if test="@date=concat(../../c:state/c:date/@year,../../c:state/c:date/@month,../../c:state/c:date/@day)">
+		<xsl:attribute name="class">selected</xsl:attribute>
+		</xsl:if>
+		<a href="?id={//p:page/@id}&amp;date={@date}"><span><xsl:value-of select="@title"/></span></a></th>
+		</xsl:for-each>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>
+	<td class="time">
+		<xsl:attribute name="style">height: <xsl:value-of select="(count(c:hour)-1)*45+1"/>px;</xsl:attribute>
+		<xsl:for-each select="c:hour">
+			<div>
+			<xsl:attribute name="style">margin-top: <xsl:value-of select="(position()-1)*45-6"/>px;</xsl:attribute>
+			<xsl:if test="number(@value)&lt;10">0</xsl:if>
+			<xsl:value-of select="@value"/>:00</div>
+		</xsl:for-each>
+	</td>
+		<xsl:apply-templates select="c:day">
+			<xsl:with-param name="height"><xsl:value-of select="(count(c:hour)-1)*45+1"/></xsl:with-param>
+		</xsl:apply-templates>
+	</tr>
+	</tbody>
+	</table>
+	</div>
 </xsl:template>
 
 
 <xsl:template match="c:weekview/c:day">
+	<xsl:param name="height"/>
 <td>
 <xsl:attribute name="class">day <xsl:if test="@selected='true'">selected</xsl:if></xsl:attribute>
-<xsl:apply-templates select="c:event"/>
+	<div style="height: {$height}px; position: relative;">
+		<xsl:apply-templates select="c:event"/>
+	</div>
 </td>
 </xsl:template>
 

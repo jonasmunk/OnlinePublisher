@@ -56,26 +56,26 @@
 </xsl:template>
 
 <xsl:template name="link-href">
-<xsl:choose>
-<xsl:when test="@path and $preview='false'">
-<xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/>
-</xsl:when>
-<xsl:when test="@page">
-<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
-</xsl:when>
-<xsl:when test="@page-reference">
-<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/>
-</xsl:when>
-<xsl:when test="@url">
-<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
-</xsl:when>
-<xsl:when test="@file">
-<xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if>
-</xsl:when>
-<xsl:when test="@email">
-mailto:<xsl:value-of select="@email"/>
-</xsl:when>
-</xsl:choose>
+	<xsl:choose>
+		<xsl:when test="@path and $preview='false'">
+			<xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/>
+		</xsl:when>
+		<xsl:when test="@page">
+			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
+		</xsl:when>
+		<xsl:when test="@page-reference">
+			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/>
+		</xsl:when>
+		<xsl:when test="@url">
+			<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
+		</xsl:when>
+		<xsl:when test="@file">
+			<xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if>
+		</xsl:when>
+		<xsl:when test="@email">
+			mailto:<xsl:value-of select="@email"/>
+		</xsl:when>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template name="oo-script">

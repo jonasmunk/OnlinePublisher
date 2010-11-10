@@ -27,18 +27,22 @@
 
 .weekview .navigation
 {
-	width: 550px;
-	_width: 561px;
 	margin-left: 35px;
 }
 .calendar .weekview table
 {
 	border: 1px solid #ccc;
 	border-width: 0px 1px 0px 0px;
-	width: 603px;
-	_width: 596px;
+	width: 100%;
+	table-layout: fixed;
 	border-collapse: collapse;
 }
+
+.calendar .weekview thead td
+{
+	width: 35px;
+}
+
 
 .calendar .weekview table th
 {
@@ -133,8 +137,6 @@
 	opacity: .7;
 	margin-left: 1px;
 	margin-right: 1px;
-	width: 76px;
-	_width: 78px;
 	position: absolute;
 	font: 9px Verdana;
 	color: #fff;
@@ -148,121 +150,116 @@
 
 .calendar .weekview .event1-2
 {
-	width: 65px;
+	margin-right: 12px;
 }
 
 .calendar .weekview .event2-2
 {
 	margin-left: 12px;
-	width: 65px;
 }
 
 
 .calendar .weekview .event1-3
 {
-	width: 62px;
+	margin-right: 15px;
 }
 
 .calendar .weekview .event2-3
 {
 	margin-left: 7px;
-	width: 62px;
+	margin-right: 7px;
 }
 
 .calendar .weekview .event3-3
 {
 	margin-left: 15px;
-	width: 62px;
 }
 
 
 .calendar .weekview .event1-4
 {
-	width: 60px;
+	margin-right: 15px;
 }
 
 .calendar .weekview .event2-4
 {
-	margin-left: 6px;
-	width: 60px;
+	margin-left: 5px;
+	margin-right: 10px;
 }
 
 .calendar .weekview .event3-4
 {
-	margin-left: 12px;
-	width: 60px;
+	margin-left: 10px;
+	margin-right: 5px;
 }
 
 .calendar .weekview .event4-4
 {
-	margin-left: 17px;
-	width: 60px;
+	margin-left: 15px;
 }
 
 
 .calendar .weekview .event1-5
 {
-	width: 55px;
+	margin-right: 20px;
 }
 
 .calendar .weekview .event2-5
 {
-	margin-left: 6px;
-	width: 55px;
+	margin-left: 5px;
+	margin-right: 15px;
 }
 
 .calendar .weekview .event3-5
 {
-	margin-left: 11px;
-	width: 55px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .calendar .weekview .event4-5
 {
-	margin-left: 17px;
-	width: 55px;
+	margin-left: 15px;
+	margin-right: 5px;
 }
 
 .calendar .weekview .event5-5
 {
-	margin-left: 22px;
-	width: 55px;
+	margin-left: 20px;
 }
 
 
 .calendar .weekview .event1-6
 {
-	width: 55px;
+	margin-right: 20px;
 }
 
 .calendar .weekview .event2-6
 {
 	margin-left: 4px;
-	width: 55px;
+	margin-right: 15px;
 }
 
 .calendar .weekview .event3-6
 {
 	margin-left: 8px;
-	width: 55px;
+	margin-right: 12px;
 }
 
 .calendar .weekview .event4-6
 {
-	margin-left: 14px;
-	width: 55px;
+	margin-left: 12px;
+	margin-right: 8px;
 }
 
 .calendar .weekview .event5-6
 {
-	margin-left: 18px;
-	width: 55px;
+	margin-left: 16px;
+	margin-right: 4px;
 }
 
 .calendar .weekview .event6-6
 {
-	margin-left: 22px;
-	width: 55px;
+	margin-left: 20px;
 }
 
 /****************************** List view ****************************/
