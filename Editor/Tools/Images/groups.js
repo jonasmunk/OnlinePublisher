@@ -32,7 +32,7 @@ ui.listen({
 		groupWindow.hide();
 	},
 	$selectionWasOpened$selector : function(item) {
-		ui.request({parameters:{id:item.value},url:'../../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+		ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
 	},
 	$success$loadGroup : function(data) {
 		this.groupId = data.id;
@@ -42,7 +42,7 @@ ui.listen({
 		groupFormula.focus();
 	},
 	$click$deleteGroup : function() {
-		ui.request({json:{data:{id:this.groupId}},url:'../../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
+		ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
 	},
 	$success$deleteGroup : function() {
 		groupSource.refresh();
