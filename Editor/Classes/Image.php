@@ -151,46 +151,8 @@ class Image extends Object {
 //////////////////////////// Persistence //////////////////////////
 	function load($id) {
 		return Object::get($id,'image');
-/*
-		$sql = "select * from image where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj = new Image();
-			$obj->_load($id);
-			$obj->filename=$row['filename'];
-			$obj->size=$row['size'];
-			$obj->width=$row['width'];
-			$obj->height=$row['height'];
-			$obj->mimetype=$row['type'];
-			return $obj;
-		} else {
-			return null;
-		}*/
 	}
-/*
-	function sub_create() {
-		$sql="insert into image (object_id,filename,size,width,height,type) values (".
-		$this->id.
-		",".Database::text($this->filename).
-		",".Database::int($this->size).
-		",".Database::int($this->width).
-		",".Database::int($this->height).
-		",".Database::text($this->mimetype).
-		")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-		$sql = "update image set ".
-		"filename=".Database::text($this->filename).
-		",size=".Database::int($this->size).
-		",width=".Database::int($this->width).
-		",height=".Database::int($this->height).
-		",type=".Database::text($this->mimetype).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
-*/
+	
 	function sub_publish() {
 		$data =
 		'<image xmlns="'.parent::_buildnamespace('1.0').'">'.
@@ -202,20 +164,7 @@ class Image extends Object {
 		'</image>';
 		return $data;
 	}
-/*
-	function sub_remove() {
-        global $basePath;
-		@unlink ($basePath.'images/'.$this->filename);
-	    $this->clearCache();
-
-		$this->fireRelationChangeEventOnGroups();
-		
-		$sql="delete from imagegroup_image where image_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from image where object_id=".$this->id;
-		Database::delete($sql);
-	}
-*/	
+	
 	function removeMore() {
 		@unlink ($basePath.'images/'.$this->filename);
 	    $this->clearCache();
