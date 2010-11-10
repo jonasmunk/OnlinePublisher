@@ -15,7 +15,8 @@ class AbstractObjectTest extends UnitTestCase {
     function testLoad() {
 		Log::debug('Testing load!');
 		$class = ucfirst($this->type);
-        $this->assertNull($class::load(0));
+		$obj = new $class();
+        $this->assertNull($obj->load(0));
     }
 
     function testCreate() {
@@ -25,9 +26,9 @@ class AbstractObjectTest extends UnitTestCase {
 		$obj->save();
 		$this->assertTrue($obj->isPersistent());
 		$id = $obj->getId();
-        $this->assertNotNull($class::load($id));
+        $this->assertNotNull($obj->load($id));
 		$obj->remove();
-        $this->assertNull($class::load($id));
+        $this->assertNull($obj->load($id));
     }
 
 }
