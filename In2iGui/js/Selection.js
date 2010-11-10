@@ -97,6 +97,9 @@ In2iGui.Selection.prototype = {
 		this.fire('selectionChanged',this.selection);
 		this.fireProperty('value',this.selection ? this.selection.value : null);
 		this.fireProperty('kind',this.selection ? this.selection.kind : null);
+		for (var i=0; i < this.subItems.length; i++) {
+			this.subItems[i].parentValueChanged();
+		};
 	},
 	/** @private */
 	registerItems : function(items) {
@@ -299,6 +302,19 @@ In2iGui.Selection.Items.prototype = {
 			var value = this.items[i].value;
 			if (value == newSelection.value) {
 				this.fireProperty('value',newSelection.value);
+				return;
+			}
+		};
+		this.fireProperty('value',null);
+	},
+	/**
+	 * Called when the parent changes value, must fire its new value
+	 * @private
+	 */
+	parentValueChanged : function() {
+		for (var i=0; i < this.items.length; i++) {
+			if (this.parent.isSelection(this.items[i])) {
+				this.fireProperty('value',this.items[i].value);
 				return;
 			}
 		};
