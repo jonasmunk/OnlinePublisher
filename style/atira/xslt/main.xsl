@@ -23,6 +23,9 @@
 	<meta name="robots" content="index,follow"></meta>
 	<xsl:call-template name="oo-script"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
+	<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
+		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/front.css"/>
+	</xsl:if>
 	<xsl:choose>
 		<xsl:when test="$template='document'">
 			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/document.php"/>
