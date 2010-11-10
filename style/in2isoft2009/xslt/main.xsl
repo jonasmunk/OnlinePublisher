@@ -33,6 +33,7 @@
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
 	<xsl:call-template name="oo-script"/>
+	<script src="{$path}In2iGui/js/SearchField.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 </head>
 <body>
 	<div class="chrome">
@@ -363,22 +364,21 @@
 
 
 <xsl:template name="search">
-<xsl:if test="f:frame/f:search">
-<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
-<div>
-<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
-<xsl:for-each select="f:frame/f:search/f:types/f:type">
-<input type="hidden" name="{@unique}" value="on"/>
-</xsl:for-each>
-<input type="text" class="text" name="query" id="searchfield"/>
-<input type="submit" class="submit" value="Søg"/>
-</div>
-</form>
-<script type="text/javascript"><xsl:comment>
-new op.SearchField({element:'searchfield',placeholder:'Søg her!'});
-</xsl:comment>
-</script>
-</xsl:if>
+	<xsl:if test="f:frame/f:search">
+		<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
+			<div>
+				<span class="in2igui_searchfield" id="search"><em class="in2igui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="in2igui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
+				<script type="text/javascript">
+					new ui.SearchField({element:'search',expandedWidth:200});
+				</script>
+				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
+				<xsl:for-each select="f:frame/f:search/f:types/f:type">
+				<input type="hidden" name="{@unique}" value="on"/>
+				</xsl:for-each>
+				<input type="submit" class="submit" value="Søg"/>
+			</div>
+		</form>
+	</xsl:if>
 </xsl:template>
 
 

@@ -5,7 +5,7 @@ In2iGui.onDomReady(function() {
 Poster = function() {
 	this.poster = $('poster');
 	this.left = $('poster_left');
-	this.left.scrollLeft = 450;
+	this.left.scrollLeft = 495;
 	this.right = $('poster_right');
 	this.progress = $('poster_loader');
 	this.context = 'style/in2isoft2009/gfx/';
@@ -39,7 +39,7 @@ Poster.prototype.start = function() {
 		{duration:500},
 		{element:this.left,property:'scrollLeft',value:'0',duration:1000,ease:n2i.ease.slowFastSlow},
 		{duration:4000},
-		{element:this.left,property:'scrollLeft',value:'450',duration:1000,ease:n2i.ease.slowFastSlow}
+		{element:this.left,property:'scrollLeft',value:'495',duration:1000,ease:n2i.ease.slowFastSlow}
 	];
 	var leftLoop = new n2i.animation.Loop(leftRecipe);
 	leftLoop.start();
@@ -51,7 +51,7 @@ Poster.prototype.start = function() {
 			$('poster_inner_right').style.backgroundImage='url(\''+base+self.rightImages[self.rightPos]+'\')';
 		},
 		{duration:500},
-		{element:this.right,property:'scrollLeft',value:'450',duration:1000,ease:n2i.ease.slowFastSlow},
+		{element:this.right,property:'scrollLeft',value:'495',duration:1000,ease:n2i.ease.slowFastSlow},
 		{duration:4000},
 		{element:this.right,property:'scrollLeft',value:'0',duration:1000,ease:n2i.ease.slowFastSlow}
 	];

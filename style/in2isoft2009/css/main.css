@@ -30,7 +30,7 @@ form
 div.chrome
 {
 	margin: 0px auto;
-	width: 906px;
+	width: 996px;
 	min-height: 100%;
 	position: relative;
 	text-align: left;
@@ -59,7 +59,7 @@ div.chrome_content
 
 div.chrome_content_sidebar
 {
-	background: url('../gfx/line.png') 700px top repeat-y;
+	background: url('../gfx/line.png') 790px top repeat-y;
 	padding-right: 0;
 }
 
@@ -70,7 +70,7 @@ div.chrome_inner_content
 
 div.chrome_content_sidebar div.chrome_inner_content
 {
-	width: 660px;
+	width: 750px;
 }
 
 div.chrome_sidebar
@@ -431,7 +431,7 @@ div.chrome_info div.about p.more
 
 #poster
 {
-	width: 900px;
+	width: 990px;
 	height: 310px;
 	background: url('../gfx/poster_bg.png');
 	cursor: pointer;
@@ -440,7 +440,7 @@ div.chrome_info div.about p.more
 {
 	float: left;
 	height: 310px;
-	width: 450px;
+	width: 495px;
 	overflow: hidden;
 }
 
@@ -448,21 +448,21 @@ div.chrome_info div.about p.more
 {
 	float: left;
 	height: 310px;
-	width: 450px;
+	width: 495px;
 	overflow: hidden;
 }
 
 #poster .left div
 {
-	width: 900px;
+	width: 990px;
 	height: 310px;
-	background: 200px 0px no-repeat;
+	background: 245px 0px no-repeat;
 }
 #poster .right div
 {
-	width: 900px;
+	width: 990px;
 	height: 310px;
-	background: 450px 0px no-repeat;
+	background: 495px 0px no-repeat;
 }
 
 #poster_loader
@@ -512,35 +512,8 @@ a.chrome_placard_right
 
 form.search
 {
-	background: url('../gfx/search.png') top left repeat-x;
-	margin-right: 13px;
 	margin-top: 13px;
 	float: right;
-	height: 24px;
-	font-size: 0px;
-}
-
-form.search div
-{
-	background: url('../gfx/search.png') bottom right no-repeat;
-	height: 24px;
-	padding-left: 8px;
-}
-
-form.search input.text
-{
-	border: none;
-	background: none;
-	padding-top: 4px;
-	font-size: 9pt;
-	color: #999;
-	width: 140px;
-	font: Verdana, tahoma,sans-serif;
-}
-
-form.search input.text:focus
-{
-	color: #333;
 }
 
 form.search .submit
