@@ -93,25 +93,27 @@
 </xsl:template>
 
 <xsl:template name="languages">
-<span class="translation">
-	<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=//p:page/p:meta/p:language and not(@language=//p:page/p:context/p:translation/@language)]">
-		<xsl:call-template name="language"/>
-	</xsl:for-each>
-	<xsl:for-each select="//p:page/p:context/p:translation">
-		<xsl:call-template name="language"/>
-	</xsl:for-each>
-</span>
+	<span class="translation">
+		<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=//p:page/p:meta/p:language and not(@language=//p:page/p:context/p:translation/@language)]">
+			<xsl:call-template name="language"/>
+		</xsl:for-each>
+		<xsl:for-each select="//p:page/p:context/p:translation">
+			<xsl:call-template name="language"/>
+		</xsl:for-each>
+	</span>
 </xsl:template>
 
 <xsl:template name="language">
-<a class="{@language}">
-	<xsl:call-template name="link"/>
-	<xsl:choose>
-		<xsl:when test="@language='da'">Dansk version</xsl:when>
-		<xsl:when test="@language='en'">English version</xsl:when>
-		<xsl:otherwise><xsl:value-of select="@language"/></xsl:otherwise>
-	</xsl:choose>
-</a><xsl:text> </xsl:text>
+	<xsl:if test="@language!='da'">
+		<a class="{@language}">
+			<xsl:call-template name="link"/>
+			<xsl:choose>
+				<xsl:when test="@language='da'">Dansk version</xsl:when>
+				<xsl:when test="@language='en'">English version</xsl:when>
+				<xsl:otherwise><xsl:value-of select="@language"/></xsl:otherwise>
+			</xsl:choose>
+		</a><xsl:text> </xsl:text>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template match="p:content">
