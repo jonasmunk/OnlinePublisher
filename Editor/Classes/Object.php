@@ -321,7 +321,11 @@ class Object {
 		
 			if ($row = Database::selectFirst($sql)) {
 		    	$unique = ucfirst($row['object_type']);
-	    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
+	    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				} else {
+					require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
+				}
 	    		$obj = new $unique;
 				$obj->id = $row['id'];
 				$obj->title = $row['title'];
@@ -471,7 +475,11 @@ class Object {
     	$sql = "select type from object where id =".Database::int($id);
     	if ($row = Database::selectFirst($sql)) {
     		$unique = ucfirst($row['type']);
-    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
+	    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				} else {
+					require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
+				}
     		$class = new $unique;
     		$object = $class->load($id);
     	}
@@ -485,7 +493,11 @@ class Object {
 		$result = Database::select($sql);
     	while ($row = Database::next($result)) {
 			$unique = ucfirst($type);
-    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
+			if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
+    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
+			} else {
+				require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
+			}
     		$class = new $unique;
     		if ($object = $class->load($row['id'])) {
 				$objects[] = $object;

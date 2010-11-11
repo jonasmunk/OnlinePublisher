@@ -15,6 +15,7 @@ Object::$schema['image'] = array(
 	'mimetype'  => array('type'=>'text', 'column' => 'type')
 );
 class Image extends Object {
+	
 	var $filename;
 	var $size;
 	var $width;
@@ -23,6 +24,10 @@ class Image extends Object {
 
 	function Image() {
 		parent::Object('image');
+	}
+	
+	function load($id) {
+		return Object::get($id,'image');
 	}
 	
 	function getIcon() {
@@ -154,9 +159,6 @@ class Image extends Object {
 	}
 
 //////////////////////////// Persistence //////////////////////////
-	function load($id) {
-		return Object::get($id,'image');
-	}
 	
 	function sub_publish() {
 		$data =

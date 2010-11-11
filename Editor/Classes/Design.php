@@ -138,36 +138,5 @@ class Design extends Object {
 		Database::update($sql);
 		$this->_saveParameters();
 	}
-	/*
-	function sub_publish() {
-		//$sql = "update design set parameters=".Database::text($this->_buildParameterXml())." where object_id=".$this->id;
-		//Database::update($sql);
-		//return '';
-	}
-	
-	function _buildParameterXml() {
-		global $basePath;
-		$out = '';
-		$info = $this->getInfo();
-		foreach ($this->parameters as $key => $parm) {
-			// First check if its in the info
-			if (isset($info['parameters'][$key])) {
-				if (($info['parameters'][$key]['type']=='images') && $parm['value']>0) {
-					require_once($basePath.'Editor/Classes/Imagegroup.php');
-					if ($group = ImageGroup::load($parm['value'])) {
-						$out .= '<parameter key="'.$key.'">'.
-						$group->getConcatenatedImageData().
-						'</parameter>';
-					}
-				} else if ($info['parameters'][$key]['type']=='text') {
-					$out .= '<parameter key="'.$key.'">'.encodeXML($parm['value']).'</parameter>';
-				} else if ($info['parameters'][$key]['type']=='options') {
-					$out .= '<parameter key="'.$key.'">'.encodeXML($parm['value']).'</parameter>';
-				}
-			}
-		}
-		return $out;
-	}
-	*/
 }
 ?>

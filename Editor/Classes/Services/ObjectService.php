@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/Model/SearchResult.php');
 
 class ObjectService {
 	
@@ -34,6 +35,13 @@ class ObjectService {
 		} else {
 			Log::debug('Unable to get class for type='.$query->getType());
 		}
-		return Object::retrieve($parts);
+		$x =  Object::retrieve($parts);
+		$result = new SearchResult();
+		$result->setList($x['rows']);
+		$result->setTotal($x['total']);
+		$result->setWindowPage($x['windowPage']);
+		$result->setWindowSize($x['windowSize']);
+		
+		return $result;
 	}
 }

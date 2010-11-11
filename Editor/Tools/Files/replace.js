@@ -12,7 +12,7 @@ ui.listen({
 		replaceFile.clear();
 		cancelReplaceUpload.enable();
 	},
-	$uploadDidSucceed$replaceFile : function() {
+	$uploadDidComplete$replaceFile : function() {
 		filesSource.refresh();
 		typesSource.refresh();
 		replaceFile.clear();
