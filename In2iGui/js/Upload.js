@@ -120,8 +120,12 @@ In2iGui.Upload.prototype = {
 			if (last) {
 				last.update({progress:1,filestatus:'Færdig'});
 			}
+			this.fire('uploadDidSucceed');
+			n2i.log('Iframe upload succeeded');
 		} else if (last) {
 			last.setError('Upload af filen fejlede!');
+			n2i.log('Iframe upload failed!');
+			this.fire('uploadDidFail');
 		}
 		this.fire('uploadDidCompleteQueue');
 		this.fire('queueComplete');
@@ -143,6 +147,7 @@ In2iGui.Upload.prototype = {
 		this.fire('uploadDidStartQueue');
 		var fileName = this.fileInput.value.split('\\').pop();
 		this.addItem({name:fileName,filestatus:'I gang'}).setWaiting();
+		n2i.log('Iframe upload started!');
 	},
 	/** @private */
 	startIframeProgress : function() {
@@ -150,7 +155,6 @@ In2iGui.Upload.prototype = {
 	},
 	/** @private */
 	endIframeProgress : function() {
-		n2i.log('endIframeProgress');
 		this.form.style.display='block';
 		this.form.reset();
 	},
