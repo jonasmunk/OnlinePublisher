@@ -150,6 +150,9 @@ class In2iGui {
 	
 	function toJSON($obj) {
 		global $basePath;
+		if (function_exists('json_encode')) {
+			return json_encode($obj);
+		}
 		require_once($basePath.'Editor/Libraries/json/JSON2.php');
 		$json = new Services_JSON();
 		return $json->encode($obj);
