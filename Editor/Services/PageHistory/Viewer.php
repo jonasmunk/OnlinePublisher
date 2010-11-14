@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Templates.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/UserInterface.php';
 
 $close = "index.php";
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 $sql = "select UNIX_TIMESTAMP(page_history.time) as time,page_id from page_history where id=".$id;
 $row = Database::selectFirst($sql);
 $sql = "select id from page_history where page_id=".$row['page_id']." and time<".Database::datetime($row['time'])." order by time desc limit 1";

@@ -9,8 +9,9 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 $sql = "select page_history.id,UNIX_TIMESTAMP(page_history.time) as time,page_history.message from page_history where id=".$id;
 $row = Database::selectFirst($sql);
 
