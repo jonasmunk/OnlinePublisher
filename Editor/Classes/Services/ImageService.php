@@ -143,7 +143,6 @@ class ImageService {
 		}
 		else {
 			// Get the size of the image
-	    	//$image = loadImage($filePath);
 			$imagehw = getimagesize($filePath);
 			$imageWidth = $imagehw[0];//imagesx($image);
 			$imageHeight = $imagehw[1];//imagesy($image);

@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Session.php';
-require_once '../../Include/Images.php';
+require_once '../../Classes/Services/ImageService.php';
 require_once '../../Classes/Image.php';
 
 // hide warnings
@@ -17,7 +17,7 @@ error_reporting(E_ERROR);
 $title = requestPostText('title');
 $group = getServiceSessionVar('imagechooser','group',0);
 
-$response = createUploadedImage($title,$group);
+$response = ImageService::createUploadedImage($title,$group);
 
 if ($response['success']==true) {
 	redirect('Icons.php?selectImage='.$response['id']);
