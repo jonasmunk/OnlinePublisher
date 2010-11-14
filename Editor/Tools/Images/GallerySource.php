@@ -12,6 +12,7 @@ $subset = Request::getString('subset');
 $group = Request::getInt('group',null);
 $text = Request::getEncodedString('text');
 
+InternalSession::setToolSessionVar('images','group',$group);
 
 $query = Query::after('image')->withText($text);
 if ($subset=='unused') {

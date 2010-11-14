@@ -317,7 +317,7 @@ class Object {
 				}
 			}
 			$sql.=" from `object`,";
-			$sql.="`".$type."` where `".$type."`.object_id=object.id and object.id=".$id;
+			$sql.="`".$type."` where `".$type."`.object_id=object.id and object.id=".Database::int($id);
 		
 			if ($row = Database::selectFirst($sql)) {
 		    	$unique = ucfirst($row['object_type']);

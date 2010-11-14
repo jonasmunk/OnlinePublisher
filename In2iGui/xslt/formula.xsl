@@ -338,6 +338,7 @@
 			<xsl:if test="@value='true'"> in2igui_checkbox_selected</xsl:if>
 		</xsl:attribute>
 		<span><span><xsl:comment/></span></span>
+		<xsl:value-of select="@title"/>
 	</a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Checkbox({

@@ -32,6 +32,10 @@ ui.listen({
 		imagesSource.refresh();
 		subsetSource.refresh();
 		groupSource.refresh();
+	},
+	$valueChanged$uploadAddToGroup : function(value) {
+		ui.request({url:'ChangeUploadAddToGroup.php',parameters:{uploadAddToGroup:value ? 'true' : 'false'},onSuccess:function() {
+			n2i.log('Saved: '+value);
+		}})
 	}
-	
 })

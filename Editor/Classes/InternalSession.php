@@ -152,5 +152,19 @@ class InternalSession {
             return $out;
         }
     }
+
+	function getToolSessionVar($tool,$key,$default=NULL) {
+		if (isset($_SESSION['tools.'.$tool.'.'.$key])) {
+			return $_SESSION['tools.'.$tool.'.'.$key];
+		}
+		else {
+			InternalSession::setToolSessionVar($tool,$key,$default);
+			return $default;
+		}
+	}
+
+	function setToolSessionVar($tool,$key,$value) {
+		$_SESSION['tools.'.$tool.'.'.$key]=$value;
+	}
 }
 ?>
