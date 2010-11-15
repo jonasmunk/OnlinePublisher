@@ -369,6 +369,7 @@
 
 <xsl:template name="gui:checkboxes">
 	<div class="in2igui_checkboxes" id="{generate-id()}">
+		<xsl:if test="@max-height"><xsl:attribute name="style">max-height:<xsl:value-of select="@max-height"/>px; overflow: auto;</xsl:attribute></xsl:if>
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">

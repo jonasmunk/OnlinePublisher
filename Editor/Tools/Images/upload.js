@@ -21,6 +21,9 @@ ui.listen({
 		ui.showMessage({text:'Henter billede...'});
 		In2iGui.request({url:'FetchImage.php',onSuccess:'imageFetched',parameters:fetchFormula.getValues()});
 	},
+	$click$cancelFetch : function() {
+		uploadWindow.hide();
+	},
 	$success$imageFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();

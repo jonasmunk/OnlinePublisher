@@ -93,7 +93,9 @@ $gui='
 				<upload name="file" url="UploadImage.php" widget="upload" flash="'.$flash.'">
 					<placeholder title="Vælg billeder på din computer..." text="Filen kan højest være '.$maxUploadSize.' stor"/>
 				</upload>
-				<checkbox title="Tilføj til den valgte gruppe" name="uploadAddToGroup" value="'.$uploadAddToGroup.'"/>
+				<block align="center" top="5">
+					<checkbox title="Tilføj til den valgte gruppe" name="uploadAddToGroup" value="'.$uploadAddToGroup.'"/>
+				</block>
 				<buttons align="center" top="10">
 					<button name="cancelUpload" title="Annuller"/>
 					<button name="upload" title="Vælg billder..." highlighted="true"/>
@@ -103,11 +105,12 @@ $gui='
 				<formula name="fetchFormula">
 					<group labels="above">
 					<text label="Adresse:" key="url"/>
-					<buttons>
-						<button name="fetchImage" title="Hent" highlighted="true"/>
-					</buttons>
 					</group>
 				</formula>
+				<buttons align="center">
+					<button name="cancelFetch" title="Annuller"/>
+					<button name="fetchImage" title="Hent" highlighted="true"/>
+				</buttons>
 			</tab>
 		</tabs>
 	</window>
@@ -116,7 +119,7 @@ $gui='
 		<formula name="imageFormula">
 			<group labels="above">
 				<text label="Titel" key="title"/>
-				<checkboxes label="Grupper:" name="imageGroups" key="groups">
+				<checkboxes label="Grupper:" name="imageGroups" key="groups" max-height="200">
 					<items source="groupSource"/>
 				</checkboxes>
 				<buttons>
