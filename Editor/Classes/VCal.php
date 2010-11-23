@@ -82,10 +82,14 @@ class VCalParser {
 		elseif ($parts[0]=='RRULE' && $this->latestEvent) {
 			$rule = $this->parseRecurrenceRule($parts);
 			$this->latestEvent->addRecurrenceRule($rule);
-		}
-		elseif ($parts[0]=='VERSION') {
+		} elseif ($parts[0]=='VERSION') {
 			$cal->setVersion($parts[1]);
+		} elseif ($parts[0]=='X-WR-CALNAME') {
+			$cal->setTitle($parts[1]);
+		} elseif ($parts[0]=='X-WR-TIMEZONE') {
+			$cal->setTimeZone($parts[1]);
 		}
+		
 	}
 	
 	function decodeString($string) {
@@ -234,7 +238,9 @@ class VCalSerializer {
 class VCalendar {
 	
 	var $events = array();
-	
+	var $version;
+	var $title;
+	var $timeZone;
 	
 	function VCalendar() {
 	}
@@ -257,6 +263,24 @@ class VCalendar {
 	function getVersion() {
 	    return $this->version;
 	}
+	
+	function setTitle($title) {
+	    $this->title = $title;
+	}
+
+	function getTitle() {
+	    return $this->title;
+	}
+	
+	function setTimeZone($timeZone) {
+	    $this->timeZone = $timeZone;
+	}
+
+	function getTimeZone() {
+	    return $this->timeZone;
+	}
+	
+	
 
 	function startDateComparator($a, $b) {
 		$a = $a->getStartDate();

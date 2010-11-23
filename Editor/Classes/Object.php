@@ -644,7 +644,9 @@ class Object {
     	global $basePath;
 		$type = $query['type'];
 		$schema = Object::$schema[$type];
-		
+		if (!is_array($schema)) {
+			Log::debug('Unable to find schema for: '.$type);
+		}
     	$parts = array(
 			// It is important to name type "object_type" since the image class also has a column named type
 			'columns' => 'object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable',
@@ -666,6 +668,11 @@ class Object {
 		}
 		if (is_array($query['joins'])) {
 			$parts['joins'] = array_merge($parts['joins'],$query['joins']);
+		}
+		if (is_array($query['fields'])) {
+			foreach ($query['fields'] as $field => $value) {
+				$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
+			}
 		}
 		if (isset($query['tables']) && is_array($query['tables']) && count($query['tables'])>0) {
 			$parts['tables'].=','.implode(',',$query['tables']);
@@ -694,10 +701,10 @@ class Object {
 		}
 		$list = Object::_find($parts,$query);
 		
+		ObjectService::importType($type);
+		$class = ucfirst($type);
 		foreach ($list['rows'] as $row) {
-	    	$unique = ucfirst($row['object_type']);
-    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
-    		$obj = new $unique;
+    		$obj = new $class;
 			$obj->id = intval($row['id']);
 			$obj->title = $row['title'];
 			$obj->created = intval($row['created']);
