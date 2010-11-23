@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class AuthenticationController extends LegacyTemplateController {
     
@@ -26,7 +27,7 @@ class AuthenticationController extends LegacyTemplateController {
 		$data = '<authentication xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/authentication/1.0/">';
 		$sql="select * from authentication where page_id=".$this->id;
 		if ($row = Database::selectFirst($sql)) {
-			$data.='<title>'.encodeXML($row['title']).'</title>';
+			$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 			$index = $row['title'];
 		}
 		$data.='<!--dynamic-->';
