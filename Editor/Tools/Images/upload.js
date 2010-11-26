@@ -21,6 +21,9 @@ ui.listen({
 		ui.showMessage({text:'Henter billede...'});
 		In2iGui.request({url:'FetchImage.php',onSuccess:'imageFetched',parameters:fetchFormula.getValues()});
 	},
+	$click$cancelFetch : function() {
+		uploadWindow.hide();
+	},
 	$success$imageFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();
@@ -32,6 +35,10 @@ ui.listen({
 		imagesSource.refresh();
 		subsetSource.refresh();
 		groupSource.refresh();
+	},
+	$valueChanged$uploadAddToGroup : function(value) {
+		ui.request({url:'ChangeUploadAddToGroup.php',parameters:{uploadAddToGroup:value ? 'true' : 'false'},onSuccess:function() {
+			n2i.log('Saved: '+value);
+		}})
 	}
-	
 })

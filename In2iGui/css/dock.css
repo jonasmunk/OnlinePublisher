@@ -7,10 +7,8 @@ table.in2igui_dock
 
 table.in2igui_dock thead td
 {
-	height: 58px;
-	padding: 0px 5px;
-	background: #eee;
-	border-bottom: 1px solid #ddd;
+	height: 78px;
+	padding: 0;
 }
 
 table.in2igui_dock tfoot.in2igui_dock_tabs td

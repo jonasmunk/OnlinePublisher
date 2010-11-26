@@ -85,6 +85,30 @@ class InternalSession {
 	}
 
 	/**
+	 * Sets the design of the active page
+	 * @param string $unique The unique name of the design
+	 */
+	function setPageDesign($unique) {
+		$_SESSION['core.page.design']=$unique;
+	}
+
+	/**
+	 * Gets the design of the active page (if set) or a special sticky design
+	 * @return string The design of the active page if set, false otherwise
+	 */
+	function getPageDesign() {
+		if (isset($_SESSION['debug.design'])) {
+			return $_SESSION['debug.design'];
+		}
+		elseif (isset($_SESSION['core.page.design'])) {
+			return $_SESSION['core.page.design'];
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Get the username of the active internal user
 	 * @return string Username of the user
 	 */
@@ -152,5 +176,19 @@ class InternalSession {
             return $out;
         }
     }
+
+	function getToolSessionVar($tool,$key,$default=NULL) {
+		if (isset($_SESSION['tools.'.$tool.'.'.$key])) {
+			return $_SESSION['tools.'.$tool.'.'.$key];
+		}
+		else {
+			InternalSession::setToolSessionVar($tool,$key,$default);
+			return $default;
+		}
+	}
+
+	function setToolSessionVar($tool,$key,$value) {
+		$_SESSION['tools.'.$tool.'.'.$key]=$value;
+	}
 }
 ?>

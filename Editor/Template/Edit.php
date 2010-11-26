@@ -5,22 +5,29 @@
  */
 require_once '../../Config/Setup.php';
 require_once '../Include/Security.php';
-require_once '../Include/Functions.php';
+require_once '../Classes/Response.php';
+require_once '../Classes/Request.php';
+require_once '../Classes/InternalSession.php';
 require_once '../Classes/Services/RenderingService.php';
 
-$id=requestGetNumber('id',-1);
+$id=Request::getId();
 if (!($id>0)) {
-	$id = getPageId();
+	$id = InternalSession::getPageId();
 }
 if (!($id>0)) {
-	$id=RenderingService::findPage('home');
+	$id = RenderingService::findPage('home');
 }
 if ($id>0) {
-	setPageId($id);
+	InternalSession::setPageId($id);
 	$sql = "select `template`.`unique` as template,`design`.`unique` as design from page,template,design where page.template_id = template.id and page.design_id=design.object_id and page.id=".$id;
 	if ($row = Database::selectFirst($sql)) {
-		setPageDesign($row['design']);
-		redirect($baseUrl.'Editor/Template/'.$row['template'].'/Edit.php?id='.$id);
+		InternalSession::setPageDesign($row['design']);
+		if ($ctrl = TemplateService::getController($row['template'])) {
+			if ($ctrl->isClientSide()) {
+				Response::redirect($baseUrl.'Editor/Services/Preview/?id='.$id.'&edit=true');
+			}
+		}
+		Response::redirect($baseUrl.'Editor/Template/'.$row['template'].'/Edit.php?id='.$id);
 	}
 }
 else {

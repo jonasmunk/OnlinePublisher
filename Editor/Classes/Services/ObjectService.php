@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/Model/SearchResult.php');
 
 class ObjectService {
 	
@@ -17,23 +18,45 @@ class ObjectService {
 	}
 	
 	function getInstance($type) {
-		global $basePath;
+		ObjectService::importType($type);
 		$class = ucfirst($type);
-		$path = $basePath.'Editor/Classes/'.$class.'.php';
-		if (!file_exists($path)) {
-			return null;
-		}
-		require_once $path;
 		return new $class;
 	}
 	
+	function importType($type) {
+		global $basePath;
+		$class = ucfirst($type);
+		$path = $basePath.'Editor/Classes/Objects/'.$class.'.php';
+		if (!file_exists($path)) {
+			$path = $basePath.'Editor/Classes/'.$class.'.php';
+			if (!file_exists($path)) {
+				return false;
+			}
+		}
+		require_once $path;
+		return true;
+	}
+	
 	function search($query) {
-		$parts = array('type' => $query->getType(), 'query' => $query->getText());
+		$parts = array( 
+			'type' => $query->getType(), 
+			'query' => $query->getText(), 
+			'fields' => $query->getFields()
+		);
 		if ($class = ObjectService::getInstance($query->getType())) {
-			$class->addCustomSearch($query,$parts);
+			if (method_exists($class,'addCustomSearch')) {
+				$class->addCustomSearch($query,$parts);
+			}
 		} else {
 			Log::debug('Unable to get class for type='.$query->getType());
 		}
-		return Object::retrieve($parts);
+		$x =  Object::retrieve($parts);
+		$result = new SearchResult();
+		$result->setList($x['result']);
+		$result->setTotal($x['total']);
+		$result->setWindowPage($x['windowPage']);
+		$result->setWindowSize($x['windowSize']);
+		
+		return $result;
 	}
 }

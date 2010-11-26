@@ -1528,6 +1528,7 @@ div.in2igui_dropdown_selector
 	-moz-box-shadow: 0px 3px 5px #999;
 	overflow: auto;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	text-align: left;
 }
 
 div.in2igui_dropdown_selector a
@@ -4391,10 +4392,8 @@ span.in2igui_searchfield_focus_dirty span span
 
 table.in2igui_dock thead td
 {
-	height: 58px;
-	padding: 0px 5px;
-	background: #eee;
-	border-bottom: 1px solid #ddd;
+	height: 78px;
+	padding: 0;
 }
 
 table.in2igui_dock tfoot.in2igui_dock_tabs td

@@ -7,7 +7,12 @@ ui.listen({
 	$uploadDidStartQueue$replaceFile : function() {
 		cancelReplaceUpload.disable();
 	},
-	$uploadDidCompleteQueue$replaceFile : function() {
+	$uploadDidFail$replaceFile : function() {
+		ui.showMessage({text:'Det lykkedes ikke at erstatte filen, den er måske for stor?',duration:5000});
+		replaceFile.clear();
+		cancelReplaceUpload.enable();
+	},
+	$uploadDidComplete$replaceFile : function() {
 		filesSource.refresh();
 		typesSource.refresh();
 		replaceFile.clear();

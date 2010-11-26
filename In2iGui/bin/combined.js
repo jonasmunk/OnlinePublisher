@@ -15105,9 +15105,10 @@ In2iGui.Overlay.prototype = {
  * {url:'',parameters:{}}
  *
  * Events:
- * uploadDidCompleteQueue / queueComplete
- * uploadDidStartQueue
- * uploadDidComplete(file)
+ * uploadDidCompleteQueue - when all files are done
+ * uploadDidStartQueue - when the upload starts
+ * uploadDidComplete(file) - when a single file is successfull
+ * uploadDidFail(file) - when a single file fails
  */
 In2iGui.Upload = function(options) {
 	this.options = n2i.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
@@ -15219,11 +15220,14 @@ In2iGui.Upload.prototype = {
 			if (last) {
 				last.update({progress:1,filestatus:'Færdig'});
 			}
+			this.fire('uploadDidComplete',{}); // TODO: Send the correct file
+			n2i.log('Iframe upload succeeded');
 		} else if (last) {
 			last.setError('Upload af filen fejlede!');
+			n2i.log('Iframe upload failed!');
+			this.fire('uploadDidFail',{}); // TODO: Send the correct file
 		}
 		this.fire('uploadDidCompleteQueue');
-		this.fire('queueComplete');
 		this.iframe.src=In2iGui.context+'/In2iGui/html/blank.html';
 		this.endIframeProgress();
 	},
@@ -15242,6 +15246,7 @@ In2iGui.Upload.prototype = {
 		this.fire('uploadDidStartQueue');
 		var fileName = this.fileInput.value.split('\\').pop();
 		this.addItem({name:fileName,filestatus:'I gang'}).setWaiting();
+		n2i.log('Iframe upload started!');
 	},
 	/** @private */
 	startIframeProgress : function() {
@@ -15249,7 +15254,6 @@ In2iGui.Upload.prototype = {
 	},
 	/** @private */
 	endIframeProgress : function() {
-		n2i.log('endIframeProgress');
 		this.form.style.display='block';
 		this.form.reset();
 	},
@@ -15400,7 +15404,6 @@ In2iGui.Upload.prototype = {
 		this.fire('uploadDidComplete',file);
 		if (this.loader.getStats().files_queued==0) {
 			this.fire('uploadDidCompleteQueue');
-			this.fire('queueComplete');
 		}
 		this.updateStatus();
 		this.busy = false;

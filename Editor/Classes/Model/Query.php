@@ -11,6 +11,7 @@ class Query {
 	private $type;
 	private $text;
 	private $custom = array();
+	private $fields = array();
 	
 	function Query($type) {
 		$this->type = $type;
@@ -37,12 +38,30 @@ class Query {
 		return $this->custom;
 	}
 	
+	function getFields() {
+		return $this->fields;
+	}
+	
 	function withCustom($key,$value) {
 		$this->custom[$key] = $value;
 		return $this;
 	}
 	
+	function withField($field,$value) {
+		$this->fields[$field] = $value;
+		return $this;
+	}
+	
 	function search() {
 		return ObjectService::search($this);
+	}
+	
+	function first() {
+		$result = ObjectService::search($this);
+		$list = $result->getList();
+		if (count($list)>0) {
+			return $list[0];
+		}
+		return null;
 	}
 }

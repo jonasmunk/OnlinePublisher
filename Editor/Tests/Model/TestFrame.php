@@ -4,23 +4,11 @@
  * @subpackage Tests.Model
  */
 
-class TestFrame extends UnitTestCase {
+class TestFrame extends AbstractObjectTest {
     
-    function testLoad() {
-        $this->assertNull(Frame::load(0));
-    }
-
-    function testCreate() {
-        $obj = new Frame();
-		$this->assertFalse($obj->isPersistent());
-		$obj->save();
-		$this->assertTrue($obj->isPersistent());
-		$id = $obj->getId();
-		$this->assertNotNull($id);
-        $this->assertNotNull(Frame::load($id));
-		$obj->remove();
-        $this->assertNull(Frame::load($id));
-    }
+	function TestFrame() {
+		parent::AbstractObjectTest('frame');
+	}
 
 	function testProperties() {
 		$obj = new Frame();

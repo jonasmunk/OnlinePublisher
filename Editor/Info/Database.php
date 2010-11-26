@@ -10,6 +10,12 @@ $databaseTables = array(
 			array("page_id","int(11)","","","0",""),
 			array("title","varchar(255)","YES","","","")
 		),
+	'cachedurl' => array(
+			array("object_id","int(11)","","","0",""),
+			array("url","varchar(255)","YES","","",""),
+			array("synchronized","datetime","YES","","",""),
+			array("mimeType","varchar(50)","YES","","","")
+	),
 	'calendar' => array(
 			array("object_id","int(11)","","","0","")
 	),

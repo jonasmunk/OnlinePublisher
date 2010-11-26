@@ -12,22 +12,30 @@ var controller = {
 	},
 	
 	$click$close : function() {
-		window.parent.location='../../Tools/Pages/';
+		this.getFrame().location='../../Tools/Pages/';
 	},
 	$click$edit : function() {
-		window.parent.location='../../Template/Edit.php';
+		var frame = window.frames[0];
+		if (frame.templateController!==undefined) {
+			frame.templateController.edit();
+		} else {
+			this.getFrame().location='../../Template/Edit.php';
+		}
 	},
 	$click$properties : function() {
-		var frame = window.parent.frames[1].frames[0];
+		var frame = window.frames[0];
 		frame.op.Editor.editProperties();
 	},
 	$click$view : function() {
-		window.parent.parent.location='ViewPublished.php';
+		window.parent.location='ViewPublished.php';
 	},
 	$click$publish : function() {
 		ui.request({url:'viewer/data/PublishPage.php',parameters:{id:this.pageId},onSuccess:function(obj) {
 			publish.setEnabled(false);
 		}});
+	},
+	getFrame : function() {
+		return window.parent.frames[0];
 	}
 };
 

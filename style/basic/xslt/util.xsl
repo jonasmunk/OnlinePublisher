@@ -104,6 +104,7 @@
 		<script src="{$path}In2iGui/js/Overlay.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}In2iGui/js/Editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}Editor/Template/{$template}/js/editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
 </xsl:template>
 

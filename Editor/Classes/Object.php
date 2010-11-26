@@ -317,11 +317,15 @@ class Object {
 				}
 			}
 			$sql.=" from `object`,";
-			$sql.="`".$type."` where `".$type."`.object_id=object.id and object.id=".$id;
+			$sql.="`".$type."` where `".$type."`.object_id=object.id and object.id=".Database::int($id);
 		
 			if ($row = Database::selectFirst($sql)) {
 		    	$unique = ucfirst($row['object_type']);
-	    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
+	    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				} else {
+					require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
+				}
 	    		$obj = new $unique;
 				$obj->id = $row['id'];
 				$obj->title = $row['title'];
@@ -471,7 +475,11 @@ class Object {
     	$sql = "select type from object where id =".Database::int($id);
     	if ($row = Database::selectFirst($sql)) {
     		$unique = ucfirst($row['type']);
-    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
+	    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
+				} else {
+					require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
+				}
     		$class = new $unique;
     		$object = $class->load($id);
     	}
@@ -485,7 +493,11 @@ class Object {
 		$result = Database::select($sql);
     	while ($row = Database::next($result)) {
 			$unique = ucfirst($type);
-    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
+			if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
+    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
+			} else {
+				require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
+			}
     		$class = new $unique;
     		if ($object = $class->load($row['id'])) {
 				$objects[] = $object;
@@ -632,7 +644,9 @@ class Object {
     	global $basePath;
 		$type = $query['type'];
 		$schema = Object::$schema[$type];
-		
+		if (!is_array($schema)) {
+			Log::debug('Unable to find schema for: '.$type);
+		}
     	$parts = array(
 			// It is important to name type "object_type" since the image class also has a column named type
 			'columns' => 'object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable',
@@ -654,6 +668,11 @@ class Object {
 		}
 		if (is_array($query['joins'])) {
 			$parts['joins'] = array_merge($parts['joins'],$query['joins']);
+		}
+		if (is_array($query['fields'])) {
+			foreach ($query['fields'] as $field => $value) {
+				$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
+			}
 		}
 		if (isset($query['tables']) && is_array($query['tables']) && count($query['tables'])>0) {
 			$parts['tables'].=','.implode(',',$query['tables']);
@@ -682,10 +701,10 @@ class Object {
 		}
 		$list = Object::_find($parts,$query);
 		
+		ObjectService::importType($type);
+		$class = ucfirst($type);
 		foreach ($list['rows'] as $row) {
-	    	$unique = ucfirst($row['object_type']);
-    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
-    		$obj = new $unique;
+    		$obj = new $class;
 			$obj->id = intval($row['id']);
 			$obj->title = $row['title'];
 			$obj->created = intval($row['created']);

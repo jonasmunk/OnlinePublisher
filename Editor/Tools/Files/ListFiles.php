@@ -67,7 +67,7 @@ foreach ($objects as $object) {
 			//startLine(array('dimmed'=>true))->text($object->getFilename())->endLine()->
 		endCell()->
 		startCell()->text(GuiUtils::bytesToString($object->getSize()))->endCell()->
-		startCell()->text(UserInterface::presentDateTime($object->getCreated()))->endCell()->
+		startCell()->text(UserInterface::presentDateTime($object->getUpdated()))->endCell()->
 	endRow();
 }
 $writer->endList();

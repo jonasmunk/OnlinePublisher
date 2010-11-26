@@ -1,18 +1,33 @@
 op.Editor = {
 	$ready : function() {
-		this.getToolbarController().pageDidLoad(op.page.id);
-		var editor = ui.Editor.get();
-		editor.setOptions({
-			partClass:'part_section'
-		});
-		editor.addPartController('header','Overskrift',op.Editor.Header);
-		editor.addPartController('text','Text',op.Editor.Text);
-		//editor.listen(this);
-		editor.ignite();
-		editor.activate();
+		var ctrl = this.getToolbarController();
+		if (ctrl) { // May not be loaded yet
+			n2i.log(ctrl);
+			ctrl.pageDidLoad(op.page.id);
+		}
+		if (n2i.location.hasHash('edit')) {
+			if (templateController!==undefined) {
+				templateController.edit();
+			}
+		}
+		if (op.page.template=='document') {
+			var editor = ui.Editor.get();
+			editor.setOptions({
+				partClass:'part_section'
+			});
+			editor.addPartController('header','Overskrift',op.Editor.Header);
+			editor.addPartController('text','Text',op.Editor.Text);
+			//editor.listen(this);
+			editor.ignite();
+			editor.activate();
+		}
 	},
 	getToolbarController : function() {
-		return window.parent.parent.frames[0].controller;
+		try {
+			return window.parent.controller;
+		} catch (e) {
+			n2i.log('Unable to find toolbar controller');
+		}
 	},
 	$partChanged : function() {
 		this.getToolbarController().pageDidChange();

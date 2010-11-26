@@ -338,6 +338,7 @@
 			<xsl:if test="@value='true'"> in2igui_checkbox_selected</xsl:if>
 		</xsl:attribute>
 		<span><span><xsl:comment/></span></span>
+		<xsl:value-of select="@title"/>
 	</a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Checkbox({
@@ -368,6 +369,7 @@
 
 <xsl:template name="gui:checkboxes">
 	<div class="in2igui_checkboxes" id="{generate-id()}">
+		<xsl:if test="@max-height"><xsl:attribute name="style">max-height:<xsl:value-of select="@max-height"/>px; overflow: auto;</xsl:attribute></xsl:if>
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">

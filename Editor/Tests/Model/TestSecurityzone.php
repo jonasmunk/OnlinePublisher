@@ -4,22 +4,11 @@
  * @subpackage Tests.Model
  */
 
-class TestSecurityzone extends UnitTestCase {
+class TestSecurityzone extends AbstractObjectTest {
     
-    function testLoad() {
-        $this->assertNull(Securityzone::load(0));
-    }
-
-    function testCreate() {
-        $obj = new Securityzone();
-		$this->assertFalse($obj->isPersistent());
-		$obj->save();
-		$this->assertTrue($obj->isPersistent());
-		$id = $obj->getId();
-        $this->assertNotNull(Securityzone::load($id));
-		$obj->remove();
-        $this->assertNull(Securityzone::load($id));
-    }
+	function TestFrame() {
+		parent::AbstractObjectTest('securityzone');
+	}
 
 	function testProperties() {
 		$obj = new Securityzone();

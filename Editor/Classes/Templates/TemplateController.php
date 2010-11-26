@@ -11,4 +11,9 @@ class TemplateController {
 	function TemplateController($type) {
 		$this->type = $type;
 	}
+	
+	// Override this
+	function isClientSide() {
+		return false;
+	}
 }

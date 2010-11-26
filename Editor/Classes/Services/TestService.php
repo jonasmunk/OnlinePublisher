@@ -12,7 +12,14 @@ class TestService {
 	
 	function getGroups() {
 		global $basePath;
-		return FileSystemUtil::listDirs($basePath.'Editor/Tests/');
+		$out = array();
+		$groups = FileSystemUtil::listDirs($basePath.'Editor/Tests/');
+		for ($i=0; $i < count($groups); $i++) { 
+			if ($groups[$i]!='Resources') {
+				$out[] = $groups[$i];
+			}
+		}
+		return $out;//$groups;
 	}
 
 	function getTestsInGroup($group) {

@@ -5,6 +5,8 @@
  */
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Image.php');
+require_once($basePath.'Editor/Classes/Objects/Imagegroup.php');
+require_once($basePath.'Editor/Classes/EventManager.php');
 
 class ImageService {
 	
@@ -21,8 +23,21 @@ class ImageService {
         return Database::getIds($sql);
 	}
 	
+	function addImageToGroup($imageId,$groupId) {
+		$image = Image::load($imageId);
+		$group = Imagegroup::load($groupId);
+		if ($image && $group) {
+			$sql="delete from imagegroup_image where image_id=".$imageId." and imagegroup_id=".$groupId;
+			Database::delete($sql);
+
+			$sql="insert into imagegroup_image (image_id, imagegroup_id) values (".$imageId.",".$groupId.")";
+			Database::insert($sql);
+			EventManager::fireEvent('relation_change','object','imagegroup',$groupId);
+		}
+	}
+	
 	function getTotalImageCount() {
-    	$sql= "SELECT count(object.id) as num FROM object,image where image.object_id=object.id";
+    	$sql= "select count(object.id) as num FROM object,image where image.object_id=object.id";
         if ($row = Database::selectFirst($sql)) {
             return intval($row['num']);
         } else {
@@ -128,7 +143,6 @@ class ImageService {
 		}
 		else {
 			// Get the size of the image
-	    	//$image = loadImage($filePath);
 			$imagehw = getimagesize($filePath);
 			$imageWidth = $imagehw[0];//imagesx($image);
 			$imageHeight = $imagehw[1];//imagesy($image);
