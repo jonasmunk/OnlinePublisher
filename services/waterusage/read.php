@@ -7,7 +7,7 @@ require_once('../../Editor/Classes/DateUtil.php');
 
 $number = Request::getString('number');
 
-$year = DateUtil::getCurrentYear()-1;
+$year = 2010-1;
 $sql = "select DATE_FORMAT(date, '%d-%m-%Y') as `date`,`value` from waterusage where year=".Database::int($year)." and number = ".Database::text($number);
 $row = Database::selectFirst($sql);
 
