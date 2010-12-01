@@ -19,12 +19,6 @@ if (Request::exists('return')) {
 $edit = Request::getBoolean('edit');
 
 $gui='
-<frames xmlns="uri:In2iGui">
-	<frame source="Toolbar.php" scrolling="false"/>
-	<frame source="Frame.php"/>
-</frames>';
-
-$gui='
 <gui xmlns="uri:In2iGui" title="OnlinePublisher editor">
 	<controller source="controller.js"/>
 	<dock url="viewer/'.($edit ? '#edit' : '').'" name="dock" position="top" frame-name="Preview">
@@ -45,20 +39,4 @@ $gui='
 </gui>';
 
 In2iGui::render($gui);
-
-
-In2iGui::render($gui);
-exit;
-
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface xmlns="uri:Frame">'.
-'<dock align="top" id="Root" tabs="true">'.
-'<frame source="Toolbar.php" scrolling="false"/>'.
-'<frame source="Frame.php" name="Bottom"/>'.
-'</dock>'.
-'</interface>'.
-'</xmlwebgui>';
-
-$elements = array("Frame");
-writeGui($xwg_skin,$elements,$gui);
 ?>

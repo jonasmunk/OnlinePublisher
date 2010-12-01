@@ -13,7 +13,7 @@ In2iGui.Gallery = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	if (this.element.parentNode.hasClassName('in2igui_overflow')) {
+	if (this.element.parentNode && this.element.parentNode.hasClassName('in2igui_overflow')) {
 		this.revealing = true;
 		this.element.parentNode.observe('scroll',this._reveal.bind(this));
 	}

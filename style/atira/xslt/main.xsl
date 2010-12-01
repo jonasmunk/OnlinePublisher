@@ -489,36 +489,43 @@
 	<xsl:variable name="language" select="//p:page/p:meta/p:language"/>
 	<div class="posters">
 		<div class="left">
-			<div class="box software">
-				<div class="box_top"><div><div><xsl:comment/></div></div></div>
-				<div class="box_body">
-					<div class="small_poster">
-						<xsl:choose>
-							<xsl:when test="$language='en'">
-								<h2><strong>software</strong> solutions</h2>
-								<p>We are a software development and consultancy company.</p>
-								<div class="links">
-									<a href="{$path}en/solutions/"><span>Solutions</span></a>
-									<xsl:text> · </xsl:text>
-									<a href="{$path}en/method/"><span>Method</span></a>
-								</div>
-								<a href="{$path}en/solutions/" class="button"><span>Mere</span></a>
-							</xsl:when>
-							<xsl:otherwise>
-								<h2><strong>software</strong> løsninger</h2>
-								<p>Vi er et software udviklingsfirma, der leverer kunde-specifikke løsninger.</p>
-								<div class="links">
-									<a href="{$path}da/loesninger/"><span>Løsninger</span></a>
-									<xsl:text> · </xsl:text>
-									<a href="{$path}da/metode/"><span>Metode</span></a>
-								</div>
-								<a href="{$path}da/loesninger/" class="button"><span>Mere</span></a>
-							</xsl:otherwise>
-						</xsl:choose>
+			<xsl:choose>
+				<xsl:when test="$language='en'">
+					<a href="{$path}en/articles/entrepreneur-of-the-year-2010.html"><img src="{$path}style/{$design}/gfx/front/entrepreneur_of_the_year.png" style="width: 287px; height: 149px; border: none;"/></a>
+				</xsl:when>
+				<xsl:otherwise>
+					<div class="box software">
+						<div class="box_top"><div><div><xsl:comment/></div></div></div>
+						<div class="box_body">
+							<div class="small_poster">
+								<xsl:choose>
+									<xsl:when test="$language='en'">
+										<h2><strong>software</strong> solutions</h2>
+										<p>We are a software development and consultancy company.</p>
+										<div class="links">
+											<a href="{$path}en/solutions/"><span>Solutions</span></a>
+											<xsl:text> · </xsl:text>
+											<a href="{$path}en/method/"><span>Method</span></a>
+										</div>
+										<a href="{$path}en/solutions/" class="button"><span>Mere</span></a>
+									</xsl:when>
+									<xsl:otherwise>
+										<h2><strong>software</strong> løsninger</h2>
+										<p>Vi er et software udviklingsfirma, der leverer kunde-specifikke løsninger.</p>
+										<div class="links">
+											<a href="{$path}da/loesninger/"><span>Løsninger</span></a>
+											<xsl:text> · </xsl:text>
+											<a href="{$path}da/metode/"><span>Metode</span></a>
+										</div>
+										<a href="{$path}da/loesninger/" class="button"><span>Mere</span></a>
+									</xsl:otherwise>
+								</xsl:choose>
+							</div>
+						</div>
+						<div class="box_bottom"><div><div><xsl:comment/></div></div></div>
 					</div>
-				</div>
-				<div class="box_bottom"><div><div><xsl:comment/></div></div></div>
-			</div>
+				</xsl:otherwise>
+			</xsl:choose>
 		</div>
 		<div class="center">
 			<div class="box pure">

@@ -55,7 +55,7 @@
 					<p><em>CVR:</em> 320 682 71</p>
 					<p><em>Tlf:</em> 70 20 60 77</p>
 					<p><em>E-post: </em> <a href="mailto:pigsaaler@greenbenefit.dk"><span>pigsaaler@greenbenefit.dk</span></a></p>
-					<p><em>Åben:</em> Alle dage, 8-20</p>
+					<p><em>Åben:</em> Alle hverdage fra kl. 9 – 17</p>
 					<blockquote>
 						"Kontakt os venligst hvis du er interesseret."
 					</blockquote>
