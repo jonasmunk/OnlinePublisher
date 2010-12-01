@@ -14,6 +14,10 @@ class DateUtil {
 		return mktime(0,0,0,$month,$date,$year);
 	}
 	
+	function getCurrentYear() {
+		return date('Y',mktime());
+	}
+	
 	/**
 	 * Gets the start time of the week of the provided timestamp
 	 */
