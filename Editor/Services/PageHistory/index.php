@@ -9,9 +9,10 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Templates.php';
 require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/InternalSession.php';
 
 $close = "../../Template/Edit.php";
-$pageId = getPageId();
+$pageId = InternalSession::getPageId();
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.

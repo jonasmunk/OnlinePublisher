@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class Project extends Object {
 	var $parentProjectId=0;
@@ -213,7 +214,7 @@ class Project extends Object {
         $result = Database::select($sql);
         while ($row = Database::next($result)) {
             if ($row['id']!=$ignore) {
-                $title = $prefix.shortenString($row['title'],20);
+                $title = $prefix.StringUtils::shortenString($row['title'],20);
             	$gui.='<option title="'.encodeXML($title).'" value="'.$row['id'].'"/>'.
             	Project::optionSpider($prefix.'··',$row['id'],$ignore);
     	    }

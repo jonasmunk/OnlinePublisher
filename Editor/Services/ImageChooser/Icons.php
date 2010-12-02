@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 require_once 'ImageChooserController.php';
 
@@ -34,7 +35,7 @@ while ($row = Database::next($result)) {
 		$counter=1;
 	}
 	$gui.=
-	'<icon title="'.encodeXML(shortenString($row['title'],16)).'" help="'.encodeXML($row['title']).'" image="../../../util/images/?id='.$row['id'].'&amp;maxwidth=32&amp;maxheight=32&amp;timestamp='.$row['updated'].'" link="javascript:parent.selectImage('.$row['id'].')" target="_parent"/>';
+	'<icon title="'.encodeXML(StringUtils::shortenString($row['title'],16)).'" help="'.encodeXML($row['title']).'" image="../../../util/images/?id='.$row['id'].'&amp;maxwidth=32&amp;maxheight=32&amp;timestamp='.$row['updated'].'" link="javascript:parent.selectImage('.$row['id'].')" target="_parent"/>';
 
 }
 Database::free($result);

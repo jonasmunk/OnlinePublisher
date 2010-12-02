@@ -10,6 +10,7 @@ require_once($basePath.'Editor/Classes/Page.php');
 require_once($basePath.'Editor/Classes/Pageblueprint.php');
 require_once($basePath.'Editor/Classes/Webloggroup.php');
 require_once($basePath.'Editor/Classes/In2iGui.php');
+require_once($basePath.'Editor/Classes/InternalSession.php');
 
 class WeblogController extends LegacyTemplateController {
     
@@ -53,7 +54,7 @@ class WeblogController extends LegacyTemplateController {
 
 	function listEntries() {
 		$xml='';
-		$sql="select webloggroup_id as id from weblog_webloggroup where page_id=".getPageId();
+		$sql="select webloggroup_id as id from weblog_webloggroup where page_id=".InternalSession::getPageId();
 		$selectedGroups = Database::getIds($sql);
 		
 		$groups = WeblogGroup::search(array('page'=>$this->id));

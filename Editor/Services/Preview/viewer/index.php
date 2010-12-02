@@ -11,6 +11,7 @@ require_once '../../../Classes/Hierarchy.php';
 require_once '../../../Classes/Request.php';
 require_once '../../../Classes/Services/RenderingService.php';
 require_once '../../../Classes/Services/PageService.php';
+require_once '../../../Classes/InternalSession.php';
 require_once '../Functions.php';
 
 if (requestGetExists('designsession')) {
@@ -32,14 +33,14 @@ $id = requestGetNumber('id',0);
 $history = requestGetNumber('history');
 
 if ($id==0) {
-	if (getPageId()>0) {
-		$id=getPageId();
+	if (InternalSession::getPageId()>0) {
+		$id=InternalSession::getPageId();
 	}
 	else {
 		$id=RenderingService::findPage('home','../../../../');
 	}
 }
-setPageId($id);
+InternalSession::setPageId($id);
 $sql="select page.id,UNIX_TIMESTAMP(page.published) as published, page.description,page.language,page.keywords,page.title,page.dynamic,page.next_page,page.previous_page,".
 "template.unique,frame.id as frameid,frame.title as frametitle,frame.data as framedata,frame.dynamic as framedynamic,".
 " design.parameters,".

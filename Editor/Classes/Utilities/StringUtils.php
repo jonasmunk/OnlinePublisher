@@ -182,4 +182,23 @@ class StringUtils {
 		$replacement = '<'.$tag.' '.$attr.'="'.$protocol.'${1}"'.($class!='' ? ' class="'.$class.'"' : '').'>${1}</'.$tag.'>';
 		return preg_replace($pattern, $replacement, $string);
 	}
+
+	/**
+	 * Shortens a string if it is too long
+	 * Note: does not guarantee the resulting length
+	 * @param string $str The string to shorten
+	 * @param int $maxLength The maximum length before shortening occurs
+	 * @return string The shortened string
+	 */
+	function shortenString($str,$maxLength) {
+		if (strlen($str)>$maxLength) {
+			$half = floor($maxLength/2);
+			$first = substr($str,0,$half);
+			$last = substr($str,strlen($str)-$half);
+			return $first.' ... '.$last;
+		}
+		else {
+			return (string) $str;
+		}
+	}
 }

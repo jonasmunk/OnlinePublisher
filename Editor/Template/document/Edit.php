@@ -7,9 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/InternalSession.php';
 require_once 'Functions.php';
 
-$id=getPageId();
+$id=InternalSession::getPageId();
 
 $sql="select design.unique from page,design where page.design_id=design.id and page.id=".$id;
 $row = Database::selectFirst($sql);

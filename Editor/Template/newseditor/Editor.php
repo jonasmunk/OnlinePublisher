@@ -8,8 +8,9 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Database.php';
+require_once '../../Classes/InternalSession.php';
 
-$sql="select * from newseditor where page_id=".getPageId();
+$sql="select * from newseditor where page_id=".InternalSession::getPageId();
 $row = Database::getRow($sql);
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.

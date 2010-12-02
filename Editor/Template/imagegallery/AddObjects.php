@@ -8,8 +8,9 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/InternalSession.php';
 
-$id = getPageId();
+$id = InternalSession::getPageId();
 $objects = requestPostArray('object');
 
 $position = 0;

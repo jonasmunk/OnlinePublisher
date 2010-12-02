@@ -7,8 +7,9 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/InternalSession.php';
 
-$id = getPageId();
+$id = InternalSession::getPageId();
 $title = requestPostText('title');
 $hierarchy = requestPostNumber('hierarchy');
 

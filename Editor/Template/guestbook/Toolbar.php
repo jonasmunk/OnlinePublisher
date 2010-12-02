@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/InternalSession.php';
 
 $tab = requestGetText('tab') | 'guestbook';
 
@@ -27,12 +28,12 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<divider/>';
 if ($tab=='guestbook') {
 	$gui.=
-	(Page::isChanged(getPageId())
+	(Page::isChanged(InternalSession::getPageId())
 	? '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" link="Publish.php" badge="!" badgestyle="Hilited"/>'
 	: '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" style="Disabled"/>'
 	).
 	'<tool title="Vis ændringer" icon="Basic/View" link="../../Services/Preview/" target="Desktop"/>'.
-	'<tool title="Egenskaber" icon="Basic/Info" link="../../Tools/Pages/?action=pageproperties&amp;id='.getPageId().'" target="Desktop" help="Vis sidens egenskaber i side-værktøjet"/>';
+	'<tool title="Egenskaber" icon="Basic/Info" link="../../Tools/Pages/?action=pageproperties&amp;id='.InternalSession::getPageId().'" target="Desktop" help="Vis sidens egenskaber i side-værktøjet"/>';
 } else {
 	$gui.=
 	'<tool title="Historik" icon="Basic/Time" link="../../Services/PageHistory/" target="Editor" help="Oversigt over tidligere versioner af dokumentet"/>';

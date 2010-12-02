@@ -9,10 +9,11 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/Services/PartService.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/Request.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Include/XmlWebGui.php';
 
 $type = Request::getString('part_type');
-$pageId = getPageId();
+$pageId = InternalSession::getPageId();
 $id = Request::getInt('id');
 $section = Request::getInt('section');
 $top = Request::getString('top');
@@ -42,7 +43,7 @@ if ($controller && method_exists($controller,'getFromRequest')) {
 }
 
 // Mark the page as changed
-Page::markChanged(getPageId());
+Page::markChanged(InternalSession::getPageId());
 
 
 redirect('Editor.php?section=0');

@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/InternalSession.php';
 
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
@@ -29,7 +30,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<header title="" width="1%"/>'.
 '</headergroup>';
 
-$sql="select * from guestbook_item where page_id=".getPageId()." order by time desc";
+$sql="select * from guestbook_item where page_id=".InternalSession::getPageId()." order by time desc";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$gui.='<row>'.

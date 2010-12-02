@@ -8,8 +8,9 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/InternalSession.php';
 
-$id = getPageId();
+$id = InternalSession::getPageId();
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.

@@ -10,10 +10,11 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Response.php';
+require_once '../../Classes/InternalSession.php';
 
 
 $historyId = Request::getInt('id');
-$pageId = getPageId();
+$pageId = InternalSession::getPageId();
 
 $page = Page::load($pageId);
 

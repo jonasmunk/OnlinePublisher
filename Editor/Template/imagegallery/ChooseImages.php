@@ -7,8 +7,9 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/InternalSession.php';
 
-$id=getPageId();
+$id=InternalSession::getPageId();
 
 $imageOptions='';
 $sql="SELECT object.* FROM object LEFT JOIN imagegallery_object ON imagegallery_object.object_id=object.id and imagegallery_object.page_id=$id WHERE object.type='image' and imagegallery_object.object_id IS NULL order by object.title;";
