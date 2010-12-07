@@ -49,7 +49,7 @@ $gui='
 		<bottom/>
 	</layout>
 	<window title="Import af data" name="uploadWindow" width="300" padding="5">
-		<upload name="file" url="Upload.php" widget="upload">
+		<upload name="file" url="Upload.php" widget="upload" flash="false">
 			<placeholder title="Upload CSV-fil med målerdata" text="Filen skal have formatet år;nummer;værdi f.eks. (2009;6778888;67545) og kan højest være '.$maxUploadSize.' stor"/>
 		</upload>
 		<buttons align="center" top="10">

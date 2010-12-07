@@ -11,7 +11,7 @@ $date = Request::getString('date');
 $value = Request::getInt('value');
 $year = 2010;
 
-$splitted = split("-",$date);
+$splitted = explode("-",$date);
 $date = mktime(0,0,0,$splitted[1],$splitted[2],$splitted[0]);
 
 
