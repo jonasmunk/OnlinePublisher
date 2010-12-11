@@ -17,11 +17,13 @@
 <xsl:attribute name="style">text-align: <xsl:value-of select="img:style/@align"/></xsl:attribute>
 </xsl:if>
 <a>
-<xsl:call-template name="img:buildlink"/>
+<xsl:if test="$editor!='true'">
+	<xsl:call-template name="img:buildlink"/>
+</xsl:if>
 <img src="{$src}" width="{$width}"  height="{$height}" alt="" id="{generate-id()}"/>
 </a>
 
-<xsl:if test="img:link/@image">
+<xsl:if test="img:link/@image and $editor!='true'">
 <script type="text/javascript">
 try {
 op.registerImageViewer('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="img:link/@image"/><xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if><xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>,text:'<xsl:value-of select="img:link/@note"/>'});
