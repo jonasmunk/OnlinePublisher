@@ -15659,7 +15659,9 @@ In2iGui.Gallery.prototype = {
 			self.element.insert(item);
 			self.nodes.push(item);
 		});
-		this._reveal();
+		if (this.revealing) {
+			this._reveal();
+		}
 	},
 	$$layout : function() {
 		if (this.nodes.length>0) {
