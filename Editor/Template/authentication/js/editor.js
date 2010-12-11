@@ -19,7 +19,7 @@ var templateController = {
 		this._load();
 	},
 	_load : function() {
-		var title = $$('.authentication h1')[0].innerHTML;
+		var title = n2i.dom.getNodeText($$('.authentication h1')[0]);
 		this.form.setValues({
 			title:title
 		});
@@ -32,7 +32,7 @@ var templateController = {
 			url : '../../../Template/authentication/Save.php',
 			parameters : values,
 			onSuccess : function() {
-				$$('.authentication h1')[0].innerHTML=values.title;
+				n2i.dom.setNodeText($$('.authentication h1')[0],values.title);
 				self.win.hide();
 			}
 		});
