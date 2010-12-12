@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.FrontPage
+ * @subpackage Templates.Document
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
@@ -9,6 +9,7 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/Services/PartService.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/Request.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Include/XmlWebGui.php';
 
@@ -46,5 +47,5 @@ if ($controller && method_exists($controller,'getFromRequest')) {
 Page::markChanged(InternalSession::getPageId());
 
 
-redirect('Editor.php?section=0');
+Response::redirect('Editor.php?section=0');
 ?>

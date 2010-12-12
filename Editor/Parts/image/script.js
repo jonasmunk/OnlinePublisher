@@ -39,12 +39,15 @@ var partController = {
 		this.chooserWindow.show();
 	},
 	preview : function() {
+		var self = this;
 		op.part.utils.updatePreview({
-			node:$('part_image_container'),
-			form:$(document.forms.PartForm),
-			type:'image',
-			delay: 500,
-			onComplete:this.suppressLink.bind(this)
+			node : $('part_image_container'),
+			form : $(document.forms.PartForm),
+			type : 'image',
+			delay : 500,
+			onComplete : function() {
+				//self.suppressLink()
+			}
 		});
 	},
 	suppressLink : function() {

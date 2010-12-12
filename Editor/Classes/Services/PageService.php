@@ -9,6 +9,10 @@ class PageService {
 		Database::insert($sql);
 	}
 	
+	function exists($id) {
+		return !Database::isEmpty("select id from page where id=".Database::int($id));
+	}
+	
 	function getPagePreview($id,$template) {
 		$data = '';
 	    if ($controller = LegacyTemplateController::getController($template,$id)) {

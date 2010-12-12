@@ -58,14 +58,12 @@ var controller = {
 			this.partEditControls.addIcon('save','common/save');
 			this.partEditControls.addIcon('cancel','common/stop');
 			this.partEditControls.showAtElement($$('.section_selected')[0],{'horizontal':'left','vertical':'topOutside'});
-			//alert($$('.sectionSelected')[0]);
 		}
 		this.ready = true;
 		$(document.body).observe('mouseup',function() {
 			this.selectedText = n2i.getSelectedText();
 		}.bind(this));
 		window.onscroll=this.saveScroll;
-		//$(document.body).observe('scroll',this.saveScroll);
 		var scroll = n2i.cookie.get('document.scroll');
 		if (scroll) {
 			window.scrollTo(0,parseInt(scroll,10));
