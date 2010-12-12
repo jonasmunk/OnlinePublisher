@@ -23,6 +23,7 @@
 
 <head>
 <title><xsl:value-of select="@title"/></title>
+	<meta http-equiv="X-UA-Compatible" content="IE8" />
 <xsl:choose>
 	<xsl:when test="$dev='true'">
 		<link rel="stylesheet" href="{$context}/In2iGui/css/dev.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>

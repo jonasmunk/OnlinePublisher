@@ -271,8 +271,12 @@ In2iGui.List.prototype = {
 				var td = new Element('td');
 				this.parseCell(cells[j],td);
 				row.insert(td);
-				if (!title) title = cells[j].innerText || cells[j].textContent;
-				if (!icon && cells[j].getAttribute('icon')) icon = cells[j].getAttribute('icon');
+				if (!title) {
+					title = n2i.dom.getNodeText(cells[j]);
+				}
+				if (!icon) {
+					icon = cells[j].getAttribute('icon');
+				}
 			};
 			var info = {id:rows[i].getAttribute('id'),kind:rows[i].getAttribute('kind'),icon:icon,title:title,index:i};
 			row.dragDropInfo = info;

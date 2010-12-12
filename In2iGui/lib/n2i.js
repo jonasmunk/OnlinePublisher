@@ -190,6 +190,8 @@ n2i.dom = {
 		for (var i=0; i < c.length; i++) {
 			if (c[i].nodeType==n2i.TEXT_NODE && c[i].nodeValue!=null) {
 				txt+=c[i].nodeValue;
+			} else if (c[i].nodeType==n2i.ELEMENT_NODE) {
+				txt+=n2i.dom.getNodeText(c[i]);
 			}
 		};
 		return txt;
