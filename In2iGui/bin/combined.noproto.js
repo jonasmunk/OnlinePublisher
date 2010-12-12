@@ -10778,9 +10778,7 @@ In2iGui.Gallery.prototype = {
 			self.element.insert(item);
 			self.nodes.push(item);
 		});
-		if (this.revealing) {
-			this._reveal();
-		}
+		this._reveal();
 	},
 	$$layout : function() {
 		if (this.nodes.length>0) {
@@ -10788,6 +10786,7 @@ In2iGui.Gallery.prototype = {
 		}
 	},
 	_reveal : function() {
+		if (!this.revealing) {return}
 		var container = this.element.parentNode;
 		var limit = container.scrollTop+container.clientHeight;
 		if (limit<=this.maxRevealed) {
