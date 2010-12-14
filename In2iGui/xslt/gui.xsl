@@ -248,7 +248,7 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 	</xsl:variable>
 	<iframe id="{$id}" name="{$id}" src="{@source}" frameborder="0">
 		<xsl:attribute name="style">
-			<xsl:text>width: 100%; height: 100%; background: #fff;</xsl:text>
+			<xsl:text>width: 100%; height: 100%; background: #fff; display: block;</xsl:text>
 			<xsl:if test="@border='true'">
 				<xsl:text>border: 1px solid #ddd; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;</xsl:text>
 			</xsl:if>
