@@ -25,7 +25,7 @@ $gui='
 			<space all="25">
 			<columns space="30">
 				<column>
-					<header icon="monochrome/gear">Udvikling</header>
+					<header icon="monochrome/message">Udvikling</header>
 					<articles source="developerFeed"/>
 				</column>
 				<column>

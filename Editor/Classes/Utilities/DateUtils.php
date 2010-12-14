@@ -63,7 +63,7 @@ class DateUtils {
 			$diff = time()-$timestamp;
 			if ($diff>0) {
 				if ($diff<60) {
-					return 'for '.$diff.' sekunder siden ('.DateUtils::formatDateTime($timestamp,$locale).')';
+					return 'for '.$diff.' sekunder siden';
 				} else if ($diff<3600) {
 					$minutes = floor($diff/60);
 					return 'for '.$minutes.($minutes==1 ? ' minut siden' : ' minutter siden');
