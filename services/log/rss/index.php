@@ -24,7 +24,7 @@ $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$item = new FeedItem();
 	$item->setTitle($row['event'].': '.$row['user']);
-	$item->setDescription('USER: '.$row['user'].'<br/>IP: '.$row['ip']."<br/>SESSION: ".$row['session']);
+	$item->setDescription('USER: '.$row['user']);
 	$item->setPubDate($row['timestamp']);
 	$item->setGuid($baseUrl.$row['id']);
 	$feed->addItem($item);
