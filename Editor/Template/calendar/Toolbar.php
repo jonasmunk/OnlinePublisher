@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/InternalSession.php';
 
 $tab = requestGetText('tab') | 'html';
 
@@ -27,7 +28,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<divider/>';
 if ($tab=='html') {
 	$gui.=
-(Page::isChanged(getPageId())
+(Page::isChanged(InternalSession::getPageId())
 ? '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" link="Publish.php" badge="!" badgestyle="Hilited"/>'
 : '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" style="Disabled"/>'
 ).

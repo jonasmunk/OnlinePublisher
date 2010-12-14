@@ -11,12 +11,13 @@ require_once '../../Classes/Services/PartService.php';
 require_once '../../Include/Session.php';
 require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/SystemInfo.php';
 require_once 'Functions.php';
 
 header('Content-Type: text/html; charset=iso-8859-1');
 
-$design = getPageDesign();
+$design = InternalSession::getPageDesign();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -109,7 +110,7 @@ $lastRowIndex=displayRows();
 
 function buildPartContext() {
 	$context = new PartContext();
-	$pageId = getPageId();
+	$pageId = InternalSession::getPageId();
 	
 	//////////////////// Find links ///////////////////
 	$sql="select * from link where page_id=".$pageId." and source_type='text'";
@@ -126,7 +127,7 @@ function buildPartContext() {
 
 function displayRows() {
 	$selected = getDocumentRow();
-	$pageId = getPageId();
+	$pageId = InternalSession::getPageId();
 	$lastIndex = 0;
 	$sql="select * from document_row where page_id=".$pageId." order by `index`";
 	$result = Database::select($sql);
@@ -143,7 +144,7 @@ function displayRows() {
 
 function displayColumns($rowId,$rowIndex) {
 	$lastIndex = 0;
-	$pageId = getPageId();
+	$pageId = InternalSession::getPageId();
 	$selectedColumn = getDocumentColumn();
 	$sql="select * from document_column where page_id=".$pageId." and row_id=".$rowId." order by `index`";
 	$result = Database::select($sql);

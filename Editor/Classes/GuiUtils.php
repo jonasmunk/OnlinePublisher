@@ -154,7 +154,7 @@ class GuiUtils {
 		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<option title="'.StringUtils::escapeXML(shortenString($row['title'],$maxSize)).'" value="'.$row['id'].'"/>';
+			$output.='<option title="'.StringUtils::escapeXML(StringUtils::shortenString($row['title'],$maxSize)).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;

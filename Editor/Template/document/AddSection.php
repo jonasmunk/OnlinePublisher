@@ -8,9 +8,10 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Response.php';
+require_once '../../Classes/InternalSession.php';
 require_once 'Functions.php';
 
-$pageId = getPageId();
+$pageId = InternalSession::getPageId();
 $columnId = Request::getInt('column');
 $index = Request::getInt('index');
 $part = Request::getString('part');

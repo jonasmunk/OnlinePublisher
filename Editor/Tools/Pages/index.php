@@ -9,6 +9,7 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/Session.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/DevelopmentMode.php';
+require_once '../../Classes/InternalSession.php';
 
 $right = getToolSessionVar('pages','rightFrame');
 if ($right==null) {
@@ -22,7 +23,7 @@ if ($action=='newpage') {
 } elseif ($action=='pageproperties') {
 	$id = requestGetNumber('id');
 	if (!($id>0)) {
-		$id = getPageId();
+		$id = InternalSession::getPageId();
 	}
 	$right = 'EditPage.php?id='.$id;
 }

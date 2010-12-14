@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/HtmlDocument.php';
+require_once '../../Classes/InternalSession.php';
 
 $fileType=$_FILES["file"]["type"];
 $tempFile=$_FILES['file']['tmp_name'];
-$id = getPageId();
+$id = InternalSession::getPageId();
 
 if ($fileType=='text/html') {
 	$html = file_get_contents($tempFile);

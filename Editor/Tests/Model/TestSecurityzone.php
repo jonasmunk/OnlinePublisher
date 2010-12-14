@@ -6,7 +6,7 @@
 
 class TestSecurityzone extends AbstractObjectTest {
     
-	function TestFrame() {
+	function TestSecurityzone() {
 		parent::AbstractObjectTest('securityzone');
 	}
 

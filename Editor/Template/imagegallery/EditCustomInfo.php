@@ -8,9 +8,10 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Image.php';
+require_once '../../Classes/InternalSession.php';
 
 $imageId = requestGetNumber('id');
-$pageId = getPageId();
+$pageId = InternalSession::getPageId();
 
 $sql="select * from imagegallery_custom_info where page_id=".$pageId." and image_id=".$imageId;
 if ($row = Database::selectFirst($sql)) {

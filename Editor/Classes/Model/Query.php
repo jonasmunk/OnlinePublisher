@@ -47,10 +47,17 @@ class Query {
 		return $this;
 	}
 	
+	// TODO: Deprecated
 	function withField($field,$value) {
 		$this->fields[$field] = $value;
 		return $this;
 	}
+
+	function withProperty($field,$value) {
+		$this->fields[$field] = $value;
+		return $this;
+	}
+
 	
 	function search() {
 		return ObjectService::search($this);

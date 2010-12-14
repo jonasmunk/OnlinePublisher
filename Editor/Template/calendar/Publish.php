@@ -8,10 +8,12 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Services/PublishingService.php';
+require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Response.php';
 
-$id = getPageId();
+$id = InternalSession::getPageId();
 
 PublishingService::publishPage($id);
 
-redirect('Toolbar.php');
+Response::redirect('Toolbar.php');
 ?>

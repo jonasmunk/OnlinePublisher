@@ -7,12 +7,14 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Response.php';
+require_once '../../Classes/InternalSession.php';
 
-$page = Page::load(getPageId());
+$page = Page::load(InternalSession::getPageId());
 
 if (strlen($page->getPath())>0) {
-	redirect('../../../'.$page->getPath());
+	Response::redirect('../../../'.$page->getPath());
 } else {
-	redirect('../../../?id='.$page->getId());
+	Response::redirect('../../../?id='.$page->getId());
 }
 ?>

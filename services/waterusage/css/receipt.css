@@ -1,0 +1,31 @@
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+.receipt
+{
+	width: 600px;
+	margin: 40px auto;
+	background: #fff;
+	padding: 30px 0px;
+	overflow: hidden;
+	text-align: left;
+}
+
+h1
+{
+	font-size: 16pt;	
+	margin-top: 0px;
+}
+
+table
+{
+	border: none;
+}
+
+table th
+{
+	padding-right: 20px;
+}

@@ -6,7 +6,7 @@
 
 class TestUser extends AbstractObjectTest {
     
-	function TestFrame() {
+	function TestUser() {
 		parent::AbstractObjectTest('user');
 	}
 

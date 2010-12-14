@@ -5,6 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
+require_once '../../Classes/InternalSession.php';
 
 $weblog = Weblog::load(InternalSession::getPageId());
 

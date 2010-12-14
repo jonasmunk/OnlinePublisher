@@ -90,8 +90,9 @@ Controller.prototype.save = function() {
 	var self = this;
 	var delegate = {
 		onSuccess : function(t) {
-			alert('Din aflæsning er nu registreret');
-			self.reset();
+			document.location='receipt.php?number='+number;
+			//alert('Din aflæsning er nu registreret');
+			//self.reset();
 		},
 		onFailure : function() {
 			alert('Der skete desværre en teknisk fejl under registreringen.')

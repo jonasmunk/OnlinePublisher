@@ -7,8 +7,9 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/InternalSession.php';
 
-$sql="select * from guestbook where page_id=".getPageId();
+$sql="select * from guestbook where page_id=".InternalSession::getPageId();
 $row = Database::selectFirst($sql);
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.

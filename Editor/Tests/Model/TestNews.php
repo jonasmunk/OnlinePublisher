@@ -6,7 +6,7 @@
 
 class TestNews extends AbstractObjectTest {
     
-	function TestFrame() {
+	function TestNews() {
 		parent::AbstractObjectTest('news');
 	}
 }
