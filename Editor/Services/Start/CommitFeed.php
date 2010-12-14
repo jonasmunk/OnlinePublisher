@@ -25,11 +25,11 @@ $writer->startArticles();
 foreach($feed->getItems() as $item) {
 	$title = $item->getTitle();
 	if (StringUtils::startsWith($title,'Merge branch')) {
-		$title = "Committed!";
+		$title = "Updates sent to central repository!";
 	}
 	$writer->startArticle();
 	$writer->startTitle()->text($title)->endTitle();
-	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatDateTime($item->getPubDate()))->endParagraph();
+	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endParagraph();
 	$writer->endArticle();
 	
 }

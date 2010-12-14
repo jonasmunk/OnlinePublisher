@@ -27,7 +27,7 @@ foreach($feed->getItems() as $item) {
 	$writer->startArticle();
 	$writer->startTitle()->text($item->getTitle())->endTitle();
 	$writer->startParagraph()->text($item->getDescription())->endParagraph();
-	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatDateTime($item->getPubDate()))->endParagraph();
+	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endParagraph();
 	//$writer->startCell()->text()->endCell();
 	$writer->endArticle();
 }

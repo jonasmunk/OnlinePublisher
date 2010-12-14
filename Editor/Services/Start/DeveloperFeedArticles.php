@@ -27,7 +27,7 @@ foreach($feed->getItems() as $item) {
 	$title = str_replace('in2isoft: ','',$title);
 	$writer->startArticle();
 	$writer->startTitle()->text($title)->endTitle();
-	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatDateTime($item->getPubDate()))->endParagraph();
+	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endParagraph();
 	$writer->endArticle();
 }
 $writer->endArticles();
