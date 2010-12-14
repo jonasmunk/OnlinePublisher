@@ -21,6 +21,9 @@ class TestFeeds extends UnitTestCase {
 		
 		$items = $feed->getItems();
 		$this->assertEqual(count($items),20);
+
+		$first = $items[0];
+		$this->assertEqual($first->getTitle(),'in2isoft: Fixing bugs related to Internet Explorer');
     }
 
     function testAtom() {
@@ -33,6 +36,13 @@ class TestFeeds extends UnitTestCase {
 		$feed = $parser->parseURL($url);
 		$this->assertTrue($feed!==false,'Unable to parse url: '.$url);
 		$this->assertEqual($feed->getTitle(),'Recent Commits to OnlinePublisher:master');
+
+		$items = $feed->getItems();
+		$this->assertEqual(count($items),20);
+		
+		$first = $items[0];
+		$this->assertEqual($first->getTitle(),'Improved reliability of water usage service / tool');
+		$this->assertEqual($first->getPubDate(),1291721077);
     }
 }
 ?>

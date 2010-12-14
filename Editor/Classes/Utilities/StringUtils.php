@@ -201,4 +201,8 @@ class StringUtils {
 			return (string) $str;
 		}
 	}
+	
+	function startsWith($find,$str) {
+		return strpos($find,$str)===0;
+	}
 }

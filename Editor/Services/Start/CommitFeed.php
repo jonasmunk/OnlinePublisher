@@ -9,8 +9,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Network/FeedParser.php';
 require_once '../../Classes/Utilities/DateUtils.php';
 
-$url = 'http://www.in2isoft.dk/services/news/rss/?group=373';
-
+$url = 'https://github.com/in2isoft/OnlinePublisher/commits/master.atom';
 $parser = new FeedParser();
 $feed = $parser->parseURL($url);
 
@@ -24,12 +23,15 @@ $writer = new ArticlesWriter();
 $writer->startArticles();
 
 foreach($feed->getItems() as $item) {
+	$title = $item->getTitle();
+	if (StringUtils::startsWith($title,'Merge branch')) {
+		$title = "Committed!";
+	}
 	$writer->startArticle();
-	$writer->startTitle()->text($item->getTitle())->endTitle();
-	$writer->startParagraph()->text($item->getDescription())->endParagraph();
-	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::presentDateTime($item->getPubDate()))->endParagraph();
-	//$writer->startCell()->text()->endCell();
+	$writer->startTitle()->text($title)->endTitle();
+	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatDateTime($item->getPubDate()))->endParagraph();
 	$writer->endArticle();
+	
 }
 $writer->endArticles();
 ?>
