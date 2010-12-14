@@ -66,52 +66,6 @@ class ImagegalleryController extends LegacyTemplateController {
 
 	function dynamic(&$state) {
 		global $basePath,$baseUrl;
-		if (requestGetBoolean('photocast')) {
-			require_once $basePath.'Editor/Classes/Feed.php';
-			$feed = new Feed();
-			$feed->setTitle('Billedgalleri');
-			$feed->setDescription('Billedgalleri');
-			$feed->setPubDate(gmmktime());
-			$feed->setLastBuildDate(gmmktime());
-			$feed->setLink($baseUrl.'?id='.$this->id);
-	
-			$sql="select object.type,object.id,object.title".
-			" from object,imagegallery_object".
-			" where (object.type='imagegroup' or object.type='image')".
-			" and object.id=imagegallery_object.object_id".
-			" and imagegallery_object.page_id=".$this->id.
-			" order by imagegallery_object.position";
-			$result = Database::select($sql);
-			while ($row = Database::next($result)) {
-				if ($row['type']=='imagegroup') {
-			    	$sql="select object.title,object.id,image.size,image.type from object,imagegroup_image,image".
-			    	" where object.id=imagegroup_image.image_id".
-					" and image.object_id = object.id".
-			    	" and imagegroup_image.imagegroup_id=".$row['id']." order by object.title";
-			        $result2 = Database::select($sql);
-			        while ($row2 = Database::next($result2)) {
-			    	    $item = new FeedItem();
-						$item->setTitle($row2['title']);
-						$item->addEnclosure($baseUrl.'util/images/?id='.$row2['id'],$row2['type'],$row2['size']);
-						$feed->addItem($item);
-			        }
-			        Database::free($result2);
-				} else {
-					$item = new FeedItem();
-					$item->setTitle($row['title']);
-					$item->addEnclosure($baseUrl.'util/images/?id'.$row2['id'],'image/jpeg',0);
-					$feed->addItem($item);
-				}
-			}
-			Database::free($result);
-	
-			header("Last-Modified: " . gmdate("D, d M Y H:i:s",gmmktime()) . " GMT");
-			header('Content-type: text/xml');
-			$serializer = new FeedSerializer();
-			echo $serializer->serialize($feed);
-			exit;
-		}
-
 		$xml='';
 		$sql="select object.type,object.id,object.data".
 		" from object,imagegallery_object".

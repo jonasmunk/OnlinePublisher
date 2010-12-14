@@ -51,6 +51,13 @@ class DOMUtils {
 		return null;
 	}
 	
+	function getFirstChildText($node,$name) {
+		if ($child = DOMUtils::getFirstChildElement($node,$name)) {
+			return DOMUtils::getText($child);
+		}
+		return null;
+	}
+	
 	function getText($node) {
 		return $node->textContent;
 	}

@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Feed.php';
+require_once '../../Classes/Network/FeedParser.php';
 require_once '../../Classes/UserInterface.php';
 
 $url = 'http://www.in2isoft.dk/services/news/rss/?group=373';
