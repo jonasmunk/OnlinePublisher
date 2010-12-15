@@ -5065,12 +5065,29 @@ n2i.dom = {
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
 	},
+	setNodeText : function(node,text) {
+		var c = node.childNodes;
+		var updated = false;
+		for (var i=0; i < c.length; i++) {
+			if (!updated && node.nodeType==n2i.TEXT_NODE) {
+				node.nodeValue=text;
+				updated = true;
+			} else {
+				node.removeChild(c[i]);
+			}
+		}
+		if (!updated) {
+			n2i.dom.addText(node,text);
+		}
+	},
 	getNodeText : function(node) {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
 			if (c[i].nodeType==n2i.TEXT_NODE && c[i].nodeValue!=null) {
 				txt+=c[i].nodeValue;
+			} else if (c[i].nodeType==n2i.ELEMENT_NODE) {
+				txt+=n2i.dom.getNodeText(c[i]);
 			}
 		};
 		return txt;

@@ -5,13 +5,15 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Link.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Response.php';
 
-$id=requestGetNumber('id',0);
+$id = Request::getInt('id');
 
-$sql="delete from link where id=".$id;
-Database::delete($sql);
+if ($link = Link::load($id)) {
+	$link->remove();
+}
 
-redirect('ListOfLinks.php');
+Response::redirect('ListOfLinks.php');
 ?>

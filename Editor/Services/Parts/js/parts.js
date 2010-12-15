@@ -10,7 +10,8 @@ op.part.utils = {
 			var url = controller.context+'Editor/Services/Parts/Preview.php?type='+options.type;
 			var parms = options.form.serialize(true);
 			ui.request({url:url,parameters:parms,onSuccess:function(t) {
-				options.node.innerHTML=t.responseText;
+				//options.node.innerHTML=t.responseText;
+				options.node.update(t.responseText);
 				if (options.onComplete) {
 					options.onComplete();
 				}

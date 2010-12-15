@@ -6,8 +6,8 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Feed.php';
-require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/Network/FeedParser.php';
+require_once '../../Classes/Utilities/DateUtils.php';
 
 $url = 'http://www.in2isoft.dk/services/news/rss/?group=373';
 
@@ -27,7 +27,7 @@ foreach($feed->getItems() as $item) {
 	$writer->startArticle();
 	$writer->startTitle()->text($item->getTitle())->endTitle();
 	$writer->startParagraph()->text($item->getDescription())->endParagraph();
-	$writer->startParagraph(array('dimmed'=>true))->text(UserInterface::presentDateTime($item->getPubDate()))->endParagraph();
+	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endParagraph();
 	//$writer->startCell()->text()->endCell();
 	$writer->endArticle();
 }

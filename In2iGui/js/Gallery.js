@@ -83,6 +83,7 @@ In2iGui.Gallery.prototype = {
 		}
 	},
 	_reveal : function() {
+		if (!this.revealing) {return}
 		var container = this.element.parentNode;
 		var limit = container.scrollTop+container.clientHeight;
 		if (limit<=this.maxRevealed) {

@@ -10,7 +10,7 @@ class TestVCal extends UnitTestCase {
 	function testIt() {
 		global $basePath;
 		require_once $basePath.'/Editor/Classes/VCal.php';
-		$path = $basePath.'/Editor/Tests/Resources/calendar.ics';
+		$path = $basePath.'/Editor/Tests/Resources/ical.ics';
 		$this->assertTrue(file_exists($path));
 		$parser = new VCalParser();
 		$cal = $parser->parseUrl($path);

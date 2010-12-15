@@ -10,19 +10,20 @@ var controller = {
 	},
 	_getParameters : function() {
 		var p = {};
-		p.text=text.getValue();
+		p.text = text.getValue();
+		p.alternative = alternative.getValue();
 		if (page.getValue()) {
-			p.type='page';
-			p.value=page.getValue();
+			p.type = 'page';
+			p.value = page.getValue();
 		} else if (file.getValue()) {
-			p.type='file';
-			p.value=file.getValue();
+			p.type = 'file';
+			p.value = file.getValue();
 		} else if (url.getValue()) {
-			p.type='url';
-			p.value=url.getValue();
+			p.type = 'url';
+			p.value = url.getValue();
 		} else if (email.getValue()) {
-			p.type='email';
-			p.value=email.getValue();
+			p.type = 'email';
+			p.value = email.getValue();
 		}
 		return p;
 	},

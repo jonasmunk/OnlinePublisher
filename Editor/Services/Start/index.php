@@ -13,6 +13,7 @@ $gui='
 	<css url="style.css"/>
 	<controller name="controller" source="controller.js"/>
 	<source name="developerFeed" url="DeveloperFeedArticles.php"/>
+	<source name="commitFeed" url="CommitFeed.php"/>
 	<source name="newsFeed" url="NewsFeedArticles.php"/>
 	<box variant="rounded">
 		<html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,8 +25,12 @@ $gui='
 			<space all="25">
 			<columns space="30">
 				<column>
-					<header icon="monochrome/gear">Udvikling</header>
+					<header icon="monochrome/message">Udvikling</header>
 					<articles source="developerFeed"/>
+				</column>
+				<column>
+					<header icon="monochrome/gear">Kode</header>
+					<articles source="commitFeed"/>
 				</column>
 				<column>
 					<header icon="monochrome/loudspeaker">Nyheder</header>

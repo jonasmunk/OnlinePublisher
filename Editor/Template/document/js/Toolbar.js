@@ -5,8 +5,14 @@ var controller = {
 		window.parent.location='../../Tools/Pages/index.php';
 	},
 	$click$publish : function() {
-		window.location='Publish.php';
+		ui.request({url:'../../Services/Model/PublishPage.php',parameters:{id:this.pageId},onSuccess:function(obj) {
+			publish.setEnabled(false);
+		}});
 	},
+	/*
+	$click$publish : function() {
+		window.location='Publish.php';
+	},*/
 	$click$preview : function() {
 		window.parent.location='../../Services/Preview/?id='+this.pageId;
 	},

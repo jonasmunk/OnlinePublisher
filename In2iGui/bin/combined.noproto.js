@@ -169,12 +169,29 @@ n2i.dom = {
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
 	},
+	setNodeText : function(node,text) {
+		var c = node.childNodes;
+		var updated = false;
+		for (var i=0; i < c.length; i++) {
+			if (!updated && node.nodeType==n2i.TEXT_NODE) {
+				node.nodeValue=text;
+				updated = true;
+			} else {
+				node.removeChild(c[i]);
+			}
+		}
+		if (!updated) {
+			n2i.dom.addText(node,text);
+		}
+	},
 	getNodeText : function(node) {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
 			if (c[i].nodeType==n2i.TEXT_NODE && c[i].nodeValue!=null) {
 				txt+=c[i].nodeValue;
+			} else if (c[i].nodeType==n2i.ELEMENT_NODE) {
+				txt+=n2i.dom.getNodeText(c[i]);
 			}
 		};
 		return txt;
@@ -6946,8 +6963,12 @@ In2iGui.List.prototype = {
 				var td = new Element('td');
 				this.parseCell(cells[j],td);
 				row.insert(td);
-				if (!title) title = cells[j].innerText || cells[j].textContent;
-				if (!icon && cells[j].getAttribute('icon')) icon = cells[j].getAttribute('icon');
+				if (!title) {
+					title = n2i.dom.getNodeText(cells[j]);
+				}
+				if (!icon) {
+					icon = cells[j].getAttribute('icon');
+				}
 			};
 			var info = {id:rows[i].getAttribute('id'),kind:rows[i].getAttribute('kind'),icon:icon,title:title,index:i};
 			row.dragDropInfo = info;
@@ -10771,6 +10792,7 @@ In2iGui.Gallery.prototype = {
 		}
 	},
 	_reveal : function() {
+		if (!this.revealing) {return}
 		var container = this.element.parentNode;
 		var limit = container.scrollTop+container.clientHeight;
 		if (limit<=this.maxRevealed) {

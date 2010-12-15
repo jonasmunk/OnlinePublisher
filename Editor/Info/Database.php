@@ -466,13 +466,13 @@ $databaseTables = array(
 			array("session","varchar(255)","YES","","","")
 		),
 	'mailinglist' => array(
-		array("object_id","int(11)","YES","","","")
+			array("object_id","int(11)","YES","","","")
 	    ),
 	'milestone' => array(
-		array("object_id","int(11)","","","0",""),
-		array("deadline","datetime","YES","","",""),
-		array("containing_object_id","int(11)","","","0",""),
-		array("completed","tinyint(1)","YES","","0","")
+			array("object_id","int(11)","","","0",""),
+			array("deadline","datetime","YES","","",""),
+			array("containing_object_id","int(11)","","","0",""),
+			array("completed","tinyint(1)","YES","","0","")
 	    ),
 	'news' => array(
 			array("object_id","int(11)","","","0",""),
@@ -490,6 +490,10 @@ $databaseTables = array(
 			array("news_id","int(11)","","","0",""),
 			array("newsgroup_id","int(11)","","","0","")
 		),
+	'newssource' => array(
+			array("object_id","int(11)","","","0",""),
+			array("url","varchar(255)","YES","","","")
+	),
 	'object' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("title","varchar(255)","YES","","",""),

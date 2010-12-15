@@ -60,5 +60,9 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual('',StringUtils::appendWordToString(null,'',' '));
 		$this->assertEqual('',StringUtils::appendWordToString(null,null,' '));
 	}
+	
+	function testStartsWith() {
+		$this->assertTrue(StringUtils::startsWith('Merge branch','Merge'));
+	}
 }
 ?>

@@ -9,7 +9,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Network/FeedParser.php';
 require_once '../../Classes/Utilities/DateUtils.php';
 
-$url = 'http://twitter.com/statuses/user_timeline/16827706.rss';
+$url = 'https://github.com/in2isoft/OnlinePublisher/commits/master.atom';
 $parser = new FeedParser();
 $feed = $parser->parseURL($url);
 
@@ -24,11 +24,14 @@ $writer->startArticles();
 
 foreach($feed->getItems() as $item) {
 	$title = $item->getTitle();
-	$title = str_replace('in2isoft: ','',$title);
+	if (StringUtils::startsWith($title,'Merge branch')) {
+		$title = "Updates sent to central repository!";
+	}
 	$writer->startArticle();
 	$writer->startTitle()->text($title)->endTitle();
 	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endParagraph();
 	$writer->endArticle();
+	
 }
 $writer->endArticles();
 ?>

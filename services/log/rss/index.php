@@ -6,8 +6,10 @@
 
 require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once '../../../Editor/Include/Functions.php';
-require_once '../../../Editor/Classes/Feed.php';
+require_once '../../../Editor/Classes/Database.php';
+require_once '../../../Editor/Classes/Network/Feed.php';
+require_once '../../../Editor/Classes/Network/FeedItem.php';
+require_once '../../../Editor/Classes/Network/FeedSerializer.php';
 
 
 $feed = new Feed();
@@ -22,7 +24,7 @@ $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$item = new FeedItem();
 	$item->setTitle($row['event'].': '.$row['user']);
-	$item->setDescription('USER: '.$row['user'].'<br/>IP: '.$row['ip']."<br/>SESSION: ".$row['session']);
+	$item->setDescription('USER: '.$row['user']);
 	$item->setPubDate($row['timestamp']);
 	$item->setGuid($baseUrl.$row['id']);
 	$feed->addItem($item);

@@ -8,6 +8,8 @@ class RemoteData {
 	
 	var $file;
 	var $age;
+	var $success;
+	var $hasData;
 	
 	function setFile($file) {
 	    $this->file = $file;
@@ -23,6 +25,22 @@ class RemoteData {
 
 	function getAge() {
 	    return $this->age;
+	}
+	
+	function setSuccess($success) {
+	    $this->success = $success;
+	}
+
+	function isSuccess() {
+	    return $this->success;
+	}
+	
+	function setHasData($hasData) {
+	    $this->hasData = $hasData;
+	}
+
+	function isHasData() {
+	    return $this->hasData;
 	}
 	
 }
