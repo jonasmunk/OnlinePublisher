@@ -29,7 +29,8 @@ ui.listen({
 			fetchFormula.reset();
 			ui.showMessage({text:'Billedet er hentet',duration:2000});
 		} else {
-			ui.showMessage({text:data.message,duration:2000});
+			n2i.log(data);
+			ui.showMessage({text:data.errorMessage,duration:2000});
 		}
 		fetchImage.setEnabled(true);
 		imagesSource.refresh();
