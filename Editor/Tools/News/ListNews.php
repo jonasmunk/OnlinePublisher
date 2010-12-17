@@ -106,7 +106,7 @@ foreach ($objects as $object) {
 	}
 	//$writer->icon(array('icon'=>($active ? 'monochrome/play' : 'monochrome/invisible')));
 	if ($linkCounts[$object->getId()]>0) {
-		$writer->icon(array('icon'=>"monochrome/attachment"));
+		$writer->icon(array('icon'=>"monochrome/link"));
 	}
 	$writer->endIcons()->endCell();
 	$writer->endRow();
