@@ -11890,11 +11890,13 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	$sourceIsBusy : function() {
-		//this.element.addClassName('in2igui_list_busy');
+		this.busy = true;
+		this.element.addClassName('in2igui_list_busy');
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		//this.element.removeClassName('in2igui_list_busy');
+		this.busy = false;
+		this.element.removeClassName('in2igui_list_busy');
 	},
 	
 	/** @private */
@@ -12130,11 +12132,13 @@ In2iGui.List.prototype = {
 	addRowBehavior : function(row,index) {
 		var self = this;
 		row.onmousedown = function(e) {
+			if (self.busy) {return};
 			self.rowDown(index);
 			In2iGui.startDrag(e,row);
 			return false;
 		}
 		row.ondblclick = function() {
+			if (self.busy) {return};
 			self.rowDoubleClick(index);
 			return false;
 		}
