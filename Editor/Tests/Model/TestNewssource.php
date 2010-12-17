@@ -6,7 +6,7 @@
 
 class TestNewssource extends AbstractObjectTest {
     
-	function TestSecurityzone() {
+	function TestNewssource() {
 		parent::AbstractObjectTest('newssource');
 	}
 
@@ -16,7 +16,7 @@ class TestNewssource extends AbstractObjectTest {
 		$obj->setUrl('https://github.com/in2isoft/OnlinePublisher/commits/master.atom');
 		$obj->save();
 		
-		$obj2 = Securityzone::load($obj->getId());
+		$obj2 = Newssource::load($obj->getId());
 		$this->assertEqual($obj2->getTitle(),$obj->getTitle());
 		$this->assertEqual($obj2->getUrl(),$obj->getUrl());
 		

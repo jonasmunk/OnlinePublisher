@@ -5,7 +5,6 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Database.php';
 require_once '../../Classes/Object.php';
@@ -27,9 +26,9 @@ if ($type=='page') {
 	Database::free($result);
 } else {
 	$query = array('type'=>$type,'query'=>$text);
-
 	$list = Object::find($query);
 	$objects = $list['result'];
+	$objects = Query::after($type)->withText($text)->search()->getList();
 	foreach ($objects as $object) {
 		echo '<item value="'.$object->getId().'" kind="'.$type.'" icon="'.$object->getIn2iGuiIcon().'" title="'.In2iGui::escape($object->getTitle()).'"/>';
 	}

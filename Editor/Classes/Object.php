@@ -592,7 +592,7 @@ class Object {
 				continue;
 			}
 	    	$className = ucfirst($row['type']);
-    		require_once($basePath.'Editor/Classes/'.$className.'.php');
+			ObjectService::importType($row['type']);
     		$class = new $className;
     		$object = $class->load($row['id']);
 			if ($object) {

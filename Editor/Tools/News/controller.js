@@ -173,7 +173,9 @@ ui.listen({
 		groupWindow.hide();
 	},
 	$selectionWasOpened$selector : function(item) {
-		ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+		if (item.kind=='newsgroup') {
+			ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+		}
 	},
 	$success$loadGroup : function(data) {
 		this.groupId = data.id;

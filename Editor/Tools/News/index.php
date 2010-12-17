@@ -14,9 +14,11 @@ $maxUploadSize = GuiUtils::bytesToString(FileSystemUtil::getMaxUploadSize());
 $gui='
 <gui xmlns="uri:In2iGui" title="Nyheder" padding="10">
 	<controller source="controller.js"/>
+	<controller source="sources.js"/>
 	<source name="pageItems" url="../../Services/Model/Items.php?type=page"/>
 	<source name="fileItems" url="../../Services/Model/Items.php?type=file"/>
 	<source name="groupSource" url="GroupItems.php"/>
+	<source name="sourcesSource" url="../../Services/Model/Items.php?type=newssource"/>
 	<source name="newsSource" url="ListNews.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
@@ -24,12 +26,14 @@ $gui='
 		<parameter key="query" value="@search.value"/>
 		<parameter key="group" value="@groupSelection.value"/>
 		<parameter key="main" value="@selector.value"/>
+		<parameter key="source" value="@sourceSelection.value"/>
 	</source>
 	<layout>
 		<top>
 			<toolbar>
 				<icon icon="common/news" title="Ny nyhed" name="newNews" overlay="new"/>
 				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
+				<icon icon="common/internet" title="Ny kilde" name="newSource" overlay="new"/>
 				<divider/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
 				<icon icon="common/delete" title="Slet" name="delete" disabled="true">
@@ -50,12 +54,12 @@ $gui='
 					<item icon="common/play" title="Aktive" value="active"/>
 					<item icon="common/stop" title="Inaktive" value="inactive"/>
 					<title>Links</title>
-					<item icon="common/internet" title="Eksterne" value="url"/>
-					<item icon="common/page" title="Sider" value="page"/>
-					<item icon="common/page" title="Filer" value="file"/>
-					<item icon="common/email" title="E-mail" value="email"/>
-					<title>Grupper</title>
-					<items source="groupSource" name="groupSelection"/>
+					<item icon="monochrome/globe" title="Eksterne" value="url"/>
+					<item icon="monochrome/file" title="Sider" value="page"/>
+					<item icon="monochrome/file" title="Filer" value="file"/>
+					<item icon="monochrome/email" title="E-mail" value="email"/>
+					<items source="groupSource" name="groupSelection" title="Grupper"/>
+					<items source="sourcesSource" name="sourceSelection" title="Kilder"/>
 				</selection>
 				</overflow>
 			</left>
@@ -77,6 +81,22 @@ $gui='
 						<confirm text="Er du sikker?" ok="Ja, slet gruppen" cancel="Nej"/>
 					</button>
 					<button name="saveGroup" title="Gem" highlighted="true"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
+
+	<window title="Kilde" name="sourceWindow" icon="common/internet" width="300" padding="5">
+		<formula name="sourceFormula">
+			<group labels="above">
+				<text label="Titel" key="title"/>
+				<text label="Adresse" key="url"/>
+				<buttons>
+					<button name="cancelSource" title="Annuller"/>
+					<button name="deleteSource" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja, slet kilden" cancel="Nej"/>
+					</button>
+					<button submit="true" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
 		</formula>

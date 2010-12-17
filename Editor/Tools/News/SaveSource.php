@@ -6,25 +6,20 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/News.php';
+require_once '../../Classes/Objects/Newssource.php';
 require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Log.php';
 
 $data = Request::getObject('data');
 if ($data->id) {
-	$news = News::load($data->id);
+	$news = Newssource::load($data->id);
 } else {
-	$news = new News();
+	$news = new Newssource();
 }
 if ($news) {
 	$links = In2iGui::fromLinks($data->links);
 	$news->setTitle(Request::fromUnicode($data->title));
-	$news->setNote(Request::fromUnicode($data->note));
-	$news->setStartdate($data->startdate);
-	$news->setEnddate($data->enddate);
+	$news->setUrl(Request::fromUnicode($data->url));
 	$news->save();
-	$news->updateLinks($links);
-	$news->updateGroupIds($data->groups);
 	$news->publish();
 }
 ?>

@@ -26,4 +26,8 @@ class Newssource extends Object {
 	function getUrl() {
 	    return $this->url;
 	}
+	
+	function getIn2iGuiIcon() {
+		return 'common/internet';
+	}
 }
