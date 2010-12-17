@@ -200,6 +200,7 @@
 <xsl:choose>
 <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
 <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+<xsl:otherwise>normal</xsl:otherwise>
 </xsl:choose>
 </xsl:variable>
 <xsl:if test="not(@hidden='true')">
