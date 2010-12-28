@@ -6,15 +6,15 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Templates.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Session.php';
 require_once '../../Classes/Hierarchy.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Services/TemplateService.php';
 require_once 'Functions.php';
 require_once 'PagesController.php';
 
-$templates = getTemplatesKeyed();
+$templates = TemplateService::getTemplatesKeyed();
 $id = requestGetNumber('id');
 
 setToolSessionVar('pages','rightFrame','HierarchyItemFrame.php?id='.$id);

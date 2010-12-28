@@ -190,5 +190,18 @@ class InternalSession {
 	function setToolSessionVar($tool,$key,$value) {
 		$_SESSION['tools.'.$tool.'.'.$key]=$value;
 	}
+	
+	function getSessionCacheVar($key) {
+		if (isset($_SESSION['cache.'.$key])) {
+			return $_SESSION['cache.'.$key];
+		}
+		else {
+			return null;
+		}
+	}
+
+	function setSessionCacheVar($key,$value) {
+		$_SESSION['cache.'.$key]=$value;
+	}
 }
 ?>

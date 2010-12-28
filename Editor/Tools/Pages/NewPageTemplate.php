@@ -7,8 +7,8 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Templates.php';
 require_once '../../Include/Session.php';
+require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
 if (requestGetBoolean('reset')) {
@@ -53,7 +53,7 @@ $gui.=
 '<overflow xmlns="uri:Layout" height="300">'.
 '<group xmlns="uri:Icon" size="3" titles="right" spacing="3" wrapping="true">';
 
-$templates = getTemplatesSorted();
+$templates = TemplateService::getTemplatesSorted();
 foreach ($templates as $template) {
 	if ($template['status']=='active') {
 		$gui.='<row>'.

@@ -7,7 +7,6 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Templates.php';
 require_once '../../Classes/UserInterface.php';
 require_once '../../Classes/InternalSession.php';
 

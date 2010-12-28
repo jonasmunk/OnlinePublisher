@@ -6,8 +6,7 @@
 
 require_once '../Config/Setup.php';
 require_once '../Editor/Include/Public.php';
-require_once '../Editor/Include/Functions.php';
-require_once '../Editor/Include/Templates.php';
+require_once '../Editor/Classes/Services/TemplateService.php';
 require_once '../Editor/Include/XmlWebGui.php';
 require_once 'Functions.php';
 require_once 'Security.php';
@@ -24,11 +23,11 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../"/>'.
 '<header title="Beskrivelse" width="60%"/>'.
 '<header width="1%"/>'.
 '</headergroup>';
-$installed = getInstalledTemplates();
-$available = getAvailableTemplates();
+$installed = TemplateService::getInstalledTemplates();
+$available = TemplateService::getAvailableTemplates();
 foreach ($available as $template) {
 	$inst = isInstalled($template,$installed);
-	$info = getTemplateInfo($template);
+	$info = TemplateService::getTemplateInfo($template);
 	$gui.='<row>'.
 	'<cell><icon icon="'.$info['icon'].'"/><text>'.$info['name'].'</text></cell>'.
 	'<cell>'.$info['description'].'</cell>'.

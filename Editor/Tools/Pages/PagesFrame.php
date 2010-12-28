@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/Session.php';
-require_once '../../Include/Templates.php';
+require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
 PagesController::setActiveItem('allpages');
@@ -49,7 +49,7 @@ else if ($searchPair[0]=='frame') {
 else if ($searchPair[0]=='template') {
 	$sql = "select * from template where id=".$searchPair[1];
 	$row = Database::selectFirst($sql);
-	$templates = getTemplatesKeyed();
+	$templates = TemplateService::getTemplatesKeyed();
 	$title='Skabelonen "'.$templates[$row['unique']]['name'].'"';
 }
 else {
