@@ -28,7 +28,7 @@ if ($sourceId) {
 		$feed = $parser->parseURL($source->getUrl());
 		foreach ($feed->getItems() as $item) {
 			$writer->startRow();
-			$writer->startCell(array('icon'=>'monochrome/file'))->text($item->getTitle())->endCell();
+			$writer->startCell(array('icon'=>'common/page'))->text($item->getTitle())->endCell();
 			$writer->startCell()->text(DateUtils::formatFuzzy($item->getPubDate()))->endCell();
 			$writer->endRow();
 		}

@@ -8,9 +8,11 @@ ui.listen({
 	fileId : null,
 	
 	$selectionChanged$list : function(item) {
-		ui.get('delete').setEnabled(true);
-		ui.get('info').setEnabled(true);
-		ui.get('duplicate').setEnabled(true);
+		if (item.kind=='news') {
+			ui.get('delete').setEnabled(true);
+			ui.get('info').setEnabled(true);
+			ui.get('duplicate').setEnabled(true);
+		}
 	},
 	$selectionReset$list : function() {
 		ui.get('delete').setEnabled(false);
