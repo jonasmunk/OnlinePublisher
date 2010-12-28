@@ -58,7 +58,6 @@ ui.listen({
 		this.userId = data.id;
 		userTitle.setValue(data.title);
 		userUsername.setValue(data.username);
-		//userPassword.setValue(data.password);
 		userEmail.setValue(data.email);
 		userAdministrator.setValue(data.administrator);
 		userInternal.setValue(data.internal);
@@ -84,11 +83,7 @@ ui.listen({
 			In2iGui.showMessage({text:'Brugernavnet er ikke udfyldt',duration:2000});
 			userUsername.focus();
 			return;
-		}/* else if (userPassword.isEmpty()) {
-			In2iGui.showMessage({text:'Kodeordet er ikke udfyldt',duration:2000});
-			userUsername.focus();
-			return;
-		}*/
+		}
 		var data = {
 			id:this.userId,
 			title:userTitle.getValue(),
