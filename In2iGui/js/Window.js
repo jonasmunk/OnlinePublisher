@@ -8,6 +8,11 @@ In2iGui.Window = function(options) {
 	this.titlebar = this.element.select('.in2igui_window_titlebar')[0];
 	this.title = this.titlebar.select('.in2igui_window_title')[0];
 	this.content = this.element.select('.in2igui_window_body')[0];
+	this.front = n2i.firstByClass(this.element,'in2igui_window_front');
+	this.back = n2i.firstByClass(this.element,'in2igui_window_back');
+	if (this.back) {
+		n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+	}
 	this.visible = false;
 	In2iGui.extend(this);
 	this.addBehavior();
@@ -16,7 +21,7 @@ In2iGui.Window = function(options) {
 In2iGui.Window.create = function(options) {
 	options = n2i.override({title:'Window',close:true},options);
 	var element = options.element = new Element('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : '')});
-	var html = (options.close ? '<div class="in2igui_window_close"></div>' : '')+
+	var html = '<div class="in2igui_window_front">'+(options.close ? '<div class="in2igui_window_close"></div>' : '')+
 		'<div class="in2igui_window_titlebar"><div><div>';
 		if (options.icon) {
 			html+='<span class="in2igui_window_icon" style="background-image: url('+In2iGui.getIconUrl(options.icon,1)+')"></span>';
@@ -27,7 +32,7 @@ In2iGui.Window.create = function(options) {
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
 		'">'+
 		'</div></div></div>'+
-		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div>';
+		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div></div>';
 	element.update(html);
 	document.body.appendChild(element);
 	return new In2iGui.Window(options);
@@ -86,11 +91,25 @@ In2iGui.Window.prototype = {
 			this.content.insert(widgetOrNode);
 		}
 	},
+	addToBack : function(widgetOrNode) {
+		if (!this.back) {
+			this.back = n2i.build('div',{className:'in2igui_window_back'});
+			this.element.insertBefore(this.back,this.front);
+			n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+		}
+		this.back.appendChild(In2iGui.getElement(widgetOrNode));
+	},
 	setVariant : function(variant) {
 		this.element.removeClassName('in2igui_window_dark');
 		this.element.removeClassName('in2igui_window_light');
 		if (variant=='dark' || variant=='light') {
 			this.element.addClassName('in2igui_window_'+variant);
+		}
+	},
+	flip : function() {
+		if (this.back) {
+			this.back.style.minHeight = this.element.clientHeight+'px';
+			n2i.effect.flip({element:this.element});
 		}
 	},
 

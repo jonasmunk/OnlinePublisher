@@ -1,0 +1,33 @@
+.in2igui_flip_container
+{
+	-webkit-perspective: 1000;
+}
+
+.in2igui_flip_back, .in2igui_flip_front
+{
+	-webkit-transform-style : preserve-3d;
+   	-webkit-transition-property : -webkit-transform;
+	-webkit-backface-visibility : hidden;
+	/*-webkit-transition-duration : 1s;*/
+	-webkit-transform : rotate(2deg);
+}
+
+.in2igui_flip_back
+{
+	-webkit-transform : rotateY(180deg);
+}
+
+.in2igui_flip_flipped .in2igui_flip_back
+{
+	-webkit-transform : rotateY(360deg);
+}
+
+.in2igui_flip_front
+{
+	-webkit-transform : rotateY(0deg);
+}
+
+.in2igui_flip_flipped .in2igui_flip_front
+{
+	-webkit-transform : rotateY(180deg);
+}

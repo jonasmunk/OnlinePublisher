@@ -106,6 +106,17 @@ div.in2igui_window_body
 	background-position: left -16px;
 }
 
+/*************************** Back ***********************/
+
+div.in2igui_window_back
+{
+	position: absolute;
+	width: 100%;
+	background: #333 url('../gfx/backgrounds/brushed.png');
+	border-radius: 8px;
+	-webkit-box-sizing: border-box;
+	border: 1px solid #555;
+}
 
 /********************************** Light **************************/
 

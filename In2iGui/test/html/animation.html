@@ -12,6 +12,26 @@
 	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<style>
+	 @-webkit-keyframes spin {
+      from { -webkit-transform: rotateY(0); }
+      to   { -webkit-transform: rotateY(360deg); }
+    }
+  
+   #webkit{
+		font-size: 30px;
+		-webkit-perspective : 1000;
+        -webkit-transform-style: preserve-3d;
+        -webkit-animation: spin 3.5s infinite ease;
+		background: #eee;
+        position: fixed;
+        right: 30px;
+        bottom: 50px;
+   	}
+
+
+
+</style>
 </head>
 
 <body>
@@ -31,9 +51,25 @@
 <button onclick="n2i.animate('text','transform','rotate(180deg)',3000,{ease:n2i.ease.bounce})">transform=rotate(180deg)</button>
 <button onclick="n2i.animate('text','transform','rotate(1000deg) scale(.1)',3000,{ease:n2i.ease.bounce})">transform=rotate(1000deg) scale(.1)</button>
 <button onclick="n2i.animate('text','transform','rotate(0deg) scale(2)',3000,{ease:n2i.ease.bounce})">transform=rotate(0deg) scale(2)</button>
+<button onclick="ui.bounceIn($('text'))">bounceIn</button>
+<button onclick="hui.effect.flip({element:'flipper'})">Flip</button>
+<button onclick="hui.effect.flip({element:'flipper',duration:'5s'})">Flip (5s)</button>
 <div style="height: 200px;"></div>
 <p id="text">
 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </p>
+
+<div style="position: absolute; height: 200px; width: 1000px;" id="flipper">
+	<div id="face" style="width: 100%; height: 100%; background: #abc; position: absolute;">Front</div>
+	<div id="back" style="width: 100%; height: 100%; background: #cba; position: absolute; border-radius: 10px; -webkit-box-sizing: border-box; padding: 10px;">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+</div>
+
+<div id="webkit">Hep hey</div>
+
+<script>
+hui.effect.makeFlippable({container:'flipper',back:'back',front:'face'});
+</script>
 </body>
 </html>
