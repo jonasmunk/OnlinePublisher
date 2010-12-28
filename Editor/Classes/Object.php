@@ -337,7 +337,16 @@ class Object {
 				$obj->ownerId = $row['owner_id'];
 				$obj->searchable = ($row['searchable']==1);
 				foreach ($schema as $property => $info) {
-					$obj->$property = $row[Object::getColumn($property,$info)];
+					$column = Object::getColumn($property,$info);
+					if ($info['type']=='int') {
+						$obj->$property = intval($row[$column]);
+					} else if ($info['type']=='datetime') {
+						$obj->$property = $row[$column] ? intval($row[$column]) : null;
+					} else if ($info['type']=='boolean') {
+						$obj->$property = $row[$column]==1 ? true : false;
+					} else {
+						$obj->$property = $row[$column];
+					}
 				}
 				return $obj;
 	    	}
@@ -720,6 +729,8 @@ class Object {
 					$obj->$property = intval($row[$column]);
 				} else if ($info['type']=='datetime') {
 					$obj->$property = $row[$column] ? intval($row[$column]) : null;
+				} else if ($info['type']=='boolean') {
+					$obj->$property = $row[$column]==1 ? true : false;
 				} else {
 					$obj->$property = $row[$column];
 				}
