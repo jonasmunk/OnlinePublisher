@@ -17,7 +17,6 @@ class DateUtils {
 	function parseRFC3339($date) {
 		if (preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})-([0-9]{2}):([0-9]{2})/mi",$date, $matches)) {
 			$diff = intval($matches[7]);
-			Log::debug('The difference is: '.$diff);
 			return gmmktime( $matches[4]+$diff,$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
 		}
 		Log::debug('Could not parse date: '.$date);

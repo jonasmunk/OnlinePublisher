@@ -19,7 +19,7 @@ if ($sourceId) {
 
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Titel','width'=>40));
+	$writer->header(array('title'=>'Titel','width'=>70));
 	$writer->header(array('title'=>'Dato'));
 	$writer->endHeaders();
 
@@ -28,12 +28,15 @@ if ($sourceId) {
 		$feed = $parser->parseURL($source->getUrl());
 		foreach ($feed->getItems() as $item) {
 			$writer->startRow();
-			$writer->startCell(array('icon'=>'common/page'))->text($item->getTitle())->endCell();
+			$writer->startCell(array('icon'=>'common/page'))->
+				startLine()->text($item->getTitle())->endLine()->
+				startLine(array('dimmed'=>true))->text(StringUtils::shortenString(StringUtils::removeTags($item->getDescription()),400))->endLine()->
+				endCell();
 			$writer->startCell()->text(DateUtils::formatFuzzy($item->getPubDate()))->endCell();
+			
 			$writer->endRow();
 		}
 	}
-	//
 	$writer->endList();
 	exit;
 }

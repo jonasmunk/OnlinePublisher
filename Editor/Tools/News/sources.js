@@ -9,6 +9,11 @@ ui.listen({
 		sourceWindow.show();
 		sourceFormula.focus();
 	},
+	$click$cancelSource : function() {
+		this.sourceId = null;
+		sourceFormula.reset();
+		sourceWindow.hide();
+	},
 	$submit$sourceFormula : function() {
 		var values = sourceFormula.getValues();
 		values.id = this.sourceId;

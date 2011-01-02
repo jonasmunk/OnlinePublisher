@@ -205,4 +205,8 @@ class StringUtils {
 	function startsWith($find,$str) {
 		return strpos($find,$str)===0;
 	}
+	
+	function removeTags($string) {
+		return preg_replace("/<[\/a-z]+[^>]*>/i", '', $string);
+	}
 }
