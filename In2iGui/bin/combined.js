@@ -9473,6 +9473,15 @@ In2iGui.hideToolTip = function(options) {
 
 /////////////////////////////// Utilities /////////////////////////////
 
+In2iGui.getElement = function(widgetOrElement) {
+	if (n2i.dom.isElement(widgetOrElement)) {
+		return widgetOrElement;
+	} else if (widgetOrElement.getElement) {
+		return widgetOrElement.getElement();
+	}
+	return null;
+}
+
 In2iGui.isWithin = function(e,element) {
 	Event.extend(e);
 	var offset = element.cumulativeOffset();
@@ -10220,6 +10229,11 @@ In2iGui.Window = function(options) {
 	this.titlebar = this.element.select('.in2igui_window_titlebar')[0];
 	this.title = this.titlebar.select('.in2igui_window_title')[0];
 	this.content = this.element.select('.in2igui_window_body')[0];
+	this.front = n2i.firstByClass(this.element,'in2igui_window_front');
+	this.back = n2i.firstByClass(this.element,'in2igui_window_back');
+	if (this.back) {
+		n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+	}
 	this.visible = false;
 	In2iGui.extend(this);
 	this.addBehavior();
@@ -10298,11 +10312,25 @@ In2iGui.Window.prototype = {
 			this.content.insert(widgetOrNode);
 		}
 	},
+	addToBack : function(widgetOrNode) {
+		if (!this.back) {
+			this.back = n2i.build('div',{className:'in2igui_window_back'});
+			this.element.insertBefore(this.back,this.front);
+			n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+		}
+		this.back.appendChild(In2iGui.getElement(widgetOrNode));
+	},
 	setVariant : function(variant) {
 		this.element.removeClassName('in2igui_window_dark');
 		this.element.removeClassName('in2igui_window_light');
 		if (variant=='dark' || variant=='light') {
 			this.element.addClassName('in2igui_window_'+variant);
+		}
+	},
+	flip : function() {
+		if (this.back) {
+			this.back.style.minHeight = this.element.clientHeight+'px';
+			n2i.effect.flip({element:this.element});
 		}
 	},
 
@@ -12012,7 +12040,7 @@ In2iGui.List.prototype = {
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && !icon.blank()) {
-			cell.insert(In2iGui.createIcon(icon,1));
+			cell.appendChild(In2iGui.createIcon(icon,1));
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];
@@ -12023,18 +12051,19 @@ In2iGui.List.prototype = {
 			} else if (n2i.dom.isElement(child,'icon')) {
 				cell.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
 			} else if (n2i.dom.isElement(child,'line')) {
-				var line = new Element('p',{'class':'in2igui_list_line'}).insert(n2i.dom.getNodeText(child));
+				var line = new Element('p',{'class':'in2igui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
 					line.addClassName('in2igui_list_dimmed')
 				}
 				cell.insert(line);
+				this.parseCell(child,line);
 			} else if (n2i.dom.isElement(child,'object')) {
 				var obj = new Element('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
-					obj.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
+					obj.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
 				}
 				if (child.firstChild && child.firstChild.nodeType==n2i.TEXT_NODE && child.firstChild.nodeValue.length>0) {
-					obj.appendChild(document.createTextNode(child.firstChild.nodeValue));
+					n2i.dom.addText(obj,child.firstChild.nodeValue);
 				}
 				cell.insert(obj);
 			} else if (n2i.dom.isElement(child,'icons')) {
@@ -12753,6 +12782,7 @@ In2iGui.Button.prototype = {
 	click : function(func) {
 		if (func) {
 			this.listen({$click:func});
+			return this;
 		} else {
 			this.clicked();
 		}

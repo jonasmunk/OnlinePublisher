@@ -13,7 +13,9 @@
 		<cell icon="common/email">common/email</cell>
 	</row>
 	<row>
-		<cell icon="common/folder">common/folder</cell>
+		<cell icon="common/folder">common/folder
+		<line dimmed="true">Another line<break/>Breaked</line>
+		</cell>
 	</row>
 	<row>
 		<cell icon="common/image">common/image</cell>

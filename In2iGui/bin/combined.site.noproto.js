@@ -1884,6 +1884,15 @@ In2iGui.hideToolTip = function(options) {
 
 /////////////////////////////// Utilities /////////////////////////////
 
+In2iGui.getElement = function(widgetOrElement) {
+	if (n2i.dom.isElement(widgetOrElement)) {
+		return widgetOrElement;
+	} else if (widgetOrElement.getElement) {
+		return widgetOrElement.getElement();
+	}
+	return null;
+}
+
 In2iGui.isWithin = function(e,element) {
 	Event.extend(e);
 	var offset = element.cumulativeOffset();
