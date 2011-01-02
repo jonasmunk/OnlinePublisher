@@ -8,9 +8,10 @@ require_once '../Config/Setup.php';
 require_once '../Editor/Include/Public.php';
 require_once '../Editor/Include/Functions.php';
 require_once '../Editor/Include/XmlWebGui.php';
+require_once '../Editor/Classes/Request.php';
 require_once 'Functions.php';
 
-if (requestPost()) {
+if (Request::isPost()) {
 	$username=requestPostText('username');
 	$password=requestPostText('password');
 	if ($username==$superUser && $password==$superPassword) {
@@ -44,7 +45,7 @@ else {
 	'<meta><title>OnlinePublisher opsætning</title></meta>'.
 	'<window xmlns="uri:Window" width="300" align="center" top="30">';
 	
-	if (requestGetBoolean('logout')) {
+	if (Request::getBoolean('logout')) {
 		setupLogOut();
 		$gui.='<sheet width="250" object="LogOutSheet" visible="true">'.
 		'<message xmlns="uri:Message" icon="Message">'.
@@ -62,8 +63,8 @@ else {
 	'</titlebar>'.
 	'<content background="true">'.
 	'<message xmlns="uri:Message" icon="Security">'.
-	'<form xmlns="uri:Form" action="Authentication.php" method="post" submit="true"'.(!requestGetBoolean('logout') ? ' focus="username"' : '').' name="Formula">'.
-	'<hidden name="page">'.requestGetText('page').'</hidden>'.
+	'<form xmlns="uri:Form" action="Authentication.php" method="post" submit="true"'.(!Request::getBoolean('logout') ? ' focus="username"' : '').' name="Formula">'.
+	'<hidden name="page">'.Request::getString('page').'</hidden>'.
 	'<group size="Large">'.
 	'<textfield badge="Brugernavn:" name="username"></textfield>'.
 	'<password badge="Kodeord:" name="password"/>'.

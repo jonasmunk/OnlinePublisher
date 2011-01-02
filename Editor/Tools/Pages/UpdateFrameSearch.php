@@ -5,18 +5,19 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
+require_once '../../Classes/Request.php';
 require_once '../../Include/Functions.php';
 
-$id = requestPostNumber('id',0);
-$enabled = requestPostCheckbox('enabled');
-$buttontitle = requestPostText('buttontitle');
-$page = requestPostNumber('page',0);
-$pages = requestPostCheckbox('pages');
-$images = requestPostCheckbox('images');
-$files = requestPostCheckbox('files');
-$news = requestPostCheckbox('news');
-$persons = requestPostCheckbox('persons');
-$products = requestPostCheckbox('products');
+$id = Request::getInt('id',0);
+$enabled = Request::getCheckbox('enabled');
+$buttontitle = Request::getString('buttontitle');
+$page = Request::getInt('page',0);
+$pages = Request::getCheckbox('pages');
+$images = Request::getCheckbox('images');
+$files = Request::getCheckbox('files');
+$news = Request::getCheckbox('news');
+$persons = Request::getCheckbox('persons');
+$products = Request::getCheckbox('products');
 
 $sql="update frame set".
 " searchenabled=".Database::boolean($enabled).

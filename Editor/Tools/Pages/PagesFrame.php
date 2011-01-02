@@ -8,15 +8,16 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
 PagesController::setActiveItem('allpages');
 InternalSession::setToolSessionVar('pages','rightFrame','PagesFrame.php');
-if (requestPostExists('freetext')) {
+if (Request::exists('freetext')) {
 	InternalSession::setToolSessionVar('pages','freeTextSearch',requestPostText('freetext'));
 }
-else if (requestGetExists('searchPairKey')) {
+else if (Request::exists('searchPairKey')) {
 	InternalSession::setToolSessionVar('pages','freeTextSearch','');
 	PagesController::setSearchPair(requestGetText('searchPairKey'),requestGetText('searchPairValue'));
 }

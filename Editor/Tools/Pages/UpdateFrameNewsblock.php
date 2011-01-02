@@ -6,15 +6,16 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
 
-$id=requestPostNumber('id',0);
-$title=requestPostText('title');
-$sortby=requestPostText('sortby');
-$sortdir=requestPostText('sortdir');
-$maxitems=requestPostNumber('maxitems',0);
-$timetype=requestPostText('timetype');
+$id=Request::getInt('id',0);
+$title=Request::getString('title');
+$sortby=Request::getString('sortby');
+$sortdir=Request::getString('sortdir');
+$maxitems=Request::getInt('maxitems',0);
+$timetype=Request::getString('timetype');
 if ($timetype=='hours' || $timetype=='days' || $timetype=='weeks' || $timetype=='months' || $timetype=='years') {
-	$timecount=requestPostNumber('timecount',0);
+	$timecount=Request::getInt('timecount',0);
 }
 else {
 	$timecount=0;
@@ -23,8 +24,8 @@ else {
 $startdate = NULL;
 $enddate = NULL;
 if ($timetype=='interval') {
-	$startdate = requestPostDateTime('startdate');
-	$enddate = requestPostDateTime('enddate');
+	$startdate = Request::getDateTime('startdate');
+	$enddate = Request::getDateTime('enddate');
 }
 
 $sql="update frame_newsblock set title=".Database::text($title).

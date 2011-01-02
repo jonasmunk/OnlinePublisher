@@ -7,12 +7,13 @@
 require_once '../Config/Setup.php';
 require_once '../Editor/Include/Public.php';
 require_once '../Editor/Include/Functions.php';
+require_once '../Editor/Classes/Request.php';
 require_once '../Editor/Include/XmlWebGui.php';
 require_once 'Functions.php';
 require_once 'Security.php';
 
 require_once '../Editor/Libraries/domit/xml_domit_include.php';
-$fix = requestGetBoolean('fix');
+$fix = Request::getBoolean('fix');
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../"/>'.
 '<interface background="Window">'.

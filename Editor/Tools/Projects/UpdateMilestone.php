@@ -8,14 +8,15 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Milestone.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id');
-$title = requestPostText('title');
-$description = requestPostText('description');
-$project = requestPostNumber('project');
-$deadlineSelected = requestPostCheckbox('deadlineSelected');
-$completed = requestPostCheckbox('completed');
-$deadline = requestPostDateTime('deadline');
+$id = Request::getInt('id');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$project = Request::getInt('project');
+$deadlineSelected = Request::getCheckbox('deadlineSelected');
+$completed = Request::getCheckbox('completed');
+$deadline = Request::getDateTime('deadline');
 
 $milestone = Milestone::load($id);
 $milestone->setTitle($title);

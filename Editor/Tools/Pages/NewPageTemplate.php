@@ -8,18 +8,19 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
-if (requestGetBoolean('reset')) {
+if (Request::getBoolean('reset')) {
 	PagesController::resetNewPageInfo();
 }
 
 $info = PagesController::getNewPageInfo();
 
-if (requestGetExists('hierarchy') && requestGetExists('parent')) {
-	$info['fixedHierarchy']=requestGetNumber('hierarchy');
-	$info['fixedHierarchyParent']=requestGetNumber('parent');
+if (Request::exists('hierarchy') && Request::exists('parent')) {
+	$info['fixedHierarchy']=Request::getInt('hierarchy');
+	$info['fixedHierarchyParent']=Request::getInt('parent');
 }
 PagesController::setNewPageInfo($info);
 

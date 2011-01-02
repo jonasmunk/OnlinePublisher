@@ -6,16 +6,16 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id');
-$title = requestPostText('title');
-$text = requestPostText('text');
-$imagesize = requestPostNumber('imagesize');
-$showtitle = requestPostCheckbox('showtitle');
-$shownote = requestPostCheckbox('shownote');
-$rotate = requestPostNumber('rotate');
+$id = Request::getInt('id');
+$title = Request::getString('title');
+$text = Request::getString('text');
+$imagesize = Request::getInt('imagesize');
+$showtitle = Request::getCheckbox('showtitle');
+$shownote = Request::getCheckbox('shownote');
+$rotate = Request::getInt('rotate');
 
 $sql="update imagegallery set title=".Database::text($title).
 ",`text`=".Database::text($text).

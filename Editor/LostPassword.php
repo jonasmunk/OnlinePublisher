@@ -14,11 +14,11 @@ require_once 'Classes/EmailUtil.php';
 require_once 'Classes/Request.php';
 
 if (Request::exists('id')) {
-    $id = requestText('id');
+    $id = Request::getString('id');
     $time = time();
     $sql = "select * from email_validation_session where timelimit>".Database::datetime($time)." and `unique`=".Database::text($id);
     if ($row = Database::selectFirst($sql)) {
-        if (requestPostExists('password1') && requestPostExists('password2')) {
+        if (Request::exists('password1') && Request::exists('password2')) {
             processPasswordChange($row['user_id'],requestPostText('password1'));
         } else {
             displayPasswordChange($id);
@@ -27,8 +27,8 @@ if (Request::exists('id')) {
 		redirect("LostPassword.php?sessionexpired=true");
     }
 }
-else if (requestPost()) {
-	$username=requestPostText('username');
+else if (Request::isPost()) {
+	$username = Request::getString('username');
 	$sql="select * from user where username=".Database::text($username)." or email=".Database::text($username);
 	$row = Database::selectFirst($sql);
 	if ($row && $row['email']!='') {
@@ -43,7 +43,7 @@ else {
 	$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../"/>'.
 	'<interface background="Desktop">'.
 	'<window xmlns="uri:Window" width="300" align="center" top="30">';
-	if (requestGetBoolean('usernotfound')) {
+	if (Request::getBoolean('usernotfound')) {
 		$gui.='<sheet width="300" object="NoUserSheet" visible="true">'.
 		'<message xmlns="uri:Message" icon="Caution">'.
 		'<title>Ukendt bruger</title>'.
@@ -56,7 +56,7 @@ else {
 		'</message>'.
 		'</sheet>';
 	}
-	elseif (requestGetBoolean('sessionexpired')) {
+	elseif (Request::getBoolean('sessionexpired')) {
 		$gui.='<sheet width="300" object="NoUserSheet" visible="true">'.
 		'<message xmlns="uri:Message" icon="time">'.
 		'<title>Tiden er overskredet</title>'.

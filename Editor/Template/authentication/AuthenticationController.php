@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
+require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class AuthenticationController extends LegacyTemplateController {
@@ -38,31 +39,28 @@ class AuthenticationController extends LegacyTemplateController {
 	function dynamic(&$state) {
 		$xml = '';
 
-		if (requestGetNumber('page')>0) {
-			$xml .= '<target type="page" id="'.requestGetNumber('page').'"/>';
+		if (Request::exists('page')) {
+			$xml .= '<target type="page" id="'.Request::getInt('page').'"/>';
 		}
-		elseif (requestPostExists('page')) {
-			$xml .= '<target type="page" id="'.requestPostNumber('page').'"/>';
-		}
-		if (requestGetBoolean('logout')) {
-			if (requestGetExists('page')) {
-				$state['redirect'] = './?id='.requestGetNumber('page');
+		if (Request::getBoolean('logout')) {
+			if (Request::exists('page')) {
+				$state['redirect'] = './?id='.Request::getInt('page');
 			} else {
 				$xml .= '<message type="loggedout"/>';
 			}
 		}
 
-		if (requestPostExists('username') && requestPostExists('password')) {
-			if (strlen(requestPostText('username'))==0) {
+		if (Request::exists('username') && Request::exists('password')) {
+			if (strlen(Request::getString('username'))==0) {
 					$xml .= '<message type="nousername"/>';
 			}
-			elseif (strlen(requestPostText('password'))==0) {
+			elseif (strlen(Request::getString('password'))==0) {
 					$xml .= '<message type="nopassword"/>';
 			}
 			else {
-				if ($user = ExternalSession::logIn(requestPostText('username'),requestPostText('password'))) {
-					if (requestPostExists('page')) {
-						$state['redirect'] = './?id='.requestPostNumber('page');
+				if ($user = ExternalSession::logIn(Request::getString('username'),Request::getString('password'))) {
+					if (Request::exists('page')) {
+						$state['redirect'] = './?id='.Request::getInt('page');
 					}
 					else {
 						$xml .= '<message type="loggedin"/>';

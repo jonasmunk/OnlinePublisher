@@ -5,11 +5,12 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
+require_once '../../Classes/Request.php';
 require_once '../../Include/Functions.php';
 
-$id = requestPostNumber('id',0);
-$enabled = requestPostCheckbox('enabled');
-$page = requestPostNumber('page',0);
+$id = Request::getInt('id',0);
+$enabled = Request::getCheckbox('enabled');
+$page = Request::getInt('page',0);
 
 $sql="update frame set".
 " userstatusenabled=".Database::boolean($enabled).

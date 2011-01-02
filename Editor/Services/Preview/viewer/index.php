@@ -14,23 +14,23 @@ require_once '../../../Classes/Services/PageService.php';
 require_once '../../../Classes/InternalSession.php';
 require_once '../Functions.php';
 
-if (requestGetExists('designsession')) {
-	$_SESSION['debug.design']=requestGetText('designsession');
+if (Request::exists('designsession')) {
+	$_SESSION['debug.design'] = Request::getString('designsession');
 }
 if (Request::getBoolean('resetdesign')) {
 	unset($_SESSION['debug.design']);
 }
 
-if (requestGetNumber('stickyDesignId')>0) {
-	setStickyDesignId(requestGetNumber('stickyDesignId'));
+if (Request::getInt('stickyDesignId')>0) {
+	setStickyDesignId(Request::getInt('stickyDesignId'));
 }
 $stickyDesignId = getStickyDesignId();
 
 $pageNS = 'http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/';
 $frameNS = 'http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/';
 
-$id = requestGetNumber('id',0);
-$history = requestGetNumber('history');
+$id = Request::getInt('id',0);
+$history = Request::getInt('history');
 
 if ($id==0) {
 	if (InternalSession::getPageId()>0) {
@@ -76,8 +76,8 @@ if ($row = Database::next($result)) {
 		$framedata = RenderingService::applyFrameDynamism($row['frameid'],$framedata);
 	}
 	$design = $row['design'];
-	if (requestGetExists('design')) {
-		$design = requestGetText('design');
+	if (Request::exists('design')) {
+		$design = Request::getString('design');
 	}
 	else if (isset($_SESSION['debug.design'])) {
 		$design = $_SESSION['debug.design'];
@@ -102,7 +102,7 @@ if ($row = Database::next($result)) {
 	$data.
 	'</content>'.
 	'</page>';
-	if (requestGetBoolean('viewsource')) {
+	if (Request::getBoolean('viewsource')) {
 		header('Content-type: text/xml');
 		echo $xml;
 	}
