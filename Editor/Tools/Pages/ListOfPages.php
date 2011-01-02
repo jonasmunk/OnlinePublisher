@@ -7,16 +7,16 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
 if (requestGetExists('tab')) {
-	setToolSessionVar('pages','listTab',requestGetText('tab'));
+	InternalSession::setToolSessionVar('pages','listTab',requestGetText('tab'));
 }
-$extended = (getToolSessionVar('pages','listTab') == 'extended');
+$extended = (InternalSession::getToolSessionVar('pages','listTab') == 'extended');
 $pair = PagesController::getSearchPair();
-$freeText = getToolSessionVar('pages','freeTextSearch');
+$freeText = InternalSession::getToolSessionVar('pages','freeTextSearch');
 if ($freeText!='' && $freeText!=NULL) {
 	$freeTextSql=" and (page.title like ".Database::search($freeText)." or page.`index` like ".Database::search($freeText)." or page.description like ".Database::search($freeText)." or page.keywords like ".Database::search($freeText).")";
 }

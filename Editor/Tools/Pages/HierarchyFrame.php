@@ -9,7 +9,7 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Hierarchy.php';
 require_once '../../Classes/Graph.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once 'PagesController.php';
 
 $id = requestGetNumber('id');
@@ -21,7 +21,7 @@ if (!$hier) {
 	exit;
 }
 
-setToolSessionVar('pages','rightFrame','HierarchyFrame.php?id='.$id);
+InternalSession::setToolSessionVar('pages','rightFrame','HierarchyFrame.php?id='.$id);
 PagesController::setActiveItem('hierarchy',$id);
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.

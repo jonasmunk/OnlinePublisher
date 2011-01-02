@@ -6,7 +6,6 @@
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Services/TemplateService.php');
-require_once($basePath.'Editor/Include/Session.php');
 
 class Template {
         

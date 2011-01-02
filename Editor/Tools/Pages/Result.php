@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
@@ -16,7 +17,7 @@ PagesController::setViewDetails(requestGetText('viewDetails'));
 $groupView = PagesController::getGroupView();
 $viewDetails = PagesController::getViewDetails();
 
-$freeText = getToolSessionVar('pages','freeTextSearch');
+$freeText = InternalSession::getToolSessionVar('pages','freeTextSearch');
 if ($freeText!='' && $freeText!=NULL) {
 	$freeTextSql=" (page.title like ".Database::search($freeText)." or page.`index` like ".Database::search($freeText)." or page.description like ".Database::search($freeText)." or page.keywords like ".Database::search($freeText).")";
 } else {

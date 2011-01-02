@@ -7,20 +7,20 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
 PagesController::setActiveItem('allpages');
-setToolSessionVar('pages','rightFrame','PagesFrame.php');
+InternalSession::setToolSessionVar('pages','rightFrame','PagesFrame.php');
 if (requestPostExists('freetext')) {
-	setToolSessionVar('pages','freeTextSearch',requestPostText('freetext'));
+	InternalSession::setToolSessionVar('pages','freeTextSearch',requestPostText('freetext'));
 }
 else if (requestGetExists('searchPairKey')) {
-	setToolSessionVar('pages','freeTextSearch','');
+	InternalSession::setToolSessionVar('pages','freeTextSearch','');
 	PagesController::setSearchPair(requestGetText('searchPairKey'),requestGetText('searchPairValue'));
 }
-$freetext = getToolSessionVar('pages','freeTextSearch');
+$freetext = InternalSession::getToolSessionVar('pages','freeTextSearch');
 $searchPair = PagesController::getSearchPair();
 if ($searchPair[0]=='' || $searchPair[0]=='allPages') {
 	$title="Alle sider";

@@ -1,6 +1,7 @@
 <?
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Tool.php');
+require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Services/AuthenticationService.php');
 
 class InternalSession {
@@ -187,6 +188,17 @@ class InternalSession {
 		}
 	}
 
+	function switchToolSessionVar($tool,$key) {
+		InternalSession::setToolSessionVar($tool,$key,!InternalSession::getToolSessionVar($tool,$key));
+	}
+
+	function getRequestToolSessionVar($tool,$key,$query,$default=NULL) {
+		if (Request::exists($query)) {
+			InternalSession::setToolSessionVar($tool,$key,Request::getString($query));
+		}
+		return InternalSession::getToolSessionVar($tool,$key,$default);
+	}
+
 	function setToolSessionVar($tool,$key,$value) {
 		$_SESSION['tools.'.$tool.'.'.$key]=$value;
 	}
@@ -202,6 +214,31 @@ class InternalSession {
 
 	function setSessionCacheVar($key,$value) {
 		$_SESSION['cache.'.$key]=$value;
+	}
+	
+	
+	/**************** services ****************/
+
+
+	function getRequestServiceSessionVar($service,$key,$query,$default=NULL) {
+		if (Request::exists($query)) {
+			InternalSession::setServiceSessionVar($service,$key,Request::getString($query));
+		}
+		return InternalSession::getServiceSessionVar($service,$key,$default);
+	}
+
+	function getServiceSessionVar($service,$key,$default=NULL) {
+		if (isset($_SESSION['services.'.$service.'.'.$key])) {
+			return $_SESSION['services.'.$service.'.'.$key];
+		}
+		else {
+			InternalSession::setServiceSessionVar($service,$key,$default);
+			return $default;
+		}
+	}
+
+	function setServiceSessionVar($service,$key,$value) {
+		$_SESSION['services.'.$service.'.'.$key]=$value;
 	}
 }
 ?>

@@ -1,39 +1,39 @@
 <?
-require_once $basePath.'Editor/Include/Session.php';
+require_once $basePath.'Editor/Classes/InternalSession.php';
 
 class ImageChooserController {
 	
 	function getGroupId() {
-		return getServiceSessionVar('imagechooser','group',0);
+		return InternalSession::getServiceSessionVar('imagechooser','group',0);
 	}
 	
 	function setGroupId($id) {
-		setServiceSessionVar('imagechooser','group',$id);
+		InternalSession::setServiceSessionVar('imagechooser','group',$id);
 	}
 
 	function getViewType() {
-		return getServiceSessionVar('images','viewtype','lastadded');
+		return InternalSession::getServiceSessionVar('images','viewtype','lastadded');
 	}
 	
 	function setViewType($value) {
-		setServiceSessionVar('images','viewtype',$value);
+		InternalSession::setServiceSessionVar('images','viewtype',$value);
 	}
 
 	function getImageView() {
-		return getServiceSessionVar('images','imageview','info');
+		return InternalSession::getServiceSessionVar('images','imageview','info');
 	}
 	
 	function setImageView($value) {
-		setServiceSessionVar('images','imageview',$value);
+		InternalSession::setServiceSessionVar('images','imageview',$value);
 	}
 
 	function getViewMode() {
-		return getServiceSessionVar('images','viewmode','icon');
+		return InternalSession::getServiceSessionVar('images','viewmode','icon');
 	}
 	
 	function setViewMode($value) {
 		if (strlen($value)>0) {
-			setServiceSessionVar('images','viewmode',$value);
+			InternalSession::setServiceSessionVar('images','viewmode',$value);
 		}
 	}
 	
