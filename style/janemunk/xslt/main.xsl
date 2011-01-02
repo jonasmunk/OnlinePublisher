@@ -47,6 +47,8 @@
 							<div class="painting5"><xsl:comment/></div>
 							<div class="painting6"><xsl:comment/></div>
 							<div class="painting7"><xsl:comment/></div>
+							<div class="painting8"><xsl:comment/></div>
+							<div class="painting9"><xsl:comment/></div>
 						</div>
 						<div class="case_front_content">
 							<xsl:apply-templates select="p:content"/>
