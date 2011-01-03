@@ -7,11 +7,12 @@
  * @category Interface
  */
 require_once '../Config/Setup.php';
-require_once 'Include/Functions.php';
 require_once 'Include/XmlWebGui.php';
 require_once 'Classes/User.php';
 require_once 'Classes/EmailUtil.php';
 require_once 'Classes/Request.php';
+require_once 'Classes/Response.php';
+require_once 'Classes/Database.php';
 require_once 'Classes/Utilities/StringUtils.php';
 
 if (Request::exists('id')) {
@@ -25,7 +26,7 @@ if (Request::exists('id')) {
             displayPasswordChange($id);
         }
     } else {
-		redirect("LostPassword.php?sessionexpired=true");
+		Response::redirect("LostPassword.php?sessionexpired=true");
     }
 }
 else if (Request::isPost()) {
@@ -34,10 +35,10 @@ else if (Request::isPost()) {
 	$row = Database::selectFirst($sql);
 	if ($row && $row['email']!='') {
 		createValidationSession($row['email'],$row['object_id'],$row['username']);
-		redirect("Authentication.php?emailsent=true");		
+		Response::redirect("Authentication.php?emailsent=true");		
 	}
 	else {
-		redirect("LostPassword.php?usernotfound=true");
+		Response::redirect("LostPassword.php?usernotfound=true");
 	}
 }
 else {
@@ -203,6 +204,6 @@ function processPasswordChange($userId,$password) {
     $user = User::load($userId);
     $user->setPassword($password);
     $user->update();
-    redirect('Authentication.php?passwordchanged=true');
+    Response::redirect('Authentication.php?passwordchanged=true');
 }
 ?>

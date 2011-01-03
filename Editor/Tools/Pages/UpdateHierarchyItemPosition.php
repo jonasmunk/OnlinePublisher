@@ -5,7 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Request.php';
 
@@ -47,5 +48,5 @@ Database::free($result);
 
 
 InternalSession::setToolSessionVar('pages','updateHier',true);
-redirect('EditHierarchyItem.php?id='.$id.'&return='.urlencode($return));
+Response::redirect('EditHierarchyItem.php?id='.$id.'&return='.urlencode($return));
 ?>

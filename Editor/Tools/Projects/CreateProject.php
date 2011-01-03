@@ -5,8 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Request.php';
@@ -24,8 +23,8 @@ $project->publish();
 
 InternalSession::setToolSessionVar('projects','updateHierarchy',true);
 if ($parentProject>0) {
-	redirect('Project.php?id='.$parentProject);
+	Response::redirect('Project.php?id='.$parentProject);
 } else {
-	redirect('Project.php?id='.$project->getId());
+	Response::redirect('Project.php?id='.$project->getId());
 }
 ?>

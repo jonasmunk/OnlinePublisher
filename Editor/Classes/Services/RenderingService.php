@@ -5,6 +5,7 @@ require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
+require_once($basePath.'Editor/Classes/Response.php');
 
 class RenderingService {
 	
@@ -312,7 +313,7 @@ class RenderingService {
 	// displays error otherwise
 	function goToAuthenticationPage($id) {
 		if ($authId = RenderingService::findAuthenticationPageForPage($id)) {
-			redirect('./?id='.$authId.'&page='.$id);
+			Response::redirect('./?id='.$authId.'&page='.$id);
 		}
 		else {
 			echo 'could not find auth page!';

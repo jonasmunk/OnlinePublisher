@@ -5,8 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Securityzone.php';
 require_once '../../Classes/Request.php';
 
@@ -20,5 +19,5 @@ $zone->setAuthenticationPageId($page);
 $zone->update();
 $zone->publish();
 
-redirect('index.php');
+Response::redirect('index.php');
 ?>

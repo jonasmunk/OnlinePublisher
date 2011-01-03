@@ -5,8 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/FileUpload.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/Request.php';
@@ -53,6 +53,6 @@ function importPage($template,&$part,$title,$design,$frame) {
 	$data =& $part->getElementsByTagName('sub')->item(0)->firstChild;
 	$controller->import($data);
 	$page->publish();
-	redirect('EditPage.php?id='.$page->getId());
+	Response::redirect('EditPage.php?id='.$page->getId());
 }
 ?>

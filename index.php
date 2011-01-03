@@ -72,7 +72,7 @@ else {
     // If the page has redirect
 	if ($page && $page['redirect']!==false) {
 		error_log($page['redirect']);
-		redirect($page['redirect']);
+		Response::redirect($page['redirect']);
 	}
 	// If the page is secure
 	else if ($page && $page['secure']) {

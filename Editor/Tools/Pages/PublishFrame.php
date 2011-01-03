@@ -5,8 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Services/FileService.php';
 require_once '../../Classes/Request.php';
 
@@ -55,19 +55,19 @@ Database::update($sql);
 
 
 if ($return=='links') {
-	redirect('EditFrameLinks.php?id='.$id.'&position='.Request::getString('position'));
+	Response::redirect('EditFrameLinks.php?id='.$id.'&position='.Request::getString('position'));
 }
 else if ($return=='search') {
-	redirect('EditFrameSearch.php?id='.$id);
+	Response::redirect('EditFrameSearch.php?id='.$id);
 }
 else if ($return=='news') {
-	redirect('FrameNews.php?id='.$id);
+	Response::redirect('FrameNews.php?id='.$id);
 }
 else if ($return=='userstatus') {
-	redirect('EditFrameUserstatus.php?id='.$id);
+	Response::redirect('EditFrameUserstatus.php?id='.$id);
 }
 else {
-	redirect('EditFrame.php?id='.$id);
+	Response::redirect('EditFrame.php?id='.$id);
 }
 
 function buildLinks($id,$position) {

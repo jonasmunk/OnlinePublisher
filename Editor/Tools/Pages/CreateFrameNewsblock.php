@@ -5,7 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Request.php';
 
 $frame = Request::getInt('frame',0);
@@ -53,5 +54,5 @@ $frame.
 $newId=Database::insert($sql);
 
 
-redirect('FrameNewsblockProperties.php?id='.$newId);
+Response::redirect('FrameNewsblockProperties.php?id='.$newId);
 ?>

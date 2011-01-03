@@ -5,8 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/RemotePublisher.php';
 require_once '../../Classes/Request.php';
 
@@ -20,5 +19,5 @@ $site->setUrl($url);
 $site->update();
 $site->publish();
 
-redirect('index.php');
+Response::redirect('index.php');
 ?>

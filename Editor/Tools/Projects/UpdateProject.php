@@ -5,8 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Request.php';
@@ -25,5 +24,5 @@ $project->publish();
 
 InternalSession::setToolSessionVar('projects','updateHierarchy',true);
 
-redirect('Project.php?id='.$id);
+Response::redirect('Project.php?id='.$id);
 ?>

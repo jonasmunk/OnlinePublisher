@@ -5,7 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Securityzone.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/Request.php';
@@ -42,5 +43,5 @@ foreach ($removedItems as $removedItem) {
 Page::updateSecureStateOfAllPages();
 
 
-redirect('Matrix.php');
+Response::redirect('Matrix.php');
 ?>

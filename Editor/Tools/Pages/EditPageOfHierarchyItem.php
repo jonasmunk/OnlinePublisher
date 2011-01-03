@@ -5,8 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
@@ -19,8 +19,8 @@ $targetType=$row['target_type'];
 $targetId=$row['target_id'];
 
 if ($targetType=='page') {
-	redirect('EditPage.php?id='.$targetId);
+	Response::redirect('EditPage.php?id='.$targetId);
 } else {
-	redirect('EditHierarchyItem.php?id='.$id);
+	Response::redirect('EditHierarchyItem.php?id='.$id);
 }
 ?>

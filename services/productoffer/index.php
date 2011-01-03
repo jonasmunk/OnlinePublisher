@@ -7,6 +7,7 @@ require_once('../../Editor/Classes/Person.php');
 require_once('../../Editor/Classes/Productoffer.php');
 require_once('../../Editor/Classes/Emailaddress.php');
 require_once('../../Editor/Classes/Request.php');
+require_once('../../Editor/Classes/Response.php');
 require_once('../../Editor/Classes/ValidateUtil.php');
 
 $name = Request::getUnicodeString('name');
@@ -16,13 +17,13 @@ $productId = Request::getInt('productId');
 $bid = Request::getUnicodeString('offer');
 
 if ($name=='') {
-	redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noName&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
+	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noName&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
 } else if ($email=='') {
-	redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noEmail&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
+	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noEmail&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
 } else if (!ValidateUtil::validateEmail($email)) {
-	redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=invalidEmail&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
+	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=invalidEmail&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
 } else if ($bid=='') {
-	redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noOffer&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
+	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noOffer&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
 } else {
 
 	$product = Product::load($productId);
@@ -47,7 +48,7 @@ if ($name=='') {
 			$offer->setPersonId($person->getId());
 			$offer->save();
 			$offer->publish();
-			redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingSuccess=true');
+			Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingSuccess=true');
 		} else {
 			echo 'Not allowed!';
 		}

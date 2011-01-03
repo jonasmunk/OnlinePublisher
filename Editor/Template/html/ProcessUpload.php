@@ -5,8 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/HtmlDocument.php';
 require_once '../../Classes/InternalSession.php';
 
@@ -31,9 +31,9 @@ if ($fileType=='text/html') {
 	" where id=".$id;
 	Database::update($sql);
 
-	redirect('Editor.php');
+	Response::redirect('Editor.php');
 
 } else {
-	redirect('Upload.php?error=invalid');
+	Response::redirect('Upload.php?error=invalid');
 }
 ?>

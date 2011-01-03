@@ -5,7 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Securityzone.php';
 require_once '../../Classes/Request.php';
 
@@ -21,6 +21,5 @@ if (count($users)>0) {
 
 }
 
-
-redirect('EditZoneUsers.php?id='.$id);
+Response::redirect('EditZoneUsers.php?id='.$id);
 ?>

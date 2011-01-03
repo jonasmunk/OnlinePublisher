@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
 require_once '../../../Editor/Classes/Page.php';
 require_once '../../../Editor/Classes/Request.php';
+require_once '../../../Editor/Classes/Response.php';
 require_once '../../../Editor/Classes/BumbleBee.php';
 require_once '../../../Editor/Include/Functions.php';
 require_once '../../../Editor/Classes/FileSystemUtil.php';
@@ -50,7 +51,7 @@ function buildPreview() {
 	} elseif ($format=='pdf') {
 		$file.='.pdf';
 	}
-	redirect($file);
+	Response::redirect($file);
 }
 
 function render($id,$format,$print) {

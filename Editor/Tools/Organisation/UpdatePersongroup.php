@@ -5,7 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Persongroup.php';
 require_once '../../Classes/Request.php';
 require_once 'Functions.php';
@@ -20,5 +20,5 @@ $persongroup->setNote($description);
 $persongroup->update();
 
 setUpdateHierarchy(true);
-redirect('Persongroup.php?id='.$id);
+Response::redirect('Persongroup.php?id='.$id);
 ?>
