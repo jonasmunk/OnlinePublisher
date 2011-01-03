@@ -9,15 +9,16 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $hierarchyId = Hierarchy::deleteItem($id);
 
 InternalSession::setToolSessionVar('pages','updateHier',true);
 
-if (requestGetExists('return')) {
-    redirect(requestGetText('return'));
+if (Request::exists('return')) {
+    redirect(Request::getString('return'));
 } else {
     redirect('EditHierarchy.php?id='.$hierarchyId);    
 }

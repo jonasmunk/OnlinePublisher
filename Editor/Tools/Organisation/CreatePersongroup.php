@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Persongroup.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-$title = requestPostText('title');
-$description = requestPostText('description');
+$title = Request::getString('title');
+$description = Request::getString('description');
 
 $group = new PersonGroup();
 $group->setTitle($title);

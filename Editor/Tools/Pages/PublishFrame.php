@@ -8,9 +8,10 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Services/FileService.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id',0);
-$return = requestGetText('return');
+$id = Request::getInt('id',0);
+$return = Request::getString('return');
 
 $sql="select * from frame where id=".$id;
 $row = Database::selectFirst($sql);
@@ -54,7 +55,7 @@ Database::update($sql);
 
 
 if ($return=='links') {
-	redirect('EditFrameLinks.php?id='.$id.'&position='.requestGetText('position'));
+	redirect('EditFrameLinks.php?id='.$id.'&position='.Request::getString('position'));
 }
 else if ($return=='search') {
 	redirect('EditFrameSearch.php?id='.$id);

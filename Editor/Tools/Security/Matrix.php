@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
@@ -29,7 +30,7 @@ $columns = array();
 $sql = "select * from object where type='securityzone' order by title";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$gui.='<column title="'.encodeXML($row['title']).'"/>'.
+	$gui.='<column title="'.StringUtils::escapeXML($row['title']).'"/>'.
 	$columns[$row['id']]=array();
 }
 Database::free($result);
@@ -44,7 +45,7 @@ $gui.='</columns>';
 $sql = "select * from object,user where object.id=user.object_id order by title";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$gui.='<row title="'.encodeXML($row['title']).'" icon="Element/User">';
+	$gui.='<row title="'.StringUtils::escapeXML($row['title']).'" icon="Element/User">';
 	foreach($columns as $column => $selected) {
 		$gui.='<cell><boolean selected="'.(in_array($row['id'],$selected) ? 'true' : 'false').'" value="user-'.$row['id'].'-'.$column.'"/></cell>';
 	}
@@ -57,7 +58,7 @@ $columns = array();
 $sql = "select * from object where type='securityzone' order by title";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$gui.='<column title="'.encodeXML($row['title']).'"/>'.
+	$gui.='<column title="'.StringUtils::escapeXML($row['title']).'"/>'.
 	$columns[$row['id']]=array();
 }
 Database::free($result);
@@ -71,7 +72,7 @@ $gui.='</columns>';
 $sql = "select * from page order by title";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$gui.='<row title="'.encodeXML($row['title']).'" icon="Template/Generic">';
+	$gui.='<row title="'.StringUtils::escapeXML($row['title']).'" icon="Template/Generic">';
 	foreach($columns as $column => $selected) {
 		$gui.='<cell><boolean selected="'.(in_array($row['id'],$selected) ? 'true' : 'false').'" value="page-'.$row['id'].'-'.$column.'"/></cell>';
 	}

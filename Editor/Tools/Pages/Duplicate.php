@@ -9,9 +9,10 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/FileUpload.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 require_once '../../Libraries/domit/xml_domit_include.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 $oldPage = Page::load($id);
 

@@ -9,8 +9,9 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Project.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 $project = Project::load($id);
 $parentProject = $project->getParentProjectId();

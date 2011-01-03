@@ -12,6 +12,7 @@ require_once '../../../Classes/Request.php';
 require_once '../../../Classes/Services/RenderingService.php';
 require_once '../../../Classes/Services/PageService.php';
 require_once '../../../Classes/InternalSession.php';
+require_once '../../../Classes/Utilities/StringUtils.php';
 require_once '../Functions.php';
 
 if (Request::exists('designsession')) {
@@ -83,18 +84,18 @@ if ($row = Database::next($result)) {
 		$design = $_SESSION['debug.design'];
 	}
 	$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.
-	'<page xmlns="'.$pageNS.'" id="'.$row['id'].'" title="'.encodeXML($row['title']).'">'.
+	'<page xmlns="'.$pageNS.'" id="'.$row['id'].'" title="'.StringUtils::escapeXML($row['title']).'">'.
 	'<meta>'.
-	'<description>'.encodeXML($row['description']).'</description>'.
-	'<keywords>'.encodeXML($row['keywords']).'</keywords>'.
+	'<description>'.StringUtils::escapeXML($row['description']).'</description>'.
+	'<keywords>'.StringUtils::escapeXML($row['keywords']).'</keywords>'.
 	RenderingService::buildDateTag('published',$row['published']).
-	'<language>'.encodeXML(strtolower($row['language'])).'</language>'.
+	'<language>'.StringUtils::escapeXML(strtolower($row['language'])).'</language>'.
 	'</meta>'.
 		'<design>'.
 		$row['parameters'].
 		'</design>'.
 	RenderingService::buildPageContext($id,$row['next_page'],$row['previous_page']).
-	'<frame xmlns="'.$frameNS.'" title="'.encodeXML($row['frametitle']).'">'.
+	'<frame xmlns="'.$frameNS.'" title="'.StringUtils::escapeXML($row['frametitle']).'">'.
 	Hierarchy::build($row['hierarchy']).
 	$framedata.
 	'</frame>'.

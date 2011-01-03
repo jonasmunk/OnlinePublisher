@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $designs=buildDesigns();
 $frames=buildFrames();
@@ -53,7 +54,7 @@ function buildDesigns() {
 	$sql="select id,name from design order by name";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['name']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['name']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -64,7 +65,7 @@ function buildFrames() {
 	$sql="select id,name from frame order by name";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['name']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['name']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

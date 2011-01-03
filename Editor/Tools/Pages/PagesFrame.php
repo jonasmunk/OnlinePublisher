@@ -10,16 +10,18 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
 PagesController::setActiveItem('allpages');
 InternalSession::setToolSessionVar('pages','rightFrame','PagesFrame.php');
 if (Request::exists('freetext')) {
-	InternalSession::setToolSessionVar('pages','freeTextSearch',requestPostText('freetext'));
+	InternalSession::setToolSessionVar('pages','freeTextSearch',Request::getString('freetext'));
 }
 else if (Request::exists('searchPairKey')) {
 	InternalSession::setToolSessionVar('pages','freeTextSearch','');
-	PagesController::setSearchPair(requestGetText('searchPairKey'),requestGetText('searchPairValue'));
+	PagesController::setSearchPair(Request::getString('searchPairKey'),Request::getString('searchPairValue'));
 }
 $freetext = InternalSession::getToolSessionVar('pages','freeTextSearch');
 $searchPair = PagesController::getSearchPair();
@@ -64,7 +66,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<tool title="Ny side" icon="Template/Generic" overlay="New" link="NewPageTemplate.php?reset=true" help="Opret en ny side"/>';
 $gui.=
 '<flexible/>'.
-'<searchfield title="Søgning" width="120" focus="true" name="freetext" method="post" value="'.encodeXML($freetext).'" action="PagesFrame.php"/>'.
+'<searchfield title="Søgning" width="120" focus="true" name="freetext" method="post" value="'.StringUtils::escapeXML($freetext).'" action="PagesFrame.php"/>'.
 '</toolbar>'.
 '<content valign="top">'.
 '<iframe xmlns="uri:Frame" source="Result.php" name="Pages"/>'.

@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
@@ -38,9 +39,9 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="EditFrame.php?id='.$row['id'].'">'.
 	'<cell>'.
 	'<icon size="1" icon="Web/Frame"/>'.
-	'<text>'.encodeXML($row['name']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['name']).'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXML($row['hierarchy']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['hierarchy']).'</cell>'.
 	'</row>';
 }
 Database::free($result);

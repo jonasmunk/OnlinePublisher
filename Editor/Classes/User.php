@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 Object::$schema['user'] = array(
 	'username'   => array('type'=>'text'),
@@ -102,7 +103,7 @@ class User extends Object {
 	function sub_publish() {
 		$data =
 		'<user xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<username>'.encodeXML($this->username).'</username>'.
+		'<username>'.StringUtils::escapeXML($this->username).'</username>'.
 		'</user>';
 		return $data;
 	}

@@ -9,8 +9,9 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Milestone.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 $milestones = Milestone::search(array('sort' => 'deadline'));
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui">'.

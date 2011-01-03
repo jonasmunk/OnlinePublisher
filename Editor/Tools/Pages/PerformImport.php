@@ -9,11 +9,12 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/FileUpload.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 require_once '../../Libraries/domit/xml_domit_include.php';
 
-$title = requestPostText('title');
-$design = requestPostNumber('design');
-$frame = requestPostNumber('frame');
+$title = Request::getText('title');
+$design = Request::getInt('design');
+$frame = Request::getInt('frame');
 
 header('Content-Type: text/plain; charset: ISO-8859-1;');
 

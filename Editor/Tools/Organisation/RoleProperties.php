@@ -9,9 +9,12 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Personrole.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 $role = PersonRole::load($id);
 
@@ -32,15 +35,15 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</buttongroup>'.
 '</message>'.
 '</sheet>'.
-'<titlebar title="'.encodeXML($role->getTitle()).'" icon="Role/Administrator">'.
+'<titlebar title="'.StringUtils::escapeXML($role->getTitle()).'" icon="Role/Administrator">'.
 '<close link="Roles.php"/>'.
 '</titlebar>'.
 '<content padding="5" background="true" valign="top">'.
 '<form xmlns="uri:Form" action="UpdatePersonrole.php" method="post" name="Formula" focus="title" submit="true">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large" badgewidth="20%">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($role->getTitle()).'</textfield>'.
-'<textfield badge="Beskrivelse:" name="description" lines="4">'.encodeXML($role->getNote()).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($role->getTitle()).'</textfield>'.
+'<textfield badge="Beskrivelse:" name="description" lines="4">'.StringUtils::escapeXML($role->getNote()).'</textfield>'.
 '<select badge="Person:" name="personid" selected="'.$role->getPersonId().'">'.
 '<option title="" value="0"/>'.
 $persons.

@@ -9,8 +9,9 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
-$tab = requestGetText('tab') | 'guestbook';
+$tab = Request::getString('tab') | 'guestbook';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<dock xmlns="uri:Dock" orientation="Top">'.

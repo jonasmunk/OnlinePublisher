@@ -6,12 +6,13 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id',0);
-$name = requestPostText('name');
-$title = requestPostText('title');
-$bottomtext = requestPostText('bottomtext');
-$hierarchy = requestPostNumber('hierarchy',0);
+$id = Request::getInt('id',0);
+$name = Request::getString('name');
+$title = Request::getString('title');
+$bottomtext = Request::getString('bottomtext');
+$hierarchy = Request::getInt('hierarchy',0);
 
 $sql="update frame set".
 " name=".Database::text($name).

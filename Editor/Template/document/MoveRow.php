@@ -8,11 +8,12 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
 $pageId = InternalSession::getPageId();
-$rowId = requestGetNumber('row',0);
-$dir = requestGetNumber('dir',0);
+$rowId = Request::getInt('row',0);
+$dir = Request::getInt('dir',0);
 
 
 $sql="select * from document_row where id=".$rowId;

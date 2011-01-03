@@ -7,8 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $sql = "Select frame_id,title,sortby,sortdir,maxitems,timetype,timecount,date_format(startdate,'%Y%m%d%H%i%s') startdate,date_format(enddate,'%Y%m%d%H%i%s') enddate from frame_newsblock where id=".$id;
 $row = Database::selectFirst($sql);
@@ -52,7 +54,7 @@ return true;
 '<hidden name="id">'.$id.'</hidden>'.
 '<hidden name="frame">'.$frame.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($title).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($title).'</textfield>'.
 '<indent><box title="Visning">'.
 '<select badge="Sorter efter:" name="sortby" selected="'.$sortby.'">'.
 '<option title="Startdato" value="startdate"/>'.

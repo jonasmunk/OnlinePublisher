@@ -7,6 +7,8 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 $id = getSearchId();
@@ -37,9 +39,9 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="Update.php" method="post" name="Formula" focus="data">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($title).'</textfield>'.
-'<textfield badge="Tekst:" name="text" lines="6">'.encodeXML($text).'</textfield>'.
-'<textfield badge="Knap:" name="buttontitle">'.encodeXML($buttontitle).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($title).'</textfield>'.
+'<textfield badge="Tekst:" name="text" lines="6">'.StringUtils::escapeXML($text).'</textfield>'.
+'<textfield badge="Knap:" name="buttontitle">'.StringUtils::escapeXML($buttontitle).'</textfield>'.
 '<buttongroup size="Large">'.
 '<button title="Luk" link="../../Tools/Pages/index.php" target="_parent"/>'.
 '<button title="Opdater" submit="true" style="Hilited"/>'.

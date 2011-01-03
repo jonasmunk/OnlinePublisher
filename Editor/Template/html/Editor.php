@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $sql="select * from html where page_id=".InternalSession::getPageId();
 $row = Database::selectFirst($sql);
@@ -24,8 +25,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<content padding="5" background="true">'.
 '<form xmlns="uri:Form" action="Update.php" method="post" name="Formula" focus="data">'.
 '<group size="Small" badgeplacement="above">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($row['title']).'</textfield>'.
-'<textfield badge="HTML-kode:" name="html" lines="20">'.encodeXML($row['html']).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($row['title']).'</textfield>'.
+'<textfield badge="HTML-kode:" name="html" lines="20">'.StringUtils::escapeXML($row['html']).'</textfield>'.
 '<buttongroup size="Large">'.
 '<button title="Luk" link="../../Tools/Pages/index.php" target="Desktop"/>'.
 '<button title="Opdater" submit="true" style="Hilited"/>'.

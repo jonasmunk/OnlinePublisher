@@ -7,6 +7,8 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 $id=getPersonGroup();
@@ -15,7 +17,7 @@ $personOptions='';
 $sql="SELECT person.*, object.* FROM person, object LEFT JOIN persongroup_person ON persongroup_person.person_id=person.object_id and persongroup_person.persongroup_id=$id WHERE persongroup_person.person_id IS NULL AND person.object_id = object.id;";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$personOptions.='<option title="'.concatenatePersonName(encodeXML($row['firstname']),encodeXML($row['middlename']),encodeXML($row['surname'])).'" value="'.encodeXML($row['id']).'"/>';
+	$personOptions.='<option title="'.concatenatePersonName(StringUtils::escapeXML($row['firstname']),StringUtils::escapeXML($row['middlename']),StringUtils::escapeXML($row['surname'])).'" value="'.StringUtils::escapeXML($row['id']).'"/>';
 }
 Database::free($result);
 

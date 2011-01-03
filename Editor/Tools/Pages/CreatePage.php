@@ -8,14 +8,15 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 require_once 'PagesController.php';
 
 $info = PagesController::getNewPageInfo();
 
-$title = requestPostText('title');
-$description = requestPostText('description');
-$keywords = requestPostText('keywords');
-$language = requestPostText('language');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$keywords = Request::getString('keywords');
+$language = Request::getString('language');
 $template = $info['template'];
 $design = $info['design'];
 $frame = $info['frame'];

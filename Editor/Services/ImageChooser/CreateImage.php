@@ -9,12 +9,14 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Services/ImageService.php';
+require_once('../../Classes/Utilities/StringUtils.php');
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Image.php';
 
 // hide warnings
 error_reporting(E_ERROR);
 
-$title = requestPostText('title');
+$title = Request::getString('title');
 $group = InternalSession::getServiceSessionVar('imagechooser','group',0);
 
 $response = ImageService::createUploadedImage($title,$group);
@@ -30,9 +32,9 @@ else {
 	'<content background="true">'.
 	'<message xmlns="uri:Message" icon="Stop">'.
 	'<title>Billedet kunne ikke oprettes</title>'.
-	'<description>'.encodeXML($response['errorMessage']).'</description>'.
+	'<description>'.StringUtils::escapeXML($response['errorMessage']).'</description>'.
 	($response['errorDetails']!=null ?
-	'<error badge="Vis fejl">'.encodeXML($response['errorDetails']).'</error>'
+	'<error badge="Vis fejl">'.StringUtils::escapeXML($response['errorDetails']).'</error>'
 	: '').
 	'<buttongroup size="Large">'.
 	'<button title="OK" link="Icons.php" style="Hilited"/>'.

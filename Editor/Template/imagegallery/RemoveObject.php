@@ -9,9 +9,10 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
 $pageId = InternalSession::getPageId();
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 // Delete the object
 $sql="delete from imagegallery_object where id=".$id;

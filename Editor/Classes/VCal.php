@@ -3,6 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Classes
  */
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class VCalParser {
 	
@@ -224,7 +225,7 @@ class VCalSerializer {
 	
 	function buildTextTag($tagName,$value) {
 		if ($value) {
-			return '<'.$tagName.'>'.encodeXML($value).'</'.$tagName.'>';
+			return '<'.$tagName.'>'.StringUtils::escapeXML($value).'</'.$tagName.'>';
 		}
 	}
 	

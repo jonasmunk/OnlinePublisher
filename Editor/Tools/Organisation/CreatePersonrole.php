@@ -8,11 +8,12 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Personrole.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-$title = requestPostText('title');
-$description = requestPostText('description');
-$personid = requestPostText('personid');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$personid = Request::getString('personid');
 
 
 $group = new PersonRole();

@@ -8,6 +8,8 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Persongroup.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 $id=getPersonGroup();
@@ -27,15 +29,15 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</buttongroup>'.
 '</message>'.
 '</sheet>'.
-'<titlebar title="'.encodeXML($group->getTitle()).'" icon="Element/Folder">'.
+'<titlebar title="'.StringUtils::escapeXML($group->getTitle()).'" icon="Element/Folder">'.
 '<close link="Persongroup.php"/>'.
 '</titlebar>'.
 '<content padding="5" background="true" valign="top">'.
 '<form xmlns="uri:Form" action="UpdatePersongroup.php" method="post" name="Formula" focus="title" submit="true">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large" badgewidth="20%">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($group->getTitle()).'</textfield>'.
-'<textfield badge="Beskrivelse:" name="description" lines="6">'.encodeXML($group->getNote()).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($group->getTitle()).'</textfield>'.
+'<textfield badge="Beskrivelse:" name="description" lines="6">'.StringUtils::escapeXML($group->getNote()).'</textfield>'.
 '<buttongroup size="Large">'.
 '<button title="Annuller" link="Persongroup.php"/>'.
 '<button title="Slet" link="javascript: ConfirmDelete.show();"/>'.

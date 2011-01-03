@@ -10,11 +10,14 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Person.php';
 require_once '../../Classes/Persongroup.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 
-$id = requestGetNumber('id',0);
-$group = requestGetNumber('group',-1);
+$id = Request::getInt('id',0);
+$group = Request::getInt('group',-1);
 if ($group>-1) {
 	setPersonGroup($group);
 }
@@ -39,7 +42,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</buttongroup>'.
 '</message>'.
 '</sheet>'.
-'<titlebar title="'.encodeXML($person->getTitle()).'" icon="Element/Person">'.
+'<titlebar title="'.StringUtils::escapeXML($person->getTitle()).'" icon="Element/Person">'.
 '<close link="'.($group>0 ? 'Persongroup.php' : 'Library.php').'"/>'.
 '</titlebar>'.
 '<content padding="5" background="true" valign="top">'.
@@ -49,14 +52,14 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<row><cell width="50%" valign="top">'.
 '<group xmlns="uri:Form" size="Large">'.
 '<box title="Navn">'.
-'<textfield badge="Fornavn:" name="firstname">'.encodeXML($person->getFirstname()).'</textfield>'.
-'<textfield badge="Mellemnavn:" name="middlename">'.encodeXML($person->getMiddlename()).'</textfield>'.
-'<textfield badge="Efternavn:" name="surname">'.encodeXML($person->getSurname()).'</textfield>'.
-'<textfield badge="Initialer:" name="initials">'.encodeXML($person->getInitials()).'</textfield>'.
-'<textfield badge="Kaldenavn:" name="nickname">'.encodeXML($person->getNickname()).'</textfield>'.
+'<textfield badge="Fornavn:" name="firstname">'.StringUtils::escapeXML($person->getFirstname()).'</textfield>'.
+'<textfield badge="Mellemnavn:" name="middlename">'.StringUtils::escapeXML($person->getMiddlename()).'</textfield>'.
+'<textfield badge="Efternavn:" name="surname">'.StringUtils::escapeXML($person->getSurname()).'</textfield>'.
+'<textfield badge="Initialer:" name="initials">'.StringUtils::escapeXML($person->getInitials()).'</textfield>'.
+'<textfield badge="Kaldenavn:" name="nickname">'.StringUtils::escapeXML($person->getNickname()).'</textfield>'.
 '</box>'.
 '<box title="Diverse">'.
-'<textfield badge="Jobtitel:" name="jobtitle">'.encodeXML($person->getJobtitle()).'</textfield>'.
+'<textfield badge="Jobtitel:" name="jobtitle">'.StringUtils::escapeXML($person->getJobtitle()).'</textfield>'.
 '<select badge="Køn:" name="sex" selected="'.$person->getSex().'">'.
 '<option title="Mand" value="1"/>'.
 '<option title="Kvinde" value="0"/>'.
@@ -65,25 +68,25 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<option title="" value="0"/>'.
 $images.
 '</select>'.
-'<textfield badge="Web-adresse:" name="webaddress">'.encodeXML($person->getWebaddress()).'</textfield>'.
+'<textfield badge="Web-adresse:" name="webaddress">'.StringUtils::escapeXML($person->getWebaddress()).'</textfield>'.
 '<checkbox badge="Søgbar:" name="searchable" selected="'.($person->isSearchable() ? 'true' : 'false').'"/>'.
 '</box>'.
 '</group>'.
 '</cell><cell>'.
 '<group xmlns="uri:Form" size="Large">'.
 '<box title="Adresse">'.
-'<textfield badge="Gade:" name="streetname">'.encodeXML($person->getStreetname()).'</textfield>'.
-'<textfield badge="Postnr:" name="zipcode">'.encodeXML($person->getZipcode()).'</textfield>'.
-'<textfield badge="By:" name="city">'.encodeXML($person->getCity()).'</textfield>'.
-'<textfield badge="Land:" name="country">'.encodeXML($person->getCountry()).'</textfield>'.
+'<textfield badge="Gade:" name="streetname">'.StringUtils::escapeXML($person->getStreetname()).'</textfield>'.
+'<textfield badge="Postnr:" name="zipcode">'.StringUtils::escapeXML($person->getZipcode()).'</textfield>'.
+'<textfield badge="By:" name="city">'.StringUtils::escapeXML($person->getCity()).'</textfield>'.
+'<textfield badge="Land:" name="country">'.StringUtils::escapeXML($person->getCountry()).'</textfield>'.
 '</box>'.
 '<box title="Telefon">'.
-'<textfield badge="Privat:" name="phone_private">'.encodeXML($person->getPhone_private()).'</textfield>'.
-'<textfield badge="Job:" name="phone_job">'.encodeXML($person->getPhone_job()).'</textfield>'.
+'<textfield badge="Privat:" name="phone_private">'.StringUtils::escapeXML($person->getPhone_private()).'</textfield>'.
+'<textfield badge="Job:" name="phone_job">'.StringUtils::escapeXML($person->getPhone_job()).'</textfield>'.
 '</box>'.
 '<box title="E-mail">'.
-'<textfield badge="Privat:" name="email_private">'.encodeXML($person->getEmail_private()).'</textfield>'.
-'<textfield badge="Job:" name="email_job">'.encodeXML($person->getEmail_job()).'</textfield>'.
+'<textfield badge="Privat:" name="email_private">'.StringUtils::escapeXML($person->getEmail_private()).'</textfield>'.
+'<textfield badge="Job:" name="email_job">'.StringUtils::escapeXML($person->getEmail_job()).'</textfield>'.
 '</box>'.
 '</group>'.
 '</cell></row><row><cell colspan="2">'.

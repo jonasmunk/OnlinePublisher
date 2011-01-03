@@ -11,12 +11,13 @@ require_once '../../Classes/Task.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Milestone.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id=requestGetNumber('id');
-if (requestGetExists('return')) {
-	$return = requestGetText('return');
+$id=Request::getInt('id');
+if (Request::exists('return')) {
+	$return = Request::getString('return');
 } else {
-	$return = 'Project.php?id='.requestGetNumber('returnProject');	
+	$return = 'Project.php?id='.Request::getInt('returnProject');	
 }
 $task = Task::load($id);
 
@@ -33,9 +34,9 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<hidden name="return">'.$return.'</hidden>'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($task->getTitle()).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($task->getTitle()).'</textfield>'.
 '<textfield badge="Beskrivelse:" name="description" lines="6">'.
-encodeXML($task->getNote()).
+StringUtils::escapeXML($task->getNote()).
 '</textfield>';
 if ($task->getDeadline() > 0) {
     $gui.=

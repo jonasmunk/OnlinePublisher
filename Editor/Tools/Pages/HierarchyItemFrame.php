@@ -11,11 +11,14 @@ require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Hierarchy.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 require_once 'PagesController.php';
 
 $templates = TemplateService::getTemplatesKeyed();
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 InternalSession::setToolSessionVar('pages','rightFrame','HierarchyItemFrame.php?id='.$id);
 PagesController::setActiveItem('item',$id);
@@ -31,7 +34,7 @@ $icon = GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['f
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="100%" height="100%">'.
-'<titlebar title="'.encodeXML($row['title']).'" icon="'.$icon.'">'.
+'<titlebar title="'.StringUtils::escapeXML($row['title']).'" icon="'.$icon.'">'.
 '<close link="PagesFrame.php" help="Gå tilbage til listen over sider"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar" align="left">';
@@ -73,10 +76,10 @@ function buildPath($id) {
     $path = Hierarchy::getItemPath($id);
     foreach ($path as $item) {
         if ($item['type']=='item') {
-            $gui.='<item title="'.encodeXML($item['title']).'" link="HierarchyItemFrame.php?id='.$item['id'].'" target="Right"/>';            
+            $gui.='<item title="'.StringUtils::escapeXML($item['title']).'" link="HierarchyItemFrame.php?id='.$item['id'].'" target="Right"/>';            
         }
         elseif ($item['type']=='hierarchy') {
-            $gui.='<item title="'.encodeXML($item['title']).'" link="HierarchyFrame.php?id='.$item['id'].'" target="Right"/>';            
+            $gui.='<item title="'.StringUtils::escapeXML($item['title']).'" link="HierarchyFrame.php?id='.$item['id'].'" target="Right"/>';            
         }
     }
     return $gui;

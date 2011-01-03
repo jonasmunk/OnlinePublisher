@@ -9,9 +9,12 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
-$hierarchyId = requestGetNumber('id');
+$hierarchyId = Request::getInt('id');
 $templates = TemplateService::getTemplatesKeyed();
 
 $gui=
@@ -76,14 +79,14 @@ function buildList($hierarchyId,$parent,$level) {
 			$gui.=' ·· ';
 		}
 		$gui.=
-		encodeXML($row['title']).
+		StringUtils::escapeXML($row['title']).
 		'</cell>'.
 		'<cell>';
 		if ($row['target_type']!='') {
 			$gui.='<icon size="1" icon="'.GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['filename']).'"/>';
 		}
 		$gui.=
-		'<text>'.encodeXML($text).'</text>'.
+		'<text>'.StringUtils::escapeXML($text).'</text>'.
 		'</cell>'.
 		'<cell>'.
 		'<icon icon="Basic/Add" link="NewHierarchyItem.php?parent='.$row['id'].'&amp;hierarchy='.$hierarchyId.'&amp;return=EditHierarchy.php%3Fid='.$hierarchyId.'" target="_parent" help="Opret et nyt underpunkt til dette menupunkt"/>'.

@@ -7,8 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface>'.
@@ -34,7 +33,7 @@ function projectSpider($parent) {
     $sql="SELECT object.id,object.title FROM project,object WHERE object.id=project.object_id and project.parent_project_id=".$parent." order by title";
     $result = Database::select($sql);
     while ($row = Database::next($result)) {
-    	$gui.='<element icon="Tool/Knowledgebase" title="'.encodeXML(StringUtils::shortenString($row['title'],20)).'" link="Project.php?id='.$row['id'].'" target="Right">'.
+    	$gui.='<element icon="Tool/Knowledgebase" title="'.StringUtils::escapeXML(StringUtils::shortenString($row['title'],20)).'" link="Project.php?id='.$row['id'].'" target="Right">'.
     	projectSpider($row['id']).
     	'</element>';
     }

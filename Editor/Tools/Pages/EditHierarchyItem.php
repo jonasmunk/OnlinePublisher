@@ -8,30 +8,33 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
-$sql="select * from hierarchy_item where id=".$id;
+$sql = "select * from hierarchy_item where id=".$id;
 $row = Database::selectFirst($sql);
 
-$title=$row['title'];
-$alternative=$row['alternative'];
-$targetType=$row['target_type'];
-$targetId=$row['target_id'];
-$targetValue=$row['target_value'];
+$title = $row['title'];
+$alternative = $row['alternative'];
+$targetType = $row['target_type'];
+$targetId = $row['target_id'];
+$targetValue = $row['target_value'];
 $hierarchyId = $row['hierarchy_id'];
 $hidden = $row['hidden']==1;
 
-$sql="select * from hierarchy_item where parent=".$id;
-$canDelete=Database::isEmpty($sql);
+$sql = "select * from hierarchy_item where parent=".$id;
+$canDelete = Database::isEmpty($sql);
 
-$pages=buildPages($targetId);
-$allPages=buildAllPages();
-$files=buildFiles();
+$pages = buildPages($targetId);
+$allPages = buildAllPages();
+$files = buildFiles();
 
-if (requestGetExists('return')) {
-    $return = requestGetText('return');
+if (Request::exists('return')) {
+    $return = Request::getString('return');
 } else {
     $return = InternalSession::getToolSessionVar('pages','rightFrame');    
 }
@@ -48,10 +51,10 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<hidden name="return">'.$return.'</hidden>'.
 '<group size="Large">'.
 '<textfield badge="Titel:" name="title">'.
-encodeXML($title).
+StringUtils::escapeXML($title).
 '</textfield>'.
 '<textfield badge="Beskrivelse:" name="alternative">'.
-encodeXML($alternative).
+StringUtils::escapeXML($alternative).
 '</textfield>'.
 '<space/>'.
 '<combo badge="Link til:" name="type" selected="'.$targetType.'">'.
@@ -66,10 +69,10 @@ encodeXML($alternative).
 		'<select name="file" selected="'.($targetType=='file' ? $targetId : '0').'">'.$files.'</select>'.
 	'</option>'.
 	'<option title="Adresse:" value="url">'.
-		'<textfield name="url">'.($targetType=='url' ? encodeXML($targetValue) : '').'</textfield>'.
+		'<textfield name="url">'.($targetType=='url' ? StringUtils::escapeXML($targetValue) : '').'</textfield>'.
 	'</option>'.
 	'<option title="E-post:" value="email">'.
-		'<textfield name="email">'.($targetType=='email' ? encodeXML($targetValue) : '').'</textfield>'.
+		'<textfield name="email">'.($targetType=='email' ? StringUtils::escapeXML($targetValue) : '').'</textfield>'.
 	'</option>'.
 '</combo>'.
 '<select badge="Destination:" name="target" selected="'.$row['target'].'">'.
@@ -103,7 +106,7 @@ function buildPages($id) {
 	$sql="select page.id,page.title from page left join hierarchy_item on page.id=target_id and target_type='page' where hierarchy_item.id is null union select id,title from page where id=".$id." order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -114,7 +117,7 @@ function buildAllPages() {
 	$sql="select page.id,page.title from page order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -125,7 +128,7 @@ function buildFiles() {
 	$sql="select id,title from object where type='file' order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

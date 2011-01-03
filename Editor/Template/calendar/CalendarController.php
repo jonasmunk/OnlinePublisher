@@ -12,6 +12,7 @@ require_once($basePath.'Editor/Classes/Event.php');
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/XmlUtils.php');
 require_once($basePath.'Editor/Classes/Request.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class CalendarController extends LegacyTemplateController {
     
@@ -53,7 +54,7 @@ class CalendarController extends LegacyTemplateController {
 		$sql="select * from calendarviewer where page_id = ".$id;
 		$setup = Database::selectFirst($sql);
 
-		$view = requestGetText('view');
+		$view = Request::getString('view');
 		if (!$view) $view=$setup['standard_view'];
 
 
@@ -190,13 +191,13 @@ class CalendarController extends LegacyTemplateController {
 	}
 
 	function buildEventXML(&$event) {
-		return '<event unique-id="'.encodeXML($event['uniqueId']).'" collision-count="'.(isset($event['collisionCount']) ? $event['collisionCount'] : 0).'" collision-number="'.(isset($event['collisionNumber']) ? $event['collisionNumber'] : 0).'" height="'.(isset($event['height']) ? $event['height'] : '').'" top="'.(isset($event['top']) ? $event['top'] : '').'" time-from="'.UserInterface::presentShortTime($event['startDate']).'" time-to="'.UserInterface::presentShortTime($event['endDate']).'">'.
+		return '<event unique-id="'.StringUtils::escapeXML($event['uniqueId']).'" collision-count="'.(isset($event['collisionCount']) ? $event['collisionCount'] : 0).'" collision-number="'.(isset($event['collisionNumber']) ? $event['collisionNumber'] : 0).'" height="'.(isset($event['height']) ? $event['height'] : '').'" top="'.(isset($event['top']) ? $event['top'] : '').'" time-from="'.UserInterface::presentShortTime($event['startDate']).'" time-to="'.UserInterface::presentShortTime($event['endDate']).'">'.
 		XmlUtils::buildDate('start',$event['startDate']).
 		XmlUtils::buildDate('end',$event['endDate']).
-		'<summary>'.encodeXML($event['summary']).'</summary>'.
-		'<description>'.encodeXML($event['description']).'</description>'.
-		'<location>'.encodeXML($event['location']).'</location>'.
-		'<calendar>'.encodeXML($event['calendarTitle']).'</calendar>'.
+		'<summary>'.StringUtils::escapeXML($event['summary']).'</summary>'.
+		'<description>'.StringUtils::escapeXML($event['description']).'</description>'.
+		'<location>'.StringUtils::escapeXML($event['location']).'</location>'.
+		'<calendar>'.StringUtils::escapeXML($event['calendarTitle']).'</calendar>'.
 		'</event>';
 	}
 

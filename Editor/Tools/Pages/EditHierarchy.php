@@ -8,9 +8,12 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
-$id=requestGetNumber('id');
+$id=Request::getInt('id');
 InternalSession::setToolSessionVar('pages','rightFrame','EditHierarchy.php?id='.$id);
 
 $sql="select name,changed-published as publishdelta from hierarchy where id=".$id;
@@ -26,7 +29,7 @@ else {
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="100%" height="100%">'.
-'<titlebar title="Redigering af hierarkiet &quot;'.encodeXML($name).'&quot;" icon="Element/Structure">'.
+'<titlebar title="Redigering af hierarkiet &quot;'.StringUtils::escapeXML($name).'&quot;" icon="Element/Structure">'.
 '<close link="HierarchyFrame.php?id='.$id.'" help="Luk vinduet og gå tilbage til listen over sider"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar" align="left">'.

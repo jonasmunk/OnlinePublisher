@@ -245,6 +245,24 @@ class Request {
 			return array();
 		}
 	}
+
+	/**
+	 * Gets the array value of a variable
+	 * @param string $key The name of the variable
+	 * @return array the array value of the variable,
+	 *         an empty array if variable is not an array
+	 */
+	function getArray($key) {
+		if (isset($_POST[$key]) && is_array($_POST[$key])) {
+			return $_POST[$key];
+		}
+		else if (isset($_GET[$key]) && is_array($_GET[$key])) {
+			return $_GET[$key];
+		}
+		else {
+			return array();
+		}
+	}
 	
 	function toUnicode($value) {
 		return mb_convert_encoding($value, "UTF-8","ISO-8859-1");

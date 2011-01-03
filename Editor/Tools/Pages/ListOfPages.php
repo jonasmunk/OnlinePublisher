@@ -8,11 +8,14 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
-if (requestGetExists('tab')) {
-	InternalSession::setToolSessionVar('pages','listTab',requestGetText('tab'));
+if (Request::exists('tab')) {
+	InternalSession::setToolSessionVar('pages','listTab',Request::getString('tab'));
 }
 $extended = (InternalSession::getToolSessionVar('pages','listTab') == 'extended');
 $pair = PagesController::getSearchPair();
@@ -73,19 +76,19 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="EditPage.php?id='.$row['id'].'" target="_parent">'.
 	'<cell>'.
 	'<icon size="1" icon="'.$templates[$row['unique']]['icon'].'"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	($row['secure']==1 ? '<status type="Locked" link="EditPageSecurity.php?id='.$row['id'].'" help="Siden er beskyttet, klik for at ændre opsætning"/>' : '').
 	'</cell>'.
 	($extended ?
 	'<cell>'.
-	encodeXML($templates[$row['unique']]['name']).
+	StringUtils::escapeXML($templates[$row['unique']]['name']).
 	'</cell>'.
-	'<cell>'.encodeXML($row['design']).'</cell>'.
-	'<cell>'.encodeXML($row['frame']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['design']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['frame']).'</cell>'.
 	'<cell index="'.$row['language'].'">'.xwgBuildListLanguageIcon($row['language']).'</cell>'
 	: '').
 	'<cell index="'.$row['changedindex'].'">'.
-	'<text>'.encodeXML($row['changed']).'</text>';
+	'<text>'.StringUtils::escapeXML($row['changed']).'</text>';
 	if ($row['publishdelta']>0) {
 		$gui.='<status type="Attention" help="Siden er ændret siden sidste udgivning"/>';
 	}

@@ -7,15 +7,16 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 require_once 'ImageChooserController.php';
 
-if (requestGetExists('group')) {
+if (Request::exists('group')) {
 	ImageChooserController::setViewType('group');
-	ImageChooserController::setGroupId(requestGetNumber('group'));
-} elseif (requestGetExists('type')) {
-	ImageChooserController::setViewType(requestGetText('type'));
+	ImageChooserController::setGroupId(Request::getInt('group'));
+} elseif (Request::exists('type')) {
+	ImageChooserController::setViewType(Request::getString('type'));
 }
 $type = ImageChooserController::getViewType();
 
@@ -35,7 +36,7 @@ while ($row = Database::next($result)) {
 		$counter=1;
 	}
 	$gui.=
-	'<icon title="'.encodeXML(StringUtils::shortenString($row['title'],16)).'" help="'.encodeXML($row['title']).'" image="../../../util/images/?id='.$row['id'].'&amp;maxwidth=32&amp;maxheight=32&amp;timestamp='.$row['updated'].'" link="javascript:parent.selectImage('.$row['id'].')" target="_parent"/>';
+	'<icon title="'.StringUtils::escapeXML(StringUtils::shortenString($row['title'],16)).'" help="'.StringUtils::escapeXML($row['title']).'" image="../../../util/images/?id='.$row['id'].'&amp;maxwidth=32&amp;maxheight=32&amp;timestamp='.$row['updated'].'" link="javascript:parent.selectImage('.$row['id'].')" target="_parent"/>';
 
 }
 Database::free($result);
@@ -44,7 +45,7 @@ Database::free($result);
 $gui.=
 '</row>'.
 '</group>';
-if ($selectImage = requestGetNumber('selectImage')) {
+if ($selectImage = Request::getInt('selectImage')) {
 	$gui.='<script xmlns="uri:Script">
 	parent.selectImage('.$selectImage.');
 	</script>';

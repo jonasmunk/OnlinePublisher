@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-if (requestGetExists('switch')) {
-	InternalSession::switchToolSessionVar('pages','hierOpen-'.requestGetNumber('switch'));
+if (Request::exists('switch')) {
+	InternalSession::switchToolSessionVar('pages','hierOpen-'.Request::getInt('switch'));
 }
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.

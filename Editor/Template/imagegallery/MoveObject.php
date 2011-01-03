@@ -9,10 +9,11 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
 $pageId = InternalSession::getPageId();
-$id = requestGetNumber('id');
-$dir = requestGetNumber('dir');
+$id = Request::getInt('id');
+$dir = Request::getInt('dir');
 
 $sql="select * from imagegallery_object where id=".$id;
 if ($row = Database::selectFirst($sql)) {

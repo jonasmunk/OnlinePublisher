@@ -8,9 +8,10 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Securityzone.php';
+require_once '../../Classes/Request.php';
 
-$title = requestPostText('title');
-$page = requestPostNumber('page');
+$title = Request::getString('title');
+$page = Request::getInt('page');
 
 $zone = new SecurityZone();
 $zone->setTitle($title);

@@ -7,9 +7,11 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Securityzone.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once '../../Include/XmlWebGui.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $zone = SecurityZone::load($id);
 
@@ -41,7 +43,7 @@ while ($row = Database::next($result)) {
 	$gui.='<row>'.
 	'<cell>'.
 	'<icon size="1" icon="Element/User"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
 	'<cell>'.
 	'<icon icon="Basic/Delete" link="DeleteZoneUser.php?zone='.$id.'&amp;user='.$row['id'].'"/>'.

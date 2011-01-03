@@ -7,11 +7,12 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
 $id = getPersonListingId();
-$text = requestPostText('text');
-$title = requestPostText('title');
+$text = Request::getString('text');
+$title = Request::getString('title');
 
 $sql="update personlisting set".
 " title=".Database::text($title).

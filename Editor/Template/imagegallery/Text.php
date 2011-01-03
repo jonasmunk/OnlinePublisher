@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $id = InternalSession::getPageId();
 
@@ -28,8 +29,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="Update.php" method="post" name="Formula" focus="title">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Overskrift:" name="title">'.encodeXML($row['title']).'</textfield>'.
-'<textfield badge="Tekst:" name="text" lines="6">'.encodeXML($row['text']).'</textfield>'.
+'<textfield badge="Overskrift:" name="title">'.StringUtils::escapeXML($row['title']).'</textfield>'.
+'<textfield badge="Tekst:" name="text" lines="6">'.StringUtils::escapeXML($row['text']).'</textfield>'.
 '<space/>'.
 '<indent><box title="Udseende">'.
 '<number badge="St&#248;rrelse:" name="imagesize" min="10" max="800" value="'.$row['imagesize'].'"/>'.

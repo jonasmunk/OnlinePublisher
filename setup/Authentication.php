@@ -12,8 +12,8 @@ require_once '../Editor/Classes/Request.php';
 require_once 'Functions.php';
 
 if (Request::isPost()) {
-	$username=requestPostText('username');
-	$password=requestPostText('password');
+	$username=Request::getString('username');
+	$password=Request::getString('password');
 	if ($username==$superUser && $password==$superPassword) {
 		setupLogIn();
 		header("Location: index.php");

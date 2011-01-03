@@ -10,12 +10,14 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/Problem.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Milestone.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id=requestGetNumber('id');
-if (requestGetExists('return')) {
-	$return = requestGetText('return');
+$id = Request::getInt('id');
+if (Request::exists('return')) {
+	$return = Request::getString('return');
 } else {
-	$return = 'Project.php?id='.requestGetNumber('returnProject');	
+	$return = 'Project.php?id='.Request::getInt('returnProject');	
 }
 $problem = Problem::load($id);
 
@@ -34,9 +36,9 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<hidden name="return">'.$return.'</hidden>'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($problem->getTitle()).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($problem->getTitle()).'</textfield>'.
 '<textfield badge="Beskrivelse:" name="description" lines="6">'.
-encodeXML($problem->getNote()).
+StringUtils::escapeXML($problem->getNote()).
 '</textfield>';
 if ($problem->getDeadline() > 0) {
     $gui.=
@@ -60,7 +62,7 @@ $projectOptions.
 '<select name="milestone" badge="Milepæl:" selected="'.$problem->getMilestoneId().'">'.
 '<option title="Ingen" value="0"/>';
 foreach ($milestones as $milestone) {
-	$gui.='<option title="'.encodeXML($milestone->getTitle()).'" value="'.$milestone->getId().'"/>';
+	$gui.='<option title="'.StringUtils::escapeXML($milestone->getTitle()).'" value="'.$milestone->getId().'"/>';
 }
 $gui.=
 '</select>'.

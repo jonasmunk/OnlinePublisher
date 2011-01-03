@@ -8,8 +8,9 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 $hier = Hierarchy::load($id);
 $hier->publish();

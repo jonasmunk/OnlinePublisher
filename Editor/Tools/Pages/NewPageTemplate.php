@@ -10,6 +10,8 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
 if (Request::getBoolean('reset')) {
@@ -61,8 +63,8 @@ foreach ($templates as $template) {
 		'<icon'.
 		' link="NewPageDesign.php?template='.$template['id'].'"'.
 		' icon="'.$template['icon'].'"'.
-		' title="'.encodeXML($template['name']).'"'.
-		' description="'.encodeXML($template['description']).'"'.
+		' title="'.StringUtils::escapeXML($template['name']).'"'.
+		' description="'.StringUtils::escapeXML($template['description']).'"'.
 		($template['id']==$info['template'] ? ' style="Hilited"' : '').
 		'/>'.
 		'</row>';

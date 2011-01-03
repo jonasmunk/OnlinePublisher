@@ -20,7 +20,9 @@ require_once 'Editor/Classes/Database.php';
 require_once 'Editor/Classes/Services/RenderingService.php';
 require_once 'Editor/Classes/ExternalSession.php';
 
-startSession();
+session_set_cookie_params(0);
+session_start();
+
 
 if (!Database::testConnection()) {
 	$error = '<title>Siden er ikke tilgængelig i øjeblikket.</title>'.

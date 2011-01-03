@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once 'ImageChooserController.php';
 
 $value = ImageChooserController::getViewType();
@@ -32,7 +32,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 $sql="select object.id,object.title,object.note,count(image.object_id) as imagecount,sum(image.size) as totalsize from imagegroup, imagegroup_image, image,object  where imagegroup_image.imagegroup_id=imagegroup.object_id and imagegroup_image.image_id = image.object_id and object.id=imagegroup.object_id group by imagegroup.object_id union select object.id,object.title,object.note,'0','0' from object left join imagegroup_image on imagegroup_image.imagegroup_id=object.id where object.type='imagegroup' and imagegroup_image.image_id is null order by title";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$gui.='<item icon="Element/Album" title="'.encodeXML(StringUtils::shortenString($row['title'],16)).'" value="'.$row['id'].'" badge="'.$row['imagecount'].'"/>';
+	$gui.='<item icon="Element/Album" title="'.StringUtils::escapeXML(StringUtils::shortenString($row['title'],16)).'" value="'.$row['id'].'" badge="'.$row['imagecount'].'"/>';
 }
 Database::free($result);
 

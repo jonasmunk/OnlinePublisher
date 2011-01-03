@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
 $id = InternalSession::getPageId();
-$title = requestPostText('title');
-$html = requestPostText('html');
+$title = Request::getString('title');
+$html = Request::getString('html');
 
 $valid = validateXML($html);
 

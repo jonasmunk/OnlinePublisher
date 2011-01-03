@@ -3,6 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Include
  */
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 $xwg_skin='In2ition';
 
@@ -49,7 +50,7 @@ function xwgBuildOptions($array) {
 	$out='';
 	$keys = array_keys($array);
 	foreach ($keys as $key) {
-		$out.='<option title="'.encodeXML($array[$key]).'" value="'.$key.'"/>';
+		$out.='<option title="'.StringUtils::escapeXML($array[$key]).'" value="'.$key.'"/>';
 	}
 	return $out;
 }
@@ -72,10 +73,10 @@ function xwgBuildListLanguageIcon($lang,$alt='auto') {
 		}
 		else {
 			if ($alt=='auto') {
-				$out = '<text align="right">'.encodeXML($languages[$lang]).'</text>';
+				$out = '<text align="right">'.StringUtils::escapeXML($languages[$lang]).'</text>';
 			}
 			else {
-				$out = '<text>'.encodeXML($alt).'</text>';
+				$out = '<text>'.StringUtils::escapeXML($alt).'</text>';
 			}
 		}
 	}

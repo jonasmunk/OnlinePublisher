@@ -10,14 +10,15 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Milestone.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Request.php';
 
 
 $projectOptions = Project::optionSpider('',0,0);
 
-$project = requestGetNumber('project');
-$milestone = requestGetNumber('milestone');
-if (requestGetExists('return')) {
-	$close = requestGetText('return');
+$project = Request::getInt('project');
+$milestone = Request::getInt('milestone');
+if (Request::exists('return')) {
+	$close = Request::getString('return');
 } else {
 	$close = 'Project.php?id='.$project;
 }

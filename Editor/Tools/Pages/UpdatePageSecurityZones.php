@@ -6,9 +6,10 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
 
-$id=requestPostNumber('id');
-$zones=requestPostArray('zones');
+$id = Request::getInt('id');
+$zones = Request::getArray('zones');
 
 $sql = "delete from securityzone_page where page_id = ".$id;
 Database::delete($sql);

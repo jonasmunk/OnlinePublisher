@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Securityzone.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 
 
-$added = requestPostText('added');
-$removed = requestPostText('removed');
+$added = Request::getString('added');
+$removed = Request::getString('removed');
 
 $addedItems = split(',',$added);
 $removedItems = split(',',$removed);

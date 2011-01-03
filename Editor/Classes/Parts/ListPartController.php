@@ -132,10 +132,10 @@ class ListPartController extends PartController
 		$items = array_slice($items,0,$part->getMaxItems());
 		foreach ($items as $item) {
 			$data.='<item>'.
-			'<title>'.encodeXML($item->getTitle()).'</title>'.
-			'<text>'.encodeXML($item->getText()).'</text>';
+			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>'.
+			'<text>'.StringUtils::escapeXML($item->getText()).'</text>';
 			if ($item->getSource()) {
-				$data.='<source>'.encodeXML($item->getSource()).'</source>';
+				$data.='<source>'.StringUtils::escapeXML($item->getSource()).'</source>';
 			}
 			if ($item->getStartDate()) {
 				$data.=XmlUtils::buildDate('date',$item->getStartDate());

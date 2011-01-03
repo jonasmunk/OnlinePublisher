@@ -7,8 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $sql = "Select * from frame_link where id=".$id;
 $row = Database::selectFirst($sql);
@@ -35,8 +37,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<hidden name="frame">'.$frame.'</hidden>'.
 '<hidden name="position">'.$position.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($title).'</textfield>'.
-'<textfield badge="Alternativ:" name="alternative">'.encodeXML($alternative).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($title).'</textfield>'.
+'<textfield badge="Alternativ:" name="alternative">'.StringUtils::escapeXML($alternative).'</textfield>'.
 '<indent>'.
 '<box title="Link">'.
 '<select badge="Side:" name="page" selected="'.($targetType=='page' ? $targetId : '0').'">'.
@@ -47,11 +49,11 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</select>'.
 '<textfield badge="Adresse:" name="url">'.
 '<radio name="type" value="url" selected="'.($targetType=='url' ? 'true' : 'false').'"/>'.
-($targetType=='url' ? encodeXML($targetValue) : '').
+($targetType=='url' ? StringUtils::escapeXML($targetValue) : '').
 '</textfield>'.
 '<textfield badge="E-post:" name="email">'.
 '<radio name="type" value="email" selected="'.($targetType=='email' ? 'true' : 'false').'"/>'.
-($targetType=='email' ? encodeXML($targetValue) : '').
+($targetType=='email' ? StringUtils::escapeXML($targetValue) : '').
 '</textfield>'.
 '</box>'.
 '</indent>'.
@@ -75,7 +77,7 @@ function buildPages() {
 	$sql="select id,title from page order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -86,7 +88,7 @@ function buildFiles() {
 	$sql="select id,title from object where type='file' order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

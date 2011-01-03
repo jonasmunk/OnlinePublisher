@@ -7,6 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface>'.
@@ -24,10 +25,10 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="persongroup.php?id='.$row['id'].'" target="_parent">'.
 	'<cell>'.
 	'<icon size="1" icon="Element/Folder"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXML($row['note']).'</cell>'.
-	'<cell>'.encodeXML($row['personcount']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['note']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['personcount']).'</cell>'.
 	'</row>';
 }
 Database::free($result);

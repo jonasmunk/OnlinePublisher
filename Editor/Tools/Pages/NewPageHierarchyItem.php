@@ -9,14 +9,17 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
 $templates = TemplateService::getTemplatesKeyed();
 
 $info = PagesController::getNewPageInfo();
-if (requestGetExists('frame')) {
-	$frame = requestGetNumber('frame');
+if (Request::exists('frame')) {
+	$frame = Request::getInt('frame');
 	if ($frame!=$info['frame']) {
 		// If new frame reset hierarchyitem
 		$info['hierarchy']=0;
@@ -57,7 +60,7 @@ $sql = "select hierarchy.id,hierarchy.name from hierarchy,frame where frame.hier
 $row = Database::selectFirst($sql);
 $gui.=
 '<hierarchy xmlns="uri:Hierarchy" persistence="true" unique="Tools.Pages.NewPage.Hierarchy.'.$row['id'].'">'.
-'<element icon="Element/Structure" title="'.encodeXML($row['name']).'" link="NewPageProperties.php?hierarchy='.$row['id'].'&amp;parent=0" open="true">'.
+'<element icon="Element/Structure" title="'.StringUtils::escapeXML($row['name']).'" link="NewPageProperties.php?hierarchy='.$row['id'].'&amp;parent=0" open="true">'.
 buildHier($row['id'],0,$info['hierarchyParent']).
 '</element>';
 
@@ -95,7 +98,7 @@ function buildHier($id,$parent,$selected) {
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$output.=
-		'<element icon="'.GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['filename']).'" title="'.encodeXML($row['title']).'" link="NewPageProperties.php?hierarchy='.$row['hierarchy_id'].'&amp;parent='.$row['id'].'"'.
+		'<element icon="'.GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['filename']).'" title="'.StringUtils::escapeXML($row['title']).'" link="NewPageProperties.php?hierarchy='.$row['hierarchy_id'].'&amp;parent='.$row['id'].'"'.
 		($row['id']==$selected ? ' style="Hilited"' : '').
 		'>'.
 		buildHier($id,$row['id'],$selected).

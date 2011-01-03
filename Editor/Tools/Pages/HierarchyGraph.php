@@ -9,8 +9,9 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Hierarchy.php';
 require_once '../../Classes/Graph.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 $hier = Hierarchy::load($id);
 
@@ -18,7 +19,7 @@ $graph = new Graph();
 
 buildGraph($id,0,$hier->getName(),$graph);
 
-$graph->display(requestGetText('format'));
+$graph->display(Request::getString('format'));
 
 function buildGraph($hierarchyId,$parentId,$parentName,&$graph) {
 	global $templates;

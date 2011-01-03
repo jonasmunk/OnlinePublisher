@@ -9,11 +9,12 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Project.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id');
-$title = requestPostText('title');
-$description = requestPostText('description');
-$parentProject = requestPostNumber('parentProject');
+$id = Request::getInt('id');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$parentProject = Request::getInt('parentProject');
 
 $project = Project::load($id);
 $project->setTitle($title);

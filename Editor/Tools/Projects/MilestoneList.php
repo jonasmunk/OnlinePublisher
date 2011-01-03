@@ -8,13 +8,14 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Milestone.php';
 require_once '../../Classes/In2iGui.php';
 require_once 'ProjectsController.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 $milestone = Milestone::load($id);
 $tasks = $milestone->getTasks();
 $problems = $milestone->getProblems();
 
-ProjectsController::setMilstoneGrouping(requestGetText('grouping'));
+ProjectsController::setMilstoneGrouping(Request::getString('grouping'));
 $grouping = ProjectsController::getMilstoneGrouping();
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui">'.

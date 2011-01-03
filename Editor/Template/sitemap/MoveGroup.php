@@ -7,9 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id',0);
-$dir = requestGetNumber('dir',0);
+$id = Request::getInt('id',0);
+$dir = Request::getInt('dir',0);
 
 
 $sql="select * from sitemap_group where id=".$id;

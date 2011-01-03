@@ -10,11 +10,11 @@ require_once '../../Include/Functions.php';
 require_once '../../Classes/Problem.php';
 require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id');
-$title = requestPostText('title');
-$description = requestPostText('description');
-$parentProject = requestPostNumber('parentProject');
-$milestone = requestPostNumber('milestone');
+$id = Request::getInt('id');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$parentProject = Request::getInt('parentProject');
+$milestone = Request::getInt('milestone');
 $priority = Request::getFloat('priority');
 $deadlineSelected = Request::getCheckbox('deadlineSelected');
 $completed = Request::getCheckbox('completed');
@@ -35,5 +35,5 @@ $problem->setPriority($priority);
 $problem->update();
 $problem->publish();
 
-redirect(requestPostText('return'));
+redirect(Request::getString('return'));
 ?>

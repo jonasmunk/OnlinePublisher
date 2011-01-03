@@ -9,6 +9,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once '../../Classes/Request.php';
 
 $id = Request::getInt('id');
@@ -18,14 +19,14 @@ $row = Database::selectFirst($sql);
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="400" top="20" align="center">'.
-'<titlebar title="'.encodeXML(UserInterface::presentDateTime($row['time'])).'" icon="Basic/Time">'.
+'<titlebar title="'.StringUtils::escapeXML(UserInterface::presentDateTime($row['time'])).'" icon="Basic/Time">'.
 '<close link="index.php"/>'.
 '</titlebar>'.
 '<content padding="5" background="true" valign="top">'.
 '<form xmlns="uri:Form" action="UpdateHistory.php" method="post" name="Formula" focus="message">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large" badgeplacement="above">'.
-'<textfield badge="Besked:" name="message" lines="6">'.encodeXML($row['message']).'</textfield>'.
+'<textfield badge="Besked:" name="message" lines="6">'.StringUtils::escapeXML($row['message']).'</textfield>'.
 '<buttongroup size="Large">'.
 '<button title="Slet" link="DeleteHistory.php?id='.$id.'"/>'.
 '<button title="Annuller" link="index.php"/>'.

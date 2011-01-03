@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once 'Functions.php';
 
 $pageId = InternalSession::getPageId();
@@ -67,15 +68,15 @@ while ($row = Database::next($result)) {
 	}
 	// target="Toolbar" link="Toolbar.php?tab=links&amp;edit='.$row['id'].'"
 	$gui.='<row>'.
-	'<cell>'.encodeXML($row['source_text']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['source_text']).'</cell>'.
 	'<cell>'.
 	'<icon icon="'.$icon.'"/>'.
-	'<text>'.encodeXML($text).'</text>'.
+	'<text>'.StringUtils::escapeXML($text).'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXML($row['alternative']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['alternative']).'</cell>'.
 	'<cell>'.
 	'<icon size="1" icon="Basic/Delete" link="DeleteLink.php?id='.$row['id'].'" help="Slet linket"/>'.
-	'<icon size="1" icon="Basic/Search" link="'.encodeXML($link).'" target="_blank" help="Åben linket"/>'.
+	'<icon size="1" icon="Basic/Search" link="'.StringUtils::escapeXML($link).'" target="_blank" help="Åben linket"/>'.
 	'</cell>'.
 	'</row>';
 }

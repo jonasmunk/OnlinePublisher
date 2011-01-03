@@ -1,5 +1,6 @@
 <?
 require_once($basePath.'Editor/Classes/Services/PublishingService.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 		
 class Page {
 
@@ -199,10 +200,10 @@ class Page {
 		'<origin site="'.$baseUrl.'"/>'.
 		'</info>'.
 		'<part type="page" subtype="'.$this->templateUnique.'">'.
-		'<parameter key="title">'.encodeXML($this->title).'</parameter>'.
-		'<parameter key="language">'.encodeXML($this->language).'</parameter>'.
-		'<parameter key="description">'.encodeXML($this->description).'</parameter>'.
-		'<parameter key="keywords">'.encodeXML($this->keywords).'</parameter>'.
+		'<parameter key="title">'.StringUtils::escapeXML($this->title).'</parameter>'.
+		'<parameter key="language">'.StringUtils::escapeXML($this->language).'</parameter>'.
+		'<parameter key="description">'.StringUtils::escapeXML($this->description).'</parameter>'.
+		'<parameter key="keywords">'.StringUtils::escapeXML($this->keywords).'</parameter>'.
 		'<sub>'.
 		$this->data.
 		'</sub>'.

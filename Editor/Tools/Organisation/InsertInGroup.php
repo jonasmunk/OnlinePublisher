@@ -7,10 +7,11 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-$id = requestPostNumber('id',0);
-$persons = requestPostArray('persons');
+$id = Request::getInt('id');
+$persons = Request::getArray('persons');
 
 
 for ($i=0;$i<count($persons);$i++) {

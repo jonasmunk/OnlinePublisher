@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/RemotePublisher.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id',0);
-$title = requestPostText('title');
-$url = requestPostText('url');
+$id = Request::getInt('id',0);
+$title = Request::getString('title');
+$url = Request::getString('url');
 
 $site = RemotePublisher::load($id);
 $site->setTitle($title);

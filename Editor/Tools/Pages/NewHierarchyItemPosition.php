@@ -9,10 +9,13 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
-$return = requestGetText('return');
-$id = requestGetNumber('id',0);
+$return = Request::getString('return');
+$id = Request::getInt('id',0);
 $templates = TemplateService::getTemplatesKeyed();
 
 
@@ -42,7 +45,7 @@ $sql="select * from hierarchy where id=".$hierarchyId;
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$gui.=
-	'<element icon="Element/Structure" title="'.encodeXML($row['name']).'" open="true"';
+	'<element icon="Element/Structure" title="'.StringUtils::escapeXML($row['name']).'" open="true"';
 	if ($parentId!=0) {
 	    $gui.=' link="UpdateHierarchyItemPosition.php?id='.$id.'&amp;newParent=0&amp;return='.urlencode($return).'"';
     } else {
@@ -77,7 +80,7 @@ function buildHier($id,$parent,$itemId,$itemParentId,$return) {
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$output.=
-		'<element icon="'.GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['filename']).'" title="'.encodeXML($row['title']).'"';
+		'<element icon="'.GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['filename']).'" title="'.StringUtils::escapeXML($row['title']).'"';
 		if ($row['id']==$itemParentId || $row['id']==$itemId) {
 		    $output.=' style="Disabled"';
 		} else {

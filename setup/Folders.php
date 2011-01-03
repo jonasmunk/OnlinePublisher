@@ -9,6 +9,8 @@ require_once '../Editor/Include/Public.php';
 require_once '../Editor/Include/Functions.php';
 require_once '../Editor/Classes/Request.php';
 require_once '../Editor/Include/XmlWebGui.php';
+require_once '../Editor/Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 require_once 'Security.php';
 
@@ -38,9 +40,9 @@ $result = checkFolders($fix);
 foreach ($result as $path => $folder) {
 	$gui.=
 	'<row>'.
-	'<cell><icon icon="Element/Folder"/><text>'.encodeXML($path).'</text></cell>'.
+	'<cell><icon icon="Element/Folder"/><text>'.StringUtils::escapeXML($path).'</text></cell>'.
 	'<cell>'.$folder['permissions'].'</cell>'.
-	'<cell>'.($folder['problem'] ? '<status type="Error"/><text>'.encodeXML($folder['problem']).'</text>' : '').'</cell>'.
+	'<cell>'.($folder['problem'] ? '<status type="Error"/><text>'.StringUtils::escapeXML($folder['problem']).'</text>' : '').'</cell>'.
 	'</row>';
 }
 $gui.=

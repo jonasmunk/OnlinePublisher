@@ -8,10 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
-$objects = requestPostArray('object');
-$title = requestPostText('title');
-$newsViewStartHour = requestPostNumber('weekview_starthour');
+$objects = Request::getArray('object');
+$title = Request::getString('title');
+$newsViewStartHour = Request::getInt('weekview_starthour');
 
 $id = InternalSession::getPageId();
 

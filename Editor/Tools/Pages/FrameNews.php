@@ -7,8 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
@@ -40,7 +42,7 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="FrameNewsblockProperties.php?id='.$row['id'].'">'.
 	'<cell>'.
 	'<icon icon="Part/News"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
 	'<cell>'.
 	'<direction direction="Up" link="MoveFrameNewsblock.php?id='.$row['id'].'&amp;dir=-1"/>'.

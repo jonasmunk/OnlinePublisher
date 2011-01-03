@@ -4,6 +4,7 @@
  * @subpackage Templates.Document
  */
 require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class HtmlController extends LegacyTemplateController {
     
@@ -12,7 +13,7 @@ class HtmlController extends LegacyTemplateController {
     }
 
 	function create($page) {
-		$sql="insert into html (page_id,html,valid) values (".$page->getId().",".Database::text('<h1>'.encodeXML($page->getTitle()).'</h1>').",1)";
+		$sql="insert into html (page_id,html,valid) values (".$page->getId().",".Database::text('<h1>'.StringUtils::escapeXML($page->getTitle()).'</h1>').",1)";
 		Database::insert($sql);
 	}
 	
@@ -26,7 +27,7 @@ class HtmlController extends LegacyTemplateController {
 		$row = Database::selectFirst($sql);
 		$data = '<html xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/html/1.0/">';
 		if (strlen($row['title'])>0) {
-			$data.='<title>'.encodeXML($row['title']).'</title>';
+			$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 		}
 		if ($row['valid']) {
 			$data.='<content valid="true">'.$row['html'].'</content>';

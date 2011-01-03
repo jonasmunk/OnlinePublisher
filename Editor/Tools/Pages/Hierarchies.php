@@ -8,6 +8,8 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
@@ -39,7 +41,7 @@ foreach ($hiers as $hier) {
 	'<row link="HierarchyProperties.php?id='.$hier->getId().'&amp;return=Hierarchies.php">'.
 	'<cell>'.
 	'<icon icon="Element/Structure"/>'.
-	'<text>'.encodeXML($name).'</text>'.
+	'<text>'.StringUtils::escapeXML($name).'</text>'.
 	'</cell>'.
 	'<cell>'.xwgBuildListLanguageIcon($hier->getLanguage()).'</cell>'.
 	'</row>';

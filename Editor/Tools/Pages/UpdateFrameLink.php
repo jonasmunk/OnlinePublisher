@@ -6,28 +6,29 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id',0);
-$frame = requestPostNumber('frame',0);
-$position = requestPostText('position');
+$id = Request::getInt('id',0);
+$frame = Request::getInt('frame',0);
+$position = Request::getString('position');
 
-$title = requestPostText('title');
-$alternative = requestPostText('alternative');
+$title = Request::getString('title');
+$alternative = Request::getString('alternative');
 
 $targetId=0;
 $targetValue='';
-$targetType=requestPostText('type');
+$targetType=Request::getString('type');
 if ($targetType=='url') {
-	$targetValue = requestPostText('url');
+	$targetValue = Request::getString('url');
 }
 else if ($targetType=='page') {
-	$targetId = requestPostText('page');
+	$targetId = Request::getString('page');
 }
 else if ($targetType=='file') {
-	$targetId = requestPostText('file');
+	$targetId = Request::getString('file');
 }
 else if ($targetType=='email') {
-	$targetValue = requestPostText('email');
+	$targetValue = Request::getString('email');
 }
 
 $sql="update frame_link set title=".Database::text($title).

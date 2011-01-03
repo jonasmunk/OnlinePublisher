@@ -9,6 +9,7 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 require_once 'Functions.php';
 require_once 'PagesController.php';
@@ -27,7 +28,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 $sql="select * from hierarchy order by name";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$gui.='<element icon="Element/Structure" title="'.encodeXML($row['name']).'" link="HierarchyFrame.php?id='.$row['id'].'"'.
+	$gui.='<element icon="Element/Structure" title="'.StringUtils::escapeXML($row['name']).'" link="HierarchyFrame.php?id='.$row['id'].'"'.
 	' target="Right" unique="hierarchy-'.$row['id'].'" info="{type:\'hierarchy\',id:'.$row['id'].'}"'.
 	'>'.
 	buildHier($row['id'],0).
@@ -72,7 +73,7 @@ function buildHier($id,$parent) {
 	while ($row = Database::next($result)) {
 		$output.=
 		'<element icon="'.GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['filename']).'"'.
-		' title="'.encodeXML($row['title']).'"'.
+		' title="'.StringUtils::escapeXML($row['title']).'"'.
 		' style="'.($row['hidden'] ? 'Disabled' : 'Standard').'"'.
 		' unique="item-'.$row['id'].'"'.
 		' link="HierarchyItem.php?id='.$row['id'].'" target="Right" info="{itemId:\''.$row['id'].'\',type:\''.$row['target_type'].'\',pageId:'.($row['pageid'] && $row['target_type']=='page' ? $row['pageid'] : 0).'}">'.

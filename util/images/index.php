@@ -26,7 +26,7 @@ function sendImage() {
 	
 	//set_time_limit(120);
 	$id = Request::getInt('id');
-	$timestamp = requestGetText('timestamp');
+	$timestamp = Request::getString('timestamp');
 	$width = Request::getInt('width');
 	$height = Request::getInt('height');
 	$max = Request::getInt('max');

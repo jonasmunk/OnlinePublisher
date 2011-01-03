@@ -9,6 +9,7 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $id = InternalSession::getPageId();
 
@@ -58,7 +59,7 @@ while ($row = Database::next($result)) {
         '<icon size="3" icon="Element/Album"/>'.
         '</cell>'.
     	'<cell>'.
-    	'<text>'.encodeXML($row['title']).'</text>'.
+    	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
     	'</cell>'.
     	'<cell></cell>'.
     	'<cell></cell>'.
@@ -76,9 +77,9 @@ while ($row = Database::next($result)) {
     	'</html>'.
     	'</cell>'.
     	'<cell>'.
-    	'<text>'.encodeXML($title).'</text>'.
+    	'<text>'.StringUtils::escapeXML($title).'</text>'.
     	'</cell>'.
-    	'<cell>'.encodeXML($note).'</cell>'.
+    	'<cell>'.StringUtils::escapeXML($note).'</cell>'.
     	'<cell>'.$row['width'].'x'.$row['height'].'</cell>'.
     	'<cell>'.GuiUtils::bytesToString($row['size']).'</cell>';
     }
@@ -123,8 +124,8 @@ function buildGroupList($id,&$gui) {
     	$gui.=
     	'<row link="EditCustomInfo.php?id='.$row['id'].'">'.
     	'<cell><html xmlns="uri:Html"><td height="48" align="center"><img src="../../../util/images/?id='.$row['id'].'&amp;maxwidth=48&amp;maxheight=48"/></td></html></cell>'.
-    	'<cell>'.encodeXML($title).'</cell>'.
-    	'<cell>'.encodeXML($note).'</cell>'.
+    	'<cell>'.StringUtils::escapeXML($title).'</cell>'.
+    	'<cell>'.StringUtils::escapeXML($note).'</cell>'.
     	'<cell>'.$row['width'].'x'.$row['height'].'</cell>'.
     	'<cell>'.GuiUtils::bytesToString($row['size']).'</cell>'.
     	'<cell></cell>'.

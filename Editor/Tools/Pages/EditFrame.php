@@ -7,8 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $sql="select * from frame where id=".$id;
 $row = Database::selectFirst($sql);
@@ -40,9 +42,9 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="UpdateFrame.php" method="post" name="Formula">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Navn:" name="name">'.encodeXML($name).'</textfield>'.
-'<textfield badge="Titel:" name="title">'.encodeXML($title).'</textfield>'.
-'<textfield badge="Bundtekst:" name="bottomtext" lines="3">'.encodeXML($bottomtext).'</textfield>'.
+'<textfield badge="Navn:" name="name">'.StringUtils::escapeXML($name).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($title).'</textfield>'.
+'<textfield badge="Bundtekst:" name="bottomtext" lines="3">'.StringUtils::escapeXML($bottomtext).'</textfield>'.
 '<select badge="Hierarki:" name="hierarchy" selected="'.$hierarchy.'">'.
 $hiers.
 '</select>'.
@@ -71,7 +73,7 @@ function buildHierarchies() {
 	$sql="select id,name from hierarchy order by name";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['name']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['name']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

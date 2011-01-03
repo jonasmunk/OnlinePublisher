@@ -7,10 +7,12 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
-if (requestGetExists('position')) {
-	$position=requestGetText('position');
+$id = Request::getInt('id',0);
+if (Request::exists('position')) {
+	$position=Request::getString('position');
 }
 else {
 	$position='top';
@@ -89,11 +91,11 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="EditFrameLink.php?id='.$row['id'].'">'.
 	'<cell>'.
 	'<icon icon="Web/Link"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
 	'<cell>'.
 	'<icon icon="'.$icon.'"/>'.
-	'<text>'.encodeXML($text).'</text>'.
+	'<text>'.StringUtils::escapeXML($text).'</text>'.
 	'</cell>'.
 	'<cell>'.
 	'<direction direction="Up" link="MoveFrameLink.php?id='.$row['id'].'&amp;dir=-1"/>'.

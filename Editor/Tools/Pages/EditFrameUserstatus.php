@@ -8,8 +8,9 @@ require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Request.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $sql="select * from frame where id=".$id;
 $row = Database::selectFirst($sql);
