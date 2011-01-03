@@ -9,7 +9,6 @@ require_once '../../../Editor/Classes/Page.php';
 require_once '../../../Editor/Classes/Request.php';
 require_once '../../../Editor/Classes/Response.php';
 require_once '../../../Editor/Classes/BumbleBee.php';
-require_once '../../../Editor/Include/Functions.php';
 require_once '../../../Editor/Classes/FileSystemUtil.php';
 
 

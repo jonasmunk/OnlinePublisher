@@ -3,11 +3,11 @@
  * @package OnlinePublisher
  * @subpackage Services.PersonChooser
  */
-require '../../../Config/Setup.php';
-require '../../Include/Security.php';
-require '../../Include/XmlWebGui.php';
-require '../../Include/Functions.php';
-require '../../Classes/Request.php';
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Security.php';
+require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 
 $group = Request::getInt('group',0);
