@@ -7,11 +7,11 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Templates.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Services/TemplateService.php';
 require_once 'Functions.php';
 
-$templates = getTemplatesKeyed();
+$templates = TemplateService::getTemplatesKeyed();
 if (requestGetExists('id')) {
 	$id = requestGetNumber('id');
 	$sql = "select hierarchy_item.*,page.id as pageid,page.title as pagetitle,template.unique as templateunique,file.object_id as fileid,file.filename from hierarchy_item left join page on page.id = hierarchy_item.target_id left join template on template.id=page.template_id left join file on file.object_id = hierarchy_item.target_id where parent=".$id." order by `hierarchy_item`.`index`";

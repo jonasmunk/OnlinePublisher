@@ -109,7 +109,7 @@ function listPages() {
 	$writer->header(array('title'=>'Ændret','key'=>'page.changed','sortable'=>'true'));
 	$writer->endHeaders();
 
-	$templates = Template::getTemplatesKeyed();
+	$templates = TemplateService::getTemplatesKeyed();
 	$result = Database::select($sql['list']);
 	while ($row = Database::next($result)) {
 		$modified = $row['publishdelta']>0;

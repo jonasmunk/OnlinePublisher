@@ -7,7 +7,8 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Templates.php';
+require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Services/TemplateService.php';
 require_once 'PagesController.php';
 
 PagesController::setGroupView(requestGetText('groupView'));
@@ -16,7 +17,7 @@ PagesController::setViewDetails(requestGetText('viewDetails'));
 $groupView = PagesController::getGroupView();
 $viewDetails = PagesController::getViewDetails();
 
-$freeText = getToolSessionVar('pages','freeTextSearch');
+$freeText = InternalSession::getToolSessionVar('pages','freeTextSearch');
 if ($freeText!='' && $freeText!=NULL) {
 	$freeTextSql=" (page.title like ".Database::search($freeText)." or page.`index` like ".Database::search($freeText)." or page.description like ".Database::search($freeText)." or page.keywords like ".Database::search($freeText).")";
 } else {
@@ -81,7 +82,7 @@ $elements = array("Result","List","Script");
 writeGui($xwg_skin,$elements,$gui);
 
 function buildContent(&$gui,$freeTextSql,$detail) {
-    $templates = getTemplatesKeyed();
+    $templates = TemplateService::getTemplatesKeyed();
 	$gui.=
 	'<group title="Sider">'.
 	'<list xmlns="uri:List" width="100%" variant="Light" sort="true">'.
@@ -100,7 +101,7 @@ function buildContent(&$gui,$freeTextSql,$detail) {
 }
 
 function buildContentHierarchy(&$gui,$freeTextSql,$detail) {
-    $templates = getTemplatesKeyed();
+    $templates = TemplateService::getTemplatesKeyed();
     $current = -1;
     $count = null;
 	$sql="select distinct page.id,page.secure,page.title,template.unique,date_format(page.changed,'%d/%m-%Y') as changed,date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,(page.changed-page.published) as publishdelta,design.unique as design,page.language,hierarchy.name as hierarchy,hierarchy.id as hierarchy_id from page join template on page.template_id=template.id join design on page.design_id=design.object_id left join hierarchy_item on hierarchy_item.target_id=page.id left join hierarchy on hierarchy_item.hierarchy_id=hierarchy.id".($freeTextSql!="" ? " where ".$freeTextSql : "")." order by hierarchy,title";
@@ -127,7 +128,7 @@ function buildContentHierarchy(&$gui,$freeTextSql,$detail) {
 }
 
 function buildContentTemplate(&$gui,$freeTextSql,$detail) {
-    $templates = getTemplatesKeyed();
+    $templates = TemplateService::getTemplatesKeyed();
     $current = '';
     $count = null;
     $sql="select distinct page.id,page.secure,page.title,template.unique,date_format(page.changed,'%d/%m-%Y') as changed,date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,(page.changed-page.published) as publishdelta,design.unique as design,page.language from page,template,design where page.template_id=template.id and page.design_id=design.object_id".($freeTextSql!="" ? " and ".$freeTextSql : "")." order by `unique`,title";
@@ -154,7 +155,7 @@ function buildContentTemplate(&$gui,$freeTextSql,$detail) {
 }
 
 function buildContentDesign(&$gui,$freeTextSql,$detail) {
-    $templates = getTemplatesKeyed();
+    $templates = TemplateService::getTemplatesKeyed();
     $current = '';
     $count = null;
     $sql="select distinct page.id,page.secure,page.title,template.unique,date_format(page.changed,'%d/%m-%Y') as changed,date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,(page.changed-page.published) as publishdelta,object.title as design,page.language from page,template,object where page.template_id=template.id and page.design_id=object.id".($freeTextSql!="" ? " and ".$freeTextSql : "")." order by design,title";
@@ -181,7 +182,7 @@ function buildContentDesign(&$gui,$freeTextSql,$detail) {
 }
 
 function buildContentFrame(&$gui,$freeTextSql,$detail) {
-    $templates = getTemplatesKeyed();
+    $templates = TemplateService::getTemplatesKeyed();
     $current = '';
     $count = null;
     $sql="select distinct page.id,page.secure,page.title,template.unique,date_format(page.changed,'%d/%m-%Y') as changed,date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,(page.changed-page.published) as publishdelta,frame.name as frame,page.language from page,template,frame where page.template_id=template.id and page.frame_id=frame.id".($freeTextSql!="" ? " and ".$freeTextSql : "")." order by frame,title";
@@ -208,7 +209,7 @@ function buildContentFrame(&$gui,$freeTextSql,$detail) {
 }
 
 function buildContentSecurityZone(&$gui,$freeTextSql,$detail) {
-    $templates = getTemplatesKeyed();
+    $templates = TemplateService::getTemplatesKeyed();
     $current = -1;
     $count = null;
 	$sql = "select page.id,page.secure,page.title,template.unique,date_format(page.changed,'%d/%m-%Y') as changed,date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,(page.changed-page.published) as publishdelta,design.unique as design,page.language,object.title as securityzone,object.id as securityzone_id from page join template on page.template_id=template.id join design on page.design_id=design.object_id left join securityzone_page on securityzone_page.page_id=page.id left join object on securityzone_page.securityzone_id=object.id ".($freeTextSql!="" ? " where ".$freeTextSql : "")." order by securityzone,title";

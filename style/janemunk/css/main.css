@@ -13,6 +13,7 @@ body
 	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
 	margin: 0px;
 	text-align: center;
+	background: #fff;
 }
 
 body,html
@@ -102,6 +103,16 @@ div.painting6
 div.painting7
 {
 	background: url('../gfx/painting7.jpg');
+}
+
+div.painting8
+{
+	background: url('../gfx/painting8.jpg');
+}
+
+div.painting9
+{
+	background: url('../gfx/painting9.jpg');
 }
 
 /*************** head **************/

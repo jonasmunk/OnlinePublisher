@@ -9,9 +9,10 @@ require_once '../../Include/Functions.php';
 require_once '../../Include/Parts.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 
-$id=requestGetNumber('id',-1);
-$debug = requestGetBoolean('debug');
+$id = Request::getInt('id',-1);
+$debug = Request::getBoolean('debug');
 $page = Page::load($id);
 
 header('Content-Type: text/xml; charset: ISO-8859-1;');

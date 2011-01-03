@@ -8,16 +8,17 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
 require_once '../../Classes/Task.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id');
-$title = requestPostText('title');
-$description = requestPostText('description');
-$parentProject = requestPostNumber('parentProject');
-$milestone = requestPostNumber('milestone');
-$priority = requestPostFloat('priority');
-$deadlineSelected = requestPostCheckbox('deadlineSelected');
-$completed = requestPostCheckbox('completed');
-$deadline = requestPostDateTime('deadline');
+$id = Request::getInt('id');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$parentProject = Request::getInt('parentProject');
+$milestone = Request::getInt('milestone');
+$priority = Request::getFloat('priority');
+$deadlineSelected = Request::getCheckbox('deadlineSelected');
+$completed = Request::getCheckbox('completed');
+$deadline = Request::getDateTime('deadline');
 
 $task = Task::load($id);
 $task->setTitle($title);
@@ -35,5 +36,5 @@ $task->update();
 $task->publish();
 
 
-redirect(requestPostText('return'));
+redirect(Request::getString('return'));
 ?>

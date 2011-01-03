@@ -5,12 +5,11 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Session.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/InternalSession.php';
 
-if (getToolSessionVar('projects','updateHierarchy')) {
+if (InternalSession::getToolSessionVar('projects','updateHierarchy')) {
 	echo "true";
-	setToolSessionVar('projects','updateHierarchy',false);
+	InternalSession::setToolSessionVar('projects','updateHierarchy',false);
 } else {
     echo "false";
 }

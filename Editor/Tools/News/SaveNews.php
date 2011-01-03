@@ -16,7 +16,6 @@ if ($data->id) {
 } else {
 	$news = new News();
 }
-Log::debug($data->groups);
 if ($news) {
 	$links = In2iGui::fromLinks($data->links);
 	$news->setTitle(Request::fromUnicode($data->title));

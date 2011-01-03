@@ -4900,6 +4900,10 @@ var n2i = {
 	browser : {}
 }
 
+if (!window.hui) {
+	var hui = n2i;
+}
+
 n2i.browser.opera = /opera/i.test(navigator.userAgent);
 n2i.browser.msie = !n2i.browser.opera && /MSIE/.test(navigator.userAgent);
 n2i.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
@@ -5104,10 +5108,23 @@ n2i.dom = {
 }
 
 n2i.get = function(str) {
-	if (n.nodeType==n2i.ELEMENT_NODE) {
+	if (str===null || str===undefined) {
+		return null;
+	}
+	if (str.nodeType==n2i.ELEMENT_NODE) {
 		return str;
 	}
 	return document.getElementById(str);
+}
+
+n2i.firstByClass = function(parentElement,className) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName('*');
+	for (var i=0;i<children.length;i++) {
+		if (n2i.hasClass(children[i],className)) {
+			return children[i];
+		}
+	}
+	return null;
 }
 
 n2i.build = function(tag,options) {
@@ -5116,6 +5133,61 @@ n2i.build = function(tag,options) {
 		e.className = options.className;
 	}
 	return e;
+}
+
+/////////////////////////// Class handling //////////////////////
+
+n2i.hasClass = function(element, className) {
+	element = n2i.get(element);
+	if (!element) {return false};
+	var a = element.className.split(/\s+/);
+	for (var i = 0; i < a.length; i++) {
+		if (a[i] == className) {
+			return true;
+		}
+	}
+	return false;
+}
+
+n2i.addClass = function(element, className) {
+    element = n2i.get(element);
+	if (!element) {return};
+	
+    n2i.removeClass(element, className);
+    element.className += ' ' + className;
+}
+
+n2i.removeClass = function(element, className) {
+	element = n2i.get(element);
+	if (!element) {return};
+
+	var newClassName = '';
+	var a = element.className.split(/\s+/);
+	for (var i = 0; i < a.length; i++) {
+		if (a[i] != className) {
+			if (i > 0) {
+				newClassName += ' ';				
+			}
+			newClassName += a[i];
+		}
+	}
+	element.className = newClassName;
+}
+
+n2i.toggleClass = function(element,className) {
+	if (n2i.hasClass(element,className)) {
+		n2i.removeClass(element,className);
+	} else {
+		n2i.addClass(element,className);
+	}
+}
+
+n2i.setClass = function(element,className,add) {
+	if (add) {
+		n2i.addClass(element,className);
+	} else {
+		n2i.removeClass(element,className);
+	}
 }
 
 ///////////////////// Style ///////////////////
@@ -5227,6 +5299,25 @@ n2i.selection = {
 			return doc.selection.createRange().text;
 		}
 		return '';
+	}
+}
+
+/////////////////// Effects //////////////////////
+
+n2i.effect = {
+	makeFlippable : function(options) {
+		n2i.addClass(options.container,'in2igui_flip_container');
+		n2i.addClass(options.front,'in2igui_flip_front');
+		n2i.addClass(options.back,'in2igui_flip_back');
+	},
+	flip : function(options) {
+		var element = n2i.get(options.element);
+		var duration = options.duration || '1s';
+		var front = n2i.firstByClass(element,'in2igui_flip_front');
+		var back = n2i.firstByClass(element,'in2igui_flip_back');
+		front.style.webkitTransitionDuration=duration;
+		back.style.webkitTransitionDuration=duration;
+		n2i.toggleClass(options.element,'in2igui_flip_flipped');
 	}
 }
 
@@ -6688,6 +6779,15 @@ In2iGui.hideToolTip = function(options) {
 };
 
 /////////////////////////////// Utilities /////////////////////////////
+
+In2iGui.getElement = function(widgetOrElement) {
+	if (n2i.dom.isElement(widgetOrElement)) {
+		return widgetOrElement;
+	} else if (widgetOrElement.getElement) {
+		return widgetOrElement.getElement();
+	}
+	return null;
+}
 
 In2iGui.isWithin = function(e,element) {
 	Event.extend(e);

@@ -70,6 +70,23 @@ class Request {
 			return $default;
 		}
 	}
+
+	/**
+	 * Gets a float variable passed thru the GET or POST protocol
+	 * @param string $key The name of the variable
+	 * @param string $default Optional: The value to return if the variable is not set
+	 * or not a number. Defaults to 0.
+	 * @return int The value of the variable, $default if variable not set or not numeric
+	 */
+	function getFloat($key,$default=0) {
+		if (isset($_POST[$key]) && is_numeric($_POST[$key])) {
+			return floatval($_POST[$key]);
+		} else if (isset($_GET[$key]) && is_numeric($_GET[$key])) {
+			return floatval($_GET[$key]);
+		} else {
+			return $default;
+		}
+	}
 	
 	/**
 	 * Gets an int with name id;
@@ -109,6 +126,40 @@ class Request {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Gets a date variable passed thru the get protocol as an XmlWebGui date
+	 * @param string $key The name of the variable
+	 * @return string The value of the variable, '' if variable not set
+	 */
+	function getDate($key) {
+		if (isset($_GET[$key])) {
+			$d=$_GET[$key];
+			return mktime(0,0,0,substr($d,4,2),substr($d,6,2),substr($d,0,4));
+		}
+		else if (isset($_POST[$key])) {
+			$d=$_POST[$key];
+			return mktime(0,0,0,substr($d,4,2),substr($d,6,2),substr($d,0,4));
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Gets a date+time variable passed thru the post protocol as a XmlWebGui datetime
+	 * @param string $key The name of the variable
+	 * @return string The value of the variable, '' if variable not set
+	 */
+	function getDateTime($key) {
+		if (isset($_POST[$key])) {
+			$d=$_POST[$key];
+			return mktime(substr($d,8,2),substr($d,10,2),substr($d,12,2),substr($d,4,2),substr($d,6,2),substr($d,0,4));
+		}
+		else {
+			return '';
+		}
 	}
 
 	function getPostDateInFormat($key,$format) {

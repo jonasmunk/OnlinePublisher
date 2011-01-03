@@ -4900,6 +4900,10 @@ var n2i = {
 	browser : {}
 }
 
+if (!window.hui) {
+	var hui = n2i;
+}
+
 n2i.browser.opera = /opera/i.test(navigator.userAgent);
 n2i.browser.msie = !n2i.browser.opera && /MSIE/.test(navigator.userAgent);
 n2i.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
@@ -5104,10 +5108,23 @@ n2i.dom = {
 }
 
 n2i.get = function(str) {
-	if (n.nodeType==n2i.ELEMENT_NODE) {
+	if (str===null || str===undefined) {
+		return null;
+	}
+	if (str.nodeType==n2i.ELEMENT_NODE) {
 		return str;
 	}
 	return document.getElementById(str);
+}
+
+n2i.firstByClass = function(parentElement,className) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName('*');
+	for (var i=0;i<children.length;i++) {
+		if (n2i.hasClass(children[i],className)) {
+			return children[i];
+		}
+	}
+	return null;
 }
 
 n2i.build = function(tag,options) {
@@ -5116,6 +5133,61 @@ n2i.build = function(tag,options) {
 		e.className = options.className;
 	}
 	return e;
+}
+
+/////////////////////////// Class handling //////////////////////
+
+n2i.hasClass = function(element, className) {
+	element = n2i.get(element);
+	if (!element) {return false};
+	var a = element.className.split(/\s+/);
+	for (var i = 0; i < a.length; i++) {
+		if (a[i] == className) {
+			return true;
+		}
+	}
+	return false;
+}
+
+n2i.addClass = function(element, className) {
+    element = n2i.get(element);
+	if (!element) {return};
+	
+    n2i.removeClass(element, className);
+    element.className += ' ' + className;
+}
+
+n2i.removeClass = function(element, className) {
+	element = n2i.get(element);
+	if (!element) {return};
+
+	var newClassName = '';
+	var a = element.className.split(/\s+/);
+	for (var i = 0; i < a.length; i++) {
+		if (a[i] != className) {
+			if (i > 0) {
+				newClassName += ' ';				
+			}
+			newClassName += a[i];
+		}
+	}
+	element.className = newClassName;
+}
+
+n2i.toggleClass = function(element,className) {
+	if (n2i.hasClass(element,className)) {
+		n2i.removeClass(element,className);
+	} else {
+		n2i.addClass(element,className);
+	}
+}
+
+n2i.setClass = function(element,className,add) {
+	if (add) {
+		n2i.addClass(element,className);
+	} else {
+		n2i.removeClass(element,className);
+	}
 }
 
 ///////////////////// Style ///////////////////
@@ -5227,6 +5299,25 @@ n2i.selection = {
 			return doc.selection.createRange().text;
 		}
 		return '';
+	}
+}
+
+/////////////////// Effects //////////////////////
+
+n2i.effect = {
+	makeFlippable : function(options) {
+		n2i.addClass(options.container,'in2igui_flip_container');
+		n2i.addClass(options.front,'in2igui_flip_front');
+		n2i.addClass(options.back,'in2igui_flip_back');
+	},
+	flip : function(options) {
+		var element = n2i.get(options.element);
+		var duration = options.duration || '1s';
+		var front = n2i.firstByClass(element,'in2igui_flip_front');
+		var back = n2i.firstByClass(element,'in2igui_flip_back');
+		front.style.webkitTransitionDuration=duration;
+		back.style.webkitTransitionDuration=duration;
+		n2i.toggleClass(options.element,'in2igui_flip_flipped');
 	}
 }
 
@@ -9382,6 +9473,15 @@ In2iGui.hideToolTip = function(options) {
 
 /////////////////////////////// Utilities /////////////////////////////
 
+In2iGui.getElement = function(widgetOrElement) {
+	if (n2i.dom.isElement(widgetOrElement)) {
+		return widgetOrElement;
+	} else if (widgetOrElement.getElement) {
+		return widgetOrElement.getElement();
+	}
+	return null;
+}
+
 In2iGui.isWithin = function(e,element) {
 	Event.extend(e);
 	var offset = element.cumulativeOffset();
@@ -10129,6 +10229,11 @@ In2iGui.Window = function(options) {
 	this.titlebar = this.element.select('.in2igui_window_titlebar')[0];
 	this.title = this.titlebar.select('.in2igui_window_title')[0];
 	this.content = this.element.select('.in2igui_window_body')[0];
+	this.front = n2i.firstByClass(this.element,'in2igui_window_front');
+	this.back = n2i.firstByClass(this.element,'in2igui_window_back');
+	if (this.back) {
+		n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+	}
 	this.visible = false;
 	In2iGui.extend(this);
 	this.addBehavior();
@@ -10137,7 +10242,7 @@ In2iGui.Window = function(options) {
 In2iGui.Window.create = function(options) {
 	options = n2i.override({title:'Window',close:true},options);
 	var element = options.element = new Element('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : '')});
-	var html = (options.close ? '<div class="in2igui_window_close"></div>' : '')+
+	var html = '<div class="in2igui_window_front">'+(options.close ? '<div class="in2igui_window_close"></div>' : '')+
 		'<div class="in2igui_window_titlebar"><div><div>';
 		if (options.icon) {
 			html+='<span class="in2igui_window_icon" style="background-image: url('+In2iGui.getIconUrl(options.icon,1)+')"></span>';
@@ -10148,7 +10253,7 @@ In2iGui.Window.create = function(options) {
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
 		'">'+
 		'</div></div></div>'+
-		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div>';
+		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div></div>';
 	element.update(html);
 	document.body.appendChild(element);
 	return new In2iGui.Window(options);
@@ -10207,11 +10312,25 @@ In2iGui.Window.prototype = {
 			this.content.insert(widgetOrNode);
 		}
 	},
+	addToBack : function(widgetOrNode) {
+		if (!this.back) {
+			this.back = n2i.build('div',{className:'in2igui_window_back'});
+			this.element.insertBefore(this.back,this.front);
+			n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+		}
+		this.back.appendChild(In2iGui.getElement(widgetOrNode));
+	},
 	setVariant : function(variant) {
 		this.element.removeClassName('in2igui_window_dark');
 		this.element.removeClassName('in2igui_window_light');
 		if (variant=='dark' || variant=='light') {
 			this.element.addClassName('in2igui_window_'+variant);
+		}
+	},
+	flip : function() {
+		if (this.back) {
+			this.back.style.minHeight = this.element.clientHeight+'px';
+			n2i.effect.flip({element:this.element});
 		}
 	},
 
@@ -11890,11 +12009,13 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	$sourceIsBusy : function() {
-		//this.element.addClassName('in2igui_list_busy');
+		this.busy = true;
+		this.element.addClassName('in2igui_list_busy');
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		//this.element.removeClassName('in2igui_list_busy');
+		this.busy = false;
+		this.element.removeClassName('in2igui_list_busy');
 	},
 	
 	/** @private */
@@ -11919,7 +12040,7 @@ In2iGui.List.prototype = {
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && !icon.blank()) {
-			cell.insert(In2iGui.createIcon(icon,1));
+			cell.appendChild(In2iGui.createIcon(icon,1));
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];
@@ -11930,18 +12051,19 @@ In2iGui.List.prototype = {
 			} else if (n2i.dom.isElement(child,'icon')) {
 				cell.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
 			} else if (n2i.dom.isElement(child,'line')) {
-				var line = new Element('p',{'class':'in2igui_list_line'}).insert(n2i.dom.getNodeText(child));
+				var line = new Element('p',{'class':'in2igui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
 					line.addClassName('in2igui_list_dimmed')
 				}
 				cell.insert(line);
+				this.parseCell(child,line);
 			} else if (n2i.dom.isElement(child,'object')) {
 				var obj = new Element('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
-					obj.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
+					obj.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
 				}
 				if (child.firstChild && child.firstChild.nodeType==n2i.TEXT_NODE && child.firstChild.nodeValue.length>0) {
-					obj.appendChild(document.createTextNode(child.firstChild.nodeValue));
+					n2i.dom.addText(obj,child.firstChild.nodeValue);
 				}
 				cell.insert(obj);
 			} else if (n2i.dom.isElement(child,'icons')) {
@@ -12130,11 +12252,13 @@ In2iGui.List.prototype = {
 	addRowBehavior : function(row,index) {
 		var self = this;
 		row.onmousedown = function(e) {
+			if (self.busy) {return};
 			self.rowDown(index);
 			In2iGui.startDrag(e,row);
 			return false;
 		}
 		row.ondblclick = function() {
+			if (self.busy) {return};
 			self.rowDoubleClick(index);
 			return false;
 		}
@@ -12658,6 +12782,7 @@ In2iGui.Button.prototype = {
 	click : function(func) {
 		if (func) {
 			this.listen({$click:func});
+			return this;
 		} else {
 			this.clicked();
 		}

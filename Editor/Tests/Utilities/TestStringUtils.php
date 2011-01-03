@@ -64,5 +64,13 @@ class TestStringUtils extends UnitTestCase {
 	function testStartsWith() {
 		$this->assertTrue(StringUtils::startsWith('Merge branch','Merge'));
 	}
+	
+	function testRemoveTags() {
+		$this->assertEqual('Jonas Munk',StringUtils::removeTags('Jonas <b>Munk</b>'));
+		$this->assertEqual('Jonas Munk',StringUtils::removeTags('Jonas <b >Munk</b>'));
+		$this->assertEqual('Jonas Munk',StringUtils::removeTags('Jonas <b style="._kfdjkjs">Munk</b>'));
+		$this->assertEqual('Jonas < > Munk',StringUtils::removeTags('Jonas < > Munk'));
+		$this->assertEqual('Jonas <> Munk',StringUtils::removeTags('Jonas <> Munk'));
+	}
 }
 ?>

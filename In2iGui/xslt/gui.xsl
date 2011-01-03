@@ -445,18 +445,21 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 			<xsl:text>in2igui_window</xsl:text>
 			<xsl:if test="@variant"><xsl:text> in2igui_window_</xsl:text><xsl:value-of select="@variant"/></xsl:if>
 		</xsl:attribute>
-		<div class="in2igui_window_close"><xsl:comment/></div>
-		<div class="in2igui_window_titlebar"><div><div>
-			<xsl:if test="@icon">
-				<span class="in2igui_window_icon" style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png')"></span>
-			</xsl:if>
-			<span class="in2igui_window_title"><xsl:value-of select="@title"/></span>
-		</div></div></div>
-		<div class="in2igui_window_content"><div class="in2igui_window_content"><div class="in2igui_window_body">
- 			<xsl:attribute name="style"><xsl:if test="@width">width: <xsl:value-of select="@width"/>px;</xsl:if><xsl:if test="@padding">padding: <xsl:value-of select="@padding"/>px;</xsl:if></xsl:attribute>
-			<xsl:apply-templates/>
-		</div></div></div>
-		<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><xsl:comment/></div></div></div>
+		<xsl:apply-templates select="gui:back"/>
+		<div class="in2igui_window_front">
+			<div class="in2igui_window_close"><xsl:comment/></div>
+			<div class="in2igui_window_titlebar"><div><div>
+				<xsl:if test="@icon">
+					<span class="in2igui_window_icon" style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png')"></span>
+				</xsl:if>
+				<span class="in2igui_window_title"><xsl:value-of select="@title"/></span>
+			</div></div></div>
+			<div class="in2igui_window_content"><div class="in2igui_window_content"><div class="in2igui_window_body">
+	 			<xsl:attribute name="style"><xsl:if test="@width">width: <xsl:value-of select="@width"/>px;</xsl:if><xsl:if test="@padding">padding: <xsl:value-of select="@padding"/>px;</xsl:if></xsl:attribute>
+				<xsl:apply-templates select="child::*[not(name()='back')]"/>
+			</div></div></div>
+			<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><xsl:comment/></div></div></div>
+		</div>
 	</div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Window({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
@@ -464,7 +467,12 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 	</script>
 </xsl:template>
 
-
+<xsl:template match="gui:window/gui:back">
+	<div class="in2igui_window_back">
+		<xsl:apply-templates/>
+		<xsl:comment/>
+	</div>
+</xsl:template>
 <!-- Upload -->
 
 <xsl:template match="gui:upload">

@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Template.php';
+require_once '../../Classes/Services/TemplateService.php';
 require_once '../../Classes/Design.php';
 require_once '../../Classes/Frame.php';
 
@@ -23,9 +23,9 @@ foreach ($frames as $frame) {
 }
 
 $templateItems='';
-$templates = Template::getInstalledTemplates();
+$templates = TemplateService::getInstalledTemplates();
 foreach ($templates as $template) {
-	$info = Template::getInfo($template['unique']);
+	$info = TemplateService::getTemplateInfo($template['unique']);
 	$templateItems.='<item title="'.StringUtils::toUnicode($info['name']).'" image="../../Template/'.$template['unique'].'/thumbnail128.jpg" value="'.$template['id'].'"/>';
 }
 

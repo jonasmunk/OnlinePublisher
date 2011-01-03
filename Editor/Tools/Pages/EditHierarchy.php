@@ -7,11 +7,11 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once 'Functions.php';
 
 $id=requestGetNumber('id');
-setToolSessionVar('pages','rightFrame','EditHierarchy.php?id='.$id);
+InternalSession::setToolSessionVar('pages','rightFrame','EditHierarchy.php?id='.$id);
 
 $sql="select name,changed-published as publishdelta from hierarchy where id=".$id;
 $row = Database::selectFirst($sql);

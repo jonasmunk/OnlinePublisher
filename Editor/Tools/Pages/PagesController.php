@@ -1,36 +1,36 @@
 <?
-require_once $basePath.'Editor/Include/Session.php';
+require_once $basePath.'Editor/Classes/InternalSession.php';
 
 class PagesController {
 	
 	function getGroupView() {
-		return getToolSessionVar('pages','groupview','none');
+		return InternalSession::getToolSessionVar('pages','groupview','none');
 	}
 	
 	function setGroupView($value) {
 		if (strlen($value)>0) {
-			setToolSessionVar('pages','groupview',$value);
+			InternalSession::setToolSessionVar('pages','groupview',$value);
 		}
 	}
 
 	function getViewDetails() {
-		return getToolSessionVar('pages','viewdetails','simple');
+		return InternalSession::getToolSessionVar('pages','viewdetails','simple');
 	}
 	
 	function setViewDetails($value) {
 		if (strlen($value)>0) {
-			setToolSessionVar('pages','viewdetails',$value);
+			InternalSession::setToolSessionVar('pages','viewdetails',$value);
 		}
 	}
 	
 	function setActiveItem($type,$id=0) {
-		setToolSessionVar('pages','activeitemtype',$type);
-		setToolSessionVar('pages','activeitemid',$id);
+		InternalSession::setToolSessionVar('pages','activeitemtype',$type);
+		InternalSession::setToolSessionVar('pages','activeitemid',$id);
 	}
 	
 	function getActiveItem() {
-		$type = getToolSessionVar('pages','activeitemtype');
-		$id = getToolSessionVar('pages','activeitemid');
+		$type = InternalSession::getToolSessionVar('pages','activeitemtype');
+		$id = InternalSession::getToolSessionVar('pages','activeitemid');
 		if ($type) {
 			return array('type' => $type, 'id' => $id);
 		} else {

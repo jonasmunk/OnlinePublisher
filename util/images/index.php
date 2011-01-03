@@ -7,9 +7,10 @@ require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
 require_once '../../Editor/Include/Functions.php';
 require_once '../../Editor/Classes/FileSystemUtil.php';
+require_once '../../Editor/Classes/Request.php';
 
 if (!function_exists('ImageCreateFromJpeg')) {
-	$id = requestGetNumber('id');
+	$id = Request::getInt('id');
 	$sql = 'select * from image where object_id='.$id;
 	if ($row = Database::selectFirst($sql)) {
 		$filename = $basePath.'images/'.$row['filename'];
@@ -24,21 +25,21 @@ function sendImage() {
 	global $basePath;
 	
 	//set_time_limit(120);
-	$id = requestGetNumber('id');
+	$id = Request::getInt('id');
 	$timestamp = requestGetText('timestamp');
-	$width = requestGetNumber('width');
-	$height = requestGetNumber('height');
-	$max = requestGetNumber('max');
-	$maxwidth = requestGetNumber('maxwidth');
-	$maxheight = requestGetNumber('maxheight');
-	$percent = requestGetNumber('percent');
-	$rotate = requestGetNumber('rotate');
-	$quality = requestGetNumber('quality');
-	$greyscale = requestGetBoolean('greyscale');
-	$blur = requestGetBoolean('blur');
-	$format = requestGetText('format');
+	$width = Request::getInt('width');
+	$height = Request::getInt('height');
+	$max = Request::getInt('max');
+	$maxwidth = Request::getInt('maxwidth');
+	$maxheight = Request::getInt('maxheight');
+	$percent = Request::getInt('percent');
+	$rotate = Request::getInt('rotate');
+	$quality = Request::getInt('quality');
+	$greyscale = Request::getBoolean('greyscale');
+	$blur = Request::getBoolean('blur');
+	$format = Request::getString('format');
 	if ($format=='') $format='png';
-	$nocache = requestGetBoolean('nocache');
+	$nocache = Request::getBoolean('nocache');
 
 	$cache = 'local/cache/images/'.$id.($max>0 ? 'm'.$max : '').($maxwidth>0 ? 'mw'.$maxwidth : '').($maxheight>0 ? 'mh'.$maxheight : '').($width>0 ? 'w'.$width : '').($height>0 ? 'h'.$height : '').($percent>0 ? 'p'.$percent : '').($rotate>0 ? 'r'.$rotate : '').($quality>0 ? 'q'.$quality : '').($greyscale ? 'G' : '').($blur ? 'B' : '').'.'.$format;
 	

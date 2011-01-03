@@ -7,9 +7,9 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 
-$view = getRequestToolSessionVar('organisation','view','view','list');
+$view = InternalSession::getRequestToolSessionVar('organisation','view','view','list');
 
 if ($view=='list')
 	$iframeSource = 'RoleList.php';

@@ -6,11 +6,11 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once 'Functions.php';
 
 $hierarchyId=requestPostNumber('hierarchy');
-$return = getToolSessionVar('pages','rightFrame');
+$return = InternalSession::getToolSessionVar('pages','rightFrame');
 
 $title = requestPostText('title');
 $alternative = requestPostText('alternative');
@@ -65,6 +65,6 @@ Database::insert($sql);
 $sql="update hierarchy set changed=now() where id=".$hierarchyId;
 Database::update($sql);
 
-setToolSessionVar('pages','updateHier',true);
+InternalSession::setToolSessionVar('pages','updateHier',true);
 redirect($return);
 ?>

@@ -11,6 +11,7 @@ require_once($basePath.'Editor/Classes/Calendarsource.php');
 require_once($basePath.'Editor/Classes/Event.php');
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/XmlUtils.php');
+require_once($basePath.'Editor/Classes/Request.php');
 
 class CalendarController extends LegacyTemplateController {
     
@@ -43,8 +44,8 @@ class CalendarController extends LegacyTemplateController {
     }
     
 	function dynamic(&$state) {		
-		$refresh = requestGetBoolean('refresh');
-		$date = requestGetDate('date');
+		$refresh = Request::getBoolean('refresh');
+		$date = Request::getDate('date');
 		if (!$date) {
 			$date=DateUtil::stripTime(time());
 		}

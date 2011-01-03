@@ -42,7 +42,7 @@ class TestFeeds extends UnitTestCase {
 		
 		$first = $items[0];
 		$this->assertEqual($first->getTitle(),'Improved reliability of water usage service / tool');
-		$this->assertEqual($first->getPubDate(),1291721077);
+		$this->assertEqual($first->getPubDate(),1291749877);
     }
 }
 ?>

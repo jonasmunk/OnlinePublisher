@@ -17,7 +17,6 @@ class DateUtils {
 	function parseRFC3339($date) {
 		if (preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})-([0-9]{2}):([0-9]{2})/mi",$date, $matches)) {
 			$diff = intval($matches[7]);
-			Log::debug('The difference is: '.$diff);
 			return gmmktime( $matches[4]+$diff,$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
 		}
 		Log::debug('Could not parse date: '.$date);
@@ -71,7 +70,8 @@ class DateUtils {
 					$minutes = floor($diff/60/60);
 					return 'for '.$minutes.($minutes==1 ? ' time siden' : ' timer siden');
 				} else if ($diff<3600*24*4) {
-					return 'for '.floor($diff/3600/24).' dage siden kl. '.DateUtils::formatShortTime($timestamp,$locale);
+					$days = floor($diff/3600/24);
+					return 'for '.$days.($days==1 ? ' dag' : ' dage').' siden kl. '.DateUtils::formatShortTime($timestamp,$locale);
 				}
 			}
 			if (strftime('%Y',time())!==strftime('%Y',$timestamp)) {
@@ -82,5 +82,45 @@ class DateUtils {
 		} else {
 			return '';
 		}
+	}
+	
+	function addSeconds($timestamp,$secs) {
+		$hours = date('H',$timestamp);
+		$minutes = date('i',$timestamp);
+		$seconds = date('s',$timestamp);
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime($hours,$minutes,$seconds+$secs,$month,$date,$year);
+	}
+	
+	function addDays($timestamp,$days) {
+		$hours = date('H',$timestamp);
+		$minutes = date('i',$timestamp);
+		$seconds = date('s',$timestamp);
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime($hours,$minutes,$seconds,$month,$date+$days,$year);
+	}
+	
+	function addYears($timestamp,$years) {
+		$hours = date('H',$timestamp);
+		$minutes = date('i',$timestamp);
+		$seconds = date('s',$timestamp);
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime($hours,$minutes,$seconds,$month,$date,$year+$years);
+	}
+	
+	function addMonths($timestamp,$months) {
+		$hours = date('H',$timestamp);
+		$minutes = date('i',$timestamp);
+		$seconds = date('s',$timestamp);
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime($hours,$minutes,$seconds,$month+$months,$date,$year);
 	}
 }

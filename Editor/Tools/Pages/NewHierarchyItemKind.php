@@ -7,11 +7,10 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Templates.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once 'Functions.php';
 
-$close = getToolSessionVar('pages','rightFrame');
+$close = InternalSession::getToolSessionVar('pages','rightFrame');
 $hierarchy = requestGetNumber('hierarchy');
 $parent = requestGetNumber('parent');
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.

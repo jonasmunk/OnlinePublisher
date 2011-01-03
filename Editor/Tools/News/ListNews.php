@@ -1,19 +1,45 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Files
+ * @subpackage Tools.News
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/News.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/UserInterface.php';
-require_once '../../Classes/GuiUtils.php';
-require_once '../../Classes/DateUtil.php';
+require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/Services/ObjectLinkService.php';
 require_once '../../Classes/Log.php';
+
+$sourceId = Request::getInt('source');
+
+if ($sourceId) {
+	$writer = new ListWriter();
+
+	$writer->startList();
+	$writer->startHeaders();
+	$writer->header(array('title'=>'Titel','width'=>70));
+	$writer->header(array('title'=>'Dato'));
+	$writer->endHeaders();
+
+	if ($source = Newssource::load($sourceId)) {
+		$parser = new FeedParser();
+		$feed = $parser->parseURL($source->getUrl());
+		foreach ($feed->getItems() as $item) {
+			$writer->startRow();
+			$writer->startCell(array('icon'=>'common/page'))->
+				startLine()->text($item->getTitle())->endLine()->
+				startLine(array('dimmed'=>true))->text(StringUtils::shortenString(StringUtils::removeTags($item->getDescription()),400))->endLine()->
+				endCell();
+			$writer->startCell()->text(DateUtils::formatFuzzy($item->getPubDate()))->endCell();
+			
+			$writer->endRow();
+		}
+	}
+	$writer->endList();
+	exit;
+}
 
 $main = Request::getString('main');
 $group = Request::getInt('group');
@@ -38,7 +64,7 @@ if ($type) {
 	$query['type'] = $type;
 }
 if ($main=='latest') {
-	$query['createdMin']=DateUtil::addDays(mktime(),-1);
+	$query['createdMin']=DateUtils::addDays(mktime(),-1);
 } else if ($main=='active') {
 	$query['active']=true;
 } else if ($main=='inactive') {
@@ -75,15 +101,15 @@ foreach ($objects as $object) {
 	$writer->startRow(array('kind'=>'news','id'=>$object->getId(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()));
 	$writer->startCell(array('icon'=>$object->getIn2iGuiIcon()))->text($object->getTitle())->endCell();
 	$writer->startCell();
-	$writer->text(UserInterface::presentDateTime($object->getStartdate()))->endCell();
-	$writer->startCell()->text(UserInterface::presentDateTime($object->getEnddate()))->endCell();
+	$writer->text(DateUtils::formatDateTime($object->getStartdate()))->endCell();
+	$writer->startCell()->text(DateUtils::formatDateTime($object->getEnddate()))->endCell();
 	$writer->startCell()->startIcons();
 	if (!$active) {
 		$writer->icon(array('icon'=>'monochrome/invisible'));	
 	}
 	//$writer->icon(array('icon'=>($active ? 'monochrome/play' : 'monochrome/invisible')));
 	if ($linkCounts[$object->getId()]>0) {
-		$writer->icon(array('icon'=>"monochrome/attachment"));
+		$writer->icon(array('icon'=>"monochrome/link"));
 	}
 	$writer->endIcons()->endCell();
 	$writer->endRow();

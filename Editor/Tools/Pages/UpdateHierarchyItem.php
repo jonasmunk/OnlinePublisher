@@ -6,34 +6,35 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
-$return = requestPostText('return');
-$hierarchyId = requestPostNumber('hierarchy',0);
-$id = requestPostNumber('id',0);
+$return = Request::getString('return');
+$hierarchyId = Request::getInt('hierarchy',0);
+$id = Request::getInt('id',0);
 
-$title = requestPostText('title');
-$alternative = requestPostText('alternative');
-$target = requestPostText('target');
-$hidden = requestPostCheckbox('hidden');
+$title = Request::getString('title');
+$alternative = Request::getString('alternative');
+$target = Request::getString('target');
+$hidden = Request::getCheckbox('hidden');
 
 $targetId=0;
 $targetValue='';
-$targetType = requestPostText('type');
+$targetType = Request::getString('type');
 if ($targetType=='url') {
-	$targetValue = requestPostText('url');
+	$targetValue = Request::getString('url');
 }
 else if ($targetType=='page') {
-	$targetId = requestPostText('page');
+	$targetId = Request::getString('page');
 }
 else if ($targetType=='pageref') {
-	$targetId = requestPostText('pageref');
+	$targetId = Request::getString('pageref');
 }
 else if ($targetType=='file') {
-	$targetId = requestPostText('file');
+	$targetId = Request::getString('file');
 }
 else if ($targetType=='email') {
-	$targetValue = requestPostText('email');
+	$targetValue = Request::getString('email');
 }
 
 
@@ -53,6 +54,6 @@ $sql="update hierarchy set changed=now() where id=".$hierarchyId;
 Database::update($sql);
 
 
-setToolSessionVar('pages','updateHier',true);
+InternalSession::setToolSessionVar('pages','updateHier',true);
 redirect($return);
 ?>

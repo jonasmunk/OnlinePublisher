@@ -13,7 +13,7 @@ require_once 'Classes/In2iGui.php';
 require_once 'Classes/DatabaseUtil.php';
 require_once 'Classes/InternalSession.php';
 
-if (requestPost()) {
+if (Request::isPost()) {
 	$page = Request::getPostInt('page');
 	$username=Request::getPostString('username');
 	$password=Request::getPostString('password');

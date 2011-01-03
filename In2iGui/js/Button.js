@@ -83,6 +83,7 @@ In2iGui.Button.prototype = {
 	click : function(func) {
 		if (func) {
 			this.listen({$click:func});
+			return this;
 		} else {
 			this.clicked();
 		}

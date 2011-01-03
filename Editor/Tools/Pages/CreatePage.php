@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Page.php';
 require_once 'PagesController.php';
 
@@ -75,7 +75,7 @@ if ($hierarchy>0) {
 	$sql="update hierarchy set changed=now() where id=".$hierarchy;
 	Database::update($sql);
 
-	setToolSessionVar('pages','updateHier',true);
+	InternalSession::setToolSessionVar('pages','updateHier',true);
 }
 
 

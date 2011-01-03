@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Image.php');
 require_once($basePath.'Editor/Classes/Objects/Imagegroup.php');
 require_once($basePath.'Editor/Classes/EventManager.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class ImageService {
 	
@@ -77,24 +78,20 @@ class ImageService {
 		$report = array('imported' => array(), 'problems' => array());
 		$error = false;
 
-		if (strlen($url)=="") {
+		if (StringUtils::isBlank($url)) {
 			return array(
 				'success' => false,
-				'errorMessage' => 'Adressen er ikke angivet',
+				'errorMessage' => 'Adressen er ikke valid',
 				'errorDetails' => 'Du skal udfylde hvilken adresse billedet skal hentes fra.'
 			);
 		}
-		else if ($file = fopen ($url, "rb")) {
-		    $tempFilename = $basePath.'local/cache/temp/'.basename($url);
-		    $temp = fopen($tempFilename, "wb");
-			while (!feof($file)) {
-				fwrite($temp,fread($file, 8192));
-			}
-		    fclose($temp);
-			$result = ImageService::createImageFromFile($tempFilename,basename($url),null,filesize($tempFilename),null,$group);
-			unlink($tempFilename);
-			fclose($file);
+		$temp = $basePath.'local/cache/temp/'.basename($url);
+		if (RemoteDataService::writeUrlToFile($url,$temp)) {
+			$result = ImageService::createImageFromFile($temp,basename($url),null,filesize($temp));
+			unlink($temp);
 			return $result;
+		} else {
+			Log::debug('Unable to load url: '.$url);
 		}
 		return array(
 			'success' => false,
@@ -120,7 +117,7 @@ class ImageService {
 		return ImageService::createImageFromFile($tempFile,$fileName,$fileType,$fileSize,$title,$group);
 	}
 	
-	function createImageFromFile($tempPath,$fileName,$mimeType,$fileSize,$title,$group) {
+	function createImageFromFile($tempPath,$fileName,$mimeType,$fileSize,$title=null,$group=null) {
 		global $basePath;
 		$errorMessage=null;
 		$errorDetails=null;
@@ -176,9 +173,12 @@ class ImageService {
 				$imageId = $image->getId();
 			}
 		}
-		return array('success' => ($errorMessage==null)
-						,'errorMessage' => $errorMessage
-						,'errorDetails' => $errorDetails,'id'=>$imageId);
+		return array(
+			'success' => ($errorMessage==null)
+			,'errorMessage' => $errorMessage
+			,'errorDetails' => $errorDetails,
+			'id'=>$imageId
+		);
 	}
 	
 	function getLatestImageId() {

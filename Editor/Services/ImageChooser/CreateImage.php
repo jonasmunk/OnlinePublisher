@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Services/ImageService.php';
 require_once '../../Classes/Image.php';
 
@@ -15,7 +15,7 @@ require_once '../../Classes/Image.php';
 error_reporting(E_ERROR);
 
 $title = requestPostText('title');
-$group = getServiceSessionVar('imagechooser','group',0);
+$group = InternalSession::getServiceSessionVar('imagechooser','group',0);
 
 $response = ImageService::createUploadedImage($title,$group);
 

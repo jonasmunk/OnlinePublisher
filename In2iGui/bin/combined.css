@@ -2366,6 +2366,17 @@ div.in2igui_window_body
 	background-position: left -16px;
 }
 
+/*************************** Back ***********************/
+
+div.in2igui_window_back
+{
+	position: absolute;
+	width: 100%;
+	background: #333 url('../gfx/backgrounds/brushed.png');
+	border-radius: 8px;
+	-webkit-box-sizing: border-box;
+	border: 1px solid #555;
+}
 
 /********************************** Light **************************/
 
@@ -2630,6 +2641,11 @@ p.in2igui_list_line
 p.in2igui_list_dimmed
 {
 	font-size: 9px;
+	color: #999;
+}
+
+div.in2igui_list_busy td
+{
 	color: #999;
 }div.in2igui_selection
 {
@@ -4943,4 +4959,36 @@ span.in2igui_links_remove:hover
 div.in2igui_links_row:hover span.in2igui_links_remove
 {
 	display: inline-block;
+}.in2igui_flip_container
+{
+	-webkit-perspective: 1000;
+}
+
+.in2igui_flip_back, .in2igui_flip_front
+{
+	-webkit-transform-style : preserve-3d;
+   	-webkit-transition-property : -webkit-transform;
+	-webkit-backface-visibility : hidden;
+	/*-webkit-transition-duration : 1s;*/
+	-webkit-transform : rotate(2deg);
+}
+
+.in2igui_flip_back
+{
+	-webkit-transform : rotateY(180deg);
+}
+
+.in2igui_flip_flipped .in2igui_flip_back
+{
+	-webkit-transform : rotateY(360deg);
+}
+
+.in2igui_flip_front
+{
+	-webkit-transform : rotateY(0deg);
+}
+
+.in2igui_flip_flipped .in2igui_flip_front
+{
+	-webkit-transform : rotateY(180deg);
 }

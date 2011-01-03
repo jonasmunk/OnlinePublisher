@@ -4,6 +4,7 @@
  * @subpackage Templates.GuestBook
  */
 require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
+require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Services/RenderingService.php');
 
@@ -48,11 +49,11 @@ class GuestbookController extends LegacyTemplateController {
 	}
 
 	function dynamic(&$state) {		
-		if (requestGetBoolean('newitem')) {
+		if (Request::getBoolean('newitem')) {
 			$xml="<newitem/>";
 		}
 		else {
-			if (requestPost() && requestPostBoolean('userinteraction')) {
+			if (Request::isPost() && Request::getBoolean('userinteraction')) {
 				$name = Request::getUnicodeString('name');
 				$text = Request::getUnicodeString('text');
 				$sql = "insert into guestbook_item (page_id,time,name,text) values (".$this->id.",now(),".Database::text($name).",".Database::text($text).")";

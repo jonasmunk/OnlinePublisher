@@ -14,7 +14,7 @@
 			</middle>
 		<bottom/>
 	</layout>
-	<window name="dark" width="300" title="Bruger" pad="5" variant="dark">
+	<window name="dark" width="300" title="Bruger" padding="5" variant="dark">
 		<formula>
 			<group>
 				<text label="Brugernavn:"/>
@@ -31,7 +31,7 @@
 			</group>
 		</formula>
 	</window>
-	<window name="standard" width="300" title="Bruger" pad="5">
+	<window name="standard" width="300" title="Bruger" padding="5">
 		<formula>
 			<group>
 				<text label="Brugernavn:"/>
@@ -48,7 +48,7 @@
 			</group>
 		</formula>
 	</window>
-	<window name="light" width="300" title="Bruger" pad="5" variant="light">
+	<window name="light" width="300" title="Bruger" padding="5" variant="light">
 		<formula>
 			<group>
 				<text label="Brugernavn:"/>
@@ -65,4 +65,25 @@
 			</group>
 		</formula>
 	</window>
+	<window name="flipper" width="300" title="Flipper" padding="5">
+		<button click="flipper.flip()" title="Flip"/>
+		<back>
+			<formula>
+				<group>
+					<text label="Brugernavn:"/>
+					<text label="Kodeord:"/>
+					<text label="Notat:" lines="6"/>
+					<checkbox label="Intern adgang:"/>
+					<checkbox label="Ekstern adgang:"/>
+					<tokens label="Tokens:"/>
+					<buttons top="10">
+						<button title="Gem" highlighted="true"/>
+						<button title="Slet"/>
+						<button title="Annuller" click="flipper.flip()"/>
+					</buttons>
+				</group>
+			</formula>
+		</back>
+	</window>
+
 </gui>

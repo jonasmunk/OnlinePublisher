@@ -210,3 +210,8 @@ p.in2igui_list_dimmed
 	font-size: 9px;
 	color: #999;
 }
+
+div.in2igui_list_busy td
+{
+	color: #999;
+}

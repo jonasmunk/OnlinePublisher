@@ -12,11 +12,11 @@ class Newssource extends Object {
 	var $url;
 
 	function Newssource() {
-		parent::Object('cachedurl');
+		parent::Object('newssource');
 	}
 	
 	function load($id) {
-		return Object::get($id,'cachedurl');
+		return Object::get($id,'newssource');
 	}
 	
 	function setUrl($url) {
@@ -25,5 +25,9 @@ class Newssource extends Object {
 
 	function getUrl() {
 	    return $this->url;
+	}
+	
+	function getIn2iGuiIcon() {
+		return 'common/internet';
 	}
 }

@@ -1,0 +1,27 @@
+<IfModule mod_headers.c>
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|swf)$">
+# 1 day
+Header set Cache-Control "public"
+Header unset Cookie
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault A300
+ExpiresByType image/x-icon A2592000
+ExpiresByType application/x-javascript A3600
+ExpiresByType text/css A3600
+ExpiresByType image/gif A604800
+ExpiresByType image/png A604800
+ExpiresByType image/jpeg A604800
+ExpiresByType text/plain A300
+ExpiresByType application/x-shockwave-flash A604800
+ExpiresByType video/x-flv A604800
+ExpiresByType application/pdf A604800
+ExpiresByType text/html A300
+</IfModule>
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/css text/javascript application/x-javascript
+</IfModule>

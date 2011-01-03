@@ -302,11 +302,13 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	$sourceIsBusy : function() {
-		//this.element.addClassName('in2igui_list_busy');
+		this.busy = true;
+		this.element.addClassName('in2igui_list_busy');
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		//this.element.removeClassName('in2igui_list_busy');
+		this.busy = false;
+		this.element.removeClassName('in2igui_list_busy');
 	},
 	
 	/** @private */
@@ -331,7 +333,7 @@ In2iGui.List.prototype = {
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && !icon.blank()) {
-			cell.insert(In2iGui.createIcon(icon,1));
+			cell.appendChild(In2iGui.createIcon(icon,1));
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];
@@ -342,18 +344,19 @@ In2iGui.List.prototype = {
 			} else if (n2i.dom.isElement(child,'icon')) {
 				cell.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
 			} else if (n2i.dom.isElement(child,'line')) {
-				var line = new Element('p',{'class':'in2igui_list_line'}).insert(n2i.dom.getNodeText(child));
+				var line = new Element('p',{'class':'in2igui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
 					line.addClassName('in2igui_list_dimmed')
 				}
 				cell.insert(line);
+				this.parseCell(child,line);
 			} else if (n2i.dom.isElement(child,'object')) {
 				var obj = new Element('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
-					obj.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
+					obj.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
 				}
 				if (child.firstChild && child.firstChild.nodeType==n2i.TEXT_NODE && child.firstChild.nodeValue.length>0) {
-					obj.appendChild(document.createTextNode(child.firstChild.nodeValue));
+					n2i.dom.addText(obj,child.firstChild.nodeValue);
 				}
 				cell.insert(obj);
 			} else if (n2i.dom.isElement(child,'icons')) {
@@ -542,11 +545,13 @@ In2iGui.List.prototype = {
 	addRowBehavior : function(row,index) {
 		var self = this;
 		row.onmousedown = function(e) {
+			if (self.busy) {return};
 			self.rowDown(index);
 			In2iGui.startDrag(e,row);
 			return false;
 		}
 		row.ondblclick = function() {
+			if (self.busy) {return};
 			self.rowDoubleClick(index);
 			return false;
 		}

@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once 'Functions.php';
 
 $id = requestGetNumber('id',0);
@@ -33,7 +33,7 @@ $files=buildFiles();
 if (requestGetExists('return')) {
     $return = requestGetText('return');
 } else {
-    $return = getToolSessionVar('pages','rightFrame');    
+    $return = InternalSession::getToolSessionVar('pages','rightFrame');    
 }
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.

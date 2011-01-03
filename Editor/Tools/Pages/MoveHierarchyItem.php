@@ -6,19 +6,20 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/Functions.php';
-require_once '../../Include/Session.php';
+require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/Request.php';
 
 require_once 'Functions.php';
 
-$id = requestGetNumber('id',0);
-$dir = requestGetNumber('dir',0);
-$return = requestGetText('return');
-$dontUpdateHierarchy = requestGetBoolean('dontUpdateHierarchy');
+$id = Request::getInt('id',0);
+$dir = Request::getInt('dir',0);
+$return = Request::getString('return');
+$dontUpdateHierarchy = Request::getBoolean('dontUpdateHierarchy');
 
 Hierarchy::moveItem($id,$dir);
 if (!$dontUpdateHierarchy) {
-	setToolSessionVar('pages','updateHier',true);
+	InternalSession::setToolSessionVar('pages','updateHier',true);
 }
 redirect($return);
 ?>
