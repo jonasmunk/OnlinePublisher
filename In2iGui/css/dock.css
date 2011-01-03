@@ -34,4 +34,6 @@ table.in2igui_dock iframe
 	width: 100%;
 	border: none;
 	font-size: 0px;
+	background: #fff;
+	display: block;
 }
