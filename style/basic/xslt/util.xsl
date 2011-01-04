@@ -121,6 +121,18 @@
 	<![endif]]]></xsl:comment>
 </xsl:template>
 
+<xsl:template name="util:style">
+	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.php"/>
+	<xsl:choose>
+		<xsl:when test="$template='document'">
+			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
 <xsl:template name="util:weekday">
 	<xsl:param name="node"/>
 	<xsl:choose>
@@ -233,14 +245,12 @@
 <xsl:template name="util:hierarchy-first-level">
 	<ul>
 		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
-			<xsl:variable name="class">
-				<xsl:choose>
-					<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-				</xsl:choose>
-			</xsl:variable>
 			<xsl:if test="not(@hidden='true')">
-				<li class="{$class}">
+				<li>
+				<xsl:choose>
+					<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+				</xsl:choose>
 				<a>
 					<xsl:call-template name="link"/>
 					<span><xsl:value-of select="@title"/></span>
@@ -262,15 +272,13 @@
 </xsl:template>
 
 <xsl:template name="util:hierarchy-item-iterator">
-	<xsl:variable name="class">
-		<xsl:choose>
-			<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-		</xsl:choose>
-	</xsl:variable>
 	<xsl:if test="not(@hidden='true')">
-		<li class="{$class}">
+		<li>
 			<a>
+				<xsl:choose>
+					<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+				</xsl:choose>
 				<xsl:call-template name="link"/>
 				<span><xsl:value-of select="@title"/></span>
 			</a>
