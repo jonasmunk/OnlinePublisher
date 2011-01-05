@@ -5,14 +5,16 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
-if (requestGetExists('return')) {
-    $return = requestGetText('return');
+
+$id = Request::getInt('id',0);
+if (Request::exists('return')) {
+    $return = Request::getString('return');
 } else {
     $return = "HierarchyFrame.php?id=".$id;
 }
@@ -31,7 +33,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<hidden name="return">'.$return.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Navn:" name="name">'.encodeXML($hier->getName()).'</textfield>'.
+'<textfield badge="Navn:" name="name">'.StringUtils::escapeXML($hier->getName()).'</textfield>'.
 '<select badge="Sprog" name="language" selected="'.$hier->getLanguage().'">'.
 '<option title="" value=""/>';
 $languages = GuiUtils::getLanguages();

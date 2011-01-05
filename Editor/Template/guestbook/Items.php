@@ -5,9 +5,10 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
@@ -34,9 +35,9 @@ $sql="select * from guestbook_item where page_id=".InternalSession::getPageId().
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$gui.='<row>'.
-	'<cell>'.encodeXML($row['time']).'</cell>'.
-	'<cell>'.encodeXML($row['name']).'</cell>'.
-	'<cell>'.encodeXML($row['text']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['time']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['name']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['text']).'</cell>'.
 	'<cell><icon icon="Basic/Delete" link="RemoveItem.php?id='.$row['id'].'"/></cell>'.
 	'</row>';
 }

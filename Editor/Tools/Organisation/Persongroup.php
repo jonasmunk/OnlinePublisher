@@ -6,14 +6,15 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Persongroup.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 require_once 'Functions.php';
 
-if (requestGetExists('id')) {
-	setPersonGroup(requestGetNumber('id',0));
+if (Request::exists('id')) {
+	setPersonGroup(Request::getInt('id',0));
 }
 $id = getPersonGroup();
 
@@ -32,7 +33,7 @@ InternalSession::setToolSessionVar('organisation','baseWindow','Persongroup.php'
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="100%" height="100%">'.
-'<titlebar title="'.encodeXML($group->getTitle()).'" icon="Element/Folder">'.
+'<titlebar title="'.StringUtils::escapeXML($group->getTitle()).'" icon="Element/Folder">'.
 '<close link="Library.php"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar" align="left">'.

@@ -5,9 +5,11 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 $frames = getFrames();
@@ -31,7 +33,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<group xmlns="uri:Icon" size="1" width="100%" spacing="3" titles="right">';
 foreach ($frames as $frame) {
 	$gui.='<row>'.
-	'<icon title="'.encodeXML($frame['name']).'" icon="Web/Frame"'.
+	'<icon title="'.StringUtils::escapeXML($frame['name']).'" icon="Web/Frame"'.
 	' link="PagesFrame.php?searchPairKey=frame&amp;searchPairValue='.$frame['id'].'" target="Right"/>'.
 	'</row>';
 }
@@ -42,7 +44,7 @@ $gui.=
 '<group xmlns="uri:Icon" size="1" width="100%" spacing="3" titles="right">';
 foreach ($hiers as $hierarchy) {
 	$gui.='<row>'.
-	'<icon title="'.encodeXML($hierarchy['name']).'" icon="Element/Structure"'.
+	'<icon title="'.StringUtils::escapeXML($hierarchy['name']).'" icon="Element/Structure"'.
 	' link="PagesFrame.php?searchPairKey=hierarchy&amp;searchPairValue='.$hierarchy['id'].'" target="Right"/>'.
 	'</row>';
 }
@@ -53,7 +55,7 @@ $gui.=
 '<group xmlns="uri:Icon" size="1" width="100%" spacing="3" titles="right">';
 foreach ($templates as $template) {
 	$gui.='<row>'.
-	'<icon title="'.encodeXML($template['name']).'" icon="'.$template['icon'].'"'.
+	'<icon title="'.StringUtils::escapeXML($template['name']).'" icon="'.$template['icon'].'"'.
 	' link="PagesFrame.php?searchPairKey=template&amp;searchPairValue='.$template['id'].'" target="Right"/>'.
 	'</row>';
 }
@@ -67,7 +69,7 @@ $gui.=
 '</row>';
 foreach ($securityZones as $zone) {
 	$gui.='<row>'.
-	'<icon title="'.encodeXML($zone['name']).'" icon="Zone/Security"'.
+	'<icon title="'.StringUtils::escapeXML($zone['name']).'" icon="Zone/Security"'.
 	' link="PagesFrame.php?searchPairKey=securityZone&amp;searchPairValue='.$zone['id'].'" target="Right"/>'.
 	'</row>';
 }

@@ -5,14 +5,14 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/Personrole.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Response.php';
 require_once 'Functions.php';
 
-$title = requestPostText('title');
-$description = requestPostText('description');
-$personid = requestPostText('personid');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$personid = Request::getString('personid');
 
 
 $group = new PersonRole();
@@ -22,5 +22,5 @@ $group->setPersonId($personid);
 $group->create();
 
 setUpdateHierarchy(true);
-redirect('Roles.php');
+Response::redirect('Roles.php');
 ?>

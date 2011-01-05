@@ -6,7 +6,9 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 
@@ -35,11 +37,11 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="RoleProperties.php?id='.$row['id'].'" target="_parent" style="'.$style.'">'.
 	'<cell>'.	
 	'<icon size="1" icon="Role/Administrator"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXML($row['note']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['note']).'</cell>'.
 	'<cell>'.
-	'<text>'.concatenatePersonName(encodeXML($row['firstname']),encodeXML($row['middlename']),encodeXML($row['surname'])).'</text>'.
+	'<text>'.concatenatePersonName(StringUtils::escapeXML($row['firstname']),StringUtils::escapeXML($row['middlename']),StringUtils::escapeXML($row['surname'])).'</text>'.
 	'</cell>'.
 	'</row>';
 }

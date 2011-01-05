@@ -6,15 +6,18 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Task.php';
 require_once '../../Classes/Problem.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'ProjectsController.php';
 
-ProjectsController::setGroupView(requestGetText('groupView'));
+ProjectsController::setGroupView(Request::getString('groupView'));
 $groupView = ProjectsController::getGroupView();
-ProjectsController::setTimeView(requestGetText('timeView'));
+ProjectsController::setTimeView(Request::getString('timeView'));
 $timeView = ProjectsController::getTimeView();
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui">'.
@@ -83,9 +86,9 @@ function buildContentType(&$gui) {
 		}
 	    $gui.=
 	    '<row link="EditTask.php?id='.$task->getId().'&amp;return=Overview.php" target="_parent">'.
-	    '<cell><icon icon="Part/Generic"/><text>'.encodeXML($task->getTitle()).'</text></cell>'.
+	    '<cell><icon icon="Part/Generic"/><text>'.StringUtils::escapeXML($task->getTitle()).'</text></cell>'.
 		($project ?
-			'<cell link="Project.php?id='.$project->getId().'"><icon icon="Tool/Knowledgebase"/><text>'.encodeXML($project->getTitle()).'</text></cell>'
+			'<cell link="Project.php?id='.$project->getId().'"><icon icon="Tool/Knowledgebase"/><text>'.StringUtils::escapeXML($project->getTitle()).'</text></cell>'
 		: '<cell/>').
 	    '<cell index="'.$task->getCompleted().'">'.($task->getCompleted() ? '<status type="Finished"/><text>Fuldført</text>' : '<status type="Active"/><text>Aktiv</text>').'</cell>'.
 	    '<cell index="'.$task->getDeadline().'">'.
@@ -129,9 +132,9 @@ function buildContentType(&$gui) {
 		}
 	    $gui.=
 	    '<row link="EditProblem.php?id='.$problem->getId().'&amp;return=Overview.php" target="_parent">'.
-	    '<cell><icon icon="Basic/Stop"/><text>'.encodeXML($problem->getTitle()).'</text></cell>'.
+	    '<cell><icon icon="Basic/Stop"/><text>'.StringUtils::escapeXML($problem->getTitle()).'</text></cell>'.
 		($project ?
-			'<cell link="Project.php?id='.$project->getId().'"><icon icon="Tool/Knowledgebase"/><text>'.encodeXML($project->getTitle()).'</text></cell>'
+			'<cell link="Project.php?id='.$project->getId().'"><icon icon="Tool/Knowledgebase"/><text>'.StringUtils::escapeXML($project->getTitle()).'</text></cell>'
 		: '<cell/>').
 	    '<cell index="'.$problem->getCompleted().'">'.($problem->getCompleted() ? '<status type="Finished"/><text>Fuldført</text>' : '<status type="Active"/><text>Aktiv</text>').'</cell>'.
 	    '<cell index="'.$problem->getDeadline().'">'.
@@ -169,7 +172,7 @@ function buildContentType(&$gui) {
 		$project = Project::load($row['id']);
 	    $gui.=
 	    '<row link="Project.php?id='.$project->getId().'" target="_parent">'.
-	    '<cell><icon icon="Tool/Knowledgebase"/><text>'.encodeXML($project->getTitle()).'</text></cell>'.
+	    '<cell><icon icon="Tool/Knowledgebase"/><text>'.StringUtils::escapeXML($project->getTitle()).'</text></cell>'.
 	    '<cell index="'.$row['completed'].'">'.($row['completed']<1 ? '<status type="Finished"/><text>Fuldført</text>' : '<status type="Active"/><text>Aktiv</text>').'</cell>'.
 	    '<cell index="'.$project->getUpdated().'">'.date('d/m-Y',$project->getUpdated()).'</cell>'.
 	    '</row>';
@@ -291,7 +294,7 @@ function buildRow(&$object,&$gui,$completed) {
     $gui.=
     '<row link="'.$link.'" target="_parent">'.
     '<cell><icon icon="'.$object->getIcon().'"/>'.
-    '<text>'.encodeXML($object->getTitle()).'</text></cell>'.
+    '<text>'.StringUtils::escapeXML($object->getTitle()).'</text></cell>'.
     '<cell>'.$type.'</cell>'.
     '<cell index="'.$deadline.'">'.($deadline>0 ? date('d/m-Y',$deadline) : '').'</cell>'.
     '</row>';

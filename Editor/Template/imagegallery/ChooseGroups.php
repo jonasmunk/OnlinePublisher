@@ -5,9 +5,10 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $id=InternalSession::getPageId();
 
@@ -15,7 +16,7 @@ $imageOptions='';
 $sql="SELECT object.* FROM object LEFT JOIN imagegallery_object ON imagegallery_object.object_id=object.id and imagegallery_object.page_id=$id WHERE object.type='imagegroup' and imagegallery_object.object_id IS NULL order by object.title;";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$imageOptions.='<option title="'.encodeXML($row['title']).'" value="'.encodeXML($row['id']).'"/>';
+	$imageOptions.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.StringUtils::escapeXML($row['id']).'"/>';
 }
 Database::free($result);
 

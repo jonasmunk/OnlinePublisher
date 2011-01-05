@@ -6,12 +6,12 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
 setPersonGroup(0);
-if (requestGetExists('view')) {
-	setPersonView(requestGetText('view'));
+if (Request::exists('view')) {
+	setPersonView(Request::getString('view'));
 }
 $view = getPersonView();
 

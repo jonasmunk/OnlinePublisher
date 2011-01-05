@@ -6,9 +6,10 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/UserInterface.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $close = "../../Template/Edit.php";
 $pageId = InternalSession::getPageId();
@@ -43,8 +44,8 @@ while ($row = Database::next($result)) {
 	'<cell><icon icon="Basic/Time"/><text>'.UserInterface::presentDateTime($row['time']).'</text></cell>'.
 	'<cell>'.
 	(strlen($row['title'])>0 ? '<icon icon="Element/User"/>' : '').
-	'<text>'.encodeXML($row['title']).'</text></cell>'.
-	'<cell><text>'.encodeXML($row['message']).'</text><icon icon="Basic/Edit" link="EditHistory.php?id='.$row['id'].'"/></cell>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text></cell>'.
+	'<cell><text>'.StringUtils::escapeXML($row['message']).'</text><icon icon="Basic/Edit" link="EditHistory.php?id='.$row['id'].'"/></cell>'.
 	'<cell>'.
 	'<button title="Gendan" link="Reconstruct.php?id='.$row['id'].'" target="Desktop"/>'.
 	'<button title="Vis" link="Viewer.php?id='.$row['id'].'"/>'.

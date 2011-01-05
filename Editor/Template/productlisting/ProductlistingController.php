@@ -49,11 +49,11 @@ class ProductlistingController extends LegacyTemplateController {
 				$error = Request::getString('productlistingError');
 				$success = Request::getBoolean('productlistingSuccess');
 				$xml = '<make-offer>';
-				$xml .= '<value key="name" value="'.encodeXML($name).'"/>';
-				$xml .= '<value key="email" value="'.encodeXML($email).'"/>';
-				$xml .= '<value key="offer" value="'.encodeXML($offer).'"/>';
+				$xml .= '<value key="name" value="'.StringUtils::escapeXML($name).'"/>';
+				$xml .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
+				$xml .= '<value key="offer" value="'.StringUtils::escapeXML($offer).'"/>';
 				if ($error!='') {
-					$xml.='<error key="'.encodeXML($error).'"/>';
+					$xml.='<error key="'.StringUtils::escapeXML($error).'"/>';
 				} else if ($success) {
 					$xml.='<success/>';
 				}

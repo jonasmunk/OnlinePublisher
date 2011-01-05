@@ -6,7 +6,8 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface>'.
@@ -29,12 +30,12 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="javascript: window.parent.selectPerson('.$row['id'].');" target="_parent">'.
 	'<cell>'.
 	'<icon size="1" icon="Role/'.($row['sex']==1 ? 'Male' : 'Female').'"/>'.
-	'<text>'.concatenatePersonName(encodeXML($row['firstname']),encodeXML($row['middlename']),encodeXML($row['surname'])).'</text>'.
+	'<text>'.concatenatePersonName(StringUtils::escapeXML($row['firstname']),StringUtils::escapeXML($row['middlename']),StringUtils::escapeXML($row['surname'])).'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXML($row['jobtitle']).'</cell>'.
-	'<cell>'.encodeXML($addr).'</cell>'.
-	'<cell>'.encodeXML($row['phone_private']).'<break/>'.encodeXML($row['phone_job']).'</cell>'.
-	'<cell>'.encodeXML($row['email_private']).'<break/>'.encodeXML($row['email_job']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['jobtitle']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($addr).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['phone_private']).'<break/>'.StringUtils::escapeXML($row['phone_job']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['email_private']).'<break/>'.StringUtils::escapeXML($row['email_job']).'</cell>'.
 	'</row>';
 }
 Database::free($result);

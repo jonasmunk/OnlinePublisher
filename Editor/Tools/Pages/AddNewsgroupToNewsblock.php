@@ -5,10 +5,12 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 
 $sql = "Select * from frame_newsblock where id=".$id;
@@ -19,7 +21,7 @@ $newsOptions='';
 $sql="SELECT object.* FROM object LEFT JOIN frame_newsblock_newsgroup ON frame_newsblock_newsgroup.newsgroup_id=object.id and frame_newsblock_newsgroup.frame_newsblock_id=$id where object.type='newsgroup' and frame_newsblock_newsgroup.id IS NULL;";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
-	$newsOptions.='<option title="'.encodeXML($row['title']).'" value="'.encodeXML($row['id']).'"/>';
+	$newsOptions.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.StringUtils::escapeXML($row['id']).'"/>';
 }
 Database::free($result);
 

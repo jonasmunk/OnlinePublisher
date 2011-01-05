@@ -6,19 +6,22 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 $templates = TemplateService::getTemplatesKeyed();
-if (requestGetExists('id')) {
-	$id = requestGetNumber('id');
+if (Request::exists('id')) {
+	$id = Request::getInt('id');
 	$sql = "select hierarchy_item.*,page.id as pageid,page.title as pagetitle,template.unique as templateunique,file.object_id as fileid,file.filename from hierarchy_item left join page on page.id = hierarchy_item.target_id left join template on template.id=page.template_id left join file on file.object_id = hierarchy_item.target_id where parent=".$id." order by `hierarchy_item`.`index`";
 	$return = 'HierarchyItemChildren.php%3Fid='.$id;
 }
-elseif (requestGetExists('hierarchy')) {
-	$id = requestGetNumber('hierarchy');
+elseif (Request::exists('hierarchy')) {
+	$id = Request::getInt('hierarchy');
 	$sql = "select hierarchy_item.*,page.id as pageid,page.title as pagetitle,template.unique as templateunique,file.object_id as fileid,file.filename from hierarchy_item left join page on page.id = hierarchy_item.target_id left join template on template.id=page.template_id left join file on file.object_id = hierarchy_item.target_id where parent=0 and hierarchy_id=".$id." order by `hierarchy_item`.`index`";
 	$return = 'HierarchyItemChildren.php%3Fhierarchy='.$id;
 } 
@@ -38,7 +41,7 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="HierarchyItemFrame.php?id='.$row['id'].'" target="_parent">'.
 	'<cell>'.
 	'<icon size="1" icon="'.GuiUtils::getLinkIcon($row['target_type'],$row['templateunique'],$row['filename']).'"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
 	'<cell>';
 	if ($row['pageid']>0) {

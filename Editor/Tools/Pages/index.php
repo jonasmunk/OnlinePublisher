@@ -5,10 +5,10 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/DevelopmentMode.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
 $right = InternalSession::getToolSessionVar('pages','rightFrame');
 if ($right==null) {
@@ -16,11 +16,11 @@ if ($right==null) {
 	$right = 'PagesFrame.php';
 }
 
-$action = requestGetText('action');
+$action = Request::getString('action');
 if ($action=='newpage') {
 	$right = 'NewPageTemplate.php?reset=true';
 } elseif ($action=='pageproperties') {
-	$id = requestGetNumber('id');
+	$id = Request::getInt('id');
 	if (!($id>0)) {
 		$id = InternalSession::getPageId();
 	}

@@ -5,28 +5,28 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Person.php';
+require_once '../../Classes/Request.php';
 
 require_once 'Functions.php';
-$firstname = requestPostText('firstname');
-$middlename = requestPostText('middlename');
-$surname = requestPostText('surname');
-$initials = requestPostText('initials');
-$nickname = requestPostText('nickname');
-$jobtitle = requestPostText('jobtitle');
-$sex = requestPostText('sex');
-$email_job = requestPostText('email_job');
-$email_private = requestPostText('email_private');
-$phone_job = requestPostText('phone_job');
-$phone_private = requestPostText('phone_private');
-$streetname = requestPostText('streetname');
-$zipcode = requestPostText('zipcode');
-$city = requestPostText('city');
-$country = requestPostText('country');
-$webaddress = requestPostText('webaddress');
-$imageid = requestPostText('imageid');
+$firstname = Request::getString('firstname');
+$middlename = Request::getString('middlename');
+$surname = Request::getString('surname');
+$initials = Request::getString('initials');
+$nickname = Request::getString('nickname');
+$jobtitle = Request::getString('jobtitle');
+$sex = Request::getString('sex');
+$email_job = Request::getString('email_job');
+$email_private = Request::getString('email_private');
+$phone_job = Request::getString('phone_job');
+$phone_private = Request::getString('phone_private');
+$streetname = Request::getString('streetname');
+$zipcode = Request::getString('zipcode');
+$city = Request::getString('city');
+$country = Request::getString('country');
+$webaddress = Request::getString('webaddress');
+$imageid = Request::getString('imageid');
 
 $person = new Person();
 $person->setFirstname($firstname);
@@ -60,6 +60,5 @@ if ($group>0) {
 
 setUpdateHierarchy(true);
 
-redirect('PersonProperties.php?id='.$personId);
-
+Response::redirect('PersonProperties.php?id='.$personId);
 ?>

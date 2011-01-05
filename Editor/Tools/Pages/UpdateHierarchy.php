@@ -5,14 +5,15 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/Request.php';
 
-$id = requestPostNumber('id');
-$name = requestPostText('name');
-$language = requestPostText('language');
-$return = requestPostText('return');
+$id = Request::getInt('id');
+$name = Request::getString('name');
+$language = Request::getString('language');
+$return = Request::getString('return');
 
 $hier = Hierarchy::load($id);
 $hier->setName($name);
@@ -21,5 +22,5 @@ $hier->update();
 
 InternalSession::setToolSessionVar('pages','updateHier',true);
 
-redirect($return);
+Response::redirect($return);
 ?>

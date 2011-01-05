@@ -6,7 +6,7 @@
 
 require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once '../../../Editor/Include/Functions.php';
+require_once '../../../Editor/Classes/Database.php';
 
 header('Content-type: text/xml');
 echo '<?xml version="1.0"?>'.

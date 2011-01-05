@@ -5,9 +5,10 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $id = InternalSession::getPageId();
 
@@ -39,11 +40,11 @@ $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$gui.=
 	'<row>'.
-	'<cell>'.encodeXML($row['title']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['title']).'</cell>'.
 	'<cell>'.
 	($row['hier_id']>0 ?
 	'<icon icon="Element/Structure"/>'.
-	'<text>'.encodeXML($row['hier_name']).'</text>'
+	'<text>'.StringUtils::escapeXML($row['hier_name']).'</text>'
 	: '').
 	'</cell>'.
 	'<cell>'.

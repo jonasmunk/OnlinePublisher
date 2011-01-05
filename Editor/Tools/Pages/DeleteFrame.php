@@ -5,9 +5,11 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
+require_once '../../Classes/Request.php';
 
-$id=requestGetNumber('id',0);
+$id=Request::getInt('id',0);
 
 
 $sql='delete from frame where id='.$id;
@@ -28,5 +30,5 @@ $sql="delete from frame_newsblock where frame_id=".$id;
 Database::delete($sql);
 
 
-redirect('Frames.php');
+Response::redirect('Frames.php');
 ?>

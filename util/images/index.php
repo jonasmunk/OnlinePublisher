@@ -5,8 +5,9 @@
  */
 require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
-require_once '../../Editor/Include/Functions.php';
 require_once '../../Editor/Classes/FileSystemUtil.php';
+require_once '../../Editor/Classes/Database.php';
+require_once '../../Editor/Classes/Response.php';
 require_once '../../Editor/Classes/Request.php';
 
 if (!function_exists('ImageCreateFromJpeg')) {
@@ -14,7 +15,7 @@ if (!function_exists('ImageCreateFromJpeg')) {
 	$sql = 'select * from image where object_id='.$id;
 	if ($row = Database::selectFirst($sql)) {
 		$filename = $basePath.'images/'.$row['filename'];
-		redirect('../../images/'.$row['filename']);
+		Response::redirect('../../images/'.$row['filename']);
 	}
 } else {
 	sendImage();
@@ -26,7 +27,7 @@ function sendImage() {
 	
 	//set_time_limit(120);
 	$id = Request::getInt('id');
-	$timestamp = requestGetText('timestamp');
+	$timestamp = Request::getString('timestamp');
 	$width = Request::getInt('width');
 	$height = Request::getInt('height');
 	$max = Request::getInt('max');
@@ -48,7 +49,7 @@ function sendImage() {
 		if ($row = Database::selectFirst($sql)) {
 			// If nothing to do just redirect to the image
 			if ($width==0 && $height==0 && $max==0 && $maxwidth==0 && $maxheight==0 && $percent==0 && $rotate==0 && !$greyscale) {
-				redirect('../../images/'.$row['filename']);
+				Response::redirect('../../images/'.$row['filename']);
 				exit;
 			}
 			
@@ -172,7 +173,7 @@ function sendImage() {
 				readfile($basePath.$cache);
 			}
 		} else {
-			redirect('ImageNotFound.gif');
+			Response::redirect('ImageNotFound.gif');
 			//TODO: Do something about missing images
 			// Inconsistency between old cached images and replaced images!
 		}
@@ -190,7 +191,7 @@ function sendImage() {
 		header('Expires: '.gmdate('D, d M Y H:i:s',time()+(60*60)) . ' GMT');
 		header('Date: '.gmdate('D, d M Y H:i:s') . ' GMT');
 		readfile($basePath.$cache);
-		//redirect('../../'.$cache.(strlen($timestamp)>0 ? '?timestamp='.$timestamp : ''));
+		//Response::redirect('../../'.$cache.(strlen($timestamp)>0 ? '?timestamp='.$timestamp : ''));
 	}
 }
 

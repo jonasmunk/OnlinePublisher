@@ -3,12 +3,14 @@
  * @package OnlinePublisher
  * @subpackage Services.PersonChooser
  */
-require '../../../Config/Setup.php';
-require '../../Include/Security.php';
-require '../../Include/XmlWebGui.php';
-require '../../Include/Functions.php';
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Security.php';
+require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$group = requestGetNumber('group',0);
+$group = Request::getInt('group',0);
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface>'.
@@ -27,7 +29,7 @@ if ($group==0) {
 			$counter=1;
 		}
 		$gui.=
-		'<icon title="'.encodeXML($row['title']).'" icon="Element/Album" link="Icons.php?group='.$row['id'].'"/>';
+		'<icon title="'.StringUtils::escapeXML($row['title']).'" icon="Element/Album" link="Icons.php?group='.$row['id'].'"/>';
 	}
 	Database::free($result);
 }
@@ -46,7 +48,7 @@ while ($row = Database::next($result)) {
 		$counter=1;
 	}
 	$gui.=
-	'<icon title="'.concatenatePersonName(encodeXML($row['firstname']),encodeXML($row['middlename']),encodeXML($row['surname'])).'" icon="Role/'.($row['sex']==0 ? 'Male' : 'Female').'" link="javascript: window.parent.selectPerson('.$row['object_id'].');"/>';
+	'<icon title="'.concatenatePersonName(StringUtils::escapeXML($row['firstname']),StringUtils::escapeXML($row['middlename']),StringUtils::escapeXML($row['surname'])).'" icon="Role/'.($row['sex']==0 ? 'Male' : 'Female').'" link="javascript: window.parent.selectPerson('.$row['object_id'].');"/>';
 }
 Database::free($result);
 

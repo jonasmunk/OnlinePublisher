@@ -6,10 +6,12 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$frameId = requestGetNumber('id',0);
-$position = requestGetText('position');
+$frameId = Request::getInt('id',0);
+$position = Request::getString('position');
 
 $pages=buildPages();
 $files=buildFiles();
@@ -63,7 +65,7 @@ function buildPages() {
 	$sql="select id,title from page order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -74,7 +76,7 @@ function buildFiles() {
 	$sql="select id,title from object where type='file' order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

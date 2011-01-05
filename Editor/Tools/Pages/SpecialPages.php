@@ -5,8 +5,9 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $types = array(
     "home" => "Forside",
@@ -43,9 +44,9 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="EditSpecialPage.php?id='.$row['id'].'">'.
 	'<cell>'.
 	'<icon size="1" icon="Web/Page"/>'.
-	'<text>'.encodeXML($types[$row['type']]).'</text>'.
+	'<text>'.StringUtils::escapeXML($types[$row['type']]).'</text>'.
 	'</cell>'.
-	'<cell>'.encodeXML($row['title']).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($row['title']).'</cell>'.
 	'<cell>'.xwgBuildListLanguageIcon($row['language']).'</cell>'.
 	'</row>';
 }

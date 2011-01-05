@@ -6,13 +6,16 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/TemplateService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
-PagesController::setGroupView(requestGetText('groupView'));
-PagesController::setViewDetails(requestGetText('viewDetails'));
+PagesController::setGroupView(Request::getString('groupView'));
+PagesController::setViewDetails(Request::getString('viewDetails'));
 
 $groupView = PagesController::getGroupView();
 $viewDetails = PagesController::getViewDetails();
@@ -112,7 +115,7 @@ function buildContentHierarchy(&$gui,$freeTextSql,$detail) {
 	            $gui.='</content></list></group>';
             }
 	        $gui.=
-            '<group title="'.($row['hierarchy_id']>0 ? encodeXML($row['hierarchy']) : 'Intet hierarki').'">'.
+            '<group title="'.($row['hierarchy_id']>0 ? StringUtils::escapeXML($row['hierarchy']) : 'Intet hierarki').'">'.
             '<list xmlns="uri:List" width="100%" variant="Light" sort="true">'.
             '<content>';
             buildHeaders($gui,$detail);
@@ -139,7 +142,7 @@ function buildContentTemplate(&$gui,$freeTextSql,$detail) {
 	            $gui.='</content></list></group>';
             }
 	        $gui.=
-            '<group title="'.encodeXML($templates[$row['unique']]['name']).'">'.
+            '<group title="'.StringUtils::escapeXML($templates[$row['unique']]['name']).'">'.
             '<list xmlns="uri:List" width="100%" variant="Light" sort="true">'.
             '<content>';
             buildHeaders($gui,$detail);
@@ -166,7 +169,7 @@ function buildContentDesign(&$gui,$freeTextSql,$detail) {
 	            $gui.='</content></list></group>';
             }
 	        $gui.=
-            '<group title="'.encodeXML($row['design']).'">'.
+            '<group title="'.StringUtils::escapeXML($row['design']).'">'.
             '<list xmlns="uri:List" width="100%" variant="Light" sort="true">'.
             '<content>';
             buildHeaders($gui,$detail);
@@ -193,7 +196,7 @@ function buildContentFrame(&$gui,$freeTextSql,$detail) {
 	            $gui.='</content></list></group>';
             }
 	        $gui.=
-            '<group title="'.encodeXML($row['frame']).'">'.
+            '<group title="'.StringUtils::escapeXML($row['frame']).'">'.
             '<list xmlns="uri:List" width="100%" variant="Light" sort="true">'.
             '<content>';
             buildHeaders($gui,$detail);
@@ -220,7 +223,7 @@ function buildContentSecurityZone(&$gui,$freeTextSql,$detail) {
 	            $gui.='</content></list></group>';
             }
 	        $gui.=
-            '<group title="'.($row['securityzone_id']>0 ? encodeXML($row['securityzone']) : 'Ingen beskyttet zone').'">'.
+            '<group title="'.($row['securityzone_id']>0 ? StringUtils::escapeXML($row['securityzone']) : 'Ingen beskyttet zone').'">'.
             '<list xmlns="uri:List" width="100%" variant="Light" sort="true">'.
             '<content>';
             buildHeaders($gui,$detail);
@@ -262,20 +265,20 @@ function buildRow(&$gui,&$row,&$templates,$detail='simple') {
     $gui.='<row link="EditPage.php?id='.$row['id'].'" target="_parent">'.
 	'<cell>'.
 	'<icon size="1" icon="'.$templates[$row['unique']]['icon'].'"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	xwgBuildListLanguageIcon($row['language']).
 	($row['secure']==1 ? '<status type="Locked" link="EditPageSecurity.php?id='.$row['id'].'" help="Siden er beskyttet, klik for at ændre opsætning"/>' : '').
 	'</cell>'.
 	($detail=='extended' ?
 	'<cell>'.
-	encodeXML($templates[$row['unique']]['name']).
+	StringUtils::escapeXML($templates[$row['unique']]['name']).
 	'</cell>'//.
-//	'<cell>'.encodeXML($row['design']).'</cell>'.
-//	'<cell>'.encodeXML($row['frame']).'</cell>'.
+//	'<cell>'.StringUtils::escapeXML($row['design']).'</cell>'.
+//	'<cell>'.StringUtils::escapeXML($row['frame']).'</cell>'.
 //	'<cell index="'.$row['language'].'">'.xwgBuildListLanguageIcon($row['language']).'</cell>'
 	: '').
 	'<cell index="'.$row['changedindex'].'">'.
-	'<text>'.encodeXML($row['changed']).'</text>';
+	'<text>'.StringUtils::escapeXML($row['changed']).'</text>';
 	if ($row['publishdelta']>0) {
 		$gui.='<status type="Attention" help="Siden er ændret siden sidste udgivning"/>';
 	}

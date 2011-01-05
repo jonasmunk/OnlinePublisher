@@ -5,14 +5,15 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
 $pageId = InternalSession::getPageId();
-$id = requestGetNumber('id');
-$dir = requestGetNumber('dir');
+$id = Request::getInt('id');
+$dir = Request::getInt('dir');
 
 $sql="select * from imagegallery_object where id=".$id;
 if ($row = Database::selectFirst($sql)) {
@@ -34,5 +35,5 @@ if ($row = Database::selectFirst($sql)) {
 
 Page::markChanged($pageId);
 
-redirect('Images.php');
+Response::redirect('Images.php');
 ?>

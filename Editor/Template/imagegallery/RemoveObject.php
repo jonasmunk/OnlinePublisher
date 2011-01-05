@@ -5,13 +5,14 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
 $pageId = InternalSession::getPageId();
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 // Delete the object
 $sql="delete from imagegallery_object where id=".$id;
@@ -30,5 +31,5 @@ Database::free($result);
 
 Page::markChanged($pageId);
 
-redirect('Images.php');
+Response::redirect('Images.php');
 ?>

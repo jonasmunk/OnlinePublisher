@@ -11,6 +11,7 @@ require_once($basePath.'Editor/Classes/Pageblueprint.php');
 require_once($basePath.'Editor/Classes/Webloggroup.php');
 require_once($basePath.'Editor/Classes/In2iGui.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class WeblogController extends LegacyTemplateController {
     
@@ -59,7 +60,7 @@ class WeblogController extends LegacyTemplateController {
 		
 		$groups = WeblogGroup::search(array('page'=>$this->id));
 		foreach ($groups as $group) {
-			$xml.='<group id="'.$group->getId().'" title="'.encodeXML($group->getTitle()).'" />';
+			$xml.='<group id="'.$group->getId().'" title="'.StringUtils::escapeXML($group->getTitle()).'" />';
 		}
 		$xml .= '<list>';
 		
@@ -76,7 +77,7 @@ class WeblogController extends LegacyTemplateController {
 			$sql = "select object.title,object.id from webloggroup_weblogentry,object where webloggroup_weblogentry.webloggroup_id=object.id and weblogentry_id=".$row['id']." order by object.title";
 			$subResult = Database::select($sql);
 			while ($subRow = Database::next($subResult)) {
-				$xml.='<group id="'.$subRow['id'].'" title="'.encodeXML($subRow['title']).'"/>';
+				$xml.='<group id="'.$subRow['id'].'" title="'.StringUtils::escapeXML($subRow['title']).'"/>';
 			}
 			Database::free($subResult);
 			$xml.=$row['object_data'];
@@ -172,7 +173,7 @@ class WeblogController extends LegacyTemplateController {
 		$sql="select * from weblog where page_id=".$this->id;
 		$row = Database::selectFirst($sql);
 		$data = '<weblog xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/weblog/1.0/">';
-		$data .= '<title>'.encodeXML($row['title']).'</title>';
+		$data .= '<title>'.StringUtils::escapeXML($row['title']).'</title>';
 		$data.= '<!--dynamic--></weblog>';
         return array('data' => $data, 'dynamic' => true, 'index' => '');
     }

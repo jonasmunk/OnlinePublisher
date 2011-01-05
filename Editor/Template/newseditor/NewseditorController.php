@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once $basePath.'Editor/Classes/News.php';
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class NewseditorController extends LegacyTemplateController {
     
@@ -49,10 +50,10 @@ class NewseditorController extends LegacyTemplateController {
 				$xml .= '<property name="'.$prop.'">';
 				if (is_array($response[$prop])) {
 					foreach ($response[$prop] as $value) {
-						$xml.='<value>'.encodeXML($value).'</value>';
+						$xml.='<value>'.StringUtils::escapeXML($value).'</value>';
 					}
 				} else {
-					$xml.=encodeXML($response[$prop]);
+					$xml.=StringUtils::escapeXML($response[$prop]);
 				}
 				$xml.='</property>';
 			}

@@ -7,14 +7,14 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Request.php';
 
 $close = 'Editor.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="400" align="center" top="20">';
-if (requestGetText('error')=='invalid') {
+if (Request::getString('error')=='invalid') {
 	$gui.='<sheet width="300" object="ErrorSheet" visible="true">'.
 	'<message xmlns="uri:Message" icon="Caution">'.
 	'<title>Ikke et HTML-dokument</title>'.

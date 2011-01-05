@@ -6,9 +6,11 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id=requestGetNumber('id');
+$id=Request::getInt('id');
 
 $users=buildUsers($id);
 
@@ -44,7 +46,7 @@ function buildUsers($id) {
 	$sql="select object.id,object.title, securityzone_user.securityzone_id from object left join securityzone_user on securityzone_user.user_id = object.id and securityzone_user.securityzone_id=".$id." where type='user' and securityzone_id is NULL order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

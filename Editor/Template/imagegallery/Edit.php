@@ -5,12 +5,12 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-if (requestGetExists('id')) {
-	setImageGalleryId(requestGetNumber('id',0));
+if (Request::exists('id')) {
+	setImageGalleryId(Request::getInt('id',0));
 }
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.

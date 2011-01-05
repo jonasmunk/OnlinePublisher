@@ -5,11 +5,12 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/RemotePublisher.php';
+require_once '../../Classes/Request.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $site = RemotePublisher::load($id);
 
@@ -23,8 +24,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="UpdateSite.php" method="post" name="Formula" focus="title">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Navn:" name="title">'.encodeXML($site->getTitle()).'</textfield>'.
-'<textfield badge="Adresse:" name="url">'.encodeXML($site->getUrl()).'</textfield>'.
+'<textfield badge="Navn:" name="title">'.StringUtils::escapeXML($site->getTitle()).'</textfield>'.
+'<textfield badge="Adresse:" name="url">'.StringUtils::escapeXML($site->getUrl()).'</textfield>'.
 '<buttongroup size="Large">'.
 '<button title="Slet" link="DeleteSite.php?id='.$id.'"/>'.
 '<button title="Annuller" link="index.php"/>'.

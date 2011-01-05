@@ -6,10 +6,10 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/Settings.php';
+require_once '../../Classes/Request.php';
 
-$tab = requestGetText('tab');
+$tab = Request::getString('tab');
 if (!$tab) {
 	$tab = Settings::getServiceSetting('start','status.tab');
 	if ($tab==null) $tab='problems';

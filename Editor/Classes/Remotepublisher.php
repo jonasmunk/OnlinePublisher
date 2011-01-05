@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Libraries/nusoap/nusoap.php');
 
 class RemotePublisher extends Object {
@@ -52,7 +53,7 @@ class RemotePublisher extends Object {
 	function sub_publish() {
 		$data =
 		'<remotepublisher xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<url>'.encodeXML($this->url).'</url>'.
+		'<url>'.StringUtils::escapeXML($this->url).'</url>'.
 		'</remotepublisher>';
 		return $data;
 	}

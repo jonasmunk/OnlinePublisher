@@ -5,8 +5,9 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
@@ -33,7 +34,7 @@ while ($row = Database::next($result)) {
 	$gui.='<row link="EditZone.php?id='.$row['id'].'">'.
 	'<cell>'.
 	'<icon size="1" icon="Zone/Security"/>'.
-	'<text>'.encodeXML($row['title']).'</text>'.
+	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
 	'</row>';
 }

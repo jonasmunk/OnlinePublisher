@@ -8,10 +8,12 @@ require_once 'Functions.php';
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$hierarchyId=requestGetNumber('hierarchy');
+$hierarchyId=Request::getInt('hierarchy');
 
 $pages=buildPages();
 $allPages=buildAllPages();
@@ -29,7 +31,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="CreateHierarchyItem.php" method="post" name="Formula" focus="title">'.
 '<hidden name="hierarchy">'.$hierarchyId.'</hidden>'.
 '<group size="Large">'.
-'<select badge="Position:" name="parent" selected="'.requestGetNumber('parent',0).'">'.
+'<select badge="Position:" name="parent" selected="'.Request::getInt('parent',0).'">'.
 '<option title=":: roden ::" value="0"/>'.
 $parents.
 '</select>'.
@@ -81,7 +83,7 @@ function buildPages() {
 	$sql="select page.id,page.title from page left join hierarchy_item on page.id=target_id and target_type='page' where hierarchy_item.id is null order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -92,7 +94,7 @@ function buildAllPages() {
 	$sql="select page.id,page.title from page order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -103,7 +105,7 @@ function buildFiles() {
 	$sql="select id,title from object where type='file' order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -120,7 +122,7 @@ function buildParents($hierarchyId,$parent,$level) {
 		}
 		$title = $prefix.$row['title'];
 		$gui.=
-		'<option title="'.encodeXML($title).'" value="'.$row['id'].'" target="_parent"/>'.
+		'<option title="'.StringUtils::escapeXML($title).'" value="'.$row['id'].'" target="_parent"/>'.
 		buildParents($hierarchyId,$row['id'],$level+1);
 	}
 	Database::free($result);

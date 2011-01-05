@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class Person extends Object {
 	var $firstname;
@@ -410,52 +411,52 @@ class Person extends Object {
 	
 		$data = '<person xmlns="'.parent::_buildnamespace('1.0').'">';
 		if ($this->firstname!='') {
-			$data.='<firstname>'.encodeXML($this->firstname).'</firstname>';
+			$data.='<firstname>'.StringUtils::escapeXML($this->firstname).'</firstname>';
 		}
 		if ($this->middlename!='') {
-			$data.='<middlename>'.encodeXML($this->middlename).'</middlename>';
+			$data.='<middlename>'.StringUtils::escapeXML($this->middlename).'</middlename>';
 		}
 		if ($this->surname!='') {
-			$data.='<surname>'.encodeXML($this->surname).'</surname>';
+			$data.='<surname>'.StringUtils::escapeXML($this->surname).'</surname>';
 		}
 		if ($this->initials!='') {
-			$data.='<initials>'.encodeXML($this->initials).'</initials>';
+			$data.='<initials>'.StringUtils::escapeXML($this->initials).'</initials>';
 		}
 		if ($this->nickname!='') {
-			$data.='<nickname>'.encodeXML($this->nickname).'</nickname>';
+			$data.='<nickname>'.StringUtils::escapeXML($this->nickname).'</nickname>';
 		}
 		if ($this->jobtitle!='') {
-			$data.='<jobtitle>'.encodeXML($this->jobtitle).'</jobtitle>';
+			$data.='<jobtitle>'.StringUtils::escapeXML($this->jobtitle).'</jobtitle>';
 		}
 		if (isset($this->sex)) {
 			$data.='<sex>'.($this->sex ? 'male' : 'female').'</sex>';
 		}
 		if ($this->email_job!='') {
-			$data.='<email context="job">'.encodeXML($this->email_job).'</email>';
+			$data.='<email context="job">'.StringUtils::escapeXML($this->email_job).'</email>';
 		}
 		if ($this->email_private!='') {
-			$data.='<email context="private">'.encodeXML($this->email_private).'</email>';
+			$data.='<email context="private">'.StringUtils::escapeXML($this->email_private).'</email>';
 		}
 		if ($this->phone_job!='') {
-			$data.='<phone context="job">'.encodeXML($this->phone_job).'</phone>';
+			$data.='<phone context="job">'.StringUtils::escapeXML($this->phone_job).'</phone>';
 		}
 		if ($this->phone_private!='') {
-			$data.='<phone context="private">'.encodeXML($this->phone_private).'</phone>';
+			$data.='<phone context="private">'.StringUtils::escapeXML($this->phone_private).'</phone>';
 		}
 		if ($this->streetname!='') {
-			$data.='<streetname>'.encodeXML($this->streetname).'</streetname>';
+			$data.='<streetname>'.StringUtils::escapeXML($this->streetname).'</streetname>';
 		}
 		if ($this->zipcode!='') {
-			$data.='<zipcode>'.encodeXML($this->zipcode).'</zipcode>';
+			$data.='<zipcode>'.StringUtils::escapeXML($this->zipcode).'</zipcode>';
 		}
 		if ($this->city!='') {
-			$data.='<city>'.encodeXML($this->city).'</city>';
+			$data.='<city>'.StringUtils::escapeXML($this->city).'</city>';
 		}
 		if ($this->country!='') {
-			$data.='<country>'.encodeXML($this->country).'</country>';
+			$data.='<country>'.StringUtils::escapeXML($this->country).'</country>';
 		}
 		if ($this->webaddress!='') {
-			$data.='<webaddress>'.encodeXML($this->webaddress).'</webaddress>';
+			$data.='<webaddress>'.StringUtils::escapeXML($this->webaddress).'</webaddress>';
 		}
 		if ($this->image_id>0) {
 			$sql="select * from object where id=".$this->image_id;
@@ -468,14 +469,14 @@ class Person extends Object {
 		$sql = "select address from emailaddress where containing_object_id=".$this->id;
 		$result = Database::select($sql);
     	while ($row = Database::next($result)) {
-			$data.='<email>'.encodeXML($row['address']).'</email>';
+			$data.='<email>'.StringUtils::escapeXML($row['address']).'</email>';
     	}
 		Database::free($result);
 		
 		$sql = "select number,context from phonenumber where containing_object_id=".$this->id;
 		$result = Database::select($sql);
     	while ($row = Database::next($result)) {
-			$data.='<phone context="'.encodeXML($row['context']).'">'.encodeXML($row['number']).'</phone>';
+			$data.='<phone context="'.StringUtils::escapeXML($row['context']).'">'.StringUtils::escapeXML($row['number']).'</phone>';
     	}
 		Database::free($result);
 

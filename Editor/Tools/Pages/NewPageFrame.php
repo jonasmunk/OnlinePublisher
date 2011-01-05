@@ -6,17 +6,21 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
 $info = PagesController::getNewPageInfo();
-if (requestGetExists('design')) {
-	$info['design']=requestGetNumber('design');
+if (Request::exists('design')) {
+	$info['design'] = Request::getInt('design');
 }
 PagesController::setNewPageInfo($info);
 
 $close = InternalSession::getToolSessionVar('pages','rightFrame');
+
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="500" height="300" align="center">'.
@@ -55,7 +59,7 @@ while ($row = Database::next($result)) {
 	$gui.='<row><icon'.
 	' link="'.$next.'?frame='.$row['id'].'"'.
 	' icon="Web/Frame"'.
-	' title="'.encodeXML($row['name']).'" description="'.buildFrameDescription($row).'"'.
+	' title="'.StringUtils::escapeXML($row['name']).'" description="'.buildFrameDescription($row).'"'.
 	($row['id']==$info['frame'] ? ' style="Hilited"' : '').
 	'/></row>';
 }

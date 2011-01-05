@@ -5,11 +5,13 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $sql="select page.*,template.unique from page,template where template.id=page.template_id and page.id=".$id;
 $row = Database::selectFirst($sql);
@@ -34,7 +36,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</buttongroup>'.
 '</message>'.
 '</sheet>'.
-'<titlebar title="'.encodeXML($title).'" icon="Web/Page">'.
+'<titlebar title="'.StringUtils::escapeXML($title).'" icon="Web/Page">'.
 '<close link="'.$close.'" help="Luk vinduet uden at gemme ændringer"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar" align="center">'.
@@ -78,7 +80,7 @@ $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$gui.='<row>'.
 	'<cell><checkbox name="zones[]" value="'.$row['id'].'" selected="'.(in_array($row['id'],$zones) ? 'true' : 'false').'"/></cell>'.
-	'<cell><icon icon="Zone/Security"/><text>'.encodeXML($row['title']).'</text></cell>'.
+	'<cell><icon icon="Zone/Security"/><text>'.StringUtils::escapeXML($row['title']).'</text></cell>'.
 	'</row>';
 }
 Database::free($result);

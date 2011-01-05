@@ -5,7 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Request.php';
 
 $id=Request::getInt('id',0);
@@ -40,5 +41,5 @@ $sql="update frame_newsblock set title=".Database::text($title).
 
 Database::update($sql);
 //echo $sql;
-redirect('FrameNewsblockProperties.php?id='.$id);
+Response::redirect('FrameNewsblockProperties.php?id='.$id);
 ?>

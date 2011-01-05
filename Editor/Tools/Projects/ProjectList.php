@@ -6,16 +6,18 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/Project.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'ProjectsController.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
-ProjectsController::setProjectScope(requestGetText('scope'));
+ProjectsController::setProjectScope(Request::getString('scope'));
 $scope = ProjectsController::getProjectScope();
 
-ProjectsController::setProjectListState(requestGetText('state'));
+ProjectsController::setProjectListState(Request::getString('state'));
 $state = ProjectsController::getProjectListState();
 
 $includeSubProjects = ($scope=='includesubprojects');
@@ -68,8 +70,8 @@ if (count($subTasks)>0) {
 		$milestone = Milestone::load($subTask->getMilestoneId());
 	    $gui.=
 	    '<row link="EditTask.php?id='.$subTask->getId().'&amp;returnProject='.$id.'" target="_parent">'.
-	    '<cell><icon icon="Part/Generic"/><text>'.encodeXML($subTask->getTitle()).'</text></cell>'.
-		'<cell>'.($milestone ? encodeXML($milestone->getTitle()) : '').'</cell>'.
+	    '<cell><icon icon="Part/Generic"/><text>'.StringUtils::escapeXML($subTask->getTitle()).'</text></cell>'.
+		'<cell>'.($milestone ? StringUtils::escapeXML($milestone->getTitle()) : '').'</cell>'.
 	    '<cell index="'.$subTask->getCompleted().'">'.($subTask->getCompleted() ? '<status type="Finished"/><text>Fuldført</text>' : '<status type="Active"/><text>Aktiv</text>').'</cell>'.
 		'<cell index="'.$subTask->getDeadline().'">'.
 		($subTask->getDeadline()>0 ?
@@ -101,8 +103,8 @@ if (count($subProblems)>0) {
 		$milestone = Milestone::load($subProblem->getMilestoneId());
 	    $gui.=
 	    '<row link="EditProblem.php?id='.$subProblem->getId().'&amp;returnProject='.$id.'" target="_parent">'.
-	    '<cell><icon icon="Basic/Stop"/><text>'.encodeXML($subProblem->getTitle()).'</text></cell>'.
-		'<cell>'.($milestone ? encodeXML($milestone->getTitle()) : '').'</cell>'.
+	    '<cell><icon icon="Basic/Stop"/><text>'.StringUtils::escapeXML($subProblem->getTitle()).'</text></cell>'.
+		'<cell>'.($milestone ? StringUtils::escapeXML($milestone->getTitle()) : '').'</cell>'.
 	    '<cell index="'.$subProblem->getCompleted().'">'.($subProblem->getCompleted() ? '<status type="Finished"/><text>Fuldført</text>' : '<status type="Active"/><text>Aktiv</text>').'</cell>'.
 	    '<cell index="'.$subProblem->getDeadline().'">'.
 		($subProblem->getDeadline()>0 ?
@@ -132,7 +134,7 @@ if (count($milestones)>0) {
 	foreach ($milestones as $milestone) {
 	    $gui.=
 	    '<row>'.
-	    '<cell><icon icon="'.$milestone->getIcon().'"/><text>'.encodeXML($milestone->getTitle()).'</text></cell>'.
+	    '<cell><icon icon="'.$milestone->getIcon().'"/><text>'.StringUtils::escapeXML($milestone->getTitle()).'</text></cell>'.
 	    '<cell index="'.$milestone->getCompleted().'">'.($milestone->getCompleted() ? '<status type="Finished"/><text>Fuldført</text>' : '<status type="Active"/><text>Aktiv</text>').'</cell>'.
 	    '<cell index="'.$milestone->getDeadline().'">'.
 		($milestone->getDeadline()>0 ?
@@ -160,7 +162,7 @@ if (count($subProjects)>0) {
 	foreach ($subProjects as $subProject) {
 	    $gui.=
 	    '<row link="Project.php?id='.$subProject->getId().'" target="_parent">'.
-	    '<cell><icon icon="Tool/Knowledgebase"/><text>'.encodeXML($subProject->getTitle()).'</text></cell>'.
+	    '<cell><icon icon="Tool/Knowledgebase"/><text>'.StringUtils::escapeXML($subProject->getTitle()).'</text></cell>'.
 	    '<cell>'.date('d/m-Y',$subProject->getUpdated()).'</cell>'.
 	    '</row>';
 	}

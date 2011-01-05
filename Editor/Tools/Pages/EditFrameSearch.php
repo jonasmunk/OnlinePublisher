@@ -5,10 +5,12 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $sql="select * from frame where id=".$id;
 $row = Database::selectFirst($sql);
@@ -45,7 +47,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
 '<checkbox badge="Aktiv:" name="enabled" selected="'.($enabled ? 'true' : 'false').'"/>'.
-'<textfield badge="Knap:" name="buttontitle">'.encodeXML($buttontitle).'</textfield>'.
+'<textfield badge="Knap:" name="buttontitle">'.StringUtils::escapeXML($buttontitle).'</textfield>'.
 '<select badge="Søgeside:" name="page" selected="'.$page.'">'.
 '<option title="Vælg side..." value="0"/>'.
 $pageList.
@@ -81,7 +83,7 @@ function buildPages() {
 	$sql="select page.id,page.title from page,template where page.template_id=template.id and template.unique='search' order by page.title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

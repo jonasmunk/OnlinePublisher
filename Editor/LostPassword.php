@@ -7,11 +7,13 @@
  * @category Interface
  */
 require_once '../Config/Setup.php';
-require_once 'Include/Functions.php';
 require_once 'Include/XmlWebGui.php';
 require_once 'Classes/User.php';
 require_once 'Classes/EmailUtil.php';
 require_once 'Classes/Request.php';
+require_once 'Classes/Response.php';
+require_once 'Classes/Database.php';
+require_once 'Classes/Utilities/StringUtils.php';
 
 if (Request::exists('id')) {
     $id = Request::getString('id');
@@ -19,12 +21,12 @@ if (Request::exists('id')) {
     $sql = "select * from email_validation_session where timelimit>".Database::datetime($time)." and `unique`=".Database::text($id);
     if ($row = Database::selectFirst($sql)) {
         if (Request::exists('password1') && Request::exists('password2')) {
-            processPasswordChange($row['user_id'],requestPostText('password1'));
+            processPasswordChange($row['user_id'],Request::getString('password1'));
         } else {
             displayPasswordChange($id);
         }
     } else {
-		redirect("LostPassword.php?sessionexpired=true");
+		Response::redirect("LostPassword.php?sessionexpired=true");
     }
 }
 else if (Request::isPost()) {
@@ -33,10 +35,10 @@ else if (Request::isPost()) {
 	$row = Database::selectFirst($sql);
 	if ($row && $row['email']!='') {
 		createValidationSession($row['email'],$row['object_id'],$row['username']);
-		redirect("Authentication.php?emailsent=true");		
+		Response::redirect("Authentication.php?emailsent=true");		
 	}
 	else {
-		redirect("LostPassword.php?usernotfound=true");
+		Response::redirect("LostPassword.php?usernotfound=true");
 	}
 }
 else {
@@ -178,7 +180,7 @@ function displayPasswordChange($id) {
 	}
 	return true;
 	</validation>'.
-	'<hidden name="id">'.encodeXML($id).'</hidden>'.
+	'<hidden name="id">'.StringUtils::escapeXML($id).'</hidden>'.
 	'<group size="Large">'.
 	'<password badge="Kodeord:" name="password1" object="Password1"/>'.
 	'<password badge="Gentag kodeord:" name="password2" object="Password2"/>'.
@@ -202,6 +204,6 @@ function processPasswordChange($userId,$password) {
     $user = User::load($userId);
     $user->setPassword($password);
     $user->update();
-    redirect('Authentication.php?passwordchanged=true');
+    Response::redirect('Authentication.php?passwordchanged=true');
 }
 ?>

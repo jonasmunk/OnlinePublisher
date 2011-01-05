@@ -6,13 +6,15 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/Hierarchy.php';
 require_once '../../Classes/Graph.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
-$id = requestGetNumber('id');
+$id = Request::getInt('id');
 
 $hier = Hierarchy::load($id);
 if (!$hier) {
@@ -27,7 +29,7 @@ PagesController::setActiveItem('hierarchy',$id);
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="100%" height="100%">'.
-'<titlebar title="'.encodeXML($hier->getName()).'" icon="Element/Structure">'.
+'<titlebar title="'.StringUtils::escapeXML($hier->getName()).'" icon="Element/Structure">'.
 '<close link="PagesFrame.php" help="Gå tilbage til listen over sider"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar" align="left">'.
@@ -45,7 +47,7 @@ $gui.=
 '<searchfield title="Søgning" width="100" focus="true" name="freetext" method="post" action="PagesFrame.php"/>'.
 '</toolbar>'.
 '<pathbar>'.
-'<item title="'.encodeXML($hier->getName()).'" link="HierarchyFrame.php?id='.$id.'"/>'.
+'<item title="'.StringUtils::escapeXML($hier->getName()).'" link="HierarchyFrame.php?id='.$id.'"/>'.
 '</pathbar>'.
 '<content valign="top">'.
 '<iframe xmlns="uri:Frame" source="HierarchyItemChildren.php?hierarchy='.$id.'" name="Contents"/>'.

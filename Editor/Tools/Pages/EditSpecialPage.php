@@ -5,11 +5,13 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id=requestGetNumber('id',0);
+$id=Request::getInt('id',0);
 
 $sql="select * from specialpage where id=".$id;
 $row = Database::selectFirst($sql);
@@ -62,7 +64,7 @@ function buildPages() {
 	$sql="select page.id,page.title from page order by page.title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

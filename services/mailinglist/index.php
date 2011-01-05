@@ -1,9 +1,9 @@
 <?
 require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
-require_once '../../Editor/Include/Functions.php';
 require_once('../../Editor/Classes/Person.php');
 require_once('../../Editor/Info/SystemInfo.php');
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $name = Request::getUnicodeString('name');
 $email = Request::getUnicodeString('email');
@@ -16,8 +16,8 @@ if (strlen($name)==0) {
 	$error = '<error key="invalidemail"/>';
 }
 if ($error!='') {
-	$values .= '<value key="name" value="'.encodeXML($name).'"/>';
-	$values .= '<value key="email" value="'.encodeXML($email).'"/>';
+	$values .= '<value key="name" value="'.StringUtils::escapeXML($name).'"/>';
+	$values .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
 } else {
 	//$this->subscribe($name,$email);
 }

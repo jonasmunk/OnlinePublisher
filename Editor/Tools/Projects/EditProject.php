@@ -6,10 +6,11 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/Project.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id=requestGetNumber('id');
+$id=Request::getInt('id');
 $close = 'Project.php?id='.$id;
 $project = Project::load($id);
 
@@ -25,13 +26,13 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="UpdateProject.php" method="post" name="Formula" focus="title">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($project->getTitle()).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($project->getTitle()).'</textfield>'.
 '<select name="parentProject" badge="Overprojekt" selected="'.$project->getParentProjectId().'">'.
 '<option title="Intet" value="0"/>'.
 $projectOptions.
 '</select>'.
 '<textfield badge="Beskrivelse:" name="description" lines="6">'.
-encodeXML($project->getNote()).
+StringUtils::escapeXML($project->getNote()).
 '</textfield>'.
 '<buttongroup size="Large">'.
 '<button title="Slet" link="DeleteProject.php?id='.$id.'"/>'.

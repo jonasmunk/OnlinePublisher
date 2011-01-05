@@ -5,14 +5,15 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
 $pageId = InternalSession::getPageId();
-$rowId = requestGetNumber('row',0);
-$dir = requestGetNumber('dir',0);
+$rowId = Request::getInt('row',0);
+$dir = Request::getInt('dir',0);
 
 
 $sql="select * from document_row where id=".$rowId;
@@ -33,5 +34,5 @@ if ($row_next) {
 $sql="update page set changed=now() where id=".$pageId;
 Database::update($sql);
 
-redirect('Editor.php');
+Response::redirect('Editor.php');
 ?>

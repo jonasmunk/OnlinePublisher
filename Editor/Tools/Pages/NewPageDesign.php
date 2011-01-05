@@ -6,14 +6,17 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Design.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'PagesController.php';
 
 $info = PagesController::getNewPageInfo();
-if (requestGetExists('template')) {
-	$info['template']=requestGetNumber('template',0);
+if (Request::exists('template')) {
+	$info['template'] = Request::getInt('template',0);
 }
 PagesController::setNewPageInfo($info);
 
@@ -53,8 +56,8 @@ while ($row = Database::next($result)) {
 	$gui.='<row><icon'.
 	' link="NewPageFrame.php?design='.$row['object_id'].'"'.
 	' image="../../../style/'.$row['unique'].'/info/Preview128.png"'.
-	' title="'.encodeXML($row['title']).'"'.
-	' description="'.encodeXML($props->description).'"'.
+	' title="'.StringUtils::escapeXML($row['title']).'"'.
+	' description="'.StringUtils::escapeXML($props->description).'"'.
 	($row['id']==$info['design'] ? ' style="Hilited"' : '').
 	'/></row>';
 }

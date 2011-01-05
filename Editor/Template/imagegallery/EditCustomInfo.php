@@ -5,12 +5,14 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/Image.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$imageId = requestGetNumber('id');
+$imageId = Request::getInt('id');
 $pageId = InternalSession::getPageId();
 
 $sql="select * from imagegallery_custom_info where page_id=".$pageId." and image_id=".$imageId;
@@ -36,8 +38,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="UpdateCustomInfo.php" method="post" name="Formula" focus="title">'.
 '<hidden name="id">'.$imageId.'</hidden>'.
 '<group size="Large" badgeplacement="above">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($title).'</textfield>'.
-'<textfield badge="Beskrivelse:" name="note" lines="6">'.encodeXML($note).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($title).'</textfield>'.
+'<textfield badge="Beskrivelse:" name="note" lines="6">'.StringUtils::escapeXML($note).'</textfield>'.
 '<buttongroup size="Large">'.
 '<button title="Gendan"'.($custom ? ' link="RevertCustomInfo.php?id='.$imageId.'"' : ' style="Disabled"').'/>'.
 '<button title="Annuller" link="Images.php"/>'.

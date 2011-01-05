@@ -6,7 +6,8 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $close = 'Groups.php';
 
@@ -43,7 +44,7 @@ function buildHierarchies() {
 	$sql="select id,name from hierarchy order by name";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['name']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['name']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 

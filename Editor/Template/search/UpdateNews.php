@@ -5,14 +5,15 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-$id = requestPostNumber('id',0);
-$label = requestPostText('label');
+$id = Request::getInt('id',0);
+$label = Request::getString('label');
 
-$mode = requestPostText('mode');
+$mode = Request::getString('mode');
 
 $enabled = false;
 $default = false;
@@ -49,5 +50,5 @@ $sql="update page set changed=now() where id=".$id;
 Database::update($sql);
 
 
-redirect('News.php');
+Response::redirect('News.php');
 ?>

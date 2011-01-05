@@ -6,7 +6,8 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 require_once 'Functions.php';
 
@@ -29,7 +30,7 @@ while ($row = Database::next($result)) {
 		$counter=1;
 	}
 	$gui.=
-	'<icon title="'.encodeXML($row['title']).'" icon="Role/Administrator" link="RoleProperties.php?id='.$row['id'].'" target="_parent"/>';
+	'<icon title="'.StringUtils::escapeXML($row['title']).'" icon="Role/Administrator" link="RoleProperties.php?id='.$row['id'].'" target="_parent"/>';
 	}
 Database::free($result);
 

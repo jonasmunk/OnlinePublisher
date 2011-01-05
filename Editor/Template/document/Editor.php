@@ -5,8 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/Services/PartService.php';
 require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
@@ -60,18 +59,18 @@ controller.parts.push({value:'<?=$part?>',title:'<?=$info['name']?>'});
 ?>
 </script>
 <?
-if (requestGetExists('row')) {
-	setDocumentRow(requestGetNumber('row',0));
+if (Request::exists('row')) {
+	setDocumentRow(Request::getInt('row',0));
 	setDocumentColumn(0);
 	setDocumentSection(0);
 }
-if (requestGetExists('section')) {
-	setDocumentSection(requestGetNumber('section',0));
+if (Request::exists('section')) {
+	setDocumentSection(Request::getInt('section',0));
 	setDocumentColumn(0);
 	setDocumentRow(0);
 }
-if (requestGetExists('column')) {
-	setDocumentColumn(requestGetNumber('column',0));
+if (Request::exists('column')) {
+	setDocumentColumn(Request::getInt('column',0));
 	setDocumentSection(0);
 }
 if (getDocumentColumn()>0) {

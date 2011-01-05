@@ -5,15 +5,17 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/BumbleBee.php';
 require_once '../../Classes/DevelopmentMode.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $page = Page::load($id);
 
@@ -41,7 +43,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</buttongroup>'.
 '</message>'.
 '</sheet>'.
-'<titlebar title="'.encodeXML($page->getTitle()).'" icon="Web/Page">'.
+'<titlebar title="'.StringUtils::escapeXML($page->getTitle()).'" icon="Web/Page">'.
 '<close link="'.$close.'" help="Luk vinduet uden at gemme ændringer"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar" align="center">'.
@@ -102,16 +104,16 @@ $gui.=
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large" badgewidth="30%">'.
 '<textfield badge="Titel:" name="title">'.
-encodeXML($page->getTitle()).
+StringUtils::escapeXML($page->getTitle()).
 '</textfield>'.
 '<textfield badge="Beskrivelse:" name="description" lines="4">'.
-encodeXML($page->getDescription()).
+StringUtils::escapeXML($page->getDescription()).
 '</textfield>';
 if ($item = $page->getHierarchyItem()) {
     $gui.=
     '<space/>'.
     '<hidden name="hierarchyItemId">'.$item['id'].'</hidden>'.
-    '<textfield name="hierarchyItemTitle" badge="Menupunkt:">'.encodeXML($item['title']).'</textfield>'.
+    '<textfield name="hierarchyItemTitle" badge="Menupunkt:">'.StringUtils::escapeXML($item['title']).'</textfield>'.
     '<buttongroup size="Small">'.
     '<button title="Rediger..." link="EditHierarchyItem.php?id='.$item['id'].'&amp;return='.urlencode('EditPage.php?id='.$id).'"/>'.
     '</buttongroup>';
@@ -138,8 +140,8 @@ $gui.=
 '</select>'.
 '<space/>'.
 '<checkbox badge="Søgbar:" name="searchable" selected="'.($page->getSearchable() ? 'true' : 'false').'"/>'.
-'<textfield badge="Nøgleord:" name="keywords" lines="2">'.encodeXML($page->getKeywords()).'</textfield>'.
-'<textfield badge="Sti:" name="path">'.encodeXML($page->getPath()).'</textfield>'.
+'<textfield badge="Nøgleord:" name="keywords" lines="2">'.StringUtils::escapeXML($page->getKeywords()).'</textfield>'.
+'<textfield badge="Sti:" name="path">'.StringUtils::escapeXML($page->getPath()).'</textfield>'.
 '<space/>'.
 '<select badge="Næste side:" name="nextPage" selected="'.$page->getNextPage().'">'.
 '<option value="" title=""/>'.
@@ -173,7 +175,7 @@ function buildDesigns() {
 	$sql="select id,title from object where type='design' order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['title']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;
@@ -184,7 +186,7 @@ function buildFrames() {
 	$sql="select id,name from frame order by name";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$output.='<option title="'.encodeXML($row['name']).'" value="'.$row['id'].'"/>';
+		$output.='<option title="'.StringUtils::escapeXML($row['name']).'" value="'.$row['id'].'"/>';
 	}
 	Database::free($result);
 	return $output;

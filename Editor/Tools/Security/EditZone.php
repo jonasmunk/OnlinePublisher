@@ -5,12 +5,13 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/Securityzone.php';
 require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once '../../Include/XmlWebGui.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $zone = SecurityZone::load($id);
 
@@ -29,7 +30,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<form xmlns="uri:Form" action="UpdateZone.php" method="post" name="Formula" focus="title">'.
 '<hidden name="id">'.$id.'</hidden>'.
 '<group size="Large">'.
-'<textfield badge="Titel:" name="title">'.encodeXML($zone->getTitle()).'</textfield>'.
+'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($zone->getTitle()).'</textfield>'.
 '<select badge="Autentifikationsside:" name="page" selected="'.$zone->getAuthenticationPageId().'">'.
 '<option value="0"/>'.
 GuiUtils::buildPageOptions('authentication').

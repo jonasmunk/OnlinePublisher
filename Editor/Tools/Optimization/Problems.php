@@ -6,8 +6,8 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalProblem.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui">'.
 '<configuration path="../../../"/>'.
@@ -26,7 +26,7 @@ foreach ($problems as $problem) {
 	$gui.=
 	'<row>'.
 	'<cell>'.buildEnity($problem->getEntity()).'</cell>'.
-	'<cell><status type="Active"/><text>'.encodeXML($title).'</text></cell>'.
+	'<cell><status type="Active"/><text>'.StringUtils::escapeXML($title).'</text></cell>'.
 	'<cell>'.buildActions($problem->getActions()).'</cell>'.
 	'</row>';
 }
@@ -43,7 +43,7 @@ writeGui($xwg_skin,$elements,$gui);
 function buildEnity($entity) {
 	if ($entity) {
 		return '<icon icon="Template/Generic"/>'.
-		'<text>'.encodeXML($entity['title']).'</text>';
+		'<text>'.StringUtils::escapeXML($entity['title']).'</text>';
 	} else {
 		return '';
 	}
@@ -52,7 +52,7 @@ function buildEnity($entity) {
 function buildActions($actions) {
 	$out ='';
 	foreach ($actions as $action) {
-		$out.='<button title="'.encodeXML($action['title']).'" link="../../'.$action['link'].'" target="'.$action['target'].'"/>';
+		$out.='<button title="'.StringUtils::escapeXML($action['title']).'" link="../../'.$action['link'].'" target="'.$action['target'].'"/>';
 	}
 	return $out;
 }

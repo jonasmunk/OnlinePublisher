@@ -6,18 +6,18 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once 'PagesController.php';
 
 $info = PagesController::getNewPageInfo();
-if (requestGetExists('hierarchy') && requestGetExists('parent')) {
-	$info['hierarchy']=requestGetNumber('hierarchy');
-	$info['hierarchyParent']=requestGetNumber('parent');
+if (Request::exists('hierarchy') && Request::exists('parent')) {
+	$info['hierarchy'] = Request::getInt('hierarchy');
+	$info['hierarchyParent'] = Request::getInt('parent');
 }
-else if (requestGetExists('frame')){
-	$info['frame']=requestGetNumber('frame');
+else if (Request::exists('frame')){
+	$info['frame'] = Request::getInt('frame');
 }
 PagesController::setNewPageInfo($info);
 

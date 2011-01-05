@@ -6,14 +6,15 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Milestone.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $projectOptions = Project::optionSpider('',0,0);
 
 $milestones = Milestone::search();
-$project = requestGetNumber('project');
+$project = Request::getInt('project');
 $close = 'Project.php?id='.$project;
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
@@ -41,7 +42,7 @@ $projectOptions.
 '<select name="milestone" badge="Milepæl:">'.
 '<option title="Ingen" value="0"/>';
 foreach ($milestones as $milestone) {
-	$gui.='<option title="'.encodeXML($milestone->getTitle()).'" value="'.$milestone->getId().'"/>';
+	$gui.='<option title="'.StringUtils::escapeXML($milestone->getTitle()).'" value="'.$milestone->getId().'"/>';
 }
 $gui.=
 '</select>'.

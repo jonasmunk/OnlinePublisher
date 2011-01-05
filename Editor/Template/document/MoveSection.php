@@ -5,14 +5,14 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
 $pageId = InternalSession::getPageId();
-$sectionId = requestGetNumber('section',0);
-$dir = requestGetNumber('dir',0);
+$sectionId = Request::getInt('section',0);
+$dir = Request::getInt('dir',0);
 
 
 $sql="select * from document_section where id=".$sectionId;

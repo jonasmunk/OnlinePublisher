@@ -5,15 +5,16 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Securityzone.php';
+require_once '../../Classes/Request.php';
 
-$zoneId = requestGetNumber('zone');
-$userId = requestGetNumber('user');
+$zoneId = Request::getInt('zone');
+$userId = Request::getInt('user');
 
 $zone = SecurityZone::load($zoneId);
 
 $zone->removeUser($userId);
 
-redirect('EditZoneUsers.php?id='.$zoneId);
+Response::redirect('EditZoneUsers.php?id='.$zoneId);
 ?>

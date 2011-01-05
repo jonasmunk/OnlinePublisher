@@ -5,13 +5,14 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Response.php';
+require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
-$objects = requestPostArray('object');
-$title = requestPostText('title');
-$newsViewStartHour = requestPostNumber('weekview_starthour');
+$objects = Request::getArray('object');
+$title = Request::getString('title');
+$newsViewStartHour = Request::getInt('weekview_starthour');
 
 $id = InternalSession::getPageId();
 
@@ -29,5 +30,5 @@ foreach ($objects as $object) {
 $sql="update page set changed=now() where id=".$id;
 Database::update($sql);
 
-redirect('Editor.php');
+Response::redirect('Editor.php');
 ?>

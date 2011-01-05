@@ -40,7 +40,7 @@ class GuestbookController extends LegacyTemplateController {
 		$data.= '</lang>';
 		$sql="select title,text from guestbook where page_id=".$this->id;
 		$row = Database::selectFirst($sql);
-		$data.='<title>'.encodeXML($row['title']).'</title>';
+		$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 		$data.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 		$data.='<!--dynamic-->';
 		$data.= '</guestbook>';
@@ -66,7 +66,7 @@ class GuestbookController extends LegacyTemplateController {
 			while ($row = Database::next($result)) {
 				$xml.='<item id="'.$row['id'].'">';
 				$xml.=RenderingService::buildDateTag('time',$row['unix']);
-				$xml.='<name>'.encodeXML($row['name']).'</name>';
+				$xml.='<name>'.StringUtils::escapeXML($row['name']).'</name>';
 				$xml.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 				$xml.='</item>';
 			}

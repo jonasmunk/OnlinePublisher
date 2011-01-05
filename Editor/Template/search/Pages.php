@@ -5,8 +5,10 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
 require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
 require_once 'Functions.php';
 
 $id = getSearchId();
@@ -46,7 +48,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</radiogroup>'.
 '<box title="Sprog:">'.
 '<textfield badge="Tekst:" name="label" hint="Den tekst der vises for sider">'.
-encodeXML($label).
+StringUtils::escapeXML($label).
 '</textfield>'.
 '</box>'.
 '<buttongroup size="Large">'.

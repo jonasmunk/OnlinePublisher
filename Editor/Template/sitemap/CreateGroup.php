@@ -5,13 +5,15 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Page.php';
+require_once '../../Classes/Request.php';
 require_once '../../Classes/InternalSession.php';
 
 $id = InternalSession::getPageId();
-$title = requestPostText('title');
-$hierarchy = requestPostNumber('hierarchy');
+$title = Request::getString('title');
+$hierarchy = Request::getInt('hierarchy');
 
 $sql = "select max(position) as position from sitemap_group where page_id=".$id;
 if ($row = Database::selectFirst($sql)) {
@@ -26,5 +28,5 @@ Database::insert($sql);
 
 Page::markChanged($id);
 
-redirect('Groups.php');
+Response::redirect('Groups.php');
 ?>

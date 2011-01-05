@@ -12,7 +12,6 @@ if (!file_exists('Config/Setup.php')) {
 }
 require_once 'Config/Setup.php';
 require_once 'Editor/Include/Public.php';
-require_once 'Editor/Include/Functions.php';
 require_once 'Editor/Include/XmlWebGui.php';
 require_once 'Editor/Classes/Request.php';
 require_once 'Editor/Classes/Response.php';
@@ -20,7 +19,9 @@ require_once 'Editor/Classes/Database.php';
 require_once 'Editor/Classes/Services/RenderingService.php';
 require_once 'Editor/Classes/ExternalSession.php';
 
-startSession();
+session_set_cookie_params(0);
+session_start();
+
 
 if (!Database::testConnection()) {
 	$error = '<title>Siden er ikke tilgængelig i øjeblikket.</title>'.
@@ -70,7 +71,7 @@ else {
     // If the page has redirect
 	if ($page && $page['redirect']!==false) {
 		error_log($page['redirect']);
-		redirect($page['redirect']);
+		Response::redirect($page['redirect']);
 	}
 	// If the page is secure
 	else if ($page && $page['secure']) {

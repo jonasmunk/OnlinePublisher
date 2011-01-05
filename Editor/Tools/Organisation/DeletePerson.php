@@ -5,12 +5,13 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/Person.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
-$id = requestGetNumber('id',0);
+$id = Request::getInt('id',0);
 
 $person = Person::load($id);
 $person->remove();
@@ -18,9 +19,9 @@ $person->remove();
 setUpdateHierarchy(true);
 $group=getPersonGroup();
 if ($group>0) {
-	redirect('Persongroup.php');
+	Response::redirect('Persongroup.php');
 }
 else {
-	redirect('Library.php');
+	Response::redirect('Library.php');
 }
 ?>

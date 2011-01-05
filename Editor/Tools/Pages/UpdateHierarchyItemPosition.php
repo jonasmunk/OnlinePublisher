@@ -5,14 +5,16 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/Functions.php';
+require_once '../../Classes/Database.php';
+require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 
 require_once 'Functions.php';
 
-$id = requestGetNumber('id');
-$newParent = requestGetNumber('newParent');
-$return = requestGetText('return');
+$id = Request::getInt('id');
+$newParent = Request::getInt('newParent');
+$return = Request::getString('return');
 
 
 // Get info about hierarchy item
@@ -46,5 +48,5 @@ Database::free($result);
 
 
 InternalSession::setToolSessionVar('pages','updateHier',true);
-redirect('EditHierarchyItem.php?id='.$id.'&return='.urlencode($return));
+Response::redirect('EditHierarchyItem.php?id='.$id.'&return='.urlencode($return));
 ?>

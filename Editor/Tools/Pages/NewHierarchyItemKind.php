@@ -6,13 +6,13 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Include/Functions.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Request.php';
 require_once 'Functions.php';
 
 $close = InternalSession::getToolSessionVar('pages','rightFrame');
-$hierarchy = requestGetNumber('hierarchy');
-$parent = requestGetNumber('parent');
+$hierarchy = Request::getInt('hierarchy');
+$parent = Request::getInt('parent');
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="400" top="20" align="center">'.
