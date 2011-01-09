@@ -37,11 +37,16 @@ class ObjectService {
 		return true;
 	}
 	
+	/**
+	 * @param query Query
+	 */
 	function search($query) {
 		$parts = array( 
 			'type' => $query->getType(), 
 			'query' => $query->getText(), 
-			'fields' => $query->getFields()
+			'fields' => $query->getFields(),
+			'ordering' => implode(',',$query->getOrdering()),
+			'direction' => $query->getDirection()
 		);
 		if ($class = ObjectService::getInstance($query->getType())) {
 			if (method_exists($class,'addCustomSearch')) {

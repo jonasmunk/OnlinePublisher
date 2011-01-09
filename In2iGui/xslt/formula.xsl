@@ -9,6 +9,8 @@
 
 <xsl:template match="gui:formula">
 	<form class="in2igui_formula" id="{generate-id()}">
+		<xsl:if test="@padding"><xsl:attribute name="style">padding: <xsl:value-of select="@padding"/>px;</xsl:attribute>
+		</xsl:if>
 		<xsl:apply-templates/>
 	</form>
 	<script type="text/javascript">

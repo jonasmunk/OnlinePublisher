@@ -44,5 +44,20 @@ class TestFeeds extends UnitTestCase {
 		$this->assertEqual($first->getTitle(),'Improved reliability of water usage service / tool');
 		$this->assertEqual($first->getPubDate(),1291749877);
     }
+
+	function testNewsService() {
+		global $baseUrl;
+		$url = $baseUrl.'Editor/Tests/Resources/twitter.rss';
+		if ($url[0]=='/') {
+			$url = 'http://localhost'.$url;
+		}
+		$src = new Newssource();
+		$src->setUrl($url);
+		$src->save();
+		
+		NewsService::synchronizeSource($src->getId());
+		
+		$src->remove();
+	}
 }
 ?>

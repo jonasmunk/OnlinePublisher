@@ -237,6 +237,7 @@ class In2iGui {
 	}
 	
 	function fromLinks($links) {
+		if (!is_array($links)) return;
 		global $basePath;
 		require_once($basePath.'Editor/Classes/ObjectLink.php');
 		$out = array();

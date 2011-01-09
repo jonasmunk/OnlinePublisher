@@ -7,7 +7,7 @@ op.page = {id:null,path:null,template:null};
 
 op.ignite = function() {
 	if (!this.preview) {
-		document.onkeypress=function keypresshandler(e) {
+		document.onkeyup=function keypresshandler(e) {
 			if(document.all) e=window.event;
 			if(e.keyCode==13 && e.shiftKey==true) {
 				window.location=(op.page.path+"Editor/index.php?page="+op.page.id);

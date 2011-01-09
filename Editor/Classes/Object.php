@@ -558,6 +558,7 @@ class Object {
 		}
 		$num = 1;
 		$size = 0;
+		Log::debug($sql);
 		$result = Database::select($sql);
 		$list['total'] = Database::size($result);
     	while ($row = Database::next($result)) {

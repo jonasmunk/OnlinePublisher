@@ -1,42 +1,11 @@
 op.part.List = {
-	objects : null,
-	objectOptions : [],
+	data : null,
 	setData : function(data) {
 		this.data = data;
 	},
 	$ready : function() {
-		this.buildWindow();
-	},
-	buildWindow : function() {
-		var form = $(document.forms.PartForm);
-		var win = ui.Window.create({title:'Liste',width:300,close:false});
-		var tabs = ui.Tabs.create({small:true,centered:true});
-		win.add(tabs);
-		var settings = tabs.createTab({title:'Settings',padding:5});
-		var formula = ui.Formula.create({name:'formula'});
-		formula.buildGroup(null,[
-			{type:'Text',options:{label:'Titel:',key:'title',value:form.title.value,min:10,max:512}},
-			{type:'Number',options:{key:'time_count',label:'Dage:',value:parseInt(form.time_count.value,10)}},
-			{type:'Number',options:{key:'maxitems',label:'Maksimalt antal:',value:parseInt(form.maxitems.value,10)}},
-			{type:'Checkbox',options:{key:'show_source',label:'Vis kilde:',value:form.show_source.value=='true'}}/*,
-			{type:'Checkboxes',options:{key:'objects',label:'Kilder:',vertical:true,items:this.objectOptions,value:this.objects}}*/
-		]);
-		settings.add(formula);
-
-		// Data tab
-		
-		var dataTab = tabs.createTab({title:'Data',padding:5});
-		var overflow = ui.Overflow.create({height:200});
-		dataTab.add(overflow);
-		var dataForm = ui.Formula.create({name:'dataFormula'});
-		dataForm.buildGroup({labels:'above'},[
-			{type:'Checkboxes',options:{key:'newsgroup',label:'Nyhedsgrupper:',vertical:true,items:this.data.newsgroupOptions,value:this.data.newsgroupValues}},
-			{type:'Checkboxes',options:{key:'calendar',label:'Kalendere:',vertical:true,items:this.data.calendarOptions,value:this.data.calendarValues}},
-			{type:'Checkboxes',options:{key:'calendarsource',label:'Kalenderkilder:',vertical:true,items:this.data.calendarsourceOptions,value:this.data.calendarsourceValues}}
-		]);
-		overflow.add(dataForm);
-		n2i.log(dataForm.getValues());
-		win.show();
+		listWindow.show();
+		dataFormula.setValues(this.data);
 	},
 	$valueChanged$group : function(value) {
 		this.preview();
@@ -49,7 +18,7 @@ op.part.List = {
 		this.preview();
 	},
 	$valuesChanged$dataFormula : function(values) {
-		var objects = [values.newsgroup,values.calendarsource,values.calendar].flatten();
+		var objects = [values.newsGroups,values.newsSources,values.calendars,values.calendarSources].flatten();
 		document.forms.PartForm.objects.value = objects.join(',');
 		this.preview();
 	},

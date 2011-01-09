@@ -30,4 +30,12 @@ class Newssource extends Object {
 	function getIn2iGuiIcon() {
 		return 'common/internet';
 	}
+	
+	function removeMore() {
+		$items = Query::after('newssourceitem')->withProperty('newssource_id',$this->id)->get();
+		foreach ($items as $item) {
+			Log::debug('Removing: '.$item->getId());
+			$item->remove();
+		}
+	}
 }
