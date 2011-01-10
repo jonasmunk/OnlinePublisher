@@ -80,7 +80,6 @@ class TestImagePart extends UnitTestCase {
 		$ctrl = new ImagePartController();
 		
 		$xml = $ctrl->build($obj,new PartContext());
-		Log::debug($xml);
 		$this->assertNull($ctrl->importFromString(null));
 		
 		$imported = $ctrl->importFromString($xml);

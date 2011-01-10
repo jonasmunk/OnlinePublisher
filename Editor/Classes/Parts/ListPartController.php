@@ -11,7 +11,7 @@ require_once($basePath.'Editor/Classes/DateUtil.php');
 require_once($basePath.'Editor/Classes/Calendarsource.php');
 require_once($basePath.'Editor/Classes/News.php');
 require_once($basePath.'Editor/Classes/Model/Query.php');
-require_once($basePath.'Editor/Classes/XMLUtils.php');
+require_once($basePath.'Editor/Classes/XmlUtils.php');
 
 class ListPartController extends PartController
 {
