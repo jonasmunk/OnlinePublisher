@@ -244,6 +244,20 @@ class Database {
 			return "NULL";
 		}
 	}
+
+	/**
+	 * Formats a unix timestamp for use in an SQL-sentence
+	 * @param int $stamp The number to format
+	 * @return string The formattet string
+	 */
+	function date($stamp) {
+		if (is_numeric($stamp)) {
+			return "'".date('Y-m-d',intval($stamp))."'";
+		}
+		else {
+			return "NULL";
+		}
+	}
 	
 	/**
 	 * Formats a string for use as a search parameter in an SQL-sentence

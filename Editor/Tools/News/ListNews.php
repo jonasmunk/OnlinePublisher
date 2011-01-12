@@ -10,6 +10,7 @@ require_once '../../Classes/News.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/Services/ObjectLinkService.php';
+require_once '../../Classes/Services/NewsService.php';
 require_once '../../Classes/Log.php';
 
 $sourceId = Request::getInt('source');
@@ -22,7 +23,24 @@ if ($sourceId) {
 	$writer->header(array('title'=>'Titel','width'=>70));
 	$writer->header(array('title'=>'Dato'));
 	$writer->endHeaders();
+	NewsService::synchronizeSource($sourceId);
+	
+	$items = Query::after('newssourceitem')->withProperty('newssource_id',$sourceId)->orderBy('date')->descending()->get();
 
+	foreach ($items as $item) {
+		$writer->startRow();
+		$writer->startCell(array('icon'=>'common/page'))->
+			startLine()->text($item->getTitle())->endLine()->
+			startLine(array('dimmed'=>true))->text(StringUtils::shortenString(StringUtils::removeTags($item->getText()),400))->endLine()->
+			endCell();
+		$writer->startCell()->text(DateUtils::formatFuzzy($item->getDate()))->endCell();
+		
+		$writer->endRow();
+	}
+	$writer->endList();
+	exit;
+
+	
 	if ($source = Newssource::load($sourceId)) {
 		$parser = new FeedParser();
 		$feed = $parser->parseURL($source->getUrl());

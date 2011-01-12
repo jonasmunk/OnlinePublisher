@@ -15,9 +15,14 @@ class DateUtils {
 	}
 	
 	function parseRFC3339($date) {
+		if (StringUtils::isBlank($date)) {
+			return null;
+		}
 		if (preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})-([0-9]{2}):([0-9]{2})/mi",$date, $matches)) {
 			$diff = intval($matches[7]);
 			return gmmktime( $matches[4]+$diff,$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
+		} else if (preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})Z/mi",$date, $matches)) {
+			return gmmktime( $matches[4],$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
 		}
 		Log::debug('Could not parse date: '.$date);
 		return null;

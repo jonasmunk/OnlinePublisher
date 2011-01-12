@@ -6,9 +6,12 @@
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/ListPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/In2iGui.php');
 require_once($basePath.'Editor/Classes/DateUtil.php');
 require_once($basePath.'Editor/Classes/Calendarsource.php');
 require_once($basePath.'Editor/Classes/News.php');
+require_once($basePath.'Editor/Classes/Model/Query.php');
+require_once($basePath.'Editor/Classes/XMLUtils.php');
 
 class ListPartController extends PartController
 {
@@ -56,33 +59,68 @@ class ListPartController extends PartController
 		'<script type="text/javascript">
 		op.part.List.setData('.$this->buildData($part).');'.
 		'</script>'.
-		'<div id="part_list_container">'.$this->render($part,$context).'</div>';
+		'<div id="part_list_container">'.
+		StringUtils::fromUnicode($this->render($part,$context)).
+		'</div>';
+	}
+	
+	function editorGui($part,$context) {
+		$gui='
+		<window title="Nyheder" name="listWindow" width="300">
+			<tabs small="true" centered="true">
+				<tab title="Indstillinger" padding="10">
+					<formula name="formula">
+						<group labels="above">
+							<text label="Titel" value="'.StringUtils::escapeXML($part->getTitle()).'" key="title"/>
+							<number label="Dage" value="'.$part->getTimeCount().'" key="time_count"/>
+							<number label="Maksimalt antal" value="'.$part->getMaxItems().'" key="maxitems"/>
+							<checkbox label="Vis kilde" value="'.$part->getShowSource().'" key="show_source"/>
+						</group>
+					</formula>
+				</tab>
+				<tab title="Data">
+					<overflow max-height="300">
+					<formula padding="10" name="dataFormula">
+						<fieldset legend="Nyheder">
+							<group labels="above">
+								<checkboxes label="Grupper" key="newsGroups">
+								'.GuiUtils::buildObjectItems('newsgroup').'
+								</checkboxes>
+								<checkboxes label="Kilder" key="newsSources">
+								'.GuiUtils::buildObjectItems('newssource').'
+								</checkboxes>
+							</group>
+						</fieldset>
+						<space height="10"/>
+						<fieldset legend="Begivenheder">
+							<group labels="above">
+								<checkboxes label="Kalendere" key="calendars">
+								'.GuiUtils::buildObjectItems('calendar').'
+								</checkboxes>
+								<checkboxes label="Kilder" key="calendarSources">
+								'.GuiUtils::buildObjectItems('calendarsource').'
+								</checkboxes>
+							</group>
+						</fieldset>
+					</formula>
+					</overflow>
+				</tab>
+			</tabs>
+		</window>';
+		return StringUtils::fromUnicode(In2iGui::renderFragment($gui));
 	}
 	
 	function buildData($part) {
 		$data = array();
-		$data['calendarsourceValues'] = $this->buildValues('calendarsource',$part);
-		$data['calendarsourceOptions'] = $this->buildItems('calendarsource');
-		$data['calendarValues'] = $this->buildValues('calendar',$part);
-		$data['calendarOptions'] = $this->buildItems('calendar');
-		$data['newsgroupValues'] = $this->buildValues('newsgroup',$part);
-		$data['newsgroupOptions'] = $this->buildItems('newsgroup');
+		$data['calendarSources'] = $this->buildValues('calendarsource',$part);
+		$data['calendars'] = $this->buildValues('calendar',$part);
+		$data['newsGroups'] = $this->buildValues('newsgroup',$part);
+		$data['newsSources'] = $this->buildValues('newssource',$part);
 		return In2iGui::toJSON($data);
 	}
 	
 	function buildValues($type,$part) {
 		return Database::selectIntArray("select object.id from part_list_object,object where part_list_object.object_id=object.id and object.type='".$type."' and part_id=".$part->getId());
-	}
-	
-	function buildItems($type) {
-		$options = array();
-		$sql = "select id as value,title from object where type='".$type."' order by title";
-		$result = Database::select($sql);
-		while ($row = Database::next($result)) {
-			$options[] = array('value'=>intval($row['value']),'title'=>$row['title']);
-		}
-		Database::free($result);
-		return $options;
 	}
 	
 	function buildSub($part,$context) {
@@ -104,7 +142,7 @@ class ListPartController extends PartController
 						$source->synchronize();
 						$sourceEvents = $source->getEvents(array('startDate'=>$from,'endDate'=>$to));
 						foreach ($sourceEvents as $sourceEvent) {
-							$item = new PartListItem2();
+							$item = new PartListItem();
 							$item->setStartDate($sourceEvent['startDate']);
 							$item->setEndDate($sourceEvent['endDate']);
 							$item->setTitle($sourceEvent['summary']);
@@ -118,12 +156,26 @@ class ListPartController extends PartController
 				} else if ($type=='newsgroup') {
 					$newsItems = News::search(array('group'=>$id,'startDate'=>$from,'endDate'=>$to));
 					foreach ($newsItems as $newsItem) {
-						$item = new PartListItem2();
+						$item = new PartListItem();
 						$item->setStartDate($newsItem->getStartDate());
 						$item->setEndDate($newsItem->getEndDate());
 						$item->setTitle($newsItem->getTitle());
 						$item->setText($newsItem->getNote());
 						$items[] = $item;
+					}
+				} else if ($type=='newssource') {
+					if ($source = Newssource::load($id)) {
+						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',DateUtil::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
+						foreach ($newsItems as $newsItem) {
+							$item = new PartListItem();
+							$item->setStartDate($newsItem->getDate());
+							$item->setTitle($newsItem->getTitle());
+							$item->setText($newsItem->getText());
+							if ($part->getShowSource()) {
+								$item->setSource($source->getTitle());
+							}
+							$items[] = $item;
+						}
 					}
 				}
 			}
@@ -166,7 +218,7 @@ class ListPartController extends PartController
 }
 	
 
-	class PartListItem2 {
+	class PartListItem {
 	
 		var $title;
 		var $text;

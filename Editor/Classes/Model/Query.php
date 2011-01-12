@@ -12,6 +12,8 @@ class Query {
 	private $text;
 	private $custom = array();
 	private $fields = array();
+	private $ordering = array();
+	private $direction = 'ascending';
 	
 	function Query($type) {
 		$this->type = $type;
@@ -24,9 +26,32 @@ class Query {
 	function getText() {
 	    return $this->text;
 	}	
+
+	function getDirection() {
+	    return $this->direction;
+	}	
+	
+	function getOrdering() {
+		return $this->ordering;
+	}
 	
 	function after($type) {
 		return new Query($type);
+	}
+	
+	function orderBy($order) {
+		$this->ordering[] = $order;
+		return $this;
+	}
+	
+	function ascending() {
+		$this->direction = 'ascending';
+		return $this;
+	}
+	
+	function descending() {
+		$this->direction = 'descending';
+		return $this;
 	}
 	
 	function withText($text) {
@@ -61,6 +86,11 @@ class Query {
 	
 	function search() {
 		return ObjectService::search($this);
+	}
+
+	function get() {
+		$result = ObjectService::search($this);
+		return $result->getList();
 	}
 	
 	function first() {

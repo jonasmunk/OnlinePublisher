@@ -493,7 +493,15 @@ $databaseTables = array(
 	'newssource' => array(
 			array("object_id","int(11)","","","0",""),
 			array("url","varchar(255)","YES","","","")
-	),
+		),
+	'newssourceitem' => array(
+			array("object_id","int(11)","","","0",""),
+			array("newssource_id","int(11)","","","0",""),
+			array("text","text","YES","","",""),
+			array("date","datetime","YES","","0000-00-00 00:00:00",""),
+			array("url","varchar(255)","YES","","",""),
+			array("guid","varchar(255)","YES","","","")
+		),
 	'object' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("title","varchar(255)","YES","","",""),
