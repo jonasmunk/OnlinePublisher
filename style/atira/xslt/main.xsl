@@ -208,7 +208,7 @@
 						</p>
 						<p>
 							<strong>General info: </strong><a href="mailto:info@atira.dk"><span>info@atira.dk</span></a>
-							<br/><strong>PURE support: </strong><a href="mailto:support@pure.atira.dk"><span>support@pure.atira.dk</span></a>
+							<br/><strong>PURE support: </strong><a href="mailto:pure-support@atira.dk"><span>pure-support@atira.dk</span></a>
 							<br/><strong>Other support: </strong><a href="mailto:support@atira.dk"><span>support@atira.dk</span></a>
 						</p>
 					</xsl:when>
@@ -226,7 +226,7 @@
 							<strong>Generel info: </strong>
 							<a href="mailto:info@atira.dk"><span>info@atira.dk</span></a><br/>
 							<strong>PURE support: </strong>
-							<a href="mailto:support@pure.atira.dk"><span>support@pure.atira.dk</span></a>
+							<a href="mailto:pure-support@atira.dk"><span>pure-support@atira.dk</span></a>
 							<br/><strong>Anden support: </strong>
 							<a href="mailto:support@atira.dk"><span>support@atira.dk</span></a>
 						</p>
