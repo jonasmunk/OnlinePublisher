@@ -1045,10 +1045,16 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 		this.parent.flipValue(item.value);
 	},
 	updateUI : function() {
+		try {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
-			n2i.setClass(item.element,'in2igui_checkbox_selected',this.parent.values.indexOf(item.value)!=-1);
+			var index = n2i.indexInArray(this.parent.values,item.value);
+			n2i.setClass(item.element,'in2igui_checkbox_selected',index!=-1);
 		};
+		} catch (e) {
+			alert(typeof(this.parent.values));
+			alert(e);
+		}
 	},
 	hasValue : function(value) {
 		for (var i=0; i < this.checkboxes.length; i++) {

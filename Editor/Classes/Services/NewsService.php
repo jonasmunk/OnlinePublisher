@@ -26,6 +26,7 @@ class NewsService {
 					$srcItem->setDate($item->getPubDate());
 					$srcItem->setUrl($item->getLink());
 					$srcItem->save();
+					$srcItem->publish();
 				}
 			}
 		}

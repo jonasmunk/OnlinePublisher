@@ -235,7 +235,7 @@ In2iGui.Selection.Items.prototype = {
 				var x = n2i.build('span',{'class':'in2igui_disclosure',parent:node});
 				n2i.listen(x,'click',function(e) {
 					n2i.stop(e);
-					self.toggle(this);
+					self.toggle(x);
 				});
 			}
 			var inner = n2i.build('span',{'class':'in2igui_selection_label',text:item.title});

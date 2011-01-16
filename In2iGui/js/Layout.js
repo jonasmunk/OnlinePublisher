@@ -15,21 +15,23 @@ In2iGui.Layout.prototype = {
 			return;
 		}
 		if (this.diff===undefined) {
-			var top = this.element.select('thead td')[0].firstDescendant().clientHeight;
-			var foot = this.element.select('tfoot td')[0];
+			var head = n2i.firstByClass(this.element,'in2igui_layout_top');
+			var top = n2i.firstByTag(head,'*').clientHeight;
+			var foot = n2i.firstByTag(n2i.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
 			if (foot) {
-				bottom = foot.firstDescendant().clientHeight;
+				bottom = n2i.firstByTag(foot,'*').clientHeight;
 			}
-			top+=this.element.cumulativeOffset().top;
+			top += n2i.getTop(this.element);
 			this.diff = bottom+top;
 			if (this.element.parentNode!==document.body) {
 				this.diff+=15;
 			} else {
 			}
 		}
-		var cell = this.element.select('tbody tr td')[0];
-		cell.style.height=(n2i.getViewPortHeight()-this.diff)+'px';
+		var tbody = n2i.firstByTag(this.element,'tbody');
+		var cell = n2i.firstByTag(tbody,'td');
+		cell.style.height = (n2i.getViewPortHeight()-this.diff+5)+'px';
 	}
 };
 

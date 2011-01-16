@@ -222,8 +222,8 @@ In2iGui.List.prototype = {
 		this.selected = [];
 		this.parseWindow(doc);
 		this.buildNavigation();
-		this.body.innerHTML='';
-		this.head.innerHTML='';
+		n2i.dom.clear(this.head);
+		n2i.dom.clear(this.body);
 		this.rows = [];
 		this.columns = [];
 		var headTr = document.createElement('tr');

@@ -5019,9 +5019,20 @@ n2i.isArray = function(obj) {
 
 n2i.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
-		if (arr[i]==value) return true;
+		if (arr[i]==value) {
+			return true;
+		}
 	};
 	return false;
+}
+
+n2i.indexInArray = function(arr,value) {
+	for (var i=0; i < arr.length; i++) {
+		if (arr[i]==value) {
+			return i;
+		}
+	};
+	return -1;
 }
 
 n2i.each = function(items,func) {
@@ -5109,6 +5120,12 @@ n2i.dom = {
 	},
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
+	},
+	clear : function(node) {
+		var children = node.childNodes;
+		for (var i = children.length - 1; i >= 0; i--) {
+			children[i].parentNode.removeChild(children[i]);
+		};
 	},
 	remove : function(node) {
 		if (node.parentNode) {
@@ -5248,7 +5265,7 @@ n2i.build = function(tag,options) {
 
 n2i.getAncestors = function(element) {
 	var ancestors = [];
-	parent = element.parentNode;
+	var parent = element.parentNode;
 	while (parent) {
 		ancestors[ancestors.length] = parent;
 		parent = parent.parentNode;
@@ -5257,6 +5274,12 @@ n2i.getAncestors = function(element) {
 }
 
 n2i.getNext = function(element) {
+	if (!element) {
+		return null;
+	}
+	if (!element.nextSibling) {
+		return null;
+	}
 	var next = element.nextSibling;
 	while (next && next.nodeType!=1) {
 		next = next.nextSibling;
@@ -5313,7 +5336,9 @@ n2i.getPosition = function(element) {
 
 n2i.hasClass = function(element, className) {
 	element = n2i.get(element);
-	if (!element) {return false};
+	if (!element || !element.className) {
+		return false
+	}
 	var a = element.className.split(/\s+/);
 	for (var i = 0; i < a.length; i++) {
 		if (a[i] == className) {
@@ -5452,7 +5477,7 @@ n2i.Event.prototype = {
 	findByTag : function(tag) {
 		var parent = this.element;
 		while (parent) {
-			if (parent.tagName==tag) {
+			if (parent.tagName.toLowerCase()==tag) {
 				return parent;
 			}
 			parent = parent.parentNode;
@@ -10422,10 +10447,16 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 		this.parent.flipValue(item.value);
 	},
 	updateUI : function() {
+		try {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
-			n2i.setClass(item.element,'in2igui_checkbox_selected',this.parent.values.indexOf(item.value)!=-1);
+			var index = n2i.indexInArray(this.parent.values,item.value);
+			n2i.setClass(item.element,'in2igui_checkbox_selected',index!=-1);
 		};
+		} catch (e) {
+			alert(typeof(this.parent.values));
+			alert(e);
+		}
 	},
 	hasValue : function(value) {
 		for (var i=0; i < this.checkboxes.length; i++) {
@@ -10939,8 +10970,8 @@ In2iGui.List.prototype = {
 		this.selected = [];
 		this.parseWindow(doc);
 		this.buildNavigation();
-		this.body.innerHTML='';
-		this.head.innerHTML='';
+		n2i.dom.clear(this.head);
+		n2i.dom.clear(this.body);
 		this.rows = [];
 		this.columns = [];
 		var headTr = document.createElement('tr');
@@ -12108,7 +12139,7 @@ In2iGui.Selection.Items.prototype = {
 				var x = n2i.build('span',{'class':'in2igui_disclosure',parent:node});
 				n2i.listen(x,'click',function(e) {
 					n2i.stop(e);
-					self.toggle(this);
+					self.toggle(x);
 				});
 			}
 			var inner = n2i.build('span',{'class':'in2igui_selection_label',text:item.title});
@@ -14422,8 +14453,8 @@ In2iGui.Upload.prototype = {
 		// IE: set value of parms again since they disappear
 		if (n2i.browser.msie) {
 			var p = this.options.parameters;
-			$H(this.options.parameters).each(function(pair) {
-				this.form[pair.key].value=pair.value;
+			n2i.each(this.options.parameters,function(key,value) {
+				this.form[key].value = value;
 			}.bind(this));
 		}
 		this.form.submit();
@@ -15353,21 +15384,23 @@ In2iGui.Layout.prototype = {
 			return;
 		}
 		if (this.diff===undefined) {
-			var top = this.element.select('thead td')[0].firstDescendant().clientHeight;
-			var foot = this.element.select('tfoot td')[0];
+			var head = n2i.firstByClass(this.element,'in2igui_layout_top');
+			var top = n2i.firstByTag(head,'*').clientHeight;
+			var foot = n2i.firstByTag(n2i.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
 			if (foot) {
-				bottom = foot.firstDescendant().clientHeight;
+				bottom = n2i.firstByTag(foot,'*').clientHeight;
 			}
-			top+=this.element.cumulativeOffset().top;
+			top += n2i.getTop(this.element);
 			this.diff = bottom+top;
 			if (this.element.parentNode!==document.body) {
 				this.diff+=15;
 			} else {
 			}
 		}
-		var cell = this.element.select('tbody tr td')[0];
-		cell.style.height=(n2i.getViewPortHeight()-this.diff)+'px';
+		var tbody = n2i.firstByTag(this.element,'tbody');
+		var cell = n2i.firstByTag(tbody,'td');
+		cell.style.height = (n2i.getViewPortHeight()-this.diff+5)+'px';
 	}
 };
 

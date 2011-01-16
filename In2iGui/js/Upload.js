@@ -145,8 +145,8 @@ In2iGui.Upload.prototype = {
 		// IE: set value of parms again since they disappear
 		if (n2i.browser.msie) {
 			var p = this.options.parameters;
-			$H(this.options.parameters).each(function(pair) {
-				this.form[pair.key].value=pair.value;
+			n2i.each(this.options.parameters,function(key,value) {
+				this.form[key].value = value;
 			}.bind(this));
 		}
 		this.form.submit();

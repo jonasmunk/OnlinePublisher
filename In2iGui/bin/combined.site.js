@@ -5019,9 +5019,20 @@ n2i.isArray = function(obj) {
 
 n2i.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
-		if (arr[i]==value) return true;
+		if (arr[i]==value) {
+			return true;
+		}
 	};
 	return false;
+}
+
+n2i.indexInArray = function(arr,value) {
+	for (var i=0; i < arr.length; i++) {
+		if (arr[i]==value) {
+			return i;
+		}
+	};
+	return -1;
 }
 
 n2i.each = function(items,func) {
@@ -5109,6 +5120,12 @@ n2i.dom = {
 	},
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
+	},
+	clear : function(node) {
+		var children = node.childNodes;
+		for (var i = children.length - 1; i >= 0; i--) {
+			children[i].parentNode.removeChild(children[i]);
+		};
 	},
 	remove : function(node) {
 		if (node.parentNode) {
@@ -5248,7 +5265,7 @@ n2i.build = function(tag,options) {
 
 n2i.getAncestors = function(element) {
 	var ancestors = [];
-	parent = element.parentNode;
+	var parent = element.parentNode;
 	while (parent) {
 		ancestors[ancestors.length] = parent;
 		parent = parent.parentNode;
@@ -5257,6 +5274,12 @@ n2i.getAncestors = function(element) {
 }
 
 n2i.getNext = function(element) {
+	if (!element) {
+		return null;
+	}
+	if (!element.nextSibling) {
+		return null;
+	}
 	var next = element.nextSibling;
 	while (next && next.nodeType!=1) {
 		next = next.nextSibling;
@@ -5313,7 +5336,9 @@ n2i.getPosition = function(element) {
 
 n2i.hasClass = function(element, className) {
 	element = n2i.get(element);
-	if (!element) {return false};
+	if (!element || !element.className) {
+		return false
+	}
 	var a = element.className.split(/\s+/);
 	for (var i = 0; i < a.length; i++) {
 		if (a[i] == className) {
@@ -5452,7 +5477,7 @@ n2i.Event.prototype = {
 	findByTag : function(tag) {
 		var parent = this.element;
 		while (parent) {
-			if (parent.tagName==tag) {
+			if (parent.tagName.toLowerCase()==tag) {
 				return parent;
 			}
 			parent = parent.parentNode;
