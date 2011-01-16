@@ -1,7 +1,24 @@
 /** @namespace */
 var n2i = {
 	/** @namespace */
-	browser : {}
+	browser : {},
+	ELEMENT_NODE : 1,
+	ATTRIBUTE_NODE : 2,
+	TEXT_NODE : 3,
+	KEY_BACKSPACE : 8,
+    KEY_TAB : 9,
+    KEY_RETURN : 13,
+    KEY_ESC : 27,
+    KEY_LEFT : 37,
+    KEY_UP : 38,
+    KEY_RIGHT : 39,
+    KEY_DOWN : 40,
+    KEY_DELETE : 46,
+    KEY_HOME : 36,
+    KEY_END : 35,
+    KEY_PAGEUP : 33,
+    KEY_PAGEDOWN : 34,
+    KEY_INSERT : 45,
 }
 
 if (!window.hui) {
@@ -25,10 +42,6 @@ n2i.browser.gecko = !n2i.browser.webkit && navigator.userAgent.indexOf('Gecko')!
 	}
 })()
 
-n2i.ELEMENT_NODE=1;
-n2i.ATTRIBUTE_NODE=2;
-n2i.TEXT_NODE=3;
-
 /** Log something */
 n2i.log = function(obj) {
 	try {
@@ -38,8 +51,8 @@ n2i.log = function(obj) {
 
 /** Make a string camelized */
 n2i.camelize = function(str) {
+	if (str.indexOf('-')==-1) {return str}
     var oStringList = str.split('-');
-    if (oStringList.length == 1) return oStringList[0];
 
     var camelizedString = str.indexOf('-') == 0
       ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
@@ -81,6 +94,14 @@ n2i.escapeHTML = function(str) {
    	return document.createElement('div').appendChild(document.createTextNode(str)).innerHTML;
 }
 
+n2i.escape = function(str) {
+	if (!n2i.isDefined(str)) {return ''};
+	return str.replace(/&/g,'&amp;').
+		replace(/>/g,'&gt;').
+		replace(/</g,'&lt;').
+		replace(/"/g,'&quot;')
+}
+
 /** Checks if a string has characters */
 n2i.isEmpty = n2i.isBlank = function(str) {
 	if (str===null || typeof(str)==='undefined' || str==='') return true;
@@ -92,11 +113,31 @@ n2i.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
+n2i.isArray = function(obj) {
+	if (obj.constructor == Array) {
+		return true;
+	} else {
+		return Object.prototype.toString.call(obj) === '[object Array]';
+	}
+}
+
 n2i.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
 		if (arr[i]==value) return true;
 	};
 	return false;
+}
+
+n2i.each = function(items,func) {
+	if (n2i.isArray(items)) {		
+		for (var i=0; i < items.length; i++) {
+			func(items[i],i);
+		};
+	} else {
+		for (key in items) {
+			func(key,items[key]);
+		}
+	}
 }
 
 /**
@@ -173,7 +214,26 @@ n2i.dom = {
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
 	},
+	remove : function(node) {
+		if (node.parentNode) {
+			node.parentNode.removeChild(node);
+		}
+	},
+	replaceHTML : function(node,html) {
+		node = n2i.get(node);
+		node.innerHTML=html;
+	},
+	runScripts : function(node) {
+		var scripts = node.getElementsByTagName('script');
+		for (var i=0; i < scripts.length; i++) {
+			eval(scripts[i].innerHTML);
+		}
+	},
 	setNodeText : function(node,text) {
+		n2i.log('setNodeText is deprecated');
+		n2i.dom.setText(node,text);
+	},
+	setText : function(node,text) {
 		var c = node.childNodes;
 		var updated = false;
 		for (var i=0; i < c.length; i++) {
@@ -202,7 +262,7 @@ n2i.dom = {
 	},
 	isVisible : function(node) {
 		while (node) {
-			if (node.style && (node.getStyle('display')==='none' || node.getStyle('visibility')==='hidden')) {
+			if (node.style && (n2i.getStyle(node,'display')==='none' || n2i.getStyle(node,'visibility')==='hidden')) {
 				return false;
 			}
 			node = node.parentNode;
@@ -211,18 +271,39 @@ n2i.dom = {
 	}
 }
 
-n2i.get = function(str) {
-	if (str===null || str===undefined) {
-		return null;
+n2i.form = {
+	getValues : function(node) {
+		var params = {};
+		var inputs = node.getElementsByTagName('input');
+		for (var i=0; i < inputs.length; i++) {
+			if (n2i.isDefined(inputs[i].name)) {
+				params[inputs[i].name] = inputs[i].value;
+			}
+		};
+		return params;
 	}
-	if (str.nodeType==n2i.ELEMENT_NODE) {
-		return str;
-	}
-	return document.getElementById(str);
 }
 
-n2i.firstByClass = function(parentElement,className) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName('*');
+n2i.get = function(str) {
+	if (typeof(str)=='string') {
+		return document.getElementById(str);
+	}
+	return str;
+}
+
+n2i.getChildren = function(node) {
+	var children = [];
+	var x = node.childNodes;
+	for (var i=0; i < x.length; i++) {
+		if (n2i.dom.isElement(x[i])) {
+			children.push(x[i]);
+		}
+	};
+	return children;
+}
+
+n2i.firstByClass = function(parentElement,className,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
 	for (var i=0;i<children.length;i++) {
 		if (n2i.hasClass(children[i],className)) {
 			return children[i];
@@ -231,12 +312,105 @@ n2i.firstByClass = function(parentElement,className) {
 	return null;
 }
 
+n2i.byClass = function(parentElement,className,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+	var out = [];
+	for (var i=0;i<children.length;i++) {
+		if (n2i.hasClass(children[i],className)) {
+			out[out.length]=children[i];
+		}
+	}
+	return out;
+}
+
+n2i.firstByTag = function(parentElement,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag);
+	return children[0];
+}
+
 n2i.build = function(tag,options) {
 	var e = document.createElement(tag);
-	if (options.className) {
-		e.className = options.className;
+	if (options) {
+		for (prop in options) {
+			if (prop=='text') {
+				e.appendChild(document.createTextNode(options.text));
+			} else if (prop=='html') {
+				e.innerHTML=options.html;
+			} else if (prop=='parent') {
+				options.parent.appendChild(e);
+			} else if (prop=='className') {
+				e.className=options.className;
+			} else if (prop=='class') {
+				e.className=options['class'];
+			} else if (n2i.isDefined(options[prop])) {
+				e.setAttribute(prop,options[prop]);
+			}
+		}
 	}
 	return e;
+}
+
+n2i.getAncestors = function(element) {
+	var ancestors = [];
+	parent = element.parentNode;
+	while (parent) {
+		ancestors[ancestors.length] = parent;
+		parent = parent.parentNode;
+	}
+	return ancestors;
+}
+
+n2i.getNext = function(element) {
+	var next = element.nextSibling;
+	while (next && next.nodeType!=1) {
+		next = next.nextSibling;
+	}
+    return next;
+}
+
+n2i.getAllNext = function(element) {
+	var elements = [];
+	var next = n2i.getNext(element);
+	while (next) {
+		elements.push(next);
+		next = n2i.getNext(next);
+	}
+	return elements;
+}
+
+n2i.getTop = function(element) {
+    element = n2i.get(element);
+	if (element) {
+		var yPos = element.offsetTop;
+		var tempEl = element.offsetParent;
+		while (tempEl != null) {
+			yPos += tempEl.offsetTop;
+			tempEl = tempEl.offsetParent;
+		}
+		return yPos;
+	}
+	else return 0;
+}
+
+n2i.getLeft = function(element) {
+    element = n2i.get(element);
+	if (element) {
+		var xPos = element.offsetLeft;
+		var tempEl = element.offsetParent;
+		while (tempEl != null) {
+			xPos += tempEl.offsetLeft;
+			tempEl = tempEl.offsetParent;
+		}
+		return xPos;
+	}
+	else return 0;
+}
+
+n2i.getPosition = function(element) {
+	return {
+		left : n2i.getLeft(element),
+		top : n2i.getTop(element)
+	}
 }
 
 /////////////////////////// Class handling //////////////////////
@@ -294,10 +468,269 @@ n2i.setClass = function(element,className,add) {
 	}
 }
 
+n2i.fromJSON = function(json) {
+	return JSON.parse(json);
+	//return eval('(' + json + ')');
+}
+
+n2i.toJSON = function(obj) {
+	return JSON.stringify(obj);
+}
+
+///////////////////// Events //////////////////
+
+n2i.listen = function(el,type,listener,useCapture) {
+	el = n2i.get(el);
+	if(document.addEventListener) {
+		el.addEventListener(type,listener,useCapture ? true : false);
+	} else {
+		el.attachEvent('on'+type, listener);
+	}
+}
+
+n2i.unListen = function(el,type,listener,useCapture) {
+	el = n2i.get(el);
+	if(document.removeEventListener) {
+		el.removeEventListener(type,listener,useCapture ? true : false);
+	} else {
+		el.detachEvent('on'+type, listener);
+	}
+}
+
+n2i.event = function(event) {
+	return new n2i.Event();
+}
+
+n2i.Event = function(event) {
+	this.event = event = event || window.event;
+	this.element = event.target ? event.target : event.srcElement;
+	this.shiftKey = event.shiftKey;
+	this.returnKey = event.keyCode==13;
+	this.escapeKey = event.keyCode==27;
+	this.spaceKey = event.keyCode==32;
+	this.keyCode = event.keyCode;
+}
+
+n2i.Event.prototype = {
+	left : function() {
+	    var left = 0;
+		if (this.event) {
+		    if (this.event.pageX) {
+			    left = this.event.pageX;
+		    } else if (this.event.clientX) {
+			    left = this.event.clientX + document.body.scrollLeft;
+		    }
+		}
+	    return left;
+	},
+	getLeft : function() {
+		return this.left();
+	},
+	top : function() {
+	    var top = 0;
+		if (this.event) {
+		    if (this.event.pageY) {
+			    top = this.event.pageY;
+		    } else if (this.event.clientY) {
+			    top = this.event.clientY + document.body.scrollTop;
+		    }
+		}
+	    return top;
+	},
+	getTop : function() {
+		return this.top();
+	},
+	getElement : function() {
+		return this.element;
+	},
+	findByClass : function(cls) {
+		var parent = this.element;
+		while (parent) {
+			if (n2i.hasClass(parent,cls)) {
+				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	findByTag : function(tag) {
+		var parent = this.element;
+		while (parent) {
+			if (parent.tagName==tag) {
+				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	isReturnKey : function() {
+		return this.event.keyCode==13;
+	},
+	isRightKey : function() {
+		return this.event.keyCode==39;
+	},
+	isLeftKey : function() {
+		return this.event.keyCode==37;
+	},
+	isEscapeKey : function() {
+		return this.event.keyCode==27;
+	},
+	isSpaceKey : function() {
+		return this.event.keyCode==32;
+	},
+	stop : function() {
+		n2i.stop(this.event);
+	}
+}
+
+n2i.stop = function(e) {
+	if (!e) {e = window.event};
+	if (e.stopPropagation) {e.stopPropagation()};
+	if (e.preventDefault) {e.preventDefault()};
+	e.cancelBubble = true;
+    e.stopped = true;
+}
+
+n2i.onReady = function(delegate) {
+	if(window.addEventListener) {
+		window.addEventListener('DOMContentLoaded',delegate);
+	}
+	else if(typeof document.addEventListener != 'undefined')
+	{
+		//.. opera 7
+		document.addEventListener('load', delegate, false);
+	}
+	else if(typeof window.attachEvent != 'undefined')
+	{
+		//.. win/ie
+		window.attachEvent('onload', delegate);
+	}
+
+	//** remove this condition to degrade older browsers
+	else
+	{
+		//.. mac/ie5 and anything else that gets this far
+	
+		//if there's an existing onload function
+		if(typeof window.onload == 'function')
+		{
+			//store it
+			var existing = window.onload;
+		
+			//add new onload handler
+			window.onload = function()
+			{
+				//call existing onload function
+				existing();
+			
+				//call delegate onload function
+				delegate();
+			};
+		}
+		else
+		{
+			//setup onload function
+			window.onload = delegate;
+		}
+	}
+}
+
+// Ajax //
+
+n2i.request = function(options) {
+	options = n2i.override({method:'GET',async:true},options);
+	var transport = n2i.request.createTransport();
+	var self = this;
+	transport.onreadystatechange = function() {
+		try {
+			if (transport.readyState == 4) {
+				if (transport.status == 200 && options.onSuccess) {
+					options.onSuccess(transport);
+				} else if (options.onFailure) {
+					options.onFailure(transport);
+				}
+			}
+		} catch (e) {
+			if (options.onException) {
+				options.onException(e,transport)
+			} else {
+				throw e;
+			}
+		}
+	};
+	var method = options.method.toUpperCase();
+	transport.open(method, options.url, options.async);
+	var parameters = null;
+	var body = '';
+    if (method=='POST' && options.parameters) {
+		body = n2i.request.buildPostBody(options.parameters);
+		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+		//transport.setRequestHeader("Content-length", body.length);
+		//transport.setRequestHeader("Connection", "close");
+	}
+	transport.send(body);
+}
+
+n2i.request.buildPostBody = function(parameters) {
+	if (!parameters) return null;
+	var output = '';
+	for (param in parameters) {
+		if (output.length>0) output+='&';
+		output+=encodeURIComponent(param)+'=';
+		if (parameters[param]!==undefined && parameters[param]!==null) {
+			output+=encodeURIComponent(parameters[param]);
+		}
+	}
+	return output;
+}
+
+n2i.request.createTransport = function() {
+	try {
+		if (window.XMLHttpRequest) {
+			var req = new XMLHttpRequest();
+			if (req.readyState == null) {
+				req.readyState = 1;
+				req.addEventListener("load", function () {
+					req.readyState = 4;
+					if (typeof req.onreadystatechange == "function")
+						req.onreadystatechange();
+				}, false);
+			}
+			return req;
+		}
+		else if (window.ActiveXObject) {
+			return n2i.request.getActiveX();
+		} else {
+			// Could not create transport
+			this.delegate.onError(this);
+		}
+	}
+	catch (ex) {
+		if (this.delegate.onError) {
+			this.delegate.onError(this,ex);
+		}
+	}
+}
+
+n2i.request.getActiveX = function() {
+	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
+	var o;
+	for (var i = 0; i < prefixes.length; i++) {
+		try {
+			// try to create the objects
+			o = new ActiveXObject(prefixes[i] + ".XmlHttp");
+			return o;
+		}
+		catch (ex) {};
+	}
+	
+	throw new Error("Could not find an installed XML parser");
+}
+
 ///////////////////// Style ///////////////////
 
 n2i.getStyle = function(element, style) {
-	element = $(element);
+	element = n2i.get(element);
 	var cameled = n2i.camelize(style);
 	var value = element.style[cameled];
 	if (!value) {
@@ -326,11 +759,20 @@ n2i.setOpacity = function(element,opacity) {
 	}
 }
 
+n2i.setStyle = function(element,styles) {
+	for (style in styles) {
+		element.style[style] = styles[style];
+	}
+}
+
 n2i.copyStyle = function(source,target,styles) {
-	styles.each(function(s) {
-		var r = source.getStyle(s);
-		if (r) target.style[s] = source.getStyle(s);
-	});
+	for (var i=0; i < styles.length; i++) {
+		var s = styles[i];
+		var r = n2i.getStyle(source,s);
+		if (r) {
+			target.style[s] = r;
+		}
+	};
 }
 
 ///////////////////// Events ////////////////////
@@ -503,7 +945,7 @@ n2i.getDocumentHeight = function() {
 n2i.place = function(options) {
 	var left=0,top=0;
 	var trgt = options.target.element;
-	var trgtPos = trgt.cumulativeOffset();
+	var trgtPos = {left:n2i.getLeft(trgt),top:n2i.getTop(trgt)};
 	left = trgtPos.left+trgt.clientWidth*options.target.horizontal;
 	top = trgtPos.top+trgt.clientHeight*options.target.vertical;
 	
@@ -700,7 +1142,7 @@ n2i.animation = {
 	running : false,
 	latestId : 0,
 	get : function(element) {
-		element = $(element);
+		element = n2i.get(element);
 		if (!element.n2iAnimationId) {
 			element.n2iAnimationId = this.latestId++;
 		}
@@ -958,9 +1400,18 @@ n2i.Color = function(color_string) {
 
     color_string = color_string.replace(/ /g,'');
     color_string = color_string.toLowerCase();
-
+	
+	var simple_colors = {
+		white : 'ffffff',
+		black : '000000',
+		red : 'ff0000',
+		green : '00ff00',
+		blue : '0000ff'
+	};
+	
     // before getting into regexps, try simple matches
     // and overwrite the input
+	/*
     var simple_colors = {
         aliceblue: 'f0f8ff',
         antiquewhite: 'faebd7',
@@ -1105,7 +1556,7 @@ n2i.Color = function(color_string) {
         whitesmoke: 'f5f5f5',
         yellow: 'ffff00',
         yellowgreen: '9acd32'
-    };
+    };*/
     for (var key in simple_colors) {
         if (color_string == key) {
             color_string = simple_colors[key];
@@ -1420,1199 +1871,26 @@ n2i.ease = {
 		if(n<0.5){ return n2i.ease.bounceIn(n*2) / 2; }
 		return (n2i.ease.bounceOut(n*2-1) / 2) + 0.5; // Decimal
 	}
-};var WysiHat = {};
-
-WysiHat.Editor = {
-  /**
-   *  WysiHat.Editor.attach(textarea)
-   *  - textarea (String | Element): an id or DOM node of the textarea that
-   *  you want to convert to rich text.
-   *
-   *  Creates a new editor for the textarea.
-   **/
-  attach: function(textarea) {
-    textarea = $(textarea);
-    textarea.hide();
-
-    return WysiHat.iFrame.create(textarea, function(editArea) {
-      var document = editArea.getDocument();
-      var window = editArea.getWindow();
-
-      editArea.load();
-
-      Event.observe(window, 'focus', function(event) { editArea.focus(); });
-      Event.observe(window, 'blur', function(event) { editArea.blur(); });
-
-
-      Event.observe(document, 'mouseup', function(event) {
-        editArea.fire("wysihat:mouseup");
-      });
-
-      Event.observe(document, 'mousemove', function(event) {
-        editArea.fire("wysihat:mousemove");
-      });
-
-      Event.observe(document, 'keypress', function(event) {
-        editArea.fire("wysihat:change");
-        editArea.fire("wysihat:keypress");
-      });
-
-      Event.observe(document, 'keyup', function(event) {
-        editArea.fire("wysihat:change");
-        editArea.fire("wysihat:keyup");
-      });
-
-      Event.observe(document, 'keydown', function(event) {
-        if (event.keyCode == 86)
-          editArea.fire("wysihat:paste");
-      });
-
-      Event.observe(window, 'paste', function(event) {
-        editArea.fire("wysihat:paste");
-      });
-
-
-      editArea.observe("wysihat:change", function(event) {
-        event.target.save();
-      });
-      //editArea.focus(); HACK!
-    });
-  }
 };
 
-/**
- * mixin WysiHat.Commands
- *
- *  Methods will be mixed into the editor element. Most of these
- *  methods will be used to bind to button clicks or key presses.
- *
- *  var editor = WysiHat.Editor.attach(textarea);
- *  $('bold_button').observe('click', function(event) {
- *    editor.boldSelection();
- *    Event.stop(event);
- *  });
- *
- *  In this example, it is important to stop the click event so you don't
- *  lose your current selection.
- **/
-WysiHat.Commands = {
-  /**
-   * WysiHat.Commands#boldSelection() -> undefined
-   *  Bolds the current selection.
-   **/
-  boldSelection: function() {
-    this.execCommand('bold', false, null);
-  },
-
-  /**
-   * WysiHat.Commands#underlineSelection() -> undefined
-   *  Underlines the current selection.
-   **/
-  underlineSelection: function() {
-    this.execCommand('underline', false, null);
-  },
-
-  /**
-   * WysiHat.Commands#italicSelection() -> undefined
-   *  Italicizes the current selection.
-   **/
-  italicSelection: function() {
-    this.execCommand('italic', false, null);
-  },
-
-  /**
-   * WysiHat.Commands#italicSelection() -> undefined
-   *  Strikethroughs the current selection.
-   **/
-  strikethroughSelection: function() {
-    this.execCommand('strikethrough', false, null);
-  },
-
-  /**
-   * WysiHat.Commands#italicSelection() -> undefined
-   *  Blockquotes the current selection.
-   **/
-  blockquoteSelection: function() {
-    this.execCommand('blockquote', false, null);
-  },
-
-  /**
-   * WysiHat.Commands#colorSelection(color) -> undefined
-   *  - color (String): a color name or hexadecimal value
-   *  Sets the foreground color of the current selection.
-   **/
-  colorSelection: function(color) {
-    this.execCommand('forecolor', false, color);
-  },
-
-  /**
-   * WysiHat.Commands#linkSelection(url) -> undefined
-   *  - url (String): value for href
-   *  Wraps the current selection in a link.
-   **/
-  linkSelection: function(url) {
-    this.execCommand('createLink', false, url);
-  },
-
-  /**
-   * WysiHat.Commands#insertOrderedList() -> undefined
-   *  Formats current selection as an ordered list. If the selection is empty
-   *  a new list is inserted.
-   **/
-  insertOrderedList: function() {
-    this.execCommand('insertorderedlist', false, null);
-  },
-
-  /**
-   * WysiHat.Commands#insertUnorderedList() -> undefined
-   *  Formats current selection as an unordered list. If the selection is empty
-   *  a new list is inserted.
-   **/
-  insertUnorderedList: function() {
-    this.execCommand('insertunorderedlist', false, null);
-  },
-
-  /**
-   * WysiHat.Commands#insertImage(url) -> undefined
-   *  - url (String): value for src
-   *  Insert an image at the insertion point with the given url.
-   **/
-  insertImage: function(url) {
-    this.execCommand('insertImage', false, url);
-  },
-
-  /**
-   * WysiHat.Commands#insertHTML(html) -> undefined
-   *  - html (String): HTML or plain text
-   *  Insert HTML at the insertion point.
-   **/
-  insertHTML: function(html) {
-    if (Prototype.Browser.IE) {
-      var range = this._selection.getRange();
-      range.pasteHTML(html);
-      range.collapse(false);
-      range.select();
-    } else {
-      this.execCommand('insertHTML', false, html);
-    }
-  },
-
-  /**
-   * WysiHat.Commands#execCommand(command[, ui = false][, value = null]) -> undefined
-   *  - command (String): Command to execute
-   *  - ui (Boolean): Boolean flag for showing UI. Currenty this not
-   *  implemented by any browser. Just use false.
-   *  - value (String): Value to pass to command
-   *  A simple delegation method to the documents execCommand method.
-   **/
-  execCommand: function(command, ui, value) {
-    var document = this.getDocument();
-    document.execCommand(command, ui, value);
-  },
-
-  queryStateCommands: $A(['bold', 'italic', 'underline', 'strikethrough']),
-
-  /**
-   * WysiHat.Commands#queryCommandState(state) -> Boolean
-   *  - state (String): bold, italic, underline, etc
-   *  Determines whether the current selection has the given state.
-   *  queryCommandState('bold') would return true if the selected text
-   *  is bold.
-   *
-   * You can extend this behavior by adding a custom method to the editor
-   * element, queryCustom(). However this API is not final.
-   * queryCommandState('link') would call queryLink().
-   **/
-  queryCommandState: function(state) {
-    var document = this.getDocument();
-
-    if (this.queryStateCommands.include(state))
-      return document.queryCommandState(state);
-    else if ((f = this['query' + state.capitalize()]))
-      return f.bind(this).call();
-    else
-      return false;
-  }
-};
-/**
- * mixin WysiHat.Persistence
- *
- *  Methods will be mixed into the editor element. These methods deal with
- *  extracting and filtering content going in and out of the editor.
- */
-WysiHat.Persistence = (function() {
-  /**
-   * WysiHat.Persistence#outputFilter(text) -> String
-   *  - text (String): HTML string
-   *
-   *  Use to filter content coming out of the editor. By default it calls
-   *  text.format_html_output. This method has been extract so you can override
-   *  it and provide your own custom output filter.
-   */
-  function outputFilter(text) {
-    return text.format_html_output();
-  }
-
-  /**
-   * WysiHat.Persistence#inputFilter(text) -> String
-   *  - text (String): HTML string
-   *
-   *  Use to filter content going into the editor. By default it calls
-   *  text.format_html_input. This method has been extract so you can override
-   *  it and provide your own custom input filter.
-   */
-  function inputFilter(text) {
-    return text.format_html_input();
-  }
-
-  /**
-   * WysiHat.Persistence#content() -> String
-   *  Returns the editors HTML contents. The contents are first passed
-   *  through outputFilter.
-   *
-   *  You can replace the generic outputFilter with your own function. The
-   *  default behavior is to use String#format_html_output.
-   *
-   *  editor.outputFilter = function(text) {
-   *    return MyUtils.format_and_santize(text);
-   *  };
-   **/
-  function content() {
-    return this.outputFilter(this.rawContent());
-  }
-
-  /**
-   * WysiHat.Persistence#setContent(text) -> undefined
-   *  - text (String): HTML string
-   *
-   *  Replaces editor's entire contents with the given HTML. The contents are
-   *  first passed through inputFilter.
-   *
-   *  You can replace the generic inputFilter with your own function. The
-   *  default behavior is to use String#format_html_input.
-   *
-   *  editor.inputFilter = function(text) {
-   *    return MyUtils.format_and_santize(text);
-   *  };
-   **/
-  function setContent(text) {
-    this.setRawContent(this.inputFilter(text));
-  }
-
-  /**
-   * WysiHat.Persistence#save() -> undefined
-   *  Saves editors contents back out to the textarea.
-   **/
-  function save() {
-    this.textarea.value = this.content();
-  }
-
-  /**
-   * WysiHat.Persistence#load() -> undefined
-   *  Loads textarea contents into editor.
-   **/
-   function load() {
-     this.setContent(this.textarea.value);
-  }
-
-  /**
-   * WysiHat.Persistence#reload() -> undefined
-   *  Saves current contents and loads contents into editor.
-   **/
-  function reload() {
-    this.selection.setBookmark();
-    this.save();
-    this.load();
-    this.selection.moveToBookmark();
-  }
-
-  return {
-    outputFilter: outputFilter,
-    inputFilter:  inputFilter,
-    content:      content,
-    setContent:   setContent,
-    save:         save,
-    load:         load,
-    reload:       reload
-  };
-})();
-/**
- * mixin WysiHat.Window
- *
- *  Methods will be mixed into the editor element. These methods handle window
- *  events such as focus and blur events on the editor.
- */
-WysiHat.Window = (function() {
-  /**
-   * WysiHat.Window#getDocument() -> Document
-   *  Cross browser method to return the iFrame's document.
-   *  You should not need to access this directly, and this API is not final.
-   */
-  function getDocument() {
-    return this.contentDocument || this.contentWindow.document;
-  }
-
-  /**
-   * WysiHat.Window#getWindow() -> Window
-   *  Cross browser method to return the iFrame's window.
-   *  You should not need to access this directly, and this API is not final.
-   */
-  function getWindow() {
-    if (this.contentWindow.document)
-      return this.contentWindow;
-    else if (this.contentDocument)
-      return this.contentDocument.defaultView;
-    else
-      return null;
-  }
-
-  /**
-   * WysiHat.Window#focus() -> undefined
-   *  binds observers to mouseup, mousemove, keypress, and keyup on focus
-   **/
-  function focus() {
-    this.getWindow().focus();
-
-    if (this.hasFocus)
-      return;
-
-    this.hasFocus = true;
-  }
-
-  /**
-   * WysiHat.Window#blur() -> undefined
-   *  removes observers to mouseup, mousemove, keypress, and keyup on blur
-   **/
-  function blur() {
-    this.hasFocus = false;
-  }
-
-  return {
-    getDocument: getDocument,
-    getWindow: getWindow,
-    focus: focus,
-    blur: blur
-  };
-})();
-
-WysiHat.iFrame = {
-  create: function(textarea, callback) {
-    var editArea = new Element('iframe', { 'id': textarea.id + '_editor', 'class': 'editor', allowtransparency:'true' });
-
-    Object.extend(editArea, WysiHat.Commands);
-    Object.extend(editArea, WysiHat.Persistence);
-    Object.extend(editArea, WysiHat.Window);
-    Object.extend(editArea, WysiHat.iFrame.Methods);
-
-    editArea.attach(textarea, callback);
-
-    textarea.insert({before: editArea});
-
-    return editArea;
-  }
-};
-
-WysiHat.iFrame.Methods = {
-  attach: function(element, callback) {
-    this.textarea = element;
-
-    this.observe('load', function() {
-      function setDocumentStyles(document, styles) {
-        if (Prototype.Browser.IE) {
-          var style = document.createStyleSheet();
-          style.addRule("body", "border: 0");
-          style.addRule("p", "margin: 0");
-
-          $H(styles).each(function(pair) {
-            var value = pair.first().underscore().dasherize() + ": " + pair.last();
-            style.addRule("body", value);
-          });
-        } else if (Prototype.Browser.Opera) {
-          var style = Element('style').update("p { margin: 0; }");
-          var head = document.getElementsByTagName('head')[0];
-          head.appendChild(style);
-        } else {
-          Element.setStyle(document.body, styles);
-        }
-      }
-
-      try {
-        var document = this.getDocument();
-      } catch(e) { return; } // No iframe, just stop
-
-      this.selection = new WysiHat.Selection(this);
-
-      if (this.ready && document.designMode == 'on')
-        return;
-
-      setDocumentStyles(document, WysiHat.Editor.styles || {});
-
-      document.designMode = 'on';
-      callback(this);
-      this.ready = true;
-	if (document.body) {
-      this.fire("wysihat:loaded"); // HACK
-}
-    });
-  },
-
-  rawContent: function() {
-    var document = this.getDocument();
-    return document.body.innerHTML;
-  },
-
-  setRawContent: function(text) {
-    var document = this.getDocument();
-    if (document.body)
-      document.body.innerHTML = text;
-  }
-};
-
-Object.extend(String.prototype, (function() {
-  /**
-   * String#format_html_output() -> String
-   *
-   *  Cleanup browser's HTML mess!
-   *
-   *  There is no standard formatting among the major browsers for the rich
-   *  text output. Safari wraps its line breaks with "div" tags, Firefox puts
-   *  "br" tags at the end of the line, and other such as Internet Explorer
-   *  wrap lines in "p" tags.
-   *
-   *  The output is a standarizes these inconsistencies and produces a clean
-   *  result. A single return creates a line break "br" and double returns
-   *  create a new paragraph. This is similar to how Textile and Markdown
-   *  handle whitespace.
-   *
-   *  Raw browser content => String#format_html_output => Textarea
-   **/
-  function format_html_output() {
-    var text = String(this);
-    text = text.tidy_xhtml();
-
-    if (Prototype.Browser.WebKit) {
-      text = text.replace(/(<div>)+/g, "\n");
-      text = text.replace(/(<\/div>)+/g, "");
-
-      text = text.replace(/<p>\s*<\/p>/g, "");
-
-      text = text.replace(/<br \/>(\n)*/g, "\n");
-    } else if (Prototype.Browser.Gecko) {
-      text = text.replace(/<p>/g, "");
-      text = text.replace(/<\/p>(\n)?/g, "\n");
-
-      text = text.replace(/<br \/>(\n)*/g, "\n");
-    } else if (Prototype.Browser.IE || Prototype.Browser.Opera) {
-      text = text.replace(/<p>(&nbsp;|&#160;|\s)<\/p>/g, "<p></p>");
-
-      text = text.replace(/<br \/>/g, "");
-
-      text = text.replace(/<p>/g, '');
-
-      text = text.replace(/&nbsp;/g, '');
-
-      text = text.replace(/<\/p>(\n)?/g, "\n");
-
-      text = text.gsub(/^<p>/, '');
-      text = text.gsub(/<\/p>$/, '');
-    }
-
-    text = text.gsub(/<b>/, "<strong>");
-    text = text.gsub(/<\/b>/, "</strong>");
-
-    text = text.gsub(/<i>/, "<em>");
-    text = text.gsub(/<\/i>/, "</em>");
-
-    text = text.replace(/\n\n+/g, "</p>\n\n<p>");
-
-    text = text.gsub(/(([^\n])(\n))(?=([^\n]))/, "#{2}<br />\n");
-
-    text = '<p>' + text + '</p>';
-
-    text = text.replace(/<p>\s*/g, "<p>");
-    text = text.replace(/\s*<\/p>/g, "</p>");
-
-    var element = Element("body");
-    element.innerHTML = text;
-
-    if (Prototype.Browser.WebKit || Prototype.Browser.Gecko) {
-      var replaced;
-      do {
-        replaced = false;
-        element.select('span').each(function(span) {
-          if (span.hasClassName('Apple-style-span')) {
-            span.removeClassName('Apple-style-span');
-            if (span.className == '')
-              span.removeAttribute('class');
-            replaced = true;
-          } else if (span.getStyle('fontWeight') == 'bold') {
-            span.setStyle({fontWeight: ''});
-            if (span.style.length == 0)
-              span.removeAttribute('style');
-            span.update('<strong>' + span.innerHTML + '</strong>');
-            replaced = true;
-          } else if (span.getStyle('fontStyle') == 'italic') {
-            span.setStyle({fontStyle: ''});
-            if (span.style.length == 0)
-              span.removeAttribute('style');
-            span.update('<em>' + span.innerHTML + '</em>');
-            replaced = true;
-          } else if (span.getStyle('textDecoration') == 'underline') {
-            span.setStyle({textDecoration: ''});
-            if (span.style.length == 0)
-              span.removeAttribute('style');
-            span.update('<u>' + span.innerHTML + '</u>');
-            replaced = true;
-          } else if (span.attributes.length == 0) {
-            span.replace(span.innerHTML);
-            replaced = true;
-          }
-        });
-      } while (replaced);
-
-    }
-
-    for (var i = 0; i < element.descendants().length; i++) {
-      var node = element.descendants()[i];
-      if (node.innerHTML.blank() && node.nodeName != 'BR' && node.id != 'bookmark')
-        node.remove();
-    }
-
-    text = element.innerHTML;
-    text = text.tidy_xhtml();
-
-    text = text.replace(/<br \/>(\n)*/g, "<br />\n");
-    text = text.replace(/<\/p>\n<p>/g, "</p>\n\n<p>");
-
-    text = text.replace(/<p>\s*<\/p>/g, "");
-
-    text = text.replace(/\s*$/g, "");
-
-    return text;
-  }
-
-  /**
-   * String#format_html_input() -> String
-   *
-   *  Prepares sane HTML for editing.
-   *
-   *  This function preforms the reserve function of String#format_html_output. Each
-   *  browser has difficulty editing mix formatting conventions. This restores
-   *  most of the original browser specific formatting tags and some other
-   *  styling conventions.
-   *
-   *  Textarea => String#format_html_input => Raw content
-  **/
-  function format_html_input() {
-    var text = String(this);
-
-    var element = Element("body");
-    element.innerHTML = text;
-
-    if (Prototype.Browser.Gecko || Prototype.Browser.WebKit) {
-      element.select('strong').each(function(element) {
-        element.replace('<span style="font-weight: bold;">' + element.innerHTML + '</span>');
-      });
-      element.select('em').each(function(element) {
-        element.replace('<span style="font-style: italic;">' + element.innerHTML + '</span>');
-      });
-      element.select('u').each(function(element) {
-        element.replace('<span style="text-decoration: underline;">' + element.innerHTML + '</span>');
-      });
-    }
-
-    if (Prototype.Browser.WebKit)
-      element.select('span').each(function(span) {
-        if (span.getStyle('fontWeight') == 'bold')
-          span.addClassName('Apple-style-span');
-
-        if (span.getStyle('fontStyle') == 'italic')
-          span.addClassName('Apple-style-span');
-
-        if (span.getStyle('textDecoration') == 'underline')
-          span.addClassName('Apple-style-span');
-      });
-
-    text = element.innerHTML;
-    text = text.tidy_xhtml();
-
-    text = text.replace(/<\/p>(\n)*<p>/g, "\n\n");
-
-    text = text.replace(/(\n)?<br( \/)?>(\n)?/g, "\n");
-
-    text = text.replace(/^<p>/g, '');
-    text = text.replace(/<\/p>$/g, '');
-
-    if (Prototype.Browser.Gecko) {
-      text = text.replace(/\n/g, "<br>");
-      text = text + '<br>';
-    } else if (Prototype.Browser.WebKit) {
-      text = text.replace(/\n/g, "</div><div>");
-      text = '<div>' + text + '</div>';
-      text = text.replace(/<div><\/div>/g, "<div><br></div>");
-    } else if (Prototype.Browser.IE || Prototype.Browser.Opera) {
-      text = text.replace(/\n/g, "</p>\n<p>");
-      text = '<p>' + text + '</p>';
-      text = text.replace(/<p><\/p>/g, "<p>&nbsp;</p>");
-      text = text.replace(/(<p>&nbsp;<\/p>)+$/g, "");
-    }
-
-    return text;
-  }
-
-  /**
-   * String#tidy_xhtml() -> String
-   *
-   *  Normalizes and tidies text into XHTML content.
-   *   * Strips out browser line breaks, '\r'
-   *   * Downcases tag names
-   *   * Closes line break tags
-   **/
-  function tidy_xhtml() {
-    var text = String(this);
-
-    text = text.gsub(/\r\n?/, "\n");
-
-    text = text.gsub(/<([A-Z]+)([^>]*)>/, function(match) {
-      return '<' + match[1].toLowerCase() + match[2] + '>';
-    });
-
-    text = text.gsub(/<\/([A-Z]+)>/, function(match) {
-      return '</' + match[1].toLowerCase() + '>';
-    });
-
-    text = text.replace(/<br>/g, "<br />");
-
-    return text;
-  }
-
-  return {
-    format_html_output: format_html_output,
-    format_html_input:  format_html_input,
-    tidy_xhtml:         tidy_xhtml
-  };
-})());
-Object.extend(String.prototype, {
-  /**
-   * String#sanitize([options]) -> String
-   * - options (Hash): Whitelist options
-   *
-   *  Sanitizes HTML tags and attributes. Options accepts an array of
-   *  allowed tags and attributes.
-   #
-   *  "<a href='#'>Example</a>".sanitize({tags: ['a'], attributes: ['href']})
-   **/
-  sanitize: function(options) {
-    return Element("div").update(this).sanitize(options).innerHTML.tidy_xhtml();
-  }
-});
-
-Element.addMethods({
-  /**
-   * Element#sanitize([options]) -> Element
-   * - options (Hash): Whitelist options
-   *
-   *  Sanitizes element tags and attributes. Options accepts an array of
-   *  allowed tags and attributes.
-   #
-   *  This method is called by String#sanitize().
-   **/
-  sanitize: function(element, options) {
-    element = $(element);
-    options = $H(options);
-    var allowed_tags = $A(options.get('tags') || []);
-    var allowed_attributes = $A(options.get('attributes') || []);
-    var sanitized = Element(element.nodeName);
-
-    $A(element.childNodes).each(function(child) {
-      if (child.nodeType == 1) {
-        var children = $(child).sanitize(options).childNodes;
-
-        if (allowed_tags.include(child.nodeName.toLowerCase())) {
-          var new_child = Element(child.nodeName);
-          allowed_attributes.each(function(attribute) {
-            if ((value = child.readAttribute(attribute)))
-              new_child.writeAttribute(attribute, value);
-          });
-          sanitized.appendChild(new_child);
-
-          $A(children).each(function(grandchild) { new_child.appendChild(grandchild); });
-        } else {
-          $A(children).each(function(grandchild) { sanitized.appendChild(grandchild); });
-        }
-      } else if (child.nodeType == 3) {
-        sanitized.appendChild(child);
-      }
-    });
-    return sanitized;
-  }
-});
-
-/**
- * class Range
- *
- *  *Under construction*
- *
- *  An attempt to implement the W3C Range in IE.
- *
- **/
-if (Prototype.Browser.IE) {
-  function Range(ownerDocument) {
-    this.ownerDocument = ownerDocument;
-
-    this.startContainer = this.ownerDocument.documentElement;
-    this.startOffset    = 0;
-    this.endContainer   = this.ownerDocument.documentElement;
-    this.endOffset      = 0;
-
-    this.collapsed = true;
-    this.commonAncestorContainer = null;
-
-    this.START_TO_START = 0;
-    this.START_TO_END   = 1;
-    this.END_TO_END     = 2;
-    this.END_TO_START   = 3;
-  }
-
-  document.createRange = function() {
-    return new Range(this);
-  };
-
-  Object.extend(Range.prototype, {
-    setStart: function(parent, offset) {},
-    setEnd: function(parent, offset) {},
-    setStartBefore: function(node) {},
-    setStartAfter: function(node) {},
-    setEndBefore: function(node) {},
-    setEndAfter: function(node) {},
-
-    collapse: function(toStart) {},
-
-    selectNode: function(n) {},
-    selectNodeContents: function(n) {},
-
-    compareBoundaryPoints: function(how, sourceRange) {},
-
-    deleteContents: function() {},
-    extractContents: function() {},
-    cloneContents: function() {},
-
-    insertNode: function(n) {
-      var range = this.ownerDocument.selection.createRange();
-      var parent = this.ownerDocument.createElement('div');
-      parent.appendChild(n);
-      range.collapse();
-      range.pasteHTML(parent.innerHTML);
-    },
-    surroundContents: function(newParent) {
-      var range = this.ownerDocument.selection.createRange();
-      var parent = this.document.createElement('div');
-      parent.appendChild(newParent);
-      node.innerHTML += range.htmlText;
-      range.pasteHTML(parent.innerHTML);
-    },
-
-    cloneRange: function() {},
-    toString: function() {},
-    detach: function() {}
-  });
-}
-/**
- * class WysiHat.Selection
- **/
-WysiHat.Selection = Class.create((function() {
-  /**
-   *  new WysiHat.Selection(editor)
-   *  - editor (WysiHat.Editor): the editor object that you want to bind to
-   **/
-  function initialize(editor) {
-    this.window = editor.getWindow();
-    this.document = editor.getDocument();
-  }
-
-  /**
-   * WysiHat.Selection#getSelection() -> Selection
-   *  Get selected text.
-   **/
-  function getSelection() {
-    return this.window.getSelection ? this.window.getSelection() : this.document.selection;
-  }
-
-  /**
-   * WysiHat.Selection#getRange() -> Range
-   *  Get range for selected text.
-   **/
-  function getRange() {
-    var selection = this.getSelection();
-
-    try {
-      var range;
-      if (selection.getRangeAt)
-        range = selection.getRangeAt(0);
-      else
-        range = selection.createRange();
-    } catch(e) { return null; }
-
-    if (Prototype.Browser.WebKit) {
-      range.setStart(selection.baseNode, selection.baseOffset);
-      range.setEnd(selection.extentNode, selection.extentOffset);
-    }
-
-    return range;
-  }
-
-  /**
-   * WysiHat.Selection#selectNode(node) -> undefined
-   * - node (Element): Element or node to select
-   **/
-  function selectNode(node) {
-    var selection = this.getSelection();
-
-    if (Prototype.Browser.IE) {
-      var range = createRangeFromElement(this.document, node);
-      range.select();
-    } else if (Prototype.Browser.WebKit) {
-      selection.setBaseAndExtent(node, 0, node, node.innerText.length);
-    } else if (Prototype.Browser.Opera) {
-      range = this.document.createRange();
-      range.selectNode(node);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    } else {
-      var range = createRangeFromElement(this.document, node);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-  }
-
-  /**
-   * WysiHat.Selection#getNode() -> Element
-   *  Returns selected node.
-   **/
-  function getNode() {
-    var nodes = null, candidates = [], children, el;
-    var range = this.getRange();
-
-    if (!range)
-      return null;
-
-    var parent;
-    if (range.parentElement)
-      parent = range.parentElement();
-    else
-      parent = range.commonAncestorContainer;
-
-    if (parent) {
-      while (parent.nodeType != 1) parent = parent.parentNode;
-      if (parent.nodeName.toLowerCase() != "body") {
-        el = parent;
-        do {
-          el = el.parentNode;
-          candidates[candidates.length] = el;
-        } while (el.nodeName.toLowerCase() != "body");
-      }
-      children = parent.all || parent.getElementsByTagName("*");
-      for (var j = 0; j < children.length; j++)
-        candidates[candidates.length] = children[j];
-      nodes = [parent];
-      for (var ii = 0, r2; ii < candidates.length; ii++) {
-        r2 = createRangeFromElement(this.document, candidates[ii]);
-        if (r2 && compareRanges(range, r2))
-          nodes[nodes.length] = candidates[ii];
-      }
-    }
-
-    return nodes.first();
-  }
-
-  function createRangeFromElement(document, node) {
-    if (document.body.createTextRange) {
-      var range = document.body.createTextRange();
-      range.moveToElementText(node);
-    } else if (document.createRange) {
-      var range = document.createRange();
-      range.selectNodeContents(node);
-    }
-    return range;
-  }
-
-  function compareRanges(r1, r2) {
-    if (r1.compareEndPoints) {
-      return !(
-        r2.compareEndPoints('StartToStart', r1) == 1 &&
-        r2.compareEndPoints('EndToEnd', r1) == 1 &&
-        r2.compareEndPoints('StartToEnd', r1) == 1 &&
-        r2.compareEndPoints('EndToStart', r1) == 1
-        ||
-        r2.compareEndPoints('StartToStart', r1) == -1 &&
-        r2.compareEndPoints('EndToEnd', r1) == -1 &&
-        r2.compareEndPoints('StartToEnd', r1) == -1 &&
-        r2.compareEndPoints('EndToStart', r1) == -1
-      );
-    } else if (r1.compareBoundaryPoints) {
-      return !(
-        r2.compareBoundaryPoints(0, r1) == 1 &&
-        r2.compareBoundaryPoints(2, r1) == 1 &&
-        r2.compareBoundaryPoints(1, r1) == 1 &&
-        r2.compareBoundaryPoints(3, r1) == 1
-        ||
-        r2.compareBoundaryPoints(0, r1) == -1 &&
-        r2.compareBoundaryPoints(2, r1) == -1 &&
-        r2.compareBoundaryPoints(1, r1) == -1 &&
-        r2.compareBoundaryPoints(3, r1) == -1
-      );
-    }
-
-    return null;
-  };
-
-  function setBookmark() {
-    var bookmark = this.document.getElementById('bookmark');
-    if (bookmark)
-      bookmark.parentNode.removeChild(bookmark);
-
-    bookmark = this.document.createElement('span');
-    bookmark.id = 'bookmark';
-    bookmark.innerHTML = '&nbsp;';
-
-    var range;
-    if (Prototype.Browser.IE)
-      range = new Range(this.document);
-    else
-      range = this.getRange();
-    range.insertNode(bookmark);
-  }
-
-  function moveToBookmark() {
-    var bookmark = this.document.getElementById('bookmark');
-    if (!bookmark)
-      return;
-
-    if (Prototype.Browser.IE) {
-      var range = this.getRange();
-      range.moveToElementText(bookmark);
-      range.collapse();
-      range.select();
-    } else if (Prototype.Browser.WebKit) {
-      var selection = this.getSelection();
-      selection.setBaseAndExtent(bookmark, 0, bookmark, 0);
-    } else {
-      var range = this.getRange();
-      range.setStartBefore(bookmark);
-    }
-
-    bookmark.parentNode.removeChild(bookmark);
-  }
-
-  return {
-    initialize:     initialize,
-    getSelection:   getSelection,
-    getRange:       getRange,
-    getNode:        getNode,
-    selectNode:     selectNode,
-    setBookmark:    setBookmark,
-    moveToBookmark: moveToBookmark
-  };
-})());
-
-/**
- * class WysiHat.Toolbar
- **/
-WysiHat.Toolbar = Class.create((function() {
-  /**
-   * new WysiHat.Toolbar(editor)
-   *  - editor (WysiHat.Editor): the editor object that you want to attach to
-   *
-   *  Creates a toolbar element above the editor. The WysiHat.Toolbar object
-   *  has many helper methods to easily add buttons to the toolbar.
-   *
-   *  This toolbar class is not required for the Editor object to function.
-   *  It is merely a set of helper methods to get you started and to build
-   *  on top of.
-   **/
-  function initialize(editArea) {
-    this.editArea = editArea;
-
-    this.hasMouseDown = false;
-    this.element = new Element('div', { 'class': 'editor_toolbar' });
-
-    var toolbar = this;
-    this.element.observe('mousedown', function(event) { toolbar.mouseDown(event); });
-    this.element.observe('mouseup', function(event) { toolbar.mouseUp(event); });
-
-    this.editArea.insert({before: this.element});
-  }
-
-  /**
-   * WysiHat.Toolbar#addButtonSet(set) -> undefined
-   *  - set (Array): The set array contains nested arrays that hold the
-   *  button options, and handler.
-   *
-   *  Adds a button set to the toolbar.
-   *
-   *  WysiHat.Toolbar.ButtonSets.Basic is a built in button set,
-   *  that looks like:
-   *  [
-   *    [{ name: 'bold', label: "Bold" }, function(editor) {
-   *      editor.boldSelection();
-   *    }],
-   *    [{ name: 'underline', label: "Underline" }, function(editor) {
-   *      editor.underlineSelection();
-   *    }],
-   *    [{ name: 'italic', label: "Italic" }, function(editor) {
-   *      editor.italicSelection();
-   *    }]
-   *  ]
-   **/
-  function addButtonSet(set) {
-    var toolbar = this;
-    $A(set).each(function(button) {
-      var options = button.first();
-      var handler = button.last();
-      toolbar.addButton(options, handler);
-    });
-  }
-
-  /**
-   * WysiHat.Toolbar#addButton(options, handler) -> undefined
-   *  - options (Hash): Required options hash
-   *  - handler (Function): Function to bind to the button
-   *
-   *  The options hash accepts two required keys, name and label. The label
-   *  value is used as the link's inner text. The name value is set to the
-   *  link's class and is used to check the button state.
-   *
-   *  toolbar.addButton({
-   *    name: 'bold', label: "Bold" }, function(editor) {
-   *      editor.boldSelection();
-   *  });
-   *
-   *  Would create a link,
-   *  "<a href='#' class='button bold'><span>Bold</span></a>"
-   **/
-  function addButton(options, handler) {
-    options = $H(options);
-    var button = Element('a', { 'class': 'button', 'href': '#' }).update('<span>' + options.get('label') + '</span>');
-    button.addClassName(options.get('name'));
-
-    this.observeButtonClick(button, handler);
-    this.observeStateChanges(button, options.get('name'));
-    this.element.appendChild(button);
-  }
-
-  /**
-   * WysiHat.Toolbar#observeButtonClick(element, handler) -> undefined
-   *  - element (String | Element): Element to bind handler to
-   *  - handler (Function): Function to bind to the element
-   *  fires wysihat:change
-   *
-   *  In addition to binding the given handler to the element, this observe
-   *  function also sets up a few more events. When the elements onclick is
-   *  fired, the toolbars hasMouseDown property will be set to true and
-   *  back to false on exit.
-   **/
-  function observeButtonClick(element, handler) {
-    var toolbar = this;
-    $(element).observe('click', function(event) {
-      toolbar.hasMouseDown = true;
-      handler(toolbar.editArea);
-      toolbar.editArea.fire("wysihat:change");
-      Event.stop(event);
-      toolbar.hasMouseDown = false;
-    });
-  }
-
-  /**
-   * WysiHat.Toolbar#observeStateChanges(element, command) -> undefined
-   *  - element (String | Element): Element to receive changes
-   *  - command (String): Name of editor command to observe
-   *
-   *  Adds the class "selected" to the given Element when the selected text
-   *  matches the command.
-   *
-   *  toolbar.observeStateChanges(buttonElement, 'bold')
-   *  would add the class "selected" to the buttonElement when the editor's
-   *  selected text was bold.
-   **/
-  function observeStateChanges(element, command) {
-    this.editArea.observe("wysihat:mousemove", function(event) {
-      if (event.target.queryCommandState(command))
-        element.addClassName('selected');
-      else
-        element.removeClassName('selected');
-    });
-  }
-
-  /**
-   * WysiHat.Toolbar#mouseDown(event) -> undefined
-   *  - event (Event)
-   *  This function is triggered when the user clicks their mouse down on
-   *  the toolbar element. For now, it only updates the hasMouseDown property
-   *  to true.
-   **/
-  function mouseDown(event) {
-    this.hasMouseDown = true;
-  }
-
-  /**
-   * WysiHat.Toolbar#mouseDown(event) -> undefined
-   *  - event (Event)
-   *  This function is triggered when the user releases their mouse from
-   *  the toolbar element. It resets the hasMouseDown property back to false
-   *  and refocuses on the editing window.
-   **/
-  function mouseUp(event) {
-    this.editArea.focus();
-    this.hasMouseDown = false;
-  }
-
-  return {
-    initialize:          initialize,
-    addButtonSet:        addButtonSet,
-    addButton:           addButton,
-    observeButtonClick:  observeButtonClick,
-    observeStateChanges: observeStateChanges,
-    mouseDown:           mouseDown,
-    mouseUp:             mouseUp
-  };
-})());
-
-WysiHat.Toolbar.ButtonSets = {};
-
-/**
- * WysiHat.Toolbar.ButtonSets.Basic = $A([
- *    [{ name: 'bold', label: "Bold" }, function(editor) {
- *      editor.boldSelection();
- *    }],
- *
- *    [{ name: 'underline', label: "Underline" }, function(editor) {
- *      editor.underlineSelection();
- *    }],
- *
- *    [{ name: 'italic', label: "Italic" }, function(editor) {
- *      editor.italicSelection();
- *    }]
- *  ])
- *
- *  A basic set of buttons: bold, underline, and italic. This set is
- *  compatible with WysiHat.Toolbar, and can be added to the toolbar with:
- *  toolbar.addButtonSet(WysiHat.Toolbar.ButtonSets.Basic);
- **/
-WysiHat.Toolbar.ButtonSets.Basic = $A([
-  [{ name: 'bold', label: "Bold" }, function(editor) {
-    editor.boldSelection();
-  }],
-
-  [{ name: 'underline', label: "Underline" }, function(editor) {
-    editor.underlineSelection();
-  }],
-
-  [{ name: 'italic', label: "Italic" }, function(editor) {
-    editor.italicSelection();
-  }]
-]);
-
-/**
+if (!Function.prototype.bind) {
+	Function.prototype.bind = function () {
+	    if (arguments.length < 2 && arguments[0] === undefined) {
+	        return this;
+	    }
+	    var thisObj = this,
+	    args = Array.prototype.slice.call(arguments),
+	    obj = args.shift();
+	    return function () {
+	        return thisObj.apply(obj, args.concat(Array.prototype.slice.call(arguments)));
+	    };
+	};
+
+	Function.bind = function() {
+	    var args = Array.prototype.slice.call(arguments);
+	    return Function.prototype.bind.apply(args.shift(), args);
+	}
+}/**
  * SWFUpload: http://www.swfupload.org, http://swfupload.googlecode.com
  *
  * mmSWFUpload 1.0: Flash upload dialog - http://profandesign.se/swfupload/,  http://www.vinterwebb.se/
@@ -3838,281 +3116,6 @@ Date.patterns = {
     SortableDateTimePattern: "Y-m-d\\TH:i:s",
     UniversalSortableDateTimePattern: "Y-m-d H:i:sO",
     YearMonthPattern: "F, Y"};
-/*
-    json2.js
-    2008-01-17
-
-    Public Domain
-
-    No warranty expressed or implied. Use at your own risk.
-
-    See http://www.JSON.org/js.html
-
-    This file creates a global JSON object containing two methods:
-
-        JSON.stringify(value, whitelist)
-            value       any JavaScript value, usually an object or array.
-
-            whitelist   an optional array prameter that determines how object
-                        values are stringified.
-
-            This method produces a JSON text from a JavaScript value.
-            There are three possible ways to stringify an object, depending
-            on the optional whitelist parameter.
-
-            If an object has a toJSON method, then the toJSON() method will be
-            called. The value returned from the toJSON method will be
-            stringified.
-
-            Otherwise, if the optional whitelist parameter is an array, then
-            the elements of the array will be used to select members of the
-            object for stringification.
-
-            Otherwise, if there is no whitelist parameter, then all of the
-            members of the object will be stringified.
-
-            Values that do not have JSON representaions, such as undefined or
-            functions, will not be serialized. Such values in objects will be
-            dropped; in arrays will be replaced with null.
-            JSON.stringify(undefined) returns undefined. Dates will be
-            stringified as quoted ISO dates.
-
-            Example:
-
-            var text = JSON.stringify(['e', {pluribus: 'unum'}]);
-            // text is '["e",{"pluribus":"unum"}]'
-
-        JSON.parse(text, filter)
-            This method parses a JSON text to produce an object or
-            array. It can throw a SyntaxError exception.
-
-            The optional filter parameter is a function that can filter and
-            transform the results. It receives each of the keys and values, and
-            its return value is used instead of the original value. If it
-            returns what it received, then structure is not modified. If it
-            returns undefined then the member is deleted.
-
-            Example:
-
-            // Parse the text. If a key contains the string 'date' then
-            // convert the value to a date.
-
-            myData = JSON.parse(text, function (key, value) {
-                return key.indexOf('date') >= 0 ? new Date(value) : value;
-            });
-
-    This is a reference implementation. You are free to copy, modify, or
-    redistribute.
-
-    Use your own copy. It is extremely unwise to load third party
-    code into your pages.
-*/
-
-/*jslint evil: true */
-
-/*global JSON */
-
-/*members "\b", "\t", "\n", "\f", "\r", "\"", JSON, "\\", apply,
-    charCodeAt, floor, getUTCDate, getUTCFullYear, getUTCHours,
-    getUTCMinutes, getUTCMonth, getUTCSeconds, hasOwnProperty, join, length,
-    parse, propertyIsEnumerable, prototype, push, replace, stringify, test,
-    toJSON, toString
-*/
-
-if (!this.JSON) {
-
-    JSON = function () {
-
-        function f(n) {    // Format integers to have at least two digits.
-            return n < 10 ? '0' + n : n;
-        }
-
-        Date.prototype.toJSON = function () {
-
-// Eventually, this method will be based on the date.toISOString method.
-
-            return this.getUTCFullYear()   + '-' +
-                 f(this.getUTCMonth() + 1) + '-' +
-                 f(this.getUTCDate())      + 'T' +
-                 f(this.getUTCHours())     + ':' +
-                 f(this.getUTCMinutes())   + ':' +
-                 f(this.getUTCSeconds())   + 'Z';
-        };
-
-
-        var m = {    // table of character substitutions
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"' : '\\"',
-            '\\': '\\\\'
-        };
-
-        function stringify(value, whitelist) {
-            var a,          // The array holding the partial texts.
-                i,          // The loop counter.
-                k,          // The member key.
-                l,          // Length.
-                r = /["\\\x00-\x1f\x7f-\x9f]/g,
-                v;          // The member value.
-
-            switch (typeof value) {
-            case 'string':
-
-// If the string contains no control characters, no quote characters, and no
-// backslash characters, then we can safely slap some quotes around it.
-// Otherwise we must also replace the offending characters with safe sequences.
-
-                return r.test(value) ?
-                    '"' + value.replace(r, function (a) {
-                        var c = m[a];
-                        if (c) {
-                            return c;
-                        }
-                        c = a.charCodeAt();
-                        return '\\u00' + Math.floor(c / 16).toString(16) +
-                                                   (c % 16).toString(16);
-                    }) + '"' :
-                    '"' + value + '"';
-
-            case 'number':
-
-// JSON numbers must be finite. Encode non-finite numbers as null.
-
-                return isFinite(value) ? String(value) : 'null';
-
-            case 'boolean':
-            case 'null':
-                return String(value);
-
-            case 'object':
-
-// Due to a specification blunder in ECMAScript,
-// typeof null is 'object', so watch out for that case.
-
-                if (!value) {
-                    return 'null';
-                }
-
-// If the object has a toJSON method, call it, and stringify the result.
-
-                if (typeof value.toJSON === 'function') {
-                    return stringify(value.toJSON());
-                }
-                a = [];
-                if (typeof value.length === 'number' &&
-                        !(value.propertyIsEnumerable('length'))) {
-
-// The object is an array. Stringify every element. Use null as a placeholder
-// for non-JSON values.
-
-                    l = value.length;
-                    for (i = 0; i < l; i += 1) {
-                        a.push(stringify(value[i], whitelist) || 'null');
-                    }
-
-// Join all of the elements together and wrap them in brackets.
-
-                    return '[' + a.join(',') + ']';
-                }
-                if (whitelist) {
-
-// If a whitelist (array of keys) is provided, use it to select the components
-// of the object.
-
-                    l = whitelist.length;
-                    for (i = 0; i < l; i += 1) {
-                        k = whitelist[i];
-                        if (typeof k === 'string') {
-                            v = stringify(value[k], whitelist);
-                            if (v) {
-                                a.push(stringify(k) + ':' + v);
-                            }
-                        }
-                    }
-                } else {
-
-// Otherwise, iterate through all of the keys in the object.
-
-                    for (k in value) {
-                        if (typeof k === 'string') {
-                            v = stringify(value[k], whitelist);
-                            if (v) {
-                                a.push(stringify(k) + ':' + v);
-                            }
-                        }
-                    }
-                }
-
-// Join all of the member texts together and wrap them in braces.
-
-                return '{' + a.join(',') + '}';
-            }
-        }
-
-        return {
-            stringify: stringify,
-            parse: function (text, filter) {
-                var j;
-
-                function walk(k, v) {
-                    var i, n;
-                    if (v && typeof v === 'object') {
-                        for (i in v) {
-                            if (Object.prototype.hasOwnProperty.apply(v, [i])) {
-                                n = walk(i, v[i]);
-                                if (n !== undefined) {
-                                    v[i] = n;
-                                }
-                            }
-                        }
-                    }
-                    return filter(k, v);
-                }
-
-
-// Parsing happens in three stages. In the first stage, we run the text against
-// regular expressions that look for non-JSON patterns. We are especially
-// concerned with '()' and 'new' because they can cause invocation, and '='
-// because it can cause mutation. But just to be safe, we want to reject all
-// unexpected forms.
-
-// We split the first stage into 4 regexp operations in order to work around
-// crippling inefficiencies in IE's and Safari's regexp engines. First we
-// replace all backslash pairs with '@' (a non-JSON character). Second, we
-// replace all simple value tokens with ']' characters. Third, we delete all
-// open brackets that follow a colon or comma or that begin the text. Finally,
-// we look to see that the remaining characters are only whitespace or ']' or
-// ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
-
-                if (/^[\],:{}\s]*$/.test(text.replace(/\\./g, '@').
-replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-
-// In the second stage we use the eval function to compile the text into a
-// JavaScript structure. The '{' operator is subject to a syntactic ambiguity
-// in JavaScript: it can begin a block or an object literal. We wrap the text
-// in parens to eliminate the ambiguity.
-
-                    j = eval('(' + text + ')');
-
-// In the optional third stage, we recursively walk the new structure, passing
-// each name/value pair to a filter function for possible transformation.
-
-                    return typeof filter === 'function' ? walk('', j) : j;
-                }
-
-// If the text is not JSON parseable, then a SyntaxError is thrown.
-
-                throw new SyntaxError('parseJSON');
-            }
-        };
-    }();
-}
-
-
 var in2igui = {
 	locales : {
 		'da/DK':{decimal:',',thousands:'.'},
@@ -4138,7 +3141,7 @@ function In2iGui() {
 	/** @private */
 	this.delegates = [];
 	/** @private */
-	this.objects = $H();
+	this.objects = {};
 	/** @private */
 	this.layoutWidgets = [];
 	/** @private */
@@ -4170,13 +3173,17 @@ In2iGui.get = function(nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
 		}
-		return In2iGui.instance.objects.get(nameOrWidget);
+		return In2iGui.instance.objects[nameOrWidget];
 	} else {
 		return In2iGui.instance;
 	}
 };
 
-document.observe('dom:loaded', function () {
+//document.observe('dom:loaded', function () {
+//	In2iGui.get().ignite();
+//});
+
+n2i.onReady(function() {
 	In2iGui.get().ignite();
 });
 
@@ -4199,18 +3206,15 @@ In2iGui.prototype = {
 		In2iGui.callSuperDelegates(this,'ready');
 
 		this.reLayout();
-		Event.observe(window,'resize',this.reLayout.bind(this));
+		n2i.listen(window,'resize',this.reLayout.bind(this));
 	},
 	/** @private */
 	addBehavior : function() {
-		Event.observe(window,'resize',this.resize.bind(this));
+		n2i.listen(window,'resize',this.resize.bind(this));
 	},
 	/** Adds a global delegate
 	 * @deprecated
 	*/
-	listen : function(delegate) {
-		this.delegates.push(delegate);
-	},
 	listen : function(delegate) {
 		this.delegates.push(delegate);
 	},
@@ -4234,18 +3238,19 @@ In2iGui.prototype = {
 	resize : function() {
 		if (!this.overflows) {return;}
 		var height = n2i.getInnerHeight();
-		this.overflows.each(function(overflow) {
+		for (var i=0; i < this.overflows.length; i++) {
+			var overflow = this.overflows[i];
 			if (n2i.browser.webkit || n2i.browser.gecko) {
 				overflow.element.style.display='none';
 				overflow.element.style.width = overflow.element.parentNode.clientWidth+'px';
 				overflow.element.style.display='';
 			}
 			overflow.element.style.height = height+overflow.diff+'px';
-		});
+		};
 	},
 	registerOverflow : function(id,diff) {
 		if (!this.overflows) {this.overflows=[];}
-		var overflow = $(id);
+		var overflow = n2i.get(id);
 		this.overflows.push({element:overflow,diff:diff});
 	},
 	/** @private */
@@ -4317,8 +3322,11 @@ In2iGui.prototype = {
 	getDescendants : function(widgetOrElement) {
 		var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
 		if (e) {
-			var d = e.descendants();
-			var o = this.objects.values();
+			var d = e.getElementsByTagName('*');
+			var o = [];
+			for (key in this.objects) {
+				o.push(this.objects[key]);
+			}
 			for (var i=0; i < d.length; i++) {
 				for (var j=0; j < o.length; j++) {
 					if (d[i]==o[j].element) {
@@ -4338,8 +3346,11 @@ In2iGui.prototype = {
 		var desc = [];
 		var e = widget.element;
 		if (e) {
-			var a = e.ancestors();
-			var o = this.objects.values();
+			var a = n2i.getAncestors(e);
+			var o = [];
+			for (key in this.objects) {
+				o.push(this.objects[key]);
+			}
 			for (var i=0; i < a.length; i++) {
 				for (var j=0; j < o.length; j++) {
 					if (o[j].element==a[i]) {
@@ -4354,7 +3365,7 @@ In2iGui.prototype = {
 	getAncestor : function(widget,cls) {
 		var a = this.getAncestors(widget);
 		for (var i=0; i < a.length; i++) {
-			if (a[i].getElement().hasClassName(cls)) {
+			if (n2i.hasClass(a[i].getElement(),cls)) {
 				return a[i];
 			}
 		};
@@ -4396,7 +3407,7 @@ In2iGui.destroyDescendants = function(element) {
 	var desc = In2iGui.get().getDescendants(element);
 	var objects = In2iGui.get().objects;
 	for (var i=0; i < desc.length; i++) {
-		var obj  = objects.unset(desc[i].name);
+		var obj  = delete(objects[desc[i].name]);
 		if (!obj) {
 			n2i.log('not found: '+desc[i].name);
 		}
@@ -4406,12 +3417,13 @@ In2iGui.destroyDescendants = function(element) {
 In2iGui.changeState = function(state) {
 	if (In2iGui.get().state===state) {return;}
 	var objects = In2iGui.get().objects.values();
-	objects.each(function(obj) {
+	for (var i=0; i < objects.length; i++) {
+		var obj = objects[i];
 		if (obj.options && obj.options.state) {
 			if (obj.options.state==state) {obj.show();}
 			else {obj.hide();}
 		}
-	});
+	};
 	In2iGui.get().state==state;
 }
 
@@ -4440,19 +3452,15 @@ In2iGui.nextTopIndex = function() {
 ///////////////////////////////// Curtain /////////////////////////////
 
 In2iGui.showCurtain = function(options,zIndex) {
-	if (options.getElement) {
-		In2iGui.showCurtainOld(options,zIndex);
-		return;
-	}
 	var widget = options.widget;
 	if (!widget.curtain) {
-		widget.curtain = new Element('div',{'class':'in2igui_curtain'}).setStyle({'z-index':'none'});
+		widget.curtain = n2i.build('div',{'class':'in2igui_curtain',style:'z-index:none'});
 		widget.curtain.onclick = function() {
 			if (widget['$curtainWasClicked']) {
 				widget['$curtainWasClicked']();
 			}
 		};
-		var body = $$('.in2igui_body')[0];
+		var body = n2i.firstByClass(document.body,'in2igui_body');
 		if (!body) {
 			body=document.body;
 		}
@@ -4476,27 +3484,6 @@ In2iGui.showCurtain = function(options,zIndex) {
 	n2i.ani(widget.curtain,'opacity',0.7,1000,{ease:n2i.ease.slowFastSlow});
 }
 
-In2iGui.showCurtainOld = function(widget,zIndex) {
-	if (!widget.curtain) {
-		widget.curtain = new Element('div',{'class':'in2igui_curtain'}).setStyle({'z-index':'none'});
-		widget.curtain.onclick = function() {
-			if (widget.curtainWasClicked) {
-				widget.curtainWasClicked();
-			}
-		};
-		var body = $$('.in2igui_body')[0];
-		if (!body) {
-			body=document.body;
-		}
-		body.appendChild(widget.curtain);
-	}
-	widget.curtain.style.height=n2i.getDocumentHeight()+'px';
-	widget.curtain.style.zIndex=zIndex;
-	n2i.setOpacity(widget.curtain,0);
-	widget.curtain.style.display='block';
-	n2i.ani(widget.curtain,'opacity',0.7,1000,{ease:n2i.ease.slowFastSlow});
-};
-
 In2iGui.hideCurtain = function(widget) {
 	if (widget.curtain) {
 		n2i.ani(widget.curtain,'opacity',0,200,{hideOnComplete:true});
@@ -4515,15 +3502,17 @@ In2iGui.showMessage = function(options) {
 		options={text:options};
 	}
 	if (!In2iGui.message) {
-		In2iGui.message = new Element('div',{'class':'in2igui_message'}).update('<div><div></div></div>');
+		In2iGui.message = n2i.build('div',{'class':'in2igui_message',html:'<div><div></div></div>'});
 		if (!n2i.browser.msie) {
-			In2iGui.message.setStyle({opacity:0});
+			n2i.setOpacity(In2iGui.message,0);
 		}
 		document.body.appendChild(In2iGui.message);
 	}
-	In2iGui.message.select('div')[1].update(options.text);
-	In2iGui.message.setStyle({'display':'block',zIndex:In2iGui.nextTopIndex()});
-	In2iGui.message.setStyle({marginLeft:(In2iGui.message.getWidth()/-2)+'px',marginTop:n2i.getScrollTop()+'px'});
+	In2iGui.message.getElementsByTagName('div')[1].innerHTML=options.text;
+	In2iGui.message.style.display='block';
+	In2iGui.message.style.zIndex=In2iGui.nextTopIndex();
+	In2iGui.message.style.marginLeft=(In2iGui.message.clientWidth/-2)+'px';
+	In2iGui.message.style.marginTop=n2i.getScrollTop()+'px';
 	if (!n2i.browser.msie) {
 		n2i.ani(In2iGui.message,'opacity',1,300);
 	}
@@ -4547,8 +3536,7 @@ In2iGui.showToolTip = function(options) {
 	var key = options.key || 'common';
 	var t = In2iGui.toolTips[key];
 	if (!t) {
-		t = new Element('div',{'class':'in2igui_tooltip'}).update('<div><div></div></div>').setStyle({display:'none'});
-		document.body.appendChild(t);
+		t = n2i.build('div',{'class':'in2igui_tooltip',style:'display:none;',html:'<div><div></div></div>',parent:document.body});
 		In2iGui.toolTips[key] = t;
 	}
 	t.onclick = function() {In2iGui.hideToolTip(options);};
@@ -4587,10 +3575,10 @@ In2iGui.getElement = function(widgetOrElement) {
 }
 
 In2iGui.isWithin = function(e,element) {
-	Event.extend(e);
-	var offset = element.cumulativeOffset();
-	var dims = element.getDimensions();
-	return e.pointerX()>offset.left && e.pointerX()<offset.left+dims.width && e.pointerY()>offset.top && e.pointerY()<offset.top+dims.height;
+	e = new n2i.Event(e);
+	var offset = {left:n2i.getLeft(element),top:n2i.getTop(element)};
+	var dims = {width:element.clientWidth,height:element.clientHeight};
+	return e.left()>offset.left && e.left()<offset.left+dims.width && e.top()>offset.top && e.top()<offset.top+dims.height;
 };
 
 In2iGui.getIconUrl = function(icon,size) {
@@ -4598,7 +3586,7 @@ In2iGui.getIconUrl = function(icon,size) {
 };
 
 In2iGui.createIcon = function(icon,size) {
-	return new Element('span',{'class':'in2igui_icon in2igui_icon_'+size}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(icon,size)+')'});
+	return n2i.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+In2iGui.getIconUrl(icon,size)+')'});
 };
 
 In2iGui.onDomReady = In2iGui.onReady = function(func) {
@@ -4607,25 +3595,27 @@ In2iGui.onDomReady = In2iGui.onReady = function(func) {
 		window.setTimeout(func,1000);
 		return;
 	}
-	document.observe('dom:loaded', func);
+	n2i.onReady(func);
+	//document.observe('dom:loaded', func);
 };
 
 In2iGui.wrapInField = function(e) {
-	var w = new Element('div',{'class':'in2igui_field'}).update(
+	var w = n2i.build('div',{'class':'in2igui_field',html:
 		'<span class="in2igui_field_top"><span><span></span></span></span>'+
 		'<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content"></span></span></span>'+
 		'<span class="in2igui_field_bottom"><span><span></span></span></span>'
-	);
-	w.select('span.in2igui_field_content')[0].insert(e);
+	});
+	n2i.firstByClass(w,'in2igui_field_content').appendChild(e);
 	return w;
 };
 
 In2iGui.addFocusClass = function(o) {
 	var ce = o.classElement || o.element, c = o['class'];
-	o.element.observe('focus',function() {
-		ce.addClassName(c);
-	}).observe('blur',function() {
-		ce.removeClassName(c);
+	n2i.listen(o.element,'focus',function() {
+		n2i.addClass(ce,c);
+	});
+	n2i.listen(o.element,'blur',function() {
+		n2i.removeClass(ce,c);
 	});
 };
 
@@ -4660,21 +3650,21 @@ In2iGui.NumberValidator.prototype = {
 /////////////////////////////// Animation /////////////////////////////
 
 In2iGui.fadeIn = function(node,time) {
-	if ($(node).getStyle('display')=='none') {
-		node.setStyle({opacity:0,display:''});
+	if (n2i.getStyle(node,'display')=='none') {
+		n2i.setStyle(node,{opacity:0,display:''});
 	}
-	n2i.ani(node,'opacity',1,time);
+	n2i.animate(node,'opacity',1,time);
 };
 
 In2iGui.fadeOut = function(node,time) {
-	n2i.ani(node,'opacity',0,time,{hideOnComplete:true});
+	hui.animate(node,'opacity',0,time,{hideOnComplete:true});
 };
 
 In2iGui.bounceIn = function(node,time) {
 	if (n2i.browser.msie) {
-		node.setStyle({'display':'block',visibility:'visible'});
+		n2i.setStyle(node,{'display':'block',visibility:'visible'});
 	} else {
-		node.setStyle({'display':'block','opacity':0,visibility:'visible'});
+		n2i.setStyle(node,{'display':'block','opacity':0,visibility:'visible'});
 		n2i.animate(node,'transform','scale(0.1)',0);// rotate(10deg)
 		window.setTimeout(function() {
 			n2i.animate(node,'opacity',1,300);
@@ -4687,27 +3677,27 @@ In2iGui.bounceIn = function(node,time) {
 
 In2iGui.positionAtElement = function(element,target,options) {
 	options = options || {};
-	element = $(element);
-	target = $(target);
-	var origDisplay = element.getStyle('display');
+	element = n2i.get(element);
+	target = n2i.get(target);
+	var origDisplay = n2i.getStyle(element,'display');
 	if (origDisplay=='none') {
-		element.setStyle({'visibility':'hidden','display':'block'});
+		n2i.setStyle(element,{'visibility':'hidden','display':'block'});
 	}
-	var pos = target.cumulativeOffset(),left = pos.left,top = pos.top;
+	var pos = left = n2i.getLeft(target),top = n2i.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
-		left = left+target.getWidth()-element.getWidth();
+		left = left+target.clientWidth-element.clientWidth;
 	}
 	if (vert=='topOutside') {
-		top = top-element.getHeight();
+		top = top-element.clientHeight;
 	} else if (vert=='bottomOutside') {
-		top = top+target.getHeight();
+		top = top+target.clientHeight;
 	}
 	left+=(options.left || 0);
 	top+=(options.top || 0);
-	element.setStyle({'left':left+'px','top':top+'px'});
+	n2i.setStyle(element,{'left':left+'px','top':top+'px'});
 	if (origDisplay=='none') {
-		element.setStyle({'visibility':'visible','display':'none'});
+		n2i.setStyle(element,{'visibility':'visible','display':'none'});
 	}
 };
 
@@ -4722,112 +3712,11 @@ In2iGui.getTextAreaHeight = function(input) {
 	if (html[html.length-1]==='\n') {
 		html+='x';
 	}
-	html = html.escapeHTML().replace(/\n/g,'<br/>');
+	html = n2i.escape(html).replace(/\n/g,'<br/>');
 	t.innerHTML = html;
 	t.style.width=(input.clientWidth)+'px';
 	return t.clientHeight;
 }
-
-//////////////////////////////// Drag drop //////////////////////////////
-
-In2iGui.getDragProxy = function() {
-	if (!In2iGui.dragProxy) {
-		In2iGui.dragProxy = new Element('div',{'class':'in2igui_dragproxy'}).setStyle({'display':'none'});
-		document.body.appendChild(In2iGui.dragProxy);
-	}
-	return In2iGui.dragProxy;
-};
-
-In2iGui.startDrag = function(e,element,options) {
-	e = e || window.event;
-	var info = element.dragDropInfo;
-	In2iGui.dropTypes = In2iGui.findDropTypes(info);
-	if (!In2iGui.dropTypes) return;
-	var proxy = In2iGui.getDragProxy();
-	Event.observe(document.body,'mousemove',In2iGui.dragListener);
-	Event.observe(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragInfo = info;
-	if (info.icon) {
-		proxy.style.backgroundImage = 'url('+In2iGui.getIconUrl(info.icon,1)+')';
-	}
-	In2iGui.startDragPos = {top:Event.pointerY(e),left:Event.pointerX(e)};
-	proxy.innerHTML = info.title ? '<span>'+info.title.escapeHTML()+'</span>' : '###';
-	In2iGui.dragging = true;
-	document.body.onselectstart = function () { return false; };
-};
-
-In2iGui.findDropTypes = function(drag) {
-	var gui = In2iGui.get();
-	var drops = null;
-	for (var i=0; i < gui.delegates.length; i++) {
-		if (gui.delegates[i].dragDrop) {
-			for (var j=0; j < gui.delegates[i].dragDrop.length; j++) {
-				var rule = gui.delegates[i].dragDrop[j];
-				if (rule.drag==drag.kind) {
-					if (drops==null) drops={};
-					drops[rule.drop] = {};
-				}
-			};
-		}
-	}
-	return drops;
-};
-
-In2iGui.dragListener = function(e) {
-	In2iGui.dragProxy.style.left = (Event.pointerX(e)+10)+'px';
-	In2iGui.dragProxy.style.top = Event.pointerY(e)+'px';
-	In2iGui.dragProxy.style.display='block';
-	var target = In2iGui.findDropTarget(Event.element(e));
-	if (target && In2iGui.dropTypes[target.dragDropInfo['kind']]) {
-		if (In2iGui.latestDropTarget) {
-			In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		}
-		target.addClassName('in2igui_drop');
-		In2iGui.latestDropTarget = target;
-	} else if (In2iGui.latestDropTarget) {
-		In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		In2iGui.latestDropTarget = null;
-	}
-	return false;
-};
-
-In2iGui.findDropTarget = function(node) {
-	while (node) {
-		if (node.dragDropInfo) {
-			return node;
-		}
-		node = node.parentNode;
-	}
-	return null;
-};
-
-In2iGui.dragEndListener = function(event) {
-	Event.stopObserving(document.body,'mousemove',In2iGui.dragListener);
-	Event.stopObserving(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragging = false;
-	if (In2iGui.latestDropTarget) {
-		In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		In2iGui.callDelegatesDrop(In2iGui.dragInfo,In2iGui.latestDropTarget.dragDropInfo);
-		In2iGui.dragProxy.style.display='none';
-	} else {
-		n2i.ani(In2iGui.dragProxy,'left',(In2iGui.startDragPos.left+10)+'px',200,{ease:n2i.ease.fastSlow});
-		n2i.ani(In2iGui.dragProxy,'top',(In2iGui.startDragPos.top-5)+'px',200,{ease:n2i.ease.fastSlow,hideOnComplete:true});
-	}
-	In2iGui.latestDropTarget=null;
-	document.body.onselectstart=null;
-};
-
-In2iGui.dropOverListener = function(event) {
-	if (In2iGui.dragging) {
-		//this.style.backgroundColor='#3875D7';
-	}
-};
-
-In2iGui.dropOutListener = function(event) {
-	if (In2iGui.dragging) {
-		//this.style.backgroundColor='';
-	}
-};
 
 //////////////////// Delegating ////////////////////
 
@@ -4840,11 +3729,11 @@ In2iGui.extend = function(obj,options) {
 		if (obj.options) {
 			obj.options = n2i.override(obj.options,options);
 		}
-		obj.element = $(options.element);
+		obj.element = n2i.get(options.element);
 		obj.name = options.name;
 	}
 	var ctrl = In2iGui.get();
-	ctrl.objects.set(obj.name,obj);
+	ctrl.objects[obj.name] = obj;
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		n2i.addToArray(this.delegates,delegate);
@@ -4902,11 +3791,11 @@ In2iGui.callDescendants = function(obj,method,value,event) {
 		method = '$'+method;
 	}
 	var d = In2iGui.get().getDescendants(obj);
-	d.each(function(child) {
-		if (child[method]) {
-			thisResult = child[method](value,event);
+	for (var i=0; i < d.length; i++) {
+		if (d[i][method]) {
+			thisResult = d[i][method](value,event);
 		}
-	});
+	};
 };
 
 In2iGui.callVisible = function(widget) {
@@ -5058,7 +3947,7 @@ In2iGui.jsonResponse = function(t,key) {
 	if (!t.responseXML || !t.responseXML.documentElement) {
 		var str = t.responseText.replace(/^\s+|\s+$/g, '');
 		if (str.length>0) {
-			var json = t.responseText.evalJSON(true);
+			var json = n2i.fromJSON(t.responseText);
 		} else {
 			json = '';
 		}
@@ -5070,16 +3959,16 @@ In2iGui.jsonResponse = function(t,key) {
 
 /** @deprecated */
 In2iGui.json = function(data,url,delegateOrKey) {
-	var options = {method:'post',parameters:{},onException:function(e) {throw e}};
+	var options = {url:url,method:'post',parameters:{},onException:function(e) {throw e}};
 	if (typeof(delegateOrKey)=='string') {
 		options.onSuccess=function(t) {In2iGui.jsonResponse(t,delegateOrKey)};
 	} else {
 		delegate = delegateOrKey;
 	}
 	for (key in data) {
-		options.parameters[key]=Object.toJSON(data[key])
+		options.parameters[key]=n2i.toJSON(data[key])
 	}
-	new Ajax.Request(url,options);
+	n2i.request(options);
 };
 
 In2iGui.jsonRequest = function(o) {
@@ -5090,16 +3979,17 @@ In2iGui.jsonRequest = function(o) {
 		delegate = delegateOrKey;
 	}
 	for (key in o.parameters) {
-		options.parameters[key]=Object.toJSON(o.parameters[key])
+		options.parameters[key]=n2i.toJSON(o.parameters[key])
 	}
-	new Ajax.Request(o.url,options)
+	options.url = o.url;
+	n2i.request(options);
 };
 
 In2iGui.request = function(options) {
 	options = n2i.override({method:'post',parameters:{}},options);
 	if (options.json) {
 		for (key in options.json) {
-			options.parameters[key]=Object.toJSON(options.json[key])
+			options.parameters[key]=n2i.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
@@ -5111,7 +4001,7 @@ In2iGui.request = function(options) {
 		} else if (options.onJSON) {
 			var str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				var json = t.responseText.evalJSON(true);
+				var json = n2i.fromJSON(t.responseText);
 			} else {
 				var json = null;
 			}
@@ -5131,7 +4021,7 @@ In2iGui.request = function(options) {
 		}
 	}
 	options.onException = function(t,e) {n2i.log(e)};
-	new Ajax.Request(options.url,options);
+	n2i.request(options);
 };
 
 In2iGui.parseItems = function(doc) {
@@ -5162,8 +4052,25 @@ In2iGui.parseSubItems = function(parent,array) {
 	};
 }
 
-////////////////////////////////// Source ///////////////////////////
 
+
+
+//////////////////////////// Prototype extensions ////////////////////////////////
+/*
+if (Element.addMethods) {
+	Element.addMethods({
+		setClassName : function(element,name,set) {
+			if (set) {
+				element.addClassName(name);
+			} else {
+				element.removeClassName(name);
+			}
+			return element;
+		}
+	});
+}
+*/
+/* EOF */
 /** A data source
  * @constructor
  */
@@ -5184,12 +4091,12 @@ In2iGui.Source.prototype = {
 	/** @private */
 	init : function() {
 		var self = this;
-		this.parameters.each(function(parm) {
+		n2i.each(this.parameters,function(parm) {
 			var val = In2iGui.bind(parm.value,function(value) {
 				self.changeParameter(parm.key,value);
 			});
 			parm.value = self.convertValue(val);
-		})
+		});
 		if (!this.options.lazy) {
 			this.refresh();
 		}
@@ -5226,11 +4133,13 @@ In2iGui.Source.prototype = {
 			};
 			this.busy=true;
 			In2iGui.callDelegates(this,'sourceIsBusy');
-			new Ajax.Request(this.options.url, {
+			n2i.request({
+				method:'post',
+				url:this.options.url,
 				parameters:prms,
-				onSuccess: function(t) {self.parse(t)},
-				onException:function(t,e) {n2i.log(e)},
-				onFailure:function(t,e) {
+				onSuccess : function(t) {self.parse(t)},
+				onException : function(t,e) {n2i.log(e)},
+				onFailure : function(t,e) {
 					In2iGui.callDelegates(self,'sourceFailed');
 				}
 			});
@@ -5265,7 +4174,7 @@ In2iGui.Source.prototype = {
 		} else {
 			var str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				var json = t.responseText.evalJSON(true);
+				var json = n2i.fromJSON(t.responseText);
 			} else {
 				var json = null;
 			}
@@ -5296,11 +4205,12 @@ In2iGui.Source.prototype = {
 	},
 	changeParameter : function(key,value) {
 		value = this.convertValue(value);
-		this.parameters.each(function(p) {
+		for (var i=0; i < this.parameters.length; i++) {
+			var p = this.parameters[i]
 			if (p.key==key) {
 				p.value=value;
 			}
-		})
+		};
 		window.clearTimeout(this.paramDelay);
 		this.paramDelay = window.setTimeout(function() {
 			this.refresh();
@@ -5308,31 +4218,114 @@ In2iGui.Source.prototype = {
 	}
 }
 
-
-//////////////////////////// Prototype extensions ////////////////////////////////
-
-Element.addMethods({
-	setClassName : function(element,name,set) {
-		if (set) {
-			element.addClassName(name);
-		} else {
-			element.removeClassName(name);
-		}
-		return element;
+/* EOF */In2iGui.getDragProxy = function() {
+	if (!In2iGui.dragProxy) {
+		In2iGui.dragProxy = n2i.build('div',{'class':'in2igui_dragproxy',style:'display:none'});
+		document.body.appendChild(In2iGui.dragProxy);
 	}
-});
+	return In2iGui.dragProxy;
+};
 
-/* EOF */
-/**
+In2iGui.startDrag = function(e,element,options) {
+	e = new n2i.Event(e);
+	var info = element.dragDropInfo;
+	In2iGui.dropTypes = In2iGui.findDropTypes(info);
+	if (!In2iGui.dropTypes) return;
+	var proxy = In2iGui.getDragProxy();
+	n2i.listen(document.body,'mousemove',In2iGui.dragListener);
+	n2i.listen(document.body,'mouseup',In2iGui.dragEndListener);
+	In2iGui.dragInfo = info;
+	if (info.icon) {
+		proxy.style.backgroundImage = 'url('+In2iGui.getIconUrl(info.icon,1)+')';
+	}
+	In2iGui.startDragPos = {top:e.top(),left:e.left()};
+	proxy.innerHTML = info.title ? '<span>'+n2i.escape(info.title)+'</span>' : '###';
+	In2iGui.dragging = true;
+	document.body.onselectstart = function () { return false; };
+};
+
+In2iGui.findDropTypes = function(drag) {
+	var gui = In2iGui.get();
+	var drops = null;
+	for (var i=0; i < gui.delegates.length; i++) {
+		if (gui.delegates[i].dragDrop) {
+			for (var j=0; j < gui.delegates[i].dragDrop.length; j++) {
+				var rule = gui.delegates[i].dragDrop[j];
+				if (rule.drag==drag.kind) {
+					if (drops==null) drops={};
+					drops[rule.drop] = {};
+				}
+			};
+		}
+	}
+	return drops;
+};
+
+In2iGui.dragListener = function(e) {
+	e = new n2i.Event(e);
+	In2iGui.dragProxy.style.left = (e.left()+10)+'px';
+	In2iGui.dragProxy.style.top = e.top()+'px';
+	In2iGui.dragProxy.style.display='block';
+	var target = In2iGui.findDropTarget(e.getElement());
+	if (target && In2iGui.dropTypes[target.dragDropInfo['kind']]) {
+		if (In2iGui.latestDropTarget) {
+			n2i.removeClass(In2iGui.latestDropTarget,'in2igui_drop');
+		}
+		n2i.addClass(target,'in2igui_drop');
+		In2iGui.latestDropTarget = target;
+	} else if (In2iGui.latestDropTarget) {
+		n2i.removeClass(In2iGui.latestDropTarget,'in2igui_drop');
+		In2iGui.latestDropTarget = null;
+	}
+	return false;
+};
+
+In2iGui.findDropTarget = function(node) {
+	while (node) {
+		if (node.dragDropInfo) {
+			return node;
+		}
+		node = node.parentNode;
+	}
+	return null;
+};
+
+In2iGui.dragEndListener = function(event) {
+	n2i.unListen(document.body,'mousemove',In2iGui.dragListener);
+	n2i.unListen(document.body,'mouseup',In2iGui.dragEndListener);
+	In2iGui.dragging = false;
+	if (In2iGui.latestDropTarget) {
+		n2i.removeClass(In2iGui.latestDropTarget,'in2igui_drop');
+		In2iGui.callDelegatesDrop(In2iGui.dragInfo,In2iGui.latestDropTarget.dragDropInfo);
+		In2iGui.dragProxy.style.display='none';
+	} else {
+		n2i.ani(In2iGui.dragProxy,'left',(In2iGui.startDragPos.left+10)+'px',200,{ease:n2i.ease.fastSlow});
+		n2i.ani(In2iGui.dragProxy,'top',(In2iGui.startDragPos.top-5)+'px',200,{ease:n2i.ease.fastSlow,hideOnComplete:true});
+	}
+	In2iGui.latestDropTarget=null;
+	document.body.onselectstart=null;
+};
+
+In2iGui.dropOverListener = function(event) {
+	if (In2iGui.dragging) {
+		//this.style.backgroundColor='#3875D7';
+	}
+};
+
+In2iGui.dropOutListener = function(event) {
+	if (In2iGui.dragging) {
+		//this.style.backgroundColor='';
+	}
+};/**
  * @constructor
  */
 In2iGui.Window = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.close = this.element.select('.in2igui_window_close')[0];
-	this.titlebar = this.element.select('.in2igui_window_titlebar')[0];
-	this.title = this.titlebar.select('.in2igui_window_title')[0];
-	this.content = this.element.select('.in2igui_window_body')[0];
+	this.close = n2i.firstByClass(this.element,'in2igui_window_close');
+	this.titlebar = n2i.firstByClass(this.element,'in2igui_window_titlebar');
+	this.title = n2i.firstByClass(this.titlebar,'in2igui_window_title');
+	this.content = n2i.firstByClass(this.element,'in2igui_window_body');
 	this.front = n2i.firstByClass(this.element,'in2igui_window_front');
 	this.back = n2i.firstByClass(this.element,'in2igui_window_back');
 	if (this.back) {
@@ -5345,7 +4338,6 @@ In2iGui.Window = function(options) {
 
 In2iGui.Window.create = function(options) {
 	options = n2i.override({title:'Window',close:true},options);
-	var element = options.element = new Element('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : '')});
 	var html = '<div class="in2igui_window_front">'+(options.close ? '<div class="in2igui_window_close"></div>' : '')+
 		'<div class="in2igui_window_titlebar"><div><div>';
 		if (options.icon) {
@@ -5358,8 +4350,7 @@ In2iGui.Window.create = function(options) {
 		'">'+
 		'</div></div></div>'+
 		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div></div>';
-	element.update(html);
-	document.body.appendChild(element);
+	options.element = n2i.build('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : ''),html:html,parent:document.body});
 	return new In2iGui.Window(options);
 }
 
@@ -5368,27 +4359,28 @@ In2iGui.Window.prototype = {
 	addBehavior : function() {
 		var self = this;
 		if (this.close) {
-			this.close.observe('click',function(e) {
+			n2i.listen(this.close,'click',function(e) {
 				this.hide();
 				this.fire('userClosedWindow');
 			}.bind(this)
-			).observe('mousedown',function(e) {e.stop();});
+			);
+			n2i.listen(this.close,'mousedown',function(e) {n2i.stop(e)});
 		}
 		this.titlebar.onmousedown = function(e) {self.startDrag(e);return false;};
-		this.element.observe('mousedown',function() {
+		n2i.listen(this.element,'mousedown',function() {
 			self.element.style.zIndex=In2iGui.nextPanelIndex();
-		})
+		});
 	},
 	setTitle : function(title) {
 		this.title.update(title);
 	},
 	show : function() {
 		if (this.visible) return;
-		this.element.setStyle({
+		n2i.setStyle(this.element,{
 			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block', top: (n2i.getScrollTop()+40)+'px'
 		})
 		var width = this.element.clientWidth;
-		this.element.setStyle({
+		n2i.setStyle(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
 		if (!n2i.browser.msie) {
@@ -5405,15 +4397,15 @@ In2iGui.Window.prototype = {
 		if (!n2i.browser.msie) {
 			n2i.ani(this.element,'opacity',0,200,{hideOnComplete:true});
 		} else {
-			this.element.setStyle({display:'none'});
+			this.element.style.display='none';
 		}
 		this.visible = false;
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
-			this.content.insert(widgetOrNode.getElement());
+			this.content.appendChild(widgetOrNode.getElement());
 		} else {
-			this.content.insert(widgetOrNode);
+			this.content.appendChild(widgetOrNode);
 		}
 	},
 	addToBack : function(widgetOrNode) {
@@ -5425,10 +4417,10 @@ In2iGui.Window.prototype = {
 		this.back.appendChild(In2iGui.getElement(widgetOrNode));
 	},
 	setVariant : function(variant) {
-		this.element.removeClassName('in2igui_window_dark');
-		this.element.removeClassName('in2igui_window_light');
+		n2i.removeClass(this.element,'in2igui_window_dark');
+		n2i.removeClass(this.element,'in2igui_window_light');
 		if (variant=='dark' || variant=='light') {
-			this.element.addClassName('in2igui_window_'+variant);
+			n2i.addClass(this.element,'in2igui_window_'+variant);
 		}
 	},
 	flip : function() {
@@ -5442,18 +4434,18 @@ In2iGui.Window.prototype = {
 
 	/** @private */
 	startDrag : function(e) {
-		var event = Event.extend(e || window.event);
+		var event = new n2i.Event(e);
 		this.element.style.zIndex=In2iGui.nextPanelIndex();
-		var pos = this.element.cumulativeOffset();
-		this.dragState = {left:event.pointerX()-pos.left,top:event.pointerY()-pos.top};
+		var pos = { top : n2i.getTop(this.element), left : n2i.getLeft(this.element) };
+		this.dragState = {left:event.left()-pos.left,top:event.top()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();
 		var self = this;
 		this.moveListener = function(e) {self.drag(e)};
 		this.upListener = function(e) {self.endDrag(e)};
-		Event.observe(document,'mousemove',this.moveListener);
-		Event.observe(document,'mouseup',this.upListener);
-		Event.observe(document,'mousedown',this.upListener);
+		n2i.listen(document,'mousemove',this.moveListener);
+		n2i.listen(document,'mouseup',this.upListener);
+		n2i.listen(document,'mousedown',this.upListener);
 		event.stop();
 		document.body.onselectstart = function () { return false; };
 		return false;
@@ -5469,10 +4461,10 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	drag : function(e) {
-		var event = Event.extend(e);
+		var event = new n2i.Event(e);
 		this.element.style.right = 'auto';
-		var top = (event.pointerY()-this.dragState.top);
-		var left = (event.pointerX()-this.dragState.left);
+		var top = (event.top()-this.dragState.top);
+		var left = (event.left()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
 		//this.calc(top,left);
@@ -5480,9 +4472,9 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	endDrag : function(e) {
-		Event.stopObserving(document,'mousemove',this.moveListener);
-		Event.stopObserving(document,'mouseup',this.upListener);
-		Event.stopObserving(document,'mousedown',this.upListener);
+		n2i.unListen(document,'mousemove',this.moveListener);
+		n2i.unListen(document,'mouseup',this.upListener);
+		n2i.unListen(document,'mousedown',this.upListener);
 		document.body.onselectstart = null;
 	}
 }
@@ -5507,7 +4499,7 @@ In2iGui.Formula.create = function(o) {
 	if (o.method) {
 		atts.method=o.method;
 	}
-	o.element = new Element('form',atts);
+	o.element = n2i.build('form',atts);
 	return new In2iGui.Formula(o);
 }
 
@@ -5565,7 +4557,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Adds a widget to the form */
 	add : function(widget) {
-		this.element.insert(widget.getElement());
+		this.element.appendChild(widget.getElement());
 	},
 	/** Creates a new form group and adds it to the form
 	 * @returns {'In2iGui.Formula.Group'} group
@@ -5580,7 +4572,7 @@ In2iGui.Formula.prototype = {
 	 */
 	buildGroup : function(options,recipe) {
 		var g = this.createGroup(options);
-		recipe.each(function(item) {
+		n2i.each(recipe,function(item) {
 			if (In2iGui.Formula[item.type]) {
 				var w = In2iGui.Formula[item.type].create(item.options);
 				g.add(w);
@@ -5603,8 +4595,8 @@ In2iGui.Formula.prototype = {
  */
 In2iGui.Formula.Group = function(options) {
 	this.name = options.name;
-	this.element = $(options.element);
-	this.body = this.element.select('tbody')[0];
+	this.element = n2i.get(options.element);
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.options = n2i.override({above:true},options);
 	In2iGui.extend(this);
 }
@@ -5612,43 +4604,42 @@ In2iGui.Formula.Group = function(options) {
 /** Creates a new form group */
 In2iGui.Formula.Group.create = function(options) {
 	options = n2i.override({above:true},options);
-	var element = options.element = new Element('table',
+	var element = options.element = n2i.build('table',
 		{'class':'in2igui_formula_group'}
 	);
 	if (options.above) {
-		element.addClassName('in2igui_formula_group_above');
+		n2i.addClass(element,'in2igui_formula_group_above');
 	}
-	element.insert(new Element('tbody'));
+	element.appendChild(n2i.build('tbody'));
 	return new In2iGui.Formula.Group(options);
 }
 
 In2iGui.Formula.Group.prototype = {
 	add : function(widget) {
-		var tr = new Element('tr');
+		var tr = n2i.build('tr');
 		this.body.appendChild(tr);
-		var td = new Element('td',{'class':'in2igui_formula_group'});
+		var td = n2i.build('td',{'class':'in2igui_formula_group'});
 		if (widget.getLabel) {
 			var label = widget.getLabel();
 			if (label) {
 				if (this.options.above) {
-					td.insert(new Element('label').insert(label));
+					n2i.build('label',{text:label,parent:td});
 				} else {
-					var th = new Element('th');
-					th.insert(new Element('label').insert(label));
-					tr.insert(th);
+					var th = n2i.build('th',{parent:tr});
+					n2i.build('label',{text:label,parent:th});
 				}
 			}
 		}
-		td.insert(new Element('div',{'class':'in2igui_formula_item'}).insert(widget.getElement()));
-		tr.insert(td);
+		var item = n2i.build('div',{'class':'in2igui_formula_item'});
+		item.appendChild(widget.getElement());
+		td.appendChild(item);
+		tr.appendChild(td);
 	},
 	createButtons : function(options) {
-		var tr = new Element('tr');
-		this.body.insert(tr);
-		var td = new Element('td',{colspan:this.options.above?1:2});
-		tr.insert(td);
+		var tr = n2i.build('tr',{parent:this.body});
+		var td = n2i.build('td',{colspan:this.options.above?1:2,parent:tr});
 		var b = In2iGui.Buttons.create(options);
-		td.insert(b.getElement());
+		td.appendChild(b.getElement());
 		return b;
 	}
 }
@@ -5661,12 +4652,12 @@ In2iGui.Formula.Group.prototype = {
  */
 In2iGui.Formula.Text = function(options) {
 	this.options = n2i.override({label:null,key:null,lines:1,live:false,maxHeight:100},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
-	this.input = this.element.select('.in2igui_formula_text')[0];
+	this.input = n2i.firstByClass(this.element,'in2igui_formula_text');
 	this.multiline = this.input.tagName.toLowerCase() == 'textarea';
-	this.placeholder = this.element.select('.in2igui_field_placeholder')[0];
+	this.placeholder = n2i.firstByClass(this.element,'in2igui_field_placeholder');
 	this.value = this.input.value;
 	if (this.placeholder) {
 		var self = this;
@@ -5684,13 +4675,15 @@ In2iGui.Formula.Text.create = function(options) {
 	options = n2i.override({lines:1},options);
 	var node,input;
 	if (options.lines>1 || options.multiline) {
-		input = new Element('textarea',
+		input = n2i.build('textarea',
 			{'class':'in2igui_formula_text','rows':options.lines,style:'height: 32px;'}
 		);
-		node = new Element('span',{'class':'in2igui_formula_text_multiline'}).insert(input);
+		node = n2i.build('span',{'class':'in2igui_formula_text_multiline'});
+		node.appendChild(input);
 	} else {
-		input = new Element('input',{'class':'in2igui_formula_text'});
-		node = new Element('span',{'class':'in2igui_field_singleline'}).insert(input);
+		input = n2i.build('input',{'class':'in2igui_formula_text'});
+		node = n2i.build('span',{'class':'in2igui_field_singleline'});
+		node.appendChild(input);
 	}
 	if (options.value!==undefined) {
 		input.value=options.value;
@@ -5703,20 +4696,28 @@ In2iGui.Formula.Text.prototype = {
 	/** @private */
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
-		this.input.observe('keyup',this.onKeyUp.bind(this));
-		var p = this.element.select('em')[0];
+		n2i.listen(this.input,'keyup',this.onKeyUp.bind(this));
+		var p = this.element.getElementsByTagName('em')[0];
 		if (p) {
 			this.updateClass();
-			p.observe('mousedown',function(){window.setTimeout(function() {this.input.focus();this.input.select();}.bind(this))}.bind(this));
-			p.observe('mouseup',function(){this.input.focus();this.input.select();}.bind(this));
+			n2i.listen(p,'mousedown',function() {
+				window.setTimeout(function() {
+					this.input.focus();
+					this.input.select();
+				}.bind(this)
+			)}.bind(this));
+			n2i.listen(p,'mouseup',function() {
+				this.input.focus();
+				this.input.select();
+			}.bind(this));
 		}
 	},
 	updateClass : function() {
-		this.element.setClassName('in2igui_field_dirty',this.value.length>0);
+		n2i.setClass(this.element,'in2igui_field_dirty',this.value.length>0);
 	},
 	/** @private */
 	onKeyUp : function(e) {
-		if (!this.multiline && e.keyCode===Event.KEY_RETURN) {
+		if (!this.multiline && e.keyCode===n2i.KEY_RETURN) {
 			this.fire('submit');
 			var form = In2iGui.get().getAncestor(this,'in2igui_formula');
 			if (form) {form.submit();}
@@ -5775,7 +4776,7 @@ In2iGui.Formula.Text.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		this.element.setClassName('in2igui_field_error',isError);
+		n2i.setClass(this.element,'in2igui_field_error',isError);
 		if (typeof(error) == 'string') {
 			In2iGui.showToolTip({text:error,element:this.element,key:this.name});
 		}
@@ -5791,7 +4792,6 @@ In2iGui.Formula.Text.prototype = {
 	/** @private */
 	expand : function(animate) {
 		if (!this.multiline) {return};
-		n2i.log('Visible:'+n2i.dom.isVisible(this.element));
 		if (!n2i.dom.isVisible(this.element)) {return};
 		var textHeight = In2iGui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
@@ -5823,8 +4823,8 @@ In2iGui.Formula.DateTime = function(o) {
 	this.inputFormats = ['d-m-Y','d/m-Y','d/m/Y','d-m-Y H:i:s','d/m-Y H:i:s','d/m/Y H:i:s','d-m-Y H:i','d/m-Y H:i','d/m/Y H:i','d-m-Y H','d/m-Y H','d/m/Y H','d-m','d/m','d','Y','m-d-Y','m-d','m/d'];
 	this.outputFormat = 'd-m-Y H:i:s';
 	this.name = o.name;
-	this.element = $(o.element);
-	this.input = this.element.select('input')[0];
+	this.element = n2i.get(o.element);
+	this.input = n2i.firstByTag(this.element,'input');
 	this.options = n2i.override({returnType:null,label:null,allowNull:true,value:null},o);
 	this.value = this.options.value;
 	In2iGui.extend(this);
@@ -5833,8 +4833,8 @@ In2iGui.Formula.DateTime = function(o) {
 }
 
 In2iGui.Formula.DateTime.create = function(options) {
-	var input = new Element('input',{'class':'in2igui_formula_text'});
-	var node = new Element('span',{'class':'in2igui_formula_text_singleline'}).insert(input);
+	var node = n2i.build('span',{'class':'in2igui_formula_text_singleline'});
+	n2i.build('input',{'class':'in2igui_formula_text',parent:node});
 	options.element = In2iGui.wrapInField(node);
 	return new In2iGui.Formula.DateTime(options);
 }
@@ -5842,7 +4842,7 @@ In2iGui.Formula.DateTime.create = function(options) {
 In2iGui.Formula.DateTime.prototype = {
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
-		this.input.observe('blur',this.check.bind(this));
+		n2i.listen(this.input,'blur',this.check.bind(this));
 	},
 	updateFromNode : function(node) {
 		if (node.firstChild) {
@@ -5912,40 +4912,42 @@ In2iGui.Formula.DateTime.prototype = {
 In2iGui.Formula.Number = function(o) {
 	this.options = n2i.override({min:0,max:10000,value:null,decimals:0,allowNull:false},o);	
 	this.name = o.name;
-	var e = this.element = $(o.element);
-	this.input = e.select('input')[0];
-	this.up = e.select('.in2igui_number_up')[0];
-	this.down = e.select('.in2igui_number_down')[0];
+	var e = this.element = n2i.get(o.element);
+	this.input = n2i.firstByTag(e,'input');
+	this.up = n2i.firstByClass(e,'in2igui_number_up');
+	this.down = n2i.firstByClass(e,'in2igui_number_down');
 	this.value = this.options.value;
 	In2iGui.extend(this);
 	this.addBehavior();
 }
 
 In2iGui.Formula.Number.create = function(o) {
-	var e = o.element = new Element('span',{'class':'in2igui_number'});
-	e.update('<span><span><input type="text" value="'+(o.value!==undefined ? o.value : '0')+'"/><a class="in2igui_number_up"></a><a class="in2igui_number_down"></a></span></span>');
+	o.element = n2i.build('span',{
+		'class':'in2igui_number',
+		html:'<span><span><input type="text" value="'+(o.value!==undefined ? o.value : '0')+'"/><a class="in2igui_number_up"></a><a class="in2igui_number_down"></a></span></span>'
+	});
 	return new In2iGui.Formula.Number(o);
 }
 
 In2iGui.Formula.Number.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		this.input.observe('focus',function() {e.addClassName('in2igui_number_focused')});
-		this.input.observe('blur',this.blurEvent.bind(this));
-		this.input.observe('keyup',this.keyEvent.bind(this));
-		//this.input.observe('keypress',this.keyEvent.bind(this));
-		this.up.observe('mousedown',this.upEvent.bind(this));
-		this.down.observe('mousedown',this.downEvent.bind(this));
+		n2i.listen(this.input,'focus',function() {n2i.addClass(e,'in2igui_number_focused')});
+		n2i.listen(this.input,'blur',this.blurEvent.bind(this));
+		n2i.listen(this.input,'keyup',this.keyEvent.bind(this));
+		n2i.listen(this.up,'mousedown',this.upEvent.bind(this));
+		n2i.listen(this.down,'mousedown',this.downEvent.bind(this));
 	},
 	blurEvent : function() {
-		this.element.removeClassName('in2igui_number_focused');
+		n2i.removeClass(this.element,'in2igui_number_focused');
 		this.updateField();
 	},
 	keyEvent : function(e) {
-		if (e.keyCode==Event.KEY_UP) {
-			e.stop();
+		e = e || window.event;
+		if (e.keyCode==n2i.KEY_UP) {
+			n2i.stop(e);
 			this.upEvent();
-		} else if (e.keyCode==Event.KEY_DOWN) {
+		} else if (e.keyCode==n2i.KEY_DOWN) {
 			this.downEvent();
 		} else {
 			var parsed = parseInt(this.input.value,10);
@@ -6015,7 +5017,7 @@ In2iGui.Formula.Number.prototype = {
 In2iGui.Formula.DropDown = function(o) {
 	this.options = n2i.override({label:null,placeholder:null,url:null,source:null},o);
 	this.name = o.name;
-	var e = this.element = $(o.element);
+	var e = this.element = n2i.get(o.element);
 	this.inner = e.getElementsByTagName('strong')[0];
 	this.items = o.items || [];
 	this.index = -1;
@@ -6034,9 +5036,10 @@ In2iGui.Formula.DropDown = function(o) {
 
 In2iGui.Formula.DropDown.create = function(options) {
 	options = options || {};
-	options.element = new Element('a',{'class':'in2igui_dropdown',href:'#'}).update(
-		'<span><span><strong></strong></span></span>'
-	);
+	options.element = n2i.build('a',{
+		'class':'in2igui_dropdown',href:'#',
+		html:'<span><span><strong></strong></span></span>'
+	});
 	return new In2iGui.Formula.DropDown(options);
 }
 
@@ -6044,9 +5047,9 @@ In2iGui.Formula.DropDown.prototype = {
 	/** @private */
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.element,'class':'in2igui_dropdown_focused'});
-		this.element.observe('click',this.clicked.bind(this));
-		this.element.observe('blur',this.hideSelector.bind(this));
-		this.element.observe('keydown',this._keyDown.bind(this));
+		n2i.listen(this.element,'click',this.clicked.bind(this));
+		n2i.listen(this.element,'blur',this.hideSelector.bind(this));
+		n2i.listen(this.element,'keydown',this._keyDown.bind(this));
 	},
 	/** @private */
 	updateIndex : function() {
@@ -6065,43 +5068,45 @@ In2iGui.Formula.DropDown.prototype = {
 			this.inner.innerHTML='';
 			n2i.dom.addText(this.inner,n2i.wrap(text));
 		} else if (this.options.placeholder) {
-			this.inner.update(new Element('em').update(this.options.placeholder.escapeHTML()));
+			this.inner.innerHTML='';
+			this.inner.appendChild(n2i.build('em',{text:n2i.escape(this.options.placeholder)}));
 		} else {
 			this.inner.innerHTML='';
 		}
 		if (!this.selector) {
 			return;
 		}
-		this.selector.select('a').each(function(a,i) {
+		var as = this.selector.getElementsByTagName('a');
+		n2i.each(as,function(a,i) {
 			if (this.index==i) {
-				a.addClassName('in2igui_selected');
+				n2i.addClass(a,'in2igui_selected');
 			}
 			else {a.className=''};
 		}.bind(this));
 	},
 	/** @private */
 	clicked : function(e) {
-		e.stop();
+		n2i.stop(e);
 		this.buildSelector();
 		var el = this.element, s=this.selector;
 		el.focus();
 		if (!this.items) return;
 		var docHeight = n2i.getDocumentHeight();
 		if (docHeight<200) {
-			var left = this.element.cumulativeOffset().left;
-			this.selector.setStyle({'left':left+'px',top:'5px'});
+			var left = n2i.getLeft(this.element);
+			n2i.setStyle(this.selector,{'left':left+'px',top:'5px'});
 		} else {
 			n2i.place({
 				target:{element:this.element,vertical:1,horizontal:0},
 				source:{element:this.selector,vertical:0,horizontal:0}
 			});
 		}
-		s.setStyle({visibility:'hidden',display:'block',width:''});
-		var height = Math.min(docHeight-s.cumulativeOffset().top-5,200);
-		var width = Math.max(el.getWidth()-5,100,s.getWidth()+20);
-		var space = n2i.getDocumentWidth()-el.cumulativeOffset().left-20;
+		n2i.setStyle(s,{visibility:'hidden',display:'block',width:''});
+		var height = Math.min(docHeight-n2i.getTop(s)-5,200);
+		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
+		var space = n2i.getDocumentWidth()-n2i.getLeft(el)-20;
 		width = Math.min(width,space);
-		s.setStyle({visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
+		n2i.setStyle(s,{visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
 	},
 	getValue : function() {
 		return this.value;
@@ -6112,7 +5117,7 @@ In2iGui.Formula.DropDown.prototype = {
 			return;
 		}
 		if (e.keyCode==40) {
-			e.stop();
+			n2i.stop(e);
 			if (this.index>=this.items.length-1) {
 				this.value=this.items[0].value;
 			} else {
@@ -6122,7 +5127,7 @@ In2iGui.Formula.DropDown.prototype = {
 			this.updateUI();
 			this.fireChange();
 		} else if (e.keyCode==38) {
-			e.stop();
+			n2i.stop(e);
 			if (this.index>0) {
 				this.index--;
 			} else {
@@ -6175,26 +5180,29 @@ In2iGui.Formula.DropDown.prototype = {
 	/** @private */
 	hideSelector : function() {
 		if (!this.selector) return;
-		this.selector.hide();
+		this.selector.style.display='none';
 	},
 	/** @private */
 	buildSelector : function() {
 		if (!this.dirty || !this.items) return;
 		if (!this.selector) {
-			this.selector = new Element('div',{'class':'in2igui_dropdown_selector'});
+			this.selector = n2i.build('div',{'class':'in2igui_dropdown_selector'});
 			document.body.appendChild(this.selector);
-			this.selector.observe('mousedown',function(e) {e.stop()});
+			n2i.listen(this.selector,'mousedown',function(e) {e.stop()});
 		} else {
-			this.selector.update();
+			this.selector.innerHTML='';
 		}
 		var self = this;
-		this.items.each(function(item,i) {
-			var e = new Element('a',{href:'#'}).update(item.label || item.title).observe('mousedown',function(e) {
-				e.stop();
+		n2i.each(this.items,function(item,i) {
+			var e = n2i.build('a',{href:'#',text:item.label || item.title});
+			n2i.listen(e,'mousedown',function(e) {
+				n2i.stop(e);
 				self.itemClicked(item,i);
 			})
-			if (i==self.index) e.addClassName('in2igui_selected');
-			self.selector.insert(e);
+			if (i==self.index) {
+				n2i.addClass(e,'in2igui_selected')
+			};
+			self.selector.appendChild(e);
 		});
 		this.dirty = false;
 	},
@@ -6223,7 +5231,7 @@ In2iGui.Formula.DropDown.prototype = {
  */
 In2iGui.Formula.Radiobuttons = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.radios = [];
 	this.value = options.value;
@@ -6240,7 +5248,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 	updateUI : function() {
 		for (var i=0; i < this.radios.length; i++) {
 			var radio = this.radios[i];
-			$(radio.id).setClassName('in2igui_selected',radio.value==this.value);
+			n2i.setClass(n2i.get(radio.id),'in2igui_selected',radio.value==this.value);
 		};
 	},
 	setValue : function(value) {
@@ -6255,7 +5263,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 	},
 	registerRadiobutton : function(radio) {
 		this.radios.push(radio);
-		var element = $(radio.id);
+		var element = n2i.get(radio.id);
 		var self = this;
 		element.onclick = function() {
 			self.setValue(radio.value);
@@ -6272,8 +5280,8 @@ In2iGui.Formula.Radiobuttons.prototype = {
  * @constructor
  */
 In2iGui.Formula.Checkbox = function(o) {
-	this.element = $(o.element);
-	this.control = this.element.select('span')[0];
+	this.element = n2i.get(o.element);
+	this.control = n2i.firstByTag(this.element,'span');
 	this.options = o;
 	this.name = o.name;
 	this.value = o.value==='true' || o.value===true;
@@ -6285,11 +5293,10 @@ In2iGui.Formula.Checkbox = function(o) {
  * Creates a new checkbox
  */
 In2iGui.Formula.Checkbox.create = function(o) {
-	var e = o.element = new Element('a',{'class':'in2igui_checkbox',href:'#'});
+	var e = o.element = n2i.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'});
 	if (o.value) {
-		e.addClassName('in2igui_checkbox_selected');
+		n2i.addClass(e,'in2igui_checkbox_selected');
 	}
-	e.update('<span><span></span></span>');
 	return new In2iGui.Formula.Checkbox(o);
 }
 
@@ -6297,11 +5304,11 @@ In2iGui.Formula.Checkbox.prototype = {
 	/** @private */
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.element,'class':'in2igui_checkbox_focused'});
-		this.element.observe('click',this.click.bind(this));
+		n2i.listen(this.element,'click',this.click.bind(this));
 	},
 	/** @private */
 	click : function(e) {
-		e.stop();
+		n2i.stop(e);
 		this.element.focus();
 		this.value = !this.value;
 		this.updateUI();
@@ -6310,7 +5317,7 @@ In2iGui.Formula.Checkbox.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		this.element.setClassName('in2igui_checkbox_selected',this.value);
+		n2i.setClass(this.element,'in2igui_checkbox_selected',this.value);
 	},
 	/** Sets the value
 	 * @param {Boolean} value Whether the checkbox is checked
@@ -6345,7 +5352,7 @@ In2iGui.Formula.Checkbox.prototype = {
  */
 In2iGui.Formula.Checkboxes = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.items = options.items || [];
 	this.sources = [];
@@ -6360,14 +5367,12 @@ In2iGui.Formula.Checkboxes = function(options) {
 }
 
 In2iGui.Formula.Checkboxes.create = function(o) {
-	o.element = new Element('div',{'class':o.vertical ? 'in2igui_checkboxes in2igui_checkboxes_vertical' : 'in2igui_checkboxes'});
+	o.element = n2i.build('div',{'class':o.vertical ? 'in2igui_checkboxes in2igui_checkboxes_vertical' : 'in2igui_checkboxes'});
 	if (o.items) {
-		o.items.each(function(item) {
-			var node = new Element('a',{'class':'in2igui_checkbox',href:'javascript:void(0);'}).update(
-				'<span><span></span></span>'+item.title
-			);
+		n2i.each(o.items,function(item) {
+			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+item.title});
 			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
-			o.element.insert(node);
+			o.element.appendChild(node);
 		});
 	}
 	return new In2iGui.Formula.Checkboxes(o);
@@ -6376,12 +5381,13 @@ In2iGui.Formula.Checkboxes.create = function(o) {
 In2iGui.Formula.Checkboxes.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.element.select('a.in2igui_checkbox').each(function(check,i) {
-			check.observe('click',function(e) {
-				e.stop();
+		var checks = n2i.byClass(this.element,'in2igui_checkbox');
+		n2i.each(checks,function(check,i) {
+			n2i.listen(check,'click',function(e) {
+				n2i.stop(e);
 				this.flipValue(this.items[i].value);
 			}.bind(this))
-		}.bind(this));
+		}.bind(this))
 	},
 	getValue : function() {
 		return this.values;
@@ -6427,9 +5433,9 @@ In2iGui.Formula.Checkboxes.prototype = {
 		for (var i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
-		var nodes = this.element.select('a.in2igui_checkbox');
-		this.items.each(function(item,i) {
-			nodes[i].setClassName('in2igui_checkbox_selected',this.values.indexOf(item.value)!==-1);
+		var nodes = n2i.byClass(this.element,'in2igui_checkbox');
+		n2i.each(this.items,function(item,i) {
+			n2i.setClass(nodes[i],'in2igui_checkbox_selected',this.values.indexOf(item.value)!==-1);
 		}.bind(this));
 	},
 	refresh : function() {
@@ -6459,16 +5465,14 @@ In2iGui.Formula.Checkboxes.prototype = {
 		return this.options.label;
 	},
 	$itemsLoaded : function(items) {
-		items.each(function(item) {
-			var node = new Element('a',{'class':'in2igui_checkbox',href:'javascript:void(0);'}).update(
-				'<span><span></span></span>'+item.title
-			);
-			node.observe('click',function(e) {
-				e.stop();
+		n2i.each(items,function(item) {
+			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+n2i.escape(item.title)});
+			n2i.listen(node,'click',function(e) {
+				n2i.stop(e);
 				this.flipValue(item.value);
 			}.bind(this))
 			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
-			this.element.insert(node);
+			this.element.appendChild(node);
 			this.items.push(item);
 		}.bind(this));
 		this.checkValues();
@@ -6483,7 +5487,7 @@ In2iGui.Formula.Checkboxes.prototype = {
  * @constructor
  */
 In2iGui.Formula.Checkboxes.Items = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.parent = null;
 	this.options = options;
@@ -6502,16 +5506,19 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 	},
 	$itemsLoaded : function(items) {
 		this.checkboxes = [];
-		this.element.update();
+		this.element.innerHTML='';
 		var self = this;
-		items.each(function(item) {
-			var node = new Element('a',{'class':'in2igui_checkbox',href:'#'}).update(
-				'<span><span></span></span>'+item.title
-			).observe('click',function(e) {e.stop();node.focus();self.itemWasClicked(item)});
+		n2i.each(items,function(item) {
+			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'+item.title});
+			n2i.listen(node,'click',function(e) {
+				n2i.stop(e);
+				node.focus();
+				self.itemWasClicked(item)
+			});
 			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
-			self.element.insert(node);
+			self.element.appendChild(node);
 			self.checkboxes.push({title:item.title,element:node,value:item.value});
-		})
+		});
 		this.parent.checkValues();
 		this.updateUI();
 	},
@@ -6521,7 +5528,7 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 	updateUI : function() {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
-			item.element.setClassName('in2igui_checkbox_selected',this.parent.values.indexOf(item.value)!=-1);
+			n2i.setClass(item.element,'in2igui_checkbox_selected',this.parent.values.indexOf(item.value)!=-1);
 		};
 	},
 	hasValue : function(value) {
@@ -6542,7 +5549,7 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
  */
 In2iGui.Formula.Tokens = function(o) {
 	this.options = n2i.override({label:null,key:null},o);
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.name = o.name;
 	this.value = [''];
 	In2iGui.extend(this);
@@ -6551,7 +5558,7 @@ In2iGui.Formula.Tokens = function(o) {
 
 In2iGui.Formula.Tokens.create = function(o) {
 	o = o || {};
-	o.element = new Element('div').addClassName('in2igui_tokens');
+	o.element = n2i.build('div',{'class':'in2igui_tokens'});
 	return new In2iGui.Formula.Tokens(o);
 }
 
@@ -6567,9 +5574,11 @@ In2iGui.Formula.Tokens.prototype = {
 	},
 	getValue : function() {
 		var out = [];
-		this.value.each(function(value) {
+		n2i.each(this.value,function(value) {
 			value = value.strip();
-			if (value.length>0) out.push(value);
+			if (value.length>0) {
+				out.push(value);
+			}
 		})
 		return out;
 	},
@@ -6577,16 +5586,17 @@ In2iGui.Formula.Tokens.prototype = {
 		return this.options.label;
 	},
 	updateUI : function() {
-		this.element.update();
-		this.value.each(function(value,i) {
-			var input = new Element('input').addClassName('in2igui_tokens_token');
+		this.element.innerHTML='';
+		n2i.each(this.value,function(value,i) {
+			var input = n2i.build('input',{'class':'in2igui_tokens_token',parent:this.element});
 			if (this.options.width) {
-				input.setStyle({width:this.options.width+'px'});
+				input.style.width=this.options.width+'px';
 			}
 			input.value = value;
 			input.in2iguiIndex = i;
-			this.element.insert(input);
-			input.observe('keyup',function() {this.inputChanged(input,i)}.bind(this));
+			n2i.listen(input,'keyup',function() {
+				this.inputChanged(input,i)
+			}.bind(this));
 		}.bind(this));
 	},
 	/** @private */
@@ -6598,15 +5608,15 @@ In2iGui.Formula.Tokens.prototype = {
 	},
 	/** @private */
 	addField : function() {
-		var input = new Element('input').addClassName('in2igui_tokens_token');
+		var input = n2i.build('input',{'class':'in2igui_tokens_token'});
 		if (this.options.width) {
-			input.setStyle({width:this.options.width+'px'});
+			input.style.width = this.options.width+'px';
 		}
 		var i = this.value.length;
 		this.value.push('');
-		this.element.insert(input);
+		this.element.appendChild(input);
 		var self = this;
-		input.observe('keyup',function() {self.inputChanged(input,i)});
+		n2i.listen(input,'keyup',function() {self.inputChanged(input,i)});
 	}
 }
 
@@ -6619,9 +5629,9 @@ In2iGui.Formula.Tokens.prototype = {
 In2iGui.Formula.StyleLength = function(o) {
 	this.options = n2i.override({value:null,min:0,max:1000,units:['px','pt','em','%'],defaultUnit:'px',allowNull:false},o);	
 	this.name = o.name;
-	var e = this.element = $(o.element);
-	this.input = e.select('input')[0];
-	var as = e.select('a');
+	var e = this.element = n2i.get(o.element);
+	this.input = n2i.firstByTag(e,'input');
+	var as = e.getElementsByTagName('a');
 	this.up = as[0];
 	this.down = as[1];
 	this.value = this.parseValue(this.options.value);
@@ -6633,11 +5643,11 @@ In2iGui.Formula.StyleLength.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var e = this.element;
-		this.input.observe('focus',function() {e.addClassName('in2igui_number_focused')});
-		this.input.observe('blur',this.blurEvent.bind(this));
-		this.input.observe('keyup',this.keyEvent.bind(this));
-		this.up.observe('mousedown',this.upEvent.bind(this));
-		this.down.observe('mousedown',this.downEvent.bind(this));
+		n2i.listen(this.input,'focus',function() {n2i.addClass(e,'in2igui_number_focused')});
+		n2i.listen(this.input,'blur',this.blurEvent.bind(this));
+		n2i.listen(this.input,'keyup',this.keyEvent.bind(this));
+		n2i.listen(this.up,'mousedown',this.upEvent.bind(this));
+		n2i.listen(this.down,'mousedown',this.downEvent.bind(this));
 	},
 	/** @private */
 	parseValue : function(value) {
@@ -6658,15 +5668,16 @@ In2iGui.Formula.StyleLength.prototype = {
 	},
 	/** @private */
 	blurEvent : function() {
-		this.element.removeClassName('in2igui_number_focused');
+		n2i.removeClass(this.element,'in2igui_number_focused');
 		this.updateInput();
 	},
 	/** @private */
 	keyEvent : function(e) {
-		if (e.keyCode==Event.KEY_UP) {
-			e.stop();
+		e = e || window.event;
+		if (e.keyCode==n2i.KEY_UP) {
+			n2i.stop(e);
 			this.upEvent();
-		} else if (e.keyCode==Event.KEY_DOWN) {
+		} else if (e.keyCode==n2i.KEY_DOWN) {
 			this.downEvent();
 		} else {
 			this.checkAndSetValue(this.parseValue(this.input.value));
@@ -6731,11 +5742,11 @@ In2iGui.Formula.StyleLength.prototype = {
 In2iGui.Formula.Location = function(options) {
 	this.options = n2i.override({value:null},options);
 	this.name = options.name;
-	this.element = $(options.element);
-	this.chooser = this.element.select('a')[0];
-	this.latField = new In2iGui.TextField({element:this.element.select('input')[0],validator:new In2iGui.NumberValidator({min:-90,max:90,allowNull:true})});
+	this.element = n2i.get(options.element);
+	this.chooser = n2i.firstByTag(this.element,'a');
+	this.latField = new In2iGui.TextField({element:n2i.firstByTag(this.element,'input'),validator:new In2iGui.NumberValidator({min:-90,max:90,allowNull:true})});
 	this.latField.listen(this);
-	this.lngField = new In2iGui.TextField({element:this.element.select('input')[1],validator:new In2iGui.NumberValidator({min:-180,max:180,allowNull:true})});
+	this.lngField = new In2iGui.TextField({element:this.element.getElementsByTagName('input')[1],validator:new In2iGui.NumberValidator({min:-180,max:180,allowNull:true})});
 	this.lngField.listen(this);
 	this.value = this.options.value;
 	In2iGui.extend(this);
@@ -6745,18 +5756,17 @@ In2iGui.Formula.Location = function(options) {
 
 In2iGui.Formula.Location.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class':'in2igui_location'});
-	var b = new Element('span');
-	b.update('<span class="in2igui_location_latitude"><span><input/></span></span><span class="in2igui_location_longitude"><span><input/></span></span>');
-	e.insert(In2iGui.wrapInField(b));
-	e.insert('<a class="in2igui_location_picker" href="javascript:void(0);"></a>');
+	var e = options.element = n2i.build('div',{'class':'in2igui_location'});
+	var b = n2i.build('span',{html:'<span class="in2igui_location_latitude"><span><input/></span></span><span class="in2igui_location_longitude"><span><input/></span></span>'});
+	e.appendChild(In2iGui.wrapInField(b));
+	e.appendChild(n2i.build('a',{'class':'in2igui_location_picker',href:'javascript:void(0);'}));
 	return new In2iGui.Formula.Location(options);
 }
 
 In2iGui.Formula.Location.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.chooser.observe('click',this.showPicker.bind(this));
+		n2i.listen(this.chooser,'click',this.showPicker.bind(this));
 		In2iGui.addFocusClass({element:this.latField.element,classElement:this.element,'class':'in2igui_field_focused'});
 		In2iGui.addFocusClass({element:this.lngField.element,classElement:this.element,'class':'in2igui_field_focused'});
 	},
@@ -6835,22 +5845,22 @@ In2iGui.Formula.Location.prototype = {
  */
 In2iGui.List = function(options) {
 	this.options = n2i.override({url:null,source:null},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
 	this.url = options.url;
-	this.table = this.element.select('table')[0];
-	this.head = this.element.select('thead')[0];
-	this.body = this.element.select('tbody')[0];
+	this.table = n2i.firstByTag(this.element,'table');
+	this.head = n2i.firstByTag(this.element,'thead');
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.columns = [];
 	this.rows = [];
 	this.selected = [];
-	this.navigation = this.element.select('.in2igui_list_navigation')[0];
-	this.count = this.navigation.select('.in2igui_list_count')[0];
-	this.windowPage = this.navigation.select('.window_page')[0];
-	this.windowPageBody = this.navigation.select('.window_page_body')[0];
+	this.navigation = n2i.firstByClass(this.element,'in2igui_list_navigation');
+	this.count = n2i.firstByClass(this.navigation,'in2igui_list_count');
+	this.windowPage = n2i.firstByClass(this.navigation,'window_page');
+	this.windowPageBody = n2i.firstByClass(this.navigation,'window_page_body');
 	this.parameters = {};
 	this.sortKey = null;
 	this.sortDirection = null;
@@ -6871,19 +5881,20 @@ In2iGui.List = function(options) {
  */
 In2iGui.List.create = function(options) {
 	options = n2i.override({},options);
-	var e = options.element = new Element('div',{'class':'in2igui_list'});
-	e.update('<div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>');
+	var e = options.element = n2i.build('div',{
+		'class':'in2igui_list',
+		html: '<div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
 	return new In2iGui.List(options);
 }
 
 In2iGui.List.prototype = {
 	/** Hides the list */
 	hide : function() {
-		this.element.hide();
+		this.element.style.display='none';
 	},
 	/** Shows the list */
 	show : function() {
-		this.element.show();
+		this.element.style.display='block';
 		this.refresh();
 	},
 	/** @private */
@@ -7032,11 +6043,11 @@ In2iGui.List.prototype = {
 		this.selected = [];
 		this.parseWindow(doc);
 		this.buildNavigation();
-		this.body.update();
-		this.head.update();
+		this.body.innerHTML='';
+		this.head.innerHTML='';
 		this.rows = [];
 		this.columns = [];
-		var headTr = new Element('tr');
+		var headTr = document.createElement('tr');
 		var sort = doc.getElementsByTagName('sort');
 		this.sortKey=null;
 		this.sortDirection=null;
@@ -7047,7 +6058,7 @@ In2iGui.List.prototype = {
 		var headers = doc.getElementsByTagName('header');
 		for (var i=0; i < headers.length; i++) {
 			var className = '';
-			var th = new Element('th');
+			var th = document.createElement('th');
 			var width = headers[i].getAttribute('width');
 			var key = headers[i].getAttribute('key');
 			var sortable = headers[i].getAttribute('sortable')=='true';
@@ -7064,7 +6075,7 @@ In2iGui.List.prototype = {
 				className+=' sort_'+this.sortDirection;
 			}
 			th.className=className;
-			var span = new Element('span');
+			var span = document.createElement('span');
 			th.appendChild(span);
 			span.appendChild(document.createTextNode(headers[i].getAttribute('title') || ''));
 			headTr.appendChild(th);
@@ -7075,13 +6086,13 @@ In2iGui.List.prototype = {
 		var rows = doc.getElementsByTagName('row');
 		for (var i=0; i < rows.length; i++) {
 			var cells = rows[i].getElementsByTagName('cell');
-			var row = new Element('tr');
+			var row = document.createElement('tr');
 			var icon = rows[i].getAttribute('icon');
 			var title = rows[i].getAttribute('title');
 			for (var j=0; j < cells.length; j++) {
-				var td = new Element('td');
+				var td = document.createElement('td');
 				this.parseCell(cells[j],td);
-				row.insert(td);
+				row.appendChild(td);
 				if (!title) {
 					title = n2i.dom.getNodeText(cells[j]);
 				}
@@ -7114,12 +6125,12 @@ In2iGui.List.prototype = {
 	/** @private */
 	$sourceIsBusy : function() {
 		this.busy = true;
-		this.element.addClassName('in2igui_list_busy');
+		n2i.addClass(this.element,'in2igui_list_busy');
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
 		this.busy = false;
-		this.element.removeClassName('in2igui_list_busy');
+		n2i.removeClass(this.element,'in2igui_list_busy');
 	},
 	
 	/** @private */
@@ -7143,7 +6154,7 @@ In2iGui.List.prototype = {
 	/** @private */
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
-		if (icon!=null && !icon.blank()) {
+		if (icon!=null && icon!='') {
 			cell.appendChild(In2iGui.createIcon(icon,1));
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
@@ -7151,27 +6162,27 @@ In2iGui.List.prototype = {
 			if (n2i.dom.isDefinedText(child)) {
 				n2i.dom.addText(cell,child.nodeValue);
 			} else if (n2i.dom.isElement(child,'break')) {
-				cell.insert(new Element('br'));
+				cell.appendChild(document.createElement('br'));
 			} else if (n2i.dom.isElement(child,'icon')) {
-				cell.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
+				cell.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
 			} else if (n2i.dom.isElement(child,'line')) {
-				var line = new Element('p',{'class':'in2igui_list_line'});
+				var line = n2i.build('p',{'class':'in2igui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
-					line.addClassName('in2igui_list_dimmed')
+					n2i.addClass(line,'in2igui_list_dimmed')
 				}
-				cell.insert(line);
+				cell.appendChild(line);
 				this.parseCell(child,line);
 			} else if (n2i.dom.isElement(child,'object')) {
-				var obj = new Element('div',{'class':'object'});
+				var obj = n2i.build('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
 					obj.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
 				}
 				if (child.firstChild && child.firstChild.nodeType==n2i.TEXT_NODE && child.firstChild.nodeValue.length>0) {
 					n2i.dom.addText(obj,child.firstChild.nodeValue);
 				}
-				cell.insert(obj);
+				cell.appendChild(obj);
 			} else if (n2i.dom.isElement(child,'icons')) {
-				var icons = new Element('span',{'class':'in2igui_list_icons'});
+				var icons = n2i.build('span',{'class':'in2igui_list_icons'});
 				this.parseCell(child,icons);
 				cell.appendChild(icons);
 			}
@@ -7201,22 +6212,22 @@ In2iGui.List.prototype = {
 		}
 		this.navigation.style.display='block';
 		var from = ((this.window.page)*this.window.size+1);
-		this.count.update(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total);
+		n2i.dom.setNodeText(this.count,(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total));
 		var pageBody = this.windowPageBody;
-		pageBody.update();
+		pageBody.innerHTML='';
 		if (pages<2) {
 			this.windowPage.style.display='none';	
 		} else {
-			var indices = $R(0, pages-1);
-			indices = this.buildPages(pages,this.window.page);
-			indices.each(function(i){
-				if (i==='') {
-					pageBody.insert('<span>·</span>');
+			var indices = this.buildPages(pages,this.window.page);
+			for (var i=0; i < indices.length; i++) {
+				var index = indices[i]
+				if (index==='') {
+					pageBody.innerHTML='<span>·</span>';
 				} else {
 					var a = document.createElement('a');
-					a.appendChild(document.createTextNode(i+1));
+					a.appendChild(document.createTextNode(index+1));
 					a.onmousedown = function() {
-						self.windowPageWasClicked(this,i);
+						self.windowPageWasClicked(this,index);
 						return false;
 					}
 					if (i==self.window.page) {
@@ -7224,7 +6235,7 @@ In2iGui.List.prototype = {
 					}
 					pageBody.appendChild(a);
 				}
-			});
+			}
 			this.windowPage.style.display='block';
 		}
 	},
@@ -7371,10 +6382,10 @@ In2iGui.List.prototype = {
 	changeSelection : function(indexes) {
 		var rows = this.body.getElementsByTagName('tr');
 		for (var i=0;i<this.selected.length;i++) {
-			rows[this.selected[i]].removeClassName('selected');
+			n2i.removeClass(rows[this.selected[i]],'selected');
 		}
 		for (var i=0;i<indexes.length;i++) {
-			rows[indexes[i]].addClassName('selected');
+			n2i.addClass(rows[indexes[i]],'selected');
 		}
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);
@@ -7401,18 +6412,23 @@ In2iGui.List.prototype = {
 In2iGui.Tabs = function(o) {
 	o = o || {};
 	this.name = o.name;
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.activeTab = -1;
-	this.bar = this.element.select('.in2igui_tabs_bar ul')[0];
-	this.tabs = this.bar.select('li');
-	this.contents = this.element.select('.in2igui_tabs_tab');
+	var x = n2i.firstByClass(this.element,'in2igui_tabs_bar');
+	this.bar = n2i.firstByTag(x,'ul');
+	this.tabs = [];
+	var nodes = this.bar.getElementsByTagName('li');
+	for (var i=0; i < nodes.length; i++) {
+		this.tabs.push(nodes[i]);
+	};
+	this.contents = n2i.byClass(this.element,'in2igui_tabs_tab');
 	this.addBehavior();
 	In2iGui.extend(this);
 }
 
 In2iGui.Tabs.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class':'in2igui_tabs'});
+	var e = options.element = n2i.build('div',{'class':'in2igui_tabs'});
 	var cls = 'in2igui_tabs_bar';
 	if (options.small) {
 		cls+=' in2igui_tabs_bar_small';
@@ -7420,21 +6436,21 @@ In2iGui.Tabs.create = function(options) {
 	if (options.centered) {
 		cls+=' in2igui_tabs_bar_centered';
 	}
-	var bar = new Element('div',{'class' : cls});
-	e.insert(bar);
-	var ul = new Element('ul');
-	bar.insert(ul);
+	var bar = n2i.build('div',{'class' : cls, parent : e});
+	var ul = n2i.build('ul',{parent:bar});
 	return new In2iGui.Tabs(options);
 }
 
 In2iGui.Tabs.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.tabs.each(this.addTabBehavior.bind(this));
+		for (var i=0; i < this.tabs.length; i++) {
+			this.addTabBehavior(this.tabs[i],i);
+		};
 	},
 	/** @private */
 	addTabBehavior : function(tab,index) {	
-		tab.observe('click',function() {
+		n2i.listen(tab,'click',function() {
 			this.tabWasClicked(index);
 		}.bind(this))
 	},
@@ -7451,27 +6467,26 @@ In2iGui.Tabs.prototype = {
 	/** @private */
 	updateGUI : function() {
 		for (var i=0; i < this.tabs.length; i++) {
-			this.tabs[i].setClassName('in2igui_tabs_selected',i==this.activeTab);
-			this.contents[i].setStyle({display : (i==this.activeTab ? 'block' : 'none')});
+			n2i.setClass(this.tabs[i],'in2igui_tabs_selected',i==this.activeTab);
+			this.contents[i].style.display = i==this.activeTab ? 'block' : 'none';
 		};
 	},
 	createTab : function(options) {
 		options = options || {};
-		var tab = new Element('li').update('<a><span><span>'+options.title+'</span></span></a>');
-		this.bar.insert(tab);
+		var tab = n2i.build('li',{html:'<a><span><span>'+n2i.escape(options.title)+'</span></span></a>',parent:this.bar});
 		this.addTabBehavior(tab,this.tabs.length);
 		this.tabs.push(tab);
-		var e = options.element = new Element('div',{'class':'in2igui_tabs_tab'});
+		var e = options.element = n2i.build('div',{'class':'in2igui_tabs_tab'});
 		if (options.padding>0) {
-			e.setStyle({'padding':options.padding+'px'});
+			e.style.padding = options.padding+'px';
 		}
 		this.contents.push(e);
-		this.element.insert(e);
+		this.element.appendChild(e);
 		if (this.activeTab==-1) {
 			this.activeTab=0;
-			tab.addClassName('in2igui_tabs_selected');
+			n2i.addClass(tab,'in2igui_tabs_selected');
 		} else {
-			e.setStyle({display:'none'});			
+			e.style.display='none';
 		}
 		return new In2iGui.Tab(options);
 	}
@@ -7482,12 +6497,12 @@ In2iGui.Tabs.prototype = {
  */
 In2iGui.Tab = function(o) {
 	this.name = o.name;
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 }
 
 In2iGui.Tab.prototype = {
 	add : function(widget) {
-		this.element.insert(widget.element);
+		this.element.appendChild(widget.element);
 	}
 }
 
@@ -7497,8 +6512,8 @@ In2iGui.Tab.prototype = {
 In2iGui.ObjectList = function(o) {
 	this.options = n2i.override({key:null},o);
 	this.name = o.name;
-	this.element = $(o.element);
-	this.body = this.element.select('tbody')[0];
+	this.element = n2i.get(o.element);
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.template = [];
 	this.objects = [];
 	In2iGui.extend(this);
@@ -7506,19 +6521,19 @@ In2iGui.ObjectList = function(o) {
 
 In2iGui.ObjectList.create = function(o) {
 	o=o || {};
-	var e = o.element = new Element('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
+	var e = o.element = n2i.build('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
 	if (o.template) {
 		var head = '<thead><tr>';
-		o.template.each(function(item) {
-			head+='<th>'+(item.label || '')+'</th>';
-		});
+		for (var i=0; i < o.template.length; i++) {
+			head+='<th>'+(o.template[i].label || '')+'</th>';
+		};
 		head+='</tr></thead>';
-		e.insert(head);
+		e.innerHTML=head;
 	}
-	e.insert(new Element('tbody'));
+	n2i.build('tbody',{parent:e});
 	var list = new In2iGui.ObjectList(o);
 	if (o.template) {
-		o.template.each(function(item) {
+		n2i.each(o.template,function(item) {
 			list.registerTemplateItem(new In2iGui.ObjectList.Text(item.key));
 		});
 	}
@@ -7535,7 +6550,7 @@ In2iGui.ObjectList.prototype = {
 			this.objects.push(obj);
 			this.body.appendChild(obj.getElement());
 		} else {
-			var last = this.objects.pop();
+			var last = this.objects[this.objects.length-1];
 			var obj = new In2iGui.ObjectList.Object(last.index,data,this);
 			last.index++;
 			this.objects.push(obj);
@@ -7546,7 +6561,12 @@ In2iGui.ObjectList.prototype = {
 	reset : function() {
 		for (var i=0; i < this.objects.length; i++) {
 			var element = this.objects[i].getElement();
-			element.parentNode.removeChild(element);
+			if (!element.parentNode) {
+				n2i.log('no parent for...');
+				n2i.log(element);
+			} else {
+				element.parentNode.removeChild(element);
+			}
 		};
 		this.objects = [];
 		this.addObject({});
@@ -7639,7 +6659,7 @@ In2iGui.ObjectList.Text.prototype = {
 		return new In2iGui.ObjectList.Text(this.key);
 	},
 	getElement : function() {
-		var input = new Element('input',{'class':'in2igui_formula_text'});
+		var input = n2i.build('input',{'class':'in2igui_formula_text'});
 		var field = In2iGui.wrapInField(input);
 		this.wrapper = new In2iGui.TextField({element:input});
 		this.wrapper.listen(this);
@@ -7673,7 +6693,7 @@ In2iGui.ObjectList.Select.prototype = {
 		return copy;
 	},
 	getElement : function() {
-		this.select = new Element('select');
+		this.select = n2i.build('select');
 		for (var i=0; i < this.options.length; i++) {
 			this.select.options[this.select.options.length] = new Option(this.options[i].label,this.options[i].value);
 		};
@@ -7700,7 +6720,7 @@ In2iGui.ObjectList.Select.prototype = {
  */
 In2iGui.Alert = function(options) {
 	this.options = n2i.override({modal:false},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.body = this.element.select('.in2igui_alert_body')[0];
 	this.content = this.element.select('.in2igui_alert_content')[0];
@@ -7742,7 +6762,7 @@ In2iGui.Alert.prototype = {
 	show : function() {
 		var zIndex = In2iGui.nextAlertIndex();
 		if (this.options.modal) {
-			In2iGui.showCurtain(this,zIndex);
+			In2iGui.showCurtain({widget:this,zIndex:zIndex});
 			zIndex++;
 		}
 		this.element.style.zIndex=zIndex;
@@ -7808,8 +6828,8 @@ In2iGui.Alert.prototype = {
 In2iGui.Button = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = $(options.element);
-	this.enabled = !this.element.hasClassName('in2igui_button_disabled');
+	this.element = n2i.get(options.element);
+	this.enabled = !n2i.hasClass(this.element,'in2igui_button_disabled');
 	In2iGui.extend(this);
 	this.addBehavior();
 }
@@ -7826,23 +6846,23 @@ In2iGui.Button.create = function(o) {
 	if (!o.enabled) {
 		className+=' in2igui_button_disabled';
 	}
-	var element = o.element = new Element('a',{'class':className,href:'#'});
-	var element2 = new Element('span');
+	var element = o.element = n2i.build('a',{'class':className,href:'#'});
+	var element2 = document.createElement('span');
 	element.appendChild(element2);
-	var element3 = new Element('span');
+	var element3 = document.createElement('span');
 	element2.appendChild(element3);
 	if (o.icon) {
-		var icon = new Element('em',{'class':'in2igui_button_icon'}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(o.icon,1)+')'});
+		var icon = n2i.build('em',{'class':'in2igui_button_icon',style:'background-image:url('+In2iGui.getIconUrl(o.icon,1)+')'});
 		if (!o.text || o.text.length==0) {
-			icon.addClassName('in2igui_button_icon_notext');
+			n2i.addClass(icon,'in2igui_button_icon_notext');
 		}
-		element3.insert(icon);
+		element3.appendChild(icon);
 	}
 	if (o.text && o.text.length>0) {
-		element3.insert(o.text);
+		n2i.dom.addText(element3,o.text);
 	}
 	if (o.title && o.title.length>0) {
-		element3.insert(o.title);
+		n2i.dom.addText(element3,o.title);
 	}
 	return new In2iGui.Button(o);
 }
@@ -7851,9 +6871,9 @@ In2iGui.Button.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		this.element.observe('click',function(e) {
+		n2i.listen(this.element,'click',function(e) {
 			self.clicked();
-			Event.stop(e);
+			n2i.stop(e);
 		});
 	},
 	/** @private */
@@ -7914,7 +6934,7 @@ In2iGui.Button.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		this.element.setClassName('in2igui_button_disabled',!this.enabled);
+		n2i.setClass(this.element,'in2igui_button_disabled',!this.enabled);
 	},
 	/** Sets the button text */
 	setText : function(text) {
@@ -7927,28 +6947,30 @@ In2iGui.Button.prototype = {
 /** @constructor */
 In2iGui.Buttons = function(o) {
 	this.name = o.name;
-	this.element = $(o.element);
-	this.body = this.element.select('.in2igui_buttons_body')[0];
+	this.element = n2i.get(o.element);
+	this.body = n2i.firstByClass(this.element,'in2igui_buttons_body');
 	In2iGui.extend(this);
 }
 
 In2iGui.Buttons.create = function(o) {
 	o = n2i.override({top:0},o);
-	var e = o.element = new Element('div',{'class':'in2igui_buttons'});
+	var e = o.element = n2i.build('div',{'class':'in2igui_buttons'});
 	if (o.align=='right') {
-		e.addClassName('in2igui_buttons_right');
+		n2i.addClass(e,'in2igui_buttons_right');
 	}
 	if (o.align=='center') {
-		e.addClassName('in2igui_buttons_center');
+		n2i.addClass(e,'in2igui_buttons_center');
 	}
-	if (o.top>0) e.setStyle({paddingTop:o.top+'px'});
-	e.insert(new Element('div',{'class':'in2igui_buttons_body'}));
+	if (o.top>0) {
+		e.style.paddingTop=o.top+'px';
+	}
+	n2i.build('div',{'class':'in2igui_buttons_body',parent:e});
 	return new In2iGui.Buttons(o);
 }
 
 In2iGui.Buttons.prototype = {
 	add : function(widget) {
-		this.body.insert(widget.element);
+		this.body.appendChild(widget.element);
 		return this;
 	}
 }
@@ -7959,7 +6981,7 @@ In2iGui.Buttons.prototype = {
  */
 In2iGui.Selection = function(options) {
 	this.options = n2i.override({value:null},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.items = [];
 	this.subItems = [];
@@ -8031,18 +7053,18 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		this.items.each(function(item) {
-			item.element.setClassName('in2igui_selected',this.isSelection(item));
-		}.bind(this));
-		this.subItems.each(function(sub) {
-			sub.updateUI();
-		});
+		for (var i=0; i < this.items.length; i++) {
+			n2i.setClass(this.items[i].element,'in2igui_selected',this.isSelection(this.items[i]));
+		};
+		for (var i=0; i < this.subItems.length; i++) {
+			this.subItems[i].updateUI();
+		};
 	},
 	/** @private */
 	changeSelection : function(item) {
-		this.subItems.each(function(sub) {
-			sub.selectionChanged(this.selection,item);
-		});
+		for (var i=0; i < this.subItems.length; i++) {
+			this.subItems[i].selectionChanged(this.selection,item);
+		};
 		this.selection = item;
 		this.updateUI();
 		this.fireChange();
@@ -8063,7 +7085,7 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	registerItem : function(id,title,icon,badge,value,kind) {
-		var element = $(id);
+		var element = n2i.get(id);
 		var item = {id:id,title:title,icon:icon,badge:badge,element:element,value:value,kind:kind};
 		this.items.push(item);
 		this.addItemBehavior(element,item);
@@ -8071,10 +7093,10 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	addItemBehavior : function(node,item) {
-		node.observe('click',function() {
+		n2i.listen(node,'click',function() {
 			this.itemWasClicked(item);
 		}.bind(this));
-		node.observe('dblclick',function() {
+		n2i.listen(node,'dblclick',function() {
 			this.itemWasDoubleClicked(item);
 		}.bind(this));
 		node.dragDropInfo = item;
@@ -8132,8 +7154,8 @@ In2iGui.Selection.prototype = {
  */
 In2iGui.Selection.Items = function(options) {
 	this.options = n2i.override({source:null},options);
-	this.element = $(options.element);
-	this.title = $(this.element.id+'_title');
+	this.element = n2i.get(options.element);
+	this.title = n2i.get(this.element.id+'_title');
 	this.name = options.name;
 	this.parent = null;
 	this.items = [];
@@ -8159,7 +7181,7 @@ In2iGui.Selection.Items.prototype = {
 	/** @private */
 	$itemsLoaded : function(items) {
 		this.items = [];
-		this.element.update();
+		this.element.innerHTML='';
 		this.buildLevel(this.element,items,0);
 		if (this.title) {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
@@ -8171,41 +7193,40 @@ In2iGui.Selection.Items.prototype = {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);
 		var open = inc==0;
-		var level = new Element('div',{'class':'in2igui_selection_level'}).setStyle({display:open ? 'block' : 'none'});
-		parent.insert(level);
-		items.each(function(item) {
+		var level = n2i.build('div',{'class':'in2igui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
+		n2i.each(items,function(item) {
 			if (item.type=='title') {
-				var div = new Element('div',{'class':'in2igui_selection_title'});
-				div.update('<span>'+item.title+'</span>');
-				level.insert(div)
+				var div = n2i.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;
 			var left = inc*16+6;
 			if (!hierarchical && inc>0 || hierarchical && !hasChildren) left+=13;
-			var node = new Element('div',{'class':'in2igui_selection_item'}).setStyle({paddingLeft:left+'px'})
+			var node = n2i.build('div',{'class':'in2igui_selection_item'});
+			node.style.paddingLeft = left+'px';
 			if (item.badge) {
-				node.insert(new Element('strong',{'class':'in2igui_selection_badge'}).update(item.badge));
+				node.appendChild(n2i.build('strong',{'class':'in2igui_selection_badge',text:item.badge}));
 			}
 			if (hierarchical && hasChildren) {
 				var self = this;
-				node.insert(new Element('span',{'class':'in2igui_disclosure'}).observe('click',function(e) {
-					e.stop();
+				var x = n2i.build('span',{'class':'in2igui_disclosure',parent:node});
+				n2i.listen(x,'click',function(e) {
+					n2i.stop(e);
 					self.toggle(this);
-				}));
+				});
 			}
-			var inner = new Element('span',{'class':'in2igui_selection_label'});
+			var inner = n2i.build('span',{'class':'in2igui_selection_label',text:item.title});
 			if (item.icon) {
-				node.insert(new Element('span',{'class':'in2igui_icon_1'}).setStyle({'backgroundImage' : 'url('+In2iGui.getIconUrl(item.icon,1)+')'}));
+				node.appendChild(n2i.build('span',{'class':'in2igui_icon_1',style:'background-image: url('+In2iGui.getIconUrl(item.icon,1)+')'}));
 			}
-			node.insert(inner.insert(item.title));
-			node.observe('click',function(e) {
+			node.appendChild(inner);
+			n2i.listen(node,'click',function(e) {
 				this.parent.itemWasClicked(item);
 			}.bind(this));
-			node.observe('dblclick',function(e) {
+			n2i.listen(node,'dblclick',function(e) {
 				this.parent.itemWasDoubleClicked(item);
 			}.bind(this));
-			level.insert(node);
+			level.appendChild(node);
 			var info = {title:item.title,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
 			node.dragDropInfo = info;
 			this.items.push(info);
@@ -8214,12 +7235,12 @@ In2iGui.Selection.Items.prototype = {
 	},
 	/** @private */
 	toggle : function(node) {
-		if (node.hasClassName('in2igui_disclosure_open')) {
-			node.parentNode.next().hide();
-			node.removeClassName('in2igui_disclosure_open');
+		if (n2i.hasClass(node,'in2igui_disclosure_open')) {
+			n2i.getNext(node.parentNode).style.display='none';
+			n2i.removeClass(node,'in2igui_disclosure_open');
 		} else {
-			node.parentNode.next().show();
-			node.addClassName('in2igui_disclosure_open');
+			n2i.getNext(node.parentNode).style.display='block';
+			n2i.addClass(node,'in2igui_disclosure_open');
 		}
 	},
 	/** @private */
@@ -8247,9 +7268,9 @@ In2iGui.Selection.Items.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		this.items.each(function(item) {
-			item.element.setClassName('in2igui_selected',this.parent.isSelection(item));
-		}.bind(this));
+		for (var i=0; i < this.items.length; i++) {
+			n2i.setClass(this.items[i].element,'in2igui_selected',this.parent.isSelection(this.items[i]));
+		};
 	},
 	/** @private */
 	selectionChanged : function(oldSelection,newSelection) {
@@ -8279,17 +7300,16 @@ In2iGui.Selection.Items.prototype = {
 /* EOF */
 /** @constructor */
 In2iGui.Toolbar = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
 
 In2iGui.Toolbar.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_toolbar'});
-	if (options.labels==false) {
-		options.element.addClassName('in2igui_toolbar_nolabels');
-	}
+	options.element = n2i.build('div',{
+		'class' : options.labels ? 'in2igui_toolbar in2igui_toolbar_nolabels' : 'in2igui_toolbar'
+	});
 	return new In2iGui.Toolbar(options);
 }
 
@@ -8308,19 +7328,21 @@ In2iGui.Toolbar.prototype = {
 
 /** @constructor */
 In2iGui.RevealingToolbar = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
 
 In2iGui.RevealingToolbar.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_revealing_toolbar'}).setStyle({'display':'none'});
-	document.body.appendChild(options.element);
-	var rev = new In2iGui.RevealingToolbar(options);
-	var toolbar = In2iGui.Toolbar.create();
-	rev.setToolbar(toolbar);
-	return rev;
+	options.element = n2i.build( 'div', {
+		className : 'in2igui_revealing_toolbar',
+		style : 'display:none',
+		parent : document.body
+	});
+	var bar = new In2iGui.RevealingToolbar(options);
+	bar.setToolbar(In2iGui.Toolbar.create());
+	return bar;
 }
 
 In2iGui.RevealingToolbar.prototype = {
@@ -8347,11 +7369,11 @@ In2iGui.RevealingToolbar.prototype = {
 /** @constructor */
 In2iGui.Toolbar.Icon = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.enabled = !this.element.hasClassName('in2igui_toolbar_icon_disabled');
+	this.enabled = !n2i.hasClass(this.element,'in2igui_toolbar_icon_disabled');
 	this.element.tabIndex=this.enabled ? 0 : -1;
-	this.icon = this.element.select('.in2igui_icon')[0];
+	this.icon = n2i.firstByClass(this.element,'in2igui_icon');
 	In2iGui.extend(this);
 	this.addBehavior();
 }
@@ -8386,7 +7408,7 @@ In2iGui.Toolbar.Icon.prototype = {
 	setEnabled : function(enabled) {
 		this.enabled = enabled;
 		this.element.tabIndex=enabled ? 0 : -1;
-		this.element.setClassName('in2igui_toolbar_icon_disabled',!this.enabled);
+		n2i.setClass(this.element,'in2igui_toolbar_icon_disabled',!this.enabled);
 	},
 	/** Disables the icon */
 	disable : function() {
@@ -8398,7 +7420,7 @@ In2iGui.Toolbar.Icon.prototype = {
 	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
-		this.element.setClassName('in2igui_toolbar_icon_selected',selected);
+		n2i.setClass(this.element,'in2igui_toolbar_icon_selected',selected);
 	},
 	/** @private */
 	wasClicked : function() {
@@ -8429,9 +7451,9 @@ In2iGui.Toolbar.Icon.prototype = {
 /** @constructor */
 In2iGui.Toolbar.SearchField = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.field = this.element.select('input')[0];
+	this.field = n2i.firstByTag(this.element,'input');
 	this.value = this.field.value;
 	In2iGui.extend(this);
 	this.addBehavior();
@@ -8439,9 +7461,11 @@ In2iGui.Toolbar.SearchField = function(options) {
 
 In2iGui.Toolbar.SearchField.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class': options.adaptive ? 'in2igui_toolbar_search in2igui_toolbar_search_adaptive' : 'in2igui_toolbar_search'});
-	e.update('<div class="in2igui_searchfield"><strong class="in2igui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
-		'<span>'+options.title+'</span>');
+	options.element = n2i.build('div',{
+		'class' : options.adaptive ? 'in2igui_toolbar_search in2igui_toolbar_search_adaptive' : 'in2igui_toolbar_search',
+		html : '<div class="in2igui_searchfield"><strong class="in2igui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
+		'<span>'+n2i.escape(options.title)+'</span>'
+	});
 	return new In2iGui.Toolbar.SearchField(options);
 }
 
@@ -8477,19 +7501,19 @@ In2iGui.Toolbar.SearchField.prototype = {
 
 /** @constructor */
 In2iGui.Toolbar.Badge = function(options) {
-	this.element = $(options.element);
+	this.element = ni2.get(options.element);
 	this.name = options.name;
-	this.label = this.element.select('strong')[0];
-	this.text = this.element.select('span')[0];
+	this.label = n2i.firstByTag(this.element,'strong');
+	this.text = n2i.firstByTag(this.element,'span');
 	In2iGui.extend(this);
 }
 
 In2iGui.Toolbar.Badge.prototype = {
 	setLabel : function(str) {
-		this.label.update(str);
+		n2i.dom.setNodeText(this.label,str);
 	},
 	setText : function(str) {
-		this.text.update(str);
+		n2i.dom.setNodeText(this.text,str);
 	}
 }
 
@@ -8500,7 +7524,7 @@ In2iGui.Toolbar.Badge.prototype = {
 In2iGui.ImagePicker = function(o) {
 	this.name = o.name;
 	this.options = o || {};
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.images = [];
 	this.object = null;
 	this.thumbnailsLoaded = false;
@@ -8538,7 +7562,7 @@ In2iGui.ImagePicker.prototype = {
 		if (!this.picker) {
 			var self = this;
 			this.picker = In2iGui.BoundPanel.create();
-			this.content = new Element('div',{'class':'in2igui_imagepicker_thumbs'});
+			this.content = n2i.build('div',{'class':'in2igui_imagepicker_thumbs'});
 			var buttons = In2iGui.Buttons.create({align:'right'});
 			var close = In2iGui.Button.create({text:'Luk',highlighted:true});
 			close.listen({
@@ -8566,23 +7590,23 @@ In2iGui.ImagePicker.prototype = {
 	/** @private */
 	updateImages : function() {
 		var self = this;
-		var delegate = {
+		n2i.request({
 			onSuccess:function(t) {
 				self.parse(t.responseXML);
-			}
-		};
-		new Ajax.Request(this.options.source,delegate);
+			},
+			url:this.options.source
+		});
 	},
 	/** @private */
 	parse : function(doc) {
-		this.content.update();
+		this.content.innerHTML='';
 		var images = doc.getElementsByTagName('image');
 		var self = this;
 		for (var i=0; i < images.length; i++) {
 			var id = images[i].getAttribute('id');
 			var img = {id:images[i].getAttribute('id')};
 			var url = In2iGui.resolveImageUrl(this,img,48,48);
-			var thumb = new Element('div',{'class':'in2igui_imagepicker_thumbnail'}).setStyle({'backgroundImage':'url('+url+')'});
+			var thumb = n2i.build('div',{'class':'in2igui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
 			thumb.in2iguiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.in2iguiObject);
@@ -8599,11 +7623,11 @@ In2iGui.ImagePicker.prototype = {
  * @param {Object} options { element: «Node | id», name: «String» }
  */
 In2iGui.BoundPanel = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.visible = false;
-	this.content=this.element.select('div.in2igui_boundpanel_content')[0];
-	this.arrow=this.element.select('div.in2igui_boundpanel_arrow')[0];
+	this.content = n2i.firstByClass(this.element,'in2igui_boundpanel_content');
+	this.arrow = n2i.firstByClass(this.element,'in2igui_boundpanel_arrow');
 	In2iGui.extend(this);
 }
 
@@ -8614,8 +7638,7 @@ In2iGui.BoundPanel = function(options) {
  */
 In2iGui.BoundPanel.create = function(options) {
 	var options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
-	var element = options.element = new Element('div',
-		{'class':'in2igui_boundpanel'}).setStyle({'display':'none','zIndex':In2iGui.nextPanelIndex(),'top':options.top+'px','left':options.left+'px'});
+
 	
 	var html = 
 		'<div class="in2igui_boundpanel_arrow"></div>'+
@@ -8629,8 +7652,15 @@ In2iGui.BoundPanel.create = function(options) {
 	}
 	html+='"></div></div></div></div>'+
 		'<div class="in2igui_boundpanel_bottom"><div><div></div></div></div>';
-	element.innerHTML=html;
-	document.body.appendChild(element);
+
+	options.element = n2i.build(
+		'div',{
+			'class':'in2igui_boundpanel',
+			style:'display:none;zIndex:'+In2iGui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
+			html:html,
+			parent:document.body
+		}
+	);
 	return new In2iGui.BoundPanel(options);
 }
 
@@ -8648,11 +7678,11 @@ In2iGui.BoundPanel.prototype = {
 			} else {
 				this.element.style.marginLeft='-30px';
 			}
-			this.element.setStyle({
+			n2i.setStyle(this.element,{
 				visibility : 'hidden', display : 'block'
 			})
 			var width = this.element.clientWidth;
-			this.element.setStyle({
+			n2i.setStyle(this.element,{
 				width : width+'px' , visibility : 'visible'
 			});
 			this.element.style.marginTop='0px';
@@ -8680,9 +7710,9 @@ In2iGui.BoundPanel.prototype = {
 	 */
 	add : function(child) {
 		if (child.getElement) {
-			this.content.insert(child.getElement());
+			this.content.appendChild(child.getElement());
 		} else {
-			this.content.insert(child);
+			this.content.appendChild(child);
 		}
 	},
 	/**
@@ -8690,20 +7720,20 @@ In2iGui.BoundPanel.prototype = {
 	 * @param {pixels} height The height of the space in pixels
 	 */
 	addSpace : function(height) {
-		this.add(new Element('div').setStyle({fontSize:'0px',height:height+'px'}));
+		this.add(n2i.build('div',{style:'font-size:0px;height:'+height+'px'}));
 	},
 	/** @private */
 	getDimensions : function() {
 		if (this.element.style.display=='none') {
 			this.element.style.visibility='hidden';
 			this.element.style.display='block';
-			var width = this.element.getWidth();
-			var height = this.element.getHeight();
+			var width = this.element.clientWidth;
+			var height = this.element.clientHeight;
 			this.element.style.display='none';
 			this.element.style.visibility='';
 		} else {
-			var width = this.element.getWidth();
-			var height = this.element.getHeight();
+			var width = this.element.clientWidth;
+			var height = this.element.clientHeight;
 		}
 		return {width:width,height:height};
 	},
@@ -8711,14 +7741,14 @@ In2iGui.BoundPanel.prototype = {
 	 * @param {Node} node The node the panel should be positioned at 
 	 */
 	position : function(node) {
-		node = $(node);
-		var offset = node.cumulativeOffset();
-		var scrollOffset = node.cumulativeScrollOffset();
+		node = n2i.get(node);
+		var offset = {left:n2i.getLeft(node),top:n2i.getTop(node)};
+		var scrollOffset = {left:n2i.getScrollLeft(),top:n2i.getScrollTop()};
 		var dims = this.getDimensions();
 		var winWidth = n2i.getInnerWidth();
 		var nodeLeft = offset.left-scrollOffset.left+n2i.getScrollLeft();
-		var nodeWidth = node.getWidth();
-		var nodeHeight = node.getHeight();
+		var nodeWidth = node.clientWidth;
+		var nodeHeight = node.clientHeight;
 		var nodeTop = offset.top-scrollOffset.top+n2i.getScrollTop();
 		if ((nodeLeft+nodeWidth/2)/winWidth<.5) {
 			this.relativePosition='left';
@@ -8749,7 +7779,7 @@ In2iGui.BoundPanel.prototype = {
  */
 In2iGui.RichText = function(options) {
 	this.name = options.name;
-	var e = this.element = $(options.element);
+	var e = this.element = n2i.get(options.element);
 	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
 	this.textarea = new Element('textarea');
 	e.insert(this.textarea);
@@ -8993,17 +8023,17 @@ In2iGui.ImageViewer = function(options) {
 		easeAuto:n2i.ease.slowFastSlow,
 		easeReturn:n2i.ease.cubicInOut,transition:400,transitionEnd:1000,transitionReturn:300
 		},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.box = this.options.box;
-	this.viewer = this.element.select('.in2igui_imageviewer_viewer')[0];
-	this.innerViewer = this.element.select('.in2igui_imageviewer_inner_viewer')[0];
-	this.status = this.element.select('.in2igui_imageviewer_status')[0];
-	this.previousControl = this.element.select('.in2igui_imageviewer_previous')[0];
-	this.controller = this.element.select('.in2igui_imageviewer_controller')[0];
-	this.nextControl = this.element.select('.in2igui_imageviewer_next')[0];
-	this.playControl = this.element.select('.in2igui_imageviewer_play')[0];
-	this.closeControl = this.element.select('.in2igui_imageviewer_close')[0];
-	this.text = this.element.select('.in2igui_imageviewer_text')[0];
+	this.viewer = n2i.firstByClass(this.element,'in2igui_imageviewer_viewer');
+	this.innerViewer = n2i.firstByClass(this.element,'in2igui_imageviewer_inner_viewer');
+	this.status = n2i.firstByClass(this.element,'in2igui_imageviewer_status');
+	this.previousControl = n2i.firstByClass(this.element,'in2igui_imageviewer_previous');
+	this.controller = n2i.firstByClass(this.element,'in2igui_imageviewer_controller');
+	this.nextControl = n2i.firstByClass(this.element,'in2igui_imageviewer_next');
+	this.playControl = n2i.firstByClass(this.element,'in2igui_imageviewer_play');
+	this.closeControl = n2i.firstByClass(this.element,'in2igui_imageviewer_close');
+	this.text = n2i.firstByClass(this.element,'in2igui_imageviewer_text');
 	this.dirty = false;
 	this.width = 600;
 	this.height = 460;
@@ -9018,16 +8048,18 @@ In2iGui.ImageViewer = function(options) {
 
 In2iGui.ImageViewer.create = function(options) {
 	options = options || {};
-	var element = options.element = new Element('div',{'class':'in2igui_imageviewer'});
-	element.update('<div class="in2igui_imageviewer_viewer"><div class="in2igui_imageviewer_inner_viewer"></div></div>'+
-	'<div class="in2igui_imageviewer_text"></div>'+
-	'<div class="in2igui_imageviewer_status"></div>'+
-	'<div class="in2igui_imageviewer_controller"><div><div>'+
-	'<a class="in2igui_imageviewer_previous"></a>'+
-	'<a class="in2igui_imageviewer_play"></a>'+
-	'<a class="in2igui_imageviewer_next"></a>'+
-	'<a class="in2igui_imageviewer_close"></a>'+
-	'</div></div></div>');
+	var element = options.element = n2i.build('div',
+		{'class':'in2igui_imageviewer',
+		html:
+		'<div class="in2igui_imageviewer_viewer"><div class="in2igui_imageviewer_inner_viewer"></div></div>'+
+		'<div class="in2igui_imageviewer_text"></div>'+
+		'<div class="in2igui_imageviewer_status"></div>'+
+		'<div class="in2igui_imageviewer_controller"><div><div>'+
+		'<a class="in2igui_imageviewer_previous"></a>'+
+		'<a class="in2igui_imageviewer_play"></a>'+
+		'<a class="in2igui_imageviewer_next"></a>'+
+		'<a class="in2igui_imageviewer_close"></a>'+
+		'</div></div></div>'});
 	var box = In2iGui.Box.create({absolute:true,modal:true,closable:true});
 	box.add(element);
 	box.addToDocument();
@@ -9049,7 +8081,7 @@ In2iGui.ImageViewer.prototype = {
 			self.playOrPause();
 		}
 		this.closeControl.onclick = this.hide.bind(this);
-		this.viewer.observe('click',this.zoom.bind(this));
+		n2i.listen(this.viewer,'click',this.zoom.bind(this));
 		this.timer = function() {
 			self.next(false);
 		}
@@ -9064,14 +8096,14 @@ In2iGui.ImageViewer.prototype = {
 				self.playOrPause();
 			}
 		},
-		this.viewer.observe('mousemove',this.mouseMoveEvent.bind(this));
-		this.controller.observe('mouseenter',function() {
+		n2i.listen(this.viewer,'mousemove',this.mouseMoveEvent.bind(this));
+		n2i.listen(this.controller,'mouseenter',function() {
 			self.overController = true;
 		});
-		this.controller.observe('mouseleave',function() {
+		n2i.listen(this.controller,'mouseleave',function() {
 			self.overController = false;
 		});
-		this.viewer.observe('mouseout',function(e) {
+		n2i.listen(this.viewer,'mouseout',function(e) {
 			if (!In2iGui.isWithin(e,this.viewer)) {
 				self.hideController();
 			}
@@ -9106,27 +8138,32 @@ In2iGui.ImageViewer.prototype = {
 			return; // Don't zoom if small
 		}
 		if (!this.zoomer) {
-			this.zoomer = new Element('div',{'class':'in2igui_imageviewer_zoomer'}).setStyle({width:this.viewer.clientWidth+'px',height:this.viewer.clientHeight+'px'});
-			this.element.insert({top:this.zoomer});
-			this.zoomer.observe('mousemove',this.zoomMove.bind(this));
-			this.zoomer.observe('click',function() {
-				this.hide();
+			this.zoomer = n2i.build('div',{
+				'class' : 'in2igui_imageviewer_zoomer',
+				style : 'width:'+this.viewer.clientWidth+'px;height:'+this.viewer.clientHeight+'px'
+			});
+			this.element.insertBefore(this.zoomer,n2i.firstByTag(this.element,'*'));
+			n2i.listen(this.zoomer,'mousemove',this.zoomMove.bind(this));
+			n2i.listen(this.zoomer,'click',function() {
+				this.style.display='none';
 			});
 		}
 		this.pause();
 		var size = this.getLargestSize({width:2000,height:2000},img);
 		var url = In2iGui.resolveImageUrl(this,img,size.width,size.height);
-		this.zoomer.update('<div style="width:'+size.width+'px;height:'+size.height+'px;"><img src="'+url+'"/></div>').show();
+		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px;"><img src="'+url+'"/></div>';
+		this.zoomer.style.display = 'block';
 		this.zoomInfo = {width:size.width,height:size.height};
 		this.zoomMove(e);
 	},
 	zoomMove : function(e) {
+		e = new n2i.Event(e);
 		if (!this.zoomInfo) {
 			return;
 		}
-		var offset = this.zoomer.cumulativeOffset();
-		var x = (e.pointerX()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
-		var y = (e.pointerY()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
+		var offset = {left:n2i.getLeft(this.zoomer),top:n2i.getTop(this.zoomer)};
+		var x = (e.left()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
+		var y = (e.top()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;
 		this.zoomer.scrollTop = y;
 	},
@@ -9183,18 +8220,18 @@ In2iGui.ImageViewer.prototype = {
 		this.calculateSize();
 		this.updateUI();
 		var margin = this.options.margin;
-		this.element.setStyle({width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
-		this.viewer.setStyle({width:(this.width+margin)+'px',height:(this.height-1)+'px'});
-		this.innerViewer.setStyle({width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
-		this.controller.setStyle({marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
+		n2i.setStyle(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
+		n2i.setStyle(this.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
+		n2i.setStyle(this.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
+		n2i.setStyle(this.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
 		this.box.show();
 		this.goToImage(false,0,false);
-		Event.observe(document,'keydown',this.keyListener);
+		n2i.listen(document,'keydown',this.keyListener);
 	},
 	hide: function(index) {
 		this.pause();
 		this.box.hide();
-		Event.stopObserving(document,'keydown',this.keyListener);
+		n2i.unListen(document,'keydown',this.keyListener);
 	},
 	/** @private */
 	$boxCurtainWasClicked : function() {
@@ -9209,13 +8246,14 @@ In2iGui.ImageViewer.prototype = {
 		if (this.dirty) {
 			this.innerViewer.innerHTML='';
 			for (var i=0; i < this.images.length; i++) {
-				var element = new Element('div',{'class':'in2igui_imageviewer_image'}).setStyle({'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
+				var element = n2i.build('div',{'class':'in2igui_imageviewer_image'});
+				n2i.setStyle(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
 				this.innerViewer.appendChild(element);
 			};
 			if (this.shouldShowController()) {
-				this.controller.show();
+				this.controller.style.display='block';
 			} else {
-				this.controller.hide();
+				this.controller.style.display='none';
 			}
 			this.dirty = false;
 			this.preload();
@@ -9243,9 +8281,11 @@ In2iGui.ImageViewer.prototype = {
 		}
 		var text = this.images[this.index].text;
 		if (text) {
-			this.text.update(text).show();			
+			this.text.innerHTML=text;
+			this.text.style.display='block';
 		} else {
-			this.text.update().hide();
+			this.text.innerHTML='';
+			this.text.style.display='none';
 		}
 	},
 	clearImages : function() {
@@ -9340,27 +8380,27 @@ In2iGui.ImageViewer.prototype = {
 		var url = In2iGui.resolveImageUrl(this,this.images[index],this.width,this.height);
 		url = url.replace(/&amp;/g,'&');
 		this.innerViewer.childNodes[index].style.backgroundImage="url('"+url+"')";
-		Element.setClassName(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',false);
-		Element.setClassName(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',false);
+		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',false);
+		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',false);
 	},
 	/** @private */
 	imageDidGiveError : function(loaded,total,index) {
-		Element.setClassName(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',true);
+		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',true);
 	},
 	/** @private */
 	imageDidAbort : function(loaded,total,index) {
-		Element.setClassName(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',true);
+		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',true);
 	}
 }
 
 /* EOF *//** @constructor */
 In2iGui.Picker = function(o) {
 	o = this.options = n2i.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},o);
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.name = o.name;
-	this.container = this.element.select('.in2igui_picker_container')[0];
-	this.content = this.element.select('.in2igui_picker_content')[0];
-	this.title = this.element.select('in2igui_picker_title')[0];
+	this.container = n2i.firstByClass(this.element,'in2igui_picker_container');
+	this.content = n2i.firstByClass(this.element,'in2igui_picker_content');
+	this.title = n2i.firstByClass(this.element,'in2igui_picker_title');
 	this.objects = [];
 	this.selected = null;
 	this.value = null;
@@ -9370,24 +8410,23 @@ In2iGui.Picker = function(o) {
 
 In2iGui.Picker.create = function(o) {
 	o = n2i.override({shadow:true},o);
-	var element = new Element('div',{'class':'in2igui_picker'});
-	element.update('<div class="in2igui_picker_top"><div><div></div></div></div>'+
-	'<div class="in2igui_picker_middle"><div class="in2igui_picker_middle">'+
-	(o.title ? '<div class="in2igui_picker_title">'+o.title+'</div>' : '')+
-	'<div class="in2igui_picker_container"><div class="in2igui_picker_content"></div></div>'+
-	'</div></div>'+
-	'<div class="in2igui_picker_bottom"><div><div></div></div></div>');
+	o.element = n2i.build('div',{'class':'in2igui_picker',
+		html:'<div class="in2igui_picker_top"><div><div></div></div></div>'+
+		'<div class="in2igui_picker_middle"><div class="in2igui_picker_middle">'+
+		(o.title ? '<div class="in2igui_picker_title">'+o.title+'</div>' : '')+
+		'<div class="in2igui_picker_container"><div class="in2igui_picker_content"></div></div>'+
+		'</div></div>'+
+		'<div class="in2igui_picker_bottom"><div><div></div></div></div>'});
 	if (o.shadow==true) {
-		element.addClassName('in2igui_picker_shadow')
+		n2i.addClass(o.element,'in2igui_picker_shadow')
 	}
-	o.element = element;
 	return new In2iGui.Picker(o);
 }
 
 In2iGui.Picker.prototype = {
 	addBehavior : function() {
 		var self = this;
-		this.content.observe('mousedown',function(e) {
+		n2i.listen(this.content,'mousedown',function(e) {
 			self.startDrag(e);
 			return false;
 		});
@@ -9410,33 +8449,35 @@ In2iGui.Picker.prototype = {
 	},
 	updateUI : function() {
 		var self = this;
-		this.content.update();
+		this.content.innerHTML='';
 		this.container.scrollLeft=0;
 		if (this.options.itemsVisible) {
 			var width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
 			var width = this.container.clientWidth;
 		}
-		this.container.setStyle({width:width+'px',height:(this.options.itemHeight+10)+'px'});
+		n2i.setStyle(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
 		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
 		this.content.style.height=(this.options.itemHeight+10)+'px';
-		this.objects.each(function(object,i) {
-			var item = new Element('div',{'class':'in2igui_picker_item',title:object.title});
-			if (self.value!=null && object[self.options.valueProperty]==self.value) item.addClassName('in2igui_picker_item_selected');
-			item.update(
-				'<div class="in2igui_picker_item_middle"><div class="in2igui_picker_item_middle">'+
-				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+object.title+'</strong></div>'+
+		n2i.each(this.objects,function(object,i) {
+			var item = n2i.build('div',{'class':'in2igui_picker_item',title:object.title});
+			if (self.value!=null && object[self.options.valueProperty]==self.value) {
+				 n2i.addClass(item,'in2igui_picker_item_selected');
+			}
+			item.innerHTML = '<div class="in2igui_picker_item_middle"><div class="in2igui_picker_item_middle">'+
+				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+n2i.escape(object.title)+'</strong></div>'+
 				'</div></div>'+
-				'<div class="in2igui_picker_item_bottom"><div><div></div></div></div>'
-			);
-			item.observe('mouseup',function() {self.selectionChanged(object[self.options.valueProperty])});
-			self.content.insert(item);			
+				'<div class="in2igui_picker_item_bottom"><div><div></div></div></div>';
+			n2i.listen(item,'mouseup',function() {
+				self.selectionChanged(object[self.options.valueProperty])
+			});
+			self.content.appendChild(item);
 		});
 	},
 	updateSelection : function() {
 		var children = this.content.childNodes;
 		for (var i=0; i < children.length; i++) {
-			Element.setClassName(children[i],'in2igui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
+			n2i.setClass(children[i],'in2igui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
 		};
 	},
 	selectionChanged : function(value) {
@@ -9449,39 +8490,41 @@ In2iGui.Picker.prototype = {
 	
 	// Dragging
 	startDrag : function(e) {
+		e = new n2i.Event(e);
 		e.stop();
 		var self = this;
-		this.dragX = Event.pointerX(e);
+		this.dragX = e.left();
 		this.dragScroll = this.container.scrollLeft;
 		In2iGui.Picker.mousemove = function(e) {self.drag(e);return false;}
 		In2iGui.Picker.mouseup = In2iGui.Picker.mousedown = function(e) {self.endDrag(e);return false;}
-		window.document.observe('mousemove',In2iGui.Picker.mousemove);
-		window.document.observe('mouseup',In2iGui.Picker.mouseup);
-		window.document.observe('mousedown',In2iGui.Picker.mouseup);
+		n2i.listen(window.document,'mousemove',In2iGui.Picker.mousemove);
+		n2i.listen(window.document,'mouseup',In2iGui.Picker.mouseup);
+		n2i.listen(window.document,'mousedown',In2iGui.Picker.mouseup);
 	},
 	drag : function(e) {
+		e = new n2i.Event();
 		this.dragging = true;
-		Event.stop(e);
-		this.container.scrollLeft=this.dragX-e.pointerX()+this.dragScroll;
+		e.stop();
+		this.container.scrollLeft=this.dragX-e.left()+this.dragScroll;
 	},
 	endDrag : function(e) {
 		this.dragging = false;
-		Event.stop(e);
-		window.document.stopObserving('mousemove',In2iGui.Picker.mousemove);
-		window.document.stopObserving('mouseup',In2iGui.Picker.mouseup);
-		window.document.stopObserving('mousedown',In2iGui.Picker.mouseup);
-		var size = (this.options.itemWidth+14);
+		n2i.stop(e);
+		n2i.unListen(window.document,'mousemove',In2iGui.Picker.mousemove);
+		n2i.unListen(window.document,'mouseup',In2iGui.Picker.mouseup);
+		n2i.unListen(window.document,'mousedown',In2iGui.Picker.mouseup);
+		var size = this.options.itemWidth+14;
 		n2i.ani(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:n2i.ease.bounceOut});
 	},
 	$visibilityChanged : function() {
-		this.container.setStyle({display:'none'});
+		this.container.style.display='none';
 		if (this.options.itemsVisible) {
 			var width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
 			var width = this.container.parentNode.clientWidth-12;
 		}
 		width = Math.max(width,0);
-		this.container.setStyle({width:width+'px',display:'block'});
+		n2i.setStyle(this.container,{width:width+'px',display:'block'});
 	}
 }
 
@@ -9519,8 +8562,8 @@ In2iGui.Editor.prototype = {
 	},
 	getPartController : function(key) {
 		var ctrl = null;
-		this.partControllers.each(function(item) {
-			if (item.key==key) ctrl=item;
+		n2i.each(this.partControllers,function(item) {
+			if (item.key==key) {ctrl=item};
 		});
 		return ctrl;
 	},
@@ -9530,17 +8573,17 @@ In2iGui.Editor.prototype = {
 		}
 		var self = this;
 		this.parts = [];
-		var rows = $$('.'+this.options.partClass);
-		rows.each(function(row,i) {
-			var columns = row.select('.'+self.options.columnClass);
+		var rows = n2i.byClass(document.body,this.options.partClass);
+		n2i.each(rows,function(row,i) {
+			var columns = n2i.byClass(row,self.options.columnClass);
 			self.reloadColumns(columns,i);
-			columns.each(function(column,j) {
+			n2i.each(columns,function(column,j) {
 				var parts = column.select('.'+self.options.partClass);
 				self.reloadParts(parts,i,j);
 			});
 		});
-		var parts = $$('.'+this.options.partClass);
-		this.parts.each(function(part) {
+		var parts = n2i.byClass(document.body,this.options.partClass);
+		n2i.each(this.parts,function(part) {
 			var i = parts.indexOf(part.element);
 			if (i!=-1) {
 				delete(parts[i]);
@@ -9553,14 +8596,14 @@ In2iGui.Editor.prototype = {
 	},
 	reloadColumns : function(columns,rowIndex) {
 		var self = this;
-		columns.each(function(column,columnIndex) {
-			column.observe('mouseover',function() {
+		n2i.each(columns,function(column,columnIndex) {
+			n2i.lsiten(column,'mouseover',function() {
 				self.hoverColumn(column);
 			});
-			column.observe('mouseout',function() {
+			n2i.listen(column,'mouseout',function() {
 				self.blurColumn();
 			});
-			column.observe('contextmenu',function(e) {
+			n2i.listen(column,'contextmenu',function(e) {
 				self.contextColumn(column,rowIndex,columnIndex,e);
 			});
 		});
@@ -9568,7 +8611,7 @@ In2iGui.Editor.prototype = {
 	reloadParts : function(parts,row,column) {
 		var self = this;
 		var reg = new RegExp(this.options.partClass+"_([\\w]+)","i");
-		parts.each(function(element,partIndex) {
+		n2i.each(parts,function(element,partIndex) {
 			if (!element) return;
 			var match = element.className.match(reg);
 			if (match && match[1]) {
@@ -9576,16 +8619,16 @@ In2iGui.Editor.prototype = {
 				if (handler) {
 					var part = new handler.controller(element,row,column,partIndex);
 					part.type=match[1];
-					element.observe('click',function() {
+					n2i.listen(element,'click',function() {
 						self.editPart(part);
 					});
-					element.observe('mouseover',function(e) {
+					n2i.listen(element,'mouseover',function(e) {
 						self.hoverPart(part);
 					});
-					element.observe('mouseout',function(e) {
+					n2i.listen(element,'mouseout',function(e) {
 						self.blurPart(e);
 					});
-					element.observe('mousedown',function(e) {
+					n2i.listen(element,'mousedown',function(e) {
 						self.startPartDrag(e);
 					});
 					self.parts.push(part);
@@ -9610,12 +8653,12 @@ In2iGui.Editor.prototype = {
 	hoverColumn : function(column) {
 		this.hoveredColumn = column;
 		if (!this.active || this.activePart) return;
-		column.addClassName('in2igui_editor_column_hover');
+		n2i.addClass(column,'in2igui_editor_column_hover');
 	},
 	
 	blurColumn : function() {
 		if (!this.active || !this.hoveredColumn) return;
-		this.hoveredColumn.removeClassName('in2igui_editor_column_hover');
+		n2i.removeClass(this.hoveredColumn,'in2igui_editor_column_hover');
 	},
 	
 	contextColumn : function(column,rowIndex,columnIndex,e) {
@@ -9626,9 +8669,10 @@ In2iGui.Editor.prototype = {
 			menu.addItem({title:'Slet kolonne',value:'removeColumn'});
 			menu.addItem({title:'Tilføj kolonne',value:'addColumn'});
 			menu.addDivider();
-			this.partControllers.each(function(item) {
-				menu.addItem({title:item.title,value:item.key});
-			});
+			for (var i=0; i < this.partControllers.length; i++) {
+				var ctrl = this.partControllers[i];
+				menu.addItem({title:ctrl.title,value:ctrl.key});
+			};
 			this.columnMenu = menu;
 			menu.listen(this);
 		}
@@ -9653,13 +8697,13 @@ In2iGui.Editor.prototype = {
 	editColumn : function(rowIndex,columnIndex) {
 		this.closeColumn();
 		var c = this.activeColumn = $$('.row')[rowIndex].select('.column')[columnIndex];
-		c.addClassName('in2igui_editor_column_edit');
+		n2i.addClass(c,'in2igui_editor_column_edit');
 		this.showColumnWindow();
 		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});
 	},
 	closeColumn : function() {
 		if (this.activeColumn) {
-			this.activeColumn.removeClassName('in2igui_editor_column_edit');
+			n2i.removeClass(this.activeColumn,'in2igui_editor_column_edit');
 		}
 	},
 	showColumnWindow : function() {
@@ -9689,7 +8733,7 @@ In2iGui.Editor.prototype = {
 		this.fire('updateColumn',values);
 	},
 	changeColumnWidth : function(width) {
-		this.activeColumn.setStyle({'width':width});
+		this.activeColumn.style.width=width;
 	},
 	changeColumnLeftMargin : function(margin) {
 		this.activeColumn.setStyle({'paddingLeft':margin});
@@ -9702,7 +8746,7 @@ In2iGui.Editor.prototype = {
 	hoverPart : function(part,event) {
 		if (!this.active || this.activePart) return;
 		this.hoveredPart = part;
-		part.element.addClassName('in2igui_editor_part_hover');
+		n2i.addClass(part.element,'in2igui_editor_part_hover');
 		var self = this;
 		this.partControlTimer = window.setTimeout(function() {self.showPartControls()},200);
 	},
@@ -9711,10 +8755,10 @@ In2iGui.Editor.prototype = {
 		if (!this.active) return;
 		if (this.partControls && !In2iGui.isWithin(e,this.partControls.element)) {
 			this.hidePartControls();
-			this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');
+			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 		}
 		if (!this.partControls && this.hoveredPart) {
-			this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');			
+			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');			
 		}
 	},
 	showPartEditControls : function() {
@@ -9733,10 +8777,10 @@ In2iGui.Editor.prototype = {
 			this.partControls.addIcon('new','common/new');
 			this.partControls.addIcon('delete','common/delete');
 			var self = this;
-			this.partControls.getElement().observe('mouseout',function(e) {
+			n2i.listen(this.partControls.getElement(),'mouseout',function(e) {
 				self.blurControls(e);
 			});
-			this.partControls.getElement().observe('mouseover',function(e) {
+			n2i.listen(this.partControls.getElement(),'mouseover',function(e) {
 				self.hoverControls(e);
 			});
 			this.partControls.listen(this);
@@ -9749,10 +8793,10 @@ In2iGui.Editor.prototype = {
 		this.partControls.showAtElement(this.hoveredPart.element,{'horizontal':'right'});
 	},
 	hoverControls : function(e) {
-		this.hoveredPart.element.addClassName('in2igui_editor_part_hover');
+		n2i.addClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 	},
 	blurControls : function(e) {
-		this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');
+		n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 		if (!In2iGui.isWithin(e,this.hoveredPart.element)) {
 			this.hidePartControls();
 		}
@@ -9787,11 +8831,11 @@ In2iGui.Editor.prototype = {
 		if (!this.active || this.activePart) return;
 		if (this.activePart) this.activePart.deactivate();
 		if (this.hoveredPart) {
-			this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');
+			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 		}
 		this.activePart = part;
 		this.showPartEditControls();
-		part.element.addClassName('in2igui_editor_part_active');
+		n2i.addClass(part.element,'in2igui_editor_part_active');
 		part.activate();
 		window.clearTimeout(this.partControlTimer);
 		this.hidePartControls();
@@ -9822,7 +8866,7 @@ In2iGui.Editor.prototype = {
 		this.partEditor.show();*/
 	},
 	updatePartProperties : function(values) {
-		this.activePart.element.setStyle({
+		n2i.setStyle(this.activePart.element,{
 			marginTop:values.top,
 			marginBottom:values.bottom,
 			marginLeft:values.left,
@@ -9851,7 +8895,7 @@ In2iGui.Editor.prototype = {
 		return null;
 	},
 	partDidDeacivate : function(part) {
-		part.element.removeClassName('in2igui_editor_part_active');
+		n2i.removeClass(part.element,'in2igui_editor_part_active');
 		this.activePart = null;
 		this.hidePartEditControls();
 	},
@@ -9865,7 +8909,7 @@ In2iGui.Editor.prototype = {
 	newPart : function(e) {
 		if (!this.newPartMenu) {
 			var menu = In2iGui.Menu.create({name:'In2iGuiEditorNewPartMenu'});
-			this.partControllers.each(function(item) {
+			n2i.each(this.partControllers,function(item) {
 				menu.addItem({title:item.title,value:item.key});
 			});
 			menu.listen(this);
@@ -9882,15 +8926,14 @@ In2iGui.Editor.prototype = {
 		return true;
 		if (!this.active || this.activePart) return true;
 		if (!this.dragProxy) {
-			this.dragProxy = new Element('div').addClassName('in2igui_editor_dragproxy part part_header');
-			document.body.appendChild(this.dragProxy);
+			this.dragProxy = n2i.build('div',{'class':'in2igui_editor_dragproxy part part_header',parent:document.body});
 		}
 		var element = this.hoveredPart.element;
-		this.dragProxy.setStyle({'width':element.getWidth()+'px'});
+		this.dragProxy.style.width = element.clientWidth+'px';
 		this.dragProxy.innerHTML = element.innerHTML;
 		In2iGui.Editor.startDrag(e,this.dragProxy);
 		return;
-		Element.observe(document.body,'mouseup',function() {
+		n2i.listen(document.body,'mouseup',function() {
 			self.endPartDrag();
 		})
 	},
@@ -9906,8 +8949,8 @@ In2iGui.Editor.prototype = {
 
 In2iGui.Editor.startDrag = function(e,element) {
 	In2iGui.Editor.dragElement = element;
-	Element.observe(document.body,'mousemove',In2iGui.Editor.dragListener);
-	Element.observe(document.body,'mouseup',In2iGui.Editor.dragEndListener);
+	n2i.listen(document.body,'mousemove',In2iGui.Editor.dragListener);
+	n2i.listen(document.body,'mouseup',In2iGui.Editor.dragEndListener);
 	In2iGui.Editor.startDragPos = {top:e.pointerY(),left:e.pointerX()};
 	e.stop();
 	return false;
@@ -9922,8 +8965,8 @@ In2iGui.Editor.dragListener = function(e) {
 }
 
 In2iGui.Editor.dragEndListener = function(event) {
-	Event.stopObserving(document.body,'mousemove',In2iGui.Editor.dragListener);
-	Event.stopObserving(document.body,'mouseup',In2iGui.Editor.dragEndListener);
+	n2i.unListen(document.body,'mousemove',In2iGui.Editor.dragListener);
+	n2i.unListen(document.body,'mouseup',In2iGui.Editor.dragEndListener);
 	In2iGui.Editor.dragElement.style.display='none';
 	In2iGui.Editor.dragElement=null;
 }
@@ -9951,14 +8994,14 @@ In2iGui.Editor.Header = function(element,row,column,position) {
 In2iGui.Editor.Header.prototype = {
 	activate : function() {
 		this.value = this.header.innerHTML;
-		this.field = new Element('textarea').addClassName('in2igui_editor_header');
+		this.field = n2i.build('textarea',{className:'in2igui_editor_header'});
 		this.field.value = this.value;
 		this.header.style.visibility='hidden';
 		this.updateFieldStyle();
 		this.element.insertBefore(this.field,this.header);
 		this.field.focus();
 		this.field.select();
-		this.field.observe('keydown',function(e) {
+		n2i.listen(this.field,'keydown',function(e) {
 			if (e.keyCode==Event.KEY_RETURN) {
 				this.save();
 			}
@@ -9982,7 +9025,7 @@ In2iGui.Editor.Header.prototype = {
 		In2iGui.Editor.get().partDidDeacivate(this);
 	},
 	updateFieldStyle : function() {
-		this.field.setStyle({width:this.header.getWidth()+'px',height:this.header.getHeight()+'px'});
+		n2i.setStyle(this.field,{width:this.header.getWidth()+'px',height:this.header.getHeight()+'px'});
 		n2i.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
 	},
 	getValue : function() {
@@ -10008,8 +9051,8 @@ In2iGui.Editor.Html.prototype = {
 	activate : function() {
 		this.value = this.element.innerHTML;
 		//if (Prototype.Browser.IE) return;
-		var height = this.element.getHeight();
-		this.element.update('');
+		var height = this.element.clientHeight;
+		this.element.innerHTML='';
 		var style = this.buildStyle();
 		this.editor = In2iGui.RichText.create({autoHideToolbar:false,style:style});
 		this.editor.setHeight(height);
@@ -10061,7 +9104,7 @@ In2iGui.Editor.Html.prototype = {
  */
 In2iGui.Menu = function(options) {
 	this.options = n2i.override({autoHide:false,parentElement:null},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.value = null;
 	this.subMenus = [];
@@ -10072,7 +9115,7 @@ In2iGui.Menu = function(options) {
 
 In2iGui.Menu.create = function(options) {
 	options = options || {};
-	options.element = new Element('div').addClassName('in2igui_menu');
+	options.element = n2i.build('div',{'class':'in2igui_menu'});
 	var obj = new In2iGui.Menu(options);
 	document.body.appendChild(options.element);
 	return obj;
@@ -10093,36 +9136,32 @@ In2iGui.Menu.prototype = {
 					}
 				}
 			};
-			this.element.observe('mouseout',x);
+			n2i.listen(this.element,'mouseout',x);
 			if (this.options.parentElement) {
-				this.options.parentElement.observe('mouseout',x);
+				n2i.listen(this.options.parentElement,'mouseout',x);
 			}
 		}
 	},
 	addDivider : function() {
-		this.element.insert(new Element('div').addClassName('in2igui_menu_divider'));
+		n2i.build('div',{'class':'in2igui_menu_divider',parent:this.element});
 	},
 	addItem : function(item) {
 		var self = this;
-		var element = new Element('div').addClassName('in2igui_menu_item').update(item.title);
-		element.observe('click',function(e) {
+		var element = n2i.build('div',{'class':'in2igui_menu_item',text:item.title});
+		n2i.listen(element,'click',function(e) {
+			n2i.stop(e);
 			self.itemWasClicked(item.value);
-			Event.stop(e);
 		});
 		if (item.children) {
 			var sub = In2iGui.Menu.create({autoHide:true,parentElement:element});
 			sub.addItems(item.children);
-			element.observe('mouseover',function(e) {
+			n2i.listen(element,'mouseover',function(e) {
 				sub.showAtElement(element,e,'horizontal');
 			});
-			//sub.listen({itemWasClicked:function(value) {self.itemWasClicked(value)}});
 			self.subMenus.push(sub);
-			element.addClassName('in2igui_menu_item_children');
-			//element.observe('mouseleave',function() {
-			//	sub.hide();
-			//});
+			n2i.addClass(element,'in2igui_menu_item_children');
 		}
-		this.element.insert(element);
+		this.element.appendChild(element);
 	},
 	addItems : function(items) {
 		for (var i=0; i < items.length; i++) {
@@ -10142,23 +9181,20 @@ In2iGui.Menu.prototype = {
 		this.fire('select',value);
 		this.hide();
 	},
-	showAtPointer : function(event) {
-		if (event) {
-			Event.stop(event);
-			//if (event.type!='click') this.ignoreNextClick=true;
-		}
-		this.showAtPoint({'top':event.pointerY(),'left':event.pointerX()});
+	showAtPointer : function(e) {
+		e = n2i.event(e);
+		e.stop();
+		this.showAtPoint({'top' : e.getTop(),'left' : e.getLeft()});
 	},
 	showAtElement : function(element,event,position) {
-		if (event) {
-			Event.stop(event);
-		}
-		element = $(element);
-		var point = element.cumulativeOffset();
+		event = n2i.event(event);
+		event.stop();
+		element = n2i.get(element);
+		var point = n2i.getPosition(element);
 		if (position=='horizontal') {
-			point.left += element.getWidth();
+			point.left += element.clientWidth;
 		} else if (position=='vertical') {
-			point.top += element.getHeight();
+			point.top += element.clientHeight;
 		}
 		this.showAtPoint(point);
 	},
@@ -10168,16 +9204,15 @@ In2iGui.Menu.prototype = {
 		var scrollTop = n2i.getScrollTop();
 		var scrollLeft = n2i.getScrollLeft();
 		if (!this.visible) {
-			this.element.setStyle({'display':'block','visibility':'hidden',opacity:0});
+			n2i.setStyle(this.element,{'display':'block','visibility':'hidden',opacity:0});
 		}
-		var width = this.element.getWidth();
-		var height = this.element.getHeight();
+		var width = this.element.clientWidth;
+		var height = this.element.clientHeight;
 		var left = Math.min(pos.left,innerWidth-width-20+scrollLeft);
 		var top = Math.max(0,Math.min(pos.top,innerHeight-height-20+scrollTop));
-		this.element.setStyle({'top':top+'px','left':left+'px','visibility':'visible',zIndex:In2iGui.nextTopIndex(),'width':(width-2)+'px'});
+		n2i.setStyle(this.element,{'top':top+'px','left':left+'px','visibility':'visible',zIndex:In2iGui.nextTopIndex(),'width':(width-2)+'px'});
 		if (!this.visible) {
-			//n2i.ani(this.element,'opacity',1,200);
-			this.element.setStyle({opacity:1});
+			n2i.setStyle(this.element,{opacity:1});
 			this.addHider();
 			this.visible = true;
 		}
@@ -10185,8 +9220,8 @@ In2iGui.Menu.prototype = {
 	hide : function() {
 		if (!this.visible) return;
 		var self = this;
-		n2i.ani(this.element,'opacity',0,200,{onComplete:function() {
-			self.element.setStyle({'display':'none'});
+		n2i.animate(this.element,'opacity',0,200,{onComplete:function() {
+			self.element.style.display='none';
 		}});
 		this.removeHider();
 		for (var i=0; i < this.subMenus.length; i++) {
@@ -10201,10 +9236,10 @@ In2iGui.Menu.prototype = {
 		return false;
 	},
 	addHider : function() {
-		Element.observe(document.body,'click',this.hider);
+		n2i.listen(document.body,'click',this.hider);
 	},
 	removeHider : function() {
-		Event.stopObserving(document.body,'click',this.hider);
+		n2i.unListen(document.body,'click',this.hider);
 	}
 }
 
@@ -10215,10 +9250,10 @@ In2iGui.Menu.prototype = {
  */
 In2iGui.Overlay = function(options) {
 	this.options = options;
-	this.element = $(options.element);
-	this.content = this.element.select('div.in2igui_inner_overlay')[1];
+	this.element = n2i.get(options.element);
+	this.content = n2i.byClass(this.element,'in2igui_inner_overlay')[1];
 	this.name = options.name;
-	this.icons = new Hash();
+	this.icons = {};
 	this.visible = false;
 	In2iGui.extend(this);
 	this.addBehavior();
@@ -10229,8 +9264,7 @@ In2iGui.Overlay = function(options) {
  */
 In2iGui.Overlay.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div').addClassName('in2igui_overlay').setStyle({'display':'none'});
-	e.update('<div class="in2igui_inner_overlay"><div class="in2igui_inner_overlay"></div></div>');
+	var e = options.element = n2i.build('div',{className:'in2igui_overlay',style:'display:none',html:'<div class="in2igui_inner_overlay"><div class="in2igui_inner_overlay"></div></div>'});
 	document.body.appendChild(e);
 	return new In2iGui.Overlay(options);
 }
@@ -10244,40 +9278,38 @@ In2iGui.Overlay.prototype = {
 				if (In2iGui.isWithin(e,self.boundElement) || In2iGui.isWithin(e,self.element)) return;
 				// TODO: should be unreg'ed but it fails
 				//self.boundElement.stopObserving(self.hider);
-				self.boundElement.removeClassName('in2igui_overlay_bound');
+				n2i.removeClass(self.boundElement,'in2igui_overlay_bound');
 				self.boundElement = null;
 				self.hide();
 			}
 		}
-		this.element.observe('mouseout',this.hider);
+		n2i.listen(this.element,'mouseout',this.hider);
 	},
 	addIcon : function(key,icon) {
 		var self = this;
-		var element = new Element('div').addClassName('in2igui_overlay_icon');
-		element.setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(icon,2)+')'});
-		element.observe('click',function(e) {
+		var element = n2i.build('div',{className:'in2igui_overlay_icon'});
+		element.style.backgroundImage='url('+In2iGui.getIconUrl(icon,2)+')';
+		n2i.listen(element,'click',function(e) {
 			self.iconWasClicked(key,e);
 		});
-		this.icons.set(key,element);
-		this.content.insert(element);
+		this.icons[key]=element;
+		this.content.appendChild(element);
 	},
 	addText : function(text) {
-		this.content.insert(new Element('span',{'class':'in2igui_overlay_text'}).update(text));
+		this.content.appendChild(n2i.build('span',{'class':'in2igui_overlay_text',text:text}));
 	},
 	add : function(widget) {
-		this.content.insert(widget.getElement());
+		this.content.appendChild(widget.getElement());
 	},
 	hideIcons : function(keys) {
-		var self = this;
-		keys.each(function(key) {
-			self.icons.get(key).hide();
-		});
+		for (var i=0; i < keys.length; i++) {
+			this.icons[keys[i]].style.display='none';
+		};
 	},
 	showIcons : function(keys) {
-		var self = this;
-		keys.each(function(key) {
-			self.icons.get(key).show();
-		});
+		for (var i=0; i < keys.length; i++) {
+			this.icons[keys[i]].style.display='';
+		};
 	},
 	iconWasClicked : function(key,e) {
 		In2iGui.callDelegates(this,'iconWasClicked',key,e);
@@ -10287,16 +9319,16 @@ In2iGui.Overlay.prototype = {
 		In2iGui.positionAtElement(this.element,element,options);
 		if (this.visible) return;
 		if (n2i.browser.msie) {
-			this.element.setStyle({'display':'block'});
+			this.element.style.display='block';
 		} else {
-			this.element.setStyle({'display':'block','opacity':0});
+			n2i.setStyle(this.element,{'display':'block','opacity':0});
 			n2i.ani(this.element,'opacity',1,150);
 		}
 		this.visible = true;
 		if (options.autoHide) {
 			this.boundElement = element;
-			element.observe('mouseout',this.hider);
-			element.addClassName('in2igui_overlay_bound');
+			n2i.listen(element,'mouseout',this.hider);
+			n2i.addClass(element,'in2igui_overlay_bound');
 		}
 		if (this.options.modal) {
 			var zIndex = In2iGui.nextAlertIndex();
@@ -10308,7 +9340,7 @@ In2iGui.Overlay.prototype = {
 	show : function(options) {
 		options = options || {};
 		if (!this.visible) {
-			this.element.setStyle({'display':'block',visibility:'hidden'});
+			n2i.setStyle(this.element,{'display':'block',visibility:'hidden'});
 		}
 		if (options.element) {
 			n2i.place({
@@ -10321,13 +9353,13 @@ In2iGui.Overlay.prototype = {
 		this.visible = true;
 		if (options.autoHide && options.element) {
 			this.boundElement = options.element;
-			options.element.observe('mouseout',this.hider);
-			options.element.addClassName('in2igui_overlay_bound');
+			n2i.listen(options.element,'mouseout',this.hider);
+			n2i.addClass(options.element,'in2igui_overlay_bound');
 		}
 		if (this.options.modal) {
 			var zIndex = In2iGui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
-			var color = $(document.body).getStyle('background-color');
+			var color = n2i.getStyle(document.body,'background-color');
 			In2iGui.showCurtain({widget:this,zIndex:zIndex,color:color});
 		}
 	},
@@ -10337,12 +9369,12 @@ In2iGui.Overlay.prototype = {
 	},
 	hide : function() {
 		In2iGui.hideCurtain(this);
-		this.element.setStyle({'display':'none'});
+		this.element.style.display='none';
 		this.visible = false;
 	},
 	clear : function() {
 		In2iGui.destroyDescendants(this.content);
-		this.content.update();
+		this.content.innerHTML='';
 	}
 }
 
@@ -10362,10 +9394,10 @@ In2iGui.Overlay.prototype = {
  */
 In2iGui.Upload = function(options) {
 	this.options = n2i.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
-	this.element = $(options.element);
-	this.itemContainer = this.element.select('.in2igui_upload_items')[0];
-	this.status = this.element.select('.in2igui_upload_status')[0];
-	this.placeholder = this.element.select('.in2igui_upload_placeholder')[0];
+	this.element = n2i.get(options.element);
+	this.itemContainer = n2i.firstByClass(this.element,'in2igui_upload_items');
+	this.status = n2i.firstByClass(this.element,'in2igui_upload_status');
+	this.placeholder = n2i.firstByClass(this.element,'in2igui_upload_placeholder');
 	this.name = options.name;
 	this.items = [];
 	this.busy = false;
@@ -10383,15 +9415,15 @@ In2iGui.Upload.nameIndex = 0;
 /** Creates a new upload widget */
 In2iGui.Upload.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_upload'});
-	options.element.update(
-		'<div class="in2igui_upload_items"></div>'+
+	options.element = n2i.build('div',{
+		'class':'in2igui_upload',
+		html : '<div class="in2igui_upload_items"></div>'+
 		'<div class="in2igui_upload_status"></div>'+
 		(options.placeholder ? '<div class="in2igui_upload_placeholder"><span class="in2igui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+options.placeholder.title+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+options.placeholder.text+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+n2i.escape(options.placeholder.title)+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+n2i.escape(options.placeholder.text)+'</p>' : '')+
 		'</div>' : '')
-	);
+	});
 	return new In2iGui.Upload(options);
 }
 
@@ -10429,34 +9461,40 @@ In2iGui.Upload.prototype = {
 		In2iGui.Upload.nameIndex++;
 		var frameName = 'in2igui_upload_'+In2iGui.Upload.nameIndex;
 		
-		var atts = {'action':this.options.url || '', 'method':'post', 'enctype':'multipart/form-data','encoding':'multipart/form-data','target':frameName};
-		var form = this.form = new Element('form',atts);
+		var form = this.form = n2i.build('form');
+		form.setAttribute('action',this.options.url || '');
+		form.setAttribute('method','post');
+		form.setAttribute('enctype','multipart/form-data');
+		form.setAttribute('encoding','multipart/form-data');
+		form.setAttribute('target',frameName);
 		if (this.options.parameters) {
-			$H(this.options.parameters).each(function(pair) {
-				var hidden = new Element('input',{'type':'hidden','name':pair.key});
-				hidden.setValue(pair.value);
-				form.insert(hidden);
-			});
+			for (key in this.options.parameters) {
+				var hidden = n2i.build('input',{'type':'hidden','name':key});
+				hidden.value = this.options.parameters[key];
+				form.appendChild(hidden);
+			}
 		}
-		var iframe = this.iframe = new Element('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html',style:'display:none'});
-		this.element.insert(iframe);
-		this.fileInput = new Element('input',{'type':'file','class':'file','name':this.options.fieldName});
-		this.fileInput.observe('change',this.iframeSubmit.bind(this));
-		form.insert(this.fileInput);
-		var buttonContainer = new Element('span',{'class':'in2igui_upload_button'});
-		var span = new Element('span',{'class':'in2igui_upload_button_input'});
-		span.insert(form);
-		buttonContainer.insert(span);
+		var iframe = this.iframe = n2i.build('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html',style:'display:none'});
+		this.element.appendChild(iframe);
+		this.fileInput = n2i.build('input',{'type':'file','class':'file','name':this.options.fieldName});
+		n2i.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
+		form.appendChild(this.fileInput);
+		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
+		var span = n2i.build('span',{'class':'in2igui_upload_button_input'});
+		span.appendChild(form);
+		buttonContainer.appendChild(span);
 		if (this.options.widget) {
 			In2iGui.onDomReady(function() {
 				var w = In2iGui.get(this.options.widget);
-				w.element.wrap(buttonContainer);
+				w.element.parentNode.insertBefore(buttonContainer,w.element);
+				w.element.parentNode.removeChild(w.element);
+				buttonContainer.appendChild(w.element);
 			}.bind(this));
 		} else {
-			buttonContainer.insert('<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>');
-			this.element.insert(buttonContainer);
+			buttonContainer.innerHTML='<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
+			this.element.appendChild(buttonContainer);
 		}
-		iframe.observe('load',function() {this.iframeUploadComplete()}.bind(this));
+		n2i.listen(iframe,'load',function() {this.iframeUploadComplete()}.bind(this));
 	},
 	/** @private */
 	iframeUploadComplete : function() {
@@ -10465,7 +9503,7 @@ In2iGui.Upload.prototype = {
 		this.uploading = false;
 		this.form.reset();
 		var doc = n2i.getFrameDocument(this.iframe);
-		var last = this.items.last();
+		var last = this.items[this.items.length-1];
 		if (doc.body.innerHTML.indexOf('SUCCESS')!=-1) {
 			if (last) {
 				last.update({progress:1,filestatus:'Færdig'});
@@ -10548,15 +9586,16 @@ In2iGui.Upload.prototype = {
 		if (phpSession) {
 			url+='?PHPSESSID='+phpSession;
 		}
-		var buttonContainer = new Element('span',{'class':'in2igui_upload_button'});
-		var placeholder = new Element('span',{'class':'in2igui_upload_button_object'});
-		buttonContainer.insert(placeholder);
+		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
+		var placeholder = n2i.build('span',{'class':'in2igui_upload_button_object',parent:buttonContainer});
 		if (this.options.widget) {
 			var w = In2iGui.get(this.options.widget);
-			w.element.wrap(buttonContainer);
+			w.element.parentNode.insertBefore(buttonContainer,w.element);
+			w.element.parentNode.removeChild(w.element);
+			buttonContainer.appendChild(w.element);
 		} else {
-			buttonContainer.insert('<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>');
-			this.element.insert(buttonContainer);
+			buttonContainer.innerHTL='<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
+			this.element.appendChild(buttonContainer);
 		}
 		
 		var self = this;
@@ -10622,7 +9661,7 @@ In2iGui.Upload.prototype = {
 	},
 	/** @private */
 	uploadStart : function() {
-		this.status.setStyle({display:'block'});
+		this.status.style.display='block';
 		n2i.log('uploadStart');
 		if (!this.busy) {
 			this.fire('uploadDidStartQueue');
@@ -10670,10 +9709,10 @@ In2iGui.Upload.prototype = {
 		}
 		var item = new In2iGui.Upload.Item(file);
 		this.items[index] = item;
-		this.itemContainer.insert(item.element);
-		this.itemContainer.setStyle({display:'block'});
+		this.itemContainer.appendChild(item.element);
+		this.itemContainer.style.display='block';
 		if (this.placeholder) {
-			this.placeholder.hide();
+			this.placeholder.style.display='none';
 		}
 		return item;
 	},
@@ -10682,49 +9721,50 @@ In2iGui.Upload.prototype = {
 	updateStatus : function() {
 		var s = this.loader.getStats();
 		if (this.items.length==0) {
-			this.status.hide();
+			this.status.style.display='none';
 		} else {
-			this.status.update('Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%').setStyle({display:'block'});
+			n2i.dom.setNodeText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
+			this.status.style.display='block';
 		}
 		n2i.log(s);
 	}
 }
 
 In2iGui.Upload.Item = function(file) {
-	this.element = new Element('div').addClassName('in2igui_upload_item');
+	this.element = n2i.build('div',{className:'in2igui_upload_item'});
 	if (file.index % 2 == 1) {
-		this.element.addClassName('in2igui_upload_item_alt')
+		n2i.addClass(this.element,'in2igui_upload_item_alt');
 	}
-	this.content = new Element('div').addClassName('in2igui_upload_item_content');
+	this.content = n2i.build('div',{className:'in2igui_upload_item_content'});
 	this.icon = In2iGui.createIcon('file/generic',2);
-	this.element.insert(this.icon);
-	this.element.insert(this.content);
-	this.info = new Element('strong');
-	this.status = new Element('em');
+	this.element.appendChild(this.icon);
+	this.element.appendChild(this.content);
+	this.info = document.createElement('strong');
+	this.status = document.createElement('em');
 	this.progress = In2iGui.ProgressBar.create({small:true});
-	this.content.insert(this.progress.getElement());
-	this.content.insert(this.info);
-	this.content.insert(this.status);
+	this.content.appendChild(this.progress.getElement());
+	this.content.appendChild(this.info);
+	this.content.appendChild(this.status);
 	this.update(file);
 }
 
 In2iGui.Upload.Item.prototype = {
 	update : function(file) {
-		this.status.update(In2iGui.Upload.status[file.filestatus] || file.filestatus);
+		n2i.dom.setNodeText(this.status,In2iGui.Upload.status[file.filestatus] || file.filestatus);
 		if (file.name) {
-			this.info.update(file.name);
+			n2i.dom.setNodeText(this.info,file.name);
 		}
 		if (file.progress!==undefined) {
 			this.setProgress(file.progress);
 		}
 		if (file.filestatus==SWFUpload.FILE_STATUS.ERROR) {
-			this.element.addClassName('in2igui_upload_item_error');
+			n2i.addClass(this.element,'in2igui_upload_item_error');
 			this.progress.hide();
 		}
 	},
 	setError : function(error) {
 		this.status.update(In2iGui.Upload.errors[error] || error);
-		this.element.addClassName('in2igui_upload_item_error');
+		n2i.addClass(this.element,'in2igui_upload_item_error');
 		this.progress.hide();
 	},
 	updateProgress : function(complete,total) {
@@ -10776,7 +9816,7 @@ if (window.SWFUpload) {
 	@constructor
 */
 In2iGui.ProgressBar = function(o) {
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.name = o.name;
 	/** @private */
 	this.WAITING = o.small ? 'in2igui_progressbar_small_waiting' : 'in2igui_progressbar_waiting';
@@ -10785,7 +9825,7 @@ In2iGui.ProgressBar = function(o) {
 	/** @private */
 	this.options = o || {};
 	/** @private */
-	this.indicator = this.element.firstDescendant();
+	this.indicator = n2i.firstByTag(this.element,'div');
 	In2iGui.extend(this);
 }
 
@@ -10794,8 +9834,8 @@ In2iGui.ProgressBar = function(o) {
 */
 In2iGui.ProgressBar.create = function(o) {
 	o = o || {};
-	var e = o.element = new Element('div',{'class':'in2igui_progressbar'}).insert(new Element('div'));
-	if (o.small) e.addClassName('in2igui_progressbar_small');
+	var e = o.element = n2i.build('div',{'class':o.small ? 'in2igui_progressbar in2igui_progressbar_small' : 'in2igui_progressbar'});
+	e.appendChild(document.createElement('div'));
 	return new In2iGui.ProgressBar(o);
 }
 	
@@ -10805,21 +9845,25 @@ In2iGui.ProgressBar.prototype = {
 	*/
 	setValue : function(value) {
 		var el = this.element;
-		if (this.waiting) el.removeClassName(this.WAITING);
-		el.setClassName(this.COMPLETE,value==1);
+		if (this.waiting) {
+			n2i.removeClass(el,this.WAITING);
+		}
+		n2i.setClass(el,this.COMPLETE,value==1);
 		n2i.ani(this.indicator,'width',(value*100)+'%',200);
 	},
 	/** Mark progress as waiting */
 	setWaiting : function() {
 		this.waiting = true;
-		this.indicator.setStyle({width:0});
-		this.element.addClassName(this.WAITING);
+		this.indicator.style.width=0;
+		n2i.addClass(this.element,this.WAITING);
 	},
 	/** Reset the progress bar */
 	reset : function() {
 		var el = this.element;
-		if (this.waiting) el.removeClassName(this.WAITING);
-		el.removeClassName(this.COMPLETE);
+		if (this.waiting) {
+			n2i.removeClass(el,this.WAITING);
+		}
+		n2i.removeClass(el,this.COMPLETE);
 		this.indicator.style.width='0%';
 	},
 	/** Hide the progress bar */
@@ -10836,7 +9880,7 @@ In2iGui.ProgressBar.prototype = {
 In2iGui.Gallery = function(options) {
 	this.options = options || {};
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.objects = [];
 	this.nodes = [];
 	this.selected = [];
@@ -10847,15 +9891,15 @@ In2iGui.Gallery = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	if (this.element.parentNode && this.element.parentNode.hasClassName('in2igui_overflow')) {
+	if (this.element.parentNode && n2i.hasClass(this.element.parentNode,'in2igui_overflow')) {
 		this.revealing = true;
-		this.element.parentNode.observe('scroll',this._reveal.bind(this));
+		n2i.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
 	}
 }
 
 In2iGui.Gallery.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_gallery'});
+	options.element = n2i.build('div',{'class':'in2igui_gallery'});
 	return new In2iGui.Gallery(options);
 }
 
@@ -10880,9 +9924,9 @@ In2iGui.Gallery.prototype = {
 	render : function() {
 		this.nodes = [];
 		this.maxRevealed=0;
-		this.element.update();
+		this.element.innerHTML='';
 		var self = this;
-		this.objects.each(function(object,i) {
+		n2i.each(this.objects,function(object,i) {
 			var url = self.resolveImageUrl(object);
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
@@ -10892,10 +9936,11 @@ In2iGui.Gallery.prototype = {
 			} else {
 				var top = 0;
 			}
-			var img = new Element('img').setStyle({margin:top+'px auto 0px'});
+			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
-			var item = new Element('div',{'class':'in2igui_gallery_item'}).setStyle({'width':self.width+'px','height':self.height+'px'}).insert(img);
-			item.observe('click',function() {
+			var item = n2i.build('div',{'class':'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			item.appendChild(img);
+			n2i.listen(item,'click',function() {
 				self.itemClicked(i);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
@@ -10903,10 +9948,10 @@ In2iGui.Gallery.prototype = {
 				In2iGui.startDrag(e,item);
 				return false;
 			};
-			item.observe('dblclick',function() {
+			n2i.listen(item,'dblclick',function() {
 				self.itemDoubleClicked(i);
 			});
-			self.element.insert(item);
+			self.element.appendChild(item);
 			self.nodes.push(item);
 		});
 		this._reveal();
@@ -10936,9 +9981,9 @@ In2iGui.Gallery.prototype = {
 	/** @private */
 	updateUI : function() {
 		var s = this.selected;
-		this.nodes.each(function(node,i) {
-			node.setClassName('in2igui_gallery_item_selected',n2i.inArray(s,i));
-		});
+		for (var i=0; i < this.nodes.length; i++) {
+			n2i.setClass(this.nodes[i],'in2igui_gallery_item_selected',n2i.inArray(s,i));
+		};
 	},
 	/** @private */
 	resolveImageUrl : function(img) {
@@ -10988,9 +10033,9 @@ In2iGui.Gallery.prototype = {
 In2iGui.Calendar = function(o) {
 	this.name = o.name;
 	this.options = n2i.override({startHour:7,endHour:24},o);
-	this.element = $(o.element);
-	this.head = $(this.element.getElementsByTagName('thead')[0]);
-	this.body = $(this.element.getElementsByTagName('tbody')[0]);
+	this.element = n2i.get(o.element);
+	this.head = n2i.firstByTag(this.element,'thead');
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.date = new Date();
 	In2iGui.extend(this);
 	this.buildUI();
@@ -11030,10 +10075,10 @@ In2iGui.Calendar.prototype = {
 	},
 	clearEvents : function() {
 		this.events = [];
-		var nodes = this.element.select('.in2igui_calendar_event');
-		nodes.each(function(node) {
-			node.remove();
-		});
+		var nodes = n2i.byClass(this.element,'in2igui_calendar_event');
+		for (var i=0; i < nodes.length; i++) {
+			n2i.dom.remove(nodes[i]);
+		};
 		this.hideEventViewer();
 	},
 	$objectsLoaded : function(data) {
@@ -11067,15 +10112,15 @@ In2iGui.Calendar.prototype = {
 		var pixels = (this.options.endHour-this.options.startHour)*40;
 		var week = this.getFirstDay().getWeekOfYear();
 		var year = this.getFirstDay().getYear();
-		this.events.each(function(event) {
-			var day = self.body.select('.in2igui_calendar_day')[event.startTime.getDay()-1];
+		n2i.each(this.events,function(event) {
+			var day = n2i.byClass(self.body,'in2igui_calendar_day')[event.startTime.getDay()-1];
 			if (!day) {
 				return;
 			}
 			if (event.startTime.getWeekOfYear()!=week || event.startTime.getYear()!=year) {
 				return;
 			}
-			var node = new Element('div',{'class':'in2igui_calendar_event'});
+			var node = n2i.build('div',{'class':'in2igui_calendar_event'});
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
 			var height = Math.min(pixels-top,height);
@@ -11109,22 +10154,19 @@ In2iGui.Calendar.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		var first = this.getFirstDay();
-		//var x = this.head.select('.time')[0];
-		//x.update('<div>Uge '+this.date.getWeekOfYear()+' '+this.date.getFullYear()+'</div>');
-		
-		var days = this.head.select('.day');
+		var first = this.getFirstDay();		
+		var days = n2i.byClass(this.head,'day');
 		for (var i=0; i < days.length; i++) {
 			var date = new Date(first.getTime());
 			date.setDate(date.getDate()+i);
-			days[i].update(date.dateFormat('l \\d. d M'))
+			days[i].innerHTML=date.dateFormat('l \\d. d M');
 		};
 	},
 	/** @private */
 	buildUI : function() {
-		var bar = this.element.select('.in2igui_calendar_bar')[0];
+		var bar = n2i.firstByClass(this.element,'in2igui_calendar_bar');
 		this.toolbar = In2iGui.Toolbar.create({labels:false});
-		bar.insert(this.toolbar.getElement());
+		bar.appendChild(this.toolbar.getElement());
 		var previous = In2iGui.Button.create({name:'in2iguiCalendarPrevious',text:'',icon:'monochrome/previous'});
 		previous.listen(this);
 		this.toolbar.add(previous);
@@ -11138,16 +10180,16 @@ In2iGui.Calendar.prototype = {
 		this.datePickerButton.listen(this);
 		this.toolbar.add(this.datePickerButton);
 		
-		var time = this.body.select('.in2igui_calendar_day')[0];
+		var time = n2i.firstByClass(this.body,'in2igui_calendar_day');
 		for (var i=this.options.startHour; i <= this.options.endHour; i++) {
-			var node = new Element('div',{'class':'in2igui_calendar_time'}).update('<span><em>'+i+':00</em></span>');
+			var node = n2i.build('div',{'class':'in2igui_calendar_time',html:'<span><em>'+i+':00</em></span>'});
 			if (i==this.options.startHour) {
-				node.addClassName('in2igui_calendar_time_first');
+				n2i.addClass(node,'in2igui_calendar_time_first');
 			}
 			if (i==this.options.endHour) {
-				node.addClassName('in2igui_calendar_time_last');
+				n2i.addClass(node,'in2igui_calendar_time_last');
 			}
-			time.insert(node);
+			time.appendChild(node);
 		};
 	},
 	$click$in2iguiCalendarPrevious : function() {
@@ -11251,11 +10293,11 @@ In2iGui.Calendar.prototype = {
 /** @constructor */
 In2iGui.DatePicker = function(options) {
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.options = {};
 	n2i.override(this.options,options);
 	this.cells = [];
-	this.title = this.element.select('strong')[0];
+	this.title = n2i.firstByTag(this.element,'strong');
 	this.today = new Date();
 	this.value = this.options.value ? new Date(this.options.value.getTime()) : new Date();
 	this.viewDate = new Date(this.value.getTime());
@@ -11266,37 +10308,37 @@ In2iGui.DatePicker = function(options) {
 }
 
 In2iGui.DatePicker.create = function(options) {
-	var element = options.element = new Element('div',{'class':'in2igui_datepicker'});
-	element.insert('<div class="in2igui_datepicker_header"><a class="in2igui_datepicker_next"></a><a class="in2igui_datepicker_previous"></a><strong></strong></div>');
-	var table = new Element('table');
-	var head = new Element('tr');
-	table.insert(new Element('thead').insert(head));
+	var element = options.element = n2i.build('div',{
+		'class' : 'in2igui_datepicker',
+		html : '<div class="in2igui_datepicker_header"><a class="in2igui_datepicker_next"></a><a class="in2igui_datepicker_previous"></a><strong></strong></div>'
+	});
+	var table = n2i.build('table',{parent:element});
+	var thead = n2i.build('thead',{parent:table});
+	var head = n2i.build('tr',{parent:thead});
 	for (var i=0;i<7;i++) {
-		head.insert(new Element('th').update(Date.dayNames[i].substring(0,3)));
+		head.insert(n2i.build('th',{text:Date.dayNames[i].substring(0,3)}));
 	}
-	var body = new Element('tbody');
-	table.insert(body);
+	var body = n2i.build('tbody',{parent:table});
 	for (var i=0;i<6;i++) {
-		var row = new Element('tr');
+		var row = n2i.build('tr',{parent:body});
 		for (var j=0;j<7;j++) {
-			var cell = new Element('td');
-			row.insert(cell);
+			var cell = n2i.build('td',{parent:row});
 		}
-		body.insert(row);
 	}
-	element.insert(table);
 	return new In2iGui.DatePicker(options);
 }
 
 In2iGui.DatePicker.prototype = {
 	addBehavior : function() {
 		var self = this;
-		this.cells = this.element.select('td');
-		this.cells.each(function(cell,index) {
-			cell.observe('mousedown',function() {self.selectCell(index)});
+		this.cells = n2i.firstByClass(this.element,'td');
+		this.each(this.cells,function(cell,index) {
+			n2i.listen(cell,'mousedown',function() {self.selectCell(index)});
 		})
-		this.element.select('.in2igui_datepicker_next')[0].observe('mousedown',function() {self.next()});
-		this.element.select('.in2igui_datepicker_previous')[0].observe('mousedown',function() {self.previous()});
+		var next = n2i.firstByClass(this.element,'in2igui_datepicker_next');
+		var previous = n2i.firstByClass(this.element,'in2igui_datepicker_previous');
+		n2i.listen(next,'mousedown',function() {self.next()});
+		n2i.listen(previous,'mousedown',function() {self.previous()});
 	},
 	setValue : function(date) {
 		this.value = new Date(date.getTime());
@@ -11319,12 +10361,12 @@ In2iGui.DatePicker.prototype = {
 				cell.className = '';
 			}
 			if (date.getDate()==this.value.getDate() && date.getMonth()==this.value.getMonth() && isSelectedYear) {
-				cell.addClassName('in2igui_datepicker_selected');
+				n2i.addClass(cell,'in2igui_datepicker_selected');
 			}
 			if (date.getDate()==this.today.getDate() && date.getMonth()==this.today.getMonth() && date.getFullYear()==this.today.getFullYear()) {
-				cell.addClassName('in2igui_datepicker_today');
+				ni2.addClass(cell,'in2igui_datepicker_today');
 			}
-			cell.update(date.getDate());
+			n2i.dom.setNodeText(cell,date.getDate());
 		};
 	},
 	getPreviousMonth : function() {
@@ -11405,7 +10447,7 @@ Date.dayNames =
 In2iGui.Layout = function(options) {
 	this.name = options.name;
 	this.options = options || {};
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	In2iGui.extend(this);
 }
 
@@ -11441,8 +10483,8 @@ In2iGui.Layout.prototype = {
 In2iGui.Columns = function(options) {
 	this.name = options.name;
 	this.options = options || {};
-	this.element = $(options.element);
-	this.body = this.element.select('tr')[0];
+	this.element = n2i.get(options.element);
+	this.body = n2i.firstByTag(this.element,'tr');
 	In2iGui.extend(this);
 }
 
@@ -11451,30 +10493,30 @@ In2iGui.Columns = function(options) {
  */
 In2iGui.Columns.create = function(options) {
 	options = options || {};
-	options.element = new Element('table',{'class':'in2igui_columns'}).insert(new Element('tbody').insert(new Element('tr')));
+	options.element = n2i.build('table',{'class' : 'in2igui_columns',html : '<tbody><tr></tr></tbody>'});
 	return new In2iGui.Columns(options);
 }
 
 In2iGui.Columns.prototype = {
 	addToColumn : function(index,widget) {
 		var c = this.ensureColumn(index);
-		c.insert(widget.getElement());
+		c.appendChild(widget.getElement());
 	},
 	setColumnStyle : function(index,style) {
 		var c = this.ensureColumn(index);
-		c.setStyle(style);
+		n2i.setStyle(c,style);
 	},
 	setColumnWidth : function(index,width) {
 		var c = this.ensureColumn(index);
-		c.setStyle({width:width+'px'});
+		c.style.width=width+'px';
 	},
 	/** @private */
 	ensureColumn : function(index) {
-		var children = this.body.childElements();
+		var children = n2i.getChildren(this.body);
 		for (var i=children.length-1;i<index;i++) {
-			this.body.insert(new Element('td',{'class':'in2igui_columns_column'}));
+			this.body.appendChild(n2i.build('td',{'class':'in2igui_columns_column'}));
 		}
-		return this.body.childElements()[index];
+		return n2i.getChildren(this.body)[index];
 	}
 }
 
@@ -11485,8 +10527,8 @@ In2iGui.Columns.prototype = {
  */
 In2iGui.Dock = function(options) {
 	this.options = options;
-	this.element = $(options.element);
-	this.iframe = this.element.select('iframe')[0];
+	this.element = n2i.get(options.element);
+	this.iframe = n2i.firstByTag(this.element,'iframe');
 	this.name = options.name;
 	In2iGui.extend(this);
 	this.diff = -69;
@@ -11516,12 +10558,12 @@ In2iGui.Dock.prototype = {
 In2iGui.Box = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
-	this.element = $(options.element);
-	this.body = this.element.select('.in2igui_box_body')[0];
-	this.close = this.element.select('.in2igui_box_close')[0];
+	this.element = n2i.get(options.element);
+	this.body = n2i.firstByClass(this.element,'in2igui_box_body');
+	this.close = n2i.firstByClass(this.element,'in2igui_box_close');
 	if (this.close) {
-		this.close.observe('click',function(e) {
-			e.stop();
+		n2i.listen(this.close,'click',function(e) {
+			n2i.stop(e);
 			this.hide();
 			this.fire('boxWasClosed');
 		}.bind(this));
@@ -11534,22 +10576,18 @@ In2iGui.Box = function(options) {
  * @param {Object} options The options : {width:0,padding:0,absolute:false,closable:false}
  */
 In2iGui.Box.create = function(options) {
-	options = n2i.override({},options);
-	var e = options.element = new Element('div',{'class':'in2igui_box'});
-	if (options.width) {
-		e.setStyle({width:options.width+'px'});
-	}
-	if (options.absolute) {
-		e.addClassName('in2igui_box_absolute');
-	}
-	e.update(
-		(options.closable ? '<a class="in2igui_box_close" href="#"></a>' : '')+
-		'<div class="in2igui_box_top"><div><div></div></div></div>'+
-		'<div class="in2igui_box_middle"><div class="in2igui_box_middle">'+
-		(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+options.title+'</strong></div>' : '')+
-		'<div class="in2igui_box_body"'+(options.padding ? ' style="padding: '+options.padding+'px;"' : '')+'></div>'+
-		'</div></div>'+
-		'<div class="in2igui_box_bottom"><div><div></div></div></div>');
+	options = options || {};
+	options.element = n2i.build('div',{
+		'class' : options.absolute ? 'in2igui_box in2igui_box_absolute' : 'in2igui_box',
+		html : (options.closable ? '<a class="in2igui_box_close" href="#"></a>' : '')+
+			'<div class="in2igui_box_top"><div><div></div></div></div>'+
+			'<div class="in2igui_box_middle"><div class="in2igui_box_middle">'+
+			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+n2i.escape(options.title)+'</strong></div>' : '')+
+			'<div class="in2igui_box_body"'+(options.padding ? ' style="padding: '+options.padding+'px;"' : '')+'></div>'+
+			'</div></div>'+
+			'<div class="in2igui_box_bottom"><div><div></div></div></div>',
+		style : options.width ? options.width+'px' : null
+	});
 	return new In2iGui.Box(options);
 };
 
@@ -11565,9 +10603,9 @@ In2iGui.Box.prototype = {
 	 */
 	add : function(widget) {
 		if (widget.getElement) {
-			this.body.insert(widget.getElement());
+			this.body.appendChild(widget.getElement());
 		} else {
-			this.body.insert(widget);
+			this.body.appendChild(widget);
 		}
 	},
 	/**
@@ -11578,16 +10616,16 @@ In2iGui.Box.prototype = {
 		if (this.options.modal) {
 			var index = In2iGui.nextPanelIndex();
 			e.style.zIndex=index+1;
-			In2iGui.showCurtain(this,index);
+			In2iGui.showCurtain({widget:this,zIndex:index});
 		}
 		if (this.options.absolute) {
-			e.setStyle({display:'block',visibility:'hidden'});
-			var w = e.getWidth();
-			var top = (n2i.getInnerHeight()-e.getHeight())/2+n2i.getScrollTop();
-			e.setStyle({'marginLeft':(w/-2)+'px',top:top+'px'});
-			e.setStyle({display:'block',visibility:'visible'});
+			n2i.setStyle(e,{display:'block',visibility:'hidden'});
+			var w = e.clientWidth;
+			var top = (n2i.getInnerHeight()-e.clientHeight)/2+n2i.getScrollTop();
+			n2i.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
+			n2i.setStyle(e,{display:'block',visibility:'visible'});
 		} else {
-			e.setStyle({display:'block'});
+			e.style.display='block';
 		}
 		In2iGui.callVisible(this);
 	},
@@ -11596,7 +10634,7 @@ In2iGui.Box.prototype = {
 	 */
 	hide : function() {
 		In2iGui.hideCurtain(this);
-		this.element.setStyle({display:'none'});
+		this.element.style.display='none';
 	},
 	/** @private */
 	curtainWasClicked : function() {
@@ -11610,15 +10648,15 @@ In2iGui.Wizard = function(o) {
 	/** @private */
 	this.options = o || {};
 	/** @private */
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	/** @private */
 	this.name = o.name;
 	/** @private */
-	this.container = this.element.select('.in2igui_wizard_steps')[0];
+	this.container = n2i.firstByClass(this.element,'in2igui_wizard_steps');
 	/** @private */
-	this.steps = this.element.select('.in2igui_wizard_step');
+	this.steps = n2i.byClass(this.element,'in2igui_wizard_step');
 	/** @private */
-	this.anchors = this.element.select('ul.in2igui_wizard a');
+	this.anchors = n2i.byClass(this.element,'in2igui_wizard_selection');
 	/** @private */
 	this.selected = 0;
 	In2iGui.extend(this);
@@ -11628,22 +10666,28 @@ In2iGui.Wizard = function(o) {
 In2iGui.Wizard.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.anchors.each(function(node,i) {
-			node.observe('mousedown',function(e) {e.stop();this.goToStep(i)}.bind(this));
-			node.observe('click',function(e) {e.stop();});
-		}.bind(this));
+		var self = this;
+		n2i.each(this.anchors,function(node,i) {
+			n2i.listen(node,'mousedown',function(e) {
+				n2i.stop(e);
+				self.goToStep(i)
+			});
+			n2i.listen(node,'click',function(e) {
+				n2i.stop(e);
+			});
+		});
 	},
 	/** Goes to the step with the index */
 	goToStep : function(index) {
 		var c = this.container;
-		c.setStyle({height:c.getHeight()+'px'})
-		this.anchors[this.selected].removeClassName('in2igui_selected');
-		this.steps[this.selected].hide();
-		this.anchors[index].addClassName('in2igui_selected');
-		this.steps[index].show();
+		c.style.height=c.clientHeight+'px';
+		n2i.removeClass(this.anchors[this.selected],'in2igui_selected');
+		this.steps[this.selected].style.display='none';
+		n2i.addClass(this.anchors[index],'in2igui_selected');
+		this.steps[index].style.display='block';
 		this.selected=index;
-		n2i.ani(c,'height',this.steps[index].getHeight()+'px',500,{ease:n2i.ease.slowFastSlow,onComplete:function() {
-			c.setStyle({height:''});
+		n2i.ani(c,'height',this.steps[index].clientHeight+'px',500,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+			c.style.height='';
 		}});
 		In2iGui.callVisible(this);
 	},
@@ -11669,7 +10713,7 @@ In2iGui.Wizard.prototype = {
 In2iGui.Articles = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	if (options.source) {
 		options.source.listen(this);
 	}
@@ -11678,44 +10722,44 @@ In2iGui.Articles = function(options) {
 In2iGui.Articles.prototype = {
 	/** @private */
 	$articlesLoaded : function(doc) {
-		this.element.update();
+		this.element.innerHTML='';
 		var a = doc.getElementsByTagName('article');
 		for (var i=0; i < a.length; i++) {
-			var e = new Element('div',{'class':'in2igui_article'});
+			var e = n2i.build('div',{'class':'in2igui_article'});
 			var c = a[i].childNodes;
 			for (var j=0; j < c.length; j++) {
 				if (n2i.dom.isElement(c[j],'title')) {
-					var title = n2i.dom.getNodeText(c[j]).escapeHTML();
-					e.insert(new Element('h2').update(title));
+					var title = n2i.dom.getNodeText(c[j]);
+					e.appendChild(n2i.build('h2',{text:title}));
 				} else if (n2i.dom.isElement(c[j],'paragraph')) {
-					var text = n2i.dom.getNodeText(c[j]).escapeHTML();
-					var p = new Element('p').update(text);
+					var text = n2i.dom.getNodeText(c[j]);
+					var p = n2i.build('p',{text:text});
 					if (c[j].getAttribute('dimmed')==='true') {
-						p.addClassName('in2igui_dimmed');
+						p.className='in2igui_dimmed';
 					}
-					e.insert(p);
+					e.appendChild(p);
 				}
 			};
-			this.element.insert(e);
+			this.element.appendChild(e);
 		};
 	},
 	$sourceFailed : function() {
-		this.element.update('<div>Failed!</div>');
+		this.element.innerHTML='<div>Failed!</div>';
 	},
 	/** @private */
 	$sourceIsBusy : function() {
-		this.element.update('<div class="in2igui_articles_loading">Loading...</div>');
+		this.element.innerHTML='<div class="in2igui_articles_loading">Loading...</div>';
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		this.element.removeClassName('in2igui_list_busy');
+		n2i.removeClass(this.element,'in2igui_list_busy');
 	}
 }
 
 /* EOF *//** @constructor */
 In2iGui.TextField = function(options) {
 	this.options = n2i.override({placeholderElement:null,validator:null},options);
-	var e = this.element = $(options.element);
+	var e = this.element = n2i.get(options.element);
 	this.element.setAttribute('autocomplete','off');
 	this.value = this.validate(this.element.value);
 	this.isPassword = this.element.type=='password';
@@ -11736,15 +10780,16 @@ In2iGui.TextField = function(options) {
 In2iGui.TextField.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		e.observe('keyup',this.keyDidStrike.bind(this));
+		n2i.listen(e,'keyup',this.keyDidStrike.bind(this));
 		var p = this.options.placeholderElement;
-		e.observe('blur',this.onBlur.bind(this));
+		n2i.listen(e,'blur',this.onBlur.bind(this));
 		if (p) {
-			e.observe('focus',this.focused.bind(this));
-			e.observe('blur',this.checkPlaceholder.bind(this));
+			n2i.listen(e,'focus',this.focused.bind(this));
+			n2i.listen(e,'blur',this.checkPlaceholder.bind(this));
 			if (p) {
-				p.setStyle({cursor:'text'});
-				p.observe('mousedown',this.focus.bind(this)).observe('click',this.focus.bind(this));
+				p.style.cursor='text';
+				n2i.listen(p,'mousedown',this.focus.bind(this));
+				n2i.listen(p,'click',this.focus.bind(this));
 			}
 		}
 	},
@@ -11759,7 +10804,7 @@ In2iGui.TextField.prototype = {
 		var validator = this.options.validator, result;
 		if (validator) {
 			result = validator.validate(value);
-			this.element.setClassName('in2igui_invalid',!result.valid);
+			n2i.setClass(this.element,'in2igui_invalid',!result.valid);
 			return result.value;
 		}
 		return value;
@@ -11785,14 +10830,16 @@ In2iGui.TextField.prototype = {
 	},
 	/** @private */
 	onBlur : function() {
-		this.element.removeClassName('in2igui_invalid');
+		n2i.removeClass(this.element,'in2igui_invalid');
 		this.element.value = this.value || '';
 	},
 	getValue : function() {
 		return this.value;
 	},
 	setValue : function(value) {
-		if (value===undefined || value===null) value='';
+		if (value===undefined || value===null) {
+			value='';
+		}
 		this.element.value = value;
 		this.value = this.validate(value);
 	},
@@ -11807,7 +10854,7 @@ In2iGui.TextField.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		this.element.setClassName('in2igui_field_error',isError);
+		n2i.setClass(this.element,'in2igui_field_error',isError);
 		if (typeof(error) == 'string') {
 			In2iGui.showToolTip({text:error,element:this.element,key:this.name});
 		}
@@ -11820,7 +10867,7 @@ In2iGui.TextField.prototype = {
 /* EOF *//** @constructor */
 In2iGui.InfoView = function(options) {
 	this.options = n2i.override({clickObjects:false},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.body = this.element.select('tbody')[0];
 	this.name = options.name;
 	In2iGui.extend(this);
@@ -11899,16 +10946,16 @@ In2iGui.InfoView.prototype = {
  */
 In2iGui.Overflow = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
 
 In2iGui.Overflow.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class':'in2igui_overflow'});
+	var e = options.element = n2i.build('div',{'class':'in2igui_overflow'});
 	if (options.height) {
-		e.setStyle({height:options.height+'px'});
+		e.style.height=options.height+'px';
 	}
 	return new In2iGui.Overflow(options);
 }
@@ -11917,19 +10964,20 @@ In2iGui.Overflow.prototype = {
 	calculate : function() {
 		var top,bottom,parent,viewport;
 		viewport = n2i.getInnerHeight();
-		parent = $(this.element.parentNode);
-		top = this.element.cumulativeOffset().top;
-		bottom = parent.cumulativeOffset().top+parent.getDimensions().height;
-		this.element.nextSiblings().each(function(node) {
-			bottom-=node.clientHeight;
-		})
+		parent = this.element.parentNode;
+		top = n2i.getTop(this.element);
+		bottom = n2i.getTop(parent)+parent.clientHeight;
+		var sibs = n2i.getAllNext(this.element);
+		for (var i=0; i < sibs.length; i++) {
+			bottom-=sibs[i].clientHeight;
+		};
 		this.diff=-1*(top+(viewport-bottom));
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
-			this.element.insert(widgetOrNode.getElement());
+			this.element.appendChild(widgetOrNode.getElement());
 		} else {
-			this.element.insert(widgetOrNode);
+			this.element.appendChild(widgetOrNode);
 		}
 		return this;
 	},
@@ -11952,12 +11000,14 @@ In2iGui.Overflow.prototype = {
 /* EOF *//** @constructor */
 In2iGui.SearchField = function(options) {
 	this.options = n2i.override({expandedWidth:null},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.field = this.element.select('input')[0];
+	this.field = n2i.firstByTag(this.element,'input');
 	this.value = this.field.value;
-	this.adaptive = this.element.hasClassName('in2igui_searchfield_adaptive');
-	In2iGui.onDomReady(function() {this.initialWidth=parseInt(this.element.getStyle('width'))}.bind(this));
+	this.adaptive = n2i.hasClass(this.element,'in2igui_searchfield_adaptive');
+	In2iGui.onDomReady(function() {
+		this.initialWidth = parseInt(n2i.getStyle(this.element,'width'))
+	}.bind(this));
 	In2iGui.extend(this);
 	this.addBehavior();
 	this.updateClass()
@@ -11966,8 +11016,10 @@ In2iGui.SearchField = function(options) {
 In2iGui.SearchField.create = function(options) {
 	options = options || {};
 	
-	var e = options.element = new Element('span',{'class': options.adaptive ? 'in2igui_searchfield in2igui_searchfield_adaptive' : 'in2igui_searchfield'});
-	e.update('<em class="in2igui_searchfield_placeholder"></em><a href="javascript:void(0);" class="in2igui_searchfield_reset"></a><span><span><input type="text"/></span></span>');
+	options.element = n2i.build('span',{
+		'class' : options.adaptive ? 'in2igui_searchfield in2igui_searchfield_adaptive' : 'in2igui_searchfield',
+		html : '<em class="in2igui_searchfield_placeholder"></em><a href="javascript:void(0);" class="in2igui_searchfield_reset"></a><span><span><input type="text"/></span></span>'
+	});
 	return new In2iGui.SearchField(options);
 }
 
@@ -11975,18 +11027,24 @@ In2iGui.SearchField.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		this.field.observe('keyup',this.onKeyUp.bind(this));
-		var reset = this.element.select('a')[0];
+		n2i.listen(this.field,'keyup',this.onKeyUp.bind(this));
+		var reset = n2i.firstByTag(this.element,'a');
 		reset.tabIndex=-1;
 		var focus = function() {self.field.focus();self.field.select()};
-		this.element.observe('mousedown',focus).observe('mouseup',focus);
-		reset.observe('mousedown',function(e) {e.stop();self.reset();focus()});
-		this.element.select('em')[0].observe('mousedown',focus);
-		this.field.observe('focus',function() {
+		n2i.listen(this.element,'mousedown',focus);
+		n2i.listen(this.element,'mouseup',focus);
+		//this.element.observe('mousedown',focus).observe('mouseup',focus);
+		n2i.listen(reset,'mousedown',function(e) {
+			n2i.stop(e);
+			self.reset();
+			focus()
+		});
+		n2i.listen(n2i.firstByTag(this.element,'em'),'mousedown',focus);
+		n2i.listen(this.field,'focus',function() {
 			self.focused=true;
 			self.updateClass();
 		});
-		this.field.observe('blur',function() {
+		n2i.listen(this.field,'blur',function() {
 			self.focused=false;
 			self.updateClass();
 		});
@@ -12055,7 +11113,7 @@ In2iGui.SearchField.prototype = {
  */
 In2iGui.Fragment = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
@@ -12077,7 +11135,7 @@ In2iGui.LocationPicker = function(options) {
 	options = options || {};
 	this.name = options.name;
 	this.options = options.options || {};
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.defaultCenter = new google.maps.LatLng(57.0465, 9.9185);
 	In2iGui.extend(this);
 	this.addBehavior();
@@ -12150,7 +11208,7 @@ In2iGui.LocationPicker.prototype = {
 In2iGui.Bar = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	In2iGui.extend(this);
 };
 
@@ -12193,7 +11251,7 @@ In2iGui.Bar.prototype = {
 In2iGui.Bar.Button = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.element.observe('click',this.onClick.bind(this));
 	if (this.options.stopEvents) {
 		this.element.observe('mousedown',function(e) {Event.stop(e)});
@@ -12224,7 +11282,7 @@ In2iGui.Bar.Button.prototype = {
  */
 In2iGui.IFrame = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
@@ -12250,7 +11308,7 @@ In2iGui.IFrame.prototype = {
 /* EOF */
 In2iGui.VideoPlayer = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.placeholder = this.element.select('div')[0];
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
@@ -12461,29 +11519,31 @@ In2iGui.VideoPlayer.Embedded.prototype = {
  */
 In2iGui.Segmented = function(options) {
 	this.options = n2i.override({value:null,allowNull:false},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.value = this.options.value;
 	In2iGui.extend(this);
-	this.element.observe('mousedown',this.onClick.bind(this));
+	n2i.listen(this.element,'mousedown',this.onClick.bind(this));
 }
 
 In2iGui.Segmented.prototype = {
 	/** @private */
 	onClick : function(e) {
-		var a = e.findElement('a');
+		e = new n2i.Event(e);
+		var a = e.findByTag('a');
 		if (a) {
 			var changed = false;
 			var value = a.getAttribute('rel');
-			this.element.select('.in2igui_segmented_selected').each(function(node) {
-				node.removeClassName('in2igui_segmented_selected');
-			});
+			var x = n2i.byClass(this.element,'in2igui_segmented_selected');
+			for (var i=0; i < x.length; i++) {
+				n2i.removeClass(x[i],'in2igui_segmented_selected');
+			};
 			if (value===this.value && this.options.allowNull) {
 				changed=true;
 				this.value = null;
 				this.fire('valueChanged',this.value);
 			} else {
-				a.addClassName('in2igui_segmented_selected');
+				n2i.addClass(a,'in2igui_segmented_selected');
 				changed=this.value!== value;
 				this.value = value;
 			}
@@ -12496,14 +11556,14 @@ In2iGui.Segmented.prototype = {
 		if (value===undefined) {
 			value=null;
 		}
-		var as = this.element.select('a');
+		var as = this.element.getElementsByTagName('a');
 		this.value = null;
 		for (var i=0; i < as.length; i++) {
 			if (as[i].getAttribute('rel')===value) {
-				as[i].addClassName('in2igui_segmented_selected');
+				n2i.addClass(as[i],'in2igui_segmented_selected');
 				this.value=value;
 			} else {
-				as[i].removeClassName('in2igui_segmented_selected');
+				n2i.removeClass(as[i],'in2igui_segmented_selected');
 			}
 		};
 	},
@@ -12649,7 +11709,7 @@ In2iGui.Flash = {
 In2iGui.Link = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	In2iGui.extend(this);
 	this.addBehavior();
 }
@@ -12658,9 +11718,9 @@ In2iGui.Link.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		this.element.observe('click',function(e) {
+		n2i.listen(this.element,'click',function(e) {
+			n2i.stop(e);
 			self.fire('click');
-			Event.stop(e);
 		});
 	}
 }
@@ -12672,19 +11732,19 @@ In2iGui.Link.prototype = {
  */
 In2iGui.Links = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 	this.items = [];
 	this.addBehavior();
 	this.selectedIndex = null;
-	this.inputs = new Hash();
+	this.inputs = {};
 }
 
 In2iGui.Links.prototype = {
 	addBehavior : function() {
-		this.element.observe('click',this.onClick.bind(this));
-		this.element.observe('dblclick',this.onDblClick.bind(this));
+		n2i.listen(this.element,'click',this.onClick.bind(this));
+		n2i.listen(this.element,'dblclick',this.onDblClick.bind(this));
 	},
 	reset : function() {
 		this.setValue([]);
@@ -12698,9 +11758,9 @@ In2iGui.Links.prototype = {
 		return this.items;
 	},
 	onDblClick : function(e) {
+		e = new n2i.Event(e);
 		n2i.selection.clear();
-		e.stop();
-		e.preventDefault();
+		e.stop(e);
 		var link = this.selectAndGetRow(e);
 		var values = {text:link.text};
 		values[link.kind]=link.value;
@@ -12711,11 +11771,11 @@ In2iGui.Links.prototype = {
 		win.show();
 	},
 	onClick : function(e) {
+		e = new n2i.Event(e);
 		e.stop();
-		e.preventDefault();
-		var element = e.element();
-		if (element.hasClassName('in2igui_links_remove')) {
-			var row = e.findElement('div.in2igui_links_row');
+		var element = e.getElement();
+		if (n2i.hasClass(element,'in2igui_links_remove')) {
+			var row = e.findByClass('in2igui_links_row');
 			In2iGui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
 				this.items.splice(row.in2igui_index,1);
 				if (this.selectedIndex===row.in2igui_index) {
@@ -12728,38 +11788,37 @@ In2iGui.Links.prototype = {
 		}
 	},
 	selectAndGetRow : function(event) {
-		var row = event.findElement('div.in2igui_links_row');
+		var row = event.findByClass('in2igui_links_row');
 		if (row) {
 			var idx = row.in2igui_index;
 			if (this.selectedIndex!==null) {
-				this.element.select('.in2igui_links_row')[this.selectedIndex].removeClassName('in2igui_links_row_selected');
+				var x = n2i.byClass(this.element,'in2igui_links_row')[this.selectedIndex];
+				n2i.removeClass(x,'in2igui_links_row_selected')
 			}
 			this.selectedIndex = idx;
-			row.addClassName('in2igui_links_row_selected');
+			n2i.addClass(row,'in2igui_links_row_selected');
 			return this.items[idx];
 		}
 	},
 	build : function() {
-		var list = this.list || this.element.select('.in2igui_links_list')[0];
-		list.update();
+		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list');
+		list.innerHTML='';
 		for (var i=0; i < this.items.length; i++) {
 			var item = this.items[i];
-			var row = new Element('div',{'class':'in2igui_links_row'});
+			var row = n2i.build('div',{'class':'in2igui_links_row'});
 			row.in2igui_index = i;
 			
 			row.appendChild(In2iGui.createIcon(item.icon,1));
-			var text = new Element('div',{'class':'in2igui_links_text'});
-			n2i.dom.addText(text,item.text);
-			row.insert(text);
+			var text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
+			row.appendChild(text);
 
-			var infoNode = new Element('div',{'class':'in2igui_links_info'});
-			n2i.dom.addText(infoNode,n2i.wrap(item.info));
-			row.insert(infoNode);
+			var infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
+			row.appendChild(infoNode);
 			var remove = In2iGui.createIcon('monochrome/round_x',1);
-			remove.addClassName('in2igui_links_remove');
-			row.insert(remove);
+			n2i.addClass(remove,'in2igui_links_remove');
+			row.appendChild(remove);
 
-			list.insert(row);
+			list.appendChild(row);
 		};
 	},
 	addLink : function() {
@@ -12778,23 +11837,23 @@ In2iGui.Links.prototype = {
 			
 			var url = In2iGui.Formula.Text.create({label:'URL',key:'url'});
 			g.add(url);
-			this.inputs.set('url',url);
+			this.inputs['url']=url;
 			
 			var email = In2iGui.Formula.Text.create({label:'E-mail',key:'email'});
 			g.add(email);
-			this.inputs.set('email',email);
+			this.inputs['email']=email;
 			
 			page = In2iGui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
 			g.add(page);
-			this.inputs.set('page',page);
+			this.inputs['page']=page;
 			
 			file = In2iGui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
 			g.add(file);
-			this.inputs.set('file',file);
+			this.inputs['file']=file;
 			
 			var self = this;
-			this.inputs.each(function(pair) {
-				pair.value.listen({$valueChanged:function(){self.changeType(pair.key)}});
+			n2i.each(this.inputs,function(key,value) {
+				value.listen({$valueChanged:function(){self.changeType(key)}});
 			});
 			
 			var b = g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
@@ -12839,20 +11898,20 @@ In2iGui.Links.prototype = {
 		} else if (n2i.isDefined(values.page)) {
 			link.kind='page';
 			link.value=values.page;
-			link.info=this.inputs.get('page').getItem().title;
+			link.info=this.inputs['page'].getItem().title;
 			link.icon='common/page';
 		} else if (n2i.isDefined(values.file)) {
 			link.kind='file';
 			link.value=values.file;
-			link.info=this.inputs.get('file').getItem().title;
+			link.info=this.inputs['file'].getItem().title;
 			link.icon='monochrome/file';
 		}
 		return link;
 	},
 	changeType : function(type) {
-		this.inputs.each(function(pair) {
-			if (pair.key!=type) {
-				pair.value.setValue();
+		n2i.each(this.inputs,function(key,value) {
+			if (key!=type) {
+				value.setValue();
 			}
 		});
 	}

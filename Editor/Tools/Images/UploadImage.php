@@ -9,8 +9,14 @@ require_once '../../Classes/Services/ImageService.php';
 require_once '../../Classes/Response.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Log.php';
+
+Log::debug('Starting upload');
 
 $response = ImageService::createUploadedImage();
+
+Log::debug('Got response');
+Log::debug($response);
 
 if ($response['success']==true) {
 	if (InternalSession::getToolSessionVar('images','uploadAddToGroup',true)) {
@@ -23,5 +29,6 @@ if ($response['success']==true) {
 	In2iGui::respondUploadSuccess();
 } else {
 	In2iGui::respondUploadFailure();
+	exit;
 }
 ?>

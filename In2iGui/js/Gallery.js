@@ -2,7 +2,7 @@
 In2iGui.Gallery = function(options) {
 	this.options = options || {};
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.objects = [];
 	this.nodes = [];
 	this.selected = [];
@@ -13,15 +13,15 @@ In2iGui.Gallery = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	if (this.element.parentNode && this.element.parentNode.hasClassName('in2igui_overflow')) {
+	if (this.element.parentNode && n2i.hasClass(this.element.parentNode,'in2igui_overflow')) {
 		this.revealing = true;
-		this.element.parentNode.observe('scroll',this._reveal.bind(this));
+		n2i.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
 	}
 }
 
 In2iGui.Gallery.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_gallery'});
+	options.element = n2i.build('div',{'class':'in2igui_gallery'});
 	return new In2iGui.Gallery(options);
 }
 
@@ -46,9 +46,9 @@ In2iGui.Gallery.prototype = {
 	render : function() {
 		this.nodes = [];
 		this.maxRevealed=0;
-		this.element.update();
+		this.element.innerHTML='';
 		var self = this;
-		this.objects.each(function(object,i) {
+		n2i.each(this.objects,function(object,i) {
 			var url = self.resolveImageUrl(object);
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
@@ -58,10 +58,11 @@ In2iGui.Gallery.prototype = {
 			} else {
 				var top = 0;
 			}
-			var img = new Element('img').setStyle({margin:top+'px auto 0px'});
+			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
-			var item = new Element('div',{'class':'in2igui_gallery_item'}).setStyle({'width':self.width+'px','height':self.height+'px'}).insert(img);
-			item.observe('click',function() {
+			var item = n2i.build('div',{'class':'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			item.appendChild(img);
+			n2i.listen(item,'click',function() {
 				self.itemClicked(i);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
@@ -69,10 +70,10 @@ In2iGui.Gallery.prototype = {
 				In2iGui.startDrag(e,item);
 				return false;
 			};
-			item.observe('dblclick',function() {
+			n2i.listen(item,'dblclick',function() {
 				self.itemDoubleClicked(i);
 			});
-			self.element.insert(item);
+			self.element.appendChild(item);
 			self.nodes.push(item);
 		});
 		this._reveal();
@@ -102,9 +103,9 @@ In2iGui.Gallery.prototype = {
 	/** @private */
 	updateUI : function() {
 		var s = this.selected;
-		this.nodes.each(function(node,i) {
-			node.setClassName('in2igui_gallery_item_selected',n2i.inArray(s,i));
-		});
+		for (var i=0; i < this.nodes.length; i++) {
+			n2i.setClass(this.nodes[i],'in2igui_gallery_item_selected',n2i.inArray(s,i));
+		};
 	},
 	/** @private */
 	resolveImageUrl : function(img) {

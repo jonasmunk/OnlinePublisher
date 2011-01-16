@@ -3,11 +3,11 @@ In2iGui.onDomReady(function() {
 });
 
 Poster = function() {
-	this.poster = $('poster');
-	this.left = $('poster_left');
+	this.poster = n2i.get('poster');
+	this.left = n2i.get('poster_left');
 	this.left.scrollLeft = 495;
-	this.right = $('poster_right');
-	this.progress = $('poster_loader');
+	this.right = n2i.get('poster_right');
+	this.progress = n2i.get('poster_loader');
 	this.context = 'style/in2isoft2009/gfx/';
 	this.leftImages = ['poster_in2isoft_image.png','poster_publisher_image.png','poster_in2igui_image.png','poster_onlineobjects_image.png'];
 	this.rightImages = ['poster_in2isoft_text.png','poster_publisher_text.png','poster_in2igui_text.png','poster_onlineobjects_text.png'];
@@ -34,7 +34,7 @@ Poster.prototype.start = function() {
 		function() {
 			self.leftPos++;
 			if (self.leftPos>=self.leftImages.length) self.leftPos=0;
-			$('poster_inner_left').style.backgroundImage='url(\''+base+self.leftImages[self.leftPos]+'\')';
+			n2i.get('poster_inner_left').style.backgroundImage='url(\''+base+self.leftImages[self.leftPos]+'\')';
 		},
 		{duration:500},
 		{element:this.left,property:'scrollLeft',value:'0',duration:1000,ease:n2i.ease.slowFastSlow},
@@ -48,7 +48,7 @@ Poster.prototype.start = function() {
 		function() {
 			self.rightPos++;
 			if (self.rightPos>=self.rightImages.length) self.rightPos=0;
-			$('poster_inner_right').style.backgroundImage='url(\''+base+self.rightImages[self.rightPos]+'\')';
+			n2i.get('poster_inner_right').style.backgroundImage='url(\''+base+self.rightImages[self.rightPos]+'\')';
 		},
 		{duration:500},
 		{element:this.right,property:'scrollLeft',value:'495',duration:1000,ease:n2i.ease.slowFastSlow},

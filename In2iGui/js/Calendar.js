@@ -4,9 +4,9 @@
 In2iGui.Calendar = function(o) {
 	this.name = o.name;
 	this.options = n2i.override({startHour:7,endHour:24},o);
-	this.element = $(o.element);
-	this.head = $(this.element.getElementsByTagName('thead')[0]);
-	this.body = $(this.element.getElementsByTagName('tbody')[0]);
+	this.element = n2i.get(o.element);
+	this.head = n2i.firstByTag(this.element,'thead');
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.date = new Date();
 	In2iGui.extend(this);
 	this.buildUI();
@@ -46,10 +46,10 @@ In2iGui.Calendar.prototype = {
 	},
 	clearEvents : function() {
 		this.events = [];
-		var nodes = this.element.select('.in2igui_calendar_event');
-		nodes.each(function(node) {
-			node.remove();
-		});
+		var nodes = n2i.byClass(this.element,'in2igui_calendar_event');
+		for (var i=0; i < nodes.length; i++) {
+			n2i.dom.remove(nodes[i]);
+		};
 		this.hideEventViewer();
 	},
 	$objectsLoaded : function(data) {
@@ -83,15 +83,15 @@ In2iGui.Calendar.prototype = {
 		var pixels = (this.options.endHour-this.options.startHour)*40;
 		var week = this.getFirstDay().getWeekOfYear();
 		var year = this.getFirstDay().getYear();
-		this.events.each(function(event) {
-			var day = self.body.select('.in2igui_calendar_day')[event.startTime.getDay()-1];
+		n2i.each(this.events,function(event) {
+			var day = n2i.byClass(self.body,'in2igui_calendar_day')[event.startTime.getDay()-1];
 			if (!day) {
 				return;
 			}
 			if (event.startTime.getWeekOfYear()!=week || event.startTime.getYear()!=year) {
 				return;
 			}
-			var node = new Element('div',{'class':'in2igui_calendar_event'});
+			var node = n2i.build('div',{'class':'in2igui_calendar_event'});
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
 			var height = Math.min(pixels-top,height);
@@ -125,22 +125,19 @@ In2iGui.Calendar.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		var first = this.getFirstDay();
-		//var x = this.head.select('.time')[0];
-		//x.update('<div>Uge '+this.date.getWeekOfYear()+' '+this.date.getFullYear()+'</div>');
-		
-		var days = this.head.select('.day');
+		var first = this.getFirstDay();		
+		var days = n2i.byClass(this.head,'day');
 		for (var i=0; i < days.length; i++) {
 			var date = new Date(first.getTime());
 			date.setDate(date.getDate()+i);
-			days[i].update(date.dateFormat('l \\d. d M'))
+			days[i].innerHTML=date.dateFormat('l \\d. d M');
 		};
 	},
 	/** @private */
 	buildUI : function() {
-		var bar = this.element.select('.in2igui_calendar_bar')[0];
+		var bar = n2i.firstByClass(this.element,'in2igui_calendar_bar');
 		this.toolbar = In2iGui.Toolbar.create({labels:false});
-		bar.insert(this.toolbar.getElement());
+		bar.appendChild(this.toolbar.getElement());
 		var previous = In2iGui.Button.create({name:'in2iguiCalendarPrevious',text:'',icon:'monochrome/previous'});
 		previous.listen(this);
 		this.toolbar.add(previous);
@@ -154,16 +151,16 @@ In2iGui.Calendar.prototype = {
 		this.datePickerButton.listen(this);
 		this.toolbar.add(this.datePickerButton);
 		
-		var time = this.body.select('.in2igui_calendar_day')[0];
+		var time = n2i.firstByClass(this.body,'in2igui_calendar_day');
 		for (var i=this.options.startHour; i <= this.options.endHour; i++) {
-			var node = new Element('div',{'class':'in2igui_calendar_time'}).update('<span><em>'+i+':00</em></span>');
+			var node = n2i.build('div',{'class':'in2igui_calendar_time',html:'<span><em>'+i+':00</em></span>'});
 			if (i==this.options.startHour) {
-				node.addClassName('in2igui_calendar_time_first');
+				n2i.addClass(node,'in2igui_calendar_time_first');
 			}
 			if (i==this.options.endHour) {
-				node.addClassName('in2igui_calendar_time_last');
+				n2i.addClass(node,'in2igui_calendar_time_last');
 			}
-			time.insert(node);
+			time.appendChild(node);
 		};
 	},
 	$click$in2iguiCalendarPrevious : function() {
@@ -267,11 +264,11 @@ In2iGui.Calendar.prototype = {
 /** @constructor */
 In2iGui.DatePicker = function(options) {
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.options = {};
 	n2i.override(this.options,options);
 	this.cells = [];
-	this.title = this.element.select('strong')[0];
+	this.title = n2i.firstByTag(this.element,'strong');
 	this.today = new Date();
 	this.value = this.options.value ? new Date(this.options.value.getTime()) : new Date();
 	this.viewDate = new Date(this.value.getTime());
@@ -282,37 +279,37 @@ In2iGui.DatePicker = function(options) {
 }
 
 In2iGui.DatePicker.create = function(options) {
-	var element = options.element = new Element('div',{'class':'in2igui_datepicker'});
-	element.insert('<div class="in2igui_datepicker_header"><a class="in2igui_datepicker_next"></a><a class="in2igui_datepicker_previous"></a><strong></strong></div>');
-	var table = new Element('table');
-	var head = new Element('tr');
-	table.insert(new Element('thead').insert(head));
+	var element = options.element = n2i.build('div',{
+		'class' : 'in2igui_datepicker',
+		html : '<div class="in2igui_datepicker_header"><a class="in2igui_datepicker_next"></a><a class="in2igui_datepicker_previous"></a><strong></strong></div>'
+	});
+	var table = n2i.build('table',{parent:element});
+	var thead = n2i.build('thead',{parent:table});
+	var head = n2i.build('tr',{parent:thead});
 	for (var i=0;i<7;i++) {
-		head.insert(new Element('th').update(Date.dayNames[i].substring(0,3)));
+		head.insert(n2i.build('th',{text:Date.dayNames[i].substring(0,3)}));
 	}
-	var body = new Element('tbody');
-	table.insert(body);
+	var body = n2i.build('tbody',{parent:table});
 	for (var i=0;i<6;i++) {
-		var row = new Element('tr');
+		var row = n2i.build('tr',{parent:body});
 		for (var j=0;j<7;j++) {
-			var cell = new Element('td');
-			row.insert(cell);
+			var cell = n2i.build('td',{parent:row});
 		}
-		body.insert(row);
 	}
-	element.insert(table);
 	return new In2iGui.DatePicker(options);
 }
 
 In2iGui.DatePicker.prototype = {
 	addBehavior : function() {
 		var self = this;
-		this.cells = this.element.select('td');
-		this.cells.each(function(cell,index) {
-			cell.observe('mousedown',function() {self.selectCell(index)});
+		this.cells = n2i.firstByClass(this.element,'td');
+		this.each(this.cells,function(cell,index) {
+			n2i.listen(cell,'mousedown',function() {self.selectCell(index)});
 		})
-		this.element.select('.in2igui_datepicker_next')[0].observe('mousedown',function() {self.next()});
-		this.element.select('.in2igui_datepicker_previous')[0].observe('mousedown',function() {self.previous()});
+		var next = n2i.firstByClass(this.element,'in2igui_datepicker_next');
+		var previous = n2i.firstByClass(this.element,'in2igui_datepicker_previous');
+		n2i.listen(next,'mousedown',function() {self.next()});
+		n2i.listen(previous,'mousedown',function() {self.previous()});
 	},
 	setValue : function(date) {
 		this.value = new Date(date.getTime());
@@ -335,12 +332,12 @@ In2iGui.DatePicker.prototype = {
 				cell.className = '';
 			}
 			if (date.getDate()==this.value.getDate() && date.getMonth()==this.value.getMonth() && isSelectedYear) {
-				cell.addClassName('in2igui_datepicker_selected');
+				n2i.addClass(cell,'in2igui_datepicker_selected');
 			}
 			if (date.getDate()==this.today.getDate() && date.getMonth()==this.today.getMonth() && date.getFullYear()==this.today.getFullYear()) {
-				cell.addClassName('in2igui_datepicker_today');
+				ni2.addClass(cell,'in2igui_datepicker_today');
 			}
-			cell.update(date.getDate());
+			n2i.dom.setNodeText(cell,date.getDate());
 		};
 	},
 	getPreviousMonth : function() {

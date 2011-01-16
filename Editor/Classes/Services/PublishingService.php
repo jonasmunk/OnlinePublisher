@@ -61,7 +61,9 @@ class PublishingService {
 		
 		$objects = PublishingService::getUnpublishedObjects();
 		foreach ($objects as $object) {
-			$object->publish();
+			if ($object) {
+				$object->publish();
+			}
 		}
 		
 	}
@@ -81,7 +83,12 @@ class PublishingService {
 		$sql = "select id from object where updated>published";
 		$ids = Database::getIds($sql);
 		foreach ($ids as $id) {
-			$result[] = Object::load($id);
+			if ($object = Object::load($id)) {
+				$result[] = $object;
+			} else {
+				Log::debug('Unable to load object: '.$id);
+			}
+			
 		}
 		return $result;
 	}

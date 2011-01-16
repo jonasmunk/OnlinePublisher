@@ -7,10 +7,15 @@ op.page = {id:null,path:null,template:null};
 
 op.ignite = function() {
 	if (!this.preview) {
-		document.onkeyup=function keypresshandler(e) {
-			if(document.all) e=window.event;
-			if(e.keyCode==13 && e.shiftKey==true) {
-				window.location=(op.page.path+"Editor/index.php?page="+op.page.id);
+		document.onkeydown=function(e) {
+			e = n2i.event(e);
+			if(e.returnKey && e.shiftKey) {
+				var temp;
+				temp = function() {
+					n2i.unListen(document,'keyup',temp);
+					window.location=(op.page.path+"Editor/index.php?page="+op.page.id);
+				}
+				n2i.listen(document,'keyup',temp);
 			}
 			return true;
 		}
@@ -28,7 +33,7 @@ op.showImage = function(image) {
 }
 
 op.registerImageViewer = function(id,image) {
-	$(id).onclick = function() {
+	n2i.get(id).onclick = function() {
 		op.showImage(image);
 		return false;
 	}
@@ -99,18 +104,20 @@ if (op.part===undefined) {
 
 op.part.ImageGallery = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.images = [];
 }
 
 op.part.ImageGallery.prototype = {
 	registerImage : function(node,image) {
+		node = n2i.get(node);
 		if (this.options.editor) {
 			return;
 		}
 		this.images.push(image);
 		var self = this;
-		$(node).onclick = function() {
+		node.onclick = function(e) {
+			n2i.stop(e);
 			self.showImage(image.id);
 			return false;
 		}
@@ -162,14 +169,14 @@ op.part.ImageGallery.changing = {
 }
 
 op.part.Formula = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.id = options.id;
-	this.element.observe('submit',this._send.bind(this));
+	n2i.listen(this.element,'submit',this._send.bind(this));
 }
 
 op.part.Formula.prototype = {
 	_send : function(e) {
-		e.stop();
+		n2i.stop(e);
 		var name = this.element.name.value;
 		var email = this.element.email.value;
 		var message = this.element.message.value;
@@ -194,18 +201,18 @@ op.part.Formula.prototype = {
 
 op.SearchField = function(o) {
 	o = this.options = n2i.override({placeholderClass:'placeholder',placeholder:''},o);
-	this.field = $(o.element);
+	this.field = n2i.get(o.element);
 	this.field.onfocus = function() {
 		if (this.field.value==o.placeholder) {
 			this.field.value = '';
-			this.field.addClassName(o.placeholderClass);
+			n2i.addClass(this.field,o.placeholderClass);
 		} else {
 			this.field.select();
 		}
 	}.bind(this);
 	this.field.onblur = function() {
 		if (this.field.value=='') {
-			this.field.addClassName(o.placeholderClass);
+			n2i.addClass(this.field,o.placeholderClass);
 			this.field.value=o.placeholder;
 		}
 	}.bind(this);
@@ -216,7 +223,7 @@ op.Dissolver = function(options) {
 	options = this.options = n2i.override({wait:4000,transition:2000,delay:0},options);
 	this.pos = Math.floor(Math.random()*(options.elements.length-.00001));
 	this.z = 1;
-	options.elements[this.pos].setStyle({display:'block'});
+	options.elements[this.pos].style.display='block';
 	window.setTimeout(this.next.bind(this),options.wait+options.delay);
 }
 
@@ -230,7 +237,7 @@ op.Dissolver.prototype = {
 		}
 		var e = elm[this.pos];
 		n2i.setOpacity(e,0);
-		e.setStyle({display:'block',zIndex:this.z});
+		n2i.setStyle(e,{display:'block',zIndex:this.z});
 		n2i.ani(e,'opacity',1,this.options.transition,{ease:n2i.ease.slowFastSlow,onComplete:function() {
 			window.setTimeout(this.next.bind(this),this.options.wait);
 		}.bind(this)});

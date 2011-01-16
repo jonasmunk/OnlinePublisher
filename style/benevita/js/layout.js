@@ -1,5 +1,5 @@
 ui.onReady(function() {
-	var blocks = $$('blockquote');
+	var blocks = n2i.get('blockquote');
 	var timer;
 	var index = -1;
 	timer = function() {

@@ -141,9 +141,12 @@
 				<xsl:for-each select="gui:step">
 					<li>
 						<a href="#">
+							<xsl:attribute name="class">
+								<xsl:text>in2igui_wizard_selection</xsl:text>
 						<xsl:if test="position()=1">
-							<xsl:attribute name="class">in2igui_selected</xsl:attribute>
+							<xsl:text> in2igui_selected</xsl:text>
 						</xsl:if>
+						</xsl:attribute>
 						<xsl:if test="@icon"><span class="in2igui_icon_1" style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png');')"><xsl:comment/></span></xsl:if>
 						<span><xsl:value-of select="@title"/></span>
 						</a>

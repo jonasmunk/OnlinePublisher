@@ -27,9 +27,12 @@ var partController = {
 	},
 	preview : function() {
 		var url = controller.context+'Editor/Services/Parts/Preview.php?type=imagegallery';
-		var parms = $(document.forms.PartForm).serialize(true);
-		new Ajax.Request(url,{parameters:parms,onSuccess:function(t) {
-			$('part_imagegallery_container').update(t.responseText);
+		var parms = n2i.form.getValues(document.forms.PartForm);
+		n2i.request({method:'post',url:url,parameters:parms,
+			onSuccess:function(t) {
+				var node = n2i.get('part_imagegallery_container');
+				n2i.dom.replaceHTML(node,t.responseText);
+				n2i.dom.runScripts(node);
 		}});
 	}
 }

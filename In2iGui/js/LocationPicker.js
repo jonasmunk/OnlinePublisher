@@ -6,7 +6,7 @@ In2iGui.LocationPicker = function(options) {
 	options = options || {};
 	this.name = options.name;
 	this.options = options.options || {};
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.defaultCenter = new google.maps.LatLng(57.0465, 9.9185);
 	In2iGui.extend(this);
 	this.addBehavior();

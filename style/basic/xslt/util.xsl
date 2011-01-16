@@ -86,7 +86,7 @@
 	<xsl:comment><![CDATA[[if IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie7.css?verson=]]><xsl:value-of select="$timestamp"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
-	<script src="{$path}In2iGui/bin/minimized.site.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}In2iGui/bin/minimized.site.noproto.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	<script src="{$path}style/basic/js/OnlinePublisher.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
 		In2iGui.context = '<xsl:value-of select="$path"/>';

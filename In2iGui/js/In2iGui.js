@@ -23,7 +23,7 @@ function In2iGui() {
 	/** @private */
 	this.delegates = [];
 	/** @private */
-	this.objects = $H();
+	this.objects = {};
 	/** @private */
 	this.layoutWidgets = [];
 	/** @private */
@@ -55,13 +55,17 @@ In2iGui.get = function(nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
 		}
-		return In2iGui.instance.objects.get(nameOrWidget);
+		return In2iGui.instance.objects[nameOrWidget];
 	} else {
 		return In2iGui.instance;
 	}
 };
 
-document.observe('dom:loaded', function () {
+//document.observe('dom:loaded', function () {
+//	In2iGui.get().ignite();
+//});
+
+n2i.onReady(function() {
 	In2iGui.get().ignite();
 });
 
@@ -84,18 +88,15 @@ In2iGui.prototype = {
 		In2iGui.callSuperDelegates(this,'ready');
 
 		this.reLayout();
-		Event.observe(window,'resize',this.reLayout.bind(this));
+		n2i.listen(window,'resize',this.reLayout.bind(this));
 	},
 	/** @private */
 	addBehavior : function() {
-		Event.observe(window,'resize',this.resize.bind(this));
+		n2i.listen(window,'resize',this.resize.bind(this));
 	},
 	/** Adds a global delegate
 	 * @deprecated
 	*/
-	listen : function(delegate) {
-		this.delegates.push(delegate);
-	},
 	listen : function(delegate) {
 		this.delegates.push(delegate);
 	},
@@ -119,18 +120,19 @@ In2iGui.prototype = {
 	resize : function() {
 		if (!this.overflows) {return;}
 		var height = n2i.getInnerHeight();
-		this.overflows.each(function(overflow) {
+		for (var i=0; i < this.overflows.length; i++) {
+			var overflow = this.overflows[i];
 			if (n2i.browser.webkit || n2i.browser.gecko) {
 				overflow.element.style.display='none';
 				overflow.element.style.width = overflow.element.parentNode.clientWidth+'px';
 				overflow.element.style.display='';
 			}
 			overflow.element.style.height = height+overflow.diff+'px';
-		});
+		};
 	},
 	registerOverflow : function(id,diff) {
 		if (!this.overflows) {this.overflows=[];}
-		var overflow = $(id);
+		var overflow = n2i.get(id);
 		this.overflows.push({element:overflow,diff:diff});
 	},
 	/** @private */
@@ -202,8 +204,11 @@ In2iGui.prototype = {
 	getDescendants : function(widgetOrElement) {
 		var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
 		if (e) {
-			var d = e.descendants();
-			var o = this.objects.values();
+			var d = e.getElementsByTagName('*');
+			var o = [];
+			for (key in this.objects) {
+				o.push(this.objects[key]);
+			}
 			for (var i=0; i < d.length; i++) {
 				for (var j=0; j < o.length; j++) {
 					if (d[i]==o[j].element) {
@@ -223,8 +228,11 @@ In2iGui.prototype = {
 		var desc = [];
 		var e = widget.element;
 		if (e) {
-			var a = e.ancestors();
-			var o = this.objects.values();
+			var a = n2i.getAncestors(e);
+			var o = [];
+			for (key in this.objects) {
+				o.push(this.objects[key]);
+			}
 			for (var i=0; i < a.length; i++) {
 				for (var j=0; j < o.length; j++) {
 					if (o[j].element==a[i]) {
@@ -239,7 +247,7 @@ In2iGui.prototype = {
 	getAncestor : function(widget,cls) {
 		var a = this.getAncestors(widget);
 		for (var i=0; i < a.length; i++) {
-			if (a[i].getElement().hasClassName(cls)) {
+			if (n2i.hasClass(a[i].getElement(),cls)) {
 				return a[i];
 			}
 		};
@@ -281,7 +289,7 @@ In2iGui.destroyDescendants = function(element) {
 	var desc = In2iGui.get().getDescendants(element);
 	var objects = In2iGui.get().objects;
 	for (var i=0; i < desc.length; i++) {
-		var obj  = objects.unset(desc[i].name);
+		var obj  = delete(objects[desc[i].name]);
 		if (!obj) {
 			n2i.log('not found: '+desc[i].name);
 		}
@@ -291,12 +299,13 @@ In2iGui.destroyDescendants = function(element) {
 In2iGui.changeState = function(state) {
 	if (In2iGui.get().state===state) {return;}
 	var objects = In2iGui.get().objects.values();
-	objects.each(function(obj) {
+	for (var i=0; i < objects.length; i++) {
+		var obj = objects[i];
 		if (obj.options && obj.options.state) {
 			if (obj.options.state==state) {obj.show();}
 			else {obj.hide();}
 		}
-	});
+	};
 	In2iGui.get().state==state;
 }
 
@@ -325,19 +334,15 @@ In2iGui.nextTopIndex = function() {
 ///////////////////////////////// Curtain /////////////////////////////
 
 In2iGui.showCurtain = function(options,zIndex) {
-	if (options.getElement) {
-		In2iGui.showCurtainOld(options,zIndex);
-		return;
-	}
 	var widget = options.widget;
 	if (!widget.curtain) {
-		widget.curtain = new Element('div',{'class':'in2igui_curtain'}).setStyle({'z-index':'none'});
+		widget.curtain = n2i.build('div',{'class':'in2igui_curtain',style:'z-index:none'});
 		widget.curtain.onclick = function() {
 			if (widget['$curtainWasClicked']) {
 				widget['$curtainWasClicked']();
 			}
 		};
-		var body = $$('.in2igui_body')[0];
+		var body = n2i.firstByClass(document.body,'in2igui_body');
 		if (!body) {
 			body=document.body;
 		}
@@ -361,27 +366,6 @@ In2iGui.showCurtain = function(options,zIndex) {
 	n2i.ani(widget.curtain,'opacity',0.7,1000,{ease:n2i.ease.slowFastSlow});
 }
 
-In2iGui.showCurtainOld = function(widget,zIndex) {
-	if (!widget.curtain) {
-		widget.curtain = new Element('div',{'class':'in2igui_curtain'}).setStyle({'z-index':'none'});
-		widget.curtain.onclick = function() {
-			if (widget.curtainWasClicked) {
-				widget.curtainWasClicked();
-			}
-		};
-		var body = $$('.in2igui_body')[0];
-		if (!body) {
-			body=document.body;
-		}
-		body.appendChild(widget.curtain);
-	}
-	widget.curtain.style.height=n2i.getDocumentHeight()+'px';
-	widget.curtain.style.zIndex=zIndex;
-	n2i.setOpacity(widget.curtain,0);
-	widget.curtain.style.display='block';
-	n2i.ani(widget.curtain,'opacity',0.7,1000,{ease:n2i.ease.slowFastSlow});
-};
-
 In2iGui.hideCurtain = function(widget) {
 	if (widget.curtain) {
 		n2i.ani(widget.curtain,'opacity',0,200,{hideOnComplete:true});
@@ -400,15 +384,17 @@ In2iGui.showMessage = function(options) {
 		options={text:options};
 	}
 	if (!In2iGui.message) {
-		In2iGui.message = new Element('div',{'class':'in2igui_message'}).update('<div><div></div></div>');
+		In2iGui.message = n2i.build('div',{'class':'in2igui_message',html:'<div><div></div></div>'});
 		if (!n2i.browser.msie) {
-			In2iGui.message.setStyle({opacity:0});
+			n2i.setOpacity(In2iGui.message,0);
 		}
 		document.body.appendChild(In2iGui.message);
 	}
-	In2iGui.message.select('div')[1].update(options.text);
-	In2iGui.message.setStyle({'display':'block',zIndex:In2iGui.nextTopIndex()});
-	In2iGui.message.setStyle({marginLeft:(In2iGui.message.getWidth()/-2)+'px',marginTop:n2i.getScrollTop()+'px'});
+	In2iGui.message.getElementsByTagName('div')[1].innerHTML=options.text;
+	In2iGui.message.style.display='block';
+	In2iGui.message.style.zIndex=In2iGui.nextTopIndex();
+	In2iGui.message.style.marginLeft=(In2iGui.message.clientWidth/-2)+'px';
+	In2iGui.message.style.marginTop=n2i.getScrollTop()+'px';
 	if (!n2i.browser.msie) {
 		n2i.ani(In2iGui.message,'opacity',1,300);
 	}
@@ -432,8 +418,7 @@ In2iGui.showToolTip = function(options) {
 	var key = options.key || 'common';
 	var t = In2iGui.toolTips[key];
 	if (!t) {
-		t = new Element('div',{'class':'in2igui_tooltip'}).update('<div><div></div></div>').setStyle({display:'none'});
-		document.body.appendChild(t);
+		t = n2i.build('div',{'class':'in2igui_tooltip',style:'display:none;',html:'<div><div></div></div>',parent:document.body});
 		In2iGui.toolTips[key] = t;
 	}
 	t.onclick = function() {In2iGui.hideToolTip(options);};
@@ -472,10 +457,10 @@ In2iGui.getElement = function(widgetOrElement) {
 }
 
 In2iGui.isWithin = function(e,element) {
-	Event.extend(e);
-	var offset = element.cumulativeOffset();
-	var dims = element.getDimensions();
-	return e.pointerX()>offset.left && e.pointerX()<offset.left+dims.width && e.pointerY()>offset.top && e.pointerY()<offset.top+dims.height;
+	e = new n2i.Event(e);
+	var offset = {left:n2i.getLeft(element),top:n2i.getTop(element)};
+	var dims = {width:element.clientWidth,height:element.clientHeight};
+	return e.left()>offset.left && e.left()<offset.left+dims.width && e.top()>offset.top && e.top()<offset.top+dims.height;
 };
 
 In2iGui.getIconUrl = function(icon,size) {
@@ -483,7 +468,7 @@ In2iGui.getIconUrl = function(icon,size) {
 };
 
 In2iGui.createIcon = function(icon,size) {
-	return new Element('span',{'class':'in2igui_icon in2igui_icon_'+size}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(icon,size)+')'});
+	return n2i.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+In2iGui.getIconUrl(icon,size)+')'});
 };
 
 In2iGui.onDomReady = In2iGui.onReady = function(func) {
@@ -492,25 +477,27 @@ In2iGui.onDomReady = In2iGui.onReady = function(func) {
 		window.setTimeout(func,1000);
 		return;
 	}
-	document.observe('dom:loaded', func);
+	n2i.onReady(func);
+	//document.observe('dom:loaded', func);
 };
 
 In2iGui.wrapInField = function(e) {
-	var w = new Element('div',{'class':'in2igui_field'}).update(
+	var w = n2i.build('div',{'class':'in2igui_field',html:
 		'<span class="in2igui_field_top"><span><span></span></span></span>'+
 		'<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content"></span></span></span>'+
 		'<span class="in2igui_field_bottom"><span><span></span></span></span>'
-	);
-	w.select('span.in2igui_field_content')[0].insert(e);
+	});
+	n2i.firstByClass(w,'in2igui_field_content').appendChild(e);
 	return w;
 };
 
 In2iGui.addFocusClass = function(o) {
 	var ce = o.classElement || o.element, c = o['class'];
-	o.element.observe('focus',function() {
-		ce.addClassName(c);
-	}).observe('blur',function() {
-		ce.removeClassName(c);
+	n2i.listen(o.element,'focus',function() {
+		n2i.addClass(ce,c);
+	});
+	n2i.listen(o.element,'blur',function() {
+		n2i.removeClass(ce,c);
 	});
 };
 
@@ -545,21 +532,21 @@ In2iGui.NumberValidator.prototype = {
 /////////////////////////////// Animation /////////////////////////////
 
 In2iGui.fadeIn = function(node,time) {
-	if ($(node).getStyle('display')=='none') {
-		node.setStyle({opacity:0,display:''});
+	if (n2i.getStyle(node,'display')=='none') {
+		n2i.setStyle(node,{opacity:0,display:''});
 	}
-	n2i.ani(node,'opacity',1,time);
+	n2i.animate(node,'opacity',1,time);
 };
 
 In2iGui.fadeOut = function(node,time) {
-	n2i.ani(node,'opacity',0,time,{hideOnComplete:true});
+	hui.animate(node,'opacity',0,time,{hideOnComplete:true});
 };
 
 In2iGui.bounceIn = function(node,time) {
 	if (n2i.browser.msie) {
-		node.setStyle({'display':'block',visibility:'visible'});
+		n2i.setStyle(node,{'display':'block',visibility:'visible'});
 	} else {
-		node.setStyle({'display':'block','opacity':0,visibility:'visible'});
+		n2i.setStyle(node,{'display':'block','opacity':0,visibility:'visible'});
 		n2i.animate(node,'transform','scale(0.1)',0);// rotate(10deg)
 		window.setTimeout(function() {
 			n2i.animate(node,'opacity',1,300);
@@ -572,27 +559,27 @@ In2iGui.bounceIn = function(node,time) {
 
 In2iGui.positionAtElement = function(element,target,options) {
 	options = options || {};
-	element = $(element);
-	target = $(target);
-	var origDisplay = element.getStyle('display');
+	element = n2i.get(element);
+	target = n2i.get(target);
+	var origDisplay = n2i.getStyle(element,'display');
 	if (origDisplay=='none') {
-		element.setStyle({'visibility':'hidden','display':'block'});
+		n2i.setStyle(element,{'visibility':'hidden','display':'block'});
 	}
-	var pos = target.cumulativeOffset(),left = pos.left,top = pos.top;
+	var pos = left = n2i.getLeft(target),top = n2i.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
-		left = left+target.getWidth()-element.getWidth();
+		left = left+target.clientWidth-element.clientWidth;
 	}
 	if (vert=='topOutside') {
-		top = top-element.getHeight();
+		top = top-element.clientHeight;
 	} else if (vert=='bottomOutside') {
-		top = top+target.getHeight();
+		top = top+target.clientHeight;
 	}
 	left+=(options.left || 0);
 	top+=(options.top || 0);
-	element.setStyle({'left':left+'px','top':top+'px'});
+	n2i.setStyle(element,{'left':left+'px','top':top+'px'});
 	if (origDisplay=='none') {
-		element.setStyle({'visibility':'visible','display':'none'});
+		n2i.setStyle(element,{'visibility':'visible','display':'none'});
 	}
 };
 
@@ -607,112 +594,11 @@ In2iGui.getTextAreaHeight = function(input) {
 	if (html[html.length-1]==='\n') {
 		html+='x';
 	}
-	html = html.escapeHTML().replace(/\n/g,'<br/>');
+	html = n2i.escape(html).replace(/\n/g,'<br/>');
 	t.innerHTML = html;
 	t.style.width=(input.clientWidth)+'px';
 	return t.clientHeight;
 }
-
-//////////////////////////////// Drag drop //////////////////////////////
-
-In2iGui.getDragProxy = function() {
-	if (!In2iGui.dragProxy) {
-		In2iGui.dragProxy = new Element('div',{'class':'in2igui_dragproxy'}).setStyle({'display':'none'});
-		document.body.appendChild(In2iGui.dragProxy);
-	}
-	return In2iGui.dragProxy;
-};
-
-In2iGui.startDrag = function(e,element,options) {
-	e = e || window.event;
-	var info = element.dragDropInfo;
-	In2iGui.dropTypes = In2iGui.findDropTypes(info);
-	if (!In2iGui.dropTypes) return;
-	var proxy = In2iGui.getDragProxy();
-	Event.observe(document.body,'mousemove',In2iGui.dragListener);
-	Event.observe(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragInfo = info;
-	if (info.icon) {
-		proxy.style.backgroundImage = 'url('+In2iGui.getIconUrl(info.icon,1)+')';
-	}
-	In2iGui.startDragPos = {top:Event.pointerY(e),left:Event.pointerX(e)};
-	proxy.innerHTML = info.title ? '<span>'+info.title.escapeHTML()+'</span>' : '###';
-	In2iGui.dragging = true;
-	document.body.onselectstart = function () { return false; };
-};
-
-In2iGui.findDropTypes = function(drag) {
-	var gui = In2iGui.get();
-	var drops = null;
-	for (var i=0; i < gui.delegates.length; i++) {
-		if (gui.delegates[i].dragDrop) {
-			for (var j=0; j < gui.delegates[i].dragDrop.length; j++) {
-				var rule = gui.delegates[i].dragDrop[j];
-				if (rule.drag==drag.kind) {
-					if (drops==null) drops={};
-					drops[rule.drop] = {};
-				}
-			};
-		}
-	}
-	return drops;
-};
-
-In2iGui.dragListener = function(e) {
-	In2iGui.dragProxy.style.left = (Event.pointerX(e)+10)+'px';
-	In2iGui.dragProxy.style.top = Event.pointerY(e)+'px';
-	In2iGui.dragProxy.style.display='block';
-	var target = In2iGui.findDropTarget(Event.element(e));
-	if (target && In2iGui.dropTypes[target.dragDropInfo['kind']]) {
-		if (In2iGui.latestDropTarget) {
-			In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		}
-		target.addClassName('in2igui_drop');
-		In2iGui.latestDropTarget = target;
-	} else if (In2iGui.latestDropTarget) {
-		In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		In2iGui.latestDropTarget = null;
-	}
-	return false;
-};
-
-In2iGui.findDropTarget = function(node) {
-	while (node) {
-		if (node.dragDropInfo) {
-			return node;
-		}
-		node = node.parentNode;
-	}
-	return null;
-};
-
-In2iGui.dragEndListener = function(event) {
-	Event.stopObserving(document.body,'mousemove',In2iGui.dragListener);
-	Event.stopObserving(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragging = false;
-	if (In2iGui.latestDropTarget) {
-		In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		In2iGui.callDelegatesDrop(In2iGui.dragInfo,In2iGui.latestDropTarget.dragDropInfo);
-		In2iGui.dragProxy.style.display='none';
-	} else {
-		n2i.ani(In2iGui.dragProxy,'left',(In2iGui.startDragPos.left+10)+'px',200,{ease:n2i.ease.fastSlow});
-		n2i.ani(In2iGui.dragProxy,'top',(In2iGui.startDragPos.top-5)+'px',200,{ease:n2i.ease.fastSlow,hideOnComplete:true});
-	}
-	In2iGui.latestDropTarget=null;
-	document.body.onselectstart=null;
-};
-
-In2iGui.dropOverListener = function(event) {
-	if (In2iGui.dragging) {
-		//this.style.backgroundColor='#3875D7';
-	}
-};
-
-In2iGui.dropOutListener = function(event) {
-	if (In2iGui.dragging) {
-		//this.style.backgroundColor='';
-	}
-};
 
 //////////////////// Delegating ////////////////////
 
@@ -725,11 +611,11 @@ In2iGui.extend = function(obj,options) {
 		if (obj.options) {
 			obj.options = n2i.override(obj.options,options);
 		}
-		obj.element = $(options.element);
+		obj.element = n2i.get(options.element);
 		obj.name = options.name;
 	}
 	var ctrl = In2iGui.get();
-	ctrl.objects.set(obj.name,obj);
+	ctrl.objects[obj.name] = obj;
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		n2i.addToArray(this.delegates,delegate);
@@ -787,11 +673,11 @@ In2iGui.callDescendants = function(obj,method,value,event) {
 		method = '$'+method;
 	}
 	var d = In2iGui.get().getDescendants(obj);
-	d.each(function(child) {
-		if (child[method]) {
-			thisResult = child[method](value,event);
+	for (var i=0; i < d.length; i++) {
+		if (d[i][method]) {
+			thisResult = d[i][method](value,event);
 		}
-	});
+	};
 };
 
 In2iGui.callVisible = function(widget) {
@@ -943,7 +829,7 @@ In2iGui.jsonResponse = function(t,key) {
 	if (!t.responseXML || !t.responseXML.documentElement) {
 		var str = t.responseText.replace(/^\s+|\s+$/g, '');
 		if (str.length>0) {
-			var json = t.responseText.evalJSON(true);
+			var json = n2i.fromJSON(t.responseText);
 		} else {
 			json = '';
 		}
@@ -955,16 +841,16 @@ In2iGui.jsonResponse = function(t,key) {
 
 /** @deprecated */
 In2iGui.json = function(data,url,delegateOrKey) {
-	var options = {method:'post',parameters:{},onException:function(e) {throw e}};
+	var options = {url:url,method:'post',parameters:{},onException:function(e) {throw e}};
 	if (typeof(delegateOrKey)=='string') {
 		options.onSuccess=function(t) {In2iGui.jsonResponse(t,delegateOrKey)};
 	} else {
 		delegate = delegateOrKey;
 	}
 	for (key in data) {
-		options.parameters[key]=Object.toJSON(data[key])
+		options.parameters[key]=n2i.toJSON(data[key])
 	}
-	new Ajax.Request(url,options);
+	n2i.request(options);
 };
 
 In2iGui.jsonRequest = function(o) {
@@ -975,16 +861,17 @@ In2iGui.jsonRequest = function(o) {
 		delegate = delegateOrKey;
 	}
 	for (key in o.parameters) {
-		options.parameters[key]=Object.toJSON(o.parameters[key])
+		options.parameters[key]=n2i.toJSON(o.parameters[key])
 	}
-	new Ajax.Request(o.url,options)
+	options.url = o.url;
+	n2i.request(options);
 };
 
 In2iGui.request = function(options) {
 	options = n2i.override({method:'post',parameters:{}},options);
 	if (options.json) {
 		for (key in options.json) {
-			options.parameters[key]=Object.toJSON(options.json[key])
+			options.parameters[key]=n2i.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
@@ -996,7 +883,7 @@ In2iGui.request = function(options) {
 		} else if (options.onJSON) {
 			var str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				var json = t.responseText.evalJSON(true);
+				var json = n2i.fromJSON(t.responseText);
 			} else {
 				var json = null;
 			}
@@ -1016,7 +903,7 @@ In2iGui.request = function(options) {
 		}
 	}
 	options.onException = function(t,e) {n2i.log(e)};
-	new Ajax.Request(options.url,options);
+	n2i.request(options);
 };
 
 In2iGui.parseItems = function(doc) {
@@ -1047,164 +934,22 @@ In2iGui.parseSubItems = function(parent,array) {
 	};
 }
 
-////////////////////////////////// Source ///////////////////////////
 
-/** A data source
- * @constructor
- */
-In2iGui.Source = function(options) {
-	this.options = n2i.override({url:null,dwr:null,parameters:[],lazy:false},options);
-	this.name = options.name;
-	this.data = null;
-	this.parameters = this.options.parameters;
-	In2iGui.extend(this);
-	if (options.delegate) {
-		this.listen(options.delegate);
-	}
-	this.busy=false;
-	In2iGui.onDomReady(this.init.bind(this));
-};
-
-In2iGui.Source.prototype = {
-	/** @private */
-	init : function() {
-		var self = this;
-		this.parameters.each(function(parm) {
-			var val = In2iGui.bind(parm.value,function(value) {
-				self.changeParameter(parm.key,value);
-			});
-			parm.value = self.convertValue(val);
-		})
-		if (!this.options.lazy) {
-			this.refresh();
-		}
-	},
-	/** @private */
-	convertValue : function(value) {		
-		if (value && value.getTime) {
-			return value.getTime();
-		}
-		return value;
-	},
-	/** Refreshes the data source */
-	refresh : function() {
-		if (this.delegates.length==0) {
-			return;
-		}
-		for (var i=0; i < this.delegates.length; i++) {
-			var d = this.delegates[i];
-			if (d['$sourceShouldRefresh'] && d['$sourceShouldRefresh']()==false) {
-				return;
-			}
-		};
-		if (this.busy) {
-			this.pendingRefresh = true;
-			return;
-		}
-		this.pendingRefresh = false;
-		var self = this;
-		if (this.options.url) {
-			var prms = {};
-			for (var i=0; i < this.parameters.length; i++) {
-				var p = this.parameters[i];
-				prms[p.key] = p.value;
-			};
-			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
-			new Ajax.Request(this.options.url, {
-				parameters:prms,
-				onSuccess: function(t) {self.parse(t)},
-				onException:function(t,e) {n2i.log(e)},
-				onFailure:function(t,e) {
-					In2iGui.callDelegates(self,'sourceFailed');
-				}
-			});
-		} else if (this.options.dwr) {
-			var pair = this.options.dwr.split('.');
-			var facade = eval(pair[0]);
-			var method = pair[1];
-			var args = facade[method].argumentNames();
-			for (var i=0; i < args.length; i++) {
-				if (this.parameters[i]) {
-					args[i]=this.parameters[i].value===undefined ? null : this.parameters[i].value;
-				}
-			};
-			args[args.length-1]=function(r) {self.parseDWR(r)};
-			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
-			facade[method].apply(facade,args);
-		}
-	},
-	/** @private */
-	end : function() {
-		In2iGui.callDelegates(this,'sourceIsNotBusy');
-		this.busy=false;
-		if (this.pendingRefresh) {
-			this.refresh();
-		}
-	},
-	/** @private */
-	parse : function(t) {
-		if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror') {
-			this.parseXML(t.responseXML);
-		} else {
-			var str = t.responseText.replace(/^\s+|\s+$/g, '');
-			if (str.length>0) {
-				var json = t.responseText.evalJSON(true);
-			} else {
-				var json = null;
-			}
-			this.fire('objectsLoaded',json);
-		}
-		this.end();
-	},
-	/** @private */
-	parseXML : function(doc) {
-		if (doc.documentElement.tagName=='items') {
-			this.data = In2iGui.parseItems(doc);
-			this.fire('itemsLoaded',this.data);
-		} else if (doc.documentElement.tagName=='list') {
-			this.fire('listLoaded',doc);
-		} else if (doc.documentElement.tagName=='articles') {
-			this.fire('articlesLoaded',doc);
-		}
-	},
-	/** @private */
-	parseDWR : function(data) {
-		this.data = data;
-		this.fire('objectsLoaded',data);
-		this.end();
-	},
-	addParameter : function(parm) {
-		//n2i.log(parm.value);
-		this.parameters.push(parm);
-	},
-	changeParameter : function(key,value) {
-		value = this.convertValue(value);
-		this.parameters.each(function(p) {
-			if (p.key==key) {
-				p.value=value;
-			}
-		})
-		window.clearTimeout(this.paramDelay);
-		this.paramDelay = window.setTimeout(function() {
-			this.refresh();
-		}.bind(this),100)
-	}
-}
 
 
 //////////////////////////// Prototype extensions ////////////////////////////////
-
-Element.addMethods({
-	setClassName : function(element,name,set) {
-		if (set) {
-			element.addClassName(name);
-		} else {
-			element.removeClassName(name);
+/*
+if (Element.addMethods) {
+	Element.addMethods({
+		setClassName : function(element,name,set) {
+			if (set) {
+				element.addClassName(name);
+			} else {
+				element.removeClassName(name);
+			}
+			return element;
 		}
-		return element;
-	}
-});
-
+	});
+}
+*/
 /* EOF */

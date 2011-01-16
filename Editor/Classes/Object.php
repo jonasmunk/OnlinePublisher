@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/EventManager.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/Services/ObjectService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class Object {
@@ -304,6 +305,7 @@ class Object {
 	
 	function get($id,$type) {
     	global $basePath;
+		ObjectService::importType($type);
 		$schema = Object::$schema[$type];
 		if (is_array($schema)) {
 			
@@ -349,7 +351,11 @@ class Object {
 					}
 				}
 				return $obj;
-	    	}
+	    	} else {
+				Log::debug('Not found: '.$id);
+			}
+		} else {
+			Log::debug('No schema for: '.$type);
 		}
 		return null;
 	}
@@ -484,11 +490,15 @@ class Object {
     	$sql = "select type from object where id =".Database::int($id);
     	if ($row = Database::selectFirst($sql)) {
     		$unique = ucfirst($row['type']);
-				if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
-	    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
-				} else {
-					require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
-				}
+			if (!$unique) {
+				Log::debug('Unable to load object by id: '.$id);
+				return false;
+			}
+			if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
+    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
+			} else {
+				require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
+			}
     		$class = new $unique;
     		$object = $class->load($id);
     	}

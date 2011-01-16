@@ -13,10 +13,10 @@
  */
 In2iGui.Upload = function(options) {
 	this.options = n2i.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
-	this.element = $(options.element);
-	this.itemContainer = this.element.select('.in2igui_upload_items')[0];
-	this.status = this.element.select('.in2igui_upload_status')[0];
-	this.placeholder = this.element.select('.in2igui_upload_placeholder')[0];
+	this.element = n2i.get(options.element);
+	this.itemContainer = n2i.firstByClass(this.element,'in2igui_upload_items');
+	this.status = n2i.firstByClass(this.element,'in2igui_upload_status');
+	this.placeholder = n2i.firstByClass(this.element,'in2igui_upload_placeholder');
 	this.name = options.name;
 	this.items = [];
 	this.busy = false;
@@ -34,15 +34,15 @@ In2iGui.Upload.nameIndex = 0;
 /** Creates a new upload widget */
 In2iGui.Upload.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_upload'});
-	options.element.update(
-		'<div class="in2igui_upload_items"></div>'+
+	options.element = n2i.build('div',{
+		'class':'in2igui_upload',
+		html : '<div class="in2igui_upload_items"></div>'+
 		'<div class="in2igui_upload_status"></div>'+
 		(options.placeholder ? '<div class="in2igui_upload_placeholder"><span class="in2igui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+options.placeholder.title+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+options.placeholder.text+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+n2i.escape(options.placeholder.title)+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+n2i.escape(options.placeholder.text)+'</p>' : '')+
 		'</div>' : '')
-	);
+	});
 	return new In2iGui.Upload(options);
 }
 
@@ -80,34 +80,40 @@ In2iGui.Upload.prototype = {
 		In2iGui.Upload.nameIndex++;
 		var frameName = 'in2igui_upload_'+In2iGui.Upload.nameIndex;
 		
-		var atts = {'action':this.options.url || '', 'method':'post', 'enctype':'multipart/form-data','encoding':'multipart/form-data','target':frameName};
-		var form = this.form = new Element('form',atts);
+		var form = this.form = n2i.build('form');
+		form.setAttribute('action',this.options.url || '');
+		form.setAttribute('method','post');
+		form.setAttribute('enctype','multipart/form-data');
+		form.setAttribute('encoding','multipart/form-data');
+		form.setAttribute('target',frameName);
 		if (this.options.parameters) {
-			$H(this.options.parameters).each(function(pair) {
-				var hidden = new Element('input',{'type':'hidden','name':pair.key});
-				hidden.setValue(pair.value);
-				form.insert(hidden);
-			});
+			for (key in this.options.parameters) {
+				var hidden = n2i.build('input',{'type':'hidden','name':key});
+				hidden.value = this.options.parameters[key];
+				form.appendChild(hidden);
+			}
 		}
-		var iframe = this.iframe = new Element('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html',style:'display:none'});
-		this.element.insert(iframe);
-		this.fileInput = new Element('input',{'type':'file','class':'file','name':this.options.fieldName});
-		this.fileInput.observe('change',this.iframeSubmit.bind(this));
-		form.insert(this.fileInput);
-		var buttonContainer = new Element('span',{'class':'in2igui_upload_button'});
-		var span = new Element('span',{'class':'in2igui_upload_button_input'});
-		span.insert(form);
-		buttonContainer.insert(span);
+		var iframe = this.iframe = n2i.build('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html',style:'display:none'});
+		this.element.appendChild(iframe);
+		this.fileInput = n2i.build('input',{'type':'file','class':'file','name':this.options.fieldName});
+		n2i.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
+		form.appendChild(this.fileInput);
+		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
+		var span = n2i.build('span',{'class':'in2igui_upload_button_input'});
+		span.appendChild(form);
+		buttonContainer.appendChild(span);
 		if (this.options.widget) {
 			In2iGui.onDomReady(function() {
 				var w = In2iGui.get(this.options.widget);
-				w.element.wrap(buttonContainer);
+				w.element.parentNode.insertBefore(buttonContainer,w.element);
+				w.element.parentNode.removeChild(w.element);
+				buttonContainer.appendChild(w.element);
 			}.bind(this));
 		} else {
-			buttonContainer.insert('<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>');
-			this.element.insert(buttonContainer);
+			buttonContainer.innerHTML='<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
+			this.element.appendChild(buttonContainer);
 		}
-		iframe.observe('load',function() {this.iframeUploadComplete()}.bind(this));
+		n2i.listen(iframe,'load',function() {this.iframeUploadComplete()}.bind(this));
 	},
 	/** @private */
 	iframeUploadComplete : function() {
@@ -116,7 +122,7 @@ In2iGui.Upload.prototype = {
 		this.uploading = false;
 		this.form.reset();
 		var doc = n2i.getFrameDocument(this.iframe);
-		var last = this.items.last();
+		var last = this.items[this.items.length-1];
 		if (doc.body.innerHTML.indexOf('SUCCESS')!=-1) {
 			if (last) {
 				last.update({progress:1,filestatus:'Færdig'});
@@ -199,15 +205,16 @@ In2iGui.Upload.prototype = {
 		if (phpSession) {
 			url+='?PHPSESSID='+phpSession;
 		}
-		var buttonContainer = new Element('span',{'class':'in2igui_upload_button'});
-		var placeholder = new Element('span',{'class':'in2igui_upload_button_object'});
-		buttonContainer.insert(placeholder);
+		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
+		var placeholder = n2i.build('span',{'class':'in2igui_upload_button_object',parent:buttonContainer});
 		if (this.options.widget) {
 			var w = In2iGui.get(this.options.widget);
-			w.element.wrap(buttonContainer);
+			w.element.parentNode.insertBefore(buttonContainer,w.element);
+			w.element.parentNode.removeChild(w.element);
+			buttonContainer.appendChild(w.element);
 		} else {
-			buttonContainer.insert('<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>');
-			this.element.insert(buttonContainer);
+			buttonContainer.innerHTL='<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
+			this.element.appendChild(buttonContainer);
 		}
 		
 		var self = this;
@@ -273,7 +280,7 @@ In2iGui.Upload.prototype = {
 	},
 	/** @private */
 	uploadStart : function() {
-		this.status.setStyle({display:'block'});
+		this.status.style.display='block';
 		n2i.log('uploadStart');
 		if (!this.busy) {
 			this.fire('uploadDidStartQueue');
@@ -321,10 +328,10 @@ In2iGui.Upload.prototype = {
 		}
 		var item = new In2iGui.Upload.Item(file);
 		this.items[index] = item;
-		this.itemContainer.insert(item.element);
-		this.itemContainer.setStyle({display:'block'});
+		this.itemContainer.appendChild(item.element);
+		this.itemContainer.style.display='block';
 		if (this.placeholder) {
-			this.placeholder.hide();
+			this.placeholder.style.display='none';
 		}
 		return item;
 	},
@@ -333,49 +340,50 @@ In2iGui.Upload.prototype = {
 	updateStatus : function() {
 		var s = this.loader.getStats();
 		if (this.items.length==0) {
-			this.status.hide();
+			this.status.style.display='none';
 		} else {
-			this.status.update('Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%').setStyle({display:'block'});
+			n2i.dom.setNodeText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
+			this.status.style.display='block';
 		}
 		n2i.log(s);
 	}
 }
 
 In2iGui.Upload.Item = function(file) {
-	this.element = new Element('div').addClassName('in2igui_upload_item');
+	this.element = n2i.build('div',{className:'in2igui_upload_item'});
 	if (file.index % 2 == 1) {
-		this.element.addClassName('in2igui_upload_item_alt')
+		n2i.addClass(this.element,'in2igui_upload_item_alt');
 	}
-	this.content = new Element('div').addClassName('in2igui_upload_item_content');
+	this.content = n2i.build('div',{className:'in2igui_upload_item_content'});
 	this.icon = In2iGui.createIcon('file/generic',2);
-	this.element.insert(this.icon);
-	this.element.insert(this.content);
-	this.info = new Element('strong');
-	this.status = new Element('em');
+	this.element.appendChild(this.icon);
+	this.element.appendChild(this.content);
+	this.info = document.createElement('strong');
+	this.status = document.createElement('em');
 	this.progress = In2iGui.ProgressBar.create({small:true});
-	this.content.insert(this.progress.getElement());
-	this.content.insert(this.info);
-	this.content.insert(this.status);
+	this.content.appendChild(this.progress.getElement());
+	this.content.appendChild(this.info);
+	this.content.appendChild(this.status);
 	this.update(file);
 }
 
 In2iGui.Upload.Item.prototype = {
 	update : function(file) {
-		this.status.update(In2iGui.Upload.status[file.filestatus] || file.filestatus);
+		n2i.dom.setNodeText(this.status,In2iGui.Upload.status[file.filestatus] || file.filestatus);
 		if (file.name) {
-			this.info.update(file.name);
+			n2i.dom.setNodeText(this.info,file.name);
 		}
 		if (file.progress!==undefined) {
 			this.setProgress(file.progress);
 		}
 		if (file.filestatus==SWFUpload.FILE_STATUS.ERROR) {
-			this.element.addClassName('in2igui_upload_item_error');
+			n2i.addClass(this.element,'in2igui_upload_item_error');
 			this.progress.hide();
 		}
 	},
 	setError : function(error) {
 		this.status.update(In2iGui.Upload.errors[error] || error);
-		this.element.addClassName('in2igui_upload_item_error');
+		n2i.addClass(this.element,'in2igui_upload_item_error');
 		this.progress.hide();
 	},
 	updateProgress : function(complete,total) {

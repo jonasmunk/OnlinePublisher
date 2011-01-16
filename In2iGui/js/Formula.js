@@ -18,7 +18,7 @@ In2iGui.Formula.create = function(o) {
 	if (o.method) {
 		atts.method=o.method;
 	}
-	o.element = new Element('form',atts);
+	o.element = n2i.build('form',atts);
 	return new In2iGui.Formula(o);
 }
 
@@ -76,7 +76,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Adds a widget to the form */
 	add : function(widget) {
-		this.element.insert(widget.getElement());
+		this.element.appendChild(widget.getElement());
 	},
 	/** Creates a new form group and adds it to the form
 	 * @returns {'In2iGui.Formula.Group'} group
@@ -91,7 +91,7 @@ In2iGui.Formula.prototype = {
 	 */
 	buildGroup : function(options,recipe) {
 		var g = this.createGroup(options);
-		recipe.each(function(item) {
+		n2i.each(recipe,function(item) {
 			if (In2iGui.Formula[item.type]) {
 				var w = In2iGui.Formula[item.type].create(item.options);
 				g.add(w);
@@ -114,8 +114,8 @@ In2iGui.Formula.prototype = {
  */
 In2iGui.Formula.Group = function(options) {
 	this.name = options.name;
-	this.element = $(options.element);
-	this.body = this.element.select('tbody')[0];
+	this.element = n2i.get(options.element);
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.options = n2i.override({above:true},options);
 	In2iGui.extend(this);
 }
@@ -123,43 +123,42 @@ In2iGui.Formula.Group = function(options) {
 /** Creates a new form group */
 In2iGui.Formula.Group.create = function(options) {
 	options = n2i.override({above:true},options);
-	var element = options.element = new Element('table',
+	var element = options.element = n2i.build('table',
 		{'class':'in2igui_formula_group'}
 	);
 	if (options.above) {
-		element.addClassName('in2igui_formula_group_above');
+		n2i.addClass(element,'in2igui_formula_group_above');
 	}
-	element.insert(new Element('tbody'));
+	element.appendChild(n2i.build('tbody'));
 	return new In2iGui.Formula.Group(options);
 }
 
 In2iGui.Formula.Group.prototype = {
 	add : function(widget) {
-		var tr = new Element('tr');
+		var tr = n2i.build('tr');
 		this.body.appendChild(tr);
-		var td = new Element('td',{'class':'in2igui_formula_group'});
+		var td = n2i.build('td',{'class':'in2igui_formula_group'});
 		if (widget.getLabel) {
 			var label = widget.getLabel();
 			if (label) {
 				if (this.options.above) {
-					td.insert(new Element('label').insert(label));
+					n2i.build('label',{text:label,parent:td});
 				} else {
-					var th = new Element('th');
-					th.insert(new Element('label').insert(label));
-					tr.insert(th);
+					var th = n2i.build('th',{parent:tr});
+					n2i.build('label',{text:label,parent:th});
 				}
 			}
 		}
-		td.insert(new Element('div',{'class':'in2igui_formula_item'}).insert(widget.getElement()));
-		tr.insert(td);
+		var item = n2i.build('div',{'class':'in2igui_formula_item'});
+		item.appendChild(widget.getElement());
+		td.appendChild(item);
+		tr.appendChild(td);
 	},
 	createButtons : function(options) {
-		var tr = new Element('tr');
-		this.body.insert(tr);
-		var td = new Element('td',{colspan:this.options.above?1:2});
-		tr.insert(td);
+		var tr = n2i.build('tr',{parent:this.body});
+		var td = n2i.build('td',{colspan:this.options.above?1:2,parent:tr});
 		var b = In2iGui.Buttons.create(options);
-		td.insert(b.getElement());
+		td.appendChild(b.getElement());
 		return b;
 	}
 }
@@ -172,12 +171,12 @@ In2iGui.Formula.Group.prototype = {
  */
 In2iGui.Formula.Text = function(options) {
 	this.options = n2i.override({label:null,key:null,lines:1,live:false,maxHeight:100},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
-	this.input = this.element.select('.in2igui_formula_text')[0];
+	this.input = n2i.firstByClass(this.element,'in2igui_formula_text');
 	this.multiline = this.input.tagName.toLowerCase() == 'textarea';
-	this.placeholder = this.element.select('.in2igui_field_placeholder')[0];
+	this.placeholder = n2i.firstByClass(this.element,'in2igui_field_placeholder');
 	this.value = this.input.value;
 	if (this.placeholder) {
 		var self = this;
@@ -195,13 +194,15 @@ In2iGui.Formula.Text.create = function(options) {
 	options = n2i.override({lines:1},options);
 	var node,input;
 	if (options.lines>1 || options.multiline) {
-		input = new Element('textarea',
+		input = n2i.build('textarea',
 			{'class':'in2igui_formula_text','rows':options.lines,style:'height: 32px;'}
 		);
-		node = new Element('span',{'class':'in2igui_formula_text_multiline'}).insert(input);
+		node = n2i.build('span',{'class':'in2igui_formula_text_multiline'});
+		node.appendChild(input);
 	} else {
-		input = new Element('input',{'class':'in2igui_formula_text'});
-		node = new Element('span',{'class':'in2igui_field_singleline'}).insert(input);
+		input = n2i.build('input',{'class':'in2igui_formula_text'});
+		node = n2i.build('span',{'class':'in2igui_field_singleline'});
+		node.appendChild(input);
 	}
 	if (options.value!==undefined) {
 		input.value=options.value;
@@ -214,20 +215,28 @@ In2iGui.Formula.Text.prototype = {
 	/** @private */
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
-		this.input.observe('keyup',this.onKeyUp.bind(this));
-		var p = this.element.select('em')[0];
+		n2i.listen(this.input,'keyup',this.onKeyUp.bind(this));
+		var p = this.element.getElementsByTagName('em')[0];
 		if (p) {
 			this.updateClass();
-			p.observe('mousedown',function(){window.setTimeout(function() {this.input.focus();this.input.select();}.bind(this))}.bind(this));
-			p.observe('mouseup',function(){this.input.focus();this.input.select();}.bind(this));
+			n2i.listen(p,'mousedown',function() {
+				window.setTimeout(function() {
+					this.input.focus();
+					this.input.select();
+				}.bind(this)
+			)}.bind(this));
+			n2i.listen(p,'mouseup',function() {
+				this.input.focus();
+				this.input.select();
+			}.bind(this));
 		}
 	},
 	updateClass : function() {
-		this.element.setClassName('in2igui_field_dirty',this.value.length>0);
+		n2i.setClass(this.element,'in2igui_field_dirty',this.value.length>0);
 	},
 	/** @private */
 	onKeyUp : function(e) {
-		if (!this.multiline && e.keyCode===Event.KEY_RETURN) {
+		if (!this.multiline && e.keyCode===n2i.KEY_RETURN) {
 			this.fire('submit');
 			var form = In2iGui.get().getAncestor(this,'in2igui_formula');
 			if (form) {form.submit();}
@@ -286,7 +295,7 @@ In2iGui.Formula.Text.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		this.element.setClassName('in2igui_field_error',isError);
+		n2i.setClass(this.element,'in2igui_field_error',isError);
 		if (typeof(error) == 'string') {
 			In2iGui.showToolTip({text:error,element:this.element,key:this.name});
 		}
@@ -302,7 +311,6 @@ In2iGui.Formula.Text.prototype = {
 	/** @private */
 	expand : function(animate) {
 		if (!this.multiline) {return};
-		n2i.log('Visible:'+n2i.dom.isVisible(this.element));
 		if (!n2i.dom.isVisible(this.element)) {return};
 		var textHeight = In2iGui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
@@ -334,8 +342,8 @@ In2iGui.Formula.DateTime = function(o) {
 	this.inputFormats = ['d-m-Y','d/m-Y','d/m/Y','d-m-Y H:i:s','d/m-Y H:i:s','d/m/Y H:i:s','d-m-Y H:i','d/m-Y H:i','d/m/Y H:i','d-m-Y H','d/m-Y H','d/m/Y H','d-m','d/m','d','Y','m-d-Y','m-d','m/d'];
 	this.outputFormat = 'd-m-Y H:i:s';
 	this.name = o.name;
-	this.element = $(o.element);
-	this.input = this.element.select('input')[0];
+	this.element = n2i.get(o.element);
+	this.input = n2i.firstByTag(this.element,'input');
 	this.options = n2i.override({returnType:null,label:null,allowNull:true,value:null},o);
 	this.value = this.options.value;
 	In2iGui.extend(this);
@@ -344,8 +352,8 @@ In2iGui.Formula.DateTime = function(o) {
 }
 
 In2iGui.Formula.DateTime.create = function(options) {
-	var input = new Element('input',{'class':'in2igui_formula_text'});
-	var node = new Element('span',{'class':'in2igui_formula_text_singleline'}).insert(input);
+	var node = n2i.build('span',{'class':'in2igui_formula_text_singleline'});
+	n2i.build('input',{'class':'in2igui_formula_text',parent:node});
 	options.element = In2iGui.wrapInField(node);
 	return new In2iGui.Formula.DateTime(options);
 }
@@ -353,7 +361,7 @@ In2iGui.Formula.DateTime.create = function(options) {
 In2iGui.Formula.DateTime.prototype = {
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
-		this.input.observe('blur',this.check.bind(this));
+		n2i.listen(this.input,'blur',this.check.bind(this));
 	},
 	updateFromNode : function(node) {
 		if (node.firstChild) {
@@ -423,40 +431,42 @@ In2iGui.Formula.DateTime.prototype = {
 In2iGui.Formula.Number = function(o) {
 	this.options = n2i.override({min:0,max:10000,value:null,decimals:0,allowNull:false},o);	
 	this.name = o.name;
-	var e = this.element = $(o.element);
-	this.input = e.select('input')[0];
-	this.up = e.select('.in2igui_number_up')[0];
-	this.down = e.select('.in2igui_number_down')[0];
+	var e = this.element = n2i.get(o.element);
+	this.input = n2i.firstByTag(e,'input');
+	this.up = n2i.firstByClass(e,'in2igui_number_up');
+	this.down = n2i.firstByClass(e,'in2igui_number_down');
 	this.value = this.options.value;
 	In2iGui.extend(this);
 	this.addBehavior();
 }
 
 In2iGui.Formula.Number.create = function(o) {
-	var e = o.element = new Element('span',{'class':'in2igui_number'});
-	e.update('<span><span><input type="text" value="'+(o.value!==undefined ? o.value : '0')+'"/><a class="in2igui_number_up"></a><a class="in2igui_number_down"></a></span></span>');
+	o.element = n2i.build('span',{
+		'class':'in2igui_number',
+		html:'<span><span><input type="text" value="'+(o.value!==undefined ? o.value : '0')+'"/><a class="in2igui_number_up"></a><a class="in2igui_number_down"></a></span></span>'
+	});
 	return new In2iGui.Formula.Number(o);
 }
 
 In2iGui.Formula.Number.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		this.input.observe('focus',function() {e.addClassName('in2igui_number_focused')});
-		this.input.observe('blur',this.blurEvent.bind(this));
-		this.input.observe('keyup',this.keyEvent.bind(this));
-		//this.input.observe('keypress',this.keyEvent.bind(this));
-		this.up.observe('mousedown',this.upEvent.bind(this));
-		this.down.observe('mousedown',this.downEvent.bind(this));
+		n2i.listen(this.input,'focus',function() {n2i.addClass(e,'in2igui_number_focused')});
+		n2i.listen(this.input,'blur',this.blurEvent.bind(this));
+		n2i.listen(this.input,'keyup',this.keyEvent.bind(this));
+		n2i.listen(this.up,'mousedown',this.upEvent.bind(this));
+		n2i.listen(this.down,'mousedown',this.downEvent.bind(this));
 	},
 	blurEvent : function() {
-		this.element.removeClassName('in2igui_number_focused');
+		n2i.removeClass(this.element,'in2igui_number_focused');
 		this.updateField();
 	},
 	keyEvent : function(e) {
-		if (e.keyCode==Event.KEY_UP) {
-			e.stop();
+		e = e || window.event;
+		if (e.keyCode==n2i.KEY_UP) {
+			n2i.stop(e);
 			this.upEvent();
-		} else if (e.keyCode==Event.KEY_DOWN) {
+		} else if (e.keyCode==n2i.KEY_DOWN) {
 			this.downEvent();
 		} else {
 			var parsed = parseInt(this.input.value,10);
@@ -526,7 +536,7 @@ In2iGui.Formula.Number.prototype = {
 In2iGui.Formula.DropDown = function(o) {
 	this.options = n2i.override({label:null,placeholder:null,url:null,source:null},o);
 	this.name = o.name;
-	var e = this.element = $(o.element);
+	var e = this.element = n2i.get(o.element);
 	this.inner = e.getElementsByTagName('strong')[0];
 	this.items = o.items || [];
 	this.index = -1;
@@ -545,9 +555,10 @@ In2iGui.Formula.DropDown = function(o) {
 
 In2iGui.Formula.DropDown.create = function(options) {
 	options = options || {};
-	options.element = new Element('a',{'class':'in2igui_dropdown',href:'#'}).update(
-		'<span><span><strong></strong></span></span>'
-	);
+	options.element = n2i.build('a',{
+		'class':'in2igui_dropdown',href:'#',
+		html:'<span><span><strong></strong></span></span>'
+	});
 	return new In2iGui.Formula.DropDown(options);
 }
 
@@ -555,9 +566,9 @@ In2iGui.Formula.DropDown.prototype = {
 	/** @private */
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.element,'class':'in2igui_dropdown_focused'});
-		this.element.observe('click',this.clicked.bind(this));
-		this.element.observe('blur',this.hideSelector.bind(this));
-		this.element.observe('keydown',this._keyDown.bind(this));
+		n2i.listen(this.element,'click',this.clicked.bind(this));
+		n2i.listen(this.element,'blur',this.hideSelector.bind(this));
+		n2i.listen(this.element,'keydown',this._keyDown.bind(this));
 	},
 	/** @private */
 	updateIndex : function() {
@@ -576,43 +587,45 @@ In2iGui.Formula.DropDown.prototype = {
 			this.inner.innerHTML='';
 			n2i.dom.addText(this.inner,n2i.wrap(text));
 		} else if (this.options.placeholder) {
-			this.inner.update(new Element('em').update(this.options.placeholder.escapeHTML()));
+			this.inner.innerHTML='';
+			this.inner.appendChild(n2i.build('em',{text:n2i.escape(this.options.placeholder)}));
 		} else {
 			this.inner.innerHTML='';
 		}
 		if (!this.selector) {
 			return;
 		}
-		this.selector.select('a').each(function(a,i) {
+		var as = this.selector.getElementsByTagName('a');
+		n2i.each(as,function(a,i) {
 			if (this.index==i) {
-				a.addClassName('in2igui_selected');
+				n2i.addClass(a,'in2igui_selected');
 			}
 			else {a.className=''};
 		}.bind(this));
 	},
 	/** @private */
 	clicked : function(e) {
-		e.stop();
+		n2i.stop(e);
 		this.buildSelector();
 		var el = this.element, s=this.selector;
 		el.focus();
 		if (!this.items) return;
 		var docHeight = n2i.getDocumentHeight();
 		if (docHeight<200) {
-			var left = this.element.cumulativeOffset().left;
-			this.selector.setStyle({'left':left+'px',top:'5px'});
+			var left = n2i.getLeft(this.element);
+			n2i.setStyle(this.selector,{'left':left+'px',top:'5px'});
 		} else {
 			n2i.place({
 				target:{element:this.element,vertical:1,horizontal:0},
 				source:{element:this.selector,vertical:0,horizontal:0}
 			});
 		}
-		s.setStyle({visibility:'hidden',display:'block',width:''});
-		var height = Math.min(docHeight-s.cumulativeOffset().top-5,200);
-		var width = Math.max(el.getWidth()-5,100,s.getWidth()+20);
-		var space = n2i.getDocumentWidth()-el.cumulativeOffset().left-20;
+		n2i.setStyle(s,{visibility:'hidden',display:'block',width:''});
+		var height = Math.min(docHeight-n2i.getTop(s)-5,200);
+		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
+		var space = n2i.getDocumentWidth()-n2i.getLeft(el)-20;
 		width = Math.min(width,space);
-		s.setStyle({visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
+		n2i.setStyle(s,{visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
 	},
 	getValue : function() {
 		return this.value;
@@ -623,7 +636,7 @@ In2iGui.Formula.DropDown.prototype = {
 			return;
 		}
 		if (e.keyCode==40) {
-			e.stop();
+			n2i.stop(e);
 			if (this.index>=this.items.length-1) {
 				this.value=this.items[0].value;
 			} else {
@@ -633,7 +646,7 @@ In2iGui.Formula.DropDown.prototype = {
 			this.updateUI();
 			this.fireChange();
 		} else if (e.keyCode==38) {
-			e.stop();
+			n2i.stop(e);
 			if (this.index>0) {
 				this.index--;
 			} else {
@@ -686,26 +699,29 @@ In2iGui.Formula.DropDown.prototype = {
 	/** @private */
 	hideSelector : function() {
 		if (!this.selector) return;
-		this.selector.hide();
+		this.selector.style.display='none';
 	},
 	/** @private */
 	buildSelector : function() {
 		if (!this.dirty || !this.items) return;
 		if (!this.selector) {
-			this.selector = new Element('div',{'class':'in2igui_dropdown_selector'});
+			this.selector = n2i.build('div',{'class':'in2igui_dropdown_selector'});
 			document.body.appendChild(this.selector);
-			this.selector.observe('mousedown',function(e) {e.stop()});
+			n2i.listen(this.selector,'mousedown',function(e) {e.stop()});
 		} else {
-			this.selector.update();
+			this.selector.innerHTML='';
 		}
 		var self = this;
-		this.items.each(function(item,i) {
-			var e = new Element('a',{href:'#'}).update(item.label || item.title).observe('mousedown',function(e) {
-				e.stop();
+		n2i.each(this.items,function(item,i) {
+			var e = n2i.build('a',{href:'#',text:item.label || item.title});
+			n2i.listen(e,'mousedown',function(e) {
+				n2i.stop(e);
 				self.itemClicked(item,i);
 			})
-			if (i==self.index) e.addClassName('in2igui_selected');
-			self.selector.insert(e);
+			if (i==self.index) {
+				n2i.addClass(e,'in2igui_selected')
+			};
+			self.selector.appendChild(e);
 		});
 		this.dirty = false;
 	},
@@ -734,7 +750,7 @@ In2iGui.Formula.DropDown.prototype = {
  */
 In2iGui.Formula.Radiobuttons = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.radios = [];
 	this.value = options.value;
@@ -751,7 +767,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 	updateUI : function() {
 		for (var i=0; i < this.radios.length; i++) {
 			var radio = this.radios[i];
-			$(radio.id).setClassName('in2igui_selected',radio.value==this.value);
+			n2i.setClass(n2i.get(radio.id),'in2igui_selected',radio.value==this.value);
 		};
 	},
 	setValue : function(value) {
@@ -766,7 +782,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 	},
 	registerRadiobutton : function(radio) {
 		this.radios.push(radio);
-		var element = $(radio.id);
+		var element = n2i.get(radio.id);
 		var self = this;
 		element.onclick = function() {
 			self.setValue(radio.value);
@@ -783,8 +799,8 @@ In2iGui.Formula.Radiobuttons.prototype = {
  * @constructor
  */
 In2iGui.Formula.Checkbox = function(o) {
-	this.element = $(o.element);
-	this.control = this.element.select('span')[0];
+	this.element = n2i.get(o.element);
+	this.control = n2i.firstByTag(this.element,'span');
 	this.options = o;
 	this.name = o.name;
 	this.value = o.value==='true' || o.value===true;
@@ -796,11 +812,10 @@ In2iGui.Formula.Checkbox = function(o) {
  * Creates a new checkbox
  */
 In2iGui.Formula.Checkbox.create = function(o) {
-	var e = o.element = new Element('a',{'class':'in2igui_checkbox',href:'#'});
+	var e = o.element = n2i.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'});
 	if (o.value) {
-		e.addClassName('in2igui_checkbox_selected');
+		n2i.addClass(e,'in2igui_checkbox_selected');
 	}
-	e.update('<span><span></span></span>');
 	return new In2iGui.Formula.Checkbox(o);
 }
 
@@ -808,11 +823,11 @@ In2iGui.Formula.Checkbox.prototype = {
 	/** @private */
 	addBehavior : function() {
 		In2iGui.addFocusClass({element:this.element,'class':'in2igui_checkbox_focused'});
-		this.element.observe('click',this.click.bind(this));
+		n2i.listen(this.element,'click',this.click.bind(this));
 	},
 	/** @private */
 	click : function(e) {
-		e.stop();
+		n2i.stop(e);
 		this.element.focus();
 		this.value = !this.value;
 		this.updateUI();
@@ -821,7 +836,7 @@ In2iGui.Formula.Checkbox.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		this.element.setClassName('in2igui_checkbox_selected',this.value);
+		n2i.setClass(this.element,'in2igui_checkbox_selected',this.value);
 	},
 	/** Sets the value
 	 * @param {Boolean} value Whether the checkbox is checked
@@ -856,7 +871,7 @@ In2iGui.Formula.Checkbox.prototype = {
  */
 In2iGui.Formula.Checkboxes = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.items = options.items || [];
 	this.sources = [];
@@ -871,14 +886,12 @@ In2iGui.Formula.Checkboxes = function(options) {
 }
 
 In2iGui.Formula.Checkboxes.create = function(o) {
-	o.element = new Element('div',{'class':o.vertical ? 'in2igui_checkboxes in2igui_checkboxes_vertical' : 'in2igui_checkboxes'});
+	o.element = n2i.build('div',{'class':o.vertical ? 'in2igui_checkboxes in2igui_checkboxes_vertical' : 'in2igui_checkboxes'});
 	if (o.items) {
-		o.items.each(function(item) {
-			var node = new Element('a',{'class':'in2igui_checkbox',href:'javascript:void(0);'}).update(
-				'<span><span></span></span>'+item.title
-			);
+		n2i.each(o.items,function(item) {
+			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+item.title});
 			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
-			o.element.insert(node);
+			o.element.appendChild(node);
 		});
 	}
 	return new In2iGui.Formula.Checkboxes(o);
@@ -887,12 +900,13 @@ In2iGui.Formula.Checkboxes.create = function(o) {
 In2iGui.Formula.Checkboxes.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.element.select('a.in2igui_checkbox').each(function(check,i) {
-			check.observe('click',function(e) {
-				e.stop();
+		var checks = n2i.byClass(this.element,'in2igui_checkbox');
+		n2i.each(checks,function(check,i) {
+			n2i.listen(check,'click',function(e) {
+				n2i.stop(e);
 				this.flipValue(this.items[i].value);
 			}.bind(this))
-		}.bind(this));
+		}.bind(this))
 	},
 	getValue : function() {
 		return this.values;
@@ -938,9 +952,9 @@ In2iGui.Formula.Checkboxes.prototype = {
 		for (var i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
-		var nodes = this.element.select('a.in2igui_checkbox');
-		this.items.each(function(item,i) {
-			nodes[i].setClassName('in2igui_checkbox_selected',this.values.indexOf(item.value)!==-1);
+		var nodes = n2i.byClass(this.element,'in2igui_checkbox');
+		n2i.each(this.items,function(item,i) {
+			n2i.setClass(nodes[i],'in2igui_checkbox_selected',this.values.indexOf(item.value)!==-1);
 		}.bind(this));
 	},
 	refresh : function() {
@@ -970,16 +984,14 @@ In2iGui.Formula.Checkboxes.prototype = {
 		return this.options.label;
 	},
 	$itemsLoaded : function(items) {
-		items.each(function(item) {
-			var node = new Element('a',{'class':'in2igui_checkbox',href:'javascript:void(0);'}).update(
-				'<span><span></span></span>'+item.title
-			);
-			node.observe('click',function(e) {
-				e.stop();
+		n2i.each(items,function(item) {
+			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+n2i.escape(item.title)});
+			n2i.listen(node,'click',function(e) {
+				n2i.stop(e);
 				this.flipValue(item.value);
 			}.bind(this))
 			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
-			this.element.insert(node);
+			this.element.appendChild(node);
 			this.items.push(item);
 		}.bind(this));
 		this.checkValues();
@@ -994,7 +1006,7 @@ In2iGui.Formula.Checkboxes.prototype = {
  * @constructor
  */
 In2iGui.Formula.Checkboxes.Items = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.parent = null;
 	this.options = options;
@@ -1013,16 +1025,19 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 	},
 	$itemsLoaded : function(items) {
 		this.checkboxes = [];
-		this.element.update();
+		this.element.innerHTML='';
 		var self = this;
-		items.each(function(item) {
-			var node = new Element('a',{'class':'in2igui_checkbox',href:'#'}).update(
-				'<span><span></span></span>'+item.title
-			).observe('click',function(e) {e.stop();node.focus();self.itemWasClicked(item)});
+		n2i.each(items,function(item) {
+			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'+item.title});
+			n2i.listen(node,'click',function(e) {
+				n2i.stop(e);
+				node.focus();
+				self.itemWasClicked(item)
+			});
 			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
-			self.element.insert(node);
+			self.element.appendChild(node);
 			self.checkboxes.push({title:item.title,element:node,value:item.value});
-		})
+		});
 		this.parent.checkValues();
 		this.updateUI();
 	},
@@ -1032,7 +1047,7 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 	updateUI : function() {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
-			item.element.setClassName('in2igui_checkbox_selected',this.parent.values.indexOf(item.value)!=-1);
+			n2i.setClass(item.element,'in2igui_checkbox_selected',this.parent.values.indexOf(item.value)!=-1);
 		};
 	},
 	hasValue : function(value) {
@@ -1053,7 +1068,7 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
  */
 In2iGui.Formula.Tokens = function(o) {
 	this.options = n2i.override({label:null,key:null},o);
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.name = o.name;
 	this.value = [''];
 	In2iGui.extend(this);
@@ -1062,7 +1077,7 @@ In2iGui.Formula.Tokens = function(o) {
 
 In2iGui.Formula.Tokens.create = function(o) {
 	o = o || {};
-	o.element = new Element('div').addClassName('in2igui_tokens');
+	o.element = n2i.build('div',{'class':'in2igui_tokens'});
 	return new In2iGui.Formula.Tokens(o);
 }
 
@@ -1078,9 +1093,11 @@ In2iGui.Formula.Tokens.prototype = {
 	},
 	getValue : function() {
 		var out = [];
-		this.value.each(function(value) {
+		n2i.each(this.value,function(value) {
 			value = value.strip();
-			if (value.length>0) out.push(value);
+			if (value.length>0) {
+				out.push(value);
+			}
 		})
 		return out;
 	},
@@ -1088,16 +1105,17 @@ In2iGui.Formula.Tokens.prototype = {
 		return this.options.label;
 	},
 	updateUI : function() {
-		this.element.update();
-		this.value.each(function(value,i) {
-			var input = new Element('input').addClassName('in2igui_tokens_token');
+		this.element.innerHTML='';
+		n2i.each(this.value,function(value,i) {
+			var input = n2i.build('input',{'class':'in2igui_tokens_token',parent:this.element});
 			if (this.options.width) {
-				input.setStyle({width:this.options.width+'px'});
+				input.style.width=this.options.width+'px';
 			}
 			input.value = value;
 			input.in2iguiIndex = i;
-			this.element.insert(input);
-			input.observe('keyup',function() {this.inputChanged(input,i)}.bind(this));
+			n2i.listen(input,'keyup',function() {
+				this.inputChanged(input,i)
+			}.bind(this));
 		}.bind(this));
 	},
 	/** @private */
@@ -1109,15 +1127,15 @@ In2iGui.Formula.Tokens.prototype = {
 	},
 	/** @private */
 	addField : function() {
-		var input = new Element('input').addClassName('in2igui_tokens_token');
+		var input = n2i.build('input',{'class':'in2igui_tokens_token'});
 		if (this.options.width) {
-			input.setStyle({width:this.options.width+'px'});
+			input.style.width = this.options.width+'px';
 		}
 		var i = this.value.length;
 		this.value.push('');
-		this.element.insert(input);
+		this.element.appendChild(input);
 		var self = this;
-		input.observe('keyup',function() {self.inputChanged(input,i)});
+		n2i.listen(input,'keyup',function() {self.inputChanged(input,i)});
 	}
 }
 
@@ -1130,9 +1148,9 @@ In2iGui.Formula.Tokens.prototype = {
 In2iGui.Formula.StyleLength = function(o) {
 	this.options = n2i.override({value:null,min:0,max:1000,units:['px','pt','em','%'],defaultUnit:'px',allowNull:false},o);	
 	this.name = o.name;
-	var e = this.element = $(o.element);
-	this.input = e.select('input')[0];
-	var as = e.select('a');
+	var e = this.element = n2i.get(o.element);
+	this.input = n2i.firstByTag(e,'input');
+	var as = e.getElementsByTagName('a');
 	this.up = as[0];
 	this.down = as[1];
 	this.value = this.parseValue(this.options.value);
@@ -1144,11 +1162,11 @@ In2iGui.Formula.StyleLength.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var e = this.element;
-		this.input.observe('focus',function() {e.addClassName('in2igui_number_focused')});
-		this.input.observe('blur',this.blurEvent.bind(this));
-		this.input.observe('keyup',this.keyEvent.bind(this));
-		this.up.observe('mousedown',this.upEvent.bind(this));
-		this.down.observe('mousedown',this.downEvent.bind(this));
+		n2i.listen(this.input,'focus',function() {n2i.addClass(e,'in2igui_number_focused')});
+		n2i.listen(this.input,'blur',this.blurEvent.bind(this));
+		n2i.listen(this.input,'keyup',this.keyEvent.bind(this));
+		n2i.listen(this.up,'mousedown',this.upEvent.bind(this));
+		n2i.listen(this.down,'mousedown',this.downEvent.bind(this));
 	},
 	/** @private */
 	parseValue : function(value) {
@@ -1169,15 +1187,16 @@ In2iGui.Formula.StyleLength.prototype = {
 	},
 	/** @private */
 	blurEvent : function() {
-		this.element.removeClassName('in2igui_number_focused');
+		n2i.removeClass(this.element,'in2igui_number_focused');
 		this.updateInput();
 	},
 	/** @private */
 	keyEvent : function(e) {
-		if (e.keyCode==Event.KEY_UP) {
-			e.stop();
+		e = e || window.event;
+		if (e.keyCode==n2i.KEY_UP) {
+			n2i.stop(e);
 			this.upEvent();
-		} else if (e.keyCode==Event.KEY_DOWN) {
+		} else if (e.keyCode==n2i.KEY_DOWN) {
 			this.downEvent();
 		} else {
 			this.checkAndSetValue(this.parseValue(this.input.value));
@@ -1242,11 +1261,11 @@ In2iGui.Formula.StyleLength.prototype = {
 In2iGui.Formula.Location = function(options) {
 	this.options = n2i.override({value:null},options);
 	this.name = options.name;
-	this.element = $(options.element);
-	this.chooser = this.element.select('a')[0];
-	this.latField = new In2iGui.TextField({element:this.element.select('input')[0],validator:new In2iGui.NumberValidator({min:-90,max:90,allowNull:true})});
+	this.element = n2i.get(options.element);
+	this.chooser = n2i.firstByTag(this.element,'a');
+	this.latField = new In2iGui.TextField({element:n2i.firstByTag(this.element,'input'),validator:new In2iGui.NumberValidator({min:-90,max:90,allowNull:true})});
 	this.latField.listen(this);
-	this.lngField = new In2iGui.TextField({element:this.element.select('input')[1],validator:new In2iGui.NumberValidator({min:-180,max:180,allowNull:true})});
+	this.lngField = new In2iGui.TextField({element:this.element.getElementsByTagName('input')[1],validator:new In2iGui.NumberValidator({min:-180,max:180,allowNull:true})});
 	this.lngField.listen(this);
 	this.value = this.options.value;
 	In2iGui.extend(this);
@@ -1256,18 +1275,17 @@ In2iGui.Formula.Location = function(options) {
 
 In2iGui.Formula.Location.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class':'in2igui_location'});
-	var b = new Element('span');
-	b.update('<span class="in2igui_location_latitude"><span><input/></span></span><span class="in2igui_location_longitude"><span><input/></span></span>');
-	e.insert(In2iGui.wrapInField(b));
-	e.insert('<a class="in2igui_location_picker" href="javascript:void(0);"></a>');
+	var e = options.element = n2i.build('div',{'class':'in2igui_location'});
+	var b = n2i.build('span',{html:'<span class="in2igui_location_latitude"><span><input/></span></span><span class="in2igui_location_longitude"><span><input/></span></span>'});
+	e.appendChild(In2iGui.wrapInField(b));
+	e.appendChild(n2i.build('a',{'class':'in2igui_location_picker',href:'javascript:void(0);'}));
 	return new In2iGui.Formula.Location(options);
 }
 
 In2iGui.Formula.Location.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.chooser.observe('click',this.showPicker.bind(this));
+		n2i.listen(this.chooser,'click',this.showPicker.bind(this));
 		In2iGui.addFocusClass({element:this.latField.element,classElement:this.element,'class':'in2igui_field_focused'});
 		In2iGui.addFocusClass({element:this.lngField.element,classElement:this.element,'class':'in2igui_field_focused'});
 	},

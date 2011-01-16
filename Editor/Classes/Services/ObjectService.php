@@ -26,6 +26,9 @@ class ObjectService {
 	function importType($type) {
 		global $basePath;
 		$class = ucfirst($type);
+		if (class_exists($class,false)) {
+			return true;
+		}
 		$path = $basePath.'Editor/Classes/Objects/'.$class.'.php';
 		if (!file_exists($path)) {
 			$path = $basePath.'Editor/Classes/'.$class.'.php';

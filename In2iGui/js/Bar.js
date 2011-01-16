@@ -5,7 +5,7 @@
 In2iGui.Bar = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	In2iGui.extend(this);
 };
 
@@ -48,7 +48,7 @@ In2iGui.Bar.prototype = {
 In2iGui.Bar.Button = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.element.observe('click',this.onClick.bind(this));
 	if (this.options.stopEvents) {
 		this.element.observe('mousedown',function(e) {Event.stop(e)});

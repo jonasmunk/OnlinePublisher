@@ -4,7 +4,7 @@
  */
 In2iGui.Selection = function(options) {
 	this.options = n2i.override({value:null},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.items = [];
 	this.subItems = [];
@@ -76,18 +76,18 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		this.items.each(function(item) {
-			item.element.setClassName('in2igui_selected',this.isSelection(item));
-		}.bind(this));
-		this.subItems.each(function(sub) {
-			sub.updateUI();
-		});
+		for (var i=0; i < this.items.length; i++) {
+			n2i.setClass(this.items[i].element,'in2igui_selected',this.isSelection(this.items[i]));
+		};
+		for (var i=0; i < this.subItems.length; i++) {
+			this.subItems[i].updateUI();
+		};
 	},
 	/** @private */
 	changeSelection : function(item) {
-		this.subItems.each(function(sub) {
-			sub.selectionChanged(this.selection,item);
-		});
+		for (var i=0; i < this.subItems.length; i++) {
+			this.subItems[i].selectionChanged(this.selection,item);
+		};
 		this.selection = item;
 		this.updateUI();
 		this.fireChange();
@@ -108,7 +108,7 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	registerItem : function(id,title,icon,badge,value,kind) {
-		var element = $(id);
+		var element = n2i.get(id);
 		var item = {id:id,title:title,icon:icon,badge:badge,element:element,value:value,kind:kind};
 		this.items.push(item);
 		this.addItemBehavior(element,item);
@@ -116,10 +116,10 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	addItemBehavior : function(node,item) {
-		node.observe('click',function() {
+		n2i.listen(node,'click',function() {
 			this.itemWasClicked(item);
 		}.bind(this));
-		node.observe('dblclick',function() {
+		n2i.listen(node,'dblclick',function() {
 			this.itemWasDoubleClicked(item);
 		}.bind(this));
 		node.dragDropInfo = item;
@@ -177,8 +177,8 @@ In2iGui.Selection.prototype = {
  */
 In2iGui.Selection.Items = function(options) {
 	this.options = n2i.override({source:null},options);
-	this.element = $(options.element);
-	this.title = $(this.element.id+'_title');
+	this.element = n2i.get(options.element);
+	this.title = n2i.get(this.element.id+'_title');
 	this.name = options.name;
 	this.parent = null;
 	this.items = [];
@@ -204,7 +204,7 @@ In2iGui.Selection.Items.prototype = {
 	/** @private */
 	$itemsLoaded : function(items) {
 		this.items = [];
-		this.element.update();
+		this.element.innerHTML='';
 		this.buildLevel(this.element,items,0);
 		if (this.title) {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
@@ -216,41 +216,40 @@ In2iGui.Selection.Items.prototype = {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);
 		var open = inc==0;
-		var level = new Element('div',{'class':'in2igui_selection_level'}).setStyle({display:open ? 'block' : 'none'});
-		parent.insert(level);
-		items.each(function(item) {
+		var level = n2i.build('div',{'class':'in2igui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
+		n2i.each(items,function(item) {
 			if (item.type=='title') {
-				var div = new Element('div',{'class':'in2igui_selection_title'});
-				div.update('<span>'+item.title+'</span>');
-				level.insert(div)
+				var div = n2i.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;
 			var left = inc*16+6;
 			if (!hierarchical && inc>0 || hierarchical && !hasChildren) left+=13;
-			var node = new Element('div',{'class':'in2igui_selection_item'}).setStyle({paddingLeft:left+'px'})
+			var node = n2i.build('div',{'class':'in2igui_selection_item'});
+			node.style.paddingLeft = left+'px';
 			if (item.badge) {
-				node.insert(new Element('strong',{'class':'in2igui_selection_badge'}).update(item.badge));
+				node.appendChild(n2i.build('strong',{'class':'in2igui_selection_badge',text:item.badge}));
 			}
 			if (hierarchical && hasChildren) {
 				var self = this;
-				node.insert(new Element('span',{'class':'in2igui_disclosure'}).observe('click',function(e) {
-					e.stop();
+				var x = n2i.build('span',{'class':'in2igui_disclosure',parent:node});
+				n2i.listen(x,'click',function(e) {
+					n2i.stop(e);
 					self.toggle(this);
-				}));
+				});
 			}
-			var inner = new Element('span',{'class':'in2igui_selection_label'});
+			var inner = n2i.build('span',{'class':'in2igui_selection_label',text:item.title});
 			if (item.icon) {
-				node.insert(new Element('span',{'class':'in2igui_icon_1'}).setStyle({'backgroundImage' : 'url('+In2iGui.getIconUrl(item.icon,1)+')'}));
+				node.appendChild(n2i.build('span',{'class':'in2igui_icon_1',style:'background-image: url('+In2iGui.getIconUrl(item.icon,1)+')'}));
 			}
-			node.insert(inner.insert(item.title));
-			node.observe('click',function(e) {
+			node.appendChild(inner);
+			n2i.listen(node,'click',function(e) {
 				this.parent.itemWasClicked(item);
 			}.bind(this));
-			node.observe('dblclick',function(e) {
+			n2i.listen(node,'dblclick',function(e) {
 				this.parent.itemWasDoubleClicked(item);
 			}.bind(this));
-			level.insert(node);
+			level.appendChild(node);
 			var info = {title:item.title,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
 			node.dragDropInfo = info;
 			this.items.push(info);
@@ -259,12 +258,12 @@ In2iGui.Selection.Items.prototype = {
 	},
 	/** @private */
 	toggle : function(node) {
-		if (node.hasClassName('in2igui_disclosure_open')) {
-			node.parentNode.next().hide();
-			node.removeClassName('in2igui_disclosure_open');
+		if (n2i.hasClass(node,'in2igui_disclosure_open')) {
+			n2i.getNext(node.parentNode).style.display='none';
+			n2i.removeClass(node,'in2igui_disclosure_open');
 		} else {
-			node.parentNode.next().show();
-			node.addClassName('in2igui_disclosure_open');
+			n2i.getNext(node.parentNode).style.display='block';
+			n2i.addClass(node,'in2igui_disclosure_open');
 		}
 	},
 	/** @private */
@@ -292,9 +291,9 @@ In2iGui.Selection.Items.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		this.items.each(function(item) {
-			item.element.setClassName('in2igui_selected',this.parent.isSelection(item));
-		}.bind(this));
+		for (var i=0; i < this.items.length; i++) {
+			n2i.setClass(this.items[i].element,'in2igui_selected',this.parent.isSelection(this.items[i]));
+		};
 	},
 	/** @private */
 	selectionChanged : function(oldSelection,newSelection) {

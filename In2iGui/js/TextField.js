@@ -1,7 +1,7 @@
 /** @constructor */
 In2iGui.TextField = function(options) {
 	this.options = n2i.override({placeholderElement:null,validator:null},options);
-	var e = this.element = $(options.element);
+	var e = this.element = n2i.get(options.element);
 	this.element.setAttribute('autocomplete','off');
 	this.value = this.validate(this.element.value);
 	this.isPassword = this.element.type=='password';
@@ -22,15 +22,16 @@ In2iGui.TextField = function(options) {
 In2iGui.TextField.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		e.observe('keyup',this.keyDidStrike.bind(this));
+		n2i.listen(e,'keyup',this.keyDidStrike.bind(this));
 		var p = this.options.placeholderElement;
-		e.observe('blur',this.onBlur.bind(this));
+		n2i.listen(e,'blur',this.onBlur.bind(this));
 		if (p) {
-			e.observe('focus',this.focused.bind(this));
-			e.observe('blur',this.checkPlaceholder.bind(this));
+			n2i.listen(e,'focus',this.focused.bind(this));
+			n2i.listen(e,'blur',this.checkPlaceholder.bind(this));
 			if (p) {
-				p.setStyle({cursor:'text'});
-				p.observe('mousedown',this.focus.bind(this)).observe('click',this.focus.bind(this));
+				p.style.cursor='text';
+				n2i.listen(p,'mousedown',this.focus.bind(this));
+				n2i.listen(p,'click',this.focus.bind(this));
 			}
 		}
 	},
@@ -45,7 +46,7 @@ In2iGui.TextField.prototype = {
 		var validator = this.options.validator, result;
 		if (validator) {
 			result = validator.validate(value);
-			this.element.setClassName('in2igui_invalid',!result.valid);
+			n2i.setClass(this.element,'in2igui_invalid',!result.valid);
 			return result.value;
 		}
 		return value;
@@ -71,14 +72,16 @@ In2iGui.TextField.prototype = {
 	},
 	/** @private */
 	onBlur : function() {
-		this.element.removeClassName('in2igui_invalid');
+		n2i.removeClass(this.element,'in2igui_invalid');
 		this.element.value = this.value || '';
 	},
 	getValue : function() {
 		return this.value;
 	},
 	setValue : function(value) {
-		if (value===undefined || value===null) value='';
+		if (value===undefined || value===null) {
+			value='';
+		}
 		this.element.value = value;
 		this.value = this.validate(value);
 	},
@@ -93,7 +96,7 @@ In2iGui.TextField.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		this.element.setClassName('in2igui_field_error',isError);
+		n2i.setClass(this.element,'in2igui_field_error',isError);
 		if (typeof(error) == 'string') {
 			In2iGui.showToolTip({text:error,element:this.element,key:this.name});
 		}

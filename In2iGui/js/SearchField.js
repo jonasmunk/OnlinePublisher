@@ -1,12 +1,14 @@
 /** @constructor */
 In2iGui.SearchField = function(options) {
 	this.options = n2i.override({expandedWidth:null},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.field = this.element.select('input')[0];
+	this.field = n2i.firstByTag(this.element,'input');
 	this.value = this.field.value;
-	this.adaptive = this.element.hasClassName('in2igui_searchfield_adaptive');
-	In2iGui.onDomReady(function() {this.initialWidth=parseInt(this.element.getStyle('width'))}.bind(this));
+	this.adaptive = n2i.hasClass(this.element,'in2igui_searchfield_adaptive');
+	In2iGui.onDomReady(function() {
+		this.initialWidth = parseInt(n2i.getStyle(this.element,'width'))
+	}.bind(this));
 	In2iGui.extend(this);
 	this.addBehavior();
 	this.updateClass()
@@ -15,8 +17,10 @@ In2iGui.SearchField = function(options) {
 In2iGui.SearchField.create = function(options) {
 	options = options || {};
 	
-	var e = options.element = new Element('span',{'class': options.adaptive ? 'in2igui_searchfield in2igui_searchfield_adaptive' : 'in2igui_searchfield'});
-	e.update('<em class="in2igui_searchfield_placeholder"></em><a href="javascript:void(0);" class="in2igui_searchfield_reset"></a><span><span><input type="text"/></span></span>');
+	options.element = n2i.build('span',{
+		'class' : options.adaptive ? 'in2igui_searchfield in2igui_searchfield_adaptive' : 'in2igui_searchfield',
+		html : '<em class="in2igui_searchfield_placeholder"></em><a href="javascript:void(0);" class="in2igui_searchfield_reset"></a><span><span><input type="text"/></span></span>'
+	});
 	return new In2iGui.SearchField(options);
 }
 
@@ -24,18 +28,24 @@ In2iGui.SearchField.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		this.field.observe('keyup',this.onKeyUp.bind(this));
-		var reset = this.element.select('a')[0];
+		n2i.listen(this.field,'keyup',this.onKeyUp.bind(this));
+		var reset = n2i.firstByTag(this.element,'a');
 		reset.tabIndex=-1;
 		var focus = function() {self.field.focus();self.field.select()};
-		this.element.observe('mousedown',focus).observe('mouseup',focus);
-		reset.observe('mousedown',function(e) {e.stop();self.reset();focus()});
-		this.element.select('em')[0].observe('mousedown',focus);
-		this.field.observe('focus',function() {
+		n2i.listen(this.element,'mousedown',focus);
+		n2i.listen(this.element,'mouseup',focus);
+		//this.element.observe('mousedown',focus).observe('mouseup',focus);
+		n2i.listen(reset,'mousedown',function(e) {
+			n2i.stop(e);
+			self.reset();
+			focus()
+		});
+		n2i.listen(n2i.firstByTag(this.element,'em'),'mousedown',focus);
+		n2i.listen(this.field,'focus',function() {
 			self.focused=true;
 			self.updateClass();
 		});
-		this.field.observe('blur',function() {
+		n2i.listen(this.field,'blur',function() {
 			self.focused=false;
 			self.updateClass();
 		});

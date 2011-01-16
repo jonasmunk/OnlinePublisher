@@ -5,7 +5,7 @@
 In2iGui.Link = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	In2iGui.extend(this);
 	this.addBehavior();
 }
@@ -14,9 +14,9 @@ In2iGui.Link.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		this.element.observe('click',function(e) {
+		n2i.listen(this.element,'click',function(e) {
+			n2i.stop(e);
 			self.fire('click');
-			Event.stop(e);
 		});
 	}
 }

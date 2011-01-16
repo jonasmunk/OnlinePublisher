@@ -65,7 +65,7 @@ $gui='
 	</layout>
 	<window name="personEditor" width="460" title="Person">
 		<formula name="personFormula">
-			<tabs small="true">
+			<tabs small="true" centered="true">
 				<tab title="Person" padding="5">
 					<columns flexible="true" space="10">
 						<column>

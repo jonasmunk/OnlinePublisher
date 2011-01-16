@@ -1,7 +1,7 @@
 
 In2iGui.VideoPlayer = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.placeholder = this.element.select('div')[0];
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};

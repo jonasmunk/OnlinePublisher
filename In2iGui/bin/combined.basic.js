@@ -4897,7 +4897,24 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
 /** @namespace */
 var n2i = {
 	/** @namespace */
-	browser : {}
+	browser : {},
+	ELEMENT_NODE : 1,
+	ATTRIBUTE_NODE : 2,
+	TEXT_NODE : 3,
+	KEY_BACKSPACE : 8,
+    KEY_TAB : 9,
+    KEY_RETURN : 13,
+    KEY_ESC : 27,
+    KEY_LEFT : 37,
+    KEY_UP : 38,
+    KEY_RIGHT : 39,
+    KEY_DOWN : 40,
+    KEY_DELETE : 46,
+    KEY_HOME : 36,
+    KEY_END : 35,
+    KEY_PAGEUP : 33,
+    KEY_PAGEDOWN : 34,
+    KEY_INSERT : 45,
 }
 
 if (!window.hui) {
@@ -4921,10 +4938,6 @@ n2i.browser.gecko = !n2i.browser.webkit && navigator.userAgent.indexOf('Gecko')!
 	}
 })()
 
-n2i.ELEMENT_NODE=1;
-n2i.ATTRIBUTE_NODE=2;
-n2i.TEXT_NODE=3;
-
 /** Log something */
 n2i.log = function(obj) {
 	try {
@@ -4934,8 +4947,8 @@ n2i.log = function(obj) {
 
 /** Make a string camelized */
 n2i.camelize = function(str) {
+	if (str.indexOf('-')==-1) {return str}
     var oStringList = str.split('-');
-    if (oStringList.length == 1) return oStringList[0];
 
     var camelizedString = str.indexOf('-') == 0
       ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
@@ -4977,6 +4990,14 @@ n2i.escapeHTML = function(str) {
    	return document.createElement('div').appendChild(document.createTextNode(str)).innerHTML;
 }
 
+n2i.escape = function(str) {
+	if (!n2i.isDefined(str)) {return ''};
+	return str.replace(/&/g,'&amp;').
+		replace(/>/g,'&gt;').
+		replace(/</g,'&lt;').
+		replace(/"/g,'&quot;')
+}
+
 /** Checks if a string has characters */
 n2i.isEmpty = n2i.isBlank = function(str) {
 	if (str===null || typeof(str)==='undefined' || str==='') return true;
@@ -4988,11 +5009,31 @@ n2i.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
+n2i.isArray = function(obj) {
+	if (obj.constructor == Array) {
+		return true;
+	} else {
+		return Object.prototype.toString.call(obj) === '[object Array]';
+	}
+}
+
 n2i.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
 		if (arr[i]==value) return true;
 	};
 	return false;
+}
+
+n2i.each = function(items,func) {
+	if (n2i.isArray(items)) {		
+		for (var i=0; i < items.length; i++) {
+			func(items[i],i);
+		};
+	} else {
+		for (key in items) {
+			func(key,items[key]);
+		}
+	}
 }
 
 /**
@@ -5069,7 +5110,26 @@ n2i.dom = {
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
 	},
+	remove : function(node) {
+		if (node.parentNode) {
+			node.parentNode.removeChild(node);
+		}
+	},
+	replaceHTML : function(node,html) {
+		node = n2i.get(node);
+		node.innerHTML=html;
+	},
+	runScripts : function(node) {
+		var scripts = node.getElementsByTagName('script');
+		for (var i=0; i < scripts.length; i++) {
+			eval(scripts[i].innerHTML);
+		}
+	},
 	setNodeText : function(node,text) {
+		n2i.log('setNodeText is deprecated');
+		n2i.dom.setText(node,text);
+	},
+	setText : function(node,text) {
 		var c = node.childNodes;
 		var updated = false;
 		for (var i=0; i < c.length; i++) {
@@ -5098,7 +5158,7 @@ n2i.dom = {
 	},
 	isVisible : function(node) {
 		while (node) {
-			if (node.style && (node.getStyle('display')==='none' || node.getStyle('visibility')==='hidden')) {
+			if (node.style && (n2i.getStyle(node,'display')==='none' || n2i.getStyle(node,'visibility')==='hidden')) {
 				return false;
 			}
 			node = node.parentNode;
@@ -5107,18 +5167,39 @@ n2i.dom = {
 	}
 }
 
-n2i.get = function(str) {
-	if (str===null || str===undefined) {
-		return null;
+n2i.form = {
+	getValues : function(node) {
+		var params = {};
+		var inputs = node.getElementsByTagName('input');
+		for (var i=0; i < inputs.length; i++) {
+			if (n2i.isDefined(inputs[i].name)) {
+				params[inputs[i].name] = inputs[i].value;
+			}
+		};
+		return params;
 	}
-	if (str.nodeType==n2i.ELEMENT_NODE) {
-		return str;
-	}
-	return document.getElementById(str);
 }
 
-n2i.firstByClass = function(parentElement,className) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName('*');
+n2i.get = function(str) {
+	if (typeof(str)=='string') {
+		return document.getElementById(str);
+	}
+	return str;
+}
+
+n2i.getChildren = function(node) {
+	var children = [];
+	var x = node.childNodes;
+	for (var i=0; i < x.length; i++) {
+		if (n2i.dom.isElement(x[i])) {
+			children.push(x[i]);
+		}
+	};
+	return children;
+}
+
+n2i.firstByClass = function(parentElement,className,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
 	for (var i=0;i<children.length;i++) {
 		if (n2i.hasClass(children[i],className)) {
 			return children[i];
@@ -5127,12 +5208,105 @@ n2i.firstByClass = function(parentElement,className) {
 	return null;
 }
 
+n2i.byClass = function(parentElement,className,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+	var out = [];
+	for (var i=0;i<children.length;i++) {
+		if (n2i.hasClass(children[i],className)) {
+			out[out.length]=children[i];
+		}
+	}
+	return out;
+}
+
+n2i.firstByTag = function(parentElement,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag);
+	return children[0];
+}
+
 n2i.build = function(tag,options) {
 	var e = document.createElement(tag);
-	if (options.className) {
-		e.className = options.className;
+	if (options) {
+		for (prop in options) {
+			if (prop=='text') {
+				e.appendChild(document.createTextNode(options.text));
+			} else if (prop=='html') {
+				e.innerHTML=options.html;
+			} else if (prop=='parent') {
+				options.parent.appendChild(e);
+			} else if (prop=='className') {
+				e.className=options.className;
+			} else if (prop=='class') {
+				e.className=options['class'];
+			} else if (n2i.isDefined(options[prop])) {
+				e.setAttribute(prop,options[prop]);
+			}
+		}
 	}
 	return e;
+}
+
+n2i.getAncestors = function(element) {
+	var ancestors = [];
+	parent = element.parentNode;
+	while (parent) {
+		ancestors[ancestors.length] = parent;
+		parent = parent.parentNode;
+	}
+	return ancestors;
+}
+
+n2i.getNext = function(element) {
+	var next = element.nextSibling;
+	while (next && next.nodeType!=1) {
+		next = next.nextSibling;
+	}
+    return next;
+}
+
+n2i.getAllNext = function(element) {
+	var elements = [];
+	var next = n2i.getNext(element);
+	while (next) {
+		elements.push(next);
+		next = n2i.getNext(next);
+	}
+	return elements;
+}
+
+n2i.getTop = function(element) {
+    element = n2i.get(element);
+	if (element) {
+		var yPos = element.offsetTop;
+		var tempEl = element.offsetParent;
+		while (tempEl != null) {
+			yPos += tempEl.offsetTop;
+			tempEl = tempEl.offsetParent;
+		}
+		return yPos;
+	}
+	else return 0;
+}
+
+n2i.getLeft = function(element) {
+    element = n2i.get(element);
+	if (element) {
+		var xPos = element.offsetLeft;
+		var tempEl = element.offsetParent;
+		while (tempEl != null) {
+			xPos += tempEl.offsetLeft;
+			tempEl = tempEl.offsetParent;
+		}
+		return xPos;
+	}
+	else return 0;
+}
+
+n2i.getPosition = function(element) {
+	return {
+		left : n2i.getLeft(element),
+		top : n2i.getTop(element)
+	}
 }
 
 /////////////////////////// Class handling //////////////////////
@@ -5190,10 +5364,269 @@ n2i.setClass = function(element,className,add) {
 	}
 }
 
+n2i.fromJSON = function(json) {
+	return JSON.parse(json);
+	//return eval('(' + json + ')');
+}
+
+n2i.toJSON = function(obj) {
+	return JSON.stringify(obj);
+}
+
+///////////////////// Events //////////////////
+
+n2i.listen = function(el,type,listener,useCapture) {
+	el = n2i.get(el);
+	if(document.addEventListener) {
+		el.addEventListener(type,listener,useCapture ? true : false);
+	} else {
+		el.attachEvent('on'+type, listener);
+	}
+}
+
+n2i.unListen = function(el,type,listener,useCapture) {
+	el = n2i.get(el);
+	if(document.removeEventListener) {
+		el.removeEventListener(type,listener,useCapture ? true : false);
+	} else {
+		el.detachEvent('on'+type, listener);
+	}
+}
+
+n2i.event = function(event) {
+	return new n2i.Event();
+}
+
+n2i.Event = function(event) {
+	this.event = event = event || window.event;
+	this.element = event.target ? event.target : event.srcElement;
+	this.shiftKey = event.shiftKey;
+	this.returnKey = event.keyCode==13;
+	this.escapeKey = event.keyCode==27;
+	this.spaceKey = event.keyCode==32;
+	this.keyCode = event.keyCode;
+}
+
+n2i.Event.prototype = {
+	left : function() {
+	    var left = 0;
+		if (this.event) {
+		    if (this.event.pageX) {
+			    left = this.event.pageX;
+		    } else if (this.event.clientX) {
+			    left = this.event.clientX + document.body.scrollLeft;
+		    }
+		}
+	    return left;
+	},
+	getLeft : function() {
+		return this.left();
+	},
+	top : function() {
+	    var top = 0;
+		if (this.event) {
+		    if (this.event.pageY) {
+			    top = this.event.pageY;
+		    } else if (this.event.clientY) {
+			    top = this.event.clientY + document.body.scrollTop;
+		    }
+		}
+	    return top;
+	},
+	getTop : function() {
+		return this.top();
+	},
+	getElement : function() {
+		return this.element;
+	},
+	findByClass : function(cls) {
+		var parent = this.element;
+		while (parent) {
+			if (n2i.hasClass(parent,cls)) {
+				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	findByTag : function(tag) {
+		var parent = this.element;
+		while (parent) {
+			if (parent.tagName==tag) {
+				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	isReturnKey : function() {
+		return this.event.keyCode==13;
+	},
+	isRightKey : function() {
+		return this.event.keyCode==39;
+	},
+	isLeftKey : function() {
+		return this.event.keyCode==37;
+	},
+	isEscapeKey : function() {
+		return this.event.keyCode==27;
+	},
+	isSpaceKey : function() {
+		return this.event.keyCode==32;
+	},
+	stop : function() {
+		n2i.stop(this.event);
+	}
+}
+
+n2i.stop = function(e) {
+	if (!e) {e = window.event};
+	if (e.stopPropagation) {e.stopPropagation()};
+	if (e.preventDefault) {e.preventDefault()};
+	e.cancelBubble = true;
+    e.stopped = true;
+}
+
+n2i.onReady = function(delegate) {
+	if(window.addEventListener) {
+		window.addEventListener('DOMContentLoaded',delegate);
+	}
+	else if(typeof document.addEventListener != 'undefined')
+	{
+		//.. opera 7
+		document.addEventListener('load', delegate, false);
+	}
+	else if(typeof window.attachEvent != 'undefined')
+	{
+		//.. win/ie
+		window.attachEvent('onload', delegate);
+	}
+
+	//** remove this condition to degrade older browsers
+	else
+	{
+		//.. mac/ie5 and anything else that gets this far
+	
+		//if there's an existing onload function
+		if(typeof window.onload == 'function')
+		{
+			//store it
+			var existing = window.onload;
+		
+			//add new onload handler
+			window.onload = function()
+			{
+				//call existing onload function
+				existing();
+			
+				//call delegate onload function
+				delegate();
+			};
+		}
+		else
+		{
+			//setup onload function
+			window.onload = delegate;
+		}
+	}
+}
+
+// Ajax //
+
+n2i.request = function(options) {
+	options = n2i.override({method:'GET',async:true},options);
+	var transport = n2i.request.createTransport();
+	var self = this;
+	transport.onreadystatechange = function() {
+		try {
+			if (transport.readyState == 4) {
+				if (transport.status == 200 && options.onSuccess) {
+					options.onSuccess(transport);
+				} else if (options.onFailure) {
+					options.onFailure(transport);
+				}
+			}
+		} catch (e) {
+			if (options.onException) {
+				options.onException(e,transport)
+			} else {
+				throw e;
+			}
+		}
+	};
+	var method = options.method.toUpperCase();
+	transport.open(method, options.url, options.async);
+	var parameters = null;
+	var body = '';
+    if (method=='POST' && options.parameters) {
+		body = n2i.request.buildPostBody(options.parameters);
+		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+		//transport.setRequestHeader("Content-length", body.length);
+		//transport.setRequestHeader("Connection", "close");
+	}
+	transport.send(body);
+}
+
+n2i.request.buildPostBody = function(parameters) {
+	if (!parameters) return null;
+	var output = '';
+	for (param in parameters) {
+		if (output.length>0) output+='&';
+		output+=encodeURIComponent(param)+'=';
+		if (parameters[param]!==undefined && parameters[param]!==null) {
+			output+=encodeURIComponent(parameters[param]);
+		}
+	}
+	return output;
+}
+
+n2i.request.createTransport = function() {
+	try {
+		if (window.XMLHttpRequest) {
+			var req = new XMLHttpRequest();
+			if (req.readyState == null) {
+				req.readyState = 1;
+				req.addEventListener("load", function () {
+					req.readyState = 4;
+					if (typeof req.onreadystatechange == "function")
+						req.onreadystatechange();
+				}, false);
+			}
+			return req;
+		}
+		else if (window.ActiveXObject) {
+			return n2i.request.getActiveX();
+		} else {
+			// Could not create transport
+			this.delegate.onError(this);
+		}
+	}
+	catch (ex) {
+		if (this.delegate.onError) {
+			this.delegate.onError(this,ex);
+		}
+	}
+}
+
+n2i.request.getActiveX = function() {
+	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
+	var o;
+	for (var i = 0; i < prefixes.length; i++) {
+		try {
+			// try to create the objects
+			o = new ActiveXObject(prefixes[i] + ".XmlHttp");
+			return o;
+		}
+		catch (ex) {};
+	}
+	
+	throw new Error("Could not find an installed XML parser");
+}
+
 ///////////////////// Style ///////////////////
 
 n2i.getStyle = function(element, style) {
-	element = $(element);
+	element = n2i.get(element);
 	var cameled = n2i.camelize(style);
 	var value = element.style[cameled];
 	if (!value) {
@@ -5222,11 +5655,20 @@ n2i.setOpacity = function(element,opacity) {
 	}
 }
 
+n2i.setStyle = function(element,styles) {
+	for (style in styles) {
+		element.style[style] = styles[style];
+	}
+}
+
 n2i.copyStyle = function(source,target,styles) {
-	styles.each(function(s) {
-		var r = source.getStyle(s);
-		if (r) target.style[s] = source.getStyle(s);
-	});
+	for (var i=0; i < styles.length; i++) {
+		var s = styles[i];
+		var r = n2i.getStyle(source,s);
+		if (r) {
+			target.style[s] = r;
+		}
+	};
 }
 
 ///////////////////// Events ////////////////////
@@ -5399,7 +5841,7 @@ n2i.getDocumentHeight = function() {
 n2i.place = function(options) {
 	var left=0,top=0;
 	var trgt = options.target.element;
-	var trgtPos = trgt.cumulativeOffset();
+	var trgtPos = {left:n2i.getLeft(trgt),top:n2i.getTop(trgt)};
 	left = trgtPos.left+trgt.clientWidth*options.target.horizontal;
 	top = trgtPos.top+trgt.clientHeight*options.target.vertical;
 	
@@ -5596,7 +6038,7 @@ n2i.animation = {
 	running : false,
 	latestId : 0,
 	get : function(element) {
-		element = $(element);
+		element = n2i.get(element);
 		if (!element.n2iAnimationId) {
 			element.n2iAnimationId = this.latestId++;
 		}
@@ -5854,9 +6296,18 @@ n2i.Color = function(color_string) {
 
     color_string = color_string.replace(/ /g,'');
     color_string = color_string.toLowerCase();
-
+	
+	var simple_colors = {
+		white : 'ffffff',
+		black : '000000',
+		red : 'ff0000',
+		green : '00ff00',
+		blue : '0000ff'
+	};
+	
     // before getting into regexps, try simple matches
     // and overwrite the input
+	/*
     var simple_colors = {
         aliceblue: 'f0f8ff',
         antiquewhite: 'faebd7',
@@ -6001,7 +6452,7 @@ n2i.Color = function(color_string) {
         whitesmoke: 'f5f5f5',
         yellow: 'ffff00',
         yellowgreen: '9acd32'
-    };
+    };*/
     for (var key in simple_colors) {
         if (color_string == key) {
             color_string = simple_colors[key];
@@ -6316,7 +6767,26 @@ n2i.ease = {
 		if(n<0.5){ return n2i.ease.bounceIn(n*2) / 2; }
 		return (n2i.ease.bounceOut(n*2-1) / 2) + 0.5; // Decimal
 	}
-};var in2igui = {
+};
+
+if (!Function.prototype.bind) {
+	Function.prototype.bind = function () {
+	    if (arguments.length < 2 && arguments[0] === undefined) {
+	        return this;
+	    }
+	    var thisObj = this,
+	    args = Array.prototype.slice.call(arguments),
+	    obj = args.shift();
+	    return function () {
+	        return thisObj.apply(obj, args.concat(Array.prototype.slice.call(arguments)));
+	    };
+	};
+
+	Function.bind = function() {
+	    var args = Array.prototype.slice.call(arguments);
+	    return Function.prototype.bind.apply(args.shift(), args);
+	}
+}var in2igui = {
 	locales : {
 		'da/DK':{decimal:',',thousands:'.'},
 		'en/US':{decimal:'.',thousands:','}
@@ -6341,7 +6811,7 @@ function In2iGui() {
 	/** @private */
 	this.delegates = [];
 	/** @private */
-	this.objects = $H();
+	this.objects = {};
 	/** @private */
 	this.layoutWidgets = [];
 	/** @private */
@@ -6373,13 +6843,17 @@ In2iGui.get = function(nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
 		}
-		return In2iGui.instance.objects.get(nameOrWidget);
+		return In2iGui.instance.objects[nameOrWidget];
 	} else {
 		return In2iGui.instance;
 	}
 };
 
-document.observe('dom:loaded', function () {
+//document.observe('dom:loaded', function () {
+//	In2iGui.get().ignite();
+//});
+
+n2i.onReady(function() {
 	In2iGui.get().ignite();
 });
 
@@ -6402,18 +6876,15 @@ In2iGui.prototype = {
 		In2iGui.callSuperDelegates(this,'ready');
 
 		this.reLayout();
-		Event.observe(window,'resize',this.reLayout.bind(this));
+		n2i.listen(window,'resize',this.reLayout.bind(this));
 	},
 	/** @private */
 	addBehavior : function() {
-		Event.observe(window,'resize',this.resize.bind(this));
+		n2i.listen(window,'resize',this.resize.bind(this));
 	},
 	/** Adds a global delegate
 	 * @deprecated
 	*/
-	listen : function(delegate) {
-		this.delegates.push(delegate);
-	},
 	listen : function(delegate) {
 		this.delegates.push(delegate);
 	},
@@ -6437,18 +6908,19 @@ In2iGui.prototype = {
 	resize : function() {
 		if (!this.overflows) {return;}
 		var height = n2i.getInnerHeight();
-		this.overflows.each(function(overflow) {
+		for (var i=0; i < this.overflows.length; i++) {
+			var overflow = this.overflows[i];
 			if (n2i.browser.webkit || n2i.browser.gecko) {
 				overflow.element.style.display='none';
 				overflow.element.style.width = overflow.element.parentNode.clientWidth+'px';
 				overflow.element.style.display='';
 			}
 			overflow.element.style.height = height+overflow.diff+'px';
-		});
+		};
 	},
 	registerOverflow : function(id,diff) {
 		if (!this.overflows) {this.overflows=[];}
-		var overflow = $(id);
+		var overflow = n2i.get(id);
 		this.overflows.push({element:overflow,diff:diff});
 	},
 	/** @private */
@@ -6520,8 +6992,11 @@ In2iGui.prototype = {
 	getDescendants : function(widgetOrElement) {
 		var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
 		if (e) {
-			var d = e.descendants();
-			var o = this.objects.values();
+			var d = e.getElementsByTagName('*');
+			var o = [];
+			for (key in this.objects) {
+				o.push(this.objects[key]);
+			}
 			for (var i=0; i < d.length; i++) {
 				for (var j=0; j < o.length; j++) {
 					if (d[i]==o[j].element) {
@@ -6541,8 +7016,11 @@ In2iGui.prototype = {
 		var desc = [];
 		var e = widget.element;
 		if (e) {
-			var a = e.ancestors();
-			var o = this.objects.values();
+			var a = n2i.getAncestors(e);
+			var o = [];
+			for (key in this.objects) {
+				o.push(this.objects[key]);
+			}
 			for (var i=0; i < a.length; i++) {
 				for (var j=0; j < o.length; j++) {
 					if (o[j].element==a[i]) {
@@ -6557,7 +7035,7 @@ In2iGui.prototype = {
 	getAncestor : function(widget,cls) {
 		var a = this.getAncestors(widget);
 		for (var i=0; i < a.length; i++) {
-			if (a[i].getElement().hasClassName(cls)) {
+			if (n2i.hasClass(a[i].getElement(),cls)) {
 				return a[i];
 			}
 		};
@@ -6599,7 +7077,7 @@ In2iGui.destroyDescendants = function(element) {
 	var desc = In2iGui.get().getDescendants(element);
 	var objects = In2iGui.get().objects;
 	for (var i=0; i < desc.length; i++) {
-		var obj  = objects.unset(desc[i].name);
+		var obj  = delete(objects[desc[i].name]);
 		if (!obj) {
 			n2i.log('not found: '+desc[i].name);
 		}
@@ -6609,12 +7087,13 @@ In2iGui.destroyDescendants = function(element) {
 In2iGui.changeState = function(state) {
 	if (In2iGui.get().state===state) {return;}
 	var objects = In2iGui.get().objects.values();
-	objects.each(function(obj) {
+	for (var i=0; i < objects.length; i++) {
+		var obj = objects[i];
 		if (obj.options && obj.options.state) {
 			if (obj.options.state==state) {obj.show();}
 			else {obj.hide();}
 		}
-	});
+	};
 	In2iGui.get().state==state;
 }
 
@@ -6643,19 +7122,15 @@ In2iGui.nextTopIndex = function() {
 ///////////////////////////////// Curtain /////////////////////////////
 
 In2iGui.showCurtain = function(options,zIndex) {
-	if (options.getElement) {
-		In2iGui.showCurtainOld(options,zIndex);
-		return;
-	}
 	var widget = options.widget;
 	if (!widget.curtain) {
-		widget.curtain = new Element('div',{'class':'in2igui_curtain'}).setStyle({'z-index':'none'});
+		widget.curtain = n2i.build('div',{'class':'in2igui_curtain',style:'z-index:none'});
 		widget.curtain.onclick = function() {
 			if (widget['$curtainWasClicked']) {
 				widget['$curtainWasClicked']();
 			}
 		};
-		var body = $$('.in2igui_body')[0];
+		var body = n2i.firstByClass(document.body,'in2igui_body');
 		if (!body) {
 			body=document.body;
 		}
@@ -6679,27 +7154,6 @@ In2iGui.showCurtain = function(options,zIndex) {
 	n2i.ani(widget.curtain,'opacity',0.7,1000,{ease:n2i.ease.slowFastSlow});
 }
 
-In2iGui.showCurtainOld = function(widget,zIndex) {
-	if (!widget.curtain) {
-		widget.curtain = new Element('div',{'class':'in2igui_curtain'}).setStyle({'z-index':'none'});
-		widget.curtain.onclick = function() {
-			if (widget.curtainWasClicked) {
-				widget.curtainWasClicked();
-			}
-		};
-		var body = $$('.in2igui_body')[0];
-		if (!body) {
-			body=document.body;
-		}
-		body.appendChild(widget.curtain);
-	}
-	widget.curtain.style.height=n2i.getDocumentHeight()+'px';
-	widget.curtain.style.zIndex=zIndex;
-	n2i.setOpacity(widget.curtain,0);
-	widget.curtain.style.display='block';
-	n2i.ani(widget.curtain,'opacity',0.7,1000,{ease:n2i.ease.slowFastSlow});
-};
-
 In2iGui.hideCurtain = function(widget) {
 	if (widget.curtain) {
 		n2i.ani(widget.curtain,'opacity',0,200,{hideOnComplete:true});
@@ -6718,15 +7172,17 @@ In2iGui.showMessage = function(options) {
 		options={text:options};
 	}
 	if (!In2iGui.message) {
-		In2iGui.message = new Element('div',{'class':'in2igui_message'}).update('<div><div></div></div>');
+		In2iGui.message = n2i.build('div',{'class':'in2igui_message',html:'<div><div></div></div>'});
 		if (!n2i.browser.msie) {
-			In2iGui.message.setStyle({opacity:0});
+			n2i.setOpacity(In2iGui.message,0);
 		}
 		document.body.appendChild(In2iGui.message);
 	}
-	In2iGui.message.select('div')[1].update(options.text);
-	In2iGui.message.setStyle({'display':'block',zIndex:In2iGui.nextTopIndex()});
-	In2iGui.message.setStyle({marginLeft:(In2iGui.message.getWidth()/-2)+'px',marginTop:n2i.getScrollTop()+'px'});
+	In2iGui.message.getElementsByTagName('div')[1].innerHTML=options.text;
+	In2iGui.message.style.display='block';
+	In2iGui.message.style.zIndex=In2iGui.nextTopIndex();
+	In2iGui.message.style.marginLeft=(In2iGui.message.clientWidth/-2)+'px';
+	In2iGui.message.style.marginTop=n2i.getScrollTop()+'px';
 	if (!n2i.browser.msie) {
 		n2i.ani(In2iGui.message,'opacity',1,300);
 	}
@@ -6750,8 +7206,7 @@ In2iGui.showToolTip = function(options) {
 	var key = options.key || 'common';
 	var t = In2iGui.toolTips[key];
 	if (!t) {
-		t = new Element('div',{'class':'in2igui_tooltip'}).update('<div><div></div></div>').setStyle({display:'none'});
-		document.body.appendChild(t);
+		t = n2i.build('div',{'class':'in2igui_tooltip',style:'display:none;',html:'<div><div></div></div>',parent:document.body});
 		In2iGui.toolTips[key] = t;
 	}
 	t.onclick = function() {In2iGui.hideToolTip(options);};
@@ -6790,10 +7245,10 @@ In2iGui.getElement = function(widgetOrElement) {
 }
 
 In2iGui.isWithin = function(e,element) {
-	Event.extend(e);
-	var offset = element.cumulativeOffset();
-	var dims = element.getDimensions();
-	return e.pointerX()>offset.left && e.pointerX()<offset.left+dims.width && e.pointerY()>offset.top && e.pointerY()<offset.top+dims.height;
+	e = new n2i.Event(e);
+	var offset = {left:n2i.getLeft(element),top:n2i.getTop(element)};
+	var dims = {width:element.clientWidth,height:element.clientHeight};
+	return e.left()>offset.left && e.left()<offset.left+dims.width && e.top()>offset.top && e.top()<offset.top+dims.height;
 };
 
 In2iGui.getIconUrl = function(icon,size) {
@@ -6801,7 +7256,7 @@ In2iGui.getIconUrl = function(icon,size) {
 };
 
 In2iGui.createIcon = function(icon,size) {
-	return new Element('span',{'class':'in2igui_icon in2igui_icon_'+size}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(icon,size)+')'});
+	return n2i.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+In2iGui.getIconUrl(icon,size)+')'});
 };
 
 In2iGui.onDomReady = In2iGui.onReady = function(func) {
@@ -6810,25 +7265,27 @@ In2iGui.onDomReady = In2iGui.onReady = function(func) {
 		window.setTimeout(func,1000);
 		return;
 	}
-	document.observe('dom:loaded', func);
+	n2i.onReady(func);
+	//document.observe('dom:loaded', func);
 };
 
 In2iGui.wrapInField = function(e) {
-	var w = new Element('div',{'class':'in2igui_field'}).update(
+	var w = n2i.build('div',{'class':'in2igui_field',html:
 		'<span class="in2igui_field_top"><span><span></span></span></span>'+
 		'<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content"></span></span></span>'+
 		'<span class="in2igui_field_bottom"><span><span></span></span></span>'
-	);
-	w.select('span.in2igui_field_content')[0].insert(e);
+	});
+	n2i.firstByClass(w,'in2igui_field_content').appendChild(e);
 	return w;
 };
 
 In2iGui.addFocusClass = function(o) {
 	var ce = o.classElement || o.element, c = o['class'];
-	o.element.observe('focus',function() {
-		ce.addClassName(c);
-	}).observe('blur',function() {
-		ce.removeClassName(c);
+	n2i.listen(o.element,'focus',function() {
+		n2i.addClass(ce,c);
+	});
+	n2i.listen(o.element,'blur',function() {
+		n2i.removeClass(ce,c);
 	});
 };
 
@@ -6863,21 +7320,21 @@ In2iGui.NumberValidator.prototype = {
 /////////////////////////////// Animation /////////////////////////////
 
 In2iGui.fadeIn = function(node,time) {
-	if ($(node).getStyle('display')=='none') {
-		node.setStyle({opacity:0,display:''});
+	if (n2i.getStyle(node,'display')=='none') {
+		n2i.setStyle(node,{opacity:0,display:''});
 	}
-	n2i.ani(node,'opacity',1,time);
+	n2i.animate(node,'opacity',1,time);
 };
 
 In2iGui.fadeOut = function(node,time) {
-	n2i.ani(node,'opacity',0,time,{hideOnComplete:true});
+	hui.animate(node,'opacity',0,time,{hideOnComplete:true});
 };
 
 In2iGui.bounceIn = function(node,time) {
 	if (n2i.browser.msie) {
-		node.setStyle({'display':'block',visibility:'visible'});
+		n2i.setStyle(node,{'display':'block',visibility:'visible'});
 	} else {
-		node.setStyle({'display':'block','opacity':0,visibility:'visible'});
+		n2i.setStyle(node,{'display':'block','opacity':0,visibility:'visible'});
 		n2i.animate(node,'transform','scale(0.1)',0);// rotate(10deg)
 		window.setTimeout(function() {
 			n2i.animate(node,'opacity',1,300);
@@ -6890,27 +7347,27 @@ In2iGui.bounceIn = function(node,time) {
 
 In2iGui.positionAtElement = function(element,target,options) {
 	options = options || {};
-	element = $(element);
-	target = $(target);
-	var origDisplay = element.getStyle('display');
+	element = n2i.get(element);
+	target = n2i.get(target);
+	var origDisplay = n2i.getStyle(element,'display');
 	if (origDisplay=='none') {
-		element.setStyle({'visibility':'hidden','display':'block'});
+		n2i.setStyle(element,{'visibility':'hidden','display':'block'});
 	}
-	var pos = target.cumulativeOffset(),left = pos.left,top = pos.top;
+	var pos = left = n2i.getLeft(target),top = n2i.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
-		left = left+target.getWidth()-element.getWidth();
+		left = left+target.clientWidth-element.clientWidth;
 	}
 	if (vert=='topOutside') {
-		top = top-element.getHeight();
+		top = top-element.clientHeight;
 	} else if (vert=='bottomOutside') {
-		top = top+target.getHeight();
+		top = top+target.clientHeight;
 	}
 	left+=(options.left || 0);
 	top+=(options.top || 0);
-	element.setStyle({'left':left+'px','top':top+'px'});
+	n2i.setStyle(element,{'left':left+'px','top':top+'px'});
 	if (origDisplay=='none') {
-		element.setStyle({'visibility':'visible','display':'none'});
+		n2i.setStyle(element,{'visibility':'visible','display':'none'});
 	}
 };
 
@@ -6925,112 +7382,11 @@ In2iGui.getTextAreaHeight = function(input) {
 	if (html[html.length-1]==='\n') {
 		html+='x';
 	}
-	html = html.escapeHTML().replace(/\n/g,'<br/>');
+	html = n2i.escape(html).replace(/\n/g,'<br/>');
 	t.innerHTML = html;
 	t.style.width=(input.clientWidth)+'px';
 	return t.clientHeight;
 }
-
-//////////////////////////////// Drag drop //////////////////////////////
-
-In2iGui.getDragProxy = function() {
-	if (!In2iGui.dragProxy) {
-		In2iGui.dragProxy = new Element('div',{'class':'in2igui_dragproxy'}).setStyle({'display':'none'});
-		document.body.appendChild(In2iGui.dragProxy);
-	}
-	return In2iGui.dragProxy;
-};
-
-In2iGui.startDrag = function(e,element,options) {
-	e = e || window.event;
-	var info = element.dragDropInfo;
-	In2iGui.dropTypes = In2iGui.findDropTypes(info);
-	if (!In2iGui.dropTypes) return;
-	var proxy = In2iGui.getDragProxy();
-	Event.observe(document.body,'mousemove',In2iGui.dragListener);
-	Event.observe(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragInfo = info;
-	if (info.icon) {
-		proxy.style.backgroundImage = 'url('+In2iGui.getIconUrl(info.icon,1)+')';
-	}
-	In2iGui.startDragPos = {top:Event.pointerY(e),left:Event.pointerX(e)};
-	proxy.innerHTML = info.title ? '<span>'+info.title.escapeHTML()+'</span>' : '###';
-	In2iGui.dragging = true;
-	document.body.onselectstart = function () { return false; };
-};
-
-In2iGui.findDropTypes = function(drag) {
-	var gui = In2iGui.get();
-	var drops = null;
-	for (var i=0; i < gui.delegates.length; i++) {
-		if (gui.delegates[i].dragDrop) {
-			for (var j=0; j < gui.delegates[i].dragDrop.length; j++) {
-				var rule = gui.delegates[i].dragDrop[j];
-				if (rule.drag==drag.kind) {
-					if (drops==null) drops={};
-					drops[rule.drop] = {};
-				}
-			};
-		}
-	}
-	return drops;
-};
-
-In2iGui.dragListener = function(e) {
-	In2iGui.dragProxy.style.left = (Event.pointerX(e)+10)+'px';
-	In2iGui.dragProxy.style.top = Event.pointerY(e)+'px';
-	In2iGui.dragProxy.style.display='block';
-	var target = In2iGui.findDropTarget(Event.element(e));
-	if (target && In2iGui.dropTypes[target.dragDropInfo['kind']]) {
-		if (In2iGui.latestDropTarget) {
-			In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		}
-		target.addClassName('in2igui_drop');
-		In2iGui.latestDropTarget = target;
-	} else if (In2iGui.latestDropTarget) {
-		In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		In2iGui.latestDropTarget = null;
-	}
-	return false;
-};
-
-In2iGui.findDropTarget = function(node) {
-	while (node) {
-		if (node.dragDropInfo) {
-			return node;
-		}
-		node = node.parentNode;
-	}
-	return null;
-};
-
-In2iGui.dragEndListener = function(event) {
-	Event.stopObserving(document.body,'mousemove',In2iGui.dragListener);
-	Event.stopObserving(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragging = false;
-	if (In2iGui.latestDropTarget) {
-		In2iGui.latestDropTarget.removeClassName('in2igui_drop');
-		In2iGui.callDelegatesDrop(In2iGui.dragInfo,In2iGui.latestDropTarget.dragDropInfo);
-		In2iGui.dragProxy.style.display='none';
-	} else {
-		n2i.ani(In2iGui.dragProxy,'left',(In2iGui.startDragPos.left+10)+'px',200,{ease:n2i.ease.fastSlow});
-		n2i.ani(In2iGui.dragProxy,'top',(In2iGui.startDragPos.top-5)+'px',200,{ease:n2i.ease.fastSlow,hideOnComplete:true});
-	}
-	In2iGui.latestDropTarget=null;
-	document.body.onselectstart=null;
-};
-
-In2iGui.dropOverListener = function(event) {
-	if (In2iGui.dragging) {
-		//this.style.backgroundColor='#3875D7';
-	}
-};
-
-In2iGui.dropOutListener = function(event) {
-	if (In2iGui.dragging) {
-		//this.style.backgroundColor='';
-	}
-};
 
 //////////////////// Delegating ////////////////////
 
@@ -7043,11 +7399,11 @@ In2iGui.extend = function(obj,options) {
 		if (obj.options) {
 			obj.options = n2i.override(obj.options,options);
 		}
-		obj.element = $(options.element);
+		obj.element = n2i.get(options.element);
 		obj.name = options.name;
 	}
 	var ctrl = In2iGui.get();
-	ctrl.objects.set(obj.name,obj);
+	ctrl.objects[obj.name] = obj;
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		n2i.addToArray(this.delegates,delegate);
@@ -7105,11 +7461,11 @@ In2iGui.callDescendants = function(obj,method,value,event) {
 		method = '$'+method;
 	}
 	var d = In2iGui.get().getDescendants(obj);
-	d.each(function(child) {
-		if (child[method]) {
-			thisResult = child[method](value,event);
+	for (var i=0; i < d.length; i++) {
+		if (d[i][method]) {
+			thisResult = d[i][method](value,event);
 		}
-	});
+	};
 };
 
 In2iGui.callVisible = function(widget) {
@@ -7261,7 +7617,7 @@ In2iGui.jsonResponse = function(t,key) {
 	if (!t.responseXML || !t.responseXML.documentElement) {
 		var str = t.responseText.replace(/^\s+|\s+$/g, '');
 		if (str.length>0) {
-			var json = t.responseText.evalJSON(true);
+			var json = n2i.fromJSON(t.responseText);
 		} else {
 			json = '';
 		}
@@ -7273,16 +7629,16 @@ In2iGui.jsonResponse = function(t,key) {
 
 /** @deprecated */
 In2iGui.json = function(data,url,delegateOrKey) {
-	var options = {method:'post',parameters:{},onException:function(e) {throw e}};
+	var options = {url:url,method:'post',parameters:{},onException:function(e) {throw e}};
 	if (typeof(delegateOrKey)=='string') {
 		options.onSuccess=function(t) {In2iGui.jsonResponse(t,delegateOrKey)};
 	} else {
 		delegate = delegateOrKey;
 	}
 	for (key in data) {
-		options.parameters[key]=Object.toJSON(data[key])
+		options.parameters[key]=n2i.toJSON(data[key])
 	}
-	new Ajax.Request(url,options);
+	n2i.request(options);
 };
 
 In2iGui.jsonRequest = function(o) {
@@ -7293,16 +7649,17 @@ In2iGui.jsonRequest = function(o) {
 		delegate = delegateOrKey;
 	}
 	for (key in o.parameters) {
-		options.parameters[key]=Object.toJSON(o.parameters[key])
+		options.parameters[key]=n2i.toJSON(o.parameters[key])
 	}
-	new Ajax.Request(o.url,options)
+	options.url = o.url;
+	n2i.request(options);
 };
 
 In2iGui.request = function(options) {
 	options = n2i.override({method:'post',parameters:{}},options);
 	if (options.json) {
 		for (key in options.json) {
-			options.parameters[key]=Object.toJSON(options.json[key])
+			options.parameters[key]=n2i.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
@@ -7314,7 +7671,7 @@ In2iGui.request = function(options) {
 		} else if (options.onJSON) {
 			var str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				var json = t.responseText.evalJSON(true);
+				var json = n2i.fromJSON(t.responseText);
 			} else {
 				var json = null;
 			}
@@ -7334,7 +7691,7 @@ In2iGui.request = function(options) {
 		}
 	}
 	options.onException = function(t,e) {n2i.log(e)};
-	new Ajax.Request(options.url,options);
+	n2i.request(options);
 };
 
 In2iGui.parseItems = function(doc) {
@@ -7365,164 +7722,22 @@ In2iGui.parseSubItems = function(parent,array) {
 	};
 }
 
-////////////////////////////////// Source ///////////////////////////
 
-/** A data source
- * @constructor
- */
-In2iGui.Source = function(options) {
-	this.options = n2i.override({url:null,dwr:null,parameters:[],lazy:false},options);
-	this.name = options.name;
-	this.data = null;
-	this.parameters = this.options.parameters;
-	In2iGui.extend(this);
-	if (options.delegate) {
-		this.listen(options.delegate);
-	}
-	this.busy=false;
-	In2iGui.onDomReady(this.init.bind(this));
-};
-
-In2iGui.Source.prototype = {
-	/** @private */
-	init : function() {
-		var self = this;
-		this.parameters.each(function(parm) {
-			var val = In2iGui.bind(parm.value,function(value) {
-				self.changeParameter(parm.key,value);
-			});
-			parm.value = self.convertValue(val);
-		})
-		if (!this.options.lazy) {
-			this.refresh();
-		}
-	},
-	/** @private */
-	convertValue : function(value) {		
-		if (value && value.getTime) {
-			return value.getTime();
-		}
-		return value;
-	},
-	/** Refreshes the data source */
-	refresh : function() {
-		if (this.delegates.length==0) {
-			return;
-		}
-		for (var i=0; i < this.delegates.length; i++) {
-			var d = this.delegates[i];
-			if (d['$sourceShouldRefresh'] && d['$sourceShouldRefresh']()==false) {
-				return;
-			}
-		};
-		if (this.busy) {
-			this.pendingRefresh = true;
-			return;
-		}
-		this.pendingRefresh = false;
-		var self = this;
-		if (this.options.url) {
-			var prms = {};
-			for (var i=0; i < this.parameters.length; i++) {
-				var p = this.parameters[i];
-				prms[p.key] = p.value;
-			};
-			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
-			new Ajax.Request(this.options.url, {
-				parameters:prms,
-				onSuccess: function(t) {self.parse(t)},
-				onException:function(t,e) {n2i.log(e)},
-				onFailure:function(t,e) {
-					In2iGui.callDelegates(self,'sourceFailed');
-				}
-			});
-		} else if (this.options.dwr) {
-			var pair = this.options.dwr.split('.');
-			var facade = eval(pair[0]);
-			var method = pair[1];
-			var args = facade[method].argumentNames();
-			for (var i=0; i < args.length; i++) {
-				if (this.parameters[i]) {
-					args[i]=this.parameters[i].value===undefined ? null : this.parameters[i].value;
-				}
-			};
-			args[args.length-1]=function(r) {self.parseDWR(r)};
-			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
-			facade[method].apply(facade,args);
-		}
-	},
-	/** @private */
-	end : function() {
-		In2iGui.callDelegates(this,'sourceIsNotBusy');
-		this.busy=false;
-		if (this.pendingRefresh) {
-			this.refresh();
-		}
-	},
-	/** @private */
-	parse : function(t) {
-		if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror') {
-			this.parseXML(t.responseXML);
-		} else {
-			var str = t.responseText.replace(/^\s+|\s+$/g, '');
-			if (str.length>0) {
-				var json = t.responseText.evalJSON(true);
-			} else {
-				var json = null;
-			}
-			this.fire('objectsLoaded',json);
-		}
-		this.end();
-	},
-	/** @private */
-	parseXML : function(doc) {
-		if (doc.documentElement.tagName=='items') {
-			this.data = In2iGui.parseItems(doc);
-			this.fire('itemsLoaded',this.data);
-		} else if (doc.documentElement.tagName=='list') {
-			this.fire('listLoaded',doc);
-		} else if (doc.documentElement.tagName=='articles') {
-			this.fire('articlesLoaded',doc);
-		}
-	},
-	/** @private */
-	parseDWR : function(data) {
-		this.data = data;
-		this.fire('objectsLoaded',data);
-		this.end();
-	},
-	addParameter : function(parm) {
-		//n2i.log(parm.value);
-		this.parameters.push(parm);
-	},
-	changeParameter : function(key,value) {
-		value = this.convertValue(value);
-		this.parameters.each(function(p) {
-			if (p.key==key) {
-				p.value=value;
-			}
-		})
-		window.clearTimeout(this.paramDelay);
-		this.paramDelay = window.setTimeout(function() {
-			this.refresh();
-		}.bind(this),100)
-	}
-}
 
 
 //////////////////////////// Prototype extensions ////////////////////////////////
-
-Element.addMethods({
-	setClassName : function(element,name,set) {
-		if (set) {
-			element.addClassName(name);
-		} else {
-			element.removeClassName(name);
+/*
+if (Element.addMethods) {
+	Element.addMethods({
+		setClassName : function(element,name,set) {
+			if (set) {
+				element.addClassName(name);
+			} else {
+				element.removeClassName(name);
+			}
+			return element;
 		}
-		return element;
-	}
-});
-
+	});
+}
+*/
 /* EOF */

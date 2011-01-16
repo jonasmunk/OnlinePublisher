@@ -42,7 +42,9 @@ if (Request::getBoolean('link')) {
 								<button title="Opret" small="true" rounded="true" name="create"/>
 							' : '
 								<button title="Opdater" small="true" rounded="true" name="update"/>
-								<button title="Slet" small="true" rounded="true" name="delete"/>
+								<button title="Slet" small="true" rounded="true" name="delete">
+									<confirm text="Vil du slette linket?" ok="Ja, slet" cancel="Nej"/>
+								</button>
 							').'
 							</cell>
 						</row>

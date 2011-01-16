@@ -1,6 +1,6 @@
 var partController = {
 	$ready : function() {
-		var field = this.field = $('PartListingTextarea');
+		var field = n2i.get('PartListingTextarea');
 		field.focus();
 		field.select();
 		this.resizer = new op.FieldResizer({field:field});

@@ -11,7 +11,7 @@ require_once '../../Classes/GuiUtils.php';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemUtil::getMaxUploadSize());
 $flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
-$flash = 'true';
+//$flash = 'true';
 $gui='
 <gui xmlns="uri:In2iGui" title="Filer" padding="10">
 	<controller source="controller.js"/>

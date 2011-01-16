@@ -1,7 +1,7 @@
 /** @constructor */
 In2iGui.InfoView = function(options) {
 	this.options = n2i.override({clickObjects:false},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.body = this.element.select('tbody')[0];
 	this.name = options.name;
 	In2iGui.extend(this);

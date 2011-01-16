@@ -2,7 +2,6 @@ op.Editor = {
 	$ready : function() {
 		var ctrl = this.getToolbarController();
 		if (ctrl) { // May not be loaded yet
-			n2i.log(ctrl);
 			ctrl.pageDidLoad(op.page.id);
 		}
 		if (n2i.location.hasHash('edit')) {
@@ -73,7 +72,11 @@ op.Editor = {
 		}.bind(this)});
 	},
 	moreProperties : function() {
-		window.parent.parent.location='../../../Tools/Pages/?action=pageproperties';
+		if (!window.parent) {
+			n2i.log('The window has no parent! '+window.location);
+			return;
+		}
+		window.parent.location='../../../Tools/Pages/?action=pageproperties';
 	}
 }
 
@@ -83,12 +86,12 @@ ui.listen(op.Editor);
  * @constructor
  */
 op.Editor.Header = function(element,row,column,position) {
-	this.element = $(element);
+	this.element = n2i.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;
 	this.id = ui.Editor.getPartId(this.element);
-	this.header = this.element.firstDescendant();
+	this.header = n2i.firstByTag(this.element,'*');
 	this.field = null;
 }
 
@@ -103,14 +106,14 @@ op.Editor.Header.prototype = {
 		}.bind(this)});
 	},
 	_edit : function() {
-		this.field = new Element('textarea').addClassName('in2igui_editor_header');
+		this.field = n2i.build('textarea',{'class':'in2igui_editor_header'});
 		this.field.value = this.part.text;
 		this.header.style.visibility='hidden';
 		this._updateFieldStyle();
 		this.element.insertBefore(this.field,this.header);
 		this.field.focus();
 		this.field.select();
-		this.field.observe('keydown',function(e) {
+		n2i.listen(this.field,'keydown',function(e) {
 			if (e.keyCode==Event.KEY_RETURN) {
 				this.save();
 			}
@@ -138,8 +141,8 @@ op.Editor.Header.prototype = {
 		In2iGui.Editor.get().partDidDeacivate(this);
 	},
 	_updateFieldStyle : function() {
-		this.field.setStyle({width:this.header.getWidth()+'px',height:this.header.getHeight()+'px'});
-		n2i.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
+		n2i.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		n2i.copyStyle(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	},
 	getValue : function() {
 		return this.value;
@@ -150,12 +153,12 @@ op.Editor.Header.prototype = {
  * @constructor
  */
 op.Editor.Text = function(element,row,column,position) {
-	this.element = $(element);
+	this.element = n2i.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;
 	this.id = ui.Editor.getPartId(this.element);
-	this.header = this.element.firstDescendant();
+	this.header = n2i.firstByTag(this.element,'*');
 	this.field = null;
 }
 
@@ -170,7 +173,7 @@ op.Editor.Text.prototype = {
 		}.bind(this)});
 	},
 	_edit : function() {
-		this.field = new Element('textarea').addClassName('in2igui_editor_header');
+		this.field = n2i.build('textarea',{className:'in2igui_editor_header'});
 		this.field.value = this.part.text;
 		this.header.style.visibility='hidden';
 		this._updateFieldStyle();
@@ -192,8 +195,8 @@ op.Editor.Text.prototype = {
 			this.header.innerHTML = value;
 			In2iGui.Editor.get().partChanged(this);
 			ui.request({url:'parts/update.php',parameters:{id:this.id,pageId:op.page.id,text:this.value,type:'text'},onText:function(html) {
-				this.element.update(html);
-				this.header = this.element.firstDescendant();
+				this.element.innerHTML=html;
+				this.header = n2i.firstByTag(this.element,'*');
 			}.bind(this)});
 		}
 	},
@@ -206,8 +209,8 @@ op.Editor.Text.prototype = {
 		In2iGui.Editor.get().partDidDeacivate(this);
 	},
 	_updateFieldStyle : function() {
-		this.field.setStyle({width:this.header.getWidth()+'px',height:this.header.getHeight()+'px'});
-		n2i.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
+		n2i.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		n2i.copyStyle(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	},
 	getValue : function() {
 		return this.value;

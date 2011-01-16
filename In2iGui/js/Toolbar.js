@@ -1,17 +1,16 @@
 
 /** @constructor */
 In2iGui.Toolbar = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
 
 In2iGui.Toolbar.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_toolbar'});
-	if (options.labels==false) {
-		options.element.addClassName('in2igui_toolbar_nolabels');
-	}
+	options.element = n2i.build('div',{
+		'class' : options.labels ? 'in2igui_toolbar in2igui_toolbar_nolabels' : 'in2igui_toolbar'
+	});
 	return new In2iGui.Toolbar(options);
 }
 
@@ -30,19 +29,21 @@ In2iGui.Toolbar.prototype = {
 
 /** @constructor */
 In2iGui.RevealingToolbar = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
 
 In2iGui.RevealingToolbar.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_revealing_toolbar'}).setStyle({'display':'none'});
-	document.body.appendChild(options.element);
-	var rev = new In2iGui.RevealingToolbar(options);
-	var toolbar = In2iGui.Toolbar.create();
-	rev.setToolbar(toolbar);
-	return rev;
+	options.element = n2i.build( 'div', {
+		className : 'in2igui_revealing_toolbar',
+		style : 'display:none',
+		parent : document.body
+	});
+	var bar = new In2iGui.RevealingToolbar(options);
+	bar.setToolbar(In2iGui.Toolbar.create());
+	return bar;
 }
 
 In2iGui.RevealingToolbar.prototype = {
@@ -69,11 +70,11 @@ In2iGui.RevealingToolbar.prototype = {
 /** @constructor */
 In2iGui.Toolbar.Icon = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.enabled = !this.element.hasClassName('in2igui_toolbar_icon_disabled');
+	this.enabled = !n2i.hasClass(this.element,'in2igui_toolbar_icon_disabled');
 	this.element.tabIndex=this.enabled ? 0 : -1;
-	this.icon = this.element.select('.in2igui_icon')[0];
+	this.icon = n2i.firstByClass(this.element,'in2igui_icon');
 	In2iGui.extend(this);
 	this.addBehavior();
 }
@@ -108,7 +109,7 @@ In2iGui.Toolbar.Icon.prototype = {
 	setEnabled : function(enabled) {
 		this.enabled = enabled;
 		this.element.tabIndex=enabled ? 0 : -1;
-		this.element.setClassName('in2igui_toolbar_icon_disabled',!this.enabled);
+		n2i.setClass(this.element,'in2igui_toolbar_icon_disabled',!this.enabled);
 	},
 	/** Disables the icon */
 	disable : function() {
@@ -120,7 +121,7 @@ In2iGui.Toolbar.Icon.prototype = {
 	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
-		this.element.setClassName('in2igui_toolbar_icon_selected',selected);
+		n2i.setClass(this.element,'in2igui_toolbar_icon_selected',selected);
 	},
 	/** @private */
 	wasClicked : function() {
@@ -151,9 +152,9 @@ In2iGui.Toolbar.Icon.prototype = {
 /** @constructor */
 In2iGui.Toolbar.SearchField = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.field = this.element.select('input')[0];
+	this.field = n2i.firstByTag(this.element,'input');
 	this.value = this.field.value;
 	In2iGui.extend(this);
 	this.addBehavior();
@@ -161,9 +162,11 @@ In2iGui.Toolbar.SearchField = function(options) {
 
 In2iGui.Toolbar.SearchField.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class': options.adaptive ? 'in2igui_toolbar_search in2igui_toolbar_search_adaptive' : 'in2igui_toolbar_search'});
-	e.update('<div class="in2igui_searchfield"><strong class="in2igui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
-		'<span>'+options.title+'</span>');
+	options.element = n2i.build('div',{
+		'class' : options.adaptive ? 'in2igui_toolbar_search in2igui_toolbar_search_adaptive' : 'in2igui_toolbar_search',
+		html : '<div class="in2igui_searchfield"><strong class="in2igui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
+		'<span>'+n2i.escape(options.title)+'</span>'
+	});
 	return new In2iGui.Toolbar.SearchField(options);
 }
 
@@ -199,19 +202,19 @@ In2iGui.Toolbar.SearchField.prototype = {
 
 /** @constructor */
 In2iGui.Toolbar.Badge = function(options) {
-	this.element = $(options.element);
+	this.element = ni2.get(options.element);
 	this.name = options.name;
-	this.label = this.element.select('strong')[0];
-	this.text = this.element.select('span')[0];
+	this.label = n2i.firstByTag(this.element,'strong');
+	this.text = n2i.firstByTag(this.element,'span');
 	In2iGui.extend(this);
 }
 
 In2iGui.Toolbar.Badge.prototype = {
 	setLabel : function(str) {
-		this.label.update(str);
+		n2i.dom.setNodeText(this.label,str);
 	},
 	setText : function(str) {
-		this.text.update(str);
+		n2i.dom.setNodeText(this.text,str);
 	}
 }
 

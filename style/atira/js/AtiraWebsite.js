@@ -3,10 +3,10 @@ if (!Atira.Website) {Atira.Website={};}
 
 Atira.Website.Poster = function(options) {
 	this.options = options || {random:false};
-	this.poster = $$('.placard')[0];
-	this.inner = $$('.inner_placard')[0];
+	this.poster = n2i.firstByClass(document.body,'placard');
+	this.inner = n2i.firstByClass(document.body,'inner_placard');
 	this.num = 1;
-	this.count = this.poster.select('.poster').length;
+	this.count = n2i.byClass(this.poster,'poster').length;
 	this.duration = 8000;
 	this.active = false;
 	this.paused = false;
@@ -17,7 +17,6 @@ Atira.Website.Poster = function(options) {
 
 Atira.Website.Poster.prototype = {
 	ignite : function() {
-		
 		if (this.options.random) {
 			this.num = Math.round(Math.random()*(this.count-1))+1;			
 		}
@@ -25,8 +24,8 @@ Atira.Website.Poster.prototype = {
 		this.inner.style.visibility='visible';
 	},
 	addBehavior : function() {
-		this.poster.observe('mouseover',this.pause.bind(this));
-		this.poster.observe('mouseout',this.resume.bind(this));
+		n2i.listen(this.poster,'mouseover',this.pause.bind(this));
+		n2i.listen(this.poster,'mouseout',this.resume.bind(this));
 	},
 	next : function() {
 		var self = this;
@@ -41,7 +40,10 @@ Atira.Website.Poster.prototype = {
 		}
 		var self = this;
 		this.active = true;
-			n2i.ani(this.poster,'scrollLeft',(this.num-1)*898,2000,{ease:n2i.ease.slowFastSlow,onComplete:function() {self.active = false;self.next()}});
+			n2i.animate(this.poster,'scrollLeft',(this.num-1)*898,2000,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+				self.active = false;
+				self.next()
+			}});
 	},
 	pause : function() {
 		this.paused = true;
@@ -65,11 +67,11 @@ Atira.Website.Ticker = function() {
 
 Atira.Website.Ticker.prototype = {
 	addBehavior : function() {
-		this.base = $$('.ticker')[0];
+		this.base = n2i.firstByClass(document.body,'ticker');
 		if (!this.base) return false;
-		this.item = this.base.select('.item')[0];
-		this.previousArrow = this.base.select('.previous')[0];
-		this.nextArrow = this.base.select('.next')[0];
+		this.item = n2i.firstByClass(this.base,'item');
+		this.previousArrow = n2i.firstByClass(this.base,'previous');
+		this.nextArrow = n2i.firstByClass(this.base,'next');
 		var self = this;
 		this.base.onmouseover = function() {
 			self.pause();
@@ -96,7 +98,9 @@ Atira.Website.Ticker.prototype = {
 
 	showNext : function() {
 		this.activeItem++;
-		if (this.activeItem>=this.items.length) this.activeItem = 0;
+		if (this.activeItem>=this.items.length) {
+			this.activeItem = 0;
+		}
 		this.updateUI();
 	},
 

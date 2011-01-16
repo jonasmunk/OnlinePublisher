@@ -4,18 +4,23 @@
 In2iGui.Tabs = function(o) {
 	o = o || {};
 	this.name = o.name;
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.activeTab = -1;
-	this.bar = this.element.select('.in2igui_tabs_bar ul')[0];
-	this.tabs = this.bar.select('li');
-	this.contents = this.element.select('.in2igui_tabs_tab');
+	var x = n2i.firstByClass(this.element,'in2igui_tabs_bar');
+	this.bar = n2i.firstByTag(x,'ul');
+	this.tabs = [];
+	var nodes = this.bar.getElementsByTagName('li');
+	for (var i=0; i < nodes.length; i++) {
+		this.tabs.push(nodes[i]);
+	};
+	this.contents = n2i.byClass(this.element,'in2igui_tabs_tab');
 	this.addBehavior();
 	In2iGui.extend(this);
 }
 
 In2iGui.Tabs.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class':'in2igui_tabs'});
+	var e = options.element = n2i.build('div',{'class':'in2igui_tabs'});
 	var cls = 'in2igui_tabs_bar';
 	if (options.small) {
 		cls+=' in2igui_tabs_bar_small';
@@ -23,21 +28,21 @@ In2iGui.Tabs.create = function(options) {
 	if (options.centered) {
 		cls+=' in2igui_tabs_bar_centered';
 	}
-	var bar = new Element('div',{'class' : cls});
-	e.insert(bar);
-	var ul = new Element('ul');
-	bar.insert(ul);
+	var bar = n2i.build('div',{'class' : cls, parent : e});
+	var ul = n2i.build('ul',{parent:bar});
 	return new In2iGui.Tabs(options);
 }
 
 In2iGui.Tabs.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.tabs.each(this.addTabBehavior.bind(this));
+		for (var i=0; i < this.tabs.length; i++) {
+			this.addTabBehavior(this.tabs[i],i);
+		};
 	},
 	/** @private */
 	addTabBehavior : function(tab,index) {	
-		tab.observe('click',function() {
+		n2i.listen(tab,'click',function() {
 			this.tabWasClicked(index);
 		}.bind(this))
 	},
@@ -54,27 +59,26 @@ In2iGui.Tabs.prototype = {
 	/** @private */
 	updateGUI : function() {
 		for (var i=0; i < this.tabs.length; i++) {
-			this.tabs[i].setClassName('in2igui_tabs_selected',i==this.activeTab);
-			this.contents[i].setStyle({display : (i==this.activeTab ? 'block' : 'none')});
+			n2i.setClass(this.tabs[i],'in2igui_tabs_selected',i==this.activeTab);
+			this.contents[i].style.display = i==this.activeTab ? 'block' : 'none';
 		};
 	},
 	createTab : function(options) {
 		options = options || {};
-		var tab = new Element('li').update('<a><span><span>'+options.title+'</span></span></a>');
-		this.bar.insert(tab);
+		var tab = n2i.build('li',{html:'<a><span><span>'+n2i.escape(options.title)+'</span></span></a>',parent:this.bar});
 		this.addTabBehavior(tab,this.tabs.length);
 		this.tabs.push(tab);
-		var e = options.element = new Element('div',{'class':'in2igui_tabs_tab'});
+		var e = options.element = n2i.build('div',{'class':'in2igui_tabs_tab'});
 		if (options.padding>0) {
-			e.setStyle({'padding':options.padding+'px'});
+			e.style.padding = options.padding+'px';
 		}
 		this.contents.push(e);
-		this.element.insert(e);
+		this.element.appendChild(e);
 		if (this.activeTab==-1) {
 			this.activeTab=0;
-			tab.addClassName('in2igui_tabs_selected');
+			n2i.addClass(tab,'in2igui_tabs_selected');
 		} else {
-			e.setStyle({display:'none'});			
+			e.style.display='none';
 		}
 		return new In2iGui.Tab(options);
 	}
@@ -85,12 +89,12 @@ In2iGui.Tabs.prototype = {
  */
 In2iGui.Tab = function(o) {
 	this.name = o.name;
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 }
 
 In2iGui.Tab.prototype = {
 	add : function(widget) {
-		this.element.insert(widget.element);
+		this.element.appendChild(widget.element);
 	}
 }
 

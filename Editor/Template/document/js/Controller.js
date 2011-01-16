@@ -20,30 +20,30 @@ var controller = {
 			null,
 			{title:'Kolonne',children:[
 				{title:'Rediger kolonne',value:'editColumn'},
-				{title:'Flyt til h&oslash;jre',value:'moveColumnRight'},
+				{title:'Flyt til højre',value:'moveColumnRight'},
 				{title:'Flyt til venstre',value:'moveColumnLeft'},
-				{title:'Tilf&oslash;j kolonne',value:'addColumn'},
+				{title:'Tilføj kolonne',value:'addColumn'},
 				{title:'Slet kolonne',value:'deleteColumn'}
 			]},
-			{title:'R&aelig;kke',children:[
+			{title:'Række',children:[
 				{title:'Flyt op',value:'moveRowUp'},
 				{title:'Flyt ned',value:'moveRowDown'},
-				{title:'Tilf&oslash;j r&aelig;kke',value:'addRow'},
-				{title:'Slet r&aelig;kke',value:'deleteRow'}
+				{title:'Tilføj række',value:'addRow'},
+				{title:'Slet række',value:'deleteRow'}
 			]}
 		]);
 		this.columnMenu = In2iGui.Menu.create({name:'sectionMenu'});
 		this.columnMenu.addItems([
 				{title:'Rediger kolonne',value:'editColumn'},
-				{title:'Flyt kolonne til h&oslash;jre',value:'moveColumnRight'},
+				{title:'Flyt kolonne til højre',value:'moveColumnRight'},
 				{title:'Flyt kolonne til venstre',value:'moveColumnLeft'},
-				{title:'Tilf&oslash;j kolonne',value:'addColumn'},
+				{title:'Tilføj kolonne',value:'addColumn'},
 				{title:'Slet kolonne',value:'deleteColumn'},
 				null,
-				{title:'Flyt r&aelig;kke op',value:'moveRowUp'},
-				{title:'Flyt r&aelig;kke ned',value:'moveRowDown'},
-				{title:'Tilf&oslash;j r&aelig;kke',value:'addRow'},
-				{title:'Slet r&aelig;kke',value:'deleteRow'}
+				{title:'Flyt række op',value:'moveRowUp'},
+				{title:'Flyt række ned',value:'moveRowDown'},
+				{title:'Tilføj række',value:'addRow'},
+				{title:'Slet række',value:'deleteRow'}
 		]);
 		this.partMenu = In2iGui.Menu.create({name:'partMenu'});
 		this.partMenu.addItems(this.parts);
@@ -57,10 +57,10 @@ var controller = {
 			this.partEditControls = In2iGui.Overlay.create({name:'sectionEditActions'});
 			this.partEditControls.addIcon('save','common/save');
 			this.partEditControls.addIcon('cancel','common/stop');
-			this.partEditControls.showAtElement($$('.section_selected')[0],{'horizontal':'left','vertical':'topOutside'});
+			this.partEditControls.showAtElement(n2i.firstByClass(document.body,'section_selected'),{'horizontal':'left','vertical':'topOutside'});
 		}
 		this.ready = true;
-		$(document.body).observe('mouseup',function() {
+		n2i.listen(document.body,'mouseup',function() {
 			this.selectedText = n2i.getSelectedText();
 		}.bind(this));
 		window.onscroll=this.saveScroll;
@@ -122,14 +122,14 @@ var controller = {
 	
 	sectionOver : function(cell,sectionId,columnId,indexVal) {
 		if (this.activeSection || !this.ready) return;
-		cell.addClassName('section_hover');
+		n2i.addClass(cell,'section_hover');
 		this.sectionId=sectionId;
 		document.forms.SectionAdder.column.value=columnId;
 		document.forms.SectionAdder.index.value=indexVal;
 		this.partControls.showAtElement(cell,{'horizontal':'right',autoHide:true});
 	},
 	sectionOut : function(cell,event) {
-		cell.removeClassName('section_hover');
+		n2i.removeClass(cell,'section_hover');
 		return;
 	},
 	showSectionMenu : function(element,event,sectionId,sectionIndex,columnId,columnIndex,rowId,rowIndex) {
@@ -165,11 +165,11 @@ var controller = {
 	},
 	
 	columnOver : function(cell) {
-		$(cell).addClassName('columnHover');
+		n2i.addClass(cell,'columnHover');
 	},
 	
 	columnOut : function(cell) {
-		$(cell).removeClassName('columnHover');
+		n2i.removeClass(cell,'columnHover');
 	},
 	
 	editColumn : function() {
@@ -229,15 +229,16 @@ op.FieldResizer = function(options) {
 	this.dummy.style.top='-999999px';
 	this.dummy.style.visibility='hidden';
 	var self = this;
-	options.field.observe('keyup',function(){self.resize(false,true)});
-	options.field.observe('keydown',function(){self.options.field.scrollTop=0;});
+	n2i.listen(options.field,'keyup',function(){self.resize(false,true)});
+	n2i.listen(options.field,'keydown',function(){self.options.field.scrollTop=0;});
 }
 
 op.FieldResizer.prototype = {
 	resize : function(instantly,focused) {
 				
-		var field = this.options.field;		n2i.copyStyle(field,this.dummy,[
-			'fontSize','lineHeight','fontWeight','letterSpacing','wordSpacing','fontFamily','textTransform','fontVariant','textIndent'
+		var field = this.options.field;
+		n2i.copyStyle(field,this.dummy,[
+			'font-size','line-height','font-weight','letter-spacing','word-spacing','font-family','text-transform','font-variant','text-indent'
 		]);
 		var html = field.value;
 		if (html[html.length-1]==='\n') {

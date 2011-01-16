@@ -4,11 +4,11 @@
  * @param {Object} options { element: «Node | id», name: «String» }
  */
 In2iGui.BoundPanel = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.visible = false;
-	this.content=this.element.select('div.in2igui_boundpanel_content')[0];
-	this.arrow=this.element.select('div.in2igui_boundpanel_arrow')[0];
+	this.content = n2i.firstByClass(this.element,'in2igui_boundpanel_content');
+	this.arrow = n2i.firstByClass(this.element,'in2igui_boundpanel_arrow');
 	In2iGui.extend(this);
 }
 
@@ -19,8 +19,7 @@ In2iGui.BoundPanel = function(options) {
  */
 In2iGui.BoundPanel.create = function(options) {
 	var options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
-	var element = options.element = new Element('div',
-		{'class':'in2igui_boundpanel'}).setStyle({'display':'none','zIndex':In2iGui.nextPanelIndex(),'top':options.top+'px','left':options.left+'px'});
+
 	
 	var html = 
 		'<div class="in2igui_boundpanel_arrow"></div>'+
@@ -34,8 +33,15 @@ In2iGui.BoundPanel.create = function(options) {
 	}
 	html+='"></div></div></div></div>'+
 		'<div class="in2igui_boundpanel_bottom"><div><div></div></div></div>';
-	element.innerHTML=html;
-	document.body.appendChild(element);
+
+	options.element = n2i.build(
+		'div',{
+			'class':'in2igui_boundpanel',
+			style:'display:none;zIndex:'+In2iGui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
+			html:html,
+			parent:document.body
+		}
+	);
 	return new In2iGui.BoundPanel(options);
 }
 
@@ -53,11 +59,11 @@ In2iGui.BoundPanel.prototype = {
 			} else {
 				this.element.style.marginLeft='-30px';
 			}
-			this.element.setStyle({
+			n2i.setStyle(this.element,{
 				visibility : 'hidden', display : 'block'
 			})
 			var width = this.element.clientWidth;
-			this.element.setStyle({
+			n2i.setStyle(this.element,{
 				width : width+'px' , visibility : 'visible'
 			});
 			this.element.style.marginTop='0px';
@@ -85,9 +91,9 @@ In2iGui.BoundPanel.prototype = {
 	 */
 	add : function(child) {
 		if (child.getElement) {
-			this.content.insert(child.getElement());
+			this.content.appendChild(child.getElement());
 		} else {
-			this.content.insert(child);
+			this.content.appendChild(child);
 		}
 	},
 	/**
@@ -95,20 +101,20 @@ In2iGui.BoundPanel.prototype = {
 	 * @param {pixels} height The height of the space in pixels
 	 */
 	addSpace : function(height) {
-		this.add(new Element('div').setStyle({fontSize:'0px',height:height+'px'}));
+		this.add(n2i.build('div',{style:'font-size:0px;height:'+height+'px'}));
 	},
 	/** @private */
 	getDimensions : function() {
 		if (this.element.style.display=='none') {
 			this.element.style.visibility='hidden';
 			this.element.style.display='block';
-			var width = this.element.getWidth();
-			var height = this.element.getHeight();
+			var width = this.element.clientWidth;
+			var height = this.element.clientHeight;
 			this.element.style.display='none';
 			this.element.style.visibility='';
 		} else {
-			var width = this.element.getWidth();
-			var height = this.element.getHeight();
+			var width = this.element.clientWidth;
+			var height = this.element.clientHeight;
 		}
 		return {width:width,height:height};
 	},
@@ -116,14 +122,14 @@ In2iGui.BoundPanel.prototype = {
 	 * @param {Node} node The node the panel should be positioned at 
 	 */
 	position : function(node) {
-		node = $(node);
-		var offset = node.cumulativeOffset();
-		var scrollOffset = node.cumulativeScrollOffset();
+		node = n2i.get(node);
+		var offset = {left:n2i.getLeft(node),top:n2i.getTop(node)};
+		var scrollOffset = {left:n2i.getScrollLeft(),top:n2i.getScrollTop()};
 		var dims = this.getDimensions();
 		var winWidth = n2i.getInnerWidth();
 		var nodeLeft = offset.left-scrollOffset.left+n2i.getScrollLeft();
-		var nodeWidth = node.getWidth();
-		var nodeHeight = node.getHeight();
+		var nodeWidth = node.clientWidth;
+		var nodeHeight = node.clientHeight;
 		var nodeTop = offset.top-scrollOffset.top+n2i.getScrollTop();
 		if ((nodeLeft+nodeWidth/2)/winWidth<.5) {
 			this.relativePosition='left';

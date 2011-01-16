@@ -2,12 +2,12 @@
  * @constructor
  */
 In2iGui.Window = function(options) {
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.close = this.element.select('.in2igui_window_close')[0];
-	this.titlebar = this.element.select('.in2igui_window_titlebar')[0];
-	this.title = this.titlebar.select('.in2igui_window_title')[0];
-	this.content = this.element.select('.in2igui_window_body')[0];
+	this.close = n2i.firstByClass(this.element,'in2igui_window_close');
+	this.titlebar = n2i.firstByClass(this.element,'in2igui_window_titlebar');
+	this.title = n2i.firstByClass(this.titlebar,'in2igui_window_title');
+	this.content = n2i.firstByClass(this.element,'in2igui_window_body');
 	this.front = n2i.firstByClass(this.element,'in2igui_window_front');
 	this.back = n2i.firstByClass(this.element,'in2igui_window_back');
 	if (this.back) {
@@ -20,7 +20,6 @@ In2iGui.Window = function(options) {
 
 In2iGui.Window.create = function(options) {
 	options = n2i.override({title:'Window',close:true},options);
-	var element = options.element = new Element('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : '')});
 	var html = '<div class="in2igui_window_front">'+(options.close ? '<div class="in2igui_window_close"></div>' : '')+
 		'<div class="in2igui_window_titlebar"><div><div>';
 		if (options.icon) {
@@ -33,8 +32,7 @@ In2iGui.Window.create = function(options) {
 		'">'+
 		'</div></div></div>'+
 		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div></div>';
-	element.update(html);
-	document.body.appendChild(element);
+	options.element = n2i.build('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : ''),html:html,parent:document.body});
 	return new In2iGui.Window(options);
 }
 
@@ -43,27 +41,28 @@ In2iGui.Window.prototype = {
 	addBehavior : function() {
 		var self = this;
 		if (this.close) {
-			this.close.observe('click',function(e) {
+			n2i.listen(this.close,'click',function(e) {
 				this.hide();
 				this.fire('userClosedWindow');
 			}.bind(this)
-			).observe('mousedown',function(e) {e.stop();});
+			);
+			n2i.listen(this.close,'mousedown',function(e) {n2i.stop(e)});
 		}
 		this.titlebar.onmousedown = function(e) {self.startDrag(e);return false;};
-		this.element.observe('mousedown',function() {
+		n2i.listen(this.element,'mousedown',function() {
 			self.element.style.zIndex=In2iGui.nextPanelIndex();
-		})
+		});
 	},
 	setTitle : function(title) {
 		this.title.update(title);
 	},
 	show : function() {
 		if (this.visible) return;
-		this.element.setStyle({
+		n2i.setStyle(this.element,{
 			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block', top: (n2i.getScrollTop()+40)+'px'
 		})
 		var width = this.element.clientWidth;
-		this.element.setStyle({
+		n2i.setStyle(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
 		if (!n2i.browser.msie) {
@@ -80,15 +79,15 @@ In2iGui.Window.prototype = {
 		if (!n2i.browser.msie) {
 			n2i.ani(this.element,'opacity',0,200,{hideOnComplete:true});
 		} else {
-			this.element.setStyle({display:'none'});
+			this.element.style.display='none';
 		}
 		this.visible = false;
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
-			this.content.insert(widgetOrNode.getElement());
+			this.content.appendChild(widgetOrNode.getElement());
 		} else {
-			this.content.insert(widgetOrNode);
+			this.content.appendChild(widgetOrNode);
 		}
 	},
 	addToBack : function(widgetOrNode) {
@@ -100,10 +99,10 @@ In2iGui.Window.prototype = {
 		this.back.appendChild(In2iGui.getElement(widgetOrNode));
 	},
 	setVariant : function(variant) {
-		this.element.removeClassName('in2igui_window_dark');
-		this.element.removeClassName('in2igui_window_light');
+		n2i.removeClass(this.element,'in2igui_window_dark');
+		n2i.removeClass(this.element,'in2igui_window_light');
 		if (variant=='dark' || variant=='light') {
-			this.element.addClassName('in2igui_window_'+variant);
+			n2i.addClass(this.element,'in2igui_window_'+variant);
 		}
 	},
 	flip : function() {
@@ -117,18 +116,18 @@ In2iGui.Window.prototype = {
 
 	/** @private */
 	startDrag : function(e) {
-		var event = Event.extend(e || window.event);
+		var event = new n2i.Event(e);
 		this.element.style.zIndex=In2iGui.nextPanelIndex();
-		var pos = this.element.cumulativeOffset();
-		this.dragState = {left:event.pointerX()-pos.left,top:event.pointerY()-pos.top};
+		var pos = { top : n2i.getTop(this.element), left : n2i.getLeft(this.element) };
+		this.dragState = {left:event.left()-pos.left,top:event.top()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();
 		var self = this;
 		this.moveListener = function(e) {self.drag(e)};
 		this.upListener = function(e) {self.endDrag(e)};
-		Event.observe(document,'mousemove',this.moveListener);
-		Event.observe(document,'mouseup',this.upListener);
-		Event.observe(document,'mousedown',this.upListener);
+		n2i.listen(document,'mousemove',this.moveListener);
+		n2i.listen(document,'mouseup',this.upListener);
+		n2i.listen(document,'mousedown',this.upListener);
 		event.stop();
 		document.body.onselectstart = function () { return false; };
 		return false;
@@ -144,10 +143,10 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	drag : function(e) {
-		var event = Event.extend(e);
+		var event = new n2i.Event(e);
 		this.element.style.right = 'auto';
-		var top = (event.pointerY()-this.dragState.top);
-		var left = (event.pointerX()-this.dragState.left);
+		var top = (event.top()-this.dragState.top);
+		var left = (event.left()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
 		//this.calc(top,left);
@@ -155,9 +154,9 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	endDrag : function(e) {
-		Event.stopObserving(document,'mousemove',this.moveListener);
-		Event.stopObserving(document,'mouseup',this.upListener);
-		Event.stopObserving(document,'mousedown',this.upListener);
+		n2i.unListen(document,'mousemove',this.moveListener);
+		n2i.unListen(document,'mouseup',this.upListener);
+		n2i.unListen(document,'mousedown',this.upListener);
 		document.body.onselectstart = null;
 	}
 }

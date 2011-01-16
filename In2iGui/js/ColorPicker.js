@@ -4,9 +4,9 @@
 In2iGui.ColorPicker = function(options) {
 	this.options = options || {};
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.color = null;
-	this.wheel1 = this.element.select('div.in2igui_colorpicker_wheel1')[0];
+	this.wheel1 = n2i.firstByClass(this.element,'in2igui_colorpicker_wheel1');
 	In2iGui.extend(this);
 	this.addBehavior();
 	this.buildData();
@@ -14,13 +14,13 @@ In2iGui.ColorPicker = function(options) {
 
 In2iGui.ColorPicker.create = function(options) {
 	options = options || {};
-	var element = options.element = new Element('div',{'class':'in2igui_colorpicker'});
-	element.update(
-		'<div class="in2igui_colorpicker_content"><div class="in2igui_colorpicker_inner_content">'+
-		'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel1"></div>'+
-		'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel2"></div>'+
-		'</div></div>'
-	);
+	options.element = n2i.build('div',{
+		'class':'in2igui_colorpicker',
+		html : '<div class="in2igui_colorpicker_content"><div class="in2igui_colorpicker_inner_content">'+
+			'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel1"></div>'+
+			'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel2"></div>'+
+			'</div></div>'
+	});
 	return new In2iGui.ColorPicker(options);
 }
 
@@ -28,14 +28,14 @@ In2iGui.ColorPicker.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		this.wheel1.observe('mousemove',function(e) {
+		n2i.listen(this.wheel1,'mousemove',function(e) {
 			self.hoverWheel1(e);
 		})
-		this.wheel1.observe('mousedown',function(e) {
-			e.stop();
+		n2i.listen(this.wheel1,'mousedown',function(e) {
+			n2i.stop(e);
 		})
-		this.wheel1.observe('click',function(e) {
-			e.stop();
+		n2i.listen(this.wheel1,'click',function(e) {
+			n2i.stop(e);
 			self.pickColor();
 		})
 	},

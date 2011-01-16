@@ -68,8 +68,10 @@
 		<p><a href="mailto:bustermunk@gmail.com">bustermunk@gmail.com</a></p>
 	</div>
 	<script type="text/javascript">
-		new op.Dissolver({elements:$$('div#chrome_photos2 div'),wait:5000,transition:3000,delay:4500});
-		new op.Dissolver({elements:$$('div#chrome_photos1 div'),wait:5000,transition:3000});
+		var one = n2i.get('chrome_photos2');
+		var two = n2i.get('chrome_photos1');
+		new op.Dissolver({elements:one.getElementsByTagName('div),wait:5000,transition:3000,delay:4500});
+		new op.Dissolver({elements:two.getElementsByTagName('div),wait:5000,transition:3000});
 	</script>
 	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-4'"/></xsl:call-template>
 </body>

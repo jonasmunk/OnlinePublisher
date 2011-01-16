@@ -30,7 +30,7 @@ $design = InternalSession::getPageDesign();
 <? if (Request::getBoolean('dev')) { ?>
 <script type="text/javascript" src="../../../In2iGui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } else { ?>
-<script type="text/javascript" src="../../../In2iGui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../In2iGui/bin/combined.noproto.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } ?>
 <!--[if IE 8]>
 <link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>

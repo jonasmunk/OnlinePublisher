@@ -32,8 +32,8 @@ In2iGui.Editor.prototype = {
 	},
 	getPartController : function(key) {
 		var ctrl = null;
-		this.partControllers.each(function(item) {
-			if (item.key==key) ctrl=item;
+		n2i.each(this.partControllers,function(item) {
+			if (item.key==key) {ctrl=item};
 		});
 		return ctrl;
 	},
@@ -43,17 +43,17 @@ In2iGui.Editor.prototype = {
 		}
 		var self = this;
 		this.parts = [];
-		var rows = $$('.'+this.options.partClass);
-		rows.each(function(row,i) {
-			var columns = row.select('.'+self.options.columnClass);
+		var rows = n2i.byClass(document.body,this.options.partClass);
+		n2i.each(rows,function(row,i) {
+			var columns = n2i.byClass(row,self.options.columnClass);
 			self.reloadColumns(columns,i);
-			columns.each(function(column,j) {
+			n2i.each(columns,function(column,j) {
 				var parts = column.select('.'+self.options.partClass);
 				self.reloadParts(parts,i,j);
 			});
 		});
-		var parts = $$('.'+this.options.partClass);
-		this.parts.each(function(part) {
+		var parts = n2i.byClass(document.body,this.options.partClass);
+		n2i.each(this.parts,function(part) {
 			var i = parts.indexOf(part.element);
 			if (i!=-1) {
 				delete(parts[i]);
@@ -66,14 +66,14 @@ In2iGui.Editor.prototype = {
 	},
 	reloadColumns : function(columns,rowIndex) {
 		var self = this;
-		columns.each(function(column,columnIndex) {
-			column.observe('mouseover',function() {
+		n2i.each(columns,function(column,columnIndex) {
+			n2i.lsiten(column,'mouseover',function() {
 				self.hoverColumn(column);
 			});
-			column.observe('mouseout',function() {
+			n2i.listen(column,'mouseout',function() {
 				self.blurColumn();
 			});
-			column.observe('contextmenu',function(e) {
+			n2i.listen(column,'contextmenu',function(e) {
 				self.contextColumn(column,rowIndex,columnIndex,e);
 			});
 		});
@@ -81,7 +81,7 @@ In2iGui.Editor.prototype = {
 	reloadParts : function(parts,row,column) {
 		var self = this;
 		var reg = new RegExp(this.options.partClass+"_([\\w]+)","i");
-		parts.each(function(element,partIndex) {
+		n2i.each(parts,function(element,partIndex) {
 			if (!element) return;
 			var match = element.className.match(reg);
 			if (match && match[1]) {
@@ -89,16 +89,16 @@ In2iGui.Editor.prototype = {
 				if (handler) {
 					var part = new handler.controller(element,row,column,partIndex);
 					part.type=match[1];
-					element.observe('click',function() {
+					n2i.listen(element,'click',function() {
 						self.editPart(part);
 					});
-					element.observe('mouseover',function(e) {
+					n2i.listen(element,'mouseover',function(e) {
 						self.hoverPart(part);
 					});
-					element.observe('mouseout',function(e) {
+					n2i.listen(element,'mouseout',function(e) {
 						self.blurPart(e);
 					});
-					element.observe('mousedown',function(e) {
+					n2i.listen(element,'mousedown',function(e) {
 						self.startPartDrag(e);
 					});
 					self.parts.push(part);
@@ -123,12 +123,12 @@ In2iGui.Editor.prototype = {
 	hoverColumn : function(column) {
 		this.hoveredColumn = column;
 		if (!this.active || this.activePart) return;
-		column.addClassName('in2igui_editor_column_hover');
+		n2i.addClass(column,'in2igui_editor_column_hover');
 	},
 	
 	blurColumn : function() {
 		if (!this.active || !this.hoveredColumn) return;
-		this.hoveredColumn.removeClassName('in2igui_editor_column_hover');
+		n2i.removeClass(this.hoveredColumn,'in2igui_editor_column_hover');
 	},
 	
 	contextColumn : function(column,rowIndex,columnIndex,e) {
@@ -139,9 +139,10 @@ In2iGui.Editor.prototype = {
 			menu.addItem({title:'Slet kolonne',value:'removeColumn'});
 			menu.addItem({title:'Tilføj kolonne',value:'addColumn'});
 			menu.addDivider();
-			this.partControllers.each(function(item) {
-				menu.addItem({title:item.title,value:item.key});
-			});
+			for (var i=0; i < this.partControllers.length; i++) {
+				var ctrl = this.partControllers[i];
+				menu.addItem({title:ctrl.title,value:ctrl.key});
+			};
 			this.columnMenu = menu;
 			menu.listen(this);
 		}
@@ -166,13 +167,13 @@ In2iGui.Editor.prototype = {
 	editColumn : function(rowIndex,columnIndex) {
 		this.closeColumn();
 		var c = this.activeColumn = $$('.row')[rowIndex].select('.column')[columnIndex];
-		c.addClassName('in2igui_editor_column_edit');
+		n2i.addClass(c,'in2igui_editor_column_edit');
 		this.showColumnWindow();
 		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});
 	},
 	closeColumn : function() {
 		if (this.activeColumn) {
-			this.activeColumn.removeClassName('in2igui_editor_column_edit');
+			n2i.removeClass(this.activeColumn,'in2igui_editor_column_edit');
 		}
 	},
 	showColumnWindow : function() {
@@ -202,7 +203,7 @@ In2iGui.Editor.prototype = {
 		this.fire('updateColumn',values);
 	},
 	changeColumnWidth : function(width) {
-		this.activeColumn.setStyle({'width':width});
+		this.activeColumn.style.width=width;
 	},
 	changeColumnLeftMargin : function(margin) {
 		this.activeColumn.setStyle({'paddingLeft':margin});
@@ -215,7 +216,7 @@ In2iGui.Editor.prototype = {
 	hoverPart : function(part,event) {
 		if (!this.active || this.activePart) return;
 		this.hoveredPart = part;
-		part.element.addClassName('in2igui_editor_part_hover');
+		n2i.addClass(part.element,'in2igui_editor_part_hover');
 		var self = this;
 		this.partControlTimer = window.setTimeout(function() {self.showPartControls()},200);
 	},
@@ -224,10 +225,10 @@ In2iGui.Editor.prototype = {
 		if (!this.active) return;
 		if (this.partControls && !In2iGui.isWithin(e,this.partControls.element)) {
 			this.hidePartControls();
-			this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');
+			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 		}
 		if (!this.partControls && this.hoveredPart) {
-			this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');			
+			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');			
 		}
 	},
 	showPartEditControls : function() {
@@ -246,10 +247,10 @@ In2iGui.Editor.prototype = {
 			this.partControls.addIcon('new','common/new');
 			this.partControls.addIcon('delete','common/delete');
 			var self = this;
-			this.partControls.getElement().observe('mouseout',function(e) {
+			n2i.listen(this.partControls.getElement(),'mouseout',function(e) {
 				self.blurControls(e);
 			});
-			this.partControls.getElement().observe('mouseover',function(e) {
+			n2i.listen(this.partControls.getElement(),'mouseover',function(e) {
 				self.hoverControls(e);
 			});
 			this.partControls.listen(this);
@@ -262,10 +263,10 @@ In2iGui.Editor.prototype = {
 		this.partControls.showAtElement(this.hoveredPart.element,{'horizontal':'right'});
 	},
 	hoverControls : function(e) {
-		this.hoveredPart.element.addClassName('in2igui_editor_part_hover');
+		n2i.addClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 	},
 	blurControls : function(e) {
-		this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');
+		n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 		if (!In2iGui.isWithin(e,this.hoveredPart.element)) {
 			this.hidePartControls();
 		}
@@ -300,11 +301,11 @@ In2iGui.Editor.prototype = {
 		if (!this.active || this.activePart) return;
 		if (this.activePart) this.activePart.deactivate();
 		if (this.hoveredPart) {
-			this.hoveredPart.element.removeClassName('in2igui_editor_part_hover');
+			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
 		}
 		this.activePart = part;
 		this.showPartEditControls();
-		part.element.addClassName('in2igui_editor_part_active');
+		n2i.addClass(part.element,'in2igui_editor_part_active');
 		part.activate();
 		window.clearTimeout(this.partControlTimer);
 		this.hidePartControls();
@@ -335,7 +336,7 @@ In2iGui.Editor.prototype = {
 		this.partEditor.show();*/
 	},
 	updatePartProperties : function(values) {
-		this.activePart.element.setStyle({
+		n2i.setStyle(this.activePart.element,{
 			marginTop:values.top,
 			marginBottom:values.bottom,
 			marginLeft:values.left,
@@ -364,7 +365,7 @@ In2iGui.Editor.prototype = {
 		return null;
 	},
 	partDidDeacivate : function(part) {
-		part.element.removeClassName('in2igui_editor_part_active');
+		n2i.removeClass(part.element,'in2igui_editor_part_active');
 		this.activePart = null;
 		this.hidePartEditControls();
 	},
@@ -378,7 +379,7 @@ In2iGui.Editor.prototype = {
 	newPart : function(e) {
 		if (!this.newPartMenu) {
 			var menu = In2iGui.Menu.create({name:'In2iGuiEditorNewPartMenu'});
-			this.partControllers.each(function(item) {
+			n2i.each(this.partControllers,function(item) {
 				menu.addItem({title:item.title,value:item.key});
 			});
 			menu.listen(this);
@@ -395,15 +396,14 @@ In2iGui.Editor.prototype = {
 		return true;
 		if (!this.active || this.activePart) return true;
 		if (!this.dragProxy) {
-			this.dragProxy = new Element('div').addClassName('in2igui_editor_dragproxy part part_header');
-			document.body.appendChild(this.dragProxy);
+			this.dragProxy = n2i.build('div',{'class':'in2igui_editor_dragproxy part part_header',parent:document.body});
 		}
 		var element = this.hoveredPart.element;
-		this.dragProxy.setStyle({'width':element.getWidth()+'px'});
+		this.dragProxy.style.width = element.clientWidth+'px';
 		this.dragProxy.innerHTML = element.innerHTML;
 		In2iGui.Editor.startDrag(e,this.dragProxy);
 		return;
-		Element.observe(document.body,'mouseup',function() {
+		n2i.listen(document.body,'mouseup',function() {
 			self.endPartDrag();
 		})
 	},
@@ -419,8 +419,8 @@ In2iGui.Editor.prototype = {
 
 In2iGui.Editor.startDrag = function(e,element) {
 	In2iGui.Editor.dragElement = element;
-	Element.observe(document.body,'mousemove',In2iGui.Editor.dragListener);
-	Element.observe(document.body,'mouseup',In2iGui.Editor.dragEndListener);
+	n2i.listen(document.body,'mousemove',In2iGui.Editor.dragListener);
+	n2i.listen(document.body,'mouseup',In2iGui.Editor.dragEndListener);
 	In2iGui.Editor.startDragPos = {top:e.pointerY(),left:e.pointerX()};
 	e.stop();
 	return false;
@@ -435,8 +435,8 @@ In2iGui.Editor.dragListener = function(e) {
 }
 
 In2iGui.Editor.dragEndListener = function(event) {
-	Event.stopObserving(document.body,'mousemove',In2iGui.Editor.dragListener);
-	Event.stopObserving(document.body,'mouseup',In2iGui.Editor.dragEndListener);
+	n2i.unListen(document.body,'mousemove',In2iGui.Editor.dragListener);
+	n2i.unListen(document.body,'mouseup',In2iGui.Editor.dragEndListener);
 	In2iGui.Editor.dragElement.style.display='none';
 	In2iGui.Editor.dragElement=null;
 }
@@ -464,14 +464,14 @@ In2iGui.Editor.Header = function(element,row,column,position) {
 In2iGui.Editor.Header.prototype = {
 	activate : function() {
 		this.value = this.header.innerHTML;
-		this.field = new Element('textarea').addClassName('in2igui_editor_header');
+		this.field = n2i.build('textarea',{className:'in2igui_editor_header'});
 		this.field.value = this.value;
 		this.header.style.visibility='hidden';
 		this.updateFieldStyle();
 		this.element.insertBefore(this.field,this.header);
 		this.field.focus();
 		this.field.select();
-		this.field.observe('keydown',function(e) {
+		n2i.listen(this.field,'keydown',function(e) {
 			if (e.keyCode==Event.KEY_RETURN) {
 				this.save();
 			}
@@ -495,7 +495,7 @@ In2iGui.Editor.Header.prototype = {
 		In2iGui.Editor.get().partDidDeacivate(this);
 	},
 	updateFieldStyle : function() {
-		this.field.setStyle({width:this.header.getWidth()+'px',height:this.header.getHeight()+'px'});
+		n2i.setStyle(this.field,{width:this.header.getWidth()+'px',height:this.header.getHeight()+'px'});
 		n2i.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
 	},
 	getValue : function() {
@@ -521,8 +521,8 @@ In2iGui.Editor.Html.prototype = {
 	activate : function() {
 		this.value = this.element.innerHTML;
 		//if (Prototype.Browser.IE) return;
-		var height = this.element.getHeight();
-		this.element.update('');
+		var height = this.element.clientHeight;
+		this.element.innerHTML='';
 		var style = this.buildStyle();
 		this.editor = In2iGui.RichText.create({autoHideToolbar:false,style:style});
 		this.editor.setHeight(height);

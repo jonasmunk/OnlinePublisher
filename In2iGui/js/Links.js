@@ -5,19 +5,19 @@
  */
 In2iGui.Links = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 	this.items = [];
 	this.addBehavior();
 	this.selectedIndex = null;
-	this.inputs = new Hash();
+	this.inputs = {};
 }
 
 In2iGui.Links.prototype = {
 	addBehavior : function() {
-		this.element.observe('click',this.onClick.bind(this));
-		this.element.observe('dblclick',this.onDblClick.bind(this));
+		n2i.listen(this.element,'click',this.onClick.bind(this));
+		n2i.listen(this.element,'dblclick',this.onDblClick.bind(this));
 	},
 	reset : function() {
 		this.setValue([]);
@@ -31,9 +31,9 @@ In2iGui.Links.prototype = {
 		return this.items;
 	},
 	onDblClick : function(e) {
+		e = new n2i.Event(e);
 		n2i.selection.clear();
-		e.stop();
-		e.preventDefault();
+		e.stop(e);
 		var link = this.selectAndGetRow(e);
 		var values = {text:link.text};
 		values[link.kind]=link.value;
@@ -44,11 +44,11 @@ In2iGui.Links.prototype = {
 		win.show();
 	},
 	onClick : function(e) {
+		e = new n2i.Event(e);
 		e.stop();
-		e.preventDefault();
-		var element = e.element();
-		if (element.hasClassName('in2igui_links_remove')) {
-			var row = e.findElement('div.in2igui_links_row');
+		var element = e.getElement();
+		if (n2i.hasClass(element,'in2igui_links_remove')) {
+			var row = e.findByClass('in2igui_links_row');
 			In2iGui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
 				this.items.splice(row.in2igui_index,1);
 				if (this.selectedIndex===row.in2igui_index) {
@@ -61,38 +61,37 @@ In2iGui.Links.prototype = {
 		}
 	},
 	selectAndGetRow : function(event) {
-		var row = event.findElement('div.in2igui_links_row');
+		var row = event.findByClass('in2igui_links_row');
 		if (row) {
 			var idx = row.in2igui_index;
 			if (this.selectedIndex!==null) {
-				this.element.select('.in2igui_links_row')[this.selectedIndex].removeClassName('in2igui_links_row_selected');
+				var x = n2i.byClass(this.element,'in2igui_links_row')[this.selectedIndex];
+				n2i.removeClass(x,'in2igui_links_row_selected')
 			}
 			this.selectedIndex = idx;
-			row.addClassName('in2igui_links_row_selected');
+			n2i.addClass(row,'in2igui_links_row_selected');
 			return this.items[idx];
 		}
 	},
 	build : function() {
-		var list = this.list || this.element.select('.in2igui_links_list')[0];
-		list.update();
+		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list');
+		list.innerHTML='';
 		for (var i=0; i < this.items.length; i++) {
 			var item = this.items[i];
-			var row = new Element('div',{'class':'in2igui_links_row'});
+			var row = n2i.build('div',{'class':'in2igui_links_row'});
 			row.in2igui_index = i;
 			
 			row.appendChild(In2iGui.createIcon(item.icon,1));
-			var text = new Element('div',{'class':'in2igui_links_text'});
-			n2i.dom.addText(text,item.text);
-			row.insert(text);
+			var text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
+			row.appendChild(text);
 
-			var infoNode = new Element('div',{'class':'in2igui_links_info'});
-			n2i.dom.addText(infoNode,n2i.wrap(item.info));
-			row.insert(infoNode);
+			var infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
+			row.appendChild(infoNode);
 			var remove = In2iGui.createIcon('monochrome/round_x',1);
-			remove.addClassName('in2igui_links_remove');
-			row.insert(remove);
+			n2i.addClass(remove,'in2igui_links_remove');
+			row.appendChild(remove);
 
-			list.insert(row);
+			list.appendChild(row);
 		};
 	},
 	addLink : function() {
@@ -111,23 +110,23 @@ In2iGui.Links.prototype = {
 			
 			var url = In2iGui.Formula.Text.create({label:'URL',key:'url'});
 			g.add(url);
-			this.inputs.set('url',url);
+			this.inputs['url']=url;
 			
 			var email = In2iGui.Formula.Text.create({label:'E-mail',key:'email'});
 			g.add(email);
-			this.inputs.set('email',email);
+			this.inputs['email']=email;
 			
 			page = In2iGui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
 			g.add(page);
-			this.inputs.set('page',page);
+			this.inputs['page']=page;
 			
 			file = In2iGui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
 			g.add(file);
-			this.inputs.set('file',file);
+			this.inputs['file']=file;
 			
 			var self = this;
-			this.inputs.each(function(pair) {
-				pair.value.listen({$valueChanged:function(){self.changeType(pair.key)}});
+			n2i.each(this.inputs,function(key,value) {
+				value.listen({$valueChanged:function(){self.changeType(key)}});
 			});
 			
 			var b = g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
@@ -172,20 +171,20 @@ In2iGui.Links.prototype = {
 		} else if (n2i.isDefined(values.page)) {
 			link.kind='page';
 			link.value=values.page;
-			link.info=this.inputs.get('page').getItem().title;
+			link.info=this.inputs['page'].getItem().title;
 			link.icon='common/page';
 		} else if (n2i.isDefined(values.file)) {
 			link.kind='file';
 			link.value=values.file;
-			link.info=this.inputs.get('file').getItem().title;
+			link.info=this.inputs['file'].getItem().title;
 			link.icon='monochrome/file';
 		}
 		return link;
 	},
 	changeType : function(type) {
-		this.inputs.each(function(pair) {
-			if (pair.key!=type) {
-				pair.value.setValue();
+		n2i.each(this.inputs,function(key,value) {
+			if (key!=type) {
+				value.setValue();
 			}
 		});
 	}

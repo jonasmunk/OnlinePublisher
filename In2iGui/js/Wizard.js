@@ -6,15 +6,15 @@ In2iGui.Wizard = function(o) {
 	/** @private */
 	this.options = o || {};
 	/** @private */
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	/** @private */
 	this.name = o.name;
 	/** @private */
-	this.container = this.element.select('.in2igui_wizard_steps')[0];
+	this.container = n2i.firstByClass(this.element,'in2igui_wizard_steps');
 	/** @private */
-	this.steps = this.element.select('.in2igui_wizard_step');
+	this.steps = n2i.byClass(this.element,'in2igui_wizard_step');
 	/** @private */
-	this.anchors = this.element.select('ul.in2igui_wizard a');
+	this.anchors = n2i.byClass(this.element,'in2igui_wizard_selection');
 	/** @private */
 	this.selected = 0;
 	In2iGui.extend(this);
@@ -24,22 +24,28 @@ In2iGui.Wizard = function(o) {
 In2iGui.Wizard.prototype = {
 	/** @private */
 	addBehavior : function() {
-		this.anchors.each(function(node,i) {
-			node.observe('mousedown',function(e) {e.stop();this.goToStep(i)}.bind(this));
-			node.observe('click',function(e) {e.stop();});
-		}.bind(this));
+		var self = this;
+		n2i.each(this.anchors,function(node,i) {
+			n2i.listen(node,'mousedown',function(e) {
+				n2i.stop(e);
+				self.goToStep(i)
+			});
+			n2i.listen(node,'click',function(e) {
+				n2i.stop(e);
+			});
+		});
 	},
 	/** Goes to the step with the index */
 	goToStep : function(index) {
 		var c = this.container;
-		c.setStyle({height:c.getHeight()+'px'})
-		this.anchors[this.selected].removeClassName('in2igui_selected');
-		this.steps[this.selected].hide();
-		this.anchors[index].addClassName('in2igui_selected');
-		this.steps[index].show();
+		c.style.height=c.clientHeight+'px';
+		n2i.removeClass(this.anchors[this.selected],'in2igui_selected');
+		this.steps[this.selected].style.display='none';
+		n2i.addClass(this.anchors[index],'in2igui_selected');
+		this.steps[index].style.display='block';
 		this.selected=index;
-		n2i.ani(c,'height',this.steps[index].getHeight()+'px',500,{ease:n2i.ease.slowFastSlow,onComplete:function() {
-			c.setStyle({height:''});
+		n2i.ani(c,'height',this.steps[index].clientHeight+'px',500,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+			c.style.height='';
 		}});
 		In2iGui.callVisible(this);
 	},

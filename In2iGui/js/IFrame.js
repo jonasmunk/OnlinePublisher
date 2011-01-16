@@ -5,7 +5,7 @@
  */
 In2iGui.IFrame = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }

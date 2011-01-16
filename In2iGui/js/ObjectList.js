@@ -4,8 +4,8 @@
 In2iGui.ObjectList = function(o) {
 	this.options = n2i.override({key:null},o);
 	this.name = o.name;
-	this.element = $(o.element);
-	this.body = this.element.select('tbody')[0];
+	this.element = n2i.get(o.element);
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.template = [];
 	this.objects = [];
 	In2iGui.extend(this);
@@ -13,19 +13,19 @@ In2iGui.ObjectList = function(o) {
 
 In2iGui.ObjectList.create = function(o) {
 	o=o || {};
-	var e = o.element = new Element('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
+	var e = o.element = n2i.build('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
 	if (o.template) {
 		var head = '<thead><tr>';
-		o.template.each(function(item) {
-			head+='<th>'+(item.label || '')+'</th>';
-		});
+		for (var i=0; i < o.template.length; i++) {
+			head+='<th>'+(o.template[i].label || '')+'</th>';
+		};
 		head+='</tr></thead>';
-		e.insert(head);
+		e.innerHTML=head;
 	}
-	e.insert(new Element('tbody'));
+	n2i.build('tbody',{parent:e});
 	var list = new In2iGui.ObjectList(o);
 	if (o.template) {
-		o.template.each(function(item) {
+		n2i.each(o.template,function(item) {
 			list.registerTemplateItem(new In2iGui.ObjectList.Text(item.key));
 		});
 	}
@@ -42,7 +42,7 @@ In2iGui.ObjectList.prototype = {
 			this.objects.push(obj);
 			this.body.appendChild(obj.getElement());
 		} else {
-			var last = this.objects.pop();
+			var last = this.objects[this.objects.length-1];
 			var obj = new In2iGui.ObjectList.Object(last.index,data,this);
 			last.index++;
 			this.objects.push(obj);
@@ -53,7 +53,12 @@ In2iGui.ObjectList.prototype = {
 	reset : function() {
 		for (var i=0; i < this.objects.length; i++) {
 			var element = this.objects[i].getElement();
-			element.parentNode.removeChild(element);
+			if (!element.parentNode) {
+				n2i.log('no parent for...');
+				n2i.log(element);
+			} else {
+				element.parentNode.removeChild(element);
+			}
 		};
 		this.objects = [];
 		this.addObject({});
@@ -146,7 +151,7 @@ In2iGui.ObjectList.Text.prototype = {
 		return new In2iGui.ObjectList.Text(this.key);
 	},
 	getElement : function() {
-		var input = new Element('input',{'class':'in2igui_formula_text'});
+		var input = n2i.build('input',{'class':'in2igui_formula_text'});
 		var field = In2iGui.wrapInField(input);
 		this.wrapper = new In2iGui.TextField({element:input});
 		this.wrapper.listen(this);
@@ -180,7 +185,7 @@ In2iGui.ObjectList.Select.prototype = {
 		return copy;
 	},
 	getElement : function() {
-		this.select = new Element('select');
+		this.select = n2i.build('select');
 		for (var i=0; i < this.options.length; i++) {
 			this.select.options[this.select.options.length] = new Option(this.options[i].label,this.options[i].value);
 		};

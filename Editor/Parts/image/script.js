@@ -41,23 +41,21 @@ var partController = {
 	preview : function() {
 		var self = this;
 		op.part.utils.updatePreview({
-			node : $('part_image_container'),
-			form : $(document.forms.PartForm),
+			node : n2i.get('part_image_container'),
+			form : document.forms.PartForm,
 			type : 'image',
-			delay : 500,
-			onComplete : function() {
-				//self.suppressLink()
-			}
+			delay : 500
 		});
 	},
 	suppressLink : function() {
-		var a = $('part_image_container').select('a')[0];
+		var container = n2i.get('part_image_container');
+		var a = container.getElementsByTagName('a');
 		if (a) {
 			a.href='javascript:void(0)';
 		}
-		var img = $('part_image_container').select('img')[0];
+		var img = n2i.firstByTag(container,'img');
 		if (img) {
-			img.observe('click',this.showChooserWindow.bind(this));
+			n2i.listen(img,'click',this.showChooserWindow.bind(this));
 		}
 	},
 	showUploadWindow : function() {

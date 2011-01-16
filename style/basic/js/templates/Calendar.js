@@ -7,12 +7,12 @@ op.CalendarTemplate = function() {
 	this.windowWasScrolled();
 	
 	var self = this;
-	Event.observe(window,'scroll',
+	n2i.listen(window,'scroll',
 		function(e) {
 			self.windowWasScrolled();
 		}
 	);
-	Event.observe(window,'resize',
+	n2i.listen(window,'resize',
 		function(e) {
 			self.windowWasScrolled();
 		}
@@ -45,9 +45,9 @@ op.CalendarTemplate.prototype.createArrows = function() {
 }
 
 op.CalendarTemplate.prototype.analyze = function() {
-	this.days = $$('.calendar .day');
+	this.days = n2i.byClass('day');
 	for (var i=0;i<this.days.length;i++) {
-		var events = this.days[i].select('.event');
+		var events = n2i.byClass(this.days[i],'event');
 		for (var j=0;j<events.length;j++) {
 			var top = events[j].cumulativeOffset().top;
 			if (top>this.maxDayEvents[i]) {
@@ -57,7 +57,7 @@ op.CalendarTemplate.prototype.analyze = function() {
 	}
 }
 
-document.observe('dom:loaded',
+n2i.onReady(
 	function() {
 		new op.CalendarTemplate();
 	}

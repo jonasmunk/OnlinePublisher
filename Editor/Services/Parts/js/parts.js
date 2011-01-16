@@ -6,25 +6,27 @@ op.part.utils = {
 	previewTimer : null,
 	
 	updatePreview : function(options) {
+		options.node = n2i.get(options.node);
 		var f = function() {
 			var url = controller.context+'Editor/Services/Parts/Preview.php?type='+options.type;
-			var parms = options.form.serialize(true);
-			ui.request({url:url,parameters:parms,onSuccess:function(t) {
-				//options.node.innerHTML=t.responseText;
-				options.node.update(t.responseText);
-				if (options.onComplete) {
-					options.onComplete();
+			var params = n2i.form.getValues(options.form);
+			ui.request({
+				url : url,
+				parameters : params,
+				onSuccess : function(t) {
+					options.node.innerHTML=t.responseText;
+					if (options.onComplete) {
+						options.onComplete();
+					}
+				},
+				onFailure:function(e) {
+					n2i.log(e);
+				},
+				onException:function(e) {
+					n2i.log(e);
+					throw e;
 				}
-			},onFailure:function(e) {
-				n2i.log(e);
-			}});
-			/*
-			new Ajax.Request(url,{parameters:parms,onSuccess:function(t) {
-				options.node.update(t.responseText);
-				if (options.onComplete) {
-					options.onComplete();
-				}
-			}});*/
+			});
 		}
 		window.clearTimeout(this.previewTimer);
 		if (options.delay) {

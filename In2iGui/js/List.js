@@ -24,22 +24,22 @@
  */
 In2iGui.List = function(options) {
 	this.options = n2i.override({url:null,source:null},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
 	this.url = options.url;
-	this.table = this.element.select('table')[0];
-	this.head = this.element.select('thead')[0];
-	this.body = this.element.select('tbody')[0];
+	this.table = n2i.firstByTag(this.element,'table');
+	this.head = n2i.firstByTag(this.element,'thead');
+	this.body = n2i.firstByTag(this.element,'tbody');
 	this.columns = [];
 	this.rows = [];
 	this.selected = [];
-	this.navigation = this.element.select('.in2igui_list_navigation')[0];
-	this.count = this.navigation.select('.in2igui_list_count')[0];
-	this.windowPage = this.navigation.select('.window_page')[0];
-	this.windowPageBody = this.navigation.select('.window_page_body')[0];
+	this.navigation = n2i.firstByClass(this.element,'in2igui_list_navigation');
+	this.count = n2i.firstByClass(this.navigation,'in2igui_list_count');
+	this.windowPage = n2i.firstByClass(this.navigation,'window_page');
+	this.windowPageBody = n2i.firstByClass(this.navigation,'window_page_body');
 	this.parameters = {};
 	this.sortKey = null;
 	this.sortDirection = null;
@@ -60,19 +60,20 @@ In2iGui.List = function(options) {
  */
 In2iGui.List.create = function(options) {
 	options = n2i.override({},options);
-	var e = options.element = new Element('div',{'class':'in2igui_list'});
-	e.update('<div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>');
+	var e = options.element = n2i.build('div',{
+		'class':'in2igui_list',
+		html: '<div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
 	return new In2iGui.List(options);
 }
 
 In2iGui.List.prototype = {
 	/** Hides the list */
 	hide : function() {
-		this.element.hide();
+		this.element.style.display='none';
 	},
 	/** Shows the list */
 	show : function() {
-		this.element.show();
+		this.element.style.display='block';
 		this.refresh();
 	},
 	/** @private */
@@ -221,11 +222,11 @@ In2iGui.List.prototype = {
 		this.selected = [];
 		this.parseWindow(doc);
 		this.buildNavigation();
-		this.body.update();
-		this.head.update();
+		this.body.innerHTML='';
+		this.head.innerHTML='';
 		this.rows = [];
 		this.columns = [];
-		var headTr = new Element('tr');
+		var headTr = document.createElement('tr');
 		var sort = doc.getElementsByTagName('sort');
 		this.sortKey=null;
 		this.sortDirection=null;
@@ -236,7 +237,7 @@ In2iGui.List.prototype = {
 		var headers = doc.getElementsByTagName('header');
 		for (var i=0; i < headers.length; i++) {
 			var className = '';
-			var th = new Element('th');
+			var th = document.createElement('th');
 			var width = headers[i].getAttribute('width');
 			var key = headers[i].getAttribute('key');
 			var sortable = headers[i].getAttribute('sortable')=='true';
@@ -253,7 +254,7 @@ In2iGui.List.prototype = {
 				className+=' sort_'+this.sortDirection;
 			}
 			th.className=className;
-			var span = new Element('span');
+			var span = document.createElement('span');
 			th.appendChild(span);
 			span.appendChild(document.createTextNode(headers[i].getAttribute('title') || ''));
 			headTr.appendChild(th);
@@ -264,13 +265,13 @@ In2iGui.List.prototype = {
 		var rows = doc.getElementsByTagName('row');
 		for (var i=0; i < rows.length; i++) {
 			var cells = rows[i].getElementsByTagName('cell');
-			var row = new Element('tr');
+			var row = document.createElement('tr');
 			var icon = rows[i].getAttribute('icon');
 			var title = rows[i].getAttribute('title');
 			for (var j=0; j < cells.length; j++) {
-				var td = new Element('td');
+				var td = document.createElement('td');
 				this.parseCell(cells[j],td);
-				row.insert(td);
+				row.appendChild(td);
 				if (!title) {
 					title = n2i.dom.getNodeText(cells[j]);
 				}
@@ -303,12 +304,12 @@ In2iGui.List.prototype = {
 	/** @private */
 	$sourceIsBusy : function() {
 		this.busy = true;
-		this.element.addClassName('in2igui_list_busy');
+		n2i.addClass(this.element,'in2igui_list_busy');
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
 		this.busy = false;
-		this.element.removeClassName('in2igui_list_busy');
+		n2i.removeClass(this.element,'in2igui_list_busy');
 	},
 	
 	/** @private */
@@ -332,7 +333,7 @@ In2iGui.List.prototype = {
 	/** @private */
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
-		if (icon!=null && !icon.blank()) {
+		if (icon!=null && icon!='') {
 			cell.appendChild(In2iGui.createIcon(icon,1));
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
@@ -340,27 +341,27 @@ In2iGui.List.prototype = {
 			if (n2i.dom.isDefinedText(child)) {
 				n2i.dom.addText(cell,child.nodeValue);
 			} else if (n2i.dom.isElement(child,'break')) {
-				cell.insert(new Element('br'));
+				cell.appendChild(document.createElement('br'));
 			} else if (n2i.dom.isElement(child,'icon')) {
-				cell.insert(In2iGui.createIcon(child.getAttribute('icon'),1));
+				cell.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
 			} else if (n2i.dom.isElement(child,'line')) {
-				var line = new Element('p',{'class':'in2igui_list_line'});
+				var line = n2i.build('p',{'class':'in2igui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
-					line.addClassName('in2igui_list_dimmed')
+					n2i.addClass(line,'in2igui_list_dimmed')
 				}
-				cell.insert(line);
+				cell.appendChild(line);
 				this.parseCell(child,line);
 			} else if (n2i.dom.isElement(child,'object')) {
-				var obj = new Element('div',{'class':'object'});
+				var obj = n2i.build('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
 					obj.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
 				}
 				if (child.firstChild && child.firstChild.nodeType==n2i.TEXT_NODE && child.firstChild.nodeValue.length>0) {
 					n2i.dom.addText(obj,child.firstChild.nodeValue);
 				}
-				cell.insert(obj);
+				cell.appendChild(obj);
 			} else if (n2i.dom.isElement(child,'icons')) {
-				var icons = new Element('span',{'class':'in2igui_list_icons'});
+				var icons = n2i.build('span',{'class':'in2igui_list_icons'});
 				this.parseCell(child,icons);
 				cell.appendChild(icons);
 			}
@@ -390,22 +391,22 @@ In2iGui.List.prototype = {
 		}
 		this.navigation.style.display='block';
 		var from = ((this.window.page)*this.window.size+1);
-		this.count.update(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total);
+		n2i.dom.setNodeText(this.count,(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total));
 		var pageBody = this.windowPageBody;
-		pageBody.update();
+		pageBody.innerHTML='';
 		if (pages<2) {
 			this.windowPage.style.display='none';	
 		} else {
-			var indices = $R(0, pages-1);
-			indices = this.buildPages(pages,this.window.page);
-			indices.each(function(i){
-				if (i==='') {
-					pageBody.insert('<span>·</span>');
+			var indices = this.buildPages(pages,this.window.page);
+			for (var i=0; i < indices.length; i++) {
+				var index = indices[i]
+				if (index==='') {
+					pageBody.innerHTML='<span>·</span>';
 				} else {
 					var a = document.createElement('a');
-					a.appendChild(document.createTextNode(i+1));
+					a.appendChild(document.createTextNode(index+1));
 					a.onmousedown = function() {
-						self.windowPageWasClicked(this,i);
+						self.windowPageWasClicked(this,index);
 						return false;
 					}
 					if (i==self.window.page) {
@@ -413,7 +414,7 @@ In2iGui.List.prototype = {
 					}
 					pageBody.appendChild(a);
 				}
-			});
+			}
 			this.windowPage.style.display='block';
 		}
 	},
@@ -560,10 +561,10 @@ In2iGui.List.prototype = {
 	changeSelection : function(indexes) {
 		var rows = this.body.getElementsByTagName('tr');
 		for (var i=0;i<this.selected.length;i++) {
-			rows[this.selected[i]].removeClassName('selected');
+			n2i.removeClass(rows[this.selected[i]],'selected');
 		}
 		for (var i=0;i<indexes.length;i++) {
-			rows[indexes[i]].addClassName('selected');
+			n2i.addClass(rows[indexes[i]],'selected');
 		}
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);

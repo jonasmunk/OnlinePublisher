@@ -5,7 +5,7 @@
 In2iGui.ImagePicker = function(o) {
 	this.name = o.name;
 	this.options = o || {};
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.images = [];
 	this.object = null;
 	this.thumbnailsLoaded = false;
@@ -43,7 +43,7 @@ In2iGui.ImagePicker.prototype = {
 		if (!this.picker) {
 			var self = this;
 			this.picker = In2iGui.BoundPanel.create();
-			this.content = new Element('div',{'class':'in2igui_imagepicker_thumbs'});
+			this.content = n2i.build('div',{'class':'in2igui_imagepicker_thumbs'});
 			var buttons = In2iGui.Buttons.create({align:'right'});
 			var close = In2iGui.Button.create({text:'Luk',highlighted:true});
 			close.listen({
@@ -71,23 +71,23 @@ In2iGui.ImagePicker.prototype = {
 	/** @private */
 	updateImages : function() {
 		var self = this;
-		var delegate = {
+		n2i.request({
 			onSuccess:function(t) {
 				self.parse(t.responseXML);
-			}
-		};
-		new Ajax.Request(this.options.source,delegate);
+			},
+			url:this.options.source
+		});
 	},
 	/** @private */
 	parse : function(doc) {
-		this.content.update();
+		this.content.innerHTML='';
 		var images = doc.getElementsByTagName('image');
 		var self = this;
 		for (var i=0; i < images.length; i++) {
 			var id = images[i].getAttribute('id');
 			var img = {id:images[i].getAttribute('id')};
 			var url = In2iGui.resolveImageUrl(this,img,48,48);
-			var thumb = new Element('div',{'class':'in2igui_imagepicker_thumbnail'}).setStyle({'backgroundImage':'url('+url+')'});
+			var thumb = n2i.build('div',{'class':'in2igui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
 			thumb.in2iguiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.in2iguiObject);

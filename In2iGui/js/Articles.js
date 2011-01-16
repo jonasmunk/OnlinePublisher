@@ -6,7 +6,7 @@
 In2iGui.Articles = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	if (options.source) {
 		options.source.listen(this);
 	}
@@ -15,37 +15,37 @@ In2iGui.Articles = function(options) {
 In2iGui.Articles.prototype = {
 	/** @private */
 	$articlesLoaded : function(doc) {
-		this.element.update();
+		this.element.innerHTML='';
 		var a = doc.getElementsByTagName('article');
 		for (var i=0; i < a.length; i++) {
-			var e = new Element('div',{'class':'in2igui_article'});
+			var e = n2i.build('div',{'class':'in2igui_article'});
 			var c = a[i].childNodes;
 			for (var j=0; j < c.length; j++) {
 				if (n2i.dom.isElement(c[j],'title')) {
-					var title = n2i.dom.getNodeText(c[j]).escapeHTML();
-					e.insert(new Element('h2').update(title));
+					var title = n2i.dom.getNodeText(c[j]);
+					e.appendChild(n2i.build('h2',{text:title}));
 				} else if (n2i.dom.isElement(c[j],'paragraph')) {
-					var text = n2i.dom.getNodeText(c[j]).escapeHTML();
-					var p = new Element('p').update(text);
+					var text = n2i.dom.getNodeText(c[j]);
+					var p = n2i.build('p',{text:text});
 					if (c[j].getAttribute('dimmed')==='true') {
-						p.addClassName('in2igui_dimmed');
+						p.className='in2igui_dimmed';
 					}
-					e.insert(p);
+					e.appendChild(p);
 				}
 			};
-			this.element.insert(e);
+			this.element.appendChild(e);
 		};
 	},
 	$sourceFailed : function() {
-		this.element.update('<div>Failed!</div>');
+		this.element.innerHTML='<div>Failed!</div>';
 	},
 	/** @private */
 	$sourceIsBusy : function() {
-		this.element.update('<div class="in2igui_articles_loading">Loading...</div>');
+		this.element.innerHTML='<div class="in2igui_articles_loading">Loading...</div>';
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		this.element.removeClassName('in2igui_list_busy');
+		n2i.removeClass(this.element,'in2igui_list_busy');
 	}
 }
 

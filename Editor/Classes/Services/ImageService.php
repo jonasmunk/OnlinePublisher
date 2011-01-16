@@ -129,12 +129,14 @@ class ImageService {
 
 		$filePath = FileSystemUtil::findFreeFilePath($filePath);
 		$fileName = FileSystemUtil::findFilePathName($filePath);
-
-		if (!ImageService::isSupportedImageFile($fileName,$mimeType)) {
+		if (!file_exists($tempPath)) {
+			$errorMessage='Filen findes ikke';
+			$errorDetails='Sti:'.$tempPath;			
+		} else if (!ImageService::isSupportedImageFile($fileName,$mimeType)) {
 			$errorMessage='Filen er ikke et validt billede';
 			$errorDetails='mime: '.$mimeType.', filename:'.$fileName;
 		}
-		else if (!copy($tempPath, $filePath)) {
+		else if (!@copy($tempPath, $filePath)) {
 			$errorMessage='Kunne ikke kopiere filen fra cachen';
 			$errorDetails=$tempPath.' -> '.$filePath;
 		}

@@ -1,7 +1,24 @@
 /** @namespace */
 var n2i = {
 	/** @namespace */
-	browser : {}
+	browser : {},
+	ELEMENT_NODE : 1,
+	ATTRIBUTE_NODE : 2,
+	TEXT_NODE : 3,
+	KEY_BACKSPACE : 8,
+    KEY_TAB : 9,
+    KEY_RETURN : 13,
+    KEY_ESC : 27,
+    KEY_LEFT : 37,
+    KEY_UP : 38,
+    KEY_RIGHT : 39,
+    KEY_DOWN : 40,
+    KEY_DELETE : 46,
+    KEY_HOME : 36,
+    KEY_END : 35,
+    KEY_PAGEUP : 33,
+    KEY_PAGEDOWN : 34,
+    KEY_INSERT : 45,
 }
 
 if (!window.hui) {
@@ -25,10 +42,6 @@ n2i.browser.gecko = !n2i.browser.webkit && navigator.userAgent.indexOf('Gecko')!
 	}
 })()
 
-n2i.ELEMENT_NODE=1;
-n2i.ATTRIBUTE_NODE=2;
-n2i.TEXT_NODE=3;
-
 /** Log something */
 n2i.log = function(obj) {
 	try {
@@ -38,8 +51,8 @@ n2i.log = function(obj) {
 
 /** Make a string camelized */
 n2i.camelize = function(str) {
+	if (str.indexOf('-')==-1) {return str}
     var oStringList = str.split('-');
-    if (oStringList.length == 1) return oStringList[0];
 
     var camelizedString = str.indexOf('-') == 0
       ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
@@ -81,6 +94,14 @@ n2i.escapeHTML = function(str) {
    	return document.createElement('div').appendChild(document.createTextNode(str)).innerHTML;
 }
 
+n2i.escape = function(str) {
+	if (!n2i.isDefined(str)) {return ''};
+	return str.replace(/&/g,'&amp;').
+		replace(/>/g,'&gt;').
+		replace(/</g,'&lt;').
+		replace(/"/g,'&quot;')
+}
+
 /** Checks if a string has characters */
 n2i.isEmpty = n2i.isBlank = function(str) {
 	if (str===null || typeof(str)==='undefined' || str==='') return true;
@@ -92,11 +113,31 @@ n2i.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
+n2i.isArray = function(obj) {
+	if (obj.constructor == Array) {
+		return true;
+	} else {
+		return Object.prototype.toString.call(obj) === '[object Array]';
+	}
+}
+
 n2i.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
 		if (arr[i]==value) return true;
 	};
 	return false;
+}
+
+n2i.each = function(items,func) {
+	if (n2i.isArray(items)) {		
+		for (var i=0; i < items.length; i++) {
+			func(items[i],i);
+		};
+	} else {
+		for (key in items) {
+			func(key,items[key]);
+		}
+	}
 }
 
 /**
@@ -173,7 +214,26 @@ n2i.dom = {
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
 	},
+	remove : function(node) {
+		if (node.parentNode) {
+			node.parentNode.removeChild(node);
+		}
+	},
+	replaceHTML : function(node,html) {
+		node = n2i.get(node);
+		node.innerHTML=html;
+	},
+	runScripts : function(node) {
+		var scripts = node.getElementsByTagName('script');
+		for (var i=0; i < scripts.length; i++) {
+			eval(scripts[i].innerHTML);
+		}
+	},
 	setNodeText : function(node,text) {
+		n2i.log('setNodeText is deprecated');
+		n2i.dom.setText(node,text);
+	},
+	setText : function(node,text) {
 		var c = node.childNodes;
 		var updated = false;
 		for (var i=0; i < c.length; i++) {
@@ -202,7 +262,7 @@ n2i.dom = {
 	},
 	isVisible : function(node) {
 		while (node) {
-			if (node.style && (node.getStyle('display')==='none' || node.getStyle('visibility')==='hidden')) {
+			if (node.style && (n2i.getStyle(node,'display')==='none' || n2i.getStyle(node,'visibility')==='hidden')) {
 				return false;
 			}
 			node = node.parentNode;
@@ -211,18 +271,39 @@ n2i.dom = {
 	}
 }
 
-n2i.get = function(str) {
-	if (str===null || str===undefined) {
-		return null;
+n2i.form = {
+	getValues : function(node) {
+		var params = {};
+		var inputs = node.getElementsByTagName('input');
+		for (var i=0; i < inputs.length; i++) {
+			if (n2i.isDefined(inputs[i].name)) {
+				params[inputs[i].name] = inputs[i].value;
+			}
+		};
+		return params;
 	}
-	if (str.nodeType==n2i.ELEMENT_NODE) {
-		return str;
-	}
-	return document.getElementById(str);
 }
 
-n2i.firstByClass = function(parentElement,className) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName('*');
+n2i.get = function(str) {
+	if (typeof(str)=='string') {
+		return document.getElementById(str);
+	}
+	return str;
+}
+
+n2i.getChildren = function(node) {
+	var children = [];
+	var x = node.childNodes;
+	for (var i=0; i < x.length; i++) {
+		if (n2i.dom.isElement(x[i])) {
+			children.push(x[i]);
+		}
+	};
+	return children;
+}
+
+n2i.firstByClass = function(parentElement,className,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
 	for (var i=0;i<children.length;i++) {
 		if (n2i.hasClass(children[i],className)) {
 			return children[i];
@@ -231,12 +312,105 @@ n2i.firstByClass = function(parentElement,className) {
 	return null;
 }
 
+n2i.byClass = function(parentElement,className,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+	var out = [];
+	for (var i=0;i<children.length;i++) {
+		if (n2i.hasClass(children[i],className)) {
+			out[out.length]=children[i];
+		}
+	}
+	return out;
+}
+
+n2i.firstByTag = function(parentElement,tag) {
+	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag);
+	return children[0];
+}
+
 n2i.build = function(tag,options) {
 	var e = document.createElement(tag);
-	if (options.className) {
-		e.className = options.className;
+	if (options) {
+		for (prop in options) {
+			if (prop=='text') {
+				e.appendChild(document.createTextNode(options.text));
+			} else if (prop=='html') {
+				e.innerHTML=options.html;
+			} else if (prop=='parent') {
+				options.parent.appendChild(e);
+			} else if (prop=='className') {
+				e.className=options.className;
+			} else if (prop=='class') {
+				e.className=options['class'];
+			} else if (n2i.isDefined(options[prop])) {
+				e.setAttribute(prop,options[prop]);
+			}
+		}
 	}
 	return e;
+}
+
+n2i.getAncestors = function(element) {
+	var ancestors = [];
+	parent = element.parentNode;
+	while (parent) {
+		ancestors[ancestors.length] = parent;
+		parent = parent.parentNode;
+	}
+	return ancestors;
+}
+
+n2i.getNext = function(element) {
+	var next = element.nextSibling;
+	while (next && next.nodeType!=1) {
+		next = next.nextSibling;
+	}
+    return next;
+}
+
+n2i.getAllNext = function(element) {
+	var elements = [];
+	var next = n2i.getNext(element);
+	while (next) {
+		elements.push(next);
+		next = n2i.getNext(next);
+	}
+	return elements;
+}
+
+n2i.getTop = function(element) {
+    element = n2i.get(element);
+	if (element) {
+		var yPos = element.offsetTop;
+		var tempEl = element.offsetParent;
+		while (tempEl != null) {
+			yPos += tempEl.offsetTop;
+			tempEl = tempEl.offsetParent;
+		}
+		return yPos;
+	}
+	else return 0;
+}
+
+n2i.getLeft = function(element) {
+    element = n2i.get(element);
+	if (element) {
+		var xPos = element.offsetLeft;
+		var tempEl = element.offsetParent;
+		while (tempEl != null) {
+			xPos += tempEl.offsetLeft;
+			tempEl = tempEl.offsetParent;
+		}
+		return xPos;
+	}
+	else return 0;
+}
+
+n2i.getPosition = function(element) {
+	return {
+		left : n2i.getLeft(element),
+		top : n2i.getTop(element)
+	}
 }
 
 /////////////////////////// Class handling //////////////////////
@@ -294,10 +468,269 @@ n2i.setClass = function(element,className,add) {
 	}
 }
 
+n2i.fromJSON = function(json) {
+	return JSON.parse(json);
+	//return eval('(' + json + ')');
+}
+
+n2i.toJSON = function(obj) {
+	return JSON.stringify(obj);
+}
+
+///////////////////// Events //////////////////
+
+n2i.listen = function(el,type,listener,useCapture) {
+	el = n2i.get(el);
+	if(document.addEventListener) {
+		el.addEventListener(type,listener,useCapture ? true : false);
+	} else {
+		el.attachEvent('on'+type, listener);
+	}
+}
+
+n2i.unListen = function(el,type,listener,useCapture) {
+	el = n2i.get(el);
+	if(document.removeEventListener) {
+		el.removeEventListener(type,listener,useCapture ? true : false);
+	} else {
+		el.detachEvent('on'+type, listener);
+	}
+}
+
+n2i.event = function(event) {
+	return new n2i.Event();
+}
+
+n2i.Event = function(event) {
+	this.event = event = event || window.event;
+	this.element = event.target ? event.target : event.srcElement;
+	this.shiftKey = event.shiftKey;
+	this.returnKey = event.keyCode==13;
+	this.escapeKey = event.keyCode==27;
+	this.spaceKey = event.keyCode==32;
+	this.keyCode = event.keyCode;
+}
+
+n2i.Event.prototype = {
+	left : function() {
+	    var left = 0;
+		if (this.event) {
+		    if (this.event.pageX) {
+			    left = this.event.pageX;
+		    } else if (this.event.clientX) {
+			    left = this.event.clientX + document.body.scrollLeft;
+		    }
+		}
+	    return left;
+	},
+	getLeft : function() {
+		return this.left();
+	},
+	top : function() {
+	    var top = 0;
+		if (this.event) {
+		    if (this.event.pageY) {
+			    top = this.event.pageY;
+		    } else if (this.event.clientY) {
+			    top = this.event.clientY + document.body.scrollTop;
+		    }
+		}
+	    return top;
+	},
+	getTop : function() {
+		return this.top();
+	},
+	getElement : function() {
+		return this.element;
+	},
+	findByClass : function(cls) {
+		var parent = this.element;
+		while (parent) {
+			if (n2i.hasClass(parent,cls)) {
+				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	findByTag : function(tag) {
+		var parent = this.element;
+		while (parent) {
+			if (parent.tagName==tag) {
+				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	isReturnKey : function() {
+		return this.event.keyCode==13;
+	},
+	isRightKey : function() {
+		return this.event.keyCode==39;
+	},
+	isLeftKey : function() {
+		return this.event.keyCode==37;
+	},
+	isEscapeKey : function() {
+		return this.event.keyCode==27;
+	},
+	isSpaceKey : function() {
+		return this.event.keyCode==32;
+	},
+	stop : function() {
+		n2i.stop(this.event);
+	}
+}
+
+n2i.stop = function(e) {
+	if (!e) {e = window.event};
+	if (e.stopPropagation) {e.stopPropagation()};
+	if (e.preventDefault) {e.preventDefault()};
+	e.cancelBubble = true;
+    e.stopped = true;
+}
+
+n2i.onReady = function(delegate) {
+	if(window.addEventListener) {
+		window.addEventListener('DOMContentLoaded',delegate);
+	}
+	else if(typeof document.addEventListener != 'undefined')
+	{
+		//.. opera 7
+		document.addEventListener('load', delegate, false);
+	}
+	else if(typeof window.attachEvent != 'undefined')
+	{
+		//.. win/ie
+		window.attachEvent('onload', delegate);
+	}
+
+	//** remove this condition to degrade older browsers
+	else
+	{
+		//.. mac/ie5 and anything else that gets this far
+	
+		//if there's an existing onload function
+		if(typeof window.onload == 'function')
+		{
+			//store it
+			var existing = window.onload;
+		
+			//add new onload handler
+			window.onload = function()
+			{
+				//call existing onload function
+				existing();
+			
+				//call delegate onload function
+				delegate();
+			};
+		}
+		else
+		{
+			//setup onload function
+			window.onload = delegate;
+		}
+	}
+}
+
+// Ajax //
+
+n2i.request = function(options) {
+	options = n2i.override({method:'GET',async:true},options);
+	var transport = n2i.request.createTransport();
+	var self = this;
+	transport.onreadystatechange = function() {
+		try {
+			if (transport.readyState == 4) {
+				if (transport.status == 200 && options.onSuccess) {
+					options.onSuccess(transport);
+				} else if (options.onFailure) {
+					options.onFailure(transport);
+				}
+			}
+		} catch (e) {
+			if (options.onException) {
+				options.onException(e,transport)
+			} else {
+				throw e;
+			}
+		}
+	};
+	var method = options.method.toUpperCase();
+	transport.open(method, options.url, options.async);
+	var parameters = null;
+	var body = '';
+    if (method=='POST' && options.parameters) {
+		body = n2i.request.buildPostBody(options.parameters);
+		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+		//transport.setRequestHeader("Content-length", body.length);
+		//transport.setRequestHeader("Connection", "close");
+	}
+	transport.send(body);
+}
+
+n2i.request.buildPostBody = function(parameters) {
+	if (!parameters) return null;
+	var output = '';
+	for (param in parameters) {
+		if (output.length>0) output+='&';
+		output+=encodeURIComponent(param)+'=';
+		if (parameters[param]!==undefined && parameters[param]!==null) {
+			output+=encodeURIComponent(parameters[param]);
+		}
+	}
+	return output;
+}
+
+n2i.request.createTransport = function() {
+	try {
+		if (window.XMLHttpRequest) {
+			var req = new XMLHttpRequest();
+			if (req.readyState == null) {
+				req.readyState = 1;
+				req.addEventListener("load", function () {
+					req.readyState = 4;
+					if (typeof req.onreadystatechange == "function")
+						req.onreadystatechange();
+				}, false);
+			}
+			return req;
+		}
+		else if (window.ActiveXObject) {
+			return n2i.request.getActiveX();
+		} else {
+			// Could not create transport
+			this.delegate.onError(this);
+		}
+	}
+	catch (ex) {
+		if (this.delegate.onError) {
+			this.delegate.onError(this,ex);
+		}
+	}
+}
+
+n2i.request.getActiveX = function() {
+	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
+	var o;
+	for (var i = 0; i < prefixes.length; i++) {
+		try {
+			// try to create the objects
+			o = new ActiveXObject(prefixes[i] + ".XmlHttp");
+			return o;
+		}
+		catch (ex) {};
+	}
+	
+	throw new Error("Could not find an installed XML parser");
+}
+
 ///////////////////// Style ///////////////////
 
 n2i.getStyle = function(element, style) {
-	element = $(element);
+	element = n2i.get(element);
 	var cameled = n2i.camelize(style);
 	var value = element.style[cameled];
 	if (!value) {
@@ -326,11 +759,20 @@ n2i.setOpacity = function(element,opacity) {
 	}
 }
 
+n2i.setStyle = function(element,styles) {
+	for (style in styles) {
+		element.style[style] = styles[style];
+	}
+}
+
 n2i.copyStyle = function(source,target,styles) {
-	styles.each(function(s) {
-		var r = source.getStyle(s);
-		if (r) target.style[s] = source.getStyle(s);
-	});
+	for (var i=0; i < styles.length; i++) {
+		var s = styles[i];
+		var r = n2i.getStyle(source,s);
+		if (r) {
+			target.style[s] = r;
+		}
+	};
 }
 
 ///////////////////// Events ////////////////////
@@ -503,7 +945,7 @@ n2i.getDocumentHeight = function() {
 n2i.place = function(options) {
 	var left=0,top=0;
 	var trgt = options.target.element;
-	var trgtPos = trgt.cumulativeOffset();
+	var trgtPos = {left:n2i.getLeft(trgt),top:n2i.getTop(trgt)};
 	left = trgtPos.left+trgt.clientWidth*options.target.horizontal;
 	top = trgtPos.top+trgt.clientHeight*options.target.vertical;
 	
@@ -700,7 +1142,7 @@ n2i.animation = {
 	running : false,
 	latestId : 0,
 	get : function(element) {
-		element = $(element);
+		element = n2i.get(element);
 		if (!element.n2iAnimationId) {
 			element.n2iAnimationId = this.latestId++;
 		}
@@ -958,9 +1400,18 @@ n2i.Color = function(color_string) {
 
     color_string = color_string.replace(/ /g,'');
     color_string = color_string.toLowerCase();
-
+	
+	var simple_colors = {
+		white : 'ffffff',
+		black : '000000',
+		red : 'ff0000',
+		green : '00ff00',
+		blue : '0000ff'
+	};
+	
     // before getting into regexps, try simple matches
     // and overwrite the input
+	/*
     var simple_colors = {
         aliceblue: 'f0f8ff',
         antiquewhite: 'faebd7',
@@ -1105,7 +1556,7 @@ n2i.Color = function(color_string) {
         whitesmoke: 'f5f5f5',
         yellow: 'ffff00',
         yellowgreen: '9acd32'
-    };
+    };*/
     for (var key in simple_colors) {
         if (color_string == key) {
             color_string = simple_colors[key];
@@ -1421,3 +1872,22 @@ n2i.ease = {
 		return (n2i.ease.bounceOut(n*2-1) / 2) + 0.5; // Decimal
 	}
 };
+
+if (!Function.prototype.bind) {
+	Function.prototype.bind = function () {
+	    if (arguments.length < 2 && arguments[0] === undefined) {
+	        return this;
+	    }
+	    var thisObj = this,
+	    args = Array.prototype.slice.call(arguments),
+	    obj = args.shift();
+	    return function () {
+	        return thisObj.apply(obj, args.concat(Array.prototype.slice.call(arguments)));
+	    };
+	};
+
+	Function.bind = function() {
+	    var args = Array.prototype.slice.call(arguments);
+	    return Function.prototype.bind.apply(args.shift(), args);
+	}
+}

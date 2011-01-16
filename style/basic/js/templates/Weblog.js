@@ -36,8 +36,9 @@ op.WeblogTemplate = {
 		var parms = {ajax:true,action:'createEntry','group[]':[]};
 		n2i.override(parms,this.newForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
-		if (parms.title.blank()) {
+		if (n2i.isBlank(parms.title)) {
 			ui.showMessage({text:'Der skal skrives en titel',duration:2000});
+			this.editForm.focus();
 			return;
 		} else if (parms['group[]'].length<1) {
 			ui.showMessage({text:'Der skal vælges mindst een gruppe',duration:2000});
@@ -53,14 +54,15 @@ op.WeblogTemplate = {
 	},
 	edit : function(id) {
 		var parms = {ajax:true,action:'loadEntry',entryId:id};
-		new Ajax.Request(op.page.pagePath, {
-			method: 'post',
-			parameters:parms,
-			onSuccess: function(t) {
-				var data = t.responseText.evalJSON();
+		n2i.request({
+			url : op.page.pagePath,
+			method : 'post',
+			parameters : parms,
+			onSuccess : function(t) {
+				var data = n2i.fromJSON(t.responseText);
 				this.editEntry(data);
 			}.bind(this),
-			onException: function(t,e) {
+			onException : function(t,e) {
 				n2i.log(e);
 			}.bind(this)
 		});
@@ -114,8 +116,9 @@ op.WeblogTemplate = {
 		var parms = {ajax:true,action:'updateEntry','group[]':[],entryId:this.activeEntry.id};
 		n2i.override(parms,this.editForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
-		if (parms.title.blank()) {
+		if (n2i.isBlank(parms.title)) {
 			ui.showMessage({text:'Der skal skrives en titel',duration:2000});
+			this.editForm.focus();
 			return;
 		} else if (parms['group[]'].length<1) {
 			ui.showMessage({text:'Der skal vælges mindst een gruppe',duration:2000});

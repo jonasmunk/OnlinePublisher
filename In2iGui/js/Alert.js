@@ -4,7 +4,7 @@
  */
 In2iGui.Alert = function(options) {
 	this.options = n2i.override({modal:false},options);
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.body = this.element.select('.in2igui_alert_body')[0];
 	this.content = this.element.select('.in2igui_alert_content')[0];
@@ -46,7 +46,7 @@ In2iGui.Alert.prototype = {
 	show : function() {
 		var zIndex = In2iGui.nextAlertIndex();
 		if (this.options.modal) {
-			In2iGui.showCurtain(this,zIndex);
+			In2iGui.showCurtain({widget:this,zIndex:zIndex});
 			zIndex++;
 		}
 		this.element.style.zIndex=zIndex;

@@ -5,16 +5,16 @@
  */
 In2iGui.Overflow = function(options) {
 	this.options = options;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	In2iGui.extend(this);
 }
 
 In2iGui.Overflow.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('div',{'class':'in2igui_overflow'});
+	var e = options.element = n2i.build('div',{'class':'in2igui_overflow'});
 	if (options.height) {
-		e.setStyle({height:options.height+'px'});
+		e.style.height=options.height+'px';
 	}
 	return new In2iGui.Overflow(options);
 }
@@ -23,19 +23,20 @@ In2iGui.Overflow.prototype = {
 	calculate : function() {
 		var top,bottom,parent,viewport;
 		viewport = n2i.getInnerHeight();
-		parent = $(this.element.parentNode);
-		top = this.element.cumulativeOffset().top;
-		bottom = parent.cumulativeOffset().top+parent.getDimensions().height;
-		this.element.nextSiblings().each(function(node) {
-			bottom-=node.clientHeight;
-		})
+		parent = this.element.parentNode;
+		top = n2i.getTop(this.element);
+		bottom = n2i.getTop(parent)+parent.clientHeight;
+		var sibs = n2i.getAllNext(this.element);
+		for (var i=0; i < sibs.length; i++) {
+			bottom-=sibs[i].clientHeight;
+		};
 		this.diff=-1*(top+(viewport-bottom));
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
-			this.element.insert(widgetOrNode.getElement());
+			this.element.appendChild(widgetOrNode.getElement());
 		} else {
-			this.element.insert(widgetOrNode);
+			this.element.appendChild(widgetOrNode);
 		}
 		return this;
 	},

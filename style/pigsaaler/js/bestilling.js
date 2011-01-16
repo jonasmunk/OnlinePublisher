@@ -1,5 +1,5 @@
 function Bestilling() {
-	this.form = $('bestilling');
+	this.form = n2i.get('bestilling');
 	this.form.onsubmit = function() {this.submit(); return false;}.bind(this);
 }
 

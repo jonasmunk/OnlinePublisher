@@ -18,14 +18,20 @@ op.part.List = {
 		this.preview();
 	},
 	$valuesChanged$dataFormula : function(values) {
-		var objects = [values.newsGroups,values.newsSources,values.calendars,values.calendarSources].flatten();
+		var x = [values.newsGroups,values.newsSources,values.calendars,values.calendarSources];
+		var objects = [];
+		for (var i=0; i < x.length; i++) {
+			for (var j=0; j < x[i].length; j++) {
+				objects.push(x[i][j]);
+			};
+		};
 		document.forms.PartForm.objects.value = objects.join(',');
 		this.preview();
 	},
 	preview : function() {
 		op.part.utils.updatePreview({
-			node:$('part_list_container'),
-			form:$(document.forms.PartForm),
+			node:'part_list_container',
+			form:document.forms.PartForm,
 			type:'list'
 		});
 	}

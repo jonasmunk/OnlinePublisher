@@ -5,8 +5,8 @@
  */
 In2iGui.Dock = function(options) {
 	this.options = options;
-	this.element = $(options.element);
-	this.iframe = this.element.select('iframe')[0];
+	this.element = n2i.get(options.element);
+	this.iframe = n2i.firstByTag(this.element,'iframe');
 	this.name = options.name;
 	In2iGui.extend(this);
 	this.diff = -69;

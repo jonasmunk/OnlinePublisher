@@ -3,7 +3,7 @@
  */
 In2iGui.MarkupEditor = function(options) {
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif; font-size: 11px;'},options);
 	this.impl = In2iGui.MarkupEditor.webkit;
 	this.impl.element = this.element;

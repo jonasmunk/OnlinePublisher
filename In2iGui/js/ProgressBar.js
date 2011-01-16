@@ -2,7 +2,7 @@
 	@constructor
 */
 In2iGui.ProgressBar = function(o) {
-	this.element = $(o.element);
+	this.element = n2i.get(o.element);
 	this.name = o.name;
 	/** @private */
 	this.WAITING = o.small ? 'in2igui_progressbar_small_waiting' : 'in2igui_progressbar_waiting';
@@ -11,7 +11,7 @@ In2iGui.ProgressBar = function(o) {
 	/** @private */
 	this.options = o || {};
 	/** @private */
-	this.indicator = this.element.firstDescendant();
+	this.indicator = n2i.firstByTag(this.element,'div');
 	In2iGui.extend(this);
 }
 
@@ -20,8 +20,8 @@ In2iGui.ProgressBar = function(o) {
 */
 In2iGui.ProgressBar.create = function(o) {
 	o = o || {};
-	var e = o.element = new Element('div',{'class':'in2igui_progressbar'}).insert(new Element('div'));
-	if (o.small) e.addClassName('in2igui_progressbar_small');
+	var e = o.element = n2i.build('div',{'class':o.small ? 'in2igui_progressbar in2igui_progressbar_small' : 'in2igui_progressbar'});
+	e.appendChild(document.createElement('div'));
 	return new In2iGui.ProgressBar(o);
 }
 	
@@ -31,21 +31,25 @@ In2iGui.ProgressBar.prototype = {
 	*/
 	setValue : function(value) {
 		var el = this.element;
-		if (this.waiting) el.removeClassName(this.WAITING);
-		el.setClassName(this.COMPLETE,value==1);
+		if (this.waiting) {
+			n2i.removeClass(el,this.WAITING);
+		}
+		n2i.setClass(el,this.COMPLETE,value==1);
 		n2i.ani(this.indicator,'width',(value*100)+'%',200);
 	},
 	/** Mark progress as waiting */
 	setWaiting : function() {
 		this.waiting = true;
-		this.indicator.setStyle({width:0});
-		this.element.addClassName(this.WAITING);
+		this.indicator.style.width=0;
+		n2i.addClass(this.element,this.WAITING);
 	},
 	/** Reset the progress bar */
 	reset : function() {
 		var el = this.element;
-		if (this.waiting) el.removeClassName(this.WAITING);
-		el.removeClassName(this.COMPLETE);
+		if (this.waiting) {
+			n2i.removeClass(el,this.WAITING);
+		}
+		n2i.removeClass(el,this.COMPLETE);
 		this.indicator.style.width='0%';
 	},
 	/** Hide the progress bar */
