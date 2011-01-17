@@ -8337,14 +8337,17 @@ In2iGui.destroyDescendants = function(element) {
 
 In2iGui.changeState = function(state) {
 	if (In2iGui.get().state===state) {return;}
-	var objects = In2iGui.get().objects.values();
-	for (var i=0; i < objects.length; i++) {
-		var obj = objects[i];
+	var all = In2iGui.get().objects;
+	for (key in all) {
+		var obj = all[key];
 		if (obj.options && obj.options.state) {
-			if (obj.options.state==state) {obj.show();}
-			else {obj.hide();}
+			if (obj.options.state==state) {
+				obj.show();
+			} else {
+				obj.hide();
+			}
 		}
-	};
+	}
 	In2iGui.get().state==state;
 }
 
@@ -11147,19 +11150,21 @@ In2iGui.List.prototype = {
 		} else {
 			var indices = this.buildPages(pages,this.window.page);
 			for (var i=0; i < indices.length; i++) {
-				var index = indices[i]
+				var index = indices[i];
 				if (index==='') {
-					pageBody.innerHTML='<span>·</span>';
+					pageBody.appendChild(n2i.build('span',{text:'·'}));
 				} else {
 					var a = document.createElement('a');
 					a.appendChild(document.createTextNode(index+1));
+					a.setAttribute('data-index',index);
 					a.onmousedown = function() {
-						self.windowPageWasClicked(this,index);
+						self.windowPageWasClicked(this);
 						return false;
 					}
-					if (i==self.window.page) {
+					if (index==self.window.page) {
 						a.className='selected';
 					}
+					n2i.log(a);
 					pageBody.appendChild(a);
 				}
 			}
@@ -11175,7 +11180,9 @@ In2iGui.List.prototype = {
 				pages.push(i);
 				x=false;
 			} else {
-				if (!x) {pages.push('')};
+				if (!x) {
+					pages.push('')
+				};
 				x=true;
 			}
 		}
@@ -11326,7 +11333,8 @@ In2iGui.List.prototype = {
 		this.fire('listRowWasOpened',this.getFirstSelection());
 	},
 	/** @private */
-	windowPageWasClicked : function(tag,index) {
+	windowPageWasClicked : function(tag) {
+		var index = parseInt(tag.getAttribute('data-index'));
 		this.window.page = index;
 		In2iGui.firePropertyChange(this,'window',this.window);
 		In2iGui.firePropertyChange(this,'window.page',this.window.page);

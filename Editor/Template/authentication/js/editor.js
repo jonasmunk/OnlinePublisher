@@ -19,7 +19,9 @@ var templateController = {
 		this._load();
 	},
 	_load : function() {
-		var title = n2i.dom.getNodeText($$('.authentication h1')[0]);
+		var base = n2i.firstByClass(document.body,'authentication');
+		var h1 = n2i.firstByTag(base,'h1');
+		var title = n2i.dom.getText(h1);
 		this.form.setValues({
 			title:title
 		});
@@ -32,7 +34,11 @@ var templateController = {
 			url : '../../../Template/authentication/Save.php',
 			parameters : values,
 			onSuccess : function() {
-				n2i.dom.setNodeText($$('.authentication h1')[0],values.title);
+				var base = n2i.firstByClass(document.body,'authentication');
+				var h1 = n2i.firstByTag(base,'h1');
+				if (h1) {
+					n2i.dom.setText(h1,values.title);
+				}
 				self.win.hide();
 			}
 		});

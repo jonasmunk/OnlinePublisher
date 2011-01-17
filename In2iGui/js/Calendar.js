@@ -337,7 +337,7 @@ In2iGui.DatePicker.prototype = {
 			if (date.getDate()==this.today.getDate() && date.getMonth()==this.today.getMonth() && date.getFullYear()==this.today.getFullYear()) {
 				ni2.addClass(cell,'in2igui_datepicker_today');
 			}
-			n2i.dom.setNodeText(cell,date.getDate());
+			n2i.dom.setText(cell,date.getDate());
 		};
 	},
 	getPreviousMonth : function() {

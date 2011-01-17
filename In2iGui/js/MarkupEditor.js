@@ -6,7 +6,7 @@ In2iGui.MarkupEditor = function(options) {
 	this.element = n2i.get(options.element);
 	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif; font-size: 11px;'},options);
 	this.impl = In2iGui.MarkupEditor.webkit;
-	this.impl.element = this.element;
+	this.impl.initialize({element:this.element});
 	In2iGui.extend(this);
 	this.addBehavior();
 }
@@ -14,7 +14,6 @@ In2iGui.MarkupEditor = function(options) {
 In2iGui.MarkupEditor.create = function(options) {
 	options = options || {};
 	options.element = n2i.build('div',{className:'in2igui_markupeditor'});
-	options.element.contentEditable = true;
 	return new In2iGui.MarkupEditor(options);
 }
 
@@ -30,7 +29,7 @@ In2iGui.MarkupEditor.prototype = {
 		this.showBar();
 	},
 	getValue : function() {
-		return this.element.innerHTML;
+		return this.impl.getHTML();
 	},
 	hideBar : function() {
 		this.bar.hide();
@@ -40,9 +39,11 @@ In2iGui.MarkupEditor.prototype = {
 			var things = [{key:'bold',icon:'edit/text_bold'},{key:'italic',icon:'edit/text_italic'}]
 			
 			this.bar = In2iGui.Bar.create({absolute:true,small:true});
-			things.each(function(info) {
+			n2i.each(things,function(info) {
 				var button = new In2iGui.Bar.Button.create({icon:info.icon,stopEvents:true});
-				button.listen({$click:function() {this.impl.format(info.key)}.bind(this)});
+				button.listen({
+					$click:function() {this.impl.format(info.key)}.bind(this)
+				});
 				this.bar.add(button);
 			}.bind(this));
 			this.bar.addToDocument();
@@ -53,7 +54,17 @@ In2iGui.MarkupEditor.prototype = {
 }
 
 In2iGui.MarkupEditor.webkit = {
-	format : function(cmd) {
-		document.execCommand(cmd,null,null);
+	initialize : function(options) {
+		this.element = options.element;
+		this.element.contentEditable = true;
+	},
+	format : function(command) {
+		document.execCommand(command,null,null);
+	},
+	setHTML : function(html) {
+		this.element.innerHTML = html;
+	},
+	getHTML : function() {
+		return this.element.innerHTML;
 	}
 }

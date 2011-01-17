@@ -342,7 +342,7 @@ In2iGui.Upload.prototype = {
 		if (this.items.length==0) {
 			this.status.style.display='none';
 		} else {
-			n2i.dom.setNodeText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
+			n2i.dom.setText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
 			this.status.style.display='block';
 		}
 		n2i.log(s);
@@ -369,9 +369,9 @@ In2iGui.Upload.Item = function(file) {
 
 In2iGui.Upload.Item.prototype = {
 	update : function(file) {
-		n2i.dom.setNodeText(this.status,In2iGui.Upload.status[file.filestatus] || file.filestatus);
+		n2i.dom.setText(this.status,In2iGui.Upload.status[file.filestatus] || file.filestatus);
 		if (file.name) {
-			n2i.dom.setNodeText(this.info,file.name);
+			n2i.dom.setText(this.info,file.name);
 		}
 		if (file.progress!==undefined) {
 			this.setProgress(file.progress);

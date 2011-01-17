@@ -211,10 +211,10 @@ In2iGui.Toolbar.Badge = function(options) {
 
 In2iGui.Toolbar.Badge.prototype = {
 	setLabel : function(str) {
-		n2i.dom.setNodeText(this.label,str);
+		n2i.dom.setText(this.label,str);
 	},
 	setText : function(str) {
-		n2i.dom.setNodeText(this.text,str);
+		n2i.dom.setText(this.text,str);
 	}
 }
 

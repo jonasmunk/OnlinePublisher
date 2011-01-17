@@ -22,10 +22,10 @@ In2iGui.Articles.prototype = {
 			var c = a[i].childNodes;
 			for (var j=0; j < c.length; j++) {
 				if (n2i.dom.isElement(c[j],'title')) {
-					var title = n2i.dom.getNodeText(c[j]);
+					var title = n2i.dom.getText(c[j]);
 					e.appendChild(n2i.build('h2',{text:title}));
 				} else if (n2i.dom.isElement(c[j],'paragraph')) {
-					var text = n2i.dom.getNodeText(c[j]);
+					var text = n2i.dom.getText(c[j]);
 					var p = n2i.build('p',{text:text});
 					if (c[j].getAttribute('dimmed')==='true') {
 						p.className='in2igui_dimmed';

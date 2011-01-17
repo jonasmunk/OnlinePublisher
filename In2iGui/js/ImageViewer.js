@@ -73,13 +73,14 @@ In2iGui.ImageViewer.prototype = {
 			self.next(false);
 		}
 		this.keyListener = function(e) {
-			if (n2i.isRightKey(e)) {
+			e = n2i.event(e);
+			if (e.rightKey) {
 				self.next(true);
-			} else if (n2i.isLeftKey(e)) {
+			} else if (e.leftKey) {
 				self.previous(true);
-			} else if (n2i.isEscapeKey(e)) {
+			} else if (e.escapeKey) {
 				self.hide();
-			} else if (n2i.isReturnKey(e)) {
+			} else if (e.returnKey) {
 				self.playOrPause();
 			}
 		},

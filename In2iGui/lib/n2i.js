@@ -217,7 +217,7 @@ n2i.scrollTo = function(element) {
 /** @namespace */
 n2i.dom = {
 	isElement : function(n,name) {
-		return n.nodeType==n2i.ELEMENT_NODE && (name===undefined ? true : n.nodeName==name);
+		return n.nodeType==n2i.ELEMENT_NODE && (name===undefined ? true : n.nodeName.toLowerCase()==name);
 	},
 	isDefinedText : function(node) {
 		return node.nodeType==n2i.TEXT_NODE && node.nodeValue.length>0;
@@ -246,10 +246,6 @@ n2i.dom = {
 			eval(scripts[i].innerHTML);
 		}
 	},
-	setNodeText : function(node,text) {
-		n2i.log('setNodeText is deprecated');
-		n2i.dom.setText(node,text);
-	},
 	setText : function(node,text) {
 		var c = node.childNodes;
 		var updated = false;
@@ -265,7 +261,7 @@ n2i.dom = {
 			n2i.dom.addText(node,text);
 		}
 	},
-	getNodeText : function(node) {
+	getText : function(node) {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
@@ -533,6 +529,10 @@ n2i.Event = function(event) {
 	this.returnKey = event.keyCode==13;
 	this.escapeKey = event.keyCode==27;
 	this.spaceKey = event.keyCode==32;
+	this.upKey = event.keyCode==38;
+	this.downKey = event.keyCode==40;
+	this.leftKey = event.keyCode==37;
+	this.rightKey = event.keyCode==39;
 	this.keyCode = event.keyCode;
 }
 
@@ -588,21 +588,7 @@ n2i.Event.prototype = {
 		}
 		return null;
 	},
-	isReturnKey : function() {
-		return this.event.keyCode==13;
-	},
-	isRightKey : function() {
-		return this.event.keyCode==39;
-	},
-	isLeftKey : function() {
-		return this.event.keyCode==37;
-	},
-	isEscapeKey : function() {
-		return this.event.keyCode==27;
-	},
-	isSpaceKey : function() {
-		return this.event.keyCode==32;
-	},
+
 	stop : function() {
 		n2i.stop(this.event);
 	}
@@ -798,24 +784,6 @@ n2i.copyStyle = function(source,target,styles) {
 			target.style[s] = r;
 		}
 	};
-}
-
-///////////////////// Events ////////////////////
-
-n2i.isReturnKey = function(e) {
-	return e.keyCode==13;
-}
-n2i.isRightKey = function(e) {
-	return e.keyCode==39;
-}
-n2i.isLeftKey = function(e) {
-	return e.keyCode==37;
-}
-n2i.isEscapeKey = function(e) {
-	return e.keyCode==27;
-}
-n2i.isSpaceKey = function(e) {
-	return e.keyCode==32;
 }
 
 //////////////////// Frames ////////////////////

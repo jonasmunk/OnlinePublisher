@@ -7111,14 +7111,17 @@ In2iGui.destroyDescendants = function(element) {
 
 In2iGui.changeState = function(state) {
 	if (In2iGui.get().state===state) {return;}
-	var objects = In2iGui.get().objects.values();
-	for (var i=0; i < objects.length; i++) {
-		var obj = objects[i];
+	var all = In2iGui.get().objects;
+	for (key in all) {
+		var obj = all[key];
 		if (obj.options && obj.options.state) {
-			if (obj.options.state==state) {obj.show();}
-			else {obj.hide();}
+			if (obj.options.state==state) {
+				obj.show();
+			} else {
+				obj.hide();
+			}
 		}
-	};
+	}
 	In2iGui.get().state==state;
 }
 

@@ -273,7 +273,7 @@ In2iGui.List.prototype = {
 				this.parseCell(cells[j],td);
 				row.appendChild(td);
 				if (!title) {
-					title = n2i.dom.getNodeText(cells[j]);
+					title = n2i.dom.getText(cells[j]);
 				}
 				if (!icon) {
 					icon = cells[j].getAttribute('icon');
@@ -391,7 +391,7 @@ In2iGui.List.prototype = {
 		}
 		this.navigation.style.display='block';
 		var from = ((this.window.page)*this.window.size+1);
-		n2i.dom.setNodeText(this.count,(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total));
+		n2i.dom.setText(this.count,(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total));
 		var pageBody = this.windowPageBody;
 		pageBody.innerHTML='';
 		if (pages<2) {
@@ -399,19 +399,21 @@ In2iGui.List.prototype = {
 		} else {
 			var indices = this.buildPages(pages,this.window.page);
 			for (var i=0; i < indices.length; i++) {
-				var index = indices[i]
+				var index = indices[i];
 				if (index==='') {
-					pageBody.innerHTML='<span>·</span>';
+					pageBody.appendChild(n2i.build('span',{text:'·'}));
 				} else {
 					var a = document.createElement('a');
 					a.appendChild(document.createTextNode(index+1));
+					a.setAttribute('data-index',index);
 					a.onmousedown = function() {
-						self.windowPageWasClicked(this,index);
+						self.windowPageWasClicked(this);
 						return false;
 					}
-					if (i==self.window.page) {
+					if (index==self.window.page) {
 						a.className='selected';
 					}
+					n2i.log(a);
 					pageBody.appendChild(a);
 				}
 			}
@@ -427,7 +429,9 @@ In2iGui.List.prototype = {
 				pages.push(i);
 				x=false;
 			} else {
-				if (!x) {pages.push('')};
+				if (!x) {
+					pages.push('')
+				};
 				x=true;
 			}
 		}
@@ -578,7 +582,8 @@ In2iGui.List.prototype = {
 		this.fire('listRowWasOpened',this.getFirstSelection());
 	},
 	/** @private */
-	windowPageWasClicked : function(tag,index) {
+	windowPageWasClicked : function(tag) {
+		var index = parseInt(tag.getAttribute('data-index'));
 		this.window.page = index;
 		In2iGui.firePropertyChange(this,'window',this.window);
 		In2iGui.firePropertyChange(this,'window.page',this.window.page);
