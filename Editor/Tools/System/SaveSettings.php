@@ -16,6 +16,7 @@ if ($data->onlineobjects) {
 	Settings::setOnlineObjectsUrl($data->onlineobjects->url);
 }
 if ($data->email) {
+	MailService::setEnabled($data->email->enabled);
 	MailService::setServer($data->email->server);
 	MailService::setPort($data->email->port);
 	MailService::setUsername($data->email->username);

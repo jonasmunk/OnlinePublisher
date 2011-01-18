@@ -57,6 +57,7 @@ $gui='
 									<space all="10" bottom="5">
 										<formula name="emailFormula">
 											<group>
+												<checkbox key="enabled" label="Aktiv:"/>
 												<text key="server" label="Server:"/>
 												<text key="port" label="Port:"/>
 												<text key="username" label="Brugernavn:"/>

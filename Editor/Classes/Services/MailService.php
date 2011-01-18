@@ -49,6 +49,14 @@ class MailService {
 		
 	}
 	
+	function getEnabled() {
+		return Settings::getSetting('system','mail','enabled')=='true';
+	}
+	
+	function setEnabled($value) {
+		Settings::setSetting('system','mail','enabled',$value ? 'true' : 'false');
+	}
+	
 	function getServer() {
 		return Settings::getSetting('system','mail','server');
 	}

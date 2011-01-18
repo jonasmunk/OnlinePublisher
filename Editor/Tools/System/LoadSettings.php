@@ -12,6 +12,7 @@ require_once '../../Classes/In2iGui.php';
 
 $settings = array(
 	'email'=>array(
+		'enabled' => MailService::getEnabled(),
 		'server' => MailService::getServer(),
 		'port' => MailService::getPort(),
 		'username' => MailService::getUsername(),

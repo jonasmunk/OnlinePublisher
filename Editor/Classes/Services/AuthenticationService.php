@@ -4,6 +4,7 @@
  * @subpackage Classes.Services
  */
 require_once($basePath.'Editor/Classes/User.php');
+require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Services/MailService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
@@ -72,15 +73,43 @@ class AuthenticationService {
 	    global $baseUrl;
 	    $unique = md5(uniqid(rand(), true));
 	    $limit = time() + 60*60; // 1 hour into future
-    
-	    $sql = "insert into email_validation_session (`unique`,`user_id`,`email`,`timelimit`)".
-	    " values (".
-	    Database::text($unique).",".$user->getId().",".Database::text($user->getEmail()).",".Database::datetime($limit).
-	    ")";
-	    Database::insert($sql);
-	    // Create the email
-	    $body = "Klik på følgende link for at ændre dit kodeord til brugeren \"".$user->getUsername()."\": \n".
-	    $baseUrl."Editor/LostPassword.php?id=".$unique;
-	    return MailService::send($email,$userName,"OnlinePublisher - ændring af kodeord",$body);
+
+	    $body = "Klik på følgende link for at ændre dit kodeord til brugeren \"".$user->getUsername()."\": \n\n".
+	    $baseUrl."Editor/Recover.php?key=".$unique;
+	    if (MailService::send($email,$userName,"OnlinePublisher - ændring af kodeord",$body)) {
+		    $sql = "insert into email_validation_session (`unique`,`user_id`,`email`,`timelimit`)".
+		    " values (".
+		    Database::text($unique).",".$user->getId().",".Database::text($user->getEmail()).",".Database::datetime($limit).
+		    ")";
+		    Database::insert($sql);
+			return true;
+		}
+		return false;
+	}
+	
+	function isValidEmailValidationSession($key) {
+		$sql = "select id from email_validation_session where `unique`=".Database::text($key)." and timelimit>now()";
+		return !Database::isEmpty($sql);
+	}
+	
+	function updatePasswordForEmailValidationSession($key,$password) {
+		if (StringUtils::isBlank($key) || StringUtils::isBlank($password)) {
+			Log::debug('key or password is blank');
+			return false;
+		}
+		$sql = "select user_id from email_validation_session where `unique`=".Database::text($key)." and timelimit>now()";
+		if ($row = Database::selectFirst($sql)) {
+			if ($user = User::load($row['user_id'])) {
+				AuthenticationService::setPassword($user,$password);
+				$user->save();
+				$user->publish();
+				// remove the session
+				$sql = "delete from email_validation_session where `unique`=".Database::text($key);
+				Database::delete($sql);
+				return true;
+			}
+		}
+		Log::debug('Key not found');
+		return false;
 	}
 }

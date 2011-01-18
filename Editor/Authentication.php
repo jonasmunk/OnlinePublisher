@@ -9,6 +9,7 @@ require_once 'Classes/In2iGui.php';
 require_once 'Classes/DatabaseUtil.php';
 require_once 'Classes/InternalSession.php';
 require_once 'Classes/SystemInfo.php';
+require_once 'Classes/Services/MailService.php';
 
 
 if (Request::getBoolean('logout')) {
@@ -23,13 +24,15 @@ if (!DatabaseUtil::isUpToDate()) {
 	// TODO warn user
 }
 
+$mailEnabled = MailService::getEnabled();
+
 $gui='
 <gui xmlns="uri:In2iGui" padding="10" title="'.SystemInfo::getTitle().'" state="login">
 	<controller name="controller" source="Authentication.js"/>
 	<box width="300" top="100" variant="rounded">
 		<space all="10" top="5" bottom="5">
 		<formula name="formula" state="login">
-			<header>OnlinePublisher login</header>
+			<header>Adgangskontrol</header>
 			<group>
 				<text name="username" label="Brugernavn:"/>
 				<text name="password" secret="true" label="Kodeord:"/>
@@ -52,7 +55,7 @@ $gui='
 		</formula>
 		</space>
 	</box>
-	<text align="center"><p><link name="forgot">Glemt kodeord</link></p></text>
+	'.($mailEnabled ? '<text align="center"><p><link name="forgot">Glemt kodeord</link></p></text>' : '').'
 </gui>';
 
 In2iGui::render($gui);
