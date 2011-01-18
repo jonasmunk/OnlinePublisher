@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Alpha.php,v 1.1 2009/10/03 09:12:50 oo Exp $
+ * @version    $Id: Alpha.php 22668 2010-07-25 14:50:46Z thomas $
  */
 
 /**
@@ -27,20 +27,20 @@ require_once 'Zend/Validate/Abstract.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_Alpha extends Zend_Validate_Abstract
 {
     const INVALID      = 'alphaInvalid';
     const NOT_ALPHA    = 'notAlpha';
-    const STRING_EMPTY = 'stringEmpty';
+    const STRING_EMPTY = 'alphaStringEmpty';
 
     /**
      * Whether to allow white space characters; off by default
      *
      * @var boolean
-     * @depreciated
+     * @deprecated
      */
     public $allowWhiteSpace;
 
@@ -57,19 +57,31 @@ class Zend_Validate_Alpha extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageTemplates = array(
-        self::INVALID      => "Invalid type given, value should be a string",
-        self::NOT_ALPHA    => "'%value%' has not only alphabetic characters",
+        self::INVALID      => "Invalid type given. String expected",
+        self::NOT_ALPHA    => "'%value%' contains non alphabetic characters",
         self::STRING_EMPTY => "'%value%' is an empty string"
     );
 
     /**
      * Sets default option values for this instance
      *
-     * @param  boolean $allowWhiteSpace
+     * @param  boolean|Zend_Config $allowWhiteSpace
      * @return void
      */
     public function __construct($allowWhiteSpace = false)
     {
+        if ($allowWhiteSpace instanceof Zend_Config) {
+            $allowWhiteSpace = $allowWhiteSpace->toArray();
+        }
+
+        if (is_array($allowWhiteSpace)) {
+            if (array_key_exists('allowWhiteSpace', $allowWhiteSpace)) {
+                $allowWhiteSpace = $allowWhiteSpace['allowWhiteSpace'];
+            } else {
+                $allowWhiteSpace = false;
+            }
+        }
+
         $this->allowWhiteSpace = (boolean) $allowWhiteSpace;
     }
 
