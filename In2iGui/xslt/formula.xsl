@@ -81,7 +81,7 @@
 
 <xsl:template match="gui:group/gui:text">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
+		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
 		<td class="in2igui_formula_group"><div class="in2igui_formula_item"><xsl:call-template name="gui:text"/></div></td>
 	</tr>
 </xsl:template>
@@ -328,8 +328,8 @@
 
 <xsl:template match="gui:group/gui:checkbox">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
-		<td><xsl:call-template name="gui:checkbox"/></td>
+		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
+		<td><div class="in2igui_formula_item"><xsl:call-template name="gui:checkbox"/></div></td>
 	</tr>
 </xsl:template>
 

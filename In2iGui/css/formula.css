@@ -90,6 +90,13 @@ table.in2igui_formula_group th
 	white-space: nowrap;
 }
 
+table.in2igui_formula_group th.in2igui_formula_middle
+{
+	vertical-align: middle;
+	line-height: normal;
+	padding-bottom: 5px;
+}
+
 table.in2igui_formula_group_above th
 {
 	text-align: left;

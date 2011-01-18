@@ -76,7 +76,7 @@ class AuthenticationService {
 
 	    $body = "Klik på følgende link for at ændre dit kodeord til brugeren \"".$user->getUsername()."\": \n\n".
 	    $baseUrl."Editor/Recover.php?key=".$unique;
-	    if (MailService::send($user->getEmail(),$user->getTitle(),"OnlinePublisher - ændring af kodeord",$body)) {
+	    if (MailService::send(StringUtils::fromUnicode($user->getEmail()),StringUtils::fromUnicode($user->getTitle()),"OnlinePublisher - ændring af kodeord",$body)) {
 		    $sql = "insert into email_validation_session (`unique`,`user_id`,`email`,`timelimit`)".
 		    " values (".
 		    Database::text($unique).",".$user->getId().",".Database::text($user->getEmail()).",".Database::datetime($limit).
