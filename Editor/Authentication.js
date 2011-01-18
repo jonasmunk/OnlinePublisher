@@ -52,7 +52,8 @@ var controller = {
 	},
 	$success$recovery : function(data) {
 		if (data.success) {
-			ui.showMessage({text:'Det lykkedes! Hvad nu?'});
+			ui.hideMessage();
+			ui.changeState('recoveryMessage');
 		} else {
 			ui.showMessage({text:data.message,duration:2000});
 		}

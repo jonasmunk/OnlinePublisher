@@ -34,7 +34,7 @@ class MailService {
 			Zend_Mail::setDefaultTransport($tr);
 		}
 
-		$mail = new Zend_Mail();
+		$mail = new Zend_Mail(Zend_Mime::ENCODING_BASE64);
 		$mail->setBodyText($body);
 		$mail->setFrom(MailService::getStandardEmail(), MailService::getStandardName());
 		$mail->addTo($email, $name);

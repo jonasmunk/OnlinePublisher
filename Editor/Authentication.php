@@ -53,9 +53,20 @@ $gui='
 				</buttons>
 			</group>
 		</formula>
+		<fragment state="recoveryMessage">
+			<space all="5">
+				<text align="center">
+					<h>Der er nu sendt en e-mail</h>
+					<p>Du skulle inden længe modtage en e-mail der beskriver hvordan du kan ændre dit kodeord. Hvis du ikke har modtaget den inden ca. et kvarter bør du kontakte den ansvarlige for webstedet.</p>
+				</text>
+				<buttons align="center" top="5">
+					<button title="OK" click="ui.changeState(\'login\');formula.focus()"/>
+				</buttons>
+			</space>
+		</fragment>
 		</space>
 	</box>
-	'.($mailEnabled ? '<text align="center"><p><link name="forgot">Glemt kodeord</link></p></text>' : '').'
+	'.($mailEnabled ? '<fragment state="login"><text align="center"><p><link name="forgot">Glemt kodeord</link></p></text></fragment>' : '').'
 </gui>';
 
 In2iGui::render($gui);
