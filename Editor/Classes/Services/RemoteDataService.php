@@ -75,6 +75,7 @@ class RemoteDataService {
 		$success = false;
 		if (!$cached) {
 			$cached = new Cachedurl();
+			$cached->setTitle($url);
 			$cached->setUrl($url);
 			$cached->setSynchronized(0);
 		} else {
@@ -83,6 +84,7 @@ class RemoteDataService {
 		$age = $now-$cached->getSynchronized();
 		if ($age>$maxAge) {
 			$success = RemoteDataService::writeUrlToFile($url,$path);
+			$cached->setTitle($url);
 			$cached->setSynchronized(mktime());
 			$cached->save();
 		}

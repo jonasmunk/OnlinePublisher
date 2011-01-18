@@ -1,45 +1,49 @@
 <?
 /**
  * @package OnlinePublisher
- * @subpackage Classes
+ * @subpackage Classes.Services
  */
 require_once($basePath."Editor/Libraries/phpmailer/class.phpmailer.php");
 require_once($basePath."Editor/Classes/Settings.php");
+require_once($basePath."Editor/Classes/Log.php");
 require_once($basePath.'Editor/Classes/Zend.php');
 require_once($basePath.'Editor/Libraries/Zend/Mail.php');
 require_once($basePath.'Editor/Libraries/Zend/Mail/Transport/Smtp.php');
 
-class EmailUtil {
+class MailService {
 	
 	function sendToStandard($subject,$body) {
-		EmailUtil::send(EmailUtil::getStandardEmail(), EmailUtil::getStandardName(),$subject,$body);
+		MailService::send(MailService::getStandardEmail(), MailService::getStandardName(),$subject,$body);
 	}
 	
 	function sendToFeedback($subject,$body) {
-		EmailUtil::send(EmailUtil::getFeedbackEmail(), EmailUtil::getFeedbackName(),$subject,$body);
+		MailService::send(MailService::getFeedbackEmail(), MailService::getFeedbackName(),$subject,$body);
 	}
 	
 	function send($email,$name,$subject,$body) {
-		
-		
-		$username = EmailUtil::getUsername();
-		$password = EmailUtil::getPassword();
+		$username = MailService::getUsername();
+		$password = MailService::getPassword();
+		$port = MailService::getPort();
 		if (strlen($username)>0 && strlen($password)>0) {
 			$config = array('auth' => 'login', 'username' => $username, 'password' => $password, 'ssl' => 'tls');
-			$tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$config);
+			if ($port) {
+				$config['port'] = $port;
+			}
+			// 'ssl' => 'ssl', 'port' => '995'
+			$tr = new Zend_Mail_Transport_Smtp(MailService::getServer(),$config);
 			Zend_Mail::setDefaultTransport($tr);
 		}
 
 		$mail = new Zend_Mail();
 		$mail->setBodyText($body);
-		$mail->setFrom(EmailUtil::getStandardEmail(), EmailUtil::getStandardName());
+		$mail->setFrom(MailService::getStandardEmail(), MailService::getStandardName());
 		$mail->addTo($email, $name);
 		$mail->setSubject($subject);
 		try {
 			$mail->send();
 			return true;
 		} catch (Zend_Exception $e) {  
-			error_log($e->getMessage());
+			Log::debug($e->getMessage());
 			return false;
 		}
 		
@@ -109,4 +113,3 @@ class EmailUtil {
 		Settings::setSetting('system','mail','feedback-name',$value);
 	}
 }
-?>

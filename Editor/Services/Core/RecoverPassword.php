@@ -1,0 +1,32 @@
+<?php
+/**
+ * @package OnlinePublisher
+ * @subpackage Services
+ */
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Public.php';
+require_once '../../Classes/Request.php';
+require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Services/AuthenticationService.php';
+require_once '../../Classes/Utilities/StringUtils.php';
+
+if (Request::isPost()) {
+	$text=Request::getString('text');
+	if ($user = AuthenticationService::getUserByEmailOrUsername($text)) {
+		if (!StringUtils::isBlank($user->getEmail())) {
+			if (AuthenticationService::createValidationSession($user)) {
+				In2iGui::sendObject(array('success' => true));
+			} else {
+				In2iGui::sendObject(array('success' => false,'message' => 'Det lykkedes ikke at sende e-mail'));
+			}
+		} else {
+			In2iGui::sendObject(array('success' => false,'message' => 'Brugeren har ingen e-mail'));
+		}
+	} else {
+		In2iGui::sendObject(array('success' => false,'message' => 'Brugeren blev ikke fundet'));
+	}
+} else {
+	In2iGui::sendObject(array('success' => false,'message' => 'Invalid request'));
+}
+exit;
+?>

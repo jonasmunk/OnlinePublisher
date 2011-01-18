@@ -6,12 +6,13 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/EmailUtil.php';
+require_once '../../Classes/Services/MailService.php';
+require_once '../../Classes/In2iGui.php';
 
 $data = Request::getObject('data');
-if (EmailUtil::send($data->email,$data->name,Request::fromUnicode($data->subject),Request::fromUnicode($data->body))) {
-	error_log('Success!');
+if (MailService::send($data->email,$data->name,Request::fromUnicode($data->subject),Request::fromUnicode($data->body))) {
+	In2iGui::sendObject(array('success'=>true));
 } else {
-	error_log('Failure!');
+	In2iGui::sendObject(array('success'=>false));
 }
 ?>

@@ -24,11 +24,11 @@ if (!DatabaseUtil::isUpToDate()) {
 }
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10" title="'.SystemInfo::getTitle().'">
+<gui xmlns="uri:In2iGui" padding="10" title="'.SystemInfo::getTitle().'" state="login">
 	<controller name="controller" source="Authentication.js"/>
 	<box width="300" top="100" variant="rounded">
 		<space all="10" top="5" bottom="5">
-		<formula name="formula">
+		<formula name="formula" state="login">
 			<header>OnlinePublisher login</header>
 			<group>
 				<text name="username" label="Brugernavn:"/>
@@ -39,8 +39,20 @@ $gui='
 				</buttons>
 			</group>
 		</formula>
+		<formula name="recoveryForm" state="recover">
+			<header>Genfind kodeord</header>
+			<text><p>Skriv dit brugernavn eller e-mail, så sender vi dig en e-mail om hvordan du kan ændre din kode...</p></text>
+			<group labels="above">
+				<text key="nameOrMail" label="Brugernavn eller e-mail:"/>
+				<buttons>
+					<button name="cancel" title="Annuller" click="ui.changeState(\'login\');formula.focus()"/>
+					<button title="Find" name="recover" highlighted="true" submit="true"/>
+				</buttons>
+			</group>
+		</formula>
 		</space>
 	</box>
+	<text align="center"><p><link name="forgot">Glemt kodeord</link></p></text>
 </gui>';
 
 In2iGui::render($gui);

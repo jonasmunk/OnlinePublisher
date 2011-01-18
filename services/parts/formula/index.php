@@ -4,7 +4,7 @@ require_once '../../../Editor/Include/Public.php';
 require_once('../../../Editor/Classes/Request.php');
 require_once('../../../Editor/Classes/Response.php');
 require_once('../../../Editor/Classes/Parts/FormulaPart.php');
-require_once('../../../Editor/Classes/EmailUtil.php');
+require_once('../../../Editor/Classes/Services/MailService.php');
 require_once('../../../Editor/Classes/Log.php');
 require_once('../../../Editor/Classes/Utilities/StringUtils.php');
 
@@ -25,5 +25,5 @@ if (StringUtils::isBlank($receiverName) || StringUtils::isBlank($receiverEmail))
 }
 
 $body = "Besked fra ".$name." (".$email.")\n\n".$message;
-EmailUtil::send($receiverEmail,$receiverName,"Besked fra website (".$name.")",$body);
+MailService::send($receiverEmail,$receiverName,"Besked fra website (".$name.")",$body);
 ?>

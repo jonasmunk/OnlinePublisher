@@ -73,5 +73,24 @@ class TestUser extends AbstractObjectTest {
 		
 		$obj->remove();
 	}
+	
+	function testGetUserByEmailOrUsername() {
+		$obj = new User();
+		$obj->setTitle('Testo Samplo');
+		$obj->setUsername('testatron');
+		$obj->setEmail('test@mydomain.com');
+		$obj->save();
+		
+		$byUsername = AuthenticationService::getUserByEmailOrUsername('testatron');
+		$this->assertNotNull($byUsername);
+		Log::debug($byUsername);
+		$this->assertEqual($obj->getId(),$byUsername->getId());
+		
+		$byEmail = AuthenticationService::getUserByEmailOrUsername('test@mydomain.com');
+		$this->assertNotNull($byEmail);
+		$this->assertEqual($obj->getId(),$byEmail->getId());
+		
+		$obj->remove();
+	}
 }
 ?>

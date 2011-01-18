@@ -57,7 +57,11 @@ ui.listen({
 		var data = emailTestFormula.getValues();
 		ui.request({json:{data:data},url:'TestEmailSetup.php',onSuccess:'testEmail'});
 	},
-	$success$testEmail : function() {
-		ui.showMessage({text:'E-mail er sendt!',duration:2000});
+	$success$testEmail : function(data) {
+		if (data.success) {
+			ui.showMessage({text:'E-mail er sendt!',duration:2000});
+		} else {
+			ui.showMessage({text:'Det lykkedes ikke at sende email!',duration:2000});
+		}
 	}
 });

@@ -25,7 +25,7 @@ $writer->startArticles();
 foreach($feed->getItems() as $item) {
 	$title = $item->getTitle();
 	if (StringUtils::startsWith($title,'Merge branch')) {
-		$title = "Updates sent to central repository!";
+		continue;
 	}
 	$writer->startArticle();
 	$writer->startTitle()->text($title)->endTitle();

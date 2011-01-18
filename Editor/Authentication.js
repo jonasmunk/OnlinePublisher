@@ -31,5 +31,30 @@ var controller = {
 			ui.showMessage({text:'Brugeren blev ikke fundet!',duration:2000});
 			formula.focus();
 		}
+	},
+	
+	$click$forgot : function() {
+		ui.changeState('recover');
+		recoveryForm.focus();
+	},
+	
+	$submit$recoveryForm : function() {
+		var text = recoveryForm.getValues()['nameOrMail'];
+		ui.showMessage({text:'Leder efter bruger, og sender e-mail...'});
+		ui.request({
+			url:'Services/Core/RecoverPassword.php',
+			onSuccess:'recovery',
+			parameters:{text:text},
+			onFailure:function() {
+				ui.showMessage({text:'Der skete en fejl internt i systemet!',duration:2000});
+			}
+		});
+	},
+	$success$recovery : function(data) {
+		if (data.success) {
+			ui.showMessage({text:'Det lykkedes! Hvad nu?'});
+		} else {
+			ui.showMessage({text:data.message,duration:2000});
+		}
 	}
 }

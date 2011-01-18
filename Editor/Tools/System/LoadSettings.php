@@ -5,21 +5,21 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/EmailUtil.php';
+require_once '../../Classes/Services/MailService.php';
 require_once '../../Classes/Settings.php';
 require_once '../../Classes/GoogleAnalytics.php';
 require_once '../../Classes/In2iGui.php';
 
 $settings = array(
 	'email'=>array(
-		'server' => EmailUtil::getServer(),
-		'port' => EmailUtil::getPort(),
-		'username' => EmailUtil::getUsername(),
-		'password' => EmailUtil::getPassword(),
-		'standardEmail' => EmailUtil::getStandardEmail(),
-		'standardName' => EmailUtil::getStandardName(),
-		'feedbackEmail' => EmailUtil::getFeedbackEmail(),
-		'feedbackName' => EmailUtil::getFeedbackName()
+		'server' => MailService::getServer(),
+		'port' => MailService::getPort(),
+		'username' => MailService::getUsername(),
+		'password' => MailService::getPassword(),
+		'standardEmail' => MailService::getStandardEmail(),
+		'standardName' => MailService::getStandardName(),
+		'feedbackEmail' => MailService::getFeedbackEmail(),
+		'feedbackName' => MailService::getFeedbackName()
 	),
 	'onlineobjects' => array(
 		'url' => Settings::getOnlineObjectsUrl()

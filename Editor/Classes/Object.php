@@ -329,14 +329,14 @@ class Object {
 					require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
 				}
 	    		$obj = new $unique;
-				$obj->id = $row['id'];
+				$obj->id = intval($row['id']);
 				$obj->title = $row['title'];
-				$obj->created = $row['created'];
-				$obj->updated = $row['updated'];
-				$obj->published = $row['published'];
+				$obj->created = intval($row['created']);
+				$obj->updated = intval($row['updated']);
+				$obj->published = intval($row['published']);
 				$obj->type = $row['object_type'];
 				$obj->note = $row['note'];
-				$obj->ownerId = $row['owner_id'];
+				$obj->ownerId = intval($row['owner_id']);
 				$obj->searchable = ($row['searchable']==1);
 				foreach ($schema as $property => $info) {
 					$column = Object::getColumn($property,$info);

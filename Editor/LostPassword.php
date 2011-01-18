@@ -9,7 +9,7 @@
 require_once '../Config/Setup.php';
 require_once 'Include/XmlWebGui.php';
 require_once 'Classes/User.php';
-require_once 'Classes/EmailUtil.php';
+require_once 'Classes/Services/MailService.php';
 require_once 'Classes/Request.php';
 require_once 'Classes/Response.php';
 require_once 'Classes/Database.php';
@@ -131,7 +131,7 @@ function createValidationSession($email,$userId,$userName) {
     // Create the email
     $body = "Klik på følgende link for at ændre dit kodeord til brugeren \"".$userName."\": \n".
     $baseUrl."Editor/LostPassword.php?id=".$unique;
-    EmailUtil::send($email,$userName,"OnlinePublisher - ændring af kodeord",$body);
+    MailService::send($email,$userName,"OnlinePublisher - ændring af kodeord",$body);
 
 }
 
