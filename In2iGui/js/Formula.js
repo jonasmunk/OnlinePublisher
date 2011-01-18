@@ -102,6 +102,12 @@ In2iGui.Formula.prototype = {
 	/** @private */
 	childValueChanged : function(value) {
 		this.fire('valuesChanged',this.getValues());
+	},
+	show : function() {
+		this.element.style.display='';
+	},
+	hide : function() {
+		this.element.style.display='none';
 	}
 }
 

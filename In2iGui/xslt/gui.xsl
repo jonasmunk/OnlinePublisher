@@ -91,6 +91,7 @@
 		<script src="{$context}/In2iGui/js/Flash.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Overlay.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Links.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/js/Link.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:when>
 	<xsl:otherwise>
 		<script src="{$context}/In2iGui/bin/minimized.noproto.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -670,8 +671,22 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 
 <xsl:template match="gui:text">
 	<div class="in2igui_text">
+		<xsl:if test="@align">
+			<xsl:attribute name="style">text-align:<xsl:value-of select="@align"/>;</xsl:attribute>
+		</xsl:if>
 		<xsl:apply-templates/>
 	</div>
+</xsl:template>
+
+<xsl:template match="gui:link">
+	<a href="javascript:void(0);" class="in2igui_link" id="{generate-id()}"><span><xsl:apply-templates/></span></a>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Link({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>'
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
 </xsl:template>
 
 <xsl:template match="gui:text/gui:header | gui:text/gui:h">

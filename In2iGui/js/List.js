@@ -145,8 +145,8 @@ In2iGui.List.prototype = {
 		this.columns = [];
 		this.rows = [];
 		this.navigation.style.display='none';
-		this.body.update();
-		this.head.update();
+		n2i.dom.clear(this.body);
+		n2i.dom.clear(this.head);
 		if (this.options.source) {
 			this.options.source.removeDelegate(this);
 		}
@@ -450,31 +450,30 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	buildHeaders : function(headers) {
-		this.head.update();
+		n2i.dom.clear(this.head);
 		this.columns = [];
-		var tr = new Element('tr');
-		this.head.insert(tr);
-		headers.each(function(h,i) {
-			var th = new Element('th');
+		var tr = n2i.build('tr',{parent:this.head});
+		n2i.each(headers,function(h,i) {
+			var th = n2i.build('th');
 			if (h.width) {
-				th.setStyle({width:h.width+'%'});
+				th.style.width = h.width+'%';
 			}
 			if (h.sortable) {
-				th.observe('click',function() {this.sort(i)}.bind(this));
-				th.addClassName('sortable');
+				n2i.listen(th,'click',function() {this.sort(i)}.bind(this));
+				n2i.addClass(th,'sortable');
 			}
-			th.insert(new Element('span').update(h.title));
-			tr.insert(th);
+			th.appendChild(n2i.build('span',{text:h.title}));
+			tr.appendChild(th);
 			this.columns.push(h);
 		}.bind(this));
 	},
 	/** @private */
 	buildRows : function(rows) {
 		var self = this;
-		this.body.update();
+		n2i.dom.clear(this.body);
 		this.rows = [];
 		if (!rows) return;
-		rows.each(function(r,i) {
+		n2i.each(rows,function(r,i) {
 			var tr = new Element('tr');
 			var icon = r.icon;
 			var title = r.title;

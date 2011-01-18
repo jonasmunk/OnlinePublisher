@@ -9,8 +9,12 @@
 
 <xsl:template match="gui:formula">
 	<form class="in2igui_formula" id="{generate-id()}">
-		<xsl:if test="@padding"><xsl:attribute name="style">padding: <xsl:value-of select="@padding"/>px;</xsl:attribute>
-		</xsl:if>
+		<xsl:attribute name="style">
+			<xsl:if test="@state and @state!=//gui:gui/@state">
+				<xsl:text>display:none;</xsl:text>
+			</xsl:if>
+			<xsl:if test="@padding">padding: <xsl:value-of select="@padding"/>px;</xsl:if>
+		</xsl:attribute>
 		<xsl:apply-templates/>
 	</form>
 	<script type="text/javascript">
@@ -18,6 +22,9 @@
 			var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula({
 				element:'<xsl:value-of select="generate-id()"/>',
 				name:'<xsl:value-of select="@name"/>'
+				<xsl:if test="@state">
+					,state:'<xsl:value-of select="@state"/>'
+				</xsl:if>
 			});
 			<xsl:call-template name="gui:createobject"/>		
 		}());

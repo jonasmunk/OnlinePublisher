@@ -649,7 +649,7 @@ n2i.onReady = function(delegate) {
 // Ajax //
 
 n2i.request = function(options) {
-	options = n2i.override({method:'GET',async:true},options);
+	options = n2i.override({method:'POST',async:true},options);
 	var transport = n2i.request.createTransport();
 	var self = this;
 	transport.onreadystatechange = function() {

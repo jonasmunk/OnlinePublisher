@@ -49,8 +49,8 @@ In2iGui.Button.prototype = {
 	addBehavior : function() {
 		var self = this;
 		n2i.listen(this.element,'click',function(e) {
-			self.clicked();
 			n2i.stop(e);
+			self.clicked();
 		});
 	},
 	/** @private */
