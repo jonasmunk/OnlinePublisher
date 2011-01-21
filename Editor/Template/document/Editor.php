@@ -30,7 +30,7 @@ $design = InternalSession::getPageDesign();
 <? if (Request::getBoolean('dev')) { ?>
 <script type="text/javascript" src="../../../In2iGui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } else { ?>
-<script type="text/javascript" src="../../../In2iGui/bin/combined.noproto.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../In2iGui/bin/minimized.noproto.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } ?>
 <!--[if IE 8]>
 <link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
@@ -89,7 +89,7 @@ else if (getDocumentSection()!=0) {
 ?>
 </head>
 <body>
-<div class="editor_body">
+<div class="editor_body" style="padding-top: 40px;">
 <form action="AddSection.php" name="SectionAdder" method="get" style="margin: 0px;">
 <input type="hidden" name="type"/>
 <input type="hidden" name="part"/>

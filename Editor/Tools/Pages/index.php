@@ -6,7 +6,6 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/DevelopmentMode.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Request.php';
 
@@ -52,9 +51,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<group xmlns="uri:Icon" size="1" spacing="9" titles="right" width="1%">'.
 '<row>'.
 '<icon title="Opsætning" icon="Tool/Setting" link="Frames.php" target="Right" help="Opsætning..."/>';
-if (DevelopmentMode::isDevelopmentMode()) {
 	$gui.='<icon title="Avanceret" icon="Tool/System" link="Import.php" target="Right" help="Udgiv ændringer foretaget på hjemmesiden"/>';
-}
 $gui.=
 '</row>'.
 '</group>'.

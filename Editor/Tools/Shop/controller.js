@@ -44,7 +44,7 @@ ui.listen({
 			offerFormula.reset();
 			deleteOffer.setEnabled(false);
 			saveOffer.setEnabled(false);
-			In2iGui.json({data:data},'../../Services/Model/LoadObject.php','loadOffer');
+			ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadOffer'});
 		} else if (obj.kind=='productgroup') {
 			this.loadGroup(obj.id);
 		} else if (obj.kind=='product') {
@@ -59,7 +59,7 @@ ui.listen({
 		productFormula.reset();
 		deleteProduct.setEnabled(false);
 		saveProduct.setEnabled(false);
-		In2iGui.json({data:data},'LoadProduct.php','loadProduct');		
+		ui.request({json:{data:data},url:'LoadProduct.php',onSuccess:'loadProduct'});
 	},
 	$success$loadProduct : function(data) {
 		this.productId = data.product.id;
@@ -102,7 +102,7 @@ ui.listen({
 			groups:productGroups.getValues()
 		};
 		n2i.log(data);
-		In2iGui.json({data:data},'SaveProduct.php','saveProduct');
+		ui.request({json:{data:data},url:'SaveProduct.php',onSuccess:'saveProduct'});
 	},
 	$success$saveProduct : function() {
 		list.refresh();
@@ -118,7 +118,7 @@ ui.listen({
 		return '../../../util/images/?id='+obj.id+'&maxwidth=48&maxheight=48&format=jpg';
 	},
 	$click$deleteProduct : function() {
-		In2iGui.json({data:{id:this.productId}},'../../Services/Model/DeleteObject.php','deleteProduct');
+		ui.request({json:{data:{id:this.productId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteProduct'});
 	},
 	$success$deleteProduct : function() {
 		this.productId=null;
@@ -144,7 +144,7 @@ ui.listen({
 		offerFormula.reset();
 	},
 	$click$deleteOffer : function() {
-		In2iGui.json({data:{id:this.offerId}},'../../Services/Model/DeleteObject.php','deleteOffer');
+		ui.request({json:{data:{id:this.offerId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteOffer'});
 	},
 	$success$deleteOffer : function() {
 		offerEditor.hide();
@@ -158,7 +158,7 @@ ui.listen({
 			note:offerNote.getValue(),
 			expiry:offerExpiry.getValue()
 		};
-		In2iGui.json({data:data},'SaveOffer.php','saveOffer');
+		ui.request({json:{data:data},url:'SaveOffer.php',onSuccess:'saveOffer'});
 	},
 	$success$saveOffer : function() {
 		offerEditor.hide();
@@ -173,7 +173,7 @@ ui.listen({
 		groupFormula.reset();
 		deleteGroup.setEnabled(false);
 		saveGroup.setEnabled(false);
-		In2iGui.json({data:data},'../../Services/Model/LoadObject.php','loadGroup');
+		ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
 	},
 	$click$newGroup : function() {
 		this.groupId = 0;
@@ -195,7 +195,7 @@ ui.listen({
 		groupFormula.reset();
 	},
 	$click$deleteGroup : function() {
-		In2iGui.json({data:{id:this.groupId}},'../../Services/Model/DeleteObject.php','deleteGroup');
+		ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
 	},
 	$success$deleteGroup : function() {
 		groupEditor.hide();
@@ -211,7 +211,7 @@ ui.listen({
 			return;
 		}
 		data.id=this.groupId;
-		In2iGui.json({data:data},'SaveGroup.php','saveGroup');
+		ui.request({json:{data:data},url:'SaveGroup.php',onSuccess:'saveGroup'});
 	},
 	$success$saveGroup : function() {
 		groupEditor.hide();
@@ -227,7 +227,7 @@ ui.listen({
 		typeFormula.reset();
 		deleteType.setEnabled(false);
 		saveType.setEnabled(false);
-		In2iGui.json({data:data},'../../Services/Model/LoadObject.php','loadType');
+		ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadType'});
 	},
 	$click$newType : function() {
 		this.typeId = 0;
@@ -250,7 +250,7 @@ ui.listen({
 		typeFormula.reset();
 	},
 	$click$deleteType : function() {
-		In2iGui.json({data:{id:this.typeId}},'../../Services/Model/DeleteObject.php','deleteType');
+		ui.request({json:{data:{id:this.typeId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteType'});
 	},
 	$success$deleteType : function() {
 		typeEditor.hide();
@@ -264,7 +264,7 @@ ui.listen({
 			title:typeTitle.getValue(),
 			note:typeNote.getValue()
 		};
-		In2iGui.json({data:data},'SaveType.php','saveType');
+		ui.request({json:{data:data},url:'SaveType.php',onSuccess:'saveType'});
 	},
 	$success$saveType : function() {
 		typeEditor.hide();

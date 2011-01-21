@@ -37,6 +37,15 @@ class DateUtils {
 		}
 	}
 	
+	function formatLongDate($timestamp,$locale="da_DK") {
+		if ($timestamp) {
+			setlocale(LC_TIME, $locale);
+			return strftime("%e. %b %Y",$timestamp);
+		} else {
+			return '';
+		}
+	}
+	
 	function formatDateTime($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			setlocale(LC_TIME, $locale);

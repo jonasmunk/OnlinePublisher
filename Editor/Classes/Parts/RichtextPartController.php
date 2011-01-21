@@ -23,9 +23,14 @@ class RichtextPartController extends PartController
 	function display($part,$context) {
 		return $this->render($part,$context);
 	}
-	
+		
 	function editor($part,$context) {
 		global $baseUrl;
+		if (Request::isLocalhost()) {
+			return '<div id="part_richtext">'.$part->getHtml().'</div>'.
+				'<input type="hidden" name="html" value="'.StringUtils::escapeXML($part->getHtml()).'"/>'.
+				'<script src="'.$baseUrl.'Editor/Parts/richtext/script.js" type="text/javascript" charset="utf-8"></script>';
+		} else {
 		return
 		'<textarea class="Part-richtext" id="PartRichtextTextarea" name="html" style="width: 100%; height: 250px;">'.
 		StringUtils::escapeXML($part->getHtml()).
@@ -55,6 +60,7 @@ class RichtextPartController extends PartController
        		theme_advanced_resizing : true
            });
            </script>';
+		}
 	}
 	
 	function getFromRequest($id) {

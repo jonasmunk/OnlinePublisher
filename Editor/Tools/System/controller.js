@@ -52,7 +52,7 @@ ui.listen({
 		userFormula.reset();
 		deleteUser.setEnabled(false);
 		saveUser.setEnabled(false);
-		In2iGui.json({data:data},'../../Services/Model/LoadObject.php','loadUser');
+		ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadUser'});
 	},
 	$success$loadUser : function(data) {
 		this.userId = data.id;
@@ -95,7 +95,7 @@ ui.listen({
 			external:userExternal.getValue(),
 			administrator:userAdministrator.getValue()
 		};
-		In2iGui.json({data:data},'SaveUser.php','saveUser');
+		ui.request({json:{data:data},url:'SaveUser.php',onSuccess:'saveUser'});
 	},
 	$success$saveUser : function() {
 		userEditor.hide();
@@ -103,7 +103,7 @@ ui.listen({
 		list.refresh();
 	},
 	$click$deleteUser : function() {
-		In2iGui.json({data:{id:this.userId}},'../../Services/Model/DeleteObject.php','deleteUser');
+		ui.request({json:{data:{id:this.userId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteUser'});
 	},
 	$success$deleteUser : function() {
 		userEditor.hide();
@@ -128,7 +128,7 @@ ui.listen({
 		weblogGroupFormula.reset();
 		deleteWeblogGroup.setEnabled(false);
 		saveWeblogGroup.setEnabled(false);
-		In2iGui.json({data:data},'../../Services/Model/LoadObject.php','loadWeblogGroup');
+		ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadWeblogGroup'});
 	},
 	$success$loadWeblogGroup : function(data) {
 		this.weblogGroupId = data.id;
@@ -143,7 +143,7 @@ ui.listen({
 		weblogGroupFormula.reset();
 	},
 	$click$deleteWeblogGroup : function() {
-		In2iGui.json({data:{id:this.weblogGroupId}},'../../Services/Model/DeleteObject.php','deleteWeblogGroup');
+		ui.request({json:{data:{id:this.weblogGroupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteWeblogGroup'});
 	},
 	$success$deleteWeblogGroup : function() {
 		weblogGroupEditor.hide();
@@ -172,7 +172,7 @@ ui.listen({
 	$click$savePath : function() {
 		var data = pathFormula.getValues();
 		data.id=this.pathId;
-		In2iGui.json({data:data},'SavePath.php','savePath');
+		ui.request({json:{data:data}},url:'SavePath.php',onSuccess:'savePath'});
 	},
 	$success$savePath : function() {
 		pathEditor.hide();
@@ -183,7 +183,7 @@ ui.listen({
 		pathFormula.reset();
 		deletePath.setEnabled(false);
 		savePath.setEnabled(false);
-		In2iGui.json({data:{id:id}},'../../Services/Model/LoadObject.php','loadPath');
+		ui.request({json:{data:{id:id}},url:'../../Services/Model/LoadObject.php',onSuccess:'loadPath'});
 	},
 	$success$loadPath : function(data) {
 		this.pathId = data.id;
@@ -193,7 +193,7 @@ ui.listen({
 		deletePath.setEnabled(true);
 	},
 	$click$deletePath : function() {
-		In2iGui.json({data:{id:this.pathId}},'../../Services/Model/DeleteObject.php','deletePath');
+		ui.request({json:{data:{id:this.pathId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePath'});
 	},
 	$success$deletePath : function() {
 		pathEditor.hide();

@@ -36,7 +36,7 @@ ui.listen({
 		usageFormula.reset();
 		deleteUsage.setEnabled(false);
 		saveUsage.setEnabled(false);
-		In2iGui.json({data:data},'../../Services/Model/LoadObject.php','loadUsage');
+		ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadUsage'});
 	},
 	
 	$success$loadUsage : function(data) {
@@ -48,7 +48,7 @@ ui.listen({
 		usageFormula.focus();
 	},
 	$click$deleteUsage : function() {
-		In2iGui.json({data:{id:this.usageId}},'../../Services/Model/DeleteObject.php','deleteUsage');
+		ui.request({json:{data:{id:this.usageId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteUsage'});
 	},
 	$success$deleteUsage : function() {
 		usageFormula.reset();

@@ -53,6 +53,7 @@ class In2iGui {
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="'.($xhtml ? 'xml' : 'html').'"/>'.
 		'<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
+		'<xsl:variable name="profile">'.($_GET['profile']=='true' ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
 		'<xsl:include href="'.$basePath.'In2iGui/xslt/gui.xsl"/>';

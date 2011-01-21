@@ -7,8 +7,9 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Database.php';
-require_once '../../Classes/RemotePublisher.php';
+require_once '../../Classes/Objects/Remotepublisher.php';
 require_once '../../Classes/Utilities/StringUtils.php';
+require_once '../../Classes/Services/RemoteDataService.php';
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
@@ -31,13 +32,18 @@ $sql="select * from remotepublisher,object where remotepublisher.object_id=objec
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$site = RemotePublisher::load($row['id']);
+	$data = RemoteDataService::getRemoteData($site->getUrl().'services/info/json/');
+	if ($data->isHasData()) {
+		$str = file_get_contents($data->getFile());
+		$obj = StringUtils::fromJSON($str);
+	}
 	$gui.='<row link="EditSite.php?id='.$row['id'].'">'.
 	'<cell>'.
 	'<icon size="1" icon="Basic/Internet"/>'.
 	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
 	'<cell>'.StringUtils::escapeXML($row['url']).'</cell>'.
-	'<cell>'.StringUtils::escapeXML($site->getVersionNumber()).'</cell>'.
+	'<cell>'.StringUtils::escapeXML(DateUtils::formatLongDate($obj->date)).'</cell>'.
 	'</row>';
 }
 Database::free($result);

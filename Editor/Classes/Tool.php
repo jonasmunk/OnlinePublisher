@@ -1,5 +1,6 @@
 <?
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Database.php');
 
 class Tool {
 	function getAvailableTools() {

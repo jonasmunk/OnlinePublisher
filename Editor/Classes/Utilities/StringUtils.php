@@ -209,4 +209,24 @@ class StringUtils {
 	function removeTags($string) {
 		return preg_replace("/<[\/a-z]+[^>]*>/i", '', $string);
 	}
+	
+	function toJSON($obj) {
+		global $basePath;
+		if (function_exists('json_encode')) {
+			return json_encode($obj);
+		}
+		require_once($basePath.'Editor/Libraries/json/JSON2.php');
+		$json = new Services_JSON();
+		return $json->encode($obj);
+	}
+	
+	function fromJSON($str) {
+		global $basePath;
+		if (function_exists('json_decode')) {
+			return json_decode($str);
+		}
+		require_once($basePath.'Editor/Libraries/json/JSON2.php');
+		$json = new Services_JSON();
+		return $json->decode($str);
+	}
 }

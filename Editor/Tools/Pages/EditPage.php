@@ -10,7 +10,6 @@ require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/BumbleBee.php';
-require_once '../../Classes/DevelopmentMode.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/StringUtils.php';
@@ -57,7 +56,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<menu xmlns="uri:Menu">'.
 '<item title="Opret nyhed" link="../News/?action=newnews&amp;page='.$id.'" target="Desktop"/>'.
 '<item title="Eksporter" link="Export.php?id='.$id.'"/>';
-if (DevelopmentMode::isDevelopmentMode()) {
+if (false) {
 	$gui.='<item title="Eksporter (debug)" link="Export.php?id='.$id.'&amp;debug=true" target="_blank"/>'.
 	'<item title="Opret kopi" link="Duplicate.php?id='.$id.'"/>';
 }
