@@ -474,7 +474,7 @@ In2iGui.createIcon = function(icon,size) {
 
 In2iGui.onDomReady = In2iGui.onReady = function(func) {
 	if (In2iGui.domReady) {return func();}
-	if (n2i.browser.gecko && document.baseURI.indexOf('xml')!=-1) {
+	if (n2i.browser.gecko && n2i.string.endsWith(document.baseURI,'xml')) {
 		window.setTimeout(func,1000);
 		return;
 	}
