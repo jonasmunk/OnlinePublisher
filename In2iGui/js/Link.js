@@ -16,7 +16,9 @@ In2iGui.Link.prototype = {
 		var self = this;
 		n2i.listen(this.element,'click',function(e) {
 			n2i.stop(e);
-			self.fire('click');
+			window.setTimeout(function() {
+				self.fire('click');
+			});
 		});
 	}
 }

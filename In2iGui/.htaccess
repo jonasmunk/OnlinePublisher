@@ -25,3 +25,5 @@ ExpiresByType text/html A300
 <IfModule mod_deflate.c>
 AddOutputFilterByType DEFLATE text/css text/javascript application/x-javascript
 </IfModule>
+
+SetEnv session.use_cookies='0';

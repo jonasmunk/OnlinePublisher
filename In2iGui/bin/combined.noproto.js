@@ -604,7 +604,7 @@ n2i.stop = function(e) {
 
 n2i.onReady = function(delegate) {
 	if(window.addEventListener) {
-		window.addEventListener('DOMContentLoaded',delegate);
+		window.addEventListener('DOMContentLoaded',delegate,false);
 	}
 	else if(typeof document.addEventListener != 'undefined')
 	{
@@ -680,6 +680,10 @@ n2i.request = function(options) {
 		//transport.setRequestHeader("Connection", "close");
 	}
 	transport.send(body);
+}
+
+n2i.request.isXMLResponse = function(t) {
+	return t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror';
 }
 
 n2i.request.buildPostBody = function(parameters) {
@@ -772,7 +776,11 @@ n2i.setOpacity = function(element,opacity) {
 
 n2i.setStyle = function(element,styles) {
 	for (style in styles) {
-		element.style[style] = styles[style];
+		if (style==='opacity') {
+			n2i.setOpacity(element,styles[style]);
+		} else {
+			element.style[style] = styles[style];
+		}
 	}
 }
 
@@ -3172,10 +3180,6 @@ In2iGui.get = function(nameOrWidget) {
 	}
 };
 
-//document.observe('dom:loaded', function () {
-//	In2iGui.get().ignite();
-//});
-
 n2i.onReady(function() {
 	In2iGui.get().ignite();
 });
@@ -3504,11 +3508,11 @@ In2iGui.showMessage = function(options) {
 		}
 		document.body.appendChild(In2iGui.message);
 	}
-	In2iGui.message.getElementsByTagName('div')[1].innerHTML=options.text;
-	In2iGui.message.style.display='block';
-	In2iGui.message.style.zIndex=In2iGui.nextTopIndex();
-	In2iGui.message.style.marginLeft=(In2iGui.message.clientWidth/-2)+'px';
-	In2iGui.message.style.marginTop=n2i.getScrollTop()+'px';
+	n2i.dom.setText(In2iGui.message.getElementsByTagName('div')[1],options.text);
+	In2iGui.message.style.display = 'block';
+	In2iGui.message.style.zIndex = In2iGui.nextTopIndex();
+	In2iGui.message.style.marginLeft = (In2iGui.message.clientWidth/-2)+'px';
+	In2iGui.message.style.marginTop = n2i.getScrollTop()+'px';
 	if (!n2i.browser.msie) {
 		n2i.ani(In2iGui.message,'opacity',1,300);
 	}
@@ -3523,7 +3527,7 @@ In2iGui.hideMessage = function() {
 		if (!n2i.browser.msie) {
 			n2i.ani(In2iGui.message,'opacity',0,300,{hideOnComplete:true});
 		} else {
-			In2iGui.message.setStyle({display:'none'});
+			In2iGui.message.style.display='none';
 		}
 	}
 };
@@ -3536,12 +3540,14 @@ In2iGui.showToolTip = function(options) {
 		In2iGui.toolTips[key] = t;
 	}
 	t.onclick = function() {In2iGui.hideToolTip(options);};
-	var n = $(options.element);
-	var pos = n.cumulativeOffset();
+	var n = n2i.get(options.element);
+	var pos = n2i.getPosition(n);
 	t.select('div')[1].update(options.text);
-	if (t.style.display=='none' && !n2i.browser.msie) {t.setStyle({opacity:0});}
-	t.setStyle({'display':'block',zIndex:In2iGui.nextTopIndex()});
-	t.setStyle({left:(pos.left-t.getWidth()+4)+'px',top:(pos.top+2-(t.getHeight()/2)+(n.getHeight()/2))+'px'});
+	if (t.style.display=='none' && !n2i.browser.msie) {
+		n2i.setOpacity(t,0);
+	}
+	n2i.setStyle(t,{'display':'block',zIndex:In2iGui.nextTopIndex()});
+	n2i.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
 	if (!n2i.browser.msie) {
 		n2i.ani(t,'opacity',1,300);
 	}
@@ -3554,7 +3560,7 @@ In2iGui.hideToolTip = function(options) {
 		if (!n2i.browser.msie) {
 			n2i.ani(t,'opacity',0,300,{hideOnComplete:true});
 		} else {
-			t.setStyle({display:'none'});
+			n2i.style.display = 'none';
 		}
 	}
 };
@@ -3587,12 +3593,11 @@ In2iGui.createIcon = function(icon,size) {
 
 In2iGui.onDomReady = In2iGui.onReady = function(func) {
 	if (In2iGui.domReady) {return func();}
-	if (n2i.browser.gecko && document.baseURI.endsWith('xml')) {
+	if (n2i.browser.gecko && document.baseURI.indexOf('xml')!=-1) {
 		window.setTimeout(func,1000);
 		return;
 	}
 	n2i.onReady(func);
-	//document.observe('dom:loaded', func);
 };
 
 In2iGui.wrapInField = function(e) {
@@ -3892,95 +3897,6 @@ In2iGui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
-In2iGui.dwrUpdate = function() {
-	var func = arguments[0];
-	var delegate = {
-  		callback:function(data) { In2iGui.handleDwrUpdate(data) }
-	}
-	var num = arguments.length;
-	if (num==1) {
-		func(delegate);
-	} else if (num==2) {
-		func(arguments[1],delegate);
-	} else {
-		alert('Too many parameters');
-	}
-};
-
-In2iGui.handleDwrUpdate = function(data) {
-	var gui = In2iGui.get();
-	for (var i=0; i < data.length; i++) {
-		if (gui.objects.get(data[i].name)) {
-			gui.objects.get(data[i].name).updateFromObject(data[i]);
-		}
-	};
-};
-
-In2iGui.update = function(url,delegate) {
-	var dlgt = {
-		onSuccess:function(t) {In2iGui.handleUpdate(t,delegate)}
-	}
-	$get(url,dlgt);
-};
-
-In2iGui.handleUpdate = function(t,delegate) {
-	var gui = In2iGui.get();
-	var doc = t.responseXML.firstChild;
-	var children = doc.childNodes;
-	for (var i=0; i < children.length; i++) {
-		if (children[i].nodeType==1) {
-			var name = children[i].getAttribute('name');
-			if (name && name!='' && gui.objects.get(name)) {
-				gui.objects.get(name).updateFromNode(children[i]);
-			}
-		}
-	};
-	delegate.onSuccess();
-};
-
-/** @private */
-In2iGui.jsonResponse = function(t,key) {
-	if (!t.responseXML || !t.responseXML.documentElement) {
-		var str = t.responseText.replace(/^\s+|\s+$/g, '');
-		if (str.length>0) {
-			var json = n2i.fromJSON(t.responseText);
-		} else {
-			json = '';
-		}
-		In2iGui.callDelegates(json,'success$'+key)
-	} else {
-		In2iGui.callDelegates(t,'success$'+key)
-	}
-};
-
-/** @deprecated */
-In2iGui.json = function(data,url,delegateOrKey) {
-	var options = {url:url,method:'post',parameters:{},onException:function(e) {throw e}};
-	if (typeof(delegateOrKey)=='string') {
-		options.onSuccess=function(t) {In2iGui.jsonResponse(t,delegateOrKey)};
-	} else {
-		delegate = delegateOrKey;
-	}
-	for (key in data) {
-		options.parameters[key]=n2i.toJSON(data[key])
-	}
-	n2i.request(options);
-};
-
-In2iGui.jsonRequest = function(o) {
-	var options = {method:'post',parameters:{},onException:function(e) {throw e}};
-	if (typeof(o.event)=='string') {
-		options.onSuccess=function(t) {In2iGui.jsonResponse(t,o.event)};
-	} else {
-		delegate = delegateOrKey;
-	}
-	for (key in o.parameters) {
-		options.parameters[key]=n2i.toJSON(o.parameters[key])
-	}
-	options.url = o.url;
-	n2i.request(options);
-};
-
 In2iGui.request = function(options) {
 	options = n2i.override({method:'post',parameters:{}},options);
 	if (options.json) {
@@ -3991,8 +3907,18 @@ In2iGui.request = function(options) {
 	var onSuccess = options.onSuccess;
 	options.onSuccess=function(t) {
 		if (typeof(onSuccess)=='string') {
-			In2iGui.jsonResponse(t,onSuccess);
-		} else if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror' && options.onXML) {
+			if (!n2i.request.isXMLResponse(t)) {
+				var str = t.responseText.replace(/^\s+|\s+$/g, '');
+				if (str.length>0) {
+					var json = n2i.fromJSON(t.responseText);
+				} else {
+					json = '';
+				}
+				In2iGui.callDelegates(json,'success$'+onSuccess);
+			} else {
+				In2iGui.callDelegates(t,'success$'+onSuccess);
+			}
+		} else if (n2i.request.isXMLResponse(t) && options.onXML) {
 			options.onXML(t.responseXML);
 		} else if (options.onJSON) {
 			var str = t.responseText.replace(/^\s+|\s+$/g, '');
@@ -4016,7 +3942,7 @@ In2iGui.request = function(options) {
 			onFailure(t);
 		}
 	}
-	options.onException = function(t,e) {n2i.log(e)};
+	options.onException = function(t,e) {n2i.log(e);};
 	n2i.request(options);
 };
 
@@ -11229,11 +11155,11 @@ In2iGui.Bar = function(options) {
 
 In2iGui.Bar.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_bar'});
+	options.element = n2i.build('div',{'class':'in2igui_bar'});
 	if (options.absolute) {
-		options.element.addClassName('in2igui_bar_absolute');
+		n2i.addClass(options.element,'in2igui_bar_absolute');
 	}
-	options.element.insert(new Element('div',{'class':'in2igui_bar_body'}));
+	n2i.build('div',{'class':'in2igui_bar_body',parent:options.element});
 	return new In2iGui.Bar(options);
 }
 
@@ -11242,7 +11168,8 @@ In2iGui.Bar.prototype = {
 		document.body.appendChild(this.element);
 	},
 	add : function(widget) {
-		this.element.select('.in2igui_bar_body')[0].insert(widget.getElement());
+		var body = n2i.firstByClass(this.element,'in2igui_bar_body');
+		body.appendChild(widget.getElement());
 	},
 	placeAbove : function(widget) {
 		n2i.place({
@@ -11267,18 +11194,18 @@ In2iGui.Bar.Button = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
 	this.element = n2i.get(options.element);
-	this.element.observe('click',this.onClick.bind(this));
+	n2i.listen(this.element,'click',this.onClick.bind(this));
 	if (this.options.stopEvents) {
-		this.element.observe('mousedown',function(e) {Event.stop(e)});
+		n2i.listen(this.element,'mousedown',function(e) {n2i.stop(e)});
 	}
 	In2iGui.extend(this);
 };
 
 In2iGui.Bar.Button.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('a',{'class':'in2igui_bar_button'});
+	var e = options.element = n2i.build('a',{'class':'in2igui_bar_button'});
 	if (options.icon) {
-		e.insert(In2iGui.createIcon(options.icon,1));
+		e.appendChild(In2iGui.createIcon(options.icon,1));
 	}
 	return new In2iGui.Bar.Button(options);
 }
@@ -11287,7 +11214,7 @@ In2iGui.Bar.Button.prototype = {
 	onClick : function(e) {
 		this.fire('click');
 		if (this.options.stopEvents) {
-			Event.stop(e);
+			n2i.stop(e);
 		}
 	}
 }/**
@@ -11735,7 +11662,9 @@ In2iGui.Link.prototype = {
 		var self = this;
 		n2i.listen(this.element,'click',function(e) {
 			n2i.stop(e);
-			self.fire('click');
+			window.setTimeout(function() {
+				self.fire('click');
+			});
 		});
 	}
 }
@@ -11929,6 +11858,114 @@ In2iGui.Links.prototype = {
 				value.setValue();
 			}
 		});
+	}
+}
+
+/* EOF *//**
+ * @constructor
+ */
+In2iGui.MarkupEditor = function(options) {
+	this.name = options.name;
+	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif; font-size: 11px;'},options);
+	if (options.replace) {
+		options.replace = n2i.get(options.replace);
+		options.element = n2i.build('div',{className:'in2igui_markupeditor'});
+		options.replace.parentNode.insertBefore(options.element,options.replace);
+		options.replace.style.display='none';
+		options.value = options.replace.innerHTML;
+	}
+	this.element = n2i.get(options.element);
+	this.impl = In2iGui.MarkupEditor.webkit;
+	this.impl.initialize({element:this.element,controller:this});
+	if (options.value) {
+		this.impl.setHTML(options.value);
+	}
+	In2iGui.extend(this);
+	this.addBehavior();
+}
+
+In2iGui.MarkupEditor.create = function(options) {
+	options = options || {};
+	options.element = n2i.build('div',{className:'in2igui_markupeditor'});
+	return new In2iGui.MarkupEditor(options);
+}
+
+In2iGui.MarkupEditor.prototype = {
+	addBehavior : function() {
+		
+	},
+	getValue : function() {
+		return this.impl.getHTML();
+	},
+	focus : function() {
+		this.impl.focus();
+	},
+	focused : function() {
+		this.showBar();
+	},
+	blurred : function() {
+		this.bar.hide();
+		this.fire('blur');
+	},
+	showBar : function() {
+		if (!this.bar) {
+			var things = [
+				{key:'strong',icon:'edit/text_bold'},
+				{key:'em',icon:'edit/text_italic'}/*,
+				{key:'insert-table',icon:'edit/text_italic'}*/
+			]
+			
+			this.bar = In2iGui.Bar.create({absolute:true,small:true});
+			n2i.each(things,function(info) {
+				var button = new In2iGui.Bar.Button.create({icon:info.icon,stopEvents:true});
+				button.listen({
+					$click:function() {this.impl.format(info)}.bind(this)
+				});
+				this.bar.add(button);
+			}.bind(this));
+			this.bar.addToDocument();
+		}
+		this.bar.placeAbove(this);
+		this.bar.show();
+	}
+}
+
+In2iGui.MarkupEditor.webkit = {
+	initialize : function(options) {
+		this.element = options.element;
+		this.element.style.overflow='auto';
+		this.element.contentEditable = true;
+		var ctrl = this.controller = options.controller;
+		n2i.listen(this.element,'focus',function() {
+			ctrl.focused();
+		});
+		n2i.listen(this.element,'blur',function() {
+			ctrl.blurred();
+		});
+	},
+	focus : function() {
+		this.element.focus();
+	},
+	format : function(info) {
+		if (info.key=='strong' || info.key=='em') {
+			this._wrapInTag(info.key);
+		} else if (info.key=='insert-table') {
+			this._insertHTML('<table><tbody><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td></tr></tbody></table>');
+		} else {
+			document.execCommand(info.key,null,null);
+		}
+	},
+	_wrapInTag : function(tag) {
+		document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');
+	},
+	_insertHTML : function(html) {
+		document.execCommand('inserthtml',null,html);
+	},
+	setHTML : function(html) {
+		this.element.innerHTML = html;
+	},
+	getHTML : function() {
+		return this.element.innerHTML;
 	}
 }
 

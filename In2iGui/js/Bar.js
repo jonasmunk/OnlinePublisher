@@ -11,11 +11,11 @@ In2iGui.Bar = function(options) {
 
 In2iGui.Bar.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_bar'});
+	options.element = n2i.build('div',{'class':'in2igui_bar'});
 	if (options.absolute) {
-		options.element.addClassName('in2igui_bar_absolute');
+		n2i.addClass(options.element,'in2igui_bar_absolute');
 	}
-	options.element.insert(new Element('div',{'class':'in2igui_bar_body'}));
+	n2i.build('div',{'class':'in2igui_bar_body',parent:options.element});
 	return new In2iGui.Bar(options);
 }
 
@@ -24,7 +24,8 @@ In2iGui.Bar.prototype = {
 		document.body.appendChild(this.element);
 	},
 	add : function(widget) {
-		this.element.select('.in2igui_bar_body')[0].insert(widget.getElement());
+		var body = n2i.firstByClass(this.element,'in2igui_bar_body');
+		body.appendChild(widget.getElement());
 	},
 	placeAbove : function(widget) {
 		n2i.place({
@@ -49,18 +50,18 @@ In2iGui.Bar.Button = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
 	this.element = n2i.get(options.element);
-	this.element.observe('click',this.onClick.bind(this));
+	n2i.listen(this.element,'click',this.onClick.bind(this));
 	if (this.options.stopEvents) {
-		this.element.observe('mousedown',function(e) {Event.stop(e)});
+		n2i.listen(this.element,'mousedown',function(e) {n2i.stop(e)});
 	}
 	In2iGui.extend(this);
 };
 
 In2iGui.Bar.Button.create = function(options) {
 	options = options || {};
-	var e = options.element = new Element('a',{'class':'in2igui_bar_button'});
+	var e = options.element = n2i.build('a',{'class':'in2igui_bar_button'});
 	if (options.icon) {
-		e.insert(In2iGui.createIcon(options.icon,1));
+		e.appendChild(In2iGui.createIcon(options.icon,1));
 	}
 	return new In2iGui.Bar.Button(options);
 }
@@ -69,7 +70,7 @@ In2iGui.Bar.Button.prototype = {
 	onClick : function(e) {
 		this.fire('click');
 		if (this.options.stopEvents) {
-			Event.stop(e);
+			n2i.stop(e);
 		}
 	}
 }

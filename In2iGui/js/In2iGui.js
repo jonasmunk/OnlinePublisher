@@ -61,10 +61,6 @@ In2iGui.get = function(nameOrWidget) {
 	}
 };
 
-//document.observe('dom:loaded', function () {
-//	In2iGui.get().ignite();
-//});
-
 n2i.onReady(function() {
 	In2iGui.get().ignite();
 });
@@ -393,11 +389,11 @@ In2iGui.showMessage = function(options) {
 		}
 		document.body.appendChild(In2iGui.message);
 	}
-	In2iGui.message.getElementsByTagName('div')[1].innerHTML=options.text;
-	In2iGui.message.style.display='block';
-	In2iGui.message.style.zIndex=In2iGui.nextTopIndex();
-	In2iGui.message.style.marginLeft=(In2iGui.message.clientWidth/-2)+'px';
-	In2iGui.message.style.marginTop=n2i.getScrollTop()+'px';
+	n2i.dom.setText(In2iGui.message.getElementsByTagName('div')[1],options.text);
+	In2iGui.message.style.display = 'block';
+	In2iGui.message.style.zIndex = In2iGui.nextTopIndex();
+	In2iGui.message.style.marginLeft = (In2iGui.message.clientWidth/-2)+'px';
+	In2iGui.message.style.marginTop = n2i.getScrollTop()+'px';
 	if (!n2i.browser.msie) {
 		n2i.ani(In2iGui.message,'opacity',1,300);
 	}
@@ -412,7 +408,7 @@ In2iGui.hideMessage = function() {
 		if (!n2i.browser.msie) {
 			n2i.ani(In2iGui.message,'opacity',0,300,{hideOnComplete:true});
 		} else {
-			In2iGui.message.setStyle({display:'none'});
+			In2iGui.message.style.display='none';
 		}
 	}
 };
@@ -425,12 +421,14 @@ In2iGui.showToolTip = function(options) {
 		In2iGui.toolTips[key] = t;
 	}
 	t.onclick = function() {In2iGui.hideToolTip(options);};
-	var n = $(options.element);
-	var pos = n.cumulativeOffset();
+	var n = n2i.get(options.element);
+	var pos = n2i.getPosition(n);
 	t.select('div')[1].update(options.text);
-	if (t.style.display=='none' && !n2i.browser.msie) {t.setStyle({opacity:0});}
-	t.setStyle({'display':'block',zIndex:In2iGui.nextTopIndex()});
-	t.setStyle({left:(pos.left-t.getWidth()+4)+'px',top:(pos.top+2-(t.getHeight()/2)+(n.getHeight()/2))+'px'});
+	if (t.style.display=='none' && !n2i.browser.msie) {
+		n2i.setOpacity(t,0);
+	}
+	n2i.setStyle(t,{'display':'block',zIndex:In2iGui.nextTopIndex()});
+	n2i.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
 	if (!n2i.browser.msie) {
 		n2i.ani(t,'opacity',1,300);
 	}
@@ -443,7 +441,7 @@ In2iGui.hideToolTip = function(options) {
 		if (!n2i.browser.msie) {
 			n2i.ani(t,'opacity',0,300,{hideOnComplete:true});
 		} else {
-			t.setStyle({display:'none'});
+			n2i.style.display = 'none';
 		}
 	}
 };
@@ -476,12 +474,11 @@ In2iGui.createIcon = function(icon,size) {
 
 In2iGui.onDomReady = In2iGui.onReady = function(func) {
 	if (In2iGui.domReady) {return func();}
-	if (n2i.browser.gecko && document.baseURI.endsWith('xml')) {
+	if (n2i.browser.gecko && document.baseURI.indexOf('xml')!=-1) {
 		window.setTimeout(func,1000);
 		return;
 	}
 	n2i.onReady(func);
-	//document.observe('dom:loaded', func);
 };
 
 In2iGui.wrapInField = function(e) {
@@ -781,95 +778,6 @@ In2iGui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
-In2iGui.dwrUpdate = function() {
-	var func = arguments[0];
-	var delegate = {
-  		callback:function(data) { In2iGui.handleDwrUpdate(data) }
-	}
-	var num = arguments.length;
-	if (num==1) {
-		func(delegate);
-	} else if (num==2) {
-		func(arguments[1],delegate);
-	} else {
-		alert('Too many parameters');
-	}
-};
-
-In2iGui.handleDwrUpdate = function(data) {
-	var gui = In2iGui.get();
-	for (var i=0; i < data.length; i++) {
-		if (gui.objects.get(data[i].name)) {
-			gui.objects.get(data[i].name).updateFromObject(data[i]);
-		}
-	};
-};
-
-In2iGui.update = function(url,delegate) {
-	var dlgt = {
-		onSuccess:function(t) {In2iGui.handleUpdate(t,delegate)}
-	}
-	$get(url,dlgt);
-};
-
-In2iGui.handleUpdate = function(t,delegate) {
-	var gui = In2iGui.get();
-	var doc = t.responseXML.firstChild;
-	var children = doc.childNodes;
-	for (var i=0; i < children.length; i++) {
-		if (children[i].nodeType==1) {
-			var name = children[i].getAttribute('name');
-			if (name && name!='' && gui.objects.get(name)) {
-				gui.objects.get(name).updateFromNode(children[i]);
-			}
-		}
-	};
-	delegate.onSuccess();
-};
-
-/** @private */
-In2iGui.jsonResponse = function(t,key) {
-	if (!t.responseXML || !t.responseXML.documentElement) {
-		var str = t.responseText.replace(/^\s+|\s+$/g, '');
-		if (str.length>0) {
-			var json = n2i.fromJSON(t.responseText);
-		} else {
-			json = '';
-		}
-		In2iGui.callDelegates(json,'success$'+key)
-	} else {
-		In2iGui.callDelegates(t,'success$'+key)
-	}
-};
-
-/** @deprecated */
-In2iGui.json = function(data,url,delegateOrKey) {
-	var options = {url:url,method:'post',parameters:{},onException:function(e) {throw e}};
-	if (typeof(delegateOrKey)=='string') {
-		options.onSuccess=function(t) {In2iGui.jsonResponse(t,delegateOrKey)};
-	} else {
-		delegate = delegateOrKey;
-	}
-	for (key in data) {
-		options.parameters[key]=n2i.toJSON(data[key])
-	}
-	n2i.request(options);
-};
-
-In2iGui.jsonRequest = function(o) {
-	var options = {method:'post',parameters:{},onException:function(e) {throw e}};
-	if (typeof(o.event)=='string') {
-		options.onSuccess=function(t) {In2iGui.jsonResponse(t,o.event)};
-	} else {
-		delegate = delegateOrKey;
-	}
-	for (key in o.parameters) {
-		options.parameters[key]=n2i.toJSON(o.parameters[key])
-	}
-	options.url = o.url;
-	n2i.request(options);
-};
-
 In2iGui.request = function(options) {
 	options = n2i.override({method:'post',parameters:{}},options);
 	if (options.json) {
@@ -880,8 +788,18 @@ In2iGui.request = function(options) {
 	var onSuccess = options.onSuccess;
 	options.onSuccess=function(t) {
 		if (typeof(onSuccess)=='string') {
-			In2iGui.jsonResponse(t,onSuccess);
-		} else if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror' && options.onXML) {
+			if (!n2i.request.isXMLResponse(t)) {
+				var str = t.responseText.replace(/^\s+|\s+$/g, '');
+				if (str.length>0) {
+					var json = n2i.fromJSON(t.responseText);
+				} else {
+					json = '';
+				}
+				In2iGui.callDelegates(json,'success$'+onSuccess);
+			} else {
+				In2iGui.callDelegates(t,'success$'+onSuccess);
+			}
+		} else if (n2i.request.isXMLResponse(t) && options.onXML) {
 			options.onXML(t.responseXML);
 		} else if (options.onJSON) {
 			var str = t.responseText.replace(/^\s+|\s+$/g, '');
@@ -905,7 +823,7 @@ In2iGui.request = function(options) {
 			onFailure(t);
 		}
 	}
-	options.onException = function(t,e) {n2i.log(e)};
+	options.onException = function(t,e) {n2i.log(e);};
 	n2i.request(options);
 };
 

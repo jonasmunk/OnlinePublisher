@@ -22,6 +22,12 @@
 <html class="in2igui">
 
 <head>
+	<xsl:if test="$profile='true'">
+	<script>
+		console.profile();
+		window.setTimeout(function() {console.profileEnd()},5000);
+	</script>
+	</xsl:if>
 <title><xsl:value-of select="@title"/></title>
 	<meta http-equiv="X-UA-Compatible" content="IE8" />
 <xsl:choose>

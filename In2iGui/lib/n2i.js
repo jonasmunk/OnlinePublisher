@@ -604,7 +604,7 @@ n2i.stop = function(e) {
 
 n2i.onReady = function(delegate) {
 	if(window.addEventListener) {
-		window.addEventListener('DOMContentLoaded',delegate);
+		window.addEventListener('DOMContentLoaded',delegate,false);
 	}
 	else if(typeof document.addEventListener != 'undefined')
 	{
@@ -680,6 +680,10 @@ n2i.request = function(options) {
 		//transport.setRequestHeader("Connection", "close");
 	}
 	transport.send(body);
+}
+
+n2i.request.isXMLResponse = function(t) {
+	return t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror';
 }
 
 n2i.request.buildPostBody = function(parameters) {
@@ -772,7 +776,11 @@ n2i.setOpacity = function(element,opacity) {
 
 n2i.setStyle = function(element,styles) {
 	for (style in styles) {
-		element.style[style] = styles[style];
+		if (style==='opacity') {
+			n2i.setOpacity(element,styles[style]);
+		} else {
+			element.style[style] = styles[style];
+		}
 	}
 }
 
