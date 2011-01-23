@@ -55,7 +55,7 @@ class TextPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = TextPart::load($id);
-		$part->setText(Request::getEncodedString('text'));
+		$part->setText(Request::getUnicodeString('text'));
 		if (Request::exists('fontSize')) {
 			$part->setFontSize(Request::getString('fontSize'));
 			$part->setFontFamily(Request::getString('fontFamily'));

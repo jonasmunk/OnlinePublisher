@@ -56,7 +56,7 @@ class NewsPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = NewsPart::load($id);
-		$part->setTitle(Request::getEncodedString('title'));
+		$part->setTitle(Request::getUnicodeString('title'));
 		$part->setVariant(Request::getString('variant'));
 		$part->setMode(Request::getString('mode'));
 		$part->setSortBy(Request::getString('sortby'));
@@ -95,7 +95,7 @@ class NewsPartController extends PartController
 		'<input type="hidden" name="timecount" value="'.$part->getTimeCount().'"/>'.
 		'<input type="hidden" name="variant" value="'.$part->getVariant().'"/>'.
 		'<div id="part_news_preview">'.
-		StringUtils::fromUnicode($this->render($part,$context)).
+		$this->render($part,$context).
 		'</div>'.
 		'<script src="'.$baseUrl.'Editor/Parts/news/Script.js"></script>';
 	}
@@ -159,7 +159,7 @@ class NewsPartController extends PartController
 			</tabs>
 		</window>
 		';
-		return StringUtils::fromUnicode(In2iGui::renderFragment($gui));
+		return In2iGui::renderFragment($gui);
 	}
 	
 	function buildSql($part) {

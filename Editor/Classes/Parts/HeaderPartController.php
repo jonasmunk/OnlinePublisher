@@ -23,7 +23,7 @@ class HeaderPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = HeaderPart::load($id);
-		$part->setText(Request::getEncodedString('text'));
+		$part->setText(Request::getUnicodeString('text'));
 		// Until Ajax posts all vars
 		if (Request::exists('level')) {
 			$part->setLevel(Request::getInt('level'));

@@ -40,7 +40,7 @@ class ListPartController extends PartController
 	function getFromRequest($id) {
 		$part = ListPart::load($id);
 		$part->setObjectIds(Request::getIntArrayComma('objects'));
-		$part->setTitle(Request::getEncodedString('title'));
+		$part->setTitle(Request::getUnicodeString('title'));
 		$part->setTimeCount(Request::getInt('time_count'));
 		$part->setMaxItems(Request::getInt('maxitems'));
 		$part->setShowSource(Request::getBoolean('show_source'));
@@ -60,7 +60,7 @@ class ListPartController extends PartController
 		op.part.List.setData('.$this->buildData($part).');'.
 		'</script>'.
 		'<div id="part_list_container">'.
-		StringUtils::fromUnicode($this->render($part,$context)).
+		$this->render($part,$context).
 		'</div>';
 	}
 	
@@ -107,7 +107,7 @@ class ListPartController extends PartController
 				</tab>
 			</tabs>
 		</window>';
-		return StringUtils::fromUnicode(In2iGui::renderFragment($gui));
+		return In2iGui::renderFragment($gui);
 	}
 	
 	function buildData($part) {

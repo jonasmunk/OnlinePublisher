@@ -13,7 +13,7 @@ require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/SystemInfo.php';
 require_once 'Functions.php';
 
-header('Content-Type: text/html; charset=iso-8859-1');
+header('Content-Type: text/html; charset=UTF-8');
 
 $design = InternalSession::getPageDesign();
 $language = InternalSession::getLanguage();
@@ -25,6 +25,7 @@ $strings = array(
 <html>
 <head>
 <title>Editor</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../In2iGui/bin/minimized.css?version=<?=SystemInfo::getDate()?>" />
 <link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/editors/document.css?version=<?=SystemInfo::getDate()?>" />
 <link rel="stylesheet" type="text/css" href="Stylesheet.css?version=<?=SystemInfo::getDate()?>" />
@@ -231,7 +232,7 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
 		echo '<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">';
-		echo StringUtils::fromUnicode($ctrl->display($part,$partContext));
+		echo $ctrl->display($part,$partContext);
 		echo '</div>';
 	}
 }
@@ -254,7 +255,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	}
 	echo
 	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section_selected">'.
-	'<form name="PartForm" action="UpdatePart.php" method="post">'.
+	'<form name="PartForm" action="UpdatePart.php" method="post" charset="utf-8">'.
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
 	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.
 	'<input type="hidden" name="section" value="'.$sectionId.'"/>'.

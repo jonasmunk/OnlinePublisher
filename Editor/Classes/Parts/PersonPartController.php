@@ -88,7 +88,7 @@ class PersonPartController extends PartController
 		'<input type="hidden" name="show_image" value="'.$this->_intToBool($part->getShowImage()).'"/>'.
 		'<input type="hidden" name="personId" value="'.$part->getPersonId().'"/>'.
 		'<div align="'.$part->getAlign().'">'.
-		'<div id="part_person_container">'.StringUtils::fromUnicode($this->render($part,$context)).'</div>'.
+		'<div id="part_person_container">'.$this->render($part,$context).'</div>'.
 		'</div>'.
 		'<script src="'.$baseUrl.'Editor/Parts/person/script.js" type="text/javascript" charset="utf-8"></script>';
 	}

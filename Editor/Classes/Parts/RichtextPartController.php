@@ -27,45 +27,46 @@ class RichtextPartController extends PartController
 	function editor($part,$context) {
 		global $baseUrl;
 		if (Request::isLocalhost()) {
-			return '<div id="part_richtext">'.$part->getHtml().'</div>'.
-				'<input type="hidden" name="html" value="'.StringUtils::escapeXML($part->getHtml()).'"/>'.
-				'<script src="'.$baseUrl.'Editor/Parts/richtext/script.js" type="text/javascript" charset="utf-8"></script>';
+			return
+			'<div id="part_richtext">'.$this->render($part,$context).'</div>'.
+			'<input type="hidden" name="html" value="'.StringUtils::fromUnicode($part->getHtml()).'"/>'.
+			'<script src="'.$baseUrl.'Editor/Parts/richtext/script.js" type="text/javascript" charset="utf-8"></script>';
 		} else {
-		return
-		'<textarea class="Part-richtext" id="PartRichtextTextarea" name="html" style="width: 100%; height: 250px;">'.
-		StringUtils::escapeXML($part->getHtml()).
-		'</textarea>'.
-		'<script language="javascript" type="text/javascript" src="'.$baseUrl.'Editor/Libraries/tinymce/tiny_mce.js"></script>
-           <script language="javascript" type="text/javascript">
-           tinyMCE.init({
-           	mode : "textareas",
-           	theme : "advanced",
-           	entity_encoding : "numeric",
-           	convert_fonts_to_spans : true,
-           	language : "en",
-           	content_css : "'.$baseUrl.'style/'.$context->getDesign().'/editors/'.$context->getTemplate().'_richtext.css",
-           	theme_advanced_toolbar_location : "top",
-           	theme_advanced_toolbar_align : "left",
-           	theme_advanced_path_location : "bottom", //preview,emotions,iespell,flash,advimage,
-           	plugins : "table,save,advhr,advlink,insertdatetime,zoom,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable",
-       		//theme_advanced_buttons1_add_before : "save,newdocument,separator",
-       		theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,separator,search,replace,separator,undo,redo,separator,formatselect,fontselect,fontsizeselect",
-       		theme_advanced_buttons2 : "bold,italic,underline,separator,justifyleft,justifycenter,justifyright,jusityfull,separator,bullist,numlist,separator,indent,outdent,separator,forecolor,backcolor,separator,sub,sup,separator,hr,advhr,separator,link,unlink,anchor", // preview,
-       		theme_advanced_buttons3 : "visualaid,tablecontrols,separator,insertdate,inserttime,charmap,separator,fullscreen,removeformat,cleanup,code",
-               theme_advanced_disable : "image,help,styleselect",
-       	    plugin_insertdate_dateFormat : "%d-%m-%Y",
-       	    plugin_insertdate_timeFormat : "%H:%M:%S",
-           	extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
-       		theme_advanced_resize_horizontal : false,
-       		theme_advanced_resizing : true
-           });
-           </script>';
+			return
+			'<textarea class="Part-richtext" id="PartRichtextTextarea" name="html" style="width: 100%; height: 250px;">'.
+			StringUtils::escapeXML($part->getHtml()).
+			'</textarea>'.
+			'<script language="javascript" type="text/javascript" src="'.$baseUrl.'Editor/Libraries/tinymce/tiny_mce.js"></script>
+			<script language="javascript" type="text/javascript">
+			tinyMCE.init({
+				mode : "textareas",
+				theme : "advanced",
+				entity_encoding : "numeric",
+				convert_fonts_to_spans : true,
+				language : "en",
+				content_css : "'.$baseUrl.'style/'.$context->getDesign().'/editors/'.$context->getTemplate().'_richtext.css",
+				theme_advanced_toolbar_location : "top",
+				theme_advanced_toolbar_align : "left",
+				theme_advanced_path_location : "bottom", //preview,emotions,iespell,flash,advimage,
+				plugins : "table,save,advhr,advlink,insertdatetime,zoom,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable",
+				//theme_advanced_buttons1_add_before : "save,newdocument,separator",
+				theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,separator,search,replace,separator,undo,redo,separator,formatselect,fontselect,fontsizeselect",
+				theme_advanced_buttons2 : "bold,italic,underline,separator,justifyleft,justifycenter,justifyright,jusityfull,separator,bullist,numlist,separator,indent,outdent,separator,forecolor,backcolor,separator,sub,sup,separator,hr,advhr,separator,link,unlink,anchor", // preview,
+				theme_advanced_buttons3 : "visualaid,tablecontrols,separator,insertdate,inserttime,charmap,separator,fullscreen,removeformat,cleanup,code",
+				theme_advanced_disable : "image,help,styleselect",
+				plugin_insertdate_dateFormat : "%d-%m-%Y",
+				plugin_insertdate_timeFormat : "%H:%M:%S",
+				extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+				theme_advanced_resize_horizontal : false,
+				theme_advanced_resizing : true
+			});
+			</script>';
 		}
 	}
 	
 	function getFromRequest($id) {
 		$part = RichtextPart::load($id);
-		$part->setHtml(Request::getString('html'));
+		$part->setHtml(Request::getUnicodeString('html'));
 		return $part;
 	}
 	

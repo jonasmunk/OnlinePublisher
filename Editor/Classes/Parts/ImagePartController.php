@@ -33,7 +33,7 @@ class ImagePartController extends PartController
 	function getFromRequest($id) {
 		$part = ImagePart::load($id);
 		$part->setImageId(Request::getInt('imageId'));
-		$part->setText(Request::getEncodedString('text'));
+		$part->setText(Request::getUnicodeString('text'));
 		$part->setAlign(Request::getString('align'));
 		$part->setScaleMethod(Request::getString('scalemethod'));
 		$part->setScalePercent(Request::getInt('scalepercent'));
@@ -85,7 +85,7 @@ class ImagePartController extends PartController
 			'scaleheight' => $part->getScaleHeight()>0 ? $part->getScaleHeight() : '',
 			'text' => $part->getText()
 		)).
-		'<div id="part_image_container">'.StringUtils::fromUnicode($this->render($part,$context)).'</div>'.
+		'<div id="part_image_container">'.$this->render($part,$context).'</div>'.
 		'<script src="'.$baseUrl.'Editor/Parts/image/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	

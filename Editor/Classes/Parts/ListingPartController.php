@@ -75,7 +75,7 @@ class ListingPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = ListingPart::load($id);
-		$part->setText(Request::getEncodedString('text'));
+		$part->setText(Request::getUnicodeString('text'));
 		if (Request::exists('type')) {
 			$part->setListStyle(Request::getString('type'));
 			$part->setFontSize(Request::getString('fontSize'));
