@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/File.php');
 require_once($basePath.'Editor/Classes/Log.php');
 
@@ -136,7 +137,7 @@ class FileService {
 	function replaceUploadedFile($id) {
 		global $basePath;
 		Log::debug($_FILES);
-		$fileName=FileSystemUtil::safeFilename($_FILES['file']['name']);
+		$fileName=FileSystemService::safeFilename($_FILES['file']['name']);
 		$fileType=$_FILES["file"]["type"];
 		$tempFile=$_FILES['file']['tmp_name'];
 		$uploadDir = $basePath.'files/';

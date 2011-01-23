@@ -6,6 +6,7 @@
 
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/RemoteFile.php');
 
 class File extends Object {
@@ -192,7 +193,7 @@ class File extends Object {
 		if ($fileType=='application/octet-stream') {
 			$fileType = FileSystemUtil::fileNameToMimeType($fileName);
 		}
-		$fileName=FileSystemUtil::safeFilename($fileName);
+		$fileName = FileSystemService::safeFilename($fileName);
 		$uploadDir = $basePath.'files/';
 		$filePath = $uploadDir . $fileName;
 
@@ -256,7 +257,7 @@ class File extends Object {
 				}
 			}
 		}
-		$filename = FileSystemUtil::safeFilename($filename);
+		$filename = FileSystemService::safeFilename($filename);
 		$newPath = FileSystemUtil::findFreeFilePath($basePath.'files/'.$filename);
 		if (!@rename($path,$newPath)) {
 			return array('success' => false,'message' => 'Der skete en uventet fejl ');

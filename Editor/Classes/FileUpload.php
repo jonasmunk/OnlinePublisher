@@ -1,5 +1,6 @@
 <?
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 
 class FileUpload {
 
@@ -20,7 +21,7 @@ class FileUpload {
 	
 	function process($field) {
 		global $basePath;
-		$this->fileName=FileSystemUtil::safeFilename($_FILES[$field]['name']);
+		$this->fileName=FileSystemService::safeFilename($_FILES[$field]['name']);
 		$this->mimeType=$_FILES[$field]["type"];
 		$tempFile=$_FILES['file']['tmp_name'];
 		$uploadDir = $basePath.'local/cache/temp/';

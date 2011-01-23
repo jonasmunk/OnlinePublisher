@@ -1,5 +1,6 @@
 <?
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class GuiUtils {
@@ -266,7 +267,7 @@ class GuiUtils {
 	 * @return string The icon of the file, Generic icon if not known
 	 */
 	function getFileIcon($filename) {
-		$ext = FileSystemUtil::getFileExtension($filename);
+		$ext = FileSystemService::getFileExtension($filename);
 		switch ($ext) {
 			case 'sql' : return "File/sql";
 			case 'html' : return "File/html";

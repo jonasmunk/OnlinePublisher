@@ -103,12 +103,16 @@ class In2iGui {
 		$parts = explode(';',$str);
 		foreach ($parts as $part) {
 			$pos = strpos($part,':');
+			error_log($part.' ('.$pos.')');
 			if ($pos===false) {
 				$parsed['any'] = trim($part);
 			} else {
-				$parsed[trim(substr($part,0,$pos))] = trim(substr($part,$pos+1));
+				$lang = trim(substr($part,0,$pos));
+				$text = substr($part,$pos+1);
+				$parsed[$lang] = trim($text);
 			}
 		}
+		Log::debug($parsed);
 		return $parsed;
 	}
 	

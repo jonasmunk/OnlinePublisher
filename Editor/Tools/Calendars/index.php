@@ -6,10 +6,10 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/FileSystemUtil.php';
+require_once '../../Classes/Services/FileSystemService.php';
 require_once '../../Classes/GuiUtils.php';
 
-$maxUploadSize = GuiUtils::bytesToString(FileSystemUtil::getMaxUploadSize());
+$maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
 $gui='
 <gui xmlns="uri:In2iGui" title="Documents" padding="10" state="list">

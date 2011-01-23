@@ -7,11 +7,11 @@
 class TestFiles extends UnitTestCase {
     
     function testGetFileExtension() {
-        $this->assertTrue(FileSystemUtil::getFileExtension('filnavn.php')=='php');
-        $this->assertTrue(FileSystemUtil::getFileExtension('filnavn.php.xml')=='xml');
-        $this->assertTrue(FileSystemUtil::getFileExtension('.xml')=='xml');
-        $this->assertTrue(FileSystemUtil::getFileExtension('xml')=='');
-        $this->assertTrue(FileSystemUtil::getFileExtension('')=='');
+        $this->assertTrue(FileSystemService::getFileExtension('filnavn.php')=='php');
+        $this->assertTrue(FileSystemService::getFileExtension('filnavn.php.xml')=='xml');
+        $this->assertTrue(FileSystemService::getFileExtension('.xml')=='xml');
+        $this->assertTrue(FileSystemService::getFileExtension('xml')=='');
+        $this->assertTrue(FileSystemService::getFileExtension('')=='');
     }
     
     function testGetFileTitle() {

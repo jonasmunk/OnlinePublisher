@@ -1,11 +1,12 @@
 <?
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Database.php');
 
 class Tool {
 	function getAvailableTools() {
 		global $basePath;
-		$arr = FileSystemUtil::listDirs($basePath."Editor/Tools/");
+		$arr = FileSystemService::listDirs($basePath."Editor/Tools/");
 		for ($i=0;$i<count($arr);$i++) {
 			if (substr($arr[$i],0,3)=='CVS') {
 				unset($arr[$i]);

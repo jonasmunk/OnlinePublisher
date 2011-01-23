@@ -6,6 +6,7 @@
 require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
 require_once '../../Editor/Classes/FileSystemUtil.php';
+require_once '../../Editor/Classes/Services/FileSystemService.php';
 require_once '../../Editor/Classes/Database.php';
 require_once '../../Editor/Classes/Response.php';
 require_once '../../Editor/Classes/Request.php';
@@ -54,7 +55,7 @@ function sendImage() {
 			}
 			
 			$filename = $basePath.'images/'.$row['filename'];
-			$ext = strtolower(FileSystemUtil::getFileExtension($filename));
+			$ext = strtolower(FileSystemService::getFileExtension($filename));
 			
 			if (!file_exists($filename)) {
 				header("HTTP/1.0 404 Not Found");

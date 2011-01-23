@@ -9,41 +9,75 @@ var controller = {
 	activeSection : 0,
 	ready : false,
 	selectedText : '',
-	
+	strings : new ui.Bundle({
+			edit_section : {da:'Rediger afsnit',en:'Edit section'},
+			delete_section : {da:'Slet afsnit',en:'Delete section'},
+			move_section_up : {da:'Flyt afsnit op',en:'Move section up'},
+			move_section_down : {da:'Flyt afsnit ned',en:'Move section down'},
+			edit_column : {da:'Rediger kolonne',en:'Edit column'},
+			move_right : {da:'Flyt til h\u00f8jre',en:'Move right'},
+			move_left : {da:'Flyt til venstre',en:'Move left'},
+			move_column_right : {da:'Flyt kolonne til h\u00f8jre',en:'Move column right'},
+			move_column_left : {da:'Flyt kolonne til venstre',en:'Move column left'},
+			add_column : {da:'Tilf\u00f8j kolonne',en:'Add column'},
+			delete_column : {da:'Slet kolonne',en:'Delete column'},
+			move_up : {da:'Flyt op',en:'Move up'},
+			move_down : {da:'Flyt ned',en:'Move down'},
+			move_row_up : {da:'Flyt r\u00e6kke op',en:'Move row up'},
+			move_row_down : {da:'Flyt r\u00e6kke ned',en:'Move row down'},
+			add_row : {da:'Tilf\u00f8j r\u00e6kke',en:'Add row'},
+			delete_row : {da:'Slet r\u00e6kke',en:'Delete row'},
+			column : {da:'Kolonne',en:'Column'},
+			row : {da:'R\u00e6kke',en:'Row'},
+			
+			confirm_delete_section : {
+				da:'Er du sikker p\u00e5 at du vil slette afsnittet?\n\nHandlingen kan ikke fortrydes.\n',
+				en:'Are you sure you want to delete the section?\n\nThe action cannot be undone.\n'
+			},
+			confirm_delete_column : {
+				da:'Er du sikker p\u00e5 at du vil slette kolonnen?\n\nHandlingen kan ikke fortrydes.\n',
+				en:'Are you sure you want to delete the column?\n\nThe action cannot be undone.\n'
+			},
+			confirm_delete_row : {
+				da:'Er du sikker p\u00e5 at du vil slette r\u00e6kken?\n\nHandlingen kan ikke fortrydes.\n',
+				en:'Are you sure you want to delete the row?\n\nThe action cannot be undone.\n'
+			}
+	}),
 	$ready : function() {
+		var strings = this.strings;
 		this.sectionMenu = In2iGui.Menu.create({name:'sectionMenu'});
 		this.sectionMenu.addItems([
-			{title:'Rediger afsnit',value:'editSection'},
-			{title:'Slet afsnit',value:'deleteSection'},
-			{title:'Flyt afsnit op',value:'moveSectionUp'},
-			{title:'Flyt afsnit ned',value:'moveSectionDown'},
+			{title:strings.get('edit_section'),value:'editSection'},
+			{title:strings.get('delete_section'),value:'deleteSection'},
+			{title:strings.get('move_section_up'),value:'moveSectionUp'},
+			{title:strings.get('move_section_down'),value:'moveSectionDown'},
 			null,
-			{title:'Kolonne',children:[
-				{title:'Rediger kolonne',value:'editColumn'},
-				{title:'Flyt til højre',value:'moveColumnRight'},
-				{title:'Flyt til venstre',value:'moveColumnLeft'},
-				{title:'Tilføj kolonne',value:'addColumn'},
-				{title:'Slet kolonne',value:'deleteColumn'}
+			{title:strings.get('column'),children:[
+				{title:strings.get('edit_column'),value:'editColumn'},
+				{title:strings.get('move_right'),value:'moveColumnRight'},
+				{title:strings.get('move_left'),value:'moveColumnLeft'},
+				{title:strings.get('add_column'),value:'addColumn'},
+				{title:strings.get('delete_column'),value:'deleteColumn'}
 			]},
-			{title:'Række',children:[
-				{title:'Flyt op',value:'moveRowUp'},
-				{title:'Flyt ned',value:'moveRowDown'},
-				{title:'Tilføj række',value:'addRow'},
-				{title:'Slet række',value:'deleteRow'}
+			{title:strings.get('row'),children:[
+				{title:strings.get('move_up'),value:'moveRowUp'},
+				{title:strings.get('move_down'),value:'moveRowDown'},
+				{title:strings.get('add_row'),value:'addRow'},
+				{title:strings.get('delete_row'),value:'deleteRow'}
 			]}
 		]);
 		this.columnMenu = In2iGui.Menu.create({name:'sectionMenu'});
 		this.columnMenu.addItems([
-				{title:'Rediger kolonne',value:'editColumn'},
-				{title:'Flyt kolonne til højre',value:'moveColumnRight'},
-				{title:'Flyt kolonne til venstre',value:'moveColumnLeft'},
-				{title:'Tilføj kolonne',value:'addColumn'},
-				{title:'Slet kolonne',value:'deleteColumn'},
+				{title:strings.get('edit_column'),value:'editColumn'},
+				{title:strings.get('move_column_right'),value:'moveColumnRight'},
+				{title:strings.get('move_column_left'),value:'moveColumnLeft'},
+				{title:strings.get('add_column'),value:'addColumn'},
+				{title:strings.get('delete_column'),value:'deleteColumn'},
 				null,
-				{title:'Flyt række op',value:'moveRowUp'},
-				{title:'Flyt række ned',value:'moveRowDown'},
-				{title:'Tilføj række',value:'addRow'},
-				{title:'Slet række',value:'deleteRow'}
+				{title:strings.get('move_row_up'),value:'moveRowUp'},
+				{title:strings.get('move_row_down'),value:'moveRowDown'},
+				{title:strings.get('add_row'),value:'addRow'},
+				{title:strings.get('delete_row'),value:'deleteRow'}
 		]);
 		this.partMenu = In2iGui.Menu.create({name:'partMenu'});
 		this.partMenu.addItems(this.parts);
@@ -145,7 +179,7 @@ var controller = {
 		document.location='Editor.php?section='+this.sectionId;
 	},
 	deleteSection : function() {
-		if (confirm('Er du sikker p\u00e5 at du vil slette afsnittet?\nHandlingen kan ikke fortrydes')) {
+		if (confirm(this.strings.get('confirm_delete_section'))) {
 			document.location='DeleteSection.php?section='+this.sectionId;
 		}
 	},
@@ -189,7 +223,7 @@ var controller = {
 	},
 	
 	deleteColumn : function() {
-		if (confirm('Er du sikker p\u00e5 at du vil slette kolonnen?\nHandlingen kan ikke fortrydes')) {
+		if (confirm(this.strings.get('confirm_delete_column'))) {
 			document.location='DeleteColumn.php?column='+this.columnId;
 		}
 	},
@@ -203,7 +237,7 @@ var controller = {
 	},
 	
 	deleteRow : function() {
-		if (confirm('Er du sikker p\u00e5 at du vil slette r\u00e6kken?\nHandlingen kan ikke fortrydes')) {
+		if (confirm(this.strings.get('confirm_delete_row'))) {
 			document.location='DeleteRow.php?row='+this.rowId;
 		}
 	},

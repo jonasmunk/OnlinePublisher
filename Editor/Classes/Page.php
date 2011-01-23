@@ -1,5 +1,6 @@
 <?
 require_once($basePath.'Editor/Classes/Services/PublishingService.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 		
 class Page {
@@ -356,7 +357,7 @@ class Page {
         global $basePath;
         require_once($basePath.'Editor/Classes/FileSystemUtil.php');
         $dir = $basePath.'local/cache/pagepreview/';
-        $files = FileSystemUtil::listFiles($dir);
+        $files = FileSystemService::listFiles($dir);
         foreach ($files as $file) {
             if (preg_match('/'.$this->id.'[a-z_\.]+/i',$file)) {
                 @unlink($dir.$file);

@@ -1,16 +1,3 @@
-var in2igui = {
-	locales : {
-		'da/DK':{decimal:',',thousands:'.'},
-		'en/US':{decimal:'.',thousands:','}
-	},
-	locale : {decimal:',',thousands:'.'},
-	setLocale : function(code) {
-		if (this.locales[code]) {
-			this.locale = this.locales[code];
-		}
-	}
-};
-
 /**
   The base class of the In2iGui framework
   @constructor
@@ -45,6 +32,9 @@ In2iGui.latestAlertIndex = 1500;
 In2iGui.latestTopIndex = 2000;
 /** @private */
 In2iGui.toolTips = {};
+
+In2iGui.context = '';
+In2iGui.language = 'en';
 
 /** Gets the one instance of In2iGui */
 In2iGui.get = function(nameOrWidget) {
@@ -855,22 +845,18 @@ In2iGui.parseSubItems = function(parent,array) {
 	};
 }
 
-
-
-
-//////////////////////////// Prototype extensions ////////////////////////////////
-/*
-if (Element.addMethods) {
-	Element.addMethods({
-		setClassName : function(element,name,set) {
-			if (set) {
-				element.addClassName(name);
-			} else {
-				element.removeClassName(name);
-			}
-			return element;
-		}
-	});
+In2iGui.Bundle = function(strings) {
+	this.strings = strings;
 }
-*/
+
+In2iGui.Bundle.prototype = {
+	get : function(key) {
+		var values = this.strings[key];
+		if (values) {
+			return values[In2iGui.language];
+		}
+		n2i.log(key+' not found for language:'+In2iGui.language);
+		return key;
+	}
+}
 /* EOF */

@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/PartContext.php');
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 
 class PartService {
 	
@@ -71,7 +72,7 @@ class PartService {
 	
 	function getAvailableParts() {
 		global $basePath;
-		$arr = FileSystemUtil::listDirs($basePath."Editor/Parts/");
+		$arr = FileSystemService::listDirs($basePath."Editor/Parts/");
 		for ($i=0;$i<count($arr);$i++) {
 			if (substr($arr[$i],0,3)=='CVS') {
 				unset($arr[$i]);
@@ -82,20 +83,20 @@ class PartService {
 
 	function getParts() {
 		return array(
-			'header' => array ( 'name' => 'Overskrift', 'description' => '', 'priority' => 0 ),
-			'text' => array ( 'name' => 'Tekst', 'description' => '', 'priority' => 1 ),
-			'listing' => array ( 'name' => 'Punktopstilling', 'description' => '', 'priority' => 2 ),
-			'image' => array ( 'name' => 'Billede', 'description' => '', 'priority' => 3 ),
-			'horizontalrule' => array ( 'name' => 'Adskiller', 'description' => '', 'priority' => 4 ),
-			'person' => array ( 'name' => 'Person', 'description' => '', 'priority' => 5 ),
-			'news' => array ( 'name' => 'Nyheder', 'description' => '', 'priority' => 6 ),
-			'file' => array ( 'name' => 'Fil', 'description' => '', 'priority' => 7 ),
-			'richtext' => array ( 'name' => 'Rig tekst', 'description' => '', 'priority' => 8 ),
-			'imagegallery' => array ( 'name' => 'Billedgalleri', 'description' => '', 'priority' => 8 ),
-			'formula' => array ( 'name' => 'Formular', 'description' => '', 'priority' => 10 ),
-			'list' => array ( 'name' => 'Liste', 'description' => '', 'priority' => 4 ),
-			'mailinglist' => array ( 'name' => 'Postliste', 'description' => '', 'priority' => 10 ),
-			'html' => array ( 'name' => 'HTML', 'description' => '', 'priority' => 7 )
+			'header' => array ( 'name' => array('da'=>'Overskrift','en'=>'Header'), 'description' => '', 'priority' => 0 ),
+			'text' => array ( 'name' => array('da'=>'Tekst','en'=>'Text'), 'description' => '', 'priority' => 1 ),
+			'listing' => array ( 'name' => array('da'=>'Punktopstilling','en'=>'Bullet list'), 'description' => '', 'priority' => 2 ),
+			'image' => array ( 'name' => array('da'=>'Billede','en'=>'Image'), 'description' => '', 'priority' => 3 ),
+			'horizontalrule' => array ( 'name' => array('da'=>'Adskiller','en'=>'Divider'), 'description' => '', 'priority' => 4 ),
+			'person' => array ( 'name' => array('da'=>'Person','en'=>'Person'), 'description' => '', 'priority' => 5 ),
+			'news' => array ( 'name' => array('da'=>'Nyheder','en'=>'News'), 'description' => '', 'priority' => 6 ),
+			'file' => array ( 'name' => array('da'=>'Fil','en'=>'File'), 'description' => '', 'priority' => 7 ),
+			'richtext' => array ( 'name' => array('da'=>'Rig tekst','en'=>'Rich text'), 'description' => '', 'priority' => 8 ),
+			'imagegallery' => array ( 'name' => array('da'=>'Billedgalleri','en'=>'Image gallery'), 'description' => '', 'priority' => 8 ),
+			'formula' => array ( 'name' => array('da'=>'Formular','en'=>'Formula'), 'description' => '', 'priority' => 10 ),
+			'list' => array ( 'name' => array('da'=>'Liste','en'=>'List'), 'description' => '', 'priority' => 4 ),
+			'mailinglist' => array ( 'name' => array('da'=>'Postliste','en'=>'Mailing list'), 'description' => '', 'priority' => 10 ),
+			'html' => array ( 'name' => array('da'=>'HTML','en'=>'HTML'), 'description' => '', 'priority' => 7 )
 		);
 		
 		

@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 Object::$schema['image'] = array(
@@ -81,7 +82,7 @@ class Image extends Object {
     function clearCache() {
         global $basePath;
         $dir = $basePath.'local/cache/images/';
-        $files = FileSystemUtil::listFiles($dir);
+        $files = FileSystemService::listFiles($dir);
         foreach ($files as $file) {
             if (preg_match('/'.$this->id.'[a-z]/i',$file)) {
                 @unlink($dir.$file);

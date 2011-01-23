@@ -6,12 +6,12 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/FileSystemUtil.php';
+require_once '../../Classes/Services/FileSystemService.php';
 require_once '../../Classes/GuiUtils.php';
 
 $uploadAddToGroup = InternalSession::getToolSessionVar('images','uploadAddToGroup',true) ? 'true' : 'false';
 
-$maxUploadSize = GuiUtils::bytesToString(FileSystemUtil::getMaxUploadSize());
+$maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 $flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
 
 $gui='

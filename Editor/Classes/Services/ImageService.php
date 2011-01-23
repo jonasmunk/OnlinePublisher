@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Image.php');
 require_once($basePath.'Editor/Classes/Objects/Imagegroup.php');
 require_once($basePath.'Editor/Classes/EventManager.php');
@@ -110,7 +111,7 @@ class ImageService {
 		global $basePath;
 	
 		$fileName=$_FILES['file']['name'];
-		$fileName=FileSystemUtil::safeFilename($fileName);
+		$fileName=FileSystemService::safeFilename($fileName);
 		$fileType=$_FILES["file"]["type"];
 		$tempFile=$_FILES['file']['tmp_name'];
 		$fileSize=$_FILES["file"]["size"];
@@ -201,7 +202,7 @@ class ImageService {
 	function isSupportedImageFile($fileName,$mimeType="") {
 		$validTypes = array("image/pjpeg","image/jpeg","image/gif","image/png","image/x-png");
 		$validExtensions = array("jpeg","jpg","gif","png");
-		$extension = strtolower(FileSystemUtil::getFileExtension($fileName));
+		$extension = strtolower(FileSystemService::getFileExtension($fileName));
 		return (in_array($mimeType,$validTypes) || in_array($extension,$validExtensions));
 	}
 }

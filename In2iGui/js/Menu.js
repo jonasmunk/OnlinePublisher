@@ -107,9 +107,12 @@ In2iGui.Menu.prototype = {
 		}
 		var width = this.element.clientWidth;
 		var height = this.element.clientHeight;
-		var left = Math.min(pos.left,innerWidth-width-20+scrollLeft);
+		var left = Math.min(pos.left,innerWidth-width-26+scrollLeft);
 		var top = Math.max(0,Math.min(pos.top,innerHeight-height-20+scrollTop));
-		n2i.setStyle(this.element,{'top':top+'px','left':left+'px','visibility':'visible',zIndex:In2iGui.nextTopIndex(),'width':(width-2)+'px'});
+		n2i.setStyle(this.element,{'top':top+'px','left':left+'px','visibility':'visible',zIndex:In2iGui.nextTopIndex()});
+		if (!this.element.style.width) {
+			this.element.style.width=(width+6)+'px';
+		}
 		if (!this.visible) {
 			n2i.setStyle(this.element,{opacity:1});
 			this.addHider();

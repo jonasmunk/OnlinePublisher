@@ -3,6 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Classes.Services
  */
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 
 class DesignService {
 	
@@ -13,7 +14,7 @@ class DesignService {
 	 */
 	function getAvailableDesigns() {
 		global $basePath;
-		$names = FileSystemUtil::listDirs($basePath."style/");
+		$names = FileSystemService::listDirs($basePath."style/");
 		$out = array();
 		foreach ($names as $name) {
 			$out[$name] = DesignService::getInfo($name);

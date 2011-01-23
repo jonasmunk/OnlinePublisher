@@ -6,6 +6,7 @@
 require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
 require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
 
 class TestService {
@@ -13,7 +14,7 @@ class TestService {
 	function getGroups() {
 		global $basePath;
 		$out = array();
-		$groups = FileSystemUtil::listDirs($basePath.'Editor/Tests/');
+		$groups = FileSystemService::listDirs($basePath.'Editor/Tests/');
 		for ($i=0; $i < count($groups); $i++) { 
 			if ($groups[$i]!='Resources') {
 				$out[] = $groups[$i];
@@ -24,7 +25,7 @@ class TestService {
 
 	function getTestsInGroup($group) {
 		global $basePath;
-		return FileSystemUtil::listFiles($basePath.'Editor/Tests/'.$group.'/');
+		return FileSystemService::listFiles($basePath.'Editor/Tests/'.$group.'/');
 	}
 	
 	function runTest($test) {

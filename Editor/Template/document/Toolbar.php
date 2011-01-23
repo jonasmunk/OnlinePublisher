@@ -22,14 +22,14 @@ if (Request::getBoolean('link')) {
 		controller.id='.$id.';
 		</script>
 		<tabs small="true" below="true">
-			<tab title="'.($new ? 'Nyt link' : 'Rediger link').'" background="light">
+			<tab title="'.($new ? '{da:Nyt link;en:New link}' : '{da:Rediger link;en:Edit link}').'" background="light">
 				<toolbar>
 					<grid left="10">
 						<row>
-							<cell label="Tekst:" width="200" right="10">
+							<cell label="{da:Tekst:;en:Text:}" width="200" right="10">
 								<textfield name="text" value="'.In2iGui::escape($link->getText()).'"/>
 							</cell>
-							<cell label="Side:" width="200" right="10">
+							<cell label="{da:Side:;en:Page:}" width="200" right="10">
 								<dropdown name="page" adaptive="true" value="'.$link->getPage().'">
 									'.GuiUtils::buildPageItems().'
 								</dropdown>
@@ -39,20 +39,20 @@ if (Request::getBoolean('link')) {
 							</cell>
 							<cell left="10">
 							'.($new ? '
-								<button title="Opret" small="true" rounded="true" name="create"/>
+								<button title="{da:Opret;en:Create}" small="true" rounded="true" name="create"/>
 							' : '
-								<button title="Opdater" small="true" rounded="true" name="update"/>
-								<button title="Slet" small="true" rounded="true" name="delete">
-									<confirm text="Vil du slette linket?" ok="Ja, slet" cancel="Nej"/>
+								<button title="{da:Opdater;en:Update}" small="true" rounded="true" name="update"/>
+								<button title="{da:Slet;en:Delete}" small="true" rounded="true" name="delete">
+									<confirm text="{da:Vil du slette linket?;en:Really delete this link?}" ok="{da:Ja, slet;en:Yes, delete}" cancel="{da:Nej;en:No}"/>
 								</button>
 							').'
 							</cell>
 						</row>
 						<row>
-							<cell label="Beskrivelse:" right="10">
+							<cell label="{da:Beskrivelse:;en:Description:}" right="10">
 								<textfield name="alternative" value="'.In2iGui::escape($link->getAlternative()).'"/>
 							</cell>
-							<cell label="Fil:" width="200" right="10">
+							<cell label="{da:Fil:;en:File:}" width="200" right="10">
 								<dropdown name="file" adaptive="true" value="'.$link->getFile().'">
 									'.GuiUtils::buildObjectItems('file').'
 								</dropdown>
@@ -61,7 +61,7 @@ if (Request::getBoolean('link')) {
 								<textfield name="email" value="'.In2iGui::escape($link->getEmail()).'"/>
 							</cell>
 							<cell left="10">
-								<button title="Annuller" click="document.location=\'Toolbar.php\'" small="true" rounded="true"/>
+								<button title="{da:Annuller;en:Cancel}" click="document.location=\'Toolbar.php\'" small="true" rounded="true"/>
 							</cell>
 						</row>
 					</grid>
@@ -77,21 +77,21 @@ if (Request::getBoolean('link')) {
 		controller.pageId='.InternalSession::getPageId().';
 		</script>
 		<tabs small="true" below="true">
-			<tab title="Dokument" background="light">
+			<tab title="{da:Dokument ; en:Document}" background="light">
 				<toolbar>
-					<icon icon="common/close" title="Luk" name="close"/>
+					<icon icon="common/close" title="{da: Luk ; en: Close}" name="close"/>
 					<divider/>
-					<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="'.(Page::isChanged(InternalSession::getPageId()) ? 'false' : 'true').'"/>
-					<icon icon="common/view" title="Vis ændringer" name="preview"/>
-					<icon icon="common/info" title="Egenskaber" name="properties"/>
+					<icon icon="common/internet" overlay="upload" title="{da:Udgiv;en:Publish}" name="publish" disabled="'.(Page::isChanged(InternalSession::getPageId()) ? 'false' : 'true').'"/>
+					<icon icon="common/view" title="{da:Vis;en:View}" name="preview"/>
+					<icon icon="common/info" title="{da:Info;en:Info}" name="properties"/>
 					<divider/>
-					<icon icon="common/link" title="Nyt link" overlay="new" name="newLink"/>
-					<icon icon="common/link" title="Rediger links" overlay="edit" name="editLinks"/>
+					<icon icon="common/link" title="{da:Nyt link;en:New link}" overlay="new" name="newLink"/>
+					<icon icon="common/link" title="{da:Rediger links;en:Edit links}" overlay="edit" name="editLinks"/>
 				</toolbar>
 			</tab>
-			<tab title="Avanceret" background="light">
+			<tab title="{da:Avanceret;en:Advanced}" background="light">
 				<toolbar>
-					<icon icon="common/time" title="Historik" name="history"/>
+					<icon icon="common/time" title="{da:Historik;en:History}" name="history"/>
 				</toolbar>
 			</tab>
 		</tabs>

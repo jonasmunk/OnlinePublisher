@@ -16,6 +16,10 @@ require_once 'Functions.php';
 header('Content-Type: text/html; charset=iso-8859-1');
 
 $design = InternalSession::getPageDesign();
+$language = InternalSession::getLanguage();
+$strings = array(
+	'add_section' => array('da' => 'Tilføj afsnit','en' => 'Add section')
+);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -43,8 +47,9 @@ $design = InternalSession::getPageDesign();
 <![endif]-->
 <script type="text/javascript">
 In2iGui.context='../../../';
+In2iGui.language='<?=$language?>';
 </script>
-<script type="text/javascript" src="js/Controller.js?version=<?=SystemInfo::getDate()?>"></script>
+<script type="text/javascript" src="js/Controller.js?version=<?=SystemInfo::getDate()?>" charset="utf-8"></script>
 <script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?=SystemInfo::getDate()?>"></script>
 <script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js?version=<?=SystemInfo::getDate()?>"></script>
 <script type="text/javascript">
@@ -53,7 +58,7 @@ controller.context='<?=$baseUrl?>';
 $parts = PartService::getParts();
 foreach ($parts as $part => $info) {
 ?>
-controller.parts.push({value:'<?=$part?>',title:'<?=$info['name']?>'});
+controller.parts.push({value:'<?=$part?>',title:'<?=$info['name'][$language]?>'});
 <?
 }
 ?>
@@ -89,7 +94,7 @@ else if (getDocumentSection()!=0) {
 ?>
 </head>
 <body>
-<div class="editor_body" style="padding-top: 40px;">
+<div class="editor_body">
 <form action="AddSection.php" name="SectionAdder" method="get" style="margin: 0px;">
 <input type="hidden" name="type"/>
 <input type="hidden" name="part"/>
@@ -171,6 +176,7 @@ function displayColumns($rowId,$rowIndex) {
 }
 
 function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
+	global $language,$strings;
 	$selected = getDocumentSection();
 	$lastIndex=0;
 	
@@ -194,9 +200,13 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	}
 	Database::free($result);
 	if ($selected==0) {
-		echo '<div style="padding-top: 5px;"><a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" title="Opret et nyt afsnit" href="#" class="in2igui_button in2igui_button_small_rounded"><span><span>Tilf&oslash;j afsnit</span></span></a></div>';
+		echo '<div style="padding-top: 5px;">'.
+		'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" href="#" class="in2igui_button in2igui_button_small_rounded">'.
+		'<span><span>'.$strings['add_section'][$language].'</span></span>'.
+		'</a>'.
+		'</div>';
 	} else {
-		echo '<div style="padding-top: 5px;"><a class="in2igui_button in2igui_button_small_rounded in2igui_button_disabled"><span><span>Tilf&oslash;j afsnit</span></span></a></div>';
+		echo '<div style="padding-top: 5px;"><a class="in2igui_button in2igui_button_small_rounded in2igui_button_disabled"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
 	}
 }
 

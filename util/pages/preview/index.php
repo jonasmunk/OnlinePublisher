@@ -10,6 +10,7 @@ require_once '../../../Editor/Classes/Request.php';
 require_once '../../../Editor/Classes/Response.php';
 require_once '../../../Editor/Classes/BumbleBee.php';
 require_once '../../../Editor/Classes/FileSystemUtil.php';
+require_once '../../../Editor/Classes/Services/FileSystemService.php';
 
 
 
@@ -110,7 +111,7 @@ function convertImage($id,$width,$print) {
 }
 
 function &loadImage($path) {
-	$ext = strtolower(FileSystemUtil::getFileExtension($path));
+	$ext = strtolower(FileSystemService::getFileExtension($path));
 	// create an image of the given filetype
 	if ($ext=="jpg" || $ext == "jpeg") {
 		$image = ImageCreateFromJpeg($path);

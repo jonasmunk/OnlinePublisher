@@ -4,8 +4,9 @@
  * @subpackage Tools.Files
  */
 require_once '../../Include/Private.php';
+require_once '../../Classes/Services/FileSystemService.php';
 
-$maxUploadSize = GuiUtils::bytesToString(FileSystemUtil::getMaxUploadSize());
+$maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
 $gui='
 <gui xmlns="uri:In2iGui" title="Nyheder" padding="10">

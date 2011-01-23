@@ -6,6 +6,7 @@
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 
 class TemplateService {
@@ -23,7 +24,7 @@ class TemplateService {
 	
 	function getAvailableTemplates() {
 		global $basePath;
-		$arr = FileSystemUtil::listDirs($basePath."Editor/Template/");
+		$arr = FileSystemService::listDirs($basePath."Editor/Template/");
 		for ($i=0;$i<count($arr);$i++) {
 			if (substr($arr[$i],0,3)=='CVS') {
 				unset($arr[$i]);
