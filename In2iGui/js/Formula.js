@@ -713,7 +713,7 @@ In2iGui.Formula.DropDown.prototype = {
 		if (!this.selector) {
 			this.selector = n2i.build('div',{'class':'in2igui_dropdown_selector'});
 			document.body.appendChild(this.selector);
-			n2i.listen(this.selector,'mousedown',function(e) {e.stop()});
+			n2i.listen(this.selector,'mousedown',function(e) {n2i.stop(e)});
 		} else {
 			this.selector.innerHTML='';
 		}
