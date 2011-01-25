@@ -67,9 +67,10 @@ In2iGui.ColorPicker.prototype = {
 	},
 	/** @private */
 	hoverWheel1 : function(e) {
-		var pos = this.wheel1.cumulativeOffset();
-		var x = 4 * (e.pointerX() - pos.left);
-		var y = 4 * (e.pointerY() - pos.top);
+		e = n2i.event(e);
+		var pos = n2i.getPosition(this.wheel1);
+		var x = 4 * (e.getLeft() - pos.left);
+		var y = 4 * (e.getTop() - pos.top);
 
 		var sx = x - 512;
 		var sy = y - 512;
