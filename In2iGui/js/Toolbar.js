@@ -19,7 +19,7 @@ In2iGui.Toolbar.prototype = {
 		this.element.appendChild(widget.getElement());
 	},
 	addDivider : function() {
-		this.element.appendChild(new Element('span',{'class':'in2igui_divider'}));
+		this.element.appendChild(n2i.build('span',{'class':'in2igui_divider'}));
 	}
 }
 
@@ -80,20 +80,16 @@ In2iGui.Toolbar.Icon = function(options) {
 }
 
 In2iGui.Toolbar.Icon.create = function(options) {
-	var element = options.element = new Element('a',{'class':'in2igui_toolbar_icon'});
-	var icon = new Element('span',{'class':'in2igui_icon'}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(options.icon,2)+')'});
-	var inner = new Element('span',{'class':'in2igui_toolbar_inner_icon'});
-	var innerest = new Element('span',{'class':'in2igui_toolbar_inner_icon'});
-	element.insert(inner);
-	inner.insert(innerest);
-	var title = new Element('strong');
-	title.innerHTML=options.title;
+	var element = options.element = n2i.build('a',{'class':'in2igui_toolbar_icon'});
+	var icon = n2i.build('span',{'class':'in2igui_icon',style:'background-image: url('+In2iGui.getIconUrl(options.icon,2)+')'});
+	var inner = n2i.build('span',{'class':'in2igui_toolbar_inner_icon',parent:element});
+	var innerest = n2i.build('span',{'class':'in2igui_toolbar_inner_icon',parent:inner});
+	var title = n2i.build('strong',{text:options.title});
 	if (options.overlay) {
-		var overlay = new Element('span',{'class':'in2igui_icon_overlay'}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl('overlay/'+options.overlay,2)+')'});
-		icon.insert(overlay);
+		n2i.build('span',{'class':'in2igui_icon_overlay',parent:icon,style:'background-image: url('+In2iGui.getIconUrl('overlay/'+options.overlay,2)+')'});
 	}
-	innerest.insert(icon);
-	innerest.insert(title);
+	innerest.appendChild(icon);
+	innerest.appendChild(title);
 	return new In2iGui.Toolbar.Icon(options);
 }
 

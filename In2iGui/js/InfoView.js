@@ -9,57 +9,47 @@ In2iGui.InfoView = function(options) {
 
 In2iGui.InfoView.create = function(options) {
 	options = options || {};
-	var element = options.element = new Element('div',{'class':'in2igui_infoview'});
+	var element = options.element = n2i.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
 	if (options.height) {
-		element.setStyle({height:options.height+'px','overflow':'auto','overflowX':'hidden'});
+		ni2.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
 	}
 	if (options.margin) {
-		element.setStyle({margin:options.margin+'px'});
+		element.style.margin = options.margin+'px';
 	}
-	element.update('<table><tbody></tbody></table>');
 	return new In2iGui.InfoView(options);
 }
 
 In2iGui.InfoView.prototype = {
 	addHeader : function(text) {
-		var row = new Element('tr');
-		row.insert(new Element('th',{'class' : 'in2igui_infoview_header','colspan':'2'}).insert(text));
-		this.body.insert(row);
+		var row = n2i.build('tr',{parent:this.body});
+		n2i.build('th',{'class' : 'in2igui_infoview_header',colspan:'2',text:text,parent:row});
 	},
 	addProperty : function(label,text) {
-		var row = new Element('tr');
-		row.insert(new Element('th').insert(label));
-		row.insert(new Element('td').insert(text));
-		this.body.insert(row);
+		var row = n2i.build('tr',{parent:this.body});
+		n2i.build('th',{parent:row,text:label});
+		n2i.build('td',{parent:row,text:text});
 	},
 	addObjects : function(label,objects) {
 		if (!objects || objects.length==0) return;
-		var row = new Element('tr');
-		row.insert(new Element('th').insert(label));
-		var cell = new Element('td');
+		var row = n2i.build('tr',{parent:this.body});
+		row.appendChild(n2i.build('th',{text:label}));
+		var cell = n2i.build('td',{parent:row});
 		var click = this.options.clickObjects;
-		objects.each(function(obj) {
-			var node = new Element('div').insert(obj.title);
+		n2i.each(objects,function(obj) {
+			var node = n2i.build('div',{text:obj.title,parent:cell});
 			if (click) {
-				node.addClassName('in2igui_infoview_click')
-				node.observe('click',function() {
+				n2i.addClass(node,'in2igui_infoview_click')
+				n2i.listen(node,'click',function() {
 					In2iGui.callDelegates(this,'objectWasClicked',obj);
 				});
 			}
-			cell.insert(node);
 		});
-		row.insert(cell);
-		this.body.insert(row);
 	},
 	setBusy : function(busy) {
-		if (busy) {
-			this.element.addClassName('in2igui_infoview_busy');
-		} else {
-			this.element.removeClassName('in2igui_infoview_busy');
-		}
+		n2i.setClass(this,element,'in2igui_infoview_busy',busy);
 	},
 	clear : function() {
-		this.body.update();
+		n2i.dom.clear(this.body);
 	},
 	update : function(data) {
 		this.clear();

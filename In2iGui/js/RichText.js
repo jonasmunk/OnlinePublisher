@@ -5,13 +5,13 @@ In2iGui.RichText = function(options) {
 	this.name = options.name;
 	var e = this.element = n2i.get(options.element);
 	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
-	this.textarea = new Element('textarea');
-	e.insert(this.textarea);
+	this.textarea = n2i.build('textarea');
+	e.appendChild(this.textarea);
 	this.editor = WysiHat.Editor.attach(this.textarea);
 	this.editor.setAttribute('frameborder','0');
 	/* @private */
-	this.toolbar = e.select('.in2igui_richtext_toolbar')[0];
-	this.toolbarContent = e.select('.in2igui_richtext_toolbar_content')[0];
+	this.toolbar = n2i.firstByClass(e,'in2igui_richtext_toolbar');
+	this.toolbarContent = n2i.firstByClass(e,'in2igui_richtext_toolbar_content');
 	this.value = this.options.value;
 	this.document = null;
 	this.ignited = false;
@@ -56,9 +56,7 @@ In2iGui.RichText.replaceInput = function(options) {
 
 In2iGui.RichText.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_richtext'}).update(
-		'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'
-	);
+	options.element = n2i.build('div',{'class':'in2igui_richtext',html:'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'});
 	return new In2iGui.RichText(options);
 }
 
@@ -124,18 +122,18 @@ In2iGui.RichText.prototype = {
 		var actions = In2iGui.RichText.actions;
 		for (var i=0; i < actions.length; i++) {
 			if (actions[i]==null) {
-				this.toolbarContent.insert(new Element('div',{'class':'in2igui_richtext_divider'}));
+				this.toolbarContent.appendChild(n2i.build('div',{'class':'in2igui_richtext_divider'}));
 			} else {
-				var div = new Element('div').addClassName('action action_'+actions[i].key);
+				var div = n2i.build('div',{'class':'action action_'+actions[i].key});
 				div.title=actions[i].key;
 				div.in2iguiRichTextAction = actions[i]
 				div.onclick = div.ondblclick = function(e) {return self.actionWasClicked(this.in2iguiRichTextAction,e);}
-				var img = new Element('img');
+				var img = n2i.build('img');
 				img.src=In2iGui.context+'/In2iGui/gfx/trans.png';
 				if (actions[i].icon) {
-					div.setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(actions[i].icon,1)+')'});
+					div.style.backgroundImage='url('+In2iGui.getIconUrl(actions[i].icon,1)+')';
 				}
-				div.insert(img);
+				div.appendChild(img);
 				this.toolbarContent.appendChild(div);
 				div.onmousedown = In2iGui.RichText.stopEvent;
 			}

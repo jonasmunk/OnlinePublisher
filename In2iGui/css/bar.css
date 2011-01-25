@@ -92,3 +92,27 @@ a.in2igui_bar_button_highlighted span.in2igui_bar_button_text
 {
 	color: #0054a6;	
 }
+
+/******************* Mini variant *****************/
+
+div.in2igui_bar_mini
+{
+	height: 22px;
+	background: #fafafa;
+	border: 1px solid #eee;
+	border-radius: 3px;
+}
+
+div.in2igui_bar_mini div.in2igui_bar_body
+{
+	height: 22px;
+	background: none;
+}
+
+div.in2igui_bar_mini a.in2igui_bar_button
+{
+	height: 22px;
+	line-height: 22px;
+	background: none;
+	padding: 0 4px;
+}

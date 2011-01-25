@@ -2,7 +2,7 @@
 In2iGui.VideoPlayer = function(options) {
 	this.options = options;
 	this.element = n2i.get(options.element);
-	this.placeholder = this.element.select('div')[0];
+	this.placeholder = n2i.firstByClass(this.element,'div');
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
 	this.handlers = [In2iGui.VideoPlayer.HTML5,In2iGui.VideoPlayer.QuickTime,In2iGui.VideoPlayer.Embedded];
@@ -10,7 +10,7 @@ In2iGui.VideoPlayer = function(options) {
 	In2iGui.extend(this);
 	if (this.options.video) {
 		if (this.placeholder) {
-			this.placeholder.observe('click',function() {
+			n2i.listen(this.placeholder,'click',function() {
 				this.setVideo(this.options.video);
 			}.bind(this))
 		} else {
@@ -24,7 +24,7 @@ In2iGui.VideoPlayer = function(options) {
 In2iGui.VideoPlayer.prototype = {
 	setVideo : function(video) {
 		this.handler = this.getHandler(video);
-		this.element.update(this.handler.element);
+		this.element.appendChild(this.handler.element);
 		if (this.handler.showController()) {
 			this.buildController();
 		}
@@ -38,12 +38,10 @@ In2iGui.VideoPlayer.prototype = {
 		};
 	},
 	buildController : function() {
-		var e = new Element('div',{'class':'in2igui_videoplayer_controller'});
-		this.playButton = new Element('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause'}).insert('wait!');
-		this.playButton.observe('click',this.playPause.bind(this));
-		this.status = new Element('span',{'class':'in2igui_videoplayer_status'});
-		e.insert(this.playButton).insert(this.status);
-		this.element.insert(e);
+		var e = n2i.build('div',{'class':'in2igui_videoplayer_controller',parent:this.element});
+		this.playButton = n2i.build('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause',text:'wait!',parent:e});
+		n2i.listen(this.playButton,'click',this.playPause.bind(this));
+		this.status = n2i.build('span',{'class':'in2igui_videoplayer_status',parent:e});
 	},
 	onCanPlay : function() {
 		this.playButton.update('Play');
@@ -85,13 +83,13 @@ In2iGui.VideoPlayer.prototype = {
 ///////// HTML5 //////////
 
 In2iGui.VideoPlayer.HTML5 = function(video,player) {
-	var e = this.element = new Element('video',{width:video.width,height:video.height,src:video.src});
-	e.observe('load',player.onLoad.bind(player));
-	e.observe('canplay',player.onCanPlay.bind(player));
-	e.observe('durationchange',function(x) {
+	var e = this.element = n2i.build('video',{width:video.width,height:video.height,src:video.src});
+	n2i.listen(e,'load',player.onLoad.bind(player));
+	n2i.listen(e,'canplay',player.onCanPlay.bind(player));
+	n2i.listen(e,'durationchange',function(x) {
 		player.onDurationChange(e.duration);
 	});
-	e.observe('timeupdate',function() {
+	n2i.listen(e,'timeupdate',function() {
 		player.onTimeChange(this.element.currentTime);
 	}.bind(this));
 }
@@ -125,8 +123,8 @@ In2iGui.VideoPlayer.HTML5.prototype = {
 
 In2iGui.VideoPlayer.QuickTime = function(video,player) {
 	this.player = player;
-	var e = this.element = new Element('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
-	e.update('<param value="false" name="controller"/>'
+	var e = this.element = n2i.build('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
+	e.innerHTML = '<param value="false" name="controller"/>'
 		+'<param value="true" name="enablejavascript"/>'
 		+'<param value="undefined" name="posterframe"/>'
 		+'<param value="false" name="showlogo"/>'
@@ -135,17 +133,17 @@ In2iGui.VideoPlayer.QuickTime = function(video,player) {
 		+'<param value="white" name="bgcolor"/>'
 		+'<param value="false" name="aggressivecleanup"/>'
 		+'<param value="true" name="saveembedtags"/>'
-		+'<param value="true" name="postdomevents"/>');
+		+'<param value="true" name="postdomevents"/>';
 		
-	e.observe('qt_canplay',player.onCanPlay.bind(player));
-	e.observe('qt_load',player.onLoad.bind(player));
-	e.observe('qt_progress',function() {
+	n2i.listen(e,'qt_canplay',player.onCanPlay.bind(player));
+	n2i.listen(e,'qt_load',player.onLoad.bind(player));
+	n2i.listen(e,'qt_progress',function() {
 		player.onLoadProgressChange(e.GetMaxTimeLoaded()/3000);
 	});
-	e.observe('qt_durationchange',function(x) {
+	n2i.listen(e,'qt_durationchange',function(x) {
 		player.onDurationChange(e.GetDuration()/3000);
 	});
-	e.observe('qt_timechanged',function() {
+	n2i.listen(e,'qt_timechanged',function() {
 		player.onTimeChange(e.GetTime());
 	})
 }
@@ -180,8 +178,7 @@ In2iGui.VideoPlayer.QuickTime.prototype = {
 ///////// Embedded //////////
 
 In2iGui.VideoPlayer.Embedded = function(video,player) {
-	var e = this.element = new Element('div',{width:video.width,height:video.height});
-	e.update(video.html);
+	var e = this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
 }
 
 In2iGui.VideoPlayer.Embedded.isSupported = function(video) {

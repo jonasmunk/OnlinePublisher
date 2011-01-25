@@ -107,7 +107,7 @@ In2iGui.Button.prototype = {
 	},
 	/** Sets whether the button is highlighted */
 	setHighlighted : function(highlighted) {
-		this.element.setClassName('in2igui_button_highlighted',highlighted);
+		n2i.setClass(this.element,'in2igui_button_highlighted',highlighted);
 	},
 	/** @private */
 	updateUI : function() {
@@ -115,7 +115,7 @@ In2iGui.Button.prototype = {
 	},
 	/** Sets the button text */
 	setText : function(text) {
-		this.element.getElementsByTagName('span')[1].innerHTML = text;
+		n2i.dom.setText(this.element.getElementsByTagName('span')[1], text);
 	}
 }
 

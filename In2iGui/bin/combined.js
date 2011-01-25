@@ -5220,29 +5220,52 @@ n2i.getChildren = function(node) {
 	return children;
 }
 
-n2i.firstByClass = function(parentElement,className,tag) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
-	for (var i=0;i<children.length;i++) {
-		if (n2i.hasClass(children[i],className)) {
-			return children[i];
-		}
+
+if (document.querySelector) {
+	n2i.firstByClass = function(parentElement,className,tag) {
+		parentElement = parentElement || document.body;
+		return parentElement.querySelector((tag ? tag+'.' : '.')+className);
 	}
-	return null;
+} else {
+	n2i.firstByClass = function(parentElement,className,tag) {
+		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+		for (var i=0;i<children.length;i++) {
+			if (n2i.hasClass(children[i],className)) {
+				return children[i];
+			}
+		}
+		return null;
+	}
 }
 
-n2i.byClass = function(parentElement,className,tag) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
-	var out = [];
-	for (var i=0;i<children.length;i++) {
-		if (n2i.hasClass(children[i],className)) {
-			out[out.length]=children[i];
-		}
+if (document.querySelectorAll) {
+	n2i.byClass = function(parentElement,className,tag) {
+		parentElement = parentElement || document.body;
+		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
+		// Important to convert into array...
+		var l=[];
+		for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
+		return l;
 	}
-	return out;
+} else {
+	n2i.byClass = function(parentElement,className,tag) {
+		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+		var out = [];
+		for (var i=0;i<children.length;i++) {
+			if (n2i.hasClass(children[i],className)) {
+				out[out.length]=children[i];
+			}
+		}
+		return out;
+	}
 }
 
 n2i.firstByTag = function(parentElement,tag) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag);
+	parentElement = n2i.get(parentElement) || document.body;
+	if (document.querySelector && tag!=='*') {
+		return parentElement.querySelector(tag);
+	}
+	var children = parentElement.getElementsByTagName(tag);
 	return children[0];
 }
 
@@ -10929,7 +10952,6 @@ In2iGui.List.prototype = {
 			row.dragDropInfo = info;
 			this.addRowBehavior(row,i);
 			frag.appendChild(row);
-			//this.body.insert(row);
 			this.rows.push(info);
 		};
 		this.body.appendChild(frag);
@@ -11120,22 +11142,22 @@ In2iGui.List.prototype = {
 		this.rows = [];
 		if (!rows) return;
 		n2i.each(rows,function(r,i) {
-			var tr = new Element('tr');
+			var tr = n2i.build('tr');
 			var icon = r.icon;
 			var title = r.title;
-			r.cells.each(function(c) {
-				var td = new Element('td');
+			n2i.each(r.cells,function(c) {
+				var td = n2i.build('td');
 				if (c.icon) {
-					td.insert(In2iGui.createIcon(c.icon,1));
+					td.appendChild(In2iGui.createIcon(c.icon,1));
 					icon = icon || c.icon;
 				}
 				if (c.text) {
 					td.appendChild(document.createTextNode(c.text))
 					title = title || c.text;
 				}
-				tr.insert(td);
+				tr.appendChild(td);
 			})
-			self.body.insert(tr);
+			self.body.appendChild(tr);
 			// TODO: Memory leak!
 			var info = {id:r.id,kind:r.kind,icon:icon,title:title,index:i};
 			tr.dragDropInfo = info;
@@ -11149,47 +11171,47 @@ In2iGui.List.prototype = {
 		this.body.update();
 		this.rows = [];
 		for (var i=0; i < objects.length; i++) {
-			var row = new Element('tr');
+			var row = n2i.build('tr');
 			var obj = objects[i];
 			var title = null;
 			for (var j=0; j < this.columns.length; j++) {
-				var cell = new Element('td');
+				var cell = n2i.build('td');
 				if (this.builder) {
-					cell.update(this.builder.buildColumn(this.columns[j],obj));
+					cell.appendChild(this.builder.buildColumn(this.columns[j],obj));
 				} else {
 					var value = obj[this.columns[j].key] || '';
-					if (value.constructor == Array) {
+					if (n2i.isArray(value)) {
 						for (var k=0; k < value.length; k++) {
 							if (value[k].constructor == Object) {
-								cell.insert(this.createObject(value[k]));
+								cell.appendChild(this.createObject(value[k]));
 							} else {
-								cell.insert(new Element('div').update(value));
+								cell.appendChild(n2i.build('div',{text:value}));
 							}
 						};
 					} else if (value.constructor == Object) {
-						cell.insert(this.createObject(value[j]));
+						cell.appendChild(this.createObject(value[j]));
 					} else {
-						cell.insert(value);
+						n2i.dom.addText(cell,value);
 						title = title==null ? value : title;
 					}
 				}
-				row.insert(cell);
+				row.appendChild(cell);
 			};
 			var info = {id:obj.id,kind:obj.kind,title:title};
 			row.dragDropInfo = info;
-			this.body.insert(row);
+			this.body.appendChild(row);
 			this.addRowBehavior(row,i);
 			this.rows.push(obj);
 		};
 	},
 	/** @private */
 	createObject : function(object) {
-		var node = new Element('div',{'class':'object'});
+		var node = n2i.build('div',{'class':'object'});
 		if (object.icon) {
-			node.insert(In2iGui.createIcon(object.icon,1));
-			//node.insert(new Element('span',{'class':'in2igui_icon in2igui_icon_1'}).setStyle({'backgroundImage':'url("'+In2iGui.getIconUrl(object.icon,1)+'")'}));
+			node.appendChild(In2iGui.createIcon(object.icon,1));
 		}
-		return node.insert(object.text || object.name || '');
+		n2i.dom.addText(node,object.text || object.name || '')
+		return node;
 	},
 	/** @private */
 	addRowBehavior : function(row,index) {
@@ -11551,10 +11573,10 @@ In2iGui.Alert = function(options) {
 	this.options = n2i.override({modal:false},options);
 	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.body = this.element.select('.in2igui_alert_body')[0];
-	this.content = this.element.select('.in2igui_alert_content')[0];
+	this.body = n2i.firstByClass(this.element,'in2igui_alert_body');
+	this.content = n2i.firstByClass(this.element,'in2igui_alert_content');
 	this.emotion = this.options.emotion;
-	this.title = this.element.select('h1').first();
+	this.title = n2i.firstByTag(this.element,'h1');
 	In2iGui.extend(this);
 }
 
@@ -11566,11 +11588,9 @@ In2iGui.Alert = function(options) {
 In2iGui.Alert.create = function(options) {
 	options = n2i.override({title:'',text:'',emotion:null,title:null},options);
 	
-	var element = options.element = new Element('div',{'class':'in2igui_alert'});
-	var body = new Element('div',{'class':'in2igui_alert_body'});
-	element.insert(body);
-	var content = new Element('div',{'class':'in2igui_alert_content'});
-	body.insert(content);
+	var element = options.element = n2i.build('div',{'class':'in2igui_alert'});
+	var body = n2i.build('div',{'class':'in2igui_alert_body',parent:element});
+	var content = n2i.build('div',{'class':'in2igui_alert_content',parent:body});
 	document.body.appendChild(element);
 	var obj = new In2iGui.Alert(options);
 	if (options.emotion) {
@@ -11609,27 +11629,25 @@ In2iGui.Alert.prototype = {
 	/** Sets the alert title */
 	setTitle : function(/**String*/ text) {
 		if (!this.title) {
-			this.title = new Element('h1');
-			this.content.appendChild(this.title);
+			this.title = n2i.build('h1',{parent:this.content});
 		}
-		this.title.innerHTML = text;
+		n2i.dom.setText(this.title,text);
 		
 	},
 	/** Sets the alert text */
 	setText : function(/**String*/ text) {
 		if (!this.text) {
-			this.text = new Element('p');
-			this.content.appendChild(this.text);
+			this.text = n2i.build('p',{parent:this.content});
 		}
-		this.text.innerHTML = text || '';
+		n2i.dom.setText(this.text,text || '');
 	},
 	/** Sets the alert emotion */
 	setEmotion : function(/**String*/ emotion) {
 		if (this.emotion) {
-			this.body.removeClassName(this.emotion);
+			n2i.removeClass(this.body,this.emotion);
 		}
 		this.emotion = emotion;
-		this.body.addClassName(emotion);
+		n2i.addClass(this.body,emotion);
 	},
 	/** Updates multiple properties
 	 * @param {Object} options {title: «String», text: «String», emotion: «'smile' | 'gasp'»}
@@ -11759,7 +11777,7 @@ In2iGui.Button.prototype = {
 	},
 	/** Sets whether the button is highlighted */
 	setHighlighted : function(highlighted) {
-		this.element.setClassName('in2igui_button_highlighted',highlighted);
+		n2i.setClass(this.element,'in2igui_button_highlighted',highlighted);
 	},
 	/** @private */
 	updateUI : function() {
@@ -11767,7 +11785,7 @@ In2iGui.Button.prototype = {
 	},
 	/** Sets the button text */
 	setText : function(text) {
-		this.element.getElementsByTagName('span')[1].innerHTML = text;
+		n2i.dom.setText(this.element.getElementsByTagName('span')[1], text);
 	}
 }
 
@@ -11827,8 +11845,10 @@ In2iGui.Selection = function(options) {
  */
 In2iGui.Selection.create = function(options) {
 	options = n2i.override({width:0},options);
-	var e = options.element = new Element('div',{'class':'in2igui_selection'});
-	if (options.width>0) e.setStyle({width:options.width+'px'});
+	var e = options.element = n2i.build('div',{'class':'in2igui_selection'});
+	if (options.width>0) {
+		e.style.width = options.width+'px';
+	}
 	return new In2iGui.Selection(options);
 }
 
@@ -11933,22 +11953,22 @@ In2iGui.Selection.prototype = {
 	/** Untested!! */
 	setObjects : function(items) {
 		this.items = [];
-		items.each(function(item) {
+		n2i.each(items,function(item) {
 			this.items.push(item);
-			var node = new Element('div',{'class':'in2igui_selection_item'});
+			var node = n2i.build('div',{'class':'in2igui_selection_item'});
 			item.element = node;
-			this.element.insert(node);
-			var inner = new Element('span',{'class':'in2igui_selection_label'}).update(item.title);
+			this.element.appendChild(node);
+			var inner = n2i.build('span',{'class':'in2igui_selection_label',text:item.title});
 			if (item.icon) {
-				node.insert(In2iGui.createIcon(item.icon,1));
+				node.appendChild(In2iGui.createIcon(item.icon,1));
 			}
-			node.insert(inner);
-			node.observe('click',function() {
+			node.appendChild(inner);
+			n2i.listen(node,'click',function() {
 				this.itemWasClicked(item);
 			}.bind(this));
-			node.observe('dblclick',function(e) {
+			n2i.listen(node,'dblclick',function(e) {
+				n2i.stop(e);
 				this.itemWasDoubleClicked(item);
-				e.stop();
 			}.bind(this));
 		}.bind(this));
 	},
@@ -12147,7 +12167,7 @@ In2iGui.Toolbar.prototype = {
 		this.element.appendChild(widget.getElement());
 	},
 	addDivider : function() {
-		this.element.appendChild(new Element('span',{'class':'in2igui_divider'}));
+		this.element.appendChild(n2i.build('span',{'class':'in2igui_divider'}));
 	}
 }
 
@@ -12208,20 +12228,16 @@ In2iGui.Toolbar.Icon = function(options) {
 }
 
 In2iGui.Toolbar.Icon.create = function(options) {
-	var element = options.element = new Element('a',{'class':'in2igui_toolbar_icon'});
-	var icon = new Element('span',{'class':'in2igui_icon'}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(options.icon,2)+')'});
-	var inner = new Element('span',{'class':'in2igui_toolbar_inner_icon'});
-	var innerest = new Element('span',{'class':'in2igui_toolbar_inner_icon'});
-	element.insert(inner);
-	inner.insert(innerest);
-	var title = new Element('strong');
-	title.innerHTML=options.title;
+	var element = options.element = n2i.build('a',{'class':'in2igui_toolbar_icon'});
+	var icon = n2i.build('span',{'class':'in2igui_icon',style:'background-image: url('+In2iGui.getIconUrl(options.icon,2)+')'});
+	var inner = n2i.build('span',{'class':'in2igui_toolbar_inner_icon',parent:element});
+	var innerest = n2i.build('span',{'class':'in2igui_toolbar_inner_icon',parent:inner});
+	var title = n2i.build('strong',{text:options.title});
 	if (options.overlay) {
-		var overlay = new Element('span',{'class':'in2igui_icon_overlay'}).setStyle({'backgroundImage':'url('+In2iGui.getIconUrl('overlay/'+options.overlay,2)+')'});
-		icon.insert(overlay);
+		n2i.build('span',{'class':'in2igui_icon_overlay',parent:icon,style:'background-image: url('+In2iGui.getIconUrl('overlay/'+options.overlay,2)+')'});
 	}
-	innerest.insert(icon);
-	innerest.insert(title);
+	innerest.appendChild(icon);
+	innerest.appendChild(title);
 	return new In2iGui.Toolbar.Icon(options);
 }
 
@@ -12610,13 +12626,13 @@ In2iGui.RichText = function(options) {
 	this.name = options.name;
 	var e = this.element = n2i.get(options.element);
 	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
-	this.textarea = new Element('textarea');
-	e.insert(this.textarea);
+	this.textarea = n2i.build('textarea');
+	e.appendChild(this.textarea);
 	this.editor = WysiHat.Editor.attach(this.textarea);
 	this.editor.setAttribute('frameborder','0');
 	/* @private */
-	this.toolbar = e.select('.in2igui_richtext_toolbar')[0];
-	this.toolbarContent = e.select('.in2igui_richtext_toolbar_content')[0];
+	this.toolbar = n2i.firstByClass(e,'in2igui_richtext_toolbar');
+	this.toolbarContent = n2i.firstByClass(e,'in2igui_richtext_toolbar_content');
 	this.value = this.options.value;
 	this.document = null;
 	this.ignited = false;
@@ -12661,9 +12677,7 @@ In2iGui.RichText.replaceInput = function(options) {
 
 In2iGui.RichText.create = function(options) {
 	options = options || {};
-	options.element = new Element('div',{'class':'in2igui_richtext'}).update(
-		'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'
-	);
+	options.element = n2i.build('div',{'class':'in2igui_richtext',html:'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'});
 	return new In2iGui.RichText(options);
 }
 
@@ -12729,18 +12743,18 @@ In2iGui.RichText.prototype = {
 		var actions = In2iGui.RichText.actions;
 		for (var i=0; i < actions.length; i++) {
 			if (actions[i]==null) {
-				this.toolbarContent.insert(new Element('div',{'class':'in2igui_richtext_divider'}));
+				this.toolbarContent.appendChild(n2i.build('div',{'class':'in2igui_richtext_divider'}));
 			} else {
-				var div = new Element('div').addClassName('action action_'+actions[i].key);
+				var div = n2i.build('div',{'class':'action action_'+actions[i].key});
 				div.title=actions[i].key;
 				div.in2iguiRichTextAction = actions[i]
 				div.onclick = div.ondblclick = function(e) {return self.actionWasClicked(this.in2iguiRichTextAction,e);}
-				var img = new Element('img');
+				var img = n2i.build('img');
 				img.src=In2iGui.context+'/In2iGui/gfx/trans.png';
 				if (actions[i].icon) {
-					div.setStyle({'backgroundImage':'url('+In2iGui.getIconUrl(actions[i].icon,1)+')'});
+					div.style.backgroundImage='url('+In2iGui.getIconUrl(actions[i].icon,1)+')';
 				}
-				div.insert(img);
+				div.appendChild(img);
 				this.toolbarContent.appendChild(div);
 				div.onmousedown = In2iGui.RichText.stopEvent;
 			}
@@ -14283,7 +14297,7 @@ In2iGui.Upload.prototype = {
 					return;
 				}
 			};
-			this.form.insert(new Element('input',{'type':'hidden','name':name,'value':value}));
+			this.form.appendChild(n2i.build('input',{'type':'hidden','name':name,'value':value}));
 		}
 	},
 	
@@ -14953,37 +14967,32 @@ In2iGui.Calendar.prototype = {
 			if (event.startTime.getWeekOfYear()!=week || event.startTime.getYear()!=year) {
 				return;
 			}
-			var node = n2i.build('div',{'class':'in2igui_calendar_event'});
+			var node = n2i.build('div',{'class':'in2igui_calendar_event',parent:day});
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
 			var height = Math.min(pixels-top,height);
-			node.setStyle({'marginTop':top+'px','height':height+'px',visibility:'hidden'});
-			var content = new Element('div');
-			content.insert(new Element('p',{'class':'in2igui_calendar_event_time'}).update(event.startTime.dateFormat('H:i')));
-			content.insert(new Element('p',{'class':'in2igui_calendar_event_text'}).update(event.text));
+			n2i.setStyle(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
+			var content = n2i.build('div',{parent:node});
+			n2i.build('p',{'class':'in2igui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
+			n2i.build('p',{'class':'in2igui_calendar_event_text',text:event.text,parent:content});
 			if (event.location) {
-				content.insert(new Element('p',{'class':'in2igui_calendar_event_location'}).update(event.location));
+				n2i.build('p',{'class':'in2igui_calendar_event_location',text:event.location,parent:content});
 			}
 			
-			day.insert(node.insert(content));
 			window.setTimeout(function() {
 				In2iGui.bounceIn(node);
 			},Math.random()*200)
-			node.observe('click',function() {
-				self.eventWasClicked(event,this);
+			n2i.listen(node,'click',function() {
+				self.eventWasClicked(node);
 			});
 		});
 	},
 	/** @private */
-	eventWasClicked : function(event,node) {
-		this.showEvent(event,node);
+	eventWasClicked : function(node) {
+		this.showEvent(node);
 	},
 	setBusy : function(busy) {
-		if (busy) {
-			this.element.addClassName('in2igui_calendar_busy');
-		} else {
-			this.element.removeClassName('in2igui_calendar_busy');
-		}
+		n2i.setClass(this.element,'in2igui_calendar_busy',busy);
 	},
 	/** @private */
 	updateUI : function() {
@@ -14992,7 +15001,7 @@ In2iGui.Calendar.prototype = {
 		for (var i=0; i < days.length; i++) {
 			var date = new Date(first.getTime());
 			date.setDate(date.getDate()+i);
-			days[i].innerHTML=date.dateFormat('l \\d. d M');
+			n2i.dom.setText(days[i],date.dateFormat('l \\d. d M'));
 		};
 	},
 	/** @private */
@@ -15089,7 +15098,7 @@ In2iGui.Calendar.prototype = {
 	
 	//////////////////////////////// Event viewer //////////////////////////////
 	
-	showEvent : function(event,node) {
+	showEvent : function(node) {
 		if (!this.eventViewerPanel) {
 			this.eventViewerPanel = In2iGui.BoundPanel.create({width:270,padding: 3});
 			this.eventInfo = In2iGui.InfoView.create(null,{height:240,clickObjects:true});
@@ -15103,7 +15112,7 @@ In2iGui.Calendar.prototype = {
 		this.eventInfo.setBusy(true);
 		this.eventViewerPanel.position(node);
 		this.eventViewerPanel.show();
-		In2iGui.callDelegates(this,'requestEventInfo',event);
+		In2iGui.callDelegates(this,'requestEventInfo');
 		return;
 	},
 	updateEventInfo : function(event,data) {
@@ -15149,7 +15158,7 @@ In2iGui.DatePicker.create = function(options) {
 	var thead = n2i.build('thead',{parent:table});
 	var head = n2i.build('tr',{parent:thead});
 	for (var i=0;i<7;i++) {
-		head.insert(n2i.build('th',{text:Date.dayNames[i].substring(0,3)}));
+		head.appendChild(n2i.build('th',{text:Date.dayNames[i].substring(0,3)}));
 	}
 	var body = n2i.build('tbody',{parent:table});
 	for (var i=0;i<6;i++) {
@@ -15710,57 +15719,47 @@ In2iGui.InfoView = function(options) {
 
 In2iGui.InfoView.create = function(options) {
 	options = options || {};
-	var element = options.element = new Element('div',{'class':'in2igui_infoview'});
+	var element = options.element = n2i.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
 	if (options.height) {
-		element.setStyle({height:options.height+'px','overflow':'auto','overflowX':'hidden'});
+		ni2.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
 	}
 	if (options.margin) {
-		element.setStyle({margin:options.margin+'px'});
+		element.style.margin = options.margin+'px';
 	}
-	element.update('<table><tbody></tbody></table>');
 	return new In2iGui.InfoView(options);
 }
 
 In2iGui.InfoView.prototype = {
 	addHeader : function(text) {
-		var row = new Element('tr');
-		row.insert(new Element('th',{'class' : 'in2igui_infoview_header','colspan':'2'}).insert(text));
-		this.body.insert(row);
+		var row = n2i.build('tr',{parent:this.body});
+		n2i.build('th',{'class' : 'in2igui_infoview_header',colspan:'2',text:text,parent:row});
 	},
 	addProperty : function(label,text) {
-		var row = new Element('tr');
-		row.insert(new Element('th').insert(label));
-		row.insert(new Element('td').insert(text));
-		this.body.insert(row);
+		var row = n2i.build('tr',{parent:this.body});
+		n2i.build('th',{parent:row,text:label});
+		n2i.build('td',{parent:row,text:text});
 	},
 	addObjects : function(label,objects) {
 		if (!objects || objects.length==0) return;
-		var row = new Element('tr');
-		row.insert(new Element('th').insert(label));
-		var cell = new Element('td');
+		var row = n2i.build('tr',{parent:this.body});
+		row.appendChild(n2i.build('th',{text:label}));
+		var cell = n2i.build('td',{parent:row});
 		var click = this.options.clickObjects;
-		objects.each(function(obj) {
-			var node = new Element('div').insert(obj.title);
+		n2i.each(objects,function(obj) {
+			var node = n2i.build('div',{text:obj.title,parent:cell});
 			if (click) {
-				node.addClassName('in2igui_infoview_click')
-				node.observe('click',function() {
+				n2i.addClass(node,'in2igui_infoview_click')
+				n2i.listen(node,'click',function() {
 					In2iGui.callDelegates(this,'objectWasClicked',obj);
 				});
 			}
-			cell.insert(node);
 		});
-		row.insert(cell);
-		this.body.insert(row);
 	},
 	setBusy : function(busy) {
-		if (busy) {
-			this.element.addClassName('in2igui_infoview_busy');
-		} else {
-			this.element.removeClassName('in2igui_infoview_busy');
-		}
+		n2i.setClass(this,element,'in2igui_infoview_busy',busy);
 	},
 	clear : function() {
-		this.body.update();
+		n2i.dom.clear(this.body);
 	},
 	update : function(data) {
 		this.clear();
@@ -15868,7 +15867,6 @@ In2iGui.SearchField.prototype = {
 		var focus = function() {self.field.focus();self.field.select()};
 		n2i.listen(this.element,'mousedown',focus);
 		n2i.listen(this.element,'mouseup',focus);
-		//this.element.observe('mousedown',focus).observe('mouseup',focus);
 		n2i.listen(reset,'mousedown',function(e) {
 			n2i.stop(e);
 			self.reset();
@@ -15973,23 +15971,19 @@ In2iGui.LocationPicker = function(options) {
 	this.element = n2i.get(options.element);
 	this.defaultCenter = new google.maps.LatLng(57.0465, 9.9185);
 	In2iGui.extend(this);
-	this.addBehavior();
 }
 
 In2iGui.LocationPicker.prototype = {
-	/** @private */
-	addBehavior : function() {
-	},
 	show : function(options) {
 		if (!this.panel) {
 			var panel = this.panel = In2iGui.BoundPanel.create({width:300});
-			var mapContainer = new Element('div').setStyle({width:'300px',height:'300px'});
+			var mapContainer = n2i.build('div',{style:'width:300px;height:300px'});
 			panel.add(mapContainer);
 			var buttons = In2iGui.Buttons.create({align:'right',top:5});
 			var button = In2iGui.Button.create({text:'Luk'});
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
-			panel.element.setStyle({left:'-10000px',top:'-10000px',display:''});
+			n2i.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
 			var latLng = this.buildLatLng();
 		    var mapOptions = {
 		      zoom: 15,
@@ -16001,7 +15995,7 @@ In2iGui.LocationPicker.prototype = {
     			this.setLocation(loc);
 				this.fire('locationChanged',loc);
   			}.bind(this));
-			panel.element.setStyle({display:'none'});
+			panel.element.style.display = 'none';
 		}
 		this.setLocation(options.location);
 		if (options.node) {
@@ -16049,10 +16043,16 @@ In2iGui.Bar = function(options) {
 
 In2iGui.Bar.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{'class':'in2igui_bar'});
-	if (options.absolute) {
-		n2i.addClass(options.element,'in2igui_bar_absolute');
+	var cls = 'in2igui_bar';
+	if (options.variant) {
+		cls+=' in2igui_bar_'+options.variant;
 	}
+	if (options.absolute) {
+		cls+=' in2igui_bar_absolute';
+	}
+	options.element = n2i.build('div',{
+		'class' : cls
+	});
 	n2i.build('div',{'class':'in2igui_bar_body',parent:options.element});
 	return new In2iGui.Bar(options);
 }
@@ -16145,7 +16145,7 @@ In2iGui.IFrame.prototype = {
 In2iGui.VideoPlayer = function(options) {
 	this.options = options;
 	this.element = n2i.get(options.element);
-	this.placeholder = this.element.select('div')[0];
+	this.placeholder = n2i.firstByClass(this.element,'div');
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
 	this.handlers = [In2iGui.VideoPlayer.HTML5,In2iGui.VideoPlayer.QuickTime,In2iGui.VideoPlayer.Embedded];
@@ -16153,7 +16153,7 @@ In2iGui.VideoPlayer = function(options) {
 	In2iGui.extend(this);
 	if (this.options.video) {
 		if (this.placeholder) {
-			this.placeholder.observe('click',function() {
+			n2i.listen(this.placeholder,'click',function() {
 				this.setVideo(this.options.video);
 			}.bind(this))
 		} else {
@@ -16167,7 +16167,7 @@ In2iGui.VideoPlayer = function(options) {
 In2iGui.VideoPlayer.prototype = {
 	setVideo : function(video) {
 		this.handler = this.getHandler(video);
-		this.element.update(this.handler.element);
+		this.element.appendChild(this.handler.element);
 		if (this.handler.showController()) {
 			this.buildController();
 		}
@@ -16181,12 +16181,10 @@ In2iGui.VideoPlayer.prototype = {
 		};
 	},
 	buildController : function() {
-		var e = new Element('div',{'class':'in2igui_videoplayer_controller'});
-		this.playButton = new Element('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause'}).insert('wait!');
-		this.playButton.observe('click',this.playPause.bind(this));
-		this.status = new Element('span',{'class':'in2igui_videoplayer_status'});
-		e.insert(this.playButton).insert(this.status);
-		this.element.insert(e);
+		var e = n2i.build('div',{'class':'in2igui_videoplayer_controller',parent:this.element});
+		this.playButton = n2i.build('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause',text:'wait!',parent:e});
+		n2i.listen(this.playButton,'click',this.playPause.bind(this));
+		this.status = n2i.build('span',{'class':'in2igui_videoplayer_status',parent:e});
 	},
 	onCanPlay : function() {
 		this.playButton.update('Play');
@@ -16228,13 +16226,13 @@ In2iGui.VideoPlayer.prototype = {
 ///////// HTML5 //////////
 
 In2iGui.VideoPlayer.HTML5 = function(video,player) {
-	var e = this.element = new Element('video',{width:video.width,height:video.height,src:video.src});
-	e.observe('load',player.onLoad.bind(player));
-	e.observe('canplay',player.onCanPlay.bind(player));
-	e.observe('durationchange',function(x) {
+	var e = this.element = n2i.build('video',{width:video.width,height:video.height,src:video.src});
+	n2i.listen(e,'load',player.onLoad.bind(player));
+	n2i.listen(e,'canplay',player.onCanPlay.bind(player));
+	n2i.listen(e,'durationchange',function(x) {
 		player.onDurationChange(e.duration);
 	});
-	e.observe('timeupdate',function() {
+	n2i.listen(e,'timeupdate',function() {
 		player.onTimeChange(this.element.currentTime);
 	}.bind(this));
 }
@@ -16268,8 +16266,8 @@ In2iGui.VideoPlayer.HTML5.prototype = {
 
 In2iGui.VideoPlayer.QuickTime = function(video,player) {
 	this.player = player;
-	var e = this.element = new Element('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
-	e.update('<param value="false" name="controller"/>'
+	var e = this.element = n2i.build('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
+	e.innerHTML = '<param value="false" name="controller"/>'
 		+'<param value="true" name="enablejavascript"/>'
 		+'<param value="undefined" name="posterframe"/>'
 		+'<param value="false" name="showlogo"/>'
@@ -16278,17 +16276,17 @@ In2iGui.VideoPlayer.QuickTime = function(video,player) {
 		+'<param value="white" name="bgcolor"/>'
 		+'<param value="false" name="aggressivecleanup"/>'
 		+'<param value="true" name="saveembedtags"/>'
-		+'<param value="true" name="postdomevents"/>');
+		+'<param value="true" name="postdomevents"/>';
 		
-	e.observe('qt_canplay',player.onCanPlay.bind(player));
-	e.observe('qt_load',player.onLoad.bind(player));
-	e.observe('qt_progress',function() {
+	n2i.listen(e,'qt_canplay',player.onCanPlay.bind(player));
+	n2i.listen(e,'qt_load',player.onLoad.bind(player));
+	n2i.listen(e,'qt_progress',function() {
 		player.onLoadProgressChange(e.GetMaxTimeLoaded()/3000);
 	});
-	e.observe('qt_durationchange',function(x) {
+	n2i.listen(e,'qt_durationchange',function(x) {
 		player.onDurationChange(e.GetDuration()/3000);
 	});
-	e.observe('qt_timechanged',function() {
+	n2i.listen(e,'qt_timechanged',function() {
 		player.onTimeChange(e.GetTime());
 	})
 }
@@ -16323,8 +16321,7 @@ In2iGui.VideoPlayer.QuickTime.prototype = {
 ///////// Embedded //////////
 
 In2iGui.VideoPlayer.Embedded = function(video,player) {
-	var e = this.element = new Element('div',{width:video.width,height:video.height});
-	e.update(video.html);
+	var e = this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
 }
 
 In2iGui.VideoPlayer.Embedded.isSupported = function(video) {
@@ -16804,12 +16801,14 @@ In2iGui.MarkupEditor.prototype = {
 	showBar : function() {
 		if (!this.bar) {
 			var things = [
-				{key:'strong',icon:'edit/text_bold'},
-				{key:'em',icon:'edit/text_italic'}/*,
+				{key:'bold',icon:'edit/text_bold'},
+				{key:'em',icon:'edit/text_italic'},
+				{key:'bold',icon:'edit/text_bold'},
+				{key:'color',icon:'common/color'}/*,
 				{key:'insert-table',icon:'edit/text_italic'}*/
 			]
 			
-			this.bar = In2iGui.Bar.create({absolute:true,small:true});
+			this.bar = In2iGui.Bar.create({absolute:true,variant:'mini',small:true});
 			n2i.each(things,function(info) {
 				var button = new In2iGui.Bar.Button.create({icon:info.icon,stopEvents:true});
 				button.listen({
@@ -16828,6 +16827,45 @@ In2iGui.MarkupEditor.webkit = {
 	initialize : function(options) {
 		this.element = options.element;
 		this.element.style.overflow='auto';
+		this.element.contentEditable = true;
+		var ctrl = this.controller = options.controller;
+		n2i.listen(this.element,'focus',function() {
+			ctrl.focused();
+		});
+		n2i.listen(this.element,'blur',function() {
+			ctrl.blurred();
+		});
+	},
+	focus : function() {
+		this.element.focus();
+	},
+	format : function(info) {
+		if (info.key=='strong' || info.key=='em') {
+			this._wrapInTag(info.key);
+		} else if (info.key=='insert-table') {
+			this._insertHTML('<table><tbody><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td></tr></tbody></table>');
+		} else {
+			document.execCommand(info.key,null,null);
+		}
+	},
+	_wrapInTag : function(tag) {
+		document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');
+	},
+	_insertHTML : function(html) {
+		document.execCommand('inserthtml',null,html);
+	},
+	setHTML : function(html) {
+		this.element.innerHTML = html;
+	},
+	getHTML : function() {
+		return this.element.innerHTML;
+	}
+}
+
+In2iGui.MarkupEditor.iframe = {
+	initialize : function(options) {
+		this.element = options.element;
+		this.iframe = n2i.build('iframe',{style:'display:block; width: 100%; border: 0;'})
 		this.element.contentEditable = true;
 		var ctrl = this.controller = options.controller;
 		n2i.listen(this.element,'focus',function() {

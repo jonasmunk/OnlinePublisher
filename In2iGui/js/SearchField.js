@@ -34,7 +34,6 @@ In2iGui.SearchField.prototype = {
 		var focus = function() {self.field.focus();self.field.select()};
 		n2i.listen(this.element,'mousedown',focus);
 		n2i.listen(this.element,'mouseup',focus);
-		//this.element.observe('mousedown',focus).observe('mouseup',focus);
 		n2i.listen(reset,'mousedown',function(e) {
 			n2i.stop(e);
 			self.reset();

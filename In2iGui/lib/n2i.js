@@ -324,29 +324,52 @@ n2i.getChildren = function(node) {
 	return children;
 }
 
-n2i.firstByClass = function(parentElement,className,tag) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
-	for (var i=0;i<children.length;i++) {
-		if (n2i.hasClass(children[i],className)) {
-			return children[i];
-		}
+
+if (document.querySelector) {
+	n2i.firstByClass = function(parentElement,className,tag) {
+		parentElement = parentElement || document.body;
+		return parentElement.querySelector((tag ? tag+'.' : '.')+className);
 	}
-	return null;
+} else {
+	n2i.firstByClass = function(parentElement,className,tag) {
+		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+		for (var i=0;i<children.length;i++) {
+			if (n2i.hasClass(children[i],className)) {
+				return children[i];
+			}
+		}
+		return null;
+	}
 }
 
-n2i.byClass = function(parentElement,className,tag) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
-	var out = [];
-	for (var i=0;i<children.length;i++) {
-		if (n2i.hasClass(children[i],className)) {
-			out[out.length]=children[i];
-		}
+if (document.querySelectorAll) {
+	n2i.byClass = function(parentElement,className,tag) {
+		parentElement = parentElement || document.body;
+		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
+		// Important to convert into array...
+		var l=[];
+		for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
+		return l;
 	}
-	return out;
+} else {
+	n2i.byClass = function(parentElement,className,tag) {
+		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+		var out = [];
+		for (var i=0;i<children.length;i++) {
+			if (n2i.hasClass(children[i],className)) {
+				out[out.length]=children[i];
+			}
+		}
+		return out;
+	}
 }
 
 n2i.firstByTag = function(parentElement,tag) {
-	var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag);
+	parentElement = n2i.get(parentElement) || document.body;
+	if (document.querySelector && tag!=='*') {
+		return parentElement.querySelector(tag);
+	}
+	var children = parentElement.getElementsByTagName(tag);
 	return children[0];
 }
 

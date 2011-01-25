@@ -69,7 +69,7 @@ In2iGui.Upload.prototype = {
 					return;
 				}
 			};
-			this.form.insert(new Element('input',{'type':'hidden','name':name,'value':value}));
+			this.form.appendChild(n2i.build('input',{'type':'hidden','name':name,'value':value}));
 		}
 	},
 	

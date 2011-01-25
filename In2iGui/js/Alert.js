@@ -6,10 +6,10 @@ In2iGui.Alert = function(options) {
 	this.options = n2i.override({modal:false},options);
 	this.element = n2i.get(options.element);
 	this.name = options.name;
-	this.body = this.element.select('.in2igui_alert_body')[0];
-	this.content = this.element.select('.in2igui_alert_content')[0];
+	this.body = n2i.firstByClass(this.element,'in2igui_alert_body');
+	this.content = n2i.firstByClass(this.element,'in2igui_alert_content');
 	this.emotion = this.options.emotion;
-	this.title = this.element.select('h1').first();
+	this.title = n2i.firstByTag(this.element,'h1');
 	In2iGui.extend(this);
 }
 
@@ -21,11 +21,9 @@ In2iGui.Alert = function(options) {
 In2iGui.Alert.create = function(options) {
 	options = n2i.override({title:'',text:'',emotion:null,title:null},options);
 	
-	var element = options.element = new Element('div',{'class':'in2igui_alert'});
-	var body = new Element('div',{'class':'in2igui_alert_body'});
-	element.insert(body);
-	var content = new Element('div',{'class':'in2igui_alert_content'});
-	body.insert(content);
+	var element = options.element = n2i.build('div',{'class':'in2igui_alert'});
+	var body = n2i.build('div',{'class':'in2igui_alert_body',parent:element});
+	var content = n2i.build('div',{'class':'in2igui_alert_content',parent:body});
 	document.body.appendChild(element);
 	var obj = new In2iGui.Alert(options);
 	if (options.emotion) {
@@ -64,27 +62,25 @@ In2iGui.Alert.prototype = {
 	/** Sets the alert title */
 	setTitle : function(/**String*/ text) {
 		if (!this.title) {
-			this.title = new Element('h1');
-			this.content.appendChild(this.title);
+			this.title = n2i.build('h1',{parent:this.content});
 		}
-		this.title.innerHTML = text;
+		n2i.dom.setText(this.title,text);
 		
 	},
 	/** Sets the alert text */
 	setText : function(/**String*/ text) {
 		if (!this.text) {
-			this.text = new Element('p');
-			this.content.appendChild(this.text);
+			this.text = n2i.build('p',{parent:this.content});
 		}
-		this.text.innerHTML = text || '';
+		n2i.dom.setText(this.text,text || '');
 	},
 	/** Sets the alert emotion */
 	setEmotion : function(/**String*/ emotion) {
 		if (this.emotion) {
-			this.body.removeClassName(this.emotion);
+			n2i.removeClass(this.body,this.emotion);
 		}
 		this.emotion = emotion;
-		this.body.addClassName(emotion);
+		n2i.addClass(this.body,emotion);
 	},
 	/** Updates multiple properties
 	 * @param {Object} options {title: «String», text: «String», emotion: «'smile' | 'gasp'»}

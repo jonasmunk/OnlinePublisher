@@ -283,7 +283,6 @@ In2iGui.List.prototype = {
 			row.dragDropInfo = info;
 			this.addRowBehavior(row,i);
 			frag.appendChild(row);
-			//this.body.insert(row);
 			this.rows.push(info);
 		};
 		this.body.appendChild(frag);
@@ -474,22 +473,22 @@ In2iGui.List.prototype = {
 		this.rows = [];
 		if (!rows) return;
 		n2i.each(rows,function(r,i) {
-			var tr = new Element('tr');
+			var tr = n2i.build('tr');
 			var icon = r.icon;
 			var title = r.title;
-			r.cells.each(function(c) {
-				var td = new Element('td');
+			n2i.each(r.cells,function(c) {
+				var td = n2i.build('td');
 				if (c.icon) {
-					td.insert(In2iGui.createIcon(c.icon,1));
+					td.appendChild(In2iGui.createIcon(c.icon,1));
 					icon = icon || c.icon;
 				}
 				if (c.text) {
 					td.appendChild(document.createTextNode(c.text))
 					title = title || c.text;
 				}
-				tr.insert(td);
+				tr.appendChild(td);
 			})
-			self.body.insert(tr);
+			self.body.appendChild(tr);
 			// TODO: Memory leak!
 			var info = {id:r.id,kind:r.kind,icon:icon,title:title,index:i};
 			tr.dragDropInfo = info;
@@ -503,47 +502,47 @@ In2iGui.List.prototype = {
 		this.body.update();
 		this.rows = [];
 		for (var i=0; i < objects.length; i++) {
-			var row = new Element('tr');
+			var row = n2i.build('tr');
 			var obj = objects[i];
 			var title = null;
 			for (var j=0; j < this.columns.length; j++) {
-				var cell = new Element('td');
+				var cell = n2i.build('td');
 				if (this.builder) {
-					cell.update(this.builder.buildColumn(this.columns[j],obj));
+					cell.appendChild(this.builder.buildColumn(this.columns[j],obj));
 				} else {
 					var value = obj[this.columns[j].key] || '';
-					if (value.constructor == Array) {
+					if (n2i.isArray(value)) {
 						for (var k=0; k < value.length; k++) {
 							if (value[k].constructor == Object) {
-								cell.insert(this.createObject(value[k]));
+								cell.appendChild(this.createObject(value[k]));
 							} else {
-								cell.insert(new Element('div').update(value));
+								cell.appendChild(n2i.build('div',{text:value}));
 							}
 						};
 					} else if (value.constructor == Object) {
-						cell.insert(this.createObject(value[j]));
+						cell.appendChild(this.createObject(value[j]));
 					} else {
-						cell.insert(value);
+						n2i.dom.addText(cell,value);
 						title = title==null ? value : title;
 					}
 				}
-				row.insert(cell);
+				row.appendChild(cell);
 			};
 			var info = {id:obj.id,kind:obj.kind,title:title};
 			row.dragDropInfo = info;
-			this.body.insert(row);
+			this.body.appendChild(row);
 			this.addRowBehavior(row,i);
 			this.rows.push(obj);
 		};
 	},
 	/** @private */
 	createObject : function(object) {
-		var node = new Element('div',{'class':'object'});
+		var node = n2i.build('div',{'class':'object'});
 		if (object.icon) {
-			node.insert(In2iGui.createIcon(object.icon,1));
-			//node.insert(new Element('span',{'class':'in2igui_icon in2igui_icon_1'}).setStyle({'backgroundImage':'url("'+In2iGui.getIconUrl(object.icon,1)+'")'}));
+			node.appendChild(In2iGui.createIcon(object.icon,1));
 		}
-		return node.insert(object.text || object.name || '');
+		n2i.dom.addText(node,object.text || object.name || '')
+		return node;
 	},
 	/** @private */
 	addRowBehavior : function(row,index) {

@@ -11,10 +11,16 @@ In2iGui.Bar = function(options) {
 
 In2iGui.Bar.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{'class':'in2igui_bar'});
-	if (options.absolute) {
-		n2i.addClass(options.element,'in2igui_bar_absolute');
+	var cls = 'in2igui_bar';
+	if (options.variant) {
+		cls+=' in2igui_bar_'+options.variant;
 	}
+	if (options.absolute) {
+		cls+=' in2igui_bar_absolute';
+	}
+	options.element = n2i.build('div',{
+		'class' : cls
+	});
 	n2i.build('div',{'class':'in2igui_bar_body',parent:options.element});
 	return new In2iGui.Bar(options);
 }
