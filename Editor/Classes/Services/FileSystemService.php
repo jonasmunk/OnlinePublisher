@@ -98,8 +98,8 @@ class FileSystemService {
 	}
 	
 	function getMaxUploadSize() {
-	    $maxPost = FileSystemUtil::parseBytes(ini_get('post_max_size'));
-	    $maxUpload = FileSystemUtil::parseBytes(ini_get('upload_max_filesize'));
+	    $maxPost = FileSystemService::parseBytes(ini_get('post_max_size'));
+	    $maxUpload = FileSystemService::parseBytes(ini_get('upload_max_filesize'));
 	    if ($maxPost<$maxUpload) {
 	        return $maxPost;
 	    } else {
