@@ -39,24 +39,6 @@ if ($sourceId) {
 	}
 	$writer->endList();
 	exit;
-
-	
-	if ($source = Newssource::load($sourceId)) {
-		$parser = new FeedParser();
-		$feed = $parser->parseURL($source->getUrl());
-		foreach ($feed->getItems() as $item) {
-			$writer->startRow();
-			$writer->startCell(array('icon'=>'common/page'))->
-				startLine()->text($item->getTitle())->endLine()->
-				startLine(array('dimmed'=>true))->text(StringUtils::shortenString(StringUtils::removeTags($item->getDescription()),400))->endLine()->
-				endCell();
-			$writer->startCell()->text(DateUtils::formatFuzzy($item->getPubDate()))->endCell();
-			
-			$writer->endRow();
-		}
-	}
-	$writer->endList();
-	exit;
 }
 
 $main = Request::getString('main');

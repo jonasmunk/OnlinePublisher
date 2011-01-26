@@ -9,7 +9,6 @@ require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Page.php';
-require_once '../../Classes/BumbleBee.php';
 require_once '../../Classes/GuiUtils.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/StringUtils.php';
@@ -60,9 +59,6 @@ if (false) {
 	$gui.='<item title="Eksporter (debug)" link="Export.php?id='.$id.'&amp;debug=true" target="_blank"/>'.
 	'<item title="Opret kopi" link="Duplicate.php?id='.$id.'"/>';
 }
-if (BumbleBee::isConfigured()) {
-	$gui.='<item title="Vis som PDF" link="../../../util/pages/preview/?id='.$id.'&amp;format=pdf&amp;'.$page->getChanged().'" target="_blank"/>';
-}
 $gui.=
 '</menu>'.
 '</tool>'.
@@ -75,29 +71,7 @@ $gui.=
 '<tab title="Sikkerhed" link="EditPageSecurity.php?id='.$id.'" help="Opsæt adgang til siden"/>'.
 '</tabgroup>'.
 '<content padding="5">'.
-'<layout xmlns="uri:Layout" width="100%"><row>';
-if (BumbleBee::isConfigured()) {
-	$gui.='<cell width="120" valign="top">'.
-	'<html xmlns="uri:Html">'.
-	'<div id="preview" style="width: 120px; border: 1px solid #ccc; background-repeat: no-repeat; visibility: hidden; cursor: pointer;" onclick="window.parent.location.href=\'../../Services/Preview/?id='.$id.'&amp;return=Tools/Pages/\'">'.
-	'</div>'.
-	'<script type="text/javascript">
-	var img = new Image();
-	img.src = \'../../../util/pages/preview/?id='.$id.'&amp;format=png&amp;width=120&amp;'.$page->getChanged().'\';
-	img.onload = function() {
-		if (this.height&lt;160) {
-			$id("preview").style.height = this.height+"px";
-		} else {
-			$id("preview").style.height = "160px";
-		}
-		$id("preview").style.backgroundImage = "url(\'../../../util/pages/preview/?id='.$id.'&amp;format=png&amp;width=120&amp;'.$page->getChanged().'\')";
-		$id("preview").style.visibility = "visible";
-	}
-	</script>'.
-	'</html>'.
-	'</cell>';
-}
-$gui.=
+'<layout xmlns="uri:Layout" width="100%"><row>'.
 '<cell>'.
 '<form xmlns="uri:Form" action="UpdatePage.php" method="post" name="Formula" focus="title">'.
 '<hidden name="id">'.$id.'</hidden>'.
