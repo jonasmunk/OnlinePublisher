@@ -277,7 +277,7 @@ n2i.dom = {
 			if (c[i].nodeType==n2i.TEXT_NODE && c[i].nodeValue!=null) {
 				txt+=c[i].nodeValue;
 			} else if (c[i].nodeType==n2i.ELEMENT_NODE) {
-				txt+=n2i.dom.getNodeText(c[i]);
+				txt+=n2i.dom.getText(c[i]);
 			}
 		};
 		return txt;

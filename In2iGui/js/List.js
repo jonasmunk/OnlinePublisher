@@ -250,7 +250,7 @@ In2iGui.List.prototype = {
 				th.onclick=function() {self.sort(this.in2iguiIndex)};
 				className+='sortable';
 			}
-			if (key==this.sortKey) {
+			if (this.sortKey && key==this.sortKey) {
 				className+=' sort_'+this.sortDirection;
 			}
 			th.className=className;
@@ -412,7 +412,6 @@ In2iGui.List.prototype = {
 					if (index==self.window.page) {
 						a.className='selected';
 					}
-					n2i.log(a);
 					pageBody.appendChild(a);
 				}
 			}

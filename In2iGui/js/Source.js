@@ -65,8 +65,11 @@ In2iGui.Source.prototype = {
 				url:this.options.url,
 				parameters:prms,
 				onSuccess : function(t) {self.parse(t)},
-				onException : function(t,e) {n2i.log(e)},
-				onFailure : function(t,e) {
+				onException : function(e,t) {
+					n2i.log('Exception while loading source...')
+					n2i.log(e)
+				},
+				onFailure : function(t) {
 					In2iGui.callDelegates(self,'sourceFailed');
 				}
 			});
