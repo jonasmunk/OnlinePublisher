@@ -27,4 +27,5 @@ div.in2igui_colorpicker_page
 div.in2igui_colorpicker_wheel1
 {
 	background-image: url('../gfx/colorwheel1.png');
+	cursor: crosshair;
 }

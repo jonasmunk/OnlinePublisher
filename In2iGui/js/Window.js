@@ -59,12 +59,18 @@ In2iGui.Window.prototype = {
 	show : function() {
 		if (this.visible) return;
 		n2i.setStyle(this.element,{
-			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block', top: (n2i.getScrollTop()+40)+'px'
+			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block'
 		})
 		var width = this.element.clientWidth;
 		n2i.setStyle(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
+		if (!this.element.style.top) {
+			this.element.style.top = (n2i.getScrollTop()+40)+'px';
+		}
+		if (!this.element.style.left) {
+			this.element.style.left = Math.round((n2i.getInnerWidth()-width)/2)+'px';
+		}
 		if (!n2i.browser.msie) {
 			n2i.ani(this.element,'opacity',1,0);
 		}

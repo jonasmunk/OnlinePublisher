@@ -48,9 +48,16 @@ In2iGui.MarkupEditor.prototype = {
 		if (!this.bar) {
 			var things = [
 				{key:'bold',icon:'edit/text_bold'},
-				{key:'em',icon:'edit/text_italic'},
-				{key:'bold',icon:'edit/text_bold'},
-				{key:'color',icon:'common/color'}/*,
+				{key:'italic',icon:'edit/text_italic'},
+				{key:'color',icon:'common/color'},
+				{key:'image',icon:'common/image'},
+				{key:'align',value:'left',icon:'edit/text_align_left'},
+				{key:'align',value:'center',icon:'edit/text_align_center'},
+				{key:'align',value:'right',icon:'edit/text_align_right'},
+				{key:'align',value:'justify',icon:'edit/text_align_justify'}
+				
+				
+				/*,
 				{key:'insert-table',icon:'edit/text_italic'}*/
 			]
 			
@@ -58,7 +65,7 @@ In2iGui.MarkupEditor.prototype = {
 			n2i.each(things,function(info) {
 				var button = new In2iGui.Bar.Button.create({icon:info.icon,stopEvents:true});
 				button.listen({
-					$click:function() {this.impl.format(info)}.bind(this)
+					$click:function() {this._buttonClicked(info)}.bind(this)
 				});
 				this.bar.add(button);
 			}.bind(this));
@@ -66,6 +73,27 @@ In2iGui.MarkupEditor.prototype = {
 		}
 		this.bar.placeAbove(this);
 		this.bar.show();
+	},
+	_buttonClicked : function(info) {
+		if (info.key=='color') {
+			this._showColors();
+		} else if (info.key=='align') {
+			this.impl.align(info.value);
+		} else {
+			this.impl.format(info);
+		}
+	},
+	_showColors : function() {
+		if (!this.colorPicker) {
+			this.colorPicker = In2iGui.Window.create();
+			var picker = In2iGui.ColorPicker.create();
+			picker.listen(this);
+			this.colorPicker.add(picker);
+		}
+		this.colorPicker.show();
+	},
+	$colorWasSelected : function(color) {
+		this.impl.colorize(color);
 	}
 }
 
@@ -91,8 +119,16 @@ In2iGui.MarkupEditor.webkit = {
 		} else if (info.key=='insert-table') {
 			this._insertHTML('<table><tbody><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td></tr></tbody></table>');
 		} else {
-			document.execCommand(info.key,null,null);
+			document.execCommand(info.key,null,info.value);
 		}
+	},
+	colorize : function(color) {
+		n2i.log(color);
+		document.execCommand('forecolor',null,color);
+	},
+	align : function(value) {
+		var x = {center:'justifycenter',justify:'justifyfull',left:'justifyleft',right:'justifyright'};
+		document.execCommand(x[value],null,null);
 	},
 	_wrapInTag : function(tag) {
 		document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');

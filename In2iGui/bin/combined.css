@@ -4765,6 +4765,7 @@ div.in2igui_bar_mini div.in2igui_bar_body
 {
 	height: 22px;
 	background: none;
+	padding: 0 3px;
 }
 
 div.in2igui_bar_mini a.in2igui_bar_button
@@ -4772,7 +4773,12 @@ div.in2igui_bar_mini a.in2igui_bar_button
 	height: 22px;
 	line-height: 22px;
 	background: none;
-	padding: 0 4px;
+	padding: 0 2px;
+}
+
+div.in2igui_bar_mini a.in2igui_bar_button:hover
+{
+	background: none;
 }div.in2igui_videoplayer
 {
 	font-size: 0;
