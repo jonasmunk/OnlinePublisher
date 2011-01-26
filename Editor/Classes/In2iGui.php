@@ -112,7 +112,6 @@ class In2iGui {
 				$parsed[$lang] = trim($text);
 			}
 		}
-		Log::debug($parsed);
 		return $parsed;
 	}
 	
