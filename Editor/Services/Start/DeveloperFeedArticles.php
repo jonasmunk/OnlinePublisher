@@ -10,12 +10,17 @@ require_once '../../Classes/Network/FeedParser.php';
 require_once '../../Classes/Utilities/DateUtils.php';
 
 $url = 'http://twitter.com/statuses/user_timeline/16827706.rss';
+$data = RemoteDataService::getRemoteData($url,60*30); // 30 minutes
+if (!$data->isHasData()) {
+	In2iGui::respondFailure();
+	exit;	
+}
 $parser = new FeedParser();
-$feed = $parser->parseURL($url);
+$feed = $parser->parseURL($data->getFile());
 
 if (!$feed) {
 	In2iGui::respondFailure();
-	exit;
+	exit;	
 }
 
 $writer = new ArticlesWriter();

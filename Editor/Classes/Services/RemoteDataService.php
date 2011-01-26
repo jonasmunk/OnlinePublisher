@@ -87,6 +87,7 @@ class RemoteDataService {
 			$cached->setTitle($url);
 			$cached->setSynchronized(mktime());
 			$cached->save();
+			$cached->publish();
 		}
 		$data = new RemoteData();
 		$data->setAge($age);
