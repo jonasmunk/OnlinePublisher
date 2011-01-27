@@ -3165,7 +3165,6 @@ function In2iGui() {
 	/** @private */
 	this.layoutWidgets = [];
 	/** @private */
-	this.state = 'default';
 	this.addBehavior();
 }
 
@@ -3186,6 +3185,8 @@ In2iGui.toolTips = {};
 
 In2iGui.context = '';
 In2iGui.language = 'en';
+
+In2iGui.state = 'default';
 
 /** Gets the one instance of In2iGui */
 In2iGui.get = function(nameOrWidget) {
@@ -3434,7 +3435,7 @@ In2iGui.destroyDescendants = function(element) {
 }
 
 In2iGui.changeState = function(state) {
-	if (In2iGui.get().state===state) {return;}
+	if (In2iGui.state===state) {return;}
 	var all = In2iGui.get().objects;
 	for (key in all) {
 		var obj = all[key];
@@ -3446,7 +3447,7 @@ In2iGui.changeState = function(state) {
 			}
 		}
 	}
-	In2iGui.get().state==state;
+	In2iGui.state=state;
 }
 
 ///////////////////////////////// Indexes /////////////////////////////
