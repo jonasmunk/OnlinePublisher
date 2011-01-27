@@ -18,6 +18,12 @@ $gui='
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="query" value="@searchField.value"/>
 	</source>
+	<source name="logSource" url="ListLog.php">
+		<parameter key="windowPage" value="@list.window.page"/>
+		<parameter key="sort" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
+		<parameter key="query" value="@searchField.value"/>
+	</source>
 	<layout>
 		<top>
 			<toolbar>
@@ -36,6 +42,7 @@ $gui='
 					<selection value="object" name="selector">
 						<item icon="common/object" title="Alle objekter" value="object"/>
 						<item icon="common/person" title="Brugere" value="user"/>
+						<item icon="file/generic" title="Log" value="log"/>
 						<item icon="common/folder" title="Weblog grupper" value="webloggroup"/>
 						<item icon="common/internet" title="Stier" value="path"/>
 						<item icon="common/color" title="Designs" value="design"/>
