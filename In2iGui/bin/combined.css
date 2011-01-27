@@ -1599,11 +1599,22 @@ a.in2igui_dropdown_adaptive
     background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
     -webkit-border-radius: 7px;
 	border: 1px solid #ddd;
+	min-height: 50px;
+}
+
+.in2igui_overflow::-webkit-scrollbar-thumb:horizontal
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(rgb(240, 240, 240)));  
 }
 
 .in2igui_overflow::-webkit-scrollbar-thumb:hover
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgb(250, 250, 250)), to(rgb(230, 230, 230)));
+}
+
+.in2igui_overflow::-webkit-scrollbar-thumb:horizontal:hover
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(250, 250, 250)), to(rgb(230, 230, 230)));
 }
 
 
