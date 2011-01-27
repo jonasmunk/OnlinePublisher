@@ -23,6 +23,10 @@ class Log {
 		Log::_logAnything('system',$key,$message,$entity);
 	}
 
+	function logPublic($key,$message) {
+		Log::_logAnything('public',$key,$message);
+	}
+
 	function logUser($key,$message) {
 		Log::_logAnything('user',$key,$message);
 	}

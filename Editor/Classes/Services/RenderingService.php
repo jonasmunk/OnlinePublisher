@@ -9,6 +9,13 @@ require_once($basePath.'Editor/Classes/Response.php');
 
 class RenderingService {
 	
+	function sendNotFound() {
+		$error = '<title>Siden findes ikke!</title>'.
+		'<note>Den forespurgte side findes ikke på dette website.</note>';
+		Log::logPublic('pagenotfound','uri='.$_SERVER['REQUEST_URI']);
+		RenderingService::displayError($error);	
+	}
+	
 	function displayError($message,$path="") {
 		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
 		$xml.= '<message xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/error/1.0/">';
@@ -330,6 +337,46 @@ class RenderingService {
 		}
 		else {
 			return false;
+		}
+	}
+	
+	function showFile($id) {
+		$sql = "select * from file where object_id = ".$id;
+		if ($row = Database::selectFirst($sql)) {
+			Response::redirect('files/'.$row['filename']);
+		} else {
+			$error = '<title>Filen findes ikke!</title>'.
+			'<note>Den forespurgte fil findes ikke på dette website.</note>';
+			Log::logPublic('filenotfound','File-id:'.$id);
+			RenderingService::displayError($error);
+		}
+	}
+	
+	function getDesign($design) {
+		if (Request::exists('designsession')) {
+			$_SESSION['debug.design']=Request::getString('designsession');
+		}
+		if (Request::getBoolean('resetdesign')) {
+			unset($_SESSION['debug.design']);
+		}
+		if (Request::exists('design')) {
+			$design = Request::getString('design');
+		}
+		else if (isset($_SESSION['debug.design'])) {
+			$design = $_SESSION['debug.design'];
+		}
+		return $design;
+	}
+
+	function writePage($id,&$page,$relative,$samePageBaseUrl) {
+		if (Request::getBoolean('viewsource')) {
+			header('Content-type: text/xml');
+			echo $page['xml'];
+		} else {
+		$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
+		header("Content-Type: text/html; charset=UTF-8");
+		echo $html;
 		}
 	}
 }

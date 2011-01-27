@@ -22,7 +22,6 @@ require_once 'Editor/Classes/ExternalSession.php';
 session_set_cookie_params(0);
 session_start();
 
-
 if (!Database::testConnection()) {
 	$error = '<title>Siden er ikke tilgængelig i øjeblikket.</title>'.
 	'<note>Prøv venligst igen senere.</note>';
@@ -30,16 +29,10 @@ if (!Database::testConnection()) {
 	exit;
 }
 
-if (Request::exists('designsession')) {
-	$_SESSION['debug.design']=Request::getString('designsession');
-}
-if (Request::getBoolean('resetdesign')) {
-	unset($_SESSION['debug.design']);
-}
-
 $file = Request::getInt('file',-1);
 $id = Request::getInt('id',-1);
 $path = Request::getString('path');
+
 if (strlen($path)>0) {
 	$relative = str_repeat('../',substr_count($path,'/'));
 	$samePageBaseUrl = $relative.$path.'?';
@@ -59,7 +52,7 @@ if ($id==-1) {
 	$id=RenderingService::findPage('home',"");
 }
 if ($file>0) {
-	showFile($file);
+	RenderingService::showFile($file);
 }
 else {
 	$allowDisabled = Request::exists('preview');
@@ -70,17 +63,16 @@ else {
 	}
     // If the page has redirect
 	if ($page && $page['redirect']!==false) {
-		error_log($page['redirect']);
 		Response::redirect($page['redirect']);
 	}
 	// If the page is secure
 	else if ($page && $page['secure']) {
 		if (Request::exists('preview')) {
-			writePage($id,$page,$relative,$samePageBaseUrl);
+			RenderingService::writePage($id,$page,$relative,$samePageBaseUrl);
 		}
 		else if ($user = ExternalSession::getUser()) {
 			if (RenderingService::userHasAccessToPage($user['id'],$id)) {
-				writePage($id,$page,$relative,$samePageBaseUrl);
+				RenderingService::writePage($id,$page,$relative,$samePageBaseUrl);
 			}
 			else {
 				RenderingService::goToAuthenticationPage($id);
@@ -92,7 +84,7 @@ else {
 	}
 	// If nothing special about page
 	elseif ($page) {
-		writePage($id,$page,$relative,$samePageBaseUrl);
+		RenderingService::writePage($id,$page,$relative,$samePageBaseUrl);
 	}
 	// If page was not found
 	else {
@@ -104,53 +96,13 @@ else {
 			} else if ($row['id']>0) {
 				Response::redirectMoved($baseUrl.'?id='.$row['id']);
 			} else {
-				$error = '<title>Siden findes ikke!</title>'.
-				'<note>Den forespurgte side findes ikke på dette website.</note>';
-				RenderingService::displayError($error);
+				RenderingService::sendNotFound();
 			}
 		} else {
-			$error = '<title>Siden findes ikke!</title>'.
-			'<note>Den forespurgte side findes ikke på dette website.</note>';
-			RenderingService::displayError($error);
+			RenderingService::sendNotFound();
 		}
 	}
 }
 
-function writePage($id,&$page,$relative,$samePageBaseUrl) {
-	if (Request::getBoolean('viewsource')) {
-		header('Content-type: text/xml');
-		echo $page['xml'];
-	} else {
-		$html = RenderingService::applyStylesheet($page['xml'],getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
-		header("Content-Type: text/html; charset=UTF-8");
-		echo $html;
-	}
-}
 
-function showFile($id) {
-	$sql = "select * from file where object_id = ".$id;
-	if ($row = Database::selectFirst($sql)) {
-		Response::redirect('files/'.$row['filename']);
-	} else {
-		$error = '<title>Filen findes ikke!</title>'.
-		'<note>Den forespurgte fil findes ikke på dette website.</note>';
-		RenderingService::displayError($error);
-	}
-}
-
-function getCacheFile($id) {
-	global $basePath;
-	return $basePath.'cache/pages/'.$id.'.xml';
-}
-
-function getDesign($design) {
-	if (Request::exists('design')) {
-		$design = Request::getString('design');
-	}
-	else if (isset($_SESSION['debug.design'])) {
-		$design = $_SESSION['debug.design'];
-	}
-	return $design;
-}
 ?>
