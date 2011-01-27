@@ -30,7 +30,7 @@
 .in2igui_layout_left .in2igui_overflow::-webkit-scrollbar-thumb
 {
 	border: 2px solid #EBF0F7;
-	background: #D4DCE9;
+	background: #dfe5ee;
 	width: 10px;
 	height: 10px;
 }
@@ -38,6 +38,7 @@
 .in2igui_layout_left .in2igui_overflow:hover::-webkit-scrollbar-thumb
 {
 	background: #c4cCd9;
+	background: #D4DCE9;
 }
 
 

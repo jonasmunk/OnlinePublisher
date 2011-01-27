@@ -21,24 +21,28 @@ $gui='
 			<span class="date"> version: '.SystemInfo::getFormattedDate().'</span>
 			</div>
 		</html>
-		<overflow vertical="109">
-			<space all="25">
+		<space all="25" bottom="15">
 			<columns space="30">
 				<column>
 					<header icon="monochrome/message">Udvikling</header>
-					<articles source="developerFeed"/>
+					<overflow vertical="180">
+						<articles source="developerFeed"/>
+					</overflow>
 				</column>
 				<column>
 					<header icon="monochrome/gear">Kode</header>
-					<articles source="commitFeed"/>
+					<overflow vertical="180">
+						<articles source="commitFeed"/>
+					</overflow>
 				</column>
 				<column>
 					<header icon="monochrome/loudspeaker">Nyheder</header>
-					<articles source="newsFeed"/>
+					<overflow vertical="180">
+						<articles source="newsFeed"/>
+					</overflow>
 				</column>
 			</columns>
-			</space>
-		</overflow>
+		</space>
 	</box>
 </gui>';
 
