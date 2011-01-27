@@ -2,7 +2,7 @@ ui.listen({
 	weblogGroupId : 0,
 	userId : 0,
 	$ready : function() {
-		list.setUrl('ListUsers.php');
+		//list.setUrl('ListUsers.php');
 	},
 	
 	$selectionChanged$selector : function(obj) {
@@ -12,14 +12,17 @@ ui.listen({
 			return;
 		}
 		ui.changeState('list');
-		if (obj.value=='databaseTables') {
-			list.setUrl('ListDatabaseTables.php');
-		} else if (obj.value=='databaseInfo') {
+		switch (obj.value) {
+			case 'databaseTables' : list.setUrl('ListDatabaseTables.php')
+		}
+		if (obj.value=='databaseInfo') {
 			list.setUrl('ListDatabaseInfo.php');
 		} else if (obj.value=='user') {
 			list.setUrl('ListUsers.php');
 		} else if (obj.value=='object') {
 			list.setSource(allObjectsSource);
+		} else if (obj.value=='log') {
+			list.setSource(logSource);
 		} else if (obj.value=='webloggroup') {
 			list.setUrl('../../Services/Model/ListObjects.php?type=webloggroup');
 		} else if (obj.value=='path') {
@@ -172,7 +175,7 @@ ui.listen({
 	$click$savePath : function() {
 		var data = pathFormula.getValues();
 		data.id=this.pathId;
-		ui.request({json:{data:data}},url:'SavePath.php',onSuccess:'savePath'});
+		ui.request({json:{data:data},url:'SavePath.php',onSuccess:'savePath'});
 	},
 	$success$savePath : function() {
 		pathEditor.hide();

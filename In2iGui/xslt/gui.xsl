@@ -123,7 +123,9 @@
 	<script src="{@source}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:for-each>
 <script type="text/javascript">
+<xsl:if test="@state">
 In2iGui.state = '<xsl:value-of select="@state"/>';
+</xsl:if>
 In2iGui.context = '<xsl:value-of select="$context"/>';
 <xsl:for-each select="gui:controller[@source]">
 	<xsl:if test="@name">
