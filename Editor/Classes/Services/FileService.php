@@ -144,8 +144,8 @@ class FileService {
 		$filePath = $uploadDir . $fileName;
 		$fileSize=$_FILES["file"]["size"];
 
-		$filePath = FileSystemUtil::findFreeFilePath($filePath);
-		$fileName = FileSystemUtil::findFilePathName($filePath);
+		$filePath = FileSystemService::findFreeFilePath($filePath);
+		$fileName = FileSystemService::getFileBaseName($filePath);
 
 		$errorMessage=false;
 		$errorDetails='';

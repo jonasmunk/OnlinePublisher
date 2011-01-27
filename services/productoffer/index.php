@@ -7,7 +7,7 @@ require_once('../../Editor/Classes/Productoffer.php');
 require_once('../../Editor/Classes/Emailaddress.php');
 require_once('../../Editor/Classes/Request.php');
 require_once('../../Editor/Classes/Response.php');
-require_once('../../Editor/Classes/ValidateUtil.php');
+require_once('../../Editor/Classes/Utilities/ValidateUtils.php');
 
 $name = Request::getUnicodeString('name');
 $email = Request::getUnicodeString('email');
@@ -19,7 +19,7 @@ if ($name=='') {
 	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noName&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
 } else if ($email=='') {
 	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noEmail&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
-} else if (!ValidateUtil::validateEmail($email)) {
+} else if (!ValidateUtils::validateEmail($email)) {
 	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=invalidEmail&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);
 } else if ($bid=='') {
 	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noOffer&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);

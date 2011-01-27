@@ -11,7 +11,7 @@ require_once '../../Classes/Services/FileService.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/UserInterface.php';
 require_once '../../Classes/GuiUtils.php';
-require_once '../../Classes/DateUtil.php';
+require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/Log.php';
 
 $main = Request::getString('main');
@@ -37,7 +37,7 @@ if ($type) {
 	$query['mimetypes'] = FileService::kindToMimeTypes($type);
 }
 if ($main=='latest') {
-	$query['createdMin']=DateUtil::addDays(mktime(),-1);
+	$query['createdMin'] = DateUtils::addDays(mktime(),-1);
 }
 
 $list = File::find($query);

@@ -5,7 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Object.php');
-require_once($basePath.'Editor/Classes/DateUtil.php');
+require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 class Calendarsource extends Object {
 	var $url;
@@ -277,32 +277,32 @@ class Calendarsource extends Object {
 		if ($by=='WEEKLY') {
 			if ($row['byday']) {
 				$dayNums = array('MO'=>0, 'TU'=>1, 'WE'=>2, 'TH'=>3,'FR'=>4,'SA'=>5,'SU'=>6);
-				$weekday = DateUtil::getWeekDay($row['startdate']);
+				$weekday = DateUtils::getWeekDay($row['startdate']);
 				$byDays = @split(",",$row['byday']);
 				foreach ($byDays as $day) {
 					$new = $row;
 					$extra = $dayNums[$day]-$weekday;
 					//error_log('byday: '.$weekday.' > '.$day.'/'.$extra);
-					$new['startdate'] = DateUtil::addDays($new['startdate'],$count*7+$extra);
-					$new['enddate'] = DateUtil::addDays($new['enddate'],$count*7+$extra);
+					$new['startdate'] = DateUtils::addDays($new['startdate'],$count*7+$extra);
+					$new['enddate'] = DateUtils::addDays($new['enddate'],$count*7+$extra);
 					$events[] = $new;
 				}
 			} else {
-				$row['startdate'] = DateUtil::addDays($row['startdate'],$count*7);
-				$row['enddate'] = DateUtil::addDays($row['enddate'],$count*7);
+				$row['startdate'] = DateUtils::addDays($row['startdate'],$count*7);
+				$row['enddate'] = DateUtils::addDays($row['enddate'],$count*7);
 				$events[] = $row;
 			}
 		} elseif ($by=='DAILY') {
-			$row['startdate'] = DateUtil::addDays($row['startdate'],$count);
-			$row['enddate'] = DateUtil::addDays($row['enddate'],$count);
+			$row['startdate'] = DateUtils::addDays($row['startdate'],$count);
+			$row['enddate'] = DateUtils::addDays($row['enddate'],$count);
 			$events[] = $row;
 		} elseif ($by=='MONTHLY') {
-			$row['startdate'] = DateUtil::addMonths($row['startdate'],$count);
-			$row['enddate'] = DateUtil::addMonths($row['enddate'],$count);
+			$row['startdate'] = DateUtils::addMonths($row['startdate'],$count);
+			$row['enddate'] = DateUtils::addMonths($row['enddate'],$count);
 			$events[] = $row;
 		} elseif ($by=='YEARLY') {
-			$row['startdate'] = DateUtil::addYears($row['startdate'],$count);
-			$row['enddate'] = DateUtil::addYears($row['enddate'],$count);
+			$row['startdate'] = DateUtils::addYears($row['startdate'],$count);
+			$row['enddate'] = DateUtils::addYears($row['enddate'],$count);
 			$events[] = $row;
 		}
 		return $events;
@@ -337,7 +337,7 @@ class Calendarsource extends Object {
 			'calendarDisplayTitle' => $this->displayTitle
 		);
 		if ($row['duration']>0) {
-			$event['endDate'] = DateUtil::addSeconds($row['startdate'],$row['duration']);
+			$event['endDate'] = DateUtils::addSeconds($row['startdate'],$row['duration']);
 		}
 		return $event;
 	}

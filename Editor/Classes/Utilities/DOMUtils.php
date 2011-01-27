@@ -62,6 +62,15 @@ class DOMUtils {
 		return $node->textContent;
 	}
 	
+	function getPathText(&$node,$path) {
+		$xpath = new DOMXPath($node->ownerDocument);
+		if ($child =& $xpath->query($path,$node)->item(0)) {
+			return $child->textContent;
+		} else {
+			return '';
+		}
+	}
+	
 	function stripNamespaces($str) {
 		return preg_replace('/ xmlns="[\\w:\\/.]*"/e','',$str);
 	}

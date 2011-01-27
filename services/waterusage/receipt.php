@@ -4,11 +4,11 @@ require_once('../../Editor/Include/Public.php');
 require_once('../../Editor/Classes/Request.php');
 require_once('../../Editor/Classes/Response.php');
 require_once('../../Editor/Classes/UserInterface.php');
-require_once('../../Editor/Classes/DateUtil.php');
+require_once('../../Editor/Classes/Utilities/DateUtils.php');
 require_once('../../Editor/Classes/Model/Query.php');
 
 $number = Request::getInt('number');
-$year = DateUtil::getCurrentYear();
+$year = DateUtils::getCurrentYear();
 
 $usage = Query::after('waterusage')->withProperty('number',$number)->withProperty('year',2010)->first();
 

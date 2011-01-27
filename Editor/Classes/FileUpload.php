@@ -28,7 +28,7 @@ class FileUpload {
 		$filePath = $uploadDir . $this->fileName;
 		$this->size=$_FILES[$field]["size"];
 
-		$this->path = FileSystemUtil::findFreeFilePath($filePath);
+		$this->path = FileSystemService::findFreeFilePath($filePath);
 
 		$error=$this->ERROR_NO_ERROR;
 		$success = false;

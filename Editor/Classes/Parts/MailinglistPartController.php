@@ -6,7 +6,7 @@
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/GuiUtils.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/ValidateUtil.php');
+require_once($basePath.'Editor/Classes/Utilities/ValidateUtils.php');
 
 class MailinglistPartController extends PartController
 {
@@ -55,7 +55,7 @@ class MailinglistPartController extends PartController
 				$subscribe_error = 'noname';
 			} else if ($email=='') {
 				$subscribe_error = 'noemail';
-			} else if (!ValidateUtil::validateEmail($email)) {
+			} else if (!ValidateUtils::validateEmail($email)) {
 				$subscribe_error = 'invalidemail';
 			}
 			if ($subscribe_error!='') {
@@ -69,7 +69,7 @@ class MailinglistPartController extends PartController
 			if ($email=='') {
 				$unsubscribe_error = 'noemail';
 				$unsubscribe_body .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
-			} else if (!ValidateUtil::validateEmail($email)) {
+			} else if (!ValidateUtils::validateEmail($email)) {
 				$unsubscribe_error = 'invalidemail';
 				$unsubscribe_body .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
 			} else {

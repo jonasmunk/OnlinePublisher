@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/FileUpload.php';
-require_once '../../Classes/Waterusage.php';
+require_once '../../Classes/Objects/Waterusage.php';
 require_once '../../Classes/Database.php';
 
 $upload = new FileUpload();
@@ -37,14 +37,14 @@ function handleLine($line) {
 	$sql = "select object_id as id from waterusage where year = ".Database::int($year)." and number = ".Database::text($number);
 	$row = Database::selectFirst($sql);
 	if ($row) {
-		$usage = WaterUsage::load($row['id']);
+		$usage = Waterusage::load($row['id']);
 		if ($usage) {
 			$usage->setValue($value);
 			$usage->save();
 			$usage->publish();
 		}
 	} else {
-		$usage = new WaterUsage();
+		$usage = new Waterusage();
 		$usage->setNumber($number);
 		$usage->setValue($value);
 		$usage->setYear($year);

@@ -6,14 +6,14 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/Waterusage.php';
+require_once '../../Classes/Objects/Waterusage.php';
 
 $data = Request::getObject('data');
 
 if ($data->id>0) {
-	$obj = WaterUsage::load($data->id);
+	$obj = Waterusage::load($data->id);
 } else {
-	$obj = new WaterUsage();
+	$obj = new Waterusage();
 }
 $obj->setNumber(Request::fromUnicode($data->number));
 $obj->setYear($data->year);

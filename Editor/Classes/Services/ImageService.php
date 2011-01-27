@@ -128,8 +128,8 @@ class ImageService {
 		$imageWidth=0;
 		$imageHeight=0;
 
-		$filePath = FileSystemUtil::findFreeFilePath($filePath);
-		$fileName = FileSystemUtil::findFilePathName($filePath);
+		$filePath = FileSystemService::findFreeFilePath($filePath);
+		$fileName = FileSystemService::getFileBaseName($filePath);
 		if (!file_exists($tempPath)) {
 			$errorMessage='Filen findes ikke';
 			$errorDetails='Sti:'.$tempPath;			
@@ -157,7 +157,7 @@ class ImageService {
 		
 				// If no title build one from filename
 				if ($title=='') {
-					$title=FileSystemUtil::filenameToTitle($fileName);
+					$title = FileSystemService::filenameToTitle($fileName);
 				}
 	
 				// Create object

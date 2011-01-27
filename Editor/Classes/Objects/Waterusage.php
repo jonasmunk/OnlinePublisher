@@ -13,13 +13,13 @@ Object::$schema['waterusage'] = array(
 	'date'  => array('type'=>'datetime')
 );
 
-class WaterUsage extends Object {
+class Waterusage extends Object {
 	var $number;
 	var $year;
 	var $value;
 	var $date;
 
-	function WaterUsage() {
+	function Waterusage() {
 		parent::Object('waterusage');
 	}
 	
@@ -79,11 +79,11 @@ class WaterUsage extends Object {
 	function override($dummy) {
 		$sql="select object_id from waterusage where number=".Database::text($dummy->getNumber())." and year=".Database::int($dummy->getYear());
 		if ($row = Database::selectFirst($sql)) {
-			$usage = WaterUsage::load($row['object_id']);
+			$usage = Waterusage::load($row['object_id']);
 			error_log('found:'.$row['object_id']);
 		}
 		if (!$usage) {
-			$usage = new WaterUsage();
+			$usage = new Waterusage();
 		}
 		$usage->setNumber($dummy->getNumber());
 		$usage->setYear($dummy->getYear());

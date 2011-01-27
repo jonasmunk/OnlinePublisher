@@ -15,10 +15,10 @@ class TestFiles extends UnitTestCase {
     }
     
     function testGetFileTitle() {
-        $this->assertTrue(FileSystemUtil::filenameToTitle('filnavn.php')=='Filnavn');
-        $this->assertTrue(FileSystemUtil::filenameToTitle('filnavn.php.xml')=='Filnavn');
-        $this->assertTrue(FileSystemUtil::filenameToTitle('filnavn')=='Filnavn');
-        $this->assertTrue(FileSystemUtil::filenameToTitle('')=='');
+        $this->assertTrue(FileSystemService::filenameToTitle('filnavn.php')=='Filnavn');
+        $this->assertTrue(FileSystemService::filenameToTitle('filnavn.php.xml')=='Filnavn');
+        $this->assertTrue(FileSystemService::filenameToTitle('filnavn')=='Filnavn');
+        $this->assertTrue(FileSystemService::filenameToTitle('')=='');
     }
     
     function testGetExtension() {

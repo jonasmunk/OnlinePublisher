@@ -107,6 +107,57 @@ class FileSystemService {
 	    }
 	}
 	
+	/**
+	 * Finds a free path for a file, using a provided file as input
+	 * @param string $path The path to be used
+	 * @return string A free path
+	 */
+	function findFreeFilePath($path) {
+		$path_parts = pathinfo($path);
+		$dir = $path_parts['dirname'];
+		$file = $path_parts['basename'];
+		if (array_key_exists('extension',$path_parts)) {
+			$ext = $path_parts['extension'];
+		} else {
+			$ext = '';
+		}
+	
+		$output = $path;
+		$head = substr($file,0,strlen($file)-strlen($ext)-1);
+		$count = 1;
+		while (file_exists($path)) {
+			$path = $dir.'/'.$head.$count.'.'.$ext;
+			$count++;
+		}
+		return $path;
+	}
+	
+	/**
+	 * Finds a paths base filename
+	 * @param string $path The path to analyze
+	 * @return string The base filename
+	 */
+	function getFileBaseName($path) {
+		$path_parts = pathinfo($path);
+		return $path_parts['basename'];
+	}
+	
+	/**
+	 * Makes a filename into a nice looking title (stripping extensions etc.)
+	 * @param string $filename The filename to convert
+	 * @return string A nice looking title
+	 */
+	function filenameToTitle($filename) {
+		$pos = strpos($filename,'.');
+		if ($pos === false) {
+			$title = $filename;
+		}
+		else {
+			$title = substr($filename,0,$pos);
+		}
+		return ucfirst($title);
+	}
+	
 
 	function parseBytes($val) {
 	    $val = trim($val);

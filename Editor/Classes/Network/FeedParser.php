@@ -4,7 +4,6 @@
  * @subpackage Classes.Network
  */
 require_once($basePath.'Editor/Classes/Log.php');
-require_once($basePath.'Editor/Classes/XmlUtils.php');
 require_once($basePath.'Editor/Classes/Network/Feed.php');
 require_once($basePath.'Editor/Classes/Network/FeedItem.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');

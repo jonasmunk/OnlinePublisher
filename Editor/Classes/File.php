@@ -197,8 +197,8 @@ class File extends Object {
 		$uploadDir = $basePath.'files/';
 		$filePath = $uploadDir . $fileName;
 
-		$filePath = FileSystemUtil::findFreeFilePath($filePath);
-		$fileName = FileSystemUtil::findFilePathName($filePath);
+		$filePath = FileSystemService::findFreeFilePath($filePath);
+		$fileName = FileSystemService::getFileBaseName($filePath);
 
 		$errorMessage=false;
 		$errorDetails='';
@@ -213,7 +213,7 @@ class File extends Object {
 		if (!$errorMessage) {
 
 			if ($title=='') {
-				$title=FileSystemUtil::filenameToTitle($fileName);
+				$title = FileSystemService::filenameToTitle($fileName);
 			}
 
 			$file = new File();
@@ -258,12 +258,12 @@ class File extends Object {
 			}
 		}
 		$filename = FileSystemService::safeFilename($filename);
-		$newPath = FileSystemUtil::findFreeFilePath($basePath.'files/'.$filename);
+		$newPath = FileSystemService::findFreeFilePath($basePath.'files/'.$filename);
 		if (!@rename($path,$newPath)) {
 			return array('success' => false,'message' => 'Der skete en uventet fejl ');
 		}
 		
-		$title=FileSystemUtil::filenameToTitle($filename);
+		$title = FileSystemService::filenameToTitle($filename);
 
 		$file = new File();
 		$file->setTitle($title);

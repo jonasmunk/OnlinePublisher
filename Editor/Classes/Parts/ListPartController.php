@@ -7,11 +7,10 @@ require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/ListPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/In2iGui.php');
-require_once($basePath.'Editor/Classes/DateUtil.php');
+require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 require_once($basePath.'Editor/Classes/Calendarsource.php');
 require_once($basePath.'Editor/Classes/News.php');
 require_once($basePath.'Editor/Classes/Model/Query.php');
-require_once($basePath.'Editor/Classes/XmlUtils.php');
 
 class ListPartController extends PartController
 {
@@ -132,7 +131,7 @@ class ListPartController extends PartController
 		if (count($part->getObjectIds())>0) {
 			$objects = Database::selectAll("select id,type from object where id in (".implode($part->getObjectIds(),',').")");
 			$from = time();
-			$to = DateUtil::addDays($from,$part->getTimeCount());
+			$to = DateUtils::addDays($from,$part->getTimeCount());
 			foreach ($objects as $object) {
 				$type = $object['type'];
 				$id = $object['id'];
@@ -165,7 +164,7 @@ class ListPartController extends PartController
 					}
 				} else if ($type=='newssource') {
 					if ($source = Newssource::load($id)) {
-						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',DateUtil::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
+						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',DateUtils::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
 						foreach ($newsItems as $newsItem) {
 							$item = new PartListItem();
 							$item->setStartDate($newsItem->getDate());
@@ -190,10 +189,10 @@ class ListPartController extends PartController
 				$data.='<source>'.StringUtils::escapeXML($item->getSource()).'</source>';
 			}
 			if ($item->getStartDate()) {
-				$data.=XmlUtils::buildDate('date',$item->getStartDate());
+				$data.=DateUtils::buildTag('date',$item->getStartDate());
 			}
 			if ($item->getEndDate()) {
-				$data.=XmlUtils::buildDate('end-date',$item->getEndDate());
+				$data.=DateUtils::buildTag('end-date',$item->getEndDate());
 			}
 			$data.='</item>';
 		}

@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/MailService.php';
 require_once '../../Classes/Settings.php';
-require_once '../../Classes/GoogleAnalytics.php';
+require_once '../../Classes/Integration/GoogleAnalytics.php';
 
 $data = Request::getObject('data');
 

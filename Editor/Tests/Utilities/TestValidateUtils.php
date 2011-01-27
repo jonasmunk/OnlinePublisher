@@ -9,15 +9,15 @@
 class TestValidateUtils extends UnitTestCase {
 	
 	function testEmail() {
-		$this->assertTrue(ValidateUtil::validateEmail('jbm@domain.dk'));
-		$this->assertTrue(ValidateUtil::validateEmail('my.name@domain.dk'));
-		$this->assertTrue(ValidateUtil::validateEmail('my.name@d.b.s.dk'));
+		$this->assertTrue(ValidateUtils::validateEmail('jbm@domain.dk'));
+		$this->assertTrue(ValidateUtils::validateEmail('my.name@domain.dk'));
+		$this->assertTrue(ValidateUtils::validateEmail('my.name@d.b.s.dk'));
 		
-		$this->assertFalse(ValidateUtil::validateEmail('jbm@domain.d'));
-		$this->assertFalse(ValidateUtil::validateEmail('jbm@@domain.d'));
-		$this->assertFalse(ValidateUtil::validateEmail(''));
-		$this->assertFalse(ValidateUtil::validateEmail('jbm'));
-		$this->assertFalse(ValidateUtil::validateEmail('@'));
-		$this->assertFalse(ValidateUtil::validateEmail('@atira.dk'));
+		$this->assertFalse(ValidateUtils::validateEmail('jbm@domain.d'));
+		$this->assertFalse(ValidateUtils::validateEmail('jbm@@domain.d'));
+		$this->assertFalse(ValidateUtils::validateEmail(''));
+		$this->assertFalse(ValidateUtils::validateEmail('jbm'));
+		$this->assertFalse(ValidateUtils::validateEmail('@'));
+		$this->assertFalse(ValidateUtils::validateEmail('@atira.dk'));
 	}
 }

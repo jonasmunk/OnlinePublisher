@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/PartContext.php');
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Utilities/DOMUtils.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 
 class PartService {
@@ -137,9 +138,9 @@ class PartService {
 			$info = array();
 			$doc = new DOMDocument();
 			if ($doc->load($file)) {
-				$info['name'] = XmlUtils::getPathText($doc->documentElement,"/part/name");
-				$info['description'] = XmlUtils::getPathText($doc->documentElement,"/part/description");
-				$info['priority'] = XmlUtils::getPathText($doc->documentElement,"/part/priority");
+				$info['name'] = DOMUtils::getPathText($doc->documentElement,"/part/name");
+				$info['description'] = DOMUtils::getPathText($doc->documentElement,"/part/description");
+				$info['priority'] = DOMUtils::getPathText($doc->documentElement,"/part/priority");
 			}
 			else {
 				error_log('getPartInfo: '.$doc->getErrorString());

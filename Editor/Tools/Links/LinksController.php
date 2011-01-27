@@ -1,5 +1,5 @@
 <?
-require_once '../../Classes/ValidateUtil.php';
+require_once '../../Classes/Utilities/ValidateUtils.php';
 
 class LinksController {
 	
@@ -60,7 +60,7 @@ class LinksController {
 		    case "email":
 		        $out['targetIcon'] = 'common/email';
 		        $out['targetLink'] = 'mailto:'.$data['target_value'];
-		        if (ValidateUtil::validateEmail($data['target_value'])) {
+		        if (ValidateUtils::validateEmail($data['target_value'])) {
 		            $out['message'] = "Kontrollér manuelt";
 		        } else {
 		            $out['status'] = "Stopped";
@@ -70,7 +70,7 @@ class LinksController {
 		    case "url":
 		        $out['targetIcon'] = 'common/internet';
 		        $out['targetLink'] = $data['target_value'];
-		        if (ValidateUtil::validateUrl($data['target_value'])) {
+		        if (ValidateUtils::validateUrl($data['target_value'])) {
 		            $out['message'] = "Kontrollér manuelt";
 		        } else {
 		            $out['status'] = "Stopped";

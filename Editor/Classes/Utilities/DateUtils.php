@@ -28,6 +28,10 @@ class DateUtils {
 		return null;
 	}
 	
+	function buildTag($tagName,$stamp) {
+		return '<'.$tagName.' unix="'.$stamp.'" day="'.date('d',$stamp).'" weekday="'.date('w',$stamp).'" yearday="'.date('z',$stamp).'" month="'.date('m',$stamp).'" year="'.date('Y',$stamp).'" hour="'.date('H',$stamp).'" minute="'.date('i',$stamp).'" second="'.date('s',$stamp).'" offset="'.date('Z',$stamp).'" timezone="'.date('T',$stamp).'"/>';
+	}
+	
 	function formatLongDateTime($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			setlocale(LC_TIME, $locale);
@@ -97,6 +101,81 @@ class DateUtils {
 			return '';
 		}
 	}
+
+	function getCurrentYear() {
+		return date('Y',mktime());
+	}
+	
+	/**
+	 * Gets the start time of the week of the provided timestamp
+	 */
+	function getWeekStart($timestamp) {
+		$year = date('Y',$timestamp);
+		$weekday = date('w',$timestamp);
+		if ($weekday==0) {
+			$weekday=6;
+		} else {
+			$weekday--;
+		}
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime(0,0,0,$month,$date-$weekday,$year);
+	}
+	
+	function getWeekDay($timestamp) {
+		$weekday = date('w',$timestamp);
+		if ($weekday==0) {
+			$weekday=6;
+		} else {
+			$weekday--;
+		}
+		return $weekday;
+	}
+	
+	function getWeekEnd($timestamp) {
+		$year = date('Y',$timestamp);
+		$weekday = date('w',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime(23,59,59,$month,$date-$weekday+7,$year);
+	}
+	
+	function getMonthStart($timestamp) {
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		return mktime(0,0,0,$month,1,$year);
+	}
+	
+	function getMonthEnd($timestamp) {
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		return mktime(0,0,-1,$month+1,1,$year);
+	}
+	
+	function getYearStart($timestamp) {
+		$year = date('Y',$timestamp);
+		return mktime(0,0,0,1,1,$year);
+	}
+	
+	function getYearEnd($timestamp) {
+		$year = date('Y',$timestamp);
+		return mktime(0,0,-1,1,1,$year+1);
+	}
+	
+	function getSecondsSinceMidnight($timestamp) {
+		$hours = date('H',$timestamp);
+		$minutes = date('i',$timestamp);
+		$seconds = date('s',$timestamp);
+		return $hours*60*60+$minutes*60+$seconds;
+	}
+	
+	function stripTime($timestamp) {
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime(0,0,0,$month,$date,$year);
+	}
+
 	
 	function addSeconds($timestamp,$secs) {
 		$hours = date('H',$timestamp);

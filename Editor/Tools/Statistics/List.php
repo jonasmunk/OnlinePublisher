@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/GoogleAnalytics.php';
+require_once '../../Classes/Integration/GoogleAnalytics.php';
 
 $kind = Request::getString('kind');
 $time = Request::getString('time');

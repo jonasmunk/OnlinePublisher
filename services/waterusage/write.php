@@ -3,7 +3,7 @@ require_once('../../Config/Setup.php');
 require_once('../../Editor/Include/Public.php');
 require_once('../../Editor/Classes/Request.php');
 require_once('../../Editor/Classes/Database.php');
-require_once('../../Editor/Classes/Waterusage.php');
+require_once('../../Editor/Classes/Objects/Waterusage.php');
 require_once('../../Editor/Classes/DateUtil.php');
 
 $number = Request::getString('number');
@@ -15,13 +15,13 @@ $splitted = explode("-",$date);
 $date = mktime(0,0,0,$splitted[1],$splitted[2],$splitted[0]);
 
 
-$dummy = new WaterUsage();
+$dummy = new Waterusage();
 $dummy->setYear($year);
 $dummy->setNumber($number);
 $dummy->setValue($value);
 $dummy->setDate($date);
 
-WaterUsage::override($dummy);
+Waterusage::override($dummy);
 
 $success = false;
 
