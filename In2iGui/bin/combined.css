@@ -859,6 +859,19 @@ textarea.in2igui_formula_text
 	overflow-x: hidden;
 }
 
+textarea.in2igui_formula_text::-webkit-scrollbar
+{  
+	height: 14px;
+	width: 14px;
+}  
+  
+textarea.in2igui_formula_text::-webkit-scrollbar-thumb
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
+    -webkit-border-radius: 7px;
+	border: 1px solid #ddd;
+}
+
 form.in2igui_formula fieldset
 {
 	border: 1px solid #ccc;
@@ -1574,6 +1587,39 @@ a.in2igui_dropdown_adaptive
 	width: 100%;
 	position: relative;
 }
+
+.in2igui_overflow::-webkit-scrollbar
+{  
+	height: 14px;
+	width: 14px;
+}  
+  
+.in2igui_overflow::-webkit-scrollbar-thumb
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
+    -webkit-border-radius: 7px;
+	border: 1px solid #ddd;
+}
+
+.in2igui_overflow::-webkit-scrollbar-thumb:hover
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgb(250, 250, 250)), to(rgb(230, 230, 230)));
+}
+
+
+.in2igui_layout_left .in2igui_overflow::-webkit-scrollbar-thumb
+{
+	border: 2px solid #EBF0F7;
+	background: #D4DCE9;
+	width: 10px;
+	height: 10px;
+}
+
+.in2igui_layout_left .in2igui_overflow:hover::-webkit-scrollbar-thumb
+{
+	background: #c4cCd9;
+}
+
 
 /******************** Columns *********************/
 

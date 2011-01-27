@@ -161,6 +161,19 @@ textarea.in2igui_formula_text
 	overflow-x: hidden;
 }
 
+textarea.in2igui_formula_text::-webkit-scrollbar
+{  
+	height: 14px;
+	width: 14px;
+}  
+  
+textarea.in2igui_formula_text::-webkit-scrollbar-thumb
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
+    -webkit-border-radius: 7px;
+	border: 1px solid #ddd;
+}
+
 form.in2igui_formula fieldset
 {
 	border: 1px solid #ccc;
