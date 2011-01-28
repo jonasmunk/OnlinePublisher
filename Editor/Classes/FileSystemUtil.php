@@ -23,37 +23,6 @@ class FileSystemUtil {
 		'ppt' => "application/vnd.ms-powerpoint",
 		'xsl' => "text/xml"
 	);
-
-	/**
-	 * Recursively finds an array of files inside a given directory
-	 * @param string $dir The path to the directory
-	 * @return array Array of files inside the dir
-	 * @todo Filenames or paths?
-	 */
-	function listFilesRecurse($dir) {
-		$out=array();
-		if (is_dir($dir)) {
-			FileSystemUtil::listFilesRecurseSpider($dir,$out);
-		}
-		return $out;
-	}
-
-	function listFilesRecurseSpider($dir,&$data) {
-		if ($dh = opendir($dir)) {
-			while (($file = readdir($dh)) !== false) {
-				if ($file{0}=='.') {
-					// ignore
-				}
-				else if (is_file($dir.$file)) {
-					array_push($data,$dir.$file);
-				} else if (is_dir($dir.$file)) {
-					FileSystemUtil::listFilesRecurseSpider($dir.$file.'/',$data);
-				}
-			}
-			closedir($dh);
-		}
-	}
-	
 	function mimeTypeToExtension($mime) {
 		foreach (self::$types as $ext => $mimeType) {
 			if ($mime==$mimeType) {
