@@ -1,9 +1,8 @@
 <?
 /**
  * @package OnlinePublisher
- * @subpackage Classes
+ * @subpackage Classes.Utilities
  */
-require_once($basePath.'Editor/Classes/Settings.php');
 
 class ValidateUtils {
 

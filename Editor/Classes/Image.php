@@ -4,7 +4,6 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/Object.php');
-require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 

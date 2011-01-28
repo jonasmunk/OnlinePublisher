@@ -8,7 +8,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Database.php';
-require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 require_once '../../Classes/Request.php';
 
@@ -19,7 +19,7 @@ $row = Database::selectFirst($sql);
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="400" top="20" align="center">'.
-'<titlebar title="'.StringUtils::escapeXML(UserInterface::presentDateTime($row['time'])).'" icon="Basic/Time">'.
+'<titlebar title="'.StringUtils::escapeXML(DateUtils::formatDateTime($row['time'])).'" icon="Basic/Time">'.
 '<close link="index.php"/>'.
 '</titlebar>'.
 '<content padding="5" background="true" valign="top">'.

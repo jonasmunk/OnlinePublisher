@@ -6,7 +6,7 @@
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
 require_once '../../../Classes/VCal.php';
-require_once '../../../Classes/UserInterface.php';
+require_once '../../../Classes/Utilities/DateUtils.php';
 require_once '../../../Classes/Calendarsource.php';
 require_once '../../../Classes/Request.php';
 require_once '../../../Classes/In2iGui.php';
@@ -44,8 +44,8 @@ function listSource($id,$force) {
 		$writer->startRow();
 		$writer->startCell()->text($event['summary'])->endCell();
 		$writer->startCell()->text($event['location'])->endCell();
-		$writer->startCell()->text(UserInterface::presentLongDateTime($event['startDate']))->endCell();
-		$writer->startCell()->text(UserInterface::presentLongDateTime($event['endDate']))->endCell();
+		$writer->startCell()->text(DateUtils::formatLongDateTime($event['startDate']))->endCell();
+		$writer->startCell()->text(DateUtils::formatLongDateTime($event['endDate']))->endCell();
 		$writer->startCell()->text($event['recurring'])->endCell();
 		$writer->endRow();
 	}

@@ -3,7 +3,6 @@ require_once '../../Config/Setup.php';
 require_once('../../Editor/Include/Public.php');
 require_once('../../Editor/Classes/Request.php');
 require_once('../../Editor/Classes/Response.php');
-require_once('../../Editor/Classes/UserInterface.php');
 require_once('../../Editor/Classes/Utilities/DateUtils.php');
 require_once('../../Editor/Classes/Model/Query.php');
 
@@ -32,11 +31,11 @@ header("Content-Type: text/html; charset=UTF-8");
 		<tbody>
 			<tr><th>Målernummer:</th><td><?=$usage->getNumber()?></td></tr>
 			<tr><th>År:</th><td><?=$usage->getYear()?></td></tr>
-			<tr><th>Aflæsnings-dato:</th><td><?=UserInterface::presentDate($usage->getDate())?></td></tr>
+			<tr><th>Aflæsnings-dato:</th><td><?=DateUtils::formatDate($usage->getDate())?></td></tr>
 			<tr><th>Værdi:</th><td><?=$usage->getValue()?></td></tr>
 		</tbody>
 		<tbody>
-			<tr><th>Registreret:</th><td><?=UserInterface::presentLongDateTime($usage->getUpdated())?></td></tr>
+			<tr><th>Registreret:</th><td><?=DateUtils::formatLongDateTime($usage->getUpdated())?></td></tr>
 		</tbody>
 	</table>
 </div>

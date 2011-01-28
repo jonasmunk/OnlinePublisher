@@ -3,7 +3,6 @@
  * @package OnlinePublisher
  * @subpackage Classes
  */
-require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/File.php');
 require_once($basePath.'Editor/Classes/Log.php');
@@ -106,6 +105,17 @@ class FileService {
 		return null;
 	}
 	
+	function extensionToInfo($ext) {
+		foreach (FileService::$types as $type) {
+			foreach ($type['extensions'] as $extension) {
+				if ($ext===$extension) {
+					return $type;
+				}
+			}
+		}
+		return null;
+	}
+	
 	function mimeTypeToLabel($mime) {
 		if ($info = FileService::mimeTypeToInfo($mime)) {
 			return $info['label'];
@@ -120,6 +130,16 @@ class FileService {
 		return '';
 	}
 	
+	function mimeTypeToExtension($mime) {
+		if ($info = FileService::mimeTypeToInfo($mime)) {
+			$ext = $info['extensions'];
+			if (count($ext)>0) {
+				return $ext[0];
+			}
+		}
+		return '';
+	}
+	
 	function kindToMimeTypes($kind) {
 		foreach (FileService::$types as $type) {
 			if ($type['kind']===$kind) {
@@ -127,6 +147,21 @@ class FileService {
 			}
 		}
 		return null;
+	}
+	
+	function extensionToMimeType($ext) {
+		if ($info = FileService::extensionToInfo($ext)) {
+			$mimes = $info['mimetypes'];
+			if (count($mimes)>0) {
+				return $mimes[0];
+			}
+		}
+		return '';
+	}
+	
+	function fileNameToMimeType($filename) {
+		$ext = FileSystemService::getFileExtension($filename);
+		return FileService::extensionToMimeType($ext);
 	}
 
 	/**

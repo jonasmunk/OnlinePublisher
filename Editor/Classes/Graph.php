@@ -1,6 +1,6 @@
 <?
 require_once($basePath.'Editor/Classes/TemporaryFolder.php');
-require_once($basePath.'Editor/Classes/Settings.php');
+require_once($basePath.'Editor/Classes/Services/SettingService.php');
 class Graph {
 
 	var $data;
@@ -10,7 +10,7 @@ class Graph {
 	}
 	
 	function canDisplay() {
-		$hasNeato = Settings::getSetting('system','environment','neato');
+		$hasNeato = SettingService::getSetting('system','environment','neato');
 		return ($hasNeato == true);
 	}
 	
@@ -61,7 +61,7 @@ class Graph {
 	}
 	
 	function execute($cmd) {
-		$extraPath = Settings::getSetting('system','environment','extrapath');
+		$extraPath = SettingService::getSetting('system','environment','extrapath');
 		if (strlen($extraPath)>0) {
 			exec('export PATH="$PATH:'.$extraPath.'"; '.$cmd);
 		} else {

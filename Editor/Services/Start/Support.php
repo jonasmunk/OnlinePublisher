@@ -6,15 +6,15 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Settings.php';
+require_once '../../Classes/Services/SettingService.php';
 require_once '../../Classes/Request.php';
 
 $tab = Request::getString('tab');
 if (!$tab) {
-	$tab = Settings::getServiceSetting('start','support.tab');
+	$tab = SettingService::getServiceSetting('start','support.tab');
 	if ($tab==null) $tab='links';
 } else {
-	Settings::setServiceSetting('start','support.tab',$tab);
+	SettingService::setServiceSetting('start','support.tab',$tab);
 }
 if ($tab=='links') {
 	$source = 'Links.php';

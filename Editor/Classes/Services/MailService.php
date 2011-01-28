@@ -4,7 +4,7 @@
  * @subpackage Classes.Services
  */
 require_once($basePath."Editor/Libraries/phpmailer/class.phpmailer.php");
-require_once($basePath."Editor/Classes/Settings.php");
+require_once($basePath."Editor/Classes/Services/SettingService.php");
 require_once($basePath."Editor/Classes/Log.php");
 require_once($basePath.'Editor/Classes/Zend.php');
 require_once($basePath.'Editor/Libraries/Zend/Mail.php');
@@ -50,74 +50,74 @@ class MailService {
 	}
 	
 	function getEnabled() {
-		return Settings::getSetting('system','mail','enabled')=='true';
+		return SettingService::getSetting('system','mail','enabled')=='true';
 	}
 	
 	function setEnabled($value) {
-		Settings::setSetting('system','mail','enabled',$value ? 'true' : 'false');
+		SettingService::setSetting('system','mail','enabled',$value ? 'true' : 'false');
 	}
 	
 	function getServer() {
-		return Settings::getSetting('system','mail','server');
+		return SettingService::getSetting('system','mail','server');
 	}
 	
 	function setServer($value) {
-		Settings::setSetting('system','mail','server',$value);
+		SettingService::setSetting('system','mail','server',$value);
 	}
 	
 	function getPort() {
-		return Settings::getSetting('system','mail','port');
+		return SettingService::getSetting('system','mail','port');
 	}
 	
 	function setPort($value) {
-		Settings::setSetting('system','mail','port',$value);
+		SettingService::setSetting('system','mail','port',$value);
 	}
 	
 	function getUsername() {
-		return Settings::getSetting('system','mail','username');
+		return SettingService::getSetting('system','mail','username');
 	}
 	
 	function setUsername($value) {
-		Settings::setSetting('system','mail','username',$value);
+		SettingService::setSetting('system','mail','username',$value);
 	}
 	
 	function getPassword() {
-		return Settings::getSetting('system','mail','password');
+		return SettingService::getSetting('system','mail','password');
 	}
 	
 	function setPassword($value) {
-		Settings::setSetting('system','mail','password',$value);
+		SettingService::setSetting('system','mail','password',$value);
 	}
 	
 	function getStandardEmail() {
-		return Settings::getSetting('system','mail','standard-email');
+		return SettingService::getSetting('system','mail','standard-email');
 	}
 	
 	function setStandardEmail($value) {
-		Settings::setSetting('system','mail','standard-email',$value);
+		SettingService::setSetting('system','mail','standard-email',$value);
 	}
 	
 	function getStandardName() {
-		return Settings::getSetting('system','mail','standard-name');
+		return SettingService::getSetting('system','mail','standard-name');
 	}
 	
 	function setStandardName($value) {
-		Settings::setSetting('system','mail','standard-name',$value);
+		SettingService::setSetting('system','mail','standard-name',$value);
 	}
 	
 	function getFeedbackEmail() {
-		return Settings::getSetting('system','mail','feedback-email');
+		return SettingService::getSetting('system','mail','feedback-email');
 	}
 	
 	function setFeedbackEmail($value) {
-		Settings::setSetting('system','mail','feedback-email',$value);
+		SettingService::setSetting('system','mail','feedback-email',$value);
 	}
 	
 	function getFeedbackName() {
-		return Settings::getSetting('system','mail','feedback-name');
+		return SettingService::getSetting('system','mail','feedback-name');
 	}
 	
 	function setFeedbackName($value) {
-		Settings::setSetting('system','mail','feedback-name',$value);
+		SettingService::setSetting('system','mail','feedback-name',$value);
 	}
 }

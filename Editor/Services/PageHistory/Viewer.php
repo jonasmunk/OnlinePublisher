@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Database.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/Utilities/DateUtils.php';
 
 $close = "index.php";
 $id = Request::getInt('id');
@@ -22,7 +22,7 @@ $next = Database::selectFirst($sql);
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="100%" height="100%" align="center" margin="10">'.
-'<titlebar title="'.UserInterface::presentDateTime($row['time']).'" icon="Basic/Time">'.
+'<titlebar title="'.DateUtils::formatDateTime($row['time']).'" icon="Basic/Time">'.
 '<close link="'.$close.'" help="Luk vinduet"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar">'.

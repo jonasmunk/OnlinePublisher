@@ -4,7 +4,7 @@
  * @subpackage Classes.Part
  */
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
-require_once($basePath.'Editor/Classes/GuiUtils.php');
+require_once($basePath.'Editor/Classes/Utilities/GuiUtils.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Utilities/ValidateUtils.php');
 

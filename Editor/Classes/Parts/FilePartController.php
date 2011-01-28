@@ -6,6 +6,7 @@
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/FilePart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Utilities/Services/FileService.php');
 
 class FilePartController extends PartController
 {
@@ -42,7 +43,7 @@ class FilePartController extends PartController
 		$xml='<file xmlns="'.$this->getNamespace().'">';
 		$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".Database::int($part->getFileId());
 		if ($row = Database::selectFirst($sql)) {
-			$xml.='<info type="'.GuiUtils::mimeTypeToKind($row['type']).'"/>';
+			$xml.='<info type="'.FileService::mimeTypeToLabel($row['type']).'"/>';
 			$xml.=$row['data'];
 		}
 		$xml.='</file>';

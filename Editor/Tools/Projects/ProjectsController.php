@@ -1,6 +1,5 @@
 <?
 require_once $basePath.'Editor/Classes/InternalSession.php';
-require_once $basePath.'Editor/Classes/Settings.php';
 
 class ProjectsController {
 	

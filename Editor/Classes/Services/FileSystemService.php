@@ -155,6 +155,7 @@ class FileSystemService {
 		else {
 			$title = substr($filename,0,$pos);
 		}
+		$title = str_replace('_',' ',$title);
 		return ucfirst($title);
 	}
 	

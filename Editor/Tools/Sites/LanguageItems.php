@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Database.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Utilities/GuiUtils.php';
 
 $sql="select language,count(id) as count from page group by language order by language";
 $result = Database::select($sql);

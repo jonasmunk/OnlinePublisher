@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Object.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/Utilities/DateUtils.php';
 
 $type = Request::getString('type');
 $queryString = Request::getUnicodeString('query');
@@ -42,7 +42,7 @@ foreach ($objects as $object) {
 	'<cell icon="'.$object->getIn2iGuiIcon().'">'.In2iGui::escape($object->getTitle()).'</cell>'.
 	'<cell>'.In2iGui::escape($object->getNote()).'</cell>'.
 	($type=='' ? '<cell>'.$object->getType().'</cell>' : '').
-	'<cell>'.UserInterface::presentDateTime($object->getCreated()).'</cell>'.
+	'<cell>'.DateUtils::formatDateTime($object->getCreated()).'</cell>'.
 	'</row>';
 }
 

@@ -355,7 +355,7 @@ class Page {
 
     function clearPreviews() {
         global $basePath;
-        require_once($basePath.'Editor/Classes/FileSystemUtil.php');
+        require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
         $dir = $basePath.'local/cache/pagepreview/';
         $files = FileSystemService::listFiles($dir);
         foreach ($files as $file) {

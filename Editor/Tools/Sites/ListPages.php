@@ -10,7 +10,7 @@ require_once '../../Classes/Template.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Hierarchy.php';
-require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Utilities/GuiUtils.php';
 
 
 $windowSize = Request::getInt('windowSize',30);

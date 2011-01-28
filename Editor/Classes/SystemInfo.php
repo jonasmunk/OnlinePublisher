@@ -1,5 +1,5 @@
 <?
-require_once('UserInterface.php');
+require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 class SystemInfo {
 	
 	private static $date = 27;
@@ -15,7 +15,7 @@ class SystemInfo {
 	
 	function getFormattedDate() {
 		$timestamp = mktime(0,0,0,SystemInfo::$month,SystemInfo::$date,SystemInfo::$year);
-		return UserInterface::presentDate(SystemInfo::getDate());
+		return DateUtils::formatDate(SystemInfo::getDate());
 	}
 	
 	function getTitle() {

@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Milestone.php';
-require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Utilities/GuiUtils.php';
 require_once '../../Classes/Request.php';
 
 

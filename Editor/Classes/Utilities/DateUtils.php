@@ -40,6 +40,13 @@ class DateUtils {
 			return '';
 		}
 	}
+		
+	function formatShortDate($timestamp) {
+		if ($timestamp) {
+			setlocale(LC_TIME, "da_DK");
+			return strftime("%e. %b",$timestamp);
+		}
+	}
 	
 	function formatLongDate($timestamp,$locale="da_DK") {
 		if ($timestamp) {
@@ -48,6 +55,19 @@ class DateUtils {
 		} else {
 			return '';
 		}
+	}
+	
+	function formatDate($timestamp,$options=array()) {
+		if ($timestamp==null) return '';
+		$format = "%e. %B";
+		if ($options['shortWeekday']) {
+			$format = "%a ".$format;
+		}
+		if (!isset($options['year']) || $options['year']) {
+			$format.=' %Y';
+		}
+		setlocale(LC_TIME, "da_DK");
+		return strftime($format,$timestamp);
 	}
 	
 	function formatDateTime($timestamp,$locale="da_DK") {

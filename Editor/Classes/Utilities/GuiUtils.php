@@ -1,5 +1,4 @@
 <?
-require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
@@ -305,41 +304,6 @@ class GuiUtils {
 	
 	function getLanguages() {
 		return GuiUtils::$languages;
-	}
-	
-	/**
-	 * Translates a mime-type into a human readable type description
-	 * @param string $mimeType The mime-type to translate
-	 * @return string Human readable description of the mime-type,
-	 * or the mime-type if not known
-	 */
-	function mimeTypeToKind($mimeType) {
-		switch ($mimeType) {
-			case 'application/msword' : return "Microsoft Word";
-			case 'application/vnd.ms-powerpoint' : return "Microsoft PowerPoint";
-			case 'video/quicktime' : return "QuickTime";
-			case 'text/xml' : return "XML-fil";
-			case 'image/jpeg' : return "JPEG-billede";
-			case 'image/pjpeg' : return "JPEG-billede";
-			case 'image/gif' : return "GIF-billede";
-			case 'image/png' : return "PNG-billede";
-			case 'text/plain' : return "Tekst-fil";
-			case 'text/html' : return "HTML-dokument";
-			case 'application/xhtml+xml' : return 'XHTML-dokument';
-			case 'application/zip' : return "ZIP-fil";
-			case 'application/x-gzip' : return 'ZIP-fil';
-			case 'application/pdf' : return "PDF-dokument";
-			case 'audio/x-ms-wma' : return "Windows Media-lyd";
-			case 'application/x-photoshop' : return "Adobe Photoshop";
-			case 'application/octet-stream' : return "Ukendt";
-			case 'application/vnd.ms-wpl' : return "Windows Media playlist";
-			case 'application/x-shockwave-flash' : return "Adobe Flash";
-			case 'text/rtf' : return "RTF-dokument";
-			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : return 'Microsoft Word';
-			case 'application/vnd.ms-excel' : return 'Microsoft Excel';
-			case 'audio/x-ms-wma' : return 'Windows media lyd';
-			default: return (string)$mimeType;
-		} 
 	}
 	
 	/**

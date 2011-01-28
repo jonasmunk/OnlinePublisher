@@ -8,8 +8,8 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Objects/Waterusage.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/UserInterface.php';
-require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Utilities/DateUtils.php';
+require_once '../../Classes/Utilities/GuiUtils.php';
 
 $year = Request::getInt('year');
 $text = Request::getUnicodeString('query');
@@ -47,8 +47,8 @@ foreach ($list['result'] as $object) {
 	$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->text( $object->getNumber() )->endCell();
 	$writer->startCell()->text($object->getYear())->endCell();
 	$writer->startCell()->text($object->getValue())->endCell();
-	$writer->startCell()->text(UserInterface::presentDateTime($object->getDate()))->endCell();
-	$writer->startCell()->text(UserInterface::presentDateTime($object->getUpdated()))->endCell();
+	$writer->startCell()->text(DateUtils::formatDateTime($object->getDate()))->endCell();
+	$writer->startCell()->text(DateUtils::formatDateTime($object->getUpdated()))->endCell();
 	$writer->endRow();
 }
 $writer->endList();

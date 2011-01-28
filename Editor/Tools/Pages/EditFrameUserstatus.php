@@ -5,7 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Utilities/GuiUtils.php';
 require_once '../../Classes/Database.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Request.php';

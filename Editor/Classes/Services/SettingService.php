@@ -35,11 +35,11 @@ class Settings {
 	}
 	
 	function setServiceSetting($service,$key,$value) {
-		Settings::setSetting('service',$service,$key,$value,InternalSession::getUserId());
+		SettingService::setSetting('service',$service,$key,$value,InternalSession::getUserId());
 	}
 	
 	function getServiceSetting($service,$key) {
-		return Settings::getSetting('service',$service,$key,InternalSession::getUserId());
+		return SettingService::getSetting('service',$service,$key,InternalSession::getUserId());
 	}
 	
 	/**
@@ -59,11 +59,11 @@ class Settings {
 	}
 	
 	function getOnlineObjectsUrl() {
-		return Settings::getSetting('system','onlineobjects','url');
+		return SettingService::getSetting('system','onlineobjects','url');
 	}
 	
 	function setOnlineObjectsUrl($value) {
-		return Settings::setSetting('system','onlineobjects','url',$value);
+		return SettingService::setSetting('system','onlineobjects','url',$value);
 	}
 }
 ?>

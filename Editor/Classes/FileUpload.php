@@ -1,5 +1,4 @@
 <?
-require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 
 class FileUpload {

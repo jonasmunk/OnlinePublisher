@@ -9,8 +9,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Image.php';
 require_once '../../Classes/Services/FileService.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/UserInterface.php';
-require_once '../../Classes/GuiUtils.php';
+require_once '../../Classes/Utilities/GuiUtils.php';
 require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/Log.php';
 
@@ -67,7 +66,7 @@ foreach ($objects as $object) {
 			//startLine(array('dimmed'=>true))->text($object->getFilename())->endLine()->
 		endCell()->
 		startCell()->text(GuiUtils::bytesToString($object->getSize()))->endCell()->
-		startCell()->text(UserInterface::presentDateTime($object->getCreated()))->endCell()->
+		startCell()->text(DateUtils::formatDateTime($object->getCreated()))->endCell()->
 	endRow();
 }
 $writer->endList();

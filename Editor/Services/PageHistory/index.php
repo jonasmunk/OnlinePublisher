@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Database.php';
-require_once '../../Classes/UserInterface.php';
+require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 
@@ -41,7 +41,7 @@ $sql="select page_history.id,UNIX_TIMESTAMP(page_history.time) as time,page_hist
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$gui.='<row link="Viewer.php?id='.$row['id'].'">'.
-	'<cell><icon icon="Basic/Time"/><text>'.UserInterface::presentDateTime($row['time']).'</text></cell>'.
+	'<cell><icon icon="Basic/Time"/><text>'.DateUtils::formatDateTime($row['time']).'</text></cell>'.
 	'<cell>'.
 	(strlen($row['title'])>0 ? '<icon icon="Element/User"/>' : '').
 	'<text>'.StringUtils::escapeXML($row['title']).'</text></cell>'.

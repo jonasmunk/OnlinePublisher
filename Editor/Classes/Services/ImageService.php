@@ -3,7 +3,6 @@
  * @package OnlinePublisher
  * @subpackage Classes
  */
-require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Image.php');
 require_once($basePath.'Editor/Classes/Objects/Imagegroup.php');

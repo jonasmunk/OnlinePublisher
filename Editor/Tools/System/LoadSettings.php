@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Services/MailService.php';
-require_once '../../Classes/Settings.php';
+require_once '../../Classes/Services/SettingService.php';
 require_once '../../Classes/Integration/GoogleAnalytics.php';
 require_once '../../Classes/In2iGui.php';
 
@@ -23,7 +23,7 @@ $settings = array(
 		'feedbackName' => MailService::getFeedbackName()
 	),
 	'onlineobjects' => array(
-		'url' => Settings::getOnlineObjectsUrl()
+		'url' => SettingService::getOnlineObjectsUrl()
 	),
 	'analytics' => array(
 		'username' => GoogleAnalytics::getUsername(),

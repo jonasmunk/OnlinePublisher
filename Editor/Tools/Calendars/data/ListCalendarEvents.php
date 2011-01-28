@@ -5,7 +5,7 @@
  */
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
-require_once '../../../Classes/UserInterface.php';
+require_once '../../../Classes/Utilities/DateUtils.php';
 require_once '../../../Classes/Event.php';
 require_once '../../../Classes/Request.php';
 require_once '../../../Classes/In2iGui.php';
@@ -38,8 +38,8 @@ function listEvents($id,$force) {
 		$writer->startRow(array('kind'=>'event','id'=>$event->getId()));
 		$writer->startCell()->text($event->getTitle())->endCell();
 		$writer->startCell()->text($event->getLocation())->endCell();
-		$writer->startCell()->text(UserInterface::presentLongDateTime($event->getStartdate()))->endCell();
-		$writer->startCell()->text(UserInterface::presentLongDateTime($event->getEnddate()))->endCell();
+		$writer->startCell()->text(DateUtils::formatLongDateTime($event->getStartdate()))->endCell();
+		$writer->startCell()->text(DateUtils::formatLongDateTime($event->getEnddate()))->endCell();
 		$writer->endRow();
 	}
 	$writer->endList();

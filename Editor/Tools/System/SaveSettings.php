@@ -7,13 +7,13 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/MailService.php';
-require_once '../../Classes/Settings.php';
+require_once '../../Classes/Services/SettingService.php';
 require_once '../../Classes/Integration/GoogleAnalytics.php';
 
 $data = Request::getObject('data');
 
 if ($data->onlineobjects) {
-	Settings::setOnlineObjectsUrl($data->onlineobjects->url);
+	SettingService::setOnlineObjectsUrl($data->onlineobjects->url);
 }
 if ($data->email) {
 	MailService::setEnabled($data->email->enabled);

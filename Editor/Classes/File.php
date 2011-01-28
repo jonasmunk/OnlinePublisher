@@ -5,8 +5,8 @@
 */
 
 require_once($basePath.'Editor/Classes/Object.php');
-require_once($basePath.'Editor/Classes/FileSystemUtil.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
+require_once($basePath.'Editor/Classes/Services/FileService.php');
 require_once($basePath.'Editor/Classes/RemoteFile.php');
 
 class File extends Object {
@@ -191,7 +191,7 @@ class File extends Object {
 		$fileSize=$_FILES["file"]["size"];
 		
 		if ($fileType=='application/octet-stream') {
-			$fileType = FileSystemUtil::fileNameToMimeType($fileName);
+			$fileType = FileService::fileNameToMimeType($fileName);
 		}
 		$fileName = FileSystemService::safeFilename($fileName);
 		$uploadDir = $basePath.'files/';
@@ -251,7 +251,7 @@ class File extends Object {
 		if ($filename==='') {
 			$filename = 'newfile';
 			if ($type!=null) {
-				$extension = FileSystemUtil::mimeTypeToExtension($type);
+				$extension = FileService::mimeTypeToExtension($type);
 				if ($extension!=null) {
 					$filename.='.'.$extension;
 				}

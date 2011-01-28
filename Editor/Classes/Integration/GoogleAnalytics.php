@@ -4,40 +4,40 @@
  * @subpackage Classes
  */
 require_once($basePath."Editor/Libraries/gapi/gapi.class.php");
-require_once($basePath."Editor/Classes/Settings.php");
+require_once($basePath."Editor/Classes/Services/SettingService.php");
 
 class GoogleAnalytics {
 	
 	function getUsername() {
-		return Settings::getSetting('system','googleanalytics','username');
+		return SettingService::getSetting('system','googleanalytics','username');
 	}
 	
 	function setUsername($value) {
-		Settings::setSetting('system','googleanalytics','username',$value);
+		SettingService::setSetting('system','googleanalytics','username',$value);
 	}
 	
 	function getPassword() {
-		return Settings::getSetting('system','googleanalytics','password');
+		return SettingService::getSetting('system','googleanalytics','password');
 	}
 	
 	function setPassword($value) {
-		Settings::setSetting('system','googleanalytics','password',$value);
+		SettingService::setSetting('system','googleanalytics','password',$value);
 	}
 	
 	function getProfile() {
-		return Settings::getSetting('system','googleanalytics','profile');
+		return SettingService::getSetting('system','googleanalytics','profile');
 	}
 	
 	function setProfile($value) {
-		Settings::setSetting('system','googleanalytics','profile',$value);
+		SettingService::setSetting('system','googleanalytics','profile',$value);
 	}
 	
 	function getWebProfile() {
-		return Settings::getSetting('system','googleanalytics','webprofile');
+		return SettingService::getSetting('system','googleanalytics','webprofile');
 	}
 	
 	function setWebProfile($value) {
-		Settings::setSetting('system','googleanalytics','webprofile',$value);
+		SettingService::setSetting('system','googleanalytics','webprofile',$value);
 	}
 	
 	function test() {

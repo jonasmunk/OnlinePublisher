@@ -5,7 +5,7 @@
  */
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
-require_once '../../../Classes/UserInterface.php';
+require_once '../../../Classes/Utilities/DateUtils.php';
 require_once '../../../Classes/Calendarsource.php';
 require_once '../../../Classes/Request.php';
 require_once '../../../Classes/In2iGui.php';
@@ -30,7 +30,7 @@ require_once '../../../Classes/In2iGui.php';
 		$writer->startCell(array('icon'=>$source->getIn2iGuiIcon()))->text($source->getTitle())->endCell();
 		$writer->startCell()->text($source->getUrl())->endCell();
 		$writer->startCell()->text($source->getFilter())->endCell();
-		$writer->startCell()->text(UserInterface::presentFuzzyDate($source->getSynchronized()))->endCell();
+		$writer->startCell()->text(DateUtils::formatFuzzy($source->getSynchronized()))->endCell();
 		$writer->endRow();
 	}
 	$writer->endList();
