@@ -1,7 +1,7 @@
 <?
 require_once($basePath.'Editor/Classes/InternalSession.php');
 
-class Settings {
+class SettingService {
 
 	/**
 	 * @static
