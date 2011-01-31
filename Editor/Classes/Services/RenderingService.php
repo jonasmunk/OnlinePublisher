@@ -12,7 +12,10 @@ class RenderingService {
 	function sendNotFound() {
 		$error = '<title>Siden findes ikke!</title>'.
 		'<note>Den forespurgte side findes ikke på dette website.</note>';
-		Log::logPublic('pagenotfound','uri='.$_SERVER['REQUEST_URI']);
+		$uri = $_SERVER['REQUEST_URI'];
+		if ($uri!='/favicon.ico' && $uri!='/robots.txt') {
+			Log::logPublic('pagenotfound','uri='.$_SERVER['REQUEST_URI']);
+		}
 		RenderingService::displayError($error);	
 	}
 	
