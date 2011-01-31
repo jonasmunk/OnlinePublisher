@@ -79,7 +79,7 @@
 </xsl:template>
 
 <xsl:template name="oo-script">
-	<link rel="stylesheet" type="text/css" href="{$path}In2iGui/bin/minimized.css?version={$timestamp}"/>
+	<link rel="stylesheet" type="text/css" href="{$path}In2iGui/bin/minimized.site.css?version={$timestamp}"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie6.css?verson=]]><xsl:value-of select="$timestamp"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>

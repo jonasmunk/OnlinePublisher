@@ -33,7 +33,6 @@
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
 	<xsl:call-template name="oo-script"/>
-	<script src="{$path}In2iGui/js/SearchField.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 </head>
 <body>
 	<div class="chrome">
