@@ -13,7 +13,7 @@ class RenderingService {
 		$error = '<title>Siden findes ikke!</title>'.
 		'<note>Den forespurgte side findes ikke på dette website.</note>';
 		$uri = $_SERVER['REQUEST_URI'];
-		if ($uri!='/favicon.ico' && $uri!='/robots.txt') {
+		if ($uri!='/favicon.ico' && $uri!='/robots.txt' && $uri!='/apple-touch-icon.png' && $uri!='/apple-touch-icon-precomposed.png') {
 			Log::logPublic('pagenotfound','uri='.$_SERVER['REQUEST_URI']);
 		}
 		RenderingService::displayError($error);	
