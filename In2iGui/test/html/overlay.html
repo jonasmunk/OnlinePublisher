@@ -23,8 +23,12 @@
 
 <body>
 <button onclick="ui.showMessage({text:'This is a message'})">Show message</button>
+<button onclick="ui.showMessage({text:'This is a busy message',busy:true})">Show message (busy)</button>
+<button onclick="ui.showMessage({text:'This a message with an icon',icon:'common/stop'})">Show message (icon)</button>
 <button onclick="ui.showMessage({text:'This is a another message (1 sec.)',duration:1000})">Another message</button>
 <button onclick="ui.hideMessage()">hide message</button>
+<button onclick="testProgressSuccess()">Progress / success</button>
+<button onclick="testProgressWarning()">Progress / warning</button>
 <button onclick="test1()">Test</button>
 <button onclick="testConfirm(this)">Confirm</button>
 <button onclick="ui.confirmOverlay({element:this,text:'Do you want to delete?',okText:'Yes delete!',cancelText:'Oops, no not really',onOk:function() {alert('OK!')}})">Confirm native</button>
@@ -32,6 +36,19 @@
 <div id="a">A</div>
 <script type="text/javascript" charset="utf-8">
 	
+	function testProgressSuccess() {
+		ui.showMessage({text:'Just a moment...',busy:true})
+		window.setTimeout(function() {
+			ui.showMessage({text:'All went well!',icon:'common/success'})
+		},3000);
+	}
+
+	function testProgressWarning() {
+		ui.showMessage({text:'Just a moment...',busy:true})
+		window.setTimeout(function() {
+			ui.showMessage({text:'Sorry it went horribly wrong!',icon:'common/warning',duration:4000})
+		},3000);
+	}
 	function test1() {
 		var overlay = ui.Overlay.create();
 		overlay.addIcon('x','common/delete');

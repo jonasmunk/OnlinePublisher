@@ -380,7 +380,18 @@ In2iGui.showMessage = function(options) {
 		}
 		document.body.appendChild(In2iGui.message);
 	}
-	n2i.dom.setText(In2iGui.message.getElementsByTagName('div')[1],options.text);
+	var inner = In2iGui.message.getElementsByTagName('div')[1];
+	if (options.icon) {
+		n2i.dom.clear(inner);
+		inner.appendChild(In2iGui.createIcon(options.icon,2));
+		n2i.dom.addText(inner,options.text);
+	}
+	else if (options.busy) {
+		inner.innerHTML='<span class="in2igui_message_busy"></span>';
+		n2i.dom.addText(inner,options.text);
+	} else {
+		n2i.dom.setText(inner,options.text);
+	}
 	In2iGui.message.style.display = 'block';
 	In2iGui.message.style.zIndex = In2iGui.nextTopIndex();
 	In2iGui.message.style.marginLeft = (In2iGui.message.clientWidth/-2)+'px';

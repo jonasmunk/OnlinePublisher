@@ -258,15 +258,18 @@ n2i.dom = {
 	setText : function(node,text) {
 		var c = node.childNodes;
 		var updated = false;
-		for (var i=0; i < c.length; i++) {
-			if (!updated && node.nodeType==n2i.TEXT_NODE) {
-				node.nodeValue=text;
+		for (var i = c.length - 1; i >= 0; i--){
+			if (!updated && c[i].nodeType==n2i.TEXT_NODE) {
+				c[i].nodeValue=text;
 				updated = true;
+				n2i.log('updated: '+i);
 			} else {
+				n2i.log('removed: '+i);
 				node.removeChild(c[i]);
 			}
 		}
 		if (!updated) {
+			n2i.log('adding, not updated');
 			n2i.dom.addText(node,text);
 		}
 	},
