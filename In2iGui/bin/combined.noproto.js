@@ -575,7 +575,7 @@ n2i.Event.prototype = {
 		    if (this.event.pageX) {
 			    left = this.event.pageX;
 		    } else if (this.event.clientX) {
-			    left = this.event.clientX + document.body.scrollLeft;
+			    left = this.event.clientX + n2i.getScrollLeft();
 		    }
 		}
 	    return left;
@@ -589,7 +589,7 @@ n2i.Event.prototype = {
 		    if (this.event.pageY) {
 			    top = this.event.pageY;
 		    } else if (this.event.clientY) {
-			    top = this.event.clientY + document.body.scrollTop;
+			    top = this.event.clientY + n2i.getScrollTop();
 		    }
 		}
 	    return top;
@@ -961,9 +961,12 @@ n2i.getDocumentHeight = function() {
 	if (n2i.browser.msie6) {
 		// In IE6 check the children too
 		var max = Math.max(document.body.clientHeight,document.documentElement.clientHeight,document.documentElement.scrollHeight);
-		$(document.body).childElements().each(function(node) {
-			max = Math.max(max,node.getHeight());
-		});
+		var children = document.body.childNodes;
+		for (var i=0; i < children.length; i++) {
+			if (n2i.dom.isElement(children[i])) {
+				max = Math.max(max,children[i].clientHeight);
+			}
+		}
 		return max;
 	}
 	if (window.scrollMaxY && window.innerHeight) {
