@@ -5390,9 +5390,11 @@ In2iGui.Formula.Checkboxes.prototype = {
 			this.subItems[i].updateUI();
 		};
 		var nodes = n2i.byClass(this.element,'in2igui_checkbox');
-		n2i.each(this.items,function(item,i) {
-			n2i.setClass(nodes[i],'in2igui_checkbox_selected',this.values.indexOf(item.value)!==-1);
-		}.bind(this));
+		for (var i=0; i < this.items.length; i++) {
+			var item = this.items[i];
+			var found = n2i.inArray(this.values,item.value);
+			n2i.setClass(nodes[i],'in2igui_checkbox_selected',found);
+		};
 	},
 	refresh : function() {
 		for (var i=0; i < this.subItems.length; i++) {
