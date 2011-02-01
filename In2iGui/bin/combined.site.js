@@ -7210,7 +7210,7 @@ In2iGui.showMessage = function(options) {
 	var inner = In2iGui.message.getElementsByTagName('div')[1];
 	if (options.icon) {
 		n2i.dom.clear(inner);
-		inner.appendChild(In2iGui.createIcon(options.icon,2));
+		inner.appendChild(In2iGui.createIcon(options.icon,24));
 		n2i.dom.addText(inner,options.text);
 	}
 	else if (options.busy) {
