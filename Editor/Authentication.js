@@ -19,7 +19,7 @@ var controller = {
 			onSuccess:'login',
 			parameters:formula.getValues(),
 			onFailure:function() {
-				ui.showMessage({text:'Der skete en fejl internt i systemet!',duration:2000});
+				ui.showMessage({text:'Der skete en fejl internt i systemet!',icon:'common/warning',duration:4000});
 			}
 		});
 	},
@@ -28,7 +28,7 @@ var controller = {
 			var page = n2i.location.getParameter('page');
 			document.location=page===null ? './index.php' : '.?page='+page;
 		} else {
-			ui.showMessage({text:'Brugeren blev ikke fundet!',duration:2000});
+			ui.showMessage({text:'Brugeren blev ikke fundet!',icon:'common/warning',duration:2000});
 			formula.focus();
 		}
 	},
@@ -40,13 +40,13 @@ var controller = {
 	
 	$submit$recoveryForm : function() {
 		var text = recoveryForm.getValues()['nameOrMail'];
-		ui.showMessage({text:'Leder efter bruger, og sender e-mail...'});
+		ui.showMessage({text:'Leder efter bruger, og sender e-mail...',busy:true});
 		ui.request({
 			url:'Services/Core/RecoverPassword.php',
 			onSuccess:'recovery',
 			parameters:{text:text},
 			onFailure:function() {
-				ui.showMessage({text:'Der skete en fejl internt i systemet!',duration:2000});
+				ui.showMessage({text:'Der skete en fejl internt i systemet!',icon:'common/warning',duration:4000});
 			}
 		});
 	},
@@ -55,7 +55,7 @@ var controller = {
 			ui.hideMessage();
 			ui.changeState('recoveryMessage');
 		} else {
-			ui.showMessage({text:data.message,duration:2000});
+			ui.showMessage({text:data.message,icon:'common/warning',duration:4000});
 		}
 	}
 }

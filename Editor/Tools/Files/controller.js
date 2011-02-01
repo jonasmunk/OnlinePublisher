@@ -55,20 +55,20 @@ ui.listen({
 	
 	$click$fetchFile : function() {
 		fetchFile.setEnabled(false);
-		ui.showMessage({text:'Henter fil...'});
+		ui.showMessage({text:'Henter fil...',busy:true});
 		In2iGui.request({url:'FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
 	},
 	$success$fileFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();
-			ui.showMessage({text:'Filen er hentet',duration:2000});
+			ui.showMessage({text:'Filen er hentet',icon:'common/success',duration:2000});
+			filesSource.refresh();
+			groupSource.refresh();
+			typesSource.refresh();
 		} else {
-			ui.showMessage({text:data.message,duration:2000});
+			ui.showMessage({text:data.message,icon:'common/warning',duration:2000});
 		}
 		fetchFile.setEnabled(true);
-		filesSource.refresh();
-		groupSource.refresh();
-		typesSource.refresh();
 	},
 	
 	//////////////////////// Actions /////////////////////////
