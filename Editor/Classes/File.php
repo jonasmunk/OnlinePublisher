@@ -5,9 +5,6 @@
 */
 
 require_once($basePath.'Editor/Classes/Object.php');
-require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
-require_once($basePath.'Editor/Classes/Services/FileService.php');
-require_once($basePath.'Editor/Classes/RemoteFile.php');
 
 class File extends Object {
 	var $filename;
@@ -174,45 +171,5 @@ class File extends Object {
 		return Database::selectAll($sql);
 	}
 		
-	/********************** Upload *****************/
-	
-	function createFromUrl($url) {
-		global $basePath;
-		$remote = new RemoteFile($url);
-		$path = $remote->writeToTempFile();
-		error_log(print_r($remote->getInfo(),true));
-		if (!$remote->isSuccess()) {
-			@unlink($path);
-			return array('success' => false,'message' => 'Filen blev ikke fundet');
-		}
-		$type = $remote->getContentType();
-		$filename = $remote->getFilename();
-		$size = filesize($path);
-		if ($filename==='') {
-			$filename = 'newfile';
-			if ($type!=null) {
-				$extension = FileService::mimeTypeToExtension($type);
-				if ($extension!=null) {
-					$filename.='.'.$extension;
-				}
-			}
-		}
-		$filename = FileSystemService::safeFilename($filename);
-		$newPath = FileSystemService::findFreeFilePath($basePath.'files/'.$filename);
-		if (!@rename($path,$newPath)) {
-			return array('success' => false,'message' => 'Der skete en uventet fejl ');
-		}
-		
-		$title = FileSystemService::filenameToTitle($filename);
-
-		$file = new File();
-		$file->setTitle($title);
-		$file->setFilename($filename);
-		$file->setSize($size);
-		$file->setMimetype($type);
-		$file->create();
-		$file->publish();
-		return array('success' => true);
-	}
 }
 ?>

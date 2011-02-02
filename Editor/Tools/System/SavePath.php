@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/Path.php';
+require_once '../../Classes/Objects/Path.php';
 
 $data = Request::getObject('data');
 

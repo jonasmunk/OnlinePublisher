@@ -44,7 +44,7 @@ class Path extends Object {
 			$obj = new Path();
 			$obj->_load($id);
 			$obj->path=$row['path'];
-			$obj->pageId=$row['page_id'];
+			$obj->pageId=intval($row['page_id']);
 			return $obj;
 		}
 		return null;

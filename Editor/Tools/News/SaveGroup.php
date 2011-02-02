@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Database.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/Newsgroup.php';
+require_once '../../Classes/Objects/Newsgroup.php';
 
 $data = Request::getObject('data');
 
