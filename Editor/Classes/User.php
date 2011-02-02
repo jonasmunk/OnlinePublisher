@@ -93,7 +93,7 @@ class User extends Object {
 	    return $this->secure;
 	}
 	
-	function removeMode() {
+	function removeMore() {
 		$sql = "delete from securityzone_user where user_id=".Database::int($this->id);
 		Database::delete($sql);
 		$sql = "delete from user_permission where user_id=".Database::int($this->id);
