@@ -1,7 +1,7 @@
 function ImageChooser(path,delegate) {
 	this.path = path;
 	this.delegate = delegate;
-	this.win;
+	this.win = null;
 }
 
 ImageChooser.prototype.open = function() {

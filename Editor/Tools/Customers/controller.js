@@ -257,7 +257,7 @@ ui.listen({
 		var mails = []
 		for (var i=0; i < data.length; i++) {
 			mails.push(data[i].address);
-		};
+		}
 		if (mails.length>0) {
 			document.location.href='mailto:?bcc='+mails.join(',');
 		}

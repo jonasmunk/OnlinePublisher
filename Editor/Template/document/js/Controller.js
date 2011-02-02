@@ -251,7 +251,7 @@ var controller = {
 
 ui.listen(controller);
 
-if (!op) {var op={}};
+if (!op) {var op={}}
 
 op.FieldResizer = function(options) {
 	this.options = options;

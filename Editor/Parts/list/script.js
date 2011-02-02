@@ -23,8 +23,8 @@ op.part.List = {
 		for (var i=0; i < x.length; i++) {
 			for (var j=0; j < x[i].length; j++) {
 				objects.push(x[i][j]);
-			};
-		};
+			}
+		}
 		document.forms.PartForm.objects.value = objects.join(',');
 		this.preview();
 	},

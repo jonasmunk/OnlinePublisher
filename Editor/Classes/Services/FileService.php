@@ -216,6 +216,65 @@ class FileService {
 		return $response;
 	}
 	
+	/**
+	 * Creates a new file object based on an uploaded file
+	 * @param string $title The title of the uploaded file
+	 * @param int $group Optional ID of FileGroup to place the file in
+	 * @return array An array describing the success of the procedure
+	 */
+	function createUploadedFile($title='',$group=0) {
+		global $basePath;
+		$fileName = $_FILES['file']['name'];
+		$fileType=$_FILES["file"]["type"];
+		$tempFile=$_FILES['file']['tmp_name'];
+		$fileSize=$_FILES["file"]["size"];
+		
+		if ($fileType=='application/octet-stream') {
+			$fileType = FileService::fileNameToMimeType($fileName);
+		}
+		$fileName = FileSystemService::safeFilename($fileName);
+		$uploadDir = $basePath.'files/';
+		$filePath = $uploadDir . $fileName;
+
+		$filePath = FileSystemService::findFreeFilePath($filePath);
+		$fileName = FileSystemService::getFileBaseName($filePath);
+
+		$errorMessage=false;
+		$errorDetails='';
+
+		if (file_exists($filePath)) {
+			$errorMessage='Filen findes allerede';
+		}
+		else if (!move_uploaded_file($tempFile, $filePath)) {
+			$errorMessage='Kunne ikke flytte filen fra cachen';
+		}
+
+		if (!$errorMessage) {
+
+			if ($title=='') {
+				$title = FileSystemService::filenameToTitle($fileName);
+			}
+
+			$file = new File();
+			$file->setTitle($title);
+			$file->setFilename($fileName);
+			$file->setSize($fileSize);
+			$file->setMimetype($fileType);
+			$file->create();
+			$file->publish();
+
+			$fileId = $file->getId();
+
+			// Add to group
+			if ($group>0) {
+				$sql="insert into filegroup_file (file_id,filegroup_id)".
+				" values (".$fileId.",".$group.")";
+				Database::insert($sql);
+			}
+		}
+		return array('success' => ($errorMessage===false),'errorMessage' => $errorMessage,'errorDetails' => $errorDetails);
+	}
+	
 	function getLatestFileId() {
 		$sql = "select max(object_id) as id from file";
 		if ($row = Database::selectFirst($sql)) {

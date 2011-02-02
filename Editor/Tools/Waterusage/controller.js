@@ -57,5 +57,5 @@ ui.listen({
 	},
 	$uploadDidCompleteQueue : function() {
 		list.refresh();
-	},
+	}
 });

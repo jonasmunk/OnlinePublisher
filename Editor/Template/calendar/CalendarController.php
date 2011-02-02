@@ -68,10 +68,10 @@ class CalendarController extends LegacyTemplateController {
 
 
 		$xml='<state view="'.$view.'">';
-		$xml.=Datetils::buildTag('date',$date);
-		$xml.=Datetils::buildTag('today',time());
-		$xml.=Datetils::buildTag('next',$info['next']);
-		$xml.=Datetils::buildTag('previous',$info['previous']);
+		$xml.=DateUtils::buildTag('date',$date);
+		$xml.=DateUtils::buildTag('today',time());
+		$xml.=DateUtils::buildTag('next',$info['next']);
+		$xml.=DateUtils::buildTag('previous',$info['previous']);
 		$xml.='</state>';
 		$xml.=$info['xml'];
 		$state['data'] = str_replace("<!--dynamic-->", $xml, $state['data']);
@@ -113,7 +113,7 @@ class CalendarController extends LegacyTemplateController {
 			$timestamp = DateUtils::addDays($firstWeekDay,$i);
 			$timestampEnd = DateUtils::addDays($firstWeekDay,$i+1)-1;
 			$xml.='<day date="'.date("Ymd",$timestamp).'" today="'.(date("Ymd",$timestamp)==date("Ymd",time()) ? 'true' : 'false').'" selected="'.(date("Ymd",$timestamp)==date("Ymd",$date) ? 'true' : 'false').'" title="'.DateUtils::formatShortDate($timestamp).'">';
-			$xml.=Datetils::buildTag('date',$timestamp);
+			$xml.=DateUtils::buildTag('date',$timestamp);
 			$dayEvents = array();
 			foreach ($events as $event) {
 				$event = EventUtil::getEventInsidePeriod($timestamp,$timestampEnd,$event);
@@ -166,7 +166,7 @@ class CalendarController extends LegacyTemplateController {
 			$title = DateUtils::formatDate($timestamp,array('shortWeekday'=>true,'year'=>false));
 			$title = mb_convert_encoding($title, "ISO-8859-1","UTF-8");
 			$xml.='<day date="'.date("Ymd",$timestamp).'" today="'.(date("Ymd",$timestamp)==date("Ymd",time()) ? 'true' : 'false').'" selected="'.(date("Ymd",$timestamp)==date("Ymd",$date) ? 'true' : 'false').'" title="'.$title.'">';
-			$xml.=Datetils::buildTag('date',$timestamp);
+			$xml.=DateUtils::buildTag('date',$timestamp);
 			$dayEvents = array();
 			foreach ($events as $event) {
 				$event = EventUtil::getEventInsidePeriod($timestamp,$timestampEnd,$event);
@@ -189,8 +189,8 @@ class CalendarController extends LegacyTemplateController {
 
 	function buildEventXML(&$event) {
 		return '<event unique-id="'.StringUtils::escapeXML($event['uniqueId']).'" collision-count="'.(isset($event['collisionCount']) ? $event['collisionCount'] : 0).'" collision-number="'.(isset($event['collisionNumber']) ? $event['collisionNumber'] : 0).'" height="'.(isset($event['height']) ? $event['height'] : '').'" top="'.(isset($event['top']) ? $event['top'] : '').'" time-from="'.DateUtils::formatShortTime($event['startDate']).'" time-to="'.DateUtils::formatShortTime($event['endDate']).'">'.
-		Datetils::buildTag('start',$event['startDate']).
-		Datetils::buildTag('end',$event['endDate']).
+		DateUtils::buildTag('start',$event['startDate']).
+		DateUtils::buildTag('end',$event['endDate']).
 		'<summary>'.StringUtils::escapeXML($event['summary']).'</summary>'.
 		'<description>'.StringUtils::escapeXML($event['description']).'</description>'.
 		'<location>'.StringUtils::escapeXML($event['location']).'</location>'.
@@ -212,7 +212,7 @@ class CalendarController extends LegacyTemplateController {
 			$title = DateUtils::formatDate($timestamp,array('shortWeekday'=>true,'year'=>false));
 			$title = mb_convert_encoding($title, "ISO-8859-1","UTF-8");
 			$xml.='<day date="'.date("Ymd",$timestamp).'" today="'.(date("Ymd",$timestamp)==date("Ymd",time()) ? 'true' : 'false').'" selected="'.(date("Ymd",$timestamp)==date("Ymd",$date) ? 'true' : 'false').'" title="'.$title.'">';
-			$xml.=Datetils::buildTag('date',$timestamp);
+			$xml.=DateUtils::buildTag('date',$timestamp);
 			$dayEvents = array();
 			foreach ($events as $event) {
 				$event = EventUtil::getEventInsidePeriod($timestamp,$timestampEnd,$event);
