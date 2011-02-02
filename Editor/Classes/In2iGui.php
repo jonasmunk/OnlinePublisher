@@ -1,6 +1,5 @@
 <?
 require_once($basePath.'Editor/Classes/Response.php');
-require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 
@@ -103,7 +102,6 @@ class In2iGui {
 		$parts = explode(';',$str);
 		foreach ($parts as $part) {
 			$pos = strpos($part,':');
-			error_log($part.' ('.$pos.')');
 			if ($pos===false) {
 				$parsed['any'] = trim($part);
 			} else {
