@@ -9918,7 +9918,7 @@ In2iGui.Gallery.prototype = {
 			}
 			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
-			var item = n2i.build('div',{'class':'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			var item = n2i.build('div',{'class' : 'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
 			item.appendChild(img);
 			n2i.listen(item,'click',function() {
 				self.itemClicked(i);
@@ -9951,8 +9951,15 @@ In2iGui.Gallery.prototype = {
 		this.maxRevealed = limit;
 		for (var i=0,l=this.nodes.length; i < l; i++) {
 			var item = this.nodes[i];
+			if (item.revealed) {continue}
 			if (item.offsetTop<limit) {
 				var img = item.getElementsByTagName('img')[0];
+				item.className = 'in2igui_gallery_item in2igui_gallery_item_busy';
+				img.onload = function() {
+					n2i.log('loaded')
+					item.className = 'in2igui_gallery_item';
+					n2i.log('loaded'+item.className);
+				}
 				img.src = img.getAttribute('data-src');
 				item.revealed = true;
 			}
@@ -11261,7 +11268,8 @@ In2iGui.IFrame.prototype = {
 	 * @param {String} url The url to change the iframe to
 	 */
 	setUrl : function(url) {
-		n2i.getFrameDocument(this.element).location.href=url;
+		this.element.setAttribute('src',url);
+		//n2i.getFrameDocument(this.element).location.href=url;
 	},
 	getDocument : function() {
 		return n2i.getFrameDocument(this.element);

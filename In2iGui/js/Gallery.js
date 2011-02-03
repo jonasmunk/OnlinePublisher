@@ -60,7 +60,7 @@ In2iGui.Gallery.prototype = {
 			}
 			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
-			var item = n2i.build('div',{'class':'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			var item = n2i.build('div',{'class' : 'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
 			item.appendChild(img);
 			n2i.listen(item,'click',function() {
 				self.itemClicked(i);
@@ -93,8 +93,15 @@ In2iGui.Gallery.prototype = {
 		this.maxRevealed = limit;
 		for (var i=0,l=this.nodes.length; i < l; i++) {
 			var item = this.nodes[i];
+			if (item.revealed) {continue}
 			if (item.offsetTop<limit) {
 				var img = item.getElementsByTagName('img')[0];
+				item.className = 'in2igui_gallery_item in2igui_gallery_item_busy';
+				img.onload = function() {
+					n2i.log('loaded')
+					item.className = 'in2igui_gallery_item';
+					n2i.log('loaded'+item.className);
+				}
 				img.src = img.getAttribute('data-src');
 				item.revealed = true;
 			}

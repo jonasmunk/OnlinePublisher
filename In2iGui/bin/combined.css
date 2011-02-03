@@ -3775,6 +3775,11 @@ div.in2igui_progressbar_small_complete div
 	margin: 4px;
 }
 
+div.in2igui_gallery_item_busy
+{
+	background: url('../gfx/progress/spinner_white_16.gif') center center no-repeat;
+}
+
 div.in2igui_gallery_item img
 {
 	display: block;

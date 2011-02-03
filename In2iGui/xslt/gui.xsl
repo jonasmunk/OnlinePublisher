@@ -253,7 +253,11 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 	</xsl:variable>
 	<iframe id="{$id}" name="{$id}" src="{@source}" frameborder="0">
 		<xsl:attribute name="style">
-			<xsl:text>width: 100%; height: 100%; background: #fff; display: block;</xsl:text>
+			<xsl:text>width: 100%; background: #fff; display: block;</xsl:text>
+			<xsl:choose>
+				<xsl:when test="@height"><xsl:text>height: </xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text></xsl:when>
+				<xsl:otherwise>height: 100%;</xsl:otherwise>
+			</xsl:choose>
 			<xsl:if test="@border='true'">
 				<xsl:text>border: 1px solid #ddd; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;</xsl:text>
 			</xsl:if>
