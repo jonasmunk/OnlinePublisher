@@ -33,7 +33,7 @@ if ($tab=='html') {
 : '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" style="Disabled"/>'
 ).
 '<tool title="Vis ændringer" icon="Basic/View" link="../../Services/Preview/" target="Desktop"/>'.
-'<tool title="Egenskaber" icon="Basic/Info" link="../../Tools/Pages/?action=pageproperties&amp;id='.getPageId().'" target="Desktop" help="Vis sidens egenskaber i side-værktøjet"/>';
+'<tool title="Egenskaber" icon="Basic/Info" link="../../Tools/Pages/?action=pageproperties&amp;id='.InternalSession::getPageId().'" target="Desktop" help="Vis sidens egenskaber i side-værktøjet"/>';
 } else {
 	$gui.=
 	'<tool title="Historik" icon="Basic/Time" link="../../Services/PageHistory/" target="Editor" help="Oversigt over tidligere versioner af dokumentet"/>';	
