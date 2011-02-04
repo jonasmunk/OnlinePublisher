@@ -61,8 +61,8 @@ $gui='
 				</overflow>
 			</left>
 			<center>
-				<overflow>
-					<gallery name="gallery" source="imagesSource"/>
+				<overflow background="brushed">
+					<gallery name="gallery" source="imagesSource" padding="5"/>
 					<!--
 					<list name="list" source="filesSource"/>
 					-->

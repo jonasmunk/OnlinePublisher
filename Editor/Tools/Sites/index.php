@@ -32,6 +32,7 @@ foreach ($templates as $template) {
 $gui='
 <gui xmlns="uri:In2iGui" title="Sites" padding="10">
 	<controller source="controller.js"/>
+	<controller source="advanced.js"/>
 	<source name="pageListSource" url="ListPages.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
@@ -58,9 +59,9 @@ $gui='
 				<divider/>
 				<icon icon="common/page" title="Nyt underpunkt" overlay="new" name="newSubPage" disabled="true"/>
 				<right>
-					<searchfield title="Søgning" name="search"/>
+					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 					<divider/>
-					<icon icon="common/settings" title="Avanceret" name="setup" action="advancedBox.show()"/>
+					<icon icon="common/settings" title="Avanceret" name="advanced"/>
 				</right>
 			</toolbar>
 		</top>
@@ -185,13 +186,11 @@ $gui='
 	</box>
 	<box absolute="true" name="advancedBox" padding="10" modal="true" width="636" variant="textured" title="Avanceret" closable="true">
 		<toolbar>
-			<icon icon="common/page" title="Specielle sider" selected="true"/>
-			<icon icon="common/page" title="Rammer"/>
-			<icon icon="common/page" title="Skabeloner"/>
+			<icon icon="common/page" title="Specielle sider" selected="true" name="advancedSpecialPages"/>
+			<icon icon="common/page" title="Rammer" name="advancedFrames"/>
+			<icon icon="common/page" title="Skabeloner" name="advancedTemplates"/>
 		</toolbar>
-		<overflow height="300">
-		
-		</overflow>
+		<iframe height="300" name="advancedFrame"/>
 	</box>
 </gui>';
 In2iGui::render($gui);
