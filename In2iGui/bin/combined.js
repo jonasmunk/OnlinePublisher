@@ -15842,6 +15842,9 @@ In2iGui.Overflow.prototype = {
 			bottom-=sibs[i].clientHeight;
 		};
 		this.diff=-1*(top+(viewport-bottom));
+		if (n2i.browser.webkit) {
+			this.diff++;
+		}
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {

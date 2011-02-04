@@ -220,9 +220,19 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 
 /****************************************** Fragment *******************************/
 
-div.in2igui_fragment_brushed
+.in2igui_bg_brushed
 {
-	background: url('../gfx/backgrounds/brushed.png');
+	background: url('../gfx/backgrounds/brushed_light.jpg');
+}
+
+.in2igui_bg_wood
+{
+	background: url('../gfx/backgrounds/wood.jpg');	
+}
+
+.in2igui_bg_leather
+{
+	background: url('../gfx/backgrounds/leather.jpg');	
 }
 
 /****************************************** Info view ******************************/

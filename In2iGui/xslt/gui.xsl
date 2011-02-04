@@ -531,7 +531,11 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 <!-- Gallery -->
 
 <xsl:template match="gui:gallery">
-	<div class="in2igui_gallery" id="{generate-id()}"><xsl:comment/>&#160;</div>
+	<div class="in2igui_gallery" id="{generate-id()}">
+		<xsl:if test="@padding"><xsl:attribute name="style">padding:<xsl:value-of select="@padding"/>px;</xsl:attribute></xsl:if>
+		<xsl:comment/>
+		<xsl:text>&#160;</xsl:text>
+	</div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Gallery({
 			element:'<xsl:value-of select="generate-id()"/>',

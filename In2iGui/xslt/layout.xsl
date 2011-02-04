@@ -68,7 +68,13 @@
 </xsl:template>
 
 <xsl:template match="gui:overflow">
-<div class="in2igui_overflow" id="{generate-id()}">
+<div id="{generate-id()}">
+	<xsl:attribute name="class">
+		<xsl:text>in2igui_overflow</xsl:text>
+	<xsl:if test="@background">
+		<xsl:text> in2igui_bg_</xsl:text><xsl:value-of select="@background"/>
+	</xsl:if>
+	</xsl:attribute>
 	<xsl:attribute name="style">
 		<xsl:choose>
 			<xsl:when test="@height or @max-height or @min-height">
@@ -260,8 +266,8 @@
 			<xsl:text>min-height: 100%;</xsl:text>
 		</xsl:if>
 	</xsl:attribute>
-	<xsl:if test="@background='brushed'">
-		<xsl:attribute name="class">in2igui_fragment_brushed</xsl:attribute>
+	<xsl:if test="@background">
+		<xsl:attribute name="class">in2igui_bg_<xsl:value-of select="@background"/></xsl:attribute>
 	</xsl:if>
 	<xsl:apply-templates/>
 </div>

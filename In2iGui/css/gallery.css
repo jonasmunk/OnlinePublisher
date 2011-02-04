@@ -1,3 +1,8 @@
+div.in2igui_gallery
+{
+	overflow: hidden;
+}
+
 div.in2igui_gallery_item
 {
 	float: left;
@@ -13,12 +18,14 @@ div.in2igui_gallery_item_busy
 div.in2igui_gallery_item img
 {
 	display: block;
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
 }
 
 div.in2igui_gallery_item:hover
 {
 	border-color: #eee;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 	/*background: url('../gfx/hover_bg.png');*/
 }
 
