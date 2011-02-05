@@ -10,6 +10,12 @@ require_once '../../Editor/Classes/Database.php';
 require_once '../../Editor/Classes/Response.php';
 require_once '../../Editor/Classes/Request.php';
 
+
+//$target = time()+2;
+//while (time()<$target) {}
+
+//usleep(1000000+rand(0,1000000));
+
 if (!function_exists('ImageCreateFromJpeg')) {
 	$id = Request::getInt('id');
 	$sql = 'select * from image where object_id='.$id;

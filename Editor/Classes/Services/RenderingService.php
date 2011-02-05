@@ -376,10 +376,18 @@ class RenderingService {
 			header('Content-type: text/xml');
 			echo $page['xml'];
 		} else {
-		$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
-		header("Content-Type: text/html; charset=UTF-8");
+			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
+			header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
+			header("Content-Type: text/html; charset=UTF-8");
 		echo $html;
 		}
+	}
+	
+	function render($id) {
+		$relative = '../../';
+		$samePageBaseUrl = '../../';
+		$page = RenderingService::buildPage($id);
+		$html = RenderingService::applyStylesheet($page['xml'],'touch',$page['template'],'../../',$relative,$relative,$samePageBaseUrl,false);
+		return $html;
 	}
 }
