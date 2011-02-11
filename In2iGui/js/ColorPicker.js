@@ -6,20 +6,65 @@ In2iGui.ColorPicker = function(options) {
 	this.name = options.name;
 	this.element = n2i.get(options.element);
 	this.color = null;
-	this.wheel1 = n2i.firstByClass(this.element,'in2igui_colorpicker_wheel1');
+	this.buttons = [];
+	this.preview = n2i.firstByClass(this.element,'in2igui_colorpicker_preview');
+	this.pages = n2i.byClass(this.element,'in2igui_colorpicker_page');
+	this.input = n2i.firstByTag(this.element,'input');
+	this.wheel1 = this.pages[0];
+	this.wheel2 = this.pages[1];
+	this.wheel3 = this.pages[2];
+	this.swatches = this.pages[3];
 	In2iGui.extend(this);
 	this.addBehavior();
 	this.buildData();
 }
 
 In2iGui.ColorPicker.create = function(options) {
+	var swatches = '';
+	for (var i=0; i < 360; i+=30) {
+		for (var j=0.05; j <= 1; j+=.15) {
+			var c = n2i.Color.hsv2rgb(i,j,1);
+			var hex = n2i.Color.rgb2hex(c);
+			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
+		}
+		for (var j=1; j >= .20; j-=.15) {
+			var c = n2i.Color.hsv2rgb(i,1,j);
+			var hex = n2i.Color.rgb2hex(c);
+			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
+		}
+	}
+		for (var j=255; j >=0; j-=255/12) {
+			var hex = n2i.Color.rgb2hex([j,j,j]);
+			swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
+		}
 	options = options || {};
 	options.element = n2i.build('div',{
 		'class':'in2igui_colorpicker',
-		html : '<div class="in2igui_colorpicker_content"><div class="in2igui_colorpicker_inner_content">'+
-			'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel1"></div>'+
-			'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel2"></div>'+
-			'</div></div>'
+		html : 
+			'<div class="in2igui_bar in2igui_bar_window">'+
+				'<div class="in2igui_bar_body">'+
+					'<a class="in2igui_bar_button in2igui_bar_button_selected" href="javascript:void(0)" rel="0">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_pastels',1)+')"></span>'+
+					'</a>'+
+					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="1">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_brightness',1)+')"></span>'+
+					'</a>'+
+					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="2">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_saturated',1)+')"></span>'+
+					'</a>'+
+					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="3">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/swatches',1)+')"></span>'+
+					'</a>'+
+					'<input class="in2igui_colorpicker"/>'+
+				'</div>'+
+			'</div>'+
+			'<div class="in2igui_colorpicker_pages">'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel1"></div>'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel2"></div>'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel3"></div>'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_swatches">'+swatches+'</div>'+
+			'</div>'+
+			'<div class="in2igui_colorpicker_preview"></div>'
 	});
 	return new In2iGui.ColorPicker(options);
 }
@@ -27,21 +72,55 @@ In2iGui.ColorPicker.create = function(options) {
 In2iGui.ColorPicker.prototype = {
 	/** @private */
 	addBehavior : function() {
-		var self = this;
-		n2i.listen(this.wheel1,'mousemove',function(e) {
-			self.hoverWheel1(e);
-		})
-		n2i.listen(this.wheel1,'mousedown',function(e) {
+		var bs = n2i.byClass(this.element,'in2igui_bar_button');
+		for (var i=0; i < bs.length; i++) {
+			var button = new In2iGui.Bar.Button({element:bs[i]});
+			button.listen(this);
+			this.buttons.push(button);
+		};
+		
+		n2i.listen(this.element,'click',this._click.bind(this));
+		n2i.listen(this.wheel1,'mousemove',this._hoverWheel1.bind(this));
+		n2i.listen(this.wheel1,'click',this._pickColor.bind(this));
+		n2i.listen(this.wheel2,'mousemove',this._hoverWheel2.bind(this));
+		n2i.listen(this.wheel2,'click',this._pickColor.bind(this));
+		n2i.listen(this.wheel3,'mousemove',this._hoverWheel3.bind(this));
+		n2i.listen(this.wheel3,'click',this._pickColor.bind(this));
+		n2i.listen(this.element,'mousedown',function(e) {
 			n2i.stop(e);
 		})
-		n2i.listen(this.wheel1,'click',function(e) {
-			n2i.stop(e);
-			self.pickColor();
-		})
+		n2i.listen(this.swatches,'mousemove',function(e) {
+			e = n2i.event(e);
+			this._hoverColor(e.element.getAttribute('rel'));
+		}.bind(this));
+		n2i.listen(this.swatches,'click',this._pickColor.bind(this));
+	},
+	$click : function(button) {
+		var page = parseInt(button.element.getAttribute('rel'));
+		for (var i = this.pages.length - 1; i >= 0; i--){
+			this.pages[i].style.display = i==page ? 'block' : 'none';
+		};
+		for (var i=0; i < this.buttons.length; i++) {
+			this.buttons[i].setSelected(this.buttons[i]==button);
+		};
+	},
+	_click : function(e) {
+		e = n2i.event(e);
+		e.stop();
+	//	return;
+		var input = e.findByTag('input');
+		if (input) {input.focus()}
 	},
 	/** @private */
-	pickColor : function() {
+	_pickColor : function(e) {
+		n2i.stop(e);
 		this.fire('colorWasSelected',this.color);
+	},
+	_hoverColor : function(color) {
+		this.preview.style.background = color;
+		this.color = color;
+		this.fire('colorWasHovered',this.color);
+		this.input.value = color;
 	},
 	/** @private */
 	buildData : function() {
@@ -66,7 +145,7 @@ In2iGui.ColorPicker.prototype = {
 		this.colorArray = clrary;
 	},
 	/** @private */
-	hoverWheel1 : function(e) {
+	_hoverWheel1 : function(e) {
 		e = n2i.event(e);
 		var pos = n2i.getPosition(this.wheel1);
 		var x = 4 * (e.getLeft() - pos.left);
@@ -101,8 +180,85 @@ In2iGui.ColorPicker.prototype = {
 			c = n.toString(16);
 		}
 		while(c.length < 6) c = "0" + c;
-		this.color = '#'+c;
-		this.fire('colorWasHovered',this.color);
+		this._hoverColor('#'+c);
+	},
+	_hoverWheel2 : function(e) {
+		e = n2i.event(e);
+		var pos = n2i.getPosition(this.wheel2);
+		var x = (e.getLeft() - pos.left);
+		var y = (e.getTop() - pos.top);
+
+		if (y > 256) {return}
+
+	    var cartx = x - 128;
+	    var carty = 128 - y;
+	    var cartx2 = cartx * cartx;
+	    var carty2 = carty * carty;
+	    var cartxs = (cartx < 0) ? -1 : 1;
+	    var cartys = (carty < 0) ? -1 : 1;
+	    var cartxn = cartx/128;                      //normalize x
+	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
+	    var rnorm = rraw/128;                        //normalized radius
+	    if (rraw == 0) {
+			var sat = 0;
+			var val = 0;
+			var rgb = new Array(0,0,0);
+		} else {
+			var arad = Math.acos(cartx/rraw);            //angle in radians 
+			var aradc = (carty>=0)?arad:2*Math.PI - arad;  //correct below axis
+			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
+			if (rnorm > 1) {    // outside circle
+				var rgb = new Array(255,255,255);
+				var sat = 1;
+				var val = 1;            
+			} else if (rnorm >= .5) {
+				var sat = 1 - ((rnorm - .5) *2);
+				var val = 1;
+				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+			} else {
+				var sat = 1;
+				var val = rnorm * 2;
+				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+			}
+		}
+		this._hoverColor(n2i.Color.rgb2hex(rgb));
+	},
+	_hoverWheel3 : function(e) {
+		e = n2i.event(e);
+		var pos = n2i.getPosition(this.wheel3);
+		var x = (e.getLeft() - pos.left);
+		var y = (e.getTop() - pos.top);
+
+		if (y > 256) {return}
+
+	    var cartx = x - 128;
+	    var carty = 128 - y;
+	    var cartx2 = cartx * cartx;
+	    var carty2 = carty * carty;
+	    var cartxs = (cartx < 0) ? -1 : 1;
+	    var cartys = (carty < 0) ? -1 : 1;
+	    var cartxn = cartx/128;                      //normalize x
+	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
+	    var rnorm = rraw/128;                        //normalized radius
+	    if (rraw == 0) {
+			var sat = 0;
+			var val = 0;
+			var rgb = new Array(0,0,0);
+		} else {
+			var arad = Math.acos(cartx/rraw);            //angle in radians 
+			var aradc = (carty>=0) ? arad : 2*Math.PI - arad;  //correct below axis
+			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
+			if (rnorm > 1) {    // outside circle
+				var rgb = new Array(255,255,255);
+				var sat = 1;
+				var val = 1;            
+			} else {
+				var sat = rnorm;// - ((rnorm - .5) *2);
+				var val = 1;
+				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+			}
+		}
+		this._hoverColor(n2i.Color.rgb2hex(rgb));
 	}
 }
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>In2iGui</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Menu.js"></script>
+	<style type="text/css" media="screen">
+		#info {
+			position: fixed;
+			font-family: Courier;
+			font-size: 12px;
+		}
+		#info p
+		{
+			margin: 5px 0;
+		}
+	</style>
+</head>
+
+<body>
+<script type="text/javascript" charset="utf-8">
+	n2i.onReady(function() {
+		var info = n2i.get('info');
+		var update = function() {
+			var html = '';
+			html+='<p>documentWidth: '+n2i.getDocumentWidth()+'</p>';
+			html+='<p>documentHeight: '+n2i.getDocumentHeight()+'</p>';
+			html+='<p>viewPortWidth: '+n2i.getViewPortWidth()+'</p>';
+			html+='<p>viewPortHeight: '+n2i.getViewPortHeight()+'</p>';
+			html+='<p>scrollTop: '+n2i.getScrollTop()+'</p>';
+			html+='<p>scrollLeft: '+n2i.getScrollLeft()+'</p>';
+			info.innerHTML = html;
+		}
+		n2i.listen(window,'resize',update);
+		n2i.listen(window,'scroll',update);
+		update();
+	});
+</script>
+<div id="info"></div>
+<div style="position: fixed; left: 50%">
+	<button onclick="window.resizeTo(200,200);">200,200</button>
+	<button onclick="window.resizeTo(400,400);">400,400</button>
+	<button onclick="window.resizeTo(800,800);">800,800</button>
+</div>
+<div style="height: 400px; width: 800px;">
+	x
+</div>
+</body>
+</html>

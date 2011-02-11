@@ -196,6 +196,19 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 </script>
 </xsl:template>
 
+<xsl:template match="gui:listen">
+<script type="text/javascript">
+	(function() {
+		var listener = {};
+		<xsl:for-each select="*">
+			listener['$<xsl:value-of select="local-name()"/>$<xsl:value-of select="../@for"/>']=function() {<xsl:apply-templates/>};
+		</xsl:for-each>
+		In2iGui.listen(listener);
+	
+	})()
+</script>	
+</xsl:template>
+
 <xsl:template match="gui:dock">
 <table class="in2igui_dock" id="{generate-id()}">
 	<xsl:if test="@position='top' or not(@position)">

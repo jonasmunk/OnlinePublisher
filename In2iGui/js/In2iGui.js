@@ -106,7 +106,7 @@ In2iGui.prototype = {
 	/** @private */
 	resize : function() {
 		if (!this.overflows) {return;}
-		var height = n2i.getInnerHeight();
+		var height = n2i.getViewPortHeight();
 		for (var i=0; i < this.overflows.length; i++) {
 			var overflow = this.overflows[i];
 			if (n2i.browser.webkit || n2i.browser.gecko) {
@@ -621,6 +621,7 @@ In2iGui.extend = function(obj,options) {
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		n2i.addToArray(this.delegates,delegate);
+		return this;
 	}
 	obj.removeDelegate = function(delegate) {
 		n2i.removeFromArray(this.delegates,delegate);

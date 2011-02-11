@@ -68,7 +68,7 @@ In2iGui.Box.prototype = {
 		if (this.options.absolute) {
 			n2i.setStyle(e,{display:'block',visibility:'hidden'});
 			var w = e.clientWidth;
-			var top = (n2i.getInnerHeight()-e.clientHeight)/2+n2i.getScrollTop();
+			var top = (n2i.getViewPortHeight()-e.clientHeight)/2+n2i.getScrollTop();
 			n2i.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
 			n2i.setStyle(e,{display:'block',visibility:'visible'});
 		} else {

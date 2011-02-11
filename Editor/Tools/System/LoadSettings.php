@@ -11,6 +11,9 @@ require_once '../../Classes/Integration/GoogleAnalytics.php';
 require_once '../../Classes/In2iGui.php';
 
 $settings = array(
+	'ui' => array(
+		'experimentalRichText' => SettingService::getSetting('part','richtext','experimetal') ? true : false
+	),
 	'email'=>array(
 		'enabled' => MailService::getEnabled(),
 		'server' => MailService::getServer(),

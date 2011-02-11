@@ -179,8 +179,9 @@ class ListPartController extends PartController
 				}
 			}
 		}
-		$this->sortItems($items);
 		$items = array_slice($items,0,$part->getMaxItems());
+		$this->sortItems($items);
+		$items = array_reverse($items);
 		foreach ($items as $item) {
 			$data.='<item>'.
 			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>'.

@@ -5141,6 +5141,14 @@ n2i.dom = {
 			node.parentNode.removeChild(node);
 		}
 	},
+	replaceNode : function(oldNode,newNode) {
+		oldNode.parentNode.insertBefore(newNode,oldNode);
+		var c = oldNode.childNodes;
+		for (var i=0; i < c.length; i++) {
+			newNode.appendChild(oldNode.removeChild(c[i]));
+		};
+		oldNode.parentNode.removeChild(oldNode);
+	},
 	replaceHTML : function(node,html) {
 		node = n2i.get(node);
 		node.innerHTML=html;
@@ -5512,7 +5520,7 @@ n2i.Event.prototype = {
 	findByTag : function(tag) {
 		var parent = this.element;
 		while (parent) {
-			if (parent.tagName.toLowerCase()==tag) {
+			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				return parent;
 			}
 			parent = parent.parentNode;
@@ -5825,7 +5833,6 @@ n2i.getScrollLeft = function() {
  * Get the height of the viewport
  */
 n2i.getViewPortHeight = function() {
-	var y;
 	if (window.innerHeight) {
 		return window.innerHeight;
 	} else if (document.documentElement && document.documentElement.clientHeight) {
@@ -5835,25 +5842,22 @@ n2i.getViewPortHeight = function() {
 	}
 }
 
-n2i.getInnerHeight = function() {
-	var y;
-	if (window.innerHeight) {
-		return window.innerHeight;
-	} else if (document.documentElement && document.documentElement.clientHeight) {
-		return document.documentElement.clientHeight;
-	} else if (document.body) {
-		return document.body.clientHeight;
-	}
-}
-
-n2i.getDocumentWidth = n2i.getInnerWidth = function() {
-	if (window.innerHeight) {
+/**
+ * Get the height of the viewport
+ */
+n2i.getViewPortWidth = function() {
+	if (window.innerWidth) {
 		return window.innerWidth;
-	} else if (document.documentElement && document.documentElement.clientHeight) {
+	} else if (document.documentElement && document.documentElement.clientWidth) {
 		return document.documentElement.clientWidth;
 	} else if (document.body) {
 		return document.body.clientWidth;
 	}
+}
+
+n2i.getDocumentWidth = function() {
+	return Math.max(document.body.clientWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth)
+	return document.body.scrollWidth;
 }
 
 n2i.getDocumentHeight = function() {
@@ -5877,6 +5881,9 @@ n2i.getDocumentHeight = function() {
 
 //////////////////////////// Placement /////////////////////////
 
+/**
+ * Example n2i.place({target : {element : myTarget, horizontal : 1}, source : {element : mySource, vertical : 0.5}})
+ */
 n2i.place = function(options) {
 	var left=0,top=0;
 	var trgt = options.target.element;
@@ -5887,6 +5894,15 @@ n2i.place = function(options) {
 	var src = options.source.element;
 	left-=src.clientWidth*options.source.horizontal;
 	top-=src.clientHeight*options.source.vertical;
+	
+	if (options.insideViewPort) {
+		var w = n2i.getViewPortWidth();
+		if (left+src.clientWidth>w) {
+			left=w-src.clientWidth;
+		}
+		if (left<0) {left=0}
+		if (top<0) {top=0}
+	}
 	
 	var src = options.source.element;
 	src.style.top=top+'px';
@@ -6569,7 +6585,43 @@ n2i.Color = function(color_string) {
         if (b.length == 1) b = '0' + b;
         return '#' + r + g + b;
     }
+}
 
+n2i.Color.hsv2rgb = function (Hdeg,S,V) {
+  	var H = Hdeg/360;     // convert from degrees to 0 to 1
+  	if (S==0) {       // HSV values = From 0 to 1
+		R = V*255;     // RGB results = From 0 to 255
+		G = V*255;
+		B = V*255;
+	} else {
+    	var_h = H*6;
+    	var_i = Math.floor( var_h );     //Or ... var_i = floor( var_h )
+    	var_1 = V*(1-S);
+    	var_2 = V*(1-S*(var_h-var_i));
+    	var_3 = V*(1-S*(1-(var_h-var_i)));
+    	if (var_i==0)      {var_r=V ;    var_g=var_3; var_b=var_1}
+    	else if (var_i==1) {var_r=var_2; var_g=V;     var_b=var_1}
+    	else if (var_i==2) {var_r=var_1; var_g=V;     var_b=var_3}
+    	else if (var_i==3) {var_r=var_1; var_g=var_2; var_b=V}
+    	else if (var_i==4) {var_r=var_3; var_g=var_1; var_b=V}
+    	else {var_r=V;     var_g=var_1; var_b=var_2}
+    	R = Math.round(var_r*255);   //RGB results = From 0 to 255
+    	G = Math.round(var_g*255);
+    	B = Math.round(var_b*255);
+  	}
+  	return new Array(R,G,B);
+}
+
+n2i.Color.rgb2hex = function(rgbary) {
+	var c = '#';
+  	for (i=0; i < 3; i++) {
+		var str = parseInt(rgbary[i]).toString(16);
+    	if (str.length < 2) {
+			str = '0'+str;
+		}
+		c+=str;
+  	}
+  	return c;
 }
 
 
@@ -8159,7 +8211,7 @@ In2iGui.prototype = {
 	/** @private */
 	resize : function() {
 		if (!this.overflows) {return;}
-		var height = n2i.getInnerHeight();
+		var height = n2i.getViewPortHeight();
 		for (var i=0; i < this.overflows.length; i++) {
 			var overflow = this.overflows[i];
 			if (n2i.browser.webkit || n2i.browser.gecko) {
@@ -8674,6 +8726,7 @@ In2iGui.extend = function(obj,options) {
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		n2i.addToArray(this.delegates,delegate);
+		return this;
 	}
 	obj.removeDelegate = function(delegate) {
 		n2i.removeFromArray(this.delegates,delegate);
@@ -9231,8 +9284,9 @@ In2iGui.Window.prototype = {
 	setTitle : function(title) {
 		this.title.update(title);
 	},
-	show : function() {
-		if (this.visible) return;
+	show : function(options) {
+		if (this.visible) {return}
+		options = options || {};
 		n2i.setStyle(this.element,{
 			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block'
 		})
@@ -9240,11 +9294,15 @@ In2iGui.Window.prototype = {
 		n2i.setStyle(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
-		if (!this.element.style.top) {
-			this.element.style.top = (n2i.getScrollTop()+40)+'px';
-		}
-		if (!this.element.style.left) {
-			this.element.style.left = Math.round((n2i.getInnerWidth()-width)/2)+'px';
+		if (options.avoid) {
+			n2i.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
+		} else {
+			if (!this.element.style.top) {
+				this.element.style.top = (n2i.getScrollTop()+40)+'px';
+			}
+			if (!this.element.style.left) {
+				this.element.style.left = Math.round((n2i.getViewPortWidth()-width)/2)+'px';
+			}			
 		}
 		if (!n2i.browser.msie) {
 			n2i.ani(this.element,'opacity',1,0);
@@ -9973,7 +10031,7 @@ In2iGui.Formula.DropDown.prototype = {
 		n2i.setStyle(s,{visibility:'hidden',display:'block',width:''});
 		var height = Math.min(docHeight-n2i.getTop(s)-5,200);
 		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
-		var space = n2i.getDocumentWidth()-n2i.getLeft(el)-20;
+		var space = n2i.getViewPortWidth()-n2i.getLeft(el)-20;
 		width = Math.min(width,space);
 		n2i.setStyle(s,{visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
 	},
@@ -12618,7 +12676,7 @@ In2iGui.BoundPanel.prototype = {
 		var offset = {left:n2i.getLeft(node),top:n2i.getTop(node)};
 		var scrollOffset = {left:n2i.getScrollLeft(),top:n2i.getScrollTop()};
 		var dims = this.getDimensions();
-		var winWidth = n2i.getInnerWidth();
+		var winWidth = n2i.getViewPortWidth();
 		var nodeLeft = offset.left-scrollOffset.left+n2i.getScrollLeft();
 		var nodeWidth = node.clientWidth;
 		var nodeHeight = node.clientHeight;
@@ -13054,10 +13112,10 @@ In2iGui.ImageViewer.prototype = {
 	/** @private */
 	calculateSize : function() {
 		var snap = this.options.sizeSnap;
-		var newWidth = n2i.getInnerWidth()-this.options.perimeter;
+		var newWidth = n2i.getViewPortWidth()-this.options.perimeter;
 		newWidth = Math.floor(newWidth/snap)*snap;
 		newWidth = Math.min(newWidth,this.options.maxWidth);
-		var newHeight = n2i.getInnerHeight()-this.options.perimeter;
+		var newHeight = n2i.getViewPortHeight()-this.options.perimeter;
 		newHeight = Math.floor(newHeight/snap)*snap;
 		newHeight = Math.min(newHeight,this.options.maxHeight);
 		var maxWidth = 0;
@@ -14072,8 +14130,8 @@ In2iGui.Menu.prototype = {
 		this.showAtPoint(point);
 	},
 	showAtPoint : function(pos) {
-		var innerWidth = n2i.getInnerWidth();
-		var innerHeight = n2i.getInnerHeight();
+		var innerWidth = n2i.getViewPortWidth();
+		var innerHeight = n2i.getViewPortHeight();
 		var scrollTop = n2i.getScrollTop();
 		var scrollLeft = n2i.getScrollLeft();
 		if (!this.visible) {
@@ -15426,7 +15484,7 @@ In2iGui.Dock.prototype = {
 	},
 	/** @private */
 	$$layout : function() {
-		var height = n2i.getInnerHeight();
+		var height = n2i.getViewPortHeight();
 		this.iframe.style.height=(height+this.diff)+'px';
 	}
 }
@@ -15501,7 +15559,7 @@ In2iGui.Box.prototype = {
 		if (this.options.absolute) {
 			n2i.setStyle(e,{display:'block',visibility:'hidden'});
 			var w = e.clientWidth;
-			var top = (n2i.getInnerHeight()-e.clientHeight)/2+n2i.getScrollTop();
+			var top = (n2i.getViewPortHeight()-e.clientHeight)/2+n2i.getScrollTop();
 			n2i.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
 			n2i.setStyle(e,{display:'block',visibility:'visible'});
 		} else {
@@ -15833,7 +15891,7 @@ In2iGui.Overflow.create = function(options) {
 In2iGui.Overflow.prototype = {
 	calculate : function() {
 		var top,bottom,parent,viewport;
-		viewport = n2i.getInnerHeight();
+		viewport = n2i.getViewPortHeight();
 		parent = this.element.parentNode;
 		top = n2i.getTop(this.element);
 		bottom = n2i.getTop(parent)+parent.clientHeight;
@@ -15857,7 +15915,7 @@ In2iGui.Overflow.prototype = {
 	$$layout : function() {
 		if (!this.options.dynamic) {
 			if (this.options.vertical) {
-				var height = n2i.getInnerHeight();
+				var height = n2i.getViewPortHeight();
 				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
 			}
 			return;
@@ -15865,7 +15923,7 @@ In2iGui.Overflow.prototype = {
 		if (this.diff===undefined) {
 			this.calculate();
 		}
-		var height = n2i.getInnerHeight();
+		var height = n2i.getViewPortHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';
 	}
 }
@@ -16149,6 +16207,9 @@ In2iGui.Bar.Button.prototype = {
 		if (this.options.stopEvents) {
 			n2i.stop(e);
 		}
+	},
+	setSelected : function(highlighted) {
+		n2i.setClass(this.element,'in2igui_bar_button_selected',highlighted);
 	}
 }/**
  * A dock
@@ -16828,6 +16889,9 @@ In2iGui.MarkupEditor.prototype = {
 	getValue : function() {
 		return this.impl.getHTML();
 	},
+	setValue : function(value) {
+		this.impl.setHTML(value);
+	},
 	focus : function() {
 		this.impl.focus();
 	},
@@ -16844,11 +16908,14 @@ In2iGui.MarkupEditor.prototype = {
 				{key:'bold',icon:'edit/text_bold'},
 				{key:'italic',icon:'edit/text_italic'},
 				{key:'color',icon:'common/color'},
-				{key:'image',icon:'common/image'},
+				/*{key:'image',icon:'common/image'},*/
+				{key:'addLink',icon:'common/link'},
 				{key:'align',value:'left',icon:'edit/text_align_left'},
 				{key:'align',value:'center',icon:'edit/text_align_center'},
 				{key:'align',value:'right',icon:'edit/text_align_right'},
-				{key:'align',value:'justify',icon:'edit/text_align_justify'}
+				{key:'align',value:'justify',icon:'edit/text_align_justify'},
+				{key:'clear',icon:'monochrome/round_x'},
+				{key:'strong',icon:'edit/text_bold'}
 				
 				
 				/*,
@@ -16870,24 +16937,60 @@ In2iGui.MarkupEditor.prototype = {
 	},
 	_buttonClicked : function(info) {
 		if (info.key=='color') {
-			this._showColors();
+			this._showColorPicker();
+		} else if (info.key=='addLink') {
+			this._showLinkEditor();
 		} else if (info.key=='align') {
 			this.impl.align(info.value);
+		} else if (info.key=='clear') {
+			this.impl.removeFormat();
 		} else {
 			this.impl.format(info);
 		}
+		this._valueChanged();
 	},
-	_showColors : function() {
+	_showColorPicker : function() {
 		if (!this.colorPicker) {
 			this.colorPicker = In2iGui.Window.create();
 			var picker = In2iGui.ColorPicker.create();
 			picker.listen(this);
 			this.colorPicker.add(picker);
 		}
-		this.colorPicker.show();
+		this.colorPicker.show({avoid:this.element});
+	},
+	_showLinkEditor : function() {
+		if (!this.linkEditor) {
+			this.linkEditor = In2iGui.Window.create({padding:5,width:300});
+			this.linkForm = In2iGui.Formula.create();
+			this.linkEditor.add(this.linkForm);
+			var group = this.linkForm.buildGroup({},[
+				{type : 'Text', options:{key:'url',label:'Address:'}}
+			]);
+			this.linkEditor.add(this.linkForm);
+			var buttons = group.createButtons();
+			var ok = In2iGui.Button.create({text:'OK',submit:true});
+			this.linkForm.listen({$submit:this._updateLink.bind(this)});
+			buttons.add(ok);
+		}
+		this.temporaryLink = this.impl.getOrCreateLink();
+		this.linkForm.setValues({url:this.temporaryLink.href});
+		this.linkEditor.show({avoid:this.element});
+		this.linkForm.focus();
+	},
+	_updateLink : function() {
+		var values = this.linkForm.getValues();
+		this.temporaryLink.href = values.url;
+		this.linkForm.reset();
+		this.temporaryLink = null;
+		this.linkEditor.hide();
+		this._valueChanged();
 	},
 	$colorWasSelected : function(color) {
 		this.impl.colorize(color);
+		this._valueChanged();
+	},
+	_valueChanged : function() {
+		this.fire('valueChanged',this.impl.getHTML());		
 	}
 }
 
@@ -16903,6 +17006,7 @@ In2iGui.MarkupEditor.webkit = {
 		n2i.listen(this.element,'blur',function() {
 			ctrl.blurred();
 		});
+		n2i.listen(this.element,'keyup',this._keyUp.bind(this));
 	},
 	focus : function() {
 		this.element.focus();
@@ -16916,6 +17020,23 @@ In2iGui.MarkupEditor.webkit = {
 			document.execCommand(info.key,null,info.value);
 		}
 	},
+	getOrCreateLink : function() {
+		var node = this._getSelectedNode();
+		if (node && node.tagName.toLowerCase()=='a') {
+			return node;
+		}
+		document.execCommand('createLink',null,'#');
+		return this._getSelectedNode();
+	},
+	_getSelectedNode : function() {
+		var selection = window.getSelection();
+		var range = selection.getRangeAt(0);
+		var ancestor = range.commonAncestorContainer;
+		if (!n2i.dom.isElement(ancestor)) {
+			ancestor = ancestor.parentNode;
+		}
+		return ancestor;
+	},
 	colorize : function(color) {
 		n2i.log(color);
 		document.execCommand('forecolor',null,color);
@@ -16924,17 +17045,58 @@ In2iGui.MarkupEditor.webkit = {
 		var x = {center:'justifycenter',justify:'justifyfull',left:'justifyleft',right:'justifyright'};
 		document.execCommand(x[value],null,null);
 	},
+	_keyUp : function() {
+		this.controller._valueChanged();
+		this._selectionChanged();
+	},
 	_wrapInTag : function(tag) {
-		document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');
+		var selection = window.getSelection();
+		if (selection.rangeCount<1) {return}
+		var range = selection.getRangeAt(0);
+		var ancestor = range.commonAncestorContainer;
+		if (!n2i.dom.isElement(ancestor)) {
+			ancestor = ancestor.parentNode;
+		}
+		if (ancestor.tagName.toLowerCase()==tag) {
+			this._unWrap(ancestor);
+		} else {
+			var node = document.createElement(tag);
+			range.surroundContents(node);
+			selection.selectAllChildren(node);
+		}
+		//document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');
+	},
+	_getInlineTag : function() {
+		var selection = window.getSelection();
+		if (selection.rangeCount<1) {return}
+		var range = selection.getRangeAt(0);
+		
+	},
+	_unWrap : function(node) {
+		var c = node.childNodes;
+		for (var i=0; i < c.length; i++) {
+			node.parentNode.insertBefore(c[i],node);
+		};
+		node.parentNode.removeChild(node);
 	},
 	_insertHTML : function(html) {
 		document.execCommand('inserthtml',null,html);
+	},
+	_selectionChanged : function() {
+		var node = this._getSelectedNode();
+		if (node) {
+			n2i.log(n2i.getStyle(node,'font-weight'));
+		}
+	},
+	removeFormat : function() {
+		document.execCommand('removeFormat',null,null);
 	},
 	setHTML : function(html) {
 		this.element.innerHTML = html;
 	},
 	getHTML : function() {
-		return this.element.innerHTML;
+		var cleaned = In2iGui.MarkupEditor.util.clean(this.element);
+		return cleaned.innerHTML;
 	}
 }
 
@@ -16973,7 +17135,33 @@ In2iGui.MarkupEditor.iframe = {
 		this.element.innerHTML = html;
 	},
 	getHTML : function() {
-		return this.element.innerHTML;
+	}
+}
+
+In2iGui.MarkupEditor.util = {
+	clean : function(node) {
+		n2i.log(node.innerHTML);
+		var copy = node.cloneNode(true);
+		this.replaceNodes(copy,{b:'strong',i:'em',font:'span'});
+
+		var apples = n2i.byClass(copy,'Apple-style-span');
+		for (var i = apples.length - 1; i >= 0; i--){
+			apples[i].removeAttribute('class');
+		};
+		return copy;
+	},
+	replaceNodes : function(node,recipe) {
+		for (key in recipe) {
+			var bs = node.getElementsByTagName(key);
+			for (var i = bs.length - 1; i >= 0; i--) {
+				var replacement = document.createElement(recipe[key]);
+				var color = bs[i].getAttribute('color');
+				if (color) {
+					replacement.style.color=color;
+				}
+				n2i.dom.replaceNode(bs[i],replacement);
+			};
+		}
 	}
 }
 
@@ -16985,20 +17173,65 @@ In2iGui.ColorPicker = function(options) {
 	this.name = options.name;
 	this.element = n2i.get(options.element);
 	this.color = null;
-	this.wheel1 = n2i.firstByClass(this.element,'in2igui_colorpicker_wheel1');
+	this.buttons = [];
+	this.preview = n2i.firstByClass(this.element,'in2igui_colorpicker_preview');
+	this.pages = n2i.byClass(this.element,'in2igui_colorpicker_page');
+	this.input = n2i.firstByTag(this.element,'input');
+	this.wheel1 = this.pages[0];
+	this.wheel2 = this.pages[1];
+	this.wheel3 = this.pages[2];
+	this.swatches = this.pages[3];
 	In2iGui.extend(this);
 	this.addBehavior();
 	this.buildData();
 }
 
 In2iGui.ColorPicker.create = function(options) {
+	var swatches = '';
+	for (var i=0; i < 360; i+=30) {
+		for (var j=0.05; j <= 1; j+=.15) {
+			var c = n2i.Color.hsv2rgb(i,j,1);
+			var hex = n2i.Color.rgb2hex(c);
+			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
+		}
+		for (var j=1; j >= .20; j-=.15) {
+			var c = n2i.Color.hsv2rgb(i,1,j);
+			var hex = n2i.Color.rgb2hex(c);
+			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
+		}
+	}
+		for (var j=255; j >=0; j-=255/12) {
+			var hex = n2i.Color.rgb2hex([j,j,j]);
+			swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
+		}
 	options = options || {};
 	options.element = n2i.build('div',{
 		'class':'in2igui_colorpicker',
-		html : '<div class="in2igui_colorpicker_content"><div class="in2igui_colorpicker_inner_content">'+
-			'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel1"></div>'+
-			'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel2"></div>'+
-			'</div></div>'
+		html : 
+			'<div class="in2igui_bar in2igui_bar_window">'+
+				'<div class="in2igui_bar_body">'+
+					'<a class="in2igui_bar_button in2igui_bar_button_selected" href="javascript:void(0)" rel="0">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_pastels',1)+')"></span>'+
+					'</a>'+
+					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="1">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_brightness',1)+')"></span>'+
+					'</a>'+
+					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="2">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_saturated',1)+')"></span>'+
+					'</a>'+
+					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="3">'+
+						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/swatches',1)+')"></span>'+
+					'</a>'+
+					'<input class="in2igui_colorpicker"/>'+
+				'</div>'+
+			'</div>'+
+			'<div class="in2igui_colorpicker_pages">'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel1"></div>'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel2"></div>'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_wheel3"></div>'+
+				'<div class="in2igui_colorpicker_page in2igui_colorpicker_swatches">'+swatches+'</div>'+
+			'</div>'+
+			'<div class="in2igui_colorpicker_preview"></div>'
 	});
 	return new In2iGui.ColorPicker(options);
 }
@@ -17006,21 +17239,55 @@ In2iGui.ColorPicker.create = function(options) {
 In2iGui.ColorPicker.prototype = {
 	/** @private */
 	addBehavior : function() {
-		var self = this;
-		n2i.listen(this.wheel1,'mousemove',function(e) {
-			self.hoverWheel1(e);
-		})
-		n2i.listen(this.wheel1,'mousedown',function(e) {
+		var bs = n2i.byClass(this.element,'in2igui_bar_button');
+		for (var i=0; i < bs.length; i++) {
+			var button = new In2iGui.Bar.Button({element:bs[i]});
+			button.listen(this);
+			this.buttons.push(button);
+		};
+		
+		n2i.listen(this.element,'click',this._click.bind(this));
+		n2i.listen(this.wheel1,'mousemove',this._hoverWheel1.bind(this));
+		n2i.listen(this.wheel1,'click',this._pickColor.bind(this));
+		n2i.listen(this.wheel2,'mousemove',this._hoverWheel2.bind(this));
+		n2i.listen(this.wheel2,'click',this._pickColor.bind(this));
+		n2i.listen(this.wheel3,'mousemove',this._hoverWheel3.bind(this));
+		n2i.listen(this.wheel3,'click',this._pickColor.bind(this));
+		n2i.listen(this.element,'mousedown',function(e) {
 			n2i.stop(e);
 		})
-		n2i.listen(this.wheel1,'click',function(e) {
-			n2i.stop(e);
-			self.pickColor();
-		})
+		n2i.listen(this.swatches,'mousemove',function(e) {
+			e = n2i.event(e);
+			this._hoverColor(e.element.getAttribute('rel'));
+		}.bind(this));
+		n2i.listen(this.swatches,'click',this._pickColor.bind(this));
+	},
+	$click : function(button) {
+		var page = parseInt(button.element.getAttribute('rel'));
+		for (var i = this.pages.length - 1; i >= 0; i--){
+			this.pages[i].style.display = i==page ? 'block' : 'none';
+		};
+		for (var i=0; i < this.buttons.length; i++) {
+			this.buttons[i].setSelected(this.buttons[i]==button);
+		};
+	},
+	_click : function(e) {
+		e = n2i.event(e);
+		e.stop();
+	//	return;
+		var input = e.findByTag('input');
+		if (input) {input.focus()}
 	},
 	/** @private */
-	pickColor : function() {
+	_pickColor : function(e) {
+		n2i.stop(e);
 		this.fire('colorWasSelected',this.color);
+	},
+	_hoverColor : function(color) {
+		this.preview.style.background = color;
+		this.color = color;
+		this.fire('colorWasHovered',this.color);
+		this.input.value = color;
 	},
 	/** @private */
 	buildData : function() {
@@ -17045,7 +17312,7 @@ In2iGui.ColorPicker.prototype = {
 		this.colorArray = clrary;
 	},
 	/** @private */
-	hoverWheel1 : function(e) {
+	_hoverWheel1 : function(e) {
 		e = n2i.event(e);
 		var pos = n2i.getPosition(this.wheel1);
 		var x = 4 * (e.getLeft() - pos.left);
@@ -17080,8 +17347,85 @@ In2iGui.ColorPicker.prototype = {
 			c = n.toString(16);
 		}
 		while(c.length < 6) c = "0" + c;
-		this.color = '#'+c;
-		this.fire('colorWasHovered',this.color);
+		this._hoverColor('#'+c);
+	},
+	_hoverWheel2 : function(e) {
+		e = n2i.event(e);
+		var pos = n2i.getPosition(this.wheel2);
+		var x = (e.getLeft() - pos.left);
+		var y = (e.getTop() - pos.top);
+
+		if (y > 256) {return}
+
+	    var cartx = x - 128;
+	    var carty = 128 - y;
+	    var cartx2 = cartx * cartx;
+	    var carty2 = carty * carty;
+	    var cartxs = (cartx < 0) ? -1 : 1;
+	    var cartys = (carty < 0) ? -1 : 1;
+	    var cartxn = cartx/128;                      //normalize x
+	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
+	    var rnorm = rraw/128;                        //normalized radius
+	    if (rraw == 0) {
+			var sat = 0;
+			var val = 0;
+			var rgb = new Array(0,0,0);
+		} else {
+			var arad = Math.acos(cartx/rraw);            //angle in radians 
+			var aradc = (carty>=0)?arad:2*Math.PI - arad;  //correct below axis
+			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
+			if (rnorm > 1) {    // outside circle
+				var rgb = new Array(255,255,255);
+				var sat = 1;
+				var val = 1;            
+			} else if (rnorm >= .5) {
+				var sat = 1 - ((rnorm - .5) *2);
+				var val = 1;
+				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+			} else {
+				var sat = 1;
+				var val = rnorm * 2;
+				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+			}
+		}
+		this._hoverColor(n2i.Color.rgb2hex(rgb));
+	},
+	_hoverWheel3 : function(e) {
+		e = n2i.event(e);
+		var pos = n2i.getPosition(this.wheel3);
+		var x = (e.getLeft() - pos.left);
+		var y = (e.getTop() - pos.top);
+
+		if (y > 256) {return}
+
+	    var cartx = x - 128;
+	    var carty = 128 - y;
+	    var cartx2 = cartx * cartx;
+	    var carty2 = carty * carty;
+	    var cartxs = (cartx < 0) ? -1 : 1;
+	    var cartys = (carty < 0) ? -1 : 1;
+	    var cartxn = cartx/128;                      //normalize x
+	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
+	    var rnorm = rraw/128;                        //normalized radius
+	    if (rraw == 0) {
+			var sat = 0;
+			var val = 0;
+			var rgb = new Array(0,0,0);
+		} else {
+			var arad = Math.acos(cartx/rraw);            //angle in radians 
+			var aradc = (carty>=0) ? arad : 2*Math.PI - arad;  //correct below axis
+			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
+			if (rnorm > 1) {    // outside circle
+				var rgb = new Array(255,255,255);
+				var sat = 1;
+				var val = 1;            
+			} else {
+				var sat = rnorm;// - ((rnorm - .5) *2);
+				var val = 1;
+				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+			}
+		}
+		this._hoverColor(n2i.Color.rgb2hex(rgb));
 	}
 }
 

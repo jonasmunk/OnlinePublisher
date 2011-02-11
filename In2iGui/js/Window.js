@@ -56,8 +56,9 @@ In2iGui.Window.prototype = {
 	setTitle : function(title) {
 		this.title.update(title);
 	},
-	show : function() {
-		if (this.visible) return;
+	show : function(options) {
+		if (this.visible) {return}
+		options = options || {};
 		n2i.setStyle(this.element,{
 			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block'
 		})
@@ -65,11 +66,15 @@ In2iGui.Window.prototype = {
 		n2i.setStyle(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
-		if (!this.element.style.top) {
-			this.element.style.top = (n2i.getScrollTop()+40)+'px';
-		}
-		if (!this.element.style.left) {
-			this.element.style.left = Math.round((n2i.getInnerWidth()-width)/2)+'px';
+		if (options.avoid) {
+			n2i.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
+		} else {
+			if (!this.element.style.top) {
+				this.element.style.top = (n2i.getScrollTop()+40)+'px';
+			}
+			if (!this.element.style.left) {
+				this.element.style.left = Math.round((n2i.getViewPortWidth()-width)/2)+'px';
+			}			
 		}
 		if (!n2i.browser.msie) {
 			n2i.ani(this.element,'opacity',1,0);

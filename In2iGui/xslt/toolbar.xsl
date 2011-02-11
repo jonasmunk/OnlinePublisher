@@ -214,7 +214,13 @@
 
 
 <xsl:template match="gui:bar">
-	<div class="in2igui_bar">
+	<div class="">
+		<xsl:attribute name="class">
+			<xsl:text>in2igui_bar</xsl:text>
+			<xsl:if test="@variant">
+				<xsl:text> in2igui_bar_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+		</xsl:attribute>
 		<div class="in2igui_bar_body">
 			<xsl:apply-templates select="gui:right"/>
 			<div class="in2igui_bar_left">
@@ -235,11 +241,13 @@
 <xsl:template match="gui:bar//gui:button">
 	<xsl:variable name="class">
 		<xsl:text>in2igui_bar_button</xsl:text>
-		<xsl:if test="@highlighted='true'"><xsl:text> in2igui_bar_button_highlighted</xsl:text></xsl:if>
+		<xsl:if test="@selected='true'"><xsl:text> in2igui_bar_button_selected</xsl:text></xsl:if>
 	</xsl:variable>
 	<a id="{generate-id()}" class="{$class}" href="javascript:void(0);">
 		<span class="in2igui_icon_1" style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png')"><xsl:comment/></span>
-		<span class="in2igui_bar_button_text"><xsl:value-of select="@text"/></span>
+		<xsl:if test="@text">
+			<span class="in2igui_bar_button_text"><xsl:value-of select="@text"/></span>
+		</xsl:if>
 	</a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Bar.Button({

@@ -170,10 +170,10 @@ In2iGui.ImageViewer.prototype = {
 	/** @private */
 	calculateSize : function() {
 		var snap = this.options.sizeSnap;
-		var newWidth = n2i.getInnerWidth()-this.options.perimeter;
+		var newWidth = n2i.getViewPortWidth()-this.options.perimeter;
 		newWidth = Math.floor(newWidth/snap)*snap;
 		newWidth = Math.min(newWidth,this.options.maxWidth);
-		var newHeight = n2i.getInnerHeight()-this.options.perimeter;
+		var newHeight = n2i.getViewPortHeight()-this.options.perimeter;
 		newHeight = Math.floor(newHeight/snap)*snap;
 		newHeight = Math.min(newHeight,this.options.maxHeight);
 		var maxWidth = 0;

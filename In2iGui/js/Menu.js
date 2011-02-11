@@ -98,8 +98,8 @@ In2iGui.Menu.prototype = {
 		this.showAtPoint(point);
 	},
 	showAtPoint : function(pos) {
-		var innerWidth = n2i.getInnerWidth();
-		var innerHeight = n2i.getInnerHeight();
+		var innerWidth = n2i.getViewPortWidth();
+		var innerHeight = n2i.getViewPortHeight();
 		var scrollTop = n2i.getScrollTop();
 		var scrollLeft = n2i.getScrollLeft();
 		if (!this.visible) {

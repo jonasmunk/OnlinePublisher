@@ -12,6 +12,9 @@ require_once '../../Classes/Integration/GoogleAnalytics.php';
 
 $data = Request::getObject('data');
 
+if ($data->ui) {
+	SettingService::setSetting('part','richtext','experimetal',$data->ui->experimentalRichText);
+}
 if ($data->onlineobjects) {
 	SettingService::setOnlineObjectsUrl($data->onlineobjects->url);
 }

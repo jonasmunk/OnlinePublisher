@@ -629,7 +629,7 @@ In2iGui.Formula.DropDown.prototype = {
 		n2i.setStyle(s,{visibility:'hidden',display:'block',width:''});
 		var height = Math.min(docHeight-n2i.getTop(s)-5,200);
 		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
-		var space = n2i.getDocumentWidth()-n2i.getLeft(el)-20;
+		var space = n2i.getViewPortWidth()-n2i.getLeft(el)-20;
 		width = Math.min(width,space);
 		n2i.setStyle(s,{visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
 	},

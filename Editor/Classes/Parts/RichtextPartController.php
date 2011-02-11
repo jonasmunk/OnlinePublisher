@@ -6,6 +6,7 @@
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/RichtextPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Services/SettingService.php');
 
 class RichtextPartController extends PartController
 {
@@ -26,7 +27,8 @@ class RichtextPartController extends PartController
 		
 	function editor($part,$context) {
 		global $baseUrl;
-		if (Request::isLocalhost()) {
+		$modern = SettingService::getSetting('part','richtext','experimetal');
+		if ($modern) {
 			return
 			'<div id="part_richtext">'.$this->render($part,$context).'</div>'.
 			'<input type="hidden" name="html" value="'.StringUtils::fromUnicode($part->getHtml()).'"/>'.

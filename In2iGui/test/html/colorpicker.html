@@ -24,32 +24,25 @@
 </head>
 
 <body>
+	<div id="hov" style="width: 200px; height: 200px;"></div>
 <script type="text/javascript" charset="utf-8">
-	ui.onDomReady(function() {
-		var win = ui.Window.create({width:'500'});
-		var editor = ui.MarkupEditor.create({value:'<h1>Lorem ipsum</h1><p>Lorem ipsum</p>'});
-		var source = ui.Formula.Text.create({multiline:true});
-		var view = ui.Button.create({text:'View source'}).listen({
-			$click:function() {
-				source.setValue(editor.getValue());
-			}
-		});
-		editor.listen({
-			$valueChanged : function(value) {
-				source.setValue(value);
-			}
-		})
-		source.listen({
-			$valueChanged : function(value) {
-				editor.setValue(value);
-			}
-		})
-		win.add(editor);
-		win.add(source);
-		win.add(view);
-		win.show();
+	ui.listen({
+		$ready : function() {
+			var hov = n2i.get('hov');
+			var win = ui.Window.create({padding:3});
+			var picker = ui.ColorPicker.create();
+			picker.listen({
+				$colorWasSelected : function(color) {
+					document.body.style.background=color;
+				},
+				$colorWasHovered : function(color) {
+					hov.style.background=color;
+				}
+			})
+			win.add(picker);
+			win.show();
+		}
 	})
 </script>
-<textarea id="source" style="height: 200px; width: 300px;"></textarea>
 </body>
 </html>

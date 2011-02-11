@@ -24,7 +24,7 @@ In2iGui.Dock.prototype = {
 	},
 	/** @private */
 	$$layout : function() {
-		var height = n2i.getInnerHeight();
+		var height = n2i.getViewPortHeight();
 		this.iframe.style.height=(height+this.diff)+'px';
 	}
 }

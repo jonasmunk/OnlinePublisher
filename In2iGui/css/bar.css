@@ -78,19 +78,73 @@ a.in2igui_bar_button:hover span.in2igui_bar_button_text
 	color: #000;
 }
 
-div.in2igui_bar  a.in2igui_bar_button_highlighted, div.in2igui_bar a.in2igui_bar_button_highlighted:hover
+div.in2igui_bar  a.in2igui_bar_button_selected, div.in2igui_bar a.in2igui_bar_button_selected:hover
 {
 	background: url('../gfx/bar_light.png') left -90px repeat-x;
 }
 
-a.in2igui_bar_button_highlighted span.in2igui_icon_1
+a.in2igui_bar_button_selected span.in2igui_icon_1
 {
 	background-position: 0 -32px;
 }
 
-a.in2igui_bar_button_highlighted span.in2igui_bar_button_text
+a.in2igui_bar_button_selected span.in2igui_bar_button_text
 {
 	color: #0054a6;	
+}
+
+/******************* window variant ***************/
+
+div.in2igui_bar_window
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	height: 24px;
+}
+
+div.in2igui_bar_window div.in2igui_bar_body
+{
+	background: none;
+	height: 24px;
+}
+
+div.in2igui_bar_window div.in2igui_bar_left
+{
+	height: 24px;
+}
+
+
+div.in2igui_bar_window a.in2igui_bar_button
+{
+	height: 24px;
+	line-height: 24px;
+	background: none;
+	border: 1px solid transparent;
+	border-width: 0 1px;
+	padding: 0 4px;	
+}
+
+div.in2igui_bar_window a.in2igui_bar_button:hover
+{
+	background: #eee;
+	border-color: #ddd;
+}
+
+div.in2igui_bar_window a.in2igui_bar_button_selected, div.in2igui_bar_window a.in2igui_bar_button_selected:hover
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#bbb), to(#ddd));
+	background: -moz-linear-gradient(top, #bbb, #ddd);
+	border-color: #bbb;
+}
+
+div.in2igui_bar_window_top
+{
+	border-top: 1px solid #ddd;
+}
+
+div.in2igui_bar_window_bottom
+{
+	border-top: 1px solid #ddd;
 }
 
 /******************* Mini variant *****************/
@@ -117,6 +171,12 @@ div.in2igui_bar_mini a.in2igui_bar_button
 	background: none;
 	padding: 0 2px;
 }
+
+div.in2igui_bar_mini span.in2igui_bar_button_text
+{
+	font-size: 11px;
+}
+
 
 div.in2igui_bar_mini a.in2igui_bar_button:hover
 {

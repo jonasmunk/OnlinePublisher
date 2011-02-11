@@ -78,5 +78,8 @@ In2iGui.Bar.Button.prototype = {
 		if (this.options.stopEvents) {
 			n2i.stop(e);
 		}
+	},
+	setSelected : function(highlighted) {
+		n2i.setClass(this.element,'in2igui_bar_button_selected',highlighted);
 	}
 }

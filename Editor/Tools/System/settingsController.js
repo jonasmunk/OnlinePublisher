@@ -11,6 +11,17 @@ ui.listen({
 		emailFormula.setValues(data.email);
 		onlineobjectsFormula.setValues(data.onlineobjects);
 		analyticsFormula.setValues(data.analytics);
+		uiFormula.setValues(data.ui);
+	},
+	
+	//UI
+	
+	$valuesChanged$uiFormula : function(value) {
+		var data = {'ui':value};
+		ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveUI'});
+	},
+	$success$saveUI : function() {
+		ui.showMessage({text:'Gemt!',icon:'common/success',duration:2000});
 	},
 	
 	// OnlineObjects

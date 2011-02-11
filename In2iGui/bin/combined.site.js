@@ -5141,6 +5141,14 @@ n2i.dom = {
 			node.parentNode.removeChild(node);
 		}
 	},
+	replaceNode : function(oldNode,newNode) {
+		oldNode.parentNode.insertBefore(newNode,oldNode);
+		var c = oldNode.childNodes;
+		for (var i=0; i < c.length; i++) {
+			newNode.appendChild(oldNode.removeChild(c[i]));
+		};
+		oldNode.parentNode.removeChild(oldNode);
+	},
 	replaceHTML : function(node,html) {
 		node = n2i.get(node);
 		node.innerHTML=html;
@@ -5512,7 +5520,7 @@ n2i.Event.prototype = {
 	findByTag : function(tag) {
 		var parent = this.element;
 		while (parent) {
-			if (parent.tagName.toLowerCase()==tag) {
+			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				return parent;
 			}
 			parent = parent.parentNode;
@@ -5825,7 +5833,6 @@ n2i.getScrollLeft = function() {
  * Get the height of the viewport
  */
 n2i.getViewPortHeight = function() {
-	var y;
 	if (window.innerHeight) {
 		return window.innerHeight;
 	} else if (document.documentElement && document.documentElement.clientHeight) {
@@ -5835,25 +5842,22 @@ n2i.getViewPortHeight = function() {
 	}
 }
 
-n2i.getInnerHeight = function() {
-	var y;
-	if (window.innerHeight) {
-		return window.innerHeight;
-	} else if (document.documentElement && document.documentElement.clientHeight) {
-		return document.documentElement.clientHeight;
-	} else if (document.body) {
-		return document.body.clientHeight;
-	}
-}
-
-n2i.getDocumentWidth = n2i.getInnerWidth = function() {
-	if (window.innerHeight) {
+/**
+ * Get the height of the viewport
+ */
+n2i.getViewPortWidth = function() {
+	if (window.innerWidth) {
 		return window.innerWidth;
-	} else if (document.documentElement && document.documentElement.clientHeight) {
+	} else if (document.documentElement && document.documentElement.clientWidth) {
 		return document.documentElement.clientWidth;
 	} else if (document.body) {
 		return document.body.clientWidth;
 	}
+}
+
+n2i.getDocumentWidth = function() {
+	return Math.max(document.body.clientWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth)
+	return document.body.scrollWidth;
 }
 
 n2i.getDocumentHeight = function() {
@@ -5877,6 +5881,9 @@ n2i.getDocumentHeight = function() {
 
 //////////////////////////// Placement /////////////////////////
 
+/**
+ * Example n2i.place({target : {element : myTarget, horizontal : 1}, source : {element : mySource, vertical : 0.5}})
+ */
 n2i.place = function(options) {
 	var left=0,top=0;
 	var trgt = options.target.element;
@@ -5887,6 +5894,15 @@ n2i.place = function(options) {
 	var src = options.source.element;
 	left-=src.clientWidth*options.source.horizontal;
 	top-=src.clientHeight*options.source.vertical;
+	
+	if (options.insideViewPort) {
+		var w = n2i.getViewPortWidth();
+		if (left+src.clientWidth>w) {
+			left=w-src.clientWidth;
+		}
+		if (left<0) {left=0}
+		if (top<0) {top=0}
+	}
 	
 	var src = options.source.element;
 	src.style.top=top+'px';
@@ -6569,7 +6585,43 @@ n2i.Color = function(color_string) {
         if (b.length == 1) b = '0' + b;
         return '#' + r + g + b;
     }
+}
 
+n2i.Color.hsv2rgb = function (Hdeg,S,V) {
+  	var H = Hdeg/360;     // convert from degrees to 0 to 1
+  	if (S==0) {       // HSV values = From 0 to 1
+		R = V*255;     // RGB results = From 0 to 255
+		G = V*255;
+		B = V*255;
+	} else {
+    	var_h = H*6;
+    	var_i = Math.floor( var_h );     //Or ... var_i = floor( var_h )
+    	var_1 = V*(1-S);
+    	var_2 = V*(1-S*(var_h-var_i));
+    	var_3 = V*(1-S*(1-(var_h-var_i)));
+    	if (var_i==0)      {var_r=V ;    var_g=var_3; var_b=var_1}
+    	else if (var_i==1) {var_r=var_2; var_g=V;     var_b=var_1}
+    	else if (var_i==2) {var_r=var_1; var_g=V;     var_b=var_3}
+    	else if (var_i==3) {var_r=var_1; var_g=var_2; var_b=V}
+    	else if (var_i==4) {var_r=var_3; var_g=var_1; var_b=V}
+    	else {var_r=V;     var_g=var_1; var_b=var_2}
+    	R = Math.round(var_r*255);   //RGB results = From 0 to 255
+    	G = Math.round(var_g*255);
+    	B = Math.round(var_b*255);
+  	}
+  	return new Array(R,G,B);
+}
+
+n2i.Color.rgb2hex = function(rgbary) {
+	var c = '#';
+  	for (i=0; i < 3; i++) {
+		var str = parseInt(rgbary[i]).toString(16);
+    	if (str.length < 2) {
+			str = '0'+str;
+		}
+		c+=str;
+  	}
+  	return c;
 }
 
 
@@ -6933,7 +6985,7 @@ In2iGui.prototype = {
 	/** @private */
 	resize : function() {
 		if (!this.overflows) {return;}
-		var height = n2i.getInnerHeight();
+		var height = n2i.getViewPortHeight();
 		for (var i=0; i < this.overflows.length; i++) {
 			var overflow = this.overflows[i];
 			if (n2i.browser.webkit || n2i.browser.gecko) {
@@ -7448,6 +7500,7 @@ In2iGui.extend = function(obj,options) {
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		n2i.addToArray(this.delegates,delegate);
+		return this;
 	}
 	obj.removeDelegate = function(delegate) {
 		n2i.removeFromArray(this.delegates,delegate);
@@ -7871,10 +7924,10 @@ In2iGui.ImageViewer.prototype = {
 	/** @private */
 	calculateSize : function() {
 		var snap = this.options.sizeSnap;
-		var newWidth = n2i.getInnerWidth()-this.options.perimeter;
+		var newWidth = n2i.getViewPortWidth()-this.options.perimeter;
 		newWidth = Math.floor(newWidth/snap)*snap;
 		newWidth = Math.min(newWidth,this.options.maxWidth);
-		var newHeight = n2i.getInnerHeight()-this.options.perimeter;
+		var newHeight = n2i.getViewPortHeight()-this.options.perimeter;
 		newHeight = Math.floor(newHeight/snap)*snap;
 		newHeight = Math.min(newHeight,this.options.maxHeight);
 		var maxWidth = 0;
@@ -8152,7 +8205,7 @@ In2iGui.Box.prototype = {
 		if (this.options.absolute) {
 			n2i.setStyle(e,{display:'block',visibility:'hidden'});
 			var w = e.clientWidth;
-			var top = (n2i.getInnerHeight()-e.clientHeight)/2+n2i.getScrollTop();
+			var top = (n2i.getViewPortHeight()-e.clientHeight)/2+n2i.getScrollTop();
 			n2i.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
 			n2i.setStyle(e,{display:'block',visibility:'visible'});
 		} else {

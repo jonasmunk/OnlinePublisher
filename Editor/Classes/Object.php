@@ -623,41 +623,6 @@ class Object {
 		return $list;
 	}
 
-	/**
-	 * @deprecated
-	 */
-    function search($query = array()) {
-    	global $basePath;
-		$list = array();
-    	$sql = "select id,type from object";
-		$where = array();
-		if (isset($query['type'])) {
-			$where[] = "type=".Database::text($query['type']);
-		}
-		if (isset($query['query'])) {
-			$where[] = "`index` like ".Database::search($query['query']);
-		}
-		if (count($where)>0) {
-			$sql.=' where '.implode(' and ',$where);
-		}
-		$sql.= " order by title";
-		if (isset($query['windowSize']) && isset($query['windowNumber'])) {
-			
-		}
-		$result = Database::select($sql);
-    	while ($row = Database::next($result)) {
-			if ($row['type']!='') {
-	    		$unique = ucfirst($row['type']);
-	    		require_once($basePath.'Editor/Classes/'.$unique.'.php');
-	    		$class = new $unique;
-	    		$object = $class->load($row['id']);
-				$list[] = $object;
-			}
-    	}
-		Database::free($result);
-    	return $list;
-    }
-
 	// This is the moast modern implementation
 	function retrieve($query = array()) {
     	global $basePath;

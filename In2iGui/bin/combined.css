@@ -3799,6 +3799,7 @@ div.in2igui_gallery_item img
 {
 	display: block;
 	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
+	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
 }
 
 div.in2igui_gallery_item:hover
@@ -4824,19 +4825,71 @@ a.in2igui_bar_button:hover span.in2igui_bar_button_text
 	color: #000;
 }
 
-div.in2igui_bar  a.in2igui_bar_button_highlighted, div.in2igui_bar a.in2igui_bar_button_highlighted:hover
+div.in2igui_bar  a.in2igui_bar_button_selected, div.in2igui_bar a.in2igui_bar_button_selected:hover
 {
 	background: url('../gfx/bar_light.png') left -90px repeat-x;
 }
 
-a.in2igui_bar_button_highlighted span.in2igui_icon_1
+a.in2igui_bar_button_selected span.in2igui_icon_1
 {
 	background-position: 0 -32px;
 }
 
-a.in2igui_bar_button_highlighted span.in2igui_bar_button_text
+a.in2igui_bar_button_selected span.in2igui_bar_button_text
 {
 	color: #0054a6;	
+}
+
+/******************* window variant ***************/
+
+div.in2igui_bar_window
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	height: 24px;
+}
+
+div.in2igui_bar_window div.in2igui_bar_body
+{
+	background: none;
+	height: 24px;
+}
+
+div.in2igui_bar_window div.in2igui_bar_left
+{
+	height: 24px;
+}
+
+
+div.in2igui_bar_window a.in2igui_bar_button
+{
+	height: 24px;
+	line-height: 24px;
+	background: none;
+	border: 1px solid transparent;
+	border-width: 0 1px;
+	padding: 0 4px;	
+}
+
+div.in2igui_bar_window a.in2igui_bar_button:hover
+{
+	background: #eee;
+	border-color: #ddd;
+}
+
+div.in2igui_bar_window a.in2igui_bar_button_selected, div.in2igui_bar_window a.in2igui_bar_button_selected:hover
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#bbb), to(#ddd));
+	border-color: #bbb;
+}
+
+div.in2igui_bar_window_top
+{
+	border-top: 1px solid #ddd;
+}
+
+div.in2igui_bar_window_bottom
+{
+	border-top: 1px solid #ddd;
 }
 
 /******************* Mini variant *****************/
@@ -4863,6 +4916,12 @@ div.in2igui_bar_mini a.in2igui_bar_button
 	background: none;
 	padding: 0 2px;
 }
+
+div.in2igui_bar_mini span.in2igui_bar_button_text
+{
+	font-size: 11px;
+}
+
 
 div.in2igui_bar_mini a.in2igui_bar_button:hover
 {
@@ -5134,4 +5193,82 @@ div.in2igui_links_row:hover span.in2igui_links_remove
 .in2igui_flip_flipped .in2igui_flip_front
 {
 	-webkit-transform : rotateY(180deg);
+}
+div.in2igui_colorpicker
+{
+	margin-bottom: -3px;
+	border: 1px solid #ddd;
+}
+
+div.in2igui_colorpicker_preview
+{
+	height: 24px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-width: 1px 0 0;
+}
+
+div.in2igui_colorpicker_pages
+{
+	width: 256px;
+	height: 256px;
+	padding: 10px;
+	background: #fff;
+	border-top: 1px solid #ddd;
+}
+
+div.in2igui_colorpicker_page
+{
+	width: 256px;
+	height: 256px;
+	display: none;
+}
+
+div.in2igui_colorpicker_wheel1
+{
+	background-image: url('../gfx/colorwheel1.png');
+	cursor: crosshair;
+	display: block;
+}
+
+div.in2igui_colorpicker_wheel2
+{
+	background-image: url('../gfx/colorwheel2.png');
+	cursor: crosshair;
+}
+
+div.in2igui_colorpicker_wheel3
+{
+	background-image: url('../gfx/colorwheel3_2.png');
+	cursor: crosshair;
+}
+
+input.in2igui_colorpicker
+{
+	margin: 3px 3px 0 0;
+	width: 50px;
+	color: #999;
+	padding: 0 2px;
+	border: 1px solid #ccc;
+	font-size: 11px;
+	font-family: monospace;
+	height: 16px;
+	float: right;
+}
+
+div.in2igui_colorpicker_swatches
+{
+	font-size: 0;
+	width: 260px;
+	margin-left: -2px;
+	margin-top: -2px;
+	cursor: crosshair;
+}
+
+div.in2igui_colorpicker_swatches a
+{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid #fff;
 }

@@ -2,15 +2,50 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:In2iGui" title="Box">
 	<bar>
-		<button icon="common/delete" text="Hep hey!"/>
-		<button icon="common/delete" text="Hep hey!"/>
-		<button icon="common/delete" text="Hep hey!"/>
+		<button icon="common/edit" text="Edit"/>
+		<button icon="common/delete" text="Delete"/>
+		<button icon="common/color" text="Color"/>
 		<button icon="common/internet"/>
 		<checkbox text="djslkfjksdjl"/>
+		<searchfield/>
 		<right>
 			<button icon="common/delete" text="Hep hey!" highlighted="true"/>
 			<button icon="common/delete" text="Hep hey!"/>
 			<button icon="common/delete" text="Hep hey!"/>
 		</right>
 	</bar>
+	<space all="50">
+	<bar variant="mini">
+		<button icon="common/edit" text="Edit"/>
+		<button icon="common/delete" text="Delete"/>
+		<button icon="common/color" text="Color"/>
+		<button icon="common/internet"/>
+		<checkbox text="djslkfjksdjl"/>
+	</bar>
+	</space>
+	
+	<window name="win" height="200" width="400">
+		<bar variant="window">
+			<button icon="common/delete" text="Delete" name="delete"/>
+			<button icon="colorpicker/wheel_saturated"/>
+			<button icon="colorpicker/wheel_pastels" name="wheelPastels" selected="true"/>
+			<button icon="colorpicker/wheel_brightness" name="wheelBrightness"/>
+		</bar>
+	</window>
+
+	<listen for="wheelBrightness">
+		<click>
+			wheelPastels.setSelected(false);
+			wheelBrightness.setSelected(true);
+		</click>
+	</listen>
+	<listen for="wheelPastels">
+		<click>
+			wheelPastels.setSelected(true);
+			wheelBrightness.setSelected(false);
+		</click>
+	</listen>
+	<script>
+		win.show();
+	</script>
 </gui>

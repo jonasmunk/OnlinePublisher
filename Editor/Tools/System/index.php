@@ -58,8 +58,17 @@ $gui='
 				<overflow>
 					<list name="list" source="allObjectsSource" state="list"/>
 					<fragment state="settings" height="full" background="brushed">
-						<box width="360" top="30" variant="rounded">
+						<box width="500" top="30" variant="rounded">
 							<tabs small="true" centered="true">
+								<tab title="Brugergrænseflade">
+									<space all="10" bottom="5">
+										<formula name="uiFormula">
+											<group>
+												<checkbox key="experimentalRichText" label="Moderne rig tekst editor:"/>
+											</group>
+										</formula>
+									</space>
+								</tab>
 								<tab title="E-mail">
 									<space all="10" bottom="5">
 										<formula name="emailFormula">

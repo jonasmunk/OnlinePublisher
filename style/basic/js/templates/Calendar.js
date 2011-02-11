@@ -21,7 +21,7 @@ op.CalendarTemplate = function() {
 
 op.CalendarTemplate.prototype.windowWasScrolled = function() {
 	var top = n2i.getScrollTop();
-	var height = n2i.getInnerHeight();
+	var height = n2i.getViewPortHeight();
 	var bottom = top+height;
 	for (var i=0;i<this.days.length;i++) {
 		if (this.maxDayEvents[i]>bottom) {

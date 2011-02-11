@@ -7,6 +7,8 @@
 			<toolbar>
 				<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
 				<divider/>
+				<icon icon="common/user" title="List users" selected="true"/>
+				<divider/>
 				<icon icon="common/user" title="List users" action="list.setUrl('data/list_users.xml')"/>
 				<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')"/>
 				<icon icon="common/color" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
