@@ -5166,14 +5166,11 @@ n2i.dom = {
 			if (!updated && c[i].nodeType==n2i.TEXT_NODE) {
 				c[i].nodeValue=text;
 				updated = true;
-				n2i.log('updated: '+i);
 			} else {
-				n2i.log('removed: '+i);
 				node.removeChild(c[i]);
 			}
 		}
 		if (!updated) {
-			n2i.log('adding, not updated');
 			n2i.dom.addText(node,text);
 		}
 	},
@@ -5458,7 +5455,7 @@ n2i.unListen = function(el,type,listener,useCapture) {
 }
 
 n2i.event = function(event) {
-	return new n2i.Event();
+	return new n2i.Event(event);
 }
 
 n2i.Event = function(event) {

@@ -4845,6 +4845,7 @@ a.in2igui_bar_button_selected span.in2igui_bar_button_text
 div.in2igui_bar_window
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
 	height: 24px;
 }
 
@@ -4879,6 +4880,7 @@ div.in2igui_bar_window a.in2igui_bar_button:hover
 div.in2igui_bar_window a.in2igui_bar_button_selected, div.in2igui_bar_window a.in2igui_bar_button_selected:hover
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#bbb), to(#ddd));
+	background: -moz-linear-gradient(top, #bbb, #ddd);
 	border-color: #bbb;
 }
 
