@@ -270,14 +270,11 @@ n2i.dom = {
 			if (!updated && c[i].nodeType==n2i.TEXT_NODE) {
 				c[i].nodeValue=text;
 				updated = true;
-				n2i.log('updated: '+i);
 			} else {
-				n2i.log('removed: '+i);
 				node.removeChild(c[i]);
 			}
 		}
 		if (!updated) {
-			n2i.log('adding, not updated');
 			n2i.dom.addText(node,text);
 		}
 	},
