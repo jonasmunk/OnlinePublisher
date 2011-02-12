@@ -7,7 +7,7 @@
  >
 
 	<xsl:template match="rt:richtext">
-		<div class="part_richtext">
+		<div class="part_richtext common_font">
 		<xsl:choose>
 			<xsl:when test="@valid='false'">
 				<xsl:value-of select="." disable-output-escaping = "yes"/>
