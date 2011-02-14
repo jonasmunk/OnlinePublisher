@@ -31,3 +31,44 @@
 {
 	-webkit-transform : rotateY(180deg);
 }
+
+/********** Cubic *********/
+
+.in2igui_effect_cube
+{
+	-webkit-transform-style : preserve-3d; 
+	-webkit-transition-property : -webkit-transform;
+	-webkit-perspective: 1000;
+	-webkit-backface-visibility : hidden;
+}
+
+.in2igui_effect_cube_face
+{
+  -webkit-transition-duration: 1000ms;
+	position: absolute;
+}
+
+.in2igui_effect_cube_run .in2igui_effect_cube_face
+{
+  -webkit-transition-duration: 1000ms;
+}
+
+.in2igui_effect_cube_face_out
+{
+  -webkit-transform: translateZ(-256px) rotateY(0deg) translateZ(256px);
+}
+
+.in2igui_effect_cube_face_in
+{
+  -webkit-transform: translateZ(-256px) rotateY(90deg) translateZ(256px);
+}
+
+.in2igui_effect_cube_run .in2igui_effect_cube_face_out
+{
+  -webkit-transform: translateZ(-256px) rotateY(-90deg) translateZ(256px);
+}
+
+.in2igui_effect_cube_run .in2igui_effect_cube_face_in
+{
+  -webkit-transform: translateZ(-256px) rotateY(0deg) translateZ(256px);
+}

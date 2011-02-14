@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>In2iGui</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+</style>
+</head>
+
+<body>
+	<button onclick="n2i.toggleClass('cube','in2igui_effect_cube_run')">Cube!</button>
+
+<div id="cube" class="in2igui_effect_cube" style="width: 512px; height: 512px;">
+	<div class="in2igui_effect_cube_face in2igui_effect_cube_face_in" style="background: blue; width: 512px; height: 512px;">
+		Incomming
+	</div>
+	<div class="in2igui_effect_cube_face in2igui_effect_cube_face_out" style="background: red; width: 512px; height: 512px;">
+		Outgoing
+	</div>
+</div>
+<script>
+	//n2i.effect.cube.make({element:'cube'});
+</script>
+</body>
+</html>
