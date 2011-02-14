@@ -56,10 +56,9 @@ In2iGui.Bar.Button = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
 	this.element = n2i.get(options.element);
-	n2i.listen(this.element,'click',this.onClick.bind(this));
-	if (this.options.stopEvents) {
-		n2i.listen(this.element,'mousedown',function(e) {n2i.stop(e)});
-	}
+	n2i.listen(this.element,'click',this._click.bind(this));
+	n2i.listen(this.element,'mousedown',this._mousedown.bind(this));
+	n2i.listen(this.element,'mouseup',function(e) {n2i.stop(e)});
 	In2iGui.extend(this);
 };
 
@@ -73,7 +72,13 @@ In2iGui.Bar.Button.create = function(options) {
 }
 
 In2iGui.Bar.Button.prototype = {
-	onClick : function(e) {
+	_mousedown : function(e) {
+		this.fire('mousedown');
+		if (this.options.stopEvents) {
+			n2i.stop(e);
+		}
+	},
+	_click : function(e) {
 		this.fire('click');
 		if (this.options.stopEvents) {
 			n2i.stop(e);

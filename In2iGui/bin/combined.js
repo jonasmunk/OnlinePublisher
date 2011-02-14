@@ -16182,10 +16182,9 @@ In2iGui.Bar.Button = function(options) {
 	this.options = n2i.override({},options);
 	this.name = options.name;
 	this.element = n2i.get(options.element);
-	n2i.listen(this.element,'click',this.onClick.bind(this));
-	if (this.options.stopEvents) {
-		n2i.listen(this.element,'mousedown',function(e) {n2i.stop(e)});
-	}
+	n2i.listen(this.element,'click',this._click.bind(this));
+	n2i.listen(this.element,'mousedown',this._mousedown.bind(this));
+	n2i.listen(this.element,'mouseup',function(e) {n2i.stop(e)});
 	In2iGui.extend(this);
 };
 
@@ -16199,7 +16198,13 @@ In2iGui.Bar.Button.create = function(options) {
 }
 
 In2iGui.Bar.Button.prototype = {
-	onClick : function(e) {
+	_mousedown : function(e) {
+		this.fire('mousedown');
+		if (this.options.stopEvents) {
+			n2i.stop(e);
+		}
+	},
+	_click : function(e) {
 		this.fire('click');
 		if (this.options.stopEvents) {
 			n2i.stop(e);
@@ -16863,14 +16868,19 @@ In2iGui.MarkupEditor = function(options) {
 		options.replace.style.display='none';
 		options.value = options.replace.innerHTML;
 	}
+	this.ready = false;
+	this.pending = [];
 	this.element = n2i.get(options.element);
-	this.impl = In2iGui.MarkupEditor.webkit;
+	if (n2i.browser.msie) {
+		this.impl = In2iGui.MarkupEditor.MSIE;
+	} else {
+		this.impl = In2iGui.MarkupEditor.webkit;
+	}
 	this.impl.initialize({element:this.element,controller:this});
-	if (options.value) {
-		this.impl.setHTML(options.value);
+	if (this.options.value) {
+		this.setValue(this.options.value);
 	}
 	In2iGui.extend(this);
-	this.addBehavior();
 }
 
 In2iGui.MarkupEditor.create = function(options) {
@@ -16880,24 +16890,41 @@ In2iGui.MarkupEditor.create = function(options) {
 }
 
 In2iGui.MarkupEditor.prototype = {
-	addBehavior : function() {
-		
+	implIsReady : function() {
+		this.ready = true;
+		n2i.log('I am ready!');
+		for (var i=0; i < this.pending.length; i++) {
+			n2i.log(this.pending[i]);
+			this.pending[i]();
+		};
+	},
+	implFocused : function() {
+		this.showBar();
+	},
+	implBlurred : function() {
+		this.bar.hide();
+		this.fire('blur');
+	},
+	implValueChanged : function() {
+		this._valueChanged();
 	},
 	getValue : function() {
 		return this.impl.getHTML();
 	},
 	setValue : function(value) {
-		this.impl.setHTML(value);
+		this._whenReady(function() {
+			this.impl.setHTML(value);
+		}.bind(this));
+	},
+	_whenReady : function(func) {
+		if (this.ready) {
+			func();
+		} else {
+			this.pending.push(func);
+		}
 	},
 	focus : function() {
-		this.impl.focus();
-	},
-	focused : function() {
-		this.showBar();
-	},
-	blurred : function() {
-		this.bar.hide();
-		this.fire('blur');
+		this._whenReady(this.impl.focus.bind(this.impl));
 	},
 	showBar : function() {
 		if (!this.bar) {
@@ -16911,8 +16938,8 @@ In2iGui.MarkupEditor.prototype = {
 				{key:'align',value:'center',icon:'edit/text_align_center'},
 				{key:'align',value:'right',icon:'edit/text_align_right'},
 				{key:'align',value:'justify',icon:'edit/text_align_justify'},
-				{key:'clear',icon:'monochrome/round_x'},
-				{key:'strong',icon:'edit/text_bold'}
+				{key:'clear',icon:'edit/clear'}/*,
+				{key:'strong',icon:'edit/text_bold'}*/
 				
 				
 				/*,
@@ -16923,7 +16950,7 @@ In2iGui.MarkupEditor.prototype = {
 			n2i.each(things,function(info) {
 				var button = new In2iGui.Bar.Button.create({icon:info.icon,stopEvents:true});
 				button.listen({
-					$click:function() {this._buttonClicked(info)}.bind(this)
+					$mousedown : function() { this._buttonClicked(info) }.bind(this)
 				});
 				this.bar.add(button);
 			}.bind(this));
@@ -16933,6 +16960,7 @@ In2iGui.MarkupEditor.prototype = {
 		this.bar.show();
 	},
 	_buttonClicked : function(info) {
+		this.impl.saveSelection();
 		if (info.key=='color') {
 			this._showColorPicker();
 		} else if (info.key=='addLink') {
@@ -16945,6 +16973,7 @@ In2iGui.MarkupEditor.prototype = {
 			this.impl.format(info);
 		}
 		this._valueChanged();
+		this.impl.restoreSelection();
 	},
 	_showColorPicker : function() {
 		if (!this.colorPicker) {
@@ -16952,6 +16981,11 @@ In2iGui.MarkupEditor.prototype = {
 			var picker = In2iGui.ColorPicker.create();
 			picker.listen(this);
 			this.colorPicker.add(picker);
+			this.colorPicker.listen({
+				$userClosedWindow : function() {
+						this.impl.restoreSelection();
+				}.bind(this)
+			})
 		}
 		this.colorPicker.show({avoid:this.element});
 	},
@@ -16983,8 +17017,10 @@ In2iGui.MarkupEditor.prototype = {
 		this._valueChanged();
 	},
 	$colorWasSelected : function(color) {
-		this.impl.colorize(color);
-		this._valueChanged();
+		this.impl.restoreSelection(function() {
+			this.impl.colorize(color);
+			this._valueChanged();
+		}.bind(this));
 	},
 	_valueChanged : function() {
 		this.fire('valueChanged',this.impl.getHTML());		
@@ -16998,12 +17034,19 @@ In2iGui.MarkupEditor.webkit = {
 		this.element.contentEditable = true;
 		var ctrl = this.controller = options.controller;
 		n2i.listen(this.element,'focus',function() {
-			ctrl.focused();
+			ctrl.implFocused();
 		});
 		n2i.listen(this.element,'blur',function() {
-			ctrl.blurred();
+			ctrl.implBlurred();
 		});
 		n2i.listen(this.element,'keyup',this._keyUp.bind(this));
+		ctrl.implIsReady();
+	},
+	saveSelection : function() {
+		
+	},
+	restoreSelection : function(callback) {
+		if (callback) {callback()}
 	},
 	focus : function() {
 		this.element.focus();
@@ -17035,7 +17078,6 @@ In2iGui.MarkupEditor.webkit = {
 		return ancestor;
 	},
 	colorize : function(color) {
-		n2i.log(color);
 		document.execCommand('forecolor',null,color);
 	},
 	align : function(value) {
@@ -17043,7 +17085,7 @@ In2iGui.MarkupEditor.webkit = {
 		document.execCommand(x[value],null,null);
 	},
 	_keyUp : function() {
-		this.controller._valueChanged();
+		this.controller.implValueChanged();
 		this._selectionChanged();
 	},
 	_wrapInTag : function(tag) {
@@ -17097,21 +17139,46 @@ In2iGui.MarkupEditor.webkit = {
 	}
 }
 
-In2iGui.MarkupEditor.iframe = {
+In2iGui.MarkupEditor.MSIE = {
 	initialize : function(options) {
 		this.element = options.element;
-		this.iframe = n2i.build('iframe',{style:'display:block; width: 100%; border: 0;'})
-		this.element.contentEditable = true;
+		this.iframe = n2i.build('iframe',{style:'display:block; width: 100%; border: 0;',parent:this.element})
+		n2i.listen(this.iframe,'load',this._load.bind(this));
 		var ctrl = this.controller = options.controller;
-		n2i.listen(this.element,'focus',function() {
-			ctrl.focused();
-		});
-		n2i.listen(this.element,'blur',function() {
-			ctrl.blurred();
-		});
+	},
+	saveSelection : function() {
+		this.savedRange = this.document.selection.createRange();
+		//this.savedSelection = this.document.selection.createRange().getBookmark();
+	},
+	restoreSelection : function(callback) {
+		window.setTimeout(function() {
+			this.body.focus();
+			this.savedRange.select();
+			if (callback) {callback()};
+		}.bind(this));
+	},
+	_load : function() {
+		this.document = n2i.getFrameDocument(this.iframe);
+		this.body = this.document.body;
+		this.body.contentEditable = true;
+		n2i.listen(this.body,'keyup',this._keyUp.bind(this));
+		n2i.listen(this.body,'mouseup',this._mouseUp.bind(this));
+		this.controller.implIsReady();
+	},
+	_keyUp : function() {
+		this.controller.implValueChanged();	
+		this.saveSelection();	
+	},
+	_mouseUp : function() {
+		this.saveSelection();
 	},
 	focus : function() {
-		this.element.focus();
+		this.body.focus();
+		this.controller.implFocused();
+	},
+	align : function(value) {
+		var x = {center:'justifycenter',justify:'justifyfull',left:'justifyleft',right:'justifyright'};
+		this.document.execCommand(x[value],null,null);
 	},
 	format : function(info) {
 		if (info.key=='strong' || info.key=='em') {
@@ -17119,8 +17186,15 @@ In2iGui.MarkupEditor.iframe = {
 		} else if (info.key=='insert-table') {
 			this._insertHTML('<table><tbody><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td></tr></tbody></table>');
 		} else {
-			document.execCommand(info.key,null,null);
+			this.document.execCommand(info.key,null,null);
 		}
+	},
+	removeFormat : function() {
+		this.document.execCommand('removeFormat',null,null);
+	},
+	colorize : function(color) {
+		this.document.execCommand('forecolor',null,color);
+		this.restoreSelection();
 	},
 	_wrapInTag : function(tag) {
 		document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');
@@ -17129,9 +17203,11 @@ In2iGui.MarkupEditor.iframe = {
 		document.execCommand('inserthtml',null,html);
 	},
 	setHTML : function(html) {
-		this.element.innerHTML = html;
+		this.body.innerHTML = html;
 	},
 	getHTML : function() {
+		var cleaned = In2iGui.MarkupEditor.util.clean(this.body);
+		return cleaned.innerHTML;
 	}
 }
 
@@ -17145,6 +17221,7 @@ In2iGui.MarkupEditor.util = {
 		for (var i = apples.length - 1; i >= 0; i--){
 			apples[i].removeAttribute('class');
 		};
+		this.convertAttributesToStyle(copy);
 		return copy;
 	},
 	replaceNodes : function(node,recipe) {
@@ -17159,6 +17236,17 @@ In2iGui.MarkupEditor.util = {
 				n2i.dom.replaceNode(bs[i],replacement);
 			};
 		}
+	},
+	convertAttributesToStyle : function(node) {
+		var all = node.getElementsByTagName('*');
+		for (var i=0; i < all.length; i++) {
+			var n = all[i];
+			var align = n.getAttribute('align');
+			if (align) {
+				n.style.textAlign = align;
+				n.removeAttribute('align');
+			}
+		};
 	}
 }
 
