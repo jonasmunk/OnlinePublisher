@@ -288,7 +288,7 @@ In2iGui.DatePicker.create = function(options) {
 	for (var i=0;i<6;i++) {
 		var row = n2i.build('tr',{parent:body});
 		for (var j=0;j<7;j++) {
-			var cell = n2i.build('td',{parent:row});
+			n2i.build('td',{parent:row});
 		}
 	}
 	return new In2iGui.DatePicker(options);
@@ -330,7 +330,7 @@ In2iGui.DatePicker.prototype = {
 				n2i.addClass(cell,'in2igui_datepicker_selected');
 			}
 			if (date.getDate()==this.today.getDate() && date.getMonth()==this.today.getMonth() && date.getFullYear()==this.today.getFullYear()) {
-				ni2.addClass(cell,'in2igui_datepicker_today');
+				n2i.addClass(cell,'in2igui_datepicker_today');
 			}
 			n2i.dom.setText(cell,date.getDate());
 		};

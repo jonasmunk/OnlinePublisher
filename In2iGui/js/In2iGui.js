@@ -245,12 +245,13 @@ In2iGui.prototype = {
 In2iGui.confirmOverlays = {};
 
 In2iGui.confirmOverlay = function(options) {
-	var node = options.element || options.widget.getElement();
+	var node = options.element || options.widget.getElement(),
+		overlay;
 	if (In2iGui.confirmOverlays[node]) {
-		var overlay = In2iGui.confirmOverlays[node];
+		overlay = In2iGui.confirmOverlays[node];
 		overlay.clear();
 	} else {
-		var overlay = ui.Overlay.create({modal:true});
+		overlay = ui.Overlay.create({modal:true});
 		In2iGui.confirmOverlays[node] = overlay;
 	}
 	if (options.text) {
@@ -567,7 +568,8 @@ In2iGui.positionAtElement = function(element,target,options) {
 	if (origDisplay=='none') {
 		n2i.setStyle(element,{'visibility':'hidden','display':'block'});
 	}
-	var pos = left = n2i.getLeft(target),top = n2i.getTop(target);
+	var left = n2i.getLeft(target),
+		top = n2i.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
 		left = left+target.clientWidth-element.clientWidth;
@@ -588,7 +590,7 @@ In2iGui.positionAtElement = function(element,target,options) {
 In2iGui.getTextAreaHeight = function(input) {
 	var t = this.textAreaDummy;
 	if (!t) {
-		var t = this.textAreaDummy = document.createElement('div');
+		t = this.textAreaDummy = document.createElement('div');
 		t.className='in2igui_textarea_dummy';
 		document.body.appendChild(t);
 	}
@@ -743,8 +745,8 @@ In2iGui.resolveImageUrl = function(widget,img,width,height) {
 		}
 	};
 	var gui = In2iGui.get();
-	for (var i=0; i < gui.delegates.length; i++) {
-		var delegate = gui.delegates[i];
+	for (var j=0; j < gui.delegates.length; j++) {
+		var delegate = gui.delegates[j];
 		if (delegate.$resolveImageUrl) {
 			return delegate.$resolveImageUrl(img,width,height);
 		}

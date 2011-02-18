@@ -214,9 +214,9 @@ n2i.toIntArray = function(str) {
 }
 
 n2i.scrollTo = function(element) {
-	element = $(element);
+	element = n2i.get(element);
 	if (element) {
-		var pos = element.cumulativeOffset();
+		var pos = n2i.getPosition(element);
 		window.scrollTo(pos.left, pos.top-50);
 	}
 }
@@ -691,7 +691,6 @@ n2i.onReady = function(delegate) {
 n2i.request = function(options) {
 	options = n2i.override({method:'POST',async:true},options);
 	var transport = n2i.request.createTransport();
-	var self = this;
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
@@ -711,13 +710,10 @@ n2i.request = function(options) {
 	};
 	var method = options.method.toUpperCase();
 	transport.open(method, options.url, options.async);
-	var parameters = null;
 	var body = '';
     if (method=='POST' && options.parameters) {
 		body = n2i.request.buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
-		//transport.setRequestHeader("Content-length", body.length);
-		//transport.setRequestHeader("Connection", "close");
 	}
 	transport.send(body);
 }
@@ -1005,7 +1001,6 @@ n2i.place = function(options) {
 		if (top<0) {top=0}
 	}
 	
-	var src = options.source.element;
 	src.style.top=top+'px';
 	src.style.left=left+'px';
 }
@@ -1065,12 +1060,14 @@ n2i.Preloader.prototype = {
 /* @namespace */
 n2i.cookie = {
 	set : function(name,value,days) {
+		var expires;
 		if (days) {
 			var date = new Date();
 			date.setTime(date.getTime()+(days*24*60*60*1000));
-			var expires = "; expires="+date.toGMTString();
+			expires = "; expires="+date.toGMTString();
+		} else {
+			expires = "";
 		}
-		else var expires = "";
 		document.cookie = name+"="+value+expires+"; path=/";
 	},
 	get : function(name) {
@@ -1361,12 +1358,13 @@ n2i.animation.TRANSFORM = n2i.browser.gecko ? 'MozTransform' : 'WebkitTransform'
 
 n2i.animation.Item.parseTransform = function(value,element) {
 	var result = {};
+	var from,fromMatch;
 	var rotateReg = /rotate\(([0-9\.]+)([a-z]+)\)/i;
 	var rotate = value.match(rotateReg);
 	if (rotate) {
-		var from = 0;
+		from = 0;
 		if (element.style[n2i.animation.TRANSFORM]) {
-			var fromMatch = element.style[n2i.animation.TRANSFORM].match(rotateReg);
+			fromMatch = element.style[n2i.animation.TRANSFORM].match(rotateReg);
 			if (fromMatch) {
 				from = parseFloat(fromMatch[1]);
 			}
@@ -1376,9 +1374,9 @@ n2i.animation.Item.parseTransform = function(value,element) {
 	var scaleReg = /scale\(([0-9\.]+)\)/i;
 	var scale = value.match(scaleReg);
 	if (scale) {
-		var from = 1;
+		from = 1;
 		if (element.style[n2i.animation.TRANSFORM]) {
-			var fromMatch = element.style[n2i.animation.TRANSFORM].match(scaleReg);
+			fromMatch = element.style[n2i.animation.TRANSFORM].match(scaleReg);
 			if (fromMatch) {
 				from = parseFloat(fromMatch[1]);
 			}
@@ -1688,34 +1686,74 @@ n2i.Color = function(color_string) {
     }
 }
 
-n2i.Color.hsv2rgb = function (Hdeg,S,V) {
-  	var H = Hdeg/360;     // convert from degrees to 0 to 1
-  	if (S==0) {       // HSV values = From 0 to 1
-		R = V*255;     // RGB results = From 0 to 255
-		G = V*255;
-		B = V*255;
-	} else {
-    	var_h = H*6;
-    	var_i = Math.floor( var_h );     //Or ... var_i = floor( var_h )
-    	var_1 = V*(1-S);
-    	var_2 = V*(1-S*(var_h-var_i));
-    	var_3 = V*(1-S*(1-(var_h-var_i)));
-    	if (var_i==0)      {var_r=V ;    var_g=var_3; var_b=var_1}
-    	else if (var_i==1) {var_r=var_2; var_g=V;     var_b=var_1}
-    	else if (var_i==2) {var_r=var_1; var_g=V;     var_b=var_3}
-    	else if (var_i==3) {var_r=var_1; var_g=var_2; var_b=V}
-    	else if (var_i==4) {var_r=var_3; var_g=var_1; var_b=V}
-    	else {var_r=V;     var_g=var_1; var_b=var_2}
-    	R = Math.round(var_r*255);   //RGB results = From 0 to 255
-    	G = Math.round(var_g*255);
-    	B = Math.round(var_b*255);
-  	}
-  	return new Array(R,G,B);
+n2i.Color.hsv2rgb = function (h,s,v) {
+  	s = s / 100;
+	v = v / 100;
+
+    var hi = Math.floor((h/60) % 6);
+    var f = (h / 60) - hi;
+    var p = v * (1 - s);
+    var q = v * (1 - f * s);
+    var t = v * (1 - (1 - f) * s);
+
+    var rgb = [];
+
+    switch (hi) {
+        case 0: rgb = [v,t,p];break;
+        case 1: rgb = [q,v,p];break;
+        case 2: rgb = [p,v,t];break;
+        case 3: rgb = [p,q,v];break;
+        case 4: rgb = [t,p,v];break;
+        case 5: rgb = [v,p,q];break;
+    }
+
+    var r = Math.min(255, Math.round(rgb[0]*256)),
+        g = Math.min(255, Math.round(rgb[1]*256)),
+        b = Math.min(255, Math.round(rgb[2]*256));
+
+    return [r,g,b];
+}
+
+n2i.Color.rgb2hsv = function(r, g, b) {
+
+    r = (r / 255);
+    g = (g / 255);
+	b = (b / 255);	
+
+    var min = Math.min(Math.min(r, g), b),
+        max = Math.max(Math.max(r, g), b),
+		value = max,
+        saturation,
+        hue;
+
+    // Hue
+    if (max == min) {
+        hue = 0;
+    } else if (max == r) {
+        hue = (60 * ((g-b) / (max-min))) % 360;
+    } else if (max == g) {
+        hue = 60 * ((b-r) / (max-min)) + 120;
+    } else if (max == b) {
+        hue = 60 * ((r-g) / (max-min)) + 240;
+    }
+
+    if (hue < 0) {
+        hue += 360;
+    }
+
+    // Saturation
+    if (max == 0) {
+        saturation = 0;
+    } else {
+        saturation = 1 - (min/max);
+    }
+
+    return [Math.round(hue), Math.round(saturation * 100), Math.round(value * 100)];
 }
 
 n2i.Color.rgb2hex = function(rgbary) {
 	var c = '#';
-  	for (i=0; i < 3; i++) {
+  	for (var i=0; i < 3; i++) {
 		var str = parseInt(rgbary[i]).toString(16);
     	if (str.length < 2) {
 			str = '0'+str;

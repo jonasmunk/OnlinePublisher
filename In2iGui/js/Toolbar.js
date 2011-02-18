@@ -198,7 +198,7 @@ In2iGui.Toolbar.SearchField.prototype = {
 
 /** @constructor */
 In2iGui.Toolbar.Badge = function(options) {
-	this.element = ni2.get(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.label = n2i.firstByTag(this.element,'strong');
 	this.text = n2i.firstByTag(this.element,'span');

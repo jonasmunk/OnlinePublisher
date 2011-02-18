@@ -166,7 +166,8 @@ In2iGui.Editor.prototype = {
 	
 	editColumn : function(rowIndex,columnIndex) {
 		this.closeColumn();
-		var c = this.activeColumn = $$('.row')[rowIndex].select('.column')[columnIndex];
+		var row = n2i.byClass(document.body,'row')[rowIndex];
+		var c = this.activeColumn = n2i.byClass(row,'column')[columnIndex];
 		n2i.addClass(c,'in2igui_editor_column_edit');
 		this.showColumnWindow();
 		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});

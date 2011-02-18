@@ -46,7 +46,7 @@ In2iGui.RichText.actions = [
 
 In2iGui.RichText.replaceInput = function(options) {
 	options = options || {};
-	var input = $(options.input);
+	var input = n2i.get(options.input);
 	input.style.display='none';
 	options.value = input.value;
 	var obj = In2iGui.RichText.create(options);

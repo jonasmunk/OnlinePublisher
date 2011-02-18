@@ -5110,9 +5110,9 @@ n2i.toIntArray = function(str) {
 }
 
 n2i.scrollTo = function(element) {
-	element = $(element);
+	element = n2i.get(element);
 	if (element) {
-		var pos = element.cumulativeOffset();
+		var pos = n2i.getPosition(element);
 		window.scrollTo(pos.left, pos.top-50);
 	}
 }
@@ -5587,7 +5587,6 @@ n2i.onReady = function(delegate) {
 n2i.request = function(options) {
 	options = n2i.override({method:'POST',async:true},options);
 	var transport = n2i.request.createTransport();
-	var self = this;
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
@@ -5607,13 +5606,10 @@ n2i.request = function(options) {
 	};
 	var method = options.method.toUpperCase();
 	transport.open(method, options.url, options.async);
-	var parameters = null;
 	var body = '';
     if (method=='POST' && options.parameters) {
 		body = n2i.request.buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
-		//transport.setRequestHeader("Content-length", body.length);
-		//transport.setRequestHeader("Connection", "close");
 	}
 	transport.send(body);
 }
@@ -5901,7 +5897,6 @@ n2i.place = function(options) {
 		if (top<0) {top=0}
 	}
 	
-	var src = options.source.element;
 	src.style.top=top+'px';
 	src.style.left=left+'px';
 }
@@ -5961,12 +5956,14 @@ n2i.Preloader.prototype = {
 /* @namespace */
 n2i.cookie = {
 	set : function(name,value,days) {
+		var expires;
 		if (days) {
 			var date = new Date();
 			date.setTime(date.getTime()+(days*24*60*60*1000));
-			var expires = "; expires="+date.toGMTString();
+			expires = "; expires="+date.toGMTString();
+		} else {
+			expires = "";
 		}
-		else var expires = "";
 		document.cookie = name+"="+value+expires+"; path=/";
 	},
 	get : function(name) {
@@ -6257,12 +6254,13 @@ n2i.animation.TRANSFORM = n2i.browser.gecko ? 'MozTransform' : 'WebkitTransform'
 
 n2i.animation.Item.parseTransform = function(value,element) {
 	var result = {};
+	var from,fromMatch;
 	var rotateReg = /rotate\(([0-9\.]+)([a-z]+)\)/i;
 	var rotate = value.match(rotateReg);
 	if (rotate) {
-		var from = 0;
+		from = 0;
 		if (element.style[n2i.animation.TRANSFORM]) {
-			var fromMatch = element.style[n2i.animation.TRANSFORM].match(rotateReg);
+			fromMatch = element.style[n2i.animation.TRANSFORM].match(rotateReg);
 			if (fromMatch) {
 				from = parseFloat(fromMatch[1]);
 			}
@@ -6272,9 +6270,9 @@ n2i.animation.Item.parseTransform = function(value,element) {
 	var scaleReg = /scale\(([0-9\.]+)\)/i;
 	var scale = value.match(scaleReg);
 	if (scale) {
-		var from = 1;
+		from = 1;
 		if (element.style[n2i.animation.TRANSFORM]) {
-			var fromMatch = element.style[n2i.animation.TRANSFORM].match(scaleReg);
+			fromMatch = element.style[n2i.animation.TRANSFORM].match(scaleReg);
 			if (fromMatch) {
 				from = parseFloat(fromMatch[1]);
 			}
@@ -6584,29 +6582,69 @@ n2i.Color = function(color_string) {
     }
 }
 
-n2i.Color.hsv2rgb = function (Hdeg,S,V) {
-  	var H = Hdeg/360;     // convert from degrees to 0 to 1
-  	if (S==0) {       // HSV values = From 0 to 1
-		R = V*255;     // RGB results = From 0 to 255
-		G = V*255;
-		B = V*255;
-	} else {
-    	var_h = H*6;
-    	var_i = Math.floor( var_h );     //Or ... var_i = floor( var_h )
-    	var_1 = V*(1-S);
-    	var_2 = V*(1-S*(var_h-var_i));
-    	var_3 = V*(1-S*(1-(var_h-var_i)));
-    	if (var_i==0)      {var_r=V ;    var_g=var_3; var_b=var_1}
-    	else if (var_i==1) {var_r=var_2; var_g=V;     var_b=var_1}
-    	else if (var_i==2) {var_r=var_1; var_g=V;     var_b=var_3}
-    	else if (var_i==3) {var_r=var_1; var_g=var_2; var_b=V}
-    	else if (var_i==4) {var_r=var_3; var_g=var_1; var_b=V}
-    	else {var_r=V;     var_g=var_1; var_b=var_2}
-    	R = Math.round(var_r*255);   //RGB results = From 0 to 255
-    	G = Math.round(var_g*255);
-    	B = Math.round(var_b*255);
-  	}
-  	return new Array(R,G,B);
+n2i.Color.hsv2rgb = function (h,s,v) {
+  	s = s / 100;
+	v = v / 100;
+
+    var hi = Math.floor((h/60) % 6);
+    var f = (h / 60) - hi;
+    var p = v * (1 - s);
+    var q = v * (1 - f * s);
+    var t = v * (1 - (1 - f) * s);
+
+    var rgb = [];
+
+    switch (hi) {
+        case 0: rgb = [v,t,p];break;
+        case 1: rgb = [q,v,p];break;
+        case 2: rgb = [p,v,t];break;
+        case 3: rgb = [p,q,v];break;
+        case 4: rgb = [t,p,v];break;
+        case 5: rgb = [v,p,q];break;
+    }
+
+    var r = Math.min(255, Math.round(rgb[0]*256)),
+        g = Math.min(255, Math.round(rgb[1]*256)),
+        b = Math.min(255, Math.round(rgb[2]*256));
+
+    return [r,g,b];
+}
+
+n2i.Color.rgb2hsv = function(r, g, b) {
+
+    r = (r / 255);
+    g = (g / 255);
+	b = (b / 255);	
+
+    var min = Math.min(Math.min(r, g), b),
+        max = Math.max(Math.max(r, g), b),
+		value = max,
+        saturation,
+        hue;
+
+    // Hue
+    if (max == min) {
+        hue = 0;
+    } else if (max == r) {
+        hue = (60 * ((g-b) / (max-min))) % 360;
+    } else if (max == g) {
+        hue = 60 * ((b-r) / (max-min)) + 120;
+    } else if (max == b) {
+        hue = 60 * ((r-g) / (max-min)) + 240;
+    }
+
+    if (hue < 0) {
+        hue += 360;
+    }
+
+    // Saturation
+    if (max == 0) {
+        saturation = 0;
+    } else {
+        saturation = 1 - (min/max);
+    }
+
+    return [Math.round(hue), Math.round(saturation * 100), Math.round(value * 100)];
 }
 
 n2i.Color.rgb2hex = function(rgbary) {
@@ -8347,12 +8385,13 @@ In2iGui.prototype = {
 In2iGui.confirmOverlays = {};
 
 In2iGui.confirmOverlay = function(options) {
-	var node = options.element || options.widget.getElement();
+	var node = options.element || options.widget.getElement(),
+		overlay;
 	if (In2iGui.confirmOverlays[node]) {
-		var overlay = In2iGui.confirmOverlays[node];
+		overlay = In2iGui.confirmOverlays[node];
 		overlay.clear();
 	} else {
-		var overlay = ui.Overlay.create({modal:true});
+		overlay = ui.Overlay.create({modal:true});
 		In2iGui.confirmOverlays[node] = overlay;
 	}
 	if (options.text) {
@@ -8690,7 +8729,7 @@ In2iGui.positionAtElement = function(element,target,options) {
 In2iGui.getTextAreaHeight = function(input) {
 	var t = this.textAreaDummy;
 	if (!t) {
-		var t = this.textAreaDummy = document.createElement('div');
+		t = this.textAreaDummy = document.createElement('div');
 		t.className='in2igui_textarea_dummy';
 		document.body.appendChild(t);
 	}
@@ -8845,8 +8884,8 @@ In2iGui.resolveImageUrl = function(widget,img,width,height) {
 		}
 	};
 	var gui = In2iGui.get();
-	for (var i=0; i < gui.delegates.length; i++) {
-		var delegate = gui.delegates[i];
+	for (var j=0; j < gui.delegates.length; j++) {
+		var delegate = gui.delegates[j];
 		if (delegate.$resolveImageUrl) {
 			return delegate.$resolveImageUrl(img,width,height);
 		}
@@ -11371,7 +11410,7 @@ In2iGui.Tabs.create = function(options) {
 		cls+=' in2igui_tabs_bar_centered';
 	}
 	var bar = n2i.build('div',{'class' : cls, parent : e});
-	var ul = n2i.build('ul',{parent:bar});
+	n2i.build('ul',{parent:bar});
 	return new In2iGui.Tabs(options);
 }
 
@@ -12128,7 +12167,7 @@ In2iGui.Selection.Items.prototype = {
 		var level = n2i.build('div',{'class':'in2igui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
 		n2i.each(items,function(item) {
 			if (item.type=='title') {
-				var div = n2i.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
+				n2i.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;
@@ -12429,7 +12468,7 @@ In2iGui.Toolbar.SearchField.prototype = {
 
 /** @constructor */
 In2iGui.Toolbar.Badge = function(options) {
-	this.element = ni2.get(options.element);
+	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.label = n2i.firstByTag(this.element,'strong');
 	this.text = n2i.firstByTag(this.element,'span');
@@ -12750,7 +12789,7 @@ In2iGui.RichText.actions = [
 
 In2iGui.RichText.replaceInput = function(options) {
 	options = options || {};
-	var input = $(options.input);
+	var input = n2i.get(options.input);
 	input.style.display='none';
 	options.value = input.value;
 	var obj = In2iGui.RichText.create(options);
@@ -13623,7 +13662,8 @@ In2iGui.Editor.prototype = {
 	
 	editColumn : function(rowIndex,columnIndex) {
 		this.closeColumn();
-		var c = this.activeColumn = $$('.row')[rowIndex].select('.column')[columnIndex];
+		var row = n2i.byClass(document.body,'row')[rowIndex];
+		var c = this.activeColumn = n2i.byClass(row,'column')[columnIndex];
 		n2i.addClass(c,'in2igui_editor_column_edit');
 		this.showColumnWindow();
 		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});
@@ -14456,7 +14496,6 @@ In2iGui.Upload.prototype = {
 		this.uploading = true;
 		// IE: set value of parms again since they disappear
 		if (n2i.browser.msie) {
-			var p = this.options.parameters;
 			n2i.each(this.options.parameters,function(key,value) {
 				this.form[key].value = value;
 			}.bind(this));
@@ -14620,7 +14659,6 @@ In2iGui.Upload.prototype = {
 	uploadComplete : function(file) {
 		this.items[file.index].update(file);
 		this.startNextUpload();
-		var self = this;
 		this.fire('uploadDidComplete',file);
 		if (this.loader.getStats().files_queued==0) {
 			this.fire('uploadDidCompleteQueue');
@@ -15255,7 +15293,7 @@ In2iGui.DatePicker.create = function(options) {
 	for (var i=0;i<6;i++) {
 		var row = n2i.build('tr',{parent:body});
 		for (var j=0;j<7;j++) {
-			var cell = n2i.build('td',{parent:row});
+			n2i.build('td',{parent:row});
 		}
 	}
 	return new In2iGui.DatePicker(options);
@@ -15297,7 +15335,7 @@ In2iGui.DatePicker.prototype = {
 				n2i.addClass(cell,'in2igui_datepicker_selected');
 			}
 			if (date.getDate()==this.today.getDate() && date.getMonth()==this.today.getMonth() && date.getFullYear()==this.today.getFullYear()) {
-				ni2.addClass(cell,'in2igui_datepicker_today');
+				n2i.addClass(cell,'in2igui_datepicker_today');
 			}
 			n2i.dom.setText(cell,date.getDate());
 		};
@@ -15812,7 +15850,7 @@ In2iGui.InfoView.create = function(options) {
 	options = options || {};
 	var element = options.element = n2i.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
 	if (options.height) {
-		ni2.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
+		n2i.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
 	}
 	if (options.margin) {
 		element.style.margin = options.margin+'px';
@@ -16078,7 +16116,6 @@ In2iGui.LocationPicker.prototype = {
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
 			n2i.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
-			var latLng = this.buildLatLng();
 		    var mapOptions = {
 		      zoom: 15,
 		      mapTypeId: google.maps.MapTypeId.TERRAIN
@@ -16424,7 +16461,7 @@ In2iGui.VideoPlayer.QuickTime.prototype = {
 ///////// Embedded //////////
 
 In2iGui.VideoPlayer.Embedded = function(video,player) {
-	var e = this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
+	this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
 }
 
 In2iGui.VideoPlayer.Embedded.isSupported = function(video) {
@@ -16794,7 +16831,7 @@ In2iGui.Links.prototype = {
 				value.listen({$valueChanged:function(){self.changeType(key)}});
 			});
 			
-			var b = g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
+			g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
 			this.editForm.listen({$submit:this.saveLink.bind(this)});
 			win.add(form);
 			if (this.options.pageSource) {
@@ -16899,7 +16936,7 @@ In2iGui.MarkupEditor.prototype = {
 		};
 	},
 	implFocused : function() {
-		this.showBar();
+		this._showBar();
 	},
 	implBlurred : function() {
 		this.bar.hide();
@@ -16908,6 +16945,7 @@ In2iGui.MarkupEditor.prototype = {
 	implValueChanged : function() {
 		this._valueChanged();
 	},
+	
 	getValue : function() {
 		return this.impl.getHTML();
 	},
@@ -16916,6 +16954,10 @@ In2iGui.MarkupEditor.prototype = {
 			this.impl.setHTML(value);
 		}.bind(this));
 	},
+	focus : function() {
+		this._whenReady(this.impl.focus.bind(this.impl));
+	},
+
 	_whenReady : function(func) {
 		if (this.ready) {
 			func();
@@ -16923,10 +16965,7 @@ In2iGui.MarkupEditor.prototype = {
 			this.pending.push(func);
 		}
 	},
-	focus : function() {
-		this._whenReady(this.impl.focus.bind(this.impl));
-	},
-	showBar : function() {
+	_showBar : function() {
 		if (!this.bar) {
 			var things = [
 				{key:'bold',icon:'edit/text_bold'},
@@ -17016,14 +17055,15 @@ In2iGui.MarkupEditor.prototype = {
 		this.linkEditor.hide();
 		this._valueChanged();
 	},
+	_valueChanged : function() {
+		this.fire('valueChanged',this.impl.getHTML());		
+	},
+	
 	$colorWasSelected : function(color) {
 		this.impl.restoreSelection(function() {
 			this.impl.colorize(color);
 			this._valueChanged();
 		}.bind(this));
-	},
-	_valueChanged : function() {
-		this.fire('valueChanged',this.impl.getHTML());		
 	}
 }
 
@@ -17108,7 +17148,6 @@ In2iGui.MarkupEditor.webkit = {
 	_getInlineTag : function() {
 		var selection = window.getSelection();
 		if (selection.rangeCount<1) {return}
-		var range = selection.getRangeAt(0);
 		
 	},
 	_unWrap : function(node) {
@@ -17122,10 +17161,10 @@ In2iGui.MarkupEditor.webkit = {
 		document.execCommand('inserthtml',null,html);
 	},
 	_selectionChanged : function() {
-		var node = this._getSelectedNode();
-		if (node) {
-			n2i.log(n2i.getStyle(node,'font-weight'));
-		}
+		n2i.log({
+			bold : document.queryCommandState('bold'),
+			italic : document.queryCommandState('italic')
+		});
 	},
 	removeFormat : function() {
 		document.execCommand('removeFormat',null,null);
@@ -17144,7 +17183,7 @@ In2iGui.MarkupEditor.MSIE = {
 		this.element = options.element;
 		this.iframe = n2i.build('iframe',{style:'display:block; width: 100%; border: 0;',parent:this.element})
 		n2i.listen(this.iframe,'load',this._load.bind(this));
-		var ctrl = this.controller = options.controller;
+		this.controller = options.controller;
 	},
 	saveSelection : function() {
 		this.savedRange = this.document.selection.createRange();
@@ -17213,7 +17252,6 @@ In2iGui.MarkupEditor.MSIE = {
 
 In2iGui.MarkupEditor.util = {
 	clean : function(node) {
-		n2i.log(node.innerHTML);
 		var copy = node.cloneNode(true);
 		this.replaceNodes(copy,{b:'strong',i:'em',font:'span'});
 
@@ -17446,9 +17484,6 @@ In2iGui.ColorPicker.prototype = {
 	    var carty = 128 - y;
 	    var cartx2 = cartx * cartx;
 	    var carty2 = carty * carty;
-	    var cartxs = (cartx < 0) ? -1 : 1;
-	    var cartys = (carty < 0) ? -1 : 1;
-	    var cartxn = cartx/128;                      //normalize x
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {
@@ -17487,9 +17522,6 @@ In2iGui.ColorPicker.prototype = {
 	    var carty = 128 - y;
 	    var cartx2 = cartx * cartx;
 	    var carty2 = carty * carty;
-	    var cartxs = (cartx < 0) ? -1 : 1;
-	    var cartys = (carty < 0) ? -1 : 1;
-	    var cartxn = cartx/128;                      //normalize x
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {

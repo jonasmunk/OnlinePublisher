@@ -129,7 +129,7 @@ In2iGui.Links.prototype = {
 				value.listen({$valueChanged:function(){self.changeType(key)}});
 			});
 			
-			var b = g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
+			g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
 			this.editForm.listen({$submit:this.saveLink.bind(this)});
 			win.add(form);
 			if (this.options.pageSource) {

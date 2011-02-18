@@ -144,7 +144,6 @@ In2iGui.Upload.prototype = {
 		this.uploading = true;
 		// IE: set value of parms again since they disappear
 		if (n2i.browser.msie) {
-			var p = this.options.parameters;
 			n2i.each(this.options.parameters,function(key,value) {
 				this.form[key].value = value;
 			}.bind(this));
@@ -308,7 +307,6 @@ In2iGui.Upload.prototype = {
 	uploadComplete : function(file) {
 		this.items[file.index].update(file);
 		this.startNextUpload();
-		var self = this;
 		this.fire('uploadDidComplete',file);
 		if (this.loader.getStats().files_queued==0) {
 			this.fire('uploadDidCompleteQueue');

@@ -51,9 +51,9 @@
 			},
 			1000,
 			function() {
-				ui.test.mouseDown($$('.in2igui_number_up')[0]);
+				ui.test.mouseDown(n2i.firstByClass(document.body,'in2igui_number_up'));
 				ui.assert.equals(formula.getValues().number,11.56,'The number field has incremented value');
-				ui.test.mouseDown($$('.in2igui_number_down')[0]);
+				ui.test.mouseDown(n2i.firstByClass(document.body,'in2igui_number_down'));
 				ui.assert.equals(formula.getValues().number,10.56,'The number field has decremented value');
 			}
 		]);

@@ -178,7 +178,7 @@ In2iGui.VideoPlayer.QuickTime.prototype = {
 ///////// Embedded //////////
 
 In2iGui.VideoPlayer.Embedded = function(video,player) {
-	var e = this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
+	this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
 }
 
 In2iGui.VideoPlayer.Embedded.isSupported = function(video) {

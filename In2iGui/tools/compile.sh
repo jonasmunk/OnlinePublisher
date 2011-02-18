@@ -13,7 +13,7 @@ echo "Compressing prototype"
 echo "Compressing scripts"
 java -jar yuicompressor-2.2.4.jar ${BIN_PATH}combined.js --charset UTF-8 -o ${BIN_PATH}minimized.js
 echo "Compressing scripts (no prototype)"
-java -jar yuicompressor-2.2.4.jar ${BIN_PATH}combined.noproto.js --charset UTF-8 -o ${BIN_PATH}minimized.noproto.js
+java -jar yuicompressor-2.2.4.jar ${BIN_PATH}combined.noproto.js --warn --charset UTF-8 -o ${BIN_PATH}minimized.noproto.js
 echo "Compressing basic scripts"
 #java -jar yuicompressor-2.2.4.jar ${BIN_PATH}combined.basic.js --charset UTF-8 -o ${BIN_PATH}minimized.basic.js
 echo "Compressing site scripts"

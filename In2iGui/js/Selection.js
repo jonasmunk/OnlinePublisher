@@ -221,7 +221,7 @@ In2iGui.Selection.Items.prototype = {
 		var level = n2i.build('div',{'class':'in2igui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
 		n2i.each(items,function(item) {
 			if (item.type=='title') {
-				var div = n2i.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
+				n2i.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;

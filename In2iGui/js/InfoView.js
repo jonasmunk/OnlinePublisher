@@ -11,7 +11,7 @@ In2iGui.InfoView.create = function(options) {
 	options = options || {};
 	var element = options.element = n2i.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
 	if (options.height) {
-		ni2.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
+		n2i.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
 	}
 	if (options.margin) {
 		element.style.margin = options.margin+'px';

@@ -1,7 +1,7 @@
 In2iGui.Graph = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = $(options.element);
+	this.element = n2i.get(options.element);
 	
 	var impls = {force:In2iGui.Graph.Protoviz,graffle:In2iGui.Graph.Raphael};
 	

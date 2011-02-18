@@ -194,9 +194,6 @@ In2iGui.ColorPicker.prototype = {
 	    var carty = 128 - y;
 	    var cartx2 = cartx * cartx;
 	    var carty2 = carty * carty;
-	    var cartxs = (cartx < 0) ? -1 : 1;
-	    var cartys = (carty < 0) ? -1 : 1;
-	    var cartxn = cartx/128;                      //normalize x
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {
@@ -235,9 +232,6 @@ In2iGui.ColorPicker.prototype = {
 	    var carty = 128 - y;
 	    var cartx2 = cartx * cartx;
 	    var carty2 = carty * carty;
-	    var cartxs = (cartx < 0) ? -1 : 1;
-	    var cartys = (carty < 0) ? -1 : 1;
-	    var cartxn = cartx/128;                      //normalize x
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {

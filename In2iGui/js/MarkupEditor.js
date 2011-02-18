@@ -42,7 +42,7 @@ In2iGui.MarkupEditor.prototype = {
 		};
 	},
 	implFocused : function() {
-		this.showBar();
+		this._showBar();
 	},
 	implBlurred : function() {
 		this.bar.hide();
@@ -51,6 +51,7 @@ In2iGui.MarkupEditor.prototype = {
 	implValueChanged : function() {
 		this._valueChanged();
 	},
+	
 	getValue : function() {
 		return this.impl.getHTML();
 	},
@@ -59,6 +60,10 @@ In2iGui.MarkupEditor.prototype = {
 			this.impl.setHTML(value);
 		}.bind(this));
 	},
+	focus : function() {
+		this._whenReady(this.impl.focus.bind(this.impl));
+	},
+
 	_whenReady : function(func) {
 		if (this.ready) {
 			func();
@@ -66,10 +71,7 @@ In2iGui.MarkupEditor.prototype = {
 			this.pending.push(func);
 		}
 	},
-	focus : function() {
-		this._whenReady(this.impl.focus.bind(this.impl));
-	},
-	showBar : function() {
+	_showBar : function() {
 		if (!this.bar) {
 			var things = [
 				{key:'bold',icon:'edit/text_bold'},
@@ -159,14 +161,15 @@ In2iGui.MarkupEditor.prototype = {
 		this.linkEditor.hide();
 		this._valueChanged();
 	},
+	_valueChanged : function() {
+		this.fire('valueChanged',this.impl.getHTML());		
+	},
+	
 	$colorWasSelected : function(color) {
 		this.impl.restoreSelection(function() {
 			this.impl.colorize(color);
 			this._valueChanged();
 		}.bind(this));
-	},
-	_valueChanged : function() {
-		this.fire('valueChanged',this.impl.getHTML());		
 	}
 }
 
@@ -251,7 +254,6 @@ In2iGui.MarkupEditor.webkit = {
 	_getInlineTag : function() {
 		var selection = window.getSelection();
 		if (selection.rangeCount<1) {return}
-		var range = selection.getRangeAt(0);
 		
 	},
 	_unWrap : function(node) {
@@ -265,10 +267,10 @@ In2iGui.MarkupEditor.webkit = {
 		document.execCommand('inserthtml',null,html);
 	},
 	_selectionChanged : function() {
-		var node = this._getSelectedNode();
-		if (node) {
-			n2i.log(n2i.getStyle(node,'font-weight'));
-		}
+		n2i.log({
+			bold : document.queryCommandState('bold'),
+			italic : document.queryCommandState('italic')
+		});
 	},
 	removeFormat : function() {
 		document.execCommand('removeFormat',null,null);
@@ -287,7 +289,7 @@ In2iGui.MarkupEditor.MSIE = {
 		this.element = options.element;
 		this.iframe = n2i.build('iframe',{style:'display:block; width: 100%; border: 0;',parent:this.element})
 		n2i.listen(this.iframe,'load',this._load.bind(this));
-		var ctrl = this.controller = options.controller;
+		this.controller = options.controller;
 	},
 	saveSelection : function() {
 		this.savedRange = this.document.selection.createRange();
@@ -356,7 +358,6 @@ In2iGui.MarkupEditor.MSIE = {
 
 In2iGui.MarkupEditor.util = {
 	clean : function(node) {
-		n2i.log(node.innerHTML);
 		var copy = node.cloneNode(true);
 		this.replaceNodes(copy,{b:'strong',i:'em',font:'span'});
 

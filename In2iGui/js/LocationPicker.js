@@ -22,7 +22,6 @@ In2iGui.LocationPicker.prototype = {
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
 			n2i.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
-			var latLng = this.buildLatLng();
 		    var mapOptions = {
 		      zoom: 15,
 		      mapTypeId: google.maps.MapTypeId.TERRAIN

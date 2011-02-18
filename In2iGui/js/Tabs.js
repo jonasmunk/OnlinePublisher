@@ -29,7 +29,7 @@ In2iGui.Tabs.create = function(options) {
 		cls+=' in2igui_tabs_bar_centered';
 	}
 	var bar = n2i.build('div',{'class' : cls, parent : e});
-	var ul = n2i.build('ul',{parent:bar});
+	n2i.build('ul',{parent:bar});
 	return new In2iGui.Tabs(options);
 }
 
