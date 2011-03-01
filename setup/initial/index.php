@@ -95,6 +95,9 @@ $elements = array("Window","Form","Script");
 writeGui("In2ition",$elements,$gui);
 
 function getBaseUrl() {
-	return 'http://'.$_SERVER['SERVER_NAME'].strstr($_SERVER['REQUEST_URI'],'setup',true);
+	$uri = $_SERVER['REQUEST_URI'];
+	$find = 'setup/initial/';
+	$pos = strpos($uri,$find);
+	return 'http://'.$_SERVER['SERVER_NAME'].'/'.substr($uri,0,$pos);
 }
 ?>

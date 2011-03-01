@@ -6649,7 +6649,7 @@ n2i.Color.rgb2hsv = function(r, g, b) {
 
 n2i.Color.rgb2hex = function(rgbary) {
 	var c = '#';
-  	for (i=0; i < 3; i++) {
+  	for (var i=0; i < 3; i++) {
 		var str = parseInt(rgbary[i]).toString(16);
     	if (str.length < 2) {
 			str = '0'+str;
@@ -8708,7 +8708,8 @@ In2iGui.positionAtElement = function(element,target,options) {
 	if (origDisplay=='none') {
 		n2i.setStyle(element,{'visibility':'hidden','display':'block'});
 	}
-	var pos = left = n2i.getLeft(target),top = n2i.getTop(target);
+	var left = n2i.getLeft(target),
+		top = n2i.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
 		left = left+target.clientWidth-element.clientWidth;
@@ -9735,7 +9736,7 @@ In2iGui.Formula.Text.prototype = {
 		return this.input.value=='';
 	},
 	isBlank : function() {
-		return this.input.value.strip()=='';
+		return n2i.isBlank(this.input.value);
 	},
 	setError : function(error) {
 		var isError = error ? true : false;

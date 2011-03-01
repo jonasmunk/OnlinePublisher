@@ -297,7 +297,7 @@ In2iGui.Formula.Text.prototype = {
 		return this.input.value=='';
 	},
 	isBlank : function() {
-		return this.input.value.strip()=='';
+		return n2i.isBlank(this.input.value);
 	},
 	setError : function(error) {
 		var isError = error ? true : false;

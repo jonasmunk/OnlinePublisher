@@ -14,23 +14,23 @@ class Database {
 	}
 	
 	function testServerConnection($host,$user,$password) {
-		$con = mysql_connect($host, $user,$password);
+		$con = @mysql_connect($host, $user,$password);
 		if (!$con) {
 			return false;
 		}
-		if (mysql_errno($con)>0) {
+		if (@mysql_errno($con)>0) {
 			return false;
 		}
 		return true;
 	}
 	
 	function testDatabaseConnection($host,$user,$password,$name) {
-		$con = mysql_connect($host, $user,$password);
+		$con = @mysql_connect($host, $user,$password);
 		if (!$con) {
 			return false;
 		}
 		@mysql_select_db($name,$con);
-		if (mysql_errno($con)>0) {
+		if (@mysql_errno($con)>0) {
 			return false;
 		}
 		return true;
@@ -54,7 +54,7 @@ class Database {
 	
 	function select($sql) {
 		$con = Database::getConnection();
-		$result = mysql_query($sql,$con);
+		$result = @mysql_query($sql,$con);
 		if (mysql_errno($con)>0) {
 			error_log(mysql_error($con).': '.$sql);
 			return false;
@@ -103,13 +103,13 @@ class Database {
 			$sql = Database::buildUpdateSql($sql);
 		}
 		$con = Database::getConnection();
-		mysql_query($sql,$con);
+		@mysql_query($sql,$con);
 		return Database::_checkError($sql,$con);
 	}
 	
 	function delete($sql) {
 		$con = Database::getConnection();
-		mysql_query($sql,$con);
+		@mysql_query($sql,$con);
 		Database::_checkError($sql,$con);
 		return mysql_affected_rows($con);
 	}
@@ -119,7 +119,7 @@ class Database {
 			$sql = Database::buildInsertSql($sql);
 		}
 		$con = Database::getConnection();
-		mysql_query($sql,$con);
+		@mysql_query($sql,$con);
 		$id=mysql_insert_id();
 		if (Database::_checkError($sql,$con)) {
 			return $id;

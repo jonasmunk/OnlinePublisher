@@ -207,7 +207,23 @@ class RenderingService {
 		return $state;
 	}
 	
-	function buildPage($id,$allowDisabled=true,$path=null) {
+	function handleMissingPage($path) {
+		// See if there is a page redirect
+		$sql = "select page.id,page.path from path left join page on page.id=path.page_id where path.path=".Database::text($path);
+		if ($row = Database::selectFirst($sql)) {
+			if ($row['path']!='') {
+				Response::redirectMoved($baseUrl.$row['path']);
+			} else if ($row['id']>0) {
+				Response::redirectMoved($baseUrl.'?id='.$row['id']);
+			} else {
+				RenderingService::sendNotFound();
+			}
+		} else {
+			RenderingService::sendNotFound();
+		}
+	}
+	
+	function buildPage($id,$path=null) {
 		$sql="select page.id,page.secure,UNIX_TIMESTAMP(page.published) as published,".
 		" page.title,page.description,page.language,page.keywords,page.data,page.dynamic,page.next_page,page.previous_page,".
 		" template.unique as template,frame.id as frameid,frame.title as frametitle,".
@@ -379,7 +395,7 @@ class RenderingService {
 			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
 			header("Content-Type: text/html; charset=UTF-8");
-		echo $html;
+			echo $html;
 		}
 	}
 	
