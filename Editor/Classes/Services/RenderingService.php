@@ -20,11 +20,11 @@ class RenderingService {
 	}
 	
 	function displayError($message,$path="") {
-		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+		$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml.= '<message xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/error/1.0/">';
 		$xml.= $message;
 		$xml.= '</message>';
-		header('Content-type: text/html');
+		header("Content-Type: text/html; charset=UTF-8");
 		header("HTTP/1.0 404 Not Found");
 		echo RenderingService::applyStylesheet($xml,"basic","error",$path,$path,$path,'',false);
 	}
