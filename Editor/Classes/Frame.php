@@ -91,12 +91,20 @@ class Frame {
 	}
 	
 	function remove() {
-		if ($this->id>0) {
+		if ($this->id>0 && $this->canRemove()) {
 			$sql = "delete from frame where id=".Database::int($this->id);
 			return Database::delete($sql)>0;
 		}
 		return false;
 	}
+	
+    function canRemove() {
+        $sql="select count(id) as num from page where frame_id=".Database::int($this->id);
+        if ($row = Database::selectFirst($sql)) {
+            return $row['num']==0;
+        }
+        return true;
+    }
 
 	function search() {
 		$list = array();

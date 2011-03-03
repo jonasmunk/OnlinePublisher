@@ -28,7 +28,11 @@ class AbstractObjectTest extends UnitTestCase {
 		$id = $obj->getId();
         $this->assertNotNull($obj->load($id));
 		$obj->remove();
-        $this->assertNull($obj->load($id));
+		$loaded = $obj->load($id);
+        $this->assertNull($loaded);
+		if ($loaded) {
+			Log::debug($loaded);
+		}
     }
 
 }

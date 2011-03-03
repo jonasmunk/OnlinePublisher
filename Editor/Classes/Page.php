@@ -244,8 +244,8 @@ class Page {
 ///////////////////////// Persistence /////////////////////////
     
     function load($id) {
-        $output = false;
-        $sql="select page.*,UNIX_TIMESTAMP(page.changed) as changed_unix,template.unique from page,template where template.id=page.template_id and page.id=".$id;
+        $output = null;
+        $sql="select page.*,UNIX_TIMESTAMP(page.changed) as changed_unix,template.unique from page,template where template.id=page.template_id and page.id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
             $output = new Page();
             $output->setId($row['id']);
@@ -275,12 +275,12 @@ class Page {
 		",".Database::text($this->description).
 		",".Database::text($this->keywords).
 		",".Database::text($this->path).
-		",".$this->templateId.
+		",".Database::int($this->templateId).
 		",now()".
 		",now()".
 		",now()".
-		",".$this->frameId.
-		",".$this->designId.
+		",".Database::int($this->frameId).
+		",".Database::int($this->designId).
 		",".Database::text($this->language).
 		",".Database::int($this->nextPage).
 		",".Database::int($this->previousPage).

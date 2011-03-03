@@ -49,28 +49,26 @@ class Design extends Object {
     //////////////////// Special ////////////////////
     
     function canRemove() {
-        $out = false;
-        $sql="select count(id) as num from page where design_id=".$this->id;
+        $sql="select count(id) as num from page where design_id=".Database::int($this->id);
         if ($row = Database::selectFirst($sql)) {
-            if ($row['num']==0) {
-                $out = true;
-            }
+            return $row['num']==0;
         }
-        return $out;
+        return true;
     }
 
     ////////////////// Persistence //////////////////
     
 	function load($id) {
 		$obj = new Design();
-		$obj->_load($id);
-		$sql = "select * from design where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-        	$obj->setUnique($row['unique']);
-			$obj->_loadParameters();
+		if ($obj->_load($id)) {
+			$sql = "select * from design where object_id=".$id;
+			if ($row = Database::selectFirst($sql)) {
+	        	$obj->setUnique($row['unique']);
+				$obj->_loadParameters();
+				return $obj;
+			}
 		}
-		return $obj;
+		return null;
 	}
     
     function _populate(&$row) {
@@ -83,7 +81,7 @@ class Design extends Object {
     }
     
 	function _loadParameters() {
-        $sql = "select * from design_parameter where design_id=".$this->id." order by `key`";
+        $sql = "select * from design_parameter where design_id=".Database::int($this->id)." order by `key`";
         $result = Database::select($sql);
         while ($row = Database::next($result)) {
             $this->parameters[$row['key']] = array('key' => $row['key'],'value' => $row['value'],'type' => $row['type']);
@@ -127,7 +125,7 @@ class Design extends Object {
 	function sub_remove() {
         $sql='delete from design where id='.$this->id;
 		Database::delete($sql);
-         $sql='delete from design_parameter where design_id='.$this->id;
+        $sql='delete from design_parameter where design_id='.$this->id;
 		Database::delete($sql);
 	}
 

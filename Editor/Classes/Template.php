@@ -12,7 +12,7 @@ class Template {
 	var $id;
 	var $unique;
 
-    function Frame() {
+    function Template() {
     }
 
 	function setId($id) {

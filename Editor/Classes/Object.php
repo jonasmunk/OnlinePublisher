@@ -193,7 +193,9 @@ class Object {
 				$this->sub_remove();
 			}
 			EventManager::fireEvent('delete','object',$this->type,$this->id);
+			return true;
 		}
+		return false;
 	}
 	
 	function publish() {

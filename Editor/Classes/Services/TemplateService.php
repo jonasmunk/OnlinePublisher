@@ -4,12 +4,24 @@
  * @subpackage Classes.Services
  */
 require_once($basePath.'Editor/Classes/Database.php');
+require_once($basePath.'Editor/Classes/Template.php');
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 
 class TemplateService {
-		
+	
+	function getTemplateByUnique($unique) {
+		$sql = "select id,`unique` from `template` where `unique`=".Database::text($unique);
+		if ($row = Database::selectFirst($sql)) {
+			$template = new Template();
+			$template->setId(intval($row['id']));
+			$template->setUnique($row['unique']);
+			return $template;
+		}
+		return null;
+	}
+	
 	function getController($type) {
 		global $basePath;
 		$class = ucfirst($type).'TemplateController';
