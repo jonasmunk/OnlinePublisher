@@ -36,6 +36,9 @@ while ($row = Database::next($result)) {
 	if ($data->isHasData()) {
 		$str = file_get_contents($data->getFile());
 		$obj = StringUtils::fromJSON($str);
+		$version = DateUtils::formatLongDate($obj->date);
+	} else {
+		$version = 'Unknown';
 	}
 	$gui.='<row link="EditSite.php?id='.$row['id'].'">'.
 	'<cell>'.
@@ -43,7 +46,7 @@ while ($row = Database::next($result)) {
 	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
 	'</cell>'.
 	'<cell>'.StringUtils::escapeXML($row['url']).'</cell>'.
-	'<cell>'.StringUtils::escapeXML(DateUtils::formatLongDate($obj->date)).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($version).'</cell>'.
 	'</row>';
 }
 Database::free($result);
