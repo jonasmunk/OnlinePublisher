@@ -2,3 +2,9 @@ hr.part_horizontalrule
 {
 	border-bottom: 1px dotted #ccc;
 }
+
+.part_header
+{
+	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
+	color: #555;
+}
