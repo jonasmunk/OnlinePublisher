@@ -30,7 +30,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<header title="Titel"/>'.
 '</headergroup>';
 
-$blueprints = PageBlueprint::search();
+$blueprints = Query::after('pageblueprint')->get();
 foreach ($blueprints as $blueprint) {
 	
 	$gui.=

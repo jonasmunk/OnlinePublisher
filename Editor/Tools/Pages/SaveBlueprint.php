@@ -10,7 +10,7 @@ require_once '../../Classes/Pageblueprint.php';
 require_once '../../Classes/Request.php';
 
 $id = Request::getInt('id');
-$title = Request::getText('title');
+$title = Request::getString('title');
 $frame = Request::getInt('frame');
 $design = Request::getInt('design');
 $template = Request::getInt('template');
