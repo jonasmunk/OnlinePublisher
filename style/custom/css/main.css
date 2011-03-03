@@ -18,6 +18,7 @@ div.layout_content
 {
 	padding: 30px;
 	margin-right: 200px;
+	min-height: 300px;
 }
 
 div.layout_header
