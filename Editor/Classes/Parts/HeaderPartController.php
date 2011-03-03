@@ -123,7 +123,7 @@ class HeaderPartController extends PartController
 		
 	function getToolbars() {
 		return array(
-			'Punktopstilling' =>
+			'Overskrift' =>
 			'
 			<dropdown label="Niveau" name="level">
 				<item value="1" title="Niveau 1"/>
