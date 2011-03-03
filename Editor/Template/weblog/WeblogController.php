@@ -7,7 +7,7 @@ require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once $basePath.'Editor/Classes/Weblogentry.php';
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Page.php');
-require_once($basePath.'Editor/Classes/Pageblueprint.php');
+require_once($basePath.'Editor/Classes/Objects/Pageblueprint.php');
 require_once($basePath.'Editor/Classes/Webloggroup.php');
 require_once($basePath.'Editor/Classes/In2iGui.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');

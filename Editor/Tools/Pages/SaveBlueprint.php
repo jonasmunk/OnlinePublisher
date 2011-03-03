@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Response.php';
-require_once '../../Classes/Pageblueprint.php';
+require_once '../../Classes/Objects/Pageblueprint.php';
 require_once '../../Classes/Request.php';
 
 $id = Request::getInt('id');
@@ -16,9 +16,9 @@ $design = Request::getInt('design');
 $template = Request::getInt('template');
 
 if ($id>0) {
-	$blueprint = PageBlueprint::load($id);
+	$blueprint = Pageblueprint::load($id);
 } else {
-	$blueprint = new PageBlueprint();
+	$blueprint = new Pageblueprint();
 }
 $blueprint->setTitle($title);
 $blueprint->setFrameId($frame);

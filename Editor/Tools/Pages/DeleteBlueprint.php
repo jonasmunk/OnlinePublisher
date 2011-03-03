@@ -8,11 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Database.php';
 require_once '../../Classes/Response.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/PageBlueprint.php';
+require_once '../../Classes/Objects/Pageblueprint.php';
 
 $id = Request::getInt('id');
 
-$blueprint = PageBlueprint::load($id);
+$blueprint = Pageblueprint::load($id);
 $blueprint->remove();
 
 Response::redirect('Blueprints.php');
