@@ -8,6 +8,8 @@ require_once '../../Classes/Services/FileSystemService.php';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
+$blueprintItems = GuiUtils::buildObjectItems('pageblueprint');
+
 $gui='
 <gui xmlns="uri:In2iGui" title="Nyheder" padding="10">
 	<controller source="controller.js"/>
@@ -29,6 +31,7 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="common/news" title="Ny nyhed" name="newNews" overlay="new"/>
+				<!--icon icon="common/page" title="Ny artikel" click="newArticleBox.show()" overlay="new"/-->
 				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
 				<icon icon="common/internet" title="Ny kilde" name="newSource" overlay="new"/>
 				<divider/>
@@ -150,11 +153,13 @@ $gui='
 	</window>
 	
 	
-	<box title="Ny nyhed" name="newNewsBox" absolute="true" padding="10" modal="true" width="636" variant="textured" closable="true">
-		<formula name="newNewsFormula">
+	<box title="Ny artikel" name="newArticleBox" absolute="true" padding="10" modal="true" width="636" variant="textured" closable="true">
+		<formula name="newArticleFormula">
 			<group labels="above">
 				<text label="Titel" key="title"/>
-				<text label="Note" key="note" multiline="true"/>
+				<text label="Opsummering" key="summary" multiline="true"/>
+				<text label="Tekst" key="text" multiline="true"/>
+				<dropdown label="Skabelon" key="blueprint">'.$blueprintItems.'</dropdown>
 			</group>
 			<columns>
 				<column>
@@ -174,8 +179,8 @@ $gui='
 				</checkboxes>
 			</group>
 			<buttons>
-				<button name="cancelNewNews" title="Annuller" click="newNewsBox.hide()"/>
-				<button name="createNewNews" title="Opret" highlighted="true"/>
+				<button name="cancelNewArticle" title="Annuller" click="newNewsBox.hide()"/>
+				<button name="createNewArticle" title="Opret" highlighted="true"/>
 			</buttons>
 		</formula>
 	</box>
