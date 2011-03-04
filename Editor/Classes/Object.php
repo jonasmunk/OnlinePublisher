@@ -97,75 +97,12 @@ class Object {
 		$this->note = mb_convert_encoding($this->note, "UTF-8","ISO-8859-1");
 	}
 	
-	
 	function create() {
-		$sql = "insert into `object` (title,type,note,created,updated,searchable,owner_id) values (".
-		Database::text($this->title).",".
-		Database::text($this->type).",".
-		Database::text($this->note).",".
-		"now(),now(),".
-		Database::boolean($this->searchable).",".
-		Database::int($this->ownerId).
-		")";		
-		$this->id = Database::insert($sql);
-		$schema = Object::$schema[$this->type];
-		if (is_array($schema)) {
-			$sql = "insert into `".$this->type."` (object_id";
-			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
-				$sql.=",`$column`";
-			}
-			$sql.=") values (".$this->id;
-			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
-				$sql.=",";
-				if ($info['type']=='int') {
-					$sql.=Database::int($this->$property);
-				} else if ($info['type']=='datetime') {
-					$sql.=Database::datetime($this->$property);
-				} else {
-					$sql.=Database::text($this->$property);
-				}
-			}
-			$sql.=")";
-			Database::insert($sql);
-		}
-		else if (method_exists($this,'sub_create')) {
-			$this->sub_create();
-		}
-		EventManager::fireEvent('create','object',$this->type,$this->id);
+		return ObjectService::create($this);
 	}
 	
 	function update() {
-		$sql = "update `object` set ".
-		"title=".Database::text($this->title).
-		",note=".Database::text($this->note).
-		",updated=now()".
-		",searchable=".Database::boolean($this->searchable).
-		",owner_id=".Database::int($this->ownerId).
-		" where id=".$this->id;		
-		Database::update($sql);
-		$schema = Object::$schema[$this->type];
-		if (is_array($schema)) {
-			$sql = "update `".$this->type."` set object_id=".$this->id;
-			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
-				$sql.=",`".$column."`=";
-				if ($info['type']=='int') {
-					$sql.=Database::int($this->$property);
-				} else if ($info['type']=='datetime') {
-					$sql.=Database::datetime($this->$property);
-				} else {
-					$sql.=Database::text($this->$property);
-				}
-			}
-			$sql.=" where object_id=".$this->id;
-			Database::update($sql);
-		}
-		else if (method_exists($this,'sub_update')) {
-			$this->sub_update();
-		}
-		EventManager::fireEvent('update','object',$this->type,$this->id);
+		return ObjectService::update($this);
 	}
 	
 	/**
@@ -176,38 +113,11 @@ class Object {
 	}
 	
 	function remove() {
-		if ($this->canRemove()) {
-			$sql = "delete from `object` where id=".$this->id;
-			$row = Database::delete($sql);
-			$sql = "delete from `object_link` where object_id=".$this->id;
-			$row = Database::delete($sql);
-			$schema = Object::$schema[$this->type];
-			if (is_array($schema)) {
-				$sql = "delete from `".$this->type."` where object_id=".$this->id;
-				$row = Database::delete($sql);
-				if (method_exists($this,'removeMore')) {
-					$this->removeMore();
-				}
-			}
-			else if (method_exists($this,'sub_remove')) {
-				$this->sub_remove();
-			}
-			EventManager::fireEvent('delete','object',$this->type,$this->id);
-			return true;
-		}
-		return false;
+		return ObjectService::remove($this);
 	}
 	
 	function publish() {
-		$index = $this->getIndex();
-		$xml = $this->getCurrentXml();
-		$sql = "update `object` set ".
-		"data=".Database::text($xml).
-		",`index`=".Database::text($index).
-		",published=now()".
-		" where id=".$this->id;		
-		Database::update($sql);
-		EventManager::fireEvent('publish','object',$this->type,$this->id);
+		ObjectService::publish($this);
 	}
 	
 	function getIndex() {
@@ -287,6 +197,8 @@ class Object {
 	}
 	
 	function _load($id) {
+		Log::debug('Object::_load() is deprecated for ...');
+		Log::debug($this);
 		$sql = "select id,title,note,type,owner_id,UNIX_TIMESTAMP(created) as created,UNIX_TIMESTAMP(updated) as updated,UNIX_TIMESTAMP(published) as published,searchable from `object` where id=".$id;
 		$row = Database::selectFirst($sql);
 		if ($row) {
@@ -306,60 +218,7 @@ class Object {
 	}
 	
 	function get($id,$type) {
-    	global $basePath;
-		ObjectService::importType($type);
-		$schema = Object::$schema[$type];
-		if (is_array($schema)) {
-			
-			$sql = "select object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable";
-			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
-				if ($info['type']=='datetime') {
-					$sql.=",UNIX_TIMESTAMP(`$type`.`$column`) as `$column`";
-				} else {
-					$sql.=",`$type`.`$column`";
-				}
-			}
-			$sql.=" from `object`,";
-			$sql.="`".$type."` where `".$type."`.object_id=object.id and object.id=".Database::int($id);
-		
-			if ($row = Database::selectFirst($sql)) {
-		    	$unique = ucfirst($row['object_type']);
-				if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
-	    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
-				} else {
-					require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
-				}
-	    		$obj = new $unique;
-				$obj->id = intval($row['id']);
-				$obj->title = $row['title'];
-				$obj->created = intval($row['created']);
-				$obj->updated = intval($row['updated']);
-				$obj->published = intval($row['published']);
-				$obj->type = $row['object_type'];
-				$obj->note = $row['note'];
-				$obj->ownerId = intval($row['owner_id']);
-				$obj->searchable = ($row['searchable']==1);
-				foreach ($schema as $property => $info) {
-					$column = Object::getColumn($property,$info);
-					if ($info['type']=='int') {
-						$obj->$property = intval($row[$column]);
-					} else if ($info['type']=='datetime') {
-						$obj->$property = $row[$column] ? intval($row[$column]) : null;
-					} else if ($info['type']=='boolean') {
-						$obj->$property = $row[$column]==1 ? true : false;
-					} else {
-						$obj->$property = $row[$column];
-					}
-				}
-				return $obj;
-	    	} else {
-				Log::debug('Not found: '.$id);
-			}
-		} else {
-			Log::debug('No schema for: '.$type);
-		}
-		return null;
+		return ObjectService::load($id,$type);
 	}
 	
 	function getColumn($property,$info) {
@@ -506,32 +365,11 @@ class Object {
     	}
     	return $object;
     }
-
-	function loadAllByType($type) {
-    	global $basePath;
-		$objects = array();
-    	$sql = "select id from object where type =".Database::text($type)." order by title";
-		$result = Database::select($sql);
-    	while ($row = Database::next($result)) {
-			$unique = ucfirst($type);
-			if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
-    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
-			} else {
-				require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
-			}
-    		$class = new $unique;
-    		if ($object = $class->load($row['id'])) {
-				$objects[] = $object;
-			}
-    	}
-		Database::free($result);
-		return $objects;
-	}
     
     function getObjectData($id) {
     	$data = null;
 		if ($id) {
-	    	$sql = "select data from object where id =".$id;
+	    	$sql = "select data from object where id =".Database::int($id);
 	    	if ($row = Database::selectFirst($sql)) {
 	    		$data = $row['data'];
 	    	}

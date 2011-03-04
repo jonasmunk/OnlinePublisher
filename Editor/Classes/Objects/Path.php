@@ -5,12 +5,20 @@
  */
 require_once($basePath.'Editor/Classes/Object.php');
 
+Object::$schema['path'] = array(
+	'path'   => array('type'=>'text'),
+	'pageId'  => array('type'=>'int','column'=>'page_id')
+);
 class Path extends Object {
 	var $path;
 	var $pageId=0;
 
 	function Path() {
 		parent::Object('path');
+	}
+	
+	function load($id) {
+		return Object::get($id,'path');
 	}
 
 	function setPath($path) {
@@ -34,53 +42,8 @@ class Path extends Object {
 	function _updateTitle() {
 		$this->setTitle($this->path.' -> '.$this->pageId);
 	}
-
-    /////////////////////////// Persistence ////////////////////////
-
-	function load($id) {
-		$sql = "select * from path where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj = new Path();
-			$obj->_load($id);
-			$obj->path=$row['path'];
-			$obj->pageId=intval($row['page_id']);
-			return $obj;
-		}
-		return null;
-	}
-
-	function sub_create() {
-		$sql="insert into path (object_id,path,page_id) values (".
-		$this->id.
-		",".Database::text($this->path).
-		",".Database::int($this->pageId).
-		")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-		$sql = "update path set ".
-		"path=".Database::text($this->path).
-		",page_id=".Database::int($this->pageId).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
-
-	function sub_publish() {
-		return '<path xmlns="'.parent::_buildnamespace('1.0').'"></path>';
-	}
-
-	function sub_remove() {
-		$sql = "delete from path where object_id=".$this->id;
-		Database::delete($sql);
-	}
-	
+		
 	/////////////////////////// GUI /////////////////////////
-	
-	function getIcon() {
-	    return 'Part/Generic';
-	}
 	
 	function getIn2iGuiIcon() {
 	    return 'monochrome/globe';
