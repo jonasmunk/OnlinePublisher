@@ -6,6 +6,7 @@
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Page.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 class Weblogentry extends Object {
 	var $text;
@@ -96,7 +97,7 @@ class Weblogentry extends Object {
 	function sub_publish() {
 		$data =
 		'<weblogentry xmlns="'.parent::_buildnamespace('1.0').'">'.
-		$this->_builddate('date',$this->date).
+		DateUtils::buildTag('date',$this->date).
 		'<text><![CDATA['.StringUtils::escapeSimpleXMLwithLineBreak($this->text,'<br/>').']]></text>';
 		$data.='</weblogentry>';
 		return $data;

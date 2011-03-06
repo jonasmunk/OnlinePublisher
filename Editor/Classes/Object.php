@@ -131,71 +131,14 @@ class Object {
 	}
 	
 	function getCurrentXml() {
-		$ns = 'http://uri.in2isoft.com/onlinepublisher/class/object/1.0/';
-		$xml = '<object xmlns="'.$ns.'" id="'.$this->id.'" type="'.$this->type.'">'.
-		'<title>'.StringUtils::escapeXML($this->title).'</title>'.
-		'<note>'.StringUtils::escapeXMLBreak($this->note,'<break/>').'</note>'.
-		$this->_builddate('created',$this->created).
-		$this->_builddate('updated',$this->updated).
-		$this->_builddate('published',$this->published);
-		$links='';
-		$sql = "select object_link.*,page.path from object_link left join page on page.id=object_link.target_value and object_link.target_type='page' where object_id=".$this->id." order by position";
-		$result = Database::select($sql);
-		while ($row = Database::next($result)) {
-			$links.='<link title="'.StringUtils::escapeXML($row['title']).'"';
-			if ($row['alternative']!='') {
-				$links.=' alternative="'.StringUtils::escapeXML($row['alternative']).'"';
-			}
-			if ($row['target']!='') {
-				$links.=' target="'.StringUtils::escapeXML($row['target']).'"';
-			}
-			if ($row['path']!='') {
-				$links.=' path="'.StringUtils::escapeXML($row['path']).'"';
-			}
-			if ($row['target_type']=='page') {
-				$links.=' page="'.StringUtils::escapeXML($row['target_value']).'"';
-			}
-			elseif ($row['target_type']=='file') {
-				$links.=' file="'.StringUtils::escapeXML($row['target_value']).'" filename="'.StringUtils::escapeXML($this->_getFilename($row['target_value'])).'"';
-			}
-			elseif ($row['target_type']=='url') {
-				$links.=' url="'.StringUtils::escapeXML($row['target_value']).'"';
-			}
-			elseif ($row['target_type']=='email') {
-				$links.=' email="'.StringUtils::escapeXML($row['target_value']).'"';
-			}
-			$links.='/>';
-		}
-		Database::free($result);
-		if ($links!='') {
-			$xml.='<links>'.$links.'</links>';
-		}
-		$xml.='<sub>';
-		if (method_exists($this,'sub_publish')) {
-			$xml.=$this->sub_publish();
-		}
-		$xml.='</sub>'.
-		'</object>';
-		return $xml;
-	}
-
-	function _getFilename($id) {
-		$output=NULL;
-		$sql = "select filename from file where object_id=".$id;
-		if ($row = Database::selectFirst($sql)) {
-			$output=$row['filename'];
-		}
-		return $output;
-	}
-
-	function _builddate($tag,$stamp) {
-		return '<'.$tag.' unix="'.$stamp.'" day="'.date('d',$stamp).'" weekday="'.date('w',$stamp).'" yearday="'.date('z',$stamp).'" month="'.date('m',$stamp).'" year="'.date('Y',$stamp).'" hour="'.date('H',$stamp).'" minute="'.date('i',$stamp).'" second="'.date('s',$stamp).'" offset="'.date('Z',$stamp).'" timezone="'.date('T',$stamp).'"/>';
+		return ObjectService::toXml($this);
 	}
 	
 	function _buildnamespace($version) {
 		return 'http://uri.in2isoft.com/onlinepublisher/class/'.$this->type.'/'.$version.'/';
 	}
 	
+	// TODO: Deprecated
 	function _load($id) {
 		Log::debug('Object::_load() is deprecated for ...');
 		Log::debug($this);
@@ -221,6 +164,7 @@ class Object {
 		return ObjectService::load($id,$type);
 	}
 	
+	// TODO: Deprecated
 	function getColumn($property,$info) {
 		if ($info['column']) {
 			return $info['column'];

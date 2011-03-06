@@ -5,6 +5,7 @@
  */
 global $basePath;
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 Object::$schema['news'] = array(
 	'imageId'   => array('type'=>'int','column'=>'image_id'),
@@ -121,10 +122,10 @@ class News extends Object {
 	function sub_publish() {
 		$data = '<news xmlns="'.parent::_buildnamespace('1.0').'">';
 		if (isset($this->startdate)) {
-			$data.=$this->_builddate('startdate',$this->startdate);
+			$data.=DateUtils::buildTag('startdate',$this->startdate);
 		}
 		if (isset($this->enddate)) {
-			$data.=$this->_builddate('enddate',$this->enddate);
+			$data.=DateUtils::buildTag('enddate',$this->enddate);
 		}
 		if ($this->imageId) {
 			$data.=Object::getObjectData($this->imageId);

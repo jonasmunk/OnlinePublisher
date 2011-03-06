@@ -36,6 +36,13 @@ class SchemaService {
 		}
 		return $sql;
 	}
+	
+	function getColumn($property,$info) {
+		if ($info['column']) {
+			return $info['column'];
+		}
+		return $property;
+	}
 
 	function buildSqlColumns($schema) {
 		$sql = '';

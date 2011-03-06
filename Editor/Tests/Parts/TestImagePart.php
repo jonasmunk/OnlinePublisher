@@ -53,7 +53,7 @@ class TestImagePart extends UnitTestCase {
 		$this->assertNull($ctrl->importFromString(null));
 		
 		$imported = $ctrl->importFromString($xml);
-		
+
 		$this->assertNotNull($imported);
 		$this->assertIdentical($imported->getImageId(),$obj->getImageId());
 		$this->assertIdentical($imported->getGreyscale(),$obj->getGreyscale());

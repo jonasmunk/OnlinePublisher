@@ -98,13 +98,17 @@ class ImagePartController extends PartController
 		if ($part->getAlign()!='') {
 			$xml.='<style align="'.$part->getAlign().'"/>';
 		}
-		$sql="select object.data,image.* from object,image where image.object_id = object.id and object.id=".Database::int($part->getImageId());
-		if ($image = Database::selectFirst($sql)) {
-			$xml.=$this->buildTransformTag($image,$part);
-			if ($link = $this->getSingleLink($part,'entireimage')) {
-			    $xml.=$this->_buildLinkTag($link,$part->getImageId());
+		if ($part->getImageId()>0) {
+			$sql="select object.data,image.* from object,image where image.object_id = object.id and object.id=".Database::int($part->getImageId());
+			if ($image = Database::selectFirst($sql)) {
+				$xml.=$this->buildTransformTag($image,$part);
+				if ($link = $this->getSingleLink($part,'entireimage')) {
+				    $xml.=$this->_buildLinkTag($link,$part->getImageId());
+				}
+				$xml.=$image['data'];
+			} else {
+				Log::debug('Unable to load image with id='.$part->getImageId());
 			}
-			$xml.=$image['data'];
 		}
 		if (StringUtils::isNotBlank($part->getText())) {
 			$xml.='<text>'.StringUtils::escapeXML($part->getText()).'</text>';
@@ -235,6 +239,7 @@ class ImagePartController extends PartController
 	function importSub($node,$part) {
 		$image = $object = DOMUtils::getFirstDescendant($node,'image');
 		if (!$image) {
+			Log::debug('ImagePartController: No image tag to import');
 			return;
 		}
 		if ($object = DOMUtils::getFirstDescendant($node,'object')) {

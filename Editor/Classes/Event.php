@@ -4,6 +4,7 @@
  * @subpackage Classes
  */
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 class Event extends Object {
 	var $startdate;
@@ -160,10 +161,10 @@ class Event extends Object {
 	function sub_publish() {
 		$data = '<event xmlns="'.parent::_buildnamespace('1.0').'">';
 		if (isset($this->startdate)) {
-			$data.=$this->_builddate('startdate',$this->startdate);
+			$data.=DateUtils::buildTag('startdate',$this->startdate);
 		}
 		if (isset($this->enddate)) {
-			$data.=$this->_builddate('enddate',$this->enddate);
+			$data.=DateUtils::buildTag('enddate',$this->enddate);
 		}
 		$data.='</event>';
 		return $data;

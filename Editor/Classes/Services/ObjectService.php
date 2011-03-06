@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Model/SearchResult.php');
 require_once($basePath.'Editor/Classes/EventManager.php');
+require_once($basePath.'Editor/Classes/Services/SchemaService.php');
 
 class ObjectService {
 	
@@ -83,7 +84,7 @@ class ObjectService {
 			
 			$sql = "select object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable";
 			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
+				$column = SchemaService::getColumn($property,$info);
 				if ($info['type']=='datetime') {
 					$sql.=",UNIX_TIMESTAMP(`$type`.`$column`) as `$column`";
 				} else {
@@ -106,7 +107,7 @@ class ObjectService {
 				$obj->ownerId = intval($row['owner_id']);
 				$obj->searchable = ($row['searchable']==1);
 				foreach ($schema as $property => $info) {
-					$column = Object::getColumn($property,$info);
+					$column = SchemaService::getColumn($property,$info);
 					if ($info['type']=='int') {
 						$obj->$property = intval($row[$column]);
 					} else if ($info['type']=='datetime') {
@@ -146,12 +147,12 @@ class ObjectService {
 		if (is_array($schema)) {
 			$sql = "insert into `".$object->type."` (object_id";
 			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
+				$column = SchemaService::getColumn($property,$info);
 				$sql.=",`$column`";
 			}
 			$sql.=") values (".$object->id;
 			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
+				$column = SchemaService::getColumn($property,$info);
 				$sql.=",";
 				if ($info['type']=='int') {
 					$sql.=Database::int($object->$property);
@@ -189,7 +190,7 @@ class ObjectService {
 		if (is_array($schema)) {
 			$sql = "update `".$object->type."` set object_id=".Database::int($object->id);
 			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
+				$column = SchemaService::getColumn($property,$info);
 				$sql.=",`".$column."`=";
 				if ($info['type']=='int') {
 					$sql.=Database::int($object->$property);
@@ -206,6 +207,63 @@ class ObjectService {
 			$object->sub_update();
 		}
 		EventManager::fireEvent('update','object',$object->type,$object->id);
+	}
+	
+	function toXml($object) {
+		$ns = 'http://uri.in2isoft.com/onlinepublisher/class/object/1.0/';
+		$xml = '<object xmlns="'.$ns.'" id="'.$object->id.'" type="'.$object->type.'">'.
+		'<title>'.StringUtils::escapeXML($object->title).'</title>'.
+		'<note>'.StringUtils::escapeXMLBreak($object->note,'<break/>').'</note>'.
+		DateUtils::buildTag('created',$object->created).
+		DateUtils::buildTag('updated',$object->updated).
+		DateUtils::buildTag('published',$object->published);
+		$links='';
+		$sql = "select object_link.*,page.path from object_link left join page on page.id=object_link.target_value and object_link.target_type='page' where object_id=".$object->id." order by position";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$links.='<link title="'.StringUtils::escapeXML($row['title']).'"';
+			if ($row['alternative']!='') {
+				$links.=' alternative="'.StringUtils::escapeXML($row['alternative']).'"';
+			}
+			if ($row['target']!='') {
+				$links.=' target="'.StringUtils::escapeXML($row['target']).'"';
+			}
+			if ($row['path']!='') {
+				$links.=' path="'.StringUtils::escapeXML($row['path']).'"';
+			}
+			if ($row['target_type']=='page') {
+				$links.=' page="'.StringUtils::escapeXML($row['target_value']).'"';
+			}
+			elseif ($row['target_type']=='file') {
+				$links.=' file="'.StringUtils::escapeXML($row['target_value']).'" filename="'.StringUtils::escapeXML(ObjectService::_getFilename($row['target_value'])).'"';
+			}
+			elseif ($row['target_type']=='url') {
+				$links.=' url="'.StringUtils::escapeXML($row['target_value']).'"';
+			}
+			elseif ($row['target_type']=='email') {
+				$links.=' email="'.StringUtils::escapeXML($row['target_value']).'"';
+			}
+			$links.='/>';
+		}
+		Database::free($result);
+		if ($links!='') {
+			$xml.='<links>'.$links.'</links>';
+		}
+		$xml.='<sub>';
+		if (method_exists($object,'sub_publish')) {
+			$xml.=$object->sub_publish();
+		}
+		$xml.='</sub>'.
+		'</object>';
+		return $xml;
+	}
+
+	function _getFilename($id) {
+		$sql = "select filename from file where object_id=".Database::int($id);
+		if ($row = Database::selectFirst($sql)) {
+			return $row['filename'];
+		}
+		return null;
 	}
 
 	
