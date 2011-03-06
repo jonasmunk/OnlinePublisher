@@ -12,6 +12,19 @@ var controller = {
 				text:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
 			});
 		}
+		ui.request({
+			url : '../In2iGui/info/preload.json',
+			onJSON : function(obj) {
+				var p = new n2i.Preloader({context:ui.context+'/In2iGui'});
+				p.addImages(obj);
+				p.setDelegate({
+					imageDidLoad : function(count,total) {
+						n2i.log(count/total);
+					}
+				});
+				p.load();
+			}
+		});
 	},
 	$submit$formula : function() {
 		ui.request({
