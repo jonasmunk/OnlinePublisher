@@ -813,6 +813,7 @@ In2iGui.request = function(options) {
 			} else {
 				var json = null;
 			}
+			n2i.log(json);
 			options.onJSON(json);
 		} else if (typeof(onSuccess)=='function') {
 			onSuccess(t);
@@ -828,7 +829,10 @@ In2iGui.request = function(options) {
 			onFailure(t);
 		}
 	}
-	options.onException = function(t,e) {n2i.log(e);};
+	options.onException = function(t,e) {
+		n2i.log(t);
+		n2i.log(e);
+	};
 	n2i.request(options);
 };
 
