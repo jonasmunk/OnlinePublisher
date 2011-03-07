@@ -7,6 +7,13 @@ require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
+Object::$schema['calendarsource'] = array(
+	'url'				=> array('type'=>'string'),
+	'synchronized'		=> array('type'=>'datetime'),
+	'syncInterval'		=> array('type'=>'int','column'=>'sync_interval'),
+	'filter'			=> array('type'=>'string'),
+	'displayTitle'		=> array('type'=>'string','column'=>'display_title')
+);
 class Calendarsource extends Object {
 	var $url;
 	var $synchronized;
@@ -16,6 +23,10 @@ class Calendarsource extends Object {
 	
 	function Calendarsource() {
 		parent::Object('calendarsource');
+	}
+
+	function load($id) {
+		return Object::get($id,'calendarsource');
 	}
 	
 	function setUrl($url) {
@@ -61,6 +72,12 @@ class Calendarsource extends Object {
 	function getSynchronized() {
 		return $this->synchronized;
 	}
+	
+	function removeMore() {
+		$sql = "delete from calendarsource_event where calendarsource_id=".Database::int($this->id);
+		Database::delete($sql);
+	}
+
 	
 	function synchronize($force=false) {
 		global $basePath;
@@ -354,61 +371,5 @@ class Calendarsource extends Object {
 		return $sources;
 	}
 	
-	
-	///////////////////////////////// Interface ////////////////////////////////
-	
-	
-	function load($id) {
-		if (!$id) return;
-		$obj = new Calendarsource();
-		$obj->_load($id);
-		$sql = "select url,filter,display_title,sync_interval,unix_timestamp(synchronized) as synchronized from calendarsource where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj->url=$row['url'];
-			$obj->synchronized=$row['synchronized'];
-			$obj->filter=$row['filter'];
-			$obj->displayTitle=$row['display_title'];
-			$obj->syncInterval=$row['sync_interval'];
-			return $obj;
-		} else {
-			return null;
-		}
-	}
-	
-	function sub_create() {
-		$sql="insert into calendarsource (object_id,url,display_title,filter,sync_interval) values (".
-		$this->id.
-		",".Database::text($this->url).
-		",".Database::text($this->displayTitle).
-		",".Database::text($this->filter).
-		",".Database::int($this->syncInterval).
-		")";
-		Database::insert($sql);
-	}
-	
-	function sub_update() {
-		$sql = "update calendarsource set ".
-		"url=".Database::text($this->url).
-		",filter=".Database::text($this->filter).
-		",display_title=".Database::text($this->displayTitle).
-		",sync_interval=".Database::int($this->syncInterval).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
-	
-	function sub_publish() {
-		$data = '<calendarsource xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<url>'.StringUtils::escapeXML($this->url).'</url>'.
-		'</calendarsource>';
-		return $data;
-	}
-	
-	function sub_remove() {
-		$sql = "delete from calendarsource where object_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from calendarsource_event where calendarsource_id=".$this->id;
-		Database::delete($sql);
-	}
 }
 ?>

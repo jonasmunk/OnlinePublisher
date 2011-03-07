@@ -6,6 +6,11 @@
 
 require_once($basePath.'Editor/Classes/Object.php');
 
+Object::$schema['file'] = array(
+	'filename'	=> array('type'=>'string'),
+	'size'		=> array('type'=>'int'),
+	'mimetype'	=> array('type'=>'string','column'=>'type')
+);
 class File extends Object {
 	var $filename;
 	var $size;
@@ -17,6 +22,10 @@ class File extends Object {
 	
 	function getIn2iGuiIcon() {
         return "file/generic";
+	}
+
+	function load($id) {
+		return Object::get($id,'file');
 	}
 
 	function setFilename($filename) {
@@ -42,41 +51,7 @@ class File extends Object {
 	function getMimetype() {
 		return $this->mimetype;
 	}
-
-	function load($id) {
-		$sql = "select * from file where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj = new File();
-			$obj->_load($id);
-			$obj->filename=$row['filename'];
-			$obj->size=$row['size'];
-			$obj->mimetype=$row['type'];
-			return $obj;
-		} else {
-			return null;
-		}
-	}
-
-	function sub_create() {
-		$sql="insert into file (object_id,filename,size,type) values (".
-		$this->id.
-		",".Database::text($this->filename).
-		",".Database::int($this->size).
-		",".Database::text($this->mimetype).
-		")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-		$sql = "update file set ".
-		"filename=".Database::text($this->filename).
-		",size=".Database::int($this->size).
-		",type=".Database::text($this->mimetype).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
-
+	
 	function sub_publish() {
 		$data =
 		'<file xmlns="'.parent::_buildnamespace('1.0').'">'.
@@ -87,15 +62,13 @@ class File extends Object {
 		return $data;
 	}
 
-	function sub_remove() {
+	function removeMore() {
 		global $basePath;
 		$path = $basePath.'files/'.$this->filename;
 		if (file_exists($path)) {
 			!@unlink ($path);
 		}
 		$sql="delete from filegroup_file where file_id=".Database::int($this->id);
-		Database::delete($sql);
-		$sql = "delete from file where object_id=".Database::int($this->id);
 		Database::delete($sql);
 	}
 	
