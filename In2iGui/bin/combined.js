@@ -5050,7 +5050,7 @@ n2i.each = function(items,func) {
 			func(items[i],i);
 		};
 	} else {
-		for (key in items) {
+		for (var key in items) {
 			func(key,items[key]);
 		}
 	}
@@ -8968,7 +8968,10 @@ In2iGui.request = function(options) {
 			onFailure(t);
 		}
 	}
-	options.onException = function(t,e) {n2i.log(e);};
+	options.onException = function(t,e) {
+		n2i.log(t);
+		n2i.log(e);
+	};
 	n2i.request(options);
 };
 
@@ -11593,7 +11596,6 @@ In2iGui.ObjectList.Object = function(index,data,list) {
 In2iGui.ObjectList.Object.prototype = {
 	getElement : function() {
 		if (!this.element) {
-			var self = this;
 			this.element = document.createElement('tr');
 			for (var i=0; i < this.list.template.length; i++) {
 				var template = this.list.template[i];
@@ -11713,7 +11715,7 @@ In2iGui.Alert.create = function(options) {
 	
 	var element = options.element = n2i.build('div',{'class':'in2igui_alert'});
 	var body = n2i.build('div',{'class':'in2igui_alert_body',parent:element});
-	var content = n2i.build('div',{'class':'in2igui_alert_content',parent:body});
+	n2i.build('div',{'class':'in2igui_alert_content',parent:body});
 	document.body.appendChild(element);
 	var obj = new In2iGui.Alert(options);
 	if (options.emotion) {
@@ -12917,7 +12919,7 @@ In2iGui.RichText.prototype = {
 	documentChanged : function() {
 		this.value = this.editor.content();
 		if (this.options.input) {
-			$(this.options.input).value=this.value;
+			n2i.get(this.options.input).value=this.value;
 		}
 	},
 	
@@ -17424,10 +17426,10 @@ In2iGui.ColorPicker.prototype = {
 		addary[5] = new Array(0,0,-1);  //red
 		addary[6] = new Array(255,1,1);
 		var clrary = new Array(360);
-		for(i = 0; i < 6; i++) {
-			for(j = 0; j < 60; j++) {
+		for(var i = 0; i < 6; i++) {
+			for(var j = 0; j < 60; j++) {
 				clrary[60 * i + j] = new Array(3);
-				for(k = 0; k < 3; k++) {
+				for(var k = 0; k < 3; k++) {
 					clrary[60 * i + j][k] = addary[6][k];
 					addary[6][k] += (addary[i][k] * 4);
 				}
@@ -17462,7 +17464,7 @@ In2iGui.ColorPicker.prototype = {
 			var c = "000000";
 		} else {
 			var n = 0;
-			for(i = 0; i < 3; i++) {
+			for(var i = 0; i < 3; i++) {
 				var r2 = this.colorArray[deg][i] * r / 256;
 				if(r > 256) r2 += Math.floor(r - 256);
 				if(r2 > 255) r2 = 255;

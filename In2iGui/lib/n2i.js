@@ -154,7 +154,7 @@ n2i.each = function(items,func) {
 			func(items[i],i);
 		};
 	} else {
-		for (key in items) {
+		for (var key in items) {
 			func(key,items[key]);
 		}
 	}

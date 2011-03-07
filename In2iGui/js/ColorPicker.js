@@ -133,10 +133,10 @@ In2iGui.ColorPicker.prototype = {
 		addary[5] = new Array(0,0,-1);  //red
 		addary[6] = new Array(255,1,1);
 		var clrary = new Array(360);
-		for(i = 0; i < 6; i++) {
-			for(j = 0; j < 60; j++) {
+		for(var i = 0; i < 6; i++) {
+			for(var j = 0; j < 60; j++) {
 				clrary[60 * i + j] = new Array(3);
-				for(k = 0; k < 3; k++) {
+				for(var k = 0; k < 3; k++) {
 					clrary[60 * i + j][k] = addary[6][k];
 					addary[6][k] += (addary[i][k] * 4);
 				}
@@ -171,7 +171,7 @@ In2iGui.ColorPicker.prototype = {
 			var c = "000000";
 		} else {
 			var n = 0;
-			for(i = 0; i < 3; i++) {
+			for(var i = 0; i < 3; i++) {
 				var r2 = this.colorArray[deg][i] * r / 256;
 				if(r > 256) r2 += Math.floor(r - 256);
 				if(r2 > 255) r2 = 255;

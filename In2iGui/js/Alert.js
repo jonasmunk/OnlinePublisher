@@ -23,7 +23,7 @@ In2iGui.Alert.create = function(options) {
 	
 	var element = options.element = n2i.build('div',{'class':'in2igui_alert'});
 	var body = n2i.build('div',{'class':'in2igui_alert_body',parent:element});
-	var content = n2i.build('div',{'class':'in2igui_alert_content',parent:body});
+	n2i.build('div',{'class':'in2igui_alert_content',parent:body});
 	document.body.appendChild(element);
 	var obj = new In2iGui.Alert(options);
 	if (options.emotion) {

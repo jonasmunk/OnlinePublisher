@@ -5050,7 +5050,7 @@ n2i.each = function(items,func) {
 			func(items[i],i);
 		};
 	} else {
-		for (key in items) {
+		for (var key in items) {
 			func(key,items[key]);
 		}
 	}
@@ -7742,7 +7742,10 @@ In2iGui.request = function(options) {
 			onFailure(t);
 		}
 	}
-	options.onException = function(t,e) {n2i.log(e);};
+	options.onException = function(t,e) {
+		n2i.log(t);
+		n2i.log(e);
+	};
 	n2i.request(options);
 };
 

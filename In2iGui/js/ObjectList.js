@@ -111,7 +111,6 @@ In2iGui.ObjectList.Object = function(index,data,list) {
 In2iGui.ObjectList.Object.prototype = {
 	getElement : function() {
 		if (!this.element) {
-			var self = this;
 			this.element = document.createElement('tr');
 			for (var i=0; i < this.list.template.length; i++) {
 				var template = this.list.template[i];

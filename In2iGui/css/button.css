@@ -61,13 +61,6 @@ a.in2igui_button span span
 	padding: 0px 6px;
 }
 
-a.in2igui_button_highlighted, a.in2igui_button_highlighted span
-{
-	color: #094100;
-	background-image: url('../gfx/button_highlighted.png');
-	background-repeat: no-repeat;
-}
-
 em.in2igui_button_icon
 {
 	padding: 0px;

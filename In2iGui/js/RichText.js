@@ -173,7 +173,7 @@ In2iGui.RichText.prototype = {
 	documentChanged : function() {
 		this.value = this.editor.content();
 		if (this.options.input) {
-			$(this.options.input).value=this.value;
+			n2i.get(this.options.input).value=this.value;
 		}
 	},
 	
