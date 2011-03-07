@@ -57,5 +57,15 @@ ui.listen({
 	},
 	$uploadDidCompleteQueue : function() {
 		list.refresh();
+	},
+	
+	// Export
+	
+	$click$export : function() {
+		var iframe = n2i.build('iframe',{style:'position:absolute;left:-1000px;top:-1000px;',parent:document.body});
+		iframe.onload = function() {
+			alert('hey!');
+		}
+		iframe.src='Export.php';
 	}
 });

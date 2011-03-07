@@ -14,6 +14,10 @@ class Response {
 		exit();
 	}
 	
+	function contentDisposition($filename) {
+		header("Content-Disposition: attachment; filename=\"$filename\"");
+	}
+	
 	function internalServerError() {
 		header('HTTP/1.1 500 Internal Server Error');
 	}

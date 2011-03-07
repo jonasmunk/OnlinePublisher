@@ -19,8 +19,6 @@ $obj->setNumber(Request::fromUnicode($data->number));
 $obj->setYear($data->year);
 $obj->setValue($data->value);
 $obj->setDate($data->date);
-error_log(print_r($data->date,true));
-error_log(print_r($obj,true));
 $obj->save();
 $obj->publish();
 ?>

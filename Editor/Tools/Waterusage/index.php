@@ -22,7 +22,9 @@ $gui='
 	<layout>
 		<top>
 			<toolbar>
-				<icon icon="file/generic" title="Upload aflæsninger" overlay="upload" name="updateData" click="uploadWindow.show();"/>
+				<icon icon="file/generic" title="Importér" overlay="upload" name="updateData" click="uploadWindow.show();"/>
+				<icon icon="file/generic" title="Eksportér" overlay="download" name="export"/>
+				<divider/>
 				<icon icon="file/generic" title="Ny aflæsning" overlay="new" name="newUsage"/>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
