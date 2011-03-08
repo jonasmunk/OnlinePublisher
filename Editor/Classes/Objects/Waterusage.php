@@ -12,7 +12,6 @@ Object::$schema['waterusage'] = array(
 	'value'  => array('type'=>'int'),
 	'date'  => array('type'=>'datetime')
 );
-
 class Waterusage extends Object {
 	var $number;
 	var $year;
@@ -21,6 +20,10 @@ class Waterusage extends Object {
 
 	function Waterusage() {
 		parent::Object('waterusage');
+	}
+
+	function load($id) {
+		return Object::get($id,'waterusage');
 	}
 	
 	function getIn2iGuiIcon() {
@@ -58,40 +61,6 @@ class Waterusage extends Object {
 
 	function getDate() {
 	    return $this->date;
-	}
-	
-	
-	// Static
-	
-	function load($id) {
-		return Object::get($id,'waterusage');
-	}
-	
-	function search($query=array()) {
-		$query['type']='waterusage';
-		$query['limits']=array();
-		if (isset($query['year'])) {
-			$query['limits'][] = 'waterusage.year='.Database::int($query['year']);
-		}
-		return Object::retrieve($query);
-	}
-	
-	function override($dummy) {
-		$sql="select object_id from waterusage where number=".Database::text($dummy->getNumber())." and year=".Database::int($dummy->getYear());
-		if ($row = Database::selectFirst($sql)) {
-			$usage = Waterusage::load($row['object_id']);
-			error_log('found:'.$row['object_id']);
-		}
-		if (!$usage) {
-			$usage = new Waterusage();
-		}
-		$usage->setNumber($dummy->getNumber());
-		$usage->setYear($dummy->getYear());
-		$usage->setDate($dummy->getDate());
-		$usage->setValue($dummy->getValue());
-		$usage->save();
-		$usage->publish();
-		error_log('saved:'.$usage->getId());
 	}
 }
 ?>

@@ -25,7 +25,7 @@ $writer = new CSVWriter();
 $writer->string('Number')->string('Year')->string('Date')->string('Updated')->string('Value');
 $result = Database::select($sql);
 while ($row = Database::next($result)) {	
-	$writer->newLine()->string($row['number'])->string($row['year'])->date($row['date'])->date($row['updated'])->text($row['value']);
+	$writer->newLine()->string($row['number'])->string($row['year'])->date($row['date'])->date($row['updated'])->string($row['value']);
 }
 Database::close($result);
 ?>

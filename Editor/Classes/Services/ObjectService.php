@@ -278,6 +278,12 @@ class ObjectService {
 			'ordering' => implode(',',$query->getOrdering()),
 			'direction' => $query->getDirection()
 		);
+		if ($query->getWindowPage()!==null) {
+			$parts['windowPage'] = $query->getWindowPage();
+		}
+		if ($query->getWindowSize()!==null) {
+			$parts['windowSize'] = $query->getWindowSize();
+		}
 		if ($class = ObjectService::getInstance($query->getType())) {
 			if (method_exists($class,'addCustomSearch')) {
 				$class->addCustomSearch($query,$parts);
@@ -285,7 +291,7 @@ class ObjectService {
 		} else {
 			Log::debug('Unable to get class for type='.$query->getType());
 		}
-		$x =  Object::retrieve($parts);
+		$x =  ObjectService::find($parts);
 		$result = new SearchResult();
 		$result->setList($x['result']);
 		$result->setTotal($x['total']);
@@ -293,5 +299,96 @@ class ObjectService {
 		$result->setWindowSize($x['windowSize']);
 		
 		return $result;
+	}
+
+	function find($query = array()) {
+    	global $basePath;
+		$type = $query['type'];
+		$schema = Object::$schema[$type];
+		if (!is_array($schema)) {
+			Log::debug('Unable to find schema for: '.$type);
+		}
+    	$parts = array(
+			// It is important to name type "object_type" since the image class also has a column named type
+			'columns' => 'object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable',
+			'tables' => 'object,`'.$type.'`',
+			'ordering' => 'object.title',
+			'limits' => array(
+				'`'.$type.'`.object_id=object.id'
+			),
+			'joins' => array()
+		);
+		if (isset($query['ordering'])) {
+			$parts['ordering'] = $query['ordering'];
+		}
+		if (isset($query['direction'])) {
+			$parts['direction'] = $query['direction'];
+		}
+		if (is_array($query['limits'])) {
+			$parts['limits'] = array_merge($parts['limits'],$query['limits']);
+		}
+		if (is_array($query['joins'])) {
+			$parts['joins'] = array_merge($parts['joins'],$query['joins']);
+		}
+		if (is_array($query['fields'])) {
+			foreach ($query['fields'] as $field => $value) {
+				$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
+			}
+		}
+		if (isset($query['tables']) && is_array($query['tables']) && count($query['tables'])>0) {
+			$parts['tables'].=','.implode(',',$query['tables']);
+		}
+		if (isset($query['query'])) {
+			$words = preg_split("/[\s,]+/", $query['query']);
+			foreach ($words as $word) {
+				if ($word!='') {
+					$parts['limits'][] = '`index` like '.Database::search($word);
+				}
+			}
+		}
+		if (isset($query['createdMin'])) {
+			$parts['limits'][]='`object`.`created` > '.Database::datetime($query['createdMin']);
+		}
+		foreach ($schema as $property => $info) {
+			$column = $property;
+			if ($info['column']) {
+				$column = $info['column'];
+			}
+			if ($info['type']=='datetime') {
+				$parts['columns'].=",UNIX_TIMESTAMP(`$type`.`$column`) as `$column`";
+			} else {
+				$parts['columns'].=",`$type`.`$column`";
+			}
+		}
+		$list = Object::_find($parts,$query);
+		
+		ObjectService::importType($type);
+		$class = ucfirst($type);
+		foreach ($list['rows'] as $row) {
+    		$obj = new $class;
+			$obj->id = intval($row['id']);
+			$obj->title = $row['title'];
+			$obj->created = intval($row['created']);
+			$obj->updated = intval($row['updated']);
+			$obj->published = intval($row['published']);
+			$obj->type = $row['object_type'];
+			$obj->note = $row['note'];
+			$obj->ownerId = intval($row['owner_id']);
+			$obj->searchable = ($row['searchable']==1);
+			foreach ($schema as $property => $info) {
+				$column = Object::getColumn($property,$info);
+				if ($info['type']=='int') {
+					$obj->$property = intval($row[$column]);
+				} else if ($info['type']=='datetime') {
+					$obj->$property = $row[$column] ? intval($row[$column]) : null;
+				} else if ($info['type']=='boolean') {
+					$obj->$property = $row[$column]==1 ? true : false;
+				} else {
+					$obj->$property = $row[$column];
+				}
+			}
+			$list['result'][] = $obj;
+    	}
+		return $list;
 	}
 }

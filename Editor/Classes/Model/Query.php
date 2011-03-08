@@ -14,6 +14,8 @@ class Query {
 	private $fields = array();
 	private $ordering = array();
 	private $direction = 'ascending';
+	private $windowPage = 0;
+	private $windowSize = 30;
 	
 	function Query($type) {
 		$this->type = $type;
@@ -70,6 +72,24 @@ class Query {
 	function withCustom($key,$value) {
 		$this->custom[$key] = $value;
 		return $this;
+	}
+	
+	function withWindowPage($page) {
+		$this->windowPage = $page;
+		return $this;
+	}
+	
+	function getWindowPage() {
+		return $this->windowPage;
+	}
+	
+	function withWindowSize($size) {
+		$this->windowSize = $size;
+		return $this;
+	}
+	
+	function getWindowSize() {
+		return $this->windowSize;
 	}
 	
 	// TODO: Deprecated

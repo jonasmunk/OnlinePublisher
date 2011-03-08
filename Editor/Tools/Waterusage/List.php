@@ -16,24 +16,17 @@ $text = Request::getUnicodeString('query');
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
 
-$query = array(
-	'windowSize' => $windowSize,
-	'windowPage' => $windowPage,
-	'sort' => 'title',
-	'query' => $text
-);
-
+$query = Query::after('waterusage')->orderBy('title')->withWindowPage($windowPage)->withWindowSize($windowSize);
 if ($year) {
-	$query['year'] = $year;
+	$query->withProperty('year',$year);
 }
-
-$list = Waterusage::search($query);
+$result = $query->search();
 
 $writer = new ListWriter();
 
 $writer->startList();
 $writer->sort($sort,$direction);
-$writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' => $windowPage ));
+$writer->window(array( 'total' => $result->getTotal(), 'size' => $windowSize, 'page' => $windowPage ));
 $writer->startHeaders();
 $writer->header(array('title'=>'Nummer','width'=>40));
 $writer->header(array('title'=>'År'));
@@ -42,7 +35,7 @@ $writer->header(array('title'=>'Aflæsningsdato'));
 $writer->header(array('title'=>'Opdateret'));
 $writer->endHeaders();
 
-foreach ($list['result'] as $object) {
+foreach ($result->getList() as $object) {
 	$writer->startRow(array( 'kind'=>'file', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
 	$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->text( $object->getNumber() )->endCell();
 	$writer->startCell()->text($object->getYear())->endCell();

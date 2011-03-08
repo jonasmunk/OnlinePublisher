@@ -6,6 +6,7 @@
 global $basePath;
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
+require_once($basePath.'Editor/Classes/Services/ObjectService.php');
 
 Object::$schema['news'] = array(
 	'imageId'   => array('type'=>'int','column'=>'image_id'),
@@ -110,7 +111,7 @@ class News extends Object {
 				$query['limits'][] = 'not ((news.startdate is null and news.enddate is null) or (news.startdate<now() and news.enddate>now()) or (news.startdate is null and news.enddate>now()) or (news.startdate<now() and news.enddate is null))';
 			}
 		}
-		return Object::retrieve($query);
+		return ObjectService::find($query);
 	}
 	
 	////////////////////////////// Persistence ////////////////////////
