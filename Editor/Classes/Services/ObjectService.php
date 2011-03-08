@@ -284,6 +284,9 @@ class ObjectService {
 		if ($query->getWindowSize()!==null) {
 			$parts['windowSize'] = $query->getWindowSize();
 		}
+		if ($query->getCreatedMin()!==null) {
+			$parts['createdMin'] = $query->getCreatedMin();
+		}
 		if ($class = ObjectService::getInstance($query->getType())) {
 			if (method_exists($class,'addCustomSearch')) {
 				$class->addCustomSearch($query,$parts);

@@ -23,6 +23,10 @@ class News extends Object {
 		parent::Object('news');
 	}
 	
+	function load($id) {
+		return Object::get($id,'news');
+	}
+	
 	function setStartdate($stamp) {
 		$this->startdate = $stamp;
 	}
@@ -76,49 +80,34 @@ class News extends Object {
 	
 	///////////////////////////////// Search //////////////////////////
 	
-	function search($query = array()) {
-		$start = $query['startDate'];
-		$end = $query['endDate'];
-		$sql = "select news.object_id as id from news,newsgroup_news where news.object_id=newsgroup_news.news_id and newsgroup_news.newsgroup_id=".$query['group'];
-		$sql.=" and ((news.startdate is null and news.enddate is null) or (news.startdate>=".Database::datetime($start)." and news.startdate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.enddate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.startdate is null) or (news.startdate<=".Database::datetime($end)." and news.enddate is null))";
-		$sql.=" order by news.startdate";
-		$out = array();
-		$ids = Database::getIds($sql);
-		foreach ($ids as $id) {
-			$out[] = News::load($id);
+	function addCustomSearch($query,&$parts) {
+		$custom = $query->getCustom();
+		if ($custom['group']>0) {
+			$parts['tables'][] = 'newsgroup_news';
+			$parts['limits'][] = 'newsgroup_news.news_id=object.id';
+			$parts['limits'][] = 'newsgroup_news.newsgroup_id='.$custom['group'];
 		}
-		return $out;
-	}
-	
-	function search2($query=array()) {
-		$query['type']='news';
-		$query['limits']=array();
-		$query['tables']=array();
-		if (isset($query['group'])) {
-			$query['tables'][] = 'newsgroup_news';
-			$query['limits'][] = 'newsgroup_news.news_id=object.id';
-			$query['limits'][] = 'newsgroup_news.newsgroup_id='.$query['group'];
+		if (isset($custom['startdate']) && isset($custom['enddate'])) {
+			$start = $custom['startdate'];
+			$end = $custom['enddate'];
+			$parts['limits'][] = "((news.startdate is null and news.enddate is null) or (news.startdate>=".Database::datetime($start)." and news.startdate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.enddate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.startdate is null) or (news.startdate<=".Database::datetime($end)." and news.enddate is null))";
 		}
-		if (isset($query['linkType'])) {
-			$query['tables'][] = 'object_link';
-			$query['limits'][] = 'object_link.object_id=object.id';
-			$query['limits'][] = 'object_link.target_type='.Database::text($query['linkType']);
-		}
-		if (isset($query['active'])) {
-			if ($query['active']) {
-				$query['limits'][] = '((news.startdate is null and news.enddate is null) or (news.startdate<now() and news.enddate>now()) or (news.startdate is null and news.enddate>now()) or (news.startdate<now() and news.enddate is null))';
+		if (isset($custom['active'])) {
+			if ($custom['active']) {
+				$parts['limits'][] = '((news.startdate is null and news.enddate is null) or (news.startdate<now() and news.enddate>now()) or (news.startdate is null and news.enddate>now()) or (news.startdate<now() and news.enddate is null))';
 			} else {
-				$query['limits'][] = 'not ((news.startdate is null and news.enddate is null) or (news.startdate<now() and news.enddate>now()) or (news.startdate is null and news.enddate>now()) or (news.startdate<now() and news.enddate is null))';
+				$parts['limits'][] = 'not ((news.startdate is null and news.enddate is null) or (news.startdate<now() and news.enddate>now()) or (news.startdate is null and news.enddate>now()) or (news.startdate<now() and news.enddate is null))';
 			}
 		}
-		return ObjectService::find($query);
+		if (isset($custom['linkType'])) {
+			$parts['tables'][] = 'object_link';
+			$parts['limits'][] = 'object_link.object_id=object.id';
+			$parts['limits'][] = 'object_link.target_type='.Database::text($custom['linkType']);
+		}
 	}
 	
 	////////////////////////////// Persistence ////////////////////////
 	
-	function load($id) {
-		return Object::get($id,'news');
-	}
 	
 	function sub_publish() {
 		$data = '<news xmlns="'.parent::_buildnamespace('1.0').'">';

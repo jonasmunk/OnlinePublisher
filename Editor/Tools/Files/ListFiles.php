@@ -21,8 +21,12 @@ $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
 $sort = Request::getString('sort');
 $direction = Request::getString('direction');
-if ($sort=='') $sort='title';
-if ($direction=='') $direction='ascending';
+if (!$sort) {
+	$sort='title';
+}
+if (!$direction) {
+	$direction='ascending';
+}
 
 $query = array('windowSize' => $windowSize,'windowPage' => $windowPage,'sort' => $sort,'direction' => $direction);
 

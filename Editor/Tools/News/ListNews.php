@@ -49,31 +49,29 @@ $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
 $sort = Request::getString('sort');
 $direction = Request::getString('direction');
-if ($sort=='') $sort='title';
-if ($direction=='') $direction='ascending';
 
-$query = array('windowSize' => $windowSize,'windowPage' => $windowPage,'ordering' => $sort,'direction' => $direction);
-
-if ($type!='') $query['type'] = $type;
-if ($queryString!='') $query['query'] = $queryString;
-
-if ($group>0) {
-	$query['group'] = $group;
+if (!$sort) {
+	$sort='title';
 }
-if ($type) {
-	$query['type'] = $type;
-}
+
+$query = Query::after('news')->orderBy($sort)->withDirection($direction)->withWindowSize($windowSize)->withWindowPage($windowPage);
+$query->withText($queryString);
+$query->withCustom('group',$group);
+
 if ($main=='latest') {
-	$query['createdMin']=DateUtils::addDays(mktime(),-1);
+	$query->withCreatedMin(DateUtils::addDays(mktime(),-1));
 } else if ($main=='active') {
-	$query['active']=true;
+	$query->withCustom('active',true);
 } else if ($main=='inactive') {
-	$query['active']=false;
+	$query->withCustom('active',false);
 } else if ($main=='url' || $main=='page' || $main=='email' || $main=='file') {
-	$query['linkType']=$main;
+	$query->withCustom('linkType',$main);
 }
-$list = News::search2($query);
-$objects = $list['result'];
+
+
+
+$result = $query->search();
+$objects = $result->getList();
 
 $linkCounts = ObjectLinkService::getLinkCounts($objects);
 
@@ -81,7 +79,7 @@ $writer = new ListWriter();
 
 $writer->startList();
 $writer->sort($sort,$direction);
-$writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' => $windowPage ));
+$writer->window(array( 'total' => $result->getTotal(), 'size' => $windowSize, 'page' => $windowPage ));
 $writer->startHeaders();
 $writer->header(array('title'=>'Titel','width'=>40,'key'=>'title','sortable'=>true));
 $writer->header(array('title'=>'Startdato','key'=>'startdate','sortable'=>true));

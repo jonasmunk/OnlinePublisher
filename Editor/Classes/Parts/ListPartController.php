@@ -154,7 +154,7 @@ class ListPartController extends PartController
 						}
 					}
 				} else if ($type=='newsgroup') {
-					$newsItems = News::search(array('group'=>$id,'startDate'=>$from,'endDate'=>$to));
+					$newsItems = Query::after('news')->withCustom('group',$id)->withCustom('startdate',$from)->withCustom('enddate',$to)->orderBy('startdate')->get();
 					foreach ($newsItems as $newsItem) {
 						$item = new PartListItem();
 						$item->setStartDate($newsItem->getStartDate());

@@ -16,6 +16,7 @@ class Query {
 	private $direction = 'ascending';
 	private $windowPage = 0;
 	private $windowSize = 30;
+	private $createdMin;
 	
 	function Query($type) {
 		$this->type = $type;
@@ -55,6 +56,21 @@ class Query {
 		$this->direction = 'descending';
 		return $this;
 	}
+	
+	function withDirection($direction) {
+		$this->direction = $direction=='ascending' ? 'ascending' : 'descending';
+		return $this;
+	}
+	
+	function withCreatedMin($createdMin) {
+	    $this->createdMin = $createdMin;
+		return $this;
+	}
+
+	function getCreatedMin() {
+	    return $this->createdMin;
+	}
+	
 	
 	function withText($text) {
 		$this->text = $text;
