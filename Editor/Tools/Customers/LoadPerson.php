@@ -9,7 +9,7 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Person.php';
 require_once '../../Classes/Objects/Emailaddress.php';
-require_once '../../Classes/Phonenumber.php';
+require_once '../../Classes/Objects/Phonenumber.php';
 
 $data = Request::getObject('data');
 $person=Person::load($data->id);
@@ -20,7 +20,7 @@ foreach ($mails as $mail) {
 	$mail->toUnicode();
 }
 
-$phones = PhoneNumber::search(array('containingObjectId'=>$person->getId()));
+$phones = Query::after('phonenumber')->withProperty('containingObjectId',$person->getId())->get();
 foreach ($phones as $phone) {
 	$phone->toUnicode();
 }

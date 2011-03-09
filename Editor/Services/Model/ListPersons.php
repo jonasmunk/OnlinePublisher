@@ -10,7 +10,7 @@ require_once '../../Classes/Object.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Objects/Emailaddress.php';
 require_once '../../Classes/Person.php';
-require_once '../../Classes/Phonenumber.php';
+require_once '../../Classes/Objects/Phonenumber.php';
 
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
@@ -71,7 +71,7 @@ function buildEmails($person) {
 
 function buildPhones($person) {
 	$out = '';
-	$phones = PhoneNumber::search(array('containingObjectId'=>$person->getId()));
+	$phones = Query::after('phonenumber')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($phones as $phone) {
 		$out.= '<object icon="common/phone">'.In2iGui::escape($phone->getNumber()).'</object>';
 	}
