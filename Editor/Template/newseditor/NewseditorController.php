@@ -4,7 +4,7 @@
  * @subpackage Templates.Newseditor
  */
 require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
-require_once $basePath.'Editor/Classes/News.php';
+require_once $basePath.'Editor/Classes/Objects/News.php';
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');

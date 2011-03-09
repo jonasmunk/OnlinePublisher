@@ -9,7 +9,7 @@ require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/In2iGui.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 require_once($basePath.'Editor/Classes/Calendarsource.php');
-require_once($basePath.'Editor/Classes/News.php');
+require_once($basePath.'Editor/Classes/Objects/News.php');
 require_once($basePath.'Editor/Classes/Objects/Newssource.php');
 require_once($basePath.'Editor/Classes/Model/Query.php');
 
