@@ -335,6 +335,9 @@ class ObjectService {
 		}
 		if (is_array($query['fields'])) {
 			foreach ($query['fields'] as $field => $value) {
+				if (isset($schema[$field]) && isset($schema[$field]['column'])) {
+					$field = $schema[$field]['column'];
+				}
 				$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
 			}
 		}

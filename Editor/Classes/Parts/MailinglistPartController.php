@@ -97,7 +97,7 @@ class MailinglistPartController extends PartController
 	function subscribe($part,$name,$address) {
 		global $basePath;
 		require_once($basePath.'Editor/Classes/Person.php');
-		require_once($basePath.'Editor/Classes/Emailaddress.php');
+		require_once($basePath.'Editor/Classes/Objects/Emailaddress.php');
 		$person = new Person();
 		$person->setFullName($name);
 		$person->save();

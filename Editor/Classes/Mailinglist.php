@@ -69,7 +69,7 @@ class Mailinglist extends Object {
 	
 	function getEmails() {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Emailaddress.php');
+		require_once($basePath.'Editor/Classes/Objects/Emailaddress.php');
 		if (!is_array($options)) {
 			$options = array();
 		}

@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Object.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/Emailaddress.php';
+require_once '../../Classes/Objects/Emailaddress.php';
 require_once '../../Classes/Person.php';
 require_once '../../Classes/Phonenumber.php';
 
@@ -62,7 +62,7 @@ function buildAddress($person) {
 
 function buildEmails($person) {
 	$out ='';
-	$mails = EmailAddress::search(array('containingObjectId'=>$person->getId()));
+	$mails = Query::after('emailaddress')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($mails as $mail) {
 		$out.= '<object icon="common/email">'.In2iGui::escape($mail->getAddress()).'</object>';
 	}

@@ -10,7 +10,7 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/Productoffer.php';
 require_once '../../Classes/Product.php';
 require_once '../../Classes/Person.php';
-require_once '../../Classes/Emailaddress.php';
+require_once '../../Classes/Objects/Emailaddress.php';
 
 $windowSize = Request::getInt('windowSize',30);
 $windowNumber = Request::getInt('windowNumber',1);
@@ -38,8 +38,7 @@ echo '<headers>
 foreach ($offers as $object) {
 	$product = Product::load($object->getProductId());
 	$person = Person::load($object->getPersonId());
-	$query = array('containingObjectId'=>$person->getId());
-	$mails = EmailAddress::search($query);
+	$mails = Query::after('emailaddress')->withProperty('containingObjectId',$person->getId())->get();
 	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'">'.
 	'<cell icon="'.$product->getIn2iGuiIcon().'">'.In2iGui::escape($product->getTitle()).'</cell>'.
 	'<cell>'.In2iGui::escape($object->getOffer()).'</cell>'.

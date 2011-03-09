@@ -514,9 +514,8 @@ class Person extends Object {
 	
 	function updateEmailAddresses($new) {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Emailaddress.php');
-		$query = array('containingObjectId'=>$this->id);
-		$mails = EmailAddress::search($query);
+		require_once($basePath.'Editor/Classes/Objects/Emailaddress.php');
+		$mails = Query::after('emailaddress')->withProperty('containingObjectId',$this->getId())->get();
 		$foundIds = array();
 		foreach ($new as $email) { 
 			if (isset($email->id) && $email->id>0) {
