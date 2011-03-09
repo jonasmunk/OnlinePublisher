@@ -6,6 +6,21 @@
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
+Object::$schema['person'] = array(
+	'firstname' => array('type'=>'string'),
+	'middlename' => array('type'=>'string'),
+	'surname' => array('type'=>'string'),
+	'initials' => array('type'=>'string'),
+	'nickname' => array('type'=>'string'),
+	'jobtitle' => array('type'=>'string'),
+	'sex' => array('type'=>'string'),
+	'streetname' => array('type'=>'string'),
+	'zipcode' => array('type'=>'string'),
+	'city' => array('type'=>'string'),
+	'country' => array('type'=>'string'),
+	'webaddress' => array('type'=>'string'),
+	'imageId' => array('type'=>'int','column'=>'image_id')
+);
 class Person extends Object {
 	var $firstname;
 	var $middlename;
@@ -23,12 +38,16 @@ class Person extends Object {
 	var $city;
 	var $country;
 	var $webaddress;
-	var $image_id;
+	var $imageId;
 	
 	function Person() {
 		parent::Object('person');
 	}
 	
+	function load($id) {
+		return Object::get($id,'person');
+	}
+
 	function toUnicode() {
 		parent::toUnicode();
 		$this->firstname = mb_convert_encoding($this->firstname, "UTF-8","ISO-8859-1");
@@ -139,35 +158,35 @@ class Person extends Object {
 		return $this->sex;
 	}
 	
-	function setEmail_job($email_job) {
+	function setEmailJob($email_job) {
 		$this->email_job = $email_job;
 	}
 	
-	function getEmail_job() {
+	function getEmailJob() {
 		return $this->email_job;
 	}
 	
-	function setEmail_private($email_private) {
+	function setEmailPrivate($email_private) {
 		$this->email_private = $email_private;
 	}
 	
-	function getEmail_private() {
+	function getEmailPrivate() {
 		return $this->email_private;
 	}
 	
-	function setPhone_job($phone_job) {
+	function setPhoneJob($phone_job) {
 		$this->phone_job = $phone_job;
 	}
 	
-	function getPhone_job() {
+	function getPhoneJob() {
 		return $this->phone_job;
 	}
 	
-	function setPhone_private($phone_private) {
+	function setPhonePrivate($phone_private) {
 		$this->phone_private = $phone_private;
 	}
 	
-	function getPhone_private() {
+	function getPhonePrivate() {
 		return $this->phone_private;
 	}
 	
@@ -211,12 +230,12 @@ class Person extends Object {
 		return $this->webaddress;
 	}
 	
-	function setImage_id($image_id) {
-		$this->image_id = $image_id;
+	function setImageId($imageId) {
+		$this->imageId = $imageId;
 	}
 	
-	function getImage_id() {
-		return $this->image_id;
+	function getImageId() {
+		return $this->imageId;
 	}
 	
 	function getMailinglistIds() {
@@ -329,84 +348,6 @@ class Person extends Object {
 		}
 	}
 	
-	function load($id) {
-		$sql = "select * from person where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj = new Person();
-			$obj->_load($id);
-			$obj->firstname=$row['firstname'];
-			$obj->middlename=$row['middlename'];
-			$obj->surname=$row['surname'];
-			$obj->initials=$row['initials'];
-			$obj->nickname=$row['nickname'];
-			$obj->jobtitle=$row['jobtitle'];
-			$obj->sex=$row['sex'];
-			$obj->email_job=$row['email_job'];
-			$obj->email_private=$row['email_private'];
-			$obj->phone_job=$row['phone_job'];
-			$obj->phone_private=$row['phone_private'];
-			$obj->streetname=$row['streetname'];
-			$obj->zipcode=$row['zipcode'];
-			$obj->city=$row['city'];
-			$obj->country=$row['country'];
-			$obj->webaddress=$row['webaddress'];
-			$obj->image_id=$row['image_id'];
-			return $obj;
-		} else {
-			return null;
-		}
-	}
-	
-	function sub_create() {
-		$sql = "insert into person (object_id,firstname,middlename,surname,initials,nickname,jobtitle,".
-				"sex , email_job , email_private , phone_job , phone_private , streetname , zipcode , city ,".
-				"country , webaddress , image_id ) values (".
-				$this->id.
-				",".Database::text($this->firstname).
-				",".Database::text($this->middlename).
-				",".Database::text($this->surname).
-				",".Database::text($this->initials).
-				",".Database::text($this->nickname).
-				",".Database::text($this->jobtitle).
-				",".Database::text($this->sex).
-				",".Database::text($this->email_job).
-				",".Database::text($this->email_private).
-				",".Database::text($this->phone_job).
-				",".Database::text($this->phone_private).
-				",".Database::text($this->streetname).
-				",".Database::text($this->zipcode).
-				",".Database::text($this->city).
-				",".Database::text($this->country).
-				",".Database::text($this->webaddress).
-				",".Database::text($this->image_id).
-				")";
-		Database::insert($sql);
-	}
-	
-	function sub_update() {
-		$sql="update person set".
-		" firstname=".Database::text($this->firstname).
-		",middlename=".Database::text($this->middlename).
-		",surname=".Database::text($this->surname).
-		",initials=".Database::text($this->initials).
-		",nickname=".Database::text($this->nickname).
-		",jobtitle=".Database::text($this->jobtitle).
-		",sex=".Database::text($this->sex).
-		",email_job=".Database::text($this->email_job).
-		",email_private=".Database::text($this->email_private).
-		",phone_job=".Database::text($this->phone_job).
-		",phone_private=".Database::text($this->phone_private).
-		",streetname=".Database::text($this->streetname).
-		",zipcode=".Database::text($this->zipcode).
-		",city=".Database::text($this->city).
-		",country=".Database::text($this->country).
-		",webaddress=".Database::text($this->webaddress).
-		",image_id=".Database::text($this->image_id).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
-	
 	function sub_publish() {
 	
 		$data = '<person xmlns="'.parent::_buildnamespace('1.0').'">';
@@ -458,8 +399,8 @@ class Person extends Object {
 		if ($this->webaddress!='') {
 			$data.='<webaddress>'.StringUtils::escapeXML($this->webaddress).'</webaddress>';
 		}
-		if ($this->image_id>0) {
-			$sql="select * from object where id=".$this->image_id;
+		if ($this->imageId>0) {
+			$sql="select * from object where id=".$this->imageId;
 			if ($img = Database::selectFirst($sql)) {
 				$data.='<image>'.$img['data'].'</image>';
 			}
@@ -485,7 +426,7 @@ class Person extends Object {
 		
 	}
 	
-	function sub_remove() {
+	function removeMore() {
 		$sql="delete from person_mailinglist where person_id=".$this->id;
 		Database::delete($sql);
 		$sql="delete from emailaddress where containing_object_id=".$this->id;
@@ -493,8 +434,6 @@ class Person extends Object {
 		$sql="delete from phonenumber where containing_object_id=".$this->id;
 		Database::delete($sql);
 		$sql="delete from persongroup_person where person_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from person where object_id=".$this->id;
 		Database::delete($sql);
 	}
 	

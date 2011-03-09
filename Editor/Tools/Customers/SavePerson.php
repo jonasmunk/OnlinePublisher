@@ -31,7 +31,7 @@ $person->setCountry(Request::fromUnicode($data->person->country));
 $person->setWebaddress(Request::fromUnicode($data->person->webaddress));
 $person->setSearchable($data->person->searchable);
 $person->setSex($data->person->sex);
-$person->setImage_id($data->person->image_id ? $data->person->image_id : 0);
+$person->setImageId($data->person->image_id ? $data->person->image_id : 0);
 
 $person->save();
 
