@@ -16,36 +16,33 @@ $kind = Request::getString('kind');
 $value = Request::getInt('value');
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
-$queryString = Request::getUnicodeString('query');
+$text = Request::getUnicodeString('query');
 $sort = Request::getString('sort');
 $direction = Request::getString('direction');
 if ($sort=='') $sort='title';
-if ($direction=='') $direction='ascending';
 
-$query = array('windowSize' => $windowSize,'windowPage' => $windowPage,'sort' => $sort,'direction' => $direction, 'query' => $query);
+$query = Query::after('person')->orderBy($sort)->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction)->withText($text);
+
 if ($kind=='mailinglist') {
-	$query['mailinglist'] = $value;
+	$query->withCustom('mailinglist',$value);
 }
 if ($kind=='persongroup') {
-	$query['persongroup'] = $value;
+	$query->withCustom('group',$value);
 }
-if ($queryString!='') $query['query'] = $queryString;
-
-$list = Person::find($query);
-$persons = $list['result'];
+$result = $query->search();
 
 header('Content-Type: text/xml;');
 echo '<?xml version="1.0"?>
 <list>
 <sort key="'.$sort.'" direction="'.$direction.'"/>
-<window total="'.$list['total'].'" size="'.$list['windowSize'].'" page="'.$list['windowPage'].'"/>
+<window total="'.$result->getTotal().'" size="'.$windowSize.'" page="'.$windowPage.'"/>
 <headers>
 	<header title="Navn" width="30" key="title" sortable="true"/>
 	<header title="E-post" width="20" sortable="true"/>
 	<header title="Telefon" width="20"/>
 	<header title="Adresse" width="30"/>
 </headers>';
-foreach ($persons as $object) {
+foreach ($result->getList() as $object) {
 	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="common/person" title="'.In2iGui::escape($object->getTitle()).'">'.
 	'<cell icon="common/person">'.In2iGui::escape($object->getTitle()).'</cell>'.
 	'<cell>'.buildEmails($object).'</cell>'.

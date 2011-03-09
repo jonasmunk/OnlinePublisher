@@ -276,66 +276,18 @@ class Person extends Object {
 		Database::insert($sql);
 	}
 	
-	function search($options = null) {
-		if (!is_array($options)) {
-			$options = array();
+	function addCustomSearch($query,&$parts) {
+		$custom = $query->getCustom();
+		if ($custom['group']>0) {
+			$parts['tables'][] = 'persongroup_person';
+			$parts['limits'][] = 'persongroup_person.person_id = object.id';
+			$parts['limits'][] = 'persongroup_person.persongroup_id = '.Database::int($custom['group']);
 		}
-		$sql = "select object.id from person,object";
-		if (isset($options['mailinglist'])) {
-			$sql.=",person_mailinglist";
+		if ($custom['mailinglist']>0) {
+			$parts['tables'][] = 'person_mailinglist';
+			$parts['limits'][] = 'person_mailinglist.person_id = object.id';
+			$parts['limits'][] = 'person_mailinglist.mailinglist_id = '.Database::int($custom['mailinglist']);
 		}
-		if (isset($options['persongroup'])) {
-			$sql.=",persongroup_person";
-		}
-		$sql.=" where object.id=person.object_id";
-		if (isset($options['mailinglist'])) {
-			$sql.=" and person_mailinglist.person_id = object.id and person_mailinglist.mailinglist_id=".$options['mailinglist'];
-		}
-		if (isset($options['persongroup'])) {
-			$sql.=" and persongroup_person.person_id = object.id and persongroup_person.persongroup_id=".$options['persongroup'];
-		}
-		$sql.=" order by object.title";
-		$result = Database::select($sql);
-		$list = array();
-		while ($row = Database::next($result)) {
-			$list[] = Person::load($row['id']);
-		}
-		Database::free($result);
-		return $list;
-	}
-
-    function find($query = array()) {
-    	$parts = array();
-		$parts['columns'] = 'object.id';
-		$parts['tables'] = 'person,object';
-		$parts['limits'] = array();
-		$parts['ordering'] = 'object.title';
-		$parts['direction'] = $query['direction'];
-		
-		$parts['limits'][] = "object.id=person.object_id";
-		if (isset($query['mailinglist'])) {
-			$parts['tables'].=",person_mailinglist";
-			$parts['limits'][] = "person_mailinglist.person_id = object.id";
-			$parts['limits'][] = "person_mailinglist.mailinglist_id=".$query['mailinglist'];
-		}
-		if (isset($query['persongroup'])) {
-			$parts['tables'].=",persongroup_person";
-			$parts['limits'][] = "persongroup_person.person_id = object.id";
-			$parts['limits'][] = "persongroup_person.persongroup_id=".$query['persongroup'];
-		}
-		if (isset($query['query'])) {
-			$parts['limits'][]='`object`.`index` like '.Database::search($query['query']);
-		}
-		if ($query['sort']=='title') {
-			$parts['ordering']="object.title";
-		}
-		
-		$list = parent::_find($parts,$query);
-		$list['result'] = array();
-		foreach ($list['rows'] as $row) {
-			$list['result'][] = Person::load($row['id']);
-		}
-		return $list;
 	}
 	
 	function loadByEmail($email) {

@@ -10,6 +10,7 @@ require_once '../../Classes/Object.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Objects/Emailaddress.php';
 require_once '../../Classes/Person.php';
+require_once '../../Classes/Model/Query.php';
 require_once '../../Classes/Objects/Phonenumber.php';
 
 $windowSize = Request::getInt('windowSize',30);
@@ -20,17 +21,14 @@ $direction = Request::getString('direction');
 if ($sort=='') $sort='title';
 if ($direction=='') $direction='ascending';
 
-$query = array('windowSize' => $windowSize,'windowPage' => $windowPage,'sort' => $sort,'direction' => $direction, 'query' => $query);
-if ($queryString!='') $query['query'] = $queryString;
-
-$list = Person::find($query);
-$persons = $list['result'];
+$result = Query::after('person')->orderBy('title')->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction)->withText($queryString)->search();
+$persons = $result->getList();
 
 header('Content-Type: text/xml;');
 echo '<?xml version="1.0"?>
 <list>
 <sort key="'.$sort.'" direction="'.$direction.'"/>
-<window total="'.$list['total'].'" size="'.$list['windowSize'].'" page="'.$list['windowPage'].'"/>
+<window total="'.$result->getTotal().'" size="'.$windowSize.'" page="'.$windowPage.'"/>
 <headers>
 	<header title="Navn" width="60" key="title" sortable="true"/>
 	<header title="Adresse" width="40"/>
