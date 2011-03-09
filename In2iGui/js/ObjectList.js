@@ -37,13 +37,15 @@ In2iGui.ObjectList.prototype = {
 		this.addObject({});
 	},
 	addObject : function(data,addToEnd) {
+		var obj;
 		if (this.objects.length==0 || addToEnd) {
-			var obj = new In2iGui.ObjectList.Object(this.objects.length,data,this);
+			obj = new In2iGui.ObjectList.Object(this.objects.length,data,this);
 			this.objects.push(obj);
 			this.body.appendChild(obj.getElement());
 		} else {
 			var last = this.objects[this.objects.length-1];
-			var obj = new In2iGui.ObjectList.Object(last.index,data,this);
+			n2i.removeFromArray(this.objects,last);
+			obj = new In2iGui.ObjectList.Object(last.index,data,this);
 			last.index++;
 			this.objects.push(obj);
 			this.objects.push(last);

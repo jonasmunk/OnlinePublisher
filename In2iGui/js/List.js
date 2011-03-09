@@ -60,7 +60,7 @@ In2iGui.List = function(options) {
  */
 In2iGui.List.create = function(options) {
 	options = n2i.override({},options);
-	var e = options.element = n2i.build('div',{
+	options.element = n2i.build('div',{
 		'class':'in2igui_list',
 		html: '<div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
 	return new In2iGui.List(options);
@@ -195,7 +195,7 @@ In2iGui.List.prototype = {
 			url+=url.indexOf('?')==-1 ? '?' : '&';
 			url+='direction='+this.sortDirection;
 		}
-		for (key in this.parameters) {
+		for (var key in this.parameters) {
 			url+=url.indexOf('?')==-1 ? '?' : '&';
 			url+=key+'='+this.parameters[key];
 		}
@@ -235,7 +235,8 @@ In2iGui.List.prototype = {
 			this.sortDirection=sort[0].getAttribute('direction');
 		}
 		var headers = doc.getElementsByTagName('header');
-		for (var i=0; i < headers.length; i++) {
+		var i;
+		for (i=0; i < headers.length; i++) {
 			var className = '';
 			var th = document.createElement('th');
 			var width = headers[i].getAttribute('width');
@@ -263,7 +264,7 @@ In2iGui.List.prototype = {
 		this.head.appendChild(headTr);
 		var frag = document.createDocumentFragment();
 		var rows = doc.getElementsByTagName('row');
-		for (var i=0; i < rows.length; i++) {
+		for (i=0; i < rows.length; i++) {
 			var cells = rows[i].getElementsByTagName('cell');
 			var row = document.createElement('tr');
 			var icon = rows[i].getAttribute('icon');
@@ -560,11 +561,12 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	changeSelection : function(indexes) {
-		var rows = this.body.getElementsByTagName('tr');
-		for (var i=0;i<this.selected.length;i++) {
+		var rows = this.body.getElementsByTagName('tr'),
+			i;
+		for (i=0;i<this.selected.length;i++) {
 			n2i.removeClass(rows[this.selected[i]],'selected');
 		}
-		for (var i=0;i<indexes.length;i++) {
+		for (i=0;i<indexes.length;i++) {
 			n2i.addClass(rows[indexes[i]],'selected');
 		}
 		this.selected = indexes;

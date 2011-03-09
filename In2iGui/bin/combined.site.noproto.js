@@ -1211,7 +1211,7 @@ n2i.animation.render = function(element) {
 	this.running = true;
 	var next = false;
 	var stamp = new Date().getTime();
-	for (id in this.objects) {
+	for (var id in this.objects) {
 		var obj = this.objects[id];
 		if (obj.work) {
 			for (var i=0; i < obj.work.length; i++) {
@@ -2077,14 +2077,12 @@ n2i.onReady(function() {
 In2iGui.prototype = {
 	/** @private */
 	ignite : function() {
-		if (window.dwr) {
-			if (dwr && dwr.engine && dwr.engine.setErrorHandler) {
-				dwr.engine.setErrorHandler(function(msg,e) {
-					n2i.log(msg);
-					n2i.log(e);
-					In2iGui.get().alert({title:'An unexpected error occurred!',text:msg,emotion:'gasp'});
-				});
-			}
+		if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
+			window.dwr.engine.setErrorHandler(function(msg,e) {
+				n2i.log(msg);
+				n2i.log(e);
+				In2iGui.get().alert({title:'An unexpected error occurred!',text:msg,emotion:'gasp'});
+			});
 		}
 		this.domLoaded = true;
 		In2iGui.domReady = true;
@@ -2211,7 +2209,7 @@ In2iGui.prototype = {
 		if (e) {
 			var d = e.getElementsByTagName('*');
 			var o = [];
-			for (key in this.objects) {
+			for (var key in this.objects) {
 				o.push(this.objects[key]);
 			}
 			for (var i=0; i < d.length; i++) {
@@ -2235,7 +2233,7 @@ In2iGui.prototype = {
 		if (e) {
 			var a = n2i.getAncestors(e);
 			var o = [];
-			for (key in this.objects) {
+			for (var key in this.objects) {
 				o.push(this.objects[key]);
 			}
 			for (var i=0; i < a.length; i++) {
@@ -2269,13 +2267,13 @@ In2iGui.confirmOverlay = function(options) {
 		overlay = In2iGui.confirmOverlays[node];
 		overlay.clear();
 	} else {
-		overlay = ui.Overlay.create({modal:true});
+		overlay = In2iGui.Overlay.create({modal:true});
 		In2iGui.confirmOverlays[node] = overlay;
 	}
 	if (options.text) {
 		overlay.addText(options.text);
 	}
-	var ok = ui.Button.create({text:options.okText || 'OK',highlighted:'true'});
+	var ok = In2iGui.Button.create({text:options.okText || 'OK',highlighted:'true'});
 	ok.click(function() {
 		if (options.onOk) {
 			options.onOk();
@@ -2283,7 +2281,7 @@ In2iGui.confirmOverlay = function(options) {
 		overlay.hide();
 	});
 	overlay.add(ok);
-	var cancel = ui.Button.create({text:options.cancelText || 'Cancel'});
+	var cancel = In2iGui.Button.create({text:options.cancelText || 'Cancel'});
 	cancel.onClick(function() {
 		overlay.hide();
 	});
@@ -2304,9 +2302,10 @@ In2iGui.destroyDescendants = function(element) {
 
 In2iGui.changeState = function(state) {
 	if (In2iGui.state===state) {return;}
-	var all = In2iGui.get().objects;
+	var all = In2iGui.get().objects,
+		key,obj;
 	for (key in all) {
-		var obj = all[key];
+		obj = all[key];
 		if (obj.options && obj.options.state) {
 			if (obj.options.state==state) {
 				obj.show();
@@ -2670,7 +2669,6 @@ In2iGui.extend = function(obj,options) {
 
 In2iGui.callDelegatesDrop = function(dragged,dropped) {
 	var gui = In2iGui.get();
-	var result = null;
 	for (var i=0; i < gui.delegates.length; i++) {
 		if (gui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
 			gui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
@@ -2804,17 +2802,18 @@ In2iGui.bind = function(expression,delegate) {
 In2iGui.request = function(options) {
 	options = n2i.override({method:'post',parameters:{}},options);
 	if (options.json) {
-		for (key in options.json) {
+		for (var key in options.json) {
 			options.parameters[key]=n2i.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
 	options.onSuccess=function(t) {
+		var str,json;
 		if (typeof(onSuccess)=='string') {
 			if (!n2i.request.isXMLResponse(t)) {
-				var str = t.responseText.replace(/^\s+|\s+$/g, '');
+				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
-					var json = n2i.fromJSON(t.responseText);
+					json = n2i.fromJSON(t.responseText);
 				} else {
 					json = '';
 				}
@@ -2825,11 +2824,11 @@ In2iGui.request = function(options) {
 		} else if (n2i.request.isXMLResponse(t) && options.onXML) {
 			options.onXML(t.responseXML);
 		} else if (options.onJSON) {
-			var str = t.responseText.replace(/^\s+|\s+$/g, '');
+			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				var json = n2i.fromJSON(t.responseText);
+				json = n2i.fromJSON(t.responseText);
 			} else {
-				var json = null;
+				json = null;
 			}
 			options.onJSON(json);
 		} else if (typeof(onSuccess)=='function') {

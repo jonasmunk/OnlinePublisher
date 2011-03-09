@@ -454,12 +454,12 @@ In2iGui.Editor.getPartId = function(element) {
  * @constructor
  */
 In2iGui.Editor.Header = function(element,row,column,position) {
-	this.element = $(element);
+	this.element = n2i.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;
 	this.id = In2iGui.Editor.getPartId(this.element);
-	this.header = this.element.firstDescendant();
+	this.header = n2i.firstByTag(this.element,'*');
 	this.field = null;
 }
 
@@ -511,7 +511,7 @@ In2iGui.Editor.Header.prototype = {
  * @constructor
  */
 In2iGui.Editor.Html = function(element,row,column,position) {
-	this.element = $(element);
+	this.element = n2i.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;

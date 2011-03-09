@@ -54,8 +54,8 @@ In2iGui.Source.prototype = {
 		var self = this;
 		if (this.options.url) {
 			var prms = {};
-			for (var i=0; i < this.parameters.length; i++) {
-				var p = this.parameters[i];
+			for (var j=0; j < this.parameters.length; j++) {
+				var p = this.parameters[j];
 				prms[p.key] = p.value;
 			};
 			this.busy=true;
@@ -78,9 +78,9 @@ In2iGui.Source.prototype = {
 			var facade = eval(pair[0]);
 			var method = pair[1];
 			var args = facade[method].argumentNames();
-			for (var i=0; i < args.length; i++) {
-				if (this.parameters[i]) {
-					args[i]=this.parameters[i].value===undefined ? null : this.parameters[i].value;
+			for (var k=0; k < args.length; k++) {
+				if (this.parameters[k]) {
+					args[k]=this.parameters[k].value===undefined ? null : this.parameters[k].value;
 				}
 			};
 			args[args.length-1]=function(r) {self.parseDWR(r)};
@@ -102,11 +102,10 @@ In2iGui.Source.prototype = {
 		if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror') {
 			this.parseXML(t.responseXML);
 		} else {
-			var str = t.responseText.replace(/^\s+|\s+$/g, '');
+			var str = t.responseText.replace(/^\s+|\s+$/g, ''),
+				json = null;
 			if (str.length>0) {
-				var json = n2i.fromJSON(t.responseText);
-			} else {
-				var json = null;
+				json = n2i.fromJSON(t.responseText);
 			}
 			this.fire('objectsLoaded',json);
 		}

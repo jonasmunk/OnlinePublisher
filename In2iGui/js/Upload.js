@@ -87,7 +87,7 @@ In2iGui.Upload.prototype = {
 		form.setAttribute('encoding','multipart/form-data');
 		form.setAttribute('target',frameName);
 		if (this.options.parameters) {
-			for (key in this.options.parameters) {
+			for (var key in this.options.parameters) {
 				var hidden = n2i.build('input',{'type':'hidden','name':key});
 				hidden.value = this.options.parameters[key];
 				form.appendChild(hidden);

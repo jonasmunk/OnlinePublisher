@@ -18,7 +18,7 @@ In2iGui.BoundPanel = function(options) {
  * @param {Object} options The options
  */
 In2iGui.BoundPanel.create = function(options) {
-	var options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
+	options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
 
 	
 	var html = 
@@ -105,16 +105,17 @@ In2iGui.BoundPanel.prototype = {
 	},
 	/** @private */
 	getDimensions : function() {
+		var width, height;
 		if (this.element.style.display=='none') {
 			this.element.style.visibility='hidden';
 			this.element.style.display='block';
-			var width = this.element.clientWidth;
-			var height = this.element.clientHeight;
+			width = this.element.clientWidth;
+			height = this.element.clientHeight;
 			this.element.style.display='none';
 			this.element.style.visibility='';
 		} else {
-			var width = this.element.clientWidth;
-			var height = this.element.clientHeight;
+			width = this.element.clientWidth;
+			height = this.element.clientHeight;
 		}
 		return {width:width,height:height};
 	},
@@ -131,16 +132,17 @@ In2iGui.BoundPanel.prototype = {
 		var nodeWidth = node.clientWidth;
 		var nodeHeight = node.clientHeight;
 		var nodeTop = offset.top-scrollOffset.top+n2i.getScrollTop();
+		var arrowLeft, left;
 		if ((nodeLeft+nodeWidth/2)/winWidth<.5) {
 			this.relativePosition='left';
-			var left = nodeLeft+nodeWidth+10;
+			left = nodeLeft+nodeWidth+10;
 			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_left';
-			var arrowLeft=-14;
+			arrowLeft=-14;
 		} else {
 			this.relativePosition='right';
-			var left = nodeLeft-dims.width-10;
+			left = nodeLeft-dims.width-10;
 			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_right';
-			var arrowLeft=dims.width-4;
+			arrowLeft=dims.width-4;
 		}
 		var top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
 		this.arrow.style.marginTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2)+'px';

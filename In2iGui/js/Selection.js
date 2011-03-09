@@ -57,12 +57,13 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	getSelectionWithValue : function(value) {
-		for (var i=0; i < this.items.length; i++) {
+		var i;
+		for (i=0; i < this.items.length; i++) {
 			if (this.items[i].value==value) {
 				return this.items[i];
 			}
 		};
-		for (var i=0; i < this.subItems.length; i++) {
+		for (i=0; i < this.subItems.length; i++) {
 			var items = this.subItems[i].items;
 			for (var j=0; j < items.length; j++) {
 				if (items[j].value==value) {
@@ -78,10 +79,11 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		for (var i=0; i < this.items.length; i++) {
+		var i;
+		for (i=0; i < this.items.length; i++) {
 			n2i.setClass(this.items[i].element,'in2igui_selected',this.isSelection(this.items[i]));
 		};
-		for (var i=0; i < this.subItems.length; i++) {
+		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
 	},

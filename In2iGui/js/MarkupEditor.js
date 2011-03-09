@@ -369,7 +369,7 @@ In2iGui.MarkupEditor.util = {
 		return copy;
 	},
 	replaceNodes : function(node,recipe) {
-		for (key in recipe) {
+		for (var key in recipe) {
 			var bs = node.getElementsByTagName(key);
 			for (var i = bs.length - 1; i >= 0; i--) {
 				var replacement = document.createElement(recipe[key]);

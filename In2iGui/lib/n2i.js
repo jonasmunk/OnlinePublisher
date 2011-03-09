@@ -1211,7 +1211,7 @@ n2i.animation.render = function(element) {
 	this.running = true;
 	var next = false;
 	var stamp = new Date().getTime();
-	for (id in this.objects) {
+	for (var id in this.objects) {
 		var obj = this.objects[id];
 		if (obj.work) {
 			for (var i=0; i < obj.work.length; i++) {

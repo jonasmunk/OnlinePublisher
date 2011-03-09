@@ -924,12 +924,13 @@ In2iGui.Formula.Checkboxes.prototype = {
 	checkValues : function() {
 		var newValues = [];
 		for (var i=0; i < this.values.length; i++) {
-			var value = this.values[i];
-			var found = false;
-			for (var j=0; j < this.items.length; j++) {
+			var value = this.values[i],
+				found = false,
+				j;
+			for (j=0; j < this.items.length; j++) {
 				found = found || this.items[j].value===value;
 			}
-			for (var j=0; j < this.subItems.length; j++) {
+			for (j=0; j < this.subItems.length; j++) {
 				found = found || this.subItems[j].hasValue(value);
 			};
 			if (found) {
@@ -955,13 +956,14 @@ In2iGui.Formula.Checkboxes.prototype = {
 		In2iGui.callAncestors(this,'childValueChanged',this.values);
 	},
 	updateUI : function() {
-		for (var i=0; i < this.subItems.length; i++) {
+		var i,item,found;
+		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
 		var nodes = n2i.byClass(this.element,'in2igui_checkbox');
-		for (var i=0; i < this.items.length; i++) {
-			var item = this.items[i];
-			var found = n2i.inArray(this.values,item.value);
+		for (i=0; i < this.items.length; i++) {
+			item = this.items[i];
+			found = n2i.inArray(this.values,item.value);
 			n2i.setClass(nodes[i],'in2igui_checkbox_selected',found);
 		};
 	},

@@ -20,23 +20,24 @@ In2iGui.ColorPicker = function(options) {
 }
 
 In2iGui.ColorPicker.create = function(options) {
-	var swatches = '';
+	var swatches = '',
+		c, hex, j;
 	for (var i=0; i < 360; i+=30) {
-		for (var j=0.05; j <= 1; j+=.15) {
-			var c = n2i.Color.hsv2rgb(i,j,1);
-			var hex = n2i.Color.rgb2hex(c);
+		for (j=0.05; j <= 1; j+=.15) {
+			c = n2i.Color.hsv2rgb(i,j,1);
+			hex = n2i.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
-		for (var j=1; j >= .20; j-=.15) {
-			var c = n2i.Color.hsv2rgb(i,1,j);
-			var hex = n2i.Color.rgb2hex(c);
+		for (j=1; j >= .20; j-=.15) {
+			c = n2i.Color.hsv2rgb(i,1,j);
+			hex = n2i.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
 	}
-		for (var j=255; j >=0; j-=255/12) {
-			var hex = n2i.Color.rgb2hex([j,j,j]);
-			swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
-		}
+	for (j=255; j >=0; j-=255/12) {
+		hex = n2i.Color.rgb2hex([j,j,j]);
+		swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
+	}
 	options = options || {};
 	options.element = n2i.build('div',{
 		'class':'in2igui_colorpicker',
@@ -96,11 +97,12 @@ In2iGui.ColorPicker.prototype = {
 		n2i.listen(this.swatches,'click',this._pickColor.bind(this));
 	},
 	$click : function(button) {
-		var page = parseInt(button.element.getAttribute('rel'));
-		for (var i = this.pages.length - 1; i >= 0; i--){
+		var page = parseInt(button.element.getAttribute('rel')),
+			i;
+		for (i = this.pages.length - 1; i >= 0; i--){
 			this.pages[i].style.display = i==page ? 'block' : 'none';
 		};
-		for (var i=0; i < this.buttons.length; i++) {
+		for (i=0; i < this.buttons.length; i++) {
 			this.buttons[i].setSelected(this.buttons[i]==button);
 		};
 	},
@@ -183,6 +185,7 @@ In2iGui.ColorPicker.prototype = {
 		this._hoverColor('#'+c);
 	},
 	_hoverWheel2 : function(e) {
+		var rgb,sat,val;
 		e = n2i.event(e);
 		var pos = n2i.getPosition(this.wheel2);
 		var x = (e.getLeft() - pos.left);
@@ -197,30 +200,31 @@ In2iGui.ColorPicker.prototype = {
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {
-			var sat = 0;
-			var val = 0;
-			var rgb = new Array(0,0,0);
+			sat = 0;
+			val = 0;
+			rgb = new Array(0,0,0);
 		} else {
 			var arad = Math.acos(cartx/rraw);            //angle in radians 
 			var aradc = (carty>=0)?arad:2*Math.PI - arad;  //correct below axis
 			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
 			if (rnorm > 1) {    // outside circle
-				var rgb = new Array(255,255,255);
-				var sat = 1;
-				var val = 1;            
+				rgb = new Array(255,255,255);
+				sat = 1;
+				val = 1;            
 			} else if (rnorm >= .5) {
-				var sat = 1 - ((rnorm - .5) *2);
-				var val = 1;
-				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				sat = 1 - ((rnorm - .5) *2);
+				val = 1;
+				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
 			} else {
-				var sat = 1;
-				var val = rnorm * 2;
-				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				sat = 1;
+				val = rnorm * 2;
+				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
 		this._hoverColor(n2i.Color.rgb2hex(rgb));
 	},
 	_hoverWheel3 : function(e) {
+		var rgb,sat,val;
 		e = n2i.event(e);
 		var pos = n2i.getPosition(this.wheel3);
 		var x = (e.getLeft() - pos.left);
@@ -235,21 +239,21 @@ In2iGui.ColorPicker.prototype = {
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {
-			var sat = 0;
-			var val = 0;
-			var rgb = new Array(0,0,0);
+			sat = 0;
+			val = 0;
+			rgb = new Array(0,0,0);
 		} else {
 			var arad = Math.acos(cartx/rraw);            //angle in radians 
 			var aradc = (carty>=0) ? arad : 2*Math.PI - arad;  //correct below axis
 			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
 			if (rnorm > 1) {    // outside circle
-				var rgb = new Array(255,255,255);
-				var sat = 1;
-				var val = 1;            
+				rgb = new Array(255,255,255);
+				sat = 1;
+				val = 1;            
 			} else {
-				var sat = rnorm;// - ((rnorm - .5) *2);
-				var val = 1;
-				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				sat = rnorm;// - ((rnorm - .5) *2);
+				val = 1;
+				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
 		this._hoverColor(n2i.Color.rgb2hex(rgb));

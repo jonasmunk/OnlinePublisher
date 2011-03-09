@@ -49,14 +49,13 @@ In2iGui.Gallery.prototype = {
 		this.element.innerHTML='';
 		var self = this;
 		n2i.each(this.objects,function(object,i) {
-			var url = self.resolveImageUrl(object);
+			var url = self.resolveImageUrl(object),
+				top = 0;
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
 			}
 			if (object.height<object.width) {
-				var top = (self.height-(self.height*object.height/object.width))/2;
-			} else {
-				var top = 0;
+				top = (self.height-(self.height*object.height/object.width))/2;
 			}
 			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );

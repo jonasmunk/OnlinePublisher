@@ -6107,7 +6107,7 @@ n2i.animation.render = function(element) {
 	this.running = true;
 	var next = false;
 	var stamp = new Date().getTime();
-	for (id in this.objects) {
+	for (var id in this.objects) {
 		var obj = this.objects[id];
 		if (obj.work) {
 			for (var i=0; i < obj.work.length; i++) {
@@ -7874,7 +7874,7 @@ Date.createParser = function(format) {
             regex += String.escape(ch);
         }
         else {
-            obj = Date.formatCodeToRegex(ch, currentGroup);
+            var obj = Date.formatCodeToRegex(ch, currentGroup);
             currentGroup += obj.g;
             regex += obj.s;
             if (obj.g && obj.c) {
@@ -8199,14 +8199,12 @@ n2i.onReady(function() {
 In2iGui.prototype = {
 	/** @private */
 	ignite : function() {
-		if (window.dwr) {
-			if (dwr && dwr.engine && dwr.engine.setErrorHandler) {
-				dwr.engine.setErrorHandler(function(msg,e) {
-					n2i.log(msg);
-					n2i.log(e);
-					In2iGui.get().alert({title:'An unexpected error occurred!',text:msg,emotion:'gasp'});
-				});
-			}
+		if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
+			window.dwr.engine.setErrorHandler(function(msg,e) {
+				n2i.log(msg);
+				n2i.log(e);
+				In2iGui.get().alert({title:'An unexpected error occurred!',text:msg,emotion:'gasp'});
+			});
 		}
 		this.domLoaded = true;
 		In2iGui.domReady = true;
@@ -8333,7 +8331,7 @@ In2iGui.prototype = {
 		if (e) {
 			var d = e.getElementsByTagName('*');
 			var o = [];
-			for (key in this.objects) {
+			for (var key in this.objects) {
 				o.push(this.objects[key]);
 			}
 			for (var i=0; i < d.length; i++) {
@@ -8357,7 +8355,7 @@ In2iGui.prototype = {
 		if (e) {
 			var a = n2i.getAncestors(e);
 			var o = [];
-			for (key in this.objects) {
+			for (var key in this.objects) {
 				o.push(this.objects[key]);
 			}
 			for (var i=0; i < a.length; i++) {
@@ -8391,13 +8389,13 @@ In2iGui.confirmOverlay = function(options) {
 		overlay = In2iGui.confirmOverlays[node];
 		overlay.clear();
 	} else {
-		overlay = ui.Overlay.create({modal:true});
+		overlay = In2iGui.Overlay.create({modal:true});
 		In2iGui.confirmOverlays[node] = overlay;
 	}
 	if (options.text) {
 		overlay.addText(options.text);
 	}
-	var ok = ui.Button.create({text:options.okText || 'OK',highlighted:'true'});
+	var ok = In2iGui.Button.create({text:options.okText || 'OK',highlighted:'true'});
 	ok.click(function() {
 		if (options.onOk) {
 			options.onOk();
@@ -8405,7 +8403,7 @@ In2iGui.confirmOverlay = function(options) {
 		overlay.hide();
 	});
 	overlay.add(ok);
-	var cancel = ui.Button.create({text:options.cancelText || 'Cancel'});
+	var cancel = In2iGui.Button.create({text:options.cancelText || 'Cancel'});
 	cancel.onClick(function() {
 		overlay.hide();
 	});
@@ -8426,9 +8424,10 @@ In2iGui.destroyDescendants = function(element) {
 
 In2iGui.changeState = function(state) {
 	if (In2iGui.state===state) {return;}
-	var all = In2iGui.get().objects;
+	var all = In2iGui.get().objects,
+		key,obj;
 	for (key in all) {
-		var obj = all[key];
+		obj = all[key];
 		if (obj.options && obj.options.state) {
 			if (obj.options.state==state) {
 				obj.show();
@@ -8792,7 +8791,6 @@ In2iGui.extend = function(obj,options) {
 
 In2iGui.callDelegatesDrop = function(dragged,dropped) {
 	var gui = In2iGui.get();
-	var result = null;
 	for (var i=0; i < gui.delegates.length; i++) {
 		if (gui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
 			gui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
@@ -8926,17 +8924,18 @@ In2iGui.bind = function(expression,delegate) {
 In2iGui.request = function(options) {
 	options = n2i.override({method:'post',parameters:{}},options);
 	if (options.json) {
-		for (key in options.json) {
+		for (var key in options.json) {
 			options.parameters[key]=n2i.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
 	options.onSuccess=function(t) {
+		var str,json;
 		if (typeof(onSuccess)=='string') {
 			if (!n2i.request.isXMLResponse(t)) {
-				var str = t.responseText.replace(/^\s+|\s+$/g, '');
+				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
-					var json = n2i.fromJSON(t.responseText);
+					json = n2i.fromJSON(t.responseText);
 				} else {
 					json = '';
 				}
@@ -8947,11 +8946,11 @@ In2iGui.request = function(options) {
 		} else if (n2i.request.isXMLResponse(t) && options.onXML) {
 			options.onXML(t.responseXML);
 		} else if (options.onJSON) {
-			var str = t.responseText.replace(/^\s+|\s+$/g, '');
+			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				var json = n2i.fromJSON(t.responseText);
+				json = n2i.fromJSON(t.responseText);
 			} else {
-				var json = null;
+				json = null;
 			}
 			options.onJSON(json);
 		} else if (typeof(onSuccess)=='function') {
@@ -9074,8 +9073,8 @@ In2iGui.Source.prototype = {
 		var self = this;
 		if (this.options.url) {
 			var prms = {};
-			for (var i=0; i < this.parameters.length; i++) {
-				var p = this.parameters[i];
+			for (var j=0; j < this.parameters.length; j++) {
+				var p = this.parameters[j];
 				prms[p.key] = p.value;
 			};
 			this.busy=true;
@@ -9098,9 +9097,9 @@ In2iGui.Source.prototype = {
 			var facade = eval(pair[0]);
 			var method = pair[1];
 			var args = facade[method].argumentNames();
-			for (var i=0; i < args.length; i++) {
-				if (this.parameters[i]) {
-					args[i]=this.parameters[i].value===undefined ? null : this.parameters[i].value;
+			for (var k=0; k < args.length; k++) {
+				if (this.parameters[k]) {
+					args[k]=this.parameters[k].value===undefined ? null : this.parameters[k].value;
 				}
 			};
 			args[args.length-1]=function(r) {self.parseDWR(r)};
@@ -9122,11 +9121,10 @@ In2iGui.Source.prototype = {
 		if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror') {
 			this.parseXML(t.responseXML);
 		} else {
-			var str = t.responseText.replace(/^\s+|\s+$/g, '');
+			var str = t.responseText.replace(/^\s+|\s+$/g, ''),
+				json = null;
 			if (str.length>0) {
-				var json = n2i.fromJSON(t.responseText);
-			} else {
-				var json = null;
+				json = n2i.fromJSON(t.responseText);
 			}
 			this.fire('objectsLoaded',json);
 		}
@@ -10366,12 +10364,13 @@ In2iGui.Formula.Checkboxes.prototype = {
 	checkValues : function() {
 		var newValues = [];
 		for (var i=0; i < this.values.length; i++) {
-			var value = this.values[i];
-			var found = false;
-			for (var j=0; j < this.items.length; j++) {
+			var value = this.values[i],
+				found = false,
+				j;
+			for (j=0; j < this.items.length; j++) {
 				found = found || this.items[j].value===value;
 			}
-			for (var j=0; j < this.subItems.length; j++) {
+			for (j=0; j < this.subItems.length; j++) {
 				found = found || this.subItems[j].hasValue(value);
 			};
 			if (found) {
@@ -10397,13 +10396,14 @@ In2iGui.Formula.Checkboxes.prototype = {
 		In2iGui.callAncestors(this,'childValueChanged',this.values);
 	},
 	updateUI : function() {
-		for (var i=0; i < this.subItems.length; i++) {
+		var i,item,found;
+		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
 		var nodes = n2i.byClass(this.element,'in2igui_checkbox');
-		for (var i=0; i < this.items.length; i++) {
-			var item = this.items[i];
-			var found = n2i.inArray(this.values,item.value);
+		for (i=0; i < this.items.length; i++) {
+			item = this.items[i];
+			found = n2i.inArray(this.values,item.value);
 			n2i.setClass(nodes[i],'in2igui_checkbox_selected',found);
 		};
 	},
@@ -10856,7 +10856,7 @@ In2iGui.List = function(options) {
  */
 In2iGui.List.create = function(options) {
 	options = n2i.override({},options);
-	var e = options.element = n2i.build('div',{
+	options.element = n2i.build('div',{
 		'class':'in2igui_list',
 		html: '<div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
 	return new In2iGui.List(options);
@@ -10991,7 +10991,7 @@ In2iGui.List.prototype = {
 			url+=url.indexOf('?')==-1 ? '?' : '&';
 			url+='direction='+this.sortDirection;
 		}
-		for (key in this.parameters) {
+		for (var key in this.parameters) {
 			url+=url.indexOf('?')==-1 ? '?' : '&';
 			url+=key+'='+this.parameters[key];
 		}
@@ -11031,7 +11031,8 @@ In2iGui.List.prototype = {
 			this.sortDirection=sort[0].getAttribute('direction');
 		}
 		var headers = doc.getElementsByTagName('header');
-		for (var i=0; i < headers.length; i++) {
+		var i;
+		for (i=0; i < headers.length; i++) {
 			var className = '';
 			var th = document.createElement('th');
 			var width = headers[i].getAttribute('width');
@@ -11059,7 +11060,7 @@ In2iGui.List.prototype = {
 		this.head.appendChild(headTr);
 		var frag = document.createDocumentFragment();
 		var rows = doc.getElementsByTagName('row');
-		for (var i=0; i < rows.length; i++) {
+		for (i=0; i < rows.length; i++) {
 			var cells = rows[i].getElementsByTagName('cell');
 			var row = document.createElement('tr');
 			var icon = rows[i].getAttribute('icon');
@@ -11356,11 +11357,12 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	changeSelection : function(indexes) {
-		var rows = this.body.getElementsByTagName('tr');
-		for (var i=0;i<this.selected.length;i++) {
+		var rows = this.body.getElementsByTagName('tr'),
+			i;
+		for (i=0;i<this.selected.length;i++) {
 			n2i.removeClass(rows[this.selected[i]],'selected');
 		}
-		for (var i=0;i<indexes.length;i++) {
+		for (i=0;i<indexes.length;i++) {
 			n2i.addClass(rows[indexes[i]],'selected');
 		}
 		this.selected = indexes;
@@ -11522,13 +11524,15 @@ In2iGui.ObjectList.prototype = {
 		this.addObject({});
 	},
 	addObject : function(data,addToEnd) {
+		var obj;
 		if (this.objects.length==0 || addToEnd) {
-			var obj = new In2iGui.ObjectList.Object(this.objects.length,data,this);
+			obj = new In2iGui.ObjectList.Object(this.objects.length,data,this);
 			this.objects.push(obj);
 			this.body.appendChild(obj.getElement());
 		} else {
 			var last = this.objects[this.objects.length-1];
-			var obj = new In2iGui.ObjectList.Object(last.index,data,this);
+			n2i.removeFromArray(this.objects,last);
+			obj = new In2iGui.ObjectList.Object(last.index,data,this);
 			last.index++;
 			this.objects.push(obj);
 			this.objects.push(last);
@@ -11810,7 +11814,7 @@ In2iGui.Button = function(options) {
  * Creates a new button
  */
 In2iGui.Button.create = function(o) {
-	var o = n2i.override({text:'',highlighted:false,enabled:true},o);
+	o = n2i.override({text:'',highlighted:false,enabled:true},o);
 	var className = 'in2igui_button'+(o.highlighted ? ' in2igui_button_highlighted' : '');
 	if (o.small && o.rounded) {
 		className+=' in2igui_button_small_rounded';
@@ -12006,12 +12010,13 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	getSelectionWithValue : function(value) {
-		for (var i=0; i < this.items.length; i++) {
+		var i;
+		for (i=0; i < this.items.length; i++) {
 			if (this.items[i].value==value) {
 				return this.items[i];
 			}
 		};
-		for (var i=0; i < this.subItems.length; i++) {
+		for (i=0; i < this.subItems.length; i++) {
 			var items = this.subItems[i].items;
 			for (var j=0; j < items.length; j++) {
 				if (items[j].value==value) {
@@ -12027,10 +12032,11 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		for (var i=0; i < this.items.length; i++) {
+		var i;
+		for (i=0; i < this.items.length; i++) {
 			n2i.setClass(this.items[i].element,'in2igui_selected',this.isSelection(this.items[i]));
 		};
-		for (var i=0; i < this.subItems.length; i++) {
+		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
 	},
@@ -12607,7 +12613,7 @@ In2iGui.BoundPanel = function(options) {
  * @param {Object} options The options
  */
 In2iGui.BoundPanel.create = function(options) {
-	var options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
+	options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
 
 	
 	var html = 
@@ -12694,16 +12700,17 @@ In2iGui.BoundPanel.prototype = {
 	},
 	/** @private */
 	getDimensions : function() {
+		var width, height;
 		if (this.element.style.display=='none') {
 			this.element.style.visibility='hidden';
 			this.element.style.display='block';
-			var width = this.element.clientWidth;
-			var height = this.element.clientHeight;
+			width = this.element.clientWidth;
+			height = this.element.clientHeight;
 			this.element.style.display='none';
 			this.element.style.visibility='';
 		} else {
-			var width = this.element.clientWidth;
-			var height = this.element.clientHeight;
+			width = this.element.clientWidth;
+			height = this.element.clientHeight;
 		}
 		return {width:width,height:height};
 	},
@@ -12720,16 +12727,17 @@ In2iGui.BoundPanel.prototype = {
 		var nodeWidth = node.clientWidth;
 		var nodeHeight = node.clientHeight;
 		var nodeTop = offset.top-scrollOffset.top+n2i.getScrollTop();
+		var arrowLeft, left;
 		if ((nodeLeft+nodeWidth/2)/winWidth<.5) {
 			this.relativePosition='left';
-			var left = nodeLeft+nodeWidth+10;
+			left = nodeLeft+nodeWidth+10;
 			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_left';
-			var arrowLeft=-14;
+			arrowLeft=-14;
 		} else {
 			this.relativePosition='right';
-			var left = nodeLeft-dims.width-10;
+			left = nodeLeft-dims.width-10;
 			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_right';
-			var arrowLeft=dims.width-4;
+			arrowLeft=dims.width-4;
 		}
 		var top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
 		this.arrow.style.marginTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2)+'px';
@@ -13417,13 +13425,14 @@ In2iGui.Picker.prototype = {
 		this.updateSelection();
 	},
 	updateUI : function() {
-		var self = this;
+		var self = this,
+			width;
 		this.content.innerHTML='';
 		this.container.scrollLeft=0;
 		if (this.options.itemsVisible) {
-			var width = this.options.itemsVisible*(this.options.itemWidth+14);
+			width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
-			var width = this.container.clientWidth;
+			width = this.container.clientWidth;
 		}
 		n2i.setStyle(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
 		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
@@ -13487,10 +13496,11 @@ In2iGui.Picker.prototype = {
 	},
 	$visibilityChanged : function() {
 		this.container.style.display='none';
+		var width;
 		if (this.options.itemsVisible) {
-			var width = this.options.itemsVisible*(this.options.itemWidth+14);
+			width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
-			var width = this.container.parentNode.clientWidth-12;
+			width = this.container.parentNode.clientWidth-12;
 		}
 		width = Math.max(width,0);
 		n2i.setStyle(this.container,{width:width+'px',display:'block'});
@@ -13953,12 +13963,12 @@ In2iGui.Editor.getPartId = function(element) {
  * @constructor
  */
 In2iGui.Editor.Header = function(element,row,column,position) {
-	this.element = $(element);
+	this.element = n2i.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;
 	this.id = In2iGui.Editor.getPartId(this.element);
-	this.header = this.element.firstDescendant();
+	this.header = n2i.firstByTag(this.element,'*');
 	this.field = null;
 }
 
@@ -14010,7 +14020,7 @@ In2iGui.Editor.Header.prototype = {
  * @constructor
  */
 In2iGui.Editor.Html = function(element,row,column,position) {
-	this.element = $(element);
+	this.element = n2i.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;
@@ -14442,7 +14452,7 @@ In2iGui.Upload.prototype = {
 		form.setAttribute('encoding','multipart/form-data');
 		form.setAttribute('target',frameName);
 		if (this.options.parameters) {
-			for (key in this.options.parameters) {
+			for (var key in this.options.parameters) {
 				var hidden = n2i.build('input',{'type':'hidden','name':key});
 				hidden.value = this.options.parameters[key];
 				form.appendChild(hidden);
@@ -14899,14 +14909,13 @@ In2iGui.Gallery.prototype = {
 		this.element.innerHTML='';
 		var self = this;
 		n2i.each(this.objects,function(object,i) {
-			var url = self.resolveImageUrl(object);
+			var url = self.resolveImageUrl(object),
+				top = 0;
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
 			}
 			if (object.height<object.width) {
-				var top = (self.height-(self.height*object.height/object.width))/2;
-			} else {
-				var top = 0;
+				top = (self.height-(self.height*object.height/object.width))/2;
 			}
 			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
@@ -15102,7 +15111,7 @@ In2iGui.Calendar.prototype = {
 			var node = n2i.build('div',{'class':'in2igui_calendar_event',parent:day});
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
-			var height = Math.min(pixels-top,height);
+			height = Math.min(pixels-top,height);
 			n2i.setStyle(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
 			var content = n2i.build('div',{parent:node});
 			n2i.build('p',{'class':'in2igui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
@@ -15285,17 +15294,17 @@ In2iGui.DatePicker.create = function(options) {
 	var element = options.element = n2i.build('div',{
 		'class' : 'in2igui_datepicker',
 		html : '<div class="in2igui_datepicker_header"><a class="in2igui_datepicker_next"></a><a class="in2igui_datepicker_previous"></a><strong></strong></div>'
-	});
-	var table = n2i.build('table',{parent:element});
-	var thead = n2i.build('thead',{parent:table});
-	var head = n2i.build('tr',{parent:thead});
+		}),
+		table = n2i.build('table',{parent:element}),
+		thead = n2i.build('thead',{parent:table}),
+		head = n2i.build('tr',{parent:thead});
 	for (var i=0;i<7;i++) {
 		head.appendChild(n2i.build('th',{text:Date.dayNames[i].substring(0,3)}));
 	}
 	var body = n2i.build('tbody',{parent:table});
-	for (var i=0;i<6;i++) {
+	for (var j=0;j<6;j++) {
 		var row = n2i.build('tr',{parent:body});
-		for (var j=0;j<7;j++) {
+		for (var k=0;k<7;k++) {
 			n2i.build('td',{parent:row});
 		}
 	}
@@ -15372,23 +15381,21 @@ In2iGui.DatePicker.prototype = {
 		In2iGui.callDelegates(this,'dateChanged',this.value);
 	},
 	indexToDate : function(index) {
-		var first = this.viewDate.getDay();
-		var days = this.viewDate.getDaysInMonth();
-		var previousDays = this.getPreviousMonth().getDaysInMonth();
+		var first = this.viewDate.getDay(),
+			days = this.viewDate.getDaysInMonth(),
+			previousDays = this.getPreviousMonth().getDaysInMonth(),
+			date;
 		if (index<first) {
-			var date = this.getPreviousMonth();
+			date = this.getPreviousMonth();
 			date.setDate(previousDays-first+index+1);
-			return date;
 		} else if (index>first+days-1) {
-			var date = this.getPreviousMonth();
+			date = this.getPreviousMonth();
 			date.setDate(index-first-days+1);
-			return date;
-			cell.update(i-first-days+1);
 		} else {
-			var date = new Date(this.viewDate.getTime());
+			date = new Date(this.viewDate.getTime());
 			date.setDate(index+1-first);
-			return date;
 		}
+		return date;
 	}
 }
 
@@ -15951,9 +15958,10 @@ In2iGui.Overflow.prototype = {
 		return this;
 	},
 	$$layout : function() {
+		var height;
 		if (!this.options.dynamic) {
 			if (this.options.vertical) {
-				var height = n2i.getViewPortHeight();
+				height = n2i.getViewPortHeight();
 				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
 			}
 			return;
@@ -15961,7 +15969,7 @@ In2iGui.Overflow.prototype = {
 		if (this.diff===undefined) {
 			this.calculate();
 		}
-		var height = n2i.getViewPortHeight();
+		height = n2i.getViewPortHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';
 	}
 }
@@ -16590,7 +16598,7 @@ In2iGui.Flash = {
 						versionRevision = versionRevision.substring(0, versionRevision.indexOf("d"));
 					}
 				}
-				var flashVer = versionMajor + "." + versionMinor + "." + versionRevision;
+				flashVer = versionMajor + "." + versionMinor + "." + versionRevision;
 			}
 		}
 		// MSN/WebTV 2.6 supports Flash 4
@@ -16779,20 +16787,21 @@ In2iGui.Links.prototype = {
 		}
 	},
 	build : function() {
-		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list');
+		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list'),
+			i,item,row,infoNode,text,remove;
 		list.innerHTML='';
-		for (var i=0; i < this.items.length; i++) {
-			var item = this.items[i];
-			var row = n2i.build('div',{'class':'in2igui_links_row'});
+		for (i=0; i < this.items.length; i++) {
+			item = this.items[i];
+			row = n2i.build('div',{'class':'in2igui_links_row'});
 			row.in2igui_index = i;
 			
 			row.appendChild(In2iGui.createIcon(item.icon,1));
-			var text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
+			text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
 			row.appendChild(text);
 
-			var infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
+			infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
 			row.appendChild(infoNode);
-			var remove = In2iGui.createIcon('monochrome/round_x',1);
+			remove = In2iGui.createIcon('monochrome/round_x',1);
 			n2i.addClass(remove,'in2igui_links_remove');
 			row.appendChild(remove);
 
@@ -17266,7 +17275,7 @@ In2iGui.MarkupEditor.util = {
 		return copy;
 	},
 	replaceNodes : function(node,recipe) {
-		for (key in recipe) {
+		for (var key in recipe) {
 			var bs = node.getElementsByTagName(key);
 			for (var i = bs.length - 1; i >= 0; i--) {
 				var replacement = document.createElement(recipe[key]);
@@ -17313,23 +17322,24 @@ In2iGui.ColorPicker = function(options) {
 }
 
 In2iGui.ColorPicker.create = function(options) {
-	var swatches = '';
+	var swatches = '',
+		c, hex, j;
 	for (var i=0; i < 360; i+=30) {
-		for (var j=0.05; j <= 1; j+=.15) {
-			var c = n2i.Color.hsv2rgb(i,j,1);
-			var hex = n2i.Color.rgb2hex(c);
+		for (j=0.05; j <= 1; j+=.15) {
+			c = n2i.Color.hsv2rgb(i,j,1);
+			hex = n2i.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
-		for (var j=1; j >= .20; j-=.15) {
-			var c = n2i.Color.hsv2rgb(i,1,j);
-			var hex = n2i.Color.rgb2hex(c);
+		for (j=1; j >= .20; j-=.15) {
+			c = n2i.Color.hsv2rgb(i,1,j);
+			hex = n2i.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
 	}
-		for (var j=255; j >=0; j-=255/12) {
-			var hex = n2i.Color.rgb2hex([j,j,j]);
-			swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
-		}
+	for (j=255; j >=0; j-=255/12) {
+		hex = n2i.Color.rgb2hex([j,j,j]);
+		swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
+	}
 	options = options || {};
 	options.element = n2i.build('div',{
 		'class':'in2igui_colorpicker',
@@ -17389,11 +17399,12 @@ In2iGui.ColorPicker.prototype = {
 		n2i.listen(this.swatches,'click',this._pickColor.bind(this));
 	},
 	$click : function(button) {
-		var page = parseInt(button.element.getAttribute('rel'));
-		for (var i = this.pages.length - 1; i >= 0; i--){
+		var page = parseInt(button.element.getAttribute('rel')),
+			i;
+		for (i = this.pages.length - 1; i >= 0; i--){
 			this.pages[i].style.display = i==page ? 'block' : 'none';
 		};
-		for (var i=0; i < this.buttons.length; i++) {
+		for (i=0; i < this.buttons.length; i++) {
 			this.buttons[i].setSelected(this.buttons[i]==button);
 		};
 	},
@@ -17476,6 +17487,7 @@ In2iGui.ColorPicker.prototype = {
 		this._hoverColor('#'+c);
 	},
 	_hoverWheel2 : function(e) {
+		var rgb,sat,val;
 		e = n2i.event(e);
 		var pos = n2i.getPosition(this.wheel2);
 		var x = (e.getLeft() - pos.left);
@@ -17490,30 +17502,31 @@ In2iGui.ColorPicker.prototype = {
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {
-			var sat = 0;
-			var val = 0;
-			var rgb = new Array(0,0,0);
+			sat = 0;
+			val = 0;
+			rgb = new Array(0,0,0);
 		} else {
 			var arad = Math.acos(cartx/rraw);            //angle in radians 
 			var aradc = (carty>=0)?arad:2*Math.PI - arad;  //correct below axis
 			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
 			if (rnorm > 1) {    // outside circle
-				var rgb = new Array(255,255,255);
-				var sat = 1;
-				var val = 1;            
+				rgb = new Array(255,255,255);
+				sat = 1;
+				val = 1;            
 			} else if (rnorm >= .5) {
-				var sat = 1 - ((rnorm - .5) *2);
-				var val = 1;
-				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				sat = 1 - ((rnorm - .5) *2);
+				val = 1;
+				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
 			} else {
-				var sat = 1;
-				var val = rnorm * 2;
-				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				sat = 1;
+				val = rnorm * 2;
+				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
 		this._hoverColor(n2i.Color.rgb2hex(rgb));
 	},
 	_hoverWheel3 : function(e) {
+		var rgb,sat,val;
 		e = n2i.event(e);
 		var pos = n2i.getPosition(this.wheel3);
 		var x = (e.getLeft() - pos.left);
@@ -17528,21 +17541,21 @@ In2iGui.ColorPicker.prototype = {
 	    var rraw = Math.sqrt(cartx2 + carty2);       //raw radius
 	    var rnorm = rraw/128;                        //normalized radius
 	    if (rraw == 0) {
-			var sat = 0;
-			var val = 0;
-			var rgb = new Array(0,0,0);
+			sat = 0;
+			val = 0;
+			rgb = new Array(0,0,0);
 		} else {
 			var arad = Math.acos(cartx/rraw);            //angle in radians 
 			var aradc = (carty>=0) ? arad : 2*Math.PI - arad;  //correct below axis
 			var adeg = 360 * aradc/(2*Math.PI);  //convert to degrees
 			if (rnorm > 1) {    // outside circle
-				var rgb = new Array(255,255,255);
-				var sat = 1;
-				var val = 1;            
+				rgb = new Array(255,255,255);
+				sat = 1;
+				val = 1;            
 			} else {
-				var sat = rnorm;// - ((rnorm - .5) *2);
-				var val = 1;
-				var rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				sat = rnorm;// - ((rnorm - .5) *2);
+				val = 1;
+				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
 		this._hoverColor(n2i.Color.rgb2hex(rgb));

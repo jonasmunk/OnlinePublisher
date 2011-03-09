@@ -94,7 +94,7 @@ In2iGui.Calendar.prototype = {
 			var node = n2i.build('div',{'class':'in2igui_calendar_event',parent:day});
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
-			var height = Math.min(pixels-top,height);
+			height = Math.min(pixels-top,height);
 			n2i.setStyle(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
 			var content = n2i.build('div',{parent:node});
 			n2i.build('p',{'class':'in2igui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
@@ -277,17 +277,17 @@ In2iGui.DatePicker.create = function(options) {
 	var element = options.element = n2i.build('div',{
 		'class' : 'in2igui_datepicker',
 		html : '<div class="in2igui_datepicker_header"><a class="in2igui_datepicker_next"></a><a class="in2igui_datepicker_previous"></a><strong></strong></div>'
-	});
-	var table = n2i.build('table',{parent:element});
-	var thead = n2i.build('thead',{parent:table});
-	var head = n2i.build('tr',{parent:thead});
+		}),
+		table = n2i.build('table',{parent:element}),
+		thead = n2i.build('thead',{parent:table}),
+		head = n2i.build('tr',{parent:thead});
 	for (var i=0;i<7;i++) {
 		head.appendChild(n2i.build('th',{text:Date.dayNames[i].substring(0,3)}));
 	}
 	var body = n2i.build('tbody',{parent:table});
-	for (var i=0;i<6;i++) {
+	for (var j=0;j<6;j++) {
 		var row = n2i.build('tr',{parent:body});
-		for (var j=0;j<7;j++) {
+		for (var k=0;k<7;k++) {
 			n2i.build('td',{parent:row});
 		}
 	}
@@ -364,23 +364,21 @@ In2iGui.DatePicker.prototype = {
 		In2iGui.callDelegates(this,'dateChanged',this.value);
 	},
 	indexToDate : function(index) {
-		var first = this.viewDate.getDay();
-		var days = this.viewDate.getDaysInMonth();
-		var previousDays = this.getPreviousMonth().getDaysInMonth();
+		var first = this.viewDate.getDay(),
+			days = this.viewDate.getDaysInMonth(),
+			previousDays = this.getPreviousMonth().getDaysInMonth(),
+			date;
 		if (index<first) {
-			var date = this.getPreviousMonth();
+			date = this.getPreviousMonth();
 			date.setDate(previousDays-first+index+1);
-			return date;
 		} else if (index>first+days-1) {
-			var date = this.getPreviousMonth();
+			date = this.getPreviousMonth();
 			date.setDate(index-first-days+1);
-			return date;
-			cell.update(i-first-days+1);
 		} else {
-			var date = new Date(this.viewDate.getTime());
+			date = new Date(this.viewDate.getTime());
 			date.setDate(index+1-first);
-			return date;
 		}
+		return date;
 	}
 }
 

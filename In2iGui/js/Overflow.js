@@ -44,9 +44,10 @@ In2iGui.Overflow.prototype = {
 		return this;
 	},
 	$$layout : function() {
+		var height;
 		if (!this.options.dynamic) {
 			if (this.options.vertical) {
-				var height = n2i.getViewPortHeight();
+				height = n2i.getViewPortHeight();
 				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
 			}
 			return;
@@ -54,7 +55,7 @@ In2iGui.Overflow.prototype = {
 		if (this.diff===undefined) {
 			this.calculate();
 		}
-		var height = n2i.getViewPortHeight();
+		height = n2i.getViewPortHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';
 	}
 }

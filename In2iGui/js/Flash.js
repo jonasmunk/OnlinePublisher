@@ -40,7 +40,7 @@ In2iGui.Flash = {
 						versionRevision = versionRevision.substring(0, versionRevision.indexOf("d"));
 					}
 				}
-				var flashVer = versionMajor + "." + versionMinor + "." + versionRevision;
+				flashVer = versionMajor + "." + versionMinor + "." + versionRevision;
 			}
 		}
 		// MSN/WebTV 2.6 supports Flash 4

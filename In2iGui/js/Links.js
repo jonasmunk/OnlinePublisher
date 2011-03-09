@@ -74,20 +74,21 @@ In2iGui.Links.prototype = {
 		}
 	},
 	build : function() {
-		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list');
+		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list'),
+			i,item,row,infoNode,text,remove;
 		list.innerHTML='';
-		for (var i=0; i < this.items.length; i++) {
-			var item = this.items[i];
-			var row = n2i.build('div',{'class':'in2igui_links_row'});
+		for (i=0; i < this.items.length; i++) {
+			item = this.items[i];
+			row = n2i.build('div',{'class':'in2igui_links_row'});
 			row.in2igui_index = i;
 			
 			row.appendChild(In2iGui.createIcon(item.icon,1));
-			var text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
+			text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
 			row.appendChild(text);
 
-			var infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
+			infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
 			row.appendChild(infoNode);
-			var remove = In2iGui.createIcon('monochrome/round_x',1);
+			remove = In2iGui.createIcon('monochrome/round_x',1);
 			n2i.addClass(remove,'in2igui_links_remove');
 			row.appendChild(remove);
 

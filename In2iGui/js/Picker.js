@@ -53,13 +53,14 @@ In2iGui.Picker.prototype = {
 		this.updateSelection();
 	},
 	updateUI : function() {
-		var self = this;
+		var self = this,
+			width;
 		this.content.innerHTML='';
 		this.container.scrollLeft=0;
 		if (this.options.itemsVisible) {
-			var width = this.options.itemsVisible*(this.options.itemWidth+14);
+			width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
-			var width = this.container.clientWidth;
+			width = this.container.clientWidth;
 		}
 		n2i.setStyle(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
 		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
@@ -123,10 +124,11 @@ In2iGui.Picker.prototype = {
 	},
 	$visibilityChanged : function() {
 		this.container.style.display='none';
+		var width;
 		if (this.options.itemsVisible) {
-			var width = this.options.itemsVisible*(this.options.itemWidth+14);
+			width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
-			var width = this.container.parentNode.clientWidth-12;
+			width = this.container.parentNode.clientWidth-12;
 		}
 		width = Math.max(width,0);
 		n2i.setStyle(this.container,{width:width+'px',display:'block'});

@@ -15,7 +15,7 @@ In2iGui.Button = function(options) {
  * Creates a new button
  */
 In2iGui.Button.create = function(o) {
-	var o = n2i.override({text:'',highlighted:false,enabled:true},o);
+	o = n2i.override({text:'',highlighted:false,enabled:true},o);
 	var className = 'in2igui_button'+(o.highlighted ? ' in2igui_button_highlighted' : '');
 	if (o.small && o.rounded) {
 		className+=' in2igui_button_small_rounded';
