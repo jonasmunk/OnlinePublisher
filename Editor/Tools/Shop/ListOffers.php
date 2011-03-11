@@ -9,7 +9,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Productoffer.php';
 require_once '../../Classes/Product.php';
-require_once '../../Classes/Person.php';
+require_once '../../Classes/Objects/Person.php';
 require_once '../../Classes/Objects/Emailaddress.php';
 
 $windowSize = Request::getInt('windowSize',30);
