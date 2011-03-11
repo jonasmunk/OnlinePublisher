@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
-require_once '../../Classes/Mailinglist.php';
+require_once '../../Classes/Objects/Mailinglist.php';
 require_once '../../Classes/In2iGui.php';
 
 $data = Request::getObject('data');
