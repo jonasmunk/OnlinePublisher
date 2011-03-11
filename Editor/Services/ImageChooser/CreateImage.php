@@ -11,7 +11,7 @@ require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Services/ImageService.php';
 require_once('../../Classes/Utilities/StringUtils.php');
 require_once '../../Classes/Request.php';
-require_once '../../Classes/Image.php';
+require_once '../../Classes/Objects/Image.php';
 
 // hide warnings
 error_reporting(E_ERROR);
