@@ -5,7 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/RemoteFile.php');
-require_once($basePath.'Editor/Classes/File.php');
+require_once($basePath.'Editor/Classes/Objects/File.php');
 require_once($basePath.'Editor/Classes/Log.php');
 
 class FileService {
