@@ -65,18 +65,6 @@ $databaseTables = array(
 			array("page_id","int(11)","","","0",""),
 			array("object_id","int(11)","","","0","")
 	),
-	'customer' => array(
-			array("object_id","int(11)","","","0",""),
-			array("firstname","varchar(50)","YES","","",""),
-			array("middlename","varchar(50)","YES","","",""),
-			array("surname","varchar(50)","YES","","",""),
-			array("email","varchar(50)","YES","","",""),
-			array("phone","varchar(20)","YES","","",""),
-			array("streetname","varchar(50)","YES","","",""),
-			array("zipcode","varchar(4)","YES","","",""),
-			array("city","varchar(30)","YES","","",""),
-			array("country","varchar(30)","YES","","","")
-		),
 	'design' => array(
 			array("object_id","int(11)","YES","","",""),
 			array("id","int(11)","","PRI","","auto_increment"),
@@ -101,111 +89,6 @@ $databaseTables = array(
 			array("page_id","int(11)","","","0",""),
 			array("width","varchar(50)","","","","")
 		),
-	'document_divider' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0","")
-		),
-	'document_header' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("text","text","YES","","",""),
-			array("level","int(11)","","","0",""),
-			array("textalign","varchar(50)","YES","","",""),
-			array("fontfamily","varchar(50)","YES","","",""),
-			array("fontsize","varchar(50)","YES","","",""),
-			array("lineheight","varchar(50)","YES","","",""),
-			array("fontweight","varchar(50)","YES","","",""),
-			array("color","varchar(50)","YES","","",""),
-			array("wordspacing","varchar(50)","YES","","",""),
-			array("letterspacing","varchar(50)","YES","","",""),
-			array("textdecoration","varchar(50)","YES","","",""),
-			array("textindent","varchar(50)","YES","","",""),
-			array("texttransform","varchar(50)","YES","","",""),
-			array("fontstyle","varchar(50)","YES","","",""),
-			array("fontvariant","varchar(50)","YES","","","")
-		),
-	'document_image' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("align","varchar(50)","YES","","",""),
-			array("image_id","int(11)","","","0","")
-		),
-	'document_list' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("text","text","YES","","",""),
-			array("textalign","varchar(50)","YES","","",""),
-			array("fontfamily","varchar(50)","YES","","",""),
-			array("fontsize","varchar(50)","YES","","",""),
-			array("lineheight","varchar(50)","YES","","",""),
-			array("fontweight","varchar(50)","YES","","",""),
-			array("color","varchar(50)","YES","","",""),
-			array("wordspacing","varchar(50)","YES","","",""),
-			array("letterspacing","varchar(50)","YES","","",""),
-			array("textdecoration","varchar(50)","YES","","",""),
-			array("textindent","varchar(50)","YES","","",""),
-			array("texttransform","varchar(50)","YES","","",""),
-			array("fontstyle","varchar(50)","YES","","",""),
-			array("fontvariant","varchar(50)","YES","","",""),
-			array("type","varchar(50)","YES","","",""),
-			array("start","int(11)","","","0","")
-		),
-	'document_news' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("align","varchar(20)","YES","","",""),
-			array("width","varchar(20)","YES","","",""),
-			array("news_id","int(11)","YES","","",""),
-			array("mode","varchar(20)","YES","","",""),
-			array("title","varchar(255)","YES","","",""),
-			array("sortby","varchar(20)","YES","","",""),
-			array("sortdir","varchar(20)","YES","","",""),
-			array("maxitems","int(11)","YES","","",""),
-			array("timetype","varchar(20)","YES","","",""),
-			array("timecount","int(11)","YES","","",""),
-			array("startdate","datetime","YES","","",""),
-			array("enddate","datetime","YES","","","")
-		),
-	'document_news_newsgroup' => array(
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("newsgroup_id","int(11)","","","0","")
-		),
-	'document_person' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("align","varchar(50)","YES","","",""),
-			array("person_id","int(11)","","","0",""),
-			array("show_firstname","int(1)","","","1",""),
-			array("show_middlename","int(1)","","","1",""),
-			array("show_surname","int(1)","","","1",""),
-			array("show_initials","int(1)","","","0",""),
-			array("show_nickname","int(1)","","","0",""),
-			array("show_jobtitle","int(1)","","","1",""),
-			array("show_sex","int(1)","","","0",""),
-			array("show_email_job","int(1)","","","1",""),
-			array("show_email_private","int(1)","","","1",""),
-			array("show_phone_job","int(1)","","","1",""),
-			array("show_phone_private","int(1)","","","1",""),
-			array("show_streetname","int(1)","","","1",""),
-			array("show_zipcode","int(1)","","","1",""),
-			array("show_city","int(1)","","","1",""),
-			array("show_country","int(1)","","","1",""),
-			array("show_webaddress","int(1)","","","1",""),
-			array("show_image","int(1)","","","1","")
-		),
-	'document_richtext' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("data","text","YES","","","")
-		),
 	'document_row' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("page_id","int(11)","","","0",""),
@@ -224,27 +107,6 @@ $databaseTables = array(
 			array("part_id","int(11)","YES","","0",""),
 			array("float","varchar(10)","YES","","",""),
 			array("width","varchar(10)","YES","","","")
-		),
-	'document_text' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("section_id","int(11)","","","0",""),
-			array("text","text","YES","","",""),
-			array("textalign","varchar(50)","YES","","",""),
-			array("fontfamily","varchar(50)","YES","","",""),
-			array("fontsize","varchar(50)","YES","","",""),
-			array("lineheight","varchar(50)","YES","","",""),
-			array("fontweight","varchar(50)","YES","","",""),
-			array("color","varchar(50)","YES","","",""),
-			array("wordspacing","varchar(50)","YES","","",""),
-			array("letterspacing","varchar(50)","YES","","",""),
-			array("textdecoration","varchar(50)","YES","","",""),
-			array("textindent","varchar(50)","YES","","",""),
-			array("texttransform","varchar(50)","YES","","",""),
-			array("fontstyle","varchar(50)","YES","","",""),
-			array("fontvariant","varchar(50)","YES","","",""),
-			array("image_id","int(11)","YES","","",""),
-			array("imagefloat","varchar(50)","YES","","left","")
 		),
 	'email_validation_session' => array(
             array("id","int(11)","","PRI","","auto_increment"),
@@ -524,55 +386,6 @@ $databaseTables = array(
 			array("alternative","varchar(255)","YES","","",""),
 			array("title","varchar(255)","YES","","",""),
 			array("position","int(11)","","","0","")
-		),
-		
-	'orders' => array(
-			array("object_id","int(11)","","","0",""),
-			array("order_no","int(11)","","PRI","","auto_increment"),
-			array("customers_id","int(11)","","","0",""),
-			array("customers_name","varchar(64)","","","",""),
-			array("customers_company","varchar(32)","","","",""),
-			array("customers_street_address","varchar(64)","","","",""),
-			array("customers_city","varchar(32)","","","",""),
-			array("customers_postcode","varchar(10)","","","",""),
-			array("customers_country","varchar(32)","","","",""),
-			array("customers_telephone","varchar(32)","","","",""),
-			array("customers_email","varchar(96)","","","",""),
-			array("delivery_name","varchar(64)","","","",""),
-			array("delivery_company","varchar(32)","","","",""),
-			array("delivery_street_address","varchar(64)","","","",""),
-			array("delivery_city","varchar(32)","","","",""),
-			array("delivery_postcode","varchar(10)","","","",""),
-			array("delivery_country","varchar(32)","","","",""),
-			array("billing_name","varchar(64)","YES","","",""),
-			array("billing_company","varchar(32)","YES","","",""),
-			array("billing_street_address","varchar(64)","YES","","",""),
-			array("billing_city","varchar(32)","YES","","",""),
-			array("billing_postcode","varchar(10)","YES","","",""),
-			array("billing_country","varchar(32)","YES","","",""),
-			array("payment_method","varchar(32)","","","",""),
-			array("cc_type","varchar(20)","YES","","",""),
-			array("cc_owner","varchar(64)","YES","","",""),
-			array("cc_number","varchar(32)","YES","","",""),
-			array("cc_controle_number","varchar(10)","YES","","",""),
-			array("cc_expires","varchar(4)","YES","","",""),
-			array("orders_status","int(5)","","","0",""),
-			array("orders_date_finished","datetime","YES","","",""),
-			array("currency","char(3)","","","",""),
-			array("currency_value","decimal(14,6)","YES","","",""),
-			array("Total_amount","varchar(12)","","","",""),
-			array("Total_tax","varchar(12)","","","","")
-		),
-		
-	'orders_product' => array(
-			array("orders_id","int(11)","","PRI","0",""),
-			array("product_id","int(11)","","","0",""),
-			array("product_model","varchar(12)","","","",""),
-			array("product_name","varchar(64)","","","",""),
-			array("product_price","decimal(15,4)","","","0",""),
-			array("final_price","decimal(15,4)","","","0",""),
-			array("product_tax","decimal(7,4)","","","0",""),
-			array("product_quantity","int(2)","","","0","")
 		),
 	
 	'page' => array(
@@ -1008,14 +821,6 @@ $databaseTables = array(
 			array("robot","tinyint(4)","YES","","",""),
 			array("known","tinyint(4)","YES","","","")
 		),
-	'stock' => array(
-			array("object_id","int(11)","","PRI","","auto_increment")
-			),
-	'stock_product' => array(
-			array("stock_id","int(11)","","","0",""),
-			array("product_id","int(11)","","","0",""),
-			array("in_stock","int(11)","","","0","")
-			),
 	'task' => array(
 			array("object_id","int(11)","","","0",""),
 			array("deadline","datetime","YES","","",""),
