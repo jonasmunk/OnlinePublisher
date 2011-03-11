@@ -6,7 +6,7 @@
 
 class TestFile extends AbstractObjectTest {
     
-	function TestImage() {
+	function TestFile() {
 		parent::AbstractObjectTest('file');
 	}
 
@@ -15,10 +15,10 @@ class TestFile extends AbstractObjectTest {
 		$obj->setTitle('My file');
 		$obj->save();
 		
-		$obj2 = File::load($obj->getId());
-		$this->assertEqual($obj2->getTitle(),'My file');
+		$loaded = File::load($obj->getId());
+		$this->assertEqual($loaded->getTitle(),'My file');
 		
-		$obj2->remove();
+		$loaded->remove();
 	}
 }
 ?>
