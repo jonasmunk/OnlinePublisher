@@ -7,7 +7,7 @@ require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 require_once($basePath.'Editor/Classes/EventUtil.php');
 require_once($basePath.'Editor/Classes/Objects/Calendarsource.php');
-require_once($basePath.'Editor/Classes/Event.php');
+require_once($basePath.'Editor/Classes/Objects/Event.php');
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');

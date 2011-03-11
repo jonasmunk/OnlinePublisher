@@ -6,6 +6,11 @@
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
+Object::$schema['event'] = array(
+	'location'   => array('type'=>'string'),
+	'startdate'  => array('type'=>'datetime'),
+	'enddate'  => array('type'=>'datetime')
+);
 class Event extends Object {
 	var $startdate;
 	var $enddate;
@@ -13,6 +18,15 @@ class Event extends Object {
 	
 	function Event() {
 		parent::Object('event');
+	}
+
+	function load($id) {
+		return Object::get($id,'event');
+	}
+
+	function removeMore() {
+		$sql="delete from calendar_event where event_id=".$this->id;
+		Database::delete($sql);
 	}
 	
 	function setLocation($location) {
@@ -22,7 +36,6 @@ class Event extends Object {
 	function getLocation() {
 	    return $this->location;
 	}
-	
 	
 	function setStartdate($stamp) {
 		$this->startdate = $stamp;
@@ -125,39 +138,6 @@ class Event extends Object {
 	
 	////////////////////////////// Persistence ////////////////////////
 	
-	function load($id) {
-		$obj = new Event();
-		$obj->_load($id);
-		$sql = "select UNIX_TIMESTAMP(startdate) as startdate,UNIX_TIMESTAMP(enddate) as enddate,location from event where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj->enddate=$row['enddate'];
-			$obj->startdate=$row['startdate'];
-			$obj->location=$row['location'];
-		}
-		return $obj;
-	}
-	
-	function sub_create() {
-		$sql="insert into event (object_id,startdate,enddate,location) values (".
-		$this->id.
-		",".Database::datetime($this->startdate).
-		",".Database::datetime($this->enddate).
-		",".Database::text($this->location).
-		")";
-		Database::insert($sql);
-	}
-	
-	function sub_update() {
-		$sql = "update event set ".
-		"startdate=".Database::datetime($this->startdate).
-		",enddate=".Database::datetime($this->enddate).
-		",location=".Database::text($this->location).
-		" where object_id=".$this->id;
-		error_log($sql);
-		Database::update($sql);
-	}
-	
 	function sub_publish() {
 		$data = '<event xmlns="'.parent::_buildnamespace('1.0').'">';
 		if (isset($this->startdate)) {
@@ -168,19 +148,6 @@ class Event extends Object {
 		}
 		$data.='</event>';
 		return $data;
-	}
-	
-	function sub_remove() {
-		$sql="delete from calendar_event where event_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from event where object_id=".$this->id;
-		Database::delete($sql);
-	}
-	
-	/////////////////////////// GUI /////////////////////////
-	
-	function getIcon() {
-        return "Basic/Time";
 	}
 }
 ?>

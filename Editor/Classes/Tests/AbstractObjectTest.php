@@ -22,6 +22,9 @@ class AbstractObjectTest extends UnitTestCase {
     function testCreate() {
 		$class = ucfirst($this->type);
         $obj = new $class();
+		if (method_exists($this,'makeValid')) {
+			$this->makeValid($obj);
+		}
 		$this->assertFalse($obj->isPersistent());
 		$obj->save();
 		$this->assertTrue($obj->isPersistent());
