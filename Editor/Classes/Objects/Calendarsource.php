@@ -359,17 +359,5 @@ class Calendarsource extends Object {
 		return $event;
 	}
 	
-	
-	
-	function search($query=array()) {
-		$sql = "select object.id from calendarsource,object where calendarsource.object_id=object.id order by object.title;";
-		$ids = Database::getIds($sql);
-		$sources = array();
-		foreach ($ids as $id) {
-			$sources[] = Calendarsource::load($id);
-		}
-		return $sources;
-	}
-	
 }
 ?>
