@@ -6,8 +6,8 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Calendar.php';
-require_once '../../Classes/Calendarsource.php';
+require_once '../../Classes/Objects/Calendar.php';
+require_once '../../Classes/Objects/Calendarsource.php';
 require_once '../../Classes/Database.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Utilities/StringUtils.php';
@@ -17,8 +17,8 @@ $row = Database::getRow($sql);
 $sql="select object_id as id from calendarviewer_object where page_id=".InternalSession::getPageId();
 $objects = Database::getIds($sql);
 
-$sources = Calendarsource::search(array());
-$calendars = Calendar::search();
+$sources = Query::after('calendarsource')->orderBy('title')->get();
+$calendars = Query::after('calendar')->orderBy('title')->get();
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop" onload="parent.Toolbar.location=\'Toolbar.php?\'+Math.random();">'.

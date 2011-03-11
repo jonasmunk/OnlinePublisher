@@ -6,7 +6,7 @@
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
 require_once '../../../Classes/Utilities/DateUtils.php';
-require_once '../../../Classes/Calendarsource.php';
+require_once '../../../Classes/Objects/Calendarsource.php';
 require_once '../../../Classes/Request.php';
 require_once '../../../Classes/In2iGui.php';
 

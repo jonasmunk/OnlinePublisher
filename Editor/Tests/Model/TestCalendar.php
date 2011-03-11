@@ -4,18 +4,18 @@
  * @subpackage Tests.Model
  */
 
-class TestCalendarsource extends AbstractObjectTest {
+class TestCalendar extends AbstractObjectTest {
     
 	function TestCalendarsource() {
-		parent::AbstractObjectTest('calendarsource');
+		parent::AbstractObjectTest('calendar');
 	}
 
 	function testProperties() {
-		$obj = new Calendarsource();
+		$obj = new Calendar();
 		$obj->setTitle('My source');
 		$obj->save();
 		
-		$loaded = Calendarsource::load($obj->getId());
+		$loaded = Calendar::load($obj->getId());
 		$this->assertEqual($loaded->getTitle(),'My source');
 		
 		$loaded->remove();
