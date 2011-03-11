@@ -22,6 +22,17 @@ class TemplateService {
 		return null;
 	}
 	
+	function getTemplateById($id) {
+		$sql = "select id,`unique` from `template` where id=".Database::int($id);
+		if ($row = Database::selectFirst($sql)) {
+			$template = new Template();
+			$template->setId(intval($row['id']));
+			$template->setUnique($row['unique']);
+			return $template;
+		}
+		return null;
+	}
+	
 	function getController($type) {
 		global $basePath;
 		$class = ucfirst($type).'TemplateController';

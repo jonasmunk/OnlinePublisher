@@ -301,6 +301,8 @@ class Page {
 			",disabled=".Database::boolean($this->disabled).
 			" where id=".$this->id;
 			Database::update($sql);
+		} else {
+			$this->create();
 		}
 	}
 
@@ -317,6 +319,10 @@ class Page {
 
 	function publish() {
 		PublishingService::publishPage($this->id);
+	}
+	
+	function remove() {
+		$this->delete();
 	}
 
 	function delete() {

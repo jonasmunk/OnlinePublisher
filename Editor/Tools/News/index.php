@@ -31,7 +31,7 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="common/news" title="Ny nyhed" name="newNews" overlay="new"/>
-				<!--icon icon="common/page" title="Ny artikel" click="newArticleBox.show()" overlay="new"/-->
+				<icon icon="common/page" title="Ny artikel" click="newArticleBox.show()" overlay="new"/>
 				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
 				<icon icon="common/internet" title="Ny kilde" name="newSource" overlay="new"/>
 				<divider/>

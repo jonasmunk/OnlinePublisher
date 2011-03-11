@@ -38,4 +38,22 @@ class NewsService {
 			$item->remove();
 		}
 	}
+	
+	function createArticle($article) {
+		$blueprint = Pageblueprint::load($article->getPageBlueprintId());
+		$page = new Page();
+		$page->setTemplateId($blueprint->getTemplateId());
+		$page->setDesignId($blueprint->getDesignId());
+		$page->setFrameId($blueprint->getFrameId());
+		$page->setTitle($article->getTitle());
+		$page->save();
+		
+		$news = new News();
+		$news->setTitle($article->getTitle());
+		$news->save();
+		
+		ObjectLinkService::addPageLink($news,$page,$article->getLinkText());
+		
+		return array('page' => $page, 'news' => $news);
+	}
 }

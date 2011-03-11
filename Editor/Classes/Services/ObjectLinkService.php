@@ -38,6 +38,10 @@ class ObjectLinkService {
 		return $list;
 	}
 	
+	function getLinks($object) {
+		return ObjectLinkService::search(array('objectId'=>$object->getId()));
+	}
+	
 	function updateLinks($id,$links) {
 		$sql = "delete from object_link where object_id=".$id;
 		Database::delete($sql);
@@ -109,6 +113,10 @@ class ObjectLinkService {
 		$sql = "update `object` set updated=now() where id=".Database::int($object->id);
 		Database::update($sql);
 	}
+	
+	function addPageLink($object,$page,$linkText) {
+		ObjectLinkService::addLink($object,$linkText,'','','page',$page->getId());
+	}
 
 	function addLink($object,$title,$alternative,$target,$targetType,$targetValue) {
 		$sql="select max(`position`) as `position` from object_link where object_id=".Database::int($object->id);
@@ -119,7 +127,7 @@ class ObjectLinkService {
 		}
 		
 		$sql="insert into object_link (object_id,title,alternative,target,position,target_type,target_value) values (".
-		$this->id.
+		Database::int($object->id).
 		",".Database::text($title).
 		",".Database::text($alternative).
 		",".Database::text($target).
