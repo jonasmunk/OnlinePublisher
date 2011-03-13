@@ -21,9 +21,9 @@ class Mailinglist extends Object {
 	}
 
 	function removeMore() {
-		$sql = "delete from person_mailinglist where mailinglist_id=".Database::$this->id;
+		$sql = "delete from person_mailinglist where mailinglist_id=".Database::int($this->id);
 		Database::delete($sql);
-		$sql = "delete from part_mailinglist_mailinglist where mailinglist_id=".$this->id;
+		$sql = "delete from part_mailinglist_mailinglist where mailinglist_id=".Database::int($this->id);
 		Database::delete($sql);
 	}
 	
@@ -33,8 +33,7 @@ class Mailinglist extends Object {
 		if (!is_array($options)) {
 			$options = array();
 		}
-		$sql = "select emailaddress.object_id as id from emailaddress,person_mailinglist where emailaddress.containing_object_id=person_mailinglist.person_id and person_mailinglist.mailinglist_id=".$this->id;
-		error_log($sql);
+		$sql = "select emailaddress.object_id as id from emailaddress,person_mailinglist where emailaddress.containing_object_id=person_mailinglist.person_id and person_mailinglist.mailinglist_id=".Database::int($this->id);
 		$result = Database::select($sql);
 		$list = array();
 		while ($row = Database::next($result)) {
