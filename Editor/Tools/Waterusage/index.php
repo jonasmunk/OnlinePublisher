@@ -63,7 +63,7 @@ $gui='
 			<group labels="above">
 				<text label="Nummer" key="number"/>
 				<number label="År" key="year"/>
-				<number label="Value" key="value" max="1000000000"/>
+				<number label="Værdi" key="value" max="1000000000"/>
 				<datetime label="Tidspunkt" key="date" return-type="seconds"/>
 				<buttons>
 					<button name="cancelUsage" title="Annuller"/>

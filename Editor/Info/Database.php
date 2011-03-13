@@ -6,10 +6,17 @@
 
 $databaseTables = array(
 	
+	'address' => array(
+			array("object_id","int(11)","YES","","",""),
+			array("street","varchar(255)","YES","","",""),
+			array("zipcode","varchar(255)","YES","","",""),
+			array("city","varchar(255)","YES","","",""),
+			array("country","varchar(255)","YES","","","")
+	),
 	'authentication' => array(
 			array("page_id","int(11)","","","0",""),
 			array("title","varchar(255)","YES","","","")
-		),
+	),
 	'cachedurl' => array(
 			array("object_id","int(11)","","","0",""),
 			array("url","varchar(255)","YES","","",""),
@@ -732,6 +739,11 @@ $databaseTables = array(
 			array("width","int(11)","YES","","",""),
 			array("height","int(11)","YES","","","")
 		),
+	'relation' => array(
+			array("from_object_id","int(11)","","","0",""),
+			array("to_object_id","int(11)","","","0",""),
+			array("kind","varchar(255)","YES","","","")
+		),
 	'remotepublisher' => array(
 			array("object_id","int(11)","","","0",""),
 			array("url","varchar(255)","YES","","","")
@@ -854,8 +866,13 @@ $databaseTables = array(
 			array("entity_id","int(11)","","","0",""),
 			array("permission","varchar(50)","YES","","","")
 		),
+	'watermeter' => array(
+			array("object_id","int(11)","YES","","0",""),
+			array("number","varchar(50)","","","","")
+		),
 	'waterusage' => array(
 			array("object_id","int(11)","YES","","0",""),
+			array("watermeter_id","int(11)","YES","","0",""),
 			array("number","varchar(50)","","","",""),
 			array("year","int(11)","","","0",""),
 			array("value","int(11)","","","0",""),

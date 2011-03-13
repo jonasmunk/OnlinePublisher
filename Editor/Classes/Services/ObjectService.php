@@ -48,6 +48,8 @@ class ObjectService {
 			$row = Database::delete($sql);
 			$sql = "delete from `object_link` where object_id=".Database::int($object->getId());
 			$row = Database::delete($sql);
+			$sql = "delete from `relation` where from_object_id=".Database::int($object->getId())." or to_object_id=".Database::int($object->getId());
+			$row = Database::delete($sql);
 			$schema = Object::$schema[$object->getType()];
 			if (is_array($schema)) {
 				$sql = "delete from `".$object->getType()."` where object_id=".Database::int($object->getId());

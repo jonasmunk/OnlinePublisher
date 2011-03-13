@@ -8,11 +8,13 @@ require_once($basePath.'Editor/Classes/Object.php');
 
 Object::$schema['waterusage'] = array(
 	'number' => array('type'=>'string'),
+	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id'),
 	'year'   => array('type'=>'int'),
 	'value'  => array('type'=>'int'),
 	'date'  => array('type'=>'datetime')
 );
 class Waterusage extends Object {
+	var $watermeterId;
 	var $number;
 	var $year;
 	var $value;
@@ -29,6 +31,15 @@ class Waterusage extends Object {
 	function getIn2iGuiIcon() {
 		return "file/generic";
 	}
+	
+	function setWatermeterId($watermeterId) {
+	    $this->watermeterId = $watermeterId;
+	}
+
+	function getWatermeterId() {
+	    return $this->watermeterId;
+	}
+	
 	
 	function setNumber($number) {
 	    $this->title = $number;
