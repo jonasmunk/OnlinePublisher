@@ -182,7 +182,7 @@ ui.listen({
 		personSearchable.setValue(data.person.searchable);
 		personWebaddress.setValue(data.person.webaddress);
 		personSex.setValue(data.person.sex);
-		personImage.setObject(data.person.image_id>0 ? {id:data.person.image_id} : null);
+		personImage.setObject(data.person.imageId>0 ? {id:data.person.imageId} : null);
 		personEmails.setObjects(data.emails);
 		personPhones.setObjects(data.phones);
 		personMailinglists.setValues(data.mailinglists);
