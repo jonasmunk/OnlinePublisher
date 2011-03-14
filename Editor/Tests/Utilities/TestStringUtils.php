@@ -8,6 +8,11 @@
 
 class TestStringUtils extends UnitTestCase {
     
+	function testTest() {
+		$result = preg_replace("/&#(0|30);/e", '', 'hep &#30; &#0;hey');
+		$this->assertEqual($result,'hep  hey');
+	}
+
     function testEscaping() {
         $this->assertEqual("&#60;&#62;&#38;",StringUtils::escapeXML('<>&'));
 		// TODO: is this correct?

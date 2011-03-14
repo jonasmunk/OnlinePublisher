@@ -48,6 +48,7 @@ class StringUtils {
 	}
 	
 	function escapeXML($input) {
+		$input = StringUtils::stripInvalidXml($input);
 		$output = StringUtils::htmlNumericEntities($input);
 		$output = str_replace('&#151;', '-', $output);
 		$output = str_replace('&#146;', '&#39;', $output);
@@ -228,5 +229,34 @@ class StringUtils {
 		require_once($basePath.'Editor/Libraries/json/JSON2.php');
 		$json = new Services_JSON();
 		return $json->decode($str);
+	}
+	
+	function stripInvalidXml($value) {
+	    $ret = "";
+	    $current;
+	    if (empty($value)) 
+	    {
+	        return $ret;
+	    }
+ 
+	    $length = strlen($value);
+	    for ($i=0; $i < $length; $i++)
+	    {
+	        $current = ord($value{$i});
+	        if (($current == 0x9) ||
+	            ($current == 0xA) ||
+	            ($current == 0xD) ||
+	            (($current >= 0x20) && ($current <= 0xD7FF)) ||
+	            (($current >= 0xE000) && ($current <= 0xFFFD)) ||
+	            (($current >= 0x10000) && ($current <= 0x10FFFF)))
+	        {
+	            $ret .= chr($current);
+	        }
+	        else
+	        {
+	            $ret .= " ";
+	        }
+	    }
+	    return $ret;
 	}
 }

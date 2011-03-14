@@ -2,6 +2,7 @@
 require_once($basePath.'Editor/Classes/Response.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class In2iGui {
 
@@ -189,21 +190,14 @@ class In2iGui {
 	function buildOptions($objects,$selected=array()) {
 		$gui='';
 		foreach ($objects as $object) {
-			$gui.='<option title="'.In2iGui::escape($object->getTitle()).'" value="'.In2iGui::escape($object->getId()).'" selected="'.(in_array($object->getId(), $selected) ? 'true' : 'false').'"/>';
+			$gui.='<option title="'.StringUtils::escapeXML($object->getTitle()).'" value="'.StringUtils::escapeXML($object->getId()).'" selected="'.(in_array($object->getId(), $selected) ? 'true' : 'false').'"/>';
 		}
 		return $gui;
 	}
 	
 	function escape($input) {
-		$output = In2iGui::_htmlnumericentities($input);
-		$output = str_replace('&#151;', '-', $output);
-		$output = str_replace('&#146;', '&#39;', $output);
-		$output = str_replace('&#147;', '&#8220;', $output);
-		$output = str_replace('&#148;', '&#8221;', $output);
-		$output = str_replace('&#128;', '&#243;', $output);
-		$output = str_replace('&#128;', '&#243;', $output);
-		$output = str_replace('"', '&quot;', $output);
-		return $output;
+		error_log('In2iGui::escape is deprecated');
+		return StringUtils::escapeXML($input);
 	}
 	
 	function escapeUnicode($input) {
@@ -217,6 +211,47 @@ class In2iGui {
 		setlocale(LC_TIME, "da_DK");
 		return strftime("%e. %b %Y",$timestamp);
 	}
+	
+	function _xmlEntities($string) 
+    { 
+        $string = preg_replace('/[^\x09\x0A\x0D\x20-\x7F]/e', 'In2iGui::_privateXMLEntities("$0")', $string); 
+        return $string; 
+    } 
+
+    function _privateXMLEntities($num) 
+    { 
+	if ($num==3) {return '';}
+    $chars = array( 
+        128 => '&#8364;', 
+        130 => '&#8218;', 
+        131 => '&#402;', 
+        132 => '&#8222;', 
+        133 => '&#8230;', 
+        134 => '&#8224;', 
+        135 => '&#8225;', 
+        136 => '&#710;', 
+        137 => '&#8240;', 
+        138 => '&#352;', 
+        139 => '&#8249;', 
+        140 => '&#338;', 
+        142 => '&#381;', 
+        145 => '&#8216;', 
+        146 => '&#8217;', 
+        147 => '&#8220;', 
+        148 => '&#8221;', 
+        149 => '&#8226;', 
+        150 => '&#8211;', 
+        151 => '&#8212;', 
+        152 => '&#732;', 
+        153 => '&#8482;', 
+        154 => '&#353;', 
+        155 => '&#8250;', 
+        156 => '&#339;', 
+        158 => '&#382;', 
+        159 => '&#376;'); 
+        $num = ord($num); 
+        return (($num > 127 && $num < 160) ? $chars[$num] : "&#".$num.";" ); 
+    } 
 
 	function _htmlnumericentities(&$str){
 	  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
@@ -346,7 +381,7 @@ class ListWriter {
 	}
 	
 	function text($text) {
-		echo In2iGui::escape($text);
+		echo StringUtils::escapeXML($text);
 		return $this;
 	}
 	
@@ -374,7 +409,7 @@ class ItemsWriter {
 	}
 
 	function startItem($options) {
-		echo '<item value="'.In2iGui::escape($options['value']).'" title="'.In2iGui::escape($options['title']).'" icon="'.$options['icon'].'" kind="'.$options['kind'].'" badge="'.$options['badge'].'">';
+		echo '<item value="'.StringUtils::escapeXML($options['value']).'" title="'.StringUtils::escapeXML($options['title']).'" icon="'.$options['icon'].'" kind="'.$options['kind'].'" badge="'.$options['badge'].'">';
 		return $this;
 	}
 
@@ -389,7 +424,7 @@ class ItemsWriter {
 	}
 
 	function title($title) {
-		echo '<title title="'.In2iGui::escape($title).'"/>';
+		echo '<title title="'.StringUtils::escapeXML($title).'"/>';
 		return $this;
 	}
 
@@ -408,7 +443,7 @@ class ArticlesWriter {
 	}
 
 	function startArticle($options=array()) {
-		echo '<article value="'.In2iGui::escape($options['value']).'" kind="'.$options['kind'].'">';
+		echo '<article value="'.StringUtils::escapeXML($options['value']).'" kind="'.$options['kind'].'">';
 		return $this;
 	}
 
