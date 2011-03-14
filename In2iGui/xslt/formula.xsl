@@ -465,11 +465,11 @@
 			<xsl:if test="@icon"><em style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png')">
 				<xsl:attribute name="class">
 					<xsl:text>in2igui_button_icon</xsl:text>
-					<xsl:if test="not(@title) or @title=''"><xsl:text> in2igui_button_icon_notext</xsl:text></xsl:if>
+					<xsl:if test="(not(@title) or @title='') and (not(@text) or @text='')"><xsl:text> in2igui_button_icon_notext</xsl:text></xsl:if>
 				</xsl:attribute>
 				<xsl:comment/>
 			</em></xsl:if>
-		<xsl:value-of select="@title"/>
+		<xsl:value-of select="@title"/><xsl:value-of select="@text"/>
 	</span></span></a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Button({

@@ -18,7 +18,7 @@ var n2i = {
     KEY_END : 35,
     KEY_PAGEUP : 33,
     KEY_PAGEDOWN : 34,
-    KEY_INSERT : 45,
+    KEY_INSERT : 45
 }
 
 if (!window.hui) {
@@ -395,6 +395,8 @@ n2i.build = function(tag,options) {
 				e.className=options.className;
 			} else if (prop=='class') {
 				e.className=options['class'];
+			} else if (prop=='style' && (n2i.browser.msie7 || n2i.browser.msie6)) {
+				e.style.setAttribute('cssText',options[prop]);
 			} else if (n2i.isDefined(options[prop])) {
 				e.setAttribute(prop,options[prop]);
 			}

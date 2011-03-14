@@ -244,7 +244,9 @@
 		<xsl:if test="@selected='true'"><xsl:text> in2igui_bar_button_selected</xsl:text></xsl:if>
 	</xsl:variable>
 	<a id="{generate-id()}" class="{$class}" href="javascript:void(0);">
-		<span class="in2igui_icon_1" style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png')"><xsl:comment/></span>
+		<xsl:if test="@icon">
+			<span class="in2igui_icon_1" style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png')"><xsl:comment/></span>
+		</xsl:if>
 		<xsl:if test="@text">
 			<span class="in2igui_bar_button_text"><xsl:value-of select="@text"/></span>
 		</xsl:if>
@@ -254,6 +256,9 @@
 			element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'
 		});
 		<xsl:call-template name="gui:createobject"/>
+		<xsl:if test="@click">
+			<xsl:value-of select="generate-id()"/>_obj.listen({$click:function() {<xsl:value-of select="@click"/>}});
+		</xsl:if>
 	</script>
 </xsl:template>
 

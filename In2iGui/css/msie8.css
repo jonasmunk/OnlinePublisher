@@ -41,11 +41,6 @@ span.in2igui_upload_button_input input
 	filter: alpha(opacity = 0);
 }
 
-span.in2igui_number input
-{
-	padding-top: 4px;
-}
-
 div.in2igui_list_body
 {
 	overflow-y: hidden;

@@ -93,7 +93,8 @@ In2iGui.Upload.prototype = {
 				form.appendChild(hidden);
 			}
 		}
-		var iframe = this.iframe = n2i.build('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html',style:'display:none'});
+		var iframe = this.iframe = n2i.build('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html'});
+		iframe.style.display='none';
 		this.element.appendChild(iframe);
 		this.fileInput = n2i.build('input',{'type':'file','class':'file','name':this.options.fieldName});
 		n2i.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
