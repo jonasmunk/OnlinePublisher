@@ -15,7 +15,7 @@ class Query {
 	private $ordering = array();
 	private $direction = 'ascending';
 	private $windowPage = 0;
-	private $windowSize = 30;
+	private $windowSize = 100;
 	private $createdMin;
 	
 	function Query($type) {

@@ -3,6 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Classes.Services
  */
+require_once($basePath.'Editor/Classes/Modules/Water/WatermeterSummary.php');
 
 class WaterusageService {
 	
@@ -20,5 +21,17 @@ class WaterusageService {
 		$usage->setValue($dummy->getValue());
 		$usage->save();
 		$usage->publish();
-	}	
+	}
+	
+	function getSummary($number) {
+		$meter = Query::after('watermeter')->withProperty('number',$number)->first();
+		if ($meter) {
+			$summary = new WatermeterSummary();
+			$summary->setNumber($meter->getNumber());
+			$usages = Query::after('waterusage')->withProperty('watermeterId',$meter->getId())->get();
+			$summary->setUsages($usages);
+			return $summary;
+		}
+		return null;
+	}
 }
