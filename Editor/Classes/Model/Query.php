@@ -13,6 +13,8 @@ class Query {
 	private $custom = array();
 	private $fields = array();
 	private $ordering = array();
+	private $relationsFrom = array();
+	private $relationsTo = array();
 	private $direction = 'ascending';
 	private $windowPage = 0;
 	private $windowSize = 100;
@@ -22,21 +24,6 @@ class Query {
 		$this->type = $type;
 	}
 
-	function getType() {
-	    return $this->type;
-	}
-
-	function getText() {
-	    return $this->text;
-	}	
-
-	function getDirection() {
-	    return $this->direction;
-	}	
-	
-	function getOrdering() {
-		return $this->ordering;
-	}
 	
 	function after($type) {
 		return new Query($type);
@@ -66,16 +53,64 @@ class Query {
 	    $this->createdMin = $createdMin;
 		return $this;
 	}
-
-	function getCreatedMin() {
-	    return $this->createdMin;
+	
+	function withRelationFrom($object,$kind=null) {
+		$this->relationsFrom[] = array('id'=>$object->getId(),'kind'=>$kind);
+		return $this;
 	}
 	
+	function withRelationTo($object,$kind=null) {
+		$this->relationsTo[] = array('id'=>$object->getId(),'kind'=>$kind);
+		return $this;
+	}
+
+	function withCustom($key,$value) {
+		$this->custom[$key] = $value;
+		return $this;
+	}
 	
+	function withWindowPage($page) {
+		$this->windowPage = $page;
+		return $this;
+	}
 	function withText($text) {
 		$this->text = $text;
 		return $this;
 	}
+	
+	// TODO: Deprecated
+	function withField($field,$value) {
+		$this->fields[$field] = $value;
+		return $this;
+	}
+
+	function withProperty($field,$value) {
+		$this->fields[$field] = $value;
+		return $this;
+	}
+
+
+	// Getters
+	
+	function getType() {
+	    return $this->type;
+	}
+
+	function getText() {
+	    return $this->text;
+	}	
+
+	function getDirection() {
+	    return $this->direction;
+	}	
+	
+	function getOrdering() {
+		return $this->ordering;
+	}
+
+	function getCreatedMin() {
+	    return $this->createdMin;
+	}	
 	
 	function getCustom() {
 		return $this->custom;
@@ -85,14 +120,12 @@ class Query {
 		return $this->fields;
 	}
 	
-	function withCustom($key,$value) {
-		$this->custom[$key] = $value;
-		return $this;
+	function getRelationsTo() {
+	    return $this->relationsTo;
 	}
 	
-	function withWindowPage($page) {
-		$this->windowPage = $page;
-		return $this;
+	function getRelationsFrom() {
+	    return $this->relationsFrom;
 	}
 	
 	function getWindowPage() {
@@ -107,18 +140,8 @@ class Query {
 	function getWindowSize() {
 		return $this->windowSize;
 	}
-	
-	// TODO: Deprecated
-	function withField($field,$value) {
-		$this->fields[$field] = $value;
-		return $this;
-	}
 
-	function withProperty($field,$value) {
-		$this->fields[$field] = $value;
-		return $this;
-	}
-
+	// Actions
 	
 	function search() {
 		return ObjectService::search($this);

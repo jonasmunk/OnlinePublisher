@@ -42,6 +42,11 @@ class ObjectService {
 		return true;
 	}
 	
+	function addRelation($fromObject,$toObject,$kind='') {
+		$sql = "insert into relation (from_object_id,to_object_id,kind) values (".Database::int($fromObject->getId()).",".Database::int($toObject->getId()).",".Database::text($kind).")";
+		Database::insert($sql);
+	}
+	
 	function remove($object) {
 		if ($object->isPersistent() && $object->canRemove()) {
 			$sql = "delete from `object` where id=".Database::int($object->getId());
@@ -278,7 +283,9 @@ class ObjectService {
 			'query' => $query->getText(), 
 			'fields' => $query->getFields(),
 			'ordering' => implode(',',$query->getOrdering()),
-			'direction' => $query->getDirection()
+			'direction' => $query->getDirection(),
+			'tables' => array(),
+			'parts' => array()
 		);
 		if ($query->getWindowPage()!==null) {
 			$parts['windowPage'] = $query->getWindowPage();
@@ -289,6 +296,14 @@ class ObjectService {
 		if ($query->getCreatedMin()!==null) {
 			$parts['createdMin'] = $query->getCreatedMin();
 		}
+		if (count($query->getRelationsFrom())==1) {
+			$relationsFrom = $query->getRelationsFrom();
+			$relation = $relationsFrom[0];
+			$parts['tables'][] = 'relation as relation_from';
+			$parts['limits'][] = 'relation_from.to_object_id=object.id';
+			$parts['limits'][] = 'relation_from.from_object_id='.Database::int($relation['id']);
+		}
+
 		if ($class = ObjectService::getInstance($query->getType())) {
 			if (method_exists($class,'addCustomSearch')) {
 				$class->addCustomSearch($query,$parts);
