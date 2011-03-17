@@ -24,8 +24,8 @@ session_set_cookie_params(0);
 session_start();
 
 if (!Database::testConnection()) {
-	$error = '<title>Siden er ikke tilgængelig i øjeblikket.</title>'.
-	'<note>Prøv venligst igen senere.</note>';
+	$error = '<title>The page is not available at the moment</title>'.
+	'<note>Please try again later</note>';
 	RenderingService::displayError($error);
 	exit;
 }
