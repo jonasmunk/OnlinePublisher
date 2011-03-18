@@ -76,7 +76,7 @@ In2iGui.Window.prototype = {
 				this.element.style.left = Math.round((n2i.getViewPortWidth()-width)/2)+'px';
 			}			
 		}
-		if (!n2i.browser.msie) {
+		if (n2i.browser.opacity) {
 			n2i.ani(this.element,'opacity',1,0);
 		}
 		this.visible = true;
@@ -87,7 +87,7 @@ In2iGui.Window.prototype = {
 	},
 	hide : function() {
 		if (!this.visible) return;
-		if (!n2i.browser.msie) {
+		if (n2i.browser.opacity) {
 			n2i.ani(this.element,'opacity',0,200,{hideOnComplete:true});
 		} else {
 			this.element.style.display='none';
