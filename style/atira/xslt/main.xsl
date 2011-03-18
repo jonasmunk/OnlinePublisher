@@ -244,10 +244,15 @@
 				</xsl:when>
 				<xsl:otherwise>
 					<h2>About Atira</h2>
+					<p>Our technical area is servers-side application architecture, development, and implementation.
+						Our business domain is Research Information Management. We supply our product Pure, an enterprise-class CERIF-based CRIS system.</p>
+						<p>Pure, released in 2003, is licensed for 45,000 researchers and used at more than 60 sites in 7 countries.</p>
+					<!--
 					<p>We specialize in customer- and domain-specific solutions for knowledge intensive sectors. Our area 
 						is server-side applications and integration in service oriented architectures.</p>
 						<p>Our development and 
 						project management method is SCRUM. We work in a number of European countries.</p>
+						-->
 				</xsl:otherwise>
 				</xsl:choose>
 			</div>
@@ -369,6 +374,7 @@
 				</div>
 				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
 			</div>
+			<!--
 			<div class="poster poster_pure poster_pure_5">
 				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
 				<div class="center">
@@ -381,6 +387,7 @@
 				</div>
 				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
 			</div>
+			-->
 			<div class="poster poster_pure poster_pure_6">
 				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
 				<div class="center">
@@ -405,6 +412,7 @@
 				</div>
 				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
 			</div>
+			<!--
 			<div class="poster poster_pure poster_pure_8">
 				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
 				<div class="center">
@@ -417,6 +425,7 @@
 				</div>
 				<div onclick="document.location='/en/pure/';" class="right"><xsl:comment/></div>
 			</div>
+			-->
 			<!--
 			<div class="poster poster_pure poster_pure_9">
 				<div onclick="document.location='/en/pure/';" class="left"><xsl:comment/></div>
@@ -490,7 +499,7 @@
 	<div class="posters">
 		<div class="left">
 			<xsl:choose>
-				<xsl:when test="$language='en'">
+				<xsl:when test="$language='en' and false">
 					<a href="{$path}en/articles/entrepreneur-of-the-year-2010.html"><img src="{$path}style/{$design}/gfx/front/entrepreneur_of_the_year.png" style="width: 287px; height: 149px; border: none;"/></a>
 				</xsl:when>
 				<xsl:otherwise>
@@ -500,14 +509,14 @@
 							<div class="small_poster">
 								<xsl:choose>
 									<xsl:when test="$language='en'">
-										<h2><strong>software</strong> solutions</h2>
-										<p>We are a software development and consultancy company.</p>
-										<div class="links">
+										<h2><strong>featured</strong> article</h2>
+										<p>Read featured articles about Pure in different countries </p>
+										<!--<div class="links">
 											<a href="{$path}en/solutions/"><span>Solutions</span></a>
 											<xsl:text> · </xsl:text>
 											<a href="{$path}en/method/"><span>Method</span></a>
-										</div>
-										<a href="{$path}en/solutions/" class="button"><span>Mere</span></a>
+										</div>-->
+										<a href="{$path}en/articles/feature.html" class="button"><span>Mere</span></a>
 									</xsl:when>
 									<xsl:otherwise>
 										<h2><strong>software</strong> løsninger</h2>
@@ -534,14 +543,16 @@
 					<div class="small_poster">
 						<xsl:choose>
 							<xsl:when test="$language='en'">
-								<h2><strong>pure</strong> version 4</h2>
-								<p>Enterprise repository platform for registering, archiving, e-publishing and managing research.</p>
+								<h2><strong>online</strong> events</h2>
+								<p>Sign up for live Webinars about Pure</p>
+								<!--
 								<div class="links">
 									<a href="{$path}en/pure/references.html"><span>References</span></a>
 									<xsl:text> · </xsl:text>
 									<a href="{$path}en/latest/"><span>News</span></a>
 								</div>
-								<a href="{$navigation-path}en/pure/" class="button"><span>Visit</span></a>
+								-->
+								<a href="{$navigation-path}en/events/" class="button"><span>Visit</span></a>
 							</xsl:when>
 							<xsl:otherwise>
 								<h2><strong>pure</strong> version 4</h2>
@@ -566,9 +577,9 @@
 					<div class="small_poster">
 						<xsl:choose>
 							<xsl:when test="$language='en'">
-								<h2><strong>about</strong> atira</h2>
-								<p>Company profile, Legal and financial profile, Technical profile, Organisation</p>
-								<a href="{$path}en/about/" class="button"><span>Visit</span></a>
+								<h2><strong>pure</strong> references</h2>
+								<p>See which universities and other institutions use Pure</p>
+								<a href="{$path}en/pure/references/" class="button"><span>Visit</span></a>
 							</xsl:when>
 							<xsl:otherwise>
 								<h2><strong>om</strong> atira</h2>

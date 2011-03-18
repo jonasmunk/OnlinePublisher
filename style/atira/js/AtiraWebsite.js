@@ -7,7 +7,7 @@ Atira.Website.Poster = function(options) {
 	this.inner = n2i.firstByClass(document.body,'inner_placard');
 	this.num = 1;
 	this.count = n2i.byClass(this.poster,'poster').length;
-	this.duration = 8000;
+	this.duration = 6000;
 	this.active = false;
 	this.paused = false;
 	this.addBehavior();
@@ -40,7 +40,7 @@ Atira.Website.Poster.prototype = {
 		}
 		var self = this;
 		this.active = true;
-			n2i.animate(this.poster,'scrollLeft',(this.num-1)*898,2000,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+			n2i.animate(this.poster,'scrollLeft',(this.num-1)*898,1500,{ease:n2i.ease.slowFastSlow,onComplete:function() {
 				self.active = false;
 				self.next()
 			}});

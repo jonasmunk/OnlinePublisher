@@ -80,7 +80,7 @@ div.lang_da div.placard div.poster_pure div.left
 
 div.lang_en div.placard div.poster_pure_1 div.left
 {
-	background-image: url('../gfx/front/v2/researchers.png');
+	background-image: url('../gfx/front/v3/reporting.png');
 }
 
 div.lang_en div.placard div.poster_pure_1 div.right
@@ -90,7 +90,7 @@ div.lang_en div.placard div.poster_pure_1 div.right
 
 div.lang_en div.placard div.poster_pure_2 div.left
 {
-	background-image: url('../gfx/front/v2/primary_investigators.png');
+	background-image: url('../gfx/front/v3/dashboards.png');
 }
 
 div.lang_en div.placard div.poster_pure_2 div.right
@@ -100,7 +100,7 @@ div.lang_en div.placard div.poster_pure_2 div.right
 
 div.lang_en div.placard div.poster_pure_3 div.left
 {
-	background-image: url('../gfx/front/v2/heads_of_schools.png');
+	background-image: url('../gfx/front/v3/import.png');
 }
 
 div.lang_en div.placard div.poster_pure_3 div.right
@@ -110,7 +110,7 @@ div.lang_en div.placard div.poster_pure_3 div.right
 
 div.lang_en div.placard div.poster_pure_4 div.left
 {
-	background-image: url('../gfx/front/v2/librarians.png');
+	background-image: url('../gfx/front/v3/funding.png');
 }
 
 div.lang_en div.placard div.poster_pure_4 div.right
@@ -130,7 +130,7 @@ div.lang_en div.placard div.poster_pure_5 div.right
 
 div.lang_en div.placard div.poster_pure_6 div.left
 {
-	background-image: url('../gfx/front/v2/research_support_offices.png');
+	background-image: url('../gfx/front/v3/merging.png');
 }
 
 div.lang_en div.placard div.poster_pure_6 div.right
@@ -140,7 +140,7 @@ div.lang_en div.placard div.poster_pure_6 div.right
 
 div.lang_en div.placard div.poster_pure_7 div.left
 {
-	background-image: url('../gfx/front/v2/sysadmins.png');
+	background-image: url('../gfx/front/v3/bibliometrics.png');
 }
 
 div.lang_en div.placard div.poster_pure_7 div.right
@@ -286,8 +286,10 @@ div.placard div.poster_2 div.right
 
 .small_poster .button
 {
-	float: right;
+	float: left;
 	height: 25px;
+	width: 68px;
+	background: url('../gfx/front.png') no-repeat;
 }
 
 .small_poster .button span
@@ -295,97 +297,70 @@ div.placard div.poster_2 div.right
 	display: none;
 }
 
-.posters .pure
+/** Left **/
+
+.posters .left .box
 {
-	background: #fff url('../gfx/front/pure_silhouette.png') 180px 10px no-repeat;
-	background: #fff url('../gfx/front/pure_background.png') right top no-repeat;
-	background: #fff url('../gfx/front/pure_background_grey.png') right top no-repeat;
+	background: #fff url('../gfx/front.png') -87px -2px no-repeat;
 }
 
-.posters .pure:hover
-{
-	background: #fff url('../gfx/front/pure_background.png') right top no-repeat;
-}
-
-.posters .pure strong
-{
-	color: #0054a6;
-}
-.posters .pure p
-{
-	width: 160px;
-}
-.lang_en .pure .button
-{
-	width: 64px;
-	background: url('../gfx/front/pure_button_en.png') no-repeat;
-}
-.lang_da .pure .button
-{
-	width: 64px;
-	background: url('../gfx/front/pure_button_da.png') no-repeat;
-}
-
-.posters .technology
-{
-	background: #fff url('../gfx/front/technology_silhouette.png') 170px 10px no-repeat;
-	background: #fff url('../gfx/front/technology_background.png') right top no-repeat;
-	background: #fff url('../gfx/front/technology_background_grey.png') right top no-repeat;
-	background: #fff url('../gfx/front/atira_background_grey.png') right top no-repeat;
-}
-
-.posters .technology:hover
-{
-	background: #fff url('../gfx/front/technology_background.png') right top no-repeat;
-	background: #fff url('../gfx/front/atira_background.png') right top no-repeat;
-}
-
-
-.posters .technology strong
-{
-	color: #04a900;
-}
-.lang_en .technology .button
-{
-	width: 58px;
-	background: url('../gfx/front/technology_button_en.png') no-repeat;
-}
-.lang_da .technology .button
-{
-	width: 71px;
-	background: url('../gfx/front/technology_button_da.png') no-repeat;
-}
-
-.posters .software
-{
-	/*
-	background: #fff url('../gfx/front/software_silhouette.png') 160px 10px no-repeat;
-	background: #fff url('../gfx/front/software_background.png') right top no-repeat;
-	background: #fff url('../gfx/front/software_background_grey.png') right top no-repeat;
-	*/
-}
-
-.posters .software:hover
-{
-	/*background: #fff url('../gfx/front/software_background.png') right top no-repeat;*/
-}
-.posters .software strong
+.posters .left strong
 {
 	color: #ed1414;
 }
-.posters .software p
+
+.left .button:hover
+{
+	background-position: 0 -25px;
+}
+
+/** Center **/
+
+.posters .center .box
+{
+	background: #fff url('../gfx/front.png') -105px -153px no-repeat;
+}
+
+.posters .center strong
+{
+	color: #0054a6;
+}
+
+.center .button
+{
+	background-position: 0 -50px;
+}
+
+.center .button:hover
+{
+	background-position: 0 -75px;
+}
+
+/** Right **/
+
+.posters .right .box
+{
+	background: #fff url('../gfx/front.png') -99px -302px no-repeat;
+}
+
+.posters .right strong
+{
+	color: #04a900;
+}
+
+.right .button
+{
+	background-position: 0 -100px;
+}
+
+.right .button:hover
+{
+	background-position: 0 -125px;
+}
+
+.posters .left p
 {
 	width: 140px;
-}
-.lang_en .software .button
-{
-	width: 64px;
-	background: url('../gfx/front/software_button_en.png') no-repeat;
-}
-.lang_da .software .button
-{
-	width: 64px;
-	background: url('../gfx/front/software_button_da.png') no-repeat;
 }
 
 /**************************** Ticker *************************/
