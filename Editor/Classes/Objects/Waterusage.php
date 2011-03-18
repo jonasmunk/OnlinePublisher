@@ -29,7 +29,7 @@ class Waterusage extends Object {
 	}
 	
 	function getIn2iGuiIcon() {
-		return "file/generic";
+		return "common/water";
 	}
 	
 	function setWatermeterId($watermeterId) {

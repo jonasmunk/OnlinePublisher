@@ -103,6 +103,7 @@ ui.listen({
 	_editMeter : function(id) {
 		ui.request({json:{data:{id:id}},url:'LoadSummary.php',onJSON:function(data) {
 			this.meterId = id;
+			summaryFormula.reset();
 			ui.changeState('meter');
 			summaryFormula.setValues(data);
 		}.bind(this)});
