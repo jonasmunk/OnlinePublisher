@@ -108,11 +108,13 @@ class Image extends Object {
 	}
 
 	function changeGroups($groups) {
-		$sql="delete from imagegroup_image where image_id=".$this->id;
+		$sql="delete from imagegroup_image where image_id=".Database::int($this->id);
 		Database::delete($sql);
 		foreach ($groups as $id) {
-			$sql="insert into imagegroup_image (image_id,imagegroup_id) values (".$this->id.",".$id.")";
-			Database::insert($sql);
+			if ($id>0) {
+				$sql="insert into imagegroup_image (image_id,imagegroup_id) values (".Database::int($this->id).",".Database::int($id).")";
+				Database::insert($sql);
+			}
 		}
 		foreach ($groups as $id) {
 			EventManager::fireEvent('relation_change','object','imagegroup',$id);
