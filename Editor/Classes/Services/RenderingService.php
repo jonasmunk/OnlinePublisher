@@ -300,7 +300,7 @@ class RenderingService {
 	}
 	
 	function findPage($type,$path=-1) {
-		$sql="select page_id from specialpage where type='".$type."'";
+		$sql="select page_id from specialpage where type='".$type."' order by language asc";
 		$row = Database::selectFirst($sql);
 		if ($row) {
 			return $row['page_id'];
