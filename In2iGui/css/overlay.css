@@ -55,4 +55,5 @@ span.in2igui_overlay_text
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 12px;
 	margin-top: 2px;
+	cursor: default;
 }
