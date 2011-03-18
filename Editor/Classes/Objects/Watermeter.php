@@ -21,7 +21,7 @@ class Watermeter extends Object {
 	}
 	
 	function getIn2iGuiIcon() {
-		return "file/generic";
+		return "common/gauge";
 	}
 	
 	function setNumber($number) {

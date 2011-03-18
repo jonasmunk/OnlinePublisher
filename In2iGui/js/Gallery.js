@@ -97,9 +97,7 @@ In2iGui.Gallery.prototype = {
 				var img = item.getElementsByTagName('img')[0];
 				item.className = 'in2igui_gallery_item in2igui_gallery_item_busy';
 				img.onload = function() {
-					n2i.log('loaded')
 					item.className = 'in2igui_gallery_item';
-					n2i.log('loaded'+item.className);
 				}
 				img.src = img.getAttribute('data-src');
 				item.revealed = true;

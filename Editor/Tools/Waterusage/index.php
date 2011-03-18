@@ -25,10 +25,8 @@ $gui='
 				<icon icon="file/generic" title="Importér" overlay="upload" name="updateData" click="uploadWindow.show();"/>
 				<icon icon="file/generic" title="Eksportér" overlay="download" name="export"/>
 				<divider/>
-				<icon icon="file/generic" title="Ny måler" overlay="new" name="newMeter"/>
-				<icon icon="file/generic" title="Ny aflæsning" overlay="new" name="newUsage"/>
-				<divider/>
-				<icon icon="file/generic" title="Test" click="ui.changeState(\'meter\')"/>
+				<icon icon="common/gauge" title="Ny måler" overlay="new" name="newMeter"/>
+				<icon icon="common/water" title="Ny aflæsning" overlay="new" name="newUsage"/>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 				</right>
@@ -38,9 +36,9 @@ $gui='
 			<left>
 				<overflow>
 				<selection value="meters" name="selector">
-					<item icon="common/files" title="Målere" value="meters"/>
+					<item icon="common/gauge" title="Målere" value="meters"/>
 					<title>Aflæsninger</title>
-					<item icon="common/files" title="Alle aflæsninger" value="usage"/>
+					<item icon="common/water" title="Alle aflæsninger" value="usage"/>
 					<item icon="common/time" title="2007" value="2007"/>
 					<item icon="common/time" title="2008" value="2008"/>
 					<item icon="common/time" title="2009" value="2009"/>
@@ -88,7 +86,10 @@ $gui='
 											<button text="Tilføj aflæsning"/>
 										</bar>
 										<overflow height="200">
-											<list name="usageList" source="listSource"/>
+											<list name="usageList">
+												<column title="Værdi" key="value"/>
+												<column title="Dato" key="date"/>
+											</list>
 										</overflow>
 									</box>
 								</column>
@@ -100,6 +101,22 @@ $gui='
 		</middle>
 		<bottom/>
 	</layout>
+	
+	<window title="Vandforbrug" name="meterUsageFormula" width="300" padding="5">
+		<formula name="meterUsageFormula">
+			<group labels="above">
+				<number label="Værdi" key="value" max="1000000000"/>
+				<datetime label="Tidspunkt" key="date" return-type="seconds"/>
+				<buttons>
+					<button name="cancelUsage" title="Annuller"/>
+					<button name="deleteUsage" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+					</button>
+					<button name="saveUsage" title="Gem" highlighted="true"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
 	
 	<window title="Import af data" name="uploadWindow" width="300" padding="5">
 		<upload name="file" url="Upload.php" widget="upload" flash="false">

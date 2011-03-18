@@ -11,7 +11,7 @@ In2iGui.Layout = function(options) {
 
 In2iGui.Layout.prototype = {
 	$$layout : function() {
-		if (!n2i.browser.msie7 && !n2i.browser.msie8) {
+		if (!n2i.browser.msie7 && !n2i.browser.msie8 && !n2i.browser.msie9) {
 			return;
 		}
 		if (this.diff===undefined) {

@@ -731,14 +731,6 @@ $databaseTables = array(
 		    array("object_id","int(11)","","","0",""),
 		    array("parent_project_id","int(11)","","","0","")
 		),
-	'quicktimeplayer' => array(
-			array("page_id","int(11)","","","0",""),
-			array("title","varchar(255)","YES","","",""),
-			array("text","text","YES","","",""),
-			array("file_id","int(11)","YES","","",""),
-			array("width","int(11)","YES","","",""),
-			array("height","int(11)","YES","","","")
-		),
 	'relation' => array(
 			array("from_object_id","int(11)","","","0",""),
 			array("to_object_id","int(11)","","","0",""),

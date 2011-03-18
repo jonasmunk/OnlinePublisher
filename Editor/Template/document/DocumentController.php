@@ -158,20 +158,7 @@ class DocumentController extends LegacyTemplateController {
 		Database::free($result);
 
 		$sql="delete from document_section where page_id=".$id;
-		Database::delete($sql);
-		$sql="delete from document_text where page_id=".$id;
-		Database::delete($sql);
-		$sql="delete from document_header where page_id=".$id;
-		Database::delete($sql);
-		$sql="delete from document_list where page_id=".$id;
-		Database::delete($sql);
-		$sql="delete from document_image where page_id=".$id;
-		Database::delete($sql);
-		$sql="delete from document_news where page_id=".$id;
-		Database::delete($sql);
-		$sql="delete from document_news_newsgroup where page_id=".$id;
-		Database::delete($sql);
-		
+		Database::delete($sql);		
 	}
 
 	function getLastRowPosition() {

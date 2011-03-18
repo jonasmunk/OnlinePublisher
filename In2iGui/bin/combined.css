@@ -2765,6 +2765,7 @@ strong.in2igui_selection_badge
 	padding: 0 4px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 7px;
+	border-radius: 7px;
 	min-width: 10px;
 	text-align: center;
 	height: 14px;

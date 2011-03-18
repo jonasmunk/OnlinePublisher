@@ -4926,10 +4926,13 @@ n2i.browser.msie = !n2i.browser.opera && /MSIE/.test(navigator.userAgent);
 n2i.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
 n2i.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
 n2i.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
+n2i.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
 n2i.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
 n2i.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
 n2i.browser.webkitVersion = null;
 n2i.browser.gecko = !n2i.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
+
+n2i.browser.opacity = !n2i.browser.msie || n2i.browser.msie9;
 
 (function() {
 	var result = /Safari\/([\d.]+)/.exec(navigator.userAgent);
@@ -5697,7 +5700,7 @@ n2i.getStyle = function(element, style) {
 }
 
 n2i.setOpacity = function(element,opacity) {
-	if (n2i.browser.msie) {
+	if (!n2i.browser.opacity) {
 		if (opacity==1) {
 			element.style['filter']=null;
 		} else {
@@ -6146,7 +6149,7 @@ n2i.animation.render = function(element) {
 					var blue = Math.round(work.from.blue+(work.to.blue-work.from.blue)*v);
 					value = 'rgb('+red+','+green+','+blue+')';
 					obj.element.style[work.property]=value;
-				} else if (n2i.browser.msie && work.property=='opacity') {
+				} else if (!n2i.browser.opacity && work.property=='opacity') {
 					var opacity = (work.from+(work.to-work.from)*v);
 					if (opacity==1) {
 						obj.element.style.removeAttribute('filter');
@@ -6229,7 +6232,7 @@ n2i.animation.Item.prototype.animate = function(from,to,property,duration,delega
 		work.from = from;
 	} else if (property=='transform') {
 		work.transform = n2i.animation.Item.parseTransform(to,this.element);
-	} else if (work.css && n2i.browser.msie && property=='opacity') {
+	} else if (work.css && !n2i.browser.opacity && property=='opacity') {
 		work.from = this.getIEOpacity(this.element);
 	} else if (work.css) {
 		var style = n2i.getStyle(this.element,property);
@@ -6247,7 +6250,9 @@ n2i.animation.Item.prototype.animate = function(from,to,property,duration,delega
 		work.unit = null;
 	}
 	work.start = new Date().getTime();
-	if (delegate && delegate.delay) work.start+=delegate.delay;
+	if (delegate && delegate.delay) {
+		work.start+=delegate.delay;
+	}
 	work.end = work.start+duration;
 	n2i.animation.start();
 }

@@ -14,9 +14,9 @@ class WatermeterSummary {
 	
 	function toUnicode() {
 		$this->number = StringUtils::toUnicode($this->number);
-		$street = StringUtils::toUnicode($this->street);
-		$zipcode = StringUtils::toUnicode($this->zipcode);
-		$city = StringUtils::toUnicode($this->city);
+		$this->street = StringUtils::toUnicode($this->street);
+		$this->zipcode = StringUtils::toUnicode($this->zipcode);
+		$this->city = StringUtils::toUnicode($this->city);
 	}
 	
 	function setWatermeterId($watermeterId) {

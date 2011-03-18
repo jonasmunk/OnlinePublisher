@@ -98,7 +98,7 @@ $gui='
 				</block>
 				<buttons align="center" top="10">
 					<button name="cancelUpload" title="Annuller"/>
-					<button name="upload" title="Vælg billder..." highlighted="true"/>
+					<button name="upload" title="Vælg billeder..." highlighted="true"/>
 				</buttons>
 			</tab>
 			<tab title="Hent fra nettet" padding="10">
