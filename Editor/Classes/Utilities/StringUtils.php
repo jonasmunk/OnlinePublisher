@@ -48,7 +48,7 @@ class StringUtils {
 	}
 	
 	function escapeXML($input) {
-		$input = StringUtils::stripInvalidXml($input);
+		//$input = StringUtils::stripInvalidXml($input);
 		$output = StringUtils::htmlNumericEntities($input);
 		$output = str_replace('&#151;', '-', $output);
 		$output = str_replace('&#146;', '&#39;', $output);
