@@ -3,6 +3,7 @@
 <xsl:stylesheet version="1.0"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:l="http://uri.in2isoft.com/onlinepublisher/part/list/1.0/"
+ xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="l"
  >
@@ -47,13 +48,21 @@
 
 <xsl:template match="l:item/l:date">
 	<p class="part_list_date">
-		<xsl:text>Fra: </xsl:text><xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>From: </xsl:text></xsl:when>
+			<xsl:otherwise><xsl:text>Fra: </xsl:text></xsl:otherwise>
+		</xsl:choose>
+		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
 	</p>
 </xsl:template>
 
 <xsl:template match="l:item/l:end-date">
 	<p class="part_list_date">
-		<xsl:text>Til: </xsl:text><xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>To: </xsl:text></xsl:when>
+			<xsl:otherwise><xsl:text>Til: </xsl:text></xsl:otherwise>
+		</xsl:choose>
+		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
 	</p>
 </xsl:template>
 
