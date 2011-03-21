@@ -10217,6 +10217,11 @@ In2iGui.Formula.Number.prototype = {
 		this.setLocalValue(this.value+1,true);
 		this.updateField();
 	},
+	focus : function() {
+		try {
+			this.input.focus();
+		} catch (e) {}
+	},
 	getValue : function() {
 		return this.value;
 	},

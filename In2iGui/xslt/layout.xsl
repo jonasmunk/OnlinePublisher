@@ -35,7 +35,7 @@
 	<td class="in2igui_columns_column">
 		<xsl:if test="(position()>1 and ../@space) or @width">
 			<xsl:attribute name="style">
-				<xsl:if test="../@space">padding-left: <xsl:value-of select="../@space"/>px;</xsl:if>
+				<xsl:if test="position()>1 and ../@space">padding-left: <xsl:value-of select="../@space"/>px;</xsl:if>
 				<xsl:if test="@width">width: <xsl:value-of select="@width"/>;</xsl:if>
 			</xsl:attribute>
 		</xsl:if>
