@@ -143,43 +143,91 @@
 <xsl:template name="util:weekday">
 	<xsl:param name="node"/>
 	<xsl:choose>
-		<xsl:when test="$node/@weekday=0">Søndag</xsl:when>
-		<xsl:when test="$node/@weekday=1">Mandag</xsl:when>
-		<xsl:when test="$node/@weekday=2">Tirsdag</xsl:when>
-		<xsl:when test="$node/@weekday=3">Onsdag</xsl:when>
-		<xsl:when test="$node/@weekday=4">Torsdag</xsl:when>
-		<xsl:when test="$node/@weekday=5">Fredag</xsl:when>
-		<xsl:when test="$node/@weekday=6">Lørdag</xsl:when>
+		<xsl:when test="//p:page/p:meta/p:language='en'">
+			<xsl:choose>
+				<xsl:when test="$node/@weekday=0">Sunday</xsl:when>
+				<xsl:when test="$node/@weekday=1">Monday</xsl:when>
+				<xsl:when test="$node/@weekday=2">Tuesday</xsl:when>
+				<xsl:when test="$node/@weekday=3">Wednesday</xsl:when>
+				<xsl:when test="$node/@weekday=4">Thursday</xsl:when>
+				<xsl:when test="$node/@weekday=5">Friday</xsl:when>
+				<xsl:when test="$node/@weekday=6">Saturday</xsl:when>
+			</xsl:choose>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:choose>
+				<xsl:when test="$node/@weekday=0">Søndag</xsl:when>
+				<xsl:when test="$node/@weekday=1">Mandag</xsl:when>
+				<xsl:when test="$node/@weekday=2">Tirsdag</xsl:when>
+				<xsl:when test="$node/@weekday=3">Onsdag</xsl:when>
+				<xsl:when test="$node/@weekday=4">Torsdag</xsl:when>
+				<xsl:when test="$node/@weekday=5">Fredag</xsl:when>
+				<xsl:when test="$node/@weekday=6">Lørdag</xsl:when>
+			</xsl:choose>
+		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:month">
 	<xsl:param name="node"/>
 	<xsl:choose>
-		<xsl:when test="number($node/@month)=1">januar</xsl:when>
-		<xsl:when test="number($node/@month)=2">februar</xsl:when>
-		<xsl:when test="number($node/@month)=3">marts</xsl:when>
-		<xsl:when test="number($node/@month)=4">april</xsl:when>
-		<xsl:when test="number($node/@month)=5">maj</xsl:when>
-		<xsl:when test="number($node/@month)=6">juni</xsl:when>
-		<xsl:when test="number($node/@month)=7">juli</xsl:when>
-		<xsl:when test="number($node/@month)=8">august</xsl:when>
-		<xsl:when test="number($node/@month)=9">september</xsl:when>
-		<xsl:when test="number($node/@month)=10">oktober</xsl:when>
-		<xsl:when test="number($node/@month)=11">november</xsl:when>
-		<xsl:when test="number($node/@month)=12">december</xsl:when>
+		<xsl:when test="//p:page/p:meta/p:language='en'">
+			<xsl:choose>
+				<xsl:when test="number($node/@month)=1">January</xsl:when>
+				<xsl:when test="number($node/@month)=2">February</xsl:when>
+				<xsl:when test="number($node/@month)=3">March</xsl:when>
+				<xsl:when test="number($node/@month)=4">April</xsl:when>
+				<xsl:when test="number($node/@month)=5">May</xsl:when>
+				<xsl:when test="number($node/@month)=6">June</xsl:when>
+				<xsl:when test="number($node/@month)=7">July</xsl:when>
+				<xsl:when test="number($node/@month)=8">August</xsl:when>
+				<xsl:when test="number($node/@month)=9">September</xsl:when>
+				<xsl:when test="number($node/@month)=10">October</xsl:when>
+				<xsl:when test="number($node/@month)=11">November</xsl:when>
+				<xsl:when test="number($node/@month)=12">December</xsl:when>
+			</xsl:choose>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:choose>
+				<xsl:when test="number($node/@month)=1">januar</xsl:when>
+				<xsl:when test="number($node/@month)=2">februar</xsl:when>
+				<xsl:when test="number($node/@month)=3">marts</xsl:when>
+				<xsl:when test="number($node/@month)=4">april</xsl:when>
+				<xsl:when test="number($node/@month)=5">maj</xsl:when>
+				<xsl:when test="number($node/@month)=6">juni</xsl:when>
+				<xsl:when test="number($node/@month)=7">juli</xsl:when>
+				<xsl:when test="number($node/@month)=8">august</xsl:when>
+				<xsl:when test="number($node/@month)=9">september</xsl:when>
+				<xsl:when test="number($node/@month)=10">oktober</xsl:when>
+				<xsl:when test="number($node/@month)=11">november</xsl:when>
+				<xsl:when test="number($node/@month)=12">december</xsl:when>
+			</xsl:choose>
+		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:long-date-time">
 	<xsl:param name="node"/>
-		<xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
-		<xsl:text> d. </xsl:text>
-		<xsl:value-of select="number($node/@day)"/><xsl:text>. </xsl:text>
-		<xsl:call-template name="util:month"><xsl:with-param name="node" select="$node"/></xsl:call-template>
-		<xsl:if test="number($node/@hour)>0 or number($node/@minute)>0">
-			<xsl:text> kl. </xsl:text><xsl:value-of select="$node/@hour"/>:<xsl:value-of select="$node/@minute"/>
-		</xsl:if>
+	<xsl:choose>
+		<xsl:when test="//p:page/p:meta/p:language='en'">
+			<xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+			<xsl:text>, </xsl:text>
+			<xsl:value-of select="number($node/@day)"/><xsl:text> </xsl:text>
+			<xsl:call-template name="util:month"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+			<xsl:if test="number($node/@hour)>0 or number($node/@minute)>0">
+				<xsl:text> at </xsl:text><xsl:value-of select="$node/@hour"/>:<xsl:value-of select="$node/@minute"/>
+			</xsl:if>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+			<xsl:text> d. </xsl:text>
+			<xsl:value-of select="number($node/@day)"/><xsl:text>. </xsl:text>
+			<xsl:call-template name="util:month"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+			<xsl:if test="number($node/@hour)>0 or number($node/@minute)>0">
+				<xsl:text> kl. </xsl:text><xsl:value-of select="$node/@hour"/>:<xsl:value-of select="$node/@minute"/>
+			</xsl:if>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:googleanalytics">
