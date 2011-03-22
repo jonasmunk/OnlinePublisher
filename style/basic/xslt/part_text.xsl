@@ -44,7 +44,7 @@
 </xsl:template>
 
 <xsl:template match="txt:p">
-<p><xsl:if test="position()=2 or (../txt:image and position()=3)"><xsl:attribute name="class">part_text_first</xsl:attribute></xsl:if><span class="part_text"><xsl:apply-templates/></span></p>
+<p><xsl:if test="position()=2 or (../txt:image and position()=3)"><xsl:attribute name="class">part_text_first</xsl:attribute></xsl:if><span class="part_text"><xsl:apply-templates/><xsl:comment/></span></p>
 </xsl:template>
 
 <xsl:template match="txt:break">

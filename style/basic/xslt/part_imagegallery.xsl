@@ -22,6 +22,7 @@
 				</xsl:attribute>
 			</xsl:if>
 			<xsl:apply-templates/>
+			<xsl:comment/>
 		</div>
 		<script type="text/javascript">
 			(function() {

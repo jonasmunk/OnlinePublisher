@@ -100,6 +100,7 @@
 		<xsl:for-each select="//p:page/p:context/p:translation">
 			<xsl:call-template name="language"/>
 		</xsl:for-each>
+		<xsl:comment/>
 	</span>
 </xsl:template>
 
