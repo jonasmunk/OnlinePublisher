@@ -763,7 +763,7 @@
 
 <xsl:template match="f:text/f:bottom">
 <span class="text">
-<xsl:apply-templates/>
+<xsl:apply-templates/><xsl:comment/>
 </span>
 </xsl:template>
 
