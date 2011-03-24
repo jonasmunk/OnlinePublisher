@@ -414,8 +414,8 @@ In2iGui.showMessage = function(options) {
 };
 
 In2iGui.hideMessage = function() {
+	window.clearTimeout(In2iGui.messageDelayTimer);
 	if (In2iGui.message) {
-		window.clearTimeout(In2iGui.messageDelayTimer);
 		if (n2i.browser.opacity) {
 			n2i.ani(In2iGui.message,'opacity',0,300,{hideOnComplete:true});
 		} else {
@@ -803,7 +803,7 @@ In2iGui.request = function(options) {
 		if (message) {
 			if (message.success) {
 				In2iGui.showMessage({text:message.success,icon:'common/success',duration:message.duration || 2000});
-			} else {
+			} else if (message.start) {
 				In2iGui.hideMessage();
 			}
 		}
@@ -848,7 +848,7 @@ In2iGui.request = function(options) {
 		n2i.log(t);
 		n2i.log(e);
 	};
-	if (options.message) {
+	if (options.message && options.message.start) {
 		In2iGui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
 	}
 	n2i.request(options);

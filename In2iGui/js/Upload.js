@@ -381,7 +381,7 @@ In2iGui.Upload.Item.prototype = {
 		}
 	},
 	setError : function(error) {
-		this.status.update(In2iGui.Upload.errors[error] || error);
+		n2i.dom.setText(this.status,In2iGui.Upload.errors[error] || error);
 		n2i.addClass(this.element,'in2igui_upload_item_error');
 		this.progress.hide();
 	},
