@@ -9,6 +9,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Object.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/DateUtils.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $type = Request::getString('type');
 $queryString = Request::getUnicodeString('query');
@@ -38,9 +39,9 @@ echo '<headers>'.
 '<header title="Ændringsdato" key="updated" sortable="true"/>'.
 '</headers>';
 foreach ($objects as $object) {
-	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="'.$object->getIn2iGuiIcon().'" title="'.In2iGui::escape($object->getTitle()).'">'.
-	'<cell icon="'.$object->getIn2iGuiIcon().'">'.In2iGui::escape($object->getTitle()).'</cell>'.
-	'<cell>'.In2iGui::escape($object->getNote()).'</cell>'.
+	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="'.$object->getIn2iGuiIcon().'" title="'.StringUtils::escapeXML($object->getTitle()).'">'.
+	'<cell icon="'.$object->getIn2iGuiIcon().'">'.StringUtils::escapeXML($object->getTitle()).'</cell>'.
+	'<cell>'.StringUtils::escapeXML($object->getNote()).'</cell>'.
 	($type=='' ? '<cell>'.$object->getType().'</cell>' : '').
 	'<cell>'.DateUtils::formatDateTime($object->getCreated()).'</cell>'.
 	'</row>';
