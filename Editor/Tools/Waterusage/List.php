@@ -42,14 +42,14 @@ function listMeters($windowSize, $windowPage, $text) {
 
 	foreach ($result->getList() as $object) {
 		$address = Query::after('address')->withRelationFrom($object)->first();
-		$addressString = null;
-		if ($address) {
-			$addressString = StringBuilder::append($address->getStreet())->separator(', ')->append($address->getZipcode())->separator(', ')->append($address->getCity())->toString();
-		}
 		$usage = Query::after('waterusage')->withProperty('watermeterId',$object->getId())->orderBy('date')->descending()->first();
 		$writer->startRow(array( 'kind'=>'watermeter', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
 		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->text( $object->getNumber() )->endCell();
-		$writer->startCell()->text($addressString)->endCell();
+		if ($address) {
+			$writer->startCell(array( 'icon'=>$address->getIn2iGuiIcon() ))->text($address->toString())->endCell();
+		} else {
+			$writer->startCell()->endCell();
+		}
 		if ($usage) {
 			$writer->startCell()->text($usage->getValue())->endCell();
 			$writer->startCell()->text(DateUtils::formatDate($usage->getDate()))->endCell();
