@@ -100,6 +100,7 @@
 		<xsl:for-each select="//p:page/p:context/p:translation">
 			<xsl:call-template name="language"/>
 		</xsl:for-each>
+		<xsl:comment/>
 	</span>
 </xsl:template>
 
@@ -762,7 +763,7 @@
 
 <xsl:template match="f:text/f:bottom">
 <span class="text">
-<xsl:apply-templates/>
+<xsl:apply-templates/><xsl:comment/>
 </span>
 </xsl:template>
 

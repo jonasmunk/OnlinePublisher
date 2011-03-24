@@ -15,7 +15,16 @@
 		<div class="part_list_box_middle">
 		<xsl:apply-templates/>
 		<xsl:if test="not(l:item)">
-			<p class="part_list_nodata">Der findes pt. ingen begivenheder</p>
+			<p class="part_list_nodata">				
+				<xsl:choose>
+					<xsl:when test="//p:page/p:meta/p:language='en'">
+						<xsl:text>There are currently no events</xsl:text>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>Der findes pt. ingen begivenheder</xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
+			</p>
 		</xsl:if>
 		<xsl:comment/>
 		</div>

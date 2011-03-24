@@ -7,7 +7,7 @@
  >
 
 <xsl:template match="html:html">
-<div class="part_html"><xsl:value-of select="." disable-output-escaping = "yes"/></div>
+<div class="part_html"><xsl:value-of select="." disable-output-escaping = "yes"/><xsl:comment/></div>
 </xsl:template>
 
 </xsl:stylesheet>

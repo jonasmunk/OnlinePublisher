@@ -94,7 +94,7 @@ $gui='
 				<text label="Titel" key="title"/>
 				<text label="Adresse" key="url" multiline="true"/>
 				<text label="Filter" key="filter"/>
-				<number label="Interval" key="syncInterval"/>
+				<number label="Interval (sekunder)" key="syncInterval"/>
 				<buttons>
 					<button name="cancelSource" title="Annuller"/>
 					<button name="deleteSource" title="Slet">
