@@ -13,9 +13,28 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual($result,'hep  hey');
 	}
 
+    function testStripInvalidXml() {
+        $this->assertEqual('-1',StringUtils::stripInvalidXml('-1'));
+        $this->assertEqual('-1',StringUtils::stripInvalidXml(-1));
+        $this->assertEqual('0',StringUtils::stripInvalidXml(0));
+        $this->assertEqual(' ',StringUtils::stripInvalidXml("\0"));
+	}
+
+    function testToString() {
+        $this->assertEqual("0",StringUtils::toString(0));
+	}
+	
     function testEscaping() {
+        $this->assertEqual("0",StringUtils::escapeXML(0));
+        $this->assertEqual("0",StringUtils::escapeXML("0"));
         $this->assertEqual("&#60;&#62;&#38;",StringUtils::escapeXML('<>&'));
+        $this->assertEqual("&quot;",StringUtils::escapeXML('"'));
+        $this->assertEqual("&#38;",StringUtils::escapeXML('&'));
+        $this->assertEqual("-",StringUtils::escapeXML('-'));
+        $this->assertEqual("+",StringUtils::escapeXML('+'));
+        $this->assertEqual("&#226;&#243;&#8220;",StringUtils::escapeXML('–'));
 		// TODO: is this correct?
+        $this->assertEqual("?",StringUtils::escapeXML(StringUtils::fromUnicode('–')));
 		$this->assertEqual("&#195;&#166;",StringUtils::escapeXML('æ'));
     }
 

@@ -27,7 +27,7 @@ class Address extends Object {
 	}
 	
 	function getIn2iGuiIcon() {
-		return "file/generic";
+		return "geo/map";
 	}
 	
 	function setStreet($street) {

@@ -26,6 +26,7 @@ class Watermeter extends Object {
 	
 	function setNumber($number) {
 	    $this->number = $number;
+		$this->setTitle($number);
 	}
 
 	function getNumber() {

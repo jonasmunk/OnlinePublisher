@@ -29,10 +29,10 @@ class FileUpload {
 
 		$this->path = FileSystemService::findFreeFilePath($filePath);
 
-		$error=$this->ERROR_NO_ERROR;
+		$error = $this->ERROR_NO_ERROR;
 		$success = false;
 		if (!move_uploaded_file($tempFile, $this->path)) {
-			$error=$this->$ERROR_COULD_NOT_MOVE_FILE_FROM_TEMP;
+			$error = $this->ERROR_COULD_NOT_MOVE_FILE_FROM_TEMP;
 		} else {
 			$success = true;
 		}

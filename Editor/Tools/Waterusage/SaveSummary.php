@@ -10,11 +10,10 @@ $data = Request::getObject('data');
 
 $summary = new WatermeterSummary();
 $summary->setWatermeterId($data->watermeterId);
+$summary->setNumber(StringUtils::fromUnicode($data->number));
 $summary->setStreet(StringUtils::fromUnicode($data->street));
 $summary->setCity(StringUtils::fromUnicode($data->city));
 $summary->setZipcode(StringUtils::fromUnicode($data->zipcode));
 
-Log::debug($data);
-Log::debug($summary);
 WaterusageService::saveSummary($summary);
 ?>

@@ -31,11 +31,24 @@ class WaterusageService {
 		return null;
 	}
 	
+	function removeMeter($id) {
+		$meter = Watermeter::load($id);
+		if ($meter) {
+			$address = Query::after('address')->withRelationFrom($meter)->first();
+			if ($address) {
+				$address->remove();
+			}
+			$usages = Query::after('waterusage')->withProperty('watermeterId',$meter->getId())->get();
+			foreach ($usages as $usage) {
+				$usage->remove();
+			}
+			$meter->remove();
+		}
+	}
+	
 	function getSummaryByMeter($meter) {
 		$summary = new WatermeterSummary();
 		$summary->setNumber($meter->getNumber());
-		$usages = Query::after('waterusage')->withProperty('watermeterId',$meter->getId())->get();
-		$summary->setUsages($usages);
 		$address = Query::after('address')->withRelationFrom($meter)->first();
 		if ($address) {
 			$summary->setStreet($address->getStreet());
@@ -58,20 +71,23 @@ class WaterusageService {
 	function saveSummary($summary) {
 		$meter = Watermeter::load($summary->getWatermeterId());
 		if ($meter) {
+			$meter->setNumber($summary->getNumber());
+			$meter->save();
+			$meter->publish();
 			$address = Query::after('address')->withRelationFrom($meter)->first();
 			if ($address) {
-				Log::debug('Address was found!');
 				$address->setStreet($summary->getStreet());
 				$address->setCity($summary->getCity());
 				$address->setZipcode($summary->getZipcode());
+				$address->publish();
 				$address->save();
 			} else {
-				Log::debug('Address not found, creating new');
 				$address = new Address();
 				$address->setStreet($summary->getStreet());
 				$address->setCity($summary->getCity());
 				$address->setZipcode($summary->getZipcode());
 				$address->save();
+				$address->publish();
 				ObjectService::addRelation($meter,$address);
 			}
 		} else {

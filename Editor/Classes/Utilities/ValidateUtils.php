@@ -15,4 +15,12 @@ class ValidateUtils {
 	   $num = preg_match($pattern,$url);
 	   return ($num>0);
 	}
+	
+	function validateDigits($str=null) {
+		if ($str===null) {return false;}
+		$str = strval($str);
+		$pattern = "/[0-9]+/";
+	   	$num = preg_match($pattern,$str,$matches);
+		return $matches[0]===$str;
+	}
 }

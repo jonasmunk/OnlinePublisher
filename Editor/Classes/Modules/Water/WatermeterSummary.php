@@ -10,7 +10,6 @@ class WatermeterSummary {
 	var $street;
 	var $zipcode;
 	var $city;
-	var $usages;
 	
 	function toUnicode() {
 		$this->number = StringUtils::toUnicode($this->number);
@@ -58,14 +57,5 @@ class WatermeterSummary {
 	function getCity() {
 	    return $this->city;
 	}
-	
-	function setUsages($usages) {
-	    $this->usages = $usages;
-	}
-
-	function getUsages() {
-	    return $this->usages;
-	}
-	
 	
 }

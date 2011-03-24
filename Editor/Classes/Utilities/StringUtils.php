@@ -47,16 +47,16 @@ class StringUtils {
 		return mb_convert_encoding($str,"ISO-8859-1", "UTF-8");
 	}
 	
-	function escapeXML($input) {
-		//$input = StringUtils::stripInvalidXml($input);
-		$output = StringUtils::htmlNumericEntities($input);
-		$output = str_replace('&#151;', '-', $output);
-		$output = str_replace('&#146;', '&#39;', $output);
-		$output = str_replace('&#147;', '&#8220;', $output);
-		$output = str_replace('&#148;', '&#8221;', $output);
-		$output = str_replace('&#128;', '&#243;', $output);
-		$output = str_replace('"', '&quot;', $output);
-		return $output;
+	function escapeXML($str) {
+		$str = StringUtils::stripInvalidXml($str);
+		$str = StringUtils::htmlNumericEntities($str);
+		$str = str_replace('&#151;', '-', $str);
+		$str = str_replace('&#146;', '&#39;', $str);
+		$str = str_replace('&#147;', '&#8220;', $str);
+		$str = str_replace('&#148;', '&#8221;', $str);
+		$str = str_replace('&#128;', '&#243;', $str);
+		$str = str_replace('"', '&quot;', $str);
+		return $str;
 	}
 
 	function htmlNumericEntities(&$str){
@@ -231,14 +231,16 @@ class StringUtils {
 		return $json->decode($str);
 	}
 	
+	function toString($val) {
+		if ($val===0) {
+			//return '0';
+		}
+		return strval($val);
+	}
+	
 	function stripInvalidXml($value) {
-	    $ret = "";
-	    $current;
-	    if (empty($value)) 
-	    {
-	        return $ret;
-	    }
- 
+		$value = StringUtils::toString($value);
+	    $ret = ""; 
 	    $length = strlen($value);
 	    for ($i=0; $i < $length; $i++)
 	    {

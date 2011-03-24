@@ -352,10 +352,18 @@ class ObjectService {
 		}
 		if (is_array($query['fields'])) {
 			foreach ($query['fields'] as $field => $value) {
-				if (isset($schema[$field]) && isset($schema[$field]['column'])) {
-					$field = $schema[$field]['column'];
+				if (isset($schema[$field])) {
+					if (isset($schema[$field]['column'])) {
+						$field = $schema[$field]['column'];
+					}
+					if ($schema[$field]['type']=='datetime') {
+						$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::datetime($value);
+					} else {
+						$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
+					}
+				} else {
+					$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
 				}
-				$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
 			}
 		}
 		if (isset($query['tables']) && is_array($query['tables']) && count($query['tables'])>0) {

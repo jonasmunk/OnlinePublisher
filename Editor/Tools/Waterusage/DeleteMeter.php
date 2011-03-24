@@ -6,10 +6,5 @@
 require_once '../../Include/Private.php';
 
 $data = Request::getObject('data');
-
-$summary = WaterusageService::getSummaryById($data->id);
-
-$summary->toUnicode();
-
-In2iGui::sendObject($summary);
+WaterusageService::removeMeter($data->id);
 ?>

@@ -22,7 +22,7 @@ $gui='
 	<layout>
 		<top>
 			<toolbar>
-				<icon icon="file/generic" title="Importér" overlay="upload" name="updateData" click="uploadWindow.show();"/>
+				<icon icon="file/generic" title="Importér" overlay="upload" name="import"/>
 				<icon icon="file/generic" title="Eksportér" overlay="download" name="export"/>
 				<divider/>
 				<icon icon="common/gauge" title="Ny måler" overlay="new" name="newMeter"/>
@@ -37,6 +37,7 @@ $gui='
 				<overflow>
 				<selection value="meters" name="selector">
 					<item icon="common/gauge" title="Målere" value="meters"/>
+					<item icon="file/generic" title="Log" value="log"/>
 					<title>Aflæsninger</title>
 					<item icon="common/water" title="Alle aflæsninger" value="usage"/>
 					<item icon="common/time" title="2007" value="2007"/>
@@ -51,11 +52,11 @@ $gui='
 					<list name="list" source="listSource" state="list"/>
 					<fragment state="meter" height="full" background="leather">
 						<bar>
-							<button text="Luk" icon="common/close" click="ui.changeState(\'list\')"/>
+							<button text="Luk" icon="common/close" name="closeMeter"/>
 						</bar>
 						<block all="20">
 							<columns space="20">
-								<column width="400px">
+								<column width="300px">
 									<box variant="rounded" padding="10">
 									<formula name="summaryFormula">
 										<group labels="above">
@@ -75,7 +76,10 @@ $gui='
 											</column>
 										</columns>
 										<buttons>
-											<button text="Opdater" submit="true"/>
+											<button name="deleteMeter" title="Slet">
+												<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+											</button>
+											<button text="Opdater" submit="true" name="saveMeter"/>
 										</buttons>
 										</formula>
 									</box>
@@ -83,12 +87,10 @@ $gui='
 								<column>
 									<box variant="rounded">
 										<bar>
-											<button text="Tilføj aflæsning"/>
+											<button text="Tilføj aflæsning" name="addSubUsage" icon="common/new"/>
 										</bar>
 										<overflow height="200">
-											<list name="usageList">
-												<column title="Værdi" key="value"/>
-												<column title="Dato" key="date"/>
+											<list name="subUsageList">
 											</list>
 										</overflow>
 									</box>
@@ -102,36 +104,48 @@ $gui='
 		<bottom/>
 	</layout>
 	
-	<window title="Vandforbrug" name="meterUsageFormula" width="300" padding="5">
-		<formula name="meterUsageFormula">
+	<window title="Aflæsning" icon="common/water" name="subUsageWindow" width="300" padding="5">
+		<formula name="subUsageFormula">
 			<group labels="above">
 				<number label="Værdi" key="value" max="1000000000"/>
 				<datetime label="Tidspunkt" key="date" return-type="seconds"/>
 				<buttons>
-					<button name="cancelUsage" title="Annuller"/>
-					<button name="deleteUsage" title="Slet">
+					<button name="cancelSubUsage" title="Annuller"/>
+					<button name="deleteSubUsage" title="Slet">
 						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
 					</button>
-					<button name="saveUsage" title="Gem" highlighted="true"/>
+					<button name="saveSubUsage" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
 			</group>
 		</formula>
 	</window>
 	
-	<window title="Import af data" name="uploadWindow" width="300" padding="5">
-		<upload name="file" url="Upload.php" widget="upload" flash="false">
-			<placeholder title="Upload CSV-fil med målerdata" text="Filen skal have formatet år;nummer;værdi f.eks. (2009;6778888;67545) og kan højest være '.$maxUploadSize.' stor"/>
-		</upload>
-		<buttons align="center" top="10">
-			<button name="upload" title="Vælg filer..." highlighted="true"/>
-		</buttons>
+	<window title="Import" name="importWindow" width="300">
+		<tabs centered="true">
+			<tab title="Vandmålere" padding="10">
+				<upload name="metersUpload" url="ImportMeters.php" widget="meterImportButton" flash="false">
+					<placeholder title="Upload af CSV-fil med vandmålere" text="Filen skal have formatet (nummer;vej;postnummer;by) f.eks. (6778888;Toldbodvej 1;9370;Hals) og kan højest være '.$maxUploadSize.' stor"/>
+				</upload>
+				<buttons align="center" top="10">
+					<button name="meterImportButton" title="Vælg filer..." highlighted="true"/>
+				</buttons>
+			</tab>
+			<tab title="Aflæsninger" padding="10">
+				<upload name="usagesUpload" url="ImportUsages.php" widget="usagesImportButton" flash="false">
+					<placeholder title="Upload af CSV-fil med aflæsninger" text="Filen skal have formatet (nummer;værdi;dato) f.eks. (6778888;21361;15/04/2011) og kan højest være '.$maxUploadSize.' stor"/>
+				</upload>
+				<buttons align="center" top="10">
+					<button name="usagesImportButton" title="Vælg filer..." highlighted="true"/>
+				</buttons>
+			</tab>
+		</tabs>
 	</window>
 	
-	<window title="Vandforbrug" name="usageWindow" width="300" padding="5">
+	<window title="Aflæsning" icon="common/water" name="usageWindow" width="300" padding="5">
 		<formula name="usageFormula">
 			<group labels="above">
 				<text label="Nummer" key="number"/>
-				<number label="År" key="year"/>
+				<!--<number label="År" key="year"/>-->
 				<number label="Værdi" key="value" max="1000000000"/>
 				<datetime label="Tidspunkt" key="date" return-type="seconds"/>
 				<buttons>
@@ -145,16 +159,13 @@ $gui='
 		</formula>
 	</window>
 
-	<window title="Vandmåler" name="meterWindow" width="300" padding="5">
+	<window title="Vandmåler" icon="common/gauge" name="meterWindow" width="300" padding="5">
 		<formula name="meterFormula">
 			<group labels="above">
 				<text label="Nummer" key="number"/>
 				<buttons>
 					<button name="cancelMeter" title="Annuller"/>
-					<button name="deleteMeter" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
-					</button>
-					<button name="saveMeter" submit="true" title="Gem" highlighted="true"/>
+					<button name="createMeter" submit="true" title="Opret" highlighted="true"/>
 				</buttons>
 			</group>
 		</formula>

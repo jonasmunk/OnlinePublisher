@@ -16,6 +16,7 @@ ui.listen({
 		this.usageId = null;
 		usageWindow.show();
 		usageFormula.reset();
+		usageFormula.setValues({date:new Date()});
 		deleteUsage.setEnabled(false);
 		saveUsage.setEnabled(true);
 		usageFormula.focus();
@@ -24,13 +25,25 @@ ui.listen({
 	$click$saveUsage : function() {
 		var data = usageFormula.getValues();
 		data.id = this.usageId;
-		ui.request({url:'SaveUsage.php',onSuccess:'usageUpdated',json:{data:data}});
+		ui.request({
+			url : 'SaveUsage.php',
+			json : {data:data},
+			message : {start:'Gemmer aflæsning...',success:'Aflæsningen er gemt'},
+			onSuccess : 'usageUpdated',
+			onFailure:function() {
+				ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
+			}
+		});
 	},
 	$success$usageUpdated : function() {
 		list.refresh();
 		this.usageId = null;
 		usageFormula.reset();
 		usageWindow.hide();
+	},
+	
+	$selectionChanged$selector : function() {
+		ui.changeState('list');
 	},
 	
 	$listRowWasOpened$list : function(obj) {
@@ -45,7 +58,12 @@ ui.listen({
 		usageFormula.reset();
 		deleteUsage.setEnabled(false);
 		saveUsage.setEnabled(false);
-		ui.request({json:{data:{id:id}},url:'../../Services/Model/LoadObject.php',onSuccess:'loadUsage'});
+		ui.request({
+			message : {start : 'Åbner aflæsning...',delay:300},
+			json : {data:{id:id}},
+			url : 'LoadUsage.php',
+			onSuccess : 'loadUsage'
+		});
 
 	},
 	$success$loadUsage : function(data) {
@@ -57,14 +75,19 @@ ui.listen({
 		usageFormula.focus();
 	},
 	$click$deleteUsage : function() {
-		ui.request({json:{data:{id:this.usageId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteUsage'});
+		ui.request({
+			json : {data:{id:this.usageId}},
+			url : '../../Services/Model/DeleteObject.php',
+			message : {start:'Sletter aflæsning...',success:'Aflæsningen er slettet'},
+			onSuccess:'deleteUsage'
+		});
 	},
 	$success$deleteUsage : function() {
 		usageFormula.reset();
 		usageWindow.hide();
 		list.refresh();
 	},
-	$uploadDidCompleteQueue : function() {
+	$file$uploadDidCompleteQueue : function() {
 		list.refresh();
 	},
 	
@@ -84,66 +107,156 @@ ui.listen({
 		this.meterId = null;
 		meterWindow.show();
 		meterFormula.reset();
-		deleteMeter.setEnabled(false);
-		saveMeter.setEnabled(true);
+		createMeter.setEnabled(true);
 		meterFormula.focus();
 	},
 	$submit$meterFormula : function() {
-		saveMeter.setEnabled(false);
+		createMeter.setEnabled(false);
 		var data = meterFormula.getValues();
 		data.id = this.meterId;
-		ui.showMessage({text:'Gemmer vandmåler',busy:true});
-		ui.request({url:'SaveMeter.php',json:{data:data},onSuccess:function() {
-			list.refresh();
-			ui.showMessage({text:'Vandmåleren er gemt',icon:'common/success',duration:2000});
-			meterFormula.reset();
-			meterWindow.hide();
-		}});
+		ui.request({
+			url:'SaveMeter.php',
+			json:{data:data},
+			message:{start:'Gemmer vandmåler',success:'Vandmåleren er gemt'},
+			onSuccess:function() {
+				list.refresh();
+				meterFormula.reset();
+				meterWindow.hide();
+			}
+		});
 	},
 	_editMeter : function(id) {
-		ui.request({json:{data:{id:id}},url:'LoadSummary.php',onJSON:function(data) {
-			this.meterId = id;
-			summaryFormula.reset();
-			ui.changeState('meter');
-			summaryFormula.setValues(data);
-		}.bind(this)});
-		return;
-		
-		meterFormula.reset();
-		deleteMeter.setEnabled(false);
-		saveMeter.setEnabled(false);
-		ui.request({json:{data:{id:id}},url:'../../Services/Model/LoadObject.php',onJSON:function(data) {
-			this.meterId = data.id;
-			
-			meterFormula.setValues(data);
-			meterWindow.show();
-			saveMeter.setEnabled(true);
-			deleteMeter.setEnabled(true);
-			meterFormula.focus();
-		}.bind(this)});
-
+		ui.request({
+			json:{data:{id:id}},
+			url:'LoadSummary.php',
+			message:{start:'Åbner måler...',delay:300},
+			onJSON:function(data) {
+				this.meterId = id;
+				subUsageList.clear();
+				summaryFormula.reset();
+				ui.changeState('meter');
+				summaryFormula.setValues(data);
+				subUsageList.setUrl('ListSubUSage.php?meterId='+id);
+			}.bind(this)
+		});
+	},
+	$click$closeMeter : function() {
+		this._resetSubUsage();
+		ui.changeState('list');
 	},
 	$submit$summaryFormula : function() {
 		var values = summaryFormula.getValues();
 		values.watermeterId = this.meterId;
-		ui.showMessage({text:'Gemmer information',busy:true});
-		ui.request({json:{data:values},url:'SaveSummary.php',onSuccess:function() {
-			ui.showMessage({text:'Informationen er gemt',icon:'common/success',duration:2000});
-		},onFailure:function() {
-			ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
-		}});
+		saveMeter.setEnabled(false);
+		ui.request({
+			json:{data:values},
+			url:'SaveSummary.php',
+			message:{start:'Gemmer information',success:'Informationen er gemt'},
+			onFailure:function() {
+				ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
+			},
+			onSuccess:function() {
+				saveMeter.setEnabled(true);
+			}
+		});
 	},
 	$click$deleteMeter : function() {
-		ui.request({json:{data:{id:this.meterId}},url:'../../Services/Model/DeleteObject.php',onSuccess:function() {
-			list.refresh();
-			this.meterId = null;
-			meterFormula.reset();
-			meterWindow.hide();
-		}.bind(this)});
+		deleteMeter.setEnabled(false);
+		ui.request({
+			json:{data:{id:this.meterId}},
+			url:'DeleteMeter.php',
+			message : {start:'Sletter måler...',success:'Måleren er slettet'},
+			onSuccess:function() {
+				list.refresh();
+				this.meterId = null;
+				this._resetSubUsage();
+				ui.changeState('list');
+				deleteMeter.setEnabled(true);
+			}.bind(this)
+		});
 	},
 	$click$cancelMeter : function() {
 		this.meterId = null;
 		meterFormula.reset();
 		meterWindow.hide();
+	},
+	
+	// Sub usage support
+	
+	subUsageId : null,
+	
+	$click$addSubUsage  : function() {
+		this.subUsageId = null;
+		subUsageFormula.reset();
+		subUsageFormula.setValues({date:new Date()});
+		subUsageWindow.show();
+		deleteSubUsage.disable();
+		subUsageFormula.focus();
+	},
+	$click$cancelSubUsage  : function() {
+		this._resetSubUsage();
+	},
+	$submit$subUsageFormula : function() {
+		var values = subUsageFormula.getValues();
+		values.id = this.subUsageId;
+		values.meterId = this.meterId;
+		ui.request({
+			json : {data:values},
+			url : 'SaveSubUsage.php',
+			message : {start:'Gemmer aflæsning...',success:'Informationen er gemt'},
+			onSuccess : function() {
+				this._resetSubUsage();
+				subUsageList.refresh();
+			}.bind(this),
+			onFailure:function() {
+				ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
+			}
+		});
+	},
+	_resetSubUsage : function() {
+		this.subUsageId = null;
+		subUsageFormula.reset();
+		subUsageWindow.hide();
+	},
+	$listRowWasOpened$subUsageList : function(obj) {
+		ui.request({
+			json : {data:{id:obj.id}},
+			url : '../../Services/Model/LoadObject.php',
+			message : {start:'Åbner aflæsning...',delay:300},
+			onJSON : function(data) {
+				ui.hideMessage();
+				this.subUsageId = data.id;
+				subUsageFormula.setValues(data);
+				subUsageWindow.show();
+				deleteSubUsage.enable();
+				subUsageFormula.focus();
+			}.bind(this)
+		});
+	},
+	$click$deleteSubUsage : function() {
+		ui.request({
+			json : {data:{id:this.subUsageId}},
+			url : '../../Services/Model/DeleteObject.php',
+			message : {start:'Sletter aflæsning...',success:'Aflæsningen er slettet'},
+			onSuccess : function() {
+				subUsageList.refresh();
+				this._resetSubUsage();
+			}.bind(this)
+		});		
+	},
+	
+	// Import
+	
+	$click$import : function() {
+		importWindow.show();
+	},
+	$uploadDidCompleteQueue$metersUpload : function() {
+		ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
+		list.refresh();
+	},
+	$uploadDidCompleteQueue$usagesUpload : function() {
+		ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
+		list.refresh();
+		subUsageList.refresh();
 	}
 });

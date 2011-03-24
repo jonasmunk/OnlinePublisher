@@ -36,6 +36,12 @@ class Database {
 		return true;
 	}
 	
+	function debug($sql) {
+		if (!true) {
+			error_log($sql);
+		}
+	}
+	
 	function getConnection() {
 		global $database_host, $database_user,$database_password,$database;
 		if (!isset($GLOBALS['OP_CON'])) {
@@ -54,6 +60,7 @@ class Database {
 	
 	function select($sql) {
 		$con = Database::getConnection();
+		Database::debug($sql);
 		$result = @mysql_query($sql,$con);
 		if (mysql_errno($con)>0) {
 			error_log(mysql_error($con).': '.$sql);

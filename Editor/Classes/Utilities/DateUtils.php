@@ -28,6 +28,14 @@ class DateUtils {
 		return null;
 	}
 	
+	/** The goal of this method is to parse anything */
+	function parse($str) {
+		if (preg_match("/([0-9]{2})[-\/\.]([0-9]{2})[-\/\.]([0-9]{4})/mi",$str, $matches)) {
+			return mktime( 0,0, 0, $matches[2],$matches[1], $matches[3]);
+		}
+		return null;
+	}
+	
 	function buildTag($tagName,$stamp) {
 		return '<'.$tagName.' unix="'.$stamp.'" day="'.date('d',$stamp).'" weekday="'.date('w',$stamp).'" yearday="'.date('z',$stamp).'" month="'.date('m',$stamp).'" year="'.date('Y',$stamp).'" hour="'.date('H',$stamp).'" minute="'.date('i',$stamp).'" second="'.date('s',$stamp).'" offset="'.date('Z',$stamp).'" timezone="'.date('T',$stamp).'"/>';
 	}
