@@ -18,7 +18,7 @@
 			<p class="part_list_nodata">				
 				<xsl:choose>
 					<xsl:when test="//p:page/p:meta/p:language='en'">
-						<xsl:text>There is currently no events</xsl:text>
+						<xsl:text>There are currently no events</xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:text>Der findes pt. ingen begivenheder</xsl:text>
