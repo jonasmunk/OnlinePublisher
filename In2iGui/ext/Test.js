@@ -1,5 +1,6 @@
 In2iGui.test = {
 	run : function(recipe) {
+		ui.showMessage({text:'Starting test',busy:true});
 		this._next(0,recipe);
 	},
 	_next : function(num,recipe) {
@@ -26,22 +27,32 @@ In2iGui.test = {
 
 In2iGui.assert = {
 	'true' : function(value,msg) {
-		fireunit.ok(value,msg);
+		if (value!==true) {
+			n2i.log('Failure ('+msg+'), not true...');
+			n2i.log(value);
+		}
 	},
 	'false' : function(value,msg) {
-		fireunit.ok(!value,msg);
+		if (value===true) {
+			n2i.log('Failure ('+msg+'), not false...');
+			n2i.log(value);
+		}
 	},
 	visible : function(node,msg) {
-		fireunit.ok(node.style.display!=='none',msg);
+		this.true(node.style.display!=='none',msg);
 	},
 	notVisible : function(node,msg) {
-		fireunit.ok(node.style.display==='none',msg);
+		this.true(node.style.display==='none',msg);
 	},
 	equals : function(obj1,obj2,msg) {
-		fireunit.ok(obj1===obj2,msg);
+		if (obj1!==obj2) {
+			n2i.log('Failure ('+msg+'), not equal...');
+			n2i.log(obj1);
+			n2i.log(obj2);
+		}
 	},
 	notEquals : function(obj1,obj2,msg) {
-		fireunit.ok(obj1!==obj2,msg);
+		this.true(obj1!==obj2,msg);
 	}
 }
 

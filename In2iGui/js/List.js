@@ -199,10 +199,11 @@ In2iGui.List.prototype = {
 			url+=url.indexOf('?')==-1 ? '?' : '&';
 			url+=key+'='+this.parameters[key];
 		}
+		this.$sourceIsBusy();
 		In2iGui.request({
 			url:url,
-			onJSON : this.$objectsLoaded.bind(this),
-			onXML : this.$listLoaded.bind(this)
+			onJSON : function(obj) {this.$sourceIsNotBusy();this.$objectsLoaded(obj)}.bind(this),
+			onXML : function(obj) {this.$sourceIsNotBusy();this.$listLoaded(obj)}.bind(this)
 		});
 	},
 	/** @private */
