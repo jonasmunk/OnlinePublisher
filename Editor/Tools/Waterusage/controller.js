@@ -46,6 +46,10 @@ ui.listen({
 		ui.changeState('list');
 	},
 	
+	$valueChanged$search : function() {
+		ui.changeState('list');
+	},
+	
 	$listRowWasOpened$list : function(obj) {
 		if (obj.kind=='waterusage') {
 			this._editUsage(obj.id);
@@ -136,7 +140,7 @@ ui.listen({
 				summaryFormula.reset();
 				ui.changeState('meter');
 				summaryFormula.setValues(data);
-				subUsageList.setUrl('ListSubUSage.php?meterId='+id);
+				subUsageList.setUrl('ListSubUsage.php?meterId='+id);
 			}.bind(this)
 		});
 	},

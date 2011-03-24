@@ -29,6 +29,7 @@ Log::logTool('waterusage','import','Import complete (meters)');
 In2iGui::respondUploadSuccess();
 
 function handleLine($line) {
+	$line = StringUtils::fromUnice($line);
 	$words = preg_split('/;/',$line);
 	$number = $words[0];
 	$name = $words[1];

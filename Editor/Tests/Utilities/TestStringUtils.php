@@ -96,5 +96,11 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual('Jonas < > Munk',StringUtils::removeTags('Jonas < > Munk'));
 		$this->assertEqual('Jonas <> Munk',StringUtils::removeTags('Jonas <> Munk'));
 	}
+	
+	function testBuildIndex() {
+		$this->assertEqual('Jonas Munk',StringUtils::buildIndex(array('Jonas','Munk')));
+		$this->assertEqual('Jonas Munk',StringUtils::buildIndex(array(' ','Jonas ',null,'  Munk',null,'')));
+		$this->assertEqual('',StringUtils::buildIndex(null));
+	}
 }
 ?>

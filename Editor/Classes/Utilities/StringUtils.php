@@ -105,6 +105,20 @@ class StringUtils {
 		}
 	}
 	
+	function buildIndex($array) {
+		$str = '';
+		if (is_array($array)) {
+			foreach ($array as $value) {
+				$trimmed = trim($value);
+				if (strlen($str)>0 && strlen($trimmed)>0) {
+					$str.=' ';
+				}
+				$str.=$trimmed;
+			}
+		}
+		return $str;
+	}
+	
 	
 	/**
 	 * Creates a summary of a text based on some keywords.

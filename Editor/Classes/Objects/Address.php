@@ -63,5 +63,8 @@ class Address extends Object {
 	    return $this->country;
 	}
 	
+	function sub_index() {
+		return StringUtils::buildIndex(array($this->street,$this->zipcode,$this->city,$this->country));
+	}
 }
 ?>

@@ -7,9 +7,7 @@ require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Object.php');
 
 Object::$schema['waterusage'] = array(
-	'number' => array('type'=>'string'),
 	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id'),
-	'year'   => array('type'=>'int'),
 	'value'  => array('type'=>'int'),
 	'date'  => array('type'=>'datetime')
 );
@@ -40,26 +38,9 @@ class Waterusage extends Object {
 	    return $this->watermeterId;
 	}
 	
-	
-	function setNumber($number) {
-	    $this->title = $number;
-	    $this->number = $number;
-	}
-
-	function getNumber() {
-	    return $this->number;
-	}
-	
-	function setYear($year) {
-	    $this->year = $year;
-	}
-
-	function getYear() {
-	    return $this->year;
-	}
-	
 	function setValue($value) {
 	    $this->value = $value;
+		$this->title = $value;
 	}
 
 	function getValue() {
@@ -72,6 +53,14 @@ class Waterusage extends Object {
 
 	function getDate() {
 	    return $this->date;
+	}
+	
+	function sub_index() {
+		$words = array($this->number);
+		if ($meter = Watermeter::load($this->watermeterId)) {
+			return $meter->getNumber();
+		}
+		return StringUtils::buildIndex($words);
 	}
 }
 ?>

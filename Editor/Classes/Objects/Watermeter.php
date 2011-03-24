@@ -32,5 +32,12 @@ class Watermeter extends Object {
 	function getNumber() {
 	    return $this->number;
 	}
+	
+	function sub_index() {
+		$address = Query::after('address')->withRelationFrom($this)->first();
+		if ($address) {
+			return $address->getIndex();
+		}
+	}
 }
 ?>
