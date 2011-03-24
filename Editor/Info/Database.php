@@ -865,8 +865,6 @@ $databaseTables = array(
 	'waterusage' => array(
 			array("object_id","int(11)","YES","","0",""),
 			array("watermeter_id","int(11)","YES","","0",""),
-			array("number","varchar(50)","","","",""),
-			array("year","int(11)","","","0",""),
 			array("value","int(11)","","","0",""),
 			array("date","datetime","YES","","","")
 		),
