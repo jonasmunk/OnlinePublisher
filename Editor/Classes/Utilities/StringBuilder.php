@@ -17,6 +17,9 @@ class StringBuilder {
 		if (!$this) {
 			return new StringBuilder($str);
 		}
+		if (strlen($str)==0) {
+			return $this;
+		}
 		if ($this->separator!==null && strlen($this->str)>0) {
 			$this->str.=$this->separator;
 		}

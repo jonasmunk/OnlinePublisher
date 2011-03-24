@@ -42,7 +42,7 @@ function listMeters($windowSize, $windowPage, $text) {
 
 	foreach ($result->getList() as $object) {
 		$address = Query::after('address')->withRelationFrom($object)->first();
-		$addressString;
+		$addressString = null;
 		if ($address) {
 			$addressString = StringBuilder::append($address->getStreet())->separator(', ')->append($address->getZipcode())->separator(', ')->append($address->getCity())->toString();
 		}
@@ -64,10 +64,11 @@ function listMeters($windowSize, $windowPage, $text) {
 }
 
 function listUsage($windowSize, $windowPage, $text, $year=null) {
-	$query = Query::after('waterusage')->orderBy('title')->withWindowPage($windowPage)->withWindowSize($windowSize)->withText($text);
-	if ($filter)
+	$query = Query::after('waterusage')->orderBy('date')->withWindowPage($windowPage)->withWindowSize($windowSize)->withText($text);
 	if ($year) {
-		$query->withProperty('year',$year);
+		$from = DateUtils::getFirstInstanceOfYear($year);
+		$to = DateUtils::getLastInstanceOfYear($year);
+		$query->withPropertyBetween('date',$from,$to);
 	}
 	$result = $query->search();
 
@@ -92,8 +93,8 @@ function listUsage($windowSize, $windowPage, $text, $year=null) {
 			$writer->startCell(array( 'icon'=>'common/warning' ))->text( 'Ikke fundet' )->endCell();
 		}
 		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->text($object->getValue())->endCell();
-		$writer->startCell()->text(DateUtils::formatDateTime($object->getDate()))->endCell();
-		$writer->startCell()->text(DateUtils::formatDateTime($object->getUpdated()))->endCell();
+		$writer->startCell()->text(DateUtils::formatLongDate($object->getDate()))->endCell();
+		$writer->startCell()->text(DateUtils::formatFuzzy($object->getUpdated()))->endCell();
 		$writer->endRow();
 	}
 	$writer->endList();

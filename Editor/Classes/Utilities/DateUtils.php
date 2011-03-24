@@ -187,6 +187,14 @@ class DateUtils {
 		return mktime(0,0,-1,$month+1,1,$year);
 	}
 	
+	function getFirstInstanceOfYear($year) {
+		return mktime(0,0,0,1,1,$year);
+	}
+	
+	function getLastInstanceOfYear($year) {
+		return mktime(0,0,-1,1,1,$year+1);
+	}
+	
 	function getYearStart($timestamp) {
 		$year = date('Y',$timestamp);
 		return mktime(0,0,0,1,1,$year);

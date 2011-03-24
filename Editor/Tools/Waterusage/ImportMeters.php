@@ -61,6 +61,7 @@ function handleLine($line) {
 	$address->setCity($city);
 	$address->setZipcode($zipcode);
 	$address->save();
+	$address->publish();
 	if ($new) {
 		ObjectService::addRelation($meter,$address);
 	}

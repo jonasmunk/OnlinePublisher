@@ -23,8 +23,6 @@ class TestWater extends UnitTestCase {
 		
 		$summary = WaterusageService::getSummary($meter->getNumber());
 		$this->assertEqual($summary->getNumber(),$meter->getNumber());
-		$usages = $summary->getUsages();
-		$this->assertEqual(count($usages),2,'There should be 2 usages there are: '.count($usages));
 		
 		$usage->remove();
 		$usage2->remove();

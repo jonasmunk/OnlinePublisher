@@ -19,6 +19,7 @@ $gui='
 		<parameter key="query" value="@search.value"/>
 		<parameter key="filter" value="@selector.value"/>
 	</source>
+	<source name="filterSource" url="FilterItems.php"/>
 	<layout>
 		<top>
 			<toolbar>
@@ -40,10 +41,7 @@ $gui='
 					<item icon="file/generic" title="Log" value="log"/>
 					<title>Aflæsninger</title>
 					<item icon="common/water" title="Alle aflæsninger" value="usage"/>
-					<item icon="common/time" title="2007" value="2007"/>
-					<item icon="common/time" title="2008" value="2008"/>
-					<item icon="common/time" title="2009" value="2009"/>
-					<item icon="common/time" title="2010" value="2010"/>
+					<items source="filterSource"/>
 				</selection>
 				</overflow>
 			</left>

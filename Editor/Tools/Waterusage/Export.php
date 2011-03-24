@@ -18,14 +18,14 @@ if ($view) {
 	Response::contentDisposition('waterusage-'.DateUtils::formatCSV(time()).'.csv');
 }
 
-$sql = "SELECT UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(waterusage.date) AS `date`,waterusage.number,CONVERT(waterusage.number,UNSIGNED) AS numberformatted,waterusage.year,waterusage.value FROM object,waterusage WHERE object.id=waterusage.object_id ORDER BY year,numberformatted";
+$sql = "SELECT UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(waterusage.date) AS `date`,watermeter.number,CONVERT(watermeter.number,UNSIGNED) AS numberformatted,waterusage.value FROM object,waterusage,watermeter WHERE object.id=waterusage.object_id and waterusage.watermeter_id=watermeter.object_id ORDER BY numberformatted,date";
 
 $writer = new CSVWriter();
 
-$writer->string('Number')->string('Year')->string('Date')->string('Updated')->string('Value');
+$writer->string('Number')->string('Date')->string('Value')->string('Updated');
 $result = Database::select($sql);
 while ($row = Database::next($result)) {	
-	$writer->newLine()->string($row['number'])->string($row['year'])->date($row['date'])->date($row['updated'])->string($row['value']);
+	$writer->newLine()->string($row['number'])->date($row['date'])->string($row['value'])->date($row['updated']);
 }
 Database::close($result);
 ?>

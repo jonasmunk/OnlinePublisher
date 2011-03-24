@@ -88,7 +88,11 @@ class Query {
 		$this->fields[$field] = $value;
 		return $this;
 	}
-
+	
+	function withPropertyBetween($field,$from,$to) {
+		$this->fields[$field] = array('from'=>$from,'to'=>$to);
+		return $this;
+	}
 
 	// Getters
 	

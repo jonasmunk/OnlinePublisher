@@ -413,6 +413,10 @@ class ItemsWriter {
 		return $this;
 	}
 
+	function item($options) {
+		return $this->startItem($options)->endItem();
+	}
+
 	function endItem() {
 		echo '</item>';
 		return $this;

@@ -68,6 +68,17 @@ class WaterusageService {
 		return null;
 	}
 	
+	function getYears() {
+		$years = array();
+		$sql = "select distinct DATE_FORMAT(waterusage.date, '%Y') as year from waterusage where date is not null order by year";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$years[] = intval($row['year']);
+		}
+		Database::free($result);
+		return $years;
+	}
+	
 	function saveSummary($summary) {
 		$meter = Watermeter::load($summary->getWatermeterId());
 		if ($meter) {

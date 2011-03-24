@@ -357,7 +357,12 @@ class ObjectService {
 						$field = $schema[$field]['column'];
 					}
 					if ($schema[$field]['type']=='datetime') {
-						$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::datetime($value);
+						if (is_array($value)) {
+							$parts['limits'][] = '`'.$type.'`.`'.$field.'`>='.Database::datetime($value['from']);
+							$parts['limits'][] = '`'.$type.'`.`'.$field.'`<='.Database::datetime($value['to']);
+						} else {
+							$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::datetime($value);
+						}
 					} else {
 						$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
 					}

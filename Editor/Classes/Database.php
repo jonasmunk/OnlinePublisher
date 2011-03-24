@@ -37,7 +37,7 @@ class Database {
 	}
 	
 	function debug($sql) {
-		if (!true) {
+		if (true) {
 			error_log($sql);
 		}
 	}

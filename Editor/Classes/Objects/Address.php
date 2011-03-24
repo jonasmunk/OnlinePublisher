@@ -21,6 +21,10 @@ class Address extends Object {
 	function Address() {
 		parent::Object('address');
 	}
+	
+	function _updateTitle() {
+		$this->title = $this->toString();
+	}
 
 	function load($id) {
 		return Object::get($id,'address');
@@ -32,15 +36,16 @@ class Address extends Object {
 	
 	function setStreet($street) {
 	    $this->street = $street;
+		$this->_updateTitle();
 	}
 
 	function getStreet() {
 	    return $this->street;
 	}
 	
-	
 	function setZipcode($zipcode) {
 	    $this->zipcode = $zipcode;
+		$this->_updateTitle();
 	}
 
 	function getZipcode() {
@@ -49,6 +54,7 @@ class Address extends Object {
 	
 	function setCity($city) {
 	    $this->city = $city;
+		$this->_updateTitle();
 	}
 
 	function getCity() {
@@ -57,10 +63,17 @@ class Address extends Object {
 	
 	function setCountry($country) {
 	    $this->country = $country;
+		$this->_updateTitle();
 	}
 
 	function getCountry() {
 	    return $this->country;
+	}
+	
+	function toString() {
+		$sb = new StringBuilder($this->street);
+		$sb->separator(', ');
+		return $sb->separator(', ')->append($this->zipcode)->separator(', ')->append($this->city)->separator(', ')->append($this->country)->toString();
 	}
 	
 	function sub_index() {

@@ -37,6 +37,7 @@ ui.listen({
 	},
 	$success$usageUpdated : function() {
 		list.refresh();
+		filterSource.refresh();
 		this.usageId = null;
 		usageFormula.reset();
 		usageWindow.hide();
