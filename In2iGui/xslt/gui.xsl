@@ -281,6 +281,9 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.IFrame({
 			element:'<xsl:value-of select="$id"/>',
 			name:'<xsl:value-of select="@name"/>'
+			<xsl:if test="@state">
+				,state:'<xsl:value-of select="@state"/>'
+			</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

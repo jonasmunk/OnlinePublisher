@@ -26,6 +26,12 @@ In2iGui.IFrame.prototype = {
 	},
 	reload : function() {
 		this.getWindow().location.reload();
+	},
+	show : function() {
+		this.element.style.display='';
+	},
+	hide : function() {
+		this.element.style.display='none';
 	}
 }
 
