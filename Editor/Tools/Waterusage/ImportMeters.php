@@ -49,7 +49,6 @@ function handleLine($line) {
 		$meter = new Watermeter();
 		$meter->setNumber($number);
 		$meter->save();
-		$meter->publish();
 	}
 	$address = Query::after('address')->withRelationFrom($meter)->first();
 	$new = false;
@@ -65,5 +64,7 @@ function handleLine($line) {
 	if ($new) {
 		ObjectService::addRelation($meter,$address);
 	}
+	// Be sure to publish at end
+	$meter->publish();
 }
 ?>
