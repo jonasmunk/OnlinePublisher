@@ -14,6 +14,10 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/syn.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		In2iGui.context='../../..';
+	</script>
 	<style type="text/css" media="screen">
 		input
 		{
@@ -32,41 +36,41 @@
 				var result,validator = new ui.NumberValidator({min:0,max:10});
 				
 				result = validator.validate(10);
-				ui.assert.true(result.valid,'10 is valid');
+				ui.test.assertTrue(result.valid,'10 is valid');
 				
 				result = validator.validate('abc');
-				ui.assert.true(!result.valid,'abc is invalid');
+				ui.test.assertTrue(!result.valid,'abc is invalid');
 				
 				result = validator.validate(0);
-				ui.assert.true(result.valid,'0 is valid');
+				ui.test.assertTrue(result.valid,'0 is valid');
 				
 				result = validator.validate('0.5');
-				ui.assert.true(result.valid,'"0.5" is valid');
-				ui.assert.equals(result.value,0.5,'new value = 0.5');
+				ui.test.assertTrue(result.valid,'"0.5" is valid');
+				ui.test.assertEquals(result.value,0.5,'new value = 0.5');
 				
 				result = validator.validate(' 5.5abc');
-				ui.assert.true(result.valid,'" 5.5abc" is valid');
-				ui.assert.equals(result.value,5.5,'new value = 5.5');
+				ui.test.assertTrue(result.valid,'" 5.5abc" is valid');
+				ui.test.assertEquals(result.value,5.5,'new value = 5.5');
 				
 				result = validator.validate(11);
-				ui.assert.true(!result.valid,'It is not valid');
-				ui.assert.equals(result.value,10,'new value = 10');
+				ui.test.assertTrue(!result.valid,'It is not valid');
+				ui.test.assertEquals(result.value,10,'new value = 10');
 				
 				result = validator.validate(-1);
-				ui.assert.true(!result.valid,'It is not valid');
-				ui.assert.equals(result.value,0,'new value = 0');
+				ui.test.assertTrue(!result.valid,'It is not valid');
+				ui.test.assertEquals(result.value,0,'new value = 0');
 			},
 			function() {
 				var validator = new ui.NumberValidator({min:0,max:10,allowNull:true});
 				
 				result = validator.validate(10);
-				ui.assert.true(result.valid,'10 is valid');
+				ui.test.assertTrue(result.valid,'10 is valid');
 				
 				result = validator.validate('');
-				ui.assert.true(result.valid,'"" is valid');
+				ui.test.assertTrue(result.valid,'"" is valid');
 
 				result = validator.validate('  ');
-				ui.assert.true(result.valid,'"  " is valid');
+				ui.test.assertTrue(result.valid,'"  " is valid');
 			},
 			function() {
 				var validator = new ui.NumberValidator({min:-10,max:10});
@@ -76,39 +80,35 @@
 					element:input,
 					validator:validator
 				});
-				ui.assert.notEquals(field.getValue(),input.value,'field value = input value');
-				ui.assert.equals('abc',input.value,'field value = input value');
-				ui.assert.equals(field.getValue(),0,'field value = 0');
+				ui.test.assertNotEquals(field.getValue(),input.value,'field value = input value');
+				ui.test.assertEquals('abc',input.value,'field value = input value');
+				ui.test.assertEquals(field.getValue(),0,'field value = 0');
 				
 				field.setValue('hfsajfh akjfhakjfhad kj');
-				ui.assert.equals(field.getValue(),0,'field value = 0');
+				ui.test.assertEquals(field.getValue(),0,'field value = 0');
 				
 				field.setValue(10000);
-				ui.assert.equals(field.getValue(),10,'field value = 10');
+				ui.test.assertEquals(field.getValue(),10,'field value = 10');
 				
 				field.setValue(-10000);
-				ui.assert.equals(field.getValue(),-10,'field value = -10');
+				ui.test.assertEquals(field.getValue(),-10,'field value = -10');
 				
 				field.setValue();
-				ui.assert.equals(field.getValue(),0,'field value = 0');
+				ui.test.assertEquals(field.getValue(),0,'field value = 0');
 				
-				ui.test.key( input, "a" );
-				field.keyDidStrike(); // hack
-				ui.test.key( input, "b" );
-				field.keyDidStrike(); // hack
-				ui.assert.equals(input.value,'ab','input value = "ab"');
-				ui.assert.equals(field.getValue(),0,'field value = 0');
-				
-				field.setValue();
-				ui.assert.equals(field.getValue(),0,'field value = 0');
-				ui.test.key( input, "2" );
-				field.keyDidStrike(); // hack
-				ui.assert.equals(input.value,'2','input value = "2"');
-				ui.assert.equals(field.getValue(),2,'field value = 2');
-				ui.test.key( input, "0" );
-				field.keyDidStrike(); // hack
-				ui.assert.equals(input.value,'20','input value = "20"');
-				ui.assert.equals(field.getValue(),10,'field value = 10');
+				ui.test.type( input, "ab", function() {
+					ui.test.assertEquals(field.getValue(),0,'field value = 0');
+					field.setValue();
+					ui.test.assertEquals(field.getValue(),0,'field value = 0');
+					ui.test.type( input, "2",function() {
+						ui.test.assertEquals(input.value,'2','input value = "2"');
+						ui.test.assertEquals(field.getValue(),2,'field value = 2');
+						ui.test.type( input, "0", function() {
+							ui.test.assertEquals(input.value,'20','input value = "20"');
+							ui.test.assertEquals(field.getValue(),10,'field value = 10');
+						} );
+					} );
+				});
 			},
 			function() {
 				var validator = new ui.NumberValidator({min:-10,max:10,allowNull:true});
@@ -118,9 +118,9 @@
 					element:input,
 					validator:validator
 				});
-				ui.assert.notEquals(field.getValue(),input.value,'field value = input value');
-				ui.assert.equals('    ',input.value,'field value = input value');
-				ui.assert.equals(field.getValue(),null,'field value = null');
+				ui.test.assertNotEquals(field.getValue(),input.value,'field value = input value');
+				ui.test.assertEquals('    ',input.value,'field value = input value');
+				ui.test.assertEquals(field.getValue(),null,'field value = null');
 			}
 		]);
 	</script>

@@ -5053,6 +5053,7 @@ div.in2igui_message span.in2igui_icon
 	-webkit-border-radius: 3px;
 	background: #fff;
 	border: 1px solid #AAAAAA;
+	border-color: #eee #ddd #aaa;
 	display: inline-block;
 	vertical-align: middle;
 	font-size: 0;
@@ -5070,6 +5071,7 @@ span.in2igui_segmented a
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	outline: none;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
 }
 
 span.in2igui_segmented .in2igui_icon_16

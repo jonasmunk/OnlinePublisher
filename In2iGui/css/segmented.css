@@ -4,10 +4,13 @@ span.in2igui_segmented
 	-webkit-border-radius: 3px;
 	background: #fff;
 	border: 1px solid #AAAAAA;
+	border-color: #ddd #ccc #aaa;
 	display: inline-block;
 	vertical-align: middle;
 	font-size: 0;
 	height: 20px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+	background: -moz-linear-gradient(top, #fff, #eee);
 }
 
 span.in2igui_segmented a

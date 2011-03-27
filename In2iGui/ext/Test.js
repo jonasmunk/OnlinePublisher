@@ -1,74 +1,110 @@
 In2iGui.test = {
+	status : null,
+	busy : 0,
 	run : function(recipe) {
-		ui.showMessage({text:'Starting test',busy:true});
+		this.status = {failures:0,successes:0};
+		this.busy = 0;
+		ui.showMessage({text:'Running test',busy:true});
 		this._next(0,recipe);
 	},
 	_next : function(num,recipe) {
 		if (recipe[num]===undefined) {
-			window.setTimeout(function() {ui.showMessage({text:'Test completed',duration:1000})},1000);
+			this._stop();
+			return;
 		}
-		else if(typeof(recipe[num])=='function') {
+		ui.showMessage({text:'Running test ('+num+')',busy:true});
+		if(typeof(recipe[num])=='function') {
 			recipe[num]();
 			this._next(num+1,recipe);
 		} else {
 			window.setTimeout(function(){this._next(num+1,recipe)}.bind(this),recipe[num]);
 		}
 	},
-	click : function(node) {
-		fireunit.click(node);
+	_stop : function() {
+		if (this.busy>0) {
+			window.setTimeout(this._stop.bind(this),100);
+			return;
+		}
+		if (this.status.failures>0) {
+			ui.showMessage({text:'Failure',icon:'common/warning',duration:2000});
+		} else {
+			ui.showMessage({text:'Success',icon:'common/success',duration:2000});
+		}
 	},
-	mouseDown : function(node) {
-		fireunit.mouseDown(node);
+	click : function(node,func) {
+		this.busy++;
+		Syn.click(node,function() {
+			if (func) {func()};
+			this.busy--;
+		}.bind(this));
 	},
-	key : function(node,character) {
-		fireunit.key( node, character );
-	}
-}
-
-In2iGui.assert = {
-	'true' : function(value,msg) {
+	type : function(node,text,func) {
+		this.busy++;
+		Syn.type(node,text,function() {
+			if (func) {func()};
+			this.busy--;
+		}.bind(this));
+	},
+	_succeed : function(prefix,msg) {
+		console.info('Success, true: '+msg);
+		this.status.successes++;
+	},
+	_fail : function(msg,obj1,obj2) {
+		console.error(msg);
+		console.info(obj1);
+		console.info(obj2);
+		this.status.failures++;
+	},
+	
+	// Assertion...
+	
+	assertTrue : function(value,msg) {
 		if (value!==true) {
-			n2i.log('Failure ('+msg+'), not true...');
-			n2i.log(value);
+			this._fail('Failure ('+msg+'), not true...',value);
+		} else {
+			this._succeed('Success, true: '+msg);
 		}
 	},
-	'false' : function(value,msg) {
-		if (value===true) {
-			n2i.log('Failure ('+msg+'), not false...');
-			n2i.log(value);
+	assertFalse : function(value,msg) {
+		if (value!==false) {
+			this._fail('Failure ('+msg+'), not false...',value);
+		} else {
+			this._succeed('Success, false: '+msg);
 		}
 	},
-	visible : function(node,msg) {
-		this.true(node.style.display!=='none',msg);
+	assertDefined : function(value,msg) {
+		if (value===null || value===undefined) {
+			this._fail('Failure ('+msg+'), defined...',value);
+		} else {
+			this._succeed('Success, defined: '+msg);
+		}
 	},
-	notVisible : function(node,msg) {
-		this.true(node.style.display==='none',msg);
-	},
-	equals : function(obj1,obj2,msg) {
+	assertEquals : function(obj1,obj2,msg) {
 		if (obj1!==obj2) {
-			n2i.log('Failure ('+msg+'), not equal...');
-			n2i.log(obj1);
-			n2i.log(obj2);
+			this._fail('Failure ('+msg+'), not equal...',obj1,obj2);
+		} else {
+			this._succeed('Success, equal: '+obj1+'==='+obj2+', '+msg);
 		}
 	},
-	notEquals : function(obj1,obj2,msg) {
-		this.true(obj1!==obj2,msg);
-	}
-}
-
-if (!window.fireunit) {
-	window.fireunit = {
-		ok : function(value,msg) {
-			
-		},
-		click : function(node) {
-			
-		},
-		mouseDown : function(node) {
-			
-		},
-		key : function(node,character) {
-			
+	assertNotEquals : function(obj1,obj2,msg) {
+		if (obj1===obj2) {
+			this._fail('Failure ('+msg+'), not not equal...',obj1,obj2);
+		} else {
+			this._succeed('Success, not equal: '+obj1+'!=='+obj2+', '+msg);
+		}
+	},
+	assertVisible : function(node,msg) {
+		if (node.style.display==='none') {
+			this._fail('Failure ('+msg+'), not visible...',node);
+		} else {
+			this._succeed('Success, visible: '+msg);
+		}
+	},
+	assertNotVisible : function(node,msg) {
+		if (node.style.display!=='none') {
+			this._fail('Failure ('+msg+'), visible...',node);
+		} else {
+			this._succeed('Success, not visible: '+msg);
 		}
 	}
 }
