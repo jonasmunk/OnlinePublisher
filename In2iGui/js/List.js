@@ -268,10 +268,14 @@ In2iGui.List.prototype = {
 		for (i=0; i < rows.length; i++) {
 			var cells = rows[i].getElementsByTagName('cell');
 			var row = document.createElement('tr');
+			row.setAttribute('data-index',i);
 			var icon = rows[i].getAttribute('icon');
 			var title = rows[i].getAttribute('title');
 			for (var j=0; j < cells.length; j++) {
 				var td = document.createElement('td');
+				if (cells[j].getAttribute('wrap')=='false') {
+					td.style.whiteSpace='nowrap';
+				}
 				this.parseCell(cells[j],td);
 				row.appendChild(td);
 				if (!title) {
@@ -313,7 +317,7 @@ In2iGui.List.prototype = {
 		n2i.removeClass(this.element,'in2igui_list_busy');
 	},
 	
-	/** @private */
+	/** @private 
 	filter : function(str) {
 		var len = 20;
 		var regex = new RegExp("[\\w]{"+len+",}","g");
@@ -329,7 +333,7 @@ In2iGui.List.prototype = {
 			};
 		}
 		return str;
-	},
+	},*/
 	
 	/** @private */
 	parseCell : function(node,cell) {
@@ -365,8 +369,19 @@ In2iGui.List.prototype = {
 				var icons = n2i.build('span',{'class':'in2igui_list_icons'});
 				this.parseCell(child,icons);
 				cell.appendChild(icons);
+			} else if (n2i.dom.isElement(child,'button')) {
+				var button = In2iGui.Button.create({text:child.getAttribute('text'),small:true,rounded:true});
+				button.click(function() {
+					this._buttonClick(button);
+				}.bind(this))
+				cell.appendChild(button.getElement());
 			}
 		};
+	},
+	_buttonClick : function(button) {
+		var row = n2i.firstParentByTag(button.getElement(),'tr');
+		var obj = this.rows[parseInt(row.getAttribute('data-index'),10)];
+		this.fire('buttonClick',obj,button);
 	},
 	/** @private */
 	parseWindow : function(doc) {

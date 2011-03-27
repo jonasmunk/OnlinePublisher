@@ -2724,6 +2724,11 @@ p.in2igui_list_dimmed
 div.in2igui_list_busy td
 {
 	color: #999;
+}
+
+div.in2igui_list td a.in2igui_button
+{
+	margin: -2px 0;
 }div.in2igui_selection
 {
 	font-family: 'Lucida Grande','Verdana',sans-serif;
@@ -5053,11 +5058,13 @@ div.in2igui_message span.in2igui_icon
 	-webkit-border-radius: 3px;
 	background: #fff;
 	border: 1px solid #AAAAAA;
-	border-color: #eee #ddd #aaa;
+	border-color: #ddd #ccc #aaa;
 	display: inline-block;
 	vertical-align: middle;
 	font-size: 0;
 	height: 20px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+	background: -moz-linear-gradient(top, #fff, #eee);
 }
 
 span.in2igui_segmented a
@@ -5071,7 +5078,6 @@ span.in2igui_segmented a
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	outline: none;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
 }
 
 span.in2igui_segmented .in2igui_icon_16

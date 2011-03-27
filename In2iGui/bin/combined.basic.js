@@ -5271,6 +5271,28 @@ if (document.querySelectorAll) {
 	}
 }
 
+n2i.firstParentByTag = function(node,tag) {
+	var parent = node;
+	while (parent) {
+		if (parent.tagName && parent.tagName.toLowerCase()==tag) {
+			return parent;
+		}
+		parent = parent.parentNode;
+	}
+	return null;
+}
+
+n2i.firstParentByClass = function(node,tag) {
+	var parent = node;
+	while (parent) {
+		if (n2i.hasClass(parent)) {
+			return parent;
+		}
+		parent = parent.parentNode;
+	}
+	return null;
+}
+
 n2i.firstByTag = function(parentElement,tag) {
 	parentElement = n2i.get(parentElement) || document.body;
 	if (document.querySelector && tag!=='*') {

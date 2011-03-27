@@ -17,5 +17,10 @@ var controller = {
 	},
 	$listRowWasOpened$list : function(info) {
 		alert(Object.toJSON(info))
+	},
+	$buttonClick$list : function(info,button) {
+		n2i.log('Button was clicked...');
+		n2i.log(info);
+		n2i.log(button);
 	}
 }

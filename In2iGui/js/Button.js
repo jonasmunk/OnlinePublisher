@@ -48,6 +48,9 @@ In2iGui.Button.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
+		n2i.listen(this.element,'mousedown',function(e) {
+			n2i.stop(e);
+		});
 		n2i.listen(this.element,'click',function(e) {
 			n2i.stop(e);
 			self.clicked();

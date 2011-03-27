@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<headers>
+		<header title="Icon"/>
+		<header width="1"/>
+	</headers>
+	<row id="34234243">
+		<cell icon="common/page">common/color</cell>
+		<cell><button text="Download"/></cell>
+	</row>
+	<row id="463186347">
+		<cell icon="common/page">common/color</cell>
+		<cell wrap="false"><button text="Download"/><button text="info"/></cell>
+	</row>
+</list>

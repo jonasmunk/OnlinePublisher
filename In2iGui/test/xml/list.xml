@@ -11,6 +11,7 @@
 			<icon icon="common/user" title="List users" action="list.setUrl('data/list_users.xml')"/>
 			<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')"/>
 			<icon icon="common/color" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
+			<icon icon="common/user" title="List buttons" action="list.setUrl('data/list_buttons.xml')"/>
 			<search title="Søgning"/>
 		</toolbar>
 		</top>
