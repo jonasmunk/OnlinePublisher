@@ -45,14 +45,16 @@ In2iGui.test = {
 			this.busy--;
 		}.bind(this));
 	},
-	_succeed : function(prefix,msg) {
-		console.info('Success, true: '+msg);
+	_succeed : function(msg) {
+		console.info(msg);
 		this.status.successes++;
 	},
 	_fail : function(msg,obj1,obj2) {
 		console.error(msg);
 		console.info(obj1);
-		console.info(obj2);
+		if (obj2!=undefined) {
+			console.info(obj2);
+		}
 		this.status.failures++;
 	},
 	

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/In2iScripts/In2iDate.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/syn.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		In2iGui.context='../../..';
+	</script>
+</head>
+<body>
+	<script type="text/javascript">
+		ui.test.run([
+			function() {
+				ui.test.assertTrue(n2i.isBlank(),'Undefined is blank');
+				ui.test.assertTrue(n2i.isBlank(null),'null is blank');
+				ui.test.assertTrue(n2i.isBlank(''),'empty string is blank');
+				ui.test.assertTrue(n2i.isBlank(' '),'space is blank');
+				ui.test.assertTrue(n2i.isBlank(' 	'),'space and tab is blank');
+				ui.test.assertFalse(n2i.isBlank(' abc '),'text is not blank');
+			},
+			function() {
+				ui.test.assertEquals(n2i.trim(''),'','Empty string trims to empty string');
+				ui.test.assertEquals(n2i.trim(null),'','NULL trims to empty string');
+				ui.test.assertEquals(n2i.trim(),'','undefined trims to empty string');
+				ui.test.assertEquals(n2i.trim(1),'1','number trims to string of number');
+				ui.test.assertEquals(n2i.trim([]),'','empty array trims to empty string');
+				ui.test.assertEquals(n2i.trim(['abc',1]),'abc,1','Array with values trims to comma separated');
+			},
+			function() {
+				ui.test.assertFalse(n2i.isDefined(),'undefined is not defined');
+				ui.test.assertFalse(n2i.isDefined(null),'NULL is not defined');
+				ui.test.assertTrue(n2i.isDefined(''),'Empty string is defined');
+				ui.test.assertTrue(n2i.isDefined({}),'empty object is defined');
+				ui.test.assertTrue(n2i.isDefined([]),'empty array is defined');
+			},
+			function() { // Test strings
+				ui.test.assertTrue(n2i.string.endsWith('Jonas','as'),'Ends with is correct');
+				ui.test.assertFalse(n2i.string.endsWith('Jonas','ona'),'Ends with is correct');
+				ui.test.assertTrue(n2i.string.endsWith('Jonas\nmunk','unk'),'Ends with works with multiple lines');
+				ui.test.assertFalse(n2i.string.endsWith('Jonas\nmunk','as'),'Ends with works with multiple lines');
+			},
+			function() { // Test strings
+				ui.test.assertTrue(n2i.inArray(['a','b','c'],'b'),'Find string in array');
+				ui.test.assertFalse(n2i.inArray(['a','b','c'],'ab'),'Find string in array');
+				ui.test.assertFalse(n2i.inArray([0,'b','c'],null),'zero in array is not null');
+				ui.test.assertFalse(n2i.inArray([0,'b','c'],''),'zero in array is not empty string');
+				ui.test.assertFalse(n2i.inArray([1,'b','c'],'1'),'number in array is not string');
+				ui.test.assertTrue(n2i.inArray([null,'b','c'],null),'Find null in array');
+				ui.test.assertTrue(n2i.inArray(['','b','c'],''),'Find empty string in array');
+			}
+		]);
+	</script>
+</body>
+</html>

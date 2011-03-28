@@ -98,7 +98,8 @@ In2iGui.Overlay.prototype = {
 		if (options.element) {
 			n2i.place({
 				source:{element:this.element,vertical:0,horizontal:.5},
-				target:{element:options.element,vertical:.5,horizontal:.5}
+				target:{element:options.element,vertical:.5,horizontal:.5},
+				insideViewPort:true
 			});
 		}
 		if (this.visible) return;

@@ -4984,7 +4984,8 @@ n2i.wrap = function(str) {
 
 /** Trim whitespace including unicode chars */
 n2i.trim = function(str) {
-	if (!str) return str;
+	if (str===null || str===undefined) {return ''};
+	if (typeof(str)!='string') {str=new String(str)}
 	return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
 }
 
@@ -5002,18 +5003,14 @@ n2i.escape = function(str) {
 }
 
 /** Checks if a string has characters */
-n2i.isEmpty = n2i.isBlank = function(str) {
-	if (str===null || typeof(str)==='undefined' || str==='') return true;
+n2i.isBlank = function(str) {
+	if (str===null || typeof(str)==='undefined' || str==='') {return true};
 	return typeof(str)=='string' && n2i.trim(str).length==0;
 }
 
-n2i.string = {
-	endsWith : function(str,end) {
-		if (!typeof(str)=='string' || !typeof(end)=='string') {
-			return false;
-		}
-		return (str.match(end+"$")==str);
-	}
+n2i.isEmpty = function(str) {
+	n2i.log('n2i.isEmpty is deprecated');
+	return n2i.isBlank(str);
 }
 
 /** Checks that an object is not null or undefined */
@@ -5029,9 +5026,18 @@ n2i.isArray = function(obj) {
 	}
 }
 
+n2i.string = {
+	endsWith : function(str,end) {
+		if (!typeof(str)=='string' || !typeof(end)=='string') {
+			return false;
+		}
+		return (str.match(end+"$")==end);
+	}
+}
+
 n2i.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
-		if (arr[i]==value) {
+		if (arr[i]===value) {
 			return true;
 		}
 	};
@@ -5212,6 +5218,8 @@ n2i.form = {
 		return params;
 	}
 }
+
+///////////////////////////// Quering ////////////////////////
 
 n2i.get = function(str) {
 	if (typeof(str)=='string') {
@@ -5915,8 +5923,10 @@ n2i.place = function(options) {
 	left-=src.clientWidth*options.source.horizontal;
 	top-=src.clientHeight*options.source.vertical;
 	
+	n2i.log(options);
 	if (options.insideViewPort) {
 		var w = n2i.getViewPortWidth();
+		n2i.log((left+src.clientWidth)+'>'+w);
 		if (left+src.clientWidth>w) {
 			left=w-src.clientWidth;
 		}

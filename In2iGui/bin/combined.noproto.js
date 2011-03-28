@@ -88,7 +88,8 @@ n2i.wrap = function(str) {
 
 /** Trim whitespace including unicode chars */
 n2i.trim = function(str) {
-	if (!str) return str;
+	if (str===null || str===undefined) {return ''};
+	if (typeof(str)!='string') {str=new String(str)}
 	return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
 }
 
@@ -106,18 +107,14 @@ n2i.escape = function(str) {
 }
 
 /** Checks if a string has characters */
-n2i.isEmpty = n2i.isBlank = function(str) {
-	if (str===null || typeof(str)==='undefined' || str==='') return true;
+n2i.isBlank = function(str) {
+	if (str===null || typeof(str)==='undefined' || str==='') {return true};
 	return typeof(str)=='string' && n2i.trim(str).length==0;
 }
 
-n2i.string = {
-	endsWith : function(str,end) {
-		if (!typeof(str)=='string' || !typeof(end)=='string') {
-			return false;
-		}
-		return (str.match(end+"$")==str);
-	}
+n2i.isEmpty = function(str) {
+	n2i.log('n2i.isEmpty is deprecated');
+	return n2i.isBlank(str);
 }
 
 /** Checks that an object is not null or undefined */
@@ -133,9 +130,18 @@ n2i.isArray = function(obj) {
 	}
 }
 
+n2i.string = {
+	endsWith : function(str,end) {
+		if (!typeof(str)=='string' || !typeof(end)=='string') {
+			return false;
+		}
+		return (str.match(end+"$")==end);
+	}
+}
+
 n2i.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
-		if (arr[i]==value) {
+		if (arr[i]===value) {
 			return true;
 		}
 	};
@@ -316,6 +322,8 @@ n2i.form = {
 		return params;
 	}
 }
+
+///////////////////////////// Quering ////////////////////////
 
 n2i.get = function(str) {
 	if (typeof(str)=='string') {
@@ -1019,8 +1027,10 @@ n2i.place = function(options) {
 	left-=src.clientWidth*options.source.horizontal;
 	top-=src.clientHeight*options.source.vertical;
 	
+	n2i.log(options);
 	if (options.insideViewPort) {
 		var w = n2i.getViewPortWidth();
+		n2i.log((left+src.clientWidth)+'>'+w);
 		if (left+src.clientWidth>w) {
 			left=w-src.clientWidth;
 		}
@@ -4748,7 +4758,7 @@ In2iGui.Window.prototype = {
 		});
 	},
 	setTitle : function(title) {
-		this.title.update(title);
+		n2i.dom.setText(this.title,title);
 	},
 	show : function(options) {
 		if (this.visible) {return}
@@ -8098,13 +8108,22 @@ In2iGui.BoundPanel.prototype = {
 	/** Shows the panel */
 	show : function() {
 		if (!this.visible) {
-			if (!n2i.browser.msie) {
+			if (n2i.browser.opacity) {
 				n2i.setOpacity(this.element,0);
 			}
+			var vert;
 			if (this.relativePosition=='left') {
+				vert = false;
 				this.element.style.marginLeft='30px';
-			} else {
+			} else if (this.relativePosition=='right') {
+				vert = false;
 				this.element.style.marginLeft='-30px';
+			} else if (this.relativePosition=='top') {
+				vert = true;
+				this.element.style.marginTop='30px';
+			} else if (this.relativePosition=='bottom') {
+				vert = true;
+				this.element.style.marginTop='-30px';
 			}
 			n2i.setStyle(this.element,{
 				visibility : 'hidden', display : 'block'
@@ -8113,12 +8132,11 @@ In2iGui.BoundPanel.prototype = {
 			n2i.setStyle(this.element,{
 				width : width+'px' , visibility : 'visible'
 			});
-			this.element.style.marginTop='0px';
 			this.element.style.display='block';
-			if (!n2i.browser.msie) {
+			if (n2i.browser.opacity) {
 				n2i.animate(this.element,'opacity',1,400,{ease:n2i.ease.fastSlow});
 			}
-			n2i.animate(this.element,'margin-left','0px',800,{ease:n2i.ease.bounce});
+			n2i.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:n2i.ease.bounce});
 		}
 		this.element.style.zIndex = In2iGui.nextPanelIndex();
 		this.visible=true;
@@ -8174,25 +8192,47 @@ In2iGui.BoundPanel.prototype = {
 		var offset = {left:n2i.getLeft(node),top:n2i.getTop(node)};
 		var scrollOffset = {left:n2i.getScrollLeft(),top:n2i.getScrollTop()};
 		var dims = this.getDimensions();
-		var winWidth = n2i.getViewPortWidth();
+		var viewportWidth = n2i.getViewPortWidth();
+		var viewportHeight = n2i.getViewPortHeight();
 		var nodeLeft = offset.left-scrollOffset.left+n2i.getScrollLeft();
 		var nodeWidth = node.clientWidth;
 		var nodeHeight = node.clientHeight;
 		var nodeTop = offset.top-scrollOffset.top+n2i.getScrollTop();
-		var arrowLeft, left;
-		if ((nodeLeft+nodeWidth/2)/winWidth<.5) {
+		var arrowLeft, arrowTop, left, top;
+		var vertical = (nodeTop-scrollOffset.top)/viewportHeight;
+		
+		if (vertical<.1) {
+			this.relativePosition='top';
+			this.arrow.className = 'in2igui_boundpanel_arrow in2igui_boundpanel_arrow_top';
+			arrowTop = -16;
+			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
+			arrowLeft = Math.min((nodeLeft+nodeWidth/2)-left-18,dims.width/2-18);
+			top = nodeTop+nodeHeight+8;
+		}
+		else if (vertical>.9) {
+			this.relativePosition='bottom';
+			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_bottom';
+			arrowTop = dims.height-6;
+			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
+			arrowLeft = Math.min((nodeLeft+nodeWidth/2)-left-18,dims.width/2-18);
+			top = nodeTop-dims.height-10;
+		}
+		else if ((nodeLeft+nodeWidth/2)/viewportWidth<.5) {
 			this.relativePosition='left';
 			left = nodeLeft+nodeWidth+10;
 			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_left';
 			arrowLeft=-14;
+			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
+			arrowTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
 		} else {
 			this.relativePosition='right';
 			left = nodeLeft-dims.width-10;
 			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_right';
 			arrowLeft=dims.width-4;
+			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
+			arrowTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
 		}
-		var top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
-		this.arrow.style.marginTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2)+'px';
+		this.arrow.style.marginTop = arrowTop+'px';
 		this.arrow.style.marginLeft = arrowLeft+'px';
 		if (this.visible) {
 			n2i.animate(this.element,'top',top+'px',500,{ease:n2i.ease.fastSlow});
@@ -9781,7 +9821,8 @@ In2iGui.Overlay.prototype = {
 		if (options.element) {
 			n2i.place({
 				source:{element:this.element,vertical:0,horizontal:.5},
-				target:{element:options.element,vertical:.5,horizontal:.5}
+				target:{element:options.element,vertical:.5,horizontal:.5},
+				insideViewPort:true
 			});
 		}
 		if (this.visible) return;

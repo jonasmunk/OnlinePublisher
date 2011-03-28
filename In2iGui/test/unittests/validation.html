@@ -8,7 +8,6 @@
 	<!--[if IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
 	<![endif]-->
-	<script charset="utf-8" type="text/javascript" src="../../lib/prototype.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/In2iScripts/In2iDate.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
@@ -74,8 +73,8 @@
 			},
 			function() {
 				var validator = new ui.NumberValidator({min:-10,max:10});
-				var input = new Element('input',{value:'abc'});
-				document.body.insert(input);
+				var input = n2i.build('input',{value:'abc'});
+				document.body.appendChild(input);
 				var field = new ui.TextField({
 					element:input,
 					validator:validator
@@ -112,8 +111,7 @@
 			},
 			function() {
 				var validator = new ui.NumberValidator({min:-10,max:10,allowNull:true});
-				var input = new Element('input',{value:'    '});
-				document.body.insert(input);
+				var input = n2i.build('input',{value:'    ',parent:document.body});
 				var field = new ui.TextField({
 					element:input,
 					validator:validator

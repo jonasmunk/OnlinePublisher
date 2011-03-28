@@ -54,7 +54,7 @@ In2iGui.Window.prototype = {
 		});
 	},
 	setTitle : function(title) {
-		this.title.update(title);
+		n2i.dom.setText(this.title,title);
 	},
 	show : function(options) {
 		if (this.visible) {return}

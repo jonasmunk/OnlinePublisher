@@ -10,19 +10,34 @@ div.in2igui_boundpanel_arrow
 {
 	position: absolute;
 	width: 18px;
-	height: 32px;
+	height: 37px;
 	z-index: 10;
 	margin-top: 17px;
+	background: url('../gfx/boundpanel_arrow.png');
 }
 
 div.in2igui_boundpanel_arrow_left
 {
-	background: url('../gfx/bound_arrow_left.png');
+	background-position: 0 0;
 }
 
 div.in2igui_boundpanel_arrow_right
 {
-	background: url('../gfx/bound_arrow_right.png');
+	background-position: -18px 0;
+}
+
+div.in2igui_boundpanel_arrow_top
+{
+	width: 36px;
+	height: 18px;
+	background-position: 0 -37px;
+}
+
+div.in2igui_boundpanel_arrow_bottom
+{
+	width: 36px;
+	height: 18px;
+	background-position: 0 -55px;
 }
 
 div.in2igui_boundpanel_content

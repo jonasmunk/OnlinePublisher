@@ -175,6 +175,7 @@ div.in2igui_inner_overlay
 	background: url('../gfx/overlay_24.png') right -40px no-repeat;
 	padding-right: 7px;
 	height: 40px;
+	white-space: nowrap;
 }
 
 div.in2igui_inner_overlay div.in2igui_inner_overlay
