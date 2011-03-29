@@ -21,7 +21,12 @@ ui.listen({
 			ui.showMessage({text:'Du skal angive en titel',duration:2000});
 			sourceFormula.focus();
 		} else {
-			ui.request({json:{data:values},url:'SaveSource.php',onSuccess:'sourceSaved'});
+			ui.request({
+				json:{data:values},
+				url:'SaveSource.php',
+				onSuccess:'sourceSaved',
+				message:{start:'Gemmer kilde...',delay:300}
+			});
 		}
 	},
 	$success$sourceSaved : function() {
@@ -31,7 +36,12 @@ ui.listen({
 	},
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='newssource') {
-			ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'sourceLoaded'});
+			ui.request(
+				{parameters:{id:item.value},
+				url:'../../Services/Model/LoadObject.php',
+				onSuccess:'sourceLoaded',
+				message:{start:'Åbner kilde...',delay:300}
+			});
 		}
 	},
 	$success$sourceLoaded : function(data) {
@@ -42,7 +52,12 @@ ui.listen({
 		sourceFormula.focus();
 	},
 	$click$deleteSource : function() {
-		ui.request({json:{data:{id:this.sourceId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteSource'});
+		ui.request({
+			json : {data:{id:this.sourceId}},
+			url : '../../Services/Model/DeleteObject.php',
+			onSuccess : 'deleteSource',
+			message : {start:'Sletter kilde...',delay:300}
+		});
 	},
 	$success$deleteSource : function() {
 		sourcesSource.refresh();

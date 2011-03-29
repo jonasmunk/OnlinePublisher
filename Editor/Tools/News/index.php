@@ -31,7 +31,7 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="common/news" title="Ny nyhed" name="newNews" overlay="new"/>
-				<icon icon="common/page" title="Ny artikel" click="newArticleBox.show()" overlay="new"/>
+				<icon icon="common/page" title="Ny artikel" name="newArticle" overlay="new"/>
 				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
 				<icon icon="common/internet" title="Ny kilde" name="newSource" overlay="new"/>
 				<divider/>
@@ -154,7 +154,7 @@ $gui='
 	
 	
 	<box title="Ny artikel" name="newArticleBox" absolute="true" padding="10" modal="true" width="636" variant="textured" closable="true">
-		<formula name="newArticleFormula">
+		<formula name="articleFormula">
 			<group labels="above">
 				<text label="Titel" key="title"/>
 				<text label="Opsummering" key="summary" multiline="true"/>
@@ -180,7 +180,7 @@ $gui='
 			</group>
 			<buttons>
 				<button name="cancelNewArticle" title="Annuller" click="newNewsBox.hide()"/>
-				<button name="createNewArticle" title="Opret" highlighted="true"/>
+				<button name="createNewArticle" title="Opret" highlighted="true" submit="true"/>
 			</buttons>
 		</formula>
 	</box>

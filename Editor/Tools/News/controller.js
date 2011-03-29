@@ -48,7 +48,12 @@ ui.listen({
 		if (obj.id===this.newsId) {
 			this.closeNewsAfterDeletion = true;
 		}
-		ui.request({url:'DeleteNews.php',onSuccess:'fileDeleted',parameters:{id:obj.id}});
+		ui.request({
+			url:'DeleteNews.php',
+			onSuccess:'fileDeleted',
+			parameters:{id:obj.id},
+			message : {start:'Sletter nyhed...',delay:300}
+		});
 	},
 	$success$fileDeleted : function(response) {
 		if (this.closeNewsAfterDeletion) {
@@ -57,7 +62,6 @@ ui.listen({
 		this.closeNewsAfterDeletion = false;
 		newsSource.refresh();
 		groupSource.refresh();
-		ui.showMessage({text:'Nyheden er nu slettet',duration:2000});
 	},
 	$click$info : function() {
 		var obj = list.getFirstSelection();
@@ -93,7 +97,12 @@ ui.listen({
 	},
 	
 	loadNews : function(id) {
-		ui.request({url:'LoadNews.php',onSuccess:'newsLoaded',parameters:{id:id}});
+		ui.request({
+			url:'LoadNews.php',
+			onSuccess:'newsLoaded',
+			parameters:{id:id},
+			message:{start:'Åbner nyhed...',delay:300}
+		});
 	},
 	
 	$success$newsLoaded : function(data) {
@@ -103,6 +112,7 @@ ui.listen({
 		newsLinks.setValue(data.links);
 		deleteNews.enable();
 		newsWindow.show();
+		newsFormula.focus();
 	},
 	$click$cancelNews : function() {
 		this.newsId = null;
@@ -110,6 +120,9 @@ ui.listen({
 		newsWindow.hide();
 	},
 	$click$updateNews : function() {
+		this.$submit$newsFormula();
+	},
+	$submit$newsFormula : function() {
 		var data = newsFormula.getValues();
 		data.id = this.newsId;
 		data.links = newsLinks.getValue();
@@ -121,7 +134,12 @@ ui.listen({
 			data.enddate=Math.round(data.enddate.getTime()/1000);
 		}
 		data.groups = newsGroups.getValue();
-		ui.request({url:'SaveNews.php',onSuccess:'newsUpdated',json:{data:data}});
+		ui.request({
+			url:'SaveNews.php',
+			onSuccess:'newsUpdated',
+			json:{data:data},
+			message:{start:'Gemmer nyhed...',delay:300}
+		});
 	},
 	$success$newsUpdated : function() {
 		this.newsId = null;
@@ -131,7 +149,12 @@ ui.listen({
 		groupSource.refresh();
 	},
 	$click$deleteNews : function() {
-		ui.request({url:'DeleteNews.php',onSuccess:'newsDeleted',parameters:{id:this.newsId}});
+		ui.request({
+			url : 'DeleteNews.php',
+			onSuccess : 'newsDeleted',
+			parameters : {id:this.newsId},
+			message : {start:'Sletter nyhed...',delay:300}
+		});
 	},
 	$success$newsDeleted : function() {
 		this.newsId = null;
@@ -158,11 +181,16 @@ ui.listen({
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
 		if (n2i.isBlank(values.title)) {
-			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
+			ui.showMessage({text:'Du skal angive en titel',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
-			ui.request({json:{data:values},url:'SaveGroup.php',onSuccess:'groupSaved'});
+			ui.request({
+				json:{data:values},
+				url:'SaveGroup.php',
+				onSuccess:'groupSaved',
+				message:{start:'Gemmer gruppe...',delay:300}
+			});
 		}
 	},
 	$submit$groupFormula : function() {
@@ -176,7 +204,12 @@ ui.listen({
 	},
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='newsgroup') {
-			ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+			ui.request({
+				parameters:{id:item.value},
+				url:'../../Services/Model/LoadObject.php',
+				onSuccess:'loadGroup',
+				message:{start:'Åbner gruppe...',delay:300}
+			});
 		}
 	},
 	$success$loadGroup : function(data) {
@@ -187,12 +220,43 @@ ui.listen({
 		groupFormula.focus();
 	},
 	$click$deleteGroup : function() {
-		ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
+		ui.request({
+			json : {data:{id:this.groupId}},
+			url : '../../Services/Model/DeleteObject.php',
+			onSuccess : 'deleteGroup',
+			message:{start:'Sletter gruppe...',delay:300}
+		});
 	},
 	$success$deleteGroup : function() {
 		groupSource.refresh();
 		this.groupId = null;
 		groupFormula.reset();
 		groupWindow.hide();
+	},
+	
+	////////////////////// Articles /////////////////////
+	
+	$click$newArticle : function() {
+		newArticleBox.show();
+	},
+	$submit$articleFormula : function() {
+		var values = articleFormula.getValues();
+		if (n2i.isBlank(values.title)) {
+			ui.showMessage({text:'Der skal udfyldes en titel',duration:2000});
+			articleFormula.focus();
+			return;
+		}
+		if (!values.blueprint>0) {
+			ui.showMessage({text:'Der skal vælges en skabelon',duration:2000});
+		}
+		ui.request({
+			json : {data:values},
+			url : 'CreateArticle.php',
+			message : {start:'Opretter artikel...',success:'Artiklen er oprettet'},
+			onSuccess : function() {
+				articleFormula.reset();
+				newArticleBox.hide();
+			}
+		});
 	}
 });
