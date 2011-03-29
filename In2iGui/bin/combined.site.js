@@ -4991,7 +4991,8 @@ n2i.trim = function(str) {
 
 /** Escape the html in a string */
 n2i.escapeHTML = function(str) {
-   	return document.createElement('div').appendChild(document.createTextNode(str)).innerHTML;
+	if (str===null || str===undefined) {return ''};
+   	return n2i.build('div',{text:str}).innerHTML;
 }
 
 n2i.escape = function(str) {
@@ -5019,6 +5020,9 @@ n2i.isDefined = function(obj) {
 }
 
 n2i.isArray = function(obj) {
+	if (obj==null || obj==undefined) {
+		return false;
+	}
 	if (obj.constructor == Array) {
 		return true;
 	} else {
@@ -5046,7 +5050,7 @@ n2i.inArray = function(arr,value) {
 
 n2i.indexInArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
-		if (arr[i]==value) {
+		if (arr[i]===value) {
 			return i;
 		}
 	};
