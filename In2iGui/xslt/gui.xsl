@@ -462,6 +462,38 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 </xsl:template>
 
 
+<!-- Bound panel -->
+
+<xsl:template match="gui:boundpanel">
+	<div id="{generate-id()}" class="in2igui_boundpanel" style="display:none;">
+		<div class="in2igui_boundpanel_arrow"><xsl:comment/></div>
+		<div class="in2igui_boundpanel_top"><div><div><xsl:comment/></div></div></div>
+		<div class="in2igui_boundpanel_body">
+			<div class="in2igui_boundpanel_body">
+				<div class="in2igui_boundpanel_body">
+					<div class="in2igui_boundpanel_content">
+						<xsl:attribute name="style">
+							<xsl:if test="@width">width:<xsl:value-of select="@width"/>px;</xsl:if>
+							<xsl:if test="@padding">padding:<xsl:value-of select="@padding"/>px;</xsl:if>
+						</xsl:attribute>
+						<xsl:apply-templates/>
+						<xsl:comment/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="in2igui_boundpanel_bottom"><div><div><xsl:comment/></div></div></div>
+	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.BoundPanel({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>'
+			<xsl:if test="@target">,target:'<xsl:value-of select="@target"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
 <!-- Window -->
 
 <xsl:template match="gui:window">

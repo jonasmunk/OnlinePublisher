@@ -12957,6 +12957,7 @@ In2iGui.ImagePicker.prototype = {
  * @param {Object} options { element: «Node | id», name: «String» }
  */
 In2iGui.BoundPanel = function(options) {
+	this.options = options;
 	this.element = n2i.get(options.element);
 	this.name = options.name;
 	this.visible = false;
@@ -13001,9 +13002,19 @@ In2iGui.BoundPanel.create = function(options) {
 /********************************* Public methods ***********************************/
 
 In2iGui.BoundPanel.prototype = {
+	toggle : function() {
+		if (!this.visible) {
+			this.show();
+		} else {
+			this.hide();
+		}
+	},
 	/** Shows the panel */
 	show : function() {
 		if (!this.visible) {
+			if (this.options.target) {
+				this.position(In2iGui.get(this.options.target));
+			}
 			if (n2i.browser.opacity) {
 				n2i.setOpacity(this.element,0);
 			}
@@ -13084,6 +13095,9 @@ In2iGui.BoundPanel.prototype = {
 	 * @param {Node} node The node the panel should be positioned at 
 	 */
 	position : function(node) {
+		if (node.getElement) {
+			node = node.getElement();
+		}
 		node = n2i.get(node);
 		var offset = {left:n2i.getLeft(node),top:n2i.getTop(node)};
 		var scrollOffset = {left:n2i.getScrollLeft(),top:n2i.getScrollTop()};
