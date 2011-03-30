@@ -73,7 +73,12 @@ ui.listen({
 	
 	$click$duplicate : function(id) {
 		var obj = list.getFirstSelection();
-		ui.request({url:'LoadNews.php',onSuccess:'duplicateLoaded',parameters:{id:obj.id}});
+		ui.request({
+			url : 'LoadNews.php',
+			onSuccess : 'duplicateLoaded',
+			parameters : {id:obj.id},
+			message : {start:'Opretter kopi...',delay:300}
+		});
 	},
 	$success$duplicateLoaded : function(data) {
 		this.newsId = null;
@@ -82,6 +87,7 @@ ui.listen({
 		newsLinks.setValue(data.links);
 		deleteNews.disable();
 		newsWindow.show();
+		newsFormula.focus();
 	},
 	$click$newNews : function() {
 		this.newsId = null;
@@ -238,16 +244,21 @@ ui.listen({
 	
 	$click$newArticle : function() {
 		newArticleBox.show();
+		articleFormula.setValues({
+			linkText : 'Læs mere...',
+			startdate : new Date()
+		});
+		articleFormula.focus();
 	},
 	$submit$articleFormula : function() {
 		var values = articleFormula.getValues();
 		if (n2i.isBlank(values.title)) {
-			ui.showMessage({text:'Der skal udfyldes en titel',duration:2000});
+			ui.showMessage({text:'Titlen skal udfyldes',duration:2000});
 			articleFormula.focus();
 			return;
 		}
 		if (!values.blueprint>0) {
-			ui.showMessage({text:'Der skal vælges en skabelon',duration:2000});
+			ui.showMessage({text:'Skabelon skal vælges',duration:2000});
 		}
 		ui.request({
 			json : {data:values},

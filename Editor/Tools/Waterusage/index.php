@@ -24,7 +24,7 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="file/generic" title="Importér" overlay="upload" name="import"/>
-				<icon icon="file/generic" title="Eksportér" overlay="download" name="export"/>
+				<icon icon="file/generic" title="Eksportér" overlay="download" name="exportIcon"/>
 				<divider/>
 				<icon icon="common/gauge" title="Ny måler" overlay="new" name="newMeter"/>
 				<icon icon="common/water" title="Ny aflæsning" overlay="new" name="newUsage"/>
@@ -168,6 +168,18 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
+	<boundpanel name="exportPanel" target="exportIcon" width="200" padding="5">
+		<text align="center">
+			<h>Eksport</h>
+			<p>Her kan du eksportere alle aflæsninger i CSV-formatet:</p><p>"Number","Date","Value","Updated"</p>
+		</text>
+		<buttons align="center">
+			<button click="exportPanel.hide()" text="Annuller"/>
+			<button name="export" title="Eksportér" highlighted="true"/>
+		</buttons>
+	</boundpanel>
+
 </gui>';
 
 In2iGui::render($gui);

@@ -39,7 +39,7 @@ $gui='
 				<icon icon="common/delete" title="Slet" name="delete" disabled="true">
 					<confirm text="Er du sikker?" ok="Ja, slet nyheden" cancel="Annuller"/>
 				</icon>
-				<icon icon="common/page" title="Kopier" name="duplicate" disabled="true"/>
+				<icon icon="common/duplicate" title="Dubler" name="duplicate" disabled="true"/>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 				</right>
@@ -159,6 +159,7 @@ $gui='
 				<text label="Titel" key="title"/>
 				<text label="Opsummering" key="summary" multiline="true"/>
 				<text label="Tekst" key="text" multiline="true"/>
+				<text label="Link" key="linkText"/>
 				<dropdown label="Skabelon" key="blueprint">'.$blueprintItems.'</dropdown>
 			</group>
 			<columns>

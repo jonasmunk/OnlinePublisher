@@ -6,6 +6,8 @@
 
 class NewsArticle {
 	var $title;
+	var $text;
+	var $summary;
 	var $pageBlueprintId;
 	var $linkText;
 	
@@ -32,6 +34,22 @@ class NewsArticle {
 
 	function getPageBluePrintId() {
 	    return $this->pageBluePrintId;
+	}
+	
+	function setText($text) {
+	    $this->text = $text;
+	}
+
+	function getText() {
+	    return $this->text;
+	}
+	
+	function setSummary($summary) {
+	    $this->summary = $summary;
+	}
+
+	function getSummary() {
+	    return $this->summary;
 	}
 	
 }

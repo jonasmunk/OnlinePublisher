@@ -101,7 +101,7 @@
 			<span class="in2igui_field_top"><span><span><xsl:comment/></span></span></span>
 			<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content">
 				<span class="in2igui_formula_text_multiline">
-				<textarea class="in2igui_formula_text" rows="{@lines}"><xsl:value-of select="@value"/><xsl:text> </xsl:text></textarea>
+				<textarea class="in2igui_formula_text" rows="{@lines}"><xsl:value-of select="@value"/><xsl:text></xsl:text></textarea>
 				</span>
 			</span></span></span>
 			<span class="in2igui_field_bottom"><span><span><xsl:comment/></span></span></span>

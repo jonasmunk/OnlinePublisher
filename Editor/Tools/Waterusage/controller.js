@@ -100,10 +100,12 @@ ui.listen({
 	
 	$click$export : function() {
 		var iframe = n2i.build('iframe',{style:'position:absolute;left:-1000px;top:-1000px;',parent:document.body});
-		iframe.onload = function() {
-			alert('hey!');
-		}
 		iframe.src='Export.php';
+		ui.showMessage({text:'Filen vil nu blive downloadet...',busy:true,duration:3000});
+		exportPanel.hide();
+	},
+	$click$exportIcon : function() {
+		exportPanel.toggle();
 	},
 	
 	// Meter
