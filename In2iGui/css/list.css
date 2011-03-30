@@ -220,3 +220,30 @@ div.in2igui_list td a.in2igui_button
 {
 	margin: -2px 0;
 }
+
+div.in2igui_list_progress
+{
+	position: absolute;
+	display: none;
+	background: #fff url('../gfx/progress/spinner_white_16.gif') center center no-repeat;
+	height: 20px;
+	width: 20px;
+	margin: 2px;
+	border: 1px solid #eee;
+	border-radius: 3px;
+}
+
+div.in2igui_overflow div.in2igui_list_progress
+{
+	height: 100%;
+	width: 100%;
+	background: url('../gfx/progress/spinner_white_32.gif') center center no-repeat;
+	margin: 0;
+	border: none;
+	border-radius: none;
+}
+
+div.in2igui_list_busy div.in2igui_list_progress
+{
+	display: block;
+}

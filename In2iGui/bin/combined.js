@@ -5324,6 +5324,12 @@ n2i.build = function(tag,options) {
 				e.innerHTML=options.html;
 			} else if (prop=='parent') {
 				options.parent.appendChild(e);
+			} else if (prop=='parentFirst') {
+				if (options.parentFirst.childNodes.length==0) {
+					options.parentFirst.appendChild(e);
+				} else {
+					options.parentFirst.insertBefore(e,options.parentFirst.childNodes[0]);
+				}
 			} else if (prop=='className') {
 				e.className=options.className;
 			} else if (prop=='class') {
@@ -11201,7 +11207,7 @@ In2iGui.List.create = function(options) {
 	options = n2i.override({},options);
 	options.element = n2i.build('div',{
 		'class':'in2igui_list',
-		html: '<div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
+		html: '<div class="in2igui_list_progress"></div><div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
 	return new In2iGui.List(options);
 }
 
@@ -11338,11 +11344,11 @@ In2iGui.List.prototype = {
 			url+=url.indexOf('?')==-1 ? '?' : '&';
 			url+=key+'='+this.parameters[key];
 		}
-		this.$sourceIsBusy();
+		this._setBusy(true);
 		In2iGui.request({
 			url:url,
-			onJSON : function(obj) {this.$sourceIsNotBusy();this.$objectsLoaded(obj)}.bind(this),
-			onXML : function(obj) {this.$sourceIsNotBusy();this.$listLoaded(obj)}.bind(this)
+			onJSON : function(obj) {this._setBusy(false);this.$objectsLoaded(obj)}.bind(this),
+			onXML : function(obj) {this._setBusy(false);this.$listLoaded(obj)}.bind(this)
 		});
 	},
 	/** @private */
@@ -11447,13 +11453,24 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	$sourceIsBusy : function() {
-		this.busy = true;
-		n2i.addClass(this.element,'in2igui_list_busy');
+		this._setBusy(true);
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		this.busy = false;
-		n2i.removeClass(this.element,'in2igui_list_busy');
+		this._setBusy(false);
+	},
+	
+	_setBusy : function(busy) {
+		this.busy = busy;
+		window.clearTimeout(this.busytimer);
+		if (busy) {
+			var e = this.element;
+			this.busytimer = window.setTimeout(function() {
+				n2i.addClass(e,'in2igui_list_busy');
+			},300);
+		} else {
+			n2i.removeClass(this.element,'in2igui_list_busy');
+		}
 	},
 	
 	/** @private 

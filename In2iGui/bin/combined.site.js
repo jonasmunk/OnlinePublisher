@@ -5324,6 +5324,12 @@ n2i.build = function(tag,options) {
 				e.innerHTML=options.html;
 			} else if (prop=='parent') {
 				options.parent.appendChild(e);
+			} else if (prop=='parentFirst') {
+				if (options.parentFirst.childNodes.length==0) {
+					options.parentFirst.appendChild(e);
+				} else {
+					options.parentFirst.insertBefore(e,options.parentFirst.childNodes[0]);
+				}
 			} else if (prop=='className') {
 				e.className=options.className;
 			} else if (prop=='class') {
