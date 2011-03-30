@@ -26,6 +26,7 @@ table.in2igui_dock tbody td
 	font-size: 0px;
 	padding: 0;
 	vertical-align: top;
+	position: relative;
 }
 
 table.in2igui_dock iframe
@@ -36,4 +37,13 @@ table.in2igui_dock iframe
 	font-size: 0px;
 	background: #fff;
 	display: block;
+}
+
+div.in2igui_dock_progress
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: url('../gfx/progress/spinner_white_48.gif') center center no-repeat;
+	/* rgba(243,245,247,.5) */
 }

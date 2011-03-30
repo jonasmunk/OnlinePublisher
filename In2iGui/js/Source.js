@@ -91,10 +91,11 @@ In2iGui.Source.prototype = {
 	},
 	/** @private */
 	end : function() {
-		In2iGui.callDelegates(this,'sourceIsNotBusy');
 		this.busy=false;
 		if (this.pendingRefresh) {
 			this.refresh();
+		} else {
+			In2iGui.callDelegates(this,'sourceIsNotBusy');
 		}
 	},
 	/** @private */

@@ -228,6 +228,7 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 	</xsl:if>
 	<tbody>
 		<tr><td>
+			<div class="in2igui_dock_progress"><xsl:comment/></div>
 			<iframe src="{@url}" frameborder="0" name="{@frame-name}"/>
 		</td></tr>
 	</tbody>

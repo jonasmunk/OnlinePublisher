@@ -12,6 +12,9 @@ var controller = {
 				text:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
 			});
 		}
+		if (n2i.location.getBoolean('logout')) {
+			ui.showMessage({text:'Du er nu logget ud',icon:'common/success',duration:2000});
+		}
 		ui.request({
 			url : '../In2iGui/info/preload.json',
 			onJSON : function(obj) {
@@ -27,6 +30,7 @@ var controller = {
 		});
 	},
 	$submit$formula : function() {
+		ui.showMessage({text:'Logger ind...',busy:true});
 		ui.request({
 			url:'Services/Core/Authentication.php',
 			onSuccess:'login',
@@ -38,6 +42,7 @@ var controller = {
 	},
 	$success$login : function(data) {
 		if (data.success) {
+			ui.showMessage({text:'Du er nu logget ind, øjeblik...',icon:'common/success'});
 			var page = n2i.location.getParameter('page');
 			document.location=page===null ? './index.php' : '.?page='+page;
 		} else {
