@@ -17,9 +17,11 @@ if (Request::isPost()) {
 	if (InternalSession::logIn($username,$password)) {
 		In2iGui::sendObject(array('success' => true));
 	} else {
+		usleep(rand(5000000,10000000));
 		In2iGui::sendObject(array('success' => false));
 	}
 } else {
+	usleep(rand(5000000,10000000));
 	In2iGui::sendObject(array('success' => false));
 }
 exit;
