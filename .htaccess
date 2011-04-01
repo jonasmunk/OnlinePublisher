@@ -2,7 +2,13 @@ Options +FollowSymLinks
 
 RewriteEngine On
 RewriteBase /
+
+#RewriteCond	%{REQUEST_FILENAME}	!-f 
+#RewriteCond	%{REQUEST_FILENAME}	!-d 
+RewriteRule ^([/~a-zA-Z_0-9\.]*)/version[0-9]+/([/~a-zA-Z_0-9\.]+) /~jbm/onlinepublisher/$1/$2 [QSA]
+
 RewriteCond	%{REQUEST_FILENAME}	!-f 
 RewriteCond	%{REQUEST_FILENAME}	!-d 
 RewriteRule ^([_0-9a-z/\.\-]+)$ /~jbm/onlinepublisher/index.php?path=$1 [QSA]
 #RewriteRule ^([0-9]+).html /~jbm/Publisher/src/index.php?id=$1 [QSA]
+
