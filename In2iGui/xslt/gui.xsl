@@ -166,6 +166,22 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 	</xsl:if>
 </xsl:template>
 
+<xsl:template name="gui:escapeScript">
+	<xsl:param name="text"/>
+	<xsl:choose>
+		<xsl:when test='contains($text,"&apos;")'>
+			<xsl:value-of select='substring-before($text,"&apos;")'/>
+			<xsl:value-of select='"\&apos;"'/>
+			<xsl:call-template name="gui:escapeScript">
+				<xsl:with-param name="text" select='substring-after($text,"&apos;")'/>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:value-of select="$text"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
 <xsl:template match="gui:source">
 <script type="text/javascript">
 	var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Source({name:'<xsl:value-of select="@name"/>'

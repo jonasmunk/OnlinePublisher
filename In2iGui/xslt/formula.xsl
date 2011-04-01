@@ -2,6 +2,7 @@
 <xsl:stylesheet
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
     xmlns:gui="uri:In2iGui"
     version="1.0"
     exclude-result-prefixes="gui"
@@ -277,7 +278,11 @@
 		});
 		with(<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:item">
-				addItem({title:'<xsl:value-of select="@title"/><xsl:value-of select="@label"/>',value:n2i.intOrString('<xsl:value-of select="@value"/>')});
+				
+				addItem({
+					title:'<xsl:value-of select="@title"/><xsl:value-of select="@label"/>',
+					value:n2i.intOrString('<xsl:call-template name="gui:escapeScript"><xsl:with-param name="text" select="@value"/></xsl:call-template>')
+				});
 			</xsl:for-each>
 		}
 		<xsl:call-template name="gui:createobject"/>
