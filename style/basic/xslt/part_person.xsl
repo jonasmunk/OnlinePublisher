@@ -59,7 +59,7 @@
 <div class="adr">
 <xsl:if test="../../../pp:display/@streetname='true' and p:streetname!=''"><span class="street-address"><xsl:value-of select="p:streetname"/></span><br/></xsl:if>
 <xsl:if test="../../../pp:display/@zipcode='true' or ../../../pp:display/@city='true' or ../../../pp:display/@country='true'">
-<xsl:if test="../../../pp:display/@zipcode='true'"><span class="postal-code"><xsl:value-of select="p:zipcode"/></span></xsl:if><xsl:text> </xsl:text><xsl:if test="../../../pp:display/@city='true'"><span class="locality"><xsl:value-of select="p:city"/></span></xsl:if><xsl:text> </xsl:text><span class="country-name"><xsl:value-of select="p:country"/></span>
+<xsl:if test="../../../pp:display/@zipcode='true'"><span class="postal-code"><xsl:value-of select="p:zipcode"/></span></xsl:if><xsl:text> </xsl:text><xsl:if test="../../../pp:display/@city='true'"><span class="locality"><xsl:value-of select="p:city"/></span></xsl:if><xsl:if test="p:country"><xsl:text> </xsl:text><span class="country-name"><xsl:value-of select="p:country"/></span></xsl:if>
 </xsl:if>
 </div>
 </xsl:if>
