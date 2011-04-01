@@ -201,7 +201,6 @@ ul.chrome_navigation li
 {
 	list-style: none;
 	width: 100%;
-	padding-bottom: 5px;
 }
 
 ul.chrome_navigation li a
@@ -210,7 +209,7 @@ ul.chrome_navigation li a
 	display: block;
 	color: #fff;
 	text-decoration: none;
-	font-size: 12pt;
+	font-size: 11px;
 	height: 33px;
 	line-height: 31px;
 	margin-right: 5px;
