@@ -4,8 +4,23 @@
  xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
  xmlns:f="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/"
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
+ xmlns:header="http://uri.in2isoft.com/onlinepublisher/part/header/1.0/"
+ xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="p f h header text util"
  >
+
+<xsl:variable name="timestamp-query">
+	<xsl:if test="$urlrewrite!='true'">
+		<xsl:text>?version=</xsl:text><xsl:value-of select="$timestamp"/>
+	</xsl:if>
+</xsl:variable> 
+
+<xsl:variable name="timestamp-url">
+	<xsl:if test="$urlrewrite='true'">
+		<xsl:text>/version</xsl:text><xsl:value-of select="$timestamp"/>
+	</xsl:if>
+</xsl:variable> 
 
 <xsl:template name="link">
 	
@@ -78,23 +93,24 @@
 	</xsl:choose>
 </xsl:template>
 
+
 <xsl:template name="oo-script">
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
-			<link rel="stylesheet" type="text/css" href="{$path}In2iGui/bin/minimized.css?version={$timestamp}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}In2iGui{$timestamp-url}/bin/minimized.css{$timestamp-query}"/>
 		</xsl:when>
 		<xsl:otherwise>
-			<link rel="stylesheet" type="text/css" href="{$path}In2iGui/bin/minimized.site.css?version={$timestamp}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}In2iGui{$timestamp-url}/bin/minimized.site.css{$timestamp-query}"/>
 		</xsl:otherwise>
 	</xsl:choose>
 	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie6.css?verson=]]><xsl:value-of select="$timestamp"/><![CDATA["></link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>In2iGui<xsl:value-of select="$timestamp-url"/>/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><![CDATA[In2iGui/css/msie7.css?verson=]]><xsl:value-of select="$timestamp"/><![CDATA["></link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>In2iGui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
-	<script src="{$path}In2iGui/bin/minimized.site.noproto.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-	<script src="{$path}style/basic/js/OnlinePublisher.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}In2iGui{$timestamp-url}/bin/minimized.site.noproto.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
 		In2iGui.context = '<xsl:value-of select="$path"/>';
 		op.page.id=<xsl:value-of select="@id"/>;
@@ -121,8 +137,8 @@
 </xsl:template>
 
 <xsl:template name="oo-style">
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css?version={$timestamp}"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css?version={$timestamp}"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/{$design}/css/stylesheet.css{$timestamp-query}"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/{$design}/css/{$template}.css{$timestamp-query}"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
@@ -138,6 +154,21 @@
 			<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
 		</xsl:otherwise>
 	</xsl:choose>
+	<xsl:if test="//header:style[contains(@font-family,'Cabin Sketch')] or //text:style[contains(@font-family,'Cabin Sketch')]">
+		<link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'/>
+	</xsl:if>
+	<xsl:if test="//header:style[contains(@font-family,'Droid Sans')] or //text:style[contains(@font-family,'Droid Sans')]">
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />
+	</xsl:if>
+	<xsl:if test="//header:style[contains(@font-family,'Just Me Again Down Here')] or //text:style[contains(@font-family,'Just Me Again Down Here')]">
+		<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here' rel='stylesheet' type='text/css'/>
+	</xsl:if>
+	<xsl:if test="//header:style[contains(@font-family,'Crimson Text')] or //text:style[contains(@font-family,'Crimson Text')]">
+		<link href='http://fonts.googleapis.com/css?family=Crimson+Text:regular,bold' rel='stylesheet' type='text/css' />
+	</xsl:if>
+	<xsl:if test="//header:style[contains(@font-family,'Luckiest Guy')] or //text:style[contains(@font-family,'Luckiest Guy')]">
+		<link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css' />
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="util:weekday">

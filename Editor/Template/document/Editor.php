@@ -29,6 +29,7 @@ $strings = array(
 <link rel="stylesheet" type="text/css" href="../../../In2iGui/bin/minimized.css?version=<?=SystemInfo::getDate()?>" />
 <link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/editors/document.css?version=<?=SystemInfo::getDate()?>" />
 <link rel="stylesheet" type="text/css" href="Stylesheet.css?version=<?=SystemInfo::getDate()?>" />
+<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy' rel='stylesheet' type='text/css' />
 <!--[if IE]>
 <link rel="stylesheet" type="text/css" href="StylesheetIE.css?version=<?=SystemInfo::getDate()?>" />
 <![endif]-->
