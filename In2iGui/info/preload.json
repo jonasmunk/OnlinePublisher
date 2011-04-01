@@ -3,6 +3,15 @@
 	"/icons/application/pages2.png",
 	"/icons/application/statistics2.png",
 	
+	"/gfx/progress/spinner_white_16.png",
+	"/gfx/progress/spinner_white_24.png",
+	"/gfx/progress/spinner_white_32.png",
+	"/gfx/progress/spinner_white_48.png",
+	"/gfx/progress/spinner_grey_24.png",
+	"/gfx/progress/spinner_grey_32.png",
+	
+	"/icons/common/success2.png",
+
 	"/icons/common/delete2.png",
 	"/icons/common/image2.png",
 	"/icons/common/news2.png",
