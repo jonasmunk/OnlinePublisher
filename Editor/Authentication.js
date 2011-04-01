@@ -30,7 +30,7 @@ var controller = {
 		});
 	},
 	$submit$formula : function() {
-		ui.showMessage({text:'Logger ind...',busy:true});
+		ui.showMessage({text:'Logger ind...',busy:true,delay:100});
 		ui.request({
 			url:'Services/Core/Authentication.php',
 			onSuccess:'login',
@@ -42,7 +42,7 @@ var controller = {
 	},
 	$success$login : function(data) {
 		if (data.success) {
-			ui.showMessage({text:'Du er nu logget ind, øjeblik...',icon:'common/success'});
+			ui.showMessage({text:'Du er nu logget ind, øjeblik...',icon:'common/success',delay:200});
 			var page = n2i.location.getParameter('page');
 			document.location=page===null ? './index.php' : '.?page='+page;
 		} else {
