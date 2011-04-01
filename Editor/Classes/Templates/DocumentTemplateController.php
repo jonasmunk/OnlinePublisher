@@ -70,6 +70,5 @@ class DocumentTemplateController extends TemplateController
 
 		$sql="delete from document_section where page_id=".$id;
 		Database::delete($sql);
-		
 	}
 }

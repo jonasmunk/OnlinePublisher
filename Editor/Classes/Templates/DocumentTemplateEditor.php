@@ -66,6 +66,35 @@ class DocumentTemplateEditor
 		Database::update($sql);
 	}
 	
+	function addPartAtEnd($pageId,$part) {
+		if (!$part->isPersistent()) {
+			Log::debug('The part is not persistent!');
+			return;
+		}
+		$sql="select id from document_row where page_id=".Database::int($pageId)." order by `index` desc";
+		if ($row = Database::selectFirst($sql)) {
+			$rowId = $row['id'];
+			$sql="select id from document_column where row_id=".Database::int($rowId)." order by `index` desc";
+			if ($row = Database::selectFirst($sql)) {
+				$columnId = $row['id'];
+				$sql = "select max(`index`) as `index` from document_section where column_id=".Database::int($columnId);
+				$index = 1;
+				if ($row = Database::selectFirst($sql)) {
+					$index = $row['index']+1;
+				}
+				$sql="insert into document_section (`page_id`,`column_id`,`index`,`type`,`part_id`) values (".Database::int($pageId).",".Database::int($columnId).",".Database::int($index).",'part',".Database::int($part->getId()).")";
+				$sectionId=Database::insert($sql);
+				
+				$sql="update page set changed=now() where id=".Database::int($pageId);
+				Database::update($sql);
+			} else {
+				Log::debug('No column found for first row of page='.$pageId);
+			}
+		} else {
+			Log::debug('No rows found for page='.$pageId);
+		}
+	}
+	
 	/**
 	 * @return The id of the section
 	 */

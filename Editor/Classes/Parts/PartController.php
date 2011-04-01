@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/Services/XslService.php');
 require_once($basePath.'Editor/Classes/Services/PartService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/PartContext.php');
+require_once($basePath.'Editor/Classes/SystemInfo.php');
 
 class PartController
 {
@@ -109,6 +110,8 @@ class PartController
 		'<xsl:variable name="usertitle"></xsl:variable>'.
 		'<xsl:variable name="preview"></xsl:variable>'.
 		'<xsl:variable name="editor">'.($editor ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="urlrewrite">'.(isset($GLOBALS['OP']) && $GLOBALS['OP']['urlrewrite'] ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="highquality">false</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';

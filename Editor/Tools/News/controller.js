@@ -257,8 +257,9 @@ ui.listen({
 			articleFormula.focus();
 			return;
 		}
-		if (!values.blueprint>0) {
+		if (!values.blueprint) {
 			ui.showMessage({text:'Skabelon skal vælges',duration:2000});
+			return;
 		}
 		ui.request({
 			json : {data:values},

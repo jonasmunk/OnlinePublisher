@@ -41,6 +41,10 @@ class NewsService {
 	
 	function createArticle($article) {
 		$blueprint = Pageblueprint::load($article->getPageBlueprintId());
+		if (!$blueprint) {
+			Log::debug('Unable to load blueprint with id='.$article->getPageBlueprintId());
+			return;
+		}
 		$page = new Page();
 		$page->setTemplateId($blueprint->getTemplateId());
 		$page->setDesignId($blueprint->getDesignId());
@@ -50,7 +54,21 @@ class NewsService {
 		
 		$news = new News();
 		$news->setTitle($article->getTitle());
+		$news->setNote($article->getSummary());
 		$news->save();
+		
+		$header = new HeaderPart();
+		$header->setLevel(1);
+		$header->setText($article->getTitle());
+		$header->save();
+		DocumentTemplateEditor::addPartAtEnd($page->getId(),$header);
+
+		$text = new TextPart();
+		$text->setText($article->getText());
+		$text->save();
+		DocumentTemplateEditor::addPartAtEnd($page->getId(),$text);
+		
+		$page->publish();
 		
 		ObjectLinkService::addPageLink($news,$page,$article->getLinkText());
 		
