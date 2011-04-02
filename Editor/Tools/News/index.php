@@ -31,7 +31,7 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="common/news" title="Ny nyhed" name="newNews" overlay="new"/>
-				<icon icon="common/page" title="Ny artikel" name="newArticle" overlay="new"/>
+				'.($blueprintItems ? '<icon icon="common/page" title="Ny artikel" name="newArticle" overlay="new"/>' : '').'
 				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
 				<icon icon="common/internet" title="Ny kilde" name="newSource" overlay="new"/>
 				<divider/>
@@ -160,7 +160,7 @@ $gui='
 				<text label="Opsummering" key="summary" multiline="true"/>
 				<text label="Tekst" key="text" multiline="true"/>
 				<text label="Link" key="linkText"/>
-				<dropdown label="Skabelon" key="blueprint">'.$blueprintItems.'</dropdown>
+				<dropdown label="Skabelon" key="blueprint" name="articleBlueprint">'.$blueprintItems.'</dropdown>
 			</group>
 			<columns>
 				<column>

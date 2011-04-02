@@ -248,6 +248,7 @@ ui.listen({
 			linkText : 'Læs mere...',
 			startdate : new Date()
 		});
+		articleBlueprint.selectFirst();
 		articleFormula.focus();
 	},
 	$submit$articleFormula : function() {

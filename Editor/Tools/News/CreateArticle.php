@@ -13,6 +13,7 @@ $article->setLinkText(StringUtils::fromUnicode($data->linkText));
 $article->setTitle(StringUtils::fromUnicode($data->title));
 $article->setText(StringUtils::fromUnicode($data->text));
 $article->setSummary(StringUtils::fromUnicode($data->summary));
+$article->setGroupIds($data->groups);
 
 NewsService::createArticle($article);
 ?>

@@ -10,6 +10,7 @@ class NewsArticle {
 	var $summary;
 	var $pageBlueprintId;
 	var $linkText;
+	var $groupIds;
 	
 	function setTitle($title) {
 	    $this->title = $title;
@@ -25,6 +26,14 @@ class NewsArticle {
 
 	function getLinkText() {
 	    return $this->linkText;
+	}
+	
+	function setGroupIds($groupIds) {
+	    $this->groupIds = $groupIds;
+	}
+
+	function getGroupIds() {
+	    return $this->groupIds;
 	}
 	
 	

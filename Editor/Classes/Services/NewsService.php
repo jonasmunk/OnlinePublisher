@@ -56,6 +56,7 @@ class NewsService {
 		$news->setTitle($article->getTitle());
 		$news->setNote($article->getSummary());
 		$news->save();
+		$news->updateGroupIds($article->getGroupIds());
 		
 		$header = new HeaderPart();
 		$header->setLevel(1);

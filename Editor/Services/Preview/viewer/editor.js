@@ -57,19 +57,28 @@ op.Editor = {
 			buttons.add(update);
 			win.add(form);
 		}
-		ui.request({url:'data/LoadPageProperties.php',parameters:{id:op.page.id},onJSON:function(obj) {
-			n2i.log(obj);
-			this.propertiesFormula.setValues(obj);
-			this.propertiesWindow.show();
-		}.bind(this)})
+		ui.request({
+			url:'data/LoadPageProperties.php',
+			parameters:{id:op.page.id},
+			message : {start:'Henter sidens info...',delay:300},
+			onJSON:function(obj) {
+				this.propertiesFormula.setValues(obj);
+				this.propertiesWindow.show();
+			}.bind(this)
+		})
 	},
 	saveProperties : function() {
 		var values = this.propertiesFormula.getValues();
 		values.id = op.page.id;
-		ui.request({url:'data/SavePageProperties.php',parameters:values,onSuccess:function() {
-			this.propertiesFormula.reset();
-			this.propertiesWindow.hide();
-		}.bind(this)});
+		ui.request({
+			url:'data/SavePageProperties.php',
+			parameters:values,
+			message : {start:'Gemmer sidens info...',delay:300},
+			onSuccess:function() {
+				this.propertiesFormula.reset();
+				this.propertiesWindow.hide();
+			}.bind(this)
+		});
 	},
 	moreProperties : function() {
 		if (!window.parent) {
