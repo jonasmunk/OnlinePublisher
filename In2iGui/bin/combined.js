@@ -5933,7 +5933,6 @@ n2i.place = function(options) {
 	left-=src.clientWidth*options.source.horizontal;
 	top-=src.clientHeight*options.source.vertical;
 	
-	n2i.log(options);
 	if (options.insideViewPort) {
 		var w = n2i.getViewPortWidth();
 		n2i.log((left+src.clientWidth)+'>'+w);
@@ -10339,9 +10338,9 @@ In2iGui.Formula.DropDown = function(o) {
 	this.value = this.options.value || null;
 	this.dirty = true;
 	In2iGui.extend(this);
-	this.addBehavior();
-	this.updateIndex();
-	this.updateUI();
+	this._addBehavior();
+	this._updateIndex();
+	this._updateUI();
 	if (this.options.url) {
 		this.options.source = new In2iGui.Source({url:this.options.url,delegate:this});
 	} else if (this.options.source) {
@@ -10360,14 +10359,14 @@ In2iGui.Formula.DropDown.create = function(options) {
 
 In2iGui.Formula.DropDown.prototype = {
 	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		In2iGui.addFocusClass({element:this.element,'class':'in2igui_dropdown_focused'});
-		n2i.listen(this.element,'click',this.clicked.bind(this));
-		n2i.listen(this.element,'blur',this.hideSelector.bind(this));
+		n2i.listen(this.element,'click',this._click.bind(this));
+		n2i.listen(this.element,'blur',this._hideSelector.bind(this));
 		n2i.listen(this.element,'keydown',this._keyDown.bind(this));
 	},
 	/** @private */
-	updateIndex : function() {
+	_updateIndex : function() {
 		this.index=-1;
 		for (var i=0; i < this.items.length; i++) {
 			if (this.items[i].value==this.value) {
@@ -10376,7 +10375,7 @@ In2iGui.Formula.DropDown.prototype = {
 		};
 	},
 	/** @private */
-	updateUI : function() {
+	_updateUI : function() {
 		var selected = this.items[this.index];
 		if (selected) {
 			var text = selected.label || selected.title || '';
@@ -10392,17 +10391,18 @@ In2iGui.Formula.DropDown.prototype = {
 			return;
 		}
 		var as = this.selector.getElementsByTagName('a');
-		n2i.each(as,function(a,i) {
+		for (var i=0; i < as.length; i++) {
 			if (this.index==i) {
-				n2i.addClass(a,'in2igui_selected');
+				n2i.addClass(as[i],'in2igui_selected');
+			} else {
+				as[i].className='';
 			}
-			else {a.className=''};
-		}.bind(this));
+		};
 	},
 	/** @private */
-	clicked : function(e) {
+	_click : function(e) {
 		n2i.stop(e);
-		this.buildSelector();
+		this._buildSelector();
 		var el = this.element, s=this.selector;
 		el.focus();
 		if (!this.items) return;
@@ -10423,9 +10423,6 @@ In2iGui.Formula.DropDown.prototype = {
 		width = Math.min(width,space);
 		n2i.setStyle(s,{visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
 	},
-	getValue : function() {
-		return this.value;
-	},
 	/** @private */
 	_keyDown : function(e) {
 		if (this.items.length==0) {
@@ -10438,9 +10435,9 @@ In2iGui.Formula.DropDown.prototype = {
 			} else {
 				this.value=this.items[this.index+1].value;
 			}
-			this.updateIndex();
-			this.updateUI();
-			this.fireChange();
+			this._updateIndex();
+			this._updateUI();
+			this._fireChange();
 		} else if (e.keyCode==38) {
 			n2i.stop(e);
 			if (this.index>0) {
@@ -10449,14 +10446,22 @@ In2iGui.Formula.DropDown.prototype = {
 				this.index = this.items.length-1;
 			}
 			this.value = this.items[this.index].value;
-			this.updateUI();
-			this.fireChange();
+			this._updateUI();
+			this._fireChange();
 		}
+	},
+	selectFirst : function() {
+		if (this.items.length>0) {
+			this.setValue(this.items[0].value);
+		}
+	},
+	getValue : function() {
+		return this.value;
 	},
 	setValue : function(value) {
 		this.value = value;
-		this.updateIndex();
-		this.updateUI();
+		this._updateIndex();
+		this._updateUI();
 	},
 	reset : function() {
 		this.setValue(null);
@@ -10469,7 +10474,8 @@ In2iGui.Formula.DropDown.prototype = {
 			this.options.source.refresh();
 		}
 	},
-	getItem : function(value) {
+	// TODO: Is this used?
+	getItem : function() {
 		if (this.index>=0) {
 			return this.items[this.index];
 		}
@@ -10478,28 +10484,28 @@ In2iGui.Formula.DropDown.prototype = {
 	addItem : function(item) {
 		this.items.push(item);
 		this.dirty = true;
-		this.updateIndex();
-		this.updateUI();
+		this._updateIndex();
+		this._updateUI();
 	},
 	setItems : function(items) {
 		this.items = items;
 		this.dirty = true;
 		this.index = -1;
-		this.updateIndex();
-		this.updateUI();
+		this._updateIndex();
+		this._updateUI();
 	},
 	/** @private */
 	$itemsLoaded : function(items) {
 		this.setItems(items);
 	},
 	/** @private */
-	hideSelector : function() {
+	_hideSelector : function() {
 		if (!this.selector) return;
 		this.selector.style.display='none';
 	},
 	/** @private */
-	buildSelector : function() {
-		if (!this.dirty || !this.items) return;
+	_buildSelector : function() {
+		if (!this.dirty || !this.items) {return};
 		if (!this.selector) {
 			this.selector = n2i.build('div',{'class':'in2igui_dropdown_selector'});
 			document.body.appendChild(this.selector);
@@ -10512,7 +10518,7 @@ In2iGui.Formula.DropDown.prototype = {
 			var e = n2i.build('a',{href:'#',text:item.label || item.title});
 			n2i.listen(e,'mousedown',function(e) {
 				n2i.stop(e);
-				self.itemClicked(item,i);
+				self._itemClicked(item,i);
 			})
 			if (i==self.index) {
 				n2i.addClass(e,'in2igui_selected')
@@ -10522,17 +10528,17 @@ In2iGui.Formula.DropDown.prototype = {
 		this.dirty = false;
 	},
 	/** @private */
-	itemClicked : function(item,index) {
+	_itemClicked : function(item,index) {
 		this.index = index;
 		var changed = this.value!=this.items[index].value;
 		this.value = this.items[index].value;
-		this.updateUI();
-		this.hideSelector();
+		this._updateUI();
+		this._hideSelector();
 		if (changed) {
-			this.fireChange();
+			this._fireChange();
 		}
 	},
-	fireChange : function() {
+	_fireChange : function() {
 		In2iGui.callAncestors(this,'childValueChanged',this.value);
 		this.fire('valueChanged',this.value);
 	}
@@ -15941,6 +15947,9 @@ In2iGui.Dock = function(options) {
 	this.iframe = n2i.firstByTag(this.element,'iframe');
 	this.progress = n2i.firstByClass(this.element,'in2igui_dock_progress');
 	n2i.listen(this.iframe,'load',this._load.bind(this));
+	//if (this.iframe.contentWindow) {
+	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();n2i.log('Fast path!')}.bind(this));
+	//}
 	this.name = options.name;
 	In2iGui.extend(this);
 	this.diff = -69;

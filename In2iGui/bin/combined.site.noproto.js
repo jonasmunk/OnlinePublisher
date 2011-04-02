@@ -1037,7 +1037,6 @@ n2i.place = function(options) {
 	left-=src.clientWidth*options.source.horizontal;
 	top-=src.clientHeight*options.source.vertical;
 	
-	n2i.log(options);
 	if (options.insideViewPort) {
 		var w = n2i.getViewPortWidth();
 		n2i.log((left+src.clientWidth)+'>'+w);

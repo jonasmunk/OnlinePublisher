@@ -9,6 +9,9 @@ In2iGui.Dock = function(options) {
 	this.iframe = n2i.firstByTag(this.element,'iframe');
 	this.progress = n2i.firstByClass(this.element,'in2igui_dock_progress');
 	n2i.listen(this.iframe,'load',this._load.bind(this));
+	//if (this.iframe.contentWindow) {
+	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();n2i.log('Fast path!')}.bind(this));
+	//}
 	this.name = options.name;
 	In2iGui.extend(this);
 	this.diff = -69;
