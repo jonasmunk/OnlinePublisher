@@ -178,6 +178,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="designEditor" width="300" title="Design" padding="5">
 		<formula name="designFormula">
 			<group>
@@ -185,12 +186,15 @@ $gui='
 				<dropdown key="unique" label="Design:" placeholder="Vælg design..." url="DesignItems.php"/>
 				<buttons>
 					<button name="cancelDesign" title="Annuller"/>
-					<button name="deleteDesign" title="Slet"/>
+					<button name="deleteDesign" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja, slet design" cancel="Nej"/>
+					</button>
 					<button name="saveDesign" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
 		</formula>
 	</window>
+	
 	<window name="emailTestWindow" width="300" title="Test af E-mail" padding="5">
 		<formula name="emailTestFormula">
 			<group labels="above">

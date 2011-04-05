@@ -92,6 +92,7 @@ $gui='
 			
 		</bottom>
 	</layout>
+	
 	<window name="pageEditor" width="300" title="Side" padding="5">
 		<formula name="pageFormula">
 			<group labels="above">
@@ -116,6 +117,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="hierarchyItemEditor" width="300" title="Menupunkt" padding="5">
 		<formula name="hierarchyItemFormula">
 			<group>
@@ -129,6 +131,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<box absolute="true" name="newPageBox" padding="10" modal="true" width="636" variant="textured" title="Oprettelse af ny side" closable="true">
 		<wizard name="newPageWizard">
 			<step title="Skabelon" icon="file/generic">
@@ -184,7 +187,8 @@ $gui='
 			<button title="Opret side" name="createPage" highlighted="true"/>
 		</buttons>
 	</box>
-	<box absolute="true" name="advancedBox" padding="10" modal="true" width="636" variant="textured" title="Avanceret" closable="true">
+	
+	<box absolute="true" name="advancedBox" modal="true" width="636" variant="textured" title="Avanceret" closable="true">
 		<toolbar>
 			<icon icon="common/page" title="Specielle sider" selected="true" name="advancedSpecialPages"/>
 			<icon icon="common/page" title="Rammer" name="advancedFrames"/>

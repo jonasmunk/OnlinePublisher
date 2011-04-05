@@ -32,8 +32,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<header title="Hierarki" width="50%"/>'.
 '</headergroup>';
 
-$sql="select frame.*,hierarchy.name as hierarchy from frame,hierarchy".
-" where frame.hierarchy_id=hierarchy.id order by frame.name";
+$sql="select frame.*,hierarchy.name as hierarchy from frame left join hierarchy".
+" on frame.hierarchy_id=hierarchy.id order by frame.name";
 $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$gui.='<row link="EditFrame.php?id='.$row['id'].'">'.

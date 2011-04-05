@@ -13,7 +13,7 @@ ui.listen({
 	$click$advancedTemplates : function() {
 		advancedTemplates.setSelected(true);
 		advancedSpecialPages.setSelected(false);
-		advancedFrame.setUrl('http://microsoft.com/');
+		advancedFrame.setUrl('Blueprints.php');
 	}
 	
 	
