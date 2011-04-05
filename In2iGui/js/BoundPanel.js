@@ -163,7 +163,7 @@ In2iGui.BoundPanel.prototype = {
 			this.arrow.className = 'in2igui_boundpanel_arrow in2igui_boundpanel_arrow_top';
 			arrowTop = -16;
 			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
-			arrowLeft = Math.min((nodeLeft+nodeWidth/2)-left-18,dims.width/2-18);
+			arrowLeft = (nodeLeft+nodeWidth/2)-left-18;
 			top = nodeTop+nodeHeight+8;
 		}
 		else if (vertical>.9) {
@@ -171,7 +171,7 @@ In2iGui.BoundPanel.prototype = {
 			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_bottom';
 			arrowTop = dims.height-6;
 			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
-			arrowLeft = Math.min((nodeLeft+nodeWidth/2)-left-18,dims.width/2-18);
+			arrowLeft = (nodeLeft+nodeWidth/2)-left-18;
 			top = nodeTop-dims.height-10;
 		}
 		else if ((nodeLeft+nodeWidth/2)/viewportWidth<.5) {

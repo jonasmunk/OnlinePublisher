@@ -58,7 +58,7 @@
 				</xsl:if>
 				<xsl:comment/>
 			</span>
-			<strong><xsl:value-of select="@title"/></strong>
+			<strong><xsl:value-of select="@title"/><xsl:value-of select="@text"/></strong>
 			</span>
 		</span>
 	</a>
