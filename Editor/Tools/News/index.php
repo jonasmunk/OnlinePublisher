@@ -104,7 +104,7 @@ $gui='
 	</window>
 	
 	
-	<window title="Nyhed" name="newsWindow" icon="file/generic" width="450">
+	<window title="Nyhed" name="newsWindow" variant="news" icon="file/generic" width="450">
 	
 		<tabs small="true" centered="true">
 		
