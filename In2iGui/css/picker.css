@@ -78,6 +78,7 @@ div.in2igui_picker_title
 
 .in2igui_picker_item strong
 {
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 10px;
 	display: inline-block;
 	height: 15px;

@@ -19,11 +19,11 @@ class Query {
 	private $windowPage = 0;
 	private $windowSize = 100;
 	private $createdMin;
+	private $ids;
 	
 	function Query($type) {
 		$this->type = $type;
 	}
-
 	
 	function after($type) {
 		return new Query($type);
@@ -78,14 +78,13 @@ class Query {
 		return $this;
 	}
 	
-	// TODO: Deprecated
-	function withField($field,$value) {
+	function withProperty($field,$value) {
 		$this->fields[$field] = $value;
 		return $this;
 	}
 
-	function withProperty($field,$value) {
-		$this->fields[$field] = $value;
+	function withIds($ids) {
+		$this->ids = $ids;
 		return $this;
 	}
 	
@@ -98,6 +97,10 @@ class Query {
 	
 	function getType() {
 	    return $this->type;
+	}
+	
+	function getIds() {
+		return $this->ids;
 	}
 
 	function getText() {

@@ -86,4 +86,22 @@
 		</back>
 	</window>
 
+	<window name="news" width="300" title="Nyhed" padding="5" variant="news">
+		<formula>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:"/>
+				<text label="Notat:" lines="6"/>
+				<checkbox label="Intern adgang:"/>
+				<checkbox label="Ekstern adgang:"/>
+				<tokens label="Tokens:"/>
+				<buttons top="10">
+					<button title="Gem" highlighted="true"/>
+					<button title="Slet"/>
+					<button title="Annuller"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
+
 </gui>

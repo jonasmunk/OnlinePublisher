@@ -259,11 +259,8 @@ n2i.dom = {
 		}
 	},
 	replaceNode : function(oldNode,newNode) {
+		newNode.parentNode.removeChild(newNode);
 		oldNode.parentNode.insertBefore(newNode,oldNode);
-		var c = oldNode.childNodes;
-		for (var i=0; i < c.length; i++) {
-			newNode.appendChild(oldNode.removeChild(c[i]));
-		};
 		oldNode.parentNode.removeChild(oldNode);
 	},
 	replaceHTML : function(node,html) {
@@ -385,6 +382,22 @@ if (document.querySelectorAll) {
 		}
 		return out;
 	}
+}
+
+
+n2i.byId = function(e,id) {
+	var children = e.childNodes;
+	for (var i = children.length - 1; i >= 0; i--) {
+		if (children[i].nodeType===hui.ELEMENT_NODE && children[i].getAttribute('id')===id) {
+			return children[i];
+		} else {
+			var found = n2i.byId(children[i],id);
+			if (found) {
+				return found;
+			}
+		}
+	}
+	return null;
 }
 
 n2i.firstParentByTag = function(node,tag) {
@@ -1734,32 +1747,38 @@ n2i.Color = function(color_string) {
     }
 }
 
-n2i.Color.hsv2rgb = function (h,s,v) {
-  	s = s / 100;
-	v = v / 100;
-
-    var hi = Math.floor((h/60) % 6);
-    var f = (h / 60) - hi;
-    var p = v * (1 - s);
-    var q = v * (1 - f * s);
-    var t = v * (1 - (1 - f) * s);
-
-    var rgb = [];
-
-    switch (hi) {
-        case 0: rgb = [v,t,p];break;
-        case 1: rgb = [q,v,p];break;
-        case 2: rgb = [p,v,t];break;
-        case 3: rgb = [p,q,v];break;
-        case 4: rgb = [t,p,v];break;
-        case 5: rgb = [v,p,q];break;
-    }
-
-    var r = Math.min(255, Math.round(rgb[0]*256)),
-        g = Math.min(255, Math.round(rgb[1]*256)),
-        b = Math.min(255, Math.round(rgb[2]*256));
-
-    return [r,g,b];
+n2i.Color.hsv2rgb = function (Hdeg,S,V) {
+  	var H = Hdeg/360,R,G,B;     // convert from degrees to 0 to 1
+  	if (S==0) {       // HSV values = From 0 to 1
+		R = V*255;     // RGB results = From 0 to 255
+		G = V*255;
+		B = V*255;
+	} else {
+    	var h = H*6,
+			var_r,var_g,var_b;
+    	var i = Math.floor( h );
+    	var var_1 = V*(1-S);
+    	var var_2 = V*(1-S*(h-i));
+    	var var_3 = V*(1-S*(1-(h-i)));
+    	if (i==0) {
+			var_r=V ;
+			var_g=var_3;
+			var_b=var_1
+		}
+    	else if (i==1) {
+			var_r=var_2;
+			var_g=V;
+			var_b=var_1
+		}
+    	else if (i==2) {var_r=var_1; var_g=V;     var_b=var_3}
+    	else if (i==3) {var_r=var_1; var_g=var_2; var_b=V}
+    	else if (i==4) {var_r=var_3; var_g=var_1; var_b=V}
+    	else {var_r=V;     var_g=var_1; var_b=var_2}
+    	R = Math.round(var_r*255);   //RGB results = From 0 to 255
+    	G = Math.round(var_g*255);
+    	B = Math.round(var_b*255);
+  	}
+  	return new Array(R,G,B);
 }
 
 n2i.Color.rgb2hsv = function(r, g, b) {
@@ -2063,5 +2082,14 @@ if (!Function.prototype.bind) {
 	Function.bind = function() {
 	    var args = Array.prototype.slice.call(arguments);
 	    return Function.prototype.bind.apply(args.shift(), args);
+	}
+}
+
+if (!Function.prototype.argumentNames) {
+	Function.prototype.argumentNames = function() {
+		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
+			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
+			.replace(/\s+/g, '').split(',');
+		return names.length == 1 && !names[0] ? [] : names;
 	}
 }

@@ -51,7 +51,10 @@ In2iGui.MarkupEditor.prototype = {
 	implValueChanged : function() {
 		this._valueChanged();
 	},
-	
+	destroy : function() {
+		n2i.dom.remove(this.element);
+		In2iGui.destroy(this);
+	},
 	getValue : function() {
 		return this.impl.getHTML();
 	},

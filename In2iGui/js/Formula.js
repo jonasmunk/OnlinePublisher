@@ -1122,7 +1122,7 @@ In2iGui.Formula.Tokens.prototype = {
 	getValue : function() {
 		var out = [];
 		n2i.each(this.value,function(value) {
-			value = value.strip();
+			value = n2i.trim(value);
 			if (value.length>0) {
 				out.push(value);
 			}

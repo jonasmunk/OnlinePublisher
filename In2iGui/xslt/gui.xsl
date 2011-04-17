@@ -381,10 +381,10 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 
 <xsl:template match="gui:list">
 	<div class="in2igui_list" id="{generate-id()}">
-		<div class="in2igui_list_progress"></div>
 		<xsl:if test="@state and @state!=//gui:gui/@state">
 			<xsl:attribute name="style">display:none</xsl:attribute>
 		</xsl:if>
+		<div class="in2igui_list_progress"></div>
 		<div class="in2igui_list_navigation">
 			<div class="in2igui_list_selection window_page"><div><div class="window_page_body"><xsl:comment/></div></div></div>
 			<span class="in2igui_list_count"><xsl:comment/></span>

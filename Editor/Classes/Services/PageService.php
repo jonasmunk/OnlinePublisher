@@ -30,4 +30,13 @@ class PageService {
 			PageService::createPageHistory($id,$data);
 		}
 	}
+	
+	function getBlueprintsByTemplate($template) {
+		$sql = "select object_id as id from pageblueprint,template where pageblueprint.template_id = template.`id` and template.`unique`=".Database::text($template);
+		$ids = Database::getIds($sql);
+		if (count($ids)>0) {
+			return Query::after('pageblueprint')->withIds($ids)->orderBy('title')->get();
+		}
+		return array();
+	}
 }

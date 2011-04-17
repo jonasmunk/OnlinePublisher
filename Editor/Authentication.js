@@ -5,7 +5,7 @@ var controller = {
 		} else {
 			username.focus();
 		}
-		if (n2i.browser.msie && !n2i.browser.msie8) {
+		if (n2i.browser.msie && (!n2i.browser.msie8 && !n2i.browser.msie9)) {
 			ui.alert({
 				emotion:'gasp',
 				title:'Din software er forældet',

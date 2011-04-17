@@ -259,11 +259,8 @@ n2i.dom = {
 		}
 	},
 	replaceNode : function(oldNode,newNode) {
+		newNode.parentNode.removeChild(newNode);
 		oldNode.parentNode.insertBefore(newNode,oldNode);
-		var c = oldNode.childNodes;
-		for (var i=0; i < c.length; i++) {
-			newNode.appendChild(oldNode.removeChild(c[i]));
-		};
 		oldNode.parentNode.removeChild(oldNode);
 	},
 	replaceHTML : function(node,html) {
@@ -385,6 +382,22 @@ if (document.querySelectorAll) {
 		}
 		return out;
 	}
+}
+
+
+n2i.byId = function(e,id) {
+	var children = e.childNodes;
+	for (var i = children.length - 1; i >= 0; i--) {
+		if (children[i].nodeType===hui.ELEMENT_NODE && children[i].getAttribute('id')===id) {
+			return children[i];
+		} else {
+			var found = n2i.byId(children[i],id);
+			if (found) {
+				return found;
+			}
+		}
+	}
+	return null;
 }
 
 n2i.firstParentByTag = function(node,tag) {
@@ -1734,32 +1747,38 @@ n2i.Color = function(color_string) {
     }
 }
 
-n2i.Color.hsv2rgb = function (h,s,v) {
-  	s = s / 100;
-	v = v / 100;
-
-    var hi = Math.floor((h/60) % 6);
-    var f = (h / 60) - hi;
-    var p = v * (1 - s);
-    var q = v * (1 - f * s);
-    var t = v * (1 - (1 - f) * s);
-
-    var rgb = [];
-
-    switch (hi) {
-        case 0: rgb = [v,t,p];break;
-        case 1: rgb = [q,v,p];break;
-        case 2: rgb = [p,v,t];break;
-        case 3: rgb = [p,q,v];break;
-        case 4: rgb = [t,p,v];break;
-        case 5: rgb = [v,p,q];break;
-    }
-
-    var r = Math.min(255, Math.round(rgb[0]*256)),
-        g = Math.min(255, Math.round(rgb[1]*256)),
-        b = Math.min(255, Math.round(rgb[2]*256));
-
-    return [r,g,b];
+n2i.Color.hsv2rgb = function (Hdeg,S,V) {
+  	var H = Hdeg/360,R,G,B;     // convert from degrees to 0 to 1
+  	if (S==0) {       // HSV values = From 0 to 1
+		R = V*255;     // RGB results = From 0 to 255
+		G = V*255;
+		B = V*255;
+	} else {
+    	var h = H*6,
+			var_r,var_g,var_b;
+    	var i = Math.floor( h );
+    	var var_1 = V*(1-S);
+    	var var_2 = V*(1-S*(h-i));
+    	var var_3 = V*(1-S*(1-(h-i)));
+    	if (i==0) {
+			var_r=V ;
+			var_g=var_3;
+			var_b=var_1
+		}
+    	else if (i==1) {
+			var_r=var_2;
+			var_g=V;
+			var_b=var_1
+		}
+    	else if (i==2) {var_r=var_1; var_g=V;     var_b=var_3}
+    	else if (i==3) {var_r=var_1; var_g=var_2; var_b=V}
+    	else if (i==4) {var_r=var_3; var_g=var_1; var_b=V}
+    	else {var_r=V;     var_g=var_1; var_b=var_2}
+    	R = Math.round(var_r*255);   //RGB results = From 0 to 255
+    	G = Math.round(var_g*255);
+    	B = Math.round(var_b*255);
+  	}
+  	return new Array(R,G,B);
 }
 
 n2i.Color.rgb2hsv = function(r, g, b) {
@@ -2063,6 +2082,15 @@ if (!Function.prototype.bind) {
 	Function.bind = function() {
 	    var args = Array.prototype.slice.call(arguments);
 	    return Function.prototype.bind.apply(args.shift(), args);
+	}
+}
+
+if (!Function.prototype.argumentNames) {
+	Function.prototype.argumentNames = function() {
+		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
+			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
+			.replace(/\s+/g, '').split(',');
+		return names.length == 1 && !names[0] ? [] : names;
 	}
 }/**
  * SWFUpload: http://www.swfupload.org, http://swfupload.googlecode.com
@@ -3838,6 +3866,11 @@ In2iGui.confirmOverlay = function(options) {
 	overlay.show({element:node});
 }
 
+In2iGui.destroy = function(widget) {
+	var objects = In2iGui.get().objects;
+	delete(objects[widget.name]);
+}
+
 In2iGui.destroyDescendants = function(element) {
 	var desc = In2iGui.get().getDescendants(element);
 	var objects = In2iGui.get().objects;
@@ -4001,13 +4034,13 @@ In2iGui.showToolTip = function(options) {
 	t.onclick = function() {In2iGui.hideToolTip(options);};
 	var n = n2i.get(options.element);
 	var pos = n2i.getPosition(n);
-	t.select('div')[1].update(options.text);
-	if (t.style.display=='none' && !n2i.browser.msie) {
+	n2i.dom.setText(t.getElementsByTagName('div')[1],options.text);
+	if (t.style.display=='none' && n2i.browser.opacity) {
 		n2i.setOpacity(t,0);
 	}
 	n2i.setStyle(t,{'display':'block',zIndex:In2iGui.nextTopIndex()});
 	n2i.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
-	if (!n2i.browser.msie) {
+	if (n2i.browser.opacity) {
 		n2i.ani(t,'opacity',1,300);
 	}
 };
@@ -6010,7 +6043,7 @@ In2iGui.Formula.Tokens.prototype = {
 	getValue : function() {
 		var out = [];
 		n2i.each(this.value,function(value) {
-			value = value.strip();
+			value = n2i.trim(value);
 			if (value.length>0) {
 				out.push(value);
 			}
@@ -6782,7 +6815,7 @@ In2iGui.List.prototype = {
 	/** @private */
 	setObjects : function(objects) {
 		this.selected = [];
-		this.body.update();
+		n2i.dom.clear(this.body);
 		this.rows = [];
 		for (var i=0; i < objects.length; i++) {
 			var row = n2i.build('tr');
@@ -9540,7 +9573,7 @@ In2iGui.Editor.Header.prototype = {
 		In2iGui.Editor.get().partDidDeacivate(this);
 	},
 	updateFieldStyle : function() {
-		n2i.setStyle(this.field,{width:this.header.getWidth()+'px',height:this.header.getHeight()+'px'});
+		n2i.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
 		n2i.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
 	},
 	getValue : function() {
@@ -9565,15 +9598,11 @@ In2iGui.Editor.Html = function(element,row,column,position) {
 In2iGui.Editor.Html.prototype = {
 	activate : function() {
 		this.value = this.element.innerHTML;
-		//if (Prototype.Browser.IE) return;
-		var height = this.element.clientHeight;
 		this.element.innerHTML='';
 		var style = this.buildStyle();
-		this.editor = In2iGui.RichText.create({autoHideToolbar:false,style:style});
-		this.editor.setHeight(height);
+		this.editor = In2iGui.MarkupEditor.create({autoHideToolbar:false,style:style});
 		this.element.appendChild(this.editor.getElement());
 		this.editor.listen(this);
-		this.editor.ignite();
 		this.editor.setValue(this.value);
 		this.editor.focus();
 	},
@@ -9592,7 +9621,7 @@ In2iGui.Editor.Html.prototype = {
 	},
 	save : function() {
 		this.deactivate();
-		var value = this.editor.value;
+		var value = this.editor.getValue();
 		if (value!=this.value) {
 			this.value = value;
 			In2iGui.Editor.get().partChanged(this);
@@ -9601,7 +9630,7 @@ In2iGui.Editor.Html.prototype = {
 	},
 	deactivate : function() {
 		if (this.editor) {
-			this.editor.deactivate();
+			this.editor.destroy();
 			this.element.innerHTML = this.value;
 		}
 		In2iGui.Editor.get().partDidDeacivate(this);
@@ -10072,10 +10101,10 @@ In2iGui.Upload.prototype = {
 			}
 		};
 		this.items = [];
-		this.itemContainer.hide();
-		this.status.hide();
+		this.itemContainer.style.display='none';
+		this.status.style.display='none';
 		if (this.placeholder) {
-			this.placeholder.show();
+			this.placeholder.style.display='block';
 		}
 	},
 	
@@ -10301,7 +10330,7 @@ In2iGui.Upload.Item.prototype = {
 		this.element.hide();
 	},
 	destroy : function() {
-		this.element.remove();
+		n2i.dom.remove(this.element);
 	}
 }
 
@@ -11121,7 +11150,10 @@ In2iGui.Box.create = function(options) {
 			'<div class="in2igui_box_top"><div><div></div></div></div>'+
 			'<div class="in2igui_box_middle"><div class="in2igui_box_middle">'+
 			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+n2i.escape(options.title)+'</strong></div>' : '')+
-			'<div class="in2igui_box_body"'+(options.padding ? ' style="padding: '+options.padding+'px;"' : '')+'></div>'+
+			'<div class="in2igui_box_body" style="'+
+			(options.padding ? 'padding: '+options.padding+'px;' : '')+
+			(options.width ? 'width: '+options.width+'px;' : '')+
+			'"></div>'+
 			'</div></div>'+
 			'<div class="in2igui_box_bottom"><div><div></div></div></div>',
 		style : options.width ? options.width+'px' : null
@@ -11857,7 +11889,7 @@ In2iGui.IFrame.prototype = {
 In2iGui.VideoPlayer = function(options) {
 	this.options = options;
 	this.element = n2i.get(options.element);
-	this.placeholder = n2i.firstByClass(this.element,'div');
+	this.placeholder = n2i.firstByTag(this.element,'div');
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
 	this.handlers = [In2iGui.VideoPlayer.HTML5,In2iGui.VideoPlayer.QuickTime,In2iGui.VideoPlayer.Embedded];
@@ -11878,6 +11910,9 @@ In2iGui.VideoPlayer = function(options) {
 
 In2iGui.VideoPlayer.prototype = {
 	setVideo : function(video) {
+		if (this.placeholder) {
+			this.placeholder.style.display='none';
+		}
 		this.handler = this.getHandler(video);
 		this.element.appendChild(this.handler.element);
 		if (this.handler.showController()) {
@@ -12518,7 +12553,10 @@ In2iGui.MarkupEditor.prototype = {
 	implValueChanged : function() {
 		this._valueChanged();
 	},
-	
+	destroy : function() {
+		n2i.dom.remove(this.element);
+		In2iGui.destroy(this);
+	},
 	getValue : function() {
 		return this.impl.getHTML();
 	},

@@ -1,8 +1,9 @@
 var controller = {
 	$ready : function() {
-		dark.show();
+/*		dark.show();
 		standard.show();
 		light.show();
-		flipper.show();
+		flipper.show();*/
+		news.show();
 	}
 }

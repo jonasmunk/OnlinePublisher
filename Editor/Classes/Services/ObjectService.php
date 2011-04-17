@@ -296,6 +296,18 @@ class ObjectService {
 		if ($query->getCreatedMin()!==null) {
 			$parts['createdMin'] = $query->getCreatedMin();
 		}
+		$ids = $query->getIds();
+		if (is_array($ids) && count($ids)>0) {
+			$limit = 'object.id in (';
+			for ($i=0; $i < count($ids); $i++) { 
+				if ($i>0) {
+					$limit.=',';
+				}
+				$limit.=Database::int($ids[$i]);
+			}
+			$limit.=')';
+			$parts['limits'][] = $limit;
+		}
 		if (count($query->getRelationsFrom())==1) {
 			$relationsFrom = $query->getRelationsFrom();
 			$relation = $relationsFrom[0];

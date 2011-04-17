@@ -271,6 +271,11 @@ In2iGui.confirmOverlay = function(options) {
 	overlay.show({element:node});
 }
 
+In2iGui.destroy = function(widget) {
+	var objects = In2iGui.get().objects;
+	delete(objects[widget.name]);
+}
+
 In2iGui.destroyDescendants = function(element) {
 	var desc = In2iGui.get().getDescendants(element);
 	var objects = In2iGui.get().objects;
@@ -434,13 +439,13 @@ In2iGui.showToolTip = function(options) {
 	t.onclick = function() {In2iGui.hideToolTip(options);};
 	var n = n2i.get(options.element);
 	var pos = n2i.getPosition(n);
-	t.select('div')[1].update(options.text);
-	if (t.style.display=='none' && !n2i.browser.msie) {
+	n2i.dom.setText(t.getElementsByTagName('div')[1],options.text);
+	if (t.style.display=='none' && n2i.browser.opacity) {
 		n2i.setOpacity(t,0);
 	}
 	n2i.setStyle(t,{'display':'block',zIndex:In2iGui.nextTopIndex()});
 	n2i.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
-	if (!n2i.browser.msie) {
+	if (n2i.browser.opacity) {
 		n2i.ani(t,'opacity',1,300);
 	}
 };

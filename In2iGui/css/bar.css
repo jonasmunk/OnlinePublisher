@@ -41,6 +41,7 @@ a.in2igui_bar_button
 	padding: 0 10px;
 	background: url('../gfx/bar_light.png') right -30px no-repeat;
 	text-decoration: none;
+	vertical-align: top;
 }
 
 a.in2igui_bar_button:focus
@@ -66,6 +67,12 @@ span.in2igui_bar_button_text
 div.in2igui_bar a.in2igui_bar_button:hover
 {
 	background: url('../gfx/bar_light.png') left -60px repeat-x;
+}
+
+a.in2igui_bar_button span.in2igui_icon_1
+{
+	vertical-align: top;
+	margin-top: 7px;
 }
 
 a.in2igui_bar_button:hover span.in2igui_icon_1
@@ -131,6 +138,12 @@ div.in2igui_bar_window a.in2igui_bar_button:hover
 	border-color: #ddd;
 }
 
+div.in2igui_bar_window a.in2igui_bar_button span.in2igui_icon_1
+{
+	vertical-align: top;
+	margin-top: 4px;
+}
+
 div.in2igui_bar_window a.in2igui_bar_button_selected, div.in2igui_bar_window a.in2igui_bar_button_selected:hover
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#bbb), to(#ddd));
@@ -172,6 +185,11 @@ div.in2igui_bar_mini a.in2igui_bar_button
 	line-height: 22px;
 	background: none;
 	padding: 0 2px;
+}
+
+div.in2igui_bar_mini a.in2igui_bar_button span.in2igui_icon_1
+{
+	margin-top: 3px;
 }
 
 div.in2igui_bar_mini span.in2igui_bar_button_text

@@ -70,7 +70,7 @@ class RemoteDataService {
 	 */
 	function getRemoteData($url,$maxAge=0) {
 		$now = mktime();
-		$cached = Query::after('cachedurl')->withField('url',$url)->first();
+		$cached = Query::after('cachedurl')->withProperty('url',$url)->first();
 		$path = RemoteDataService::getPathOfUrl($url);
 		$success = false;
 		if (!$cached) {

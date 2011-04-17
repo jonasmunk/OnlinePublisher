@@ -526,7 +526,7 @@ In2iGui.List.prototype = {
 	/** @private */
 	setObjects : function(objects) {
 		this.selected = [];
-		this.body.update();
+		n2i.dom.clear(this.body);
 		this.rows = [];
 		for (var i=0; i < objects.length; i++) {
 			var row = n2i.build('tr');

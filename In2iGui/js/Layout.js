@@ -12,7 +12,10 @@ In2iGui.Layout = function(options) {
 In2iGui.Layout.prototype = {
 	$$layout : function() {
 		if (n2i.browser.gecko) {
-			n2i.firstByClass(this.element,'in2igui_layout_center').style.height='100%';
+			var center = n2i.firstByClass(this.element,'in2igui_layout_center');
+			if (center) {
+				center.style.height='100%';
+			}
 		}
 		if (!n2i.browser.msie7 && !n2i.browser.msie8 && !n2i.browser.msie9) {
 			return;

@@ -172,10 +172,10 @@ In2iGui.Upload.prototype = {
 			}
 		};
 		this.items = [];
-		this.itemContainer.hide();
-		this.status.hide();
+		this.itemContainer.style.display='none';
+		this.status.style.display='none';
 		if (this.placeholder) {
-			this.placeholder.show();
+			this.placeholder.style.display='block';
 		}
 	},
 	
@@ -401,7 +401,7 @@ In2iGui.Upload.Item.prototype = {
 		this.element.hide();
 	},
 	destroy : function() {
-		this.element.remove();
+		n2i.dom.remove(this.element);
 	}
 }
 

@@ -172,3 +172,25 @@ div.in2igui_window_dark div.in2igui_window_content div.in2igui_window_content
 {
 	background-image: url('../gfx/window_dark_middle.png');
 }
+
+/********************************** News **************************/
+
+div.in2igui_window_news div.in2igui_window_titlebar, div.in2igui_window_news div.in2igui_window_titlebar div
+{
+	background: none;
+}
+
+div.in2igui_window_news div.in2igui_window_bottom
+{
+	background-image: none;
+}
+
+div.in2igui_window_news div.in2igui_window_content
+{
+	background-image: url('../gfx/window_dark_middle_right.png');
+}
+
+div.in2igui_window_news div.in2igui_window_content div.in2igui_window_content
+{
+	background-image: url('../gfx/window_dark_middle.png');
+}

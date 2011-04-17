@@ -30,7 +30,10 @@ In2iGui.Box.create = function(options) {
 			'<div class="in2igui_box_top"><div><div></div></div></div>'+
 			'<div class="in2igui_box_middle"><div class="in2igui_box_middle">'+
 			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+n2i.escape(options.title)+'</strong></div>' : '')+
-			'<div class="in2igui_box_body"'+(options.padding ? ' style="padding: '+options.padding+'px;"' : '')+'></div>'+
+			'<div class="in2igui_box_body" style="'+
+			(options.padding ? 'padding: '+options.padding+'px;' : '')+
+			(options.width ? 'width: '+options.width+'px;' : '')+
+			'"></div>'+
 			'</div></div>'+
 			'<div class="in2igui_box_bottom"><div><div></div></div></div>',
 		style : options.width ? options.width+'px' : null

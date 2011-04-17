@@ -2,7 +2,7 @@
 In2iGui.VideoPlayer = function(options) {
 	this.options = options;
 	this.element = n2i.get(options.element);
-	this.placeholder = n2i.firstByClass(this.element,'div');
+	this.placeholder = n2i.firstByTag(this.element,'div');
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
 	this.handlers = [In2iGui.VideoPlayer.HTML5,In2iGui.VideoPlayer.QuickTime,In2iGui.VideoPlayer.Embedded];
@@ -23,6 +23,9 @@ In2iGui.VideoPlayer = function(options) {
 
 In2iGui.VideoPlayer.prototype = {
 	setVideo : function(video) {
+		if (this.placeholder) {
+			this.placeholder.style.display='none';
+		}
 		this.handler = this.getHandler(video);
 		this.element.appendChild(this.handler.element);
 		if (this.handler.showController()) {

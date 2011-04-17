@@ -8,7 +8,8 @@ require_once '../../Classes/Services/FileSystemService.php';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
-$blueprintItems = GuiUtils::buildObjectItems('pageblueprint');
+$blueprints = PageService::getBlueprintsByTemplate('document');
+$blueprintItems = GuiUtils::buildObjectItems($blueprints);
 
 $gui='
 <gui xmlns="uri:In2iGui" title="Nyheder" padding="10">

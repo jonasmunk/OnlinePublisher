@@ -163,19 +163,23 @@ class GuiUtils {
 	/**
 	 * Builds select-options for a particular type of object
 	 * @param string $type The type of object
-	 * @param int $maxSize The maximum number of chars in the title
-	 * @return string Option-tags for use with XmlWebGui
 	 */
 	function buildObjectItems($type) {
 		$output='';
-		$sql="select id,title from object where type=".Database::text($type)." order by title";
-		$result = Database::select($sql);
-		while ($row = Database::next($result)) {
-			$title = $row['title'];
-			$title = str_replace("'","",$title);
-			$output.='<item title="'.StringUtils::escapeJavaScriptXML($title).'" value="'.$row['id'].'"/>';
+		if (is_array($type)) {
+			foreach ($type as $object) {
+				$output.='<item title="'.StringUtils::escapeXML($object->getTitle()).'" value="'.$object->getId().'"/>';
+			}
+		} else {
+			$sql="select id,title from object where type=".Database::text($type)." order by title";
+			$result = Database::select($sql);
+			while ($row = Database::next($result)) {
+				$title = $row['title'];
+				$title = str_replace("'","",$title);
+				$output.='<item title="'.StringUtils::escapeJavaScriptXML($title).'" value="'.$row['id'].'"/>';
+			}
+			Database::free($result);
 		}
-		Database::free($result);
 		return $output;
 	}
 	

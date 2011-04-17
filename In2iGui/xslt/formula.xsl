@@ -82,7 +82,9 @@
 
 <xsl:template match="gui:group/gui:text">
 	<tr>
-		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
+		<th>
+			<xsl:if test="not(@lines>1) and not(@multiline='true')"><xsl:attribute name="class">in2igui_formula_middle</xsl:attribute></xsl:if>
+			<label><xsl:value-of select="@label"/></label></th>
 		<td class="in2igui_formula_group"><div class="in2igui_formula_item"><xsl:call-template name="gui:text"/></div></td>
 	</tr>
 </xsl:template>
@@ -130,7 +132,7 @@
 
 <xsl:template match="gui:group/gui:datetime">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
+		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
 		<td><div class="in2igui_formula_item"><xsl:call-template name="gui:datetime"/></div></td>
 	</tr>
 </xsl:template>
@@ -241,7 +243,7 @@
 
 <xsl:template match="gui:group/gui:dropdown">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
+		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
 		<td class="in2igui_formula_group"><div class="in2igui_formula_item"><xsl:call-template name="gui:dropdown"/></div></td>
 	</tr>
 </xsl:template>
@@ -295,7 +297,7 @@
 
 <xsl:template match="gui:group/gui:radiobuttons">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
+		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
 		<td><div class="in2igui_formula_item"><xsl:call-template name="gui:radiobuttons"/></div></td>
 	</tr>
 </xsl:template>
