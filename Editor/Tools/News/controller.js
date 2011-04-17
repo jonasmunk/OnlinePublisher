@@ -262,6 +262,12 @@ ui.listen({
 			ui.showMessage({text:'Skabelon skal vælges',duration:2000});
 			return;
 		}
+		if (values.startdate) {
+			values.startdate=Math.round(values.startdate.getTime()/1000);
+		}
+		if (values.enddate) {
+			values.enddate=Math.round(values.enddate.getTime()/1000);
+		}
 		ui.request({
 			json : {data:values},
 			url : 'CreateArticle.php',

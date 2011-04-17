@@ -10,6 +10,7 @@ require_once '../../Classes/Template.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Hierarchy.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once '../../Classes/Utilities/GuiUtils.php';
 
 
@@ -113,14 +114,14 @@ function listPages() {
 	$result = Database::select($sql['list']);
 	while ($row = Database::next($result)) {
 		$modified = $row['publishdelta']>0;
-		echo '<row id="'.$row['id'].'" title="'.In2iGui::escape($row['title']).'" kind="page" icon="common/page">'.
-		'<cell icon="common/page"><line>'.In2iGui::escape($row['title']).'</line>'.
-		($row['path'] ? '<line dimmed="true">'.In2iGui::escape($row['path']).'</line>' : '').
+		echo '<row id="'.$row['id'].'" title="'.StringUtils::escapeXML($row['title']).'" kind="page" icon="common/page">'.
+		'<cell icon="common/page"><line>'.StringUtils::escapeXML($row['title']).'</line>'.
+		($row['path'] ? '<line dimmed="true">'.StringUtils::escapeXML($row['path']).'</line>' : '').
 		'</cell>'.
-		'<cell>'.In2iGui::escape($templates[$row['unique']]['name']).'</cell>'.
-		//'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.In2iGui::escape($row['path']).'</line></cell>'.
+		'<cell>'.StringUtils::escapeXML($templates[$row['unique']]['name']).'</cell>'.
+		//'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.StringUtils::escapeXML($row['path']).'</line></cell>'.
 		'<cell icon="'.GuiUtils::getLanguageIcon($row['language']).'"></cell>'.
-		'<cell'.($modified ? ' icon="monochrome/warning"' : '').'>'.In2iGui::escape($row['changed']).'</cell>'.
+		'<cell'.($modified ? ' icon="monochrome/warning"' : '').'>'.StringUtils::escapeXML($row['changed']).'</cell>'.
 		'</row>';
 	}
 	Database::free($result);

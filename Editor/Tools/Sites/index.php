@@ -13,13 +13,13 @@ require_once '../../Classes/Frame.php';
 $designItems='';
 $designs = Design::search();
 foreach ($designs as $design) {
-	$designItems.='<item title="'.In2iGui::escape($design->getTitle()).'" image="../../../style/'.$design->getUnique().'/info/Preview128.png" value="'.$design->getId().'"/>';
+	$designItems.='<item title="'.StringUtils::escapeXML($design->getTitle()).'" image="../../../style/'.$design->getUnique().'/info/Preview128.png" value="'.$design->getId().'"/>';
 }
 
 $frameItems='';
 $frames = Frame::search();
 foreach ($frames as $frame) {
-	$frameItems.='<item icon="common/settings" title="'.In2iGui::escape($frame->getName()).'" value="'.$frame->getId().'"/>';
+	$frameItems.='<item icon="common/settings" title="'.StringUtils::escapeXML($frame->getName()).'" value="'.$frame->getId().'"/>';
 }
 
 $templateItems='';

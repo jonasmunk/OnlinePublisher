@@ -10,6 +10,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Hierarchy.php';
 require_once '../../Classes/Frame.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $frameId = Request::getInt('frame');
 if ($frameId>0) {
@@ -25,7 +26,7 @@ header('Content-Type: text/xml;');
 echo '<?xml version="1.0"?>
 <items>';
 foreach ($hierarchies as $hierarchy) {
-	echo '<item icon="common/hierarchy" value="'.$hierarchy->getId().'" title="'.In2iGui::escape($hierarchy->getName()).'" kind="hierarchy">';
+	echo '<item icon="common/hierarchy" value="'.$hierarchy->getId().'" title="'.StringUtils::escapeXML($hierarchy->getName()).'" kind="hierarchy">';
 	encodeLevel(0,$hierarchy->getId());
 	echo '</item>';
 }
@@ -44,7 +45,7 @@ function encodeLevel($parent,$hierarchyId) {
 		if ($row['target_type']=='page' && !$row['pageid']) {
 			$icon = "common/warning";
 		}
-		echo '<item icon="'.$icon.'" value="'.$row['id'].'" title="'.In2iGui::escape($row['title']).'" kind="hierarchyItem">';
+		echo '<item icon="'.$icon.'" value="'.$row['id'].'" title="'.StringUtils::escapeXML($row['title']).'" kind="hierarchyItem">';
 		encodeLevel($row['id'],$hierarchyId);
 		echo '</item>';
 	}

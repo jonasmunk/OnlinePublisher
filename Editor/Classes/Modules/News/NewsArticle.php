@@ -9,6 +9,8 @@ class NewsArticle {
 	var $text;
 	var $summary;
 	var $pageBlueprintId;
+	var $startDate;
+	var $endDate;
 	var $linkText;
 	var $groupIds;
 	
@@ -34,6 +36,23 @@ class NewsArticle {
 
 	function getGroupIds() {
 	    return $this->groupIds;
+	}
+	
+	function setStartDate($startDate) {
+	    $this->startDate = $startDate;
+	}
+	
+	function setEndDate($endDate) {
+	    $this->endDate = $endDate;
+	}
+
+	function getEndDate() {
+	    return $this->endDate;
+	}
+	
+
+	function getStartDate() {
+	    return $this->startDate;
 	}
 	
 	

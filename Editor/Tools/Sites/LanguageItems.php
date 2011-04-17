@@ -9,6 +9,7 @@ require_once '../../Classes/Database.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/GuiUtils.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 
 $sql="select language,count(id) as count from page group by language order by language";
 $result = Database::select($sql);
@@ -34,7 +35,7 @@ header('Content-Type: text/xml;');
 echo '<?xml version="1.0"?>
 <items>';
 foreach ($items as $key => $value) {
-	echo '<item icon="'.$value['icon'].'" value="'.In2iGui::escape($key).'" title="'.In2iGui::escape($value['language']).'" kind="language" badge="'.$value['count'].'"/>';
+	echo '<item icon="'.$value['icon'].'" value="'.StringUtils::escapeXML($key).'" title="'.StringUtils::escapeXML($value['language']).'" kind="language" badge="'.$value['count'].'"/>';
 }
 echo '</items>';
 ?>

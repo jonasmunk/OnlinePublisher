@@ -55,6 +55,8 @@ class NewsService {
 		$news = new News();
 		$news->setTitle($article->getTitle());
 		$news->setNote($article->getSummary());
+		$news->setStartdate($article->getStartdate());
+		$news->setEnddate($article->getEnddate());
 		$news->save();
 		$news->updateGroupIds($article->getGroupIds());
 		
