@@ -91,6 +91,9 @@ In2iGui.Button.prototype = {
 			this.clicked();
 		}
 	},
+	focus : function() {
+		this.element.focus();
+	},
 	/** Registers a function as a click handler */
 	onClick : function(func) {
 		this.listen({$click:func});

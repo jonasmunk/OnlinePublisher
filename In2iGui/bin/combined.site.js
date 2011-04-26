@@ -6185,7 +6185,9 @@ n2i.animation.render = function(element) {
 					v = work.delegate.ease(v);
 				}
 				var value = null;
-				if (!work.css) {
+				if (work.delegate && work.delegate.callback) {
+					work.delegate.callback(obj.element,v);
+				} else if (!work.css) {
 					obj.element[work.property] = Math.round(work.from+(work.to-work.from)*v);
 				} else if (work.property=='transform' && !n2i.browser.msie) {
 					var t = work.transform;
@@ -6765,6 +6767,10 @@ n2i.ease = {
 		} else {
 			return (7.5625*(t-=(2.625/2.75))*t + .984375);
 		}
+	},
+	flicker : function(value) {
+		if (value==1) return 1;
+		return Math.random()*value;
 	},
 	
 	linear: function(/* Decimal? */n){

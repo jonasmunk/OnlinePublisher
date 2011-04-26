@@ -172,7 +172,7 @@ In2iGui.BoundPanel.prototype = {
 			arrowTop = dims.height-6;
 			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
 			arrowLeft = (nodeLeft+nodeWidth/2)-left-18;
-			top = nodeTop-dims.height-10;
+			top = nodeTop-dims.height-5;
 		}
 		else if ((nodeLeft+nodeWidth/2)/viewportWidth<.5) {
 			this.relativePosition='left';
