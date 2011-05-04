@@ -67,7 +67,7 @@ N2i.InlineImage.prototype.imageWasClicked = function(event) {
 			var renderWidth = Math.floor(this.width/400)*400;
 		}
 		var renderHeight = Math.round(this.height/this.width*renderWidth);
-		parm = "&maxwidth="+renderWidth;
+		parm = "&width="+renderWidth;
 	} else {
 		if (this.height>maxHeight) {
 			var renderHeight = Math.floor(maxHeight/200)*200;
@@ -75,11 +75,11 @@ N2i.InlineImage.prototype.imageWasClicked = function(event) {
 			var renderHeight = Math.floor(this.height/200)*200;
 		}
 		var renderWidth = Math.round(this.width/this.height*renderHeight);
-		parm = "&maxheight="+renderHeight;
+		parm = "&height="+renderHeight;
 	}
 	window.status = renderWidth+'/'+renderHeight;
 	this.resizeViewer(renderWidth,renderHeight);
-	this.viewerImage.style.backgroundImage="url('"+this.path+"util/images/?id="+this.id+parm+"&format=jpg&quality=90')";
+	this.viewerImage.style.backgroundImage="url('"+this.path+"services/images/?id="+this.id+parm+"&format=jpg&quality=90')";
 	this.viewer.style.display='';
 	return false;
 }

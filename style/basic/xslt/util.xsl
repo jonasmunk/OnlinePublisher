@@ -94,7 +94,7 @@
 </xsl:template>
 
 
-<xsl:template name="oo-script">
+<xsl:template name="util:scripts">
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}In2iGui{$timestamp-url}/bin/minimized.css{$timestamp-query}"/>
@@ -129,19 +129,6 @@
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}Editor/Template/{$template}/js/editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
-</xsl:template>
-
-<xsl:template name="oo-meta">
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
-	<meta name="robots" content="index,follow"></meta>
-</xsl:template>
-
-<xsl:template name="oo-style">
-	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/{$design}/css/stylesheet.css{$timestamp-query}"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/{$design}/css/{$template}.css{$timestamp-query}"/>
-	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
-	<![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style">

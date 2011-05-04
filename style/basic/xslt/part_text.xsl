@@ -33,7 +33,7 @@
 
 
 <xsl:template match="txt:image">
-	<img src="{$path}util/images/?id={o:object/@id}">
+	<img src="{$path}services/images/?id={o:object/@id}">
 	<xsl:attribute name="class">
 		<xsl:choose>
 		<xsl:when test="@float='left'"><xsl:text>part_text_image_left</xsl:text></xsl:when>

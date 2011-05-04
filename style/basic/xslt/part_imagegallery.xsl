@@ -50,7 +50,7 @@
 		<xsl:variable name="url">
 			<xsl:choose>
 				<xsl:when test="$editor='true'">javascript:void();</xsl:when>
-				<xsl:otherwise><xsl:value-of select="$path"/>util/images/?id=<xsl:value-of select="@id"/></xsl:otherwise>
+				<xsl:otherwise><xsl:value-of select="$path"/>services/images/?id=<xsl:value-of select="@id"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 		<a href="{$url}">
@@ -62,7 +62,7 @@
 			<xsl:if test="../ig:display/@show-title='true'">
 				<span class="common_font"><xsl:value-of select="o:title"/></span>
 			</xsl:if>
-			<img src="{$path}util/images/?id={@id}&amp;maxheight={$height}" style="height: {$height}px; width: {$width}px;" alt="" id="{generate-id()}"/>
+			<img src="{$path}services/images/?id={@id}&amp;height={$height}" style="height: {$height}px; width: {$width}px;" alt="" id="{generate-id()}"/>
 		</a>
 	</xsl:template>
 

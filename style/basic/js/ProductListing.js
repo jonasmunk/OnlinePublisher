@@ -22,7 +22,7 @@ OP.ProductListing.prototype = {
 			};
 			viewer.listen({
 				$resolveImageUrl : function(img,width,height) {
-					return OP.Page.path+'util/images/?id='+img.id+'&maxwidth='+width+'&maxheight='+height+'&format=jpg&quality=70';
+					return OP.Page.path+'services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg&quality=70';
 				}
 			});
 		}

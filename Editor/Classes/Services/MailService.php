@@ -3,7 +3,6 @@
  * @package OnlinePublisher
  * @subpackage Classes.Services
  */
-require_once($basePath."Editor/Libraries/phpmailer/class.phpmailer.php");
 require_once($basePath."Editor/Classes/Services/SettingService.php");
 require_once($basePath."Editor/Classes/Log.php");
 require_once($basePath.'Editor/Classes/Zend.php');

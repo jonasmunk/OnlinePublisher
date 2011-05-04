@@ -1,5 +1,3 @@
-@import url('box.css');
-
 /********************* Common *******************/
 	
 a.common
@@ -117,22 +115,22 @@ form
 
 .images .image-1
 {
-	background: url('../../../util/images/?id=139') no-repeat;
+	background: url('../../../services/images/?id=139') no-repeat;
 	width: 690px;
 }
 .images .image-2
 {
-	background: url('../../../util/images/?id=140') no-repeat;
+	background: url('../../../services/images/?id=140') no-repeat;
 	width: 337px;
 }
 .images .image-3
 {
-	background: url('../../../util/images/?id=141') no-repeat;
+	background: url('../../../services/images/?id=141') no-repeat;
 	width: 331px;
 }
 .images .image-4
 {
-	background: url('../../../util/images/?id=142') no-repeat;
+	background: url('../../../services/images/?id=142') no-repeat;
 	width: 387px;
 }
 

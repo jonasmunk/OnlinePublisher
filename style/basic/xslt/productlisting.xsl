@@ -121,7 +121,7 @@
 </xsl:template>
 
 <xsl:template match="i:image">
-<a href="{$path}util/images/?id={../../@id}" onclick="OP.ProductListing.get().showImage({../../@id}); return false;"><img src="{$path}util/images/?id={../../@id}&amp;maxwidth=100&amp;maxheight=130" style="float:right;"/></a>
+<a href="{$path}services/images/?id={../../@id}" onclick="OP.ProductListing.get().showImage({../../@id}); return false;"><img src="{$path}services/images/?id={../../@id}&amp;width=100&amp;height=130" style="float:right;"/></a>
 </xsl:template>
 
 <xsl:template match="p:attributes">

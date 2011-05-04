@@ -23,7 +23,7 @@ var partController = {
 					partController.preview();
 				},
 				$resolveImageUrl : function(obj,width,height) {
-					return '../../../util/images/?id='+obj.value+'&maxwidth='+width+'&maxheight='+height;
+					return '../../../services/images/?id='+obj.value+'&width='+width+'&height='+height;
 				}
 			});
 			overflow.add(list);

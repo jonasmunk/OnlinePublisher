@@ -67,9 +67,9 @@
 	<xsl:if test="../../ig:display/@show-title='true' and $title!=''">
 		<div class="title"><xsl:value-of select="$title"/></div>
 	</xsl:if>
-	<a href="{$path}util/images/?id={$id}" onclick="OP.ImageGallery.get().showImage({@id}); return false;">
+	<a href="{$path}services/images/?id={$id}" onclick="OP.ImageGallery.get().showImage({@id}); return false;">
 	<xsl:if test="$highquality='false'">
-		<img src="{$path}util/images/?id={$id}&amp;maxwidth={$maxsize}&amp;maxheight={$maxsize}&amp;rotate={../../ig:display/@rotate}&amp;format=jpg" alt="">
+		<img src="{$path}services/images/?id={$id}&amp;width={$maxsize}&amp;height={$maxsize}&amp;rotate={../../ig:display/@rotate}&amp;format=jpg" alt="">
 			<xsl:choose>
 				<xsl:when test="number(o:sub/i:image/i:width)>number(o:sub/i:image/i:height)">
 					<xsl:attribute name="width"><xsl:value-of select="$maxsize"/></xsl:attribute>
@@ -81,7 +81,7 @@
 		</img>
 	</xsl:if>
 	<xsl:if test="$highquality='true'">
-		<img src="{$path}util/images/?id={$id}&amp;rotate={../../ig:display/@rotate}" alt="">
+		<img src="{$path}services/images/?id={$id}&amp;rotate={../../ig:display/@rotate}" alt="">
 			<xsl:choose>
 				<xsl:when test="number(o:sub/i:image/i:width)>number(o:sub/i:image/i:height)">
 					<xsl:attribute name="width"><xsl:value-of select="$maxsize"/></xsl:attribute>

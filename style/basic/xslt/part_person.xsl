@@ -121,13 +121,13 @@
 </xsl:template>
 
 <xsl:template match="p:image">
-<td class="part_person_image"><a href="{$path}util/images/?id={o:object/@id}"><img src="{$path}util/images/?id={o:object/@id}&amp;maxwidth=60&amp;maxheight=80" alt="" id="{generate-id(o:object)}"/></a>
-<script type="text/javascript">
-try {
-op.registerImageViewer('<xsl:value-of select="generate-id(o:object)"/>',{id:<xsl:value-of select="o:object/@id"/>,width:<xsl:value-of select="o:object/o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:object/o:sub/i:image/i:height"/>});
-} catch (ignore) {}
-</script>
-</td>
+	<td class="part_person_image"><a href="{$path}services/images/?id={o:object/@id}"><img src="{$path}services/images/?id={o:object/@id}&amp;width=60&amp;height=80" alt="" id="{generate-id(o:object)}"/></a>
+	<script type="text/javascript">
+	try {
+	op.registerImageViewer('<xsl:value-of select="generate-id(o:object)"/>',{id:<xsl:value-of select="o:object/@id"/>,width:<xsl:value-of select="o:object/o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:object/o:sub/i:image/i:height"/>});
+	} catch (ignore) {}
+	</script>
+	</td>
 </xsl:template>
 
 </xsl:stylesheet>

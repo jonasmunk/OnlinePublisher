@@ -12,7 +12,7 @@ ui.listen({
 	},
 		
 	$resolveImageUrl : function(img,width,height) {
-		return '../../../util/images/?id='+img.id+'&maxwidth='+width+'&maxheight='+height+'&format=jpg';
+		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
 	
 	$selectionChanged$gallery : function() {
@@ -30,7 +30,7 @@ ui.listen({
 	
 	$click$view : function() {
 		var obj = gallery.getFirstSelection();
-		window.open('../../../util/images/?id='+obj.id,"filewindow"+obj.id);
+		window.open('../../../services/images/?id='+obj.id,"filewindow"+obj.id);
 	},
 	$click$download : function() {
 		var obj = gallery.getFirstSelection();

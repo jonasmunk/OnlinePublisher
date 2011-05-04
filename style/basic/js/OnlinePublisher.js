@@ -43,7 +43,7 @@ op.imageViewerDelegate = {
 	$resolveImageUrl : function(img,width,height) {
 		var w = img.width ? Math.min(width,img.width) : width;
 		var h = img.height ? Math.min(height,img.height) : height;
-		return op.page.path+'util/images/?id='+img.id+'&maxwidth='+w+'&maxheight='+h+'&format=jpg&quality=100';
+		return op.page.path+'services/images/?id='+img.id+'&width='+w+'&height='+h+'&format=jpg&quality=100';
 	}
 }
 

@@ -6,6 +6,7 @@
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="p f h n o"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
@@ -15,10 +16,10 @@
 <xsl:template match="p:page">
 <html>
 <head>
-	<xsl:call-template name="oo-meta"/>
+	<xsl:call-template name="util:metatags"/>
 	<title><xsl:value-of select="@title"/> : <xsl:value-of select="f:frame/@title"/></title>
-	<xsl:call-template name="oo-script"/>
-	<xsl:call-template name="oo-style"/>
+	<xsl:call-template name="util:style"/>
+	<xsl:call-template name="util:scripts"/>
 	<xsl:if test="@id=1">
 		<script type="text/javascript" src="{$path}style/terrazzo/js/Poster.js"><xsl:text> </xsl:text></script>
 	</xsl:if>

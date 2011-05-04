@@ -38,7 +38,7 @@
 			<xsl:comment><![CDATA[[if gt IE 7]>
 			<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
 			<![endif]]]></xsl:comment>
-			<xsl:call-template name="oo-script"/>
+			<xsl:call-template name="util:scripts"/>
 		</head>
 		<body>
 			<div class="layout">
@@ -87,7 +87,7 @@
 					<div class="layout_box">
 						<div class="layout_box_top"><xsl:comment/></div>
 						<div class="layout_box_middle">
-							<img src="{$path}util/images/?id=16&amp;maxwidth=175" style="width: 175px; border: 0px;"/>
+							<img src="{$path}services/images/?id=16&amp;width=175" style="width: 175px; border: 0px;"/>
 						</div>
 						<div class="layout_box_bottom"><xsl:comment/></div>
 					</div>

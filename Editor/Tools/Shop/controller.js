@@ -11,7 +11,7 @@ ui.listen({
 	},
 	
 	$resolveImageUrl : function(img,width,height) {
-		return '../../../util/images/?id='+img.id+'&maxwidth='+width+'&maxheight='+height+'&format=jpg';
+		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
 	
 	$selectionChanged$selector : function(obj) {
@@ -115,7 +115,7 @@ ui.listen({
 	},
 	$getImageUrl$productImage : function(picker) {
 		var obj = picker.getObject();
-		return '../../../util/images/?id='+obj.id+'&maxwidth=48&maxheight=48&format=jpg';
+		return '../../../services/images/?id='+obj.id+'&width=48&height=48&format=jpg';
 	},
 	$click$deleteProduct : function() {
 		ui.request({json:{data:{id:this.productId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteProduct'});

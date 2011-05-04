@@ -31,7 +31,7 @@
 	<xsl:comment><![CDATA[[if gt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
 	<![endif]]]></xsl:comment>
-	<xsl:call-template name="oo-script"/>
+	<xsl:call-template name="util:scripts"/>
 </head>
 <body>
 	<div class="layout">

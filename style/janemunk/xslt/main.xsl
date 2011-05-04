@@ -20,19 +20,11 @@
 		<head>
 			<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 			<xsl:call-template name="util:metatags"/>
-			<xsl:call-template name="oo-script"/>
-			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
-			<xsl:choose>
-				<xsl:when test="$template='document'">
-					<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:call-template name="util:style"/>
 			<xsl:comment><![CDATA[[if lt IE 7]>
 			<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 			<![endif]]]></xsl:comment>
+			<xsl:call-template name="util:scripts"/>
 		</head>
 		<body>
 			<div class="case">

@@ -21,21 +21,8 @@
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
-	<!--
-	<link href='http://fonts.googleapis.com/css?family=Nobile:regular,bold|Reenie+Beanie&amp;subset=latin' rel='stylesheet' type='text/css'/>
-	<link href='http://fonts.googleapis.com/css?family=Molengo&amp;subset=latin' rel='stylesheet' type='text/css'/>
-	<link href='http://fonts.googleapis.com/css?family=Neucha&amp;subset=latin' rel='stylesheet' type='text/css'/>
-	-->
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.php"/>
-	<xsl:choose>
-		<xsl:when test="$template='document'">
-			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
-		</xsl:when>
-		<xsl:otherwise>
-			<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
-		</xsl:otherwise>
-	</xsl:choose>
-	<xsl:call-template name="oo-script"/>
+	<xsl:call-template name="util:style"/>
+	<xsl:call-template name="util:scripts"/>
 </head>
 <body>
 	<xsl:choose>

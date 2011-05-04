@@ -188,7 +188,7 @@ class GuiUtils {
 	}
 	
 	function buildImageEntity($image) {
-		return '<entity image="../../../util/images/?id='.$image->getId().'&amp;maxwidth=32&amp;maxheight=32&amp;format=jpg&amp;timestamp='.$image->getUpdated().'" title="'.StringUtils::escapeXML($image->getTitle()).'" value="'.$image->getId().'"/>';
+		return '<entity image="../../../services/images/?id='.$image->getId().'&amp;width=32&amp;height=32&amp;format=jpg&amp;timestamp='.$image->getUpdated().'" title="'.StringUtils::escapeXML($image->getTitle()).'" value="'.$image->getId().'"/>';
 	}
 	
 	/**

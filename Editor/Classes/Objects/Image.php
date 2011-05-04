@@ -83,7 +83,7 @@ class Image extends Object {
         $dir = $basePath.'local/cache/images/';
         $files = FileSystemService::listFiles($dir);
         foreach ($files as $file) {
-            if (preg_match('/'.$this->id.'[a-z]/i',$file)) {
+            if (preg_match('/'.$this->id.'[a-z_]/i',$file)) {
                 @unlink($dir.$file);
             }
         }

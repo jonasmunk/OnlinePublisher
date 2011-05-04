@@ -20,10 +20,10 @@
 		<title><xsl:value-of select="@title"/> :: <xsl:value-of select="f:frame/@title"/></title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
 		<meta name="robots" content="index,follow"></meta>
-		<xsl:call-template name="oo-script"/>
 		<link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'/>
 		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css"/>
 		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+		<xsl:call-template name="util:scripts"/>
 	</head>
 	<body>
 		<div class="layout">

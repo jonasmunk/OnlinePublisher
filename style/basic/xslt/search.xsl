@@ -179,7 +179,7 @@ Intet fundet
 
 <xsl:template match="s:group[@type='image']/s:result">
 <li class="search_result_item">
-<image src="{$path}util/images/?id={o:object/@id}&amp;maxwidth=128&amp;maxheight=128" border="0"/>
+<image src="{$path}services/images/?id={o:object/@id}&amp;width=128&amp;height=128" border="0"/>
 <h3>
 <a href="{$path}images/{o:object/o:sub/i:image/i:filename}" class="common"><span><xsl:value-of select="substring(o:object/o:title,1,30)"/></span></a></h3>
 <p class="search_result_metadata"><xsl:value-of select="o:object/o:sub/i:image/i:width"/>x<xsl:value-of select="o:object/o:sub/i:image/i:height"/>, <xsl:value-of select="o:object/o:sub/i:image/i:size"/> bytes</p>
@@ -209,7 +209,7 @@ Intet fundet
 <xsl:template match="s:group[@type='person']/s:result">
 <li class="search_result_item">
 <xsl:if test="o:object/o:sub/ps:person/ps:image">
-<img src="{$path}util/images/?id={o:object/o:sub/ps:person/ps:image/o:object/@id}&amp;maxwidth=128&amp;maxheight=128"/>
+<img src="{$path}services/images/?id={o:object/o:sub/ps:person/ps:image/o:object/@id}&amp;width=128&amp;height=128"/>
 </xsl:if>
 <h3><xsl:value-of select="o:object/o:title"/></h3>
 <xsl:if test="o:object/o:sub/ps:person/ps:initials!='' or o:object/o:sub/ps:person/ps:nickname!=''">

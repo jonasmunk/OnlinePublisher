@@ -1,5 +1,16 @@
 <?
 class Request {
+	
+	function getParameters() {
+		$query = $_SERVER['QUERY_STRING'];
+		$parameters = array();
+		$parts = explode('&',$query);
+		foreach ($parts as $part) {
+			$pair = explode('=',$part);
+			$parameters[] = array('name' => $pair[0] , 'value'=>$pair[1]);
+		}
+		return $parameters;
+	}
 
 	/**
 	 * Checks if a variable was passed thru the get or post protocol

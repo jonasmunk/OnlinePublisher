@@ -10488,7 +10488,7 @@ In2iGui.Gallery.prototype = {
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
 			}
-			if (object.height<object.width) {
+			if (!self.revealing && object.height<object.width) {
 				top = (self.height-(self.height*object.height/object.width))/2;
 			}
 			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
@@ -10530,8 +10530,13 @@ In2iGui.Gallery.prototype = {
 			if (item.offsetTop<limit) {
 				var img = item.getElementsByTagName('img')[0];
 				item.className = 'in2igui_gallery_item in2igui_gallery_item_busy';
+				var self = this;
 				img.onload = function() {
 					item.className = 'in2igui_gallery_item';
+					if (this.height<this.width) {
+						var top = (self.height-(self.height*this.height/this.width))/2;
+						this.style.marginTop = top+'px';
+					}
 				}
 				img.src = img.getAttribute('data-src');
 				item.revealed = true;

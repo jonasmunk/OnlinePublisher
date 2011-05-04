@@ -36,7 +36,7 @@ while ($row = Database::next($result)) {
 		$counter=1;
 	}
 	$gui.=
-	'<icon title="'.StringUtils::escapeXML(StringUtils::shortenString($row['title'],16)).'" help="'.StringUtils::escapeXML($row['title']).'" image="../../../util/images/?id='.$row['id'].'&amp;maxwidth=32&amp;maxheight=32&amp;timestamp='.$row['updated'].'" link="javascript:parent.selectImage('.$row['id'].')" target="_parent"/>';
+	'<icon title="'.StringUtils::escapeXML(StringUtils::shortenString($row['title'],16)).'" help="'.StringUtils::escapeXML($row['title']).'" image="../../../services/images/?id='.$row['id'].'&amp;width=32&amp;height=32&amp;timestamp='.$row['updated'].'" link="javascript:parent.selectImage('.$row['id'].')" target="_parent"/>';
 
 }
 Database::free($result);

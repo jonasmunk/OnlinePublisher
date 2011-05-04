@@ -72,7 +72,7 @@ while ($row = Database::next($result)) {
     	'<cell>'.
         '<html xmlns="uri:Html">'.
     	'<td height="48" align="center">'.
-    	'<img src="../../../util/images/?id='.$row['id'].'&amp;maxwidth=48&amp;maxheight=48"/>'.
+    	'<img src="../../../services/images/?id='.$row['id'].'&amp;width=48&amp;height=48"/>'.
     	'</td>'.
     	'</html>'.
     	'</cell>'.
@@ -123,7 +123,7 @@ function buildGroupList($id,&$gui) {
         $note = ($row['info_id']!='' ? $row['info_note'] : $row['note']);
     	$gui.=
     	'<row link="EditCustomInfo.php?id='.$row['id'].'">'.
-    	'<cell><html xmlns="uri:Html"><td height="48" align="center"><img src="../../../util/images/?id='.$row['id'].'&amp;maxwidth=48&amp;maxheight=48"/></td></html></cell>'.
+    	'<cell><html xmlns="uri:Html"><td height="48" align="center"><img src="../../../services/images/?id='.$row['id'].'&amp;width=48&amp;height=48"/></td></html></cell>'.
     	'<cell>'.StringUtils::escapeXML($title).'</cell>'.
     	'<cell>'.StringUtils::escapeXML($note).'</cell>'.
     	'<cell>'.$row['width'].'x'.$row['height'].'</cell>'.

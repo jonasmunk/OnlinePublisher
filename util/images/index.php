@@ -190,7 +190,7 @@ function sendImage() {
 		} else {
 			header('Content-Type: image/jpeg');
 		}
-		$fp = fopen($basePath.$cache, 'rb');
+		//$fp = fopen($basePath.$cache, 'rb');
 
 		header("Content-Length: " . filesize($basePath.$cache));
 		header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($basePath.$cache)).' GMT');

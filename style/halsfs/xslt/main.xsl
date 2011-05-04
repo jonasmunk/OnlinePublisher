@@ -22,12 +22,12 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
 	<meta name="robots" content="index,follow"></meta>
 	<xsl:call-template name="util:metatags"/>
-	<xsl:call-template name="oo-script"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
+	<xsl:call-template name="util:scripts"/>
 </head>
 <body>
 	<div class="chrome">

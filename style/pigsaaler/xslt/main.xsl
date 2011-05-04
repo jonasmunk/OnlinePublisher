@@ -20,7 +20,6 @@
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
-	<xsl:call-template name="oo-script"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/combined.php"/>
 	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
 	<xsl:comment><![CDATA[[if lt IE 7]>
@@ -32,6 +31,7 @@
 	<xsl:comment><![CDATA[[if gt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
 	<![endif]]]></xsl:comment>
+	<xsl:call-template name="util:scripts"/>
 	<script type="text/javascript" src="{$path}style/{$design}/js/bestilling.js" charset="utf-8"><xsl:comment/></script>
 	<script type="text/javascript" src="{$path}In2iGui/js/Alert.js"><xsl:comment/></script>
 	<script type="text/javascript" src="{$path}In2iGui/js/Button.js"><xsl:comment/></script>
