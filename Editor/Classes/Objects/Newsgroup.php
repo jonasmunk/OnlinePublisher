@@ -33,7 +33,7 @@ class NewsGroup extends Object {
 	function removeMore() {
 		$sql="delete from newsgroup_news where newsgroup_id=".$this->id;
 		Database::delete($sql);
-		$sql="delete from document_news_newsgroup where newsgroup_id=".$this->id;
+		$sql="delete from part_news_newsgroup where newsgroup_id=".$this->id;
 		Database::delete($sql);
 	}
 	
