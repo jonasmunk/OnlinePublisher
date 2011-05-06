@@ -1,0 +1,91 @@
+a.common
+{
+	color: #ccc;
+}
+
+a.common span
+{
+	color: #3366ee;
+}
+	
+a.common:hover, a.common:hover span
+{
+	color: #112299;
+}
+
+/*************** Header *************/
+
+.part_header
+{
+	color: #333;
+	font-family: Georgia,serif;
+	font-weight: normal;
+	font-style: italic;
+	margin: 0;
+}
+
+h1.part_header, textarea.part_header_1
+{
+	font-size: 20pt;
+}
+
+h2.part_header, textarea.part_header_2
+{
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+h3.part_header, textarea.part_header_3
+{
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+h4.part_header, textarea.part_header_4
+{
+	font-size:11pt;
+	font-weight: bold;
+}
+
+h5.part_header, textarea.part_header_5
+{
+	font-size:10pt;
+	font-weight: bold;
+}
+
+h6.part_header, textarea.part_header_6
+{
+	font-size:9pt;
+	font-weight: bold;
+}
+
+.part_section_header_1
+{
+	padding-bottom: 20px;
+}
+
+.part_section_header_2
+{
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+.part_section_header_3
+{
+	padding-top: 10px;
+}
+
+.part_section_header_4
+{
+	padding-top: 10px;
+}
+
+.part_section_header_5
+{
+	padding-top: 10px;
+}
+
+.part_section_header_6
+{
+	padding-top: 10px;
+}

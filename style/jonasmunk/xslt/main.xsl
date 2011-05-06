@@ -8,18 +8,17 @@
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:html="http://uri.in2isoft.com/onlinepublisher/publishing/html/1.0/"
- exclude-result-prefixes="p f h n o util"
+ exclude-result-prefixes="p f h n o html util"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
-
 <xsl:template match="p:page">
 <html>
-	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
+	<xsl:call-template name="util:html-attributes"/>
 <head>
-	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
+	<title><xsl:value-of select="@title"/> - <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
 	<xsl:call-template name="util:style"/>
 	<xsl:call-template name="util:scripts"/>

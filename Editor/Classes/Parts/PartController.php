@@ -222,6 +222,7 @@ class PartController
 				<item value="\'Droid Sans\', arial, serif;" title="Droid Sans"/>
 				<item value="\'Crimson Text\', arial, serif;" title="Crimson Text"/>
 				<item value="\'Luckiest Guy\', arial, serif;" title="Luckiest Guy"/>
+				<item value="\'Dancing Script\', arial, serif;" title="Dancing Script"/>
 		';
 	}
 }

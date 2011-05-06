@@ -1,30 +1,4 @@
 /********************* Common *******************/
-	
-a.common
-{
-	color: #3366ff;
-}
-	
-a.common:hover
-{
-	color: #0000aa;
-}
-
-h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
-{
-	margin: 0px;
-	color: #398595;
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	font-weight: normal;
-}
-
-p.common, ul.common
-{
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	font-size: 10pt;
-	line-height: 160%;
-	text-align: justify;
-}
 
 .clear
 {

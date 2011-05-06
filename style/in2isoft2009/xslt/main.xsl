@@ -13,118 +13,124 @@
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
-
 <xsl:template match="p:page">
 <html>
-	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
-<head>
-	<title><xsl:choose><xsl:when test="//p:page/@id=//p:context/p:home/@page">In2iSoft : Intuitive Internet Software</xsl:when><xsl:otherwise><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></xsl:otherwise></xsl:choose></title>
-	<xsl:call-template name="util:metatags"/>
-	<xsl:call-template name="util:style"/>
-	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
-	<![endif]]]></xsl:comment>
-	<xsl:call-template name="util:scripts"/>
-</head>
-<body>
-	<div class="chrome">
-		<div class="chrome_head">
-			<ul class="chrome_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
-			<xsl:call-template name="search"/>
-		</div>
-		<div class="chrome_base">
-			<div class="chrome_box_top"><div><div><xsl:comment/></div></div></div>
-			<div class="chrome_box_middle"><div class="chrome_box_middle">
-				<div class="chrome_box_body">
-					<div class="chrome_box_head">
-						<xsl:call-template name="secondlevel"/><xsl:comment/>
-					</div>
-					<xsl:if test="//p:page/@id=//p:context/p:home/@page">
-					<div id="poster">
-						<div id="poster_loader">0%</div>
-						<div class="left" id="poster_left"><div id="poster_inner_left"><xsl:comment/></div></div>
-						<div class="right" id="poster_right"><div id="poster_inner_right"><xsl:comment/></div></div>
-					</div>
-					<script type="text/javascript" src="{$path}style/{$design}/js/Poster.js"><xsl:comment/></script>
-					</xsl:if>
-					<xsl:apply-templates select="p:content"/>
-					<xsl:choose>
-						<xsl:when test="//p:page/@id=//p:context/p:home/@page">
-							<div class="chrome_placards">
-								<a class="chrome_placard chrome_placard_left" href="{$path}produkter/onlinepublisher/"><xsl:comment/></a>
-								<a class="chrome_placard chrome_placard_center" href="{$path}produkter/onlineobjects/"><xsl:comment/></a>
-								<a class="chrome_placard chrome_placard_right" href="{$path}produkter/onlineme/"><xsl:comment/></a>
-							</div>
-						</xsl:when>
-						<xsl:otherwise>
-							<div class="chrome_box_foot">
-								<xsl:comment/>
-							</div>
-						</xsl:otherwise>
-					</xsl:choose>
-				</div>
-			</div></div>
-			<div class="chrome_box_bottom"><div><div><xsl:comment/></div></div></div>
-			<div class="chrome_info">
+	<xsl:call-template name="util:html-attributes"/>
+	<head>
+		<title>
+			<xsl:choose>
+				<xsl:when test="//p:page/@id=//p:context/p:home/@page">
+					<xsl:text>In2iSoft : Intuitive Internet Software</xsl:text>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="@title"/><xsl:text> » </xsl:text><xsl:value-of select="f:frame/@title"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</title>
+		<xsl:call-template name="util:metatags"/>
+		<xsl:call-template name="util:style"/>
+		<xsl:call-template name="util:style-ie6"/>
+		<xsl:call-template name="util:scripts"/>
+	</head>
+	<body>
+		<div class="chrome">
+			<div class="chrome_head">
+				<ul class="chrome_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
+				<xsl:call-template name="search"/>
+			</div>
+			<div class="chrome_base">
 				<div class="chrome_box_top"><div><div><xsl:comment/></div></div></div>
 				<div class="chrome_box_middle"><div class="chrome_box_middle">
 					<div class="chrome_box_body">
-						<div class="about">
-							<h2>Om In2iSoft</h2>
-							<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
-								den mest enkle og essentielle løsning. Vi tror på at maskinen skal
-								arbejde for mennesket. Vi mener at viden bør være frit
-								og tilgængeligt for alle. Vi håber du er enig :-)
-							</p>
-							<p class="more"><a href="{$path}om/" class="common"><span>Mere om In2iSoft »</span></a></p>
+						<div class="chrome_box_head">
+							<xsl:call-template name="secondlevel"/><xsl:comment/>
 						</div>
-						<div class="contact">
-							<h2>Kontakt</h2>
-							<p class="name"><strong>Jonas Brinkmann Munk</strong></p>
-							<p class="email"><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
-							<p class="phone">28 77 63 65</p>
-							<p class="name"><strong>Kenni Graversen</strong></p>
-							<p class="email"><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
-							<p class="phone">22 48 61 53</p>
+						<xsl:if test="//p:page/@id=//p:context/p:home/@page">
+						<div id="poster">
+							<div id="poster_loader">0%</div>
+							<div class="left" id="poster_left"><div id="poster_inner_left"><xsl:comment/></div></div>
+							<div class="right" id="poster_right"><div id="poster_inner_right"><xsl:comment/></div></div>
 						</div>
+						<script type="text/javascript" src="{$path}style/{$design}/js/Poster.js"><xsl:comment/></script>
+						</xsl:if>
+						<xsl:apply-templates select="p:content"/>
+						<xsl:choose>
+							<xsl:when test="//p:page/@id=//p:context/p:home/@page">
+								<div class="chrome_placards">
+									<a class="chrome_placard chrome_placard_left" href="{$path}produkter/onlinepublisher/"><xsl:comment/></a>
+									<a class="chrome_placard chrome_placard_center" href="{$path}produkter/onlineobjects/"><xsl:comment/></a>
+									<a class="chrome_placard chrome_placard_right" href="{$path}produkter/onlineme/"><xsl:comment/></a>
+								</div>
+							</xsl:when>
+							<xsl:otherwise>
+								<div class="chrome_box_foot">
+									<xsl:comment/>
+								</div>
+							</xsl:otherwise>
+						</xsl:choose>
 					</div>
 				</div></div>
 				<div class="chrome_box_bottom"><div><div><xsl:comment/></div></div></div>
+				<div class="chrome_info">
+					<div class="chrome_box_top"><div><div><xsl:comment/></div></div></div>
+					<div class="chrome_box_middle"><div class="chrome_box_middle">
+						<div class="chrome_box_body">
+							<div class="about">
+								<h2>Om In2iSoft</h2>
+								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
+									den mest enkle og essentielle løsning. Vi tror på at maskinen skal
+									arbejde for mennesket. Vi mener at viden bør være frit
+									og tilgængeligt for alle. Vi håber du er enig :-)
+								</p>
+								<p class="more"><a href="{$path}om/" class="common"><span>Mere om In2iSoft »</span></a></p>
+							</div>
+							<div class="contact">
+								<h2>Kontakt</h2>
+								<p class="name"><strong>Jonas Brinkmann Munk</strong></p>
+								<p class="email"><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
+								<p class="phone">28 77 63 65</p>
+								<p class="name"><strong>Kenni Graversen</strong></p>
+								<p class="email"><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
+								<p class="phone">22 48 61 53</p>
+							</div>
+						</div>
+					</div></div>
+					<div class="chrome_box_bottom"><div><div><xsl:comment/></div></div></div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="chrome_footer">
-		<a class="chrome_design">Designet og udviklet af In2iSoft</a>
-			<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
-			<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
-	</div>
-	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-2'"/></xsl:call-template>
-</body>
+		<div class="chrome_footer">
+			<a class="chrome_design">Designet og udviklet af In2iSoft</a>
+				<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
+				<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
+		</div>
+		<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-2'"/></xsl:call-template>
+	</body>
 </html>
 </xsl:template>
 
 
 <xsl:template match="p:content">
 <div>
-<xsl:choose>
-<xsl:when test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
-<xsl:attribute name="class">chrome_content chrome_content_sidebar</xsl:attribute>
-</xsl:when>
-<xsl:otherwise>
-<xsl:attribute name="class">chrome_content</xsl:attribute>
-</xsl:otherwise>
-</xsl:choose>
-<xsl:if test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
-<div class="chrome_sidebar">
-<xsl:call-template name="thirdlevel"/>
-<xsl:apply-templates select="../f:frame/f:newsblock"/>
-<xsl:comment/>
-</div>
-</xsl:if>
-<div class="chrome_inner_content">
-<xsl:apply-templates/>
-<xsl:comment/>
-</div>
+	<xsl:choose>
+		<xsl:when test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
+			<xsl:attribute name="class">chrome_content chrome_content_sidebar</xsl:attribute>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:attribute name="class">chrome_content</xsl:attribute>
+		</xsl:otherwise>
+	</xsl:choose>
+	<xsl:if test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
+		<div class="chrome_sidebar">
+			<xsl:call-template name="thirdlevel"/>
+			<xsl:apply-templates select="../f:frame/f:newsblock"/>
+			<xsl:comment/>
+		</div>
+	</xsl:if>
+	<div class="chrome_inner_content">
+		<xsl:apply-templates/>
+		<xsl:comment/>
+	</div>
 </div>
 </xsl:template>
 

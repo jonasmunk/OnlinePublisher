@@ -1,0 +1,117 @@
+/********************* Common *******************/
+	
+a.common
+{
+	color: #ddd;
+	cursor: pointer;
+}
+
+a.common span
+{
+	color: #0079cd;
+}
+	
+a.common:hover, a.common:hover span
+{
+	color: #0169b2;
+}
+
+h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
+{
+	margin: 0px;
+	color: #333;
+	font-family: "Arial","Helvetica", sans-serif;
+	font-weight: normal;
+}
+
+p.common, ul.common
+{
+	font-family: "Arial","Helvetica", sans-serif;
+	font-size: 9pt;
+	line-height: 160%;
+	text-align: justify;
+}
+
+/*************** Header *************/
+
+.part_header
+{
+	color: #2F5078;
+	font-family: "Arial","Helvetica", sans-serif;
+	font-weight: normal;
+	margin: 0;
+}
+
+h1.part_header, textarea.part_header_1
+{
+	font-size: 18pt;
+}
+
+h2.part_header, textarea.part_header_2
+{
+	font-size: 13pt;
+}
+
+h3.part_header, textarea.part_header_3
+{
+	font-size: 11pt;
+}
+
+h4.part_header, textarea.part_header_4
+{
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+h5.part_header, textarea.part_header_5
+{
+	font-size:10pt;
+	font-weight: bold;
+}
+
+h6.part_header, textarea.part_header_6
+{
+	font-size:10pt;
+	font-weight: bold;
+}
+
+.part_section_header_1
+{
+	padding-bottom: 15px;
+}
+
+.part_section_header_2
+{
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+.part_section_header_3
+{
+	padding-top: 10px;
+}
+
+.part_section_header_4
+{
+	padding-top: 10px;
+}
+
+.part_section_header_5
+{
+	padding-top: 10px;
+}
+
+.part_section_header_6
+{
+	padding-top: 10px;
+}
+
+/*************** Text *************/
+
+div.part_text, textarea.part_text
+{
+	font-family: "Arial","Helvetica", sans-serif;
+	font-size: 10pt;
+	line-height: 1.5em;
+	color: #333;
+}

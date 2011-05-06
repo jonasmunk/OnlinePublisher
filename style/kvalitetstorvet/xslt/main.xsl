@@ -16,27 +16,15 @@
 
 <xsl:template match="p:page">
 <html>
-	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
+	<xsl:call-template name="util:html-attributes"/>
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
 	<link href='http://fonts.googleapis.com/css?family=Nobile:regular,bold|Reenie+Beanie&amp;subset=latin' rel='stylesheet' type='text/css'/>
-	<!--
-	<link href='http://fonts.googleapis.com/css?family=Molengo&amp;subset=latin' rel='stylesheet' type='text/css'/>
-	<link href='http://fonts.googleapis.com/css?family=Neucha&amp;subset=latin' rel='stylesheet' type='text/css'/>
-	-->
-
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.php"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
-	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
-	<![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link>
-	<![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if gt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
-	<![endif]]]></xsl:comment>
+	<xsl:call-template name="util:style"/>
+	<xsl:call-template name="util:style-ie6"/>
+	<xsl:call-template name="util:style-ie7"/>
+	<xsl:call-template name="util:style-ie8"/>
 	<xsl:call-template name="util:scripts"/>
 </head>
 <body>

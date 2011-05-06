@@ -15,14 +15,11 @@
 
 <xsl:template match="p:page">
 <html>
-	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
+	<xsl:call-template name="util:html-attributes"/>
 	<head>
 		<title><xsl:value-of select="@title"/> :: <xsl:value-of select="f:frame/@title"/></title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
-		<meta name="robots" content="index,follow"></meta>
-		<link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'/>
-		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css"/>
-		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
+		<xsl:call-template name="util:metatags"/>
+		<xsl:call-template name="util:style"/>
 		<xsl:call-template name="util:scripts"/>
 	</head>
 	<body>

@@ -131,16 +131,44 @@
 	</xsl:if>
 </xsl:template>
 
+<xsl:template name="util:html-attributes">
+	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
+	<xsl:if test="//p:page/p:meta/p:language">
+		<xsl:attribute name="lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
+		<xsl:attribute name="xml:lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="util:style-ie6">
+	<xsl:comment><![CDATA[[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
+	<![endif]]]></xsl:comment>
+</xsl:template>
+
+<xsl:template name="util:style-ie7">
+	<xsl:comment><![CDATA[[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link>
+	<![endif]]]></xsl:comment>
+</xsl:template>
+
+<xsl:template name="util:style-ie8">
+	<xsl:comment><![CDATA[[if gt IE 7]>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
+	<![endif]]]></xsl:comment>
+</xsl:template>
+
 <xsl:template name="util:style">
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.php"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/style.php"/>
+	<!--
 	<xsl:choose>
 		<xsl:when test="$template='document'">
 			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
 		</xsl:when>
 		<xsl:otherwise>
-			<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
 		</xsl:otherwise>
 	</xsl:choose>
+	-->
 	<xsl:if test="//header:style[contains(@font-family,'Cabin Sketch')] or //text:style[contains(@font-family,'Cabin Sketch')]">
 		<link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'/>
 	</xsl:if>
@@ -156,6 +184,10 @@
 	<xsl:if test="//header:style[contains(@font-family,'Luckiest Guy')] or //text:style[contains(@font-family,'Luckiest Guy')]">
 		<link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css' />
 	</xsl:if>
+	<xsl:if test="//header:style[contains(@font-family,'Dancing Script')] or //text:style[contains(@font-family,'Dancing Script')]">
+		<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css' />
+	</xsl:if>
+	
 </xsl:template>
 
 <xsl:template name="util:weekday">

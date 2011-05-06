@@ -6,6 +6,7 @@
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="p f h n o"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
@@ -15,16 +16,12 @@
 
 <xsl:template match="p:page">
 <html>
-	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
+	<xsl:call-template name="util:html-attributes"/>
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
-	<meta name="robots" content="index,follow"></meta>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/main.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
-	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
-	<![endif]]]></xsl:comment>
+	<xsl:call-template name="util:metatags"/>
+	<xsl:call-template name="util:style"/>
+	<xsl:call-template name="util:style-ie6"/>
 	<xsl:call-template name="util:scripts"/>
 </head>
 <body>

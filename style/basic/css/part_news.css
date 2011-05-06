@@ -46,7 +46,7 @@
 .part_news_title
 {
 	font-size: 12pt;
-	color: #738fa5;
+	color: #333;
 	padding-bottom: 3px;
 }
 
@@ -61,12 +61,13 @@
 
 .part_news_item_title
 {
-	color: #122f3f;
+	font-weight: bold;
+	color: #333;
 }
 
 .part_news_item_description
 {
-	color: #7894a5;
+	color: #333;
 }
 
 .part_news_item_date

@@ -19,3 +19,15 @@ div.part_text p.part_text_first
 {
 	margin: 0;
 }
+
+img.part_text_image_right
+{
+	float: right;
+	margin: 0px 0px 10px 10px;
+}
+
+img.part_text_image_left
+{
+	float: left;
+	margin: 0px 10px 10px 0px;
+}

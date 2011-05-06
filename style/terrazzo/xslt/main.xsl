@@ -15,6 +15,7 @@
 
 <xsl:template match="p:page">
 <html>
+	<xsl:call-template name="util:html-attributes"/>
 <head>
 	<xsl:call-template name="util:metatags"/>
 	<title><xsl:value-of select="@title"/> : <xsl:value-of select="f:frame/@title"/></title>

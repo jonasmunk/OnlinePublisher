@@ -3,21 +3,6 @@ html
 	height: 100%;
 }
 
-a.common
-{
-	color: #ccc;
-}
-
-a.common span
-{
-	color: #3366ee;
-}
-	
-a.common:hover, a.common:hover span
-{
-	color: #112299;
-}
-
 body
 {
 	background: #1764D9 url('../gfx/clouds.jpg') repeat-x scroll center 0;
