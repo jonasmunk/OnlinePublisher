@@ -8,16 +8,6 @@ body
 	color: #3080CB;
 }
 
-td.document_column
-{
-	padding-left: 10px;
-}
-
-td.document_column_first
-{
-	padding-left: 0px;
-}
-
 /********************* Common *******************/
 	
 a.common

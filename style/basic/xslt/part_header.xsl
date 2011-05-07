@@ -7,27 +7,27 @@
  >
 
 <xsl:template match="h:header[@level=1]">
-<h1 class="PartHeader part_header common"><xsl:apply-templates/></h1>
+<h1 class="part_header common"><xsl:apply-templates/></h1>
 </xsl:template>
 
 <xsl:template match="h:header[@level=2]">
-<h2 class="PartHeader part_header common"><xsl:apply-templates/></h2>
+<h2 class="part_header common"><xsl:apply-templates/></h2>
 </xsl:template>
 
 <xsl:template match="h:header[@level=3]">
-<h3 class="PartHeader part_header common"><xsl:apply-templates/></h3>
+<h3 class="part_header common"><xsl:apply-templates/></h3>
 </xsl:template>
 
 <xsl:template match="h:header[@level=4]">
-<h4 class="PartHeader part_header common"><xsl:apply-templates/></h4>
+<h4 class="part_header common"><xsl:apply-templates/></h4>
 </xsl:template>
 
 <xsl:template match="h:header[@level=5]">
-<h5 class="PartHeader part_header common"><xsl:apply-templates/></h5>
+<h5 class="part_header common"><xsl:apply-templates/></h5>
 </xsl:template>
 
 <xsl:template match="h:header[@level=6]">
-<h6 class="PartHeader part_header common"><xsl:apply-templates/></h6>
+<h6 class="part_header common"><xsl:apply-templates/></h6>
 </xsl:template>
 
 <xsl:template match="h:style">
