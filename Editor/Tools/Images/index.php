@@ -20,6 +20,7 @@ $gui='
 	<controller source="groups.js"/>
 	<controller source="upload.js"/>
 	<source name="subsetSource" url="Selection.php"/>
+	<source name="groupOptionsSource" url="../../Services/Model/Items.php?type=imagegroup"/>
 	<source name="groupSource" url="GroupItems.php"/>
 	<!--<source name="typesSource" url="TypeItems.php"/>-->
 	<source name="imagesSource" url="GallerySource.php">
@@ -27,13 +28,12 @@ $gui='
 		<parameter key="group" value="@groupSelection.value"/>
 		<parameter key="subset" value="@subsetSelection.value"/>
 	</source>
+	<!--
 	<source name="filesSource" url="ListImages.php">
-		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="query" value="@search.value"/>
 		<parameter key="group" value="@groupSelection.value"/>
-		<parameter key="type" value="@typeSelection.value"/>
 		<parameter key="main" value="@selector.value"/>
-	</source>
+	</source>-->
 	<layout>
 		<top>
 			<toolbar>
@@ -120,7 +120,7 @@ $gui='
 			<group labels="above">
 				<text label="Titel" key="title"/>
 				<checkboxes label="Grupper:" name="imageGroups" key="groups" max-height="200">
-					<items source="groupSource"/>
+					<items source="groupOptionsSource"/>
 				</checkboxes>
 				<buttons>
 					<button name="cancelImage" title="Annuller"/>

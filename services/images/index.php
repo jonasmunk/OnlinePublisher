@@ -11,6 +11,9 @@ require_once '../../Editor/Classes/Database.php';
 require_once '../../Editor/Classes/Response.php';
 require_once '../../Editor/Classes/Request.php';
 
+if ($_SESSION['core.debug.simulateLatency']) {
+	usleep(rand(1000000,2000000));
+}
 $id = Request::getId();
 
 $recipe = array(

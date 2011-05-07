@@ -5,10 +5,15 @@ ui.listen({
 	],
 	
 	$drop$image$imagegroup : function(dragged,dropped) {
-		In2iGui.request({url:'AddImageToGroup.php',json:{data:{image:dragged.id,group:dropped.value}},onSuccess:function() {
-			imagesSource.refresh();
-			groupSource.refresh();
-		}});
+		In2iGui.request({
+			url:'AddImageToGroup.php',
+			json:{data:{image:dragged.id,group:dropped.value}},
+			message:{start:'Tilføjer til gruppe...',delay:300},
+			onSuccess:function() {
+				imagesSource.refresh();
+				groupSource.refresh();
+			}
+		});
 	},
 		
 	$resolveImageUrl : function(img,width,height) {
@@ -59,12 +64,17 @@ ui.listen({
 		var self = this;
 		var data = imageFormula.getValues();
 		data.id = this.imageId;
-		ui.request({url:'SaveImage.php',json:{data:data},onSuccess:function() {
-			imagesSource.refresh();
-			groupSource.refresh();
-			self._cancelImage();
-			ui.showMessage({text:'Billedet er gemt!',duration:2000});			
-		}});
+		ui.request({
+			url:'SaveImage.php',
+			json:{data:data},
+			message:{start:'Gemmer billede...',delay:300},
+			onSuccess:function() {
+				imagesSource.refresh();
+				groupSource.refresh();
+				self._cancelImage();
+				ui.showMessage({text:'Billedet er gemt!',icon:'common/success',duration:2000});			
+			}
+		});
 	},
 	_cancelImage : function() {
 		imageFormula.reset();
@@ -73,24 +83,34 @@ ui.listen({
 	},
 	_loadImage : function(id) {
 		var self = this;
-		ui.request({url:'LoadImage.php',parameters:{id:id},onJSON:function(data) {
-			self.imageId = id;
-			imageFormula.setValues(data.image);
-			imageGroups.setValue(data.groups);
-			imageWindow.show();
-			imageFormula.focus();
-		}});
+		ui.request({
+			url:'LoadImage.php',
+			parameters:{id:id},
+			message:{start:'Åbner billede...',delay:300},
+			onJSON:function(data) {
+				self.imageId = id;
+				imageFormula.setValues(data.image);
+				imageGroups.setValue(data.groups);
+				imageWindow.show();
+				imageFormula.focus();
+			}
+		});
 	},
 	_deleteImage : function(id) {
 		if (id===this.imageId) {
 			this._cancelImage();
 		}
-		ui.request({url:'DeleteImage.php',parameters:{id:id},onSuccess:function() {
-			imagesSource.refresh();
-			groupSource.refresh();
-			subsetSource.refresh();
-			ui.showMessage({text:'Billedet er nu slettet',duration:2000});
-		}});
+		ui.request({
+			url:'DeleteImage.php',
+			parameters:{id:id},
+			message:{start:'Sletter billede...',delay:300},
+			onSuccess:function() {
+				imagesSource.refresh();
+				groupSource.refresh();
+				subsetSource.refresh();
+				ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
+			}
+		});
 	}
 	
 });

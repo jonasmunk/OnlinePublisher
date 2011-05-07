@@ -19,7 +19,12 @@ ui.listen({
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
-			ui.request({json:{data:values},url:'SaveGroup.php',onSuccess:'groupSaved'});
+			ui.request({
+				json:{data:values},
+				url:'SaveGroup.php',
+				message:{start:'Gemmer gruppe...',success:'Gruppen er gemt',delay:300},
+				onSuccess:'groupSaved'
+			});
 		}
 	},
 	$submit$groupFormula : function() {
@@ -27,12 +32,18 @@ ui.listen({
 	},
 	$success$groupSaved : function() {
 		groupSource.refresh();
+		groupOptionsSource.refresh();
 		this.groupId = null;
 		groupFormula.reset();
 		groupWindow.hide();
 	},
 	$selectionWasOpened$selector : function(item) {
-		ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+		ui.request({
+			parameters:{id:item.value},
+			url:'../../Services/Model/LoadObject.php',
+			onSuccess:'loadGroup',
+			message:{start:'Åbner gruppe...',delay:300}
+		});
 	},
 	$success$loadGroup : function(data) {
 		this.groupId = data.id;
@@ -42,10 +53,16 @@ ui.listen({
 		groupFormula.focus();
 	},
 	$click$deleteGroup : function() {
-		ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
+		ui.request({
+			json:{data:{id:this.groupId}},
+			url:'../../Services/Model/DeleteObject.php',
+			onSuccess:'deleteGroup',
+			message:{start:'Sletter gruppe...',success:'Gruppen er slettet',delay:300}
+		});
 	},
 	$success$deleteGroup : function() {
 		groupSource.refresh();
+		groupOptionsSource.refresh();
 		this.groupId = null;
 		groupFormula.reset();
 		groupWindow.hide();
