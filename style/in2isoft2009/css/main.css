@@ -8,7 +8,6 @@ img
 
 body
 {
-	font-family: "Cantarell","Lucida Grande","Lucida Sans Unicode", sans-serif;
 	padding: 0px;
 	margin: 0px;
 	background: #eeeff0 url('../gfx/bg.png') left top repeat-x;
@@ -182,6 +181,7 @@ ul.chrome_navigation img
 	margin: -5px 10px 0 0;
 }
 
+
 /***************** Sub navigation *************/
 
 
@@ -245,6 +245,21 @@ ul.chrome_sub_navigation a.selected span, ul.chrome_sub_navigation a.highlighted
 {
 	background: url('../gfx/menu_sub_selection.png') right -75px no-repeat;
 }
+/*
+ul.chrome_sub_navigation a.selected
+{
+	background: #eee;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 2px 3px #dde;
+	border: 1px solid #d6d6d6;
+	height: 23px;
+}
+
+ul.chrome_sub_navigation a.selected span
+{
+	background: none;
+}*/
+
 
 /***************** Side navigation *************/
 

@@ -11,6 +11,10 @@ div.part_imagegallery a
 	text-decoration: none;
 }
 
+div.part_imagegallery_framed
+{
+}
+
 div.part_imagegallery_framed a
 {
 	margin: 0px 10px 10px 0px;
@@ -18,11 +22,14 @@ div.part_imagegallery_framed a
 	border-bottom: 1px solid #bbb;
 	border-top: 1px solid #eee;
 	background: #fff;
-	padding: 4px;
 	font-size: 0;
 	line-height: 0;
-	overflow: hidden;
 	position: relative;
+	z-index: 1;
+	background: #fff;
+/*	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; 
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;*/
 }
 
 div.part_imagegallery span
@@ -47,4 +54,46 @@ div.part_imagegallery_changing a
 	display: none;
 	float: none;
 	position: absolute;
+}
+
+div.part_imagegallery_framed a:before,
+div.part_imagegallery_framed a:after {
+	content: '';
+	z-index: -1;
+	position: absolute;
+	left: 14px;
+	bottom: 14px;
+	width: 70%;
+	max-width: 300px; /* avoid rotation causing ugly appearance at large container widths */
+	height: 55%;
+	-webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+	-webkit-transform: skew(-15deg) rotate(-6deg);
+	-moz-transform: skew(-15deg) rotate(-6deg);
+	-ms-transform: skew(-15deg) rotate(-6deg);
+	-o-transform: skew(-15deg) rotate(-6deg);
+	transform: skew(-15deg) rotate(-6deg);
+}
+
+
+div.part_imagegallery_framed a:after {
+	left: auto;
+	right: 14px;
+	-webkit-transform: skew(15deg) rotate(6deg);
+	-moz-transform: skew(15deg) rotate(6deg);
+	-ms-transform: skew(15deg) rotate(6deg);
+	-o-transform: skew(15deg) rotate(6deg);
+	transform: skew(15deg) rotate(6deg);
+}
+
+div.part_imagegallery_framed img
+{
+	border: 4px solid #fff;
+}
+
+div.part_imagegallery_framed span
+{
+	margin: 4px;
+	display: none;
 }
