@@ -108,9 +108,9 @@ In2iGui.Picker.prototype = {
 		n2i.listen(window.document,'mousedown',In2iGui.Picker.mouseup);
 	},
 	drag : function(e) {
-		e = new n2i.Event();
-		this.dragging = true;
+		e = new n2i.Event(e);
 		e.stop();
+		this.dragging = true;
 		this.container.scrollLeft=this.dragX-e.left()+this.dragScroll;
 	},
 	endDrag : function(e) {
