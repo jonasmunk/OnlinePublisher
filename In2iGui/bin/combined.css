@@ -3972,6 +3972,19 @@ div.in2igui_gallery_item img
 	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,.5);
 }
 
+div.in2igui_gallery_item_busy img
+{
+	visibility: hidden;
+}
+
+div.in2igui_gallery_item_error
+{
+	border: 3px dashed rgb(255,0,0);
+	border: 3px dashed rgba(255,0,0,.5);
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
 div.in2igui_gallery_item:hover
 {
 	border-color: #eee;
@@ -3986,6 +3999,32 @@ div.in2igui_gallery_item_selected, div.in2igui_gallery_item_selected:hover
 	background: url('../gfx/hover_bg.png');
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+
+div.in2igui_gallery_busy div.in2igui_gallery_item
+{
+	opacity: .5;
+}
+
+div.in2igui_gallery_progress
+{
+	height: 32px;
+	width: 32px;
+	background: #fff url('../gfx/progress/spinner_white_32.gif') center center no-repeat;
+	padding: 2px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -17px 0 0 -17px;
+	z-index: 1;
+}
+
+div.in2igui_gallery_busy div.in2igui_gallery_progress
+{
+	display: block;
 }div.in2igui_calendar
 {
 	overflow-x: hidden;
@@ -5366,7 +5405,9 @@ span.in2igui_links_remove:hover
 div.in2igui_links_row:hover span.in2igui_links_remove
 {
 	display: inline-block;
-}.in2igui_flip_container
+}/*************** Flip ****************/
+
+.in2igui_flip_container
 {
 	-webkit-perspective: 1000;
 }
@@ -5398,6 +5439,23 @@ div.in2igui_links_row:hover span.in2igui_links_remove
 .in2igui_flip_flipped .in2igui_flip_front
 {
 	-webkit-transform : rotateY(180deg);
+}
+
+/** Leacy **/
+
+.in2igui_flip_back_legacy
+{
+	display: none;
+}
+
+.in2igui_flip_flipped_legacy .in2igui_flip_back_legacy
+{
+	display: block;
+}
+
+.in2igui_flip_flipped_legacy .in2igui_flip_front_legacy
+{
+	display: none;
 }
 
 /********** Cubic *********/

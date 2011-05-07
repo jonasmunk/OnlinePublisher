@@ -110,9 +110,6 @@ In2iGui.Upload.prototype = {
 				w.element.parentNode.removeChild(w.element);
 				buttonContainer.appendChild(w.element);
 			}.bind(this));
-		} else {
-			buttonContainer.innerHTML='<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
-			this.element.appendChild(buttonContainer);
 		}
 		n2i.listen(iframe,'load',function() {this.iframeUploadComplete()}.bind(this));
 	},

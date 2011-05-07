@@ -1,3 +1,5 @@
+/*************** Flip ****************/
+
 .in2igui_flip_container
 {
 	-webkit-perspective: 1000;
@@ -30,6 +32,23 @@
 .in2igui_flip_flipped .in2igui_flip_front
 {
 	-webkit-transform : rotateY(180deg);
+}
+
+/** Leacy **/
+
+.in2igui_flip_back_legacy
+{
+	display: none;
+}
+
+.in2igui_flip_flipped_legacy .in2igui_flip_back_legacy
+{
+	display: block;
+}
+
+.in2igui_flip_flipped_legacy .in2igui_flip_front_legacy
+{
+	display: none;
 }
 
 /********** Cubic *********/

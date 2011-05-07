@@ -29,7 +29,8 @@
 
 <body>
 <button onclick="leftTopToLeftBottom()">left/top &rarr; left/bottom</button>
-<button onclick="leftTopToMiddleMiddle()">left/top &rarr; left/middle</button>
+<button onclick="leftTopToMiddleMiddle()">left/top &rarr; middle/middle</button>
+<button onclick="middleMiddleToLeftTop()">left/top &rarr; middle/middle</button>
 <button onclick="middleMiddleToMiddleMiddle()">middle/middle &rarr; middle/middle</button>
 
 <script type="text/javascript" charset="utf-8">
@@ -37,6 +38,12 @@
 		n2i.place({
 			source:{element:$('source1'),vertical:0,horizontal:0},
 			target:{element:$('target1'),vertical:1,horizontal:0}
+		})
+	}
+	function middleMiddleToLeftTop() {
+		n2i.place({
+			source:{element:$('source1'),vertical:.5,horizontal:.5},
+			target:{element:$('target1'),vertical:0,horizontal:0}
 		})
 	}
 	function leftTopToMiddleMiddle() {

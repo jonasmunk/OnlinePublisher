@@ -215,6 +215,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/In2iGui.Calendar.html">In2iGui.Calendar</a></li>
 	
+	<li><a href="../symbols/In2iGui.ColorPicker.html">In2iGui.ColorPicker</a></li>
+	
 	<li><a href="../symbols/In2iGui.Columns.html">In2iGui.Columns</a></li>
 	
 	<li><a href="../symbols/In2iGui.DatePicker.html">In2iGui.DatePicker</a></li>
@@ -276,6 +278,8 @@ ul.inheritsList
 	<li><a href="../symbols/In2iGui.List.html">In2iGui.List</a></li>
 	
 	<li><a href="../symbols/In2iGui.LocationPicker.html">In2iGui.LocationPicker</a></li>
+	
+	<li><a href="../symbols/In2iGui.MarkupEditor.html">In2iGui.MarkupEditor</a></li>
 	
 	<li><a href="../symbols/In2iGui.Menu.html">In2iGui.Menu</a></li>
 	
@@ -473,6 +477,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">In2iGui.<b><a href="../symbols/In2iGui.html#.Bundle">Bundle</a></b>(strings)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">In2iGui.<b><a href="../symbols/In2iGui.html#.callAncestors">callAncestors</a></b>(obj, method, value, event)
 								</div>
 								<div class="description"></div>
@@ -555,6 +568,15 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">In2iGui.<b><a href="../symbols/In2iGui.html#.createIcon">createIcon</a></b>(icon, size)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">In2iGui.<b><a href="../symbols/In2iGui.html#.destroy">destroy</a></b>(widget)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -786,11 +808,11 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">In2iGui.<b><a href="../symbols/In2iGui.html#.json">json</a></b>(data, url, delegateOrKey)
+								<div class="fixedFont"><b><a href="../symbols/In2iGui.html#listen">listen</a></b>(delegate)
 								</div>
-								<div class="description"></div>
+								<div class="description">Adds a global delegate</div>
 							</td>
 						</tr>
 					
@@ -800,15 +822,6 @@ ul.inheritsList
 								<div class="fixedFont">In2iGui.<b><a href="../symbols/In2iGui.html#.listen">listen</a></b>(d)
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/In2iGui.html#listen">listen</a></b>(delegate)
-								</div>
-								<div class="description">Adds a global delegate</div>
 							</td>
 						</tr>
 					
@@ -1199,6 +1212,42 @@ ul.inheritsList
 							
 								<dt>
 									<b>time</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".Bundle"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">In2iGui.</span><b>Bundle</b>(strings)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>strings</b>
 									
 								</dt>
 								<dd></dd>
@@ -1643,6 +1692,42 @@ ul.inheritsList
 							
 								<dt>
 									<b>size</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".destroy"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">In2iGui.</span><b>destroy</b>(widget)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>widget</b>
 									
 								</dt>
 								<dd></dd>
@@ -2591,15 +2676,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".json"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="listen"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">In2iGui.</span><b>json</b>(data, url, delegateOrKey)
+					<b>listen</b>(delegate)
 					
 					</div>
 					<div class="description">
-						
+						Adds a global delegate
 						
 						
 					</div>
@@ -2611,19 +2696,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>data</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>url</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>delegateOrKey</b>
+									<b>delegate</b>
 									
 								</dt>
 								<dd></dd>
@@ -2660,42 +2733,6 @@ ul.inheritsList
 							
 								<dt>
 									<b>d</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="listen"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>listen</b>(delegate)
-					
-					</div>
-					<div class="description">
-						Adds a global delegate
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>delegate</b>
 									
 								</dt>
 								<dd></dd>
@@ -3412,7 +3449,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Jan 20 2011 09:57:56 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Sat May 07 2011 11:36:42 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

@@ -5843,18 +5843,27 @@ n2i.selection = {
 
 n2i.effect = {
 	makeFlippable : function(options) {
-		n2i.addClass(options.container,'in2igui_flip_container');
-		n2i.addClass(options.front,'in2igui_flip_front');
-		n2i.addClass(options.back,'in2igui_flip_back');
+		if (n2i.browser.webkit) {
+			n2i.addClass(options.container,'in2igui_flip_container');
+			n2i.addClass(options.front,'in2igui_flip_front');
+			n2i.addClass(options.back,'in2igui_flip_back');
+		} else {
+			n2i.addClass(options.front,'in2igui_flip_front_legacy');
+			n2i.addClass(options.back,'in2igui_flip_back_legacy');
+		}
 	},
 	flip : function(options) {
-		var element = n2i.get(options.element);
-		var duration = options.duration || '1s';
-		var front = n2i.firstByClass(element,'in2igui_flip_front');
-		var back = n2i.firstByClass(element,'in2igui_flip_back');
-		front.style.webkitTransitionDuration=duration;
-		back.style.webkitTransitionDuration=duration;
-		n2i.toggleClass(options.element,'in2igui_flip_flipped');
+		if (!n2i.browser.webkit) {
+			n2i.toggleClass(options.element,'in2igui_flip_flipped_legacy');
+		} else {
+			var element = n2i.get(options.element);
+			var duration = options.duration || '1s';
+			var front = n2i.firstByClass(element,'in2igui_flip_front');
+			var back = n2i.firstByClass(element,'in2igui_flip_back');
+			front.style.webkitTransitionDuration=duration;
+			back.style.webkitTransitionDuration=duration;
+			n2i.toggleClass(options.element,'in2igui_flip_flipped');
+		}
 	}
 }
 
