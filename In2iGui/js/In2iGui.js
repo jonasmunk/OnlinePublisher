@@ -74,6 +74,9 @@ In2iGui.prototype = {
 
 		this.reLayout();
 		n2i.listen(window,'resize',this.reLayout.bind(this));
+		if (window.parent && window.parent.In2iGui) {
+			window.parent.In2iGui._frameLoaded(window);
+		}
 	},
 	/** @private */
 	addBehavior : function() {
@@ -241,6 +244,11 @@ In2iGui.prototype = {
 };
 
 In2iGui.confirmOverlays = {};
+
+In2iGui._frameLoaded = function(win) {
+	In2iGui.callSuperDelegates(this,'frameLoaded',win);
+}
+
 
 In2iGui.confirmOverlay = function(options) {
 	var node = options.element || options.widget.getElement(),

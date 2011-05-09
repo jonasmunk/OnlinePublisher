@@ -3684,6 +3684,9 @@ In2iGui.prototype = {
 
 		this.reLayout();
 		n2i.listen(window,'resize',this.reLayout.bind(this));
+		if (window.parent && window.parent.In2iGui) {
+			window.parent.In2iGui._frameLoaded(window);
+		}
 	},
 	/** @private */
 	addBehavior : function() {
@@ -3851,6 +3854,11 @@ In2iGui.prototype = {
 };
 
 In2iGui.confirmOverlays = {};
+
+In2iGui._frameLoaded = function(win) {
+	In2iGui.callSuperDelegates(this,'frameLoaded',win);
+}
+
 
 In2iGui.confirmOverlay = function(options) {
 	var node = options.element || options.widget.getElement(),
@@ -11147,6 +11155,7 @@ In2iGui.Dock = function(options) {
 		this.diff-=15;
 	}
 	this.busy = true;
+	In2iGui.listen(this);
 }
 
 In2iGui.Dock.prototype = {
@@ -11155,6 +11164,7 @@ In2iGui.Dock.prototype = {
 	 */
 	setUrl : function(url) {
 		this._setBusy(true);
+		n2i.getFrameDocument(this.iframe).location.href='about:blank';
 		n2i.getFrameDocument(this.iframe).location.href=url;
 	},
 	_load : function() {
@@ -11165,6 +11175,11 @@ In2iGui.Dock.prototype = {
 			n2i.setStyle(this.progress,{display:'block',height:this.iframe.clientHeight});
 		} else {
 			this.progress.style.display = 'none';
+		}
+	},
+	$frameLoaded : function(win) {
+		if (win==n2i.getFrameWindow(this.iframe)) {
+			this._setBusy(false);
 		}
 	},
 	/** @private */

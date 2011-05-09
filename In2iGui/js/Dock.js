@@ -19,6 +19,7 @@ In2iGui.Dock = function(options) {
 		this.diff-=15;
 	}
 	this.busy = true;
+	In2iGui.listen(this);
 }
 
 In2iGui.Dock.prototype = {
@@ -27,6 +28,7 @@ In2iGui.Dock.prototype = {
 	 */
 	setUrl : function(url) {
 		this._setBusy(true);
+		n2i.getFrameDocument(this.iframe).location.href='about:blank';
 		n2i.getFrameDocument(this.iframe).location.href=url;
 	},
 	_load : function() {
@@ -37,6 +39,11 @@ In2iGui.Dock.prototype = {
 			n2i.setStyle(this.progress,{display:'block',height:this.iframe.clientHeight});
 		} else {
 			this.progress.style.display = 'none';
+		}
+	},
+	$frameLoaded : function(win) {
+		if (win==n2i.getFrameWindow(this.iframe)) {
+			this._setBusy(false);
 		}
 	},
 	/** @private */
