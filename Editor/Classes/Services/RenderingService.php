@@ -395,6 +395,8 @@ class RenderingService {
 		} else {
 			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
+			header("Cache-Control: public");
+			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
 			header("Content-Type: text/html; charset=UTF-8");
 			echo $html;
 		}

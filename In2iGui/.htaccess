@@ -1,3 +1,10 @@
+# 5 minutes = A300
+# 1 hour = A3600
+# 1 day = A86400
+# 1 week = A604800
+# 1 month = A2592000
+# 2 months = A5184000
+
 <IfModule mod_headers.c>
 <FilesMatch "\.(jpg|jpeg|png|gif|css|js|swf)$">
 # 1 day
@@ -8,18 +15,28 @@ Header unset Cookie
 
 <IfModule mod_expires.c>
 ExpiresActive On
-ExpiresDefault A300
-ExpiresByType image/x-icon A2592000
-ExpiresByType application/x-javascript A3600
-ExpiresByType text/css A3600
+
+# 1 month
+ExpiresDefault A2592000
+
+# 1 week
+ExpiresByType application/x-javascript A604800
+ExpiresByType text/javascript A604800
+ExpiresByType application/javascript A604800
+ExpiresByType text/css A604800
 ExpiresByType image/gif A604800
 ExpiresByType image/png A604800
 ExpiresByType image/jpeg A604800
-ExpiresByType text/plain A300
-ExpiresByType application/x-shockwave-flash A604800
-ExpiresByType video/x-flv A604800
-ExpiresByType application/pdf A604800
-ExpiresByType text/html A300
+
+#ExpiresByType image/x-icon A2592000
+#ExpiresByType image/gif A604800
+#ExpiresByType image/png A604800
+#ExpiresByType image/jpeg A604800
+#ExpiresByType text/plain A300
+#ExpiresByType application/x-shockwave-flash A604800
+#ExpiresByType video/x-flv A604800
+#ExpiresByType application/pdf A604800
+#ExpiresByType text/html A300
 </IfModule>
 
 <IfModule mod_deflate.c>
