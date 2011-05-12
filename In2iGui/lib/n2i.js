@@ -373,8 +373,8 @@ if (document.querySelectorAll) {
 	}
 } else {
 	n2i.byClass = function(parentElement,className,tag) {
-		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
-		var out = [];
+		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*'),
+			out = [];
 		for (var i=0;i<children.length;i++) {
 			if (n2i.hasClass(children[i],className)) {
 				out[out.length]=children[i];
@@ -384,6 +384,12 @@ if (document.querySelectorAll) {
 	}
 }
 
+n2i.byTag = function(node,name) {
+	var nl = node.getElementsByTagName(name),
+		l=[];
+	for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
+	return l;
+}
 
 n2i.byId = function(e,id) {
 	var children = e.childNodes;

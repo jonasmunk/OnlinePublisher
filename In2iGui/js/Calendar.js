@@ -297,8 +297,8 @@ In2iGui.DatePicker.create = function(options) {
 In2iGui.DatePicker.prototype = {
 	addBehavior : function() {
 		var self = this;
-		this.cells = n2i.firstByClass(this.element,'td');
-		this.each(this.cells,function(cell,index) {
+		this.cells = n2i.byTag(this.element,'td');
+		n2i.each(this.cells,function(cell,index) {
 			n2i.listen(cell,'mousedown',function() {self.selectCell(index)});
 		})
 		var next = n2i.firstByClass(this.element,'in2igui_datepicker_next');
@@ -313,7 +313,7 @@ In2iGui.DatePicker.prototype = {
 		this.updateUI();
 	},
 	updateUI : function() {
-		this.title.update(this.viewDate.dateFormat('F Y'));
+		n2i.dom.setText(this.title,this.viewDate.dateFormat('F Y'));
 		var isSelectedYear =  this.value.getFullYear()==this.viewDate.getFullYear();
 		var month = this.viewDate.getMonth();
 		for (var i=0; i < this.cells.length; i++) {

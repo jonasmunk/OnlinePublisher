@@ -220,7 +220,7 @@ ui.listen({
 	},
 	
 	$click$deletePerson : function() {
-		u.request({json:{data:{id:this.personId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePerson'});
+		ui.request({json:{data:{id:this.personId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePerson'});
 	},
 	$success$deletePerson : function() {
 		personEditor.hide();
