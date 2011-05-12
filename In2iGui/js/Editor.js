@@ -412,7 +412,6 @@ In2iGui.Editor.prototype = {
 		
 	},
 	endPartDrag : function() {
-		In2iGui.get();
 	}
 }
 

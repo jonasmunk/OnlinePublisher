@@ -44,7 +44,7 @@
 	In2iGui.state = '<xsl:value-of select="@state"/>';
 	In2iGui.context = '<xsl:value-of select="$context"/>';
 	<xsl:for-each select="i:controller">
-		In2iGui.get().listen(<xsl:value-of select="@name"/>);
+		In2iGui.listen(<xsl:value-of select="@name"/>);
 	</xsl:for-each>
 	</script>
 	<xsl:call-template name="dwr-setup"/>

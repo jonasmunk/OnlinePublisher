@@ -10,7 +10,7 @@
 				<text label="Kodeord:" secret="true"/>
 				<buttons top="5">
 					<button title="Annuller"/>
-					<button title="Log in" highlighted="true" action="In2iGui.get().alert({title:'The user does not exist',emotion:'gasp',button:'Hey!'});"/>
+					<button title="Log in" highlighted="true" action="In2iGui.alert({title:'The user does not exist',emotion:'gasp',button:'Hey!'});"/>
 				</buttons>
 			</group>
 		</formula>

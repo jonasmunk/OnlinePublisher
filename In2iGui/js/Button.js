@@ -78,7 +78,7 @@ In2iGui.Button.prototype = {
 	fireClick : function() {
 		this.fire('click');
 		if (this.options.submit) {
-			var form = In2iGui.get().getAncestor(this,'in2igui_formula');
+			var form = In2iGui.getAncestor(this,'in2igui_formula');
 			if (form) {form.submit();}
 		}
 	},

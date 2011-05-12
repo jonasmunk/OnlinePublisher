@@ -5752,6 +5752,24 @@ n2i.getStyle = function(element, style) {
 	return value == 'auto' ? null : value;
 }
 
+n2i.getTopPad = function(element) {
+	var all,top;
+	all = parseInt(n2i.getStyle(element,'padding'),10);
+	top = parseInt(n2i.getStyle(element,'padding-top'),10);
+	if (all) {return all;}
+	if (top) {return top;}
+	return 0;
+}
+
+n2i.getBottomPad = function(element) {
+	var all,bottom;
+	all = parseInt(n2i.getStyle(element,'padding'),10);
+	bottom = parseInt(n2i.getStyle(element,'padding-bottom'),10);
+	if (all) {return all;}
+	if (bottom) {return bottom;}
+	return 0;
+}
+
 n2i.setOpacity = function(element,opacity) {
 	if (!n2i.browser.opacity) {
 		if (opacity==1) {
@@ -8505,256 +8523,74 @@ Date.patterns = {
     UniversalSortableDateTimePattern: "Y-m-d H:i:sO",
     YearMonthPattern: "F, Y"};
 /**
-  The base class of the In2iGui framework
-  @constructor
+  The namespace of the In2iGui framework
+  @namespace
  */
-function In2iGui() {
-	/** {boolean} Is true when the DOM is loaded */
-	this.domLoaded = false;
-	/** @private */
-	this.overflows = null;
-	/** @private */
-	this.delegates = [];
-	/** @private */
-	this.objects = {};
-	/** @private */
-	this.layoutWidgets = [];
-	/** @private */
-	this.addBehavior();
+var In2iGui = {
+	domReady : false,
+	context : '',
+	language : 'en',
+
+	layoutWidgets : [],
+	objects : [],
+	delegates : [],
+
+	state : 'default',
+
+	latestObjectIndex : 0,
+	latestIndex : 500,
+	latestPanelIndex : 1000,
+	latestAlertIndex : 1500,
+	latestTopIndex : 2000,
+	toolTips : {},
+	confirmOverlays : {}
 }
 
-window.ui = In2iGui;
+window.ui = In2iGui; // TODO: old namespace
 
-/** @private */
-In2iGui.latestObjectIndex = 0;
-/** @private */
-In2iGui.latestIndex = 500;
-/** @private */
-In2iGui.latestPanelIndex = 1000;
-/** @private */
-In2iGui.latestAlertIndex = 1500;
-/** @private */
-In2iGui.latestTopIndex = 2000;
-/** @private */
-In2iGui.toolTips = {};
+if (window.hui) {
+	window.hui.ui = In2iGui;
+}
 
-In2iGui.context = '';
-In2iGui.language = 'en';
-
-In2iGui.state = 'default';
 
 /** Gets the one instance of In2iGui */
 In2iGui.get = function(nameOrWidget) {
-	if (!In2iGui.instance) {
-		In2iGui.instance = new In2iGui();
-	}
 	if (nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
 		}
-		return In2iGui.instance.objects[nameOrWidget];
+		return In2iGui.objects[nameOrWidget];
 	} else {
-		return In2iGui.instance;
+		return In2iGui;
 	}
 };
 
 n2i.onReady(function() {
-	In2iGui.get().ignite();
-});
-
-In2iGui.prototype = {
-	/** @private */
-	ignite : function() {
-		if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
-			window.dwr.engine.setErrorHandler(function(msg,e) {
-				n2i.log(msg);
-				n2i.log(e);
-				In2iGui.get().alert({title:'An unexpected error occurred!',text:msg,emotion:'gasp'});
-			});
-		}
-		this.domLoaded = true;
-		In2iGui.domReady = true;
-		this.resize();
-		//In2iGui.callSuperDelegates(this,'interfaceIsReady');
-		In2iGui.callSuperDelegates(this,'ready');
-
-		this.reLayout();
-		n2i.listen(window,'resize',this.reLayout.bind(this));
-		if (window.parent && window.parent.In2iGui) {
-			window.parent.In2iGui._frameLoaded(window);
-		}
-	},
-	/** @private */
-	addBehavior : function() {
-		n2i.listen(window,'resize',this.resize.bind(this));
-	},
-	/** Adds a global delegate
-	 * @deprecated
-	*/
-	listen : function(delegate) {
-		this.delegates.push(delegate);
-	},
-	getTopPad : function(element) {
-		var all,top;
-		all = parseInt(n2i.getStyle(element,'padding'),10);
-		top = parseInt(n2i.getStyle(element,'padding-top'),10);
-		if (all) {return all;}
-		if (top) {return top;}
-		return 0;
-	},
-	getBottomPad : function(element) {
-		var all,bottom;
-		all = parseInt(n2i.getStyle(element,'padding'),10);
-		bottom = parseInt(n2i.getStyle(element,'padding-bottom'),10);
-		if (all) {return all;}
-		if (bottom) {return bottom;}
-		return 0;
-	},
-	/** @private */
-	resize : function() {
-		if (!this.overflows) {return;}
-		var height = n2i.getViewPortHeight();
-		for (var i=0; i < this.overflows.length; i++) {
-			var overflow = this.overflows[i];
-			if (n2i.browser.webkit || n2i.browser.gecko) {
-				overflow.element.style.display='none';
-				overflow.element.style.width = overflow.element.parentNode.clientWidth+'px';
-				overflow.element.style.display='';
-			}
-			overflow.element.style.height = height+overflow.diff+'px';
-		};
-	},
-	registerOverflow : function(id,diff) {
-		if (!this.overflows) {this.overflows=[];}
-		var overflow = n2i.get(id);
-		this.overflows.push({element:overflow,diff:diff});
-	},
-	/** @private */
-	alert : function(options) {
-		if (!this.alertBox) {
-			this.alertBox = In2iGui.Alert.create(options);
-			this.alertBoxButton = In2iGui.Button.create({name:'in2iGuiAlertBoxButton',text : 'OK'});
-			this.alertBoxButton.listen(this);
-			this.alertBox.addButton(this.alertBoxButton);
-		} else {
-			this.alertBox.update(options);
-		}
-		this.alertBoxCallBack = options.onOK;
-		this.alertBoxButton.setText(options.button ? options.button : 'OK');
-		this.alertBox.show();
-	},
-	/** @private */
-	$click$in2iGuiAlertBoxButton : function() {
-		In2iGui.get().alertBox.hide();
-		if (this.alertBoxCallBack) {
-			this.alertBoxCallBack();
-			this.alertBoxCallBack = null;
-		}
-	},
-	confirm : function(options) {
-		if (!options.name) {
-			options.name = 'in2iguiConfirm';
-		}
-		var alert = In2iGui.get(options.name);
-		var ok;
-		if (!alert) {
-			alert = In2iGui.Alert.create(options);
-			var cancel = In2iGui.Button.create({name:name+'_cancel',text : options.cancel || 'Cancel',highlighted:options.highlighted==='cancel'});
-			cancel.listen({$click:function(){
-				alert.hide();
-				if (options.onCancel) {
-					options.onCancel();
-				}
-				In2iGui.callDelegates(alert,'cancel');
-			}});
-			alert.addButton(cancel);
-		
-			ok = In2iGui.Button.create({name:name+'_ok',text : options.ok || 'OK',highlighted:options.highlighted==='ok'});
-			alert.addButton(ok);
-		} else {
-			alert.update(options);
-			ok = In2iGui.get(name+'_ok');
-			ok.setText(options.ok || 'OK');
-			ok.setHighlighted(options.highlighted=='ok');
-			ok.clearDelegates();
-			In2iGui.get(name+'_cancel').setText(options.ok || 'Cancel');
-			In2iGui.get(name+'_cancel').setHighlighted(options.highlighted=='cancel');
-			if (options.cancel) {In2iGui.get(name+'_cancel').setText(options.cancel);}
-		}
-		ok.listen({$click:function(){
-			alert.hide();
-			if (options.onOK) {
-				options.onOK();
-			}
-			In2iGui.callDelegates(alert,'ok');
-		}});
-		alert.show();
-	},
-	reLayout : function() {
-		for (var i = this.layoutWidgets.length - 1; i >= 0; i--){
-			this.layoutWidgets[i]['$$layout']();
-		};
-	},
-	getDescendants : function(widgetOrElement) {
-		var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
-		if (e) {
-			var d = e.getElementsByTagName('*');
-			var o = [];
-			for (var key in this.objects) {
-				o.push(this.objects[key]);
-			}
-			for (var i=0; i < d.length; i++) {
-				for (var j=0; j < o.length; j++) {
-					if (d[i]==o[j].element) {
-						desc.push(o[j]);
-					}
-				};
-				
-			};
-		}
-		return desc;
-	},
-	/** Gets all ancestors of a widget
-		@param {Widget} A widget
-		@returns {Array} An array of all ancestors
-	*/
-	getAncestors : function(widget) {
-		var desc = [];
-		var e = widget.element;
-		if (e) {
-			var a = n2i.getAncestors(e);
-			var o = [];
-			for (var key in this.objects) {
-				o.push(this.objects[key]);
-			}
-			for (var i=0; i < a.length; i++) {
-				for (var j=0; j < o.length; j++) {
-					if (o[j].element==a[i]) {
-						desc.push(o[j]);
-					}
-					
-				};
-			};
-		}
-		return desc;
-	},
-	getAncestor : function(widget,cls) {
-		var a = this.getAncestors(widget);
-		for (var i=0; i < a.length; i++) {
-			if (n2i.hasClass(a[i].getElement(),cls)) {
-				return a[i];
-			}
-		};
-		return null;
+	if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
+		window.dwr.engine.setErrorHandler(function(msg,e) {
+			n2i.log(msg);
+			n2i.log(e);
+		});
 	}
-};
-
-In2iGui.confirmOverlays = {};
+	In2iGui.callSuperDelegates(this,'ready');
+	n2i.listen(window,'resize',In2iGui._resize);
+	In2iGui._resize();
+	In2iGui.domReady = true;
+	if (window.parent && window.parent.In2iGui) {
+		window.parent.In2iGui._frameLoaded(window);
+	}
+});
 
 In2iGui._frameLoaded = function(win) {
 	In2iGui.callSuperDelegates(this,'frameLoaded',win);
 }
 
+/** @private */
+In2iGui._resize = function() {
+	for (var i = In2iGui.layoutWidgets.length - 1; i >= 0; i--){
+		In2iGui.layoutWidgets[i]['$$layout']();
+	};
+}
 
 In2iGui.confirmOverlay = function(options) {
 	var node = options.element || options.widget.getElement(),
@@ -8786,13 +8622,13 @@ In2iGui.confirmOverlay = function(options) {
 }
 
 In2iGui.destroy = function(widget) {
-	var objects = In2iGui.get().objects;
+	var objects = In2iGui.objects;
 	delete(objects[widget.name]);
 }
 
 In2iGui.destroyDescendants = function(element) {
-	var desc = In2iGui.get().getDescendants(element);
-	var objects = In2iGui.get().objects;
+	var desc = In2iGui.getDescendants(element);
+	var objects = In2iGui.objects;
 	for (var i=0; i < desc.length; i++) {
 		var obj  = delete(objects[desc[i].name]);
 		if (!obj) {
@@ -8801,9 +8637,65 @@ In2iGui.destroyDescendants = function(element) {
 	};
 }
 
+/** Gets all ancestors of a widget
+	@param {Widget} A widget
+	@returns {Array} An array of all ancestors
+*/
+In2iGui.getAncestors = function(widget) {
+	var desc = [];
+	var e = widget.element;
+	if (e) {
+		var a = n2i.getAncestors(e);
+		var o = [];
+		for (var key in In2iGui.objects) {
+			o.push(In2iGui.objects[key]);
+		}
+		for (var i=0; i < a.length; i++) {
+			for (var j=0; j < o.length; j++) {
+				if (o[j].element==a[i]) {
+					desc.push(o[j]);
+				}
+			}
+		}
+	}
+	return desc;
+}
+
+In2iGui.getDescendants = function(widgetOrElement) {
+	var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
+	if (e) {
+		var d = e.getElementsByTagName('*');
+		var o = [];
+		for (var key in In2iGui.objects) {
+			o.push(In2iGui.objects[key]);
+		}
+		for (var i=0; i < d.length; i++) {
+			for (var j=0; j < o.length; j++) {
+				if (d[i]==o[j].element) {
+					desc.push(o[j]);
+				}
+			};
+			
+		};
+	}
+	return desc;
+}
+
+In2iGui.getAncestor = function(widget,cls) {
+	var a = In2iGui.getAncestors(widget);
+	for (var i=0; i < a.length; i++) {
+		if (n2i.hasClass(a[i].getElement(),cls)) {
+			return a[i];
+		}
+	};
+	return null;
+}
+
+
+
 In2iGui.changeState = function(state) {
 	if (In2iGui.state===state) {return;}
-	var all = In2iGui.get().objects,
+	var all = In2iGui.objects,
 		key,obj;
 	for (key in all) {
 		obj = all[key];
@@ -8883,8 +8775,66 @@ In2iGui.hideCurtain = function(widget) {
 
 //////////////////////////////// Message //////////////////////////////
 
-In2iGui.alert = function(o) {
-	In2iGui.get().alert(o);
+In2iGui.confirm = function(options) {
+	if (!options.name) {
+		options.name = 'in2iguiConfirm';
+	}
+	var alert = In2iGui.get(options.name);
+	var ok;
+	if (!alert) {
+		alert = In2iGui.Alert.create(options);
+		var cancel = In2iGui.Button.create({name:name+'_cancel',text : options.cancel || 'Cancel',highlighted:options.highlighted==='cancel'});
+		cancel.listen({$click:function(){
+			alert.hide();
+			if (options.onCancel) {
+				options.onCancel();
+			}
+			In2iGui.callDelegates(alert,'cancel');
+		}});
+		alert.addButton(cancel);
+	
+		ok = In2iGui.Button.create({name:name+'_ok',text : options.ok || 'OK',highlighted:options.highlighted==='ok'});
+		alert.addButton(ok);
+	} else {
+		alert.update(options);
+		ok = In2iGui.get(name+'_ok');
+		ok.setText(options.ok || 'OK');
+		ok.setHighlighted(options.highlighted=='ok');
+		ok.clearDelegates();
+		In2iGui.get(name+'_cancel').setText(options.ok || 'Cancel');
+		In2iGui.get(name+'_cancel').setHighlighted(options.highlighted=='cancel');
+		if (options.cancel) {In2iGui.get(name+'_cancel').setText(options.cancel);}
+	}
+	ok.listen({$click:function(){
+		alert.hide();
+		if (options.onOK) {
+			options.onOK();
+		}
+		In2iGui.callDelegates(alert,'ok');
+	}});
+	alert.show();
+}
+
+In2iGui.alert = function(options) {
+	if (!this.alertBox) {
+		this.alertBox = In2iGui.Alert.create(options);
+		this.alertBoxButton = In2iGui.Button.create({name:'in2iGuiAlertBoxButton',text : 'OK'});
+		this.alertBoxButton.listen({
+			$click$in2iGuiAlertBoxButton : function() {
+				In2iGui.alertBox.hide();
+				if (In2iGui.alertBoxCallBack) {
+					In2iGui.alertBoxCallBack();
+					In2iGui.alertBoxCallBack = null;
+				}
+			}
+		});
+		this.alertBox.addButton(this.alertBoxButton);
+	} else {
+		this.alertBox.update(options);
+	}
+	this.alertBoxCallBack = options.onOK;
+	this.alertBoxButton.setText(options.button ? options.button : 'OK');
+	this.alertBox.show();
 };
 
 In2iGui.showMessage = function(options) {
@@ -9145,8 +9095,7 @@ In2iGui.extend = function(obj,options) {
 		obj.element = n2i.get(options.element);
 		obj.name = options.name;
 	}
-	var ctrl = In2iGui.get();
-	ctrl.objects[obj.name] = obj;
+	In2iGui.objects[obj.name] = obj;
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		n2i.addToArray(this.delegates,delegate);
@@ -9173,22 +9122,21 @@ In2iGui.extend = function(obj,options) {
 		obj.valueForProperty = function(p) {return this[p]};
 	}
 	if (obj['$$layout']) {
-		ctrl.layoutWidgets.push(obj);
+		In2iGui.layoutWidgets.push(obj);
 	}
 };
 
 In2iGui.callDelegatesDrop = function(dragged,dropped) {
-	var gui = In2iGui.get();
-	for (var i=0; i < gui.delegates.length; i++) {
-		if (gui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
-			gui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
+	for (var i=0; i < In2iGui.delegates.length; i++) {
+		if (In2iGui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
+			In2iGui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
 		}
 	}
 };
 
 In2iGui.callAncestors = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
-	var d = In2iGui.get().getAncestors(obj);
+	var d = In2iGui.getAncestors(obj);
 	for (var i=0; i < d.length; i++) {
 		if (d[i][method]) {
 			d[i][method](value,event);
@@ -9203,7 +9151,7 @@ In2iGui.callDescendants = function(obj,method,value,event) {
 	if (!method[0]=='$') {
 		method = '$'+method;
 	}
-	var d = In2iGui.get().getDescendants(obj);
+	var d = In2iGui.getDescendants(obj);
 	for (var i=0; i < d.length; i++) {
 		if (d[i][method]) {
 			thisResult = d[i][method](value,event);
@@ -9215,8 +9163,8 @@ In2iGui.callVisible = function(widget) {
 	In2iGui.callDescendants(widget,'$visibilityChanged');
 }
 
-In2iGui.listen = function(d) {
-	In2iGui.get().listen(d);
+In2iGui.listen = function(delegate) {
+	In2iGui.delegates.push(delegate);
 }
 
 In2iGui.callDelegates = function(obj,method,value,event) {
@@ -9247,10 +9195,9 @@ In2iGui.callDelegates = function(obj,method,value,event) {
 
 In2iGui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
-	var gui = In2iGui.get();
 	var result = null;
-	for (var i=0; i < gui.delegates.length; i++) {
-		var delegate = gui.delegates[i];
+	for (var i=0; i < In2iGui.delegates.length; i++) {
+		var delegate = In2iGui.delegates[i];
 		var thisResult = null;
 		if (obj.name && delegate['$'+method+'$'+obj.name]) {
 			thisResult = delegate['$'+method+'$'+obj.name](value,event);
@@ -9270,9 +9217,8 @@ In2iGui.resolveImageUrl = function(widget,img,width,height) {
 			return widget.delegates[i].$resolveImageUrl(img,width,height);
 		}
 	};
-	var gui = In2iGui.get();
-	for (var j=0; j < gui.delegates.length; j++) {
-		var delegate = gui.delegates[j];
+	for (var j=0; j < In2iGui.delegates.length; j++) {
+		var delegate = In2iGui.delegates[j];
 		if (delegate.$resolveImageUrl) {
 			return delegate.$resolveImageUrl(img,width,height);
 		}
@@ -9593,7 +9539,7 @@ In2iGui.startDrag = function(e,element,options) {
 };
 
 In2iGui.findDropTypes = function(drag) {
-	var gui = In2iGui.get();
+	var gui = In2iGui;
 	var drops = null;
 	for (var i=0; i < gui.delegates.length; i++) {
 		if (gui.delegates[i].dragDrop) {
@@ -9873,7 +9819,7 @@ In2iGui.Formula.prototype = {
 	/** Returns a map of all values of descendants */
 	getValues : function() {
 		var data = {};
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key && d[i].getValue) {
 				data[d[i].options.key] = d[i].getValue();
@@ -9885,7 +9831,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Sets the values of the descendants */
 	setValues : function(values) {
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key) {
 				var key = d[i].options.key;
@@ -9897,7 +9843,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Sets focus in the first found child */
 	focus : function() {
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].focus) {
 				d[i].focus();
@@ -9907,7 +9853,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Resets all descendants */
 	reset : function() {
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].reset) {
 				d[i].reset();
@@ -10084,7 +10030,7 @@ In2iGui.Formula.Text.prototype = {
 	onKeyUp : function(e) {
 		if (!this.multiline && e.keyCode===n2i.KEY_RETURN) {
 			this.fire('submit');
-			var form = In2iGui.get().getAncestor(this,'in2igui_formula');
+			var form = In2iGui.getAncestor(this,'in2igui_formula');
 			if (form) {form.submit();}
 			return;
 		}
@@ -12316,7 +12262,7 @@ In2iGui.Button.prototype = {
 	fireClick : function() {
 		this.fire('click');
 		if (this.options.submit) {
-			var form = In2iGui.get().getAncestor(this,'in2igui_formula');
+			var form = In2iGui.getAncestor(this,'in2igui_formula');
 			if (form) {form.submit();}
 		}
 	},
@@ -14410,7 +14356,6 @@ In2iGui.Editor.prototype = {
 		
 	},
 	endPartDrag : function() {
-		In2iGui.get();
 	}
 }
 

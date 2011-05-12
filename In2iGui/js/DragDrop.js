@@ -25,7 +25,7 @@ In2iGui.startDrag = function(e,element,options) {
 };
 
 In2iGui.findDropTypes = function(drag) {
-	var gui = In2iGui.get();
+	var gui = In2iGui;
 	var drops = null;
 	for (var i=0; i < gui.delegates.length; i++) {
 		if (gui.delegates[i].dragDrop) {

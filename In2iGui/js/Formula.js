@@ -33,7 +33,7 @@ In2iGui.Formula.prototype = {
 	/** Returns a map of all values of descendants */
 	getValues : function() {
 		var data = {};
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key && d[i].getValue) {
 				data[d[i].options.key] = d[i].getValue();
@@ -45,7 +45,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Sets the values of the descendants */
 	setValues : function(values) {
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key) {
 				var key = d[i].options.key;
@@ -57,7 +57,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Sets focus in the first found child */
 	focus : function() {
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].focus) {
 				d[i].focus();
@@ -67,7 +67,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Resets all descendants */
 	reset : function() {
-		var d = In2iGui.get().getDescendants(this);
+		var d = In2iGui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].reset) {
 				d[i].reset();
@@ -244,7 +244,7 @@ In2iGui.Formula.Text.prototype = {
 	onKeyUp : function(e) {
 		if (!this.multiline && e.keyCode===n2i.KEY_RETURN) {
 			this.fire('submit');
-			var form = In2iGui.get().getAncestor(this,'in2igui_formula');
+			var form = In2iGui.getAncestor(this,'in2igui_formula');
 			if (form) {form.submit();}
 			return;
 		}

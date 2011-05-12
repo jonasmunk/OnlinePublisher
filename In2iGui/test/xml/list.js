@@ -10,10 +10,10 @@ var controller = {
 		list.loadData('data/list_users.xml');
 	},
 	$drop$user$folder : function(dragged,target) {
-		In2iGui.get().alert({text:Object.toJSON(dragged)+' was dropped on '+Object.toJSON(target)});
+		In2iGui.alert({text:Object.toJSON(dragged)+' was dropped on '+Object.toJSON(target)});
 	},
 	$drop$icon$folder : function(dragged,target) {
-		In2iGui.get().alert({text:Object.toJSON(dragged)+' was dropped on '+Object.toJSON(target)});
+		In2iGui.alert({text:Object.toJSON(dragged)+' was dropped on '+Object.toJSON(target)});
 	},
 	$listRowWasOpened$list : function(info) {
 		alert(Object.toJSON(info))

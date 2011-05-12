@@ -856,6 +856,24 @@ n2i.getStyle = function(element, style) {
 	return value == 'auto' ? null : value;
 }
 
+n2i.getTopPad = function(element) {
+	var all,top;
+	all = parseInt(n2i.getStyle(element,'padding'),10);
+	top = parseInt(n2i.getStyle(element,'padding-top'),10);
+	if (all) {return all;}
+	if (top) {return top;}
+	return 0;
+}
+
+n2i.getBottomPad = function(element) {
+	var all,bottom;
+	all = parseInt(n2i.getStyle(element,'padding'),10);
+	bottom = parseInt(n2i.getStyle(element,'padding-bottom'),10);
+	if (all) {return all;}
+	if (bottom) {return bottom;}
+	return 0;
+}
+
 n2i.setOpacity = function(element,opacity) {
 	if (!n2i.browser.opacity) {
 		if (opacity==1) {
