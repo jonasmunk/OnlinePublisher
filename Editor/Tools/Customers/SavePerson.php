@@ -9,9 +9,7 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/Objects/Person.php';
 
 $data = Request::getObject('data');
-error_log(print_r($data,true));
-error_log(is_string($data->groups) ? 'yes' : 'no');
-//exit;
+
 if (intval($data->person->id)>0) {
 	$person = Person::load($data->person->id);
 } else {

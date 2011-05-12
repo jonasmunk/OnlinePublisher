@@ -8,6 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Object.php';
 require_once '../../Classes/Request.php';
+require_once '../../Classes/Utilities/StringUtils.php';
 require_once '../../Classes/Objects/Emailaddress.php';
 require_once '../../Classes/Objects/Person.php';
 require_once '../../Classes/Objects/Phonenumber.php';
@@ -43,8 +44,8 @@ echo '<?xml version="1.0"?>
 	<header title="Adresse" width="30"/>
 </headers>';
 foreach ($result->getList() as $object) {
-	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="common/person" title="'.In2iGui::escape($object->getTitle()).'">'.
-	'<cell icon="common/person">'.In2iGui::escape($object->getTitle()).'</cell>'.
+	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="common/person" title="'.StringUtils::escapeXML($object->getTitle()).'">'.
+	'<cell icon="common/person">'.StringUtils::escapeXML($object->getTitle()).'</cell>'.
 	'<cell>'.buildEmails($object).'</cell>'.
 	'<cell>'.buildPhones($object).'</cell>'.
 	'<cell>'.buildAddress($object).'</cell>'.
@@ -54,10 +55,10 @@ foreach ($result->getList() as $object) {
 echo '</list>';
 
 function buildAddress($person) {
-	$addr = In2iGui::escape($person->getStreetname());
-	$zipcode = In2iGui::escape($person->getZipcode());
-	$city = In2iGui::escape($person->getCity());
-	$country = In2iGui::escape($person->getCountry());
+	$addr = StringUtils::escapeXML($person->getStreetname());
+	$zipcode = StringUtils::escapeXML($person->getZipcode());
+	$city = StringUtils::escapeXML($person->getCity());
+	$country = StringUtils::escapeXML($person->getCountry());
 	if ($zipcode!='' || $city!='') {
 		if ($addr!='') $addr.='<break/>';
 		$addr.=$zipcode.' '.$city;
@@ -73,7 +74,7 @@ function buildEmails($person) {
 	$out ='';
 	$mails = Query::after('emailaddress')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($mails as $mail) {
-		$out.= '<object icon="common/email">'.In2iGui::escape($mail->getAddress()).'</object>';
+		$out.= '<object icon="common/email">'.StringUtils::escapeXML($mail->getAddress()).'</object>';
 	}
 	return $out;
 }
@@ -82,7 +83,7 @@ function buildPhones($person) {
 	$out = '';
 	$phones = Query::after('phonenumber')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($phones as $phone) {
-		$out.= '<object icon="common/phone">'.In2iGui::escape($phone->getNumber()).'</object>';
+		$out.= '<object icon="common/phone">'.StringUtils::escapeXML($phone->getNumber()).'</object>';
 	}
 	return $out;
 }
