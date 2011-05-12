@@ -438,7 +438,7 @@ class Person extends Object {
 	function updatePhoneNumbers($new) {
 		global $basePath;
 		require_once($basePath.'Editor/Classes/Objects/Phonenumber.php');
-		$numbers = Query::after('emailaddress')->withProperty('containingObjectId',$this->getId())->get();
+		$numbers = Query::after('phonenumber')->withProperty('containingObjectId',$this->getId())->get();
 		$foundIds = array();
 		foreach ($new as $number) { 
 			if (isset($number->id) && $number->id>0) {
