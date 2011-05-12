@@ -115,6 +115,7 @@ class Database {
 	}
 	
 	function delete($sql) {
+		Database::debug($sql);
 		$con = Database::getConnection();
 		@mysql_query($sql,$con);
 		Database::_checkError($sql,$con);
@@ -125,6 +126,7 @@ class Database {
 		if (is_array($sql)) {
 			$sql = Database::buildInsertSql($sql);
 		}
+		Database::debug($sql);
 		$con = Database::getConnection();
 		@mysql_query($sql,$con);
 		$id=mysql_insert_id();
