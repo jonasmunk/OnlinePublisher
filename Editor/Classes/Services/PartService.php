@@ -97,7 +97,8 @@ class PartService {
 			'formula' => array ( 'name' => array('da'=>'Formular','en'=>'Formula'), 'description' => '', 'priority' => 10 ),
 			'list' => array ( 'name' => array('da'=>'Liste','en'=>'List'), 'description' => '', 'priority' => 4 ),
 			'mailinglist' => array ( 'name' => array('da'=>'Postliste','en'=>'Mailing list'), 'description' => '', 'priority' => 10 ),
-			'html' => array ( 'name' => array('da'=>'HTML','en'=>'HTML'), 'description' => '', 'priority' => 7 )
+			'html' => array ( 'name' => array('da'=>'HTML','en'=>'HTML'), 'description' => '', 'priority' => 7 ),
+			'poster' => array ( 'name' => array('da'=>'Plakat','en'=>'Poster'), 'description' => '', 'priority' => 7 )
 		);
 		
 		

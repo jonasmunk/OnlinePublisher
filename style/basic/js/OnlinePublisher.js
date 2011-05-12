@@ -168,6 +168,8 @@ op.part.ImageGallery.changing = {
 	}
 }
 
+///////////////// Formula //////////////////
+
 op.part.Formula = function(options) {
 	this.element = n2i.get(options.element);
 	this.id = options.id;
@@ -198,6 +200,33 @@ op.part.Formula.prototype = {
 		ui.showMessage({text:'Beskeden kunne desværre ikke afleveres',duration:5000});
 	}
 }
+
+///////////////// Poster //////////////////
+
+op.part.Poster = function(options) {
+	this.element = n2i.get(options.element);
+	this.pages = n2i.byClass(this.element,'part_poster_page');
+	this.index = 0;
+	this.delay = 5000;
+	this.callNext();
+}
+
+op.part.Poster.prototype = {
+	next : function() {
+		this.pages[this.index].style.display='none';
+		this.index++;
+		if (this.index>=this.pages.length) {
+			this.index = 0;
+		}
+		this.pages[this.index].style.display='block';
+		this.callNext();
+	},
+	callNext : function() {
+		window.setTimeout(this.next.bind(this),this.delay);
+	}
+}
+
+///////////////// Search field //////////////////
 
 op.SearchField = function(o) {
 	o = this.options = n2i.override({placeholderClass:'placeholder',placeholder:''},o);

@@ -80,6 +80,9 @@ class VCalParser {
 		elseif ($parts[0]=='LOCATION' && $this->latestEvent) {
 			$this->latestEvent->setLocation($this->decodeString($parts[1]));
 		}
+		elseif ($parts[0]=='URL' && $this->latestEvent) {
+			$this->latestEvent->setUrl($this->decodeString($parts[1]));
+		}
 		elseif ($parts[0]=='RRULE' && $this->latestEvent) {
 			$rule = $this->parseRecurrenceRule($parts);
 			$this->latestEvent->addRecurrenceRule($rule);
@@ -308,6 +311,7 @@ class VEvent {
 	var $timeStamp;
 	var $uniqueId;
 	var $recurrenceRules = array();
+	var $url;
 	
 	
 	function VEvent() {
@@ -388,6 +392,15 @@ class VEvent {
 	function getDuration() {
 	    return $this->duration;
 	}
+	
+	function setUrl($url) {
+	    $this->url = $url;
+	}
+
+	function getUrl() {
+	    return $this->url;
+	}
+	
 	
 }
 

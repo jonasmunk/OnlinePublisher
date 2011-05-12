@@ -592,6 +592,10 @@ $databaseTables = array(
 			array("show_webaddress","int(1)","","","1",""),
 			array("show_image","int(1)","","","1","")
 		),
+	'part_poster' => array(
+			array("part_id","int(11)","","","0",""),
+			array("recipe","text","YES","","","")
+	),
 	'part_richtext' => array(
 			array("part_id","int(11)","","","0",""),
 			array("html","text","YES","","",""),

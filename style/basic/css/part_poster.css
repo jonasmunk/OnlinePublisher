@@ -1,0 +1,19 @@
+div.part_poster
+{
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 10px;
+	overflow: hidden;
+}
+
+p.part_poster_title
+{
+	margin: 0;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+p.part_poster_text
+{
+	font-size: 12px;
+}

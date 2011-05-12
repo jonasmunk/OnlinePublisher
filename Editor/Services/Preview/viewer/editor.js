@@ -115,7 +115,7 @@ op.Editor.Header.prototype = {
 		}.bind(this)});
 	},
 	_edit : function() {
-		this.field = n2i.build('textarea',{'class':'in2igui_editor_header'});
+		this.field = n2i.build('textarea',{'class':'in2igui_editor_header',style:'resize: none;'});
 		this.field.value = this.part.text;
 		this.header.style.visibility='hidden';
 		this._updateFieldStyle();
@@ -182,7 +182,7 @@ op.Editor.Text.prototype = {
 		}.bind(this)});
 	},
 	_edit : function() {
-		this.field = n2i.build('textarea',{className:'in2igui_editor_header'});
+		this.field = n2i.build('textarea',{className:'in2igui_editor_header',style:'resize: none;'});
 		this.field.value = this.part.text;
 		this.header.style.visibility='hidden';
 		this._updateFieldStyle();

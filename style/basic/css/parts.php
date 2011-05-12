@@ -13,4 +13,5 @@ include 'part_text.css';
 include 'part_mailinglist.css';
 include 'part_formula.css';
 include 'part_richtext.css';
+include 'part_poster.css';
 ?>
