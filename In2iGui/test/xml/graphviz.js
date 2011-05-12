@@ -1,6 +1,6 @@
 var controller = {
 	$ready : function() {
-		this.refresh();
+		window.setTimeout(this.refresh.bind(this),3000);
 	},
 	refresh : function() {
 		var url = '../graphviz/'+algorithm.getValue().value+'/'+file.getValue().value;

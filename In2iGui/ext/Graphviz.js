@@ -3,9 +3,9 @@ In2iGui.Graphviz = function(element,name,options) {
 		this.systemScale = 4/3;
 		this.scale = 1;
 		this.padding = 8;
-		this.element = $(element);
-		this.texts = this.element.select('.in2igui_graphviz_texts')[0];
-		this.canvas = this.element.select('canvas')[0];
+		this.element = hui.get(element);
+		this.texts = hui.firstByClass(this.element,'in2igui_graphviz_texts');
+		this.canvas = hui.firstByTag(this.element,'canvas');
 		this.ctx = this.canvas.getContext('2d');
 
 		this.images = {};
@@ -15,10 +15,10 @@ In2iGui.Graphviz = function(element,name,options) {
 }
 
 In2iGui.Graphviz.create = function(name,options) {
-	var element = new Element('div',{'class':'in2igui_graphviz'});
-	var texts = new Element('div',{'class':'in2igui_graphviz_texts'}).setStyle({'position':'relative'});
+	var element = hui.build('div',{'class':'in2igui_graphviz'});
+	var texts = bui.build('div',{'class':'in2igui_graphviz_texts',style:'position:relative;'});
 	element.appendChild(texts);
-	element.appendChild(new Element('canvas'));
+	element.appendChild(n2i.build('canvas'));
 	return new In2iGui.Graphviz(element,name,options);
 }
 
@@ -28,7 +28,7 @@ In2iGui.Graphviz.prototype = {
 	},
 	load: function(url) {
 		var self = this;
-		new Ajax.Request(url,{onSuccess:function(t) {self.parse(t)}});
+		new hui.request({url:url,onSuccess:function(t) {self.parse(t)}});
 	},
 	zoom : function(zoom) {
 		this.scale=this.scale*zoom;

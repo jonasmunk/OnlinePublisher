@@ -61,6 +61,7 @@
 		<script src="{$context}/In2iGui/lib/In2iScripts/In2iDate.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/lib/json2.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/In2iGui.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/js/Require.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Source.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/DragDrop.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Window.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -103,9 +104,6 @@
 		<script src="{$context}/In2iGui/bin/minimized.noproto.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:otherwise>
 </xsl:choose>
-<xsl:if test="//gui:graphviz">
-	<script src="{$context}/In2iGui/ext/Graphviz.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-</xsl:if>
 <xsl:if test="//gui:graph">
 	<link rel="stylesheet" href="{$context}/In2iGui/ext/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script type="text/javascript" src="{$context}/In2iGui/lib/protovis-3.2/protovis-r3.2.js"><xsl:comment/></script>
@@ -675,8 +673,10 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 		<canvas/>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Graphviz('<xsl:value-of select="generate-id()"/>','<xsl:value-of select="@name"/>');
-		<xsl:call-template name="gui:createobject"/>
+		hui.require('<xsl:value-of select="$context"/>/In2iGui/ext/Graphviz.js',function() {
+			var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Graphviz('<xsl:value-of select="generate-id()"/>','<xsl:value-of select="@name"/>');
+			<xsl:call-template name="gui:createobject"/>
+		});
 	</script>
 </xsl:template>
 
