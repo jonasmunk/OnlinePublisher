@@ -373,8 +373,8 @@ if (document.querySelectorAll) {
 	}
 } else {
 	n2i.byClass = function(parentElement,className,tag) {
-		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
-		var out = [];
+		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*'),
+			out = [];
 		for (var i=0;i<children.length;i++) {
 			if (n2i.hasClass(children[i],className)) {
 				out[out.length]=children[i];
@@ -384,6 +384,12 @@ if (document.querySelectorAll) {
 	}
 }
 
+n2i.byTag = function(node,name) {
+	var nl = node.getElementsByTagName(name),
+		l=[];
+	for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
+	return l;
+}
 
 n2i.byId = function(e,id) {
 	var children = e.childNodes;
@@ -8613,10 +8619,10 @@ In2iGui.ImageViewer.prototype = {
 			}
 		},
 		n2i.listen(this.viewer,'mousemove',this.mouseMoveEvent.bind(this));
-		n2i.listen(this.controller,'mouseenter',function() {
+		n2i.listen(this.controller,'mouseover',function() {
 			self.overController = true;
 		});
-		n2i.listen(this.controller,'mouseleave',function() {
+		n2i.listen(this.controller,'mouseout',function() {
 			self.overController = false;
 		});
 		n2i.listen(this.viewer,'mouseout',function(e) {
@@ -10884,8 +10890,8 @@ In2iGui.DatePicker.create = function(options) {
 In2iGui.DatePicker.prototype = {
 	addBehavior : function() {
 		var self = this;
-		this.cells = n2i.firstByClass(this.element,'td');
-		this.each(this.cells,function(cell,index) {
+		this.cells = n2i.byTag(this.element,'td');
+		n2i.each(this.cells,function(cell,index) {
 			n2i.listen(cell,'mousedown',function() {self.selectCell(index)});
 		})
 		var next = n2i.firstByClass(this.element,'in2igui_datepicker_next');
@@ -10900,7 +10906,7 @@ In2iGui.DatePicker.prototype = {
 		this.updateUI();
 	},
 	updateUI : function() {
-		this.title.update(this.viewDate.dateFormat('F Y'));
+		n2i.dom.setText(this.title,this.viewDate.dateFormat('F Y'));
 		var isSelectedYear =  this.value.getFullYear()==this.viewDate.getFullYear();
 		var month = this.viewDate.getMonth();
 		for (var i=0; i < this.cells.length; i++) {

@@ -85,10 +85,10 @@ In2iGui.ImageViewer.prototype = {
 			}
 		},
 		n2i.listen(this.viewer,'mousemove',this.mouseMoveEvent.bind(this));
-		n2i.listen(this.controller,'mouseenter',function() {
+		n2i.listen(this.controller,'mouseover',function() {
 			self.overController = true;
 		});
-		n2i.listen(this.controller,'mouseleave',function() {
+		n2i.listen(this.controller,'mouseout',function() {
 			self.overController = false;
 		});
 		n2i.listen(this.viewer,'mouseout',function(e) {
