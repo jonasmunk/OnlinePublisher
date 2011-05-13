@@ -283,15 +283,10 @@
 <xsl:template name="util:googleanalytics">
 	<xsl:param name="code"/>
 	<xsl:if test="not($preview='true')">
-		<script	src="http://www.google-analytics.com/ga.js" type="text/javascript"><xsl:comment/></script>
-		<script type="text/javascript">
-		try {
-			if (document.location.hostname!=="localhost") {
-				var pageTracker = _gat._getTracker("<xsl:value-of select="$code"/>");
-				pageTracker._trackPageview();
-			}
-		} catch(ex) {}
-		</script>
+		<script type="text/javascript">var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview']];(function(d,t){
+		var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.async=1;g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)
+		}(document,'script'))</script>
 	</xsl:if>
 </xsl:template>
 
