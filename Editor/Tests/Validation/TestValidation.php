@@ -46,7 +46,7 @@ class TestValidation extends UnitTestCase {
 			$this->assertTrue(strpos($html, '<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">')!==false,'The design "'.$name.'" does not have correct html tag');
 			$this->assertFalse(strpos($html, 'http://uri.in2isoft.com')!==false,'The design "'.$name.'" may contain xml namespaces');
 			$this->assertTrue(strpos($html, 'Test page for validation')!==false,'The design "'.$name.'" does not contain the title');
-			$this->assertTrue(strpos($html, '/bin/minimized.site.noproto.js')!==false,'The design "'.$name.'" does include minimized site scripts');
+			$this->assertTrue(strpos($html, '/bin/minimized.site.js')!==false,'The design "'.$name.'" does include minimized site scripts');
 			$this->assertTrue(strpos($html, '/bin/minimized.site.css')!==false,'The design "'.$name.'" does include minimized site css');
 			$this->assertTrue(XmlService::validateSnippet($html),'The design "'.$name.'" is not valid xml');
 		}

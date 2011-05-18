@@ -6,11 +6,11 @@ op.part.utils = {
 	previewTimer : null,
 	
 	updatePreview : function(options) {
-		options.node = n2i.get(options.node);
+		options.node = hui.get(options.node);
 		var f = function() {
 			var url = controller.context+'Editor/Services/Parts/Preview.php?type='+options.type;
-			var params = n2i.form.getValues(options.form);
-			ui.request({
+			var params = hui.form.getValues(options.form);
+			hui.ui.request({
 				url : url,
 				parameters : params,
 				onSuccess : function(t) {
@@ -20,10 +20,10 @@ op.part.utils = {
 					}
 				},
 				onFailure:function(e) {
-					n2i.log(e);
+					hui.log(e);
 				},
 				onException:function(e) {
-					n2i.log(e);
+					hui.log(e);
 					throw e;
 				}
 			});

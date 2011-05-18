@@ -1,11 +1,11 @@
-ui.listen({
+hui.ui.listen({
 	imageId : null,
 	dragDrop : [
 		{drag:'image',drop:'imagegroup'}
 	],
 	
 	$drop$image$imagegroup : function(dragged,dropped) {
-		In2iGui.request({
+		hui.ui.request({
 			url:'AddImageToGroup.php',
 			json:{data:{image:dragged.id,group:dropped.value}},
 			message:{start:'Tilføjer til gruppe...',delay:300},
@@ -64,7 +64,7 @@ ui.listen({
 		var self = this;
 		var data = imageFormula.getValues();
 		data.id = this.imageId;
-		ui.request({
+		hui.ui.request({
 			url:'SaveImage.php',
 			json:{data:data},
 			message:{start:'Gemmer billede...',delay:300},
@@ -83,7 +83,7 @@ ui.listen({
 	},
 	_loadImage : function(id) {
 		var self = this;
-		ui.request({
+		hui.ui.request({
 			url:'LoadImage.php',
 			parameters:{id:id},
 			message:{start:'Åbner billede...',delay:300},
@@ -100,7 +100,7 @@ ui.listen({
 		if (id===this.imageId) {
 			this._cancelImage();
 		}
-		ui.request({
+		hui.ui.request({
 			url:'DeleteImage.php',
 			parameters:{id:id},
 			message:{start:'Sletter billede...',delay:300},

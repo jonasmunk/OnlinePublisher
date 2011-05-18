@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='calendarsource') {
 			this.editSource(item.value);
@@ -16,7 +16,7 @@ ui.listen({
 		}
 	},
 	editSource : function(id) {
-		ui.request({parameters:{id:id},url:'../../Services/Model/LoadObject.php',onSuccess:'loadSource'});
+		hui.ui.request({parameters:{id:id},url:'../../Services/Model/LoadObject.php',onSuccess:'loadSource'});
 	},
 	
 	// Source
@@ -33,7 +33,7 @@ ui.listen({
 	$click$saveSource : function() {
 		var data = sourceFormula.getValues();
 		data.id = this.sourceId;
-		ui.request({url:'data/SaveCalendarSource.php',onSuccess:'saveSource',json:{data:data}});
+		hui.ui.request({url:'data/SaveCalendarSource.php',onSuccess:'saveSource',json:{data:data}});
 	},
 	$success$saveSource : function() {
 		this.sourceId = null;
@@ -42,7 +42,7 @@ ui.listen({
 		sourcesItemsSource.refresh();
 	},
 	$click$deleteSource : function() {
-		ui.request({url:'data/DeleteCalendarSource.php',onSuccess:'deleteSource',parameters:{id:this.sourceId}});
+		hui.ui.request({url:'data/DeleteCalendarSource.php',onSuccess:'deleteSource',parameters:{id:this.sourceId}});
 	},
 	$success$deleteSource : function() {
 		this.sourceId = null;
@@ -62,7 +62,7 @@ ui.listen({
 		var value = selector.getValue();
 		if (value.kind=='calendarsource') {
 			ui.showMessage({text:'Synkroniserer kilde...'});
-			ui.request({url:'data/SyncCalendarSource.php',onSuccess:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
+			hui.ui.request({url:'data/SyncCalendarSource.php',onSuccess:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
 		}
 	},
 	$success$synchronizeSource : function() {

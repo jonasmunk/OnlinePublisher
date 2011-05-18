@@ -2,7 +2,7 @@ op.part.News = {
 	$ready : function() {
 		newsWindow.show();
 		this.form = document.forms.PartForm;
-		newsGroups.setValue(n2i.toIntArray(this.form.groups.value));
+		newsGroups.setValue(hui.toIntArray(this.form.groups.value));
 	},
 	$valueChanged$newsTitle : function(value) {
 		this.form.title.value = value;
@@ -56,4 +56,4 @@ op.part.News = {
 		});
 	}
 }
-ui.listen(op.part.News);
+hui.ui.listen(op.part.News);

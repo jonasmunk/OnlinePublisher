@@ -1,6 +1,6 @@
-ui.listen({
+hui.ui.listen({
 	$listRowWasOpened$list : function(item) {
-		ui.request({
+		hui.ui.request({
 			url:'PublishOne.php',
 			parameters:{id:item.id,kind:item.kind},
 			onSuccess : function() {
@@ -9,7 +9,7 @@ ui.listen({
 		});
 	},
 	$click$publishAll : function() {
-		ui.request({
+		hui.ui.request({
 			url:'PublishAll.php',
 			onSuccess : function() {
 				listSource.refresh();

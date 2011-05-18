@@ -110,5 +110,4 @@
   (typeof module !== 'undefined' && module.exports) ?
     (module.exports = $script) :
     (win.n2i.require = $script);
-
 }(this, document, setTimeout);

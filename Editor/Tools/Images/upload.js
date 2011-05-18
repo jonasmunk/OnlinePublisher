@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	
 	///////////////////////// Uoload /////////////////////////
 	
@@ -19,7 +19,7 @@ ui.listen({
 	$click$fetchImage : function() {
 		fetchImage.setEnabled(false);
 		ui.showMessage({text:'Henter billede...'});
-		In2iGui.request({url:'FetchImage.php',onSuccess:'imageFetched',parameters:fetchFormula.getValues()});
+		hui.ui.request({url:'FetchImage.php',onSuccess:'imageFetched',parameters:fetchFormula.getValues()});
 	},
 	$click$cancelFetch : function() {
 		uploadWindow.hide();
@@ -29,7 +29,7 @@ ui.listen({
 			fetchFormula.reset();
 			ui.showMessage({text:'Billedet er hentet',duration:2000});
 		} else {
-			n2i.log(data);
+			hui.log(data);
 			ui.showMessage({text:data.errorMessage,duration:2000});
 		}
 		fetchImage.setEnabled(true);
@@ -38,8 +38,8 @@ ui.listen({
 		groupSource.refresh();
 	},
 	$valueChanged$uploadAddToGroup : function(value) {
-		ui.request({url:'ChangeUploadAddToGroup.php',parameters:{uploadAddToGroup:value ? 'true' : 'false'},onSuccess:function() {
-			n2i.log('Saved: '+value);
+		hui.ui.request({url:'ChangeUploadAddToGroup.php',parameters:{uploadAddToGroup:value ? 'true' : 'false'},onSuccess:function() {
+			hui.log('Saved: '+value);
 		}})
 	}
 })

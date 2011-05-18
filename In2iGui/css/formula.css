@@ -436,12 +436,12 @@ span.in2igui_style_length input
 
 /************************************** Buttons *********************************/
 
-form.in2igui_formula div.in2igui_buttons_body
+form.in2igui_formula div.hui_buttons_body
 {
 	float: right;
 }
 
-form.in2igui_formula a.in2igui_button
+form.in2igui_formula a.hui_button
 {
 	margin-left: 2px;
 	margin-right: 0px;

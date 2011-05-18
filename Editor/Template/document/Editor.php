@@ -38,7 +38,7 @@ $strings = array(
 <? if (Request::getBoolean('dev')) { ?>
 <script type="text/javascript" src="../../../In2iGui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } else { ?>
-<script type="text/javascript" src="../../../In2iGui/bin/minimized.noproto.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../In2iGui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } ?>
 <!--[if IE 8]>
 <link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
@@ -50,8 +50,8 @@ $strings = array(
 	<link rel="stylesheet" type="text/css" href="../../../In2iGui/css/msie7.css?version=<?=SystemInfo::getDate()?>"> </link>
 <![endif]-->
 <script type="text/javascript">
-In2iGui.context='../../../';
-In2iGui.language='<?=$language?>';
+hui.ui.context='../../../';
+hui.ui.language='<?=$language?>';
 </script>
 <script type="text/javascript" src="js/Controller.js?version=<?=SystemInfo::getDate()?>" charset="utf-8"></script>
 <script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?=SystemInfo::getDate()?>"></script>
@@ -205,12 +205,12 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	Database::free($result);
 	if ($selected==0) {
 		echo '<div style="padding-top: 5px;">'.
-		'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" href="#" class="in2igui_button in2igui_button_small_rounded">'.
+		'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" href="#" class="hui_button hui_button_small_rounded">'.
 		'<span><span>'.$strings['add_section'][$language].'</span></span>'.
 		'</a>'.
 		'</div>';
 	} else {
-		echo '<div style="padding-top: 5px;"><a class="in2igui_button in2igui_button_small_rounded in2igui_button_disabled"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
+		echo '<div style="padding-top: 5px;"><a class="hui_button hui_button_small_rounded hui_button_disabled"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
 	}
 }
 

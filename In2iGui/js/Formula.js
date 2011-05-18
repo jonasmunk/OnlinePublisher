@@ -207,6 +207,9 @@ In2iGui.Formula.Text.create = function(options) {
 		node.appendChild(input);
 	} else {
 		input = n2i.build('input',{'class':'in2igui_formula_text'});
+		if (options.secret) {
+			input.setAttribute('type','password');
+		}
 		node = n2i.build('span',{'class':'in2igui_field_singleline'});
 		node.appendChild(input);
 	}

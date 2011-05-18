@@ -2,15 +2,15 @@
  * An alert
  * @constructor
  */
-In2iGui.Alert = function(options) {
-	this.options = n2i.override({modal:false},options);
-	this.element = n2i.get(options.element);
+hui.ui.Alert = function(options) {
+	this.options = hui.override({modal:false},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.body = n2i.firstByClass(this.element,'in2igui_alert_body');
-	this.content = n2i.firstByClass(this.element,'in2igui_alert_content');
+	this.body = hui.firstByClass(this.element,'hui_alert_body');
+	this.content = hui.firstByClass(this.element,'hui_alert_content');
 	this.emotion = this.options.emotion;
-	this.title = n2i.firstByTag(this.element,'h1');
-	In2iGui.extend(this);
+	this.title = hui.firstByTag(this.element,'h1');
+	hui.ui.extend(this);
 }
 
 /**
@@ -18,14 +18,14 @@ In2iGui.Alert = function(options) {
  * <br/><strong>options:</strong> { name: «String», title: «String», text: «String», emotion: «'smile' | 'gasp'», modal: «Boolean»}
  * @static
  */
-In2iGui.Alert.create = function(options) {
-	options = n2i.override({title:'',text:'',emotion:null,title:null},options);
+hui.ui.Alert.create = function(options) {
+	options = hui.override({title:'',text:'',emotion:null,title:null},options);
 	
-	var element = options.element = n2i.build('div',{'class':'in2igui_alert'});
-	var body = n2i.build('div',{'class':'in2igui_alert_body',parent:element});
-	n2i.build('div',{'class':'in2igui_alert_content',parent:body});
+	var element = options.element = hui.build('div',{'class':'hui_alert'});
+	var body = hui.build('div',{'class':'hui_alert_body',parent:element});
+	hui.build('div',{'class':'hui_alert_content',parent:body});
 	document.body.appendChild(element);
-	var obj = new In2iGui.Alert(options);
+	var obj = new hui.ui.Alert(options);
 	if (options.emotion) {
 		obj.setEmotion(options.emotion);
 	}
@@ -39,48 +39,48 @@ In2iGui.Alert.create = function(options) {
 	return obj;
 }
 
-In2iGui.Alert.prototype = {
+hui.ui.Alert.prototype = {
 	/** Shows the alert */
 	show : function() {
-		var zIndex = In2iGui.nextAlertIndex();
+		var zIndex = hui.ui.nextAlertIndex();
 		if (this.options.modal) {
-			In2iGui.showCurtain({widget:this,zIndex:zIndex});
+			hui.ui.showCurtain({widget:this,zIndex:zIndex});
 			zIndex++;
 		}
 		this.element.style.zIndex=zIndex;
 		this.element.style.display='block';
-		this.element.style.top=(n2i.getScrollTop()+100)+'px';
-		n2i.animate(this.element,'opacity',1,200);
-		n2i.animate(this.element,'margin-top','40px',600,{ease:n2i.ease.elastic});
+		this.element.style.top=(hui.getScrollTop()+100)+'px';
+		hui.animate(this.element,'opacity',1,200);
+		hui.animate(this.element,'margin-top','40px',600,{ease:hui.ease.elastic});
 	},
 	/** Hides the alert */
 	hide : function() {
-		n2i.animate(this.element,'opacity',0,200,{hideOnComplete:true});
-		n2i.animate(this.element,'margin-top','0px',200);
-		In2iGui.hideCurtain(this);
+		hui.animate(this.element,'opacity',0,200,{hideOnComplete:true});
+		hui.animate(this.element,'margin-top','0px',200);
+		hui.ui.hideCurtain(this);
 	},
 	/** Sets the alert title */
 	setTitle : function(/**String*/ text) {
 		if (!this.title) {
-			this.title = n2i.build('h1',{parent:this.content});
+			this.title = hui.build('h1',{parent:this.content});
 		}
-		n2i.dom.setText(this.title,text);
+		hui.dom.setText(this.title,text);
 		
 	},
 	/** Sets the alert text */
 	setText : function(/**String*/ text) {
 		if (!this.text) {
-			this.text = n2i.build('p',{parent:this.content});
+			this.text = hui.build('p',{parent:this.content});
 		}
-		n2i.dom.setText(this.text,text || '');
+		hui.dom.setText(this.text,text || '');
 	},
 	/** Sets the alert emotion */
 	setEmotion : function(/**String*/ emotion) {
 		if (this.emotion) {
-			n2i.removeClass(this.body,this.emotion);
+			hui.removeClass(this.body,this.emotion);
 		}
 		this.emotion = emotion;
-		n2i.addClass(this.body,emotion);
+		hui.addClass(this.body,emotion);
 	},
 	/** Updates multiple properties
 	 * @param {Object} options {title: «String», text: «String», emotion: «'smile' | 'gasp'»}
@@ -91,10 +91,10 @@ In2iGui.Alert.prototype = {
 		this.setText(options.text || null);
 		this.setEmotion(options.emotion || null);
 	},
-	/** Adds an In2iGui.Button to the alert */
+	/** Adds a Button to the alert */
 	addButton : function(button) {
 		if (!this.buttons) {
-			this.buttons = In2iGui.Buttons.create({align:'right'});
+			this.buttons = hui.ui.Buttons.create({align:'right'});
 			this.body.appendChild(this.buttons.element);
 		}
 		this.buttons.add(button);

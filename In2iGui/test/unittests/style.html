@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/syn.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		In2iGui.context='../../..';
+	</script>
+	<style>
+		#one
+		{
+			color: red;
+			font-size: 12px;
+			font-family: Verdana,Tahoma,sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<div id="one">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+	<script type="text/javascript">
+		ui.test.run([
+			function() { // Blank
+				var color = hui.getStyle('one','color');
+				var fontSize = hui.getStyle('one','font-size');
+				var fontFamily = hui.getStyle('one','font-family');
+				
+				hui.ui.test.assertEquals(color,'rgb(255, 0, 0)');
+				hui.ui.test.assertEquals(fontSize,'12px');
+				hui.ui.test.assertEquals(fontFamily,'Verdana, Tahoma, sans-serif');
+			},
+			function() { // Blank
+				var color = new hui.Color('red');
+				hui.ui.test.assertEquals(color.toRGB(),'rgb(255, 0, 0)');
+				hui.ui.test.assertEquals(color.toHex(),'#ff0000');
+
+				var color = new hui.Color('rgb(200, 0, 0)');
+				hui.ui.test.assertEquals(color.toRGB(),'rgb(200, 0, 0)');
+				hui.ui.test.assertEquals(color.toHex(),'#c80000');
+				
+				var color = new hui.Color('#f00');
+				hui.ui.test.assertEquals(color.toRGB(),'rgb(255, 0, 0)');
+
+				var color = new hui.Color('rgb(255, 0, 0)');
+				hui.ui.test.assertEquals(color.toHex(),'#ff0000');
+				hui.ui.test.assertEquals(color.toHSL(),'hsl(0, 100%, 50%)');
+
+				var color = new hui.Color('rgb(100%, 0%, 0%)');
+				hui.ui.test.assertEquals(color.toHex(),'#ff0000');
+				
+				// failures
+				var color = new hui.Color('#ff00');
+				hui.ui.test.assertFalse(color.ok);
+
+				var color = new hui.Color('');
+				hui.ui.test.assertFalse(color.ok);
+
+				var color = new hui.Color();
+				hui.ui.test.assertFalse(color.ok);
+			}
+		]);
+	</script>
+</body>
+</html>

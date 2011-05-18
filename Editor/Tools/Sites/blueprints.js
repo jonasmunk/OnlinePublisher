@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	
 	blueprintId : null,
 	
@@ -17,7 +17,7 @@ ui.listen({
 		blueprintFormula.reset();
 		deleteBlueprint.setEnabled(false);
 		saveBlueprint.setEnabled(false);
-		ui.request({
+		hui.ui.request({
 			json : {data:data},
 			url : '../../Services/Model/LoadObject.php',
 			message : {start:'Åbner skabelon...',delay:300},
@@ -38,13 +38,13 @@ ui.listen({
 	},
 	$submit$blueprintFormula : function() {
 		var values = blueprintFormula.getValues();
-		if (n2i.isBlank(values.title) || !values.designId || !values.frameId || !values.templateId) {
+		if (hui.isBlank(values.title) || !values.designId || !values.frameId || !values.templateId) {
 			ui.showMessage({text:'Udfyld venligst alle felter',icon:'common/warning',duration:2000});
 			blueprintFormula.focus();
 			return;
 		}
 		values.id = this.blueprintId;
-		ui.request({
+		hui.ui.request({
 			json : {data:values},
 			url : 'SaveBlueprint.php',
 			message : {start:'Gemmer skabelon...',delay:300},
@@ -57,7 +57,7 @@ ui.listen({
 	},
 	$click$deleteBlueprint : function() {
 		deleteBlueprint.setEnabled(false);
-		ui.request({
+		hui.ui.request({
 			json : {data:{id:this.blueprintId}},
 			url : '../../Services/Model/DeleteObject.php',
 			message : {start:'Sletter skabelon...',delay:300},

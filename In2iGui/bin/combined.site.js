@@ -4895,7 +4895,7 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
 
 /*--------------------------------------------------------------------------*/
 /** @namespace */
-var n2i = {
+var hui = {
 	/** @namespace */
 	browser : {},
 	ELEMENT_NODE : 1,
@@ -4917,56 +4917,39 @@ var n2i = {
     KEY_INSERT : 45
 }
 
-if (!window.hui) {
-	var hui = n2i;
+if (!window.n2i) {
+	var n2i = hui;
 }
 
-n2i.browser.opera = /opera/i.test(navigator.userAgent);
-n2i.browser.msie = !n2i.browser.opera && /MSIE/.test(navigator.userAgent);
-n2i.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
-n2i.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
-n2i.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
-n2i.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
-n2i.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
-n2i.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
-n2i.browser.webkitVersion = null;
-n2i.browser.gecko = !n2i.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
+hui.browser.opera = /opera/i.test(navigator.userAgent);
+hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent);
+hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
+hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
+hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
+hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
+hui.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
+hui.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
+hui.browser.webkitVersion = null;
+hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
 
-n2i.browser.opacity = !n2i.browser.msie || n2i.browser.msie9;
+hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
 
 (function() {
 	var result = /Safari\/([\d.]+)/.exec(navigator.userAgent);
 	if (result) {
-		n2i.browser.webkitVersion=parseFloat(result[1]);
+		hui.browser.webkitVersion=parseFloat(result[1]);
 	}
 })()
 
 /** Log something */
-n2i.log = function(obj) {
+hui.log = function(obj) {
 	try {
 		console.log(obj);
 	} catch (ignore) {};
 }
 
-/** Make a string camelized */
-n2i.camelize = function(str) {
-	if (str.indexOf('-')==-1) {return str}
-    var oStringList = str.split('-');
-
-    var camelizedString = str.indexOf('-') == 0
-      ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
-      : oStringList[0];
-
-    for (var i = 1, len = oStringList.length; i < len; i++) {
-      var s = oStringList[i];
-      camelizedString += s.charAt(0).toUpperCase() + s.substring(1);
-    }
-
-    return camelizedString;
-}
-
 /** Override the properties on the first argument with properties from the last object */
-n2i.override = function(original,subject) {
+hui.override = function(original,subject) {
 	if (subject) {
 		for (prop in subject) {
 			original[prop] = subject[prop];
@@ -4975,7 +4958,8 @@ n2i.override = function(original,subject) {
 	return original;
 }
 
-n2i.wrap = function(str) {
+/** Inserts invisible break chars in string so it will wrap */
+hui.wrap = function(str) {
 	if (str===null || str===undefined) {
 		return '';
 	}
@@ -4983,20 +4967,20 @@ n2i.wrap = function(str) {
 }
 
 /** Trim whitespace including unicode chars */
-n2i.trim = function(str) {
+hui.trim = function(str) {
 	if (str===null || str===undefined) {return ''};
 	if (typeof(str)!='string') {str=new String(str)}
 	return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
 }
 
 /** Escape the html in a string */
-n2i.escapeHTML = function(str) {
+hui.escapeHTML = function(str) {
 	if (str===null || str===undefined) {return ''};
-   	return n2i.build('div',{text:str}).innerHTML;
+   	return hui.build('div',{text:str}).innerHTML;
 }
 
-n2i.escape = function(str) {
-	if (!n2i.isDefined(str)) {return ''};
+hui.escape = function(str) {
+	if (!hui.isDefined(str)) {return ''};
 	return str.replace(/&/g,'&amp;').
 		replace(/>/g,'&gt;').
 		replace(/</g,'&lt;').
@@ -5004,22 +4988,22 @@ n2i.escape = function(str) {
 }
 
 /** Checks if a string has characters */
-n2i.isBlank = function(str) {
+hui.isBlank = function(str) {
 	if (str===null || typeof(str)==='undefined' || str==='') {return true};
-	return typeof(str)=='string' && n2i.trim(str).length==0;
+	return typeof(str)=='string' && hui.trim(str).length==0;
 }
 
-n2i.isEmpty = function(str) {
-	n2i.log('n2i.isEmpty is deprecated');
-	return n2i.isBlank(str);
+hui.isEmpty = function(str) {
+	hui.log('hui.isEmpty is deprecated');
+	return hui.isBlank(str);
 }
 
 /** Checks that an object is not null or undefined */
-n2i.isDefined = function(obj) {
+hui.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
-n2i.isArray = function(obj) {
+hui.isArray = function(obj) {
 	if (obj==null || obj==undefined) {
 		return false;
 	}
@@ -5030,16 +5014,40 @@ n2i.isArray = function(obj) {
 	}
 }
 
-n2i.string = {
+/** @namespace */
+hui.string = {
+	
+	/**
+	Test that a string ends with another string
+	@param str The string to test
+	@param end The string to look for at the end
+	*/
 	endsWith : function(str,end) {
 		if (!typeof(str)=='string' || !typeof(end)=='string') {
 			return false;
 		}
 		return (str.match(end+"$")==end);
+	},
+	
+	/** Make a string camelized */
+	camelize : function(str) {
+		if (str.indexOf('-')==-1) {return str}
+	    var oStringList = str.split('-');
+
+	    var camelizedString = str.indexOf('-') == 0
+	      ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
+	      : oStringList[0];
+
+	    for (var i = 1, len = oStringList.length; i < len; i++) {
+	      var s = oStringList[i];
+	      camelizedString += s.charAt(0).toUpperCase() + s.substring(1);
+	    }
+
+	    return camelizedString;
 	}
 }
 
-n2i.inArray = function(arr,value) {
+hui.inArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
 		if (arr[i]===value) {
 			return true;
@@ -5048,7 +5056,7 @@ n2i.inArray = function(arr,value) {
 	return false;
 }
 
-n2i.indexInArray = function(arr,value) {
+hui.indexInArray = function(arr,value) {
 	for (var i=0; i < arr.length; i++) {
 		if (arr[i]===value) {
 			return i;
@@ -5057,8 +5065,8 @@ n2i.indexInArray = function(arr,value) {
 	return -1;
 }
 
-n2i.each = function(items,func) {
-	if (n2i.isArray(items)) {		
+hui.each = function(items,func) {
+	if (hui.isArray(items)) {		
 		for (var i=0; i < items.length; i++) {
 			func(items[i],i);
 		};
@@ -5072,8 +5080,8 @@ n2i.each = function(items,func) {
 /**
  * Converts a string to an int if it is only digits, otherwise remains a string
  */
-n2i.intOrString = function(str) {
-	if (n2i.isDefined(str)) {
+hui.intOrString = function(str) {
+	if (hui.isDefined(str)) {
 		var result = /[0-9]+/.exec(str);
 		if (result!==null && result[0]==str) {
 			if (parseInt(str,10)==str) {
@@ -5084,15 +5092,15 @@ n2i.intOrString = function(str) {
 	return str;
 }
 
-n2i.flipInArray = function(arr,value) {
-	if (n2i.inArray(arr,value)) {
-		n2i.removeFromArray(arr,value);
+hui.flipInArray = function(arr,value) {
+	if (hui.inArray(arr,value)) {
+		hui.removeFromArray(arr,value);
 	} else {
 		arr.push(value);
 	}
 }
 
-n2i.removeFromArray = function(arr,value) {
+hui.removeFromArray = function(arr,value) {
 	for (var i = arr.length - 1; i >= 0; i--){
 		if (arr[i]==value) {
 			arr.splice(i,1);
@@ -5100,21 +5108,21 @@ n2i.removeFromArray = function(arr,value) {
 	};
 }
 
-n2i.addToArray = function(arr,value) {
+hui.addToArray = function(arr,value) {
 	if (value.constructor==Array) {
 		for (var i=0; i < value.length; i++) {
-			if (!n2i.inArray(arr,value[i])) {
+			if (!hui.inArray(arr,value[i])) {
 				arr.push(value);
 			}
 		};
 	} else {
-		if (!n2i.inArray(arr,value)) {
+		if (!hui.inArray(arr,value)) {
 			arr.push(value);
 		}
 	}
 }
 
-n2i.toIntArray = function(str) {
+hui.toIntArray = function(str) {
 	var array = str.split(',');
 	for (var i = array.length - 1; i >= 0; i--){
 		array[i] = parseInt(array[i]);
@@ -5122,10 +5130,10 @@ n2i.toIntArray = function(str) {
 	return array;
 }
 
-n2i.scrollTo = function(element) {
-	element = n2i.get(element);
+hui.scrollTo = function(element) {
+	element = hui.get(element);
 	if (element) {
-		var pos = n2i.getPosition(element);
+		var pos = hui.getPosition(element);
 		window.scrollTo(pos.left, pos.top-50);
 	}
 }
@@ -5133,12 +5141,12 @@ n2i.scrollTo = function(element) {
 ////////////////////// DOM ////////////////////
 
 /** @namespace */
-n2i.dom = {
+hui.dom = {
 	isElement : function(n,name) {
-		return n.nodeType==n2i.ELEMENT_NODE && (name===undefined ? true : n.nodeName.toLowerCase()==name);
+		return n.nodeType==hui.ELEMENT_NODE && (name===undefined ? true : n.nodeName.toLowerCase()==name);
 	},
 	isDefinedText : function(node) {
-		return node.nodeType==n2i.TEXT_NODE && node.nodeValue.length>0;
+		return node.nodeType==hui.TEXT_NODE && node.nodeValue.length>0;
 	},
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
@@ -5160,7 +5168,7 @@ n2i.dom = {
 		oldNode.parentNode.removeChild(oldNode);
 	},
 	replaceHTML : function(node,html) {
-		node = n2i.get(node);
+		node = hui.get(node);
 		node.innerHTML=html;
 	},
 	runScripts : function(node) {
@@ -5173,7 +5181,7 @@ n2i.dom = {
 		var c = node.childNodes;
 		var updated = false;
 		for (var i = c.length - 1; i >= 0; i--){
-			if (!updated && c[i].nodeType==n2i.TEXT_NODE) {
+			if (!updated && c[i].nodeType==hui.TEXT_NODE) {
 				c[i].nodeValue=text;
 				updated = true;
 			} else {
@@ -5181,24 +5189,24 @@ n2i.dom = {
 			}
 		}
 		if (!updated) {
-			n2i.dom.addText(node,text);
+			hui.dom.addText(node,text);
 		}
 	},
 	getText : function(node) {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
-			if (c[i].nodeType==n2i.TEXT_NODE && c[i].nodeValue!=null) {
+			if (c[i].nodeType==hui.TEXT_NODE && c[i].nodeValue!=null) {
 				txt+=c[i].nodeValue;
-			} else if (c[i].nodeType==n2i.ELEMENT_NODE) {
-				txt+=n2i.dom.getText(c[i]);
+			} else if (c[i].nodeType==hui.ELEMENT_NODE) {
+				txt+=hui.dom.getText(c[i]);
 			}
 		};
 		return txt;
 	},
 	isVisible : function(node) {
 		while (node) {
-			if (node.style && (n2i.getStyle(node,'display')==='none' || n2i.getStyle(node,'visibility')==='hidden')) {
+			if (node.style && (hui.getStyle(node,'display')==='none' || hui.getStyle(node,'visibility')==='hidden')) {
 				return false;
 			}
 			node = node.parentNode;
@@ -5207,12 +5215,12 @@ n2i.dom = {
 	}
 }
 
-n2i.form = {
+hui.form = {
 	getValues : function(node) {
 		var params = {};
 		var inputs = node.getElementsByTagName('input');
 		for (var i=0; i < inputs.length; i++) {
-			if (n2i.isDefined(inputs[i].name)) {
+			if (hui.isDefined(inputs[i].name)) {
 				params[inputs[i].name] = inputs[i].value;
 			}
 		};
@@ -5222,18 +5230,18 @@ n2i.form = {
 
 ///////////////////////////// Quering ////////////////////////
 
-n2i.get = function(str) {
+hui.get = function(str) {
 	if (typeof(str)=='string') {
 		return document.getElementById(str);
 	}
 	return str;
 }
 
-n2i.getChildren = function(node) {
+hui.getChildren = function(node) {
 	var children = [];
 	var x = node.childNodes;
 	for (var i=0; i < x.length; i++) {
-		if (n2i.dom.isElement(x[i])) {
+		if (hui.dom.isElement(x[i])) {
 			children.push(x[i]);
 		}
 	};
@@ -5242,15 +5250,15 @@ n2i.getChildren = function(node) {
 
 
 if (document.querySelector) {
-	n2i.firstByClass = function(parentElement,className,tag) {
+	hui.firstByClass = function(parentElement,className,tag) {
 		parentElement = parentElement || document.body;
 		return parentElement.querySelector((tag ? tag+'.' : '.')+className);
 	}
 } else {
-	n2i.firstByClass = function(parentElement,className,tag) {
-		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*');
+	hui.firstByClass = function(parentElement,className,tag) {
+		var children = (hui.get(parentElement) || document.body).getElementsByTagName(tag || '*');
 		for (var i=0;i<children.length;i++) {
-			if (n2i.hasClass(children[i],className)) {
+			if (hui.hasClass(children[i],className)) {
 				return children[i];
 			}
 		}
@@ -5259,7 +5267,7 @@ if (document.querySelector) {
 }
 
 if (document.querySelectorAll) {
-	n2i.byClass = function(parentElement,className,tag) {
+	hui.byClass = function(parentElement,className,tag) {
 		parentElement = parentElement || document.body;
 		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
 		// Important to convert into array...
@@ -5268,11 +5276,11 @@ if (document.querySelectorAll) {
 		return l;
 	}
 } else {
-	n2i.byClass = function(parentElement,className,tag) {
-		var children = (n2i.get(parentElement) || document.body).getElementsByTagName(tag || '*'),
+	hui.byClass = function(parentElement,className,tag) {
+		var children = (hui.get(parentElement) || document.body).getElementsByTagName(tag || '*'),
 			out = [];
 		for (var i=0;i<children.length;i++) {
-			if (n2i.hasClass(children[i],className)) {
+			if (hui.hasClass(children[i],className)) {
 				out[out.length]=children[i];
 			}
 		}
@@ -5280,20 +5288,20 @@ if (document.querySelectorAll) {
 	}
 }
 
-n2i.byTag = function(node,name) {
+hui.byTag = function(node,name) {
 	var nl = node.getElementsByTagName(name),
 		l=[];
 	for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
 	return l;
 }
 
-n2i.byId = function(e,id) {
+hui.byId = function(e,id) {
 	var children = e.childNodes;
 	for (var i = children.length - 1; i >= 0; i--) {
 		if (children[i].nodeType===hui.ELEMENT_NODE && children[i].getAttribute('id')===id) {
 			return children[i];
 		} else {
-			var found = n2i.byId(children[i],id);
+			var found = hui.byId(children[i],id);
 			if (found) {
 				return found;
 			}
@@ -5302,7 +5310,7 @@ n2i.byId = function(e,id) {
 	return null;
 }
 
-n2i.firstParentByTag = function(node,tag) {
+hui.firstParentByTag = function(node,tag) {
 	var parent = node;
 	while (parent) {
 		if (parent.tagName && parent.tagName.toLowerCase()==tag) {
@@ -5313,10 +5321,10 @@ n2i.firstParentByTag = function(node,tag) {
 	return null;
 }
 
-n2i.firstParentByClass = function(node,tag) {
+hui.firstParentByClass = function(node,tag) {
 	var parent = node;
 	while (parent) {
-		if (n2i.hasClass(parent)) {
+		if (hui.hasClass(parent)) {
 			return parent;
 		}
 		parent = parent.parentNode;
@@ -5324,8 +5332,8 @@ n2i.firstParentByClass = function(node,tag) {
 	return null;
 }
 
-n2i.firstByTag = function(parentElement,tag) {
-	parentElement = n2i.get(parentElement) || document.body;
+hui.firstByTag = function(parentElement,tag) {
+	parentElement = hui.get(parentElement) || document.body;
 	if (document.querySelector && tag!=='*') {
 		return parentElement.querySelector(tag);
 	}
@@ -5333,7 +5341,7 @@ n2i.firstByTag = function(parentElement,tag) {
 	return children[0];
 }
 
-n2i.build = function(tag,options) {
+hui.build = function(tag,options) {
 	var e = document.createElement(tag);
 	if (options) {
 		for (prop in options) {
@@ -5353,9 +5361,9 @@ n2i.build = function(tag,options) {
 				e.className=options.className;
 			} else if (prop=='class') {
 				e.className=options['class'];
-			} else if (prop=='style' && (n2i.browser.msie7 || n2i.browser.msie6)) {
+			} else if (prop=='style' && (hui.browser.msie7 || hui.browser.msie6)) {
 				e.style.setAttribute('cssText',options[prop]);
-			} else if (n2i.isDefined(options[prop])) {
+			} else if (hui.isDefined(options[prop])) {
 				e.setAttribute(prop,options[prop]);
 			}
 		}
@@ -5363,7 +5371,7 @@ n2i.build = function(tag,options) {
 	return e;
 }
 
-n2i.getAncestors = function(element) {
+hui.getAncestors = function(element) {
 	var ancestors = [];
 	var parent = element.parentNode;
 	while (parent) {
@@ -5373,7 +5381,7 @@ n2i.getAncestors = function(element) {
 	return ancestors;
 }
 
-n2i.getNext = function(element) {
+hui.getNext = function(element) {
 	if (!element) {
 		return null;
 	}
@@ -5387,18 +5395,18 @@ n2i.getNext = function(element) {
     return next;
 }
 
-n2i.getAllNext = function(element) {
+hui.getAllNext = function(element) {
 	var elements = [];
-	var next = n2i.getNext(element);
+	var next = hui.getNext(element);
 	while (next) {
 		elements.push(next);
-		next = n2i.getNext(next);
+		next = hui.getNext(next);
 	}
 	return elements;
 }
 
-n2i.getTop = function(element) {
-    element = n2i.get(element);
+hui.getTop = function(element) {
+    element = hui.get(element);
 	if (element) {
 		var yPos = element.offsetTop;
 		var tempEl = element.offsetParent;
@@ -5411,8 +5419,8 @@ n2i.getTop = function(element) {
 	else return 0;
 }
 
-n2i.getLeft = function(element) {
-    element = n2i.get(element);
+hui.getLeft = function(element) {
+    element = hui.get(element);
 	if (element) {
 		var xPos = element.offsetLeft;
 		var tempEl = element.offsetParent;
@@ -5425,17 +5433,17 @@ n2i.getLeft = function(element) {
 	else return 0;
 }
 
-n2i.getPosition = function(element) {
+hui.getPosition = function(element) {
 	return {
-		left : n2i.getLeft(element),
-		top : n2i.getTop(element)
+		left : hui.getLeft(element),
+		top : hui.getTop(element)
 	}
 }
 
 /////////////////////////// Class handling //////////////////////
 
-n2i.hasClass = function(element, className) {
-	element = n2i.get(element);
+hui.hasClass = function(element, className) {
+	element = hui.get(element);
 	if (!element || !element.className) {
 		return false
 	}
@@ -5448,16 +5456,16 @@ n2i.hasClass = function(element, className) {
 	return false;
 }
 
-n2i.addClass = function(element, className) {
-    element = n2i.get(element);
+hui.addClass = function(element, className) {
+    element = hui.get(element);
 	if (!element) {return};
 	
-    n2i.removeClass(element, className);
+    hui.removeClass(element, className);
     element.className += ' ' + className;
 }
 
-n2i.removeClass = function(element, className) {
-	element = n2i.get(element);
+hui.removeClass = function(element, className) {
+	element = hui.get(element);
 	if (!element) {return};
 
 	var newClassName = '';
@@ -5473,35 +5481,35 @@ n2i.removeClass = function(element, className) {
 	element.className = newClassName;
 }
 
-n2i.toggleClass = function(element,className) {
-	if (n2i.hasClass(element,className)) {
-		n2i.removeClass(element,className);
+hui.toggleClass = function(element,className) {
+	if (hui.hasClass(element,className)) {
+		hui.removeClass(element,className);
 	} else {
-		n2i.addClass(element,className);
+		hui.addClass(element,className);
 	}
 }
 
-n2i.setClass = function(element,className,add) {
+hui.setClass = function(element,className,add) {
 	if (add) {
-		n2i.addClass(element,className);
+		hui.addClass(element,className);
 	} else {
-		n2i.removeClass(element,className);
+		hui.removeClass(element,className);
 	}
 }
 
-n2i.fromJSON = function(json) {
+hui.fromJSON = function(json) {
 	return JSON.parse(json);
 	//return eval('(' + json + ')');
 }
 
-n2i.toJSON = function(obj) {
+hui.toJSON = function(obj) {
 	return JSON.stringify(obj);
 }
 
 ///////////////////// Events //////////////////
 
-n2i.listen = function(el,type,listener,useCapture) {
-	el = n2i.get(el);
+hui.listen = function(el,type,listener,useCapture) {
+	el = hui.get(el);
 	if(document.addEventListener) {
 		el.addEventListener(type,listener,useCapture ? true : false);
 	} else {
@@ -5509,8 +5517,8 @@ n2i.listen = function(el,type,listener,useCapture) {
 	}
 }
 
-n2i.unListen = function(el,type,listener,useCapture) {
-	el = n2i.get(el);
+hui.unListen = function(el,type,listener,useCapture) {
+	el = hui.get(el);
 	if(document.removeEventListener) {
 		el.removeEventListener(type,listener,useCapture ? true : false);
 	} else {
@@ -5518,11 +5526,11 @@ n2i.unListen = function(el,type,listener,useCapture) {
 	}
 }
 
-n2i.event = function(event) {
-	return new n2i.Event(event);
+hui.event = function(event) {
+	return new hui.Event(event);
 }
 
-n2i.Event = function(event) {
+hui.Event = function(event) {
 	this.event = event = event || window.event;
 	this.element = event.target ? event.target : event.srcElement;
 	this.shiftKey = event.shiftKey;
@@ -5536,14 +5544,14 @@ n2i.Event = function(event) {
 	this.keyCode = event.keyCode;
 }
 
-n2i.Event.prototype = {
+hui.Event.prototype = {
 	left : function() {
 	    var left = 0;
 		if (this.event) {
 		    if (this.event.pageX) {
 			    left = this.event.pageX;
 		    } else if (this.event.clientX) {
-			    left = this.event.clientX + n2i.getScrollLeft();
+			    left = this.event.clientX + hui.getScrollLeft();
 		    }
 		}
 	    return left;
@@ -5557,7 +5565,7 @@ n2i.Event.prototype = {
 		    if (this.event.pageY) {
 			    top = this.event.pageY;
 		    } else if (this.event.clientY) {
-			    top = this.event.clientY + n2i.getScrollTop();
+			    top = this.event.clientY + hui.getScrollTop();
 		    }
 		}
 	    return top;
@@ -5571,7 +5579,7 @@ n2i.Event.prototype = {
 	findByClass : function(cls) {
 		var parent = this.element;
 		while (parent) {
-			if (n2i.hasClass(parent,cls)) {
+			if (hui.hasClass(parent,cls)) {
 				return parent;
 			}
 			parent = parent.parentNode;
@@ -5590,11 +5598,11 @@ n2i.Event.prototype = {
 	},
 
 	stop : function() {
-		n2i.stop(this.event);
+		hui.stop(this.event);
 	}
 }
 
-n2i.stop = function(e) {
+hui.stop = function(e) {
 	if (!e) {e = window.event};
 	if (e.stopPropagation) {e.stopPropagation()};
 	if (e.preventDefault) {e.preventDefault()};
@@ -5602,7 +5610,7 @@ n2i.stop = function(e) {
     e.stopped = true;
 }
 
-n2i.onReady = function(delegate) {
+hui.onReady = function(delegate) {
 	if(window.addEventListener) {
 		window.addEventListener('DOMContentLoaded',delegate,false);
 	}
@@ -5648,9 +5656,9 @@ n2i.onReady = function(delegate) {
 
 // Ajax //
 
-n2i.request = function(options) {
-	options = n2i.override({method:'POST',async:true},options);
-	var transport = n2i.request.createTransport();
+hui.request = function(options) {
+	options = hui.override({method:'POST',async:true},options);
+	var transport = hui.request.createTransport();
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
@@ -5672,17 +5680,17 @@ n2i.request = function(options) {
 	transport.open(method, options.url, options.async);
 	var body = '';
     if (method=='POST' && options.parameters) {
-		body = n2i.request.buildPostBody(options.parameters);
+		body = hui.request.buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
 	}
 	transport.send(body);
 }
 
-n2i.request.isXMLResponse = function(t) {
+hui.request.isXMLResponse = function(t) {
 	return t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror';
 }
 
-n2i.request.buildPostBody = function(parameters) {
+hui.request.buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
 	for (param in parameters) {
@@ -5695,7 +5703,7 @@ n2i.request.buildPostBody = function(parameters) {
 	return output;
 }
 
-n2i.request.createTransport = function() {
+hui.request.createTransport = function() {
 	try {
 		if (window.XMLHttpRequest) {
 			var req = new XMLHttpRequest();
@@ -5710,7 +5718,7 @@ n2i.request.createTransport = function() {
 			return req;
 		}
 		else if (window.ActiveXObject) {
-			return n2i.request.getActiveX();
+			return hui.request.getActiveX();
 		} else {
 			// Could not create transport
 			this.delegate.onError(this);
@@ -5723,7 +5731,7 @@ n2i.request.createTransport = function() {
 	}
 }
 
-n2i.request.getActiveX = function() {
+hui.request.getActiveX = function() {
 	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
 	var o;
 	for (var i = 0; i < prefixes.length; i++) {
@@ -5740,9 +5748,9 @@ n2i.request.getActiveX = function() {
 
 ///////////////////// Style ///////////////////
 
-n2i.getStyle = function(element, style) {
-	element = n2i.get(element);
-	var cameled = n2i.camelize(style);
+hui.getStyle = function(element, style) {
+	element = hui.get(element);
+	var cameled = hui.string.camelize(style);
 	var value = element.style[cameled];
 	if (!value) {
 		if (document.defaultView && document.defaultView.getComputedStyle) {
@@ -5753,31 +5761,31 @@ n2i.getStyle = function(element, style) {
 		}
 	}
 	if (window.opera && ['left', 'top', 'right', 'bottom'].include(style)) {
-		if (n2i.getStyle(element, 'position') == 'static') value = 'auto';
+		if (hui.getStyle(element, 'position') == 'static') value = 'auto';
 	}
 	return value == 'auto' ? null : value;
 }
 
-n2i.getTopPad = function(element) {
+hui.getTopPad = function(element) {
 	var all,top;
-	all = parseInt(n2i.getStyle(element,'padding'),10);
-	top = parseInt(n2i.getStyle(element,'padding-top'),10);
+	all = parseInt(hui.getStyle(element,'padding'),10);
+	top = parseInt(hui.getStyle(element,'padding-top'),10);
 	if (all) {return all;}
 	if (top) {return top;}
 	return 0;
 }
 
-n2i.getBottomPad = function(element) {
+hui.getBottomPad = function(element) {
 	var all,bottom;
-	all = parseInt(n2i.getStyle(element,'padding'),10);
-	bottom = parseInt(n2i.getStyle(element,'padding-bottom'),10);
+	all = parseInt(hui.getStyle(element,'padding'),10);
+	bottom = parseInt(hui.getStyle(element,'padding-bottom'),10);
 	if (all) {return all;}
 	if (bottom) {return bottom;}
 	return 0;
 }
 
-n2i.setOpacity = function(element,opacity) {
-	if (!n2i.browser.opacity) {
+hui.setOpacity = function(element,opacity) {
+	if (!hui.browser.opacity) {
 		if (opacity==1) {
 			element.style['filter']=null;
 		} else {
@@ -5788,20 +5796,20 @@ n2i.setOpacity = function(element,opacity) {
 	}
 }
 
-n2i.setStyle = function(element,styles) {
+hui.setStyle = function(element,styles) {
 	for (style in styles) {
 		if (style==='opacity') {
-			n2i.setOpacity(element,styles[style]);
+			hui.setOpacity(element,styles[style]);
 		} else {
 			element.style[style] = styles[style];
 		}
 	}
 }
 
-n2i.copyStyle = function(source,target,styles) {
+hui.copyStyle = function(source,target,styles) {
 	for (var i=0; i < styles.length; i++) {
 		var s = styles[i];
-		var r = n2i.getStyle(source,s);
+		var r = hui.getStyle(source,s);
 		if (r) {
 			target.style[s] = r;
 		}
@@ -5810,7 +5818,7 @@ n2i.copyStyle = function(source,target,styles) {
 
 //////////////////// Frames ////////////////////
 
-n2i.getFrameDocument = function(frame) {
+hui.getFrameDocument = function(frame) {
     if (frame.contentDocument) {
         return frame.contentDocument;
     } else if (frame.contentWindow) {
@@ -5820,7 +5828,7 @@ n2i.getFrameDocument = function(frame) {
     }
 }
 
-n2i.getFrameWindow = function(frame) {
+hui.getFrameWindow = function(frame) {
     if (frame.defaultView) {
         return frame.defaultView;
     } else if (frame.contentWindow) {
@@ -5830,7 +5838,7 @@ n2i.getFrameWindow = function(frame) {
 
 /////////////////// Selection /////////////////////
 
-n2i.getSelectedText = function(doc) {
+hui.getSelectedText = function(doc) {
 	doc = doc || document;
 	if (doc.getSelection) {
 		return doc.getSelection()+'';
@@ -5840,7 +5848,7 @@ n2i.getSelectedText = function(doc) {
 	return '';
 }
 
-n2i.selection = {
+hui.selection = {
 	clear : function() { 
 		var sel ; 
 		if(document.selection && document.selection.empty	){ 
@@ -5865,35 +5873,35 @@ n2i.selection = {
 
 /////////////////// Effects //////////////////////
 
-n2i.effect = {
+hui.effect = {
 	makeFlippable : function(options) {
-		if (n2i.browser.webkit) {
-			n2i.addClass(options.container,'in2igui_flip_container');
-			n2i.addClass(options.front,'in2igui_flip_front');
-			n2i.addClass(options.back,'in2igui_flip_back');
+		if (hui.browser.webkit) {
+			hui.addClass(options.container,'in2igui_flip_container');
+			hui.addClass(options.front,'in2igui_flip_front');
+			hui.addClass(options.back,'in2igui_flip_back');
 		} else {
-			n2i.addClass(options.front,'in2igui_flip_front_legacy');
-			n2i.addClass(options.back,'in2igui_flip_back_legacy');
+			hui.addClass(options.front,'in2igui_flip_front_legacy');
+			hui.addClass(options.back,'in2igui_flip_back_legacy');
 		}
 	},
 	flip : function(options) {
-		if (!n2i.browser.webkit) {
-			n2i.toggleClass(options.element,'in2igui_flip_flipped_legacy');
+		if (!hui.browser.webkit) {
+			hui.toggleClass(options.element,'in2igui_flip_flipped_legacy');
 		} else {
-			var element = n2i.get(options.element);
+			var element = hui.get(options.element);
 			var duration = options.duration || '1s';
-			var front = n2i.firstByClass(element,'in2igui_flip_front');
-			var back = n2i.firstByClass(element,'in2igui_flip_back');
+			var front = hui.firstByClass(element,'in2igui_flip_front');
+			var back = hui.firstByClass(element,'in2igui_flip_back');
 			front.style.webkitTransitionDuration=duration;
 			back.style.webkitTransitionDuration=duration;
-			n2i.toggleClass(options.element,'in2igui_flip_flipped');
+			hui.toggleClass(options.element,'in2igui_flip_flipped');
 		}
 	}
 }
 
 /////////////////// Position /////////////////////
 
-n2i.getScrollTop = function() {
+hui.getScrollTop = function() {
 	if (self.pageYOffset) {
 		return self.pageYOffset;
 	} else if (document.documentElement && document.documentElement.scrollTop) {
@@ -5903,7 +5911,7 @@ n2i.getScrollTop = function() {
 	}
 }
 
-n2i.getScrollLeft = function() {
+hui.getScrollLeft = function() {
 	if (self.pageYOffset) {
 		return self.pageXOffset;
 	} else if (document.documentElement && document.documentElement.scrollTop) {
@@ -5916,7 +5924,7 @@ n2i.getScrollLeft = function() {
 /**
  * Get the height of the viewport
  */
-n2i.getViewPortHeight = function() {
+hui.getViewPortHeight = function() {
 	if (window.innerHeight) {
 		return window.innerHeight;
 	} else if (document.documentElement && document.documentElement.clientHeight) {
@@ -5929,7 +5937,7 @@ n2i.getViewPortHeight = function() {
 /**
  * Get the height of the viewport
  */
-n2i.getViewPortWidth = function() {
+hui.getViewPortWidth = function() {
 	if (window.innerWidth) {
 		return window.innerWidth;
 	} else if (document.documentElement && document.documentElement.clientWidth) {
@@ -5939,18 +5947,18 @@ n2i.getViewPortWidth = function() {
 	}
 }
 
-n2i.getDocumentWidth = function() {
+hui.getDocumentWidth = function() {
 	return Math.max(document.body.clientWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth)
 	return document.body.scrollWidth;
 }
 
-n2i.getDocumentHeight = function() {
-	if (n2i.browser.msie6) {
+hui.getDocumentHeight = function() {
+	if (hui.browser.msie6) {
 		// In IE6 check the children too
 		var max = Math.max(document.body.clientHeight,document.documentElement.clientHeight,document.documentElement.scrollHeight);
 		var children = document.body.childNodes;
 		for (var i=0; i < children.length; i++) {
-			if (n2i.dom.isElement(children[i])) {
+			if (hui.dom.isElement(children[i])) {
 				max = Math.max(max,children[i].clientHeight);
 			}
 		}
@@ -5966,12 +5974,12 @@ n2i.getDocumentHeight = function() {
 //////////////////////////// Placement /////////////////////////
 
 /**
- * Example n2i.place({target : {element : myTarget, horizontal : 1}, source : {element : mySource, vertical : 0.5}})
+ * Example hui.place({target : {element : myTarget, horizontal : 1}, source : {element : mySource, vertical : 0.5}})
  */
-n2i.place = function(options) {
+hui.place = function(options) {
 	var left=0,top=0;
 	var trgt = options.target.element;
-	var trgtPos = {left:n2i.getLeft(trgt),top:n2i.getTop(trgt)};
+	var trgtPos = {left:hui.getLeft(trgt),top:hui.getTop(trgt)};
 	left = trgtPos.left+trgt.clientWidth*options.target.horizontal;
 	top = trgtPos.top+trgt.clientHeight*options.target.vertical;
 	
@@ -5980,8 +5988,8 @@ n2i.place = function(options) {
 	top-=src.clientHeight*options.source.vertical;
 	
 	if (options.insideViewPort) {
-		var w = n2i.getViewPortWidth();
-		n2i.log((left+src.clientWidth)+'>'+w);
+		var w = hui.getViewPortWidth();
+		hui.log((left+src.clientWidth)+'>'+w);
 		if (left+src.clientWidth>w) {
 			left=w-src.clientWidth;
 		}
@@ -5996,14 +6004,14 @@ n2i.place = function(options) {
 //////////////////////////// Preloader /////////////////////////
 
 /** @constructor */
-n2i.Preloader = function(options) {
+hui.Preloader = function(options) {
 	this.options = options || {};
 	this.delegate = {};
 	this.images = [];
 	this.loaded = 0;
 }
 
-n2i.Preloader.prototype = {
+hui.Preloader.prototype = {
 	addImages : function(imageOrImages) {
 		if (typeof(imageOrImages)=='object') {
 			for (var i=0; i < imageOrImages.length; i++) {
@@ -6046,7 +6054,7 @@ n2i.Preloader.prototype = {
 }
 
 /* @namespace */
-n2i.cookie = {
+hui.cookie = {
 	set : function(name,value,days) {
 		var expires;
 		if (days) {
@@ -6075,14 +6083,14 @@ n2i.cookie = {
 
 ///////////////////////// URL/Location /////////////////////
 
-n2i.URL = function(url) {
+hui.URL = function(url) {
 	this.url = url || '';
 }
 
-n2i.URL.prototype = {
+hui.URL.prototype = {
 	addParameter : function(key,value) {
 		this.url+=this.url.indexOf('?')!=-1 ? '&' : '?';
-		this.url+=key+'='+(n2i.isDefined(value) ? value : '');
+		this.url+=key+'='+(hui.isDefined(value) ? value : '');
 	},
 	toString : function() {
 		return this.url;
@@ -6090,9 +6098,9 @@ n2i.URL.prototype = {
 }
 
 /* @namespace */
-n2i.location = {
+hui.location = {
 	getParameter : function(name) {
-		var parms = n2i.location.getParameters();
+		var parms = hui.location.getParameters();
 		for (var i=0; i < parms.length; i++) {
 			if (parms[i].name==name) {
 				return parms[i].value;
@@ -6101,7 +6109,7 @@ n2i.location = {
 		return null;
 	},
 	setParameter : function(name,value) {
-		var parms = n2i.location.getParameters();
+		var parms = hui.location.getParameters();
 		var found = false;
 		for (var i=0; i < parms.length; i++) {
 			if (parms[i].name==name) {
@@ -6113,7 +6121,7 @@ n2i.location = {
 		if (!found) {
 			parms.push({name:name,value:value});
 		}
-		n2i.location.setParameters(parms);
+		hui.location.setParameters(parms);
 	},
 	hasHash : function(name) {
 		var h = document.location.hash;
@@ -6148,7 +6156,7 @@ n2i.location = {
 		document.location.search=query;
 	},
 	getBoolean : function(name) {
-		var value = n2i.location.getParameter(name);
+		var value = hui.location.getParameter(name);
 		return (value=='true' || value=='1');
 	},
 	getParameters : function() {
@@ -6169,33 +6177,33 @@ n2i.location = {
 /////////////////////////// Animation ///////////////////////////
 
 
-n2i.ani = n2i.animate = function(element,style,value,duration,delegate) {
-	n2i.animation.get(element).animate(null,value,style,duration,delegate);
+hui.ani = hui.animate = function(element,style,value,duration,delegate) {
+	hui.animation.get(element).animate(null,value,style,duration,delegate);
 }
 
 /** @namespace */
-n2i.animation = {
+hui.animation = {
 	objects : {},
 	running : false,
 	latestId : 0,
 	get : function(element) {
-		element = n2i.get(element);
+		element = hui.get(element);
 		if (!element.n2iAnimationId) {
 			element.n2iAnimationId = this.latestId++;
 		}
 		if (!this.objects[element.n2iAnimationId]) {
-			this.objects[element.n2iAnimationId] = new n2i.animation.Item(element);
+			this.objects[element.n2iAnimationId] = new hui.animation.Item(element);
 		}
 		return this.objects[element.n2iAnimationId];
 	},
 	start : function() {
 		if (!this.running) {
-			n2i.animation.render();
+			hui.animation.render();
 		}
 	}
 };
 
-n2i.animation.render = function(element) {
+hui.animation.render = function(element) {
 	this.running = true;
 	var next = false;
 	var stamp = new Date().getTime();
@@ -6222,7 +6230,7 @@ n2i.animation.render = function(element) {
 					work.delegate.callback(obj.element,v);
 				} else if (!work.css) {
 					obj.element[work.property] = Math.round(work.from+(work.to-work.from)*v);
-				} else if (work.property=='transform' && !n2i.browser.msie) {
+				} else if (work.property=='transform' && !hui.browser.msie) {
 					var t = work.transform;
 					var str = '';
 					if (t.rotate) {
@@ -6231,14 +6239,14 @@ n2i.animation.render = function(element) {
 					if (t.scale) {
 						str+=' scale('+(t.scale.from+(t.scale.to-t.scale.from)*v)+')';
 					}
-					obj.element.style[n2i.animation.TRANSFORM]=str;
+					obj.element.style[hui.animation.TRANSFORM]=str;
 				} else if (work.to.red!=null) {
 					var red = Math.round(work.from.red+(work.to.red-work.from.red)*v);
 					var green = Math.round(work.from.green+(work.to.green-work.from.green)*v);
 					var blue = Math.round(work.from.blue+(work.to.blue-work.from.blue)*v);
 					value = 'rgb('+red+','+green+','+blue+')';
 					obj.element.style[work.property]=value;
-				} else if (!n2i.browser.opacity && work.property=='opacity') {
+				} else if (!hui.browser.opacity && work.property=='opacity') {
 					var opacity = (work.from+(work.to-work.from)*v);
 					if (opacity==1) {
 						obj.element.style.removeAttribute('filter');
@@ -6262,17 +6270,17 @@ n2i.animation.render = function(element) {
 	}
 	if (next) {
 		window.setTimeout(function() {
-			n2i.animation.render();
+			hui.animation.render();
 		},0);
 	} else {
 		this.running = false;
 	}
 }
 
-n2i.animation.parseStyle = function(value) {
+hui.animation.parseStyle = function(value) {
 	var parsed = {type:null,value:null,unit:null};
 	var match;
-	if (!n2i.isDefined(value)) {
+	if (!hui.isDefined(value)) {
 		return parsed;
 	} else if (!isNaN(value)) {
 		parsed.value=parseFloat(value);
@@ -6288,7 +6296,7 @@ n2i.animation.parseStyle = function(value) {
 			blue:parseInt(match[3])
 		};
 	} else {
-		var color = new n2i.Color(value);
+		var color = new hui.Color(value);
 		if (color.ok) {
 			parsed.value = {
 				red:color.r,
@@ -6302,36 +6310,36 @@ n2i.animation.parseStyle = function(value) {
 
 ///////////////////////////// Item ///////////////////////////////
 
-n2i.animation.Item = function(element) {
+hui.animation.Item = function(element) {
 	this.element = element;
 	this.work = [];
 }
 
-n2i.animation.Item.prototype.animate = function(from,to,property,duration,delegate) {
+hui.animation.Item.prototype.animate = function(from,to,property,duration,delegate) {
 	var css = true;
 	if (property=='scrollLeft' || property=='scrollTop') {
 		css = false;
 	}
 	
-	var work = this.getWork(css ? n2i.camelize(property) : property);
+	var work = this.getWork(css ? hui.string.camelize(property) : property);
 	work.delegate = delegate;
 	work.finished = false;
 	work.css = css;
 	if (from!=null) {
 		work.from = from;
 	} else if (property=='transform') {
-		work.transform = n2i.animation.Item.parseTransform(to,this.element);
-	} else if (work.css && !n2i.browser.opacity && property=='opacity') {
+		work.transform = hui.animation.Item.parseTransform(to,this.element);
+	} else if (work.css && !hui.browser.opacity && property=='opacity') {
 		work.from = this.getIEOpacity(this.element);
 	} else if (work.css) {
-		var style = n2i.getStyle(this.element,property);
-		var parsedStyle = n2i.animation.parseStyle(style);
+		var style = hui.getStyle(this.element,property);
+		var parsedStyle = hui.animation.parseStyle(style);
 		work.from = parsedStyle.value;
 	} else {
 		work.from = this.element[property];
 	}
 	if (work.css) {
-		var parsed = n2i.animation.parseStyle(to);
+		var parsed = hui.animation.parseStyle(to);
 		work.to = parsed.value;
 		work.unit = parsed.unit;
 	} else {
@@ -6343,20 +6351,20 @@ n2i.animation.Item.prototype.animate = function(from,to,property,duration,delega
 		work.start+=delegate.delay;
 	}
 	work.end = work.start+duration;
-	n2i.animation.start();
+	hui.animation.start();
 }
 
-n2i.animation.TRANSFORM = n2i.browser.gecko ? 'MozTransform' : 'WebkitTransform';
+hui.animation.TRANSFORM = hui.browser.gecko ? 'MozTransform' : 'WebkitTransform';
 
-n2i.animation.Item.parseTransform = function(value,element) {
+hui.animation.Item.parseTransform = function(value,element) {
 	var result = {};
 	var from,fromMatch;
 	var rotateReg = /rotate\(([0-9\.]+)([a-z]+)\)/i;
 	var rotate = value.match(rotateReg);
 	if (rotate) {
 		from = 0;
-		if (element.style[n2i.animation.TRANSFORM]) {
-			fromMatch = element.style[n2i.animation.TRANSFORM].match(rotateReg);
+		if (element.style[hui.animation.TRANSFORM]) {
+			fromMatch = element.style[hui.animation.TRANSFORM].match(rotateReg);
 			if (fromMatch) {
 				from = parseFloat(fromMatch[1]);
 			}
@@ -6367,8 +6375,8 @@ n2i.animation.Item.parseTransform = function(value,element) {
 	var scale = value.match(scaleReg);
 	if (scale) {
 		from = 1;
-		if (element.style[n2i.animation.TRANSFORM]) {
-			fromMatch = element.style[n2i.animation.TRANSFORM].match(scaleReg);
+		if (element.style[hui.animation.TRANSFORM]) {
+			fromMatch = element.style[hui.animation.TRANSFORM].match(scaleReg);
 			if (fromMatch) {
 				from = parseFloat(fromMatch[1]);
 			}
@@ -6379,8 +6387,8 @@ n2i.animation.Item.parseTransform = function(value,element) {
 	return result;
 }
 
-n2i.animation.Item.prototype.getIEOpacity = function(element) {
-	var filter = n2i.getStyle(element,'filter').toLowerCase();
+hui.animation.Item.prototype.getIEOpacity = function(element) {
+	var filter = hui.getStyle(element,'filter').toLowerCase();
 	var match;
 	if (match = filter.match(/opacity=([0-9]+)/)) {
 		return parseFloat(match[1])/100;
@@ -6389,7 +6397,7 @@ n2i.animation.Item.prototype.getIEOpacity = function(element) {
 	}
 }
 
-n2i.animation.Item.prototype.getWork = function(property) {
+hui.animation.Item.prototype.getWork = function(property) {
 	for (var i=0; i < this.work.length; i++) {
 		if (this.work[i].property==property) {
 			return this.work[i];
@@ -6402,13 +6410,13 @@ n2i.animation.Item.prototype.getWork = function(property) {
 
 /////////////////////////////// Loop ///////////////////////////////////
 
-n2i.animation.Loop = function(recipe) {
+hui.animation.Loop = function(recipe) {
 	this.recipe = recipe;
 	this.position = -1;
 	this.running = false;
 }
 
-n2i.animation.Loop.prototype.next = function() {
+hui.animation.Loop.prototype.next = function() {
 	this.position++;
 	if (this.position>=this.recipe.length) {
 		this.position = 0;
@@ -6417,191 +6425,35 @@ n2i.animation.Loop.prototype.next = function() {
 	if (typeof(item)=='function') {
 		item();
 	} else if (item.element) {
-		n2i.ani(item.element,item.property,item.value,item.duration,{ease:item.ease});
+		hui.ani(item.element,item.property,item.value,item.duration,{ease:item.ease});
 	}
 	var self = this;
 	var time = item.duration || 0;
 	window.setTimeout(function() {self.next()},time);
 }
 
-n2i.animation.Loop.prototype.start = function() {
+hui.animation.Loop.prototype.start = function() {
 	this.running=true;
 	this.next();
 }
 
-/**
-	@constructor
-*/
-n2i.Color = function(color_string) {
+/** @constructor */
+hui.Color = function(str) {
     this.ok = false;
-
+	if (hui.isBlank(str)) {
+		return;
+	}
     // strip any leading #
-    if (color_string.charAt(0) == '#') { // remove # if any
-        color_string = color_string.substr(1,6);
+    if (str.charAt(0) == '#') { // remove # if any
+        str = str.substr(1,6);
     }
 
-    color_string = color_string.replace(/ /g,'');
-    color_string = color_string.toLowerCase();
-	
-	var simple_colors = {
-		white : 'ffffff',
-		black : '000000',
-		red : 'ff0000',
-		green : '00ff00',
-		blue : '0000ff'
-	};
-	
-    // before getting into regexps, try simple matches
-    // and overwrite the input
-	/*
-    var simple_colors = {
-        aliceblue: 'f0f8ff',
-        antiquewhite: 'faebd7',
-        aqua: '00ffff',
-        aquamarine: '7fffd4',
-        azure: 'f0ffff',
-        beige: 'f5f5dc',
-        bisque: 'ffe4c4',
-        black: '000000',
-        blanchedalmond: 'ffebcd',
-        blue: '0000ff',
-        blueviolet: '8a2be2',
-        brown: 'a52a2a',
-        burlywood: 'deb887',
-        cadetblue: '5f9ea0',
-        chartreuse: '7fff00',
-        chocolate: 'd2691e',
-        coral: 'ff7f50',
-        cornflowerblue: '6495ed',
-        cornsilk: 'fff8dc',
-        crimson: 'dc143c',
-        cyan: '00ffff',
-        darkblue: '00008b',
-        darkcyan: '008b8b',
-        darkgoldenrod: 'b8860b',
-        darkgray: 'a9a9a9',
-        darkgreen: '006400',
-        darkkhaki: 'bdb76b',
-        darkmagenta: '8b008b',
-        darkolivegreen: '556b2f',
-        darkorange: 'ff8c00',
-        darkorchid: '9932cc',
-        darkred: '8b0000',
-        darksalmon: 'e9967a',
-        darkseagreen: '8fbc8f',
-        darkslateblue: '483d8b',
-        darkslategray: '2f4f4f',
-        darkturquoise: '00ced1',
-        darkviolet: '9400d3',
-        deeppink: 'ff1493',
-        deepskyblue: '00bfff',
-        dimgray: '696969',
-        dodgerblue: '1e90ff',
-        feldspar: 'd19275',
-        firebrick: 'b22222',
-        floralwhite: 'fffaf0',
-        forestgreen: '228b22',
-        fuchsia: 'ff00ff',
-        gainsboro: 'dcdcdc',
-        ghostwhite: 'f8f8ff',
-        gold: 'ffd700',
-        goldenrod: 'daa520',
-        gray: '808080',
-        green: '008000',
-        greenyellow: 'adff2f',
-        honeydew: 'f0fff0',
-        hotpink: 'ff69b4',
-        indianred : 'cd5c5c',
-        indigo : '4b0082',
-        ivory: 'fffff0',
-        khaki: 'f0e68c',
-        lavender: 'e6e6fa',
-        lavenderblush: 'fff0f5',
-        lawngreen: '7cfc00',
-        lemonchiffon: 'fffacd',
-        lightblue: 'add8e6',
-        lightcoral: 'f08080',
-        lightcyan: 'e0ffff',
-        lightgoldenrodyellow: 'fafad2',
-        lightgrey: 'd3d3d3',
-        lightgreen: '90ee90',
-        lightpink: 'ffb6c1',
-        lightsalmon: 'ffa07a',
-        lightseagreen: '20b2aa',
-        lightskyblue: '87cefa',
-        lightslateblue: '8470ff',
-        lightslategray: '778899',
-        lightsteelblue: 'b0c4de',
-        lightyellow: 'ffffe0',
-        lime: '00ff00',
-        limegreen: '32cd32',
-        linen: 'faf0e6',
-        magenta: 'ff00ff',
-        maroon: '800000',
-        mediumaquamarine: '66cdaa',
-        mediumblue: '0000cd',
-        mediumorchid: 'ba55d3',
-        mediumpurple: '9370d8',
-        mediumseagreen: '3cb371',
-        mediumslateblue: '7b68ee',
-        mediumspringgreen: '00fa9a',
-        mediumturquoise: '48d1cc',
-        mediumvioletred: 'c71585',
-        midnightblue: '191970',
-        mintcream: 'f5fffa',
-        mistyrose: 'ffe4e1',
-        moccasin: 'ffe4b5',
-        navajowhite: 'ffdead',
-        navy: '000080',
-        oldlace: 'fdf5e6',
-        olive: '808000',
-        olivedrab: '6b8e23',
-        orange: 'ffa500',
-        orangered: 'ff4500',
-        orchid: 'da70d6',
-        palegoldenrod: 'eee8aa',
-        palegreen: '98fb98',
-        paleturquoise: 'afeeee',
-        palevioletred: 'd87093',
-        papayawhip: 'ffefd5',
-        peachpuff: 'ffdab9',
-        peru: 'cd853f',
-        pink: 'ffc0cb',
-        plum: 'dda0dd',
-        powderblue: 'b0e0e6',
-        purple: '800080',
-        red: 'ff0000',
-        rosybrown: 'bc8f8f',
-        royalblue: '4169e1',
-        saddlebrown: '8b4513',
-        salmon: 'fa8072',
-        sandybrown: 'f4a460',
-        seagreen: '2e8b57',
-        seashell: 'fff5ee',
-        sienna: 'a0522d',
-        silver: 'c0c0c0',
-        skyblue: '87ceeb',
-        slateblue: '6a5acd',
-        slategray: '708090',
-        snow: 'fffafa',
-        springgreen: '00ff7f',
-        steelblue: '4682b4',
-        tan: 'd2b48c',
-        teal: '008080',
-        thistle: 'd8bfd8',
-        tomato: 'ff6347',
-        turquoise: '40e0d0',
-        violet: 'ee82ee',
-        violetred: 'd02090',
-        wheat: 'f5deb3',
-        white: 'ffffff',
-        whitesmoke: 'f5f5f5',
-        yellow: 'ffff00',
-        yellowgreen: '9acd32'
-    };*/
-    for (var key in simple_colors) {
-        if (color_string == key) {
-            color_string = simple_colors[key];
+    str = str.replace(/ /g,'');
+    str = str.toLowerCase();
+		
+    for (var key in hui.Color.table) {
+        if (str == key) {
+            str = hui.Color.table[key];
         }
     }
     // emd of simple type-in colors
@@ -6610,7 +6462,6 @@ n2i.Color = function(color_string) {
     var color_defs = [
         {
             re: /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/,
-            example: ['rgb(123, 234, 45)', 'rgb(255,234,245)'],
             process: function (bits){
                 return [
                     parseInt(bits[1]),
@@ -6620,8 +6471,17 @@ n2i.Color = function(color_string) {
             }
         },
         {
+            re: /^rgb\((\d{1,3})%,\s*(\d{1,3})%,\s*(\d{1,3})%\)$/	,
+            process: function (bits){
+                return [
+                    Math.round(parseInt(bits[1])/100*255),
+                    Math.round(parseInt(bits[2])/100*255),
+                    Math.round(parseInt(bits[3])/100*255)
+                ];
+            }
+        },
+        {
             re: /^(\w{2})(\w{2})(\w{2})$/,
-            example: ['#00ff00', '336699'],
             process: function (bits){
                 return [
                     parseInt(bits[1], 16),
@@ -6632,7 +6492,6 @@ n2i.Color = function(color_string) {
         },
         {
             re: /^(\w{1})(\w{1})(\w{1})$/,
-            example: ['#fb0', 'f0f'],
             process: function (bits){
                 return [
                     parseInt(bits[1] + bits[1], 16),
@@ -6645,40 +6504,78 @@ n2i.Color = function(color_string) {
 
     // search through the definitions to find a match
     for (var i = 0; i < color_defs.length; i++) {
-        var re = color_defs[i].re;
-        var processor = color_defs[i].process;
-        var bits = re.exec(color_string);
+        var re = color_defs[i].re,
+			processor = color_defs[i].process,
+			bits = re.exec(str);
         if (bits) {
             channels = processor(bits);
             this.r = channels[0];
             this.g = channels[1];
             this.b = channels[2];
             this.ok = true;
+			break;
         }
-
     }
 
     // validate/cleanup values
     this.r = (this.r < 0 || isNaN(this.r)) ? 0 : ((this.r > 255) ? 255 : this.r);
     this.g = (this.g < 0 || isNaN(this.g)) ? 0 : ((this.g > 255) ? 255 : this.g);
     this.b = (this.b < 0 || isNaN(this.b)) ? 0 : ((this.b > 255) ? 255 : this.b);
+}
 
-    // some getters
-    this.toRGB = function () {
+hui.Color.prototype = {
+	toRGB : function () {
         return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
-    }
-    this.toHex = function () {
+    },
+	toHex : function() {
         var r = this.r.toString(16);
         var g = this.g.toString(16);
         var b = this.b.toString(16);
-        if (r.length == 1) r = '0' + r;
-        if (g.length == 1) g = '0' + g;
-        if (b.length == 1) b = '0' + b;
+        if (r.length == 1) {
+			r = '0' + r;
+		}
+        if (g.length == 1) {
+			g = '0' + g;
+		}
+        if (b.length == 1) {
+			b = '0' + b;
+		}
         return '#' + r + g + b;
-    }
+	}
 }
 
-n2i.Color.hsv2rgb = function (Hdeg,S,V) {
+hui.Color.table = {
+	white : 'ffffff',
+	black : '000000',
+	red : 'ff0000',
+	green : '00ff00',
+	blue : '0000ff'
+}
+
+hui.Color.hex2rgb = function(hex) {
+	if (hui.isBlank(hex)) {
+		return null;
+	}
+	if (hex[0]=="#") {
+		hex=hex.substr(1);
+	}
+	if (hex.length==3) {
+		var temp=hex;
+		hex='';
+		temp = /^([a-f0-9])([a-f0-9])([a-f0-9])$/i.exec(temp).slice(1);
+		for (var i=0;i<3;i++) {
+			hex+=temp[i]+temp[i];
+		}
+	}
+	var triplets = /^([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$/i.exec(hex).slice(1);
+	return {
+		r:   parseInt(triplets[0],16),
+		g: parseInt(triplets[1],16),
+		b:  parseInt(triplets[2],16)
+	}
+}
+
+hui.Color.hsv2rgb = function (Hdeg,S,V) {
   	var H = Hdeg/360,R,G,B;     // convert from degrees to 0 to 1
   	if (S==0) {       // HSV values = From 0 to 1
 		R = V*255;     // RGB results = From 0 to 255
@@ -6712,7 +6609,7 @@ n2i.Color.hsv2rgb = function (Hdeg,S,V) {
   	return new Array(R,G,B);
 }
 
-n2i.Color.rgb2hsv = function(r, g, b) {
+hui.Color.rgb2hsv = function(r, g, b) {
 
     r = (r / 255);
     g = (g / 255);
@@ -6749,7 +6646,7 @@ n2i.Color.rgb2hsv = function(r, g, b) {
     return [Math.round(hue), Math.round(saturation * 100), Math.round(value * 100)];
 }
 
-n2i.Color.rgb2hex = function(rgbary) {
+hui.Color.rgb2hex = function(rgbary) {
 	var c = '#';
   	for (var i=0; i < 3; i++) {
 		var str = parseInt(rgbary[i]).toString(16);
@@ -6763,7 +6660,7 @@ n2i.Color.rgb2hex = function(rgbary) {
 
 
 /** @namespace */
-n2i.ease = {
+hui.ease = {
 	slowFastSlow : function(val) {
 		var a = 1.6;
 		var b = 1.4;
@@ -6775,7 +6672,7 @@ n2i.ease = {
 		return -1*Math.pow(Math.cos((Math.PI/2)*Math.pow(val,a)),Math.pow(Math.PI,b))+1;
 	},
 	elastic : function(t) {
-		return 1 - n2i.ease.elastic2(1-t);
+		return 1 - hui.ease.elastic2(1-t);
 	},
 
 	elastic2 : function (t, a, p) {
@@ -6971,7 +6868,7 @@ n2i.ease = {
 
 	bounceIn: function(/* Decimal? */n){
 		// summary: An easing function that "bounces" near the beginning of an Animation
-		return (1 - n2i.ease.bounceOut(1-n)); // Decimal
+		return (1 - hui.ease.bounceOut(1-n)); // Decimal
 	},
 
 	bounceOut: function(/* Decimal? */n){
@@ -6996,8 +6893,8 @@ n2i.ease = {
 
 	bounceInOut: function(/* Decimal? */n){
 		// summary: An easing function that "bounces" at the beginning and end of the Animation
-		if(n<0.5){ return n2i.ease.bounceIn(n*2) / 2; }
-		return (n2i.ease.bounceOut(n*2-1) / 2) + 0.5; // Decimal
+		if(n<0.5){ return hui.ease.bounceIn(n*2) / 2; }
+		return (hui.ease.bounceOut(n*2-1) / 2) + 0.5; // Decimal
 	}
 };
 
@@ -7028,10 +6925,10 @@ if (!Function.prototype.argumentNames) {
 		return names.length == 1 && !names[0] ? [] : names;
 	}
 }/**
-  The namespace of the In2iGui framework
+  The namespace of the HUI framework
   @namespace
  */
-var In2iGui = {
+hui.ui = {
 	domReady : false,
 	context : '',
 	language : 'en',
@@ -7051,15 +6948,13 @@ var In2iGui = {
 	confirmOverlays : {}
 }
 
-window.ui = In2iGui; // TODO: old namespace
+window.ui = hui.ui; // TODO: old namespace
 
-if (window.hui) {
-	window.hui.ui = In2iGui;
-}
+window.In2iGui = hui.ui; // TODO: old namespace
 
 
 /** Gets the one instance of In2iGui */
-In2iGui.get = function(nameOrWidget) {
+hui.ui.get = function(nameOrWidget) {
 	if (nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
@@ -7070,47 +6965,47 @@ In2iGui.get = function(nameOrWidget) {
 	}
 };
 
-n2i.onReady(function() {
+hui.onReady(function() {
 	if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
 		window.dwr.engine.setErrorHandler(function(msg,e) {
-			n2i.log(msg);
-			n2i.log(e);
+			hui.log(msg);
+			hui.log(e);
 		});
 	}
 	In2iGui.callSuperDelegates(this,'ready');
-	n2i.listen(window,'resize',In2iGui._resize);
-	In2iGui._resize();
-	In2iGui.domReady = true;
-	if (window.parent && window.parent.In2iGui) {
-		window.parent.In2iGui._frameLoaded(window);
+	hui.listen(window,'resize',hui.ui._resize);
+	hui.ui._resize();
+	hui.ui.domReady = true;
+	if (window.parent && window.parent.hui && window.parent.hui.ui) {
+		window.parent.hui.ui._frameLoaded(window);
 	}
 });
 
-In2iGui._frameLoaded = function(win) {
-	In2iGui.callSuperDelegates(this,'frameLoaded',win);
+hui.ui._frameLoaded = function(win) {
+	hui.ui.callSuperDelegates(this,'frameLoaded',win);
 }
 
 /** @private */
-In2iGui._resize = function() {
-	for (var i = In2iGui.layoutWidgets.length - 1; i >= 0; i--){
-		In2iGui.layoutWidgets[i]['$$layout']();
+hui.ui._resize = function() {
+	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--){
+		hui.ui.layoutWidgets[i]['$$layout']();
 	};
 }
 
-In2iGui.confirmOverlay = function(options) {
+hui.ui.confirmOverlay = function(options) {
 	var node = options.element || options.widget.getElement(),
 		overlay;
-	if (In2iGui.confirmOverlays[node]) {
-		overlay = In2iGui.confirmOverlays[node];
+	if (hui.ui.confirmOverlays[node]) {
+		overlay = hui.ui.confirmOverlays[node];
 		overlay.clear();
 	} else {
-		overlay = In2iGui.Overlay.create({modal:true});
-		In2iGui.confirmOverlays[node] = overlay;
+		overlay = hui.ui.Overlay.create({modal:true});
+		hui.ui.confirmOverlays[node] = overlay;
 	}
 	if (options.text) {
 		overlay.addText(options.text);
 	}
-	var ok = In2iGui.Button.create({text:options.okText || 'OK',highlighted:'true'});
+	var ok = hui.ui.Button.create({text:options.okText || 'OK',highlighted:'true'});
 	ok.click(function() {
 		if (options.onOk) {
 			options.onOk();
@@ -7118,7 +7013,7 @@ In2iGui.confirmOverlay = function(options) {
 		overlay.hide();
 	});
 	overlay.add(ok);
-	var cancel = In2iGui.Button.create({text:options.cancelText || 'Cancel'});
+	var cancel = hui.ui.Button.create({text:options.cancelText || 'Cancel'});
 	cancel.onClick(function() {
 		overlay.hide();
 	});
@@ -7126,18 +7021,18 @@ In2iGui.confirmOverlay = function(options) {
 	overlay.show({element:node});
 }
 
-In2iGui.destroy = function(widget) {
-	var objects = In2iGui.objects;
+hui.ui.destroy = function(widget) {
+	var objects = hui.ui.objects;
 	delete(objects[widget.name]);
 }
 
-In2iGui.destroyDescendants = function(element) {
-	var desc = In2iGui.getDescendants(element);
-	var objects = In2iGui.objects;
+hui.ui.destroyDescendants = function(element) {
+	var desc = hui.ui.getDescendants(element);
+	var objects = hui.ui.objects;
 	for (var i=0; i < desc.length; i++) {
 		var obj  = delete(objects[desc[i].name]);
 		if (!obj) {
-			n2i.log('not found: '+desc[i].name);
+			hui.log('not found: '+desc[i].name);
 		}
 	};
 }
@@ -7146,14 +7041,14 @@ In2iGui.destroyDescendants = function(element) {
 	@param {Widget} A widget
 	@returns {Array} An array of all ancestors
 */
-In2iGui.getAncestors = function(widget) {
+hui.ui.getAncestors = function(widget) {
 	var desc = [];
 	var e = widget.element;
 	if (e) {
-		var a = n2i.getAncestors(e);
+		var a = hui.getAncestors(e);
 		var o = [];
-		for (var key in In2iGui.objects) {
-			o.push(In2iGui.objects[key]);
+		for (var key in hui.ui.objects) {
+			o.push(hui.ui.objects[key]);
 		}
 		for (var i=0; i < a.length; i++) {
 			for (var j=0; j < o.length; j++) {
@@ -7166,13 +7061,13 @@ In2iGui.getAncestors = function(widget) {
 	return desc;
 }
 
-In2iGui.getDescendants = function(widgetOrElement) {
+hui.ui.getDescendants = function(widgetOrElement) {
 	var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
 	if (e) {
 		var d = e.getElementsByTagName('*');
 		var o = [];
-		for (var key in In2iGui.objects) {
-			o.push(In2iGui.objects[key]);
+		for (var key in hui.ui.objects) {
+			o.push(hui.ui.objects[key]);
 		}
 		for (var i=0; i < d.length; i++) {
 			for (var j=0; j < o.length; j++) {
@@ -7186,10 +7081,10 @@ In2iGui.getDescendants = function(widgetOrElement) {
 	return desc;
 }
 
-In2iGui.getAncestor = function(widget,cls) {
-	var a = In2iGui.getAncestors(widget);
+hui.ui.getAncestor = function(widget,cls) {
+	var a = hui.ui.getAncestors(widget);
 	for (var i=0; i < a.length; i++) {
-		if (n2i.hasClass(a[i].getElement(),cls)) {
+		if (hui.hasClass(a[i].getElement(),cls)) {
 			return a[i];
 		}
 	};
@@ -7198,9 +7093,9 @@ In2iGui.getAncestor = function(widget,cls) {
 
 
 
-In2iGui.changeState = function(state) {
-	if (In2iGui.state===state) {return;}
-	var all = In2iGui.objects,
+hui.ui.changeState = function(state) {
+	if (hui.ui.state===state) {return;}
+	var all = hui.ui.objects,
 		key,obj;
 	for (key in all) {
 		obj = all[key];
@@ -7212,43 +7107,43 @@ In2iGui.changeState = function(state) {
 			}
 		}
 	}
-	In2iGui.state=state;
+	hui.ui.state=state;
 }
 
 ///////////////////////////////// Indexes /////////////////////////////
 
-In2iGui.nextIndex = function() {
-	In2iGui.latestIndex++;
-	return 	In2iGui.latestIndex;
+hui.ui.nextIndex = function() {
+	hui.ui.latestIndex++;
+	return 	hui.ui.latestIndex;
 };
 
-In2iGui.nextPanelIndex = function() {
-	In2iGui.latestPanelIndex++;
-	return 	In2iGui.latestPanelIndex;
+hui.ui.nextPanelIndex = function() {
+	hui.ui.latestPanelIndex++;
+	return 	hui.ui.latestPanelIndex;
 };
 
-In2iGui.nextAlertIndex = function() {
-	In2iGui.latestAlertIndex++;
-	return 	In2iGui.latestAlertIndex;
+hui.ui.nextAlertIndex = function() {
+	hui.ui.latestAlertIndex++;
+	return 	hui.ui.latestAlertIndex;
 };
 
-In2iGui.nextTopIndex = function() {
-	In2iGui.latestTopIndex++;
-	return 	In2iGui.latestTopIndex;
+hui.ui.nextTopIndex = function() {
+	hui.ui.latestTopIndex++;
+	return 	hui.ui.latestTopIndex;
 };
 
 ///////////////////////////////// Curtain /////////////////////////////
 
-In2iGui.showCurtain = function(options,zIndex) {
+hui.ui.showCurtain = function(options,zIndex) {
 	var widget = options.widget;
 	if (!widget.curtain) {
-		widget.curtain = n2i.build('div',{'class':'in2igui_curtain',style:'z-index:none'});
+		widget.curtain = hui.build('div',{'class':'in2igui_curtain',style:'z-index:none'});
 		widget.curtain.onclick = function() {
 			if (widget['$curtainWasClicked']) {
 				widget['$curtainWasClicked']();
 			}
 		};
-		var body = n2i.firstByClass(document.body,'in2igui_body');
+		var body = hui.firstByClass(document.body,'in2igui_body');
 		if (!body) {
 			body=document.body;
 		}
@@ -7257,8 +7152,8 @@ In2iGui.showCurtain = function(options,zIndex) {
 	if (options.color) {
 		widget.curtain.style.backgroundColor=options.color;
 	}
-	if (n2i.browser.msie) {
-		widget.curtain.style.height=n2i.getDocumentHeight()+'px';
+	if (hui.browser.msie) {
+		widget.curtain.style.height=hui.getDocumentHeight()+'px';
 	} else {
 		widget.curtain.style.position='fixed';
 		widget.curtain.style.top='0';
@@ -7267,69 +7162,69 @@ In2iGui.showCurtain = function(options,zIndex) {
 		widget.curtain.style.right='0';
 	}
 	widget.curtain.style.zIndex=options.zIndex;
-	n2i.setOpacity(widget.curtain,0);
+	hui.setOpacity(widget.curtain,0);
 	widget.curtain.style.display='block';
-	n2i.ani(widget.curtain,'opacity',0.7,1000,{ease:n2i.ease.slowFastSlow});
+	hui.ani(widget.curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
 }
 
-In2iGui.hideCurtain = function(widget) {
+hui.ui.hideCurtain = function(widget) {
 	if (widget.curtain) {
-		n2i.ani(widget.curtain,'opacity',0,200,{hideOnComplete:true});
+		hui.ani(widget.curtain,'opacity',0,200,{hideOnComplete:true});
 	}
 };
 
 //////////////////////////////// Message //////////////////////////////
 
-In2iGui.confirm = function(options) {
+hui.ui.confirm = function(options) {
 	if (!options.name) {
 		options.name = 'in2iguiConfirm';
 	}
-	var alert = In2iGui.get(options.name);
+	var alert = hui.ui.get(options.name);
 	var ok;
 	if (!alert) {
-		alert = In2iGui.Alert.create(options);
-		var cancel = In2iGui.Button.create({name:name+'_cancel',text : options.cancel || 'Cancel',highlighted:options.highlighted==='cancel'});
+		alert = hui.ui.Alert.create(options);
+		var cancel = hui.ui.Button.create({name:name+'_cancel',text : options.cancel || 'Cancel',highlighted:options.highlighted==='cancel'});
 		cancel.listen({$click:function(){
 			alert.hide();
 			if (options.onCancel) {
 				options.onCancel();
 			}
-			In2iGui.callDelegates(alert,'cancel');
+			hui.ui.callDelegates(alert,'cancel');
 		}});
 		alert.addButton(cancel);
 	
-		ok = In2iGui.Button.create({name:name+'_ok',text : options.ok || 'OK',highlighted:options.highlighted==='ok'});
+		ok = hui.ui.Button.create({name:name+'_ok',text : options.ok || 'OK',highlighted:options.highlighted==='ok'});
 		alert.addButton(ok);
 	} else {
 		alert.update(options);
-		ok = In2iGui.get(name+'_ok');
+		ok = hui.ui.get(name+'_ok');
 		ok.setText(options.ok || 'OK');
 		ok.setHighlighted(options.highlighted=='ok');
 		ok.clearDelegates();
-		In2iGui.get(name+'_cancel').setText(options.ok || 'Cancel');
-		In2iGui.get(name+'_cancel').setHighlighted(options.highlighted=='cancel');
-		if (options.cancel) {In2iGui.get(name+'_cancel').setText(options.cancel);}
+		hui.ui.get(name+'_cancel').setText(options.ok || 'Cancel');
+		hui.ui.get(name+'_cancel').setHighlighted(options.highlighted=='cancel');
+		if (options.cancel) {hui.ui.get(name+'_cancel').setText(options.cancel);}
 	}
 	ok.listen({$click:function(){
 		alert.hide();
 		if (options.onOK) {
 			options.onOK();
 		}
-		In2iGui.callDelegates(alert,'ok');
+		hui.ui.callDelegates(alert,'ok');
 	}});
 	alert.show();
 }
 
-In2iGui.alert = function(options) {
+hui.ui.alert = function(options) {
 	if (!this.alertBox) {
-		this.alertBox = In2iGui.Alert.create(options);
-		this.alertBoxButton = In2iGui.Button.create({name:'in2iGuiAlertBoxButton',text : 'OK'});
+		this.alertBox = hui.ui.Alert.create(options);
+		this.alertBoxButton = hui.ui.Button.create({name:'in2iGuiAlertBoxButton',text : 'OK'});
 		this.alertBoxButton.listen({
 			$click$in2iGuiAlertBoxButton : function() {
-				In2iGui.alertBox.hide();
-				if (In2iGui.alertBoxCallBack) {
-					In2iGui.alertBoxCallBack();
-					In2iGui.alertBoxCallBack = null;
+				hui.ui.alertBox.hide();
+				if (hui.ui.alertBoxCallBack) {
+					hui.ui.alertBoxCallBack();
+					hui.ui.alertBoxCallBack = null;
 				}
 			}
 		});
@@ -7342,99 +7237,99 @@ In2iGui.alert = function(options) {
 	this.alertBox.show();
 };
 
-In2iGui.showMessage = function(options) {
+hui.ui.showMessage = function(options) {
 	if (typeof(options)=='string') {
 		// TODO: Backwards compatibility
 		options={text:options};
 	}
 	if (options.delay) {
-		In2iGui.messageDelayTimer = window.setTimeout(function() {
+		hui.ui.messageDelayTimer = window.setTimeout(function() {
 			options.delay=null;
-			In2iGui.showMessage(options);
+			hui.ui.showMessage(options);
 		},options.delay);
 		return;
 	}
-	window.clearTimeout(In2iGui.messageDelayTimer);
-	if (!In2iGui.message) {
-		In2iGui.message = n2i.build('div',{'class':'in2igui_message',html:'<div><div></div></div>'});
-		if (!n2i.browser.msie) {
-			n2i.setOpacity(In2iGui.message,0);
+	window.clearTimeout(hui.ui.messageDelayTimer);
+	if (!hui.ui.message) {
+		hui.ui.message = hui.build('div',{'class':'in2igui_message',html:'<div><div></div></div>'});
+		if (!hui.browser.msie) {
+			hui.setOpacity(hui.ui.message,0);
 		}
-		document.body.appendChild(In2iGui.message);
+		document.body.appendChild(hui.ui.message);
 	}
-	var inner = In2iGui.message.getElementsByTagName('div')[1];
+	var inner = hui.ui.message.getElementsByTagName('div')[1];
 	if (options.icon) {
-		n2i.dom.clear(inner);
-		inner.appendChild(In2iGui.createIcon(options.icon,24));
-		n2i.dom.addText(inner,options.text);
+		hui.dom.clear(inner);
+		inner.appendChild(hui.ui.createIcon(options.icon,24));
+		hui.dom.addText(inner,options.text);
 	}
 	else if (options.busy) {
 		inner.innerHTML='<span class="in2igui_message_busy"></span>';
-		n2i.dom.addText(inner,options.text);
+		hui.dom.addText(inner,options.text);
 	} else {
-		n2i.dom.setText(inner,options.text);
+		hui.dom.setText(inner,options.text);
 	}
-	In2iGui.message.style.display = 'block';
-	In2iGui.message.style.zIndex = In2iGui.nextTopIndex();
-	In2iGui.message.style.marginLeft = (In2iGui.message.clientWidth/-2)+'px';
-	In2iGui.message.style.marginTop = n2i.getScrollTop()+'px';
-	if (n2i.browser.opacity) {
-		n2i.ani(In2iGui.message,'opacity',1,300);
+	hui.ui.message.style.display = 'block';
+	hui.ui.message.style.zIndex = hui.ui.nextTopIndex();
+	hui.ui.message.style.marginLeft = (hui.ui.message.clientWidth/-2)+'px';
+	hui.ui.message.style.marginTop = hui.getScrollTop()+'px';
+	if (hui.browser.opacity) {
+		hui.ani(hui.ui.message,'opacity',1,300);
 	}
-	window.clearTimeout(In2iGui.messageTimer);
+	window.clearTimeout(hui.ui.messageTimer);
 	if (options.duration) {
-		In2iGui.messageTimer = window.setTimeout(In2iGui.hideMessage,options.duration);
+		hui.ui.messageTimer = window.setTimeout(hui.ui.hideMessage,options.duration);
 	}
 };
 
-In2iGui.hideMessage = function() {
-	window.clearTimeout(In2iGui.messageDelayTimer);
-	if (In2iGui.message) {
-		if (n2i.browser.opacity) {
-			n2i.ani(In2iGui.message,'opacity',0,300,{hideOnComplete:true});
+hui.ui.hideMessage = function() {
+	window.clearTimeout(hui.ui.messageDelayTimer);
+	if (hui.ui.message) {
+		if (hui.browser.opacity) {
+			hui.ani(hui.ui.message,'opacity',0,300,{hideOnComplete:true});
 		} else {
-			In2iGui.message.style.display='none';
+			hui.ui.message.style.display='none';
 		}
 	}
 };
 
-In2iGui.showToolTip = function(options) {
+hui.ui.showToolTip = function(options) {
 	var key = options.key || 'common';
-	var t = In2iGui.toolTips[key];
+	var t = hui.ui.toolTips[key];
 	if (!t) {
-		t = n2i.build('div',{'class':'in2igui_tooltip',style:'display:none;',html:'<div><div></div></div>',parent:document.body});
-		In2iGui.toolTips[key] = t;
+		t = hui.build('div',{'class':'in2igui_tooltip',style:'display:none;',html:'<div><div></div></div>',parent:document.body});
+		hui.ui.toolTips[key] = t;
 	}
-	t.onclick = function() {In2iGui.hideToolTip(options);};
-	var n = n2i.get(options.element);
-	var pos = n2i.getPosition(n);
-	n2i.dom.setText(t.getElementsByTagName('div')[1],options.text);
-	if (t.style.display=='none' && n2i.browser.opacity) {
-		n2i.setOpacity(t,0);
+	t.onclick = function() {hui.ui.hideToolTip(options);};
+	var n = hui.get(options.element);
+	var pos = hui.getPosition(n);
+	hui.dom.setText(t.getElementsByTagName('div')[1],options.text);
+	if (t.style.display=='none' && hui.browser.opacity) {
+		hui.setOpacity(t,0);
 	}
-	n2i.setStyle(t,{'display':'block',zIndex:In2iGui.nextTopIndex()});
-	n2i.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
-	if (n2i.browser.opacity) {
-		n2i.ani(t,'opacity',1,300);
+	hui.setStyle(t,{'display':'block',zIndex:hui.ui.nextTopIndex()});
+	hui.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
+	if (hui.browser.opacity) {
+		hui.ani(t,'opacity',1,300);
 	}
 };
 
-In2iGui.hideToolTip = function(options) {
+hui.ui.hideToolTip = function(options) {
 	var key = options ? options.key || 'common' : 'common';
-	var t = In2iGui.toolTips[key];
+	var t = hui.ui.toolTips[key];
 	if (t) {
-		if (!n2i.browser.msie) {
-			n2i.ani(t,'opacity',0,300,{hideOnComplete:true});
+		if (!hui.browser.msie) {
+			hui.ani(t,'opacity',0,300,{hideOnComplete:true});
 		} else {
-			n2i.style.display = 'none';
+			hui.style.display = 'none';
 		}
 	}
 };
 
 /////////////////////////////// Utilities /////////////////////////////
 
-In2iGui.getElement = function(widgetOrElement) {
-	if (n2i.dom.isElement(widgetOrElement)) {
+hui.ui.getElement = function(widgetOrElement) {
+	if (hui.dom.isElement(widgetOrElement)) {
 		return widgetOrElement;
 	} else if (widgetOrElement.getElement) {
 		return widgetOrElement.getElement();
@@ -7442,64 +7337,64 @@ In2iGui.getElement = function(widgetOrElement) {
 	return null;
 }
 
-In2iGui.isWithin = function(e,element) {
-	e = new n2i.Event(e);
-	var offset = {left:n2i.getLeft(element),top:n2i.getTop(element)};
+hui.ui.isWithin = function(e,element) {
+	e = new hui.Event(e);
+	var offset = {left:hui.getLeft(element),top:hui.getTop(element)};
 	var dims = {width:element.clientWidth,height:element.clientHeight};
 	return e.left()>offset.left && e.left()<offset.left+dims.width && e.top()>offset.top && e.top()<offset.top+dims.height;
 };
 
-In2iGui.getIconUrl = function(icon,size) {
-	return In2iGui.context+'/In2iGui/icons/'+icon+size+'.png';
+hui.ui.getIconUrl = function(icon,size) {
+	return hui.ui.context+'/In2iGui/icons/'+icon+size+'.png';
 };
 
-In2iGui.createIcon = function(icon,size) {
-	return n2i.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+In2iGui.getIconUrl(icon,size)+')'});
+hui.ui.createIcon = function(icon,size) {
+	return hui.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
-In2iGui.onDomReady = In2iGui.onReady = function(func) {
-	if (In2iGui.domReady) {return func();}
-	if (n2i.browser.gecko && n2i.string.endsWith(document.baseURI,'xml')) {
+hui.ui.onDomReady = hui.ui.onReady = function(func) {
+	if (hui.ui.domReady) {return func();}
+	if (hui.browser.gecko && hui.string.endsWith(document.baseURI,'xml')) {
 		window.setTimeout(func,1000);
 		return;
 	}
-	n2i.onReady(func);
+	hui.onReady(func);
 };
 
-In2iGui.wrapInField = function(e) {
-	var w = n2i.build('div',{'class':'in2igui_field',html:
+hui.ui.wrapInField = function(e) {
+	var w = hui.build('div',{'class':'in2igui_field',html:
 		'<span class="in2igui_field_top"><span><span></span></span></span>'+
 		'<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content"></span></span></span>'+
 		'<span class="in2igui_field_bottom"><span><span></span></span></span>'
 	});
-	n2i.firstByClass(w,'in2igui_field_content').appendChild(e);
+	hui.firstByClass(w,'in2igui_field_content').appendChild(e);
 	return w;
 };
 
-In2iGui.addFocusClass = function(o) {
+hui.ui.addFocusClass = function(o) {
 	var ce = o.classElement || o.element, c = o['class'];
-	n2i.listen(o.element,'focus',function() {
-		n2i.addClass(ce,c);
+	hui.listen(o.element,'focus',function() {
+		hui.addClass(ce,c);
 	});
-	n2i.listen(o.element,'blur',function() {
-		n2i.removeClass(ce,c);
+	hui.listen(o.element,'blur',function() {
+		hui.removeClass(ce,c);
 	});
 };
 
 
 /////////////////////////////// Validation /////////////////////////////
 
-In2iGui.NumberValidator = function(options) {
-	n2i.override({allowNull:false,min:0,max:10},options)
+hui.ui.NumberValidator = function(options) {
+	hui.override({allowNull:false,min:0,max:10},options)
 	this.min = options.min;
 	this.max = options.max;
 	this.allowNull = options.allowNull;
 	this.middle = Math.max(Math.min(this.max,0),this.min);
 }
 
-In2iGui.NumberValidator.prototype = {
+hui.ui.NumberValidator.prototype = {
 	validate : function(value) {
-		if (n2i.isBlank(value) && this.allowNull) {
+		if (hui.isBlank(value) && this.allowNull) {
 			return {valid:true,value:null};
 		}
 		var number = parseFloat(value);
@@ -7516,42 +7411,42 @@ In2iGui.NumberValidator.prototype = {
 
 /////////////////////////////// Animation /////////////////////////////
 
-In2iGui.fadeIn = function(node,time) {
-	if (n2i.getStyle(node,'display')=='none') {
-		n2i.setStyle(node,{opacity:0,display:''});
+hui.ui.fadeIn = function(node,time) {
+	if (hui.getStyle(node,'display')=='none') {
+		hui.setStyle(node,{opacity:0,display:''});
 	}
-	n2i.animate(node,'opacity',1,time);
+	hui.animate(node,'opacity',1,time);
 };
 
-In2iGui.fadeOut = function(node,time) {
+hui.ui.fadeOut = function(node,time) {
 	hui.animate(node,'opacity',0,time,{hideOnComplete:true});
 };
 
-In2iGui.bounceIn = function(node,time) {
-	if (n2i.browser.msie) {
-		n2i.setStyle(node,{'display':'block',visibility:'visible'});
+hui.ui.bounceIn = function(node,time) {
+	if (hui.browser.msie) {
+		hui.setStyle(node,{'display':'block',visibility:'visible'});
 	} else {
-		n2i.setStyle(node,{'display':'block','opacity':0,visibility:'visible'});
-		n2i.animate(node,'transform','scale(0.1)',0);// rotate(10deg)
+		hui.setStyle(node,{'display':'block','opacity':0,visibility:'visible'});
+		hui.animate(node,'transform','scale(0.1)',0);// rotate(10deg)
 		window.setTimeout(function() {
-			n2i.animate(node,'opacity',1,300);
-			n2i.animate(node,'transform','scale(1)',400,{ease:n2i.ease.backOut}); // rotate(0deg)
+			hui.animate(node,'opacity',1,300);
+			hui.animate(node,'transform','scale(1)',400,{ease:hui.ease.backOut}); // rotate(0deg)
 		});
 	}
 };
 
 //////////////////////////// Positioning /////////////////////////////
 
-In2iGui.positionAtElement = function(element,target,options) {
+hui.ui.positionAtElement = function(element,target,options) {
 	options = options || {};
-	element = n2i.get(element);
-	target = n2i.get(target);
-	var origDisplay = n2i.getStyle(element,'display');
+	element = hui.get(element);
+	target = hui.get(target);
+	var origDisplay = hui.getStyle(element,'display');
 	if (origDisplay=='none') {
-		n2i.setStyle(element,{'visibility':'hidden','display':'block'});
+		hui.setStyle(element,{'visibility':'hidden','display':'block'});
 	}
-	var left = n2i.getLeft(target),
-		top = n2i.getTop(target);
+	var left = hui.getLeft(target),
+		top = hui.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
 		left = left+target.clientWidth-element.clientWidth;
@@ -7563,13 +7458,13 @@ In2iGui.positionAtElement = function(element,target,options) {
 	}
 	left+=(options.left || 0);
 	top+=(options.top || 0);
-	n2i.setStyle(element,{'left':left+'px','top':top+'px'});
+	hui.setStyle(element,{'left':left+'px','top':top+'px'});
 	if (origDisplay=='none') {
-		n2i.setStyle(element,{'visibility':'visible','display':'none'});
+		hui.setStyle(element,{'visibility':'visible','display':'none'});
 	}
 };
 
-In2iGui.getTextAreaHeight = function(input) {
+hui.ui.getTextAreaHeight = function(input) {
 	var t = this.textAreaDummy;
 	if (!t) {
 		t = this.textAreaDummy = document.createElement('div');
@@ -7580,7 +7475,7 @@ In2iGui.getTextAreaHeight = function(input) {
 	if (html[html.length-1]==='\n') {
 		html+='x';
 	}
-	html = n2i.escape(html).replace(/\n/g,'<br/>');
+	html = hui.escape(html).replace(/\n/g,'<br/>');
 	t.innerHTML = html;
 	t.style.width=(input.clientWidth)+'px';
 	return t.clientHeight;
@@ -7588,35 +7483,35 @@ In2iGui.getTextAreaHeight = function(input) {
 
 //////////////////// Delegating ////////////////////
 
-In2iGui.extend = function(obj,options) {
+hui.ui.extend = function(obj,options) {
 	if (!obj.name) {
-		In2iGui.latestObjectIndex++;
-		obj.name = 'unnamed'+In2iGui.latestObjectIndex;
+		hui.ui.latestObjectIndex++;
+		obj.name = 'unnamed'+hui.ui.latestObjectIndex;
 	}
 	if (options!==undefined) {
 		if (obj.options) {
-			obj.options = n2i.override(obj.options,options);
+			obj.options = hui.override(obj.options,options);
 		}
-		obj.element = n2i.get(options.element);
+		obj.element = hui.get(options.element);
 		obj.name = options.name;
 	}
-	In2iGui.objects[obj.name] = obj;
+	hui.ui.objects[obj.name] = obj;
 	obj.delegates = [];
 	obj.listen = function(delegate) {
-		n2i.addToArray(this.delegates,delegate);
+		hui.addToArray(this.delegates,delegate);
 		return this;
 	}
 	obj.removeDelegate = function(delegate) {
-		n2i.removeFromArray(this.delegates,delegate);
+		hui.removeFromArray(this.delegates,delegate);
 	}
 	obj.clearDelegates = function() {
 		this.delegates = [];
 	}
 	obj.fire = function(method,value,event) {
-		In2iGui.callDelegates(this,method,value,event);
+		hui.ui.callDelegates(this,method,value,event);
 	}
 	obj.fireProperty = function(key,value) {
-		In2iGui.firePropertyChange(this,key,value);
+		hui.ui.firePropertyChange(this,key,value);
 	}
 	if (!obj.getElement) {
 		obj.getElement = function() {
@@ -7627,21 +7522,21 @@ In2iGui.extend = function(obj,options) {
 		obj.valueForProperty = function(p) {return this[p]};
 	}
 	if (obj['$$layout']) {
-		In2iGui.layoutWidgets.push(obj);
+		hui.ui.layoutWidgets.push(obj);
 	}
 };
 
-In2iGui.callDelegatesDrop = function(dragged,dropped) {
-	for (var i=0; i < In2iGui.delegates.length; i++) {
-		if (In2iGui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
-			In2iGui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
+hui.ui.callDelegatesDrop = function(dragged,dropped) {
+	for (var i=0; i < hui.ui.delegates.length; i++) {
+		if (hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
+			hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
 		}
 	}
 };
 
-In2iGui.callAncestors = function(obj,method,value,event) {
+hui.ui.callAncestors = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
-	var d = In2iGui.getAncestors(obj);
+	var d = hui.ui.getAncestors(obj);
 	for (var i=0; i < d.length; i++) {
 		if (d[i][method]) {
 			d[i][method](value,event);
@@ -7649,14 +7544,14 @@ In2iGui.callAncestors = function(obj,method,value,event) {
 	};
 };
 
-In2iGui.callDescendants = function(obj,method,value,event) {
+hui.ui.callDescendants = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
 	}
 	if (!method[0]=='$') {
 		method = '$'+method;
 	}
-	var d = In2iGui.getDescendants(obj);
+	var d = hui.ui.getDescendants(obj);
 	for (var i=0; i < d.length; i++) {
 		if (d[i][method]) {
 			thisResult = d[i][method](value,event);
@@ -7664,15 +7559,15 @@ In2iGui.callDescendants = function(obj,method,value,event) {
 	};
 };
 
-In2iGui.callVisible = function(widget) {
-	In2iGui.callDescendants(widget,'$visibilityChanged');
+hui.ui.callVisible = function(widget) {
+	hui.ui.callDescendants(widget,'$visibilityChanged');
 }
 
-In2iGui.listen = function(delegate) {
-	In2iGui.delegates.push(delegate);
+hui.ui.listen = function(delegate) {
+	hui.ui.delegates.push(delegate);
 }
 
-In2iGui.callDelegates = function(obj,method,value,event) {
+hui.ui.callDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
 	}
@@ -7691,18 +7586,18 @@ In2iGui.callDelegates = function(obj,method,value,event) {
 			}
 		};
 	}
-	var superResult = In2iGui.callSuperDelegates(obj,method,value,event);
+	var superResult = hui.ui.callSuperDelegates(obj,method,value,event);
 	if (result==null && superResult!=null) {
 		result = superResult;
 	}
 	return result;
 };
 
-In2iGui.callSuperDelegates = function(obj,method,value,event) {
+hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
 	var result = null;
-	for (var i=0; i < In2iGui.delegates.length; i++) {
-		var delegate = In2iGui.delegates[i];
+	for (var i=0; i < hui.ui.delegates.length; i++) {
+		var delegate = hui.ui.delegates[i];
 		var thisResult = null;
 		if (obj.name && delegate['$'+method+'$'+obj.name]) {
 			thisResult = delegate['$'+method+'$'+obj.name](value,event);
@@ -7716,14 +7611,14 @@ In2iGui.callSuperDelegates = function(obj,method,value,event) {
 	return result;
 };
 
-In2iGui.resolveImageUrl = function(widget,img,width,height) {
+hui.ui.resolveImageUrl = function(widget,img,width,height) {
 	for (var i=0; i < widget.delegates.length; i++) {
 		if (widget.delegates[i].$resolveImageUrl) {
 			return widget.delegates[i].$resolveImageUrl(img,width,height);
 		}
 	};
-	for (var j=0; j < In2iGui.delegates.length; j++) {
-		var delegate = In2iGui.delegates[j];
+	for (var j=0; j < hui.ui.delegates.length; j++) {
+		var delegate = hui.ui.delegates[j];
 		if (delegate.$resolveImageUrl) {
 			return delegate.$resolveImageUrl(img,width,height);
 		}
@@ -7733,16 +7628,16 @@ In2iGui.resolveImageUrl = function(widget,img,width,height) {
 
 ////////////////////////////// Bindings ///////////////////////////
 
-In2iGui.firePropertyChange = function(obj,name,value) {
-	In2iGui.callDelegates(obj,'propertyChanged',{property:name,value:value});
+hui.ui.firePropertyChange = function(obj,name,value) {
+	hui.ui.callDelegates(obj,'propertyChanged',{property:name,value:value});
 };
 
-In2iGui.bind = function(expression,delegate) {
+hui.ui.bind = function(expression,delegate) {
 	if (expression.charAt(0)=='@') {
 		var pair = expression.substring(1).split('.');
-		var obj = In2iGui.get(pair[0]);
+		var obj = hui.ui.get(pair[0]);
 		if (!obj) {
-			n2i.log('Unable to bind to '+expression);
+			hui.log('Unable to bind to '+expression);
 			return;
 		}
 		var p = pair.slice(1).join('.');
@@ -7760,11 +7655,11 @@ In2iGui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
-In2iGui.request = function(options) {
-	options = n2i.override({method:'post',parameters:{}},options);
+hui.ui.request = function(options) {
+	options = hui.override({method:'post',parameters:{}},options);
 	if (options.json) {
 		for (var key in options.json) {
-			options.parameters[key]=n2i.toJSON(options.json[key]);
+			options.parameters[key]=hui.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
@@ -7772,30 +7667,30 @@ In2iGui.request = function(options) {
 	options.onSuccess=function(t) {
 		if (message) {
 			if (message.success) {
-				In2iGui.showMessage({text:message.success,icon:'common/success',duration:message.duration || 2000});
+				hui.ui.showMessage({text:message.success,icon:'common/success',duration:message.duration || 2000});
 			} else if (message.start) {
-				In2iGui.hideMessage();
+				hui.ui.hideMessage();
 			}
 		}
 		var str,json;
 		if (typeof(onSuccess)=='string') {
-			if (!n2i.request.isXMLResponse(t)) {
+			if (!hui.request.isXMLResponse(t)) {
 				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
-					json = n2i.fromJSON(t.responseText);
+					json = hui.fromJSON(t.responseText);
 				} else {
 					json = '';
 				}
-				In2iGui.callDelegates(json,'success$'+onSuccess);
+				hui.ui.callDelegates(json,'success$'+onSuccess);
 			} else {
-				In2iGui.callDelegates(t,'success$'+onSuccess);
+				hui.ui.callDelegates(t,'success$'+onSuccess);
 			}
-		} else if (n2i.request.isXMLResponse(t) && options.onXML) {
+		} else if (hui.request.isXMLResponse(t) && options.onXML) {
 			options.onXML(t.responseXML);
 		} else if (options.onJSON) {
 			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				json = n2i.fromJSON(t.responseText);
+				json = hui.fromJSON(t.responseText);
 			} else {
 				json = null;
 			}
@@ -7809,29 +7704,29 @@ In2iGui.request = function(options) {
 	var onFailure = options.onFailure;
 	options.onFailure = function(t) {
 		if (typeof(onFailure)=='string') {
-			In2iGui.callDelegates(t,'failure$'+onFailure)
+			hui.ui.callDelegates(t,'failure$'+onFailure)
 		} else if (typeof(onFailure)=='function') {
 			onFailure(t);
 		}
 	}
 	options.onException = function(t,e) {
-		n2i.log(t);
-		n2i.log(e);
+		hui.log(t);
+		hui.log(e);
 	};
 	if (options.message && options.message.start) {
-		In2iGui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
+		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
 	}
-	n2i.request(options);
+	hui.request(options);
 };
 
-In2iGui.parseItems = function(doc) {
+hui.ui.parseItems = function(doc) {
 	var root = doc.documentElement;
 	var out = [];
-	In2iGui.parseSubItems(root,out);
+	hui.ui.parseSubItems(root,out);
 	return out;
 };
 
-In2iGui.parseSubItems = function(parent,array) {
+hui.ui.parseSubItems = function(parent,array) {
 	var children = parent.childNodes;
 	for (var i=0; i < children.length; i++) {
 		var node = children[i];
@@ -7839,7 +7734,7 @@ In2iGui.parseSubItems = function(parent,array) {
 			array.push({title:node.getAttribute('title'),type:'title'})
 		} else if (node.nodeType==1 && node.nodeName=='item') {
 			var sub = [];
-			In2iGui.parseSubItems(node,sub);
+			hui.ui.parseSubItems(node,sub);
 			array.push({
 				title:node.getAttribute('title'),
 				value:node.getAttribute('value'),
@@ -7852,19 +7747,26 @@ In2iGui.parseSubItems = function(parent,array) {
 	};
 }
 
-In2iGui.Bundle = function(strings) {
+hui.ui.Bundle = function(strings) {
 	this.strings = strings;
 }
 
-In2iGui.Bundle.prototype = {
+hui.ui.Bundle.prototype = {
 	get : function(key) {
 		var values = this.strings[key];
 		if (values) {
-			return values[In2iGui.language];
+			return values[hui.ui.language];
 		}
-		n2i.log(key+' not found for language:'+In2iGui.language);
+		hui.log(key+' not found for language:'+hui.ui.language);
 		return key;
 	}
+}
+
+hui.ui.require = function(names,func) {
+	for (var i = names.length - 1; i >= 0; i--){
+		names[i] = hui.ui.context+'In2iGui/js/'+names[i]+'.js';
+	};
+	hui.require(names,func);
 }
 /* EOF */
 /**

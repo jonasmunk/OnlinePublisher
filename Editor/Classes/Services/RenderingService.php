@@ -122,6 +122,7 @@ class RenderingService {
 		'<xsl:variable name="userid">'.StringUtils::escapeXML($userId).'</xsl:variable>'.
 		'<xsl:variable name="username">'.StringUtils::escapeXML($userName).'</xsl:variable>'.
 		'<xsl:variable name="usertitle">'.StringUtils::escapeXML($userTitle).'</xsl:variable>'.
+		'<xsl:variable name="internal-logged-in">'.(InternalSession::isLoggedIn() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="editor">false</xsl:variable>'.
 		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.

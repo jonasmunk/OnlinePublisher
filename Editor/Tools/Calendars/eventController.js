@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	//dragDrop : [
 	//	{drag:'event',drop:'calendar'}
 	//],
@@ -36,7 +36,7 @@ ui.listen({
 	///////////// Other ///////////
 	
 	loadEvent : function(id) {
-		ui.request({parameters:{id:id},url:'data/LoadEvent.php',onSuccess:'loadEvent'});
+		hui.ui.request({parameters:{id:id},url:'data/LoadEvent.php',onSuccess:'loadEvent'});
 	},
 	
 	$drop$event$calendar : function(dragged,dropped) {
@@ -79,7 +79,7 @@ ui.listen({
 			eventFormula.focus();
 			return;
 		}
-		ui.request({url:'data/SaveEvent.php',onSuccess:'saveEvent',json:{data:data}});
+		hui.ui.request({url:'data/SaveEvent.php',onSuccess:'saveEvent',json:{data:data}});
 	},
 	$success$saveEvent : function() {
 		this.eventId = null;
@@ -103,7 +103,7 @@ ui.listen({
 		this.deleteEvent(this.eventId);
 	},
 	deleteEvent : function(id) {
-		ui.request({url:'data/DeleteEvent.php',onSuccess:'deleteEvent',parameters:{id:id}});
+		hui.ui.request({url:'data/DeleteEvent.php',onSuccess:'deleteEvent',parameters:{id:id}});
 	},
 	$success$deleteEvent : function() {
 		this.eventId = null;

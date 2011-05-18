@@ -1,32 +1,32 @@
 
-div.in2igui_buttons
+div.hui_buttons
 {
 	overflow: hidden;
 	font-size: 0;
 	line-height: 0;
 }
 
-div.in2igui_buttons_right div.in2igui_buttons_body
+div.hui_buttons_right div.hui_buttons_body
 {
 	text-align: right;
 }
 
-div.in2igui_buttons_center div.in2igui_buttons_body
+div.hui_buttons_center div.hui_buttons_body
 {
 	text-align: center;
 }
 
-div.in2igui_buttons a.in2igui_button
+div.hui_buttons a.hui_button
 {
 	margin-right: 2px;
 }
 
-div.in2igui_buttons_right a.in2igui_button
+div.hui_buttons_right a.hui_button
 {
 	margin: 0px 0px 0px 2px;
 }
 
-a.in2igui_button
+a.hui_button
 {
 	background: url('../gfx/button2.png') top left no-repeat;
 	color: #004a80;
@@ -43,7 +43,7 @@ a.in2igui_button
 	white-space: nowrap;
 }
 
-a.in2igui_button span
+a.hui_button span
 {
 	background-image: url('../gfx/button2.png');	
 	background-repeat: no-repeat;
@@ -53,7 +53,7 @@ a.in2igui_button span
 	height: 30px;
 }
 
-a.in2igui_button span span
+a.hui_button span span
 {
 	background-position: 0px -60px;
 	background-repeat: repeat-x;
@@ -61,7 +61,7 @@ a.in2igui_button span span
 	padding: 0px 6px;
 }
 
-em.in2igui_button_icon
+em.hui_button_icon
 {
 	padding: 0px;
 	margin: -1px 3px 0px -2px;
@@ -71,124 +71,124 @@ em.in2igui_button_icon
 	vertical-align: middle;
 }
 
-em.in2igui_button_icon_notext
+em.hui_button_icon_notext
 {
 	margin: -1px -3px 0px -3px;
 }
 
-a.in2igui_button:hover
+a.hui_button:hover
 {
 	background-position: 0px -90px;
 }
 
-a.in2igui_button:hover span
+a.hui_button:hover span
 {
 	background-position: 100% -120px;
 }
 
-a.in2igui_button:hover span span
+a.hui_button:hover span span
 {
 	background-position: 0px -150px;
 	background-repeat: repeat-x;
 }
 
-a.in2igui_button:focus
+a.hui_button:focus
 {
 	background-position: 0px -180px;
 	outline: none;
 }
 
-a.in2igui_button:focus span
+a.hui_button:focus span
 {
 	background-position: 100% -210px;
 }
 
-a.in2igui_button:focus span span
+a.hui_button:focus span span
 {
 	background-position: 0px -240px;
 	background-repeat: repeat-x;
 }
 
-a.in2igui_button:focus:hover
+a.hui_button:focus:hover
 {
 	background-position: 0px -270px;
 	outline: none;
 }
 
-a.in2igui_button:focus:hover span
+a.hui_button:focus:hover span
 {
 	background-position: 100% -300px;
 }
 
-a.in2igui_button:focus:hover span span
+a.hui_button:focus:hover span span
 {
 	background-position: 0px -330px;
 	background-repeat: repeat-x;
 }
 
-a.in2igui_button:active
+a.hui_button:active
 {
 	background-position: 0px -360px;
 	outline: none;
 }
 
-a.in2igui_button:active span
+a.hui_button:active span
 {
 	background-position: 100% -390px;
 }
 
-a.in2igui_button:active span span
+a.hui_button:active span span
 {
 	background-position: 0px -420px;
 	background-repeat: repeat-x;
 }
 
-a.in2igui_button:active:focus
+a.hui_button:active:focus
 {
 	background-position: 0px -450px;
 	outline: none;
 }
 
-a.in2igui_button:active:focus span
+a.hui_button:active:focus span
 {
 	background-position: 100% -480px;
 }
 
-a.in2igui_button:active:focus span span
+a.hui_button:active:focus span span
 {
 	background-position: 0px -510px;
 	background-repeat: repeat-x;
 }
 
-a.in2igui_button_highlighted, a.in2igui_button_highlighted span
+a.hui_button_highlighted, a.hui_button_highlighted span
 {
 	background-image: url('../gfx/button_highlighted2.png');
 	color: #fff;
 }
 
-a.in2igui_button_disabled
+a.hui_button_disabled
 {
 	color: #666;
 	opacity: .5;
 	cursor: default;
 }
 
-a.in2igui_button_disabled:hover
+a.hui_button_disabled:hover
 {
 	background-position: top left;
 }
 
-a.in2igui_button_disabled:hover span
+a.hui_button_disabled:hover span
 {
 	background-position: 100% -30px;
 }
 
-a.in2igui_button_disabled:hover span span
+a.hui_button_disabled:hover span span
 {
 	background-position: 0px -60px;
 }
 
-a.in2igui_button_small_rounded
+a.hui_button_small_rounded
 {
 	height: 24px;
 	background-image: url('../gfx/button_small_rounded.png');
@@ -196,14 +196,14 @@ a.in2igui_button_small_rounded
 	font-size: 0;
 }
 
-a.in2igui_button_small_rounded span
+a.hui_button_small_rounded span
 {
 	height: 24px;
 	background-image: url('../gfx/button_small_rounded.png');
 	background-position: right -24px;
 }
 
-a.in2igui_button_small_rounded span span
+a.hui_button_small_rounded span span
 {
 	background-position: left -48px;
 	margin: 0 12px;
@@ -213,86 +213,86 @@ a.in2igui_button_small_rounded span span
 	text-shadow: 0 1px 0 #FFFFFF;
 }
 
-a.in2igui_button_small_rounded:hover
+a.hui_button_small_rounded:hover
 {
 	background-position: left -72px;
 }
 
-a.in2igui_button_small_rounded:hover span
+a.hui_button_small_rounded:hover span
 {
 	background-position: right -96px;
 }
 
-a.in2igui_button_small_rounded:hover span span
+a.hui_button_small_rounded:hover span span
 {
 	background-position: left -120px;
 }
 
-a.in2igui_button_small_rounded:active
+a.hui_button_small_rounded:active
 {
 	background-position: left -144px;
 }
 
-a.in2igui_button_small_rounded:active span
+a.hui_button_small_rounded:active span
 {
 	background-position: right -168px;
 }
 
-a.in2igui_button_small_rounded:active span span
+a.hui_button_small_rounded:active span span
 {
 	background-position: left -192px;
 }
 
 
-a.in2igui_button_small_rounded:focus
+a.hui_button_small_rounded:focus
 {
 	background-position: left -216px;
 }
 
-a.in2igui_button_small_rounded:focus span
+a.hui_button_small_rounded:focus span
 {
 	background-position: right -240px;
 }
 
-a.in2igui_button_small_rounded:focus span span
+a.hui_button_small_rounded:focus span span
 {
 	background-position: left -264px;
 }
 
-a.in2igui_button_small_rounded:focus:hover
+a.hui_button_small_rounded:focus:hover
 {
 	background-position: left -288px;
 }
 
-a.in2igui_button_small_rounded:focus:hover span
+a.hui_button_small_rounded:focus:hover span
 {
 	background-position: right -312px;
 }
 
-a.in2igui_button_small_rounded:focus:hover span span
+a.hui_button_small_rounded:focus:hover span span
 {
 	background-position: left -336px;
 }
 
-a.in2igui_button_small_rounded:focus:active
+a.hui_button_small_rounded:focus:active
 {
 	background-position: left -360px;
 }
 
-a.in2igui_button_small_rounded:focus:active span
+a.hui_button_small_rounded:focus:active span
 {
 	background-position: right -384px;
 }
 
-a.in2igui_button_small_rounded:focus:active span span
+a.hui_button_small_rounded:focus:active span span
 {
 	background-position: left -408px;
 }
 
 /*****************************************/
 /*
-a.in2igui_button_highlighted {
-    -webkit-animation-name: in2igui_pulse;
+a.hui_button_highlighted {
+    -webkit-animation-name: hui_pulse;
     -webkit-animation-duration: 2s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-timing-function: ease-in-out;
@@ -300,7 +300,7 @@ a.in2igui_button_highlighted {
 
 
 
-@-webkit-keyframes in2igui_pulse {
+@-webkit-keyframes hui_pulse {
 	0% {
 	  opacity: 1;
 	}
@@ -312,7 +312,7 @@ a.in2igui_button_highlighted {
 	}
 }*/
 
-a.in2igui_button_paper, a.in2igui_button_paper span
+a.hui_button_paper, a.hui_button_paper span
 {
 	background: none;
 	height: 26px;
@@ -321,7 +321,7 @@ a.in2igui_button_paper, a.in2igui_button_paper span
 	font-size: 14px;
 }
 
-a.in2igui_button_paper
+a.hui_button_paper
 {
 	border: 1px solid #ddd;
 	border-radius: 4px;
@@ -333,7 +333,7 @@ a.in2igui_button_paper
 	/*-webkit-box-shadow: 0px 1px 3px #eee;*/
 }
 
-a.in2igui_button_paper:hover
+a.hui_button_paper:hover
 {
 	border-color: #dadada;
     background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fafafa), to(#eee));
@@ -341,7 +341,7 @@ a.in2igui_button_paper:hover
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fafafa, endColorstr=#eeeeee);
 }
 
-a.in2igui_button_paper:active
+a.hui_button_paper:active
 {
 	border-color: #dadada;
     background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#eee), to(#fafafa));
@@ -349,7 +349,7 @@ a.in2igui_button_paper:active
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#fafafa);
 }
 
-a.in2igui_button_paper:focus
+a.hui_button_paper:focus
 {
 	outline: auto 5px rgba(1,105,255,.3);
 	outline-offset: -2px;
@@ -358,13 +358,13 @@ a.in2igui_button_paper:focus
 	background-position: 0 0;
 }
 
-a.in2igui_button_small_paper, a.in2igui_button_small_paper span
+a.hui_button_small_paper, a.hui_button_small_paper span
 {
 	height: 20px;
 	line-height: 18px;
 }
 
-a.in2igui_button_small_paper span span
+a.hui_button_small_paper span span
 {
 	margin: 0;
 	padding: 0 10px;

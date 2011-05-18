@@ -27,14 +27,14 @@ var partController = {
 	},
 	preview : function() {
 		var url = controller.context+'Editor/Services/Parts/Preview.php?type=imagegallery';
-		var parms = n2i.form.getValues(document.forms.PartForm);
-		n2i.request({method:'post',url:url,parameters:parms,
+		var parms = hui.form.getValues(document.forms.PartForm);
+		hui.ui.request({method:'post',url:url,parameters:parms,
 			onSuccess:function(t) {
-				var node = n2i.get('part_imagegallery_container');
-				n2i.dom.replaceHTML(node,t.responseText);
-				n2i.dom.runScripts(node);
+				var node = hui.get('part_imagegallery_container');
+				hui.dom.replaceHTML(node,t.responseText);
+				hui.dom.runScripts(node);
 		}});
 	}
 }
 
-In2iGui.listen(partController);
+In2iGhui.ui.listen(partController);

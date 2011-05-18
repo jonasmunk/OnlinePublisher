@@ -31,7 +31,7 @@ var controller = {
 	
 	$click$create : function() {
 		var p = this._getParameters();
-		ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
+		hui.ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
 			this.editorFrame.reload();
 		}.bind(this)});
 	},
@@ -40,12 +40,12 @@ var controller = {
 	$click$update : function() {
 		var p = this._getParameters();
 		p.id = this.id;
-		ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
+		hui.ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
 			this.editorFrame.reload();
 		}.bind(this)});
 	},
 	$click$delete : function() {
-		ui.request({url:'Links/DeleteLink.php',parameters:{id:this.id},onSuccess:function() {
+		hui.ui.request({url:'Links/DeleteLink.php',parameters:{id:this.id},onSuccess:function() {
 			this.editorFrame.reload();
 		}.bind(this)});
 	},

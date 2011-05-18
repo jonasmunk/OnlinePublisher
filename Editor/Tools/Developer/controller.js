@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	$selectionChanged$selector : function(item) {
 		if (item.value=='settings') {
 			ui.changeState('settings');
@@ -18,7 +18,7 @@ ui.listen({
 		}
 	},
 	$valuesChanged$settingsFormula : function(values) {
-		ui.request({
+		hui.ui.request({
 			url : 'SaveSettings.php',
 			json : {data:values},
 			message : {success:'Saved'}

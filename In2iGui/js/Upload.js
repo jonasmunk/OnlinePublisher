@@ -210,7 +210,7 @@ In2iGui.Upload.prototype = {
 			w.element.parentNode.removeChild(w.element);
 			buttonContainer.appendChild(w.element);
 		} else {
-			buttonContainer.innerHTL='<a href="javascript:void(0);" class="in2igui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
+			buttonContainer.innerHTL='<a href="javascript:void(0);" class="hui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
 			this.element.appendChild(buttonContainer);
 		}
 		

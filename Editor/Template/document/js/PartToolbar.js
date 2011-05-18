@@ -58,7 +58,7 @@ var partToolbar = {
 	},
 	animatePadding : function(style,prop,value) {
 		if (value) {
-			n2i.animate(this.section,style,value,200,{ease:n2i.ease.slowFastSlow,onComplete : function() {
+			hui.animate(this.section,style,value,200,{ease:hui.ease.slowFastSlow,onComplete : function() {
 				this.syncSize();
 			}.bind(this)})
 		} else {
@@ -76,7 +76,7 @@ var partToolbar = {
 			this.section.style.width='';
 				this.syncSize();
 		} else {
-			n2i.animate(this.section,'width',value,200,{ease:n2i.ease.slowFastSlow,onComplete : function() {
+			hui.animate(this.section,'width',value,200,{ease:hui.ease.slowFastSlow,onComplete : function() {
 				this.syncSize();
 			}.bind(this)})
 		}
@@ -86,4 +86,4 @@ var partToolbar = {
 	}
 };
 
-ui.listen(partToolbar);
+hui.ui.listen(partToolbar);

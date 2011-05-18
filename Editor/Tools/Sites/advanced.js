@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	
 	$click$advanced : function() {
 		advancedBox.show();

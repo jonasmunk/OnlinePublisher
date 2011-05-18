@@ -1,6 +1,6 @@
 var partController = {
 	$ready : function() {
-		var field = n2i.get('PartTextTextarea');
+		var field = hui.get('PartTextTextarea');
 		field.focus();
 		field.select();
 		this.resizer = new op.FieldResizer({field:field});
@@ -11,4 +11,4 @@ var partController = {
 	}
 }
 
-ui.listen(partController);
+hui.ui.listen(partController);

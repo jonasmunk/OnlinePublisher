@@ -1,11 +1,11 @@
-ui.listen({
+hui.ui.listen({
 	id : null,
 	
 	$listRowWasOpened$list : function(obj) {
 		if (obj.kind=='design') {
 			designFormula.reset();
 			designEditor.show();
-			ui.request({parameters:{id:obj.id},url:'../../Services/Model/LoadObject.php',onSuccess:'loadDesign'});
+			hui.ui.request({parameters:{id:obj.id},url:'../../Services/Model/LoadObject.php',onSuccess:'loadDesign'});
 		}
 	},
 	$success$loadDesign : function(data) {
@@ -23,7 +23,7 @@ ui.listen({
 		designEditor.hide();
 	},
 	$click$deleteDesign : function() {
-		ui.request({json:{data:{id:this.id}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteDesign'});
+		hui.ui.request({json:{data:{id:this.id}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteDesign'});
 	},
 	$success$deleteDesign : function() {
 		list.refresh();
@@ -32,7 +32,7 @@ ui.listen({
 	},
 	$click$saveDesign : function() {
 		var values = designFormula.getValues();
-		if (n2i.isBlank(values.title)) {
+		if (hui.isBlank(values.title)) {
 			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
 			designFormula.focus();
 		} else if (values.unique===null) {
@@ -40,7 +40,7 @@ ui.listen({
 			designFormula.focus();
 		} else {
 			values.id = this.id;
-			ui.request({json:{data:values},url:'SaveDesign.php',onSuccess:'designSaved'});
+			hui.ui.request({json:{data:values},url:'SaveDesign.php',onSuccess:'designSaved'});
 		}
 	},
 	$success$designSaved : function() {

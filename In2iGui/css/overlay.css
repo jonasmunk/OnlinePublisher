@@ -30,17 +30,17 @@ div.in2igui_overlay_icon
 	margin: 3px 1px 0px;
 }
 
-div.in2igui_overlay a.in2igui_button
+div.in2igui_overlay a.hui_button
 {
 	margin-top: 4px;
 }
 /*
-div.in2igui_overlay a.in2igui_button
+div.in2igui_overlay a.hui_button
 {
 	-webkit-transition: -webkit-transform 0.3s ease-in-out;
 }
 
-div.in2igui_overlay a.in2igui_button:hover
+div.in2igui_overlay a.hui_button:hover
 {
     -webkit-transform: scale(1.2);
 }*/

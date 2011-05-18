@@ -18,11 +18,11 @@ var controller = {
 		hui.ui.request({
 			url : '../In2iGui/info/preload.json',
 			onJSON : function(obj) {
-				var p = new n2i.Preloader({context:ui.context+'/In2iGui'});
+				var p = new hui.Preloader({context:hui.ui.context+'/In2iGui'});
 				p.addImages(obj);
 				p.setDelegate({
 					imageDidLoad : function(count,total) {
-						n2i.log(count/total);
+						hui.log(count/total);
 					}
 				});
 				p.load();
@@ -43,7 +43,7 @@ var controller = {
 	$success$login : function(data) {
 		if (data.success) {
 			hui.ui.showMessage({text:'Du er nu logget ind, øjeblik...',icon:'common/success',delay:200});
-			var page = n2i.location.getParameter('page');
+			var page = hui.location.getParameter('page');
 			document.location=page===null ? './index.php' : '.?page='+page;
 		} else {
 			hui.ui.showMessage({text:'Brugeren blev ikke fundet!',icon:'common/warning',duration:2000});

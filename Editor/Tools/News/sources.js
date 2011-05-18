@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	
 	sourceId : null,
 	
@@ -17,11 +17,11 @@ ui.listen({
 	$submit$sourceFormula : function() {
 		var values = sourceFormula.getValues();
 		values.id = this.sourceId;
-		if (n2i.isBlank(values.title)) {
+		if (hui.isBlank(values.title)) {
 			ui.showMessage({text:'Du skal angive en titel',duration:2000});
 			sourceFormula.focus();
 		} else {
-			ui.request({
+			hui.ui.request({
 				json:{data:values},
 				url:'SaveSource.php',
 				onSuccess:'sourceSaved',
@@ -36,7 +36,7 @@ ui.listen({
 	},
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='newssource') {
-			ui.request(
+			hui.ui.request(
 				{parameters:{id:item.value},
 				url:'../../Services/Model/LoadObject.php',
 				onSuccess:'sourceLoaded',
@@ -52,7 +52,7 @@ ui.listen({
 		sourceFormula.focus();
 	},
 	$click$deleteSource : function() {
-		ui.request({
+		hui.ui.request({
 			json : {data:{id:this.sourceId}},
 			url : '../../Services/Model/DeleteObject.php',
 			onSuccess : 'deleteSource',

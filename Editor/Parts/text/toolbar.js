@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	$ready : function() {
 		this.form = partToolbar.partForm;
 		fontWeight.setValue(this.form.fontWeight.value);

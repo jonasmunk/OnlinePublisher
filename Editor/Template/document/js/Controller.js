@@ -91,20 +91,20 @@ var controller = {
 			this.partEditControls = In2iGui.Overlay.create({name:'sectionEditActions'});
 			this.partEditControls.addIcon('save','common/save');
 			this.partEditControls.addIcon('cancel','common/stop');
-			this.partEditControls.showAtElement(n2i.firstByClass(document.body,'section_selected'),{'horizontal':'left','vertical':'topOutside'});
+			this.partEditControls.showAtElement(hui.firstByClass(document.body,'section_selected'),{'horizontal':'left','vertical':'topOutside'});
 		}
 		this.ready = true;
-		n2i.listen(document.body,'mouseup',function() {
-			this.selectedText = n2i.getSelectedText();
+		hui.ui.listen(document.body,'mouseup',function() {
+			this.selectedText = hui.getSelectedText();
 		}.bind(this));
 		window.onscroll=this.saveScroll;
-		var scroll = n2i.cookie.get('document.scroll');
+		var scroll = hui.cookie.get('document.scroll');
 		if (scroll) {
 			window.scrollTo(0,parseInt(scroll,10));
 		}
 	},
 	saveScroll : function() {
-		n2i.cookie.set('document.scroll',n2i.getScrollTop());
+		hui.cookie.set('document.scroll',hui.getScrollTop());
 	},
 	$iconWasClicked$sectionActions : function(value,event) {
 		if (value=='edit') {
@@ -156,14 +156,14 @@ var controller = {
 	
 	sectionOver : function(cell,sectionId,columnId,indexVal) {
 		if (this.activeSection || !this.ready) return;
-		n2i.addClass(cell,'section_hover');
+		hui.addClass(cell,'section_hover');
 		this.sectionId=sectionId;
 		document.forms.SectionAdder.column.value=columnId;
 		document.forms.SectionAdder.index.value=indexVal;
 		this.partControls.showAtElement(cell,{'horizontal':'right',autoHide:true});
 	},
 	sectionOut : function(cell,event) {
-		n2i.removeClass(cell,'section_hover');
+		hui.removeClass(cell,'section_hover');
 		return;
 	},
 	showSectionMenu : function(element,event,sectionId,sectionIndex,columnId,columnIndex,rowId,rowIndex) {
@@ -199,11 +199,11 @@ var controller = {
 	},
 	
 	columnOver : function(cell) {
-		n2i.addClass(cell,'columnHover');
+		hui.addClass(cell,'columnHover');
 	},
 	
 	columnOut : function(cell) {
-		n2i.removeClass(cell,'columnHover');
+		hui.removeClass(cell,'columnHover');
 	},
 	
 	editColumn : function() {
@@ -249,7 +249,7 @@ var controller = {
 	}
 };
 
-ui.listen(controller);
+hui.ui.listen(controller);
 
 if (!op) {var op={}}
 
@@ -263,15 +263,15 @@ op.FieldResizer = function(options) {
 	this.dummy.style.top='-999999px';
 	this.dummy.style.visibility='hidden';
 	var self = this;
-	n2i.listen(options.field,'keyup',function(){self.resize(false,true)});
-	n2i.listen(options.field,'keydown',function(){self.options.field.scrollTop=0;});
+	hui.ui.listen(options.field,'keyup',function(){self.resize(false,true)});
+	hui.ui.listen(options.field,'keydown',function(){self.options.field.scrollTop=0;});
 }
 
 op.FieldResizer.prototype = {
 	resize : function(instantly,focused) {
 				
 		var field = this.options.field;
-		n2i.copyStyle(field,this.dummy,[
+		hui.copyStyle(field,this.dummy,[
 			'font-size','line-height','font-weight','letter-spacing','word-spacing','font-family','text-transform','font-variant','text-indent'
 		]);
 		var html = field.value;
@@ -292,7 +292,7 @@ op.FieldResizer.prototype = {
 			this.options.field.style.height=height;
 		} else {
 			//this.options.field.scrollTop=0;
-			n2i.animate(this.options.field,'height',height,200,{ease:n2i.ease.slowFastSlow});
+			hui.animate(this.options.field,'height',height,200,{ease:hui.ease.slowFastSlow});
 		}
 	}
 }

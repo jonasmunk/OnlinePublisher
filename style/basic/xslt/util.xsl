@@ -109,14 +109,20 @@
 	<xsl:comment><![CDATA[[if IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>In2iGui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
-	<script src="{$path}In2iGui{$timestamp-url}/bin/minimized.site.noproto.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}In2iGui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
 		In2iGui.context = '<xsl:value-of select="$path"/>';
+		op.context = '<xsl:value-of select="$path"/>';
 		op.page.id=<xsl:value-of select="@id"/>;
 		op.page.template='<xsl:value-of select="$template"/>';
 		op.page.path='<xsl:value-of select="$path"/>';
 		op.page.pagePath='<xsl:value-of select="$page-path"/>';
+		op.user = {
+			username : '<xsl:value-of select="$username"/>',
+			id : <xsl:value-of select="$userid"/>,
+			internal : <xsl:value-of select="$internal-logged-in"/>
+		};
 		op.preview=<xsl:value-of select="$preview"/>;
 		op.ignite();
 	</xsl:comment></script>

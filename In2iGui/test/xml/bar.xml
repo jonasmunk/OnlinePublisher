@@ -8,6 +8,9 @@
 		<button icon="common/internet"/>
 		<checkbox text="djslkfjksdjl"/>
 		<searchfield/>
+		<dropdown value="1">
+			<item value="1" title="My option"/>
+		</dropdown>
 		<right>
 			<button icon="common/delete" text="Hep hey!" highlighted="true"/>
 			<button icon="common/delete" text="Hep hey!"/>

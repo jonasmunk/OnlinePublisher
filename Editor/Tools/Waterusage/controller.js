@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	usageId : null,
 	meterId : null,
 	
@@ -25,7 +25,7 @@ ui.listen({
 	$click$saveUsage : function() {
 		var data = usageFormula.getValues();
 		data.id = this.usageId;
-		ui.request({
+		hui.ui.request({
 			url : 'SaveUsage.php',
 			json : {data:data},
 			message : {start:'Gemmer aflæsning...',success:'Aflæsningen er gemt'},
@@ -63,7 +63,7 @@ ui.listen({
 		usageFormula.reset();
 		deleteUsage.setEnabled(false);
 		saveUsage.setEnabled(false);
-		ui.request({
+		hui.ui.request({
 			message : {start : 'Åbner aflæsning...',delay:300},
 			json : {data:{id:id}},
 			url : 'LoadUsage.php',
@@ -80,7 +80,7 @@ ui.listen({
 		usageFormula.focus();
 	},
 	$click$deleteUsage : function() {
-		ui.request({
+		hui.ui.request({
 			json : {data:{id:this.usageId}},
 			url : '../../Services/Model/DeleteObject.php',
 			message : {start:'Sletter aflæsning...',success:'Aflæsningen er slettet'},
@@ -99,7 +99,7 @@ ui.listen({
 	// Export
 	
 	$click$export : function() {
-		var iframe = n2i.build('iframe',{style:'position:absolute;left:-1000px;top:-1000px;',parent:document.body});
+		var iframe = hui.build('iframe',{style:'position:absolute;left:-1000px;top:-1000px;',parent:document.body});
 		iframe.src='Export.php';
 		ui.showMessage({text:'Filen vil nu blive downloadet...',busy:true,duration:3000});
 		exportPanel.hide();
@@ -121,7 +121,7 @@ ui.listen({
 		createMeter.setEnabled(false);
 		var data = meterFormula.getValues();
 		data.id = this.meterId;
-		ui.request({
+		hui.ui.request({
 			url:'SaveMeter.php',
 			json:{data:data},
 			message:{start:'Gemmer vandmåler',success:'Vandmåleren er gemt'},
@@ -133,7 +133,7 @@ ui.listen({
 		});
 	},
 	_editMeter : function(id) {
-		ui.request({
+		hui.ui.request({
 			json:{data:{id:id}},
 			url:'LoadSummary.php',
 			message:{start:'Åbner måler...',delay:300},
@@ -155,7 +155,7 @@ ui.listen({
 		var values = summaryFormula.getValues();
 		values.watermeterId = this.meterId;
 		saveMeter.setEnabled(false);
-		ui.request({
+		hui.ui.request({
 			json:{data:values},
 			url:'SaveSummary.php',
 			message:{start:'Gemmer information',success:'Informationen er gemt'},
@@ -169,7 +169,7 @@ ui.listen({
 	},
 	$click$deleteMeter : function() {
 		deleteMeter.setEnabled(false);
-		ui.request({
+		hui.ui.request({
 			json:{data:{id:this.meterId}},
 			url:'DeleteMeter.php',
 			message : {start:'Sletter måler...',success:'Måleren er slettet'},
@@ -207,7 +207,7 @@ ui.listen({
 		var values = subUsageFormula.getValues();
 		values.id = this.subUsageId;
 		values.meterId = this.meterId;
-		ui.request({
+		hui.ui.request({
 			json : {data:values},
 			url : 'SaveSubUsage.php',
 			message : {start:'Gemmer aflæsning...',success:'Informationen er gemt'},
@@ -226,7 +226,7 @@ ui.listen({
 		subUsageWindow.hide();
 	},
 	$listRowWasOpened$subUsageList : function(obj) {
-		ui.request({
+		hui.ui.request({
 			json : {data:{id:obj.id}},
 			url : '../../Services/Model/LoadObject.php',
 			message : {start:'Åbner aflæsning...',delay:300},
@@ -241,7 +241,7 @@ ui.listen({
 		});
 	},
 	$click$deleteSubUsage : function() {
-		ui.request({
+		hui.ui.request({
 			json : {data:{id:this.subUsageId}},
 			url : '../../Services/Model/DeleteObject.php',
 			message : {start:'Sletter aflæsning...',success:'Aflæsningen er slettet'},

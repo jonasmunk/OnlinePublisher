@@ -1,7 +1,7 @@
-ui.listen({
+hui.ui.listen({
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='calendar') {
-			ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadCalendar'});
+			hui.ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadCalendar'});
 		}
 	},
 	
@@ -21,7 +21,7 @@ ui.listen({
 	$submit$calendarFormula : function() {
 		var data = calendarFormula.getValues();
 		data.id = this.calendarId;
-		ui.request({url:'data/SaveCalendar.php',onSuccess:'saveCalendar',json:{data:data}});
+		hui.ui.request({url:'data/SaveCalendar.php',onSuccess:'saveCalendar',json:{data:data}});
 	},
 	$success$saveCalendar : function() {
 		this.sourceId = null;
@@ -38,7 +38,7 @@ ui.listen({
 		calendarFormula.focus();
 	},
 	$click$deleteCalendar : function() {
-		ui.request({url:'data/DeleteCalendar.php',onSuccess:'deleteCalendar',parameters:{id:this.calendarId}});
+		hui.ui.request({url:'data/DeleteCalendar.php',onSuccess:'deleteCalendar',parameters:{id:this.calendarId}});
 	},
 	$success$deleteCalendar : function() {
 		this.calendarId = null;

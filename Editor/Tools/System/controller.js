@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	weblogGroupId : 0,
 	userId : 0,
 	$ready : function() {
@@ -55,7 +55,7 @@ ui.listen({
 		userFormula.reset();
 		deleteUser.setEnabled(false);
 		saveUser.setEnabled(false);
-		ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadUser'});
+		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadUser'});
 	},
 	$success$loadUser : function(data) {
 		this.userId = data.id;
@@ -98,7 +98,7 @@ ui.listen({
 			external:userExternal.getValue(),
 			administrator:userAdministrator.getValue()
 		};
-		ui.request({json:{data:data},url:'SaveUser.php',onSuccess:'saveUser'});
+		hui.ui.request({json:{data:data},url:'SaveUser.php',onSuccess:'saveUser'});
 	},
 	$success$saveUser : function() {
 		userEditor.hide();
@@ -106,7 +106,7 @@ ui.listen({
 		list.refresh();
 	},
 	$click$deleteUser : function() {
-		ui.request({json:{data:{id:this.userId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteUser'});
+		hui.ui.request({json:{data:{id:this.userId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteUser'});
 	},
 	$success$deleteUser : function() {
 		userEditor.hide();
@@ -131,7 +131,7 @@ ui.listen({
 		weblogGroupFormula.reset();
 		deleteWeblogGroup.setEnabled(false);
 		saveWeblogGroup.setEnabled(false);
-		ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadWeblogGroup'});
+		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadWeblogGroup'});
 	},
 	$success$loadWeblogGroup : function(data) {
 		this.weblogGroupId = data.id;
@@ -146,7 +146,7 @@ ui.listen({
 		weblogGroupFormula.reset();
 	},
 	$click$deleteWeblogGroup : function() {
-		ui.request({json:{data:{id:this.weblogGroupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteWeblogGroup'});
+		hui.ui.request({json:{data:{id:this.weblogGroupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteWeblogGroup'});
 	},
 	$success$deleteWeblogGroup : function() {
 		weblogGroupEditor.hide();
@@ -156,7 +156,7 @@ ui.listen({
 	$click$saveWeblogGroup : function() {
 		var data = weblogGroupFormula.getValues();
 		data.id = this.weblogGroupId;
-		In2iGui.request({json:{data:data},url:'SaveWeblogGroup.php',onSuccess:'saveWeblogGroup'});
+		hui.ui.request({json:{data:data},url:'SaveWeblogGroup.php',onSuccess:'saveWeblogGroup'});
 	},
 	$success$saveWeblogGroup : function() {
 		weblogGroupEditor.hide();
@@ -175,7 +175,7 @@ ui.listen({
 	$click$savePath : function() {
 		var data = pathFormula.getValues();
 		data.id=this.pathId;
-		ui.request({json:{data:data},url:'SavePath.php',onSuccess:'savePath'});
+		hui.ui.request({json:{data:data},url:'SavePath.php',onSuccess:'savePath'});
 	},
 	$success$savePath : function() {
 		pathEditor.hide();
@@ -186,7 +186,7 @@ ui.listen({
 		pathFormula.reset();
 		deletePath.setEnabled(false);
 		savePath.setEnabled(false);
-		ui.request({json:{data:{id:id}},url:'../../Services/Model/LoadObject.php',onSuccess:'loadPath'});
+		hui.ui.request({json:{data:{id:id}},url:'../../Services/Model/LoadObject.php',onSuccess:'loadPath'});
 	},
 	$success$loadPath : function(data) {
 		this.pathId = data.id;
@@ -196,7 +196,7 @@ ui.listen({
 		deletePath.setEnabled(true);
 	},
 	$click$deletePath : function() {
-		ui.request({json:{data:{id:this.pathId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePath'});
+		hui.ui.request({json:{data:{id:this.pathId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePath'});
 	},
 	$success$deletePath : function() {
 		pathEditor.hide();

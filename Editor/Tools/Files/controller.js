@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	
 	dragDrop : [
 		{drag:'file',drop:'filegroup'}
@@ -31,7 +31,7 @@ ui.listen({
 	//////////////////////// Dragging ////////////////////////
 	
 	$drop$file$filegroup : function(dragged,dropped) {
-		In2iGui.request({url:'AddFileToGroup.php',onSuccess:'fileMoved',json:{data:{file:dragged.id,group:dropped.value}}});
+		hui.ui.request({url:'AddFileToGroup.php',onSuccess:'fileMoved',json:{data:{file:dragged.id,group:dropped.value}}});
 	},
 	$success$fileMoved : function() {
 		filesSource.refresh();
@@ -56,7 +56,7 @@ ui.listen({
 	$click$fetchFile : function() {
 		fetchFile.setEnabled(false);
 		ui.showMessage({text:'Henter fil...',busy:true});
-		In2iGui.request({url:'FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
+		hui.ui.request({url:'FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
 	},
 	$success$fileFetched : function(data) {
 		if (data.success) {
@@ -78,7 +78,7 @@ ui.listen({
 		if (obj.id===this.fileId) {
 			this.closeFileAfterDeletion = true;
 		}
-		ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:obj.id}});
+		hui.ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:obj.id}});
 	},
 	$success$fileDeleted : function(response) {
 		if (this.closeFileAfterDeletion) {
@@ -106,7 +106,7 @@ ui.listen({
 	//////////////////////// Properties //////////////////////
 	
 	loadFile : function(id) {
-		ui.request({url:'LoadFile.php',onSuccess:'fileLoaded',parameters:{id:id}});
+		hui.ui.request({url:'LoadFile.php',onSuccess:'fileLoaded',parameters:{id:id}});
 	},
 	
 	$success$fileLoaded : function(data) {
@@ -123,7 +123,7 @@ ui.listen({
 	$click$updateFile : function() {
 		var data = fileFormula.getValues();
 		data.id = this.fileId;
-		ui.request({url:'UpdateFile.php',onSuccess:'fileUpdated',json:{data:data}});
+		hui.ui.request({url:'UpdateFile.php',onSuccess:'fileUpdated',json:{data:data}});
 	},
 	$success$fileUpdated : function() {
 		this.fileId = null;
@@ -135,7 +135,7 @@ ui.listen({
 	},
 	$click$deleteFile : function() {
 		this.closeFileAfterDeletion = true;
-		ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:this.fileId}});
+		hui.ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:this.fileId}});
 	},
 	
 	////////////////////////// Group /////////////////////////
@@ -154,12 +154,12 @@ ui.listen({
 	},
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
-		if (n2i.isBlank(values.title)) {
+		if (hui.isBlank(values.title)) {
 			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
-			ui.request({json:{data:values},url:'SaveGroup.php',onSuccess:'groupSaved'});
+			hui.ui.request({json:{data:values},url:'SaveGroup.php',onSuccess:'groupSaved'});
 		}
 	},
 	$submit$groupFormula : function() {
@@ -172,7 +172,7 @@ ui.listen({
 		groupWindow.hide();
 	},
 	$selectionWasOpened$selector : function(item) {
-		ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+		hui.ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
 	},
 	$success$loadGroup : function(data) {
 		this.groupId = data.id;
@@ -182,7 +182,7 @@ ui.listen({
 		groupFormula.focus();
 	},
 	$click$deleteGroup : function() {
-		ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
+		hui.ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
 	},
 	$success$deleteGroup : function() {
 		groupSource.refresh();

@@ -58,7 +58,7 @@ $gui='
 						<p>Du skulle inden længe modtage en e-mail der beskriver hvordan du kan ændre dit kodeord. Hvis du ikke har modtaget den inden ca. et kvarter bør du kontakte den ansvarlige for webstedet.</p>
 					</text>
 					<buttons align="center" top="5">
-						<button title="OK" click="ui.changeState(\'login\');formula.focus()"/>
+						<button title="OK" click="hui.ui.changeState(\'login\');formula.focus()"/>
 					</buttons>
 				</space>
 			</fragment>
@@ -70,7 +70,7 @@ $gui='
 						<p>{da:Problemet kan løses med opsætnings-værktøjet; en:The problem can be resolved using the setup tool}</p>
 					</text>
 					<buttons align="center" top="5">
-						<button title="{Sign in;da:Log ind}" click="ui.changeState(\'login\');formula.focus()"/>
+						<button title="{Sign in;da:Log ind}" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="{Go to setup;da:Gå til opsætning}" highlighted="true" click="document.location=\'../setup/\'"/>
 					</buttons>
 				</space>

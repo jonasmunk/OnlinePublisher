@@ -3,7 +3,7 @@ var controller = {
 	
 	pageDidLoad : function(id) {
 		this.pageId = id;
-		ui.request({url:'viewer/data/LoadPageStatus.php',parameters:{id:id},onJSON:function(obj) {
+		hui.ui.request({url:'viewer/data/LoadPageStatus.php',parameters:{id:id},onJSON:function(obj) {
 			publish.setEnabled(obj.changed);
 		}});
 	},
@@ -30,7 +30,7 @@ var controller = {
 		window.parent.location='ViewPublished.php';
 	},
 	$click$publish : function() {
-		ui.request({url:'viewer/data/PublishPage.php',parameters:{id:this.pageId},onSuccess:function(obj) {
+		hui.ui.request({url:'viewer/data/PublishPage.php',parameters:{id:this.pageId},onSuccess:function(obj) {
 			publish.setEnabled(false);
 		}});
 	},
@@ -39,4 +39,4 @@ var controller = {
 	}
 };
 
-ui.listen(controller);
+hui.ui.listen(controller);

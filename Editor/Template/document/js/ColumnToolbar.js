@@ -24,4 +24,4 @@ var columnToolbar = {
 	}
 }
 
-ui.listen(columnToolbar);
+hui.ui.listen(columnToolbar);

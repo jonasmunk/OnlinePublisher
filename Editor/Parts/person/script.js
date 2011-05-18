@@ -4,10 +4,10 @@ var partController = {
 	},
 	buildWindow : function() {
 		var form = document.forms.PartForm,
-			win = ui.Window.create({title:'Vælg person',width:400,close:false}),
-			toolbar = ui.Toolbar.create({labels:false}),
-			searchField = ui.SearchField.create({name:'search',adaptive:true}),
-			list = ui.List.create({name:'list',maxHeight:300});
+			win = hui.ui.Window.create({title:'Vælg person',width:400,close:false}),
+			toolbar = hui.ui.Toolbar.create({labels:false}),
+			searchField = hui.ui.SearchField.create({name:'search',adaptive:true}),
+			list = hui.ui.List.create({name:'list',maxHeight:300});
 		toolbar.add(searchField);
 		win.add(toolbar);
 		list.listen({
@@ -21,7 +21,7 @@ var partController = {
 		});
 		win.add(list);
 		win.show();
-		var src = new ui.Source({
+		var src = new hui.ui.Source({
 			url : '../../Services/Model/ListPersons.php?windowSize=10',
 			parameters : [
 				{key:'query',value:'@search.value'},
@@ -41,4 +41,4 @@ var partController = {
 	}
 }
 
-ui.listen(partController);
+hui.ui.listen(partController);

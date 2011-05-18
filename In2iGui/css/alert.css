@@ -1,4 +1,4 @@
-div.in2igui_alert
+div.hui_alert
 {
 	width: 500px;
 	border: 1px solid #ccc;
@@ -15,7 +15,7 @@ div.in2igui_alert
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
-div.in2igui_alert_body
+div.hui_alert_body
 {
 	min-height: 135px;
 	padding: 13px 15px;
@@ -24,25 +24,25 @@ div.in2igui_alert_body
 	border: 1px solid #fff;
 }
 
-div.in2igui_alert_content
+div.hui_alert_content
 {
 	min-height: 105px;
 	overflow: hidden;
 }
 
-div.in2igui_alert .smile
+div.hui_alert .smile
 {
 	padding-left: 160px;
 	background: url('../gfx/smiley_large_smile.png') no-repeat scroll 10px 10px;
 }
 
-div.in2igui_alert .gasp
+div.hui_alert .gasp
 {
 	padding-left: 160px;
 	background: url('../gfx/smiley_large_gasp.png') no-repeat scroll 10px 10px;
 }
 
-div.in2igui_alert h1
+div.hui_alert h1
 {
 	color: #123;
 	font-size: 18px;
@@ -51,7 +51,7 @@ div.in2igui_alert h1
 	text-align: left;
 }
 
-div.in2igui_alert p
+div.hui_alert p
 {
 	color: #123;
 	font-size: 13px;

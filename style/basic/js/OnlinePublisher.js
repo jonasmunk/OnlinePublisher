@@ -8,18 +8,84 @@ op.page = {id:null,path:null,template:null};
 op.ignite = function() {
 	if (!this.preview) {
 		document.onkeydown=function(e) {
-			e = n2i.event(e);
+			e = hui.event(e);
 			if(e.returnKey && e.shiftKey) {
 				var temp;
-				temp = function() {
-					n2i.unListen(document,'keyup',temp);
-					window.location=(op.page.path+"Editor/index.php?page="+op.page.id);
+				temp = function(e) {
+					e = hui.event(e);
+					if (e.returnKey) {
+						hui.unListen(document,'keyup',temp);
+						if (!hui.browser.msie && !op.user.internal) {
+							e.stop();
+							op.showLogin();
+						} else {
+							window.location=(op.page.path+"Editor/index.php?page="+op.page.id);
+						}
+					}
 				}
-				n2i.listen(document,'keyup',temp);
+				hui.listen(document,'keyup',temp);
 			}
 			return true;
 		}
 	}
+}
+
+op.showLogin = function() {
+	if (!this.loginBox) {
+		hui.ui.require(['Formula','Button'],
+			function() {
+				var box = this.loginBox = hui.ui.Box.create({width:300,title:'Adgangskontrol',modal:true,absolute:true,closable:true,padding:10});
+				this.loginBox.addToDocument();
+				var form = hui.ui.Formula.create();
+				form.listen({$submit:function() {
+					var values = form.getValues();
+					op.login(values.username,values.password);
+				}});
+				var g = form.buildGroup(null,[
+					{type:'Text',options:{label:'Brugernavn',key:'username'}},
+					{type:'Text',options:{label:'Kodeord',key:'password',secret:true}}
+				]);
+				var b = g.createButtons();
+				var cancel = hui.ui.Button.create({text:'Annuller'})
+				cancel.listen({$click:function() {
+					form.reset();
+					box.hide();
+				}});
+				b.add(cancel);
+				b.add(hui.ui.Button.create({text:'Log ind',highlighted:true,submit:true}));
+				this.loginBox.add(form);
+				this.loginBox.show();
+				window.setTimeout(function() {
+					form.focus();
+				},100);
+			}
+		);
+	} else {
+		this.loginBox.show();
+	}
+}
+
+op.login = function(username,password) {
+	hui.ui.request({
+		message : {start:'Logger ind...',delay:300},
+		url : op.context+'Editor/Services/Core/Authentication.php',
+		parameters : {username:username,password:password},
+		onJSON : function(response) {
+			if (response.success) {
+				hui.ui.showMessage({text:'Du er nu logget ind!',icon:'common/success',duration:4000});
+				op.igniteEditor();
+			} else {
+				hui.ui.showMessage({text:'Brugeren blev ikke fundet',icon:'common/warning',duration:4000});
+			}
+		},
+		onFailure : function() {
+			hui.ui.showMessage({text:'Der skete en fejl internt i systemet!',icon:'common/warning',duration:4000});
+		}
+	});
+}
+
+op.igniteEditor = function() {
+	window.location=(op.page.path+"Editor/index.php?page="+op.page.id);
 }
 
 op.showImage = function(image) {

@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 		
 	$click$newGroup : function() {
 		this.groupId = null;
@@ -14,12 +14,12 @@ ui.listen({
 	},
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
-		if (n2i.isBlank(values.title)) {
+		if (hui.isBlank(values.title)) {
 			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
-			ui.request({
+			hui.ui.request({
 				json:{data:values},
 				url:'SaveGroup.php',
 				message:{start:'Gemmer gruppe...',success:'Gruppen er gemt',delay:300},
@@ -38,7 +38,7 @@ ui.listen({
 		groupWindow.hide();
 	},
 	$selectionWasOpened$selector : function(item) {
-		ui.request({
+		hui.ui.request({
 			parameters:{id:item.value},
 			url:'../../Services/Model/LoadObject.php',
 			onSuccess:'loadGroup',
@@ -53,7 +53,7 @@ ui.listen({
 		groupFormula.focus();
 	},
 	$click$deleteGroup : function() {
-		ui.request({
+		hui.ui.request({
 			json:{data:{id:this.groupId}},
 			url:'../../Services/Model/DeleteObject.php',
 			onSuccess:'deleteGroup',

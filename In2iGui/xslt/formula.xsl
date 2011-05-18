@@ -439,12 +439,12 @@
 <xsl:template match="gui:buttons" name="gui:buttons">
 	<div>
 		<xsl:attribute name="class">
-			<xsl:text>in2igui_buttons</xsl:text>
+			<xsl:text>hui_buttons</xsl:text>
 			<xsl:if test="@align='right'">
-				<xsl:text> in2igui_buttons_right</xsl:text>
+				<xsl:text> hui_buttons_right</xsl:text>
 			</xsl:if>
 			<xsl:if test="@align='center'">
-				<xsl:text> in2igui_buttons_center</xsl:text>
+				<xsl:text> hui_buttons_center</xsl:text>
 			</xsl:if>
 		</xsl:attribute>
 		<xsl:attribute name="style">
@@ -454,7 +454,7 @@
 			<xsl:if test="@bottom">padding-bottom:<xsl:value-of select="@bottom"/>px;</xsl:if>
 			<xsl:if test="@right">padding-right:<xsl:value-of select="@right"/>px;</xsl:if>
 		</xsl:attribute>
-		<div class="in2igui_buttons_body">
+		<div class="hui_buttons_body">
 			<xsl:apply-templates/>
 		</div>
 	</div>
@@ -463,16 +463,24 @@
 <xsl:template match="gui:button" name="gui:button">
 	<a id="{generate-id()}" href="#">
 		<xsl:attribute name="class">
-			in2igui_button
-			<xsl:if test="@highlighted='true'"> in2igui_button_highlighted</xsl:if>
-			<xsl:if test="@disabled='true'"> in2igui_button_disabled</xsl:if>
-			<xsl:if test="@small='true' and @rounded='true'"> in2igui_button_small_rounded</xsl:if>
+			hui_button
+			<xsl:if test="@variant">
+				<xsl:text>hui_button_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+			<xsl:if test="@highlighted='true'"> hui_button_highlighted</xsl:if>
+			<xsl:if test="@disabled='true'"> hui_button_disabled</xsl:if>
+			<xsl:choose>
+				<xsl:when test="@variant and @small='true'">
+					<xsl:text> hui_button_small_</xsl:text><xsl:value-of select="@variant"/>
+				</xsl:when>
+				<xsl:when test="@small='true' and @rounded='true'"> hui_button_small_rounded</xsl:when>
+			</xsl:choose>
 		</xsl:attribute>
 		<span><span>
 			<xsl:if test="@icon"><em style="background-image: url('{$context}/In2iGui/icons/{@icon}1.png')">
 				<xsl:attribute name="class">
-					<xsl:text>in2igui_button_icon</xsl:text>
-					<xsl:if test="(not(@title) or @title='') and (not(@text) or @text='')"><xsl:text> in2igui_button_icon_notext</xsl:text></xsl:if>
+					<xsl:text>hui_button_icon</xsl:text>
+					<xsl:if test="(not(@title) or @title='') and (not(@text) or @text='')"><xsl:text> hui_button_icon_notext</xsl:text></xsl:if>
 				</xsl:attribute>
 				<xsl:comment/>
 			</em></xsl:if>

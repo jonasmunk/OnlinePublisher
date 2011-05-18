@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	
 	dragDrop : [
 		{drag:'news',drop:'newsgroup'}
@@ -34,7 +34,7 @@ ui.listen({
 	//////////////////////// Dragging ////////////////////////
 	
 	$drop$news$newsgroup : function(dragged,dropped) {
-		In2iGui.request({url:'AddNewsToGroup.php',onSuccess:'newsMoved',json:{data:{file:dragged.id,group:dropped.value}}});
+		hui.ui.request({url:'AddNewsToGroup.php',onSuccess:'newsMoved',json:{data:{file:dragged.id,group:dropped.value}}});
 	},
 	$success$newsMoved : function() {
 		newsSource.refresh();
@@ -48,7 +48,7 @@ ui.listen({
 		if (obj.id===this.newsId) {
 			this.closeNewsAfterDeletion = true;
 		}
-		ui.request({
+		hui.ui.request({
 			url:'DeleteNews.php',
 			onSuccess:'fileDeleted',
 			parameters:{id:obj.id},
@@ -73,7 +73,7 @@ ui.listen({
 	
 	$click$duplicate : function(id) {
 		var obj = list.getFirstSelection();
-		ui.request({
+		hui.ui.request({
 			url : 'LoadNews.php',
 			onSuccess : 'duplicateLoaded',
 			parameters : {id:obj.id},
@@ -103,7 +103,7 @@ ui.listen({
 	},
 	
 	loadNews : function(id) {
-		ui.request({
+		hui.ui.request({
 			url:'LoadNews.php',
 			onSuccess:'newsLoaded',
 			parameters:{id:id},
@@ -140,7 +140,7 @@ ui.listen({
 			data.enddate=Math.round(data.enddate.getTime()/1000);
 		}
 		data.groups = newsGroups.getValue();
-		ui.request({
+		hui.ui.request({
 			url:'SaveNews.php',
 			onSuccess:'newsUpdated',
 			json:{data:data},
@@ -155,7 +155,7 @@ ui.listen({
 		groupSource.refresh();
 	},
 	$click$deleteNews : function() {
-		ui.request({
+		hui.ui.request({
 			url : 'DeleteNews.php',
 			onSuccess : 'newsDeleted',
 			parameters : {id:this.newsId},
@@ -186,12 +186,12 @@ ui.listen({
 	},
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
-		if (n2i.isBlank(values.title)) {
+		if (hui.isBlank(values.title)) {
 			ui.showMessage({text:'Du skal angive en titel',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
-			ui.request({
+			hui.ui.request({
 				json:{data:values},
 				url:'SaveGroup.php',
 				onSuccess:'groupSaved',
@@ -210,7 +210,7 @@ ui.listen({
 	},
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='newsgroup') {
-			ui.request({
+			hui.ui.request({
 				parameters:{id:item.value},
 				url:'../../Services/Model/LoadObject.php',
 				onSuccess:'loadGroup',
@@ -226,7 +226,7 @@ ui.listen({
 		groupFormula.focus();
 	},
 	$click$deleteGroup : function() {
-		ui.request({
+		hui.ui.request({
 			json : {data:{id:this.groupId}},
 			url : '../../Services/Model/DeleteObject.php',
 			onSuccess : 'deleteGroup',
@@ -253,7 +253,7 @@ ui.listen({
 	},
 	$submit$articleFormula : function() {
 		var values = articleFormula.getValues();
-		if (n2i.isBlank(values.title)) {
+		if (hui.isBlank(values.title)) {
 			ui.showMessage({text:'Titlen skal udfyldes',duration:2000});
 			articleFormula.focus();
 			return;
@@ -268,7 +268,7 @@ ui.listen({
 		if (values.enddate) {
 			values.enddate=Math.round(values.enddate.getTime()/1000);
 		}
-		ui.request({
+		hui.ui.request({
 			json : {data:values},
 			url : 'CreateArticle.php',
 			message : {start:'Opretter artikel...',success:'Artiklen er oprettet'},

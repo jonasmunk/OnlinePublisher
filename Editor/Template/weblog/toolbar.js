@@ -5,7 +5,7 @@ var controller = {
 		window.parent.location='../../Tools/Pages/index.php';
 	},
 	$click$publish : function() {
-		ui.request({url:'../../Services/Model/PublishPage.php',parameters:{id:this.pageId},onSuccess:function() {
+		hui.ui.request({url:'../../Services/Model/PublishPage.php',parameters:{id:this.pageId},onSuccess:function() {
 			publish.disable();
 		}});
 	},

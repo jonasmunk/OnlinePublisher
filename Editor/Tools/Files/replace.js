@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	$click$replace : function() {
 		var obj = list.getFirstSelection();
 		replaceFile.setParameter('id',obj.id);

@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	mailinglistId : 0,
 	groupId : 0,
 	personId : 0,
@@ -30,7 +30,7 @@ ui.listen({
 			personId : dragged.id,
 			personGroupId : target.value
 		}
-		In2iGui.request({json:{data:data},url:'AddPersonToGroup.php',onSuccess:'addPersonToGroup'});
+		hui.ui.request({json:{data:data},url:'AddPersonToGroup.php',onSuccess:'addPersonToGroup'});
 	},
 	
 	$listRowWasOpened$list : function(obj) {
@@ -39,18 +39,18 @@ ui.listen({
 			mailinglistFormula.reset();
 			deleteMailinglist.setEnabled(false);
 			saveMailinglist.setEnabled(false);
-			In2iGui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadMailinglist'});
+			hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadMailinglist'});
 		} else if (obj.kind=='persongroup') {
 			groupFormula.reset();
 			deleteGroup.setEnabled(false);
 			saveGroup.setEnabled(false);
 			saveGroup.setEnabled(false);
-			In2iGui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+			hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
 		} else if (obj.kind=='person') {
 			personFormula.reset();
 			deletePerson.setEnabled(false);
 			savePerson.setEnabled(false);
-			In2iGui.request({json:{data:data},url:'LoadPerson.php',onSuccess:'loadPerson'});
+			hui.ui.request({json:{data:data},url:'LoadPerson.php',onSuccess:'loadPerson'});
 		}
 	},
 	
@@ -88,7 +88,7 @@ ui.listen({
 			return;
 		}
 		var data = {id:this.mailinglistId,title:title,note:note};
-		ui.request({json:{data:data},url:'SaveMailinglist.php',onSuccess:'saveMailinglist'});
+		hui.ui.request({json:{data:data},url:'SaveMailinglist.php',onSuccess:'saveMailinglist'});
 	},
 	$success$saveMailinglist : function(t) {
 		mailinglistEditor.hide();
@@ -104,7 +104,7 @@ ui.listen({
 			return;
 		}
 		var data = {id:this.groupId,title:title,note:note};
-		ui.request({json:{data:data},url:'SaveGroup.php',onSuccess:'saveGroup'});
+		hui.ui.request({json:{data:data},url:'SaveGroup.php',onSuccess:'saveGroup'});
 	},
 	$success$saveGroup : function(t) {
 		groupEditor.hide();
@@ -138,7 +138,7 @@ ui.listen({
 		var groups = personGroups.getValues();
 		var mailinglists = personMailinglists.getValues();
 		var data = {person:person,emails:emails,phones:phones,groups:groups,mailinglists:mailinglists};
-		ui.request({json:{data:data},url:'SavePerson.php',onSuccess:'savePerson'});
+		hui.ui.request({json:{data:data},url:'SavePerson.php',onSuccess:'savePerson'});
 	},
 	$success$savePerson : function(t) {
 		personEditor.hide();
@@ -200,7 +200,7 @@ ui.listen({
 	},
 	
 	$click$deleteMailinglist : function() {
-		ui.request({json:{data:{id:this.mailinglistId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteMailinglist'});
+		hui.ui.request({json:{data:{id:this.mailinglistId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteMailinglist'});
 	},
 	$success$deleteMailinglist : function(t) {
 		mailinglistEditor.hide();
@@ -210,7 +210,7 @@ ui.listen({
 	},
 	
 	$click$deleteGroup : function() {
-		ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
+		hui.ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
 	},
 	$success$deleteGroup : function(t) {
 		groupEditor.hide();
@@ -220,7 +220,7 @@ ui.listen({
 	},
 	
 	$click$deletePerson : function() {
-		ui.request({json:{data:{id:this.personId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePerson'});
+		hui.ui.request({json:{data:{id:this.personId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePerson'});
 	},
 	$success$deletePerson : function() {
 		personEditor.hide();
@@ -250,7 +250,7 @@ ui.listen({
 	
 	$click$sendEmail : function() {
 		var data = {id:selector.getValue().value};
-		ui.request({json:{data:data},url:'GetMailinglistEmails.php',onSuccess:'sendEmail'});
+		hui.ui.request({json:{data:data},url:'GetMailinglistEmails.php',onSuccess:'sendEmail'});
 	},
 	
 	$success$sendEmail : function(data) {

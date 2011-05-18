@@ -58,13 +58,13 @@ a.in2igui_toolbar_icon_disabled
 	background-color: #F2F2F3;
 }
 
-a.in2igui_button_disabled
+a.hui_button_disabled
 {
 	filter: alpha(opacity = 50);
 	background-color: #e7e7e7;
 }
 
-div.in2igui_window_dark a.in2igui_button_disabled
+div.in2igui_window_dark a.hui_button_disabled
 {
 	background-color: #333;
 }
@@ -121,7 +121,7 @@ span.in2igui_upload_button_input input
 	filter: alpha(opacity = 0);
 }
 
-em.in2igui_button_icon_notext
+em.hui_button_icon_notext
 {
 	margin-top: 6px;
 }

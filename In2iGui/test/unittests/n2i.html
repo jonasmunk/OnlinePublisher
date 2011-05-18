@@ -8,9 +8,9 @@
 	<!--[if IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
 	<![endif]-->
-	<script charset="utf-8" type="text/javascript" src="../../lib/n2i.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/In2iScripts/In2iDate.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/In2iGui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/syn.js"></script>
 	<script type="text/javascript" charset="utf-8">
@@ -58,6 +58,10 @@
 				ui.test.assertFalse(n2i.string.endsWith('Jonas','ona'),'Ends with is correct');
 				ui.test.assertTrue(n2i.string.endsWith('Jonas\nmunk','unk'),'Ends with works with multiple lines');
 				ui.test.assertFalse(n2i.string.endsWith('Jonas\nmunk','as'),'Ends with works with multiple lines');
+				
+				ui.test.assertEquals(n2i.string.camelize('font-size'),'fontSize');
+				ui.test.assertEquals(n2i.string.camelize('fontSize'),'fontSize');
+				ui.test.assertEquals(n2i.string.camelize('color'),'color');
 			},
 			function() { // Test arrays
 				ui.test.assertTrue(n2i.isArray([]),'Test that empty array is array');
@@ -94,6 +98,9 @@
 				ui.test.assertEquals(roundtrip.arr[0],object.arr[0],'Test that arrays are encoded/decoded correct');
 				ui.test.assertEquals(roundtrip.arr[1],object.arr[1],'Test that arrays are encoded/decoded correct');
 				ui.test.assertEquals(roundtrip.arr[2],object.arr[2],'Test that arrays are encoded/decoded correct');
+			},
+			function() {
+				
 			}
 		]);
 	</script>

@@ -9,13 +9,13 @@ var partController = {
 	showChooserWindow : function() {
 		if (!this.chooserWindow) {
 			var form = document.forms.PartForm;
-			var win = this.chooserWindow = ui.Window.create({title:'Vælg billede',width:400,close:true});
-			var toolbar = ui.Toolbar.create({labels:false});
-			var searchField = ui.SearchField.create({name:'search',adaptive:true});
+			var win = this.chooserWindow = hui.ui.Window.create({title:'Vælg billede',width:400,close:true});
+			var toolbar = hui.ui.Toolbar.create({labels:false});
+			var searchField = hui.ui.SearchField.create({name:'search',adaptive:true});
 			toolbar.add(searchField);
 			win.add(toolbar);
-			var overflow = ui.Overflow.create({height:200});
-			var list = ui.Gallery.create({name:'list',maxHeight:300});
+			var overflow = hui.ui.Overflow.create({height:200});
+			var list = hui.ui.Gallery.create({name:'list',maxHeight:300});
 			list.listen({
 				$selectionChanged:function(list) {
 					var id = list.getFirstSelection().value;
@@ -29,7 +29,7 @@ var partController = {
 			overflow.add(list);
 			win.add(overflow);
 		
-			list.setSource(new ui.Source({
+			list.setSource(new hui.ui.Source({
 				url:'../../Services/Model/Items.php?type=image',
 				parameters:[
 					{key:'query',value:'@search.value'}
@@ -41,36 +41,36 @@ var partController = {
 	preview : function() {
 		var self = this;
 		op.part.utils.updatePreview({
-			node : n2i.get('part_image_container'),
+			node : hui.get('part_image_container'),
 			form : document.forms.PartForm,
 			type : 'image',
 			delay : 500
 		});
 	},
 	suppressLink : function() {
-		var container = n2i.get('part_image_container');
+		var container = hui.get('part_image_container');
 		var a = container.getElementsByTagName('a');
 		if (a) {
 			a.href='javascript:void(0)';
 		}
-		var img = n2i.firstByTag(container,'img');
+		var img = hui.firstByTag(container,'img');
 		if (img) {
-			n2i.listen(img,'click',this.showChooserWindow.bind(this));
+			hui.ui.listen(img,'click',this.showChooserWindow.bind(this));
 		}
 	},
 	showUploadWindow : function() {
 		if (!this.uploadWindow) {
-			var win = this.uploadWindow = ui.Window.create({title:'Tilføj billede',width:300});
-			var tabs = ui.Tabs.create({small:true,centered:true});
+			var win = this.uploadWindow = hui.ui.Window.create({title:'Tilføj billede',width:300});
+			var tabs = hui.ui.Tabs.create({small:true,centered:true});
 			var uploadTab = tabs.createTab({title:'Fra computer',padding:10});
 			win.add(tabs);
-			var buttons = ui.Buttons.create({top: 10,align:'center'});
-			var cancel = ui.Button.create({title:'Annuller'});
+			var buttons = hui.ui.Buttons.create({top: 10,align:'center'});
+			var cancel = hui.ui.Button.create({title:'Annuller'});
 			cancel.onClick(win.hide.bind(win));
-			var choose = ui.Button.create({text:'Vælg billede...'});
+			var choose = hui.ui.Button.create({text:'Vælg billede...'});
 			buttons.add(choose);
 			buttons.add(cancel);
-			var upload = ui.Upload.create({
+			var upload = hui.ui.Upload.create({
 				name:'imageUpload',
 				useFlash : false,
 				url:'../../Parts/image/Upload.php',
@@ -81,37 +81,37 @@ var partController = {
 			uploadTab.add(upload);
 			uploadTab.add(buttons);
 			var linkTab = tabs.createTab({title:'Fra nettet',padding:10});
-			var form = ui.Formula.create({name:'urlForm'});
+			var form = hui.ui.Formula.create({name:'urlForm'});
 			form.buildGroup({above:true},[
 				{type:'Text',options:{label:'Internetaddresse:',key:'url'}}
 			]);
 			linkTab.add(form);
-			var create = ui.Button.create({name:'createFromUrl',title:'Hent'});
+			var create = hui.ui.Button.create({name:'createFromUrl',title:'Hent'});
 			linkTab.add(create);
 		}
 		this.uploadWindow.show();
 	},
 	$uploadDidCompleteQueue$imageUpload : function() {
-		//ui.showMessage({text:'Billedet er tilføjet!',duration:2000});
-		ui.request({'url':'../../Parts/image/UploadStatus.php',onJSON:function(status) {
+		//hui.ui.showMessage({text:'Billedet er tilføjet!',duration:2000});
+		hui.ui.request({'url':'../../Parts/image/UploadStatus.php',onJSON:function(status) {
 			document.forms.PartForm.imageId.value = status.id;
 			this.preview();
 		}.bind(this)});
 	},
 	$click$createFromUrl : function() {
-		var form = ui.get('urlForm');
+		var form = hui.ui.get('urlForm');
 		var url = form.getValues()['url'];
-		ui.showMessage({text:'Henter billede...'});
-		ui.request({
+		hui.ui.showMessage({text:'Henter billede...'});
+		hui.ui.request({
 			url : '../../Parts/image/Fetch.php',
 			parameters : {url:url},
 			onJSON : function(status) {
 				if (status.success) {
-					ui.showMessage({text:'Billedet er nu hentet',duration:2000});
+					hui.ui.showMessage({text:'Billedet er nu hentet',duration:2000});
 					document.forms.PartForm.imageId.value = status.id;
 					this.preview();
 				} else {
-					ui.showMessage({text:'Det lykkedes ikke at hente billedet',duration:2000});
+					hui.ui.showMessage({text:'Det lykkedes ikke at hente billedet',duration:2000});
 				}
 			}.bind(this)
 		});
@@ -119,4 +119,4 @@ var partController = {
 	}
 }
 
-ui.listen(partController);
+hui.ui.listen(partController);

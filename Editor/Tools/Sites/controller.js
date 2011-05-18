@@ -1,4 +1,4 @@
-ui.listen({
+hui.ui.listen({
 	
 	activePage : 0,
 	dragDrop : [
@@ -45,7 +45,7 @@ ui.listen({
 					pageEditor.hide();
 					this.activePage = 0;
 				}
-				In2iGui.request({url:'DeletePage.php',onSuccess:'pageDeleted',parameters:{id:obj.id}});
+				hui.ui.request({url:'DeletePage.php',onSuccess:'pageDeleted',parameters:{id:obj.id}});
 			}.bind(this)
 		});
 	},
@@ -60,7 +60,7 @@ ui.listen({
 	$click$info : function() {
 		var obj = list.getFirstSelection();
 		if (obj.kind=='page') {
-			ui.request({url:'LoadPage.php',onSuccess:'pageLoaded',json:{data:obj}});
+			hui.ui.request({url:'LoadPage.php',onSuccess:'pageLoaded',json:{data:obj}});
 		} else if (obj.kind=='hierarchyItem') {
 			this.loadHierarchyItem(obj.id);
 		}
@@ -70,13 +70,13 @@ ui.listen({
 	},
 	$listRowWasOpened$list : function(obj) {
 		if (obj.kind=='page') {
-			In2iGui.request({url:'LoadPage.php',onSuccess:'pageLoaded',json:{data:obj}});
+			hui.ui.request({url:'LoadPage.php',onSuccess:'pageLoaded',json:{data:obj}});
 		} else if (obj.kind=='hierarchyItem') {
 			this.loadHierarchyItem(obj.id);
 		}
 	},
 	$drop$page$language : function(dragged,dropped) {
-		In2iGui.request({url:'ChangeLanguage.php',onSuccess:'languageChanged',json:{data:{id:dragged.id,language:dropped.value}}});
+		hui.ui.request({url:'ChangeLanguage.php',onSuccess:'languageChanged',json:{data:{id:dragged.id,language:dropped.value}}});
 	},
 	$success$languageChanged : function(data) {
 		list.refresh();
@@ -91,7 +91,7 @@ ui.listen({
 	/////////// Hierarchy item properties //////////
 	
 	loadHierarchyItem : function(id) {
-		In2iGui.request({url:'LoadHierarchyItem.php',onSuccess:'hierarchyItemLoaded',parameters:{id:id}});
+		hui.ui.request({url:'LoadHierarchyItem.php',onSuccess:'hierarchyItemLoaded',parameters:{id:id}});
 	},
 	$success$hierarchyItemLoaded : function(data) {
 		this.activeHierarchyItem = data.id;
@@ -106,7 +106,7 @@ ui.listen({
 	$click$saveHierarchyItem : function() {
 		var values = hierarchyItemFormula.getValues();
 		values.id = this.activeHierarchyItem;
-		In2iGui.request({url:'SaveHierarchyItem.php',onSuccess:'hierarchyItemChanged',json:{data:values}});
+		hui.ui.request({url:'SaveHierarchyItem.php',onSuccess:'hierarchyItemChanged',json:{data:values}});
 	},
 	$success$hierarchyItemChanged : function() {
 		this.activeHierarchyItem = 0;
@@ -117,7 +117,7 @@ ui.listen({
 		In2iGui.showMessage({text:'Menupunktet er opdateret!',duration:2000});
 	},
 	$click$deleteHierarchyItem : function() {
-		In2iGui.request({url:'DeleteHierarchyItem.php',onSuccess:'hierarchyItemDeleted',parameters:{id:this.activeHierarchyItem}});
+		hui.ui.request({url:'DeleteHierarchyItem.php',onSuccess:'hierarchyItemDeleted',parameters:{id:this.activeHierarchyItem}});
 	},
 	$success$hierarchyItemDeleted : function() {
 		this.activeHierarchyItem = 0;
@@ -143,10 +143,10 @@ ui.listen({
 	$click$savePage : function() {
 		var values = pageFormula.getValues();
 		values.id = this.activePage;
-		In2iGui.request({url:'SavePage.php',onSuccess:'pageChanged',json:{data:values}});
+		hui.ui.request({url:'SavePage.php',onSuccess:'pageChanged',json:{data:values}});
 	},
 	$click$deletePage : function() {
-		In2iGui.request({url:'DeletePage.php',onSuccess:'pageChanged',parameters:{id:this.activePage}});
+		hui.ui.request({url:'DeletePage.php',onSuccess:'pageChanged',parameters:{id:this.activePage}});
 	},
 	$success$pageChanged : function(data) {
 		this.activePage = 0;
@@ -191,7 +191,7 @@ ui.listen({
 			newPageTitle.focus();
 		} else {
 			var data = {design:design,template:template,frame:frame.value,menuItemId:menuItem.value,menuItemKind:menuItem.kind};
-			n2i.override(data,form);
+			hui.override(data,form);
 			if (menuItem!=null) {
 				if (menuItem.kind=='hierarchyItem') {
 				  	data.hierarchyItem = menuItem.value;
@@ -199,7 +199,7 @@ ui.listen({
 					data.hierarchy = menuItem.value;
 				}
 			}
-			In2iGui.request({url:'CreatePage.php',onSuccess:'pageCreated',parameters:data});
+			hui.ui.request({url:'CreatePage.php',onSuccess:'pageCreated',parameters:data});
 		}
 	},
 	$success$pageCreated : function() {

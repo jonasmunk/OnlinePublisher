@@ -4,12 +4,12 @@ op.part.File = {
 	},
 	buildWindow : function() {
 		var form = document.forms.PartForm;
-		var win = ui.Window.create({title:'Vælg fil',width:400,close:false});
-		var toolbar = ui.Toolbar.create({labels:false});
-		var searchField = ui.SearchField.create({name:'search',adaptive:true});
+		var win = hui.ui.Window.create({title:'Vælg fil',width:400,close:false});
+		var toolbar = hui.ui.Toolbar.create({labels:false});
+		var searchField = hui.ui.SearchField.create({name:'search',adaptive:true});
 		toolbar.add(searchField);
 		win.add(toolbar);
-		var list = ui.List.create({name:'list',maxHeight:300});
+		var list = hui.ui.List.create({name:'list',maxHeight:300});
 		list.listen({$selectionChanged:function(obj) {
 			document.forms.PartForm.fileId.value=obj.id;
 			this.preview();
@@ -17,7 +17,7 @@ op.part.File = {
 		searchField.listen({$valueChanged:function() {list.resetState()}});
 		win.add(list);
 		win.show();
-		var src = new ui.Source({
+		var src = new hui.ui.Source({
 			url:'../../Services/Model/ListFiles.php?windowSize=10',
 			parameters:[
 				{key:'query',value:'@search.value'},
@@ -37,4 +37,4 @@ op.part.File = {
 	}
 }
 
-ui.listen(op.part.File);
+hui.ui.listen(op.part.File);

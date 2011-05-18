@@ -15,7 +15,7 @@
 <xsl:apply-templates select="wl:list | wl:edit | wl:new"/>
 </div>
 <xsl:if test="$username!=''">
-<script type="text/javascript" charset="utf-8" src="{$path}In2iGui/lib/In2iScripts/In2iDate.js"><xsl:comment/></script>
+<script type="text/javascript" charset="utf-8" src="{$path}In2iGui/lib/date.js"><xsl:comment/></script>
 <script type="text/javascript" charset="utf-8" src="{$path}In2iGui/js/Button.js"><xsl:comment/></script>
 <script type="text/javascript" charset="utf-8" src="{$path}In2iGui/js/Formula.js"><xsl:comment/></script>
 <script type="text/javascript" charset="utf-8" src="{$path}In2iGui/js/Overlay.js"><xsl:comment/></script>
@@ -45,7 +45,7 @@
 <xsl:template match="wl:list">
 <xsl:if test="$username!=''">
 <div class="actions">
-<a class="in2igui_button in2igui_button_paper" id="weblog_new" href="#"><span><span>Opret ny</span></span></a>
+<a class="hui_button hui_button_paper" id="weblog_new" href="#"><span><span>Opret ny</span></span></a>
 </div>
 </xsl:if>
 <xsl:apply-templates select="../wl:title"/>
@@ -89,8 +89,8 @@
 </xsl:choose>
 <xsl:if test="$username!=''">
 <div class="operations">
-	<a href="#" onclick="op.WeblogTemplate.edit({o:object/@id}); return false;" class="in2igui_button in2igui_button_paper in2igui_button_small_paper" style="margin-right: 5px;"><span><span>Rediger</span></span></a>
-	<a href="#" onclick="op.WeblogTemplate.deleteEntry({o:object/@id},this); return false;" class="in2igui_button in2igui_button_paper in2igui_button_small_paper"><span><span>Slet</span></span></a></div>
+	<a href="#" onclick="op.WeblogTemplate.edit({o:object/@id}); return false;" class="hui_button hui_button_paper hui_button_small_paper" style="margin-right: 5px;"><span><span>Rediger</span></span></a>
+	<a href="#" onclick="op.WeblogTemplate.deleteEntry({o:object/@id},this); return false;" class="hui_button hui_button_paper hui_button_small_paper"><span><span>Slet</span></span></a></div>
 </xsl:if>
 </div>
 </xsl:template>

@@ -1,9 +1,9 @@
-ui.listen({
+hui.ui.listen({
 	$selectionChanged$selector : function(obj) {
 		if (obj.value=='settings') {
 			if (!this.loaded) {
 				this.loaded = true;
-				ui.request({url:'LoadSettings.php',onSuccess:'loadSettings'});
+				hui.ui.request({url:'LoadSettings.php',onSuccess:'loadSettings'});
 			}
 		}
 	},
@@ -18,7 +18,7 @@ ui.listen({
 	
 	$valuesChanged$uiFormula : function(value) {
 		var data = {'ui':value};
-		ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveUI'});
+		hui.ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveUI'});
 	},
 	$success$saveUI : function() {
 		ui.showMessage({text:'Gemt!',icon:'common/success',duration:2000});
@@ -28,7 +28,7 @@ ui.listen({
 	$click$saveOnlineObjects : function() {
 		saveOnlineObjects.setEnabled(false);
 		var data = {'onlineobjects':onlineobjectsFormula.getValues()};
-		ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveOnlineObjects'});
+		hui.ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveOnlineObjects'});
 	},
 	$success$saveOnlineObjects : function() {
 		saveOnlineObjects.setEnabled(true);
@@ -38,14 +38,14 @@ ui.listen({
 	$click$saveAnalytics : function() {
 		saveAnalytics.setEnabled(false);
 		var data = {'analytics':analyticsFormula.getValues()};
-		ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveAnalytics'});
+		hui.ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveAnalytics'});
 	},
 	$success$saveAnalytics : function() {
 		saveAnalytics.setEnabled(true);
 	},
 	$click$testAnalytics : function() {
 		ui.showMessage({text:'Tester forbindelse til Google Analytics...'});
-		ui.request({json:{},url:'TestAnalytics.php',onSuccess:'testAnalytics'});
+		hui.ui.request({json:{},url:'TestAnalytics.php',onSuccess:'testAnalytics'});
 	},
 	$success$testAnalytics : function(success) {
 		ui.showMessage({text:success ? 'Det virkede!' : 'Det virkede ikke!',duration:2000});
@@ -55,7 +55,7 @@ ui.listen({
 	$click$saveEmail : function() {
 		saveEmail.setEnabled(false);
 		var data = {'email':emailFormula.getValues()};
-		ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveEmail'});
+		hui.ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveEmail'});
 	},
 	$success$saveEmail : function() {
 		saveEmail.setEnabled(true);
@@ -66,7 +66,7 @@ ui.listen({
 	$click$testEmail : function() {
 		ui.showMessage({text:'Sender e-mail...'});
 		var data = emailTestFormula.getValues();
-		ui.request({json:{data:data},url:'TestEmailSetup.php',onSuccess:'testEmail'});
+		hui.ui.request({json:{data:data},url:'TestEmailSetup.php',onSuccess:'testEmail'});
 	},
 	$success$testEmail : function(data) {
 		if (data.success) {

@@ -57,10 +57,10 @@
 <xsl:choose>
 	<xsl:when test="$dev='true'">
 		<script src="{$context}/In2iGui/lib/swfupload/swfupload.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-		<script src="{$context}/In2iGui/lib/n2i.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-		<script src="{$context}/In2iGui/lib/In2iScripts/In2iDate.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/lib/date.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/lib/json2.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-		<script src="{$context}/In2iGui/js/In2iGui.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/js/hui.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/js/ui.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Require.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Source.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/DragDrop.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -83,6 +83,7 @@
 		<script src="{$context}/In2iGui/js/ProgressBar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Gallery.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Calendar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/js/DatePicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Layout.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Dock.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/In2iGui/js/Box.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -101,7 +102,7 @@
 		<script src="{$context}/In2iGui/js/Link.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:when>
 	<xsl:otherwise>
-		<script src="{$context}/In2iGui/bin/minimized.noproto.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/In2iGui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:otherwise>
 </xsl:choose>
 <xsl:if test="//gui:graph">
@@ -109,10 +110,6 @@
 	<script type="text/javascript" src="{$context}/In2iGui/lib/protovis-3.2/protovis-r3.2.js"><xsl:comment/></script>
 	<script type="text/javascript" src="{$context}/In2iGui/lib/raphael-min.js"><xsl:comment/></script>
 	<script src="{$context}/In2iGui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-</xsl:if>
-<xsl:if test="//gui:chart">
-	<script src="{$context}/In2iGui/lib/swfobject.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-	<script src="{$context}/In2iGui/ext/FlashChart.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:for-each select="gui:localize[@source]">
 	<script src="{@source}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -677,25 +674,6 @@ In2iGui.context = '<xsl:value-of select="$context"/>';
 			var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Graphviz('<xsl:value-of select="generate-id()"/>','<xsl:value-of select="@name"/>');
 			<xsl:call-template name="gui:createobject"/>
 		});
-	</script>
-</xsl:template>
-
-
-<!-- Chart -->
-
-<xsl:template match="gui:chart">
-	<div id="{generate-id()}"><div id="{generate-id()}_chart"><xsl:comment/></div></div>
-	<script type="text/javascript">
-		swfobject.embedSWF(
-			"<xsl:value-of select="$context"/>/In2iGui/lib/openflashchart/open-flash-chart.swf",
-			"<xsl:value-of select="generate-id()"/>_chart",
-			"<xsl:value-of select="@width"/>",
-			"<xsl:value-of select="@height"/>",
-  			"9.0.0", "expressInstall.swf",
-  			{"data-file":"<xsl:value-of select="@url"/>"}
-  		);
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.FlashChart('<xsl:value-of select="generate-id()"/>','<xsl:value-of select="@name"/>');
-		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
 
