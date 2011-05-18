@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:In2iGui" title="Box">
+	<dock url="unittests/hui.html" name="dock" position="bottom" frame-name="Desktop">
+		<tabs small="true">
+			<tab title="Unit-tests">
+				<toolbar>
+					<icon icon="common/folder" text="Formula" click="dock.setUrl('unittests/formula.html')"/>
+					<icon icon="common/folder" text="HUI" click="dock.setUrl('unittests/hui.html')"/>
+					<icon icon="common/folder" text="Style" click="dock.setUrl('unittests/style.html')"/>
+					<icon icon="common/folder" text="Validation" click="dock.setUrl('unittests/validation.html')"/>
+					<icon icon="common/folder" text="Window" click="dock.setUrl('unittests/window.html')"/>
+				</toolbar>
+			</tab>
+			<tab title="XML-tests">
+				<toolbar>
+					<icon icon="common/folder" text="Bar" click="dock.setUrl('xml/bar.xml')"/>
+					<icon icon="common/folder" text="Box" click="dock.setUrl('xml/box.xml')"/>
+					<icon icon="common/folder" text="Button" click="dock.setUrl('xml/button.xml')"/>
+					<icon icon="common/folder" text="Calendar" click="dock.setUrl('xml/calendar.xml')"/>
+					<icon icon="common/folder" text="Chart" click="dock.setUrl('xml/chart.xml')"/>
+					<icon icon="common/folder" text="DropDown" click="dock.setUrl('xml/dropdown.xml')"/>
+					<icon icon="common/folder" text="Formula" click="dock.setUrl('xml/formula.xml')"/>
+					<icon icon="common/folder" text="Formula - fieldset" click="dock.setUrl('xml/formula_fieldset.xml')"/>
+					<icon icon="common/folder" text="Graph" click="dock.setUrl('xml/graph.xml')"/>
+					<icon icon="common/folder" text="Graphviz" click="dock.setUrl('xml/graphviz.xml')"/>
+					<icon icon="common/folder" text="List" click="dock.setUrl('xml/list.xml')"/>
+					<icon icon="common/folder" text="RichText" click="dock.setUrl('xml/richtext.xml')"/>
+					<icon icon="common/folder" text="Sites" click="dock.setUrl('xml/sites.xml')"/>
+					<icon icon="common/folder" text="Tabs" click="dock.setUrl('xml/tabs.xml')"/>
+					<icon icon="common/folder" text="Toolbar" click="dock.setUrl('xml/toolbar.xml')"/>
+				</toolbar>
+			</tab>
+			<tab title="Interfaces">
+				<toolbar>
+					<icon icon="common/folder" text="Competence" click="dock.setUrl('guis/competence.xml')"/>
+					<icon icon="common/folder" text="Login" click="dock.setUrl('guis/login.xml')"/>
+					<icon icon="common/folder" text="Person part" click="dock.setUrl('guis/person_part.xml')"/>
+					<icon icon="common/folder" text="Sites" click="dock.setUrl('guis/sites.xml')"/>
+				</toolbar>				
+			</tab>
+		</tabs>
+	</dock>
+</gui>

@@ -47,6 +47,7 @@ In2iGui.test = {
 	},
 	_succeed : function(msg) {
 		console.info(msg);
+		this._log(msg);
 		this.status.successes++;
 	},
 	_fail : function(msg,obj1,obj2) {
@@ -55,7 +56,27 @@ In2iGui.test = {
 		if (obj2!=undefined) {
 			console.info(obj2);
 		}
+		this._log(msg,true);
 		this.status.failures++;
+	},
+	_log : function(msg,fail) {
+		if (!this.log) {
+			var log = this.log = hui.build('div',{parent:document.body,style:'border: 1px solid #eee; padding: 5px; position: fixed; bottom:20px;right:20px; width: 200px; max-height: 200px; overflow: auto; white-space: nowrap; font-family: Monaco, monospace; font-size: 9px; color: #00ff00; background: #000'});
+			hui.listen(this.log,'click',function() {
+				if (log.style.left=='20px') {
+					log.style.left='';
+					log.style.top='';
+					log.style.width='200px';
+					log.style.maxHeight='200px';
+				} else {
+					log.style.left='20px';
+					log.style.top='20px';
+					log.style.width='';
+					log.style.maxHeight='';
+				}
+			});
+		}
+		hui.build('div',{parent:this.log,text:msg,style:fail?'color:red;':''});
 	},
 	
 	// Assertion...

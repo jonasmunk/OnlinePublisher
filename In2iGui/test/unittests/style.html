@@ -11,7 +11,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../lib/syn.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../tools/funcunit/funcunit/funcunit.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		In2iGui.context='../../..';
 	</script>
@@ -35,7 +35,9 @@
 				
 				hui.ui.test.assertEquals(color,'rgb(255, 0, 0)');
 				hui.ui.test.assertEquals(fontSize,'12px');
-				hui.ui.test.assertEquals(fontFamily,'Verdana, Tahoma, sans-serif');
+				hui.ui.test.assertTrue(fontFamily.indexOf('Verdana')!==-1);
+				hui.ui.test.assertTrue(fontFamily.indexOf('Tahoma')!==-1);
+				hui.ui.test.assertTrue(fontFamily.indexOf('sans-serif')!==-1);
 			},
 			function() { // Blank
 				var color = new hui.Color('red');
@@ -51,7 +53,6 @@
 
 				var color = new hui.Color('rgb(255, 0, 0)');
 				hui.ui.test.assertEquals(color.toHex(),'#ff0000');
-				hui.ui.test.assertEquals(color.toHSL(),'hsl(0, 100%, 50%)');
 
 				var color = new hui.Color('rgb(100%, 0%, 0%)');
 				hui.ui.test.assertEquals(color.toHex(),'#ff0000');
