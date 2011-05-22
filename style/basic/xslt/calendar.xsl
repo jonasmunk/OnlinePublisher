@@ -74,6 +74,7 @@
 <xsl:attribute name="class">day <xsl:if test="@selected='true'">selected</xsl:if></xsl:attribute>
 	<div style="height: {$height}px; position: relative;">
 		<xsl:apply-templates select="c:event"/>
+		<xsl:comment/>
 	</div>
 </td>
 </xsl:template>

@@ -37,15 +37,12 @@ op.CalendarTemplate.prototype.windowWasScrolled = function() {
 
 op.CalendarTemplate.prototype.createArrows = function() {
 	for (var i=0; i < this.days.length; i++) {
-		var arrow = document.createElement('div');
-		arrow.className = 'calendar_arrow';
-		document.body.appendChild(arrow);
-		this.arrows[i] = arrow;
+		this.arrows[i] = hui.build('div',{'class':'calendar_arrow',parent:document.body});
 	};
 }
 
 op.CalendarTemplate.prototype.analyze = function() {
-	this.days = n2i.byClass('day');
+	this.days = n2i.byClass(document.body,'day');
 	for (var i=0;i<this.days.length;i++) {
 		var events = n2i.byClass(this.days[i],'event');
 		for (var j=0;j<events.length;j++) {
