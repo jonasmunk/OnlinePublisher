@@ -3,14 +3,14 @@
  * @param {Object} The options
  * @constructor
  */
-In2iGui.Fragment = function(options) {
+hui.ui.Fragment = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Fragment.prototype = {
+hui.ui.Fragment.prototype = {
 	show : function() {
 		this.element.style.display='block';
 	},

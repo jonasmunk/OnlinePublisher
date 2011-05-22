@@ -12,7 +12,7 @@
 				<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')" selected="true"/>
 				<divider/>
 				<icon icon="common/color" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
-				<icon icon="common/folder" title="List icons" action="ui.showMessage({text:'hey',duration:2000})"/>
+				<icon icon="common/folder" title="List icons" action="hui.ui.showMessage({text:'hey',duration:2000})"/>
 				<divider/>
 				<icon icon="geo/map" title="Map"/>
 				<right>

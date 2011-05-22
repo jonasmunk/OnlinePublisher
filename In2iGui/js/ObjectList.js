@@ -1,19 +1,19 @@
 /**
  * @constructor
  */
-In2iGui.ObjectList = function(o) {
-	this.options = n2i.override({key:null},o);
+hui.ui.ObjectList = function(o) {
+	this.options = hui.override({key:null},o);
 	this.name = o.name;
-	this.element = n2i.get(o.element);
-	this.body = n2i.firstByTag(this.element,'tbody');
+	this.element = hui.get(o.element);
+	this.body = hui.firstByTag(this.element,'tbody');
 	this.template = [];
 	this.objects = [];
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.ObjectList.create = function(o) {
+hui.ui.ObjectList.create = function(o) {
 	o=o || {};
-	var e = o.element = n2i.build('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
+	var e = o.element = hui.build('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
 	if (o.template) {
 		var head = '<thead><tr>';
 		for (var i=0; i < o.template.length; i++) {
@@ -22,30 +22,30 @@ In2iGui.ObjectList.create = function(o) {
 		head+='</tr></thead>';
 		e.innerHTML=head;
 	}
-	n2i.build('tbody',{parent:e});
-	var list = new In2iGui.ObjectList(o);
+	hui.build('tbody',{parent:e});
+	var list = new hui.ui.ObjectList(o);
 	if (o.template) {
-		n2i.each(o.template,function(item) {
-			list.registerTemplateItem(new In2iGui.ObjectList.Text(item.key));
+		hui.each(o.template,function(item) {
+			list.registerTemplateItem(new hui.ui.ObjectList.Text(item.key));
 		});
 	}
 	return list;
 }
 
-In2iGui.ObjectList.prototype = {
+hui.ui.ObjectList.prototype = {
 	ignite : function() {
 		this.addObject({});
 	},
 	addObject : function(data,addToEnd) {
 		var obj;
 		if (this.objects.length==0 || addToEnd) {
-			obj = new In2iGui.ObjectList.Object(this.objects.length,data,this);
+			obj = new hui.ui.ObjectList.Object(this.objects.length,data,this);
 			this.objects.push(obj);
 			this.body.appendChild(obj.getElement());
 		} else {
 			var last = this.objects[this.objects.length-1];
-			n2i.removeFromArray(this.objects,last);
-			obj = new In2iGui.ObjectList.Object(last.index,data,this);
+			hui.removeFromArray(this.objects,last);
+			obj = new hui.ui.ObjectList.Object(last.index,data,this);
 			last.index++;
 			this.objects.push(obj);
 			this.objects.push(last);
@@ -56,8 +56,8 @@ In2iGui.ObjectList.prototype = {
 		for (var i=0; i < this.objects.length; i++) {
 			var element = this.objects[i].getElement();
 			if (!element.parentNode) {
-				n2i.log('no parent for...');
-				n2i.log(element);
+				hui.log('no parent for...');
+				hui.log(element);
 			} else {
 				element.parentNode.removeChild(element);
 			}
@@ -103,14 +103,14 @@ In2iGui.ObjectList.prototype = {
 /********************** Object ********************/
 
 /** @constructor */
-In2iGui.ObjectList.Object = function(index,data,list) {
+hui.ui.ObjectList.Object = function(index,data,list) {
 	this.data = data;
 	this.index = index;
 	this.list = list;
 	this.fields = [];
 }
 
-In2iGui.ObjectList.Object.prototype = {
+hui.ui.ObjectList.Object.prototype = {
 	getElement : function() {
 		if (!this.element) {
 			this.element = document.createElement('tr');
@@ -142,19 +142,19 @@ In2iGui.ObjectList.Object.prototype = {
 
 /*************************** Text **************************/
 
-In2iGui.ObjectList.Text = function(key) {
+hui.ui.ObjectList.Text = function(key) {
 	this.key = key;
 	this.value = null;
 }
 
-In2iGui.ObjectList.Text.prototype = {
+hui.ui.ObjectList.Text.prototype = {
 	clone : function() {
-		return new In2iGui.ObjectList.Text(this.key);
+		return new hui.ui.ObjectList.Text(this.key);
 	},
 	getElement : function() {
-		var input = n2i.build('input',{'class':'in2igui_formula_text'});
-		var field = In2iGui.wrapInField(input);
-		this.wrapper = new In2iGui.TextField({element:input});
+		var input = hui.build('input',{'class':'in2igui_formula_text'});
+		var field = hui.ui.wrapInField(input);
+		this.wrapper = new hui.ui.TextField({element:input});
 		this.wrapper.listen(this);
 		return field;
 	},
@@ -173,20 +173,20 @@ In2iGui.ObjectList.Text.prototype = {
 
 /*************************** Select **************************/
 
-In2iGui.ObjectList.Select = function(key) {
+hui.ui.ObjectList.Select = function(key) {
 	this.key = key;
 	this.value = null;
 	this.options = [];
 }
 
-In2iGui.ObjectList.Select.prototype = {
+hui.ui.ObjectList.Select.prototype = {
 	clone : function() {
-		var copy = new In2iGui.ObjectList.Select(this.key);
+		var copy = new hui.ui.ObjectList.Select(this.key);
 		copy.options = this.options;
 		return copy;
 	},
 	getElement : function() {
-		this.select = n2i.build('select');
+		this.select = hui.build('select');
 		for (var i=0; i < this.options.length; i++) {
 			this.select.options[this.select.options.length] = new Option(this.options[i].label,this.options[i].value);
 		};

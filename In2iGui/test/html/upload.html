@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>In2iGui</title>
+	<title>HUI</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
@@ -20,7 +20,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Upload.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ProgressBar.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		In2iGui.context='../../..';
+		hui.ui.context='../../..';
 	</script>
 </head>
 
@@ -28,13 +28,13 @@
 	<button onclick="testFlash()">Simple upload</button>
 	<script type="text/javascript" charset="utf-8">
 		function testFlash() {
-			var win = ui.Window.create({width:300});
+			var win = hui.ui.Window.create({width:300});
 			
-			var buttons = ui.Buttons.create();
-			var choose = ui.Button.create({title:'Vælg filer...'});
+			var buttons = hui.ui.Buttons.create();
+			var choose = hui.ui.Button.create({title:'Vælg filer...'});
 			buttons.add(choose);
 			
-			var up = ui.Upload.create({url:'upload.php',widget:choose});
+			var up = hui.ui.Upload.create({url:'upload.php',widget:choose});
 			
 			win.add(up);
 			win.add(buttons);
@@ -44,13 +44,13 @@
 	<button onclick="testNoFlash()">Simple upload (noFlash)</button>
 	<script type="text/javascript" charset="utf-8">
 		function testNoFlash() {
-			var win = ui.Window.create({width:300});
+			var win = hui.ui.Window.create({width:300});
 			
-			var buttons = ui.Buttons.create();
-			var choose = ui.Button.create({title:'Vælg filer...'});
+			var buttons = hui.ui.Buttons.create();
+			var choose = hui.ui.Button.create({title:'Vælg filer...'});
 			buttons.add(choose);
 			
-			var up = ui.Upload.create({useFlash:false,url:'upload.php',widget:choose});
+			var up = hui.ui.Upload.create({useFlash:false,url:'upload.php',widget:choose});
 			
 			win.add(up);
 			win.add(buttons);
@@ -60,11 +60,11 @@
 	<button onclick="testNoFlashError()">Simple upload (noFlash) + error</button>
 	<script type="text/javascript" charset="utf-8">
 		function testNoFlashError() {
-			var win = In2iGui.Window.create({width:300});
-			var buttons = ui.Buttons.create();
-			var choose = ui.Button.create({title:'Vælg filer...'});
+			var win = hui.ui.Window.create({width:300});
+			var buttons = hui.ui.Buttons.create();
+			var choose = hui.ui.Button.create({title:'Vælg filer...'});
 			buttons.add(choose);
-			var up = In2iGui.Upload.create({useFlash:false,url:'nowhere',name:'noFlashUploadError',widget:choose});
+			var up = hui.ui.Upload.create({useFlash:false,url:'nowhere',name:'noFlashUploadError',widget:choose});
 			win.add(up);
 			win.add(buttons);
 			win.show();

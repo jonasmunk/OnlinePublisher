@@ -1,55 +1,55 @@
 /** @constructor */
-In2iGui.InfoView = function(options) {
-	this.options = n2i.override({clickObjects:false},options);
-	this.element = n2i.get(options.element);
+hui.ui.InfoView = function(options) {
+	this.options = hui.override({clickObjects:false},options);
+	this.element = hui.get(options.element);
 	this.body = this.element.select('tbody')[0];
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.InfoView.create = function(options) {
+hui.ui.InfoView.create = function(options) {
 	options = options || {};
-	var element = options.element = n2i.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
+	var element = options.element = hui.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
 	if (options.height) {
-		n2i.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
+		hui.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
 	}
 	if (options.margin) {
 		element.style.margin = options.margin+'px';
 	}
-	return new In2iGui.InfoView(options);
+	return new hui.ui.InfoView(options);
 }
 
-In2iGui.InfoView.prototype = {
+hui.ui.InfoView.prototype = {
 	addHeader : function(text) {
-		var row = n2i.build('tr',{parent:this.body});
-		n2i.build('th',{'class' : 'in2igui_infoview_header',colspan:'2',text:text,parent:row});
+		var row = hui.build('tr',{parent:this.body});
+		hui.build('th',{'class' : 'in2igui_infoview_header',colspan:'2',text:text,parent:row});
 	},
 	addProperty : function(label,text) {
-		var row = n2i.build('tr',{parent:this.body});
-		n2i.build('th',{parent:row,text:label});
-		n2i.build('td',{parent:row,text:text});
+		var row = hui.build('tr',{parent:this.body});
+		hui.build('th',{parent:row,text:label});
+		hui.build('td',{parent:row,text:text});
 	},
 	addObjects : function(label,objects) {
 		if (!objects || objects.length==0) return;
-		var row = n2i.build('tr',{parent:this.body});
-		row.appendChild(n2i.build('th',{text:label}));
-		var cell = n2i.build('td',{parent:row});
+		var row = hui.build('tr',{parent:this.body});
+		row.appendChild(hui.build('th',{text:label}));
+		var cell = hui.build('td',{parent:row});
 		var click = this.options.clickObjects;
-		n2i.each(objects,function(obj) {
-			var node = n2i.build('div',{text:obj.title,parent:cell});
+		hui.each(objects,function(obj) {
+			var node = hui.build('div',{text:obj.title,parent:cell});
 			if (click) {
-				n2i.addClass(node,'in2igui_infoview_click')
-				n2i.listen(node,'click',function() {
-					In2iGui.callDelegates(this,'objectWasClicked',obj);
+				hui.addClass(node,'in2igui_infoview_click')
+				hui.listen(node,'click',function() {
+					hui.ui.callDelegates(this,'objectWasClicked',obj);
 				});
 			}
 		});
 	},
 	setBusy : function(busy) {
-		n2i.setClass(this,element,'in2igui_infoview_busy',busy);
+		hui.setClass(this,element,'in2igui_infoview_busy',busy);
 	},
 	clear : function() {
-		n2i.dom.clear(this.body);
+		hui.dom.clear(this.body);
 	},
 	update : function(data) {
 		this.clear();

@@ -5,8 +5,8 @@
 		<column>
 			<box width="500" padding="10" title="Title with toolbar" variant="textured" closable="true">
 				<toolbar>
-					<icon icon="common/color" title="Hep hey!" selected="true" click="ui.alert({title:'ALERT!',emotion:'smile'})"/>
-					<icon icon="common/folder" title="Hep hey!" name="icon" click="ui.get('icon').setSelected(true)"/>
+					<icon icon="common/color" title="Hep hey!" selected="true" click="hui.ui.alert({title:'ALERT!',emotion:'smile'})"/>
+					<icon icon="common/folder" title="Hep hey!" name="icon" click="hui.ui.get('icon').setSelected(true)"/>
 					<icon icon="common/settings" title="Disbaled" disabled="true"/>
 					<icon icon="common/view" title="Show hidden box" click="absoluteBox.show();"/>
 				</toolbar>

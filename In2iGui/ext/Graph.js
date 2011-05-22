@@ -1,21 +1,21 @@
-In2iGui.Graph = function(options) {
+hui.ui.Graph = function(options) {
 	this.options = options;
 	this.name = options.name;
 	this.element = n2i.get(options.element);
 	
-	var impls = {force:In2iGui.Graph.Protoviz,graffle:In2iGui.Graph.Raphael};
+	var impls = {force:hui.ui.Graph.Protoviz,graffle:hui.ui.Graph.Raphael};
 	
 	this.impl = impls[this.options.layout];
 	
 	this.impl.init(this);
 	
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (options.source) {
 		options.source.listen(this);
 	}
 }
 
-In2iGui.Graph.prototype = {
+hui.ui.Graph.prototype = {
 	setData : function(data) {
 		this.impl.setData(data);
 	},
@@ -25,7 +25,7 @@ In2iGui.Graph.prototype = {
 	}
 }
 
-In2iGui.Graph.Protoviz = {
+hui.ui.Graph.Protoviz = {
 	init : function(parent) {
 		this.parent = parent;
 		var w = document.body.clientWidth,
@@ -90,7 +90,7 @@ In2iGui.Graph.Protoviz = {
 	
 }
 
-In2iGui.Graph.Raphael = {
+hui.ui.Graph.Raphael = {
 	init : function(parent) {
 		this.parent = parent;
 		n2i.log('Initializing');

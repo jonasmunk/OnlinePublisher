@@ -2,26 +2,26 @@
 	Used to get a geografical location
 	@constructor
 */
-In2iGui.LocationPicker = function(options) {
+hui.ui.LocationPicker = function(options) {
 	options = options || {};
 	this.name = options.name;
 	this.options = options.options || {};
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.defaultCenter = new google.maps.LatLng(57.0465, 9.9185);
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.LocationPicker.prototype = {
+hui.ui.LocationPicker.prototype = {
 	show : function(options) {
 		if (!this.panel) {
-			var panel = this.panel = In2iGui.BoundPanel.create({width:300});
-			var mapContainer = n2i.build('div',{style:'width:300px;height:300px'});
+			var panel = this.panel = hui.ui.BoundPanel.create({width:300});
+			var mapContainer = hui.build('div',{style:'width:300px;height:300px'});
 			panel.add(mapContainer);
-			var buttons = In2iGui.Buttons.create({align:'right',top:5});
-			var button = In2iGui.Button.create({text:'Luk'});
+			var buttons = hui.ui.Buttons.create({align:'right',top:5});
+			var button = hui.ui.Button.create({text:'Luk'});
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
-			n2i.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
+			hui.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
 		    var mapOptions = {
 		      zoom: 15,
 		      mapTypeId: google.maps.MapTypeId.TERRAIN

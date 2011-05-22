@@ -4,15 +4,15 @@ var controller = {
 		alert(Object.toJSON(v));
 	},
 	$click$build : function() {
-		var win = In2iGui.Window.create({width:300,padding:10});
-		var form = In2iGui.Formula.create();
+		var win = hui.ui.Window.create({width:300,padding:10});
+		var form = hui.ui.Formula.create();
 		win.add(form);
 		var group = form.createGroup();
-		var drop = In2iGui.Formula.DropDown.create({label:'Data from url',url:'data/items_loremipsum.xml'});
+		var drop = hui.ui.Formula.DropDown.create({label:'Data from url',url:'data/items_loremipsum.xml'});
 		group.add(drop);
-		var drop2 = In2iGui.Formula.DropDown.create({label:'Data from source',source:itemsSource});
+		var drop2 = hui.ui.Formula.DropDown.create({label:'Data from source',source:itemsSource});
 		group.add(drop2);
-		var drop2 = In2iGui.Formula.DropDown.create({label:'Added items',items:[
+		var drop2 = hui.ui.Formula.DropDown.create({label:'Added items',items:[
 			{value:1,title:'A'},
 			{value:2,title:'B'},
 			{value:3,title:'C'}

@@ -1,29 +1,29 @@
 /**
  * @constructor
  */
-In2iGui.Window = function(options) {
-	this.element = n2i.get(options.element);
+hui.ui.Window = function(options) {
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.close = n2i.firstByClass(this.element,'in2igui_window_close');
-	this.titlebar = n2i.firstByClass(this.element,'in2igui_window_titlebar');
-	this.title = n2i.firstByClass(this.titlebar,'in2igui_window_title');
-	this.content = n2i.firstByClass(this.element,'in2igui_window_body');
-	this.front = n2i.firstByClass(this.element,'in2igui_window_front');
-	this.back = n2i.firstByClass(this.element,'in2igui_window_back');
+	this.close = hui.firstByClass(this.element,'in2igui_window_close');
+	this.titlebar = hui.firstByClass(this.element,'in2igui_window_titlebar');
+	this.title = hui.firstByClass(this.titlebar,'in2igui_window_title');
+	this.content = hui.firstByClass(this.element,'in2igui_window_body');
+	this.front = hui.firstByClass(this.element,'in2igui_window_front');
+	this.back = hui.firstByClass(this.element,'in2igui_window_back');
 	if (this.back) {
-		n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+		hui.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
 	}
 	this.visible = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Window.create = function(options) {
-	options = n2i.override({title:'Window',close:true},options);
+hui.ui.Window.create = function(options) {
+	options = hui.override({title:'Window',close:true},options);
 	var html = '<div class="in2igui_window_front">'+(options.close ? '<div class="in2igui_window_close"></div>' : '')+
 		'<div class="in2igui_window_titlebar"><div><div>';
 		if (options.icon) {
-			html+='<span class="in2igui_window_icon" style="background-image: url('+In2iGui.getIconUrl(options.icon,1)+')"></span>';
+			html+='<span class="in2igui_window_icon" style="background-image: url('+hui.ui.getIconUrl(options.icon,1)+')"></span>';
 		}
 	html+='<span class="in2igui_window_title">'+options.title+'</span></div></div></div>'+
 		'<div class="in2igui_window_content"><div class="in2igui_window_content"><div class="in2igui_window_body" style="'+
@@ -32,63 +32,63 @@ In2iGui.Window.create = function(options) {
 		'">'+
 		'</div></div></div>'+
 		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div></div>';
-	options.element = n2i.build('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : ''),html:html,parent:document.body});
-	return new In2iGui.Window(options);
+	options.element = hui.build('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : ''),html:html,parent:document.body});
+	return new hui.ui.Window(options);
 }
 
-In2iGui.Window.prototype = {
+hui.ui.Window.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
 		if (this.close) {
-			n2i.listen(this.close,'click',function(e) {
+			hui.listen(this.close,'click',function(e) {
 				this.hide();
 				this.fire('userClosedWindow');
 			}.bind(this)
 			);
-			n2i.listen(this.close,'mousedown',function(e) {n2i.stop(e)});
+			hui.listen(this.close,'mousedown',function(e) {hui.stop(e)});
 		}
 		this.titlebar.onmousedown = function(e) {self.startDrag(e);return false;};
-		n2i.listen(this.element,'mousedown',function() {
-			self.element.style.zIndex=In2iGui.nextPanelIndex();
+		hui.listen(this.element,'mousedown',function() {
+			self.element.style.zIndex=hui.ui.nextPanelIndex();
 		});
 	},
 	setTitle : function(title) {
-		n2i.dom.setText(this.title,title);
+		hui.dom.setText(this.title,title);
 	},
 	show : function(options) {
 		if (this.visible) {return}
 		options = options || {};
-		n2i.setStyle(this.element,{
-			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block'
+		hui.setStyle(this.element,{
+			zIndex : hui.ui.nextPanelIndex(), visibility : 'hidden', display : 'block'
 		})
 		var width = this.element.clientWidth;
-		n2i.setStyle(this.element,{
+		hui.setStyle(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
 		if (options.avoid) {
-			n2i.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
+			hui.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
 		} else {
 			if (!this.element.style.top) {
-				this.element.style.top = (n2i.getScrollTop()+40)+'px';
+				this.element.style.top = (hui.getScrollTop()+40)+'px';
 			}
 			if (!this.element.style.left) {
-				this.element.style.left = Math.round((n2i.getViewPortWidth()-width)/2)+'px';
+				this.element.style.left = Math.round((hui.getViewPortWidth()-width)/2)+'px';
 			}			
 		}
-		if (n2i.browser.opacity) {
-			n2i.ani(this.element,'opacity',1,0);
+		if (hui.browser.opacity) {
+			hui.ani(this.element,'opacity',1,0);
 		}
 		this.visible = true;
-		In2iGui.callVisible(this);
+		hui.ui.callVisible(this);
 	},
 	toggle : function() {
 		(this.visible ? this.hide() : this.show() );
 	},
 	hide : function() {
 		if (!this.visible) return;
-		if (n2i.browser.opacity) {
-			n2i.ani(this.element,'opacity',0,200,{hideOnComplete:true});
+		if (hui.browser.opacity) {
+			hui.ani(this.element,'opacity',0,200,{hideOnComplete:true});
 		} else {
 			this.element.style.display='none';
 		}
@@ -103,23 +103,23 @@ In2iGui.Window.prototype = {
 	},
 	addToBack : function(widgetOrNode) {
 		if (!this.back) {
-			this.back = n2i.build('div',{className:'in2igui_window_back'});
+			this.back = hui.build('div',{className:'in2igui_window_back'});
 			this.element.insertBefore(this.back,this.front);
-			n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+			hui.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
 		}
-		this.back.appendChild(In2iGui.getElement(widgetOrNode));
+		this.back.appendChild(hui.ui.getElement(widgetOrNode));
 	},
 	setVariant : function(variant) {
-		n2i.removeClass(this.element,'in2igui_window_dark');
-		n2i.removeClass(this.element,'in2igui_window_light');
+		hui.removeClass(this.element,'in2igui_window_dark');
+		hui.removeClass(this.element,'in2igui_window_light');
 		if (variant=='dark' || variant=='light') {
-			n2i.addClass(this.element,'in2igui_window_'+variant);
+			hui.addClass(this.element,'in2igui_window_'+variant);
 		}
 	},
 	flip : function() {
 		if (this.back) {
 			this.back.style.minHeight = this.element.clientHeight+'px';
-			n2i.effect.flip({element:this.element});
+			hui.effect.flip({element:this.element});
 		}
 	},
 
@@ -127,18 +127,18 @@ In2iGui.Window.prototype = {
 
 	/** @private */
 	startDrag : function(e) {
-		var event = new n2i.Event(e);
-		this.element.style.zIndex=In2iGui.nextPanelIndex();
-		var pos = { top : n2i.getTop(this.element), left : n2i.getLeft(this.element) };
+		var event = new hui.Event(e);
+		this.element.style.zIndex=hui.ui.nextPanelIndex();
+		var pos = { top : hui.getTop(this.element), left : hui.getLeft(this.element) };
 		this.dragState = {left:event.left()-pos.left,top:event.top()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();
 		var self = this;
 		this.moveListener = function(e) {self.drag(e)};
 		this.upListener = function(e) {self.endDrag(e)};
-		n2i.listen(document,'mousemove',this.moveListener);
-		n2i.listen(document,'mouseup',this.upListener);
-		n2i.listen(document,'mousedown',this.upListener);
+		hui.listen(document,'mousemove',this.moveListener);
+		hui.listen(document,'mouseup',this.upListener);
+		hui.listen(document,'mousedown',this.upListener);
 		event.stop();
 		document.body.onselectstart = function () { return false; };
 		return false;
@@ -154,7 +154,7 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	drag : function(e) {
-		var event = new n2i.Event(e);
+		var event = new hui.Event(e);
 		this.element.style.right = 'auto';
 		var top = (event.top()-this.dragState.top);
 		var left = (event.left()-this.dragState.left);
@@ -165,9 +165,9 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	endDrag : function(e) {
-		n2i.unListen(document,'mousemove',this.moveListener);
-		n2i.unListen(document,'mouseup',this.upListener);
-		n2i.unListen(document,'mousedown',this.upListener);
+		hui.unListen(document,'mousemove',this.moveListener);
+		hui.unListen(document,'mouseup',this.upListener);
+		hui.unListen(document,'mousedown',this.upListener);
 		document.body.onselectstart = null;
 	}
 }

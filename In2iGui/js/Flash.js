@@ -1,5 +1,5 @@
 /** @namespace */
-In2iGui.Flash = {
+hui.hui.Flash = {
 	
 	fullVersion:undefined,
 	
@@ -49,7 +49,7 @@ In2iGui.Flash = {
 		else if (navigator.userAgent.toLowerCase().indexOf("webtv/2.5") != -1) flashVer = 3;
 		// older WebTV supports Flash 2
 		else if (navigator.userAgent.toLowerCase().indexOf("webtv") != -1) flashVer = 2;
-		else if ( n2i.browser.msie ) {
+		else if ( hui.browser.msie ) {
 			flashVer = this.getActiveXVersion();
 		}
 		this.fullVersion = flashVer;

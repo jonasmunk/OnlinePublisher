@@ -1,4 +1,4 @@
-In2iGui.localize({
+hui.ui.localize({
 	save : {		en:'Save',			da:'Gem'				},
 	refresh : {		en:'Refresh',		da:'Genindlæs'			}
 })

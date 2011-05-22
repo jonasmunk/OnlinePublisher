@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>In2iGui</title>
+	<title>HUI</title>
 	<!--<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />-->
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
@@ -25,18 +25,18 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/MarkupEditor.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ColorPicker.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		In2iGui.state = '';
-		In2iGui.context = '../../..';
+		hui.ui.state = '';
+		hui.ui.context = '../../..';
 	</script>
 </head>
 
 <body>
 <script type="text/javascript" charset="utf-8">
-	ui.onDomReady(function() {
-		var win = ui.Window.create({width:'500'});
-		var editor = ui.MarkupEditor.create({value:'<h1>Lorem ipsum</h1><p>Lorem ipsum</p>'});
-		var source = ui.Formula.Text.create({multiline:true});
-		var view = ui.Button.create({text:'View source'}).listen({
+	hui.ui.onReady(function() {
+		var win = hui.ui.Window.create({width:'500'});
+		var editor = hui.ui.MarkupEditor.create({value:'<h1>Lorem ipsum</h1><p>Lorem ipsum</p>'});
+		var source = hui.ui.Formula.Text.create({multiline:true});
+		var view = hui.ui.Button.create({text:'View source'}).listen({
 			$click:function() {
 				source.setValue(editor.getValue());
 			}

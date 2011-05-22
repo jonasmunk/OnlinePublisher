@@ -1,25 +1,25 @@
 /** A data source
  * @constructor
  */
-In2iGui.Source = function(options) {
-	this.options = n2i.override({url:null,dwr:null,parameters:[],lazy:false},options);
+hui.ui.Source = function(options) {
+	this.options = hui.override({url:null,dwr:null,parameters:[],lazy:false},options);
 	this.name = options.name;
 	this.data = null;
 	this.parameters = this.options.parameters;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (options.delegate) {
 		this.listen(options.delegate);
 	}
 	this.busy=false;
-	In2iGui.onDomReady(this.init.bind(this));
+	hui.ui.onReady(this.init.bind(this));
 };
 
-In2iGui.Source.prototype = {
+hui.ui.Source.prototype = {
 	/** @private */
 	init : function() {
 		var self = this;
-		n2i.each(this.parameters,function(parm) {
-			var val = In2iGui.bind(parm.value,function(value) {
+		hui.each(this.parameters,function(parm) {
+			var val = hui.ui.bind(parm.value,function(value) {
 				self.changeParameter(parm.key,value);
 			});
 			parm.value = self.convertValue(val);
@@ -59,18 +59,18 @@ In2iGui.Source.prototype = {
 				prms[p.key] = p.value;
 			};
 			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
-			n2i.request({
+			hui.ui.callDelegates(this,'sourceIsBusy');
+			hui.request({
 				method:'post',
 				url:this.options.url,
 				parameters:prms,
 				onSuccess : function(t) {self.parse(t)},
 				onException : function(e,t) {
-					n2i.log('Exception while loading source...')
-					n2i.log(e)
+					hui.log('Exception while loading source...')
+					hui.log(e)
 				},
 				onFailure : function(t) {
-					In2iGui.callDelegates(self,'sourceFailed');
+					hui.ui.callDelegates(self,'sourceFailed');
 				}
 			});
 		} else if (this.options.dwr) {
@@ -85,7 +85,7 @@ In2iGui.Source.prototype = {
 			};
 			args[args.length-1]=function(r) {self.parseDWR(r)};
 			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
+			hui.ui.callDelegates(this,'sourceIsBusy');
 			facade[method].apply(facade,args);
 		}
 	},
@@ -95,7 +95,7 @@ In2iGui.Source.prototype = {
 		if (this.pendingRefresh) {
 			this.refresh();
 		} else {
-			In2iGui.callDelegates(this,'sourceIsNotBusy');
+			hui.ui.callDelegates(this,'sourceIsNotBusy');
 		}
 	},
 	/** @private */
@@ -106,7 +106,7 @@ In2iGui.Source.prototype = {
 			var str = t.responseText.replace(/^\s+|\s+$/g, ''),
 				json = null;
 			if (str.length>0) {
-				json = n2i.fromJSON(t.responseText);
+				json = hui.fromJSON(t.responseText);
 			}
 			this.fire('objectsLoaded',json);
 		}
@@ -115,7 +115,7 @@ In2iGui.Source.prototype = {
 	/** @private */
 	parseXML : function(doc) {
 		if (doc.documentElement.tagName=='items') {
-			this.data = In2iGui.parseItems(doc);
+			this.data = hui.ui.parseItems(doc);
 			this.fire('itemsLoaded',this.data);
 		} else if (doc.documentElement.tagName=='list') {
 			this.fire('listLoaded',doc);
@@ -130,7 +130,7 @@ In2iGui.Source.prototype = {
 		this.end();
 	},
 	addParameter : function(parm) {
-		//n2i.log(parm.value);
+		//hui.log(parm.value);
 		this.parameters.push(parm);
 	},
 	changeParameter : function(key,value) {

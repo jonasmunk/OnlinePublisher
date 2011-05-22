@@ -1,4 +1,4 @@
-In2iGui.Graphviz = function(element,name,options) {
+hui.ui.Graphviz = function(element,name,options) {
 		this.maxXdotVersion = 1.2;
 		this.systemScale = 4/3;
 		this.scale = 1;
@@ -11,18 +11,18 @@ In2iGui.Graphviz = function(element,name,options) {
 		this.images = {};
 		this.numImages = 0;
 		this.numImagesFinished = 0;
-		In2iGui.extend(this);
+		hui.ui.extend(this);
 }
 
-In2iGui.Graphviz.create = function(name,options) {
+hui.ui.Graphviz.create = function(name,options) {
 	var element = hui.build('div',{'class':'in2igui_graphviz'});
 	var texts = bui.build('div',{'class':'in2igui_graphviz_texts',style:'position:relative;'});
 	element.appendChild(texts);
 	element.appendChild(n2i.build('canvas'));
-	return new In2iGui.Graphviz(element,name,options);
+	return new hui.ui.Graphviz(element,name,options);
 }
 
-In2iGui.Graphviz.prototype = {
+hui.ui.Graphviz.prototype = {
 	setImagePath: function(imagePath) {
 		this.imagePath = imagePath;
 	},
@@ -63,13 +63,13 @@ In2iGui.Graphviz.prototype = {
 					}
 					line += lines[i++];
 				}
-				// In2iGui.Graphviz.debug(line);
+				// hui.ui.Graphviz.debug(line);
 				matches = line.match(/^(.*?)\s*{$/);
 				if (matches) {
 					container_stack.push(matches[1]);
-					// In2iGui.Graphviz.debug('begin container ' + container_stack.last());
+					// hui.ui.Graphviz.debug('begin container ' + container_stack.last());
 				} else if ('}' == line) {
-					// In2iGui.Graphviz.debug('end container ' + container_stack.last());
+					// hui.ui.Graphviz.debug('end container ' + container_stack.last());
 					container_stack.pop();
 				} else {
 					// matches = line.match(/^(".*?[^\\]"|\S+?)\s+\[(.+)\];$/);
@@ -85,7 +85,7 @@ In2iGui.Graphviz.prototype = {
 								params = params.substr(matches[0].length);
 								param_name = matches[1];
 								param_value = this.unescape(matches[2]);
-// In2iGui.Graphviz.debug(param_name + ' ' + param_value);
+// hui.ui.Graphviz.debug(param_name + ' ' + param_value);
 								if (is_graph && 1 == container_stack.length) {
 									switch (param_name) {
 										case 'bb':
@@ -103,7 +103,7 @@ In2iGui.Graphviz.prototype = {
 												this.maxHeight = 72 * Number(size[2]);
 												this.bbEnlarge = ('!' == size[3]);
 											} else {
-												In2iGui.Graphviz.debug('can\'t parse size');
+												hui.ui.Graphviz.debug('can\'t parse size');
 											}
 											break;
 										case 'orientation':
@@ -119,7 +119,7 @@ In2iGui.Graphviz.prototype = {
 										case 'xdotversion':
 											this.xdotversion = parseFloat(param_value);
 											if (this.maxXdotVersion < this.xdotversion) {
-												In2iGui.Graphviz.debug('unsupported xdotversion ' + this.xdotversion + '; this script currently supports up to xdotversion ' + this.maxXdotVersion);
+												hui.ui.Graphviz.debug('unsupported xdotversion ' + this.xdotversion + '; this script currently supports up to xdotversion ' + this.maxXdotVersion);
 											}
 											break;
 									}
@@ -131,7 +131,7 @@ In2iGui.Graphviz.prototype = {
 									case '_tdraw_':
 									case '_hldraw_':
 									case '_tldraw_':
-//										In2iGui.Graphviz.debug(entity + ': ' + param_value);
+//										hui.ui.Graphviz.debug(entity + ': ' + param_value);
 										this.commands.push(param_value);
 										break;
 								}
@@ -158,7 +158,7 @@ In2iGui.Graphviz.prototype = {
 			}
 		}
 */
-//		In2iGui.Graphviz.debug('done');
+//		hui.ui.Graphviz.debug('done');
 		this.draw();
 	},
 	draw: function(redraw_canvas) {
@@ -185,8 +185,8 @@ In2iGui.Graphviz.prototype = {
 		var text_divs = '';
 		for (var command_index = 0; command_index < this.commands.length; command_index++) {
 			var command = this.commands[command_index];
-//			In2iGui.Graphviz.debug(command);
-			var tokenizer = new In2iGui.Graphviz.Tokenizer(command);
+//			hui.ui.Graphviz.debug(command);
+			var tokenizer = new hui.ui.Graphviz.Tokenizer(command);
 			var token = tokenizer.takeChars();
 			if (token) {
 				++entity_id;
@@ -194,7 +194,7 @@ In2iGui.Graphviz.prototype = {
 				this.dashStyle = 'solid';
 				this.ctx.save();
 				while (token) {
-//					In2iGui.Graphviz.debug('processing token ' + token);
+//					hui.ui.Graphviz.debug('processing token ' + token);
 					switch (token) {
 						case 'E': // filled ellipse
 						case 'e': // unfilled ellipse
@@ -251,7 +251,7 @@ In2iGui.Graphviz.prototype = {
 							var src = tokenizer.takeString();
 							if (!this.images[src]) {
 								y -= h;
-								this.images[src] = new In2iGui.Graphviz.Image(this, src, x, y, w, h);
+								this.images[src] = new hui.ui.Graphviz.Image(this, src, x, y, w, h);
 							}
 							this.images[src].draw();
 							break;
@@ -262,7 +262,7 @@ In2iGui.Graphviz.prototype = {
 							var text_width = Math.round(this.scale * this.systemScale * tokenizer.takeNumber());
 							var str = tokenizer.takeString();
 							if (!redraw_canvas && !str.match(/^\s*$/)) {
-//								In2iGui.Graphviz.debug('draw text ' + str + ' ' + x + ' ' + y + ' ' + text_align + ' ' + text_width);
+//								hui.ui.Graphviz.debug('draw text ' + str + ' ' + x + ' ' + y + ' ' + text_align + ' ' + text_width);
 								str = n2i.escapeHTML(str);
 								do {
 									matches = str.match(/ ( +)/);
@@ -316,7 +316,7 @@ In2iGui.Graphviz.prototype = {
 								default:
 									// nothing
 							}
-//							In2iGui.Graphviz.debug('set font ' + this.fontSize + 'pt ' + this.fontName);
+//							hui.ui.Graphviz.debug('set font ' + this.fontSize + 'pt ' + this.fontName);
 							break;
 						case 'S': // set style
 							var style = tokenizer.takeString();
@@ -337,12 +337,12 @@ In2iGui.Graphviz.prototype = {
 									if (matches) {
 										this.ctx.lineWidth = Number(matches[1]) / this.systemScale;
 									} else {
-										In2iGui.Graphviz.debug('unknown style ' + style);
+										hui.ui.Graphviz.debug('unknown style ' + style);
 									}
 							}
 							break;
 						default:
-							In2iGui.Graphviz.debug('unknown token ' + token);
+							hui.ui.Graphviz.debug('unknown token ' + token);
 							return;
 					}
 					token = tokenizer.takeChars();
@@ -394,8 +394,8 @@ In2iGui.Graphviz.prototype = {
 		}
 	},
 	parseColor: function(color) {
-		if (In2iGui.Graphviz.colors[color]) { // named color
-			return 'rgb(' + In2iGui.Graphviz.colors[color][0] + ',' + In2iGui.Graphviz.colors[color][1] + ',' + In2iGui.Graphviz.colors[color][2] + ')';
+		if (hui.ui.Graphviz.colors[color]) { // named color
+			return 'rgb(' + hui.ui.Graphviz.colors[color][0] + ',' + hui.ui.Graphviz.colors[color][1] + ',' + hui.ui.Graphviz.colors[color][2] + ')';
 		} else {
 			var matches = color.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
 			if (matches) { // rgba
@@ -409,7 +409,7 @@ In2iGui.Graphviz.prototype = {
 				}
 			}
 		}
-		In2iGui.Graphviz.debug('unknown color ' + color);
+		hui.ui.Graphviz.debug('unknown color ' + color);
 		return '#000000';
 	},
 	hsvToRgbColor: function(h, s, v) {
@@ -433,7 +433,7 @@ In2iGui.Graphviz.prototype = {
 }
 
 
-In2iGui.Graphviz.Image = function(graph, src, x, y, w, h) {
+hui.ui.Graphviz.Image = function(graph, src, x, y, w, h) {
 		this.graph = graph;
 		++this.graph.numImages;
 		this.src = this.graph.imagePath + '/' + src;
@@ -449,7 +449,7 @@ In2iGui.Graphviz.Image = function(graph, src, x, y, w, h) {
 		this.img.src = this.src;
 	}
 	
-In2iGui.Graphviz.Image.prototype = {
+hui.ui.Graphviz.Image.prototype = {
 	succeeded: function() {
 		this.loaded = true;
 		this.finished();
@@ -467,16 +467,16 @@ In2iGui.Graphviz.Image.prototype = {
 	}
 }
 
-In2iGui.Graphviz.debug = function(str) {
+hui.ui.Graphviz.debug = function(str) {
 	n2i.log(str);
 }
 
 
-In2iGui.Graphviz.Tokenizer = function(str) {
+hui.ui.Graphviz.Tokenizer = function(str) {
 		this.str = str;
 }
 
-In2iGui.Graphviz.Tokenizer.prototype = {
+hui.ui.Graphviz.Tokenizer.prototype = {
 	takeChars: function(num) {
 		if (!num) {
 			num = 1;
@@ -881,7 +881,7 @@ function Ellipse(cx, cy, rx, ry) {
 Ellipse.prototype = new Path();
 Ellipse.prototype.KAPPA=0.5522847498;
 
-In2iGui.Graphviz.colors={
+hui.ui.Graphviz.colors={
 	aliceblue:[240,248,255],
 	antiquewhite:[250,235,215],
 	antiquewhite1:[255,239,219],

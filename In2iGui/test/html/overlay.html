@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>In2iGui</title>
+	<title>HUI</title>
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
@@ -16,50 +16,50 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Overlay.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		ui.context='../../..';
+		hui.ui.context='../../..';
 	</script>
 </head>
 
 <body>
-<button onclick="ui.showMessage({text:'This is a message'})">Show message</button>
-<button onclick="ui.showMessage({text:'This is a busy message',busy:true})">Show message (busy)</button>
-<button onclick="ui.showMessage({text:'This a message with an icon',icon:'common/stop'})">Show message (icon)</button>
-<button onclick="ui.showMessage({text:'This is a another message (1 sec.)',duration:1000})">Another message</button>
-<button onclick="ui.hideMessage()">hide message</button>
+<button onclick="hui.ui.showMessage({text:'This is a message'})">Show message</button>
+<button onclick="hui.ui.showMessage({text:'This is a busy message',busy:true})">Show message (busy)</button>
+<button onclick="hui.ui.showMessage({text:'This a message with an icon',icon:'common/stop'})">Show message (icon)</button>
+<button onclick="hui.ui.showMessage({text:'This is a another message (1 sec.)',duration:1000})">Another message</button>
+<button onclick="hui.ui.hideMessage()">hide message</button>
 <button onclick="testProgressSuccess()">Progress / success</button>
 <button onclick="testProgressWarning()">Progress / warning</button>
 <button onclick="test1()">Test</button>
 <button onclick="testConfirm(this)">Confirm</button>
-<button onclick="ui.confirmOverlay({element:this,text:'Do you want to delete?',okText:'Yes delete!',cancelText:'Oops, no not really',onOk:function() {alert('OK!')}})">Confirm native</button>
+<button onclick="hui.ui.confirmOverlay({element:this,text:'Do you want to delete?',okText:'Yes delete!',cancelText:'Oops, no not really',onOk:function() {alert('OK!')}})">Confirm native</button>
 <button onclick="testButtonConfirm()">Confirm button</button>
 <div id="a">A</div>
 <script type="text/javascript" charset="utf-8">
 	
 	function testProgressSuccess() {
-		ui.showMessage({text:'Just a moment...',busy:true})
+		hui.ui.showMessage({text:'Just a moment...',busy:true})
 		window.setTimeout(function() {
-			ui.showMessage({text:'All went well!',icon:'common/success'})
+			hui.ui.showMessage({text:'All went well!',icon:'common/success'})
 		},3000);
 	}
 
 	function testProgressWarning() {
-		ui.showMessage({text:'Just a moment...',busy:true})
+		hui.ui.showMessage({text:'Just a moment...',busy:true})
 		window.setTimeout(function() {
-			ui.showMessage({text:'Sorry it went horribly wrong!',icon:'common/warning',duration:4000})
+			hui.ui.showMessage({text:'Sorry it went horribly wrong!',icon:'common/warning',duration:4000})
 		},3000);
 	}
 	function test1() {
-		var overlay = ui.Overlay.create();
+		var overlay = hui.ui.Overlay.create();
 		overlay.addIcon('x','common/delete');
 		overlay.addIcon('x','common/save');
 		overlay.showAtElement($('a'));
 	}
 	
 	function testConfirm(node) {
-		var overlay = ui.Overlay.create({modal:true});
+		var overlay = hui.ui.Overlay.create({modal:true});
 		overlay.addText('Are you sure?')
-		overlay.add(ui.Button.create({text:'Save',highlighted:'true'}));
-		var cancel = ui.Button.create({text:'Cancel'});
+		overlay.add(hui.ui.Button.create({text:'Save',highlighted:'true'}));
+		var cancel = hui.ui.Button.create({text:'Cancel'});
 		cancel.onClick(function() {
 			overlay.hide();
 		});
@@ -68,8 +68,8 @@
 	}
 	
 	function testButtonConfirm(node) {
-		var win = ui.Window.create({width:400});
-		var button = ui.Button.create({text:'I need confirmation!',confirm:{text:'Are you confident in yourself?'}});
+		var win = hui.ui.Window.create({width:400});
+		var button = hui.ui.Button.create({text:'I need confirmation!',confirm:{text:'Are you confident in yourself?'}});
 		button.click(function() {
 			alert('Yes!');
 		});

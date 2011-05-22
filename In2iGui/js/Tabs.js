@@ -1,26 +1,29 @@
 /**
  * @constructor
  */
-In2iGui.Tabs = function(o) {
+hui.ui.Tabs = function(o) {
 	o = o || {};
 	this.name = o.name;
-	this.element = n2i.get(o.element);
+	this.element = hui.get(o.element);
 	this.activeTab = -1;
-	var x = n2i.firstByClass(this.element,'in2igui_tabs_bar');
-	this.bar = n2i.firstByTag(x,'ul');
+	var x = hui.firstByClass(this.element,'in2igui_tabs_bar');
+	this.bar = hui.firstByTag(x,'ul');
 	this.tabs = [];
 	var nodes = this.bar.getElementsByTagName('li');
 	for (var i=0; i < nodes.length; i++) {
+		if (!hui.browser.msie) {
+			hui.firstByTag(nodes[i],'a').removeAttribute('href');
+		}
 		this.tabs.push(nodes[i]);
 	};
-	this.contents = n2i.byClass(this.element,'in2igui_tabs_tab');
+	this.contents = hui.byClass(this.element,'in2igui_tabs_tab');
 	this.addBehavior();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Tabs.create = function(options) {
+hui.ui.Tabs.create = function(options) {
 	options = options || {};
-	var e = options.element = n2i.build('div',{'class':'in2igui_tabs'});
+	var e = options.element = hui.build('div',{'class':'in2igui_tabs'});
 	var cls = 'in2igui_tabs_bar';
 	if (options.small) {
 		cls+=' in2igui_tabs_bar_small';
@@ -28,12 +31,12 @@ In2iGui.Tabs.create = function(options) {
 	if (options.centered) {
 		cls+=' in2igui_tabs_bar_centered';
 	}
-	var bar = n2i.build('div',{'class' : cls, parent : e});
-	n2i.build('ul',{parent:bar});
-	return new In2iGui.Tabs(options);
+	var bar = hui.build('div',{'class' : cls, parent : e});
+	hui.build('ul',{parent:bar});
+	return new hui.ui.Tabs(options);
 }
 
-In2iGui.Tabs.prototype = {
+hui.ui.Tabs.prototype = {
 	/** @private */
 	addBehavior : function() {
 		for (var i=0; i < this.tabs.length; i++) {
@@ -42,7 +45,7 @@ In2iGui.Tabs.prototype = {
 	},
 	/** @private */
 	addTabBehavior : function(tab,index) {	
-		n2i.listen(tab,'click',function() {
+		hui.listen(tab,'click',function() {
 			this.tabWasClicked(index);
 		}.bind(this))
 	},
@@ -59,16 +62,16 @@ In2iGui.Tabs.prototype = {
 	/** @private */
 	updateGUI : function() {
 		for (var i=0; i < this.tabs.length; i++) {
-			n2i.setClass(this.tabs[i],'in2igui_tabs_selected',i==this.activeTab);
+			hui.setClass(this.tabs[i],'in2igui_tabs_selected',i==this.activeTab);
 			this.contents[i].style.display = i==this.activeTab ? 'block' : 'none';
 		};
 	},
 	createTab : function(options) {
 		options = options || {};
-		var tab = n2i.build('li',{html:'<a><span><span>'+n2i.escape(options.title)+'</span></span></a>',parent:this.bar});
+		var tab = hui.build('li',{html:'<a><span><span>'+hui.escape(options.title)+'</span></span></a>',parent:this.bar});
 		this.addTabBehavior(tab,this.tabs.length);
 		this.tabs.push(tab);
-		var e = options.element = n2i.build('div',{'class':'in2igui_tabs_tab'});
+		var e = options.element = hui.build('div',{'class':'in2igui_tabs_tab'});
 		if (options.padding>0) {
 			e.style.padding = options.padding+'px';
 		}
@@ -76,23 +79,23 @@ In2iGui.Tabs.prototype = {
 		this.element.appendChild(e);
 		if (this.activeTab==-1) {
 			this.activeTab=0;
-			n2i.addClass(tab,'in2igui_tabs_selected');
+			hui.addClass(tab,'in2igui_tabs_selected');
 		} else {
 			e.style.display='none';
 		}
-		return new In2iGui.Tab(options);
+		return new hui.ui.Tab(options);
 	}
 };
 
 /**
  * @constructor
  */
-In2iGui.Tab = function(o) {
+hui.ui.Tab = function(o) {
 	this.name = o.name;
-	this.element = n2i.get(o.element);
+	this.element = hui.get(o.element);
 }
 
-In2iGui.Tab.prototype = {
+hui.ui.Tab.prototype = {
 	add : function(widget) {
 		this.element.appendChild(widget.element);
 	}

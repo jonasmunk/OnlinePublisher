@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>In2iGui</title>
+	<title>HUI</title>
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
@@ -12,48 +12,46 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
 	<style>
-	 @-webkit-keyframes spin {
-      from { -webkit-transform: rotateY(0); }
-      to   { -webkit-transform: rotateY(360deg); }
-    }
+		@-webkit-keyframes spin {
+			from { -webkit-transform: rotateY(0); }
+			to   { -webkit-transform: rotateY(360deg); }
+		}
   
-   #webkit{
-		font-size: 30px;
-		-webkit-perspective : 1000;
-        -webkit-transform-style: preserve-3d;
-        -webkit-animation: spin 3.5s infinite ease;
-		background: #eee;
-        position: fixed;
-        right: 30px;
-        bottom: 50px;
-   	}
-
-
-
-</style>
+		#webkit{
+			font-size: 30px;
+			-webkit-perspective : 1000;
+			-webkit-transform-style: preserve-3d;
+			-webkit-animation: spin 3.5s infinite ease;
+			background: #eee;
+			position: fixed;
+			right: 30px;
+			bottom: 50px;
+		}
+	</style>
 </head>
 
-<body>
-<button onclick="n2i.animate('text','opacity',0,3000)">opacity=0</button>
-<button onclick="n2i.animate('text','opacity',1,3000)">opacity=1</button>
-<button onclick="n2i.animate('text','width','400px',3000)">width=400px</button>
-<button onclick="n2i.animate('text','font-size','72pt',3000)">font-size=72pt</button>
-<button onclick="n2i.animate('text','font-size','12pt',3000)">font-size=12pt</button>
-<button onclick="n2i.animate('text','line-height','30px',1000)">line-height=30px</button>
-<button onclick="n2i.animate('text','color','#f00',3000)">color=#f00</button>
-<button onclick="n2i.animate('text','color','#000',3000)">color=#000</button>
-<button onclick="n2i.animate('text','margin-left','50%',3000)">margin-left=50%</button>
-<button onclick="n2i.animate('text','margin-left','0%',3000,{ease:n2i.ease.bounce})">margin-left=0%</button>
-<button onclick="n2i.animate('text','transform','scale(2)',1000,{ease:n2i.ease.elastic})">transform=scale(2)</button>
-<button onclick="n2i.animate('text','transform','scale(1)',1000,{ease:n2i.ease.elastic})">transform=scale(1)</button>
-<button onclick="n2i.animate('text','transform','rotate(40deg)',3000,{ease:n2i.ease.bounce})">transform=rotate(40deg)</button>
-<button onclick="n2i.animate('text','transform','rotate(180deg)',3000,{ease:n2i.ease.bounce})">transform=rotate(180deg)</button>
-<button onclick="n2i.animate('text','transform','rotate(1000deg) scale(.1)',3000,{ease:n2i.ease.bounce})">transform=rotate(1000deg) scale(.1)</button>
-<button onclick="n2i.animate('text','transform','rotate(0deg) scale(2)',3000,{ease:n2i.ease.bounce})">transform=rotate(0deg) scale(2)</button>
-<button onclick="ui.bounceIn($('text'))">bounceIn</button>
-<button onclick="hui.effect.flip({element:'flipper'})">Flip</button>
-<button onclick="hui.effect.flip({element:'flipper',duration:'5s'})">Flip (5s)</button>
-<div style="height: 200px;"></div>
+<body style="padding: 30px">
+	<button onclick="hui.animate('text','opacity',0,3000)">opacity=0</button>
+	<button onclick="hui.animate('text','opacity',1,3000)">opacity=1</button>
+	<button onclick="hui.animate('text','width','400px',3000)">width=400px</button>
+	<button onclick="hui.animate('text','font-size','72pt',3000)">font-size=72pt</button>
+	<button onclick="hui.animate('text','font-size','12pt',3000)">font-size=12pt</button>
+	<button onclick="hui.animate('text','line-height','30px',1000)">line-height=30px</button>
+	<button onclick="hui.animate('text','color','#f00',3000)">color=#f00</button>
+	<button onclick="hui.animate('text','color','#000',3000)">color=#000</button>
+	<button onclick="hui.animate('text','margin-left','50%',3000)">margin-left=50%</button>
+	<button onclick="hui.animate('text','margin-left','0%',3000,{ease:hui.ease.bounce})">margin-left=0%</button>
+	<button onclick="hui.animate('text','transform','scale(2)',1000,{ease:hui.ease.elastic})">transform=scale(2)</button>
+	<button onclick="hui.animate('text','transform','scale(1)',1000,{ease:hui.ease.elastic})">transform=scale(1)</button>
+	<button onclick="hui.animate('text','transform','rotate(40deg)',3000,{ease:hui.ease.bounce})">transform=rotate(40deg)</button>
+	<button onclick="hui.animate('text','transform','rotate(180deg)',3000,{ease:hui.ease.bounce})">transform=rotate(180deg)</button>
+	<button onclick="hui.animate('text','transform','rotate(1000deg) scale(.1)',3000,{ease:hui.ease.bounce})">transform=rotate(1000deg) scale(.1)</button>
+	<button onclick="hui.animate('text','transform','rotate(0deg) scale(2)',3000,{ease:hui.ease.bounce})">transform=rotate(0deg) scale(2)</button>
+	<button onclick="hui.ui.bounceIn(hui.get('text'))">bounceIn</button>
+	<button onclick="hui.effect.flip({element:'flipper'})">Flip</button>
+	<button onclick="hui.effect.flip({element:'flipper',duration:'5s'})">Flip (5s)</button>
+	<div style="height: 200px;"></div>
+
 <p id="text">
 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </p>

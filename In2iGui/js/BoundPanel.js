@@ -3,14 +3,14 @@
  * @constructor
  * @param {Object} options { element: «Node | id», name: «String» }
  */
-In2iGui.BoundPanel = function(options) {
+hui.ui.BoundPanel = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.visible = false;
-	this.content = n2i.firstByClass(this.element,'in2igui_boundpanel_content');
-	this.arrow = n2i.firstByClass(this.element,'in2igui_boundpanel_arrow');
-	In2iGui.extend(this);
+	this.content = hui.firstByClass(this.element,'in2igui_boundpanel_content');
+	this.arrow = hui.firstByClass(this.element,'in2igui_boundpanel_arrow');
+	hui.ui.extend(this);
 }
 
 /**
@@ -18,8 +18,8 @@ In2iGui.BoundPanel = function(options) {
  * <br/><strong>options:</strong> { name: «String», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
  * @param {Object} options The options
  */
-In2iGui.BoundPanel.create = function(options) {
-	options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
+hui.ui.BoundPanel.create = function(options) {
+	options = hui.override({name:null, top:0, left:0, width:null, padding: null}, options);
 
 	
 	var html = 
@@ -35,20 +35,20 @@ In2iGui.BoundPanel.create = function(options) {
 	html+='"></div></div></div></div>'+
 		'<div class="in2igui_boundpanel_bottom"><div><div></div></div></div>';
 
-	options.element = n2i.build(
+	options.element = hui.build(
 		'div',{
 			'class':'in2igui_boundpanel',
-			style:'display:none;zIndex:'+In2iGui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
+			style:'display:none;zIndex:'+hui.ui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
 			html:html,
 			parent:document.body
 		}
 	);
-	return new In2iGui.BoundPanel(options);
+	return new hui.ui.BoundPanel(options);
 }
 
 /********************************* Public methods ***********************************/
 
-In2iGui.BoundPanel.prototype = {
+hui.ui.BoundPanel.prototype = {
 	toggle : function() {
 		if (!this.visible) {
 			this.show();
@@ -60,10 +60,10 @@ In2iGui.BoundPanel.prototype = {
 	show : function() {
 		if (!this.visible) {
 			if (this.options.target) {
-				this.position(In2iGui.get(this.options.target));
+				this.position(hui.ui.get(this.options.target));
 			}
-			if (n2i.browser.opacity) {
-				n2i.setOpacity(this.element,0);
+			if (hui.browser.opacity) {
+				hui.setOpacity(this.element,0);
 			}
 			var vert;
 			if (this.relativePosition=='left') {
@@ -79,28 +79,28 @@ In2iGui.BoundPanel.prototype = {
 				vert = true;
 				this.element.style.marginTop='-30px';
 			}
-			n2i.setStyle(this.element,{
+			hui.setStyle(this.element,{
 				visibility : 'hidden', display : 'block'
 			})
 			var width = this.element.clientWidth;
-			n2i.setStyle(this.element,{
+			hui.setStyle(this.element,{
 				width : width+'px' , visibility : 'visible'
 			});
 			this.element.style.display='block';
-			if (n2i.browser.opacity) {
-				n2i.animate(this.element,'opacity',1,400,{ease:n2i.ease.fastSlow});
+			if (hui.browser.opacity) {
+				hui.animate(this.element,'opacity',1,400,{ease:hui.ease.fastSlow});
 			}
-			n2i.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:n2i.ease.bounce});
+			hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
 		}
-		this.element.style.zIndex = In2iGui.nextPanelIndex();
+		this.element.style.zIndex = hui.ui.nextPanelIndex();
 		this.visible=true;
 	},
 	/** Hides the panel */
 	hide : function() {
-		if (n2i.browser.msie) {
+		if (hui.browser.msie) {
 			this.element.style.display='none';
 		} else {
-			n2i.animate(this.element,'opacity',0,300,{ease:n2i.ease.slowFast,hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,hideOnComplete:true});
 		}
 		this.visible=false;
 	},
@@ -120,7 +120,7 @@ In2iGui.BoundPanel.prototype = {
 	 * @param {pixels} height The height of the space in pixels
 	 */
 	addSpace : function(height) {
-		this.add(n2i.build('div',{style:'font-size:0px;height:'+height+'px'}));
+		this.add(hui.build('div',{style:'font-size:0px;height:'+height+'px'}));
 	},
 	/** @private */
 	getDimensions : function() {
@@ -145,16 +145,16 @@ In2iGui.BoundPanel.prototype = {
 		if (node.getElement) {
 			node = node.getElement();
 		}
-		node = n2i.get(node);
-		var offset = {left:n2i.getLeft(node),top:n2i.getTop(node)};
-		var scrollOffset = {left:n2i.getScrollLeft(),top:n2i.getScrollTop()};
+		node = hui.get(node);
+		var offset = {left:hui.getLeft(node),top:hui.getTop(node)};
+		var scrollOffset = {left:hui.getScrollLeft(),top:hui.getScrollTop()};
 		var dims = this.getDimensions();
-		var viewportWidth = n2i.getViewPortWidth();
-		var viewportHeight = n2i.getViewPortHeight();
-		var nodeLeft = offset.left-scrollOffset.left+n2i.getScrollLeft();
+		var viewportWidth = hui.getViewPortWidth();
+		var viewportHeight = hui.getViewPortHeight();
+		var nodeLeft = offset.left-scrollOffset.left+hui.getScrollLeft();
 		var nodeWidth = node.clientWidth;
 		var nodeHeight = node.clientHeight;
-		var nodeTop = offset.top-scrollOffset.top+n2i.getScrollTop();
+		var nodeTop = offset.top-scrollOffset.top+hui.getScrollTop();
 		var arrowLeft, arrowTop, left, top;
 		var vertical = (nodeTop-scrollOffset.top)/viewportHeight;
 		
@@ -192,8 +192,8 @@ In2iGui.BoundPanel.prototype = {
 		this.arrow.style.marginTop = arrowTop+'px';
 		this.arrow.style.marginLeft = arrowLeft+'px';
 		if (this.visible) {
-			n2i.animate(this.element,'top',top+'px',500,{ease:n2i.ease.fastSlow});
-			n2i.animate(this.element,'left',left+'px',500,{ease:n2i.ease.fastSlow});
+			hui.animate(this.element,'top',top+'px',500,{ease:hui.ease.fastSlow});
+			hui.animate(this.element,'left',left+'px',500,{ease:hui.ease.fastSlow});
 		} else {
 			this.element.style.top=top+'px';
 			this.element.style.left=left+'px';

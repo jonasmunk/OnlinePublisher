@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>In2iGui</title>
+	<title>HUI</title>
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/colorpicker.css" rel="stylesheet" />
@@ -21,19 +21,19 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/MarkupEditor.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ColorPicker.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		In2iGui.state = '';
-		In2iGui.context = '../../..';
+		hui.ui.state = '';
+		hui.ui.context = '../../..';
 	</script>
 </head>
 
 <body>
 	<div id="hov" style="width: 200px; height: 200px;"></div>
 <script type="text/javascript" charset="utf-8">
-	ui.listen({
+	hui.ui.listen({
 		$ready : function() {
-			var hov = n2i.get('hov');
-			var win = ui.Window.create({padding:3});
-			var picker = ui.ColorPicker.create();
+			var hov = hui.get('hov');
+			var win = hui.ui.Window.create({padding:3});
+			var picker = hui.ui.ColorPicker.create();
 			picker.listen({
 				$colorWasSelected : function(color) {
 					document.body.style.background=color;

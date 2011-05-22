@@ -1,55 +1,55 @@
 /**
  * @constructor
  */
-In2iGui.Overlay = function(options) {
+hui.ui.Overlay = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
-	this.content = n2i.byClass(this.element,'in2igui_inner_overlay')[1];
+	this.element = hui.get(options.element);
+	this.content = hui.byClass(this.element,'in2igui_inner_overlay')[1];
 	this.name = options.name;
 	this.icons = {};
 	this.visible = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
 /**
  * Creates a new overlay
  */
-In2iGui.Overlay.create = function(options) {
+hui.ui.Overlay.create = function(options) {
 	options = options || {};
-	var e = options.element = n2i.build('div',{className:'in2igui_overlay',style:'display:none',html:'<div class="in2igui_inner_overlay"><div class="in2igui_inner_overlay"></div></div>'});
+	var e = options.element = hui.build('div',{className:'in2igui_overlay',style:'display:none',html:'<div class="in2igui_inner_overlay"><div class="in2igui_inner_overlay"></div></div>'});
 	document.body.appendChild(e);
-	return new In2iGui.Overlay(options);
+	return new hui.ui.Overlay(options);
 }
 
-In2iGui.Overlay.prototype = {
+hui.ui.Overlay.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
 		this.hider = function(e) {
 			if (self.boundElement) {
-				if (In2iGui.isWithin(e,self.boundElement) || In2iGui.isWithin(e,self.element)) return;
+				if (hui.ui.isWithin(e,self.boundElement) || hui.ui.isWithin(e,self.element)) return;
 				// TODO: should be unreg'ed but it fails
 				//self.boundElement.stopObserving(self.hider);
-				n2i.removeClass(self.boundElement,'in2igui_overlay_bound');
+				hui.removeClass(self.boundElement,'in2igui_overlay_bound');
 				self.boundElement = null;
 				self.hide();
 			}
 		}
-		n2i.listen(this.element,'mouseout',this.hider);
+		hui.listen(this.element,'mouseout',this.hider);
 	},
 	addIcon : function(key,icon) {
 		var self = this;
-		var element = n2i.build('div',{className:'in2igui_overlay_icon'});
-		element.style.backgroundImage='url('+In2iGui.getIconUrl(icon,2)+')';
-		n2i.listen(element,'click',function(e) {
+		var element = hui.build('div',{className:'in2igui_overlay_icon'});
+		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,2)+')';
+		hui.listen(element,'click',function(e) {
 			self.iconWasClicked(key,e);
 		});
 		this.icons[key]=element;
 		this.content.appendChild(element);
 	},
 	addText : function(text) {
-		this.content.appendChild(n2i.build('span',{'class':'in2igui_overlay_text',text:text}));
+		this.content.appendChild(hui.build('span',{'class':'in2igui_overlay_text',text:text}));
 	},
 	add : function(widget) {
 		this.content.appendChild(widget.getElement());
@@ -65,56 +65,56 @@ In2iGui.Overlay.prototype = {
 		};
 	},
 	iconWasClicked : function(key,e) {
-		In2iGui.callDelegates(this,'iconWasClicked',key,e);
+		hui.ui.callDelegates(this,'iconWasClicked',key,e);
 	},
 	showAtElement : function(element,options) {
 		options = options || {};
-		In2iGui.positionAtElement(this.element,element,options);
+		hui.ui.positionAtElement(this.element,element,options);
 		if (this.visible) return;
-		if (n2i.browser.msie) {
+		if (hui.browser.msie) {
 			this.element.style.display='block';
 		} else {
-			n2i.setStyle(this.element,{'display':'block','opacity':0});
-			n2i.ani(this.element,'opacity',1,150);
+			hui.setStyle(this.element,{'display':'block','opacity':0});
+			hui.ani(this.element,'opacity',1,150);
 		}
 		this.visible = true;
 		if (options.autoHide) {
 			this.boundElement = element;
-			n2i.listen(element,'mouseout',this.hider);
-			n2i.addClass(element,'in2igui_overlay_bound');
+			hui.listen(element,'mouseout',this.hider);
+			hui.addClass(element,'in2igui_overlay_bound');
 		}
 		if (this.options.modal) {
-			var zIndex = In2iGui.nextAlertIndex();
+			var zIndex = hui.ui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
-			In2iGui.showCurtain({widget:this,zIndex:zIndex});
+			hui.ui.showCurtain({widget:this,zIndex:zIndex});
 		}
 		return;
 	},
 	show : function(options) {
 		options = options || {};
 		if (!this.visible) {
-			n2i.setStyle(this.element,{'display':'block',visibility:'hidden'});
+			hui.setStyle(this.element,{'display':'block',visibility:'hidden'});
 		}
 		if (options.element) {
-			n2i.place({
+			hui.place({
 				source:{element:this.element,vertical:0,horizontal:.5},
 				target:{element:options.element,vertical:.5,horizontal:.5},
 				insideViewPort:true
 			});
 		}
 		if (this.visible) return;
-		In2iGui.bounceIn(this.element);
+		hui.ui.bounceIn(this.element);
 		this.visible = true;
 		if (options.autoHide && options.element) {
 			this.boundElement = options.element;
-			n2i.listen(options.element,'mouseout',this.hider);
-			n2i.addClass(options.element,'in2igui_overlay_bound');
+			hui.listen(options.element,'mouseout',this.hider);
+			hui.addClass(options.element,'in2igui_overlay_bound');
 		}
 		if (this.options.modal) {
-			var zIndex = In2iGui.nextAlertIndex();
+			var zIndex = hui.ui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
-			var color = n2i.getStyle(document.body,'background-color');
-			In2iGui.showCurtain({widget:this,zIndex:zIndex,color:color});
+			var color = hui.getStyle(document.body,'background-color');
+			hui.ui.showCurtain({widget:this,zIndex:zIndex,color:color});
 		}
 	},
 	/** private */
@@ -122,12 +122,12 @@ In2iGui.Overlay.prototype = {
 		this.hide();
 	},
 	hide : function() {
-		In2iGui.hideCurtain(this);
+		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 		this.visible = false;
 	},
 	clear : function() {
-		In2iGui.destroyDescendants(this.content);
+		hui.ui.destroyDescendants(this.content);
 		this.content.innerHTML='';
 	}
 }

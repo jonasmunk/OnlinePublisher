@@ -2,42 +2,42 @@
  * @constructor
  * @param {Object} options { element «Node | id», name: «String» }
  */
-In2iGui.Layout = function(options) {
+hui.ui.Layout = function(options) {
 	this.name = options.name;
 	this.options = options || {};
-	this.element = n2i.get(options.element);
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
 }
 
-In2iGui.Layout.prototype = {
+hui.ui.Layout.prototype = {
 	$$layout : function() {
-		if (n2i.browser.gecko) {
-			var center = n2i.firstByClass(this.element,'in2igui_layout_center');
+		if (hui.browser.gecko) {
+			var center = hui.firstByClass(this.element,'in2igui_layout_center');
 			if (center) {
 				center.style.height='100%';
 			}
 		}
-		if (!n2i.browser.msie7 && !n2i.browser.msie8 && !n2i.browser.msie9) {
+		if (!hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9) {
 			return;
 		}
 		if (this.diff===undefined) {
-			var head = n2i.firstByClass(this.element,'in2igui_layout_top');
-			var top = n2i.firstByTag(head,'*').clientHeight;
-			var foot = n2i.firstByTag(n2i.firstByTag(this.element,'tfoot'),'td');
+			var head = hui.firstByClass(this.element,'in2igui_layout_top');
+			var top = hui.firstByTag(head,'*').clientHeight;
+			var foot = hui.firstByTag(hui.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
 			if (foot) {
-				bottom = n2i.firstByTag(foot,'*').clientHeight;
+				bottom = hui.firstByTag(foot,'*').clientHeight;
 			}
-			top += n2i.getTop(this.element);
+			top += hui.getTop(this.element);
 			this.diff = bottom+top;
 			if (this.element.parentNode!==document.body) {
 				this.diff+=15;
 			} else {
 			}
 		}
-		var tbody = n2i.firstByTag(this.element,'tbody');
-		var cell = n2i.firstByTag(tbody,'td');
-		cell.style.height = (n2i.getViewPortHeight()-this.diff+5)+'px';
+		var tbody = hui.firstByTag(this.element,'tbody');
+		var cell = hui.firstByTag(tbody,'td');
+		cell.style.height = (hui.getViewPortHeight()-this.diff+5)+'px';
 	}
 };
 
@@ -46,31 +46,31 @@ In2iGui.Layout.prototype = {
  * @constructor
  * @param {Object} options { element «Node | id», name: «String» }
  */
-In2iGui.Columns = function(options) {
+hui.ui.Columns = function(options) {
 	this.name = options.name;
 	this.options = options || {};
-	this.element = n2i.get(options.element);
-	this.body = n2i.firstByTag(this.element,'tr');
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	this.body = hui.firstByTag(this.element,'tr');
+	hui.ui.extend(this);
 }
 
 /**
  * Creates a new Columns opject
  */
-In2iGui.Columns.create = function(options) {
+hui.ui.Columns.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('table',{'class' : 'in2igui_columns',html : '<tbody><tr></tr></tbody>'});
-	return new In2iGui.Columns(options);
+	options.element = hui.build('table',{'class' : 'in2igui_columns',html : '<tbody><tr></tr></tbody>'});
+	return new hui.ui.Columns(options);
 }
 
-In2iGui.Columns.prototype = {
+hui.ui.Columns.prototype = {
 	addToColumn : function(index,widget) {
 		var c = this.ensureColumn(index);
 		c.appendChild(widget.getElement());
 	},
 	setColumnStyle : function(index,style) {
 		var c = this.ensureColumn(index);
-		n2i.setStyle(c,style);
+		hui.setStyle(c,style);
 	},
 	setColumnWidth : function(index,width) {
 		var c = this.ensureColumn(index);
@@ -78,11 +78,11 @@ In2iGui.Columns.prototype = {
 	},
 	/** @private */
 	ensureColumn : function(index) {
-		var children = n2i.getChildren(this.body);
+		var children = hui.getChildren(this.body);
 		for (var i=children.length-1;i<index;i++) {
-			this.body.appendChild(n2i.build('td',{'class':'in2igui_columns_column'}));
+			this.body.appendChild(hui.build('td',{'class':'in2igui_columns_column'}));
 		}
-		return n2i.getChildren(this.body)[index];
+		return hui.getChildren(this.body)[index];
 	}
 }
 

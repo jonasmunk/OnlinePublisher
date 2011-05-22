@@ -1,26 +1,26 @@
 /**
  * @constructor
  */
-In2iGui.RichText = function(options) {
+hui.ui.RichText = function(options) {
 	this.name = options.name;
-	var e = this.element = n2i.get(options.element);
-	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
-	this.textarea = n2i.build('textarea');
+	var e = this.element = hui.get(options.element);
+	this.options = hui.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
+	this.textarea = hui.build('textarea');
 	e.appendChild(this.textarea);
 	this.editor = WysiHat.Editor.attach(this.textarea);
 	this.editor.setAttribute('frameborder','0');
 	/* @private */
-	this.toolbar = n2i.firstByClass(e,'in2igui_richtext_toolbar');
-	this.toolbarContent = n2i.firstByClass(e,'in2igui_richtext_toolbar_content');
+	this.toolbar = hui.firstByClass(e,'in2igui_richtext_toolbar');
+	this.toolbarContent = hui.firstByClass(e,'in2igui_richtext_toolbar_content');
 	this.value = this.options.value;
 	this.document = null;
 	this.ignited = false;
 	this.buildToolbar();
 	this.ignite();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.RichText.actions = [
+hui.ui.RichText.actions = [
 	{key:'bold',				cmd:'bold',				value:null,		icon:'edit/text_bold'},
 	{key:'italic',				cmd:'italic',			value:null,		icon:'edit/text_italic'},
 	{key:'underline',			cmd:'underline',		value:null,		icon:'edit/text_underline'},
@@ -44,23 +44,23 @@ In2iGui.RichText.actions = [
 	{key:'removeformat', 	cmd:'removeformat', 	'value':null}*/
 ];
 
-In2iGui.RichText.replaceInput = function(options) {
+hui.ui.RichText.replaceInput = function(options) {
 	options = options || {};
-	var input = n2i.get(options.input);
+	var input = hui.get(options.input);
 	input.style.display='none';
 	options.value = input.value;
-	var obj = In2iGui.RichText.create(options);
+	var obj = hui.ui.RichText.create(options);
 	input.parentNode.insertBefore(obj.element,input);
 	obj.ignite();
 }
 
-In2iGui.RichText.create = function(options) {
+hui.ui.RichText.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{'class':'in2igui_richtext',html:'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'});
-	return new In2iGui.RichText(options);
+	options.element = hui.build('div',{'class':'in2igui_richtext',html:'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'});
+	return new hui.ui.RichText(options);
 }
 
-In2iGui.RichText.prototype = {
+hui.ui.RichText.prototype = {
 	isCompatible : function() {
 	    var agt=navigator.userAgent.toLowerCase();
 		return true;
@@ -119,61 +119,61 @@ In2iGui.RichText.prototype = {
 		this.toolbar.onmousedown = function() {this.toolbarMouseDown=true}.bind(this);
 		this.toolbar.onmouseup = function() {this.toolbarMouseDown=false}.bind(this);
 		var self = this;
-		var actions = In2iGui.RichText.actions;
+		var actions = hui.ui.RichText.actions;
 		for (var i=0; i < actions.length; i++) {
 			if (actions[i]==null) {
-				this.toolbarContent.appendChild(n2i.build('div',{'class':'in2igui_richtext_divider'}));
+				this.toolbarContent.appendChild(hui.build('div',{'class':'in2igui_richtext_divider'}));
 			} else {
-				var div = n2i.build('div',{'class':'action action_'+actions[i].key});
+				var div = hui.build('div',{'class':'action action_'+actions[i].key});
 				div.title=actions[i].key;
 				div.in2iguiRichTextAction = actions[i]
 				div.onclick = div.ondblclick = function(e) {return self.actionWasClicked(this.in2iguiRichTextAction,e);}
-				var img = n2i.build('img');
-				img.src=In2iGui.context+'/In2iGui/gfx/trans.png';
+				var img = hui.build('img');
+				img.src=hui.ui.context+'/In2iGui/gfx/trans.png';
 				if (actions[i].icon) {
-					div.style.backgroundImage='url('+In2iGui.getIconUrl(actions[i].icon,1)+')';
+					div.style.backgroundImage='url('+hui.ui.getIconUrl(actions[i].icon,1)+')';
 				}
 				div.appendChild(img);
 				this.toolbarContent.appendChild(div);
-				div.onmousedown = In2iGui.RichText.stopEvent;
+				div.onmousedown = hui.ui.RichText.stopEvent;
 			}
 		};
 	},
 	documentFocused : function() {
-		if (n2i.browser.msie) {
+		if (hui.browser.msie) {
 			this.toolbar.style.display='block';
 			return;
 		}
 		if (this.toolbar.style.display!='block') {
 			this.toolbar.style.marginTop='-40px';
-			n2i.setOpacity(this.toolbar,0);
+			hui.setOpacity(this.toolbar,0);
 			this.toolbar.style.display='block';
-			n2i.ani(this.toolbar,'opacity',1,300);
-			n2i.ani(this.toolbar,'margin-top','-32px',300);
+			hui.ani(this.toolbar,'opacity',1,300);
+			hui.ani(this.toolbar,'margin-top','-32px',300);
 		}
 	},
 	
 	documentBlurred : function() {
 		if (this.toolbarMouseDown) return;
 		if (this.options.autoHideToolbar) {
-			if (n2i.browser.msie) {
+			if (hui.browser.msie) {
 				var self = this;
 				window.setTimeout(function() {
 					self.toolbar.style.display='none';
 				},100);
 				return;
 			}
-			n2i.ani(this.toolbar,'opacity',0,300,{hideOnComplete:true});
-			n2i.ani(this.toolbar,'margin-top','-40px',300);
+			hui.ani(this.toolbar,'opacity',0,300,{hideOnComplete:true});
+			hui.ani(this.toolbar,'margin-top','-40px',300);
 		}
 		this.documentChanged();
-		In2iGui.callDelegates(this,'richTextDidChange');
+		hui.ui.callDelegates(this,'richTextDidChange');
 	},
 	
 	documentChanged : function() {
 		this.value = this.editor.content();
 		if (this.options.input) {
-			n2i.get(this.options.input).value=this.value;
+			hui.get(this.options.input).value=this.value;
 		}
 	},
 	
@@ -187,7 +187,7 @@ In2iGui.RichText.prototype = {
 		return false;
 	},
 	actionWasClicked : function(action,e) {
-		In2iGui.RichText.stopEvent(e);
+		hui.ui.RichText.stopEvent(e);
 		if (action.key=='color') {
 			this.showColorPicker();
 		} else {
@@ -202,8 +202,8 @@ In2iGui.RichText.prototype = {
 	},
 	showColorPicker : function() {
 		if (!this.colorPicker) {
-			var panel = In2iGui.Window.create({variant:'dark'});
-			var picker = In2iGui.ColorPicker.create();
+			var panel = hui.ui.Window.create({variant:'dark'});
+			var picker = hui.ui.ColorPicker.create();
 			picker.listen(this);
 			panel.add(picker);
 			panel.show();
@@ -222,7 +222,7 @@ In2iGui.RichText.prototype = {
 
 
 
-In2iGui.RichText.stopEvent = function(e) {
+hui.ui.RichText.stopEvent = function(e) {
   var evt = e ? e : window.event; 
   if (evt.returnValue) {
     evt.returnValue = false;

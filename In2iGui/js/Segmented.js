@@ -2,33 +2,33 @@
  * @constructor
  * @param {Object} options The options
  */
-In2iGui.Segmented = function(options) {
-	this.options = n2i.override({value:null,allowNull:false},options);
-	this.element = n2i.get(options.element);
+hui.ui.Segmented = function(options) {
+	this.options = hui.override({value:null,allowNull:false},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.value = this.options.value;
-	In2iGui.extend(this);
-	n2i.listen(this.element,'mousedown',this.onClick.bind(this));
+	hui.ui.extend(this);
+	hui.listen(this.element,'mousedown',this.onClick.bind(this));
 }
 
-In2iGui.Segmented.prototype = {
+hui.ui.Segmented.prototype = {
 	/** @private */
 	onClick : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		var a = e.findByTag('a');
 		if (a) {
 			var changed = false;
 			var value = a.getAttribute('rel');
-			var x = n2i.byClass(this.element,'in2igui_segmented_selected');
+			var x = hui.byClass(this.element,'in2igui_segmented_selected');
 			for (var i=0; i < x.length; i++) {
-				n2i.removeClass(x[i],'in2igui_segmented_selected');
+				hui.removeClass(x[i],'in2igui_segmented_selected');
 			};
 			if (value===this.value && this.options.allowNull) {
 				changed=true;
 				this.value = null;
 				this.fire('valueChanged',this.value);
 			} else {
-				n2i.addClass(a,'in2igui_segmented_selected');
+				hui.addClass(a,'in2igui_segmented_selected');
 				changed=this.value!== value;
 				this.value = value;
 			}
@@ -45,10 +45,10 @@ In2iGui.Segmented.prototype = {
 		this.value = null;
 		for (var i=0; i < as.length; i++) {
 			if (as[i].getAttribute('rel')===value) {
-				n2i.addClass(as[i],'in2igui_segmented_selected');
+				hui.addClass(as[i],'in2igui_segmented_selected');
 				this.value=value;
 			} else {
-				n2i.removeClass(as[i],'in2igui_segmented_selected');
+				hui.removeClass(as[i],'in2igui_segmented_selected');
 			}
 		};
 	},

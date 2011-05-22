@@ -1,4 +1,4 @@
-textarea.in2igui_editor_header
+textarea.hui_editor_header
 {
 	background: none;
 	border: none;
@@ -8,7 +8,7 @@ textarea.in2igui_editor_header
 	outline: none;
 }
 
-textarea.in2igui_editor_html
+textarea.hui_editor_html
 {
 	background: none;
 	border: none;
@@ -17,35 +17,35 @@ textarea.in2igui_editor_html
 	width: 100%;
 }
 
-div.in2igui_editor_dragproxy
+div.hui_editor_dragproxy
 {
 	position: absolute;
 	top: 0px;
 	left: 0px;
 }
 
-.in2igui_editor_part_active
+.hui_editor_part_active
 {
 	outline: 1px dashed #3875d7;
 }
 
-div.in2igui_overlay_icon:hover
+div.hui_overlay_icon:hover
 {
 	cursor: pointer;
 	background-position: 0px -32px;
 }
 
-.in2igui_editor_part_hover
+.hui_editor_part_hover
 {
 	background: url('../gfx/hover_bg.png');
 }
 
-.in2igui_editor_column_hover
+.hui_editor_column_hover
 {
 	border: 1px dashed #3875d7;
 }
 
-.in2igui_editor_column_edit
+.hui_editor_column_edit
 {
 	outline: 2px dashed #3875d7 !important;
 }

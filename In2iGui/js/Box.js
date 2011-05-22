@@ -2,34 +2,34 @@
  * @constructor
  * @param {Object} options The options : {modal:false}
  */
-In2iGui.Box = function(options) {
-	this.options = n2i.override({},options);
+hui.ui.Box = function(options) {
+	this.options = hui.override({},options);
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	this.body = n2i.firstByClass(this.element,'in2igui_box_body');
-	this.close = n2i.firstByClass(this.element,'in2igui_box_close');
+	this.element = hui.get(options.element);
+	this.body = hui.firstByClass(this.element,'in2igui_box_body');
+	this.close = hui.firstByClass(this.element,'in2igui_box_close');
 	if (this.close) {
-		n2i.listen(this.close,'click',function(e) {
-			n2i.stop(e);
+		hui.listen(this.close,'click',function(e) {
+			hui.stop(e);
 			this.hide();
 			this.fire('boxWasClosed');
 		}.bind(this));
 	}
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 };
 
 /**
  * Creates a new box widget
  * @param {Object} options The options : {width:0,padding:0,absolute:false,closable:false}
  */
-In2iGui.Box.create = function(options) {
+hui.ui.Box.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class' : options.absolute ? 'in2igui_box in2igui_box_absolute' : 'in2igui_box',
 		html : (options.closable ? '<a class="in2igui_box_close" href="#"></a>' : '')+
 			'<div class="in2igui_box_top"><div><div></div></div></div>'+
 			'<div class="in2igui_box_middle"><div class="in2igui_box_middle">'+
-			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+n2i.escape(options.title)+'</strong></div>' : '')+
+			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+hui.escape(options.title)+'</strong></div>' : '')+
 			'<div class="in2igui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+
@@ -38,10 +38,10 @@ In2iGui.Box.create = function(options) {
 			'<div class="in2igui_box_bottom"><div><div></div></div></div>',
 		style : options.width ? options.width+'px' : null
 	});
-	return new In2iGui.Box(options);
+	return new hui.ui.Box(options);
 };
 
-In2iGui.Box.prototype = {
+hui.ui.Box.prototype = {
 	/**
 	 * Adds the box to the end of the body
 	 */
@@ -64,26 +64,26 @@ In2iGui.Box.prototype = {
 	show : function() {
 		var e = this.element;
 		if (this.options.modal) {
-			var index = In2iGui.nextPanelIndex();
+			var index = hui.ui.nextPanelIndex();
 			e.style.zIndex=index+1;
-			In2iGui.showCurtain({widget:this,zIndex:index});
+			hui.ui.showCurtain({widget:this,zIndex:index});
 		}
 		if (this.options.absolute) {
-			n2i.setStyle(e,{display:'block',visibility:'hidden'});
+			hui.setStyle(e,{display:'block',visibility:'hidden'});
 			var w = e.clientWidth;
-			var top = (n2i.getViewPortHeight()-e.clientHeight)/2+n2i.getScrollTop();
-			n2i.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
-			n2i.setStyle(e,{display:'block',visibility:'visible'});
+			var top = (hui.getViewPortHeight()-e.clientHeight)/2+hui.getScrollTop();
+			hui.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
+			hui.setStyle(e,{display:'block',visibility:'visible'});
 		} else {
 			e.style.display='block';
 		}
-		In2iGui.callVisible(this);
+		hui.ui.callVisible(this);
 	},
 	/**
 	 * Hides the box
 	 */
 	hide : function() {
-		In2iGui.hideCurtain(this);
+		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 	},
 	/** @private */

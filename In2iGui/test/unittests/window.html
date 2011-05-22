@@ -1,6 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/message.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
 	<![endif]-->
@@ -14,20 +16,20 @@
 	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../tools/funcunit/funcunit/funcunit.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		In2iGui.context='../../..';
+		hui.ui.context='../../..';
 	</script>
 </head>
 <body>
 	<script type="text/javascript">
 		var win;
-		ui.test.run([
+		hui.ui.test.run([
 			function() {
-				win = ui.Window.create({title:'This is the window title',width:200,name:'myWindow'});
-				ui.test.assertEquals(ui.get('myWindow'),win,'Could get window by name');
+				win = hui.ui.Window.create({title:'This is the window title',width:200,name:'myWindow'});
+				hui.ui.test.assertEquals(hui.ui.get('myWindow'),win,'Could get window by name');
 			},
 			function() {
 				win.show();
-				ui.test.assertVisible(win.getElement(),'Window is visible');
+				hui.ui.test.assertVisible(win.getElement(),'Window is visible');
 			},
 			1000,
 			function(){
@@ -35,7 +37,7 @@
 			},
 			1000,
 			function() {
-				ui.test.assertNotVisible(win.getElement(),'Window is not visible');
+				hui.ui.test.assertNotVisible(win.getElement(),'Window is not visible');
 			},
 			function() {
 				win.show();
@@ -48,19 +50,19 @@
 					closeEventFired=true;
 				}});
 				var close = n2i.firstByClass(win.getElement(),'in2igui_window_close');
-				ui.test.click(close,function() {
-					ui.test.assertTrue(closeEventFired,'userClosedWindow was fired');
+				hui.ui.test.click(close,function() {
+					hui.ui.test.assertTrue(closeEventFired,'userClosedWindow was fired');
 					win.show();
 				});
 			},
 			1000,
 			function() {
-				ui.showMessage({text:'Dark variant',duration: 1000});
+				hui.ui.showMessage({text:'Dark variant',duration: 1000});
 				win.setVariant('dark');
 			},
 			1000,
 			function() {
-				ui.showMessage({text:'Light variant',duration: 1000});
+				hui.ui.showMessage({text:'Light variant',duration: 1000});
 				win.setVariant('light');
 			}
 		]);

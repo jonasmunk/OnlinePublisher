@@ -2028,7 +2028,120 @@ if (!Function.prototype.argumentNames) {
 			.replace(/\s+/g, '').split(',');
 		return names.length == 1 && !names[0] ? [] : names;
 	}
-}/**
+}/*!
+  * $script.js v1.3
+  * https://github.com/ded/script.js
+  * Copyright: @ded & @fat - Dustin Diaz, Jacob Thornton 2011
+  * Follow our software http://twitter.com/dedfat
+  * License: MIT
+  */
+!function(win, doc, timeout) {
+  var head = doc.getElementsByTagName('head')[0],
+      list = {}, ids = {}, delay = {},
+      scripts = {}, s = 'string', f = false,
+      push = 'push', domContentLoaded = 'DOMContentLoaded', readyState = 'readyState',
+      addEventListener = 'addEventListener', onreadystatechange = 'onreadystatechange',
+      every = function(ar, fn) {
+        for (var i = 0, j = ar.length; i < j; ++i) {
+          if (!fn(ar[i])) {
+            return f;
+          }
+        }
+        return 1;
+      };
+      function each(ar, fn) {
+        every(ar, function(el) {
+          return !fn(el);
+        });
+      }
+
+  if (!doc[readyState] && doc[addEventListener]) {
+    doc[addEventListener](domContentLoaded, function fn() {
+      doc.removeEventListener(domContentLoaded, fn, f);
+      doc[readyState] = "complete";
+    }, f);
+    doc[readyState] = "loading";
+  }
+
+  var $script = function(paths, idOrDone, optDone) {
+    paths = paths[push] ? paths : [paths];
+    var idOrDoneIsDone = idOrDone && idOrDone.call,
+        done = idOrDoneIsDone ? idOrDone : optDone,
+        id = idOrDoneIsDone ? paths.join('') : idOrDone,
+        queue = paths.length;
+        function loopFn(item) {
+          return item.call ? item() : list[item];
+        }
+        function callback() {
+          if (!--queue) {
+            list[id] = 1;
+            done && done();
+            for (var dset in delay) {
+              every(dset.split('|'), loopFn) && !each(delay[dset], loopFn) && (delay[dset] = []);
+            }
+          }
+        }
+    timeout(function() {
+      each(paths, function(path) {
+        if (scripts[path]) {
+          id && (ids[id] = 1);
+          callback();
+          return;
+        }
+        scripts[path] = 1;
+        id && (ids[id] = 1);
+        create($script.path ?
+          $script.path + path + '.js' :
+          path, callback);
+      });
+    }, 0);
+    return $script;
+  };
+
+  function create(path, fn) {
+    var el = doc.createElement("script"),
+        loaded = f;
+    el.onload = el.onerror = el[onreadystatechange] = function () {
+      if ((el[readyState] && !(/^c|loade/.test(el[readyState]))) || loaded) {
+        return;
+      }
+      el.onload = el[onreadystatechange] = null;
+      loaded = 1;
+      fn();
+    };
+    el.async = 1;
+    el.src = path;
+    head.insertBefore(el, head.firstChild);
+  }
+
+  $script.get = create;
+
+  $script.ready = function(deps, ready, req) {
+    deps = deps[push] ? deps : [deps];
+    var missing = [];
+    !each(deps, function(dep) {
+      list[dep] || missing[push](dep);
+    }) && every(deps, function(dep) {
+      return list[dep];
+    }) ? ready() : !function(key) {
+      delay[key] = delay[key] || [];
+      delay[key][push](ready);
+      req && req(missing);
+    }(deps.join('|'));
+    return $script;
+  };
+
+  var old = win.$script;
+  $script.noConflict = function () {
+    win.$script = old;
+    return this;
+  };
+
+  (typeof module !== 'undefined' && module.exports) ?
+    (module.exports = $script) :
+    (win.hui.require = $script);
+}(this, document, setTimeout);
+/**
  * SWFUpload: http://www.swfupload.org, http://swfupload.googlecode.com
  *
  * mmSWFUpload 1.0: Flash upload dialog - http://profandesign.se/swfupload/,  http://www.vinterwebb.se/
@@ -3553,9 +3666,9 @@ hui.ui = {
 	confirmOverlays : {}
 }
 
-window.ui = hui.ui; // TODO: old namespace
+//window.ui = hui.ui; // TODO: old namespace
 
-window.In2iGui = hui.ui; // TODO: old namespace
+//window.In2iGui = hui.ui; // TODO: old namespace
 
 
 /** Gets the one instance of In2iGui */
@@ -3564,9 +3677,9 @@ hui.ui.get = function(nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
 		}
-		return In2iGui.objects[nameOrWidget];
+		return hui.ui.objects[nameOrWidget];
 	} else {
-		return In2iGui;
+		return hui.ui;
 	}
 };
 
@@ -3577,7 +3690,7 @@ hui.onReady(function() {
 			hui.log(e);
 		});
 	}
-	In2iGui.callSuperDelegates(this,'ready');
+	hui.ui.callSuperDelegates(this,'ready');
 	hui.listen(window,'resize',hui.ui._resize);
 	hui.ui._resize();
 	hui.ui.domReady = true;
@@ -3823,9 +3936,9 @@ hui.ui.confirm = function(options) {
 hui.ui.alert = function(options) {
 	if (!this.alertBox) {
 		this.alertBox = hui.ui.Alert.create(options);
-		this.alertBoxButton = hui.ui.Button.create({name:'in2iGuiAlertBoxButton',text : 'OK'});
+		this.alertBoxButton = hui.ui.Button.create({name:'huiAlertBoxButton',text : 'OK'});
 		this.alertBoxButton.listen({
-			$click$in2iGuiAlertBoxButton : function() {
+			$click$huiAlertBoxButton : function() {
 				hui.ui.alertBox.hide();
 				if (hui.ui.alertBoxCallBack) {
 					hui.ui.alertBoxCallBack();
@@ -3957,7 +4070,10 @@ hui.ui.createIcon = function(icon,size) {
 	return hui.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
-hui.ui.onDomReady = hui.ui.onReady = function(func) {
+/**
+ * Called when the DOM is ready and hui.ui is ready
+ */
+hui.ui.onReady = function(func) {
 	if (hui.ui.domReady) {return func();}
 	if (hui.browser.gecko && hui.string.endsWith(document.baseURI,'xml')) {
 		window.setTimeout(func,1000);
@@ -4377,25 +4493,25 @@ hui.ui.require = function(names,func) {
 /** A data source
  * @constructor
  */
-In2iGui.Source = function(options) {
-	this.options = n2i.override({url:null,dwr:null,parameters:[],lazy:false},options);
+hui.ui.Source = function(options) {
+	this.options = hui.override({url:null,dwr:null,parameters:[],lazy:false},options);
 	this.name = options.name;
 	this.data = null;
 	this.parameters = this.options.parameters;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (options.delegate) {
 		this.listen(options.delegate);
 	}
 	this.busy=false;
-	In2iGui.onDomReady(this.init.bind(this));
+	hui.ui.onReady(this.init.bind(this));
 };
 
-In2iGui.Source.prototype = {
+hui.ui.Source.prototype = {
 	/** @private */
 	init : function() {
 		var self = this;
-		n2i.each(this.parameters,function(parm) {
-			var val = In2iGui.bind(parm.value,function(value) {
+		hui.each(this.parameters,function(parm) {
+			var val = hui.ui.bind(parm.value,function(value) {
 				self.changeParameter(parm.key,value);
 			});
 			parm.value = self.convertValue(val);
@@ -4435,18 +4551,18 @@ In2iGui.Source.prototype = {
 				prms[p.key] = p.value;
 			};
 			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
-			n2i.request({
+			hui.ui.callDelegates(this,'sourceIsBusy');
+			hui.request({
 				method:'post',
 				url:this.options.url,
 				parameters:prms,
 				onSuccess : function(t) {self.parse(t)},
 				onException : function(e,t) {
-					n2i.log('Exception while loading source...')
-					n2i.log(e)
+					hui.log('Exception while loading source...')
+					hui.log(e)
 				},
 				onFailure : function(t) {
-					In2iGui.callDelegates(self,'sourceFailed');
+					hui.ui.callDelegates(self,'sourceFailed');
 				}
 			});
 		} else if (this.options.dwr) {
@@ -4461,7 +4577,7 @@ In2iGui.Source.prototype = {
 			};
 			args[args.length-1]=function(r) {self.parseDWR(r)};
 			this.busy=true;
-			In2iGui.callDelegates(this,'sourceIsBusy');
+			hui.ui.callDelegates(this,'sourceIsBusy');
 			facade[method].apply(facade,args);
 		}
 	},
@@ -4471,7 +4587,7 @@ In2iGui.Source.prototype = {
 		if (this.pendingRefresh) {
 			this.refresh();
 		} else {
-			In2iGui.callDelegates(this,'sourceIsNotBusy');
+			hui.ui.callDelegates(this,'sourceIsNotBusy');
 		}
 	},
 	/** @private */
@@ -4482,7 +4598,7 @@ In2iGui.Source.prototype = {
 			var str = t.responseText.replace(/^\s+|\s+$/g, ''),
 				json = null;
 			if (str.length>0) {
-				json = n2i.fromJSON(t.responseText);
+				json = hui.fromJSON(t.responseText);
 			}
 			this.fire('objectsLoaded',json);
 		}
@@ -4491,7 +4607,7 @@ In2iGui.Source.prototype = {
 	/** @private */
 	parseXML : function(doc) {
 		if (doc.documentElement.tagName=='items') {
-			this.data = In2iGui.parseItems(doc);
+			this.data = hui.ui.parseItems(doc);
 			this.fire('itemsLoaded',this.data);
 		} else if (doc.documentElement.tagName=='list') {
 			this.fire('listLoaded',doc);
@@ -4506,7 +4622,7 @@ In2iGui.Source.prototype = {
 		this.end();
 	},
 	addParameter : function(parm) {
-		//n2i.log(parm.value);
+		//hui.log(parm.value);
 		this.parameters.push(parm);
 	},
 	changeParameter : function(key,value) {
@@ -4524,34 +4640,34 @@ In2iGui.Source.prototype = {
 	}
 }
 
-/* EOF */In2iGui.getDragProxy = function() {
-	if (!In2iGui.dragProxy) {
-		In2iGui.dragProxy = n2i.build('div',{'class':'in2igui_dragproxy',style:'display:none'});
-		document.body.appendChild(In2iGui.dragProxy);
+/* EOF */hui.ui.getDragProxy = function() {
+	if (!hui.ui.dragProxy) {
+		hui.ui.dragProxy = hui.build('div',{'class':'in2igui_dragproxy',style:'display:none'});
+		document.body.appendChild(hui.ui.dragProxy);
 	}
-	return In2iGui.dragProxy;
+	return hui.ui.dragProxy;
 };
 
-In2iGui.startDrag = function(e,element,options) {
-	e = new n2i.Event(e);
+hui.ui.startDrag = function(e,element,options) {
+	e = new hui.Event(e);
 	var info = element.dragDropInfo;
-	In2iGui.dropTypes = In2iGui.findDropTypes(info);
-	if (!In2iGui.dropTypes) return;
-	var proxy = In2iGui.getDragProxy();
-	n2i.listen(document.body,'mousemove',In2iGui.dragListener);
-	n2i.listen(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragInfo = info;
+	hui.ui.dropTypes = hui.ui.findDropTypes(info);
+	if (!hui.ui.dropTypes) return;
+	var proxy = hui.ui.getDragProxy();
+	hui.listen(document.body,'mousemove',hui.ui.dragListener);
+	hui.listen(document.body,'mouseup',hui.ui.dragEndListener);
+	hui.ui.dragInfo = info;
 	if (info.icon) {
-		proxy.style.backgroundImage = 'url('+In2iGui.getIconUrl(info.icon,1)+')';
+		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,1)+')';
 	}
-	In2iGui.startDragPos = {top:e.top(),left:e.left()};
-	proxy.innerHTML = info.title ? '<span>'+n2i.escape(info.title)+'</span>' : '###';
-	In2iGui.dragging = true;
+	hui.ui.startDragPos = {top:e.top(),left:e.left()};
+	proxy.innerHTML = info.title ? '<span>'+hui.escape(info.title)+'</span>' : '###';
+	hui.ui.dragging = true;
 	document.body.onselectstart = function () { return false; };
 };
 
-In2iGui.findDropTypes = function(drag) {
-	var gui = In2iGui;
+hui.ui.findDropTypes = function(drag) {
+	var gui = hui.ui;
 	var drops = null;
 	for (var i=0; i < gui.delegates.length; i++) {
 		if (gui.delegates[i].dragDrop) {
@@ -4567,26 +4683,26 @@ In2iGui.findDropTypes = function(drag) {
 	return drops;
 };
 
-In2iGui.dragListener = function(e) {
-	e = new n2i.Event(e);
-	In2iGui.dragProxy.style.left = (e.left()+10)+'px';
-	In2iGui.dragProxy.style.top = e.top()+'px';
-	In2iGui.dragProxy.style.display='block';
-	var target = In2iGui.findDropTarget(e.getElement());
-	if (target && In2iGui.dropTypes[target.dragDropInfo['kind']]) {
-		if (In2iGui.latestDropTarget) {
-			n2i.removeClass(In2iGui.latestDropTarget,'in2igui_drop');
+hui.ui.dragListener = function(e) {
+	e = new hui.Event(e);
+	hui.ui.dragProxy.style.left = (e.left()+10)+'px';
+	hui.ui.dragProxy.style.top = e.top()+'px';
+	hui.ui.dragProxy.style.display='block';
+	var target = hui.ui.findDropTarget(e.getElement());
+	if (target && hui.ui.dropTypes[target.dragDropInfo['kind']]) {
+		if (hui.ui.latestDropTarget) {
+			hui.removeClass(hui.ui.latestDropTarget,'in2igui_drop');
 		}
-		n2i.addClass(target,'in2igui_drop');
-		In2iGui.latestDropTarget = target;
-	} else if (In2iGui.latestDropTarget) {
-		n2i.removeClass(In2iGui.latestDropTarget,'in2igui_drop');
-		In2iGui.latestDropTarget = null;
+		hui.addClass(target,'in2igui_drop');
+		hui.ui.latestDropTarget = target;
+	} else if (hui.ui.latestDropTarget) {
+		hui.removeClass(hui.ui.latestDropTarget,'in2igui_drop');
+		hui.ui.latestDropTarget = null;
 	}
 	return false;
 };
 
-In2iGui.findDropTarget = function(node) {
+hui.ui.findDropTarget = function(node) {
 	while (node) {
 		if (node.dragDropInfo) {
 			return node;
@@ -4596,58 +4712,58 @@ In2iGui.findDropTarget = function(node) {
 	return null;
 };
 
-In2iGui.dragEndListener = function(event) {
-	n2i.unListen(document.body,'mousemove',In2iGui.dragListener);
-	n2i.unListen(document.body,'mouseup',In2iGui.dragEndListener);
-	In2iGui.dragging = false;
-	if (In2iGui.latestDropTarget) {
-		n2i.removeClass(In2iGui.latestDropTarget,'in2igui_drop');
-		In2iGui.callDelegatesDrop(In2iGui.dragInfo,In2iGui.latestDropTarget.dragDropInfo);
-		In2iGui.dragProxy.style.display='none';
+hui.ui.dragEndListener = function(event) {
+	hui.unListen(document.body,'mousemove',hui.ui.dragListener);
+	hui.unListen(document.body,'mouseup',hui.ui.dragEndListener);
+	hui.ui.dragging = false;
+	if (hui.ui.latestDropTarget) {
+		hui.removeClass(hui.ui.latestDropTarget,'in2igui_drop');
+		hui.ui.callDelegatesDrop(hui.ui.dragInfo,hui.ui.latestDropTarget.dragDropInfo);
+		hui.ui.dragProxy.style.display='none';
 	} else {
-		n2i.ani(In2iGui.dragProxy,'left',(In2iGui.startDragPos.left+10)+'px',200,{ease:n2i.ease.fastSlow});
-		n2i.ani(In2iGui.dragProxy,'top',(In2iGui.startDragPos.top-5)+'px',200,{ease:n2i.ease.fastSlow,hideOnComplete:true});
+		hui.animate(hui.ui.dragProxy,'left',(hui.ui.startDragPos.left+10)+'px',200,{ease:hui.ease.fastSlow});
+		hui.animate(hui.ui.dragProxy,'top',(hui.ui.startDragPos.top-5)+'px',200,{ease:hui.ease.fastSlow,hideOnComplete:true});
 	}
-	In2iGui.latestDropTarget=null;
+	hui.ui.latestDropTarget=null;
 	document.body.onselectstart=null;
 };
 
-In2iGui.dropOverListener = function(event) {
-	if (In2iGui.dragging) {
+hui.ui.dropOverListener = function(event) {
+	if (hui.ui.dragging) {
 		//this.style.backgroundColor='#3875D7';
 	}
 };
 
-In2iGui.dropOutListener = function(event) {
-	if (In2iGui.dragging) {
+hui.ui.dropOutListener = function(event) {
+	if (hui.ui.dragging) {
 		//this.style.backgroundColor='';
 	}
 };/**
  * @constructor
  */
-In2iGui.Window = function(options) {
-	this.element = n2i.get(options.element);
+hui.ui.Window = function(options) {
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.close = n2i.firstByClass(this.element,'in2igui_window_close');
-	this.titlebar = n2i.firstByClass(this.element,'in2igui_window_titlebar');
-	this.title = n2i.firstByClass(this.titlebar,'in2igui_window_title');
-	this.content = n2i.firstByClass(this.element,'in2igui_window_body');
-	this.front = n2i.firstByClass(this.element,'in2igui_window_front');
-	this.back = n2i.firstByClass(this.element,'in2igui_window_back');
+	this.close = hui.firstByClass(this.element,'in2igui_window_close');
+	this.titlebar = hui.firstByClass(this.element,'in2igui_window_titlebar');
+	this.title = hui.firstByClass(this.titlebar,'in2igui_window_title');
+	this.content = hui.firstByClass(this.element,'in2igui_window_body');
+	this.front = hui.firstByClass(this.element,'in2igui_window_front');
+	this.back = hui.firstByClass(this.element,'in2igui_window_back');
 	if (this.back) {
-		n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+		hui.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
 	}
 	this.visible = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Window.create = function(options) {
-	options = n2i.override({title:'Window',close:true},options);
+hui.ui.Window.create = function(options) {
+	options = hui.override({title:'Window',close:true},options);
 	var html = '<div class="in2igui_window_front">'+(options.close ? '<div class="in2igui_window_close"></div>' : '')+
 		'<div class="in2igui_window_titlebar"><div><div>';
 		if (options.icon) {
-			html+='<span class="in2igui_window_icon" style="background-image: url('+In2iGui.getIconUrl(options.icon,1)+')"></span>';
+			html+='<span class="in2igui_window_icon" style="background-image: url('+hui.ui.getIconUrl(options.icon,1)+')"></span>';
 		}
 	html+='<span class="in2igui_window_title">'+options.title+'</span></div></div></div>'+
 		'<div class="in2igui_window_content"><div class="in2igui_window_content"><div class="in2igui_window_body" style="'+
@@ -4656,63 +4772,63 @@ In2iGui.Window.create = function(options) {
 		'">'+
 		'</div></div></div>'+
 		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div></div>';
-	options.element = n2i.build('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : ''),html:html,parent:document.body});
-	return new In2iGui.Window(options);
+	options.element = hui.build('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : ''),html:html,parent:document.body});
+	return new hui.ui.Window(options);
 }
 
-In2iGui.Window.prototype = {
+hui.ui.Window.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
 		if (this.close) {
-			n2i.listen(this.close,'click',function(e) {
+			hui.listen(this.close,'click',function(e) {
 				this.hide();
 				this.fire('userClosedWindow');
 			}.bind(this)
 			);
-			n2i.listen(this.close,'mousedown',function(e) {n2i.stop(e)});
+			hui.listen(this.close,'mousedown',function(e) {hui.stop(e)});
 		}
 		this.titlebar.onmousedown = function(e) {self.startDrag(e);return false;};
-		n2i.listen(this.element,'mousedown',function() {
-			self.element.style.zIndex=In2iGui.nextPanelIndex();
+		hui.listen(this.element,'mousedown',function() {
+			self.element.style.zIndex=hui.ui.nextPanelIndex();
 		});
 	},
 	setTitle : function(title) {
-		n2i.dom.setText(this.title,title);
+		hui.dom.setText(this.title,title);
 	},
 	show : function(options) {
 		if (this.visible) {return}
 		options = options || {};
-		n2i.setStyle(this.element,{
-			zIndex : In2iGui.nextPanelIndex(), visibility : 'hidden', display : 'block'
+		hui.setStyle(this.element,{
+			zIndex : hui.ui.nextPanelIndex(), visibility : 'hidden', display : 'block'
 		})
 		var width = this.element.clientWidth;
-		n2i.setStyle(this.element,{
+		hui.setStyle(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
 		if (options.avoid) {
-			n2i.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
+			hui.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
 		} else {
 			if (!this.element.style.top) {
-				this.element.style.top = (n2i.getScrollTop()+40)+'px';
+				this.element.style.top = (hui.getScrollTop()+40)+'px';
 			}
 			if (!this.element.style.left) {
-				this.element.style.left = Math.round((n2i.getViewPortWidth()-width)/2)+'px';
+				this.element.style.left = Math.round((hui.getViewPortWidth()-width)/2)+'px';
 			}			
 		}
-		if (n2i.browser.opacity) {
-			n2i.ani(this.element,'opacity',1,0);
+		if (hui.browser.opacity) {
+			hui.ani(this.element,'opacity',1,0);
 		}
 		this.visible = true;
-		In2iGui.callVisible(this);
+		hui.ui.callVisible(this);
 	},
 	toggle : function() {
 		(this.visible ? this.hide() : this.show() );
 	},
 	hide : function() {
 		if (!this.visible) return;
-		if (n2i.browser.opacity) {
-			n2i.ani(this.element,'opacity',0,200,{hideOnComplete:true});
+		if (hui.browser.opacity) {
+			hui.ani(this.element,'opacity',0,200,{hideOnComplete:true});
 		} else {
 			this.element.style.display='none';
 		}
@@ -4727,23 +4843,23 @@ In2iGui.Window.prototype = {
 	},
 	addToBack : function(widgetOrNode) {
 		if (!this.back) {
-			this.back = n2i.build('div',{className:'in2igui_window_back'});
+			this.back = hui.build('div',{className:'in2igui_window_back'});
 			this.element.insertBefore(this.back,this.front);
-			n2i.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
+			hui.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
 		}
-		this.back.appendChild(In2iGui.getElement(widgetOrNode));
+		this.back.appendChild(hui.ui.getElement(widgetOrNode));
 	},
 	setVariant : function(variant) {
-		n2i.removeClass(this.element,'in2igui_window_dark');
-		n2i.removeClass(this.element,'in2igui_window_light');
+		hui.removeClass(this.element,'in2igui_window_dark');
+		hui.removeClass(this.element,'in2igui_window_light');
 		if (variant=='dark' || variant=='light') {
-			n2i.addClass(this.element,'in2igui_window_'+variant);
+			hui.addClass(this.element,'in2igui_window_'+variant);
 		}
 	},
 	flip : function() {
 		if (this.back) {
 			this.back.style.minHeight = this.element.clientHeight+'px';
-			n2i.effect.flip({element:this.element});
+			hui.effect.flip({element:this.element});
 		}
 	},
 
@@ -4751,18 +4867,18 @@ In2iGui.Window.prototype = {
 
 	/** @private */
 	startDrag : function(e) {
-		var event = new n2i.Event(e);
-		this.element.style.zIndex=In2iGui.nextPanelIndex();
-		var pos = { top : n2i.getTop(this.element), left : n2i.getLeft(this.element) };
+		var event = new hui.Event(e);
+		this.element.style.zIndex=hui.ui.nextPanelIndex();
+		var pos = { top : hui.getTop(this.element), left : hui.getLeft(this.element) };
 		this.dragState = {left:event.left()-pos.left,top:event.top()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();
 		var self = this;
 		this.moveListener = function(e) {self.drag(e)};
 		this.upListener = function(e) {self.endDrag(e)};
-		n2i.listen(document,'mousemove',this.moveListener);
-		n2i.listen(document,'mouseup',this.upListener);
-		n2i.listen(document,'mousedown',this.upListener);
+		hui.listen(document,'mousemove',this.moveListener);
+		hui.listen(document,'mouseup',this.upListener);
+		hui.listen(document,'mousedown',this.upListener);
 		event.stop();
 		document.body.onselectstart = function () { return false; };
 		return false;
@@ -4778,7 +4894,7 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	drag : function(e) {
-		var event = new n2i.Event(e);
+		var event = new hui.Event(e);
 		this.element.style.right = 'auto';
 		var top = (event.top()-this.dragState.top);
 		var left = (event.left()-this.dragState.left);
@@ -4789,9 +4905,9 @@ In2iGui.Window.prototype = {
 	},
 	/** @private */
 	endDrag : function(e) {
-		n2i.unListen(document,'mousemove',this.moveListener);
-		n2i.unListen(document,'mouseup',this.upListener);
-		n2i.unListen(document,'mousedown',this.upListener);
+		hui.unListen(document,'mousemove',this.moveListener);
+		hui.unListen(document,'mouseup',this.upListener);
+		hui.unListen(document,'mousedown',this.upListener);
 		document.body.onselectstart = null;
 	}
 }
@@ -4800,27 +4916,27 @@ In2iGui.Window.prototype = {
  * @class
  * This is a formula
  */
-In2iGui.Formula = function(options) {
+hui.hui.Formula = function(options) {
 	this.options = options;
-	In2iGui.extend(this,options);
+	hui.hui.extend(this,options);
 	this.addBehavior();
 }
 
 /** @static Creates a new formula */
-In2iGui.Formula.create = function(o) {
+hui.hui.Formula.create = function(o) {
 	o = o || {};
-	var atts = {'class':'in2igui_formula'};
+	var atts = {'class':'in2igui_formula hui_formula'};
 	if (o.action) {
 		atts.action=o.action;
 	}
 	if (o.method) {
 		atts.method=o.method;
 	}
-	o.element = n2i.build('form',atts);
-	return new In2iGui.Formula(o);
+	o.element = hui.build('form',atts);
+	return new hui.ui.Formula(o);
 }
 
-In2iGui.Formula.prototype = {
+hui.ui.Formula.prototype = {
 	/** @private */
 	addBehavior : function() {
 		this.element.onsubmit=function() {return false;};
@@ -4831,7 +4947,7 @@ In2iGui.Formula.prototype = {
 	/** Returns a map of all values of descendants */
 	getValues : function() {
 		var data = {};
-		var d = In2iGui.getDescendants(this);
+		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key && d[i].getValue) {
 				data[d[i].options.key] = d[i].getValue();
@@ -4843,7 +4959,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Sets the values of the descendants */
 	setValues : function(values) {
-		var d = In2iGui.getDescendants(this);
+		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key) {
 				var key = d[i].options.key;
@@ -4855,7 +4971,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Sets focus in the first found child */
 	focus : function() {
-		var d = In2iGui.getDescendants(this);
+		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].focus) {
 				d[i].focus();
@@ -4865,7 +4981,7 @@ In2iGui.Formula.prototype = {
 	},
 	/** Resets all descendants */
 	reset : function() {
-		var d = In2iGui.getDescendants(this);
+		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].reset) {
 				d[i].reset();
@@ -4877,21 +4993,21 @@ In2iGui.Formula.prototype = {
 		this.element.appendChild(widget.getElement());
 	},
 	/** Creates a new form group and adds it to the form
-	 * @returns {'In2iGui.Formula.Group'} group
+	 * @returns {'hui.ui.Formula.Group'} group
 	 */
 	createGroup : function(options) {
-		var g = In2iGui.Formula.Group.create(options);
+		var g = hui.ui.Formula.Group.create(options);
 		this.add(g);
 		return g;
 	},
 	/** Builds and adds a new group according to a recipe
-	 * @returns {'In2iGui.Formula.Group'} group
+	 * @returns {'hui.ui.Formula.Group'} group
 	 */
 	buildGroup : function(options,recipe) {
 		var g = this.createGroup(options);
-		n2i.each(recipe,function(item) {
-			if (In2iGui.Formula[item.type]) {
-				var w = In2iGui.Formula[item.type].create(item.options);
+		hui.each(recipe,function(item) {
+			if (hui.ui.Formula[item.type]) {
+				var w = hui.ui.Formula[item.type].create(item.options);
 				g.add(w);
 			}
 		});
@@ -4916,52 +5032,52 @@ In2iGui.Formula.prototype = {
  * A form group
  * @constructor
  */
-In2iGui.Formula.Group = function(options) {
+hui.ui.Formula.Group = function(options) {
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	this.body = n2i.firstByTag(this.element,'tbody');
-	this.options = n2i.override({above:true},options);
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	this.body = hui.firstByTag(this.element,'tbody');
+	this.options = hui.override({above:true},options);
+	hui.ui.extend(this);
 }
 
 /** Creates a new form group */
-In2iGui.Formula.Group.create = function(options) {
-	options = n2i.override({above:true},options);
-	var element = options.element = n2i.build('table',
+hui.ui.Formula.Group.create = function(options) {
+	options = hui.override({above:true},options);
+	var element = options.element = hui.build('table',
 		{'class':'in2igui_formula_group'}
 	);
 	if (options.above) {
-		n2i.addClass(element,'in2igui_formula_group_above');
+		hui.addClass(element,'in2igui_formula_group_above');
 	}
-	element.appendChild(n2i.build('tbody'));
-	return new In2iGui.Formula.Group(options);
+	element.appendChild(hui.build('tbody'));
+	return new hui.ui.Formula.Group(options);
 }
 
-In2iGui.Formula.Group.prototype = {
+hui.ui.Formula.Group.prototype = {
 	add : function(widget) {
-		var tr = n2i.build('tr');
+		var tr = hui.build('tr');
 		this.body.appendChild(tr);
-		var td = n2i.build('td',{'class':'in2igui_formula_group'});
+		var td = hui.build('td',{'class':'in2igui_formula_group'});
 		if (widget.getLabel) {
 			var label = widget.getLabel();
 			if (label) {
 				if (this.options.above) {
-					n2i.build('label',{text:label,parent:td});
+					hui.build('label',{text:label,parent:td});
 				} else {
-					var th = n2i.build('th',{parent:tr});
-					n2i.build('label',{text:label,parent:th});
+					var th = hui.build('th',{parent:tr});
+					hui.build('label',{text:label,parent:th});
 				}
 			}
 		}
-		var item = n2i.build('div',{'class':'in2igui_formula_item'});
+		var item = hui.build('div',{'class':'in2igui_formula_item'});
 		item.appendChild(widget.getElement());
 		td.appendChild(item);
 		tr.appendChild(td);
 	},
 	createButtons : function(options) {
-		var tr = n2i.build('tr',{parent:this.body});
-		var td = n2i.build('td',{colspan:this.options.above?1:2,parent:tr});
-		var b = In2iGui.Buttons.create(options);
+		var tr = hui.build('tr',{parent:this.body});
+		var td = hui.build('td',{colspan:this.options.above?1:2,parent:tr});
+		var b = hui.ui.Buttons.create(options);
 		td.appendChild(b.getElement());
 		return b;
 	}
@@ -4973,18 +5089,18 @@ In2iGui.Formula.Group.prototype = {
  * A text fields
  * @constructor
  */
-In2iGui.Formula.Text = function(options) {
-	this.options = n2i.override({label:null,key:null,lines:1,live:false,maxHeight:100},options);
-	this.element = n2i.get(options.element);
+hui.ui.Formula.Text = function(options) {
+	this.options = hui.override({label:null,key:null,lines:1,live:false,maxHeight:100},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
-	this.input = n2i.firstByClass(this.element,'in2igui_formula_text');
+	hui.ui.extend(this);
+	this.input = hui.firstByClass(this.element,'in2igui_formula_text');
 	this.multiline = this.input.tagName.toLowerCase() == 'textarea';
-	this.placeholder = n2i.firstByClass(this.element,'in2igui_field_placeholder');
+	this.placeholder = hui.firstByClass(this.element,'in2igui_field_placeholder');
 	this.value = this.input.value;
 	if (this.placeholder) {
 		var self = this;
-		In2iGui.onDomReady(function() {
+		hui.ui.onReady(function() {
 			window.setTimeout(function() {
 				self.value = self.input.value;
 				self.updateClass();
@@ -4994,58 +5110,58 @@ In2iGui.Formula.Text = function(options) {
 	this.addBehavior();
 }
 
-In2iGui.Formula.Text.create = function(options) {
-	options = n2i.override({lines:1},options);
+hui.ui.Formula.Text.create = function(options) {
+	options = hui.override({lines:1},options);
 	var node,input;
 	if (options.lines>1 || options.multiline) {
-		input = n2i.build('textarea',
+		input = hui.build('textarea',
 			{'class':'in2igui_formula_text','rows':options.lines,style:'height: 32px;'}
 		);
-		node = n2i.build('span',{'class':'in2igui_formula_text_multiline'});
+		node = hui.build('span',{'class':'in2igui_formula_text_multiline'});
 		node.appendChild(input);
 	} else {
-		input = n2i.build('input',{'class':'in2igui_formula_text'});
+		input = hui.build('input',{'class':'in2igui_formula_text'});
 		if (options.secret) {
 			input.setAttribute('type','password');
 		}
-		node = n2i.build('span',{'class':'in2igui_field_singleline'});
+		node = hui.build('span',{'class':'in2igui_field_singleline'});
 		node.appendChild(input);
 	}
 	if (options.value!==undefined) {
 		input.value=options.value;
 	}
-	options.element = In2iGui.wrapInField(node);
-	return new In2iGui.Formula.Text(options);
+	options.element = hui.ui.wrapInField(node);
+	return new hui.ui.Formula.Text(options);
 }
 
-In2iGui.Formula.Text.prototype = {
+hui.ui.Formula.Text.prototype = {
 	/** @private */
 	addBehavior : function() {
-		In2iGui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
-		n2i.listen(this.input,'keyup',this.onKeyUp.bind(this));
+		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
+		hui.listen(this.input,'keyup',this.onKeyUp.bind(this));
 		var p = this.element.getElementsByTagName('em')[0];
 		if (p) {
 			this.updateClass();
-			n2i.listen(p,'mousedown',function() {
+			hui.listen(p,'mousedown',function() {
 				window.setTimeout(function() {
 					this.input.focus();
 					this.input.select();
 				}.bind(this)
 			)}.bind(this));
-			n2i.listen(p,'mouseup',function() {
+			hui.listen(p,'mouseup',function() {
 				this.input.focus();
 				this.input.select();
 			}.bind(this));
 		}
 	},
 	updateClass : function() {
-		n2i.setClass(this.element,'in2igui_field_dirty',this.value.length>0);
+		hui.setClass(this.element,'in2igui_field_dirty',this.value.length>0);
 	},
 	/** @private */
 	onKeyUp : function(e) {
-		if (!this.multiline && e.keyCode===n2i.KEY_RETURN) {
+		if (!this.multiline && e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
-			var form = In2iGui.getAncestor(this,'in2igui_formula');
+			var form = hui.ui.getAncestor(this,'in2igui_formula');
 			if (form) {form.submit();}
 			return;
 		}
@@ -5053,7 +5169,7 @@ In2iGui.Formula.Text.prototype = {
 		this.value=this.input.value;
 		this.updateClass();
 		this.expand(true);
-		In2iGui.callAncestors(this,'childValueChanged',this.input.value);
+		hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 		this.fire('valueChanged',this.input.value);
 	},
 	updateFromNode : function(node) {
@@ -5098,16 +5214,16 @@ In2iGui.Formula.Text.prototype = {
 		return this.input.value=='';
 	},
 	isBlank : function() {
-		return n2i.isBlank(this.input.value);
+		return hui.isBlank(this.input.value);
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		n2i.setClass(this.element,'in2igui_field_error',isError);
+		hui.setClass(this.element,'in2igui_field_error',isError);
 		if (typeof(error) == 'string') {
-			In2iGui.showToolTip({text:error,element:this.element,key:this.name});
+			hui.ui.showToolTip({text:error,element:this.element,key:this.name});
 		}
 		if (!isError) {
-			In2iGui.hideToolTip({key:this.name});
+			hui.ui.hideToolTip({key:this.name});
 		}
 	},
 	// Expanding
@@ -5118,13 +5234,13 @@ In2iGui.Formula.Text.prototype = {
 	/** @private */
 	expand : function(animate) {
 		if (!this.multiline) {return};
-		if (!n2i.dom.isVisible(this.element)) {return};
-		var textHeight = In2iGui.getTextAreaHeight(this.input);
+		if (!hui.dom.isVisible(this.element)) {return};
+		var textHeight = hui.ui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
 		textHeight = Math.min(textHeight,this.options.maxHeight);
 		if (animate) {
 			this.updateOverflow();
-			n2i.animate(this.input,'height',textHeight+'px',300,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+			hui.animate(this.input,'height',textHeight+'px',300,{ease:hui.ease.slowFastSlow,onComplete:function() {
 				this.updateOverflow();
 				}.bind(this)
 			});
@@ -5145,30 +5261,30 @@ In2iGui.Formula.Text.prototype = {
  * A date and time field
  * @constructor
  */
-In2iGui.Formula.DateTime = function(o) {
+hui.ui.Formula.DateTime = function(o) {
 	this.inputFormats = ['d-m-Y','d/m-Y','d/m/Y','d-m-Y H:i:s','d/m-Y H:i:s','d/m/Y H:i:s','d-m-Y H:i','d/m-Y H:i','d/m/Y H:i','d-m-Y H','d/m-Y H','d/m/Y H','d-m','d/m','d','Y','m-d-Y','m-d','m/d'];
 	this.outputFormat = 'd-m-Y H:i:s';
 	this.name = o.name;
-	this.element = n2i.get(o.element);
-	this.input = n2i.firstByTag(this.element,'input');
-	this.options = n2i.override({returnType:null,label:null,allowNull:true,value:null},o);
+	this.element = hui.get(o.element);
+	this.input = hui.firstByTag(this.element,'input');
+	this.options = hui.override({returnType:null,label:null,allowNull:true,value:null},o);
 	this.value = this.options.value;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	this.updateUI();
 }
 
-In2iGui.Formula.DateTime.create = function(options) {
-	var node = n2i.build('span',{'class':'in2igui_formula_text_singleline'});
-	n2i.build('input',{'class':'in2igui_formula_text',parent:node});
-	options.element = In2iGui.wrapInField(node);
-	return new In2iGui.Formula.DateTime(options);
+hui.ui.Formula.DateTime.create = function(options) {
+	var node = hui.build('span',{'class':'in2igui_formula_text_singleline'});
+	hui.build('input',{'class':'in2igui_formula_text',parent:node});
+	options.element = hui.ui.wrapInField(node);
+	return new hui.ui.Formula.DateTime(options);
 }
 
-In2iGui.Formula.DateTime.prototype = {
+hui.ui.Formula.DateTime.prototype = {
 	addBehavior : function() {
-		In2iGui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
-		n2i.listen(this.input,'blur',this.check.bind(this));
+		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
+		hui.listen(this.input,'blur',this.check.bind(this));
 	},
 	updateFromNode : function(node) {
 		if (node.firstChild) {
@@ -5235,45 +5351,45 @@ In2iGui.Formula.DateTime.prototype = {
  * A date and time field
  * @constructor
  */
-In2iGui.Formula.Number = function(o) {
-	this.options = n2i.override({min:0,max:10000,value:null,decimals:0,allowNull:false},o);	
+hui.ui.Formula.Number = function(o) {
+	this.options = hui.override({min:0,max:10000,value:null,decimals:0,allowNull:false},o);	
 	this.name = o.name;
-	var e = this.element = n2i.get(o.element);
-	this.input = n2i.firstByTag(e,'input');
-	this.up = n2i.firstByClass(e,'in2igui_number_up');
-	this.down = n2i.firstByClass(e,'in2igui_number_down');
+	var e = this.element = hui.get(o.element);
+	this.input = hui.firstByTag(e,'input');
+	this.up = hui.firstByClass(e,'in2igui_number_up');
+	this.down = hui.firstByClass(e,'in2igui_number_down');
 	this.value = this.options.value;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Formula.Number.create = function(o) {
-	o.element = n2i.build('span',{
+hui.ui.Formula.Number.create = function(o) {
+	o.element = hui.build('span',{
 		'class':'in2igui_number',
 		html:'<span><span><input type="text" value="'+(o.value!==undefined ? o.value : '0')+'"/><a class="in2igui_number_up"></a><a class="in2igui_number_down"></a></span></span>'
 	});
-	return new In2iGui.Formula.Number(o);
+	return new hui.ui.Formula.Number(o);
 }
 
-In2iGui.Formula.Number.prototype = {
+hui.ui.Formula.Number.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		n2i.listen(this.input,'focus',function() {n2i.addClass(e,'in2igui_number_focused')});
-		n2i.listen(this.input,'blur',this.blurEvent.bind(this));
-		n2i.listen(this.input,'keyup',this.keyEvent.bind(this));
-		n2i.listen(this.up,'mousedown',this.upEvent.bind(this));
-		n2i.listen(this.down,'mousedown',this.downEvent.bind(this));
+		hui.listen(this.input,'focus',function() {hui.addClass(e,'in2igui_number_focused')});
+		hui.listen(this.input,'blur',this.blurEvent.bind(this));
+		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
+		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
+		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
 	},
 	blurEvent : function() {
-		n2i.removeClass(this.element,'in2igui_number_focused');
+		hui.removeClass(this.element,'in2igui_number_focused');
 		this.updateField();
 	},
 	keyEvent : function(e) {
 		e = e || window.event;
-		if (e.keyCode==n2i.KEY_UP) {
-			n2i.stop(e);
+		if (e.keyCode==hui.KEY_UP) {
+			hui.stop(e);
 			this.upEvent();
-		} else if (e.keyCode==n2i.KEY_DOWN) {
+		} else if (e.keyCode==hui.KEY_DOWN) {
 			this.downEvent();
 		} else {
 			var parsed = parseInt(this.input.value,10);
@@ -5325,7 +5441,7 @@ In2iGui.Formula.Number.prototype = {
 			this.value = Math.min(Math.max(value,this.options.min),this.options.max);
 		}
 		if (fire && orig!==this.value) {
-			In2iGui.callAncestors(this,'childValueChanged',this.value);
+			hui.ui.callAncestors(this,'childValueChanged',this.value);
 			this.fire('valueChanged',this.value);
 		}
 	},
@@ -5345,42 +5461,42 @@ In2iGui.Formula.Number.prototype = {
  * A drop down selector
  * @constructor
  */
-In2iGui.Formula.DropDown = function(o) {
-	this.options = n2i.override({label:null,placeholder:null,url:null,source:null},o);
+hui.ui.Formula.DropDown = function(o) {
+	this.options = hui.override({label:null,placeholder:null,url:null,source:null},o);
 	this.name = o.name;
-	var e = this.element = n2i.get(o.element);
+	var e = this.element = hui.get(o.element);
 	this.inner = e.getElementsByTagName('strong')[0];
 	this.items = o.items || [];
 	this.index = -1;
 	this.value = this.options.value || null;
 	this.dirty = true;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this._addBehavior();
 	this._updateIndex();
 	this._updateUI();
 	if (this.options.url) {
-		this.options.source = new In2iGui.Source({url:this.options.url,delegate:this});
+		this.options.source = new hui.ui.Source({url:this.options.url,delegate:this});
 	} else if (this.options.source) {
 		this.options.source.listen(this);
 	}
 }
 
-In2iGui.Formula.DropDown.create = function(options) {
+hui.ui.Formula.DropDown.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('a',{
+	options.element = hui.build('a',{
 		'class':'in2igui_dropdown',href:'#',
 		html:'<span><span><strong></strong></span></span>'
 	});
-	return new In2iGui.Formula.DropDown(options);
+	return new hui.ui.Formula.DropDown(options);
 }
 
-In2iGui.Formula.DropDown.prototype = {
+hui.ui.Formula.DropDown.prototype = {
 	/** @private */
 	_addBehavior : function() {
-		In2iGui.addFocusClass({element:this.element,'class':'in2igui_dropdown_focused'});
-		n2i.listen(this.element,'click',this._click.bind(this));
-		n2i.listen(this.element,'blur',this._hideSelector.bind(this));
-		n2i.listen(this.element,'keydown',this._keyDown.bind(this));
+		hui.ui.addFocusClass({element:this.element,'class':'in2igui_dropdown_focused'});
+		hui.listen(this.element,'click',this._click.bind(this));
+		hui.listen(this.element,'blur',this._hideSelector.bind(this));
+		hui.listen(this.element,'keydown',this._keyDown.bind(this));
 	},
 	/** @private */
 	_updateIndex : function() {
@@ -5397,10 +5513,10 @@ In2iGui.Formula.DropDown.prototype = {
 		if (selected) {
 			var text = selected.label || selected.title || '';
 			this.inner.innerHTML='';
-			n2i.dom.addText(this.inner,n2i.wrap(text));
+			hui.dom.addText(this.inner,hui.wrap(text));
 		} else if (this.options.placeholder) {
 			this.inner.innerHTML='';
-			this.inner.appendChild(n2i.build('em',{text:n2i.escape(this.options.placeholder)}));
+			this.inner.appendChild(hui.build('em',{text:hui.escape(this.options.placeholder)}));
 		} else {
 			this.inner.innerHTML='';
 		}
@@ -5410,7 +5526,7 @@ In2iGui.Formula.DropDown.prototype = {
 		var as = this.selector.getElementsByTagName('a');
 		for (var i=0; i < as.length; i++) {
 			if (this.index==i) {
-				n2i.addClass(as[i],'in2igui_selected');
+				hui.addClass(as[i],'in2igui_selected');
 			} else {
 				as[i].className='';
 			}
@@ -5418,27 +5534,27 @@ In2iGui.Formula.DropDown.prototype = {
 	},
 	/** @private */
 	_click : function(e) {
-		n2i.stop(e);
+		hui.stop(e);
 		this._buildSelector();
 		var el = this.element, s=this.selector;
 		el.focus();
 		if (!this.items) return;
-		var docHeight = n2i.getDocumentHeight();
+		var docHeight = hui.getDocumentHeight();
 		if (docHeight<200) {
-			var left = n2i.getLeft(this.element);
-			n2i.setStyle(this.selector,{'left':left+'px',top:'5px'});
+			var left = hui.getLeft(this.element);
+			hui.setStyle(this.selector,{'left':left+'px',top:'5px'});
 		} else {
-			n2i.place({
+			hui.place({
 				target:{element:this.element,vertical:1,horizontal:0},
 				source:{element:this.selector,vertical:0,horizontal:0}
 			});
 		}
-		n2i.setStyle(s,{visibility:'hidden',display:'block',width:''});
-		var height = Math.min(docHeight-n2i.getTop(s)-5,200);
+		hui.setStyle(s,{visibility:'hidden',display:'block',width:''});
+		var height = Math.min(docHeight-hui.getTop(s)-5,200);
 		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
-		var space = n2i.getViewPortWidth()-n2i.getLeft(el)-20;
+		var space = hui.getViewPortWidth()-hui.getLeft(el)-20;
 		width = Math.min(width,space);
-		n2i.setStyle(s,{visibility:'visible',width:width+'px',zIndex:In2iGui.nextTopIndex(),maxHeight:height+'px'});
+		hui.setStyle(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
 	},
 	/** @private */
 	_keyDown : function(e) {
@@ -5446,7 +5562,7 @@ In2iGui.Formula.DropDown.prototype = {
 			return;
 		}
 		if (e.keyCode==40) {
-			n2i.stop(e);
+			hui.stop(e);
 			if (this.index>=this.items.length-1) {
 				this.value=this.items[0].value;
 			} else {
@@ -5456,7 +5572,7 @@ In2iGui.Formula.DropDown.prototype = {
 			this._updateUI();
 			this._fireChange();
 		} else if (e.keyCode==38) {
-			n2i.stop(e);
+			hui.stop(e);
 			if (this.index>0) {
 				this.index--;
 			} else {
@@ -5524,21 +5640,21 @@ In2iGui.Formula.DropDown.prototype = {
 	_buildSelector : function() {
 		if (!this.dirty || !this.items) {return};
 		if (!this.selector) {
-			this.selector = n2i.build('div',{'class':'in2igui_dropdown_selector'});
+			this.selector = hui.build('div',{'class':'in2igui_dropdown_selector'});
 			document.body.appendChild(this.selector);
-			n2i.listen(this.selector,'mousedown',function(e) {n2i.stop(e)});
+			hui.listen(this.selector,'mousedown',function(e) {hui.stop(e)});
 		} else {
 			this.selector.innerHTML='';
 		}
 		var self = this;
-		n2i.each(this.items,function(item,i) {
-			var e = n2i.build('a',{href:'#',text:item.label || item.title});
-			n2i.listen(e,'mousedown',function(e) {
-				n2i.stop(e);
+		hui.each(this.items,function(item,i) {
+			var e = hui.build('a',{href:'#',text:item.label || item.title});
+			hui.listen(e,'mousedown',function(e) {
+				hui.stop(e);
 				self._itemClicked(item,i);
 			})
 			if (i==self.index) {
-				n2i.addClass(e,'in2igui_selected')
+				hui.addClass(e,'in2igui_selected')
 			};
 			self.selector.appendChild(e);
 		});
@@ -5556,7 +5672,7 @@ In2iGui.Formula.DropDown.prototype = {
 		}
 	},
 	_fireChange : function() {
-		In2iGui.callAncestors(this,'childValueChanged',this.value);
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
 		this.fire('valueChanged',this.value);
 	}
 }
@@ -5567,17 +5683,17 @@ In2iGui.Formula.DropDown.prototype = {
 /**
  * @constructor
  */
-In2iGui.Formula.Radiobuttons = function(options) {
+hui.ui.Formula.Radiobuttons = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.radios = [];
 	this.value = options.value;
 	this.defaultValue = this.value;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Formula.Radiobuttons.prototype = {
+hui.ui.Formula.Radiobuttons.prototype = {
 	click : function() {
 		this.value = !this.value;
 		this.updateUI();
@@ -5586,7 +5702,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 	updateUI : function() {
 		for (var i=0; i < this.radios.length; i++) {
 			var radio = this.radios[i];
-			n2i.setClass(n2i.get(radio.id),'in2igui_selected',radio.value==this.value);
+			hui.setClass(hui.get(radio.id),'in2igui_selected',radio.value==this.value);
 		};
 	},
 	setValue : function(value) {
@@ -5601,7 +5717,7 @@ In2iGui.Formula.Radiobuttons.prototype = {
 	},
 	registerRadiobutton : function(radio) {
 		this.radios.push(radio);
-		var element = n2i.get(radio.id);
+		var element = hui.get(radio.id);
 		var self = this;
 		element.onclick = function() {
 			self.setValue(radio.value);
@@ -5617,45 +5733,45 @@ In2iGui.Formula.Radiobuttons.prototype = {
  * A check box
  * @constructor
  */
-In2iGui.Formula.Checkbox = function(o) {
-	this.element = n2i.get(o.element);
-	this.control = n2i.firstByTag(this.element,'span');
+hui.ui.Formula.Checkbox = function(o) {
+	this.element = hui.get(o.element);
+	this.control = hui.firstByTag(this.element,'span');
 	this.options = o;
 	this.name = o.name;
 	this.value = o.value==='true' || o.value===true;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
 /**
  * Creates a new checkbox
  */
-In2iGui.Formula.Checkbox.create = function(o) {
-	var e = o.element = n2i.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'});
+hui.ui.Formula.Checkbox.create = function(o) {
+	var e = o.element = hui.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'});
 	if (o.value) {
-		n2i.addClass(e,'in2igui_checkbox_selected');
+		hui.addClass(e,'in2igui_checkbox_selected');
 	}
-	return new In2iGui.Formula.Checkbox(o);
+	return new hui.ui.Formula.Checkbox(o);
 }
 
-In2iGui.Formula.Checkbox.prototype = {
+hui.ui.Formula.Checkbox.prototype = {
 	/** @private */
 	addBehavior : function() {
-		In2iGui.addFocusClass({element:this.element,'class':'in2igui_checkbox_focused'});
-		n2i.listen(this.element,'click',this.click.bind(this));
+		hui.ui.addFocusClass({element:this.element,'class':'in2igui_checkbox_focused'});
+		hui.listen(this.element,'click',this.click.bind(this));
 	},
 	/** @private */
 	click : function(e) {
-		n2i.stop(e);
+		hui.stop(e);
 		this.element.focus();
 		this.value = !this.value;
 		this.updateUI();
-		In2iGui.callAncestors(this,'childValueChanged',this.value);
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
 		this.fire('valueChanged',this.value);
 	},
 	/** @private */
 	updateUI : function() {
-		n2i.setClass(this.element,'in2igui_checkbox_selected',this.value);
+		hui.setClass(this.element,'in2igui_checkbox_selected',this.value);
 	},
 	/** Sets the value
 	 * @param {Boolean} value Whether the checkbox is checked
@@ -5688,41 +5804,41 @@ In2iGui.Formula.Checkbox.prototype = {
  * Multiple checkboxes
  * @constructor
  */
-In2iGui.Formula.Checkboxes = function(options) {
+hui.ui.Formula.Checkboxes = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.items = options.items || [];
 	this.sources = [];
 	this.subItems = [];
 	this.values = options.values || options.value || []; // values is deprecated
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	this.updateUI();
 	if (options.url) {
-		new In2iGui.Source({url:options.url,delegate:this});
+		new hui.ui.Source({url:options.url,delegate:this});
 	}
 }
 
-In2iGui.Formula.Checkboxes.create = function(o) {
-	o.element = n2i.build('div',{'class':o.vertical ? 'in2igui_checkboxes in2igui_checkboxes_vertical' : 'in2igui_checkboxes'});
+hui.ui.Formula.Checkboxes.create = function(o) {
+	o.element = hui.build('div',{'class':o.vertical ? 'in2igui_checkboxes in2igui_checkboxes_vertical' : 'in2igui_checkboxes'});
 	if (o.items) {
-		n2i.each(o.items,function(item) {
-			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+item.title});
-			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
+		hui.each(o.items,function(item) {
+			var node = hui.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+item.title});
+			hui.ui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
 			o.element.appendChild(node);
 		});
 	}
-	return new In2iGui.Formula.Checkboxes(o);
+	return new hui.ui.Formula.Checkboxes(o);
 }
 
-In2iGui.Formula.Checkboxes.prototype = {
+hui.ui.Formula.Checkboxes.prototype = {
 	/** @private */
 	addBehavior : function() {
-		var checks = n2i.byClass(this.element,'in2igui_checkbox');
-		n2i.each(checks,function(check,i) {
-			n2i.listen(check,'click',function(e) {
-				n2i.stop(e);
+		var checks = hui.byClass(this.element,'in2igui_checkbox');
+		hui.each(checks,function(check,i) {
+			hui.listen(check,'click',function(e) {
+				hui.stop(e);
 				this.flipValue(this.items[i].value);
 			}.bind(this))
 		}.bind(this))
@@ -5762,22 +5878,22 @@ In2iGui.Formula.Checkboxes.prototype = {
 		this.setValue(values);
 	},
 	flipValue : function(value) {
-		n2i.flipInArray(this.values,value);
+		hui.flipInArray(this.values,value);
 		this.checkValues();
 		this.updateUI();
 		this.fire('valueChanged',this.values);
-		In2iGui.callAncestors(this,'childValueChanged',this.values);
+		hui.ui.callAncestors(this,'childValueChanged',this.values);
 	},
 	updateUI : function() {
 		var i,item,found;
 		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
-		var nodes = n2i.byClass(this.element,'in2igui_checkbox');
+		var nodes = hui.byClass(this.element,'in2igui_checkbox');
 		for (i=0; i < this.items.length; i++) {
 			item = this.items[i];
-			found = n2i.inArray(this.values,item.value);
-			n2i.setClass(nodes[i],'in2igui_checkbox_selected',found);
+			found = hui.inArray(this.values,item.value);
+			hui.setClass(nodes[i],'in2igui_checkbox_selected',found);
 		};
 	},
 	refresh : function() {
@@ -5807,13 +5923,13 @@ In2iGui.Formula.Checkboxes.prototype = {
 		return this.options.label;
 	},
 	$itemsLoaded : function(items) {
-		n2i.each(items,function(item) {
-			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+n2i.escape(item.title)});
-			n2i.listen(node,'click',function(e) {
-				n2i.stop(e);
+		hui.each(items,function(item) {
+			var node = hui.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.escape(item.title)});
+			hui.listen(node,'click',function(e) {
+				hui.stop(e);
 				this.flipValue(item.value);
 			}.bind(this))
-			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
+			hui.ui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
 			this.element.appendChild(node);
 			this.items.push(item);
 		}.bind(this));
@@ -5828,19 +5944,19 @@ In2iGui.Formula.Checkboxes.prototype = {
  * Check box items
  * @constructor
  */
-In2iGui.Formula.Checkboxes.Items = function(options) {
-	this.element = n2i.get(options.element);
+hui.ui.Formula.Checkboxes.Items = function(options) {
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.parent = null;
 	this.options = options;
 	this.checkboxes = [];
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
 }
 
-In2iGui.Formula.Checkboxes.Items.prototype = {
+hui.ui.Formula.Checkboxes.Items.prototype = {
 	refresh : function() {
 		if (this.options.source) {
 			this.options.source.refresh();
@@ -5850,14 +5966,14 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 		this.checkboxes = [];
 		this.element.innerHTML='';
 		var self = this;
-		n2i.each(items,function(item) {
-			var node = n2i.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'+item.title});
-			n2i.listen(node,'click',function(e) {
-				n2i.stop(e);
+		hui.each(items,function(item) {
+			var node = hui.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'+item.title});
+			hui.listen(node,'click',function(e) {
+				hui.stop(e);
 				node.focus();
 				self.itemWasClicked(item)
 			});
-			In2iGui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
+			hui.ui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
 			self.element.appendChild(node);
 			self.checkboxes.push({title:item.title,element:node,value:item.value});
 		});
@@ -5871,8 +5987,8 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
 		try {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
-			var index = n2i.indexInArray(this.parent.values,item.value);
-			n2i.setClass(item.element,'in2igui_checkbox_selected',index!=-1);
+			var index = hui.indexInArray(this.parent.values,item.value);
+			hui.setClass(item.element,'in2igui_checkbox_selected',index!=-1);
 		};
 		} catch (e) {
 			alert(typeof(this.parent.values));
@@ -5895,22 +6011,22 @@ In2iGui.Formula.Checkboxes.Items.prototype = {
  * A tokens component
  * @constructor
  */
-In2iGui.Formula.Tokens = function(o) {
-	this.options = n2i.override({label:null,key:null},o);
-	this.element = n2i.get(o.element);
+hui.ui.Formula.Tokens = function(o) {
+	this.options = hui.override({label:null,key:null},o);
+	this.element = hui.get(o.element);
 	this.name = o.name;
 	this.value = [''];
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.updateUI();
 }
 
-In2iGui.Formula.Tokens.create = function(o) {
+hui.ui.Formula.Tokens.create = function(o) {
 	o = o || {};
-	o.element = n2i.build('div',{'class':'in2igui_tokens'});
-	return new In2iGui.Formula.Tokens(o);
+	o.element = hui.build('div',{'class':'in2igui_tokens'});
+	return new hui.ui.Formula.Tokens(o);
 }
 
-In2iGui.Formula.Tokens.prototype = {
+hui.ui.Formula.Tokens.prototype = {
 	setValue : function(objects) {
 		this.value = objects;
 		this.value.push('');
@@ -5922,8 +6038,8 @@ In2iGui.Formula.Tokens.prototype = {
 	},
 	getValue : function() {
 		var out = [];
-		n2i.each(this.value,function(value) {
-			value = n2i.trim(value);
+		hui.each(this.value,function(value) {
+			value = hui.trim(value);
 			if (value.length>0) {
 				out.push(value);
 			}
@@ -5935,14 +6051,14 @@ In2iGui.Formula.Tokens.prototype = {
 	},
 	updateUI : function() {
 		this.element.innerHTML='';
-		n2i.each(this.value,function(value,i) {
-			var input = n2i.build('input',{'class':'in2igui_tokens_token',parent:this.element});
+		hui.each(this.value,function(value,i) {
+			var input = hui.build('input',{'class':'in2igui_tokens_token',parent:this.element});
 			if (this.options.width) {
 				input.style.width=this.options.width+'px';
 			}
 			input.value = value;
 			input.in2iguiIndex = i;
-			n2i.listen(input,'keyup',function() {
+			hui.listen(input,'keyup',function() {
 				this.inputChanged(input,i)
 			}.bind(this));
 		}.bind(this));
@@ -5956,7 +6072,7 @@ In2iGui.Formula.Tokens.prototype = {
 	},
 	/** @private */
 	addField : function() {
-		var input = n2i.build('input',{'class':'in2igui_tokens_token'});
+		var input = hui.build('input',{'class':'in2igui_tokens_token'});
 		if (this.options.width) {
 			input.style.width = this.options.width+'px';
 		}
@@ -5964,7 +6080,7 @@ In2iGui.Formula.Tokens.prototype = {
 		this.value.push('');
 		this.element.appendChild(input);
 		var self = this;
-		n2i.listen(input,'keyup',function() {self.inputChanged(input,i)});
+		hui.listen(input,'keyup',function() {self.inputChanged(input,i)});
 	}
 }
 
@@ -5974,28 +6090,28 @@ In2iGui.Formula.Tokens.prototype = {
  * A date and time field
  * @constructor
  */
-In2iGui.Formula.StyleLength = function(o) {
-	this.options = n2i.override({value:null,min:0,max:1000,units:['px','pt','em','%'],defaultUnit:'px',allowNull:false},o);	
+hui.ui.Formula.StyleLength = function(o) {
+	this.options = hui.override({value:null,min:0,max:1000,units:['px','pt','em','%'],defaultUnit:'px',allowNull:false},o);	
 	this.name = o.name;
-	var e = this.element = n2i.get(o.element);
-	this.input = n2i.firstByTag(e,'input');
+	var e = this.element = hui.get(o.element);
+	this.input = hui.firstByTag(e,'input');
 	var as = e.getElementsByTagName('a');
 	this.up = as[0];
 	this.down = as[1];
 	this.value = this.parseValue(this.options.value);
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Formula.StyleLength.prototype = {
+hui.ui.Formula.StyleLength.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var e = this.element;
-		n2i.listen(this.input,'focus',function() {n2i.addClass(e,'in2igui_number_focused')});
-		n2i.listen(this.input,'blur',this.blurEvent.bind(this));
-		n2i.listen(this.input,'keyup',this.keyEvent.bind(this));
-		n2i.listen(this.up,'mousedown',this.upEvent.bind(this));
-		n2i.listen(this.down,'mousedown',this.downEvent.bind(this));
+		hui.listen(this.input,'focus',function() {hui.addClass(e,'in2igui_number_focused')});
+		hui.listen(this.input,'blur',this.blurEvent.bind(this));
+		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
+		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
+		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
 	},
 	/** @private */
 	parseValue : function(value) {
@@ -6016,16 +6132,16 @@ In2iGui.Formula.StyleLength.prototype = {
 	},
 	/** @private */
 	blurEvent : function() {
-		n2i.removeClass(this.element,'in2igui_number_focused');
+		hui.removeClass(this.element,'in2igui_number_focused');
 		this.updateInput();
 	},
 	/** @private */
 	keyEvent : function(e) {
 		e = e || window.event;
-		if (e.keyCode==n2i.KEY_UP) {
-			n2i.stop(e);
+		if (e.keyCode==hui.KEY_UP) {
+			hui.stop(e);
 			this.upEvent();
-		} else if (e.keyCode==n2i.KEY_DOWN) {
+		} else if (e.keyCode==hui.KEY_DOWN) {
 			this.downEvent();
 		} else {
 			this.checkAndSetValue(this.parseValue(this.input.value));
@@ -6087,36 +6203,36 @@ In2iGui.Formula.StyleLength.prototype = {
  * A component for geo-location
  * @constructor
  */
-In2iGui.Formula.Location = function(options) {
-	this.options = n2i.override({value:null},options);
+hui.ui.Formula.Location = function(options) {
+	this.options = hui.override({value:null},options);
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	this.chooser = n2i.firstByTag(this.element,'a');
-	this.latField = new In2iGui.TextField({element:n2i.firstByTag(this.element,'input'),validator:new In2iGui.NumberValidator({min:-90,max:90,allowNull:true})});
+	this.element = hui.get(options.element);
+	this.chooser = hui.firstByTag(this.element,'a');
+	this.latField = new hui.ui.TextField({element:hui.firstByTag(this.element,'input'),validator:new hui.ui.NumberValidator({min:-90,max:90,allowNull:true})});
 	this.latField.listen(this);
-	this.lngField = new In2iGui.TextField({element:this.element.getElementsByTagName('input')[1],validator:new In2iGui.NumberValidator({min:-180,max:180,allowNull:true})});
+	this.lngField = new hui.ui.TextField({element:this.element.getElementsByTagName('input')[1],validator:new hui.ui.NumberValidator({min:-180,max:180,allowNull:true})});
 	this.lngField.listen(this);
 	this.value = this.options.value;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.setValue(this.value);
 	this.addBehavior();
 }
 
-In2iGui.Formula.Location.create = function(options) {
+hui.ui.Formula.Location.create = function(options) {
 	options = options || {};
-	var e = options.element = n2i.build('div',{'class':'in2igui_location'});
-	var b = n2i.build('span',{html:'<span class="in2igui_location_latitude"><span><input/></span></span><span class="in2igui_location_longitude"><span><input/></span></span>'});
-	e.appendChild(In2iGui.wrapInField(b));
-	e.appendChild(n2i.build('a',{'class':'in2igui_location_picker',href:'javascript:void(0);'}));
-	return new In2iGui.Formula.Location(options);
+	var e = options.element = hui.build('div',{'class':'in2igui_location'});
+	var b = hui.build('span',{html:'<span class="in2igui_location_latitude"><span><input/></span></span><span class="in2igui_location_longitude"><span><input/></span></span>'});
+	e.appendChild(hui.ui.wrapInField(b));
+	e.appendChild(hui.build('a',{'class':'in2igui_location_picker',href:'javascript:void(0);'}));
+	return new hui.ui.Formula.Location(options);
 }
 
-In2iGui.Formula.Location.prototype = {
+hui.ui.Formula.Location.prototype = {
 	/** @private */
 	addBehavior : function() {
-		n2i.listen(this.chooser,'click',this.showPicker.bind(this));
-		In2iGui.addFocusClass({element:this.latField.element,classElement:this.element,'class':'in2igui_field_focused'});
-		In2iGui.addFocusClass({element:this.lngField.element,classElement:this.element,'class':'in2igui_field_focused'});
+		hui.listen(this.chooser,'click',this.showPicker.bind(this));
+		hui.ui.addFocusClass({element:this.latField.element,classElement:this.element,'class':'in2igui_field_focused'});
+		hui.ui.addFocusClass({element:this.lngField.element,classElement:this.element,'class':'in2igui_field_focused'});
 	},
 	getLabel : function() {
 		return this.options.label;
@@ -6147,7 +6263,7 @@ In2iGui.Formula.Location.prototype = {
 	/** @private */
 	showPicker : function() {
 		if (!this.picker) {
-			this.picker = new In2iGui.LocationPicker();
+			this.picker = new hui.ui.LocationPicker();
 			this.picker.listen(this);
 		}
 		this.picker.show({node:this.chooser,location:this.value});
@@ -6191,24 +6307,24 @@ In2iGui.Formula.Location.prototype = {
  * @constructor
  * @param {Object} options The options : {url:null,source:null}
  */
-In2iGui.List = function(options) {
-	this.options = n2i.override({url:null,source:null},options);
-	this.element = n2i.get(options.element);
+hui.ui.List = function(options) {
+	this.options = hui.override({url:null,source:null},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
 	this.url = options.url;
-	this.table = n2i.firstByTag(this.element,'table');
-	this.head = n2i.firstByTag(this.element,'thead');
-	this.body = n2i.firstByTag(this.element,'tbody');
+	this.table = hui.firstByTag(this.element,'table');
+	this.head = hui.firstByTag(this.element,'thead');
+	this.body = hui.firstByTag(this.element,'tbody');
 	this.columns = [];
 	this.rows = [];
 	this.selected = [];
-	this.navigation = n2i.firstByClass(this.element,'in2igui_list_navigation');
-	this.count = n2i.firstByClass(this.navigation,'in2igui_list_count');
-	this.windowPage = n2i.firstByClass(this.navigation,'window_page');
-	this.windowPageBody = n2i.firstByClass(this.navigation,'window_page_body');
+	this.navigation = hui.firstByClass(this.element,'in2igui_list_navigation');
+	this.count = hui.firstByClass(this.navigation,'in2igui_list_count');
+	this.windowPage = hui.firstByClass(this.navigation,'window_page');
+	this.windowPageBody = hui.firstByClass(this.navigation,'window_page_body');
 	this.parameters = {};
 	this.sortKey = null;
 	this.sortDirection = null;
@@ -6217,7 +6333,7 @@ In2iGui.List = function(options) {
 	if (options.windowSize!='') {
 		this.window.size = parseInt(options.windowSize);
 	}
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (this.url)  {
 		this.refresh();
 	}
@@ -6227,15 +6343,15 @@ In2iGui.List = function(options) {
  * Creates a new list widget
  * @param {Object} options The options
  */
-In2iGui.List.create = function(options) {
-	options = n2i.override({},options);
-	options.element = n2i.build('div',{
+hui.ui.List.create = function(options) {
+	options = hui.override({},options);
+	options.element = hui.build('div',{
 		'class':'in2igui_list',
 		html: '<div class="in2igui_list_progress"></div><div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
-	return new In2iGui.List(options);
+	return new hui.ui.List(options);
 }
 
-In2iGui.List.prototype = {
+hui.ui.List.prototype = {
 	/** Hides the list */
 	hide : function() {
 		this.element.style.display='none';
@@ -6280,7 +6396,7 @@ In2iGui.List.prototype = {
 	},
 	/**
 	 * Sets the lists data source and refreshes it if it is new
-	 * @param {In2iGui.Source} source The source
+	 * @param {hui.ui.Source} source The source
 	 */
 	setSource : function(source) {
 		if (this.options.source!=source) {
@@ -6314,8 +6430,8 @@ In2iGui.List.prototype = {
 		this.columns = [];
 		this.rows = [];
 		this.navigation.style.display='none';
-		n2i.dom.clear(this.body);
-		n2i.dom.clear(this.head);
+		hui.dom.clear(this.body);
+		hui.dom.clear(this.head);
 		if (this.options.source) {
 			this.options.source.removeDelegate(this);
 		}
@@ -6325,8 +6441,8 @@ In2iGui.List.prototype = {
 	/** Resets the window state of the navigator */
 	resetState : function() {
 		this.window = {size:null,page:0,total:0};
-		In2iGui.firePropertyChange(this,'window',this.window);
-		In2iGui.firePropertyChange(this,'window.page',this.window.page);
+		hui.ui.firePropertyChange(this,'window',this.window);
+		hui.ui.firePropertyChange(this,'window.page',this.window.page);
 	},
 	/** @private */
 	valueForProperty : function(p) {
@@ -6369,7 +6485,7 @@ In2iGui.List.prototype = {
 			url+=key+'='+this.parameters[key];
 		}
 		this._setBusy(true);
-		In2iGui.request({
+		hui.ui.request({
 			url:url,
 			onJSON : function(obj) {this._setBusy(false);this.$objectsLoaded(obj)}.bind(this),
 			onXML : function(obj) {this._setBusy(false);this.$listLoaded(obj)}.bind(this)
@@ -6380,9 +6496,9 @@ In2iGui.List.prototype = {
 		var key = this.columns[index].key;
 		if (key==this.sortKey) {
 			this.sortDirection = this.sortDirection=='ascending' ? 'descending' : 'ascending';
-			In2iGui.firePropertyChange(this,'sort.direction',this.sortDirection);
+			hui.ui.firePropertyChange(this,'sort.direction',this.sortDirection);
 		} else {
-			In2iGui.firePropertyChange(this,'sort.key',key);
+			hui.ui.firePropertyChange(this,'sort.key',key);
 		}
 		this.sortKey = key;
 	},
@@ -6392,8 +6508,8 @@ In2iGui.List.prototype = {
 		this.selected = [];
 		this.parseWindow(doc);
 		this.buildNavigation();
-		n2i.dom.clear(this.head);
-		n2i.dom.clear(this.body);
+		hui.dom.clear(this.head);
+		hui.dom.clear(this.body);
 		this.rows = [];
 		this.columns = [];
 		var headTr = document.createElement('tr');
@@ -6448,7 +6564,7 @@ In2iGui.List.prototype = {
 				this.parseCell(cells[j],td);
 				row.appendChild(td);
 				if (!title) {
-					title = n2i.dom.getText(cells[j]);
+					title = hui.dom.getText(cells[j]);
 				}
 				if (!icon) {
 					icon = cells[j].getAttribute('icon');
@@ -6490,10 +6606,10 @@ In2iGui.List.prototype = {
 		if (busy) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				n2i.addClass(e,'in2igui_list_busy');
+				hui.addClass(e,'in2igui_list_busy');
 			},300);
 		} else {
-			n2i.removeClass(this.element,'in2igui_list_busy');
+			hui.removeClass(this.element,'in2igui_list_busy');
 		}
 	},
 	
@@ -6519,38 +6635,38 @@ In2iGui.List.prototype = {
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
-			cell.appendChild(In2iGui.createIcon(icon,1));
+			cell.appendChild(hui.ui.createIcon(icon,1));
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];
-			if (n2i.dom.isDefinedText(child)) {
-				n2i.dom.addText(cell,child.nodeValue);
-			} else if (n2i.dom.isElement(child,'break')) {
+			if (hui.dom.isDefinedText(child)) {
+				hui.dom.addText(cell,child.nodeValue);
+			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
-			} else if (n2i.dom.isElement(child,'icon')) {
-				cell.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
-			} else if (n2i.dom.isElement(child,'line')) {
-				var line = n2i.build('p',{'class':'in2igui_list_line'});
+			} else if (hui.dom.isElement(child,'icon')) {
+				cell.appendChild(hui.ui.createIcon(child.getAttribute('icon'),1));
+			} else if (hui.dom.isElement(child,'line')) {
+				var line = hui.build('p',{'class':'in2igui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
-					n2i.addClass(line,'in2igui_list_dimmed')
+					hui.addClass(line,'in2igui_list_dimmed')
 				}
 				cell.appendChild(line);
 				this.parseCell(child,line);
-			} else if (n2i.dom.isElement(child,'object')) {
-				var obj = n2i.build('div',{'class':'object'});
+			} else if (hui.dom.isElement(child,'object')) {
+				var obj = hui.build('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
-					obj.appendChild(In2iGui.createIcon(child.getAttribute('icon'),1));
+					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),1));
 				}
-				if (child.firstChild && child.firstChild.nodeType==n2i.TEXT_NODE && child.firstChild.nodeValue.length>0) {
-					n2i.dom.addText(obj,child.firstChild.nodeValue);
+				if (child.firstChild && child.firstChild.nodeType==hui.TEXT_NODE && child.firstChild.nodeValue.length>0) {
+					hui.dom.addText(obj,child.firstChild.nodeValue);
 				}
 				cell.appendChild(obj);
-			} else if (n2i.dom.isElement(child,'icons')) {
-				var icons = n2i.build('span',{'class':'in2igui_list_icons'});
+			} else if (hui.dom.isElement(child,'icons')) {
+				var icons = hui.build('span',{'class':'in2igui_list_icons'});
 				this.parseCell(child,icons);
 				cell.appendChild(icons);
-			} else if (n2i.dom.isElement(child,'button')) {
-				var button = In2iGui.Button.create({text:child.getAttribute('text'),small:true,rounded:true});
+			} else if (hui.dom.isElement(child,'button')) {
+				var button = hui.ui.Button.create({text:child.getAttribute('text'),small:true,rounded:true});
 				button.click(function() {
 					this._buttonClick(button);
 				}.bind(this))
@@ -6559,7 +6675,7 @@ In2iGui.List.prototype = {
 		};
 	},
 	_buttonClick : function(button) {
-		var row = n2i.firstParentByTag(button.getElement(),'tr');
+		var row = hui.firstParentByTag(button.getElement(),'tr');
 		var obj = this.rows[parseInt(row.getAttribute('data-index'),10)];
 		this.fire('buttonClick',obj,button);
 	},
@@ -6587,7 +6703,7 @@ In2iGui.List.prototype = {
 		}
 		this.navigation.style.display='block';
 		var from = ((this.window.page)*this.window.size+1);
-		n2i.dom.setText(this.count,(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total));
+		hui.dom.setText(this.count,(from+'-'+Math.min((this.window.page+1)*this.window.size,this.window.total)+' / '+this.window.total));
 		var pageBody = this.windowPageBody;
 		pageBody.innerHTML='';
 		if (pages<2) {
@@ -6597,7 +6713,7 @@ In2iGui.List.prototype = {
 			for (var i=0; i < indices.length; i++) {
 				var index = indices[i];
 				if (index==='') {
-					pageBody.appendChild(n2i.build('span',{text:'·'}));
+					pageBody.appendChild(hui.build('span',{text:'·'}));
 				} else {
 					var a = document.createElement('a');
 					a.appendChild(document.createTextNode(index+1));
@@ -6645,19 +6761,19 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	buildHeaders : function(headers) {
-		n2i.dom.clear(this.head);
+		hui.dom.clear(this.head);
 		this.columns = [];
-		var tr = n2i.build('tr',{parent:this.head});
-		n2i.each(headers,function(h,i) {
-			var th = n2i.build('th');
+		var tr = hui.build('tr',{parent:this.head});
+		hui.each(headers,function(h,i) {
+			var th = hui.build('th');
 			if (h.width) {
 				th.style.width = h.width+'%';
 			}
 			if (h.sortable) {
-				n2i.listen(th,'click',function() {this.sort(i)}.bind(this));
-				n2i.addClass(th,'sortable');
+				hui.listen(th,'click',function() {this.sort(i)}.bind(this));
+				hui.addClass(th,'sortable');
 			}
-			th.appendChild(n2i.build('span',{text:h.title}));
+			th.appendChild(hui.build('span',{text:h.title}));
 			tr.appendChild(th);
 			this.columns.push(h);
 		}.bind(this));
@@ -6665,17 +6781,17 @@ In2iGui.List.prototype = {
 	/** @private */
 	buildRows : function(rows) {
 		var self = this;
-		n2i.dom.clear(this.body);
+		hui.dom.clear(this.body);
 		this.rows = [];
 		if (!rows) return;
-		n2i.each(rows,function(r,i) {
-			var tr = n2i.build('tr');
+		hui.each(rows,function(r,i) {
+			var tr = hui.build('tr');
 			var icon = r.icon;
 			var title = r.title;
-			n2i.each(r.cells,function(c) {
-				var td = n2i.build('td');
+			hui.each(r.cells,function(c) {
+				var td = hui.build('td');
 				if (c.icon) {
-					td.appendChild(In2iGui.createIcon(c.icon,1));
+					td.appendChild(hui.ui.createIcon(c.icon,1));
 					icon = icon || c.icon;
 				}
 				if (c.text) {
@@ -6695,30 +6811,30 @@ In2iGui.List.prototype = {
 	/** @private */
 	setObjects : function(objects) {
 		this.selected = [];
-		n2i.dom.clear(this.body);
+		hui.dom.clear(this.body);
 		this.rows = [];
 		for (var i=0; i < objects.length; i++) {
-			var row = n2i.build('tr');
+			var row = hui.build('tr');
 			var obj = objects[i];
 			var title = null;
 			for (var j=0; j < this.columns.length; j++) {
-				var cell = n2i.build('td');
+				var cell = hui.build('td');
 				if (this.builder) {
 					cell.appendChild(this.builder.buildColumn(this.columns[j],obj));
 				} else {
 					var value = obj[this.columns[j].key] || '';
-					if (n2i.isArray(value)) {
+					if (hui.isArray(value)) {
 						for (var k=0; k < value.length; k++) {
 							if (value[k].constructor == Object) {
 								cell.appendChild(this.createObject(value[k]));
 							} else {
-								cell.appendChild(n2i.build('div',{text:value}));
+								cell.appendChild(hui.build('div',{text:value}));
 							}
 						};
 					} else if (value.constructor == Object) {
 						cell.appendChild(this.createObject(value[j]));
 					} else {
-						n2i.dom.addText(cell,value);
+						hui.dom.addText(cell,value);
 						title = title==null ? value : title;
 					}
 				}
@@ -6733,11 +6849,11 @@ In2iGui.List.prototype = {
 	},
 	/** @private */
 	createObject : function(object) {
-		var node = n2i.build('div',{'class':'object'});
+		var node = hui.build('div',{'class':'object'});
 		if (object.icon) {
-			node.appendChild(In2iGui.createIcon(object.icon,1));
+			node.appendChild(hui.ui.createIcon(object.icon,1));
 		}
-		n2i.dom.addText(node,object.text || object.name || '')
+		hui.dom.addText(node,object.text || object.name || '')
 		return node;
 	},
 	/** @private */
@@ -6746,7 +6862,7 @@ In2iGui.List.prototype = {
 		row.onmousedown = function(e) {
 			if (self.busy) {return};
 			self.rowDown(index);
-			In2iGui.startDrag(e,row);
+			hui.ui.startDrag(e,row);
 			return false;
 		}
 		row.ondblclick = function() {
@@ -6760,10 +6876,10 @@ In2iGui.List.prototype = {
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {
-			n2i.removeClass(rows[this.selected[i]],'selected');
+			hui.removeClass(rows[this.selected[i]],'selected');
 		}
 		for (i=0;i<indexes.length;i++) {
-			n2i.addClass(rows[indexes[i]],'selected');
+			hui.addClass(rows[indexes[i]],'selected');
 		}
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);
@@ -6780,34 +6896,37 @@ In2iGui.List.prototype = {
 	windowPageWasClicked : function(tag) {
 		var index = parseInt(tag.getAttribute('data-index'));
 		this.window.page = index;
-		In2iGui.firePropertyChange(this,'window',this.window);
-		In2iGui.firePropertyChange(this,'window.page',this.window.page);
+		hui.ui.firePropertyChange(this,'window',this.window);
+		hui.ui.firePropertyChange(this,'window.page',this.window.page);
 	}
 };
 
 /* EOF *//**
  * @constructor
  */
-In2iGui.Tabs = function(o) {
+hui.ui.Tabs = function(o) {
 	o = o || {};
 	this.name = o.name;
-	this.element = n2i.get(o.element);
+	this.element = hui.get(o.element);
 	this.activeTab = -1;
-	var x = n2i.firstByClass(this.element,'in2igui_tabs_bar');
-	this.bar = n2i.firstByTag(x,'ul');
+	var x = hui.firstByClass(this.element,'in2igui_tabs_bar');
+	this.bar = hui.firstByTag(x,'ul');
 	this.tabs = [];
 	var nodes = this.bar.getElementsByTagName('li');
 	for (var i=0; i < nodes.length; i++) {
+		if (!hui.browser.msie) {
+			hui.firstByTag(nodes[i],'a').removeAttribute('href');
+		}
 		this.tabs.push(nodes[i]);
 	};
-	this.contents = n2i.byClass(this.element,'in2igui_tabs_tab');
+	this.contents = hui.byClass(this.element,'in2igui_tabs_tab');
 	this.addBehavior();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Tabs.create = function(options) {
+hui.ui.Tabs.create = function(options) {
 	options = options || {};
-	var e = options.element = n2i.build('div',{'class':'in2igui_tabs'});
+	var e = options.element = hui.build('div',{'class':'in2igui_tabs'});
 	var cls = 'in2igui_tabs_bar';
 	if (options.small) {
 		cls+=' in2igui_tabs_bar_small';
@@ -6815,12 +6934,12 @@ In2iGui.Tabs.create = function(options) {
 	if (options.centered) {
 		cls+=' in2igui_tabs_bar_centered';
 	}
-	var bar = n2i.build('div',{'class' : cls, parent : e});
-	n2i.build('ul',{parent:bar});
-	return new In2iGui.Tabs(options);
+	var bar = hui.build('div',{'class' : cls, parent : e});
+	hui.build('ul',{parent:bar});
+	return new hui.ui.Tabs(options);
 }
 
-In2iGui.Tabs.prototype = {
+hui.ui.Tabs.prototype = {
 	/** @private */
 	addBehavior : function() {
 		for (var i=0; i < this.tabs.length; i++) {
@@ -6829,7 +6948,7 @@ In2iGui.Tabs.prototype = {
 	},
 	/** @private */
 	addTabBehavior : function(tab,index) {	
-		n2i.listen(tab,'click',function() {
+		hui.listen(tab,'click',function() {
 			this.tabWasClicked(index);
 		}.bind(this))
 	},
@@ -6846,16 +6965,16 @@ In2iGui.Tabs.prototype = {
 	/** @private */
 	updateGUI : function() {
 		for (var i=0; i < this.tabs.length; i++) {
-			n2i.setClass(this.tabs[i],'in2igui_tabs_selected',i==this.activeTab);
+			hui.setClass(this.tabs[i],'in2igui_tabs_selected',i==this.activeTab);
 			this.contents[i].style.display = i==this.activeTab ? 'block' : 'none';
 		};
 	},
 	createTab : function(options) {
 		options = options || {};
-		var tab = n2i.build('li',{html:'<a><span><span>'+n2i.escape(options.title)+'</span></span></a>',parent:this.bar});
+		var tab = hui.build('li',{html:'<a><span><span>'+hui.escape(options.title)+'</span></span></a>',parent:this.bar});
 		this.addTabBehavior(tab,this.tabs.length);
 		this.tabs.push(tab);
-		var e = options.element = n2i.build('div',{'class':'in2igui_tabs_tab'});
+		var e = options.element = hui.build('div',{'class':'in2igui_tabs_tab'});
 		if (options.padding>0) {
 			e.style.padding = options.padding+'px';
 		}
@@ -6863,23 +6982,23 @@ In2iGui.Tabs.prototype = {
 		this.element.appendChild(e);
 		if (this.activeTab==-1) {
 			this.activeTab=0;
-			n2i.addClass(tab,'in2igui_tabs_selected');
+			hui.addClass(tab,'in2igui_tabs_selected');
 		} else {
 			e.style.display='none';
 		}
-		return new In2iGui.Tab(options);
+		return new hui.ui.Tab(options);
 	}
 };
 
 /**
  * @constructor
  */
-In2iGui.Tab = function(o) {
+hui.ui.Tab = function(o) {
 	this.name = o.name;
-	this.element = n2i.get(o.element);
+	this.element = hui.get(o.element);
 }
 
-In2iGui.Tab.prototype = {
+hui.ui.Tab.prototype = {
 	add : function(widget) {
 		this.element.appendChild(widget.element);
 	}
@@ -6888,19 +7007,19 @@ In2iGui.Tab.prototype = {
 /* EOF *//**
  * @constructor
  */
-In2iGui.ObjectList = function(o) {
-	this.options = n2i.override({key:null},o);
+hui.ui.ObjectList = function(o) {
+	this.options = hui.override({key:null},o);
 	this.name = o.name;
-	this.element = n2i.get(o.element);
-	this.body = n2i.firstByTag(this.element,'tbody');
+	this.element = hui.get(o.element);
+	this.body = hui.firstByTag(this.element,'tbody');
 	this.template = [];
 	this.objects = [];
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.ObjectList.create = function(o) {
+hui.ui.ObjectList.create = function(o) {
 	o=o || {};
-	var e = o.element = n2i.build('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
+	var e = o.element = hui.build('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
 	if (o.template) {
 		var head = '<thead><tr>';
 		for (var i=0; i < o.template.length; i++) {
@@ -6909,30 +7028,30 @@ In2iGui.ObjectList.create = function(o) {
 		head+='</tr></thead>';
 		e.innerHTML=head;
 	}
-	n2i.build('tbody',{parent:e});
-	var list = new In2iGui.ObjectList(o);
+	hui.build('tbody',{parent:e});
+	var list = new hui.ui.ObjectList(o);
 	if (o.template) {
-		n2i.each(o.template,function(item) {
-			list.registerTemplateItem(new In2iGui.ObjectList.Text(item.key));
+		hui.each(o.template,function(item) {
+			list.registerTemplateItem(new hui.ui.ObjectList.Text(item.key));
 		});
 	}
 	return list;
 }
 
-In2iGui.ObjectList.prototype = {
+hui.ui.ObjectList.prototype = {
 	ignite : function() {
 		this.addObject({});
 	},
 	addObject : function(data,addToEnd) {
 		var obj;
 		if (this.objects.length==0 || addToEnd) {
-			obj = new In2iGui.ObjectList.Object(this.objects.length,data,this);
+			obj = new hui.ui.ObjectList.Object(this.objects.length,data,this);
 			this.objects.push(obj);
 			this.body.appendChild(obj.getElement());
 		} else {
 			var last = this.objects[this.objects.length-1];
-			n2i.removeFromArray(this.objects,last);
-			obj = new In2iGui.ObjectList.Object(last.index,data,this);
+			hui.removeFromArray(this.objects,last);
+			obj = new hui.ui.ObjectList.Object(last.index,data,this);
 			last.index++;
 			this.objects.push(obj);
 			this.objects.push(last);
@@ -6943,8 +7062,8 @@ In2iGui.ObjectList.prototype = {
 		for (var i=0; i < this.objects.length; i++) {
 			var element = this.objects[i].getElement();
 			if (!element.parentNode) {
-				n2i.log('no parent for...');
-				n2i.log(element);
+				hui.log('no parent for...');
+				hui.log(element);
 			} else {
 				element.parentNode.removeChild(element);
 			}
@@ -6990,14 +7109,14 @@ In2iGui.ObjectList.prototype = {
 /********************** Object ********************/
 
 /** @constructor */
-In2iGui.ObjectList.Object = function(index,data,list) {
+hui.ui.ObjectList.Object = function(index,data,list) {
 	this.data = data;
 	this.index = index;
 	this.list = list;
 	this.fields = [];
 }
 
-In2iGui.ObjectList.Object.prototype = {
+hui.ui.ObjectList.Object.prototype = {
 	getElement : function() {
 		if (!this.element) {
 			this.element = document.createElement('tr');
@@ -7029,19 +7148,19 @@ In2iGui.ObjectList.Object.prototype = {
 
 /*************************** Text **************************/
 
-In2iGui.ObjectList.Text = function(key) {
+hui.ui.ObjectList.Text = function(key) {
 	this.key = key;
 	this.value = null;
 }
 
-In2iGui.ObjectList.Text.prototype = {
+hui.ui.ObjectList.Text.prototype = {
 	clone : function() {
-		return new In2iGui.ObjectList.Text(this.key);
+		return new hui.ui.ObjectList.Text(this.key);
 	},
 	getElement : function() {
-		var input = n2i.build('input',{'class':'in2igui_formula_text'});
-		var field = In2iGui.wrapInField(input);
-		this.wrapper = new In2iGui.TextField({element:input});
+		var input = hui.build('input',{'class':'in2igui_formula_text'});
+		var field = hui.ui.wrapInField(input);
+		this.wrapper = new hui.ui.TextField({element:input});
 		this.wrapper.listen(this);
 		return field;
 	},
@@ -7060,20 +7179,20 @@ In2iGui.ObjectList.Text.prototype = {
 
 /*************************** Select **************************/
 
-In2iGui.ObjectList.Select = function(key) {
+hui.ui.ObjectList.Select = function(key) {
 	this.key = key;
 	this.value = null;
 	this.options = [];
 }
 
-In2iGui.ObjectList.Select.prototype = {
+hui.ui.ObjectList.Select.prototype = {
 	clone : function() {
-		var copy = new In2iGui.ObjectList.Select(this.key);
+		var copy = new hui.ui.ObjectList.Select(this.key);
 		copy.options = this.options;
 		return copy;
 	},
 	getElement : function() {
-		this.select = n2i.build('select');
+		this.select = hui.build('select');
 		for (var i=0; i < this.options.length; i++) {
 			this.select.options[this.select.options.length] = new Option(this.options[i].label,this.options[i].value);
 		};
@@ -7361,9 +7480,9 @@ hui.ui.Buttons.prototype = {
  * @constructor
  * @param {Object} options The options : {value:null}
  */
-In2iGui.Selection = function(options) {
-	this.options = n2i.override({value:null},options);
-	this.element = n2i.get(options.element);
+hui.ui.Selection = function(options) {
+	this.options = hui.override({value:null},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.items = [];
 	this.subItems = [];
@@ -7371,23 +7490,23 @@ In2iGui.Selection = function(options) {
 	if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
 	}
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
 /**
  * Creates a new selection widget
  * @param {Object} options The options : {width:0}
  */
-In2iGui.Selection.create = function(options) {
-	options = n2i.override({width:0},options);
-	var e = options.element = n2i.build('div',{'class':'in2igui_selection'});
+hui.ui.Selection.create = function(options) {
+	options = hui.override({width:0},options);
+	var e = options.element = hui.build('div',{'class':'in2igui_selection'});
 	if (options.width>0) {
 		e.style.width = options.width+'px';
 	}
-	return new In2iGui.Selection(options);
+	return new hui.ui.Selection(options);
 }
 
-In2iGui.Selection.prototype = {
+hui.ui.Selection.prototype = {
 	/** Get the selected item
 	 * @returns {Object} The selected item, null if no selection */
 	getValue : function() {
@@ -7440,7 +7559,7 @@ In2iGui.Selection.prototype = {
 	updateUI : function() {
 		var i;
 		for (i=0; i < this.items.length; i++) {
-			n2i.setClass(this.items[i].element,'in2igui_selected',this.isSelection(this.items[i]));
+			hui.setClass(this.items[i].element,'in2igui_selected',this.isSelection(this.items[i]));
 		};
 		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
@@ -7471,7 +7590,7 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	registerItem : function(id,title,icon,badge,value,kind) {
-		var element = n2i.get(id);
+		var element = hui.get(id);
 		var item = {id:id,title:title,icon:icon,badge:badge,element:element,value:value,kind:kind};
 		this.items.push(item);
 		this.addItemBehavior(element,item);
@@ -7479,10 +7598,10 @@ In2iGui.Selection.prototype = {
 	},
 	/** @private */
 	addItemBehavior : function(node,item) {
-		n2i.listen(node,'click',function() {
+		hui.listen(node,'click',function() {
 			this.itemWasClicked(item);
 		}.bind(this));
-		n2i.listen(node,'dblclick',function() {
+		hui.listen(node,'dblclick',function() {
 			this.itemWasDoubleClicked(item);
 		}.bind(this));
 		node.dragDropInfo = item;
@@ -7490,21 +7609,21 @@ In2iGui.Selection.prototype = {
 	/** Untested!! */
 	setObjects : function(items) {
 		this.items = [];
-		n2i.each(items,function(item) {
+		hui.each(items,function(item) {
 			this.items.push(item);
-			var node = n2i.build('div',{'class':'in2igui_selection_item'});
+			var node = hui.build('div',{'class':'in2igui_selection_item'});
 			item.element = node;
 			this.element.appendChild(node);
-			var inner = n2i.build('span',{'class':'in2igui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'in2igui_selection_label',text:item.title});
 			if (item.icon) {
-				node.appendChild(In2iGui.createIcon(item.icon,1));
+				node.appendChild(hui.ui.createIcon(item.icon,1));
 			}
 			node.appendChild(inner);
-			n2i.listen(node,'click',function() {
+			hui.listen(node,'click',function() {
 				this.itemWasClicked(item);
 			}.bind(this));
-			n2i.listen(node,'dblclick',function(e) {
-				n2i.stop(e);
+			hui.listen(node,'dblclick',function(e) {
+				hui.stop(e);
 				this.itemWasDoubleClicked(item);
 			}.bind(this));
 		}.bind(this));
@@ -7538,20 +7657,20 @@ In2iGui.Selection.prototype = {
  * A group of items loaded from a source
  * @param {Object} options The options : {element,name,source}
  */
-In2iGui.Selection.Items = function(options) {
-	this.options = n2i.override({source:null},options);
-	this.element = n2i.get(options.element);
-	this.title = n2i.get(this.element.id+'_title');
+hui.ui.Selection.Items = function(options) {
+	this.options = hui.override({source:null},options);
+	this.element = hui.get(options.element);
+	this.title = hui.get(this.element.id+'_title');
 	this.name = options.name;
 	this.parent = null;
 	this.items = [];
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
 }
 
-In2iGui.Selection.Items.prototype = {
+hui.ui.Selection.Items.prototype = {
 	/**
 	 * Refresh the underlying source
 	 */
@@ -7579,37 +7698,37 @@ In2iGui.Selection.Items.prototype = {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);
 		var open = inc==0;
-		var level = n2i.build('div',{'class':'in2igui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
-		n2i.each(items,function(item) {
+		var level = hui.build('div',{'class':'in2igui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
+		hui.each(items,function(item) {
 			if (item.type=='title') {
-				n2i.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
+				hui.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;
 			var left = inc*16+6;
 			if (!hierarchical && inc>0 || hierarchical && !hasChildren) left+=13;
-			var node = n2i.build('div',{'class':'in2igui_selection_item'});
+			var node = hui.build('div',{'class':'in2igui_selection_item'});
 			node.style.paddingLeft = left+'px';
 			if (item.badge) {
-				node.appendChild(n2i.build('strong',{'class':'in2igui_selection_badge',text:item.badge}));
+				node.appendChild(hui.build('strong',{'class':'in2igui_selection_badge',text:item.badge}));
 			}
 			if (hierarchical && hasChildren) {
 				var self = this;
-				var x = n2i.build('span',{'class':'in2igui_disclosure',parent:node});
-				n2i.listen(x,'click',function(e) {
-					n2i.stop(e);
+				var x = hui.build('span',{'class':'in2igui_disclosure',parent:node});
+				hui.listen(x,'click',function(e) {
+					hui.stop(e);
 					self.toggle(x);
 				});
 			}
-			var inner = n2i.build('span',{'class':'in2igui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'in2igui_selection_label',text:item.title});
 			if (item.icon) {
-				node.appendChild(n2i.build('span',{'class':'in2igui_icon_1',style:'background-image: url('+In2iGui.getIconUrl(item.icon,1)+')'}));
+				node.appendChild(hui.build('span',{'class':'in2igui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,1)+')'}));
 			}
 			node.appendChild(inner);
-			n2i.listen(node,'click',function(e) {
+			hui.listen(node,'click',function(e) {
 				this.parent.itemWasClicked(item);
 			}.bind(this));
-			n2i.listen(node,'dblclick',function(e) {
+			hui.listen(node,'dblclick',function(e) {
 				this.parent.itemWasDoubleClicked(item);
 			}.bind(this));
 			level.appendChild(node);
@@ -7621,12 +7740,12 @@ In2iGui.Selection.Items.prototype = {
 	},
 	/** @private */
 	toggle : function(node) {
-		if (n2i.hasClass(node,'in2igui_disclosure_open')) {
-			n2i.getNext(node.parentNode).style.display='none';
-			n2i.removeClass(node,'in2igui_disclosure_open');
+		if (hui.hasClass(node,'in2igui_disclosure_open')) {
+			hui.getNext(node.parentNode).style.display='none';
+			hui.removeClass(node,'in2igui_disclosure_open');
 		} else {
-			n2i.getNext(node.parentNode).style.display='block';
-			n2i.addClass(node,'in2igui_disclosure_open');
+			hui.getNext(node.parentNode).style.display='block';
+			hui.addClass(node,'in2igui_disclosure_open');
 		}
 	},
 	/** @private */
@@ -7655,7 +7774,7 @@ In2iGui.Selection.Items.prototype = {
 	/** @private */
 	updateUI : function() {
 		for (var i=0; i < this.items.length; i++) {
-			n2i.setClass(this.items[i].element,'in2igui_selected',this.parent.isSelection(this.items[i]));
+			hui.setClass(this.items[i].element,'in2igui_selected',this.parent.isSelection(this.items[i]));
 		};
 	},
 	/** @private */
@@ -7685,26 +7804,26 @@ In2iGui.Selection.Items.prototype = {
 }
 /* EOF */
 /** @constructor */
-In2iGui.Toolbar = function(options) {
-	this.element = n2i.get(options.element);
+hui.ui.Toolbar = function(options) {
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Toolbar.create = function(options) {
+hui.ui.Toolbar.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class' : options.labels ? 'in2igui_toolbar in2igui_toolbar_nolabels' : 'in2igui_toolbar'
 	});
-	return new In2iGui.Toolbar(options);
+	return new hui.ui.Toolbar(options);
 }
 
-In2iGui.Toolbar.prototype = {
+hui.ui.Toolbar.prototype = {
 	add : function(widget) {
 		this.element.appendChild(widget.getElement());
 	},
 	addDivider : function() {
-		this.element.appendChild(n2i.build('span',{'class':'in2igui_divider'}));
+		this.element.appendChild(hui.build('span',{'class':'in2igui_divider'}));
 	}
 }
 
@@ -7713,25 +7832,25 @@ In2iGui.Toolbar.prototype = {
 /////////////////////// Revealing toolbar ////////////////////////
 
 /** @constructor */
-In2iGui.RevealingToolbar = function(options) {
-	this.element = n2i.get(options.element);
+hui.ui.RevealingToolbar = function(options) {
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.RevealingToolbar.create = function(options) {
+hui.ui.RevealingToolbar.create = function(options) {
 	options = options || {};
-	options.element = n2i.build( 'div', {
+	options.element = hui.build( 'div', {
 		className : 'in2igui_revealing_toolbar',
 		style : 'display:none',
 		parent : document.body
 	});
-	var bar = new In2iGui.RevealingToolbar(options);
-	bar.setToolbar(In2iGui.Toolbar.create());
+	var bar = new hui.ui.RevealingToolbar(options);
+	bar.setToolbar(hui.ui.Toolbar.create());
 	return bar;
 }
 
-In2iGui.RevealingToolbar.prototype = {
+hui.ui.RevealingToolbar.prototype = {
 	setToolbar : function(widget) {
 		this.toolbar = widget;
 		this.element.appendChild(widget.getElement());
@@ -7741,10 +7860,10 @@ In2iGui.RevealingToolbar.prototype = {
 	},
 	show : function(instantly) {
 		this.element.style.display='';
-		n2i.ani(this.element,'height','58px',instantly ? 0 : 600,{ease:n2i.ease.slowFastSlow});
+		hui.ani(this.element,'height','58px',instantly ? 0 : 600,{ease:hui.ease.slowFastSlow});
 	},
 	hide : function() {
-		n2i.ani(this.element,'height','0px',500,{ease:n2i.ease.slowFastSlow,hideOnComplete:true});
+		hui.ani(this.element,'height','0px',500,{ease:hui.ease.slowFastSlow,hideOnComplete:true});
 	}
 }
 
@@ -7753,32 +7872,35 @@ In2iGui.RevealingToolbar.prototype = {
 /////////////////////// Icon ///////////////////
 
 /** @constructor */
-In2iGui.Toolbar.Icon = function(options) {
+hui.ui.Toolbar.Icon = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.enabled = !n2i.hasClass(this.element,'in2igui_toolbar_icon_disabled');
+	this.enabled = !hui.hasClass(this.element,'in2igui_toolbar_icon_disabled');
 	this.element.tabIndex=this.enabled ? 0 : -1;
-	this.icon = n2i.firstByClass(this.element,'in2igui_icon');
-	In2iGui.extend(this);
+	this.icon = hui.firstByClass(this.element,'in2igui_icon');
+	if (!hui.browser.msie) {
+		this.element.removeAttribute('href');
+	}
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Toolbar.Icon.create = function(options) {
-	var element = options.element = n2i.build('a',{'class':'in2igui_toolbar_icon'});
-	var icon = n2i.build('span',{'class':'in2igui_icon',style:'background-image: url('+In2iGui.getIconUrl(options.icon,2)+')'});
-	var inner = n2i.build('span',{'class':'in2igui_toolbar_inner_icon',parent:element});
-	var innerest = n2i.build('span',{'class':'in2igui_toolbar_inner_icon',parent:inner});
-	var title = n2i.build('strong',{text:options.title});
+hui.ui.Toolbar.Icon.create = function(options) {
+	var element = options.element = hui.build('a',{'class':'in2igui_toolbar_icon'});
+	var icon = hui.build('span',{'class':'in2igui_icon',style:'background-image: url('+hui.ui.getIconUrl(options.icon,2)+')'});
+	var inner = hui.build('span',{'class':'in2igui_toolbar_inner_icon',parent:element});
+	var innerest = hui.build('span',{'class':'in2igui_toolbar_inner_icon',parent:inner});
+	var title = hui.build('strong',{text:options.title});
 	if (options.overlay) {
-		n2i.build('span',{'class':'in2igui_icon_overlay',parent:icon,style:'background-image: url('+In2iGui.getIconUrl('overlay/'+options.overlay,2)+')'});
+		hui.build('span',{'class':'in2igui_icon_overlay',parent:icon,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+options.overlay,2)+')'});
 	}
 	innerest.appendChild(icon);
 	innerest.appendChild(title);
-	return new In2iGui.Toolbar.Icon(options);
+	return new hui.ui.Toolbar.Icon(options);
 }
 
-In2iGui.Toolbar.Icon.prototype = {
+hui.ui.Toolbar.Icon.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
@@ -7790,7 +7912,7 @@ In2iGui.Toolbar.Icon.prototype = {
 	setEnabled : function(enabled) {
 		this.enabled = enabled;
 		this.element.tabIndex=enabled ? 0 : -1;
-		n2i.setClass(this.element,'in2igui_toolbar_icon_disabled',!this.enabled);
+		hui.setClass(this.element,'in2igui_toolbar_icon_disabled',!this.enabled);
 	},
 	/** Disables the icon */
 	disable : function() {
@@ -7802,13 +7924,13 @@ In2iGui.Toolbar.Icon.prototype = {
 	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
-		n2i.setClass(this.element,'in2igui_toolbar_icon_selected',selected);
+		hui.setClass(this.element,'in2igui_toolbar_icon_selected',selected);
 	},
 	/** @private */
 	wasClicked : function() {
 		if (this.enabled) {
 			if (this.options.confirm) {
-				In2iGui.confirmOverlay({
+				hui.ui.confirmOverlay({
 					widget:this,
 					text:this.options.confirm.text,
 					okText:this.options.confirm.okText,
@@ -7822,8 +7944,8 @@ In2iGui.Toolbar.Icon.prototype = {
 	},
 	/** @private */
 	fireClick : function() {
-		In2iGui.callDelegates(this,'toolbarIconWasClicked');
-		In2iGui.callDelegates(this,'click');
+		hui.ui.callDelegates(this,'toolbarIconWasClicked');
+		hui.ui.callDelegates(this,'click');
 	}
 }
 
@@ -7831,27 +7953,27 @@ In2iGui.Toolbar.Icon.prototype = {
 /////////////////////// Search field ///////////////////////
 
 /** @constructor */
-In2iGui.Toolbar.SearchField = function(options) {
+hui.ui.Toolbar.SearchField = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.field = n2i.firstByTag(this.element,'input');
+	this.field = hui.firstByTag(this.element,'input');
 	this.value = this.field.value;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Toolbar.SearchField.create = function(options) {
+hui.ui.Toolbar.SearchField.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class' : options.adaptive ? 'in2igui_toolbar_search in2igui_toolbar_search_adaptive' : 'in2igui_toolbar_search',
 		html : '<div class="in2igui_searchfield"><strong class="in2igui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
-		'<span>'+n2i.escape(options.title)+'</span>'
+		'<span>'+hui.escape(options.title)+'</span>'
 	});
-	return new In2iGui.Toolbar.SearchField(options);
+	return new hui.ui.Toolbar.SearchField(options);
 }
 
-In2iGui.Toolbar.SearchField.prototype = {
+hui.ui.Toolbar.SearchField.prototype = {
 	getValue : function() {
 		return this.field.value;
 	},
@@ -7862,18 +7984,18 @@ In2iGui.Toolbar.SearchField.prototype = {
 		}
 		if (!this.options.adaptive) {
 			this.field.onfocus = function() {
-				n2i.ani(this,'width','120px',500,{ease:n2i.ease.slowFastSlow});
+				hui.ani(this,'width','120px',500,{ease:hui.ease.slowFastSlow});
 			}
 			this.field.onblur = function() {
-				n2i.ani(this,'width','80px',500,{ease:n2i.ease.slowFastSlow});
+				hui.ani(this,'width','80px',500,{ease:hui.ease.slowFastSlow});
 			}
 		}
 	},
 	fieldChanged : function() {
 		if (this.field.value!=this.value) {
 			this.value=this.field.value;
-			In2iGui.callDelegates(this,'valueChanged');
-			In2iGui.firePropertyChange(this,'value',this.value);
+			hui.ui.callDelegates(this,'valueChanged');
+			hui.ui.firePropertyChange(this,'value',this.value);
 		}
 	}
 }
@@ -7882,20 +8004,20 @@ In2iGui.Toolbar.SearchField.prototype = {
 //////////////////////// Badge ///////////////////////
 
 /** @constructor */
-In2iGui.Toolbar.Badge = function(options) {
-	this.element = n2i.get(options.element);
+hui.ui.Toolbar.Badge = function(options) {
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.label = n2i.firstByTag(this.element,'strong');
-	this.text = n2i.firstByTag(this.element,'span');
-	In2iGui.extend(this);
+	this.label = hui.firstByTag(this.element,'strong');
+	this.text = hui.firstByTag(this.element,'span');
+	hui.ui.extend(this);
 }
 
-In2iGui.Toolbar.Badge.prototype = {
+hui.ui.Toolbar.Badge.prototype = {
 	setLabel : function(str) {
-		n2i.dom.setText(this.label,str);
+		hui.dom.setText(this.label,str);
 	},
 	setText : function(str) {
-		n2i.dom.setText(this.text,str);
+		hui.dom.setText(this.text,str);
 	}
 }
 
@@ -7903,18 +8025,18 @@ In2iGui.Toolbar.Badge.prototype = {
 	Used to choose an image
 	@constructor
 */
-In2iGui.ImagePicker = function(o) {
+hui.ui.ImagePicker = function(o) {
 	this.name = o.name;
 	this.options = o || {};
-	this.element = n2i.get(o.element);
+	this.element = hui.get(o.element);
 	this.images = [];
 	this.object = null;
 	this.thumbnailsLoaded = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.ImagePicker.prototype = {
+hui.ui.ImagePicker.prototype = {
 	/** @private */
 	addBehavior : function() {
 		this.element.onclick = this.showPicker.bind(this);
@@ -7935,7 +8057,7 @@ In2iGui.ImagePicker.prototype = {
 		if (this.object==null) {
 			this.element.style.backgroundImage='';
 		} else {
-			var url = In2iGui.resolveImageUrl(this,this.object,48,48);
+			var url = hui.ui.resolveImageUrl(this,this.object,48,48);
 			this.element.style.backgroundImage='url('+url+')';
 		}
 	},
@@ -7943,14 +8065,14 @@ In2iGui.ImagePicker.prototype = {
 	showPicker : function() {
 		if (!this.picker) {
 			var self = this;
-			this.picker = In2iGui.BoundPanel.create();
-			this.content = n2i.build('div',{'class':'in2igui_imagepicker_thumbs'});
-			var buttons = In2iGui.Buttons.create({align:'right'});
-			var close = In2iGui.Button.create({text:'Luk',highlighted:true});
+			this.picker = hui.ui.BoundPanel.create();
+			this.content = hui.build('div',{'class':'in2igui_imagepicker_thumbs'});
+			var buttons = hui.ui.Buttons.create({align:'right'});
+			var close = hui.ui.Button.create({text:'Luk',highlighted:true});
 			close.listen({
 				$click:function() {self.hidePicker()}
 			});
-			var remove = In2iGui.Button.create({text:'Fjern'});
+			var remove = hui.ui.Button.create({text:'Fjern'});
 			remove.listen({
 				$click:function() {self.setObject(null);self.hidePicker()}
 			});
@@ -7972,7 +8094,7 @@ In2iGui.ImagePicker.prototype = {
 	/** @private */
 	updateImages : function() {
 		var self = this;
-		n2i.request({
+		hui.request({
 			onSuccess:function(t) {
 				self.parse(t.responseXML);
 			},
@@ -7987,8 +8109,8 @@ In2iGui.ImagePicker.prototype = {
 		for (var i=0; i < images.length; i++) {
 			var id = images[i].getAttribute('id');
 			var img = {id:images[i].getAttribute('id')};
-			var url = In2iGui.resolveImageUrl(this,img,48,48);
-			var thumb = n2i.build('div',{'class':'in2igui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
+			var url = hui.ui.resolveImageUrl(this,img,48,48);
+			var thumb = hui.build('div',{'class':'in2igui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
 			thumb.in2iguiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.in2iguiObject);
@@ -8004,14 +8126,14 @@ In2iGui.ImagePicker.prototype = {
  * @constructor
  * @param {Object} options { element: «Node | id», name: «String» }
  */
-In2iGui.BoundPanel = function(options) {
+hui.ui.BoundPanel = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.visible = false;
-	this.content = n2i.firstByClass(this.element,'in2igui_boundpanel_content');
-	this.arrow = n2i.firstByClass(this.element,'in2igui_boundpanel_arrow');
-	In2iGui.extend(this);
+	this.content = hui.firstByClass(this.element,'in2igui_boundpanel_content');
+	this.arrow = hui.firstByClass(this.element,'in2igui_boundpanel_arrow');
+	hui.ui.extend(this);
 }
 
 /**
@@ -8019,8 +8141,8 @@ In2iGui.BoundPanel = function(options) {
  * <br/><strong>options:</strong> { name: «String», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
  * @param {Object} options The options
  */
-In2iGui.BoundPanel.create = function(options) {
-	options = n2i.override({name:null, top:0, left:0, width:null, padding: null}, options);
+hui.ui.BoundPanel.create = function(options) {
+	options = hui.override({name:null, top:0, left:0, width:null, padding: null}, options);
 
 	
 	var html = 
@@ -8036,20 +8158,20 @@ In2iGui.BoundPanel.create = function(options) {
 	html+='"></div></div></div></div>'+
 		'<div class="in2igui_boundpanel_bottom"><div><div></div></div></div>';
 
-	options.element = n2i.build(
+	options.element = hui.build(
 		'div',{
 			'class':'in2igui_boundpanel',
-			style:'display:none;zIndex:'+In2iGui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
+			style:'display:none;zIndex:'+hui.ui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
 			html:html,
 			parent:document.body
 		}
 	);
-	return new In2iGui.BoundPanel(options);
+	return new hui.ui.BoundPanel(options);
 }
 
 /********************************* Public methods ***********************************/
 
-In2iGui.BoundPanel.prototype = {
+hui.ui.BoundPanel.prototype = {
 	toggle : function() {
 		if (!this.visible) {
 			this.show();
@@ -8061,10 +8183,10 @@ In2iGui.BoundPanel.prototype = {
 	show : function() {
 		if (!this.visible) {
 			if (this.options.target) {
-				this.position(In2iGui.get(this.options.target));
+				this.position(hui.ui.get(this.options.target));
 			}
-			if (n2i.browser.opacity) {
-				n2i.setOpacity(this.element,0);
+			if (hui.browser.opacity) {
+				hui.setOpacity(this.element,0);
 			}
 			var vert;
 			if (this.relativePosition=='left') {
@@ -8080,28 +8202,28 @@ In2iGui.BoundPanel.prototype = {
 				vert = true;
 				this.element.style.marginTop='-30px';
 			}
-			n2i.setStyle(this.element,{
+			hui.setStyle(this.element,{
 				visibility : 'hidden', display : 'block'
 			})
 			var width = this.element.clientWidth;
-			n2i.setStyle(this.element,{
+			hui.setStyle(this.element,{
 				width : width+'px' , visibility : 'visible'
 			});
 			this.element.style.display='block';
-			if (n2i.browser.opacity) {
-				n2i.animate(this.element,'opacity',1,400,{ease:n2i.ease.fastSlow});
+			if (hui.browser.opacity) {
+				hui.animate(this.element,'opacity',1,400,{ease:hui.ease.fastSlow});
 			}
-			n2i.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:n2i.ease.bounce});
+			hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
 		}
-		this.element.style.zIndex = In2iGui.nextPanelIndex();
+		this.element.style.zIndex = hui.ui.nextPanelIndex();
 		this.visible=true;
 	},
 	/** Hides the panel */
 	hide : function() {
-		if (n2i.browser.msie) {
+		if (hui.browser.msie) {
 			this.element.style.display='none';
 		} else {
-			n2i.animate(this.element,'opacity',0,300,{ease:n2i.ease.slowFast,hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,hideOnComplete:true});
 		}
 		this.visible=false;
 	},
@@ -8121,7 +8243,7 @@ In2iGui.BoundPanel.prototype = {
 	 * @param {pixels} height The height of the space in pixels
 	 */
 	addSpace : function(height) {
-		this.add(n2i.build('div',{style:'font-size:0px;height:'+height+'px'}));
+		this.add(hui.build('div',{style:'font-size:0px;height:'+height+'px'}));
 	},
 	/** @private */
 	getDimensions : function() {
@@ -8146,16 +8268,16 @@ In2iGui.BoundPanel.prototype = {
 		if (node.getElement) {
 			node = node.getElement();
 		}
-		node = n2i.get(node);
-		var offset = {left:n2i.getLeft(node),top:n2i.getTop(node)};
-		var scrollOffset = {left:n2i.getScrollLeft(),top:n2i.getScrollTop()};
+		node = hui.get(node);
+		var offset = {left:hui.getLeft(node),top:hui.getTop(node)};
+		var scrollOffset = {left:hui.getScrollLeft(),top:hui.getScrollTop()};
 		var dims = this.getDimensions();
-		var viewportWidth = n2i.getViewPortWidth();
-		var viewportHeight = n2i.getViewPortHeight();
-		var nodeLeft = offset.left-scrollOffset.left+n2i.getScrollLeft();
+		var viewportWidth = hui.getViewPortWidth();
+		var viewportHeight = hui.getViewPortHeight();
+		var nodeLeft = offset.left-scrollOffset.left+hui.getScrollLeft();
 		var nodeWidth = node.clientWidth;
 		var nodeHeight = node.clientHeight;
-		var nodeTop = offset.top-scrollOffset.top+n2i.getScrollTop();
+		var nodeTop = offset.top-scrollOffset.top+hui.getScrollTop();
 		var arrowLeft, arrowTop, left, top;
 		var vertical = (nodeTop-scrollOffset.top)/viewportHeight;
 		
@@ -8193,8 +8315,8 @@ In2iGui.BoundPanel.prototype = {
 		this.arrow.style.marginTop = arrowTop+'px';
 		this.arrow.style.marginLeft = arrowLeft+'px';
 		if (this.visible) {
-			n2i.animate(this.element,'top',top+'px',500,{ease:n2i.ease.fastSlow});
-			n2i.animate(this.element,'left',left+'px',500,{ease:n2i.ease.fastSlow});
+			hui.animate(this.element,'top',top+'px',500,{ease:hui.ease.fastSlow});
+			hui.animate(this.element,'left',left+'px',500,{ease:hui.ease.fastSlow});
 		} else {
 			this.element.style.top=top+'px';
 			this.element.style.left=left+'px';
@@ -8205,26 +8327,26 @@ In2iGui.BoundPanel.prototype = {
 /* EOF *//**
  * @constructor
  */
-In2iGui.RichText = function(options) {
+hui.ui.RichText = function(options) {
 	this.name = options.name;
-	var e = this.element = n2i.get(options.element);
-	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
-	this.textarea = n2i.build('textarea');
+	var e = this.element = hui.get(options.element);
+	this.options = hui.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
+	this.textarea = hui.build('textarea');
 	e.appendChild(this.textarea);
 	this.editor = WysiHat.Editor.attach(this.textarea);
 	this.editor.setAttribute('frameborder','0');
 	/* @private */
-	this.toolbar = n2i.firstByClass(e,'in2igui_richtext_toolbar');
-	this.toolbarContent = n2i.firstByClass(e,'in2igui_richtext_toolbar_content');
+	this.toolbar = hui.firstByClass(e,'in2igui_richtext_toolbar');
+	this.toolbarContent = hui.firstByClass(e,'in2igui_richtext_toolbar_content');
 	this.value = this.options.value;
 	this.document = null;
 	this.ignited = false;
 	this.buildToolbar();
 	this.ignite();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.RichText.actions = [
+hui.ui.RichText.actions = [
 	{key:'bold',				cmd:'bold',				value:null,		icon:'edit/text_bold'},
 	{key:'italic',				cmd:'italic',			value:null,		icon:'edit/text_italic'},
 	{key:'underline',			cmd:'underline',		value:null,		icon:'edit/text_underline'},
@@ -8248,23 +8370,23 @@ In2iGui.RichText.actions = [
 	{key:'removeformat', 	cmd:'removeformat', 	'value':null}*/
 ];
 
-In2iGui.RichText.replaceInput = function(options) {
+hui.ui.RichText.replaceInput = function(options) {
 	options = options || {};
-	var input = n2i.get(options.input);
+	var input = hui.get(options.input);
 	input.style.display='none';
 	options.value = input.value;
-	var obj = In2iGui.RichText.create(options);
+	var obj = hui.ui.RichText.create(options);
 	input.parentNode.insertBefore(obj.element,input);
 	obj.ignite();
 }
 
-In2iGui.RichText.create = function(options) {
+hui.ui.RichText.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{'class':'in2igui_richtext',html:'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'});
-	return new In2iGui.RichText(options);
+	options.element = hui.build('div',{'class':'in2igui_richtext',html:'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'});
+	return new hui.ui.RichText(options);
 }
 
-In2iGui.RichText.prototype = {
+hui.ui.RichText.prototype = {
 	isCompatible : function() {
 	    var agt=navigator.userAgent.toLowerCase();
 		return true;
@@ -8323,61 +8445,61 @@ In2iGui.RichText.prototype = {
 		this.toolbar.onmousedown = function() {this.toolbarMouseDown=true}.bind(this);
 		this.toolbar.onmouseup = function() {this.toolbarMouseDown=false}.bind(this);
 		var self = this;
-		var actions = In2iGui.RichText.actions;
+		var actions = hui.ui.RichText.actions;
 		for (var i=0; i < actions.length; i++) {
 			if (actions[i]==null) {
-				this.toolbarContent.appendChild(n2i.build('div',{'class':'in2igui_richtext_divider'}));
+				this.toolbarContent.appendChild(hui.build('div',{'class':'in2igui_richtext_divider'}));
 			} else {
-				var div = n2i.build('div',{'class':'action action_'+actions[i].key});
+				var div = hui.build('div',{'class':'action action_'+actions[i].key});
 				div.title=actions[i].key;
 				div.in2iguiRichTextAction = actions[i]
 				div.onclick = div.ondblclick = function(e) {return self.actionWasClicked(this.in2iguiRichTextAction,e);}
-				var img = n2i.build('img');
-				img.src=In2iGui.context+'/In2iGui/gfx/trans.png';
+				var img = hui.build('img');
+				img.src=hui.ui.context+'/In2iGui/gfx/trans.png';
 				if (actions[i].icon) {
-					div.style.backgroundImage='url('+In2iGui.getIconUrl(actions[i].icon,1)+')';
+					div.style.backgroundImage='url('+hui.ui.getIconUrl(actions[i].icon,1)+')';
 				}
 				div.appendChild(img);
 				this.toolbarContent.appendChild(div);
-				div.onmousedown = In2iGui.RichText.stopEvent;
+				div.onmousedown = hui.ui.RichText.stopEvent;
 			}
 		};
 	},
 	documentFocused : function() {
-		if (n2i.browser.msie) {
+		if (hui.browser.msie) {
 			this.toolbar.style.display='block';
 			return;
 		}
 		if (this.toolbar.style.display!='block') {
 			this.toolbar.style.marginTop='-40px';
-			n2i.setOpacity(this.toolbar,0);
+			hui.setOpacity(this.toolbar,0);
 			this.toolbar.style.display='block';
-			n2i.ani(this.toolbar,'opacity',1,300);
-			n2i.ani(this.toolbar,'margin-top','-32px',300);
+			hui.ani(this.toolbar,'opacity',1,300);
+			hui.ani(this.toolbar,'margin-top','-32px',300);
 		}
 	},
 	
 	documentBlurred : function() {
 		if (this.toolbarMouseDown) return;
 		if (this.options.autoHideToolbar) {
-			if (n2i.browser.msie) {
+			if (hui.browser.msie) {
 				var self = this;
 				window.setTimeout(function() {
 					self.toolbar.style.display='none';
 				},100);
 				return;
 			}
-			n2i.ani(this.toolbar,'opacity',0,300,{hideOnComplete:true});
-			n2i.ani(this.toolbar,'margin-top','-40px',300);
+			hui.ani(this.toolbar,'opacity',0,300,{hideOnComplete:true});
+			hui.ani(this.toolbar,'margin-top','-40px',300);
 		}
 		this.documentChanged();
-		In2iGui.callDelegates(this,'richTextDidChange');
+		hui.ui.callDelegates(this,'richTextDidChange');
 	},
 	
 	documentChanged : function() {
 		this.value = this.editor.content();
 		if (this.options.input) {
-			n2i.get(this.options.input).value=this.value;
+			hui.get(this.options.input).value=this.value;
 		}
 	},
 	
@@ -8391,7 +8513,7 @@ In2iGui.RichText.prototype = {
 		return false;
 	},
 	actionWasClicked : function(action,e) {
-		In2iGui.RichText.stopEvent(e);
+		hui.ui.RichText.stopEvent(e);
 		if (action.key=='color') {
 			this.showColorPicker();
 		} else {
@@ -8406,8 +8528,8 @@ In2iGui.RichText.prototype = {
 	},
 	showColorPicker : function() {
 		if (!this.colorPicker) {
-			var panel = In2iGui.Window.create({variant:'dark'});
-			var picker = In2iGui.ColorPicker.create();
+			var panel = hui.ui.Window.create({variant:'dark'});
+			var picker = hui.ui.ColorPicker.create();
 			picker.listen(this);
 			panel.add(picker);
 			panel.show();
@@ -8426,7 +8548,7 @@ In2iGui.RichText.prototype = {
 
 
 
-In2iGui.RichText.stopEvent = function(e) {
+hui.ui.RichText.stopEvent = function(e) {
   var evt = e ? e : window.event; 
   if (evt.returnValue) {
     evt.returnValue = false;
@@ -8440,26 +8562,26 @@ In2iGui.RichText.stopEvent = function(e) {
 /* EOF *//**
  @constructor
  */
-In2iGui.ImageViewer = function(options) {
-	this.options = n2i.override({
+hui.ui.ImageViewer = function(options) {
+	this.options = hui.override({
 		maxWidth:800,maxHeight:600,perimeter:100,sizeSnap:100,
 		margin:0,
-		ease:n2i.ease.slowFastSlow,
-		easeEnd:n2i.ease.bounce,
-		easeAuto:n2i.ease.slowFastSlow,
-		easeReturn:n2i.ease.cubicInOut,transition:400,transitionEnd:1000,transitionReturn:300
+		ease:hui.ease.slowFastSlow,
+		easeEnd:hui.ease.bounce,
+		easeAuto:hui.ease.slowFastSlow,
+		easeReturn:hui.ease.cubicInOut,transition:400,transitionEnd:1000,transitionReturn:300
 		},options);
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.box = this.options.box;
-	this.viewer = n2i.firstByClass(this.element,'in2igui_imageviewer_viewer');
-	this.innerViewer = n2i.firstByClass(this.element,'in2igui_imageviewer_inner_viewer');
-	this.status = n2i.firstByClass(this.element,'in2igui_imageviewer_status');
-	this.previousControl = n2i.firstByClass(this.element,'in2igui_imageviewer_previous');
-	this.controller = n2i.firstByClass(this.element,'in2igui_imageviewer_controller');
-	this.nextControl = n2i.firstByClass(this.element,'in2igui_imageviewer_next');
-	this.playControl = n2i.firstByClass(this.element,'in2igui_imageviewer_play');
-	this.closeControl = n2i.firstByClass(this.element,'in2igui_imageviewer_close');
-	this.text = n2i.firstByClass(this.element,'in2igui_imageviewer_text');
+	this.viewer = hui.firstByClass(this.element,'in2igui_imageviewer_viewer');
+	this.innerViewer = hui.firstByClass(this.element,'in2igui_imageviewer_inner_viewer');
+	this.status = hui.firstByClass(this.element,'in2igui_imageviewer_status');
+	this.previousControl = hui.firstByClass(this.element,'in2igui_imageviewer_previous');
+	this.controller = hui.firstByClass(this.element,'in2igui_imageviewer_controller');
+	this.nextControl = hui.firstByClass(this.element,'in2igui_imageviewer_next');
+	this.playControl = hui.firstByClass(this.element,'in2igui_imageviewer_play');
+	this.closeControl = hui.firstByClass(this.element,'in2igui_imageviewer_close');
+	this.text = hui.firstByClass(this.element,'in2igui_imageviewer_text');
 	this.dirty = false;
 	this.width = 600;
 	this.height = 460;
@@ -8469,12 +8591,12 @@ In2iGui.ImageViewer = function(options) {
 	this.images = [];
 	this.box.listen(this);
 	this.addBehavior();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.ImageViewer.create = function(options) {
+hui.ui.ImageViewer.create = function(options) {
 	options = options || {};
-	var element = options.element = n2i.build('div',
+	var element = options.element = hui.build('div',
 		{'class':'in2igui_imageviewer',
 		html:
 		'<div class="in2igui_imageviewer_viewer"><div class="in2igui_imageviewer_inner_viewer"></div></div>'+
@@ -8486,14 +8608,14 @@ In2iGui.ImageViewer.create = function(options) {
 		'<a class="in2igui_imageviewer_next"></a>'+
 		'<a class="in2igui_imageviewer_close"></a>'+
 		'</div></div></div>'});
-	var box = In2iGui.Box.create({absolute:true,modal:true,closable:true});
+	var box = hui.ui.Box.create({absolute:true,modal:true,closable:true});
 	box.add(element);
 	box.addToDocument();
 	options.box=box;
-	return new In2iGui.ImageViewer(options);
+	return new hui.ui.ImageViewer(options);
 }
 
-In2iGui.ImageViewer.prototype = {
+hui.ui.ImageViewer.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
@@ -8507,12 +8629,12 @@ In2iGui.ImageViewer.prototype = {
 			self.playOrPause();
 		}
 		this.closeControl.onclick = this.hide.bind(this);
-		n2i.listen(this.viewer,'click',this.zoom.bind(this));
+		hui.listen(this.viewer,'click',this.zoom.bind(this));
 		this.timer = function() {
 			self.next(false);
 		}
 		this.keyListener = function(e) {
-			e = n2i.event(e);
+			e = hui.event(e);
 			if (e.rightKey) {
 				self.next(true);
 			} else if (e.leftKey) {
@@ -8523,15 +8645,15 @@ In2iGui.ImageViewer.prototype = {
 				self.playOrPause();
 			}
 		},
-		n2i.listen(this.viewer,'mousemove',this.mouseMoveEvent.bind(this));
-		n2i.listen(this.controller,'mouseover',function() {
+		hui.listen(this.viewer,'mousemove',this.mouseMoveEvent.bind(this));
+		hui.listen(this.controller,'mouseover',function() {
 			self.overController = true;
 		});
-		n2i.listen(this.controller,'mouseout',function() {
+		hui.listen(this.controller,'mouseout',function() {
 			self.overController = false;
 		});
-		n2i.listen(this.viewer,'mouseout',function(e) {
-			if (!In2iGui.isWithin(e,this.viewer)) {
+		hui.listen(this.viewer,'mouseout',function(e) {
+			if (!hui.ui.isWithin(e,this.viewer)) {
 				self.hideController();
 			}
 		}.bind(this));
@@ -8541,20 +8663,20 @@ In2iGui.ImageViewer.prototype = {
 		window.clearTimeout(this.ctrlHider);
 		if (this.shouldShowController()) {
 			this.ctrlHider = window.setTimeout(this.hideController.bind(this),2000);
-			if (n2i.browser.msie) {
+			if (hui.browser.msie) {
 				this.controller.show();
 			} else {
-				In2iGui.fadeIn(this.controller,200);
+				hui.ui.fadeIn(this.controller,200);
 			}
 		}
 	},
 	/** @private */
 	hideController : function() {
 		if (!this.overController) {
-			if (n2i.browser.msie) {
+			if (hui.browser.msie) {
 				this.controller.hide();
 			} else {
-				In2iGui.fadeOut(this.controller,500);
+				hui.ui.fadeOut(this.controller,500);
 			}
 		}
 	},
@@ -8565,30 +8687,30 @@ In2iGui.ImageViewer.prototype = {
 			return; // Don't zoom if small
 		}
 		if (!this.zoomer) {
-			this.zoomer = n2i.build('div',{
+			this.zoomer = hui.build('div',{
 				'class' : 'in2igui_imageviewer_zoomer',
 				style : 'width:'+this.viewer.clientWidth+'px;height:'+this.viewer.clientHeight+'px'
 			});
-			this.element.insertBefore(this.zoomer,n2i.firstByTag(this.element,'*'));
-			n2i.listen(this.zoomer,'mousemove',this.zoomMove.bind(this));
-			n2i.listen(this.zoomer,'click',function() {
+			this.element.insertBefore(this.zoomer,hui.firstByTag(this.element,'*'));
+			hui.listen(this.zoomer,'mousemove',this.zoomMove.bind(this));
+			hui.listen(this.zoomer,'click',function() {
 				this.style.display='none';
 			});
 		}
 		this.pause();
 		var size = this.getLargestSize({width:2000,height:2000},img);
-		var url = In2iGui.resolveImageUrl(this,img,size.width,size.height);
+		var url = hui.ui.resolveImageUrl(this,img,size.width,size.height);
 		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px;"><img src="'+url+'"/></div>';
 		this.zoomer.style.display = 'block';
 		this.zoomInfo = {width:size.width,height:size.height};
 		this.zoomMove(e);
 	},
 	zoomMove : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		if (!this.zoomInfo) {
 			return;
 		}
-		var offset = {left:n2i.getLeft(this.zoomer),top:n2i.getTop(this.zoomer)};
+		var offset = {left:hui.getLeft(this.zoomer),top:hui.getTop(this.zoomer)};
 		var x = (e.left()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
 		var y = (e.top()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;
@@ -8609,10 +8731,10 @@ In2iGui.ImageViewer.prototype = {
 	/** @private */
 	calculateSize : function() {
 		var snap = this.options.sizeSnap;
-		var newWidth = n2i.getViewPortWidth()-this.options.perimeter;
+		var newWidth = hui.getViewPortWidth()-this.options.perimeter;
 		newWidth = Math.floor(newWidth/snap)*snap;
 		newWidth = Math.min(newWidth,this.options.maxWidth);
-		var newHeight = n2i.getViewPortHeight()-this.options.perimeter;
+		var newHeight = hui.getViewPortHeight()-this.options.perimeter;
 		newHeight = Math.floor(newHeight/snap)*snap;
 		newHeight = Math.min(newHeight,this.options.maxHeight);
 		var maxWidth = 0;
@@ -8647,18 +8769,18 @@ In2iGui.ImageViewer.prototype = {
 		this.calculateSize();
 		this.updateUI();
 		var margin = this.options.margin;
-		n2i.setStyle(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
-		n2i.setStyle(this.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
-		n2i.setStyle(this.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
-		n2i.setStyle(this.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
+		hui.setStyle(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
+		hui.setStyle(this.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
+		hui.setStyle(this.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
+		hui.setStyle(this.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
 		this.box.show();
 		this.goToImage(false,0,false);
-		n2i.listen(document,'keydown',this.keyListener);
+		hui.listen(document,'keydown',this.keyListener);
 	},
 	hide: function(index) {
 		this.pause();
 		this.box.hide();
-		n2i.unListen(document,'keydown',this.keyListener);
+		hui.unListen(document,'keydown',this.keyListener);
 	},
 	/** @private */
 	$boxCurtainWasClicked : function() {
@@ -8673,8 +8795,8 @@ In2iGui.ImageViewer.prototype = {
 		if (this.dirty) {
 			this.innerViewer.innerHTML='';
 			for (var i=0; i < this.images.length; i++) {
-				var element = n2i.build('div',{'class':'in2igui_imageviewer_image'});
-				n2i.setStyle(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
+				var element = hui.build('div',{'class':'in2igui_imageviewer_image'});
+				hui.setStyle(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
 				this.innerViewer.appendChild(element);
 			};
 			if (this.shouldShowController()) {
@@ -8694,14 +8816,14 @@ In2iGui.ImageViewer.prototype = {
 	goToImage : function(animate,num,user) {	
 		if (animate) {
 			if (num>1) {
-				n2i.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),Math.min(num*this.options.transitionReturn,2000),{ease:this.options.easeReturn});				
+				hui.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),Math.min(num*this.options.transitionReturn,2000),{ease:this.options.easeReturn});				
 			} else {
 				var end = this.index==0 || this.index==this.images.length-1;
 				var ease = (end ? this.options.easeEnd : this.options.ease);
 				if (!user) {
 					ease = this.options.easeAuto;
 				}
-				n2i.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),(end ? this.options.transitionEnd : this.options.transition),{ease:ease});
+				hui.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),(end ? this.options.transitionEnd : this.options.transition),{ease:ease});
 			}
 		} else {
 			this.viewer.scrollLeft=this.index*(this.width+this.options.margin);
@@ -8777,18 +8899,18 @@ In2iGui.ImageViewer.prototype = {
 	},
 	/** @private */
 	preload : function() {
-		var guiLoader = new n2i.Preloader();
-		guiLoader.addImages(In2iGui.context+'In2iGui/gfx/imageviewer_controls.png');
+		var guiLoader = new hui.Preloader();
+		guiLoader.addImages(hui.ui.context+'In2iGui/gfx/imageviewer_controls.png');
 		var self = this;
 		guiLoader.setDelegate({allImagesDidLoad:function() {self.preloadImages()}});
 		guiLoader.load();
 	},
 	/** @private */
 	preloadImages : function() {
-		var loader = new n2i.Preloader();
+		var loader = new hui.Preloader();
 		loader.setDelegate(this);
 		for (var i=0; i < this.images.length; i++) {
-			var url = In2iGui.resolveImageUrl(this,this.images[i],this.width,this.height);
+			var url = hui.ui.resolveImageUrl(this,this.images[i],this.width,this.height);
 			if (url!==null) {
 				loader.addImages(url);
 			}
@@ -8804,40 +8926,40 @@ In2iGui.ImageViewer.prototype = {
 	/** @private */
 	imageDidLoad : function(loaded,total,index) {
 		this.status.innerHTML = Math.round(loaded/total*100)+'%';
-		var url = In2iGui.resolveImageUrl(this,this.images[index],this.width,this.height);
+		var url = hui.ui.resolveImageUrl(this,this.images[index],this.width,this.height);
 		url = url.replace(/&amp;/g,'&');
 		this.innerViewer.childNodes[index].style.backgroundImage="url('"+url+"')";
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',false);
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',false);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',false);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',false);
 	},
 	/** @private */
 	imageDidGiveError : function(loaded,total,index) {
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',true);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',true);
 	},
 	/** @private */
 	imageDidAbort : function(loaded,total,index) {
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',true);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',true);
 	}
 }
 
 /* EOF *//** @constructor */
-In2iGui.Picker = function(o) {
-	o = this.options = n2i.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},o);
-	this.element = n2i.get(o.element);
+hui.ui.Picker = function(o) {
+	o = this.options = hui.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},o);
+	this.element = hui.get(o.element);
 	this.name = o.name;
-	this.container = n2i.firstByClass(this.element,'in2igui_picker_container');
-	this.content = n2i.firstByClass(this.element,'in2igui_picker_content');
-	this.title = n2i.firstByClass(this.element,'in2igui_picker_title');
+	this.container = hui.firstByClass(this.element,'in2igui_picker_container');
+	this.content = hui.firstByClass(this.element,'in2igui_picker_content');
+	this.title = hui.firstByClass(this.element,'in2igui_picker_title');
 	this.objects = [];
 	this.selected = null;
 	this.value = null;
 	this.addBehavior();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Picker.create = function(o) {
-	o = n2i.override({shadow:true},o);
-	o.element = n2i.build('div',{'class':'in2igui_picker',
+hui.ui.Picker.create = function(o) {
+	o = hui.override({shadow:true},o);
+	o.element = hui.build('div',{'class':'in2igui_picker',
 		html:'<div class="in2igui_picker_top"><div><div></div></div></div>'+
 		'<div class="in2igui_picker_middle"><div class="in2igui_picker_middle">'+
 		(o.title ? '<div class="in2igui_picker_title">'+o.title+'</div>' : '')+
@@ -8845,15 +8967,15 @@ In2iGui.Picker.create = function(o) {
 		'</div></div>'+
 		'<div class="in2igui_picker_bottom"><div><div></div></div></div>'});
 	if (o.shadow==true) {
-		n2i.addClass(o.element,'in2igui_picker_shadow')
+		hui.addClass(o.element,'in2igui_picker_shadow')
 	}
-	return new In2iGui.Picker(o);
+	return new hui.ui.Picker(o);
 }
 
-In2iGui.Picker.prototype = {
+hui.ui.Picker.prototype = {
 	addBehavior : function() {
 		var self = this;
-		n2i.listen(this.content,'mousedown',function(e) {
+		hui.listen(this.content,'mousedown',function(e) {
 			self.startDrag(e);
 			return false;
 		});
@@ -8884,19 +9006,19 @@ In2iGui.Picker.prototype = {
 		} else {
 			width = this.container.clientWidth;
 		}
-		n2i.setStyle(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
+		hui.setStyle(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
 		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
 		this.content.style.height=(this.options.itemHeight+10)+'px';
-		n2i.each(this.objects,function(object,i) {
-			var item = n2i.build('div',{'class':'in2igui_picker_item',title:object.title});
+		hui.each(this.objects,function(object,i) {
+			var item = hui.build('div',{'class':'in2igui_picker_item',title:object.title});
 			if (self.value!=null && object[self.options.valueProperty]==self.value) {
-				 n2i.addClass(item,'in2igui_picker_item_selected');
+				 hui.addClass(item,'in2igui_picker_item_selected');
 			}
 			item.innerHTML = '<div class="in2igui_picker_item_middle"><div class="in2igui_picker_item_middle">'+
-				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+n2i.escape(object.title)+'</strong></div>'+
+				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.escape(object.title)+'</strong></div>'+
 				'</div></div>'+
 				'<div class="in2igui_picker_item_bottom"><div><div></div></div></div>';
-			n2i.listen(item,'mouseup',function() {
+			hui.listen(item,'mouseup',function() {
 				self.selectionChanged(object[self.options.valueProperty])
 			});
 			self.content.appendChild(item);
@@ -8905,7 +9027,7 @@ In2iGui.Picker.prototype = {
 	updateSelection : function() {
 		var children = this.content.childNodes;
 		for (var i=0; i < children.length; i++) {
-			n2i.setClass(children[i],'in2igui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
+			hui.setClass(children[i],'in2igui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
 		};
 	},
 	selectionChanged : function(value) {
@@ -8918,31 +9040,31 @@ In2iGui.Picker.prototype = {
 	
 	// Dragging
 	startDrag : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		e.stop();
 		var self = this;
 		this.dragX = e.left();
 		this.dragScroll = this.container.scrollLeft;
-		In2iGui.Picker.mousemove = function(e) {self.drag(e);return false;}
-		In2iGui.Picker.mouseup = In2iGui.Picker.mousedown = function(e) {self.endDrag(e);return false;}
-		n2i.listen(window.document,'mousemove',In2iGui.Picker.mousemove);
-		n2i.listen(window.document,'mouseup',In2iGui.Picker.mouseup);
-		n2i.listen(window.document,'mousedown',In2iGui.Picker.mouseup);
+		hui.ui.Picker.mousemove = function(e) {self.drag(e);return false;}
+		hui.ui.Picker.mouseup = hui.ui.Picker.mousedown = function(e) {self.endDrag(e);return false;}
+		hui.listen(window.document,'mousemove',hui.ui.Picker.mousemove);
+		hui.listen(window.document,'mouseup',hui.ui.Picker.mouseup);
+		hui.listen(window.document,'mousedown',hui.ui.Picker.mouseup);
 	},
 	drag : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		e.stop();
 		this.dragging = true;
 		this.container.scrollLeft=this.dragX-e.left()+this.dragScroll;
 	},
 	endDrag : function(e) {
 		this.dragging = false;
-		n2i.stop(e);
-		n2i.unListen(window.document,'mousemove',In2iGui.Picker.mousemove);
-		n2i.unListen(window.document,'mouseup',In2iGui.Picker.mouseup);
-		n2i.unListen(window.document,'mousedown',In2iGui.Picker.mouseup);
+		hui.stop(e);
+		hui.unListen(window.document,'mousemove',hui.ui.Picker.mousemove);
+		hui.unListen(window.document,'mouseup',hui.ui.Picker.mouseup);
+		hui.unListen(window.document,'mousedown',hui.ui.Picker.mouseup);
 		var size = this.options.itemWidth+14;
-		n2i.ani(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:n2i.ease.bounceOut});
+		hui.ani(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
 	},
 	$visibilityChanged : function() {
 		this.container.style.display='none';
@@ -8953,15 +9075,15 @@ In2iGui.Picker.prototype = {
 			width = this.container.parentNode.clientWidth-12;
 		}
 		width = Math.max(width,0);
-		n2i.setStyle(this.container,{width:width+'px',display:'block'});
+		hui.setStyle(this.container,{width:width+'px',display:'block'});
 	}
 }
 
 /* EOF *//**
  * @constructor
  */
-In2iGui.Editor = function() {
-	this.name = 'In2iGuiEditor';
+hui.ui.Editor = function() {
+	this.name = 'huiEditor';
 	this.options = {rowClass:'row',columnClass:'column',partClass:'part'};
 	this.parts = [];
 	this.rows = [];
@@ -8969,17 +9091,17 @@ In2iGui.Editor = function() {
 	this.activePart = null;
 	this.active = false;
 	this.dragProxy = null;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Editor.get = function() {
-	if (!In2iGui.Editor.instance) {
-		In2iGui.Editor.instance = new In2iGui.Editor();
+hui.ui.Editor.get = function() {
+	if (!hui.ui.Editor.instance) {
+		hui.ui.Editor.instance = new hui.ui.Editor();
 	}
-	return In2iGui.Editor.instance;
+	return hui.ui.Editor.instance;
 }
 
-In2iGui.Editor.prototype = {
+hui.ui.Editor.prototype = {
 	ignite : function() {
 		this.reload();
 	},
@@ -8987,11 +9109,11 @@ In2iGui.Editor.prototype = {
 		this.partControllers.push({key:key,'title':title,'controller':controller});
 	},
 	setOptions : function(options) {
-		n2i.override(this.options,options);
+		hui.override(this.options,options);
 	},
 	getPartController : function(key) {
 		var ctrl = null;
-		n2i.each(this.partControllers,function(item) {
+		hui.each(this.partControllers,function(item) {
 			if (item.key==key) {ctrl=item};
 		});
 		return ctrl;
@@ -9002,17 +9124,17 @@ In2iGui.Editor.prototype = {
 		}
 		var self = this;
 		this.parts = [];
-		var rows = n2i.byClass(document.body,this.options.partClass);
-		n2i.each(rows,function(row,i) {
-			var columns = n2i.byClass(row,self.options.columnClass);
+		var rows = hui.byClass(document.body,this.options.partClass);
+		hui.each(rows,function(row,i) {
+			var columns = hui.byClass(row,self.options.columnClass);
 			self.reloadColumns(columns,i);
-			n2i.each(columns,function(column,j) {
+			hui.each(columns,function(column,j) {
 				var parts = column.select('.'+self.options.partClass);
 				self.reloadParts(parts,i,j);
 			});
 		});
-		var parts = n2i.byClass(document.body,this.options.partClass);
-		n2i.each(this.parts,function(part) {
+		var parts = hui.byClass(document.body,this.options.partClass);
+		hui.each(this.parts,function(part) {
 			var i = parts.indexOf(part.element);
 			if (i!=-1) {
 				delete(parts[i]);
@@ -9025,14 +9147,14 @@ In2iGui.Editor.prototype = {
 	},
 	reloadColumns : function(columns,rowIndex) {
 		var self = this;
-		n2i.each(columns,function(column,columnIndex) {
-			n2i.lsiten(column,'mouseover',function() {
+		hui.each(columns,function(column,columnIndex) {
+			hui.lsiten(column,'mouseover',function() {
 				self.hoverColumn(column);
 			});
-			n2i.listen(column,'mouseout',function() {
+			hui.listen(column,'mouseout',function() {
 				self.blurColumn();
 			});
-			n2i.listen(column,'contextmenu',function(e) {
+			hui.listen(column,'contextmenu',function(e) {
 				self.contextColumn(column,rowIndex,columnIndex,e);
 			});
 		});
@@ -9040,7 +9162,7 @@ In2iGui.Editor.prototype = {
 	reloadParts : function(parts,row,column) {
 		var self = this;
 		var reg = new RegExp(this.options.partClass+"_([\\w]+)","i");
-		n2i.each(parts,function(element,partIndex) {
+		hui.each(parts,function(element,partIndex) {
 			if (!element) return;
 			var match = element.className.match(reg);
 			if (match && match[1]) {
@@ -9048,16 +9170,16 @@ In2iGui.Editor.prototype = {
 				if (handler) {
 					var part = new handler.controller(element,row,column,partIndex);
 					part.type=match[1];
-					n2i.listen(element,'click',function() {
+					hui.listen(element,'click',function() {
 						self.editPart(part);
 					});
-					n2i.listen(element,'mouseover',function(e) {
+					hui.listen(element,'mouseover',function(e) {
 						self.hoverPart(part);
 					});
-					n2i.listen(element,'mouseout',function(e) {
+					hui.listen(element,'mouseout',function(e) {
 						self.blurPart(e);
 					});
-					n2i.listen(element,'mousedown',function(e) {
+					hui.listen(element,'mousedown',function(e) {
 						self.startPartDrag(e);
 					});
 					self.parts.push(part);
@@ -9082,18 +9204,18 @@ In2iGui.Editor.prototype = {
 	hoverColumn : function(column) {
 		this.hoveredColumn = column;
 		if (!this.active || this.activePart) return;
-		n2i.addClass(column,'in2igui_editor_column_hover');
+		hui.addClass(column,'hui_editor_column_hover');
 	},
 	
 	blurColumn : function() {
 		if (!this.active || !this.hoveredColumn) return;
-		n2i.removeClass(this.hoveredColumn,'in2igui_editor_column_hover');
+		hui.removeClass(this.hoveredColumn,'hui_editor_column_hover');
 	},
 	
 	contextColumn : function(column,rowIndex,columnIndex,e) {
 		if (!this.active || this.activePart) return;
 		if (!this.columnMenu) {
-			var menu = In2iGui.Menu.create({name:'In2iGuiEditorColumnMenu'});
+			var menu = hui.ui.Menu.create({name:'huiEditorColumnMenu'});
 			menu.addItem({title:'Rediger kolonne',value:'editColumn'});
 			menu.addItem({title:'Slet kolonne',value:'removeColumn'});
 			menu.addItem({title:'Tilføj kolonne',value:'addColumn'});
@@ -9109,7 +9231,7 @@ In2iGui.Editor.prototype = {
 		this.hoveredColumnIndex=columnIndex;
 		this.columnMenu.showAtPointer(e);
 	},
-	$itemWasClicked$In2iGuiEditorColumnMenu : function(value) {
+	$itemWasClicked$huiEditorColumnMenu : function(value) {
 		if (value=='removeColumn') {
 			this.fire('removeColumn',{'row':this.hoveredRow,'column':this.hoveredColumnIndex});
 		} else if (value=='editColumn') {
@@ -9125,29 +9247,29 @@ In2iGui.Editor.prototype = {
 	
 	editColumn : function(rowIndex,columnIndex) {
 		this.closeColumn();
-		var row = n2i.byClass(document.body,'row')[rowIndex];
-		var c = this.activeColumn = n2i.byClass(row,'column')[columnIndex];
-		n2i.addClass(c,'in2igui_editor_column_edit');
+		var row = hui.byClass(document.body,'row')[rowIndex];
+		var c = this.activeColumn = hui.byClass(row,'column')[columnIndex];
+		hui.addClass(c,'hui_editor_column_edit');
 		this.showColumnWindow();
 		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});
 	},
 	closeColumn : function() {
 		if (this.activeColumn) {
-			n2i.removeClass(this.activeColumn,'in2igui_editor_column_edit');
+			hui.removeClass(this.activeColumn,'hui_editor_column_edit');
 		}
 	},
 	showColumnWindow : function() {
 		if (!this.columnEditor) {
-			var w = this.columnEditor = In2iGui.Window.create({name:'columnEditor',title:'Rediger kolonne',width:200});
-			var f = this.columnEditorForm = In2iGui.Formula.create();
+			var w = this.columnEditor = hui.ui.Window.create({name:'columnEditor',title:'Rediger kolonne',width:200});
+			var f = this.columnEditorForm = hui.ui.Formula.create();
 			var g = f.createGroup();
-			var width = In2iGui.Formula.Text.create({label:'Bredde',key:'width'});
+			var width = hui.ui.Formula.Text.create({label:'Bredde',key:'width'});
 			width.listen({$valueChanged:function(v) {this.changeColumnWidth(v)}.bind(this)})
 			g.add(width);
-			var marginLeft = In2iGui.Formula.Text.create({label:'Venstremargen',key:'left'});
+			var marginLeft = hui.ui.Formula.Text.create({label:'Venstremargen',key:'left'});
 			marginLeft.listen({$valueChanged:function(v) {this.changeColumnLeftMargin(v)}.bind(this)})
 			g.add(marginLeft);
-			var marginRight = In2iGui.Formula.Text.create({label:'Højremargen',key:'right'});
+			var marginRight = hui.ui.Formula.Text.create({label:'Højremargen',key:'right'});
 			marginRight.listen({$valueChanged:this.changeColumnRightMargin.bind(this)})
 			g.add(marginRight);
 			w.add(f);
@@ -9176,24 +9298,24 @@ In2iGui.Editor.prototype = {
 	hoverPart : function(part,event) {
 		if (!this.active || this.activePart) return;
 		this.hoveredPart = part;
-		n2i.addClass(part.element,'in2igui_editor_part_hover');
+		hui.addClass(part.element,'hui_editor_part_hover');
 		var self = this;
 		this.partControlTimer = window.setTimeout(function() {self.showPartControls()},200);
 	},
 	blurPart : function(e) {
 		window.clearTimeout(this.partControlTimer);
 		if (!this.active) return;
-		if (this.partControls && !In2iGui.isWithin(e,this.partControls.element)) {
+		if (this.partControls && !hui.ui.isWithin(e,this.partControls.element)) {
 			this.hidePartControls();
-			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
+			hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');
 		}
 		if (!this.partControls && this.hoveredPart) {
-			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');			
+			hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');			
 		}
 	},
 	showPartEditControls : function() {
 		if (!this.partEditControls) {
-			this.partEditControls = In2iGui.Overlay.create({name:'In2iGuiEditorPartEditActions'});
+			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions'});
 			this.partEditControls.addIcon('save','common/save');
 			this.partEditControls.addIcon('cancel','common/close');
 			this.partEditControls.listen(this);
@@ -9202,15 +9324,15 @@ In2iGui.Editor.prototype = {
 	},
 	showPartControls : function() {
 		if (!this.partControls) {
-			this.partControls = In2iGui.Overlay.create({name:'In2iGuiEditorPartActions'});
+			this.partControls = hui.ui.Overlay.create({name:'huiEditorPartActions'});
 			this.partControls.addIcon('edit','common/edit');
 			this.partControls.addIcon('new','common/new');
 			this.partControls.addIcon('delete','common/delete');
 			var self = this;
-			n2i.listen(this.partControls.getElement(),'mouseout',function(e) {
+			hui.listen(this.partControls.getElement(),'mouseout',function(e) {
 				self.blurControls(e);
 			});
-			n2i.listen(this.partControls.getElement(),'mouseover',function(e) {
+			hui.listen(this.partControls.getElement(),'mouseover',function(e) {
 				self.hoverControls(e);
 			});
 			this.partControls.listen(this);
@@ -9223,15 +9345,15 @@ In2iGui.Editor.prototype = {
 		this.partControls.showAtElement(this.hoveredPart.element,{'horizontal':'right'});
 	},
 	hoverControls : function(e) {
-		n2i.addClass(this.hoveredPart.element,'in2igui_editor_part_hover');
+		hui.addClass(this.hoveredPart.element,'hui_editor_part_hover');
 	},
 	blurControls : function(e) {
-		n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
-		if (!In2iGui.isWithin(e,this.hoveredPart.element)) {
+		hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');
+		if (!hui.ui.isWithin(e,this.hoveredPart.element)) {
 			this.hidePartControls();
 		}
 	},
-	$iconWasClicked$In2iGuiEditorPartActions : function(key,event) {
+	$iconWasClicked$huiEditorPartActions : function(key,event) {
 		if (key=='delete') {
 			this.deletePart(this.hoveredPart);
 		} else if (key=='new') {
@@ -9240,7 +9362,7 @@ In2iGui.Editor.prototype = {
 			this.editPart(this.hoveredPart);
 		}
 	},
-	$iconWasClicked$In2iGuiEditorPartEditActions : function(key,event) {
+	$iconWasClicked$huiEditorPartEditActions : function(key,event) {
 		if (key=='cancel') {
 			this.cancelPart(this.activePart);
 		} else if (key=='save') {
@@ -9261,11 +9383,11 @@ In2iGui.Editor.prototype = {
 		if (!this.active || this.activePart) return;
 		if (this.activePart) this.activePart.deactivate();
 		if (this.hoveredPart) {
-			n2i.removeClass(this.hoveredPart.element,'in2igui_editor_part_hover');
+			hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');
 		}
 		this.activePart = part;
 		this.showPartEditControls();
-		n2i.addClass(part.element,'in2igui_editor_part_active');
+		hui.addClass(part.element,'hui_editor_part_active');
 		part.activate();
 		window.clearTimeout(this.partControlTimer);
 		this.hidePartControls();
@@ -9275,8 +9397,8 @@ In2iGui.Editor.prototype = {
 	showPartEditor : function() {
 		 // TODO: Disabled!
 		/*if (!this.partEditor) {
-			var w = this.partEditor = In2iGui.Window.create({padding:5,title:'Afstande',close:false,variant:'dark',width: 200});
-			var f = this.partEditorForm = In2iGui.Formula.create();
+			var w = this.partEditor = hui.hui.Window.create({padding:5,title:'Afstande',close:false,variant:'dark',width: 200});
+			var f = this.partEditorForm = hui.ui.Formula.create();
 			f.buildGroup({above:false},[
 				{type:'Text',options:{label:'Top',key:'top'}},
 				{type:'Text',options:{label:'Bottom',key:'bottom'}},
@@ -9296,14 +9418,14 @@ In2iGui.Editor.prototype = {
 		this.partEditor.show();*/
 	},
 	updatePartProperties : function(values) {
-		n2i.setStyle(this.activePart.element,{
+		hui.setStyle(this.activePart.element,{
 			marginTop:values.top,
 			marginBottom:values.bottom,
 			marginLeft:values.left,
 			marginRight:values.right
 		});
 		this.activePart.properties = values;
-		n2i.log(values);
+		hui.log(values);
 	},
 	hidePartEditor : function() {
 		if (this.partEditor) this.partEditor.hide();
@@ -9325,21 +9447,21 @@ In2iGui.Editor.prototype = {
 		return null;
 	},
 	partDidDeacivate : function(part) {
-		n2i.removeClass(part.element,'in2igui_editor_part_active');
+		hui.removeClass(part.element,'hui_editor_part_active');
 		this.activePart = null;
 		this.hidePartEditControls();
 	},
 	partChanged : function(part) {
-		In2iGui.callDelegates(part,'partChanged');
+		hui.ui.callDelegates(part,'partChanged');
 	},
 	deletePart : function(part) {
-		In2iGui.callDelegates(part,'deletePart');
+		hui.ui.callDelegates(part,'deletePart');
 		this.partControls.hide();
 	},
 	newPart : function(e) {
 		if (!this.newPartMenu) {
-			var menu = In2iGui.Menu.create({name:'In2iGuiEditorNewPartMenu'});
-			n2i.each(this.partControllers,function(item) {
+			var menu = hui.ui.Menu.create({name:'huiEditorNewPartMenu'});
+			hui.each(this.partControllers,function(item) {
 				menu.addItem({title:item.title,value:item.key});
 			});
 			menu.listen(this);
@@ -9347,23 +9469,23 @@ In2iGui.Editor.prototype = {
 		}
 		this.newPartMenu.showAtPointer(e);
 	},
-	itemWasClicked$In2iGuiEditorNewPartMenu : function(value) {
+	itemWasClicked$huiEditorNewPartMenu : function(value) {
 		var info = {row:this.hoveredPart.row,column:this.hoveredPart.column,position:this.hoveredPart.position+1,type:value};
-		In2iGui.callDelegates(this,'addPart',info);
+		hui.ui.callDelegates(this,'addPart',info);
 	},
 	/**** Dragging ****/
 	startPartDrag : function(e) {
 		return true;
 		if (!this.active || this.activePart) return true;
 		if (!this.dragProxy) {
-			this.dragProxy = n2i.build('div',{'class':'in2igui_editor_dragproxy part part_header',parent:document.body});
+			this.dragProxy = hui.build('div',{'class':'hui_editor_dragproxy part part_header',parent:document.body});
 		}
 		var element = this.hoveredPart.element;
 		this.dragProxy.style.width = element.clientWidth+'px';
 		this.dragProxy.innerHTML = element.innerHTML;
-		In2iGui.Editor.startDrag(e,this.dragProxy);
+		hui.ui.Editor.startDrag(e,this.dragProxy);
 		return;
-		n2i.listen(document.body,'mouseup',function() {
+		hui.listen(document.body,'mouseup',function() {
 			self.endPartDrag();
 		})
 	},
@@ -9376,32 +9498,32 @@ In2iGui.Editor.prototype = {
 
 
 
-In2iGui.Editor.startDrag = function(e,element) {
-	In2iGui.Editor.dragElement = element;
-	n2i.listen(document.body,'mousemove',In2iGui.Editor.dragListener);
-	n2i.listen(document.body,'mouseup',In2iGui.Editor.dragEndListener);
-	In2iGui.Editor.startDragPos = {top:e.pointerY(),left:e.pointerX()};
+hui.ui.Editor.startDrag = function(e,element) {
+	hui.ui.Editor.dragElement = element;
+	hui.listen(document.body,'mousemove',hui.ui.Editor.dragListener);
+	hui.listen(document.body,'mouseup',hui.ui.Editor.dragEndListener);
+	hui.ui.Editor.startDragPos = {top:e.pointerY(),left:e.pointerX()};
 	e.stop();
 	return false;
 }
 
-In2iGui.Editor.dragListener = function(e) {
-	e = n2i.event(e);
-	var element = In2iGui.Editor.dragElement;
+hui.ui.Editor.dragListener = function(e) {
+	e = hui.event(e);
+	var element = hui.ui.Editor.dragElement;
 	element.style.left = e.getLeft()+'px';
 	element.style.top = e.getTop()+'px';
 	element.style.display='block';
 	return false;
 }
 
-In2iGui.Editor.dragEndListener = function(event) {
-	n2i.unListen(document.body,'mousemove',In2iGui.Editor.dragListener);
-	n2i.unListen(document.body,'mouseup',In2iGui.Editor.dragEndListener);
-	In2iGui.Editor.dragElement.style.display='none';
-	In2iGui.Editor.dragElement=null;
+hui.ui.Editor.dragEndListener = function(event) {
+	hui.unListen(document.body,'mousemove',hui.ui.Editor.dragListener);
+	hui.unListen(document.body,'mouseup',hui.ui.Editor.dragEndListener);
+	hui.ui.Editor.dragElement.style.display='none';
+	hui.ui.Editor.dragElement=null;
 }
 
-In2iGui.Editor.getPartId = function(element) {
+hui.ui.Editor.getPartId = function(element) {
 	var m = element.id.match(/part\-([\d]+)/i);
 	if (m && m.length>0) return m[1];
 }
@@ -9411,27 +9533,27 @@ In2iGui.Editor.getPartId = function(element) {
 /**
  * @constructor
  */
-In2iGui.Editor.Header = function(element,row,column,position) {
-	this.element = n2i.get(element);
+hui.ui.Editor.Header = function(element,row,column,position) {
+	this.element = hui.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;
-	this.id = In2iGui.Editor.getPartId(this.element);
-	this.header = n2i.firstByTag(this.element,'*');
+	this.id = hui.ui.Editor.getPartId(this.element);
+	this.header = hui.firstByTag(this.element,'*');
 	this.field = null;
 }
 
-In2iGui.Editor.Header.prototype = {
+hui.ui.Editor.Header.prototype = {
 	activate : function() {
 		this.value = this.header.innerHTML;
-		this.field = n2i.build('textarea',{className:'in2igui_editor_header'});
+		this.field = hui.build('textarea',{className:'hui_editor_header'});
 		this.field.value = this.value;
 		this.header.style.visibility='hidden';
 		this.updateFieldStyle();
 		this.element.insertBefore(this.field,this.header);
 		this.field.focus();
 		this.field.select();
-		n2i.listen(this.field,'keydown',function(e) {
+		hui.listen(this.field,'keydown',function(e) {
 			if (e.keyCode==Event.KEY_RETURN) {
 				this.save();
 			}
@@ -9443,7 +9565,7 @@ In2iGui.Editor.Header.prototype = {
 		this.deactivate();
 		if (value!=this.value) {
 			this.value = value;
-			In2iGui.Editor.get().partChanged(this);
+			hui.ui.Editor.get().partChanged(this);
 		}
 	},
 	cancel : function() {
@@ -9452,11 +9574,11 @@ In2iGui.Editor.Header.prototype = {
 	deactivate : function() {
 		this.header.style.visibility='';
 		this.element.removeChild(this.field);
-		In2iGui.Editor.get().partDidDeacivate(this);
+		hui.ui.Editor.get().partDidDeacivate(this);
 	},
 	updateFieldStyle : function() {
-		n2i.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
-		n2i.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
+		hui.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		hui.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
 	},
 	getValue : function() {
 		return this.value;
@@ -9468,21 +9590,21 @@ In2iGui.Editor.Header.prototype = {
 /**
  * @constructor
  */
-In2iGui.Editor.Html = function(element,row,column,position) {
-	this.element = n2i.get(element);
+hui.ui.Editor.Html = function(element,row,column,position) {
+	this.element = hui.get(element);
 	this.row = row;
 	this.column = column;
 	this.position = position;
-	this.id = In2iGui.Editor.getPartId(this.element);
+	this.id = hui.ui.Editor.getPartId(this.element);
 	this.field = null;
 }
 
-In2iGui.Editor.Html.prototype = {
+hui.ui.Editor.Html.prototype = {
 	activate : function() {
 		this.value = this.element.innerHTML;
 		this.element.innerHTML='';
 		var style = this.buildStyle();
-		this.editor = In2iGui.MarkupEditor.create({autoHideToolbar:false,style:style});
+		this.editor = hui.ui.MarkupEditor.create({autoHideToolbar:false,style:style});
 		this.element.appendChild(this.editor.getElement());
 		this.editor.listen(this);
 		this.editor.setValue(this.value);
@@ -9490,11 +9612,11 @@ In2iGui.Editor.Html.prototype = {
 	},
 	buildStyle : function() {
 		return {
-			'textAlign':n2i.getStyle(this.element,'text-align')
-			,'fontFamily':n2i.getStyle(this.element,'font-family')
-			,'fontSize':n2i.getStyle(this.element,'font-size')
-			,'fontWeight':n2i.getStyle(this.element,'font-weight')
-			,'color':n2i.getStyle(this.element,'color')
+			'textAlign':hui.getStyle(this.element,'text-align')
+			,'fontFamily':hui.getStyle(this.element,'font-family')
+			,'fontSize':hui.getStyle(this.element,'font-size')
+			,'fontWeight':hui.getStyle(this.element,'font-weight')
+			,'color':hui.getStyle(this.element,'color')
 		}
 	},
 	cancel : function() {
@@ -9506,7 +9628,7 @@ In2iGui.Editor.Html.prototype = {
 		var value = this.editor.getValue();
 		if (value!=this.value) {
 			this.value = value;
-			In2iGui.Editor.get().partChanged(this);
+			hui.ui.Editor.get().partChanged(this);
 		}
 		this.element.innerHTML = this.value;
 	},
@@ -9515,7 +9637,7 @@ In2iGui.Editor.Html.prototype = {
 			this.editor.destroy();
 			this.element.innerHTML = this.value;
 		}
-		In2iGui.Editor.get().partDidDeacivate(this);
+		hui.ui.Editor.get().partDidDeacivate(this);
 	},
 	richTextDidChange : function() {
 		//this.deactivate();
@@ -9528,26 +9650,26 @@ In2iGui.Editor.Html.prototype = {
 /* EOF *//**
  * @constructor
  */
-In2iGui.Menu = function(options) {
-	this.options = n2i.override({autoHide:false,parentElement:null},options);
-	this.element = n2i.get(options.element);
+hui.ui.Menu = function(options) {
+	this.options = hui.override({autoHide:false,parentElement:null},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.value = null;
 	this.subMenus = [];
 	this.visible = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Menu.create = function(options) {
+hui.ui.Menu.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{'class':'in2igui_menu'});
-	var obj = new In2iGui.Menu(options);
+	options.element = hui.build('div',{'class':'in2igui_menu'});
+	var obj = new hui.ui.Menu(options);
 	document.body.appendChild(options.element);
 	return obj;
 }
 
-In2iGui.Menu.prototype = {
+hui.ui.Menu.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
@@ -9556,36 +9678,36 @@ In2iGui.Menu.prototype = {
 		}
 		if (this.options.autoHide) {
 			var x = function(e) {
-				if (!In2iGui.isWithin(e,self.element) && (!self.options.parentElement || !In2iGui.isWithin(e,self.options.parentElement))) {
+				if (!hui.ui.isWithin(e,self.element) && (!self.options.parentElement || !hui.ui.isWithin(e,self.options.parentElement))) {
 					if (!self.isSubMenuVisible()) {
 						self.hide();
 					}
 				}
 			};
-			n2i.listen(this.element,'mouseout',x);
+			hui.listen(this.element,'mouseout',x);
 			if (this.options.parentElement) {
-				n2i.listen(this.options.parentElement,'mouseout',x);
+				hui.listen(this.options.parentElement,'mouseout',x);
 			}
 		}
 	},
 	addDivider : function() {
-		n2i.build('div',{'class':'in2igui_menu_divider',parent:this.element});
+		hui.build('div',{'class':'in2igui_menu_divider',parent:this.element});
 	},
 	addItem : function(item) {
 		var self = this;
-		var element = n2i.build('div',{'class':'in2igui_menu_item',text:item.title});
-		n2i.listen(element,'click',function(e) {
-			n2i.stop(e);
+		var element = hui.build('div',{'class':'in2igui_menu_item',text:item.title});
+		hui.listen(element,'click',function(e) {
+			hui.stop(e);
 			self.itemWasClicked(item.value);
 		});
 		if (item.children) {
-			var sub = In2iGui.Menu.create({autoHide:true,parentElement:element});
+			var sub = hui.ui.Menu.create({autoHide:true,parentElement:element});
 			sub.addItems(item.children);
-			n2i.listen(element,'mouseover',function(e) {
+			hui.listen(element,'mouseover',function(e) {
 				sub.showAtElement(element,e,'horizontal');
 			});
 			self.subMenus.push(sub);
-			n2i.addClass(element,'in2igui_menu_item_children');
+			hui.addClass(element,'in2igui_menu_item_children');
 		}
 		this.element.appendChild(element);
 	},
@@ -9608,15 +9730,15 @@ In2iGui.Menu.prototype = {
 		this.hide();
 	},
 	showAtPointer : function(e) {
-		e = n2i.event(e);
+		e = hui.event(e);
 		e.stop();
 		this.showAtPoint({'top' : e.getTop(),'left' : e.getLeft()});
 	},
 	showAtElement : function(element,event,position) {
-		event = n2i.event(event);
+		event = hui.event(event);
 		event.stop();
-		element = n2i.get(element);
-		var point = n2i.getPosition(element);
+		element = hui.get(element);
+		var point = hui.getPosition(element);
 		if (position=='horizontal') {
 			point.left += element.clientWidth;
 		} else if (position=='vertical') {
@@ -9625,23 +9747,23 @@ In2iGui.Menu.prototype = {
 		this.showAtPoint(point);
 	},
 	showAtPoint : function(pos) {
-		var innerWidth = n2i.getViewPortWidth();
-		var innerHeight = n2i.getViewPortHeight();
-		var scrollTop = n2i.getScrollTop();
-		var scrollLeft = n2i.getScrollLeft();
+		var innerWidth = hui.getViewPortWidth();
+		var innerHeight = hui.getViewPortHeight();
+		var scrollTop = hui.getScrollTop();
+		var scrollLeft = hui.getScrollLeft();
 		if (!this.visible) {
-			n2i.setStyle(this.element,{'display':'block','visibility':'hidden',opacity:0});
+			hui.setStyle(this.element,{'display':'block','visibility':'hidden',opacity:0});
 		}
 		var width = this.element.clientWidth;
 		var height = this.element.clientHeight;
 		var left = Math.min(pos.left,innerWidth-width-26+scrollLeft);
 		var top = Math.max(0,Math.min(pos.top,innerHeight-height-20+scrollTop));
-		n2i.setStyle(this.element,{'top':top+'px','left':left+'px','visibility':'visible',zIndex:In2iGui.nextTopIndex()});
+		hui.setStyle(this.element,{'top':top+'px','left':left+'px','visibility':'visible',zIndex:hui.ui.nextTopIndex()});
 		if (!this.element.style.width) {
 			this.element.style.width=(width+6)+'px';
 		}
 		if (!this.visible) {
-			n2i.setStyle(this.element,{opacity:1});
+			hui.setStyle(this.element,{opacity:1});
 			this.addHider();
 			this.visible = true;
 		}
@@ -9649,7 +9771,7 @@ In2iGui.Menu.prototype = {
 	hide : function() {
 		if (!this.visible) return;
 		var self = this;
-		n2i.animate(this.element,'opacity',0,200,{onComplete:function() {
+		hui.animate(this.element,'opacity',0,200,{onComplete:function() {
 			self.element.style.display='none';
 		}});
 		this.removeHider();
@@ -9665,10 +9787,10 @@ In2iGui.Menu.prototype = {
 		return false;
 	},
 	addHider : function() {
-		n2i.listen(document.body,'click',this.hider);
+		hui.listen(document.body,'click',this.hider);
 	},
 	removeHider : function() {
-		n2i.unListen(document.body,'click',this.hider);
+		hui.unListen(document.body,'click',this.hider);
 	}
 }
 
@@ -9677,55 +9799,55 @@ In2iGui.Menu.prototype = {
 /* EOF *//**
  * @constructor
  */
-In2iGui.Overlay = function(options) {
+hui.ui.Overlay = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
-	this.content = n2i.byClass(this.element,'in2igui_inner_overlay')[1];
+	this.element = hui.get(options.element);
+	this.content = hui.byClass(this.element,'in2igui_inner_overlay')[1];
 	this.name = options.name;
 	this.icons = {};
 	this.visible = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
 /**
  * Creates a new overlay
  */
-In2iGui.Overlay.create = function(options) {
+hui.ui.Overlay.create = function(options) {
 	options = options || {};
-	var e = options.element = n2i.build('div',{className:'in2igui_overlay',style:'display:none',html:'<div class="in2igui_inner_overlay"><div class="in2igui_inner_overlay"></div></div>'});
+	var e = options.element = hui.build('div',{className:'in2igui_overlay',style:'display:none',html:'<div class="in2igui_inner_overlay"><div class="in2igui_inner_overlay"></div></div>'});
 	document.body.appendChild(e);
-	return new In2iGui.Overlay(options);
+	return new hui.ui.Overlay(options);
 }
 
-In2iGui.Overlay.prototype = {
+hui.ui.Overlay.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
 		this.hider = function(e) {
 			if (self.boundElement) {
-				if (In2iGui.isWithin(e,self.boundElement) || In2iGui.isWithin(e,self.element)) return;
+				if (hui.ui.isWithin(e,self.boundElement) || hui.ui.isWithin(e,self.element)) return;
 				// TODO: should be unreg'ed but it fails
 				//self.boundElement.stopObserving(self.hider);
-				n2i.removeClass(self.boundElement,'in2igui_overlay_bound');
+				hui.removeClass(self.boundElement,'in2igui_overlay_bound');
 				self.boundElement = null;
 				self.hide();
 			}
 		}
-		n2i.listen(this.element,'mouseout',this.hider);
+		hui.listen(this.element,'mouseout',this.hider);
 	},
 	addIcon : function(key,icon) {
 		var self = this;
-		var element = n2i.build('div',{className:'in2igui_overlay_icon'});
-		element.style.backgroundImage='url('+In2iGui.getIconUrl(icon,2)+')';
-		n2i.listen(element,'click',function(e) {
+		var element = hui.build('div',{className:'in2igui_overlay_icon'});
+		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,2)+')';
+		hui.listen(element,'click',function(e) {
 			self.iconWasClicked(key,e);
 		});
 		this.icons[key]=element;
 		this.content.appendChild(element);
 	},
 	addText : function(text) {
-		this.content.appendChild(n2i.build('span',{'class':'in2igui_overlay_text',text:text}));
+		this.content.appendChild(hui.build('span',{'class':'in2igui_overlay_text',text:text}));
 	},
 	add : function(widget) {
 		this.content.appendChild(widget.getElement());
@@ -9741,56 +9863,56 @@ In2iGui.Overlay.prototype = {
 		};
 	},
 	iconWasClicked : function(key,e) {
-		In2iGui.callDelegates(this,'iconWasClicked',key,e);
+		hui.ui.callDelegates(this,'iconWasClicked',key,e);
 	},
 	showAtElement : function(element,options) {
 		options = options || {};
-		In2iGui.positionAtElement(this.element,element,options);
+		hui.ui.positionAtElement(this.element,element,options);
 		if (this.visible) return;
-		if (n2i.browser.msie) {
+		if (hui.browser.msie) {
 			this.element.style.display='block';
 		} else {
-			n2i.setStyle(this.element,{'display':'block','opacity':0});
-			n2i.ani(this.element,'opacity',1,150);
+			hui.setStyle(this.element,{'display':'block','opacity':0});
+			hui.ani(this.element,'opacity',1,150);
 		}
 		this.visible = true;
 		if (options.autoHide) {
 			this.boundElement = element;
-			n2i.listen(element,'mouseout',this.hider);
-			n2i.addClass(element,'in2igui_overlay_bound');
+			hui.listen(element,'mouseout',this.hider);
+			hui.addClass(element,'in2igui_overlay_bound');
 		}
 		if (this.options.modal) {
-			var zIndex = In2iGui.nextAlertIndex();
+			var zIndex = hui.ui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
-			In2iGui.showCurtain({widget:this,zIndex:zIndex});
+			hui.ui.showCurtain({widget:this,zIndex:zIndex});
 		}
 		return;
 	},
 	show : function(options) {
 		options = options || {};
 		if (!this.visible) {
-			n2i.setStyle(this.element,{'display':'block',visibility:'hidden'});
+			hui.setStyle(this.element,{'display':'block',visibility:'hidden'});
 		}
 		if (options.element) {
-			n2i.place({
+			hui.place({
 				source:{element:this.element,vertical:0,horizontal:.5},
 				target:{element:options.element,vertical:.5,horizontal:.5},
 				insideViewPort:true
 			});
 		}
 		if (this.visible) return;
-		In2iGui.bounceIn(this.element);
+		hui.ui.bounceIn(this.element);
 		this.visible = true;
 		if (options.autoHide && options.element) {
 			this.boundElement = options.element;
-			n2i.listen(options.element,'mouseout',this.hider);
-			n2i.addClass(options.element,'in2igui_overlay_bound');
+			hui.listen(options.element,'mouseout',this.hider);
+			hui.addClass(options.element,'in2igui_overlay_bound');
 		}
 		if (this.options.modal) {
-			var zIndex = In2iGui.nextAlertIndex();
+			var zIndex = hui.ui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
-			var color = n2i.getStyle(document.body,'background-color');
-			In2iGui.showCurtain({widget:this,zIndex:zIndex,color:color});
+			var color = hui.getStyle(document.body,'background-color');
+			hui.ui.showCurtain({widget:this,zIndex:zIndex,color:color});
 		}
 	},
 	/** private */
@@ -9798,12 +9920,12 @@ In2iGui.Overlay.prototype = {
 		this.hide();
 	},
 	hide : function() {
-		In2iGui.hideCurtain(this);
+		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 		this.visible = false;
 	},
 	clear : function() {
-		In2iGui.destroyDescendants(this.content);
+		hui.ui.destroyDescendants(this.content);
 		this.content.innerHTML='';
 	}
 }
@@ -9822,49 +9944,49 @@ In2iGui.Overlay.prototype = {
  * uploadDidComplete(file) - when a single file is successfull
  * uploadDidFail(file) - when a single file fails
  */
-In2iGui.Upload = function(options) {
-	this.options = n2i.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
-	this.element = n2i.get(options.element);
-	this.itemContainer = n2i.firstByClass(this.element,'in2igui_upload_items');
-	this.status = n2i.firstByClass(this.element,'in2igui_upload_status');
-	this.placeholder = n2i.firstByClass(this.element,'in2igui_upload_placeholder');
+hui.ui.Upload = function(options) {
+	this.options = hui.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
+	this.element = hui.get(options.element);
+	this.itemContainer = hui.firstByClass(this.element,'in2igui_upload_items');
+	this.status = hui.firstByClass(this.element,'in2igui_upload_status');
+	this.placeholder = hui.firstByClass(this.element,'in2igui_upload_placeholder');
 	this.name = options.name;
 	this.items = [];
 	this.busy = false;
 	this.loaded = false;
 	this.useFlash = this.options.useFlash;
 	if (this.options.useFlash) {
-		this.useFlash = In2iGui.Flash.getMajorVersion()>=10;
+		this.useFlash = hui.ui.Flash.getMajorVersion()>=10;
 	}
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Upload.nameIndex = 0;
+hui.ui.Upload.nameIndex = 0;
 
 /** Creates a new upload widget */
-In2iGui.Upload.create = function(options) {
+hui.ui.Upload.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class':'in2igui_upload',
 		html : '<div class="in2igui_upload_items"></div>'+
 		'<div class="in2igui_upload_status"></div>'+
 		(options.placeholder ? '<div class="in2igui_upload_placeholder"><span class="in2igui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+n2i.escape(options.placeholder.title)+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+n2i.escape(options.placeholder.text)+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+hui.escape(options.placeholder.title)+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+hui.escape(options.placeholder.text)+'</p>' : '')+
 		'</div>' : '')
 	});
-	return new In2iGui.Upload(options);
+	return new hui.ui.Upload(options);
 }
 
-In2iGui.Upload.prototype = {
+hui.ui.Upload.prototype = {
 	/** @private */
 	addBehavior : function() {
 		if (!this.useFlash) {
 			this.createIframeVersion();
 			return;
 		}
-		In2iGui.onDomReady(this.createFlashVersion.bind(this));
+		hui.ui.onReady(this.createFlashVersion.bind(this));
 	},
 	/**
 	 * Change a parameter
@@ -9880,7 +10002,7 @@ In2iGui.Upload.prototype = {
 					return;
 				}
 			};
-			this.form.appendChild(n2i.build('input',{'type':'hidden','name':name,'value':value}));
+			this.form.appendChild(hui.build('input',{'type':'hidden','name':name,'value':value}));
 		}
 	},
 	
@@ -9888,10 +10010,10 @@ In2iGui.Upload.prototype = {
 	
 	/** @private */
 	createIframeVersion : function() {
-		In2iGui.Upload.nameIndex++;
-		var frameName = 'in2igui_upload_'+In2iGui.Upload.nameIndex;
+		hui.ui.Upload.nameIndex++;
+		var frameName = 'in2igui_upload_'+hui.ui.Upload.nameIndex;
 		
-		var form = this.form = n2i.build('form');
+		var form = this.form = hui.build('form');
 		form.setAttribute('action',this.options.url || '');
 		form.setAttribute('method','post');
 		form.setAttribute('enctype','multipart/form-data');
@@ -9899,52 +10021,52 @@ In2iGui.Upload.prototype = {
 		form.setAttribute('target',frameName);
 		if (this.options.parameters) {
 			for (var key in this.options.parameters) {
-				var hidden = n2i.build('input',{'type':'hidden','name':key});
+				var hidden = hui.build('input',{'type':'hidden','name':key});
 				hidden.value = this.options.parameters[key];
 				form.appendChild(hidden);
 			}
 		}
-		var iframe = this.iframe = n2i.build('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html'});
+		var iframe = this.iframe = hui.build('iframe',{name:frameName,id:frameName,src:hui.ui.context+'/In2iGui/html/blank.html'});
 		iframe.style.display='none';
 		this.element.appendChild(iframe);
-		this.fileInput = n2i.build('input',{'type':'file','class':'file','name':this.options.fieldName});
-		n2i.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
+		this.fileInput = hui.build('input',{'type':'file','class':'file','name':this.options.fieldName});
+		hui.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
 		form.appendChild(this.fileInput);
-		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
-		var span = n2i.build('span',{'class':'in2igui_upload_button_input'});
+		var buttonContainer = hui.build('span',{'class':'in2igui_upload_button'});
+		var span = hui.build('span',{'class':'in2igui_upload_button_input'});
 		span.appendChild(form);
 		buttonContainer.appendChild(span);
 		if (this.options.widget) {
-			In2iGui.onDomReady(function() {
-				var w = In2iGui.get(this.options.widget);
+			hui.ui.onReady(function() {
+				var w = hui.ui.get(this.options.widget);
 				w.element.parentNode.insertBefore(buttonContainer,w.element);
 				w.element.parentNode.removeChild(w.element);
 				buttonContainer.appendChild(w.element);
 			}.bind(this));
 		}
-		n2i.listen(iframe,'load',function() {this.iframeUploadComplete()}.bind(this));
+		hui.listen(iframe,'load',function() {this.iframeUploadComplete()}.bind(this));
 	},
 	/** @private */
 	iframeUploadComplete : function() {
 		if (!this.uploading) return;
-		n2i.log('iframeUploadComplete uploading: '+this.uploading+' ('+this.name+')');
+		hui.log('iframeUploadComplete uploading: '+this.uploading+' ('+this.name+')');
 		this.uploading = false;
 		this.form.reset();
-		var doc = n2i.getFrameDocument(this.iframe);
+		var doc = hui.getFrameDocument(this.iframe);
 		var last = this.items[this.items.length-1];
 		if (doc.body.innerHTML.indexOf('SUCCESS')!=-1) {
 			if (last) {
 				last.update({progress:1,filestatus:'Færdig'});
 			}
 			this.fire('uploadDidComplete',{}); // TODO: Send the correct file
-			n2i.log('Iframe upload succeeded');
+			hui.log('Iframe upload succeeded');
 		} else if (last) {
 			last.setError('Upload af filen fejlede!');
-			n2i.log('Iframe upload failed!');
+			hui.log('Iframe upload failed!');
 			this.fire('uploadDidFail',{}); // TODO: Send the correct file
 		}
 		this.fire('uploadDidCompleteQueue');
-		this.iframe.src=In2iGui.context+'/In2iGui/html/blank.html';
+		this.iframe.src=hui.ui.context+'/In2iGui/html/blank.html';
 		this.endIframeProgress();
 	},
 	/** @private */
@@ -9952,8 +10074,8 @@ In2iGui.Upload.prototype = {
 		this.startIframeProgress();
 		this.uploading = true;
 		// IE: set value of parms again since they disappear
-		if (n2i.browser.msie) {
-			n2i.each(this.options.parameters,function(key,value) {
+		if (hui.browser.msie) {
+			hui.each(this.options.parameters,function(key,value) {
 				this.form[key].value = value;
 			}.bind(this));
 		}
@@ -9961,7 +10083,7 @@ In2iGui.Upload.prototype = {
 		this.fire('uploadDidStartQueue');
 		var fileName = this.fileInput.value.split('\\').pop();
 		this.addItem({name:fileName,filestatus:'I gang'}).setWaiting();
-		n2i.log('Iframe upload started!');
+		hui.log('Iframe upload started!');
 	},
 	/** @private */
 	startIframeProgress : function() {
@@ -10003,20 +10125,20 @@ In2iGui.Upload.prototype = {
 	
 	/** @private */
 	createFlashVersion : function() {
-		n2i.log('Creating flash verison');
+		hui.log('Creating flash verison');
 		var url = this.getAbsoluteUrl(this.options.url);
-		var javaSession = n2i.cookie.get('JSESSIONID');
+		var javaSession = hui.cookie.get('JSESSIONID');
 		if (javaSession) {
 			url+=';jsessionid='+javaSession;
 		}
-		var phpSession = n2i.cookie.get('PHPSESSID');
+		var phpSession = hui.cookie.get('PHPSESSID');
 		if (phpSession) {
 			url+='?PHPSESSID='+phpSession;
 		}
-		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
-		var placeholder = n2i.build('span',{'class':'in2igui_upload_button_object',parent:buttonContainer});
+		var buttonContainer = hui.build('span',{'class':'in2igui_upload_button'});
+		var placeholder = hui.build('span',{'class':'in2igui_upload_button_object',parent:buttonContainer});
 		if (this.options.widget) {
-			var w = In2iGui.get(this.options.widget);
+			var w = hui.ui.get(this.options.widget);
 			w.element.parentNode.insertBefore(buttonContainer,w.element);
 			w.element.parentNode.removeChild(w.element);
 			buttonContainer.appendChild(w.element);
@@ -10028,7 +10150,7 @@ In2iGui.Upload.prototype = {
 		var self = this;
 		this.loader = new SWFUpload({
 			upload_url : url,
-			flash_url : In2iGui.context+"/In2iGui/lib/swfupload/swfupload.swf",
+			flash_url : hui.ui.context+"/In2iGui/lib/swfupload/swfupload.swf",
 			file_size_limit : this.options.maxSize,
 			file_queue_limit : this.options.maxItems,
 			file_post_name : this.options.fieldName,
@@ -10061,7 +10183,7 @@ In2iGui.Upload.prototype = {
 	
 	/** @private */
 	flashLoaded : function() {
-		n2i.log('flash loaded');
+		hui.log('flash loaded');
 		this.loaded = true;
 	},
 	/** @private */
@@ -10078,18 +10200,18 @@ In2iGui.Upload.prototype = {
 		if (file!==null) {
 			this.addError(file,error);
 		} else {
-			In2iGui.showMessage({text:In2iGui.Upload.errors[error],duration:4000});
+			hui.ui.showMessage({text:hui.ui.Upload.errors[error],duration:4000});
 		}
 	},
 	/** @private */
 	fileDialogComplete : function() {
-		n2i.log('fileDialogComplete');
+		hui.log('fileDialogComplete');
 		this.startNextUpload();
 	},
 	/** @private */
 	uploadStart : function() {
 		this.status.style.display='block';
-		n2i.log('uploadStart');
+		hui.log('uploadStart');
 		if (!this.busy) {
 			this.fire('uploadDidStartQueue');
 		}
@@ -10102,14 +10224,14 @@ In2iGui.Upload.prototype = {
 	},
 	/** @private */
 	uploadError : function(file, error, message) {
-		n2i.log('uploadError file:'+file+', error:'+error+', message:'+message);
+		hui.log('uploadError file:'+file+', error:'+error+', message:'+message);
 		if (file) {
 			this.items[file.index].update(file);
 		}
 	},
 	/** @private */
 	uploadSuccess : function(file,data) {
-		n2i.log('uploadSuccess file:'+file+', data:'+data);
+		hui.log('uploadSuccess file:'+file+', data:'+data);
 		this.items[file.index].updateProgress(file.size,file.size);
 	},
 	/** @private */
@@ -10133,7 +10255,7 @@ In2iGui.Upload.prototype = {
 			index = this.items.length;
 			file.index = index;
 		}
-		var item = new In2iGui.Upload.Item(file);
+		var item = new hui.ui.Upload.Item(file);
 		this.items[index] = item;
 		this.itemContainer.appendChild(item.element);
 		this.itemContainer.style.display='block';
@@ -10149,48 +10271,48 @@ In2iGui.Upload.prototype = {
 		if (this.items.length==0) {
 			this.status.style.display='none';
 		} else {
-			n2i.dom.setText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
+			hui.dom.setText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
 			this.status.style.display='block';
 		}
-		n2i.log(s);
+		hui.log(s);
 	}
 }
 
-In2iGui.Upload.Item = function(file) {
-	this.element = n2i.build('div',{className:'in2igui_upload_item'});
+hui.ui.Upload.Item = function(file) {
+	this.element = hui.build('div',{className:'in2igui_upload_item'});
 	if (file.index % 2 == 1) {
-		n2i.addClass(this.element,'in2igui_upload_item_alt');
+		hui.addClass(this.element,'in2igui_upload_item_alt');
 	}
-	this.content = n2i.build('div',{className:'in2igui_upload_item_content'});
-	this.icon = In2iGui.createIcon('file/generic',2);
+	this.content = hui.build('div',{className:'in2igui_upload_item_content'});
+	this.icon = hui.ui.createIcon('file/generic',2);
 	this.element.appendChild(this.icon);
 	this.element.appendChild(this.content);
 	this.info = document.createElement('strong');
 	this.status = document.createElement('em');
-	this.progress = In2iGui.ProgressBar.create({small:true});
+	this.progress = hui.ui.ProgressBar.create({small:true});
 	this.content.appendChild(this.progress.getElement());
 	this.content.appendChild(this.info);
 	this.content.appendChild(this.status);
 	this.update(file);
 }
 
-In2iGui.Upload.Item.prototype = {
+hui.ui.Upload.Item.prototype = {
 	update : function(file) {
-		n2i.dom.setText(this.status,In2iGui.Upload.status[file.filestatus] || file.filestatus);
+		hui.dom.setText(this.status,hui.ui.Upload.status[file.filestatus] || file.filestatus);
 		if (file.name) {
-			n2i.dom.setText(this.info,file.name);
+			hui.dom.setText(this.info,file.name);
 		}
 		if (file.progress!==undefined) {
 			this.setProgress(file.progress);
 		}
 		if (file.filestatus==SWFUpload.FILE_STATUS.ERROR) {
-			n2i.addClass(this.element,'in2igui_upload_item_error');
+			hui.addClass(this.element,'in2igui_upload_item_error');
 			this.progress.hide();
 		}
 	},
 	setError : function(error) {
-		n2i.dom.setText(this.status,In2iGui.Upload.errors[error] || error);
-		n2i.addClass(this.element,'in2igui_upload_item_error');
+		hui.dom.setText(this.status,hui.ui.Upload.errors[error] || error);
+		hui.addClass(this.element,'in2igui_upload_item_error');
 		this.progress.hide();
 	},
 	updateProgress : function(complete,total) {
@@ -10209,13 +10331,13 @@ In2iGui.Upload.Item.prototype = {
 		this.element.hide();
 	},
 	destroy : function() {
-		n2i.dom.remove(this.element);
+		hui.dom.remove(this.element);
 	}
 }
 
 if (window.SWFUpload) {
 (function(){
-	var e = In2iGui.Upload.errors = {};
+	var e = hui.ui.Upload.errors = {};
 	e[SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED]			= 'Der er valgt for mange filer';
 	e[SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT]		= 'Filen er for stor';
 	e[SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE]					= 'Filen er tom';
@@ -10230,7 +10352,7 @@ if (window.SWFUpload) {
 	e[SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED]		= 'Validering af filen fejlede';
 	e[SWFUpload.UPLOAD_ERROR.FILE_CANCELLED]				= 'Filen blev afbrudt';
 	e[SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED]				= 'Upload af filen blev stoppet';
-	var s = In2iGui.Upload.status = {};
+	var s = hui.ui.Upload.status = {};
 	s[SWFUpload.FILE_STATUS.QUEUED] 		= 'I kø';
 	s[SWFUpload.FILE_STATUS.IN_PROGRESS] 	= 'I gang';
 	s[SWFUpload.FILE_STATUS.ERROR] 			= 'Filen gav fejl';
@@ -10241,8 +10363,8 @@ if (window.SWFUpload) {
 /* EOF *//** A progress bar is a widget that shows progress from 0% to 100%
 	@constructor
 */
-In2iGui.ProgressBar = function(o) {
-	this.element = n2i.get(o.element);
+hui.ui.ProgressBar = function(o) {
+	this.element = hui.get(o.element);
 	this.name = o.name;
 	/** @private */
 	this.WAITING = o.small ? 'in2igui_progressbar_small_waiting' : 'in2igui_progressbar_waiting';
@@ -10251,45 +10373,45 @@ In2iGui.ProgressBar = function(o) {
 	/** @private */
 	this.options = o || {};
 	/** @private */
-	this.indicator = n2i.firstByTag(this.element,'div');
-	In2iGui.extend(this);
+	this.indicator = hui.firstByTag(this.element,'div');
+	hui.ui.extend(this);
 }
 
 /** Creates a new progress bar:
 	@param o {Object} Options : {small:false}
 */
-In2iGui.ProgressBar.create = function(o) {
+hui.ui.ProgressBar.create = function(o) {
 	o = o || {};
-	var e = o.element = n2i.build('div',{'class':o.small ? 'in2igui_progressbar in2igui_progressbar_small' : 'in2igui_progressbar'});
+	var e = o.element = hui.build('div',{'class':o.small ? 'in2igui_progressbar in2igui_progressbar_small' : 'in2igui_progressbar'});
 	e.appendChild(document.createElement('div'));
-	return new In2iGui.ProgressBar(o);
+	return new hui.ui.ProgressBar(o);
 }
 	
-In2iGui.ProgressBar.prototype = {
+hui.ui.ProgressBar.prototype = {
 	/** Set the progress value
 	@param value {Number} A number between 0 and 1
 	*/
 	setValue : function(value) {
 		var el = this.element;
 		if (this.waiting) {
-			n2i.removeClass(el,this.WAITING);
+			hui.removeClass(el,this.WAITING);
 		}
-		n2i.setClass(el,this.COMPLETE,value==1);
-		n2i.ani(this.indicator,'width',(value*100)+'%',200);
+		hui.setClass(el,this.COMPLETE,value==1);
+		hui.ani(this.indicator,'width',(value*100)+'%',200);
 	},
 	/** Mark progress as waiting */
 	setWaiting : function() {
 		this.waiting = true;
 		this.indicator.style.width=0;
-		n2i.addClass(this.element,this.WAITING);
+		hui.addClass(this.element,this.WAITING);
 	},
 	/** Reset the progress bar */
 	reset : function() {
 		var el = this.element;
 		if (this.waiting) {
-			n2i.removeClass(el,this.WAITING);
+			hui.removeClass(el,this.WAITING);
 		}
-		n2i.removeClass(el,this.COMPLETE);
+		hui.removeClass(el,this.COMPLETE);
 		this.indicator.style.width='0%';
 	},
 	/** Hide the progress bar */
@@ -10303,34 +10425,34 @@ In2iGui.ProgressBar.prototype = {
 }
 
 /* EOF *//** @constructor */
-In2iGui.Gallery = function(options) {
+hui.ui.Gallery = function(options) {
 	this.options = options || {};
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	this.body = n2i.firstByClass(this.element,'in2igui_gallery_body');
+	this.element = hui.get(options.element);
+	this.body = hui.firstByClass(this.element,'in2igui_gallery_body');
 	this.objects = [];
 	this.nodes = [];
 	this.selected = [];
 	this.width = 100;
 	this.height = 100;
 	this.revealing = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	if (this.element.parentNode && n2i.hasClass(this.element.parentNode,'in2igui_overflow')) {
+	if (this.element.parentNode && hui.hasClass(this.element.parentNode,'in2igui_overflow')) {
 		this.revealing = true;
-		n2i.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
+		hui.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
 	}
 }
 
-In2iGui.Gallery.create = function(options) {
+hui.ui.Gallery.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{'class':'in2igui_gallery',html:'<div class="in2igui_gallery_progress"></div><div class="in2igui_gallery_body"></div>'});
-	return new In2iGui.Gallery(options);
+	options.element = hui.build('div',{'class':'in2igui_gallery',html:'<div class="in2igui_gallery_progress"></div><div class="in2igui_gallery_body"></div>'});
+	return new hui.ui.Gallery(options);
 }
 
-In2iGui.Gallery.prototype = {
+hui.ui.Gallery.prototype = {
 	setObjects : function(objects) {
 		this.objects = objects;
 		this.render();
@@ -10353,7 +10475,7 @@ In2iGui.Gallery.prototype = {
 		this.maxRevealed=0;
 		this.body.innerHTML='';
 		var self = this;
-		n2i.each(this.objects,function(object,i) {
+		hui.each(this.objects,function(object,i) {
 			var url = self.resolveImageUrl(object),
 				top = 0;
 			if (url!==null) {
@@ -10362,22 +10484,22 @@ In2iGui.Gallery.prototype = {
 			if (!self.revealing && object.height<object.width) {
 				top = (self.height-(self.height*object.height/object.width))/2;
 			}
-			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
+			var img = hui.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
 			if (self.revealing) {
 			//	img.style.visibility='hidden';
 			}
-			var item = n2i.build('div',{'class' : 'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			var item = hui.build('div',{'class' : 'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
 			item.appendChild(img);
-			n2i.listen(item,'click',function() {
+			hui.listen(item,'click',function() {
 				self.itemClicked(i);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
 			item.onmousedown=function(e) {
-				In2iGui.startDrag(e,item);
+				hui.ui.startDrag(e,item);
 				return false;
 			};
-			n2i.listen(item,'dblclick',function() {
+			hui.listen(item,'dblclick',function() {
 				self.itemDoubleClicked(i);
 			});
 			self.body.appendChild(item);
@@ -10424,12 +10546,12 @@ In2iGui.Gallery.prototype = {
 	updateUI : function() {
 		var s = this.selected;
 		for (var i=0; i < this.nodes.length; i++) {
-			n2i.setClass(this.nodes[i],'in2igui_gallery_item_selected',n2i.inArray(s,i));
+			hui.setClass(this.nodes[i],'in2igui_gallery_item_selected',hui.inArray(s,i));
 		};
 	},
 	/** @private */
 	resolveImageUrl : function(img) {
-		return In2iGui.resolveImageUrl(this,img,this.width,this.height);
+		return hui.ui.resolveImageUrl(this,img,this.width,this.height);
 		for (var i=0; i < this.delegates.length; i++) {
 			if (this.delegates[i]['$resolveImageUrl']) {
 				return this.delegates[i]['$resolveImageUrl'](img,this.width,this.height);
@@ -10461,7 +10583,7 @@ In2iGui.Gallery.prototype = {
 	},
 	/**
 	 * Sets the lists data source and refreshes it if it is new
-	 * @param {In2iGui.Source} source The source
+	 * @param {hui.ui.Source} source The source
 	 */
 	setSource : function(source) {
 		if (this.options.source!=source) {
@@ -10488,10 +10610,10 @@ In2iGui.Gallery.prototype = {
 		if (busy) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				n2i.addClass(e,'in2igui_gallery_busy');
+				hui.addClass(e,'in2igui_gallery_busy');
 			},300);
 		} else {
-			n2i.removeClass(this.element,'in2igui_gallery_busy');
+			hui.removeClass(this.element,'in2igui_gallery_busy');
 		}
 	}
 }
@@ -10499,14 +10621,14 @@ In2iGui.Gallery.prototype = {
 /* EOF *//**
  * @constructor
  */
-In2iGui.Calendar = function(o) {
+hui.ui.Calendar = function(o) {
 	this.name = o.name;
-	this.options = n2i.override({startHour:7,endHour:24},o);
-	this.element = n2i.get(o.element);
-	this.head = n2i.firstByTag(this.element,'thead');
-	this.body = n2i.firstByTag(this.element,'tbody');
+	this.options = hui.override({startHour:7,endHour:24},o);
+	this.element = hui.get(o.element);
+	this.head = hui.firstByTag(this.element,'thead');
+	this.body = hui.firstByTag(this.element,'tbody');
 	this.date = new Date();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.buildUI();
 	this.updateUI();
 	if (this.options.source) {
@@ -10514,7 +10636,7 @@ In2iGui.Calendar = function(o) {
 	}
 }
 
-In2iGui.Calendar.prototype = {
+hui.ui.Calendar.prototype = {
 	show : function() {
 		this.element.style.display='block';
 		if (this.options.source) {
@@ -10544,9 +10666,9 @@ In2iGui.Calendar.prototype = {
 	},
 	clearEvents : function() {
 		this.events = [];
-		var nodes = n2i.byClass(this.element,'in2igui_calendar_event');
+		var nodes = hui.byClass(this.element,'in2igui_calendar_event');
 		for (var i=0; i < nodes.length; i++) {
-			n2i.dom.remove(nodes[i]);
+			hui.dom.remove(nodes[i]);
 		};
 		this.hideEventViewer();
 	},
@@ -10554,7 +10676,7 @@ In2iGui.Calendar.prototype = {
 		try {
 			this.setEvents(data);
 		} catch (e) {
-			n2i.log(e);
+			hui.log(e);
 		}
 	},
 	$sourceIsBusy : function() {
@@ -10581,30 +10703,30 @@ In2iGui.Calendar.prototype = {
 		var pixels = (this.options.endHour-this.options.startHour)*40;
 		var week = this.getFirstDay().getWeekOfYear();
 		var year = this.getFirstDay().getYear();
-		n2i.each(this.events,function(event) {
-			var day = n2i.byClass(self.body,'in2igui_calendar_day')[event.startTime.getDay()-1];
+		hui.each(this.events,function(event) {
+			var day = hui.byClass(self.body,'in2igui_calendar_day')[event.startTime.getDay()-1];
 			if (!day) {
 				return;
 			}
 			if (event.startTime.getWeekOfYear()!=week || event.startTime.getYear()!=year) {
 				return;
 			}
-			var node = n2i.build('div',{'class':'in2igui_calendar_event',parent:day});
+			var node = hui.build('div',{'class':'in2igui_calendar_event',parent:day});
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
 			height = Math.min(pixels-top,height);
-			n2i.setStyle(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
-			var content = n2i.build('div',{parent:node});
-			n2i.build('p',{'class':'in2igui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
-			n2i.build('p',{'class':'in2igui_calendar_event_text',text:event.text,parent:content});
+			hui.setStyle(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
+			var content = hui.build('div',{parent:node});
+			hui.build('p',{'class':'in2igui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
+			hui.build('p',{'class':'in2igui_calendar_event_text',text:event.text,parent:content});
 			if (event.location) {
-				n2i.build('p',{'class':'in2igui_calendar_event_location',text:event.location,parent:content});
+				hui.build('p',{'class':'in2igui_calendar_event_location',text:event.location,parent:content});
 			}
 			
 			window.setTimeout(function() {
-				In2iGui.bounceIn(node);
+				hui.ui.bounceIn(node);
 			},Math.random()*200)
-			n2i.listen(node,'click',function() {
+			hui.listen(node,'click',function() {
 				self.eventWasClicked(node);
 			});
 		});
@@ -10614,44 +10736,44 @@ In2iGui.Calendar.prototype = {
 		this.showEvent(node);
 	},
 	setBusy : function(busy) {
-		n2i.setClass(this.element,'in2igui_calendar_busy',busy);
+		hui.setClass(this.element,'in2igui_calendar_busy',busy);
 	},
 	/** @private */
 	updateUI : function() {
 		var first = this.getFirstDay();		
-		var days = n2i.byClass(this.head,'day');
+		var days = hui.byClass(this.head,'day');
 		for (var i=0; i < days.length; i++) {
 			var date = new Date(first.getTime());
 			date.setDate(date.getDate()+i);
-			n2i.dom.setText(days[i],date.dateFormat('l \\d. d M'));
+			hui.dom.setText(days[i],date.dateFormat('l \\d. d M'));
 		};
 	},
 	/** @private */
 	buildUI : function() {
-		var bar = n2i.firstByClass(this.element,'in2igui_calendar_bar');
-		this.toolbar = In2iGui.Toolbar.create({labels:false});
+		var bar = hui.firstByClass(this.element,'in2igui_calendar_bar');
+		this.toolbar = hui.ui.Toolbar.create({labels:false});
 		bar.appendChild(this.toolbar.getElement());
-		var previous = In2iGui.Button.create({name:'in2iguiCalendarPrevious',text:'',icon:'monochrome/previous'});
+		var previous = hui.ui.Button.create({name:'in2iguiCalendarPrevious',text:'',icon:'monochrome/previous'});
 		previous.listen(this);
 		this.toolbar.add(previous);
-		var today = In2iGui.Button.create({name:'in2iguiCalendarToday',text:'Idag'});
+		var today = hui.ui.Button.create({name:'in2iguiCalendarToday',text:'Idag'});
 		today.click(function() {this.setDate(new Date())}.bind(this));
 		this.toolbar.add(today);
-		var next = In2iGui.Button.create({name:'in2iguiCalendarNext',text:'',icon:'monochrome/next'});
+		var next = hui.ui.Button.create({name:'in2iguiCalendarNext',text:'',icon:'monochrome/next'});
 		next.listen(this);
 		this.toolbar.add(next);
-		this.datePickerButton = In2iGui.Button.create({name:'in2iguiCalendarDatePicker',text:'Vælg dato...'});
+		this.datePickerButton = hui.ui.Button.create({name:'in2iguiCalendarDatePicker',text:'Vælg dato...'});
 		this.datePickerButton.listen(this);
 		this.toolbar.add(this.datePickerButton);
 		
-		var time = n2i.firstByClass(this.body,'in2igui_calendar_day');
+		var time = hui.firstByClass(this.body,'in2igui_calendar_day');
 		for (var i=this.options.startHour; i <= this.options.endHour; i++) {
-			var node = n2i.build('div',{'class':'in2igui_calendar_time',html:'<span><em>'+i+':00</em></span>'});
+			var node = hui.build('div',{'class':'in2igui_calendar_time',html:'<span><em>'+i+':00</em></span>'});
 			if (i==this.options.startHour) {
-				n2i.addClass(node,'in2igui_calendar_time_first');
+				hui.addClass(node,'in2igui_calendar_time_first');
 			}
 			if (i==this.options.endHour) {
-				n2i.addClass(node,'in2igui_calendar_time_last');
+				hui.addClass(node,'in2igui_calendar_time_last');
 			}
 			time.appendChild(node);
 		};
@@ -10682,8 +10804,8 @@ In2iGui.Calendar.prototype = {
 		this.setBusy(true);
 		var info = {'startTime':this.getFirstDay(),'endTime':this.getLastDay()};
 		this.fire('calendarSpanChanged',info);
-		In2iGui.firePropertyChange(this,'startTime',this.getFirstDay());
-		In2iGui.firePropertyChange(this,'endTime',this.getLastDay());
+		hui.ui.firePropertyChange(this,'startTime',this.getFirstDay());
+		hui.ui.firePropertyChange(this,'endTime',this.getLastDay());
 	},
 	/** @private */
 	valueForProperty : function(p) {
@@ -10699,12 +10821,12 @@ In2iGui.Calendar.prototype = {
 	////////////////////////////////// Date picker ///////////////////////////
 	showDatePicker : function() {
 		if (!this.datePickerPanel) {
-			this.datePickerPanel = In2iGui.BoundPanel.create();
-			this.datePicker = In2iGui.DatePicker.create({name:'in2iguiCalendarDatePicker',value:this.date});
+			this.datePickerPanel = hui.ui.BoundPanel.create();
+			this.datePicker = hui.ui.DatePicker.create({name:'in2iguiCalendarDatePicker',value:this.date});
 			this.datePicker.listen(this);
 			this.datePickerPanel.add(this.datePicker);
 			this.datePickerPanel.addSpace(3);
-			var button = In2iGui.Button.create({name:'in2iguiCalendarDatePickerClose',text:'Luk',small:true,rounded:true});
+			var button = hui.ui.Button.create({name:'in2iguiCalendarDatePickerClose',text:'Luk',small:true,rounded:true});
 			button.listen(this);
 			this.datePickerPanel.add(button);
 		}
@@ -10722,11 +10844,11 @@ In2iGui.Calendar.prototype = {
 	
 	showEvent : function(node) {
 		if (!this.eventViewerPanel) {
-			this.eventViewerPanel = In2iGui.BoundPanel.create({width:270,padding: 3});
-			this.eventInfo = In2iGui.InfoView.create(null,{height:240,clickObjects:true});
+			this.eventViewerPanel = hui.ui.BoundPanel.create({width:270,padding: 3});
+			this.eventInfo = hui.ui.InfoView.create(null,{height:240,clickObjects:true});
 			this.eventViewerPanel.add(this.eventInfo);
 			this.eventViewerPanel.addSpace(5);
-			var button = In2iGui.Button.create({name:'in2iguiCalendarEventClose',text:'Luk'});
+			var button = hui.ui.Button.create({name:'in2iguiCalendarEventClose',text:'Luk'});
 			button.listen(this);
 			this.eventViewerPanel.add(button);
 		}
@@ -10734,7 +10856,7 @@ In2iGui.Calendar.prototype = {
 		this.eventInfo.setBusy(true);
 		this.eventViewerPanel.position(node);
 		this.eventViewerPanel.show();
-		In2iGui.callDelegates(this,'requestEventInfo');
+		hui.ui.callDelegates(this,'requestEventInfo');
 		return;
 	},
 	updateEventInfo : function(event,data) {
@@ -10911,42 +11033,42 @@ Date.dayNames =
  * @constructor
  * @param {Object} options { element «Node | id», name: «String» }
  */
-In2iGui.Layout = function(options) {
+hui.ui.Layout = function(options) {
 	this.name = options.name;
 	this.options = options || {};
-	this.element = n2i.get(options.element);
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
 }
 
-In2iGui.Layout.prototype = {
+hui.ui.Layout.prototype = {
 	$$layout : function() {
-		if (n2i.browser.gecko) {
-			var center = n2i.firstByClass(this.element,'in2igui_layout_center');
+		if (hui.browser.gecko) {
+			var center = hui.firstByClass(this.element,'in2igui_layout_center');
 			if (center) {
 				center.style.height='100%';
 			}
 		}
-		if (!n2i.browser.msie7 && !n2i.browser.msie8 && !n2i.browser.msie9) {
+		if (!hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9) {
 			return;
 		}
 		if (this.diff===undefined) {
-			var head = n2i.firstByClass(this.element,'in2igui_layout_top');
-			var top = n2i.firstByTag(head,'*').clientHeight;
-			var foot = n2i.firstByTag(n2i.firstByTag(this.element,'tfoot'),'td');
+			var head = hui.firstByClass(this.element,'in2igui_layout_top');
+			var top = hui.firstByTag(head,'*').clientHeight;
+			var foot = hui.firstByTag(hui.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
 			if (foot) {
-				bottom = n2i.firstByTag(foot,'*').clientHeight;
+				bottom = hui.firstByTag(foot,'*').clientHeight;
 			}
-			top += n2i.getTop(this.element);
+			top += hui.getTop(this.element);
 			this.diff = bottom+top;
 			if (this.element.parentNode!==document.body) {
 				this.diff+=15;
 			} else {
 			}
 		}
-		var tbody = n2i.firstByTag(this.element,'tbody');
-		var cell = n2i.firstByTag(tbody,'td');
-		cell.style.height = (n2i.getViewPortHeight()-this.diff+5)+'px';
+		var tbody = hui.firstByTag(this.element,'tbody');
+		var cell = hui.firstByTag(tbody,'td');
+		cell.style.height = (hui.getViewPortHeight()-this.diff+5)+'px';
 	}
 };
 
@@ -10955,31 +11077,31 @@ In2iGui.Layout.prototype = {
  * @constructor
  * @param {Object} options { element «Node | id», name: «String» }
  */
-In2iGui.Columns = function(options) {
+hui.ui.Columns = function(options) {
 	this.name = options.name;
 	this.options = options || {};
-	this.element = n2i.get(options.element);
-	this.body = n2i.firstByTag(this.element,'tr');
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	this.body = hui.firstByTag(this.element,'tr');
+	hui.ui.extend(this);
 }
 
 /**
  * Creates a new Columns opject
  */
-In2iGui.Columns.create = function(options) {
+hui.ui.Columns.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('table',{'class' : 'in2igui_columns',html : '<tbody><tr></tr></tbody>'});
-	return new In2iGui.Columns(options);
+	options.element = hui.build('table',{'class' : 'in2igui_columns',html : '<tbody><tr></tr></tbody>'});
+	return new hui.ui.Columns(options);
 }
 
-In2iGui.Columns.prototype = {
+hui.ui.Columns.prototype = {
 	addToColumn : function(index,widget) {
 		var c = this.ensureColumn(index);
 		c.appendChild(widget.getElement());
 	},
 	setColumnStyle : function(index,style) {
 		var c = this.ensureColumn(index);
-		n2i.setStyle(c,style);
+		hui.setStyle(c,style);
 	},
 	setColumnWidth : function(index,width) {
 		var c = this.ensureColumn(index);
@@ -10987,11 +11109,11 @@ In2iGui.Columns.prototype = {
 	},
 	/** @private */
 	ensureColumn : function(index) {
-		var children = n2i.getChildren(this.body);
+		var children = hui.getChildren(this.body);
 		for (var i=children.length-1;i<index;i++) {
-			this.body.appendChild(n2i.build('td',{'class':'in2igui_columns_column'}));
+			this.body.appendChild(hui.build('td',{'class':'in2igui_columns_column'}));
 		}
-		return n2i.getChildren(this.body)[index];
+		return hui.getChildren(this.body)[index];
 	}
 }
 
@@ -11000,52 +11122,52 @@ In2iGui.Columns.prototype = {
  * @param {Object} The options
  * @constructor
  */
-In2iGui.Dock = function(options) {
+hui.ui.Dock = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
-	this.iframe = n2i.firstByTag(this.element,'iframe');
-	this.progress = n2i.firstByClass(this.element,'in2igui_dock_progress');
-	n2i.listen(this.iframe,'load',this._load.bind(this));
+	this.element = hui.get(options.element);
+	this.iframe = hui.firstByTag(this.element,'iframe');
+	this.progress = hui.firstByClass(this.element,'in2igui_dock_progress');
+	hui.listen(this.iframe,'load',this._load.bind(this));
 	//if (this.iframe.contentWindow) {
-	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();n2i.log('Fast path!')}.bind(this));
+	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();hui.log('Fast path!')}.bind(this));
 	//}
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.diff = -69;
 	if (this.options.tabs) {
 		this.diff-=15;
 	}
 	this.busy = true;
-	In2iGui.listen(this);
+	hui.ui.listen(this);
 }
 
-In2iGui.Dock.prototype = {
+hui.ui.Dock.prototype = {
 	/** Change the url of the iframe
 	 * @param {String} url The url to change the iframe to
 	 */
 	setUrl : function(url) {
 		this._setBusy(true);
-		n2i.getFrameDocument(this.iframe).location.href='about:blank';
-		n2i.getFrameDocument(this.iframe).location.href=url;
+		hui.getFrameDocument(this.iframe).location.href='about:blank';
+		hui.getFrameDocument(this.iframe).location.href=url;
 	},
 	_load : function() {
 		this._setBusy(false);
 	},
 	_setBusy : function(busy) {
 		if (busy) {
-			n2i.setStyle(this.progress,{display:'block',height:this.iframe.clientHeight});
+			hui.setStyle(this.progress,{display:'block',height:this.iframe.clientHeight});
 		} else {
 			this.progress.style.display = 'none';
 		}
 	},
 	$frameLoaded : function(win) {
-		if (win==n2i.getFrameWindow(this.iframe)) {
+		if (win==hui.getFrameWindow(this.iframe)) {
 			this._setBusy(false);
 		}
 	},
 	/** @private */
 	$$layout : function() {
-		var height = n2i.getViewPortHeight();
+		var height = hui.getViewPortHeight();
 		this.iframe.style.height=(height+this.diff)+'px';
 		this.progress.style.height=(height+this.diff)+'px';
 	}
@@ -11055,34 +11177,34 @@ In2iGui.Dock.prototype = {
  * @constructor
  * @param {Object} options The options : {modal:false}
  */
-In2iGui.Box = function(options) {
-	this.options = n2i.override({},options);
+hui.ui.Box = function(options) {
+	this.options = hui.override({},options);
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	this.body = n2i.firstByClass(this.element,'in2igui_box_body');
-	this.close = n2i.firstByClass(this.element,'in2igui_box_close');
+	this.element = hui.get(options.element);
+	this.body = hui.firstByClass(this.element,'in2igui_box_body');
+	this.close = hui.firstByClass(this.element,'in2igui_box_close');
 	if (this.close) {
-		n2i.listen(this.close,'click',function(e) {
-			n2i.stop(e);
+		hui.listen(this.close,'click',function(e) {
+			hui.stop(e);
 			this.hide();
 			this.fire('boxWasClosed');
 		}.bind(this));
 	}
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 };
 
 /**
  * Creates a new box widget
  * @param {Object} options The options : {width:0,padding:0,absolute:false,closable:false}
  */
-In2iGui.Box.create = function(options) {
+hui.ui.Box.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class' : options.absolute ? 'in2igui_box in2igui_box_absolute' : 'in2igui_box',
 		html : (options.closable ? '<a class="in2igui_box_close" href="#"></a>' : '')+
 			'<div class="in2igui_box_top"><div><div></div></div></div>'+
 			'<div class="in2igui_box_middle"><div class="in2igui_box_middle">'+
-			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+n2i.escape(options.title)+'</strong></div>' : '')+
+			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+hui.escape(options.title)+'</strong></div>' : '')+
 			'<div class="in2igui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+
@@ -11091,10 +11213,10 @@ In2iGui.Box.create = function(options) {
 			'<div class="in2igui_box_bottom"><div><div></div></div></div>',
 		style : options.width ? options.width+'px' : null
 	});
-	return new In2iGui.Box(options);
+	return new hui.ui.Box(options);
 };
 
-In2iGui.Box.prototype = {
+hui.ui.Box.prototype = {
 	/**
 	 * Adds the box to the end of the body
 	 */
@@ -11117,26 +11239,26 @@ In2iGui.Box.prototype = {
 	show : function() {
 		var e = this.element;
 		if (this.options.modal) {
-			var index = In2iGui.nextPanelIndex();
+			var index = hui.ui.nextPanelIndex();
 			e.style.zIndex=index+1;
-			In2iGui.showCurtain({widget:this,zIndex:index});
+			hui.ui.showCurtain({widget:this,zIndex:index});
 		}
 		if (this.options.absolute) {
-			n2i.setStyle(e,{display:'block',visibility:'hidden'});
+			hui.setStyle(e,{display:'block',visibility:'hidden'});
 			var w = e.clientWidth;
-			var top = (n2i.getViewPortHeight()-e.clientHeight)/2+n2i.getScrollTop();
-			n2i.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
-			n2i.setStyle(e,{display:'block',visibility:'visible'});
+			var top = (hui.getViewPortHeight()-e.clientHeight)/2+hui.getScrollTop();
+			hui.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
+			hui.setStyle(e,{display:'block',visibility:'visible'});
 		} else {
 			e.style.display='block';
 		}
-		In2iGui.callVisible(this);
+		hui.ui.callVisible(this);
 	},
 	/**
 	 * Hides the box
 	 */
 	hide : function() {
-		In2iGui.hideCurtain(this);
+		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 	},
 	/** @private */
@@ -11147,36 +11269,36 @@ In2iGui.Box.prototype = {
  * @constructor
  * A wizard with a number of steps
  */
-In2iGui.Wizard = function(o) {
+hui.ui.Wizard = function(o) {
 	/** @private */
 	this.options = o || {};
 	/** @private */
-	this.element = n2i.get(o.element);
+	this.element = hui.get(o.element);
 	/** @private */
 	this.name = o.name;
 	/** @private */
-	this.container = n2i.firstByClass(this.element,'in2igui_wizard_steps');
+	this.container = hui.firstByClass(this.element,'in2igui_wizard_steps');
 	/** @private */
-	this.steps = n2i.byClass(this.element,'in2igui_wizard_step');
+	this.steps = hui.byClass(this.element,'in2igui_wizard_step');
 	/** @private */
-	this.anchors = n2i.byClass(this.element,'in2igui_wizard_selection');
+	this.anchors = hui.byClass(this.element,'in2igui_wizard_selection');
 	/** @private */
 	this.selected = 0;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 	
-In2iGui.Wizard.prototype = {
+hui.ui.Wizard.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		n2i.each(this.anchors,function(node,i) {
-			n2i.listen(node,'mousedown',function(e) {
-				n2i.stop(e);
+		hui.each(this.anchors,function(node,i) {
+			hui.listen(node,'mousedown',function(e) {
+				hui.stop(e);
 				self.goToStep(i)
 			});
-			n2i.listen(node,'click',function(e) {
-				n2i.stop(e);
+			hui.listen(node,'click',function(e) {
+				hui.stop(e);
 			});
 		});
 	},
@@ -11184,15 +11306,15 @@ In2iGui.Wizard.prototype = {
 	goToStep : function(index) {
 		var c = this.container;
 		c.style.height=c.clientHeight+'px';
-		n2i.removeClass(this.anchors[this.selected],'in2igui_selected');
+		hui.removeClass(this.anchors[this.selected],'in2igui_selected');
 		this.steps[this.selected].style.display='none';
-		n2i.addClass(this.anchors[index],'in2igui_selected');
+		hui.addClass(this.anchors[index],'in2igui_selected');
 		this.steps[index].style.display='block';
 		this.selected=index;
-		n2i.ani(c,'height',this.steps[index].clientHeight+'px',500,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+		hui.ani(c,'height',this.steps[index].clientHeight+'px',500,{ease:hui.ease.slowFastSlow,onComplete:function() {
 			c.style.height='';
 		}});
-		In2iGui.callVisible(this);
+		hui.ui.callVisible(this);
 	},
 	/** Goes to the next step */
 	next : function() {
@@ -11211,32 +11333,32 @@ In2iGui.Wizard.prototype = {
 /* EOF *//**
  * A list of articles
  * @constructor
- * @param {Object} options { element: «Node | id», name: «String», source: «In2iGui.Source» }
+ * @param {Object} options { element: «Node | id», name: «String», source: «hui.ui.Source» }
  */
-In2iGui.Articles = function(options) {
+hui.ui.Articles = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	if (options.source) {
 		options.source.listen(this);
 	}
 }
 
-In2iGui.Articles.prototype = {
+hui.ui.Articles.prototype = {
 	/** @private */
 	$articlesLoaded : function(doc) {
 		this.element.innerHTML='';
 		var a = doc.getElementsByTagName('article');
 		for (var i=0; i < a.length; i++) {
-			var e = n2i.build('div',{'class':'in2igui_article'});
+			var e = hui.build('div',{'class':'in2igui_article'});
 			var c = a[i].childNodes;
 			for (var j=0; j < c.length; j++) {
-				if (n2i.dom.isElement(c[j],'title')) {
-					var title = n2i.dom.getText(c[j]);
-					e.appendChild(n2i.build('h2',{text:title}));
-				} else if (n2i.dom.isElement(c[j],'paragraph')) {
-					var text = n2i.dom.getText(c[j]);
-					var p = n2i.build('p',{text:text});
+				if (hui.dom.isElement(c[j],'title')) {
+					var title = hui.dom.getText(c[j]);
+					e.appendChild(hui.build('h2',{text:title}));
+				} else if (hui.dom.isElement(c[j],'paragraph')) {
+					var text = hui.dom.getText(c[j]);
+					var p = hui.build('p',{text:text});
 					if (c[j].getAttribute('dimmed')==='true') {
 						p.className='in2igui_dimmed';
 					}
@@ -11255,22 +11377,22 @@ In2iGui.Articles.prototype = {
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		n2i.removeClass(this.element,'in2igui_list_busy');
+		hui.removeClass(this.element,'in2igui_list_busy');
 	}
 }
 
 /* EOF *//** @constructor */
-In2iGui.TextField = function(options) {
-	this.options = n2i.override({placeholderElement:null,validator:null},options);
-	var e = this.element = n2i.get(options.element);
+hui.ui.TextField = function(options) {
+	this.options = hui.override({placeholderElement:null,validator:null},options);
+	var e = this.element = hui.get(options.element);
 	this.element.setAttribute('autocomplete','off');
 	this.value = this.validate(this.element.value);
 	this.isPassword = this.element.type=='password';
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	if (this.options.placeholderElement && this.value!='') {
-		In2iGui.fadeOut(this.options.placeholderElement,0);
+		hui.ui.fadeOut(this.options.placeholderElement,0);
 	}
 	this.checkPlaceholder();
 	try { // IE hack
@@ -11280,26 +11402,26 @@ In2iGui.TextField = function(options) {
 	} catch (e) {}
 }
 
-In2iGui.TextField.prototype = {
+hui.ui.TextField.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		n2i.listen(e,'keyup',this.keyDidStrike.bind(this));
+		hui.listen(e,'keyup',this.keyDidStrike.bind(this));
 		var p = this.options.placeholderElement;
-		n2i.listen(e,'blur',this.onBlur.bind(this));
+		hui.listen(e,'blur',this.onBlur.bind(this));
 		if (p) {
-			n2i.listen(e,'focus',this.focused.bind(this));
-			n2i.listen(e,'blur',this.checkPlaceholder.bind(this));
+			hui.listen(e,'focus',this.focused.bind(this));
+			hui.listen(e,'blur',this.checkPlaceholder.bind(this));
 			if (p) {
 				p.style.cursor='text';
-				n2i.listen(p,'mousedown',this.focus.bind(this));
-				n2i.listen(p,'click',this.focus.bind(this));
+				hui.listen(p,'mousedown',this.focus.bind(this));
+				hui.listen(p,'click',this.focus.bind(this));
 			}
 		}
 	},
 	focused : function() {
 		var e = this.element,p = this.options.placeholderElement;
 		if (p && e.value=='') {
-			In2iGui.fadeOut(p,0);
+			hui.ui.fadeOut(p,0);
 		}
 	},
 	/** @private */
@@ -11307,16 +11429,16 @@ In2iGui.TextField.prototype = {
 		var validator = this.options.validator, result;
 		if (validator) {
 			result = validator.validate(value);
-			n2i.setClass(this.element,'in2igui_invalid',!result.valid);
+			hui.setClass(this.element,'in2igui_invalid',!result.valid);
 			return result.value;
 		}
 		return value;
 	},
 	checkPlaceholder : function() {
 		if (this.options.placeholderElement && this.value=='') {
-			In2iGui.fadeIn(this.options.placeholderElement,200);
+			hui.ui.fadeIn(this.options.placeholderElement,200);
 		}
-		if (this.isPassword && !n2i.browser.msie) {
+		if (this.isPassword && !hui.browser.msie) {
 			this.element.type='password';
 		}
 	},
@@ -11333,7 +11455,7 @@ In2iGui.TextField.prototype = {
 	},
 	/** @private */
 	onBlur : function() {
-		n2i.removeClass(this.element,'in2igui_invalid');
+		hui.removeClass(this.element,'in2igui_invalid');
 		this.element.value = this.value || '';
 	},
 	getValue : function() {
@@ -11357,68 +11479,68 @@ In2iGui.TextField.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		n2i.setClass(this.element,'in2igui_field_error',isError);
+		hui.setClass(this.element,'in2igui_field_error',isError);
 		if (typeof(error) == 'string') {
-			In2iGui.showToolTip({text:error,element:this.element,key:this.name});
+			hui.ui.showToolTip({text:error,element:this.element,key:this.name});
 		}
 		if (!isError) {
-			In2iGui.hideToolTip({key:this.name});
+			hui.ui.hideToolTip({key:this.name});
 		}
 	}
 };
 
 /* EOF *//** @constructor */
-In2iGui.InfoView = function(options) {
-	this.options = n2i.override({clickObjects:false},options);
-	this.element = n2i.get(options.element);
+hui.ui.InfoView = function(options) {
+	this.options = hui.override({clickObjects:false},options);
+	this.element = hui.get(options.element);
 	this.body = this.element.select('tbody')[0];
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.InfoView.create = function(options) {
+hui.ui.InfoView.create = function(options) {
 	options = options || {};
-	var element = options.element = n2i.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
+	var element = options.element = hui.build('div',{'class':'in2igui_infoview',html:'<table><tbody></tbody></table>'});
 	if (options.height) {
-		n2i.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
+		hui.setStyle(element,{height:options.height+'px','overflow':'auto','overflowX':'hidden'});
 	}
 	if (options.margin) {
 		element.style.margin = options.margin+'px';
 	}
-	return new In2iGui.InfoView(options);
+	return new hui.ui.InfoView(options);
 }
 
-In2iGui.InfoView.prototype = {
+hui.ui.InfoView.prototype = {
 	addHeader : function(text) {
-		var row = n2i.build('tr',{parent:this.body});
-		n2i.build('th',{'class' : 'in2igui_infoview_header',colspan:'2',text:text,parent:row});
+		var row = hui.build('tr',{parent:this.body});
+		hui.build('th',{'class' : 'in2igui_infoview_header',colspan:'2',text:text,parent:row});
 	},
 	addProperty : function(label,text) {
-		var row = n2i.build('tr',{parent:this.body});
-		n2i.build('th',{parent:row,text:label});
-		n2i.build('td',{parent:row,text:text});
+		var row = hui.build('tr',{parent:this.body});
+		hui.build('th',{parent:row,text:label});
+		hui.build('td',{parent:row,text:text});
 	},
 	addObjects : function(label,objects) {
 		if (!objects || objects.length==0) return;
-		var row = n2i.build('tr',{parent:this.body});
-		row.appendChild(n2i.build('th',{text:label}));
-		var cell = n2i.build('td',{parent:row});
+		var row = hui.build('tr',{parent:this.body});
+		row.appendChild(hui.build('th',{text:label}));
+		var cell = hui.build('td',{parent:row});
 		var click = this.options.clickObjects;
-		n2i.each(objects,function(obj) {
-			var node = n2i.build('div',{text:obj.title,parent:cell});
+		hui.each(objects,function(obj) {
+			var node = hui.build('div',{text:obj.title,parent:cell});
 			if (click) {
-				n2i.addClass(node,'in2igui_infoview_click')
-				n2i.listen(node,'click',function() {
-					In2iGui.callDelegates(this,'objectWasClicked',obj);
+				hui.addClass(node,'in2igui_infoview_click')
+				hui.listen(node,'click',function() {
+					hui.ui.callDelegates(this,'objectWasClicked',obj);
 				});
 			}
 		});
 	},
 	setBusy : function(busy) {
-		n2i.setClass(this,element,'in2igui_infoview_busy',busy);
+		hui.setClass(this,element,'in2igui_infoview_busy',busy);
 	},
 	clear : function() {
-		n2i.dom.clear(this.body);
+		hui.dom.clear(this.body);
 	},
 	update : function(data) {
 		this.clear();
@@ -11437,35 +11559,35 @@ In2iGui.InfoView.prototype = {
  * @param {Object} The options
  * @constructor
  */
-In2iGui.Overflow = function(options) {
+hui.ui.Overflow = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Overflow.create = function(options) {
+hui.ui.Overflow.create = function(options) {
 	options = options || {};
-	var e = options.element = n2i.build('div',{'class':'in2igui_overflow'});
+	var e = options.element = hui.build('div',{'class':'in2igui_overflow'});
 	if (options.height) {
 		e.style.height=options.height+'px';
 	}
-	return new In2iGui.Overflow(options);
+	return new hui.ui.Overflow(options);
 }
 
-In2iGui.Overflow.prototype = {
+hui.ui.Overflow.prototype = {
 	calculate : function() {
 		var top,bottom,parent,viewport;
-		viewport = n2i.getViewPortHeight();
+		viewport = hui.getViewPortHeight();
 		parent = this.element.parentNode;
-		top = n2i.getTop(this.element);
-		bottom = n2i.getTop(parent)+parent.clientHeight;
-		var sibs = n2i.getAllNext(this.element);
+		top = hui.getTop(this.element);
+		bottom = hui.getTop(parent)+parent.clientHeight;
+		var sibs = hui.getAllNext(this.element);
 		for (var i=0; i < sibs.length; i++) {
 			bottom-=sibs[i].clientHeight;
 		};
 		this.diff=-1*(top+(viewport-bottom));
-		if (n2i.browser.webkit) {
+		if (hui.browser.webkit) {
 			this.diff++;
 		}
 	},
@@ -11481,7 +11603,7 @@ In2iGui.Overflow.prototype = {
 		var height;
 		if (!this.options.dynamic) {
 			if (this.options.vertical) {
-				height = n2i.getViewPortHeight();
+				height = hui.getViewPortHeight();
 				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
 			}
 			return;
@@ -11489,67 +11611,67 @@ In2iGui.Overflow.prototype = {
 		if (this.diff===undefined) {
 			this.calculate();
 		}
-		height = n2i.getViewPortHeight();
+		height = hui.getViewPortHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';
 	}
 }
 
 /* EOF *//** @constructor */
-In2iGui.SearchField = function(options) {
-	this.options = n2i.override({expandedWidth:null},options);
-	this.element = n2i.get(options.element);
+hui.ui.SearchField = function(options) {
+	this.options = hui.override({expandedWidth:null},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.field = n2i.firstByTag(this.element,'input');
+	this.field = hui.firstByTag(this.element,'input');
 	this.value = this.field.value;
-	this.adaptive = n2i.hasClass(this.element,'in2igui_searchfield_adaptive');
-	In2iGui.onDomReady(function() {
-		this.initialWidth = parseInt(n2i.getStyle(this.element,'width'))
+	this.adaptive = hui.hasClass(this.element,'in2igui_searchfield_adaptive');
+	hui.ui.onReady(function() {
+		this.initialWidth = parseInt(hui.getStyle(this.element,'width'))
 	}.bind(this));
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	this.updateClass()
 }
 
-In2iGui.SearchField.create = function(options) {
+hui.ui.SearchField.create = function(options) {
 	options = options || {};
 	
-	options.element = n2i.build('span',{
+	options.element = hui.build('span',{
 		'class' : options.adaptive ? 'in2igui_searchfield in2igui_searchfield_adaptive' : 'in2igui_searchfield',
 		html : '<em class="in2igui_searchfield_placeholder"></em><a href="javascript:void(0);" class="in2igui_searchfield_reset"></a><span><span><input type="text"/></span></span>'
 	});
-	return new In2iGui.SearchField(options);
+	return new hui.ui.SearchField(options);
 }
 
-In2iGui.SearchField.prototype = {
+hui.ui.SearchField.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		n2i.listen(this.field,'keyup',this.onKeyUp.bind(this));
-		var reset = n2i.firstByTag(this.element,'a');
+		hui.listen(this.field,'keyup',this.onKeyUp.bind(this));
+		var reset = hui.firstByTag(this.element,'a');
 		reset.tabIndex=-1;
 		var focus = function() {self.field.focus();self.field.select()};
-		n2i.listen(this.element,'mousedown',focus);
-		n2i.listen(this.element,'mouseup',focus);
-		n2i.listen(reset,'mousedown',function(e) {
-			n2i.stop(e);
+		hui.listen(this.element,'mousedown',focus);
+		hui.listen(this.element,'mouseup',focus);
+		hui.listen(reset,'mousedown',function(e) {
+			hui.stop(e);
 			self.reset();
 			focus()
 		});
-		n2i.listen(n2i.firstByTag(this.element,'em'),'mousedown',focus);
-		n2i.listen(this.field,'focus',function() {
+		hui.listen(hui.firstByTag(this.element,'em'),'mousedown',focus);
+		hui.listen(this.field,'focus',function() {
 			self.focused=true;
 			self.updateClass();
 		});
-		n2i.listen(this.field,'blur',function() {
+		hui.listen(this.field,'blur',function() {
 			self.focused=false;
 			self.updateClass();
 		});
 		if (this.options.expandedWidth>0) {
 			this.field.onfocus = function() {
-				n2i.ani(self.element,'width',self.options.expandedWidth+'px',500,{ease:n2i.ease.slowFastSlow});
+				hui.ani(self.element,'width',self.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
 			}
 			this.field.onblur = function() {
-				n2i.ani(self.element,'width',self.initialWidth+'px',500,{ease:n2i.ease.slowFastSlow,delay:100});
+				hui.ani(self.element,'width',self.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
 			}
 		}
 	},
@@ -11597,7 +11719,7 @@ In2iGui.SearchField.prototype = {
 			this.value=this.field.value;
 			this.updateClass();
 			this.fire('valueChanged',this.value);
-			In2iGui.firePropertyChange(this,'value',this.value);
+			hui.ui.firePropertyChange(this,'value',this.value);
 		}
 	}
 }
@@ -11607,14 +11729,14 @@ In2iGui.SearchField.prototype = {
  * @param {Object} The options
  * @constructor
  */
-In2iGui.Fragment = function(options) {
+hui.ui.Fragment = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.Fragment.prototype = {
+hui.ui.Fragment.prototype = {
 	show : function() {
 		this.element.style.display='block';
 	},
@@ -11627,26 +11749,26 @@ In2iGui.Fragment.prototype = {
 	Used to get a geografical location
 	@constructor
 */
-In2iGui.LocationPicker = function(options) {
+hui.ui.LocationPicker = function(options) {
 	options = options || {};
 	this.name = options.name;
 	this.options = options.options || {};
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.defaultCenter = new google.maps.LatLng(57.0465, 9.9185);
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.LocationPicker.prototype = {
+hui.ui.LocationPicker.prototype = {
 	show : function(options) {
 		if (!this.panel) {
-			var panel = this.panel = In2iGui.BoundPanel.create({width:300});
-			var mapContainer = n2i.build('div',{style:'width:300px;height:300px'});
+			var panel = this.panel = hui.ui.BoundPanel.create({width:300});
+			var mapContainer = hui.build('div',{style:'width:300px;height:300px'});
 			panel.add(mapContainer);
-			var buttons = In2iGui.Buttons.create({align:'right',top:5});
-			var button = In2iGui.Button.create({text:'Luk'});
+			var buttons = hui.ui.Buttons.create({align:'right',top:5});
+			var button = hui.ui.Button.create({text:'Luk'});
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
-			n2i.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
+			hui.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
 		    var mapOptions = {
 		      zoom: 15,
 		      mapTypeId: google.maps.MapTypeId.TERRAIN
@@ -11696,14 +11818,14 @@ In2iGui.LocationPicker.prototype = {
  * @constructor
  * @param {Object} options The options
  */
-In2iGui.Bar = function(options) {
-	this.options = n2i.override({},options);
+hui.ui.Bar = function(options) {
+	this.options = hui.override({},options);
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
 };
 
-In2iGui.Bar.create = function(options) {
+hui.ui.Bar.create = function(options) {
 	options = options || {};
 	var cls = 'in2igui_bar';
 	if (options.variant) {
@@ -11712,27 +11834,27 @@ In2iGui.Bar.create = function(options) {
 	if (options.absolute) {
 		cls+=' in2igui_bar_absolute';
 	}
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class' : cls
 	});
-	n2i.build('div',{'class':'in2igui_bar_body',parent:options.element});
-	return new In2iGui.Bar(options);
+	hui.build('div',{'class':'in2igui_bar_body',parent:options.element});
+	return new hui.ui.Bar(options);
 }
 
-In2iGui.Bar.prototype = {
+hui.ui.Bar.prototype = {
 	addToDocument : function() {
 		document.body.appendChild(this.element);
 	},
 	add : function(widget) {
-		var body = n2i.firstByClass(this.element,'in2igui_bar_body');
+		var body = hui.firstByClass(this.element,'in2igui_bar_body');
 		body.appendChild(widget.getElement());
 	},
 	placeAbove : function(widget) {
-		n2i.place({
+		hui.place({
 			source:{element:this.element,vertical:1,horizontal:0},
 			target:{element:widget.getElement(),vertical:0,horizontal:0}
 		});
-		this.element.style.zIndex = In2iGui.nextTopIndex();
+		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
 	show : function() {
 		this.element.style.visibility='visible';
@@ -11746,66 +11868,66 @@ In2iGui.Bar.prototype = {
  * @constructor
  * @param {Object} options The options
  */
-In2iGui.Bar.Button = function(options) {
-	this.options = n2i.override({},options);
+hui.ui.Bar.Button = function(options) {
+	this.options = hui.override({},options);
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	n2i.listen(this.element,'click',this._click.bind(this));
-	n2i.listen(this.element,'mousedown',this._mousedown.bind(this));
-	n2i.listen(this.element,'mouseup',function(e) {n2i.stop(e)});
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	hui.listen(this.element,'click',this._click.bind(this));
+	hui.listen(this.element,'mousedown',this._mousedown.bind(this));
+	hui.listen(this.element,'mouseup',function(e) {hui.stop(e)});
+	hui.ui.extend(this);
 };
 
-In2iGui.Bar.Button.create = function(options) {
+hui.ui.Bar.Button.create = function(options) {
 	options = options || {};
-	var e = options.element = n2i.build('a',{'class':'in2igui_bar_button'});
+	var e = options.element = hui.build('a',{'class':'in2igui_bar_button'});
 	if (options.icon) {
-		e.appendChild(In2iGui.createIcon(options.icon,1));
+		e.appendChild(hui.ui.createIcon(options.icon,1));
 	}
-	return new In2iGui.Bar.Button(options);
+	return new hui.ui.Bar.Button(options);
 }
 
-In2iGui.Bar.Button.prototype = {
+hui.ui.Bar.Button.prototype = {
 	_mousedown : function(e) {
 		this.fire('mousedown');
 		if (this.options.stopEvents) {
-			n2i.stop(e);
+			hui.stop(e);
 		}
 	},
 	_click : function(e) {
 		this.fire('click');
 		if (this.options.stopEvents) {
-			n2i.stop(e);
+			hui.stop(e);
 		}
 	},
 	setSelected : function(highlighted) {
-		n2i.setClass(this.element,'in2igui_bar_button_selected',highlighted);
+		hui.setClass(this.element,'in2igui_bar_button_selected',highlighted);
 	}
 }/**
  * A dock
  * @param {Object} The options
  * @constructor
  */
-In2iGui.IFrame = function(options) {
+hui.ui.IFrame = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.IFrame.prototype = {
+hui.ui.IFrame.prototype = {
 	/** Change the url of the iframe
 	 * @param {String} url The url to change the iframe to
 	 */
 	setUrl : function(url) {
 		this.element.setAttribute('src',url);
-		//n2i.getFrameDocument(this.element).location.href=url;
+		//hui.getFrameDocument(this.element).location.href=url;
 	},
 	getDocument : function() {
-		return n2i.getFrameDocument(this.element);
+		return hui.getFrameDocument(this.element);
 	},
 	getWindow : function() {
-		return n2i.getFrameWindow(this.element);
+		return hui.getFrameWindow(this.element);
 	},
 	reload : function() {
 		this.getWindow().location.reload();
@@ -11819,29 +11941,29 @@ In2iGui.IFrame.prototype = {
 }
 
 /* EOF */
-In2iGui.VideoPlayer = function(options) {
+hui.ui.VideoPlayer = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
-	this.placeholder = n2i.firstByTag(this.element,'div');
+	this.element = hui.get(options.element);
+	this.placeholder = hui.firstByTag(this.element,'div');
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
-	this.handlers = [In2iGui.VideoPlayer.HTML5,In2iGui.VideoPlayer.QuickTime,In2iGui.VideoPlayer.Embedded];
+	this.handlers = [hui.ui.VideoPlayer.HTML5,hui.ui.VideoPlayer.QuickTime,hui.ui.VideoPlayer.Embedded];
 	this.handler = null;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (this.options.video) {
 		if (this.placeholder) {
-			n2i.listen(this.placeholder,'click',function() {
+			hui.listen(this.placeholder,'click',function() {
 				this.setVideo(this.options.video);
 			}.bind(this))
 		} else {
-			In2iGui.onReady(function() {
+			hui.ui.onReady(function() {
 				this.setVideo(this.options.video);
 			}.bind(this));			
 		}
 	}
 }
 
-In2iGui.VideoPlayer.prototype = {
+hui.ui.VideoPlayer.prototype = {
 	setVideo : function(video) {
 		if (this.placeholder) {
 			this.placeholder.style.display='none';
@@ -11861,10 +11983,10 @@ In2iGui.VideoPlayer.prototype = {
 		};
 	},
 	buildController : function() {
-		var e = n2i.build('div',{'class':'in2igui_videoplayer_controller',parent:this.element});
-		this.playButton = n2i.build('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause',text:'wait!',parent:e});
-		n2i.listen(this.playButton,'click',this.playPause.bind(this));
-		this.status = n2i.build('span',{'class':'in2igui_videoplayer_status',parent:e});
+		var e = hui.build('div',{'class':'in2igui_videoplayer_controller',parent:this.element});
+		this.playButton = hui.build('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause',text:'wait!',parent:e});
+		hui.listen(this.playButton,'click',this.playPause.bind(this));
+		this.status = hui.build('span',{'class':'in2igui_videoplayer_status',parent:e});
 	},
 	onCanPlay : function() {
 		this.playButton.update('Play');
@@ -11905,26 +12027,26 @@ In2iGui.VideoPlayer.prototype = {
 
 ///////// HTML5 //////////
 
-In2iGui.VideoPlayer.HTML5 = function(video,player) {
-	var e = this.element = n2i.build('video',{width:video.width,height:video.height,src:video.src});
-	n2i.listen(e,'load',player.onLoad.bind(player));
-	n2i.listen(e,'canplay',player.onCanPlay.bind(player));
-	n2i.listen(e,'durationchange',function(x) {
+hui.ui.VideoPlayer.HTML5 = function(video,player) {
+	var e = this.element = hui.build('video',{width:video.width,height:video.height,src:video.src});
+	hui.listen(e,'load',player.onLoad.bind(player));
+	hui.listen(e,'canplay',player.onCanPlay.bind(player));
+	hui.listen(e,'durationchange',function(x) {
 		player.onDurationChange(e.duration);
 	});
-	n2i.listen(e,'timeupdate',function() {
+	hui.listen(e,'timeupdate',function() {
 		player.onTimeChange(this.element.currentTime);
 	}.bind(this));
 }
 
-In2iGui.VideoPlayer.HTML5.isSupported = function(video) {
-	if (n2i.browser.webkitVersion>528 && (video.type==='video/quicktime' || video.type==='video/mp4')) {
+hui.ui.VideoPlayer.HTML5.isSupported = function(video) {
+	if (hui.browser.webkitVersion>528 && (video.type==='video/quicktime' || video.type==='video/mp4')) {
 		return true;
 	}
 	return false;
 }
 
-In2iGui.VideoPlayer.HTML5.prototype = {
+hui.ui.VideoPlayer.HTML5.prototype = {
 	showController : function() {
 		return true;
 	},
@@ -11944,9 +12066,9 @@ In2iGui.VideoPlayer.HTML5.prototype = {
 
 ///////// QuickTime //////////
 
-In2iGui.VideoPlayer.QuickTime = function(video,player) {
+hui.ui.VideoPlayer.QuickTime = function(video,player) {
 	this.player = player;
-	var e = this.element = n2i.build('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
+	var e = this.element = hui.build('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
 	e.innerHTML = '<param value="false" name="controller"/>'
 		+'<param value="true" name="enablejavascript"/>'
 		+'<param value="undefined" name="posterframe"/>'
@@ -11958,24 +12080,24 @@ In2iGui.VideoPlayer.QuickTime = function(video,player) {
 		+'<param value="true" name="saveembedtags"/>'
 		+'<param value="true" name="postdomevents"/>';
 		
-	n2i.listen(e,'qt_canplay',player.onCanPlay.bind(player));
-	n2i.listen(e,'qt_load',player.onLoad.bind(player));
-	n2i.listen(e,'qt_progress',function() {
+	hui.listen(e,'qt_canplay',player.onCanPlay.bind(player));
+	hui.listen(e,'qt_load',player.onLoad.bind(player));
+	hui.listen(e,'qt_progress',function() {
 		player.onLoadProgressChange(e.GetMaxTimeLoaded()/3000);
 	});
-	n2i.listen(e,'qt_durationchange',function(x) {
+	hui.listen(e,'qt_durationchange',function(x) {
 		player.onDurationChange(e.GetDuration()/3000);
 	});
-	n2i.listen(e,'qt_timechanged',function() {
+	hui.listen(e,'qt_timechanged',function() {
 		player.onTimeChange(e.GetTime());
 	})
 }
 
-In2iGui.VideoPlayer.QuickTime.isSupported = function(video) {
+hui.ui.VideoPlayer.QuickTime.isSupported = function(video) {
 	return video.html==undefined;
 }
 
-In2iGui.VideoPlayer.QuickTime.prototype = {
+hui.ui.VideoPlayer.QuickTime.prototype = {
 	showController : function() {
 		return true;
 	},
@@ -12000,15 +12122,15 @@ In2iGui.VideoPlayer.QuickTime.prototype = {
 
 ///////// Embedded //////////
 
-In2iGui.VideoPlayer.Embedded = function(video,player) {
-	this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
+hui.ui.VideoPlayer.Embedded = function(video,player) {
+	this.element = hui.build('div',{width:video.width,height:video.height,html:video.html});
 }
 
-In2iGui.VideoPlayer.Embedded.isSupported = function(video) {
+hui.ui.VideoPlayer.Embedded.isSupported = function(video) {
 	return video.html!==undefined;
 }
 
-In2iGui.VideoPlayer.Embedded.prototype = {
+hui.ui.VideoPlayer.Embedded.prototype = {
 	showController : function() {
 		return false;
 	},
@@ -12030,33 +12152,33 @@ In2iGui.VideoPlayer.Embedded.prototype = {
  * @constructor
  * @param {Object} options The options
  */
-In2iGui.Segmented = function(options) {
-	this.options = n2i.override({value:null,allowNull:false},options);
-	this.element = n2i.get(options.element);
+hui.ui.Segmented = function(options) {
+	this.options = hui.override({value:null,allowNull:false},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.value = this.options.value;
-	In2iGui.extend(this);
-	n2i.listen(this.element,'mousedown',this.onClick.bind(this));
+	hui.ui.extend(this);
+	hui.listen(this.element,'mousedown',this.onClick.bind(this));
 }
 
-In2iGui.Segmented.prototype = {
+hui.ui.Segmented.prototype = {
 	/** @private */
 	onClick : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		var a = e.findByTag('a');
 		if (a) {
 			var changed = false;
 			var value = a.getAttribute('rel');
-			var x = n2i.byClass(this.element,'in2igui_segmented_selected');
+			var x = hui.byClass(this.element,'in2igui_segmented_selected');
 			for (var i=0; i < x.length; i++) {
-				n2i.removeClass(x[i],'in2igui_segmented_selected');
+				hui.removeClass(x[i],'in2igui_segmented_selected');
 			};
 			if (value===this.value && this.options.allowNull) {
 				changed=true;
 				this.value = null;
 				this.fire('valueChanged',this.value);
 			} else {
-				n2i.addClass(a,'in2igui_segmented_selected');
+				hui.addClass(a,'in2igui_segmented_selected');
 				changed=this.value!== value;
 				this.value = value;
 			}
@@ -12073,10 +12195,10 @@ In2iGui.Segmented.prototype = {
 		this.value = null;
 		for (var i=0; i < as.length; i++) {
 			if (as[i].getAttribute('rel')===value) {
-				n2i.addClass(as[i],'in2igui_segmented_selected');
+				hui.addClass(as[i],'in2igui_segmented_selected');
 				this.value=value;
 			} else {
-				n2i.removeClass(as[i],'in2igui_segmented_selected');
+				hui.removeClass(as[i],'in2igui_segmented_selected');
 			}
 		};
 	},
@@ -12086,7 +12208,7 @@ In2iGui.Segmented.prototype = {
 }
 
 /* EOF *//** @namespace */
-In2iGui.Flash = {
+hui.hui.Flash = {
 	
 	fullVersion:undefined,
 	
@@ -12136,7 +12258,7 @@ In2iGui.Flash = {
 		else if (navigator.userAgent.toLowerCase().indexOf("webtv/2.5") != -1) flashVer = 3;
 		// older WebTV supports Flash 2
 		else if (navigator.userAgent.toLowerCase().indexOf("webtv") != -1) flashVer = 2;
-		else if ( n2i.browser.msie ) {
+		else if ( hui.browser.msie ) {
 			flashVer = this.getActiveXVersion();
 		}
 		this.fullVersion = flashVer;
@@ -12219,20 +12341,20 @@ In2iGui.Flash = {
  * @constructor
  * A link
  */
-In2iGui.Link = function(options) {
+hui.ui.Link = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	In2iGui.extend(this);
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Link.prototype = {
+hui.ui.Link.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		n2i.listen(this.element,'click',function(e) {
-			n2i.stop(e);
+		hui.listen(this.element,'click',function(e) {
+			hui.stop(e);
 			window.setTimeout(function() {
 				self.fire('click');
 			});
@@ -12245,21 +12367,21 @@ In2iGui.Link.prototype = {
  * @param {Object} The options
  * @constructor
  */
-In2iGui.Links = function(options) {
+hui.ui.Links = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.items = [];
 	this.addBehavior();
 	this.selectedIndex = null;
 	this.inputs = {};
 }
 
-In2iGui.Links.prototype = {
+hui.ui.Links.prototype = {
 	addBehavior : function() {
-		n2i.listen(this.element,'click',this.onClick.bind(this));
-		n2i.listen(this.element,'dblclick',this.onDblClick.bind(this));
+		hui.listen(this.element,'click',this.onClick.bind(this));
+		hui.listen(this.element,'dblclick',this.onDblClick.bind(this));
 	},
 	reset : function() {
 		this.setValue([]);
@@ -12273,8 +12395,8 @@ In2iGui.Links.prototype = {
 		return this.items;
 	},
 	onDblClick : function(e) {
-		e = new n2i.Event(e);
-		n2i.selection.clear();
+		e = new hui.Event(e);
+		hui.selection.clear();
 		e.stop(e);
 		var link = this.selectAndGetRow(e);
 		var values = {text:link.text};
@@ -12286,12 +12408,12 @@ In2iGui.Links.prototype = {
 		win.show();
 	},
 	onClick : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		e.stop();
 		var element = e.getElement();
-		if (n2i.hasClass(element,'in2igui_links_remove')) {
+		if (hui.hasClass(element,'in2igui_links_remove')) {
 			var row = e.findByClass('in2igui_links_row');
-			In2iGui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
+			hui.ui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
 				this.items.splice(row.in2igui_index,1);
 				if (this.selectedIndex===row.in2igui_index) {
 					this.selectedIndex=null;
@@ -12307,31 +12429,31 @@ In2iGui.Links.prototype = {
 		if (row) {
 			var idx = row.in2igui_index;
 			if (this.selectedIndex!==null) {
-				var x = n2i.byClass(this.element,'in2igui_links_row')[this.selectedIndex];
-				n2i.removeClass(x,'in2igui_links_row_selected')
+				var x = hui.byClass(this.element,'in2igui_links_row')[this.selectedIndex];
+				hui.removeClass(x,'in2igui_links_row_selected')
 			}
 			this.selectedIndex = idx;
-			n2i.addClass(row,'in2igui_links_row_selected');
+			hui.addClass(row,'in2igui_links_row_selected');
 			return this.items[idx];
 		}
 	},
 	build : function() {
-		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list'),
+		var list = this.list || hui.firstByClass(this.element,'in2igui_links_list'),
 			i,item,row,infoNode,text,remove;
 		list.innerHTML='';
 		for (i=0; i < this.items.length; i++) {
 			item = this.items[i];
-			row = n2i.build('div',{'class':'in2igui_links_row'});
+			row = hui.build('div',{'class':'in2igui_links_row'});
 			row.in2igui_index = i;
 			
-			row.appendChild(In2iGui.createIcon(item.icon,1));
-			text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
+			row.appendChild(hui.ui.createIcon(item.icon,1));
+			text = hui.build('div',{'class':'in2igui_links_text',text:item.text});
 			row.appendChild(text);
 
-			infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
+			infoNode = hui.build('div',{'class':'in2igui_links_info',text:hui.wrap(item.info)});
 			row.appendChild(infoNode);
-			remove = In2iGui.createIcon('monochrome/round_x',1);
-			n2i.addClass(remove,'in2igui_links_remove');
+			remove = hui.ui.createIcon('monochrome/round_x',1);
+			hui.addClass(remove,'in2igui_links_remove');
 			row.appendChild(remove);
 
 			list.appendChild(row);
@@ -12345,34 +12467,34 @@ In2iGui.Links.prototype = {
 	},
 	getEditWindow : function() {
 		if (!this.editWindow) {
-			var win = this.editWindow = In2iGui.Window.create({title:'Link',width:300,padding:5});
-			var form = this.editForm = In2iGui.Formula.create();
+			var win = this.editWindow = hui.ui.Window.create({title:'Link',width:300,padding:5});
+			var form = this.editForm = hui.ui.Formula.create();
 			var g = form.buildGroup({above:false},[
 				{type:'Text',options:{label:'Tekst',key:'text'}}
 			]);
 			
-			var url = In2iGui.Formula.Text.create({label:'URL',key:'url'});
+			var url = hui.ui.Formula.Text.create({label:'URL',key:'url'});
 			g.add(url);
 			this.inputs['url']=url;
 			
-			var email = In2iGui.Formula.Text.create({label:'E-mail',key:'email'});
+			var email = hui.ui.Formula.Text.create({label:'E-mail',key:'email'});
 			g.add(email);
 			this.inputs['email']=email;
 			
-			page = In2iGui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
+			page = hui.ui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
 			g.add(page);
 			this.inputs['page']=page;
 			
-			file = In2iGui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
+			file = hui.ui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
 			g.add(file);
 			this.inputs['file']=file;
 			
 			var self = this;
-			n2i.each(this.inputs,function(key,value) {
+			hui.each(this.inputs,function(key,value) {
 				value.listen({$valueChanged:function(){self.changeType(key)}});
 			});
 			
-			g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
+			g.createButtons().add(hui.ui.Button.create({text:'Gem',submit:true,highlighted:true}));
 			this.editForm.listen({$submit:this.saveLink.bind(this)});
 			win.add(form);
 			if (this.options.pageSource) {
@@ -12389,7 +12511,7 @@ In2iGui.Links.prototype = {
 		var link = this.valuesToLink(v);
 		var edited = this.editedLink;
 		if (edited) {
-			n2i.override(edited,link);
+			hui.override(edited,link);
 		} else {
 			this.items.push(link);
 		}
@@ -12411,12 +12533,12 @@ In2iGui.Links.prototype = {
 			link.value=values.url;
 			link.info=values.url;
 			link.icon='monochrome/globe';
-		} else if (n2i.isDefined(values.page)) {
+		} else if (hui.isDefined(values.page)) {
 			link.kind='page';
 			link.value=values.page;
 			link.info=this.inputs['page'].getItem().title;
 			link.icon='common/page';
-		} else if (n2i.isDefined(values.file)) {
+		} else if (hui.isDefined(values.file)) {
 			link.kind='file';
 			link.value=values.file;
 			link.info=this.inputs['file'].getItem().title;
@@ -12425,7 +12547,7 @@ In2iGui.Links.prototype = {
 		return link;
 	},
 	changeType : function(type) {
-		n2i.each(this.inputs,function(key,value) {
+		hui.each(this.inputs,function(key,value) {
 			if (key!=type) {
 				value.setValue();
 			}
@@ -12436,43 +12558,43 @@ In2iGui.Links.prototype = {
 /* EOF *//**
  * @constructor
  */
-In2iGui.MarkupEditor = function(options) {
+hui.ui.MarkupEditor = function(options) {
 	this.name = options.name;
-	this.options = n2i.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif; font-size: 11px;'},options);
+	this.options = hui.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif; font-size: 11px;'},options);
 	if (options.replace) {
-		options.replace = n2i.get(options.replace);
-		options.element = n2i.build('div',{className:'in2igui_markupeditor'});
+		options.replace = hui.get(options.replace);
+		options.element = hui.build('div',{className:'in2igui_markupeditor'});
 		options.replace.parentNode.insertBefore(options.element,options.replace);
 		options.replace.style.display='none';
 		options.value = options.replace.innerHTML;
 	}
 	this.ready = false;
 	this.pending = [];
-	this.element = n2i.get(options.element);
-	if (n2i.browser.msie) {
-		this.impl = In2iGui.MarkupEditor.MSIE;
+	this.element = hui.get(options.element);
+	if (hui.browser.msie) {
+		this.impl = hui.ui.MarkupEditor.MSIE;
 	} else {
-		this.impl = In2iGui.MarkupEditor.webkit;
+		this.impl = hui.ui.MarkupEditor.webkit;
 	}
 	this.impl.initialize({element:this.element,controller:this});
 	if (this.options.value) {
 		this.setValue(this.options.value);
 	}
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.MarkupEditor.create = function(options) {
+hui.ui.MarkupEditor.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{className:'in2igui_markupeditor'});
-	return new In2iGui.MarkupEditor(options);
+	options.element = hui.build('div',{className:'in2igui_markupeditor'});
+	return new hui.ui.MarkupEditor(options);
 }
 
-In2iGui.MarkupEditor.prototype = {
+hui.ui.MarkupEditor.prototype = {
 	implIsReady : function() {
 		this.ready = true;
-		n2i.log('I am ready!');
+		hui.log('I am ready!');
 		for (var i=0; i < this.pending.length; i++) {
-			n2i.log(this.pending[i]);
+			hui.log(this.pending[i]);
 			this.pending[i]();
 		};
 	},
@@ -12487,8 +12609,8 @@ In2iGui.MarkupEditor.prototype = {
 		this._valueChanged();
 	},
 	destroy : function() {
-		n2i.dom.remove(this.element);
-		In2iGui.destroy(this);
+		hui.dom.remove(this.element);
+		hui.ui.destroy(this);
 	},
 	getValue : function() {
 		return this.impl.getHTML();
@@ -12529,9 +12651,9 @@ In2iGui.MarkupEditor.prototype = {
 				{key:'insert-table',icon:'edit/text_italic'}*/
 			]
 			
-			this.bar = In2iGui.Bar.create({absolute:true,variant:'mini',small:true});
-			n2i.each(things,function(info) {
-				var button = new In2iGui.Bar.Button.create({icon:info.icon,stopEvents:true});
+			this.bar = hui.ui.Bar.create({absolute:true,variant:'mini',small:true});
+			hui.each(things,function(info) {
+				var button = new hui.ui.Bar.Button.create({icon:info.icon,stopEvents:true});
 				button.listen({
 					$mousedown : function() { this._buttonClicked(info) }.bind(this)
 				});
@@ -12560,8 +12682,8 @@ In2iGui.MarkupEditor.prototype = {
 	},
 	_showColorPicker : function() {
 		if (!this.colorPicker) {
-			this.colorPicker = In2iGui.Window.create();
-			var picker = In2iGui.ColorPicker.create();
+			this.colorPicker = hui.ui.Window.create();
+			var picker = hui.ui.ColorPicker.create();
 			picker.listen(this);
 			this.colorPicker.add(picker);
 			this.colorPicker.listen({
@@ -12574,15 +12696,15 @@ In2iGui.MarkupEditor.prototype = {
 	},
 	_showLinkEditor : function() {
 		if (!this.linkEditor) {
-			this.linkEditor = In2iGui.Window.create({padding:5,width:300});
-			this.linkForm = In2iGui.Formula.create();
+			this.linkEditor = hui.ui.Window.create({padding:5,width:300});
+			this.linkForm = hui.ui.Formula.create();
 			this.linkEditor.add(this.linkForm);
 			var group = this.linkForm.buildGroup({},[
 				{type : 'Text', options:{key:'url',label:'Address:'}}
 			]);
 			this.linkEditor.add(this.linkForm);
 			var buttons = group.createButtons();
-			var ok = In2iGui.Button.create({text:'OK',submit:true});
+			var ok = hui.ui.Button.create({text:'OK',submit:true});
 			this.linkForm.listen({$submit:this._updateLink.bind(this)});
 			buttons.add(ok);
 		}
@@ -12611,19 +12733,19 @@ In2iGui.MarkupEditor.prototype = {
 	}
 }
 
-In2iGui.MarkupEditor.webkit = {
+hui.ui.MarkupEditor.webkit = {
 	initialize : function(options) {
 		this.element = options.element;
 		this.element.style.overflow='auto';
 		this.element.contentEditable = true;
 		var ctrl = this.controller = options.controller;
-		n2i.listen(this.element,'focus',function() {
+		hui.listen(this.element,'focus',function() {
 			ctrl.implFocused();
 		});
-		n2i.listen(this.element,'blur',function() {
+		hui.listen(this.element,'blur',function() {
 			ctrl.implBlurred();
 		});
-		n2i.listen(this.element,'keyup',this._keyUp.bind(this));
+		hui.listen(this.element,'keyup',this._keyUp.bind(this));
 		ctrl.implIsReady();
 	},
 	saveSelection : function() {
@@ -12656,7 +12778,7 @@ In2iGui.MarkupEditor.webkit = {
 		var selection = window.getSelection();
 		var range = selection.getRangeAt(0);
 		var ancestor = range.commonAncestorContainer;
-		if (!n2i.dom.isElement(ancestor)) {
+		if (!hui.dom.isElement(ancestor)) {
 			ancestor = ancestor.parentNode;
 		}
 		return ancestor;
@@ -12677,7 +12799,7 @@ In2iGui.MarkupEditor.webkit = {
 		if (selection.rangeCount<1) {return}
 		var range = selection.getRangeAt(0);
 		var ancestor = range.commonAncestorContainer;
-		if (!n2i.dom.isElement(ancestor)) {
+		if (!hui.dom.isElement(ancestor)) {
 			ancestor = ancestor.parentNode;
 		}
 		if (ancestor.tagName.toLowerCase()==tag) {
@@ -12687,7 +12809,7 @@ In2iGui.MarkupEditor.webkit = {
 			range.surroundContents(node);
 			selection.selectAllChildren(node);
 		}
-		//document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');
+		//document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.getSelectedText())+'</'+tag+'>');
 	},
 	_getInlineTag : function() {
 		var selection = window.getSelection();
@@ -12705,7 +12827,7 @@ In2iGui.MarkupEditor.webkit = {
 		document.execCommand('inserthtml',null,html);
 	},
 	_selectionChanged : function() {
-		n2i.log({
+		hui.log({
 			bold : document.queryCommandState('bold'),
 			italic : document.queryCommandState('italic')
 		});
@@ -12717,16 +12839,16 @@ In2iGui.MarkupEditor.webkit = {
 		this.element.innerHTML = html;
 	},
 	getHTML : function() {
-		var cleaned = In2iGui.MarkupEditor.util.clean(this.element);
+		var cleaned = hui.ui.MarkupEditor.util.clean(this.element);
 		return cleaned.innerHTML;
 	}
 }
 
-In2iGui.MarkupEditor.MSIE = {
+hui.ui.MarkupEditor.MSIE = {
 	initialize : function(options) {
 		this.element = options.element;
-		this.iframe = n2i.build('iframe',{style:'display:block; width: 100%; border: 0;',parent:this.element})
-		n2i.listen(this.iframe,'load',this._load.bind(this));
+		this.iframe = hui.build('iframe',{style:'display:block; width: 100%; border: 0;',parent:this.element})
+		hui.listen(this.iframe,'load',this._load.bind(this));
 		this.controller = options.controller;
 	},
 	saveSelection : function() {
@@ -12741,11 +12863,11 @@ In2iGui.MarkupEditor.MSIE = {
 		}.bind(this));
 	},
 	_load : function() {
-		this.document = n2i.getFrameDocument(this.iframe);
+		this.document = hui.getFrameDocument(this.iframe);
 		this.body = this.document.body;
 		this.body.contentEditable = true;
-		n2i.listen(this.body,'keyup',this._keyUp.bind(this));
-		n2i.listen(this.body,'mouseup',this._mouseUp.bind(this));
+		hui.listen(this.body,'keyup',this._keyUp.bind(this));
+		hui.listen(this.body,'mouseup',this._mouseUp.bind(this));
 		this.controller.implIsReady();
 	},
 	_keyUp : function() {
@@ -12780,7 +12902,7 @@ In2iGui.MarkupEditor.MSIE = {
 		this.restoreSelection();
 	},
 	_wrapInTag : function(tag) {
-		document.execCommand('inserthtml',null,'<'+tag+'>'+n2i.escape(n2i.getSelectedText())+'</'+tag+'>');
+		document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.getSelectedText())+'</'+tag+'>');
 	},
 	_insertHTML : function(html) {
 		document.execCommand('inserthtml',null,html);
@@ -12789,17 +12911,17 @@ In2iGui.MarkupEditor.MSIE = {
 		this.body.innerHTML = html;
 	},
 	getHTML : function() {
-		var cleaned = In2iGui.MarkupEditor.util.clean(this.body);
+		var cleaned = hui.ui.MarkupEditor.util.clean(this.body);
 		return cleaned.innerHTML;
 	}
 }
 
-In2iGui.MarkupEditor.util = {
+hui.ui.MarkupEditor.util = {
 	clean : function(node) {
 		var copy = node.cloneNode(true);
 		this.replaceNodes(copy,{b:'strong',i:'em',font:'span'});
 
-		var apples = n2i.byClass(copy,'Apple-style-span');
+		var apples = hui.byClass(copy,'Apple-style-span');
 		for (var i = apples.length - 1; i >= 0; i--){
 			apples[i].removeAttribute('class');
 		};
@@ -12815,7 +12937,7 @@ In2iGui.MarkupEditor.util = {
 				if (color) {
 					replacement.style.color=color;
 				}
-				n2i.dom.replaceNode(bs[i],replacement);
+				hui.dom.replaceNode(bs[i],replacement);
 			};
 		}
 	},
@@ -12835,60 +12957,60 @@ In2iGui.MarkupEditor.util = {
 /* EOF *//**
  * @constructor
  */
-In2iGui.ColorPicker = function(options) {
+hui.ui.ColorPicker = function(options) {
 	this.options = options || {};
 	this.name = options.name;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.color = null;
 	this.buttons = [];
-	this.preview = n2i.firstByClass(this.element,'in2igui_colorpicker_preview');
-	this.pages = n2i.byClass(this.element,'in2igui_colorpicker_page');
-	this.input = n2i.firstByTag(this.element,'input');
+	this.preview = hui.firstByClass(this.element,'in2igui_colorpicker_preview');
+	this.pages = hui.byClass(this.element,'in2igui_colorpicker_page');
+	this.input = hui.firstByTag(this.element,'input');
 	this.wheel1 = this.pages[0];
 	this.wheel2 = this.pages[1];
 	this.wheel3 = this.pages[2];
 	this.swatches = this.pages[3];
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	this.buildData();
 }
 
-In2iGui.ColorPicker.create = function(options) {
+hui.ui.ColorPicker.create = function(options) {
 	var swatches = '',
 		c, hex, j;
 	for (var i=0; i < 360; i+=30) {
 		for (j=0.05; j <= 1; j+=.15) {
-			c = n2i.Color.hsv2rgb(i,j,1);
-			hex = n2i.Color.rgb2hex(c);
+			c = hui.Color.hsv2rgb(i,j,1);
+			hex = hui.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
 		for (j=1; j >= .20; j-=.15) {
-			c = n2i.Color.hsv2rgb(i,1,j);
-			hex = n2i.Color.rgb2hex(c);
+			c = hui.Color.hsv2rgb(i,1,j);
+			hex = hui.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
 	}
 	for (j=255; j >=0; j-=255/12) {
-		hex = n2i.Color.rgb2hex([j,j,j]);
+		hex = hui.Color.rgb2hex([j,j,j]);
 		swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
 	}
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class':'in2igui_colorpicker',
 		html : 
 			'<div class="in2igui_bar in2igui_bar_window">'+
 				'<div class="in2igui_bar_body">'+
 					'<a class="in2igui_bar_button in2igui_bar_button_selected" href="javascript:void(0)" rel="0">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_pastels',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_pastels',1)+')"></span>'+
 					'</a>'+
 					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="1">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_brightness',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_brightness',1)+')"></span>'+
 					'</a>'+
 					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="2">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_saturated',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_saturated',1)+')"></span>'+
 					'</a>'+
 					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="3">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/swatches',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/swatches',1)+')"></span>'+
 					'</a>'+
 					'<input class="in2igui_colorpicker"/>'+
 				'</div>'+
@@ -12901,34 +13023,34 @@ In2iGui.ColorPicker.create = function(options) {
 			'</div>'+
 			'<div class="in2igui_colorpicker_preview"></div>'
 	});
-	return new In2iGui.ColorPicker(options);
+	return new hui.ui.ColorPicker(options);
 }
 
-In2iGui.ColorPicker.prototype = {
+hui.ui.ColorPicker.prototype = {
 	/** @private */
 	addBehavior : function() {
-		var bs = n2i.byClass(this.element,'in2igui_bar_button');
+		var bs = hui.byClass(this.element,'in2igui_bar_button');
 		for (var i=0; i < bs.length; i++) {
-			var button = new In2iGui.Bar.Button({element:bs[i]});
+			var button = new hui.ui.Bar.Button({element:bs[i]});
 			button.listen(this);
 			this.buttons.push(button);
 		};
 		
-		n2i.listen(this.element,'click',this._click.bind(this));
-		n2i.listen(this.wheel1,'mousemove',this._hoverWheel1.bind(this));
-		n2i.listen(this.wheel1,'click',this._pickColor.bind(this));
-		n2i.listen(this.wheel2,'mousemove',this._hoverWheel2.bind(this));
-		n2i.listen(this.wheel2,'click',this._pickColor.bind(this));
-		n2i.listen(this.wheel3,'mousemove',this._hoverWheel3.bind(this));
-		n2i.listen(this.wheel3,'click',this._pickColor.bind(this));
-		n2i.listen(this.element,'mousedown',function(e) {
-			n2i.stop(e);
+		hui.listen(this.element,'click',this._click.bind(this));
+		hui.listen(this.wheel1,'mousemove',this._hoverWheel1.bind(this));
+		hui.listen(this.wheel1,'click',this._pickColor.bind(this));
+		hui.listen(this.wheel2,'mousemove',this._hoverWheel2.bind(this));
+		hui.listen(this.wheel2,'click',this._pickColor.bind(this));
+		hui.listen(this.wheel3,'mousemove',this._hoverWheel3.bind(this));
+		hui.listen(this.wheel3,'click',this._pickColor.bind(this));
+		hui.listen(this.element,'mousedown',function(e) {
+			hui.stop(e);
 		})
-		n2i.listen(this.swatches,'mousemove',function(e) {
-			e = n2i.event(e);
+		hui.listen(this.swatches,'mousemove',function(e) {
+			e = hui.event(e);
 			this._hoverColor(e.element.getAttribute('rel'));
 		}.bind(this));
-		n2i.listen(this.swatches,'click',this._pickColor.bind(this));
+		hui.listen(this.swatches,'click',this._pickColor.bind(this));
 	},
 	$click : function(button) {
 		var page = parseInt(button.element.getAttribute('rel')),
@@ -12941,7 +13063,7 @@ In2iGui.ColorPicker.prototype = {
 		};
 	},
 	_click : function(e) {
-		e = n2i.event(e);
+		e = hui.event(e);
 		e.stop();
 	//	return;
 		var input = e.findByTag('input');
@@ -12949,7 +13071,7 @@ In2iGui.ColorPicker.prototype = {
 	},
 	/** @private */
 	_pickColor : function(e) {
-		n2i.stop(e);
+		hui.stop(e);
 		this.fire('colorWasSelected',this.color);
 	},
 	_hoverColor : function(color) {
@@ -12982,8 +13104,8 @@ In2iGui.ColorPicker.prototype = {
 	},
 	/** @private */
 	_hoverWheel1 : function(e) {
-		e = n2i.event(e);
-		var pos = n2i.getPosition(this.wheel1);
+		e = hui.event(e);
+		var pos = hui.getPosition(this.wheel1);
 		var x = 4 * (e.getLeft() - pos.left);
 		var y = 4 * (e.getTop() - pos.top);
 
@@ -13020,8 +13142,8 @@ In2iGui.ColorPicker.prototype = {
 	},
 	_hoverWheel2 : function(e) {
 		var rgb,sat,val;
-		e = n2i.event(e);
-		var pos = n2i.getPosition(this.wheel2);
+		e = hui.event(e);
+		var pos = hui.getPosition(this.wheel2);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 
@@ -13048,19 +13170,19 @@ In2iGui.ColorPicker.prototype = {
 			} else if (rnorm >= .5) {
 				sat = 1 - ((rnorm - .5) *2);
 				val = 1;
-				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				rgb = hui.Color.hsv2rgb(adeg,sat,val);
 			} else {
 				sat = 1;
 				val = rnorm * 2;
-				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				rgb = hui.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
-		this._hoverColor(n2i.Color.rgb2hex(rgb));
+		this._hoverColor(hui.Color.rgb2hex(rgb));
 	},
 	_hoverWheel3 : function(e) {
 		var rgb,sat,val;
-		e = n2i.event(e);
-		var pos = n2i.getPosition(this.wheel3);
+		e = hui.event(e);
+		var pos = hui.getPosition(this.wheel3);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 
@@ -13087,10 +13209,10 @@ In2iGui.ColorPicker.prototype = {
 			} else {
 				sat = rnorm;// - ((rnorm - .5) *2);
 				val = 1;
-				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				rgb = hui.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
-		this._hoverColor(n2i.Color.rgb2hex(rgb));
+		this._hoverColor(hui.Color.rgb2hex(rgb));
 	}
 }
 

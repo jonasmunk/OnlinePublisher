@@ -11,49 +11,49 @@
  * uploadDidComplete(file) - when a single file is successfull
  * uploadDidFail(file) - when a single file fails
  */
-In2iGui.Upload = function(options) {
-	this.options = n2i.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
-	this.element = n2i.get(options.element);
-	this.itemContainer = n2i.firstByClass(this.element,'in2igui_upload_items');
-	this.status = n2i.firstByClass(this.element,'in2igui_upload_status');
-	this.placeholder = n2i.firstByClass(this.element,'in2igui_upload_placeholder');
+hui.ui.Upload = function(options) {
+	this.options = hui.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
+	this.element = hui.get(options.element);
+	this.itemContainer = hui.firstByClass(this.element,'in2igui_upload_items');
+	this.status = hui.firstByClass(this.element,'in2igui_upload_status');
+	this.placeholder = hui.firstByClass(this.element,'in2igui_upload_placeholder');
 	this.name = options.name;
 	this.items = [];
 	this.busy = false;
 	this.loaded = false;
 	this.useFlash = this.options.useFlash;
 	if (this.options.useFlash) {
-		this.useFlash = In2iGui.Flash.getMajorVersion()>=10;
+		this.useFlash = hui.ui.Flash.getMajorVersion()>=10;
 	}
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.Upload.nameIndex = 0;
+hui.ui.Upload.nameIndex = 0;
 
 /** Creates a new upload widget */
-In2iGui.Upload.create = function(options) {
+hui.ui.Upload.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class':'in2igui_upload',
 		html : '<div class="in2igui_upload_items"></div>'+
 		'<div class="in2igui_upload_status"></div>'+
 		(options.placeholder ? '<div class="in2igui_upload_placeholder"><span class="in2igui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+n2i.escape(options.placeholder.title)+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+n2i.escape(options.placeholder.text)+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+hui.escape(options.placeholder.title)+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+hui.escape(options.placeholder.text)+'</p>' : '')+
 		'</div>' : '')
 	});
-	return new In2iGui.Upload(options);
+	return new hui.ui.Upload(options);
 }
 
-In2iGui.Upload.prototype = {
+hui.ui.Upload.prototype = {
 	/** @private */
 	addBehavior : function() {
 		if (!this.useFlash) {
 			this.createIframeVersion();
 			return;
 		}
-		In2iGui.onDomReady(this.createFlashVersion.bind(this));
+		hui.ui.onReady(this.createFlashVersion.bind(this));
 	},
 	/**
 	 * Change a parameter
@@ -69,7 +69,7 @@ In2iGui.Upload.prototype = {
 					return;
 				}
 			};
-			this.form.appendChild(n2i.build('input',{'type':'hidden','name':name,'value':value}));
+			this.form.appendChild(hui.build('input',{'type':'hidden','name':name,'value':value}));
 		}
 	},
 	
@@ -77,10 +77,10 @@ In2iGui.Upload.prototype = {
 	
 	/** @private */
 	createIframeVersion : function() {
-		In2iGui.Upload.nameIndex++;
-		var frameName = 'in2igui_upload_'+In2iGui.Upload.nameIndex;
+		hui.ui.Upload.nameIndex++;
+		var frameName = 'in2igui_upload_'+hui.ui.Upload.nameIndex;
 		
-		var form = this.form = n2i.build('form');
+		var form = this.form = hui.build('form');
 		form.setAttribute('action',this.options.url || '');
 		form.setAttribute('method','post');
 		form.setAttribute('enctype','multipart/form-data');
@@ -88,52 +88,52 @@ In2iGui.Upload.prototype = {
 		form.setAttribute('target',frameName);
 		if (this.options.parameters) {
 			for (var key in this.options.parameters) {
-				var hidden = n2i.build('input',{'type':'hidden','name':key});
+				var hidden = hui.build('input',{'type':'hidden','name':key});
 				hidden.value = this.options.parameters[key];
 				form.appendChild(hidden);
 			}
 		}
-		var iframe = this.iframe = n2i.build('iframe',{name:frameName,id:frameName,src:In2iGui.context+'/In2iGui/html/blank.html'});
+		var iframe = this.iframe = hui.build('iframe',{name:frameName,id:frameName,src:hui.ui.context+'/In2iGui/html/blank.html'});
 		iframe.style.display='none';
 		this.element.appendChild(iframe);
-		this.fileInput = n2i.build('input',{'type':'file','class':'file','name':this.options.fieldName});
-		n2i.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
+		this.fileInput = hui.build('input',{'type':'file','class':'file','name':this.options.fieldName});
+		hui.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
 		form.appendChild(this.fileInput);
-		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
-		var span = n2i.build('span',{'class':'in2igui_upload_button_input'});
+		var buttonContainer = hui.build('span',{'class':'in2igui_upload_button'});
+		var span = hui.build('span',{'class':'in2igui_upload_button_input'});
 		span.appendChild(form);
 		buttonContainer.appendChild(span);
 		if (this.options.widget) {
-			In2iGui.onDomReady(function() {
-				var w = In2iGui.get(this.options.widget);
+			hui.ui.onReady(function() {
+				var w = hui.ui.get(this.options.widget);
 				w.element.parentNode.insertBefore(buttonContainer,w.element);
 				w.element.parentNode.removeChild(w.element);
 				buttonContainer.appendChild(w.element);
 			}.bind(this));
 		}
-		n2i.listen(iframe,'load',function() {this.iframeUploadComplete()}.bind(this));
+		hui.listen(iframe,'load',function() {this.iframeUploadComplete()}.bind(this));
 	},
 	/** @private */
 	iframeUploadComplete : function() {
 		if (!this.uploading) return;
-		n2i.log('iframeUploadComplete uploading: '+this.uploading+' ('+this.name+')');
+		hui.log('iframeUploadComplete uploading: '+this.uploading+' ('+this.name+')');
 		this.uploading = false;
 		this.form.reset();
-		var doc = n2i.getFrameDocument(this.iframe);
+		var doc = hui.getFrameDocument(this.iframe);
 		var last = this.items[this.items.length-1];
 		if (doc.body.innerHTML.indexOf('SUCCESS')!=-1) {
 			if (last) {
 				last.update({progress:1,filestatus:'Færdig'});
 			}
 			this.fire('uploadDidComplete',{}); // TODO: Send the correct file
-			n2i.log('Iframe upload succeeded');
+			hui.log('Iframe upload succeeded');
 		} else if (last) {
 			last.setError('Upload af filen fejlede!');
-			n2i.log('Iframe upload failed!');
+			hui.log('Iframe upload failed!');
 			this.fire('uploadDidFail',{}); // TODO: Send the correct file
 		}
 		this.fire('uploadDidCompleteQueue');
-		this.iframe.src=In2iGui.context+'/In2iGui/html/blank.html';
+		this.iframe.src=hui.ui.context+'/In2iGui/html/blank.html';
 		this.endIframeProgress();
 	},
 	/** @private */
@@ -141,8 +141,8 @@ In2iGui.Upload.prototype = {
 		this.startIframeProgress();
 		this.uploading = true;
 		// IE: set value of parms again since they disappear
-		if (n2i.browser.msie) {
-			n2i.each(this.options.parameters,function(key,value) {
+		if (hui.browser.msie) {
+			hui.each(this.options.parameters,function(key,value) {
 				this.form[key].value = value;
 			}.bind(this));
 		}
@@ -150,7 +150,7 @@ In2iGui.Upload.prototype = {
 		this.fire('uploadDidStartQueue');
 		var fileName = this.fileInput.value.split('\\').pop();
 		this.addItem({name:fileName,filestatus:'I gang'}).setWaiting();
-		n2i.log('Iframe upload started!');
+		hui.log('Iframe upload started!');
 	},
 	/** @private */
 	startIframeProgress : function() {
@@ -192,20 +192,20 @@ In2iGui.Upload.prototype = {
 	
 	/** @private */
 	createFlashVersion : function() {
-		n2i.log('Creating flash verison');
+		hui.log('Creating flash verison');
 		var url = this.getAbsoluteUrl(this.options.url);
-		var javaSession = n2i.cookie.get('JSESSIONID');
+		var javaSession = hui.cookie.get('JSESSIONID');
 		if (javaSession) {
 			url+=';jsessionid='+javaSession;
 		}
-		var phpSession = n2i.cookie.get('PHPSESSID');
+		var phpSession = hui.cookie.get('PHPSESSID');
 		if (phpSession) {
 			url+='?PHPSESSID='+phpSession;
 		}
-		var buttonContainer = n2i.build('span',{'class':'in2igui_upload_button'});
-		var placeholder = n2i.build('span',{'class':'in2igui_upload_button_object',parent:buttonContainer});
+		var buttonContainer = hui.build('span',{'class':'in2igui_upload_button'});
+		var placeholder = hui.build('span',{'class':'in2igui_upload_button_object',parent:buttonContainer});
 		if (this.options.widget) {
-			var w = In2iGui.get(this.options.widget);
+			var w = hui.ui.get(this.options.widget);
 			w.element.parentNode.insertBefore(buttonContainer,w.element);
 			w.element.parentNode.removeChild(w.element);
 			buttonContainer.appendChild(w.element);
@@ -217,7 +217,7 @@ In2iGui.Upload.prototype = {
 		var self = this;
 		this.loader = new SWFUpload({
 			upload_url : url,
-			flash_url : In2iGui.context+"/In2iGui/lib/swfupload/swfupload.swf",
+			flash_url : hui.ui.context+"/In2iGui/lib/swfupload/swfupload.swf",
 			file_size_limit : this.options.maxSize,
 			file_queue_limit : this.options.maxItems,
 			file_post_name : this.options.fieldName,
@@ -250,7 +250,7 @@ In2iGui.Upload.prototype = {
 	
 	/** @private */
 	flashLoaded : function() {
-		n2i.log('flash loaded');
+		hui.log('flash loaded');
 		this.loaded = true;
 	},
 	/** @private */
@@ -267,18 +267,18 @@ In2iGui.Upload.prototype = {
 		if (file!==null) {
 			this.addError(file,error);
 		} else {
-			In2iGui.showMessage({text:In2iGui.Upload.errors[error],duration:4000});
+			hui.ui.showMessage({text:hui.ui.Upload.errors[error],duration:4000});
 		}
 	},
 	/** @private */
 	fileDialogComplete : function() {
-		n2i.log('fileDialogComplete');
+		hui.log('fileDialogComplete');
 		this.startNextUpload();
 	},
 	/** @private */
 	uploadStart : function() {
 		this.status.style.display='block';
-		n2i.log('uploadStart');
+		hui.log('uploadStart');
 		if (!this.busy) {
 			this.fire('uploadDidStartQueue');
 		}
@@ -291,14 +291,14 @@ In2iGui.Upload.prototype = {
 	},
 	/** @private */
 	uploadError : function(file, error, message) {
-		n2i.log('uploadError file:'+file+', error:'+error+', message:'+message);
+		hui.log('uploadError file:'+file+', error:'+error+', message:'+message);
 		if (file) {
 			this.items[file.index].update(file);
 		}
 	},
 	/** @private */
 	uploadSuccess : function(file,data) {
-		n2i.log('uploadSuccess file:'+file+', data:'+data);
+		hui.log('uploadSuccess file:'+file+', data:'+data);
 		this.items[file.index].updateProgress(file.size,file.size);
 	},
 	/** @private */
@@ -322,7 +322,7 @@ In2iGui.Upload.prototype = {
 			index = this.items.length;
 			file.index = index;
 		}
-		var item = new In2iGui.Upload.Item(file);
+		var item = new hui.ui.Upload.Item(file);
 		this.items[index] = item;
 		this.itemContainer.appendChild(item.element);
 		this.itemContainer.style.display='block';
@@ -338,48 +338,48 @@ In2iGui.Upload.prototype = {
 		if (this.items.length==0) {
 			this.status.style.display='none';
 		} else {
-			n2i.dom.setText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
+			hui.dom.setText(this.status,'Status: '+Math.round(s.successful_uploads/this.items.length*100)+'%');
 			this.status.style.display='block';
 		}
-		n2i.log(s);
+		hui.log(s);
 	}
 }
 
-In2iGui.Upload.Item = function(file) {
-	this.element = n2i.build('div',{className:'in2igui_upload_item'});
+hui.ui.Upload.Item = function(file) {
+	this.element = hui.build('div',{className:'in2igui_upload_item'});
 	if (file.index % 2 == 1) {
-		n2i.addClass(this.element,'in2igui_upload_item_alt');
+		hui.addClass(this.element,'in2igui_upload_item_alt');
 	}
-	this.content = n2i.build('div',{className:'in2igui_upload_item_content'});
-	this.icon = In2iGui.createIcon('file/generic',2);
+	this.content = hui.build('div',{className:'in2igui_upload_item_content'});
+	this.icon = hui.ui.createIcon('file/generic',2);
 	this.element.appendChild(this.icon);
 	this.element.appendChild(this.content);
 	this.info = document.createElement('strong');
 	this.status = document.createElement('em');
-	this.progress = In2iGui.ProgressBar.create({small:true});
+	this.progress = hui.ui.ProgressBar.create({small:true});
 	this.content.appendChild(this.progress.getElement());
 	this.content.appendChild(this.info);
 	this.content.appendChild(this.status);
 	this.update(file);
 }
 
-In2iGui.Upload.Item.prototype = {
+hui.ui.Upload.Item.prototype = {
 	update : function(file) {
-		n2i.dom.setText(this.status,In2iGui.Upload.status[file.filestatus] || file.filestatus);
+		hui.dom.setText(this.status,hui.ui.Upload.status[file.filestatus] || file.filestatus);
 		if (file.name) {
-			n2i.dom.setText(this.info,file.name);
+			hui.dom.setText(this.info,file.name);
 		}
 		if (file.progress!==undefined) {
 			this.setProgress(file.progress);
 		}
 		if (file.filestatus==SWFUpload.FILE_STATUS.ERROR) {
-			n2i.addClass(this.element,'in2igui_upload_item_error');
+			hui.addClass(this.element,'in2igui_upload_item_error');
 			this.progress.hide();
 		}
 	},
 	setError : function(error) {
-		n2i.dom.setText(this.status,In2iGui.Upload.errors[error] || error);
-		n2i.addClass(this.element,'in2igui_upload_item_error');
+		hui.dom.setText(this.status,hui.ui.Upload.errors[error] || error);
+		hui.addClass(this.element,'in2igui_upload_item_error');
 		this.progress.hide();
 	},
 	updateProgress : function(complete,total) {
@@ -398,13 +398,13 @@ In2iGui.Upload.Item.prototype = {
 		this.element.hide();
 	},
 	destroy : function() {
-		n2i.dom.remove(this.element);
+		hui.dom.remove(this.element);
 	}
 }
 
 if (window.SWFUpload) {
 (function(){
-	var e = In2iGui.Upload.errors = {};
+	var e = hui.ui.Upload.errors = {};
 	e[SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED]			= 'Der er valgt for mange filer';
 	e[SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT]		= 'Filen er for stor';
 	e[SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE]					= 'Filen er tom';
@@ -419,7 +419,7 @@ if (window.SWFUpload) {
 	e[SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED]		= 'Validering af filen fejlede';
 	e[SWFUpload.UPLOAD_ERROR.FILE_CANCELLED]				= 'Filen blev afbrudt';
 	e[SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED]				= 'Upload af filen blev stoppet';
-	var s = In2iGui.Upload.status = {};
+	var s = hui.ui.Upload.status = {};
 	s[SWFUpload.FILE_STATUS.QUEUED] 		= 'I kø';
 	s[SWFUpload.FILE_STATUS.IN_PROGRESS] 	= 'I gang';
 	s[SWFUpload.FILE_STATUS.ERROR] 			= 'Filen gav fejl';

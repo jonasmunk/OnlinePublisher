@@ -44,7 +44,7 @@
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:icon">
-	<a id="{generate-id()}" href="javascript:void(0)">
+	<a id="{generate-id()}" href="javascript://">
 		<xsl:attribute name="class">
 			<xsl:text>in2igui_toolbar_icon</xsl:text>
 			<xsl:if test="@selected='true'"> in2igui_toolbar_icon_selected</xsl:if>
@@ -63,7 +63,7 @@
 		</span>
 	</a>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Toolbar.Icon({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Toolbar.Icon({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>'
 			<xsl:if test="gui:confirm">
@@ -88,7 +88,7 @@
 		<span><span><input type="text"/></span></span>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.SearchField({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'<xsl:if test="@expandedWidth">,expandedWidth:<xsl:value-of select="@expandedWidth"/></xsl:if>});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.SearchField({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'<xsl:if test="@expandedWidth">,expandedWidth:<xsl:value-of select="@expandedWidth"/></xsl:if>});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
@@ -111,7 +111,7 @@
 		</div></div>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Toolbar.Badge({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Toolbar.Badge({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
@@ -252,7 +252,7 @@
 		</xsl:if>
 	</a>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Bar.Button({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Bar.Button({
 			element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'
 		});
 		<xsl:call-template name="gui:createobject"/>

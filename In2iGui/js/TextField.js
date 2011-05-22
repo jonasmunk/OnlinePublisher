@@ -1,15 +1,15 @@
 /** @constructor */
-In2iGui.TextField = function(options) {
-	this.options = n2i.override({placeholderElement:null,validator:null},options);
-	var e = this.element = n2i.get(options.element);
+hui.ui.TextField = function(options) {
+	this.options = hui.override({placeholderElement:null,validator:null},options);
+	var e = this.element = hui.get(options.element);
 	this.element.setAttribute('autocomplete','off');
 	this.value = this.validate(this.element.value);
 	this.isPassword = this.element.type=='password';
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	if (this.options.placeholderElement && this.value!='') {
-		In2iGui.fadeOut(this.options.placeholderElement,0);
+		hui.ui.fadeOut(this.options.placeholderElement,0);
 	}
 	this.checkPlaceholder();
 	try { // IE hack
@@ -19,26 +19,26 @@ In2iGui.TextField = function(options) {
 	} catch (e) {}
 }
 
-In2iGui.TextField.prototype = {
+hui.ui.TextField.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		n2i.listen(e,'keyup',this.keyDidStrike.bind(this));
+		hui.listen(e,'keyup',this.keyDidStrike.bind(this));
 		var p = this.options.placeholderElement;
-		n2i.listen(e,'blur',this.onBlur.bind(this));
+		hui.listen(e,'blur',this.onBlur.bind(this));
 		if (p) {
-			n2i.listen(e,'focus',this.focused.bind(this));
-			n2i.listen(e,'blur',this.checkPlaceholder.bind(this));
+			hui.listen(e,'focus',this.focused.bind(this));
+			hui.listen(e,'blur',this.checkPlaceholder.bind(this));
 			if (p) {
 				p.style.cursor='text';
-				n2i.listen(p,'mousedown',this.focus.bind(this));
-				n2i.listen(p,'click',this.focus.bind(this));
+				hui.listen(p,'mousedown',this.focus.bind(this));
+				hui.listen(p,'click',this.focus.bind(this));
 			}
 		}
 	},
 	focused : function() {
 		var e = this.element,p = this.options.placeholderElement;
 		if (p && e.value=='') {
-			In2iGui.fadeOut(p,0);
+			hui.ui.fadeOut(p,0);
 		}
 	},
 	/** @private */
@@ -46,16 +46,16 @@ In2iGui.TextField.prototype = {
 		var validator = this.options.validator, result;
 		if (validator) {
 			result = validator.validate(value);
-			n2i.setClass(this.element,'in2igui_invalid',!result.valid);
+			hui.setClass(this.element,'in2igui_invalid',!result.valid);
 			return result.value;
 		}
 		return value;
 	},
 	checkPlaceholder : function() {
 		if (this.options.placeholderElement && this.value=='') {
-			In2iGui.fadeIn(this.options.placeholderElement,200);
+			hui.ui.fadeIn(this.options.placeholderElement,200);
 		}
-		if (this.isPassword && !n2i.browser.msie) {
+		if (this.isPassword && !hui.browser.msie) {
 			this.element.type='password';
 		}
 	},
@@ -72,7 +72,7 @@ In2iGui.TextField.prototype = {
 	},
 	/** @private */
 	onBlur : function() {
-		n2i.removeClass(this.element,'in2igui_invalid');
+		hui.removeClass(this.element,'in2igui_invalid');
 		this.element.value = this.value || '';
 	},
 	getValue : function() {
@@ -96,12 +96,12 @@ In2iGui.TextField.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		n2i.setClass(this.element,'in2igui_field_error',isError);
+		hui.setClass(this.element,'in2igui_field_error',isError);
 		if (typeof(error) == 'string') {
-			In2iGui.showToolTip({text:error,element:this.element,key:this.name});
+			hui.ui.showToolTip({text:error,element:this.element,key:this.name});
 		}
 		if (!isError) {
-			In2iGui.hideToolTip({key:this.name});
+			hui.ui.hideToolTip({key:this.name});
 		}
 	}
 };

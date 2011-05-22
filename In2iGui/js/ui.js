@@ -22,9 +22,9 @@ hui.ui = {
 	confirmOverlays : {}
 }
 
-window.ui = hui.ui; // TODO: old namespace
+//window.ui = hui.ui; // TODO: old namespace
 
-window.In2iGui = hui.ui; // TODO: old namespace
+//window.In2iGui = hui.ui; // TODO: old namespace
 
 
 /** Gets the one instance of In2iGui */
@@ -33,9 +33,9 @@ hui.ui.get = function(nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
 		}
-		return In2iGui.objects[nameOrWidget];
+		return hui.ui.objects[nameOrWidget];
 	} else {
-		return In2iGui;
+		return hui.ui;
 	}
 };
 
@@ -46,7 +46,7 @@ hui.onReady(function() {
 			hui.log(e);
 		});
 	}
-	In2iGui.callSuperDelegates(this,'ready');
+	hui.ui.callSuperDelegates(this,'ready');
 	hui.listen(window,'resize',hui.ui._resize);
 	hui.ui._resize();
 	hui.ui.domReady = true;
@@ -292,9 +292,9 @@ hui.ui.confirm = function(options) {
 hui.ui.alert = function(options) {
 	if (!this.alertBox) {
 		this.alertBox = hui.ui.Alert.create(options);
-		this.alertBoxButton = hui.ui.Button.create({name:'in2iGuiAlertBoxButton',text : 'OK'});
+		this.alertBoxButton = hui.ui.Button.create({name:'huiAlertBoxButton',text : 'OK'});
 		this.alertBoxButton.listen({
-			$click$in2iGuiAlertBoxButton : function() {
+			$click$huiAlertBoxButton : function() {
 				hui.ui.alertBox.hide();
 				if (hui.ui.alertBoxCallBack) {
 					hui.ui.alertBoxCallBack();
@@ -426,7 +426,10 @@ hui.ui.createIcon = function(icon,size) {
 	return hui.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
-hui.ui.onDomReady = hui.ui.onReady = function(func) {
+/**
+ * Called when the DOM is ready and hui.ui is ready
+ */
+hui.ui.onReady = function(func) {
 	if (hui.ui.domReady) {return func();}
 	if (hui.browser.gecko && hui.string.endsWith(document.baseURI,'xml')) {
 		window.setTimeout(func,1000);

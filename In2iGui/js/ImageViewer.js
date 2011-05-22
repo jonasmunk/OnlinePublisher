@@ -1,26 +1,26 @@
 /**
  @constructor
  */
-In2iGui.ImageViewer = function(options) {
-	this.options = n2i.override({
+hui.ui.ImageViewer = function(options) {
+	this.options = hui.override({
 		maxWidth:800,maxHeight:600,perimeter:100,sizeSnap:100,
 		margin:0,
-		ease:n2i.ease.slowFastSlow,
-		easeEnd:n2i.ease.bounce,
-		easeAuto:n2i.ease.slowFastSlow,
-		easeReturn:n2i.ease.cubicInOut,transition:400,transitionEnd:1000,transitionReturn:300
+		ease:hui.ease.slowFastSlow,
+		easeEnd:hui.ease.bounce,
+		easeAuto:hui.ease.slowFastSlow,
+		easeReturn:hui.ease.cubicInOut,transition:400,transitionEnd:1000,transitionReturn:300
 		},options);
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.box = this.options.box;
-	this.viewer = n2i.firstByClass(this.element,'in2igui_imageviewer_viewer');
-	this.innerViewer = n2i.firstByClass(this.element,'in2igui_imageviewer_inner_viewer');
-	this.status = n2i.firstByClass(this.element,'in2igui_imageviewer_status');
-	this.previousControl = n2i.firstByClass(this.element,'in2igui_imageviewer_previous');
-	this.controller = n2i.firstByClass(this.element,'in2igui_imageviewer_controller');
-	this.nextControl = n2i.firstByClass(this.element,'in2igui_imageviewer_next');
-	this.playControl = n2i.firstByClass(this.element,'in2igui_imageviewer_play');
-	this.closeControl = n2i.firstByClass(this.element,'in2igui_imageviewer_close');
-	this.text = n2i.firstByClass(this.element,'in2igui_imageviewer_text');
+	this.viewer = hui.firstByClass(this.element,'in2igui_imageviewer_viewer');
+	this.innerViewer = hui.firstByClass(this.element,'in2igui_imageviewer_inner_viewer');
+	this.status = hui.firstByClass(this.element,'in2igui_imageviewer_status');
+	this.previousControl = hui.firstByClass(this.element,'in2igui_imageviewer_previous');
+	this.controller = hui.firstByClass(this.element,'in2igui_imageviewer_controller');
+	this.nextControl = hui.firstByClass(this.element,'in2igui_imageviewer_next');
+	this.playControl = hui.firstByClass(this.element,'in2igui_imageviewer_play');
+	this.closeControl = hui.firstByClass(this.element,'in2igui_imageviewer_close');
+	this.text = hui.firstByClass(this.element,'in2igui_imageviewer_text');
 	this.dirty = false;
 	this.width = 600;
 	this.height = 460;
@@ -30,12 +30,12 @@ In2iGui.ImageViewer = function(options) {
 	this.images = [];
 	this.box.listen(this);
 	this.addBehavior();
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.ImageViewer.create = function(options) {
+hui.ui.ImageViewer.create = function(options) {
 	options = options || {};
-	var element = options.element = n2i.build('div',
+	var element = options.element = hui.build('div',
 		{'class':'in2igui_imageviewer',
 		html:
 		'<div class="in2igui_imageviewer_viewer"><div class="in2igui_imageviewer_inner_viewer"></div></div>'+
@@ -47,14 +47,14 @@ In2iGui.ImageViewer.create = function(options) {
 		'<a class="in2igui_imageviewer_next"></a>'+
 		'<a class="in2igui_imageviewer_close"></a>'+
 		'</div></div></div>'});
-	var box = In2iGui.Box.create({absolute:true,modal:true,closable:true});
+	var box = hui.ui.Box.create({absolute:true,modal:true,closable:true});
 	box.add(element);
 	box.addToDocument();
 	options.box=box;
-	return new In2iGui.ImageViewer(options);
+	return new hui.ui.ImageViewer(options);
 }
 
-In2iGui.ImageViewer.prototype = {
+hui.ui.ImageViewer.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
@@ -68,12 +68,12 @@ In2iGui.ImageViewer.prototype = {
 			self.playOrPause();
 		}
 		this.closeControl.onclick = this.hide.bind(this);
-		n2i.listen(this.viewer,'click',this.zoom.bind(this));
+		hui.listen(this.viewer,'click',this.zoom.bind(this));
 		this.timer = function() {
 			self.next(false);
 		}
 		this.keyListener = function(e) {
-			e = n2i.event(e);
+			e = hui.event(e);
 			if (e.rightKey) {
 				self.next(true);
 			} else if (e.leftKey) {
@@ -84,15 +84,15 @@ In2iGui.ImageViewer.prototype = {
 				self.playOrPause();
 			}
 		},
-		n2i.listen(this.viewer,'mousemove',this.mouseMoveEvent.bind(this));
-		n2i.listen(this.controller,'mouseover',function() {
+		hui.listen(this.viewer,'mousemove',this.mouseMoveEvent.bind(this));
+		hui.listen(this.controller,'mouseover',function() {
 			self.overController = true;
 		});
-		n2i.listen(this.controller,'mouseout',function() {
+		hui.listen(this.controller,'mouseout',function() {
 			self.overController = false;
 		});
-		n2i.listen(this.viewer,'mouseout',function(e) {
-			if (!In2iGui.isWithin(e,this.viewer)) {
+		hui.listen(this.viewer,'mouseout',function(e) {
+			if (!hui.ui.isWithin(e,this.viewer)) {
 				self.hideController();
 			}
 		}.bind(this));
@@ -102,20 +102,20 @@ In2iGui.ImageViewer.prototype = {
 		window.clearTimeout(this.ctrlHider);
 		if (this.shouldShowController()) {
 			this.ctrlHider = window.setTimeout(this.hideController.bind(this),2000);
-			if (n2i.browser.msie) {
+			if (hui.browser.msie) {
 				this.controller.show();
 			} else {
-				In2iGui.fadeIn(this.controller,200);
+				hui.ui.fadeIn(this.controller,200);
 			}
 		}
 	},
 	/** @private */
 	hideController : function() {
 		if (!this.overController) {
-			if (n2i.browser.msie) {
+			if (hui.browser.msie) {
 				this.controller.hide();
 			} else {
-				In2iGui.fadeOut(this.controller,500);
+				hui.ui.fadeOut(this.controller,500);
 			}
 		}
 	},
@@ -126,30 +126,30 @@ In2iGui.ImageViewer.prototype = {
 			return; // Don't zoom if small
 		}
 		if (!this.zoomer) {
-			this.zoomer = n2i.build('div',{
+			this.zoomer = hui.build('div',{
 				'class' : 'in2igui_imageviewer_zoomer',
 				style : 'width:'+this.viewer.clientWidth+'px;height:'+this.viewer.clientHeight+'px'
 			});
-			this.element.insertBefore(this.zoomer,n2i.firstByTag(this.element,'*'));
-			n2i.listen(this.zoomer,'mousemove',this.zoomMove.bind(this));
-			n2i.listen(this.zoomer,'click',function() {
+			this.element.insertBefore(this.zoomer,hui.firstByTag(this.element,'*'));
+			hui.listen(this.zoomer,'mousemove',this.zoomMove.bind(this));
+			hui.listen(this.zoomer,'click',function() {
 				this.style.display='none';
 			});
 		}
 		this.pause();
 		var size = this.getLargestSize({width:2000,height:2000},img);
-		var url = In2iGui.resolveImageUrl(this,img,size.width,size.height);
+		var url = hui.ui.resolveImageUrl(this,img,size.width,size.height);
 		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px;"><img src="'+url+'"/></div>';
 		this.zoomer.style.display = 'block';
 		this.zoomInfo = {width:size.width,height:size.height};
 		this.zoomMove(e);
 	},
 	zoomMove : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		if (!this.zoomInfo) {
 			return;
 		}
-		var offset = {left:n2i.getLeft(this.zoomer),top:n2i.getTop(this.zoomer)};
+		var offset = {left:hui.getLeft(this.zoomer),top:hui.getTop(this.zoomer)};
 		var x = (e.left()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
 		var y = (e.top()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;
@@ -170,10 +170,10 @@ In2iGui.ImageViewer.prototype = {
 	/** @private */
 	calculateSize : function() {
 		var snap = this.options.sizeSnap;
-		var newWidth = n2i.getViewPortWidth()-this.options.perimeter;
+		var newWidth = hui.getViewPortWidth()-this.options.perimeter;
 		newWidth = Math.floor(newWidth/snap)*snap;
 		newWidth = Math.min(newWidth,this.options.maxWidth);
-		var newHeight = n2i.getViewPortHeight()-this.options.perimeter;
+		var newHeight = hui.getViewPortHeight()-this.options.perimeter;
 		newHeight = Math.floor(newHeight/snap)*snap;
 		newHeight = Math.min(newHeight,this.options.maxHeight);
 		var maxWidth = 0;
@@ -208,18 +208,18 @@ In2iGui.ImageViewer.prototype = {
 		this.calculateSize();
 		this.updateUI();
 		var margin = this.options.margin;
-		n2i.setStyle(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
-		n2i.setStyle(this.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
-		n2i.setStyle(this.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
-		n2i.setStyle(this.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
+		hui.setStyle(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
+		hui.setStyle(this.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
+		hui.setStyle(this.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
+		hui.setStyle(this.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
 		this.box.show();
 		this.goToImage(false,0,false);
-		n2i.listen(document,'keydown',this.keyListener);
+		hui.listen(document,'keydown',this.keyListener);
 	},
 	hide: function(index) {
 		this.pause();
 		this.box.hide();
-		n2i.unListen(document,'keydown',this.keyListener);
+		hui.unListen(document,'keydown',this.keyListener);
 	},
 	/** @private */
 	$boxCurtainWasClicked : function() {
@@ -234,8 +234,8 @@ In2iGui.ImageViewer.prototype = {
 		if (this.dirty) {
 			this.innerViewer.innerHTML='';
 			for (var i=0; i < this.images.length; i++) {
-				var element = n2i.build('div',{'class':'in2igui_imageviewer_image'});
-				n2i.setStyle(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
+				var element = hui.build('div',{'class':'in2igui_imageviewer_image'});
+				hui.setStyle(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
 				this.innerViewer.appendChild(element);
 			};
 			if (this.shouldShowController()) {
@@ -255,14 +255,14 @@ In2iGui.ImageViewer.prototype = {
 	goToImage : function(animate,num,user) {	
 		if (animate) {
 			if (num>1) {
-				n2i.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),Math.min(num*this.options.transitionReturn,2000),{ease:this.options.easeReturn});				
+				hui.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),Math.min(num*this.options.transitionReturn,2000),{ease:this.options.easeReturn});				
 			} else {
 				var end = this.index==0 || this.index==this.images.length-1;
 				var ease = (end ? this.options.easeEnd : this.options.ease);
 				if (!user) {
 					ease = this.options.easeAuto;
 				}
-				n2i.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),(end ? this.options.transitionEnd : this.options.transition),{ease:ease});
+				hui.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),(end ? this.options.transitionEnd : this.options.transition),{ease:ease});
 			}
 		} else {
 			this.viewer.scrollLeft=this.index*(this.width+this.options.margin);
@@ -338,18 +338,18 @@ In2iGui.ImageViewer.prototype = {
 	},
 	/** @private */
 	preload : function() {
-		var guiLoader = new n2i.Preloader();
-		guiLoader.addImages(In2iGui.context+'In2iGui/gfx/imageviewer_controls.png');
+		var guiLoader = new hui.Preloader();
+		guiLoader.addImages(hui.ui.context+'In2iGui/gfx/imageviewer_controls.png');
 		var self = this;
 		guiLoader.setDelegate({allImagesDidLoad:function() {self.preloadImages()}});
 		guiLoader.load();
 	},
 	/** @private */
 	preloadImages : function() {
-		var loader = new n2i.Preloader();
+		var loader = new hui.Preloader();
 		loader.setDelegate(this);
 		for (var i=0; i < this.images.length; i++) {
-			var url = In2iGui.resolveImageUrl(this,this.images[i],this.width,this.height);
+			var url = hui.ui.resolveImageUrl(this,this.images[i],this.width,this.height);
 			if (url!==null) {
 				loader.addImages(url);
 			}
@@ -365,19 +365,19 @@ In2iGui.ImageViewer.prototype = {
 	/** @private */
 	imageDidLoad : function(loaded,total,index) {
 		this.status.innerHTML = Math.round(loaded/total*100)+'%';
-		var url = In2iGui.resolveImageUrl(this,this.images[index],this.width,this.height);
+		var url = hui.ui.resolveImageUrl(this,this.images[index],this.width,this.height);
 		url = url.replace(/&amp;/g,'&');
 		this.innerViewer.childNodes[index].style.backgroundImage="url('"+url+"')";
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',false);
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',false);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',false);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',false);
 	},
 	/** @private */
 	imageDidGiveError : function(loaded,total,index) {
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',true);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',true);
 	},
 	/** @private */
 	imageDidAbort : function(loaded,total,index) {
-		n2i.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',true);
+		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',true);
 	}
 }
 

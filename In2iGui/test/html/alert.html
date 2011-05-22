@@ -1,8 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>In2iGui</title>
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<title>HUI</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/alert.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/message.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/button.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
 	<![endif]-->
@@ -13,15 +16,21 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.context='../../..';
+	</script>
 </head>
 
 <body>
-	<button onclick="ui.alert({title:'This is the title',text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',button:'This is the button text!'})">A lot of text</button>
+	<button onclick="hui.ui.alert({title:'This is the title',text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',button:'This is the button text!'})">A lot of text</button>
 	<button onclick="hui.ui.alert({emotion:'smile',title:'This is the title',button:'OK'})">Smile</button>
 	<button onclick="hui.ui.alert({emotion:'gasp',title:'This is the title',button:'OK'})">Gasp</button>
 	<hr/>
 	<button onclick="hui.ui.showMessage({text:'This is a message'})">Show message</button>
-	<button onclick="hui.ui.showMessage({text:'This is a another message (1 sec.)',duration:1000})">Another message</button>
+	<button onclick="hui.ui.showMessage({text:'This is a busy message',busy:true})">Show busy message</button>
+	<button onclick="hui.ui.showMessage({text:'This is an icon message',icon:'common/success'})">Show icon message</button>
+	<button onclick="hui.ui.showMessage({text:'This is a another message (1 sec.)',duration:1000})">Hiding message</button>
+	<button onclick="hui.ui.showMessage({text:'Im delayed and will hide',duration:1000,delay:1000})">Hiding message with delay</button>
 	<button onclick="hui.ui.hideMessage()">hide message</button>
 </body>
 </html>

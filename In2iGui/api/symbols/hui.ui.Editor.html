@@ -1,0 +1,2662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - hui.ui.Editor</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/Date.html">Date</a></li>
+	
+	<li><a href="../symbols/Function.html">Function</a></li>
+	
+	<li><a href="../symbols/hui.html">hui</a></li>
+	
+	<li><a href="../symbols/hui.animation.html">hui.animation</a></li>
+	
+	<li><a href="../symbols/hui.browser.html">hui.browser</a></li>
+	
+	<li><a href="../symbols/hui.Color.html">hui.Color</a></li>
+	
+	<li><a href="../symbols/hui.dom.html">hui.dom</a></li>
+	
+	<li><a href="../symbols/hui.ease.html">hui.ease</a></li>
+	
+	<li><a href="../symbols/hui.hui.Flash.html">hui.hui.Flash</a></li>
+	
+	<li><a href="../symbols/hui.hui.Formula.html">hui.hui.Formula</a></li>
+	
+	<li><a href="../symbols/hui.Preloader.html">hui.Preloader</a></li>
+	
+	<li><a href="../symbols/hui.string.html">hui.string</a></li>
+	
+	<li><a href="../symbols/hui.ui.html">hui.ui</a></li>
+	
+	<li><a href="../symbols/hui.ui.Alert.html">hui.ui.Alert</a></li>
+	
+	<li><a href="../symbols/hui.ui.Articles.html">hui.ui.Articles</a></li>
+	
+	<li><a href="../symbols/hui.ui.Bar.html">hui.ui.Bar</a></li>
+	
+	<li><a href="../symbols/hui.ui.Bar.Button.html">hui.ui.Bar.Button</a></li>
+	
+	<li><a href="../symbols/hui.ui.BoundPanel.html">hui.ui.BoundPanel</a></li>
+	
+	<li><a href="../symbols/hui.ui.Box.html">hui.ui.Box</a></li>
+	
+	<li><a href="../symbols/hui.ui.Button.html">hui.ui.Button</a></li>
+	
+	<li><a href="../symbols/hui.ui.Buttons.html">hui.ui.Buttons</a></li>
+	
+	<li><a href="../symbols/hui.ui.Calendar.html">hui.ui.Calendar</a></li>
+	
+	<li><a href="../symbols/hui.ui.ColorPicker.html">hui.ui.ColorPicker</a></li>
+	
+	<li><a href="../symbols/hui.ui.Columns.html">hui.ui.Columns</a></li>
+	
+	<li><a href="../symbols/hui.ui.DatePicker.html">hui.ui.DatePicker</a></li>
+	
+	<li><a href="../symbols/hui.ui.Dock.html">hui.ui.Dock</a></li>
+	
+	<li><a href="../symbols/hui.ui.Editor.html">hui.ui.Editor</a></li>
+	
+	<li><a href="../symbols/hui.ui.Editor.Header.html">hui.ui.Editor.Header</a></li>
+	
+	<li><a href="../symbols/hui.ui.Editor.Html.html">hui.ui.Editor.Html</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Checkbox.html">hui.ui.Formula.Checkbox</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Checkboxes.html">hui.ui.Formula.Checkboxes</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Checkboxes.Items.html">hui.ui.Formula.Checkboxes.Items</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.DateTime.html">hui.ui.Formula.DateTime</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.DropDown.html">hui.ui.Formula.DropDown</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Group.html">hui.ui.Formula.Group</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Location.html">hui.ui.Formula.Location</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Number.html">hui.ui.Formula.Number</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Radiobuttons.html">hui.ui.Formula.Radiobuttons</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.StyleLength.html">hui.ui.Formula.StyleLength</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Text.html">hui.ui.Formula.Text</a></li>
+	
+	<li><a href="../symbols/hui.ui.Formula.Tokens.html">hui.ui.Formula.Tokens</a></li>
+	
+	<li><a href="../symbols/hui.ui.Fragment.html">hui.ui.Fragment</a></li>
+	
+	<li><a href="../symbols/hui.ui.Gallery.html">hui.ui.Gallery</a></li>
+	
+	<li><a href="../symbols/hui.ui.IFrame.html">hui.ui.IFrame</a></li>
+	
+	<li><a href="../symbols/hui.ui.ImagePicker.html">hui.ui.ImagePicker</a></li>
+	
+	<li><a href="../symbols/hui.ui.ImageViewer.html">hui.ui.ImageViewer</a></li>
+	
+	<li><a href="../symbols/hui.ui.InfoView.html">hui.ui.InfoView</a></li>
+	
+	<li><a href="../symbols/hui.ui.Layout.html">hui.ui.Layout</a></li>
+	
+	<li><a href="../symbols/hui.ui.Link.html">hui.ui.Link</a></li>
+	
+	<li><a href="../symbols/hui.ui.Links.html">hui.ui.Links</a></li>
+	
+	<li><a href="../symbols/hui.ui.List.html">hui.ui.List</a></li>
+	
+	<li><a href="../symbols/hui.ui.LocationPicker.html">hui.ui.LocationPicker</a></li>
+	
+	<li><a href="../symbols/hui.ui.MarkupEditor.html">hui.ui.MarkupEditor</a></li>
+	
+	<li><a href="../symbols/hui.ui.Menu.html">hui.ui.Menu</a></li>
+	
+	<li><a href="../symbols/hui.ui.ObjectList.html">hui.ui.ObjectList</a></li>
+	
+	<li><a href="../symbols/hui.ui.ObjectList.Object.html">hui.ui.ObjectList.Object</a></li>
+	
+	<li><a href="../symbols/hui.ui.Overflow.html">hui.ui.Overflow</a></li>
+	
+	<li><a href="../symbols/hui.ui.Overlay.html">hui.ui.Overlay</a></li>
+	
+	<li><a href="../symbols/hui.ui.Picker.html">hui.ui.Picker</a></li>
+	
+	<li><a href="../symbols/hui.ui.ProgressBar.html">hui.ui.ProgressBar</a></li>
+	
+	<li><a href="../symbols/hui.ui.RevealingToolbar.html">hui.ui.RevealingToolbar</a></li>
+	
+	<li><a href="../symbols/hui.ui.RichText.html">hui.ui.RichText</a></li>
+	
+	<li><a href="../symbols/hui.ui.SearchField.html">hui.ui.SearchField</a></li>
+	
+	<li><a href="../symbols/hui.ui.Segmented.html">hui.ui.Segmented</a></li>
+	
+	<li><a href="../symbols/hui.ui.Selection.html">hui.ui.Selection</a></li>
+	
+	<li><a href="../symbols/hui.ui.Selection.Items.html">hui.ui.Selection.Items</a></li>
+	
+	<li><a href="../symbols/hui.ui.Source.html">hui.ui.Source</a></li>
+	
+	<li><a href="../symbols/hui.ui.Tab.html">hui.ui.Tab</a></li>
+	
+	<li><a href="../symbols/hui.ui.Tabs.html">hui.ui.Tabs</a></li>
+	
+	<li><a href="../symbols/hui.ui.TextField.html">hui.ui.TextField</a></li>
+	
+	<li><a href="../symbols/hui.ui.Toolbar.html">hui.ui.Toolbar</a></li>
+	
+	<li><a href="../symbols/hui.ui.Toolbar.Badge.html">hui.ui.Toolbar.Badge</a></li>
+	
+	<li><a href="../symbols/hui.ui.Toolbar.Icon.html">hui.ui.Toolbar.Icon</a></li>
+	
+	<li><a href="../symbols/hui.ui.Toolbar.SearchField.html">hui.ui.Toolbar.SearchField</a></li>
+	
+	<li><a href="../symbols/hui.ui.Upload.html">hui.ui.Upload</a></li>
+	
+	<li><a href="../symbols/hui.ui.Window.html">hui.ui.Window</a></li>
+	
+	<li><a href="../symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class hui.ui.Editor
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_jbm_Sites_onlinepublisher_In2iGui_tools_bin_combined.js.html">combined.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Editor.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/hui.ui.Editor.html#constructor">hui.ui.Editor</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Editor.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#$iconWasClicked$huiEditorPartActions">$iconWasClicked$huiEditorPartActions</a></b>(key, event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#$iconWasClicked$huiEditorPartEditActions">$iconWasClicked$huiEditorPartEditActions</a></b>(key, event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#$itemWasClicked$huiEditorColumnMenu">$itemWasClicked$huiEditorColumnMenu</a></b>(value)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#$userClosedWindow$columnEditor">$userClosedWindow$columnEditor</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#activate">activate</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#addPartController">addPartController</a></b>(key, title, controller)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#blurColumn">blurColumn</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#blurControls">blurControls</a></b>(e)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#blurPart">blurPart</a></b>(e)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#cancelPart">cancelPart</a></b>(part)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#changeColumnLeftMargin">changeColumnLeftMargin</a></b>(margin)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#changeColumnRightMargin">changeColumnRightMargin</a></b>(margin)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#changeColumnWidth">changeColumnWidth</a></b>(width)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#closeColumn">closeColumn</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#contextColumn">contextColumn</a></b>(column, rowIndex, columnIndex, e)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#deactivate">deactivate</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#deletePart">deletePart</a></b>(part)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.dragEndListener">dragEndListener</a></b>(event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.dragListener">dragListener</a></b>(e)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#dragPart">dragPart</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#editColumn">editColumn</a></b>(rowIndex, columnIndex)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#editPart">editPart</a></b>(part)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#endPartDrag">endPartDrag</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.get">get</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#getEditorForElement">getEditorForElement</a></b>(element)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#getPartController">getPartController</a></b>(key)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.getPartId">getPartId</a></b>(element)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#hidePartControls">hidePartControls</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#hidePartEditControls">hidePartEditControls</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#hidePartEditor">hidePartEditor</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#hoverColumn">hoverColumn</a></b>(column)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#hoverControls">hoverControls</a></b>(e)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#hoverPart">hoverPart</a></b>(part, event)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#ignite">ignite</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#itemWasClicked$huiEditorNewPartMenu">itemWasClicked$huiEditorNewPartMenu</a></b>(value)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#newPart">newPart</a></b>(e)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#partChanged">partChanged</a></b>(part)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#partDidDeacivate">partDidDeacivate</a></b>(part)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#partExists">partExists</a></b>(element)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#reload">reload</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#reloadColumns">reloadColumns</a></b>(columns, rowIndex)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#reloadParts">reloadParts</a></b>(parts, row, column)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#savePart">savePart</a></b>(part)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#setOptions">setOptions</a></b>(options)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#showColumnWindow">showColumnWindow</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#showPartControls">showPartControls</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#showPartEditControls">showPartEditControls</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#showPartEditor">showPartEditor</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.startDrag">startDrag</a></b>(e, element)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#startPartDrag">startPartDrag</a></b>(e)
+								</div>
+								<div class="description">* Dragging ***</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#updatePartProperties">updatePartProperties</a></b>(values)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>hui.ui.Editor</b>()
+				</div>
+				
+				<div class="description">
+					
+					
+				</div>
+				
+				
+				
+				
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="$iconWasClicked$huiEditorPartActions"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>$iconWasClicked$huiEditorPartActions</b>(key, event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>key</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="$iconWasClicked$huiEditorPartEditActions"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>$iconWasClicked$huiEditorPartEditActions</b>(key, event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>key</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="$itemWasClicked$huiEditorColumnMenu"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>$itemWasClicked$huiEditorColumnMenu</b>(value)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="$userClosedWindow$columnEditor"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>$userClosedWindow$columnEditor</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="activate"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>activate</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addPartController"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addPartController</b>(key, title, controller)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>key</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>title</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>controller</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="blurColumn"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>blurColumn</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="blurControls"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>blurControls</b>(e)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="blurPart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>blurPart</b>(e)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="cancelPart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>cancelPart</b>(part)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>part</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="changeColumnLeftMargin"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>changeColumnLeftMargin</b>(margin)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>margin</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="changeColumnRightMargin"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>changeColumnRightMargin</b>(margin)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>margin</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="changeColumnWidth"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>changeColumnWidth</b>(width)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>width</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="closeColumn"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>closeColumn</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="contextColumn"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>contextColumn</b>(column, rowIndex, columnIndex, e)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>column</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>rowIndex</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>columnIndex</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="deactivate"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>deactivate</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="deletePart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>deletePart</b>(part)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>part</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".dragEndListener"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.Editor.</span><b>dragEndListener</b>(event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".dragListener"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.Editor.</span><b>dragListener</b>(e)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="dragPart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>dragPart</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="editColumn"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>editColumn</b>(rowIndex, columnIndex)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>rowIndex</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>columnIndex</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="editPart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>editPart</b>(part)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>part</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="endPartDrag"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>endPartDrag</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".get"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.Editor.</span><b>get</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="getEditorForElement"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>getEditorForElement</b>(element)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPartController"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>getPartController</b>(key)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>key</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getPartId"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.Editor.</span><b>getPartId</b>(element)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hidePartControls"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hidePartControls</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hidePartEditControls"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hidePartEditControls</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hidePartEditor"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hidePartEditor</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hoverColumn"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hoverColumn</b>(column)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>column</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hoverControls"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hoverControls</b>(e)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hoverPart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hoverPart</b>(part, event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>part</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="ignite"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>ignite</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="itemWasClicked$huiEditorNewPartMenu"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>itemWasClicked$huiEditorNewPartMenu</b>(value)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="newPart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>newPart</b>(e)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="partChanged"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>partChanged</b>(part)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>part</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="partDidDeacivate"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>partDidDeacivate</b>(part)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>part</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="partExists"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>partExists</b>(element)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="reload"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>reload</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="reloadColumns"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>reloadColumns</b>(columns, rowIndex)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>columns</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>rowIndex</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="reloadParts"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>reloadParts</b>(parts, row, column)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>parts</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>row</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>column</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="savePart"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>savePart</b>(part)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>part</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setOptions"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setOptions</b>(options)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>options</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="showColumnWindow"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>showColumnWindow</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="showPartControls"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>showPartControls</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="showPartEditControls"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>showPartEditControls</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="showPartEditor"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>showPartEditor</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".startDrag"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.Editor.</span><b>startDrag</b>(e, element)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="startPartDrag"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>startPartDrag</b>(e)
+					
+					</div>
+					<div class="description">
+						* Dragging ***
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="updatePartProperties"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>updatePartProperties</b>(values)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>values</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun May 22 2011 17:21:10 GMT+0200 (CEST)
+		</div>
+	</body>
+</html>

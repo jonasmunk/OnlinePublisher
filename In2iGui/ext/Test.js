@@ -1,10 +1,10 @@
-In2iGui.test = {
+hui.ui.test = {
 	status : null,
 	busy : 0,
 	run : function(recipe) {
 		this.status = {failures:0,successes:0};
 		this.busy = 0;
-		ui.showMessage({text:'Running test',busy:true});
+		hui.ui.showMessage({text:'Running test',busy:true});
 		this._next(0,recipe);
 	},
 	_next : function(num,recipe) {
@@ -12,7 +12,7 @@ In2iGui.test = {
 			this._stop();
 			return;
 		}
-		ui.showMessage({text:'Running test ('+num+')',busy:true});
+		hui.ui.showMessage({text:'Running test ('+num+')',busy:true});
 		if(typeof(recipe[num])=='function') {
 			recipe[num]();
 			this._next(num+1,recipe);
@@ -26,9 +26,9 @@ In2iGui.test = {
 			return;
 		}
 		if (this.status.failures>0) {
-			ui.showMessage({text:'Failure',icon:'common/warning',duration:2000});
+			hui.ui.showMessage({text:'Failure',icon:'common/warning',duration:2000});
 		} else {
-			ui.showMessage({text:'Success',icon:'common/success',duration:2000});
+			hui.ui.showMessage({text:'Success',icon:'common/success',duration:2000});
 		}
 	},
 	click : function(node,func) {
@@ -46,13 +46,17 @@ In2iGui.test = {
 		}.bind(this));
 	},
 	_succeed : function(msg) {
-		console.info(msg);
+		if (window.console) {
+			console.info(msg);
+		}	
 		this._log(msg);
 		this.status.successes++;
 	},
 	_fail : function(msg,obj1,obj2) {
-		console.error(msg);
-		console.info(obj1);
+		if (window.console) {
+			console.error(msg);
+			console.info(obj1);
+		}	
 		if (obj2!=undefined) {
 			console.info(obj2);
 		}

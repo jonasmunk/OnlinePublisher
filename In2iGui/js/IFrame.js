@@ -3,26 +3,26 @@
  * @param {Object} The options
  * @constructor
  */
-In2iGui.IFrame = function(options) {
+hui.ui.IFrame = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.IFrame.prototype = {
+hui.ui.IFrame.prototype = {
 	/** Change the url of the iframe
 	 * @param {String} url The url to change the iframe to
 	 */
 	setUrl : function(url) {
 		this.element.setAttribute('src',url);
-		//n2i.getFrameDocument(this.element).location.href=url;
+		//hui.getFrameDocument(this.element).location.href=url;
 	},
 	getDocument : function() {
-		return n2i.getFrameDocument(this.element);
+		return hui.getFrameDocument(this.element);
 	},
 	getWindow : function() {
-		return n2i.getFrameWindow(this.element);
+		return hui.getFrameWindow(this.element);
 	},
 	reload : function() {
 		this.getWindow().location.reload();

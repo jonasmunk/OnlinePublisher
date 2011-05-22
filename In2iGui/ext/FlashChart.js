@@ -2,14 +2,14 @@
  * A dock
  * @constructor
  */
-In2iGui.FlashChart = function(element,name,options) {
+hui.ui.FlashChart = function(element,name,options) {
 	this.options = N2i.override({},options);
 	this.element = $(element);
 	this.name = name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
-In2iGui.FlashChart.prototype = {
+hui.ui.FlashChart.prototype = {
 	load : function(url) {
 		var self = this;
 		var flash = this.findSWF(this.element.id+'_chart');

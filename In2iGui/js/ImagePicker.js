@@ -2,18 +2,18 @@
 	Used to choose an image
 	@constructor
 */
-In2iGui.ImagePicker = function(o) {
+hui.ui.ImagePicker = function(o) {
 	this.name = o.name;
 	this.options = o || {};
-	this.element = n2i.get(o.element);
+	this.element = hui.get(o.element);
 	this.images = [];
 	this.object = null;
 	this.thumbnailsLoaded = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 }
 
-In2iGui.ImagePicker.prototype = {
+hui.ui.ImagePicker.prototype = {
 	/** @private */
 	addBehavior : function() {
 		this.element.onclick = this.showPicker.bind(this);
@@ -34,7 +34,7 @@ In2iGui.ImagePicker.prototype = {
 		if (this.object==null) {
 			this.element.style.backgroundImage='';
 		} else {
-			var url = In2iGui.resolveImageUrl(this,this.object,48,48);
+			var url = hui.ui.resolveImageUrl(this,this.object,48,48);
 			this.element.style.backgroundImage='url('+url+')';
 		}
 	},
@@ -42,14 +42,14 @@ In2iGui.ImagePicker.prototype = {
 	showPicker : function() {
 		if (!this.picker) {
 			var self = this;
-			this.picker = In2iGui.BoundPanel.create();
-			this.content = n2i.build('div',{'class':'in2igui_imagepicker_thumbs'});
-			var buttons = In2iGui.Buttons.create({align:'right'});
-			var close = In2iGui.Button.create({text:'Luk',highlighted:true});
+			this.picker = hui.ui.BoundPanel.create();
+			this.content = hui.build('div',{'class':'in2igui_imagepicker_thumbs'});
+			var buttons = hui.ui.Buttons.create({align:'right'});
+			var close = hui.ui.Button.create({text:'Luk',highlighted:true});
 			close.listen({
 				$click:function() {self.hidePicker()}
 			});
-			var remove = In2iGui.Button.create({text:'Fjern'});
+			var remove = hui.ui.Button.create({text:'Fjern'});
 			remove.listen({
 				$click:function() {self.setObject(null);self.hidePicker()}
 			});
@@ -71,7 +71,7 @@ In2iGui.ImagePicker.prototype = {
 	/** @private */
 	updateImages : function() {
 		var self = this;
-		n2i.request({
+		hui.request({
 			onSuccess:function(t) {
 				self.parse(t.responseXML);
 			},
@@ -86,8 +86,8 @@ In2iGui.ImagePicker.prototype = {
 		for (var i=0; i < images.length; i++) {
 			var id = images[i].getAttribute('id');
 			var img = {id:images[i].getAttribute('id')};
-			var url = In2iGui.resolveImageUrl(this,img,48,48);
-			var thumb = n2i.build('div',{'class':'in2igui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
+			var url = hui.ui.resolveImageUrl(this,img,48,48);
+			var thumb = hui.build('div',{'class':'in2igui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
 			thumb.in2iguiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.in2iguiObject);

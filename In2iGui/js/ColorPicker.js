@@ -1,60 +1,60 @@
 /**
  * @constructor
  */
-In2iGui.ColorPicker = function(options) {
+hui.ui.ColorPicker = function(options) {
 	this.options = options || {};
 	this.name = options.name;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.color = null;
 	this.buttons = [];
-	this.preview = n2i.firstByClass(this.element,'in2igui_colorpicker_preview');
-	this.pages = n2i.byClass(this.element,'in2igui_colorpicker_page');
-	this.input = n2i.firstByTag(this.element,'input');
+	this.preview = hui.firstByClass(this.element,'in2igui_colorpicker_preview');
+	this.pages = hui.byClass(this.element,'in2igui_colorpicker_page');
+	this.input = hui.firstByTag(this.element,'input');
 	this.wheel1 = this.pages[0];
 	this.wheel2 = this.pages[1];
 	this.wheel3 = this.pages[2];
 	this.swatches = this.pages[3];
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	this.buildData();
 }
 
-In2iGui.ColorPicker.create = function(options) {
+hui.ui.ColorPicker.create = function(options) {
 	var swatches = '',
 		c, hex, j;
 	for (var i=0; i < 360; i+=30) {
 		for (j=0.05; j <= 1; j+=.15) {
-			c = n2i.Color.hsv2rgb(i,j,1);
-			hex = n2i.Color.rgb2hex(c);
+			c = hui.Color.hsv2rgb(i,j,1);
+			hex = hui.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
 		for (j=1; j >= .20; j-=.15) {
-			c = n2i.Color.hsv2rgb(i,1,j);
-			hex = n2i.Color.rgb2hex(c);
+			c = hui.Color.hsv2rgb(i,1,j);
+			hex = hui.Color.rgb2hex(c);
 			swatches+='<a style="background: rgb('+c[0]+','+c[1]+','+c[2]+')" rel="'+hex+'"></a>';
 		}
 	}
 	for (j=255; j >=0; j-=255/12) {
-		hex = n2i.Color.rgb2hex([j,j,j]);
+		hex = hui.Color.rgb2hex([j,j,j]);
 		swatches+='<a style="background: rgb('+Math.round(j)+','+Math.round(j)+','+Math.round(j)+')" rel="'+hex+'"></a>';
 	}
 	options = options || {};
-	options.element = n2i.build('div',{
+	options.element = hui.build('div',{
 		'class':'in2igui_colorpicker',
 		html : 
 			'<div class="in2igui_bar in2igui_bar_window">'+
 				'<div class="in2igui_bar_body">'+
 					'<a class="in2igui_bar_button in2igui_bar_button_selected" href="javascript:void(0)" rel="0">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_pastels',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_pastels',1)+')"></span>'+
 					'</a>'+
 					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="1">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_brightness',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_brightness',1)+')"></span>'+
 					'</a>'+
 					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="2">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/wheel_saturated',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_saturated',1)+')"></span>'+
 					'</a>'+
 					'<a class="in2igui_bar_button" href="javascript:void(0)" rel="3">'+
-						'<span class="in2igui_icon_1" style="background: url('+In2iGui.getIconUrl('colorpicker/swatches',1)+')"></span>'+
+						'<span class="in2igui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/swatches',1)+')"></span>'+
 					'</a>'+
 					'<input class="in2igui_colorpicker"/>'+
 				'</div>'+
@@ -67,34 +67,34 @@ In2iGui.ColorPicker.create = function(options) {
 			'</div>'+
 			'<div class="in2igui_colorpicker_preview"></div>'
 	});
-	return new In2iGui.ColorPicker(options);
+	return new hui.ui.ColorPicker(options);
 }
 
-In2iGui.ColorPicker.prototype = {
+hui.ui.ColorPicker.prototype = {
 	/** @private */
 	addBehavior : function() {
-		var bs = n2i.byClass(this.element,'in2igui_bar_button');
+		var bs = hui.byClass(this.element,'in2igui_bar_button');
 		for (var i=0; i < bs.length; i++) {
-			var button = new In2iGui.Bar.Button({element:bs[i]});
+			var button = new hui.ui.Bar.Button({element:bs[i]});
 			button.listen(this);
 			this.buttons.push(button);
 		};
 		
-		n2i.listen(this.element,'click',this._click.bind(this));
-		n2i.listen(this.wheel1,'mousemove',this._hoverWheel1.bind(this));
-		n2i.listen(this.wheel1,'click',this._pickColor.bind(this));
-		n2i.listen(this.wheel2,'mousemove',this._hoverWheel2.bind(this));
-		n2i.listen(this.wheel2,'click',this._pickColor.bind(this));
-		n2i.listen(this.wheel3,'mousemove',this._hoverWheel3.bind(this));
-		n2i.listen(this.wheel3,'click',this._pickColor.bind(this));
-		n2i.listen(this.element,'mousedown',function(e) {
-			n2i.stop(e);
+		hui.listen(this.element,'click',this._click.bind(this));
+		hui.listen(this.wheel1,'mousemove',this._hoverWheel1.bind(this));
+		hui.listen(this.wheel1,'click',this._pickColor.bind(this));
+		hui.listen(this.wheel2,'mousemove',this._hoverWheel2.bind(this));
+		hui.listen(this.wheel2,'click',this._pickColor.bind(this));
+		hui.listen(this.wheel3,'mousemove',this._hoverWheel3.bind(this));
+		hui.listen(this.wheel3,'click',this._pickColor.bind(this));
+		hui.listen(this.element,'mousedown',function(e) {
+			hui.stop(e);
 		})
-		n2i.listen(this.swatches,'mousemove',function(e) {
-			e = n2i.event(e);
+		hui.listen(this.swatches,'mousemove',function(e) {
+			e = hui.event(e);
 			this._hoverColor(e.element.getAttribute('rel'));
 		}.bind(this));
-		n2i.listen(this.swatches,'click',this._pickColor.bind(this));
+		hui.listen(this.swatches,'click',this._pickColor.bind(this));
 	},
 	$click : function(button) {
 		var page = parseInt(button.element.getAttribute('rel')),
@@ -107,7 +107,7 @@ In2iGui.ColorPicker.prototype = {
 		};
 	},
 	_click : function(e) {
-		e = n2i.event(e);
+		e = hui.event(e);
 		e.stop();
 	//	return;
 		var input = e.findByTag('input');
@@ -115,7 +115,7 @@ In2iGui.ColorPicker.prototype = {
 	},
 	/** @private */
 	_pickColor : function(e) {
-		n2i.stop(e);
+		hui.stop(e);
 		this.fire('colorWasSelected',this.color);
 	},
 	_hoverColor : function(color) {
@@ -148,8 +148,8 @@ In2iGui.ColorPicker.prototype = {
 	},
 	/** @private */
 	_hoverWheel1 : function(e) {
-		e = n2i.event(e);
-		var pos = n2i.getPosition(this.wheel1);
+		e = hui.event(e);
+		var pos = hui.getPosition(this.wheel1);
 		var x = 4 * (e.getLeft() - pos.left);
 		var y = 4 * (e.getTop() - pos.top);
 
@@ -186,8 +186,8 @@ In2iGui.ColorPicker.prototype = {
 	},
 	_hoverWheel2 : function(e) {
 		var rgb,sat,val;
-		e = n2i.event(e);
-		var pos = n2i.getPosition(this.wheel2);
+		e = hui.event(e);
+		var pos = hui.getPosition(this.wheel2);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 
@@ -214,19 +214,19 @@ In2iGui.ColorPicker.prototype = {
 			} else if (rnorm >= .5) {
 				sat = 1 - ((rnorm - .5) *2);
 				val = 1;
-				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				rgb = hui.Color.hsv2rgb(adeg,sat,val);
 			} else {
 				sat = 1;
 				val = rnorm * 2;
-				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				rgb = hui.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
-		this._hoverColor(n2i.Color.rgb2hex(rgb));
+		this._hoverColor(hui.Color.rgb2hex(rgb));
 	},
 	_hoverWheel3 : function(e) {
 		var rgb,sat,val;
-		e = n2i.event(e);
-		var pos = n2i.getPosition(this.wheel3);
+		e = hui.event(e);
+		var pos = hui.getPosition(this.wheel3);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 
@@ -253,10 +253,10 @@ In2iGui.ColorPicker.prototype = {
 			} else {
 				sat = rnorm;// - ((rnorm - .5) *2);
 				val = 1;
-				rgb = n2i.Color.hsv2rgb(adeg,sat,val);
+				rgb = hui.Color.hsv2rgb(adeg,sat,val);
 			}
 		}
-		this._hoverColor(n2i.Color.rgb2hex(rgb));
+		this._hoverColor(hui.Color.rgb2hex(rgb));
 	}
 }
 

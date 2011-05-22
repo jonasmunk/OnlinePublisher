@@ -1,32 +1,32 @@
 /** @constructor */
-In2iGui.Gallery = function(options) {
+hui.ui.Gallery = function(options) {
 	this.options = options || {};
 	this.name = options.name;
-	this.element = n2i.get(options.element);
-	this.body = n2i.firstByClass(this.element,'in2igui_gallery_body');
+	this.element = hui.get(options.element);
+	this.body = hui.firstByClass(this.element,'in2igui_gallery_body');
 	this.objects = [];
 	this.nodes = [];
 	this.selected = [];
 	this.width = 100;
 	this.height = 100;
 	this.revealing = false;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	if (this.element.parentNode && n2i.hasClass(this.element.parentNode,'in2igui_overflow')) {
+	if (this.element.parentNode && hui.hasClass(this.element.parentNode,'in2igui_overflow')) {
 		this.revealing = true;
-		n2i.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
+		hui.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
 	}
 }
 
-In2iGui.Gallery.create = function(options) {
+hui.ui.Gallery.create = function(options) {
 	options = options || {};
-	options.element = n2i.build('div',{'class':'in2igui_gallery',html:'<div class="in2igui_gallery_progress"></div><div class="in2igui_gallery_body"></div>'});
-	return new In2iGui.Gallery(options);
+	options.element = hui.build('div',{'class':'in2igui_gallery',html:'<div class="in2igui_gallery_progress"></div><div class="in2igui_gallery_body"></div>'});
+	return new hui.ui.Gallery(options);
 }
 
-In2iGui.Gallery.prototype = {
+hui.ui.Gallery.prototype = {
 	setObjects : function(objects) {
 		this.objects = objects;
 		this.render();
@@ -49,7 +49,7 @@ In2iGui.Gallery.prototype = {
 		this.maxRevealed=0;
 		this.body.innerHTML='';
 		var self = this;
-		n2i.each(this.objects,function(object,i) {
+		hui.each(this.objects,function(object,i) {
 			var url = self.resolveImageUrl(object),
 				top = 0;
 			if (url!==null) {
@@ -58,22 +58,22 @@ In2iGui.Gallery.prototype = {
 			if (!self.revealing && object.height<object.width) {
 				top = (self.height-(self.height*object.height/object.width))/2;
 			}
-			var img = n2i.build('img',{style:'margin:'+top+'px auto 0px'});
+			var img = hui.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
 			if (self.revealing) {
 			//	img.style.visibility='hidden';
 			}
-			var item = n2i.build('div',{'class' : 'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			var item = hui.build('div',{'class' : 'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
 			item.appendChild(img);
-			n2i.listen(item,'click',function() {
+			hui.listen(item,'click',function() {
 				self.itemClicked(i);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
 			item.onmousedown=function(e) {
-				In2iGui.startDrag(e,item);
+				hui.ui.startDrag(e,item);
 				return false;
 			};
-			n2i.listen(item,'dblclick',function() {
+			hui.listen(item,'dblclick',function() {
 				self.itemDoubleClicked(i);
 			});
 			self.body.appendChild(item);
@@ -120,12 +120,12 @@ In2iGui.Gallery.prototype = {
 	updateUI : function() {
 		var s = this.selected;
 		for (var i=0; i < this.nodes.length; i++) {
-			n2i.setClass(this.nodes[i],'in2igui_gallery_item_selected',n2i.inArray(s,i));
+			hui.setClass(this.nodes[i],'in2igui_gallery_item_selected',hui.inArray(s,i));
 		};
 	},
 	/** @private */
 	resolveImageUrl : function(img) {
-		return In2iGui.resolveImageUrl(this,img,this.width,this.height);
+		return hui.ui.resolveImageUrl(this,img,this.width,this.height);
 		for (var i=0; i < this.delegates.length; i++) {
 			if (this.delegates[i]['$resolveImageUrl']) {
 				return this.delegates[i]['$resolveImageUrl'](img,this.width,this.height);
@@ -157,7 +157,7 @@ In2iGui.Gallery.prototype = {
 	},
 	/**
 	 * Sets the lists data source and refreshes it if it is new
-	 * @param {In2iGui.Source} source The source
+	 * @param {hui.ui.Source} source The source
 	 */
 	setSource : function(source) {
 		if (this.options.source!=source) {
@@ -184,10 +184,10 @@ In2iGui.Gallery.prototype = {
 		if (busy) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				n2i.addClass(e,'in2igui_gallery_busy');
+				hui.addClass(e,'in2igui_gallery_busy');
 			},300);
 		} else {
-			n2i.removeClass(this.element,'in2igui_gallery_busy');
+			hui.removeClass(this.element,'in2igui_gallery_busy');
 		}
 	}
 }

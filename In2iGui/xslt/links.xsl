@@ -12,7 +12,7 @@
 		<div class="in2igui_links_list"><xsl:comment/></div>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Links({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Links({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>'
 			<xsl:if test="@pageSource">,pageSource:<xsl:value-of select="@pageSource"/></xsl:if>

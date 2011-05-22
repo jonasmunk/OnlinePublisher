@@ -3,21 +3,21 @@
  * @param {Object} The options
  * @constructor
  */
-In2iGui.Links = function(options) {
+hui.ui.Links = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.items = [];
 	this.addBehavior();
 	this.selectedIndex = null;
 	this.inputs = {};
 }
 
-In2iGui.Links.prototype = {
+hui.ui.Links.prototype = {
 	addBehavior : function() {
-		n2i.listen(this.element,'click',this.onClick.bind(this));
-		n2i.listen(this.element,'dblclick',this.onDblClick.bind(this));
+		hui.listen(this.element,'click',this.onClick.bind(this));
+		hui.listen(this.element,'dblclick',this.onDblClick.bind(this));
 	},
 	reset : function() {
 		this.setValue([]);
@@ -31,8 +31,8 @@ In2iGui.Links.prototype = {
 		return this.items;
 	},
 	onDblClick : function(e) {
-		e = new n2i.Event(e);
-		n2i.selection.clear();
+		e = new hui.Event(e);
+		hui.selection.clear();
 		e.stop(e);
 		var link = this.selectAndGetRow(e);
 		var values = {text:link.text};
@@ -44,12 +44,12 @@ In2iGui.Links.prototype = {
 		win.show();
 	},
 	onClick : function(e) {
-		e = new n2i.Event(e);
+		e = new hui.Event(e);
 		e.stop();
 		var element = e.getElement();
-		if (n2i.hasClass(element,'in2igui_links_remove')) {
+		if (hui.hasClass(element,'in2igui_links_remove')) {
 			var row = e.findByClass('in2igui_links_row');
-			In2iGui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
+			hui.ui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
 				this.items.splice(row.in2igui_index,1);
 				if (this.selectedIndex===row.in2igui_index) {
 					this.selectedIndex=null;
@@ -65,31 +65,31 @@ In2iGui.Links.prototype = {
 		if (row) {
 			var idx = row.in2igui_index;
 			if (this.selectedIndex!==null) {
-				var x = n2i.byClass(this.element,'in2igui_links_row')[this.selectedIndex];
-				n2i.removeClass(x,'in2igui_links_row_selected')
+				var x = hui.byClass(this.element,'in2igui_links_row')[this.selectedIndex];
+				hui.removeClass(x,'in2igui_links_row_selected')
 			}
 			this.selectedIndex = idx;
-			n2i.addClass(row,'in2igui_links_row_selected');
+			hui.addClass(row,'in2igui_links_row_selected');
 			return this.items[idx];
 		}
 	},
 	build : function() {
-		var list = this.list || n2i.firstByClass(this.element,'in2igui_links_list'),
+		var list = this.list || hui.firstByClass(this.element,'in2igui_links_list'),
 			i,item,row,infoNode,text,remove;
 		list.innerHTML='';
 		for (i=0; i < this.items.length; i++) {
 			item = this.items[i];
-			row = n2i.build('div',{'class':'in2igui_links_row'});
+			row = hui.build('div',{'class':'in2igui_links_row'});
 			row.in2igui_index = i;
 			
-			row.appendChild(In2iGui.createIcon(item.icon,1));
-			text = n2i.build('div',{'class':'in2igui_links_text',text:item.text});
+			row.appendChild(hui.ui.createIcon(item.icon,1));
+			text = hui.build('div',{'class':'in2igui_links_text',text:item.text});
 			row.appendChild(text);
 
-			infoNode = n2i.build('div',{'class':'in2igui_links_info',text:n2i.wrap(item.info)});
+			infoNode = hui.build('div',{'class':'in2igui_links_info',text:hui.wrap(item.info)});
 			row.appendChild(infoNode);
-			remove = In2iGui.createIcon('monochrome/round_x',1);
-			n2i.addClass(remove,'in2igui_links_remove');
+			remove = hui.ui.createIcon('monochrome/round_x',1);
+			hui.addClass(remove,'in2igui_links_remove');
 			row.appendChild(remove);
 
 			list.appendChild(row);
@@ -103,34 +103,34 @@ In2iGui.Links.prototype = {
 	},
 	getEditWindow : function() {
 		if (!this.editWindow) {
-			var win = this.editWindow = In2iGui.Window.create({title:'Link',width:300,padding:5});
-			var form = this.editForm = In2iGui.Formula.create();
+			var win = this.editWindow = hui.ui.Window.create({title:'Link',width:300,padding:5});
+			var form = this.editForm = hui.ui.Formula.create();
 			var g = form.buildGroup({above:false},[
 				{type:'Text',options:{label:'Tekst',key:'text'}}
 			]);
 			
-			var url = In2iGui.Formula.Text.create({label:'URL',key:'url'});
+			var url = hui.ui.Formula.Text.create({label:'URL',key:'url'});
 			g.add(url);
 			this.inputs['url']=url;
 			
-			var email = In2iGui.Formula.Text.create({label:'E-mail',key:'email'});
+			var email = hui.ui.Formula.Text.create({label:'E-mail',key:'email'});
 			g.add(email);
 			this.inputs['email']=email;
 			
-			page = In2iGui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
+			page = hui.ui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
 			g.add(page);
 			this.inputs['page']=page;
 			
-			file = In2iGui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
+			file = hui.ui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
 			g.add(file);
 			this.inputs['file']=file;
 			
 			var self = this;
-			n2i.each(this.inputs,function(key,value) {
+			hui.each(this.inputs,function(key,value) {
 				value.listen({$valueChanged:function(){self.changeType(key)}});
 			});
 			
-			g.createButtons().add(In2iGui.Button.create({text:'Gem',submit:true,highlighted:true}));
+			g.createButtons().add(hui.ui.Button.create({text:'Gem',submit:true,highlighted:true}));
 			this.editForm.listen({$submit:this.saveLink.bind(this)});
 			win.add(form);
 			if (this.options.pageSource) {
@@ -147,7 +147,7 @@ In2iGui.Links.prototype = {
 		var link = this.valuesToLink(v);
 		var edited = this.editedLink;
 		if (edited) {
-			n2i.override(edited,link);
+			hui.override(edited,link);
 		} else {
 			this.items.push(link);
 		}
@@ -169,12 +169,12 @@ In2iGui.Links.prototype = {
 			link.value=values.url;
 			link.info=values.url;
 			link.icon='monochrome/globe';
-		} else if (n2i.isDefined(values.page)) {
+		} else if (hui.isDefined(values.page)) {
 			link.kind='page';
 			link.value=values.page;
 			link.info=this.inputs['page'].getItem().title;
 			link.icon='common/page';
-		} else if (n2i.isDefined(values.file)) {
+		} else if (hui.isDefined(values.file)) {
 			link.kind='file';
 			link.value=values.file;
 			link.info=this.inputs['file'].getItem().title;
@@ -183,7 +183,7 @@ In2iGui.Links.prototype = {
 		return link;
 	},
 	changeType : function(type) {
-		n2i.each(this.inputs,function(key,value) {
+		hui.each(this.inputs,function(key,value) {
 			if (key!=type) {
 				value.setValue();
 			}

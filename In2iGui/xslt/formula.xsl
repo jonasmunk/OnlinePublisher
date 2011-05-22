@@ -9,7 +9,7 @@
     >
 
 <xsl:template match="gui:formula">
-	<form class="in2igui_formula" id="{generate-id()}">
+	<form class="in2igui_formula hui_formula" id="{generate-id()}">
 		<xsl:attribute name="style">
 			<xsl:if test="@state and @state!=//gui:gui/@state">
 				<xsl:text>display:none;</xsl:text>
@@ -20,7 +20,7 @@
 	</form>
 	<script type="text/javascript">
 		(function() {
-			var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula({
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula({
 				element:'<xsl:value-of select="generate-id()"/>',
 				name:'<xsl:value-of select="@name"/>'
 				<xsl:if test="@state">
@@ -123,7 +123,7 @@
 		</xsl:otherwise>
 	</xsl:choose>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Text({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',key:'<xsl:value-of select="@key"/>'});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Text({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',key:'<xsl:value-of select="@key"/>'});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
@@ -155,7 +155,7 @@
 		<span class="in2igui_field_bottom"><span><span><xsl:comment/></span></span></span>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.DateTime({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.DateTime({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>',
@@ -190,7 +190,7 @@
 		<span><span><input type="text" value="{@value}"/><em class="in2igui_number_units"><xsl:comment/></em><a class="in2igui_number_up"><xsl:comment/></a><a class="in2igui_number_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Number({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Number({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>'
@@ -227,7 +227,7 @@
 		<span><span><input type="text" value="{@value}"/><a class="in2igui_number_up"><xsl:comment/></a><a class="in2igui_number_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.StyleLength({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.StyleLength({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>'
@@ -269,7 +269,7 @@
 	<span><span><strong><xsl:comment/></strong></span></span>
 	</a>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.DropDown(
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.DropDown(
 			{element:'<xsl:value-of select="generate-id()"/>'
 			,name:'<xsl:value-of select="@name"/>'
 			,key:'<xsl:value-of select="@key"/>'
@@ -314,7 +314,7 @@
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Radiobuttons({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>','value':'<xsl:value-of select="@value"/>','key':'<xsl:value-of select="@key"/>'});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Radiobuttons({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>','value':'<xsl:value-of select="@value"/>','key':'<xsl:value-of select="@key"/>'});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:radiobutton | gui:item">
 				registerRadiobutton({id:'<xsl:value-of select="generate-id()"/>','value':'<xsl:value-of select="@value"/>'});
@@ -357,7 +357,7 @@
 		<xsl:value-of select="@title"/>
 	</a>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Checkbox({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Checkbox({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			'key':'<xsl:value-of select="@key"/>',
@@ -389,7 +389,7 @@
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Checkboxes({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Checkboxes({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>'
@@ -411,7 +411,7 @@
 		<xsl:comment/>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Checkboxes.Items({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',source:<xsl:value-of select="@source"/>});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Checkboxes.Items({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',source:<xsl:value-of select="@source"/>});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
@@ -487,7 +487,7 @@
 		<xsl:value-of select="@title"/><xsl:value-of select="@text"/>
 	</span></span></a>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Button({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Button({
 			element:'<xsl:value-of select="generate-id()"/>'
 			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
 			<xsl:if test="@submit='true'">,submit:true</xsl:if>
@@ -537,7 +537,7 @@
 <xsl:template name="gui:imagepicker">
 	<div class="in2igui_imagepicker" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.ImagePicker({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImagePicker({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			source:'<xsl:value-of select="@source"/>'
@@ -571,7 +571,7 @@
 		<xsl:comment/>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Formula.Tokens({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Tokens({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			'key':'<xsl:value-of select="@key"/>'}
@@ -609,7 +609,7 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.ObjectList({element:'<xsl:value-of select="generate-id()"/>'
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ObjectList({element:'<xsl:value-of select="generate-id()"/>'
 			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
 			,key:'<xsl:value-of select="@key"/>'});
 		<xsl:call-template name="gui:createobject"/>
@@ -621,12 +621,12 @@
 </xsl:template>
 
 <xsl:template match="gui:objectlist/gui:text">
-	registerTemplateItem(new In2iGui.ObjectList.Text('<xsl:value-of select="@key"/>'));
+	registerTemplateItem(new hui.ui.ObjectList.Text('<xsl:value-of select="@key"/>'));
 </xsl:template>
 
 <xsl:template match="gui:objectlist/gui:select">
 	<xsl:variable name="id" select="generate-id()"/>
-	var <xsl:value-of select="$id"/> = new In2iGui.ObjectList.Select('<xsl:value-of select="@key"/>');
+	var <xsl:value-of select="$id"/> = new hui.ui.ObjectList.Select('<xsl:value-of select="@key"/>');
 	<xsl:for-each select="gui:option">
 		<xsl:value-of select="$id"/>.addOption('<xsl:value-of select="@value"/>','<xsl:value-of select="@label"/>');
 	</xsl:for-each>

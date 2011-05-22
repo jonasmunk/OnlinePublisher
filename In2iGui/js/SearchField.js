@@ -1,59 +1,59 @@
 /** @constructor */
-In2iGui.SearchField = function(options) {
-	this.options = n2i.override({expandedWidth:null},options);
-	this.element = n2i.get(options.element);
+hui.ui.SearchField = function(options) {
+	this.options = hui.override({expandedWidth:null},options);
+	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.field = n2i.firstByTag(this.element,'input');
+	this.field = hui.firstByTag(this.element,'input');
 	this.value = this.field.value;
-	this.adaptive = n2i.hasClass(this.element,'in2igui_searchfield_adaptive');
-	In2iGui.onDomReady(function() {
-		this.initialWidth = parseInt(n2i.getStyle(this.element,'width'))
+	this.adaptive = hui.hasClass(this.element,'in2igui_searchfield_adaptive');
+	hui.ui.onReady(function() {
+		this.initialWidth = parseInt(hui.getStyle(this.element,'width'))
 	}.bind(this));
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	this.addBehavior();
 	this.updateClass()
 }
 
-In2iGui.SearchField.create = function(options) {
+hui.ui.SearchField.create = function(options) {
 	options = options || {};
 	
-	options.element = n2i.build('span',{
+	options.element = hui.build('span',{
 		'class' : options.adaptive ? 'in2igui_searchfield in2igui_searchfield_adaptive' : 'in2igui_searchfield',
 		html : '<em class="in2igui_searchfield_placeholder"></em><a href="javascript:void(0);" class="in2igui_searchfield_reset"></a><span><span><input type="text"/></span></span>'
 	});
-	return new In2iGui.SearchField(options);
+	return new hui.ui.SearchField(options);
 }
 
-In2iGui.SearchField.prototype = {
+hui.ui.SearchField.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var self = this;
-		n2i.listen(this.field,'keyup',this.onKeyUp.bind(this));
-		var reset = n2i.firstByTag(this.element,'a');
+		hui.listen(this.field,'keyup',this.onKeyUp.bind(this));
+		var reset = hui.firstByTag(this.element,'a');
 		reset.tabIndex=-1;
 		var focus = function() {self.field.focus();self.field.select()};
-		n2i.listen(this.element,'mousedown',focus);
-		n2i.listen(this.element,'mouseup',focus);
-		n2i.listen(reset,'mousedown',function(e) {
-			n2i.stop(e);
+		hui.listen(this.element,'mousedown',focus);
+		hui.listen(this.element,'mouseup',focus);
+		hui.listen(reset,'mousedown',function(e) {
+			hui.stop(e);
 			self.reset();
 			focus()
 		});
-		n2i.listen(n2i.firstByTag(this.element,'em'),'mousedown',focus);
-		n2i.listen(this.field,'focus',function() {
+		hui.listen(hui.firstByTag(this.element,'em'),'mousedown',focus);
+		hui.listen(this.field,'focus',function() {
 			self.focused=true;
 			self.updateClass();
 		});
-		n2i.listen(this.field,'blur',function() {
+		hui.listen(this.field,'blur',function() {
 			self.focused=false;
 			self.updateClass();
 		});
 		if (this.options.expandedWidth>0) {
 			this.field.onfocus = function() {
-				n2i.ani(self.element,'width',self.options.expandedWidth+'px',500,{ease:n2i.ease.slowFastSlow});
+				hui.ani(self.element,'width',self.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
 			}
 			this.field.onblur = function() {
-				n2i.ani(self.element,'width',self.initialWidth+'px',500,{ease:n2i.ease.slowFastSlow,delay:100});
+				hui.ani(self.element,'width',self.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
 			}
 		}
 	},
@@ -101,7 +101,7 @@ In2iGui.SearchField.prototype = {
 			this.value=this.field.value;
 			this.updateClass();
 			this.fire('valueChanged',this.value);
-			In2iGui.firePropertyChange(this,'value',this.value);
+			hui.ui.firePropertyChange(this,'value',this.value);
 		}
 	}
 }

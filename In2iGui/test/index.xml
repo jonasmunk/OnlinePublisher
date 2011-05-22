@@ -31,6 +31,34 @@
 					<icon icon="common/folder" text="Toolbar" click="dock.setUrl('xml/toolbar.xml')"/>
 				</toolbar>
 			</tab>
+			<tab title="HTML-tests">
+				<toolbar>
+					<icon icon="common/folder" text="Alert" click="dock.setUrl('html/alert.html')"/>
+					<icon icon="common/folder" text="Animation" click="dock.setUrl('html/animation.html')"/>
+					<icon icon="common/folder" text="BoundPanel" click="dock.setUrl('html/boundpanel.html')"/>
+					<icon icon="common/folder" text="ColorPicker" click="dock.setUrl('html/colorpicker.html')"/>
+					<icon icon="common/folder" text="Drawing" click="dock.setUrl('html/drawing.html')"/>
+					<icon icon="common/folder" text="Editor" click="dock.setUrl('html/editor.html')"/>
+					<icon icon="common/folder" text="Effects" click="dock.setUrl('html/effects.html')"/>
+					<icon icon="common/folder" text="Formula" click="dock.setUrl('html/formula.html')"/>
+					<icon icon="common/folder" text="Graphviz" click="dock.setUrl('html/graphviz.html')"/>
+					<icon icon="common/folder" text="LocationPicker" click="dock.setUrl('html/LocationPicker.html')"/>
+					<icon icon="common/folder" text="MarkupEditor" click="dock.setUrl('html/markupeditor.html')"/>
+					<icon icon="common/folder" text="Menu" click="dock.setUrl('html/menu.html')"/>
+					<icon icon="common/folder" text="Overlay" click="dock.setUrl('html/overlay.html')"/>
+					<icon icon="common/folder" text="Picker" click="dock.setUrl('html/picker.html')"/>
+					<icon icon="common/folder" text="Placement" click="dock.setUrl('html/placement.html')"/>
+					<icon icon="common/folder" text="Positions" click="dock.setUrl('html/positions.html')"/>
+					<icon icon="common/folder" text="Progressbar" click="dock.setUrl('html/progressbar.html')"/>
+					<icon icon="common/folder" text="Protovis" click="dock.setUrl('html/protovis.html')"/>
+					<icon icon="common/folder" text="Require" click="dock.setUrl('html/require.html')"/>
+					<icon icon="common/folder" text="RichText" click="dock.setUrl('html/richtext.html')"/>
+					<icon icon="common/folder" text="Selection" click="dock.setUrl('html/selection.html')"/>
+					<icon icon="common/folder" text="upload" click="dock.setUrl('html/upload.html')"/>
+					<icon icon="common/folder" text="video" click="dock.setUrl('html/video.html')"/>
+					<icon icon="common/folder" text="Window" click="dock.setUrl('html/window.html')"/>
+				</toolbar>
+			</tab>
 			<tab title="Interfaces">
 				<toolbar>
 					<icon icon="common/folder" text="Competence" click="dock.setUrl('guis/competence.xml')"/>

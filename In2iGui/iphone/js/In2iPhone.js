@@ -40,13 +40,13 @@ In2iPhone.addTouchBehavior = function(element,delegate) {
 In2iPhone.Button = function(element,name,options) {
 	this.element = $(element);
 	this.name = name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	In2iPhone.addTouchBehavior(this.element,this);
 }
 
 In2iPhone.Button.prototype = {
 	elementWasTouched : function() {
-		In2iGui.callDelegates(this,'click');
+		hui.ui.callDelegates(this,'click');
 	}
 }
 
@@ -57,7 +57,7 @@ In2iPhone.goToPage = function(page) {
 In2iPhone.Page = function(element,name,options) {
 	this.element = $(element);
 	this.name = name;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 }
 
 In2iPhone.Page.prototype = {

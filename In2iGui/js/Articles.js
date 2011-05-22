@@ -1,32 +1,32 @@
 /**
  * A list of articles
  * @constructor
- * @param {Object} options { element: «Node | id», name: «String», source: «In2iGui.Source» }
+ * @param {Object} options { element: «Node | id», name: «String», source: «hui.ui.Source» }
  */
-In2iGui.Articles = function(options) {
+hui.ui.Articles = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	if (options.source) {
 		options.source.listen(this);
 	}
 }
 
-In2iGui.Articles.prototype = {
+hui.ui.Articles.prototype = {
 	/** @private */
 	$articlesLoaded : function(doc) {
 		this.element.innerHTML='';
 		var a = doc.getElementsByTagName('article');
 		for (var i=0; i < a.length; i++) {
-			var e = n2i.build('div',{'class':'in2igui_article'});
+			var e = hui.build('div',{'class':'in2igui_article'});
 			var c = a[i].childNodes;
 			for (var j=0; j < c.length; j++) {
-				if (n2i.dom.isElement(c[j],'title')) {
-					var title = n2i.dom.getText(c[j]);
-					e.appendChild(n2i.build('h2',{text:title}));
-				} else if (n2i.dom.isElement(c[j],'paragraph')) {
-					var text = n2i.dom.getText(c[j]);
-					var p = n2i.build('p',{text:text});
+				if (hui.dom.isElement(c[j],'title')) {
+					var title = hui.dom.getText(c[j]);
+					e.appendChild(hui.build('h2',{text:title}));
+				} else if (hui.dom.isElement(c[j],'paragraph')) {
+					var text = hui.dom.getText(c[j]);
+					var p = hui.build('p',{text:text});
 					if (c[j].getAttribute('dimmed')==='true') {
 						p.className='in2igui_dimmed';
 					}
@@ -45,7 +45,7 @@ In2iGui.Articles.prototype = {
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		n2i.removeClass(this.element,'in2igui_list_busy');
+		hui.removeClass(this.element,'in2igui_list_busy');
 	}
 }
 

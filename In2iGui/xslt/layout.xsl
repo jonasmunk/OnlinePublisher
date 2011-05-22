@@ -90,7 +90,7 @@
 	<xsl:apply-templates/>
 </div>
 <script type="text/javascript">
-	var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Overflow({
+	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Overflow({
 		element:'<xsl:value-of select="generate-id()"/>',
 		dynamic:<xsl:value-of select="not(@height or @max-height or @min-height or @vertical)"/>
 		<xsl:if test="@vertical">,vertical:<xsl:value-of select="@vertical"/></xsl:if>
@@ -128,7 +128,7 @@
 		<div class="in2igui_box_bottom"><div><div><xsl:comment/></div></div></div>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Box({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Box({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>'
 			<xsl:if test="@modal='true'">,modal:true</xsl:if>
@@ -184,7 +184,7 @@
 	</div>
 	<script type="text/javascript">
 		(function() {
-			var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Wizard({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Wizard({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
 			<xsl:call-template name="gui:createobject"/>
 		})();
 	</script>
@@ -198,7 +198,7 @@
 	</table>
 	<script type="text/javascript">
 		(function() {
-			var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Layout({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Layout({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
 			<xsl:call-template name="gui:createobject"/>
 		})();
 	</script>
@@ -272,7 +272,7 @@
 	<xsl:apply-templates/>
 </div>
 <script type="text/javascript">
-	var <xsl:value-of select="generate-id()"/>_obj = new In2iGui.Fragment({
+	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Fragment({
 		element:'<xsl:value-of select="generate-id()"/>',
 		name:'<xsl:value-of select="@name"/>',
 		state:'<xsl:value-of select="@state"/>'

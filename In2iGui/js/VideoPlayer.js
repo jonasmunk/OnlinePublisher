@@ -1,27 +1,27 @@
 
-In2iGui.VideoPlayer = function(options) {
+hui.ui.VideoPlayer = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
-	this.placeholder = n2i.firstByTag(this.element,'div');
+	this.element = hui.get(options.element);
+	this.placeholder = hui.firstByTag(this.element,'div');
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
-	this.handlers = [In2iGui.VideoPlayer.HTML5,In2iGui.VideoPlayer.QuickTime,In2iGui.VideoPlayer.Embedded];
+	this.handlers = [hui.ui.VideoPlayer.HTML5,hui.ui.VideoPlayer.QuickTime,hui.ui.VideoPlayer.Embedded];
 	this.handler = null;
-	In2iGui.extend(this);
+	hui.ui.extend(this);
 	if (this.options.video) {
 		if (this.placeholder) {
-			n2i.listen(this.placeholder,'click',function() {
+			hui.listen(this.placeholder,'click',function() {
 				this.setVideo(this.options.video);
 			}.bind(this))
 		} else {
-			In2iGui.onReady(function() {
+			hui.ui.onReady(function() {
 				this.setVideo(this.options.video);
 			}.bind(this));			
 		}
 	}
 }
 
-In2iGui.VideoPlayer.prototype = {
+hui.ui.VideoPlayer.prototype = {
 	setVideo : function(video) {
 		if (this.placeholder) {
 			this.placeholder.style.display='none';
@@ -41,10 +41,10 @@ In2iGui.VideoPlayer.prototype = {
 		};
 	},
 	buildController : function() {
-		var e = n2i.build('div',{'class':'in2igui_videoplayer_controller',parent:this.element});
-		this.playButton = n2i.build('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause',text:'wait!',parent:e});
-		n2i.listen(this.playButton,'click',this.playPause.bind(this));
-		this.status = n2i.build('span',{'class':'in2igui_videoplayer_status',parent:e});
+		var e = hui.build('div',{'class':'in2igui_videoplayer_controller',parent:this.element});
+		this.playButton = hui.build('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause',text:'wait!',parent:e});
+		hui.listen(this.playButton,'click',this.playPause.bind(this));
+		this.status = hui.build('span',{'class':'in2igui_videoplayer_status',parent:e});
 	},
 	onCanPlay : function() {
 		this.playButton.update('Play');
@@ -85,26 +85,26 @@ In2iGui.VideoPlayer.prototype = {
 
 ///////// HTML5 //////////
 
-In2iGui.VideoPlayer.HTML5 = function(video,player) {
-	var e = this.element = n2i.build('video',{width:video.width,height:video.height,src:video.src});
-	n2i.listen(e,'load',player.onLoad.bind(player));
-	n2i.listen(e,'canplay',player.onCanPlay.bind(player));
-	n2i.listen(e,'durationchange',function(x) {
+hui.ui.VideoPlayer.HTML5 = function(video,player) {
+	var e = this.element = hui.build('video',{width:video.width,height:video.height,src:video.src});
+	hui.listen(e,'load',player.onLoad.bind(player));
+	hui.listen(e,'canplay',player.onCanPlay.bind(player));
+	hui.listen(e,'durationchange',function(x) {
 		player.onDurationChange(e.duration);
 	});
-	n2i.listen(e,'timeupdate',function() {
+	hui.listen(e,'timeupdate',function() {
 		player.onTimeChange(this.element.currentTime);
 	}.bind(this));
 }
 
-In2iGui.VideoPlayer.HTML5.isSupported = function(video) {
-	if (n2i.browser.webkitVersion>528 && (video.type==='video/quicktime' || video.type==='video/mp4')) {
+hui.ui.VideoPlayer.HTML5.isSupported = function(video) {
+	if (hui.browser.webkitVersion>528 && (video.type==='video/quicktime' || video.type==='video/mp4')) {
 		return true;
 	}
 	return false;
 }
 
-In2iGui.VideoPlayer.HTML5.prototype = {
+hui.ui.VideoPlayer.HTML5.prototype = {
 	showController : function() {
 		return true;
 	},
@@ -124,9 +124,9 @@ In2iGui.VideoPlayer.HTML5.prototype = {
 
 ///////// QuickTime //////////
 
-In2iGui.VideoPlayer.QuickTime = function(video,player) {
+hui.ui.VideoPlayer.QuickTime = function(video,player) {
 	this.player = player;
-	var e = this.element = n2i.build('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
+	var e = this.element = hui.build('object',{width:video.width,height:video.height,data:video.src,type:'video/quicktime'});
 	e.innerHTML = '<param value="false" name="controller"/>'
 		+'<param value="true" name="enablejavascript"/>'
 		+'<param value="undefined" name="posterframe"/>'
@@ -138,24 +138,24 @@ In2iGui.VideoPlayer.QuickTime = function(video,player) {
 		+'<param value="true" name="saveembedtags"/>'
 		+'<param value="true" name="postdomevents"/>';
 		
-	n2i.listen(e,'qt_canplay',player.onCanPlay.bind(player));
-	n2i.listen(e,'qt_load',player.onLoad.bind(player));
-	n2i.listen(e,'qt_progress',function() {
+	hui.listen(e,'qt_canplay',player.onCanPlay.bind(player));
+	hui.listen(e,'qt_load',player.onLoad.bind(player));
+	hui.listen(e,'qt_progress',function() {
 		player.onLoadProgressChange(e.GetMaxTimeLoaded()/3000);
 	});
-	n2i.listen(e,'qt_durationchange',function(x) {
+	hui.listen(e,'qt_durationchange',function(x) {
 		player.onDurationChange(e.GetDuration()/3000);
 	});
-	n2i.listen(e,'qt_timechanged',function() {
+	hui.listen(e,'qt_timechanged',function() {
 		player.onTimeChange(e.GetTime());
 	})
 }
 
-In2iGui.VideoPlayer.QuickTime.isSupported = function(video) {
+hui.ui.VideoPlayer.QuickTime.isSupported = function(video) {
 	return video.html==undefined;
 }
 
-In2iGui.VideoPlayer.QuickTime.prototype = {
+hui.ui.VideoPlayer.QuickTime.prototype = {
 	showController : function() {
 		return true;
 	},
@@ -180,15 +180,15 @@ In2iGui.VideoPlayer.QuickTime.prototype = {
 
 ///////// Embedded //////////
 
-In2iGui.VideoPlayer.Embedded = function(video,player) {
-	this.element = n2i.build('div',{width:video.width,height:video.height,html:video.html});
+hui.ui.VideoPlayer.Embedded = function(video,player) {
+	this.element = hui.build('div',{width:video.width,height:video.height,html:video.html});
 }
 
-In2iGui.VideoPlayer.Embedded.isSupported = function(video) {
+hui.ui.VideoPlayer.Embedded.isSupported = function(video) {
 	return video.html!==undefined;
 }
 
-In2iGui.VideoPlayer.Embedded.prototype = {
+hui.ui.VideoPlayer.Embedded.prototype = {
 	showController : function() {
 		return false;
 	},

@@ -9,7 +9,7 @@
 		<button name="button" title="Set links!"/>
 	</box>
 	<script>
-		ui.listen({
+		hui.ui.listen({
 			$click$button : function() {
 				myLinks.setValue([
 					{id:1,text:'My link',kind:'url',value:'http://www.in2isoft.dk/',info:'http://www.in2isoft.dk/',icon:'common/internet'},
