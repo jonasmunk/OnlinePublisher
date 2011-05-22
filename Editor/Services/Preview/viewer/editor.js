@@ -134,7 +134,7 @@ op.Editor.Header.prototype = {
 		if (value!=this.value) {
 			this.value = value;
 			this.header.innerHTML = value;
-			In2iGui.Editor.get().partChanged(this);
+			hui.ui.Editor.get().partChanged(this);
 			hui.ui.request({url:'parts/update.php',parameters:{id:this.id,pageId:op.page.id,text:this.value,type:'header'},onText:function(html) {
 				this.element.update(html);
 				this.header = this.element.firstDescendant();
@@ -147,7 +147,7 @@ op.Editor.Header.prototype = {
 	deactivate : function() {
 		this.header.style.visibility='';
 		this.element.removeChild(this.field);
-		In2iGui.Editor.get().partDidDeacivate(this);
+		hui.ui.Editor.get().partDidDeacivate(this);
 	},
 	_updateFieldStyle : function() {
 		hui.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
@@ -202,7 +202,7 @@ op.Editor.Text.prototype = {
 		if (value!=this.value) {
 			this.value = value;
 			this.header.innerHTML = value;
-			In2iGui.Editor.get().partChanged(this);
+			hui.ui.Editor.get().partChanged(this);
 			hui.ui.request({url:'parts/update.php',parameters:{id:this.id,pageId:op.page.id,text:this.value,type:'text'},onText:function(html) {
 				this.element.innerHTML=html;
 				this.header = hui.firstByTag(this.element,'*');

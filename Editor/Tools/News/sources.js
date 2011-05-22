@@ -18,7 +18,7 @@ hui.ui.listen({
 		var values = sourceFormula.getValues();
 		values.id = this.sourceId;
 		if (hui.isBlank(values.title)) {
-			ui.showMessage({text:'Du skal angive en titel',duration:2000});
+			hui.ui.showMessage({text:'Du skal angive en titel',duration:2000});
 			sourceFormula.focus();
 		} else {
 			hui.ui.request({

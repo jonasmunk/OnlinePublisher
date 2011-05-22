@@ -3,6 +3,6 @@ op.SearchTemplate = function() {
 	n2i.firstByClass(container,'text','input').focus();
 }
 
-In2iGui.onDomReady(function() {
+hui.ui.onReady(function() {
 	new op.SearchTemplate();
 });

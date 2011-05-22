@@ -1,9 +1,9 @@
 hui.ui.listen({
 	$selectionChanged$selector : function(item) {
 		if (item.value=='settings') {
-			ui.changeState('settings');
+			hui.ui.changeState('settings');
 		} else {
-			ui.changeState('frame');
+			hui.ui.changeState('frame');
 		}
 		if (item.value=='phpInfo') {
 			iframe.setUrl('PhpInfo.php');

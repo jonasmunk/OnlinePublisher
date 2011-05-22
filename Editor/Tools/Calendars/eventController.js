@@ -63,19 +63,19 @@ hui.ui.listen({
 		if (data.startdate) {
 			data.startdate=Math.round(data.startdate.getTime()/1000);
 		} else {
-			ui.showMessage({text:'Startdato skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:'Startdato skal udfyldes',duration:2000});
 			eventFormula.focus();
 			return;
 		}
 		if (data.enddate) {
 			data.enddate=Math.round(data.enddate.getTime()/1000);
 		} else {
-			ui.showMessage({text:'Slutdato skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:'Slutdato skal udfyldes',duration:2000});
 			eventFormula.focus();
 			return;
 		}
 		if (data.calendars.length<1) {
-			ui.showMessage({text:'Der skal vælges mindst een kalender',duration:2000});
+			hui.ui.showMessage({text:'Der skal vælges mindst een kalender',duration:2000});
 			eventFormula.focus();
 			return;
 		}

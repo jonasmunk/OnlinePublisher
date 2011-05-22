@@ -21,7 +21,7 @@ hui.ui.listen({
 		hui.ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveUI'});
 	},
 	$success$saveUI : function() {
-		ui.showMessage({text:'Gemt!',icon:'common/success',duration:2000});
+		hui.ui.showMessage({text:'Gemt!',icon:'common/success',duration:2000});
 	},
 	
 	// OnlineObjects
@@ -44,11 +44,11 @@ hui.ui.listen({
 		saveAnalytics.setEnabled(true);
 	},
 	$click$testAnalytics : function() {
-		ui.showMessage({text:'Tester forbindelse til Google Analytics...'});
+		hui.ui.showMessage({text:'Tester forbindelse til Google Analytics...'});
 		hui.ui.request({json:{},url:'TestAnalytics.php',onSuccess:'testAnalytics'});
 	},
 	$success$testAnalytics : function(success) {
-		ui.showMessage({text:success ? 'Det virkede!' : 'Det virkede ikke!',duration:2000});
+		hui.ui.showMessage({text:success ? 'Det virkede!' : 'Det virkede ikke!',duration:2000});
 	},
 	
 	// Email
@@ -64,15 +64,15 @@ hui.ui.listen({
 		emailTestWindow.show();
 	},
 	$click$testEmail : function() {
-		ui.showMessage({text:'Sender e-mail...'});
+		hui.ui.showMessage({text:'Sender e-mail...'});
 		var data = emailTestFormula.getValues();
 		hui.ui.request({json:{data:data},url:'TestEmailSetup.php',onSuccess:'testEmail'});
 	},
 	$success$testEmail : function(data) {
 		if (data.success) {
-			ui.showMessage({text:'E-mail er sendt!',duration:2000});
+			hui.ui.showMessage({text:'E-mail er sendt!',duration:2000});
 		} else {
-			ui.showMessage({text:'Det lykkedes ikke at sende email!',duration:2000});
+			hui.ui.showMessage({text:'Det lykkedes ikke at sende email!',duration:2000});
 		}
 	}
 });

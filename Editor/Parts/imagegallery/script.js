@@ -4,8 +4,8 @@ var partController = {
 	},
 	buildWindow : function() {
 		var form = document.forms.PartForm;
-		var win = In2iGui.Window.create({title:'Billedgalleri',width:300,close:false,padding:5,variant:'dark'});
-		var formula = In2iGui.Formula.create({name:'formula'});
+		var win = hui.ui.Window.create({title:'Billedgalleri',width:300,close:false,padding:5,variant:'dark'});
+		var formula = hui.ui.Formula.create({name:'formula'});
 		formula.buildGroup(null,[
 			{type:'DropDown',options:{name:'group',label:'Billedgruppe:',url:'../../Services/Model/Items.php?type=imagegroup',value:form.group.value}},
 			{type:'Number',options:{label:'Højde:',name:'height',value:parseInt(form.height.value,10),min:10,max:512}},

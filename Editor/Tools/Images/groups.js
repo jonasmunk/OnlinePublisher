@@ -15,7 +15,7 @@ hui.ui.listen({
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
+			hui.ui.showMessage({text:'Du skal angive en titel!',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;

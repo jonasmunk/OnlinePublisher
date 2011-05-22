@@ -12,7 +12,7 @@
 <xsl:apply-templates/>
 </div>
 
-<script type="text/javascript" src="{$path}In2iGui/js/ImageViewer.js"><xsl:comment/></script>
+<script type="text/javascript" src="{$path}hui/js/ImageViewer.js"><xsl:comment/></script>
 <script type="text/javascript" src="{$path}style/basic/js/templates/ImageGallery.js"><xsl:comment/></script>
 <script type="text/javascript">
 	with (OP.ImageGallery.get()) {

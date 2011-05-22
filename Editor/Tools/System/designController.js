@@ -33,10 +33,10 @@ hui.ui.listen({
 	$click$saveDesign : function() {
 		var values = designFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
+			hui.ui.showMessage({text:'Du skal angive en titel!',duration:2000});
 			designFormula.focus();
 		} else if (values.unique===null) {
-			ui.showMessage({text:'Du skal vælge et design!',duration:2000});
+			hui.ui.showMessage({text:'Du skal vælge et design!',duration:2000});
 			designFormula.focus();
 		} else {
 			values.id = this.id;

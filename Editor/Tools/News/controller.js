@@ -9,15 +9,15 @@ hui.ui.listen({
 	
 	$selectionChanged$list : function(item) {
 		if (item.kind=='news') {
-			ui.get('delete').setEnabled(true);
-			ui.get('info').setEnabled(true);
-			ui.get('duplicate').setEnabled(true);
+			hui.ui.get('delete').setEnabled(true);
+			hui.ui.get('info').setEnabled(true);
+			hui.ui.get('duplicate').setEnabled(true);
 		}
 	},
 	$selectionReset$list : function() {
-		ui.get('delete').setEnabled(false);
-		ui.get('info').setEnabled(false);
-		ui.get('duplicate').setEnabled(false);
+		hui.ui.get('delete').setEnabled(false);
+		hui.ui.get('info').setEnabled(false);
+		hui.ui.get('duplicate').setEnabled(false);
 	},
 	$listRowWasOpened$list : function(obj) {
 		this.loadNews(obj.id);
@@ -187,7 +187,7 @@ hui.ui.listen({
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			ui.showMessage({text:'Du skal angive en titel',duration:2000});
+			hui.ui.showMessage({text:'Du skal angive en titel',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
@@ -254,12 +254,12 @@ hui.ui.listen({
 	$submit$articleFormula : function() {
 		var values = articleFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			ui.showMessage({text:'Titlen skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:'Titlen skal udfyldes',duration:2000});
 			articleFormula.focus();
 			return;
 		}
 		if (!values.blueprint) {
-			ui.showMessage({text:'Skabelon skal vælges',duration:2000});
+			hui.ui.showMessage({text:'Skabelon skal vælges',duration:2000});
 			return;
 		}
 		if (values.startdate) {

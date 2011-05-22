@@ -16,9 +16,9 @@ var controller = {
 			hui.ui.showMessage({text:'Du er nu logget ud',icon:'common/success',duration:2000});
 		}
 		hui.ui.request({
-			url : '../In2iGui/info/preload.json',
+			url : '../hui/info/preload.json',
 			onJSON : function(obj) {
-				var p = new hui.Preloader({context:hui.ui.context+'/In2iGui'});
+				var p = new hui.Preloader({context:hui.ui.context+'/hui'});
 				p.addImages(obj);
 				p.setDelegate({
 					imageDidLoad : function(count,total) {

@@ -206,7 +206,7 @@ hui.ui.listen({
 	$submit$groupFormula : function() {
 		var data = groupFormula.getValues();
 		if (hui.isBlank(data.title)) {
-			ui.showMessage({text:'Titlen skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:'Titlen skal udfyldes',duration:2000});
 			groupFormula.focus();
 			return;
 		}

@@ -9,19 +9,19 @@ hui.ui.listen({
 	///////////////// List ///////////////
 	
 	$selectionChanged$selector : function(item) {
-		In2iGui.get('newSubPage').setEnabled(item.kind=='hierarchy' || item.kind=='hierarchyItem');
+		hui.ui.get('newSubPage').setEnabled(item.kind=='hierarchy' || item.kind=='hierarchyItem');
 	},
 	$selectionChanged$list : function(item) {
-		In2iGui.get('edit').setEnabled(item.kind=='page');
-		In2iGui.get('info').setEnabled(true);
-		In2iGui.get('delete').setEnabled(item.kind=='page');
-		In2iGui.get('view').setEnabled(item.kind=='page');
+		hui.ui.get('edit').setEnabled(item.kind=='page');
+		hui.ui.get('info').setEnabled(true);
+		hui.ui.get('delete').setEnabled(item.kind=='page');
+		hui.ui.get('view').setEnabled(item.kind=='page');
 	},
 	$selectionReset$list : function() {
-		In2iGui.get('edit').setEnabled(false);
-		In2iGui.get('info').setEnabled(false);
-		In2iGui.get('delete').setEnabled(false);
-		In2iGui.get('view').setEnabled(false);
+		hui.ui.get('edit').setEnabled(false);
+		hui.ui.get('info').setEnabled(false);
+		hui.ui.get('delete').setEnabled(false);
+		hui.ui.get('view').setEnabled(false);
 	},
 	$click$edit : function() {
 		var obj = list.getFirstSelection();
@@ -32,7 +32,7 @@ hui.ui.listen({
 		document.location='../../Services/Preview/?id='+obj.id;
 	},
 	$click$delete : function() {
-		In2iGui.get().confirm({
+		hui.ui.get().confirm({
 			emotion:'gasp',
 			title:'Er du sikker på at du vil slette siden?',
 			text:'Alle data fjernes og handlingen kan ikke fortrydes!',
@@ -66,7 +66,7 @@ hui.ui.listen({
 		}
 	},
 	$click$newSubPage : function() {
-		In2iGui.showMessage({text:'Ikke implementeret',duration:2000});
+		hui.ui.showMessage({text:'Ikke implementeret',duration:2000});
 	},
 	$listRowWasOpened$list : function(obj) {
 		if (obj.kind=='page') {
@@ -114,7 +114,7 @@ hui.ui.listen({
 		hierarchyItemEditor.hide();
 		list.refresh();
 		hierarchySource.refresh();
-		In2iGui.showMessage({text:'Menupunktet er opdateret!',duration:2000});
+		hui.ui.showMessage({text:'Menupunktet er opdateret!',duration:2000});
 	},
 	$click$deleteHierarchyItem : function() {
 		hui.ui.request({url:'DeleteHierarchyItem.php',onSuccess:'hierarchyItemDeleted',parameters:{id:this.activeHierarchyItem}});
@@ -125,7 +125,7 @@ hui.ui.listen({
 		hierarchyItemEditor.hide();
 		list.refresh();
 		hierarchySource.refresh();
-		In2iGui.showMessage({text:'Menupunktet er slettet!',duration:2000});
+		hui.ui.showMessage({text:'Menupunktet er slettet!',duration:2000});
 	},
 	
 	/////////// Page properties //////////
@@ -178,16 +178,16 @@ hui.ui.listen({
 		var form = newPageFormula.getValues();
 		if (template===null) {
 			newPageWizard.goToStep(0);
-			In2iGui.showMessage({text:'Der er ikke valgt en skabelon',duration:2000});
+			hui.ui.showMessage({text:'Der er ikke valgt en skabelon',duration:2000});
 		} else if (design===null) {
 			newPageWizard.goToStep(1);
-			In2iGui.showMessage({text:'Der er ikke valgt et design',duration:2000});
+			hui.ui.showMessage({text:'Der er ikke valgt et design',duration:2000});
 		} else if (frame===null) {
 			newPageWizard.goToStep(2);
-			In2iGui.showMessage({text:'Der er ikke valgt en grundopsætning',duration:2000});
+			hui.ui.showMessage({text:'Der er ikke valgt en grundopsætning',duration:2000});
 		} else if (form.title=='') {
 			newPageWizard.goToStep(4);
-			In2iGui.showMessage({text:'Der er ikke udfyldt en titel',duration:2000});
+			hui.ui.showMessage({text:'Der er ikke udfyldt en titel',duration:2000});
 			newPageTitle.focus();
 		} else {
 			var data = {design:design,template:template,frame:frame.value,menuItemId:menuItem.value,menuItemKind:menuItem.kind};

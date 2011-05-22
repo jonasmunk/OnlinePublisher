@@ -97,22 +97,22 @@
 <xsl:template name="util:scripts">
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
-			<link rel="stylesheet" type="text/css" href="{$path}In2iGui{$timestamp-url}/bin/minimized.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/bin/minimized.css{$timestamp-query}"/>
 		</xsl:when>
 		<xsl:otherwise>
-			<link rel="stylesheet" type="text/css" href="{$path}In2iGui{$timestamp-url}/bin/minimized.site.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/bin/minimized.site.css{$timestamp-query}"/>
 		</xsl:otherwise>
 	</xsl:choose>
 	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>In2iGui<xsl:value-of select="$timestamp-url"/>/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>In2iGui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
-	<script src="{$path}In2iGui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
-		In2iGui.context = '<xsl:value-of select="$path"/>';
+		hui.ui.context = '<xsl:value-of select="$path"/>';
 		op.context = '<xsl:value-of select="$path"/>';
 		op.page.id=<xsl:value-of select="@id"/>;
 		op.page.template='<xsl:value-of select="$template"/>';
@@ -127,11 +127,11 @@
 		op.ignite();
 	</xsl:comment></script>
 	<xsl:if test="$preview='true'">
-		<script src="{$path}In2iGui/js/Window.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Formula.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Button.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Overlay.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}In2iGui/js/Editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}hui/js/Window.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}hui/js/Formula.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}hui/js/Button.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}hui/js/Overlay.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}hui/js/Editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}Editor/Template/{$template}/js/editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>

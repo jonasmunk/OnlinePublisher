@@ -1,4 +1,4 @@
-In2iGui.onDomReady(function() {
+hui.ui.onReady(function() {
 	Poster.getInstance().preload();
 });
 

@@ -46,7 +46,7 @@ $gui='
 				<group labels="above">
 					<text key="nameOrMail" label="Brugernavn eller e-mail:"/>
 					<buttons>
-						<button name="cancel" title="Annuller" click="ui.changeState(\'login\');formula.focus()"/>
+						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="Find" name="recover" highlighted="true" submit="true"/>
 					</buttons>
 				</group>

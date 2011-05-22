@@ -21,16 +21,16 @@ hui.ui.listen({
 	},
 	
 	$selectionChanged$gallery : function() {
-		ui.get('delete').setEnabled(true);
-		ui.get('view').setEnabled(true);
-		ui.get('download').setEnabled(true);
-		ui.get('info').setEnabled(true);
+		hui.ui.get('delete').setEnabled(true);
+		hui.ui.get('view').setEnabled(true);
+		hui.ui.get('download').setEnabled(true);
+		hui.ui.get('info').setEnabled(true);
 	},
 	$selectionReset$gallery : function() {
-		ui.get('delete').setEnabled(false);
-		ui.get('view').setEnabled(false);
-		ui.get('download').setEnabled(false);
-		ui.get('info').setEnabled(false);
+		hui.ui.get('delete').setEnabled(false);
+		hui.ui.get('view').setEnabled(false);
+		hui.ui.get('download').setEnabled(false);
+		hui.ui.get('info').setEnabled(false);
 	},
 	
 	$click$view : function() {
@@ -72,7 +72,7 @@ hui.ui.listen({
 				imagesSource.refresh();
 				groupSource.refresh();
 				self._cancelImage();
-				ui.showMessage({text:'Billedet er gemt!',icon:'common/success',duration:2000});			
+				hui.ui.showMessage({text:'Billedet er gemt!',icon:'common/success',duration:2000});			
 			}
 		});
 	},
@@ -108,7 +108,7 @@ hui.ui.listen({
 				imagesSource.refresh();
 				groupSource.refresh();
 				subsetSource.refresh();
-				ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
+				hui.ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
 			}
 		});
 	}

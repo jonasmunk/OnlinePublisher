@@ -18,7 +18,7 @@ hui.ui.listen({
 	
 	$click$fetchImage : function() {
 		fetchImage.setEnabled(false);
-		ui.showMessage({text:'Henter billede...'});
+		hui.ui.showMessage({text:'Henter billede...'});
 		hui.ui.request({url:'FetchImage.php',onSuccess:'imageFetched',parameters:fetchFormula.getValues()});
 	},
 	$click$cancelFetch : function() {
@@ -27,10 +27,10 @@ hui.ui.listen({
 	$success$imageFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();
-			ui.showMessage({text:'Billedet er hentet',duration:2000});
+			hui.ui.showMessage({text:'Billedet er hentet',duration:2000});
 		} else {
 			hui.log(data);
-			ui.showMessage({text:data.errorMessage,duration:2000});
+			hui.ui.showMessage({text:data.errorMessage,duration:2000});
 		}
 		fetchImage.setEnabled(true);
 		imagesSource.refresh();

@@ -90,7 +90,7 @@ op.igniteEditor = function() {
 
 op.showImage = function(image) {
 	if (!this.imageViewer) {
-		this.imageViewer = In2iGui.ImageViewer.create({maxWidth:2000,maxHeight:2000,perimeter:40,sizeSnap:10});
+		this.imageViewer = hui.ui.ImageViewer.create({maxWidth:2000,maxHeight:2000,perimeter:40,sizeSnap:10});
 		this.imageViewer.listen(op.imageViewerDelegate);
 	}
 	this.imageViewer.clearImages();
@@ -121,7 +121,7 @@ op.showVideo = function(video) {
 }
 
 op.VideoViewer = function() {
-	this.box = In2iGui.Box.create(null,{absolute:true,modal:true})
+	this.box = hui.ui.Box.create(null,{absolute:true,modal:true})
 	this.box.addToDocument();
 	this.content = new Element('div').setStyle({width:'400px',height:'200px'});
 	this.box.add(this.content);
@@ -190,7 +190,7 @@ op.part.ImageGallery.prototype = {
 	},
 	showImage : function(id) {
 		if (!this.viewer) {
-			this.imageViewer = In2iGui.ImageViewer.create({maxWidth:2000,maxHeight:2000,perimeter:40,sizeSnap:10});
+			this.imageViewer = hui.ui.ImageViewer.create({maxWidth:2000,maxHeight:2000,perimeter:40,sizeSnap:10});
 			this.imageViewer.listen(op.imageViewerDelegate);
 		}
 		this.imageViewer.clearImages();
@@ -249,21 +249,21 @@ op.part.Formula.prototype = {
 		var email = this.element.email.value;
 		var message = this.element.message.value;
 		if (n2i.isBlank(name) || n2i.isBlank(email) || n2i.isBlank(message)) {
-			ui.showMessage({text:'Alle felter skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:'Alle felter skal udfyldes',duration:2000});
 			this.element.name.focus();
 			return;
 		}
-		ui.showMessage({text:'Sender besked...'});
+		hui.ui.showMessage({text:'Sender besked...'});
 		var url = op.page.path+'services/parts/formula/';
 		var parms = {name:name,email:email,message:message,id:this.id};
-		ui.request({url:url,parameters:parms,onSuccess:this._onSuccess.bind(this),onFailure:this._onFailure.bind(this)});
+		hui.ui.request({url:url,parameters:parms,onSuccess:this._onSuccess.bind(this),onFailure:this._onFailure.bind(this)});
 	},
 	_onSuccess : function() {
-		ui.showMessage({text:'Beskeden er nu sendt',duration:2000});
+		hui.ui.showMessage({text:'Beskeden er nu sendt',duration:2000});
 		this.element.reset();
 	},
 	_onFailure : function() {
-		ui.showMessage({text:'Beskeden kunne desværre ikke afleveres',duration:5000});
+		hui.ui.showMessage({text:'Beskeden kunne desværre ikke afleveres',duration:5000});
 	}
 }
 

@@ -9,7 +9,7 @@ var columnToolbar = {
 		parent.Frame.EditorFrame.setUrl('DeleteColumn.php?column='+this.columnId);
 	},
 	$click$save : function() {
-		var width = ui.get('width').getValue();
+		var width = hui.ui.get('width').getValue();
 		parent.Frame.EditorFrame.setUrl('UpdateColumn.php?width='+width);
 	},
 	

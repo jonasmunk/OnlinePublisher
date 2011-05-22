@@ -7,11 +7,11 @@ hui.ui.listen({
 	
 	$selectionChanged$selector : function(obj) {
 		if (obj.value=='settings') {
-			ui.changeState('settings');
+			hui.ui.changeState('settings');
 			list.clear();
 			return;
 		}
-		ui.changeState('list');
+		hui.ui.changeState('list');
 		switch (obj.value) {
 			case 'databaseTables' : list.setUrl('ListDatabaseTables.php')
 		}
@@ -83,7 +83,7 @@ hui.ui.listen({
 	},
 	$click$saveUser : function() {
 		if (userUsername.isEmpty()) {
-			In2iGui.showMessage({text:'Brugernavnet er ikke udfyldt',duration:2000});
+			hui.ui.showMessage({text:'Brugernavnet er ikke udfyldt',duration:2000});
 			userUsername.focus();
 			return;
 		}

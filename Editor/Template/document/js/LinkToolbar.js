@@ -73,4 +73,4 @@ var controller = {
 	}
 };
 
-ui.get().listen(controller);
+hui.ui.listen(controller);

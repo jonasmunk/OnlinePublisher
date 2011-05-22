@@ -56,7 +56,7 @@ class In2iGui {
 		'<xsl:variable name="profile">'.($_GET['profile']=='true' ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
-		'<xsl:include href="'.$basePath.'In2iGui/xslt/gui.xsl"/>';
+		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>';
 		$xslData.='<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
 	
@@ -123,7 +123,7 @@ class In2iGui {
 		'<xsl:variable name="dev">false</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
-		'<xsl:include href="'.$basePath.'In2iGui/xslt/gui.xsl"/>'.
+		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
 		$result = XslService::transform($gui,$xsl);

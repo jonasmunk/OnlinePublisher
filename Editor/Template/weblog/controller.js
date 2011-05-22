@@ -15,7 +15,7 @@ hui.ui.listen({
 		hui.ui.request({url:'Save.php',json:{data:values},onSuccess:function(values) {
 			save.enable();
 			window.parent.Toolbar.publish.enable();
-			ui.showMessage({text:'Ændringerne er nu gemt',duration:2000});
+			hui.ui.showMessage({text:'Ændringerne er nu gemt',duration:2000});
 		}});
 	}
 });

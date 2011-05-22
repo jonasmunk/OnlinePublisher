@@ -14,9 +14,9 @@ op.ImageGallery.prototype = {
 		this.images.push(img);
 	},
 	showImage : function(id) {
-		var viewer = In2iGui.get('imageGalleryViewer');
+		var viewer = hui.ui.get('imageGalleryViewer');
 		if (!viewer) {			
-			viewer = In2iGui.ImageViewer.create({name:'ImageGallery'});
+			viewer = hui.ui.ImageViewer.create({name:'ImageGallery'});
 			for (var i=0; i < this.images.length; i++) {
 				viewer.addImage(this.images[i]);
 			};

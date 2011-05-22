@@ -14,9 +14,9 @@ OP.ProductListing.prototype = {
 		this.images.push(img);
 	},
 	showImage : function(id) {
-		var viewer = In2iGui.get('productListingViewer');
+		var viewer = hui.ui.get('productListingViewer');
 		if (!viewer) {			
-			viewer = In2iGui.ImageViewer.create({name:'productListingViewer'});
+			viewer = hui.ui.ImageViewer.create({name:'productListingViewer'});
 			for (var i=0; i < this.images.length; i++) {
 				viewer.addImage(this.images[i]);
 			};

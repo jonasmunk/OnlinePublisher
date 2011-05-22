@@ -367,7 +367,7 @@
 			<div>
 				<span class="in2igui_searchfield" id="search"><em class="in2igui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="in2igui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
 				<script type="text/javascript">
-					new ui.SearchField({element:'search',expandedWidth:200});
+					new hui.ui.SearchField({element:'search',expandedWidth:200});
 				</script>
 				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
 				<xsl:for-each select="f:frame/f:search/f:types/f:type">

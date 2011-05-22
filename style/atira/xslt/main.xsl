@@ -592,7 +592,7 @@
 		<xsl:call-template name="front-posters"/>
 	</div>
 	<script type="text/javascript">
-		In2iGui.onDomReady(function() {
+		hui.ui.onReady(function() {
 			new Atira.Website.Poster({random:true});
 		})
 	</script>
@@ -605,7 +605,7 @@
 		<xsl:call-template name="front-posters"/>
 	</div>
 	<script type="text/javascript">
-		In2iGui.onDomReady(function() {
+		hui.ui.onReady(function() {
 			new Atira.Website.Poster();
 		})
 	</script>

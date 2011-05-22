@@ -8,7 +8,7 @@ hui.ui.listen({
 		cancelReplaceUpload.disable();
 	},
 	$uploadDidFail$replaceFile : function() {
-		ui.showMessage({text:'Det lykkedes ikke at erstatte filen, den er måske for stor?',duration:5000});
+		hui.ui.showMessage({text:'Det lykkedes ikke at erstatte filen, den er måske for stor?',duration:5000});
 		replaceFile.clear();
 		cancelReplaceUpload.enable();
 	},
@@ -17,7 +17,7 @@ hui.ui.listen({
 		typesSource.refresh();
 		replaceFile.clear();
 		replaceWindow.hide();
-		ui.showMessage({text:'Filen er nu erstattet',duration:3000});
+		hui.ui.showMessage({text:'Filen er nu erstattet',duration:3000});
 		cancelReplaceUpload.enable();
 	},
 	$click$cancelReplaceUpload : function() {

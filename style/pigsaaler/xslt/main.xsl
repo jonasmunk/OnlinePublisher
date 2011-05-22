@@ -26,8 +26,8 @@
 	<xsl:call-template name="util:style-ie8"/>
 	<xsl:call-template name="util:scripts"/>
 	<script type="text/javascript" src="{$path}style/{$design}/js/bestilling.js" charset="utf-8"><xsl:comment/></script>
-	<script type="text/javascript" src="{$path}In2iGui/js/Alert.js"><xsl:comment/></script>
-	<script type="text/javascript" src="{$path}In2iGui/js/Button.js"><xsl:comment/></script>
+	<script type="text/javascript" src="{$path}hui/js/Alert.js"><xsl:comment/></script>
+	<script type="text/javascript" src="{$path}hui/js/Button.js"><xsl:comment/></script>
 </head>
 <body>
 	<div class="case">

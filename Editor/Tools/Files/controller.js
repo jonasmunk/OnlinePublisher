@@ -11,18 +11,18 @@ hui.ui.listen({
 		//this.$click$newFile();
 	},
 	$selectionChanged$list : function(item) {
-		ui.get('delete').setEnabled(true);
-		ui.get('view').setEnabled(true);
-		ui.get('download').setEnabled(true);
-		ui.get('info').setEnabled(true);
-		ui.get('replace').setEnabled(true);
+		hui.ui.get('delete').setEnabled(true);
+		hui.ui.get('view').setEnabled(true);
+		hui.ui.get('download').setEnabled(true);
+		hui.ui.get('info').setEnabled(true);
+		hui.ui.get('replace').setEnabled(true);
 	},
 	$selectionReset$list : function() {
-		ui.get('delete').setEnabled(false);
-		ui.get('view').setEnabled(false);
-		ui.get('download').setEnabled(false);
-		ui.get('info').setEnabled(false);
-		ui.get('replace').setEnabled(false);
+		hui.ui.get('delete').setEnabled(false);
+		hui.ui.get('view').setEnabled(false);
+		hui.ui.get('download').setEnabled(false);
+		hui.ui.get('info').setEnabled(false);
+		hui.ui.get('replace').setEnabled(false);
 	},
 	$listRowWasOpened$list : function(obj) {
 		this.loadFile(obj.id);
@@ -55,18 +55,18 @@ hui.ui.listen({
 	
 	$click$fetchFile : function() {
 		fetchFile.setEnabled(false);
-		ui.showMessage({text:'Henter fil...',busy:true});
+		hui.ui.showMessage({text:'Henter fil...',busy:true});
 		hui.ui.request({url:'FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
 	},
 	$success$fileFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();
-			ui.showMessage({text:'Filen er hentet',icon:'common/success',duration:2000});
+			hui.ui.showMessage({text:'Filen er hentet',icon:'common/success',duration:2000});
 			filesSource.refresh();
 			groupSource.refresh();
 			typesSource.refresh();
 		} else {
-			ui.showMessage({text:data.message,icon:'common/warning',duration:2000});
+			hui.ui.showMessage({text:data.message,icon:'common/warning',duration:2000});
 		}
 		fetchFile.setEnabled(true);
 	},
@@ -88,7 +88,7 @@ hui.ui.listen({
 		filesSource.refresh();
 		groupSource.refresh();
 		typesSource.refresh();
-		ui.showMessage({text:'Filen er nu slettet',duration:2000});
+		hui.ui.showMessage({text:'Filen er nu slettet',duration:2000});
 	},
 	$click$view : function() {
 		var obj = list.getFirstSelection();
@@ -155,7 +155,7 @@ hui.ui.listen({
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			ui.showMessage({text:'Du skal angive en titel!',duration:2000});
+			hui.ui.showMessage({text:'Du skal angive en titel!',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;

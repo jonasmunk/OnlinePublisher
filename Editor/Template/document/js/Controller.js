@@ -9,7 +9,7 @@ var controller = {
 	activeSection : 0,
 	ready : false,
 	selectedText : '',
-	strings : new ui.Bundle({
+	strings : new hui.ui.Bundle({
 			edit_section : {da:'Rediger afsnit',en:'Edit section'},
 			delete_section : {da:'Slet afsnit',en:'Delete section'},
 			move_section_up : {da:'Flyt afsnit op',en:'Move section up'},
@@ -45,7 +45,7 @@ var controller = {
 	}),
 	$ready : function() {
 		var strings = this.strings;
-		this.sectionMenu = In2iGui.Menu.create({name:'sectionMenu'});
+		this.sectionMenu = hui.ui.Menu.create({name:'sectionMenu'});
 		this.sectionMenu.addItems([
 			{title:strings.get('edit_section'),value:'editSection'},
 			{title:strings.get('delete_section'),value:'deleteSection'},
@@ -66,7 +66,7 @@ var controller = {
 				{title:strings.get('delete_row'),value:'deleteRow'}
 			]}
 		]);
-		this.columnMenu = In2iGui.Menu.create({name:'sectionMenu'});
+		this.columnMenu = hui.ui.Menu.create({name:'sectionMenu'});
 		this.columnMenu.addItems([
 				{title:strings.get('edit_column'),value:'editColumn'},
 				{title:strings.get('move_column_right'),value:'moveColumnRight'},
@@ -79,16 +79,16 @@ var controller = {
 				{title:strings.get('add_row'),value:'addRow'},
 				{title:strings.get('delete_row'),value:'deleteRow'}
 		]);
-		this.partMenu = In2iGui.Menu.create({name:'partMenu'});
+		this.partMenu = hui.ui.Menu.create({name:'partMenu'});
 		this.partMenu.addItems(this.parts);
 		
-		this.partControls = In2iGui.Overlay.create({name:'sectionActions'});
+		this.partControls = hui.ui.Overlay.create({name:'sectionActions'});
 		this.partControls.addIcon('edit','common/edit');
 		this.partControls.addIcon('new','common/new');
 		this.partControls.addIcon('delete','common/delete');
 		
 		if (this.activeSection) {
-			this.partEditControls = In2iGui.Overlay.create({name:'sectionEditActions'});
+			this.partEditControls = hui.ui.Overlay.create({name:'sectionEditActions'});
 			this.partEditControls.addIcon('save','common/save');
 			this.partEditControls.addIcon('cancel','common/stop');
 			this.partEditControls.showAtElement(hui.firstByClass(document.body,'section_selected'),{'horizontal':'left','vertical':'topOutside'});

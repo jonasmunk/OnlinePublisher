@@ -12,7 +12,7 @@
 <xsl:decimal-format name="danish" decimal-separator=","/>
 
 <xsl:template match="pl:productlisting">
-<script type="text/javascript" src="{$path}In2iGui/js/ImageViewer.js"><xsl:comment/></script>
+<script type="text/javascript" src="{$path}hui/js/ImageViewer.js"><xsl:comment/></script>
 <script type="text/javascript" src="{$path}style/basic/js/ProductListing.js"><xsl:comment/></script>
 <script type="text/javascript">
 	with (OP.ProductListing.get()) {

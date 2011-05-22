@@ -31,7 +31,7 @@ hui.ui.listen({
 			message : {start:'Gemmer aflæsning...',success:'Aflæsningen er gemt'},
 			onSuccess : 'usageUpdated',
 			onFailure:function() {
-				ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
+				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			}
 		});
 	},
@@ -44,11 +44,11 @@ hui.ui.listen({
 	},
 	
 	$selectionChanged$selector : function() {
-		ui.changeState('list');
+		hui.ui.changeState('list');
 	},
 	
 	$valueChanged$search : function() {
-		ui.changeState('list');
+		hui.ui.changeState('list');
 	},
 	
 	$listRowWasOpened$list : function(obj) {
@@ -101,7 +101,7 @@ hui.ui.listen({
 	$click$export : function() {
 		var iframe = hui.build('iframe',{style:'position:absolute;left:-1000px;top:-1000px;',parent:document.body});
 		iframe.src='Export.php';
-		ui.showMessage({text:'Filen vil nu blive downloadet...',busy:true,duration:3000});
+		hui.ui.showMessage({text:'Filen vil nu blive downloadet...',busy:true,duration:3000});
 		exportPanel.hide();
 	},
 	$click$exportIcon : function() {
@@ -141,7 +141,7 @@ hui.ui.listen({
 				this.meterId = id;
 				subUsageList.clear();
 				summaryFormula.reset();
-				ui.changeState('meter');
+				hui.ui.changeState('meter');
 				summaryFormula.setValues(data);
 				subUsageList.setUrl('ListSubUsage.php?meterId='+id);
 			}.bind(this)
@@ -149,7 +149,7 @@ hui.ui.listen({
 	},
 	$click$closeMeter : function() {
 		this._resetSubUsage();
-		ui.changeState('list');
+		hui.ui.changeState('list');
 	},
 	$submit$summaryFormula : function() {
 		var values = summaryFormula.getValues();
@@ -160,7 +160,7 @@ hui.ui.listen({
 			url:'SaveSummary.php',
 			message:{start:'Gemmer information',success:'Informationen er gemt'},
 			onFailure:function() {
-				ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
+				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			},
 			onSuccess:function() {
 				saveMeter.setEnabled(true);
@@ -177,7 +177,7 @@ hui.ui.listen({
 				list.refresh();
 				this.meterId = null;
 				this._resetSubUsage();
-				ui.changeState('list');
+				hui.ui.changeState('list');
 				deleteMeter.setEnabled(true);
 			}.bind(this)
 		});
@@ -216,7 +216,7 @@ hui.ui.listen({
 				subUsageList.refresh();
 			}.bind(this),
 			onFailure:function() {
-				ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
+				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			}
 		});
 	},
@@ -231,7 +231,7 @@ hui.ui.listen({
 			url : '../../Services/Model/LoadObject.php',
 			message : {start:'Åbner aflæsning...',delay:300},
 			onJSON : function(data) {
-				ui.hideMessage();
+				hui.ui.hideMessage();
 				this.subUsageId = data.id;
 				subUsageFormula.setValues(data);
 				subUsageWindow.show();
@@ -258,11 +258,11 @@ hui.ui.listen({
 		importWindow.show();
 	},
 	$uploadDidCompleteQueue$metersUpload : function() {
-		ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
+		hui.ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
 		list.refresh();
 	},
 	$uploadDidCompleteQueue$usagesUpload : function() {
-		ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
+		hui.ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
 		list.refresh();
 		subUsageList.refresh();
 	}

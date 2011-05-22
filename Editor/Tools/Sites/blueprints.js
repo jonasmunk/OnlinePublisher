@@ -39,7 +39,7 @@ hui.ui.listen({
 	$submit$blueprintFormula : function() {
 		var values = blueprintFormula.getValues();
 		if (hui.isBlank(values.title) || !values.designId || !values.frameId || !values.templateId) {
-			ui.showMessage({text:'Udfyld venligst alle felter',icon:'common/warning',duration:2000});
+			hui.ui.showMessage({text:'Udfyld venligst alle felter',icon:'common/warning',duration:2000});
 			blueprintFormula.focus();
 			return;
 		}

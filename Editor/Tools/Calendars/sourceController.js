@@ -61,15 +61,15 @@ hui.ui.listen({
 	$click$synchronizeSource : function() {
 		var value = selector.getValue();
 		if (value.kind=='calendarsource') {
-			ui.showMessage({text:'Synkroniserer kilde...'});
+			hui.ui.showMessage({text:'Synkroniserer kilde...'});
 			hui.ui.request({url:'data/SyncCalendarSource.php',onSuccess:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
 		}
 	},
 	$success$synchronizeSource : function() {
-		ui.hideMessage();
+		hui.ui.hideMessage();
 		list.refresh();
 	},
 	$failure$synchronizeSource : function() {
-		ui.showMessage({text:'Synkronisering fejlede!',duration:2000});
+		hui.ui.showMessage({text:'Synkronisering fejlede!',duration:2000});
 	}
 });
