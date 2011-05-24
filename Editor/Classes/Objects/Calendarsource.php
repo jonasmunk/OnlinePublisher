@@ -154,7 +154,7 @@ class Calendarsource extends Object {
 	
 	function synchronizeVCal() {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/VCal.php');
+		require_once($basePath.'Editor/Classes/Formats/VCalParser.php');
 		$parser = new VCalParser();
 		$cal = $parser->parseURL($this->url);
 		if ($cal) {
