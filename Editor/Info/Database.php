@@ -60,7 +60,7 @@ $databaseTables = array(
 			array("byweeknumber","varchar(255)","YES","","",""),
 			array("weekstart","char(2)","YES","","",""),
 			array("duration","int(11)","YES","","",""),
-			array("link","varchar(1024)","YES","","","")
+			array("url","varchar(1024)","YES","","","")
 	),
 	'calendarviewer' => array(
 			array("page_id","int(11)","","","0",""),
