@@ -111,7 +111,9 @@ class Calendarsource extends Object {
 	
 	function synchronizeDBU() {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/DBUCalendar.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
 		$parser = new DBUCalendarParser();
 		$cal = $parser->parseURL($this->url);
 		if ($cal) {
