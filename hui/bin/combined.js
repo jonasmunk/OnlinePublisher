@@ -267,7 +267,9 @@ hui.dom = {
 		}
 	},
 	replaceNode : function(oldNode,newNode) {
-		newNode.parentNode.removeChild(newNode);
+		if (newNode.parentNode) {
+			newNode.parentNode.removeChild(newNode);
+		}
 		oldNode.parentNode.insertBefore(newNode,oldNode);
 		oldNode.parentNode.removeChild(oldNode);
 	},
@@ -12394,16 +12396,16 @@ hui.ui.Links.prototype = {
 hui.ui.MarkupEditor = function(options) {
 	this.name = options.name;
 	this.options = hui.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif; font-size: 11px;'},options);
-	if (options.replace) {
-		options.replace = hui.get(options.replace);
-		options.element = hui.build('div',{className:'hui_markupeditor'});
-		options.replace.parentNode.insertBefore(options.element,options.replace);
-		options.replace.style.display='none';
-		options.value = options.replace.innerHTML;
+	if (this.options.replace) {
+		this.options.replace = hui.get(options.replace);
+		this.options.element = hui.build('div',{className:'hui_markupeditor '+this.options.replace.className});
+		this.options.replace.parentNode.insertBefore(this.options.element,this.options.replace);
+		this.options.replace.style.display='none';
+		this.options.value = this.options.replace.innerHTML;
 	}
 	this.ready = false;
 	this.pending = [];
-	this.element = hui.get(options.element);
+	this.element = hui.get(this.options.element);
 	if (hui.browser.msie) {
 		this.impl = hui.ui.MarkupEditor.MSIE;
 	} else {
@@ -12768,12 +12770,18 @@ hui.ui.MarkupEditor.util = {
 		for (var key in recipe) {
 			var bs = node.getElementsByTagName(key);
 			for (var i = bs.length - 1; i >= 0; i--) {
+				var x = bs[i];
 				var replacement = document.createElement(recipe[key]);
 				var color = bs[i].getAttribute('color');
 				if (color) {
 					replacement.style.color=color;
 				}
-				hui.dom.replaceNode(bs[i],replacement);
+				hui.dom.replaceNode(x,replacement);
+				var children = x.childNodes;
+				for (var j=0; j < children.length; j++) {
+					var removed = x.removeChild(children[j]);
+					replacement.appendChild(removed);
+				};
 			};
 		}
 	},

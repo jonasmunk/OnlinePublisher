@@ -267,7 +267,9 @@ hui.dom = {
 		}
 	},
 	replaceNode : function(oldNode,newNode) {
-		newNode.parentNode.removeChild(newNode);
+		if (newNode.parentNode) {
+			newNode.parentNode.removeChild(newNode);
+		}
 		oldNode.parentNode.insertBefore(newNode,oldNode);
 		oldNode.parentNode.removeChild(oldNode);
 	},

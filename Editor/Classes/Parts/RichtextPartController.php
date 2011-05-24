@@ -31,7 +31,7 @@ class RichtextPartController extends PartController
 		if ($modern) {
 			return
 			'<div id="part_richtext">'.$this->render($part,$context).'</div>'.
-			'<input type="hidden" name="html" value="'.StringUtils::fromUnicode($part->getHtml()).'"/>'.
+			'<input type="hidden" name="html" value="'.StringUtils::escapeXML(StringUtils::fromUnicode($part->getHtml())).'"/>'.
 			'<script src="'.$baseUrl.'Editor/Parts/richtext/script.js" type="text/javascript" charset="utf-8"></script>';
 		} else {
 			return
