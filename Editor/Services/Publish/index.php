@@ -9,7 +9,7 @@ require_once '../../Classes/In2iGui.php';
 
 
 $gui = '
-<gui xmlns="uri:In2iGui" padding="10" title="System" state="list">
+<gui xmlns="uri:hui" padding="10" title="System" state="list">
 	<controller source="controller.js"/>
 	<source name="listSource" url="List.php"/>
 	<box width="500" top="30" title="Ændret indhold">

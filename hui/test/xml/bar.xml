@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:In2iGui" title="Box">
+<gui xmlns="uri:hui" title="Box">
 	<bar>
 		<button icon="common/edit" text="Edit"/>
 		<button icon="common/delete" text="Delete"/>

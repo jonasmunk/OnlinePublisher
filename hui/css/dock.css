@@ -1,27 +1,27 @@
-table.in2igui_dock
+table.hui_dock
 {
 	height: 100%;
 	width: 100%;
 	border-collapse: collapse;
 }
 
-table.in2igui_dock thead td
+table.hui_dock thead td
 {
 	height: 78px;
 	padding: 0;
 }
 
-table.in2igui_dock tfoot.in2igui_dock_tabs td
+table.hui_dock tfoot.hui_dock_tabs td
 {
 	height: 78px;
 	padding: 0;
 }
 
-table.in2igui_dock tfoot td div.in2igui_toolbar
+table.hui_dock tfoot td div.hui_toolbar
 {
 }
 
-table.in2igui_dock tbody td
+table.hui_dock tbody td
 {
 	font-size: 0px;
 	padding: 0;
@@ -29,7 +29,7 @@ table.in2igui_dock tbody td
 	position: relative;
 }
 
-table.in2igui_dock iframe
+table.hui_dock iframe
 {
 	height: 100%;
 	width: 100%;
@@ -39,7 +39,7 @@ table.in2igui_dock iframe
 	display: block;
 }
 
-div.in2igui_dock_progress
+div.hui_dock_progress
 {
 	position: absolute;
 	height: 100%;

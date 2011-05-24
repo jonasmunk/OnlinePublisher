@@ -1,56 +1,56 @@
 
-.in2igui_picker
+.hui_picker
 {
 	background: #b9bec6;
 }
 
-.in2igui_picker_top, .in2igui_picker_top div
+.hui_picker_top, .hui_picker_top div
 {
 	font-size: 1px;
 	height: 7px;
 	background: url('../gfx/picker_bg.png') left -14px repeat-x;
 }
 
-.in2igui_picker_top div
+.hui_picker_top div
 {
 	background: url('../gfx/picker_bg.png') left 0px no-repeat;
 }
 
-.in2igui_picker_top div div
+.hui_picker_top div div
 {
 	background: url('../gfx/picker_bg.png') right -7px no-repeat;
 }
 
-.in2igui_picker_bottom, .in2igui_picker_bottom div
+.hui_picker_bottom, .hui_picker_bottom div
 {
 	font-size: 1px;
 	height: 7px;
 	background: url('../gfx/picker_bg.png') left -35px repeat-x;
 }
 
-.in2igui_picker_bottom div
+.hui_picker_bottom div
 {
 	background: url('../gfx/picker_bg.png') left -21px no-repeat;
 }
 
-.in2igui_picker_bottom div div
+.hui_picker_bottom div div
 {
 	background: url('../gfx/picker_bg.png') right -28px no-repeat;
 }
 
-.in2igui_picker_middle
+.hui_picker_middle
 {
 	background: url('../gfx/picker_bg_middle.png') right 0px repeat-y;
 	padding-right: 3px;
 }
 
-.in2igui_picker_middle .in2igui_picker_middle
+.hui_picker_middle .hui_picker_middle
 {
 	background: url('../gfx/picker_bg_middle.png') left 0px repeat-y;
 	padding: 0px 3px 0px 6px;
 }
 
-div.in2igui_picker_title
+div.hui_picker_title
 {
 	font-family: 'Lucida Grande','Verdana',sans-serif;
 	font-size: 10pt;
@@ -61,12 +61,12 @@ div.in2igui_picker_title
 
 
 
-.in2igui_picker_container
+.hui_picker_container
 {
 	overflow: hidden;
 }
 
-.in2igui_picker_item
+.hui_picker_item
 {
 	float: left;
 	background: center center no-repeat;
@@ -76,7 +76,7 @@ div.in2igui_picker_title
 	font-size: 0;
 }
 
-.in2igui_picker_item strong
+.hui_picker_item strong
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 10px;
@@ -91,41 +91,41 @@ div.in2igui_picker_title
 	color: #456;
 }
 
-.in2igui_picker_item:hover
+.hui_picker_item:hover
 {
 	background: url('../gfx/hover_bg.png');
 }
 
-.in2igui_picker_item_selected, .in2igui_picker_item_selected:hover
+.hui_picker_item_selected, .hui_picker_item_selected:hover
 {
 	background-color: #3875D7;
 	background-color: rgba(56,117,215,.7);
 	-moz-border-radius: 5px;
 }
 
-div.in2igui_picker_shadow div.in2igui_picker_item_selected
+div.hui_picker_shadow div.hui_picker_item_selected
 {
 	-moz-border-radius: 3px;
 }
 
-div.in2igui_picker_shadow div.in2igui_picker_item
+div.hui_picker_shadow div.hui_picker_item
 {
 	padding: 4px 3px 1px;
 }
 
-div.in2igui_picker_shadow div.in2igui_picker_item_middle
+div.hui_picker_shadow div.hui_picker_item_middle
 {
 	background: url('../gfx/picker_item.png') left -12px no-repeat;
 	padding-left: 2px;
 }
 
-div.in2igui_picker_shadow div.in2igui_picker_item_middle div.in2igui_picker_item_middle
+div.hui_picker_shadow div.hui_picker_item_middle div.hui_picker_item_middle
 {
 	padding: 0px 2px 0px 0px;
 	background-position: right -12px;
 }
 
-div.in2igui_picker_shadow div.in2igui_picker_item_bottom
+div.hui_picker_shadow div.hui_picker_item_bottom
 {
 	background: url('../gfx/picker_item.png') left 0px no-repeat;
 	font-size: 0px;
@@ -133,14 +133,14 @@ div.in2igui_picker_shadow div.in2igui_picker_item_bottom
 	padding-left: 4px;
 }
 
-div.in2igui_picker_shadow div.in2igui_picker_item_bottom div
+div.hui_picker_shadow div.hui_picker_item_bottom div
 {
 	background: url('../gfx/picker_item.png') right -4px no-repeat;
 	height: 4px;
 	padding-right: 4px;
 }
 
-div.in2igui_picker_shadow div.in2igui_picker_item_bottom div div
+div.hui_picker_shadow div.hui_picker_item_bottom div div
 {
 	background: url('../gfx/picker_item.png') right -8px repeat-x;
 	padding: 0px;

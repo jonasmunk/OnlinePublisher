@@ -13,7 +13,7 @@ $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 $flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
 //$flash = 'true';
 $gui='
-<gui xmlns="uri:In2iGui" title="Filer" padding="10">
+<gui xmlns="uri:hui" title="Filer" padding="10">
 	<controller source="controller.js"/>
 	<controller source="replace.js"/>
 	<source name="groupSource" url="GroupItems.php"/>

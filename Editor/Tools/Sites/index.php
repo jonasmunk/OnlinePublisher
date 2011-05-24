@@ -30,7 +30,7 @@ foreach ($templates as $template) {
 }
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Sites" padding="10">
+<gui xmlns="uri:hui" title="Sites" padding="10">
 	<controller source="controller.js"/>
 	<controller source="advanced.js"/>
 	<source name="pageListSource" url="ListPages.php">

@@ -19,7 +19,7 @@ if (Request::exists('return')) {
 $edit = Request::getBoolean('edit');
 
 $gui='
-<gui xmlns="uri:In2iGui" title="OnlinePublisher editor">
+<gui xmlns="uri:hui" title="OnlinePublisher editor">
 	<controller source="controller.js"/>
 	<dock url="viewer/'.($edit ? '#edit' : '').'" name="dock" position="top" frame-name="Preview">
 		<tabs small="true" below="true">

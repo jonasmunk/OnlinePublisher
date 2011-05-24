@@ -12,7 +12,7 @@ require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
 if (!is_dir($basePath."Config/") || !is_writable($basePath."Config/")) {
 $gui='
-<gui xmlns="uri:In2iGui" padding="10">
+<gui xmlns="uri:hui" padding="10">
 	<controller source="controller.js"/>
 	<box width="400" top="30" variant="rounded">
 		<space left="30" right="30" top="10" bottom="10">
@@ -29,7 +29,7 @@ In2iGui::render($gui);
 exit;
 }
 $gui='
-<gui xmlns="uri:In2iGui" padding="10">
+<gui xmlns="uri:hui" padding="10">
 	<controller source="controller.js"/>
 	<box width="500" top="30" padding="10" title="Initial setup">
 		<space left="10" right="10" top="5" bottom="10">

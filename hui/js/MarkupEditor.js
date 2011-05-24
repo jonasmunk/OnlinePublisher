@@ -6,7 +6,7 @@ hui.ui.MarkupEditor = function(options) {
 	this.options = hui.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif; font-size: 11px;'},options);
 	if (options.replace) {
 		options.replace = hui.get(options.replace);
-		options.element = hui.build('div',{className:'in2igui_markupeditor'});
+		options.element = hui.build('div',{className:'hui_markupeditor'});
 		options.replace.parentNode.insertBefore(options.element,options.replace);
 		options.replace.style.display='none';
 		options.value = options.replace.innerHTML;
@@ -28,7 +28,7 @@ hui.ui.MarkupEditor = function(options) {
 
 hui.ui.MarkupEditor.create = function(options) {
 	options = options || {};
-	options.element = hui.build('div',{className:'in2igui_markupeditor'});
+	options.element = hui.build('div',{className:'hui_markupeditor'});
 	return new hui.ui.MarkupEditor(options);
 }
 
@@ -176,6 +176,7 @@ hui.ui.MarkupEditor.prototype = {
 	}
 }
 
+/** @private */
 hui.ui.MarkupEditor.webkit = {
 	initialize : function(options) {
 		this.element = options.element;
@@ -287,6 +288,7 @@ hui.ui.MarkupEditor.webkit = {
 	}
 }
 
+/** @private */
 hui.ui.MarkupEditor.MSIE = {
 	initialize : function(options) {
 		this.element = options.element;
@@ -359,6 +361,7 @@ hui.ui.MarkupEditor.MSIE = {
 	}
 }
 
+/** @private */
 hui.ui.MarkupEditor.util = {
 	clean : function(node) {
 		var copy = node.cloneNode(true);

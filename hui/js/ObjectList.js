@@ -13,7 +13,7 @@ hui.ui.ObjectList = function(o) {
 
 hui.ui.ObjectList.create = function(o) {
 	o=o || {};
-	var e = o.element = hui.build('table',{'class':'in2igui_objectlist',cellpadding:'0',cellspacing:'0'});
+	var e = o.element = hui.build('table',{'class':'hui_objectlist',cellpadding:'0',cellspacing:'0'});
 	if (o.template) {
 		var head = '<thead><tr>';
 		for (var i=0; i < o.template.length; i++) {
@@ -152,7 +152,7 @@ hui.ui.ObjectList.Text.prototype = {
 		return new hui.ui.ObjectList.Text(this.key);
 	},
 	getElement : function() {
-		var input = hui.build('input',{'class':'in2igui_formula_text'});
+		var input = hui.build('input',{'class':'hui_formula_text'});
 		var field = hui.ui.wrapInField(input);
 		this.wrapper = new hui.ui.TextField({element:input});
 		this.wrapper.listen(this);

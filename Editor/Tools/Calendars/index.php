@@ -12,7 +12,7 @@ require_once '../../Classes/Utilities/GuiUtils.php';
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Documents" padding="10" state="list">
+<gui xmlns="uri:hui" title="Documents" padding="10" state="list">
 
 	<controller source="controller.js"/>
 	<controller source="sourceController.js"/>

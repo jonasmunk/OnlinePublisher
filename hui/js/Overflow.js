@@ -12,7 +12,7 @@ hui.ui.Overflow = function(options) {
 
 hui.ui.Overflow.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{'class':'in2igui_overflow'});
+	var e = options.element = hui.build('div',{'class':'hui_overflow'});
 	if (options.height) {
 		e.style.height=options.height+'px';
 	}

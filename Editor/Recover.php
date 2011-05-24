@@ -21,7 +21,7 @@ if (StringUtils::isBlank($key)) {
 }
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10" title="'.SystemInfo::getTitle().'" state="login">
+<gui xmlns="uri:hui" padding="10" title="'.SystemInfo::getTitle().'" state="login">
 	'.(!$error ? '
 	<controller name="controller" source="Recover.js"/>
 	' : '').'

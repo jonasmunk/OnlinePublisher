@@ -46,7 +46,7 @@ hui.ui.TextField.prototype = {
 		var validator = this.options.validator, result;
 		if (validator) {
 			result = validator.validate(value);
-			hui.setClass(this.element,'in2igui_invalid',!result.valid);
+			hui.setClass(this.element,'hui_invalid',!result.valid);
 			return result.value;
 		}
 		return value;
@@ -72,7 +72,7 @@ hui.ui.TextField.prototype = {
 	},
 	/** @private */
 	onBlur : function() {
-		hui.removeClass(this.element,'in2igui_invalid');
+		hui.removeClass(this.element,'hui_invalid');
 		this.element.value = this.value || '';
 	},
 	getValue : function() {
@@ -96,7 +96,7 @@ hui.ui.TextField.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		hui.setClass(this.element,'in2igui_field_error',isError);
+		hui.setClass(this.element,'hui_field_error',isError);
 		if (typeof(error) == 'string') {
 			hui.ui.showToolTip({text:error,element:this.element,key:this.name});
 		}

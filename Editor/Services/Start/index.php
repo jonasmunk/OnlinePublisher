@@ -9,7 +9,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/SystemInfo.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10" title="Start">
+<gui xmlns="uri:hui" padding="10" title="Start">
 	<css url="style.css"/>
 	<controller name="controller" source="controller.js"/>
 	<source name="developerFeed" url="DeveloperFeedArticles.php"/>

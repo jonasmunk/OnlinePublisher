@@ -1,35 +1,35 @@
-div.in2igui_calendar
+div.hui_calendar
 {
 	overflow-x: hidden;
 	width: 100%;
 }
 
-div.in2igui_calendar_busy div.in2igui_toolbar
+div.hui_calendar_busy div.hui_toolbar
 {
 	background: url('../gfx/spinner_small.gif') 220px center no-repeat;
 }
 
-div.in2igui_calendar_bar
+div.hui_calendar_bar
 {
 	background: url('../gfx/calendar_bar.png');
 	height: 30px;
 	border-bottom: 1px solid #ccc;
 }
 
-table.in2igui_calendar_weekview
+table.hui_calendar_weekview
 {
 	border-collapse: collapse;
 	
 }
 
-table.in2igui_calendar_weekview
+table.hui_calendar_weekview
 {
 	background: #fff;
 	width: 100%;
 	-webkit-box-sizing: border-box;
 }
 
-table.in2igui_calendar_weekview th
+table.hui_calendar_weekview th
 {
 	background: url('../gfx/list_header.png');
 	height: 22px;
@@ -41,26 +41,26 @@ table.in2igui_calendar_weekview th
 	padding: 0px;
 }
 
-table.in2igui_calendar_weekview th.time
+table.hui_calendar_weekview th.time
 {
 	width: 10%;
 	text-align: left;
 }
 
-table.in2igui_calendar_weekview th div
+table.hui_calendar_weekview th div
 {
 	position: absolute;
 	margin-left: 5px;
 }
 
-table.in2igui_calendar_weekview td.time
+table.hui_calendar_weekview td.time
 {
 	/*background-image: url('../gfx/calendar_time_bg.gif');*/
 	border-left:1px solid #DDDDDD;
 	border-right:1px solid #DDDDDD;
 }
 
-div.in2igui_calendar_time
+div.hui_calendar_time
 {
 	color: #666;
 	font-family: Helvetica,Arial,sans-serif;
@@ -69,7 +69,7 @@ div.in2igui_calendar_time
 	height: 40px;
 }
 
-div.in2igui_calendar_time span
+div.hui_calendar_time span
 {
 	margin-top: -10px;
 	padding: 0 2px;
@@ -78,30 +78,30 @@ div.in2igui_calendar_time span
 	background: #fff;
 }
 
-div.in2igui_calendar_time_first span
+div.hui_calendar_time_first span
 {
 	margin-top: -2px;
 	background: none;
 }
 
-div.in2igui_calendar_time_list span
+div.hui_calendar_time_list span
 {
 	margin-top: -13px;
 	line-height: 12px;
 }
 
-table.in2igui_calendar_weekview td.time em
+table.hui_calendar_weekview td.time em
 {
 	background: #fff;
 	font-style: normal;
 }
 
-div.in2igui_calendar_day
+div.hui_calendar_day
 {
 	position: relative;
 }
 
-table.in2igui_calendar_weekview tbody td
+table.hui_calendar_weekview tbody td
 {
 	background-image: url('../gfx/calendar_bg.gif');
 	border-right: 1px solid #DDDDDD;
@@ -111,7 +111,7 @@ table.in2igui_calendar_weekview tbody td
 	-webkit-box-sizing: border-box;
 }
 
-table.in2igui_calendar_weekview div.in2igui_calendar_event
+table.hui_calendar_weekview div.hui_calendar_event
 {
 	position: absolute;
 	background: #caddfd;
@@ -130,28 +130,28 @@ table.in2igui_calendar_weekview div.in2igui_calendar_event
 	cursor: pointer;
 }
 
-table.in2igui_calendar_weekview div.in2igui_calendar_event:hover
+table.hui_calendar_weekview div.hui_calendar_event:hover
 {
 	background: rgb(180, 200, 255);
 	border-color: rgb(120, 160, 230);
 }
 
-table.in2igui_calendar_weekview div.in2igui_calendar_event div
+table.hui_calendar_weekview div.hui_calendar_event div
 {
 	padding: 2px 4px;
 }
 
-table.in2igui_calendar_weekview div.in2igui_calendar_event p
+table.hui_calendar_weekview div.hui_calendar_event p
 {
 	margin: 0px;
 }
 
-p.in2igui_calendar_event_time
+p.hui_calendar_event_time
 {
 	float: right;
 }
 
-p.in2igui_calendar_event_location
+p.hui_calendar_event_location
 {
 	font-size: 8pt;
 }

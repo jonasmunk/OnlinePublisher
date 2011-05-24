@@ -1,12 +1,12 @@
 /************************** Box *************************/
 
-div.in2igui_box
+div.hui_box
 {
 	margin: 0 auto;
 	text-align: left;
 }
 
-a.in2igui_box_close
+a.hui_box_close
 {
 	width: 30px;
 	height: 30px;
@@ -16,7 +16,7 @@ a.in2igui_box_close
 	z-index: 200;
 }
 
-div.in2igui_box_absolute
+div.hui_box_absolute
 {
 	position: absolute;
 	left: 50%;
@@ -25,71 +25,71 @@ div.in2igui_box_absolute
 	visibility: hidden;
 }
 
-div.in2igui_box_top
+div.hui_box_top
 {
 	height: 5px;
 	background: url('../gfx/box_shadow.png') left top no-repeat;
 	padding-left: 18px;
 }
 
-div.in2igui_box_top div
+div.hui_box_top div
 {
 	height: 5px;
 	background: url('../gfx/box_shadow.png') right -5px no-repeat;
 	padding-right: 18px;
 }
 
-div.in2igui_box_top div div
+div.hui_box_top div div
 {
 	background: url('../gfx/box_shadow.png') left -10px repeat-x;
 	padding: 0px;
 }
 
-div.in2igui_box_bottom
+div.hui_box_bottom
 {
 	height: 13px;
 	background: url('../gfx/box_shadow.png') left -15px no-repeat;
 	padding-left: 18px;
 }
 
-div.in2igui_box_bottom div
+div.hui_box_bottom div
 {
 	height: 13px;
 	background: url('../gfx/box_shadow.png') right -28px no-repeat;
 	padding-right: 18px;
 }
 
-div.in2igui_box_bottom div div
+div.hui_box_bottom div div
 {
 	background: url('../gfx/box_shadow.png') left -41px repeat-x;
 	padding: 0px;
 }
 
-div.in2igui_box_middle
+div.hui_box_middle
 {
 	background: url('../gfx/box_shadow.png') left -54px repeat-y;
 	padding-left: 7px;
 }
 
-div.in2igui_box_middle div.in2igui_box_middle
+div.hui_box_middle div.hui_box_middle
 {
 	background: url('../gfx/box_shadow.png') right -54px repeat-y;
 	padding: 0px 7px 0px 0px;
 }
 
-div.in2igui_box_body
+div.hui_box_body
 {
 	padding: 0px;
 	background: #fff;
 }
 
-div.in2igui_box_textured div.in2igui_box_body
+div.hui_box_textured div.hui_box_body
 {
 	background: #f3f3f3;
 	border: 1px solid #fff;
 }
 
-div.in2igui_box_header
+div.hui_box_header
 {
 	height: 58px;
 	background: url('../gfx/box_toolbar.png') left top repeat-x;
@@ -98,7 +98,7 @@ div.in2igui_box_header
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
-strong.in2igui_box_title
+strong.hui_box_title
 {
 	float: left;
 	height: 58px;
@@ -110,27 +110,27 @@ strong.in2igui_box_title
 	text-shadow: rgba(255,255,255,.5) 0px 1px 0px;
 }
 
-div.in2igui_box_header_toolbar strong.in2igui_box_title
+div.hui_box_header_toolbar strong.hui_box_title
 {
 	float: right;
 }
 
-div.in2igui_box_header div.in2igui_toolbar
+div.hui_box_header div.hui_toolbar
 {
 	float: left;
 }
 
-div.in2igui_box_header div.in2igui_toolbar_icon_selected
+div.hui_box_header div.hui_toolbar_icon_selected
 {
 	background: url('../gfx/box_toolbar.png') left -174px repeat-x;
 }
 
-div.in2igui_box_header div.in2igui_toolbar_icon_selected div.in2igui_toolbar_inner_icon
+div.hui_box_header div.hui_toolbar_icon_selected div.hui_toolbar_inner_icon
 {
 	background: url('../gfx/box_toolbar.png') left -58px no-repeat;
 }
 
-div.in2igui_box_header div.in2igui_toolbar_icon_selected div.in2igui_toolbar_inner_icon div.in2igui_toolbar_inner_icon
+div.hui_box_header div.hui_toolbar_icon_selected div.hui_toolbar_inner_icon div.hui_toolbar_inner_icon
 {
 	background: url('../gfx/box_toolbar.png') right -116px no-repeat;
 }
@@ -138,7 +138,7 @@ div.in2igui_box_header div.in2igui_toolbar_icon_selected div.in2igui_toolbar_inn
 /***************************** Rounded ************************/
 
 
-div.in2igui_box_rounded div.in2igui_box_top, div.in2igui_box_rounded div.in2igui_box_top div
+div.hui_box_rounded div.hui_box_top, div.hui_box_rounded div.hui_box_top div
 {
 	font-size: 0;
 	background: url('../gfx/box_rounded.png') no-repeat;
@@ -146,19 +146,19 @@ div.in2igui_box_rounded div.in2igui_box_top, div.in2igui_box_rounded div.in2igui
 	padding: 0;
 }
 
-div.in2igui_box_rounded div.in2igui_box_top div
+div.hui_box_rounded div.hui_box_top div
 {
 	background-position: right -7px;
 }
 
-div.in2igui_box_rounded div.in2igui_box_top div div
+div.hui_box_rounded div.hui_box_top div div
 {
 	background-position: left -14px;
 	background-repeat: repeat-x;
 	margin: 0 8px;
 }
 
-div.in2igui_box_rounded div.in2igui_box_bottom, div.in2igui_box_rounded div.in2igui_box_bottom div
+div.hui_box_rounded div.hui_box_bottom, div.hui_box_rounded div.hui_box_bottom div
 {
 	font-size: 0;
 	background: url('../gfx/box_rounded.png') left -21px no-repeat;
@@ -166,31 +166,31 @@ div.in2igui_box_rounded div.in2igui_box_bottom, div.in2igui_box_rounded div.in2i
 	padding: 0;
 }
 
-div.in2igui_box_rounded div.in2igui_box_bottom div
+div.hui_box_rounded div.hui_box_bottom div
 {
 	background-position: right -31px;
 	padding: 0;
 }
 
-div.in2igui_box_rounded div.in2igui_box_bottom div div
+div.hui_box_rounded div.hui_box_bottom div div
 {
 	background-position: left -41px;
 	background-repeat: repeat-x;
 	margin: 0 8px;
 }
 
-div.in2igui_box_rounded div.in2igui_box_middle
+div.hui_box_rounded div.hui_box_middle
 {
 	background: url('../gfx/box_rounded_middle.png') repeat-y;
 	padding: 0;
 }
 
-div.in2igui_box_rounded div.in2igui_box_middle div.in2igui_box_middle
+div.hui_box_rounded div.hui_box_middle div.hui_box_middle
 {
 	background: url('../gfx/box_rounded_middle.png') right repeat-y;
 }
 
-div.in2igui_box_rounded div.in2igui_box_body
+div.hui_box_rounded div.hui_box_body
 {
 	margin: 0 3px;
 	background: #fff;

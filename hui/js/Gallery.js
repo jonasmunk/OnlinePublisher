@@ -3,7 +3,7 @@ hui.ui.Gallery = function(options) {
 	this.options = options || {};
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.body = hui.firstByClass(this.element,'in2igui_gallery_body');
+	this.body = hui.firstByClass(this.element,'hui_gallery_body');
 	this.objects = [];
 	this.nodes = [];
 	this.selected = [];
@@ -14,7 +14,7 @@ hui.ui.Gallery = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	if (this.element.parentNode && hui.hasClass(this.element.parentNode,'in2igui_overflow')) {
+	if (this.element.parentNode && hui.hasClass(this.element.parentNode,'hui_overflow')) {
 		this.revealing = true;
 		hui.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
 	}
@@ -22,7 +22,7 @@ hui.ui.Gallery = function(options) {
 
 hui.ui.Gallery.create = function(options) {
 	options = options || {};
-	options.element = hui.build('div',{'class':'in2igui_gallery',html:'<div class="in2igui_gallery_progress"></div><div class="in2igui_gallery_body"></div>'});
+	options.element = hui.build('div',{'class':'hui_gallery',html:'<div class="hui_gallery_progress"></div><div class="hui_gallery_body"></div>'});
 	return new hui.ui.Gallery(options);
 }
 
@@ -63,7 +63,7 @@ hui.ui.Gallery.prototype = {
 			if (self.revealing) {
 			//	img.style.visibility='hidden';
 			}
-			var item = hui.build('div',{'class' : 'in2igui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			var item = hui.build('div',{'class' : 'hui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
 			item.appendChild(img);
 			hui.listen(item,'click',function() {
 				self.itemClicked(i);
@@ -99,17 +99,17 @@ hui.ui.Gallery.prototype = {
 			if (item.revealed) {continue}
 			if (item.offsetTop<limit) {
 				var img = item.getElementsByTagName('img')[0];
-				item.className = 'in2igui_gallery_item in2igui_gallery_item_busy';
+				item.className = 'hui_gallery_item hui_gallery_item_busy';
 				var self = this;
 				img.onload = function() {
-					this.parentNode.className = 'in2igui_gallery_item';
+					this.parentNode.className = 'hui_gallery_item';
 					if (this.height<this.width) {
 						var top = (self.height-(self.height*this.height/this.width))/2;
 						this.style.marginTop = top+'px';
 					}
 				}
 				img.onerror = function() {
-					this.parentNode.className = 'in2igui_gallery_item in2igui_gallery_item_error';
+					this.parentNode.className = 'hui_gallery_item hui_gallery_item_error';
 				}
 				img.src = img.getAttribute('data-src');
 				item.revealed = true;
@@ -120,7 +120,7 @@ hui.ui.Gallery.prototype = {
 	updateUI : function() {
 		var s = this.selected;
 		for (var i=0; i < this.nodes.length; i++) {
-			hui.setClass(this.nodes[i],'in2igui_gallery_item_selected',hui.inArray(s,i));
+			hui.setClass(this.nodes[i],'hui_gallery_item_selected',hui.inArray(s,i));
 		};
 	},
 	/** @private */
@@ -184,10 +184,10 @@ hui.ui.Gallery.prototype = {
 		if (busy) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				hui.addClass(e,'in2igui_gallery_busy');
+				hui.addClass(e,'hui_gallery_busy');
 			},300);
 		} else {
-			hui.removeClass(this.element,'in2igui_gallery_busy');
+			hui.removeClass(this.element,'hui_gallery_busy');
 		}
 	}
 }

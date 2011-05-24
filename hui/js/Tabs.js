@@ -6,7 +6,7 @@ hui.ui.Tabs = function(o) {
 	this.name = o.name;
 	this.element = hui.get(o.element);
 	this.activeTab = -1;
-	var x = hui.firstByClass(this.element,'in2igui_tabs_bar');
+	var x = hui.firstByClass(this.element,'hui_tabs_bar');
 	this.bar = hui.firstByTag(x,'ul');
 	this.tabs = [];
 	var nodes = this.bar.getElementsByTagName('li');
@@ -16,20 +16,20 @@ hui.ui.Tabs = function(o) {
 		}
 		this.tabs.push(nodes[i]);
 	};
-	this.contents = hui.byClass(this.element,'in2igui_tabs_tab');
+	this.contents = hui.byClass(this.element,'hui_tabs_tab');
 	this.addBehavior();
 	hui.ui.extend(this);
 }
 
 hui.ui.Tabs.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{'class':'in2igui_tabs'});
-	var cls = 'in2igui_tabs_bar';
+	var e = options.element = hui.build('div',{'class':'hui_tabs'});
+	var cls = 'hui_tabs_bar';
 	if (options.small) {
-		cls+=' in2igui_tabs_bar_small';
+		cls+=' hui_tabs_bar_small';
 	}
 	if (options.centered) {
-		cls+=' in2igui_tabs_bar_centered';
+		cls+=' hui_tabs_bar_centered';
 	}
 	var bar = hui.build('div',{'class' : cls, parent : e});
 	hui.build('ul',{parent:bar});
@@ -62,7 +62,7 @@ hui.ui.Tabs.prototype = {
 	/** @private */
 	updateGUI : function() {
 		for (var i=0; i < this.tabs.length; i++) {
-			hui.setClass(this.tabs[i],'in2igui_tabs_selected',i==this.activeTab);
+			hui.setClass(this.tabs[i],'hui_tabs_selected',i==this.activeTab);
 			this.contents[i].style.display = i==this.activeTab ? 'block' : 'none';
 		};
 	},
@@ -71,7 +71,7 @@ hui.ui.Tabs.prototype = {
 		var tab = hui.build('li',{html:'<a><span><span>'+hui.escape(options.title)+'</span></span></a>',parent:this.bar});
 		this.addTabBehavior(tab,this.tabs.length);
 		this.tabs.push(tab);
-		var e = options.element = hui.build('div',{'class':'in2igui_tabs_tab'});
+		var e = options.element = hui.build('div',{'class':'hui_tabs_tab'});
 		if (options.padding>0) {
 			e.style.padding = options.padding+'px';
 		}
@@ -79,7 +79,7 @@ hui.ui.Tabs.prototype = {
 		this.element.appendChild(e);
 		if (this.activeTab==-1) {
 			this.activeTab=0;
-			hui.addClass(tab,'in2igui_tabs_selected');
+			hui.addClass(tab,'hui_tabs_selected');
 		} else {
 			e.style.display='none';
 		}

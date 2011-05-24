@@ -5,9 +5,9 @@ hui.ui.ProgressBar = function(o) {
 	this.element = hui.get(o.element);
 	this.name = o.name;
 	/** @private */
-	this.WAITING = o.small ? 'in2igui_progressbar_small_waiting' : 'in2igui_progressbar_waiting';
+	this.WAITING = o.small ? 'hui_progressbar_small_waiting' : 'hui_progressbar_waiting';
 	/** @private */
-	this.COMPLETE = o.small ? 'in2igui_progressbar_small_complete' : 'in2igui_progressbar_complete';
+	this.COMPLETE = o.small ? 'hui_progressbar_small_complete' : 'hui_progressbar_complete';
 	/** @private */
 	this.options = o || {};
 	/** @private */
@@ -20,7 +20,7 @@ hui.ui.ProgressBar = function(o) {
 */
 hui.ui.ProgressBar.create = function(o) {
 	o = o || {};
-	var e = o.element = hui.build('div',{'class':o.small ? 'in2igui_progressbar in2igui_progressbar_small' : 'in2igui_progressbar'});
+	var e = o.element = hui.build('div',{'class':o.small ? 'hui_progressbar hui_progressbar_small' : 'hui_progressbar'});
 	e.appendChild(document.createElement('div'));
 	return new hui.ui.ProgressBar(o);
 }

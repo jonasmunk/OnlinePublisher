@@ -55,9 +55,9 @@
 			},
 			1000,
 			function() {
-				hui.ui.test.click(n2i.firstByClass(document.body,'in2igui_number_up'));
+				hui.ui.test.click(n2i.firstByClass(document.body,'hui_number_up'));
 				hui.ui.test.assertEquals(formula.getValues().number,11.56,'The number field has incremented value');
-				hui.ui.test.click(n2i.firstByClass(document.body,'in2igui_number_down'));
+				hui.ui.test.click(n2i.firstByClass(document.body,'hui_number_down'));
 				hui.ui.test.assertEquals(formula.getValues().number,10.56,'The number field has decremented value');
 			},
 			function() {

@@ -1,6 +1,6 @@
 @import url('calendar.css');
 
-body.in2igui
+body.hui
 {
 	margin: 0px;
 	font-size: 11pt;
@@ -9,7 +9,7 @@ body.in2igui
 	min-height: 100%;
 }
 
-body.in2igui, textarea
+body.hui, textarea
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
@@ -29,12 +29,12 @@ tr.view_toolbar
 	display: none;
 }
 
-div.in2igui_calendar_bar
+div.hui_calendar_bar
 {
 	display: none;
 }
 
-table.in2igui_view
+table.hui_view
 {
 	width: 100%;
 }

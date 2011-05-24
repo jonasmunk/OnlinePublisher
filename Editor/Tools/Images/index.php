@@ -15,7 +15,7 @@ $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 $flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Billeder" padding="10">
+<gui xmlns="uri:hui" title="Billeder" padding="10">
 	<controller source="controller.js"/>
 	<controller source="groups.js"/>
 	<controller source="upload.js"/>

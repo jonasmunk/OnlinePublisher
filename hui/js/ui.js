@@ -19,24 +19,20 @@ hui.ui = {
 	latestAlertIndex : 1500,
 	latestTopIndex : 2000,
 	toolTips : {},
-	confirmOverlays : {}
+	confirmOverlays : {},
+	
+	delayedUntilReady : []
 }
 
-//window.ui = hui.ui; // TODO: old namespace
-
-//window.In2iGui = hui.ui; // TODO: old namespace
-
-
-/** Gets the one instance of In2iGui */
+/** Get a widget by name */
 hui.ui.get = function(nameOrWidget) {
 	if (nameOrWidget) {
 		if (nameOrWidget.element) {
 			return nameOrWidget;
 		}
 		return hui.ui.objects[nameOrWidget];
-	} else {
-		return hui.ui;
 	}
+	return null;
 };
 
 hui.onReady(function() {
@@ -53,7 +49,23 @@ hui.onReady(function() {
 	if (window.parent && window.parent.hui && window.parent.hui.ui) {
 		window.parent.hui.ui._frameLoaded(window);
 	}
+	for (var i=0; i < hui.ui.delayedUntilReady.length; i++) {
+		hui.ui.delayedUntilReady[i]();
+	};
 });
+
+
+/**
+ * Called when the DOM is ready and hui.ui is ready
+ */
+hui.ui.onReady = function(func) {
+	if (hui.ui.domReady) {return func();}
+	if (hui.browser.gecko && hui.string.endsWith(document.baseURI,'xml')) {
+		window.setTimeout(func,1000);
+		return;
+	}
+	hui.ui.delayedUntilReady.push(func);
+};
 
 hui.ui._frameLoaded = function(win) {
 	hui.ui.callSuperDelegates(this,'frameLoaded',win);
@@ -211,13 +223,13 @@ hui.ui.nextTopIndex = function() {
 hui.ui.showCurtain = function(options,zIndex) {
 	var widget = options.widget;
 	if (!widget.curtain) {
-		widget.curtain = hui.build('div',{'class':'in2igui_curtain',style:'z-index:none'});
+		widget.curtain = hui.build('div',{'class':'hui_curtain',style:'z-index:none'});
 		widget.curtain.onclick = function() {
 			if (widget['$curtainWasClicked']) {
 				widget['$curtainWasClicked']();
 			}
 		};
-		var body = hui.firstByClass(document.body,'in2igui_body');
+		var body = hui.firstByClass(document.body,'hui_body');
 		if (!body) {
 			body=document.body;
 		}
@@ -251,7 +263,7 @@ hui.ui.hideCurtain = function(widget) {
 
 hui.ui.confirm = function(options) {
 	if (!options.name) {
-		options.name = 'in2iguiConfirm';
+		options.name = 'huiConfirm';
 	}
 	var alert = hui.ui.get(options.name);
 	var ok;
@@ -325,7 +337,7 @@ hui.ui.showMessage = function(options) {
 	}
 	window.clearTimeout(hui.ui.messageDelayTimer);
 	if (!hui.ui.message) {
-		hui.ui.message = hui.build('div',{'class':'in2igui_message',html:'<div><div></div></div>'});
+		hui.ui.message = hui.build('div',{'class':'hui_message',html:'<div><div></div></div>'});
 		if (!hui.browser.msie) {
 			hui.setOpacity(hui.ui.message,0);
 		}
@@ -338,7 +350,7 @@ hui.ui.showMessage = function(options) {
 		hui.dom.addText(inner,options.text);
 	}
 	else if (options.busy) {
-		inner.innerHTML='<span class="in2igui_message_busy"></span>';
+		inner.innerHTML='<span class="hui_message_busy"></span>';
 		hui.dom.addText(inner,options.text);
 	} else {
 		hui.dom.setText(inner,options.text);
@@ -371,7 +383,7 @@ hui.ui.showToolTip = function(options) {
 	var key = options.key || 'common';
 	var t = hui.ui.toolTips[key];
 	if (!t) {
-		t = hui.build('div',{'class':'in2igui_tooltip',style:'display:none;',html:'<div><div></div></div>',parent:document.body});
+		t = hui.build('div',{'class':'hui_tooltip',style:'display:none;',html:'<div><div></div></div>',parent:document.body});
 		hui.ui.toolTips[key] = t;
 	}
 	t.onclick = function() {hui.ui.hideToolTip(options);};
@@ -423,28 +435,16 @@ hui.ui.getIconUrl = function(icon,size) {
 };
 
 hui.ui.createIcon = function(icon,size) {
-	return hui.build('span',{'class':'in2igui_icon in2igui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
-};
-
-/**
- * Called when the DOM is ready and hui.ui is ready
- */
-hui.ui.onReady = function(func) {
-	if (hui.ui.domReady) {return func();}
-	if (hui.browser.gecko && hui.string.endsWith(document.baseURI,'xml')) {
-		window.setTimeout(func,1000);
-		return;
-	}
-	hui.onReady(func);
+	return hui.build('span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
 hui.ui.wrapInField = function(e) {
-	var w = hui.build('div',{'class':'in2igui_field',html:
-		'<span class="in2igui_field_top"><span><span></span></span></span>'+
-		'<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content"></span></span></span>'+
-		'<span class="in2igui_field_bottom"><span><span></span></span></span>'
+	var w = hui.build('div',{'class':'hui_field',html:
+		'<span class="hui_field_top"><span><span></span></span></span>'+
+		'<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content"></span></span></span>'+
+		'<span class="hui_field_bottom"><span><span></span></span></span>'
 	});
-	hui.firstByClass(w,'in2igui_field_content').appendChild(e);
+	hui.firstByClass(w,'hui_field_content').appendChild(e);
 	return w;
 };
 
@@ -545,7 +545,7 @@ hui.ui.getTextAreaHeight = function(input) {
 	var t = this.textAreaDummy;
 	if (!t) {
 		t = this.textAreaDummy = document.createElement('div');
-		t.className='in2igui_textarea_dummy';
+		t.className='hui_textarea_dummy';
 		document.body.appendChild(t);
 	}
 	var html = input.value;

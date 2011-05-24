@@ -18,7 +18,7 @@ hui.ui.Articles.prototype = {
 		this.element.innerHTML='';
 		var a = doc.getElementsByTagName('article');
 		for (var i=0; i < a.length; i++) {
-			var e = hui.build('div',{'class':'in2igui_article'});
+			var e = hui.build('div',{'class':'hui_article'});
 			var c = a[i].childNodes;
 			for (var j=0; j < c.length; j++) {
 				if (hui.dom.isElement(c[j],'title')) {
@@ -28,7 +28,7 @@ hui.ui.Articles.prototype = {
 					var text = hui.dom.getText(c[j]);
 					var p = hui.build('p',{text:text});
 					if (c[j].getAttribute('dimmed')==='true') {
-						p.className='in2igui_dimmed';
+						p.className='hui_dimmed';
 					}
 					e.appendChild(p);
 				}
@@ -41,11 +41,11 @@ hui.ui.Articles.prototype = {
 	},
 	/** @private */
 	$sourceIsBusy : function() {
-		this.element.innerHTML='<div class="in2igui_articles_loading">Loading...</div>';
+		this.element.innerHTML='<div class="hui_articles_loading">Loading...</div>';
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
-		hui.removeClass(this.element,'in2igui_list_busy');
+		hui.removeClass(this.element,'hui_list_busy');
 	}
 }
 

@@ -1,4 +1,4 @@
-a.in2igui_dropdown
+a.hui_dropdown
 {
 	display: inline-block;
 	height: 26px;
@@ -12,14 +12,14 @@ a.in2igui_dropdown
 	text-align: left;
 }
 
-a.in2igui_dropdown span
+a.hui_dropdown span
 {
 	display: block;
 	height: 26px;
 	background: url('../gfx/dropdown.png') right -52px no-repeat;
 }
 
-a.in2igui_dropdown span span
+a.hui_dropdown span span
 {
 	margin: 0 25px 0 6px;
 	background: url('../gfx/dropdown.png') left -26px repeat-x;
@@ -27,52 +27,52 @@ a.in2igui_dropdown span span
 	padding-right: 10px;
 }
 
-a.in2igui_dropdown:hover
+a.hui_dropdown:hover
 {
 	background-position: -19px -156px;
 }
 
-a.in2igui_dropdown:hover span
+a.hui_dropdown:hover span
 {
 	background-position: right -208px;
 }
 
-a.in2igui_dropdown:hover span span
+a.hui_dropdown:hover span span
 {
 	background-position: left -182px;
 }
 
-a.in2igui_dropdown_focused
+a.hui_dropdown_focused
 {
 	background-position: -19px -78px;
 }
 
-a.in2igui_dropdown_focused span
+a.hui_dropdown_focused span
 {
 	background-position: right -130px;
 }
 
-a.in2igui_dropdown_focused span span
+a.hui_dropdown_focused span span
 {
 	background-position: left -104px;
 }
 
-a.in2igui_dropdown_focused:hover
+a.hui_dropdown_focused:hover
 {
 	background-position: -19px -234px;
 }
 
-a.in2igui_dropdown_focused:hover span
+a.hui_dropdown_focused:hover span
 {
 	background-position: right -286px;
 }
 
-a.in2igui_dropdown_focused:hover span span
+a.hui_dropdown_focused:hover span span
 {
 	background-position: left -260px;
 }
 
-a.in2igui_dropdown strong
+a.hui_dropdown strong
 {
 	display: block;
 	overflow: hidden;
@@ -81,12 +81,12 @@ a.in2igui_dropdown strong
 	width: 100%;
 }
 
-a.in2igui_dropdown em
+a.hui_dropdown em
 {
 	color: #456;
 }
 
-div.in2igui_dropdown_selector
+div.hui_dropdown_selector
 {
 	position: absolute;
 	display: none;
@@ -103,7 +103,7 @@ div.in2igui_dropdown_selector
 	text-align: left;
 }
 
-div.in2igui_dropdown_selector a
+div.hui_dropdown_selector a
 {
 	padding: 2px 5px;
 	display: block;
@@ -112,14 +112,14 @@ div.in2igui_dropdown_selector a
 	min-height: 15px;
 }
 
-div.in2igui_dropdown_selector a.in2igui_selected
+div.hui_dropdown_selector a.hui_selected
 {
 	background: #eee;
 	color: #000;
 	font-weight: bold;
 }
 
-div.in2igui_dropdown_selector a:hover
+div.hui_dropdown_selector a:hover
 {
 	background-color: #3875d7;
 	color: #fff;
@@ -127,7 +127,7 @@ div.in2igui_dropdown_selector a:hover
 
 /* Adaptive */
 
-a.in2igui_dropdown_adaptive
+a.hui_dropdown_adaptive
 {
 	width: 100%;
 }

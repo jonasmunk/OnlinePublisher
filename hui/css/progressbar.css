@@ -1,4 +1,4 @@
-div.in2igui_progressbar
+div.hui_progressbar
 {
 	height: 22px;
 	border: 1px solid #ccc;
@@ -6,42 +6,42 @@ div.in2igui_progressbar
 	background: url("../gfx/progress_bg.png") repeat-x 0 -28px;
 }
 
-div.in2igui_progressbar div
+div.hui_progressbar div
 {
 	height: 22px;
 	background: url('../gfx/progress_animation.gif');
 	width: 0%;
 }
 
-div.in2igui_progressbar_complete div
+div.hui_progressbar_complete div
 {
 	background: url('../gfx/progress_bg.png') left -50px;
 }
 
-div.in2igui_progressbar_waiting
+div.hui_progressbar_waiting
 {
 	background: url('../gfx/progress_animation_indeterminate.gif');
 }
 
-div.in2igui_progressbar_small
+div.hui_progressbar_small
 {
 	background: url('../gfx/progress_bg.png');
 	height: 14px;
 }
 
-div.in2igui_progressbar_small div
+div.hui_progressbar_small div
 {
 	background: url('../gfx/progress_animation_small.gif');
 	height: 14px;
 }
 
-div.in2igui_progressbar_small_waiting
+div.hui_progressbar_small_waiting
 {
 	background: url('../gfx/progress_animation_small_indeterminate.gif');
 	height: 14px;
 }
 
-div.in2igui_progressbar_small_complete div
+div.hui_progressbar_small_complete div
 {
 	background: url('../gfx/progress_bg.png') left -14px;
 }

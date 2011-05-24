@@ -3,13 +3,13 @@
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
-    xmlns:gui="uri:In2iGui"
+    xmlns:gui="uri:hui"
     version="1.0"
     exclude-result-prefixes="gui"
     >
 
 <xsl:template match="gui:formula">
-	<form class="in2igui_formula hui_formula" id="{generate-id()}">
+	<form class="hui_formula hui_formula" id="{generate-id()}">
 		<xsl:attribute name="style">
 			<xsl:if test="@state and @state!=//gui:gui/@state">
 				<xsl:text>display:none;</xsl:text>
@@ -33,17 +33,17 @@
 </xsl:template>
 
 <xsl:template match="gui:formula//gui:header">
-	<div class="in2igui_formula_header"><xsl:apply-templates/></div>
+	<div class="hui_formula_header"><xsl:apply-templates/></div>
 </xsl:template>
 
 <xsl:template match="gui:formula//gui:group">
-	<table class="in2igui_formula_group">
+	<table class="hui_formula_group">
 		<xsl:apply-templates/>
 	</table>
 </xsl:template>
 
 <xsl:template match="gui:formula//gui:group[@labels='above']">
-	<table class="in2igui_formula_group in2igui_formula_group_above">
+	<table class="hui_formula_group hui_formula_group_above">
 		<xsl:apply-templates/>
 	</table>
 </xsl:template>
@@ -58,8 +58,8 @@
 </xsl:template>
 
 <xsl:template match="gui:formula//gui:fieldset">
-	<div class="in2igui_formula_fieldset">
-		<strong class="in2igui_formula_fieldset"><xsl:value-of select="@legend"/></strong>
+	<div class="hui_formula_fieldset">
+		<strong class="hui_formula_fieldset"><xsl:value-of select="@legend"/></strong>
 		<xsl:apply-templates/>
 	</div>
 </xsl:template>
@@ -83,42 +83,42 @@
 <xsl:template match="gui:group/gui:text">
 	<tr>
 		<th>
-			<xsl:if test="not(@lines>1) and not(@multiline='true')"><xsl:attribute name="class">in2igui_formula_middle</xsl:attribute></xsl:if>
+			<xsl:if test="not(@lines>1) and not(@multiline='true')"><xsl:attribute name="class">hui_formula_middle</xsl:attribute></xsl:if>
 			<label><xsl:value-of select="@label"/></label></th>
-		<td class="in2igui_formula_group"><div class="in2igui_formula_item"><xsl:call-template name="gui:text"/></div></td>
+		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:text"/></div></td>
 	</tr>
 </xsl:template>
 
 <xsl:template match="gui:group[@labels='above']/gui:text">
 	<tr><td>
 		<label><xsl:value-of select="@label"/></label>
-		<div class="in2igui_formula_item"><xsl:call-template name="gui:text"/></div>
+		<div class="hui_formula_item"><xsl:call-template name="gui:text"/></div>
 	</td></tr>
 </xsl:template>
 
 <xsl:template name="gui:text" match="gui:textfield">
 	<xsl:choose>
 		<xsl:when test="@lines>1 or @multiline='true'">
-			<div class="in2igui_field in2igui_longfield" id="{generate-id()}">
+			<div class="hui_field hui_longfield" id="{generate-id()}">
 			
-			<span class="in2igui_field_top"><span><span><xsl:comment/></span></span></span>
-			<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content">
-				<span class="in2igui_formula_text_multiline">
-				<textarea class="in2igui_formula_text" rows="{@lines}"><xsl:value-of select="@value"/><xsl:text></xsl:text></textarea>
+			<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
+			<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
+				<span class="hui_formula_text_multiline">
+				<textarea class="hui_formula_text" rows="{@lines}"><xsl:value-of select="@value"/><xsl:text></xsl:text></textarea>
 				</span>
 			</span></span></span>
-			<span class="in2igui_field_bottom"><span><span><xsl:comment/></span></span></span>
+			<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
 			</div>
 		</xsl:when>
 		<xsl:otherwise>
-			<div class="in2igui_field" id="{generate-id()}">
-			<span class="in2igui_field_top"><span><span><xsl:comment/></span></span></span>
-			<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content">
-				<span class="in2igui_field_singleline">
-				<input class="in2igui_formula_text" value="{@value}"><xsl:if test="@secret='true'"><xsl:attribute name="type">password</xsl:attribute></xsl:if></input>
+			<div class="hui_field" id="{generate-id()}">
+			<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
+			<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
+				<span class="hui_field_singleline">
+				<input class="hui_formula_text" value="{@value}"><xsl:if test="@secret='true'"><xsl:attribute name="type">password</xsl:attribute></xsl:if></input>
 				</span>
 			</span></span></span>
-			<span class="in2igui_field_bottom"><span><span><xsl:comment/></span></span></span>
+			<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
 			</div>
 		</xsl:otherwise>
 	</xsl:choose>
@@ -132,27 +132,27 @@
 
 <xsl:template match="gui:group/gui:datetime">
 	<tr>
-		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="in2igui_formula_item"><xsl:call-template name="gui:datetime"/></div></td>
+		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
+		<td><div class="hui_formula_item"><xsl:call-template name="gui:datetime"/></div></td>
 	</tr>
 </xsl:template>
 
 <xsl:template match="gui:group[@labels='above']/gui:datetime">
 	<tr><td>
 		<label><xsl:value-of select="@label"/></label>
-		<div class="in2igui_formula_item"><xsl:call-template name="gui:datetime"/></div>
+		<div class="hui_formula_item"><xsl:call-template name="gui:datetime"/></div>
 	</td></tr>
 </xsl:template>
 
 <xsl:template name="gui:datetime">
-	<div class="in2igui_field" id="{generate-id()}">
-		<span class="in2igui_field_top"><span><span><xsl:comment/></span></span></span>
-		<span class="in2igui_field_middle"><span class="in2igui_field_middle"><span class="in2igui_field_content">
-			<span class="in2igui_field_singleline">
-				<input type="text" class="in2igui_formula_text"/>
+	<div class="hui_field" id="{generate-id()}">
+		<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
+		<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
+			<span class="hui_field_singleline">
+				<input type="text" class="hui_formula_text"/>
 			</span>
 		</span></span></span>
-		<span class="in2igui_field_bottom"><span><span><xsl:comment/></span></span></span>
+		<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
 	</div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.DateTime({
@@ -170,24 +170,24 @@
 <xsl:template match="gui:group/gui:number">
 	<tr>
 		<th><label><xsl:value-of select="@label"/></label></th>
-		<td class="in2igui_formula_group"><div class="in2igui_formula_item"><xsl:call-template name="gui:number"/></div></td>
+		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:number"/></div></td>
 	</tr>
 </xsl:template>
 
 <xsl:template match="gui:group[@labels='above']/gui:number">
 	<tr><td>
 		<label><xsl:value-of select="@label"/></label>
-		<div class="in2igui_formula_item"><xsl:call-template name="gui:number"/></div>
+		<div class="hui_formula_item"><xsl:call-template name="gui:number"/></div>
 	</td></tr>
 </xsl:template>
 
 <xsl:template name="gui:number">
 	<span id="{generate-id()}">
 		<xsl:attribute name="class">
-			<xsl:text>in2igui_number</xsl:text>
-			<xsl:if test="@adaptive='true'"><xsl:text> in2igui_number_adaptive</xsl:text></xsl:if>
+			<xsl:text>hui_number</xsl:text>
+			<xsl:if test="@adaptive='true'"><xsl:text> hui_number_adaptive</xsl:text></xsl:if>
 		</xsl:attribute>
-		<span><span><input type="text" value="{@value}"/><em class="in2igui_number_units"><xsl:comment/></em><a class="in2igui_number_up"><xsl:comment/></a><a class="in2igui_number_down"><xsl:comment/></a></span></span>
+		<span><span><input type="text" value="{@value}"/><em class="hui_number_units"><xsl:comment/></em><a class="hui_number_up"><xsl:comment/></a><a class="hui_number_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Number({
@@ -211,23 +211,23 @@
 <xsl:template match="gui:group/gui:style-length">
 	<tr>
 		<th><label><xsl:value-of select="@label"/></label></th>
-		<td class="in2igui_formula_group"><div class="in2igui_formula_item"><xsl:call-template name="gui:style-length"/></div></td>
+		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:style-length"/></div></td>
 	</tr>
 </xsl:template>
 
 <xsl:template match="gui:group[@labels='above']/gui:style-length">
 	<tr><td>
 		<label><xsl:value-of select="@label"/></label>
-		<div class="in2igui_formula_item"><xsl:call-template name="gui:style-length"/></div>
+		<div class="hui_formula_item"><xsl:call-template name="gui:style-length"/></div>
 	</td></tr>
 </xsl:template>
 
 <xsl:template name="gui:style-length">
-	<span class="in2igui_style_length in2igui_number" id="{generate-id()}">
-		<span><span><input type="text" value="{@value}"/><a class="in2igui_number_up"><xsl:comment/></a><a class="in2igui_number_down"><xsl:comment/></a></span></span>
+	<span class="hui_style_length hui_number" id="{generate-id()}">
+		<span><span><input type="text" value="{@value}"/><a class="hui_number_up"><xsl:comment/></a><a class="hui_number_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.StyleLength({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.StyleLength({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>'
@@ -243,15 +243,15 @@
 
 <xsl:template match="gui:group/gui:dropdown">
 	<tr>
-		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td class="in2igui_formula_group"><div class="in2igui_formula_item"><xsl:call-template name="gui:dropdown"/></div></td>
+		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
+		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:dropdown"/></div></td>
 	</tr>
 </xsl:template>
 
 <xsl:template match="gui:group[@labels='above']/gui:dropdown">
 	<tr><td>
 		<label><xsl:value-of select="@label"/></label>
-		<div class="in2igui_formula_item"><xsl:call-template name="gui:dropdown"/></div>
+		<div class="hui_formula_item"><xsl:call-template name="gui:dropdown"/></div>
 	</td></tr>
 </xsl:template>
 
@@ -262,8 +262,8 @@
 		</xsl:if>
 	<xsl:attribute name="class">
 		<xsl:choose>
-			<xsl:when test="@adaptive='true'">in2igui_dropdown in2igui_dropdown_adaptive</xsl:when>
-			<xsl:otherwise>in2igui_dropdown</xsl:otherwise>
+			<xsl:when test="@adaptive='true'">hui_dropdown hui_dropdown_adaptive</xsl:when>
+			<xsl:otherwise>hui_dropdown</xsl:otherwise>
 		</xsl:choose>
 	</xsl:attribute>	
 	<span><span><strong><xsl:comment/></strong></span></span>
@@ -297,20 +297,20 @@
 
 <xsl:template match="gui:group/gui:radiobuttons">
 	<tr>
-		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="in2igui_formula_item"><xsl:call-template name="gui:radiobuttons"/></div></td>
+		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
+		<td><div class="hui_formula_item"><xsl:call-template name="gui:radiobuttons"/></div></td>
 	</tr>
 </xsl:template>
 
 <xsl:template match="gui:group[@labels='above']/gui:radiobuttons">
 	<tr><td>
 		<label><xsl:value-of select="@label"/></label>
-		<div class="in2igui_formula_item"><xsl:call-template name="gui:radiobuttons"/></div>
+		<div class="hui_formula_item"><xsl:call-template name="gui:radiobuttons"/></div>
 	</td></tr>
 </xsl:template>
 
 <xsl:template name="gui:radiobuttons">
-	<div class="in2igui_radiobuttons" id="{generate-id()}">
+	<div class="hui_radiobuttons" id="{generate-id()}">
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">
@@ -326,7 +326,7 @@
 
 <xsl:template match="gui:radiobuttons/gui:radiobutton | gui:radiobuttons/gui:item">
 	<div id="{generate-id()}">
-		<xsl:attribute name="class">in2igui_radiobutton <xsl:if test="@value=../@value">in2igui_selected</xsl:if></xsl:attribute>
+		<xsl:attribute name="class">hui_radiobutton <xsl:if test="@value=../@value">hui_selected</xsl:if></xsl:attribute>
 		<div><xsl:comment/></div><xsl:value-of select="@label"/>
 	</div>
 </xsl:template>
@@ -335,8 +335,8 @@
 
 <xsl:template match="gui:group/gui:checkbox">
 	<tr>
-		<th class="in2igui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="in2igui_formula_item"><xsl:call-template name="gui:checkbox"/></div></td>
+		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
+		<td><div class="hui_formula_item"><xsl:call-template name="gui:checkbox"/></div></td>
 	</tr>
 </xsl:template>
 
@@ -350,8 +350,8 @@
 <xsl:template name="gui:checkbox"  match="gui:checkbox">
 	<a id="{generate-id()}" href="#">
 		<xsl:attribute name="class">
-			<xsl:text>in2igui_checkbox</xsl:text>
-			<xsl:if test="@value='true'"> in2igui_checkbox_selected</xsl:if>
+			<xsl:text>hui_checkbox</xsl:text>
+			<xsl:if test="@value='true'"> hui_checkbox_selected</xsl:if>
 		</xsl:attribute>
 		<span><span><xsl:comment/></span></span>
 		<xsl:value-of select="@title"/>
@@ -372,19 +372,19 @@
 <xsl:template match="gui:group/gui:checkboxes">
 	<tr>
 		<th><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="in2igui_formula_item"><xsl:call-template name="gui:checkboxes"/></div></td>
+		<td><div class="hui_formula_item"><xsl:call-template name="gui:checkboxes"/></div></td>
 	</tr>
 </xsl:template>
 
 <xsl:template match="gui:group[@labels='above']/gui:checkboxes">
 	<tr><td>
 		<label><xsl:value-of select="@label"/></label>
-		<div class="in2igui_formula_item"><xsl:call-template name="gui:checkboxes"/></div>
+		<div class="hui_formula_item"><xsl:call-template name="gui:checkboxes"/></div>
 	</td></tr>
 </xsl:template>
 
 <xsl:template name="gui:checkboxes">
-	<div class="in2igui_checkboxes" id="{generate-id()}">
+	<div class="hui_checkboxes" id="{generate-id()}">
 		<xsl:if test="@max-height"><xsl:attribute name="style">max-height:<xsl:value-of select="@max-height"/>px; overflow: auto;</xsl:attribute></xsl:if>
 		<xsl:apply-templates/>
 	</div>
@@ -417,7 +417,7 @@
 </xsl:template>
 
 <xsl:template match="gui:checkboxes/gui:item">
-	<a class="in2igui_checkbox" href="javascript:void(0);">
+	<a class="hui_checkbox" href="javascript:void(0);">
 		<span><span></span></span><xsl:value-of select="@title"/>
 	</a>
 </xsl:template>
@@ -535,7 +535,7 @@
 </xsl:template>
 
 <xsl:template name="gui:imagepicker">
-	<div class="in2igui_imagepicker" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
+	<div class="hui_imagepicker" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImagePicker({
 			element:'<xsl:value-of select="generate-id()"/>',
@@ -567,7 +567,7 @@
 </xsl:template>
 
 <xsl:template name="gui:tokens">
-	<div class="in2igui_tokens" id="{generate-id()}">
+	<div class="hui_tokens" id="{generate-id()}">
 		<xsl:comment/>
 	</div>
 	<script type="text/javascript">
@@ -594,12 +594,12 @@
 </xsl:template>
 
 <xsl:template match="gui:objectlist" name="gui:objectlist">
-	<table cellspacing="0" cellpadding="0" id="{generate-id()}" class="in2igui_objectlist">
+	<table cellspacing="0" cellpadding="0" id="{generate-id()}" class="hui_objectlist">
 		<xsl:if test="gui:text/@label">
 			<thead>
 				<tr>
 					<xsl:for-each select="gui:text | gui:select">
-						<th class="in2igui_objectlist in2igui_objectlist{position()}" style="width: {100 div count(../*)}%;"><xsl:value-of select="@label"/></th>
+						<th class="hui_objectlist hui_objectlist{position()}" style="width: {100 div count(../*)}%;"><xsl:value-of select="@label"/></th>
 					</xsl:for-each>
 				</tr>
 			</thead>

@@ -12,7 +12,7 @@ require_once '../../Classes/Utilities/GuiUtils.php';
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Vandforbrug" padding="10" state="list">
+<gui xmlns="uri:hui" title="Vandforbrug" padding="10" state="list">
 	<controller source="controller.js"/>
 	<source name="listSource" url="List.php">
 		<parameter key="windowPage" value="@list.window.page"/>

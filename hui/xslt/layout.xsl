@@ -2,13 +2,13 @@
 <xsl:stylesheet
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:gui="uri:In2iGui"
+    xmlns:gui="uri:hui"
     version="1.0"
     exclude-result-prefixes="gui"
     >
 
 <xsl:template match="gui:space | gui:block">
-	<div class="in2igui_space">
+	<div class="hui_space">
 		<xsl:attribute name="style">
 			<xsl:if test="@all">padding: <xsl:value-of select="@all"/>px;</xsl:if>
 			<xsl:if test="@left">padding-left: <xsl:value-of select="@left"/>px;</xsl:if>
@@ -24,7 +24,7 @@
 </xsl:template>
 
 <xsl:template match="gui:columns">
-	<table cellspacing="0" cellpadding="0" class="in2igui_columns">
+	<table cellspacing="0" cellpadding="0" class="hui_columns">
 		<tr>
 			<xsl:apply-templates select="gui:column"/>
 		</tr>
@@ -32,7 +32,7 @@
 </xsl:template>
 
 <xsl:template match="gui:columns/gui:column">
-	<td class="in2igui_columns_column">
+	<td class="hui_columns_column">
 		<xsl:if test="(position()>1 and ../@space) or @width">
 			<xsl:attribute name="style">
 				<xsl:if test="position()>1 and ../@space">padding-left: <xsl:value-of select="../@space"/>px;</xsl:if>
@@ -44,8 +44,8 @@
 </xsl:template>
 
 <xsl:template match="gui:header">
-	<h2 class="in2igui_header">
-		<xsl:if test="@icon"><span class="in2igui_icon_2" style="background-image: url('{$context}/hui/icons/{@icon}2.png')"><xsl:comment/></span></xsl:if>
+	<h2 class="hui_header">
+		<xsl:if test="@icon"><span class="hui_icon_2" style="background-image: url('{$context}/hui/icons/{@icon}2.png')"><xsl:comment/></span></xsl:if>
 		<xsl:apply-templates/></h2>
 </xsl:template>
 
@@ -70,9 +70,9 @@
 <xsl:template match="gui:overflow">
 <div id="{generate-id()}">
 	<xsl:attribute name="class">
-		<xsl:text>in2igui_overflow</xsl:text>
+		<xsl:text>hui_overflow</xsl:text>
 	<xsl:if test="@background">
-		<xsl:text> in2igui_bg_</xsl:text><xsl:value-of select="@background"/>
+		<xsl:text> hui_bg_</xsl:text><xsl:value-of select="@background"/>
 	</xsl:if>
 	</xsl:attribute>
 	<xsl:attribute name="style">
@@ -102,30 +102,30 @@
 <xsl:template match="gui:box">
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">
-			<xsl:text>in2igui_box</xsl:text>
-			<xsl:if test="@variant"><xsl:text> in2igui_box_</xsl:text><xsl:value-of select="@variant"/></xsl:if>
-			<xsl:if test="@absolute='true'"><xsl:text> in2igui_box_absolute</xsl:text></xsl:if>
+			<xsl:text>hui_box</xsl:text>
+			<xsl:if test="@variant"><xsl:text> hui_box_</xsl:text><xsl:value-of select="@variant"/></xsl:if>
+			<xsl:if test="@absolute='true'"><xsl:text> hui_box_absolute</xsl:text></xsl:if>
 		</xsl:attribute>
 		<xsl:attribute name="style">
 		<xsl:if test="@width">width: <xsl:value-of select="@width"/>px;</xsl:if>
 		<xsl:if test="@top">padding-top: <xsl:value-of select="@top"/>px;</xsl:if>
 		</xsl:attribute>
-		<xsl:if test="@closable='true'"><a class="in2igui_box_close" href="#"><xsl:comment/></a></xsl:if>
-		<div class="in2igui_box_top"><div><div><xsl:comment/></div></div></div>
-		<div class="in2igui_box_middle"><div class="in2igui_box_middle">
+		<xsl:if test="@closable='true'"><a class="hui_box_close" href="#"><xsl:comment/></a></xsl:if>
+		<div class="hui_box_top"><div><div><xsl:comment/></div></div></div>
+		<div class="hui_box_middle"><div class="hui_box_middle">
 			<xsl:if test="@title or gui:toolbar">
-				<div class="in2igui_box_header">
-					<xsl:attribute name="class">in2igui_box_header<xsl:if test="gui:toolbar"> in2igui_box_header_toolbar</xsl:if></xsl:attribute>
+				<div class="hui_box_header">
+					<xsl:attribute name="class">hui_box_header<xsl:if test="gui:toolbar"> hui_box_header_toolbar</xsl:if></xsl:attribute>
 					<xsl:apply-templates select="gui:toolbar"/>
-					<strong class="in2igui_box_title"><xsl:value-of select="@title"/></strong>
+					<strong class="hui_box_title"><xsl:value-of select="@title"/></strong>
 				</div>
 			</xsl:if>
-			<div class="in2igui_box_body">
+			<div class="hui_box_body">
 				<xsl:if test="@padding"><xsl:attribute name="style">padding: <xsl:value-of select="@padding"/>px;</xsl:attribute></xsl:if>
 				<xsl:apply-templates select="child::*[not(name()='toolbar')]"/>
 			</div>
 		</div></div>
-		<div class="in2igui_box_bottom"><div><div><xsl:comment/></div></div></div>
+		<div class="hui_box_bottom"><div><div><xsl:comment/></div></div></div>
 	</div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Box({
@@ -140,33 +140,33 @@
 </xsl:template>
 
 <xsl:template match="gui:wizard">
-	<div class="in2igui_wizard" id="{generate-id()}">
-		<table class="in2igui_wizard"><tr>
-			<th class="in2igui_wizard">
-				<ul class="in2igui_wizard">
+	<div class="hui_wizard" id="{generate-id()}">
+		<table class="hui_wizard"><tr>
+			<th class="hui_wizard">
+				<ul class="hui_wizard">
 				<xsl:for-each select="gui:step">
 					<li>
 						<a href="#">
 							<xsl:attribute name="class">
-								<xsl:text>in2igui_wizard_selection</xsl:text>
+								<xsl:text>hui_wizard_selection</xsl:text>
 						<xsl:if test="position()=1">
-							<xsl:text> in2igui_selected</xsl:text>
+							<xsl:text> hui_selected</xsl:text>
 						</xsl:if>
 						</xsl:attribute>
-						<xsl:if test="@icon"><span class="in2igui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png');')"><xsl:comment/></span></xsl:if>
+						<xsl:if test="@icon"><span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png');')"><xsl:comment/></span></xsl:if>
 						<span><xsl:value-of select="@title"/></span>
 						</a>
 					</li>
 				</xsl:for-each>
 				</ul>
 			</th>
-			<td class="in2igui_wizard">
-				<div class="in2igui_wizard_steps">
+			<td class="hui_wizard">
+				<div class="hui_wizard_steps">
 				<xsl:for-each select="gui:step">
 					<div>
 						<xsl:attribute name="class">
-							<xsl:text>in2igui_wizard_step</xsl:text>
-							<xsl:if test="@frame='true'"><xsl:text> in2igui_wizard_step_frame</xsl:text></xsl:if>
+							<xsl:text>hui_wizard_step</xsl:text>
+							<xsl:if test="@frame='true'"><xsl:text> hui_wizard_step_frame</xsl:text></xsl:if>
 						</xsl:attribute>
 						<xsl:attribute name="style">
 						<xsl:if test="@padding">
@@ -193,7 +193,7 @@
 
 
 <xsl:template match="gui:layout">
-	<table class="in2igui_layout" id="{generate-id()}">
+	<table class="hui_layout" id="{generate-id()}">
 		<xsl:apply-templates/>
 	</table>
 	<script type="text/javascript">
@@ -205,9 +205,9 @@
 </xsl:template>
 
 <xsl:template match="gui:layout/gui:top">
-	<thead class="in2igui_layout">
-		<tr><td class="in2igui_layout_top">
-			<div class="in2igui_layout_top"><div class="in2igui_layout_top"><div class="in2igui_layout_top">
+	<thead class="hui_layout">
+		<tr><td class="hui_layout_top">
+			<div class="hui_layout_top"><div class="hui_layout_top"><div class="hui_layout_top">
 				<xsl:apply-templates/>
 				<xsl:comment/>
 			</div></div></div>
@@ -216,10 +216,10 @@
 </xsl:template>
 
 <xsl:template match="gui:layout/gui:middle">
-	<tbody class="in2igui_layout">
-		<tr class="in2igui_layout_middle">
-			<td class="in2igui_layout_middle">
-			<table class="in2igui_layout_middle">
+	<tbody class="hui_layout">
+		<tr class="hui_layout_middle">
+			<td class="hui_layout_middle">
+			<table class="hui_layout_middle">
 				<tr>
 					<xsl:apply-templates/>
 				</tr>
@@ -229,14 +229,14 @@
 </xsl:template>
 
 <xsl:template match="gui:layout/gui:middle/gui:left">
-	<td class="in2igui_layout_left">
+	<td class="hui_layout_left">
 		<xsl:apply-templates/>
-		<div class="in2igui_layout_left"><xsl:comment/></div>
+		<div class="hui_layout_left"><xsl:comment/></div>
 	</td>
 </xsl:template>
 
 <xsl:template match="gui:layout/gui:middle/gui:center">
-	<td class="in2igui_layout_center">
+	<td class="hui_layout_center">
 		<xsl:if test="@padding">
 			<xsl:attribute name="style">padding: <xsl:value-of select="@padding"/>px;</xsl:attribute>
 		</xsl:if>
@@ -245,9 +245,9 @@
 </xsl:template>
 
 <xsl:template match="gui:layout/gui:bottom">
-	<tfoot class="in2igui_layout">
-		<tr><td class="in2igui_layout_bottom">
-			<div class="in2igui_layout_bottom"><div class="in2igui_layout_bottom"><div class="in2igui_layout_bottom">
+	<tfoot class="hui_layout">
+		<tr><td class="hui_layout_bottom">
+			<div class="hui_layout_bottom"><div class="hui_layout_bottom"><div class="hui_layout_bottom">
 				<xsl:apply-templates/>
 			</div></div></div>
 		</td></tr>
@@ -267,7 +267,7 @@
 		</xsl:if>
 	</xsl:attribute>
 	<xsl:if test="@background">
-		<xsl:attribute name="class">in2igui_bg_<xsl:value-of select="@background"/></xsl:attribute>
+		<xsl:attribute name="class">hui_bg_<xsl:value-of select="@background"/></xsl:attribute>
 	</xsl:if>
 	<xsl:apply-templates/>
 </div>

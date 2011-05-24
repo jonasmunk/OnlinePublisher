@@ -12,15 +12,15 @@ hui.ui.ImageViewer = function(options) {
 		},options);
 	this.element = hui.get(options.element);
 	this.box = this.options.box;
-	this.viewer = hui.firstByClass(this.element,'in2igui_imageviewer_viewer');
-	this.innerViewer = hui.firstByClass(this.element,'in2igui_imageviewer_inner_viewer');
-	this.status = hui.firstByClass(this.element,'in2igui_imageviewer_status');
-	this.previousControl = hui.firstByClass(this.element,'in2igui_imageviewer_previous');
-	this.controller = hui.firstByClass(this.element,'in2igui_imageviewer_controller');
-	this.nextControl = hui.firstByClass(this.element,'in2igui_imageviewer_next');
-	this.playControl = hui.firstByClass(this.element,'in2igui_imageviewer_play');
-	this.closeControl = hui.firstByClass(this.element,'in2igui_imageviewer_close');
-	this.text = hui.firstByClass(this.element,'in2igui_imageviewer_text');
+	this.viewer = hui.firstByClass(this.element,'hui_imageviewer_viewer');
+	this.innerViewer = hui.firstByClass(this.element,'hui_imageviewer_inner_viewer');
+	this.status = hui.firstByClass(this.element,'hui_imageviewer_status');
+	this.previousControl = hui.firstByClass(this.element,'hui_imageviewer_previous');
+	this.controller = hui.firstByClass(this.element,'hui_imageviewer_controller');
+	this.nextControl = hui.firstByClass(this.element,'hui_imageviewer_next');
+	this.playControl = hui.firstByClass(this.element,'hui_imageviewer_play');
+	this.closeControl = hui.firstByClass(this.element,'hui_imageviewer_close');
+	this.text = hui.firstByClass(this.element,'hui_imageviewer_text');
 	this.dirty = false;
 	this.width = 600;
 	this.height = 460;
@@ -36,16 +36,16 @@ hui.ui.ImageViewer = function(options) {
 hui.ui.ImageViewer.create = function(options) {
 	options = options || {};
 	var element = options.element = hui.build('div',
-		{'class':'in2igui_imageviewer',
+		{'class':'hui_imageviewer',
 		html:
-		'<div class="in2igui_imageviewer_viewer"><div class="in2igui_imageviewer_inner_viewer"></div></div>'+
-		'<div class="in2igui_imageviewer_text"></div>'+
-		'<div class="in2igui_imageviewer_status"></div>'+
-		'<div class="in2igui_imageviewer_controller"><div><div>'+
-		'<a class="in2igui_imageviewer_previous"></a>'+
-		'<a class="in2igui_imageviewer_play"></a>'+
-		'<a class="in2igui_imageviewer_next"></a>'+
-		'<a class="in2igui_imageviewer_close"></a>'+
+		'<div class="hui_imageviewer_viewer"><div class="hui_imageviewer_inner_viewer"></div></div>'+
+		'<div class="hui_imageviewer_text"></div>'+
+		'<div class="hui_imageviewer_status"></div>'+
+		'<div class="hui_imageviewer_controller"><div><div>'+
+		'<a class="hui_imageviewer_previous"></a>'+
+		'<a class="hui_imageviewer_play"></a>'+
+		'<a class="hui_imageviewer_next"></a>'+
+		'<a class="hui_imageviewer_close"></a>'+
 		'</div></div></div>'});
 	var box = hui.ui.Box.create({absolute:true,modal:true,closable:true});
 	box.add(element);
@@ -127,7 +127,7 @@ hui.ui.ImageViewer.prototype = {
 		}
 		if (!this.zoomer) {
 			this.zoomer = hui.build('div',{
-				'class' : 'in2igui_imageviewer_zoomer',
+				'class' : 'hui_imageviewer_zoomer',
 				style : 'width:'+this.viewer.clientWidth+'px;height:'+this.viewer.clientHeight+'px'
 			});
 			this.element.insertBefore(this.zoomer,hui.firstByTag(this.element,'*'));
@@ -234,7 +234,7 @@ hui.ui.ImageViewer.prototype = {
 		if (this.dirty) {
 			this.innerViewer.innerHTML='';
 			for (var i=0; i < this.images.length; i++) {
-				var element = hui.build('div',{'class':'in2igui_imageviewer_image'});
+				var element = hui.build('div',{'class':'hui_imageviewer_image'});
 				hui.setStyle(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
 				this.innerViewer.appendChild(element);
 			};
@@ -295,12 +295,12 @@ hui.ui.ImageViewer.prototype = {
 		}
 		this.next(false);
 		this.playing=true;
-		this.playControl.className='in2igui_imageviewer_pause';
+		this.playControl.className='hui_imageviewer_pause';
 	},
 	pause : function() {
 		window.clearInterval(this.interval);
 		this.interval = null;
-		this.playControl.className='in2igui_imageviewer_play';
+		this.playControl.className='hui_imageviewer_play';
 		this.playing = false;
 	},
 	playOrPause : function() {
@@ -368,16 +368,16 @@ hui.ui.ImageViewer.prototype = {
 		var url = hui.ui.resolveImageUrl(this,this.images[index],this.width,this.height);
 		url = url.replace(/&amp;/g,'&');
 		this.innerViewer.childNodes[index].style.backgroundImage="url('"+url+"')";
-		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',false);
-		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',false);
+		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_abort',false);
+		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_error',false);
 	},
 	/** @private */
 	imageDidGiveError : function(loaded,total,index) {
-		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_error',true);
+		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_error',true);
 	},
 	/** @private */
 	imageDidAbort : function(loaded,total,index) {
-		hui.setClass(this.innerViewer.childNodes[index],'in2igui_imageviewer_image_abort',true);
+		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_abort',true);
 	}
 }
 

@@ -14,7 +14,7 @@ $sql = "select * from document_column where id=".$id;
 $row = Database::selectFirst($sql);
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Toolbar">
+<gui xmlns="uri:hui" title="Toolbar">
 	<controller source="js/ColumnToolbar.js"/>
 	<script>
 	columnToolbar.columnId='.getDocumentColumn().';

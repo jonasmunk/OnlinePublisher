@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10" title="System">
+<gui xmlns="uri:hui" padding="10" title="System">
 	<controller source="controller.js"/>
 	<source name="listSource" url="List.php">
 		<parameter key="windowPage" value="@list.window.page"/>

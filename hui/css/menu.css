@@ -1,4 +1,4 @@
-div.in2igui_menu
+div.hui_menu
 {
 	display: none;
 	position: absolute;
@@ -17,14 +17,14 @@ div.in2igui_menu
 }
 
 
-div.in2igui_menu_divider
+div.hui_menu_divider
 {
 	font-size: 0px;
 	border-top: 1px solid #ddd;
 	margin: 3px 0px;
 }
 
-div.in2igui_menu_item
+div.hui_menu_item
 {
 	font-size: 13px;
 	line-height: 18px;
@@ -33,18 +33,18 @@ div.in2igui_menu_item
 	height: 18px;
 }
 
-div.in2igui_menu_item:hover
+div.hui_menu_item:hover
 {
 	background-color: #3875d7;
 	color: #fff;
 }
 
-div.in2igui_menu_item_children
+div.hui_menu_item_children
 {
 	background: url('../gfx/menu_arrow.png') right top no-repeat;
 }
 
-div.in2igui_menu_item_children:hover
+div.hui_menu_item_children:hover
 {
 	background: #3875d7 url('../gfx/menu_arrow.png') right -18px no-repeat;
 }

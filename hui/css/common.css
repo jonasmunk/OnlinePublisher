@@ -1,4 +1,4 @@
-div.in2igui_curtain
+div.hui_curtain
 {
 	width: 100%;
 	background: #000;
@@ -7,7 +7,7 @@ div.in2igui_curtain
 	left: 0px;
 }
 
-div.in2igui_dragproxy
+div.hui_dragproxy
 {
 	position: absolute;
 	top: 0px;
@@ -18,7 +18,7 @@ div.in2igui_dragproxy
 	font-size: 9pt;
 }
 
-div.in2igui_dragproxy span
+div.hui_dragproxy span
 {
 	padding: 1px 3px;
 	background: rgba(255,255,255,.8);

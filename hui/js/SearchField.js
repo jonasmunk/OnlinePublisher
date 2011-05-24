@@ -5,7 +5,7 @@ hui.ui.SearchField = function(options) {
 	this.name = options.name;
 	this.field = hui.firstByTag(this.element,'input');
 	this.value = this.field.value;
-	this.adaptive = hui.hasClass(this.element,'in2igui_searchfield_adaptive');
+	this.adaptive = hui.hasClass(this.element,'hui_searchfield_adaptive');
 	hui.ui.onReady(function() {
 		this.initialWidth = parseInt(hui.getStyle(this.element,'width'))
 	}.bind(this));
@@ -18,8 +18,8 @@ hui.ui.SearchField.create = function(options) {
 	options = options || {};
 	
 	options.element = hui.build('span',{
-		'class' : options.adaptive ? 'in2igui_searchfield in2igui_searchfield_adaptive' : 'in2igui_searchfield',
-		html : '<em class="in2igui_searchfield_placeholder"></em><a href="javascript:void(0);" class="in2igui_searchfield_reset"></a><span><span><input type="text"/></span></span>'
+		'class' : options.adaptive ? 'hui_searchfield hui_searchfield_adaptive' : 'hui_searchfield',
+		html : '<em class="hui_searchfield_placeholder"></em><a href="javascript:void(0);" class="hui_searchfield_reset"></a><span><span><input type="text"/></span></span>'
 	});
 	return new hui.ui.SearchField(options);
 }
@@ -82,16 +82,16 @@ hui.ui.SearchField.prototype = {
 	},
 	/** @private */
 	updateClass : function() {
-		var className = 'in2igui_searchfield';
+		var className = 'hui_searchfield';
 		if (this.adaptive) {
-			className+=' in2igui_searchfield_adaptive';
+			className+=' hui_searchfield_adaptive';
 		}
 		if (this.focused && this.value!='') {
-			className+=' in2igui_searchfield_focus_dirty';
+			className+=' hui_searchfield_focus_dirty';
 		} else if (this.focused) {
-			className+=' in2igui_searchfield_focus';
+			className+=' hui_searchfield_focus';
 		} else if (this.value!='') {
-			className+=' in2igui_searchfield_dirty';
+			className+=' hui_searchfield_dirty';
 		}
 		this.element.className=className;
 	},

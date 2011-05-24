@@ -1,4 +1,4 @@
-div.in2igui_overlay
+div.hui_overlay
 {
 	display: none;
 	position: absolute;
@@ -8,7 +8,7 @@ div.in2igui_overlay
 	font-size: 0;
 }
 
-div.in2igui_inner_overlay
+div.hui_inner_overlay
 {
 	background: url('../gfx/overlay_24.png') right -40px no-repeat;
 	padding-right: 7px;
@@ -16,13 +16,13 @@ div.in2igui_inner_overlay
 	white-space: nowrap;
 }
 
-div.in2igui_inner_overlay div.in2igui_inner_overlay
+div.hui_inner_overlay div.hui_inner_overlay
 {
 	background: url('../gfx/overlay_24.png') left -80px repeat-x;
 	padding: 0px;
 }
 
-div.in2igui_overlay_icon
+div.hui_overlay_icon
 {
 	width: 32px;
 	height: 32px;
@@ -30,22 +30,22 @@ div.in2igui_overlay_icon
 	margin: 3px 1px 0px;
 }
 
-div.in2igui_overlay a.hui_button
+div.hui_overlay a.hui_button
 {
 	margin-top: 4px;
 }
 /*
-div.in2igui_overlay a.hui_button
+div.hui_overlay a.hui_button
 {
 	-webkit-transition: -webkit-transform 0.3s ease-in-out;
 }
 
-div.in2igui_overlay a.hui_button:hover
+div.hui_overlay a.hui_button:hover
 {
     -webkit-transform: scale(1.2);
 }*/
 
-span.in2igui_overlay_text
+span.hui_overlay_text
 {
 	display: inline-block;
 	line-height: 30px;

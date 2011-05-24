@@ -1,4 +1,4 @@
-span.in2igui_searchfield
+span.hui_searchfield
 {
 	display: inline-block;
 	height: 25px;
@@ -12,14 +12,14 @@ span.in2igui_searchfield
 	vertical-align: middle;
 }
 
-span.in2igui_searchfield span
+span.hui_searchfield span
 {
 	display: block;
 	height: 25px;
 	background: url('../gfx/search_field.png') right -25px no-repeat;
 }
 
-span.in2igui_searchfield span span
+span.hui_searchfield span span
 {
 	height: 25px;
 	background-position: right -50px;
@@ -28,7 +28,7 @@ span.in2igui_searchfield span span
 	padding: 0 7px 0 2px;
 }
 
-span.in2igui_searchfield input
+span.hui_searchfield input
 {
 	border: none;
 	background: none;
@@ -40,7 +40,7 @@ span.in2igui_searchfield input
 	outline: none;
 }
 
-a.in2igui_searchfield_reset
+a.hui_searchfield_reset
 {
 	position: absolute;
 	right: 6px;
@@ -52,17 +52,17 @@ a.in2igui_searchfield_reset
 	background: url('../gfx/search_field.png') left -300px;
 }
 
-a.in2igui_searchfield_reset:hover
+a.hui_searchfield_reset:hover
 {
 	background-position: 0 -313px;
 }
 
-span.in2igui_searchfield_dirty a, span.in2igui_searchfield_focus_dirty a
+span.hui_searchfield_dirty a, span.hui_searchfield_focus_dirty a
 {
 	display: block;
 }
 
-em.in2igui_searchfield_placeholder
+em.hui_searchfield_placeholder
 {
 	position: absolute;
 	font-style: normal;
@@ -75,63 +75,63 @@ em.in2igui_searchfield_placeholder
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
-span.in2igui_searchfield_dirty em,span.in2igui_searchfield_focus em, span.in2igui_searchfield_focus_dirty em
+span.hui_searchfield_dirty em,span.hui_searchfield_focus em, span.hui_searchfield_focus_dirty em
 {
 	display: none;
 }
 
-span.in2igui_searchfield_adaptive
+span.hui_searchfield_adaptive
 {
 	width: 100%;
 }
 
 /*** Focus ***/
 
-span.in2igui_searchfield_focus
+span.hui_searchfield_focus
 {
 	background-position: 0 -75px;
 }
 
-span.in2igui_searchfield_focus span
+span.hui_searchfield_focus span
 {
 	background-position: right -100px;
 }
 
-span.in2igui_searchfield_focus span span
+span.hui_searchfield_focus span span
 {
 	background-position: 0 -125px;
 }
 
 
 
-span.in2igui_searchfield_dirty
+span.hui_searchfield_dirty
 {
 	background-position: 0 -150px;
 }
 
-span.in2igui_searchfield_dirty span
+span.hui_searchfield_dirty span
 {
 	background-position: right -175px;
 }
 
-span.in2igui_searchfield_dirty span span
+span.hui_searchfield_dirty span span
 {
 	background-position: 0 -200px;
 }
 
 
 
-span.in2igui_searchfield_focus_dirty
+span.hui_searchfield_focus_dirty
 {
 	background-position: 0 -225px;
 }
 
-span.in2igui_searchfield_focus_dirty span
+span.hui_searchfield_focus_dirty span
 {
 	background-position: right -250px;
 }
 
-span.in2igui_searchfield_focus_dirty span span
+span.hui_searchfield_focus_dirty span span
 {
 	background-position: 0 -275px;
 }

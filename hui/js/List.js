@@ -36,8 +36,8 @@ hui.ui.List = function(options) {
 	this.columns = [];
 	this.rows = [];
 	this.selected = [];
-	this.navigation = hui.firstByClass(this.element,'in2igui_list_navigation');
-	this.count = hui.firstByClass(this.navigation,'in2igui_list_count');
+	this.navigation = hui.firstByClass(this.element,'hui_list_navigation');
+	this.count = hui.firstByClass(this.navigation,'hui_list_count');
 	this.windowPage = hui.firstByClass(this.navigation,'window_page');
 	this.windowPageBody = hui.firstByClass(this.navigation,'window_page_body');
 	this.parameters = {};
@@ -61,8 +61,8 @@ hui.ui.List = function(options) {
 hui.ui.List.create = function(options) {
 	options = hui.override({},options);
 	options.element = hui.build('div',{
-		'class':'in2igui_list',
-		html: '<div class="in2igui_list_progress"></div><div class="in2igui_list_navigation"><div class="in2igui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="in2igui_list_count"></span></div><div class="in2igui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
+		'class':'hui_list',
+		html: '<div class="hui_list_progress"></div><div class="hui_list_navigation"><div class="hui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="hui_list_count"></span></div><div class="hui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
 	return new hui.ui.List(options);
 }
 
@@ -248,8 +248,8 @@ hui.ui.List.prototype = {
 			}
 			if (sortable) {
 				var self = this;
-				th.in2iguiIndex = i;
-				th.onclick=function() {self.sort(this.in2iguiIndex)};
+				th.huiIndex = i;
+				th.onclick=function() {self.sort(this.huiIndex)};
 				className+='sortable';
 			}
 			if (this.sortKey && key==this.sortKey) {
@@ -271,10 +271,17 @@ hui.ui.List.prototype = {
 			row.setAttribute('data-index',i);
 			var icon = rows[i].getAttribute('icon');
 			var title = rows[i].getAttribute('title');
+			var level = rows[i].getAttribute('level');
 			for (var j=0; j < cells.length; j++) {
 				var td = document.createElement('td');
 				if (cells[j].getAttribute('wrap')=='false') {
 					td.style.whiteSpace='nowrap';
+				}
+				if (cells[j].getAttribute('vertical-align')) {
+					td.style.verticalAlign=cells[j].getAttribute('vertical-align');
+				}
+				if (j==0 && level>1) {
+					td.style.paddingLeft = ((parseInt(level)-1)*16+5)+'px';
 				}
 				this.parseCell(cells[j],td);
 				row.appendChild(td);
@@ -321,10 +328,10 @@ hui.ui.List.prototype = {
 		if (busy) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				hui.addClass(e,'in2igui_list_busy');
+				hui.addClass(e,'hui_list_busy');
 			},300);
 		} else {
-			hui.removeClass(this.element,'in2igui_list_busy');
+			hui.removeClass(this.element,'hui_list_busy');
 		}
 	},
 	
@@ -361,9 +368,9 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'icon')) {
 				cell.appendChild(hui.ui.createIcon(child.getAttribute('icon'),1));
 			} else if (hui.dom.isElement(child,'line')) {
-				var line = hui.build('p',{'class':'in2igui_list_line'});
+				var line = hui.build('p',{'class':'hui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
-					hui.addClass(line,'in2igui_list_dimmed')
+					hui.addClass(line,'hui_list_dimmed')
 				}
 				cell.appendChild(line);
 				this.parseCell(child,line);
@@ -377,7 +384,7 @@ hui.ui.List.prototype = {
 				}
 				cell.appendChild(obj);
 			} else if (hui.dom.isElement(child,'icons')) {
-				var icons = hui.build('span',{'class':'in2igui_list_icons'});
+				var icons = hui.build('span',{'class':'hui_list_icons'});
 				this.parseCell(child,icons);
 				cell.appendChild(icons);
 			} else if (hui.dom.isElement(child,'button')) {

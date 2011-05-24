@@ -1,4 +1,4 @@
-span.in2igui_segmented
+span.hui_segmented
 {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -13,7 +13,7 @@ span.in2igui_segmented
 	background: -moz-linear-gradient(top, #fff, #eee);
 }
 
-span.in2igui_segmented a
+span.hui_segmented a
 {
 	display: inline-block;
 	height: 20px;
@@ -26,19 +26,19 @@ span.in2igui_segmented a
 	outline: none;
 }
 
-span.in2igui_segmented .in2igui_icon_16
+span.hui_segmented .hui_icon_16
 {
 	margin-top: 2px;
 }
 
-span.in2igui_segmented_text
+span.hui_segmented_text
 {
 	font-size: 12px;
 	line-height: 20px;
 	padding: 0 4px;
 }
 
-a.in2igui_segmented_selected
+a.hui_segmented_selected
 {
 	background: #ddd;
 	background: -moz-linear-gradient(top, #EFF2F4, #C0C9CF);

@@ -21,7 +21,7 @@ div.sidebar
 	left: 0;
 	top: 0;
 	width: 300px;
-	background-image: -webkit-gradient(linear, 0 0, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,.4))), url('<?=baseit('../../In2iGui/gfx/backgrounds/sand_dark.png')?>');
+	background-image: -webkit-gradient(linear, 0 0, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,.4))), url('<?=baseit('../../hui/gfx/backgrounds/sand_dark.png')?>');
 	height: 100%;
 }
 
@@ -69,7 +69,7 @@ div.page
 	height: 800px;
 	overflow: hidden;
 	margin: 10px;
-	background: #fff;/*url('<?=baseit('../../In2iGui/gfx/backgrounds/sand_light.png')?>');*/
+	background: #fff;/*url('<?=baseit('../../hui/gfx/backgrounds/sand_light.png')?>');*/
 	font-family: Palatino;
 	color: #321;
 	border-radius: 3px;

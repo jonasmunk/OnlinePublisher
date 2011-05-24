@@ -4,7 +4,7 @@
 hui.ui.Overlay = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
-	this.content = hui.byClass(this.element,'in2igui_inner_overlay')[1];
+	this.content = hui.byClass(this.element,'hui_inner_overlay')[1];
 	this.name = options.name;
 	this.icons = {};
 	this.visible = false;
@@ -17,7 +17,7 @@ hui.ui.Overlay = function(options) {
  */
 hui.ui.Overlay.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{className:'in2igui_overlay',style:'display:none',html:'<div class="in2igui_inner_overlay"><div class="in2igui_inner_overlay"></div></div>'});
+	var e = options.element = hui.build('div',{className:'hui_overlay',style:'display:none',html:'<div class="hui_inner_overlay"><div class="hui_inner_overlay"></div></div>'});
 	document.body.appendChild(e);
 	return new hui.ui.Overlay(options);
 }
@@ -31,7 +31,7 @@ hui.ui.Overlay.prototype = {
 				if (hui.ui.isWithin(e,self.boundElement) || hui.ui.isWithin(e,self.element)) return;
 				// TODO: should be unreg'ed but it fails
 				//self.boundElement.stopObserving(self.hider);
-				hui.removeClass(self.boundElement,'in2igui_overlay_bound');
+				hui.removeClass(self.boundElement,'hui_overlay_bound');
 				self.boundElement = null;
 				self.hide();
 			}
@@ -40,7 +40,7 @@ hui.ui.Overlay.prototype = {
 	},
 	addIcon : function(key,icon) {
 		var self = this;
-		var element = hui.build('div',{className:'in2igui_overlay_icon'});
+		var element = hui.build('div',{className:'hui_overlay_icon'});
 		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,2)+')';
 		hui.listen(element,'click',function(e) {
 			self.iconWasClicked(key,e);
@@ -49,7 +49,7 @@ hui.ui.Overlay.prototype = {
 		this.content.appendChild(element);
 	},
 	addText : function(text) {
-		this.content.appendChild(hui.build('span',{'class':'in2igui_overlay_text',text:text}));
+		this.content.appendChild(hui.build('span',{'class':'hui_overlay_text',text:text}));
 	},
 	add : function(widget) {
 		this.content.appendChild(widget.getElement());
@@ -81,7 +81,7 @@ hui.ui.Overlay.prototype = {
 		if (options.autoHide) {
 			this.boundElement = element;
 			hui.listen(element,'mouseout',this.hider);
-			hui.addClass(element,'in2igui_overlay_bound');
+			hui.addClass(element,'hui_overlay_bound');
 		}
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();
@@ -108,7 +108,7 @@ hui.ui.Overlay.prototype = {
 		if (options.autoHide && options.element) {
 			this.boundElement = options.element;
 			hui.listen(options.element,'mouseout',this.hider);
-			hui.addClass(options.element,'in2igui_overlay_bound');
+			hui.addClass(options.element,'hui_overlay_bound');
 		}
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();

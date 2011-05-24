@@ -1,4 +1,4 @@
-ui.get().listen({
+hui.ui.listen({
 	$ready : function() {
 		var form = partToolbar.partForm;
 		receiverName.setValue(form.receiverName.value);

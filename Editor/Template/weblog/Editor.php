@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10">
+<gui xmlns="uri:hui" padding="10">
 	<controller source="controller.js"/>
 	<box width="360" top="30" padding="10" title="Indstillinger til weblog">
 		<formula name="formula">

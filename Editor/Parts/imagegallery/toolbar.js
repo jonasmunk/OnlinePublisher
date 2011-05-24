@@ -1,4 +1,4 @@
-ui.get().listen({
+hui.ui.listen({
 	$ready : function() {
 		group.setValue(partToolbar.partForm.group.value);
 		height.setValue(partToolbar.partForm.height.value);

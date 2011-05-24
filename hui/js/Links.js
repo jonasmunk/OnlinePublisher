@@ -47,11 +47,11 @@ hui.ui.Links.prototype = {
 		e = new hui.Event(e);
 		e.stop();
 		var element = e.getElement();
-		if (hui.hasClass(element,'in2igui_links_remove')) {
-			var row = e.findByClass('in2igui_links_row');
+		if (hui.hasClass(element,'hui_links_remove')) {
+			var row = e.findByClass('hui_links_row');
 			hui.ui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
-				this.items.splice(row.in2igui_index,1);
-				if (this.selectedIndex===row.in2igui_index) {
+				this.items.splice(row.hui_index,1);
+				if (this.selectedIndex===row.hui_index) {
 					this.selectedIndex=null;
 				}
 				this.build();				
@@ -61,35 +61,35 @@ hui.ui.Links.prototype = {
 		}
 	},
 	selectAndGetRow : function(event) {
-		var row = event.findByClass('in2igui_links_row');
+		var row = event.findByClass('hui_links_row');
 		if (row) {
-			var idx = row.in2igui_index;
+			var idx = row.hui_index;
 			if (this.selectedIndex!==null) {
-				var x = hui.byClass(this.element,'in2igui_links_row')[this.selectedIndex];
-				hui.removeClass(x,'in2igui_links_row_selected')
+				var x = hui.byClass(this.element,'hui_links_row')[this.selectedIndex];
+				hui.removeClass(x,'hui_links_row_selected')
 			}
 			this.selectedIndex = idx;
-			hui.addClass(row,'in2igui_links_row_selected');
+			hui.addClass(row,'hui_links_row_selected');
 			return this.items[idx];
 		}
 	},
 	build : function() {
-		var list = this.list || hui.firstByClass(this.element,'in2igui_links_list'),
+		var list = this.list || hui.firstByClass(this.element,'hui_links_list'),
 			i,item,row,infoNode,text,remove;
 		list.innerHTML='';
 		for (i=0; i < this.items.length; i++) {
 			item = this.items[i];
-			row = hui.build('div',{'class':'in2igui_links_row'});
-			row.in2igui_index = i;
+			row = hui.build('div',{'class':'hui_links_row'});
+			row.hui_index = i;
 			
 			row.appendChild(hui.ui.createIcon(item.icon,1));
-			text = hui.build('div',{'class':'in2igui_links_text',text:item.text});
+			text = hui.build('div',{'class':'hui_links_text',text:item.text});
 			row.appendChild(text);
 
-			infoNode = hui.build('div',{'class':'in2igui_links_info',text:hui.wrap(item.info)});
+			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.wrap(item.info)});
 			row.appendChild(infoNode);
 			remove = hui.ui.createIcon('monochrome/round_x',1);
-			hui.addClass(remove,'in2igui_links_remove');
+			hui.addClass(remove,'hui_links_remove');
 			row.appendChild(remove);
 
 			list.appendChild(row);

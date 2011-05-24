@@ -1,11 +1,11 @@
 /*************** Flip ****************/
 
-.in2igui_flip_container
+.hui_flip_container
 {
 	-webkit-perspective: 1000;
 }
 
-.in2igui_flip_back, .in2igui_flip_front
+.hui_flip_back, .hui_flip_front
 {
 	-webkit-transform-style : preserve-3d;
    	-webkit-transition-property : -webkit-transform;
@@ -14,46 +14,46 @@
 	-webkit-transform : rotate(2deg);
 }
 
-.in2igui_flip_back
+.hui_flip_back
 {
 	-webkit-transform : rotateY(180deg);
 }
 
-.in2igui_flip_flipped .in2igui_flip_back
+.hui_flip_flipped .hui_flip_back
 {
 	-webkit-transform : rotateY(360deg);
 }
 
-.in2igui_flip_front
+.hui_flip_front
 {
 	-webkit-transform : rotateY(0deg);
 }
 
-.in2igui_flip_flipped .in2igui_flip_front
+.hui_flip_flipped .hui_flip_front
 {
 	-webkit-transform : rotateY(180deg);
 }
 
 /** Leacy **/
 
-.in2igui_flip_back_legacy
+.hui_flip_back_legacy
 {
 	display: none;
 }
 
-.in2igui_flip_flipped_legacy .in2igui_flip_back_legacy
+.hui_flip_flipped_legacy .hui_flip_back_legacy
 {
 	display: block;
 }
 
-.in2igui_flip_flipped_legacy .in2igui_flip_front_legacy
+.hui_flip_flipped_legacy .hui_flip_front_legacy
 {
 	display: none;
 }
 
 /********** Cubic *********/
 
-.in2igui_effect_cube
+.hui_effect_cube
 {
 	-webkit-transform-style : preserve-3d; 
 	-webkit-transition-property : -webkit-transform;
@@ -61,33 +61,33 @@
 	-webkit-backface-visibility : hidden;
 }
 
-.in2igui_effect_cube_face
+.hui_effect_cube_face
 {
   -webkit-transition-duration: 1000ms;
 	position: absolute;
 }
 
-.in2igui_effect_cube_run .in2igui_effect_cube_face
+.hui_effect_cube_run .hui_effect_cube_face
 {
   -webkit-transition-duration: 1000ms;
 }
 
-.in2igui_effect_cube_face_out
+.hui_effect_cube_face_out
 {
   -webkit-transform: translateZ(-256px) rotateY(0deg) translateZ(256px);
 }
 
-.in2igui_effect_cube_face_in
+.hui_effect_cube_face_in
 {
   -webkit-transform: translateZ(-256px) rotateY(90deg) translateZ(256px);
 }
 
-.in2igui_effect_cube_run .in2igui_effect_cube_face_out
+.hui_effect_cube_run .hui_effect_cube_face_out
 {
   -webkit-transform: translateZ(-256px) rotateY(-90deg) translateZ(256px);
 }
 
-.in2igui_effect_cube_run .in2igui_effect_cube_face_in
+.hui_effect_cube_run .hui_effect_cube_face_in
 {
   -webkit-transform: translateZ(-256px) rotateY(0deg) translateZ(256px);
 }

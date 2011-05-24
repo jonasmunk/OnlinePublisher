@@ -980,25 +980,25 @@ hui.selection = {
 hui.effect = {
 	makeFlippable : function(options) {
 		if (hui.browser.webkit) {
-			hui.addClass(options.container,'in2igui_flip_container');
-			hui.addClass(options.front,'in2igui_flip_front');
-			hui.addClass(options.back,'in2igui_flip_back');
+			hui.addClass(options.container,'hui_flip_container');
+			hui.addClass(options.front,'hui_flip_front');
+			hui.addClass(options.back,'hui_flip_back');
 		} else {
-			hui.addClass(options.front,'in2igui_flip_front_legacy');
-			hui.addClass(options.back,'in2igui_flip_back_legacy');
+			hui.addClass(options.front,'hui_flip_front_legacy');
+			hui.addClass(options.back,'hui_flip_back_legacy');
 		}
 	},
 	flip : function(options) {
 		if (!hui.browser.webkit) {
-			hui.toggleClass(options.element,'in2igui_flip_flipped_legacy');
+			hui.toggleClass(options.element,'hui_flip_flipped_legacy');
 		} else {
 			var element = hui.get(options.element);
 			var duration = options.duration || '1s';
-			var front = hui.firstByClass(element,'in2igui_flip_front');
-			var back = hui.firstByClass(element,'in2igui_flip_back');
+			var front = hui.firstByClass(element,'hui_flip_front');
+			var back = hui.firstByClass(element,'hui_flip_back');
 			front.style.webkitTransitionDuration=duration;
 			back.style.webkitTransitionDuration=duration;
-			hui.toggleClass(options.element,'in2igui_flip_flipped');
+			hui.toggleClass(options.element,'hui_flip_flipped');
 		}
 	}
 }
@@ -1107,7 +1107,9 @@ hui.place = function(options) {
 
 //////////////////////////// Preloader /////////////////////////
 
-/** @constructor */
+/** @constructor
+ * @param options {context:«prefix for urls»}
+ */
 hui.Preloader = function(options) {
 	this.options = options || {};
 	this.delegate = {};
@@ -1116,6 +1118,7 @@ hui.Preloader = function(options) {
 }
 
 hui.Preloader.prototype = {
+	/** Add images either as a single url or an array of urls */
 	addImages : function(imageOrImages) {
 		if (typeof(imageOrImages)=='object') {
 			for (var i=0; i < imageOrImages.length; i++) {
@@ -1125,9 +1128,13 @@ hui.Preloader.prototype = {
 			this.images.push(imageOrImages);
 		}
 	},
+	/** Set the delegate (listener) */
 	setDelegate : function(d) {
 		this.delegate = d;
 	},
+	/**
+	 * Start loading images beginning at startIndex
+	 */
 	load : function(startIndex) {
 		startIndex = startIndex || 0;
 		var self = this;
@@ -1138,15 +1145,15 @@ hui.Preloader.prototype = {
 				index = index-this.images.length;
 			}
 			var img = new Image();
-			img.n2iPreloaderIndex = index;
-			img.onload = function() {self.imageChanged(this.n2iPreloaderIndex,'imageDidLoad')};
-			img.onerror = function() {self.imageChanged(this.n2iPreloaderIndex,'imageDidGiveError')};
-			img.onabort = function() {self.imageChanged(this.n2iPreloaderIndex,'imageDidAbort')};
+			img.huiPreloaderIndex = index;
+			img.onload = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidLoad')};
+			img.onerror = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidGiveError')};
+			img.onabort = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidAbort')};
 			img.src = (this.options.context ? this.options.context : '')+this.images[index];
 			this.obs.push(img);
 		};
 	},
-	imageChanged : function(index,method) {
+	_imageChanged : function(index,method) {
 		this.loaded++;
 		if (this.delegate[method]) {
 			this.delegate[method](this.loaded,this.images.length,index);
@@ -1157,8 +1164,9 @@ hui.Preloader.prototype = {
 	}
 }
 
-/* @namespace */
+/** @namespace */
 hui.cookie = {
+	/** Adds a cookie value by name */
 	set : function(name,value,days) {
 		var expires;
 		if (days) {
@@ -1170,16 +1178,22 @@ hui.cookie = {
 		}
 		document.cookie = name+"="+value+expires+"; path=/";
 	},
+	/** Gets a cookie value by name */
 	get : function(name) {
 		var nameEQ = name + "=";
 		var ca = document.cookie.split(';');
 		for(var i=0;i < ca.length;i++) {
 			var c = ca[i];
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			while (c.charAt(0)==' ') {
+				c = c.substring(1,c.length);
+			}
+			if (c.indexOf(nameEQ) == 0) {
+				return c.substring(nameEQ.length,c.length);
+			}
 		}
 		return null;
 	},
+	/** Clears a cookie by name */
 	clear : function(name) {
 		this.set(name,"",-1);
 	}
@@ -1187,6 +1201,7 @@ hui.cookie = {
 
 ///////////////////////// URL/Location /////////////////////
 
+/** @constructor */
 hui.URL = function(url) {
 	this.url = url || '';
 }
@@ -1201,8 +1216,9 @@ hui.URL.prototype = {
 	}
 }
 
-/* @namespace */
+/** @namespace */
 hui.location = {
+	/** Get an URL parameter */
 	getParameter : function(name) {
 		var parms = hui.location.getParameters();
 		for (var i=0; i < parms.length; i++) {
@@ -1212,6 +1228,7 @@ hui.location = {
 		};
 		return null;
 	},
+	/** Set an URL parameter - initiates a new request */
 	setParameter : function(name,value) {
 		var parms = hui.location.getParameters();
 		var found = false;
@@ -1227,6 +1244,7 @@ hui.location = {
 		}
 		hui.location.setParameters(parms);
 	},
+	/** Checks if the URL has a certain hash */
 	hasHash : function(name) {
 		var h = document.location.hash;
 		if (h!=='') {
@@ -1234,6 +1252,7 @@ hui.location = {
 		}
 		return false;
 	},
+	/** Gets a hash parameter (#name=value&other=text) */
 	getHashParameter : function(name) {
 		var h = document.location.hash;
 		if (h!=='') {
@@ -1248,9 +1267,13 @@ hui.location = {
 		}
 		return null;
 	},
+	/** Clears the URL hash */
 	clearHash : function() {
 		document.location.hash='#';
 	},
+	/** Sets a number of parameters
+	 * @param params Array of parameters [{name:'hep',value:'hey'}]
+	 */
 	setParameters : function(parms) {
 		var query = '';
 		for (var i=0; i < parms.length; i++) {
@@ -1259,10 +1282,12 @@ hui.location = {
 		};
 		document.location.search=query;
 	},
+	/** Checks if a parameter exists with the value 'true' or 1 */
 	getBoolean : function(name) {
 		var value = hui.location.getParameter(name);
 		return (value=='true' || value=='1');
 	},
+	/** Gets all parameters as an array like : [{name:'hep',value:'hey'}] */
 	getParameters : function() {
 		var items = document.location.search.substring(1).split('&');
 		var parsed = [];

@@ -1,4 +1,4 @@
-ui.get().listen({
+hui.ui.listen({
 	$ready : function() {
 		showStreetname.setValue(partToolbar.partForm.show_streetname.value);
 		showCity.setValue(partToolbar.partForm.show_city.value);

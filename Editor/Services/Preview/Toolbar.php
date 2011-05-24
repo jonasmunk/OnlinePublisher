@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Vis ændringer">
+<gui xmlns="uri:hui" title="Vis ændringer">
 	<controller source="controller.js"/>
 	<tabs small="true" below="true">
 		<tab title="Visning af ændringer" background="light">

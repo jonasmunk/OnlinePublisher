@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:In2iGui" padding="20" title="Box">
+<gui xmlns="uri:hui" padding="20" title="Box">
 	<columns>
 		<column>
 			<box width="500" padding="10" title="Title with toolbar" variant="textured" closable="true">

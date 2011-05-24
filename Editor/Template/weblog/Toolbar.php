@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Dokument">
+<gui xmlns="uri:hui" title="Dokument">
 	<controller source="toolbar.js"/>
 	<script>
 	controller.pageId='.InternalSession::getPageId().';

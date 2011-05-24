@@ -10,8 +10,8 @@ hui.ui.RichText = function(options) {
 	this.editor = WysiHat.Editor.attach(this.textarea);
 	this.editor.setAttribute('frameborder','0');
 	/* @private */
-	this.toolbar = hui.firstByClass(e,'in2igui_richtext_toolbar');
-	this.toolbarContent = hui.firstByClass(e,'in2igui_richtext_toolbar_content');
+	this.toolbar = hui.firstByClass(e,'hui_richtext_toolbar');
+	this.toolbarContent = hui.firstByClass(e,'hui_richtext_toolbar_content');
 	this.value = this.options.value;
 	this.document = null;
 	this.ignited = false;
@@ -56,7 +56,7 @@ hui.ui.RichText.replaceInput = function(options) {
 
 hui.ui.RichText.create = function(options) {
 	options = options || {};
-	options.element = hui.build('div',{'class':'in2igui_richtext',html:'<div class="in2igui_richtext_toolbar"><div class="in2igui_richtext_inner_toolbar"><div class="in2igui_richtext_toolbar_content"></div></div></div>'});
+	options.element = hui.build('div',{'class':'hui_richtext',html:'<div class="hui_richtext_toolbar"><div class="hui_richtext_inner_toolbar"><div class="hui_richtext_toolbar_content"></div></div></div>'});
 	return new hui.ui.RichText(options);
 }
 
@@ -122,12 +122,12 @@ hui.ui.RichText.prototype = {
 		var actions = hui.ui.RichText.actions;
 		for (var i=0; i < actions.length; i++) {
 			if (actions[i]==null) {
-				this.toolbarContent.appendChild(hui.build('div',{'class':'in2igui_richtext_divider'}));
+				this.toolbarContent.appendChild(hui.build('div',{'class':'hui_richtext_divider'}));
 			} else {
 				var div = hui.build('div',{'class':'action action_'+actions[i].key});
 				div.title=actions[i].key;
-				div.in2iguiRichTextAction = actions[i]
-				div.onclick = div.ondblclick = function(e) {return self.actionWasClicked(this.in2iguiRichTextAction,e);}
+				div.huiRichTextAction = actions[i]
+				div.onclick = div.ondblclick = function(e) {return self.actionWasClicked(this.huiRichTextAction,e);}
 				var img = hui.build('img');
 				img.src=hui.ui.context+'/hui/gfx/trans.png';
 				if (actions[i].icon) {

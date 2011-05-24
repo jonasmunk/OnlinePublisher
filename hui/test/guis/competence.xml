@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
-<gui xmlns="uri:In2iGui" pad="10" title="Box">
+<gui xmlns="uri:hui" pad="10" title="Box">
 	<box width="400" padding="10" top="100" variant="textured">
 		<formula name="formula">
 			<header>Ny begvienhed</header>

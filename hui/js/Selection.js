@@ -21,7 +21,7 @@ hui.ui.Selection = function(options) {
  */
 hui.ui.Selection.create = function(options) {
 	options = hui.override({width:0},options);
-	var e = options.element = hui.build('div',{'class':'in2igui_selection'});
+	var e = options.element = hui.build('div',{'class':'hui_selection'});
 	if (options.width>0) {
 		e.style.width = options.width+'px';
 	}
@@ -81,7 +81,7 @@ hui.ui.Selection.prototype = {
 	updateUI : function() {
 		var i;
 		for (i=0; i < this.items.length; i++) {
-			hui.setClass(this.items[i].element,'in2igui_selected',this.isSelection(this.items[i]));
+			hui.setClass(this.items[i].element,'hui_selected',this.isSelection(this.items[i]));
 		};
 		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
@@ -133,10 +133,10 @@ hui.ui.Selection.prototype = {
 		this.items = [];
 		hui.each(items,function(item) {
 			this.items.push(item);
-			var node = hui.build('div',{'class':'in2igui_selection_item'});
+			var node = hui.build('div',{'class':'hui_selection_item'});
 			item.element = node;
 			this.element.appendChild(node);
-			var inner = hui.build('span',{'class':'in2igui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
 			if (item.icon) {
 				node.appendChild(hui.ui.createIcon(item.icon,1));
 			}
@@ -220,31 +220,31 @@ hui.ui.Selection.Items.prototype = {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);
 		var open = inc==0;
-		var level = hui.build('div',{'class':'in2igui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
+		var level = hui.build('div',{'class':'hui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
 		hui.each(items,function(item) {
 			if (item.type=='title') {
-				hui.build('div',{'class':'in2igui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
+				hui.build('div',{'class':'hui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;
 			var left = inc*16+6;
 			if (!hierarchical && inc>0 || hierarchical && !hasChildren) left+=13;
-			var node = hui.build('div',{'class':'in2igui_selection_item'});
+			var node = hui.build('div',{'class':'hui_selection_item'});
 			node.style.paddingLeft = left+'px';
 			if (item.badge) {
-				node.appendChild(hui.build('strong',{'class':'in2igui_selection_badge',text:item.badge}));
+				node.appendChild(hui.build('strong',{'class':'hui_selection_badge',text:item.badge}));
 			}
 			if (hierarchical && hasChildren) {
 				var self = this;
-				var x = hui.build('span',{'class':'in2igui_disclosure',parent:node});
+				var x = hui.build('span',{'class':'hui_disclosure',parent:node});
 				hui.listen(x,'click',function(e) {
 					hui.stop(e);
 					self.toggle(x);
 				});
 			}
-			var inner = hui.build('span',{'class':'in2igui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
 			if (item.icon) {
-				node.appendChild(hui.build('span',{'class':'in2igui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,1)+')'}));
+				node.appendChild(hui.build('span',{'class':'hui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,1)+')'}));
 			}
 			node.appendChild(inner);
 			hui.listen(node,'click',function(e) {
@@ -262,12 +262,12 @@ hui.ui.Selection.Items.prototype = {
 	},
 	/** @private */
 	toggle : function(node) {
-		if (hui.hasClass(node,'in2igui_disclosure_open')) {
+		if (hui.hasClass(node,'hui_disclosure_open')) {
 			hui.getNext(node.parentNode).style.display='none';
-			hui.removeClass(node,'in2igui_disclosure_open');
+			hui.removeClass(node,'hui_disclosure_open');
 		} else {
 			hui.getNext(node.parentNode).style.display='block';
-			hui.addClass(node,'in2igui_disclosure_open');
+			hui.addClass(node,'hui_disclosure_open');
 		}
 	},
 	/** @private */
@@ -296,7 +296,7 @@ hui.ui.Selection.Items.prototype = {
 	/** @private */
 	updateUI : function() {
 		for (var i=0; i < this.items.length; i++) {
-			hui.setClass(this.items[i].element,'in2igui_selected',this.parent.isSelection(this.items[i]));
+			hui.setClass(this.items[i].element,'hui_selected',this.parent.isSelection(this.items[i]));
 		};
 	},
 	/** @private */

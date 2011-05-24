@@ -1,4 +1,4 @@
-div.in2igui_toolbar
+div.hui_toolbar
 {
 	padding: 0px;
 	font-family: "Lucida Grande","Tahoma",sans-serif;
@@ -6,7 +6,7 @@ div.in2igui_toolbar
 	font-size: 0;
 }
 
-div.in2igui_revealing_toolbar
+div.hui_revealing_toolbar
 {
 	left: 0px;
 	overflow: hidden;
@@ -18,7 +18,7 @@ div.in2igui_revealing_toolbar
 	border-bottom: 1px solid #aaa;
 }
 
-div.in2igui_toolbar span.in2igui_divider
+div.hui_toolbar span.hui_divider
 {
 	vertical-align: middle;
 	display: inline-block;
@@ -28,19 +28,19 @@ div.in2igui_toolbar span.in2igui_divider
 	margin: 1px 5px 0px;
 }
 
-div.in2igui_toolbar_centered
+div.hui_toolbar_centered
 {
 	text-align: center;
 }
 
-div.in2igui_toolbar_right
+div.hui_toolbar_right
 {
 	position: absolute;
 	right: 0;
 	top: 0;
 }
 
-div.in2igui_toolbar_body_fixed_height
+div.hui_toolbar_body_fixed_height
 {
 	height: 56px;
 	overflow: hidden;
@@ -49,7 +49,7 @@ div.in2igui_toolbar_body_fixed_height
 /********************************** Icon ************************/
 
 
-a.in2igui_toolbar_icon
+a.hui_toolbar_icon
 {
 	margin-top: 1px;
 	height: 55px;
@@ -61,52 +61,52 @@ a.in2igui_toolbar_icon
 	text-decoration: none;
 }
 
-a.in2igui_toolbar_icon:focus
+a.hui_toolbar_icon:focus
 {
 	background: url('../gfx/toolbar_bg.png') left 0 no-repeat;
 	outline: none;
 }
 
-a.in2igui_toolbar_icon:focus span.in2igui_toolbar_inner_icon
+a.hui_toolbar_icon:focus span.hui_toolbar_inner_icon
 {
 	background: url('../gfx/toolbar_bg.png') right -55px no-repeat;
 }
 
-a.in2igui_toolbar_icon:focus span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+a.hui_toolbar_icon:focus span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
 {
 	background: url('../gfx/toolbar_bg.png') left -110px repeat-x;
 }
 
-a.in2igui_toolbar_icon span.in2igui_toolbar_inner_icon
+a.hui_toolbar_icon span.hui_toolbar_inner_icon
 {
 	display: block;
 }
 
-a.in2igui_toolbar_icon span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+a.hui_toolbar_icon span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
 {
 	padding: 5px 0 0;
 	height: 50px;
 	margin: 0 7px;
 }
 
-a.in2igui_toolbar_icon_selected
+a.hui_toolbar_icon_selected
 {
 	background: url('../gfx/toolbar_bg.png') left -165px no-repeat;
 }
 
-a.in2igui_toolbar_icon_selected span.in2igui_toolbar_inner_icon
+a.hui_toolbar_icon_selected span.hui_toolbar_inner_icon
 {
 	background: url('../gfx/toolbar_bg.png') right -220px no-repeat;
 	height: 55px;
 }
 
-a.in2igui_toolbar_icon_selected span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+a.hui_toolbar_icon_selected span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
 {
 	background: url('../gfx/toolbar_bg.png') left -275px repeat-x;
 	height: 51px;
 }
 
-a.in2igui_toolbar_icon span.in2igui_icon
+a.hui_toolbar_icon span.hui_icon
 {
 	height: 32px;
 	width: 32px;
@@ -114,7 +114,7 @@ a.in2igui_toolbar_icon span.in2igui_icon
 	display: inline-block;
 }
 
-span.in2igui_icon_overlay
+span.hui_icon_overlay
 {
 	height: 32px;
 	width: 32px;
@@ -123,12 +123,12 @@ span.in2igui_icon_overlay
 }
 
 
-a.in2igui_toolbar_icon:hover span.in2igui_icon
+a.hui_toolbar_icon:hover span.hui_icon
 {
 	background-position: 0px -32px;
 }
 
-a.in2igui_toolbar_icon strong
+a.hui_toolbar_icon strong
 {
 	font-size: 11px;
 	color: #345;
@@ -136,20 +136,20 @@ a.in2igui_toolbar_icon strong
 	display: block;
 }
 
-a.in2igui_toolbar_icon_disabled
+a.hui_toolbar_icon_disabled
 {
 	opacity: 0.5;
 	cursor: default;
 }
 
-a.in2igui_toolbar_icon_disabled:hover span.in2igui_icon
+a.hui_toolbar_icon_disabled:hover span.hui_icon
 {
 	background-position: 0 0;
 }
 
 /********************************* Search *************************/
 
-span.in2igui_toolbar_search
+span.hui_toolbar_search
 {
 	height: 58px;
 	vertical-align: middle;
@@ -157,12 +157,12 @@ span.in2igui_toolbar_search
 	text-align: center;
 }
 
-span.in2igui_toolbar_search span.in2igui_searchfield
+span.hui_toolbar_search span.hui_searchfield
 {
 	margin: 12px 0px 3px;
 }
 
-span.in2igui_toolbar_search_label
+span.hui_toolbar_search_label
 {
 	display: block;
 	color:#334455;
@@ -172,7 +172,7 @@ span.in2igui_toolbar_search_label
 
 /********************** Buttons ********************/
 
-div.in2igui_toolbar a.hui_button
+div.hui_toolbar a.hui_button
 {
 	margin: 0;
 	font-size: 12px;
@@ -180,7 +180,7 @@ div.in2igui_toolbar a.hui_button
 
 /********************** Buttons ********************/
 
-div.in2igui_toolbar_badge
+div.hui_toolbar_badge
 {
 	vertical-align: middle;
 	display: inline-block;
@@ -192,7 +192,7 @@ div.in2igui_toolbar_badge
 	margin: 15px 4px 0px 4px;
 }
 
-div.in2igui_toolbar_inner_badge
+div.hui_toolbar_inner_badge
 {
 	background: url('../gfx/toolbar_badge.png') right -25px no-repeat;
 	padding-right: 8px;
@@ -200,19 +200,19 @@ div.in2igui_toolbar_inner_badge
 	float: left;
 }
 
-div.in2igui_toolbar_inner_badge div.in2igui_toolbar_inner_badge
+div.hui_toolbar_inner_badge div.hui_toolbar_inner_badge
 {
 	background: url('../gfx/toolbar_badge.png') right -50px repeat-x;
 	padding: 0px 8px;
 }
 
-div.in2igui_toolbar_badge strong
+div.hui_toolbar_badge strong
 {
 	margin-right: 4px;
 	color: #666;
 }
 
-div.in2igui_toolbar_badge_icon
+div.hui_toolbar_badge_icon
 {
 	width: 16px;
 	height: 16px;
@@ -222,42 +222,42 @@ div.in2igui_toolbar_badge_icon
 
 /********************************* No labels **************************/
 
-div.in2igui_toolbar_nolabels
+div.hui_toolbar_nolabels
 {
 	height: auto;
 }
 
-div.in2igui_toolbar_nolabels a.in2igui_toolbar_icon
+div.hui_toolbar_nolabels a.hui_toolbar_icon
 {
 	height: 34px;	
 }
 
-div.in2igui_toolbar_nolabels a.in2igui_toolbar_icon strong
+div.hui_toolbar_nolabels a.hui_toolbar_icon strong
 {
 	display: none;
 }
 
-div.in2igui_toolbar_nolabels span.in2igui_toolbar_inner_icon span.in2igui_toolbar_inner_icon
+div.hui_toolbar_nolabels span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
 {
 	padding-top: 0;
 }
 
-div.in2igui_toolbar_nolabels .in2igui_toolbar_search
+div.hui_toolbar_nolabels .hui_toolbar_search
 {
 	height: 34px;
 }
 
-div.in2igui_toolbar_nolabels .in2igui_toolbar_search .in2igui_searchfield  
+div.hui_toolbar_nolabels .hui_toolbar_search .hui_searchfield  
 {
 	margin-top: 4px;
 }
 
-div.in2igui_toolbar_nolabels div.in2igui_toolbar_search span
+div.hui_toolbar_nolabels div.hui_toolbar_search span
 {
 	display: none;
 }
 
-div.in2igui_toolbar_nolabels div.in2igui_divider 
+div.hui_toolbar_nolabels div.hui_divider 
 {
 	height: 30px;
 	margin-top: 3px;
@@ -265,31 +265,31 @@ div.in2igui_toolbar_nolabels div.in2igui_divider
 
 /************************************ Border *****************************/
 
-div.in2igui_toolbar_border_top
+div.hui_toolbar_border_top
 {
 	border-top: 1px solid #ddd;
 	padding: 0;
 }
 
-div.in2igui_toolbar_border_top div.in2igui_toolbar_body
+div.hui_toolbar_border_top div.hui_toolbar_body
 {
 	border-top: 1px solid #fff;
 	background: #f2f2f3;
 }
 
-div.in2igui_toolbar_border_bottom
+div.hui_toolbar_border_bottom
 {
 	border-bottom: 1px solid #ddd;
 	padding: 0;
 }
 
-div.in2igui_toolbar_border_bottom div.in2igui_toolbar_body
+div.hui_toolbar_border_bottom div.hui_toolbar_body
 {
 	border-top: 1px solid #fff;
 	background: #f2f2f3;
 }
 
-div.in2igui_layout_top div.in2igui_toolbar_border_top, div.in2igui_layout_top div.in2igui_toolbar_border_top div.in2igui_toolbar_body
+div.hui_layout_top div.hui_toolbar_border_top, div.hui_layout_top div.hui_toolbar_border_top div.hui_toolbar_body
 {
 	padding: 0 6px;
 	width: 100%;
@@ -298,7 +298,7 @@ div.in2igui_layout_top div.in2igui_toolbar_border_top, div.in2igui_layout_top di
 
 /************************************ Items *****************************/
 
-span.in2igui_toolbar_item
+span.hui_toolbar_item
 {
 	display: inline-block;
 	vertical-align: middle;
@@ -306,40 +306,40 @@ span.in2igui_toolbar_item
 	height: 56px;
 }
 
-span.in2igui_toolbar_item_body
+span.hui_toolbar_item_body
 {
 	display:block;
 	height: 38px;
 	text-align: center;
 }
 
-span.in2igui_toolbar_item span.in2igui_number
+span.hui_toolbar_item span.hui_number
 {
 	top: 8px;
 }
 
-span.in2igui_toolbar_item a.in2igui_dropdown
+span.hui_toolbar_item a.hui_dropdown
 {
 	margin-top: 7px;
 }
 
-span.in2igui_toolbar_item .in2igui_checkboxes
+span.hui_toolbar_item .hui_checkboxes
 {
 	padding-top: 11px;
 }
 
-span.in2igui_toolbar_item .in2igui_field
+span.hui_toolbar_item .hui_field
 {
 	padding-top: 8px;
 }
 
-span.in2igui_toolbar_item span.in2igui_segmented
+span.hui_toolbar_item span.hui_segmented
 {
 	margin-top: 9px;
 }
 
 
-span.in2igui_toolbar_label
+span.hui_toolbar_label
 {
 	color:#334455;
 	display:block;
@@ -349,14 +349,14 @@ span.in2igui_toolbar_label
 
 /********************************* Grid ******************************/
 
-span.in2igui_toolbar_grid
+span.hui_toolbar_grid
 {
 	height: 56px;
 	vertical-align: middle;
 	display: inline-block;
 }
 
-table.in2igui_toolbar_grid
+table.hui_toolbar_grid
 {
 	display: inline-table;
 	border-collapse: collapse;
@@ -365,13 +365,13 @@ table.in2igui_toolbar_grid
 	top: 1px;
 }
 
-table.in2igui_toolbar_grid td
+table.hui_toolbar_grid td
 {
 	padding: 0px;
 	height: 27px;
 }
 
-table.in2igui_toolbar_grid th
+table.hui_toolbar_grid th
 {
 	color: #334455;
 	font-size: 11px;
@@ -383,7 +383,7 @@ table.in2igui_toolbar_grid th
 	padding: 0px;
 }
 
-label.in2igui_toolbar_grid
+label.hui_toolbar_grid
 {
 	font-size: 11px;
 	color: #334455;

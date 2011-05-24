@@ -1,16 +1,16 @@
-div.in2igui_upload
+div.hui_upload
 {
 	overflow: hidden;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 0;
 }
 
-div.in2igui_upload div.hui_buttons
+div.hui_upload div.hui_buttons
 {
 	padding: 5px 0px 0px 0px;
 }
 
-div.in2igui_upload_items
+div.hui_upload_items
 {
 	overflow: auto;
 	max-height: 200px;
@@ -22,7 +22,7 @@ div.in2igui_upload_items
 	display: none;
 }
 
-div.in2igui_upload_item
+div.hui_upload_item
 {
 	font-size: 8pt;
 	overflow: hidden;
@@ -30,43 +30,43 @@ div.in2igui_upload_item
 	color: #666;
 }
 
-div.in2igui_upload_item_alt
+div.hui_upload_item_alt
 {
 	background: #EDF3FE;
 }
 
-div.in2igui_upload_item_content
+div.hui_upload_item_content
 {
 	margin-left: 36px;
 	padding-top: 2px;
 }
 
-div.in2igui_upload_item span.in2igui_icon_2
+div.hui_upload_item span.hui_icon_2
 {
 	float:left;
 	height:32px;
 	width:32px;
 }
 
-div.in2igui_upload_item_error
+div.hui_upload_item_error
 {
 	/*background: #fde;*/
 	color: #f00;
 }
 
-div.in2igui_upload_item_error a
+div.hui_upload_item_error a
 {
 	float: right;
 }
 
-div.in2igui_upload_item strong
+div.hui_upload_item strong
 {
 	line-height: 11px;
 	font-size: 9px;
 	float: left;
 }
 
-div.in2igui_upload_item em
+div.hui_upload_item em
 {
 	line-height: 11px;
 	font-size: 9px;
@@ -74,7 +74,7 @@ div.in2igui_upload_item em
 	font-style: normal;
 }
 
-span.in2igui_upload_button object
+span.hui_upload_button object
 {
 	position: absolute;
 	width: 100%;
@@ -83,7 +83,7 @@ span.in2igui_upload_button object
 	outline: none;
 }
 
-div.in2igui_upload_status
+div.hui_upload_status
 {
 	color: #999999;
 	font-size: 11px;
@@ -92,18 +92,18 @@ div.in2igui_upload_status
 	display: none;
 }
 
-span.in2igui_upload_button
+span.hui_upload_button
 {
 	display: inline-block;
 	position: relative;
 }
 
-div.in2igui_upload form
+div.hui_upload form
 {
 	margin: 0;
 }
 
-span.in2igui_upload_button_input
+span.hui_upload_button_input
 {
 	position: absolute;
 	height: 30px;
@@ -112,7 +112,7 @@ span.in2igui_upload_button_input
 	cursor: pointer;
 }
 
-span.in2igui_upload_button_input input
+span.hui_upload_button_input input
 {
 	position: absolute;
 	right: 0;
@@ -123,12 +123,12 @@ span.in2igui_upload_button_input input
 
 /*************** Placeholder *************/
 
-div.in2igui_upload_placeholder
+div.hui_upload_placeholder
 {
 	text-align: center;
 }
 
-span.in2igui_upload_icon
+span.hui_upload_icon
 {
 	display: inline-block;
 	width: 64px;
@@ -136,14 +136,14 @@ span.in2igui_upload_icon
 	background-image: url('../icons/common/upload64.png');
 }
 
-div.in2igui_upload_placeholder h2
+div.hui_upload_placeholder h2
 {
 	font-size:10pt;
 	margin: 5px 0;
 	color: #234;
 }
 
-div.in2igui_upload_placeholder p
+div.hui_upload_placeholder p
 {
 	font-size: 11px;
 	margin: 0;

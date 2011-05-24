@@ -1,29 +1,29 @@
-div.in2igui_bar
+div.hui_bar
 {
 	background: url('../gfx/bar_light.png');
 	height: 30px;
 }
 
-div.in2igui_bar_body
+div.hui_bar_body
 {
 	height: 30px;
 	font-size: 0;
 	background: url('../gfx/bar_light.png') left -30px no-repeat;
 }
 
-div.in2igui_bar_right
+div.hui_bar_right
 {
 	float: right;
 	height: 30px;
 	background: url('../gfx/bar_light.png') right -30px no-repeat;
 }
 
-div.in2igui_bar_left
+div.hui_bar_left
 {
 	height: 30px;
 }
 
-div.in2igui_bar_absolute
+div.hui_bar_absolute
 {
 	position: absolute;
 	visibility: hidden;
@@ -33,7 +33,7 @@ div.in2igui_bar_absolute
 
 /*************** Button **************/
 
-a.in2igui_bar_button
+a.hui_bar_button
 {
 	display: inline-block;
 	height: 30px;
@@ -44,17 +44,17 @@ a.in2igui_bar_button
 	vertical-align: top;
 }
 
-a.in2igui_bar_button:focus
+a.hui_bar_button:focus
 {
 	outline: none;
 }
 
-div.in2igui_bar_right a.in2igui_bar_button
+div.hui_bar_right a.hui_bar_button
 {
 	background-position: left -30px;
 }
 
-span.in2igui_bar_button_text
+span.hui_bar_button_text
 {
 	color: #444;
 	vertical-align: middle;
@@ -64,45 +64,45 @@ span.in2igui_bar_button_text
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
-div.in2igui_bar a.in2igui_bar_button:hover
+div.hui_bar a.hui_bar_button:hover
 {
 	background: url('../gfx/bar_light.png') left -60px repeat-x;
 }
 
-a.in2igui_bar_button span.in2igui_icon_1
+a.hui_bar_button span.hui_icon_1
 {
 	vertical-align: top;
 	margin-top: 7px;
 }
 
-a.in2igui_bar_button:hover span.in2igui_icon_1
+a.hui_bar_button:hover span.hui_icon_1
 {
 	background-position: 0 -16px;
 }
 
-a.in2igui_bar_button:hover span.in2igui_bar_button_text
+a.hui_bar_button:hover span.hui_bar_button_text
 {
 	color: #000;
 }
 
-div.in2igui_bar  a.in2igui_bar_button_selected, div.in2igui_bar a.in2igui_bar_button_selected:hover
+div.hui_bar  a.hui_bar_button_selected, div.hui_bar a.hui_bar_button_selected:hover
 {
 	background: url('../gfx/bar_light.png') left -90px repeat-x;
 }
 
-a.in2igui_bar_button_selected span.in2igui_icon_1
+a.hui_bar_button_selected span.hui_icon_1
 {
 	background-position: 0 -32px;
 }
 
-a.in2igui_bar_button_selected span.in2igui_bar_button_text
+a.hui_bar_button_selected span.hui_bar_button_text
 {
 	color: #0054a6;	
 }
 
 /******************* window variant ***************/
 
-div.in2igui_bar_window
+div.hui_bar_window
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
 	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
@@ -110,19 +110,19 @@ div.in2igui_bar_window
 	height: 24px;
 }
 
-div.in2igui_bar_window div.in2igui_bar_body
+div.hui_bar_window div.hui_bar_body
 {
 	background: none;
 	height: 24px;
 }
 
-div.in2igui_bar_window div.in2igui_bar_left
+div.hui_bar_window div.hui_bar_left
 {
 	height: 24px;
 }
 
 
-div.in2igui_bar_window a.in2igui_bar_button
+div.hui_bar_window a.hui_bar_button
 {
 	height: 24px;
 	line-height: 24px;
@@ -132,19 +132,19 @@ div.in2igui_bar_window a.in2igui_bar_button
 	padding: 0 4px;	
 }
 
-div.in2igui_bar_window a.in2igui_bar_button:hover
+div.hui_bar_window a.hui_bar_button:hover
 {
 	background: #eee;
 	border-color: #ddd;
 }
 
-div.in2igui_bar_window a.in2igui_bar_button span.in2igui_icon_1
+div.hui_bar_window a.hui_bar_button span.hui_icon_1
 {
 	vertical-align: top;
 	margin-top: 4px;
 }
 
-div.in2igui_bar_window a.in2igui_bar_button_selected, div.in2igui_bar_window a.in2igui_bar_button_selected:hover
+div.hui_bar_window a.hui_bar_button_selected, div.hui_bar_window a.hui_bar_button_selected:hover
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#bbb), to(#ddd));
 	background: -moz-linear-gradient(top, #bbb, #ddd);
@@ -152,19 +152,19 @@ div.in2igui_bar_window a.in2igui_bar_button_selected, div.in2igui_bar_window a.i
 	border-color: #bbb;
 }
 
-div.in2igui_bar_window_top
+div.hui_bar_window_top
 {
 	border-top: 1px solid #ddd;
 }
 
-div.in2igui_bar_window_bottom
+div.hui_bar_window_bottom
 {
 	border-top: 1px solid #ddd;
 }
 
 /******************* Mini variant *****************/
 
-div.in2igui_bar_mini
+div.hui_bar_mini
 {
 	height: 22px;
 	background: #fafafa;
@@ -172,14 +172,14 @@ div.in2igui_bar_mini
 	border-radius: 3px;
 }
 
-div.in2igui_bar_mini div.in2igui_bar_body
+div.hui_bar_mini div.hui_bar_body
 {
 	height: 22px;
 	background: none;
 	padding: 0 3px;
 }
 
-div.in2igui_bar_mini a.in2igui_bar_button
+div.hui_bar_mini a.hui_bar_button
 {
 	height: 22px;
 	line-height: 22px;
@@ -187,18 +187,18 @@ div.in2igui_bar_mini a.in2igui_bar_button
 	padding: 0 2px;
 }
 
-div.in2igui_bar_mini a.in2igui_bar_button span.in2igui_icon_1
+div.hui_bar_mini a.hui_bar_button span.hui_icon_1
 {
 	margin-top: 3px;
 }
 
-div.in2igui_bar_mini span.in2igui_bar_button_text
+div.hui_bar_mini span.hui_bar_button_text
 {
 	font-size: 11px;
 }
 
 
-div.in2igui_bar_mini a.in2igui_bar_button:hover
+div.hui_bar_mini a.hui_bar_button:hover
 {
 	background: none;
 }

@@ -3,39 +3,39 @@ div,h1,h2,h3,h4,h5,h6,ol,ul,li
 	zoom: 1;
 }
 
-div.in2igui_toolbar_icon div.in2igui_icon
+div.hui_toolbar_icon div.hui_icon
 {
 	margin: 0px;
 }
 
-form.in2igui_formula input.text, form.in2igui_formula textarea
+form.hui_formula input.text, form.hui_formula textarea
 {
 	text-indent: 0px;
 }
 
-form.in2igui_formula table.group label
+form.hui_formula table.group label
 {
 	line-height: 16px;
 }
 
-table.in2igui_objectlist thead th.in2igui_objectlist
+table.hui_objectlist thead th.hui_objectlist
 {
 	line-height: 11pt;
 }
 
-form.in2igui_formula .checkbox 
+form.hui_formula .checkbox 
 {
 	padding: 2px 0px;
 }
 
 
-span.in2igui_field_singleline
+span.hui_field_singleline
 {
 	position: relative;
 	height: 16px;
 }
 
-span.in2igui_field_singleline input
+span.hui_field_singleline input
 {
 	position: absolute;
 }
@@ -52,7 +52,7 @@ a.hui_button_small_rounded
 
 /*********** Search field ***************/
 
-span.in2igui_searchfield input
+span.hui_searchfield input
 {
 	margin-top: 4px;
 	margin-left: -21px;

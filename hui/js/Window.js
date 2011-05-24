@@ -4,12 +4,12 @@
 hui.ui.Window = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.close = hui.firstByClass(this.element,'in2igui_window_close');
-	this.titlebar = hui.firstByClass(this.element,'in2igui_window_titlebar');
-	this.title = hui.firstByClass(this.titlebar,'in2igui_window_title');
-	this.content = hui.firstByClass(this.element,'in2igui_window_body');
-	this.front = hui.firstByClass(this.element,'in2igui_window_front');
-	this.back = hui.firstByClass(this.element,'in2igui_window_back');
+	this.close = hui.firstByClass(this.element,'hui_window_close');
+	this.titlebar = hui.firstByClass(this.element,'hui_window_titlebar');
+	this.title = hui.firstByClass(this.titlebar,'hui_window_title');
+	this.content = hui.firstByClass(this.element,'hui_window_body');
+	this.front = hui.firstByClass(this.element,'hui_window_front');
+	this.back = hui.firstByClass(this.element,'hui_window_back');
 	if (this.back) {
 		hui.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
 	}
@@ -20,19 +20,19 @@ hui.ui.Window = function(options) {
 
 hui.ui.Window.create = function(options) {
 	options = hui.override({title:'Window',close:true},options);
-	var html = '<div class="in2igui_window_front">'+(options.close ? '<div class="in2igui_window_close"></div>' : '')+
-		'<div class="in2igui_window_titlebar"><div><div>';
+	var html = '<div class="hui_window_front">'+(options.close ? '<div class="hui_window_close"></div>' : '')+
+		'<div class="hui_window_titlebar"><div><div>';
 		if (options.icon) {
-			html+='<span class="in2igui_window_icon" style="background-image: url('+hui.ui.getIconUrl(options.icon,1)+')"></span>';
+			html+='<span class="hui_window_icon" style="background-image: url('+hui.ui.getIconUrl(options.icon,1)+')"></span>';
 		}
-	html+='<span class="in2igui_window_title">'+options.title+'</span></div></div></div>'+
-		'<div class="in2igui_window_content"><div class="in2igui_window_content"><div class="in2igui_window_body" style="'+
+	html+='<span class="hui_window_title">'+options.title+'</span></div></div></div>'+
+		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
 		(options.width ? 'width:'+options.width+'px;':'')+
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
 		'">'+
 		'</div></div></div>'+
-		'<div class="in2igui_window_bottom"><div class="in2igui_window_bottom"><div class="in2igui_window_bottom"></div></div></div></div>';
-	options.element = hui.build('div',{'class':'in2igui_window'+(options.variant ? ' in2igui_window_'+options.variant : ''),html:html,parent:document.body});
+		'<div class="hui_window_bottom"><div class="hui_window_bottom"><div class="hui_window_bottom"></div></div></div></div>';
+	options.element = hui.build('div',{'class':'hui_window'+(options.variant ? ' hui_window_'+options.variant : ''),html:html,parent:document.body});
 	return new hui.ui.Window(options);
 }
 
@@ -103,17 +103,17 @@ hui.ui.Window.prototype = {
 	},
 	addToBack : function(widgetOrNode) {
 		if (!this.back) {
-			this.back = hui.build('div',{className:'in2igui_window_back'});
+			this.back = hui.build('div',{className:'hui_window_back'});
 			this.element.insertBefore(this.back,this.front);
 			hui.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
 		}
 		this.back.appendChild(hui.ui.getElement(widgetOrNode));
 	},
 	setVariant : function(variant) {
-		hui.removeClass(this.element,'in2igui_window_dark');
-		hui.removeClass(this.element,'in2igui_window_light');
+		hui.removeClass(this.element,'hui_window_dark');
+		hui.removeClass(this.element,'hui_window_light');
 		if (variant=='dark' || variant=='light') {
-			hui.addClass(this.element,'in2igui_window_'+variant);
+			hui.addClass(this.element,'hui_window_'+variant);
 		}
 	},
 	flip : function() {

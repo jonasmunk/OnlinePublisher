@@ -1,9 +1,9 @@
-html.in2igui
+html.hui
 {
 	height: 100%;
 }
 
-body.in2igui
+body.hui
 {
 	margin: 0px;
 	background: #f3f5f7;
@@ -12,12 +12,12 @@ body.in2igui
 	height: 100%;
 }
 
-body.in2igui, body.in2igui textarea
+body.hui, body.hui textarea
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
-div.in2igui_body
+div.hui_body
 {
 	height: 100%;
 	box-sizing: border-box;
@@ -27,37 +27,37 @@ div.in2igui_body
 
 /************************* Links ********************/
 
-a.in2igui_link
+a.hui_link
 {
 	color: #ccc;
 	text-decoration: underline;
 	cursor: pointer;
 }
 
-a.in2igui_link span
+a.hui_link span
 {
 	color: #3366FF;
 }
 
-a.in2igui_link:hover, a.in2igui_link:hover span
+a.hui_link:hover, a.hui_link:hover span
 {
 	color: #0033aa;
 }
 
 /*********************** text **********************/
 
-div.in2igui_text
+div.hui_text
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
-div.in2igui_text h1
+div.hui_text h1
 {
 	margin: 0px;
 	font-size: 12pt;
 }
 
-div.in2igui_text p
+div.hui_text p
 {
 	font-size: 9pt;
 	margin: 5px 0px;
@@ -65,7 +65,7 @@ div.in2igui_text p
 
 /************************* icons **********************/
 
-span.in2igui_icon_1, span.in2igui_icon_16
+span.hui_icon_1, span.hui_icon_16
 {
 	display: inline-block;
 	width: 16px;
@@ -73,7 +73,7 @@ span.in2igui_icon_1, span.in2igui_icon_16
 	vertical-align: middle;
 }
 
-span.in2igui_icon_2, span.in2igui_icon_32
+span.hui_icon_2, span.hui_icon_32
 {
 	display: inline-block;
 	width: 32px;
@@ -81,7 +81,7 @@ span.in2igui_icon_2, span.in2igui_icon_32
 	vertical-align: middle;
 }
 
-span.in2igui_icon_24
+span.hui_icon_24
 {
 	display: inline-block;
 	width: 24px;
@@ -91,7 +91,7 @@ span.in2igui_icon_24
 
 /************************* disclosure **********************/
 
-span.in2igui_disclosure
+span.hui_disclosure
 {
 	display: inline-block;
 	width: 11px;
@@ -103,24 +103,24 @@ span.in2igui_disclosure
 	cursor: default;
 }
 
-span.in2igui_disclosure:hover
+span.hui_disclosure:hover
 {
 	background-position: 0 -11px;
 }
 
-span.in2igui_disclosure_open
+span.hui_disclosure_open
 {
 	background-position: 0 -22px;
 }
 
-span.in2igui_disclosure_open:hover
+span.hui_disclosure_open:hover
 {
 	background-position: 0 -33px;
 }
 
 /*********************** tooltip **********************/
 
-div.in2igui_tooltip
+div.hui_tooltip
 {
 	position: absolute;
 	top: 0px;
@@ -135,13 +135,13 @@ div.in2igui_tooltip
 	cursor: default;
 }
 
-div.in2igui_tooltip div
+div.hui_tooltip div
 {
 	background: url('../gfx/tooltip.png') right -62px no-repeat;
 	height: 31px;
 }
 
-div.in2igui_tooltip div div
+div.hui_tooltip div div
 {
 	background: url('../gfx/tooltip.png') left -31px repeat-x;
 	margin: 0px 18px 0px 11px;
@@ -220,41 +220,41 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 
 /****************************************** Fragment *******************************/
 
-.in2igui_bg_brushed
+.hui_bg_brushed
 {
 	background: url('../gfx/backgrounds/brushed_light.jpg');
 }
 
-.in2igui_bg_wood
+.hui_bg_wood
 {
 	background: url('../gfx/backgrounds/wood.jpg');	
 }
 
-.in2igui_bg_leather
+.hui_bg_leather
 {
 	background: url('../gfx/backgrounds/leather.jpg');	
 }
 
 /****************************************** Info view ******************************/
 
-div.in2igui_infoview
+div.hui_infoview
 {
 	overflow-y: hidden;
 }
 
-div.in2igui_infoview_busy
+div.hui_infoview_busy
 {
 	background: url('../gfx/spinner_large.gif') center center no-repeat;
 }
 
-div.in2igui_infoview table
+div.hui_infoview table
 {
 	width: 100%;
 	font-size: 8pt;
 	line-height: 14px;
 }
 
-div.in2igui_infoview th
+div.hui_infoview th
 {
 	vertical-align: top;
 	text-align: right;
@@ -263,13 +263,13 @@ div.in2igui_infoview th
 	font-weight: normal;
 }
 
-div.in2igui_infoview td
+div.hui_infoview td
 {
 	vertical-align: top;
 	padding: 2px 0px 0px 0px;
 }
 
-div.in2igui_infoview th.in2igui_infoview_header
+div.hui_infoview th.hui_infoview_header
 {
 	font-size: 13pt;
 	padding-bottom: 5px;
@@ -279,7 +279,7 @@ div.in2igui_infoview th.in2igui_infoview_header
 	padding-top: 0px;
 }
 
-div.in2igui_infoview_click:hover
+div.hui_infoview_click:hover
 {
 	cursor: pointer;
 	text-decoration: underline;

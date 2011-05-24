@@ -1,0 +1,61 @@
+
+
+/******************************** Location *************************/
+
+div.hui_locationfield
+{
+	padding-right: 18px;
+	position: relative;
+}
+
+div.hui_locationfield input
+{
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: none;
+	height: 16px;
+}
+
+a.hui_locationfield_picker
+{
+	background-image: url('../icons/geo/map1.png');
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	right: 0;
+	top: 4px;
+	font-size: 0;
+}
+
+span.hui_locationfield_latitude, span.hui_locationfield_longitude
+{
+	display: inline-block;
+	height: 16px;
+	width: 49%;
+	position: relative;
+}
+
+span.hui_locationfield_latitude
+{
+	width: 50%;
+}
+
+span.hui_locationfield_latitude span, span.hui_locationfield_longitude span
+{
+	display: block;
+	width: 100%;
+	height: 16px;
+	padding-left: 16px;
+}
+
+span.hui_locationfield_latitude
+{
+	background: url('../icons/monochrome/latitude1.png') left top no-repeat;
+}
+
+span.hui_locationfield_longitude
+{
+	background: url('../icons/monochrome/longitude1.png') left top no-repeat;
+}

@@ -43,7 +43,7 @@ hui.ui.ImagePicker.prototype = {
 		if (!this.picker) {
 			var self = this;
 			this.picker = hui.ui.BoundPanel.create();
-			this.content = hui.build('div',{'class':'in2igui_imagepicker_thumbs'});
+			this.content = hui.build('div',{'class':'hui_imagepicker_thumbs'});
 			var buttons = hui.ui.Buttons.create({align:'right'});
 			var close = hui.ui.Button.create({text:'Luk',highlighted:true});
 			close.listen({
@@ -87,10 +87,10 @@ hui.ui.ImagePicker.prototype = {
 			var id = images[i].getAttribute('id');
 			var img = {id:images[i].getAttribute('id')};
 			var url = hui.ui.resolveImageUrl(this,img,48,48);
-			var thumb = hui.build('div',{'class':'in2igui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
-			thumb.in2iguiObject = {'id':id};
+			var thumb = hui.build('div',{'class':'hui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
+			thumb.huiObject = {'id':id};
 			thumb.onclick = function() {
-				self.setObject(this.in2iguiObject);
+				self.setObject(this.huiObject);
 				self.hidePicker();
 			}
 			this.content.appendChild(thumb);

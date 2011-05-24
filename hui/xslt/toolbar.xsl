@@ -2,7 +2,7 @@
 <xsl:stylesheet
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:gui="uri:In2iGui"
+    xmlns:gui="uri:hui"
     version="1.0"
     exclude-result-prefixes="gui"
 >
@@ -15,17 +15,17 @@
 <xsl:template match="gui:toolbar" name="gui:toolbar">
 	<div>
 		<xsl:attribute name="class">
-			<xsl:text>in2igui_toolbar</xsl:text>
-			<xsl:if test="@labels='false'"><xsl:text> in2igui_toolbar_nolabels</xsl:text></xsl:if>
-			<xsl:if test="@border='top'"><xsl:text> in2igui_toolbar_border_top</xsl:text></xsl:if>
-			<xsl:if test="@border='bottom'"><xsl:text> in2igui_toolbar_border_bottom</xsl:text></xsl:if>
-			<xsl:if test="@centered='true'"><xsl:text> in2igui_toolbar_centered</xsl:text></xsl:if>
+			<xsl:text>hui_toolbar</xsl:text>
+			<xsl:if test="@labels='false'"><xsl:text> hui_toolbar_nolabels</xsl:text></xsl:if>
+			<xsl:if test="@border='top'"><xsl:text> hui_toolbar_border_top</xsl:text></xsl:if>
+			<xsl:if test="@border='bottom'"><xsl:text> hui_toolbar_border_bottom</xsl:text></xsl:if>
+			<xsl:if test="@centered='true'"><xsl:text> hui_toolbar_centered</xsl:text></xsl:if>
 		</xsl:attribute>
 		<div>
 			<xsl:attribute name="class">
-				<xsl:text>in2igui_toolbar_body</xsl:text>
+				<xsl:text>hui_toolbar_body</xsl:text>
 				<xsl:if test="@fixed-height='true'">
-					<xsl:text> in2igui_toolbar_body_fixed_height</xsl:text>
+					<xsl:text> hui_toolbar_body_fixed_height</xsl:text>
 				</xsl:if>
 			</xsl:attribute>
 			<xsl:apply-templates select="child::*[not(name()='right')]"/>
@@ -36,25 +36,25 @@
 
 
 <xsl:template match="gui:toolbar/gui:right">
-	<div class="in2igui_toolbar_right"><xsl:apply-templates /></div>
+	<div class="hui_toolbar_right"><xsl:apply-templates /></div>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:divider">
-	<span class="in2igui_divider"><xsl:comment /></span>
+	<span class="hui_divider"><xsl:comment /></span>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:icon">
 	<a id="{generate-id()}" href="javascript://">
 		<xsl:attribute name="class">
-			<xsl:text>in2igui_toolbar_icon</xsl:text>
-			<xsl:if test="@selected='true'"> in2igui_toolbar_icon_selected</xsl:if>
-			<xsl:if test="@disabled='true'"> in2igui_toolbar_icon_disabled</xsl:if>
+			<xsl:text>hui_toolbar_icon</xsl:text>
+			<xsl:if test="@selected='true'"> hui_toolbar_icon_selected</xsl:if>
+			<xsl:if test="@disabled='true'"> hui_toolbar_icon_disabled</xsl:if>
 		</xsl:attribute>
-		<span class="in2igui_toolbar_inner_icon">
-			<span class="in2igui_toolbar_inner_icon">
-			<span class="in2igui_icon" style="background-image: url('{$context}/hui/icons/{@icon}2.png')">
+		<span class="hui_toolbar_inner_icon">
+			<span class="hui_toolbar_inner_icon">
+			<span class="hui_icon" style="background-image: url('{$context}/hui/icons/{@icon}2.png')">
 				<xsl:if test="@overlay">
-					<span class="in2igui_icon_overlay" style="background-image: url('{$context}/hui/icons/overlay/{@overlay}2.png')"><xsl:comment/></span>
+					<span class="hui_icon_overlay" style="background-image: url('{$context}/hui/icons/overlay/{@overlay}2.png')"><xsl:comment/></span>
 				</xsl:if>
 				<xsl:comment/>
 			</span>
@@ -81,10 +81,10 @@
 </xsl:template>
 
 <xsl:template match="gui:searchfield" name="gui:searchfield">
-	<span class="in2igui_searchfield" id="{generate-id()}">
+	<span class="hui_searchfield" id="{generate-id()}">
 		<xsl:if test="@width"><xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute></xsl:if>
-		<em class="in2igui_searchfield_placeholder"><xsl:value-of select="@placeholder"/><xsl:comment/></em>
-		<a href="javascript:void(0);" class="in2igui_searchfield_reset"><xsl:comment/></a>
+		<em class="hui_searchfield_placeholder"><xsl:value-of select="@placeholder"/><xsl:comment/></em>
+		<a href="javascript:void(0);" class="hui_searchfield_reset"><xsl:comment/></a>
 		<span><span><input type="text"/></span></span>
 	</span>
 	<script type="text/javascript">
@@ -94,17 +94,17 @@
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:searchfield[@title]">
-	<span class="in2igui_toolbar_search">
+	<span class="hui_toolbar_search">
 		<xsl:call-template name="gui:searchfield"/>
-		<span class="in2igui_toolbar_search_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
+		<span class="hui_toolbar_search_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:badge">
-	<div id="{generate-id()}" class="in2igui_toolbar_badge">
-		<div class="in2igui_toolbar_inner_badge"><div class="in2igui_toolbar_inner_badge">
+	<div id="{generate-id()}" class="hui_toolbar_badge">
+		<div class="hui_toolbar_inner_badge"><div class="hui_toolbar_inner_badge">
 		<xsl:if test="@icon">
-			<div class="in2igui_toolbar_badge_icon" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"><xsl:comment/></div>
+			<div class="hui_toolbar_badge_icon" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"><xsl:comment/></div>
 		</xsl:if>
 		<strong><xsl:value-of select="@label"/><xsl:comment/></strong>
 		<span><xsl:value-of select="@text"/><xsl:comment/></span>
@@ -120,8 +120,8 @@
 
 
 <xsl:template match="gui:toolbar//gui:grid">
-	<span class="in2igui_toolbar_grid">
-	<table class="in2igui_toolbar_grid">
+	<span class="hui_toolbar_grid">
+	<table class="hui_toolbar_grid">
 		<xsl:if test="@left">
 			<xsl:attribute name="style">margin-left:<xsl:value-of select="@left"/>px;</xsl:attribute>
 		</xsl:if>
@@ -151,49 +151,49 @@
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:grid/gui:row/gui:cell/gui:label">
-	<label class="in2igui_toolbar_grid"><xsl:apply-templates/></label>
+	<label class="hui_toolbar_grid"><xsl:apply-templates/></label>
 </xsl:template>
 <!-- Inputs -->
 
 <xsl:template match="gui:toolbar//gui:checkboxes">
-	<span class="in2igui_toolbar_item">
-		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:checkboxes"/></span>
-		<span class="in2igui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
+	<span class="hui_toolbar_item">
+		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:checkboxes"/></span>
+		<span class="hui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:number">
-	<span class="in2igui_toolbar_item">
-		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:number"/></span>
-		<span class="in2igui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
+	<span class="hui_toolbar_item">
+		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:number"/></span>
+		<span class="hui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:style-length">
-	<span class="in2igui_toolbar_item">
-		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:style-length"/></span>
-		<span class="in2igui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
+	<span class="hui_toolbar_item">
+		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:style-length"/></span>
+		<span class="hui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:dropdown[@title] | gui:toolbar//gui:dropdown[@label]">
-	<span class="in2igui_toolbar_item">
-		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:dropdown"/></span>
-		<span class="in2igui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
+	<span class="hui_toolbar_item">
+		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:dropdown"/></span>
+		<span class="hui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:segmented[@label]">
-	<span class="in2igui_toolbar_item">
-		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:segmented"/></span>
-		<span class="in2igui_toolbar_label"><xsl:value-of select="@label"/></span>
+	<span class="hui_toolbar_item">
+		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:segmented"/></span>
+		<span class="hui_toolbar_label"><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
 
 <xsl:template match="gui:toolbar//gui:textfield">
-	<span class="in2igui_toolbar_item">
-		<span class="in2igui_toolbar_item_body"><xsl:call-template name="gui:text"/></span>
-		<span class="in2igui_toolbar_label"><xsl:value-of select="@label"/></span>
+	<span class="hui_toolbar_item">
+		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:text"/></span>
+		<span class="hui_toolbar_label"><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
 
@@ -216,14 +216,14 @@
 <xsl:template match="gui:bar">
 	<div class="">
 		<xsl:attribute name="class">
-			<xsl:text>in2igui_bar</xsl:text>
+			<xsl:text>hui_bar</xsl:text>
 			<xsl:if test="@variant">
-				<xsl:text> in2igui_bar_</xsl:text><xsl:value-of select="@variant"/>
+				<xsl:text> hui_bar_</xsl:text><xsl:value-of select="@variant"/>
 			</xsl:if>
 		</xsl:attribute>
-		<div class="in2igui_bar_body">
+		<div class="hui_bar_body">
 			<xsl:apply-templates select="gui:right"/>
-			<div class="in2igui_bar_left">
+			<div class="hui_bar_left">
 				<xsl:apply-templates select="child::*[not(name()='right')]"/>
 				<xsl:comment/>
 			</div>
@@ -232,7 +232,7 @@
 </xsl:template>
 
 <xsl:template match="gui:bar/gui:right">
-	<div class="in2igui_bar_right">
+	<div class="hui_bar_right">
 		<xsl:apply-templates/>
 		<xsl:comment/>
 	</div>
@@ -240,15 +240,15 @@
 
 <xsl:template match="gui:bar//gui:button">
 	<xsl:variable name="class">
-		<xsl:text>in2igui_bar_button</xsl:text>
-		<xsl:if test="@selected='true'"><xsl:text> in2igui_bar_button_selected</xsl:text></xsl:if>
+		<xsl:text>hui_bar_button</xsl:text>
+		<xsl:if test="@selected='true'"><xsl:text> hui_bar_button_selected</xsl:text></xsl:if>
 	</xsl:variable>
 	<a id="{generate-id()}" class="{$class}" href="javascript:void(0);">
 		<xsl:if test="@icon">
-			<span class="in2igui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"><xsl:comment/></span>
+			<span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"><xsl:comment/></span>
 		</xsl:if>
 		<xsl:if test="@text">
-			<span class="in2igui_bar_button_text"><xsl:value-of select="@text"/></span>
+			<span class="hui_bar_button_text"><xsl:value-of select="@text"/></span>
 		</xsl:if>
 	</a>
 	<script type="text/javascript">

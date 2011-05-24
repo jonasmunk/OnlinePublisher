@@ -12,7 +12,7 @@ $blueprints = PageService::getBlueprintsByTemplate('document');
 $blueprintItems = GuiUtils::buildObjectItems($blueprints);
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Nyheder" padding="10">
+<gui xmlns="uri:hui" title="Nyheder" padding="10">
 	<controller source="controller.js"/>
 	<controller source="sources.js"/>
 	<source name="pageItems" url="../../Services/Model/Items.php?type=page"/>

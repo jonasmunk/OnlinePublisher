@@ -1,4 +1,4 @@
-table.in2igui_view
+table.hui_view
 {
 	width: 100%;
 	height: 100%;
@@ -37,7 +37,7 @@ div.view_toolbar_box div.view_toolbar_box
 	background: url('../gfx/toolbar_bg.png') repeat-x;
 }
 
-div.view_toolbar_box div.in2igui_toolbar
+div.view_toolbar_box div.hui_toolbar
 {
 	padding-left: 0px;
 }

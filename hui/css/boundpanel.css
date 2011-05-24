@@ -1,4 +1,4 @@
-div.in2igui_boundpanel
+div.hui_boundpanel
 {
 	position: absolute;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -6,7 +6,7 @@ div.in2igui_boundpanel
 	left: 0px;
 }
 
-div.in2igui_boundpanel_arrow
+div.hui_boundpanel_arrow
 {
 	position: absolute;
 	width: 18px;
@@ -16,31 +16,31 @@ div.in2igui_boundpanel_arrow
 	background: url('../gfx/boundpanel_arrow.png');
 }
 
-div.in2igui_boundpanel_arrow_left
+div.hui_boundpanel_arrow_left
 {
 	background-position: 0 0;
 }
 
-div.in2igui_boundpanel_arrow_right
+div.hui_boundpanel_arrow_right
 {
 	background-position: -18px 0;
 }
 
-div.in2igui_boundpanel_arrow_top
+div.hui_boundpanel_arrow_top
 {
 	width: 36px;
 	height: 18px;
 	background-position: 0 -37px;
 }
 
-div.in2igui_boundpanel_arrow_bottom
+div.hui_boundpanel_arrow_bottom
 {
 	width: 36px;
 	height: 18px;
 	background-position: 0 -55px;
 }
 
-div.in2igui_boundpanel_content
+div.hui_boundpanel_content
 {
 	width: 200px;
 	overflow: hidden;
@@ -48,21 +48,21 @@ div.in2igui_boundpanel_content
 
 /* Top */
 
-div.in2igui_boundpanel_top
+div.hui_boundpanel_top
 {
 	height: 8px;
 	padding-left: 10px;
 	background: url('../gfx/bound_top_left.png') top left no-repeat;
 }
 
-div.in2igui_boundpanel_top div
+div.hui_boundpanel_top div
 {
 	height: 8px;
 	padding-right: 10px;
 	background: url('../gfx/bound_top_right.png') top right no-repeat;
 }
 
-div.in2igui_boundpanel_top div div
+div.hui_boundpanel_top div div
 {
 	height: 8px;
 	background: url('../gfx/bound_top.png') top left repeat-x;
@@ -70,20 +70,20 @@ div.in2igui_boundpanel_top div div
 
 /* body */
 
-div.in2igui_boundpanel_body
+div.hui_boundpanel_body
 {
 	padding-left: 10px;
 	background: url('../gfx/bound_left.png') top left repeat-y;
 }
 
-div.in2igui_boundpanel_body div.in2igui_boundpanel_body
+div.hui_boundpanel_body div.hui_boundpanel_body
 {
 	padding-left: 0px;
 	padding-right: 10px;
 	background: url('../gfx/bound_right.png') top right repeat-y;
 }
 
-div.in2igui_boundpanel_body div.in2igui_boundpanel_body div.in2igui_boundpanel_body
+div.hui_boundpanel_body div.hui_boundpanel_body div.hui_boundpanel_body
 {
 	padding: 0px;
 	background: #f2f2f2;
@@ -91,21 +91,21 @@ div.in2igui_boundpanel_body div.in2igui_boundpanel_body div.in2igui_boundpanel_b
 
 /* Bottom */
 
-div.in2igui_boundpanel_bottom
+div.hui_boundpanel_bottom
 {
 	height: 12px;
 	padding-left: 10px;
 	background: url('../gfx/bound_bottom_left.png') top left no-repeat;
 }
 
-div.in2igui_boundpanel_bottom div
+div.hui_boundpanel_bottom div
 {
 	height: 12px;
 	padding-right: 10px;
 	background: url('../gfx/bound_bottom_right.png') top right no-repeat;
 }
 
-div.in2igui_boundpanel_bottom div div
+div.hui_boundpanel_bottom div div
 {
 	height: 12px;
 	background: url('../gfx/bound_bottom.png') top left repeat-x;

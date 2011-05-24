@@ -365,7 +365,7 @@
 	<xsl:if test="f:frame/f:search">
 		<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
 			<div>
-				<span class="in2igui_searchfield" id="search"><em class="in2igui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="in2igui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
+				<span class="hui_searchfield" id="search"><em class="hui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="hui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
 				<script type="text/javascript">
 					new hui.ui.SearchField({element:'search',expandedWidth:200});
 				</script>

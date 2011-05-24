@@ -1,16 +1,16 @@
-table.in2igui_wizard, td.in2igui_wizard
+table.hui_wizard, td.hui_wizard
 {
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
 }
 
-td.in2igui_wizard
+td.hui_wizard
 {
 	vertical-align: top;
 }
 
-th.in2igui_wizard
+th.hui_wizard
 {
 	width: 1%;
 	text-align: left;
@@ -18,7 +18,7 @@ th.in2igui_wizard
 	padding: 0 10px 0 0;
 }
 
-ul.in2igui_wizard
+ul.hui_wizard
 {
 	list-style: none;
 	margin: 0px;
@@ -28,7 +28,7 @@ ul.in2igui_wizard
 	border-bottom: 1px solid #fff;
 }
 
-ul.in2igui_wizard a
+ul.hui_wizard a
 {
 	display: block;
 	border-top: 1px solid #fff;
@@ -42,28 +42,28 @@ ul.in2igui_wizard a
 	color: #333;
 }
 
-div.in2igui_wizard_steps
+div.hui_wizard_steps
 {
 	overflow: hidden;
 }
 
-div.in2igui_wizard_step_frame
+div.hui_wizard_step_frame
 {
 	background: #fff;
 	border: 1px solid #ccc;
 }
 
-ul.in2igui_wizard span
+ul.hui_wizard span
 {
 	vertical-align: middle;
 }
 
-ul.in2igui_wizard span.in2igui_icon_1
+ul.hui_wizard span.hui_icon_1
 {
 	margin: 1px 5px 0px 0px;
 }
 
-ul.in2igui_wizard a.in2igui_selected
+ul.hui_wizard a.hui_selected
 {
 	background-color:#bcd;
 	border-color:#abc;

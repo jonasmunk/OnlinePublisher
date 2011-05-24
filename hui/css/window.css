@@ -1,4 +1,4 @@
-.in2igui_window
+.hui_window
 {
 	position: absolute;
 	top: 50px;
@@ -7,7 +7,7 @@
 	opacity: 0;
 }
 
-.in2igui_window_titlebar
+.hui_window_titlebar
 {
 	font-family: 'Lucida Grande','Verdana',sans-serif;
 	background: url('../gfx/window_grey.png') left -27px no-repeat;
@@ -17,21 +17,21 @@
 	text-align:center;
 }
 
-.in2igui_window_titlebar div
+.hui_window_titlebar div
 {
 	height:27px;
 	background: url('../gfx/window_grey.png') left -27px no-repeat;
 	background-position: right -54px;
 }
 
-.in2igui_window_titlebar div div
+.hui_window_titlebar div div
 {
 	background-position: left 0px;
 	background-repeat: repeat-x;
 	margin: 0px 13px;
 }
 
-span.in2igui_window_title
+span.hui_window_title
 {
 	font-size: 10pt;
 	line-height: 27px;
@@ -39,7 +39,7 @@ span.in2igui_window_title
 	vertical-align: middle;
 }
 
-span.in2igui_window_icon
+span.hui_window_icon
 {
 	font-size: 0;
 	display: inline-block;
@@ -49,39 +49,39 @@ span.in2igui_window_icon
 	vertical-align: middle;
 }
 
-.in2igui_window_content
+.hui_window_content
 {
 	background: url('../gfx/window_grey_middle_right.png') right top repeat-y;
 	padding-right: 8px;
 }
 
-.in2igui_window_content .in2igui_window_content
+.hui_window_content .hui_window_content
 {
 	background: url('../gfx/window_grey_middle.png') top left repeat-y;
 	padding: 0px 0px 0px 8px;
 }
 
-div.in2igui_window_body
+div.hui_window_body
 {
 	overflow: hidden;
 	margin: 0 -3px;
 }
 
 
-.in2igui_window_bottom
+.hui_window_bottom
 {
 	background: url('../gfx/window_grey.png') left -92px no-repeat;
 	font-size: 0px;
 	height: 11px;
 }
 
-.in2igui_window_bottom div
+.hui_window_bottom div
 {
 	background: url('../gfx/window_grey.png') right -103px no-repeat;
 	height: 11px;
 }
 
-.in2igui_window_bottom div div
+.hui_window_bottom div div
 {
 	background-position: left -81px;
 	background-repeat: repeat-x;
@@ -89,7 +89,7 @@ div.in2igui_window_body
 }
 
 
-.in2igui_window_close
+.hui_window_close
 {
 	font-size: 0;
 	position: absolute;
@@ -101,14 +101,14 @@ div.in2igui_window_body
 	background: url('../gfx/window_close.png') top left no-repeat;
 }
 
-.in2igui_window_close:hover
+.hui_window_close:hover
 {
 	background-position: left -16px;
 }
 
 /*************************** Back ***********************/
 
-div.in2igui_window_back
+div.hui_window_back
 {
 	position: absolute;
 	width: 100%;
@@ -120,27 +120,27 @@ div.in2igui_window_back
 
 /********************************** Light **************************/
 
-div.in2igui_window_light div.in2igui_window_titlebar, div.in2igui_window_light div.in2igui_window_titlebar div
+div.hui_window_light div.hui_window_titlebar, div.hui_window_light div.hui_window_titlebar div
 {
 	background-image: url('../gfx/window_light.png');
 }
 
-div.in2igui_window_light .in2igui_window_titlebar span
+div.hui_window_light .hui_window_titlebar span
 {
 	color: #333;
 }
 
-div.in2igui_window_light div.in2igui_window_bottom
+div.hui_window_light div.hui_window_bottom
 {
 	background-image: url('../gfx/window_light.png');
 }
 
-div.in2igui_window_light div.in2igui_window_content
+div.hui_window_light div.hui_window_content
 {
 	background-image: url('../gfx/window_light_middle_right.png');
 }
 
-div.in2igui_window_light div.in2igui_window_content div.in2igui_window_content
+div.hui_window_light div.hui_window_content div.hui_window_content
 {
 	background-image: url('../gfx/window_light_middle.png');
 }
@@ -148,46 +148,46 @@ div.in2igui_window_light div.in2igui_window_content div.in2igui_window_content
 
 /********************************** Dark **************************/
 
-div.in2igui_window_dark div.in2igui_window_titlebar, div.in2igui_window_dark div.in2igui_window_titlebar div
+div.hui_window_dark div.hui_window_titlebar, div.hui_window_dark div.hui_window_titlebar div
 {
 	background-image: url('../gfx/window_dark.png');
 }
 
-div.in2igui_window_dark .in2igui_window_titlebar span
+div.hui_window_dark .hui_window_titlebar span
 {
 	color: #fff;
 }
 
-div.in2igui_window_dark div.in2igui_window_bottom
+div.hui_window_dark div.hui_window_bottom
 {
 	background-image: url('../gfx/window_dark.png');
 }
 
-div.in2igui_window_dark div.in2igui_window_content
+div.hui_window_dark div.hui_window_content
 {
 	background-image: url('../gfx/window_dark_middle_right.png');
 }
 
-div.in2igui_window_dark div.in2igui_window_content div.in2igui_window_content
+div.hui_window_dark div.hui_window_content div.hui_window_content
 {
 	background-image: url('../gfx/window_dark_middle.png');
 }
 
 /********************************** News **************************/
 
-div.in2igui_window_news div.in2igui_window_titlebar, div.in2igui_window_news div.in2igui_window_titlebar div
+div.hui_window_news div.hui_window_titlebar, div.hui_window_news div.hui_window_titlebar div
 {
 	background: none;
 }
 
-div.in2igui_window_news div.in2igui_window_bottom
+div.hui_window_news div.hui_window_bottom
 {
 	background-image: none;
 	position: relative;
 	height: 0;
 }
 
-div.in2igui_window_news div.in2igui_window_bottom div.in2igui_window_bottom
+div.hui_window_news div.hui_window_bottom div.hui_window_bottom
 {
 	position: absolute;
 	margin-top: 1px;
@@ -199,40 +199,40 @@ div.in2igui_window_news div.in2igui_window_bottom div.in2igui_window_bottom
 	background: #eee;
 }
 
-div.in2igui_window_news div.in2igui_window_bottom div.in2igui_window_bottom div.in2igui_window_bottom
+div.hui_window_news div.hui_window_bottom div.hui_window_bottom div.hui_window_bottom
 {
 	margin: 0;
 	top: 3px;
 }
 
-div.in2igui_window_news
+div.hui_window_news
 {
 	border: 1px solid #ddd;
 	background: #fafafa url('../gfx/holes.png') left top repeat-y;
 	border-radius: 3px;
 }
 
-div.in2igui_window_news div.in2igui_window_front
+div.hui_window_news div.hui_window_front
 {
 	background: url('../gfx/holes.png') right top repeat-y;
 }
 
-div.in2igui_window_news div.in2igui_window_content
+div.hui_window_news div.hui_window_content
 {
 	background: none;
 }
 
-div.in2igui_window_news div.in2igui_window_content div.in2igui_window_content
+div.hui_window_news div.hui_window_content div.hui_window_content
 {
 	background: none;
 }
 
-div.in2igui_window_news table.in2igui_formula_group label
+div.hui_window_news table.hui_formula_group label
 {
 	background: none;
 }
 
-div.in2igui_window_news div.in2igui_window_body
+div.hui_window_news div.hui_window_body
 {
 	margin: 0;
 }

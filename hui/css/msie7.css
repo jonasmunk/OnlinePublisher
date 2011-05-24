@@ -1,13 +1,13 @@
 @import url('msie.css');
 
-body.in2igui, html.in2igui
+body.hui, html.hui
 {
 	overflow-y: auto;
 	overflow-x: auto;
 }
 
 
-div.in2igui_body
+div.hui_body
 {
 	position: fixed;
 	bottom: 0;
@@ -16,12 +16,12 @@ div.in2igui_body
 	right: 0;
 }
 
-table.in2igui_view
+table.hui_view
 {
 	height: auto;
 }
 
-table.in2igui_calendar_weekview div.in2igui_calendar_event
+table.hui_calendar_weekview div.hui_calendar_event
 {
 	width: 17.8%;
 }
@@ -31,28 +31,28 @@ td.view_toolbar
 	height: 58px;
 }
 
-a.in2igui_toolbar_icon, span.in2igui_toolbar_item, span.in2igui_divider, span.in2igui_toolbar_grid
+a.hui_toolbar_icon, span.hui_toolbar_item, span.hui_divider, span.hui_toolbar_grid
 {
 	vertical-align: top;
 }
 
-span.in2igui_divider
+span.hui_divider
 {
 	top: 5px;
 	position: relative;
 }
 
-table.in2igui_toolbar_grid
+table.hui_toolbar_grid
 {
 	display: inline;
 }
 
-div.in2igui_toolbar_icon div.in2igui_icon
+div.hui_toolbar_icon div.hui_icon
 {
 	margin: 0px;
 }
 
-a.in2igui_toolbar_icon_disabled
+a.hui_toolbar_icon_disabled
 {
 	filter: alpha(opacity = 50);
 	background-color: #F2F2F3;
@@ -64,59 +64,59 @@ a.hui_button_disabled
 	background-color: #e7e7e7;
 }
 
-div.in2igui_window_dark a.hui_button_disabled
+div.hui_window_dark a.hui_button_disabled
 {
 	background-color: #333;
 }
 
-div.in2igui_toolbar_icon_disabled div.in2igui_icon
+div.hui_toolbar_icon_disabled div.hui_icon
 {
 	background-position: 0 -64px;
 }
 
-div.in2igui_toolbar_icon_disabled span
+div.hui_toolbar_icon_disabled span
 {
 	color: #999;
 }
 
-div.in2igui_window_content
+div.hui_window_content
 {
 	height: 1%;
 }
 
-.in2igui_picker_item_selected, .in2igui_picker_item_selected:hover
+.hui_picker_item_selected, .hui_picker_item_selected:hover
 {
 	background-color: #3875D7;
 }
 
-div.in2igui_box_body
+div.hui_box_body
 {
 	height: 1%;
 }
 
-input.in2igui_formula_text
+input.hui_formula_text
 {
 	margin-top: 0;
 }
 
-textarea.in2igui_formula_text
+textarea.hui_formula_text
 {
 	overflow-y: auto;
 }
 
-span.in2igui_field_content, div.in2igui_list, div.in2igui_box_middle
+span.hui_field_content, div.hui_list, div.hui_box_middle
 {
 	zoom: 1;
 }
 
 
-.in2igui_overflow
+.hui_overflow
 {
 	position: static;
 	width: 100%;
 }
 
-span.in2igui_upload_button_input input
+span.hui_upload_button_input input
 {
 	filter: alpha(opacity = 0);
 }
@@ -128,23 +128,23 @@ em.hui_button_icon_notext
 
 /********************** layout ****************/
 
-table.in2igui_layout
+table.hui_layout
 {
 	height: auto;
 	border-collapse: collapse;
 }
 
-table.in2igui_layout_middle
+table.hui_layout_middle
 {
 	border-collapse: collapse;
 }
 
-td.in2igui_layout_center
+td.hui_layout_center
 {
 	width: 100%;
 }
 
-span.in2igui_formula_text_multiline
+span.hui_formula_text_multiline
 {
 	position: relative;
 	display: block;
@@ -152,7 +152,7 @@ span.in2igui_formula_text_multiline
 
 /********************** Tabs ****************/
 
-div.in2igui_tabs_bar li
+div.hui_tabs_bar li
 {
 	display: inline;
 }

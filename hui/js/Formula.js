@@ -11,7 +11,7 @@ hui.ui.Formula = function(options) {
 /** @static Creates a new formula */
 hui.ui.Formula.create = function(o) {
 	o = o || {};
-	var atts = {'class':'in2igui_formula hui_formula'};
+	var atts = {'class':'hui_formula hui_formula'};
 	if (o.action) {
 		atts.action=o.action;
 	}
@@ -96,6 +96,10 @@ hui.ui.Formula.prototype = {
 				var w = hui.ui.Formula[item.type].create(item.options);
 				g.add(w);
 			}
+			else if (hui.ui[item.type]) {
+				var w = hui.ui.Formula[item.type].create(item.options);
+				g.add(w);
+			}
 		});
 		return g;
 	},
@@ -130,10 +134,10 @@ hui.ui.Formula.Group = function(options) {
 hui.ui.Formula.Group.create = function(options) {
 	options = hui.override({above:true},options);
 	var element = options.element = hui.build('table',
-		{'class':'in2igui_formula_group'}
+		{'class':'hui_formula_group'}
 	);
 	if (options.above) {
-		hui.addClass(element,'in2igui_formula_group_above');
+		hui.addClass(element,'hui_formula_group_above');
 	}
 	element.appendChild(hui.build('tbody'));
 	return new hui.ui.Formula.Group(options);
@@ -143,7 +147,7 @@ hui.ui.Formula.Group.prototype = {
 	add : function(widget) {
 		var tr = hui.build('tr');
 		this.body.appendChild(tr);
-		var td = hui.build('td',{'class':'in2igui_formula_group'});
+		var td = hui.build('td',{'class':'hui_formula_group'});
 		if (widget.getLabel) {
 			var label = widget.getLabel();
 			if (label) {
@@ -155,7 +159,7 @@ hui.ui.Formula.Group.prototype = {
 				}
 			}
 		}
-		var item = hui.build('div',{'class':'in2igui_formula_item'});
+		var item = hui.build('div',{'class':'hui_formula_item'});
 		item.appendChild(widget.getElement());
 		td.appendChild(item);
 		tr.appendChild(td);
@@ -180,9 +184,9 @@ hui.ui.Formula.Text = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	hui.ui.extend(this);
-	this.input = hui.firstByClass(this.element,'in2igui_formula_text');
+	this.input = hui.firstByClass(this.element,'hui_formula_text');
 	this.multiline = this.input.tagName.toLowerCase() == 'textarea';
-	this.placeholder = hui.firstByClass(this.element,'in2igui_field_placeholder');
+	this.placeholder = hui.firstByClass(this.element,'hui_field_placeholder');
 	this.value = this.input.value;
 	if (this.placeholder) {
 		var self = this;
@@ -201,16 +205,16 @@ hui.ui.Formula.Text.create = function(options) {
 	var node,input;
 	if (options.lines>1 || options.multiline) {
 		input = hui.build('textarea',
-			{'class':'in2igui_formula_text','rows':options.lines,style:'height: 32px;'}
+			{'class':'hui_formula_text','rows':options.lines,style:'height: 32px;'}
 		);
-		node = hui.build('span',{'class':'in2igui_formula_text_multiline'});
+		node = hui.build('span',{'class':'hui_formula_text_multiline'});
 		node.appendChild(input);
 	} else {
-		input = hui.build('input',{'class':'in2igui_formula_text'});
+		input = hui.build('input',{'class':'hui_formula_text'});
 		if (options.secret) {
 			input.setAttribute('type','password');
 		}
-		node = hui.build('span',{'class':'in2igui_field_singleline'});
+		node = hui.build('span',{'class':'hui_field_singleline'});
 		node.appendChild(input);
 	}
 	if (options.value!==undefined) {
@@ -223,7 +227,7 @@ hui.ui.Formula.Text.create = function(options) {
 hui.ui.Formula.Text.prototype = {
 	/** @private */
 	addBehavior : function() {
-		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
+		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'keyup',this.onKeyUp.bind(this));
 		var p = this.element.getElementsByTagName('em')[0];
 		if (p) {
@@ -241,13 +245,13 @@ hui.ui.Formula.Text.prototype = {
 		}
 	},
 	updateClass : function() {
-		hui.setClass(this.element,'in2igui_field_dirty',this.value.length>0);
+		hui.setClass(this.element,'hui_field_dirty',this.value.length>0);
 	},
 	/** @private */
 	onKeyUp : function(e) {
 		if (!this.multiline && e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
-			var form = hui.ui.getAncestor(this,'in2igui_formula');
+			var form = hui.ui.getAncestor(this,'hui_formula');
 			if (form) {form.submit();}
 			return;
 		}
@@ -304,7 +308,7 @@ hui.ui.Formula.Text.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		hui.setClass(this.element,'in2igui_field_error',isError);
+		hui.setClass(this.element,'hui_field_error',isError);
 		if (typeof(error) == 'string') {
 			hui.ui.showToolTip({text:error,element:this.element,key:this.name});
 		}
@@ -361,15 +365,15 @@ hui.ui.Formula.DateTime = function(o) {
 }
 
 hui.ui.Formula.DateTime.create = function(options) {
-	var node = hui.build('span',{'class':'in2igui_formula_text_singleline'});
-	hui.build('input',{'class':'in2igui_formula_text',parent:node});
+	var node = hui.build('span',{'class':'hui_formula_text_singleline'});
+	hui.build('input',{'class':'hui_formula_text',parent:node});
 	options.element = hui.ui.wrapInField(node);
 	return new hui.ui.Formula.DateTime(options);
 }
 
 hui.ui.Formula.DateTime.prototype = {
 	addBehavior : function() {
-		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'in2igui_field_focused'});
+		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'blur',this.check.bind(this));
 	},
 	updateFromNode : function(node) {
@@ -442,8 +446,8 @@ hui.ui.Formula.Number = function(o) {
 	this.name = o.name;
 	var e = this.element = hui.get(o.element);
 	this.input = hui.firstByTag(e,'input');
-	this.up = hui.firstByClass(e,'in2igui_number_up');
-	this.down = hui.firstByClass(e,'in2igui_number_down');
+	this.up = hui.firstByClass(e,'hui_number_up');
+	this.down = hui.firstByClass(e,'hui_number_down');
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	this.addBehavior();
@@ -451,8 +455,8 @@ hui.ui.Formula.Number = function(o) {
 
 hui.ui.Formula.Number.create = function(o) {
 	o.element = hui.build('span',{
-		'class':'in2igui_number',
-		html:'<span><span><input type="text" value="'+(o.value!==undefined ? o.value : '0')+'"/><a class="in2igui_number_up"></a><a class="in2igui_number_down"></a></span></span>'
+		'class':'hui_number',
+		html:'<span><span><input type="text" value="'+(o.value!==undefined ? o.value : '0')+'"/><a class="hui_number_up"></a><a class="hui_number_down"></a></span></span>'
 	});
 	return new hui.ui.Formula.Number(o);
 }
@@ -460,14 +464,14 @@ hui.ui.Formula.Number.create = function(o) {
 hui.ui.Formula.Number.prototype = {
 	addBehavior : function() {
 		var e = this.element;
-		hui.listen(this.input,'focus',function() {hui.addClass(e,'in2igui_number_focused')});
+		hui.listen(this.input,'focus',function() {hui.addClass(e,'hui_number_focused')});
 		hui.listen(this.input,'blur',this.blurEvent.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
 		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
 	},
 	blurEvent : function() {
-		hui.removeClass(this.element,'in2igui_number_focused');
+		hui.removeClass(this.element,'hui_number_focused');
 		this.updateField();
 	},
 	keyEvent : function(e) {
@@ -570,7 +574,7 @@ hui.ui.Formula.DropDown = function(o) {
 hui.ui.Formula.DropDown.create = function(options) {
 	options = options || {};
 	options.element = hui.build('a',{
-		'class':'in2igui_dropdown',href:'#',
+		'class':'hui_dropdown',href:'#',
 		html:'<span><span><strong></strong></span></span>'
 	});
 	return new hui.ui.Formula.DropDown(options);
@@ -579,7 +583,7 @@ hui.ui.Formula.DropDown.create = function(options) {
 hui.ui.Formula.DropDown.prototype = {
 	/** @private */
 	_addBehavior : function() {
-		hui.ui.addFocusClass({element:this.element,'class':'in2igui_dropdown_focused'});
+		hui.ui.addFocusClass({element:this.element,'class':'hui_dropdown_focused'});
 		hui.listen(this.element,'click',this._click.bind(this));
 		hui.listen(this.element,'blur',this._hideSelector.bind(this));
 		hui.listen(this.element,'keydown',this._keyDown.bind(this));
@@ -612,7 +616,7 @@ hui.ui.Formula.DropDown.prototype = {
 		var as = this.selector.getElementsByTagName('a');
 		for (var i=0; i < as.length; i++) {
 			if (this.index==i) {
-				hui.addClass(as[i],'in2igui_selected');
+				hui.addClass(as[i],'hui_selected');
 			} else {
 				as[i].className='';
 			}
@@ -726,7 +730,7 @@ hui.ui.Formula.DropDown.prototype = {
 	_buildSelector : function() {
 		if (!this.dirty || !this.items) {return};
 		if (!this.selector) {
-			this.selector = hui.build('div',{'class':'in2igui_dropdown_selector'});
+			this.selector = hui.build('div',{'class':'hui_dropdown_selector'});
 			document.body.appendChild(this.selector);
 			hui.listen(this.selector,'mousedown',function(e) {hui.stop(e)});
 		} else {
@@ -740,7 +744,7 @@ hui.ui.Formula.DropDown.prototype = {
 				self._itemClicked(item,i);
 			})
 			if (i==self.index) {
-				hui.addClass(e,'in2igui_selected')
+				hui.addClass(e,'hui_selected')
 			};
 			self.selector.appendChild(e);
 		});
@@ -788,7 +792,7 @@ hui.ui.Formula.Radiobuttons.prototype = {
 	updateUI : function() {
 		for (var i=0; i < this.radios.length; i++) {
 			var radio = this.radios[i];
-			hui.setClass(hui.get(radio.id),'in2igui_selected',radio.value==this.value);
+			hui.setClass(hui.get(radio.id),'hui_selected',radio.value==this.value);
 		};
 	},
 	setValue : function(value) {
@@ -833,9 +837,9 @@ hui.ui.Formula.Checkbox = function(o) {
  * Creates a new checkbox
  */
 hui.ui.Formula.Checkbox.create = function(o) {
-	var e = o.element = hui.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'});
+	var e = o.element = hui.build('a',{'class':'hui_checkbox',href:'#',html:'<span><span></span></span>'});
 	if (o.value) {
-		hui.addClass(e,'in2igui_checkbox_selected');
+		hui.addClass(e,'hui_checkbox_selected');
 	}
 	return new hui.ui.Formula.Checkbox(o);
 }
@@ -843,7 +847,7 @@ hui.ui.Formula.Checkbox.create = function(o) {
 hui.ui.Formula.Checkbox.prototype = {
 	/** @private */
 	addBehavior : function() {
-		hui.ui.addFocusClass({element:this.element,'class':'in2igui_checkbox_focused'});
+		hui.ui.addFocusClass({element:this.element,'class':'hui_checkbox_focused'});
 		hui.listen(this.element,'click',this.click.bind(this));
 	},
 	/** @private */
@@ -857,7 +861,7 @@ hui.ui.Formula.Checkbox.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		hui.setClass(this.element,'in2igui_checkbox_selected',this.value);
+		hui.setClass(this.element,'hui_checkbox_selected',this.value);
 	},
 	/** Sets the value
 	 * @param {Boolean} value Whether the checkbox is checked
@@ -907,11 +911,11 @@ hui.ui.Formula.Checkboxes = function(options) {
 }
 
 hui.ui.Formula.Checkboxes.create = function(o) {
-	o.element = hui.build('div',{'class':o.vertical ? 'in2igui_checkboxes in2igui_checkboxes_vertical' : 'in2igui_checkboxes'});
+	o.element = hui.build('div',{'class':o.vertical ? 'hui_checkboxes hui_checkboxes_vertical' : 'hui_checkboxes'});
 	if (o.items) {
 		hui.each(o.items,function(item) {
-			var node = hui.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+item.title});
-			hui.ui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
+			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+item.title});
+			hui.ui.addFocusClass({element:node,'class':'hui_checkbox_focused'});
 			o.element.appendChild(node);
 		});
 	}
@@ -921,7 +925,7 @@ hui.ui.Formula.Checkboxes.create = function(o) {
 hui.ui.Formula.Checkboxes.prototype = {
 	/** @private */
 	addBehavior : function() {
-		var checks = hui.byClass(this.element,'in2igui_checkbox');
+		var checks = hui.byClass(this.element,'hui_checkbox');
 		hui.each(checks,function(check,i) {
 			hui.listen(check,'click',function(e) {
 				hui.stop(e);
@@ -975,11 +979,11 @@ hui.ui.Formula.Checkboxes.prototype = {
 		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
-		var nodes = hui.byClass(this.element,'in2igui_checkbox');
+		var nodes = hui.byClass(this.element,'hui_checkbox');
 		for (i=0; i < this.items.length; i++) {
 			item = this.items[i];
 			found = hui.inArray(this.values,item.value);
-			hui.setClass(nodes[i],'in2igui_checkbox_selected',found);
+			hui.setClass(nodes[i],'hui_checkbox_selected',found);
 		};
 	},
 	refresh : function() {
@@ -1010,12 +1014,12 @@ hui.ui.Formula.Checkboxes.prototype = {
 	},
 	$itemsLoaded : function(items) {
 		hui.each(items,function(item) {
-			var node = hui.build('a',{'class':'in2igui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.escape(item.title)});
+			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.escape(item.title)});
 			hui.listen(node,'click',function(e) {
 				hui.stop(e);
 				this.flipValue(item.value);
 			}.bind(this))
-			hui.ui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
+			hui.ui.addFocusClass({element:node,'class':'hui_checkbox_focused'});
 			this.element.appendChild(node);
 			this.items.push(item);
 		}.bind(this));
@@ -1053,13 +1057,13 @@ hui.ui.Formula.Checkboxes.Items.prototype = {
 		this.element.innerHTML='';
 		var self = this;
 		hui.each(items,function(item) {
-			var node = hui.build('a',{'class':'in2igui_checkbox',href:'#',html:'<span><span></span></span>'+item.title});
+			var node = hui.build('a',{'class':'hui_checkbox',href:'#',html:'<span><span></span></span>'+item.title});
 			hui.listen(node,'click',function(e) {
 				hui.stop(e);
 				node.focus();
 				self.itemWasClicked(item)
 			});
-			hui.ui.addFocusClass({element:node,'class':'in2igui_checkbox_focused'});
+			hui.ui.addFocusClass({element:node,'class':'hui_checkbox_focused'});
 			self.element.appendChild(node);
 			self.checkboxes.push({title:item.title,element:node,value:item.value});
 		});
@@ -1074,7 +1078,7 @@ hui.ui.Formula.Checkboxes.Items.prototype = {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
 			var index = hui.indexInArray(this.parent.values,item.value);
-			hui.setClass(item.element,'in2igui_checkbox_selected',index!=-1);
+			hui.setClass(item.element,'hui_checkbox_selected',index!=-1);
 		};
 		} catch (e) {
 			alert(typeof(this.parent.values));
@@ -1108,7 +1112,7 @@ hui.ui.Formula.Tokens = function(o) {
 
 hui.ui.Formula.Tokens.create = function(o) {
 	o = o || {};
-	o.element = hui.build('div',{'class':'in2igui_tokens'});
+	o.element = hui.build('div',{'class':'hui_tokens'});
 	return new hui.ui.Formula.Tokens(o);
 }
 
@@ -1138,12 +1142,11 @@ hui.ui.Formula.Tokens.prototype = {
 	updateUI : function() {
 		this.element.innerHTML='';
 		hui.each(this.value,function(value,i) {
-			var input = hui.build('input',{'class':'in2igui_tokens_token',parent:this.element});
+			var input = hui.build('input',{'class':'hui_tokens_token',parent:this.element});
 			if (this.options.width) {
 				input.style.width=this.options.width+'px';
 			}
 			input.value = value;
-			input.in2iguiIndex = i;
 			hui.listen(input,'keyup',function() {
 				this.inputChanged(input,i)
 			}.bind(this));
@@ -1158,7 +1161,7 @@ hui.ui.Formula.Tokens.prototype = {
 	},
 	/** @private */
 	addField : function() {
-		var input = hui.build('input',{'class':'in2igui_tokens_token'});
+		var input = hui.build('input',{'class':'hui_tokens_token'});
 		if (this.options.width) {
 			input.style.width = this.options.width+'px';
 		}
@@ -1169,204 +1172,3 @@ hui.ui.Formula.Tokens.prototype = {
 		hui.listen(input,'keyup',function() {self.inputChanged(input,i)});
 	}
 }
-
-/////////////////////////// Style length /////////////////////////
-
-/**
- * A date and time field
- * @constructor
- */
-hui.ui.Formula.StyleLength = function(o) {
-	this.options = hui.override({value:null,min:0,max:1000,units:['px','pt','em','%'],defaultUnit:'px',allowNull:false},o);	
-	this.name = o.name;
-	var e = this.element = hui.get(o.element);
-	this.input = hui.firstByTag(e,'input');
-	var as = e.getElementsByTagName('a');
-	this.up = as[0];
-	this.down = as[1];
-	this.value = this.parseValue(this.options.value);
-	hui.ui.extend(this);
-	this.addBehavior();
-}
-
-hui.ui.Formula.StyleLength.prototype = {
-	/** @private */
-	addBehavior : function() {
-		var e = this.element;
-		hui.listen(this.input,'focus',function() {hui.addClass(e,'in2igui_number_focused')});
-		hui.listen(this.input,'blur',this.blurEvent.bind(this));
-		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
-		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
-		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
-	},
-	/** @private */
-	parseValue : function(value) {
-		var num = parseFloat(value,10);
-		if (isNaN(num)) {
-			return null;
-		}
-		var parsed = {number: num, unit:this.options.defaultUnit};
-		for (var i=0; i < this.options.units.length; i++) {
-			var unit = this.options.units[i];
-			if (value.indexOf(unit)!=-1) {
-				parsed.unit = unit;
-				break;
-			}
-		};
-		parsed.number = Math.max(this.options.min,Math.min(this.options.max,parsed.number));
-		return parsed;
-	},
-	/** @private */
-	blurEvent : function() {
-		hui.removeClass(this.element,'in2igui_number_focused');
-		this.updateInput();
-	},
-	/** @private */
-	keyEvent : function(e) {
-		e = e || window.event;
-		if (e.keyCode==hui.KEY_UP) {
-			hui.stop(e);
-			this.upEvent();
-		} else if (e.keyCode==hui.KEY_DOWN) {
-			this.downEvent();
-		} else {
-			this.checkAndSetValue(this.parseValue(this.input.value));
-		}
-	},
-	/** @private */
-	updateInput : function() {
-		this.input.value = this.getValue();
-	},
-	/** @private */
-	checkAndSetValue : function(value) {
-		var old = this.value;
-		var changed = false;
-		if (old===null && value===null) {
-			// nothing
-		} else if (old!=null && value!=null && old.number===value.number && old.unit===value.unit) {
-			// nothing
-		} else {
-			changed = true;
-		}
-		this.value = value;
-		if (changed) {
-			this.fire('valueChanged',this.getValue());
-		}
-	},
-	/** @private */
-	downEvent : function() {
-		if (this.value) {
-			this.checkAndSetValue({number:Math.max(this.options.min,this.value.number-1),unit:this.value.unit});
-		} else {
-			this.checkAndSetValue({number:this.options.min,unit:this.options.defaultUnit});
-		}
-		this.updateInput();
-	},
-	/** @private */
-	upEvent : function() {
-		if (this.value) {
-			this.checkAndSetValue({number:Math.min(this.options.max,this.value.number+1),unit:this.value.unit});
-		} else {
-			this.checkAndSetValue({number:this.options.min+1,unit:this.options.defaultUnit});
-		}
-		this.updateInput();
-	},
-	
-	// Public
-	
-	getValue : function() {
-		return this.value ? this.value.number+this.value.unit : '';
-	},
-	setValue : function(value) {
-		this.value = this.parseValue(value);
-		this.updateInput();
-	}
-}
-
-/////////////////////////// Style length /////////////////////////
-
-/**
- * A component for geo-location
- * @constructor
- */
-hui.ui.Formula.Location = function(options) {
-	this.options = hui.override({value:null},options);
-	this.name = options.name;
-	this.element = hui.get(options.element);
-	this.chooser = hui.firstByTag(this.element,'a');
-	this.latField = new hui.ui.TextField({element:hui.firstByTag(this.element,'input'),validator:new hui.ui.NumberValidator({min:-90,max:90,allowNull:true})});
-	this.latField.listen(this);
-	this.lngField = new hui.ui.TextField({element:this.element.getElementsByTagName('input')[1],validator:new hui.ui.NumberValidator({min:-180,max:180,allowNull:true})});
-	this.lngField.listen(this);
-	this.value = this.options.value;
-	hui.ui.extend(this);
-	this.setValue(this.value);
-	this.addBehavior();
-}
-
-hui.ui.Formula.Location.create = function(options) {
-	options = options || {};
-	var e = options.element = hui.build('div',{'class':'in2igui_location'});
-	var b = hui.build('span',{html:'<span class="in2igui_location_latitude"><span><input/></span></span><span class="in2igui_location_longitude"><span><input/></span></span>'});
-	e.appendChild(hui.ui.wrapInField(b));
-	e.appendChild(hui.build('a',{'class':'in2igui_location_picker',href:'javascript:void(0);'}));
-	return new hui.ui.Formula.Location(options);
-}
-
-hui.ui.Formula.Location.prototype = {
-	/** @private */
-	addBehavior : function() {
-		hui.listen(this.chooser,'click',this.showPicker.bind(this));
-		hui.ui.addFocusClass({element:this.latField.element,classElement:this.element,'class':'in2igui_field_focused'});
-		hui.ui.addFocusClass({element:this.lngField.element,classElement:this.element,'class':'in2igui_field_focused'});
-	},
-	getLabel : function() {
-		return this.options.label;
-	},
-	reset : function() {
-		this.setValue();
-	},
-	getValue : function() {
-		return this.value;
-	},
-	setValue : function(loc) {
-		if (loc) {
-			this.latField.setValue(loc.latitude);
-			this.lngField.setValue(loc.longitude);
-			this.value = loc;
-		} else {
-			this.latField.setValue();
-			this.lngField.setValue();
-			this.value = null;
-		}
-		this.updatePicker();
-	},
-	updatePicker : function() {
-		if (this.picker) {
-			this.picker.setLocation(this.value);
-		}
-	},
-	/** @private */
-	showPicker : function() {
-		if (!this.picker) {
-			this.picker = new hui.ui.LocationPicker();
-			this.picker.listen(this);
-		}
-		this.picker.show({node:this.chooser,location:this.value});
-	},
-	$locationChanged : function(loc) {
-		this.setValue(loc);
-	},
-	$valueChanged : function() {
-		var lat = this.latField.getValue();
-		var lng = this.lngField.getValue();
-		if (lat===null || lng===null) {
-			this.value = null;
-		} else {
-			this.value = {latitude:lat,longitude:lng};
-		}
-		this.updatePicker();
-	}
-}
-
-/* EOF */

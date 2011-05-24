@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10" title="Customers">
+<gui xmlns="uri:hui" padding="10" title="Customers">
 	<controller source="controller.js"/>
 	<source name="personGroupSource" url="../../Services/Model/Items.php?type=persongroup"/>
 	<source name="mailinglistSource" url="../../Services/Model/Items.php?type=mailinglist"/>

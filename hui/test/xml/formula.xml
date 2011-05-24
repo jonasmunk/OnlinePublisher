@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:In2iGui" pad="10" title="Formula">
+<gui xmlns="uri:hui" pad="10" title="Formula">
 	<controller name="controller" source="formula.js"/>
 	<source name="itemsSource" url="data/source_items.xml"/>
 	<box width="600" title="Title with toolbars" variant="textured">

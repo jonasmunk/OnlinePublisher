@@ -23,7 +23,7 @@ setDocumentToolbarTab('document');
 
 
 $gui='
-<frames xmlns="uri:In2iGui">
+<frames xmlns="uri:hui">
 	<frame source="Toolbar.php" scrolling="false" name="Toolbar"/>
 	<frame source="Frame.php" name="Frame"/>
 </frames>';

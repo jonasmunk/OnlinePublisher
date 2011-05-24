@@ -14,7 +14,7 @@ hui.ui.Menu = function(options) {
 
 hui.ui.Menu.create = function(options) {
 	options = options || {};
-	options.element = hui.build('div',{'class':'in2igui_menu'});
+	options.element = hui.build('div',{'class':'hui_menu'});
 	var obj = new hui.ui.Menu(options);
 	document.body.appendChild(options.element);
 	return obj;
@@ -42,11 +42,11 @@ hui.ui.Menu.prototype = {
 		}
 	},
 	addDivider : function() {
-		hui.build('div',{'class':'in2igui_menu_divider',parent:this.element});
+		hui.build('div',{'class':'hui_menu_divider',parent:this.element});
 	},
 	addItem : function(item) {
 		var self = this;
-		var element = hui.build('div',{'class':'in2igui_menu_item',text:item.title});
+		var element = hui.build('div',{'class':'hui_menu_item',text:item.title});
 		hui.listen(element,'click',function(e) {
 			hui.stop(e);
 			self.itemWasClicked(item.value);
@@ -58,7 +58,7 @@ hui.ui.Menu.prototype = {
 				sub.showAtElement(element,e,'horizontal');
 			});
 			self.subMenus.push(sub);
-			hui.addClass(element,'in2igui_menu_item_children');
+			hui.addClass(element,'hui_menu_item_children');
 		}
 		this.element.appendChild(element);
 	},

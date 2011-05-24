@@ -46,7 +46,7 @@ hui.ui.Calendar.prototype = {
 	},
 	clearEvents : function() {
 		this.events = [];
-		var nodes = hui.byClass(this.element,'in2igui_calendar_event');
+		var nodes = hui.byClass(this.element,'hui_calendar_event');
 		for (var i=0; i < nodes.length; i++) {
 			hui.dom.remove(nodes[i]);
 		};
@@ -84,23 +84,23 @@ hui.ui.Calendar.prototype = {
 		var week = this.getFirstDay().getWeekOfYear();
 		var year = this.getFirstDay().getYear();
 		hui.each(this.events,function(event) {
-			var day = hui.byClass(self.body,'in2igui_calendar_day')[event.startTime.getDay()-1];
+			var day = hui.byClass(self.body,'hui_calendar_day')[event.startTime.getDay()-1];
 			if (!day) {
 				return;
 			}
 			if (event.startTime.getWeekOfYear()!=week || event.startTime.getYear()!=year) {
 				return;
 			}
-			var node = hui.build('div',{'class':'in2igui_calendar_event',parent:day});
+			var node = hui.build('div',{'class':'hui_calendar_event',parent:day});
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
 			height = Math.min(pixels-top,height);
 			hui.setStyle(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
 			var content = hui.build('div',{parent:node});
-			hui.build('p',{'class':'in2igui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
-			hui.build('p',{'class':'in2igui_calendar_event_text',text:event.text,parent:content});
+			hui.build('p',{'class':'hui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
+			hui.build('p',{'class':'hui_calendar_event_text',text:event.text,parent:content});
 			if (event.location) {
-				hui.build('p',{'class':'in2igui_calendar_event_location',text:event.location,parent:content});
+				hui.build('p',{'class':'hui_calendar_event_location',text:event.location,parent:content});
 			}
 			
 			window.setTimeout(function() {
@@ -116,7 +116,7 @@ hui.ui.Calendar.prototype = {
 		this.showEvent(node);
 	},
 	setBusy : function(busy) {
-		hui.setClass(this.element,'in2igui_calendar_busy',busy);
+		hui.setClass(this.element,'hui_calendar_busy',busy);
 	},
 	/** @private */
 	updateUI : function() {
@@ -130,40 +130,40 @@ hui.ui.Calendar.prototype = {
 	},
 	/** @private */
 	buildUI : function() {
-		var bar = hui.firstByClass(this.element,'in2igui_calendar_bar');
+		var bar = hui.firstByClass(this.element,'hui_calendar_bar');
 		this.toolbar = hui.ui.Toolbar.create({labels:false});
 		bar.appendChild(this.toolbar.getElement());
-		var previous = hui.ui.Button.create({name:'in2iguiCalendarPrevious',text:'',icon:'monochrome/previous'});
+		var previous = hui.ui.Button.create({name:'huiCalendarPrevious',text:'',icon:'monochrome/previous'});
 		previous.listen(this);
 		this.toolbar.add(previous);
-		var today = hui.ui.Button.create({name:'in2iguiCalendarToday',text:'Idag'});
+		var today = hui.ui.Button.create({name:'huiCalendarToday',text:'Idag'});
 		today.click(function() {this.setDate(new Date())}.bind(this));
 		this.toolbar.add(today);
-		var next = hui.ui.Button.create({name:'in2iguiCalendarNext',text:'',icon:'monochrome/next'});
+		var next = hui.ui.Button.create({name:'huiCalendarNext',text:'',icon:'monochrome/next'});
 		next.listen(this);
 		this.toolbar.add(next);
-		this.datePickerButton = hui.ui.Button.create({name:'in2iguiCalendarDatePicker',text:'Vælg dato...'});
+		this.datePickerButton = hui.ui.Button.create({name:'huiCalendarDatePicker',text:'Vælg dato...'});
 		this.datePickerButton.listen(this);
 		this.toolbar.add(this.datePickerButton);
 		
-		var time = hui.firstByClass(this.body,'in2igui_calendar_day');
+		var time = hui.firstByClass(this.body,'hui_calendar_day');
 		for (var i=this.options.startHour; i <= this.options.endHour; i++) {
-			var node = hui.build('div',{'class':'in2igui_calendar_time',html:'<span><em>'+i+':00</em></span>'});
+			var node = hui.build('div',{'class':'hui_calendar_time',html:'<span><em>'+i+':00</em></span>'});
 			if (i==this.options.startHour) {
-				hui.addClass(node,'in2igui_calendar_time_first');
+				hui.addClass(node,'hui_calendar_time_first');
 			}
 			if (i==this.options.endHour) {
-				hui.addClass(node,'in2igui_calendar_time_last');
+				hui.addClass(node,'hui_calendar_time_last');
 			}
 			time.appendChild(node);
 		};
 	},
-	$click$in2iguiCalendarPrevious : function() {
+	$click$huiCalendarPrevious : function() {
 		var date = new Date(this.date.getTime());
 		date.setDate(this.date.getDate()-7);
 		this.setDate(date);
 	},
-	$click$in2iguiCalendarNext : function() {
+	$click$huiCalendarNext : function() {
 		var date = new Date(this.date.getTime());
 		date.setDate(this.date.getDate()+7);
 		this.setDate(date);
@@ -176,7 +176,7 @@ hui.ui.Calendar.prototype = {
 			this.datePicker.setValue(this.date);
 		}
 	},
-	$click$in2iguiCalendarDatePicker : function() {
+	$click$huiCalendarDatePicker : function() {
 		this.showDatePicker();
 	},
 	refresh : function() {
@@ -202,21 +202,21 @@ hui.ui.Calendar.prototype = {
 	showDatePicker : function() {
 		if (!this.datePickerPanel) {
 			this.datePickerPanel = hui.ui.BoundPanel.create();
-			this.datePicker = hui.ui.DatePicker.create({name:'in2iguiCalendarDatePicker',value:this.date});
+			this.datePicker = hui.ui.DatePicker.create({name:'huiCalendarDatePicker',value:this.date});
 			this.datePicker.listen(this);
 			this.datePickerPanel.add(this.datePicker);
 			this.datePickerPanel.addSpace(3);
-			var button = hui.ui.Button.create({name:'in2iguiCalendarDatePickerClose',text:'Luk',small:true,rounded:true});
+			var button = hui.ui.Button.create({name:'huiCalendarDatePickerClose',text:'Luk',small:true,rounded:true});
 			button.listen(this);
 			this.datePickerPanel.add(button);
 		}
 		this.datePickerPanel.position(this.datePickerButton.getElement());
 		this.datePickerPanel.show();
 	},
-	$click$in2iguiCalendarDatePickerClose : function() {
+	$click$huiCalendarDatePickerClose : function() {
 		this.datePickerPanel.hide();
 	},
-	$dateChanged$in2iguiCalendarDatePicker : function(date) {
+	$dateChanged$huiCalendarDatePicker : function(date) {
 		this.setDate(date);
 	},
 	
@@ -228,7 +228,7 @@ hui.ui.Calendar.prototype = {
 			this.eventInfo = hui.ui.InfoView.create(null,{height:240,clickObjects:true});
 			this.eventViewerPanel.add(this.eventInfo);
 			this.eventViewerPanel.addSpace(5);
-			var button = hui.ui.Button.create({name:'in2iguiCalendarEventClose',text:'Luk'});
+			var button = hui.ui.Button.create({name:'huiCalendarEventClose',text:'Luk'});
 			button.listen(this);
 			this.eventViewerPanel.add(button);
 		}
@@ -243,7 +243,7 @@ hui.ui.Calendar.prototype = {
 		this.eventInfo.setBusy(false);
 		this.eventInfo.update(data);
 	},
-	click$in2iguiCalendarEventClose : function() {
+	click$huiCalendarEventClose : function() {
 		this.hideEventViewer();
 	},
 	hideEventViewer : function() {

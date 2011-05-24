@@ -12,7 +12,7 @@ hui.ui.Layout = function(options) {
 hui.ui.Layout.prototype = {
 	$$layout : function() {
 		if (hui.browser.gecko) {
-			var center = hui.firstByClass(this.element,'in2igui_layout_center');
+			var center = hui.firstByClass(this.element,'hui_layout_center');
 			if (center) {
 				center.style.height='100%';
 			}
@@ -21,7 +21,7 @@ hui.ui.Layout.prototype = {
 			return;
 		}
 		if (this.diff===undefined) {
-			var head = hui.firstByClass(this.element,'in2igui_layout_top');
+			var head = hui.firstByClass(this.element,'hui_layout_top');
 			var top = hui.firstByTag(head,'*').clientHeight;
 			var foot = hui.firstByTag(hui.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
@@ -59,7 +59,7 @@ hui.ui.Columns = function(options) {
  */
 hui.ui.Columns.create = function(options) {
 	options = options || {};
-	options.element = hui.build('table',{'class' : 'in2igui_columns',html : '<tbody><tr></tr></tbody>'});
+	options.element = hui.build('table',{'class' : 'hui_columns',html : '<tbody><tr></tr></tbody>'});
 	return new hui.ui.Columns(options);
 }
 
@@ -80,7 +80,7 @@ hui.ui.Columns.prototype = {
 	ensureColumn : function(index) {
 		var children = hui.getChildren(this.body);
 		for (var i=children.length-1;i<index;i++) {
-			this.body.appendChild(hui.build('td',{'class':'in2igui_columns_column'}));
+			this.body.appendChild(hui.build('td',{'class':'hui_columns_column'}));
 		}
 		return hui.getChildren(this.body)[index];
 	}

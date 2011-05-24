@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
-<gui xmlns="uri:In2iGui" title="System">
+<gui xmlns="uri:hui" title="System">
 	<controller name="controller" source="list.js"/>
 	<source name="itemsSource" url="data/source_items.xml"/>
 	<source name="listSource" url="data/list_icons.xml"/>

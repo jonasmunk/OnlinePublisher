@@ -1,4 +1,4 @@
-.in2igui_panel
+.hui_panel
 {
 	position: absolute;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -9,21 +9,21 @@
 
 /* Titlebar */
 
-.in2igui_panel .titlebar
+.hui_panel .titlebar
 {
 	height: 29px;
 	padding-right: 16px;
 	background: url('../gfx/panel_titlebar_right.png') bottom right no-repeat;
 }
 
-.in2igui_panel .titlebar div
+.hui_panel .titlebar div
 {
 	height: 29px;
 	padding-left: 16px;
 	background: url('../gfx/panel_titlebar_left.png') bottom left no-repeat;
 }
 
-.in2igui_panel .titlebar div div
+.hui_panel .titlebar div div
 {
 	height: 29px;
 	padding: 0px 10px 0px 0px;
@@ -31,7 +31,7 @@
 	text-align: center;
 }
 
-.in2igui_panel .titlebar .close
+.hui_panel .titlebar .close
 {
 	float: left;
 	width: 15px;
@@ -42,11 +42,11 @@
 	cursor: pointer;
 }
 
-.in2igui_panel .titlebar .close:hover
+.hui_panel .titlebar .close:hover
 {
 	background-image: url('../gfx/panel_close_hover.png')
 }
-.in2igui_panel .titlebar strong
+.hui_panel .titlebar strong
 {
 	color: #fff;
 	font-weight: normal;
@@ -59,30 +59,30 @@
 }
 /* Body */
 
-.in2igui_panel .body
+.hui_panel .body
 {
 	padding: 0px 6px 0px 0px;
 	background: url('../gfx/panel_right.png') bottom right repeat-y;
 }
-.in2igui_panel .body .body
+.hui_panel .body .body
 {
 	padding: 0px 0px 0px 6px;
 	background: url('../gfx/panel_left.png') bottom left repeat-y;
 }
-.in2igui_panel .body .body .body
+.hui_panel .body .body .body
 {
 	padding: 0px;
 	background: url('../gfx/panel_bg.png');
 }
 
-.in2igui_panel .content
+.hui_panel .content
 {
 	overflow: auto;
 }
 
 /* Bottom */
 
-.in2igui_panel .bottom
+.hui_panel .bottom
 {
 	font-size: 1px;
 	height: 16px;
@@ -90,14 +90,14 @@
 	background: url('../gfx/panel_bottom_right.png') bottom right no-repeat;
 }
 
-.in2igui_panel .bottom div
+.hui_panel .bottom div
 {
 	height: 16px;
 	padding-left: 16px;
 	background: url('../gfx/panel_bottom_left.png') bottom left no-repeat;
 }
 
-.in2igui_panel .bottom div div
+.hui_panel .bottom div div
 {
 	height: 16px;
 	background: url('../gfx/panel_bottom.png') bottom left repeat-x;

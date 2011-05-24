@@ -1,10 +1,10 @@
-div.in2igui_colorpicker
+div.hui_colorpicker
 {
 	margin-bottom: -3px;
 	border: 1px solid #ddd;
 }
 
-div.in2igui_colorpicker_preview
+div.hui_colorpicker_preview
 {
 	height: 24px;
 	background: #fff;
@@ -12,7 +12,7 @@ div.in2igui_colorpicker_preview
 	border-width: 1px 0 0;
 }
 
-div.in2igui_colorpicker_pages
+div.hui_colorpicker_pages
 {
 	width: 256px;
 	height: 256px;
@@ -21,33 +21,33 @@ div.in2igui_colorpicker_pages
 	border-top: 1px solid #ddd;
 }
 
-div.in2igui_colorpicker_page
+div.hui_colorpicker_page
 {
 	width: 256px;
 	height: 256px;
 	display: none;
 }
 
-div.in2igui_colorpicker_wheel1
+div.hui_colorpicker_wheel1
 {
 	background-image: url('../gfx/colorwheel1.png');
 	cursor: crosshair;
 	display: block;
 }
 
-div.in2igui_colorpicker_wheel2
+div.hui_colorpicker_wheel2
 {
 	background-image: url('../gfx/colorwheel2.png');
 	cursor: crosshair;
 }
 
-div.in2igui_colorpicker_wheel3
+div.hui_colorpicker_wheel3
 {
 	background-image: url('../gfx/colorwheel3_2.png');
 	cursor: crosshair;
 }
 
-input.in2igui_colorpicker
+input.hui_colorpicker
 {
 	margin: 3px 3px 0 0;
 	width: 50px;
@@ -60,7 +60,7 @@ input.in2igui_colorpicker
 	float: right;
 }
 
-div.in2igui_colorpicker_swatches
+div.hui_colorpicker_swatches
 {
 	font-size: 0;
 	width: 260px;
@@ -69,7 +69,7 @@ div.in2igui_colorpicker_swatches
 	cursor: crosshair;
 }
 
-div.in2igui_colorpicker_swatches a
+div.hui_colorpicker_swatches a
 {
 	display: inline-block;
 	width: 18px;

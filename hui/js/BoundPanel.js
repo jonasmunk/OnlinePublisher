@@ -8,8 +8,8 @@ hui.ui.BoundPanel = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.visible = false;
-	this.content = hui.firstByClass(this.element,'in2igui_boundpanel_content');
-	this.arrow = hui.firstByClass(this.element,'in2igui_boundpanel_arrow');
+	this.content = hui.firstByClass(this.element,'hui_boundpanel_content');
+	this.arrow = hui.firstByClass(this.element,'hui_boundpanel_arrow');
 	hui.ui.extend(this);
 }
 
@@ -23,9 +23,9 @@ hui.ui.BoundPanel.create = function(options) {
 
 	
 	var html = 
-		'<div class="in2igui_boundpanel_arrow"></div>'+
-		'<div class="in2igui_boundpanel_top"><div><div></div></div></div>'+
-		'<div class="in2igui_boundpanel_body"><div class="in2igui_boundpanel_body"><div class="in2igui_boundpanel_body"><div class="in2igui_boundpanel_content" style="';
+		'<div class="hui_boundpanel_arrow"></div>'+
+		'<div class="hui_boundpanel_top"><div><div></div></div></div>'+
+		'<div class="hui_boundpanel_body"><div class="hui_boundpanel_body"><div class="hui_boundpanel_body"><div class="hui_boundpanel_content" style="';
 	if (options.width) {
 		html+='width:'+options.width+'px;';
 	}
@@ -33,11 +33,11 @@ hui.ui.BoundPanel.create = function(options) {
 		html+='padding:'+options.padding+'px;';
 	}
 	html+='"></div></div></div></div>'+
-		'<div class="in2igui_boundpanel_bottom"><div><div></div></div></div>';
+		'<div class="hui_boundpanel_bottom"><div><div></div></div></div>';
 
 	options.element = hui.build(
 		'div',{
-			'class':'in2igui_boundpanel',
+			'class':'hui_boundpanel',
 			style:'display:none;zIndex:'+hui.ui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
 			html:html,
 			parent:document.body
@@ -160,7 +160,7 @@ hui.ui.BoundPanel.prototype = {
 		
 		if (vertical<.1) {
 			this.relativePosition='top';
-			this.arrow.className = 'in2igui_boundpanel_arrow in2igui_boundpanel_arrow_top';
+			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_top';
 			arrowTop = -16;
 			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
 			arrowLeft = (nodeLeft+nodeWidth/2)-left-18;
@@ -168,7 +168,7 @@ hui.ui.BoundPanel.prototype = {
 		}
 		else if (vertical>.9) {
 			this.relativePosition='bottom';
-			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_bottom';
+			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_bottom';
 			arrowTop = dims.height-6;
 			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
 			arrowLeft = (nodeLeft+nodeWidth/2)-left-18;
@@ -177,14 +177,14 @@ hui.ui.BoundPanel.prototype = {
 		else if ((nodeLeft+nodeWidth/2)/viewportWidth<.5) {
 			this.relativePosition='left';
 			left = nodeLeft+nodeWidth+10;
-			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_left';
+			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_left';
 			arrowLeft=-14;
 			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
 			arrowTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
 		} else {
 			this.relativePosition='right';
 			left = nodeLeft-dims.width-10;
-			this.arrow.className='in2igui_boundpanel_arrow in2igui_boundpanel_arrow_right';
+			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_right';
 			arrowLeft=dims.width-4;
 			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
 			arrowTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);

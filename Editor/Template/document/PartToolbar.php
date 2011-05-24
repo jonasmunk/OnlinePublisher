@@ -21,7 +21,7 @@ if (!$partType) {
 $part = PartService::getController($partType);
 
 $gui='
-<gui xmlns="uri:In2iGui" title="Toolbar">
+<gui xmlns="uri:hui" title="Toolbar">
 	<controller source="js/PartToolbar.js"/>
 	<controller source="../../Parts/'.$partType.'/toolbar.js"/>
 	<script>

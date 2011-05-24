@@ -7,7 +7,7 @@ hui.ui.Dock = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
 	this.iframe = hui.firstByTag(this.element,'iframe');
-	this.progress = hui.firstByClass(this.element,'in2igui_dock_progress');
+	this.progress = hui.firstByClass(this.element,'hui_dock_progress');
 	hui.listen(this.iframe,'load',this._load.bind(this));
 	//if (this.iframe.contentWindow) {
 	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();hui.log('Fast path!')}.bind(this));

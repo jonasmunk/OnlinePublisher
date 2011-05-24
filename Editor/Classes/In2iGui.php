@@ -116,7 +116,7 @@ class In2iGui {
 	
 	function renderFragment($gui) {
 		global $basePath,$baseUrl;
-		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:In2iGui">'.In2iGui::localize($gui).'</subgui>';
+		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:hui">'.In2iGui::localize($gui).'</subgui>';
 		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="xml"/>'.

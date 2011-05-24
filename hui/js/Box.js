@@ -6,8 +6,8 @@ hui.ui.Box = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.body = hui.firstByClass(this.element,'in2igui_box_body');
-	this.close = hui.firstByClass(this.element,'in2igui_box_close');
+	this.body = hui.firstByClass(this.element,'hui_box_body');
+	this.close = hui.firstByClass(this.element,'hui_box_close');
 	if (this.close) {
 		hui.listen(this.close,'click',function(e) {
 			hui.stop(e);
@@ -25,17 +25,17 @@ hui.ui.Box = function(options) {
 hui.ui.Box.create = function(options) {
 	options = options || {};
 	options.element = hui.build('div',{
-		'class' : options.absolute ? 'in2igui_box in2igui_box_absolute' : 'in2igui_box',
-		html : (options.closable ? '<a class="in2igui_box_close" href="#"></a>' : '')+
-			'<div class="in2igui_box_top"><div><div></div></div></div>'+
-			'<div class="in2igui_box_middle"><div class="in2igui_box_middle">'+
-			(options.title ? '<div class="in2igui_box_header"><strong class="in2igui_box_title">'+hui.escape(options.title)+'</strong></div>' : '')+
-			'<div class="in2igui_box_body" style="'+
+		'class' : options.absolute ? 'hui_box hui_box_absolute' : 'hui_box',
+		html : (options.closable ? '<a class="hui_box_close" href="#"></a>' : '')+
+			'<div class="hui_box_top"><div><div></div></div></div>'+
+			'<div class="hui_box_middle"><div class="hui_box_middle">'+
+			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.escape(options.title)+'</strong></div>' : '')+
+			'<div class="hui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+
 			'"></div>'+
 			'</div></div>'+
-			'<div class="in2igui_box_bottom"><div><div></div></div></div>',
+			'<div class="hui_box_bottom"><div><div></div></div></div>',
 		style : options.width ? options.width+'px' : null
 	});
 	return new hui.ui.Box(options);

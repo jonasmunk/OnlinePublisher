@@ -3,9 +3,9 @@ hui.ui.Picker = function(o) {
 	o = this.options = hui.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},o);
 	this.element = hui.get(o.element);
 	this.name = o.name;
-	this.container = hui.firstByClass(this.element,'in2igui_picker_container');
-	this.content = hui.firstByClass(this.element,'in2igui_picker_content');
-	this.title = hui.firstByClass(this.element,'in2igui_picker_title');
+	this.container = hui.firstByClass(this.element,'hui_picker_container');
+	this.content = hui.firstByClass(this.element,'hui_picker_content');
+	this.title = hui.firstByClass(this.element,'hui_picker_title');
 	this.objects = [];
 	this.selected = null;
 	this.value = null;
@@ -15,15 +15,15 @@ hui.ui.Picker = function(o) {
 
 hui.ui.Picker.create = function(o) {
 	o = hui.override({shadow:true},o);
-	o.element = hui.build('div',{'class':'in2igui_picker',
-		html:'<div class="in2igui_picker_top"><div><div></div></div></div>'+
-		'<div class="in2igui_picker_middle"><div class="in2igui_picker_middle">'+
-		(o.title ? '<div class="in2igui_picker_title">'+o.title+'</div>' : '')+
-		'<div class="in2igui_picker_container"><div class="in2igui_picker_content"></div></div>'+
+	o.element = hui.build('div',{'class':'hui_picker',
+		html:'<div class="hui_picker_top"><div><div></div></div></div>'+
+		'<div class="hui_picker_middle"><div class="hui_picker_middle">'+
+		(o.title ? '<div class="hui_picker_title">'+o.title+'</div>' : '')+
+		'<div class="hui_picker_container"><div class="hui_picker_content"></div></div>'+
 		'</div></div>'+
-		'<div class="in2igui_picker_bottom"><div><div></div></div></div>'});
+		'<div class="hui_picker_bottom"><div><div></div></div></div>'});
 	if (o.shadow==true) {
-		hui.addClass(o.element,'in2igui_picker_shadow')
+		hui.addClass(o.element,'hui_picker_shadow')
 	}
 	return new hui.ui.Picker(o);
 }
@@ -66,14 +66,14 @@ hui.ui.Picker.prototype = {
 		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
 		this.content.style.height=(this.options.itemHeight+10)+'px';
 		hui.each(this.objects,function(object,i) {
-			var item = hui.build('div',{'class':'in2igui_picker_item',title:object.title});
+			var item = hui.build('div',{'class':'hui_picker_item',title:object.title});
 			if (self.value!=null && object[self.options.valueProperty]==self.value) {
-				 hui.addClass(item,'in2igui_picker_item_selected');
+				 hui.addClass(item,'hui_picker_item_selected');
 			}
-			item.innerHTML = '<div class="in2igui_picker_item_middle"><div class="in2igui_picker_item_middle">'+
+			item.innerHTML = '<div class="hui_picker_item_middle"><div class="hui_picker_item_middle">'+
 				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.escape(object.title)+'</strong></div>'+
 				'</div></div>'+
-				'<div class="in2igui_picker_item_bottom"><div><div></div></div></div>';
+				'<div class="hui_picker_item_bottom"><div><div></div></div></div>';
 			hui.listen(item,'mouseup',function() {
 				self.selectionChanged(object[self.options.valueProperty])
 			});
@@ -83,7 +83,7 @@ hui.ui.Picker.prototype = {
 	updateSelection : function() {
 		var children = this.content.childNodes;
 		for (var i=0; i < children.length; i++) {
-			hui.setClass(children[i],'in2igui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
+			hui.setClass(children[i],'hui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
 		};
 	},
 	selectionChanged : function(value) {

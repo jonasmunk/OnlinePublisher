@@ -10,11 +10,11 @@ hui.ui.Wizard = function(o) {
 	/** @private */
 	this.name = o.name;
 	/** @private */
-	this.container = hui.firstByClass(this.element,'in2igui_wizard_steps');
+	this.container = hui.firstByClass(this.element,'hui_wizard_steps');
 	/** @private */
-	this.steps = hui.byClass(this.element,'in2igui_wizard_step');
+	this.steps = hui.byClass(this.element,'hui_wizard_step');
 	/** @private */
-	this.anchors = hui.byClass(this.element,'in2igui_wizard_selection');
+	this.anchors = hui.byClass(this.element,'hui_wizard_selection');
 	/** @private */
 	this.selected = 0;
 	hui.ui.extend(this);
@@ -39,9 +39,9 @@ hui.ui.Wizard.prototype = {
 	goToStep : function(index) {
 		var c = this.container;
 		c.style.height=c.clientHeight+'px';
-		hui.removeClass(this.anchors[this.selected],'in2igui_selected');
+		hui.removeClass(this.anchors[this.selected],'hui_selected');
 		this.steps[this.selected].style.display='none';
-		hui.addClass(this.anchors[index],'in2igui_selected');
+		hui.addClass(this.anchors[index],'hui_selected');
 		this.steps[index].style.display='block';
 		this.selected=index;
 		hui.ani(c,'height',this.steps[index].clientHeight+'px',500,{ease:hui.ease.slowFastSlow,onComplete:function() {

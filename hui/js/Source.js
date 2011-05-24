@@ -130,7 +130,6 @@ hui.ui.Source.prototype = {
 		this.end();
 	},
 	addParameter : function(parm) {
-		//hui.log(parm.value);
 		this.parameters.push(parm);
 	},
 	changeParameter : function(key,value) {

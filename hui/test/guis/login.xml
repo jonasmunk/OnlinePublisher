@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
-<gui xmlns="uri:In2iGui" padding="10" title="Box">
+<gui xmlns="uri:hui" padding="10" title="Box">
 	<box width="300" padding="10" top="100" variant="textured">
 		<formula>
 			<header>OnlinePublisher Login</header>

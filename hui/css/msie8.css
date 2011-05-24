@@ -1,15 +1,15 @@
-body.in2igui
+body.hui
 {
 	font-size: 0;
 }
 
-table.in2igui_layout
+table.hui_layout
 {
 	height: 100%;
 	border-collapse: collapse;
 }
 
-a.in2igui_toolbar_icon_disabled
+a.hui_toolbar_icon_disabled
 {
 	filter: alpha(opacity = 50);
 	background-color: #F2F2F3;
@@ -21,27 +21,27 @@ a.hui_button_disabled
 	background-color: #e7e7e7;
 }
 
-div.in2igui_window_dark a.hui_button_disabled
+div.hui_window_dark a.hui_button_disabled
 {
 	background-color: #333;
 }
 
-.in2igui_formula_text
+.hui_formula_text
 {
 	background: url('#');
 }
 
-input.in2igui_formula_text
+input.hui_formula_text
 {
 	padding-top: 2px;
 }
 
-span.in2igui_upload_button_input input
+span.hui_upload_button_input input
 {
 	filter: alpha(opacity = 0);
 }
 
-div.in2igui_list_body
+div.hui_list_body
 {
 	overflow-y: hidden;
 }

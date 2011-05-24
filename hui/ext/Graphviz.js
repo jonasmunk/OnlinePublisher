@@ -4,7 +4,7 @@ hui.ui.Graphviz = function(element,name,options) {
 		this.scale = 1;
 		this.padding = 8;
 		this.element = hui.get(element);
-		this.texts = hui.firstByClass(this.element,'in2igui_graphviz_texts');
+		this.texts = hui.firstByClass(this.element,'hui_graphviz_texts');
 		this.canvas = hui.firstByTag(this.element,'canvas');
 		this.ctx = this.canvas.getContext('2d');
 
@@ -15,8 +15,8 @@ hui.ui.Graphviz = function(element,name,options) {
 }
 
 hui.ui.Graphviz.create = function(name,options) {
-	var element = hui.build('div',{'class':'in2igui_graphviz'});
-	var texts = bui.build('div',{'class':'in2igui_graphviz_texts',style:'position:relative;'});
+	var element = hui.build('div',{'class':'hui_graphviz'});
+	var texts = bui.build('div',{'class':'hui_graphviz_texts',style:'position:relative;'});
 	element.appendChild(texts);
 	element.appendChild(n2i.build('canvas'));
 	return new hui.ui.Graphviz(element,name,options);

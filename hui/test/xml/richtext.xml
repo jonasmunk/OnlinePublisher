@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:In2iGui" pad="10" title="System">
+<gui xmlns="uri:hui" pad="10" title="System">
 	<controller name="controller" source="richtext.js"/>
 	<window name="win" width="300" title="Bruger" pad="5">
 		<richtext height="200" name="richText"/>

@@ -19,16 +19,16 @@ hui.ui.Segmented.prototype = {
 		if (a) {
 			var changed = false;
 			var value = a.getAttribute('rel');
-			var x = hui.byClass(this.element,'in2igui_segmented_selected');
+			var x = hui.byClass(this.element,'hui_segmented_selected');
 			for (var i=0; i < x.length; i++) {
-				hui.removeClass(x[i],'in2igui_segmented_selected');
+				hui.removeClass(x[i],'hui_segmented_selected');
 			};
 			if (value===this.value && this.options.allowNull) {
 				changed=true;
 				this.value = null;
 				this.fire('valueChanged',this.value);
 			} else {
-				hui.addClass(a,'in2igui_segmented_selected');
+				hui.addClass(a,'hui_segmented_selected');
 				changed=this.value!== value;
 				this.value = value;
 			}
@@ -45,10 +45,10 @@ hui.ui.Segmented.prototype = {
 		this.value = null;
 		for (var i=0; i < as.length; i++) {
 			if (as[i].getAttribute('rel')===value) {
-				hui.addClass(as[i],'in2igui_segmented_selected');
+				hui.addClass(as[i],'hui_segmented_selected');
 				this.value=value;
 			} else {
-				hui.removeClass(as[i],'in2igui_segmented_selected');
+				hui.removeClass(as[i],'hui_segmented_selected');
 			}
 		};
 	},

@@ -14,9 +14,9 @@
 hui.ui.Upload = function(options) {
 	this.options = hui.override({url:'',parameters:{},maxItems:50,maxSize:"20480",types:"*.*",useFlash:true,fieldName:'file',chooseButton:'Choose files...'},options);
 	this.element = hui.get(options.element);
-	this.itemContainer = hui.firstByClass(this.element,'in2igui_upload_items');
-	this.status = hui.firstByClass(this.element,'in2igui_upload_status');
-	this.placeholder = hui.firstByClass(this.element,'in2igui_upload_placeholder');
+	this.itemContainer = hui.firstByClass(this.element,'hui_upload_items');
+	this.status = hui.firstByClass(this.element,'hui_upload_status');
+	this.placeholder = hui.firstByClass(this.element,'hui_upload_placeholder');
 	this.name = options.name;
 	this.items = [];
 	this.busy = false;
@@ -35,10 +35,10 @@ hui.ui.Upload.nameIndex = 0;
 hui.ui.Upload.create = function(options) {
 	options = options || {};
 	options.element = hui.build('div',{
-		'class':'in2igui_upload',
-		html : '<div class="in2igui_upload_items"></div>'+
-		'<div class="in2igui_upload_status"></div>'+
-		(options.placeholder ? '<div class="in2igui_upload_placeholder"><span class="in2igui_upload_icon"></span>'+
+		'class':'hui_upload',
+		html : '<div class="hui_upload_items"></div>'+
+		'<div class="hui_upload_status"></div>'+
+		(options.placeholder ? '<div class="hui_upload_placeholder"><span class="hui_upload_icon"></span>'+
 			(options.placeholder.title ? '<h2>'+hui.escape(options.placeholder.title)+'</h2>' : '')+
 			(options.placeholder.text ? '<p>'+hui.escape(options.placeholder.text)+'</p>' : '')+
 		'</div>' : '')
@@ -78,7 +78,7 @@ hui.ui.Upload.prototype = {
 	/** @private */
 	createIframeVersion : function() {
 		hui.ui.Upload.nameIndex++;
-		var frameName = 'in2igui_upload_'+hui.ui.Upload.nameIndex;
+		var frameName = 'hui_upload_'+hui.ui.Upload.nameIndex;
 		
 		var form = this.form = hui.build('form');
 		form.setAttribute('action',this.options.url || '');
@@ -99,8 +99,8 @@ hui.ui.Upload.prototype = {
 		this.fileInput = hui.build('input',{'type':'file','class':'file','name':this.options.fieldName});
 		hui.listen(this.fileInput,'change',this.iframeSubmit.bind(this));
 		form.appendChild(this.fileInput);
-		var buttonContainer = hui.build('span',{'class':'in2igui_upload_button'});
-		var span = hui.build('span',{'class':'in2igui_upload_button_input'});
+		var buttonContainer = hui.build('span',{'class':'hui_upload_button'});
+		var span = hui.build('span',{'class':'hui_upload_button_input'});
 		span.appendChild(form);
 		buttonContainer.appendChild(span);
 		if (this.options.widget) {
@@ -202,8 +202,8 @@ hui.ui.Upload.prototype = {
 		if (phpSession) {
 			url+='?PHPSESSID='+phpSession;
 		}
-		var buttonContainer = hui.build('span',{'class':'in2igui_upload_button'});
-		var placeholder = hui.build('span',{'class':'in2igui_upload_button_object',parent:buttonContainer});
+		var buttonContainer = hui.build('span',{'class':'hui_upload_button'});
+		var placeholder = hui.build('span',{'class':'hui_upload_button_object',parent:buttonContainer});
 		if (this.options.widget) {
 			var w = hui.ui.get(this.options.widget);
 			w.element.parentNode.insertBefore(buttonContainer,w.element);
@@ -346,11 +346,11 @@ hui.ui.Upload.prototype = {
 }
 
 hui.ui.Upload.Item = function(file) {
-	this.element = hui.build('div',{className:'in2igui_upload_item'});
+	this.element = hui.build('div',{className:'hui_upload_item'});
 	if (file.index % 2 == 1) {
-		hui.addClass(this.element,'in2igui_upload_item_alt');
+		hui.addClass(this.element,'hui_upload_item_alt');
 	}
-	this.content = hui.build('div',{className:'in2igui_upload_item_content'});
+	this.content = hui.build('div',{className:'hui_upload_item_content'});
 	this.icon = hui.ui.createIcon('file/generic',2);
 	this.element.appendChild(this.icon);
 	this.element.appendChild(this.content);
@@ -373,13 +373,13 @@ hui.ui.Upload.Item.prototype = {
 			this.setProgress(file.progress);
 		}
 		if (file.filestatus==SWFUpload.FILE_STATUS.ERROR) {
-			hui.addClass(this.element,'in2igui_upload_item_error');
+			hui.addClass(this.element,'hui_upload_item_error');
 			this.progress.hide();
 		}
 	},
 	setError : function(error) {
 		hui.dom.setText(this.status,hui.ui.Upload.errors[error] || error);
-		hui.addClass(this.element,'in2igui_upload_item_error');
+		hui.addClass(this.element,'hui_upload_item_error');
 		this.progress.hide();
 	},
 	updateProgress : function(complete,total) {

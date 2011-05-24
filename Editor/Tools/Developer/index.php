@@ -7,7 +7,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10" title="Developer" state="frame">
+<gui xmlns="uri:hui" padding="10" title="Developer" state="frame">
 	<controller source="controller.js"/>
 	<source name="testsSource" url="ListTests.php"/>
 	<layout>

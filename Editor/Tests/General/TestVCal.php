@@ -31,5 +31,8 @@ class TestVCal extends UnitTestCase {
 		$this->assertEqual(date("M d Y H:i:s", $first->getStartDate()),"Nov 18 2010 15:00:00");
 		$this->assertEqual(gmdate("M d Y H:i:s", $first->getEndDate()),"Nov 18 2010 16:00:00");
 		$this->assertEqual($first->getDuration(),null);
+		
+		$next = $events[1];
+		$this->assertEqual($next->getUrl(),"http://www.jonasmunk.dk");
 	}
 }

@@ -20,7 +20,7 @@ if (Request::exists("page")) {
 	$start='Services/Preview/';
 }
 $gui='
-<gui xmlns="uri:In2iGui" title="OnlinePublisher editor">
+<gui xmlns="uri:hui" title="OnlinePublisher editor">
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
 		<tabs small="true">';
 			$tabs = array('edit'=>'{ Editing ; da: Redigering }','analyse'=>'{Analysis ; da:Analyse}','setup'=>'{ Setup ; da:Opsætning }');

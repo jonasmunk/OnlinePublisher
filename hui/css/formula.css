@@ -1,4 +1,4 @@
-form.in2igui_formula
+form.hui_formula
 {
 	padding: 0px;
 	margin: 0px;
@@ -6,7 +6,7 @@ form.in2igui_formula
 	text-align: left;
 }
 
-div.in2igui_formula_fieldset
+div.hui_formula_fieldset
 {
 	border: 1px solid #ddd;
 	padding: 10px;
@@ -14,7 +14,7 @@ div.in2igui_formula_fieldset
 	background: #f6f6f6;
 }
 
-strong.in2igui_formula_fieldset
+strong.hui_formula_fieldset
 {
 	position: absolute;
 	margin-top: -19px;
@@ -27,60 +27,60 @@ strong.in2igui_formula_fieldset
 	border-radius: 4px;
 }
 
-div.in2igui_window strong.in2igui_formula_fieldset
+div.hui_window strong.hui_formula_fieldset
 {
 	background: #E7E7E7;
 }
 
-div.in2igui_window div.in2igui_formula_fieldset
+div.hui_window div.hui_formula_fieldset
 {
 	background: #eee;
 	border: 1px solid #ccc;
 }
 
-.in2igui_formula_header
+.hui_formula_header
 {
 	color: #0077cd;
 	font-size: 13pt;
 	padding-bottom: 5px;
 }
 
-table.in2igui_formula_group
+table.hui_formula_group
 {
 	width: 100%;
 	font-size: 0;
 }
 
-table.in2igui_formula_group_above
+table.hui_formula_group_above
 {
 	border-spacing: 0px;
 }
 
-form.in2igui_formula table.split
+form.hui_formula table.split
 {
 	border-spacing: 5px 0px;
 }
 
-table.in2igui_formula_group label
+table.hui_formula_group label
 {
 	color: #004A80;
 	font-size: 12px;
 	font-weight: normal;
 }
 
-table.in2igui_formula_group_above label
+table.hui_formula_group_above label
 {
 	line-height: 13px;
 	display: inline-block;
 	padding-left: 2px;
 }
 
-table.in2igui_formula_group th label
+table.hui_formula_group th label
 {
 	font-size: 9pt;
 }
 
-table.in2igui_formula_group th
+table.hui_formula_group th
 {
 	width: 1%;
 	vertical-align: top;
@@ -90,36 +90,36 @@ table.in2igui_formula_group th
 	white-space: nowrap;
 }
 
-table.in2igui_formula_group th.in2igui_formula_middle
+table.hui_formula_group th.hui_formula_middle
 {
 	vertical-align: middle;
 	line-height: normal;
 	padding-bottom: 5px;
 }
 
-table.in2igui_formula_group_above th
+table.hui_formula_group_above th
 {
 	text-align: left;
 }
 
-table.in2igui_formula_group_above div.in2igui_tokens
+table.hui_formula_group_above div.hui_tokens
 {
 	margin-bottom: 2px;
 }
 
-form.in2igui_formula div.in2igui_field
+form.hui_formula div.hui_field
 {
 	font-size: 0;
 }
 
-form.in2igui_formula select
+form.hui_formula select
 {
 	font-size: 9pt;
 	margin: 0;
 	width: 100%;
 }
 
-.in2igui_formula_text
+.hui_formula_text
 {
 	border: 0px;
 	padding: 0px;
@@ -132,7 +132,7 @@ form.in2igui_formula select
 	outline: none;
 }
 
-div.in2igui_textarea_dummy
+div.hui_textarea_dummy
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 9pt;
@@ -145,12 +145,12 @@ div.in2igui_textarea_dummy
 	padding: 1px 0px;
 }
 
-input.in2igui_formula_text
+input.hui_formula_text
 {
 	height: 18px;
 }
 
-textarea.in2igui_formula_text
+textarea.hui_formula_text
 {
 	text-indent: 0;
 	line-height: 16px;
@@ -161,38 +161,38 @@ textarea.in2igui_formula_text
 	overflow-x: hidden;
 }
 
-textarea.in2igui_formula_text::-webkit-scrollbar
+textarea.hui_formula_text::-webkit-scrollbar
 {  
 	height: 14px;
 	width: 14px;
 }  
   
-textarea.in2igui_formula_text::-webkit-scrollbar-thumb
+textarea.hui_formula_text::-webkit-scrollbar-thumb
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
     -webkit-border-radius: 7px;
 	border: 1px solid #ddd;
 }
 
-form.in2igui_formula fieldset
+form.hui_formula fieldset
 {
 	border: 1px solid #ccc;
 	margin: 0px;
 	padding: 0px 8px 5px 6px;
 }
 
-form.in2igui_formula fieldset legend
+form.hui_formula fieldset legend
 {
 	font-size: 9pt;
 	color: #999;
 }
 
-td.in2igui_formula_group
+td.hui_formula_group
 {
 	padding: 0;
 }
 
-div.in2igui_formula_item
+div.hui_formula_item
 {
 	padding-bottom: 5px;
 	font-size: 0;
@@ -201,14 +201,14 @@ div.in2igui_formula_item
 
 /*************************************** Field **********************************/
 
-span.in2igui_field
+span.hui_field
 {
 	display: inline-block;
 	vertical-align: middle;
 }
 
 
-span.in2igui_field_top, span.in2igui_field_top span
+span.hui_field_top, span.hui_field_top span
 {
 	display: block;
 	font-size: 0;
@@ -216,19 +216,19 @@ span.in2igui_field_top, span.in2igui_field_top span
 	height: 5px;
 }
 
-span.in2igui_field_top span
+span.hui_field_top span
 {
 	background-position: 100% -10px;
 }
 
-span.in2igui_field_top span span
+span.hui_field_top span span
 {
 	background-position: 0 0;
 	background-repeat: repeat;
 	margin: 0 5px;
 }
 
-span.in2igui_field_bottom, span.in2igui_field_bottom span
+span.hui_field_bottom, span.hui_field_bottom span
 {
 	display: block;
 	font-size: 0;
@@ -236,79 +236,79 @@ span.in2igui_field_bottom, span.in2igui_field_bottom span
 	height: 4px;
 }
 
-span.in2igui_field_bottom span
+span.hui_field_bottom span
 {
 	background-position: 100% -23px;
 	background-repeat: no-repeat;
 }
 
-span.in2igui_field_bottom span span
+span.hui_field_bottom span span
 {
 	background-position: 0 -15px;
 	background-repeat: repeat-x;
 	margin: 0 5px;
 }
 
-span.in2igui_field_middle
+span.hui_field_middle
 {
 	display: block;
 	background: url('../gfx/field.png') 0 -27px no-repeat;
 }
 
-span.in2igui_field_middle span.in2igui_field_middle
+span.hui_field_middle span.hui_field_middle
 {
 	display: block;
 	background: url('../gfx/field.png') 100% -427px no-repeat;
 }
 
-span.in2igui_field_content
+span.hui_field_content
 {
 	display: block;
 	margin: 0 5px;
 	background: #fff;
 }
 
-.in2igui_field_focused span.in2igui_field_top
+.hui_field_focused span.hui_field_top
 {
 	background-position: 0 -832px;
 }
 
-.in2igui_field_focused span.in2igui_field_top span
+.hui_field_focused span.hui_field_top span
 {
 	background-position: 100% -837px;
 }
 
-.in2igui_field_focused span.in2igui_field_top span span
+.hui_field_focused span.hui_field_top span span
 {
 	background-position: 100% -827px;
 }
 
-.in2igui_field_focused span.in2igui_field_bottom
+.hui_field_focused span.hui_field_bottom
 {
 	background-position: 0 -846px;
 }
 
-.in2igui_field_focused span.in2igui_field_bottom span
+.hui_field_focused span.hui_field_bottom span
 {
 	background-position: 100% -850px;
 }
 
-.in2igui_field_focused span.in2igui_field_bottom span span
+.hui_field_focused span.hui_field_bottom span span
 {
 	background-position: 100% -842px;
 }
 
-.in2igui_field_focused span.in2igui_field_middle
+.hui_field_focused span.hui_field_middle
 {
 	background-position: 0 -854px;
 }
 
-.in2igui_field_focused span.in2igui_field_middle span.in2igui_field_middle
+.hui_field_focused span.hui_field_middle span.hui_field_middle
 {
 	background-position: 100% -1254px;
 }
 
-span.in2igui_field_singleline
+span.hui_field_singleline
 {
 	background: none;
 	height: 16px;
@@ -316,7 +316,7 @@ span.in2igui_field_singleline
 	display: block;
 }
 
-em.in2igui_field_placeholder
+em.hui_field_placeholder
 {
 	position: absolute;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
@@ -327,14 +327,14 @@ em.in2igui_field_placeholder
 	margin-top: 5px;
 }
 
-.in2igui_field_focused em.in2igui_field_placeholder, .in2igui_field_dirty em.in2igui_field_placeholder
+.hui_field_focused em.hui_field_placeholder, .hui_field_dirty em.hui_field_placeholder
 {
 	display: none;
 }
 
 /*********************************** Number **********************************/
 
-span.in2igui_number
+span.hui_number
 {
 	display: inline-block;
 	background: url('../gfx/number.png') -11px top no-repeat;
@@ -342,21 +342,21 @@ span.in2igui_number
 	position: relative;
 }
 
-span.in2igui_number span
+span.hui_number span
 {
 	display: inline-block;
 	background: url('../gfx/number.png') right -50px no-repeat;
 	height: 25px;
 }
 
-span.in2igui_number span span
+span.hui_number span span
 {
 	margin: 0 17px 0 6px;
 	background: url('../gfx/number.png') left -25px repeat-x;
 	line-height: 0;
 }
 
-span.in2igui_number input
+span.hui_number input
 {
 	border: none;
 	background: none;
@@ -371,12 +371,12 @@ span.in2igui_number input
 	vertical-align: top;
 }
 
-span.in2igui_number input:focus
+span.hui_number input:focus
 {
 	outline: none;
 }
 
-a.in2igui_number_up
+a.hui_number_up
 {
 	position: absolute;
 	width: 15px;
@@ -385,7 +385,7 @@ a.in2igui_number_up
 	top: 2px;
 }
 
-a.in2igui_number_down
+a.hui_number_down
 {
 	position: absolute;
 	width: 15px;
@@ -394,32 +394,32 @@ a.in2igui_number_down
 	bottom: 3px;
 }
 
-span.in2igui_number_focused
+span.hui_number_focused
 {
 	background-position: -11px -75px;
 }
 
-span.in2igui_number_focused span
+span.hui_number_focused span
 {
 	background-position: right -125px;
 }
 
-span.in2igui_number_focused span span
+span.hui_number_focused span span
 {
 	background-position: left -100px;
 }
 
-em.in2igui_number_units
+em.hui_number_units
 {
 	vertical-align: middle;
 }
 
-span.in2igui_number_adaptive
+span.hui_number_adaptive
 {
 	width: 100%;
 }
 
-span.in2igui_number_adaptive input
+span.hui_number_adaptive input
 {
 	width: 100%;
 	padding-right: 0;
@@ -429,19 +429,19 @@ span.in2igui_number_adaptive input
 
 /******* Special lenght for style *******/
 
-span.in2igui_style_length input
+span.hui_style_length input
 {
 	width: 50px;
 }
 
 /************************************** Buttons *********************************/
 
-form.in2igui_formula div.hui_buttons_body
+form.hui_formula div.hui_buttons_body
 {
 	float: right;
 }
 
-form.in2igui_formula a.hui_button
+form.hui_formula a.hui_button
 {
 	margin-left: 2px;
 	margin-right: 0px;
@@ -449,14 +449,14 @@ form.in2igui_formula a.hui_button
 
 /******************************* Radio button **************************/
 
-div.in2igui_radiobuttons
+div.hui_radiobuttons
 {
 	overflow: hidden;
 	margin-bottom: 5px;
 	padding-top: 4px;
 }
 
-div.in2igui_radiobutton
+div.hui_radiobutton
 {
 	overflow: hidden;
 	margin-right: 10px;
@@ -467,7 +467,7 @@ div.in2igui_radiobutton
 	line-height: 15px;
 }
 
-div.in2igui_radiobutton div
+div.hui_radiobutton div
 {
 	float: left;
 	background: url('../gfx/radiobutton.png') no-repeat;
@@ -477,7 +477,7 @@ div.in2igui_radiobutton div
 	cursor: pointer;
 }
 
-div.in2igui_radiobuttons div.in2igui_selected div
+div.hui_radiobuttons div.hui_selected div
 {
 	background-position: 0px -18px;
 }
@@ -485,7 +485,7 @@ div.in2igui_radiobuttons div.in2igui_selected div
 /******************************* Checkboxes **************************/
 
 
-a.in2igui_checkbox
+a.hui_checkbox
 {
 	overflow: hidden;
 	font-size: 10pt;
@@ -498,24 +498,24 @@ a.in2igui_checkbox
 	vertical-align: middle;
 }
 
-div.in2igui_checkboxes
+div.hui_checkboxes
 {
 	margin-bottom: 5px;
 	font-size: 0;
 }
 
-div.in2igui_checkboxes a.in2igui_checkbox
+div.hui_checkboxes a.hui_checkbox
 {
 	margin-right: 10px;
 }
 
-div.in2igui_checkboxes_vertical a.in2igui_checkbox
+div.hui_checkboxes_vertical a.hui_checkbox
 {
 	display: block;
 	padding: 1px 5px 0px 0px;
 }
 
-a.in2igui_checkbox span
+a.hui_checkbox span
 {
 	float: left;
 	width: 20px;
@@ -523,57 +523,57 @@ a.in2igui_checkbox span
 	margin-right: 2px;
 }
 
-a.in2igui_checkbox span span
+a.hui_checkbox span span
 {
 	background: url('../gfx/checkbox.png') no-repeat;
 	margin: 0;
 }
 
-a.in2igui_checkbox:hover span span
+a.hui_checkbox:hover span span
 {
 	background-position: 0 -20px;
 }
 
-a.in2igui_checkbox:active span span
+a.hui_checkbox:active span span
 {
 	background-position: 0 -40px;
 }
 
-a.in2igui_checkbox_focused
+a.hui_checkbox_focused
 {
 	text-shadow: #3366ff 0px 0px 2px;
 	color: #002244;
 }
 
-a.in2igui_checkbox_focused span
+a.hui_checkbox_focused span
 {
 	background: url('../gfx/checkbox.png') 0 -120px no-repeat;
 }
 
-a.in2igui_checkbox_selected span span
+a.hui_checkbox_selected span span
 {
 	background-position: 0px -60px;
 }
 
-a.in2igui_checkbox_selected:hover span span
+a.hui_checkbox_selected:hover span span
 {
 	background-position: 0px -80px;
 }
 
-a.in2igui_checkbox_selected:active span span
+a.hui_checkbox_selected:active span span
 {
 	background-position: 0px -100px;
 }
 
 /******************************* Object list **************************/
 
-table.in2igui_objectlist
+table.hui_objectlist
 {
 	margin-top: 1px;
 	width: 100%;
 }
 
-table.in2igui_objectlist th
+table.hui_objectlist th
 {
 	text-align: left;
 	font-size: 11px;
@@ -583,37 +583,37 @@ table.in2igui_objectlist th
 	padding-left: 4px;
 }
 
-table.in2igui_objectlist th.in2igui_objectlist1
+table.hui_objectlist th.hui_objectlist1
 {
 	padding-left: 2px;
 }
 
-.in2igui_objectlist tbody input.text
+.hui_objectlist tbody input.text
 {
 	border-color: #ccc #ddd #eee #ddd;
 	width: 100%;
 }
-.in2igui_objectlist tbody td
+.hui_objectlist tbody td
 {
 	padding: 0px 0px 0px 2px;
 	vertical-align: top;
 }
 
-.in2igui_objectlist tbody td.first
+.hui_objectlist tbody td.first
 {
 	padding-left: 0px;
 }
 
 /******************************** Tokens *************************/
 
-div.in2igui_tokens
+div.hui_tokens
 {
 	overflow: hidden;
 	padding-left:3px;
 	padding-top:3px;
 }
 
-input.in2igui_tokens_token
+input.hui_tokens_token
 {
 	border-color:#BBBBBB #CCCCCC #DDDDDD;
 	border-style:solid;
@@ -627,126 +627,66 @@ input.in2igui_tokens_token
 	-webkit-border-radius: 2px;
 }
 
-input.in2igui_tokens_token:focus
+input.hui_tokens_token:focus
 {
 	border-color: #68f;
-}
-
-/******************************** Location *************************/
-
-div.in2igui_location
-{
-	padding-right: 18px;
-	position: relative;
-}
-
-div.in2igui_location input
-{
-	border: 0;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	background: none;
-	height: 16px;
-}
-
-a.in2igui_location_picker
-{
-	background-image: url('../icons/geo/map1.png');
-	width: 16px;
-	height: 16px;
-	position: absolute;
-	right: 0;
-	top: 4px;
-	font-size: 0;
-}
-
-span.in2igui_location_latitude, span.in2igui_location_longitude
-{
-	display: inline-block;
-	height: 16px;
-	width: 49%;
-	position: relative;
-}
-
-span.in2igui_location_latitude
-{
-	width: 50%;
-}
-
-span.in2igui_location_latitude span, span.in2igui_location_longitude span
-{
-	display: block;
-	width: 100%;
-	height: 16px;
-	padding-left: 16px;
-}
-
-span.in2igui_location_latitude
-{
-	background: url('../icons/monochrome/latitude1.png') left top no-repeat;
-}
-
-span.in2igui_location_longitude
-{
-	background: url('../icons/monochrome/longitude1.png') left top no-repeat;
 }
 
 /************************* Override for windows *******************/
 
 
-div.in2igui_window table.in2igui_formula_group label
+div.hui_window table.hui_formula_group label
 {
 	background: rgb(231,231,231);
 	padding: 0px 2px;
 }
 
-div.in2igui_window_light table.in2igui_formula_group label
+div.hui_window_light table.hui_formula_group label
 {
 	color: #004A80;
 	background: rgb(229,229,229);
 }
 
 
-div.in2igui_window_dark table.in2igui_formula_group label, div.in2igui_window_dark div.in2igui_checkbox, div.in2igui_window_dark div.in2igui_radiobutton, div.in2igui_window_dark th.in2igui_objectlist
+div.hui_window_dark table.hui_formula_group label, div.hui_window_dark div.hui_checkbox, div.hui_window_dark div.hui_radiobutton, div.hui_window_dark th.hui_objectlist
 {
 	color: #fff;
 	background: none;
 }
 
-div.in2igui_window_dark .in2igui_formula_text
+div.hui_window_dark .hui_formula_text
 {
 	color: #fff;
 }
 
-div.in2igui_window_dark div.in2igui_field span
+div.hui_window_dark div.hui_field span
 {
 	background-image: url('../gfx/field_dark.png');
 }
 
-div.in2igui_window_dark div.in2igui_field span.in2igui_formula_text_singleline, div.in2igui_window_dark div.in2igui_field span.in2igui_formula_text_multiline
+div.hui_window_dark div.hui_field span.hui_formula_text_singleline, div.hui_window_dark div.hui_field span.hui_formula_text_multiline
 {
 	background: none;
 }
 
-div.in2igui_window_dark div.in2igui_field span.in2igui_field_content
+div.hui_window_dark div.hui_field span.hui_field_content
 {
 	background: #222222;
 }
 
-div.in2igui_window_dark div.in2igui_field span.in2igui_field_singleline
+div.hui_window_dark div.hui_field span.hui_field_singleline
 {
 	background: none;
 }
 
-div.in2igui_window_dark input.in2igui_tokens_token
+div.hui_window_dark input.hui_tokens_token
 {
 	background: #222;
 	border: 1px solid #444;
 	color: #fff;
 }
 
-div.in2igui_window_dark a.in2igui_checkbox
+div.hui_window_dark a.hui_checkbox
 {
 	color: #fff;
 }

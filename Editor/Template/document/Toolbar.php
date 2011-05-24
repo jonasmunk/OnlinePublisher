@@ -16,7 +16,7 @@ if (Request::getBoolean('link')) {
 		$link = new Link();
 	}
 	$gui='
-	<gui xmlns="uri:In2iGui" title="Dokument">
+	<gui xmlns="uri:hui" title="Dokument">
 		<controller source="js/LinkToolbar.js"/>
 		<script>
 		controller.id='.$id.';
@@ -71,7 +71,7 @@ if (Request::getBoolean('link')) {
 	</gui>';
 } else {
 	$gui='
-	<gui xmlns="uri:In2iGui" title="Dokument">
+	<gui xmlns="uri:hui" title="Dokument">
 		<controller source="js/Toolbar.js"/>
 		<script>
 		controller.pageId='.InternalSession::getPageId().';

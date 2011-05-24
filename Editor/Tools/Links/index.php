@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:In2iGui" padding="10" title="System">
+<gui xmlns="uri:hui" padding="10" title="System">
 	<controller source="controller.js"/>
 	<source name="listSource" url="LinkList.php">
 		<parameter key="subset" value="@selector.value"/>
@@ -41,7 +41,7 @@ $gui='
 		<bottom/>
 	</layout>
 </gui>';
-//$gui='<gui xmlns="uri:In2iGui" pad="10" title="System"><upload/></gui>';
+//$gui='<gui xmlns="uri:hui" pad="10" title="System"><upload/></gui>';
 
 In2iGui::render($gui);
 ?>

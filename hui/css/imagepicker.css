@@ -1,4 +1,4 @@
-div.in2igui_imagepicker
+div.hui_imagepicker
 {
 	width: 52px;
 	height: 52px;
@@ -8,7 +8,7 @@ div.in2igui_imagepicker
 	margin-top: 2px;
 }
 
-.in2igui_imagepicker_thumbs
+.hui_imagepicker_thumbs
 {
 	width: 200px;
 	height: 200px;
@@ -17,7 +17,7 @@ div.in2igui_imagepicker
 }
 
 
-.in2igui_imagepicker_thumbnail
+.hui_imagepicker_thumbnail
 {
 	float: left;
 	width: 52px;
@@ -28,7 +28,7 @@ div.in2igui_imagepicker
 	background: #fff center center no-repeat;
 }
 
-.in2igui_imagepicker_thumbnail:hover
+.hui_imagepicker_thumbnail:hover
 {
 	border-color: #3875d7;
 }

@@ -41,10 +41,10 @@ hui.ui.VideoPlayer.prototype = {
 		};
 	},
 	buildController : function() {
-		var e = hui.build('div',{'class':'in2igui_videoplayer_controller',parent:this.element});
-		this.playButton = hui.build('a',{href:'javascript:void(0);','class':'in2igui_videoplayer_playpause',text:'wait!',parent:e});
+		var e = hui.build('div',{'class':'hui_videoplayer_controller',parent:this.element});
+		this.playButton = hui.build('a',{href:'javascript:void(0);','class':'hui_videoplayer_playpause',text:'wait!',parent:e});
 		hui.listen(this.playButton,'click',this.playPause.bind(this));
-		this.status = hui.build('span',{'class':'in2igui_videoplayer_status',parent:e});
+		this.status = hui.build('span',{'class':'hui_videoplayer_status',parent:e});
 	},
 	onCanPlay : function() {
 		this.playButton.update('Play');
