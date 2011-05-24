@@ -81,7 +81,7 @@ class VCalParser {
 			$this->latestEvent->setLocation($this->decodeString($parts[1]));
 		}
 		elseif ($parts[0]=='URL' && $this->latestEvent) {
-			$this->latestEvent->setUrl($this->decodeString($parts[1]));
+			$this->latestEvent->setUrl($this->parseURLLine($line));
 		}
 		elseif ($parts[0]=='RRULE' && $this->latestEvent) {
 			$rule = $this->parseRecurrenceRule($parts);
@@ -114,6 +114,10 @@ class VCalParser {
 	
 	function parseDescription($line) {
 		return $this->decodeString(substr($line,12));
+	}
+	
+	function parseURLLine($line) {
+		return $this->decodeString(substr($line,14));
 	}
 	
 	function parseRecurrenceRule($parts) {

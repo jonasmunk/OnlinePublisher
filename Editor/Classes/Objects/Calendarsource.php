@@ -200,7 +200,7 @@ class Calendarsource extends Object {
 				}
 			
 				$sql = "insert into calendarsource_event (".
-				"calendarsource_id,summary,description,location,startdate,enddate,duration,uniqueid,recurring,frequency,until,`interval`,`count`,weekstart,bymonth,bymonthday,byday,byyearday,byweeknumber".
+				"calendarsource_id,summary,description,location,startdate,enddate,duration,uniqueid,recurring,frequency,until,`interval`,`count`,weekstart,bymonth,bymonthday,byday,byyearday,byweeknumber,url".
 				") values (".
 				$this->id.",".
 				Database::text($event->getSummary()).",".
@@ -220,7 +220,8 @@ class Calendarsource extends Object {
 				Database::text($bymonthday).",".
 				Database::text($byday).",".
 				Database::text($byyearday).",".
-				Database::text($byweeknumber).
+				Database::text($byweeknumber).",".
+				Database::text($event->getUrl()).
 				")";
 				Database::insert($sql);
 			}
@@ -229,7 +230,7 @@ class Calendarsource extends Object {
 	
 	function getEvents($query=array()) {
 		$events = array();
-		$sql = "select id,summary,description,recurring,uniqueid,location,unix_timestamp(startdate) as startdate,unix_timestamp(enddate) as enddate,`duration`".
+		$sql = "select id,summary,description,url,recurring,uniqueid,location,unix_timestamp(startdate) as startdate,unix_timestamp(enddate) as enddate,`duration`".
 		" from calendarsource_event where calendarsource_id=".$this->id." and recurring=0";
 		if ($query['startDate'] && $query['endDate']) {
 			$sql.=" and not (startdate>".Database::datetime($query['endDate'])." or endDate<".Database::datetime($query['startDate']).")";
@@ -244,7 +245,7 @@ class Calendarsource extends Object {
 		Database::free($result);
 		
 		// Get recurring events
-		$sql = "select id,summary,recurring,uniqueid,location,unix_timestamp(startdate) as startdate,unix_timestamp(enddate) as enddate,`duration`".
+		$sql = "select id,summary,description,url,recurring,uniqueid,location,unix_timestamp(startdate) as startdate,unix_timestamp(enddate) as enddate,`duration`".
 		",frequency,unix_timestamp(until) as until,`count`,`interval`,byday".
 		" from calendarsource_event where calendarsource_id=".$this->id." and recurring=1 order by startdate desc";
 
@@ -347,6 +348,7 @@ class Calendarsource extends Object {
 			'description' => $row['description'],
 			'location' => $row['location'],
 			'uniqueId' => $row['uniqueid'],
+			'url' => $row['url'],
 			'recurring' => $row['recurring'],
 			'startDate' => $row['startdate'],
 			'endDate' => $row['enddate'],

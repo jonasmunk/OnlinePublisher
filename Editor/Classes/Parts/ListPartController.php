@@ -147,6 +147,7 @@ class ListPartController extends PartController
 							$item->setEndDate($sourceEvent['endDate']);
 							$item->setTitle($sourceEvent['summary']);
 							$item->setText($sourceEvent['description']);
+							$item->setUrl($sourceEvent['url']);
 							if ($part->getShowSource()) {
 								$item->setSource($sourceEvent['calendarDisplayTitle']);
 							}
@@ -186,7 +187,8 @@ class ListPartController extends PartController
 		foreach ($items as $item) {
 			$data.='<item>'.
 			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>'.
-			'<text>'.StringUtils::escapeXML($item->getText()).'</text>';
+			'<text>'.StringUtils::escapeXML($item->getText()).'</text>'.
+			'<url>'.StringUtils::escapeXML($item->getUrl()).'</url>';
 			if ($item->getSource()) {
 				$data.='<source>'.StringUtils::escapeXML($item->getSource()).'</source>';
 			}
@@ -226,6 +228,7 @@ class ListPartController extends PartController
 		var $startDate;
 		var $endDate;
 		var $source;
+		var $url;
 	
 		function setTitle($title) {
 		    $this->title = $title;
@@ -266,5 +269,13 @@ class ListPartController extends PartController
 		function getSource() {
 		    return $this->source;
 		}
-	
+		
+		function setUrl($url) {
+		    $this->url = $url;
+		}
+
+		function getUrl() {
+		    return $this->url;
+		}
+		
 	}

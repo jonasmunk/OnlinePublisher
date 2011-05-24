@@ -44,7 +44,11 @@
 </xsl:template>
 
 <xsl:template match="l:item/l:title">
-	<h3><xsl:apply-templates/></h3>
+	<h3><xsl:apply-templates/><xsl:value-of select="../l:url"/></h3>
+</xsl:template>
+
+<xsl:template match="l:item[l:url]/l:title">
+	<h3><a href="{../l:url}" class="common"><span><xsl:apply-templates/></span></a></h3>
 </xsl:template>
 
 <xsl:template match="l:item/l:text">
@@ -54,6 +58,8 @@
 <xsl:template match="l:item/l:source">
 	<p class="part_list_source"><xsl:apply-templates/></p>
 </xsl:template>
+
+<xsl:template match="l:item/l:url"></xsl:template>
 
 <xsl:template match="l:item/l:date">
 	<p class="part_list_date">
