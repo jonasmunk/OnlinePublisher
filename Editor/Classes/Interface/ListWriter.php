@@ -96,7 +96,7 @@ class ListWriter {
 	}
 	
 	function text($text) {
-		echo StringUtils::escapeXML($text);
+		echo StringUtils::escapeXMLBreak($text,'<break/>');
 		return $this;
 	}
 	

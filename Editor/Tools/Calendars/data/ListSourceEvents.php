@@ -32,8 +32,10 @@ function listSource($id,$force) {
 	//$writer->sort($sort,$direction);
 	//$writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' => $windowPage ));
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Titel','width'=>40));
+	$writer->header(array('title'=>'Titel','width'=>20));
+	$writer->header(array('title'=>'Note','width'=>20));
 	$writer->header(array('title'=>'Lokation'));
+	$writer->header(array('title'=>'URL'));
 	$writer->header(array('title'=>'Start'));
 	$writer->header(array('title'=>'Slut'));
 	$writer->header(array('title'=>'Bonus'));
@@ -42,7 +44,9 @@ function listSource($id,$force) {
 	foreach ($events as $event) {
 		$writer->startRow();
 		$writer->startCell()->text($event['summary'])->endCell();
+		$writer->startCell()->text($event['description'])->endCell();
 		$writer->startCell()->text($event['location'])->endCell();
+		$writer->startCell()->text($event['url'])->endCell();
 		$writer->startCell()->text(DateUtils::formatLongDateTime($event['startDate']))->endCell();
 		$writer->startCell()->text(DateUtils::formatLongDateTime($event['endDate']))->endCell();
 		$writer->startCell()->text($event['recurring'])->endCell();

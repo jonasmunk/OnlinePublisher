@@ -189,7 +189,7 @@ class ListPartController extends PartController
 			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>'.
 			'<text>'.StringUtils::escapeXML($item->getText()).'</text>';
 			if (StringUtils::isNotBlank($item->getUrl())) {
-				'<url>'.StringUtils::escapeXML($item->getUrl()).'</url>';
+				$data.='<url>'.StringUtils::escapeXML($item->getUrl()).'</url>';
 			}
 			if ($item->getSource()) {
 				$data.='<source>'.StringUtils::escapeXML($item->getSource()).'</source>';
