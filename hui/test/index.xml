@@ -5,6 +5,7 @@
 		<tabs small="true">
 			<tab title="Unit-tests">
 				<toolbar>
+					<icon icon="common/folder" text="Animation" click="dock.setUrl('unittests/animation.html')"/>
 					<icon icon="common/folder" text="Formula" click="dock.setUrl('unittests/formula.html')"/>
 					<icon icon="common/folder" text="HUI" click="dock.setUrl('unittests/hui.html')"/>
 					<icon icon="common/folder" text="Style" click="dock.setUrl('unittests/style.html')"/>

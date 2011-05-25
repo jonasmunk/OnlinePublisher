@@ -148,8 +148,8 @@ hui.ui.RichText.prototype = {
 			this.toolbar.style.marginTop='-40px';
 			hui.setOpacity(this.toolbar,0);
 			this.toolbar.style.display='block';
-			hui.ani(this.toolbar,'opacity',1,300);
-			hui.ani(this.toolbar,'margin-top','-32px',300);
+			hui.animate(this.toolbar,'opacity',1,300);
+			hui.animate(this.toolbar,'margin-top','-32px',300);
 		}
 	},
 	
@@ -163,8 +163,8 @@ hui.ui.RichText.prototype = {
 				},100);
 				return;
 			}
-			hui.ani(this.toolbar,'opacity',0,300,{hideOnComplete:true});
-			hui.ani(this.toolbar,'margin-top','-40px',300);
+			hui.animate(this.toolbar,'opacity',0,300,{hideOnComplete:true});
+			hui.animate(this.toolbar,'margin-top','-40px',300);
 		}
 		this.documentChanged();
 		hui.ui.callDelegates(this,'richTextDidChange');

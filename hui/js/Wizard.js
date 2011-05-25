@@ -44,7 +44,7 @@ hui.ui.Wizard.prototype = {
 		hui.addClass(this.anchors[index],'hui_selected');
 		this.steps[index].style.display='block';
 		this.selected=index;
-		hui.ani(c,'height',this.steps[index].clientHeight+'px',500,{ease:hui.ease.slowFastSlow,onComplete:function() {
+		hui.animate(c,'height',this.steps[index].clientHeight+'px',500,{ease:hui.ease.slowFastSlow,onComplete:function() {
 			c.style.height='';
 		}});
 		hui.ui.callVisible(this);

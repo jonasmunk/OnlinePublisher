@@ -50,10 +50,10 @@ hui.ui.SearchField.prototype = {
 		});
 		if (this.options.expandedWidth>0) {
 			this.field.onfocus = function() {
-				hui.ani(self.element,'width',self.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
+				hui.animate(self.element,'width',self.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
 			}
 			this.field.onblur = function() {
-				hui.ani(self.element,'width',self.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
+				hui.animate(self.element,'width',self.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
 			}
 		}
 	},

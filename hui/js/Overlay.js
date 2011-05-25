@@ -75,7 +75,7 @@ hui.ui.Overlay.prototype = {
 			this.element.style.display='block';
 		} else {
 			hui.setStyle(this.element,{'display':'block','opacity':0});
-			hui.ani(this.element,'opacity',1,150);
+			hui.animate(this.element,'opacity',1,150);
 		}
 		this.visible = true;
 		if (options.autoHide) {

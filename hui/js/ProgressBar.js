@@ -35,7 +35,7 @@ hui.ui.ProgressBar.prototype = {
 			hui.removeClass(el,this.WAITING);
 		}
 		hui.setClass(el,this.COMPLETE,value==1);
-		hui.ani(this.indicator,'width',(value*100)+'%',200);
+		hui.animate(this.indicator,'width',(value*100)+'%',200);
 	},
 	/** Mark progress as waiting */
 	setWaiting : function() {

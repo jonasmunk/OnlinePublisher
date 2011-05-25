@@ -120,7 +120,7 @@ hui.ui.Picker.prototype = {
 		hui.unListen(window.document,'mouseup',hui.ui.Picker.mouseup);
 		hui.unListen(window.document,'mousedown',hui.ui.Picker.mouseup);
 		var size = this.options.itemWidth+14;
-		hui.ani(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
+		hui.animate(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
 	},
 	$visibilityChanged : function() {
 		this.container.style.display='none';

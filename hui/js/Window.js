@@ -77,7 +77,7 @@ hui.ui.Window.prototype = {
 			}			
 		}
 		if (hui.browser.opacity) {
-			hui.ani(this.element,'opacity',1,0);
+			hui.animate(this.element,'opacity',1,0);
 		}
 		this.visible = true;
 		hui.ui.callVisible(this);
@@ -88,7 +88,7 @@ hui.ui.Window.prototype = {
 	hide : function() {
 		if (!this.visible) return;
 		if (hui.browser.opacity) {
-			hui.ani(this.element,'opacity',0,200,{hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,200,{hideOnComplete:true});
 		} else {
 			this.element.style.display='none';
 		}

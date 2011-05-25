@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script src="head.js"></script>
+	<style>
+		body
+		{
+			margin: 0;
+			padding: 10px;
+		}
+		#one
+		{
+			color: red;
+			font-size: 12px;
+			font-family: Verdana,Tahoma,sans-serif;
+			border: 2px solid red;
+			width: 300px;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="one">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+	
+	<div id="two" style="padding: 10px; padding-left: 20px;">
+		
+	</div>
+	
+	<script type="text/javascript">
+		hui.ui.test.run([
+			2000,
+			function() { // parsing
+				var parsed;
+				
+				parsed = hui.animation.parseStyle('12px');
+				hui.ui.test.assertEquals(parsed.unit,'px');
+				hui.ui.test.assertEquals(parsed.value,12);
+
+				parsed = hui.animation.parseStyle('12.4%');
+				hui.ui.test.assertEquals(parsed.unit,'%');
+				hui.ui.test.assertEquals(parsed.value,12.4);
+
+				parsed = hui.animation.parseStyle('#f00');
+				hui.ui.test.assertEquals(parsed.unit,null);
+				hui.ui.test.assertEquals(parsed.value.red,255);
+				hui.ui.test.assertEquals(parsed.value.green,0);
+				hui.ui.test.assertEquals(parsed.value.blue,0);
+
+				parsed = hui.animation.parseStyle('blue');
+				hui.ui.test.assertEquals(parsed.unit,null);
+				hui.ui.test.assertEquals(parsed.value.red,0);
+				hui.ui.test.assertEquals(parsed.value.green,0);
+				hui.ui.test.assertEquals(parsed.value.blue,255);
+			},
+			function() { // One		
+				hui.animate('one','width','200px',1000);
+			},
+			1100,
+			function() { // Two
+				hui.ui.test.assertEquals(hui.get('one').clientWidth,220);
+			},
+			function() {
+				hui.animate({node:'one',css:{width:'500px',color:'green',borderWidth:'10px',opacity:0,transform:'rotate(90deg)'},duration:1000});
+			},
+			500,
+			function() {
+				hui.animate({node:'one',css:{width:'250px'},duration:1000});
+			},
+			1000,
+			function() {
+				hui.ui.test.assertEquals(hui.get('one').clientWidth,270);
+			}
+		]);
+	</script>
+</body>
+</html>

@@ -1,46 +1,65 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/message.css" rel="stylesheet" />
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
-	<!--[if lt IE 7]>
-		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
-	<![endif]-->
-	<!--[if IE 7]>
-		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
-	<![endif]-->
-	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../tools/funcunit/funcunit/funcunit.js"></script>
-	<script type="text/javascript" charset="utf-8">
-		hui.ui.context='../../..';
-	</script>
+	<script src="head.js">
 	<style>
+		body
+		{
+			margin: 0;
+			padding: 10px;
+		}
 		#one
 		{
 			color: red;
 			font-size: 12px;
 			font-family: Verdana,Tahoma,sans-serif;
+			border: 2px solid red;
+			width: 300px;
+			padding: 10px;
 		}
 	</style>
 </head>
 <body>
-	<div id="one">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+	<div id="one">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+	
+	<div id="two" style="padding: 10px; padding-left: 20px;">
+		
+	</div>
+	
 	<script type="text/javascript">
 		hui.ui.test.run([
-			function() { // Blank
-				var color = hui.getStyle('one','color');
-				var fontSize = hui.getStyle('one','font-size');
-				var fontFamily = hui.getStyle('one','font-family');
+			function() { // One
 				
-				hui.ui.test.assertEquals(color,'rgb(255, 0, 0)');
-				hui.ui.test.assertEquals(fontSize,'12px');
+				hui.ui.test.assertEquals(hui.getTop('one'),10);
+				hui.ui.test.assertEquals(hui.get('one').clientWidth,320);
+				hui.ui.test.assertEquals(hui.getStyle('one','width'),'300px');
+				hui.ui.test.assertEquals(hui.getStyle('one','padding-top'),'10px');
+				hui.ui.test.assertEquals(hui.getStyle('one','padding'),'');
+				hui.ui.test.assertEquals(hui.getStyle('one','color'),'rgb(255, 0, 0)');
+				hui.ui.test.assertEquals(hui.getStyle('one','font-size'),'12px');
+				hui.ui.test.assertEquals(hui.getStyle('one','display'),'block');
+				hui.ui.test.assertEquals(hui.getStyle('one','border-top-width'),'2px');
+				hui.ui.test.assertEquals(hui.getStyle('one','border-width'),'');
+				hui.ui.test.assertEquals(hui.getStyle('one','opacity'),'1','Check opacity');
+				if (hui.browser.webkit) {
+					hui.ui.test.assertEquals(hui.getStyle('one','background-color'),'rgba(0, 0, 0, 0)','Check background color');
+					hui.ui.test.assertEquals(hui.getStyle('one','line-height'),'normal');
+				} else {
+					hui.ui.test.assertEquals(hui.getStyle('one','background-color'),'transparent','Check background color');
+					hui.ui.test.assertEquals(hui.getStyle('one','line-height'),'16px');
+				}
+				
+				var fontFamily = hui.getStyle('one','font-family');
 				hui.ui.test.assertTrue(fontFamily.indexOf('Verdana')!==-1);
 				hui.ui.test.assertTrue(fontFamily.indexOf('Tahoma')!==-1);
 				hui.ui.test.assertTrue(fontFamily.indexOf('sans-serif')!==-1);
 			},
-			function() { // Blank
+			function() { // Two
+				hui.ui.test.assertEquals(hui.getStyle('two','padding'),'10px 10px 10px 20px');
+			},
+			function() { // Colors
 				var color = new hui.Color('red');
 				hui.ui.test.assertEquals(color.toRGB(),'rgb(255, 0, 0)');
 				hui.ui.test.assertEquals(color.toHex(),'#ff0000');

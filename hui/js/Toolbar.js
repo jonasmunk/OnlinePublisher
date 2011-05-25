@@ -56,10 +56,10 @@ hui.ui.RevealingToolbar.prototype = {
 	},
 	show : function(instantly) {
 		this.element.style.display='';
-		hui.ani(this.element,'height','58px',instantly ? 0 : 600,{ease:hui.ease.slowFastSlow});
+		hui.animate(this.element,'height','58px',instantly ? 0 : 600,{ease:hui.ease.slowFastSlow});
 	},
 	hide : function() {
-		hui.ani(this.element,'height','0px',500,{ease:hui.ease.slowFastSlow,hideOnComplete:true});
+		hui.animate(this.element,'height','0px',500,{ease:hui.ease.slowFastSlow,hideOnComplete:true});
 	}
 }
 
@@ -180,10 +180,10 @@ hui.ui.Toolbar.SearchField.prototype = {
 		}
 		if (!this.options.adaptive) {
 			this.field.onfocus = function() {
-				hui.ani(this,'width','120px',500,{ease:hui.ease.slowFastSlow});
+				hui.animate(this,'width','120px',500,{ease:hui.ease.slowFastSlow});
 			}
 			this.field.onblur = function() {
-				hui.ani(this,'width','80px',500,{ease:hui.ease.slowFastSlow});
+				hui.animate(this,'width','80px',500,{ease:hui.ease.slowFastSlow});
 			}
 		}
 	},

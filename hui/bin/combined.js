@@ -234,6 +234,7 @@ hui.toIntArray = function(str) {
 	return array;
 }
 
+/** Scroll to an element */
 hui.scrollTo = function(element) {
 	element = hui.get(element);
 	if (element) {
@@ -246,8 +247,8 @@ hui.scrollTo = function(element) {
 
 /** @namespace */
 hui.dom = {
-	isElement : function(n,name) {
-		return n.nodeType==hui.ELEMENT_NODE && (name===undefined ? true : n.nodeName.toLowerCase()==name);
+	isElement : function(node,name) {
+		return node.nodeType==hui.ELEMENT_NODE && (name===undefined ? true : node.nodeName.toLowerCase()==name);
 	},
 	isDefinedText : function(node) {
 		return node.nodeType==hui.TEXT_NODE && node.nodeValue.length>0;
@@ -867,11 +868,14 @@ hui.getStyle = function(element, style) {
 		}
 	}
 	if (window.opera && ['left', 'top', 'right', 'bottom'].include(style)) {
-		if (hui.getStyle(element, 'position') == 'static') value = 'auto';
+		if (hui.getStyle(element, 'position') == 'static') {
+			value = 'auto';
+		}
 	}
-	return value == 'auto' ? null : value;
+	return value == 'auto' ? '' : value;
 }
 
+// TODO: Remove this
 hui.getTopPad = function(element) {
 	var all,top;
 	all = parseInt(hui.getStyle(element,'padding'),10);
@@ -881,6 +885,7 @@ hui.getTopPad = function(element) {
 	return 0;
 }
 
+// TODO: Remove this
 hui.getBottomPad = function(element) {
 	var all,bottom;
 	all = parseInt(hui.getStyle(element,'padding'),10);
@@ -1308,8 +1313,15 @@ hui.location = {
 /////////////////////////// Animation ///////////////////////////
 
 
-hui.ani = hui.animate = function(element,style,value,duration,delegate) {
-	hui.animation.get(element).animate(null,value,style,duration,delegate);
+hui.animate = function(options,style,value,duration,delegate) {
+	if (typeof(options)=='string' || hui.dom.isElement(options)) {
+		hui.animation.get(options).animate(null,value,style,duration,delegate);
+	} else {
+		var item = hui.animation.get(options.node);
+		for (prop in options.css) {
+			item.animate(null,options.css[prop],prop,options.duration,options);
+		}
+	}
 }
 
 /** @namespace */
@@ -1334,77 +1346,92 @@ hui.animation = {
 	}
 };
 
-hui.animation.render = function(element) {
-	this.running = true;
-	var next = false;
-	var stamp = new Date().getTime();
-	for (var id in this.objects) {
-		var obj = this.objects[id];
+hui.animation.lengthUpater = function(element,v,work) {
+	element.style[work.property] = (work.from+(work.to-work.from)*v)+(work.unit!=null ? work.unit : '');
+}
+
+hui.animation.transformUpater = function(element,v,work) {
+	var t = work.transform;
+	var str = '';
+	if (t.rotate) {
+		str+=' rotate('+(t.rotate.from+(t.rotate.to-t.rotate.from)*v)+t.rotate.unit+')';
+	}
+	if (t.scale) {
+		str+=' scale('+(t.scale.from+(t.scale.to-t.scale.from)*v)+')';
+	}
+	element.style[hui.animation.TRANSFORM]=str;
+}
+
+hui.animation.colorUpater = function(element,v,work) {
+	var red = Math.round(work.from.red+(work.to.red-work.from.red)*v);
+	var green = Math.round(work.from.green+(work.to.green-work.from.green)*v);
+	var blue = Math.round(work.from.blue+(work.to.blue-work.from.blue)*v);
+	value = 'rgb('+red+','+green+','+blue+')';
+	element.style[work.property]=value;
+}
+
+hui.animation.propertyUpater = function(element,v,work) {
+	element[work.property] = Math.round(work.from+(work.to-work.from)*v);
+}
+
+hui.animation.ieOpacityUpdater = function(element,v,work) {
+	var opacity = (work.from+(work.to-work.from)*v);
+	if (opacity==1) {
+		element.style.removeAttribute('filter');
+	} else {
+		element.style['filter']='alpha(opacity='+(opacity*100)+')';
+	}
+}
+
+hui.animation.render = function() {
+	hui.animation.running = true;
+	var next = false,
+		stamp = new Date().getTime();
+	for (var id in hui.animation.objects) {
+		var obj = hui.animation.objects[id];
 		if (obj.work) {
+			var element = obj.element;
 			for (var i=0; i < obj.work.length; i++) {
 				var work = obj.work[i];
-				if (work.finished) continue;
+				if (work.finished) {
+					continue
+				};
 				var place = (stamp-work.start)/(work.end-work.start);
 				if (place<0) {
 					next=true;
 					continue;
 				}
-				else if (isNaN(place)) place = 1;
-				else if (place>1) place=1;
-				else if (place<1) next=true;
-				var v = place;
+				else if (isNaN(place) || place>1) {
+					place = 1;
+				}
+				else if (place<1) {
+					next=true;
+				}
+				var v = place,
+					value = null;
 				if (work.delegate && work.delegate.ease) {
 					v = work.delegate.ease(v);
 				}
-				var value = null;
 				if (work.delegate && work.delegate.callback) {
-					work.delegate.callback(obj.element,v);
-				} else if (!work.css) {
-					obj.element[work.property] = Math.round(work.from+(work.to-work.from)*v);
-				} else if (work.property=='transform' && !hui.browser.msie) {
-					var t = work.transform;
-					var str = '';
-					if (t.rotate) {
-						str+=' rotate('+(t.rotate.from+(t.rotate.to-t.rotate.from)*v)+t.rotate.unit+')';
-					}
-					if (t.scale) {
-						str+=' scale('+(t.scale.from+(t.scale.to-t.scale.from)*v)+')';
-					}
-					obj.element.style[hui.animation.TRANSFORM]=str;
-				} else if (work.to.red!=null) {
-					var red = Math.round(work.from.red+(work.to.red-work.from.red)*v);
-					var green = Math.round(work.from.green+(work.to.green-work.from.green)*v);
-					var blue = Math.round(work.from.blue+(work.to.blue-work.from.blue)*v);
-					value = 'rgb('+red+','+green+','+blue+')';
-					obj.element.style[work.property]=value;
-				} else if (!hui.browser.opacity && work.property=='opacity') {
-					var opacity = (work.from+(work.to-work.from)*v);
-					if (opacity==1) {
-						obj.element.style.removeAttribute('filter');
-					} else {
-						obj.element.style['filter']='alpha(opacity='+(opacity*100)+')';
-					}
-				} else {
-					value = new String(work.from+(work.to-work.from)*v)+(work.unit!=null ? work.unit : '');
-					obj.element.style[work.property]=value;
+					work.delegate.callback(element,v);
+				} else if (work.updater) {
+					work.updater(element,v,work);
 				}
 				if (place==1) {
 					work.finished = true;
 					if (work.delegate && work.delegate.onComplete) {
 						window.setTimeout(work.delegate.onComplete);
 					} else if (work.delegate && work.delegate.hideOnComplete) {
-						obj.element.style.display='none';
+						element.style.display='none';
 					}
 				}
 			};
 		}
 	}
 	if (next) {
-		window.setTimeout(function() {
-			hui.animation.render();
-		},0);
+		window.setTimeout(hui.animation.render,0);
 	} else {
-		this.running = false;
+		hui.animation.running = false;
 	}
 }
 
@@ -1447,35 +1474,40 @@ hui.animation.Item = function(element) {
 }
 
 hui.animation.Item.prototype.animate = function(from,to,property,duration,delegate) {
-	var css = true;
-	if (property=='scrollLeft' || property=='scrollTop') {
-		css = false;
-	}
-	
-	var work = this.getWork(css ? hui.string.camelize(property) : property);
+	var work = this.getWork(hui.string.camelize(property));
 	work.delegate = delegate;
 	work.finished = false;
-	work.css = css;
-	if (from!=null) {
+	var css = !(property=='scrollLeft' || property=='scrollTop');
+	if (from!==null) {
 		work.from = from;
 	} else if (property=='transform') {
 		work.transform = hui.animation.Item.parseTransform(to,this.element);
-	} else if (work.css && !hui.browser.opacity && property=='opacity') {
+	} else if (!hui.browser.opacity && property=='opacity') {
 		work.from = this.getIEOpacity(this.element);
-	} else if (work.css) {
+	} else if (css) {
 		var style = hui.getStyle(this.element,property);
 		var parsedStyle = hui.animation.parseStyle(style);
 		work.from = parsedStyle.value;
 	} else {
 		work.from = this.element[property];
 	}
-	if (work.css) {
+	if (css) {
 		var parsed = hui.animation.parseStyle(to);
 		work.to = parsed.value;
 		work.unit = parsed.unit;
+		if (!hui.browser.opacity && property=='opacity') {
+			work.updater = hui.animation.ieOpacityUpdater;
+		} else if (property=='transform') {
+			work.updater = hui.browser.msie ? function() {} : hui.animation.transformUpater;
+		} else if (parsed.value.red===undefined) {
+			work.updater = hui.animation.lengthUpater;
+		} else {
+			work.updater = hui.animation.colorUpater;
+		}
 	} else {
 		work.to = to;
 		work.unit = null;
+		work.updater = hui.animation.propertyUpater;
 	}
 	work.start = new Date().getTime();
 	if (delegate && delegate.delay) {
@@ -1529,8 +1561,8 @@ hui.animation.Item.prototype.getIEOpacity = function(element) {
 }
 
 hui.animation.Item.prototype.getWork = function(property) {
-	for (var i=0; i < this.work.length; i++) {
-		if (this.work[i].property==property) {
+	for (var i = this.work.length - 1; i >= 0; i--) {
+		if (this.work[i].property===property) {
 			return this.work[i];
 		}
 	};
@@ -1556,7 +1588,7 @@ hui.animation.Loop.prototype.next = function() {
 	if (typeof(item)=='function') {
 		item();
 	} else if (item.element) {
-		hui.ani(item.element,item.property,item.value,item.duration,{ease:item.ease});
+		hui.animate(item.element,item.property,item.value,item.duration,{ease:item.ease});
 	}
 	var self = this;
 	var time = item.duration || 0;
@@ -3921,12 +3953,12 @@ hui.ui.showCurtain = function(options,zIndex) {
 	widget.curtain.style.zIndex=options.zIndex;
 	hui.setOpacity(widget.curtain,0);
 	widget.curtain.style.display='block';
-	hui.ani(widget.curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
+	hui.animate(widget.curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
 }
 
 hui.ui.hideCurtain = function(widget) {
 	if (widget.curtain) {
-		hui.ani(widget.curtain,'opacity',0,200,{hideOnComplete:true});
+		hui.animate(widget.curtain,'opacity',0,200,{hideOnComplete:true});
 	}
 };
 
@@ -4031,7 +4063,7 @@ hui.ui.showMessage = function(options) {
 	hui.ui.message.style.marginLeft = (hui.ui.message.clientWidth/-2)+'px';
 	hui.ui.message.style.marginTop = hui.getScrollTop()+'px';
 	if (hui.browser.opacity) {
-		hui.ani(hui.ui.message,'opacity',1,300);
+		hui.animate(hui.ui.message,'opacity',1,300);
 	}
 	window.clearTimeout(hui.ui.messageTimer);
 	if (options.duration) {
@@ -4043,7 +4075,7 @@ hui.ui.hideMessage = function() {
 	window.clearTimeout(hui.ui.messageDelayTimer);
 	if (hui.ui.message) {
 		if (hui.browser.opacity) {
-			hui.ani(hui.ui.message,'opacity',0,300,{hideOnComplete:true});
+			hui.animate(hui.ui.message,'opacity',0,300,{hideOnComplete:true});
 		} else {
 			hui.ui.message.style.display='none';
 		}
@@ -4067,7 +4099,7 @@ hui.ui.showToolTip = function(options) {
 	hui.setStyle(t,{'display':'block',zIndex:hui.ui.nextTopIndex()});
 	hui.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
 	if (hui.browser.opacity) {
-		hui.ani(t,'opacity',1,300);
+		hui.animate(t,'opacity',1,300);
 	}
 };
 
@@ -4076,7 +4108,7 @@ hui.ui.hideToolTip = function(options) {
 	var t = hui.ui.toolTips[key];
 	if (t) {
 		if (!hui.browser.msie) {
-			hui.ani(t,'opacity',0,300,{hideOnComplete:true});
+			hui.animate(t,'opacity',0,300,{hideOnComplete:true});
 		} else {
 			hui.style.display = 'none';
 		}
@@ -4843,7 +4875,7 @@ hui.ui.Window.prototype = {
 			}			
 		}
 		if (hui.browser.opacity) {
-			hui.ani(this.element,'opacity',1,0);
+			hui.animate(this.element,'opacity',1,0);
 		}
 		this.visible = true;
 		hui.ui.callVisible(this);
@@ -4854,7 +4886,7 @@ hui.ui.Window.prototype = {
 	hide : function() {
 		if (!this.visible) return;
 		if (hui.browser.opacity) {
-			hui.ani(this.element,'opacity',0,200,{hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,200,{hideOnComplete:true});
 		} else {
 			this.element.style.display='none';
 		}
@@ -7695,10 +7727,10 @@ hui.ui.RevealingToolbar.prototype = {
 	},
 	show : function(instantly) {
 		this.element.style.display='';
-		hui.ani(this.element,'height','58px',instantly ? 0 : 600,{ease:hui.ease.slowFastSlow});
+		hui.animate(this.element,'height','58px',instantly ? 0 : 600,{ease:hui.ease.slowFastSlow});
 	},
 	hide : function() {
-		hui.ani(this.element,'height','0px',500,{ease:hui.ease.slowFastSlow,hideOnComplete:true});
+		hui.animate(this.element,'height','0px',500,{ease:hui.ease.slowFastSlow,hideOnComplete:true});
 	}
 }
 
@@ -7819,10 +7851,10 @@ hui.ui.Toolbar.SearchField.prototype = {
 		}
 		if (!this.options.adaptive) {
 			this.field.onfocus = function() {
-				hui.ani(this,'width','120px',500,{ease:hui.ease.slowFastSlow});
+				hui.animate(this,'width','120px',500,{ease:hui.ease.slowFastSlow});
 			}
 			this.field.onblur = function() {
-				hui.ani(this,'width','80px',500,{ease:hui.ease.slowFastSlow});
+				hui.animate(this,'width','80px',500,{ease:hui.ease.slowFastSlow});
 			}
 		}
 	},
@@ -8309,8 +8341,8 @@ hui.ui.RichText.prototype = {
 			this.toolbar.style.marginTop='-40px';
 			hui.setOpacity(this.toolbar,0);
 			this.toolbar.style.display='block';
-			hui.ani(this.toolbar,'opacity',1,300);
-			hui.ani(this.toolbar,'margin-top','-32px',300);
+			hui.animate(this.toolbar,'opacity',1,300);
+			hui.animate(this.toolbar,'margin-top','-32px',300);
 		}
 	},
 	
@@ -8324,8 +8356,8 @@ hui.ui.RichText.prototype = {
 				},100);
 				return;
 			}
-			hui.ani(this.toolbar,'opacity',0,300,{hideOnComplete:true});
-			hui.ani(this.toolbar,'margin-top','-40px',300);
+			hui.animate(this.toolbar,'opacity',0,300,{hideOnComplete:true});
+			hui.animate(this.toolbar,'margin-top','-40px',300);
 		}
 		this.documentChanged();
 		hui.ui.callDelegates(this,'richTextDidChange');
@@ -8651,14 +8683,14 @@ hui.ui.ImageViewer.prototype = {
 	goToImage : function(animate,num,user) {	
 		if (animate) {
 			if (num>1) {
-				hui.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),Math.min(num*this.options.transitionReturn,2000),{ease:this.options.easeReturn});				
+				hui.animate(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),Math.min(num*this.options.transitionReturn,2000),{ease:this.options.easeReturn});				
 			} else {
 				var end = this.index==0 || this.index==this.images.length-1;
 				var ease = (end ? this.options.easeEnd : this.options.ease);
 				if (!user) {
 					ease = this.options.easeAuto;
 				}
-				hui.ani(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),(end ? this.options.transitionEnd : this.options.transition),{ease:ease});
+				hui.animate(this.viewer,'scrollLeft',this.index*(this.width+this.options.margin),(end ? this.options.transitionEnd : this.options.transition),{ease:ease});
 			}
 		} else {
 			this.viewer.scrollLeft=this.index*(this.width+this.options.margin);
@@ -8899,7 +8931,7 @@ hui.ui.Picker.prototype = {
 		hui.unListen(window.document,'mouseup',hui.ui.Picker.mouseup);
 		hui.unListen(window.document,'mousedown',hui.ui.Picker.mouseup);
 		var size = this.options.itemWidth+14;
-		hui.ani(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
+		hui.animate(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
 	},
 	$visibilityChanged : function() {
 		this.container.style.display='none';
@@ -9708,7 +9740,7 @@ hui.ui.Overlay.prototype = {
 			this.element.style.display='block';
 		} else {
 			hui.setStyle(this.element,{'display':'block','opacity':0});
-			hui.ani(this.element,'opacity',1,150);
+			hui.animate(this.element,'opacity',1,150);
 		}
 		this.visible = true;
 		if (options.autoHide) {
@@ -10232,7 +10264,7 @@ hui.ui.ProgressBar.prototype = {
 			hui.removeClass(el,this.WAITING);
 		}
 		hui.setClass(el,this.COMPLETE,value==1);
-		hui.ani(this.indicator,'width',(value*100)+'%',200);
+		hui.animate(this.indicator,'width',(value*100)+'%',200);
 	},
 	/** Mark progress as waiting */
 	setWaiting : function() {
@@ -11146,7 +11178,7 @@ hui.ui.Wizard.prototype = {
 		hui.addClass(this.anchors[index],'hui_selected');
 		this.steps[index].style.display='block';
 		this.selected=index;
-		hui.ani(c,'height',this.steps[index].clientHeight+'px',500,{ease:hui.ease.slowFastSlow,onComplete:function() {
+		hui.animate(c,'height',this.steps[index].clientHeight+'px',500,{ease:hui.ease.slowFastSlow,onComplete:function() {
 			c.style.height='';
 		}});
 		hui.ui.callVisible(this);
@@ -11503,10 +11535,10 @@ hui.ui.SearchField.prototype = {
 		});
 		if (this.options.expandedWidth>0) {
 			this.field.onfocus = function() {
-				hui.ani(self.element,'width',self.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
+				hui.animate(self.element,'width',self.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
 			}
 			this.field.onblur = function() {
-				hui.ani(self.element,'width',self.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
+				hui.animate(self.element,'width',self.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
 			}
 		}
 	},
@@ -12427,9 +12459,7 @@ hui.ui.MarkupEditor.create = function(options) {
 hui.ui.MarkupEditor.prototype = {
 	implIsReady : function() {
 		this.ready = true;
-		hui.log('I am ready!');
 		for (var i=0; i < this.pending.length; i++) {
-			hui.log(this.pending[i]);
 			this.pending[i]();
 		};
 	},

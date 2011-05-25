@@ -250,12 +250,12 @@ hui.ui.showCurtain = function(options,zIndex) {
 	widget.curtain.style.zIndex=options.zIndex;
 	hui.setOpacity(widget.curtain,0);
 	widget.curtain.style.display='block';
-	hui.ani(widget.curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
+	hui.animate(widget.curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
 }
 
 hui.ui.hideCurtain = function(widget) {
 	if (widget.curtain) {
-		hui.ani(widget.curtain,'opacity',0,200,{hideOnComplete:true});
+		hui.animate(widget.curtain,'opacity',0,200,{hideOnComplete:true});
 	}
 };
 
@@ -360,7 +360,7 @@ hui.ui.showMessage = function(options) {
 	hui.ui.message.style.marginLeft = (hui.ui.message.clientWidth/-2)+'px';
 	hui.ui.message.style.marginTop = hui.getScrollTop()+'px';
 	if (hui.browser.opacity) {
-		hui.ani(hui.ui.message,'opacity',1,300);
+		hui.animate(hui.ui.message,'opacity',1,300);
 	}
 	window.clearTimeout(hui.ui.messageTimer);
 	if (options.duration) {
@@ -372,7 +372,7 @@ hui.ui.hideMessage = function() {
 	window.clearTimeout(hui.ui.messageDelayTimer);
 	if (hui.ui.message) {
 		if (hui.browser.opacity) {
-			hui.ani(hui.ui.message,'opacity',0,300,{hideOnComplete:true});
+			hui.animate(hui.ui.message,'opacity',0,300,{hideOnComplete:true});
 		} else {
 			hui.ui.message.style.display='none';
 		}
@@ -396,7 +396,7 @@ hui.ui.showToolTip = function(options) {
 	hui.setStyle(t,{'display':'block',zIndex:hui.ui.nextTopIndex()});
 	hui.setStyle(t,{left:(pos.left-t.clientWidth+4)+'px',top:(pos.top+2-(t.clientHeight/2)+(n.clientHeight/2))+'px'});
 	if (hui.browser.opacity) {
-		hui.ani(t,'opacity',1,300);
+		hui.animate(t,'opacity',1,300);
 	}
 };
 
@@ -405,7 +405,7 @@ hui.ui.hideToolTip = function(options) {
 	var t = hui.ui.toolTips[key];
 	if (t) {
 		if (!hui.browser.msie) {
-			hui.ani(t,'opacity',0,300,{hideOnComplete:true});
+			hui.animate(t,'opacity',0,300,{hideOnComplete:true});
 		} else {
 			hui.style.display = 'none';
 		}
