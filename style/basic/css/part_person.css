@@ -30,6 +30,8 @@ div.part_person table td
 div.part_person img
 {
 	border: none;
+	width: 60px;
+	height: 80px;
 }
 
 span.part_person_label
@@ -39,7 +41,7 @@ span.part_person_label
 
 td.part_person_image
 {
-	width: 75px;
+	width: 80px;
 }
 
 td.part_person_image a
