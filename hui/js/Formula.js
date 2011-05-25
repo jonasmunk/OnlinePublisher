@@ -468,7 +468,9 @@ hui.ui.Formula.Number.prototype = {
 		hui.listen(this.input,'blur',this.blurEvent.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
+		hui.listen(this.up,'dblclick',this.upEvent.bind(this));
 		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
+		hui.listen(this.down,'dblclick',this.upEvent.bind(this));
 	},
 	blurEvent : function() {
 		hui.removeClass(this.element,'hui_number_focused');
@@ -490,7 +492,8 @@ hui.ui.Formula.Number.prototype = {
 			}
 		}
 	},
-	downEvent : function() {
+	downEvent : function(e) {
+		hui.stop(e);
 		if (this.value===null) {
 			this.setLocalValue(this.options.min,true);
 		} else {
@@ -498,7 +501,8 @@ hui.ui.Formula.Number.prototype = {
 		}
 		this.updateField();
 	},
-	upEvent : function() {
+	upEvent : function(e) {
+		hui.stop(e);
 		this.setLocalValue(this.value+1,true);
 		this.updateField();
 	},
@@ -574,7 +578,7 @@ hui.ui.Formula.DropDown = function(o) {
 hui.ui.Formula.DropDown.create = function(options) {
 	options = options || {};
 	options.element = hui.build('a',{
-		'class':'hui_dropdown',href:'#',
+		'class':'hui_dropdown',href:'javascript://',
 		html:'<span><span><strong></strong></span></span>'
 	});
 	return new hui.ui.Formula.DropDown(options);
