@@ -70,8 +70,8 @@ Atira.Website.Ticker.prototype = {
 		this.base = n2i.firstByClass(document.body,'ticker');
 		if (!this.base) return false;
 		this.item = n2i.firstByClass(this.base,'item');
-		this.previousArrow = n2i.firstByClass(this.base,'previous');
-		this.nextArrow = n2i.firstByClass(this.base,'next');
+		this.previousArrow = n2i.firstByClass(this.base,'ticker_previous');
+		this.nextArrow = n2i.firstByClass(this.base,'ticker_next');
 		var self = this;
 		this.base.onmouseover = function() {
 			self.pause();
@@ -113,8 +113,8 @@ Atira.Website.Ticker.prototype = {
 	updateUI : function() {
 		var item = this.items[this.activeItem];
 		if (!item) return;
-		this.item.innerHTML = item.title;
-		this.item.className = 'item '+item.variant;
+		this.item.innerHTML = '<span>'+item.title+'<span>';
+		this.item.className = 'item common';
 		this.item.href = item.url;
 	},
 

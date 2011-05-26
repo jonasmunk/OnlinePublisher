@@ -449,38 +449,38 @@
 <xsl:template name="front-ticker">
 	<xsl:variable name="language" select="//p:page/p:meta/p:language"/>
 	<div class="ticker">
-		<div class="left">
-			<div>
-				<xsl:if test="$language='en'"><strong>Latest news:</strong></xsl:if>
-				<xsl:if test="$language!='en'"><strong>Seneste nyheder:</strong></xsl:if>
-				<img src="{$path}style/{$design}/gfx/front/ticker_previous.png" onmouseover="this.src='{$path}style/{$design}/gfx/front/ticker_previous_hover.png'" onmouseout="this.src='{$path}style/{$design}/gfx/front/ticker_previous.png'" class="arrow previous" alt=""/>
-				<img src="{$path}style/{$design}/gfx/front/ticker_next.png" onmouseover="this.src='{$path}style/{$design}/gfx/front/ticker_next_hover.png'" onmouseout="this.src='{$path}style/{$design}/gfx/front/ticker_next.png'" class="arrow next" alt=""/>
-			</div>
+		<div class="ticker_left">
+			<xsl:if test="$language='en'"><strong>Latest news:</strong></xsl:if>
+			<xsl:if test="$language!='en'"><strong>Seneste nyheder:</strong></xsl:if>
+			<a class="ticker_previous" href="javascript://"><span>Previous</span></a>
+			<a class="ticker_next" href="javascript://"><span>Next</span></a>
 		</div>
 		<div class="news"><a class="item"><xsl:comment/></a></div>
-		<div class="right">
-			<xsl:if test="$language='en'"><a href="{$path}en/latest/">More news »</a></xsl:if>
-			<xsl:if test="$language!='en'"><a href="{$path}da/aktuelt/">Flere nyheder »</a></xsl:if>
+		<div class="ticker_right">
+			<xsl:if test="$language='en'"><a href="{$path}en/latest/" class="common"><span>More news »</span></a></xsl:if>
+			<xsl:if test="$language!='en'"><a href="{$path}da/aktuelt/" class="common"><span>Flere nyheder »</span></a></xsl:if>
 			<xsl:comment/>
 		</div>
 	</div>
 	<script charset="utf-8" type="text/javascript">
-		var ticker = new Atira.Website.Ticker();
-		<xsl:for-each select="//pn:news">
-			<xsl:if test="position()=1">
-				<xsl:for-each select=".//o:object[@type='news']">
-					{
-						var title = "<xsl:value-of select="o:title"/>";
-						var link = null;
-						<xsl:for-each select=".//o:link[1]">
-							link="<xsl:call-template name="link-href"/>";
-						</xsl:for-each>
-						ticker.addItem(title,link,null);
-					}
-				</xsl:for-each>
-			</xsl:if>
-		</xsl:for-each>
-		ticker.start();
+		!function() {
+			var ticker = new Atira.Website.Ticker();
+			<xsl:for-each select="//pn:news">
+				<xsl:if test="position()=1">
+					<xsl:for-each select=".//o:object[@type='news']">
+						{
+							var title = "<xsl:value-of select="o:title"/>";
+							var link = null;
+							<xsl:for-each select=".//o:link[1]">
+								link="<xsl:call-template name="link-href"/>";
+							</xsl:for-each>
+							ticker.addItem(title,link,null);
+						}
+					</xsl:for-each>
+				</xsl:if>
+			</xsl:for-each>
+			ticker.start();
+		}();
 	</script>
 </xsl:template>
 

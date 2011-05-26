@@ -365,67 +365,81 @@ div.placard div.poster_2 div.right
 
 /**************************** Ticker *************************/
 
-.ticker
+div.ticker
 {
 	height: 25px;
 	margin-top: 15px;
-	background: url('../gfx/front/ticker_bg.png') right top repeat-x;
 	overflow: hidden;
+	background: #F0F0F0;
+	border: 1px solid #E6E6E6;
+	border-radius: 3px;
 }
 
-.ticker .left
+div.ticker_left
 {
 	float: left;
-	background: url('../gfx/front/ticker_left_bg.png') right top repeat-x;
-}
-.ticker .left div
-{
-	background: url('../gfx/front/ticker_left_left.png') left top no-repeat;
+	line-height: 25px;
 	height: 25px;
-	float: left;
 }
 
-.ticker .left .feed
+div.ticker_left a span
 {
-	float: left;
-	width: 16px;
-	height: 16px;
-	margin: 5px 0px 0px 8px;
+	display: none;
 }
-.ticker .left strong
+
+a.ticker_previous
+{
+	display: inline-block;
+	font-size: 0;
+	border-style: solid;
+	border-width: 5px 10px 5px 0;
+	border-color: transparent #ccc transparent transparent;
+	height: 0px;
+	margin: 0 3px;
+	top: -1px;
+	position: relative;
+}
+
+a.ticker_next
+{
+	display: inline-block;
+	font-size: 0;
+	border-style: solid;
+	border-width: 5px 0px 5px 10px;
+	border-color: transparent transparent transparent #ccc;
+	height: 0px;
+	top: -1px;
+	position: relative;
+}
+
+a.ticker_next:hover
+{
+	border-color: transparent transparent transparent #666;
+}
+
+a.ticker_previous:hover
+{
+	border-color: transparent #666 transparent transparent;
+}
+
+div.ticker_left strong
 {
 	font-weight: normal;
-	font-size: 10pt;
-	color: #fff;
+	font-size: 12px;
+	color: #aaa;
 	float: left;
-	margin: 4px 0px 0px 10px;
+	margin: 0 4px 0px 10px;
 }
-.ticker .left .arrow
-{
-	float: left;
-	width: 12px;
-	height: 14px;
-	padding: 6px 3px;
-	cursor: pointer;
-}
-.ticker .left .previous
-{
-	padding-left: 6px;
-}
-.ticker .left .next
-{
-	padding-right: 6px;
-}
-.ticker .right
+
+div.ticker_right
 {
 	float: right;
-	background: url('../gfx/front/ticker_right.png') right top no-repeat;
 	padding-right: 8px;
 	height: 25px;
 	line-height: 21px;
 }
 
-.ticker .right a
+div.ticker_right a span
 {
 	color: #888;
 	font-size: 9pt;
@@ -441,46 +455,19 @@ div.placard div.poster_2 div.right
 
 .ticker .news a
 {
+	text-decoration: none;
+}
+
+.ticker .news a span
+{
 	font-size: 10pt;
 	color: #555;
-	text-decoration: none;
 	float: left;
 	padding-top: 4px;
 }
 
-.ticker .news a.technology
+.ticker:hover a.item
 {
-	padding-right: 80px;
-	background: url('../gfx/front/technology_badge.png') right 5px no-repeat;
-}
-
-.ticker .news a.pure
-{
-	padding-right: 51px;
-	background: url('../gfx/front/pure_badge.png') right 5px no-repeat;
-}
-
-.ticker .news a.software
-{
-	padding-right: 73px;
-	background: url('../gfx/front/software_badge.png') right 5px no-repeat;
-}
-
-.ticker .news a.ignite
-{
-	padding-right: 53px;
-	background: url('../gfx/front/ignite_badge.png') right 5px no-repeat;
-}
-
-.ticker .news a.atira
-{
-	padding-right: 50px;
-	background: url('../gfx/front/atira_badge.png') right 5px no-repeat;
-}
-
-.ticker:hover a
-{
-	color: #333;
 	text-decoration: underline;
 }
 .ticker a:hover
