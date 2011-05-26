@@ -202,6 +202,11 @@ class ImageTransformationService {
 	}
 	
 	function sendFile($path,$mimeType) {
+		if (!$mimeType) {
+			if ($info = ImageTransformationService::getImageInfo($path)) {
+				$mimeType = $info['mime'];
+			}
+		}
 		if ($mimeType=='png') {
 			$mimeType='image/png';
 		} else if ($mimeType=='jpg') {
@@ -210,7 +215,7 @@ class ImageTransformationService {
 			$mimeType='image/gif';
 		}
 		header('Content-Type: '.$mimeType);
-		header("Content-Length: " . filesize($path));
+		header("Content-Length: ".filesize($path));
 		header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($path)).' GMT');
 		header('Expires: '.gmdate('D, d M Y H:i:s',time()+(60*60)) . ' GMT');
 		header('Date: '.gmdate('D, d M Y H:i:s') . ' GMT');
