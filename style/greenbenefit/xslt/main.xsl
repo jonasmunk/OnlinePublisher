@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div class="chrome_footer">
-		<a class="chrome_design">Designet og udviklet af In2iSoft</a>
+		<a class="chrome_design" href="http://www.in2isoft.dk/">Designet og udviklet af In2iSoft</a>
 		<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
 		<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
 	</div>
