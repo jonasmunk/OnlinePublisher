@@ -9,7 +9,7 @@
  >
 
 <xsl:template match="l:list">
-	<div class="part_list common_font">
+	<div class="part_list common_font" id="part_list_{../../@id}">
 		<div class="part_list_box">
 		<div class="part_list_box_top"><div><div><xsl:comment/></div></div></div>
 		<div class="part_list_box_middle">
@@ -31,6 +31,24 @@
 		<div class="part_list_box_bottom"><div><div><xsl:comment/></div></div></div>
 		</div>
 	</div>
+	<xsl:if test="@dirty='true'">
+		<script type="text/javascript">
+			hui.onReady(function() {
+				var id = <xsl:value-of select="../../@id"/>;
+				var node = hui.get('part_list_'+id);
+				hui.addClass(node,'part_list_busy');
+				hui.log('Updating list ('+id+')');
+				hui.request({
+					url:'<xsl:value-of select="$path"/>services/parts/render/',
+					parameters:{type:'list',id:id,synchronize:'true'},
+					onSuccess : function(t) {
+						node.parentNode.innerHTML = t.responseText;
+						hui.log('Finished list ('+id+')');
+					}
+				})
+			});
+		</script>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template match="l:list/l:title">

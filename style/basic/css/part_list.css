@@ -94,3 +94,9 @@ p.part_list_date
 	font-size: 11px;
 	color: #999;
 }
+
+
+div.part_list_busy
+{
+	opacity: 0.5;
+}

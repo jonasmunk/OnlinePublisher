@@ -35,7 +35,15 @@
 	<body>
 		<div class="chrome">
 			<div class="chrome_head">
-				<ul class="chrome_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
+				<ul>
+					<xsl:attribute name="class">
+						<xsl:text>chrome_navigation</xsl:text>
+						<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+							<xsl:text> chrome_navigation_selected</xsl:text>
+						</xsl:if>
+					</xsl:attribute>
+					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
+				</ul>
 				<xsl:call-template name="search"/>
 			</div>
 			<div class="chrome_base">
@@ -43,7 +51,8 @@
 				<div class="chrome_box_middle"><div class="chrome_box_middle">
 					<div class="chrome_box_body">
 						<div class="chrome_box_head">
-							<xsl:call-template name="secondlevel"/><xsl:comment/>
+							<xsl:call-template name="secondlevel"/>
+							<xsl:comment/>
 						</div>
 						<xsl:if test="//p:page/@id=//p:context/p:home/@page">
 						<div id="poster">
@@ -155,38 +164,51 @@
 
 
 <xsl:template match="h:hierarchy/h:item">
-<xsl:if test="not(@hidden='true')">
-<li><xsl:choose>
-<xsl:when test="position()>1 and //p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
-<xsl:when test="position()>1 anddescendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
-<xsl:when test="position()>1"><xsl:attribute name="class">normal</xsl:attribute></xsl:when>
-</xsl:choose>
-<a>
-<xsl:call-template name="link"/>
-<xsl:choose>
-<xsl:when test="position()=1">
-<img src="{$path}style/{$design}/gfx/logo.png" alt="In2iSoft"/>
-</xsl:when>
-<xsl:otherwise>
-<span><xsl:value-of select="@title"/></span>
-</xsl:otherwise>
-</xsl:choose>
-</a>
-</li>
-</xsl:if>
+	<xsl:if test="not(@hidden='true')">
+		<li>
+			<xsl:choose>
+				<xsl:when test="position()>1 and //p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+				<xsl:when test="position()>1 anddescendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+				<xsl:when test="position()>1"><xsl:attribute name="class">normal</xsl:attribute></xsl:when>
+			</xsl:choose>
+			<a>
+				<xsl:call-template name="link"/>
+				<xsl:choose>
+					<xsl:when test="position()=1">
+						<img src="{$path}style/{$design}/gfx/logo.png" alt="In2iSoft"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<span><xsl:value-of select="@title"/></span>
+					</xsl:otherwise>
+				</xsl:choose>
+			</a>
+		</li>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="secondlevel">
-<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-	<ul class="chrome_sub_navigation">
-		<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-	</ul>
-</xsl:if>
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+		<ul>
+			<xsl:attribute name="class">
+				<xsl:text>chrome_sub_navigation</xsl:text>
+				<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[descendant-or-self::*/@page=//p:page/@id]">
+					<xsl:text> chrome_sub_navigation_selected</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
+			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
+		</ul>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="thirdlevel">
 <xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-	<ul class="chrome_side_navigation">
+	<ul>
+		<xsl:attribute name="class">
+			<xsl:text>chrome_side_navigation</xsl:text>
+			<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[descendant-or-self::*/@page=//p:page/@id]">
+				<xsl:text> chrome_side_navigation_selected</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
 	</ul>
 </xsl:if>
