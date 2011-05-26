@@ -14,6 +14,7 @@ class PartContext {
 	var $design;
 	var $displayDecorator;
 	var $buildDecorator;
+	var $synchronize;
 	
 	function PartContext() {
 		$this->displayLinks = array();
@@ -49,6 +50,15 @@ class PartContext {
 	function getDesign() {
 	    return $this->design;
 	}
+	
+	function setSynchronize($synchronize) {
+	    $this->synchronize = $synchronize;
+	}
+
+	function getSynchronize() {
+	    return $this->synchronize;
+	}
+	
 
 	function decorateForDisplay($text) {
 		return $this->displayDecorator->decorate($text);

@@ -124,10 +124,7 @@ class ListPartController extends PartController
 	}
 	
 	function buildSub($part,$context) {
-		$data = '<list xmlns="'.$this->getNamespace().'">';
-		if (StringUtils::isNotBlank($part->getTitle())) {
-			$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
-		}
+		$dirty = false;
 		$items = array();
 		if (count($part->getObjectIds())>0) {
 			$objects = Database::selectAll("select id,type from object where id in (".implode($part->getObjectIds(),',').")");
@@ -139,7 +136,13 @@ class ListPartController extends PartController
 				if ($type=='calendarsource') {
 					$source = Calendarsource::load($id);
 					if ($source) {
-						$source->synchronize();
+						if ($context->getSynchronize()) {
+							$source->synchronize();
+						}
+						if (!$source->isInSync()) {
+							Log::debug('Source is dirty: '+$id);
+							$dirty = true;
+						}
 						$sourceEvents = $source->getEvents(array('startDate'=>$from,'endDate'=>$to));
 						foreach ($sourceEvents as $sourceEvent) {
 							$item = new PartListItem();
@@ -180,6 +183,11 @@ class ListPartController extends PartController
 					}
 				}
 			}
+		}
+
+		$data = '<list xmlns="'.$this->getNamespace().'" dirty="'.($dirty ? 'true' : 'false').'">';
+		if (StringUtils::isNotBlank($part->getTitle())) {
+			$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
 		}
 		$items = array_slice($items,0,$part->getMaxItems());
 		$this->sortItems($items);
