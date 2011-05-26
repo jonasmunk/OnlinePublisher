@@ -5,8 +5,7 @@
  */
 
 class DBUCalendarParser {
-	
-	
+
 	function parseURL($url) {
 		$string = @file_get_contents($url);
 		if (!$string) {
@@ -17,9 +16,18 @@ class DBUCalendarParser {
 		//$reg = '/<tr><td[^>]*>[0-9]+<\/td><td[^>]*>[^<]{3}<\/td><td>([0-9]{4})-([0-9]{2})-([0-9]{2})<\/td><td>([0-9]{2}):([0-9]{2})<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td>/i';
 		$reg = '/<tr><td[^>]*>[0-9]+<\/td><td[^>]*>[^<]*<\/td><td[^>]*>[^<]*<\/td><td[^>]*>([0-9]{4})-([0-9]{2})-([0-9]{2})<\/td><td[^>]*>([0-9]{2}):([0-9]{2})<\/td><td[^>]*>([^<]+)<\/td><td[^>]*>([^<]*)<\/td><td[^>]*>([^<]*)<\/td><td[^>]*>([^<]*)<\/td>/i';
 		//$reg = '/<tr><td[^>]*>[0-9]+<\/td><td[^>]*>[^<]*<\/td><td[^>]*>[^<]*<\/td><td[^>]*>([0-9]{4})-([0-9]{2})-([0-9]{2})<\/td><td>([0-9]{2}):([0-9]{2})<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td>/i';
+		$reg = '/<tr><td[^>]*>[0-9]+<\/td><td[^>]*>[^<]*<\/td><td[^>]*>([0-9]{4})-([0-9]{2})-([0-9]{2})<\/td><td[^>]*>([0-9]{2}):([0-9]{2})<\/td><td[^>]*>([^<]+)<\/td><td[^>]*>([^<]*)<\/td><td[^>]*>([^<]*)<\/td><td[^>]*>([^<]*)<\/td>/i';
 		preg_match_all($reg,$string, $matches);
 		
-		error_log(print_r($matches,true));
+		$pos = -1;
+		
+		while ($pos!==false) {
+			$pos = strpos($string,'<tr',$pos+1);
+			Log::debug($pos);
+			$end = strpos($string,'</tr>',$pos);
+			
+			Log::debug(substr($string,$pos,$end-$pos));
+		}
 		for ($i=0; $i < count($matches[0]); $i++) {
 			$event = new DBUCalendarEvent();
 
@@ -46,8 +54,6 @@ class DBUCalendarParser {
 			$event->setScore($score);
 			$cal->addEvent($event);
 		}
-		//header('Content-Type: text/plain');
-		//print_r($cal);
 		return $cal;
 	}
 }

@@ -102,5 +102,13 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual('Jonas Munk',StringUtils::buildIndex(array(' ','Jonas ',null,'  Munk',null,'')));
 		$this->assertEqual('',StringUtils::buildIndex(null));
 	}
+	
+	function testExtract() {
+		$str = 'hep hey <table><tr><td>hdsjfhafkhk</td></tr></table> hey <table></table><table border="1">--</table>';
+		$extracted = StringUtils::extract($str,'<table','table>');
+		$this->assertEqual($extracted[0],'<table><tr><td>hdsjfhafkhk</td></tr></table>');
+		$this->assertEqual($extracted[1],'<table></table>');
+		$this->assertEqual($extracted[2],'<table border="1">--</table>');
+	}
 }
 ?>

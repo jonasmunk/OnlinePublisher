@@ -44,7 +44,7 @@ function __autoload($class_name) {
 	if (class_exists($class_name)) {
 		return;
 	}
-	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/','Model/','Network/','Interface/','Modules/News/','Modules/Images/');
+	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/','Model/','Network/','Interface/','Modules/News/','Modules/Images/','Formats');
 	foreach ($folders as $folder) {
 		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';
 		if (file_exists($path)) {

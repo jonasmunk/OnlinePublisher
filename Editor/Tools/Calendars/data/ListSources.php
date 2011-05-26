@@ -22,6 +22,7 @@ $writer->startHeaders();
 $writer->header(array('title'=>'Titel','width'=>30));
 $writer->header(array('title'=>'Adresse'));
 $writer->header(array('title'=>'Filter'));
+$writer->header(array('title'=>'Interval'));
 $writer->header(array('title'=>'Synkroniseret'));
 $writer->endHeaders();
 
@@ -30,6 +31,7 @@ foreach ($sources as $source) {
 	$writer->startCell(array('icon'=>$source->getIn2iGuiIcon()))->text($source->getTitle())->endCell();
 	$writer->startCell()->text($source->getUrl())->endCell();
 	$writer->startCell()->text($source->getFilter())->endCell();
+	$writer->startCell()->text($source->getSyncInterval())->endCell();
 	$writer->startCell()->text(DateUtils::formatFuzzy($source->getSynchronized()))->endCell();
 	$writer->endRow();
 }

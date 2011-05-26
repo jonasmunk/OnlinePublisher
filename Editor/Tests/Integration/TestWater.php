@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tests.Services
+ * @subpackage Tests.Integration
  */
 
 class TestWater extends UnitTestCase {

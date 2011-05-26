@@ -275,4 +275,26 @@ class StringUtils {
 	    }
 	    return $ret;
 	}
+	
+	function extract($str,$start,$stop) {
+		$extracted = array();
+		$pos = 0;
+		while ($pos!==false) {
+			$from = strpos($str,$start,$pos);
+			if ($from===false) {
+				$pos = false;
+				continue;
+			}
+			$to = strpos($str,$stop,$from+strlen($start));
+			if ($to!==false) {
+				$to+=strlen($stop);
+				Log::debug('From '.$from.' to '.$to);
+				$extracted[] = substr($str,$from,$to-$from);
+				$pos = $to;
+			} else {
+				$pos = false;
+			}
+		}
+		return $extracted;
+	}
 }

@@ -40,6 +40,7 @@ hui.ui.listen({
 		sourceFormula.reset();
 		sourceWindow.hide();
 		sourcesItemsSource.refresh();
+		list.refresh();
 	},
 	$click$deleteSource : function() {
 		hui.ui.request({url:'data/DeleteCalendarSource.php',onSuccess:'deleteSource',parameters:{id:this.sourceId}});

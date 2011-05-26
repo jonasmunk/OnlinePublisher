@@ -78,11 +78,13 @@ class Calendarsource extends Object {
 		Database::delete($sql);
 	}
 
+	function isInSync() {
+		return (time() - $this->synchronized < $this->syncInterval);
+	}
 	
 	function synchronize($force=false) {
 		global $basePath;
-		if (time()-$this->synchronized<$this->syncInterval && $force==false) {
-			// If not synced for an hour
+		if ($this->isInSync() && $force==false) {
 			return;
 		}
 		if (strpos($this->url,'dbu.dk')!==false) {
@@ -90,7 +92,8 @@ class Calendarsource extends Object {
 		} else {
 			$this->synchronizeVCal();
 		}
-		$sql = "update calendarsource set synchronized=".Database::datetime(time())." where object_id=".$this->id;
+		$this->synchronized = time();
+		$sql = "update calendarsource set synchronized=".Database::datetime(time())." where object_id=".Database::int($this->id);
 		Database::update($sql);
 	}
 	
