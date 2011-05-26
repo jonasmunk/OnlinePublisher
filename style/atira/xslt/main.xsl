@@ -20,15 +20,16 @@
 <head>
 	<title><xsl:value-of select="@title"/> : <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
-	<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
+	<!--<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
 		<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/front.css"/>
-	</xsl:if>
+	</xsl:if>-->
 	<xsl:call-template name="util:style"/>
 	<xsl:call-template name="util:style-ie6"/>
+	<xsl:call-template name="util:style-ie7"/>
 	<xsl:call-template name="util:scripts"/>
 	<script src="{$path}style/{$design}/js/AtiraWebsite.js?1" type="text/javascript"><xsl:comment/></script>
 </head>
-<body>
+<body class="{$agent}">
 	<xsl:if test="//p:design/p:parameter[@key='variant']/.='news'">
 		<xsl:attribute name="class">news</xsl:attribute>
 	</xsl:if>

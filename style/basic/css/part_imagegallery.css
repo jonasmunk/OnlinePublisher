@@ -55,7 +55,7 @@ div.part_imagegallery_changing a
 	float: none;
 	position: absolute;
 }
-
+/*
 div.part_imagegallery_framed a:before,
 div.part_imagegallery_framed a:after {
 	content: '';
@@ -64,7 +64,7 @@ div.part_imagegallery_framed a:after {
 	left: 14px;
 	bottom: 14px;
 	width: 70%;
-	max-width: 300px; /* avoid rotation causing ugly appearance at large container widths */
+	max-width: 300px;
 	height: 55%;
 	-webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 	-moz-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -86,6 +86,7 @@ div.part_imagegallery_framed a:after {
 	-o-transform: skew(15deg) rotate(6deg);
 	transform: skew(15deg) rotate(6deg);
 }
+*/
 
 div.part_imagegallery_framed img
 {

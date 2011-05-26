@@ -272,7 +272,7 @@ ul.tabbar a.selected, ul.tabbar a.highlighted
 .extra .left
 {
 	width: 260px;
-	border-right: 2px solid #e2e2e2;
+	border-right: 1px solid #e2e2e2;
 	height: 200px;
 	float: left;
 	padding: 0px 20px;
@@ -282,7 +282,7 @@ ul.tabbar a.selected, ul.tabbar a.highlighted
 .extra .center
 {
 	width: 260px;
-	border-right: 2px solid #e2e2e2;
+	border-right: 1px solid #e2e2e2;
 	height: 200px;
 	float: left;
 	padding: 0px 20px;
@@ -350,7 +350,7 @@ ul.tabbar a.selected, ul.tabbar a.highlighted
 .footer
 {
 	height: 30px;
-	border-top: 3px solid #e3e3e3;
+	border-top: 1px solid #e3e3e3;
 	text-align: center;
 	padding-top: 10px;
 	font-size: 10pt;
