@@ -764,13 +764,15 @@ hui.onReady = function(delegate) {
 // Ajax //
 
 hui.request = function(options) {
-	options = hui.override({method:'POST',async:true},options);
+	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
 	var transport = hui.request.createTransport();
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
 				if (transport.status == 200 && options.onSuccess) {
 					options.onSuccess(transport);
+				} else if (transport.status == 403 && options.onForbidden) {
+					options.onForbidden(transport);
 				} else if (options.onFailure) {
 					options.onFailure(transport);
 				}
@@ -789,6 +791,11 @@ hui.request = function(options) {
     if (method=='POST' && options.parameters) {
 		body = hui.request.buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+	}
+	if (options.headers) {
+		for (name in options.headers) {
+			transport.setRequestHeader(name, options.headers[name]);
+		}
 	}
 	transport.send(body);
 }
@@ -3782,8 +3789,11 @@ hui.ui._resize = function() {
 }
 
 hui.ui.confirmOverlay = function(options) {
-	var node = options.element || options.widget.getElement(),
+	var node = options.element,
 		overlay;
+	if (options.widget) {
+		node = options.widget.getElement();
+	}
 	if (hui.ui.confirmOverlays[node]) {
 		overlay = hui.ui.confirmOverlays[node];
 		overlay.clear();
@@ -4435,6 +4445,20 @@ hui.ui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
+hui.ui.handleForbidden = function(widget) {
+	hui.log('General access denied received');
+	var result = hui.ui.callSuperDelegates(widget || this,'accessDenied');
+	hui.ui.confirmOverlay({
+		element : document.body,
+		text : 'Access denied',
+		okText : 'Reload page',
+		cancelText : 'Continue',
+		onOk : function() {
+			document.location.reload();
+		}
+	});
+}
+
 hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
 	if (options.json) {
@@ -4493,6 +4517,13 @@ hui.ui.request = function(options) {
 		hui.log(t);
 		hui.log(e);
 	};
+	options.onForbidden = function(t) {
+		if (options.message && options.message.start) {
+			hui.ui.hideMessage();
+		}
+		options.onFailure(t);
+		hui.ui.handleForbidden();
+	}
 	if (options.message && options.message.start) {
 		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
 	}
@@ -4612,13 +4643,17 @@ hui.ui.Source.prototype = {
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
 			hui.request({
-				method:'post',
-				url:this.options.url,
-				parameters:prms,
+				method : 'post',
+				url : this.options.url,
+				parameters : prms,
 				onSuccess : function(t) {self.parse(t)},
 				onException : function(e,t) {
 					hui.log('Exception while loading source...')
 					hui.log(e)
+				},
+				onForbidden : function() {
+					hui.ui.handleForbidden(self);
+					hui.ui.callDelegates(self,'sourceFailed');
 				},
 				onFailure : function(t) {
 					hui.ui.callDelegates(self,'sourceFailed');
@@ -6470,7 +6505,10 @@ hui.ui.List.prototype = {
 	$sourceIsNotBusy : function() {
 		this._setBusy(false);
 	},
-	
+	$sourceFailed : function() {
+		hui.log('The source failed!');
+		hui.addClass(this.element,'hui_list_error');
+	},
 	_setBusy : function(busy) {
 		this.busy = busy;
 		window.clearTimeout(this.busytimer);
@@ -6481,6 +6519,7 @@ hui.ui.List.prototype = {
 			},300);
 		} else {
 			hui.removeClass(this.element,'hui_list_busy');
+			hui.removeClass(this.element,'hui_list_error');
 		}
 	},
 	
@@ -11625,7 +11664,8 @@ hui.ui.LocationPicker = function(options) {
 	this.name = options.name;
 	this.options = options.options || {};
 	this.element = hui.get(options.element);
-	this.defaultCenter = new google.maps.LatLng(57.0465, 9.9185);
+	this.backendLoaded = false;
+	this.defered = [];
 	hui.ui.extend(this);
 }
 
@@ -11640,44 +11680,68 @@ hui.ui.LocationPicker.prototype = {
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
 			hui.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
-		    var mapOptions = {
-		      zoom: 15,
-		      mapTypeId: google.maps.MapTypeId.TERRAIN
-		    }
-		    this.map = new google.maps.Map(mapContainer, mapOptions);
-			google.maps.event.addListener(this.map, 'click', function(obj) {
-				var loc = {latitude:obj.latLng.lat(),longitude:obj.latLng.lng()};
-    			this.setLocation(loc);
-				this.fire('locationChanged',loc);
-  			}.bind(this));
-			panel.element.style.display = 'none';
+			this._whenReady(function() {
+		   	 	var mapOptions = {
+			      zoom: 15,
+			      mapTypeId: google.maps.MapTypeId.TERRAIN
+			    }
+				this.defaultCenter = new google.maps.LatLng(57.0465, 9.9185);
+			    this.map = new google.maps.Map(mapContainer, mapOptions);
+				google.maps.event.addListener(this.map, 'click', function(obj) {
+					var loc = {latitude:obj.latLng.lat(),longitude:obj.latLng.lng()};
+	    			this.setLocation(loc);
+					this.fire('locationChanged',loc);
+	  			}.bind(this));
+				this.setLocation(options.location);
+			}.bind(this))
 		}
-		this.setLocation(options.location);
 		if (options.node) {
 			this.panel.position(options.node);
 		}
 		this.panel.show();
 	},
-	setLocation : function(loc) {
-		if (!loc && this.marker) {
-			this.marker.setMap(null);
-			this.map.setCenter(this.defaultCenter);
+	_whenReady : function(func) {
+		if (this.backendLoaded) {
+			func();
 			return;
 		}
-		loc = this.buildLatLng(loc);
-		if (!this.marker) {
-		    this.marker = new google.maps.Marker({
-		        position: loc, 
-		        map: this.map
-		    });
-		} else {
-    		this.marker.setPosition(loc);
-			this.marker.setMap(this.map);
-		}
-		this.map.setCenter(loc);
+		this.defered.push(func);
+		if (this.loadingBackend) {return};
+		this.loadingBackend = true;
+		window.huiLocationPickerReady = function() {
+			this.loadingBackend = false;
+			this.backendLoaded = true;
+			hui.log('Google maps loaded!')
+			for (var i=0; i < this.defered.length; i++) {
+				this.defered[i]();
+			};
+			window.huiLocationPickerReady = null;
+		}.bind(this);
+		hui.log('Loading google maps...')
+		hui.require('http://maps.google.com/maps/api/js?sensor=false&callback=huiLocationPickerReady');
 	},
-	/** @private */
-	buildLatLng : function(loc) {
+	setLocation : function(loc) {
+		this._whenReady(function() {
+			hui.log('Setting location...')
+			if (!loc && this.marker) {
+				this.marker.setMap(null);
+				this.map.setCenter(this.defaultCenter);
+				return;
+			}
+			loc = this._buildLatLng(loc);
+			if (!this.marker) {
+			    this.marker = new google.maps.Marker({
+			        position: loc, 
+			        map: this.map
+			    });
+			} else {
+	    		this.marker.setPosition(loc);
+				this.marker.setMap(this.map);
+			}
+			this.map.setCenter(loc);
+		}.bind(this))
+	},
+	_buildLatLng : function(loc) {
 		if (!loc) {
 			loc = {latitude:57.0465, longitude:9.9185};
 		}

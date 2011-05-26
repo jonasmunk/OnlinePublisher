@@ -16,7 +16,12 @@ if ($_SESSION['core.debug.simulateLatency']) {
 
 // If not logged in
 if (!InternalSession::isLoggedIn()) {
-	if (isset($_GET['page'])) {
+	require_once($basePath."Editor/Classes/Request.php");
+	require_once($basePath."Editor/Classes/Response.php");
+	if (Request::getHeader('Ajax')) {
+		Response::forbidden();
+	}
+	else if (isset($_GET['page'])) {
 		header("Location: ".$baseUrl."Editor/Authentication.php?notloggedin=true&page=".$_GET['page']); 
 	}
 	else {

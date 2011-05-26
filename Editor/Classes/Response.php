@@ -30,6 +30,10 @@ class Response {
 		Response::sendStatus(404,'Not Found',$text);
 	}
 	
+	function forbidden($text=null) {
+		Response::sendStatus(403,'Forbidden',$text);
+	}
+	
 	function sendStatus($number,$key,$text=null) {
 		header('HTTP/1.1 '.$number.' '.$key);
 		if ($text) {

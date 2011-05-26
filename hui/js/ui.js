@@ -79,8 +79,11 @@ hui.ui._resize = function() {
 }
 
 hui.ui.confirmOverlay = function(options) {
-	var node = options.element || options.widget.getElement(),
+	var node = options.element,
 		overlay;
+	if (options.widget) {
+		node = options.widget.getElement();
+	}
 	if (hui.ui.confirmOverlays[node]) {
 		overlay = hui.ui.confirmOverlays[node];
 		overlay.clear();
@@ -732,6 +735,20 @@ hui.ui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
+hui.ui.handleForbidden = function(widget) {
+	hui.log('General access denied received');
+	var result = hui.ui.callSuperDelegates(widget || this,'accessDenied');
+	hui.ui.confirmOverlay({
+		element : document.body,
+		text : 'Access denied',
+		okText : 'Reload page',
+		cancelText : 'Continue',
+		onOk : function() {
+			document.location.reload();
+		}
+	});
+}
+
 hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
 	if (options.json) {
@@ -790,6 +807,13 @@ hui.ui.request = function(options) {
 		hui.log(t);
 		hui.log(e);
 	};
+	options.onForbidden = function(t) {
+		if (options.message && options.message.start) {
+			hui.ui.hideMessage();
+		}
+		options.onFailure(t);
+		hui.ui.handleForbidden();
+	}
 	if (options.message && options.message.start) {
 		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
 	}

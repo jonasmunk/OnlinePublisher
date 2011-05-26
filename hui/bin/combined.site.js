@@ -764,13 +764,15 @@ hui.onReady = function(delegate) {
 // Ajax //
 
 hui.request = function(options) {
-	options = hui.override({method:'POST',async:true},options);
+	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
 	var transport = hui.request.createTransport();
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
 				if (transport.status == 200 && options.onSuccess) {
 					options.onSuccess(transport);
+				} else if (transport.status == 403 && options.onForbidden) {
+					options.onForbidden(transport);
 				} else if (options.onFailure) {
 					options.onFailure(transport);
 				}
@@ -789,6 +791,11 @@ hui.request = function(options) {
     if (method=='POST' && options.parameters) {
 		body = hui.request.buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+	}
+	if (options.headers) {
+		for (name in options.headers) {
+			transport.setRequestHeader(name, options.headers[name]);
+		}
 	}
 	transport.send(body);
 }
@@ -2281,8 +2288,11 @@ hui.ui._resize = function() {
 }
 
 hui.ui.confirmOverlay = function(options) {
-	var node = options.element || options.widget.getElement(),
+	var node = options.element,
 		overlay;
+	if (options.widget) {
+		node = options.widget.getElement();
+	}
 	if (hui.ui.confirmOverlays[node]) {
 		overlay = hui.ui.confirmOverlays[node];
 		overlay.clear();
@@ -2934,6 +2944,20 @@ hui.ui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
+hui.ui.handleForbidden = function(widget) {
+	hui.log('General access denied received');
+	var result = hui.ui.callSuperDelegates(widget || this,'accessDenied');
+	hui.ui.confirmOverlay({
+		element : document.body,
+		text : 'Access denied',
+		okText : 'Reload page',
+		cancelText : 'Continue',
+		onOk : function() {
+			document.location.reload();
+		}
+	});
+}
+
 hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
 	if (options.json) {
@@ -2992,6 +3016,13 @@ hui.ui.request = function(options) {
 		hui.log(t);
 		hui.log(e);
 	};
+	options.onForbidden = function(t) {
+		if (options.message && options.message.start) {
+			hui.ui.hideMessage();
+		}
+		options.onFailure(t);
+		hui.ui.handleForbidden();
+	}
 	if (options.message && options.message.start) {
 		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
 	}

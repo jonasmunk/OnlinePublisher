@@ -286,5 +286,34 @@ class Request {
 	function isLocalhost() {
 		return $_SERVER['SERVER_NAME']==='localhost';
 	}
+
+	function getHeader($name) {
+	    foreach ($_SERVER as $k => $v)
+	    {
+	        if (substr($k, 0, 5) == "HTTP_")
+	        {
+	            $k = str_replace('_', ' ', substr($k, 5));
+	            $k = str_replace(' ', '-', ucwords(strtolower($k)));
+				if ($name==$k) {
+					return $v;
+				}
+	        }
+	    }
+		return null;
+	}
+	
+	function getHeaders() {
+	    $headers = array();
+	    foreach ($_SERVER as $k => $v)
+	    {
+	        if (substr($k, 0, 5) == "HTTP_")
+	        {
+	            $k = str_replace('_', ' ', substr($k, 5));
+	            $k = str_replace(' ', '-', ucwords(strtolower($k)));
+	            $headers[$k] = $v;
+	        }
+	    }
+	    return $headers;
+	}  
 }
 ?>

@@ -61,13 +61,17 @@ hui.ui.Source.prototype = {
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
 			hui.request({
-				method:'post',
-				url:this.options.url,
-				parameters:prms,
+				method : 'post',
+				url : this.options.url,
+				parameters : prms,
 				onSuccess : function(t) {self.parse(t)},
 				onException : function(e,t) {
 					hui.log('Exception while loading source...')
 					hui.log(e)
+				},
+				onForbidden : function() {
+					hui.ui.handleForbidden(self);
+					hui.ui.callDelegates(self,'sourceFailed');
 				},
 				onFailure : function(t) {
 					hui.ui.callDelegates(self,'sourceFailed');

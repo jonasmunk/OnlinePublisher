@@ -321,7 +321,10 @@ hui.ui.List.prototype = {
 	$sourceIsNotBusy : function() {
 		this._setBusy(false);
 	},
-	
+	$sourceFailed : function() {
+		hui.log('The source failed!');
+		hui.addClass(this.element,'hui_list_error');
+	},
 	_setBusy : function(busy) {
 		this.busy = busy;
 		window.clearTimeout(this.busytimer);
@@ -332,6 +335,7 @@ hui.ui.List.prototype = {
 			},300);
 		} else {
 			hui.removeClass(this.element,'hui_list_busy');
+			hui.removeClass(this.element,'hui_list_error');
 		}
 	},
 	

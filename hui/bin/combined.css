@@ -2790,6 +2790,11 @@ div.hui_list_busy td
 	color: #999;
 }
 
+div.hui_list_error td
+{
+	color: red;
+}
+
 div.hui_list td a.hui_button
 {
 	margin: -2px 0;

@@ -764,13 +764,15 @@ hui.onReady = function(delegate) {
 // Ajax //
 
 hui.request = function(options) {
-	options = hui.override({method:'POST',async:true},options);
+	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
 	var transport = hui.request.createTransport();
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
 				if (transport.status == 200 && options.onSuccess) {
 					options.onSuccess(transport);
+				} else if (transport.status == 403 && options.onForbidden) {
+					options.onForbidden(transport);
 				} else if (options.onFailure) {
 					options.onFailure(transport);
 				}
@@ -789,6 +791,11 @@ hui.request = function(options) {
     if (method=='POST' && options.parameters) {
 		body = hui.request.buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+	}
+	if (options.headers) {
+		for (name in options.headers) {
+			transport.setRequestHeader(name, options.headers[name]);
+		}
 	}
 	transport.send(body);
 }
