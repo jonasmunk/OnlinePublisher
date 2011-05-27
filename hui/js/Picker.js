@@ -99,7 +99,7 @@ hui.ui.Picker.prototype = {
 		e = new hui.Event(e);
 		e.stop();
 		var self = this;
-		this.dragX = e.left();
+		this.dragX = e.getLeft();
 		this.dragScroll = this.container.scrollLeft;
 		hui.ui.Picker.mousemove = function(e) {self.drag(e);return false;}
 		hui.ui.Picker.mouseup = hui.ui.Picker.mousedown = function(e) {self.endDrag(e);return false;}
@@ -111,7 +111,7 @@ hui.ui.Picker.prototype = {
 		e = new hui.Event(e);
 		e.stop();
 		this.dragging = true;
-		this.container.scrollLeft=this.dragX-e.left()+this.dragScroll;
+		this.container.scrollLeft=this.dragX-e.getLeft()+this.dragScroll;
 	},
 	endDrag : function(e) {
 		this.dragging = false;

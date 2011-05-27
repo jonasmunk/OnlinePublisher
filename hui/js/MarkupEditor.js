@@ -251,7 +251,7 @@ hui.ui.MarkupEditor.webkit = {
 			range.surroundContents(node);
 			selection.selectAllChildren(node);
 		}
-		//document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.getSelectedText())+'</'+tag+'>');
+		//document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.selection.getText())+'</'+tag+'>');
 	},
 	_getInlineTag : function() {
 		var selection = window.getSelection();
@@ -345,7 +345,7 @@ hui.ui.MarkupEditor.MSIE = {
 		this.restoreSelection();
 	},
 	_wrapInTag : function(tag) {
-		document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.getSelectedText())+'</'+tag+'>');
+		document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.selection.getText())+'</'+tag+'>');
 	},
 	_insertHTML : function(html) {
 		document.execCommand('inserthtml',null,html);

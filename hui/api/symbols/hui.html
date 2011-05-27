@@ -199,6 +199,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.animation.html">hui.animation</a></li>
 	
+	<li><a href="../symbols/hui.animation.Loop.html">hui.animation.Loop</a></li>
+	
 	<li><a href="../symbols/hui.browser.html">hui.browser</a></li>
 	
 	<li><a href="../symbols/hui.Color.html">hui.Color</a></li>
@@ -209,9 +211,15 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ease.html">hui.ease</a></li>
 	
+	<li><a href="../symbols/hui.effect.html">hui.effect</a></li>
+	
+	<li><a href="../symbols/hui.Event.html">hui.Event</a></li>
+	
 	<li><a href="../symbols/hui.location.html">hui.location</a></li>
 	
 	<li><a href="../symbols/hui.Preloader.html">hui.Preloader</a></li>
+	
+	<li><a href="../symbols/hui.selection.html">hui.selection</a></li>
 	
 	<li><a href="../symbols/hui.string.html">hui.string</a></li>
 	
@@ -348,8 +356,6 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.Window.html">hui.ui.Window</a></li>
 	
 	<li><a href="../symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></li>
-	
-	<li><a href="../symbols/hui.URL.html">hui.URL</a></li>
 	
 </ul>
 <hr />
@@ -523,18 +529,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.Event">Event</a></b>(event)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.event">event</a></b>(event)
 								</div>
-								<div class="description"></div>
+								<div class="description">Creates an event wrapper for an event</div>
 							</td>
 						</tr>
 					
@@ -721,15 +718,6 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getSelectedText">getSelectedText</a></b>(doc)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getStyle">getStyle</a></b>(element, style)
 								</div>
 								<div class="description"></div>
@@ -768,7 +756,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getViewPortWidth">getViewPortWidth</a></b>()
 								</div>
-								<div class="description">Get the height of the viewport</div>
+								<div class="description">Get the width of the viewport</div>
 							</td>
 						</tr>
 					
@@ -867,7 +855,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.onReady">onReady</a></b>(delegate)
 								</div>
-								<div class="description"></div>
+								<div class="description">Execute a function when the DOM is ready</div>
 							</td>
 						</tr>
 					
@@ -939,7 +927,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.setOpacity">setOpacity</a></b>(element, opacity)
 								</div>
-								<div class="description"></div>
+								<div class="description">Cross browser way of setting opacity</div>
 							</td>
 						</tr>
 					
@@ -955,9 +943,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.stop">stop</a></b>(e)
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.stop">stop</a></b>(event)
 								</div>
-								<div class="description"></div>
+								<div class="description">Stops an event from propagating</div>
 							</td>
 						</tr>
 					
@@ -1543,42 +1531,6 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".Event"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>Event</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".event"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -1587,7 +1539,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Creates an event wrapper for an event
 						
 						
 					</div>
@@ -1602,13 +1554,20 @@ ul.inheritsList
 									<b>event</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The DOM event</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>hui.Event An event wrapper</dd>
+							
+							</dl>
 						
 						
 						
@@ -2003,6 +1962,13 @@ ul.inheritsList
 							</dl>
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Deprecated:</dt>
+							<dt>
+								TODO: Remove this
+							</dt>
+							</dl>
+						
 						
 						
 						
@@ -2327,42 +2293,6 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".getSelectedText"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getSelectedText</b>(doc)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>doc</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".getStyle"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -2469,6 +2399,13 @@ ul.inheritsList
 							</dl>
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Deprecated:</dt>
+							<dt>
+								TODO: Remove this
+							</dt>
+							</dl>
+						
 						
 						
 						
@@ -2510,7 +2447,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Get the height of the viewport
+						Get the width of the viewport
 						
 						
 					</div>
@@ -2931,7 +2868,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Execute a function when the DOM is ready
 						
 						
 					</div>
@@ -2946,7 +2883,7 @@ ul.inheritsList
 									<b>delegate</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The function to execute</dd>
 							
 							</dl>
 						
@@ -3249,7 +3186,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Cross browser way of setting opacity
 						
 						
 					</div>
@@ -3329,11 +3266,11 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.</span><b>stop</b>(e)
+					<span class="light">hui.</span><b>stop</b>(event)
 					
 					</div>
 					<div class="description">
-						
+						Stops an event from propagating
 						
 						
 					</div>
@@ -3345,10 +3282,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>e</b>
+									<b>event</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>A standard DOM event, NOT an hui.Event</dd>
 							
 							</dl>
 						
@@ -3613,7 +3550,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed May 25 2011 18:57:01 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri May 27 2011 22:04:35 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

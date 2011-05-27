@@ -14,8 +14,8 @@
  * </ul>
  * <p><strong>XML:</strong></p>
  * <code>
- * &lt;list name=&quot;list&quot; source=&quot;sourcesListSource&quot; state=&quot;list&quot;/&gt;
- * <br/>
+ * &lt;list name=&quot;myList&quot; source=&quot;mySource&quot; state=&quot;list&quot;/&gt;
+ * <br/><br/>
  * &lt;list name=&quot;list&quot; url=&quot;my_list_data.xml&quot; state=&quot;list&quot;/&gt;
  * </code>
  *
@@ -220,6 +220,7 @@ hui.ui.List.prototype = {
 
 	/** @private */
 	$listLoaded : function(doc) {
+		this._setError(false);
 		this.selected = [];
 		this.parseWindow(doc);
 		this.buildNavigation();
@@ -304,6 +305,7 @@ hui.ui.List.prototype = {
 	
 	/** @private */
 	$objectsLoaded : function(data) {
+		this._setError(false);
 		if (data==null) {
 			// NOOP
 		} else if (data.constructor == Array) {
@@ -323,7 +325,10 @@ hui.ui.List.prototype = {
 	},
 	$sourceFailed : function() {
 		hui.log('The source failed!');
-		hui.addClass(this.element,'hui_list_error');
+		this._setError(true);
+	},
+	_setError : function(error) {
+		hui.setClass(this.element,'hui_list_error',error);
 	},
 	_setBusy : function(busy) {
 		this.busy = busy;
@@ -335,7 +340,6 @@ hui.ui.List.prototype = {
 			},300);
 		} else {
 			hui.removeClass(this.element,'hui_list_busy');
-			hui.removeClass(this.element,'hui_list_error');
 		}
 	},
 	

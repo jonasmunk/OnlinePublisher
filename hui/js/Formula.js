@@ -97,7 +97,7 @@ hui.ui.Formula.prototype = {
 				g.add(w);
 			}
 			else if (hui.ui[item.type]) {
-				var w = hui.ui.Formula[item.type].create(item.options);
+				var w = hui.ui[item.type].create(item.options);
 				g.add(w);
 			}
 		});

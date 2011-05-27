@@ -18,7 +18,7 @@ hui.ui.startDrag = function(e,element,options) {
 	if (info.icon) {
 		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,1)+')';
 	}
-	hui.ui.startDragPos = {top:e.top(),left:e.left()};
+	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
 	proxy.innerHTML = info.title ? '<span>'+hui.escape(info.title)+'</span>' : '###';
 	hui.ui.dragging = true;
 	document.body.onselectstart = function () { return false; };
@@ -43,8 +43,8 @@ hui.ui.findDropTypes = function(drag) {
 
 hui.ui.dragListener = function(e) {
 	e = new hui.Event(e);
-	hui.ui.dragProxy.style.left = (e.left()+10)+'px';
-	hui.ui.dragProxy.style.top = e.top()+'px';
+	hui.ui.dragProxy.style.left = (e.getLeft()+10)+'px';
+	hui.ui.dragProxy.style.top = e.getTop()+'px';
 	hui.ui.dragProxy.style.display='block';
 	var target = hui.ui.findDropTarget(e.getElement());
 	if (target && hui.ui.dropTypes[target.dragDropInfo['kind']]) {

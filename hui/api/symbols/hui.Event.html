@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.URL</title>
+		<title>JsDoc Reference - hui.Event</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -199,6 +199,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.animation.html">hui.animation</a></li>
 	
+	<li><a href="../symbols/hui.animation.Loop.html">hui.animation.Loop</a></li>
+	
 	<li><a href="../symbols/hui.browser.html">hui.browser</a></li>
 	
 	<li><a href="../symbols/hui.Color.html">hui.Color</a></li>
@@ -209,9 +211,15 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ease.html">hui.ease</a></li>
 	
+	<li><a href="../symbols/hui.effect.html">hui.effect</a></li>
+	
+	<li><a href="../symbols/hui.Event.html">hui.Event</a></li>
+	
 	<li><a href="../symbols/hui.location.html">hui.location</a></li>
 	
 	<li><a href="../symbols/hui.Preloader.html">hui.Preloader</a></li>
+	
+	<li><a href="../symbols/hui.selection.html">hui.selection</a></li>
 	
 	<li><a href="../symbols/hui.string.html">hui.string</a></li>
 	
@@ -349,8 +357,6 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></li>
 	
-	<li><a href="../symbols/hui.URL.html">hui.URL</a></li>
-	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -360,7 +366,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hui.URL
+				Class hui.Event
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -377,7 +383,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.URL.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.Event.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -390,7 +396,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.URL.html#constructor">hui.URL</a></b>(url)
+								<b><a href="../symbols/hui.Event.html#constructor">hui.Event</a></b>(event)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -406,7 +412,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.URL.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.Event.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -419,18 +425,54 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.URL.html#addParameter">addParameter</a></b>(key, value)
+								<div class="fixedFont"><b><a href="../symbols/hui.Event.html#findByClass">findByClass</a></b>(cls)
 								</div>
-								<div class="description"></div>
+								<div class="description">Finds the nearest ancester with a certain class name</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.URL.html#toString">toString</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.Event.html#findByTag">findByTag</a></b>(tag)
 								</div>
-								<div class="description"></div>
+								<div class="description">Finds the nearest ancester with a certain tag name</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.Event.html#getElement">getElement</a></b>()
+								</div>
+								<div class="description">Get the node the event originates from</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.Event.html#getLeft">getLeft</a></b>()
+								</div>
+								<div class="description">Get the left coordinate</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.Event.html#getTop">getTop</a></b>()
+								</div>
+								<div class="description">Get the top coordinate</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.Event.html#stop">stop</a></b>()
+								</div>
+								<div class="description">Stops the event from propagating</div>
 							</td>
 						</tr>
 					
@@ -451,7 +493,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.URL</b>(url)
+						<b>hui.Event</b>(event)
 				</div>
 				
 				<div class="description">
@@ -467,10 +509,10 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								 <b>url</b>
+								 <b>event</b>
 								
 							</dt>
-								<dd></dd>
+								<dd>The DOM event</dd>
 						
 						</dl>
 					
@@ -493,15 +535,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="addParameter"> </a>
+					<a name="findByClass"> </a>
 					<div class="fixedFont">
 					
-					
-					<b>addParameter</b>(key, value)
+					<span class="light">{Element}</span>
+					<b>findByClass</b>(cls)
 					
 					</div>
 					<div class="description">
-						
+						Finds the nearest ancester with a certain class name
 						
 						
 					</div>
@@ -513,16 +555,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>key</b>
+									<b>cls</b>
 									
 								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>value</b>
-									
-								</dt>
-								<dd></dd>
+								<dd>The css class name</dd>
 							
 							</dl>
 						
@@ -530,20 +566,166 @@ ul.inheritsList
 						
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Element}</span> The found element or null</dd>
+							
+							</dl>
+						
 						
 						
 
 					<hr />
 				
-					<a name="toString"> </a>
+					<a name="findByTag"> </a>
 					<div class="fixedFont">
 					
-					
-					<b>toString</b>()
+					<span class="light">{Element}</span>
+					<b>findByTag</b>(tag)
 					
 					</div>
 					<div class="description">
+						Finds the nearest ancester with a certain tag name
 						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>tag</b>
+									
+								</dt>
+								<dd>The tag name</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Element}</span> The found element or null</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getElement"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{ELement}</span>
+					<b>getElement</b>()
+					
+					</div>
+					<div class="description">
+						Get the node the event originates from
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{ELement}</span> The originating element</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getLeft"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>getLeft</b>()
+					
+					</div>
+					<div class="description">
+						Get the left coordinate
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The left coordinate</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getTop"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getTop</b>()
+					
+					</div>
+					<div class="description">
+						Get the top coordinate
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The top coordinate</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="stop"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>stop</b>()
+					
+					</div>
+					<div class="description">
+						Stops the event from propagating
 						
 						
 					</div>
@@ -572,7 +754,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed May 25 2011 18:57:05 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri May 27 2011 22:04:36 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

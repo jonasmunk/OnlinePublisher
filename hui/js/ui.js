@@ -21,19 +21,15 @@ hui.ui = {
 	toolTips : {},
 	confirmOverlays : {},
 	
-	delayedUntilReady : []
-}
-
-/** Get a widget by name */
-hui.ui.get = function(nameOrWidget) {
-	if (nameOrWidget) {
-		if (nameOrWidget.element) {
-			return nameOrWidget;
-		}
-		return hui.ui.objects[nameOrWidget];
+	delayedUntilReady : [],
+	
+	texts : {
+		request_error : {en:'An error occurred on the server',da:'Der skete en fejl på serveren'},
+		'continue' : {en:'Continue',da:'Fortsæt'},
+		reload_page : {en:'Reload page',da:'Indæs siden igen'},
+		access_denied : {en:'Access denied, maybe you are nolonger logged in',da:'Adgang nægtet, du er måske ikke længere logget ind'}
 	}
-	return null;
-};
+}
 
 hui.onReady(function() {
 	if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
@@ -54,6 +50,26 @@ hui.onReady(function() {
 	};
 });
 
+/** Get a widget by name */
+hui.ui.get = function(nameOrWidget) {
+	if (nameOrWidget) {
+		if (nameOrWidget.element) {
+			return nameOrWidget;
+		}
+		return hui.ui.objects[nameOrWidget];
+	}
+	return null;
+};
+
+hui.ui.getText = function(key) {
+	var x = this.texts[key];
+	if (!x) {return key}
+	if (x[this.language]) {
+		return x[this.language];
+	} else {
+		return x['en'];
+	}
+}
 
 /**
  * Called when the DOM is ready and hui.ui is ready
@@ -127,7 +143,7 @@ hui.ui.destroyDescendants = function(element) {
 }
 
 /** Gets all ancestors of a widget
-	@param {Widget} A widget
+	@param {Widget} widget A widget
 	@returns {Array} An array of all ancestors
 */
 hui.ui.getAncestors = function(widget) {
@@ -430,7 +446,7 @@ hui.ui.isWithin = function(e,element) {
 	e = new hui.Event(e);
 	var offset = {left:hui.getLeft(element),top:hui.getTop(element)};
 	var dims = {width:element.clientWidth,height:element.clientHeight};
-	return e.left()>offset.left && e.left()<offset.left+dims.width && e.top()>offset.top && e.top()<offset.top+dims.height;
+	return e.getLeft()>offset.left && e.getLeft()<offset.left+dims.width && e.getTop()>offset.top && e.getTop()<offset.top+dims.height;
 };
 
 hui.ui.getIconUrl = function(icon,size) {
@@ -735,18 +751,36 @@ hui.ui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
+hui.ui.handleRequestError = function(widget) {
+	hui.log('General request error received');
+	var result = hui.ui.callSuperDelegates(widget || this,'requestError');
+	if (!result) {
+		hui.ui.confirmOverlay({
+			element : document.body,
+			text : hui.ui.getText('request_error'),
+			okText : hui.ui.getText('reload_page'),
+			cancelText : hui.ui.getText('continue'),
+			onOk : function() {
+				document.location.reload();
+			}
+		});
+	}
+}
+
 hui.ui.handleForbidden = function(widget) {
 	hui.log('General access denied received');
 	var result = hui.ui.callSuperDelegates(widget || this,'accessDenied');
-	hui.ui.confirmOverlay({
-		element : document.body,
-		text : 'Access denied',
-		okText : 'Reload page',
-		cancelText : 'Continue',
-		onOk : function() {
-			document.location.reload();
-		}
-	});
+	if (!result) {
+		hui.ui.confirmOverlay({
+			element : document.body,
+			text : hui.ui.getText('access_denied'),
+			okText : hui.ui.getText('reload_page'),
+			cancelText : hui.ui.getText('continue'),
+			onOk : function() {
+				document.location.reload();
+			}
+		});
+	}
 }
 
 hui.ui.request = function(options) {
@@ -801,6 +835,11 @@ hui.ui.request = function(options) {
 			hui.ui.callDelegates(t,'failure$'+onFailure)
 		} else if (typeof(onFailure)=='function') {
 			onFailure(t);
+		} else {
+			if (options.message && options.message.start) {
+				hui.ui.hideMessage();
+			}
+			hui.ui.handleRequestError();
 		}
 	}
 	options.onException = function(t,e) {

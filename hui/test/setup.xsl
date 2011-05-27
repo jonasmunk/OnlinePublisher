@@ -8,6 +8,7 @@
 <xsl:variable name="dev">false</xsl:variable>
 <xsl:variable name="version">1</xsl:variable>
 <xsl:variable name="profile">false</xsl:variable>
+<xsl:variable name="language">en</xsl:variable>
 
 <xsl:template match="/"><xsl:apply-templates/></xsl:template>
 </xsl:stylesheet>

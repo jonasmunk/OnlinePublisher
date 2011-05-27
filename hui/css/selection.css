@@ -112,6 +112,15 @@ div.hui_selection_inline div.hui_selected span.hui_selection_label
 	-webkit-border-radius: 4px;
 }
 
+div.hui_selection_busy span.hui_selection_label
+{
+	color: #999;
+}
+
+div.hui_selection_busy div.hui_selected span.hui_selection_label
+{
+	color: #fff;
+}
 
 /********************** Dark ************************/
 

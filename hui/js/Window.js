@@ -130,7 +130,7 @@ hui.ui.Window.prototype = {
 		var event = new hui.Event(e);
 		this.element.style.zIndex=hui.ui.nextPanelIndex();
 		var pos = { top : hui.getTop(this.element), left : hui.getLeft(this.element) };
-		this.dragState = {left:event.left()-pos.left,top:event.top()-pos.top};
+		this.dragState = {left:event.getLeft()-pos.left,top:event.getTop()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();
 		var self = this;
@@ -156,8 +156,8 @@ hui.ui.Window.prototype = {
 	drag : function(e) {
 		var event = new hui.Event(e);
 		this.element.style.right = 'auto';
-		var top = (event.top()-this.dragState.top);
-		var left = (event.left()-this.dragState.left);
+		var top = (event.getTop()-this.dragState.top);
+		var left = (event.getLeft()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
 		//this.calc(top,left);

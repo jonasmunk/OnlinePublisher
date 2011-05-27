@@ -150,8 +150,8 @@ hui.ui.ImageViewer.prototype = {
 			return;
 		}
 		var offset = {left:hui.getLeft(this.zoomer),top:hui.getTop(this.zoomer)};
-		var x = (e.left()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
-		var y = (e.top()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
+		var x = (e.getLeft()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
+		var y = (e.getTop()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;
 		this.zoomer.scrollTop = y;
 	},

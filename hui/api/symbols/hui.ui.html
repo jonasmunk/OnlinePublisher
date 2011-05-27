@@ -199,6 +199,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.animation.html">hui.animation</a></li>
 	
+	<li><a href="../symbols/hui.animation.Loop.html">hui.animation.Loop</a></li>
+	
 	<li><a href="../symbols/hui.browser.html">hui.browser</a></li>
 	
 	<li><a href="../symbols/hui.Color.html">hui.Color</a></li>
@@ -209,9 +211,15 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ease.html">hui.ease</a></li>
 	
+	<li><a href="../symbols/hui.effect.html">hui.effect</a></li>
+	
+	<li><a href="../symbols/hui.Event.html">hui.Event</a></li>
+	
 	<li><a href="../symbols/hui.location.html">hui.location</a></li>
 	
 	<li><a href="../symbols/hui.Preloader.html">hui.Preloader</a></li>
+	
+	<li><a href="../symbols/hui.selection.html">hui.selection</a></li>
 	
 	<li><a href="../symbols/hui.string.html">hui.string</a></li>
 	
@@ -348,8 +356,6 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.Window.html">hui.ui.Window</a></li>
 	
 	<li><a href="../symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></li>
-	
-	<li><a href="../symbols/hui.URL.html">hui.URL</a></li>
 	
 </ul>
 <hr />
@@ -685,7 +691,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.getAncestors">getAncestors</a></b>(A)
+								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.getAncestors">getAncestors</a></b>(widget)
 								</div>
 								<div class="description">Gets all ancestors of a widget</div>
 							</td>
@@ -730,7 +736,34 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.getText">getText</a></b>(key)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.getTextAreaHeight">getTextAreaHeight</a></b>(input)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.handleForbidden">handleForbidden</a></b>(widget)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.handleRequestError">handleRequestError</a></b>(widget)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -2171,7 +2204,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					<span class="light">{Array}</span>
-					<span class="light">hui.ui.</span><b>getAncestors</b>(A)
+					<span class="light">hui.ui.</span><b>getAncestors</b>(widget)
 					
 					</div>
 					<div class="description">
@@ -2187,10 +2220,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Widget}</span> <b>A</b>
+									<span class="light fixedFont">{Widget}</span> <b>widget</b>
 									
 								</dt>
-								<dd>widget</dd>
+								<dd>A widget</dd>
 							
 							</dl>
 						
@@ -2349,6 +2382,42 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name=".getText"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.</span><b>getText</b>(key)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>key</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".getTextAreaHeight"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -2370,6 +2439,78 @@ ul.inheritsList
 							
 								<dt>
 									<b>input</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".handleForbidden"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.</span><b>handleForbidden</b>(widget)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>widget</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".handleRequestError"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.</span><b>handleRequestError</b>(widget)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>widget</b>
 									
 								</dt>
 								<dd></dd>
@@ -3236,7 +3377,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed May 25 2011 18:57:02 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri May 27 2011 22:04:36 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

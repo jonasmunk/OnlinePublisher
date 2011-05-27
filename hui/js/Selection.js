@@ -8,6 +8,7 @@ hui.ui.Selection = function(options) {
 	this.name = options.name;
 	this.items = [];
 	this.subItems = [];
+	this.busy = 0;
 	this.selection=null;
 	if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
@@ -73,6 +74,21 @@ hui.ui.Selection.prototype = {
 		};
 		return null;
 	},
+	/** Changes selection to the first item */
+	selectFirst : function() {
+		var i;
+		for (i=0; i < this.items.length; i++) {
+			this.changeSelection(this.items[i]);
+			return;
+		};
+		for (i=0; i < this.subItems.length; i++) {
+			var items = this.subItems[i].items;
+			for (var j=0; j < items.length; j++) {
+				this.changeSelection(this.items[j]);
+				return;
+			};
+		};
+	},
 	/** Set the value to null */
 	reset : function() {
 		this.setValue(null);
@@ -123,7 +139,8 @@ hui.ui.Selection.prototype = {
 		hui.listen(node,'click',function() {
 			this.itemWasClicked(item);
 		}.bind(this));
-		hui.listen(node,'dblclick',function() {
+		hui.listen(node,'dblclick',function(e) {
+			hui.stop(e);
 			this.itemWasDoubleClicked(item);
 		}.bind(this));
 		node.dragDropInfo = item;
@@ -164,11 +181,27 @@ hui.ui.Selection.prototype = {
 	
 	/** @private */
 	itemWasClicked : function(item) {
+		if (this.busy>0) {return}
 		this.changeSelection(item);
 	},
 	/** @private */
 	itemWasDoubleClicked : function(item) {
+		if (this.busy>0) {return}
 		this.fire('selectionWasOpened',item);
+	},
+	_setBusy : function(busy) {
+		this.busy+= busy ? 1 : -1;
+		hui.setClass(this.element,'hui_selection_busy',this.busy>0);
+		hui.log('Busy count='+this.busy)
+	},
+	_checkValue : function() {
+		var item = this.getSelectionWithValue(this.selection.value);
+		if (!item) {
+			this.selectFirst();
+		} else {
+			hui.log('Selection is...')
+			hui.log(item)
+		}
 	}
 }
 
@@ -214,6 +247,14 @@ hui.ui.Selection.Items.prototype = {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
 		}
 		this.parent.updateUI();
+		this.parent._checkValue();
+	},
+	$sourceIsBusy : function() {
+		this.parent._setBusy(true);
+	},
+	/** @private */
+	$sourceIsNotBusy : function() {
+		this.parent._setBusy(false);
 	},
 	/** @private */
 	buildLevel : function(parent,items,inc) {
@@ -251,6 +292,7 @@ hui.ui.Selection.Items.prototype = {
 				this.parent.itemWasClicked(item);
 			}.bind(this));
 			hui.listen(node,'dblclick',function(e) {
+				hui.stop(e);
 				this.parent.itemWasDoubleClicked(item);
 			}.bind(this));
 			level.appendChild(node);

@@ -633,10 +633,17 @@ hui.unListen = function(el,type,listener,useCapture) {
 	}
 }
 
+/** Creates an event wrapper for an event
+ * @param event The DOM event
+ * @returns {hui.Event} An event wrapper
+ */
 hui.event = function(event) {
 	return new hui.Event(event);
 }
 
+/** @constructor
+ * @param event The DOM event
+ */
 hui.Event = function(event) {
 	this.event = event = event || window.event;
 	this.element = event.target ? event.target : event.srcElement;
@@ -652,7 +659,12 @@ hui.Event = function(event) {
 }
 
 hui.Event.prototype = {
-	left : function() {
+	/**
+	 * Get the left coordinate
+	 * @returns {Number} The left coordinate
+	 * @type {Number}
+	 */
+	getLeft : function() {
 	    var left = 0;
 		if (this.event) {
 		    if (this.event.pageX) {
@@ -663,10 +675,11 @@ hui.Event.prototype = {
 		}
 	    return left;
 	},
-	getLeft : function() {
-		return this.left();
-	},
-	top : function() {
+	/**
+	 * Get the top coordinate
+	 * @returns {Number} The top coordinate
+	 */
+	getTop : function() {
 	    var top = 0;
 		if (this.event) {
 		    if (this.event.pageY) {
@@ -677,12 +690,16 @@ hui.Event.prototype = {
 		}
 	    return top;
 	},
-	getTop : function() {
-		return this.top();
-	},
+	/** Get the node the event originates from
+	 * @returns {ELement} The originating element
+	 */
 	getElement : function() {
 		return this.element;
 	},
+	/** Finds the nearest ancester with a certain class name
+	 * @param cls The css class name
+	 * @returns {Element} The found element or null
+	 */
 	findByClass : function(cls) {
 		var parent = this.element;
 		while (parent) {
@@ -693,6 +710,10 @@ hui.Event.prototype = {
 		}
 		return null;
 	},
+	/** Finds the nearest ancester with a certain tag name
+	 * @param tag The tag name
+	 * @returns {Element} The found element or null
+	 */
 	findByTag : function(tag) {
 		var parent = this.element;
 		while (parent) {
@@ -703,20 +724,27 @@ hui.Event.prototype = {
 		}
 		return null;
 	},
-
+	/** Stops the event from propagating */
 	stop : function() {
 		hui.stop(this.event);
 	}
 }
 
-hui.stop = function(e) {
-	if (!e) {e = window.event};
-	if (e.stopPropagation) {e.stopPropagation()};
-	if (e.preventDefault) {e.preventDefault()};
-	e.cancelBubble = true;
-    e.stopped = true;
+/** Stops an event from propagating
+ * @param event A standard DOM event, NOT an hui.Event
+*/
+hui.stop = function(event) {
+	if (!event) {event = window.event};
+	if (event.stopPropagation) {event.stopPropagation()};
+	if (event.preventDefault) {event.preventDefault()};
+	event.cancelBubble = true;
+    event.stopped = true;
 }
 
+/**
+ * Execute a function when the DOM is ready
+ * @param delegate The function to execute
+ */
 hui.onReady = function(delegate) {
 	if(window.addEventListener) {
 		window.addEventListener('DOMContentLoaded',delegate,false);
@@ -789,7 +817,7 @@ hui.request = function(options) {
 	transport.open(method, options.url, options.async);
 	var body = '';
     if (method=='POST' && options.parameters) {
-		body = hui.request.buildPostBody(options.parameters);
+		body = hui.request._buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
 	}
 	if (options.headers) {
@@ -798,13 +826,14 @@ hui.request = function(options) {
 		}
 	}
 	transport.send(body);
+	return transport;
 }
 
 hui.request.isXMLResponse = function(t) {
 	return t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror';
 }
 
-hui.request.buildPostBody = function(parameters) {
+hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
 	for (param in parameters) {
@@ -817,6 +846,10 @@ hui.request.buildPostBody = function(parameters) {
 	return output;
 }
 
+/**
+ * Creates a new XMLHttpRequest (ActiveX)
+ * @returns The transport
+ */
 hui.request.createTransport = function() {
 	try {
 		if (window.XMLHttpRequest) {
@@ -832,7 +865,7 @@ hui.request.createTransport = function() {
 			return req;
 		}
 		else if (window.ActiveXObject) {
-			return hui.request.getActiveX();
+			return hui.request._getActiveX();
 		} else {
 			// Could not create transport
 			this.delegate.onError(this);
@@ -845,7 +878,7 @@ hui.request.createTransport = function() {
 	}
 }
 
-hui.request.getActiveX = function() {
+hui.request._getActiveX = function() {
 	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
 	var o;
 	for (var i = 0; i < prefixes.length; i++) {
@@ -882,7 +915,8 @@ hui.getStyle = function(element, style) {
 	return value == 'auto' ? '' : value;
 }
 
-// TODO: Remove this
+/** @deprecated
+ * TODO: Remove this */
 hui.getTopPad = function(element) {
 	var all,top;
 	all = parseInt(hui.getStyle(element,'padding'),10);
@@ -892,7 +926,8 @@ hui.getTopPad = function(element) {
 	return 0;
 }
 
-// TODO: Remove this
+/** @deprecated
+ * TODO: Remove this */
 hui.getBottomPad = function(element) {
 	var all,bottom;
 	all = parseInt(hui.getStyle(element,'padding'),10);
@@ -902,6 +937,7 @@ hui.getBottomPad = function(element) {
 	return 0;
 }
 
+/** Cross browser way of setting opacity */
 hui.setOpacity = function(element,opacity) {
 	if (!hui.browser.opacity) {
 		if (opacity==1) {
@@ -956,16 +992,7 @@ hui.getFrameWindow = function(frame) {
 
 /////////////////// Selection /////////////////////
 
-hui.getSelectedText = function(doc) {
-	doc = doc || document;
-	if (doc.getSelection) {
-		return doc.getSelection()+'';
-	} else if (doc.selection) {
-		return doc.selection.createRange().text;
-	}
-	return '';
-}
-
+/** @namespace */
 hui.selection = {
 	clear : function() { 
 		var sel ; 
@@ -991,6 +1018,7 @@ hui.selection = {
 
 /////////////////// Effects //////////////////////
 
+/** @namespace */
 hui.effect = {
 	makeFlippable : function(options) {
 		if (hui.browser.webkit) {
@@ -1053,7 +1081,7 @@ hui.getViewPortHeight = function() {
 }
 
 /**
- * Get the height of the viewport
+ * Get the width of the viewport
  */
 hui.getViewPortWidth = function() {
 	if (window.innerWidth) {
@@ -1213,22 +1241,7 @@ hui.cookie = {
 	}
 }
 
-///////////////////////// URL/Location /////////////////////
-
-/** @constructor */
-hui.URL = function(url) {
-	this.url = url || '';
-}
-
-hui.URL.prototype = {
-	addParameter : function(key,value) {
-		this.url+=this.url.indexOf('?')!=-1 ? '&' : '?';
-		this.url+=key+'='+(hui.isDefined(value) ? value : '');
-	},
-	toString : function() {
-		return this.url;
-	}
-}
+///////////////////////// Location /////////////////////
 
 /** @namespace */
 hui.location = {
@@ -1580,6 +1593,7 @@ hui.animation.Item.prototype.getWork = function(property) {
 
 /////////////////////////////// Loop ///////////////////////////////////
 
+/** @constructor */
 hui.animation.Loop = function(recipe) {
 	this.recipe = recipe;
 	this.position = -1;

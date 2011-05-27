@@ -48,6 +48,9 @@ hui.ui.Source.prototype = {
 		};
 		if (this.busy) {
 			this.pendingRefresh = true;
+			if (this.transport) {
+				this.transport.abort();
+			}
 			return;
 		}
 		this.pendingRefresh = false;
@@ -60,21 +63,25 @@ hui.ui.Source.prototype = {
 			};
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
-			hui.request({
+			this.transport = hui.request({
 				method : 'post',
 				url : this.options.url,
 				parameters : prms,
-				onSuccess : function(t) {self.parse(t)},
+				onSuccess : this.parse.bind(this),
 				onException : function(e,t) {
 					hui.log('Exception while loading source...')
 					hui.log(e)
+					self.end();
 				},
 				onForbidden : function() {
 					hui.ui.handleForbidden(self);
 					hui.ui.callDelegates(self,'sourceFailed');
+					self.end();
 				},
 				onFailure : function(t) {
+					hui.log('sourceFailed');
 					hui.ui.callDelegates(self,'sourceFailed');
+					self.end();
 				}
 			});
 		} else if (this.options.dwr) {

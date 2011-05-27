@@ -120,17 +120,20 @@
 	<script src="{@source}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:for-each>
 <script type="text/javascript">
-<xsl:if test="@state">
-hui.ui.state = '<xsl:value-of select="@state"/>';
-</xsl:if>
-hui.ui.context = '<xsl:value-of select="$context"/>';
-<xsl:for-each select="gui:controller[@source]">
-	<xsl:if test="@name">
-	if (window['<xsl:value-of select="@name"/>']!==undefined) {
-		hui.ui.listen(<xsl:value-of select="@name"/>);
-	}
+	hui.ui.context = '<xsl:value-of select="$context"/>';
+	<xsl:if test="@state">
+		hui.ui.state = '<xsl:value-of select="@state"/>';
 	</xsl:if>
-</xsl:for-each>
+	<xsl:if test="$language">
+		hui.ui.language = '<xsl:value-of select="$language"/>';
+	</xsl:if>
+	<xsl:for-each select="gui:controller[@source]">
+		<xsl:if test="@name">
+		if (window['<xsl:value-of select="@name"/>']!==undefined) {
+			hui.ui.listen(<xsl:value-of select="@name"/>);
+		}
+		</xsl:if>
+	</xsl:for-each>
 </script>
 <xsl:call-template name="dwr-setup"/>
 </head>

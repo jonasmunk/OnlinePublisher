@@ -633,10 +633,17 @@ hui.unListen = function(el,type,listener,useCapture) {
 	}
 }
 
+/** Creates an event wrapper for an event
+ * @param event The DOM event
+ * @returns {hui.Event} An event wrapper
+ */
 hui.event = function(event) {
 	return new hui.Event(event);
 }
 
+/** @constructor
+ * @param event The DOM event
+ */
 hui.Event = function(event) {
 	this.event = event = event || window.event;
 	this.element = event.target ? event.target : event.srcElement;
@@ -652,7 +659,12 @@ hui.Event = function(event) {
 }
 
 hui.Event.prototype = {
-	left : function() {
+	/**
+	 * Get the left coordinate
+	 * @returns {Number} The left coordinate
+	 * @type {Number}
+	 */
+	getLeft : function() {
 	    var left = 0;
 		if (this.event) {
 		    if (this.event.pageX) {
@@ -663,10 +675,11 @@ hui.Event.prototype = {
 		}
 	    return left;
 	},
-	getLeft : function() {
-		return this.left();
-	},
-	top : function() {
+	/**
+	 * Get the top coordinate
+	 * @returns {Number} The top coordinate
+	 */
+	getTop : function() {
 	    var top = 0;
 		if (this.event) {
 		    if (this.event.pageY) {
@@ -677,12 +690,16 @@ hui.Event.prototype = {
 		}
 	    return top;
 	},
-	getTop : function() {
-		return this.top();
-	},
+	/** Get the node the event originates from
+	 * @returns {ELement} The originating element
+	 */
 	getElement : function() {
 		return this.element;
 	},
+	/** Finds the nearest ancester with a certain class name
+	 * @param cls The css class name
+	 * @returns {Element} The found element or null
+	 */
 	findByClass : function(cls) {
 		var parent = this.element;
 		while (parent) {
@@ -693,6 +710,10 @@ hui.Event.prototype = {
 		}
 		return null;
 	},
+	/** Finds the nearest ancester with a certain tag name
+	 * @param tag The tag name
+	 * @returns {Element} The found element or null
+	 */
 	findByTag : function(tag) {
 		var parent = this.element;
 		while (parent) {
@@ -703,20 +724,27 @@ hui.Event.prototype = {
 		}
 		return null;
 	},
-
+	/** Stops the event from propagating */
 	stop : function() {
 		hui.stop(this.event);
 	}
 }
 
-hui.stop = function(e) {
-	if (!e) {e = window.event};
-	if (e.stopPropagation) {e.stopPropagation()};
-	if (e.preventDefault) {e.preventDefault()};
-	e.cancelBubble = true;
-    e.stopped = true;
+/** Stops an event from propagating
+ * @param event A standard DOM event, NOT an hui.Event
+*/
+hui.stop = function(event) {
+	if (!event) {event = window.event};
+	if (event.stopPropagation) {event.stopPropagation()};
+	if (event.preventDefault) {event.preventDefault()};
+	event.cancelBubble = true;
+    event.stopped = true;
 }
 
+/**
+ * Execute a function when the DOM is ready
+ * @param delegate The function to execute
+ */
 hui.onReady = function(delegate) {
 	if(window.addEventListener) {
 		window.addEventListener('DOMContentLoaded',delegate,false);
@@ -789,7 +817,7 @@ hui.request = function(options) {
 	transport.open(method, options.url, options.async);
 	var body = '';
     if (method=='POST' && options.parameters) {
-		body = hui.request.buildPostBody(options.parameters);
+		body = hui.request._buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
 	}
 	if (options.headers) {
@@ -798,13 +826,14 @@ hui.request = function(options) {
 		}
 	}
 	transport.send(body);
+	return transport;
 }
 
 hui.request.isXMLResponse = function(t) {
 	return t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror';
 }
 
-hui.request.buildPostBody = function(parameters) {
+hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
 	for (param in parameters) {
@@ -817,6 +846,10 @@ hui.request.buildPostBody = function(parameters) {
 	return output;
 }
 
+/**
+ * Creates a new XMLHttpRequest (ActiveX)
+ * @returns The transport
+ */
 hui.request.createTransport = function() {
 	try {
 		if (window.XMLHttpRequest) {
@@ -832,7 +865,7 @@ hui.request.createTransport = function() {
 			return req;
 		}
 		else if (window.ActiveXObject) {
-			return hui.request.getActiveX();
+			return hui.request._getActiveX();
 		} else {
 			// Could not create transport
 			this.delegate.onError(this);
@@ -845,7 +878,7 @@ hui.request.createTransport = function() {
 	}
 }
 
-hui.request.getActiveX = function() {
+hui.request._getActiveX = function() {
 	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
 	var o;
 	for (var i = 0; i < prefixes.length; i++) {
@@ -882,7 +915,8 @@ hui.getStyle = function(element, style) {
 	return value == 'auto' ? '' : value;
 }
 
-// TODO: Remove this
+/** @deprecated
+ * TODO: Remove this */
 hui.getTopPad = function(element) {
 	var all,top;
 	all = parseInt(hui.getStyle(element,'padding'),10);
@@ -892,7 +926,8 @@ hui.getTopPad = function(element) {
 	return 0;
 }
 
-// TODO: Remove this
+/** @deprecated
+ * TODO: Remove this */
 hui.getBottomPad = function(element) {
 	var all,bottom;
 	all = parseInt(hui.getStyle(element,'padding'),10);
@@ -902,6 +937,7 @@ hui.getBottomPad = function(element) {
 	return 0;
 }
 
+/** Cross browser way of setting opacity */
 hui.setOpacity = function(element,opacity) {
 	if (!hui.browser.opacity) {
 		if (opacity==1) {
@@ -956,16 +992,7 @@ hui.getFrameWindow = function(frame) {
 
 /////////////////// Selection /////////////////////
 
-hui.getSelectedText = function(doc) {
-	doc = doc || document;
-	if (doc.getSelection) {
-		return doc.getSelection()+'';
-	} else if (doc.selection) {
-		return doc.selection.createRange().text;
-	}
-	return '';
-}
-
+/** @namespace */
 hui.selection = {
 	clear : function() { 
 		var sel ; 
@@ -991,6 +1018,7 @@ hui.selection = {
 
 /////////////////// Effects //////////////////////
 
+/** @namespace */
 hui.effect = {
 	makeFlippable : function(options) {
 		if (hui.browser.webkit) {
@@ -1053,7 +1081,7 @@ hui.getViewPortHeight = function() {
 }
 
 /**
- * Get the height of the viewport
+ * Get the width of the viewport
  */
 hui.getViewPortWidth = function() {
 	if (window.innerWidth) {
@@ -1213,22 +1241,7 @@ hui.cookie = {
 	}
 }
 
-///////////////////////// URL/Location /////////////////////
-
-/** @constructor */
-hui.URL = function(url) {
-	this.url = url || '';
-}
-
-hui.URL.prototype = {
-	addParameter : function(key,value) {
-		this.url+=this.url.indexOf('?')!=-1 ? '&' : '?';
-		this.url+=key+'='+(hui.isDefined(value) ? value : '');
-	},
-	toString : function() {
-		return this.url;
-	}
-}
+///////////////////////// Location /////////////////////
 
 /** @namespace */
 hui.location = {
@@ -1580,6 +1593,7 @@ hui.animation.Item.prototype.getWork = function(property) {
 
 /////////////////////////////// Loop ///////////////////////////////////
 
+/** @constructor */
 hui.animation.Loop = function(recipe) {
 	this.recipe = recipe;
 	this.position = -1;
@@ -3731,19 +3745,15 @@ hui.ui = {
 	toolTips : {},
 	confirmOverlays : {},
 	
-	delayedUntilReady : []
-}
-
-/** Get a widget by name */
-hui.ui.get = function(nameOrWidget) {
-	if (nameOrWidget) {
-		if (nameOrWidget.element) {
-			return nameOrWidget;
-		}
-		return hui.ui.objects[nameOrWidget];
+	delayedUntilReady : [],
+	
+	texts : {
+		request_error : {en:'An error occurred on the server',da:'Der skete en fejl på serveren'},
+		'continue' : {en:'Continue',da:'Fortsæt'},
+		reload_page : {en:'Reload page',da:'Indæs siden igen'},
+		access_denied : {en:'Access denied, maybe you are nolonger logged in',da:'Adgang nægtet, du er måske ikke længere logget ind'}
 	}
-	return null;
-};
+}
 
 hui.onReady(function() {
 	if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
@@ -3764,6 +3774,26 @@ hui.onReady(function() {
 	};
 });
 
+/** Get a widget by name */
+hui.ui.get = function(nameOrWidget) {
+	if (nameOrWidget) {
+		if (nameOrWidget.element) {
+			return nameOrWidget;
+		}
+		return hui.ui.objects[nameOrWidget];
+	}
+	return null;
+};
+
+hui.ui.getText = function(key) {
+	var x = this.texts[key];
+	if (!x) {return key}
+	if (x[this.language]) {
+		return x[this.language];
+	} else {
+		return x['en'];
+	}
+}
 
 /**
  * Called when the DOM is ready and hui.ui is ready
@@ -3837,7 +3867,7 @@ hui.ui.destroyDescendants = function(element) {
 }
 
 /** Gets all ancestors of a widget
-	@param {Widget} A widget
+	@param {Widget} widget A widget
 	@returns {Array} An array of all ancestors
 */
 hui.ui.getAncestors = function(widget) {
@@ -4140,7 +4170,7 @@ hui.ui.isWithin = function(e,element) {
 	e = new hui.Event(e);
 	var offset = {left:hui.getLeft(element),top:hui.getTop(element)};
 	var dims = {width:element.clientWidth,height:element.clientHeight};
-	return e.left()>offset.left && e.left()<offset.left+dims.width && e.top()>offset.top && e.top()<offset.top+dims.height;
+	return e.getLeft()>offset.left && e.getLeft()<offset.left+dims.width && e.getTop()>offset.top && e.getTop()<offset.top+dims.height;
 };
 
 hui.ui.getIconUrl = function(icon,size) {
@@ -4445,18 +4475,36 @@ hui.ui.bind = function(expression,delegate) {
 
 //////////////////////////////// Data /////////////////////////////
 
+hui.ui.handleRequestError = function(widget) {
+	hui.log('General request error received');
+	var result = hui.ui.callSuperDelegates(widget || this,'requestError');
+	if (!result) {
+		hui.ui.confirmOverlay({
+			element : document.body,
+			text : hui.ui.getText('request_error'),
+			okText : hui.ui.getText('reload_page'),
+			cancelText : hui.ui.getText('continue'),
+			onOk : function() {
+				document.location.reload();
+			}
+		});
+	}
+}
+
 hui.ui.handleForbidden = function(widget) {
 	hui.log('General access denied received');
 	var result = hui.ui.callSuperDelegates(widget || this,'accessDenied');
-	hui.ui.confirmOverlay({
-		element : document.body,
-		text : 'Access denied',
-		okText : 'Reload page',
-		cancelText : 'Continue',
-		onOk : function() {
-			document.location.reload();
-		}
-	});
+	if (!result) {
+		hui.ui.confirmOverlay({
+			element : document.body,
+			text : hui.ui.getText('access_denied'),
+			okText : hui.ui.getText('reload_page'),
+			cancelText : hui.ui.getText('continue'),
+			onOk : function() {
+				document.location.reload();
+			}
+		});
+	}
 }
 
 hui.ui.request = function(options) {
@@ -4511,6 +4559,11 @@ hui.ui.request = function(options) {
 			hui.ui.callDelegates(t,'failure$'+onFailure)
 		} else if (typeof(onFailure)=='function') {
 			onFailure(t);
+		} else {
+			if (options.message && options.message.start) {
+				hui.ui.hideMessage();
+			}
+			hui.ui.handleRequestError();
 		}
 	}
 	options.onException = function(t,e) {
@@ -4630,6 +4683,9 @@ hui.ui.Source.prototype = {
 		};
 		if (this.busy) {
 			this.pendingRefresh = true;
+			if (this.transport) {
+				this.transport.abort();
+			}
 			return;
 		}
 		this.pendingRefresh = false;
@@ -4642,21 +4698,25 @@ hui.ui.Source.prototype = {
 			};
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
-			hui.request({
+			this.transport = hui.request({
 				method : 'post',
 				url : this.options.url,
 				parameters : prms,
-				onSuccess : function(t) {self.parse(t)},
+				onSuccess : this.parse.bind(this),
 				onException : function(e,t) {
 					hui.log('Exception while loading source...')
 					hui.log(e)
+					self.end();
 				},
 				onForbidden : function() {
 					hui.ui.handleForbidden(self);
 					hui.ui.callDelegates(self,'sourceFailed');
+					self.end();
 				},
 				onFailure : function(t) {
+					hui.log('sourceFailed');
 					hui.ui.callDelegates(self,'sourceFailed');
+					self.end();
 				}
 			});
 		} else if (this.options.dwr) {
@@ -4753,7 +4813,7 @@ hui.ui.startDrag = function(e,element,options) {
 	if (info.icon) {
 		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,1)+')';
 	}
-	hui.ui.startDragPos = {top:e.top(),left:e.left()};
+	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
 	proxy.innerHTML = info.title ? '<span>'+hui.escape(info.title)+'</span>' : '###';
 	hui.ui.dragging = true;
 	document.body.onselectstart = function () { return false; };
@@ -4778,8 +4838,8 @@ hui.ui.findDropTypes = function(drag) {
 
 hui.ui.dragListener = function(e) {
 	e = new hui.Event(e);
-	hui.ui.dragProxy.style.left = (e.left()+10)+'px';
-	hui.ui.dragProxy.style.top = e.top()+'px';
+	hui.ui.dragProxy.style.left = (e.getLeft()+10)+'px';
+	hui.ui.dragProxy.style.top = e.getTop()+'px';
 	hui.ui.dragProxy.style.display='block';
 	var target = hui.ui.findDropTarget(e.getElement());
 	if (target && hui.ui.dropTypes[target.dragDropInfo['kind']]) {
@@ -4963,7 +5023,7 @@ hui.ui.Window.prototype = {
 		var event = new hui.Event(e);
 		this.element.style.zIndex=hui.ui.nextPanelIndex();
 		var pos = { top : hui.getTop(this.element), left : hui.getLeft(this.element) };
-		this.dragState = {left:event.left()-pos.left,top:event.top()-pos.top};
+		this.dragState = {left:event.getLeft()-pos.left,top:event.getTop()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();
 		var self = this;
@@ -4989,8 +5049,8 @@ hui.ui.Window.prototype = {
 	drag : function(e) {
 		var event = new hui.Event(e);
 		this.element.style.right = 'auto';
-		var top = (event.top()-this.dragState.top);
-		var left = (event.left()-this.dragState.left);
+		var top = (event.getTop()-this.dragState.top);
+		var left = (event.getLeft()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
 		//this.calc(top,left);
@@ -5104,7 +5164,7 @@ hui.ui.Formula.prototype = {
 				g.add(w);
 			}
 			else if (hui.ui[item.type]) {
-				var w = hui.ui.Formula[item.type].create(item.options);
+				var w = hui.ui[item.type].create(item.options);
 				g.add(w);
 			}
 		});
@@ -6198,8 +6258,8 @@ hui.ui.Formula.Tokens.prototype = {
  * </ul>
  * <p><strong>XML:</strong></p>
  * <code>
- * &lt;list name=&quot;list&quot; source=&quot;sourcesListSource&quot; state=&quot;list&quot;/&gt;
- * <br/>
+ * &lt;list name=&quot;myList&quot; source=&quot;mySource&quot; state=&quot;list&quot;/&gt;
+ * <br/><br/>
  * &lt;list name=&quot;list&quot; url=&quot;my_list_data.xml&quot; state=&quot;list&quot;/&gt;
  * </code>
  *
@@ -6404,6 +6464,7 @@ hui.ui.List.prototype = {
 
 	/** @private */
 	$listLoaded : function(doc) {
+		this._setError(false);
 		this.selected = [];
 		this.parseWindow(doc);
 		this.buildNavigation();
@@ -6488,6 +6549,7 @@ hui.ui.List.prototype = {
 	
 	/** @private */
 	$objectsLoaded : function(data) {
+		this._setError(false);
 		if (data==null) {
 			// NOOP
 		} else if (data.constructor == Array) {
@@ -6507,7 +6569,10 @@ hui.ui.List.prototype = {
 	},
 	$sourceFailed : function() {
 		hui.log('The source failed!');
-		hui.addClass(this.element,'hui_list_error');
+		this._setError(true);
+	},
+	_setError : function(error) {
+		hui.setClass(this.element,'hui_list_error',error);
 	},
 	_setBusy : function(busy) {
 		this.busy = busy;
@@ -6519,7 +6584,6 @@ hui.ui.List.prototype = {
 			},300);
 		} else {
 			hui.removeClass(this.element,'hui_list_busy');
-			hui.removeClass(this.element,'hui_list_error');
 		}
 	},
 	
@@ -7396,6 +7460,7 @@ hui.ui.Selection = function(options) {
 	this.name = options.name;
 	this.items = [];
 	this.subItems = [];
+	this.busy = 0;
 	this.selection=null;
 	if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
@@ -7461,6 +7526,21 @@ hui.ui.Selection.prototype = {
 		};
 		return null;
 	},
+	/** Changes selection to the first item */
+	selectFirst : function() {
+		var i;
+		for (i=0; i < this.items.length; i++) {
+			this.changeSelection(this.items[i]);
+			return;
+		};
+		for (i=0; i < this.subItems.length; i++) {
+			var items = this.subItems[i].items;
+			for (var j=0; j < items.length; j++) {
+				this.changeSelection(this.items[j]);
+				return;
+			};
+		};
+	},
 	/** Set the value to null */
 	reset : function() {
 		this.setValue(null);
@@ -7511,7 +7591,8 @@ hui.ui.Selection.prototype = {
 		hui.listen(node,'click',function() {
 			this.itemWasClicked(item);
 		}.bind(this));
-		hui.listen(node,'dblclick',function() {
+		hui.listen(node,'dblclick',function(e) {
+			hui.stop(e);
 			this.itemWasDoubleClicked(item);
 		}.bind(this));
 		node.dragDropInfo = item;
@@ -7552,11 +7633,27 @@ hui.ui.Selection.prototype = {
 	
 	/** @private */
 	itemWasClicked : function(item) {
+		if (this.busy>0) {return}
 		this.changeSelection(item);
 	},
 	/** @private */
 	itemWasDoubleClicked : function(item) {
+		if (this.busy>0) {return}
 		this.fire('selectionWasOpened',item);
+	},
+	_setBusy : function(busy) {
+		this.busy+= busy ? 1 : -1;
+		hui.setClass(this.element,'hui_selection_busy',this.busy>0);
+		hui.log('Busy count='+this.busy)
+	},
+	_checkValue : function() {
+		var item = this.getSelectionWithValue(this.selection.value);
+		if (!item) {
+			this.selectFirst();
+		} else {
+			hui.log('Selection is...')
+			hui.log(item)
+		}
 	}
 }
 
@@ -7602,6 +7699,14 @@ hui.ui.Selection.Items.prototype = {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
 		}
 		this.parent.updateUI();
+		this.parent._checkValue();
+	},
+	$sourceIsBusy : function() {
+		this.parent._setBusy(true);
+	},
+	/** @private */
+	$sourceIsNotBusy : function() {
+		this.parent._setBusy(false);
 	},
 	/** @private */
 	buildLevel : function(parent,items,inc) {
@@ -7639,6 +7744,7 @@ hui.ui.Selection.Items.prototype = {
 				this.parent.itemWasClicked(item);
 			}.bind(this));
 			hui.listen(node,'dblclick',function(e) {
+				hui.stop(e);
 				this.parent.itemWasDoubleClicked(item);
 			}.bind(this));
 			level.appendChild(node);
@@ -8621,8 +8727,8 @@ hui.ui.ImageViewer.prototype = {
 			return;
 		}
 		var offset = {left:hui.getLeft(this.zoomer),top:hui.getTop(this.zoomer)};
-		var x = (e.left()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
-		var y = (e.top()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
+		var x = (e.getLeft()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
+		var y = (e.getTop()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;
 		this.zoomer.scrollTop = y;
 	},
@@ -8953,7 +9059,7 @@ hui.ui.Picker.prototype = {
 		e = new hui.Event(e);
 		e.stop();
 		var self = this;
-		this.dragX = e.left();
+		this.dragX = e.getLeft();
 		this.dragScroll = this.container.scrollLeft;
 		hui.ui.Picker.mousemove = function(e) {self.drag(e);return false;}
 		hui.ui.Picker.mouseup = hui.ui.Picker.mousedown = function(e) {self.endDrag(e);return false;}
@@ -8965,7 +9071,7 @@ hui.ui.Picker.prototype = {
 		e = new hui.Event(e);
 		e.stop();
 		this.dragging = true;
-		this.container.scrollLeft=this.dragX-e.left()+this.dragScroll;
+		this.container.scrollLeft=this.dragX-e.getLeft()+this.dragScroll;
 	},
 	endDrag : function(e) {
 		this.dragging = false;
@@ -12743,7 +12849,7 @@ hui.ui.MarkupEditor.webkit = {
 			range.surroundContents(node);
 			selection.selectAllChildren(node);
 		}
-		//document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.getSelectedText())+'</'+tag+'>');
+		//document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.selection.getText())+'</'+tag+'>');
 	},
 	_getInlineTag : function() {
 		var selection = window.getSelection();
@@ -12837,7 +12943,7 @@ hui.ui.MarkupEditor.MSIE = {
 		this.restoreSelection();
 	},
 	_wrapInTag : function(tag) {
-		document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.getSelectedText())+'</'+tag+'>');
+		document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.selection.getText())+'</'+tag+'>');
 	},
 	_insertHTML : function(html) {
 		document.execCommand('inserthtml',null,html);
@@ -13185,7 +13291,7 @@ hui.ui.LocationField.create = function(options) {
 	var b = hui.build('span',{html:'<span class="hui_locationfield_latitude"><span><input/></span></span><span class="hui_locationfield_longitude"><span><input/></span></span>'});
 	e.appendChild(hui.ui.wrapInField(b));
 	e.appendChild(hui.build('a',{'class':'hui_locationfield_picker',href:'javascript:void(0);'}));
-	return new hui.ui.Formula.Location(options);
+	return new hui.ui.LocationField(options);
 }
 
 hui.ui.LocationField.prototype = {
