@@ -38,7 +38,7 @@
 				<ul>
 					<xsl:attribute name="class">
 						<xsl:text>chrome_navigation</xsl:text>
-						<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+						<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id] and //p:page/@id!=//p:context/p:home/@page">
 							<xsl:text> chrome_navigation_selected</xsl:text>
 						</xsl:if>
 					</xsl:attribute>

@@ -5,6 +5,12 @@ body
 
 .part_header
 {
+	color: #333;
+	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
+}
+
+.part_header_1
+{
 	color: #3080CB;
 }
 
@@ -29,9 +35,14 @@ a.common:hover, a.common:hover span
 h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
-	color: #3080CB;
+	color: #333;
 	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: normal;
+}
+
+h1.common
+{
+	color: #3080CB;
 }
 
 p.common, ul.common
