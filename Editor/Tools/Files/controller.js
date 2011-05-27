@@ -75,16 +75,17 @@ hui.ui.listen({
 	
 	$click$delete : function() {
 		var obj = list.getFirstSelection();
+		hui.ui.request({
+			message : {start : 'Sletter fil...', delay : 300},
+			url : 'DeleteFile.php',
+			onSuccess : 'fileDeleted',
+			parameters : {id:obj.id}
+		});
 		if (obj.id===this.fileId) {
-			this.closeFileAfterDeletion = true;
-		}
-		hui.ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:obj.id}});
-	},
-	$success$fileDeleted : function(response) {
-		if (this.closeFileAfterDeletion) {
 			this.$click$cancelFile();
 		}
-		this.closeFileAfterDeletion = false;
+	},
+	$success$fileDeleted : function(response) {
 		filesSource.refresh();
 		groupSource.refresh();
 		typesSource.refresh();
@@ -106,7 +107,12 @@ hui.ui.listen({
 	//////////////////////// Properties //////////////////////
 	
 	loadFile : function(id) {
-		hui.ui.request({url:'LoadFile.php',onSuccess:'fileLoaded',parameters:{id:id}});
+		hui.ui.request({
+			message : {start : 'Åbner fil...',delay:300},
+			url : 'LoadFile.php',
+			onSuccess : 'fileLoaded',
+			parameters : {id:id}
+		});
 	},
 	
 	$success$fileLoaded : function(data) {
@@ -123,25 +129,36 @@ hui.ui.listen({
 	$click$updateFile : function() {
 		var data = fileFormula.getValues();
 		data.id = this.fileId;
-		hui.ui.request({url:'UpdateFile.php',onSuccess:'fileUpdated',json:{data:data}});
-	},
-	$success$fileUpdated : function() {
+		hui.ui.request({
+			message : {start : 'Gemmer fil...',delay:300},
+			url : 'UpdateFile.php',
+			onSuccess : 'fileUpdated',
+			json : {data:data}
+		});
 		this.fileId = null;
 		fileFormula.reset();
 		fileWindow.hide();
+	},
+	$success$fileUpdated : function() {
 		filesSource.refresh();
 		groupSource.refresh();
 		typesSource.refresh();
 	},
 	$click$deleteFile : function() {
 		this.closeFileAfterDeletion = true;
-		hui.ui.request({url:'DeleteFile.php',onSuccess:'fileDeleted',parameters:{id:this.fileId}});
+		hui.ui.request({
+			message : {start : 'Sletter fil...', delay : 300},
+			url:'DeleteFile.php',
+			onSuccess:'fileDeleted',
+			parameters:{id:this.fileId}
+		});
+		this.$click$cancelFile();
 	},
 	
 	////////////////////////// Group /////////////////////////
 	
 	$click$newGroup : function() {
-		this.groupId = null;
+		this.groupId = 0;
 		deleteGroup.setEnabled(false);
 		groupFormula.reset();
 		groupWindow.show();
@@ -153,26 +170,35 @@ hui.ui.listen({
 		groupWindow.hide();
 	},
 	$click$saveGroup : function() {
+		if (this.groupId===null) {return};
 		var values = groupFormula.getValues();
 		if (hui.isBlank(values.title)) {
 			hui.ui.showMessage({text:'Du skal angive en titel!',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
-			hui.ui.request({json:{data:values},url:'SaveGroup.php',onSuccess:'groupSaved'});
+			hui.ui.request({
+				message : { start : 'Gemmer gruppe...', delay : 300 },
+				json : {data:values},
+				url : 'SaveGroup.php',
+				onSuccess : function() {groupSource.refresh()}
+			});
+			this.groupId = null;
+			groupFormula.reset();
+			groupWindow.hide();
 		}
 	},
 	$submit$groupFormula : function() {
 		this.$click$saveGroup();
 	},
-	$success$groupSaved : function() {
-		groupSource.refresh();
-		this.groupId = null;
-		groupFormula.reset();
-		groupWindow.hide();
-	},
 	$selectionWasOpened$selector : function(item) {
-		hui.ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+		if (item.kind!='filegroup') {return}
+		hui.ui.request({
+			message : { start : 'Åbner gruppe...', delay : 300 },
+			parameters:{id:item.value},
+			url:'../../Services/Model/LoadObject.php',
+			onSuccess:'loadGroup'
+		});
 	},
 	$success$loadGroup : function(data) {
 		this.groupId = data.id;
@@ -182,12 +208,17 @@ hui.ui.listen({
 		groupFormula.focus();
 	},
 	$click$deleteGroup : function() {
-		hui.ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
-	},
-	$success$deleteGroup : function() {
-		groupSource.refresh();
+		hui.ui.request({
+			message : { start : 'Sletter gruppe...', delay : 300 },
+			json:{data:{id:this.groupId}},
+			url:'../../Services/Model/DeleteObject.php',
+			onSuccess:'deleteGroup'
+		});
 		this.groupId = null;
 		groupFormula.reset();
 		groupWindow.hide();
+	},
+	$success$deleteGroup : function() {
+		groupSource.refresh();
 	}
 });

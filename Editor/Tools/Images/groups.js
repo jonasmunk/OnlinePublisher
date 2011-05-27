@@ -25,6 +25,9 @@ hui.ui.listen({
 				message:{start:'Gemmer gruppe...',success:'Gruppen er gemt',delay:300},
 				onSuccess:'groupSaved'
 			});
+			this.groupId = null;
+			groupFormula.reset();
+			groupWindow.hide();
 		}
 	},
 	$submit$groupFormula : function() {
@@ -33,9 +36,6 @@ hui.ui.listen({
 	$success$groupSaved : function() {
 		groupSource.refresh();
 		groupOptionsSource.refresh();
-		this.groupId = null;
-		groupFormula.reset();
-		groupWindow.hide();
 	},
 	$selectionWasOpened$selector : function(item) {
 		hui.ui.request({
@@ -59,14 +59,13 @@ hui.ui.listen({
 			onSuccess:'deleteGroup',
 			message:{start:'Sletter gruppe...',success:'Gruppen er slettet',delay:300}
 		});
+		this.groupId = null;
+		groupFormula.reset();
+		groupWindow.hide();
 	},
 	$success$deleteGroup : function() {
 		groupSource.refresh();
 		groupOptionsSource.refresh();
-		this.groupId = null;
-		groupFormula.reset();
-		groupWindow.hide();
-		selector.setValue('all');
 	}
 	
 });

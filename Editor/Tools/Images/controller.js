@@ -4,6 +4,11 @@ hui.ui.listen({
 		{drag:'image',drop:'imagegroup'}
 	],
 	
+	$accessDenied : function() {
+		//alert('Access denied');
+		//return true;
+	},
+	
 	$drop$image$imagegroup : function(dragged,dropped) {
 		hui.ui.request({
 			url:'AddImageToGroup.php',
@@ -44,9 +49,17 @@ hui.ui.listen({
 	$click$delete : function() {
 		var obj = gallery.getFirstSelection();
 		this._deleteImage(obj.id);
+		if (obj.id===this.imageId) {
+			this._cancelImage();
+		}
+
 	},
 	$click$deleteImage : function() {
+		if (!this.imageId) {
+			return;
+		}
 		this._deleteImage(this.imageId);
+		this._cancelImage();
 	},
 	$click$info : function() {
 		var obj = gallery.getFirstSelection();
@@ -61,6 +74,9 @@ hui.ui.listen({
 	},
 	
 	$submit$imageFormula : function() {
+		if (!this.imageId) {
+			return; // important guard
+		}
 		var self = this;
 		var data = imageFormula.getValues();
 		data.id = this.imageId;
@@ -71,10 +87,10 @@ hui.ui.listen({
 			onSuccess:function() {
 				imagesSource.refresh();
 				groupSource.refresh();
-				self._cancelImage();
 				hui.ui.showMessage({text:'Billedet er gemt!',icon:'common/success',duration:2000});			
 			}
 		});
+		self._cancelImage();
 	},
 	_cancelImage : function() {
 		imageFormula.reset();
@@ -97,9 +113,6 @@ hui.ui.listen({
 		});
 	},
 	_deleteImage : function(id) {
-		if (id===this.imageId) {
-			this._cancelImage();
-		}
 		hui.ui.request({
 			url:'DeleteImage.php',
 			parameters:{id:id},

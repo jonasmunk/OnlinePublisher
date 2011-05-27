@@ -49,10 +49,8 @@ $gui='
 				<selection value="all" name="selector">
 					<item icon="common/files" title="Alle" value="all"/>
 					<item icon="common/time" title="Seneste døgn" value="latest"/>
-					<title>Grupper</title>
-					<items source="groupSource" name="groupSelection"/>
-					<title>Typer</title>
-					<items source="typesSource" name="typeSelection"/>
+					<items source="groupSource" name="groupSelection" title="Grupper"/>
+					<items source="typesSource" name="typeSelection" title="Typer"/>
 				</selection>
 				</overflow>
 			</left>
