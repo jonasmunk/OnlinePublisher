@@ -32,8 +32,12 @@ op.ignite = function() {
 
 op.showLogin = function() {
 	if (!this.loginBox) {
+		if (this.loadingLogin) {return}
+		this.loadingLogin = true;
+		hui.ui.showMessage({text:'Indlæser...',busy:true,delay:300});
 		hui.ui.require(['Formula','Button'],
 			function() {
+				hui.ui.hideMessage();
 				var box = this.loginBox = hui.ui.Box.create({width:300,title:'Adgangskontrol',modal:true,absolute:true,closable:true,padding:10});
 				this.loginBox.addToDocument();
 				var form = hui.ui.Formula.create();
