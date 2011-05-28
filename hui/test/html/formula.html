@@ -19,7 +19,7 @@
 </head>
 
 <body>
-	<button onclick="n2i.log(hui.ui.get('formula').getValues())">Test 1</button>
+	<button onclick="hui.log(hui.ui.get('formula').getValues())">Test 1</button>
 	<script type="text/javascript" charset="utf-8">
 		var win = hui.ui.Window.create({width:300,padding:5});
 		var form = hui.ui.Formula.create({name:'formula'});
@@ -34,7 +34,7 @@
 		win.show();
 		form.listen({
 			$valuesChanged : function(v) {
-				n2i.log(v);
+				hui.log(v);
 			}
 		});
 	</script>

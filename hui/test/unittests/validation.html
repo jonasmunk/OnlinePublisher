@@ -74,7 +74,7 @@
 			},
 			function() {
 				var validator = new hui.ui.NumberValidator({min:-10,max:10});
-				var input = n2i.build('input',{value:'abc'});
+				var input = hui.build('input',{value:'abc'});
 				document.body.appendChild(input);
 				var field = new hui.ui.TextField({
 					element:input,
@@ -112,7 +112,7 @@
 			},
 			function() {
 				var validator = new hui.ui.NumberValidator({min:-10,max:10,allowNull:true});
-				var input = n2i.build('input',{value:'    ',parent:document.body});
+				var input = hui.build('input',{value:'    ',parent:document.body});
 				var field = new hui.ui.TextField({
 					element:input,
 					validator:validator

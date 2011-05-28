@@ -34,9 +34,9 @@ op.WeblogTemplate = {
 	},
 	$click$createNewEntry : function() {
 		var parms = {ajax:true,action:'createEntry','group[]':[]};
-		n2i.override(parms,this.newForm.getValues());
+		hui.override(parms,this.newForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
-		if (n2i.isBlank(parms.title)) {
+		if (hui.isBlank(parms.title)) {
 			hui.ui.showMessage({text:'Der skal skrives en titel',duration:2000});
 			this.editForm.focus();
 			return;
@@ -54,16 +54,16 @@ op.WeblogTemplate = {
 	},
 	edit : function(id) {
 		var parms = {ajax:true,action:'loadEntry',entryId:id};
-		n2i.request({
+		hui.request({
 			url : op.page.pagePath,
 			method : 'post',
 			parameters : parms,
 			onSuccess : function(t) {
-				var data = n2i.fromJSON(t.responseText);
+				var data = hui.fromJSON(t.responseText);
 				this.editEntry(data);
 			}.bind(this),
 			onException : function(t,e) {
-				n2i.log(e);
+				hui.log(e);
 			}.bind(this)
 		});
 	},
@@ -114,9 +114,9 @@ op.WeblogTemplate = {
 	},
 	$click$updateEditEntry : function() {
 		var parms = {ajax:true,action:'updateEntry','group[]':[],entryId:this.activeEntry.id};
-		n2i.override(parms,this.editForm.getValues());
+		hui.override(parms,this.editForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
-		if (n2i.isBlank(parms.title)) {
+		if (hui.isBlank(parms.title)) {
 			hui.ui.showMessage({text:'Der skal skrives en titel',duration:2000});
 			this.editForm.focus();
 			return;

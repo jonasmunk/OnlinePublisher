@@ -1,36 +1,36 @@
 function Bestilling() {
-	this.form = n2i.get('bestilling');
+	this.form = hui.get('bestilling');
 	this.form.onsubmit = function() {this.submit(); return false;}.bind(this);
 }
 
 Bestilling.prototype = {
 	submit : function(e) {
-		if (n2i.isBlank(this.form['name'].value)) {
+		if (hui.isBlank(this.form['name'].value)) {
 			this.form['name'].focus();
 			hui.ui.showMessage({text:'Navn skal udfyldes',duration:2000});
 			return;
 		}
-		if (n2i.isBlank(this.form['address'].value)) {
+		if (hui.isBlank(this.form['address'].value)) {
 			this.form['address'].focus();
 			hui.ui.showMessage({text:'Adressen skal udfyldes',duration:2000});
 			return;
 		}
-		if (n2i.isBlank(this.form['zipcode'].value)) {
+		if (hui.isBlank(this.form['zipcode'].value)) {
 			this.form['zipcode'].focus();
 			hui.ui.showMessage({text:'Postnummeret skal udfyldes',duration:2000});
 			return;
 		}
-		if (n2i.isBlank(this.form['city'].value)) {
+		if (hui.isBlank(this.form['city'].value)) {
 			this.form['city'].focus();
 			hui.ui.showMessage({text:'Byen skal udfyldes',duration:2000});
 			return;
 		}
-		if (n2i.isBlank(this.form['phone'].value)) {
+		if (hui.isBlank(this.form['phone'].value)) {
 			this.form['phone'].focus();
 			hui.ui.showMessage({text:'Telefonnummeret skal udfyldes',duration:2000});
 			return;
 		}
-		if (n2i.isBlank(this.form['email'].value)) {
+		if (hui.isBlank(this.form['email'].value)) {
 			this.form['email'].focus();
 			hui.ui.showMessage({text:'Emailadressen skal udfyldes',duration:2000});
 			return;

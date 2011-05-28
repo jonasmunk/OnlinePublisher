@@ -18,7 +18,7 @@ hui.ui.Graphviz.create = function(name,options) {
 	var element = hui.build('div',{'class':'hui_graphviz'});
 	var texts = bui.build('div',{'class':'hui_graphviz_texts',style:'position:relative;'});
 	element.appendChild(texts);
-	element.appendChild(n2i.build('canvas'));
+	element.appendChild(hui.build('canvas'));
 	return new hui.ui.Graphviz(element,name,options);
 }
 
@@ -263,7 +263,7 @@ hui.ui.Graphviz.prototype = {
 							var str = tokenizer.takeString();
 							if (!redraw_canvas && !str.match(/^\s*$/)) {
 //								hui.ui.Graphviz.debug('draw text ' + str + ' ' + x + ' ' + y + ' ' + text_align + ' ' + text_width);
-								str = n2i.escapeHTML(str);
+								str = hui.escapeHTML(str);
 								do {
 									matches = str.match(/ ( +)/);
 									if (matches) {
@@ -468,7 +468,7 @@ hui.ui.Graphviz.Image.prototype = {
 }
 
 hui.ui.Graphviz.debug = function(str) {
-	n2i.log(str);
+	hui.log(str);
 }
 
 

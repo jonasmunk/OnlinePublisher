@@ -7,12 +7,12 @@ op.CalendarTemplate = function() {
 	this.windowWasScrolled();
 	
 	var self = this;
-	n2i.listen(window,'scroll',
+	hui.listen(window,'scroll',
 		function(e) {
 			self.windowWasScrolled();
 		}
 	);
-	n2i.listen(window,'resize',
+	hui.listen(window,'resize',
 		function(e) {
 			self.windowWasScrolled();
 		}
@@ -20,8 +20,8 @@ op.CalendarTemplate = function() {
 }
 
 op.CalendarTemplate.prototype.windowWasScrolled = function() {
-	var top = n2i.getScrollTop();
-	var height = n2i.getViewPortHeight();
+	var top = hui.getScrollTop();
+	var height = hui.getViewPortHeight();
 	var bottom = top+height;
 	for (var i=0;i<this.days.length;i++) {
 		if (this.maxDayEvents[i]>bottom) {
@@ -42,9 +42,9 @@ op.CalendarTemplate.prototype.createArrows = function() {
 }
 
 op.CalendarTemplate.prototype.analyze = function() {
-	this.days = n2i.byClass(document.body,'day');
+	this.days = hui.byClass(document.body,'day');
 	for (var i=0;i<this.days.length;i++) {
-		var events = n2i.byClass(this.days[i],'event');
+		var events = hui.byClass(this.days[i],'event');
 		for (var j=0;j<events.length;j++) {
 			var top = events[j].cumulativeOffset().top;
 			if (top>this.maxDayEvents[i]) {
@@ -54,7 +54,7 @@ op.CalendarTemplate.prototype.analyze = function() {
 	}
 }
 
-n2i.onReady(
+hui.onReady(
 	function() {
 		new op.CalendarTemplate();
 	}

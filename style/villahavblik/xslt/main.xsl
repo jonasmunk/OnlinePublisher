@@ -66,8 +66,8 @@
 		<p><a href="mailto:bustermunk@gmail.com">bustermunk@gmail.com</a></p>
 	</div>
 	<script type="text/javascript">
-		var one = n2i.get('chrome_photos2');
-		var two = n2i.get('chrome_photos1');
+		var one = hui.get('chrome_photos2');
+		var two = hui.get('chrome_photos1');
 		new op.Dissolver({elements:one.getElementsByTagName('div),wait:5000,transition:3000,delay:4500});
 		new op.Dissolver({elements:two.getElementsByTagName('div),wait:5000,transition:3000});
 	</script>

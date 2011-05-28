@@ -103,7 +103,7 @@ op.showImage = function(image) {
 }
 
 op.registerImageViewer = function(id,image) {
-	n2i.get(id).onclick = function() {
+	hui.get(id).onclick = function() {
 		op.showImage(image);
 		return false;
 	}
@@ -174,20 +174,20 @@ if (op.part===undefined) {
 
 op.part.ImageGallery = function(options) {
 	this.options = options;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.images = [];
 }
 
 op.part.ImageGallery.prototype = {
 	registerImage : function(node,image) {
-		node = n2i.get(node);
+		node = hui.get(node);
 		if (this.options.editor) {
 			return;
 		}
 		this.images.push(image);
 		var self = this;
 		node.onclick = function(e) {
-			n2i.stop(e);
+			hui.stop(e);
 			self.showImage(image.id);
 			return false;
 		}
@@ -218,17 +218,17 @@ op.part.ImageGallery.changing = {
 		var first = true;
 		timer = function() {
 			if (index>-1) {
-				n2i.animate(nodes[index],'opacity',0,200,{hideOnComplete:true,delay:800});
+				hui.animate(nodes[index],'opacity',0,200,{hideOnComplete:true,delay:800});
 			}
 			index++;
 			if (index>nodes.length-1) {
 				index = 0;
 			}
 			if (!first) {
-			n2i.setOpacity(nodes[index],0)
+			hui.setOpacity(nodes[index],0)
 			nodes[index].style.zIndex=zIndex;
 			nodes[index].style.display='block';
-			n2i.animate(nodes[index],'opacity',1,1000,{ease:n2i.ease.slowFastSlow});
+			hui.animate(nodes[index],'opacity',1,1000,{ease:hui.ease.slowFastSlow});
 			}
 			window.setTimeout(timer,3000);
 			zIndex++;
@@ -241,18 +241,18 @@ op.part.ImageGallery.changing = {
 ///////////////// Formula //////////////////
 
 op.part.Formula = function(options) {
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	this.id = options.id;
-	n2i.listen(this.element,'submit',this._send.bind(this));
+	hui.listen(this.element,'submit',this._send.bind(this));
 }
 
 op.part.Formula.prototype = {
 	_send : function(e) {
-		n2i.stop(e);
+		hui.stop(e);
 		var name = this.element.name.value;
 		var email = this.element.email.value;
 		var message = this.element.message.value;
-		if (n2i.isBlank(name) || n2i.isBlank(email) || n2i.isBlank(message)) {
+		if (hui.isBlank(name) || hui.isBlank(email) || hui.isBlank(message)) {
 			hui.ui.showMessage({text:'Alle felter skal udfyldes',duration:2000});
 			this.element.name.focus();
 			return;
@@ -274,8 +274,8 @@ op.part.Formula.prototype = {
 ///////////////// Poster //////////////////
 
 op.part.Poster = function(options) {
-	this.element = n2i.get(options.element);
-	this.pages = n2i.byClass(this.element,'part_poster_page');
+	this.element = hui.get(options.element);
+	this.pages = hui.byClass(this.element,'part_poster_page');
 	this.index = 0;
 	this.delay = 5000;
 	this.callNext();
@@ -299,19 +299,19 @@ op.part.Poster.prototype = {
 ///////////////// Search field //////////////////
 
 op.SearchField = function(o) {
-	o = this.options = n2i.override({placeholderClass:'placeholder',placeholder:''},o);
-	this.field = n2i.get(o.element);
+	o = this.options = hui.override({placeholderClass:'placeholder',placeholder:''},o);
+	this.field = hui.get(o.element);
 	this.field.onfocus = function() {
 		if (this.field.value==o.placeholder) {
 			this.field.value = '';
-			n2i.addClass(this.field,o.placeholderClass);
+			hui.addClass(this.field,o.placeholderClass);
 		} else {
 			this.field.select();
 		}
 	}.bind(this);
 	this.field.onblur = function() {
 		if (this.field.value=='') {
-			n2i.addClass(this.field,o.placeholderClass);
+			hui.addClass(this.field,o.placeholderClass);
 			this.field.value=o.placeholder;
 		}
 	}.bind(this);
@@ -319,7 +319,7 @@ op.SearchField = function(o) {
 }
 
 op.Dissolver = function(options) {
-	options = this.options = n2i.override({wait:4000,transition:2000,delay:0},options);
+	options = this.options = hui.override({wait:4000,transition:2000,delay:0},options);
 	this.pos = Math.floor(Math.random()*(options.elements.length-.00001));
 	this.z = 1;
 	options.elements[this.pos].style.display='block';
@@ -335,9 +335,9 @@ op.Dissolver.prototype = {
 			this.pos=0;
 		}
 		var e = elm[this.pos];
-		n2i.setOpacity(e,0);
-		n2i.setStyle(e,{display:'block',zIndex:this.z});
-		n2i.ani(e,'opacity',1,this.options.transition,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+		hui.setOpacity(e,0);
+		hui.setStyle(e,{display:'block',zIndex:this.z});
+		hui.animate(e,'opacity',1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function() {
 			window.setTimeout(this.next.bind(this),this.options.wait);
 		}.bind(this)});
 	}

@@ -1,7 +1,7 @@
 hui.ui.Graph = function(options) {
 	this.options = options;
 	this.name = options.name;
-	this.element = n2i.get(options.element);
+	this.element = hui.get(options.element);
 	
 	var impls = {force:hui.ui.Graph.Protoviz,graffle:hui.ui.Graph.Raphael};
 	
@@ -20,7 +20,7 @@ hui.ui.Graph.prototype = {
 		this.impl.setData(data);
 	},
 	$objectsLoaded : function(data) {
-		n2i.log('Data loaded');
+		hui.log('Data loaded');
 		this.setData(data);
 	}
 }
@@ -93,7 +93,7 @@ hui.ui.Graph.Protoviz = {
 hui.ui.Graph.Raphael = {
 	init : function(parent) {
 		this.parent = parent;
-		n2i.log('Initializing');
+		hui.log('Initializing');
 		
 		Raphael.fn.connection = function (obj1, obj2, line, bg, text) {
 			if (obj1.line && obj1.from && obj1.to) {

@@ -3,10 +3,10 @@ if (!Atira.Website) {Atira.Website={};}
 
 Atira.Website.Poster = function(options) {
 	this.options = options || {random:false};
-	this.poster = n2i.firstByClass(document.body,'placard');
-	this.inner = n2i.firstByClass(document.body,'inner_placard');
+	this.poster = hui.firstByClass(document.body,'placard');
+	this.inner = hui.firstByClass(document.body,'inner_placard');
 	this.num = 1;
-	this.count = n2i.byClass(this.poster,'poster').length;
+	this.count = hui.byClass(this.poster,'poster').length;
 	this.duration = 6000;
 	this.active = false;
 	this.paused = false;
@@ -24,8 +24,8 @@ Atira.Website.Poster.prototype = {
 		this.inner.style.visibility='visible';
 	},
 	addBehavior : function() {
-		n2i.listen(this.poster,'mouseover',this.pause.bind(this));
-		n2i.listen(this.poster,'mouseout',this.resume.bind(this));
+		hui.listen(this.poster,'mouseover',this.pause.bind(this));
+		hui.listen(this.poster,'mouseout',this.resume.bind(this));
 	},
 	next : function() {
 		var self = this;
@@ -40,7 +40,7 @@ Atira.Website.Poster.prototype = {
 		}
 		var self = this;
 		this.active = true;
-			n2i.animate(this.poster,'scrollLeft',(this.num-1)*898,1500,{ease:n2i.ease.slowFastSlow,onComplete:function() {
+			hui.animate(this.poster,'scrollLeft',(this.num-1)*898,1500,{ease:hui.ease.slowFastSlow,onComplete:function() {
 				self.active = false;
 				self.next()
 			}});
@@ -67,11 +67,11 @@ Atira.Website.Ticker = function() {
 
 Atira.Website.Ticker.prototype = {
 	addBehavior : function() {
-		this.base = n2i.firstByClass(document.body,'ticker');
+		this.base = hui.firstByClass(document.body,'ticker');
 		if (!this.base) return false;
-		this.item = n2i.firstByClass(this.base,'item');
-		this.previousArrow = n2i.firstByClass(this.base,'ticker_previous');
-		this.nextArrow = n2i.firstByClass(this.base,'ticker_next');
+		this.item = hui.firstByClass(this.base,'item');
+		this.previousArrow = hui.firstByClass(this.base,'ticker_previous');
+		this.nextArrow = hui.firstByClass(this.base,'ticker_next');
 		var self = this;
 		this.base.onmouseover = function() {
 			self.pause();

@@ -56,7 +56,7 @@ ui.listen({
 			url:'TestDatabase.php',
 			parameters:values,
 			onJSON:function(result) {
-				n2i.log(result);
+				hui.log(result);
 				if (!result.server) {
 					hui.ui.showMessage({text:'Unable to connect to host',duration:4000});
 				} else if (!result.database) {

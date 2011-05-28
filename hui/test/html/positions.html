@@ -28,20 +28,20 @@
 
 <body>
 <script type="text/javascript" charset="utf-8">
-	n2i.onReady(function() {
-		var info = n2i.get('info');
+	hui.onReady(function() {
+		var info = hui.get('info');
 		var update = function() {
 			var html = '';
-			html+='<p>documentWidth: '+n2i.getDocumentWidth()+'</p>';
-			html+='<p>documentHeight: '+n2i.getDocumentHeight()+'</p>';
-			html+='<p>viewPortWidth: '+n2i.getViewPortWidth()+'</p>';
-			html+='<p>viewPortHeight: '+n2i.getViewPortHeight()+'</p>';
-			html+='<p>scrollTop: '+n2i.getScrollTop()+'</p>';
-			html+='<p>scrollLeft: '+n2i.getScrollLeft()+'</p>';
+			html+='<p>documentWidth: '+hui.getDocumentWidth()+'</p>';
+			html+='<p>documentHeight: '+hui.getDocumentHeight()+'</p>';
+			html+='<p>viewPortWidth: '+hui.getViewPortWidth()+'</p>';
+			html+='<p>viewPortHeight: '+hui.getViewPortHeight()+'</p>';
+			html+='<p>scrollTop: '+hui.getScrollTop()+'</p>';
+			html+='<p>scrollLeft: '+hui.getScrollLeft()+'</p>';
 			info.innerHTML = html;
 		}
-		n2i.listen(window,'resize',update);
-		n2i.listen(window,'scroll',update);
+		hui.listen(window,'resize',update);
+		hui.listen(window,'scroll',update);
 		update();
 	});
 </script>

@@ -16,7 +16,7 @@
 		try {
 			new op.part.Poster({element:'<xsl:value-of select="generate-id()"/>'});
 		} catch (e) {
-			n2i.log(e)
+			hui.log(e)
 		}
 		</script>
 	</xsl:if>

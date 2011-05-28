@@ -283,7 +283,7 @@
 				
 				addItem({
 					title:'<xsl:value-of select="@title"/><xsl:value-of select="@label"/>',
-					value:n2i.intOrString('<xsl:call-template name="gui:escapeScript"><xsl:with-param name="text" select="@value"/></xsl:call-template>')
+					value:hui.intOrString('<xsl:call-template name="gui:escapeScript"><xsl:with-param name="text" select="@value"/></xsl:call-template>')
 				});
 			</xsl:for-each>
 		}
@@ -399,7 +399,7 @@
 				registerItems(<xsl:value-of select="generate-id()"/>_obj);
 			</xsl:for-each>
 			<xsl:for-each select="gui:item">
-				registerItem({title:'<xsl:value-of select="@title"/>',value:n2i.intOrString('<xsl:value-of select="@value"/>')});
+				registerItem({title:'<xsl:value-of select="@title"/>',value:hui.intOrString('<xsl:value-of select="@value"/>')});
 			</xsl:for-each>
 		}
 		<xsl:call-template name="gui:createobject"/>

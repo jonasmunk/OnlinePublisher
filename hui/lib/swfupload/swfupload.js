@@ -137,7 +137,7 @@ SWFUpload.prototype.initSettings = function () {
 	this.ensureDefault("upload_success_handler", null);
 	this.ensureDefault("upload_complete_handler", null);
 	
-	this.ensureDefault("debug_handler", function(msg) {n2i.log(msg)});
+	this.ensureDefault("debug_handler", function(msg) {hui.log(msg)});
 
 	this.ensureDefault("custom_settings", {});
 
@@ -814,5 +814,5 @@ SWFUpload.prototype.uploadComplete = function (file) {
 /* Called by SWFUpload JavaScript and Flash functions when debug is enabled. By default it writes messages to the
    internal debug console.  You can override this event and have messages written where you want. */
 SWFUpload.prototype.debug = function (message) {
-	n2i.log(message);
+	hui.log(message);
 };

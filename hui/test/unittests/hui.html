@@ -22,78 +22,78 @@
 	<script type="text/javascript">
 		hui.ui.test.run([
 			function() { // Blank
-				hui.ui.test.assertTrue(n2i.isBlank(),'Undefined is blank');
-				hui.ui.test.assertTrue(n2i.isBlank(null),'null is blank');
-				hui.ui.test.assertTrue(n2i.isBlank(''),'empty string is blank');
-				hui.ui.test.assertTrue(n2i.isBlank(' '),'space is blank');
-				hui.ui.test.assertTrue(n2i.isBlank(' 	'),'space and tab is blank');
-				hui.ui.test.assertFalse(n2i.isBlank(' abc '),'text is not blank');
+				hui.ui.test.assertTrue(hui.isBlank(),'Undefined is blank');
+				hui.ui.test.assertTrue(hui.isBlank(null),'null is blank');
+				hui.ui.test.assertTrue(hui.isBlank(''),'empty string is blank');
+				hui.ui.test.assertTrue(hui.isBlank(' '),'space is blank');
+				hui.ui.test.assertTrue(hui.isBlank(' 	'),'space and tab is blank');
+				hui.ui.test.assertFalse(hui.isBlank(' abc '),'text is not blank');
 			},
 			function() { // Defined
-				hui.ui.test.assertFalse(n2i.isDefined(),'undefined is not defined');
-				hui.ui.test.assertFalse(n2i.isDefined(null),'NULL is not defined');
-				hui.ui.test.assertTrue(n2i.isDefined(''),'Empty string is defined');
-				hui.ui.test.assertTrue(n2i.isDefined({}),'empty object is defined');
-				hui.ui.test.assertTrue(n2i.isDefined([]),'empty array is defined');
+				hui.ui.test.assertFalse(hui.isDefined(),'undefined is not defined');
+				hui.ui.test.assertFalse(hui.isDefined(null),'NULL is not defined');
+				hui.ui.test.assertTrue(hui.isDefined(''),'Empty string is defined');
+				hui.ui.test.assertTrue(hui.isDefined({}),'empty object is defined');
+				hui.ui.test.assertTrue(hui.isDefined([]),'empty array is defined');
 			},
 			function() { // Trimming
-				hui.ui.test.assertEquals(n2i.trim(''),'','Empty string trims to empty string');
-				hui.ui.test.assertEquals(n2i.trim(null),'','NULL trims to empty string');
-				hui.ui.test.assertEquals(n2i.trim(),'','undefined trims to empty string');
-				hui.ui.test.assertEquals(n2i.trim(1),'1','number trims to string of number');
-				hui.ui.test.assertEquals(n2i.trim([]),'','empty array trims to empty string');
-				hui.ui.test.assertEquals(n2i.trim(['abc',1]),'abc,1','Array with values trims to comma separated');
+				hui.ui.test.assertEquals(hui.trim(''),'','Empty string trims to empty string');
+				hui.ui.test.assertEquals(hui.trim(null),'','NULL trims to empty string');
+				hui.ui.test.assertEquals(hui.trim(),'','undefined trims to empty string');
+				hui.ui.test.assertEquals(hui.trim(1),'1','number trims to string of number');
+				hui.ui.test.assertEquals(hui.trim([]),'','empty array trims to empty string');
+				hui.ui.test.assertEquals(hui.trim(['abc',1]),'abc,1','Array with values trims to comma separated');
 			},
 			function() { // Escaping
-				hui.ui.test.assertEquals(n2i.escapeHTML(''),'','Escape empty string');
-				hui.ui.test.assertEquals(n2i.escapeHTML(null),'','Escape NULL');
-				hui.ui.test.assertEquals(n2i.escapeHTML(' '),' ','Escape space');
-				hui.ui.test.assertEquals(n2i.escapeHTML('abc'),'abc','Escape string');
-				hui.ui.test.assertEquals(n2i.escapeHTML('abc<>'),'abc&lt;&gt;','Escape <> string');
-				hui.ui.test.assertEquals(n2i.escapeHTML('&'),'&amp;','Escape & string');
-				hui.ui.test.assertEquals(n2i.escapeHTML('"'),'"','Escape " string');
-				hui.ui.test.assertEquals(n2i.escapeHTML('This is <br>some <strong>common & general</strong> markup'),'This is &lt;br&gt;some &lt;strong&gt;common &amp; general&lt;/strong&gt; markup','Escape markup');
+				hui.ui.test.assertEquals(hui.escapeHTML(''),'','Escape empty string');
+				hui.ui.test.assertEquals(hui.escapeHTML(null),'','Escape NULL');
+				hui.ui.test.assertEquals(hui.escapeHTML(' '),' ','Escape space');
+				hui.ui.test.assertEquals(hui.escapeHTML('abc'),'abc','Escape string');
+				hui.ui.test.assertEquals(hui.escapeHTML('abc<>'),'abc&lt;&gt;','Escape <> string');
+				hui.ui.test.assertEquals(hui.escapeHTML('&'),'&amp;','Escape & string');
+				hui.ui.test.assertEquals(hui.escapeHTML('"'),'"','Escape " string');
+				hui.ui.test.assertEquals(hui.escapeHTML('This is <br>some <strong>common & general</strong> markup'),'This is &lt;br&gt;some &lt;strong&gt;common &amp; general&lt;/strong&gt; markup','Escape markup');
 			},
 			function() { // Test strings
-				hui.ui.test.assertTrue(n2i.string.endsWith('Jonas','as'),'Ends with is correct');
-				hui.ui.test.assertFalse(n2i.string.endsWith('Jonas','ona'),'Ends with is correct');
-				hui.ui.test.assertTrue(n2i.string.endsWith('Jonas\nmunk','unk'),'Ends with works with multiple lines');
-				hui.ui.test.assertFalse(n2i.string.endsWith('Jonas\nmunk','as'),'Ends with works with multiple lines');
+				hui.ui.test.assertTrue(hui.string.endsWith('Jonas','as'),'Ends with is correct');
+				hui.ui.test.assertFalse(hui.string.endsWith('Jonas','ona'),'Ends with is correct');
+				hui.ui.test.assertTrue(hui.string.endsWith('Jonas\nmunk','unk'),'Ends with works with multiple lines');
+				hui.ui.test.assertFalse(hui.string.endsWith('Jonas\nmunk','as'),'Ends with works with multiple lines');
 				
-				hui.ui.test.assertEquals(n2i.string.camelize('font-size'),'fontSize');
-				hui.ui.test.assertEquals(n2i.string.camelize('fontSize'),'fontSize');
-				hui.ui.test.assertEquals(n2i.string.camelize('color'),'color');
+				hui.ui.test.assertEquals(hui.string.camelize('font-size'),'fontSize');
+				hui.ui.test.assertEquals(hui.string.camelize('fontSize'),'fontSize');
+				hui.ui.test.assertEquals(hui.string.camelize('color'),'color');
 			},
 			function() { // Test arrays
-				hui.ui.test.assertTrue(n2i.isArray([]),'Test that empty array is array');
-				hui.ui.test.assertTrue(n2i.isArray(['a','b','c']),'Test that array is array');
-				hui.ui.test.assertFalse(n2i.isArray(null),'NULL is not array');
-				hui.ui.test.assertFalse(n2i.isArray(),'UNDEFINED is not array');
-				hui.ui.test.assertFalse(n2i.isArray({}),'Object is not array');
-				hui.ui.test.assertFalse(n2i.isArray(""),'String is not array');
-				hui.ui.test.assertFalse(n2i.isArray(1),'Number is not array');
+				hui.ui.test.assertTrue(hui.isArray([]),'Test that empty array is array');
+				hui.ui.test.assertTrue(hui.isArray(['a','b','c']),'Test that array is array');
+				hui.ui.test.assertFalse(hui.isArray(null),'NULL is not array');
+				hui.ui.test.assertFalse(hui.isArray(),'UNDEFINED is not array');
+				hui.ui.test.assertFalse(hui.isArray({}),'Object is not array');
+				hui.ui.test.assertFalse(hui.isArray(""),'String is not array');
+				hui.ui.test.assertFalse(hui.isArray(1),'Number is not array');
 				// inArray
-				hui.ui.test.assertTrue(n2i.inArray(['a','b','c'],'b'),'Find string in array');
-				hui.ui.test.assertFalse(n2i.inArray(['a','b','c'],'ab'),'Find string in array');
-				hui.ui.test.assertFalse(n2i.inArray([0,'b','c'],null),'zero in array is not null');
-				hui.ui.test.assertFalse(n2i.inArray([0,'b','c'],''),'zero in array is not empty string');
-				hui.ui.test.assertFalse(n2i.inArray([1,'b','c'],'1'),'number in array is not string');
-				hui.ui.test.assertTrue(n2i.inArray([null,'b','c'],null),'Find null in array');
-				hui.ui.test.assertTrue(n2i.inArray(['','b','c'],''),'Find empty string in array');
+				hui.ui.test.assertTrue(hui.inArray(['a','b','c'],'b'),'Find string in array');
+				hui.ui.test.assertFalse(hui.inArray(['a','b','c'],'ab'),'Find string in array');
+				hui.ui.test.assertFalse(hui.inArray([0,'b','c'],null),'zero in array is not null');
+				hui.ui.test.assertFalse(hui.inArray([0,'b','c'],''),'zero in array is not empty string');
+				hui.ui.test.assertFalse(hui.inArray([1,'b','c'],'1'),'number in array is not string');
+				hui.ui.test.assertTrue(hui.inArray([null,'b','c'],null),'Find null in array');
+				hui.ui.test.assertTrue(hui.inArray(['','b','c'],''),'Find empty string in array');
 				// indexInArray
-				hui.ui.test.assertEquals(n2i.indexInArray(['','b','c'],'b'),1,'Find index of string in array');
-				hui.ui.test.assertEquals(n2i.indexInArray(['','b',2],2),2,'Find index of number in array');
-				hui.ui.test.assertEquals(n2i.indexInArray(['',null,0],0),2,'Find index of number in array');
-				hui.ui.test.assertEquals(n2i.indexInArray(['',null,0],null),1,'Find index of NULL in array');
-				hui.ui.test.assertEquals(n2i.indexInArray(['',' ',0],null),-1,'Not found in array');
+				hui.ui.test.assertEquals(hui.indexInArray(['','b','c'],'b'),1,'Find index of string in array');
+				hui.ui.test.assertEquals(hui.indexInArray(['','b',2],2),2,'Find index of number in array');
+				hui.ui.test.assertEquals(hui.indexInArray(['',null,0],0),2,'Find index of number in array');
+				hui.ui.test.assertEquals(hui.indexInArray(['',null,0],null),1,'Find index of NULL in array');
+				hui.ui.test.assertEquals(hui.indexInArray(['',' ',0],null),-1,'Not found in array');
 			},
 			function() { // JSON
-				hui.ui.test.assertEquals(n2i.toJSON({}),"{}",'JSON of empty object');
-				hui.ui.test.assertEquals(n2i.toJSON(1),"1",'JSON of number');
-				hui.ui.test.assertEquals(n2i.toJSON('abc'),'"abc"','JSON of string');
-				hui.ui.test.assertEquals(n2i.toJSON([]),"[]",'JSON of array');
+				hui.ui.test.assertEquals(hui.toJSON({}),"{}",'JSON of empty object');
+				hui.ui.test.assertEquals(hui.toJSON(1),"1",'JSON of number');
+				hui.ui.test.assertEquals(hui.toJSON('abc'),'"abc"','JSON of string');
+				hui.ui.test.assertEquals(hui.toJSON([]),"[]",'JSON of array');
 				var object = {str:'ab"c',num:9.5,arr:[1,null,'ab"c']};
-				var roundtrip = n2i.fromJSON(n2i.toJSON(object));
+				var roundtrip = hui.fromJSON(hui.toJSON(object));
 				hui.ui.test.assertEquals(roundtrip.str,object.str,'Test that strings are encoded/decoded correct');
 				hui.ui.test.assertEquals(roundtrip.num,object.num,'Test that numbers are encoded/decoded correct');
 				hui.ui.test.assertEquals(roundtrip.arr[0],object.arr[0],'Test that arrays are encoded/decoded correct');

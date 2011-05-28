@@ -15,7 +15,7 @@
 				<datetime label="Startdato:"/>
 				<datetime label="Slutdato:"/>
 				<buttons top="5">
-					<button title="Annuller" action="n2i.log(formula.getValues());"/>
+					<button title="Annuller" action="hui.log(formula.getValues());"/>
 					<button title="Opret" highlighted="true"/>
 				</buttons>
 			</group>

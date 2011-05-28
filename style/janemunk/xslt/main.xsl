@@ -45,7 +45,7 @@
 						</div>
 					</div>
 					<script type="text/javascript">
-						new op.Dissolver({elements:n2i.get('paintings').getElementsByTagName('div'),wait:3000,transition:1000,delay:0});
+						new op.Dissolver({elements:hui.get('paintings').getElementsByTagName('div'),wait:3000,transition:1000,delay:0});
 					</script>
 				</xsl:when>
 				<xsl:otherwise>
