@@ -79,7 +79,7 @@ class TextDecorator {
 	}
 	
 	function url($text,&$rules) {
-		$pattern = "/((http:\/\/[a-z0-9\-\.]+\.[a-z0-9]{2,3})((\/[a-z0-9.\?&\/\#=_\-\)\(;]*)| |\r\n))/mi";
+		$pattern = "/((http[s]?:\/\/[a-z0-9\-\.]+\.[a-z0-9]{2,3})((\/[a-z0-9.\?&\/\#=_\-\%)\(;]*)| |\r\n))/mi";
 		preg_match_all($pattern, $text, $matches,PREG_OFFSET_CAPTURE);
 		foreach ($matches[0] as $match) {
 			$pos = $match[1];
