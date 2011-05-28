@@ -32,7 +32,7 @@ hui.ui.listen({
 		document.location='../../Services/Preview/?id='+obj.id;
 	},
 	$click$delete : function() {
-		hui.ui.get().confirm({
+		hui.ui.confirm({
 			emotion:'gasp',
 			title:'Er du sikker på at du vil slette siden?',
 			text:'Alle data fjernes og handlingen kan ikke fortrydes!',
