@@ -94,8 +94,8 @@ var controller = {
 			this.partEditControls.showAtElement(hui.firstByClass(document.body,'section_selected'),{'horizontal':'left','vertical':'topOutside'});
 		}
 		this.ready = true;
-		hui.ui.listen(document.body,'mouseup',function() {
-			this.selectedText = hui.getSelectedText();
+		hui.listen(document.body,'mouseup',function() {
+			this.selectedText = hui.selection.getText();
 		}.bind(this));
 		window.onscroll=this.saveScroll;
 		var scroll = hui.cookie.get('document.scroll');

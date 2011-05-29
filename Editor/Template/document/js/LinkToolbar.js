@@ -33,6 +33,7 @@ var controller = {
 		var p = this._getParameters();
 		hui.ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
 			this.editorFrame.reload();
+			document.location='Toolbar.php';
 		}.bind(this)});
 	},
 	
@@ -42,11 +43,13 @@ var controller = {
 		p.id = this.id;
 		hui.ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
 			this.editorFrame.reload();
+			document.location='Toolbar.php';
 		}.bind(this)});
 	},
 	$click$delete : function() {
 		hui.ui.request({url:'Links/DeleteLink.php',parameters:{id:this.id},onSuccess:function() {
 			this.editorFrame.reload();
+			document.location='Toolbar.php';
 		}.bind(this)});
 	},
 	
