@@ -199,7 +199,7 @@ class GuiUtils {
 	 */
 	function buildPageOptions($template=null) {
 		$output='';
-		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "");
+		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "")." order by page.title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$output.='<option title="'.StringUtils::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
