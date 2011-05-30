@@ -68,6 +68,7 @@ class TextPartController extends PartController
 			$part->setTextIndent(Request::getString('textIndent'));
 			$part->setTextTransform(Request::getString('textTransform'));
 			$part->setFontVariant(Request::getString('fontVariant'));
+			$part->setColor(Request::getString('color'));
 			$part->setTextDecoration(Request::getString('textDecoration'));
 			$part->setImageId(Request::getInt('imageId'));
 			$part->setImageFloat(Request::getString('imageFloat'));
