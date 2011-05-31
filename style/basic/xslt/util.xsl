@@ -292,13 +292,13 @@
 		<script type="text/javascript">
 		try {
 			if (document.location.hostname!=="localhost") {
-				var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview']];(function(d,t){
+				var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview','_trackPageLoadTime']];(function(d,t){
 				var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
 				g.async=1;g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)
 				}(document,'script'))			
 			}
 		} catch(ex) {}
-</script>
+		</script>
 	</xsl:if>
 </xsl:template>
 

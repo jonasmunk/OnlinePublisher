@@ -195,7 +195,7 @@ class ListPartController extends PartController
 		foreach ($items as $item) {
 			$data.='<item>'.
 			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>'.
-			'<text>'.StringUtils::escapeXML($item->getText()).'</text>';
+			'<text>'.StringUtils::escapeXMLBreak($item->getText(),'<break/>').'</text>';
 			if (StringUtils::isNotBlank($item->getUrl())) {
 				$data.='<url>'.StringUtils::escapeXML($item->getUrl()).'</url>';
 			}
