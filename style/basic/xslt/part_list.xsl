@@ -73,6 +73,8 @@
 	<p class="part_list_text"><xsl:apply-templates/></p>
 </xsl:template>
 
+<xsl:template match="l:break"><br/></xsl:template>
+
 <xsl:template match="l:item/l:source">
 	<p class="part_list_source"><xsl:apply-templates/></p>
 </xsl:template>
