@@ -191,16 +191,21 @@ hui.ui.Selection.prototype = {
 	},
 	_setBusy : function(busy) {
 		this.busy+= busy ? 1 : -1;
-		hui.setClass(this.element,'hui_selection_busy',this.busy>0);
-		hui.log('Busy count='+this.busy)
+		window.clearTimeout(this.busytimer);
+		if (this.busy>0) {
+			var e = this.element;
+			this.busytimer = window.setTimeout(function() {
+				hui.addClass(e,'hui_selection_busy');
+			},300);
+		} else {
+			hui.removeClass(this.element,'hui_selection_busy');
+		}
 	},
 	_checkValue : function() {
+		if (!this.selection) {return}
 		var item = this.getSelectionWithValue(this.selection.value);
 		if (!item) {
 			this.selectFirst();
-		} else {
-			hui.log('Selection is...')
-			hui.log(item)
 		}
 	}
 }
@@ -217,6 +222,7 @@ hui.ui.Selection.Items = function(options) {
 	this.element = hui.get(options.element);
 	this.title = hui.get(this.element.id+'_title');
 	this.name = options.name;
+	this.disclosed = {};
 	this.parent = null;
 	this.items = [];
 	hui.ui.extend(this);
@@ -242,7 +248,7 @@ hui.ui.Selection.Items.prototype = {
 	$itemsLoaded : function(items) {
 		this.items = [];
 		this.element.innerHTML='';
-		this.buildLevel(this.element,items,0);
+		this.buildLevel(this.element,items,0,true);
 		if (this.title) {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
 		}
@@ -257,10 +263,9 @@ hui.ui.Selection.Items.prototype = {
 		this.parent._setBusy(false);
 	},
 	/** @private */
-	buildLevel : function(parent,items,inc) {
+	buildLevel : function(parent,items,inc,open) {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);
-		var open = inc==0;
 		var level = hui.build('div',{'class':'hui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
 		hui.each(items,function(item) {
 			if (item.type=='title') {
@@ -269,18 +274,23 @@ hui.ui.Selection.Items.prototype = {
 			}
 			var hasChildren = item.children && item.children.length>0;
 			var left = inc*16+6;
-			if (!hierarchical && inc>0 || hierarchical && !hasChildren) left+=13;
+			if (!hierarchical && inc>0 || hierarchical && !hasChildren) {
+				left+=13;
+			}
 			var node = hui.build('div',{'class':'hui_selection_item'});
 			node.style.paddingLeft = left+'px';
 			if (item.badge) {
 				node.appendChild(hui.build('strong',{'class':'hui_selection_badge',text:item.badge}));
 			}
+			var subOpen = false;
 			if (hierarchical && hasChildren) {
 				var self = this;
-				var x = hui.build('span',{'class':'hui_disclosure',parent:node});
-				hui.listen(x,'click',function(e) {
+				subOpen = this.disclosed[item.value]
+				var cls = this.disclosed[item.value] ? 'hui_disclosure hui_disclosure_open' : 'hui_disclosure';
+				var disc = hui.build('span',{'class':cls,parent:node});
+				hui.listen(disc,'click',function(e) {
 					hui.stop(e);
-					self.toggle(x);
+					self.toggle(disc,item);
 				});
 			}
 			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
@@ -299,15 +309,17 @@ hui.ui.Selection.Items.prototype = {
 			var info = {title:item.title,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
 			node.dragDropInfo = info;
 			this.items.push(info);
-			this.buildLevel(level,item.children,inc+1);
+			this.buildLevel(level,item.children,inc+1,subOpen);
 		}.bind(this));
 	},
 	/** @private */
-	toggle : function(node) {
+	toggle : function(node,item) {
 		if (hui.hasClass(node,'hui_disclosure_open')) {
+			this.disclosed[item.value] = false;
 			hui.getNext(node.parentNode).style.display='none';
 			hui.removeClass(node,'hui_disclosure_open');
 		} else {
+			this.disclosed[item.value] = true;
 			hui.getNext(node.parentNode).style.display='block';
 			hui.addClass(node,'hui_disclosure_open');
 		}

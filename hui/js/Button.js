@@ -122,6 +122,9 @@ hui.ui.Button.prototype = {
 	/** Sets the button text */
 	setText : function(text) {
 		hui.dom.setText(this.element.getElementsByTagName('span')[1], text);
+	},
+	getData : function() {
+		return this.options.data;
 	}
 }
 

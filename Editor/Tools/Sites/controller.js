@@ -12,10 +12,23 @@ hui.ui.listen({
 		hui.ui.get('newSubPage').setEnabled(item.kind=='hierarchy' || item.kind=='hierarchyItem');
 	},
 	$selectionChanged$list : function(item) {
-		hui.ui.get('edit').setEnabled(item.kind=='page');
-		hui.ui.get('info').setEnabled(true);
-		hui.ui.get('delete').setEnabled(item.kind=='page');
-		hui.ui.get('view').setEnabled(item.kind=='page');
+		if (item.kind=='page') {
+			hui.ui.get('edit').setEnabled(true);
+			hui.ui.get('info').enable();
+			hui.ui.get('delete').enable();
+			hui.ui.get('view').enable();			
+		} else if (item.kind=='hierarchyItem') {
+			var page = item.data && item.data.page;
+			hui.ui.get('edit').setEnabled(page);
+			hui.ui.get('info').enable();
+			hui.ui.get('delete').disable()
+			hui.ui.get('view').disable()
+		} else {
+			hui.ui.get('edit').disable()
+			hui.ui.get('info').disable()
+			hui.ui.get('delete').disable()
+			hui.ui.get('view').disable()
+		}
 	},
 	$selectionReset$list : function() {
 		hui.ui.get('edit').setEnabled(false);
@@ -25,42 +38,43 @@ hui.ui.listen({
 	},
 	$click$edit : function() {
 		var obj = list.getFirstSelection();
-		document.location='../../Template/Edit.php?id='+obj.id;
+		if (obj.kind=='page') {
+			document.location='../../Template/Edit.php?id='+obj.id;
+		} else if (obj.kind=='hierarchyItem' && obj.data && obj.data.page) {
+			document.location='../../Template/Edit.php?id='+obj.data.page;
+		}
 	},
 	$click$view : function() {
 		var obj = list.getFirstSelection();
 		document.location='../../Services/Preview/?id='+obj.id;
 	},
 	$click$delete : function() {
-		hui.ui.confirm({
-			emotion:'gasp',
-			title:'Er du sikker på at du vil slette siden?',
-			text:'Alle data fjernes og handlingen kan ikke fortrydes!',
-			cancel:'Nej',
-			ok:'Ja, slet siden',
-			onOK : function() {
-				var obj = list.getFirstSelection();
-				if (this.activePage==obj.id) {
-					pageFormula.reset();
-					pageEditor.hide();
-					this.activePage = 0;
-				}
-				hui.ui.request({url:'DeletePage.php',onSuccess:'pageDeleted',parameters:{id:obj.id}});
-			}.bind(this)
+		var obj = list.getFirstSelection();
+		if (obj.kind=='page') {
+			this.deletePage(obj.id);
+		}
+	},
+	deletePage : function(id) {
+		if (this.activePage==id) {
+			pageFormula.reset();
+			pageEditor.hide();
+			this.activePage = 0;
+		}
+		hui.ui.request({
+			message : {start:'Sletter side...',delay:300,success:'Siden er nu slettet'},
+			url : 'DeletePage.php',
+			parameters : { id : id },
+			onSuccess : function() {
+				list.refresh();
+				languageSource.refresh();
+				hierarchySource.refresh();				
+			}
 		});
-	},
-	$ok$deleteConfirmation : function() {
-		alert(0)
-	},
-	$success$pageDeleted : function() {
-		list.refresh();
-		languageSource.refresh();
-		hierarchySource.refresh();
 	},
 	$click$info : function() {
 		var obj = list.getFirstSelection();
 		if (obj.kind=='page') {
-			hui.ui.request({url:'LoadPage.php',onSuccess:'pageLoaded',json:{data:obj}});
+			this.loadPage(obj.id);
 		} else if (obj.kind=='hierarchyItem') {
 			this.loadHierarchyItem(obj.id);
 		}
@@ -70,65 +84,32 @@ hui.ui.listen({
 	},
 	$listRowWasOpened$list : function(obj) {
 		if (obj.kind=='page') {
-			hui.ui.request({url:'LoadPage.php',onSuccess:'pageLoaded',json:{data:obj}});
-		} else if (obj.kind=='hierarchyItem') {
-			this.loadHierarchyItem(obj.id);
+			this.loadPage(obj.id);
 		}
 	},
 	$drop$page$language : function(dragged,dropped) {
-		hui.ui.request({url:'ChangeLanguage.php',onSuccess:'languageChanged',json:{data:{id:dragged.id,language:dropped.value}}});
-	},
-	$success$languageChanged : function(data) {
-		list.refresh();
-		languageSource.refresh();
-	},
-	$selectionWasOpened : function(obj) {
-		if (obj.kind=='hierarchyItem') {
-			this.loadHierarchyItem(obj.value);
-		}
-	},
-		
-	/////////// Hierarchy item properties //////////
-	
-	loadHierarchyItem : function(id) {
-		hui.ui.request({url:'LoadHierarchyItem.php',onSuccess:'hierarchyItemLoaded',parameters:{id:id}});
-	},
-	$success$hierarchyItemLoaded : function(data) {
-		this.activeHierarchyItem = data.id;
-		hierarchyItemFormula.setValues(data);
-		hierarchyItemEditor.show();
-	},
-	$click$cancelHierarchyItem : function() {
-		this.activeHierarchyItem = null;
-		hierarchyItemFormula.reset();
-		hierarchyItemEditor.hide();
-	},
-	$click$saveHierarchyItem : function() {
-		var values = hierarchyItemFormula.getValues();
-		values.id = this.activeHierarchyItem;
-		hui.ui.request({url:'SaveHierarchyItem.php',onSuccess:'hierarchyItemChanged',json:{data:values}});
-	},
-	$success$hierarchyItemChanged : function() {
-		this.activeHierarchyItem = 0;
-		hierarchyItemFormula.reset();
-		hierarchyItemEditor.hide();
-		list.refresh();
-		hierarchySource.refresh();
-		hui.ui.showMessage({text:'Menupunktet er opdateret!',duration:2000});
-	},
-	$click$deleteHierarchyItem : function() {
-		hui.ui.request({url:'DeleteHierarchyItem.php',onSuccess:'hierarchyItemDeleted',parameters:{id:this.activeHierarchyItem}});
-	},
-	$success$hierarchyItemDeleted : function() {
-		this.activeHierarchyItem = 0;
-		hierarchyItemFormula.reset();
-		hierarchyItemEditor.hide();
-		list.refresh();
-		hierarchySource.refresh();
-		hui.ui.showMessage({text:'Menupunktet er slettet!',duration:2000});
+		hui.ui.request({
+			message : {start:'Ændrer sprog...',delay:300},
+			url : 'ChangeLanguage.php',
+			json : {data : {id:dragged.id,language:dropped.value}},
+			onSuccess : function() {
+				hui.ui.showMessage({text:'Sproget er ændret',icon:'common/success',duration:2000});
+				list.refresh();
+				languageSource.refresh();
+			}
+		});
 	},
 	
 	/////////// Page properties //////////
+	
+	loadPage : function(id) {
+		hui.ui.request({
+			message : {start : 'Åbner side...',delay:300},
+			url : 'LoadPage.php',
+			onSuccess : 'pageLoaded',
+			parameters : {id:id}
+		});
+	},
 	
 	$success$pageLoaded : function(data) {
 		this.activePage = data.id;
@@ -143,18 +124,22 @@ hui.ui.listen({
 	$click$savePage : function() {
 		var values = pageFormula.getValues();
 		values.id = this.activePage;
-		hui.ui.request({url:'SavePage.php',onSuccess:'pageChanged',json:{data:values}});
-	},
-	$click$deletePage : function() {
-		hui.ui.request({url:'DeletePage.php',onSuccess:'pageChanged',parameters:{id:this.activePage}});
-	},
-	$success$pageChanged : function(data) {
+		hui.ui.request({
+			message : {text : 'Gemmer side...',delay:300},
+			url : 'SavePage.php',
+			json : {data:values},
+			onSuccess : function() {
+				list.refresh();
+				languageSource.refresh();
+				hierarchySource.refresh();				
+			}
+		});
 		this.activePage = 0;
 		pageFormula.reset();
 		pageEditor.hide();
-		list.refresh();
-		languageSource.refresh();
-		hierarchySource.refresh();
+	},
+	$click$deletePage : function() {
+		this.deletePage(this.activePage);
 	},
 	
 	////////////// New page /////////////

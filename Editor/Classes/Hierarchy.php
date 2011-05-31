@@ -45,7 +45,7 @@ class Hierarchy {
     
     function canDelete() {
         $out = false;
-        $sql="select count(id) as num from hierarchy_item where hierarchy_id=".$this->id;
+        $sql="select count(id) as num from hierarchy_item where hierarchy_id=".Database::int($this->id);
         if ($row = Database::selectFirst($sql)) {
             if ($row['num']==0) {
                 $out = true;
@@ -57,7 +57,7 @@ class Hierarchy {
     ////////////////// Persistence //////////////////
     
     function load($id) {
-        $sql = "select * from hierarchy where id=".$id;
+        $sql = "select * from hierarchy where id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
             return Hierarchy::_populate($row);
         } else {
@@ -66,7 +66,7 @@ class Hierarchy {
     }
 	
 	function loadFromItemId($id) {
-		$sql="select hierarchy_id from hierarchy_item where id=".$id;
+		$sql="select hierarchy_id from hierarchy_item where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			return Hierarchy::load($row['hierarchy_id']);
 		}
@@ -106,7 +106,7 @@ class Hierarchy {
     
     function delete() {
         if ($this->canDelete()) {
-            $sql='delete from hierarchy where id='.$this->id;
+            $sql='delete from hierarchy where id='.Database::int($this->id);
             return Database::delete($sql);
         } else {
             return false;
@@ -124,7 +124,7 @@ class Hierarchy {
 	function createItemForPage($pageId,$title,$parentId) {
 		
 		// find index
-		$sql="select max(`index`) as `index` from hierarchy_item where parent=".$parentId." and hierarchy_id=".$this->id;
+		$sql="select max(`index`) as `index` from hierarchy_item where parent=".Database::int($parentId)." and hierarchy_id=".Database::int($this->id);
 		if ($row = Database::selectFirst($sql)) {
 			$index=$row['index']+1;
 		} else {
@@ -134,17 +134,17 @@ class Hierarchy {
 		$sql="insert into hierarchy_item (title,type,hierarchy_id,parent,`index`,target_type,target_id) values (".
 		Database::text($title).
 		",'item'".
-		",".$this->id.
-		",".$parentId.
-		",".$index.
+		",".Database::int($this->id).
+		",".Database::int($parentId).
+		",".Database::int($index).
 		",'page'".
-		",".$pageId.
+		",".Database::int($pageId).
 		")";
 		Database::insert($sql);
 	}
 
 	function markChanged() {
-		$sql="update hierarchy set changed=now() where id=".$this->id;
+		$sql="update hierarchy set changed=now() where id=".Database::int($this->id);
 		Database::update($sql);
 	}
 	
@@ -152,7 +152,7 @@ class Hierarchy {
     
     function publish($allowDisabled=false) {
 	    $data = $this->build($this->id,$allowDisabled);
-	    $sql="update hierarchy set published=now(),data=".Database::text($data)." where id=".$this->id;
+	    $sql="update hierarchy set published=now(),data=".Database::text($data)." where id=".Database::int($this->id);
 	    Database::update($sql);
     }
     
@@ -168,8 +168,8 @@ class Hierarchy {
     	$output="";
     	$sql="select hierarchy_item.*,page.disabled,page.path from hierarchy_item".
     	" left join page on page.id = hierarchy_item.target_id and (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')".
-    	" where parent=".$parent.
-    	" and hierarchy_id=".$id.
+    	" where parent=".Database::int($parent).
+    	" and hierarchy_id=".Database::int($id).
     	" order by `index`";
     	$result = Database::select($sql);
     	while ($row = Database::next($result)) {
@@ -220,75 +220,101 @@ class Hierarchy {
     
     function moveItem($id,$dir) {
         $output = false;
-        $sql="select * from hierarchy_item where id=".$id;
+        $sql="select * from hierarchy_item where id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
 	        $index=$row['index'];
 	        $hierarchyId=$row['hierarchy_id'];
 	        $parent=$row['parent'];
 
-	        $sql="select id from hierarchy_item where parent=".$parent." and hierarchy_id=".$hierarchyId." and `index`=".($index+$dir);
+	        $sql="select id from hierarchy_item where parent=".Database::int($parent)." and hierarchy_id=".Database::int($hierarchyId)." and `index`=".Database::int($index+$dir);
 	        $result = Database::select($sql);
 	        if ($row = Database::next($result)) {
 	        	$otherid=$row['id'];
 
-	        	$sql="update hierarchy_item set `index`=".($index+$dir)." where id=".$id;
+	        	$sql="update hierarchy_item set `index`=".Database::int($index+$dir)." where id=".Database::int($id);
 	        	Database::update($sql);
 
-	        	$sql="update hierarchy_item set `index`=".$index." where id=".$otherid;
+	        	$sql="update hierarchy_item set `index`=".Database::int($index)." where id=".Database::int($otherid);
 	        	Database::update($sql);
 
-	        	$sql="update hierarchy set changed=now() where id=".$hierarchyId;
+	        	$sql="update hierarchy set changed=now() where id=".Database::int($hierarchyId);
 	        	Database::update($sql);
 	        	$output = true;
+				EventManager::fireEvent('update','hierarchy',null,$id);
 	        }
 	        Database::free($result);
 		} else {
 			error_log('could not load: '.$sql);
 		}
-		EventManager::fireEvent('update','hierarchy',null,$id);
         return $output;
     }
     
     function deleteItem($id) {
 
         // Load info about item
-        $sql="select * from hierarchy_item where id=".$id;
+        $sql="select * from hierarchy_item where id=".Database::int($id);
         $row = Database::selectFirst($sql);
 		if (!$row) {
+			Log::debug('Cannot find item');
 			return null;
 		}
-        $parent=$row['parent'];
-        $hierarchyId=$row['hierarchy_id'];
+		// Check that no children exists
+        $sql="select * from hierarchy_item where parent=".Database::int($id);
+		if (Database::selectFirst($sql)) {
+			Log::debug('Will not delete item with parents');
+			return null;
+		}
+        $parent = $row['parent'];
+        $hierarchyId = $row['hierarchy_id'];
 
         // Delete item
-        $sql="delete from hierarchy_item where id=".$id;
+        $sql="delete from hierarchy_item where id=".Database::int($id);
         Database::delete($sql);
 
         // Fix positions
-        $sql="select id from hierarchy_item where parent=".$parent." and hierarchy_id=".$hierarchyId." order by `index`";
+        $sql="select id from hierarchy_item where parent=".Database::int($parent)." and hierarchy_id=".Database::int($hierarchyId)." order by `index`";
         $result = Database::select($sql);
 
         $index=1;
         while ($row = Database::next($result)) {
-        	$sql="update hierarchy_item set `index`=".$index." where id=".$row['id'];
+        	$sql="update hierarchy_item set `index`=".Database::int($index)." where id=".Database::int($row['id']);
         	Database::update($sql);
         	$index++;
         }
         Database::free($result);
 
         // Mark hierarchy as changed
-        $sql="update hierarchy set changed=now() where id=".$hierarchyId;
+        $sql="update hierarchy set changed=now() where id=".Database::int($hierarchyId);
         Database::update($sql);
 	
-		EventManager::fireEvent('update','hierarchy',null,$id);
+		EventManager::fireEvent('update','hierarchy',null,$hierarchyId);
         return $hierarchyId;
     }
     
+    function getAncestorPath($id) {
+	    $output = array();
+	    $parent = $id;
+	    while ($parent>0) {
+    	    $sql = "select * from hierarchy_item where id=".Database::int($parent);
+    	    if ($row=Database::selectFirst($sql)) {
+    	        $output[] = intval($row['id']);
+    	        $parent = $row['parent'];
+    	    } else {
+    	        $parent = 0;
+    	    }
+	    }
+/*        $sql = "select hierarchy.id,hierarchy.name from hierarchy,hierarchy_item where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".Database::int($id);
+    	if ($row=Database::selectFirst($sql)) {
+            $output[] = array('type' => 'hierarchy','id' => $row['id'],'title' => $row['name']);    	
+    	}*/
+	    return array_reverse($output);
+	}
+
     function getItemPath($id) {
 	    $output = array();
 	    $parent = $id;
 	    while ($parent>0) {
-    	    $sql = "select * from hierarchy_item where id=".$parent;
+    	    $sql = "select * from hierarchy_item where id=".Database::int($parent);
     	    if ($row=Database::selectFirst($sql)) {
     	        $output[] = array('type'=>'item','id'=>$row['id'],'title'=>$row['title']);
     	        $parent = $row['parent'];
@@ -296,7 +322,7 @@ class Hierarchy {
     	        $parent = 0;
     	    }
 	    }
-        $sql = "select hierarchy.id,hierarchy.name from hierarchy,hierarchy_item where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".$id;
+        $sql = "select hierarchy.id,hierarchy.name from hierarchy,hierarchy_item where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".Database::int($id);
     	if ($row=Database::selectFirst($sql)) {
             $output[] = array('type' => 'hierarchy','id' => $row['id'],'title' => $row['name']);    	
     	}
@@ -304,8 +330,66 @@ class Hierarchy {
 	}
 	
 	function markHierarchyOfItemChanged($id) {
-	    $sql = "update hierarchy,hierarchy_item set hierarchy.changed=now() where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".$id;
+	    $sql = "update hierarchy,hierarchy_item set hierarchy.changed=now() where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".Database::int($id);
         Database::update($sql);
+	}
+	
+	function relocateItem($move,$targetItem,$targetHierarchy) {
+
+		// Get info about hierarchy item
+		$sql = "select * from hierarchy_item where id=".Database::int($move);
+		if ($row = Database::selectFirst($sql)) {
+			$moveHierarchy = $row['hierarchy_id'];
+			$moveParent = $row['parent'];
+		} else {
+			return array('success'=>false,'message'=>'Punktet findes ikke');
+		}
+
+		if ($targetHierarchy>0 && $targetHierarchy!=$moveHierarchy) {
+			return array('success'=>false,'message'=>'Du kan ikke flyttet et punkt til et andet hierarki');
+		} else if ($moveParent==$targetItem) {
+			return array('success'=>false,'message'=>'Punktet har allerede denne position');
+		} else if ($move==$targetItem) {
+			return array('success'=>false,'message'=>'Du kan ikke flyttet et punkt til sig selv');
+		} else {
+			$path = Hierarchy::getAncestorPath($targetItem);
+			if (in_array($move,$path)) {
+				return array('success'=>false,'message'=>'Du kan ikke flyttet et punkt til et punkt under sig selv');
+			}
+		}
+
+		// Find largest position of items under new parent
+		if ($targetHierarchy>0) {
+			$sql = "select max(`index`) as `index` from hierarchy_item where parent=0 and hierarchy_id=".Database::int($targetHierarchy);
+			$newParent = 0;
+		} else {
+			$sql = "select max(`index`) as `index` from hierarchy_item where parent=".Database::int($targetItem);
+			$newParent = $targetItem;
+		}
+		if ($row = Database::selectFirst($sql)) {
+		    $newIndex = $row['index']+1;
+		} else {
+		    $newIndex = 1;
+		}
+
+		// Change position to new position
+		$sql="update hierarchy_item set parent=".Database::int($newParent).",`index`=".Database::int($newIndex)." where id=".Database::int($move);
+		Database::update($sql);
+
+		// Fix positions of old parent
+		$sql="select id from hierarchy_item where parent=".Database::int($moveParent)." and hierarchy_id=".Database::int($moveHierarchy)." order by `index`";
+		$result = Database::select($sql);
+		$index=1;
+		while ($row = Database::next($result)) {
+			$sql="update hierarchy_item set `index`=".Database::int($index)." where id=".Database::int($row['id']);
+			Database::update($sql);
+			$index++;
+		}
+		Database::free($result);
+
+		Hierarchy::markHierarchyOfItemChanged($move);
+		
+		return array('success'=>true);
 	}
 }
 ?>

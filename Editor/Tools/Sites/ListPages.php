@@ -34,20 +34,34 @@ function listHierarhy() {
 	global $windowSize,$windowPage,$query,$sort,$kind,$value,$direction;
 	$writer = new ListWriter();
 	
-	$sql=buildHierarchySql();
-
 	$writer->startList();
-	$writer->sort($sort,$direction);
-	$writer->window(array( 'total' => 0, 'size' => $windowSize, 'page' => $windowPage ));
 	$writer->startHeaders();
 	$writer->header(array('title'=>'Menupunkt'));
-	$writer->header(array('title'=>'Link','width'=>70));
+	$writer->header(array('title'=>'Link','width'=>50));
+	$writer->header(array('width'=>1));
 	$writer->endHeaders();
+	if ($kind=='hierarchy') {
+		$hierarchyId = intval($value);
+		$parent = null;
+	} else {
+		$hierarchyId = null;
+		$parent = intval($value);
+	}
+	listHierarhyLevel($writer,$hierarchyId,$parent,1);
 	
+	$writer->endList();	
+}
+
+function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
+	$sql=buildHierarchySql($hierarchyId,$parent);
 	$result = Database::select($sql['list']);
 	while ($row = Database::next($result)) {
 		$icon=Hierarchy::getItemIcon($row['target_type']);
-		$writer->startRow(array('id'=>$row['id'],'kind'=>'hierarchyItem'));
+		$options = array('id'=>$row['id'],'kind'=>'hierarchyItem','level'=>$level);
+		if ($row['target_type']=='page' && $row['pageid']) {
+			$options['data'] = array('page'=>intval($row['pageid']));
+		}
+		$writer->startRow($options);
 		$writer->startCell(array('icon'=>'monochrome/dot'))->text($row['title'])->endCell();
 		if ($row['target_type']=='page') {
 			if (!$row['pageid']) {
@@ -66,24 +80,26 @@ function listHierarhy() {
 		} else {
 			$writer->startCell(array('icon'=>'monochrome/round_question'))->text($row['target_type'].'')->endCell();
 		}
-		$writer->endRow();
+		$writer->startCell(array('wrap'=>false))->
+		startIcons()->
+			icon(array('icon'=>'monochrome/round_arrow_up','data'=>array('direction'=>'up')))->
+			icon(array('icon'=>'monochrome/round_arrow_down','data'=>array('direction'=>'down')))->
+		endIcons()->
+		endCell()->
+		endRow();
+		listHierarhyLevel($writer,$hierarchyId,$row['id'],$level+1);
 	}
 	Database::free($result);
-	
-	$writer->endList();	
 }
 
-function buildHierarchySql() {
-	global $windowSize,$windowPage,$query,$sort,$kind,$value,$direction;
-	
+function buildHierarchySql($hierarchyId,$parent) {
 	$sql="select hierarchy_item.*,page.id as pageid,page.title as pagetitle,template.unique as templateunique,file.object_id as fileid,file.filename,fileobject.title as filetitle from hierarchy_item left join page on page.id = hierarchy_item.target_id left join file on file.object_id = hierarchy_item.target_id left join object as fileobject on file.object_id=fileobject.id left join template on template.id=page.template_id";
-	if ($kind=='hierarchy') {
-		$sql.=" where hierarchy_id=".$value." and parent=0";
+	if ($parent===null && $hierarchyId!==null) {
+		$sql.=" where hierarchy_id=".Database::int($hierarchyId)." and parent=0";
 	} else {
-		$sql.=" where parent=".$value;
+		$sql.=" where parent=".Database::int($parent);
 	}
 	$sql.=" order by `index`";
-	
 	return array('list'=>$sql);
 }
 

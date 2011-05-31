@@ -60,6 +60,12 @@ class ListWriter {
 		if (isset($options['kind'])) {
 			echo ' kind="'.$options['kind'].'"';
 		}
+		if (isset($options['level'])) {
+			echo ' level="'.$options['level'].'"';
+		}
+		if (isset($options['data'])) {
+			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
+		}
 		echo '>';
 		return $this;
 	}
@@ -73,6 +79,9 @@ class ListWriter {
 		echo '<cell';
 		if (isset($options['icon'])) {
 			echo ' icon="'.$options['icon'].'"';
+		}
+		if (isset($options['wrap'])) {
+			echo ' wrap="'.($options['wrap'] ? 'true' : 'false').'"';
 		}
 		echo '>';
 		return $this;
@@ -101,7 +110,20 @@ class ListWriter {
 	}
 	
 	function icon($options=array()) {
-		echo '<icon icon="'.$options['icon'].'"/>';
+		echo '<icon icon="'.$options['icon'].'"';
+		if (isset($options['data'])) {
+			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
+		}
+		echo '/>';
+		return $this;
+	}
+
+	function button($options=array()) {
+		echo '<button text="'.StringUtils::escapeXML($options['text']).'"';
+		if (isset($options['data'])) {
+			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
+		}
+		echo '/>';
 		return $this;
 	}
 	

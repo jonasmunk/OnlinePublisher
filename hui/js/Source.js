@@ -48,9 +48,10 @@ hui.ui.Source.prototype = {
 		};
 		if (this.busy) {
 			this.pendingRefresh = true;
-			if (this.transport) {
-				this.transport.abort();
-			}
+			// It might be better to cue rather than abort
+			//if (this.transport) {
+			//	this.transport.abort();
+			//}
 			return;
 		}
 		this.pendingRefresh = false;
@@ -111,7 +112,7 @@ hui.ui.Source.prototype = {
 	},
 	/** @private */
 	parse : function(t) {
-		if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror') {
+		if (hui.request.isXMLResponse(t)) {
 			this.parseXML(t.responseXML);
 		} else {
 			var str = t.responseText.replace(/^\s+|\s+$/g, ''),

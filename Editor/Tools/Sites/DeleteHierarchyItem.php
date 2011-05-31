@@ -10,5 +10,10 @@ require_once '../../Classes/Hierarchy.php';
 
 $id = Request::getInt('id');
 
-Hierarchy::deleteItem($id);
+$result = Hierarchy::deleteItem($id);
+Log::debug($result);
+
+if ($result===null) {
+	In2iGui::respondFailure();
+}
 ?>

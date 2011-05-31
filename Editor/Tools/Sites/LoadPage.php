@@ -9,10 +9,10 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Page.php';
 
-$data = Request::getObject('data');
-$page=Page::load($data->id);
-$page->setData(null);
-$page->toUnicode();
+$id = Request::getInt('id');
 
-In2iGui::sendObject($page);
+$page=Page::load($id);
+$page->setData(null);
+
+In2iGui::sendUnicodeObject($page);
 ?>

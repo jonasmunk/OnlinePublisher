@@ -2594,6 +2594,7 @@ div.hui_list table thead th
 	text-align: left;
 	font-size: 9pt;
 	background: #fafafa;
+	text-shadow: 0 1px 0px white;
 	color: #334455;
 	vertical-align: top;
 	line-height: 21px;
@@ -2669,6 +2670,15 @@ span.hui_list_icons .hui_icon
 	float: none;
 }
 
+.hui_list_revealing
+{
+	visibility: hidden;
+}
+
+div.hui_list tbody tr:hover .hui_list_revealing
+{
+	visibility: visible;
+}
 
 div.hui_list table tbody tr:hover
 {
@@ -2848,6 +2858,12 @@ div.hui_list_busy div.hui_list_progress
 div.hui_selection span.hui_disclosure
 {
 	margin-right: 2px;
+	opacity: .3;
+}
+
+div.hui_selection:hover span.hui_disclosure
+{
+	opacity: 1;
 }
 
 div.hui_selection_item span.hui_selection_label
@@ -2903,6 +2919,7 @@ div.hui_selection div.hui_selected, div.hui_selection div.hui_selected:hover
 	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
 	background: -webkit-gradient(linear, left top, left bottom, from(#92BCFA), to(#5580ee));
 	color: #fff;
+	-webkit-box-shadow: inset 0 1px 0 #7FA9F6;
 }
 
 div.hui_selection div.hui_selected span.hui_selection_label
@@ -2936,7 +2953,8 @@ div.hui_selection_inline div.hui_selected span.hui_selection_label
 .hui_selection div.hui_drop, .hui_selection div.hui_drop:hover
 {
 	background: #779cd6 url('../gfx/hover_bg.png');
-	-webkit-border-radius: 4px;
+	/*-webkit-border-radius: 4px;*/
+	cursor: default;
 }
 
 div.hui_selection_busy span.hui_selection_label

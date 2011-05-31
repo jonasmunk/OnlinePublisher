@@ -1,5 +1,5 @@
 hui.ui.listen({
-	$listRowWasOpened$list : function(item) {
+	$clickButton$list : function(item) {
 		hui.ui.request({
 			url:'PublishOne.php',
 			parameters:{id:item.id,kind:item.kind},

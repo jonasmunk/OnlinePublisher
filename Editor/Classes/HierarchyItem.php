@@ -5,12 +5,14 @@
  */
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Hierarchy.php');
 
 class HierarchyItem {
         
 	var $id;
 	var $title;
 	var $hidden;
+	var $canDelete;
 
     function HierarchyItem() {
     }
@@ -39,6 +41,15 @@ class HierarchyItem {
 	    return $this->hidden;
 	}
 	
+	function setCanDelete($canDelete) {
+	    $this->canDelete = $canDelete;
+	}
+
+	function getCanDelete() {
+	    return $this->canDelete;
+	}
+	
+	
 	function toUnicode() {
 		$this->title = mb_convert_encoding($this->title, "UTF-8","ISO-8859-1");
 	}
@@ -54,6 +65,8 @@ class HierarchyItem {
 			$item->setHidden($row['hidden']==1);
 		}
 		Database::free($result);
+		$sql="select * from hierarchy_item where parent=".Database::int($id);
+		$item->canDelete = Database::isEmpty($sql);
 		return $item;
 	}
 	
@@ -64,6 +77,7 @@ class HierarchyItem {
 			",hidden=".Database::boolean($this->hidden).
 			" where id=".$this->id;
 			Database::update($sql);
+			Hierarchy::markHierarchyOfItemChanged($this->id);
 		}
 	}
 }

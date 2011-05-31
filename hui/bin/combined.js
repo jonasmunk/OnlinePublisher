@@ -4683,9 +4683,10 @@ hui.ui.Source.prototype = {
 		};
 		if (this.busy) {
 			this.pendingRefresh = true;
-			if (this.transport) {
-				this.transport.abort();
-			}
+			// It might be better to cue rather than abort
+			//if (this.transport) {
+			//	this.transport.abort();
+			//}
 			return;
 		}
 		this.pendingRefresh = false;
@@ -4746,7 +4747,7 @@ hui.ui.Source.prototype = {
 	},
 	/** @private */
 	parse : function(t) {
-		if (t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror') {
+		if (hui.request.isXMLResponse(t)) {
 			this.parseXML(t.responseXML);
 		} else {
 			var str = t.responseText.replace(/^\s+|\s+$/g, ''),
@@ -6248,6 +6249,8 @@ hui.ui.Formula.Tokens.prototype = {
  * <li>listRowWasOpened - When a row is double clicked (rename to open)</li>
  * <li>selectionChanged - When a row is selected (rename to select)</li>
  * <li>selectionReset - When a selection is removed</li>
+ * <li>clickButton(row,button) - When a button is clicked</li>
+ * <li>clickIcon(row,data) - When an icon is clicked</li>
  * </ul>
  * <p><strong>Bindings:</strong></p>
  * <ul>
@@ -6537,7 +6540,7 @@ hui.ui.List.prototype = {
 					icon = cells[j].getAttribute('icon');
 				}
 			};
-			var info = {id:rows[i].getAttribute('id'),kind:rows[i].getAttribute('kind'),icon:icon,title:title,index:i};
+			var info = {id:rows[i].getAttribute('id'),kind:rows[i].getAttribute('kind'),icon:icon,title:title,index:i,data:this._getData(rows[i])};
 			row.dragDropInfo = info;
 			this.addRowBehavior(row,i);
 			frag.appendChild(row);
@@ -6567,6 +6570,7 @@ hui.ui.List.prototype = {
 	$sourceIsNotBusy : function() {
 		this._setBusy(false);
 	},
+	/** @private */
 	$sourceFailed : function() {
 		hui.log('The source failed!');
 		this._setError(true);
@@ -6618,7 +6622,14 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
-				cell.appendChild(hui.ui.createIcon(child.getAttribute('icon'),1));
+				var icon = hui.ui.createIcon(child.getAttribute('icon'),1);
+				var data = child.getAttribute('data');
+				if (data) {
+					icon.setAttribute('data',data);
+					hui.addClass(icon,'hui_list_action');
+					hui.addClass(icon,'hui_list_revealing');
+				}
+				cell.appendChild(icon);
 			} else if (hui.dom.isElement(child,'line')) {
 				var line = hui.build('p',{'class':'hui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
@@ -6640,18 +6651,23 @@ hui.ui.List.prototype = {
 				this.parseCell(child,icons);
 				cell.appendChild(icons);
 			} else if (hui.dom.isElement(child,'button')) {
-				var button = hui.ui.Button.create({text:child.getAttribute('text'),small:true,rounded:true});
-				button.click(function() {
-					this._buttonClick(button);
-				}.bind(this))
+				var button = hui.ui.Button.create({text:child.getAttribute('text'),small:true,rounded:true,data:this._getData(child)});
+				button.click(this._buttonClick.bind(this))
 				cell.appendChild(button.getElement());
 			}
 		};
 	},
+	_getData : function(node) {
+		var data = node.getAttribute('data');
+		if (data) {
+			return hui.fromJSON(data);
+		}
+		return null;
+	},
 	_buttonClick : function(button) {
 		var row = hui.firstParentByTag(button.getElement(),'tr');
 		var obj = this.rows[parseInt(row.getAttribute('data-index'),10)];
-		this.fire('buttonClick',obj,button);
+		this.fire('clickButton',obj,button);
 	},
 	/** @private */
 	parseWindow : function(doc) {
@@ -6730,11 +6746,11 @@ hui.ui.List.prototype = {
 		this.window.size = win.size || 0;
 		this.window.page = win.page || 0;
 		this.buildNavigation();
-		this.buildHeaders(data.headers);
-		this.buildRows(data.rows);
+		this._buildHeaders(data.headers);
+		this._buildRows(data.rows);
 	},
 	/** @private */
-	buildHeaders : function(headers) {
+	_buildHeaders : function(headers) {
 		hui.dom.clear(this.head);
 		this.columns = [];
 		var tr = hui.build('tr',{parent:this.head});
@@ -6753,7 +6769,7 @@ hui.ui.List.prototype = {
 		}.bind(this));
 	},
 	/** @private */
-	buildRows : function(rows) {
+	_buildRows : function(rows) {
 		var self = this;
 		hui.dom.clear(this.body);
 		this.rows = [];
@@ -6778,6 +6794,7 @@ hui.ui.List.prototype = {
 			// TODO: Memory leak!
 			var info = {id:r.id,kind:r.kind,icon:icon,title:title,index:i};
 			tr.dragDropInfo = info;
+			hui.log(this._getData(r))
 			self.rows.push({id:r.id,kind:r.kind,icon:icon,title:title,index:i,data:r.data});
 			this.addRowBehavior(tr,i);
 		}.bind(this));
@@ -6835,13 +6852,22 @@ hui.ui.List.prototype = {
 		var self = this;
 		row.onmousedown = function(e) {
 			if (self.busy) {return};
-			self.rowDown(index);
-			hui.ui.startDrag(e,row);
-			return false;
+			var event = hui.event(e);
+			var action = event.findByClass('hui_list_action');
+			if (!action) {
+				self._rowDown(index);
+				hui.ui.startDrag(e,row);
+				return false;
+			}
 		}
 		row.ondblclick = function() {
 			if (self.busy) {return};
-			self.rowDoubleClick(index);
+			self._rowDoubleClick(index);
+			return false;
+		}
+		row.onclick = function(e) {
+			if (self.busy) {return};
+			self._rowClick(index,e);
 			return false;
 		}
 	},
@@ -6858,12 +6884,20 @@ hui.ui.List.prototype = {
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);
 	},
-	/** @private */
-	rowDown : function(index) {
+	_rowClick : function(index,e) {
+		e = hui.event(e);
+		var a = e.findByClass('hui_list_action');
+		if (a) {
+			var data = a.getAttribute('data');
+			if (data) {
+				this.fire('clickIcon',this.rows[index],hui.fromJSON(data));
+			}
+		}
+	},
+	_rowDown : function(index) {
 		this.changeSelection([index]);
 	},
-	/** @private */
-	rowDoubleClick : function(index) {
+	_rowDoubleClick : function(index) {
 		this.fire('listRowWasOpened',this.getFirstSelection());
 	},
 	/** @private */
@@ -7414,6 +7448,9 @@ hui.ui.Button.prototype = {
 	/** Sets the button text */
 	setText : function(text) {
 		hui.dom.setText(this.element.getElementsByTagName('span')[1], text);
+	},
+	getData : function() {
+		return this.options.data;
 	}
 }
 
@@ -7643,16 +7680,21 @@ hui.ui.Selection.prototype = {
 	},
 	_setBusy : function(busy) {
 		this.busy+= busy ? 1 : -1;
-		hui.setClass(this.element,'hui_selection_busy',this.busy>0);
-		hui.log('Busy count='+this.busy)
+		window.clearTimeout(this.busytimer);
+		if (this.busy>0) {
+			var e = this.element;
+			this.busytimer = window.setTimeout(function() {
+				hui.addClass(e,'hui_selection_busy');
+			},300);
+		} else {
+			hui.removeClass(this.element,'hui_selection_busy');
+		}
 	},
 	_checkValue : function() {
+		if (!this.selection) {return}
 		var item = this.getSelectionWithValue(this.selection.value);
 		if (!item) {
 			this.selectFirst();
-		} else {
-			hui.log('Selection is...')
-			hui.log(item)
 		}
 	}
 }
@@ -7669,6 +7711,7 @@ hui.ui.Selection.Items = function(options) {
 	this.element = hui.get(options.element);
 	this.title = hui.get(this.element.id+'_title');
 	this.name = options.name;
+	this.disclosed = {};
 	this.parent = null;
 	this.items = [];
 	hui.ui.extend(this);
@@ -7694,7 +7737,7 @@ hui.ui.Selection.Items.prototype = {
 	$itemsLoaded : function(items) {
 		this.items = [];
 		this.element.innerHTML='';
-		this.buildLevel(this.element,items,0);
+		this.buildLevel(this.element,items,0,true);
 		if (this.title) {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
 		}
@@ -7709,10 +7752,9 @@ hui.ui.Selection.Items.prototype = {
 		this.parent._setBusy(false);
 	},
 	/** @private */
-	buildLevel : function(parent,items,inc) {
+	buildLevel : function(parent,items,inc,open) {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);
-		var open = inc==0;
 		var level = hui.build('div',{'class':'hui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
 		hui.each(items,function(item) {
 			if (item.type=='title') {
@@ -7721,18 +7763,23 @@ hui.ui.Selection.Items.prototype = {
 			}
 			var hasChildren = item.children && item.children.length>0;
 			var left = inc*16+6;
-			if (!hierarchical && inc>0 || hierarchical && !hasChildren) left+=13;
+			if (!hierarchical && inc>0 || hierarchical && !hasChildren) {
+				left+=13;
+			}
 			var node = hui.build('div',{'class':'hui_selection_item'});
 			node.style.paddingLeft = left+'px';
 			if (item.badge) {
 				node.appendChild(hui.build('strong',{'class':'hui_selection_badge',text:item.badge}));
 			}
+			var subOpen = false;
 			if (hierarchical && hasChildren) {
 				var self = this;
-				var x = hui.build('span',{'class':'hui_disclosure',parent:node});
-				hui.listen(x,'click',function(e) {
+				subOpen = this.disclosed[item.value]
+				var cls = this.disclosed[item.value] ? 'hui_disclosure hui_disclosure_open' : 'hui_disclosure';
+				var disc = hui.build('span',{'class':cls,parent:node});
+				hui.listen(disc,'click',function(e) {
 					hui.stop(e);
-					self.toggle(x);
+					self.toggle(disc,item);
 				});
 			}
 			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
@@ -7751,15 +7798,17 @@ hui.ui.Selection.Items.prototype = {
 			var info = {title:item.title,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
 			node.dragDropInfo = info;
 			this.items.push(info);
-			this.buildLevel(level,item.children,inc+1);
+			this.buildLevel(level,item.children,inc+1,subOpen);
 		}.bind(this));
 	},
 	/** @private */
-	toggle : function(node) {
+	toggle : function(node,item) {
 		if (hui.hasClass(node,'hui_disclosure_open')) {
+			this.disclosed[item.value] = false;
 			hui.getNext(node.parentNode).style.display='none';
 			hui.removeClass(node,'hui_disclosure_open');
 		} else {
+			this.disclosed[item.value] = true;
 			hui.getNext(node.parentNode).style.display='block';
 			hui.addClass(node,'hui_disclosure_open');
 		}

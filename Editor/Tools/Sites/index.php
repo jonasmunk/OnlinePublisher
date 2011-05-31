@@ -32,6 +32,7 @@ foreach ($templates as $template) {
 $gui='
 <gui xmlns="uri:hui" title="Sites" padding="10">
 	<controller source="controller.js"/>
+	<controller source="hierarchy.js"/>
 	<controller source="advanced.js"/>
 	<source name="pageListSource" url="ListPages.php">
 		<parameter key="windowPage" value="@list.window.page"/>
@@ -55,7 +56,9 @@ $gui='
 				<icon icon="common/edit" title="Rediger" name="edit" disabled="true"/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
 				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
-				<icon icon="common/delete" title="Slet" name="delete" disabled="true"/>
+				<icon icon="common/delete" title="Slet" name="delete" disabled="true">
+					<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet" cancel="Annuller"/>
+				</icon>
 				<divider/>
 				<icon icon="common/page" title="Nyt underpunkt" overlay="new" name="newSubPage" disabled="true"/>
 				<right>
@@ -111,7 +114,9 @@ $gui='
 				<checkbox key="disabled" label="Inaktiv:"/>
 				<buttons>
 					<button name="cancelPage" title="Annuller"/>
-					<button name="deletePage" title="Slet"/>
+					<button name="deletePage" title="Slet">
+						<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet side" cancel="Annuller"/>
+					</button>
 					<button name="savePage" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
@@ -125,7 +130,9 @@ $gui='
 				<checkbox key="hidden" label="Skjult:"/>
 				<buttons>
 					<button name="cancelHierarchyItem" title="Annuller"/>
-					<button name="deleteHierarchyItem" title="Slet"/>
+					<button name="deleteHierarchyItem" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja, slet punkt" cancel="Annuller"/>
+					</button>
 					<button name="saveHierarchyItem" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
@@ -158,7 +165,7 @@ $gui='
 					</selection>
 				</overflow>
 				<buttons top="10">
-					<button name="noMenuItem" title="Intet menupunkt"/>
+					<button name="noMenuItem" title="Intet menupunkt" small="true" rounded="true"/>
 				</buttons>
 			</step>
 			<step title="Egenskaber" padding="10" frame="true" icon="common/info">
