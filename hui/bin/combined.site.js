@@ -515,8 +515,8 @@ hui.getAllNext = function(element) {
 hui.getTop = function(element) {
     element = hui.get(element);
 	if (element) {
-		var yPos = element.offsetTop;
-		var tempEl = element.offsetParent;
+		var yPos = element.offsetTop,
+			tempEl = element.offsetParent;
 		while (tempEl != null) {
 			yPos += tempEl.offsetTop;
 			tempEl = tempEl.offsetParent;
@@ -526,11 +526,22 @@ hui.getTop = function(element) {
 	else return 0;
 }
 
+hui.getScrollOffset = function(element) {
+    element = hui.get(element);
+	var top = 0, left = 0;
+    do {
+      top += element.scrollTop  || 0;
+      left += element.scrollLeft || 0;
+      element = element.parentNode;
+    } while (element);
+	return {top:top,left:left};
+}
+
 hui.getLeft = function(element) {
     element = hui.get(element);
 	if (element) {
-		var xPos = element.offsetLeft;
-		var tempEl = element.offsetParent;
+		var xPos = element.offsetLeft,
+			tempEl = element.offsetParent;
 		while (tempEl != null) {
 			xPos += tempEl.offsetLeft;
 			tempEl = tempEl.offsetParent;
@@ -1141,6 +1152,12 @@ hui.place = function(options) {
 		}
 		if (left<0) {left=0}
 		if (top<0) {top=0}
+	}
+	if (options.top) {
+		top+=options.top;
+	}
+	if (options.left) {
+		left+=options.left;
 	}
 	
 	src.style.top=top+'px';

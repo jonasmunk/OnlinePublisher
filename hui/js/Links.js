@@ -117,11 +117,11 @@ hui.ui.Links.prototype = {
 			g.add(email);
 			this.inputs['email']=email;
 			
-			page = hui.ui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
+			page = hui.ui.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
 			g.add(page);
 			this.inputs['page']=page;
 			
-			file = hui.ui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
+			file = hui.ui.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
 			g.add(file);
 			this.inputs['file']=file;
 			

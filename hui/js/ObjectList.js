@@ -154,7 +154,7 @@ hui.ui.ObjectList.Text.prototype = {
 	getElement : function() {
 		var input = hui.build('input',{'class':'hui_formula_text'});
 		var field = hui.ui.wrapInField(input);
-		this.wrapper = new hui.ui.TextField({element:input});
+		this.wrapper = new hui.ui.Input({element:input});
 		this.wrapper.listen(this);
 		return field;
 	},

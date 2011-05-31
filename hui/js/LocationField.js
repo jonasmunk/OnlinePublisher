@@ -9,9 +9,9 @@ hui.ui.LocationField = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);
 	this.chooser = hui.firstByTag(this.element,'a');
-	this.latField = new hui.ui.TextField({element:hui.firstByTag(this.element,'input'),validator:new hui.ui.NumberValidator({min:-90,max:90,allowNull:true})});
+	this.latField = new hui.ui.Input({element:hui.firstByTag(this.element,'input'),validator:new hui.ui.NumberValidator({min:-90,max:90,allowNull:true})});
 	this.latField.listen(this);
-	this.lngField = new hui.ui.TextField({element:this.element.getElementsByTagName('input')[1],validator:new hui.ui.NumberValidator({min:-180,max:180,allowNull:true})});
+	this.lngField = new hui.ui.Input({element:this.element.getElementsByTagName('input')[1],validator:new hui.ui.NumberValidator({min:-180,max:180,allowNull:true})});
 	this.lngField.listen(this);
 	this.value = this.options.value;
 	hui.ui.extend(this);

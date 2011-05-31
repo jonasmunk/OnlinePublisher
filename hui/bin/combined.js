@@ -515,8 +515,8 @@ hui.getAllNext = function(element) {
 hui.getTop = function(element) {
     element = hui.get(element);
 	if (element) {
-		var yPos = element.offsetTop;
-		var tempEl = element.offsetParent;
+		var yPos = element.offsetTop,
+			tempEl = element.offsetParent;
 		while (tempEl != null) {
 			yPos += tempEl.offsetTop;
 			tempEl = tempEl.offsetParent;
@@ -526,11 +526,22 @@ hui.getTop = function(element) {
 	else return 0;
 }
 
+hui.getScrollOffset = function(element) {
+    element = hui.get(element);
+	var top = 0, left = 0;
+    do {
+      top += element.scrollTop  || 0;
+      left += element.scrollLeft || 0;
+      element = element.parentNode;
+    } while (element);
+	return {top:top,left:left};
+}
+
 hui.getLeft = function(element) {
     element = hui.get(element);
 	if (element) {
-		var xPos = element.offsetLeft;
-		var tempEl = element.offsetParent;
+		var xPos = element.offsetLeft,
+			tempEl = element.offsetParent;
 		while (tempEl != null) {
 			xPos += tempEl.offsetLeft;
 			tempEl = tempEl.offsetParent;
@@ -1141,6 +1152,12 @@ hui.place = function(options) {
 		}
 		if (left<0) {left=0}
 		if (top<0) {top=0}
+	}
+	if (options.top) {
+		top+=options.top;
+	}
+	if (options.left) {
+		left+=options.left;
 	}
 	
 	src.style.top=top+'px';
@@ -5617,228 +5634,6 @@ hui.ui.Formula.Number.prototype = {
 	}
 }
 
-////////////////////////// DropDown ///////////////////////////
-
-/**
- * A drop down selector
- * @constructor
- */
-hui.ui.Formula.DropDown = function(o) {
-	this.options = hui.override({label:null,placeholder:null,url:null,source:null},o);
-	this.name = o.name;
-	var e = this.element = hui.get(o.element);
-	this.inner = e.getElementsByTagName('strong')[0];
-	this.items = o.items || [];
-	this.index = -1;
-	this.value = this.options.value || null;
-	this.dirty = true;
-	hui.ui.extend(this);
-	this._addBehavior();
-	this._updateIndex();
-	this._updateUI();
-	if (this.options.url) {
-		this.options.source = new hui.ui.Source({url:this.options.url,delegate:this});
-	} else if (this.options.source) {
-		this.options.source.listen(this);
-	}
-}
-
-hui.ui.Formula.DropDown.create = function(options) {
-	options = options || {};
-	options.element = hui.build('a',{
-		'class':'hui_dropdown',href:'javascript://',
-		html:'<span><span><strong></strong></span></span>'
-	});
-	return new hui.ui.Formula.DropDown(options);
-}
-
-hui.ui.Formula.DropDown.prototype = {
-	/** @private */
-	_addBehavior : function() {
-		hui.ui.addFocusClass({element:this.element,'class':'hui_dropdown_focused'});
-		hui.listen(this.element,'click',this._click.bind(this));
-		hui.listen(this.element,'blur',this._hideSelector.bind(this));
-		hui.listen(this.element,'keydown',this._keyDown.bind(this));
-	},
-	/** @private */
-	_updateIndex : function() {
-		this.index=-1;
-		for (var i=0; i < this.items.length; i++) {
-			if (this.items[i].value==this.value) {
-				this.index=i;
-			}
-		};
-	},
-	/** @private */
-	_updateUI : function() {
-		var selected = this.items[this.index];
-		if (selected) {
-			var text = selected.label || selected.title || '';
-			this.inner.innerHTML='';
-			hui.dom.addText(this.inner,hui.wrap(text));
-		} else if (this.options.placeholder) {
-			this.inner.innerHTML='';
-			this.inner.appendChild(hui.build('em',{text:hui.escape(this.options.placeholder)}));
-		} else {
-			this.inner.innerHTML='';
-		}
-		if (!this.selector) {
-			return;
-		}
-		var as = this.selector.getElementsByTagName('a');
-		for (var i=0; i < as.length; i++) {
-			if (this.index==i) {
-				hui.addClass(as[i],'hui_selected');
-			} else {
-				as[i].className='';
-			}
-		};
-	},
-	/** @private */
-	_click : function(e) {
-		hui.stop(e);
-		this._buildSelector();
-		var el = this.element, s=this.selector;
-		el.focus();
-		if (!this.items) return;
-		var docHeight = hui.getDocumentHeight();
-		if (docHeight<200) {
-			var left = hui.getLeft(this.element);
-			hui.setStyle(this.selector,{'left':left+'px',top:'5px'});
-		} else {
-			hui.place({
-				target:{element:this.element,vertical:1,horizontal:0},
-				source:{element:this.selector,vertical:0,horizontal:0}
-			});
-		}
-		hui.setStyle(s,{visibility:'hidden',display:'block',width:''});
-		var height = Math.min(docHeight-hui.getTop(s)-5,200);
-		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
-		var space = hui.getViewPortWidth()-hui.getLeft(el)-20;
-		width = Math.min(width,space);
-		hui.setStyle(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
-	},
-	/** @private */
-	_keyDown : function(e) {
-		if (this.items.length==0) {
-			return;
-		}
-		if (e.keyCode==40) {
-			hui.stop(e);
-			if (this.index>=this.items.length-1) {
-				this.value=this.items[0].value;
-			} else {
-				this.value=this.items[this.index+1].value;
-			}
-			this._updateIndex();
-			this._updateUI();
-			this._fireChange();
-		} else if (e.keyCode==38) {
-			hui.stop(e);
-			if (this.index>0) {
-				this.index--;
-			} else {
-				this.index = this.items.length-1;
-			}
-			this.value = this.items[this.index].value;
-			this._updateUI();
-			this._fireChange();
-		}
-	},
-	selectFirst : function() {
-		if (this.items.length>0) {
-			this.setValue(this.items[0].value);
-		}
-	},
-	getValue : function() {
-		return this.value;
-	},
-	setValue : function(value) {
-		this.value = value;
-		this._updateIndex();
-		this._updateUI();
-	},
-	reset : function() {
-		this.setValue(null);
-	},
-	getLabel : function() {
-		return this.options.label;
-	},
-	refresh : function() {
-		if (this.options.source) {
-			this.options.source.refresh();
-		}
-	},
-	// TODO: Is this used?
-	getItem : function() {
-		if (this.index>=0) {
-			return this.items[this.index];
-		}
-		return 0;
-	},
-	addItem : function(item) {
-		this.items.push(item);
-		this.dirty = true;
-		this._updateIndex();
-		this._updateUI();
-	},
-	setItems : function(items) {
-		this.items = items;
-		this.dirty = true;
-		this.index = -1;
-		this._updateIndex();
-		this._updateUI();
-	},
-	/** @private */
-	$itemsLoaded : function(items) {
-		this.setItems(items);
-	},
-	/** @private */
-	_hideSelector : function() {
-		if (!this.selector) return;
-		this.selector.style.display='none';
-	},
-	/** @private */
-	_buildSelector : function() {
-		if (!this.dirty || !this.items) {return};
-		if (!this.selector) {
-			this.selector = hui.build('div',{'class':'hui_dropdown_selector'});
-			document.body.appendChild(this.selector);
-			hui.listen(this.selector,'mousedown',function(e) {hui.stop(e)});
-		} else {
-			this.selector.innerHTML='';
-		}
-		var self = this;
-		hui.each(this.items,function(item,i) {
-			var e = hui.build('a',{href:'#',text:item.label || item.title});
-			hui.listen(e,'mousedown',function(e) {
-				hui.stop(e);
-				self._itemClicked(item,i);
-			})
-			if (i==self.index) {
-				hui.addClass(e,'hui_selected')
-			};
-			self.selector.appendChild(e);
-		});
-		this.dirty = false;
-	},
-	/** @private */
-	_itemClicked : function(item,index) {
-		this.index = index;
-		var changed = this.value!=this.items[index].value;
-		this.value = this.items[index].value;
-		this._updateUI();
-		this._hideSelector();
-		if (changed) {
-			this._fireChange();
-		}
-	},
-	_fireChange : function() {
-		hui.ui.callAncestors(this,'childValueChanged',this.value);
-		this.fire('valueChanged',this.value);
-	}
-}
-
 
 //////////////////////////// Radio buttons ////////////////////////////
 
@@ -7168,7 +6963,7 @@ hui.ui.ObjectList.Text.prototype = {
 	getElement : function() {
 		var input = hui.build('input',{'class':'hui_formula_text'});
 		var field = hui.ui.wrapInField(input);
-		this.wrapper = new hui.ui.TextField({element:input});
+		this.wrapper = new hui.ui.Input({element:input});
 		this.wrapper.listen(this);
 		return field;
 	},
@@ -7221,7 +7016,229 @@ hui.ui.ObjectList.Select.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */////////////////////////// DropDown ///////////////////////////
+
+/**
+ * A drop down selector
+ * @constructor
+ */
+hui.ui.DropDown = function(o) {
+	this.options = hui.override({label:null,placeholder:null,url:null,source:null},o);
+	this.name = o.name;
+	var e = this.element = hui.get(o.element);
+	this.inner = e.getElementsByTagName('strong')[0];
+	this.items = o.items || [];
+	this.index = -1;
+	this.value = this.options.value || null;
+	this.dirty = true;
+	hui.ui.extend(this);
+	this._addBehavior();
+	this._updateIndex();
+	this._updateUI();
+	if (this.options.url) {
+		this.options.source = new hui.ui.Source({url:this.options.url,delegate:this});
+	} else if (this.options.source) {
+		this.options.source.listen(this);
+	}
+}
+
+hui.ui.DropDown.create = function(options) {
+	options = options || {};
+	options.element = hui.build('a',{
+		'class':'hui_dropdown',href:'javascript://',
+		html:'<span><span><strong></strong></span></span>'
+	});
+	return new hui.ui.DropDown(options);
+}
+
+hui.ui.DropDown.prototype = {
+	/** @private */
+	_addBehavior : function() {
+		hui.ui.addFocusClass({element:this.element,'class':'hui_dropdown_focused'});
+		hui.listen(this.element,'click',this._click.bind(this));
+		hui.listen(this.element,'blur',this._hideSelector.bind(this));
+		hui.listen(this.element,'keydown',this._keyDown.bind(this));
+	},
+	/** @private */
+	_updateIndex : function() {
+		this.index=-1;
+		for (var i=0; i < this.items.length; i++) {
+			if (this.items[i].value==this.value) {
+				this.index=i;
+			}
+		};
+	},
+	/** @private */
+	_updateUI : function() {
+		var selected = this.items[this.index];
+		if (selected) {
+			var text = selected.label || selected.title || '';
+			this.inner.innerHTML='';
+			hui.dom.addText(this.inner,hui.wrap(text));
+		} else if (this.options.placeholder) {
+			this.inner.innerHTML='';
+			this.inner.appendChild(hui.build('em',{text:hui.escape(this.options.placeholder)}));
+		} else {
+			this.inner.innerHTML='';
+		}
+		if (!this.selector) {
+			return;
+		}
+		var as = this.selector.getElementsByTagName('a');
+		for (var i=0; i < as.length; i++) {
+			if (this.index==i) {
+				hui.addClass(as[i],'hui_selected');
+			} else {
+				as[i].className='';
+			}
+		};
+	},
+	/** @private */
+	_click : function(e) {
+		hui.stop(e);
+		this._buildSelector();
+		var el = this.element, s=this.selector;
+		el.focus();
+		if (!this.items) return;
+		var docHeight = hui.getDocumentHeight();
+		if (docHeight<200) {
+			var left = hui.getLeft(this.element);
+			hui.setStyle(this.selector,{'left':left+'px',top:'5px'});
+		} else {
+			var scroll = hui.getScrollOffset(this.element);
+			hui.place({
+				target : {element:this.element,vertical:1,horizontal:0},
+				source : {element:this.selector,vertical:0,horizontal:0},
+				top : scroll.top*-1
+			});
+		}
+		hui.setStyle(s,{visibility:'hidden',display:'block',width:''});
+		var height = Math.min(docHeight-hui.getTop(s)-5,200);
+		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
+		var space = hui.getViewPortWidth()-hui.getLeft(el)-20;
+		width = Math.min(width,space);
+		hui.setStyle(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
+	},
+	/** @private */
+	_keyDown : function(e) {
+		if (this.items.length==0) {
+			return;
+		}
+		if (e.keyCode==40) {
+			hui.stop(e);
+			if (this.index>=this.items.length-1) {
+				this.value=this.items[0].value;
+			} else {
+				this.value=this.items[this.index+1].value;
+			}
+			this._updateIndex();
+			this._updateUI();
+			this._fireChange();
+		} else if (e.keyCode==38) {
+			hui.stop(e);
+			if (this.index>0) {
+				this.index--;
+			} else {
+				this.index = this.items.length-1;
+			}
+			this.value = this.items[this.index].value;
+			this._updateUI();
+			this._fireChange();
+		}
+	},
+	selectFirst : function() {
+		if (this.items.length>0) {
+			this.setValue(this.items[0].value);
+		}
+	},
+	getValue : function() {
+		return this.value;
+	},
+	setValue : function(value) {
+		this.value = value;
+		this._updateIndex();
+		this._updateUI();
+	},
+	reset : function() {
+		this.setValue(null);
+	},
+	getLabel : function() {
+		return this.options.label;
+	},
+	refresh : function() {
+		if (this.options.source) {
+			this.options.source.refresh();
+		}
+	},
+	// TODO: Is this used?
+	getItem : function() {
+		if (this.index>=0) {
+			return this.items[this.index];
+		}
+		return 0;
+	},
+	addItem : function(item) {
+		this.items.push(item);
+		this.dirty = true;
+		this._updateIndex();
+		this._updateUI();
+	},
+	setItems : function(items) {
+		this.items = items;
+		this.dirty = true;
+		this.index = -1;
+		this._updateIndex();
+		this._updateUI();
+	},
+	/** @private */
+	$itemsLoaded : function(items) {
+		this.setItems(items);
+	},
+	/** @private */
+	_hideSelector : function() {
+		if (!this.selector) return;
+		this.selector.style.display='none';
+	},
+	/** @private */
+	_buildSelector : function() {
+		if (!this.dirty || !this.items) {return};
+		if (!this.selector) {
+			this.selector = hui.build('div',{'class':'hui_dropdown_selector'});
+			document.body.appendChild(this.selector);
+			hui.listen(this.selector,'mousedown',function(e) {hui.stop(e)});
+		} else {
+			this.selector.innerHTML='';
+		}
+		var self = this;
+		hui.each(this.items,function(item,i) {
+			var e = hui.build('a',{href:'#',text:item.label || item.title});
+			hui.listen(e,'mousedown',function(e) {
+				hui.stop(e);
+				self._itemClicked(item,i);
+			})
+			if (i==self.index) {
+				hui.addClass(e,'hui_selected')
+			};
+			self.selector.appendChild(e);
+		});
+		this.dirty = false;
+	},
+	/** @private */
+	_itemClicked : function(item,index) {
+		this.index = index;
+		var changed = this.value!=this.items[index].value;
+		this.value = this.items[index].value;
+		this._updateUI();
+		this._hideSelector();
+		if (changed) {
+			this._fireChange();
+		}
+	},
+	_fireChange : function() {
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
+		this.fire('valueChanged',this.value);
+	}
+}/**
  * An alert
  * @constructor
  */
@@ -11447,35 +11464,35 @@ hui.ui.Articles.prototype = {
 }
 
 /* EOF *//** @constructor */
-hui.ui.TextField = function(options) {
+hui.ui.Input = function(options) {
 	this.options = hui.override({placeholderElement:null,validator:null},options);
 	var e = this.element = hui.get(options.element);
 	this.element.setAttribute('autocomplete','off');
-	this.value = this.validate(this.element.value);
+	this.value = this._validate(this.element.value);
 	this.isPassword = this.element.type=='password';
 	this.name = options.name;
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 	if (this.options.placeholderElement && this.value!='') {
 		hui.ui.fadeOut(this.options.placeholderElement,0);
 	}
-	this.checkPlaceholder();
+	this._checkPlaceholder();
 	try { // IE hack
 		if (e==document.activeElement) {
-			this.focused();
+			this._focused();
 		}
 	} catch (e) {}
 }
 
-hui.ui.TextField.prototype = {
-	addBehavior : function() {
-		var e = this.element;
+hui.ui.Input.prototype = {
+	_addBehavior : function() {
+		var e = this.element,
+			p = this.options.placeholderElement;
 		hui.listen(e,'keyup',this.keyDidStrike.bind(this));
-		var p = this.options.placeholderElement;
 		hui.listen(e,'blur',this.onBlur.bind(this));
 		if (p) {
-			hui.listen(e,'focus',this.focused.bind(this));
-			hui.listen(e,'blur',this.checkPlaceholder.bind(this));
+			hui.listen(e,'focus',this._focused.bind(this));
+			hui.listen(e,'blur',this._checkPlaceholder.bind(this));
 			if (p) {
 				p.style.cursor='text';
 				hui.listen(p,'mousedown',this.focus.bind(this));
@@ -11483,23 +11500,24 @@ hui.ui.TextField.prototype = {
 			}
 		}
 	},
-	focused : function() {
+	_focused : function() {
 		var e = this.element,p = this.options.placeholderElement;
 		if (p && e.value=='') {
 			hui.ui.fadeOut(p,0);
 		}
 	},
 	/** @private */
-	validate : function(value) {
-		var validator = this.options.validator, result;
+	_validate : function(value) {
+		var validator = this.options.validator,
+			result;
 		if (validator) {
-			result = validator.validate(value);
+			result = validator._validate(value);
 			hui.setClass(this.element,'hui_invalid',!result.valid);
 			return result.value;
 		}
 		return value;
 	},
-	checkPlaceholder : function() {
+	_checkPlaceholder : function() {
 		if (this.options.placeholderElement && this.value=='') {
 			hui.ui.fadeIn(this.options.placeholderElement,200);
 		}
@@ -11510,7 +11528,7 @@ hui.ui.TextField.prototype = {
 	/** @private */
 	keyDidStrike : function() {
 		if (this.value!==this.element.value) {
-			var newValue = this.validate(this.element.value);
+			var newValue = this._validate(this.element.value);
 			var changed = newValue!==this.value;
 			this.value = newValue;
 			if (changed) {
@@ -11531,13 +11549,13 @@ hui.ui.TextField.prototype = {
 			value='';
 		}
 		this.element.value = value;
-		this.value = this.validate(value);
+		this.value = this._validate(value);
 	},
 	isEmpty : function() {
 		return this.value=='';
 	},
 	isBlank : function() {
-		return this.value.strip()=='';
+		return hui.isBlank(this.value);
 	},
 	focus : function() {
 		this.element.focus();
@@ -12571,11 +12589,11 @@ hui.ui.Links.prototype = {
 			g.add(email);
 			this.inputs['email']=email;
 			
-			page = hui.ui.Formula.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
+			page = hui.ui.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
 			g.add(page);
 			this.inputs['page']=page;
 			
-			file = hui.ui.Formula.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
+			file = hui.ui.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
 			g.add(file);
 			this.inputs['file']=file;
 			
@@ -13324,9 +13342,9 @@ hui.ui.LocationField = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);
 	this.chooser = hui.firstByTag(this.element,'a');
-	this.latField = new hui.ui.TextField({element:hui.firstByTag(this.element,'input'),validator:new hui.ui.NumberValidator({min:-90,max:90,allowNull:true})});
+	this.latField = new hui.ui.Input({element:hui.firstByTag(this.element,'input'),validator:new hui.ui.NumberValidator({min:-90,max:90,allowNull:true})});
 	this.latField.listen(this);
-	this.lngField = new hui.ui.TextField({element:this.element.getElementsByTagName('input')[1],validator:new hui.ui.NumberValidator({min:-180,max:180,allowNull:true})});
+	this.lngField = new hui.ui.Input({element:this.element.getElementsByTagName('input')[1],validator:new hui.ui.NumberValidator({min:-180,max:180,allowNull:true})});
 	this.lngField.listen(this);
 	this.value = this.options.value;
 	hui.ui.extend(this);

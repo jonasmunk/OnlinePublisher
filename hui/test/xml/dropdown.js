@@ -8,11 +8,11 @@ var controller = {
 		var form = hui.ui.Formula.create();
 		win.add(form);
 		var group = form.createGroup();
-		var drop = hui.ui.Formula.DropDown.create({label:'Data from url',url:'data/items_loremipsum.xml'});
+		var drop = hui.ui.DropDown.create({label:'Data from url',url:'data/items_loremipsum.xml'});
 		group.add(drop);
-		var drop2 = hui.ui.Formula.DropDown.create({label:'Data from source',source:itemsSource});
+		var drop2 = hui.ui.DropDown.create({label:'Data from source',source:itemsSource});
 		group.add(drop2);
-		var drop2 = hui.ui.Formula.DropDown.create({label:'Added items',items:[
+		var drop2 = hui.ui.DropDown.create({label:'Added items',items:[
 			{value:1,title:'A'},
 			{value:2,title:'B'},
 			{value:3,title:'C'}

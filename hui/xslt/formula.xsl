@@ -269,7 +269,7 @@
 	<span><span><strong><xsl:comment/></strong></span></span>
 	</a>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.DropDown(
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.DropDown(
 			{element:'<xsl:value-of select="generate-id()"/>'
 			,name:'<xsl:value-of select="@name"/>'
 			,key:'<xsl:value-of select="@key"/>'

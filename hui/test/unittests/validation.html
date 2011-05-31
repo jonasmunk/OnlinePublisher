@@ -12,7 +12,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/date.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Input.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../ext/Test.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../tools/funcunit/funcunit/funcunit.js"></script>
 	<script type="text/javascript" charset="utf-8">
@@ -76,7 +76,7 @@
 				var validator = new hui.ui.NumberValidator({min:-10,max:10});
 				var input = hui.build('input',{value:'abc'});
 				document.body.appendChild(input);
-				var field = new hui.ui.TextField({
+				var field = new hui.ui.Input({
 					element:input,
 					validator:validator
 				});
@@ -113,7 +113,7 @@
 			function() {
 				var validator = new hui.ui.NumberValidator({min:-10,max:10,allowNull:true});
 				var input = hui.build('input',{value:'    ',parent:document.body});
-				var field = new hui.ui.TextField({
+				var field = new hui.ui.Input({
 					element:input,
 					validator:validator
 				});
