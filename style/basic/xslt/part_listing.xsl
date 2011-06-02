@@ -3,7 +3,8 @@
 <xsl:stylesheet version="1.0"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:l="http://uri.in2isoft.com/onlinepublisher/part/listing/1.0/"
- exclude-result-prefixes="l"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="l util"
  >
 
 	<xsl:template match="l:listing">

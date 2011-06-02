@@ -8,7 +8,8 @@
  xmlns:f="http://uri.in2isoft.com/onlinepublisher/class/file/1.0/"
  xmlns:ps="http://uri.in2isoft.com/onlinepublisher/class/person/1.0/"
  xmlns:pr="http://uri.in2isoft.com/onlinepublisher/class/product/1.0/"
- exclude-result-prefixes="s p o i f ps pr"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="s p o i f ps pr util"
  >
 
 <xsl:template match="s:search">

@@ -5,7 +5,8 @@
  xmlns:pn="http://uri.in2isoft.com/onlinepublisher/part/news/1.0/"
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
- exclude-result-prefixes="pn n o"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="pn n o util"
  >
 
 <xsl:template match="pn:news">

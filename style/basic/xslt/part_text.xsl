@@ -4,7 +4,8 @@
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:txt="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
- exclude-result-prefixes="txt o"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="txt o util"
  >
 
 <xsl:template match="txt:text">

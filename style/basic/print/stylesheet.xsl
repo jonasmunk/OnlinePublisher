@@ -4,7 +4,8 @@
  xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
  xmlns:f="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/"
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
- exclude-result-prefixes="p f h"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="p f h util"
  >
 <xsl:variable name="skin">in2isoft</xsl:variable>
 

@@ -4,7 +4,8 @@
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:sm="http://uri.in2isoft.com/onlinepublisher/publishing/sitemap/1.0/"
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
- exclude-result-prefixes="sm"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="sm util h"
  >
 
 <xsl:template match="sm:sitemap">
