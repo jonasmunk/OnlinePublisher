@@ -71,7 +71,7 @@
 
 <xsl:template match="txt:link">
 <a class="common PartTextLink part_text_link">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:apply-templates/></span>
 </a>
 </xsl:template>

@@ -72,7 +72,7 @@
 
 <xsl:template match="pn:news//o:link">
 	<xsl:if test="position()>1"><xsl:text> </xsl:text></xsl:if>
-	<a title="{@alternative}" class="common"><xsl:call-template name="link"/>
+	<a title="{@alternative}" class="common"><xsl:call-template name="util:link"/>
 		<span><xsl:value-of select="@title"/></span>
 	</a>
 </xsl:template>

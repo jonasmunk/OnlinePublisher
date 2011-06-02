@@ -89,7 +89,7 @@
 </xsl:variable>
 <li class="{$style}">
 <a>
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 </li>
@@ -122,7 +122,7 @@
 <xsl:if test="not(@hidden='true')">
 <li>
 <a class="{$style}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 </li>
@@ -140,7 +140,7 @@
 <xsl:if test="not(@hidden='true')">
 <li>
 <a class="{$style}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 <xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
@@ -178,7 +178,7 @@
 <xsl:template match="f:links/f:bottom/f:link">
 <xsl:if test="position()>1"><span>&#160;&#183;&#160;</span></xsl:if>
 <a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 </xsl:template>
@@ -186,7 +186,7 @@
 <xsl:template match="f:links/f:top/f:link">
 <span>&#160;&#183;&#160;</span>
 <a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 </xsl:template>
@@ -213,7 +213,7 @@
 
 <xsl:template match="f:text/f:bottom/f:link">
 <a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:apply-templates/></span>
 </a>
 </xsl:template>
@@ -268,7 +268,7 @@
 <xsl:template match="f:newsblock//o:link">
 <xsl:if test="position()>1"><xsl:text> </xsl:text></xsl:if>
 <a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span>
 <xsl:value-of select="@title"/>
 </span>

@@ -97,7 +97,7 @@
 <xsl:template name="language">
 	<xsl:if test="@language!='da'">
 		<a class="{@language}">
-			<xsl:call-template name="link"/>
+			<xsl:call-template name="util:link"/>
 			<xsl:choose>
 				<xsl:when test="@language='da'">Dansk version</xsl:when>
 				<xsl:when test="@language='en'">English version</xsl:when>
@@ -176,9 +176,9 @@
 					<xsl:for-each select="//h:hierarchy/h:item[position()>1 and not(@hidden='true')]">
 					<div class="tile">
 						<p>
-							<strong><a><xsl:call-template name="link"/><span><xsl:value-of select="@title"/></span></a></strong>
+							<strong><a><xsl:call-template name="util:link"/><span><xsl:value-of select="@title"/></span></a></strong>
 							<xsl:for-each select="h:item[not(@hidden='true') and not(@page=../@page-reference)]">
-								<br/><a><xsl:call-template name="link"/><span><xsl:value-of select="@title"/></span></a>
+								<br/><a><xsl:call-template name="util:link"/><span><xsl:value-of select="@title"/></span></a>
 							</xsl:for-each>
 						</p>
 					</div>
@@ -261,7 +261,7 @@
 			<p><xsl:value-of select="o:note"/></p>
 			<xsl:for-each select=".//o:link">
 				<a title="{@alternative}" class="common">
-					<xsl:call-template name="link"/>
+					<xsl:call-template name="util:link"/>
 					<span><xsl:value-of select="@title"/></span>
 				</a><xsl:text> </xsl:text>
 			</xsl:for-each>
@@ -473,7 +473,7 @@
 							var title = "<xsl:value-of select="o:title"/>";
 							var link = null;
 							<xsl:for-each select=".//o:link[1]">
-								link="<xsl:call-template name="link-href"/>";
+								link="<xsl:call-template name="util:link-href"/>";
 							</xsl:for-each>
 							ticker.addItem(title,link,null);
 						}
@@ -642,7 +642,7 @@
 </xsl:variable>
 <li class="{$style}">
 <a>
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 </li>
@@ -675,7 +675,7 @@
 </xsl:variable>
 <xsl:if test="not(@hidden='true')">
 <li><a class="{$style}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a></li>
 </xsl:if>
@@ -691,7 +691,7 @@
 </xsl:variable>
 <xsl:if test="not(@hidden='true')">
 <li><a class="{$style}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a></li>
 <xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
@@ -730,7 +730,7 @@
 <xsl:template match="f:links/f:bottom/f:link">
 <xsl:if test="position()>1"><span>&#160;&#183;&#160;</span></xsl:if>
 <a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a>
 </xsl:template>
@@ -738,7 +738,7 @@
 <xsl:template match="f:links/f:top/f:link">
 <span>&#160;&#183;&#160;</span>
 <a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a>
 </xsl:template>
@@ -764,7 +764,7 @@
 
 <xsl:template match="f:text/f:bottom/f:link">
 <a title="{@alternative}" class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:apply-templates/>
 </a>
 </xsl:template>
@@ -819,7 +819,7 @@
 <xsl:template match="f:newsblock//o:link">
 <xsl:if test="position()>1"><xsl:text> &#160; </xsl:text></xsl:if>
 <a title="{@alternative}" class="common link">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 </xsl:template>

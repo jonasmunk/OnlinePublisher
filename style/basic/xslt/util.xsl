@@ -22,7 +22,7 @@
 	</xsl:if>
 </xsl:variable> 
 
-<xsl:template name="link">
+<xsl:template name="util:link">
 	
 	<xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
 	<xsl:choose>
@@ -70,7 +70,7 @@
 	</xsl:choose>
 </xsl:template>
 
-<xsl:template name="link-href">
+<xsl:template name="util:link-href">
 	<xsl:choose>
 		<xsl:when test="@path and $preview='false'">
 			<xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/>
@@ -324,7 +324,7 @@
 
 <xsl:template name="util:language">
 	<a class="layout_language_{@language}">
-		<xsl:call-template name="link"/>
+		<xsl:call-template name="util:link"/>
 		<span>
 		<xsl:choose>
 			<xsl:when test="@language='da'">Dansk version</xsl:when>
@@ -364,7 +364,7 @@
 					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
 				</xsl:choose>
 				<a>
-					<xsl:call-template name="link"/>
+					<xsl:call-template name="util:link"/>
 					<span><xsl:value-of select="@title"/></span>
 				</a>
 				</li>
@@ -391,7 +391,7 @@
 					<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
 					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
 				</xsl:choose>
-				<xsl:call-template name="link"/>
+				<xsl:call-template name="util:link"/>
 				<span><xsl:value-of select="@title"/></span>
 			</a>
 			<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
@@ -404,5 +404,13 @@
 		</li>
 	</xsl:if>
 </xsl:template>
-
+<!--
+	<xsl:template name="util:share">
+		<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+		<g:plusone size="small"></g:plusone>"
+		<div id="fb-root"></div>
+		<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+		<fb:like href="" send="false" layout="button_count" width="450" show_faces="false" font="lucida grande"></fb:like>
+	</xsl:template>
+-->
 </xsl:stylesheet>

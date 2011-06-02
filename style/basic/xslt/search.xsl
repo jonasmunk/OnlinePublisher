@@ -170,7 +170,7 @@ Intet fundet
 
 <xsl:template match="s:result//o:link">
 <a class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 </xsl:template>

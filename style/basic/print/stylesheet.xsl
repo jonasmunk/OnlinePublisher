@@ -24,7 +24,7 @@
 </xsl:template>
 
 
-<xsl:template name="link">
+<xsl:template name="util:link">
 	
 </xsl:template>
 

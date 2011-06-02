@@ -72,7 +72,7 @@
 
 <xsl:template match="h:link">
 <a class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:apply-templates/></span>
 </a>
 </xsl:template>

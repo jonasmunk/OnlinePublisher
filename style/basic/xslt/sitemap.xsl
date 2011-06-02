@@ -39,7 +39,7 @@
 <xsl:template match="sm:sitemap//h:item">
 <li>
 <a class="common">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a>
 <xsl:if test="h:item">

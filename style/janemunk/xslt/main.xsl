@@ -104,7 +104,7 @@
 		</xsl:variable>
 		<li class="{$style}">
 			<a>
-			<xsl:call-template name="link"/>
+			<xsl:call-template name="util:link"/>
 			<span><xsl:value-of select="@title"/></span>
 			</a>
 		</li>
@@ -137,7 +137,7 @@
 	<xsl:if test="not(@hidden='true')">
 		<li>
 			<a class="{$style}">
-				<xsl:call-template name="link"/>
+				<xsl:call-template name="util:link"/>
 				<span><xsl:value-of select="@title"/></span>
 			</a>
 		</li>
@@ -155,7 +155,7 @@
 	<xsl:if test="not(@hidden='true')">
 		<li>
 		<a class="{$style}">
-			<xsl:call-template name="link"/>
+			<xsl:call-template name="util:link"/>
 			<span><xsl:value-of select="@title"/></span>
 		</a>
 		<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
