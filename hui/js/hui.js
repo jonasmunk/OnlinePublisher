@@ -31,6 +31,7 @@ hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
 hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
 hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
 hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
+hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0')!==-1;
 hui.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
 hui.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
 hui.browser.webkitVersion = null;

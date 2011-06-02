@@ -28,9 +28,9 @@
 		window.setTimeout(function() {console.profileEnd()},5000);
 	</script>
 	</xsl:if>
-<title><xsl:value-of select="@title"/></title>
-	<meta http-equiv="X-UA-Compatible" content="IE8" />
-<xsl:choose>
+	<title><xsl:value-of select="@title"/></title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<xsl:choose>
 	<xsl:when test="$dev='true'">
 		<link rel="stylesheet" href="{$context}/hui/css/dev.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	</xsl:when>
@@ -103,6 +103,7 @@
 		<script src="{$context}/hui/js/LocationField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/DropDown.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/StyleLength.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/DateTimeField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:when>
 	<xsl:otherwise>
 		<script src="{$context}/hui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>

@@ -155,7 +155,7 @@
 		<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.DateTime({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.DateTimeField({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>',
