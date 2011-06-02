@@ -37,7 +37,7 @@ class Database {
 	}
 	
 	function debug($sql) {
-		if ($_SESSION['core.debug.logDatabaseQueries'] || !true) {
+		if ($_SESSION['core.debug.logDatabaseQueries']) {
 			error_log($sql);
 		}
 	}
