@@ -419,7 +419,11 @@ $databaseTables = array(
 			array("next_page","int(11)","","","0",""),
 			array("previous_page","int(11)","","","0","")
 		),
-	
+	'page_cache' => array(
+			array("page_id","int(11)","YES","","",""),
+			array("stamp","datetime","YES","","",""),
+			array("html","varchar(50000)","YES","","","")
+	),
 	'pageblueprint' => array(
 			array("object_id","int(11)","","","0",""),
 			array("design_id","int(11)","","","0",""),

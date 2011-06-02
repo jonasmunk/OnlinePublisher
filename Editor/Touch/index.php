@@ -24,7 +24,6 @@ header("Content-Type: text/html; charset=UTF-8");
 	<div class="sidebar"></div>
 <div class="page" id="container">
 	<div style="padding: 30px;">
-		<?=RenderingService::render(2)?>
 	</div>
 </div>
 	<div id="log"></div>

@@ -6,6 +6,7 @@ require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
 require_once($basePath.'Editor/Classes/Response.php');
+require_once($basePath.'Editor/Classes/Services/CacheService.php');
 
 class RenderingService {
 	
@@ -293,7 +294,9 @@ class RenderingService {
 			    'template' => $template,
 			    'published' => $row['published'],
 			    'secure' => $row['secure'],
-			    'redirect' => $redirect
+			    'redirect' => $redirect,
+				'dynamic' => $row['dynamic'],
+				'framedynamic' => $row['framedynamic']
 			);
 		}
 		else {
@@ -400,14 +403,9 @@ class RenderingService {
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
 			header("Content-Type: text/html; charset=UTF-8");
 			echo $html;
+			if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
+				CacheService::createPageCache($id,$html);
+			}
 		}
-	}
-	
-	function render($id) {
-		$relative = '../../';
-		$samePageBaseUrl = '../../';
-		$page = RenderingService::buildPage($id);
-		$html = RenderingService::applyStylesheet($page['xml'],'touch',$page['template'],'../../',$relative,$relative,$samePageBaseUrl,false);
-		return $html;
 	}
 }

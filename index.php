@@ -18,6 +18,7 @@ require_once 'Editor/Classes/Request.php';
 require_once 'Editor/Classes/Response.php';
 require_once 'Editor/Classes/Database.php';
 require_once 'Editor/Classes/Services/RenderingService.php';
+require_once 'Editor/Classes/Services/CacheService.php';
 require_once 'Editor/Classes/ExternalSession.php';
 
 session_set_cookie_params(0);
@@ -39,6 +40,13 @@ if ($file>0) {
 	RenderingService::showFile($file);
 	exit;
 }
+if (Request::getBoolean('logout')) {
+	ExternalSession::logOut();
+}
+
+if (CacheService::sendCachedPage($id,$path)) {
+	exit;
+}
 
 if (strlen($path)>0) {
 	$relative = str_repeat('../',substr_count($path,'/'));
@@ -51,23 +59,19 @@ if (strlen($relative)==0) {
 	$relative = './';
 }
 
-if (Request::getBoolean('logout')) {
-	ExternalSession::logOut();
-}
-
-if ($id==-1) {
-	$id = RenderingService::findPage('home',"");
-}
-if ($path=='') {
-	$page = RenderingService::buildPage($id);
-} else {
+if ($path!='') {	
 	$page = RenderingService::buildPage(-1,$path);
+} else {
+	if ($id==-1) {
+		$id = RenderingService::findPage('home',"");
+	}
+	$page = RenderingService::buildPage($id);	
 }
 
 if (!$page) {
 	RenderingService::handleMissingPage($path);
 }
-   // If the page has redirect
+// If the page has redirect
 else if ($page['redirect']!==false) {
 	Response::redirect($page['redirect']);
 }

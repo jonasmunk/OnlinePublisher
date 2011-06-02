@@ -26,7 +26,11 @@ header('Content-Type: text/xml;');
 echo '<?xml version="1.0"?>
 <items>';
 foreach ($hierarchies as $hierarchy) {
-	echo '<item icon="common/hierarchy" value="'.$hierarchy->getId().'" title="'.StringUtils::escapeXML($hierarchy->getName()).'" kind="hierarchy">';
+	$title = $hierarchy->getName();
+	if ($hierarchy->getChanged()>$hierarchy->getPublished()) {
+		$title.=' [!]';
+	}
+	echo '<item icon="common/hierarchy" value="'.$hierarchy->getId().'" title="'.StringUtils::escapeXML($title).'" kind="hierarchy">';
 	encodeLevel(0,$hierarchy->getId());
 	echo '</item>';
 }

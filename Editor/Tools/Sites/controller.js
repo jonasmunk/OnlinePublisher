@@ -21,7 +21,7 @@ hui.ui.listen({
 			var page = item.data && item.data.page;
 			hui.ui.get('edit').setEnabled(page);
 			hui.ui.get('info').enable();
-			hui.ui.get('delete').disable()
+			hui.ui.get('delete').enable()
 			hui.ui.get('view').disable()
 		} else {
 			hui.ui.get('edit').disable()

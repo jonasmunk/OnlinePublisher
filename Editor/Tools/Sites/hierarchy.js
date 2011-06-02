@@ -27,6 +27,12 @@ hui.ui.listen({
 			this.loadHierarchyItem(obj.id);
 		}
 	},
+	$click$delete : function() {
+		var obj = list.getFirstSelection();
+		if (obj.kind=='hierarchyItem') {
+			this.deleteHierarchyItem(obj.id);
+		}
+	},
 
 	/////////// Hierarchy item properties //////////
 	
@@ -88,13 +94,13 @@ hui.ui.listen({
 		hierarchyItemFormula.reset();
 		hierarchyItemEditor.hide();
 	},
-	$click$deleteHierarchyItem : function() {
+	deleteHierarchyItem : function(id) {
 		hui.ui.request({
 			message : {start : 'Sletter menupunkt...',delay : 300},
 			url : 'DeleteHierarchyItem.php',
-			parameters : {id : this.activeHierarchyItem},
+			parameters : {id : id},
 			onFailure : function() {
-				hui.ui.showMessage({text : 'Menupunktet Kunne ikke slettes',icon : 'common/warning',duration : 2000});
+				hui.ui.showMessage({text : 'Menupunktet kunne ikke slettes',icon : 'common/warning',duration : 2000});
 			},
 			onSuccess : function() {
 				list.refresh();
@@ -102,9 +108,14 @@ hui.ui.listen({
 				hui.ui.showMessage({text : 'Menupunktet er slettet',icon : 'common/success',duration : 2000});
 			}
 		});
-		this.activeHierarchyItem = 0;
-		hierarchyItemFormula.reset();
-		hierarchyItemEditor.hide();
+		if (id==this.activeHierarchyItem) {
+			this.activeHierarchyItem = 0;
+			hierarchyItemFormula.reset();
+			hierarchyItemEditor.hide();
+		}
+	},
+	$click$deleteHierarchyItem : function() {
+		this.deleteHierarchyItem(this.activeHierarchyItem);
 	}
 
 });

@@ -6,12 +6,15 @@
 require_once($basePath.'Editor/Classes/EventManager.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Services/FileService.php');
+require_once($basePath.'Editor/Classes/Services/CacheService.php');
 
 class Hierarchy {
     
     var $id;
     var $name;
     var $language;
+	var $changed;
+	var $published;
     
     function Hierarchy() {
         
@@ -40,6 +43,24 @@ class Hierarchy {
     function getLanguage() {
         return $this->language;
     }
+
+	function setChanged($changed) {
+	    $this->changed = $changed;
+	}
+
+	function getChanged() {
+	    return $this->changed;
+	}
+	
+	function setPublished($published) {
+	    $this->published = $published;
+	}
+
+	function getPublished() {
+	    return $this->published;
+	}
+	
+	
     
     //////////////////// Special ////////////////////
     
@@ -57,7 +78,7 @@ class Hierarchy {
     ////////////////// Persistence //////////////////
     
     function load($id) {
-        $sql = "select * from hierarchy where id=".Database::int($id);
+        $sql = "select id,name,language,UNIX_TIMESTAMP(changed) as changed,UNIX_TIMESTAMP(published) as published from hierarchy where id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
             return Hierarchy::_populate($row);
         } else {
@@ -78,12 +99,14 @@ class Hierarchy {
         $hier->setId($row['id']);
         $hier->setName($row['name']);
         $hier->setLanguage($row['language']);
+        $hier->setPublished($row['published']);
+        $hier->setChanged($row['changed']);
         return $hier;        
     }
     
     function search() {
         $out = array();
-        $sql = "select * from hierarchy order by name";
+        $sql = "select id,name,language,UNIX_TIMESTAMP(changed) as changed,UNIX_TIMESTAMP(published) as published from hierarchy order by name";
         $result = Database::select($sql);
         while ($row = Database::next($result)) {
             $out[] = Hierarchy::_populate($row);
@@ -154,6 +177,7 @@ class Hierarchy {
 	    $data = $this->build($this->id,$allowDisabled);
 	    $sql="update hierarchy set published=now(),data=".Database::text($data)." where id=".Database::int($this->id);
 	    Database::update($sql);
+		CacheService::clearCompletePageCache();
     }
     
     // Static!
@@ -331,6 +355,11 @@ class Hierarchy {
 	
 	function markHierarchyOfItemChanged($id) {
 	    $sql = "update hierarchy,hierarchy_item set hierarchy.changed=now() where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".Database::int($id);
+        Database::update($sql);
+	}
+	
+	function markHierarchyOfPageChanged($id) {
+		$sql = "update hierarchy,hierarchy_item set hierarchy.changed=now() where hierarchy_item.hierarchy_id=hierarchy.id and hierarchy_item.target_id = ".Database::int($id)." and (target_type in ('page','pageref'))";
         Database::update($sql);
 	}
 	
