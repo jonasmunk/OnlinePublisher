@@ -35,7 +35,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<direction direction="Right" title="Næste" link="Viewer.php?id='.$next['id'].'"/>'
 : '<direction direction="Right" title="Næste" style="disabled"/>').
 '<divider/>'.
-'<tool title="Gendan version" icon="Basic/Refresh" link="Reconstruct.php?id='.$id.'" target="Desktop"/>'.
+'<tool title="Gendan version" icon="Basic/Refresh" link="javascript:window.parent.parent.location=\'Reconstruct.php?id='.$id.'\'"/>'.
 '</toolbar>'.
 '<content>'.
 '<iframe source="../Preview/viewer/?history='.$id.'" xmlns="uri:Frame"/>'.

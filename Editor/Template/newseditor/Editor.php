@@ -16,13 +16,13 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop" onload="parent.Toolbar.location=\'Toolbar.php?\'+Math.random();">'.
 '<window xmlns="uri:Window" width="500" align="center" margin="10">'.
 '<titlebar title="Nyhedsredigering">'.
-'<close link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<close link="../../Tools/Pages/index.php" target="_parent"/>'.
 '</titlebar>'.
 '<content padding="5" background="true">'.
 '<form xmlns="uri:Form" action="Update.php" method="post" name="Formula" focus="data">'.
 '<group size="Small" badgeplacement="above">'.
 '<buttongroup size="Large">'.
-'<button title="Luk" link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<button title="Luk" link="../../Tools/Pages/index.php" target="_parent"/>'.
 '<button title="Opdater" submit="true" style="Hilited"/>'.
 '</buttongroup>'.
 '</group>'.

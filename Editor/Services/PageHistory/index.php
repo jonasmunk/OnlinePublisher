@@ -11,17 +11,17 @@ require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 
-$close = "../../Template/Edit.php";
+$close = "javascript:window.parent.parent.location='../../Template/Edit.php'";
 $pageId = InternalSession::getPageId();
 
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="700" align="center" top="20">'.
 '<titlebar title="Sidens historik" icon="Basic/Time">'.
-'<close link="'.$close.'" target="Desktop" help="Luk vinduet"/>'.
+'<close link="'.$close.'" help="Luk vinduet"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar">'.
-'<tool title="Luk" icon="Basic/Close" link="'.$close.'" target="Desktop"/>'.
+'<tool title="Luk" icon="Basic/Close" link="'.$close.'"/>'.
 '<divider/>'.
 '<tool title="Gem version" icon="Basic/Save" link="SaveVersion.php?id='.$pageId.'"/>'.
 '</toolbar>'.
@@ -47,7 +47,7 @@ while ($row = Database::next($result)) {
 	'<text>'.StringUtils::escapeXML($row['title']).'</text></cell>'.
 	'<cell><text>'.StringUtils::escapeXML($row['message']).'</text><icon icon="Basic/Edit" link="EditHistory.php?id='.$row['id'].'"/></cell>'.
 	'<cell>'.
-	'<button title="Gendan" link="Reconstruct.php?id='.$row['id'].'" target="Desktop"/>'.
+	'<button title="Gendan" link="javascript:window.parent.parent.location=\'Reconstruct.php?id='.$row['id'].'\'"/>'.
 	'<button title="Vis" link="Viewer.php?id='.$row['id'].'"/>'.
 	'</cell>'.
 	'</row>';

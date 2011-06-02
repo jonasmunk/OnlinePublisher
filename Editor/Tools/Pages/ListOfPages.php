@@ -95,8 +95,8 @@ while ($row = Database::next($result)) {
 	$gui.=
 	'</cell>'.
 	'<cell>'.
-	'<icon size="1" icon="Basic/Edit" link="../../Template/Edit.php?id='.$row['id'].'" target="Desktop" help="Rediger siden"/>'.
-	'<icon size="1" icon="Basic/View" link="../../Services/Preview/?id='.$row['id'].'&amp;return=Tools/Pages/" target="Desktop" help="Se siden"/>'.
+	'<icon size="1" icon="Basic/Edit" link="javascript:window.parent.parent.location=\'../../Template/Edit.php?id='.$row['id'].'\'" help="Rediger siden"/>'.
+	'<icon size="1" icon="Basic/View" link="javascript:window.parent.parent.location=\'../../Services/Preview/?id='.$row['id'].'&amp;return=Tools/Pages/\'" help="Se siden"/>'.
 	'<icon size="1" icon="Basic/Info" help="Sidens egenskaber"/>'.
 	($extended && $row['hieritems']>0 ? '<icon icon="Element/Structure" help="Siden har '.$row['hieritems'].' menupunkt der peger derp�"/>' : '').
 	'</cell>'.

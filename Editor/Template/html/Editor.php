@@ -16,7 +16,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop" onload="parent.Toolbar.location=\'Toolbar.php?\'+Math.random();">'.
 '<window xmlns="uri:Window" width="100%" align="center" margin="10">'.
 '<titlebar title="HTML">'.
-'<close link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<close link="../../Tools/Pages/index.php" target="_parent"/>'.
 '</titlebar>'.
 '<toolbar xmlns="uri:Toolbar">'.
 '<tool title="Upload HTML-dokument" icon="File/html" overlay="Upload" link="Upload.php"/>'.
@@ -27,7 +27,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($row['title']).'</textfield>'.
 '<textfield badge="HTML-kode:" name="html" lines="20">'.StringUtils::escapeXML($row['html']).'</textfield>'.
 '<buttongroup size="Large">'.
-'<button title="Luk" link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<button title="Luk" link="../../Tools/Pages/index.php" target="_parent"/>'.
 '<button title="Opdater" submit="true" style="Hilited"/>'.
 '</buttongroup>'.
 '</group>'.

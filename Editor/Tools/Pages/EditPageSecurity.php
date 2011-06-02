@@ -42,8 +42,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<toolbar xmlns="uri:Toolbar" align="center">'.
 '<tool title="Luk" icon="Basic/Close" link="'.$close.'" help="Luk vinduet uden at gemme ændringer"/>'.
 '<divider/>'.
-'<tool title="Rediger" icon="Basic/Edit" link="../../Template/Edit.php?id='.$id.'" target="Desktop" help="Rediger sidens indhold"/>'.
-'<tool title="Vis siden" icon="Basic/View" link="../../Services/Preview/?id='.$row['id'].'&amp;return=Tools/Pages/" target="Desktop" help="Se siden"/>'.
+'<tool title="Rediger" icon="Basic/Edit" link="../../Template/Edit.php?id='.$id.'" target="_parent" help="Rediger sidens indhold"/>'.
+'<tool title="Vis siden" icon="Basic/View" link="../../Services/Preview/?id='.$row['id'].'&amp;return=Tools/Pages/" target="_parent" help="Se siden"/>'.
 '<tool title="Slet" icon="Basic/Delete" link="javascript: ConfirmDelete.show();" help="Slet siden"/>'.
 '<flexible/>'.
 '</toolbar>'.

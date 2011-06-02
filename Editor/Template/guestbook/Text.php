@@ -17,7 +17,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop" onload="parent.Toolbar.location=\'Toolbar.php?\'+Math.random();">'.
 '<window xmlns="uri:Window" width="500" align="center" margin="10">'.
 '<titlebar title="Gæstebog">'.
-'<close link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<close link="../../Tools/Pages/index.php" target="_parent"/>'.
 '</titlebar>'.
 '<tabgroup size="Large" align="center">'.
 '<tab title="Tekst" style="Hilited"/>'.
@@ -29,7 +29,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($row['title']).'</textfield>'.
 '<textfield badge="Tekst:" name="text" lines="6">'.StringUtils::escapeXML($row['text']).'</textfield>'.
 '<buttongroup size="Large">'.
-'<button title="Luk" link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<button title="Luk" link="../../Tools/Pages/index.php" target="_parent"/>'.
 '<button title="Opdater" submit="true" style="Hilited"/>'.
 '</buttongroup>'.
 '</group>'.

@@ -13,7 +13,7 @@ op.WeblogTemplate = {
 			var form = this.newForm = hui.ui.Formula.create();
 			var group = form.buildGroup({above:true},[
 				{type:'Text',options:{label:'Titel',key:'title'}},
-				{type:'DateTime',options:{label:'Dato',name:'newEntryDate',key:'date',allowNull:false}},
+				{type:'DateTimeField',options:{label:'Dato',name:'newEntryDate',key:'date',allowNull:false}},
 				{type:'Text',options:{label:'Text',key:'text',lines:8}},
 				{type:'Checkboxes',options:{label:'Grupper',items:this.groups,key:'group[]'}}
 			]);
@@ -91,7 +91,7 @@ op.WeblogTemplate = {
 			var form = this.editForm = hui.ui.Formula.create();
 			var group = form.buildGroup({above:true},[
 				{type:'Text',options:{label:'Titel',key:'title'}},
-				{type:'DateTime',options:{label:'Dato',name:'editEntryDate',key:'date',allowNull:false}},
+				{type:'DateTimeField',options:{label:'Dato',name:'editEntryDate',key:'date',allowNull:false}},
 				{type:'Text',options:{label:'Text',key:'text',lines:8}},
 				{type:'Checkboxes',options:{label:'Grupper',items:this.groups,key:'group[]',name:'editEntryGroups'}}
 			]);

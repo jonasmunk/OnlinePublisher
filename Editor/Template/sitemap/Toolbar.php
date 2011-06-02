@@ -13,14 +13,14 @@ require_once '../../Classes/InternalSession.php';
 $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<dock xmlns="uri:Dock" orientation="Top">'.
 '<content>'.
-'<tool title="Luk" icon="Basic/Close" link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<tool title="Luk" icon="Basic/Close" link="../../Tools/Pages/index.php" target="_parent"/>'.
 '<divider/>'.
 (pageIsChanged()
 ? '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" link="Publish.php" badge="!" badgestyle="Hilited"/>'
 : '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" style="Disabled"/>'
 ).
-'<tool title="Vis ændringer" icon="Basic/View" link="../../Services/Preview/" target="Desktop"/>'.
-'<tool title="Egenskaber" icon="Basic/Info" link="../../Tools/Pages/?action=pageproperties&amp;id='.InternalSession::getPageId().'" target="Desktop" help="Vis sidens egenskaber i side-værktøjet"/>'.
+'<tool title="Vis ændringer" icon="Basic/View" link="../../Services/Preview/" target="_parent"/>'.
+'<tool title="Egenskaber" icon="Basic/Info" link="../../Tools/Pages/?action=pageproperties&amp;id='.InternalSession::getPageId().'" target="_parent" help="Vis sidens egenskaber i side-værktøjet"/>'.
 '</content>'.
 '</dock>'.
 '</xmlwebgui>';

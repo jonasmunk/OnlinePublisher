@@ -6,11 +6,19 @@ var controller = {
 			username.focus();
 		}
 		if (hui.browser.msie && (!hui.browser.msie8 && !hui.browser.msie9)) {
-			hui.ui.alert({
-				emotion:'gasp',
-				title:'Din software er forældet',
-				text:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
-			});
+			if (hui.browser.msie9compat) {
+				hui.ui.alert({
+					emotion : 'gasp',
+					title : '"Compatibility View" er slået til',
+					text : 'Det ser ud til at du har slået "Compatibility View" til. Slå det venligst fra for en mere stabil oplevelse. Det gøres ved at klikke på det blå dokument-ikon i adresse linjen øverst.'
+				});
+			} else {
+				hui.ui.alert({
+					emotion:'gasp',
+					title:'Din software er forældet',
+					text:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
+				});
+			}
 		}
 		if (hui.location.getBoolean('logout')) {
 			hui.ui.showMessage({text:'Du er nu logget ud',icon:'common/success',duration:2000});

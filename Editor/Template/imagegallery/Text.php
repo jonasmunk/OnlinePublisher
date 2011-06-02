@@ -19,7 +19,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop" onload="parent.Toolbar.location=\'Toolbar.php?\'+Math.random();">'.
 '<window xmlns="uri:Window" width="500" align="center" top="30">'.
 '<titlebar title="Billedgalleri">'.
-'<close link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<close link="../../Tools/Pages/index.php" target="_parent"/>'.
 '</titlebar>'.
 '<tabgroup align="center" size="Large">'.
 '<tab title="Indstillinger" style="Hilited"/>'.
@@ -39,7 +39,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<checkbox badge="Vis beskrivelse" name="shownote" selected="'.($row['shownote'] ? 'true' : 'false').'"/>'.
 '</box></indent>'.
 '<buttongroup size="Large">'.
-'<button title="Luk" link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<button title="Luk" link="../../Tools/Pages/index.php" target="_parent"/>'.
 '<button title="Opdater" submit="true" style="Hilited"/>'.
 '</buttongroup>'.
 '</group>'.

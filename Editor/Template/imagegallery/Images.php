@@ -17,7 +17,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<interface background="Desktop">'.
 '<window xmlns="uri:Window" width="750" align="center" top="30">'.
 '<titlebar title="Billedgalleri">'.
-'<close link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<close link="../../Tools/Pages/index.php" target="_parent"/>'.
 '</titlebar>'.
 '<tabgroup align="center" size="Large">'.
 '<tab title="Indstillinger" link="Text.php"/>'.

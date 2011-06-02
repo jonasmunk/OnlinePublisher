@@ -41,8 +41,8 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 if ($row['target_type']=='page' && $row['pageid']>0) {
 	$gui.=
     '<tool title="Egenskaber" icon="Basic/Info" link="EditPage.php?id='.$row['target_id'].'" help="Rediger sidens egenskaber"/>'.
-	'<tool title="Rediger" icon="Basic/Edit" link="../../Template/Edit.php?id='.$row['target_id'].'" target="Desktop" help="Rediger sidens indhold"/>'.
-	'<tool title="Vis siden" icon="Basic/View" link="../../Services/Preview/?id='.$row['target_id'].'&amp;return=Tools/Pages/" target="Desktop" help="Se siden"/>';
+	'<tool title="Rediger" icon="Basic/Edit" link="javascript:window.parent.parent.location=\'../../Template/Edit.php?id='.$row['target_id'].'\'" help="Rediger sidens indhold"/>'.
+	'<tool title="Vis siden" icon="Basic/View" link="javascript:window.parent.parent.location=\'../../Services/Preview/?id='.$row['target_id'].'&amp;return=Tools/Pages/\'" help="Se siden"/>';
 }
 else {
 	$gui.=

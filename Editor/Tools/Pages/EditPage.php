@@ -47,13 +47,13 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<toolbar xmlns="uri:Toolbar" align="center">'.
 '<tool title="Luk" icon="Basic/Close" link="'.$close.'" help="Luk vinduet uden at gemme ændringer"/>'.
 '<divider/>'.
-'<tool title="Rediger" icon="Basic/Edit" link="../../Template/Edit.php?id='.$id.'" target="Desktop" help="Rediger sidens indhold"/>'.
-'<tool title="Vis siden" icon="Basic/View" link="../../Services/Preview/?id='.$id.'&amp;return=Tools/Pages/" target="Desktop" help="Se siden"/>'.
+'<tool title="Rediger" icon="Basic/Edit" link="../../Template/Edit.php?id='.$id.'" target="_parent" help="Rediger sidens indhold"/>'.
+'<tool title="Vis siden" icon="Basic/View" link="../../Services/Preview/?id='.$id.'&amp;return=Tools/Pages/" target="_parent" help="Se siden"/>'.
 '<tool title="Slet" icon="Basic/Delete" link="javascript: ConfirmDelete.show();" help="Slet siden"/>'.
 '<flexible/>'.
 '<tool title="Avanceret" icon="Tool/System" overlay="DropDown">'.
 '<menu xmlns="uri:Menu">'.
-'<item title="Opret nyhed" link="../News/?action=newnews&amp;page='.$id.'" target="Desktop"/>'.
+'<item title="Opret nyhed" link="../News/?action=newnews&amp;page='.$id.'" target="_parent"/>'.
 '<item title="Eksporter" link="Export.php?id='.$id.'"/>';
 if (false) {
 	$gui.='<item title="Eksporter (debug)" link="Export.php?id='.$id.'&amp;debug=true" target="_blank"/>'.

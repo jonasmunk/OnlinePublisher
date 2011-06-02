@@ -29,7 +29,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($row['title']).'</textfield>'.
 '<textfield badge="Tekst:" name="text" lines="6">'.StringUtils::escapeXML($row['text']).'</textfield>'.
 '<buttongroup size="Large">'.
-'<button title="Luk" link="../../Tools/Pages/index.php" target="Desktop"/>'.
+'<button title="Luk" link="../../Tools/Pages/index.php" target="_parent"/>'.
 '<button title="Opdater" submit="true" style="Hilited"/>'.
 '</buttongroup>'.
 '</group>'.

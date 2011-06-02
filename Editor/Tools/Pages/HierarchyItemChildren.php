@@ -46,8 +46,8 @@ while ($row = Database::next($result)) {
 	'<cell>';
 	if ($row['pageid']>0) {
 		$gui.=
-		'<icon size="1" icon="Basic/Edit" link="../../Template/Edit.php?id='.$row['pageid'].'" target="Desktop" help="Rediger siden"/>'.
-		'<icon size="1" icon="Basic/View" link="../../Services/Preview/?id='.$row['pageid'].'&amp;return=Tools/Pages/" target="Desktop" help="Se siden"/>'.
+		'<icon size="1" icon="Basic/Edit" link="javascript:window.parent.parent.location=\'../../Template/Edit.php?id='.$row['pageid'].'\'" help="Rediger siden"/>'.
+		'<icon size="1" icon="Basic/View" link="javascript:window.parent.parent.location=\'../../Services/Preview/?id='.$row['pageid'].'&amp;return=Tools/Pages/\'" help="Se siden"/>'.
 		'<icon size="1" icon="Basic/Info" link="EditPage.php?id='.$row['pageid'].'" help="Rediger sidens egenskaber"/>';
 	}
 	$gui.=
