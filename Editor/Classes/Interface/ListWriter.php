@@ -104,6 +104,16 @@ class ListWriter {
 		return $this;
 	}
 	
+	function startWrap() {
+		echo '<wrap>';
+		return $this;
+	}
+	
+	function endWrap() {
+		echo '</wrap>';
+		return $this;
+	}
+
 	function text($text) {
 		echo StringUtils::escapeXMLBreak($text,'<break/>');
 		return $this;
@@ -113,6 +123,9 @@ class ListWriter {
 		echo '<icon icon="'.$options['icon'].'"';
 		if (isset($options['data'])) {
 			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
+		}
+		if ($options['revealing']) {
+			echo ' revealing="true"';
 		}
 		echo '/>';
 		return $this;

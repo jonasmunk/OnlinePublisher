@@ -12,15 +12,19 @@ hui.ui.listen({
 		}
 	},
 	$clickIcon$list : function(row,data) {
-		hui.ui.request({
-			message : {start : 'Flytter menupunkt...',delay : 300},
-			url:'MoveHierarchyItem.php',
-			parameters:{id:row.id,direction:data.direction},
-			onSuccess:function() {
-				list.refresh();
-				hierarchySource.refresh();
-			}
-		});
+		if (data.action=='pageInfo') {
+			mainController.loadPage(data.id);
+		} else if (data.action=='moveItem') {
+			hui.ui.request({
+				message : {start : 'Flytter menupunkt...',delay : 300},
+				url:'MoveHierarchyItem.php',
+				parameters:{id:row.id,direction:data.direction},
+				onSuccess:function() {
+					list.refresh();
+					hierarchySource.refresh();
+				}
+			});
+		}		
 	},
 	$listRowWasOpened$list : function(obj) {
 		if (obj.kind=='hierarchyItem') {
@@ -31,6 +35,18 @@ hui.ui.listen({
 		var obj = list.getFirstSelection();
 		if (obj.kind=='hierarchyItem') {
 			this.deleteHierarchyItem(obj.id);
+		}
+	},
+	$click$view : function() {
+		var obj = list.getFirstSelection();
+		if (obj.kind=='hierarchyItem' && obj.data && obj.data.page) {
+			document.location='../../Services/Preview/?id='+obj.data.page;
+		}
+	},
+	$click$edit : function() {
+		var obj = list.getFirstSelection();
+		if (obj.kind=='hierarchyItem' && obj.data && obj.data.page) {
+			document.location='../../Template/Edit.php?id='+obj.data.page;
 		}
 	},
 
@@ -68,7 +84,14 @@ hui.ui.listen({
 	},
 	$success$hierarchyItemLoaded : function(data) {
 		this.activeHierarchyItem = data.id;
-		hierarchyItemFormula.setValues(data);
+		hierarchyItemFormula.setValues({
+			title : data.title,
+			hidden : data.hidden,
+			page : data.targetType=='page' ? data.targetValue : null,
+			file : data.targetType=='file' ? data.targetValue : null,
+			url : data.targetType=='url' ? data.targetValue : '',
+			email : data.targetType=='url' ? data.targetValue : ''
+		});
 		hierarchyItemEditor.show();
 		deleteHierarchyItem.setEnabled(data.canDelete);
 	},

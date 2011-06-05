@@ -1,4 +1,4 @@
-hui.ui.listen({
+var mainController = {
 	
 	activePage : 0,
 	dragDrop : [
@@ -21,8 +21,8 @@ hui.ui.listen({
 			var page = item.data && item.data.page;
 			hui.ui.get('edit').setEnabled(page);
 			hui.ui.get('info').enable();
-			hui.ui.get('delete').enable()
-			hui.ui.get('view').disable()
+			hui.ui.get('delete').enable();
+			hui.ui.get('view').setEnabled(page);
 		} else {
 			hui.ui.get('edit').disable()
 			hui.ui.get('info').disable()
@@ -40,13 +40,13 @@ hui.ui.listen({
 		var obj = list.getFirstSelection();
 		if (obj.kind=='page') {
 			document.location='../../Template/Edit.php?id='+obj.id;
-		} else if (obj.kind=='hierarchyItem' && obj.data && obj.data.page) {
-			document.location='../../Template/Edit.php?id='+obj.data.page;
 		}
 	},
 	$click$view : function() {
 		var obj = list.getFirstSelection();
-		document.location='../../Services/Preview/?id='+obj.id;
+		if (obj.kind=='page') {
+			document.location='../../Services/Preview/?id='+obj.id;
+		}
 	},
 	$click$delete : function() {
 		var obj = list.getFirstSelection();
@@ -110,11 +110,16 @@ hui.ui.listen({
 			parameters : {id:id}
 		});
 	},
-	
 	$success$pageLoaded : function(data) {
 		this.activePage = data.id;
 		pageFormula.setValues(data);
 		pageEditor.show();
+	},
+	$click$editPage : function() {
+		document.location='../../Template/Edit.php?id='+this.activePage;
+	},
+	$click$viewPage : function() {
+		document.location='../../Services/Preview/?id='+this.activePage;
 	},
 	$click$cancelPage : function() {
 		this.activePage = 0;
@@ -216,4 +221,6 @@ hui.ui.listen({
 	checkNewPage : function(value) {
 		createPage.setEnabled(value.length>0);
 	}
-});
+}
+
+hui.ui.listen(mainController);

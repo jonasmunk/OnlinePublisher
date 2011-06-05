@@ -20,6 +20,7 @@
 			<xsl:if test="@border='top'"><xsl:text> hui_toolbar_border_top</xsl:text></xsl:if>
 			<xsl:if test="@border='bottom'"><xsl:text> hui_toolbar_border_bottom</xsl:text></xsl:if>
 			<xsl:if test="@centered='true'"><xsl:text> hui_toolbar_centered</xsl:text></xsl:if>
+			<xsl:if test="@variant"><xsl:text> hui_toolbar_</xsl:text><xsl:value-of select="@variant"/></xsl:if>
 		</xsl:attribute>
 		<div>
 			<xsl:attribute name="class">

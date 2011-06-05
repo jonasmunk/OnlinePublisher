@@ -42,6 +42,8 @@ $gui='
 		<parameter key="kind" value="@selector.kind"/>
 		<parameter key="value" value="@selector.value"/>
 	</source>
+	<source name="pagesSource" url="../../Services/Model/Items.php?type=page"/>
+	<source name="filesSource" url="../../Services/Model/Items.php?type=file"/>
 	<source name="languageSource" url="LanguageItems.php"/>
 	<source name="hierarchySource" url="HierarchyItems.php"/>
 	<source name="newPageHierarchySource" url="FrameHierarchyItems.php">
@@ -96,8 +98,16 @@ $gui='
 		</bottom>
 	</layout>
 	
-	<window name="pageEditor" width="300" title="Side" padding="5">
-		<formula name="pageFormula">
+	<window name="pageEditor" width="300" title="Side">
+		<toolbar variant="window">
+			<icon icon="common/info" text="Info" selected="true"/>
+			<icon icon="common/settings" text="Avanceret" click="pageEditor.flip()"/>
+			<right>
+			<icon icon="common/edit" text="Rediger" name="editPage"/>
+			<icon icon="common/view" text="Vis" name="viewPage"/>
+			</right>
+		</toolbar>
+		<formula name="pageFormula" padding="5">
 			<group labels="above">
 				<text key="title" label="Titel:"/>
 				<text key="description" label="Beskrivelse:" lines="5"/>
@@ -121,6 +131,10 @@ $gui='
 				</buttons>
 			</group>
 		</formula>
+		<back>
+			<text>Hello</text>
+			<button text="Flip!" click="pageEditor.flip()"/>
+		</back>
 	</window>
 	
 	<window name="hierarchyItemEditor" width="300" title="Menupunkt" padding="5">
@@ -128,6 +142,16 @@ $gui='
 			<group>
 				<text key="title" label="Titel:"/>
 				<checkbox key="hidden" label="Skjult:"/>
+			</group>
+			<fieldset legend="Link">
+				<group>
+					<dropdown key="page" label="Side:" source="pagesSource"/>
+					<dropdown key="file" label="Fil:" source="filesSource"/>
+					<text key="url" label="URL:"/>
+					<text key="email" label="E-post:"/>
+				</group>				
+			</fieldset>
+			<group>
 				<buttons>
 					<button name="cancelHierarchyItem" title="Annuller"/>
 					<button name="deleteHierarchyItem" title="Slet">

@@ -2,6 +2,13 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" title="List" padding="10">
 	<source name="itemsSource" url="data/source_items.xml"/>
+	<script>
+		hui.ui.listen({
+			$ready : function() {
+				pageEditor.show();
+			}
+		})
+	</script>
 	<layout>
 		<top>
 			<toolbar>
@@ -86,4 +93,52 @@
 			</toolbar>
 		</bottom>
 	</layout>
+	
+	<window name="pageEditor" width="300" title="Side">
+		<toolbar centered="true" variant="window">
+			<icon icon="common/edit" text="Rediger"/>
+		</toolbar>
+		<formula name="pageFormula" padding="5">
+			<group labels="above">
+				<text key="title" label="Titel:"/>
+				<text key="description" label="Beskrivelse:" lines="5"/>
+			</group>
+			<fieldset legend="Link">
+			<group>
+				<dropdown key="language" label="Side:">
+					<item value="" title="Intet"/>
+					<item value="DA" title="Dansk"/>
+					<item value="EN" title="Engelsk"/>
+					<item value="DE" title="Tysk"/>
+				</dropdown>
+				<dropdown key="language" label="Fil:">
+					<item value="" title="Intet"/>
+					<item value="DA" title="Dansk"/>
+					<item value="EN" title="Engelsk"/>
+					<item value="DE" title="Tysk"/>
+				</dropdown>
+				<text key="title" label="URL:"/>
+				<text key="title" label="E-post:"/>
+			</group>				
+			</fieldset>
+			<group>
+				<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
+					<item value="" title="Intet"/>
+					<item value="DA" title="Dansk"/>
+					<item value="EN" title="Engelsk"/>
+					<item value="DE" title="Tysk"/>
+				</dropdown>
+				<text key="path" label="Sti:"/>
+				<checkbox key="searchable" label="Søgbar:"/>
+				<checkbox key="disabled" label="Inaktiv:"/>
+				<buttons>
+					<button name="cancelPage" title="Annuller"/>
+					<button name="deletePage" title="Slet">
+						<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet side" cancel="Annuller"/>
+					</button>
+					<button name="savePage" title="Gem" highlighted="true"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
 </gui>

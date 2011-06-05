@@ -37,7 +37,8 @@ function listHierarhy() {
 	$writer->startList();
 	$writer->startHeaders();
 	$writer->header(array('title'=>'Menupunkt'));
-	$writer->header(array('title'=>'Link','width'=>50));
+	$writer->header(array('title'=>'Link','width'=>40));
+	$writer->header(array('title'=>'Sti'));
 	$writer->header(array('width'=>1));
 	$writer->endHeaders();
 	if ($kind=='hierarchy') {
@@ -61,13 +62,24 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		if ($row['target_type']=='page' && $row['pageid']) {
 			$options['data'] = array('page'=>intval($row['pageid']));
 		}
-		$writer->startRow($options);
-		$writer->startCell(array('icon'=>'monochrome/dot'))->text($row['title'])->endCell();
+		$writer->
+		startRow($options)->
+		startCell(array('icon'=>'monochrome/dot'))->text($row['title']);
+		if ($row['hidden']) {
+			$writer->startIcons()->icon(array('icon'=>'monochrome/invisible','data'=>array('action'=>'invisible')))->endIcons();
+		}
+		$writer->endCell();
 		if ($row['target_type']=='page') {
 			if (!$row['pageid']) {
 				$writer->startCell(array('icon'=>'common/warning'))->text('Ingen side!')->endCell();
 			} else {
-				$writer->startCell(array('icon'=>$icon))->text($row['pagetitle'])->endCell();
+				$writer->
+					startCell(array('icon'=>$icon))->
+					text($row['pagetitle'])->
+					startIcons()->
+						icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
+					endIcons()->
+					endCell();
 			}
 		} else if ($row['target_type']=='pageref') {
 			$writer->startCell(array('icon'=>$icon))->text($row['pagetitle'].'')->endCell();
@@ -80,10 +92,12 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		} else {
 			$writer->startCell(array('icon'=>'monochrome/round_question'))->text($row['target_type'].'')->endCell();
 		}
-		$writer->startCell(array('wrap'=>false))->
+		$writer->
+		startCell()->startWrap()->text($row['page_path'])->endWrap()->endCell()->
+		startCell(array('wrap'=>false))->
 		startIcons()->
-			icon(array('icon'=>'monochrome/round_arrow_up','data'=>array('direction'=>'up')))->
-			icon(array('icon'=>'monochrome/round_arrow_down','data'=>array('direction'=>'down')))->
+			icon(array('icon'=>'monochrome/round_arrow_up','revealing'=>true,'data'=>array('action'=>'moveItem','direction'=>'up')))->
+			icon(array('icon'=>'monochrome/round_arrow_down','revealing'=>true,'data'=>array('action'=>'moveItem','direction'=>'down')))->
 		endIcons()->
 		endCell()->
 		endRow();
@@ -93,7 +107,7 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 }
 
 function buildHierarchySql($hierarchyId,$parent) {
-	$sql="select hierarchy_item.*,page.id as pageid,page.title as pagetitle,template.unique as templateunique,file.object_id as fileid,file.filename,fileobject.title as filetitle from hierarchy_item left join page on page.id = hierarchy_item.target_id left join file on file.object_id = hierarchy_item.target_id left join object as fileobject on file.object_id=fileobject.id left join template on template.id=page.template_id";
+	$sql="select hierarchy_item.*,page.id as pageid,page.title as pagetitle,page.path as page_path,template.unique as templateunique,file.object_id as fileid,file.filename,fileobject.title as filetitle from hierarchy_item left join page on page.id = hierarchy_item.target_id left join file on file.object_id = hierarchy_item.target_id left join object as fileobject on file.object_id=fileobject.id left join template on template.id=page.template_id";
 	if ($parent===null && $hierarchyId!==null) {
 		$sql.=" where hierarchy_id=".Database::int($hierarchyId)." and parent=0";
 	} else {
@@ -132,7 +146,7 @@ function listPages() {
 		$modified = $row['publishdelta']>0;
 		echo '<row id="'.$row['id'].'" title="'.StringUtils::escapeXML($row['title']).'" kind="page" icon="common/page">'.
 		'<cell icon="common/page"><line>'.StringUtils::escapeXML($row['title']).'</line>'.
-		($row['path'] ? '<line dimmed="true">'.StringUtils::escapeXML($row['path']).'</line>' : '').
+		($row['path'] ? '<line dimmed="true"><wrap>'.StringUtils::escapeXML($row['path']).'</wrap></line>' : '').
 		'</cell>'.
 		'<cell>'.StringUtils::escapeXML($templates[$row['unique']]['name']).'</cell>'.
 		//'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.StringUtils::escapeXML($row['path']).'</line></cell>'.

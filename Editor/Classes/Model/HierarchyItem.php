@@ -1,7 +1,7 @@
 <?
 /**
  * @package OnlinePublisher
- * @subpackage Classes
+ * @subpackage Classes.Model
  */
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Object.php');
@@ -13,6 +13,8 @@ class HierarchyItem {
 	var $title;
 	var $hidden;
 	var $canDelete;
+	var $targetType;
+	var $targetValue;
 
     function HierarchyItem() {
     }
@@ -49,13 +51,28 @@ class HierarchyItem {
 	    return $this->canDelete;
 	}
 	
+	function setTargetType($targetType) {
+	    $this->targetType = $targetType;
+	}
+
+	function getTargetType() {
+	    return $this->targetType;
+	}
+	
+	function setTargetValue($targetValue) {
+	    $this->targetValue = $targetValue;
+	}
+
+	function getTargetValue() {
+	    return $this->targetValue;
+	}
 	
 	function toUnicode() {
 		$this->title = mb_convert_encoding($this->title, "UTF-8","ISO-8859-1");
 	}
 
 	function load($id) {
-		$sql = "select id,title,hidden from hierarchy_item where id=".$id;
+		$sql = "select id,title,hidden,target_type,target_value,target_id from hierarchy_item where id=".Database::int($id);
 		$result = Database::select($sql);
 		$item = null;
 		if ($row = Database::next($result)) {
@@ -63,18 +80,34 @@ class HierarchyItem {
 			$item->setId($row['id']);
 			$item->setTitle($row['title']);
 			$item->setHidden($row['hidden']==1);
+			$item->setTargetType($row['target_type']);
+			if ($row['target_type']=='page' || $row['target_type']=='pageref' || $row['target_type']=='file') {
+				$item->setTargetValue($row['target_id']);
+			} else {
+				$item->setTargetValue($row['target_value']);
+			}
+			Log::debug($row);
+			$sql="select * from hierarchy_item where parent=".Database::int($id);
+			$item->canDelete = Database::isEmpty($sql);
 		}
 		Database::free($result);
-		$sql="select * from hierarchy_item where parent=".Database::int($id);
-		$item->canDelete = Database::isEmpty($sql);
 		return $item;
 	}
 	
 	function save() {
 		if ($this->id>0) {
+			$target_value=null;$target_id=null;
+			if ($this->targetType=='page' || $this->targetType=='pageref' || $this->targetType=='file') {
+				$target_id = $this->targetValue;
+			} else {
+				$target_value = $this->targetValue;
+			}
 			$sql="update hierarchy_item set".
 			" title=".Database::text($this->title).
 			",hidden=".Database::boolean($this->hidden).
+			",target_type=".Database::text($this->targetType).
+			",target_value=".Database::text($target_value).
+			",target_id=".Database::int($target_id).
 			" where id=".$this->id;
 			Database::update($sql);
 			Hierarchy::markHierarchyOfItemChanged($this->id);
