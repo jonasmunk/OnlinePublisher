@@ -46,6 +46,21 @@ div.hui_toolbar_body_fixed_height
 	overflow: hidden;
 }
 
+/********************************** variants ************************/
+
+div.hui_toolbar_window
+{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #fff;
+}
+
+div.hui_toolbar_window div.hui_toolbar_body
+{
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #fff;
+	padding-left: 3px;
+}
+
 /********************************** Icon ************************/
 
 

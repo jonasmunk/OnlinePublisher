@@ -1993,6 +1993,21 @@ div.hui_toolbar_body_fixed_height
 	overflow: hidden;
 }
 
+/********************************** variants ************************/
+
+div.hui_toolbar_window
+{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #fff;
+}
+
+div.hui_toolbar_window div.hui_toolbar_body
+{
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #fff;
+	padding-left: 3px;
+}
+
 /********************************** Icon ************************/
 
 
@@ -2663,6 +2678,7 @@ span.hui_list_icons
 	font-size: 0;
 	vertical-align: top;
 	display: inline-block;
+	padding-left: 3px;
 }
 
 span.hui_list_icons .hui_icon
@@ -2686,7 +2702,17 @@ div.hui_list table tbody tr:hover
 	cursor: pointer;
 }
 
-div.hui_list table tbody tr:hover .hui_icon_1
+div.hui_list tr:hover .hui_icon_1
+{
+	background-position: 0px -16px;
+}
+
+div.hui_list tr:hover span.hui_list_icons .hui_icon_1
+{
+	background-position: 0px 0px;
+}
+
+div.hui_list tr:hover span.hui_list_icons .hui_icon_1:hover
 {
 	background-position: 0px -16px;
 }

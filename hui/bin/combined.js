@@ -6297,23 +6297,13 @@ hui.ui.List.prototype = {
 		}
 	},
 	
-	/** @private 
-	filter : function(str) {
-		var len = 20;
-		var regex = new RegExp("[\\w]{"+len+",}","g");
-		var match = regex.exec(str);
-		if (match) {
-			for (var i=0; i < match.length; i++) {
-				var rep = '';
-				for (var j=0; j < match[i].length; j++) {
-					rep+=match[i][j];
-					if ((j+1)%len==0) rep+='\u200B';
-				};
-				str = str.replace(match[i],rep);
-			};
-		}
-		return str;
-	},*/
+	_wrap : function(str) {
+		var out = '';
+		for (var i=0; i < str.length; i++) {
+			out+=str[i]+'\u200B';
+		};
+		return out;
+	},
 	
 	/** @private */
 	parseCell : function(node,cell) {
@@ -6325,6 +6315,8 @@ hui.ui.List.prototype = {
 			var child = node.childNodes[i];
 			if (hui.dom.isDefinedText(child)) {
 				hui.dom.addText(cell,child.nodeValue);
+			} else if (hui.dom.isElement(child,'wrap')) {
+				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
 			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
@@ -6333,7 +6325,9 @@ hui.ui.List.prototype = {
 				if (data) {
 					icon.setAttribute('data',data);
 					hui.addClass(icon,'hui_list_action');
-					hui.addClass(icon,'hui_list_revealing');
+					if (child.getAttribute('revealing')==='true') {
+						hui.addClass(icon,'hui_list_revealing');
+					}
 				}
 				cell.appendChild(icon);
 			} else if (hui.dom.isElement(child,'line')) {
