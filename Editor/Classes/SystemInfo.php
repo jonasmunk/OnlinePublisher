@@ -2,8 +2,8 @@
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 class SystemInfo {
 	
-	private static $date = 31;
-	private static $month = 5;
+	private static $date = 5;
+	private static $month = 6;
 	private static $year = 2011;
 	private static $feedbackMail = "jonasmunk@mac.com";
 	private static $feedbackName = "Jonas Munk";
