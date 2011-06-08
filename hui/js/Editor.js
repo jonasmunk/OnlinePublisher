@@ -89,8 +89,11 @@ hui.ui.Editor.prototype = {
 				if (handler) {
 					var part = new handler.controller(element,row,column,partIndex);
 					part.type=match[1];
-					hui.listen(element,'click',function() {
-						self.editPart(part);
+					hui.listen(element,'click',function(e) {
+						e = hui.event(e);
+						if (!e.findByTag('a')) {
+							self.editPart(part);
+						}
 					});
 					hui.listen(element,'mouseover',function(e) {
 						self.hoverPart(part);

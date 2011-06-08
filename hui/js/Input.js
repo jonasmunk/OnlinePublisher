@@ -43,10 +43,10 @@ hui.ui.Input.prototype = {
 	},
 	/** @private */
 	_validate : function(value) {
-		var validator = this.options.validator,
-			result;
+		var validator = this.options.validator;
+		var result;
 		if (validator) {
-			result = validator._validate(value);
+			result = validator.validate(value);
 			hui.setClass(this.element,'hui_invalid',!result.valid);
 			return result.value;
 		}

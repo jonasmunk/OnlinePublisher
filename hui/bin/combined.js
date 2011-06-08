@@ -9157,8 +9157,11 @@ hui.ui.Editor.prototype = {
 				if (handler) {
 					var part = new handler.controller(element,row,column,partIndex);
 					part.type=match[1];
-					hui.listen(element,'click',function() {
-						self.editPart(part);
+					hui.listen(element,'click',function(e) {
+						e = hui.event(e);
+						if (!e.findByTag('a')) {
+							self.editPart(part);
+						}
 					});
 					hui.listen(element,'mouseover',function(e) {
 						self.hoverPart(part);
@@ -11413,10 +11416,10 @@ hui.ui.Input.prototype = {
 	},
 	/** @private */
 	_validate : function(value) {
-		var validator = this.options.validator,
-			result;
+		var validator = this.options.validator;
+		var result;
 		if (validator) {
-			result = validator._validate(value);
+			result = validator.validate(value);
 			hui.setClass(this.element,'hui_invalid',!result.valid);
 			return result.value;
 		}

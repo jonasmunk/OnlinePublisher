@@ -29,19 +29,19 @@
 	<button onclick="test1()">Test 1</button>
 <script type="text/javascript" charset="utf-8">
 		var normal = hui.ui.Window.create();
-		normal.add(new Element('div',{style:'width: 200px; height: 200px;'}));
+		normal.add(hui.build('div',{style:'width: 200px; height: 200px;'}));
 		normal.show();
 		
 		var light = hui.ui.Window.create({variant:'light'});
-		light.add(new Element('div',{style:'width: 200px; height: 200px;'}));
+		light.add(hui.build('div',{style:'width: 200px; height: 200px;'}));
 		light.show();
 		
 		var dark = hui.ui.Window.create({variant:'dark'});
-		dark.add(new Element('div',{style:'width: 200px; height: 200px;'}));
+		dark.add(hui.build('div',{style:'width: 200px; height: 200px;'}));
 		dark.show();
 
 		var news = hui.ui.Window.create({variant:'news'});
-		news.add(new Element('div',{style:'width: 200px; height: 200px;'}));
+		news.add(hui.build('div',{style:'width: 200px; height: 200px;'}));
 		news.show();
 		
 		var tabWindow = hui.ui.Window.create({variant:'dark',title:'Window with tabs',width:300});
