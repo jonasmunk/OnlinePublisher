@@ -211,6 +211,7 @@ class RenderingService {
 	}
 	
 	function handleMissingPage($path) {
+		global $baseUrl;
 		// See if there is a page redirect
 		$sql = "select page.id,page.path from path left join page on page.id=path.page_id where path.path=".Database::text($path);
 		if ($row = Database::selectFirst($sql)) {
