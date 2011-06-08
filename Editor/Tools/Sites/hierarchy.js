@@ -53,7 +53,7 @@ hui.ui.listen({
 	/////////// Hierarchy item properties //////////
 	
 	$drop$hierarchyItem$hierarchyItem : function(dragged,dropped) {
-		this.relocateHierarchyItem({move:dragged.id,targetItem:dropped.value});
+		this.relocateHierarchyItem({move:dragged.id,targetItem:dropped.value || dropped.id});
 	},
 	$drop$hierarchyItem$hierarchy : function(dragged,dropped) {
 		this.relocateHierarchyItem({move:dragged.id,targetHierarchy:dropped.value});
