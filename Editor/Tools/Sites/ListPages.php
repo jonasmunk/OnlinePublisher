@@ -84,7 +84,11 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		} else if ($row['target_type']=='pageref') {
 			$writer->startCell(array('icon'=>$icon))->text($row['pagetitle'].'')->endCell();
 		} else if ($row['target_type']=='url') {
-			$writer->startCell(array('icon'=>$icon))->text($row['target_value'].'')->endCell();
+			$writer->startCell(array('icon'=>$icon))->text($row['target_value'].'')->
+				startIcons()->
+					icon(array('icon'=>'monochrome/round_arrow_right','revealing'=>true,'data'=>array('action'=>'visitLink','url'=>$row['target_value'])))->
+				endIcons()->
+			endCell();
 		} else if ($row['target_type']=='email') {
 			$writer->startCell(array('icon'=>'monochrome/email'))->text($row['target_value'].'')->endCell();
 		} else if ($row['target_type']=='file') {

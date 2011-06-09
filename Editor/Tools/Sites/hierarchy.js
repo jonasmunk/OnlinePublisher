@@ -29,6 +29,8 @@ hui.ui.listen({
 					hierarchySource.refresh();
 				}
 			});
+		} else if (data.action=='visitLink') {
+			window.open(data.url);
 		}		
 	},
 	$listRowWasOpened$list : function(obj) {

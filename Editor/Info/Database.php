@@ -362,7 +362,9 @@ $databaseTables = array(
 		),
 	'newssource' => array(
 			array("object_id","int(11)","","","0",""),
-			array("url","varchar(255)","YES","","","")
+			array("url","varchar(255)","YES","","",""),
+			array("synchronized","datetime","YES","","",""),
+			array("sync_interval","int(11)","NO","","3600","")
 		),
 	'newssourceitem' => array(
 			array("object_id","int(11)","","","0",""),
@@ -422,7 +424,8 @@ $databaseTables = array(
 	'page_cache' => array(
 			array("page_id","int(11)","YES","","",""),
 			array("stamp","datetime","YES","","",""),
-			array("html","varchar(50000)","YES","","","")
+			array("html","varchar(50000)","YES","","",""),
+			array("path","varchar(1024)","YES","","","")
 	),
 	'pageblueprint' => array(
 			array("object_id","int(11)","","","0",""),

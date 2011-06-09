@@ -246,7 +246,6 @@ class ImageTransformationService {
 		if ($recipe['format']) {
 			$path.='.'.$recipe['format'];
 		}
-		Log::debug($path);
 		return $path;
 	}
 }

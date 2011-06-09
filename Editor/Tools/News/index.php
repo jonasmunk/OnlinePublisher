@@ -65,6 +65,9 @@ $gui='
 				</overflow>
 			</left>
 			<center>
+				<!--bar variant="layout">
+					<button icon="common/folder" text="Dubler" name="sync" disabled="true"/>
+				</bar-->
 				<overflow>
 					<list name="list" source="newsSource"/>
 				</overflow>

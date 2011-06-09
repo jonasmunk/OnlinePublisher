@@ -12,6 +12,7 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/Hierarchy.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/EventManager.php';
+require_once '../../Classes/Services/CacheService.php';
 
 $id=Request::getInt('id',-1);
 $name=Request::getString('name');
@@ -56,6 +57,7 @@ if ($hierarchyItemId>0) {
 
 $page = Page::load($id);
 $page->clearPreviews();
+CacheService::clearPageCache($id);
 
 // TODO : templateUnique instead of null
 EventManager::fireEvent('update','page',null,$id);

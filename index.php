@@ -79,7 +79,7 @@ else if ($page['redirect']!==false) {
 else if ($page['secure']) {
 	if ($user = ExternalSession::getUser()) {
 		if (RenderingService::userHasAccessToPage($user['id'],$id)) {
-			RenderingService::writePage($id,$page,$relative,$samePageBaseUrl);
+			RenderingService::writePage($id,$path,$page,$relative,$samePageBaseUrl);
 		}
 		else {
 			RenderingService::goToAuthenticationPage($id);
@@ -91,7 +91,7 @@ else if ($page['secure']) {
 }
 // If nothing special about page
 else {
-	RenderingService::writePage($id,$page,$relative,$samePageBaseUrl);
+	RenderingService::writePage($id,$path,$page,$relative,$samePageBaseUrl);
 }
 
 

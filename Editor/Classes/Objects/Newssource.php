@@ -4,13 +4,18 @@
  * @subpackage Classes.Objects
  */
 require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Services/NewsService.php');
 
 Object::$schema['newssource'] = array(
-	'url' => array('type'=>'text')
+	'url' => array('type'=>'text'),
+	'synchronized'		=> array('type'=>'datetime'),
+	'syncInterval'		=> array('type'=>'int','column'=>'sync_interval')
 );
 class Newssource extends Object {
 	var $url;
-
+	var $synchronized;
+	var $syncInterval;
+	
 	function Newssource() {
 		parent::Object('newssource');
 	}
@@ -27,6 +32,35 @@ class Newssource extends Object {
 	    return $this->url;
 	}
 	
+	function setSynchronized($synchronized) {
+	    $this->synchronized = $synchronized;
+	}
+
+	function getSynchronized() {
+	    return $this->synchronized;
+	}
+	
+	function setSyncInterval($syncInterval) {
+	    $this->syncInterval = $syncInterval;
+	}
+
+	function getSyncInterval() {
+	    return $this->syncInterval;
+	}
+
+	function isInSync() {
+		return (time() - $this->synchronized < $this->syncInterval);
+	}
+	
+	function synchronize($force=false) {
+		global $basePath;
+		if ($this->isInSync() && $force==false) {
+			return;
+		}
+		NewsService::synchronizeSource($this->id);
+	}
+	
+	
 	function getIn2iGuiIcon() {
 		return 'common/internet';
 	}
@@ -34,7 +68,6 @@ class Newssource extends Object {
 	function removeMore() {
 		$items = Query::after('newssourceitem')->withProperty('newssource_id',$this->id)->get();
 		foreach ($items as $item) {
-			//Log::debug('Removing: '.$item->getId());
 			$item->remove();
 		}
 	}

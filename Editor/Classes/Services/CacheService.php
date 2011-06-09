@@ -17,11 +17,15 @@ class CacheService {
 	}
 	
 	function sendCachedPage($id,$path) {
-		return false;
+		if (Request::getBoolean('viewsource')) {
+			return false;
+		}
 		$sql = "select page_cache.html,UNIX_TIMESTAMP(page.published) from page_cache,page,frame where page.secure=0 and page.dynamic=0 and page.id=page_cache.page_id and page.frame_id=frame.id and frame.dynamic=0";
 		if (strlen($path)>0) {
+			$sql.=" and page_cache.path=".Database::text($path);
 			$sql.=" and page.path=".Database::text($path);
 		} else {
+			$sql.=" and (page_cache.path is null or page_cache.path='')";
 			$sql.=" and page.id=".Database::int($id);
 		}
 		if ($row = Database::selectFirst($sql)) {
@@ -35,15 +39,19 @@ class CacheService {
 		return false;
 	}
 	
-	function createPageCache($id,$html) {
-		return;
+	function createPageCache($id,$path,$html) {
 		$html = Database::text($html);
 		if (strlen($html)>49900) {
 			return; // Be sure not to cache incomplete html
 		}
 		$sql = "delete from page_cache where page_id=".Database::int($id);
+		if (strlen($path)>0) {
+			$sql.=" and page_cache.path=".Database::text($path);
+		} else {
+			$sql.=" and (page_cache.path is null or page_cache.path='')";
+		}
 		Database::delete($sql);
-		$sql = "insert into page_cache (page_id,html,stamp) values (".Database::int($id).",".$html.",now())";
+		$sql = "insert into page_cache (page_id,path,html,stamp) values (".Database::int($id).",".Database::text($path).",".$html.",now())";
 		Database::insert($sql);		
 	}
 }

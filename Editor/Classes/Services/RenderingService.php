@@ -290,6 +290,7 @@ class RenderingService {
 			'</content>'.
 			'</page>';
 			return array(
+				'id' => $row['id'],
 			    'xml' => $xml,
 			    'design' => $row['design'],
 			    'template' => $template,
@@ -393,7 +394,7 @@ class RenderingService {
 		return $design;
 	}
 
-	function writePage($id,&$page,$relative,$samePageBaseUrl) {
+	function writePage($id,$path,&$page,$relative,$samePageBaseUrl) {
 		if (Request::getBoolean('viewsource')) {
 			header('Content-type: text/xml');
 			echo $page['xml'];
@@ -405,7 +406,7 @@ class RenderingService {
 			header("Content-Type: text/html; charset=UTF-8");
 			echo $html;
 			if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
-				CacheService::createPageCache($id,$html);
+				CacheService::createPageCache($page['id'],$path,$html);
 			}
 		}
 	}

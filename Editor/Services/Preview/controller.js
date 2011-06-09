@@ -12,7 +12,7 @@ var controller = {
 	},
 	
 	$click$close : function() {
-		this.getFrame().location='../../Tools/Pages/';
+		this.getFrame().location='../../Tools/Sites/';
 	},
 	$click$edit : function() {
 		var frame = window.frames[0];
@@ -30,9 +30,13 @@ var controller = {
 		window.parent.location='ViewPublished.php';
 	},
 	$click$publish : function() {
-		hui.ui.request({url:'viewer/data/PublishPage.php',parameters:{id:this.pageId},onSuccess:function(obj) {
-			publish.setEnabled(false);
-		}});
+		hui.ui.request({
+			url : 'viewer/data/PublishPage.php',
+			parameters : {id:this.pageId},
+			onSuccess : function(obj) {
+				publish.setEnabled(false);
+			}
+		});
 	},
 	getFrame : function() {
 		return window.parent.frames[0];
