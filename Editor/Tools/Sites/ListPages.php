@@ -86,7 +86,7 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		} else if ($row['target_type']=='url') {
 			$writer->startCell(array('icon'=>$icon))->text($row['target_value'].'')->endCell();
 		} else if ($row['target_type']=='email') {
-			$writer->startCell(array('icon'=>$icon))->text($row['target_value'].'')->endCell();
+			$writer->startCell(array('icon'=>'monochrome/email'))->text($row['target_value'].'')->endCell();
 		} else if ($row['target_type']=='file') {
 			$writer->startCell(array('icon'=>$icon))->text($row['filetitle'].'')->endCell();
 		} else {

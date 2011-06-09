@@ -29,6 +29,13 @@ foreach ($templates as $template) {
 	$templateItems.='<item title="'.StringUtils::toUnicode($info['name']).'" image="../../Template/'.$template['unique'].'/thumbnail128.jpg" value="'.$template['id'].'"/>';
 }
 
+$languageItems = '
+	<item value="" title="Intet"/>
+	<item value="DA" title="Dansk"/>
+	<item value="EN" title="Engelsk"/>
+	<item value="DE" title="Tysk"/>
+';
+
 $gui='
 <gui xmlns="uri:hui" title="Sites" padding="10">
 	<controller source="controller.js"/>
@@ -62,7 +69,8 @@ $gui='
 					<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet" cancel="Annuller"/>
 				</icon>
 				<divider/>
-				<icon icon="common/page" title="Nyt underpunkt" overlay="new" name="newSubPage" disabled="true"/>
+				<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" name="newHierarchy"/>
+				<icon icon="common/page" title="Nyt underpunkt" overlay="new" name="newHierarchyItem" disabled="true"/>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 					<divider/>
@@ -114,10 +122,7 @@ $gui='
 			</group>
 			<group>
 				<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
-					<item value="" title="Intet"/>
-					<item value="DA" title="Dansk"/>
-					<item value="EN" title="Engelsk"/>
-					<item value="DE" title="Tysk"/>
+					'.$languageItems.'
 				</dropdown>
 				<text key="path" label="Sti:"/>
 				<checkbox key="searchable" label="Søgbar:"/>
@@ -125,7 +130,7 @@ $gui='
 				<buttons>
 					<button name="cancelPage" title="Annuller"/>
 					<button name="deletePage" title="Slet">
-						<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet side" cancel="Annuller"/>
+						<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet side" cancel="Nej"/>
 					</button>
 					<button name="savePage" title="Gem" highlighted="true"/>
 				</buttons>
@@ -136,6 +141,26 @@ $gui='
 			<button text="Flip!" click="pageEditor.flip()"/>
 		</back>
 	</window>
+
+	<window name="hierarchyEditor" width="300" title="Hierarki" padding="5" icon="common/hierarchy">
+		<formula name="hierarchyFormula">
+			<group>
+				<text key="name" label="Titel:"/>
+				<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
+					'.$languageItems.'
+				</dropdown>
+			</group>
+			<group>
+				<buttons>
+					<button name="cancelHierarchy" title="Annuller"/>
+					<button name="deleteHierarchy" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja, slet hierarki" cancel="Nej"/>
+					</button>
+					<button name="saveHierarchy" title="Gem" highlighted="true" submit="true"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
 	
 	<window name="hierarchyItemEditor" width="300" title="Menupunkt" padding="5">
 		<formula name="hierarchyItemFormula">
@@ -145,10 +170,11 @@ $gui='
 			</group>
 			<fieldset legend="Link">
 				<group>
-					<dropdown key="page" label="Side:" source="pagesSource"/>
-					<dropdown key="file" label="Fil:" source="filesSource"/>
-					<text key="url" label="URL:"/>
-					<text key="email" label="E-post:"/>
+					<dropdown key="page" label="Side:" source="pagesSource" name="hierarchyItemPage"/>
+					<checkbox key="reference" label="Reference" name="hierarchyItemReference"/>
+					<dropdown key="file" label="Fil:" source="filesSource" name="hierarchyItemFile"/>
+					<text key="url" label="URL:" name="hierarchyItemURL"/>
+					<text key="email" label="E-post:" name="hierarchyItemEmail"/>
 				</group>				
 			</fieldset>
 			<group>
@@ -200,10 +226,7 @@ $gui='
 						<text label="Menupunkt:" key="menuItem"/>
 						<text label="Sti:" key="path"/>
 						<dropdown label="Sprog:" key="language" placeholder="Vælg sprog...">
-							<item value="" title="Intet"/>
-							<item value="DA" title="Dansk"/>
-							<item value="EN" title="Engelsk"/>
-							<item value="DE" title="Tysk"/>
+							'.$languageItems.'
 						</dropdown>
 						<text label="Beskrivelse:" lines="4" key="description"/>
 					</group>

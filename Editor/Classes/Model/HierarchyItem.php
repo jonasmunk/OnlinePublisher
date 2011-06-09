@@ -86,7 +86,6 @@ class HierarchyItem {
 			} else {
 				$item->setTargetValue($row['target_value']);
 			}
-			Log::debug($row);
 			$sql="select * from hierarchy_item where parent=".Database::int($id);
 			$item->canDelete = Database::isEmpty($sql);
 		}
@@ -96,7 +95,8 @@ class HierarchyItem {
 	
 	function save() {
 		if ($this->id>0) {
-			$target_value=null;$target_id=null;
+			$target_value = null;
+			$target_id = null;
 			if ($this->targetType=='page' || $this->targetType=='pageref' || $this->targetType=='file') {
 				$target_id = $this->targetValue;
 			} else {

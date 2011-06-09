@@ -10,13 +10,39 @@ require_once '../../Classes/Model/HierarchyItem.php';
 
 $data = Request::getObject('data');
 
-$item = HierarchyItem::load($data->id);
+Log::debug($data);
 
-$item->setTitle(Request::fromUnicode($data->title));
-$item->setHidden($data->hidden);
-if ($data->targetType) {
-	$item->setTargetType($data->targetType);
-	$item->setTargetValue($data->targetValue);
+if ($data->id) {
+	$item = HierarchyItem::load($data->id);
+	$item->setTitle(Request::fromUnicode($data->title));
+	$item->setHidden($data->hidden);
+	if ($data->targetType) {
+		$item->setTargetType($data->targetType);
+		$item->setTargetValue($data->targetValue);
+	}
+	$item->save();
+} else if ($data->parent) {
+	if ($data->parent->kind=='hierarchy') {
+		$hierarchy = Hierarchy::load($data->parent->id);
+		$parent = 0;
+	} else if ($data->parent->kind=='hierarchyItem') {
+		$hierarchy = Hierarchy::loadFromItemId($data->parent->id);
+		$parent = $data->parent->id;
+	} else {
+		Response::badRequest();
+		exit;
+	}
+	$result = $hierarchy->createItem(array(
+		'title' => Request::fromUnicode($data->title),
+		'hidden' => $data->hidden,
+		'targetType' => $data->targetType,
+		'targetValue' => $data->targetValue,
+		'parent' => $parent
+	));
+	if (!$result) {
+		Response::badRequest();
+	}
+} else {
+	Response::internalServerError();
 }
-$item->save();
 ?>

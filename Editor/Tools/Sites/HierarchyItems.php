@@ -28,7 +28,7 @@ echo '<?xml version="1.0"?>
 foreach ($hierarchies as $hierarchy) {
 	$title = $hierarchy->getName();
 	if ($hierarchy->getChanged()>$hierarchy->getPublished()) {
-		$title.=' [!]';
+		$title.=' !';
 	}
 	echo '<item icon="common/hierarchy" value="'.$hierarchy->getId().'" title="'.StringUtils::escapeXML($title).'" kind="hierarchy">';
 	encodeLevel(0,$hierarchy->getId());

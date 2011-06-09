@@ -132,9 +132,18 @@ class Hierarchy {
             $sql='delete from hierarchy where id='.Database::int($this->id);
             return Database::delete($sql);
         } else {
+			Log::debug('The hierarchy cannot be deleted');
             return false;
         }
     }
+
+	function save() {
+		if ($this->id>0) {
+			$this->update();
+		} else {
+			$this->create();
+		}
+	}
     
     function update() {
         $sql="update hierarchy set ".
@@ -164,6 +173,64 @@ class Hierarchy {
 		",".Database::int($pageId).
 		")";
 		Database::insert($sql);
+	}
+
+	function createItem($options) {
+		if (StringUtils::isBlank($options['title'])) {
+			Log::debug('No title');
+			return false;
+		}
+		if (!in_array($options['targetType'],array('page','pageref','file','email','url'))) {
+			Log::debug('Invalid targetType');
+			return false;
+		}
+		if (!isset($options['hidden'])) {
+			Log::debug('hidden not set');
+			return false;
+		}
+		if (!isset($options['targetValue'])) {
+			Log::debug('targetValue not set');
+			return false;
+		}
+		if (!isset($options['parent'])) {
+			Log::debug('parent not set');
+			return false;
+		}
+		if ($options['parent']>0) {
+			$sql="select id from hierarchy_item where id=".Database::int($options['parent'])." and hierarchy_id=".Database::int($this->id);
+			if (!$row = Database::selectFirst($sql)) {
+				Log::debug('parent not found');
+				return false;
+			}
+		}
+		// find index
+		$sql="select max(`index`) as `index` from hierarchy_item where parent=".Database::int($options['parent'])." and hierarchy_id=".Database::int($this->id);
+		if ($row = Database::selectFirst($sql)) {
+			$index=$row['index']+1;
+		} else {
+			$index=1;
+		}
+		
+		if ($options['targetType']=='page' || $options['targetType']=='pageref' || $options['targetType']=='file') {
+			$target_id = $options['targetValue'];
+		} else {
+			$target_value = $options['targetValue'];
+		}
+		
+		$sql="insert into hierarchy_item (title,hidden,type,hierarchy_id,parent,`index`,target_type,target_id,target_value) values (".
+		Database::text($options['title']).
+		",".Database::boolean($options['hidden']).
+		",'item'".
+		",".Database::int($this->id).
+		",".Database::int($options['parent']).
+		",".Database::int($index).
+		",".Database::text($options['targetType']).
+		",".Database::int($target_id).
+		",".Database::text($target_value).
+		")";
+		Log::debug($sql);
+		Database::insert($sql);
+		return true;
 	}
 
 	function markChanged() {

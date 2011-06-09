@@ -8,9 +8,6 @@ var mainController = {
 	
 	///////////////// List ///////////////
 	
-	$selectionChanged$selector : function(item) {
-		hui.ui.get('newSubPage').setEnabled(item.kind=='hierarchy' || item.kind=='hierarchyItem');
-	},
 	$selectionChanged$list : function(item) {
 		if (item.kind=='page') {
 			hui.ui.get('edit').setEnabled(true);
@@ -78,9 +75,6 @@ var mainController = {
 		} else if (obj.kind=='hierarchyItem') {
 			this.loadHierarchyItem(obj.id);
 		}
-	},
-	$click$newSubPage : function() {
-		hui.ui.showMessage({text:'Ikke implementeret',duration:2000});
 	},
 	$listRowWasOpened$list : function(obj) {
 		if (obj.kind=='page') {
