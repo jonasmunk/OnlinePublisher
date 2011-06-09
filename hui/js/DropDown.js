@@ -152,6 +152,9 @@ hui.ui.DropDown.prototype = {
 			this.options.source.refresh();
 		}
 	},
+	focus : function() {
+		try {this.element.focus()} catch (ignore) {}
+	},
 	// TODO: Is this used?
 	getItem : function() {
 		if (this.index>=0) {

@@ -2861,6 +2861,11 @@ div.hui_overflow div.hui_list_progress
 div.hui_list_busy div.hui_list_progress
 {
 	display: block;
+}
+
+div.hui_list tr.hui_drop td
+{
+	background: #779cd6 url('../gfx/hover_bg.png');
 }div.hui_selection
 {
 	font-family: 'Lucida Grande','Verdana',sans-serif;

@@ -6560,9 +6560,9 @@ hui.ui.List.prototype = {
 				return false;
 			}
 		}
-		row.ondblclick = function() {
+		row.ondblclick = function(e) {
 			if (self.busy) {return};
-			self._rowDoubleClick(index);
+			self._rowDoubleClick(index,e);
 			return false;
 		}
 		row.onclick = function(e) {
@@ -6597,8 +6597,14 @@ hui.ui.List.prototype = {
 	_rowDown : function(index) {
 		this.changeSelection([index]);
 	},
-	_rowDoubleClick : function(index) {
-		this.fire('listRowWasOpened',this.getFirstSelection());
+	_rowDoubleClick : function(index,e) {
+		e = hui.event(e);
+		if (!e.findByClass('hui_list_action')) {
+			var row = this.getFirstSelection();
+			if (row) {
+				this.fire('listRowWasOpened',row);
+			}			
+		}
 	},
 	/** @private */
 	windowPageWasClicked : function(tag) {
@@ -7074,6 +7080,9 @@ hui.ui.DropDown.prototype = {
 		if (this.options.source) {
 			this.options.source.refresh();
 		}
+	},
+	focus : function() {
+		try {this.element.focus()} catch (ignore) {}
 	},
 	// TODO: Is this used?
 	getItem : function() {
