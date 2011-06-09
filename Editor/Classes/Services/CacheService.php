@@ -17,6 +17,7 @@ class CacheService {
 	}
 	
 	function sendCachedPage($id,$path) {
+		return false;
 		$sql = "select page_cache.html,UNIX_TIMESTAMP(page.published) from page_cache,page,frame where page.secure=0 and page.dynamic=0 and page.id=page_cache.page_id and page.frame_id=frame.id and frame.dynamic=0";
 		if (strlen($path)>0) {
 			$sql.=" and page.path=".Database::text($path);
@@ -35,6 +36,7 @@ class CacheService {
 	}
 	
 	function createPageCache($id,$html) {
+		return;
 		$html = Database::text($html);
 		if (strlen($html)>49900) {
 			return; // Be sure not to cache incomplete html
