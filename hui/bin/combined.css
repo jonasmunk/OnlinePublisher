@@ -2920,6 +2920,12 @@ strong.hui_selection_badge
 	margin-top: 2px;
 }
 
+div.hui_selection:hover strong.hui_selection_badge
+{
+	background: #79b;
+}
+
+
 div.hui_selection div.hui_selected strong.hui_selection_badge
 {
 	background: #fff;
