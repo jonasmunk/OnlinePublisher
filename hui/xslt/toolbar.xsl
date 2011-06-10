@@ -215,13 +215,16 @@
 
 
 <xsl:template match="gui:bar">
-	<div class="">
+	<div id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_bar</xsl:text>
 			<xsl:if test="@variant">
 				<xsl:text> hui_bar_</xsl:text><xsl:value-of select="@variant"/>
 			</xsl:if>
 		</xsl:attribute>
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+			<xsl:attribute name="style">display:none;</xsl:attribute>
+		</xsl:if>
 		<div class="hui_bar_body">
 			<xsl:apply-templates select="gui:right"/>
 			<div class="hui_bar_left">
@@ -230,6 +233,14 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Bar({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>'
+			<xsl:if test="@state">,state : '<xsl:value-of select="@state"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
 </xsl:template>
 
 <xsl:template match="gui:bar/gui:right">
@@ -239,7 +250,7 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="gui:bar//gui:button">
+<xsl:template match="gui:bar//gui:button[@icon]">
 	<xsl:variable name="class">
 		<xsl:text>hui_bar_button</xsl:text>
 		<xsl:if test="@selected='true'"><xsl:text> hui_bar_button_selected</xsl:text></xsl:if>
@@ -260,6 +271,25 @@
 		<xsl:if test="@click">
 			<xsl:value-of select="generate-id()"/>_obj.listen({$click:function() {<xsl:value-of select="@click"/>}});
 		</xsl:if>
+	</script>
+</xsl:template>
+
+<xsl:template match="gui:bar//gui:text">
+	<span class="hui_bar_text" id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_bar_text</xsl:text>
+			<xsl:if test="@variant">
+				<xsl:text> hui_bar_text_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+		</xsl:attribute>
+		<xsl:comment/>
+	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Bar.Text({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>'
+		});
+		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
 

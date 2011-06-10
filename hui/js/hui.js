@@ -286,6 +286,9 @@ hui.dom = {
 		}
 	},
 	setText : function(node,text) {
+		if (text==undefined || text==null) {
+			text = '';
+		}
 		var c = node.childNodes;
 		var updated = false;
 		for (var i = c.length - 1; i >= 0; i--){

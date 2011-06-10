@@ -661,6 +661,10 @@ hui.ui.List.prototype = {
 		this.window.page = index;
 		hui.ui.firePropertyChange(this,'window',this.window);
 		hui.ui.firePropertyChange(this,'window.page',this.window.page);
+		var as = this.windowPageBody.getElementsByTagName('a');
+		for (var i = as.length - 1; i >= 0; i--){
+			as[i].className = as[i]==tag ? 'selected' : '';
+		};
 	}
 };
 

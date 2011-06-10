@@ -162,6 +162,72 @@ div.hui_bar_window_bottom
 	border-top: 1px solid #ddd;
 }
 
+/******************* layout variant ***************/
+
+div.hui_bar_layout
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	height: 28px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+}
+
+div.hui_bar_layout div.hui_bar_body
+{
+	height: 28px;
+	background: none;
+	padding: 0 3px;
+}
+
+div.hui_bar_layout a.hui_bar_button
+{
+	height: 28px;
+	line-height: 28px;
+	background: none;
+	padding: 0 2px;
+}
+
+div.hui_bar_layout a.hui_button
+{
+	margin-top: 2px;
+}
+
+div.hui_bar_layout a.hui_bar_button span.hui_icon_1
+{
+	margin-top: 5px;
+}
+
+div.hui_bar_layout a.hui_bar_button:hover
+{
+	background: none;
+}
+
+div.hui_bar_layout div.hui_bar_right, div.hui_bar_layout div.hui_bar_left
+{
+	height: 28px;
+	border: none;
+	background: none;
+}
+
+div.hui_bar_layout span.hui_bar_text
+{
+	color: #999;
+    display: inline-block;
+    font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    font-size: 12px;
+    line-height: 28px;
+    padding: 0 5px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+div.hui_bar_layout span.hui_bar_text_header
+{
+	color: #445566;
+	font-weight: bold;
+}
+
 /******************* Mini variant *****************/
 
 div.hui_bar_mini

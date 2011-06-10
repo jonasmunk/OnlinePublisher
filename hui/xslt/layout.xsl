@@ -71,9 +71,9 @@
 <div id="{generate-id()}">
 	<xsl:attribute name="class">
 		<xsl:text>hui_overflow</xsl:text>
-	<xsl:if test="@background">
-		<xsl:text> hui_bg_</xsl:text><xsl:value-of select="@background"/>
-	</xsl:if>
+		<xsl:if test="@background">
+			<xsl:text> hui_bg_</xsl:text><xsl:value-of select="@background"/>
+		</xsl:if>
 	</xsl:attribute>
 	<xsl:attribute name="style">
 		<xsl:choose>
@@ -86,14 +86,18 @@
 				<xsl:text>height: 0px;</xsl:text>
 			</xsl:otherwise>
 		</xsl:choose>
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+			<xsl:text>display:none;</xsl:text>
+		</xsl:if>
 	</xsl:attribute>
 	<xsl:apply-templates/>
 </div>
 <script type="text/javascript">
 	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Overflow({
-		element:'<xsl:value-of select="generate-id()"/>',
-		dynamic:<xsl:value-of select="not(@height or @max-height or @min-height or @vertical)"/>
+		element : '<xsl:value-of select="generate-id()"/>',
+		dynamic : <xsl:value-of select="not(@height or @max-height or @min-height or @vertical)"/>
 		<xsl:if test="@vertical">,vertical:<xsl:value-of select="@vertical"/></xsl:if>
+		<xsl:if test="@state">,state:'<xsl:value-of select="@state"/>'</xsl:if>
 	});
 	<xsl:call-template name="gui:createobject"/>
 </script>
@@ -259,7 +263,7 @@
 <xsl:template match="gui:fragment">
 <div id="{generate-id()}">
 	<xsl:attribute name="style">
-		<xsl:if test="@state and @state!=//gui:gui/@state">
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
 			<xsl:text>display:none;</xsl:text>
 		</xsl:if>
 		<xsl:if test="@height='full'">

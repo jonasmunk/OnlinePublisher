@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" title="Box">
+<gui xmlns="uri:hui" title="Bar">
 	<bar>
+		<button icon="common/edit" text="Edit"/>
+		<button icon="common/delete" text="Delete"/>
+		<button icon="common/color" text="Color"/>
+		<button icon="common/internet"/>
+		<checkbox text="djslkfjksdjl"/>
+		<searchfield/>
+		<dropdown value="1">
+			<item value="1" title="My option"/>
+		</dropdown>
+		<right>
+			<button icon="common/delete" text="Hep hey!" highlighted="true"/>
+			<button icon="common/delete" text="Hep hey!"/>
+			<button icon="common/delete" text="Hep hey!"/>
+		</right>
+	</bar>
+	<bar variant="layout">
 		<button icon="common/edit" text="Edit"/>
 		<button icon="common/delete" text="Delete"/>
 		<button icon="common/color" text="Color"/>

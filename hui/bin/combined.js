@@ -286,6 +286,9 @@ hui.dom = {
 		}
 	},
 	setText : function(node,text) {
+		if (text==undefined || text==null) {
+			text = '';
+		}
 		var c = node.childNodes;
 		var updated = false;
 		for (var i = c.length - 1; i >= 0; i--){
@@ -3831,7 +3834,7 @@ hui.ui._frameLoaded = function(win) {
 
 /** @private */
 hui.ui._resize = function() {
-	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--){
+	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--) {
 		hui.ui.layoutWidgets[i]['$$layout']();
 	};
 }
@@ -3955,6 +3958,13 @@ hui.ui.changeState = function(state) {
 		}
 	}
 	hui.ui.state=state;
+	
+	for (key in all) {
+		obj = all[key];
+		if (obj['$$layoutChanged']) {
+			obj['$$layoutChanged']();
+		}
+	}
 }
 
 ///////////////////////////////// Indexes /////////////////////////////
@@ -6612,6 +6622,10 @@ hui.ui.List.prototype = {
 		this.window.page = index;
 		hui.ui.firePropertyChange(this,'window',this.window);
 		hui.ui.firePropertyChange(this,'window.page',this.window.page);
+		var as = this.windowPageBody.getElementsByTagName('a');
+		for (var i = as.length - 1; i >= 0; i--){
+			as[i].className = as[i]==tag ? 'selected' : '';
+		};
 	}
 };
 
@@ -11576,20 +11590,25 @@ hui.ui.Overflow.create = function(options) {
 }
 
 hui.ui.Overflow.prototype = {
-	calculate : function() {
-		var top,bottom,parent,viewport;
-		viewport = hui.getViewPortHeight();
-		parent = this.element.parentNode;
-		top = hui.getTop(this.element);
-		bottom = hui.getTop(parent)+parent.clientHeight;
-		var sibs = hui.getAllNext(this.element);
+	_calculate : function() {
+		var viewport = hui.getViewPortHeight(),
+			parent = this.element.parentNode,
+			top = hui.getTop(this.element),
+			bottom = hui.getTop(parent)+parent.clientHeight,
+			sibs = hui.getAllNext(this.element);
 		for (var i=0; i < sibs.length; i++) {
 			bottom-=sibs[i].clientHeight;
-		};
-		this.diff=-1*(top+(viewport-bottom));
+		}
+		this.diff = -1 * (top + (viewport - bottom));
 		if (hui.browser.webkit) {
 			this.diff++;
 		}
+	},
+	show : function() {
+		this.element.style.display='';
+	},
+	hide : function() {
+		this.element.style.display='none';
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
@@ -11599,6 +11618,15 @@ hui.ui.Overflow.prototype = {
 		}
 		return this;
 	},
+	$$layoutChanged : function() {
+		if (!this.options.dynamic) {return}
+		this.element.style.height='0px';
+		window.setTimeout(function() {
+			this._calculate();
+			this.$$layout();
+		}.bind(this))
+	},
+	/** @private */
 	$$layout : function() {
 		var height;
 		if (!this.options.dynamic) {
@@ -11609,7 +11637,7 @@ hui.ui.Overflow.prototype = {
 			return;
 		}
 		if (this.diff===undefined) {
-			this.calculate();
+			this._calculate();
 		}
 		height = hui.getViewPortHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';
@@ -11882,10 +11910,18 @@ hui.ui.Bar.prototype = {
 		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
 	show : function() {
-		this.element.style.visibility='visible';
+		if (this.options.absolute) {
+			this.element.style.visibility='visible';
+		} else {
+			this.element.style.display='';
+		}
 	},
 	hide : function() {
-		this.element.style.visibility='hidden';
+		if (this.options.absolute) {
+			this.element.style.visibility='hidden';
+		} else {
+			this.element.style.display='none';
+		}
 	}
 }
 
@@ -11927,6 +11963,23 @@ hui.ui.Bar.Button.prototype = {
 	},
 	setSelected : function(highlighted) {
 		hui.setClass(this.element,'hui_bar_button_selected',highlighted);
+	}
+}
+
+/**
+ * @constructor
+ * @param {Object} options The options
+ */
+hui.ui.Bar.Text = function(options) {
+	this.options = hui.override({},options);
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
+};
+
+hui.ui.Bar.Text.prototype = {
+	setText : function(str) {
+		hui.dom.setText(this.element,str);
 	}
 }/**
  * A dock

@@ -41,10 +41,18 @@ hui.ui.Bar.prototype = {
 		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
 	show : function() {
-		this.element.style.visibility='visible';
+		if (this.options.absolute) {
+			this.element.style.visibility='visible';
+		} else {
+			this.element.style.display='';
+		}
 	},
 	hide : function() {
-		this.element.style.visibility='hidden';
+		if (this.options.absolute) {
+			this.element.style.visibility='hidden';
+		} else {
+			this.element.style.display='none';
+		}
 	}
 }
 
@@ -86,5 +94,22 @@ hui.ui.Bar.Button.prototype = {
 	},
 	setSelected : function(highlighted) {
 		hui.setClass(this.element,'hui_bar_button_selected',highlighted);
+	}
+}
+
+/**
+ * @constructor
+ * @param {Object} options The options
+ */
+hui.ui.Bar.Text = function(options) {
+	this.options = hui.override({},options);
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
+};
+
+hui.ui.Bar.Text.prototype = {
+	setText : function(str) {
+		hui.dom.setText(this.element,str);
 	}
 }

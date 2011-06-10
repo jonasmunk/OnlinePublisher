@@ -1761,6 +1761,7 @@ td.hui_layout_center
 	vertical-align: top;
 	padding: 0;
 	width:100%;
+	height: auto;
 }
 
 tfoot.hui_layout
@@ -2739,7 +2740,11 @@ div.hui_list .window_page
 div.hui_list_navigation
 {
 	display: none;
-	background: url('../gfx/list_navigation.png');
+	/*background: url('../gfx/list_navigation.png');*/
+	
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
 	border-bottom: 1px solid #ccc;
 	height: 26px;
 	padding: 0px 3px;
@@ -2760,20 +2765,20 @@ div.hui_list_selection
 	margin-top: 1px;
 	float: left;
 	height: 24px;
-	background: url('../gfx/list_box.png') repeat-x;
+	/*background: url('../gfx/list_box.png') repeat-x;*/
 }
 
 div.hui_list_selection div
 {
 	height: 24px;
-	background: url('../gfx/list_box.png') left -24px no-repeat;
+	/*background: url('../gfx/list_box.png') left -24px no-repeat;*/
 }
 
 div.hui_list_selection div div
 {
 	height: 24px;
-	background: url('../gfx/list_box.png') right -48px no-repeat;
-	padding: 0px 12px;
+	/*background: url('../gfx/list_box.png') right -48px no-repeat;*/
+	padding: 0px 2px;
 }
 
 div.hui_list_selection a
@@ -2785,7 +2790,7 @@ div.hui_list_selection a
 	height: 16px;
 	margin-top: 4px;
 	line-height: 16px;
-	padding: 0px 2px;
+	padding: 0px 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
@@ -2800,13 +2805,15 @@ div.hui_list_selection span
 
 div.hui_list_selection a:hover
 {
-	background: #aaa;
+	background: #ddd;
 	color: #000;
 }
 
 div.hui_list_selection a.selected
 {
 	background: #3875D7;
+	background: #bbb;
+	box-shadow: 0 1px 1px #666666 inset;
 	color: #fff;
 }
 
@@ -5133,6 +5140,72 @@ div.hui_bar_window_top
 div.hui_bar_window_bottom
 {
 	border-top: 1px solid #ddd;
+}
+
+/******************* layout variant ***************/
+
+div.hui_bar_layout
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	height: 28px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+}
+
+div.hui_bar_layout div.hui_bar_body
+{
+	height: 28px;
+	background: none;
+	padding: 0 3px;
+}
+
+div.hui_bar_layout a.hui_bar_button
+{
+	height: 28px;
+	line-height: 28px;
+	background: none;
+	padding: 0 2px;
+}
+
+div.hui_bar_layout a.hui_button
+{
+	margin-top: 2px;
+}
+
+div.hui_bar_layout a.hui_bar_button span.hui_icon_1
+{
+	margin-top: 5px;
+}
+
+div.hui_bar_layout a.hui_bar_button:hover
+{
+	background: none;
+}
+
+div.hui_bar_layout div.hui_bar_right, div.hui_bar_layout div.hui_bar_left
+{
+	height: 28px;
+	border: none;
+	background: none;
+}
+
+div.hui_bar_layout span.hui_bar_text
+{
+	color: #999;
+    display: inline-block;
+    font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    font-size: 12px;
+    line-height: 28px;
+    padding: 0 5px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+div.hui_bar_layout span.hui_bar_text_header
+{
+	color: #445566;
+	font-weight: bold;
 }
 
 /******************* Mini variant *****************/

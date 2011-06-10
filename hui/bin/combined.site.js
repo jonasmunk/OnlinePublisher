@@ -286,6 +286,9 @@ hui.dom = {
 		}
 	},
 	setText : function(node,text) {
+		if (text==undefined || text==null) {
+			text = '';
+		}
 		var c = node.childNodes;
 		var updated = false;
 		for (var i = c.length - 1; i >= 0; i--){
@@ -2330,7 +2333,7 @@ hui.ui._frameLoaded = function(win) {
 
 /** @private */
 hui.ui._resize = function() {
-	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--){
+	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--) {
 		hui.ui.layoutWidgets[i]['$$layout']();
 	};
 }
@@ -2454,6 +2457,13 @@ hui.ui.changeState = function(state) {
 		}
 	}
 	hui.ui.state=state;
+	
+	for (key in all) {
+		obj = all[key];
+		if (obj['$$layoutChanged']) {
+			obj['$$layoutChanged']();
+		}
+	}
 }
 
 ///////////////////////////////// Indexes /////////////////////////////

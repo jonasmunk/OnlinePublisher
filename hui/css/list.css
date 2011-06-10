@@ -150,7 +150,11 @@ div.hui_list .window_page
 div.hui_list_navigation
 {
 	display: none;
-	background: url('../gfx/list_navigation.png');
+	/*background: url('../gfx/list_navigation.png');*/
+	
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
 	border-bottom: 1px solid #ccc;
 	height: 26px;
 	padding: 0px 3px;
@@ -171,20 +175,20 @@ div.hui_list_selection
 	margin-top: 1px;
 	float: left;
 	height: 24px;
-	background: url('../gfx/list_box.png') repeat-x;
+	/*background: url('../gfx/list_box.png') repeat-x;*/
 }
 
 div.hui_list_selection div
 {
 	height: 24px;
-	background: url('../gfx/list_box.png') left -24px no-repeat;
+	/*background: url('../gfx/list_box.png') left -24px no-repeat;*/
 }
 
 div.hui_list_selection div div
 {
 	height: 24px;
-	background: url('../gfx/list_box.png') right -48px no-repeat;
-	padding: 0px 12px;
+	/*background: url('../gfx/list_box.png') right -48px no-repeat;*/
+	padding: 0px 2px;
 }
 
 div.hui_list_selection a
@@ -196,7 +200,7 @@ div.hui_list_selection a
 	height: 16px;
 	margin-top: 4px;
 	line-height: 16px;
-	padding: 0px 2px;
+	padding: 0px 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
@@ -211,13 +215,15 @@ div.hui_list_selection span
 
 div.hui_list_selection a:hover
 {
-	background: #aaa;
+	background: #ddd;
 	color: #000;
 }
 
 div.hui_list_selection a.selected
 {
 	background: #3875D7;
+	background: #bbb;
+	box-shadow: 0 1px 1px #666666 inset;
 	color: #fff;
 }
 

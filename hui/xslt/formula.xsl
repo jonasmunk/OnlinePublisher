@@ -11,7 +11,7 @@
 <xsl:template match="gui:formula">
 	<form class="hui_formula hui_formula" id="{generate-id()}">
 		<xsl:attribute name="style">
-			<xsl:if test="@state and @state!=//gui:gui/@state">
+			<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
 				<xsl:text>display:none;</xsl:text>
 			</xsl:if>
 			<xsl:if test="@padding">padding: <xsl:value-of select="@padding"/>px;</xsl:if>
