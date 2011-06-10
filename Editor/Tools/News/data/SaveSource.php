@@ -3,11 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Tools.News
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Request.php';
-require_once '../../Classes/Objects/Newssource.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../../../Config/Setup.php';
+require_once '../../../Include/Security.php';
+require_once '../../../Classes/Request.php';
+require_once '../../../Classes/Objects/Newssource.php';
 
 $data = Request::getObject('data');
 if ($data->id) {
@@ -16,9 +15,9 @@ if ($data->id) {
 	$news = new Newssource();
 }
 if ($news) {
-	$links = In2iGui::fromLinks($data->links);
 	$news->setTitle(Request::fromUnicode($data->title));
 	$news->setUrl(Request::fromUnicode($data->url));
+	$news->setSyncInterval($data->syncInterval);
 	$news->save();
 	$news->publish();
 }

@@ -65,9 +65,21 @@ $gui='
 				</overflow>
 			</left>
 			<center>
-				<!--bar variant="layout">
-					<button icon="common/folder" text="Dubler" name="sync" disabled="true"/>
-				</bar-->
+				<bar variant="layout" state="source">
+					<text name="sourceHeader" variant="header"/>
+					<text name="sourceText"/>
+					<right>
+						<button text="Info" name="sourceInfo" small="true" rounded="true"/>
+						<button text="Synkroniser" name="synchronize" small="true" rounded="true"/>
+					</right>
+				</bar>
+				<bar variant="layout" state="group">
+					<text name="groupHeader" variant="header"/>
+					<right>
+						<button text="Info" name="groupInfo" small="true" rounded="true"/>
+						<button text="RSS-url" name="groupRSS" small="true" rounded="true"/>
+					</right>
+				</bar>
 				<overflow>
 					<list name="list" source="newsSource"/>
 				</overflow>
@@ -95,6 +107,7 @@ $gui='
 			<group labels="above">
 				<text label="Titel" key="title"/>
 				<text label="Adresse" key="url"/>
+				<number label="Interval (sekunder)" key="syncInterval"/>
 				<buttons>
 					<button name="cancelSource" title="Annuller"/>
 					<button name="deleteSource" title="Slet">

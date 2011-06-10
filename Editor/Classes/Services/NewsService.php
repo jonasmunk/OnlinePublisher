@@ -3,13 +3,18 @@
  * @package OnlinePublisher
  * @subpackage Classes.Services
  */
+require_once($basePath.'Editor/Classes/Services/RemoteDataService.php');
+require_once($basePath.'Editor/Classes/Network/FeedParser.php');
 
 class NewsService {
 	
-	function synchronizeSource($id) {
+	function synchronizeSource($id,$force=false) {
 		// TODO: Dont remove old items, only update existing
 		$source = Newssource::load($id);
 		if (!$source) return;
+		if ($source->isInSync() && $force==false) {
+			return;
+		}
 		NewsService::clearSource($id);
 		$data = RemoteDataService::getRemoteData($source->getUrl(),30);
 		if ($data->isHasData()) {
@@ -30,6 +35,8 @@ class NewsService {
 				}
 			}
 		}
+		$sql = 'update newssource set synchronized=now() where object_id='.Database::int($id);
+		Database::update($sql);
 	}
 	
 	function clearSource($id) {

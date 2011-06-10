@@ -140,7 +140,7 @@ class ListPartController extends PartController
 							$source->synchronize();
 						}
 						if (!$source->isInSync()) {
-							Log::debug('Source is dirty: '+$id);
+							Log::debug('Calendarsource is dirty: '.$id);
 							$dirty = true;
 						}
 						$sourceEvents = $source->getEvents(array('startDate'=>$from,'endDate'=>$to));
@@ -169,6 +169,13 @@ class ListPartController extends PartController
 					}
 				} else if ($type=='newssource') {
 					if ($source = Newssource::load($id)) {
+						if ($context->getSynchronize()) {
+							$source->synchronize();
+						}
+						if (!$source->isInSync()) {
+							Log::debug('Newssource is dirty: '.$id);
+							$dirty = true;
+						}
 						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',DateUtils::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
 						foreach ($newsItems as $newsItem) {
 							$item = new PartListItem();

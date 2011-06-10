@@ -53,11 +53,7 @@ class Newssource extends Object {
 	}
 	
 	function synchronize($force=false) {
-		global $basePath;
-		if ($this->isInSync() && $force==false) {
-			return;
-		}
-		NewsService::synchronizeSource($this->id);
+		NewsService::synchronizeSource($this->id,$force);
 	}
 	
 	

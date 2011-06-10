@@ -88,8 +88,7 @@ $gui='
 											<button text="Tilføj aflæsning" name="addSubUsage" icon="common/new"/>
 										</bar>
 										<overflow height="200">
-											<list name="subUsageList">
-											</list>
+											<list name="subUsageList"/>
 										</overflow>
 									</box>
 								</column>

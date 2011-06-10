@@ -27,8 +27,16 @@ hui.ui.listen({
 		list.resetState();
 	},
 	
-	$selectionChanged$selector : function() {
+	$selectionChanged$selector : function(item) {
 		list.resetState();
+		if (item.kind=='newssource') {
+			hui.ui.changeState('source');
+		} else if (item.kind=='newsgroup') {
+			hui.ui.changeState('group');
+			groupHeader.setText(item.title);
+		} else {
+			hui.ui.changeState('default');
+		}
 	},
 	
 	//////////////////////// Dragging ////////////////////////
@@ -146,11 +154,11 @@ hui.ui.listen({
 			json:{data:data},
 			message:{start:'Gemmer nyhed...',delay:300}
 		});
-	},
-	$success$newsUpdated : function() {
 		this.newsId = null;
 		newsFormula.reset();
 		newsWindow.hide();
+	},
+	$success$newsUpdated : function() {
 		newsSource.refresh();
 		groupSource.refresh();
 	},
@@ -171,6 +179,7 @@ hui.ui.listen({
 	},
 	
 	////////////////////////// Group /////////////////////////
+	
 	
 	$click$newGroup : function() {
 		this.groupId = null;
@@ -210,13 +219,20 @@ hui.ui.listen({
 	},
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='newsgroup') {
-			hui.ui.request({
-				parameters:{id:item.value},
-				url:'../../Services/Model/LoadObject.php',
-				onSuccess:'loadGroup',
-				message:{start:'Åbner gruppe...',delay:300}
-			});
+			this.loadGroup(item.value);
 		}
+	},
+	$click$groupInfo : function() {
+		var item = selector.getValue();
+		this.loadGroup(item.value);
+	},
+	loadGroup : function(id) {
+		hui.ui.request({
+			parameters:{id:id},
+			url:'../../Services/Model/LoadObject.php',
+			onSuccess:'loadGroup',
+			message:{start:'Åbner gruppe...',delay:300}
+		});
 	},
 	$success$loadGroup : function(data) {
 		this.groupId = data.id;
@@ -238,6 +254,10 @@ hui.ui.listen({
 		this.groupId = null;
 		groupFormula.reset();
 		groupWindow.hide();
+	},
+	$click$groupRSS : function() {
+		var item = selector.getValue();
+		window.open('../../../services/news/rss/?group='+item.value);
 	},
 	
 	////////////////////// Articles /////////////////////

@@ -2,6 +2,38 @@ hui.ui.listen({
 	
 	sourceId : null,
 	
+	$selectionChanged$selector : function(item) {
+		if (item.kind=='newssource') {
+			sourceHeader.setText(item.title);
+			this.updateSourceInfo(item.value);
+		}
+	},
+	updateSourceInfo : function(id) {
+		sourceText.setText();
+		hui.ui.request({
+			parameters : {id:id},
+			url : '../../Services/Model/LoadObject.php',
+			onJSON : function(obj) {
+				sourceText.setText(' - synkroniseret: '+new Date(obj.synchronized*1000));
+			}
+		});
+	},
+	$click$synchronize : function() {
+		var item = selector.getValue();
+		synchronize.disable();
+		hui.ui.request({
+			message : {start:'Synkroniserer kilde...',success:'Kilden er nu synkroniseret'},
+			url : 'data/SyncSource.php',
+			parameters : {id:item.value},
+			onSuccess : function() {
+				list.refresh();
+				synchronize.enable();
+				this.updateSourceInfo(item.value);
+			}.bind(this)
+		});
+		
+	},
+	
 	$click$newSource : function() {
 		this.sourceId = null;
 		sourceFormula.reset();
@@ -22,27 +54,33 @@ hui.ui.listen({
 			sourceFormula.focus();
 		} else {
 			hui.ui.request({
-				json:{data:values},
-				url:'SaveSource.php',
-				onSuccess:'sourceSaved',
-				message:{start:'Gemmer kilde...',delay:300}
+				json : {data:values},
+				url : 'data/SaveSource.php',
+				message : {start:'Gemmer kilde...',delay:300},
+				onSuccess : function() {
+					sourcesSource.refresh();
+				}
 			});
+			sourceFormula.reset();
+			sourceWindow.hide();
 		}
 	},
-	$success$sourceSaved : function() {
-		sourcesSource.refresh();
-		sourceFormula.reset();
-		sourceWindow.hide();
+	$click$sourceInfo : function() {
+		var item = selector.getValue();
+		this.loadSource(item.value);
 	},
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind=='newssource') {
-			hui.ui.request(
-				{parameters:{id:item.value},
-				url:'../../Services/Model/LoadObject.php',
-				onSuccess:'sourceLoaded',
-				message:{start:'Åbner kilde...',delay:300}
-			});
+			this.loadSource(item.value);
 		}
+	},
+	loadSource : function(id) {
+		hui.ui.request({
+			parameters : {id:id},
+			url : '../../Services/Model/LoadObject.php',
+			onSuccess : 'sourceLoaded',
+			message : {start:'Åbner kilde...',delay:300}
+		});
 	},
 	$success$sourceLoaded : function(data) {
 		this.sourceId = data.id;

@@ -29,7 +29,8 @@ $gui='
 				</overflow>
 			</left>
 			<center>
-				<fragment state="settings" height="full" background="wood">
+				<overflow state="settings">
+				<fragment height="full" background="wood">
 					<box width="300" top="30" title="Settings" padding="10">
 						<formula name="settingsFormula">
 							<group>
@@ -39,6 +40,7 @@ $gui='
 						</formula>
 					</box>
 				</fragment>
+				</overflow>
 				<iframe source="PhpInfo.php" name="iframe" state="frame"/>
 			</center>
 		</middle>
