@@ -31,7 +31,7 @@
 		<div class="part_list_box_bottom"><div><div><xsl:comment/></div></div></div>
 		</div>
 	</div>
-	<xsl:if test="@dirty='true'">
+	<xsl:if test="@dirty='true' and $editor!='true'">
 		<script type="text/javascript">
 			hui.onReady(function() {
 				var id = <xsl:value-of select="../../@id"/>;

@@ -17,9 +17,9 @@ $gui='
 	<controller source="sources.js"/>
 	<source name="pageItems" url="../../Services/Model/Items.php?type=page"/>
 	<source name="fileItems" url="../../Services/Model/Items.php?type=file"/>
-	<source name="groupSource" url="GroupItems.php"/>
+	<source name="groupSource" url="data/GroupItems.php"/>
 	<source name="sourcesSource" url="../../Services/Model/Items.php?type=newssource"/>
-	<source name="newsSource" url="ListNews.php">
+	<source name="newsSource" url="data/ListNews.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
@@ -87,6 +87,7 @@ $gui='
 		</middle>
 		<bottom/>
 	</layout>
+	
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
 			<group labels="above">
@@ -120,7 +121,7 @@ $gui='
 	</window>
 	
 	
-	<window title="Nyhed" name="newsWindow" variant="news" icon="file/generic" width="450">
+	<window title="Nyhed" name="newsWindow" variant="news" icon="common/news" width="450">
 	
 		<tabs small="true" centered="true">
 		

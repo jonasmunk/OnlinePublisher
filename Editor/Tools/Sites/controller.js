@@ -72,8 +72,6 @@ var mainController = {
 		var obj = list.getFirstSelection();
 		if (obj.kind=='page') {
 			this.loadPage(obj.id);
-		} else if (obj.kind=='hierarchyItem') {
-			this.loadHierarchyItem(obj.id);
 		}
 	},
 	$listRowWasOpened$list : function(obj) {

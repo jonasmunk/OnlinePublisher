@@ -66,7 +66,7 @@ class ListPartController extends PartController
 	
 	function editorGui($part,$context) {
 		$gui='
-		<window title="Nyheder" name="listWindow" width="300">
+		<window title="Nyheder" name="listWindow" width="300" close="false">
 			<tabs small="true" centered="true">
 				<tab title="Indstillinger" padding="10">
 					<formula name="formula">
@@ -196,9 +196,9 @@ class ListPartController extends PartController
 		if (StringUtils::isNotBlank($part->getTitle())) {
 			$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
 		}
-		$items = array_slice($items,0,$part->getMaxItems());
 		$this->sortItems($items);
 		$items = array_reverse($items);
+		$items = array_slice($items,0,$part->getMaxItems());
 		foreach ($items as $item) {
 			$data.='<item>'.
 			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>'.

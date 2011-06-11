@@ -3,7 +3,8 @@
  * @package OnlinePublisher
  * @subpackage Tools.News
  */
-require_once '../../Include/Private.php';
+require_once '../../../../Config/Setup.php';
+require_once '../../../Include/Security.php';
 
 $data = Request::getObject('data');
 

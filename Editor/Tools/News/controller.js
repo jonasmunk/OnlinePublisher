@@ -42,7 +42,7 @@ hui.ui.listen({
 	//////////////////////// Dragging ////////////////////////
 	
 	$drop$news$newsgroup : function(dragged,dropped) {
-		hui.ui.request({url:'AddNewsToGroup.php',onSuccess:'newsMoved',json:{data:{file:dragged.id,group:dropped.value}}});
+		hui.ui.request({url:'data/AddNewsToGroup.php',onSuccess:'newsMoved',json:{data:{file:dragged.id,group:dropped.value}}});
 	},
 	$success$newsMoved : function() {
 		newsSource.refresh();
@@ -57,7 +57,7 @@ hui.ui.listen({
 			this.closeNewsAfterDeletion = true;
 		}
 		hui.ui.request({
-			url:'DeleteNews.php',
+			url:'data/DeleteNews.php',
 			onSuccess:'fileDeleted',
 			parameters:{id:obj.id},
 			message : {start:'Sletter nyhed...',delay:300}
@@ -82,7 +82,7 @@ hui.ui.listen({
 	$click$duplicate : function(id) {
 		var obj = list.getFirstSelection();
 		hui.ui.request({
-			url : 'LoadNews.php',
+			url : 'data/LoadNews.php',
 			onSuccess : 'duplicateLoaded',
 			parameters : {id:obj.id},
 			message : {start:'Opretter kopi...',delay:300}
@@ -112,7 +112,7 @@ hui.ui.listen({
 	
 	loadNews : function(id) {
 		hui.ui.request({
-			url:'LoadNews.php',
+			url:'data/LoadNews.php',
 			onSuccess:'newsLoaded',
 			parameters:{id:id},
 			message:{start:'Åbner nyhed...',delay:300}
@@ -149,7 +149,7 @@ hui.ui.listen({
 		}
 		data.groups = newsGroups.getValue();
 		hui.ui.request({
-			url:'SaveNews.php',
+			url:'data/SaveNews.php',
 			onSuccess:'newsUpdated',
 			json:{data:data},
 			message:{start:'Gemmer nyhed...',delay:300}
@@ -164,7 +164,7 @@ hui.ui.listen({
 	},
 	$click$deleteNews : function() {
 		hui.ui.request({
-			url : 'DeleteNews.php',
+			url : 'data/DeleteNews.php',
 			onSuccess : 'newsDeleted',
 			parameters : {id:this.newsId},
 			message : {start:'Sletter nyhed...',delay:300}
@@ -202,7 +202,7 @@ hui.ui.listen({
 			values.id = this.groupId;
 			hui.ui.request({
 				json:{data:values},
-				url:'SaveGroup.php',
+				url:'data/SaveGroup.php',
 				onSuccess:'groupSaved',
 				message:{start:'Gemmer gruppe...',delay:300}
 			});
@@ -290,11 +290,13 @@ hui.ui.listen({
 		}
 		hui.ui.request({
 			json : {data:values},
-			url : 'CreateArticle.php',
+			url : 'data/CreateArticle.php',
 			message : {start:'Opretter artikel...',success:'Artiklen er oprettet'},
 			onSuccess : function() {
 				articleFormula.reset();
 				newArticleBox.hide();
+				list.refresh();
+				groupSource.refresh();
 			}
 		});
 	}

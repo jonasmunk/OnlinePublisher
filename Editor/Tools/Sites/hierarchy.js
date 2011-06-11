@@ -56,6 +56,12 @@ hui.ui.listen({
 			document.location='../../Template/Edit.php?id='+obj.data.page;
 		}
 	},
+	$click$info : function() {
+		var obj = list.getFirstSelection();
+		if (obj.kind=='hierarchyItem') {
+			this.loadHierarchyItem(obj.id);
+		}
+	},
 	
 	////////////////// Hierarchy //////////////////
 
