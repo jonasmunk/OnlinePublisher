@@ -2669,7 +2669,8 @@ div.hui_list table tbody td .object
 
 div.hui_list .hui_icon
 {
-	margin-right: 3px;
+	margin-right: 4px;
+	margin-left: 1px;
 	float: left;
 }
 
@@ -2685,6 +2686,7 @@ span.hui_list_icons
 span.hui_list_icons .hui_icon
 {
 	float: none;
+	margin: 0 3px 0 0;
 }
 
 .hui_list_revealing

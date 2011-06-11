@@ -533,7 +533,9 @@
 		</xsl:attribute>
 		<xsl:apply-templates select="gui:back"/>
 		<div class="hui_window_front">
-			<div class="hui_window_close"><xsl:comment/></div>
+			<xsl:if test="not(@close='false')">
+				<div class="hui_window_close"><xsl:comment/></div>
+			</xsl:if>
 			<div class="hui_window_titlebar"><div><div>
 				<xsl:if test="@icon">
 					<span class="hui_window_icon" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"></span>
