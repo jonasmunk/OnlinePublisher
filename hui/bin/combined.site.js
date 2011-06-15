@@ -3553,6 +3553,7 @@ hui.ui.Box = function(options) {
 	this.element = hui.get(options.element);
 	this.body = hui.firstByClass(this.element,'hui_box_body');
 	this.close = hui.firstByClass(this.element,'hui_box_close');
+	this.visible = !this.options.absolute;
 	if (this.close) {
 		hui.listen(this.close,'click',function(e) {
 			hui.stop(e);
@@ -3623,6 +3624,15 @@ hui.ui.Box.prototype = {
 			e.style.display='block';
 		}
 		hui.ui.callVisible(this);
+		this.visible = true;
+	},
+	$$layout : function() {
+		if (this.options.absolute && this.visible) {
+			var e = this.element;
+			var w = e.clientWidth;
+			var top = (hui.getViewPortHeight()-e.clientHeight)/2+hui.getScrollTop();
+			hui.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
+		}
 	},
 	/**
 	 * Hides the box
@@ -3630,6 +3640,7 @@ hui.ui.Box.prototype = {
 	hide : function() {
 		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
+		this.visible = false;
 	},
 	/** @private */
 	curtainWasClicked : function() {

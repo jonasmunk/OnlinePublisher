@@ -30,7 +30,7 @@ hui.ui.Overflow.prototype = {
 			bottom-=sibs[i].clientHeight;
 		}
 		this.diff = -1 * (top + (viewport - bottom));
-		if (hui.browser.webkit) {
+		if (hui.browser.webkit && this.element.parentNode.className=='hui_layout_center') {
 			this.diff++;
 		}
 	},
