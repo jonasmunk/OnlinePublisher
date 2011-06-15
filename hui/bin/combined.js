@@ -6325,8 +6325,6 @@ hui.ui.List.prototype = {
 			var child = node.childNodes[i];
 			if (hui.dom.isDefinedText(child)) {
 				hui.dom.addText(cell,child.nodeValue);
-			} else if (hui.dom.isElement(child,'wrap')) {
-				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
 			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
@@ -6364,6 +6362,11 @@ hui.ui.List.prototype = {
 				var button = hui.ui.Button.create({text:child.getAttribute('text'),small:true,rounded:true,data:this._getData(child)});
 				button.click(this._buttonClick.bind(this))
 				cell.appendChild(button.getElement());
+			} else if (hui.dom.isElement(child,'wrap')) {
+				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
+			} else if (hui.dom.isElement(child,'delete')) {
+				var icons = hui.build('del',{parent:cell});
+				this.parseCell(child,icons);
 			}
 		};
 	},

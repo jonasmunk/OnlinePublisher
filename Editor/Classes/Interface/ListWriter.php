@@ -113,6 +113,16 @@ class ListWriter {
 		echo '</wrap>';
 		return $this;
 	}
+	
+	function startDelete() {
+		echo '<delete>';
+		return $this;
+	}
+	
+	function endDelete() {
+		echo '</delete>';
+		return $this;
+	}
 
 	function text($text) {
 		echo StringUtils::escapeXMLBreak($text,'<break/>');

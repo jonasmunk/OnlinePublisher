@@ -2674,6 +2674,11 @@ div.hui_list .hui_icon
 	float: left;
 }
 
+div.hui_list del
+{
+	color: #999;
+}
+
 span.hui_list_icons
 {
 	white-space: nowrap;

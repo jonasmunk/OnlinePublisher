@@ -64,9 +64,12 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		}
 		$writer->
 		startRow($options)->
-		startCell(array('icon'=>'monochrome/dot'))->text($row['title']);
+		startCell(array('icon'=>'monochrome/dot'));
 		if ($row['hidden']) {
-			$writer->startIcons()->icon(array('icon'=>'monochrome/invisible','data'=>array('action'=>'invisible')))->endIcons();
+			//$writer->startIcons()->icon(array('icon'=>'monochrome/invisible','data'=>array('action'=>'invisible')))->endIcons();
+			$writer->startDelete()->text($row['title'])->endDelete();
+		} else {
+			$writer->text($row['title']);
 		}
 		$writer->endCell();
 		if ($row['target_type']=='page') {
@@ -74,10 +77,14 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 				$writer->startCell(array('icon'=>'common/warning'))->text('Ingen side!')->endCell();
 			} else {
 				$writer->
-					startCell(array('icon'=>$icon))->
-					text($row['pagetitle'])->
-					startIcons()->
-						icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
+					startCell(array('icon'=>$icon));
+					if ($row['page_disabled']) {
+						$writer->startDelete()->text($row['pagetitle'])->endDelete();
+					} else {
+						$writer->text($row['pagetitle']);
+					}
+					$writer->startIcons();
+						$writer->icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
 					endIcons()->
 					endCell();
 			}
@@ -111,7 +118,7 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 }
 
 function buildHierarchySql($hierarchyId,$parent) {
-	$sql="select hierarchy_item.*,page.id as pageid,page.title as pagetitle,page.path as page_path,template.unique as templateunique,file.object_id as fileid,file.filename,fileobject.title as filetitle from hierarchy_item left join page on page.id = hierarchy_item.target_id left join file on file.object_id = hierarchy_item.target_id left join object as fileobject on file.object_id=fileobject.id left join template on template.id=page.template_id";
+	$sql="select hierarchy_item.*,page.id as pageid,page.title as pagetitle,page.path as page_path,page.disabled as page_disabled,template.unique as templateunique,file.object_id as fileid,file.filename,fileobject.title as filetitle from hierarchy_item left join page on page.id = hierarchy_item.target_id left join file on file.object_id = hierarchy_item.target_id left join object as fileobject on file.object_id=fileobject.id left join template on template.id=page.template_id";
 	if ($parent===null && $hierarchyId!==null) {
 		$sql.=" where hierarchy_id=".Database::int($hierarchyId)." and parent=0";
 	} else {
