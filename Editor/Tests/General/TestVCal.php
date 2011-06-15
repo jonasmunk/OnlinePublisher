@@ -21,7 +21,7 @@ class TestVCal extends UnitTestCase {
 		$this->assertEqual('Europe/Copenhagen',$cal->getTimeZone());
 		
 		$events = $cal->getEvents();
-		$this->assertEqual(count($events),2);
+		$this->assertEqual(count($events),3);
 		
 		$first = $events[0];
 		$this->assertEqual($first->getSummary(),'My event');
