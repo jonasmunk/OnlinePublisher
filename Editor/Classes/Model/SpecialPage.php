@@ -4,6 +4,7 @@
  * @subpackage Classes.Model
  */
 require_once($basePath.'Editor/Classes/Database.php');
+require_once($basePath.'Editor/Classes/Services/CacheService.php');
 
 class SpecialPage {
         
@@ -81,7 +82,9 @@ class SpecialPage {
 	
 	function remove() {
 		$sql = "delete from specialpage where id = ".Database::int($this->id);
-		return Database::delete($sql);
+		$result = Database::delete($sql);
+		CacheService::clearCompletePageCache();
+		return $result;
 	}
 	
 	function save() {
@@ -100,5 +103,6 @@ class SpecialPage {
 			")";
 			$this->id = Database::insert($sql);
 		}
+		CacheService::clearCompletePageCache();
 	}
 }
