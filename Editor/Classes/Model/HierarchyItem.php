@@ -4,7 +4,6 @@
  * @subpackage Classes.Model
  */
 require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Hierarchy.php');
 
 class HierarchyItem {

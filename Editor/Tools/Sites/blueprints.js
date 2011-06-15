@@ -46,14 +46,15 @@ hui.ui.listen({
 		values.id = this.blueprintId;
 		hui.ui.request({
 			json : {data:values},
-			url : 'SaveBlueprint.php',
+			url : 'data/SaveBlueprint.php',
 			message : {start:'Gemmer skabelon...',delay:300},
 			onSuccess : function() {
-				blueprintFormula.reset();
-				blueprintWindow.hide();
 				listSource.refresh();
 			}.bind(this)
 		});
+		this.blueprintId = null;
+		blueprintFormula.reset();
+		blueprintWindow.hide();
 	},
 	$click$deleteBlueprint : function() {
 		deleteBlueprint.setEnabled(false);
@@ -62,12 +63,12 @@ hui.ui.listen({
 			url : '../../Services/Model/DeleteObject.php',
 			message : {start:'Sletter skabelon...',delay:300},
 			onSuccess : function() {
-				this.blueprintId = null;
-				blueprintFormula.reset();
-				blueprintWindow.hide();
 				listSource.refresh();
 			}.bind(this)
 		});
+		this.blueprintId = null;
+		blueprintFormula.reset();
+		blueprintWindow.hide();
 	}
 
 	

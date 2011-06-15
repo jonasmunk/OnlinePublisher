@@ -3,7 +3,8 @@
  * @package OnlinePublisher
  * @subpackage Tools.Sites
  */
-require_once '../../Include/Private.php';
+require_once '../../../../Config/Setup.php';
+require_once '../../../Include/Security.php';
 
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
