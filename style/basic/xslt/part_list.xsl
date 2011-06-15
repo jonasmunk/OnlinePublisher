@@ -83,6 +83,12 @@
 
 <xsl:template match="l:item/l:date">
 	<p class="part_list_date">
+		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
+	</p>
+</xsl:template>
+
+<xsl:template match="l:item/l:start-date">
+	<p class="part_list_date">
 		<xsl:choose>
 			<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>From: </xsl:text></xsl:when>
 			<xsl:otherwise><xsl:text>Fra: </xsl:text></xsl:otherwise>

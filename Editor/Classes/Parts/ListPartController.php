@@ -179,7 +179,7 @@ class ListPartController extends PartController
 						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',DateUtils::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
 						foreach ($newsItems as $newsItem) {
 							$item = new PartListItem();
-							$item->setStartDate($newsItem->getDate());
+							$item->setDate($newsItem->getDate());
 							$item->setTitle($newsItem->getTitle());
 							$item->setText($newsItem->getText());
 							if ($part->getShowSource()) {
@@ -201,16 +201,21 @@ class ListPartController extends PartController
 		$items = array_slice($items,0,$part->getMaxItems());
 		foreach ($items as $item) {
 			$data.='<item>'.
-			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>'.
-			'<text>'.StringUtils::escapeXMLBreak($item->getText(),'<break/>').'</text>';
+			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>';
+			if (StringUtils::isNotBlank($item->getText())) {
+				$data.='<text>'.StringUtils::escapeXMLBreak($item->getText(),'<break/>').'</text>';
+			}
 			if (StringUtils::isNotBlank($item->getUrl())) {
 				$data.='<url>'.StringUtils::escapeXML($item->getUrl()).'</url>';
 			}
 			if ($item->getSource()) {
 				$data.='<source>'.StringUtils::escapeXML($item->getSource()).'</source>';
 			}
+			if ($item->getDate()) {
+				$data.=DateUtils::buildTag('date',$item->getDate());
+			}
 			if ($item->getStartDate()) {
-				$data.=DateUtils::buildTag('date',$item->getStartDate());
+				$data.=DateUtils::buildTag('start-date',$item->getStartDate());
 			}
 			if ($item->getEndDate()) {
 				$data.=DateUtils::buildTag('end-date',$item->getEndDate());
@@ -226,8 +231,8 @@ class ListPartController extends PartController
 	}
 	
 	function _startDateComparator($a, $b) {
-		$a = $a->getStartDate();
-		$b = $b->getStartDate();
+		$a = $a->getStartDate() || $a->getDate();
+		$b = $b->getStartDate() || $b->getDate();
 		if (!$a) $a=0;
 		if (!$b) $b=0;
     	if ($a == $b) {
@@ -242,6 +247,7 @@ class ListPartController extends PartController
 	
 		var $title;
 		var $text;
+		var $date;
 		var $startDate;
 		var $endDate;
 		var $source;
@@ -278,6 +284,15 @@ class ListPartController extends PartController
 		function getEndDate() {
 		    return $this->endDate;
 		}
+		
+		function setDate($date) {
+		    $this->date = $date;
+		}
+
+		function getDate() {
+		    return $this->date;
+		}
+		
 	
 		function setSource($source) {
 		    $this->source = $source;
