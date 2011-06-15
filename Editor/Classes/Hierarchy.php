@@ -7,6 +7,7 @@ require_once($basePath.'Editor/Classes/EventManager.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Services/FileService.php');
 require_once($basePath.'Editor/Classes/Services/CacheService.php');
+require_once($basePath.'Editor/Classes/Services/HierarchyService.php');
 
 class Hierarchy {
     
@@ -65,14 +66,7 @@ class Hierarchy {
     //////////////////// Special ////////////////////
     
     function canDelete() {
-        $out = false;
-        $sql="select count(id) as num from hierarchy_item where hierarchy_id=".Database::int($this->id);
-        if ($row = Database::selectFirst($sql)) {
-            if ($row['num']==0) {
-                $out = true;
-            }
-        }
-        return $out;
+		return HierarchyService::canDeleteHierarchy($this->id);
     }
     
     ////////////////// Persistence //////////////////
@@ -82,7 +76,7 @@ class Hierarchy {
         if ($row = Database::selectFirst($sql)) {
             return Hierarchy::_populate($row);
         } else {
-            return false;
+            return null;
         }
     }
 	
@@ -116,15 +110,7 @@ class Hierarchy {
     }
 	
 	function create() {
-        $data='<hierarchy xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"/>';
-
-		$sql = "insert into hierarchy (name,language,data,changed,published) values (".
-		Database::text($this->name).",".
-		Database::text($this->language).",".
-		Database::text($data).",".
-		"now(),now()".
-		")";		
-		$this->id = Database::insert($sql);
+		HierarchyService::createHierarchy($this);
     }
     
     function delete() {
@@ -146,96 +132,20 @@ class Hierarchy {
 	}
     
     function update() {
-        $sql="update hierarchy set ".
-        "name=".Database::text($this->name).
-        ",language=".Database::text($this->language).
-        " where id=".$this->id;
-        return Database::update($sql);
+		HierarchyService::updateHierarchy($this);
     }
 
 	function createItemForPage($pageId,$title,$parentId) {
-		
-		// find index
-		$sql="select max(`index`) as `index` from hierarchy_item where parent=".Database::int($parentId)." and hierarchy_id=".Database::int($this->id);
-		if ($row = Database::selectFirst($sql)) {
-			$index=$row['index']+1;
-		} else {
-			$index=1;
-		}
-		
-		$sql="insert into hierarchy_item (title,type,hierarchy_id,parent,`index`,target_type,target_id) values (".
-		Database::text($title).
-		",'item'".
-		",".Database::int($this->id).
-		",".Database::int($parentId).
-		",".Database::int($index).
-		",'page'".
-		",".Database::int($pageId).
-		")";
-		Database::insert($sql);
+		return $this->createItem(array('targetType'=>'page','targetValue'=>$pageId,'title'=>$title,'parent'=>$parentId,'hidden'=>false));
 	}
 
 	function createItem($options) {
-		if (StringUtils::isBlank($options['title'])) {
-			Log::debug('No title');
-			return false;
-		}
-		if (!in_array($options['targetType'],array('page','pageref','file','email','url'))) {
-			Log::debug('Invalid targetType');
-			return false;
-		}
-		if (!isset($options['hidden'])) {
-			Log::debug('hidden not set');
-			return false;
-		}
-		if (!isset($options['targetValue'])) {
-			Log::debug('targetValue not set');
-			return false;
-		}
-		if (!isset($options['parent'])) {
-			Log::debug('parent not set');
-			return false;
-		}
-		if ($options['parent']>0) {
-			$sql="select id from hierarchy_item where id=".Database::int($options['parent'])." and hierarchy_id=".Database::int($this->id);
-			if (!$row = Database::selectFirst($sql)) {
-				Log::debug('parent not found');
-				return false;
-			}
-		}
-		// find index
-		$sql="select max(`index`) as `index` from hierarchy_item where parent=".Database::int($options['parent'])." and hierarchy_id=".Database::int($this->id);
-		if ($row = Database::selectFirst($sql)) {
-			$index=$row['index']+1;
-		} else {
-			$index=1;
-		}
-		
-		if ($options['targetType']=='page' || $options['targetType']=='pageref' || $options['targetType']=='file') {
-			$target_id = $options['targetValue'];
-		} else {
-			$target_value = $options['targetValue'];
-		}
-		
-		$sql="insert into hierarchy_item (title,hidden,type,hierarchy_id,parent,`index`,target_type,target_id,target_value) values (".
-		Database::text($options['title']).
-		",".Database::boolean($options['hidden']).
-		",'item'".
-		",".Database::int($this->id).
-		",".Database::int($options['parent']).
-		",".Database::int($index).
-		",".Database::text($options['targetType']).
-		",".Database::int($target_id).
-		",".Database::text($target_value).
-		")";
-		Log::debug($sql);
-		Database::insert($sql);
-		return true;
+		$options['hierarchyId'] = $this->id;
+		return HierarchyService::createItem($options);
 	}
 
 	function markChanged() {
-		$sql="update hierarchy set changed=now() where id=".Database::int($this->id);
-		Database::update($sql);
+		HierarchyService::markHierarchyChanged($this->id);
 	}
 	
     /////////////////// Publishing //////////////////
@@ -310,6 +220,11 @@ class Hierarchy {
 	}
     
     function moveItem($id,$dir) {
+		if ($dir<0) {
+			$dir = -1;
+		} else {
+			$dir = 1;
+		}
         $output = false;
         $sql="select * from hierarchy_item where id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
@@ -341,45 +256,7 @@ class Hierarchy {
     }
     
     function deleteItem($id) {
-
-        // Load info about item
-        $sql="select * from hierarchy_item where id=".Database::int($id);
-        $row = Database::selectFirst($sql);
-		if (!$row) {
-			Log::debug('Cannot find item');
-			return null;
-		}
-		// Check that no children exists
-        $sql="select * from hierarchy_item where parent=".Database::int($id);
-		if (Database::selectFirst($sql)) {
-			Log::debug('Will not delete item with parents');
-			return null;
-		}
-        $parent = $row['parent'];
-        $hierarchyId = $row['hierarchy_id'];
-
-        // Delete item
-        $sql="delete from hierarchy_item where id=".Database::int($id);
-        Database::delete($sql);
-
-        // Fix positions
-        $sql="select id from hierarchy_item where parent=".Database::int($parent)." and hierarchy_id=".Database::int($hierarchyId)." order by `index`";
-        $result = Database::select($sql);
-
-        $index=1;
-        while ($row = Database::next($result)) {
-        	$sql="update hierarchy_item set `index`=".Database::int($index)." where id=".Database::int($row['id']);
-        	Database::update($sql);
-        	$index++;
-        }
-        Database::free($result);
-
-        // Mark hierarchy as changed
-        $sql="update hierarchy set changed=now() where id=".Database::int($hierarchyId);
-        Database::update($sql);
-	
-		EventManager::fireEvent('update','hierarchy',null,$hierarchyId);
-        return $hierarchyId;
+		return HierarchyService::deleteItem($id);
     }
     
     function getAncestorPath($id) {
@@ -394,10 +271,6 @@ class Hierarchy {
     	        $parent = 0;
     	    }
 	    }
-/*        $sql = "select hierarchy.id,hierarchy.name from hierarchy,hierarchy_item where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".Database::int($id);
-    	if ($row=Database::selectFirst($sql)) {
-            $output[] = array('type' => 'hierarchy','id' => $row['id'],'title' => $row['name']);    	
-    	}*/
 	    return array_reverse($output);
 	}
 

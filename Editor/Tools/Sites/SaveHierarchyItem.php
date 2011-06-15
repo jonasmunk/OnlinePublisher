@@ -39,7 +39,7 @@ if ($data->id) {
 		'targetValue' => $data->targetValue,
 		'parent' => $parent
 	));
-	if (!$result) {
+	if ($result===false) {
 		Response::badRequest();
 	}
 } else {
