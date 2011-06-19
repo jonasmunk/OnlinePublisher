@@ -34,21 +34,21 @@
 			function() { // parsing
 				var parsed;
 				
-				parsed = hui.animation.parseStyle('12px');
+				parsed = hui.animation._parseStyle('12px');
 				hui.ui.test.assertEquals(parsed.unit,'px');
 				hui.ui.test.assertEquals(parsed.value,12);
 
-				parsed = hui.animation.parseStyle('12.4%');
+				parsed = hui.animation._parseStyle('12.4%');
 				hui.ui.test.assertEquals(parsed.unit,'%');
 				hui.ui.test.assertEquals(parsed.value,12.4);
 
-				parsed = hui.animation.parseStyle('#f00');
+				parsed = hui.animation._parseStyle('#f00');
 				hui.ui.test.assertEquals(parsed.unit,null);
 				hui.ui.test.assertEquals(parsed.value.red,255);
 				hui.ui.test.assertEquals(parsed.value.green,0);
 				hui.ui.test.assertEquals(parsed.value.blue,0);
 
-				parsed = hui.animation.parseStyle('blue');
+				parsed = hui.animation._parseStyle('blue');
 				hui.ui.test.assertEquals(parsed.unit,null);
 				hui.ui.test.assertEquals(parsed.value.red,0);
 				hui.ui.test.assertEquals(parsed.value.green,0);
