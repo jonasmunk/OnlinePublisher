@@ -7,9 +7,9 @@ body
 
 div.layout
 {
-	background: #fff;
-	box-shadow: 0 0 20px #fff, 0 0 10px #fff;
-	width: 980px;
+	background: #fff url('../gfx/bg.jpg');
+	/*box-shadow: 0 0 20px #fff, 0 0 10px #fff;*/
+	width: 1000px;
 	margin: 0 auto;
 }
 
@@ -22,7 +22,7 @@ div.layout_content
 
 div.layout_header
 {
-	height: 217px;
+	height: 229px;
 	background: #fff url('../gfx/header_flower.jpg');
 /*    background: -webkit-gradient(linear,0 0,0 bottom,from(#eeeeee),to(#ffffff));
     background: -moz-linear-gradient(#eeeeee, #ffffff);
@@ -49,8 +49,10 @@ p.layout_logo
 
 p.layout_designed
 {
+	background: transparent url('../gfx/bg_bottom.jpg') center top no-repeat;
 	text-align: center;
-	margin: 40px 0;
+	margin: 0;
+	padding: 40px 0;
 }
 
 p.layout_designed a
@@ -78,7 +80,7 @@ div.layout_navigation ul
 	height: 30px;
 	font-size: 0;
 	position: absolute;
-	margin-top: -50px;
+	margin-top: -60px;
 }
 
 div.layout_navigation li
@@ -103,6 +105,7 @@ div.layout_navigation a span
 	display: inline-block;
 	height: 30px;	
 	background: #0270cb;
+	background: rgba(2, 80, 175, .35);
 	border-radius: 5px;
 	padding: 0 10px;
 }
