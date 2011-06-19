@@ -96,6 +96,7 @@ hui.ui.ColorPicker.prototype = {
 		}.bind(this));
 		hui.listen(this.swatches,'click',this._pickColor.bind(this));
 	},
+	/** @private */
 	$click : function(button) {
 		var page = parseInt(button.element.getAttribute('rel')),
 			i;
@@ -146,7 +147,6 @@ hui.ui.ColorPicker.prototype = {
 		}
 		this.colorArray = clrary;
 	},
-	/** @private */
 	_hoverWheel1 : function(e) {
 		e = hui.event(e);
 		var pos = hui.getPosition(this.wheel1);

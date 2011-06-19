@@ -52,6 +52,7 @@ hui.ui.Calendar.prototype = {
 		};
 		this.hideEventViewer();
 	},
+	/** @private */
 	$objectsLoaded : function(data) {
 		try {
 			this.setEvents(data);
@@ -59,9 +60,11 @@ hui.ui.Calendar.prototype = {
 			hui.log(e);
 		}
 	},
+	/** @private */
 	$sourceIsBusy : function() {
 		this.setBusy(true);
 	},
+	/** @private */
 	$sourceShouldRefresh : function() {
 		return this.element.style.display!='none';
 	},
@@ -115,6 +118,7 @@ hui.ui.Calendar.prototype = {
 	eventWasClicked : function(node) {
 		this.showEvent(node);
 	},
+	/** @private */
 	setBusy : function(busy) {
 		hui.setClass(this.element,'hui_calendar_busy',busy);
 	},
@@ -158,11 +162,13 @@ hui.ui.Calendar.prototype = {
 			time.appendChild(node);
 		};
 	},
+	/** @private */
 	$click$huiCalendarPrevious : function() {
 		var date = new Date(this.date.getTime());
 		date.setDate(this.date.getDate()-7);
 		this.setDate(date);
 	},
+	/** @private */
 	$click$huiCalendarNext : function() {
 		var date = new Date(this.date.getTime());
 		date.setDate(this.date.getDate()+7);
@@ -176,6 +182,7 @@ hui.ui.Calendar.prototype = {
 			this.datePicker.setValue(this.date);
 		}
 	},
+	/** @private */
 	$click$huiCalendarDatePicker : function() {
 		this.showDatePicker();
 	},
@@ -199,6 +206,7 @@ hui.ui.Calendar.prototype = {
 	},
 	
 	////////////////////////////////// Date picker ///////////////////////////
+	/** @private */
 	showDatePicker : function() {
 		if (!this.datePickerPanel) {
 			this.datePickerPanel = hui.ui.BoundPanel.create();
@@ -213,15 +221,18 @@ hui.ui.Calendar.prototype = {
 		this.datePickerPanel.position(this.datePickerButton.getElement());
 		this.datePickerPanel.show();
 	},
+	/** @private */
 	$click$huiCalendarDatePickerClose : function() {
 		this.datePickerPanel.hide();
 	},
+	/** @private */
 	$dateChanged$huiCalendarDatePicker : function(date) {
 		this.setDate(date);
 	},
 	
 	//////////////////////////////// Event viewer //////////////////////////////
 	
+	/** @private */
 	showEvent : function(node) {
 		if (!this.eventViewerPanel) {
 			this.eventViewerPanel = hui.ui.BoundPanel.create({width:270,padding: 3});
@@ -239,13 +250,16 @@ hui.ui.Calendar.prototype = {
 		hui.ui.callDelegates(this,'requestEventInfo');
 		return;
 	},
+	/** @private */
 	updateEventInfo : function(event,data) {
 		this.eventInfo.setBusy(false);
 		this.eventInfo.update(data);
 	},
-	click$huiCalendarEventClose : function() {
+	/** @private */
+	$click$huiCalendarEventClose : function() {
 		this.hideEventViewer();
 	},
+	/** @private */
 	hideEventViewer : function() {
 		if (this.eventViewerPanel) {
 			this.eventViewerPanel.hide();

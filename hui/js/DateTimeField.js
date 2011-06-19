@@ -4,7 +4,7 @@
  * A date and time field
  * @constructor
  */
-hui.ui.Formula.DateTimeField = function(o) {
+hui.ui.DateTimeField = function(o) {
 	this.inputFormats = ['d-m-Y','d/m-Y','d/m/Y','d-m-Y H:i:s','d/m-Y H:i:s','d/m/Y H:i:s','d-m-Y H:i','d/m-Y H:i','d/m/Y H:i','d-m-Y H','d/m-Y H','d/m/Y H','d-m','d/m','d','Y','m-d-Y','m-d','m/d'];
 	this.outputFormat = 'd-m-Y H:i:s';
 	this.name = o.name;
@@ -17,14 +17,14 @@ hui.ui.Formula.DateTimeField = function(o) {
 	this.updateUI();
 }
 
-hui.ui.Formula.DateTimeField.create = function(options) {
+hui.ui.DateTimeField.create = function(options) {
 	var node = hui.build('span',{'class':'hui_formula_text_singleline'});
 	hui.build('input',{'class':'hui_formula_text',parent:node});
 	options.element = hui.ui.wrapInField(node);
-	return new hui.ui.Formula.DateTimeField(options);
+	return new hui.ui.DateTimeField(options);
 }
 
-hui.ui.Formula.DateTimeField.prototype = {
+hui.ui.DateTimeField.prototype = {
 	addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'blur',this.check.bind(this));

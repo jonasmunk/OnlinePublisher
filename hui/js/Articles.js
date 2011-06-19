@@ -1,7 +1,7 @@
 /**
  * A list of articles
  * @constructor
- * @param {Object} options { element: «Node | id», name: «String», source: «hui.ui.Source» }
+ * @param {Object} options { element: «node | id», name: «name», source: «hui.ui.Source» }
  */
 hui.ui.Articles = function(options) {
 	this.options = options;
@@ -36,6 +36,7 @@ hui.ui.Articles.prototype = {
 			this.element.appendChild(e);
 		};
 	},
+	/** @private */
 	$sourceFailed : function() {
 		this.element.innerHTML='<div>Failed!</div>';
 	},

@@ -86,6 +86,20 @@
 
 				var color = new hui.Color();
 				hui.ui.test.assertFalse(color.ok);
+			},
+			function() {
+				var color = hui.Color.hex2rgb('#f00');
+				hui.ui.test.assertEquals(color.r,255);
+				hui.ui.test.assertEquals(color.g,0);
+				hui.ui.test.assertEquals(color.b,0);
+				
+				var color = hui.Color.hsv2rgb(90,1,1);
+				hui.ui.test.assertEquals(color[0],128);
+				hui.ui.test.assertEquals(color[1],255);
+				hui.ui.test.assertEquals(color[2],0);
+				
+				var color = hui.Color.rgb2hex([255,0,0]);
+				hui.ui.test.assertEquals(color,'#ff0000');
 			}
 		]);
 	</script>

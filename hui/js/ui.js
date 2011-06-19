@@ -487,6 +487,7 @@ hui.ui.addFocusClass = function(o) {
 
 /////////////////////////////// Validation /////////////////////////////
 
+/** @constructor */
 hui.ui.NumberValidator = function(options) {
 	hui.override({allowNull:false,min:0,max:10},options)
 	this.min = options.min;

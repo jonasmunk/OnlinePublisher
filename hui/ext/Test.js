@@ -89,14 +89,14 @@ hui.ui.test = {
 		if (value!==true) {
 			this._fail('Failure ('+msg+'), not true...',value);
 		} else {
-			this._succeed('Success, true: '+msg);
+			this._succeed('Success, true'+(msg ? ': '+msg : ''));
 		}
 	},
 	assertFalse : function(value,msg) {
 		if (value!==false) {
 			this._fail('Failure ('+msg+'), not false...',value);
 		} else {
-			this._succeed('Success, false: '+msg);
+			this._succeed('Success, false'+(msg ? ': '+msg : ''));
 		}
 	},
 	assertDefined : function(value,msg) {
@@ -110,7 +110,7 @@ hui.ui.test = {
 		if (obj1!==obj2) {
 			this._fail('Failure ('+msg+'), not equal...',obj1,obj2);
 		} else {
-			this._succeed('Success, equal: '+obj1+'==='+obj2+', '+msg);
+			this._succeed('Success, equal: '+obj1+'==='+obj2+(msg ? ', '+msg : ''));
 		}
 	},
 	assertNotEquals : function(obj1,obj2,msg) {

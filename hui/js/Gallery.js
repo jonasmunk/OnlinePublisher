@@ -81,6 +81,7 @@ hui.ui.Gallery.prototype = {
 		});
 		this._reveal();
 	},
+	/** @private */
 	$$layout : function() {
 		if (this.nodes.length>0) {
 			this._reveal();

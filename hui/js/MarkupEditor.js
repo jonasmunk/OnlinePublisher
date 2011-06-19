@@ -1,5 +1,6 @@
 /**
  * @constructor
+ * @param options The options { debug : «boolean», value : '«html»', autoHideToolbar : «boolean», style : '«css»', replace : «node-or-id»}
  */
 hui.ui.MarkupEditor = function(options) {
 	this.name = options.name;
@@ -33,34 +34,42 @@ hui.ui.MarkupEditor.create = function(options) {
 }
 
 hui.ui.MarkupEditor.prototype = {
+	/** @private */
 	implIsReady : function() {
 		this.ready = true;
 		for (var i=0; i < this.pending.length; i++) {
 			this.pending[i]();
 		};
 	},
+	/** @private */
 	implFocused : function() {
 		this._showBar();
 	},
+	/** @private */
 	implBlurred : function() {
 		this.bar.hide();
 		this.fire('blur');
 	},
+	/** @private */
 	implValueChanged : function() {
 		this._valueChanged();
 	},
+	/** Remove the widget from the DOM */
 	destroy : function() {
 		hui.dom.remove(this.element);
 		hui.ui.destroy(this);
 	},
+	/** Get the HTML value */
 	getValue : function() {
 		return this.impl.getHTML();
 	},
+	/** Set the HTML value */
 	setValue : function(value) {
 		this._whenReady(function() {
 			this.impl.setHTML(value);
 		}.bind(this));
 	},
+	/** Focus the editor */
 	focus : function() {
 		this._whenReady(this.impl.focus.bind(this.impl));
 	},
@@ -166,6 +175,7 @@ hui.ui.MarkupEditor.prototype = {
 		this.fire('valueChanged',this.impl.getHTML());		
 	},
 	
+	/** @private */
 	$colorWasSelected : function(color) {
 		this.impl.restoreSelection(function() {
 			this.impl.colorize(color);

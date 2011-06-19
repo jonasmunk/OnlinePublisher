@@ -25,18 +25,30 @@ if (!window.n2i) {
 	var n2i = hui;
 }
 
+/** If the browser is opera */
 hui.browser.opera = /opera/i.test(navigator.userAgent);
+/** If the browser is any version of InternetExplorer */
 hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent);
+/** If the browser is InternetExplorer 6 */
 hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
+/** If the browser is InternetExplorer 7 */
 hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
+/** If the browser is InternetExplorer 8 */
 hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
+/** If the browser is InternetExplorer 9 */
 hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
+/** If the browser is InternetExplorer 9 in compatibility mode */
 hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0')!==-1;
+/** If the browser is WebKit based */
 hui.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
+/** If the browser is any version of Safari */
 hui.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
+/** The version of WebKit (null if not WebKit) */
 hui.browser.webkitVersion = null;
+/** If the browser is Gecko based */
 hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
 
+/** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
 
 (function() {
@@ -657,19 +669,31 @@ hui.event = function(event) {
 }
 
 /** @constructor
+ * Wrapper for events
  * @param event The DOM event
  */
 hui.Event = function(event) {
+	/** The event */
 	this.event = event = event || window.event;
+	/** The target element */
 	this.element = event.target ? event.target : event.srcElement;
+	/** If the shift key was pressed */
 	this.shiftKey = event.shiftKey;
+	/** If the return key was pressed */
 	this.returnKey = event.keyCode==13;
+	/** If the escape key was pressed */
 	this.escapeKey = event.keyCode==27;
+	/** If the space key was pressed */
 	this.spaceKey = event.keyCode==32;
+	/** If the up key was pressed */
 	this.upKey = event.keyCode==38;
+	/** If the down key was pressed */
 	this.downKey = event.keyCode==40;
+	/** If the left key was pressed */
 	this.leftKey = event.keyCode==37;
+	/** If the right key was pressed */
 	this.rightKey = event.keyCode==39;
+	/** The key code */
 	this.keyCode = event.keyCode;
 }
 
@@ -1009,6 +1033,7 @@ hui.getFrameWindow = function(frame) {
 
 /** @namespace */
 hui.selection = {
+	/** Clear the text selection */
 	clear : function() { 
 		var sel ; 
 		if(document.selection && document.selection.empty	){ 
@@ -1020,6 +1045,9 @@ hui.selection = {
 			}
 		}
 	},
+	/** Get the selected text
+	 * @param doc The document, defaults to current document
+	 */
 	getText : function(doc) {
 		doc = doc || document;
 		if (doc.getSelection) {
@@ -1382,16 +1410,16 @@ hui.animation = {
 	},
 	start : function() {
 		if (!this.running) {
-			hui.animation.render();
+			hui.animation._render();
 		}
 	}
 };
 
-hui.animation.lengthUpater = function(element,v,work) {
+hui.animation._lengthUpater = function(element,v,work) {
 	element.style[work.property] = (work.from+(work.to-work.from)*v)+(work.unit!=null ? work.unit : '');
 }
 
-hui.animation.transformUpater = function(element,v,work) {
+hui.animation._transformUpater = function(element,v,work) {
 	var t = work.transform;
 	var str = '';
 	if (t.rotate) {
@@ -1403,7 +1431,7 @@ hui.animation.transformUpater = function(element,v,work) {
 	element.style[hui.animation.TRANSFORM]=str;
 }
 
-hui.animation.colorUpater = function(element,v,work) {
+hui.animation._colorUpater = function(element,v,work) {
 	var red = Math.round(work.from.red+(work.to.red-work.from.red)*v);
 	var green = Math.round(work.from.green+(work.to.green-work.from.green)*v);
 	var blue = Math.round(work.from.blue+(work.to.blue-work.from.blue)*v);
@@ -1411,11 +1439,11 @@ hui.animation.colorUpater = function(element,v,work) {
 	element.style[work.property]=value;
 }
 
-hui.animation.propertyUpater = function(element,v,work) {
+hui.animation._propertyUpater = function(element,v,work) {
 	element[work.property] = Math.round(work.from+(work.to-work.from)*v);
 }
 
-hui.animation.ieOpacityUpdater = function(element,v,work) {
+hui.animation._ieOpacityUpdater = function(element,v,work) {
 	var opacity = (work.from+(work.to-work.from)*v);
 	if (opacity==1) {
 		element.style.removeAttribute('filter');
@@ -1424,7 +1452,7 @@ hui.animation.ieOpacityUpdater = function(element,v,work) {
 	}
 }
 
-hui.animation.render = function() {
+hui.animation._render = function() {
 	hui.animation.running = true;
 	var next = false,
 		stamp = new Date().getTime();
@@ -1470,13 +1498,13 @@ hui.animation.render = function() {
 		}
 	}
 	if (next) {
-		window.setTimeout(hui.animation.render,0);
+		window.setTimeout(hui.animation._render,0);
 	} else {
 		hui.animation.running = false;
 	}
 }
 
-hui.animation.parseStyle = function(value) {
+hui.animation._parseStyle = function(value) {
 	var parsed = {type:null,value:null,unit:null};
 	var match;
 	if (!hui.isDefined(value)) {
@@ -1524,31 +1552,31 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 	} else if (property=='transform') {
 		work.transform = hui.animation.Item.parseTransform(to,this.element);
 	} else if (!hui.browser.opacity && property=='opacity') {
-		work.from = this.getIEOpacity(this.element);
+		work.from = this._getIEOpacity(this.element);
 	} else if (css) {
 		var style = hui.getStyle(this.element,property);
-		var parsedStyle = hui.animation.parseStyle(style);
+		var parsedStyle = hui.animation._parseStyle(style);
 		work.from = parsedStyle.value;
 	} else {
 		work.from = this.element[property];
 	}
 	if (css) {
-		var parsed = hui.animation.parseStyle(to);
+		var parsed = hui.animation._parseStyle(to);
 		work.to = parsed.value;
 		work.unit = parsed.unit;
 		if (!hui.browser.opacity && property=='opacity') {
-			work.updater = hui.animation.ieOpacityUpdater;
+			work.updater = hui.animation._ieOpacityUpdater;
 		} else if (property=='transform') {
-			work.updater = hui.browser.msie ? function() {} : hui.animation.transformUpater;
+			work.updater = hui.browser.msie ? function() {} : hui.animation._transformUpater;
 		} else if (parsed.value.red===undefined) {
-			work.updater = hui.animation.lengthUpater;
+			work.updater = hui.animation._lengthUpater;
 		} else {
-			work.updater = hui.animation.colorUpater;
+			work.updater = hui.animation._colorUpater;
 		}
 	} else {
 		work.to = to;
 		work.unit = null;
-		work.updater = hui.animation.propertyUpater;
+		work.updater = hui.animation._propertyUpater;
 	}
 	work.start = new Date().getTime();
 	if (delegate && delegate.delay) {
@@ -1591,7 +1619,7 @@ hui.animation.Item.parseTransform = function(value,element) {
 	return result;
 }
 
-hui.animation.Item.prototype.getIEOpacity = function(element) {
+hui.animation.Item.prototype._getIEOpacity = function(element) {
 	var filter = hui.getStyle(element,'filter').toLowerCase();
 	var match;
 	if (match = filter.match(/opacity=([0-9]+)/)) {
@@ -1642,7 +1670,9 @@ hui.animation.Loop.prototype.start = function() {
 	this.next();
 }
 
-/** @constructor */
+/** @constructor
+ * @param str The color like red or rgb(255, 0, 0) or #ff0000 or rgb(100%, 0%, 0%)
+ */
 hui.Color = function(str) {
     this.ok = false;
 	if (hui.isBlank(str)) {
@@ -1729,9 +1759,11 @@ hui.Color = function(str) {
 }
 
 hui.Color.prototype = {
+	/** Get the color as rgb(255,0,0) */
 	toRGB : function () {
         return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
     },
+	/** Get the color as #ff0000 */
 	toHex : function() {
         var r = this.r.toString(16);
         var g = this.g.toString(16);
@@ -4232,6 +4264,7 @@ hui.ui.addFocusClass = function(o) {
 
 /////////////////////////////// Validation /////////////////////////////
 
+/** @constructor */
 hui.ui.NumberValidator = function(options) {
 	hui.override({allowNull:false,min:0,max:10},options)
 	this.min = options.min;
@@ -4822,7 +4855,8 @@ hui.ui.Source.prototype = {
 	}
 }
 
-/* EOF */hui.ui.getDragProxy = function() {
+/* EOF *//** @private */
+hui.ui.getDragProxy = function() {
 	if (!hui.ui.dragProxy) {
 		hui.ui.dragProxy = hui.build('div',{'class':'hui_dragproxy',style:'display:none'});
 		document.body.appendChild(hui.ui.dragProxy);
@@ -4830,6 +4864,7 @@ hui.ui.Source.prototype = {
 	return hui.ui.dragProxy;
 };
 
+/** @private */
 hui.ui.startDrag = function(e,element,options) {
 	e = new hui.Event(e);
 	var info = element.dragDropInfo;
@@ -4848,6 +4883,7 @@ hui.ui.startDrag = function(e,element,options) {
 	document.body.onselectstart = function () { return false; };
 };
 
+/** @private */
 hui.ui.findDropTypes = function(drag) {
 	var gui = hui.ui;
 	var drops = null;
@@ -4865,6 +4901,7 @@ hui.ui.findDropTypes = function(drag) {
 	return drops;
 };
 
+/** @private */
 hui.ui.dragListener = function(e) {
 	e = new hui.Event(e);
 	hui.ui.dragProxy.style.left = (e.getLeft()+10)+'px';
@@ -4884,6 +4921,7 @@ hui.ui.dragListener = function(e) {
 	return false;
 };
 
+/** @private */
 hui.ui.findDropTarget = function(node) {
 	while (node) {
 		if (node.dragDropInfo) {
@@ -4894,6 +4932,7 @@ hui.ui.findDropTarget = function(node) {
 	return null;
 };
 
+/** @private */
 hui.ui.dragEndListener = function(event) {
 	hui.unListen(document.body,'mousemove',hui.ui.dragListener);
 	hui.unListen(document.body,'mouseup',hui.ui.dragEndListener);
@@ -4910,12 +4949,14 @@ hui.ui.dragEndListener = function(event) {
 	document.body.onselectstart=null;
 };
 
+/** @private */
 hui.ui.dropOverListener = function(event) {
 	if (hui.ui.dragging) {
 		//this.style.backgroundColor='#3875D7';
 	}
 };
 
+/** @private */
 hui.ui.dropOutListener = function(event) {
 	if (hui.ui.dragging) {
 		//this.style.backgroundColor='';
@@ -8151,7 +8192,7 @@ hui.ui.BoundPanel = function(options) {
 
 /**
  * Creates a new bound panel
- * <br/><strong>options:</strong> { name: «String», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
+ * <br/><strong>options:</strong> { name: «name», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
  * @param {Object} options The options
  */
 hui.ui.BoundPanel.create = function(options) {
@@ -10523,6 +10564,7 @@ hui.ui.Gallery.prototype = {
 		});
 		this._reveal();
 	},
+	/** @private */
 	$$layout : function() {
 		if (this.nodes.length>0) {
 			this._reveal();
@@ -10688,6 +10730,7 @@ hui.ui.Calendar.prototype = {
 		};
 		this.hideEventViewer();
 	},
+	/** @private */
 	$objectsLoaded : function(data) {
 		try {
 			this.setEvents(data);
@@ -10695,9 +10738,11 @@ hui.ui.Calendar.prototype = {
 			hui.log(e);
 		}
 	},
+	/** @private */
 	$sourceIsBusy : function() {
 		this.setBusy(true);
 	},
+	/** @private */
 	$sourceShouldRefresh : function() {
 		return this.element.style.display!='none';
 	},
@@ -10751,6 +10796,7 @@ hui.ui.Calendar.prototype = {
 	eventWasClicked : function(node) {
 		this.showEvent(node);
 	},
+	/** @private */
 	setBusy : function(busy) {
 		hui.setClass(this.element,'hui_calendar_busy',busy);
 	},
@@ -10794,11 +10840,13 @@ hui.ui.Calendar.prototype = {
 			time.appendChild(node);
 		};
 	},
+	/** @private */
 	$click$huiCalendarPrevious : function() {
 		var date = new Date(this.date.getTime());
 		date.setDate(this.date.getDate()-7);
 		this.setDate(date);
 	},
+	/** @private */
 	$click$huiCalendarNext : function() {
 		var date = new Date(this.date.getTime());
 		date.setDate(this.date.getDate()+7);
@@ -10812,6 +10860,7 @@ hui.ui.Calendar.prototype = {
 			this.datePicker.setValue(this.date);
 		}
 	},
+	/** @private */
 	$click$huiCalendarDatePicker : function() {
 		this.showDatePicker();
 	},
@@ -10835,6 +10884,7 @@ hui.ui.Calendar.prototype = {
 	},
 	
 	////////////////////////////////// Date picker ///////////////////////////
+	/** @private */
 	showDatePicker : function() {
 		if (!this.datePickerPanel) {
 			this.datePickerPanel = hui.ui.BoundPanel.create();
@@ -10849,15 +10899,18 @@ hui.ui.Calendar.prototype = {
 		this.datePickerPanel.position(this.datePickerButton.getElement());
 		this.datePickerPanel.show();
 	},
+	/** @private */
 	$click$huiCalendarDatePickerClose : function() {
 		this.datePickerPanel.hide();
 	},
+	/** @private */
 	$dateChanged$huiCalendarDatePicker : function(date) {
 		this.setDate(date);
 	},
 	
 	//////////////////////////////// Event viewer //////////////////////////////
 	
+	/** @private */
 	showEvent : function(node) {
 		if (!this.eventViewerPanel) {
 			this.eventViewerPanel = hui.ui.BoundPanel.create({width:270,padding: 3});
@@ -10875,13 +10928,16 @@ hui.ui.Calendar.prototype = {
 		hui.ui.callDelegates(this,'requestEventInfo');
 		return;
 	},
+	/** @private */
 	updateEventInfo : function(event,data) {
 		this.eventInfo.setBusy(false);
 		this.eventInfo.update(data);
 	},
-	click$huiCalendarEventClose : function() {
+	/** @private */
+	$click$huiCalendarEventClose : function() {
 		this.hideEventViewer();
 	},
+	/** @private */
 	hideEventViewer : function() {
 		if (this.eventViewerPanel) {
 			this.eventViewerPanel.hide();
@@ -11273,6 +11329,7 @@ hui.ui.Box.prototype = {
 		hui.ui.callVisible(this);
 		this.visible = true;
 	},
+	/** private */
 	$$layout : function() {
 		if (this.options.absolute && this.visible) {
 			var e = this.element;
@@ -11361,7 +11418,7 @@ hui.ui.Wizard.prototype = {
 /* EOF *//**
  * A list of articles
  * @constructor
- * @param {Object} options { element: «Node | id», name: «String», source: «hui.ui.Source» }
+ * @param {Object} options { element: «node | id», name: «name», source: «hui.ui.Source» }
  */
 hui.ui.Articles = function(options) {
 	this.options = options;
@@ -11396,6 +11453,7 @@ hui.ui.Articles.prototype = {
 			this.element.appendChild(e);
 		};
 	},
+	/** @private */
 	$sourceFailed : function() {
 		this.element.innerHTML='<div>Failed!</div>';
 	},
@@ -12650,6 +12708,7 @@ hui.ui.Links.prototype = {
 
 /* EOF *//**
  * @constructor
+ * @param options The options { debug : «boolean», value : '«html»', autoHideToolbar : «boolean», style : '«css»', replace : «node-or-id»}
  */
 hui.ui.MarkupEditor = function(options) {
 	this.name = options.name;
@@ -12683,34 +12742,42 @@ hui.ui.MarkupEditor.create = function(options) {
 }
 
 hui.ui.MarkupEditor.prototype = {
+	/** @private */
 	implIsReady : function() {
 		this.ready = true;
 		for (var i=0; i < this.pending.length; i++) {
 			this.pending[i]();
 		};
 	},
+	/** @private */
 	implFocused : function() {
 		this._showBar();
 	},
+	/** @private */
 	implBlurred : function() {
 		this.bar.hide();
 		this.fire('blur');
 	},
+	/** @private */
 	implValueChanged : function() {
 		this._valueChanged();
 	},
+	/** Remove the widget from the DOM */
 	destroy : function() {
 		hui.dom.remove(this.element);
 		hui.ui.destroy(this);
 	},
+	/** Get the HTML value */
 	getValue : function() {
 		return this.impl.getHTML();
 	},
+	/** Set the HTML value */
 	setValue : function(value) {
 		this._whenReady(function() {
 			this.impl.setHTML(value);
 		}.bind(this));
 	},
+	/** Focus the editor */
 	focus : function() {
 		this._whenReady(this.impl.focus.bind(this.impl));
 	},
@@ -12816,6 +12883,7 @@ hui.ui.MarkupEditor.prototype = {
 		this.fire('valueChanged',this.impl.getHTML());		
 	},
 	
+	/** @private */
 	$colorWasSelected : function(color) {
 		this.impl.restoreSelection(function() {
 			this.impl.colorize(color);
@@ -13152,6 +13220,7 @@ hui.ui.ColorPicker.prototype = {
 		}.bind(this));
 		hui.listen(this.swatches,'click',this._pickColor.bind(this));
 	},
+	/** @private */
 	$click : function(button) {
 		var page = parseInt(button.element.getAttribute('rel')),
 			i;
@@ -13202,7 +13271,6 @@ hui.ui.ColorPicker.prototype = {
 		}
 		this.colorArray = clrary;
 	},
-	/** @private */
 	_hoverWheel1 : function(e) {
 		e = hui.event(e);
 		var pos = hui.getPosition(this.wheel1);
@@ -13517,7 +13585,7 @@ hui.ui.StyleLength.prototype = {
  * A date and time field
  * @constructor
  */
-hui.ui.Formula.DateTimeField = function(o) {
+hui.ui.DateTimeField = function(o) {
 	this.inputFormats = ['d-m-Y','d/m-Y','d/m/Y','d-m-Y H:i:s','d/m-Y H:i:s','d/m/Y H:i:s','d-m-Y H:i','d/m-Y H:i','d/m/Y H:i','d-m-Y H','d/m-Y H','d/m/Y H','d-m','d/m','d','Y','m-d-Y','m-d','m/d'];
 	this.outputFormat = 'd-m-Y H:i:s';
 	this.name = o.name;
@@ -13530,14 +13598,14 @@ hui.ui.Formula.DateTimeField = function(o) {
 	this.updateUI();
 }
 
-hui.ui.Formula.DateTimeField.create = function(options) {
+hui.ui.DateTimeField.create = function(options) {
 	var node = hui.build('span',{'class':'hui_formula_text_singleline'});
 	hui.build('input',{'class':'hui_formula_text',parent:node});
 	options.element = hui.ui.wrapInField(node);
-	return new hui.ui.Formula.DateTimeField(options);
+	return new hui.ui.DateTimeField(options);
 }
 
-hui.ui.Formula.DateTimeField.prototype = {
+hui.ui.DateTimeField.prototype = {
 	addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'blur',this.check.bind(this));

@@ -100,8 +100,15 @@
 				hui.ui.test.assertEquals(roundtrip.arr[1],object.arr[1],'Test that arrays are encoded/decoded correct');
 				hui.ui.test.assertEquals(roundtrip.arr[2],object.arr[2],'Test that arrays are encoded/decoded correct');
 			},
-			function() {
-				
+			function() { // Cookies
+				hui.cookie.set('my cookie','the value');
+				hui.cookie.set('my other cookie','the other value');
+				hui.ui.test.assertEquals(hui.cookie.get('my cookie'),'the value');
+				hui.cookie.clear('my cookie');
+				hui.ui.test.assertEquals(hui.cookie.get('my other cookie'),'the other value');
+				hui.ui.test.assertEquals(hui.cookie.get('my cookie'),null);
+				hui.cookie.clear('my other cookie');
+				hui.ui.test.assertEquals(hui.cookie.get('my other cookie'),null);
 			}
 		]);
 	</script>

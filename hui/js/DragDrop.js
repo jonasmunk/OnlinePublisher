@@ -1,3 +1,4 @@
+/** @private */
 hui.ui.getDragProxy = function() {
 	if (!hui.ui.dragProxy) {
 		hui.ui.dragProxy = hui.build('div',{'class':'hui_dragproxy',style:'display:none'});
@@ -6,6 +7,7 @@ hui.ui.getDragProxy = function() {
 	return hui.ui.dragProxy;
 };
 
+/** @private */
 hui.ui.startDrag = function(e,element,options) {
 	e = new hui.Event(e);
 	var info = element.dragDropInfo;
@@ -24,6 +26,7 @@ hui.ui.startDrag = function(e,element,options) {
 	document.body.onselectstart = function () { return false; };
 };
 
+/** @private */
 hui.ui.findDropTypes = function(drag) {
 	var gui = hui.ui;
 	var drops = null;
@@ -41,6 +44,7 @@ hui.ui.findDropTypes = function(drag) {
 	return drops;
 };
 
+/** @private */
 hui.ui.dragListener = function(e) {
 	e = new hui.Event(e);
 	hui.ui.dragProxy.style.left = (e.getLeft()+10)+'px';
@@ -60,6 +64,7 @@ hui.ui.dragListener = function(e) {
 	return false;
 };
 
+/** @private */
 hui.ui.findDropTarget = function(node) {
 	while (node) {
 		if (node.dragDropInfo) {
@@ -70,6 +75,7 @@ hui.ui.findDropTarget = function(node) {
 	return null;
 };
 
+/** @private */
 hui.ui.dragEndListener = function(event) {
 	hui.unListen(document.body,'mousemove',hui.ui.dragListener);
 	hui.unListen(document.body,'mouseup',hui.ui.dragEndListener);
@@ -86,12 +92,14 @@ hui.ui.dragEndListener = function(event) {
 	document.body.onselectstart=null;
 };
 
+/** @private */
 hui.ui.dropOverListener = function(event) {
 	if (hui.ui.dragging) {
 		//this.style.backgroundColor='#3875D7';
 	}
 };
 
+/** @private */
 hui.ui.dropOutListener = function(event) {
 	if (hui.ui.dragging) {
 		//this.style.backgroundColor='';

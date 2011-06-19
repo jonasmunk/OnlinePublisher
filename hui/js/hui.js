@@ -25,18 +25,30 @@ if (!window.n2i) {
 	var n2i = hui;
 }
 
+/** If the browser is opera */
 hui.browser.opera = /opera/i.test(navigator.userAgent);
+/** If the browser is any version of InternetExplorer */
 hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent);
+/** If the browser is InternetExplorer 6 */
 hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
+/** If the browser is InternetExplorer 7 */
 hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
+/** If the browser is InternetExplorer 8 */
 hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
+/** If the browser is InternetExplorer 9 */
 hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
+/** If the browser is InternetExplorer 9 in compatibility mode */
 hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0')!==-1;
+/** If the browser is WebKit based */
 hui.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
+/** If the browser is any version of Safari */
 hui.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
+/** The version of WebKit (null if not WebKit) */
 hui.browser.webkitVersion = null;
+/** If the browser is Gecko based */
 hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
 
+/** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
 
 (function() {
@@ -657,19 +669,31 @@ hui.event = function(event) {
 }
 
 /** @constructor
+ * Wrapper for events
  * @param event The DOM event
  */
 hui.Event = function(event) {
+	/** The event */
 	this.event = event = event || window.event;
+	/** The target element */
 	this.element = event.target ? event.target : event.srcElement;
+	/** If the shift key was pressed */
 	this.shiftKey = event.shiftKey;
+	/** If the return key was pressed */
 	this.returnKey = event.keyCode==13;
+	/** If the escape key was pressed */
 	this.escapeKey = event.keyCode==27;
+	/** If the space key was pressed */
 	this.spaceKey = event.keyCode==32;
+	/** If the up key was pressed */
 	this.upKey = event.keyCode==38;
+	/** If the down key was pressed */
 	this.downKey = event.keyCode==40;
+	/** If the left key was pressed */
 	this.leftKey = event.keyCode==37;
+	/** If the right key was pressed */
 	this.rightKey = event.keyCode==39;
+	/** The key code */
 	this.keyCode = event.keyCode;
 }
 
@@ -1009,6 +1033,7 @@ hui.getFrameWindow = function(frame) {
 
 /** @namespace */
 hui.selection = {
+	/** Clear the text selection */
 	clear : function() { 
 		var sel ; 
 		if(document.selection && document.selection.empty	){ 
@@ -1020,6 +1045,9 @@ hui.selection = {
 			}
 		}
 	},
+	/** Get the selected text
+	 * @param doc The document, defaults to current document
+	 */
 	getText : function(doc) {
 		doc = doc || document;
 		if (doc.getSelection) {
@@ -1382,16 +1410,16 @@ hui.animation = {
 	},
 	start : function() {
 		if (!this.running) {
-			hui.animation.render();
+			hui.animation._render();
 		}
 	}
 };
 
-hui.animation.lengthUpater = function(element,v,work) {
+hui.animation._lengthUpater = function(element,v,work) {
 	element.style[work.property] = (work.from+(work.to-work.from)*v)+(work.unit!=null ? work.unit : '');
 }
 
-hui.animation.transformUpater = function(element,v,work) {
+hui.animation._transformUpater = function(element,v,work) {
 	var t = work.transform;
 	var str = '';
 	if (t.rotate) {
@@ -1403,7 +1431,7 @@ hui.animation.transformUpater = function(element,v,work) {
 	element.style[hui.animation.TRANSFORM]=str;
 }
 
-hui.animation.colorUpater = function(element,v,work) {
+hui.animation._colorUpater = function(element,v,work) {
 	var red = Math.round(work.from.red+(work.to.red-work.from.red)*v);
 	var green = Math.round(work.from.green+(work.to.green-work.from.green)*v);
 	var blue = Math.round(work.from.blue+(work.to.blue-work.from.blue)*v);
@@ -1411,11 +1439,11 @@ hui.animation.colorUpater = function(element,v,work) {
 	element.style[work.property]=value;
 }
 
-hui.animation.propertyUpater = function(element,v,work) {
+hui.animation._propertyUpater = function(element,v,work) {
 	element[work.property] = Math.round(work.from+(work.to-work.from)*v);
 }
 
-hui.animation.ieOpacityUpdater = function(element,v,work) {
+hui.animation._ieOpacityUpdater = function(element,v,work) {
 	var opacity = (work.from+(work.to-work.from)*v);
 	if (opacity==1) {
 		element.style.removeAttribute('filter');
@@ -1424,7 +1452,7 @@ hui.animation.ieOpacityUpdater = function(element,v,work) {
 	}
 }
 
-hui.animation.render = function() {
+hui.animation._render = function() {
 	hui.animation.running = true;
 	var next = false,
 		stamp = new Date().getTime();
@@ -1470,13 +1498,13 @@ hui.animation.render = function() {
 		}
 	}
 	if (next) {
-		window.setTimeout(hui.animation.render,0);
+		window.setTimeout(hui.animation._render,0);
 	} else {
 		hui.animation.running = false;
 	}
 }
 
-hui.animation.parseStyle = function(value) {
+hui.animation._parseStyle = function(value) {
 	var parsed = {type:null,value:null,unit:null};
 	var match;
 	if (!hui.isDefined(value)) {
@@ -1524,31 +1552,31 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 	} else if (property=='transform') {
 		work.transform = hui.animation.Item.parseTransform(to,this.element);
 	} else if (!hui.browser.opacity && property=='opacity') {
-		work.from = this.getIEOpacity(this.element);
+		work.from = this._getIEOpacity(this.element);
 	} else if (css) {
 		var style = hui.getStyle(this.element,property);
-		var parsedStyle = hui.animation.parseStyle(style);
+		var parsedStyle = hui.animation._parseStyle(style);
 		work.from = parsedStyle.value;
 	} else {
 		work.from = this.element[property];
 	}
 	if (css) {
-		var parsed = hui.animation.parseStyle(to);
+		var parsed = hui.animation._parseStyle(to);
 		work.to = parsed.value;
 		work.unit = parsed.unit;
 		if (!hui.browser.opacity && property=='opacity') {
-			work.updater = hui.animation.ieOpacityUpdater;
+			work.updater = hui.animation._ieOpacityUpdater;
 		} else if (property=='transform') {
-			work.updater = hui.browser.msie ? function() {} : hui.animation.transformUpater;
+			work.updater = hui.browser.msie ? function() {} : hui.animation._transformUpater;
 		} else if (parsed.value.red===undefined) {
-			work.updater = hui.animation.lengthUpater;
+			work.updater = hui.animation._lengthUpater;
 		} else {
-			work.updater = hui.animation.colorUpater;
+			work.updater = hui.animation._colorUpater;
 		}
 	} else {
 		work.to = to;
 		work.unit = null;
-		work.updater = hui.animation.propertyUpater;
+		work.updater = hui.animation._propertyUpater;
 	}
 	work.start = new Date().getTime();
 	if (delegate && delegate.delay) {
@@ -1591,7 +1619,7 @@ hui.animation.Item.parseTransform = function(value,element) {
 	return result;
 }
 
-hui.animation.Item.prototype.getIEOpacity = function(element) {
+hui.animation.Item.prototype._getIEOpacity = function(element) {
 	var filter = hui.getStyle(element,'filter').toLowerCase();
 	var match;
 	if (match = filter.match(/opacity=([0-9]+)/)) {
@@ -1642,7 +1670,9 @@ hui.animation.Loop.prototype.start = function() {
 	this.next();
 }
 
-/** @constructor */
+/** @constructor
+ * @param str The color like red or rgb(255, 0, 0) or #ff0000 or rgb(100%, 0%, 0%)
+ */
 hui.Color = function(str) {
     this.ok = false;
 	if (hui.isBlank(str)) {
@@ -1729,9 +1759,11 @@ hui.Color = function(str) {
 }
 
 hui.Color.prototype = {
+	/** Get the color as rgb(255,0,0) */
 	toRGB : function () {
         return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
     },
+	/** Get the color as #ff0000 */
 	toHex : function() {
         var r = this.r.toString(16);
         var g = this.g.toString(16);

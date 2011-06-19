@@ -251,6 +251,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.DatePicker.html">hui.ui.DatePicker</a></li>
 	
+	<li><a href="../symbols/hui.ui.DateTimeField.html">hui.ui.DateTimeField</a></li>
+	
 	<li><a href="../symbols/hui.ui.Dock.html">hui.ui.Dock</a></li>
 	
 	<li><a href="../symbols/hui.ui.DropDown.html">hui.ui.DropDown</a></li>
@@ -270,8 +272,6 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.Formula.Checkboxes.html">hui.ui.Formula.Checkboxes</a></li>
 	
 	<li><a href="../symbols/hui.ui.Formula.Checkboxes.Items.html">hui.ui.Formula.Checkboxes.Items</a></li>
-	
-	<li><a href="../symbols/hui.ui.Formula.DateTimeField.html">hui.ui.Formula.DateTimeField</a></li>
 	
 	<li><a href="../symbols/hui.ui.Formula.Group.html">hui.ui.Formula.Group</a></li>
 	
@@ -312,6 +312,8 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.MarkupEditor.html">hui.ui.MarkupEditor</a></li>
 	
 	<li><a href="../symbols/hui.ui.Menu.html">hui.ui.Menu</a></li>
+	
+	<li><a href="../symbols/hui.ui.NumberValidator.html">hui.ui.NumberValidator</a></li>
 	
 	<li><a href="../symbols/hui.ui.ObjectList.html">hui.ui.ObjectList</a></li>
 	
@@ -425,15 +427,6 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#$colorWasSelected">$colorWasSelected</a></b>(color)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.MarkupEditor.<b><a href="../symbols/hui.ui.MarkupEditor.html#.create">create</a></b>(options)
@@ -447,7 +440,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#destroy">destroy</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Remove the widget from the DOM</div>
 							</td>
 						</tr>
 					
@@ -456,7 +449,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#focus">focus</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Focus the editor</div>
 							</td>
 						</tr>
 					
@@ -465,43 +458,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#getValue">getValue</a></b>()
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#implBlurred">implBlurred</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#implFocused">implFocused</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#implIsReady">implIsReady</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#implValueChanged">implValueChanged</a></b>()
-								</div>
-								<div class="description"></div>
+								<div class="description">Get the HTML value</div>
 							</td>
 						</tr>
 					
@@ -510,7 +467,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.MarkupEditor.html#setValue">setValue</a></b>(value)
 								</div>
-								<div class="description"></div>
+								<div class="description">Set the HTML value</div>
 							</td>
 						</tr>
 					
@@ -550,7 +507,7 @@ ul.inheritsList
 								 <b>options</b>
 								
 							</dt>
-								<dd></dd>
+								<dd>The options { debug : «boolean», value : '«html»', autoHideToolbar : «boolean», style : '«css»', replace : «node-or-id»}</dd>
 						
 						</dl>
 					
@@ -572,42 +529,6 @@ ul.inheritsList
 				<div class="sectionTitle">
 					Method Detail
 				</div>
-				
-					<a name="$colorWasSelected"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>$colorWasSelected</b>(color)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>color</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
 				
 					<a name=".create"> </a>
 					<div class="fixedFont">&lt;static&gt; 
@@ -653,7 +574,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Remove the widget from the DOM
 						
 						
 					</div>
@@ -678,7 +599,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Focus the editor
 						
 						
 					</div>
@@ -703,107 +624,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="implBlurred"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>implBlurred</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="implFocused"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>implFocused</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="implIsReady"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>implIsReady</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="implValueChanged"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>implValueChanged</b>()
-					
-					</div>
-					<div class="description">
-						
+						Get the HTML value
 						
 						
 					</div>
@@ -828,7 +649,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Set the HTML value
 						
 						
 					</div>
@@ -868,7 +689,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jun 19 2011 14:16:36 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jun 19 2011 16:26:07 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

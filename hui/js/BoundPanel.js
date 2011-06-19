@@ -15,7 +15,7 @@ hui.ui.BoundPanel = function(options) {
 
 /**
  * Creates a new bound panel
- * <br/><strong>options:</strong> { name: «String», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
+ * <br/><strong>options:</strong> { name: «name», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
  * @param {Object} options The options
  */
 hui.ui.BoundPanel.create = function(options) {
