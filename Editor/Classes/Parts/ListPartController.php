@@ -231,14 +231,20 @@ class ListPartController extends PartController
 	}
 	
 	function _startDateComparator($a, $b) {
-		$a = $a->getStartDate() || $a->getDate();
-		$b = $b->getStartDate() || $b->getDate();
-		if (!$a) $a=0;
-		if (!$b) $b=0;
-    	if ($a == $b) {
+		$date1 = $a->getStartDate();
+		if (!$date1) {
+			$date1 = $a->getDate();
+		}
+		$date2 = $b->getStartDate();
+		if (!$date2) {
+			$date2 = $b->getDate();
+		}
+		if (!$date1) $date1=0;
+		if (!$date2) $date2=0;
+    	if ($date1 == $date2) {
         	return 0;
     	}
-    	return ($a < $b) ? -1 : 1;
+    	return ($date1 < $date2) ? -1 : 1;
 	}
 }
 	
