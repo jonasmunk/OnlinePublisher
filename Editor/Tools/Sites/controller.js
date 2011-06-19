@@ -139,6 +139,22 @@ var mainController = {
 		this.deletePage(this.activePage);
 	},
 	
+	$click$pageInfo : function() {
+		pageInfoFragment.show();
+		pageInfo.setSelected(true);
+		pageInfo.element.blur();
+		pageTranslationFragment.hide();
+		pageTranslation.setSelected(false);
+	},
+	
+	$click$pageTranslation : function() {
+		pageInfoFragment.hide();
+		pageInfo.setSelected(false);
+		pageTranslationFragment.show();
+		pageTranslation.setSelected(true);
+		pageTranslation.element.blur();
+	},
+	
 	////////////// New page /////////////
 	
 	$click$newPage : function() {

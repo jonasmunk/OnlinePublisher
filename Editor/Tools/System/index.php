@@ -41,7 +41,7 @@ $gui='
 				<overflow>
 					<selection value="object" name="selector">
 						<item icon="common/object" title="Alle objekter" value="object"/>
-						<item icon="common/person" title="Brugere" value="user"/>
+						<item icon="common/user" title="Brugere" value="user"/>
 						<item icon="file/generic" title="Log" value="log"/>
 						<item icon="common/folder" title="Weblog grupper" value="webloggroup"/>
 						<item icon="common/internet" title="Stier" value="path"/>

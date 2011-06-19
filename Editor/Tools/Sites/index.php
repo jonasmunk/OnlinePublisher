@@ -108,37 +108,48 @@ $gui='
 	
 	<window name="pageEditor" width="300" title="Side">
 		<toolbar variant="window">
-			<icon icon="common/info" text="Info" selected="true"/>
+			<icon icon="common/info" text="Info" selected="true" name="pageInfo"/>
 			<icon icon="common/settings" text="Avanceret" click="pageEditor.flip()"/>
+			<icon icon="common/flag" text="Sprog" name="pageTranslation"/>
 			<right>
 			<icon icon="common/edit" text="Rediger" name="editPage"/>
 			<icon icon="common/view" text="Vis" name="viewPage"/>
 			</right>
 		</toolbar>
-		<formula name="pageFormula" padding="5">
-			<group labels="above">
-				<text key="title" label="Titel:"/>
-				<text key="description" label="Beskrivelse:" lines="5"/>
-			</group>
-			<group>
-				<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
-					'.$languageItems.'
-				</dropdown>
-				<text key="path" label="Sti:"/>
-				<checkbox key="searchable" label="Søgbar:"/>
-				<checkbox key="disabled" label="Inaktiv:"/>
-				<buttons>
-					<button name="cancelPage" title="Annuller"/>
-					<button name="deletePage" title="Slet">
-						<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet side" cancel="Nej"/>
-					</button>
-					<button name="savePage" title="Gem" highlighted="true"/>
-				</buttons>
-			</group>
-		</formula>
+		<fragment name="pageInfoFragment">
+			<formula name="pageFormula" padding="5">
+				<group labels="above">
+					<text key="title" label="Titel:"/>
+					<text key="description" label="Beskrivelse:" lines="5"/>
+				</group>
+				<group>
+					<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
+						'.$languageItems.'
+					</dropdown>
+					<text key="path" label="Sti:"/>
+					<checkbox key="searchable" label="Søgbar:"/>
+					<checkbox key="disabled" label="Inaktiv:"/>
+					<buttons>
+						<button name="cancelPage" title="Annuller"/>
+						<button name="deletePage" title="Slet">
+							<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet side" cancel="Nej"/>
+						</button>
+						<button name="savePage" title="Gem" highlighted="true"/>
+					</buttons>
+				</group>
+			</formula>
+		</fragment>
+		<fragment name="pageTranslationFragment" visible="false">
+			<bar>
+				<button icon="common/new" text="Tilføj oversættelse"/>
+			</bar>
+			<list>
+				<column title="Side" />
+				<column title="Sprog" />
+			</list>
+		</fragment>
 		<back>
-			<text>Hello</text>
-			<button text="Flip!" click="pageEditor.flip()"/>
+			<button text="Back" click="pageEditor.flip()"/>
 		</back>
 	</window>
 
