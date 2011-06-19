@@ -27,6 +27,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</title>
+		<meta name="google-site-verification" content="WMeBqZoNf7fYYk8Yvu8p05cFXnskJt1_Y6SJtXE-Ym0" />
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:style"/>
 		<xsl:call-template name="util:style-ie6"/>
