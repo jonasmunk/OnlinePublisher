@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet
 	xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -7,6 +7,11 @@
     exclude-result-prefixes="gui"
     >
 
+<!--doc title:'Space'
+<space all="«pixels»" left="«pixels»" right="«pixels»" top="«pixels»" bottom="«pixels»" align="«left | center | right»" height="«pixels»">
+    ···
+</space>
+-->
 <xsl:template match="gui:space | gui:block">
 	<div class="hui_space">
 		<xsl:attribute name="style">
@@ -23,6 +28,16 @@
 	</div>
 </xsl:template>
 
+<!--doc title:'Columns'
+<columns space="«pixels»">
+    <column width="«css-length»">
+        ···
+    </column>
+    <column width="«css-length»">
+    ···
+    </column>
+</columns>
+-->
 <xsl:template match="gui:columns">
 	<table cellspacing="0" cellpadding="0" class="hui_columns">
 		<tr>
@@ -43,13 +58,28 @@
 	</td>
 </xsl:template>
 
+<!--doc title:'Header'
+<header icon="«icon»">«text»</header>
+-->
 <xsl:template match="gui:header">
 	<h2 class="hui_header">
 		<xsl:if test="@icon"><span class="hui_icon_2" style="background-image: url('{$context}/hui/icons/{@icon}2.png')"><xsl:comment/></span></xsl:if>
 		<xsl:apply-templates/></h2>
 </xsl:template>
 
-
+<!--doc title:'Split'
+<split>
+    <sidebar>
+        ···
+    </sidebar>
+    <content>
+        ···
+    </content>
+    <content>
+        ···
+    </content>
+</split>
+-->
 <xsl:template match="gui:split">
 <table class="split" cellpadding="0" cellspacing="0">
 <tr>
@@ -67,6 +97,11 @@
 	<td class="split_sidebar"><xsl:apply-templates/><div class="split_sidebar"><xsl:comment/></div></td>
 </xsl:template>
 
+<!--doc title:'Overflow' class:'hui.ui.Overflow'
+<overflow background="«background»" vertical="«pixels»" height="«pixels»" min-height="«pixels»" max-height="«pixels»" state="«text»">
+    ···
+</overflow>
+-->
 <xsl:template match="gui:overflow">
 <div id="{generate-id()}">
 	<xsl:attribute name="class">
@@ -103,6 +138,12 @@
 </script>
 </xsl:template>
 
+<!--doc title:'Box' class:'hui.ui.Box'
+<box variant="«?»" closable="«boolean»" absolute="«boolean»" width="«pixels»" top="«pixels»" name="«name»" title="«text»" state="«text»" modal="«boolean»">
+    <toolbar/>
+    ···
+</box>
+-->
 <xsl:template match="gui:box">
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">
@@ -143,6 +184,13 @@
 	</script>
 </xsl:template>
 
+<!--doc title:'Wizard' class:'hui.ui.Wizard'
+<wizard name="«name»">
+    <step frame="«boolean»" icon="«icon»" title="«text»">
+        ···
+    </step>
+</wizard>
+-->
 <xsl:template match="gui:wizard">
 	<div class="hui_wizard" id="{generate-id()}">
 		<table class="hui_wizard"><tr>
@@ -153,12 +201,12 @@
 						<a href="#">
 							<xsl:attribute name="class">
 								<xsl:text>hui_wizard_selection</xsl:text>
-						<xsl:if test="position()=1">
-							<xsl:text> hui_selected</xsl:text>
-						</xsl:if>
-						</xsl:attribute>
-						<xsl:if test="@icon"><span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png');')"><xsl:comment/></span></xsl:if>
-						<span><xsl:value-of select="@title"/></span>
+								<xsl:if test="position()=1">
+									<xsl:text> hui_selected</xsl:text>
+								</xsl:if>
+							</xsl:attribute>
+							<xsl:if test="@icon"><span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png');')"><xsl:comment/></span></xsl:if>
+							<span><xsl:value-of select="@title"/></span>
 						</a>
 					</li>
 				</xsl:for-each>
@@ -188,14 +236,34 @@
 	</div>
 	<script type="text/javascript">
 		(function() {
-			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Wizard({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'});
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Wizard({
+				element:'<xsl:value-of select="generate-id()"/>',
+				name:'<xsl:value-of select="@name"/>'
+			});
 			<xsl:call-template name="gui:createobject"/>
 		})();
 	</script>
 </xsl:template>
 
 
-
+<!--doc title:'Layout' class:'hui.ui.Layout'
+<layout name="«name»">
+    <top>
+        ···
+    </top>
+    <middle>
+        <left>
+            ···
+        </left>
+        <center padding="«pixels»">
+            ···
+        </center>
+    </middle>
+    <bottom>
+        ···
+    </botttom>
+</layout>
+-->
 <xsl:template match="gui:layout">
 	<table class="hui_layout" id="{generate-id()}">
 		<xsl:apply-templates/>
@@ -260,10 +328,15 @@
 
 
 
+<!--doc title:'Fragment' class:'hui.ui.Fragment'
+<fragment name="«name»" state="«text»" height="«'full'»" background="«background»" visible="«boolean»">
+    ···
+</fragment>
+-->
 <xsl:template match="gui:fragment">
 <div id="{generate-id()}">
 	<xsl:attribute name="style">
-		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state) or @visible='false'">
 			<xsl:text>display:none;</xsl:text>
 		</xsl:if>
 		<xsl:if test="@height='full'">
@@ -286,6 +359,11 @@
 </xsl:template>
 
 
+<!--doc title:'Structure'
+<structure top="«pixels»">
+    ···
+</structure>
+-->
 <xsl:template match="gui:structure">
 	<div style="position:fixed; top: {@top}px; bottom: 0; width: 100%">
 		<xsl:apply-templates/>

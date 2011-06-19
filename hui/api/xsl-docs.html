@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<style>pre{background: #139;padding: 10px;color: white;border-radius: 3px;white-space: pre;}</style><title>HUI XML format docs</title>
+</head>
+<body><h2>Gui</h2>
+<div><pre>
+&lt;gui title="«text»" state="«text»" padding="«pixels»"&gt;
+    &lt;controller source="«url»" name="«name»"/&gt;
+    &lt;controller source="«url»" name="«name»"/&gt;
+    ···
+&lt;/gui&gt;
+</pre></div>
+<h2>DWR setup</h2>
+<div><pre>
+&lt;dwr base="«url»"&gt;
+    &lt;interface name="«text»"/&gt;
+    &lt;interface name="«text»"/&gt;
+&lt;/dwr&gt;
+</pre></div>
+<h2>Data source</h2>
+<div><pre>
+&lt;source url="«url»" dwr="«text»" lazy="«boolean»"&gt;
+    &lt;parameter key="«text»" value="«expression»"/&gt;
+&lt;/source&gt;
+</pre></div>
+<h2>Sub-GUI</h2>
+<div><pre>
+&lt;subgui&gt;
+    ···
+&lt;/subgui&gt;
+</pre></div>
+<h2>Script</h2>
+<div><pre>
+&lt;script&gt;
+    «text»
+&lt;/script&gt;
+</pre></div>
+<h2>Listener</h2>
+<div><pre>
+&lt;listen&gt;
+    &lt;«name» for="«event»"&gt;
+        «text»
+    &lt;/«name»&gt;
+&lt;/listen&gt;
+</pre></div>
+<h2>Dock</h2>
+<p>Class: <a href="symbols/hui.ui.Dock.html">hui.ui.Dock</a></p>
+<div><pre>
+&lt;dock url="«url»" frame-name="«text»" position="« top | bottom »" name="«name»"&gt;
+    &lt;tabs/&gt; | &lt;toolbar/&gt;
+&lt;/dock&gt;
+</pre></div>
+<h2>Space</h2>
+<div><pre>
+&lt;space all="«pixels»" left="«pixels»" right="«pixels»" top="«pixels»" bottom="«pixels»" align="«left | center | right»" height="«pixels»"&gt;
+    ···
+&lt;/space&gt;
+</pre></div>
+<h2>Columns</h2>
+<div><pre>
+&lt;columns space="«pixels»"&gt;
+    &lt;column width="«css-length»"&gt;
+        ···
+    &lt;/column&gt;
+    &lt;column width="«css-length»"&gt;
+    ···
+    &lt;/column&gt;
+&lt;/columns&gt;
+</pre></div>
+<h2>Header</h2>
+<div><pre>
+&lt;header icon="«icon»"&gt;«text»&lt;/header&gt;
+</pre></div>
+<h2>Split</h2>
+<div><pre>
+&lt;split&gt;
+    &lt;sidebar&gt;
+        ···
+    &lt;/sidebar&gt;
+    &lt;content&gt;
+        ···
+    &lt;/content&gt;
+    &lt;content&gt;
+        ···
+    &lt;/content&gt;
+&lt;/split&gt;
+</pre></div>
+<h2>Overflow</h2>
+<p>Class: <a href="symbols/hui.ui.Overflow.html">hui.ui.Overflow</a></p>
+<div><pre>
+&lt;overflow background="«background»" vertical="«pixels»" height="«pixels»" min-height="«pixels»" max-height="«pixels»" state="«text»"&gt;
+    ···
+&lt;/overflow&gt;
+</pre></div>
+<h2>Box</h2>
+<p>Class: <a href="symbols/hui.ui.Box.html">hui.ui.Box</a></p>
+<div><pre>
+&lt;box variant="«?»" closable="«boolean»" absolute="«boolean»" width="«pixels»" top="«pixels»" name="«name»" title="«text»" state="«text»" modal="«boolean»"&gt;
+    &lt;toolbar/&gt;
+    ···
+&lt;/box&gt;
+</pre></div>
+<h2>Wizard</h2>
+<p>Class: <a href="symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></p>
+<div><pre>
+&lt;wizard name="«name»"&gt;
+    &lt;step frame="«boolean»" icon="«icon»" title="«text»"&gt;
+        ···
+    &lt;/step&gt;
+&lt;/wizard&gt;
+</pre></div>
+<h2>Wizard</h2>
+<p>Class: <a href="symbols/hui.ui.Layout.html">hui.ui.Layout</a></p>
+<div><pre>
+&lt;layour name="«name»"&gt;
+    &lt;top&gt;
+        ···
+    &lt;/top&gt;
+    &lt;middle&gt;
+        &lt;left&gt;
+            ···
+        &lt;/left&gt;
+        &lt;center padding="«pixels»"&gt;
+            ···
+        &lt;/center&gt;
+    &lt;/middle&gt;
+    &lt;bottom&gt;
+        ···
+    &lt;/botttom&gt;
+&lt;/box&gt;
+</pre></div>
+<h2>Fragment</h2>
+<p>Class: <a href="symbols/hui.ui.Fragment.html">hui.ui.Fragment</a></p>
+<div><pre>
+&lt;fragment name="«name»" state="«text»" height="«'full'»" background="«background»"&gt;
+    ···
+&lt;/fragment&gt;
+</pre></div>
+<h2>Structure</h2>
+<div><pre>
+&lt;structure top="«pixels»"&gt;
+    ···
+&lt;/structure&gt;
+</pre></div>
+</body>
+</html>

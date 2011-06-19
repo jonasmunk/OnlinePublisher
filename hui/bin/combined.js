@@ -11176,6 +11176,7 @@ hui.ui.Dock.prototype = {
 			this.progress.style.display = 'none';
 		}
 	},
+	/** @private */
 	$frameLoaded : function(win) {
 		if (win==hui.getFrameWindow(this.iframe)) {
 			this._setBusy(false);
