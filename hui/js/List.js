@@ -615,6 +615,7 @@ hui.ui.List.prototype = {
 		row.ondblclick = function(e) {
 			if (self.busy) {return};
 			self._rowDoubleClick(index,e);
+			hui.selection.clear();
 			return false;
 		}
 		row.onclick = function(e) {
