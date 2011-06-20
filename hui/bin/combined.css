@@ -1267,23 +1267,6 @@ a.hui_checkbox
 	vertical-align: middle;
 }
 
-div.hui_checkboxes
-{
-	margin-bottom: 5px;
-	font-size: 0;
-}
-
-div.hui_checkboxes a.hui_checkbox
-{
-	margin-right: 10px;
-}
-
-div.hui_checkboxes_vertical a.hui_checkbox
-{
-	display: block;
-	padding: 1px 5px 0px 0px;
-}
-
 a.hui_checkbox span
 {
 	float: left;
@@ -5723,4 +5706,19 @@ div.hui_window_dark input.hui_tokenfield_token
 	background: #222;
 	border: 1px solid #444;
 	color: #fff;
+}div.hui_checkboxes
+{
+	margin-bottom: 5px;
+	font-size: 0;
+}
+
+div.hui_checkboxes a.hui_checkbox
+{
+	margin-right: 10px;
+}
+
+div.hui_checkboxes_vertical a.hui_checkbox
+{
+	display: block;
+	padding: 1px 5px 0px 0px;
 }

@@ -1662,6 +1662,9 @@ hui.animation.Loop.prototype.next = function() {
 	}
 	var self = this;
 	var time = item.duration || 0;
+	if (item.wait!==undefined) {
+		time = item.wait;
+	}
 	window.setTimeout(function() {self.next()},time);
 }
 
