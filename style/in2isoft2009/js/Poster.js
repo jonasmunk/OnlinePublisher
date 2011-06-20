@@ -5,7 +5,6 @@ hui.ui.onReady(function() {
 Poster = function() {
 	this.poster = hui.get('poster');
 	this.left = hui.get('poster_left');
-	this.left.scrollLeft = 495;
 	this.right = hui.get('poster_right');
 	this.progress = hui.get('poster_loader');
 	this.context = 'style/in2isoft2009/gfx/';
@@ -28,35 +27,28 @@ Poster.getInstance = function() {
 }
 
 Poster.prototype.start = function() {
+	this.left.scrollLeft = 495;
 	var self = this;
 	var base = op.page.path+this.context;
-	var leftRecipe = [
+	new hui.animation.Loop([
 		function() {
 			self.leftPos++;
-			if (self.leftPos>=self.leftImages.length) self.leftPos=0;
+			if (self.leftPos>=self.leftImages.length) {
+				self.leftPos=0;
+			}
 			hui.get('poster_inner_left').style.backgroundImage='url(\''+base+self.leftImages[self.leftPos]+'\')';
-		},
-		{duration:500},
-		{element:this.left,property:'scrollLeft',value:'0',duration:1000,ease:hui.ease.slowFastSlow},
-		{duration:4000},
-		{element:this.left,property:'scrollLeft',value:'495',duration:1000,ease:hui.ease.slowFastSlow}
-	];
-	var leftLoop = new hui.animation.Loop(leftRecipe);
-	leftLoop.start();
-	
-	var rightRecipe = [
-		function() {
+
 			self.rightPos++;
 			if (self.rightPos>=self.rightImages.length) self.rightPos=0;
 			hui.get('poster_inner_right').style.backgroundImage='url(\''+base+self.rightImages[self.rightPos]+'\')';
 		},
-		{duration:500},
-		{element:this.right,property:'scrollLeft',value:'495',duration:1000,ease:hui.ease.slowFastSlow},
+		{duration:1000},
+		{element:this.left,property:'scrollLeft',value:'0',duration:1000,ease:hui.ease.fastSlow,wait:500},
+		{element:this.right,property:'scrollLeft',value:'495',duration:1000,ease:hui.ease.fastSlow},
 		{duration:4000},
-		{element:this.right,property:'scrollLeft',value:'0',duration:1000,ease:hui.ease.slowFastSlow}
-	];
-	var rightLoop = new hui.animation.Loop(rightRecipe);
-	rightLoop.start();
+		{element:this.left,property:'scrollLeft',value:'495',duration:1000,ease:hui.ease.quintIn,wait:500},
+		{element:this.right,property:'scrollLeft',value:'0',duration:1000,ease:hui.ease.quintIn}
+	]).start();
 }
 
 Poster.prototype.preload = function() {
