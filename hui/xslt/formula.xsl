@@ -567,11 +567,11 @@
 </xsl:template>
 
 <xsl:template name="gui:tokens">
-	<div class="hui_tokens" id="{generate-id()}">
+	<div class="hui_tokenfield" id="{generate-id()}">
 		<xsl:comment/>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Tokens({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.TokenField({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			'key':'<xsl:value-of select="@key"/>'}

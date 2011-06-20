@@ -111,6 +111,7 @@
 		<script src="{$context}/hui/js/DropDown.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/StyleLength.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/DateTimeField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/TokenField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:when>
 	<xsl:otherwise>
 		<script src="{$context}/hui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
