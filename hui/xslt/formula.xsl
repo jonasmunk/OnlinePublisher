@@ -357,7 +357,7 @@
 		<xsl:value-of select="@title"/>
 	</a>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Checkbox({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Checkbox({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			'key':'<xsl:value-of select="@key"/>',
