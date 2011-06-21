@@ -86,6 +86,7 @@ class ImagePartController extends PartController
 			'text' => $part->getText()
 		)).
 		'<div id="part_image_container">'.$this->render($part,$context).'</div>'.
+		'<script src="'.$baseUrl.'hui/js/ImagePaster.js" type="text/javascript" charset="utf-8"></script>'.
 		'<script src="'.$baseUrl.'Editor/Parts/image/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
@@ -268,6 +269,7 @@ class ImagePartController extends PartController
 			'<script source="../../Parts/image/toolbar.js"/>
 			<icon icon="common/new" title="Tilf&#248;j billede" name="addImage"/>
 			<icon icon="common/search" title="V&#230;lg billede" name="chooseImage"/>
+			<icon icon="common/image" overlay="new" title="Fra udklipsholder" name="pasteImage"/>
 			<divider/>
 			<segmented label="Placering" name="alignment" allow-null="true">
 				<item icon="style/align_left" value="left"/>

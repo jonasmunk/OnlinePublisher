@@ -112,5 +112,11 @@ hui.ui.listen({
 	},
 	$click$chooseImage : function() {
 		partToolbar.getMainController().showChooserWindow();
+	},
+	
+	// Pasting...
+	
+	$click$pasteImage : function() {
+		partToolbar.getMainController().paste();
 	}
 });

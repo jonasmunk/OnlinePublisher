@@ -1,6 +1,24 @@
 <?
 class Response {
 	
+	function sendObject($obj) {
+		header('Content-Type: text/plain; charset=utf-8');
+		echo StringUtils::toJSON($obj);
+	}
+	
+	function sendUnicodeObject($obj) {
+		foreach ($obj as $key => $value) {
+			if (is_string($value)) {
+				if (is_array($obj)) {
+					$obj[$key] = Request::toUnicode($value);
+				} else {
+					$obj->$key = Request::toUnicode($value);
+				}
+			}
+		}
+		Response::sendObject($obj);
+	}
+		
 	function redirect($url) {
 		session_write_close();
 		header('Location: '.$url);

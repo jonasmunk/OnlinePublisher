@@ -107,6 +107,12 @@ class FileSystemService {
 	    }
 	}
 	
+	function getFreeTempPath() {
+		global $basePath;
+		$path = $basePath.'local/cache/temp/'.time();
+		return FileSystemService::findFreeFilePath($path);
+	}
+
 	/**
 	 * Finds a free path for a file, using a provided file as input
 	 * @param string $path The path to be used

@@ -116,6 +116,37 @@ var partController = {
 			}.bind(this)
 		});
 		
+	},
+	paste : function() {
+		hui.ui.showMessage({text:'Pasting...',busy:true});
+		if (!this.paster) {
+			this.paster = hui.ui.ImagePaster.create({invisible:true});
+			this.paster.listen({
+				$imageWasPasted : function(data) {
+					hui.ui.showMessage({text:'Pasted!',icon:'common/success',duration:2000});
+					this._updateWithData(data);
+				}.bind(this),
+				$imagePasteFailed : function(code) {
+					hui.ui.showMessage({text:'Paste failed: '+code,icon:'common/warning',duration:2000});
+				}
+			})
+		}
+		hui.log('Telling paster to paste');
+		this.paster.paste();
+	},
+	_updateWithData : function(data) {
+		hui.ui.request({
+			url : '../../Services/Images/Create.php',
+			parameters : {data:data,title:'Udklipsholder'},
+			onFailure : function() {
+				hui.ui.showMessage({text:'Det lykkedes ikke at lave et billede fra udklipsholderen',icon:'common/warning',duration:2000});
+			},
+			onJSON : function(response) {
+				hui.ui.showMessage({text:'Billedet er nu indsat',icon:'common/success',duration:2000});
+				document.forms.PartForm.imageId.value = response.id;
+				this.preview();
+			}.bind(this)
+		});
 	}
 }
 

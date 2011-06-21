@@ -10,6 +10,9 @@ require_once($basePath.'Editor/Classes/EventManager.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class ImageService {
+
+	static $validTypes = array("image/pjpeg","image/jpeg","image/gif","image/png","image/x-png");
+	static $validExtensions = array("jpeg","jpg","gif","png");
 	
 	function getUsedImageIds() {
 	    $sql = "select image_id as id from part_image".
@@ -117,6 +120,70 @@ class ImageService {
 		return ImageService::createImageFromFile($tempFile,$fileName,$fileType,$fileSize,$title,$group);
 	}
 	
+	function createImageFromBase64($data,$fileName=null,$title=null) {
+		global $basePath;
+		$output = array('image'=>null,'success'=>false,'message'=>null);
+		
+		if (StringUtils::isBlank($data)) {
+			$output['message'] = 'No data';
+			return $output;
+		}
+		if ($fileName==null) {
+			$fileName = 'untitled';
+		}
+		if ($title==null) {
+			$title = 'Untitled';
+		}
+		$decoded = base64_decode($data);
+		$tempPath = FileSystemService::getFreeTempPath();
+		FileSystemService::writeStringToFile($decoded,$tempPath);
+		
+		$info = getimagesize($tempPath);
+		$width = $info[0];
+		$height = $info[1];
+		$mimeType = $info['mime'];
+		if ($width==0 || $height==0) {
+			$output['message'] = 'Illegal dimensions';
+			@unlink($tempPath);
+			return $output;
+		}
+		if (!in_array($mimeType,ImageService::$validTypes)) {
+			$output['message'] = 'Invalid mime type: '+$mimeType;
+			return $output;
+		}
+
+		$extension = FileSystemService::getFileExtension($fileName);
+		if (!$extension) {
+			$extension = FileService::mimeTypeToExtension($mimeType);
+			$fileName.='.'.$extension;
+		}
+		$path = $basePath.'images/'.$fileName;
+		$path = FileSystemService::findFreeFilePath($path);
+		
+		if (!@rename($tempPath, $path)) {
+			$output['message'] = 'Unable to move file from temporary path;';
+			return $output;
+			@unlink($tempPath);
+		}
+		
+		$fileName = FileSystemService::getFileBaseName($path);
+		
+		$image = new Image();
+		$image->setTitle($title);
+		$image->setFilename($fileName);
+		$image->setSize(filesize($path));
+		$image->setMimetype($mimeType);
+		$image->setWidth($width);
+		$image->setHeight($height);
+		$image->create();
+		$image->publish();
+		
+		$output['image'] = $image;
+		$output['success'] = true;
+		
+		return $output;
+	}
+	
 	function createImageFromFile($tempPath,$fileName,$mimeType,$fileSize,$title=null,$group=null) {
 		global $basePath;
 		$errorMessage=null;
@@ -199,10 +266,8 @@ class ImageService {
 	 * @return boolean True if file supported, false otherwise
 	 */
 	function isSupportedImageFile($fileName,$mimeType="") {
-		$validTypes = array("image/pjpeg","image/jpeg","image/gif","image/png","image/x-png");
-		$validExtensions = array("jpeg","jpg","gif","png");
 		$extension = strtolower(FileSystemService::getFileExtension($fileName));
-		return (in_array($mimeType,$validTypes) || in_array($extension,$validExtensions));
+		return (in_array($mimeType,ImageService::$validTypes) || in_array($extension,ImageService::$validExtensions));
 	}
 }
 
