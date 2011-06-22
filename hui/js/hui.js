@@ -65,6 +65,13 @@ hui.log = function(obj) {
 	} catch (ignore) {};
 }
 
+hui.defer = function(func,bind) {
+	if (bind) {
+		func = func.bind(bind);
+	}
+	window.setTimeout(func);
+}
+
 /** Override the properties on the first argument with properties from the last object */
 hui.override = function(original,subject) {
 	if (subject) {

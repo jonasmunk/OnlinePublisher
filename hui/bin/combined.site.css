@@ -235,6 +235,15 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 	background: url('../gfx/backgrounds/leather.jpg');	
 }
 
+.hui_bg_vichy
+{
+	background: url('../gfx/backgrounds/vichy.png');	
+}
+
+.hui_bg_aluminum
+{
+	background: url('../gfx/backgrounds/brushed_alu.png');	
+}
 /****************************************** Info view ******************************/
 
 div.hui_infoview

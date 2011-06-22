@@ -17,28 +17,44 @@ hui.ui.ImagePaster.create = function(options) {
 	return new hui.ui.ImagePaster(options);
 }
 
+hui.ui.ImagePaster.supported = function() {
+	var result = { 
+		javaEnabled: false,
+		version: ''
+	};
+	if (typeof navigator != 'undefined' && typeof navigator.javaEnabled != 'undefined') {
+		result.javaEnabled = navigator.javaEnabled();
+	} else {
+		result.javaEnabled = 'unknown';
+		if (navigator.javaEnabled() && typeof java != 'undefined') {
+			result.version = java.lang.System.getProperty("java.version");
+		}
+	}
+	return result;
+}
+
 hui.ui.ImagePaster.prototype = {
 	_initialize : function() {
-		/*
-		this.element.innerHTML = '<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width= "290" height= "290" style="border-width:0;"  id="rup" name="rup" codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_4_1-windows-i586.cab#version=1,4,1"><param name="archive" value="../../../hui/lib/supa/Supa.jar"><param name="code" value="de.christophlinder.supa.SupaApplet"><param name="mayscript" value="yes"><param name="scriptable" value="true"><param name="name" value="jsapplet"><param name="encoding" value="base64"><param name="previewscaler" value="original size"></object>';
-		return;
-		this.element.innerHTML = '<applet id="SupaApplet" archive="../../../hui/lib/supa/Supa.jar" code="de.christophlinder.supa.SupaApplet" width="0" height="0"><param name="imagecodec" value="png"><param name="encoding" value="base64"><param name="previewscaler" value="original size"></applet>';
-		return;*/
 		hui.log('Initializing...');
-		this.applet = hui.build('applet',{
-			archive : hui.ui.context+"/hui/lib/supa/Supa.jar",
-			code : 'de.christophlinder.supa.SupaApplet',
-			width : 0,
-			height : 0,
-			html : '<param name="imagecodec" value="png"><param name="encoding" value="base64"><param name="previewscaler" value="original size">',
-			parent : this.element
-		});
+		if (hui.browser.msie) {
+			this.element.innerHTML = '<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width="0" height="0" style="border-width:0;"  id="rup" name="rup" codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_5_0-windows-i586.cab#Version=1,5,0,0"><param name="archive" value="'+hui.ui.context+'/hui/lib/supa/Supa.jar"><param name="code" value="de.christophlinder.supa.SupaApplet"><param name="mayscript" value="yes"><param name="scriptable" value="true"><param name="name" value="jsapplet"><param name="encoding" value="base64"><param name="previewscaler" value="original size"></object>';
+			this.applet = hui.firstByTag(this.element,'object');
+		} else {
+			this.applet = hui.build('applet',{
+				archive : hui.ui.context+"/hui/lib/supa/Supa.jar",
+				code : 'de.christophlinder.supa.SupaApplet',
+				width : 0,
+				height : 0,
+				html : '<param name="imagecodec" value="png"><param name="encoding" value="base64"><param name="previewscaler" value="original size">',
+				parent : this.element
+			});
+		}
 		if (this.options.invisible) {
 			hui.log('Adding to body...');
 			document.body.appendChild(this.element);
 		}
-		this._checkReady();
 		this.initialized = true;
+		hui.defer(this._checkReady,this);
 	},
 	_checkReady : function() {
 		if (this._isReady()) {
@@ -49,7 +65,8 @@ hui.ui.ImagePaster.prototype = {
 			}
 			this.fire('readyToPaste',this);
 		} else {
-			window.setTimeout(this._checkReady.bind(this),100);
+			hui.log('Not ready yet...');
+			window.setTimeout(this._checkReady.bind(this),500);
 		}
 	},
 	_isReady : function() {
@@ -66,7 +83,7 @@ hui.ui.ImagePaster.prototype = {
 		if (!this.initialized) {
 			hui.log('Pasting, not intitialized, so pending...');
 			this.pendingPaste = true;
-			this._initialize();
+			hui.defer(this._initialize,this);
 			return;
 		}
 		hui.log('Pasting...');
@@ -89,6 +106,7 @@ hui.ui.ImagePaster.prototype = {
 		} else if (code==4) {
 			key = 'busy';
 		}
+		hui.log('Error: '+key);
 		this.fire('imagePasteFailed',key);
 	},
 	_updatePreview : function() {

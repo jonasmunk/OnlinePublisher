@@ -5,6 +5,7 @@ CSS_PATH=${DIR}"/../css/"
 JS_LIB_PATH=${DIR}"/../lib/"
 JS_PATH=${DIR}"/../js/"
 BIN_PATH=${DIR}"/../bin/"
+EXT_PATH=${DIR}"/../ext/"
 
 echo "Concatenating CSS"
 cat ${CSS_PATH}master.css ${CSS_PATH}button.css ${CSS_PATH}common.css ${CSS_PATH}tabbox.css ${CSS_PATH}formula.css ${CSS_PATH}dropdown.css ${CSS_PATH}layout.css ${CSS_PATH}alert.css ${CSS_PATH}view.css ${CSS_PATH}toolbar.css ${CSS_PATH}window.css ${CSS_PATH}list.css ${CSS_PATH}selection.css ${CSS_PATH}imagepicker.css ${CSS_PATH}boundpanel.css ${CSS_PATH}panel.css ${CSS_PATH}richtext.css ${CSS_PATH}imageviewer.css ${CSS_PATH}picker.css ${CSS_PATH}editor.css ${CSS_PATH}menu.css ${CSS_PATH}overlay.css ${CSS_PATH}upload.css ${CSS_PATH}progressbar.css ${CSS_PATH}gallery.css ${CSS_PATH}calendar.css ${CSS_PATH}datepicker.css ${CSS_PATH}box.css ${CSS_PATH}articles.css ${CSS_PATH}wizard.css ${CSS_PATH}searchfield.css ${CSS_PATH}dock.css ${CSS_PATH}tabs.css ${CSS_PATH}bar.css ${CSS_PATH}videoplayer.css ${CSS_PATH}message.css ${CSS_PATH}segmented.css ${CSS_PATH}links.css ${CSS_PATH}effects.css ${CSS_PATH}colorpicker.css ${CSS_PATH}locationfield.css ${CSS_PATH}tokenfield.css ${CSS_PATH}checkbox.css ${CSS_PATH}checkboxes.css > ${BIN_PATH}combined.css
@@ -17,3 +18,6 @@ cat  ${JS_PATH}hui.js ${JS_PATH}hui_require.js ${JS_LIB_PATH}swfupload/swfupload
 
 echo "Concatenating site scripts"
 cat ${JS_PATH}hui.js ${JS_PATH}hui_require.js ${JS_PATH}ui.js ${JS_PATH}ImageViewer.js ${JS_PATH}Box.js ${JS_PATH}SearchField.js > ${BIN_PATH}combined.site.js
+
+echo "Concatenating all scripts"
+cat ${BIN_PATH}combined.js ${EXT_PATH}Graph.js ${EXT_PATH}Graphviz.js ${EXT_PATH}Test.js ${EXT_PATH}FlashChart.js ${JS_PATH}Drawing.js ${JS_PATH}ImagePaster.js > ${BIN_PATH}all.js
