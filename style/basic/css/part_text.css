@@ -3,7 +3,7 @@
 	padding-bottom: 10px;
 }
 
-div.part_text, textarea.part_text
+.part_text
 {
 	font-size: 9pt;
 	line-height: 1.4em;

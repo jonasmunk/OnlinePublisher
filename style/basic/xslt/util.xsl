@@ -383,6 +383,14 @@
 	</xsl:if>
 </xsl:template>
 
+<xsl:template name="util:hierarchy-all-levels">
+	<ul>
+		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
+			<xsl:call-template name="util:hierarchy-item-iterator"/>
+		</xsl:for-each>
+	</ul>
+</xsl:template>
+
 <xsl:template name="util:hierarchy-item-iterator">
 	<xsl:if test="not(@hidden='true')">
 		<li>
