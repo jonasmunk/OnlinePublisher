@@ -3,6 +3,11 @@ body
 	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
 }
 
+.common_font
+{
+	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
+}
+
 a.common
 {
 	color: #ddd;
@@ -31,11 +36,6 @@ p.common, ul.common
 	font-size: 9pt;
 	line-height: 160%;
 	text-align: justify;
-}
-
-.common_font
-{
-	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
 }
 
 hr.part_horizontalrule

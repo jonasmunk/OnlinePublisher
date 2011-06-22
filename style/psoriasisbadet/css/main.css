@@ -2,7 +2,6 @@ body
 {
 	margin: 0;
 	padding: 0 20px;
-	font-family: Georgie;
 }
 
 div.layout
@@ -16,13 +15,14 @@ div.layout_content
 	padding: 15px;
 	margin-left: 260px;
 	min-height: 300px;
+	overflow: hidden;
+	width: 710px;
 }
 
 div.layout_header
 {
 	height: 157px;
 	background: #fff url('../gfx/header.jpg') center top no-repeat;
-*/
 }
 
 /**************************** Sidebar ************************/
