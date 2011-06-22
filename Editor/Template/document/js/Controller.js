@@ -263,8 +263,8 @@ op.FieldResizer = function(options) {
 	this.dummy.style.top='-999999px';
 	this.dummy.style.visibility='hidden';
 	var self = this;
-	hui.ui.listen(options.field,'keyup',function(){self.resize(false,true)});
-	hui.ui.listen(options.field,'keydown',function(){self.options.field.scrollTop=0;});
+	hui.listen(options.field,'keyup',function(){self.resize(false,true)});
+	hui.listen(options.field,'keydown',function(){self.options.field.scrollTop=0;});
 }
 
 op.FieldResizer.prototype = {
@@ -288,6 +288,7 @@ op.FieldResizer.prototype = {
 		this.options.field.style.webkitTransform = 'scale(1)';
 		this.dummy.style.width=this.options.field.clientWidth+'px';
 		var height = Math.max(50,this.dummy.clientHeight)+'px';
+		hui.log(height)
 		if (instantly) {
 			this.options.field.style.height=height;
 		} else {

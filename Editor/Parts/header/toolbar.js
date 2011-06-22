@@ -18,9 +18,9 @@ hui.ui.listen({
 	},
 	$valueChanged$level : function(value) {
 		this.form.level.value=value || '';
-		this.form.text.className="part_header part_header_"+value;
+		this.form.text.className="common_font part_header part_header_"+value;
 		for (var i=0;i<=6;i++) {
-			hi.removeClass(partToolbar.section,'part_section_header_'+i);
+			hui.removeClass(partToolbar.section,'part_section_header_'+i);
 		}
 		hui.addClass(partToolbar.section,'part_section_header_'+value);
 		partToolbar.getMainController().syncSize();
