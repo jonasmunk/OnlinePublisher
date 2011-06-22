@@ -25,22 +25,39 @@
 			<body>
 				<div class="layout">
 					<div class="layout_header">
-						<p class="layout_logo"><xsl:value-of select="f:frame/@title"/><xsl:comment/></p>
-					</div>
-					<div class="layout_navigation">
-						<xsl:call-template name="util:hierarchy-first-level"/>
+						<xsl:comment/>
 					</div>
 					<div class="layout_sidebar">
-						<xsl:call-template name="util:hierarchy-after-first-level"/>
+						<div class="layout_menu">
+						<xsl:call-template name="util:hierarchy-all-levels"/>
+						</div>
 						<xsl:comment/>
+						<div class="layout_box">
+							<h3>Kontakt</h3>
+							<p><strong>Green Benefit</strong></p>
+							<div class="layout_address">
+							<p>Maren Hemmings Vej 13</p>
+							<p>9000 Aalborg</p>
+							<p>Denmark</p>
+							</div>
+							<p>E-mail: <a href="mailto:info@greenbenefit.dk">info@greenbenefit.dk</a></p>
+							<p>Tlf: 70 20 60 77</p>
+						</div>
+						<div class="layout_box">
+							<h3>Nyhedsbrev</h3>
+							<p>Tilmeld dig Psoriasisbadet Nyt og følg med i den helbredende udvikling.</p>
+							<p><a href="#">Tilmeld nyhedsbrev »</a></p>
+						</div>
 					</div>
 					<div class="layout_content">
 						<xsl:apply-templates select="p:content"/>
 					</div>
+					<div class="layout_footer">
+						<p class="layout_designed">
+							<a href="http://www.in2isoft.dk/"><span>Designet og udviklet af In2iSoft</span></a>
+						</p>
+					</div>
 				</div>
-				<p class="layout_designed">
-					<a href="http://www.in2isoft.dk/"><span>Designet og udviklet af In2iSoft</span></a>
-				</p>
 			</body>
 		</html>
 	</xsl:template>
