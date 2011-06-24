@@ -22,11 +22,6 @@ class Phonenumber extends Object {
 	function load($id) {
 		return Object::get($id,'phonenumber');
 	}
-
-	function toUnicode() {
-		parent::toUnicode();
-		$this->number = mb_convert_encoding($this->number, "UTF-8","ISO-8859-1");
-	}
 	
 	function setNumber($number) {
 		$this->title = $number;

@@ -143,9 +143,9 @@ class In2iGui {
 		foreach ($obj as $key => $value) {
 			if (is_string($value)) {
 				if (is_array($obj)) {
-					$obj[$key] = Request::toUnicode($value);
+					$obj[$key] = StringUtils::toUnicode($value);
 				} else {
-					$obj->$key = Request::toUnicode($value);
+					$obj->$key = StringUtils::toUnicode($value);
 				}
 			}
 		}
@@ -281,7 +281,7 @@ class In2iGui {
 		$out = array();
 		foreach ($links as $link) {
 			$objectLink = new ObjectLink();
-			$objectLink->setText(Request::fromUnicode($link->text));
+			$objectLink->setText($link->text);
 			$objectLink->setType($link->kind);
 			$objectLink->setValue($link->value);
 			$out[] = $objectLink;

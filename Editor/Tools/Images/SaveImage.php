@@ -8,12 +8,12 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Objects/Image.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 $object = Image::load($data->id);
 if ($object) {
 	$object->changeGroups($data->groups);
-	$object->setTitle(Request::fromUnicode($data->title));
+	$object->setTitle($data->title);
 	$object->save();
 	$object->publish();
 }

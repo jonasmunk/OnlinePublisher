@@ -10,7 +10,7 @@ require_once '../../../Classes/Objects/News.php';
 require_once '../../../Classes/In2iGui.php';
 require_once '../../../Classes/Log.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 if ($data->id) {
 	$news = News::load($data->id);
 } else {
@@ -18,8 +18,8 @@ if ($data->id) {
 }
 if ($news) {
 	$links = In2iGui::fromLinks($data->links);
-	$news->setTitle(Request::fromUnicode($data->title));
-	$news->setNote(Request::fromUnicode($data->note));
+	$news->setTitle($data->title);
+	$news->setNote($data->note);
 	$news->setStartdate($data->startdate);
 	$news->setEnddate($data->enddate);
 	$news->save();

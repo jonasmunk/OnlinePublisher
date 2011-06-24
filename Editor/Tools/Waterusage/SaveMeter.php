@@ -8,14 +8,14 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Objects/Watermeter.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->id>0) {
 	$obj = Watermeter::load($data->id);
 } else {
 	$obj = new Watermeter();
 }
-$obj->setNumber(Request::fromUnicode($data->number));
+$obj->setNumber($data->number);
 $obj->save();
 $obj->publish();
 ?>

@@ -9,8 +9,8 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/Services/MailService.php';
 require_once '../../Classes/In2iGui.php';
 
-$data = Request::getObject('data');
-if (MailService::send($data->email,$data->name,Request::fromUnicode($data->subject),Request::fromUnicode($data->body))) {
+$data = Request::getUnicodeObject('data');
+if (MailService::send($data->email,$data->name,$data->subject,$data->body)) {
 	In2iGui::sendObject(array('success'=>true));
 } else {
 	In2iGui::sendObject(array('success'=>false));

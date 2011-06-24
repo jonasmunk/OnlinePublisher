@@ -47,18 +47,6 @@ class Person extends Object {
 	function load($id) {
 		return Object::get($id,'person');
 	}
-
-	function toUnicode() {
-		parent::toUnicode();
-		$this->firstname = mb_convert_encoding($this->firstname, "UTF-8","ISO-8859-1");
-		$this->middlename = mb_convert_encoding($this->middlename, "UTF-8","ISO-8859-1");
-		$this->surname = mb_convert_encoding($this->surname, "UTF-8","ISO-8859-1");
-		$this->initials = mb_convert_encoding($this->initials, "UTF-8","ISO-8859-1");
-		$this->jobtitle = mb_convert_encoding($this->jobtitle, "UTF-8","ISO-8859-1");
-		$this->nickname = mb_convert_encoding($this->nickname, "UTF-8","ISO-8859-1");
-		$this->streetname = mb_convert_encoding($this->streetname, "UTF-8","ISO-8859-1");
-		$this->city = mb_convert_encoding($this->city, "UTF-8","ISO-8859-1");
-	}
 	
 	function setFullName($name) {
 		$this->firstname='';
@@ -420,7 +408,7 @@ class Person extends Object {
 				$old = new EmailAddress();
 			}
 			if (strlen($email->address)>0) {
-				$old->setAddress(Request::fromUnicode($email->address));
+				$old->setAddress($email->address);
 				$old->setContainingObjectId($this->getId());
 				$old->save();
 				$old->publish();
@@ -452,8 +440,8 @@ class Person extends Object {
 				$old = new PhoneNumber();
 			}
 			if (strlen($number->number)>0 || strlen($number->context)>0) {
-				$old->setNumber(Request::fromUnicode($number->number));
-				$old->setContext(Request::fromUnicode($number->context));
+				$old->setNumber($number->number);
+				$old->setContext($number->context);
 				$old->setContainingObjectId($this->getId());
 				$old->save();
 				$old->publish();

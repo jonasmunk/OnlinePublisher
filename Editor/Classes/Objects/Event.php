@@ -53,11 +53,6 @@ class Event extends Object {
 		return $this->enddate;
 	}
 	
-	function toUnicode() {
-		parent::toUnicode();
-		$this->location = mb_convert_encoding($this->location, "UTF-8","ISO-8859-1");
-	}
-	
 	////////////////////////////// Utils ///////////////////////////
 	
 	function getCalendarIds() {

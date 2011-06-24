@@ -1,4 +1,5 @@
 <?
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 class Response {
 	
 	function sendObject($obj) {
@@ -10,9 +11,9 @@ class Response {
 		foreach ($obj as $key => $value) {
 			if (is_string($value)) {
 				if (is_array($obj)) {
-					$obj[$key] = Request::toUnicode($value);
+					$obj[$key] = StringUtils::toUnicode($value);
 				} else {
-					$obj->$key = Request::toUnicode($value);
+					$obj->$key = StringUtils::toUnicode($value);
 				}
 			}
 		}

@@ -8,7 +8,7 @@ require_once '../../../Include/Security.php';
 require_once '../../../Classes/Request.php';
 require_once '../../../Classes/Objects/Calendarsource.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->id) {
 	$src = CalendarSource::load($data->id);
@@ -16,9 +16,9 @@ if ($data->id) {
 	$src = new CalendarSource();
 }
 if ($src) {
-	$src->setTitle(Request::fromUnicode($data->title));
-	$src->setUrl(Request::fromUnicode($data->url));
-	$src->setFilter(Request::fromUnicode($data->filter));
+	$src->setTitle($data->title);
+	$src->setUrl($data->url);
+	$src->setFilter($data->filter);
 	$src->setSyncInterval($data->syncInterval);
 	$src->save();
 	$src->publish();

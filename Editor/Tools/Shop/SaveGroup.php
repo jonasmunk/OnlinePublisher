@@ -8,15 +8,15 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Productgroup.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->id>0) {
 	$group = ProductGroup::load($data->id);
 } else {
 	$group = new ProductGroup();
 }
-$group->setTitle(Request::fromUnicode($data->title));
-$group->setNote(Request::fromUnicode($data->note));
+$group->setTitle($data->title);
+$group->setNote($data->note);
 $group->save();
 $group->publish();
 ?>

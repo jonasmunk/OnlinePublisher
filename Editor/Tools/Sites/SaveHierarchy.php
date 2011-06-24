@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Hierarchy.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->id) {
 	if (!$item = Hierarchy::load($data->id)) {
@@ -18,7 +18,7 @@ if ($data->id) {
 } else {
 	$item = new Hierarchy();
 }
-$item->setName(Request::fromUnicode($data->name));
+$item->setName($data->name);
 $item->setLanguage($data->language);
 $item->save();
 ?>

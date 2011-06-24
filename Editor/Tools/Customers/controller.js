@@ -146,7 +146,7 @@ hui.ui.listen({
 	},
 	
 	$submit$mailinglistFormula : function() {
-		this.click$saveMailinglist();
+		this.$click$saveMailinglist();
 	},
 	$success$loadMailinglist : function(data) {
 		this.mailinglistId = data.id;

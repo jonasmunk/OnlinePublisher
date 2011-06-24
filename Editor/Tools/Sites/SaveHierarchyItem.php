@@ -8,13 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Model/HierarchyItem.php';
 
-$data = Request::getObject('data');
-
-Log::debug($data);
+$data = Request::getUnicodeObject('data');
 
 if ($data->id) {
 	$item = HierarchyItem::load($data->id);
-	$item->setTitle(Request::fromUnicode($data->title));
+	$item->setTitle($data->title);
 	$item->setHidden($data->hidden);
 	if ($data->targetType) {
 		$item->setTargetType($data->targetType);
@@ -33,7 +31,7 @@ if ($data->id) {
 		exit;
 	}
 	$result = $hierarchy->createItem(array(
-		'title' => Request::fromUnicode($data->title),
+		'title' => $data->title,
 		'hidden' => $data->hidden,
 		'targetType' => $data->targetType,
 		'targetValue' => $data->targetValue,
