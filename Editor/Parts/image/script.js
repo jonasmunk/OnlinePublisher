@@ -117,6 +117,9 @@ var partController = {
 		});
 		
 	},
+	isPasteSupported : function() {
+		return hui.ui.ImagePaster.isSupported();
+	},
 	paste : function() {
 		hui.ui.showMessage({text:'Pasting...',busy:true});
 		if (!this.paster) {

@@ -20,6 +20,7 @@ hui.ui.listen({
 		} else if (form.linkType.value=='sameimage') {
 			sameimage.setValue(true);
 		}
+		pasteImage.setEnabled(partToolbar.getMainController().isPasteSupported());
 	},
 	$valueChanged$page : function() {
 		partToolbar.partForm.linkType.value='page';
