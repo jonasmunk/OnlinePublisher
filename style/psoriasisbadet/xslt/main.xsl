@@ -46,7 +46,7 @@
 						<div class="layout_box">
 							<h3>Nyhedsbrev</h3>
 							<p>Tilmeld dig Psoriasisbadet Nyt og følg med i den helbredende udvikling.</p>
-							<p><a href="#">Tilmeld nyhedsbrev »</a></p>
+							<p><a href="/#nyhedsbrev">Tilmeld nyhedsbrev »</a></p>
 						</div>
 					</div>
 					<div class="layout_content">
