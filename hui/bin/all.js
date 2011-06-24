@@ -7221,7 +7221,7 @@ hui.ui.Selection.prototype = {
 		for (i=0; i < this.subItems.length; i++) {
 			var items = this.subItems[i].items;
 			for (var j=0; j < items.length; j++) {
-				this.changeSelection(this.items[j]);
+				this.changeSelection(items[j]);
 				return;
 			};
 		};
@@ -15641,6 +15641,11 @@ hui.ui.ImagePaster.create = function(options) {
 }
 
 hui.ui.ImagePaster.supported = function() {
+	if (!navigator) {
+		return false;
+	}
+	return navigator.platform=='MacIntel';
+	/*
 	var result = { 
 		javaEnabled: false,
 		version: ''
@@ -15653,7 +15658,7 @@ hui.ui.ImagePaster.supported = function() {
 			result.version = java.lang.System.getProperty("java.version");
 		}
 	}
-	return result;
+	return result;*/
 }
 
 hui.ui.ImagePaster.prototype = {
