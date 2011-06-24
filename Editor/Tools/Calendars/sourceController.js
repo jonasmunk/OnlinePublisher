@@ -50,6 +50,7 @@ hui.ui.listen({
 		sourceFormula.reset();
 		sourceWindow.hide();
 		sourcesItemsSource.refresh();
+		list.refresh();
 	},
 	
 	$click$newSource : function() {
@@ -57,6 +58,7 @@ hui.ui.listen({
 		sourceFormula.reset();
 		sourceWindow.show();
 		deleteSource.setEnabled(false);
+		sourceFormula.focus();
 	},
 	
 	$click$synchronizeSource : function() {
