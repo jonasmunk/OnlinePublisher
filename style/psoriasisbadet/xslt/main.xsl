@@ -51,6 +51,7 @@
 					</div>
 					<div class="layout_content">
 						<xsl:apply-templates select="p:content"/>
+						<xsl:comment/>
 					</div>
 					<div class="layout_footer">
 						<p class="layout_designed">
