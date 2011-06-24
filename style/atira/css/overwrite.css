@@ -7,6 +7,11 @@ h1.common
 	font-size: 18pt;
 }
 
+.common_font
+{
+	font-family: "Tahoma","Geneva","Helvetica","Arial",sans-serif;
+}
+
 a.common
 {
 	color: #ccc;
