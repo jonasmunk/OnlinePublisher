@@ -6206,7 +6206,7 @@ hui.ui.List.prototype = {
 			// TODO: Memory leak!
 			var info = {id:r.id,kind:r.kind,icon:icon,title:title,index:i};
 			tr.dragDropInfo = info;
-			hui.log(this._getData(r))
+			hui.log(this._getData(tr))
 			self.rows.push({id:r.id,kind:r.kind,icon:icon,title:title,index:i,data:r.data});
 			this.addRowBehavior(tr,i);
 		}.bind(this));
@@ -11437,7 +11437,7 @@ hui.ui.SearchField.prototype = {
 	},
 	onKeyUp : function(e) {
 		this.fieldChanged();
-		if (e.keyCode===Event.KEY_RETURN) {
+		if (e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
 		}
 	},
@@ -15641,6 +15641,11 @@ hui.ui.ImagePaster.create = function(options) {
 }
 
 hui.ui.ImagePaster.supported = function() {
+	if (!navigator) {
+		return false;
+	}
+	return navigator.platform=='MacIntel';
+	/*
 	var result = { 
 		javaEnabled: false,
 		version: ''
@@ -15653,7 +15658,7 @@ hui.ui.ImagePaster.supported = function() {
 			result.version = java.lang.System.getProperty("java.version");
 		}
 	}
-	return result;
+	return result;*/
 }
 
 hui.ui.ImagePaster.prototype = {

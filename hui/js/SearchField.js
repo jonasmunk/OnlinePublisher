@@ -59,7 +59,7 @@ hui.ui.SearchField.prototype = {
 	},
 	onKeyUp : function(e) {
 		this.fieldChanged();
-		if (e.keyCode===Event.KEY_RETURN) {
+		if (e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
 		}
 	},
