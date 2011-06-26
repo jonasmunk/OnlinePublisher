@@ -95,7 +95,6 @@
 		<script src="{$context}/hui/js/Dock.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Box.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Wizard.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-		<script src="{$context}/hui/js/Articles.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Input.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/SearchField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Overflow.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
