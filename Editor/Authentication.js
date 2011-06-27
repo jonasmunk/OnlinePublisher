@@ -52,8 +52,12 @@ var controller = {
 	$success$login : function(data) {
 		if (data.success) {
 			hui.ui.showMessage({text:'Du er nu logget ind, øjeblik...',icon:'common/success',delay:200});
-			var page = hui.location.getParameter('page');
-			document.location=page===null ? './index.php' : '.?page='+page;
+			if (hui.browser.ipad) {
+				document.location = './Touch/';
+			} else {
+				var page = hui.location.getParameter('page');
+				document.location = page===null ? './index.php' : '.?page='+page;
+			}
 		} else {
 			hui.ui.showMessage({text:'Brugeren blev ikke fundet!',icon:'common/warning',duration:2000});
 			formula.focus();

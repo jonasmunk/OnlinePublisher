@@ -12,7 +12,35 @@ body
 }
 
 
+div.bar
+{
+	height: 40px;
+	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#333), to(#000));
+	border-bottom: 1px solid #333;
+	font-size: 0;
+}
 
+div.bar a
+{
+	display: inline-block;
+	line-height: 28px;
+	height: 28px;
+	margin: 5px 0 0 5px;
+	border: 1px solid #111;
+	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#555), to(#222));
+	color: #fff;
+	padding: 0 8px;
+	text-shadow: 0px 1px 0 #000;
+	-webkit-box-shadow: 0 0 1px #ddd,0 1px 1px #333;
+	-webkit-background-origin: padding-box;
+	-webkit-background-clip: border-box;
+	-webkit-border-radius: 3px;
+	-webkit-background-clip: padding-box;	
+	font-family: 'Lucida Grande',"Helvetica Neue", Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 13pt;
+	vertical-align: top;
+}
 
 
 div.sidebar

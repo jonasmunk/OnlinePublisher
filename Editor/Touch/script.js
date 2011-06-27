@@ -1,5 +1,5 @@
 
-var hui = {touch:{}};
+hui.touch={};
 
 hui.touch.makeScrollable = function(id) {
 	var c = document.getElementById(id);
@@ -35,3 +35,18 @@ hui.touch.makeScrollable('container');
 		var log = document.getElementById('log');
 		log.innerHTML=new Date()+str;
 	}
+	
+hui.ui.listen({
+	$ready : function() {
+		hui.ui.request({
+			url : 'data/list_pages.php',
+			onJSON : function(list) {
+				var c = hui.get('list');
+				for (var i=0; i < list.length; i++) {
+					var item = list[i];
+					hui.build('li',{text:item.title,parent:c});
+				};
+			}
+		})
+	}
+})

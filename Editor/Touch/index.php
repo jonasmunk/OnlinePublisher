@@ -18,17 +18,28 @@ header("Content-Type: text/html; charset=UTF-8");
 		include('style.css.php')
 		?>
 	</style>
+	<script src="../../hui/js/hui.js"></script>
+	<script src="../../hui/js/ui.js"></script>
 </head>
 
 <body>
+	<div class="bar">
+		<a>←Hep hey</a>
+		<a>◀</a>
+		<a>▶</a>
+		<a style="font-size: 28px; font-family: 'Apple Symbols'; font-weight: normal;">⚒</a>
+		<a style="font-size: 28px; font-family: 'Apple Symbols'; font-weight: normal;">⚙</a>
+	</div>
 	<div class="sidebar"></div>
 <div class="page" id="container">
 	<div style="padding: 30px;">
+		<h1>Hep hey</h1>
+		<ul id="list"></ul>
 	</div>
 </div>
 	<div id="log"></div>
-	
 	<a class="button" onclick="document.location=document.location">Reload</a>
+	
 	<div id="mover" style="display: none; width: 100px; height: 100px; background: blue; position: absolute; left: 200px; top: 200px;"></div>
 <script>
 <?
