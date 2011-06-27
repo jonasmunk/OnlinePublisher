@@ -15,6 +15,7 @@ $gui='
 	<source name="developerFeed" url="DeveloperFeedArticles.php"/>
 	<source name="commitFeed" url="CommitFeed.php"/>
 	<source name="newsFeed" url="NewsFeedArticles.php"/>
+	<source name="warningsList" url="data/WarningsList.php"/>
 	<box variant="rounded">
 		<html xmlns="http://www.w3.org/1999/xhtml">
 			<div class="header">
@@ -26,19 +27,19 @@ $gui='
 				<column>
 					<header icon="monochrome/message">Udvikling</header>
 					<overflow vertical="180">
-						<articles source="developerFeed"/>
+						<list source="developerFeed"/>
 					</overflow>
 				</column>
 				<column>
 					<header icon="monochrome/gear">Kode</header>
 					<overflow vertical="180">
-						<articles source="commitFeed"/>
+						<list source="commitFeed"/>
 					</overflow>
 				</column>
 				<column>
 					<header icon="monochrome/loudspeaker">Nyheder</header>
 					<overflow vertical="180">
-						<articles source="newsFeed"/>
+						<list source="newsFeed"/>
 					</overflow>
 				</column>
 			</columns>

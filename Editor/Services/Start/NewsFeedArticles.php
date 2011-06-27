@@ -24,17 +24,19 @@ if (!$feed) {
 	exit;	
 }
 
-$writer = new ArticlesWriter();
+$writer = new ListWriter();
 
-$writer->startArticles();
+$writer->startList(array('unicode'=>true));
 
 foreach($feed->getItems() as $item) {
-	$writer->startArticle();
-	$writer->startTitle()->text($item->getTitle())->endTitle();
-	$writer->startParagraph()->text($item->getDescription())->endParagraph();
-	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endParagraph();
-	//$writer->startCell()->text()->endCell();
-	$writer->endArticle();
+	$writer->startRow()->
+		startCell()->startLine()->text(StringUtils::fromUnicode($item->getTitle()))->endLine()->
+			startLine()->text(StringUtils::fromUnicode($item->getDescription()))->endline()->
+			startLine(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
+		endCell()->
+		//startCell()->button(array('text'=>StringUtils::fromUnicode('Læs'),'data'=>array('url'=>$item->getLink())))->endCell()->
+	endRow();
+		
 }
-$writer->endArticles();
+$writer->endList();
 ?>

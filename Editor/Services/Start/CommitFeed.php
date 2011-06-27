@@ -24,20 +24,22 @@ if (!$feed) {
 	exit;	
 }
 
-$writer = new ArticlesWriter();
+$writer = new ListWriter();
 
-$writer->startArticles();
+$writer->startList();
 
 foreach($feed->getItems() as $item) {
 	$title = $item->getTitle();
 	if (StringUtils::startsWith($title,'Merge branch')) {
 		continue;
 	}
-	$writer->startArticle();
-	$writer->startTitle()->text($title)->endTitle();
-	$writer->startParagraph(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endParagraph();
-	$writer->endArticle();
+	$writer->startRow()->
+		startCell()->
+			startLine()->text($title)->endLine()->
+			startLine(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
+		endCell()->
+	endRow();
 	
 }
-$writer->endArticles();
+$writer->endList();
 ?>
