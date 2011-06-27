@@ -218,7 +218,7 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 	color: #fff;
 }
 
-/****************************************** Fragment *******************************/
+/****************************************** Backgrounds *******************************/
 
 .hui_bg_brushed
 {
@@ -243,55 +243,6 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 .hui_bg_aluminum
 {
 	background: url('../gfx/backgrounds/brushed_alu.png');	
-}
-/****************************************** Info view ******************************/
-
-div.hui_infoview
-{
-	overflow-y: hidden;
-}
-
-div.hui_infoview_busy
-{
-	background: url('../gfx/spinner_large.gif') center center no-repeat;
-}
-
-div.hui_infoview table
-{
-	width: 100%;
-	font-size: 8pt;
-	line-height: 14px;
-}
-
-div.hui_infoview th
-{
-	vertical-align: top;
-	text-align: right;
-	padding: 2px 8px 0px 0px;
-	color: #666;
-	font-weight: normal;
-}
-
-div.hui_infoview td
-{
-	vertical-align: top;
-	padding: 2px 0px 0px 0px;
-}
-
-div.hui_infoview th.hui_infoview_header
-{
-	font-size: 13pt;
-	padding-bottom: 5px;
-	text-align: left;
-	color: #333;
-	line-height: 19px;
-	padding-top: 0px;
-}
-
-div.hui_infoview_click:hover
-{
-	cursor: pointer;
-	text-decoration: underline;
 }
 
 
@@ -5694,4 +5645,53 @@ div.hui_checkboxes_vertical a.hui_checkbox
 {
 	display: block;
 	padding: 1px 5px 0px 0px;
+}div.hui_infoview
+{
+	overflow-y: hidden;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
+
+div.hui_infoview_busy
+{
+	background: url('../gfx/spinner_large.gif') center center no-repeat;
+}
+
+div.hui_infoview table
+{
+	width: 100%;
+	font-size: 8pt;
+	line-height: 14px;
+}
+
+div.hui_infoview th
+{
+	vertical-align: top;
+	text-align: right;
+	padding: 2px 8px 0px 0px;
+	color: #666;
+	font-weight: bold;
+	width: 50%;
+}
+
+div.hui_infoview td
+{
+	vertical-align: top;
+	padding: 2px 0px 0px 0px;
+}
+
+div.hui_infoview th.hui_infoview_header
+{
+	font-size: 13px;
+	padding-bottom: 5px;
+	text-align: center;
+	color: #333;
+	line-height: 19px;
+	padding-top: 0px;
+}
+
+div.hui_infoview_click:hover
+{
+	cursor: pointer;
+	text-decoration: underline;
+}
+

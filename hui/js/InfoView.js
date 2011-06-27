@@ -2,7 +2,7 @@
 hui.ui.InfoView = function(options) {
 	this.options = hui.override({clickObjects:false},options);
 	this.element = hui.get(options.element);
-	this.body = this.element.select('tbody')[0];
+	this.body = hui.firstByTag(this.element,'tbody');
 	this.name = options.name;
 	hui.ui.extend(this);
 }
