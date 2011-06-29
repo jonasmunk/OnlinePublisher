@@ -1172,37 +1172,38 @@ hui.getDocumentHeight = function() {
 //////////////////////////// Placement /////////////////////////
 
 /**
- * Example hui.place({target : {element : myTarget, horizontal : 1}, source : {element : mySource, vertical : 0.5}})
+ * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»},insideViewPort:«boolean»,viewPartMargin:«integer»})
  */
 hui.place = function(options) {
-	var left=0,top=0;
-	var trgt = options.target.element;
-	var trgtPos = {left:hui.getLeft(trgt),top:hui.getTop(trgt)};
-	left = trgtPos.left+trgt.clientWidth*options.target.horizontal;
-	top = trgtPos.top+trgt.clientHeight*options.target.vertical;
+	var left = 0,
+		top = 0,
+		trgt = options.target.element,
+		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
+	left = trgtPos.left + trgt.clientWidth * options.target.horizontal;
+	top = trgtPos.top + trgt.clientHeight * options.target.vertical;
 	
 	var src = options.source.element;
-	left-=src.clientWidth*options.source.horizontal;
-	top-=src.clientHeight*options.source.vertical;
+	left -= src.clientWidth * options.source.horizontal;
+	top -= src.clientHeight * options.source.vertical;
 	
 	if (options.insideViewPort) {
 		var w = hui.getViewPortWidth();
-		hui.log((left+src.clientWidth)+'>'+w);
-		if (left+src.clientWidth>w) {
-			left=w-src.clientWidth;
+		if (left + src.clientWidth > w) {
+			left = w - src.clientWidth - (options.viewPartMargin || 0);
+			hui.log(options.viewPartMargin)
 		}
-		if (left<0) {left=0}
-		if (top<0) {top=0}
+		if (left < 0) {left=0}
+		if (top < 0) {top=0}
 	}
 	if (options.top) {
-		top+=options.top;
+		top += options.top;
 	}
 	if (options.left) {
-		left+=options.left;
+		left += options.left;
 	}
 	
-	src.style.top=top+'px';
-	src.style.left=left+'px';
+	src.style.top = top+'px';
+	src.style.left = left+'px';
 }
 
 //////////////////////////// Preloader /////////////////////////
@@ -3883,6 +3884,9 @@ hui.ui._resize = function() {
 	};
 }
 
+/**
+ * @param options { element:«node», widget:«widget», text:«string», okText:«string», cancelText«string», onOk:«function»}
+ */
 hui.ui.confirmOverlay = function(options) {
 	var node = options.element,
 		overlay;
@@ -5667,7 +5671,7 @@ hui.ui.Formula.Radiobuttons.prototype = {
  * <li>selectionChanged - When a row is selected (rename to select)</li>
  * <li>selectionReset - When a selection is removed</li>
  * <li>clickButton(row,button) - When a button is clicked</li>
- * <li>clickIcon(row,data) - When an icon is clicked</li>
+ * <li>clickIcon({row:row,data:data,node:node}) - When an icon is clicked</li>
  * </ul>
  * <p><strong>Bindings:</strong></p>
  * <ul>
@@ -6305,7 +6309,7 @@ hui.ui.List.prototype = {
 		if (a) {
 			var data = a.getAttribute('data');
 			if (data) {
-				this.fire('clickIcon',this.rows[index],hui.fromJSON(data));
+				this.fire('clickIcon',{row:this.rows[index],data:hui.fromJSON(data),node:a});
 			}
 		}
 	},
@@ -6993,8 +6997,8 @@ hui.ui.Button = function(options) {
 hui.ui.Button.create = function(o) {
 	o = hui.override({text:'',highlighted:false,enabled:true},o);
 	var className = 'hui_button'+(o.highlighted ? ' hui_button_highlighted' : '');
-	if (o.small && o.rounded) {
-		className+=' hui_button_small_rounded';
+	if (o.small) {
+		className+=' hui_button_small';
 	}
 	if (!o.enabled) {
 		className+=' hui_button_disabled';
@@ -9613,9 +9617,10 @@ hui.ui.Overlay.prototype = {
 		}
 		if (options.element) {
 			hui.place({
-				source:{element:this.element,vertical:0,horizontal:.5},
-				target:{element:options.element,vertical:.5,horizontal:.5},
-				insideViewPort:true
+				source : {element:this.element,vertical:0,horizontal:.5},
+				target : {element:options.element,vertical:.5,horizontal:.5},
+				insideViewPort : true,
+				viewPartMargin : 7
 			});
 		}
 		if (this.visible) return;

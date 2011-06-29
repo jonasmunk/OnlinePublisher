@@ -5,7 +5,7 @@
  * <li>selectionChanged - When a row is selected (rename to select)</li>
  * <li>selectionReset - When a selection is removed</li>
  * <li>clickButton(row,button) - When a button is clicked</li>
- * <li>clickIcon(row,data) - When an icon is clicked</li>
+ * <li>clickIcon({row:row,data:data,node:node}) - When an icon is clicked</li>
  * </ul>
  * <p><strong>Bindings:</strong></p>
  * <ul>
@@ -643,7 +643,7 @@ hui.ui.List.prototype = {
 		if (a) {
 			var data = a.getAttribute('data');
 			if (data) {
-				this.fire('clickIcon',this.rows[index],hui.fromJSON(data));
+				this.fire('clickIcon',{row:this.rows[index],data:hui.fromJSON(data),node:a});
 			}
 		}
 	},

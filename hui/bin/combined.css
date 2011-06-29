@@ -435,22 +435,22 @@ a.hui_button_disabled:hover span span
 	background-position: 0px -60px;
 }
 
-a.hui_button_small_rounded
+a.hui_button_small
 {
 	height: 24px;
-	background-image: url('../gfx/button_small_rounded.png');
+	background-image: url('../gfx/button_small.png');
 	line-height: 0;
 	font-size: 0;
 }
 
-a.hui_button_small_rounded span
+a.hui_button_small span
 {
 	height: 24px;
-	background-image: url('../gfx/button_small_rounded.png');
+	background-image: url('../gfx/button_small.png');
 	background-position: right -24px;
 }
 
-a.hui_button_small_rounded span span
+a.hui_button_small span span
 {
 	background-position: left -48px;
 	margin: 0 12px;
@@ -460,80 +460,86 @@ a.hui_button_small_rounded span span
 	text-shadow: 0 1px 0 #FFFFFF;
 }
 
-a.hui_button_small_rounded:hover
+a.hui_button_small:hover
 {
 	background-position: left -72px;
 }
 
-a.hui_button_small_rounded:hover span
+a.hui_button_small:hover span
 {
 	background-position: right -96px;
 }
 
-a.hui_button_small_rounded:hover span span
+a.hui_button_small:hover span span
 {
 	background-position: left -120px;
 }
 
-a.hui_button_small_rounded:active
+a.hui_button_small:active
 {
 	background-position: left -144px;
 }
 
-a.hui_button_small_rounded:active span
+a.hui_button_small:active span
 {
 	background-position: right -168px;
 }
 
-a.hui_button_small_rounded:active span span
+a.hui_button_small:active span span
 {
 	background-position: left -192px;
 }
 
 
-a.hui_button_small_rounded:focus
+a.hui_button_small:focus
 {
 	background-position: left -216px;
 }
 
-a.hui_button_small_rounded:focus span
+a.hui_button_small:focus span
 {
 	background-position: right -240px;
 }
 
-a.hui_button_small_rounded:focus span span
+a.hui_button_small:focus span span
 {
 	background-position: left -264px;
 }
 
-a.hui_button_small_rounded:focus:hover
+a.hui_button_small:focus:hover
 {
 	background-position: left -288px;
 }
 
-a.hui_button_small_rounded:focus:hover span
+a.hui_button_small:focus:hover span
 {
 	background-position: right -312px;
 }
 
-a.hui_button_small_rounded:focus:hover span span
+a.hui_button_small:focus:hover span span
 {
 	background-position: left -336px;
 }
 
-a.hui_button_small_rounded:focus:active
+a.hui_button_small:focus:active
 {
 	background-position: left -360px;
 }
 
-a.hui_button_small_rounded:focus:active span
+a.hui_button_small:focus:active span
 {
 	background-position: right -384px;
 }
 
-a.hui_button_small_rounded:focus:active span span
+a.hui_button_small:focus:active span span
 {
 	background-position: left -408px;
+}
+
+a.hui_button_small_highlighted, a.hui_button_small_highlighted span
+{
+	background-image: url('../gfx/button_small_highlighted.png');
+	color: #152;
 }
 
 /*****************************************/
@@ -1465,12 +1471,12 @@ a.hui_dropdown_adaptive
 
 .hui_overflow::-webkit-scrollbar-thumb:hover
 {
-    background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgb(250, 250, 250)), to(rgb(230, 230, 230)));
+    background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgb(245, 245, 245)), to(rgb(235, 235, 235)));
 }
 
 .hui_overflow::-webkit-scrollbar-thumb:horizontal:hover
 {
-    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(250, 250, 250)), to(rgb(230, 230, 230)));
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(245, 245, 245)), to(rgb(235, 235, 235)));
 }
 
 

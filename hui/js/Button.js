@@ -17,8 +17,8 @@ hui.ui.Button = function(options) {
 hui.ui.Button.create = function(o) {
 	o = hui.override({text:'',highlighted:false,enabled:true},o);
 	var className = 'hui_button'+(o.highlighted ? ' hui_button_highlighted' : '');
-	if (o.small && o.rounded) {
-		className+=' hui_button_small_rounded';
+	if (o.small) {
+		className+=' hui_button_small';
 	}
 	if (!o.enabled) {
 		className+=' hui_button_disabled';

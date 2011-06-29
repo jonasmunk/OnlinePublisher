@@ -94,6 +94,9 @@ hui.ui._resize = function() {
 	};
 }
 
+/**
+ * @param options { element:«node», widget:«widget», text:«string», okText:«string», cancelText«string», onOk:«function»}
+ */
 hui.ui.confirmOverlay = function(options) {
 	var node = options.element,
 		overlay;
