@@ -348,8 +348,18 @@ hui.ui.List.prototype = {
 	
 	_wrap : function(str) {
 		var out = '';
+		var count = 0;
 		for (var i=0; i < str.length; i++) {
-			out+=str[i]+'\u200B';
+			if (str[i]===' ') {
+				count=0;
+			} else {
+				count++;
+			}
+			out+=str[i];
+			if (count>10) {
+				out+='\u200B';
+				count=0;
+			}
 		};
 		return out;
 	},
@@ -359,6 +369,7 @@ hui.ui.List.prototype = {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
 			cell.appendChild(hui.ui.createIcon(icon,1));
+			cell = hui.build('div',{parent:cell,style:'margin-left: 20px'});
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];
