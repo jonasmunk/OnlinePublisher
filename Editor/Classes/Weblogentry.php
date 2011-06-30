@@ -18,11 +18,6 @@ class Weblogentry extends Object {
 		parent::Object('weblogentry');
 	}
 	
-	function toUnicode() {
-		parent::toUnicode();
-		$this->text = mb_convert_encoding($this->text, "UTF-8","ISO-8859-1");
-	}
-	
 	function setText($text) {
 	    $this->text = $text;
 	}

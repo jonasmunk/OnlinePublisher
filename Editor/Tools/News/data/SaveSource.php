@@ -8,15 +8,15 @@ require_once '../../../Include/Security.php';
 require_once '../../../Classes/Request.php';
 require_once '../../../Classes/Objects/Newssource.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 if ($data->id) {
 	$news = Newssource::load($data->id);
 } else {
 	$news = new Newssource();
 }
 if ($news) {
-	$news->setTitle(Request::fromUnicode($data->title));
-	$news->setUrl(Request::fromUnicode($data->url));
+	$news->setTitle($data->title);
+	$news->setUrl($data->url);
 	$news->setSyncInterval($data->syncInterval);
 	$news->save();
 	$news->publish();

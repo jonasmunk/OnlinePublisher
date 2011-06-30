@@ -9,21 +9,21 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/User.php';
 require_once '../../Classes/Services/AuthenticationService.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->id>0) {
 	$user = User::load($data->id);
 } else {
 	$user = new User();
 }
-$user->setTitle(Request::fromUnicode($data->title));
-$user->setNote(Request::fromUnicode($data->note));
-$user->setUsername(Request::fromUnicode($data->username));
-$password = Request::fromUnicode($data->password);
+$user->setTitle($data->title);
+$user->setNote($data->note);
+$user->setUsername($data->username);
+$password = $data->password;
 if (StringUtils::isNotBlank($password)) {
 	AuthenticationService::setPassword($user,$password);
 }
-$user->setEmail(Request::fromUnicode($data->email));
+$user->setEmail($data->email);
 $user->setInternal($data->internal);
 $user->setExternal($data->external);
 $user->setAdministrator($data->administrator);

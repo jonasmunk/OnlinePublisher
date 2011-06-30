@@ -84,7 +84,7 @@ hui.ui.Selection.prototype = {
 		for (i=0; i < this.subItems.length; i++) {
 			var items = this.subItems[i].items;
 			for (var j=0; j < items.length; j++) {
-				this.changeSelection(this.items[j]);
+				this.changeSelection(items[j]);
 				return;
 			};
 		};

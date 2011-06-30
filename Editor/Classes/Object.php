@@ -93,8 +93,11 @@ class Object {
 	}
 	
 	function toUnicode() {
-		$this->title = mb_convert_encoding($this->title, "UTF-8","ISO-8859-1");
-		$this->note = mb_convert_encoding($this->note, "UTF-8","ISO-8859-1");
+		foreach ($this as $key => $value) {
+			if (is_string($value)) {
+				$this->$key = StringUtils::toUnicode($value);
+			}
+		}
 	}
 	
 	function create() {

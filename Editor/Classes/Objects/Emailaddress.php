@@ -20,11 +20,6 @@ class EmailAddress extends Object {
 	function load($id) {
 		return Object::get($id,'emailaddress');
 	}
-
-	function toUnicode() {
-		parent::toUnicode();
-		$this->address = mb_convert_encoding($this->address, "UTF-8","ISO-8859-1");
-	}
 	
 	function setAddress($address) {
 		$this->title = $address;

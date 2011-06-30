@@ -1,4 +1,5 @@
 <?
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 class Request {
 	
 	function getParameters() {
@@ -53,16 +54,15 @@ class Request {
 	 * Gets a string and converts it to ISO-8859-1 if it is in Unicode
 	 */
 	function getEncodedString($key) {
-		$value = Request::getString($key);
 		if (strpos($_SERVER['CONTENT_TYPE'],'UTF-8')!==false) {
-			return mb_convert_encoding($value, "ISO-8859-1","UTF-8");
+			return Request::getUnicodeString($key);
 		}
-		return $value;
+		return Request::getString($key);
 	}
 	
 	function getUnicodeString($key) {
 		$value = Request::getString($key);
-		return mb_convert_encoding($value, "ISO-8859-1","UTF-8");
+		return StringUtils::fromUnicode($value);
 	}
 
 	/**
@@ -203,7 +203,7 @@ class Request {
 	function getObject($key) {
 		global $basePath;
 		require_once($basePath.'Editor/Libraries/json/JSON2.php');
-		$json = new Services_JSON();
+		//$json = new Services_JSON();
 		//return $json->decode(Request::getString($key));
 		return json_decode(Request::getString($key));
 	}
@@ -211,13 +211,29 @@ class Request {
 	function getUnicodeObject($key) {
 		$obj = Request::getObject($key);
 		if ($obj!==null) {
+			Request::convertToUnicode($obj);
+		}
+		return $obj;
+	}
+	
+	function convertToUnicode($obj) {
+		if (is_object($obj)) {
 			foreach ($obj as $key => $value) {
 				if (is_string($value)) {
-					$obj->$key = Request::fromUnicode($value);
+					$obj->$key = StringUtils::fromUnicode($value);
+				} else if (is_object($value) || is_array($value)) {
+					Request::convertToUnicode($value);
+				}
+			}
+		} else if (is_array($obj)) {
+			for ($i=0; $i < count($obj); $i++) { 
+				if (is_string($obj[$i])) {
+					$obj[$i] = StringUtils::fromUnicode($value);
+				} else if (is_object($obj[$i]) || is_array($obj[$i])) {
+					Request::convertToUnicode($obj[$i]);
 				}
 			}
 		}
-		return $obj;
 	}
 
 	/**
@@ -273,14 +289,6 @@ class Request {
 		else {
 			return array();
 		}
-	}
-	
-	function toUnicode($value) {
-		return mb_convert_encoding($value, "UTF-8","ISO-8859-1");
-	}
-	
-	function fromUnicode($value) {
-		return mb_convert_encoding($value,"ISO-8859-1", "UTF-8");
 	}
 	
 	function isLocalhost() {

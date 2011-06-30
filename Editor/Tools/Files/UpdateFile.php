@@ -8,12 +8,12 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Objects/File.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 $file = File::load($data->id);
 if ($file) {
 	$file->updateGroupIds($data->groups);
-	$file->setTitle(Request::fromUnicode($data->title));
+	$file->setTitle($data->title);
 	$file->save();
 	$file->publish();
 }

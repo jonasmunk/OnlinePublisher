@@ -44,6 +44,11 @@ class StringUtils {
 	}
 	
 	function fromUnicode($str) {
+		$str = str_replace("\xe2\x80\x9c",'"',$str);
+		$str = str_replace("\xe2\x80\x9d",'"',$str);
+		$str = str_replace("\xe2\x80\x93",'-',$str);
+		$str = str_replace("\xca\xbc",'\'',$str);
+		$str = str_replace("\xca\xbb",'\'',$str);
 		return mb_convert_encoding($str,"ISO-8859-1", "UTF-8");
 	}
 	

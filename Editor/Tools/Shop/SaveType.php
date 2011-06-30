@@ -8,15 +8,15 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Producttype.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->id>0) {
 	$type = ProductType::load($data->id);
 } else {
 	$type = new ProductType();
 }
-$type->setTitle(Request::fromUnicode($data->title));
-$type->setNote(Request::fromUnicode($data->note));
+$type->setTitle($data->title);
+$type->setNote($data->note);
 $type->save();
 $type->publish();
 ?>

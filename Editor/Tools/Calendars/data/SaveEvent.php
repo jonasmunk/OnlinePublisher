@@ -9,7 +9,7 @@ require_once '../../../Classes/Request.php';
 require_once '../../../Classes/Objects/Event.php';
 require_once '../../../Classes/Log.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 Log::debug($data->calendars);
 
 if ($data->id) {
@@ -18,8 +18,8 @@ if ($data->id) {
 	$src = new Event();
 }
 if ($src) {
-	$src->setTitle(Request::fromUnicode($data->title));
-	$src->setLocation(Request::fromUnicode($data->location));
+	$src->setTitle($data->title);
+	$src->setLocation($data->location);
 	$src->setStartdate($data->startdate);
 	$src->setEnddate($data->enddate);
 	$src->save();

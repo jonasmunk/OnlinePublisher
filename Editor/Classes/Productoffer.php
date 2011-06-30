@@ -19,11 +19,6 @@ class ProductOffer extends Object {
 		$this->title = $this->offer;
 	}
 	
-	function toUnicode() {
-		parent::toUnicode();
-		$this->offer = mb_convert_encoding($this->offer, "UTF-8","ISO-8859-1");
-	}
-	
 	function setOffer($offer) {
 		$this->offer = $offer;
 		$this->updateTitle();

@@ -18,11 +18,6 @@ class Product extends Object {
 		$this->imageId=0;
 	}
 	
-	function toUnicode() {
-		parent::toUnicode();
-		$this->number = mb_convert_encoding($this->number, "UTF-8","ISO-8859-1");
-	}
-	
 	function setNumber($number) {
 		$this->number = $number;
 	}

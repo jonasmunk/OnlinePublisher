@@ -6,14 +6,14 @@
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->id>0) {
 	$object = Pageblueprint::load($data->id);
 } else {
 	$object = new Pageblueprint();
 }
-$object->setTitle(Request::fromUnicode($data->title));
+$object->setTitle($data->title);
 $object->setDesignId($data->designId);
 $object->setTemplateId($data->templateId);
 $object->setFrameId($data->frameId);

@@ -10,10 +10,10 @@ require_once '../../../Classes/In2iGui.php';
 require_once '../../../Classes/Objects/Event.php';
 
 $id = Request::getInt('id');
-$file=Event::load($id);
-$file->toUnicode();
+$event = Event::load($id);
+$event->toUnicode();
 
-$groups = $file->getCalendarIds();
+$groups = $event->getCalendarIds();
 
-In2iGui::sendObject(array('event' => $file, 'calendars' => $groups));
+In2iGui::sendObject(array('event' => $event, 'calendars' => $groups));
 ?>
