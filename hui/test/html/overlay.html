@@ -2,12 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>HUI</title>
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/common.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/overlay.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/message.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/button.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
 	<![endif]-->
 	<!--[if IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<!--[if IE 8]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie8.css"> </link>
 	<![endif]-->
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
@@ -52,7 +60,7 @@
 		var overlay = hui.ui.Overlay.create();
 		overlay.addIcon('x','common/delete');
 		overlay.addIcon('x','common/save');
-		overlay.showAtElement($('a'));
+		overlay.showAtElement(hui.get('a'));
 	}
 	
 	function testConfirm(node) {
@@ -71,7 +79,7 @@
 		var win = hui.ui.Window.create({width:400});
 		var button = hui.ui.Button.create({text:'I need confirmation!',confirm:{text:'Are you confident in yourself?'}});
 		button.click(function() {
-			alert('Yes!');
+			hui.ui.showMessage({text:'Yes!',icon:'common/success',duration:1000})
 		});
 		win.add(button);
 		win.show();

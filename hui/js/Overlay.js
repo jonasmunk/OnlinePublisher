@@ -100,7 +100,7 @@ hui.ui.Overlay.prototype = {
 				source : {element:this.element,vertical:0,horizontal:.5},
 				target : {element:options.element,vertical:.5,horizontal:.5},
 				insideViewPort : true,
-				viewPartMargin : 7
+				viewPartMargin : 9
 			});
 		}
 		if (this.visible) return;

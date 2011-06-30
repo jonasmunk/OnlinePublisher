@@ -23,7 +23,7 @@ hui.ui.Button.create = function(o) {
 	if (!o.enabled) {
 		className+=' hui_button_disabled';
 	}
-	var element = o.element = hui.build('a',{'class':className,href:'#'});
+	var element = o.element = hui.build('a',{'class':className,href:'javascript://'});
 	var element2 = document.createElement('span');
 	element.appendChild(element2);
 	var element3 = document.createElement('span');

@@ -465,24 +465,28 @@ div.hui_overlay_icon
 
 div.hui_overlay a.hui_button
 {
-	margin-top: 4px;
-}
-/*
-div.hui_overlay a.hui_button
-{
-	-webkit-transition: -webkit-transform 0.3s ease-in-out;
+	vertical-align: top;
+	margin-top: 5px;
+	margin-left: 2px;
 }
 
-div.hui_overlay a.hui_button:hover
+
+div.hui_overlay a.hui_button, div.hui_overlay a.hui_button span
 {
-    -webkit-transform: scale(1.2);
-}*/
+	background-image: url('../gfx/button_overlay.png');
+	color: #fff;
+}
+
+div.hui_overlay a.hui_button_highlighted, div.hui_overlay a.hui_button_highlighted span
+{
+	background-image: url('../gfx/button_overlay_highlighted.png');
+}
 
 span.hui_overlay_text
 {
 	display: inline-block;
-	line-height: 30px;
-	vertical-align: middle;
+	line-height: 33px;
+	vertical-align: top;
 	height: 30px;
 	padding: 0 10px;
 	color: #fff;
@@ -718,13 +722,13 @@ div.hui_buttons_right a.hui_button
 
 a.hui_button
 {
-	background: url('../gfx/button2.png') top left no-repeat;
+	background: url('../gfx/button.png') top left no-repeat;
 	color: #004a80;
 	display: inline-block;
 	vertical-align: middle;
 	font-size: 12px;
-	height: 30px;
-	line-height: 29px;
+	height: 28px;
+	line-height: 28px;
 	cursor: pointer;
 	text-decoration: none;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
@@ -735,125 +739,130 @@ a.hui_button
 
 a.hui_button span
 {
-	background-image: url('../gfx/button2.png');	
+	background-image: url('../gfx/button.png');	
 	background-repeat: no-repeat;
 	display: inline-block;
-	background-position: right -30px;
+	background-position: right -56px;
 	background-repeat: no-repeat;
-	height: 30px;
+	height: 28px;
 }
 
 a.hui_button span span
 {
-	background-position: 0px -60px;
+	background-position: 0px -28px;
 	background-repeat: repeat-x;
-	margin: 0px 6px;
-	padding: 0px 6px;
+	margin: 0px 5px;
+	padding: 0px 5px;
 }
 
 em.hui_button_icon
 {
 	padding: 0px;
-	margin: -1px 3px 0px -2px;
+	margin: 6px 3px 0px -2px;
 	width: 16px;
 	height: 16px;
 	display: inline-block;
-	vertical-align: middle;
+	vertical-align: top;
 }
 
 em.hui_button_icon_notext
 {
-	margin: -1px -3px 0px -3px;
+	margin: 6px -3px 0px -3px;
+}
+
+a.hui_button:hover em.hui_button_icon
+{
+	background-position: 0 -16px;
 }
 
 a.hui_button:hover
 {
-	background-position: 0px -90px;
+	background-position: 0px -84px;
 }
 
 a.hui_button:hover span
 {
-	background-position: 100% -120px;
+	background-position: 100% -140px;
 }
 
 a.hui_button:hover span span
 {
-	background-position: 0px -150px;
-	background-repeat: repeat-x;
-}
-
-a.hui_button:focus
-{
-	background-position: 0px -180px;
-	outline: none;
-}
-
-a.hui_button:focus span
-{
-	background-position: 100% -210px;
-}
-
-a.hui_button:focus span span
-{
-	background-position: 0px -240px;
-	background-repeat: repeat-x;
-}
-
-a.hui_button:focus:hover
-{
-	background-position: 0px -270px;
-	outline: none;
-}
-
-a.hui_button:focus:hover span
-{
-	background-position: 100% -300px;
-}
-
-a.hui_button:focus:hover span span
-{
-	background-position: 0px -330px;
+	background-position: 0px -112px;
 	background-repeat: repeat-x;
 }
 
 a.hui_button:active
 {
-	background-position: 0px -360px;
+	background-position: 0px -168px;
 	outline: none;
 }
 
 a.hui_button:active span
 {
-	background-position: 100% -390px;
+	background-position: 100% -224px;
 }
 
 a.hui_button:active span span
 {
-	background-position: 0px -420px;
+	background-position: 0px -196px;
+	background-repeat: repeat-x;
+}
+
+a.hui_button:focus
+{
+	background-position: 0px -252px;
+	outline: none;
+}
+
+a.hui_button:focus span
+{
+	background-position: 100% -308px;
+}
+
+a.hui_button:focus span span
+{
+	background-position: 0px -280px;
+	background-repeat: repeat-x;
+}
+
+a.hui_button:focus:hover
+{
+	background-position: 0px -336px;
+	outline: none;
+}
+
+a.hui_button:focus:hover span
+{
+	background-position: 100% -392px;
+}
+
+a.hui_button:focus:hover span span
+{
+	background-position: 0px -364px;
 	background-repeat: repeat-x;
 }
 
 a.hui_button:active:focus
 {
-	background-position: 0px -450px;
+	background-position: 0px -420px;
 	outline: none;
 }
 
 a.hui_button:active:focus span
 {
-	background-position: 100% -480px;
+	background-position: 100% -476px;
 }
 
 a.hui_button:active:focus span span
 {
-	background-position: 0px -510px;
+	background-position: 0px -448px;
 	background-repeat: repeat-x;
 }
 
 a.hui_button_highlighted, a.hui_button_highlighted span
 {
-	background-image: url('../gfx/button_highlighted2.png');
-	color: #fff;
+	background-image: url('../gfx/button_highlighted.png');
+	color: #152;
 }
 
 a.hui_button_disabled
@@ -870,12 +879,12 @@ a.hui_button_disabled:hover
 
 a.hui_button_disabled:hover span
 {
-	background-position: 100% -30px;
+	background-position: 100% -56px;
 }
 
 a.hui_button_disabled:hover span span
 {
-	background-position: 0px -60px;
+	background-position: 0px -28px;
 }
 
 a.hui_button_small
@@ -985,6 +994,18 @@ a.hui_button_small_highlighted, a.hui_button_small_highlighted span
 	color: #152;
 }
 
+a.hui_button_small em.hui_button_icon
+{
+	margin-left: -3px;
+    margin-top: 4px;
+}
+
+a.hui_button_small em.hui_button_icon_notext
+{
+    margin-right: -4px;
+    margin-left: -4px;
+}
+
 /*****************************************/
 /*
 a.hui_button_highlighted {
@@ -1047,11 +1068,7 @@ a.hui_button_paper:active
 
 a.hui_button_paper:focus
 {
-	outline: auto 5px rgba(1,105,255,.3);
-	outline-offset: -2px;
-	-moz-outline: -moz-mac-focusring solid 2px; -moz-outline-radius: 0 7px 7px;
-	-moz-outline-offset: 0;
-	background-position: 0 0;
+	border-color: rgb(1,105,255);
 }
 
 a.hui_button_small_paper, a.hui_button_small_paper span
@@ -1066,6 +1083,18 @@ a.hui_button_small_paper span span
 	padding: 0 10px;
 	font-size: 11px;
 	line-height: 18px;
+}
+
+a.hui_button_paper em.hui_button_icon
+{
+	margin-left: -6px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+a.hui_button_paper em.hui_button_icon_notext
+{
+    margin-right: -5px;
 }form.hui_formula
 {
 	padding: 0px;
@@ -1077,7 +1106,7 @@ a.hui_button_small_paper span span
 div.hui_formula_fieldset
 {
 	border: 1px solid #ddd;
-	padding: 10px;
+	padding: 10px 10px 5px;
 	margin-top: 4px;
 	background: #f6f6f6;
 }
@@ -1104,6 +1133,8 @@ div.hui_window div.hui_formula_fieldset
 {
 	background: #eee;
 	border: 1px solid #ccc;
+	border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 3px #DDDDDD inset;
 }
 
 .hui_formula_header

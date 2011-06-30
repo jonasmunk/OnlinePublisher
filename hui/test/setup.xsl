@@ -5,7 +5,7 @@
 <xsl:include href="../xslt/gui.xsl"/>
 
 <xsl:variable name="context">../..</xsl:variable>
-<xsl:variable name="dev">false</xsl:variable>
+<xsl:variable name="dev">true</xsl:variable>
 <xsl:variable name="version">1</xsl:variable>
 <xsl:variable name="profile">false</xsl:variable>
 <xsl:variable name="language">en</xsl:variable>

@@ -44,6 +44,26 @@ div.hui_dock_progress
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	/*top: 50%;
+	left: 50%;
+	width: 48px;
+	height: 48px;*/
 	background: url('../gfx/progress/spinner_white_48.gif') center center no-repeat;
 	/* rgba(243,245,247,.5) */
+}
+
+table.hui_dock_with_sidebar
+{
+	border-left: 200px solid transparent;
+}
+
+div.hui_dock_sidebar
+{
+	background: #EBF0F7;
+	width: 199px;
+	border-right: 1px solid #bcd;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
 }

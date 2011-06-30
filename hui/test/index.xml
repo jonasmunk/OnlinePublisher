@@ -1,7 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" title="HUI tests">
+	<listen for="selector">
+		<selectionChanged>
+			dock.setUrl(selector.getValue().value);
+		</selectionChanged>
+	</listen>
 	<dock url="unittests/hui.html" name="dock" position="bottom" frame-name="Desktop">
+		<sidebar>
+			<overflow>
+			<selection name="selector">
+				<title>Unit tests</title>
+				<item icon="common/folder" text="Animation" value="unittests/animation.html"/>
+				<item icon="common/folder" text="Formula" value="unittests/formula.html"/>
+				<item icon="common/folder" text="HUI" value="unittests/hui.html"/>
+				<item icon="common/folder" text="Style" value="unittests/style.html"/>
+				<item icon="common/folder" text="Validation" value="unittests/validation.html"/>
+				<item icon="common/folder" text="Window" value="unittests/window.html"/>
+				<title>XML-tests</title>				
+				<item icon="common/folder" text="Bar" value="xml/bar.xml"/>
+				<item icon="common/folder" text="Box" value="xml/box.xml"/>
+				<item icon="common/folder" text="Button" value="xml/button.xml"/>
+				<item icon="common/folder" text="Calendar" value="xml/calendar.xml"/>
+				<item icon="common/folder" text="DropDown" value="xml/dropdown.xml"/>
+				<item icon="common/folder" text="Formula" value="xml/formula.xml"/>
+				<item icon="common/folder" text="Formula - fieldset" value="xml/formula_fieldset.xml"/>
+				<item icon="common/folder" text="Graph" value="xml/graph.xml"/>
+				<item icon="common/folder" text="Graphviz" value="xml/graphviz.xml"/>
+				<item icon="common/folder" text="Graphviz" value="xml/images.xml"/>
+				<item icon="common/folder" text="List" value="xml/layout.xml"/>
+				<item icon="common/folder" text="List" value="xml/links.xml"/>
+				<item icon="common/folder" text="List" value="xml/list.xml"/>
+				<item icon="common/folder" text="RichText" value="xml/richtext.xml"/>
+				<item icon="common/folder" text="Sites" value="xml/style.xml"/>
+				<item icon="common/folder" text="Tabs" value="xml/tabs.xml"/>
+				<item icon="common/folder" text="Toolbar" value="xml/toolbar.xml"/>
+				<item icon="common/folder" text="Toolbar" value="xml/windows.xml"/>
+			</selection>
+			</overflow>
+		</sidebar>
 		<tabs small="true">
 			<tab title="Unit-tests">
 				<toolbar>

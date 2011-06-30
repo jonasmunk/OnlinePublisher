@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" padding="10" title="Drop down">
-	<box width="700" title="Buttons" variant="textured" padding="10">
+	<box width="800" title="Buttons" variant="textured" padding="10">
 		<button name="one" title="Simple button"/>
 		<button name="disabledButton" title="Disabled button" disabled="true"/>
 		<button title="Highlighted button" highlighted="true"/>
@@ -10,12 +10,28 @@
 		</button>
 		<button icon="common/delete"/>
 		<button icon="common/delete" text="Delete"/>
+		<button icon="monochrome/delete" text="Delete"/>
+		<button icon="monochrome/close" text="Cancel"/>
+		
 		<space height="20"/>
-		<button text="Small" small="true" rounded="true"/>
-		<button text="Small" disabled="true" small="true" rounded="true"/>
+		
+		<button text="Small" small="true"/>
+		<button text="Small" disabled="true" small="true"/>
+		<button text="Small" small="true" highlighted="true"/>
+		<button text="Small" disabled="true" small="true" highlighted="true"/>
+		
+		<button text="Small" small="true" icon="monochrome/delete"/>
+		<button text="Small" small="true" icon="monochrome/edit"/>
+		<button small="true" icon="monochrome/info"/>
+		<button small="true" icon="monochrome/info_light" highlighted="true"/>
+		<button small="true" icon="monochrome/edit"/>
+		
 		<space height="20"/>
+		
 		<button variant="paper" text="Paper variant"/>
-		<button variant="paper" text="Paper variant" disabled="true"/>
+		<button variant="paper" text="Paper variant disabled" disabled="true"/>
+		<button variant="paper" text="Paper variant" icon="monochrome/delete"/>
+		<button variant="paper" icon="monochrome/delete"/>
 		<button variant="paper" text="Paper variant (small)" small="true"/>
 		<button variant="paper" text="Paper variant (small + disabled)" small="true" disabled="true"/>
 	</box>

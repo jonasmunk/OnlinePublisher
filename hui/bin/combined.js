@@ -4043,16 +4043,17 @@ hui.ui.showCurtain = function(options,zIndex) {
 	var widget = options.widget;
 	if (!widget.curtain) {
 		widget.curtain = hui.build('div',{'class':'hui_curtain',style:'z-index:none'});
-		widget.curtain.onclick = function() {
-			if (widget['$curtainWasClicked']) {
-				widget['$curtainWasClicked']();
-			}
-		};
+		
 		var body = hui.firstByClass(document.body,'hui_body');
 		if (!body) {
 			body=document.body;
 		}
 		body.appendChild(widget.curtain);
+		hui.listen(widget.curtain,'click',function() {
+			if (widget['$curtainWasClicked']) {
+				widget['$curtainWasClicked']();
+			}
+		});
 	}
 	if (options.color) {
 		widget.curtain.style.backgroundColor=options.color;
@@ -6016,7 +6017,7 @@ hui.ui.List.prototype = {
 		var out = '';
 		var count = 0;
 		for (var i=0; i < str.length; i++) {
-			if (str[i]===' ') {
+			if (str[i]===' ' || str[i]==='-') {
 				count=0;
 			} else {
 				count++;
@@ -6142,7 +6143,7 @@ hui.ui.List.prototype = {
 						return false;
 					}
 					if (index==self.window.page) {
-						a.className='selected';
+						a.className='hui_list_selected';
 					}
 					pageBody.appendChild(a);
 				}
@@ -6306,10 +6307,10 @@ hui.ui.List.prototype = {
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {
-			hui.removeClass(rows[this.selected[i]],'selected');
+			hui.removeClass(rows[this.selected[i]],'hui_list_selected');
 		}
 		for (i=0;i<indexes.length;i++) {
-			hui.addClass(rows[indexes[i]],'selected');
+			hui.addClass(rows[indexes[i]],'hui_list_selected');
 		}
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);
@@ -6344,7 +6345,7 @@ hui.ui.List.prototype = {
 		hui.ui.firePropertyChange(this,'window.page',this.window.page);
 		var as = this.windowPageBody.getElementsByTagName('a');
 		for (var i = as.length - 1; i >= 0; i--){
-			as[i].className = as[i]==tag ? 'selected' : '';
+			as[i].className = as[i]==tag ? 'hui_list_selected' : '';
 		};
 	}
 };
@@ -7014,7 +7015,7 @@ hui.ui.Button.create = function(o) {
 	if (!o.enabled) {
 		className+=' hui_button_disabled';
 	}
-	var element = o.element = hui.build('a',{'class':className,href:'#'});
+	var element = o.element = hui.build('a',{'class':className,href:'javascript://'});
 	var element2 = document.createElement('span');
 	element.appendChild(element2);
 	var element3 = document.createElement('span');
@@ -9631,7 +9632,7 @@ hui.ui.Overlay.prototype = {
 				source : {element:this.element,vertical:0,horizontal:.5},
 				target : {element:options.element,vertical:.5,horizontal:.5},
 				insideViewPort : true,
-				viewPartMargin : 7
+				viewPartMargin : 9
 			});
 		}
 		if (this.visible) return;
@@ -10904,7 +10905,7 @@ hui.ui.Dock.prototype = {
 	},
 	_setBusy : function(busy) {
 		if (busy) {
-			hui.setStyle(this.progress,{display:'block',height:this.iframe.clientHeight});
+			hui.setStyle(this.progress,{display:'block',style:this.iframe.clientHeight+'px;width:'+this.iframe.clientWidth+'px'});
 		} else {
 			this.progress.style.display = 'none';
 		}
@@ -10919,6 +10920,7 @@ hui.ui.Dock.prototype = {
 	$$layout : function() {
 		var height = hui.getViewPortHeight();
 		this.iframe.style.height=(height+this.diff)+'px';
+		this.progress.style.width=(this.iframe.clientWidth)+'px';
 		this.progress.style.height=(height+this.diff)+'px';
 	}
 }
@@ -12228,7 +12230,7 @@ hui.ui.Links.prototype = {
 
 			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.wrap(item.info)});
 			row.appendChild(infoNode);
-			remove = hui.ui.createIcon('monochrome/round_x',1);
+			remove = hui.ui.createIcon('monochrome/delete',1);
 			hui.addClass(remove,'hui_links_remove');
 			row.appendChild(remove);
 

@@ -301,7 +301,7 @@
 </xsl:template>
 
 <xsl:template match="gui:layout/gui:middle/gui:left">
-	<td class="hui_layout_left">
+	<td class="hui_layout_left hui_context_sidebar">
 		<xsl:apply-templates/>
 		<div class="hui_layout_left"><xsl:comment/></div>
 	</td>

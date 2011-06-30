@@ -269,7 +269,14 @@
 </dock>
 -->
 <xsl:template match="gui:dock">
+	<xsl:apply-templates select="gui:sidebar"/>
 	<table class="hui_dock" id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_dock</xsl:text>
+			<xsl:if test="gui:sidebar">
+				<xsl:text> hui_dock_with_sidebar</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:if test="@position='top' or not(@position)">
 			<thead>
 				<tr><td>
@@ -281,7 +288,7 @@
 			<tfoot>
 				<xsl:if test="gui:tabs"><xsl:attribute name="class">hui_dock_tabs</xsl:attribute></xsl:if>
 				<tr><td>
-					<xsl:apply-templates/>
+					<xsl:apply-templates select="child::*[not(name()='sidebar')]"/>
 				</td></tr>
 			</tfoot>
 		</xsl:if>
@@ -296,6 +303,13 @@
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Dock({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'<xsl:if test="gui:tabs">,tabs:true</xsl:if>});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
+</xsl:template>
+
+<xsl:template match="gui:dock/gui:sidebar">
+	<div class="hui_dock_sidebar hui_context_sidebar">
+		<xsl:comment/>
+		<xsl:apply-templates/>
+	</div>
 </xsl:template>
 
 <xsl:template match="gui:frames">
@@ -392,7 +406,7 @@
 			</span>
 		</xsl:if>
 		<span class="hui_selection_label">
-		<xsl:value-of select="@title"/>
+		<xsl:value-of select="@title"/><xsl:value-of select="@text"/>
 		</span>
 	</div>
 </xsl:template>

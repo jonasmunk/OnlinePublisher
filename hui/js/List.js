@@ -350,7 +350,7 @@ hui.ui.List.prototype = {
 		var out = '';
 		var count = 0;
 		for (var i=0; i < str.length; i++) {
-			if (str[i]===' ') {
+			if (str[i]===' ' || str[i]==='-') {
 				count=0;
 			} else {
 				count++;
@@ -476,7 +476,7 @@ hui.ui.List.prototype = {
 						return false;
 					}
 					if (index==self.window.page) {
-						a.className='selected';
+						a.className='hui_list_selected';
 					}
 					pageBody.appendChild(a);
 				}
@@ -640,10 +640,10 @@ hui.ui.List.prototype = {
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {
-			hui.removeClass(rows[this.selected[i]],'selected');
+			hui.removeClass(rows[this.selected[i]],'hui_list_selected');
 		}
 		for (i=0;i<indexes.length;i++) {
-			hui.addClass(rows[indexes[i]],'selected');
+			hui.addClass(rows[indexes[i]],'hui_list_selected');
 		}
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);
@@ -678,7 +678,7 @@ hui.ui.List.prototype = {
 		hui.ui.firePropertyChange(this,'window.page',this.window.page);
 		var as = this.windowPageBody.getElementsByTagName('a');
 		for (var i = as.length - 1; i >= 0; i--){
-			as[i].className = as[i]==tag ? 'selected' : '';
+			as[i].className = as[i]==tag ? 'hui_list_selected' : '';
 		};
 	}
 };

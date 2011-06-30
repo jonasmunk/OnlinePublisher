@@ -88,7 +88,7 @@ hui.ui.Links.prototype = {
 
 			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.wrap(item.info)});
 			row.appendChild(infoNode);
-			remove = hui.ui.createIcon('monochrome/round_x',1);
+			remove = hui.ui.createIcon('monochrome/delete',1);
 			hui.addClass(remove,'hui_links_remove');
 			row.appendChild(remove);
 

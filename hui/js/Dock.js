@@ -36,7 +36,7 @@ hui.ui.Dock.prototype = {
 	},
 	_setBusy : function(busy) {
 		if (busy) {
-			hui.setStyle(this.progress,{display:'block',height:this.iframe.clientHeight});
+			hui.setStyle(this.progress,{display:'block',style:this.iframe.clientHeight+'px;width:'+this.iframe.clientWidth+'px'});
 		} else {
 			this.progress.style.display = 'none';
 		}
@@ -51,6 +51,7 @@ hui.ui.Dock.prototype = {
 	$$layout : function() {
 		var height = hui.getViewPortHeight();
 		this.iframe.style.height=(height+this.diff)+'px';
+		this.progress.style.width=(this.iframe.clientWidth)+'px';
 		this.progress.style.height=(height+this.diff)+'px';
 	}
 }

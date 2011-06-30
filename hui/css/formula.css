@@ -9,7 +9,7 @@ form.hui_formula
 div.hui_formula_fieldset
 {
 	border: 1px solid #ddd;
-	padding: 10px;
+	padding: 10px 10px 5px;
 	margin-top: 4px;
 	background: #f6f6f6;
 }
@@ -36,6 +36,8 @@ div.hui_window div.hui_formula_fieldset
 {
 	background: #eee;
 	border: 1px solid #ccc;
+	border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 3px #DDDDDD inset;
 }
 
 .hui_formula_header

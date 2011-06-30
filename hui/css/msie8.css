@@ -3,6 +3,11 @@ body.hui
 	font-size: 0;
 }
 
+a.hui_button
+{
+	line-height: 27px;
+}
+
 table.hui_layout
 {
 	height: 100%;
