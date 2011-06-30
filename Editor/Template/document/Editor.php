@@ -205,12 +205,12 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	Database::free($result);
 	if ($selected==0) {
 		echo '<div style="padding-top: 5px;">'.
-		'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" href="#" class="hui_button hui_button_small_rounded">'.
+		'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" href="#" class="hui_button hui_button_small">'.
 		'<span><span>'.$strings['add_section'][$language].'</span></span>'.
 		'</a>'.
 		'</div>';
 	} else {
-		echo '<div style="padding-top: 5px;"><a class="hui_button hui_button_small_rounded hui_button_disabled"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
+		echo '<div style="padding-top: 5px;"><a class="hui_button hui_button_small hui_button_disabled"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
 	}
 }
 

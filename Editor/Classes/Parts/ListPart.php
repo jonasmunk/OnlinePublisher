@@ -14,7 +14,11 @@ Part::$schema['list'] = array(
 		'variant' => array( 'type' => 'text' ),
 		'timeCount' => array( 'type' => 'int', 'column' => 'time_count' ),
 		'timeType' => array( 'type' => 'text', 'column' => 'time_type' ),
-		'showSource' => array( 'type' => 'boolean', 'column' => 'show_source' )
+		'showSource' => array( 'type' => 'boolean', 'column' => 'show_source' ),
+		'showText' => array( 'type' => 'boolean', 'column' => 'show_text' ),
+		'showTimezone' => array( 'type' => 'boolean', 'column' => 'show_timezone' ),
+		'timezone' => array( 'type' => 'text' ),
+		'maxTextLength' => array( 'type' => 'int', 'column' => 'maxtextlength' )
 	),
 	'relations' => array(
 		'objectIds' => array( 'table' => 'part_list_object', 'fromColumn' => 'part_id', 'toColumn' => 'object_id' )
@@ -32,6 +36,11 @@ class ListPart extends Part
 	var $timeType;
 	var $showSource;
 	var $objectIds;
+	
+	var $showText;
+	var $showTimeZone;
+	var $timezone;
+	var $maxTextLength;
 	
 	function ListPart() {
 		parent::Part('list');
@@ -111,6 +120,38 @@ class ListPart extends Part
 
 	function getObjectIds() {
 	    return $this->objectIds;
+	}
+	
+	function setShowText($showText) {
+	    $this->showText = $showText;
+	}
+
+	function getShowText() {
+	    return $this->showText;
+	}
+	
+	function setShowTimeZone($showTimeZone) {
+	    $this->showTimeZone = $showTimeZone;
+	}
+
+	function getShowTimeZone() {
+	    return $this->showTimeZone;
+	}
+	
+	function setTimezone($timezone) {
+	    $this->timezone = $timezone;
+	}
+
+	function getTimezone() {
+	    return $this->timezone;
+	}
+
+	function setMaxTextLength($maxTextLength) {
+	    $this->maxTextLength = $maxTextLength;
+	}
+
+	function getMaxTextLength() {
+	    return $this->maxTextLength;
 	}
 	
 }

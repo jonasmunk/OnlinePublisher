@@ -25,8 +25,10 @@ class TextPartController extends PartController
 	}
 	
 	function getIndex($part) {
-		// TODO Strip tags etc.
-		return $part->getText();
+		$context = new PartContext();
+		$text = $part->getText();
+		$text = $context->decorateForIndex($text);
+		return $text;
 	}
 	
 	function editor($part,$context) {

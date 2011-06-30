@@ -524,10 +524,14 @@ $databaseTables = array(
 			array("align","varchar(20)","YES","","",""),
 			array("width","varchar(20)","YES","","",""),
 			array("maxitems","int(11)","YES","","10",""),
+			array("maxtextlength","int(11)","YES","","",""),
 			array("variant","varchar(50)","NO","","box",""),
 			array("time_count","int(11)","NO","","7",""),
 			array("time_type","varchar(255)","NO","","days",""),
-			array("show_source","tinyint(4)","NO","","0","")
+			array("show_source","tinyint(4)","NO","","0",""),
+			array("show_text","tinyint(4)","NO","","1",""),
+			array("show_timezone","tinyint(4)","NO","","0",""),
+			array("timezone","varchar(255)","NO","","days","")
 		),
 	'part_list_object' => array(
 			array("part_id","int(11)","","","0",""),
@@ -848,6 +852,9 @@ $databaseTables = array(
 	'template' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("unique","varchar(50)","","","","")
+		),
+	'testphrase' => array(
+			array("object_id","int(11)","","","0","")
 		),
 	'tool' => array(
 			array("id","int(11)","","PRI","","auto_increment"),

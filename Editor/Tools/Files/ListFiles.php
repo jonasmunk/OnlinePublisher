@@ -62,7 +62,7 @@ foreach ($objects as $object) {
 	$writer->
 	startRow(array('kind'=>'file','id'=>$object->getId(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()))->
 		startCell(array('icon'=>$object->getIn2iGuiIcon()))->
-			startLine()->text($object->getTitle())->endLine()->
+			startLine()->startWrap()->text($object->getTitle())->endWrap()->endLine()->
 		endCell()->
 		startCell()->
 			startLine()->text(FileService::mimeTypeToLabel($object->getMimeType()))->endLine()->

@@ -177,7 +177,7 @@ class VCalParser {
 	
 	function parseDate($date) {
 		if (preg_match("/([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2})Z/mi",$date, $matches)) {
-			return mktime ( $matches[4]+1,$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
+			return gmmktime ( $matches[4],$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
 		} else if (preg_match("/([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2})/mi",$date, $matches)) {
 			return mktime ( $matches[4],$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
 		} elseif (preg_match("/([0-9]{4})([0-9]{2})([0-9]{2})/mi",$date, $matches)) {

@@ -180,7 +180,6 @@ class Calendarsource extends Object {
 				if ($event->isRecurring()) {
 					$rule = $event->getRecurrenceRules();
 					$rule = $rule[0];
-					//error_log(print_r($rule,true));
 					$recurring = true;
 					$frequency = $rule->getFrequency();
 					$until = $rule->getUntil();
@@ -273,6 +272,7 @@ class Calendarsource extends Object {
 			return;
 		}
 		if ($row['frequency']=='DAILY' || $row['frequency']=='WEEKLY' || $row['frequency']=='MONTHLY' || $row['frequency']=='YEARLY') {
+			Log::debug($row);
 			// Build maximum 1000 events
 			$running = true;
 			for ($i=0;$i<1000 && $running;$i++) {

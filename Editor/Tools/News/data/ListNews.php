@@ -28,14 +28,15 @@ if ($sourceId) {
 	$items = Query::after('newssourceitem')->withProperty('newssource_id',$sourceId)->orderBy('date')->descending()->get();
 
 	foreach ($items as $item) {
-		$writer->startRow();
-		$writer->startCell(array('icon'=>'common/page'))->
+		$writer->startRow()->
+		startCell(array('icon'=>'common/page'))->
 			startLine()->text($item->getTitle())->endLine()->
 			startLine(array('dimmed'=>true))->text(StringUtils::shortenString(StringUtils::removeTags($item->getText()),400))->endLine()->
-			endCell();
-		$writer->startCell()->text(DateUtils::formatFuzzy($item->getDate()))->endCell();
-		
-		$writer->endRow();
+		endCell()->
+		startCell()->
+			text(DateUtils::formatFuzzy($item->getDate()))->
+		endCell()->
+		endRow();
 	}
 	$writer->endList();
 	exit;

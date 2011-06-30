@@ -17,42 +17,71 @@ $gui='
 	<layout>
 		<top>
 			<toolbar>
+				<icon icon="common/new" title="Tilføj kontrolord" name="newWord" click="newWordPanel.show();wordFormula.focus()"/>
 				<!--icon icon="common/edit" title="Rediger"/>
-				<icon icon="common/info" title="Egenskaber"/-->
+				-->
 			</toolbar>
 		</top>
 		<middle>
 			<left>
+				<overflow>
 				<selection value="overview" name="selector">
 					<item icon="common/info" title="Oversigt" value="overview"/>
 					<item icon="common/warning" title="Advarsler" value="warnings"/>
 					<title>Sprog</title>
 					<item icon="common/search" title="Søgeindeks" value="index"/>
 					<item icon="common/info" title="Unikke ord" value="words"/>
+					<item icon="common/info" title="Kontroller ord" value="wordcheck"/>
 				</selection>
+				</overflow>
 			</left>
-			<middle>
+			<center>
 				<overflow>
 					<bar state="list" variant="layout">
 						<text name="listDescription"/>
 					</bar>
 					<list name="list" source="listSource" state="list"/>
-					<fragment state="overview" background="brushed" height="full">
-						<box width="500" padding="10" top="20">
-							<formula>
+					<fragment state="overview" height="full" background="vichy">
+						<box width="500" padding="10" top="20" title="Oversigt">
+							<toolbar>
+								<icon icon="common/save" text="Gem" name="saveSettings"/>
+							</toolbar>
+							<formula name="settingsFormula">
 								<group labels="above">
-									<text label="Hvad er hjemmesidens formål:" multiline="true"/>
-									<tokens label="Ord der skal være på siden:"/>
-									<text label="Hvilke målgrupper har siden:" multiline="true"/>
+									<text label="Hvad er hjemmesidens formål:" multiline="true" key="purpose"/>
+									<text label="Hvilke målgrupper har siden:" multiline="true" key="audiences"/>
+									<text label="Hvad er success-kriterierne for siden" multiline="true" key="successcriteria"/>
 								</group>
 							</formula>
 						</box>
 					</fragment>
 				</overflow>
-			</middle>
+			</center>
 		</middle>
 		<bottom/>
 	</layout>
+	
+	<boundpanel target="newWord" name="newWordPanel" width="200">
+		<formula name="wordFormula">
+			<group labels="above">
+				<text label="Ord:" key="word"/>
+			</group>
+			<buttons>
+				<button text="Luk" click="newWordPanel.hide()" small="true"/>
+				<button text="Opret" highlighted="true" submit="true" small="true"/>
+			</buttons>
+		</formula>
+	</boundpanel>
+	
+	<boundpanel name="wordPanel" width="300" title="Sider med ordet">
+		<overflow height="200">
+			<list name="phrasePageList"/>
+		</overflow>
+		<buttons top="10">
+			<button small="true" text="Luk" click="wordPanel.hide()" highlighted="true"/>
+		</buttons>
+	</boundpanel>
+	
 </gui>';
 
 In2iGui::render($gui);

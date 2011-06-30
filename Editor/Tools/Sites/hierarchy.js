@@ -16,21 +16,22 @@ hui.ui.listen({
 			this.loadHierarchy(obj.value);
 		}
 	},
-	$clickIcon$list : function(row,data) {
-		if (data.action=='pageInfo') {
-			mainController.loadPage(data.id);
-		} else if (data.action=='moveItem') {
+	$clickIcon$list : function(info) {
+		
+		if (info.data.action=='pageInfo') {
+			mainController.loadPage(info.data.id);
+		} else if (info.data.action=='moveItem') {
 			hui.ui.request({
 				message : {start : 'Flytter menupunkt...',delay : 300},
 				url:'MoveHierarchyItem.php',
-				parameters:{id:row.id,direction:data.direction},
+				parameters:{id:info.row.id,direction:info.data.direction},
 				onSuccess:function() {
 					list.refresh();
 					hierarchySource.refresh();
 				}
 			});
-		} else if (data.action=='visitLink') {
-			window.open(data.url);
+		} else if (info.data.action=='visitLink') {
+			window.open(info.data.url);
 		}		
 	},
 	$listRowWasOpened$list : function(obj) {

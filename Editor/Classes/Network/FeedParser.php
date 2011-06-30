@@ -83,6 +83,7 @@ class FeedParser {
 			$item = new FeedItem();
 			$item->setTitle(DOMUtils::getFirstChildText($node,'title'));
 			$item->setPubDate(DateUtils::parseRFC3339(DOMUtils::getFirstChildText($node,'updated')));
+			$item->setDescription(DOMUtils::getFirstChildText($node,'content'));
 			$feed->addItem($item);
 		}
 	}

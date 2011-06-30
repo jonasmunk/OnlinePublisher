@@ -43,7 +43,10 @@ class ListPartController extends PartController
 		$part->setTitle(Request::getUnicodeString('title'));
 		$part->setTimeCount(Request::getInt('time_count'));
 		$part->setMaxItems(Request::getInt('maxitems'));
+		$part->setMaxTextLength(Request::getInt('maxtextlength'));
 		$part->setShowSource(Request::getBoolean('show_source'));
+		$part->setShowText(Request::getBoolean('show_text'));
+		$part->setShowTimezone(Request::getBoolean('show_timezone'));
 		return $part;
 	}
 	
@@ -52,9 +55,12 @@ class ListPartController extends PartController
 		return 
 	    '<input type="hidden" name="time_count" value="'.$part->getTimeCount().'"/>'.
 	    '<input type="hidden" name="maxitems" value="'.$part->getMaxItems().'"/>'.
+	    '<input type="hidden" name="maxtextlength" value="'.$part->getMaxTextLength().'"/>'.
 	    '<input type="hidden" name="title" value="'.StringUtils::escapeXML($part->getTitle()).'"/>'.
 	    '<input type="hidden" name="objects" value="'.implode(',',$part->getObjectIds()).'"/>'.
 	    '<input type="hidden" name="show_source" value="'.($part->getShowSource() ? 'true' : 'false').'"/>'.
+	    '<input type="hidden" name="show_text" value="'.($part->getShowText() ? 'true' : 'false').'"/>'.
+	    '<input type="hidden" name="show_timezone" value="'.($part->getShowTimezone() ? 'true' : 'false').'"/>'.
 		'<script src="'.$baseUrl.'Editor/Parts/list/script.js" type="text/javascript" charset="utf-8"></script>'.
 		'<script type="text/javascript">
 		op.part.List.setData('.$this->buildData($part).');'.
@@ -65,6 +71,10 @@ class ListPartController extends PartController
 	}
 	
 	function editorGui($part,$context) {
+		$zoneItems = '';
+		foreach (DateUtils::getTimeZones() as $zone) {
+			$zoneItems.='<item title="'.$zone.'" value="'.$zone.'"/>';
+		}
 		$gui='
 		<window title="Nyheder" name="listWindow" width="300" close="false">
 			<tabs small="true" centered="true">
@@ -72,10 +82,26 @@ class ListPartController extends PartController
 					<formula name="formula">
 						<group labels="above">
 							<text label="Titel" value="'.StringUtils::escapeXML($part->getTitle()).'" key="title"/>
-							<number label="Dage" value="'.$part->getTimeCount().'" key="time_count"/>
-							<number label="Maksimalt antal" value="'.$part->getMaxItems().'" key="maxitems"/>
-							<checkbox label="Vis kilde" value="'.$part->getShowSource().'" key="show_source"/>
 						</group>
+						<fieldset legend="Begrænsning">
+							<group labels="before">
+								<number label="Dage" value="'.$part->getTimeCount().'" key="time_count"/>
+								<number label="Maksimalt antal" value="'.$part->getMaxItems().'" key="maxitems"/>
+							</group>
+						</fieldset>
+						<space height="10"/>
+						<fieldset legend="Visning">
+							<group>
+								<checkbox label="Vis tekst" value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
+								<number label="Tekstlængde" value="'.$part->getMaxTextLength().'" key="maxtextlength"/>
+								<checkbox label="Vis kilde" value="'.($part->getShowSource() ? 'true' : 'false').'" key="show_source"/>
+								<checkbox label="Vis tidszone" value="'.($part->getShowTimezone() ? 'true' : 'false').'" key="show_timezone"/>
+								<dropdown label="Tidszone">
+									<item value="" text="Standard"/>
+									'.$zoneItems.'
+								</dropdown>
+							</group>
+						</fieldset>
 					</formula>
 				</tab>
 				<tab title="Data">
@@ -149,7 +175,9 @@ class ListPartController extends PartController
 							$item->setStartDate($sourceEvent['startDate']);
 							$item->setEndDate($sourceEvent['endDate']);
 							$item->setTitle($sourceEvent['summary']);
-							$item->setText($sourceEvent['description']);
+							if ($part->getShowText()) {
+								$item->setText($sourceEvent['description']);
+							}
 							$item->setUrl($sourceEvent['url']);
 							if ($part->getShowSource()) {
 								$item->setSource($sourceEvent['calendarDisplayTitle']);
@@ -164,7 +192,9 @@ class ListPartController extends PartController
 						$item->setStartDate($newsItem->getStartDate());
 						$item->setEndDate($newsItem->getEndDate());
 						$item->setTitle($newsItem->getTitle());
-						$item->setText($newsItem->getNote());
+						if ($part->getShowText()) {
+							$item->setText($newsItem->getNote());
+						}
 						$items[] = $item;
 					}
 				} else if ($type=='newssource') {
@@ -181,7 +211,9 @@ class ListPartController extends PartController
 							$item = new PartListItem();
 							$item->setDate($newsItem->getDate());
 							$item->setTitle($newsItem->getTitle());
-							$item->setText($newsItem->getText());
+							if ($part->getShowText()) {
+								$item->setText($newsItem->getText());
+							}
 							if ($part->getShowSource()) {
 								$item->setSource($source->getTitle());
 							}
@@ -193,6 +225,7 @@ class ListPartController extends PartController
 		}
 
 		$data = '<list xmlns="'.$this->getNamespace().'" dirty="'.($dirty ? 'true' : 'false').'">';
+		$data.='<settings show-timezone="'.($part->getShowTimeZone() ? 'true' : 'false').'"/>';
 		if (StringUtils::isNotBlank($part->getTitle())) {
 			$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
 		}
@@ -203,7 +236,11 @@ class ListPartController extends PartController
 			$data.='<item>'.
 			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>';
 			if (StringUtils::isNotBlank($item->getText())) {
-				$data.='<text>'.StringUtils::escapeXMLBreak($item->getText(),'<break/>').'</text>';
+				$text = StringUtils::removeTags($item->getText());
+				if ($part->getMaxTextLength()) {
+					$text = StringUtils::shortenString($text,$part->getMaxTextLength());
+				}
+				$data.='<text>'.StringUtils::escapeXMLBreak($text,'<break/>').'</text>';
 			}
 			if (StringUtils::isNotBlank($item->getUrl())) {
 				$data.='<url>'.StringUtils::escapeXML($item->getUrl()).'</url>';

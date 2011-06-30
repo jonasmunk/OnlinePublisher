@@ -84,26 +84,35 @@
 <xsl:template match="l:item/l:date">
 	<p class="part_list_date">
 		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
+		<xsl:if test="../../l:settings/@show-timezone='true'">
+			(<xsl:value-of select="@timezone"/>)
+		</xsl:if>
 	</p>
 </xsl:template>
 
 <xsl:template match="l:item/l:start-date">
 	<p class="part_list_date">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>From: </xsl:text></xsl:when>
-			<xsl:otherwise><xsl:text>Fra: </xsl:text></xsl:otherwise>
+			<xsl:when test="//p:page/p:meta/p:language='da'"><xsl:text>Fra: </xsl:text></xsl:when>
+			<xsl:otherwise><xsl:text>From: </xsl:text></xsl:otherwise>
 		</xsl:choose>
 		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
+		<xsl:if test="../../l:settings/@show-timezone='true'">
+			(<xsl:value-of select="@timezone"/>)
+		</xsl:if>
 	</p>
 </xsl:template>
 
 <xsl:template match="l:item/l:end-date">
 	<p class="part_list_date">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>To: </xsl:text></xsl:when>
-			<xsl:otherwise><xsl:text>Til: </xsl:text></xsl:otherwise>
+			<xsl:when test="//p:page/p:meta/p:language='da'"><xsl:text>Til: </xsl:text></xsl:when>
+			<xsl:otherwise><xsl:text>To: </xsl:text></xsl:otherwise>
 		</xsl:choose>
 		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
+		<xsl:if test="../../l:settings/@show-timezone='true'">
+			(<xsl:value-of select="@timezone"/>)
+		</xsl:if>
 	</p>
 </xsl:template>
 

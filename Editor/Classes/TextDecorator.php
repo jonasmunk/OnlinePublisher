@@ -61,7 +61,13 @@ class TextDecorator {
 			$pos = $matches[0][$i][1];
 			$old = $matches[0][$i][0];
 			$subject = $matches[1][$i][0];
-			$rules[$pos] = array('start' => $pos, 'stop' => $pos+strlen($old),'openTag' => '<'.$replacement.'>','closeTag' => '</'.$replacement.'>','subject' => $subject);
+			$open = '';
+			$close = '';
+			if ($replacement) {
+				$open = '<'.$replacement.'>';
+				$close = '</'.$replacement.'>';
+			}
+			$rules[$pos] = array('start' => $pos, 'stop' => $pos+strlen($old),'openTag' => $open,'closeTag' => $close,'subject' => $subject);
 		}
 		foreach ($matches[0] as $match) {
 		}

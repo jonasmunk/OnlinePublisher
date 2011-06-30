@@ -32,24 +32,29 @@ function listSource($id,$force) {
 	//$writer->sort($sort,$direction);
 	//$writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' => $windowPage ));
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Titel','width'=>20));
-	$writer->header(array('title'=>'Note','width'=>20));
-	$writer->header(array('title'=>'Lokation'));
+	$writer->header(array('title'=>'Titel + note','width'=>30));
+	$writer->header(array('title'=>'Lokation','width'=>20));
 	$writer->header(array('title'=>'URL'));
-	$writer->header(array('title'=>'Start'));
-	$writer->header(array('title'=>'Slut'));
-	$writer->header(array('title'=>'Bonus'));
+	$writer->header(array('title'=>'Start','width'=>1));
+	$writer->header(array('title'=>'Slut','width'=>1));
+	$writer->header(array('title'=>'Bonus','width'=>1));
 	$writer->endHeaders();
 
 	foreach ($events as $event) {
-		$writer->startRow();
-		$writer->startCell()->text($event['summary'])->endCell();
-		$writer->startCell()->text($event['description'])->endCell();
+		$writer->startRow()
+			->startCell(array('icon'=>'common/time'))->
+				startLine()->startWrap()->text($event['summary'])->endWrap()->endLine()->
+				startLine(array('dimmed'=>true))->startWrap()->text($event['description'])->endWrap()->endLine()->
+			endCell();
 		$writer->startCell()->text($event['location'])->endCell();
-		$writer->startCell()->text($event['url'])->endCell();
-		$writer->startCell()->text(DateUtils::formatLongDateTime($event['startDate']))->endCell();
-		$writer->startCell()->text(DateUtils::formatLongDateTime($event['endDate']))->endCell();
-		$writer->startCell()->text($event['recurring'])->endCell();
+		$writer->startCell()->startWrap()->text($event['url'])->endWrap()->endCell();
+		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatLongDateTime($event['startDate']))->endCell();
+		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatLongDateTime($event['endDate']))->endCell();
+		$writer->startCell();
+		if ($event['recurring']) {
+			$writer->icon(array('icon'=>'common/recycle'));
+		}
+		$writer->endCell();
 		$writer->endRow();
 	}
 	$writer->endList();

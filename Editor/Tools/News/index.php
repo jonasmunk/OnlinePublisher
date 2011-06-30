@@ -155,12 +155,14 @@ $gui='
 				<toolbar centered="true">
 					<icon title="Tilføj link" icon="common/link" overlay="new" click="newsLinks.addLink()"/>
 				</toolbar>
+				<space right="10" left="10" bottom="10">
 				<links name="newsLinks" pageSource="pageItems" fileSource="fileItems"/>
+				</space>
 			</tab>
 			
 		</tabs>
 		
-		<buttons right="10" bottom="5" align="right">
+		<buttons right="10" bottom="10" align="right">
 			<button name="cancelNews" title="Annuller"/>
 			<button name="deleteNews" title="Slet">
 				<confirm text="Er du sikker?" ok="Ja, slet nyheden" cancel="Annuller"/>

@@ -9,8 +9,15 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Object.php';
 
-$data = Request::getObject('data');
-
-$obj=Object::load($data->id);
-$obj->remove();
+$id = Request::getInt('id');
+if (!$id) {
+	$data = Request::getObject('data');
+	$id = $data->id;
+}
+$obj=Object::load($id);
+if ($obj) {
+	$obj->remove();
+} else {
+	Response::badRequest();
+}
 ?>

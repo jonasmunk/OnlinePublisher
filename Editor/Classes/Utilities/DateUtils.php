@@ -259,4 +259,8 @@ class DateUtils {
 		$date = date('j',$timestamp);
 		return mktime($hours,$minutes,$seconds,$month+$months,$date,$year);
 	}
+	
+	function getTimeZones() {
+		return DateTimeZone::listIdentifiers();
+	}
 }

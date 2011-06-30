@@ -14,6 +14,7 @@ class PartContext {
 	var $design;
 	var $displayDecorator;
 	var $buildDecorator;
+	var $indexDecorator;
 	var $synchronize;
 	
 	function PartContext() {
@@ -33,6 +34,10 @@ class PartContext {
 		$this->buildDecorator->addTag('s','strong');
 		$this->buildDecorator->addTag('e','em');
 		$this->buildDecorator->addTag('slet','del');
+		$this->indexDecorator = new TextDecorator();
+		$this->indexDecorator->addTag('s',null);
+		$this->indexDecorator->addTag('e',null);
+		$this->indexDecorator->addTag('slet',null);
 	}
 	
 	function setTemplate($template) {
@@ -66,6 +71,10 @@ class PartContext {
 
 	function decorateForBuild($text) {
 		return $this->buildDecorator->decorate($text);
+	}
+
+	function decorateForIndex($text) {
+		return $this->indexDecorator->decorate($text);
 	}
 
 	/////////////////////////////// Links ///////////////////////////

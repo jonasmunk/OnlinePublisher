@@ -34,6 +34,15 @@ class TestHeaderPart extends UnitTestCase {
 		$obj2->remove();
 	}
 
+	function testIndex() {
+		$obj = new HeaderPart();
+		$obj->setText("Lorem [s]ipsum[s] dolor [e]sit[e] amet,\n consectetur<tag> [slet]adipisicing[slet] elit\n\nNew paragraph\n\n\nThree & new lines");
+		$ctrl = new HeaderPartController();
+		$index = $ctrl->getIndex($obj);
+		$expected = "Lorem ipsum dolor sit amet,\n consectetur<tag> adipisicing elit\n\nNew paragraph\n\n\nThree & new lines";
+		$this->assertEqual($index,$expected);
+	}
+
 	function testImport() {
 		$obj = new HeaderPart();
 		$obj->setText('Lorem [s]ipsum[s] dolor [e]sit[e] amet,\n consectetur<tag> [slet]adipisicing[slet] elit\n\nNew paragraph\n\n\nThree & new lines');

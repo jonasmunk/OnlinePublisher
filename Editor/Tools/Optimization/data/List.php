@@ -5,9 +5,6 @@
  */
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
-require_once '../../../Classes/In2iGui.php';
-require_once '../../../Classes/Request.php';
-require_once '../../../Classes/InternalProblem.php';
 
 $kind = Request::getString('kind');
 
@@ -15,6 +12,8 @@ if ($kind=='index') {
 	listIndex();
 } else if ($kind=='words') {
 	listWords();
+} else if ($kind=='wordcheck') {
+	listWordCheck();
 } else {
 	listWarning();
 }
@@ -37,6 +36,46 @@ function listIndex() {
 		$writer->endRow();
 	}
 	Database::free($result);
+
+	$writer->endList();
+}
+
+function listWordCheck() {
+	
+	$list = Query::after('testphrase')->orderBy('title')->get();
+	
+	$writer = new ListWriter();
+
+	$writer->startList();
+	$writer->startHeaders();
+	$writer->header(array('title'=>'Side','width'=>'30'));
+	$writer->header(array('title'=>'Antal'));
+	$writer->header(array('width'=>'1'));
+	$writer->endHeaders();
+
+	foreach ($list as $word) {
+		$sql = "select count(id) as `count` from page where lower(`index`) like '%".strtolower($word->getTitle())."%'";
+		$row = Database::selectFirst($sql);
+		
+		$writer->startRow(array('id'=>$word->getId()));
+		$writer->startCell(array('icon'=>'monochrome/dot'))->text($word->getTitle())->endCell();
+		if ($row['count']==0) {
+			$writer->startCell(array('icon'=>'common/warning'))->text('Ikke findet')->endCell();
+		} else {
+			$writer->startCell(array('icon'=>'common/page'))->
+				text($row['count'])->
+				startIcons()->
+					icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'view')))->
+				endIcons()->
+			endCell();
+		}
+		$writer->startCell(array('wrap'=>false))->
+			startIcons()->
+				icon(array('icon'=>'monochrome/delete','revealing'=>true,'data'=>array('action'=>'delete')))->
+			endIcons()->
+		endCell();
+		$writer->endRow();
+	}
 
 	$writer->endList();
 }

@@ -14,7 +14,10 @@ op.part.List = {
 		document.forms.PartForm.title.value = values.title;
 		document.forms.PartForm.time_count.value = values.time_count;
 		document.forms.PartForm.maxitems.value = values.maxitems;
+		document.forms.PartForm.maxtextlength.value = values.maxtextlength;
 		document.forms.PartForm.show_source.value = values.show_source;
+		document.forms.PartForm.show_text.value = values.show_text;
+		document.forms.PartForm.show_timezone.value = values.show_timezone;
 		this.preview();
 	},
 	$valuesChanged$dataFormula : function(values) {
