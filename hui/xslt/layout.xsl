@@ -168,6 +168,7 @@
 			<div class="hui_box_body">
 				<xsl:if test="@padding"><xsl:attribute name="style">padding: <xsl:value-of select="@padding"/>px;</xsl:attribute></xsl:if>
 				<xsl:apply-templates select="child::*[not(name()='toolbar')]"/>
+				<xsl:comment/>
 			</div>
 		</div></div>
 		<div class="hui_box_bottom"><div><div><xsl:comment/></div></div></div>

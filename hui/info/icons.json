@@ -1,0 +1,525 @@
+{
+    "application": {
+        "files": [
+            2
+        ], 
+        "news": [
+            1, 
+            2
+        ], 
+        "pages": [
+            2
+        ], 
+        "shop": [
+            2
+        ], 
+        "statistics": [
+            2
+        ], 
+        "water": [
+            2
+        ]
+    }, 
+    "colorpicker": {
+        "swatches": [
+            1
+        ], 
+        "wheel_brightness": [
+            1
+        ], 
+        "wheel_pastels": [
+            1
+        ], 
+        "wheel_saturated": [
+            1
+        ]
+    }, 
+    "common": {
+        "calendar": [
+            1, 
+            2
+        ], 
+        "close": [
+            1, 
+            2
+        ], 
+        "color": [
+            1, 
+            16, 
+            2
+        ], 
+        "delete": [
+            1, 
+            2
+        ], 
+        "design": [
+            2
+        ], 
+        "duplicate": [
+            2
+        ], 
+        "edit": [
+            1, 
+            2
+        ], 
+        "email": [
+            1, 
+            16, 
+            2
+        ], 
+        "files": [
+            1
+        ], 
+        "flag": [
+            2
+        ], 
+        "folder": [
+            1, 
+            2
+        ], 
+        "folder_grey": [
+            1
+        ], 
+        "frame": [
+            2
+        ], 
+        "gauge": [
+            1, 
+            2
+        ], 
+        "hierarchy": [
+            1, 
+            2
+        ], 
+        "image": [
+            1, 
+            2
+        ], 
+        "info": [
+            1, 
+            2
+        ], 
+        "internet": [
+            1, 
+            16, 
+            2
+        ], 
+        "larger": [
+            2
+        ], 
+        "letter": [
+            1, 
+            2
+        ], 
+        "link": [
+            1, 
+            2
+        ], 
+        "new": [
+            1, 
+            2
+        ], 
+        "news": [
+            1, 
+            2
+        ], 
+        "object": [
+            1, 
+            2
+        ], 
+        "page": [
+            1, 
+            2
+        ], 
+        "pagereference": [
+            1
+        ], 
+        "person": [
+            1, 
+            2
+        ], 
+        "phone": [
+            1
+        ], 
+        "play": [
+            1, 
+            2
+        ], 
+        "product": [
+            1, 
+            2
+        ], 
+        "refresh": [
+            2
+        ], 
+        "save": [
+            2
+        ], 
+        "search": [
+            1, 
+            2
+        ], 
+        "security": [
+            2
+        ], 
+        "settings": [
+            1, 
+            2
+        ], 
+        "smaller": [
+            2
+        ], 
+        "smiley": [
+            2
+        ], 
+        "stop": [
+            1, 
+            2, 
+            24
+        ], 
+        "success": [
+            2, 
+            24
+        ], 
+        "time": [
+            1, 
+            2
+        ], 
+        "upload": [
+            64
+        ], 
+        "user": [
+            1, 
+            2
+        ], 
+        "view": [
+            2
+        ], 
+        "warning": [
+            1, 
+            2, 
+            24
+        ], 
+        "water": [
+            1, 
+            2
+        ]
+    }, 
+    "edit": {
+        "clear": [
+            1
+        ], 
+        "decrease_font_size": [
+            1
+        ], 
+        "increase_font_size": [
+            1
+        ], 
+        "text_align_center": [
+            1
+        ], 
+        "text_align_justify": [
+            1
+        ], 
+        "text_align_left": [
+            1
+        ], 
+        "text_align_right": [
+            1
+        ], 
+        "text_bold": [
+            1
+        ], 
+        "text_italic": [
+            1
+        ], 
+        "text_underline": [
+            1
+        ]
+    }, 
+    "file": {
+        "generic": [
+            1, 
+            2
+        ]
+    }, 
+    "flag": {
+        "de": [
+            1
+        ], 
+        "dk": [
+            1
+        ], 
+        "gb": [
+            1
+        ]
+    }, 
+    "geo": {
+        "map": [
+            1, 
+            2
+        ]
+    }, 
+    "inset": {
+        "cross": [
+            1
+        ], 
+        "globe": [
+            1
+        ], 
+        "public": [
+            1
+        ], 
+        "tools": [
+            1
+        ], 
+        "user": [
+            1
+        ]
+    }, 
+    "layout": {
+        "layout": [
+            2
+        ], 
+        "row": [
+            2
+        ]
+    }, 
+    "monochrome": {
+        "attachment": [
+            1
+        ], 
+        "close": [
+            1
+        ], 
+        "delete": [
+            1
+        ], 
+        "dot": [
+            1
+        ], 
+        "edit": [
+            1
+        ], 
+        "email": [
+            1
+        ], 
+        "feed": [
+            1
+        ], 
+        "file": [
+            1
+        ], 
+        "gear": [
+            2
+        ], 
+        "globe": [
+            1
+        ], 
+        "info": [
+            1
+        ], 
+        "info_light": [
+            1
+        ], 
+        "invisible": [
+            1
+        ], 
+        "latitude": [
+            1
+        ], 
+        "link": [
+            1
+        ], 
+        "longitude": [
+            1
+        ], 
+        "loudspeaker": [
+            2
+        ], 
+        "message": [
+            2
+        ], 
+        "next": [
+            1
+        ], 
+        "pin": [
+            1
+        ], 
+        "play": [
+            1
+        ], 
+        "previous": [
+            1
+        ], 
+        "recycle": [
+            1
+        ], 
+        "round_arrow_down": [
+            1
+        ], 
+        "round_arrow_left": [
+            1
+        ], 
+        "round_arrow_right": [
+            1
+        ], 
+        "round_arrow_up": [
+            1
+        ], 
+        "round_question": [
+            1
+        ], 
+        "round_x": [
+            1
+        ], 
+        "stop": [
+            1
+        ], 
+        "view": [
+            1
+        ], 
+        "warning": [
+            1
+        ]
+    }, 
+    "overlay": {
+        "change": [
+            2
+        ], 
+        "delete": [
+            2
+        ], 
+        "download": [
+            2
+        ], 
+        "edit": [
+            2
+        ], 
+        "new": [
+            2
+        ], 
+        "upload": [
+            2
+        ], 
+        "warning": [
+            2
+        ]
+    }, 
+    "part": {
+        "news": [
+            1
+        ]
+    }, 
+    "style": {
+        "align_center": [
+            16
+        ], 
+        "align_left": [
+            16
+        ], 
+        "align_right": [
+            16
+        ], 
+        "float_left": [
+            16
+        ], 
+        "float_none": [
+            16
+        ], 
+        "float_right": [
+            16
+        ], 
+        "font_variant_normal": [
+            16
+        ], 
+        "font_variant_smallcaps": [
+            16
+        ], 
+        "list-style-circle": [
+            16
+        ], 
+        "list-style-decimal": [
+            16
+        ], 
+        "list-style-disc": [
+            16
+        ], 
+        "list-style-lower-alpha": [
+            16
+        ], 
+        "list-style-lower-roman": [
+            16
+        ], 
+        "list-style-square": [
+            16
+        ], 
+        "list-style-upper-alpha": [
+            16
+        ], 
+        "list-style-upper-roman": [
+            16
+        ], 
+        "text_align_center": [
+            16
+        ], 
+        "text_align_justify": [
+            16
+        ], 
+        "text_align_left": [
+            16
+        ], 
+        "text_align_right": [
+            16
+        ], 
+        "text_bold": [
+            16
+        ], 
+        "text_decoration_linethrough": [
+            16
+        ], 
+        "text_decoration_overline": [
+            16
+        ], 
+        "text_decoration_underline": [
+            16
+        ], 
+        "text_italic": [
+            16
+        ], 
+        "text_normal": [
+            16
+        ], 
+        "text_transform_capitalize": [
+            16
+        ], 
+        "text_transform_lowercase": [
+            16
+        ], 
+        "text_transform_none": [
+            16
+        ], 
+        "text_transform_uppercase": [
+            16
+        ]
+    }, 
+    "transparent": {
+        "play": [
+            64
+        ], 
+        "playstroke": [
+            64
+        ], 
+        "warning": [
+            64
+        ]
+    }, 
+    "view": {
+        "calendar": [
+            16
+        ], 
+        "list": [
+            16
+        ]
+    }
+}

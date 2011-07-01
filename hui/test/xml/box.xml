@@ -1,72 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" padding="20" title="Box">
-	<columns>
-		<column>
-			<box width="500" padding="10" title="Title with toolbar" variant="textured" closable="true">
-				<toolbar>
-					<icon icon="common/color" title="Hep hey!" selected="true" click="hui.ui.alert({title:'ALERT!',emotion:'smile'})"/>
-					<icon icon="common/folder" title="Hep hey!" name="icon" click="hui.ui.get('icon').setSelected(true)"/>
-					<icon icon="common/settings" title="Disbaled" disabled="true"/>
-					<icon icon="common/view" title="Show hidden box" click="absoluteBox.show();"/>
-				</toolbar>
-				<formula>
-					<group>
-						<text label="Brugernavn:"/>
-						<text label="Kodeord:"/>
-						<checkbox label="Intern adgang:"/>
-						<checkbox label="Ekstern adgang:"/>
-						<tokens label="Tokens:"/>
-						<buttons top="10">
-							<button title="Gem" highlighted="true"/>
-							<button title="Slet"/>
-							<button title="Annuller"/>
-						</buttons>
-					</group>
-				</formula>
-			</box>
-		</column>
-		<column>
-			<box width="400" padding="10" title="Title with no toolbar">
-				<formula>
-					<group>
-						<text label="Brugernavn:"/>
-						<text label="Kodeord:"/>
-						<checkbox label="Intern adgang:"/>
-						<checkbox label="Ekstern adgang:"/>
-						<tokens label="Tokens:"/>
-						<buttons top="10">
-							<button title="Gem" highlighted="true"/>
-							<button title="Slet"/>
-							<button title="Annuller"/>
-						</buttons>
-					</group>
-				</formula>
-			</box>
-		</column>
-		<column>
-			<box width="400" padding="10" variant="textured">
-				<formula>
-					<group>
-						<text label="Brugernavn:"/>
-						<text label="Kodeord:"/>
-						<checkbox label="Intern adgang:"/>
-						<checkbox label="Ekstern adgang:"/>
-						<tokens label="Tokens:"/>
-						<buttons top="10">
-							<button title="Gem" highlighted="true"/>
-							<button title="Slet"/>
-							<button title="Annuller"/>
-						</buttons>
-					</group>
-				</formula>
-			</box>
-		</column>
-	</columns>
-	<box width="400" height="300" padding="10" variant="rounded" name="absoluteBox">
-		hsdjfha jdfhasfjkahsfjka hdfjaksf hak
+	<script>
+		hui.ui.listen({
+			$click$icon1 : function() {
+				icon2.setSelected(false);
+				icon1.setSelected(true);
+			},
+			$click$icon2 : function() {
+				icon1.setSelected(false);
+				icon2.setSelected(true);
+			}
+		});
+	</script>
+	<box width="500" padding="10" title="Title with toolbar" variant="textured" closable="true">
+		<toolbar>
+			<icon icon="common/color" title="Hep hey!" selected="true" name="icon1"/>
+			<icon icon="common/folder" title="Hep hey!" name="icon2"/>
+			<icon icon="common/settings" title="Disbaled" disabled="true"/>
+			<icon icon="common/view" title="Show hidden box" click="absoluteBox.show();"/>
+		</toolbar>
+		<formula>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:"/>
+				<checkbox label="Intern adgang:"/>
+				<checkbox label="Ekstern adgang:"/>
+				<tokens label="Tokens:"/>
+				<buttons top="10">
+					<button title="Annuller"/>
+					<button title="Slet"/>
+					<button title="Gem" highlighted="true"/>
+				</buttons>
+			</group>
+		</formula>
 	</box>
+	<space height="40"/>
+	<box width="400" padding="10" title="Title with no toolbar">
+		<formula>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:"/>
+				<checkbox label="Intern adgang:"/>
+				<checkbox label="Ekstern adgang:"/>
+				<tokens label="Tokens:"/>
+				<buttons top="10">
+					<button title="Gem" highlighted="true"/>
+					<button title="Slet"/>
+					<button title="Annuller"/>
+				</buttons>
+			</group>
+		</formula>
+	</box>
+	<space height="40"/>
+	
+	<box width="400" padding="10" variant="textured">
+		<formula>
+			<group>
+				<text label="Brugernavn:"/>
+				<text label="Kodeord:"/>
+				<checkbox label="Intern adgang:"/>
+				<checkbox label="Ekstern adgang:"/>
+				<tokens label="Tokens:"/>
+				<buttons top="10">
+					<button title="Gem" highlighted="true"/>
+					<button title="Slet"/>
+					<button title="Annuller"/>
+				</buttons>
+			</group>
+		</formula>
+	</box>
+	<space height="40"/>
+	<box width="400" height="300" padding="10" variant="rounded">
+		<text><h>This is a rounded box</h>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		</text>
+	</box>
+	<space height="40"/>
 	<box width="400" padding="10" title="Title with toolbar" variant="textured" modal="true" absolute="true" closable="true" name="absoluteBox">
-		hsdjfha jdfhasfjkahsfjka hdfjaksf hak
+		<text><h>This is an absolute box</h>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		</text>
 	</box>
 </gui>

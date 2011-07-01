@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<items>
+    <title title="Tests"/>
+    <item icon="common/folder" title="Unit tests" value="Unit tests">
+        <item icon="common/page" title="animation" value="unittests/animation.html"/>
+        <item icon="common/page" title="formula" value="unittests/formula.html"/>
+        <item icon="common/page" title="hui" value="unittests/hui.html"/>
+        <item icon="common/page" title="profile" value="unittests/profile.html"/>
+        <item icon="common/page" title="style" value="unittests/style.html"/>
+        <item icon="common/page" title="validation" value="unittests/validation.html"/>
+        <item icon="common/page" title="window" value="unittests/window.html"/>
+    </item>
+    <item icon="common/folder" title="HTML tests" value="HTML tests">
+        <item icon="common/page" title="alert" value="html/alert.html"/>
+        <item icon="common/page" title="animation" value="html/animation.html"/>
+        <item icon="common/page" title="boundpanel" value="html/boundpanel.html"/>
+        <item icon="common/page" title="colorpicker" value="html/colorpicker.html"/>
+        <item icon="common/page" title="drawing" value="html/drawing.html"/>
+        <item icon="common/page" title="editor" value="html/editor.html"/>
+        <item icon="common/page" title="effects" value="html/effects.html"/>
+        <item icon="common/page" title="formula" value="html/formula.html"/>
+        <item icon="common/page" title="graphviz" value="html/graphviz.html"/>
+        <item icon="common/page" title="imagepaster" value="html/imagepaster.html"/>
+        <item icon="common/page" title="infoview" value="html/infoview.html"/>
+        <item icon="common/page" title="LocationPicker" value="html/LocationPicker.html"/>
+        <item icon="common/page" title="markupeditor" value="html/markupeditor.html"/>
+        <item icon="common/page" title="menu" value="html/menu.html"/>
+        <item icon="common/page" title="overlay" value="html/overlay.html"/>
+        <item icon="common/page" title="picker" value="html/picker.html"/>
+        <item icon="common/page" title="placement" value="html/placement.html"/>
+        <item icon="common/page" title="plupload" value="html/plupload.html"/>
+        <item icon="common/page" title="positions" value="html/positions.html"/>
+        <item icon="common/page" title="progressbar" value="html/progressbar.html"/>
+        <item icon="common/page" title="protovis" value="html/protovis.html"/>
+        <item icon="common/page" title="require" value="html/require.html"/>
+        <item icon="common/page" title="richtext" value="html/richtext.html"/>
+        <item icon="common/page" title="selection" value="html/selection.html"/>
+        <item icon="common/page" title="supa" value="html/supa.html"/>
+        <item icon="common/page" title="upload" value="html/upload.html"/>
+        <item icon="common/page" title="upload_webkit" value="html/upload_webkit.html"/>
+        <item icon="common/page" title="video" value="html/video.html"/>
+        <item icon="common/page" title="window" value="html/window.html"/>
+    </item>
+    <item icon="common/folder" title="XML tests" value="XML tests">
+        <item icon="common/page" title="bar" value="xml/bar.xml"/>
+        <item icon="common/page" title="box" value="xml/box.xml"/>
+        <item icon="common/page" title="button" value="xml/button.xml"/>
+        <item icon="common/page" title="calendar" value="xml/calendar.xml"/>
+        <item icon="common/page" title="dropdown" value="xml/dropdown.xml"/>
+        <item icon="common/page" title="formula" value="xml/formula.xml"/>
+        <item icon="common/page" title="formula_fieldset" value="xml/formula_fieldset.xml"/>
+        <item icon="common/page" title="graph" value="xml/graph.xml"/>
+        <item icon="common/page" title="graphviz" value="xml/graphviz.xml"/>
+        <item icon="common/page" title="images" value="xml/images.xml"/>
+        <item icon="common/page" title="index" value="xml/index.xml"/>
+        <item icon="common/page" title="layout" value="xml/layout.xml"/>
+        <item icon="common/page" title="links" value="xml/links.xml"/>
+        <item icon="common/page" title="list" value="xml/list.xml"/>
+        <item icon="common/page" title="richtext" value="xml/richtext.xml"/>
+        <item icon="common/page" title="style" value="xml/style.xml"/>
+        <item icon="common/page" title="tabs" value="xml/tabs.xml"/>
+        <item icon="common/page" title="toolbar" value="xml/toolbar.xml"/>
+        <item icon="common/page" title="windows" value="xml/windows.xml"/>
+    </item>
+    <item icon="common/folder" title="Complete GUIs" value="Complete GUIs">
+        <item icon="common/page" title="competence" value="guis/competence.xml"/>
+        <item icon="common/page" title="login" value="guis/login.xml"/>
+        <item icon="common/page" title="objectchooser" value="guis/objectchooser.html"/>
+        <item icon="common/page" title="person_part" value="guis/person_part.xml"/>
+        <item icon="common/page" title="sites" value="guis/sites.xml"/>
+        <item icon="common/page" title="starttool" value="guis/starttool.xml"/>
+    </item>
+</items>

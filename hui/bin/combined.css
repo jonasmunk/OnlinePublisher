@@ -1507,7 +1507,7 @@ a.hui_dropdown_adaptive
 }
 
 
-.hui_layout_left .hui_overflow::-webkit-scrollbar-thumb
+.hui_context_sidebar .hui_overflow::-webkit-scrollbar-thumb
 {
 	border: 2px solid #EBF0F7;
 	background: #dfe5ee;
@@ -1515,9 +1515,8 @@ a.hui_dropdown_adaptive
 	height: 10px;
 }
 
-.hui_layout_left .hui_overflow:hover::-webkit-scrollbar-thumb
+.hui_context_sidebar .hui_overflow:hover::-webkit-scrollbar-thumb
 {
-	background: #c4cCd9;
 	background: #D4DCE9;
 }
 
@@ -4634,11 +4633,6 @@ div.hui_dock_progress
 	/* rgba(243,245,247,.5) */
 }
 
-table.hui_dock_with_sidebar
-{
-	border-left: 200px solid transparent;
-}
-
 div.hui_dock_sidebar
 {
 	background: #EBF0F7;
@@ -4648,6 +4642,16 @@ div.hui_dock_sidebar
 	top: 0;
 	left: 0;
 	bottom: 0;
+}
+
+div.hui_dock_sidebar_main
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 200px;
+}	
 }div.hui_tabs_tab_light
 {
 	background: #fff;

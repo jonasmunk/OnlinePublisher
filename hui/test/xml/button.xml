@@ -5,9 +5,8 @@
 		<button name="one" title="Simple button"/>
 		<button name="disabledButton" title="Disabled button" disabled="true"/>
 		<button title="Highlighted button" highlighted="true"/>
-		<button title="Confirmation" click="hui.ui.showMessage({text:'Action approved!',duration:2000})">
-			<confirm text="Are you sure?" ok="Yes" cancel="No"/>
-		</button>
+		<button title="Highlighted button" highlighted="true" disabled="true"/>
+		<space height="10"/>
 		<button icon="common/delete"/>
 		<button icon="common/delete" text="Delete"/>
 		<button icon="monochrome/delete" text="Delete"/>
@@ -28,11 +27,17 @@
 		
 		<space height="20"/>
 		
+		<header>Paper variant</header>
 		<button variant="paper" text="Paper variant"/>
 		<button variant="paper" text="Paper variant disabled" disabled="true"/>
 		<button variant="paper" text="Paper variant" icon="monochrome/delete"/>
 		<button variant="paper" icon="monochrome/delete"/>
 		<button variant="paper" text="Paper variant (small)" small="true"/>
 		<button variant="paper" text="Paper variant (small + disabled)" small="true" disabled="true"/>
+		<header>Actions</header>
+		<button title="Confirmation" click="hui.ui.showMessage({text:'Action approved!',duration:2000})">
+			<confirm text="Are you sure?" ok="Yes" cancel="No"/>
+		</button>
+
 	</box>
 </gui>

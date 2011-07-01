@@ -38,7 +38,7 @@
 }
 
 
-.hui_layout_left .hui_overflow::-webkit-scrollbar-thumb
+.hui_context_sidebar .hui_overflow::-webkit-scrollbar-thumb
 {
 	border: 2px solid #EBF0F7;
 	background: #dfe5ee;
@@ -46,9 +46,8 @@
 	height: 10px;
 }
 
-.hui_layout_left .hui_overflow:hover::-webkit-scrollbar-thumb
+.hui_context_sidebar .hui_overflow:hover::-webkit-scrollbar-thumb
 {
-	background: #c4cCd9;
 	background: #D4DCE9;
 }
 

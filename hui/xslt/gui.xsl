@@ -265,11 +265,32 @@
 
 <!--doc title:'Dock' class:'hui.ui.Dock'
 <dock url="«url»" frame-name="«text»" position="« top | bottom »" name="«name»">
+    <sidebar>
+        ···
+    </sidebar>
     <tabs/> | <toolbar/>
 </dock>
 -->
 <xsl:template match="gui:dock">
+	<xsl:call-template name="gui:dock-internals"/>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Dock({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'<xsl:if test="gui:tabs">,tabs:true</xsl:if>});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+<xsl:template match="gui:dock[gui:sidebar]">
 	<xsl:apply-templates select="gui:sidebar"/>
+	<div class="hui_dock_sidebar_main">
+		<xsl:call-template name="gui:dock-internals"/>
+	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Dock({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'<xsl:if test="gui:tabs">,tabs:true</xsl:if>});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+<xsl:template name="gui:dock-internals">
 	<table class="hui_dock" id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_dock</xsl:text>
@@ -299,10 +320,6 @@
 			</td></tr>
 		</tbody>
 	</table>
-	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Dock({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'<xsl:if test="gui:tabs">,tabs:true</xsl:if>});
-		<xsl:call-template name="gui:createobject"/>
-	</script>
 </xsl:template>
 
 <xsl:template match="gui:dock/gui:sidebar">
@@ -331,7 +348,7 @@
 	</html>
 </xsl:template>
 
-<!--doc title:'Dock' class:'hui.ui.IFrame'
+<!--doc title:'IFrame' class:'hui.ui.IFrame'
 <iframe source="«url»" id="«text»" state="«text»" name="«name»" height="«pixels»" />
 -->
 <xsl:template match="gui:iframe">

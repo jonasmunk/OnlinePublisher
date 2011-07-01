@@ -52,11 +52,6 @@ div.hui_dock_progress
 	/* rgba(243,245,247,.5) */
 }
 
-table.hui_dock_with_sidebar
-{
-	border-left: 200px solid transparent;
-}
-
 div.hui_dock_sidebar
 {
 	background: #EBF0F7;
@@ -66,4 +61,14 @@ div.hui_dock_sidebar
 	top: 0;
 	left: 0;
 	bottom: 0;
+}
+
+div.hui_dock_sidebar_main
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 200px;
+}	
 }

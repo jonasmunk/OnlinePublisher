@@ -3,14 +3,21 @@
 <gui xmlns="uri:hui" title="Bar">
 	<bar>
 		<button icon="common/edit" text="Edit"/>
-		<button icon="common/delete" text="Delete"/>
+		<button icon="common/delete" text="Delete" selected="true"/>
 		<button icon="common/color" text="Color"/>
 		<button icon="common/internet"/>
+		<button text="Only text"/>
 		<checkbox text="djslkfjksdjl"/>
 		<searchfield/>
 		<dropdown value="1">
 			<item value="1" title="My option"/>
 		</dropdown>
+		<segmented value="2">
+			<item value="1" title="H1"/>
+			<item value="2" title="H2"/>
+			<item value="3" title="H3"/>
+			<item value="4" icon="common/color"/>
+		</segmented>
 		<right>
 			<button icon="common/delete" text="Hep hey!" highlighted="true"/>
 			<button icon="common/delete" text="Hep hey!"/>
@@ -19,14 +26,21 @@
 	</bar>
 	<bar variant="layout">
 		<button icon="common/edit" text="Edit"/>
-		<button icon="common/delete" text="Delete"/>
+		<button icon="common/delete" text="Delete" selected="true"/>
 		<button icon="common/color" text="Color"/>
 		<button icon="common/internet"/>
-		<checkbox text="djslkfjksdjl"/>
+		<button text="Only text" small="true"/>
+		<checkbox/>
 		<searchfield/>
 		<dropdown value="1">
 			<item value="1" title="My option"/>
 		</dropdown>
+		<segmented value="2">
+			<item value="1" title="H1"/>
+			<item value="2" title="H2"/>
+			<item value="3" title="H3"/>
+			<item value="4" icon="common/color"/>
+		</segmented>
 		<right>
 			<button icon="common/delete" text="Hep hey!" highlighted="true"/>
 			<button icon="common/delete" text="Hep hey!"/>
@@ -39,7 +53,7 @@
 		<button icon="common/delete" text="Delete"/>
 		<button icon="common/color" text="Color"/>
 		<button icon="common/internet"/>
-		<checkbox text="djslkfjksdjl"/>
+		<checkbox/>
 	</bar>
 	</space>
 	
@@ -50,6 +64,12 @@
 			<button icon="colorpicker/wheel_pastels" name="wheelPastels" selected="true"/>
 			<button icon="colorpicker/wheel_brightness" name="wheelBrightness"/>
 		</bar>
+		<space all="20">
+			<text>
+				<h>Header</h>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</text>
+		</space>
 	</window>
 
 	<listen for="wheelBrightness">
