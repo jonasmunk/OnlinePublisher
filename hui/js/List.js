@@ -415,8 +415,9 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'wrap')) {
 				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
 			} else if (hui.dom.isElement(child,'delete')) {
-				var icons = hui.build('del',{parent:cell});
-				this.parseCell(child,icons);
+				this.parseCell(child,hui.build('del',{parent:cell}));
+			} else if (hui.dom.isElement(child,'badge')) {
+				this.parseCell(child,hui.build('span',{className:'hui_list_badge',parent:cell}));
 			}
 		};
 	},

@@ -248,6 +248,28 @@ p.hui_list_dimmed
 	color: #999;
 }
 
+span.hui_list_badge
+{
+	font-size: 9px;
+	padding: 1px 4px;
+	border: 1px solid #eee;
+	border-radius: 3px;
+	margin-left: 4px;
+	color: #999;
+}
+
+div.hui_list tr:hover span.hui_list_badge
+{
+	border-color: #ccc;
+	color: #666;
+}
+
+tr.hui_list_selected span.hui_list_badge, div.hui_list tr.hui_list_selected:hover span.hui_list_badge
+{
+	color: #def;
+	border-color: #def;
+}
+
 div.hui_list_busy td
 {
 	color: #999;

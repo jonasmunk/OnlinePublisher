@@ -6082,8 +6082,9 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'wrap')) {
 				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
 			} else if (hui.dom.isElement(child,'delete')) {
-				var icons = hui.build('del',{parent:cell});
-				this.parseCell(child,icons);
+				this.parseCell(child,hui.build('del',{parent:cell}));
+			} else if (hui.dom.isElement(child,'badge')) {
+				this.parseCell(child,hui.build('span',{className:'hui_list_badge',parent:cell}));
 			}
 		};
 	},
@@ -7167,9 +7168,10 @@ hui.ui.Selection = function(options) {
 	this.selection=null;
 	if (options.items && options.items.length>0) {
 		for (var i=0; i < options.items.length; i++) {
-			var item = options.items[i]
+			var item = options.items[i];
 			this.items.push(item);
 			var element = hui.get(item.id);
+			item.element = element;
 			this.addItemBehavior(element,item);
 		};
 		this.selection = this.getSelectionWithValue(this.options.value);
@@ -10218,6 +10220,10 @@ hui.ui.Gallery.prototype = {
 	},
 	getObjects : function() {
 		return this.objects;
+	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return this.element.style.display!='none';
 	},
 	/** @private */
 	$objectsLoaded : function(objects) {
