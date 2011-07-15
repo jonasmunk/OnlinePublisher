@@ -7,12 +7,22 @@
     exclude-result-prefixes="gui"
 >
 
+<!--doc title:'Graph' class:'hui.ui.Graph'
+<graph name="«name»" layout="«?»" source="«source»"/>
+-->
 <xsl:template match="gui:graph">
-	<div class="hui_graph" id="{generate-id()}" style="height: 400px;"><xsl:comment/></div>
+	<div class="hui_graph" id="{generate-id()}">
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+			<xsl:attribute name="style">display:none</xsl:attribute>
+		</xsl:if>
+		<xsl:comment/></div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Graph({
-			element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',layout:'<xsl:value-of select="@layout"/>'
-			<xsl:if test="@source">,source:<xsl:value-of select="@source"/></xsl:if>
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>',
+			layout : '<xsl:value-of select="@layout"/>',
+			state : '<xsl:value-of select="@state"/>'
+			<xsl:if test="@source">,source : <xsl:value-of select="@source"/></xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

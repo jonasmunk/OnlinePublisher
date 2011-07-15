@@ -7,19 +7,18 @@
 	<source name="languagesSource" url="data/items_languages.xml"/>
 	<layout>
 		<top>
-		<toolbar>
-			<icon icon="common/page" title="Opret side" overlay="new" action="newPage.show()"/>
-			<divider/>
-			<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>
-			<right>
-				<search title="Søgning"/>
-			</right>
-		</toolbar>
+			<toolbar>
+				<icon icon="common/page" title="Opret side" overlay="new" action="newPage.show()"/>
+				<divider/>
+				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>
+				<right>
+					<search title="Søgning"/>
+				</right>
+			</toolbar>
 		</top>
 		<middle>
-		<content>
-			<split>
-				<sidebar>
+			<left>
+				<overflow>
 					<selection value="user" name="selector">
 						<item icon="file/generic" title="Alle sider" value="user"/>
 						<title>Hierarkier</title>
@@ -37,14 +36,13 @@
 						<item icon="common/delete" title="Uden menupunk" value="nomenu"/>
 						<item icon="common/time" title="Arkiveret" value="archive"/>
 					</selection>
-				</sidebar>
-				<content>
-					<overflow height="300" resize="-58">
-						<list name="list" source="listSource"/>
-					</overflow>
-				</content>
-			</split>
-		</content>
+				</overflow>
+			</left>
+			<center>
+				<overflow height="300" resize="-58">
+					<list name="list" source="listSource"/>
+				</overflow>
+			</center>
 		</middle>
 	</layout>
 	<window name="newPage" width="300" title="Ny side" padding="5">

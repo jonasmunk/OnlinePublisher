@@ -484,7 +484,7 @@
 			</xsl:choose>
 		</xsl:attribute>
 		<span><span>
-			<xsl:if test="@icon"><em style="background-image: url('{$context}/hui/icons/{@icon}1.png')">
+			<xsl:if test="@icon"><em style="background-image: url('{$context}/hui/icons/{@icon}16.png')">
 				<xsl:attribute name="class">
 					<xsl:text>hui_button_icon</xsl:text>
 					<xsl:if test="(not(@title) or @title='') and (not(@text) or @text='')"><xsl:text> hui_button_icon_notext</xsl:text></xsl:if>

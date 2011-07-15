@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<title>HUI icons</title>
+		<style>
+			body
+			{
+				font-family: 'Lucida Grande';
+				font-size: 11px;
+			}
+			p
+			{
+				border-bottom: 1px solid #eee;
+				padding: 10px 0;
+				margin: 0;
+			}
+			p *
+			{
+				vertical-align: middle;
+			}
+			strong
+			{
+				display: inline-block;
+				width: 200px;
+			}
+			a.icon
+			{
+				display: inline-block;
+				height: 16px;
+				width: 16px;
+				font-size: 0;
+				border: 1px solid #eee;
+				margin: 3px;
+			}
+			
+			a.icon32
+			{
+				height: 32px;
+				width: 32px;
+			}
+		</style>
+		<script src="../bin/combined.js"></script>
+		<script type="text/javascript">
+		hui.ui.request({
+			url : '../info/icons.json',
+			onJSON : function(obj) {
+				var body = document.body;
+				for (group in obj) {
+					if (group=='overlay') continue
+					var groupNode = hui.build('p',{parent:document.body});
+					hui.build('strong',{text:group,parent:groupNode});
+					for (icon in obj[group]) {
+						hui.log(icon)
+						var sizes = obj[group][icon];
+						for (var i=0; i < sizes.length; i++) {
+							var size = sizes[i];
+							hui.log(size)	
+							hui.build('a',{
+								'class' : 'icon icon'+size,
+								style : "background:url('../icons/"+group+"/"+icon+size+".png'); width:"+size+"px;height:"+size+"px;",
+								parent : groupNode,
+								title : group+'/'+icon
+							});
+						};
+					}
+				}
+			}
+		})
+		</script>
+	</head>
+	<body>
+	
+	</body>
+</html>

@@ -131,7 +131,7 @@ hui.ui.RichText.prototype = {
 				var img = hui.build('img');
 				img.src=hui.ui.context+'/hui/gfx/trans.png';
 				if (actions[i].icon) {
-					div.style.backgroundImage='url('+hui.ui.getIconUrl(actions[i].icon,1)+')';
+					div.style.backgroundImage='url('+hui.ui.getIconUrl(actions[i].icon,16)+')';
 				}
 				div.appendChild(img);
 				this.toolbarContent.appendChild(div);

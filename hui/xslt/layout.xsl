@@ -63,7 +63,7 @@
 -->
 <xsl:template match="gui:header">
 	<h2 class="hui_header">
-		<xsl:if test="@icon"><span class="hui_icon_2" style="background-image: url('{$context}/hui/icons/{@icon}2.png')"><xsl:comment/></span></xsl:if>
+		<xsl:if test="@icon"><span class="hui_icon_2" style="background-image: url('{$context}/hui/icons/{@icon}32.png')"><xsl:comment/></span></xsl:if>
 		<xsl:apply-templates/></h2>
 </xsl:template>
 
@@ -206,7 +206,7 @@
 									<xsl:text> hui_selected</xsl:text>
 								</xsl:if>
 							</xsl:attribute>
-							<xsl:if test="@icon"><span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png');')"><xsl:comment/></span></xsl:if>
+							<xsl:if test="@icon"><span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}16.png');')"><xsl:comment/></span></xsl:if>
 							<span><xsl:value-of select="@title"/></span>
 						</a>
 					</li>

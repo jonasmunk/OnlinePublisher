@@ -5,7 +5,8 @@
 		{"id":"pem","label":"Poul Erik Munk"},
 		{"id":"bm","label":"Buster Munk"},
 		{"id":"pom","label":"Per Orla Munk"},
-		{"id":"lm","label":"Lotte Munk"}
+		{"id":"lm","label":"Lotte Munk"},
+		{"id":"mb","label":"Marianne Boller"}
 	],
 	"edges" : [
 		{"from":"pem","to":"jbm","label":"Father"},
@@ -16,6 +17,7 @@
 		{"from":"jm","to":"pem","label":"Married"},
 		{"from":"pom","to":"pem","label":"Siblings"},
 		{"from":"pom","to":"lm","label":"Father"},
-		{"from":"mb","to":"lm","label":"Friends"}
+		{"from":"mb","to":"lm","label":"Friends"},
+		{"from":"mb","to":"jbm","label":"Friends"}
 	]
 }

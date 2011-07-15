@@ -225,6 +225,11 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 	background: url('../gfx/backgrounds/brushed_light.jpg');
 }
 
+.hui_bg_linen
+{
+	background: url('../gfx/backgrounds/linen.png');
+}
+
 .hui_bg_wood
 {
 	background: url('../gfx/backgrounds/wood.jpg');	

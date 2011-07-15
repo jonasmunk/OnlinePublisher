@@ -53,9 +53,9 @@
 		</xsl:attribute>
 		<span class="hui_toolbar_inner_icon">
 			<span class="hui_toolbar_inner_icon">
-			<span class="hui_icon" style="background-image: url('{$context}/hui/icons/{@icon}2.png')">
+			<span class="hui_icon" style="background-image: url('{$context}/hui/icons/{@icon}32.png')">
 				<xsl:if test="@overlay">
-					<span class="hui_icon_overlay" style="background-image: url('{$context}/hui/icons/overlay/{@overlay}2.png')"><xsl:comment/></span>
+					<span class="hui_icon_overlay" style="background-image: url('{$context}/hui/icons/overlay/{@overlay}32.png')"><xsl:comment/></span>
 				</xsl:if>
 				<xsl:comment/>
 			</span>
@@ -105,7 +105,7 @@
 	<div id="{generate-id()}" class="hui_toolbar_badge">
 		<div class="hui_toolbar_inner_badge"><div class="hui_toolbar_inner_badge">
 		<xsl:if test="@icon">
-			<div class="hui_toolbar_badge_icon" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"><xsl:comment/></div>
+			<div class="hui_toolbar_badge_icon" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></div>
 		</xsl:if>
 		<strong><xsl:value-of select="@label"/><xsl:comment/></strong>
 		<span><xsl:value-of select="@text"/><xsl:comment/></span>
@@ -257,7 +257,7 @@
 	</xsl:variable>
 	<a id="{generate-id()}" class="{$class}" href="javascript:void(0);">
 		<xsl:if test="@icon">
-			<span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"><xsl:comment/></span>
+			<span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></span>
 		</xsl:if>
 		<xsl:if test="@text">
 			<span class="hui_bar_button_text"><xsl:value-of select="@text"/></span>

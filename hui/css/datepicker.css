@@ -67,7 +67,7 @@ div.hui_datepicker_header strong
 a.hui_datepicker_previous
 {
 	float: left;
-	background: url('../icons/monochrome/previous1.png') -1px -2px no-repeat;
+	background: url('../icons/monochrome/previous16.png') -1px -2px no-repeat;
 	width: 12px;
 	height: 12px;
 	margin-left: 5px;
@@ -77,7 +77,7 @@ a.hui_datepicker_previous
 a.hui_datepicker_next
 {
 	float: right;
-	background: url('../icons/monochrome/next1.png') -3px -2px no-repeat;
+	background: url('../icons/monochrome/next16.png') -3px -2px no-repeat;
 	width: 12px;
 	height: 12px;
 	margin-right: 5px;

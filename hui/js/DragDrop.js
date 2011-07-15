@@ -18,7 +18,7 @@ hui.ui.startDrag = function(e,element,options) {
 	hui.listen(document.body,'mouseup',hui.ui.dragEndListener);
 	hui.ui.dragInfo = info;
 	if (info.icon) {
-		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,1)+')';
+		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,16)+')';
 	}
 	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
 	proxy.innerHTML = info.title ? '<span>'+hui.escape(info.title)+'</span>' : '###';

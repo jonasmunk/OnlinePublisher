@@ -120,8 +120,6 @@
 </xsl:choose>
 <xsl:if test="//gui:graph">
 	<link rel="stylesheet" href="{$context}/hui/ext/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
-	<script type="text/javascript" src="{$context}/hui/lib/protovis-3.2/protovis-r3.2.js"><xsl:comment/></script>
-	<script type="text/javascript" src="{$context}/hui/lib/raphael-min.js"><xsl:comment/></script>
 	<script src="{$context}/hui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:for-each select="gui:localize[@source]">
@@ -361,6 +359,9 @@
 	<iframe id="{$id}" name="{$id}" src="{@source}" frameborder="0">
 		<xsl:attribute name="style">
 			<xsl:text>width: 100%; background: #fff; display: block;</xsl:text>
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+			<xsl:text>display:none;</xsl:text>
+		</xsl:if>
 			<xsl:choose>
 				<xsl:when test="@height"><xsl:text>height: </xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text></xsl:when>
 				<xsl:otherwise>height: 100%;</xsl:otherwise>
@@ -395,19 +396,34 @@
 <xsl:template match="gui:selection">
 	<div class="hui_selection" id="{generate-id()}"><xsl:apply-templates/></div>
 	<script type="text/javascript">
+		!function() {
+		
+			var items = [];
+			<xsl:for-each select="gui:item">
+			items.push({
+				id : '<xsl:value-of select="generate-id()"/>',
+				title : '<xsl:value-of select="@title"/>',
+				icon : '<xsl:value-of select="@icon"/>',
+				badge : '<xsl:value-of select="@badge"/>',
+				value : '<xsl:value-of select="@value"/>',
+				kind : '<xsl:value-of select="@kind"/>'
+			});
+			</xsl:for-each>
+		
+		
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Selection({
-			element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>',
+			items : items
 			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
 		});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
-			<xsl:for-each select="gui:item">
-				registerItem('<xsl:value-of select="generate-id()"/>','<xsl:value-of select="@title"/>','<xsl:value-of select="@icon"/>','<xsl:value-of select="@badge"/>','<xsl:value-of select="@value"/>','<xsl:value-of select="@kind"/>');
-			</xsl:for-each>
 			<xsl:for-each select="gui:items">
 				registerItems(<xsl:value-of select="generate-id()"/>_obj);
 			</xsl:for-each>
 		}
 		<xsl:call-template name="gui:createobject"/>
+		}();
 	</script>
 </xsl:template>
 
@@ -417,7 +433,7 @@
 		<xsl:if test="@badge"><strong class="hui_selection_badge"><xsl:value-of select="@badge"/></strong></xsl:if>
 		<xsl:if test="@icon">
 			<span>
-				<xsl:attribute name="style">background-image: url('<xsl:value-of select="$context"/>/hui/icons/<xsl:value-of select="@icon"/>1.png');</xsl:attribute>
+				<xsl:attribute name="style">background-image: url('<xsl:value-of select="$context"/>/hui/icons/<xsl:value-of select="@icon"/>16.png');</xsl:attribute>
 				<xsl:attribute name="class">hui_icon_1</xsl:attribute>
 				<xsl:comment/>
 			</span>
@@ -645,7 +661,7 @@
 			</xsl:if>
 			<div class="hui_window_titlebar"><div><div>
 				<xsl:if test="@icon">
-					<span class="hui_window_icon" style="background-image: url('{$context}/hui/icons/{@icon}1.png')"></span>
+					<span class="hui_window_icon" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"></span>
 				</xsl:if>
 				<span class="hui_window_title"><xsl:value-of select="@title"/></span>
 			</div></div></div>
@@ -733,10 +749,13 @@
 <!-- Gallery -->
 
 <!--doc title:'Gallery' class:'hui.ui.Gallery'
-<gallery name="«name»" source="«name»" padding="«pixels»" />
+<gallery name="«name»" source="«name»" padding="«pixels»" state="«state»" />
 -->
 <xsl:template match="gui:gallery">
 	<div class="hui_gallery" id="{generate-id()}">
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+			<xsl:attribute name="style">display:none</xsl:attribute>
+		</xsl:if>
 		<xsl:if test="@padding"><xsl:attribute name="style">padding:<xsl:value-of select="@padding"/>px;</xsl:attribute></xsl:if>
 		<div class="hui_gallery_progress"><xsl:comment/></div>
 		<div class="hui_gallery_body">
@@ -749,6 +768,7 @@
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>'
 			<xsl:if test="@source">,source:<xsl:value-of select="@source"/></xsl:if>
+			<xsl:if test="@state">,state:'<xsl:value-of select="@state"/>'</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
@@ -869,18 +889,6 @@
 			</xsl:for-each>
 			<xsl:value-of select="generate-id()"/>_obj.setObjects(items);
 		})();
-	</script>
-</xsl:template>
-
-<xsl:template match="gui:articles">
-	<div class="hui_articles" id="{generate-id()}"><xsl:comment/></div>
-	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Articles({
-			element:'<xsl:value-of select="generate-id()"/>',
-			name:'<xsl:value-of select="@name"/>'
-			<xsl:if test="@source">,source:<xsl:value-of select="@source"/></xsl:if>
-		});
-		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
 

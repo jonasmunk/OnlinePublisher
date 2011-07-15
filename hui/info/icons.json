@@ -1,414 +1,415 @@
 {
     "application": {
         "files": [
-            2
+            32
         ], 
         "news": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "pages": [
-            2
+            32
         ], 
         "shop": [
-            2
+            32
         ], 
         "statistics": [
-            2
+            32
         ], 
         "water": [
-            2
+            32
         ]
     }, 
     "colorpicker": {
         "swatches": [
-            1
+            16
         ], 
         "wheel_brightness": [
-            1
+            16
         ], 
         "wheel_pastels": [
-            1
+            16
         ], 
         "wheel_saturated": [
-            1
+            16
         ]
     }, 
     "common": {
         "calendar": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "close": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "color": [
-            1, 
             16, 
-            2
+            32
         ], 
         "delete": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "design": [
-            2
+            32
         ], 
         "duplicate": [
-            2
+            32
         ], 
         "edit": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "email": [
-            1, 
             16, 
-            2
+            32
         ], 
         "files": [
-            1
+            16
         ], 
         "flag": [
-            2
+            32
         ], 
         "folder": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "folder_grey": [
-            1
+            16
         ], 
         "frame": [
-            2
+            32
         ], 
         "gauge": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "hierarchy": [
-            1, 
-            2
+            16, 
+            32
+        ], 
+        "hierarchy_item": [
+            16, 
+            32
         ], 
         "image": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "info": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "internet": [
-            1, 
             16, 
-            2
+            32
         ], 
         "larger": [
-            2
+            32
         ], 
         "letter": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "link": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "new": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "news": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "object": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "page": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "pagereference": [
-            1
+            16
         ], 
         "person": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "phone": [
-            1
+            16
         ], 
         "play": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "product": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "refresh": [
-            2
+            32
         ], 
         "save": [
-            2
+            32
         ], 
         "search": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "security": [
-            2
+            32
         ], 
         "settings": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "smaller": [
-            2
+            32
         ], 
         "smiley": [
-            2
+            32
         ], 
         "stop": [
-            1, 
-            2, 
-            24
+            16, 
+            24, 
+            32
         ], 
         "success": [
-            2, 
-            24
+            24, 
+            32
         ], 
         "time": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "upload": [
             64
         ], 
         "user": [
-            1, 
-            2
+            16, 
+            32
         ], 
         "view": [
-            2
+            32
         ], 
         "warning": [
-            1, 
-            2, 
-            24
+            16, 
+            24, 
+            32
         ], 
         "water": [
-            1, 
-            2
+            16, 
+            32
         ]
     }, 
     "edit": {
         "clear": [
-            1
+            16
         ], 
         "decrease_font_size": [
-            1
+            16
         ], 
         "increase_font_size": [
-            1
+            16
         ], 
         "text_align_center": [
-            1
+            16
         ], 
         "text_align_justify": [
-            1
+            16
         ], 
         "text_align_left": [
-            1
+            16
         ], 
         "text_align_right": [
-            1
+            16
         ], 
         "text_bold": [
-            1
+            16
         ], 
         "text_italic": [
-            1
+            16
         ], 
         "text_underline": [
-            1
+            16
         ]
     }, 
     "file": {
         "generic": [
-            1, 
-            2
+            16, 
+            32
         ]
     }, 
     "flag": {
         "de": [
-            1
+            16
         ], 
         "dk": [
-            1
+            16
         ], 
         "gb": [
-            1
+            16
         ]
     }, 
     "geo": {
         "map": [
-            1, 
-            2
+            16, 
+            32
         ]
     }, 
     "inset": {
         "cross": [
-            1
+            16
         ], 
         "globe": [
-            1
+            16
         ], 
         "public": [
-            1
+            16
         ], 
         "tools": [
-            1
+            16
         ], 
         "user": [
-            1
+            16
         ]
     }, 
     "layout": {
         "layout": [
-            2
+            32
         ], 
         "row": [
-            2
+            32
         ]
     }, 
     "monochrome": {
         "attachment": [
-            1
+            16
         ], 
         "close": [
-            1
+            16
         ], 
         "delete": [
-            1
+            16
         ], 
         "dot": [
-            1
+            16
         ], 
         "edit": [
-            1
+            16
         ], 
         "email": [
-            1
+            16
         ], 
         "feed": [
-            1
+            16
         ], 
         "file": [
-            1
+            16
         ], 
         "gear": [
-            2
+            32
         ], 
         "globe": [
-            1
+            16
         ], 
         "info": [
-            1
+            16
         ], 
         "info_light": [
-            1
+            16
         ], 
         "invisible": [
-            1
+            16
         ], 
         "latitude": [
-            1
+            16
         ], 
         "link": [
-            1
+            16
         ], 
         "longitude": [
-            1
+            16
         ], 
         "loudspeaker": [
-            2
+            32
         ], 
         "message": [
-            2
+            32
         ], 
         "next": [
-            1
+            16
         ], 
         "pin": [
-            1
+            16
         ], 
         "play": [
-            1
+            16
         ], 
         "previous": [
-            1
+            16
         ], 
         "recycle": [
-            1
+            16
         ], 
         "round_arrow_down": [
-            1
+            16
         ], 
         "round_arrow_left": [
-            1
+            16
         ], 
         "round_arrow_right": [
-            1
+            16
         ], 
         "round_arrow_up": [
-            1
+            16
         ], 
         "round_question": [
-            1
+            16
         ], 
         "round_x": [
-            1
+            16
         ], 
         "stop": [
-            1
+            16
         ], 
         "view": [
-            1
+            16
         ], 
         "warning": [
-            1
+            16
         ]
     }, 
     "overlay": {
         "change": [
-            2
+            32
         ], 
         "delete": [
-            2
+            32
         ], 
         "download": [
-            2
+            32
         ], 
         "edit": [
-            2
+            32
         ], 
         "new": [
-            2
+            32
         ], 
         "upload": [
-            2
+            32
         ], 
         "warning": [
-            2
+            32
         ]
     }, 
     "part": {
         "news": [
-            1
+            16
         ]
     }, 
     "style": {
@@ -516,6 +517,9 @@
     }, 
     "view": {
         "calendar": [
+            16
+        ], 
+        "graph": [
             16
         ], 
         "list": [

@@ -6,13 +6,21 @@
 	<layout>
 		<top>
 			<toolbar>
-				<icon icon="common/new" title="Test"/>
+				<icon icon="common/refresh" title="Test"/>
+				<divider/>
+				<segmented label="View">
+					<item icon="view/list"/>
+					<item icon="view/calendar"/>
+					<item icon="view/graph"/>
+				</segmented>
 			</toolbar>
 		</top>
 		<middle>
 			<left></left>
 			<center>
-				<graph name="graph" layout="graffle" source="soirce"/>
+				<overflow>
+				<graph name="graph" layout="d3" source="soirce"/>
+				</overflow>
 			</center>
 		</middle>
 		<bottom>

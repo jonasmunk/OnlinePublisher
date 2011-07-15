@@ -74,7 +74,7 @@ hui.ui.Bar.Button.create = function(options) {
 	options = options || {};
 	var e = options.element = hui.build('a',{'class':'hui_bar_button'});
 	if (options.icon) {
-		e.appendChild(hui.ui.createIcon(options.icon,1));
+		e.appendChild(hui.ui.createIcon(options.icon,16));
 	}
 	return new hui.ui.Bar.Button(options);
 }

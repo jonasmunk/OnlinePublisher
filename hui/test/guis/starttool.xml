@@ -23,13 +23,11 @@
 				<column>
 					<header icon="monochrome/gear">Kode</header>
 					<overflow vertical="180">
-						<articles source="commitFeed"/>
 					</overflow>
 				</column>
 				<column>
 					<header icon="monochrome/loudspeaker">Nyheder</header>
 					<overflow vertical="180">
-						<articles source="newsFeed"/>
 					</overflow>
 				</column>
 			</columns>

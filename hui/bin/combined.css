@@ -2817,7 +2817,7 @@ strong.hui_selection_badge
 
 div.hui_selection:hover strong.hui_selection_badge
 {
-	background: #79b;
+	background: #89b;
 }
 
 
@@ -4160,7 +4160,7 @@ div.hui_datepicker_header strong
 a.hui_datepicker_previous
 {
 	float: left;
-	background: url('../icons/monochrome/previous1.png') -1px -2px no-repeat;
+	background: url('../icons/monochrome/previous16.png') -1px -2px no-repeat;
 	width: 12px;
 	height: 12px;
 	margin-left: 5px;
@@ -4170,7 +4170,7 @@ a.hui_datepicker_previous
 a.hui_datepicker_next
 {
 	float: right;
-	background: url('../icons/monochrome/next1.png') -3px -2px no-repeat;
+	background: url('../icons/monochrome/next16.png') -3px -2px no-repeat;
 	width: 12px;
 	height: 12px;
 	margin-right: 5px;
@@ -5562,7 +5562,7 @@ div.hui_locationfield input
 
 a.hui_locationfield_picker
 {
-	background-image: url('../icons/geo/map1.png');
+	background-image: url('../icons/geo/map16.png');
 	width: 16px;
 	height: 16px;
 	position: absolute;
@@ -5594,12 +5594,12 @@ span.hui_locationfield_latitude span, span.hui_locationfield_longitude span
 
 span.hui_locationfield_latitude
 {
-	background: url('../icons/monochrome/latitude1.png') left top no-repeat;
+	background: url('../icons/monochrome/latitude16.png') left top no-repeat;
 }
 
 span.hui_locationfield_longitude
 {
-	background: url('../icons/monochrome/longitude1.png') left top no-repeat;
+	background: url('../icons/monochrome/longitude16.png') left top no-repeat;
 }/******************************** Token field *************************/
 
 div.hui_tokenfield

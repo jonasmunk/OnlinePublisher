@@ -18,6 +18,9 @@ hui.ui.IFrame.prototype = {
 		this.element.setAttribute('src',url);
 		//hui.getFrameDocument(this.element).location.href=url;
 	},
+	clear : function() {
+		this.setUrl('about:blank');
+	},
 	getDocument : function() {
 		return hui.getFrameDocument(this.element);
 	},

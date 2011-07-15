@@ -1,4 +1,51 @@
 div.hui_graph
 {
 	background: url('../gfx/backgrounds/blueprint.png');
+	height: 100%;
+	font-size: 0;
+}
+
+line.hui_graph_link
+{
+		stroke: #fff;
+		stroke-opacity: .6;
+}
+
+.hui_graph_icon
+{
+	fill: #fff;
+	cursor: pointer;
+}
+.hui_node:hover .hui_graph_icon
+{
+	/*fill: #000;*/
+}
+
+text.hui_graph_label
+{
+	fill: #fff;
+	font-size: 11px;
+	font-family: Verdana;
+	cursor: pointer;
+}
+
+
+div.hui_graph
+{
+	background: url('../gfx/backgrounds/blueprint_white.png');	
+}
+
+.hui_graph_icon
+{
+	fill: #579;
+}
+
+line.hui_graph_link
+{
+	stroke: #579;
+}
+
+text.hui_graph_label
+{
+	fill: #579;
 }

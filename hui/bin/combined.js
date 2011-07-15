@@ -4892,7 +4892,7 @@ hui.ui.startDrag = function(e,element,options) {
 	hui.listen(document.body,'mouseup',hui.ui.dragEndListener);
 	hui.ui.dragInfo = info;
 	if (info.icon) {
-		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,1)+')';
+		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,16)+')';
 	}
 	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
 	proxy.innerHTML = info.title ? '<span>'+hui.escape(info.title)+'</span>' : '###';
@@ -5003,7 +5003,7 @@ hui.ui.Window.create = function(options) {
 	var html = '<div class="hui_window_front">'+(options.close ? '<div class="hui_window_close"></div>' : '')+
 		'<div class="hui_window_titlebar"><div><div>';
 		if (options.icon) {
-			html+='<span class="hui_window_icon" style="background-image: url('+hui.ui.getIconUrl(options.icon,1)+')"></span>';
+			html+='<span class="hui_window_icon" style="background-image: url('+hui.ui.getIconUrl(options.icon,16)+')"></span>';
 		}
 	html+='<span class="hui_window_title">'+options.title+'</span></div></div></div>'+
 		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
@@ -6035,7 +6035,7 @@ hui.ui.List.prototype = {
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
-			cell.appendChild(hui.ui.createIcon(icon,1));
+			cell.appendChild(hui.ui.createIcon(icon,16));
 			cell = hui.build('div',{parent:cell,style:'margin-left: 20px'});
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
@@ -6045,7 +6045,7 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
-				var icon = hui.ui.createIcon(child.getAttribute('icon'),1);
+				var icon = hui.ui.createIcon(child.getAttribute('icon'),16);
 				var data = child.getAttribute('data');
 				if (data) {
 					icon.setAttribute('data',data);
@@ -6065,7 +6065,7 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'object')) {
 				var obj = hui.build('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
-					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),1));
+					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),16));
 				}
 				if (child.firstChild && child.firstChild.nodeType==hui.TEXT_NODE && child.firstChild.nodeValue.length>0) {
 					hui.dom.addText(obj,child.firstChild.nodeValue);
@@ -6211,7 +6211,7 @@ hui.ui.List.prototype = {
 			hui.each(r.cells,function(c) {
 				var td = hui.build('td');
 				if (c.icon) {
-					td.appendChild(hui.ui.createIcon(c.icon,1));
+					td.appendChild(hui.ui.createIcon(c.icon,16));
 					icon = icon || c.icon;
 				}
 				if (c.text) {
@@ -6272,7 +6272,7 @@ hui.ui.List.prototype = {
 	createObject : function(object) {
 		var node = hui.build('div',{'class':'object'});
 		if (object.icon) {
-			node.appendChild(hui.ui.createIcon(object.icon,1));
+			node.appendChild(hui.ui.createIcon(object.icon,16));
 		}
 		hui.dom.addText(node,object.text || object.name || '')
 		return node;
@@ -7021,7 +7021,7 @@ hui.ui.Button.create = function(o) {
 	var element3 = document.createElement('span');
 	element2.appendChild(element3);
 	if (o.icon) {
-		var icon = hui.build('em',{'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(o.icon,1)+')'});
+		var icon = hui.build('em',{'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(o.icon,16)+')'});
 		if (!o.text || o.text.length==0) {
 			hui.addClass(icon,'hui_button_icon_notext');
 		}
@@ -7165,7 +7165,16 @@ hui.ui.Selection = function(options) {
 	this.subItems = [];
 	this.busy = 0;
 	this.selection=null;
-	if (this.options.value!=null) {
+	if (options.items && options.items.length>0) {
+		for (var i=0; i < options.items.length; i++) {
+			var item = options.items[i]
+			this.items.push(item);
+			var element = hui.get(item.id);
+			this.addItemBehavior(element,item);
+		};
+		this.selection = this.getSelectionWithValue(this.options.value);
+		this.updateUI();
+	} else if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
 	}
 	hui.ui.extend(this);
@@ -7231,6 +7240,7 @@ hui.ui.Selection.prototype = {
 	},
 	/** Changes selection to the first item */
 	selectFirst : function() {
+		hui.log('selecting first')
 		var i;
 		for (i=0; i < this.items.length; i++) {
 			this.changeSelection(this.items[i]);
@@ -7281,7 +7291,8 @@ hui.ui.Selection.prototype = {
 		items.parent = this;
 		this.subItems.push(items);
 	},
-	/** @private */
+	/** @private
+	
 	registerItem : function(id,title,icon,badge,value,kind) {
 		var element = hui.get(id);
 		var item = {id:id,title:title,icon:icon,badge:badge,element:element,value:value,kind:kind};
@@ -7289,6 +7300,7 @@ hui.ui.Selection.prototype = {
 		this.addItemBehavior(element,item);
 		this.selection = this.getSelectionWithValue(this.options.value);
 	},
+	*/
 	/** @private */
 	addItemBehavior : function(node,item) {
 		hui.listen(node,'click',function() {
@@ -7310,7 +7322,7 @@ hui.ui.Selection.prototype = {
 			this.element.appendChild(node);
 			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
 			if (item.icon) {
-				node.appendChild(hui.ui.createIcon(item.icon,1));
+				node.appendChild(hui.ui.createIcon(item.icon,16));
 			}
 			node.appendChild(inner);
 			hui.listen(node,'click',function() {
@@ -7360,7 +7372,12 @@ hui.ui.Selection.prototype = {
 		if (!this.selection) {return}
 		var item = this.getSelectionWithValue(this.selection.value);
 		if (!item) {
-			this.selectFirst();
+			hui.log('Value not found: '+this.selection.value);
+			if (!this.busy) {
+				this.selectFirst();
+			} else {
+				hui.log('Will not select first since im still busy');
+			}
 		}
 	}
 }
@@ -7450,7 +7467,7 @@ hui.ui.Selection.Items.prototype = {
 			}
 			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
 			if (item.icon) {
-				node.appendChild(hui.build('span',{'class':'hui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,1)+')'}));
+				node.appendChild(hui.build('span',{'class':'hui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,16)+')'}));
 			}
 			node.appendChild(inner);
 			hui.listen(node,'click',function(e) {
@@ -7619,12 +7636,12 @@ hui.ui.Toolbar.Icon = function(options) {
 
 hui.ui.Toolbar.Icon.create = function(options) {
 	var element = options.element = hui.build('a',{'class':'hui_toolbar_icon'});
-	var icon = hui.build('span',{'class':'hui_icon',style:'background-image: url('+hui.ui.getIconUrl(options.icon,2)+')'});
+	var icon = hui.build('span',{'class':'hui_icon',style:'background-image: url('+hui.ui.getIconUrl(options.icon,32)+')'});
 	var inner = hui.build('span',{'class':'hui_toolbar_inner_icon',parent:element});
 	var innerest = hui.build('span',{'class':'hui_toolbar_inner_icon',parent:inner});
 	var title = hui.build('strong',{text:options.title});
 	if (options.overlay) {
-		hui.build('span',{'class':'hui_icon_overlay',parent:icon,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+options.overlay,2)+')'});
+		hui.build('span',{'class':'hui_icon_overlay',parent:icon,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+options.overlay,32)+')'});
 	}
 	innerest.appendChild(icon);
 	innerest.appendChild(title);
@@ -8188,7 +8205,7 @@ hui.ui.RichText.prototype = {
 				var img = hui.build('img');
 				img.src=hui.ui.context+'/hui/gfx/trans.png';
 				if (actions[i].icon) {
-					div.style.backgroundImage='url('+hui.ui.getIconUrl(actions[i].icon,1)+')';
+					div.style.backgroundImage='url('+hui.ui.getIconUrl(actions[i].icon,16)+')';
 				}
 				div.appendChild(img);
 				this.toolbarContent.appendChild(div);
@@ -9573,7 +9590,7 @@ hui.ui.Overlay.prototype = {
 	addIcon : function(key,icon) {
 		var self = this;
 		var element = hui.build('div',{className:'hui_overlay_icon'});
-		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,2)+')';
+		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,32)+')';
 		hui.listen(element,'click',function(e) {
 			self.iconWasClicked(key,e);
 		});
@@ -10019,7 +10036,7 @@ hui.ui.Upload.Item = function(file) {
 		hui.addClass(this.element,'hui_upload_item_alt');
 	}
 	this.content = hui.build('div',{className:'hui_upload_item_content'});
-	this.icon = hui.ui.createIcon('file/generic',2);
+	this.icon = hui.ui.createIcon('file/generic',32);
 	this.element.appendChild(this.icon);
 	this.element.appendChild(this.content);
 	this.info = document.createElement('strong');
@@ -10188,6 +10205,12 @@ hui.ui.Gallery.create = function(options) {
 }
 
 hui.ui.Gallery.prototype = {
+	hide : function() {
+		this.element.style.display='none';
+	},
+	show : function() {
+		this.element.style.display='';
+	},
 	setObjects : function(objects) {
 		this.objects = objects;
 		this.render();
@@ -11643,7 +11666,7 @@ hui.ui.Bar.Button.create = function(options) {
 	options = options || {};
 	var e = options.element = hui.build('a',{'class':'hui_bar_button'});
 	if (options.icon) {
-		e.appendChild(hui.ui.createIcon(options.icon,1));
+		e.appendChild(hui.ui.createIcon(options.icon,16));
 	}
 	return new hui.ui.Bar.Button(options);
 }
@@ -11700,6 +11723,9 @@ hui.ui.IFrame.prototype = {
 	setUrl : function(url) {
 		this.element.setAttribute('src',url);
 		//hui.getFrameDocument(this.element).location.href=url;
+	},
+	clear : function() {
+		this.setUrl('about:blank');
 	},
 	getDocument : function() {
 		return hui.getFrameDocument(this.element);
@@ -12224,13 +12250,13 @@ hui.ui.Links.prototype = {
 			row = hui.build('div',{'class':'hui_links_row'});
 			row.hui_index = i;
 			
-			row.appendChild(hui.ui.createIcon(item.icon,1));
+			row.appendChild(hui.ui.createIcon(item.icon,16));
 			text = hui.build('div',{'class':'hui_links_text',text:item.text});
 			row.appendChild(text);
 
 			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.wrap(item.info)});
 			row.appendChild(infoNode);
-			remove = hui.ui.createIcon('monochrome/delete',1);
+			remove = hui.ui.createIcon('monochrome/delete',16);
 			hui.addClass(remove,'hui_links_remove');
 			row.appendChild(remove);
 
@@ -12796,16 +12822,16 @@ hui.ui.ColorPicker.create = function(options) {
 			'<div class="hui_bar hui_bar_window">'+
 				'<div class="hui_bar_body">'+
 					'<a class="hui_bar_button hui_bar_button_selected" href="javascript:void(0)" rel="0">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_pastels',1)+')"></span>'+
+						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_pastels',16)+')"></span>'+
 					'</a>'+
 					'<a class="hui_bar_button" href="javascript:void(0)" rel="1">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_brightness',1)+')"></span>'+
+						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_brightness',16)+')"></span>'+
 					'</a>'+
 					'<a class="hui_bar_button" href="javascript:void(0)" rel="2">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_saturated',1)+')"></span>'+
+						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_saturated',16)+')"></span>'+
 					'</a>'+
 					'<a class="hui_bar_button" href="javascript:void(0)" rel="3">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/swatches',1)+')"></span>'+
+						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/swatches',16)+')"></span>'+
 					'</a>'+
 					'<input class="hui_colorpicker"/>'+
 				'</div>'+

@@ -351,7 +351,7 @@ hui.ui.Upload.Item = function(file) {
 		hui.addClass(this.element,'hui_upload_item_alt');
 	}
 	this.content = hui.build('div',{className:'hui_upload_item_content'});
-	this.icon = hui.ui.createIcon('file/generic',2);
+	this.icon = hui.ui.createIcon('file/generic',32);
 	this.element.appendChild(this.icon);
 	this.element.appendChild(this.content);
 	this.info = document.createElement('strong');

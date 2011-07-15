@@ -84,12 +84,12 @@ hui.ui.Toolbar.Icon = function(options) {
 
 hui.ui.Toolbar.Icon.create = function(options) {
 	var element = options.element = hui.build('a',{'class':'hui_toolbar_icon'});
-	var icon = hui.build('span',{'class':'hui_icon',style:'background-image: url('+hui.ui.getIconUrl(options.icon,2)+')'});
+	var icon = hui.build('span',{'class':'hui_icon',style:'background-image: url('+hui.ui.getIconUrl(options.icon,32)+')'});
 	var inner = hui.build('span',{'class':'hui_toolbar_inner_icon',parent:element});
 	var innerest = hui.build('span',{'class':'hui_toolbar_inner_icon',parent:inner});
 	var title = hui.build('strong',{text:options.title});
 	if (options.overlay) {
-		hui.build('span',{'class':'hui_icon_overlay',parent:icon,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+options.overlay,2)+')'});
+		hui.build('span',{'class':'hui_icon_overlay',parent:icon,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+options.overlay,32)+')'});
 	}
 	innerest.appendChild(icon);
 	innerest.appendChild(title);

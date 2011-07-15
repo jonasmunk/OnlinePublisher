@@ -10,7 +10,17 @@ hui.ui.Selection = function(options) {
 	this.subItems = [];
 	this.busy = 0;
 	this.selection=null;
-	if (this.options.value!=null) {
+	if (options.items && options.items.length>0) {
+		for (var i=0; i < options.items.length; i++) {
+			var item = options.items[i];
+			this.items.push(item);
+			var element = hui.get(item.id);
+			item.element = element;
+			this.addItemBehavior(element,item);
+		};
+		this.selection = this.getSelectionWithValue(this.options.value);
+		this.updateUI();
+	} else if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
 	}
 	hui.ui.extend(this);
@@ -76,6 +86,7 @@ hui.ui.Selection.prototype = {
 	},
 	/** Changes selection to the first item */
 	selectFirst : function() {
+		hui.log('selecting first')
 		var i;
 		for (i=0; i < this.items.length; i++) {
 			this.changeSelection(this.items[i]);
@@ -126,7 +137,8 @@ hui.ui.Selection.prototype = {
 		items.parent = this;
 		this.subItems.push(items);
 	},
-	/** @private */
+	/** @private
+	
 	registerItem : function(id,title,icon,badge,value,kind) {
 		var element = hui.get(id);
 		var item = {id:id,title:title,icon:icon,badge:badge,element:element,value:value,kind:kind};
@@ -134,6 +146,7 @@ hui.ui.Selection.prototype = {
 		this.addItemBehavior(element,item);
 		this.selection = this.getSelectionWithValue(this.options.value);
 	},
+	*/
 	/** @private */
 	addItemBehavior : function(node,item) {
 		hui.listen(node,'click',function() {
@@ -155,7 +168,7 @@ hui.ui.Selection.prototype = {
 			this.element.appendChild(node);
 			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
 			if (item.icon) {
-				node.appendChild(hui.ui.createIcon(item.icon,1));
+				node.appendChild(hui.ui.createIcon(item.icon,16));
 			}
 			node.appendChild(inner);
 			hui.listen(node,'click',function() {
@@ -205,7 +218,12 @@ hui.ui.Selection.prototype = {
 		if (!this.selection) {return}
 		var item = this.getSelectionWithValue(this.selection.value);
 		if (!item) {
-			this.selectFirst();
+			hui.log('Value not found: '+this.selection.value);
+			if (!this.busy) {
+				this.selectFirst();
+			} else {
+				hui.log('Will not select first since im still busy');
+			}
 		}
 	}
 }
@@ -295,7 +313,7 @@ hui.ui.Selection.Items.prototype = {
 			}
 			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
 			if (item.icon) {
-				node.appendChild(hui.build('span',{'class':'hui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,1)+')'}));
+				node.appendChild(hui.build('span',{'class':'hui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,16)+')'}));
 			}
 			node.appendChild(inner);
 			hui.listen(node,'click',function(e) {

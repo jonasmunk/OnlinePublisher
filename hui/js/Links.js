@@ -82,13 +82,13 @@ hui.ui.Links.prototype = {
 			row = hui.build('div',{'class':'hui_links_row'});
 			row.hui_index = i;
 			
-			row.appendChild(hui.ui.createIcon(item.icon,1));
+			row.appendChild(hui.ui.createIcon(item.icon,16));
 			text = hui.build('div',{'class':'hui_links_text',text:item.text});
 			row.appendChild(text);
 
 			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.wrap(item.info)});
 			row.appendChild(infoNode);
-			remove = hui.ui.createIcon('monochrome/delete',1);
+			remove = hui.ui.createIcon('monochrome/delete',16);
 			hui.addClass(remove,'hui_links_remove');
 			row.appendChild(remove);
 

@@ -14,21 +14,36 @@
 				<title>API</title>
 				<item icon="common/info" text="XML-format" value="../api/xml/index.html"/>
 				<item icon="common/info" text="JavaScript API" value="../api/index.html"/>
+				<item icon="common/color" text="Icons" value="../api/icons.html"/>
 				<items source="navSource"/>
 			</selection>
 			</overflow>
 		</sidebar>
 		<tabs small="true">
-			<tab title="Unit-tests">
+			<tab title="Humanize User Interface">
 				<toolbar>
-					<icon icon="common/folder" text="Animation" click="dock.setUrl('unittests/animation.html')"/>
-					<icon icon="common/folder" text="Formula" click="dock.setUrl('unittests/formula.html')"/>
-					<icon icon="common/folder" text="HUI" click="dock.setUrl('unittests/hui.html')"/>
-					<icon icon="common/folder" text="Style" click="dock.setUrl('unittests/style.html')"/>
-					<icon icon="common/folder" text="Validation" click="dock.setUrl('unittests/validation.html')"/>
-					<icon icon="common/folder" text="Window" click="dock.setUrl('unittests/window.html')"/>
+						<icon icon="common/internet" text="Publish"/>
+					<right>
+						<icon icon="common/internet" name="publish" text="Publish"/>
+					</right>
 				</toolbar>
 			</tab>
 		</tabs>
 	</dock>
+	
+	<boundpanel name="panel" width="200">
+		<text>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		</text>
+		<button small="true" click="panel.hide()" text="Close"/>
+	</boundpanel>
+	
+	<script>
+		hui.ui.listen({
+			$click$publish : function() {
+				panel.position(publish);
+				panel.show();
+			}
+		})
+	</script>
 </gui>

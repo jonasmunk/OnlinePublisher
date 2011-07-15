@@ -20,7 +20,7 @@ div.hui_locationfield input
 
 a.hui_locationfield_picker
 {
-	background-image: url('../icons/geo/map1.png');
+	background-image: url('../icons/geo/map16.png');
 	width: 16px;
 	height: 16px;
 	position: absolute;
@@ -52,10 +52,10 @@ span.hui_locationfield_latitude span, span.hui_locationfield_longitude span
 
 span.hui_locationfield_latitude
 {
-	background: url('../icons/monochrome/latitude1.png') left top no-repeat;
+	background: url('../icons/monochrome/latitude16.png') left top no-repeat;
 }
 
 span.hui_locationfield_longitude
 {
-	background: url('../icons/monochrome/longitude1.png') left top no-repeat;
+	background: url('../icons/monochrome/longitude16.png') left top no-repeat;
 }

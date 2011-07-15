@@ -41,7 +41,7 @@ hui.ui.Overlay.prototype = {
 	addIcon : function(key,icon) {
 		var self = this;
 		var element = hui.build('div',{className:'hui_overlay_icon'});
-		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,2)+')';
+		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,32)+')';
 		hui.listen(element,'click',function(e) {
 			self.iconWasClicked(key,e);
 		});

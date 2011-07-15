@@ -368,7 +368,7 @@ hui.ui.List.prototype = {
 	parseCell : function(node,cell) {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
-			cell.appendChild(hui.ui.createIcon(icon,1));
+			cell.appendChild(hui.ui.createIcon(icon,16));
 			cell = hui.build('div',{parent:cell,style:'margin-left: 20px'});
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
@@ -378,7 +378,7 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
-				var icon = hui.ui.createIcon(child.getAttribute('icon'),1);
+				var icon = hui.ui.createIcon(child.getAttribute('icon'),16);
 				var data = child.getAttribute('data');
 				if (data) {
 					icon.setAttribute('data',data);
@@ -398,7 +398,7 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'object')) {
 				var obj = hui.build('div',{'class':'object'});
 				if (child.getAttribute('icon')) {
-					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),1));
+					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),16));
 				}
 				if (child.firstChild && child.firstChild.nodeType==hui.TEXT_NODE && child.firstChild.nodeValue.length>0) {
 					hui.dom.addText(obj,child.firstChild.nodeValue);
@@ -544,7 +544,7 @@ hui.ui.List.prototype = {
 			hui.each(r.cells,function(c) {
 				var td = hui.build('td');
 				if (c.icon) {
-					td.appendChild(hui.ui.createIcon(c.icon,1));
+					td.appendChild(hui.ui.createIcon(c.icon,16));
 					icon = icon || c.icon;
 				}
 				if (c.text) {
@@ -605,7 +605,7 @@ hui.ui.List.prototype = {
 	createObject : function(object) {
 		var node = hui.build('div',{'class':'object'});
 		if (object.icon) {
-			node.appendChild(hui.ui.createIcon(object.icon,1));
+			node.appendChild(hui.ui.createIcon(object.icon,16));
 		}
 		hui.dom.addText(node,object.text || object.name || '')
 		return node;

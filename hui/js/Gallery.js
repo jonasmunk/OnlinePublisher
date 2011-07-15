@@ -27,6 +27,12 @@ hui.ui.Gallery.create = function(options) {
 }
 
 hui.ui.Gallery.prototype = {
+	hide : function() {
+		this.element.style.display='none';
+	},
+	show : function() {
+		this.element.style.display='';
+	},
 	setObjects : function(objects) {
 		this.objects = objects;
 		this.render();
@@ -34,6 +40,10 @@ hui.ui.Gallery.prototype = {
 	},
 	getObjects : function() {
 		return this.objects;
+	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return this.element.style.display!='none';
 	},
 	/** @private */
 	$objectsLoaded : function(objects) {
