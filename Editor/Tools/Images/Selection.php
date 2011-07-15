@@ -12,7 +12,7 @@ $writer = new ItemsWriter();
 
 $writer->
 startItems()->
-	startItem(array('title'=>'Alle','badge'=>ImageService::getTotalImageCount(),'icon'=>'common/files','value'=>'all'))->endItem()->
+	startItem(array('title'=>'Alle billeder','badge'=>ImageService::getTotalImageCount(),'icon'=>'common/image','value'=>'all'))->endItem()->
 	title('Anvendelse')->
 	item(array(
 		'title'=>'Ikke anvendt',

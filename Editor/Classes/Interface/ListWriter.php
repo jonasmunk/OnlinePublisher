@@ -135,6 +135,13 @@ class ListWriter {
 		echo StringUtils::escapeXMLBreak($text,'<break/>');
 		return $this;
 	}
+
+	function badge($text) {
+		echo '<badge>';
+		$this->text($text);
+		echo '</badge>';
+		return $this;
+	}
 	
 	function icon($options=array()) {
 		echo '<icon icon="'.$options['icon'].'"';

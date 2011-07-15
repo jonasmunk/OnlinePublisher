@@ -113,6 +113,7 @@ function listPages() {
 			endCell()->
 			startCell(array('icon'=>'common/page'))->
 				text($row['page_title'])->
+				badge($row['template'])->
 				startIcons()->
 					icon(array(
 						'icon' => 'monochrome/edit',

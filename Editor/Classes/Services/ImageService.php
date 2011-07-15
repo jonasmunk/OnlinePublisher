@@ -93,20 +93,20 @@ class ImageService {
 	
 	
 	function getPageImageRelations() {
-		$sql = "select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'image' as part".
+		$sql = "select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'image' as part,'document' as template".
 			" from `part_image`,document_section,page,object".
 			" where part_image.part_id=document_section.part_id and page.id=document_section.page_id and part_image.image_id=object.id".
-		" union select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'text' as part".
+		" union select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'text' as part,'document' as template".
 			" from part_text,document_section,page,object".
 			" where part_text.part_id=document_section.part_id and page.id=document_section.page_id and part_text.image_id=object.id".
-		" union select distinct object.id as image_id,object.title as image_title,page.title as page_title,page.id as page_id,'imagegallery' as part".
+		" union select distinct object.id as image_id,object.title as image_title,page.title as page_title,page.id as page_id,'imagegallery' as part,'document' as template".
 			" from part_imagegallery,imagegroup,imagegroup_image,document_section,page,object".
 			" where part_imagegallery.part_id=document_section.part_id and page.id=document_section.page_id".
 				" and part_imagegallery.imagegroup_id=imagegroup_image.imagegroup_id and imagegroup_image.image_id=object.id".
-		" union select object.id as image_id,object.title as image_title, page.title as page_title, page.id as page_id,'' as part".
+		" union select object.id as image_id,object.title as image_title, page.title as page_title, page.id as page_id,'' as part,'imagegallery' as template".
 			" from imagegallery_object,object,page where imagegallery_object.object_id = object.id".
 			" and imagegallery_object.page_id=page.id and object.type='image'".
-		" union select object.id as image_id,object.title as image_title, page.title as page_title, page.id as page_id,'' as part".
+		" union select object.id as image_id,object.title as image_title, page.title as page_title, page.id as page_id,'' as part,'imagegallery' as template".
 			" from imagegallery_object,imagegroup_image,object,page".
 			" where imagegroup_image.imagegroup_id = imagegallery_object.object_id".
 			" and imagegallery_object.page_id=page.id and imagegroup_image.image_id=object.id".
