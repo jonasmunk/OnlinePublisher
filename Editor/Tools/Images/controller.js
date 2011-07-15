@@ -25,6 +25,15 @@ hui.ui.listen({
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
 	
+	
+	$selectionChanged$selector : function(item) {
+		if (item.value=='pages' || item.value=='products' || item.value=='persons') {
+			hui.ui.changeState('list');
+		} else {
+			hui.ui.changeState('gallery');
+		}
+	},
+	
 	$selectionChanged$gallery : function() {
 		hui.ui.get('delete').setEnabled(true);
 		hui.ui.get('view').setEnabled(true);
@@ -124,6 +133,16 @@ hui.ui.listen({
 				hui.ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
 			}
 		});
-	}
+	},
 	
+	
+	$clickIcon$list : function(info) {
+		if (info.data.action=='editPage') {
+			document.location='../../Template/Edit.php?id='+info.data.id;
+		} else if (info.data.action=='editPerson') {
+			document.location='../Customers/?person='+info.data.id;
+		} else if (info.data.action=='editProduct') {
+			document.location='../Shop/?product='+info.data.id;
+		}
+	}
 });

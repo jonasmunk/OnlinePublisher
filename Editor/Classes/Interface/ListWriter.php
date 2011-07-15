@@ -13,6 +13,7 @@ class ListWriter {
 			header('Content-Type: text/xml; charset=iso-8859-1');
 			echo '<?xml version="1.0" encoding="ISO-8859-1"?><list>';
 		}
+		return $this;
 	}
 
 	function endList() {
@@ -52,6 +53,7 @@ class ListWriter {
 			echo ' sortable="'.($options['sortable'] ? 'true' : 'false').'"';
 		}
 		echo '/>';
+		return $this;
 	}
 	
 	function startRow($options=array()) {

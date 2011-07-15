@@ -211,18 +211,18 @@ class Request {
 	function getUnicodeObject($key) {
 		$obj = Request::getObject($key);
 		if ($obj!==null) {
-			Request::convertToUnicode($obj);
+			Request::convertFromUnicode($obj);
 		}
 		return $obj;
 	}
 	
-	function convertToUnicode($obj) {
+	function convertFromUnicode($obj) {
 		if (is_object($obj)) {
 			foreach ($obj as $key => $value) {
 				if (is_string($value)) {
 					$obj->$key = StringUtils::fromUnicode($value);
 				} else if (is_object($value) || is_array($value)) {
-					Request::convertToUnicode($value);
+					Request::convertFromUnicode($value);
 				}
 			}
 		} else if (is_array($obj)) {
@@ -230,7 +230,7 @@ class Request {
 				if (is_string($obj[$i])) {
 					$obj[$i] = StringUtils::fromUnicode($value);
 				} else if (is_object($obj[$i]) || is_array($obj[$i])) {
-					Request::convertToUnicode($obj[$i]);
+					Request::convertFromUnicode($obj[$i]);
 				}
 			}
 		}

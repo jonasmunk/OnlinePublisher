@@ -10,8 +10,33 @@ require_once '../../Classes/Request.php';
 
 $writer = new ItemsWriter();
 
-$writer->startItems();
-$writer->startItem(array('title'=>'Alle','badge'=>ImageService::getTotalImageCount(),'icon'=>'common/files','value'=>'all'))->endItem();
-$writer->startItem(array('title'=>'Ikke anvendt','badge'=>ImageService::getUnusedImagesCount(),'icon'=>'monochrome/round_question','value'=>'unused'))->endItem();
-$writer->endItems();
+$writer->
+startItems()->
+	startItem(array('title'=>'Alle','badge'=>ImageService::getTotalImageCount(),'icon'=>'common/files','value'=>'all'))->endItem()->
+	title('Anvendelse')->
+	item(array(
+		'title'=>'Ikke anvendt',
+		'badge'=>ImageService::getUnusedImagesCount(),
+		'icon'=>'monochrome/round_question',
+		'value'=>'unused')
+	)->
+	item(array(
+		'title'=>'Sider',
+		'badge'=>ImageService::getNumberOfPagesWithImages(),
+		'icon'=>'common/page',
+		'value'=>'pages')
+	)->
+	item(array(
+		'title'=>'Personer',
+		'badge'=>ImageService::getNumberOfPersonsWithImages(),
+		'icon'=>'common/person',
+		'value'=>'persons')
+	)->
+	item(array(
+		'title'=>'Produkter',
+		'badge'=>ImageService::getNumberOfProductsWithImages(),
+		'icon'=>'common/product',
+		'value'=>'products')
+	)->
+endItems();
 ?>

@@ -35,7 +35,9 @@ hui.ui.listen({
 		});
 	},
 	$clickIcon$list : function(info) {
-		if (info.data.action=='delete') {
+		if (info.data.action=='view' && info.row.type=='page') {
+			parent.location = '../Template/Edit.php?id='+(info.row.id);
+		} else if (info.data.action=='delete') {
 			hui.ui.confirmOverlay({
 				element : info.node,
 				text : 'Er du sikker?',

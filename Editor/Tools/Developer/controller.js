@@ -1,27 +1,34 @@
 hui.ui.listen({
 	$selectionChanged$selector : function(item) {
 		if (item.value=='settings') {
+			iframe.clear();
 			hui.ui.changeState('settings');
+		} else if (item.value=='graph') {
+			iframe.clear();
+			hui.ui.changeState('graph');
 		} else {
 			hui.ui.changeState('frame');
 		}
 		if (item.value=='phpInfo') {
-			iframe.setUrl('PhpInfo.php');
+			iframe.setUrl('data/PhpInfo.php');
 		} else if (item.value=='session') {
-			iframe.setUrl('Session.php');
+			iframe.setUrl('data/Session.php');
 		} else if (item.kind=='test') {
-			iframe.setUrl('RunTest.php?test='+item.value);
+			iframe.setUrl('data/RunTest.php?test='+item.value);
 		} else if (item.kind=='testgroup') {
-			iframe.setUrl('RunTest.php?group='+item.value);
+			iframe.setUrl('data/RunTest.php?group='+item.value);
 		} else if (item.kind=='alltests') {
-			iframe.setUrl('RunTest.php?all=true');
+			iframe.setUrl('data/RunTest.php?all=true');
 		}
 	},
 	$valuesChanged$settingsFormula : function(values) {
 		hui.ui.request({
-			url : 'SaveSettings.php',
+			url : 'data/SaveSettings.php',
 			json : {data:values},
 			message : {success:'Saved'}
 		})
+	},
+	$clickNode$graph : function(node) {
+		hui.ui.showMessage({text:node.label,duration:2000});
 	}
 });

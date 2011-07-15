@@ -48,7 +48,7 @@ $gui='
 			<center>
 				<overflow>
 					<list name="list" source="listSource" state="list"/>
-					<fragment state="meter" height="full" background="leather">
+					<fragment state="meter" height="full" background="linen">
 						<bar>
 							<button text="Luk" icon="common/close" name="closeMeter"/>
 						</bar>
@@ -77,7 +77,7 @@ $gui='
 											<button name="deleteMeter" title="Slet">
 												<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
 											</button>
-											<button text="Opdater" submit="true" name="saveMeter"/>
+											<button text="Opdater" submit="true" name="saveMeter" highlighted="true"/>
 										</buttons>
 										</formula>
 									</box>

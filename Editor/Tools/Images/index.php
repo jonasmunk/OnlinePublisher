@@ -15,7 +15,7 @@ $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 $flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
 
 $gui='
-<gui xmlns="uri:hui" title="Billeder" padding="10">
+<gui xmlns="uri:hui" title="Billeder" padding="10" state="gallery">
 	<controller source="controller.js"/>
 	<controller source="groups.js"/>
 	<controller source="upload.js"/>
@@ -28,12 +28,10 @@ $gui='
 		<parameter key="group" value="@groupSelection.value"/>
 		<parameter key="subset" value="@subsetSelection.value"/>
 	</source>
-	<!--
-	<source name="filesSource" url="ListImages.php">
+	<source name="listSource" url="data/ListImages.php">
 		<parameter key="query" value="@search.value"/>
-		<parameter key="group" value="@groupSelection.value"/>
 		<parameter key="main" value="@selector.value"/>
-	</source>-->
+	</source>
 	<layout>
 		<top>
 			<toolbar>
@@ -62,10 +60,8 @@ $gui='
 			</left>
 			<center>
 				<overflow>
-					<gallery name="gallery" source="imagesSource" padding="5"/>
-					<!--
-					<list name="list" source="filesSource"/>
-					-->
+					<gallery name="gallery" source="imagesSource" padding="5" state="gallery"/>
+					<list name="list" source="listSource" state="list"/>
 				</overflow>
 			</center>
 		</middle>

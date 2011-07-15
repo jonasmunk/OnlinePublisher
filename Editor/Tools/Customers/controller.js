@@ -8,6 +8,10 @@ hui.ui.listen({
 	
 	$ready : function() {
 		sendEmail.setEnabled(false);
+		var person = hui.location.getParameter('person');
+		if (person) {
+			this.loadPerson(person);
+		}
 	},
 	
 	$resolveImageUrl : function(img,width,height) {
@@ -47,14 +51,18 @@ hui.ui.listen({
 			saveGroup.setEnabled(false);
 			hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
 		} else if (obj.kind=='person') {
-			personFormula.reset();
-			deletePerson.setEnabled(false);
-			savePerson.setEnabled(false);
-			hui.ui.request({json:{data:data},url:'LoadPerson.php',onSuccess:'loadPerson'});
+			this.loadPerson(obj.id);
 		}
 	},
 	
 	///////////////////////////////////// Person /////////////////////////////
+	
+	loadPerson : function(id) {
+		personFormula.reset();
+		deletePerson.setEnabled(false);
+		savePerson.setEnabled(false);
+		hui.ui.request({json:{data:{id:id}},url:'LoadPerson.php',onSuccess:'loadPerson'});
+	},
 	
 	$click$newPerson : function() {
 		this.personId = 0;

@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Developer
  */
-require_once '../../Include/Private.php';
+require_once '../../../Include/Private.php';
 
 $data = Request::getObject('data');
 

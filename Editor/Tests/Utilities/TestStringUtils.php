@@ -33,9 +33,12 @@ class TestStringUtils extends UnitTestCase {
         $this->assertEqual("-",StringUtils::escapeXML('-'));
         $this->assertEqual("+",StringUtils::escapeXML('+'));
         $this->assertEqual("&#226;&#243;&#8220;",StringUtils::escapeXML('–'));
+		
+		$this->assertEqual("-",StringUtils::fromUnicode('–'),"Long dash is replaced with short dash");
+		$this->assertEqual("\"",StringUtils::fromUnicode('”'),"Curcly quotes are replaced with normal quotes");
+		$this->assertEqual("\"",StringUtils::fromUnicode('“'),"Curcly quotes are replaced with normal quotes");
 		// TODO: is this correct?
-        $this->assertEqual("?",StringUtils::escapeXML(StringUtils::fromUnicode('–')));
-		$this->assertEqual("&#195;&#166;",StringUtils::escapeXML('æ'));
+		$this->assertEqual("&#230;",StringUtils::escapeXML(StringUtils::fromUnicode('æ')));
     }
 
     function testUnicode() {

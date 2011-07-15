@@ -70,7 +70,7 @@ $gui='
 				</icon>
 				<divider/>
 				<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" name="newHierarchy"/>
-				<icon icon="common/page" title="Nyt underpunkt" overlay="new" name="newHierarchyItem" disabled="true"/>
+				<icon icon="common/hierarchy_item" title="Nyt underpunkt" overlay="new" name="newHierarchyItem" disabled="true"/>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 					<divider/>
@@ -82,13 +82,13 @@ $gui='
 			<left>
 				<overflow>
 					<selection value="all" name="selector">
-						<item icon="file/generic" title="Alle sider" value="all"/>
+						<item icon="common/page" title="Alle sider" value="all"/>
 						<title>Hierarkier</title>
 						<items source="hierarchySource"/>
 						<title>Sprog</title>
 						<items source="languageSource"/>
 						<title>Oversigter</title>
-						<item icon="part/news" title="Nyheder" value="news" kind="subset"/>
+						<item icon="common/news" title="Nyheder" value="news" kind="subset"/>
 						<item icon="common/warning" title="Advarsler" value="warnings"/>
 						<item icon="common/edit" title="Ændret" value="changed"/>
 						<item icon="common/delete" title="Uden menupunkt" value="nomenu"/>
