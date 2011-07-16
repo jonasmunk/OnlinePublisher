@@ -1172,19 +1172,19 @@ hui.getDocumentHeight = function() {
 //////////////////////////// Placement /////////////////////////
 
 /**
- * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»},insideViewPort:«boolean»,viewPartMargin:«integer»})
+ * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPartMargin:«integer»})
  */
 hui.place = function(options) {
 	var left = 0,
 		top = 0,
 		trgt = options.target.element,
 		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
-	left = trgtPos.left + trgt.clientWidth * options.target.horizontal;
-	top = trgtPos.top + trgt.clientHeight * options.target.vertical;
+	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
+	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
 	
 	var src = options.source.element;
-	left -= src.clientWidth * options.source.horizontal;
-	top -= src.clientHeight * options.source.vertical;
+	left -= src.clientWidth * (options.source.horizontal || 0);
+	top -= src.clientHeight * (options.source.vertical || 0);
 	
 	if (options.insideViewPort) {
 		var w = hui.getViewPortWidth();
