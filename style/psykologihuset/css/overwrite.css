@@ -1,0 +1,9 @@
+.common_font
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.part_text, .part_text, div.part_richtext, .part_richtext
+{
+	color: #777777;
+}

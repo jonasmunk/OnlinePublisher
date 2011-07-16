@@ -18,12 +18,9 @@
 <head> 
 	<title><xsl:if test="not(//p:page/@id=//p:context/p:home/@page)"><xsl:value-of select="@title"/> » </xsl:if><xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
-	<xsl:call-template name="oo-script"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/stylesheet.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.css"/>
-	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
-	<![endif]]]></xsl:comment>
+	<xsl:call-template name="util:style"/>
+	<xsl:call-template name="util:style-ie6"/>
+	<xsl:call-template name="util:scripts"/>
 </head>
 <body>
 	<div class="chrome">
@@ -143,7 +140,7 @@
 <xsl:if test="not(@hidden='true')">
 <li class="{$style}">
 <a>
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a>
 </li>
@@ -171,7 +168,7 @@
 <xsl:if test="not(@hidden='true')">
 <li>
 <a class="navigation navigation_{$style}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <span><xsl:value-of select="@title"/></span>
 </a>
 <xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
@@ -202,7 +199,7 @@
 <xsl:template match="f:links/f:bottom/f:link">
 <xsl:if test="position()>1"><span>&#160;|&#160;</span></xsl:if>
 <a title="{@alternative}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a>
 </xsl:template>
@@ -210,7 +207,7 @@
 <xsl:template match="f:links/f:top/f:link">
 <span>&#160;|&#160;</span>
 <a title="{@alternative}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a>
 </xsl:template>
@@ -231,7 +228,7 @@
 
 <xsl:template match="f:text/f:bottom/f:link">
 <a title="{@alternative}">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:apply-templates/>
 </a>
 </xsl:template>
@@ -286,7 +283,7 @@
 <xsl:template match="f:newsblock//o:link">
 <xsl:if test="position()>1"><xsl:text> </xsl:text></xsl:if>
 <a title="{@alternative}" class="common FrameNewsLink">
-<xsl:call-template name="link"/>
+<xsl:call-template name="util:link"/>
 <xsl:value-of select="@title"/>
 </a>
 </xsl:template>
