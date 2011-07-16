@@ -7,3 +7,47 @@ div.part_text, .part_text, div.part_richtext, .part_richtext
 {
 	color: #777777;
 }
+
+.part_header
+{
+	color: #004071;
+	font-family: Georgia,serif;
+	font-weight: normal;
+	font-style: normal;
+	margin: 0;
+}
+
+h1.part_header, textarea.part_header_1
+{
+	font-size: 14pt;
+}
+
+h2.part_header, textarea.part_header_2
+{
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+h3.part_header, textarea.part_header_3
+{
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+h4.part_header, textarea.part_header_4
+{
+	font-size:11pt;
+	font-weight: bold;
+}
+
+h5.part_header, textarea.part_header_5
+{
+	font-size:10pt;
+	font-weight: bold;
+}
+
+h6.part_header, textarea.part_header_6
+{
+	font-size:9pt;
+	font-weight: bold;
+}
