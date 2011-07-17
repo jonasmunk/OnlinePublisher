@@ -10,6 +10,7 @@ require_once '../../Classes/In2iGui.php';
 $gui='
 <gui xmlns="uri:hui" padding="10" title="Butik">
 	<controller source="controller.js"/>
+	<source name="productListSource" url="data/ListProducts.php"/>
 	<source name="groupSource" url="../../Services/Model/Items.php?type=productgroup"/>
 	<source name="typeSource" url="../../Services/Model/Items.php?type=producttype"/>
 	<layout>
@@ -34,7 +35,7 @@ $gui='
 			</left>
 			<center>
 				<overflow>
-					<list name="list"/>
+					<list name="list" source="productListSource"/>
 				</overflow>
 			</center>
 		</middle>
@@ -47,9 +48,9 @@ $gui='
 				<datetime name="offerExpiry" label="Deadline:"/>
 				<text name="offerNote" label="Notat:" lines="6"/>
 				<buttons>
-					<button name="saveOffer" title="Gem" highlighted="true"/>
-					<button name="deleteOffer" title="Slet"/>
 					<button name="cancelOffer" title="Annuller"/>
+					<button name="deleteOffer" title="Slet"/>
+					<button name="saveOffer" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
 		</formula>
@@ -73,16 +74,16 @@ $gui='
 				<text name="typeTitle" label="Titel:"/>
 				<text name="typeNote" label="Notat:" lines="10"/>
 				<buttons>
-					<button name="saveType" title="Gem" highlighted="true"/>
 					<button name="deleteType" title="Slet"/>
 					<button name="cancelType" title="Annuller"/>
+					<button name="saveType" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
 		</formula>
 	</window>
 	<window name="productEditor" width="500" title="Produkt">
 		<formula name="productFormula">
-			<tabs>
+			<tabs small="true" centered="true">
 				<tab title="Produkt" padding="5">
 					<columns space="10">
 						<column>
@@ -164,9 +165,11 @@ $gui='
 			</tabs>
 			<group>
 				<buttons>
-					<button name="saveProduct" title="Gem" highlighted="true"/>
-					<button name="deleteProduct" title="Slet"/>
 					<button name="cancelProduct" title="Annuller"/>
+					<button name="deleteProduct" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja,slet produkt" cancel="Nej"/>
+					</button>
+					<button name="saveProduct" title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
 		</formula>

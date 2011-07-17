@@ -6,10 +6,6 @@ hui.ui.listen({
 		{drag:'product',drop:'producttype'}
 	],
 	
-	$ready : function() {
-		list.loadData('ListProducts.php');
-	},
-	
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
@@ -18,13 +14,13 @@ hui.ui.listen({
 		if (obj.value=='productgroup') {
 			list.loadData('../../Services/Model/ListObjects.php?type=productgroup');
 		} else if (obj.value=='product') {
-			list.loadData('ListProducts.php');
+			list.loadData('data/ListProducts.php');
 		} else if (obj.value=='productoffer') {
 			list.loadData('ListOffers.php');
 		} else if (obj.kind=='productgroup') {
-			list.loadData('ListProducts.php?productgroup='+obj.value);
+			list.loadData('data/ListProducts.php?productgroup='+obj.value);
 		} else if (obj.kind=='producttype') {
-			list.loadData('ListProducts.php?producttype='+obj.value);
+			list.loadData('data/ListProducts.php?producttype='+obj.value);
 		}
 	},
 	$selectionWasOpened : function() {
@@ -37,8 +33,7 @@ hui.ui.listen({
 		}
 	},
 	
-	$listRowsWasOpened$list : function(list) {
-		var obj = list.getFirstSelection();
+	$listRowWasOpened$list : function(obj) {
 		var data = {id:obj.id};
 		if (obj.kind=='productoffer') {
 			offerFormula.reset();
@@ -59,7 +54,7 @@ hui.ui.listen({
 		productFormula.reset();
 		deleteProduct.setEnabled(false);
 		saveProduct.setEnabled(false);
-		hui.ui.request({json:{data:data},url:'LoadProduct.php',onSuccess:'loadProduct'});
+		hui.ui.request({json:{data:data},url:'data/LoadProduct.php',onSuccess:'loadProduct'});
 	},
 	$success$loadProduct : function(data) {
 		this.productId = data.product.id;
