@@ -60,12 +60,16 @@ op.part.utils = {
 				style : 'width: 24px; height: 24px; position: absolute; background: #fff url(\''+hui.ui.context+'hui/gfx/progress/spinner_white_24.gif\');'
 			});
 		}
-		hui.setOpacity(node,.5);
-		hui.place({source:{element:this.spinner},target:{element:node},left:1,top:1})
-		this.spinner.style.display='';
+		hui.place({source:{element:this.spinner,vertical:.5,horizontal:.5},target:{element:node,vertical:.5,horizontal:.5},left:1,top:1})
+		window.clearTimeout(this.spinnerTimer);
+		this.spinnerTimer = window.setTimeout(function() {
+			hui.setOpacity(node,.5);
+			this.spinner.style.display='';
+		}.bind(this),300);
 	},
 	hideSpinner : function(node) {
 		hui.setOpacity(node,1);
+		window.clearTimeout(this.spinnerTimer);
 		this.spinner.style.display='none';
 	}
 }

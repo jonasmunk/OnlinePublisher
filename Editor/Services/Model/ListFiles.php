@@ -5,7 +5,7 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Interface/ListWriter.php';
 require_once '../../Classes/Object.php';
 require_once '../../Classes/Request.php';
 
@@ -26,19 +26,19 @@ if ($queryString!='') {
 
 $list = Object::find($query);
 $objects = $list['result'];
-header('Content-Type: text/xml;');
-echo '<?xml version="1.0" encoding="UTF-8"?>';
-echo '<list>';
-echo '<sort key="'.$sort.'" direction="'.$direction.'"/>';
-echo '<window total="'.$list['total'].'" size="'.$list['windowSize'].'" page="'.$list['windowPage'].'"/>';
-echo '<headers>'.
-'<header title="Titel" width="30" key="title" sortable="true"/>'.
-'</headers>';
-foreach ($objects as $object) {
-	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="'.$object->getIn2iGuiIcon().'" title="'.In2iGui::escape($object->getTitle()).'">'.
-	'<cell icon="'.$object->getIn2iGuiIcon().'"><wrap>'.In2iGui::escape($object->getTitle()).'</wrap></cell>'.
-	'</row>';
-}
 
-echo '</list>';
+$writer = new ListWriter();
+
+$writer->startList()->
+	sort($sort,$direction)->
+	window(array('total'=>$list['total'],'size'=>$list['windowSize'],'page'=>$list['windowPage']))->
+	startHeaders()->
+		header(array('title'=>'Titel','width'=>30,'key'=>'title','sortable'=>true))->
+	endHeaders();
+foreach ($objects as $object) {
+	$writer->startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()))->
+		startCell(array('icon'=>$object->getIn2iGuiIcon()))->startWrap()->text($object->getTitle())->endWrap()->endCell()->
+	endRow();
+}
+$writer->endList();
 ?>
