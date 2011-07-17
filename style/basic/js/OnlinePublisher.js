@@ -35,7 +35,7 @@ op.showLogin = function() {
 		if (this.loadingLogin) {return}
 		this.loadingLogin = true;
 		hui.ui.showMessage({text:'Indlæser...',busy:true,delay:300});
-		hui.ui.require(['Formula','Button'],
+		hui.ui.require(['Formula','Button','TextField'],
 			function() {
 				hui.ui.hideMessage();
 				var box = this.loginBox = hui.ui.Box.create({width:300,title:'Adgangskontrol',modal:true,absolute:true,closable:true,padding:10});
@@ -46,8 +46,8 @@ op.showLogin = function() {
 					op.login(values.username,values.password);
 				}});
 				var g = form.buildGroup(null,[
-					{type:'Text',options:{label:'Brugernavn',key:'username'}},
-					{type:'Text',options:{label:'Kodeord',key:'password',secret:true}}
+					{type:'TextField',options:{label:'Brugernavn',key:'username'}},
+					{type:'TextField',options:{label:'Kodeord',key:'password',secret:true}}
 				]);
 				var b = g.createButtons();
 				var cancel = hui.ui.Button.create({text:'Annuller'})

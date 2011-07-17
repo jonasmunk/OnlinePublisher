@@ -12,9 +12,9 @@ op.WeblogTemplate = {
 			var box = this.newBox = hui.ui.Box.create({modal:true,width:600,absolute:true,padding:10,title:'Nyt indlæg',closable:true});
 			var form = this.newForm = hui.ui.Formula.create();
 			var group = form.buildGroup({above:true},[
-				{type:'Text',options:{label:'Titel',key:'title'}},
+				{type:'TextField',options:{label:'Titel',key:'title'}},
 				{type:'DateTimeField',options:{label:'Dato',name:'newEntryDate',key:'date',allowNull:false}},
-				{type:'Text',options:{label:'Text',key:'text',lines:8}},
+				{type:'TextField',options:{label:'Text',key:'text',lines:8}},
 				{type:'Checkboxes',options:{label:'Grupper',items:this.groups,key:'group[]'}}
 			]);
 			var buttons = group.createButtons();

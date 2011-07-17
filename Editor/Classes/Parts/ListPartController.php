@@ -76,7 +76,7 @@ class ListPartController extends PartController
 			$zoneItems.='<item title="'.$zone.'" value="'.$zone.'"/>';
 		}
 		$gui='
-		<window title="Nyheder" name="listWindow" width="300" close="false">
+		<window title="Liste" name="listWindow" width="300" close="false">
 			<tabs small="true" centered="true">
 				<tab title="Indstillinger" padding="10">
 					<formula name="formula">
