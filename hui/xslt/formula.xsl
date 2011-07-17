@@ -123,7 +123,7 @@
 		</xsl:otherwise>
 	</xsl:choose>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Text({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',key:'<xsl:value-of select="@key"/>'});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.TextField({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',key:'<xsl:value-of select="@key"/>'});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
@@ -169,7 +169,7 @@
 
 <xsl:template match="gui:group/gui:number">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
+		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
 		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:number"/></div></td>
 	</tr>
 </xsl:template>
@@ -184,13 +184,13 @@
 <xsl:template name="gui:number">
 	<span id="{generate-id()}">
 		<xsl:attribute name="class">
-			<xsl:text>hui_number</xsl:text>
-			<xsl:if test="@adaptive='true'"><xsl:text> hui_number_adaptive</xsl:text></xsl:if>
+			<xsl:text>hui_numberfield</xsl:text>
+			<xsl:if test="@adaptive='true'"><xsl:text> hui_numberfield_adaptive</xsl:text></xsl:if>
 		</xsl:attribute>
-		<span><span><input type="text" value="{@value}"/><em class="hui_number_units"><xsl:comment/></em><a class="hui_number_up"><xsl:comment/></a><a class="hui_number_down"><xsl:comment/></a></span></span>
+		<span><span><input type="text" value="{@value}"/><em class="hui_numberfield_units"><xsl:comment/></em><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Number({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.NumberField({
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>'
@@ -223,8 +223,8 @@
 </xsl:template>
 
 <xsl:template name="gui:style-length">
-	<span class="hui_style_length hui_number" id="{generate-id()}">
-		<span><span><input type="text" value="{@value}"/><a class="hui_number_up"><xsl:comment/></a><a class="hui_number_down"><xsl:comment/></a></span></span>
+	<span class="hui_style_length hui_numberfield" id="{generate-id()}">
+		<span><span><input type="text" value="{@value}"/><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.StyleLength({
@@ -314,7 +314,7 @@
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Radiobuttons({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>','value':'<xsl:value-of select="@value"/>','key':'<xsl:value-of select="@key"/>'});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Radiobuttons({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>','value':'<xsl:value-of select="@value"/>','key':'<xsl:value-of select="@key"/>'});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:radiobutton | gui:item">
 				registerRadiobutton({id:'<xsl:value-of select="generate-id()"/>','value':'<xsl:value-of select="@value"/>'});

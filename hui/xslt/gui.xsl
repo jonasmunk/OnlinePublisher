@@ -113,6 +113,9 @@
 		<script src="{$context}/hui/js/TokenField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Checkboxes.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Checkbox.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/Radiobuttons.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/NumberField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/TextField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:when>
 	<xsl:otherwise>
 		<script src="{$context}/hui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>

@@ -150,7 +150,7 @@ hui.ui.MarkupEditor.prototype = {
 			this.linkForm = hui.ui.Formula.create();
 			this.linkEditor.add(this.linkForm);
 			var group = this.linkForm.buildGroup({},[
-				{type : 'Text', options:{key:'url',label:'Address:'}}
+				{type : 'TextField', options:{key:'url',label:'Address:'}}
 			]);
 			this.linkEditor.add(this.linkForm);
 			var buttons = group.createButtons();

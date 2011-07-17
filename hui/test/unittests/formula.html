@@ -13,6 +13,8 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/BoundPanel.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/DropDown.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/DateTimeField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/NumberField.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Input.js"></script>
 </head>
@@ -28,9 +30,9 @@
 				win.show();
 				hui.ui.test.assertEquals(hui.ui.get('myForm'),formula,'Could get form by name');
 				formula.buildGroup(null,[
-					{type:'Text',options:{name:'textField',key:'text',value:'This is some text',label:'Text label'}},
+					{type:'TextField',options:{name:'textField',key:'text',value:'This is some text',label:'Text label'}},
 					{type:'DateTimeField',options:{key:'date',value:now,label:'Date label'}},
-					{type:'Number',options:{key:'number',value:10.56,label:'Number label'}},
+					{type:'NumberField',options:{key:'number',value:10.56,label:'Number label'}},
 					{type:'DropDown',options:{key:'drop',value:'da',label:'Drop label',items:[{value:'da',label:'Danish'},{value:'en',title:'English'},{value:'abc',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}]}},
 					{type:'LocationField',options:{key:'location',value:{latitude:57.535354,longitude:10.7428479},label:'Location label'}}
 				]);
@@ -46,9 +48,9 @@
 			},
 			1000,
 			function() {
-				hui.ui.test.click(hui.firstByClass(document.body,'hui_number_up'));
+				hui.ui.test.click(hui.firstByClass(document.body,'hui_numberfield_up'));
 				hui.ui.test.assertEquals(formula.getValues().number,11.56,'The number field has incremented value');
-				hui.ui.test.click(hui.firstByClass(document.body,'hui_number_down'));
+				hui.ui.test.click(hui.firstByClass(document.body,'hui_numberfield_down'));
 				hui.ui.test.assertEquals(formula.getValues().number,10.56,'The number field has decremented value');
 			},
 			function() {

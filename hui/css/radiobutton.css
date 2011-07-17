@@ -1,0 +1,34 @@
+/******************************* Radio button **************************/
+
+div.hui_radiobuttons
+{
+	overflow: hidden;
+	margin-bottom: 5px;
+	padding-top: 4px;
+}
+
+div.hui_radiobutton
+{
+	overflow: hidden;
+	margin-right: 10px;
+	font-size: 10pt;
+	cursor: default;
+	color: #004A80;
+	float: left;
+	line-height: 15px;
+}
+
+div.hui_radiobutton div
+{
+	float: left;
+	background: url('../gfx/radiobutton.png') no-repeat;
+	width: 18px;
+	height: 18px;
+	margin-right: 3px;
+	cursor: pointer;
+}
+
+div.hui_radiobuttons div.hui_selected div
+{
+	background-position: 0px -18px;
+}

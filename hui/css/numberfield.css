@@ -1,0 +1,94 @@
+/*********************************** Number **********************************/
+
+span.hui_numberfield
+{
+	display: inline-block;
+	background: url('../gfx/number.png') -11px top no-repeat;
+	height: 25px;
+	position: relative;
+}
+
+span.hui_numberfield span
+{
+	display: inline-block;
+	background: url('../gfx/number.png') right -50px no-repeat;
+	height: 25px;
+}
+
+span.hui_numberfield span span
+{
+	margin: 0 17px 0 6px;
+	background: url('../gfx/number.png') left -25px repeat-x;
+	line-height: 0;
+}
+
+span.hui_numberfield input
+{
+	border: none;
+	background: none;
+	width: 80px;
+	font-family: Verdana, sans-serif;
+	font-size: 9pt;
+	padding: 0 4px 0;
+	height: 16px;
+	margin: 5px 0;
+	text-align: right;
+	line-height: 16px;
+	vertical-align: top;
+}
+
+span.hui_numberfield input:focus
+{
+	outline: none;
+}
+
+a.hui_numberfield_up
+{
+	position: absolute;
+	width: 15px;
+	height: 10px;
+	right: 2px;
+	top: 2px;
+}
+
+a.hui_numberfield_down
+{
+	position: absolute;
+	width: 15px;
+	height: 10px;
+	right: 2px;
+	bottom: 3px;
+}
+
+span.hui_numberfield_focused
+{
+	background-position: -11px -75px;
+}
+
+span.hui_numberfield_focused span
+{
+	background-position: right -125px;
+}
+
+span.hui_numberfield_focused span span
+{
+	background-position: left -100px;
+}
+
+em.hui_numberfield_units
+{
+	vertical-align: middle;
+}
+
+span.hui_numberfield_adaptive
+{
+	width: 100%;
+}
+
+span.hui_numberfield_adaptive input
+{
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+	margin-left: -2px;
+}

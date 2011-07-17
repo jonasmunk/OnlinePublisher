@@ -106,14 +106,14 @@ hui.ui.Links.prototype = {
 			var win = this.editWindow = hui.ui.Window.create({title:'Link',width:300,padding:5});
 			var form = this.editForm = hui.ui.Formula.create();
 			var g = form.buildGroup({above:false},[
-				{type:'Text',options:{label:'Tekst',key:'text'}}
+				{type:'TextField',options:{label:'Tekst',key:'text'}}
 			]);
 			
-			var url = hui.ui.Formula.Text.create({label:'URL',key:'url'});
+			var url = hui.ui.TextField.create({label:'URL',key:'url'});
 			g.add(url);
 			this.inputs['url']=url;
 			
-			var email = hui.ui.Formula.Text.create({label:'E-mail',key:'email'});
+			var email = hui.ui.TextField.create({label:'E-mail',key:'email'});
 			g.add(email);
 			this.inputs['email']=email;
 			

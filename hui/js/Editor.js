@@ -185,13 +185,13 @@ hui.ui.Editor.prototype = {
 			var w = this.columnEditor = hui.ui.Window.create({name:'columnEditor',title:'Rediger kolonne',width:200});
 			var f = this.columnEditorForm = hui.ui.Formula.create();
 			var g = f.createGroup();
-			var width = hui.ui.Formula.Text.create({label:'Bredde',key:'width'});
+			var width = hui.ui.TextField.create({label:'Bredde',key:'width'});
 			width.listen({$valueChanged:function(v) {this.changeColumnWidth(v)}.bind(this)})
 			g.add(width);
-			var marginLeft = hui.ui.Formula.Text.create({label:'Venstremargen',key:'left'});
+			var marginLeft = hui.ui.TextField.create({label:'Venstremargen',key:'left'});
 			marginLeft.listen({$valueChanged:function(v) {this.changeColumnLeftMargin(v)}.bind(this)})
 			g.add(marginLeft);
-			var marginRight = hui.ui.Formula.Text.create({label:'Højremargen',key:'right'});
+			var marginRight = hui.ui.TextField.create({label:'Højremargen',key:'right'});
 			marginRight.listen({$valueChanged:this.changeColumnRightMargin.bind(this)})
 			g.add(marginRight);
 			w.add(f);
@@ -322,10 +322,10 @@ hui.ui.Editor.prototype = {
 			var w = this.partEditor = hui.ui.Window.create({padding:5,title:'Afstande',close:false,variant:'dark',width: 200});
 			var f = this.partEditorForm = hui.ui.Formula.create();
 			f.buildGroup({above:false},[
-				{type:'Text',options:{label:'Top',key:'top'}},
-				{type:'Text',options:{label:'Bottom',key:'bottom'}},
-				{type:'Text',options:{label:'Left',key:'left'}},
-				{type:'Text',options:{label:'Right',key:'right'}}
+				{type:'TextField',options:{label:'Top',key:'top'}},
+				{type:'TextField',options:{label:'Bottom',key:'bottom'}},
+				{type:'TextField',options:{label:'Left',key:'left'}},
+				{type:'TextField',options:{label:'Right',key:'right'}}
 			]);
 			w.add(f);
 			f.listen({valuesChanged:this.updatePartProperties.bind(this)});

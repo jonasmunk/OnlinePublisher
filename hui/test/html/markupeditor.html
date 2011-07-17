@@ -35,7 +35,7 @@
 	hui.ui.onReady(function() {
 		var win = hui.ui.Window.create({width:'500'});
 		var editor = hui.ui.MarkupEditor.create({value:'<h1>Lorem ipsum</h1><p>Lorem ipsum</p>'});
-		var source = hui.ui.Formula.Text.create({multiline:true});
+		var source = hui.ui.TextField.create({multiline:true});
 		var view = hui.ui.Button.create({text:'View source'}).listen({
 			$click:function() {
 				source.setValue(editor.getValue());
