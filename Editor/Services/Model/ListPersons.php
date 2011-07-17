@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Customers
+ * @subpackage Services.Model
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
@@ -24,55 +24,56 @@ if ($direction=='') $direction='ascending';
 $result = Query::after('person')->orderBy('title')->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction)->withText($queryString)->search();
 $persons = $result->getList();
 
-header('Content-Type: text/xml;');
-echo '<?xml version="1.0"?>
-<list>
-<sort key="'.$sort.'" direction="'.$direction.'"/>
-<window total="'.$result->getTotal().'" size="'.$windowSize.'" page="'.$windowPage.'"/>
-<headers>
-	<header title="Navn" width="60" key="title" sortable="true"/>
-	<header title="Adresse" width="40"/>
-</headers>';
+$writer = new ListWriter();
+
+$writer->startList(array('unicode'=>true))->
+	sort($sort,$direction)->
+	window(array('total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage))->
+	startHeaders()->
+		header(array('title'=>'Navn','width'=>60,'key'=>'title','sortable'=>true))->
+		header(array('title'=>'Adresse','width'=>40))->
+	endHeaders();
+
 foreach ($persons as $object) {
-	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="common/person" title="'.In2iGui::escape($object->getTitle()).'">'.
-	'<cell icon="common/person">'.In2iGui::escape($object->getTitle()).'</cell>'.
-	'<cell>'.buildAddress($object).buildEmails($object).buildPhones($object).'</cell>'.
-	'</row>';
-}
+	$writer->
+		startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>"common/person",'title'=>In2iGui::escape($object->getTitle())))->
+			startCell(array('icon'=>'common/person'))->startWrap()->text($object->getTitle())->endWrap()->endCell()->
+			startCell();
+			buildAddress($object,$writer);
+			buildEmails($object,$writer);
+			buildPhones($object,$writer);
+			$writer->endCell()->
+		endRow();
+}	
+$writer->endList();
 
-echo '</list>';
-
-function buildAddress($person) {
-	$addr = In2iGui::escape($person->getStreetname());
-	$zipcode = In2iGui::escape($person->getZipcode());
-	$city = In2iGui::escape($person->getCity());
-	$country = In2iGui::escape($person->getCountry());
+function buildAddress($person,$writer) {
+	$addr = $person->getStreetname();
+	$zipcode = $person->getZipcode();
+	$city = $person->getCity();
+	$country = $person->getCountry();
 	if ($zipcode!='' || $city!='') {
-		if ($addr!='') $addr.='<break/>';
+		if ($addr!='') $addr.="\n";
 		$addr.=$zipcode.' '.$city;
 	}
 	if ($country!='') {
-		if ($addr!='') $addr.='<break/>';
+		if ($addr!='') $addr.="\n";
 		$addr.=$country;
 	}
-	return $addr;
+	$writer->text($addr);
 }
 
-function buildEmails($person) {
-	$out ='';
+function buildEmails($person,$writer) {
 	$mails = Query::after('emailaddress')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($mails as $mail) {
-		$out.= '<object icon="common/email">'.In2iGui::escape($mail->getAddress()).'</object>';
+		$writer->object(array('icon'=>"common/email",'text'=>In2iGui::escape($mail->getAddress())));
 	}
-	return $out;
 }
 
-function buildPhones($person) {
-	$out = '';
+function buildPhones($person,$writer) {
 	$phones = Query::after('phonenumber')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($phones as $phone) {
-		$out.= '<object icon="common/phone">'.In2iGui::escape($phone->getNumber()).'</object>';
+		$writer->object(array('icon'=>"common/phone",'text'=>In2iGui::escape($phone->getNumber())));
 	}
-	return $out;
 }
 ?>

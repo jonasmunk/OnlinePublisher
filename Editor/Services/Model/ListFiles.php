@@ -36,7 +36,7 @@ echo '<headers>'.
 '</headers>';
 foreach ($objects as $object) {
 	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="'.$object->getIn2iGuiIcon().'" title="'.In2iGui::escape($object->getTitle()).'">'.
-	'<cell icon="'.$object->getIn2iGuiIcon().'">'.In2iGui::escape($object->getTitle()).'</cell>'.
+	'<cell icon="'.$object->getIn2iGuiIcon().'"><wrap>'.In2iGui::escape($object->getTitle()).'</wrap></cell>'.
 	'</row>';
 }
 

@@ -30,9 +30,9 @@ op.part.File = {
 	},
 	preview : function() {
 		op.part.utils.updatePreview({
-			node:'part_file_container',
-			form:document.forms.PartForm,
-			type:'file'
+			node : 'part_file_container',
+			form : document.forms.PartForm,
+			type : 'file'
 		});
 	}
 }

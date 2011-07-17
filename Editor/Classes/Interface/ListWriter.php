@@ -22,10 +22,12 @@ class ListWriter {
 	
 	function sort($key,$direction) {
 		echo "<sort key='$key' direction='$direction'/>";
+		return $this;
 	}
 	
 	function window($options) {
 		echo '<window total="'.$options['total'].'" size="'.$options['size'].'" page="'.$options['page'].'"/>';
+		return $this;
 	}
 	
 	function startHeaders() {
@@ -140,6 +142,13 @@ class ListWriter {
 		echo '<badge>';
 		$this->text($text);
 		echo '</badge>';
+		return $this;
+	}
+	
+	function object($options=array()) {
+		echo '<object icon="'.$options['icon'].'">';
+		$this->text($options['text']);
+		echo '</object>';
 		return $this;
 	}
 	
