@@ -5084,6 +5084,7 @@ hui.ui.Window.prototype = {
 			this.element.style.display='none';
 		}
 		this.visible = false;
+		hui.ui.callVisible(this);
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
@@ -5690,9 +5691,15 @@ hui.ui.List.prototype = {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
 				hui.addClass(e,'hui_list_busy');
+				if (e.parentNode.className=='hui_overflow') {
+					hui.addClass(e,'hui_list_busy_large');
+				}
 			},300);
 		} else {
 			hui.removeClass(this.element,'hui_list_busy');
+			if (this.element.parentNode.className=='hui_overflow') {
+				hui.removeClass(this.element,'hui_list_busy_large');
+			}
 		}
 	},
 	
@@ -5781,7 +5788,7 @@ hui.ui.List.prototype = {
 	_buttonClick : function(button) {
 		var row = hui.firstParentByTag(button.getElement(),'tr');
 		var obj = this.rows[parseInt(row.getAttribute('data-index'),10)];
-		this.fire('clickButton',obj,button);
+		this.fire('clickButton',{row:obj,button:button});
 	},
 	/** @private */
 	parseWindow : function(doc) {
@@ -8530,6 +8537,7 @@ hui.ui.Picker.prototype = {
 		hui.animate(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
 	},
 	$visibilityChanged : function() {
+		if (!hui.dom.isVisible(this.container)) {return}
 		this.container.style.display='none';
 		var width;
 		if (this.options.itemsVisible) {
@@ -10747,8 +10755,8 @@ hui.ui.Box.prototype = {
 		} else {
 			e.style.display='block';
 		}
-		hui.ui.callVisible(this);
 		this.visible = true;
+		hui.ui.callVisible(this);
 	},
 	/** private */
 	$$layout : function() {
@@ -10766,6 +10774,7 @@ hui.ui.Box.prototype = {
 		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 		this.visible = false;
+		hui.ui.callVisible(this);
 	},
 	/** @private */
 	curtainWasClicked : function() {
@@ -11209,9 +11218,11 @@ hui.ui.Fragment = function(options) {
 hui.ui.Fragment.prototype = {
 	show : function() {
 		this.element.style.display='block';
+		hui.ui.callVisible(this);
 	},
 	hide : function() {
 		this.element.style.display='none';
+		hui.ui.callVisible(this);
 	}
 }
 
@@ -13703,7 +13714,9 @@ hui.ui.TextField.prototype = {
 	// Expanding
 	
 	$visibilityChanged : function() {
-		window.setTimeout(this.expand.bind(this));
+		if (hui.dom.isVisible(this.element)) {
+			window.setTimeout(this.expand.bind(this));
+		}
 	},
 	/** @private */
 	expand : function(animate) {

@@ -93,6 +93,7 @@ hui.ui.Window.prototype = {
 			this.element.style.display='none';
 		}
 		this.visible = false;
+		hui.ui.callVisible(this);
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {

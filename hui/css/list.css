@@ -285,6 +285,11 @@ div.hui_list td a.hui_button
 	margin: -2px 0;
 }
 
+div.hui_list_busy
+{
+	min-height: 26px;
+}
+
 div.hui_list_progress
 {
 	position: absolute;
@@ -297,7 +302,7 @@ div.hui_list_progress
 	border-radius: 3px;
 }
 
-div.hui_overflow div.hui_list_progress
+div.hui_list_busy_large div.hui_list_progress
 {
 	height: 100%;
 	width: 100%;

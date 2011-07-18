@@ -123,6 +123,7 @@ hui.ui.Picker.prototype = {
 		hui.animate(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
 	},
 	$visibilityChanged : function() {
+		if (!hui.dom.isVisible(this.container)) {return}
 		this.container.style.display='none';
 		var width;
 		if (this.options.itemsVisible) {

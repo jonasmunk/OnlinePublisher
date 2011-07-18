@@ -350,9 +350,15 @@ hui.ui.List.prototype = {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
 				hui.addClass(e,'hui_list_busy');
+				if (e.parentNode.className=='hui_overflow') {
+					hui.addClass(e,'hui_list_busy_large');
+				}
 			},300);
 		} else {
 			hui.removeClass(this.element,'hui_list_busy');
+			if (this.element.parentNode.className=='hui_overflow') {
+				hui.removeClass(this.element,'hui_list_busy_large');
+			}
 		}
 	},
 	
@@ -441,7 +447,7 @@ hui.ui.List.prototype = {
 	_buttonClick : function(button) {
 		var row = hui.firstParentByTag(button.getElement(),'tr');
 		var obj = this.rows[parseInt(row.getAttribute('data-index'),10)];
-		this.fire('clickButton',obj,button);
+		this.fire('clickButton',{row:obj,button:button});
 	},
 	/** @private */
 	parseWindow : function(doc) {

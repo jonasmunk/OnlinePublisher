@@ -78,8 +78,8 @@ hui.ui.Box.prototype = {
 		} else {
 			e.style.display='block';
 		}
-		hui.ui.callVisible(this);
 		this.visible = true;
+		hui.ui.callVisible(this);
 	},
 	/** private */
 	$$layout : function() {
@@ -97,6 +97,7 @@ hui.ui.Box.prototype = {
 		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 		this.visible = false;
+		hui.ui.callVisible(this);
 	},
 	/** @private */
 	curtainWasClicked : function() {
