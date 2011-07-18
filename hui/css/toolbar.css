@@ -328,7 +328,7 @@ span.hui_toolbar_item_body
 	text-align: center;
 }
 
-span.hui_toolbar_item span.hui_number
+span.hui_toolbar_item span.hui_numberfield
 {
 	top: 8px;
 }
