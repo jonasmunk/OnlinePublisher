@@ -13,6 +13,7 @@ hui.ui.DropDown = function(o) {
 	this.index = -1;
 	this.value = this.options.value || null;
 	this.dirty = true;
+	this.busy = false;
 	hui.ui.extend(this);
 	this._addBehavior();
 	this._updateIndex();
@@ -77,6 +78,7 @@ hui.ui.DropDown.prototype = {
 	},
 	/** @private */
 	_click : function(e) {
+		if (this.busy) {return}
 		hui.stop(e);
 		this._buildSelector();
 		var el = this.element, s=this.selector;
@@ -103,6 +105,7 @@ hui.ui.DropDown.prototype = {
 	},
 	/** @private */
 	_keyDown : function(e) {
+		if (this.busy) {return}
 		if (this.items.length==0) {
 			return;
 		}
@@ -180,8 +183,32 @@ hui.ui.DropDown.prototype = {
 		this.setItems(items);
 	},
 	/** @private */
+	$sourceIsBusy : function() {
+		this.busy = true;
+		hui.setOpacity(this.element,.5);
+	},
+	$sourceIsNotBusy : function() {
+		this.busy = false;
+		hui.setOpacity(this.element,1);
+	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			if (this.options.source) {
+				// If there is a source, make sure it is initially 
+				this.options.source.refreshFirst();
+			}			
+		} else {
+			this._hideSelector();
+		}
+	},
+	/** @private */
 	_hideSelector : function() {
-		if (!this.selector) return;
+		if (!this.selector) {return}
 		this.selector.style.display='none';
 	},
 	/** @private */

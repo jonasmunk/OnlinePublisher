@@ -4723,6 +4723,7 @@ hui.ui.Source = function(options) {
 	if (options.delegate) {
 		this.listen(options.delegate);
 	}
+	this.initial = true;
 	this.busy=false;
 	hui.ui.onReady(this.init.bind(this));
 };
@@ -4748,17 +4749,26 @@ hui.ui.Source.prototype = {
 		}
 		return value;
 	},
+	refreshFirst : function() {
+		if (this.initial) {
+			this.refresh();
+		}
+	},
 	/** Refreshes the data source */
 	refresh : function() {
 		if (this.delegates.length==0) {
 			return;
 		}
+		var shouldRefresh = this.delegates.length==0;
 		for (var i=0; i < this.delegates.length; i++) {
 			var d = this.delegates[i];
-			if (d['$sourceShouldRefresh'] && d['$sourceShouldRefresh']()==false) {
-				return;
+			if (d['$sourceShouldRefresh']) {
+				shouldRefresh = shouldRefresh || d['$sourceShouldRefresh']();
+			} else {
+				shouldRefresh = true;
 			}
 		};
+		if (!shouldRefresh) {return}
 		if (this.busy) {
 			this.pendingRefresh = true;
 			// It might be better to cue rather than abort
@@ -4767,6 +4777,7 @@ hui.ui.Source.prototype = {
 			//}
 			return;
 		}
+		this.initial = false;
 		this.pendingRefresh = false;
 		var self = this;
 		if (this.options.url) {
@@ -5351,10 +5362,10 @@ hui.ui.Formula.Group.prototype = {
  * </code>
  *
  * @constructor
- * @param {Object} options The options : {url:null,source:null}
+ * @param {Object} options The options : {url:null,source:null,selectable:«boolean»}
  */
 hui.ui.List = function(options) {
-	this.options = hui.override({url:null,source:null},options);
+	this.options = hui.override({url:null,source:null,selectable:true},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	if (this.options.source) {
@@ -5500,7 +5511,14 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
-		return this.element.style.display!='none';
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (this.options.source && hui.dom.isVisible(this.element)) {
+			// If there is a source, make sure it is initially 
+			this.options.source.refreshFirst();
+		}
 	},
 	/** @private */
 	refresh : function() {
@@ -5611,6 +5629,9 @@ hui.ui.List.prototype = {
 				}
 				if (cells[j].getAttribute('vertical-align')) {
 					td.style.verticalAlign=cells[j].getAttribute('vertical-align');
+				}
+				if (cells[j].getAttribute('align')) {
+					td.style.textAlign=cells[j].getAttribute('align');
 				}
 				if (j==0 && level>1) {
 					td.style.paddingLeft = ((parseInt(level)-1)*16+5)+'px';
@@ -5967,6 +5988,9 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	changeSelection : function(indexes) {
+		if (!this.options.selectable) {
+			return;
+		}
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {
@@ -6340,6 +6364,7 @@ hui.ui.DropDown = function(o) {
 	this.index = -1;
 	this.value = this.options.value || null;
 	this.dirty = true;
+	this.busy = false;
 	hui.ui.extend(this);
 	this._addBehavior();
 	this._updateIndex();
@@ -6404,6 +6429,7 @@ hui.ui.DropDown.prototype = {
 	},
 	/** @private */
 	_click : function(e) {
+		if (this.busy) {return}
 		hui.stop(e);
 		this._buildSelector();
 		var el = this.element, s=this.selector;
@@ -6430,6 +6456,7 @@ hui.ui.DropDown.prototype = {
 	},
 	/** @private */
 	_keyDown : function(e) {
+		if (this.busy) {return}
 		if (this.items.length==0) {
 			return;
 		}
@@ -6507,8 +6534,32 @@ hui.ui.DropDown.prototype = {
 		this.setItems(items);
 	},
 	/** @private */
+	$sourceIsBusy : function() {
+		this.busy = true;
+		hui.setOpacity(this.element,.5);
+	},
+	$sourceIsNotBusy : function() {
+		this.busy = false;
+		hui.setOpacity(this.element,1);
+	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			if (this.options.source) {
+				// If there is a source, make sure it is initially 
+				this.options.source.refreshFirst();
+			}			
+		} else {
+			this._hideSelector();
+		}
+	},
+	/** @private */
 	_hideSelector : function() {
-		if (!this.selector) return;
+		if (!this.selector) {return}
 		this.selector.style.display='none';
 	},
 	/** @private */

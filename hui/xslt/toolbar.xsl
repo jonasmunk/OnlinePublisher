@@ -82,7 +82,13 @@
 </xsl:template>
 
 <xsl:template match="gui:searchfield" name="gui:searchfield">
-	<span class="hui_searchfield" id="{generate-id()}">
+	<span id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_searchfield</xsl:text>
+			<xsl:if test="@adaptive='true'">
+				<xsl:text> hui_searchfield_adaptive</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:if test="@width"><xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute></xsl:if>
 		<em class="hui_searchfield_placeholder"><xsl:value-of select="@placeholder"/><xsl:comment/></em>
 		<a href="javascript:void(0);" class="hui_searchfield_reset"><xsl:comment/></a>

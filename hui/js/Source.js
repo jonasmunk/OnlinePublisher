@@ -10,6 +10,7 @@ hui.ui.Source = function(options) {
 	if (options.delegate) {
 		this.listen(options.delegate);
 	}
+	this.initial = true;
 	this.busy=false;
 	hui.ui.onReady(this.init.bind(this));
 };
@@ -35,17 +36,26 @@ hui.ui.Source.prototype = {
 		}
 		return value;
 	},
+	refreshFirst : function() {
+		if (this.initial) {
+			this.refresh();
+		}
+	},
 	/** Refreshes the data source */
 	refresh : function() {
 		if (this.delegates.length==0) {
 			return;
 		}
+		var shouldRefresh = this.delegates.length==0;
 		for (var i=0; i < this.delegates.length; i++) {
 			var d = this.delegates[i];
-			if (d['$sourceShouldRefresh'] && d['$sourceShouldRefresh']()==false) {
-				return;
+			if (d['$sourceShouldRefresh']) {
+				shouldRefresh = shouldRefresh || d['$sourceShouldRefresh']();
+			} else {
+				shouldRefresh = true;
 			}
 		};
+		if (!shouldRefresh) {return}
 		if (this.busy) {
 			this.pendingRefresh = true;
 			// It might be better to cue rather than abort
@@ -54,6 +64,7 @@ hui.ui.Source.prototype = {
 			//}
 			return;
 		}
+		this.initial = false;
 		this.pendingRefresh = false;
 		var self = this;
 		if (this.options.url) {

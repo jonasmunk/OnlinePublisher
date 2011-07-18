@@ -22,10 +22,10 @@
  * </code>
  *
  * @constructor
- * @param {Object} options The options : {url:null,source:null}
+ * @param {Object} options The options : {url:null,source:null,selectable:«boolean»}
  */
 hui.ui.List = function(options) {
-	this.options = hui.override({url:null,source:null},options);
+	this.options = hui.override({url:null,source:null,selectable:true},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	if (this.options.source) {
@@ -171,7 +171,14 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
-		return this.element.style.display!='none';
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (this.options.source && hui.dom.isVisible(this.element)) {
+			// If there is a source, make sure it is initially 
+			this.options.source.refreshFirst();
+		}
 	},
 	/** @private */
 	refresh : function() {
@@ -282,6 +289,9 @@ hui.ui.List.prototype = {
 				}
 				if (cells[j].getAttribute('vertical-align')) {
 					td.style.verticalAlign=cells[j].getAttribute('vertical-align');
+				}
+				if (cells[j].getAttribute('align')) {
+					td.style.textAlign=cells[j].getAttribute('align');
 				}
 				if (j==0 && level>1) {
 					td.style.paddingLeft = ((parseInt(level)-1)*16+5)+'px';
@@ -638,6 +648,9 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	changeSelection : function(indexes) {
+		if (!this.options.selectable) {
+			return;
+		}
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {

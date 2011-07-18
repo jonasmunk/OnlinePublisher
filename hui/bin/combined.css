@@ -2133,12 +2133,12 @@ label.hui_toolbar_grid
 	background-position: left 0px;
 	background-repeat: repeat-x;
 	margin: 0px 13px;
+	line-height: 31px;
 }
 
 span.hui_window_title
 {
 	font-size: 10pt;
-	line-height: 27px;
 	color:#000;
 	vertical-align: middle;
 }

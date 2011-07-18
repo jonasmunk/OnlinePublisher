@@ -508,6 +508,7 @@
 			name:'<xsl:value-of select="@name"/>',
 			url:'<xsl:value-of select="@url"/>',
 			<xsl:if test="@source">source:<xsl:value-of select="@source"/>,</xsl:if>
+			<xsl:if test="@selectable">selectable:<xsl:value-of select="@selectable"/>,</xsl:if>
 			state:'<xsl:value-of select="@state"/>',
 			windowSize:'<xsl:value-of select="gui:window/@size"/>'
 		});
