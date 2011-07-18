@@ -26,7 +26,7 @@ class TestPage extends UnitTestCase {
 		$page->setDesignId($design->getId());
 		$page->setFrameId($frame->getId());
 		$page->setTitle('Test page');
-		$page->setDescription('My page description');
+		$page->setDescription('My page description, find this: djsakJSDLjdasljslsdjljdslJ');
 		$page->setPath('test/path.html');
 		$page->setLanguage('en');
 		$page->create();
@@ -60,7 +60,15 @@ class TestPage extends UnitTestCase {
 		$this->assertFalse($design->remove());
 		$this->assertFalse($frame->canRemove());
 		$this->assertFalse($frame->remove());
-
+		
+		
+		$result = PageQuery::rows()->withText('djsakJSDLjdasljslsdjljdslJ')->search();
+		$this->assertEqual($result->getTotal(),'1');
+		$list = $result->getList();
+		$first = $list[0];
+		$this->assertEqual($first['title'],'Test page');
+		$this->assertEqual($first['id'],$page->getId());
+		$this->assertEqual($first['language'],$page->getLanguage());
 
 		$page->delete();
 		
@@ -74,7 +82,7 @@ class TestPage extends UnitTestCase {
 		$this->assertTrue($design->remove());
 		$this->assertTrue($frame->canRemove());
 		$this->assertTrue($frame->remove());
-		
 	}
+	
 }
 ?>

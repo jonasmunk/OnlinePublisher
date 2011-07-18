@@ -17,6 +17,7 @@ class Page {
     var $searchable;
     var $disabled;
     var $changed;
+    var $published;
     var $data;
 	var $name;
 	var $path;
@@ -141,6 +142,10 @@ class Page {
     function getChanged() {
         return $this->changed;
     }
+
+    function getPublished() {
+        return $this->published;
+    }
     
 	function setNextPage($nextPage) {
 	    $this->nextPage = $nextPage;
@@ -245,7 +250,7 @@ class Page {
     
     function load($id) {
         $output = null;
-        $sql="select page.*,UNIX_TIMESTAMP(page.changed) as changed_unix,template.unique from page,template where template.id=page.template_id and page.id=".Database::int($id);
+        $sql="select page.*,UNIX_TIMESTAMP(page.changed) as changed_unix,UNIX_TIMESTAMP(page.published) as published_unix,template.unique from page,template where template.id=page.template_id and page.id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
             $output = new Page();
             $output->setId($row['id']);
@@ -264,7 +269,8 @@ class Page {
             $output->setDisabled($row['disabled']==1);
             $output->setNextPage($row['next_page']);
             $output->setPreviousPage($row['previous_page']);
-			$output->changed=$row['changed_unix'];
+			$output->changed=intval($row['changed_unix']);
+			$output->published=intval($row['published_unix']);
         }
         return $output;
     }

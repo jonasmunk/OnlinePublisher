@@ -55,6 +55,7 @@ var mainController = {
 		if (this.activePage==id) {
 			pageFormula.reset();
 			pageEditor.hide();
+			pageFinder.hide();
 			this.activePage = 0;
 		}
 		hui.ui.request({
@@ -97,15 +98,18 @@ var mainController = {
 	loadPage : function(id) {
 		hui.ui.request({
 			message : {start : 'Åbner side...',delay:300},
-			url : 'LoadPage.php',
+			url : 'data/LoadPage.php',
 			onSuccess : 'pageLoaded',
 			parameters : {id:id}
 		});
 	},
 	$success$pageLoaded : function(data) {
-		this.activePage = data.id;
-		pageFormula.setValues(data);
+		var page = data.page;
+		this.activePage = page.id;
+		pageFormula.setValues(page);
+		publishPage.setEnabled(page.changed>page.published);
 		pageEditor.show();
+		pageTranslationList.setUrl('data/PageTranslationList.php?page='+data.page.id);
 	},
 	$click$editPage : function() {
 		document.location='../../Template/Edit.php?id='+this.activePage;
@@ -117,12 +121,13 @@ var mainController = {
 		this.activePage = 0;
 		pageFormula.reset();
 		pageEditor.hide();
+		pageFinder.hide();
 	},
 	$click$savePage : function() {
 		var values = pageFormula.getValues();
 		values.id = this.activePage;
 		hui.ui.request({
-			message : {text : 'Gemmer side...',delay:300},
+			message : {start : 'Gemmer side...',delay:300},
 			url : 'SavePage.php',
 			json : {data:values},
 			onSuccess : function() {
@@ -134,6 +139,7 @@ var mainController = {
 		this.activePage = 0;
 		pageFormula.reset();
 		pageEditor.hide();
+		pageFinder.hide();
 	},
 	$click$deletePage : function() {
 		this.deletePage(this.activePage);
@@ -146,6 +152,9 @@ var mainController = {
 		pageTranslationFragment.hide();
 		pageTranslation.setSelected(false);
 	},
+	$userClosedWindow$pageEditor : function() {
+		pageFinder.hide();
+	},
 	
 	$click$pageTranslation : function() {
 		pageInfoFragment.hide();
@@ -153,6 +162,51 @@ var mainController = {
 		pageTranslationFragment.show();
 		pageTranslation.setSelected(true);
 		pageTranslation.element.blur();
+	},
+	$clickIcon$pageTranslationList : function(info) {
+		hui.ui.confirmOverlay({element:info.node,text:'Er du sikker?',okText:'Ja, fjern',cancelText:'Nej',onOk : function() {
+			hui.ui.request({
+				message : {start:'Sletter oversættelse...',delay:300},
+				url : 'data/DeletePageTranslation.php',
+				parameters : {id:info.row.id},
+				onSuccess : function() {
+					pageTranslationList.refresh();
+					publishPage.enable();
+					list.refresh();
+				}
+			})
+		}});
+	},
+	$click$addTranslation : function() {
+		pageFinder.show({avoid:pageEditor.getElement()});
+	},
+	$listRowWasOpened$pageFinderList : function(row) {
+		if (!this.activePage) {
+			return;
+		}
+		hui.ui.request({
+			message : {start:'Tilføjer oversættelse...',delay:300},
+			url : 'data/AddPageTranslation.php',
+			parameters : {page:this.activePage,translation:row.id},
+			onSuccess : function() {
+				pageTranslationList.refresh();
+				publishPage.enable();
+				list.refresh();
+			}
+		})
+		pageFinder.hide();
+	},
+	$click$publishPage : function() {
+		hui.ui.request({
+			message : {start:'Udgiver side...',delay:300},
+			url : '../../Services/Model/PublishPage.php',
+			parameters : {id:this.activePage},
+			onSuccess : function() {
+				publishPage.disable();
+				list.refresh();
+			}
+		})
+
 	},
 	
 	////////////// New page /////////////

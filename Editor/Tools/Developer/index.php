@@ -21,8 +21,8 @@ $gui='
 				<overflow>
 					<selection value="phpInfo" name="selector">
 						<item icon="common/info" title="PHP info" value="phpInfo"/>
-						<item icon="common/info" title="Session" value="session"/>
-						<item icon="common/info" title="Settings" value="settings"/>
+						<item icon="common/time" title="Session" value="session"/>
+						<item icon="common/tools" title="Settings" value="settings"/>
 						<item icon="common/settings" title="Graph" value="graph"/>
 						<title>Tests</title>
 						<items name="testSelection" source="testsSource"/>

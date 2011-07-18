@@ -149,6 +149,7 @@ function listPages() {
 	//$writer->header(array('title'=>'Sti','key'=>'page.path','sortable'=>'true'));
 	$writer->header(array('title'=>'Sprog','key'=>'page.language','sortable'=>'true'));
 	$writer->header(array('title'=>'Ændret','key'=>'page.changed','sortable'=>'true'));
+	$writer->header(array('width'=>1));
 	$writer->endHeaders();
 
 	$templates = TemplateService::getTemplatesKeyed();
@@ -163,6 +164,12 @@ function listPages() {
 		//'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.StringUtils::escapeXML($row['path']).'</line></cell>'.
 		'<cell icon="'.GuiUtils::getLanguageIcon($row['language']).'"></cell>'.
 		'<cell'.($modified ? ' icon="monochrome/warning"' : '').'>'.StringUtils::escapeXML($row['changed']).'</cell>'.
+		'<cell align="right">'.
+			'<icons>'.
+			($row['searchable'] ? '' : '<icon icon="monochrome/nosearch"/>').
+			($row['disabled'] ? '<icon icon="monochrome/invisible"/>' : '').
+			'</icons>'.
+		'</cell>'.
 		'</row>';
 	}
 	Database::free($result);
@@ -175,7 +182,7 @@ function buildPagesSql() {
 	
 	$countSql ="select count(page.id) as total";
 
-	$sql = "select page.id,page.secure,page.path,page.title,template.unique,
+	$sql = "select page.id,page.secure,page.searchable,page.disabled,page.path,page.title,template.unique,
 		date_format(page.changed,'%d/%m-%Y') as changed,
 		date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,
 		(page.changed-page.published) as publishdelta,page.language";

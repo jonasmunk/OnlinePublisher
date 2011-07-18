@@ -47,6 +47,16 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual("æ",StringUtils::fromUnicode('Ã¦'));
 		$this->assertEqual("Ã¦",StringUtils::toUnicode('æ'));
 		$this->assertEqual("æ",StringUtils::toUnicode(StringUtils::fromUnicode('æ')));
+		
+		$obj = array('first'=>'æ','sub'=>array('one'=>'æ'));
+		$obj = StringUtils::convertToUnicode($obj);
+		$this->assertEqual("Ã¦",$obj['first']);
+		$this->assertEqual("Ã¦",$obj['sub']['one']);
+		
+		$group = new ImageGroup();
+		$group->setTitle('æ');
+		StringUtils::convertToUnicode($group);
+		$this->assertEqual("Ã¦",$group->getTitle());
 	}
 
     function testBlank() {

@@ -48,19 +48,11 @@ class StringUtils {
 			return StringUtils::toUnicode($obj);
 		} else if (is_object($obj)) {
 			foreach ($obj as $key => $value) {
-				if (is_string($value)) {
-					$obj->$key = StringUtils::toUnicode($value);
-				} else if (is_object($value) || is_array($value)) {
-					Request::convertToUnicode($value);
-				}
+				$obj->$key = StringUtils::convertToUnicode($value);
 			}
 		} else if (is_array($obj)) {
-			for ($i=0; $i < count($obj); $i++) { 
-				if (is_string($obj[$i])) {
-					$obj[$i] = StringUtils::toUnicode($value);
-				} else if (is_object($obj[$i]) || is_array($obj[$i])) {
-					Request::convertToUnicode($obj[$i]);
-				}
+			foreach ($obj as $key => $value) {
+				$obj[$key] = StringUtils::convertToUnicode($value);
 			}
 		}
 		return $obj;

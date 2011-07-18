@@ -49,6 +49,12 @@ $gui='
 		<parameter key="kind" value="@selector.kind"/>
 		<parameter key="value" value="@selector.value"/>
 	</source>
+	<source name="pageFinderListSource" url="data/PageFinderList.php">
+		<parameter key="windowPage" value="@pageFinderList.window.page"/>
+		<parameter key="sort" value="@pageFinderList.sort.key"/>
+		<parameter key="direction" value="@pageFinderList.sort.direction"/>
+		<parameter key="text" value="@pageFinderSearch.value"/>
+	</source>
 	<source name="pagesSource" url="../../Services/Model/Items.php?type=page"/>
 	<source name="filesSource" url="../../Services/Model/Items.php?type=file"/>
 	<source name="languageSource" url="LanguageItems.php"/>
@@ -106,12 +112,15 @@ $gui='
 		</bottom>
 	</layout>
 	
-	<window name="pageEditor" width="300" title="Side">
+	<window name="pageEditor" width="400" title="Side" icon="common/page">
 		<toolbar variant="window">
 			<icon icon="common/info" text="Info" selected="true" name="pageInfo"/>
+			<!--
 			<icon icon="common/settings" text="Avanceret" click="pageEditor.flip()"/>
+			-->
 			<icon icon="common/flag" text="Sprog" name="pageTranslation"/>
 			<right>
+			<icon icon="common/internet" text="Udgiv" overlay="upload" name="publishPage" disabled="true"/>
 			<icon icon="common/edit" text="Rediger" name="editPage"/>
 			<icon icon="common/view" text="Vis" name="viewPage"/>
 			</right>
@@ -140,17 +149,25 @@ $gui='
 			</formula>
 		</fragment>
 		<fragment name="pageTranslationFragment" visible="false">
+		<!--
 			<bar>
-				<button icon="common/new" text="Tilføj oversættelse"/>
-			</bar>
-			<list>
-				<column title="Side" />
-				<column title="Sprog" />
-			</list>
+				<button icon="common/new" text="Tilføj oversættelse" name="addTranslation"/>
+			</bar>-->
+			<list name="pageTranslationList" selectable="false"/>
+			<buttons top="5" left="5" bottom="3">
+				<button text="Tilføj oversættelse" highlighted="true" small="true" name="addTranslation"/>
+			</buttons>
 		</fragment>
 		<back>
 			<button text="Back" click="pageEditor.flip()"/>
 		</back>
+	</window>
+	
+	<window name="pageFinder" width="400" title="Vælg side">
+		<searchfield adaptive="true" name="pageFinderSearch"/>
+		<overflow max-height="200">
+		<list source="pageFinderListSource" name="pageFinderList"/>
+		</overflow>
 	</window>
 
 	<window name="hierarchyEditor" width="300" title="Hierarki" padding="5" icon="common/hierarchy">

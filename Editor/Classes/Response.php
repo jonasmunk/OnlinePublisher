@@ -8,16 +8,6 @@ class Response {
 	}
 	
 	function sendUnicodeObject($obj) {
-		/*
-		foreach ($obj as $key => $value) {
-			if (is_string($value)) {
-				if (is_array($obj)) {
-					$obj[$key] = StringUtils::toUnicode($value);
-				} else {
-					$obj->$key = StringUtils::toUnicode($value);
-				}
-			}
-		}*/
 		$obj = StringUtils::convertToUnicode($obj);
 		Response::sendObject($obj);
 	}
