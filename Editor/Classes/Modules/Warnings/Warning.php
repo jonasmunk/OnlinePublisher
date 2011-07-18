@@ -9,6 +9,16 @@ class Warning {
 	var $text;
 	var $key;
 	var $entity;
+	var $status;
+	
+	function setStatus($status) {
+	    $this->status = $status;
+	}
+
+	function getStatus() {
+	    return $this->status;
+	}
+	
 
 	function setText($text) {
 	    $this->text = $text;
