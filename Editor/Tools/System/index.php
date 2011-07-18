@@ -18,6 +18,9 @@ $gui='
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="query" value="@searchField.value"/>
 	</source>
+	<source name="warningsSource" url="data/WarningsList.php">
+	
+	</source>
 	<source name="logSource" url="ListLog.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
@@ -53,6 +56,7 @@ $gui='
 						<title>Indstillinger</title>
 						<item icon="common/settings" title="Indstillinger" value="settings"/>
 						<item icon="common/time" title="Cache" value="caches"/>
+						<item icon="common/warning" title="Problemer" value="warnings"/>
 					</selection>
 				</overflow>
 			</left>

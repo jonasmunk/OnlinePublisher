@@ -28,6 +28,8 @@ hui.ui.listen({
 			list.setSource(allObjectsSource);
 		} else if (obj.value=='log') {
 			list.setSource(logSource);
+		} else if (obj.value=='warnings') {
+			list.setSource(warningsSource);
 		} else if (obj.value=='webloggroup') {
 			list.setUrl('../../Services/Model/ListObjects.php?type=webloggroup');
 		} else if (obj.value=='path') {
