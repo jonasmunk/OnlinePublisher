@@ -11,6 +11,11 @@ hui.ui.listen({
 			list.clear();
 			return;
 		}
+		if (obj.value=='caches') {
+			hui.ui.changeState('caches');
+			list.clear();
+			return;
+		}
 		hui.ui.changeState('list');
 		switch (obj.value) {
 			case 'databaseTables' : list.setUrl('ListDatabaseTables.php')
@@ -206,5 +211,18 @@ hui.ui.listen({
 	$click$cancelPath : function() {
 		pathEditor.hide();
 		pathFormula.reset();
+	},
+	
+	////////////////////////// Caches /////////////////////////
+	
+	$clickButton$cachesList : function(info) {
+		hui.ui.request({
+			message : {start:'Rydder cache...',delay:300},
+			parameters : {type:info.button.getData().type},
+			url : 'data/ClearCache.php',
+			onSuccess : function() {
+				cachesList.refresh();
+			}
+		});
 	}
 });

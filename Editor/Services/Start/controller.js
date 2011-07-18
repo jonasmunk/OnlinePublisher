@@ -1,5 +1,5 @@
 hui.ui.listen({
-	$clickButton : function(row,button) {
-		window.open(button.getData().link);
+	$clickButton : function(info) {
+		window.open(info.button.getData().link);
 	}
 })

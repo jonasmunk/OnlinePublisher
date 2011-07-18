@@ -24,6 +24,7 @@ $gui='
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="query" value="@searchField.value"/>
 	</source>
+	<source name="cachesSource" url="data/CacheList.php"/>
 	<layout>
 		<top>
 			<toolbar>
@@ -51,13 +52,22 @@ $gui='
 						<item icon="common/folder" title="Tabeller" value="databaseTables"/>
 						<title>Indstillinger</title>
 						<item icon="common/settings" title="Indstillinger" value="settings"/>
+						<item icon="common/time" title="Cache" value="caches"/>
 					</selection>
 				</overflow>
 			</left>
 			<center>
 				<overflow>
 					<list name="list" source="allObjectsSource" state="list"/>
-					<fragment state="settings" height="full" background="brushed">
+					<fragment state="caches" height="full" background="linen">
+						<box width="500" top="30" title="Caches">
+							<toolbar>
+								<icon icon="common/refresh" click="cachesList.refresh()" text="Genopfrisk"/>
+							</toolbar>
+							<list name="cachesList" source="cachesSource" selectable="false"/>
+						</box>
+					</fragment>
+					<fragment state="settings" height="full" background="vichy">
 						<box width="500" top="30" variant="rounded">
 							<tabs small="true" centered="true">
 								<tab title="Brugergrænseflade">

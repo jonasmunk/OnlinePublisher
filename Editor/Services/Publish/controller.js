@@ -2,7 +2,7 @@ hui.ui.listen({
 	$clickButton$list : function(item) {
 		hui.ui.request({
 			url:'PublishOne.php',
-			parameters:{id:item.id,kind:item.kind},
+			parameters:{id:item.row.id,kind:item.row.kind},
 			onSuccess : function() {
 				listSource.refresh();
 			}
