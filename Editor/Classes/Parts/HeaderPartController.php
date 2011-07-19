@@ -127,14 +127,14 @@ class HeaderPartController extends PartController
 		return array(
 			'Overskrift' =>
 			'
-			<dropdown label="Niveau" name="level">
-				<item value="1" title="Niveau 1"/>
-				<item value="2" title="Niveau 2"/>
-				<item value="3" title="Niveau 3"/>
-				<item value="4" title="Niveau 4"/>
-				<item value="5" title="Niveau 5"/>
-				<item value="6" title="Niveau 6"/>
-			</dropdown>
+			<segmented label="Niveau" name="level">
+				<item text="1" value="1"/>
+				<item text="2" value="2"/>
+				<item text="3" value="3"/>
+				<item text="4" value="4"/>
+				<item text="5" value="5"/>
+				<item text="6" value="6"/>
+			</segmented>
 			<style-length label="St&#248;rrelse" name="fontSize"/>
 			<segmented label="Placering" name="textAlign" allow-null="true">
 				<item icon="style/text_align_left" value="left"/>
@@ -155,8 +155,8 @@ class HeaderPartController extends PartController
 			<segmented label="Kursiv" name="fontStyle" allow-null="true">
 				<item icon="style/text_normal" value="normal"/>
 				<item icon="style/text_italic" value="italic"/>
-			</segmented>',
-			
+			</segmented>
+			',
 		'Avanceret' =>
 			'
 			<style-length label="Ord-mellemrum" name="wordSpacing"/>
@@ -179,7 +179,7 @@ class HeaderPartController extends PartController
 				<item icon="style/text_decoration_overline" value="overline"/>
 			</segmented>
 			'
-			);
+		);
 	}
 }
 ?>
