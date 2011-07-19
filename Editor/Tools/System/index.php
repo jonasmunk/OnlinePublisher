@@ -94,8 +94,14 @@ $gui='
 												<text key="password" secret="true" label="Kodeord:"/>
 												<text key="standardName" label="Navn:"/>
 												<text key="standardEmail" label="E-mail:"/>
+											</group>
+											<fieldset legend="Feedback">
+											<group>
 												<text key="feedbackName" label="Feedback-navn:"/>
 												<text key="feedbackEmail" label="Feedback E-mail:"/>
+											</group>
+											</fieldset>
+											<group>
 												<buttons>
 													<button title="Test" name="showEmailTest"/>
 													<button title="Opdater" name="saveEmail" highlighted="true"/>
