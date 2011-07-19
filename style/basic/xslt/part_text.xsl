@@ -9,7 +9,7 @@
  >
 
 <xsl:template match="txt:text">
-	<div class="PartText part_text common_font">
+	<div class="part_text common_font">
 		<xsl:apply-templates/>
 	</div>
 </xsl:template>
@@ -77,7 +77,7 @@
 </xsl:template>
 
 <xsl:template match="txt:link">
-	<a class="common PartTextLink part_text_link">
+	<a class="common part_text_link">
 		<xsl:call-template name="util:link"/>
 		<span><xsl:apply-templates/></span>
 	</a>
