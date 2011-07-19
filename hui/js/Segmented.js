@@ -26,7 +26,6 @@ hui.ui.Segmented.prototype = {
 			if (value===this.value && this.options.allowNull) {
 				changed=true;
 				this.value = null;
-				this.fire('valueChanged',this.value);
 			} else {
 				hui.addClass(a,'hui_segmented_selected');
 				changed=this.value!== value;
@@ -34,6 +33,7 @@ hui.ui.Segmented.prototype = {
 			}
 			if (changed) {
 				this.fire('valueChanged',this.value);
+				hui.ui.firePropertyChange(this,'value',this.value);
 			}
 		}
 	},

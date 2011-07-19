@@ -4799,6 +4799,12 @@ div.hui_bar_absolute
 	top: -1000px;
 }
 
+span.gui_bar_space
+{
+	display: inline-block;
+	width: 5px;
+}
+
 /*************** Button **************/
 
 a.hui_bar_button
@@ -4994,6 +5000,11 @@ div.hui_bar_layout span.hui_bar_text_header
 {
 	color: #445566;
 	font-weight: bold;
+}
+
+div.hui_bar_layout span.hui_segmented
+{
+	margin-top: 3px;
 }
 
 /******************* Mini variant *****************/
