@@ -17,7 +17,7 @@ hui.ui.ImagePaster.create = function(options) {
 	return new hui.ui.ImagePaster(options);
 }
 
-hui.ui.ImagePaster.supported = function() {
+hui.ui.ImagePaster.isSupported = function() {
 	if (!navigator) {
 		return false;
 	}

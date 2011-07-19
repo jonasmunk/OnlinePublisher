@@ -8862,7 +8862,9 @@ hui.ui.Editor.prototype = {
 		this.activePart = part;
 		this.showPartEditControls();
 		hui.addClass(part.element,'hui_editor_part_active');
-		part.activate();
+		part.activate(function() {
+			hui.ui.showMessage({text:'Loaded',duration:2000});
+		});
 		window.clearTimeout(this.partControlTimer);
 		this.hidePartControls();
 		this.blurColumn();
@@ -15906,7 +15908,7 @@ hui.ui.ImagePaster.create = function(options) {
 	return new hui.ui.ImagePaster(options);
 }
 
-hui.ui.ImagePaster.supported = function() {
+hui.ui.ImagePaster.isSupported = function() {
 	if (!navigator) {
 		return false;
 	}
