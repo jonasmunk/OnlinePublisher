@@ -938,8 +938,8 @@
 				<xsl:if test="@icon">
 					<span class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></span>
 				</xsl:if>
-				<xsl:if test="@title">
-					<span class="hui_segmented_text"><xsl:value-of select="@title"/></span>
+				<xsl:if test="@title or @text">
+					<span class="hui_segmented_text"><xsl:value-of select="@title"/><xsl:value-of select="@text"/></span>
 				</xsl:if>
 			</a>
 		</xsl:for-each>

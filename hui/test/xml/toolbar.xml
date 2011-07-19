@@ -16,9 +16,6 @@
 				<divider/>
 				<icon icon="common/user" title="List users" selected="true"/>
 				<divider/>
-				<icon icon="common/user" title="List users" action="list.setUrl('data/list_users.xml')"/>
-				<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')"/>
-				<icon icon="common/color" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
 				<number title="Venstre"/>
 				<dropdown title="Billedgruppe" placeholder="Vælg..." source="itemsSource">
 				</dropdown>
@@ -45,8 +42,16 @@
 						</cell>
 					</row>
 				</grid>
-				<button title="Click me" small="true" rounded="true"/>
-				<button title="Click me"/>
+					<segmented label="Level" value="1">
+						<item text="1" value="1"/>
+						<item text="2" value="2"/>
+						<item text="3" value="3"/>
+						<item text="4" value="4"/>
+						<item text="5" value="5"/>
+						<item text="6" value="6"/>
+					</segmented>
+				<button title="Small button" small="true"/>
+				<button title="Regular button"/>
 				<right>
 					<searchfield title="Søgning" expandedWidth="200" placeholder="Search"/>
 				</right>
@@ -64,6 +69,7 @@
 			</left>
 			<center>
 				<toolbar border="bottom">
+				<icon icon="common/folder" title="Folder"/>
 					<button title="Click me" small="true" rounded="true"/>
 					<dropdown placeholder="Vælg..." source="itemsSource"/>
 					<textfield/>
@@ -96,41 +102,20 @@
 	
 	<window name="pageEditor" width="300" title="Side">
 		<toolbar centered="true" variant="window">
-			<icon icon="common/edit" text="Rediger"/>
+			<icon icon="common/edit" text="Edit"/>
+		</toolbar>
+		<toolbar variant="window">
+			<icon icon="common/info" text="Info"/>
+			<right>
+				<icon icon="common/edit" text="Edit"/>
+			</right>
 		</toolbar>
 		<formula name="pageFormula" padding="5">
 			<group labels="above">
 				<text key="title" label="Titel:"/>
 				<text key="description" label="Beskrivelse:" lines="5"/>
 			</group>
-			<fieldset legend="Link">
 			<group>
-				<dropdown key="language" label="Side:">
-					<item value="" title="Intet"/>
-					<item value="DA" title="Dansk"/>
-					<item value="EN" title="Engelsk"/>
-					<item value="DE" title="Tysk"/>
-				</dropdown>
-				<dropdown key="language" label="Fil:">
-					<item value="" title="Intet"/>
-					<item value="DA" title="Dansk"/>
-					<item value="EN" title="Engelsk"/>
-					<item value="DE" title="Tysk"/>
-				</dropdown>
-				<text key="title" label="URL:"/>
-				<text key="title" label="E-post:"/>
-			</group>				
-			</fieldset>
-			<group>
-				<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
-					<item value="" title="Intet"/>
-					<item value="DA" title="Dansk"/>
-					<item value="EN" title="Engelsk"/>
-					<item value="DE" title="Tysk"/>
-				</dropdown>
-				<text key="path" label="Sti:"/>
-				<checkbox key="searchable" label="Søgbar:"/>
-				<checkbox key="disabled" label="Inaktiv:"/>
 				<buttons>
 					<button name="cancelPage" title="Annuller"/>
 					<button name="deletePage" title="Slet">
