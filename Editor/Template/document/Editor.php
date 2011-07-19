@@ -169,7 +169,7 @@ function displayColumns($rowId,$rowIndex) {
 			}
 		}
 		echo "\n";
-		echo '<td class="column'.($selectedColumn==$row['id'] ? 'Selected' : '').'" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');return false;">';
+		echo '<td class="column'.($selectedColumn==$row['id'] ? 'Selected' : '').'" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
 		displaySections($row['id'],$row['index'],$rowId,$rowIndex);
 		echo '</td>';
 		echo "\n";
@@ -234,7 +234,7 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 	$ctrl = PartService::getController($partType);
 	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
-		echo '<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section"  oncontextmenu="controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.'); return false;" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">';
+		echo '<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">';
 		echo $ctrl->display($part,$partContext);
 		echo '</div>';
 	}

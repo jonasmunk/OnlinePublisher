@@ -167,13 +167,17 @@ var controller = {
 		return;
 	},
 	showSectionMenu : function(element,event,sectionId,sectionIndex,columnId,columnIndex,rowId,rowIndex) {
-	    this.sectionId=sectionId;
-	    this.sectionIndex=sectionIndex;
-	    this.columnId=columnId;
-	    this.columnIndex=columnIndex;
-	    this.rowId=rowId;
-	    this.rowIndex=rowIndex;
+		if (this.activeSection || this.selectedText) {
+			return true;
+		}
+	    this.sectionId = sectionId;
+	    this.sectionIndex = sectionIndex;
+	    this.columnId = columnId;
+	    this.columnIndex = columnIndex;
+	    this.rowId = rowId;
+	    this.rowIndex = rowIndex;
 		this.sectionMenu.showAtPointer(event);
+		return false;
 	},
 	editSection : function() {
 		document.location='Editor.php?section='+this.sectionId;
@@ -191,11 +195,15 @@ var controller = {
 	},
 	
 	showColumnMenu : function(element,event,columnId,columnIndex,rowId,rowIndex) {
+		if (this.activeSection || this.selectedText) {
+			return true;
+		}
 	    this.columnId=columnId;
 	    this.columnIndex=columnIndex;
 	    this.rowId=rowId;
 	    this.rowIndex=rowIndex;
 		this.columnMenu.showAtPointer(event);
+		return false;
 	},
 	
 	columnOver : function(cell) {
