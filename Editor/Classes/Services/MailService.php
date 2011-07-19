@@ -28,7 +28,13 @@ class MailService {
 			if ($port) {
 				$config['port'] = $port;
 			}
+			if (MailService::getServer()=='smtp.gmail.com') {
+				$config['ssl']='ssl';
+				$config['port']='465';
+			}
 			// 'ssl' => 'ssl', 'port' => '995'
+			Log::debug('Sending mail with config...');
+			Log::debug($config);
 			$tr = new Zend_Mail_Transport_Smtp(MailService::getServer(),$config);
 			Zend_Mail::setDefaultTransport($tr);
 		}
