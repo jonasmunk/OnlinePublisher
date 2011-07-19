@@ -109,7 +109,14 @@
 	<xsl:comment><![CDATA[[if IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
-	<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+	<xsl:choose>
+		<xsl:when test="$preview='true'">
+			<script src="{$path}hui{$timestamp-url}/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+		</xsl:when>
+		<xsl:otherwise>
+			<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+		</xsl:otherwise>
+	</xsl:choose>
 	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
 		hui.ui.context = '<xsl:value-of select="$path"/>';
@@ -127,11 +134,6 @@
 		op.ignite();
 	</xsl:comment></script>
 	<xsl:if test="$preview='true'">
-		<script src="{$path}hui/js/Window.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}hui/js/Formula.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}hui/js/Button.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}hui/js/Overlay.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}hui/js/Editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}Editor/Template/{$template}/js/editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
