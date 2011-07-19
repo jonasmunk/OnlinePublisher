@@ -83,7 +83,7 @@ var partController = {
 			var linkTab = tabs.createTab({title:'Fra nettet',padding:10});
 			var form = hui.ui.Formula.create({name:'urlForm'});
 			form.buildGroup({above:true},[
-				{type:'Text',options:{label:'Internetaddresse:',key:'url'}}
+				{type:'TextField',options:{label:'Internetaddresse:',key:'url'}}
 			]);
 			linkTab.add(form);
 			var create = hui.ui.Button.create({name:'createFromUrl',title:'Hent'});
@@ -101,6 +101,10 @@ var partController = {
 	$click$createFromUrl : function() {
 		var form = hui.ui.get('urlForm');
 		var url = form.getValues()['url'];
+		if (hui.isBlank(url)) {
+			form.focus();
+			return;
+		}
 		hui.ui.showMessage({text:'Henter billede...'});
 		hui.ui.request({
 			url : '../../Parts/image/Fetch.php',
@@ -111,7 +115,7 @@ var partController = {
 					document.forms.PartForm.imageId.value = status.id;
 					this.preview();
 				} else {
-					hui.ui.showMessage({text:'Det lykkedes ikke at hente billedet',duration:2000});
+					hui.ui.showMessage({text:'Det lykkedes ikke at hente billedet',icon:'common/warning',duration:2000});
 				}
 			}.bind(this)
 		});
@@ -130,7 +134,13 @@ var partController = {
 					this._updateWithData(data);
 				}.bind(this),
 				$imagePasteFailed : function(code) {
-					hui.ui.showMessage({text:'Paste failed: '+code,icon:'common/warning',duration:2000});
+					var msg = {
+						unknown:'Der skete en uventet fejl',
+						empty:'Udklipsholderen er tom',
+						invalid:'Der er ikke et validt billede i udklipsholderen',
+						busy:'Udklipsholderen er i brug'
+					};
+					hui.ui.showMessage({text:msg[code] || 'Der skete en ukendt fejl',icon:'common/warning',duration:5000});
 				}
 			})
 		}
