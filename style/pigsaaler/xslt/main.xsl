@@ -37,7 +37,6 @@
 				<ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
 			</div>
 		</div>
-		<xsl:call-template name="search"/>
 		<div class="case_body">
 			<div class="case_sidebar">
 				<xsl:call-template name="thirdlevel"/>
@@ -235,87 +234,6 @@
 <xsl:call-template name="util:link"/>
 <span><xsl:apply-templates/></span>
 </a>
-</xsl:template>
-
-
-
-
-<!--            News              -->
-
-
-
-
-
-<xsl:template match="f:newsblock">
-<div class="case_news">
-<h2><xsl:value-of select="@title"/></h2>
-<xsl:apply-templates/>
-</div>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:object">
-<div class="case_news_item">
-<h3>
-<xsl:value-of select="o:title"/>
-</h3>
-<p class="case_news_text">
-<xsl:apply-templates select="o:note"/>
-</p>
-<xsl:apply-templates select="o:sub/n:news/n:startdate"/>
-<xsl:apply-templates select="o:links"/>
-</div>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:links">
-<p class="case_news_links">
-<xsl:apply-templates/>
-</p>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:note">
-<xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:break">
-<br/>
-</xsl:template>
-
-<xsl:template match="f:newsblock//n:startdate">
-<p class="case_news_date"> <xsl:value-of select="@day"/>/<xsl:value-of select="@month"/><!--/<xsl:value-of select="substring(@year,3,2)"/>--></p>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:link">
-<xsl:if test="position()>1"><xsl:text> </xsl:text></xsl:if>
-<a title="{@alternative}" class="common">
-<xsl:call-template name="util:link"/>
-<span>
-<xsl:value-of select="@title"/>
-</span>
-</a>
-</xsl:template>
-
-
-
-<!--                  Search                     -->
-
-
-<xsl:template name="search">
-<xsl:if test="f:frame/f:search">
-<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
-<div>
-<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
-<xsl:for-each select="f:frame/f:search/f:types/f:type">
-<input type="hidden" name="{@unique}" value="on"/>
-</xsl:for-each>
-<input type="text" class="text" name="query" id="searchfield"/>
-<input type="submit" class="submit" value="Søg"/>
-</div>
-</form>
-<script type="text/javascript"><xsl:comment>
-new op.SearchField({element:'searchfield',placeholder:'Søg her!'});
-</xsl:comment>
-</script>
-</xsl:if>
 </xsl:template>
 
 
