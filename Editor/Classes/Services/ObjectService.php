@@ -8,6 +8,7 @@ require_once($basePath.'Editor/Classes/Log.php');
 require_once($basePath.'Editor/Classes/Model/SearchResult.php');
 require_once($basePath.'Editor/Classes/EventManager.php');
 require_once($basePath.'Editor/Classes/Services/SchemaService.php');
+require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 class ObjectService {
 	
