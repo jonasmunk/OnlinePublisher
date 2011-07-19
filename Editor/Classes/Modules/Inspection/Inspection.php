@@ -4,12 +4,13 @@
  * @subpackage Classes.Modules.Warnings
  */
 
-class Warning {
+class Inspection {
 	
 	var $text;
 	var $key;
 	var $entity;
 	var $status;
+	var $category;
 	
 	function setStatus($status) {
 	    $this->status = $status;
@@ -17,6 +18,14 @@ class Warning {
 
 	function getStatus() {
 	    return $this->status;
+	}
+	
+	function setCategory($category) {
+	    $this->category = $category;
+	}
+
+	function getCategory() {
+	    return $this->category;
 	}
 	
 

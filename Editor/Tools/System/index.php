@@ -18,8 +18,9 @@ $gui='
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="query" value="@searchField.value"/>
 	</source>
-	<source name="warningsSource" url="data/WarningsList.php">
-	
+	<source name="inspectionSource" url="data/InspectionList.php">
+		<parameter key="status" value="@inspectionStatus.value"/>
+		<parameter key="category" value="@inspectionCategory.value"/>
 	</source>
 	<source name="logSource" url="ListLog.php">
 		<parameter key="windowPage" value="@list.window.page"/>
@@ -56,13 +57,32 @@ $gui='
 						<title>Indstillinger</title>
 						<item icon="common/settings" title="Indstillinger" value="settings"/>
 						<item icon="common/time" title="Cache" value="caches"/>
-						<item icon="common/warning" title="Problemer" value="warnings"/>
+						<item icon="common/warning" title="Problemer" value="inspection"/>
 					</selection>
 				</overflow>
 			</left>
 			<center>
 				<overflow>
+					<bar state="inspection" variant="layout">
+						<segmented value="all" name="inspectionCategory">
+							<item text="Alle" value="all"/>
+							<item text="System" value="system"/>
+							<item text="Indhold" value="content"/>
+							<item text="Model" value="model"/>
+						</segmented>
+						<space/>
+						<segmented value="all" name="inspectionStatus">
+							<item text="Alle" value="all"/>
+							<item text="Advarsler" value="warning"/>
+							<item text="OK" value="ok"/>
+							<item text="Fejl" value="error"/>
+						</segmented>
+						<right>
+							<button text="Refresh" click="inspectionList.refresh()" small="true"/>
+						</right>
+					</bar>
 					<list name="list" source="allObjectsSource" state="list"/>
+					<list name="inspectionList" source="inspectionSource" state="inspection"/>
 					<fragment state="caches" height="full" background="linen">
 						<box width="500" top="30" title="Caches">
 							<toolbar>

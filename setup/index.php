@@ -41,9 +41,6 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../"/>'.
 '<tool title="Værktøjer" icon="Tool/Generic"'.
 ($pos=='Tools' ? ' selected="true"' : ' link="?position=Tools"').
 '/>'.
-'<tool title="Mapper" icon="Element/Folder"'.
-($pos=='Folders' ? ' selected="true"' : ' link="?position=Folders"').
-'/>'.
 '</toolbar>'.
 '<content background="true">'.
 '<layout xmlns="uri:Layout" height="100%" width="100%" spacing="8">'.

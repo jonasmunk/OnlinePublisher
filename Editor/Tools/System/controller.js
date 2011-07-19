@@ -11,9 +11,12 @@ hui.ui.listen({
 			list.clear();
 			return;
 		}
-		if (obj.value=='caches') {
+		else if (obj.value=='caches') {
 			hui.ui.changeState('caches');
 			list.clear();
+			return;
+		} else if (obj.value=='inspection') {
+			hui.ui.changeState('inspection');
 			return;
 		}
 		hui.ui.changeState('list');
@@ -28,8 +31,6 @@ hui.ui.listen({
 			list.setSource(allObjectsSource);
 		} else if (obj.value=='log') {
 			list.setSource(logSource);
-		} else if (obj.value=='warnings') {
-			list.setSource(warningsSource);
 		} else if (obj.value=='webloggroup') {
 			list.setUrl('../../Services/Model/ListObjects.php?type=webloggroup');
 		} else if (obj.value=='path') {
