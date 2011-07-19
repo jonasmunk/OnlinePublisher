@@ -29,7 +29,10 @@ op.Editor = {
 		}
 	},
 	$partChanged : function() {
-		this.getToolbarController().pageDidChange();
+		var ctrl = this.getToolbarController();
+		if (ctrl) {
+			ctrl.pageDidChange();
+		}
 	},
 	
 	editProperties : function() {
@@ -37,10 +40,10 @@ op.Editor = {
 			var win = this.propertiesWindow = hui.ui.Window.create({width:300,title:'Info',icon:'common/info',padding:10,variant:'dark'});
 			var form = this.propertiesFormula = hui.ui.Formula.create();
 			var group = form.buildGroup({above:true},[
-				{type:'Text',options:{label:'Titel:',key:'title'}},
-				{type:'Text',options:{label:'Beskrivelse:',key:'description',multiline:true}},
-				{type:'Text',options:{label:'Nøgelord:',key:'keywords'}},
-				{type:'Text',options:{label:'Sti:',key:'path'}},
+				{type:'TextField',options:{label:'Titel:',key:'title'}},
+				{type:'TextField',options:{label:'Beskrivelse:',key:'description',multiline:true}},
+				{type:'TextField',options:{label:'Nøgelord:',key:'keywords'}},
+				{type:'TextField',options:{label:'Sti:',key:'path'}},
 				{type:'DropDown',options:{
 					label:'Sprog:',
 					key:'language',
@@ -172,29 +175,25 @@ op.Editor.Text = function(element,row,column,position) {
 }
 
 op.Editor.Text.prototype = {
-	activate : function() {
-		this._load();
+	activate : function(callback) {
+		this._load(callback);
 	},
-	_load : function() {
+	_load : function(callback) {
 		hui.ui.request({url:'parts/load.php',parameters:{type:'text',id:this.id},onJSON:function(part) {
 			this.part = part;
 			this._edit();
+			callback();
 		}.bind(this)});
 	},
 	_edit : function() {
-		this.field = hui.build('textarea',{className:'hui_editor_header',style:'resize: none;'});
+		this.field = hui.build('textarea',{style:'resize: none; overflow: hidden; background: none; border: none; padding: 0; display: block; outline: none;'});
 		this.field.value = this.part.text;
-		this.header.style.visibility='hidden';
 		this._updateFieldStyle();
+		this.header.style.display='none';
 		this.element.insertBefore(this.field,this.header);
+		new op.FieldResizer({field:this.field}).resize(true);
 		this.field.focus();
 		this.field.select();
-		/*
-		this.field.observe('keydown',function(e) {
-			if (e.keyCode==Event.KEY_RETURN) {
-				this.save();
-			}
-		}.bind(this));*/
 	},
 	save : function() {
 		var value = this.field.value;
@@ -203,17 +202,21 @@ op.Editor.Text.prototype = {
 			this.value = value;
 			this.header.innerHTML = value;
 			hui.ui.Editor.get().partChanged(this);
-			hui.ui.request({url:'parts/update.php',parameters:{id:this.id,pageId:op.page.id,text:this.value,type:'text'},onText:function(html) {
-				this.element.innerHTML=html;
-				this.header = hui.firstByTag(this.element,'*');
-			}.bind(this)});
+			hui.ui.request({
+				url : 'parts/update.php',
+				parameters : {id:this.id,pageId:op.page.id,text:this.value,type:'text'},
+				onText : function(html) {
+					this.element.innerHTML=html;
+					this.header = hui.firstByTag(this.element,'*');
+				}.bind(this)
+			});
 		}
 	},
 	cancel : function() {
 		this.deactivate();
 	},
 	deactivate : function() {
-		this.header.style.visibility='';
+		this.header.style.display='';
 		this.element.removeChild(this.field);
 		hui.ui.Editor.get().partDidDeacivate(this);
 	},
@@ -223,5 +226,50 @@ op.Editor.Text.prototype = {
 	},
 	getValue : function() {
 		return this.value;
+	}
+}
+
+op.FieldResizer = function(options) {
+	this.options = options;
+	this.options.field.style.overflow='hidden';
+	this.dummy = document.createElement('div');
+	document.body.appendChild(this.dummy);
+	this.dummy.style.position='absolute';
+	this.dummy.style.left='-999999px';
+	this.dummy.style.top='-999999px';
+	this.dummy.style.visibility='hidden';
+	var self = this;
+	hui.listen(options.field,'keyup',function(){self.resize(false,true)});
+	hui.listen(options.field,'keydown',function(){self.options.field.scrollTop=0;});
+}
+
+op.FieldResizer.prototype = {
+	resize : function(instantly,focused) {
+				
+		var field = this.options.field;
+		hui.copyStyle(field,this.dummy,[
+			'font-size','line-height','font-weight','letter-spacing','word-spacing','font-family','text-transform','font-variant','text-indent'
+		]);
+		var html = field.value;
+		if (html[html.length-1]==='\n') {
+			html+='x';
+		}
+		// Force webkit redraw
+		if (!focused) {
+			field.style.display='none';
+			field.offsetHeight; // no need to store this anywhere, the reference is enough
+			field.style.display='block';
+		}
+		this.dummy.innerHTML = html.replace(/\n/g,'<br/>');
+		this.options.field.style.webkitTransform = 'scale(1)';
+		this.dummy.style.width=this.options.field.clientWidth+'px';
+		var height = Math.max(50,this.dummy.clientHeight)+'px';
+		hui.log(height)
+		if (instantly) {
+			this.options.field.style.height=height;
+		} else {
+			//this.options.field.scrollTop=0;
+			hui.animate(this.options.field,'height',height,200,{ease:hui.ease.slowFastSlow});
+		}
 	}
 }
