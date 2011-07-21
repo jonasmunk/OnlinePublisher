@@ -97,7 +97,7 @@ else if (getDocumentSection()!=0) {
 }
 ?>
 </head>
-<body>
+<body class="editor">
 <div class="editor_body">
 <form action="AddSection.php" name="SectionAdder" method="get" style="margin: 0px;">
 <input type="hidden" name="type"/>
