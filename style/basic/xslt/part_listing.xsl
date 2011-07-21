@@ -10,10 +10,11 @@
 	<xsl:template match="l:listing">
 		<div class="part_listing common_font">
 			<xsl:apply-templates/>
+			<xsl:comment/>
 		</div>
 	</xsl:template>
 
-	<xsl:template match="l:list">
+	<xsl:template match="l:list[l:item]">
 		<xsl:choose>
 			<xsl:when test="@type='1'">
 				<ol style="list-style-type: decimal;"><xsl:apply-templates/></ol>
