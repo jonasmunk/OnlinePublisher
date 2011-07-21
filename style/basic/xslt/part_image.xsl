@@ -99,7 +99,7 @@
 		<xsl:value-of select="$path"/><xsl:text>services/images/?id=</xsl:text>
 		<xsl:value-of select="o:object/@id"/>
 		<xsl:if test="img:transform/@scale-percent and $highquality='false'">
-			<xsl:text>&amp;percent=</xsl:text><xsl:value-of select="img:transform/@scale-percent"/>
+			<xsl:text>&amp;scale=</xsl:text><xsl:value-of select="img:transform/@scale-percent"/>
 		</xsl:if>
 		<xsl:if test="img:transform/@width and $highquality='false'">
 			<xsl:text>&amp;width=</xsl:text><xsl:value-of select="img:transform/@width"/>
