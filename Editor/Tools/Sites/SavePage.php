@@ -11,15 +11,16 @@ require_once '../../Classes/Hierarchy.php';
 
 $data = Request::getUnicodeObject('data');
 
-$page = Page::load($data->id);
+if ($page = Page::load($data->id)) {
+	$page->setTitle($data->title);
+	$page->setDescription($data->description);
+	$page->setPath($data->path);
+	$page->setSearchable($data->searchable);
+	$page->setDisabled($data->disabled);
+	$page->setLanguage($data->language);
+	$page->save();
 
-$page->setTitle($data->title);
-$page->setDescription($data->description);
-$page->setPath($data->path);
-$page->setSearchable($data->searchable);
-$page->setDisabled($data->disabled);
-$page->setLanguage($data->language);
-$page->save();
-
-Hierarchy::markHierarchyOfPageChanged($page->getId());
+	Hierarchy::markHierarchyOfPageChanged($page->getId());
+	PageService::markChanged($page->getId());	
+}
 ?>

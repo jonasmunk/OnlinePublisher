@@ -10,8 +10,9 @@ require_once '../../Classes/Page.php';
 
 $data = Request::getObject('data');
 
-$page = Page::load($data->id);
-
-$page->setLanguage($data->language);
-$page->save();
+if ($page = Page::load($data->id)) {
+	$page->setLanguage($data->language);
+	$page->save();
+	PageService::markChanged($page->getId());	
+}
 ?>
