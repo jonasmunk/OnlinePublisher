@@ -10657,7 +10657,8 @@ hui.ui.Dock.prototype = {
 	},
 	_setBusy : function(busy) {
 		if (busy) {
-			hui.setStyle(this.progress,{display:'block',style:this.iframe.clientHeight+'px;width:'+this.iframe.clientWidth+'px'});
+			hui.log(this.iframe.clientWidth)
+			hui.setStyle(this.progress,{display:'block',style:'height:'+this.iframe.clientHeight+'px;width:'+this.iframe.clientWidth+'px'});
 		} else {
 			this.progress.style.display = 'none';
 		}
@@ -12554,16 +12555,16 @@ hui.ui.ColorPicker.create = function(options) {
 			'<div class="hui_bar hui_bar_window">'+
 				'<div class="hui_bar_body">'+
 					'<a class="hui_bar_button hui_bar_button_selected" href="javascript:void(0)" rel="0">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_pastels',16)+')"></span>'+
+						'<span class="hui_icon_16" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_pastels',16)+')"></span>'+
 					'</a>'+
 					'<a class="hui_bar_button" href="javascript:void(0)" rel="1">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_brightness',16)+')"></span>'+
+						'<span class="hui_icon_16" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_brightness',16)+')"></span>'+
 					'</a>'+
 					'<a class="hui_bar_button" href="javascript:void(0)" rel="2">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_saturated',16)+')"></span>'+
+						'<span class="hui_icon_16" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_saturated',16)+')"></span>'+
 					'</a>'+
 					'<a class="hui_bar_button" href="javascript:void(0)" rel="3">'+
-						'<span class="hui_icon_1" style="background: url('+hui.ui.getIconUrl('colorpicker/swatches',16)+')"></span>'+
+						'<span class="hui_icon_16" style="background: url('+hui.ui.getIconUrl('colorpicker/swatches',16)+')"></span>'+
 					'</a>'+
 					'<input class="hui_colorpicker"/>'+
 				'</div>'+

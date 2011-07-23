@@ -36,7 +36,8 @@ hui.ui.Dock.prototype = {
 	},
 	_setBusy : function(busy) {
 		if (busy) {
-			hui.setStyle(this.progress,{display:'block',style:this.iframe.clientHeight+'px;width:'+this.iframe.clientWidth+'px'});
+			hui.log(this.iframe.clientWidth)
+			hui.setStyle(this.progress,{display:'block',style:'height:'+this.iframe.clientHeight+'px;width:'+this.iframe.clientWidth+'px'});
 		} else {
 			this.progress.style.display = 'none';
 		}

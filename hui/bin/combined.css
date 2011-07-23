@@ -4335,7 +4335,7 @@ ul.hui_wizard span
 	vertical-align: middle;
 }
 
-ul.hui_wizard span.hui_icon_1
+ul.hui_wizard span.hui_icon_16
 {
 	margin: 1px 5px 0px 0px;
 }
@@ -4843,13 +4843,13 @@ div.hui_bar a.hui_bar_button:hover
 	background: url('../gfx/bar_light.png') left -60px repeat-x;
 }
 
-a.hui_bar_button span.hui_icon_1
+a.hui_bar_button span.hui_icon_16
 {
 	vertical-align: top;
 	margin-top: 7px;
 }
 
-a.hui_bar_button:hover span.hui_icon_1
+a.hui_bar_button:hover span.hui_icon_16
 {
 	background-position: 0 -16px;
 }
@@ -4864,7 +4864,7 @@ div.hui_bar  a.hui_bar_button_selected, div.hui_bar a.hui_bar_button_selected:ho
 	background: url('../gfx/bar_light.png') left -90px repeat-x;
 }
 
-a.hui_bar_button_selected span.hui_icon_1
+a.hui_bar_button_selected span.hui_icon_16
 {
 	background-position: 0 -32px;
 }
@@ -4912,7 +4912,7 @@ div.hui_bar_window a.hui_bar_button:hover
 	border-color: #ddd;
 }
 
-div.hui_bar_window a.hui_bar_button span.hui_icon_1
+div.hui_bar_window a.hui_bar_button span.hui_icon_16
 {
 	vertical-align: top;
 	margin-top: 4px;
@@ -4968,7 +4968,7 @@ div.hui_bar_layout a.hui_button
 	margin-top: 2px;
 }
 
-div.hui_bar_layout a.hui_bar_button span.hui_icon_1
+div.hui_bar_layout a.hui_bar_button span.hui_icon_16
 {
 	margin-top: 5px;
 }
@@ -5032,7 +5032,7 @@ div.hui_bar_mini a.hui_bar_button
 	padding: 0 2px;
 }
 
-div.hui_bar_mini a.hui_bar_button span.hui_icon_1
+div.hui_bar_mini a.hui_bar_button span.hui_icon_16
 {
 	margin-top: 3px;
 }
