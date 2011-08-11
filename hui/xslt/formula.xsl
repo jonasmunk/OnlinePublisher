@@ -5,7 +5,7 @@
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
     xmlns:gui="uri:hui"
     version="1.0"
-    exclude-result-prefixes="gui"
+    exclude-result-prefixes="gui fn"
     >
 
 <xsl:template match="gui:formula">

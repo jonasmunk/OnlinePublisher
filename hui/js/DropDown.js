@@ -89,11 +89,13 @@ hui.ui.DropDown.prototype = {
 			var left = hui.getLeft(this.element);
 			hui.setStyle(this.selector,{'left':left+'px',top:'5px'});
 		} else {
-			var scroll = hui.getScrollOffset(this.element);
+			var windowScrollTop = hui.window.getScrollTop();
+			var scrollOffsetTop = hui.getScrollOffset(this.element).top;
+			var scrollTop = windowScrollTop-scrollOffsetTop;
 			hui.place({
 				target : {element:this.element,vertical:1,horizontal:0},
 				source : {element:this.selector,vertical:0,horizontal:0},
-				top : scroll.top*-1
+				top : scrollTop
 			});
 		}
 		hui.setStyle(s,{visibility:'hidden',display:'block',width:''});

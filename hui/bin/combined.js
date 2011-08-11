@@ -583,6 +583,17 @@ hui.getPosition = function(element) {
 	}
 }
 
+hui.window = {
+	getScrollTop : function() {
+		if (window.pageYOffset) {
+			return window.pageYOffset;
+		} else if (document.documentElement) {
+			return document.documentElement.scrollTop;
+		}
+		return document.body.scrollTop;
+	}
+}
+
 /////////////////////////// Class handling //////////////////////
 
 hui.hasClass = function(element, className) {
@@ -1181,7 +1192,6 @@ hui.place = function(options) {
 		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
 	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
 	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
-	
 	var src = options.source.element;
 	left -= src.clientWidth * (options.source.horizontal || 0);
 	top -= src.clientHeight * (options.source.vertical || 0);
@@ -6447,11 +6457,13 @@ hui.ui.DropDown.prototype = {
 			var left = hui.getLeft(this.element);
 			hui.setStyle(this.selector,{'left':left+'px',top:'5px'});
 		} else {
-			var scroll = hui.getScrollOffset(this.element);
+			var windowScrollTop = hui.window.getScrollTop();
+			var scrollOffsetTop = hui.getScrollOffset(this.element).top;
+			var scrollTop = windowScrollTop-scrollOffsetTop;
 			hui.place({
 				target : {element:this.element,vertical:1,horizontal:0},
 				source : {element:this.selector,vertical:0,horizontal:0},
-				top : scroll.top*-1
+				top : scrollTop
 			});
 		}
 		hui.setStyle(s,{visibility:'hidden',display:'block',width:''});
@@ -7294,6 +7306,15 @@ hui.ui.Toolbar.prototype = {
 	},
 	addDivider : function() {
 		this.element.appendChild(hui.build('span',{'class':'hui_divider'}));
+	},
+	setSelection : function(key) {
+		var desc = hui.ui.getDescendants(this);
+		for (var i=0; i < desc.length; i++) {
+			var widget = desc[i];
+			if (widget.setSelected) {
+				widget.setSelected(widget.key==key);
+			}
+		};
 	}
 }
 
@@ -7346,6 +7367,7 @@ hui.ui.Toolbar.Icon = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
 	this.name = options.name;
+	this.key = options.key;
 	this.enabled = !hui.hasClass(this.element,'hui_toolbar_icon_disabled');
 	this.element.tabIndex=this.enabled ? 0 : -1;
 	this.icon = hui.firstByClass(this.element,'hui_icon');
@@ -7394,6 +7416,9 @@ hui.ui.Toolbar.Icon.prototype = {
 	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
+		if (selected) {
+			this.element.blur();
+		}
 		hui.setClass(this.element,'hui_toolbar_icon_selected',selected);
 	},
 	/** @private */

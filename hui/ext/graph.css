@@ -27,8 +27,13 @@ text.hui_graph_label
 	font-size: 11px;
 	font-family: Verdana;
 	cursor: pointer;
+	opacity: .5;
 }
 
+.hui_node:hover text.hui_graph_label
+{
+	opacity: 1;
+}
 
 div.hui_graph
 {

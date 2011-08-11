@@ -13,3 +13,4 @@ echo "Compressing css"
 java -jar yuicompressor-2.2.4.jar ${BIN_PATH}combined.css --charset UTF-8 -o ${BIN_PATH}minimized.css
 echo "Compressing site css"
 java -jar yuicompressor-2.2.4.jar ${BIN_PATH}combined.site.css --charset UTF-8 -o ${BIN_PATH}minimized.site.css
+echo "Finished!"

@@ -13,7 +13,7 @@
 
 
 <xsl:template match="gui:toolbar" name="gui:toolbar">
-	<div>
+	<div id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_toolbar</xsl:text>
 			<xsl:if test="@labels='false'"><xsl:text> hui_toolbar_nolabels</xsl:text></xsl:if>
@@ -33,6 +33,13 @@
 			<xsl:apply-templates select="gui:right"/>
 		</div>
 	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Toolbar({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>'
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
 </xsl:template>
 
 
@@ -65,8 +72,11 @@
 	</a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Toolbar.Icon({
-			element:'<xsl:value-of select="generate-id()"/>',
-			name:'<xsl:value-of select="@name"/>'
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>'
+			<xsl:if test="@key">
+				,key : '<xsl:value-of select="@key"/>'
+			</xsl:if>
 			<xsl:if test="gui:confirm">
 				,confirm:{text:'<xsl:value-of select="gui:confirm/@text"/>',okText:'<xsl:value-of select="gui:confirm/@ok"/>',cancelText:'<xsl:value-of select="gui:confirm/@cancel"/>'}
 			</xsl:if>

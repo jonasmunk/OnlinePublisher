@@ -583,6 +583,17 @@ hui.getPosition = function(element) {
 	}
 }
 
+hui.window = {
+	getScrollTop : function() {
+		if (window.pageYOffset) {
+			return window.pageYOffset;
+		} else if (document.documentElement) {
+			return document.documentElement.scrollTop;
+		}
+		return document.body.scrollTop;
+	}
+}
+
 /////////////////////////// Class handling //////////////////////
 
 hui.hasClass = function(element, className) {
@@ -1181,7 +1192,6 @@ hui.place = function(options) {
 		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
 	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
 	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
-	
 	var src = options.source.element;
 	left -= src.clientWidth * (options.source.horizontal || 0);
 	top -= src.clientHeight * (options.source.vertical || 0);

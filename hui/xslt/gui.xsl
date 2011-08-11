@@ -333,6 +333,7 @@
 <xsl:template match="gui:frames">
 	<html>
 		<head>
+			<xsl:apply-templates select="gui:script"/>
 		</head>
 		<frameset rows="84,*" framespacing="0" frameborder="0" border="0">
 			<xsl:for-each select="gui:frame">
