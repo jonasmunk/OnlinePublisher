@@ -6,6 +6,12 @@ var mainController = {
 		{drag:'page',drop:'subset'}
 	],
 	
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:Sites');
+		}
+	},
+	
 	///////////////// List ///////////////
 	
 	$selectionChanged$list : function(item) {

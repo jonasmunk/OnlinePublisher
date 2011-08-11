@@ -497,7 +497,8 @@ $databaseTables = array(
 			array("scalewidth","int(11)","YES","","",""),
 			array("scaleheight","int(11)","YES","","",""),
 			array("scalepercent","int(11)","YES","","",""),
-			array("text","varchar(255)","YES","","","")
+			array("text","varchar(255)","YES","","",""),
+			array("frame","varchar(30)","YES","","","")
 		),
 	'part_imagegallery' => array(
 			array("part_id","int(11)","","","0",""),

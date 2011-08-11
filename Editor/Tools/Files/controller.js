@@ -8,7 +8,9 @@ hui.ui.listen({
 	fileId : null,
 	
 	$ready : function() {
-		//this.$click$newFile();
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:Files');
+		}
 	},
 	$selectionChanged$list : function(item) {
 		hui.ui.get('delete').setEnabled(true);

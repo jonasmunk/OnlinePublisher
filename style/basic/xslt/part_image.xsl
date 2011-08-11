@@ -9,9 +9,6 @@
  >
 
 <xsl:template match="img:image[img:link]">
-	<xsl:variable name="src"><xsl:call-template name="img:buildsrc"/></xsl:variable>
-	<xsl:variable name="width"><xsl:call-template name="img:buildwidth"/></xsl:variable>
-	<xsl:variable name="height"><xsl:call-template name="img:buildheight"/></xsl:variable>
 	<div class="part_image">
 		<xsl:if test="img:style/@align">
 			<xsl:attribute name="style">text-align: <xsl:value-of select="img:style/@align"/></xsl:attribute>
@@ -20,13 +17,13 @@
 			<xsl:if test="$editor!='true'">
 				<xsl:call-template name="img:buildlink"/>
 			</xsl:if>
-			<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="{generate-id()}"/>
+			<xsl:call-template name="img:buildimage"/>
 		</a>
 
 		<xsl:if test="img:link/@image and $editor!='true'">
 			<script type="text/javascript">
 			try {
-			op.registerImageViewer('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="img:link/@image"/><xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if><xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>,text:'<xsl:value-of select="img:link/@note"/>'});
+				op.registerImageViewer('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="img:link/@image"/><xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if><xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>,text:'<xsl:value-of select="img:link/@note"/>'});
 			} catch (ignore) {}
 			</script>
 		</xsl:if>
@@ -35,14 +32,12 @@
 </xsl:template>
 
 <xsl:template match="img:image">
-	<xsl:variable name="src"><xsl:call-template name="img:buildsrc"/></xsl:variable>
-	<xsl:variable name="width"><xsl:call-template name="img:buildwidth"/></xsl:variable>
-	<xsl:variable name="height"><xsl:call-template name="img:buildheight"/></xsl:variable>
 	<div class="part_image">
 		<xsl:if test="img:style/@align">
 			<xsl:attribute name="style">text-align: <xsl:value-of select="img:style/@align"/></xsl:attribute>
 		</xsl:if>
-		<img src="{$src}" width="{$width}"  height="{$height}" alt=""/>
+		<xsl:value-of select="img:style/@frame"/>
+		<xsl:call-template name="img:buildimage"/>
 		<xsl:if test="$editor='true' and not(o:object)">
 			<span style="font-size: 12px;">Intet billede</span>
 		</xsl:if>
@@ -50,6 +45,21 @@
 	</div>
 </xsl:template>
 
+<xsl:template name="img:buildimage">
+	<xsl:variable name="src"><xsl:call-template name="img:buildsrc"/></xsl:variable>
+	<xsl:variable name="width"><xsl:call-template name="img:buildwidth"/></xsl:variable>
+	<xsl:variable name="height"><xsl:call-template name="img:buildheight"/></xsl:variable>
+	<xsl:choose>
+		<xsl:when test="img:style/@frame">
+			<span class="part_image_frame_{img:style/@frame}">
+				<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="{generate-id()}"/>
+			</span>
+		</xsl:when>
+		<xsl:otherwise>
+			<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="{generate-id()}"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
 
 <xsl:template match="img:text">
 	<p class="common_font"><xsl:apply-templates/></p>

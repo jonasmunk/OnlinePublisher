@@ -4,6 +4,12 @@ hui.ui.listen({
 		{drag:'image',drop:'imagegroup'}
 	],
 	
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:Images');
+		}
+
+	},
 	$accessDenied : function() {
 		//alert('Access denied');
 		//return true;

@@ -2,6 +2,12 @@ hui.ui.listen({
 	usageId : null,
 	meterId : null,
 	
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:Waterusage');
+		}
+	},
+	
 	$valueChanged$search : function(value) {
 		list.resetState();
 	},

@@ -5,6 +5,11 @@ hui.ui.listen({
 		{drag:'product',drop:'productgroup'},
 		{drag:'product',drop:'producttype'}
 	],
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:Shop');
+		}
+	},
 	
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';

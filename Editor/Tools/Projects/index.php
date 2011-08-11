@@ -25,8 +25,13 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</cell></row>'.
 '</layout>'.
 '</interface>'.
+'<script xmlns="uri:Script" type="text/javascript">
+	if (window.parent) {
+		window.parent.baseController.changeSelection(\'tool:Projects\');
+	}
+</script>'.
 '</xmlwebgui>';
 
-$elements = array("Layout","Frame","Area");
+$elements = array("Layout","Frame","Area","Script");
 writeGui($xwg_skin,$elements,$gui);
 ?>

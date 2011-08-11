@@ -88,6 +88,9 @@ class In2iGui {
 		$diff = 0;
 		for ($i=0;$i<count($matches[0]);$i++) {
 			$pos = $matches[0][$i][1];
+			if ($xml[$pos+$diff-1]!='"') {
+				continue;
+			}
 			$old = $matches[0][$i][0];
 			$parts = In2iGui::extract($old);
 			$new = array_key_exists($language,$parts) ? $parts[$language] : $parts['any'];

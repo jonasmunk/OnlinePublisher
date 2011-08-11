@@ -14,3 +14,13 @@ div.part_image p, div.part_image textarea
 	font-size: 8pt;
 	color: #999;
 }
+
+span.part_image_frame_light
+{
+	padding: 4px;
+	border: 1px solid #DDDDDD;
+	border-bottom: 1px solid #bbb;
+	border-top: 1px solid #eee;
+	background: #fff;
+	display: inline-block;
+}

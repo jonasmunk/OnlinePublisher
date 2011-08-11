@@ -7,6 +7,12 @@ hui.ui.listen({
 	groupId : null,
 	fileId : null,
 	
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:News');
+		}
+	},
+	
 	$selectionChanged$list : function(item) {
 		if (item.kind=='news') {
 			hui.ui.get('delete').setEnabled(true);

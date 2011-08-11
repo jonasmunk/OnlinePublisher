@@ -40,6 +40,7 @@ class ImagePartController extends PartController
 		$part->setScaleWidth(Request::getInt('scalewidth'));
 		$part->setScaleHeight(Request::getInt('scaleheight'));
 		$part->setGreyscale(Request::getBoolean('greyscale'));
+		$part->setFrame(Request::getString('frame'));
 		return $part;
 	}
 	
@@ -83,7 +84,8 @@ class ImagePartController extends PartController
 			'scalepercent' => $part->getScalePercent()>0 ? $part->getScalePercent() : '',
 			'scalewidth' => $part->getScaleWidth()>0 ? $part->getScaleWidth() : '',
 			'scaleheight' => $part->getScaleHeight()>0 ? $part->getScaleHeight() : '',
-			'text' => $part->getText()
+			'text' => $part->getText(),
+			'frame' => $part->getFrame()
 		)).
 		'<div id="part_image_container">'.$this->render($part,$context).'</div>'.
 		'<script src="'.$baseUrl.'hui/ext/ImagePaster.js" type="text/javascript" charset="utf-8"></script>'.
@@ -96,8 +98,15 @@ class ImagePartController extends PartController
 	
 	function buildSub($part,$context) {
 		$xml = '<image xmlns="'.$this->getNamespace().'">';
-		if ($part->getAlign()!='') {
-			$xml.='<style align="'.$part->getAlign().'"/>';
+		if ($part->getAlign()!='' || $part->getFrame()!='') {
+			$xml.='<style';
+			if ($part->getAlign()!='') {
+				$xml.=' align="'.StringUtils::escapeXML($part->getAlign()).'"';
+			}
+			if ($part->getFrame()!='') {
+				$xml.=' frame="'.StringUtils::escapeXML($part->getFrame()).'"';
+			}
+			$xml.='/>';
 		}
 		if ($part->getImageId()>0) {
 			$sql="select object.data,image.* from object,image where image.object_id = object.id and object.id=".Database::int($part->getImageId());
@@ -115,6 +124,7 @@ class ImagePartController extends PartController
 			$xml.='<text>'.StringUtils::escapeXML($part->getText()).'</text>';
 		}
 		$xml.='</image>';
+		error_log($xml);
 		return $xml;
 	}
 	
@@ -263,13 +273,33 @@ class ImagePartController extends PartController
 		}
 	}
 	
+	function editorGui($part,$context) {
+		$gui='
+		<window title="Avanceret" name="imageAdvancedWindow" width="300">
+			<formula name="imageAdvancedFormula">
+				<group>
+					<text label="Tekst" multiline="true" key="text"/>
+					<checkbox key="greyscale" label="Gråtone"/>
+					<dropdown label="Ramme" key="frame">
+						<item title="Ingen" value=""/>
+						<item title="Let" value="light"/>
+					</dropdown>
+					<buttons>
+						<button name="pasteImage" text="Indsæt fra udklipsholder"/>
+					</buttons>
+				</group>
+			</formula>
+		</window>
+		';
+		return In2iGui::renderFragment($gui);
+	}
+	
 	function getToolbars() {
 		return array(
 			'Billede' =>
 			'<script source="../../Parts/image/toolbar.js"/>
 			<icon icon="common/new" title="Tilf&#248;j billede" name="addImage"/>
 			<icon icon="common/search" title="V&#230;lg billede" name="chooseImage"/>
-			<icon icon="common/image" overlay="new" title="Fra udklipsholder" name="pasteImage"/>
 			<divider/>
 			<segmented label="Placering" name="alignment" allow-null="true">
 				<item icon="style/align_left" value="left"/>
@@ -293,7 +323,7 @@ class ImagePartController extends PartController
 				</row>
 			</grid>
 			<divider/>
-			<grid>
+			<!--grid>
 				<row>
 					<cell label="Text:" width="200" right="5">
 						<textfield name="text" label="text"/>
@@ -302,7 +332,10 @@ class ImagePartController extends PartController
 				<row>
 					<cell right="5" label="Gr&#229;tone:"><checkbox name="greyscale"/></cell>
 				</row>
-			</grid>'
+			</grid>
+			<divider/-->
+			<icon icon="common/settings" title="Avanceret" name="showAdvanced"/>
+			'
 			,
 			'Link' =>
 			'<grid>

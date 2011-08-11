@@ -1,4 +1,9 @@
 hui.ui.listen({
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('service:publish');
+		}
+	},
 	$clickButton$list : function(item) {
 		hui.ui.request({
 			url:'PublishOne.php',

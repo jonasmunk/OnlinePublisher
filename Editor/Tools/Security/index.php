@@ -46,8 +46,13 @@ $gui.=
 '</content>'.
 '</window>'.
 '</interface>'.
+'<script xmlns="uri:Script" type="text/javascript">
+	if (window.parent) {
+		window.parent.baseController.changeSelection(\'tool:Security\');
+	}
+</script>'.
 '</xmlwebgui>';
 
-$elements = array("Window","Toolbar","List");
+$elements = array("Window","Toolbar","List","Script");
 writeGui($xwg_skin,$elements,$gui);
 ?>

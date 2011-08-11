@@ -21,25 +21,26 @@ if (Request::exists("page")) {
 }
 $gui='
 <gui xmlns="uri:hui" title="OnlinePublisher editor">
+	<controller source="Base.js"/>
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
 		<tabs small="true">';
 			$tabs = array('edit'=>'{ Editing ; da: Redigering }','analyse'=>'{Analysis ; da:Analyse}','setup'=>'{ Setup ; da:Opsætning }');
 			foreach ($tabs as $tab => $tabTitle) {
 				$tools = InternalSession::getToolsByCategory($tab);
 				if ($tools) {
-					$gui.='<tab title="'.$tabTitle.'" background="light"><toolbar>';
+					$gui.='<tab title="'.$tabTitle.'" background="light"><toolbar name="'.$tab.'Toolbar">';
 					foreach ($tools as $tool) {
-						$gui.='<icon title="'.$tool['name'].'" icon="'.$tool['icon'].'" action="dock.setUrl(\'Tools/'.$tool['unique'].'/\')"/>';
+						$gui.='<icon title="'.$tool['name'].'" icon="'.$tool['icon'].'" action="dock.setUrl(\'Tools/'.$tool['unique'].'/\')" key="tool:'.$tool['unique'].'"/>';
 					}
 					$gui.='
 					<right>
-					<icon title="{ View ; da:Vis }" icon="common/view" action="dock.setUrl(\'Services/Preview/\')"/>
-					<icon title="{ Edit ; da:Rediger }" icon="common/edit" action="dock.setUrl(\'Template/Edit.php/\')"/>
-					<icon title="{ Publish ; da:Udgiv }" icon="common/internet" overlay="upload" action="dock.setUrl(\'Services/Publish/?close=../../Services/Start/\')"/>
+					<icon title="{ View ; da:Vis }" icon="common/view" action="dock.setUrl(\'Services/Preview/\')" key="service:preview"/>
+					<icon title="{ Edit ; da:Rediger }" icon="common/edit" action="dock.setUrl(\'Template/Edit.php/\')" key="service:edit"/>
+					<icon title="{ Publish ; da:Udgiv }" icon="common/internet" overlay="upload" action="baseController.goPublish()" key="service:publish"/>
 					<!--<divider/>
 					<search title="Søgning"/>-->
 					<divider/>
-					<icon title="Start" icon="common/play" action="dock.setUrl(\'Services/Start/\')"/>
+					<icon title="Start" icon="common/play" action="dock.setUrl(\'Services/Start/\')" key="service:start"/>
 					<icon title="{ Exit ; da: Log ud }" icon="common/stop" action="document.location=\'Authentication.php?logout=true\'"/>
 					</right>
 					</toolbar></tab>';

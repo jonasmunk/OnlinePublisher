@@ -19,9 +19,14 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<frame name="Toolbar" source="Toolbar.php" scrolling="false"/>'.
 '<frame name="Editor" source="Text.php"/>'.
 '</dock>'.
+'<script xmlns="uri:Script">
+	if (window.parent!=window) {
+		window.parent.baseController.changeSelection("service:edit");
+	}
+</script>'.
 '</interface>'.
 '</xmlwebgui>';
 
-$elements = array("Frame");
+$elements = array("Frame","Script");
 writeGui($xwg_skin,$elements,$gui);
 ?>

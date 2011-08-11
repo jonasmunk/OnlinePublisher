@@ -63,9 +63,14 @@ $gui.=
 '<iframe xmlns="uri:Frame" source="'.$right.'" name="Right"/>'.
 '</cell></row>'.
 '</layout>'.
+'<script xmlns="uri:Script" type="text/javascript">
+	if (window.parent) {
+		window.parent.baseController.changeSelection(\'tool:Pages\');
+	}
+</script>'.
 '</interface>'.
 '</xmlwebgui>';
 
-$elements = array("Layout","Frame","Area","Icon");
+$elements = array("Layout","Frame","Area","Icon","Script");
 writeGui($xwg_skin,$elements,$gui);
 ?>

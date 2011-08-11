@@ -1,4 +1,9 @@
 hui.ui.listen({
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:Developer');
+		}
+	},
 	$selectionChanged$selector : function(item) {
 		if (item.value=='settings') {
 			iframe.clear();

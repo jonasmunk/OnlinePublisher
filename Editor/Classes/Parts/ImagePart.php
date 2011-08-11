@@ -10,6 +10,7 @@ Part::$schema['image'] = array(
 		'imageId' => array( 'type' => 'int', 'column' => 'image_id' ),
 		'text' => array( 'type' => 'text' ),
 		'align' => array( 'type' => 'text' ),
+		'frame' => array( 'type' => 'text' ),
 		'greyscale' => array( 'type' => 'boolean' ),
 		'scaleMethod' => array( 'type' => 'text', 'column' => 'scalemethod' ),
 		'scalePercent' => array( 'type' => 'int', 'column' => 'scalepercent' ),
@@ -28,6 +29,7 @@ class ImagePart extends Part
 	var $scalePercent;
 	var $scaleWidth;
 	var $scaleHeight;
+	var $frame;
 	
 	function ImagePart() {
 		parent::Part('image');
@@ -101,6 +103,15 @@ class ImagePart extends Part
 	function getScaleHeight() {
 	    return $this->scaleHeight;
 	}
+	
+	function setFrame($frame) {
+	    $this->frame = $frame;
+	}
+
+	function getFrame() {
+	    return $this->frame;
+	}
+	
 	
 }
 ?>

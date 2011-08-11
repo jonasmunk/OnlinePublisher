@@ -2,7 +2,9 @@ hui.ui.listen({
 	weblogGroupId : 0,
 	userId : 0,
 	$ready : function() {
-		//list.setUrl('ListUsers.php');
+		if (window.parent) {
+			window.parent.baseController.changeSelection('tool:System');
+		}
 	},
 	
 	$selectionChanged$selector : function(obj) {

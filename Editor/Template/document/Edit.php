@@ -26,6 +26,11 @@ $gui='
 <frames xmlns="uri:hui">
 	<frame source="Toolbar.php" scrolling="false" name="Toolbar"/>
 	<frame source="Frame.php" name="Frame"/>
+	<script>
+		if (window.parent!=window) {
+			window.parent.baseController.changeSelection("service:edit");
+		}
+	</script>
 </frames>';
 
 In2iGui::render($gui);

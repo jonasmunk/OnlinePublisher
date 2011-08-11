@@ -4,6 +4,12 @@ var partController = {
 		if (form.imageId.value==='0') {
 			this.showChooserWindow();
 		}
+		imageAdvancedFormula.setValues({
+			text : form.text.value,
+			frame : form.frame.value,
+			greyscale : form.greyscale.value=='true'
+		});
+		pasteImage.setEnabled(hui.ui.ImagePaster.isSupported());
 		this.suppressLink();
 	},
 	showChooserWindow : function() {
@@ -121,6 +127,11 @@ var partController = {
 		});
 		
 	},
+	
+	// Pasting ...
+	$click$pasteImage : function() {
+		this.paste();
+	},
 	isPasteSupported : function() {
 		return hui.ui.ImagePaster.isSupported();
 	},
@@ -147,6 +158,8 @@ var partController = {
 		hui.log('Telling paster to paste');
 		this.paster.paste();
 	},
+	
+	
 	_updateWithData : function(data) {
 		hui.ui.request({
 			url : '../../Services/Images/Create.php',
@@ -160,6 +173,15 @@ var partController = {
 				this.preview();
 			}.bind(this)
 		});
+	},
+	showAdvancedWindow : function() {
+		imageAdvancedWindow.show();
+	},
+	$valuesChanged$imageAdvancedFormula : function(values) {
+		document.forms.PartForm.text.value=values.text;
+		document.forms.PartForm.greyscale.value=values.greyscale;
+		document.forms.PartForm.frame.value=values.frame;
+		this.preview();
 	}
 }
 

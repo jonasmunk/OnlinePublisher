@@ -1,6 +1,11 @@
 var controller = {
 	pageId : null,
 	
+	$ready : function() {
+		if (window.parent) {
+			window.parent.baseController.changeSelection('service:preview');
+		}
+	},
 	pageDidLoad : function(id) {
 		this.pageId = id;
 		hui.ui.request({url:'viewer/data/LoadPageStatus.php',parameters:{id:id},onJSON:function(obj) {
@@ -12,7 +17,7 @@ var controller = {
 	},
 	
 	$click$close : function() {
-		this.getFrame().location='../../Tools/Sites/';
+		this.getFrame().location='../../Tools/Pages/';
 	},
 	$click$edit : function() {
 		var frame = window.frames[0];
