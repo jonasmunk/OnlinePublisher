@@ -40,6 +40,7 @@ hui.ui.Radiobuttons.prototype = {
 		element.onclick = function() {
 			self.setValue(radio.value);
 			self.fire('valueChanged',radio.value);
+			hui.ui.callAncestors(self,'childValueChanged',radio.value);
 		}
 	}
 }

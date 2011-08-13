@@ -327,7 +327,7 @@
 <xsl:template match="gui:radiobuttons/gui:radiobutton | gui:radiobuttons/gui:item">
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">hui_radiobutton <xsl:if test="@value=../@value">hui_selected</xsl:if></xsl:attribute>
-		<div><xsl:comment/></div><xsl:value-of select="@label"/>
+		<div><xsl:comment/></div><xsl:value-of select="@label"/><xsl:value-of select="@text"/>
 	</div>
 </xsl:template>
 
@@ -418,7 +418,7 @@
 
 <xsl:template match="gui:checkboxes/gui:item">
 	<a class="hui_checkbox" href="javascript:void(0);">
-		<span><span></span></span><xsl:value-of select="@title"/>
+		<span><span></span></span><xsl:value-of select="@title"/><xsl:value-of select="@text"/>
 	</a>
 </xsl:template>
 

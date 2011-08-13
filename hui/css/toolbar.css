@@ -6,6 +6,7 @@ div.hui_toolbar
 	font-size: 0;
 }
 
+
 div.hui_revealing_toolbar
 {
 	left: 0px;
@@ -45,6 +46,17 @@ div.hui_toolbar_body_fixed_height
 	height: 56px;
 	overflow: hidden;
 }
+
+.hui_dock_tabs div.hui_toolbar_body
+{
+	padding-left: 5px;
+}
+
+.hui_dock_tabs div.hui_toolbar_right
+{
+	right: 5px;
+}
+
 
 /********************************** variants ************************/
 

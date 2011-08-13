@@ -28,6 +28,11 @@ div.hui_radiobutton div
 	cursor: pointer;
 }
 
+div.hui_radiobuttons div.hui_radiobutton
+{
+	margin-bottom: 3px;
+}
+
 div.hui_radiobuttons div.hui_selected div
 {
 	background-position: 0px -18px;

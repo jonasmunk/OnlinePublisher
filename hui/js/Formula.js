@@ -49,7 +49,7 @@ hui.ui.Formula.prototype = {
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key) {
 				var key = d[i].options.key;
-				if (key && values[key]!=undefined) {
+				if (key && values[key]!==undefined) {
 					d[i].setValue(values[key]);
 				}
 			}

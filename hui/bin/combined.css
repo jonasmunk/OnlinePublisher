@@ -1169,6 +1169,11 @@ div.hui_window table.hui_formula_group label
 	padding: 0px 2px;
 }
 
+div.hui_window div.hui_formula_fieldset table.hui_formula_group label
+{
+	background: none;
+}
+
 div.hui_window_light table.hui_formula_group label
 {
 	color: #004A80;
@@ -1705,6 +1710,7 @@ td.view_sidebar
 	font-size: 0;
 }
 
+
 div.hui_revealing_toolbar
 {
 	left: 0px;
@@ -1744,6 +1750,17 @@ div.hui_toolbar_body_fixed_height
 	height: 56px;
 	overflow: hidden;
 }
+
+.hui_dock_tabs div.hui_toolbar_body
+{
+	padding-left: 5px;
+}
+
+.hui_dock_tabs div.hui_toolbar_right
+{
+	right: 5px;
+}
+
 
 /********************************** variants ************************/
 
@@ -5702,6 +5719,11 @@ div.hui_radiobutton div
 	height: 18px;
 	margin-right: 3px;
 	cursor: pointer;
+}
+
+div.hui_radiobuttons div.hui_radiobutton
+{
+	margin-bottom: 3px;
 }
 
 div.hui_radiobuttons div.hui_selected div
