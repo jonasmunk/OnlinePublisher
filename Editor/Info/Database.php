@@ -532,6 +532,7 @@ $databaseTables = array(
 			array("show_source","tinyint(4)","NO","","0",""),
 			array("show_text","tinyint(4)","NO","","1",""),
 			array("show_timezone","tinyint(4)","NO","","0",""),
+			array("sort_direction","varchar(10)","NO","","ascending",""),
 			array("timezone","varchar(255)","NO","","days","")
 		),
 	'part_list_object' => array(

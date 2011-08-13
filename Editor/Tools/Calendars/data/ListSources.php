@@ -28,11 +28,14 @@ $writer->endHeaders();
 
 foreach ($sources as $source) {
 	$writer->startRow(array('kind'=>'calendarsource','id'=>$source->getId()));
-	$writer->startCell(array('icon'=>$source->getIn2iGuiIcon()))->text($source->getTitle())->endCell();
-	$writer->startCell()->startWrap()->text($source->getUrl())->endWrap()->endCell();
+	$writer->startCell(array('icon'=>$source->getIn2iGuiIcon()))->
+		startLine()->text($source->getTitle())->endLine()->
+		startLine(array('dimmed'=>true))->text($source->getDisplayTitle())->endLine()->
+	endCell();
+	$writer->startCell()->startLine(array('dimmed'=>true))->startWrap()->text($source->getUrl())->endWrap()->endLine()->endCell();
 	$writer->startCell()->text($source->getFilter())->endCell();
-	$writer->startCell()->text($source->getSyncInterval())->endCell();
-	$writer->startCell()->text(DateUtils::formatFuzzy($source->getSynchronized()))->endCell();
+	$writer->startCell()->text(DateUtils::formatDuration($source->getSyncInterval()))->endCell();
+	$writer->startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($source->getSynchronized()))->endCell();
 	$writer->endRow();
 }
 $writer->endList();

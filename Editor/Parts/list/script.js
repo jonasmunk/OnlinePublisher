@@ -18,6 +18,7 @@ op.part.List = {
 		document.forms.PartForm.show_source.value = values.show_source;
 		document.forms.PartForm.show_text.value = values.show_text;
 		document.forms.PartForm.show_timezone.value = values.show_timezone;
+		document.forms.PartForm.sort_direction.value = values.sort_direction;
 		this.preview();
 	},
 	$valuesChanged$dataFormula : function(values) {

@@ -92,6 +92,7 @@ $gui='
 		<formula name="sourceFormula">
 			<group labels="above">
 				<text label="Titel" key="title"/>
+				<text label="Titel (visning)" key="displayTitle"/>
 				<text label="Adresse" key="url" multiline="true"/>
 				<text label="Filter" key="filter"/>
 				<number label="Interval (sekunder)" key="syncInterval"/>

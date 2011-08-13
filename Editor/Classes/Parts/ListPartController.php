@@ -41,6 +41,7 @@ class ListPartController extends PartController
 		$part = ListPart::load($id);
 		$part->setObjectIds(Request::getIntArrayComma('objects'));
 		$part->setTitle(Request::getUnicodeString('title'));
+		$part->setSortDirection(Request::getUnicodeString('sort_direction'));
 		$part->setTimeCount(Request::getInt('time_count'));
 		$part->setMaxItems(Request::getInt('maxitems'));
 		$part->setMaxTextLength(Request::getInt('maxtextlength'));
@@ -57,6 +58,7 @@ class ListPartController extends PartController
 	    '<input type="hidden" name="maxitems" value="'.$part->getMaxItems().'"/>'.
 	    '<input type="hidden" name="maxtextlength" value="'.$part->getMaxTextLength().'"/>'.
 	    '<input type="hidden" name="title" value="'.StringUtils::escapeXML($part->getTitle()).'"/>'.
+	    '<input type="hidden" name="sort_direction" value="'.StringUtils::escapeXML($part->getSortDirection()).'"/>'.
 	    '<input type="hidden" name="objects" value="'.implode(',',$part->getObjectIds()).'"/>'.
 	    '<input type="hidden" name="show_source" value="'.($part->getShowSource() ? 'true' : 'false').'"/>'.
 	    '<input type="hidden" name="show_text" value="'.($part->getShowText() ? 'true' : 'false').'"/>'.
@@ -92,6 +94,10 @@ class ListPartController extends PartController
 						<space height="10"/>
 						<fieldset legend="Visning">
 							<group>
+								<radiobuttons key="sort_direction" label="Retning" value="'.StringUtils::escapeXML($part->getSortDirection()).'">
+									<item value="descending" text="Faldende"/>
+									<item value="ascending" text="Stigende"/>
+								</radiobuttons>
 								<checkbox label="Vis tekst" value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
 								<number label="Tekstlængde" value="'.$part->getMaxTextLength().'" key="maxtextlength"/>
 								<checkbox label="Vis kilde" value="'.($part->getShowSource() ? 'true' : 'false').'" key="show_source"/>
@@ -166,7 +172,7 @@ class ListPartController extends PartController
 							$source->synchronize();
 						}
 						if (!$source->isInSync()) {
-							Log::debug('Calendarsource is dirty: '.$id);
+							//Log::debug('Calendarsource is dirty: '.$id);
 							$dirty = true;
 						}
 						$sourceEvents = $source->getEvents(array('startDate'=>$from,'endDate'=>$to));
@@ -203,7 +209,7 @@ class ListPartController extends PartController
 							$source->synchronize();
 						}
 						if (!$source->isInSync()) {
-							Log::debug('Newssource is dirty: '.$id);
+							//Log::debug('Newssource is dirty: '.$id);
 							$dirty = true;
 						}
 						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',DateUtils::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
@@ -230,7 +236,9 @@ class ListPartController extends PartController
 			$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
 		}
 		$this->sortItems($items);
-		$items = array_reverse($items);
+		if ($part->getSortDirection()=='ascending') {
+			$items = array_reverse($items);
+		}
 		$items = array_slice($items,0,$part->getMaxItems());
 		foreach ($items as $item) {
 			$data.='<item>'.

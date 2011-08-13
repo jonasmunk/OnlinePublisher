@@ -110,6 +110,16 @@ class DateUtils {
 		}
 	}
 	
+	function formatDuration($seconds,$locale="da_DK") {
+		if ($seconds<60) {
+			return $seconds.' sekunder';
+		}
+		if ($seconds<60*60) {
+			return round($seconds/60,2).' minutter';
+		}
+		return round($seconds/60/60,2).' timer';
+	}
+	
 	function formatFuzzy($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			$diff = time()-$timestamp;

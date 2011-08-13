@@ -88,7 +88,7 @@ class In2iGui {
 		$diff = 0;
 		for ($i=0;$i<count($matches[0]);$i++) {
 			$pos = $matches[0][$i][1];
-			if ($xml[$pos+$diff-1]!='"') {
+			if ($xml[$pos+$diff-1]!='"' && $xml[$pos+$diff-1]!='>') {
 				continue;
 			}
 			$old = $matches[0][$i][0];

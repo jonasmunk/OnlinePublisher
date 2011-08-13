@@ -17,6 +17,7 @@ if ($data->id) {
 }
 if ($src) {
 	$src->setTitle($data->title);
+	$src->setDisplayTitle($data->displayTitle);
 	$src->setUrl($data->url);
 	$src->setFilter($data->filter);
 	$src->setSyncInterval($data->syncInterval);

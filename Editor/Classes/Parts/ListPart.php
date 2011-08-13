@@ -18,7 +18,8 @@ Part::$schema['list'] = array(
 		'showText' => array( 'type' => 'boolean', 'column' => 'show_text' ),
 		'showTimezone' => array( 'type' => 'boolean', 'column' => 'show_timezone' ),
 		'timezone' => array( 'type' => 'text' ),
-		'maxTextLength' => array( 'type' => 'int', 'column' => 'maxtextlength' )
+		'maxTextLength' => array( 'type' => 'int', 'column' => 'maxtextlength' ),
+		'sortDirection' => array( 'type' => 'text', 'column' => 'sort_direction' )
 	),
 	'relations' => array(
 		'objectIds' => array( 'table' => 'part_list_object', 'fromColumn' => 'part_id', 'toColumn' => 'object_id' )
@@ -36,6 +37,7 @@ class ListPart extends Part
 	var $timeType;
 	var $showSource;
 	var $objectIds;
+	var $sortDirection;
 	
 	var $showText;
 	var $showTimeZone;
@@ -153,6 +155,15 @@ class ListPart extends Part
 	function getMaxTextLength() {
 	    return $this->maxTextLength;
 	}
+	
+	function setSortDirection($sortDirection) {
+	    $this->sortDirection = $sortDirection;
+	}
+
+	function getSortDirection() {
+	    return $this->sortDirection;
+	}
+	
 	
 }
 ?>

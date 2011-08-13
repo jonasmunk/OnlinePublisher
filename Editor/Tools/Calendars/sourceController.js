@@ -16,7 +16,13 @@ hui.ui.listen({
 		}
 	},
 	editSource : function(id) {
-		hui.ui.request({parameters:{id:id},url:'../../Services/Model/LoadObject.php',onSuccess:'loadSource'});
+		sourceFormula.reset();
+		hui.ui.request({
+			message : {start:'Åbner kilde...',delay:300},
+			parameters : {id:id},
+			url : '../../Services/Model/LoadObject.php',
+			onSuccess : 'loadSource'
+		});
 	},
 	
 	// Source
