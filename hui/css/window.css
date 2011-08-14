@@ -35,8 +35,9 @@
 span.hui_window_title
 {
 	font-size: 10pt;
-	color:#000;
 	vertical-align: middle;
+	color: #333;
+	text-shadow: 0 1px white;
 }
 
 span.hui_window_icon
@@ -156,6 +157,7 @@ div.hui_window_dark div.hui_window_titlebar, div.hui_window_dark div.hui_window_
 div.hui_window_dark .hui_window_titlebar span
 {
 	color: #fff;
+	text-shadow: none;
 }
 
 div.hui_window_dark div.hui_window_bottom

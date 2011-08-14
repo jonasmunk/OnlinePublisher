@@ -105,7 +105,12 @@
 		<span><span><input type="text"/></span></span>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.SearchField({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'<xsl:if test="@expandedWidth">,expandedWidth:<xsl:value-of select="@expandedWidth"/></xsl:if>});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.SearchField({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>'
+			<xsl:if test="@expandedWidth">,expandedWidth:<xsl:value-of select="@expandedWidth"/></xsl:if>
+			<xsl:if test="@expanded-width">,expandedWidth:<xsl:value-of select="@expanded-width"/></xsl:if>
+		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
@@ -273,7 +278,7 @@
 	</xsl:variable>
 	<a id="{generate-id()}" class="{$class}" href="javascript:void(0);">
 		<xsl:if test="@icon">
-			<span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></span>
+			<span class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></span>
 		</xsl:if>
 		<xsl:if test="@text">
 			<span class="hui_bar_button_text"><xsl:value-of select="@text"/></span>

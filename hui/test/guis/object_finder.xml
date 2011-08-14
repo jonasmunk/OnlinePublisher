@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:hui" pad="10" title="Box">
+	<window title="Vælg billede" name="finder" width="600">
+		<layout>
+			<middle>
+				<left>
+					<overflow height="400">
+					<selection value="latest">
+						<item text="Alle billeder" icon="common/image" value="all"/>
+						<item text="Seneste" icon="common/time" value="latest"/>
+						<title>Grupper</title>
+						<item text="Personer" icon="common/folder" value="1"/>
+					</selection>
+					</overflow>
+				</left>
+				<center>
+					<bar variant="layout">
+						<segmented>
+							<item icon="view/list" value="list"/>
+							<item icon="view/gallery" value="gallery"/>
+						</segmented>
+						<right>
+						<searchfield expanded-width="200"/>
+						</right>
+					</bar>
+					<overflow>
+						<list/>
+					</overflow>
+				</center>
+			</middle>
+		</layout>
+	</window>
+	<script>
+		finder.show()
+	</script>
+</gui>

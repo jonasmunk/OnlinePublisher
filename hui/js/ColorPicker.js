@@ -42,7 +42,7 @@ hui.ui.ColorPicker.create = function(options) {
 	options.element = hui.build('div',{
 		'class':'hui_colorpicker',
 		html : 
-			'<div class="hui_bar hui_bar_window">'+
+			'<div class="hui_bar hui_bar_window_mini">'+
 				'<div class="hui_bar_body">'+
 					'<a class="hui_bar_button hui_bar_button_selected" href="javascript:void(0)" rel="0">'+
 						'<span class="hui_icon_16" style="background: url('+hui.ui.getIconUrl('colorpicker/wheel_pastels',16)+')"></span>'+

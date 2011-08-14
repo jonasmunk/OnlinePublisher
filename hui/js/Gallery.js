@@ -188,7 +188,11 @@ hui.ui.Gallery.prototype = {
 	$sourceIsNotBusy : function() {
 		this._setBusy(false);
 	},
-	
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			this._reveal();
+		}
+	},
 	_setBusy : function(busy) {
 		this.busy = busy;
 		window.clearTimeout(this.busytimer);

@@ -108,7 +108,30 @@ a.hui_bar_button_selected span.hui_bar_button_text
 
 /******************* window variant ***************/
 
+div.hui_bar_window, div.hui_bar_window div.hui_bar_body, div.hui_bar_window div.hui_bar_left, div.hui_bar_window div.hui_bar_right
+{
+	background: none;
+	height: 25px;
+}
+
 div.hui_bar_window
+{
+	border-top: 1px solid #D6D6D6;
+}
+
+div.hui_bar_window div.hui_bar_body
+{
+	border-top: 1px solid #F3F3F3;
+}
+
+div.hui_bar_window span.hui_segmented
+{
+	margin-top: 1px;
+}
+
+/******************* window mini variant ***************/
+
+div.hui_bar_window_mini
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
 	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
@@ -116,19 +139,25 @@ div.hui_bar_window
 	height: 24px;
 }
 
-div.hui_bar_window div.hui_bar_body
+div.hui_bar_window_mini div.hui_bar_body
 {
 	background: none;
 	height: 24px;
 }
 
-div.hui_bar_window div.hui_bar_left
+div.hui_bar_window_mini div.hui_bar_right
+{
+	height: 24px;
+	background: none;
+}
+
+div.hui_bar_window_mini div.hui_bar_left
 {
 	height: 24px;
 }
 
 
-div.hui_bar_window a.hui_bar_button
+div.hui_bar_window_mini a.hui_bar_button
 {
 	height: 24px;
 	line-height: 24px;
@@ -138,19 +167,19 @@ div.hui_bar_window a.hui_bar_button
 	padding: 0 4px;	
 }
 
-div.hui_bar_window a.hui_bar_button:hover
+div.hui_bar_window_mini a.hui_bar_button:hover
 {
 	background: #eee;
 	border-color: #ddd;
 }
 
-div.hui_bar_window a.hui_bar_button span.hui_icon_16
+div.hui_bar_window_mini a.hui_bar_button span.hui_icon_16
 {
 	vertical-align: top;
 	margin-top: 4px;
 }
 
-div.hui_bar_window a.hui_bar_button_selected, div.hui_bar_window a.hui_bar_button_selected:hover
+div.hui_bar_window_mini a.hui_bar_button_selected, div.hui_bar_window_mini a.hui_bar_button_selected:hover
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#bbb), to(#ddd));
 	background: -moz-linear-gradient(top, #bbb, #ddd);
@@ -158,12 +187,12 @@ div.hui_bar_window a.hui_bar_button_selected, div.hui_bar_window a.hui_bar_butto
 	border-color: #bbb;
 }
 
-div.hui_bar_window_top
+div.hui_bar_window_mini_top
 {
 	border-top: 1px solid #ddd;
 }
 
-div.hui_bar_window_bottom
+div.hui_bar_window_mini_bottom
 {
 	border-top: 1px solid #ddd;
 }
@@ -237,6 +266,11 @@ div.hui_bar_layout span.hui_bar_text_header
 div.hui_bar_layout span.hui_segmented
 {
 	margin-top: 3px;
+}
+
+div.hui_bar_layout span.hui_searchfield
+{
+	margin-top: 2px;
 }
 
 /******************* Mini variant *****************/

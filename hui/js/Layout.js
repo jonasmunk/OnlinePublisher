@@ -20,6 +20,9 @@ hui.ui.Layout.prototype = {
 		if (!hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9) {
 			return;
 		}
+		if (!hui.dom.isVisible(this.element)) {
+			return;
+		}
 		if (this.diff===undefined) {
 			var head = hui.firstByClass(this.element,'hui_layout_top');
 			var top = hui.firstByTag(head,'*').clientHeight;
@@ -37,7 +40,8 @@ hui.ui.Layout.prototype = {
 		}
 		var tbody = hui.firstByTag(this.element,'tbody');
 		var cell = hui.firstByTag(tbody,'td');
-		cell.style.height = (hui.getViewPortHeight()-this.diff+5)+'px';
+		var height = (hui.getViewPortHeight()-this.diff+5);
+		cell.style.height = height+'px';
 	}
 };
 
