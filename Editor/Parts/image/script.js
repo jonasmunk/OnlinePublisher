@@ -12,37 +12,16 @@ var partController = {
 		pasteImage.setEnabled(hui.ui.ImagePaster.isSupported());
 		this.suppressLink();
 	},
+	$resolveImageUrl : function(obj,width,height) {
+		return '../../../services/images/?id='+obj.value+'&width='+width+'&height='+height;
+	},
+	$selectionChanged$imageGallery : function(list) {
+		var id = list.getFirstSelection().value;
+		document.forms.PartForm.imageId.value = id;
+		this.preview();
+	},
 	showChooserWindow : function() {
-		if (!this.chooserWindow) {
-			var form = document.forms.PartForm;
-			var win = this.chooserWindow = hui.ui.Window.create({title:'Vælg billede',width:400,close:true});
-			var toolbar = hui.ui.Toolbar.create({labels:false});
-			var searchField = hui.ui.SearchField.create({name:'search',adaptive:true});
-			toolbar.add(searchField);
-			win.add(toolbar);
-			var overflow = hui.ui.Overflow.create({height:200});
-			var list = hui.ui.Gallery.create({name:'list',maxHeight:300});
-			list.listen({
-				$selectionChanged:function(list) {
-					var id = list.getFirstSelection().value;
-					form.imageId.value = id;
-					partController.preview();
-				},
-				$resolveImageUrl : function(obj,width,height) {
-					return '../../../services/images/?id='+obj.value+'&width='+width+'&height='+height;
-				}
-			});
-			overflow.add(list);
-			win.add(overflow);
-		
-			list.setSource(new hui.ui.Source({
-				url:'../../Services/Model/Items.php?type=image',
-				parameters:[
-					{key:'query',value:'@search.value'}
-				]
-			}));
-		}
-		this.chooserWindow.show();
+		imageChooser.show();
 	},
 	preview : function() {
 		var self = this;

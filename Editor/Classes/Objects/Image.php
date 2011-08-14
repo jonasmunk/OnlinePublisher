@@ -152,6 +152,9 @@ class Image extends Object {
 			$parts['limits'][] = 'object.id = image.object_id';
 			$parts['limits'][] = 'imagegroup_image.imagegroup_id is null';
 		}
+		if (isset($custom['createdAfter'])) {
+			$parts['limits'][] = '`object`.`created` > '.Database::datetime($custom['createdAfter']);
+		}
 		if ($custom['unused']===true) {
 			$ids = ImageService::getUsedImageids();
 			if (count($ids)>0) {

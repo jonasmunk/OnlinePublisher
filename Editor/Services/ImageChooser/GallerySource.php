@@ -1,22 +1,21 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Images
+ * @subpackage Services.ImageChooser
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Request.php';
+require_once '../../Include/Private.php';
 
+$text = Request::getString('text');
 $subset = Request::getString('subset');
 $group = Request::getInt('group',null);
-$text = Request::getEncodedString('text');
-
-InternalSession::setToolSessionVar('images','group',$group);
 
 $query = Query::after('image')->withText($text)->withWindowSize(500);
+
 if ($subset=='unused') {
 	$query->withCustom('unused',true);
+}
+if ($subset=='nogroup') {
+	$query->withCustom('nogroup',true);
 }
 if ($subset=='latest') {
 	$query->withCustom('createdAfter',DateUtils::addDays(mktime(),-1));
@@ -26,7 +25,21 @@ if ($group===-1) {
 } else if ($group) {
 	$query->withCustom('group',$group);
 }
-$list = $query->search()->getList();
 
-In2iGui::sendObject($list);
+$objects = $query->get();
+
+$writer = new ItemsWriter();
+
+$writer->startItems();
+
+foreach ($objects as $object) {
+	$writer->item(array(
+		'title' => $object->getTitle(),
+		'value' => $object->getId(),
+		'icon' => $object->getIn2iGuiIcon(),
+		'kind' => $type
+	));
+}
+
+$writer->endItems();
 ?>

@@ -35,7 +35,7 @@ $strings = array(
 <!--[if IE]>
 <link rel="stylesheet" type="text/css" href="StylesheetIE.css?version=<?=SystemInfo::getDate()?>" />
 <![endif]-->
-<? if (Request::getBoolean('dev')) { ?>
+<? if (true || Request::getBoolean('dev')) { ?>
 <script type="text/javascript" src="../../../hui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } else { ?>
 <script type="text/javascript" src="../../../hui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>

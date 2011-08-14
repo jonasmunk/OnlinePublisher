@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Customers
+ * @subpackage Services.Model
  */
 require_once '../../Include/Private.php';
 

@@ -124,7 +124,6 @@ class ImagePartController extends PartController
 			$xml.='<text>'.StringUtils::escapeXML($part->getText()).'</text>';
 		}
 		$xml.='</image>';
-		error_log($xml);
 		return $xml;
 	}
 	
@@ -289,6 +288,48 @@ class ImagePartController extends PartController
 					</buttons>
 				</group>
 			</formula>
+		</window>
+		
+		<source name="gallerySource" url="../../Services/ImageChooser/GallerySource.php">
+			<parameter key="text" value="@search.value"/>
+			<parameter key="subset" value="@imageChooserSelection.value"/>
+			<parameter key="group" value="@imageGroupSelection.value"/>
+		</source>
+		<source name="groupOptionsSource" url="../../Services/Model/Items.php?type=imagegroup"/>
+		
+		<window title="Vælg billede" name="imageChooser" width="700" icon="common/search">
+			<layout>
+				<middle>
+					<left>
+						<overflow height="400">
+							<selection value="all" name="imageChooserSelection">
+								<item text="Alle billeder" icon="common/image" value="all"/>
+								<item text="Seneste" icon="common/time" value="latest"/>
+								<item text="Ikke brugt" icon="monochrome/round_question" value="unused"/>
+								<title>Grupper</title>
+								<item text="Uden gruppe" icon="common/folder_grey" value="nogroup"/>
+								<items source="groupOptionsSource" name="imageGroupSelection"/>
+							</selection>
+						</overflow>
+					</left>
+					<center>
+						<bar variant="layout">
+							<!--
+							<segmented>
+								<item icon="view/list" value="list"/>
+								<item icon="view/gallery" value="gallery"/>
+							</segmented>
+							-->
+							<right>
+							<searchfield expanded-width="200" name="search"/>
+							</right>
+						</bar>
+						<overflow height="375">
+							<gallery source="gallerySource" name="imageGallery"/>
+						</overflow>
+					</center>
+				</middle>
+			</layout>
 		</window>
 		';
 		return In2iGui::renderFragment($gui);
