@@ -150,6 +150,9 @@
 <xsl:call-template name="dwr-setup"/>
 </head>
 <body class="hui">
+	<xsl:if test="gui:dock">
+		<xsl:attribute name="style">overflow:hidden;</xsl:attribute>
+	</xsl:if>
 	<xsl:choose>
 		<xsl:when test="@padding"><div style="padding: {@padding}px;" class="hui_body"><xsl:apply-templates/></div></xsl:when>
 		<xsl:otherwise><xsl:apply-templates/></xsl:otherwise>

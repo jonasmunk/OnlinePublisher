@@ -18,12 +18,11 @@ hui.ui.Wizard = function(o) {
 	/** @private */
 	this.selected = 0;
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 	
 hui.ui.Wizard.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var self = this;
 		hui.each(this.anchors,function(node,i) {
 			hui.listen(node,'mousedown',function(e) {
@@ -35,7 +34,11 @@ hui.ui.Wizard.prototype = {
 			});
 		});
 	},
-	/** Goes to the step with the index */
+	/** Get the currently selected step (0-based)*/
+	getStep : function() {
+		return this.selected;
+	},
+	/** Goes to the step with the index (0-based) */
 	goToStep : function(index) {
 		var c = this.container;
 		c.style.height=c.clientHeight+'px';
@@ -48,6 +51,13 @@ hui.ui.Wizard.prototype = {
 			c.style.height='';
 		}});
 		hui.ui.callVisible(this);
+		this.fire('stepChanged',this.selected);
+	},
+	isFirst : function() {
+		return this.selected==0;
+	},
+	isLast : function() {
+		return this.selected==this.steps.length-1;
 	},
 	/** Goes to the next step */
 	next : function() {

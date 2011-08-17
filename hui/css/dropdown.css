@@ -84,6 +84,9 @@ a.hui_dropdown strong
 a.hui_dropdown em
 {
 	color: #456;
+	font-size: 11px;
+	line-height: 25px;
+	display: block;
 }
 
 div.hui_dropdown_selector

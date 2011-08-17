@@ -206,7 +206,7 @@
 									<xsl:text> hui_selected</xsl:text>
 								</xsl:if>
 							</xsl:attribute>
-							<xsl:if test="@icon"><span class="hui_icon_1" style="background-image: url('{$context}/hui/icons/{@icon}16.png');')"><xsl:comment/></span></xsl:if>
+							<xsl:if test="@icon"><span class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png');')"><xsl:comment/></span></xsl:if>
 							<span><xsl:value-of select="@title"/></span>
 						</a>
 					</li>
