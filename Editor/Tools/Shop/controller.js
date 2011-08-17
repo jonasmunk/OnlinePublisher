@@ -6,7 +6,7 @@ hui.ui.listen({
 		{drag:'product',drop:'producttype'}
 	],
 	$ready : function() {
-		if (window.parent) {
+		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('tool:Shop');
 		}
 	},

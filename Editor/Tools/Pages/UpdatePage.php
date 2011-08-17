@@ -55,8 +55,6 @@ if ($hierarchyItemId>0) {
 }
 
 
-$page = Page::load($id);
-$page->clearPreviews();
 CacheService::clearPageCache($id);
 
 // TODO : templateUnique instead of null

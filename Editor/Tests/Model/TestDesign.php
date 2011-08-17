@@ -19,6 +19,8 @@ class TestDesign extends AbstractObjectTest {
 		$this->assertEqual($obj2->getTitle(),'My design');
 		
 		$obj2->remove();
+		
+		$this->assertFalse(Design::load($obj->getId()));
 	}
 }
 ?>

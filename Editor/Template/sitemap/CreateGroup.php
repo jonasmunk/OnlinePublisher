@@ -26,7 +26,7 @@ $sql = "insert into sitemap_group (page_id,title,position,hierarchy_id) values (
 Database::insert($sql);
 
 
-Page::markChanged($id);
+PageService::markChanged($id);
 
 Response::redirect('Groups.php');
 ?>

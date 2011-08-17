@@ -5,6 +5,7 @@
  */
 require_once($basePath.'Editor/Classes/Object.php');
 require_once($basePath.'Editor/Classes/Page.php');
+require_once($basePath.'Editor/Classes/Services/PageService.php');
 
 Object::$schema['securityzone'] = array(
 	'authenticationPageId'   => array('type'=>'int','column'=>'authentication_page_id')
@@ -33,7 +34,7 @@ class SecurityZone extends Object {
 		Database::delete($sql);
 		$sql = "delete from securityzone_user where securityzone_id=".$this->id;
 		Database::delete($sql);
-		Page::updateSecureStateOfAllPages();
+		PageService::updateSecureStateOfAllPages();
 	}
 	
 	/***** Users *****/

@@ -39,24 +39,6 @@ class HtmlController extends LegacyTemplateController {
     }
 
     function import(&$node) {
-		$html = '';
-		$valid = true;
-		$root =& $node->documentElement;
-		if ($root->getAttribute('valid')=='false') {
-			$valid = false;
-			$html = $root->getText();
-		} else {
-			$children =& $root->childNodes;
-			for ($i=0;$i<count($children);$i++) {
-				$html.=$children[$i]->toString();
-			}
-		}
-		
-		$sql = "update html set".
-		" html=".Database::text($html).
-		",valid=".Database::text($valid).
-		" where page_id=".$this->id;
-		Database::update($sql);
     }
 	
 	function dynamic($state) {

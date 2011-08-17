@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Sites
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Request.php';
-require_once '../../Classes/Page.php';
-require_once '../../Classes/Hierarchy.php';
+require_once '../../../Include/Private.php';
 
 $design = Request::getInt('design');
 $frame = Request::getInt('frame');
@@ -44,4 +40,5 @@ if ($menuItemKind=='hierarchy') {
 	$hierarchy->createItemForPage($page->getId(),$menuItem,$menuItemId);
 	$hierarchy->markChanged();
 }
+Response::sendObject(array('id'=>$page->getId()));
 ?>

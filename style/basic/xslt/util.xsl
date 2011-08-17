@@ -23,7 +23,6 @@
 </xsl:variable> 
 
 <xsl:template name="util:link">
-	
 	<xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
 	<xsl:choose>
 		<xsl:when test="$editor='true'">

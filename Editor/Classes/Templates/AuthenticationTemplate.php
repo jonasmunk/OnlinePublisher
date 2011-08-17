@@ -27,9 +27,8 @@ class AuthenticationTemplate {
 		
 	function save() {
 		$sql = "update authentication set title=".Database::text($this->title)." where page_id=".Database::int($this->id);
-		Log::debug($sql);
 		Database::update($sql);
-		Page::markChanged($this->id);
+		PageService::markChanged($this->id);
 	}
 	
 	function load($id) {

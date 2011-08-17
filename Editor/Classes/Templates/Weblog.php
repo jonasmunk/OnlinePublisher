@@ -54,7 +54,7 @@ class Weblog {
 			$sql = "insert into weblog_webloggroup (page_id,webloggroup_id) values (".Database::int($this->id).",".Database::int($group).")";
 			Database::insert($sql);
 		}
-		Page::markChanged($this->id);
+		PageService::markChanged($this->id);
 	}
 	
 	function load($id) {

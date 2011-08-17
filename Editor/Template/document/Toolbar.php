@@ -5,7 +5,7 @@ require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/GuiUtils.php';
-require_once '../../Classes/Page.php';
+require_once '../../Classes/Services/PageService.php';
 require_once '../../Classes/Link.php';
 
 if (Request::getBoolean('link')) {
@@ -81,7 +81,7 @@ if (Request::getBoolean('link')) {
 				<toolbar>
 					<icon icon="common/close" title="{da: Luk ; en: Close}" name="close"/>
 					<divider/>
-					<icon icon="common/internet" overlay="upload" title="{da:Udgiv;en:Publish}" name="publish" disabled="'.(Page::isChanged(InternalSession::getPageId()) ? 'false' : 'true').'"/>
+					<icon icon="common/internet" overlay="upload" title="{da:Udgiv;en:Publish}" name="publish" disabled="'.(PageService::isChanged(InternalSession::getPageId()) ? 'false' : 'true').'"/>
 					<icon icon="common/view" title="{da:Vis;en:View}" name="preview"/>
 					<icon icon="common/info" title="{da:Info;en:Info}" name="properties"/>
 					<divider/>

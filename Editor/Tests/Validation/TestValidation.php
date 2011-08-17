@@ -35,7 +35,7 @@ class TestValidation extends UnitTestCase {
 		$page->create();
 		
 		$page->publish();
-		$this->assertFalse(Page::isChanged($page->getId()));
+		$this->assertFalse(PageService::isChanged($page->getId()));
 				
 		$designs = DesignService::getAvailableDesigns();
 		foreach ($designs as $name => $info) {

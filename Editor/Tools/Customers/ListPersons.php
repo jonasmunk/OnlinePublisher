@@ -42,6 +42,7 @@ echo '<?xml version="1.0"?>
 	<header title="E-post" width="20" sortable="true"/>
 	<header title="Telefon" width="20"/>
 	<header title="Adresse" width="30"/>
+	<header width="1"/>
 </headers>';
 foreach ($result->getList() as $object) {
 	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="common/person" title="'.StringUtils::escapeXML($object->getTitle()).'">'.
@@ -49,6 +50,7 @@ foreach ($result->getList() as $object) {
 	'<cell>'.buildEmails($object).'</cell>'.
 	'<cell>'.buildPhones($object).'</cell>'.
 	'<cell>'.buildAddress($object).'</cell>'.
+	'<cell>'.($object->getImageId()!=null ? '<icons><icon icon="monochrome/image"/></icons>' : '').'</cell>'.
 	'</row>';
 }
 

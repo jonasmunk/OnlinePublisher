@@ -3,14 +3,9 @@
  * @package OnlinePublisher
  * @subpackage Tools.Pages
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Design.php';
-require_once '../../Classes/Frame.php';
-require_once '../../Classes/Template.php';
+require_once '../../Include/Private.php';
 
-$designs = Design::search();
+$designs = Query::after('design')->get();
 $frames = Frame::search();
 $templates = Template::search();
 

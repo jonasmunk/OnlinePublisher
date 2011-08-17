@@ -118,6 +118,8 @@ class ObjectService {
 					$column = SchemaService::getColumn($property,$info);
 					if ($info['type']=='int') {
 						$obj->$property = intval($row[$column]);
+					} else if ($info['type']=='int') {
+						$obj->$property = floatval($row[$column]);
 					} else if ($info['type']=='datetime') {
 						$obj->$property = $row[$column] ? intval($row[$column]) : null;
 					} else if ($info['type']=='boolean') {
@@ -164,8 +166,12 @@ class ObjectService {
 				$sql.=",";
 				if ($info['type']=='int') {
 					$sql.=Database::int($object->$property);
+				} else if ($info['type']=='float') {
+					$sql.=Database::float($object->$property);
 				} else if ($info['type']=='datetime') {
 					$sql.=Database::datetime($object->$property);
+				} else if ($info['type']=='boolean') {
+					$sql.=Database::boolean($object->$property);
 				} else {
 					$sql.=Database::text($object->$property);
 				}
@@ -202,8 +208,12 @@ class ObjectService {
 				$sql.=",`".$column."`=";
 				if ($info['type']=='int') {
 					$sql.=Database::int($object->$property);
+				} else if ($info['type']=='float') {
+					$sql.=Database::float($object->$property);
 				} else if ($info['type']=='datetime') {
 					$sql.=Database::datetime($object->$property);
+				} else if ($info['type']=='boolean') {
+					$sql.=Database::boolean($object->$property);
 				} else {
 					$sql.=Database::text($object->$property);
 				}
@@ -428,6 +438,8 @@ class ObjectService {
 				$column = Object::getColumn($property,$info);
 				if ($info['type']=='int') {
 					$obj->$property = intval($row[$column]);
+				} else if ($info['type']=='float') {
+					$obj->$property = floatval($row[$column]);
 				} else if ($info['type']=='datetime') {
 					$obj->$property = $row[$column] ? intval($row[$column]) : null;
 				} else if ($info['type']=='boolean') {

@@ -138,6 +138,16 @@
 		</div>
 	</xsl:if>
 	<div class="chrome_inner_content">
+		<xsl:if test="//p:context/p:translation">
+			<p class="layout_translation">
+			<xsl:for-each select="//p:context/p:translation">
+				<a class="common_link">
+					<xsl:call-template name="util:link"/>
+					<span>This page in english</span>
+				</a>
+			</xsl:for-each>
+			</p>
+		</xsl:if>
 		<xsl:apply-templates/>
 		<xsl:comment/>
 	</div>

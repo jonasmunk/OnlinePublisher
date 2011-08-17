@@ -54,12 +54,6 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<tool title="Avanceret" icon="Tool/System" overlay="DropDown">'.
 '<menu xmlns="uri:Menu">'.
 '<item title="Opret nyhed" link="../News/?action=newnews&amp;page='.$id.'" target="_parent"/>'.
-'<item title="Eksporter" link="Export.php?id='.$id.'"/>';
-if (false) {
-	$gui.='<item title="Eksporter (debug)" link="Export.php?id='.$id.'&amp;debug=true" target="_blank"/>'.
-	'<item title="Opret kopi" link="Duplicate.php?id='.$id.'"/>';
-}
-$gui.=
 '</menu>'.
 '</tool>'.
 '</toolbar>'.
@@ -82,7 +76,7 @@ StringUtils::escapeXML($page->getTitle()).
 '<textfield badge="Beskrivelse:" name="description" lines="4">'.
 StringUtils::escapeXML($page->getDescription()).
 '</textfield>';
-if ($item = $page->getHierarchyItem()) {
+if ($item = HierarchyService::getHierarchyItemForPage($page)) {
     $gui.=
     '<space/>'.
     '<hidden name="hierarchyItemId">'.$item['id'].'</hidden>'.

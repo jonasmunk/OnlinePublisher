@@ -22,10 +22,25 @@ class TestPage extends UnitTestCase {
 
 		$page = new Page();
 
+		$this->assertNull($page->getId());
+		$this->assertFalse(PageService::validate($page));
+		$this->assertFalse($page->create());
+	
 		$page->setTemplateId($template->getId());
+		$this->assertFalse(PageService::validate($page));
+		$this->assertFalse($page->create());
+		
 		$page->setDesignId($design->getId());
+		$this->assertFalse(PageService::validate($page));
+		$this->assertFalse($page->create());
+		
 		$page->setFrameId($frame->getId());
+		$this->assertFalse(PageService::validate($page));
+		$this->assertFalse($page->create());
+		
 		$page->setTitle('Test page');
+		$this->assertTrue(PageService::validate($page));
+		
 		$page->setDescription('My page description, find this: djsakJSDLjdasljslsdjljdslJ');
 		$page->setPath('test/path.html');
 		$page->setLanguage('en');
@@ -44,15 +59,15 @@ class TestPage extends UnitTestCase {
 		$this->assertEqual($page->getLanguage(),$loaded->getLanguage());
 
 
-		$this->assertFalse(Page::isChanged($page->getId()));
+		$this->assertFalse(PageService::isChanged($page->getId()));
 		$page->setTitle('Test page');
 		$page->save();
 		sleep(2);
-		Page::markChanged($page->getId());
-		$this->assertTrue(Page::isChanged($page->getId()));
+		PageService::markChanged($page->getId());
+		$this->assertTrue(PageService::isChanged($page->getId()));
 
 		$page->publish();
-		$this->assertFalse(Page::isChanged($page->getId()));
+		$this->assertFalse(PageService::isChanged($page->getId()));
 		
 
 		// Check that the design and frame cannot be removed
@@ -77,9 +92,11 @@ class TestPage extends UnitTestCase {
 		$this->assertNull($loaded);
 		
 		
-		
+		Log::debug('Design id: '.$design->getId());
 		$this->assertTrue($design->canRemove());
 		$this->assertTrue($design->remove());
+		$this->assertFalse(Design::load($design->getId()));
+		
 		$this->assertTrue($frame->canRemove());
 		$this->assertTrue($frame->remove());
 	}

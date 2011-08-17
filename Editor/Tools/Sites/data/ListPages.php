@@ -3,16 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Sites
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/Template.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Request.php';
-require_once '../../Classes/Hierarchy.php';
-require_once '../../Classes/Utilities/StringUtils.php';
-require_once '../../Classes/Utilities/GuiUtils.php';
-
+require_once '../../../Include/Private.php';
 
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);

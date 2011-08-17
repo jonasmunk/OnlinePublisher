@@ -27,7 +27,7 @@ $sql="update sitemap set".
 Database::update($sql);
 
 
-Page::markChanged($id);
+PageService::markChanged($id);
 
 Response::redirect('Editor.php');
 ?>

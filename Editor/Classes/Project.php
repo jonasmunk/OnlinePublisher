@@ -153,7 +153,7 @@ class Project extends Object {
 	
 	function getSubProblems($filter=array()) {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Problem.php');
+		require_once($basePath.'Editor/Classes/Objects/Problem.php');
 		$output = array();
 		$ids = array();
 		if ($filter['includeSubProjects']) {
@@ -173,7 +173,7 @@ class Project extends Object {
 	
 	function getMilestones($filter=array()) {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Milestone.php');
+		require_once($basePath.'Editor/Classes/Objects/Milestone.php');
 		
 		$ids = array();
 		if ($filter['includeSubProjects']==true) {

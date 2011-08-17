@@ -34,7 +34,7 @@ while ($row = Database::next($result)) {
 Database::free($result);
 	
 
-Page::markChanged($page);
+PageService::markChanged($page);
 
 Response::redirect('Groups.php');
 ?>

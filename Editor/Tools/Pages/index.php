@@ -51,7 +51,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<group xmlns="uri:Icon" size="1" spacing="9" titles="right" width="1%">'.
 '<row>'.
 '<icon title="Opsætning" icon="Tool/Setting" link="Frames.php" target="Right" help="Opsætning..."/>';
-	$gui.='<icon title="Avanceret" icon="Tool/System" link="Import.php" target="Right" help="Udgiv ændringer foretaget på hjemmesiden"/>';
+//	$gui.='<icon title="Avanceret" icon="Tool/System" link="Import.php" target="Right" help="Udgiv ændringer foretaget på hjemmesiden"/>';
 $gui.=
 '</row>'.
 '</group>'.
@@ -64,7 +64,7 @@ $gui.=
 '</cell></row>'.
 '</layout>'.
 '<script xmlns="uri:Script" type="text/javascript">
-	if (window.parent) {
+	if (window.parent!=window) {
 		window.parent.baseController.changeSelection(\'tool:Pages\');
 	}
 </script>'.

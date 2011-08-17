@@ -10,6 +10,7 @@ require_once '../../Classes/Response.php';
 require_once '../../Classes/Securityzone.php';
 require_once '../../Classes/Page.php';
 require_once '../../Classes/Request.php';
+require_once '../../Classes/Services/PageService.php';
 
 
 $added = Request::getString('added');
@@ -40,7 +41,7 @@ foreach ($removedItems as $removedItem) {
 	}
 }
 
-Page::updateSecureStateOfAllPages();
+PageService::updateSecureStateOfAllPages();
 
 
 Response::redirect('Matrix.php');

@@ -12,7 +12,7 @@ hui.ui.listen({
 		if (person) {
 			this.loadPerson(person);
 		}
-		if (window.parent) {
+		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('tool:Customers');
 		}
 	},

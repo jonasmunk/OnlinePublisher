@@ -5,6 +5,11 @@
  */
 require_once($basePath.'Editor/Classes/Object.php');
 
+Object::$schema['milestone'] = array(
+	'deadline'  => array('type'=>'datetime'),
+	'completed'  => array('type'=>'boolean'),
+	'containingObjectId'  => array('type'=>'int','column'=>'containing_object_id')
+);
 class Milestone extends Object {
 	var $deadline;
 	var $containingObjectId;
@@ -12,6 +17,10 @@ class Milestone extends Object {
 
 	function Milestone() {
 		parent::Object('milestone');
+	}
+
+	function load($id) {
+		return Object::get($id,'milestone');
 	}
 
 	function setDeadline($deadline) {
@@ -40,18 +49,6 @@ class Milestone extends Object {
 
     /////////////////////////// Persistence ////////////////////////
 
-	function load($id) {
-		$obj = new Milestone();
-		$obj->_load($id);
-		$sql = "select UNIX_TIMESTAMP(deadline) as deadline,containing_object_id,completed".
-		" from milestone where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj->_populate($row);
-		}
-		return $obj;
-	}
-	
 	function _fixOptions(&$arr) {
 		if (!is_array($arr)) $arr = array();
 		if (!isset($arr['sort'])) $arr['sort'] = 'title';
@@ -88,44 +85,10 @@ class Milestone extends Object {
 		}
 		return $list;
 	}
-
-	function _populate(&$row) {
-		$this->deadline=$row['deadline'];
-		$this->containingObjectId=$row['containing_object_id'];
-		$this->completed=$row['completed']==1;
-	}
-
-	function sub_create() {
-		$sql="insert into milestone (object_id,deadline,containing_object_id,completed) values (".
-		$this->id.
-		",".Database::datetime($this->deadline).
-		",".Database::int($this->containingObjectId).
-		",".Database::boolean($this->completed).
-		")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-		$sql = "update milestone set ".
-		"deadline=".Database::datetime($this->deadline).
-		",containing_object_id=".Database::int($this->containingObjectId).
-		",completed=".Database::boolean($this->completed).
-		" where object_id=".$this->id;
+	
+	function removeMore() {
+		$sql = "update task set milestone_id=0 where milestone_id=".Database::int($this->id);
 		Database::update($sql);
-	}
-
-	function sub_publish() {
-		$data =
-		'<milestone xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'</milestone>';
-		return $data;
-	}
-
-	function sub_remove() {
-		$sql = "update task set milestone_id=0 where milestone_id=".$this->id;
-		Database::update($sql);
-		$sql = "delete from milestone where object_id=".$this->id;
-		Database::delete($sql);
 	}
 	
 	////////////////////// Convenience //////////////////////
@@ -146,7 +109,7 @@ class Milestone extends Object {
 	
 	function getProblems() {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Problem.php');
+		require_once($basePath.'Editor/Classes/Objects/Problem.php');
 		$output = array();
 		$sql = "select object_id from problem,object where problem.object_id = object.id and problem.milestone_id=".$this->id." order by object.title";
 		$result = Database::select($sql);

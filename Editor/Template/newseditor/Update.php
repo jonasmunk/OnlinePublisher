@@ -10,7 +10,7 @@ require_once '../../Classes/Page.php';
 require_once '../../Classes/InternalSession.php';
 
 $id = InternalSession::getPageId();
-Page::markChanged($id);
+PageService::markChanged($id);
 
 Response::redirect('Editor.php');
 ?>

@@ -29,7 +29,7 @@ while ($row = Database::next($result)) {
 }
 Database::free($result);
 
-Page::markChanged($pageId);
+PageService::markChanged($pageId);
 
 Response::redirect('Images.php');
 ?>

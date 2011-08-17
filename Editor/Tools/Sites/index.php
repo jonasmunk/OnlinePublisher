@@ -3,15 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Tools.Sites
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Services/TemplateService.php';
-require_once '../../Classes/Design.php';
-require_once '../../Classes/Frame.php';
+require_once '../../Include/Private.php';
 
 $designItems='';
-$designs = Design::search();
+$designs = Query::after('design')->get();
 foreach ($designs as $design) {
 	$designItems.='<item title="'.StringUtils::escapeXML($design->getTitle()).'" image="../../../style/'.$design->getUnique().'/info/Preview128.png" value="'.$design->getId().'"/>';
 }
@@ -41,7 +36,7 @@ $gui='
 	<controller source="controller.js"/>
 	<controller source="hierarchy.js"/>
 	<controller source="advanced.js"/>
-	<source name="pageListSource" url="ListPages.php">
+	<source name="pageListSource" url="data/ListPages.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
@@ -134,6 +129,12 @@ $gui='
 				<group>
 					<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
 						'.$languageItems.'
+					</dropdown>
+					<dropdown key="designId" label="Design:">
+						'.$designItems.'
+					</dropdown>
+					<dropdown key="frameId" label="Opsætning:">
+						'.$frameItems.'
 					</dropdown>
 					<text key="path" label="Sti:"/>
 					<checkbox key="searchable" label="Søgbar:"/>
@@ -263,9 +264,9 @@ $gui='
 			</step>
 		</wizard>
 		<buttons top="10" align="right">
-			<button title="Forrige" action="newPageWizard.previous()"/>
-			<button title="Næste" action="newPageWizard.next()"/>
-			<button title="Annuller" action="newPageBox.hide()"/>
+			<button title="Forrige" name="newPagePrevious"/>
+			<button title="Næste" name="newPageNext"/>
+			<button title="Annuller" name="newPageCancel"/>
 			<button title="Opret side" name="createPage" highlighted="true"/>
 		</buttons>
 	</box>

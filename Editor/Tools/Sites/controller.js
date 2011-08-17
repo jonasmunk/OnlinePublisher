@@ -7,7 +7,7 @@ var mainController = {
 	],
 	
 	$ready : function() {
-		if (window.parent) {
+		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('tool:Sites');
 		}
 	},
@@ -226,6 +226,7 @@ var mainController = {
 		newPageWizard.goToStep(0);
 		createPage.setEnabled(false);
 		newPageBox.show();
+		this._checkNewPage();
 	},
 	
 	$click$createPage : function() {
@@ -257,37 +258,70 @@ var mainController = {
 					data.hierarchy = menuItem.value;
 				}
 			}
-			hui.ui.request({url:'CreatePage.php',onSuccess:'pageCreated',parameters:data});
+			hui.ui.request({
+				message : {start:'Opretter side...',delay:300},
+				url : 'data/CreatePage.php',
+				onSuccess : 'pageCreated',
+				parameters : data
+			});
 		}
 	},
-	$success$pageCreated : function() {
+	$success$pageCreated : function(info) {
 		newPageBox.hide();
 		list.refresh();
 		languageSource.refresh();
 		hierarchySource.refresh();
+		this.loadPage(info.id);
 	},
 	
 	$selectionChanged$templatePicker : function() {
-		newPageWizard.goToStep(1);
+		newPageWizard.next();
+		this._checkNewPage();
 	},
 	$selectionChanged$designPicker : function() {
-		newPageWizard.goToStep(2);
+		newPageWizard.next();
+		this._checkNewPage();
 	},
 	$selectionChanged$frameSelection : function() {
-		newPageWizard.goToStep(3);
+		newPageWizard.next();
+		this._checkNewPage();
 	},
 	$selectionChanged$menuItemSelection : function() {
-		newPageWizard.goToStep(4);
+		newPageWizard.next();
+		this._checkNewPage();
+		newPageTitle.focus();
 	},
 	$valueChanged$newPageTitle : function(value) {
-		this.checkNewPage(value);
+		this._checkNewPage();
 	},
 	$click$noMenuItem : function() {
 		menuItemSelection.reset();
-		newPageWizard.goToStep(4);
+		newPageWizard.next();
+		newPageTitle.focus();
 	},
-	checkNewPage : function(value) {
-		createPage.setEnabled(value.length>0);
+	$stepChanged$newPageWizard : function() {
+		this._checkNewPage();
+	},
+	_checkNewPage : function(value) {
+		var templateSelected = templatePicker.getValue()!=null;
+		var designSelected = designPicker.getValue()!=null;
+		var frameSelected = frameSelection.getValue()!=null;
+		var titleFilled = !newPageTitle.isBlank();
+		//hui.log(hui.toJSON({templateSelected:templateSelected,designSelected:designSelected,frameSelected:frameSelected,titleFilled:titleFilled}));
+		createPage.setEnabled(templateSelected && designSelected && frameSelected && titleFilled);
+		newPagePrevious.setEnabled(!newPageWizard.isFirst());
+		newPageNext.setEnabled(!newPageWizard.isLast());
+	},
+	$click$newPageCancel : function() {
+		newPageBox.hide()
+	},
+	$click$newPagePrevious : function() {
+		newPageWizard.previous()
+		this._checkNewPage();
+	},
+	$click$newPageNext : function() {
+		newPageWizard.next()
+		this._checkNewPage();
 	}
 }
 

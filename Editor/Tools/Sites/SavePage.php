@@ -18,6 +18,8 @@ if ($page = Page::load($data->id)) {
 	$page->setSearchable($data->searchable);
 	$page->setDisabled($data->disabled);
 	$page->setLanguage($data->language);
+	$page->setDesignId($data->designId);
+	$page->setFrameId($data->frameId);
 	$page->save();
 
 	Hierarchy::markHierarchyOfPageChanged($page->getId());

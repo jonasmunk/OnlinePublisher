@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Preview
  */
-require_once '../../../../../Config/Setup.php';
-require_once '../../../../Include/Security.php';
-require_once '../../../../Classes/Request.php';
-require_once '../../../../Classes/Page.php';
-require_once '../../../../Classes/Log.php';
+require_once '../../../../Include/Private.php';
 
 $id = Request::getInt('id');
 $pageId = Request::getInt('pageId');
@@ -17,7 +13,7 @@ if ($ctrl = PartService::getController($type)) {
 	$part = $ctrl->getFromRequest($id);
 	$part->save();
 
-	Page::markChanged($pageId);
+	PageService::markChanged($pageId);
 
 	header("Content-Type: text/html; charset=UTF-8");
 	$context = PartService::buildPartContext($pageId);

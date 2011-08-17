@@ -65,6 +65,22 @@ class PageService {
 		Database::update($sql);
 	}
 	
+	function isChanged($id) {
+		$sql="select changed-published as delta from page where id=".Database::int($id);
+		$row = Database::selectFirst($sql);
+		if ($row['delta']>0) {
+			return true;
+		}
+		return false;
+	}
+	
+	function updateSecureStateOfAllPages() {
+		$sql = "update page set secure=1";
+		Database::update($sql);
+		$sql = "update page left join securityzone_page on page.id=securityzone_page.page_id set page.secure=0 where securityzone_page.securityzone_id is null";
+		Database::update($sql);
+	}
+	
 	function search($query) {
 		$countSql ="select count(page.id) as total";
 
@@ -107,6 +123,153 @@ class PageService {
 		$result->setList($list);
 		
 		return $result;
+	}
+	
+	function validate($page) {
+		if (!$page) {
+			return false;
+		}
+		if (StringUtils::isBlank($page->getTitle())) {
+			return false;
+		}
+		if (!$page->getTemplateId()) {
+			return false;
+		}
+		$sql = "select id from template where id=".Database::int($page->getTemplateId());
+		if (Database::isEmpty($sql)) {
+			return false;
+		}
+		$sql = "select id from frame where id=".Database::int($page->getFrameId());
+		if (Database::isEmpty($sql)) {
+			return false;
+		}
+		$design = Design::load($page->getDesignId());
+		if (!$design) {
+			return false;
+		}
+		return true;
+	}
+	
+	function create($page) {
+		if (!PageService::validate($page)) {
+			return false;
+		}
 		
+		$sql="insert into page (title,description,keywords,path,template_id,created,changed,published,frame_id,design_id,language,next_page,previous_page) values (".
+		Database::text($page->getTitle()).
+		",".Database::text($page->getDescription()).
+		",".Database::text($page->getKeywords()).
+		",".Database::text($page->getPath()).
+		",".Database::int($page->getTemplateId()).
+		",now()".
+		",now()".
+		",now()".
+		",".Database::int($page->getFrameId()).
+		",".Database::int($page->getDesignId()).
+		",".Database::text($page->getLanguage()).
+		",".Database::int($page->getNextPage()).
+		",".Database::int($page->getPreviousPage()).
+		")";
+		$page->id=Database::insert($sql);
+		PageService::_createTemplate($page);
+		return true;
+	}
+
+	function _createTemplate($page) {
+		$template = TemplateService::getTemplateById($page->getTemplateId());
+		$page->templateUnique = $template->getUnique();
+		$controller = TemplateService::getLegacyTemplateController($page);
+		if ($controller && method_exists($controller,'create')) {
+			$controller->create($page);
+		}
+	}
+	
+	function delete($page) {
+
+		$controller = TemplateService::getLegacyTemplateController($page);
+		if ($controller && method_exists($controller,'delete')) {
+			$controller->delete();
+		}
+		
+		$id = $page->getId();
+
+		// Delete the page
+		$sql="delete from page where id=".Database::int($id);
+		Database::delete($sql);
+
+		// Delete links
+		$sql="delete from link where page_id=".Database::int($id);
+		Database::delete($sql);
+
+		// Delete translations
+		$sql="delete from page_translation where page_id=".Database::int($id)." or translation_id=".Database::int($id);
+		Database::delete($sql);
+
+		// Delete security zone relations
+		$sql="delete from securityzone_page where page_id=".Database::int($id);
+		Database::delete($sql);
+
+		EventManager::fireEvent('delete','page',$page->getTemplateUnique(),$id);
+	}
+
+    function load($id) {
+		$sql = "select page.*,UNIX_TIMESTAMP(page.changed) as changed_unix,UNIX_TIMESTAMP(page.published) as published_unix,template.unique".
+		" from page,template where template.id=page.template_id and page.id=".Database::int($id);
+		if ($row = Database::selectFirst($sql)) {
+			$output = new Page();
+			$output->setId($row['id']);
+			$output->setName($row['name']);
+			$output->setPath($row['path']);
+			$output->setTemplateId($row['template_id']);
+			$output->templateUnique = $row['unique'];
+			$output->setDesignId(intval($row['design_id']));
+			$output->setFrameId(intval($row['frame_id']));
+			$output->setTitle($row['title']);
+			$output->setDescription($row['description']);
+			$output->setKeywords($row['keywords']);
+			$output->setLanguage($row['language']);
+			$output->setData($row['data']);
+			$output->setSearchable($row['searchable']==1);
+			$output->setDisabled($row['disabled']==1);
+			$output->setNextPage($row['next_page']);
+			$output->setPreviousPage($row['previous_page']);
+			$output->changed=intval($row['changed_unix']);
+			$output->published=intval($row['published_unix']);
+			return $output;
+		}
+		return null;
+	}
+
+	function save($page) {
+		if ($page->getId()>0) {
+			$sql="update page set".
+			" title=".Database::text($page->getTitle()).
+			",description=".Database::text($page->getDescription()).
+			",path=".Database::text($page->getPath()).
+			",keywords=".Database::text($page->getKeywords()).
+			",language=".Database::text($page->getLanguage()).
+			",searchable=".Database::boolean($page->getSearchable()).
+			",disabled=".Database::boolean($page->getDisabled()).
+			",design_id=".Database::int($page->getDesignId()).
+			",frame_id=".Database::int($page->getFrameId()).
+			" where id=".Database::int($page->getId());
+			return Database::update($sql);
+		} else {
+			return PageService::create($page);
+		}
+	}
+
+	
+	function reconstruct($pageId,$historyId) {		
+		$page = PageService::load($pageId);
+		
+		if ($controller = TemplateService::getController($page->getTemplateUnique())) {
+			$sql = "select data from page_history where id=".Database::int($historyId);
+			if ($row = Database::selectFirst($sql)) {
+				if ($doc = DOMUtils::parse($row['data'])) {
+					$controller->import($page->getId(),$doc);
+				}
+			}
+		}
 	}
 }

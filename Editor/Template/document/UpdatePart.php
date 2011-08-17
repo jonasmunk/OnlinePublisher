@@ -3,15 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/Services/PartService.php';
-require_once '../../Classes/Page.php';
-require_once '../../Classes/Request.php';
-require_once '../../Classes/Response.php';
-require_once '../../Classes/InternalSession.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Include/Private.php';
 
 $type = Request::getString('part_type');
 $pageId = InternalSession::getPageId();
@@ -44,7 +36,7 @@ if ($controller && method_exists($controller,'getFromRequest')) {
 }
 
 // Mark the page as changed
-Page::markChanged(InternalSession::getPageId());
+PageService::markChanged($pageId);
 
 
 Response::redirect('Editor.php?section=0');

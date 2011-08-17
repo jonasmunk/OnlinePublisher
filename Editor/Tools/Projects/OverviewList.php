@@ -10,7 +10,7 @@ require_once '../../Classes/Database.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Project.php';
 require_once '../../Classes/Task.php';
-require_once '../../Classes/Problem.php';
+require_once '../../Classes/Objects/Problem.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 
 require_once 'ProjectsController.php';

@@ -23,7 +23,7 @@ $sql="insert into imagegallery_custom_info (page_id,image_id,title,note)".
 " values (".$pageId.",".$imageId.",".Database::text($title).",".Database::text($note).")";
 Database::insert($sql);
 
-Page::markChanged($pageId);
+PageService::markChanged($pageId);
 
 Response::redirect('Images.php');
 ?>

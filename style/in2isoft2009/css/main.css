@@ -79,6 +79,15 @@ div.chrome_sidebar
 	padding-top: 10px;
 }
 
+/******** Translation ********/
+
+p.layout_translation
+{
+	margin: 0;
+	float: right;
+	font-size: 11px;
+}
+
 /******** Footer ********/
 
 div.chrome_footer

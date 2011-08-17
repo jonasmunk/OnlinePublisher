@@ -35,10 +35,6 @@ class PublishingService {
 		Database::update($sql);
 		$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".InternalSession::getUserId().",".Database::text($data).",now())";
 		Database::insert($sql);
-
-		// Clear page previews
-		$page = Page::load($id);
-		$page->clearPreviews();
 		
 		// Clear page cache
 		CacheService::clearPageCache($id);

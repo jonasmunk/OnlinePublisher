@@ -23,6 +23,11 @@ class HierarchyService {
 		")";
 		$hierarchy->setId(Database::insert($sql));
     }
+    
+    function getHierarchyItemForPage($page) {
+        $sql="select * from hierarchy_item where target_type='page' and target_id=".Database::int($page->getId());
+        return Database::selectFirst($sql);
+    }
 
     function updateHierarchy($hierarchy) {
 		if (!$hierarchy) {

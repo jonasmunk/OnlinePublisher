@@ -26,7 +26,7 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '</layout>'.
 '</interface>'.
 '<script xmlns="uri:Script" type="text/javascript">
-	if (window.parent) {
+	if (window.parent!=window) {
 		window.parent.baseController.changeSelection(\'tool:Projects\');
 	}
 </script>'.

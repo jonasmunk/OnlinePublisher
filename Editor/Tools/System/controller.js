@@ -2,7 +2,7 @@ hui.ui.listen({
 	weblogGroupId : 0,
 	userId : 0,
 	$ready : function() {
-		if (window.parent) {
+		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('tool:System');
 		}
 	},

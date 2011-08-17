@@ -27,7 +27,7 @@ $sql="update imagegallery set title=".Database::text($title).
 " where page_id=".$id;
 Database::update($sql);
 
-Page::markChanged($id);
+PageService::markChanged($id);
 
 Response::redirect('Text.php');
 ?>

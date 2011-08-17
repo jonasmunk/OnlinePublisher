@@ -17,7 +17,7 @@ $imageId = Request::getInt('id');
 $sql="delete from imagegallery_custom_info where image_id=".$imageId." and page_id=".$pageId;
 Database::delete($sql);
 
-Page::markChanged($pageId);
+PageService::markChanged($pageId);
 
 response::redirect('EditCustomInfo.php?id='.$imageId);
 ?>

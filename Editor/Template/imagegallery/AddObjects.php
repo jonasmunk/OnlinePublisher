@@ -27,7 +27,7 @@ for ($i=0;$i<count($objects);$i++) {
 	Database::insert($sql);
 }
 
-Page::markChanged($id);
+PageService::markChanged($id);
 
 Response::redirect('Images.php');
 ?>
