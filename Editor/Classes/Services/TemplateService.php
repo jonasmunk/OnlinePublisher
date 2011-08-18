@@ -80,6 +80,28 @@ class TemplateService {
 		return $arr;
 	}
 	
+	function getInstalledTemplateKeys() {
+		$arr = array();
+		$sql = "select id,`unique` from `template`";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$arr[] = $row['unique'];
+		}
+		Database::free($result);
+		return $arr;
+	}
+	
+	function getUsedTemplates() {		
+		$arr = array();
+		$sql = "select distinct `template`.`unique` from `template`,`page` where page.template_id=template.id";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$arr[] = $row['unique'];
+		}
+		Database::free($result);
+		return $arr;
+	}
+	
 	/**
 	 * @static
 	 */

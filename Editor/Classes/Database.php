@@ -60,6 +60,10 @@ class Database {
 	
 	function select($sql) {
 		$con = Database::getConnection();
+		if (!$con) {
+			error_log('No database connection');
+			return false;
+		}
 		Database::debug($sql);
 		$result = @mysql_query($sql,$con);
 		if (mysql_errno($con)>0) {
