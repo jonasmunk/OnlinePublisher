@@ -216,7 +216,7 @@ class GuiUtils {
 	 */
 	function buildPageItems($template=null) {
 		$output='';
-		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "");
+		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "")." order by page.title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$output.='<item title="'.StringUtils::escapeJavaScriptXML($row['title']).'" value="'.$row['id'].'"/>';
