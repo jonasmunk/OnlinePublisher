@@ -1,70 +1,53 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Users
+ * @subpackage Tools.Central
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/Objects/Remotepublisher.php';
-require_once '../../Classes/Utilities/StringUtils.php';
-require_once '../../Classes/Services/RemoteDataService.php';
+require_once '../../Include/Private.php';
 
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface background="Desktop">'.
-'<window xmlns="uri:Window" width="500" align="center" top="30">'.
-'<titlebar title="Andre systemer" icon="Web/Service"/>'.
-'<toolbar xmlns="uri:Toolbar" align="center">'.
-'<tool title="Nyt system" icon="Basic/Internet" overlay="New" link="NewSite.php"/>'.
-'</toolbar>'.
-'<content>'.
-'<list xmlns="uri:List" width="100%" margin="3">'.
-'<content>'.
-'<headergroup>'.
-'<header title="Title"/>'.
-'<header title="Adresse"/>'.
-'<header title="Version"/>'.
-'</headergroup>';
+$gui='
+<gui xmlns="uri:hui" padding="10" title="System">
+	<controller source="controller.js"/>
+	<source name="listSource" url="data/List.php">
+		<parameter key="subset" value="@selector.value"/>
+	</source>
+	<layout>
+		<top>
+			<toolbar>
+				<icon icon="common/internet" text="Nyt site" name="newSite"/>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<selection value="all" name="selector">
+					<item icon="common/folder" title="Alle" value="all"/>
+				</selection>
+			</left>
+			<middle>
+				<overflow>
+					<list name="list" source="listSource"/>
+				</overflow>
+			</middle>
+		</middle>
+		<bottom/>
+	</layout>
+	
+	<window title="Site" name="siteWindow" width="300" padding="5">
+		<formula name="siteFormula">
+			<group labels="above">
+				<text label="Titel" key="title"/>
+				<text label="Adresse" key="url"/>
+				<buttons>
+					<button name="cancelSite" title="Annuller"/>
+					<button name="deleteSite" title="Slet">
+						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
+					</button>
+					<button name="saveSite" title="Gem" highlighted="true" submit="true"/>
+				</buttons>
+			</group>
+		</formula>
+	</window>
+</gui>';
 
-
-$sql="select * from remotepublisher,object where remotepublisher.object_id=object.id order by title";
-$result = Database::select($sql);
-while ($row = Database::next($result)) {
-	$site = RemotePublisher::load($row['id']);
-	$data = RemoteDataService::getRemoteData($site->getUrl().'services/info/json/');
-	if ($data->isHasData()) {
-		$str = file_get_contents($data->getFile());
-		$obj = StringUtils::fromJSON($str);
-		$version = DateUtils::formatLongDate($obj->date);
-	} else {
-		$version = 'Unknown';
-	}
-	$gui.='<row link="EditSite.php?id='.$row['id'].'">'.
-	'<cell>'.
-	'<icon size="1" icon="Basic/Internet"/>'.
-	'<text>'.StringUtils::escapeXML($row['title']).'</text>'.
-	'</cell>'.
-	'<cell>'.StringUtils::escapeXML($row['url']).'</cell>'.
-	'<cell>'.StringUtils::escapeXML($version).'</cell>'.
-	'</row>';
-}
-Database::free($result);
-
-
-$gui.=
-'</content>'.
-'</list>'.
-'</content>'.
-'</window>'.
-'</interface>'.
-'<script xmlns="uri:Script" type="text/javascript">
-	if (window.parent!=window) {
-		window.parent.baseController.changeSelection(\'tool:Central\');
-	}
-</script>'.
-'</xmlwebgui>';
-
-$elements = array("Window","Toolbar","List","Script");
-writeGui($xwg_skin,$elements,$gui);
+In2iGui::render($gui);
 ?>
