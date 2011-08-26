@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<window total="50" size="10" page="1"/>
+	<headers>
+		<header title="Titel" width="30" sortable="true"/>
+		<header title="Notat" width="50"/>
+		<header title="Ændringsdato"/>
+	</headers>
+	<row id="1" kind="user">
+		<cell icon="common/user">Administrator</cell>
+		<cell/>
+		<cell>
+			<object icon="common/success">Enabled</object>
+			<object icon="common/success">Server</object>
+		</cell>
+	</row>
+</list>
