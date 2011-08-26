@@ -75,6 +75,22 @@ div.part_text strong
 	color: #000;
 }
 
+/**************************** Rich text ************************/
+
+div.part_richtext
+{
+	font-family: "Tahoma","Geneva","Helvetica","Arial",sans-serif;
+	font-size: 10pt;
+	margin: 0px;
+	line-height: 150%;
+	color: #333;
+}
+
+div.part_richtext p
+{
+	margin: 0 0 10px;
+}
+
 /**************************** Listing **************************/
 
 div.part_listing
