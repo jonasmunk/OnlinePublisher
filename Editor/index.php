@@ -23,6 +23,9 @@ $gui='
 <gui xmlns="uri:hui" title="OnlinePublisher editor">
 	<controller source="Base.js"/>
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
+		<!--<sidebar>
+			<searchfield adaptive="true"/>
+		</sidebar>-->
 		<tabs small="true">';
 			$tabs = array('edit'=>'{ Editing ; da: Redigering }','analyse'=>'{Analysis ; da:Analyse}','setup'=>'{ Setup ; da:Opsætning }');
 			foreach ($tabs as $tab => $tabTitle) {
