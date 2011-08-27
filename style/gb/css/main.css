@@ -25,7 +25,6 @@ div.layout_content
 {
 	margin-top: 30px;
 	margin-left: 260px;
-	min-height: 300px;
 	width: 778px;
 	background: url('../gfx/paper.png') -791px top repeat-y;
 }
@@ -72,7 +71,7 @@ div.layout_content_middle
 	padding: 15px 30px;
 	margin: 0 4px;
 	background: #fff;
-	min-height: 500px;
+	min-height: 700px;
 }
 
 div.layout_header
@@ -103,7 +102,6 @@ div.layout_sidebar
 	padding-left: 10px;
 	position: absolute;
 	z-index: 20;
-	padding-bottom: 200px;
 }
 
 

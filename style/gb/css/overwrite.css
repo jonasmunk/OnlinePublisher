@@ -48,6 +48,11 @@ hr.part_horizontalrule
 	color: #555;
 }
 
+div.part_listing ul
+{
+	color: #ccc;
+}
+
 .part_text
 {
 	font-size: 10pt;
