@@ -20,6 +20,7 @@
 				<title><xsl:if test="not(//p:page/@id=//p:context/p:home/@page)"><xsl:value-of select="@title"/> - </xsl:if><xsl:value-of select="f:frame/@title"/></title>
 				<xsl:call-template name="util:metatags"/>
 				<xsl:call-template name="util:style"/>
+				<xsl:call-template name="util:style-ie7"/>
 				<xsl:call-template name="util:scripts"/>
 			</head>
 			<body>

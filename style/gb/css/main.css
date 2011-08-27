@@ -160,9 +160,10 @@ div.layout_sidebar li a
 {
 	text-decoration: none;
 	color: #543;
-	font-size: 12pt;
+	font-size: 11pt;
 	display: block;
 	padding-left: 45px;
+	padding-right: 5px;
 }
 
 div.layout_sidebar ul ul a
