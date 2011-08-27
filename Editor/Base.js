@@ -3,13 +3,13 @@ var baseController = {
 		
 	},
 	changeSelection : function(key) {
-		if (editToolbar) {
+		if (window['editToolbar']) {
 			editToolbar.setSelection(key);
 		}
-		if (analyseToolbar) {
+		if (window['analyseToolbar']) {
 			analyseToolbar.setSelection(key);
 		}
-		if (setupToolbar) {
+		if (window['setupToolbar']) {
 			setupToolbar.setSelection(key);
 		}
 	},
