@@ -52,6 +52,7 @@
 							</div>
 							<div class="layout_box_bottom"><xsl:comment/></div>
 						</div>
+						<!--
 						<div class="layout_box">
 							<div class="layout_box_top"><xsl:comment/></div>
 							<div class="layout_box_middle">
@@ -61,6 +62,7 @@
 							</div>
 							<div class="layout_box_bottom"><xsl:comment/></div>
 						</div>
+						-->
 					</div>
 					<div class="layout_content">
 						<div class="layout_content_top"><xsl:comment/></div>
@@ -75,6 +77,11 @@
 					</div>
 				</div>
 					<div class="layout_footer">
+						<div class="layout_footer_text">
+							<p><strong>Green Benefit ApS</strong></p>
+							<p>Maren Hemmings Vej 13, 9000 Aalborg, telefon 70 20 60 77</p>
+							<p>cvr.nr. 33068271 – reg. 7452 konto 0001061692</p>
+						</div>
 						<p class="layout_designed">
 							<a href="http://www.in2isoft.dk/"><span>Designet og udviklet af In2iSoft</span></a>
 						</p>

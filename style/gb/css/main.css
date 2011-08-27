@@ -84,8 +84,8 @@ div.layout_header
 div.layout_header p
 {
 	text-indent: -10000px;
-	height: 120px;
-	width: 505px;
+	height: 119px;
+	width: 500px;
 	background: url('../gfx/logo.png');
 	margin: 0;
 	position: absolute;
@@ -261,7 +261,7 @@ div.layout_box a
 	color: #666;
 }
 
-/************* Designed ***********/
+/************* Footer ***********/
 
 div.layout_footer
 {
@@ -272,19 +272,40 @@ div.layout_footer
 	width: 100%;
 }
 
+div.layout_footer_text
+{
+	font-family: Helvetica,Arial,sans-serif;
+	padding-top: 120px;
+	text-align: center;
+	color: #cabcaf;
+	font-size: 12px;
+}
+
+div.layout_footer_text strong
+{
+	font-size: 18px;
+	color: #e0d0c1;
+	font-weight: normal;
+}
+
+div.layout_footer_text p
+{
+	margin: 0 0 3px;
+}
+
 p.layout_designed
 {
 	text-align: center;
 	margin: 0;
-	padding: 40px 0;
+	padding: 40px 0 0;
 }
 
 p.layout_designed a
 {
 	display: inline-block;
 	background: url('../gfx/in2isoft.png');
-	width: 149px;
-	height: 47px;
+	width: 166px;
+	height: 66px;
 }
 
 p.layout_designed span
