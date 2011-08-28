@@ -61,7 +61,7 @@ class CacheService {
 		}
 		Database::delete($sql);
 		$sql = "insert into page_cache (page_id,path,html,stamp) values (".Database::int($id).",".Database::text($path).",".$html.",now())";
-		Database::insert($sql);		
+		Database::insert($sql);
 	}
 	
 	////// Images //////
