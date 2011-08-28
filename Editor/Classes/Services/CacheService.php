@@ -46,6 +46,9 @@ class CacheService {
 	}
 	
 	function createPageCache($id,$path,$html) {
+		if (Request::getBoolean('viewsource') || Request::getString('design') || $_SESSION['debug.design']) {
+			return;
+		}
 		$html = Database::text($html);
 		if (strlen($html)>49900) {
 			return; // Be sure not to cache incomplete html
