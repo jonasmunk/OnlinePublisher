@@ -1,5 +1,5 @@
-ui.onReady(function() {
-	var blocks = hui.get('blockquote');
+hui.onReady(function() {
+	var blocks = hui.byTag(document.body,'blockquote');
 	var timer;
 	var index = -1;
 	timer = function() {
