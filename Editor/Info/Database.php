@@ -910,12 +910,6 @@ $databaseTables = array(
 	'webloggroup_weblogentry' => array(
 			array("weblogentry_id","int(11)","","","0",""),
 			array("webloggroup_id","int(11)","","","0","")
-		),
-	'test' => array(
-			array("object_id","int(11)","YES","","",""),
-			array("djhfsjdkfhdksj","int(11)","YES","","","")
-			,array("dsjdhjkadsfaf","int(18)","YES","","","")
-			,array("9hh89h88h989","int(18)","YES","","5","")
 		)
 );
 ?>
