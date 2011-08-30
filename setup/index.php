@@ -35,9 +35,6 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../"/>'.
 '<tool title="Administrator" icon="Role/Administrator"'.
 ($pos=='Users' ? ' selected="true"' : ' link="?position=Users"').
 '/>'.
-'<tool title="Skabeloner" icon="Element/Template"'.
-($pos=='Templates' ? ' selected="true"' : ' link="?position=Templates"').
-'/>'.
 '<tool title="Værktøjer" icon="Tool/Generic"'.
 ($pos=='Tools' ? ' selected="true"' : ' link="?position=Tools"').
 '/>'.
