@@ -23,6 +23,7 @@ if (!DatabaseUtil::isUpToDate()) {
 }
 
 $mailEnabled = MailService::getEnabled();
+//$mailEnabled = false;
 
 $gui='
 <gui xmlns="uri:hui" padding="10" title="'.SystemInfo::getTitle().'" state="'.$state.'">
@@ -41,6 +42,7 @@ $gui='
 				</group>
 			</formula>
 			<formula name="recoveryForm" state="recover">
+				'.($mailEnabled ? '
 				<header>Genfind kodeord</header>
 				<text><p>Skriv dit brugernavn eller e-mail, så sender vi dig en e-mail om hvordan du kan ændre din kode...</p></text>
 				<group labels="above">
@@ -51,6 +53,20 @@ $gui='
 						<button title="Find" name="recover" highlighted="true" submit="true"/>
 					</buttons>
 				</group>
+				' : '
+				<header>Genfind kodeord</header>
+				<text>
+					<p>Systemet er ikke konfigureret til at sende e-mail. Kontakt den ansvarlige for systemet for at få adgang.</p>
+					<p>Du kan også oprette en ny administrator hvis du kender super-brugeren.</p>
+				</text>
+				<group labels="above">
+					<buttons>
+						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
+						<button title="Ny bruger" name="createAdmin"/>
+					</buttons>
+				</group>				
+				'
+				).'
 			</formula>
 			<fragment state="recoveryMessage">
 				<space all="5">
@@ -78,7 +94,7 @@ $gui='
 			</fragment>
 		</space>
 	</box>
-	'.($mailEnabled ? '<fragment state="login"><text align="center"><p><link name="forgot">Glemt kodeord</link></p></text></fragment>' : '').'
+	<fragment state="login"><text align="center"><p><link name="forgot">Glemt kodeord</link></p></text></fragment>
 
 	<window name="databaseWindow" width="300" padding="5" title="{Update database;da:Opdatér databasen}">
 		<formula name="databaseFormula">
