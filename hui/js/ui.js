@@ -858,12 +858,17 @@ hui.ui.request = function(options) {
 		hui.log(t);
 		hui.log(e);
 	};
+	var onForbidden = options.onForbidden;
 	options.onForbidden = function(t) {
 		if (options.message && options.message.start) {
 			hui.ui.hideMessage();
 		}
-		options.onFailure(t);
-		hui.ui.handleForbidden();
+		if (onForbidden) {
+			onForbidden(t);
+		} else {
+			options.onFailure(t);
+			hui.ui.handleForbidden();
+		}
 	}
 	if (options.message && options.message.start) {
 		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});

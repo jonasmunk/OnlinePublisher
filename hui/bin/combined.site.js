@@ -2829,7 +2829,7 @@ hui.ui.fadeOut = function(node,time) {
 	hui.animate(node,'opacity',0,time,{hideOnComplete:true});
 };
 
-hui.ui.bounceIn = function(node,time) {
+hui.ui.bounceIn = function(node) {
 	if (hui.browser.msie) {
 		hui.setStyle(node,{'display':'block',visibility:'visible'});
 	} else {
@@ -3157,12 +3157,17 @@ hui.ui.request = function(options) {
 		hui.log(t);
 		hui.log(e);
 	};
+	var onForbidden = options.onForbidden;
 	options.onForbidden = function(t) {
 		if (options.message && options.message.start) {
 			hui.ui.hideMessage();
 		}
-		options.onFailure(t);
-		hui.ui.handleForbidden();
+		if (onForbidden) {
+			onForbidden(t);
+		} else {
+			options.onFailure(t);
+			hui.ui.handleForbidden();
+		}
 	}
 	if (options.message && options.message.start) {
 		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
