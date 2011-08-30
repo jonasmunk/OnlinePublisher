@@ -95,7 +95,9 @@ span.layout_languages a
 	background-image: url('../gfx/flags.png');
 	background-repeat: no-repeat;
 	line-height: 40px;
-	color: white;	
+	color: white;
+	cursor: pointer;
+	text-decoration: none;
 }
 
 span.layout_languages a span
