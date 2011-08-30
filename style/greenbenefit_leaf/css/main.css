@@ -179,6 +179,11 @@ div.layout_footer
 	margin-top: -90px;
 }
 
+div.layout_footer a
+{
+	color: #444;
+}
+
 div.layout_footer span
 {
 	color: #666;
