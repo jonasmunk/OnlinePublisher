@@ -5,6 +5,9 @@
  */
 require_once '../../../Include/Private.php';
 
+$time = 60*60;
+$time = 0;
+
 $writer = new ListWriter();
 
 $writer->startList(array('unicode'=>true));
@@ -19,9 +22,8 @@ $writer->endHeaders();
 
 $objects = Query::after('remotepublisher')->orderBy('title')->get();
 foreach ($objects as $site) {
-	$data = RemoteDataService::getRemoteData($site->getUrl().'services/info/json/');
-	$templates = 'Unknown';
-	$email = 'Unknown';
+	$data = RemoteDataService::getRemoteData($site->getUrl().'services/info/json/',$time);
+	$obj = null;
 	if ($data->isHasData()) {
 		$str = file_get_contents($data->getFile());
 		$obj = StringUtils::fromJSON($str);

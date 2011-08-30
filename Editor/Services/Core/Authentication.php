@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Services
+ * @subpackage Services.Core
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Public.php';
@@ -15,6 +15,7 @@ if (Request::isPost()) {
 	$username=Request::getPostString('username');
 	$password=Request::getPostString('password');
 	if (InternalSession::logIn($username,$password)) {
+		ToolService::install('system'); // Ensure that the system tool is present
 		In2iGui::sendObject(array('success' => true));
 	} else {
 		usleep(rand(5000000,10000000));

@@ -88,5 +88,76 @@ var controller = {
 		} else {
 			hui.ui.showMessage({text:data.message,icon:'common/warning',duration:4000});
 		}
+	},
+	
+	// Database...
+	
+	$click$updateDatabase : function() {
+		databaseWindow.show();
+		databaseFormula.focus();
+	},
+	
+	$submit$databaseFormula : function(form) {
+		var values = form.getValues();
+		if (hui.isBlank(values.username) || hui.isBlank(values.password)) {
+			form.focus();
+			return;
+		}
+		hui.ui.showMessage({text:'Opdaterer database...',busy:true});
+		hui.ui.request({
+			url : 'Services/Core/UpdateDatabase.php',
+			parameters : values,
+			onFailure : function() {
+				hui.ui.showMessage({text:'Der skete en fejl internt i systemet!',icon:'common/warning',duration:4000});
+			},
+			onForbidden : function() {
+				hui.ui.showMessage({text:'Bruger eller kode er ikke korrekt',icon:'common/warning',duration:4000});
+				form.focus();
+			},
+			onJSON : function(response) {
+				databaseLog.setValue(response.log);
+				databaseLogWindow.show();
+				if (!response.updated) {
+					hui.ui.showMessage({text:'Databasen er endnu ikke fuldt opdateret, prøv igen',icon:'common/warning',duration:4000});
+					return;
+				}
+				hui.ui.showMessage({text:'Databasen er nu opdateret',icon:'common/success',duration:4000});
+				databaseFormula.reset();
+				databaseWindow.hide();
+				hui.ui.changeState('login');
+				formula.focus()
+			}
+		});
+	},
+	
+	// Admin...
+	$click$createAdmin : function() {
+		adminWindow.show();
+		adminFormula.focus();
+	},
+	$submit$adminFormula : function(form) {
+		var values = form.getValues();
+		if (hui.isBlank(values.superUsername) || hui.isBlank(values.superPassword) || hui.isBlank(values.adminUsername) || hui.isBlank(values.adminPassword)) {
+			form.focus();
+			return;
+		}
+		hui.ui.request({
+			url : 'Services/Core/CreateAdministrator.php',
+			parameters : values,
+			onFailure : function() {
+				hui.ui.showMessage({text:'Der skete en fejl internt i systemet!',icon:'common/warning',duration:4000});
+			},
+			onForbidden : function() {
+				hui.ui.showMessage({text:'Bruger eller kode er ikke korrekt',icon:'common/warning',duration:4000});
+				form.focus();
+			},
+			onSuccess : function(response) {
+				hui.ui.showMessage({text:'Administratoren er nu oprettet',icon:'common/success',duration:4000});
+				form.reset();
+				adminWindow.hide();
+				hui.ui.changeState('login');
+				formula.focus()
+			}
+		});
 	}
 }

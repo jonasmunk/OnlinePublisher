@@ -3,10 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.System
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/DatabaseUtil.php';
+require_once '../../../Include/Private.php';
 
 $con = Database::getConnection();
 $status = mysql_stat($con);

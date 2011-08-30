@@ -167,7 +167,8 @@ class DatabaseUtil {
 	 * @return array An array of problems describing what is wrong with the table
 	 */
 	function checkTable($table,$columns) {
-		global $databaseTables;
+		global $databaseTables, $basePath;
+		require_once($basePath.'/Editor/Info/Database.php');
 		$errors = array();
 		if (array_key_exists($table,$databaseTables)) {
 			$expectedColumns = $databaseTables[$table];
@@ -213,7 +214,8 @@ class DatabaseUtil {
 	 * @return array An array of the table names missing in the database
 	 */
 	function findMissingTables($tables) {
-		global $databaseTables;
+		global $databaseTables, $basePath;
+		require_once($basePath.'/Editor/Info/Database.php');
 		$out = array();
 		$keys = array_keys($databaseTables);
 		foreach ($keys as $table) {
@@ -253,6 +255,73 @@ class DatabaseUtil {
 
 	function buildColumnProps($cols) {
 		return "type=".$cols[0].",null=".$cols[1].",key=".$cols[2].",default=".$cols[3].",extra=".$cols[4];
+	}
+	
+	function update() {
+		$tables = DatabaseUtil::getTables();
+
+		$log = array();
+		$log[] = "== Starting update ==";
+		$missingTables = DatabaseUtil::findMissingTables($tables);
+		foreach ($missingTables as $table) {
+			$action = "CREATE TABLE `".$table."` (";
+			$columns = DatabaseUtil::getExpectedColumns($table);
+			$keys = '';
+			for ($i=0;$i<count($columns);$i++) {
+				$column = $columns[$i];
+				if ($i>0) {
+					$action.= ",";
+				}
+				$action.= "`".$column[0]."` ".$column[1];
+				if ($column[2]=='') {
+					$action.= " NOT NULL";
+				}
+				if ($column[3]=='PRI') {
+					$keys.= ",PRIMARY KEY (`".$column[0]."`)";
+				}
+				if ($column[4]!='') {
+					$action.= " DEFAULT '".$column[4]."'";
+				}
+				if ($column[5]!='') {
+					$action.= " ".$column[5];
+				}
+			}
+			$action.= $keys;
+			$action.= ")";
+			$log[] = "";
+			$log[] = "Command: ";
+			$log[] = $action;
+			$con = Database::getConnection();
+			mysql_query($action,$con);
+			$error = mysql_error($con);
+			if (strlen($error)>0) {
+				$log[] = "!!!Error: ".$error;
+			}
+		}
+
+		foreach ($tables as $table) {
+			$columns = DatabaseUtil::getTableColumns($table);
+			$errors = DatabaseUtil::checkTable($table,$columns);
+			if (count($errors)>0) {
+				$sql=DatabaseUtil::updateTable($table,$columns);
+				foreach ($sql as $action) {
+					$log[] = "";
+					$log[] = "Command: ";
+					$log[] = $action;
+					$con = Database::getConnection();
+					mysql_query($action,$con);
+					$error = mysql_error($con);
+					if (strlen($error)>0) {
+						$log[] = "!!!Error: ".$error;
+					}
+				}
+			}
+		}
+		DatabaseUtil::setAsUpToDate();
+
+		$log[] = "";
+		$log[] = "== Update finished ==";
+		return $log;
 	}
 }
 ?>

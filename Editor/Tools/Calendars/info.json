@@ -1,0 +1,7 @@
+{
+	"icon" : "common/calendar",
+	"name" : {"da" : "Kalendere", "en" : "Calendars"},
+	"description" : {"da" : "Abonner på, og udgiv kalendere", "en" : "Subscribe to, and publish calendars"},
+	"category" : "edit",
+	"priority" : 7
+}

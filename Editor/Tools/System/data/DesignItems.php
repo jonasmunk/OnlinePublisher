@@ -3,9 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.System
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../../Include/Private.php';
 
 $designs = DesignService::getAvailableDesigns();
 

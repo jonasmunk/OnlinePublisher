@@ -23,10 +23,12 @@ hui.ui.listen({
 		}
 		hui.ui.changeState('list');
 		switch (obj.value) {
-			case 'databaseTables' : list.setUrl('ListDatabaseTables.php')
+			case 'databaseTables' : list.setUrl('data/ListDatabaseTables.php')
+			case 'templates' : list.setUrl('data/ListTemplates.php')
+			case 'tools' : list.setUrl('data/ListTools.php')
 		}
 		if (obj.value=='databaseInfo') {
-			list.setUrl('ListDatabaseInfo.php');
+			list.setUrl('data/ListDatabaseInfo.php');
 		} else if (obj.value=='user') {
 			list.setUrl('ListUsers.php');
 		} else if (obj.value=='object') {
@@ -36,9 +38,9 @@ hui.ui.listen({
 		} else if (obj.value=='webloggroup') {
 			list.setUrl('../../Services/Model/ListObjects.php?type=webloggroup');
 		} else if (obj.value=='path') {
-			list.setUrl('ListPaths.php');
+			list.setUrl('data/ListPaths.php');
 		} else if (obj.value=='design') {
-			list.setUrl('ListDesigns.php');
+			list.setUrl('data/ListDesigns.php');
 		}
 	},
 	$listRowWasOpened$list : function(obj) {
@@ -216,6 +218,49 @@ hui.ui.listen({
 	$click$cancelPath : function() {
 		pathEditor.hide();
 		pathFormula.reset();
+	},
+	
+	///////////////////////// Templates ///////////////////////
+	
+	$clickButton$list : function(info) {
+		var data = info.button.getData();
+		if (data.action=='uninstallTemplate') {
+			hui.ui.request({
+				message : {start : 'Afinstallerer skabelon',delay:300},
+				parameters : {key:data.key},
+				url : 'data/UninstallTemplate.php',
+				onSuccess : function() {
+					list.refresh();
+				}
+			});
+		} else if (data.action=='installTemplate') {
+			hui.ui.request({
+				message : {start : 'Installerer skabelon',delay:300},
+				parameters : {key:data.key},
+				url : 'data/InstallTemplate.php',
+				onSuccess : function() {
+					list.refresh();
+				}
+			});
+		} else if (data.action=='installTool') {
+			hui.ui.request({
+				message : {start : 'Installerer værktøj',delay:300},
+				parameters : {key:data.key},
+				url : 'data/InstallTool.php',
+				onSuccess : function() {
+					list.refresh();
+				}
+			});
+		} else if (data.action=='uninstallTool') {
+			hui.ui.request({
+				message : {start : 'Afinstallerer værktøj',delay:300},
+				parameters : {key:data.key},
+				url : 'data/UninstallTool.php',
+				onSuccess : function() {
+					list.refresh();
+				}
+			});
+		}
 	},
 	
 	////////////////////////// Caches /////////////////////////

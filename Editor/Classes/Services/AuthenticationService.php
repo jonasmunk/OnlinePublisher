@@ -22,6 +22,17 @@ class AuthenticationService {
 		}
 	}
 	
+	function isSuperUser($username,$password) {
+		global $superUser,$superPassword;
+		if (StringUtils::isBlank($username) || StringUtils::isBlank($password) || StringUtils::isBlank($superUser) || StringUtils::isBlank($superPassword)) {
+			return false;
+		}
+		if ($superUser==$username && $superPassword==$password) {
+			return true;
+		}
+		return false;
+	}
+	
 	function setPassword($user,$password) {
 		$user->setPassword(AuthenticationService::encryptPassword($password));
 		$user->setSecure(true);

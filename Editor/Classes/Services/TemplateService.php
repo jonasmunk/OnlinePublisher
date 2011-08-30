@@ -69,6 +69,26 @@ class TemplateService {
 		return $arr;
 	}
 	
+	function install($key) {
+		$sql = "select id from `template` where `unique`=".Database::text($key);
+		if (Database::isEmpty($sql)) {
+			$sql = "insert into template (`unique`) values (".Database::text($key).")";
+			Database::insert($sql);
+		} else {
+			Log::debug('Unable to install template ('.$key.') since it already exists');
+		}
+	}
+	
+	function uninstall($key) {
+		$sql = "select `template`.`id` from `template`,`page` where page.template_id=template.id and `template`.`unique`=".Database::text($key);
+		if (Database::isEmpty($sql)) {
+			$sql = "delete from `template` where `unique`=".Database::text($key);
+			Database::delete($sql);
+		} else {
+			Log::debug('Unable to delete template ('.$key.') since it is in use');
+		}
+	}
+	
 	function getInstalledTemplates() {
 		$arr = array();
 		$sql = "select id,`unique` from `template`";
@@ -82,7 +102,7 @@ class TemplateService {
 	
 	function getInstalledTemplateKeys() {
 		$arr = array();
-		$sql = "select id,`unique` from `template`";
+		$sql = "select `unique` from `template`";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$arr[] = $row['unique'];

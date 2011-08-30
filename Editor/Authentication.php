@@ -46,6 +46,7 @@ $gui='
 				<group labels="above">
 					<text key="nameOrMail" label="Brugernavn eller e-mail:"/>
 					<buttons>
+						<button title="Ny bruger" name="createAdmin"/>
 						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="Find" name="recover" highlighted="true" submit="true"/>
 					</buttons>
@@ -67,17 +68,60 @@ $gui='
 					<text align="center">
 						<h>{da:Databasen er ikke korrekt;en:The database is not correct}</h>
 						<p>{da:Systemet vil være ustabilt indtil databasen opdateres; en:The system will be unstable until the database is updated}</p>
-						<p>{da:Problemet kan løses med opsætnings-værktøjet; en:The problem can be resolved using the setup tool}</p>
+						<p>{da:Du kan opdatere databasen hvis du kender super-brugeren; en:You can update the database if you know the super user}</p>
 					</text>
 					<buttons align="center" top="5">
 						<button title="{Sign in;da:Log ind}" click="hui.ui.changeState(\'login\');formula.focus()"/>
-						<button title="{Go to setup;da:Gå til opsætning}" highlighted="true" click="document.location=\'../setup/\'"/>
+						<button title="{Update;da:Opdater}" name="updateDatabase" highlighted="true"/>
 					</buttons>
 				</space>
 			</fragment>
 		</space>
 	</box>
 	'.($mailEnabled ? '<fragment state="login"><text align="center"><p><link name="forgot">Glemt kodeord</link></p></text></fragment>' : '').'
+
+	<window name="databaseWindow" width="300" padding="5" title="{Update database;da:Opdatér databasen}">
+		<formula name="databaseFormula">
+			<text align="center">
+				<p>{da:Log ind med super-bruger for at opdatere databasen;en:Log in as super-user in order to update the database}</p>
+			</text>
+			<group>
+				<text label="{Username;da:Brugernavn}" key="username"/>
+				<text label="{Password;da:Kodeord}" key="password" secret="true"/>
+			</group>
+			<buttons>
+				<button text="{Update;da:Opdater}" submit="true" highlighted="true"/>
+			</buttons>
+		</formula>
+	</window>
+
+	<window title="Log" name="databaseLogWindow" width="500">
+		<textfield adaptive="true" multiline="true" name="databaseLog"/>
+	</window>
+
+	<window name="adminWindow" width="300" padding="10" title="{Create administrator;da:Opret administrator}">
+		<formula name="adminFormula">
+			<text align="center">
+				<p>{da:Log ind med super-bruger for at oprette en ny administrator;en:Log in as super-user in order to create a new administrator}</p>
+			</text>
+			<fieldset legend="Super user">
+				<group>
+					<text label="{Username;da:Brugernavn}" key="superUsername"/>
+					<text label="{Password;da:Kodeord}" key="superPassword" secret="true"/>
+				</group>
+			</fieldset>
+			<space height="10"/>
+			<fieldset legend="Administrator">
+				<group>
+					<text label="{Username;da:Brugernavn}" key="adminUsername"/>
+					<text label="{Password;da:Kodeord}" key="adminPassword" secret="true"/>
+				</group>
+			</fieldset>
+			<buttons top="10">
+				<button text="{Create;da:Opret}" submit="true" highlighted="true"/>
+			</buttons>
+		</formula>
+	</window>
 </gui>';
 
 In2iGui::render($gui);

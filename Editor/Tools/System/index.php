@@ -22,7 +22,7 @@ $gui='
 		<parameter key="status" value="@inspectionStatus.value"/>
 		<parameter key="category" value="@inspectionCategory.value"/>
 	</source>
-	<source name="logSource" url="ListLog.php">
+	<source name="logSource" url="data/ListLog.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
@@ -51,6 +51,8 @@ $gui='
 						<item icon="common/folder" title="Weblog grupper" value="webloggroup"/>
 						<item icon="common/internet" title="Stier" value="path"/>
 						<item icon="common/color" title="Designs" value="design"/>
+						<item icon="common/page" title="Skabeloner" value="templates"/>
+						<item icon="common/tools" title="Værktøjer" value="tools"/>
 						<title>Database</title>
 						<item icon="common/folder" title="Status" value="databaseInfo"/>
 						<item icon="common/folder" title="Tabeller" value="databaseTables"/>
@@ -223,7 +225,7 @@ $gui='
 		<formula name="designFormula">
 			<group>
 				<text key="title" label="Titel:"/>
-				<dropdown key="unique" label="Design:" placeholder="Vælg design..." url="DesignItems.php"/>
+				<dropdown key="unique" label="Design:" placeholder="Vælg design..." url="data/DesignItems.php"/>
 				<buttons>
 					<button name="cancelDesign" title="Annuller"/>
 					<button name="deleteDesign" title="Slet">
