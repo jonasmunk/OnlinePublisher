@@ -8,6 +8,7 @@ require_once '../../Include/Public.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Services/ToolService.php';
 require_once '../../Classes/User.php';
 
 if (Request::isPost()) {
