@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>common/person</icon>
-	<name>Personer</name>
-	<description>Redigering af kunder</description>
-	<category>edit</category>
-	<priority>5</priority>
-</tool>

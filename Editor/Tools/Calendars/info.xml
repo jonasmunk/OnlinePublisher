@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>common/calendar</icon>
-	<name>Kalendere</name>
-	<description>Abonnering og udgivning af kalendere</description>
-	<category>edit</category>
-	<priority>7</priority>
-</tool>

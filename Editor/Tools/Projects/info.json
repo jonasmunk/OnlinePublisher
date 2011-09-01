@@ -1,0 +1,8 @@
+{
+	"key" : "Projects",
+	"icon" : "common/folder",
+	"name" : {"da" : "Projekter", "en" : "Projects"},
+	"description" : {"da" : "Styring af projekter", "en" : "Manage projects"},
+	"category" : "edit",
+	"priority" : 5
+}

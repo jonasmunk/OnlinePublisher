@@ -4,7 +4,6 @@
  * @subpackage Classes.Services
  */
 require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/Tool.php');
 
 class ToolService {
 
@@ -30,6 +29,31 @@ class ToolService {
 		return $arr;
 	}
 	
+	function getCategorized() {
+		$categorized = array();
+		$installed = ToolService::getInstalled();
+		foreach ($installed as $key) {
+			$info = ToolService::getInfo($key);
+			if (!isset($categorized[$info->category])) {
+				$categorized[$info->category] = array();
+			}
+			$categorized[$info->category][$key] = $info;
+		}
+		foreach ($categorized as $key => &$value) {
+			usort($value,array('ToolService','_priorityComparator'));
+		}
+		return $categorized;
+	}
+	
+	function _priorityComparator($toolA, $toolB) {
+		$a = $toolA->priority;
+		$b = $toolB->priority;
+		if ($a == $b) {
+			return 0;
+		}
+		return ($a < $b) ? -1 : 1;
+	}
+
 	function getInfo($key) {
 		global $basePath;
 		$path = $basePath."Editor/Tools/".$key."/info.json";

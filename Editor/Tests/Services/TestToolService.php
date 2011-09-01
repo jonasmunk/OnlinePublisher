@@ -18,6 +18,7 @@ class TestToolService extends UnitTestCase {
 		foreach ($tools as $key) {
 			$info = ToolService::getInfo($key);
 			$this->assertTrue($info!=null,"The tool $key has no info");
+			$this->assertEqual($info->key,$key,"The tool $key does not have the correct key");
 		}
 	}
 }

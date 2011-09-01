@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>common/settings</icon>
-	<name>Udvikler</name>
-	<description>Værktøj til udviklere af OnlinePublisher</description>
-	<category>analyse</category>
-	<priority>1</priority>
-</tool>

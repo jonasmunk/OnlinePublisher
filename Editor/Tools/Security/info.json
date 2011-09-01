@@ -1,0 +1,8 @@
+{
+	"key" : "Security",
+	"icon" : "common/security",
+	"name" : {"da" : "Sikkerhed", "en" : "Security"},
+	"description" : {"da" : "Opsætning af sikre zoner", "en" : "Setup of secure zones"},
+	"category" : "setup",
+	"priority" : 0
+}

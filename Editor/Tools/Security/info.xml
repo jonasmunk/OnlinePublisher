@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>common/security</icon>
-	<name>Sikkerhed</name>
-	<description>Opsætning af sikre zoner med adgangsbegrænsning</description>
-	<category>setup</category>
-	<priority>0</priority>
-</tool>

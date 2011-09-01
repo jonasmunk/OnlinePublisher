@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>common/search</icon>
-	<name>Optimering</name>
-	<description>Optimering af sitet til søgemaskiner</description>
-	<category>analyse</category>
-	<priority>1</priority>
-</tool>

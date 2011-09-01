@@ -34,8 +34,26 @@ $gui='
 					<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="true"/>
 				</toolbar>
 			</tab>
+			<tab title="Avanceret" background="light">
+				<toolbar>
+					<icon icon="common/note" title="Tilføj note" name="addNote" click="notePanel.show();noteFormula.focus()"/>
+					<divider/>
+					<icon icon="common/success" title="Godkend"/>
+				</toolbar>
+			</tab>
 		</tabs>
 	</dock>
+	<boundpanel target="addNote" name="notePanel" width="200">
+		<formula name="noteFormula">
+			<group labels="above">
+				<text label="Note:" key="word" multiline="true"/>
+			</group>
+			<buttons>
+				<button text="Annuller" click="notePanel.hide()" small="true"/>
+				<button text="Opret" highlighted="true" submit="true" small="true"/>
+			</buttons>
+		</formula>
+	</boundpanel>
 </gui>';
 
 In2iGui::render($gui);

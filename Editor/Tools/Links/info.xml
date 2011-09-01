@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>common/link</icon>
-	<name>Links</name>
-	<description>Oversigt og kontrol af alle links</description>
-	<category>analyse</category>
-	<priority>2</priority>
-</tool>

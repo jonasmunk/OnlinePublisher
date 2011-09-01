@@ -23,9 +23,9 @@ hui.ui.listen({
 		}
 		hui.ui.changeState('list');
 		switch (obj.value) {
-			case 'databaseTables' : list.setUrl('data/ListDatabaseTables.php')
-			case 'templates' : list.setUrl('data/ListTemplates.php')
-			case 'tools' : list.setUrl('data/ListTools.php')
+			case 'databaseTables' : list.setUrl('data/ListDatabaseTables.php'); break;
+			case 'templates' : list.setUrl('data/ListTemplates.php'); break;
+			case 'tools' : list.setUrl('data/ListTools.php'); break;
 		}
 		if (obj.value=='databaseInfo') {
 			list.setUrl('data/ListDatabaseInfo.php');

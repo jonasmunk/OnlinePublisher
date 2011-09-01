@@ -1,6 +1,5 @@
 <?
 require_once($basePath.'Editor/Classes/Log.php');
-require_once($basePath.'Editor/Classes/Tool.php');
 require_once($basePath.'Editor/Classes/Request.php');
 require_once($basePath.'Editor/Classes/Services/AuthenticationService.php');
 
@@ -146,37 +145,6 @@ class InternalSession {
         return $permissions;
     }
 
-    function getToolsByCategory($cat) {
-        $tools = Tool::getToolsByCategory($cat);
-        if (InternalSession::isAdministrator()) {
-            return $tools;
-        } else {
-            $out = array();
-            $perms = InternalSession::getPermissions('tool');
-            foreach ($tools as $tool) {
-                if (in_array($tool['id'],$perms)) {
-                    $out[] = $tool;
-                }
-            }
-            return $out;
-        }
-    }
-
-    function getTools() {
-        $tools = Tool::getTools();
-        if (InternalSession::isAdministrator()) {
-            return $tools;
-        } else {
-            $out = array();
-            $perms = InternalSession::getPermissions('tool');
-            foreach ($tools as $tool) {
-                if (in_array($tool['id'],$perms)) {
-                    $out[] = $tool;
-                }
-            }
-            return $out;
-        }
-    }
 
 	function getToolSessionVar($tool,$key,$default=NULL) {
 		if (isset($_SESSION['tools.'.$tool.'.'.$key])) {

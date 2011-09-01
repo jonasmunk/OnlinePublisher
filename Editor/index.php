@@ -19,6 +19,11 @@ if (Request::exists("page")) {
 	InternalSession::setPageId($page);
 	$start='Services/Preview/';
 }
+
+$categorized = ToolService::getCategorized();
+
+$lang = InternalSession::getLanguage();
+
 $gui='
 <gui xmlns="uri:hui" title="OnlinePublisher editor">
 	<controller source="Base.js"/>
@@ -29,11 +34,11 @@ $gui='
 		<tabs small="true">';
 			$tabs = array('edit'=>'{ Editing ; da: Redigering }','analyse'=>'{Analysis ; da:Analyse}','setup'=>'{ Setup ; da:Opsætning }');
 			foreach ($tabs as $tab => $tabTitle) {
-				$tools = InternalSession::getToolsByCategory($tab);
+				$tools = $categorized[$tab];
 				if ($tools) {
 					$gui.='<tab title="'.$tabTitle.'" background="light"><toolbar name="'.$tab.'Toolbar">';
-					foreach ($tools as $tool) {
-						$gui.='<icon title="'.$tool['name'].'" icon="'.$tool['icon'].'" action="dock.setUrl(\'Tools/'.$tool['unique'].'/\')" key="tool:'.$tool['unique'].'"/>';
+					foreach ($tools as $key => $tool) {
+						$gui.='<icon title="'.$tool->name->$lang.'" icon="'.$tool->icon.'" action="dock.setUrl(\'Tools/'.$tool->key.'/\')" key="tool:'.$tool->key.'"/>';
 					}
 					$gui.='
 					<right>
