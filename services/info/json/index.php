@@ -15,7 +15,7 @@ Response::sendObject(array(
 		'used' => TemplateService::getUsedTemplates()
 	),
 	'tools' => array(
-		'installed' => ToolService::getInstalledToolKeys()
+		'installed' => ToolService::getInstalled()
 	),
 	'email' => array(
 		'enabled' => MailService::getEnabled(),
