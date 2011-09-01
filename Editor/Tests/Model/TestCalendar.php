@@ -6,7 +6,7 @@
 
 class TestCalendar extends AbstractObjectTest {
     
-	function TestCalendarsource() {
+	function TestCalendar() {
 		parent::AbstractObjectTest('calendar');
 	}
 

@@ -6,7 +6,7 @@
 
 class TestEmailaddress extends AbstractObjectTest {
     
-	function TestNewsgroup() {
+	function TestEmailaddress() {
 		parent::AbstractObjectTest('emailaddress');
 	}
 

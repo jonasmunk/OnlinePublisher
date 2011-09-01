@@ -83,7 +83,6 @@ class TestUser extends AbstractObjectTest {
 		
 		$byUsername = AuthenticationService::getUserByEmailOrUsername('testatron');
 		$this->assertNotNull($byUsername);
-		Log::debug($byUsername);
 		$this->assertEqual($obj->getId(),$byUsername->getId());
 		
 		$byEmail = AuthenticationService::getUserByEmailOrUsername('test@mydomain.com');

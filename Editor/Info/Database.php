@@ -205,37 +205,6 @@ $databaseTables = array(
 			array("frame_newsblock_id","int(11)","","","0",""),
 			array("newsgroup_id","int(11)","","","0","")
 		),
-	'frontpage' => array(
-			array("page_id","int(11)","","PRI","0","")
-		),
-	'frontpage_cell' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("row_id","int(11)","","","0",""),
-			array("position","int(11)","","","0",""),
-			array("rows","int(11)","","","1",""),
-			array("columns","int(11)","","","1",""),
-			array("title","varchar(255)","YES","","",""),
-			array("type","varchar(20)","YES","","",""),
-			array("width","varchar(20)","YES","","",""),
-			array("height","varchar(20)","YES","","100","")
-		),
-	'frontpage_row' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("position","int(11)","","","0","")
-		),
-	'frontpage_section' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("page_id","int(11)","","","0",""),
-			array("cell_id","int(11)","","","0",""),
-			array("position","int(11)","","","0",""),
-			array("part_id","int(11)","","","0",""),
-			array("top","varchar(10)","YES","","",""),
-			array("bottom","varchar(10)","YES","","",""),
-			array("left","varchar(10)","YES","","",""),
-			array("right","varchar(10)","YES","","","")
-		),
 	'guestbook' => array(
 			array("page_id","int(11)","","","0",""),
 			array("title","varchar(255)","","","",""),
@@ -349,9 +318,6 @@ $databaseTables = array(
 			array("startdate","datetime","YES","","0000-00-00 00:00:00",""),
 			array("enddate","datetime","YES","","0000-00-00 00:00:00",""),
 			array("image_id","int(11)","YES","","","")
-		),
-	'newseditor' => array(
-			array("page_id","int(11)","YES","","","")
 		),
 	'newsgroup' => array(
 			array("object_id","int(11)","","","0","")
@@ -673,15 +639,6 @@ $databaseTables = array(
 			array("person_id","int(11)","","","0",""),
 			array("persongroup_id","int(11)","","","0","")
 		),
-	'personlisting' => array(
-			array("page_id","int(11)","","","0",""),
-			array("title","varchar(255)","YES","","",""),
-			array("text","text","YES","","","")
-		),
-	'personlisting_persongroup' => array(
-			array("page_id","int(11)","","","0",""),
-			array("persongroup_id","int(11)","","","0","")
-		),
 	'phonenumber' => array(
 		array("object_id","int(11)","","","0",""),
 		array("number","varchar(255)","YES","","",""),
@@ -715,15 +672,6 @@ $databaseTables = array(
 		),
 	'productgroup_product' => array(
 			array("product_id","int(11)","","","0",""),
-			array("productgroup_id","int(11)","","","0","")
-		),
-	'productlisting' => array(
-			array("page_id","int(11)","","","0",""),
-			array("title","varchar(255)","YES","","",""),
-			array("text","text","YES","","","")
-		),
-	'productlisting_productgroup' => array(
-			array("page_id","int(11)","","","0",""),
 			array("productgroup_id","int(11)","","","0","")
 		),
 	'productoffer' => array(
