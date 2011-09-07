@@ -11,7 +11,7 @@ require_once '../../Classes/Utilities/GuiUtils.php';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 $flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
-//$flash = 'true';
+$flash = 'false';
 $gui='
 <gui xmlns="uri:hui" title="Filer" padding="10">
 	<controller source="controller.js"/>
