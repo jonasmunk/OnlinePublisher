@@ -85,7 +85,7 @@ class HeaderPartController extends PartController
 	function buildSub($part,$context) {
 		$text = $part->getText();
 		$text = StringUtils::escapeSimpleXML($text);
-		$text = $context->decorateForBuild($text);
+		$text = $context->decorateForBuild($text,$part->getId());
 		$text = StringUtils::insertLineBreakTags($text,'<break/>');
 		return 
 			'<header level="'.$part->getLevel().'" xmlns="'.$this->getNamespace().'">'.

@@ -97,12 +97,22 @@ class DocumentController extends LegacyTemplateController {
 
 	function buildPartContext($pageId) {
 		$context = new PartContext();
-	
+		
 		//////////////////// Find links ///////////////////
-		$sql = "select link.*,page.path from link left join page on page.id=link.target_id and link.target_type='page' where page_id=".$pageId." and source_type='text'";
+		$sql = "select link.*,page.path from link left join page on page.id=link.target_id and link.target_type='page' where page_id=".Database::int($pageId)." and source_type='text'";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$context -> addBuildLink(StringUtils::escapeSimpleXML($row['source_text']),$row['target_type'],$row['target_id'],$row['target_value'],$row['target'],$row['alternative'],$row['path']);
+			$context -> addBuildLink(
+				StringUtils::escapeSimpleXML($row['source_text']),
+				$row['target_type'],
+				$row['target_id'],
+				$row['target_value'],
+				$row['target'],
+				$row['alternative'],
+				$row['path'],
+				$row['id'],
+				intval($row['part_id'])
+			);
 		}
 		Database::free($result);
 	

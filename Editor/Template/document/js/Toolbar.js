@@ -20,16 +20,14 @@ var controller = {
 		window.parent.location='../../Tools/Pages/?action=pageproperties&amp;id='+this.pageId;
 	},
 	$click$newLink : function() {
-		document.location='Toolbar.php?link=true';
+		var win = window.parent.frames[1].EditorFrame.getWindow();
+		win.controller.newLink();
 	},
 	$click$editLinks : function() {
-		window.parent.Frame.location='ListOfLinks.php';
-	},
-	$click$editLayout : function() {
-		window.parent.Frame.EditorFrame.setUrl('Editor.php?toggleLayoutMode=true');
+		window.parent.frames[1].location='Links.php';
 	},
 	$click$history : function() {
-		window.parent.Frame.EditorFrame.setUrl('../../Services/PageHistory/');
+		window.parent.frames[1].EditorFrame.setUrl('../../Services/PageHistory/');
 	}
 };
 

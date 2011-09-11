@@ -81,7 +81,7 @@ class TextPartController extends PartController
 	function buildSub($part,$context) {
 		$text = $part->getText();
 		$text = StringUtils::escapeSimpleXML($text);
-		$text = $context->decorateForBuild($text);
+		$text = $context->decorateForBuild($text,$part->getId());
 		$text = StringUtils::insertLineBreakTags($text,'<break/>');
 		$text = str_replace('<break/><break/>', '</p><p>', $text);
 		$xml = '<text xmlns="'.$this->getNamespace().'">';

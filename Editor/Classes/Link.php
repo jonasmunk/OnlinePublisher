@@ -14,6 +14,7 @@ class Link {
 	var $targetValue;
 	var $targetId;
 	var $pageId;
+	var $partId;
     
     function Link() {
         
@@ -33,6 +34,14 @@ class Link {
 
 	function getPageId() {
 	    return $this->pageId;
+	}
+	
+	function setPartId($partId) {
+	    $this->partId = $partId;
+	}
+
+	function getPartId() {
+	    return $this->partId;
 	}
 	
 	
@@ -101,19 +110,21 @@ class Link {
 		$sql = "select * from link where id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
 			$link = new Link();
-			$link->setId($id);
+			$link->setId(intval($id));
 			$link->setText($row['source_text']);
 			$link->setAlternative($row['alternative']);
 			$link->targetType=$row['target_type'];
 			$link->targetValue=$row['target_value'];
-			$link->targetId=$row['target_id'];
+			$link->targetId=intVal($row['target_id']);
+			$link->partId=intVal($row['part_id']);
+			$link->pageId=intVal($row['page_id']);
 			return $link;
 		}
 		return null;
 	}
 	
 	function remove() {
-		$sql="delete from link where id=".$this->id;
+		$sql="delete from link where id=".Database::int($this->id);
 		Database::delete($sql);
 	}
 	
@@ -123,7 +134,9 @@ class Link {
 		}
 		if ($this->id) {
 			$sql="update link set ".
-			"source_text=".Database::text($this->text).
+			"part_id=".Database::int($this->partId).
+			",page_id=".Database::int($this->pageId).
+			",source_text=".Database::text($this->text).
 			",target_type=".Database::text($this->targetType).
 			",target_value=".Database::text($this->targetValue).
 			",target_id=".Database::int($this->targetId).
@@ -132,9 +145,10 @@ class Link {
 			" where id=".Database::int($this->id);
 			Database::update($sql);
 		} else {
-			$sql="insert into link (page_id,source_type,source_text,target_type,target_value,target_id,target,alternative
+			$sql="insert into link (page_id,part_id,source_type,source_text,target_type,target_value,target_id,target,alternative
 				) values (".
-				$this->pageId.
+				Database::int($this->pageId).
+				",".Database::int($this->partId).
 				",'text',".
 				Database::text($this->text).",".
 				Database::text($this->targetType).",".
@@ -143,7 +157,6 @@ class Link {
 				Database::text($this->target).",".
 				Database::text($alternative).
 			")";
-			error_log($sql);
 			$this->id = Database::insert($sql);
 		}
 	}

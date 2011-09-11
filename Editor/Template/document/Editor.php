@@ -11,6 +11,7 @@ require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/SystemInfo.php';
+require_once 'DocumentController.php';
 require_once 'Functions.php';
 
 header('Content-Type: text/html; charset=UTF-8');
@@ -41,7 +42,7 @@ $strings = array(
 <script type="text/javascript" src="../../../hui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
 <? } ?>
 <!--[if IE 8]>
-<link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
+	<link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
 <![endif]-->
 <!--[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version=<?=SystemInfo::getDate()?>"> </link>
@@ -106,32 +107,62 @@ else if (getDocumentSection()!=0) {
 <input type="hidden" name="index"/>
 </form>
 <?
-$partContext = buildPartContext();
-$lastRowIndex=displayRows();
+$partContext = DocumentController::buildPartContext(InternalSession::getPageId());
+$lastRowIndex = displayRows();
 ?>
 </div>
+<?
+$gui = '
+	<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
+	<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
+	<window width="400" name="linkWindow" padding="5" title="Link">
+	<formula name="linkFormula">
+		<group labels="above">
+			<text label="Tekst" key="text" multiline="true"/>
+			<checkbox label="Kun dette afsnit" key="limitToPart"/>
+		</group>
+		<space left="3" right="3" top="5">
+		<fieldset legend="Link">
+			<group>
+				<dropdown label="Side" key="page" name="linkPage" source="pageSource"/>
+				<dropdown label="Fil" key="file" name="linkFile" source="fileSource"/>
+				<text label="Adresse" key="url" name="linkUrl"/>
+				<text label="E-post" key="email" name="linkEmail"/>
+			</group>
+		</fieldset>
+		</space>
+		<buttons top="5">
+			<button text="Slet" name="deleteLink">
+				<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+			</button>
+			<button text="Annuller" name="cancelLink"/>
+			<button text="Opret" submit="true" highlighted="true" name="saveLink"/>
+		</buttons>
+	</formula>
+	</window>
+	
+	<boundpanel name="linkPanel" variant="light">
+		<buttons align="center">
+			<button text="Rediger" name="editLink" highlighted="true" variant="paper"/>
+			<button text="Slet" name="deleteLinkPanel" variant="paper">
+				<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+			</button>
+			<button text="Besøg" name="visitLink" variant="paper"/>
+			<button text="Kun dette afsnit" name="limitLinkToPart" variant="paper"/>
+			<button text="Annuller" click="linkPanel.hide()" variant="paper"/>
+		</buttons>
+	</boundpanel>
+	
+	<menu name="linkMenu">
+		<item title="Slet"/>
+	</menu>
+';
+echo In2iGui::renderFragment($gui);
+?>
 </body>
 </html>
 
 <?
-
-function buildPartContext() {
-	$context = new PartContext();
-	$pageId = InternalSession::getPageId();
-	
-	//////////////////// Find links ///////////////////
-	$sql="select * from link where page_id=".$pageId." and source_type='text'";
-	$result = Database::select($sql);
-	while ($row = Database::next($result)) {
-		$context -> addDisplayLink(StringUtils::escapeSimpleXML($row['source_text']),'Toolbar.php?link=true&amp;id='.$row['id'],'Toolbar','common',$row['alternative']);
-		$context -> addBuildLink(StringUtils::escapeSimpleXML($row['source_text']),$row['target_type'],$row['target_id'],$row['target_value'],$row['target'],$row['alternative'],$row['path'],$row['id']);
-	}
-	Database::free($result);
-	
-	/////////////////// Return ///////////////////////
-	return $context;
-}
-
 function displayRows() {
 	$selected = getDocumentRow();
 	$pageId = InternalSession::getPageId();
@@ -234,7 +265,7 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 	$ctrl = PartService::getController($partType);
 	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
-		echo '<div style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)">';
+		echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\'>';
 		echo $ctrl->display($part,$partContext);
 		echo '</div>';
 	}

@@ -7,7 +7,8 @@
  xmlns:header="http://uri.in2isoft.com/onlinepublisher/part/header/1.0/"
  xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
- exclude-result-prefixes="p f h header text util"
+ xmlns:part="http://uri.in2isoft.com/onlinepublisher/part/1.0/"
+ exclude-result-prefixes="p f h header text util part"
  >
 
 <xsl:variable name="timestamp-query">
@@ -26,15 +27,37 @@
 	<xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
 	<xsl:choose>
 		<xsl:when test="$editor='true'">
-			<xsl:attribute name="href">#</xsl:attribute>
+			<xsl:attribute name="href">javascript://</xsl:attribute>
 			<xsl:choose>
 				<xsl:when test="@id">
-					<xsl:attribute name="onclick">controller.linkWasClicked('<xsl:value-of select="@id"/>');return false;</xsl:attribute>
+					<xsl:attribute name="onclick">
+					controller.linkWasClicked({
+						id : <xsl:value-of select="@id"/>
+						, event : event
+						, node : this
+						<xsl:if test="@page">,page : <xsl:value-of select="@page"/></xsl:if>
+						<xsl:if test="@file">,file : <xsl:value-of select="@file"/></xsl:if>
+						<xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
+					}); return false;
+					</xsl:attribute>
+					<xsl:attribute name="oncontextmenu">
+						controller.linkMenu({
+							id : <xsl:value-of select="@id"/>
+							, event : event
+							, node : this
+							<xsl:if test="@page">,page : <xsl:value-of select="@page"/></xsl:if>
+							<xsl:if test="@file">,file : <xsl:value-of select="@file"/></xsl:if>
+							<xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
+						});
+					</xsl:attribute>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:attribute name="onclick">return false;</xsl:attribute>
 				</xsl:otherwise>
 			</xsl:choose>
+			<xsl:if test="@part-id">
+				<span class="editor_link_bound"><xsl:comment/></span>
+			</xsl:if>
 		</xsl:when>
 		<xsl:otherwise>
 			<xsl:choose>

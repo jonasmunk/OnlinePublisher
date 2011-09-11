@@ -69,3 +69,21 @@ div.row {
 .Disabled {
 	opacity: 0.5;
 }
+
+div.editor_part_highlighted
+{
+	border: 1px solid #CDF;
+	box-shadow: 0 0 5px #ABF, inset 0 0 5px #ABF;
+	border-radius: 4px;
+}
+
+body.editor_details span.editor_link_bound
+{
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-left: -12px;
+	margin-top: 2px;
+	position: absolute;
+	background: url('../../../hui/icons/monochrome/lock12.png');
+}

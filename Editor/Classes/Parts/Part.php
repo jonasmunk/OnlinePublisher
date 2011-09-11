@@ -106,17 +106,20 @@ class Part
 	}
 	
 	function remove() {
-		$sql = "delete from part where id=".$this->id;
+		$sql = "delete from part where id=".Database::int($this->id);
 		Database::delete($sql);
 
-		$sql = "delete from part_".$this->type." where part_id=".$this->id;
+		$sql = "delete from part_".$this->type." where part_id=".Database::int($this->id);
+		Database::delete($sql);
+
+		$sql = "delete from link where part_id=".Database::int($this->id);
 		Database::delete($sql);
 		
 		// Delete relations
 		$schema = Part::$schema[$this->type];
 		if (is_array($schema['relations'])) {
 			foreach ($schema['relations'] as $field => $info) {
-				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".$this->id;
+				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".Database::int($this->id);
 				Database::delete($sql);
 			}
 		}

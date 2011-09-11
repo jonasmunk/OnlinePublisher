@@ -34,7 +34,7 @@ class ListingPartController extends PartController
 			$data.='<item>';
 			$lines = count($point);
 			for ($i=0;$i<$lines;$i++) {
-				$formatted = $this->_formatBuildText($point[$i],$context);
+				$formatted = $this->_formatBuildText($point[$i],$context,$part);
 				if ($i>0) {
 					$data.='<break/>'.$formatted;
 				} else {
@@ -48,9 +48,9 @@ class ListingPartController extends PartController
 		return $data;
 	}
 
-	function _formatBuildText($text,$context) {
+	function _formatBuildText($text,$context,$part) {
 		$text = StringUtils::escapeSimpleXML($text);
-		$text = $context->decorateForBuild($text);
+		$text = $context->decorateForBuild($text,$part->getId());
 		$text = StringUtils::insertLineBreakTags($text,'<break/>');
 		return $text;
 	}

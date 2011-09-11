@@ -11,6 +11,10 @@ hui.ui.listen({
 		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('tool:Files');
 		}
+		var fileInfo = hui.location.getInt('fileInfo');
+		if (fileInfo) {
+			this.loadFile(fileInfo);
+		}
 	},
 	$selectionChanged$list : function(item) {
 		hui.ui.get('delete').setEnabled(true);

@@ -53,12 +53,14 @@ class ImageService {
 	
 	function getNumberOfPagesWithImages() {
 		$count = 0;
-		$sql = "select count(page.id) as num from `part_image`,document_section,page".
-			" where part_image.part_id=document_section.part_id and page.id=document_section.page_id";
-		$rows = Database::selectAll($sql);
-		foreach ($rows as $row) {
+		$sql = "select count(distinct page.id) as num from `part_image`,object,document_section,page where part_image.part_id=document_section.part_id and page.id=document_section.page_id and `part_image`.`image_id`=object.`id`";
+		if ($row = Database::selectFirst($sql)) {
 			$count+= intval($row['num']);
 		}
+		$sql = "select distinct page.id as num from part_imagegallery,imagegroup,object,`imagegroup_image`,document_section,page where part_imagegallery.part_id=document_section.part_id and page.id=document_section.page_id and `part_imagegallery`.`imagegroup_id`=imagegroup.`object_id` and `imagegroup_image`.`imagegroup_id`=imagegroup.`object_id` and imagegroup.`object_id`=object.id";
+		if ($row = Database::selectFirst($sql)) {
+			$count+= intval($row['num']);
+		}		
 		return $count;
 	}
 	

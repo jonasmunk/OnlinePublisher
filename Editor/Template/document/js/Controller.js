@@ -92,9 +92,30 @@ var controller = {
 			this.partEditControls.addIcon('save','common/save');
 			this.partEditControls.addIcon('cancel','common/stop');
 			this.partEditControls.showAtElement(hui.firstByClass(document.body,'section_selected'),{'horizontal':'left','vertical':'topOutside'});
+		} else {
+			hui.listen(document.body,'keydown',function(e) {
+				e = hui.event(e);
+				if (e.shiftKey) {
+					hui.addClass(document.body,'editor_details');
+					controller.detailsMode = true;
+				}
+			});
+			hui.listen(document.body,'keyup',function(e) {
+				if (controller.detailsMode) {
+					hui.removeClass(document.body,'editor_details');
+					controller.detailsMode = false;
+				}
+			});			
 		}
 		this.ready = true;
-		hui.listen(document.body,'mouseup',function() {
+		hui.listen(document.body,'mouseup',function(e) {
+			e = hui.event(e);
+			var section = e.findByClass('editor_section');
+			if (section) {
+				this.selectedTextInfo = hui.fromJSON(section.getAttribute('data'));
+			} else {
+				this.selectedTextInfo = null;
+			}
 			this.selectedText = hui.selection.getText();
 		}.bind(this));
 		window.onscroll=this.saveScroll;
@@ -252,8 +273,201 @@ var controller = {
 	
 	////////////////////////////////// Links //////////////////////////
 	
-	linkWasClicked : function(id) {
-		parent.parent.Toolbar.location='Toolbar.php?link=true&id='+id+'&'+Math.random();
+	linkId : null,
+	
+	newLink : function() {
+		this.linkId = null;
+		if (this.selectedTextInfo) {
+			this.linkPartId = this.selectedTextInfo.part;
+			this._highlightPart(this.linkPartId);
+		}
+		linkFormula.reset();
+		linkFormula.setValues({
+			text : this.selectedText
+		});
+		linkWindow.show();
+		deleteLink.disable();
+		saveLink.setText('Opret');
+		linkFormula.focus();
+	},
+	$click$cancelLink : function() {
+		linkFormula.reset();
+		linkWindow.hide();
+		this._clearPartHighlight();
+	},
+	_highlightPart : function(id) {
+		this._clearPartHighlight();
+		var node = hui.get('part'+id);
+		if (node) {
+			hui.addClass(node,'editor_part_highlighted');
+			this._highlightedPart = node;
+		}
+	},
+	_clearPartHighlight : function() {
+		if (this._highlightedPart) {
+			hui.removeClass(this._highlightedPart,'editor_part_highlighted');
+		}
+		this._highlightedPart = null;
+	},
+	$userClosedWindow$linkWindow : function() {
+		this._clearPartHighlight();
+	},
+	$valueChanged$linkPage : function() {
+		linkUrl.reset();
+		linkFile.reset();
+		linkEmail.reset()
+	},
+	$valueChanged$linkFile : function() {
+		linkUrl.reset();
+		linkPage.reset();
+		linkEmail.reset()
+	},
+	$valueChanged$linkUrl : function() {
+		linkFile.reset();
+		linkPage.reset();
+		linkEmail.reset()
+	},
+	$valueChanged$linkEmail : function() {
+		linkFile.reset();
+		linkPage.reset();
+		linkUrl.reset()
+	},
+	$submit$linkFormula : function(form) {
+		var values = form.getValues();
+		if (hui.isBlank(values.text)) {
+			hui.ui.showMessage({text:'Skriv den tekst hvor der skal linkes fra',duration:2000});
+			form.focus();
+			return;
+		}
+		if (hui.isBlank(values.email) && hui.isBlank(values.url) && values.page==null && values.file==null) {
+			hui.ui.showMessage({text:'Du skal vælge et mål for linket',duration:2000});
+			form.focus();
+			return;
+		}
+		var p = {text : values.text, id : this.linkId};
+		if (values.page) {
+			p.type = 'page';
+			p.value = values.page;
+		} else if (values.file) {
+			p.type = 'file';
+			p.value = values.file;
+		} else if (!hui.isBlank(values.url)) {
+			p.type = 'url';
+			p.value = values.url;
+		} else if (!hui.isBlank(values.email)) {
+			p.type = 'email';
+			p.value = values.email;
+		}
+		if (values.limitToPart && this.linkPartId) {
+			p.partId = this.linkPartId;
+		}
+		hui.ui.request({
+			url : 'data/SaveLink.php',
+			parameters : p,
+			message : {start:'Indsætter link',delay:300},
+			onSuccess : function() {
+				document.location.reload();
+			}
+		});
+		linkFormula.reset();
+		linkWindow.hide();
+	},
+	_loadLink : function(id) {
+		this.linkId = null;
+		linkFormula.reset();
+		hui.ui.request({
+			url : 'data/LoadLink.php',
+			parameters : {id:id},
+			message : {start:'Henter link',delay:300},
+			onJSON : function(obj) {
+				this.linkId = obj.id;
+				if (obj.partId) {
+					this.linkPartId = obj.partId;
+					hui.log('Using partId from data');
+				} else if (this.selectedTextInfo) {
+					this.linkPartId = this.selectedTextInfo.part;
+					hui.log('Using partId from selected text');
+				} else {
+					hui.log('Part id is undefined');
+				}
+				if (this.linkPartId) {
+					this._highlightPart(this.linkPartId);
+				}
+				hui.log('load link: Part id is: '+this.linkPartId);
+				linkFormula.setValues(obj);
+				linkWindow.show();
+				deleteLink.enable();
+				saveLink.setText('Opdater');
+			}.bind(this)
+		});
+	},
+	
+	clickedLink : null,
+	
+	linkWasClicked : function(info) {
+		visitLink.setEnabled(info.page!=undefined);
+		this.clickedLink = info;
+		linkPanel.position(info.node);
+		var section = hui.firstAncestorByClass(info.node,'editor_section');
+		if (section) {
+			this.selectedTextInfo = hui.fromJSON(section.getAttribute('data'));
+		} else {
+			hui.log('Section not found');
+			this.selectedTextInfo = null;
+		}
+		if (this.selectedTextInfo) {
+			this.linkPartId = this.selectedTextInfo.part;
+			hui.log('link click: Part id is: '+this.linkPartId);
+		}
+		linkPanel.show();
+	},
+	linkMenu : function(info) {
+		if (!this.linkContextMenu) {
+			this.linkContextMenu = hui.ui.Menu.create({name:'linkMenu'});
+			this.linkContextMenu.addItems([
+				{title:'Slet',value:'delete'}
+			]);
+		}
+		this.linkContextMenu.showAtPointer(info.event);
+	},
+	$click$editLink : function() {
+		linkPanel.hide();
+		this._loadLink(this.clickedLink.id);
+	},
+	$click$visitLink : function() {
+		if (this.clickedLink.page) {
+			parent.parent.location='../Edit.php?id='+this.clickedLink.page;
+		}
+	},
+	$click$limitLinkToPart : function() {
+		hui.ui.request({
+			url : 'data/BindLinkToPart.php',
+			parameters : {linkId:this.clickedLink.id,partId:this.clickedLink.part},
+			message : {start:'Gemmer link',delay:300},
+			onSuccess : function() {
+				document.location.reload();
+			}
+		});
+	},
+	$click$deleteLinkPanel : function() {
+		linkPanel.hide();
+		this._deleteLink(this.clickedLink.id);
+	},
+	$click$deleteLink : function() {
+		this._deleteLink(this.linkId);
+		this.linkId = null;
+		linkFormula.reset();
+		linkWindow.hide();
+	},
+	_deleteLink : function(id) {
+		hui.ui.request({
+			url : 'data/DeleteLink.php',
+			parameters : {id:id},
+			message : {start:'Sletter link',delay:300},
+			onSuccess : function() {
+				document.location.reload();
+			}
+		});
 	}
 };
 

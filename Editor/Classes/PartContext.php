@@ -8,26 +8,19 @@ require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class PartContext {
 	
-	var $displayLinks;
-	var $buildLinks;
+	//var $displayLinks;
+	//var $buildLinks;
 	var $template;
 	var $design;
-	var $displayDecorator;
 	var $buildDecorator;
 	var $indexDecorator;
 	var $synchronize;
 	
 	function PartContext() {
 		$this->displayLinks = array();
-		$this->buildLinks = array();
+		//$this->buildLinks = array();
 		$this->template = 'document';
 		$this->design = 'in2it';
-		$this->displayDecorator = new TextDecorator();
-		$this->displayDecorator->setEmailTags('<a href="#" class="common"><span>','</span></a>');
-		$this->displayDecorator->setHttpTags('<a href="{subject}" class="common" target="_blank"><span>','</span></a>');
-		$this->displayDecorator->addTag('s','strong');
-		$this->displayDecorator->addTag('e','em');
-		$this->displayDecorator->addTag('slet','del');
 		$this->buildDecorator = new TextDecorator();
 		$this->buildDecorator->setEmailTags('<link email="{subject}">','</link>');
 		$this->buildDecorator->setHttpTags('<link url="{subject}">','</link>');
@@ -63,14 +56,9 @@ class PartContext {
 	function getSynchronize() {
 	    return $this->synchronize;
 	}
-	
 
-	function decorateForDisplay($text) {
-		return $this->displayDecorator->decorate($text);
-	}
-
-	function decorateForBuild($text) {
-		return $this->buildDecorator->decorate($text);
+	function decorateForBuild($text,$partId=null) {
+		return $this->buildDecorator->decorate($text,$partId);
 	}
 
 	function decorateForIndex($text) {
@@ -79,13 +67,8 @@ class PartContext {
 
 	/////////////////////////////// Links ///////////////////////////
 	
-	function addDisplayLink($text,$href,$target,$class,$title) {
-		$this->displayLinks[] = array('text' => $text, 'href' => $href , 'target' => $target, 'class' => $class, 'title' => $title);
-		$this->displayDecorator->addReplacement($text,'<a href="'.$href.'" target="'.$target.'" class="'.$class.'" title="'.$title.'"><span>','</span></a>');
-	}
-	
-	function addBuildLink($text,$type,$id,$value,$target,$title,$path,$linkId=0) {
-		$this->buildLinks[] = array('text' => $text, 'type' => $type, 'id' => $id, 'value' => $value , 'target' => $target, 'title' => $title, 'linkId' => $linkId);
+	function addBuildLink($text,$type,$id,$value,$target,$title,$path,$linkId=0,$partId=null) {
+		//$this->buildLinks[] = array('text' => $text, 'type' => $type, 'id' => $id, 'value' => $value , 'target' => $target, 'title' => $title, 'linkId' => $linkId, 'partId' => $partId);
 		$atts='';
 		if ($type=='url') {
 			$atts.=' url="'.StringUtils::escapeXML($value).'"';
@@ -105,10 +88,19 @@ class PartContext {
 		if ($path!='') {
 			$atts.=' path="'.$path.'"';
 		}
+		if (StringUtils::isNotBlank($title)) {
+			$atts.=' title="'.StringUtils::escapeXML($title).'"';
+		}
 		if ($linkId>0) {
 			$atts.=' id="'.$linkId.'"';
 		}
-		$this->buildDecorator->addReplacement($text,'<link'.$atts.'>','</link>');
+		if ($partId>0) {
+			$atts.=' part-id="'.$partId.'"';
+		}
+		if ($partId!=null) {
+			Log::debug('Build link added: '.$partId);
+		}
+		$this->buildDecorator->addReplacement($text,'<link'.$atts.'>','</link>',$partId);
 	}
 }
 ?>

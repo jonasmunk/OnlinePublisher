@@ -2,11 +2,12 @@ var controller = {
 	id : null,
 	editorFrame : null,
 	$ready : function() {
-		this.editorFrame = window.parent.Frame.EditorFrame;
-		if (this.id===0) {
+		this.editorFrame = window.parent.frames[1].EditorFrame;
+		if (this.editorFrame && this.id===0) {
 			var win = this.editorFrame.getWindow();
 			text.setValue(win.controller.selectedText);
 		}
+		text.focus();
 	},
 	_getParameters : function() {
 		var p = {};
@@ -32,8 +33,7 @@ var controller = {
 	$click$create : function() {
 		var p = this._getParameters();
 		hui.ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
-			this.editorFrame.reload();
-			document.location='Toolbar.php';
+			this._refresh();
 		}.bind(this)});
 	},
 	
@@ -42,15 +42,16 @@ var controller = {
 		var p = this._getParameters();
 		p.id = this.id;
 		hui.ui.request({url:'Links/SaveLink.php',parameters:p,onSuccess:function() {
-			this.editorFrame.reload();
-			document.location='Toolbar.php';
+			this._refresh();
 		}.bind(this)});
 	},
 	$click$delete : function() {
 		hui.ui.request({url:'Links/DeleteLink.php',parameters:{id:this.id},onSuccess:function() {
-			this.editorFrame.reload();
-			document.location='Toolbar.php';
+			this._refresh();
 		}.bind(this)});
+	},
+	_refresh : function() {
+		window.parent.location='Edit.php';
 	},
 	
 	

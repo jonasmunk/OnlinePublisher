@@ -5,12 +5,21 @@
  */
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class Log {
 	
 	function debug($object) {
 		global $baseUrl;
 		if (strpos('/~jbm/',$baseUrl)!==false || true) {
+			error_log(print_r($object,true));
+		}
+	}
+	
+	function debugJSON($object) {
+		global $baseUrl;
+		if (strpos('/~jbm/',$baseUrl)!==false || true) {
+			$object = StringUtils::toJSON($object);
 			error_log(print_r($object,true));
 		}
 	}
