@@ -617,7 +617,13 @@
 </boundpanel>
 -->
 <xsl:template match="gui:boundpanel">
-	<div id="{generate-id()}" class="hui_boundpanel" style="display:none;">
+	<div id="{generate-id()}" style="display:none;">
+		<xsl:attribute name="class">
+			<xsl:text>hui_boundpanel</xsl:text>
+			<xsl:if test="@variant">
+				<xsl:text> hui_boundpanel_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+		</xsl:attribute>
 		<div class="hui_boundpanel_arrow"><xsl:comment/></div>
 		<div class="hui_boundpanel_top"><div><div><xsl:comment/></div></div></div>
 		<div class="hui_boundpanel_body">
@@ -641,6 +647,7 @@
 			element:'<xsl:value-of select="generate-id()"/>',
 			name:'<xsl:value-of select="@name"/>'
 			<xsl:if test="@target">,target:'<xsl:value-of select="@target"/>'</xsl:if>
+			<xsl:if test="@variant">,variant:'<xsl:value-of select="@variant"/>'</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

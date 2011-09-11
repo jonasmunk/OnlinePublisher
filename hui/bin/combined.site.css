@@ -703,6 +703,7 @@ div.hui_buttons
 	overflow: hidden;
 	font-size: 0;
 	line-height: 0;
+	white-space: nowrap;
 }
 
 div.hui_buttons_right div.hui_buttons_body
@@ -723,6 +724,11 @@ div.hui_buttons a.hui_button
 div.hui_buttons_right a.hui_button
 {
 	margin: 0px 0px 0px 2px;
+}
+
+div.hui_buttons_center a.hui_button
+{
+	margin: 0px 1px 0px 1px;
 }
 
 a.hui_button

@@ -10,6 +10,12 @@ hui.ui.BoundPanel = function(options) {
 	this.visible = false;
 	this.content = hui.firstByClass(this.element,'hui_boundpanel_content');
 	this.arrow = hui.firstByClass(this.element,'hui_boundpanel_arrow');
+	this.arrowWide = 32;
+	this.arrowNarrow = 18;
+	if (options.variant=='light') {
+		this.arrowWide = 23;
+		this.arrowNarrow = 12;
+	}
 	hui.ui.extend(this);
 }
 
@@ -37,7 +43,7 @@ hui.ui.BoundPanel.create = function(options) {
 
 	options.element = hui.build(
 		'div',{
-			'class':'hui_boundpanel',
+			'class' : options.variant ? 'hui_boundpanel hui_boundpanel_'+options.variant : 'hui_boundpanel',
 			style:'display:none;zIndex:'+hui.ui.nextPanelIndex()+';top:'+options.top+'px;left:'+options.left+'px',
 			html:html,
 			parent:document.body
@@ -152,8 +158,8 @@ hui.ui.BoundPanel.prototype = {
 		var viewportWidth = hui.getViewPortWidth();
 		var viewportHeight = hui.getViewPortHeight();
 		var nodeLeft = offset.left-scrollOffset.left+hui.getScrollLeft();
-		var nodeWidth = node.clientWidth;
-		var nodeHeight = node.clientHeight;
+		var nodeWidth = node.clientWidth || node.offsetWidth;
+		var nodeHeight = node.clientHeight || node.offsetHeight;
 		var nodeTop = offset.top-scrollOffset.top+hui.getScrollTop();
 		var arrowLeft, arrowTop, left, top;
 		var vertical = (nodeTop-scrollOffset.top)/viewportHeight;
@@ -161,33 +167,51 @@ hui.ui.BoundPanel.prototype = {
 		if (vertical<.1) {
 			this.relativePosition='top';
 			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_top';
-			arrowTop = -16;
+			if (this.options.variant=='light') {
+				arrowTop = this.arrowNarrow*-1+1;
+			} else {
+				arrowTop = this.arrowNarrow*-1+2;
+			}
 			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
-			arrowLeft = (nodeLeft+nodeWidth/2)-left-18;
+			arrowLeft = (nodeLeft+nodeWidth/2)-left-this.arrowNarrow;
 			top = nodeTop+nodeHeight+8;
 		}
 		else if (vertical>.9) {
 			this.relativePosition='bottom';
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_bottom';
-			arrowTop = dims.height-6;
+			if (this.options.variant=='light') {
+				arrowTop = dims.height-2;
+			} else {
+				arrowTop = dims.height-6;
+			}
 			left = Math.min(viewportWidth-dims.width,Math.max(0,nodeLeft+(nodeWidth/2)-((dims.width)/2)));
-			arrowLeft = (nodeLeft+nodeWidth/2)-left-18;
+			arrowLeft = (nodeLeft+nodeWidth/2)-left-this.arrowNarrow;
 			top = nodeTop-dims.height-5;
 		}
 		else if ((nodeLeft+nodeWidth/2)/viewportWidth<.5) {
 			this.relativePosition='left';
 			left = nodeLeft+nodeWidth+10;
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_left';
-			arrowLeft=-14;
 			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
-			arrowTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
+			arrowTop = (dims.height-this.arrowWide)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
+			if (this.options.variant=='light') {
+				arrowLeft=-11;
+				arrowTop+=2;
+			} else {
+				arrowLeft=-14;
+			}
 		} else {
 			this.relativePosition='right';
 			left = nodeLeft-dims.width-10;
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_right';
-			arrowLeft=dims.width-4;
 			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
-			arrowTop = (dims.height-32)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
+			arrowTop = (dims.height-this.arrowWide)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
+			if (this.options.variant=='light') {
+				arrowLeft=dims.width-1;
+				arrowTop+=2;
+			} else {
+				arrowLeft=dims.width-4;
+			}
 		}
 		this.arrow.style.marginTop = arrowTop+'px';
 		this.arrow.style.marginLeft = arrowLeft+'px';

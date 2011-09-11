@@ -115,6 +115,9 @@ hui.ui.Overlay.prototype = {
 			var zIndex = hui.ui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
 			var color = hui.getStyle(document.body,'background-color');
+			if (color=='transparent' || color=='rgba(0, 0, 0, 0)') {
+				color='#fff';
+			}
 			hui.ui.showCurtain({widget:this,zIndex:zIndex,color:color});
 		}
 	},

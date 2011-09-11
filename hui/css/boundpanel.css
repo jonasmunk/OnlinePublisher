@@ -42,7 +42,7 @@ div.hui_boundpanel_arrow_bottom
 
 div.hui_boundpanel_content
 {
-	width: 200px;
+	/*width: 200px;*/
 	overflow: hidden;
 }
 
@@ -109,4 +109,61 @@ div.hui_boundpanel_bottom div div
 {
 	height: 12px;
 	background: url('../gfx/bound_bottom.png') top left repeat-x;
+}
+
+/*************** Light variant **************/
+
+div.hui_boundpanel_light div.hui_boundpanel_bottom, div.hui_boundpanel_light div.hui_boundpanel_top
+{
+	display: none;
+}
+
+div.hui_boundpanel_light div.hui_boundpanel_body
+{
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 0;
+	box-shadow: 0 0 5px rgba(0,0,0,.1);
+}
+
+div.hui_boundpanel_light div.hui_boundpanel_body  div.hui_boundpanel_body
+{
+	background: none;
+	padding: 0;
+	border: none;
+	box-shadow: none;
+}
+
+div.hui_boundpanel_light div.hui_boundpanel_content
+{
+	padding: 4px;
+}
+
+div.hui_boundpanel_light div.hui_boundpanel_arrow_left
+{
+	height: 23px;
+	width: 12px;
+	background-position: 0 -78px;
+}
+
+div.hui_boundpanel_light div.hui_boundpanel_arrow_right
+{
+	height: 23px;
+	width: 12px;
+	background-position: -24px -78px;
+}
+
+div.hui_boundpanel_light div.hui_boundpanel_arrow_top
+{
+	width: 23px;
+	height: 12px;
+	background-position: -8px -100px;
+}
+
+div.hui_boundpanel_light div.hui_boundpanel_arrow_bottom
+{
+	width: 23px;
+	height: 12px;
+	background-position: -8px -115px;
 }

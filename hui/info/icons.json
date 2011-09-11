@@ -1,6 +1,7 @@
 {
     "application": {
         "files": [
+            16, 
             32
         ], 
         "news": [
@@ -8,15 +9,19 @@
             32
         ], 
         "pages": [
+            16, 
             32
         ], 
         "shop": [
+            16, 
             32
         ], 
         "statistics": [
+            16, 
             32
         ], 
         "water": [
+            16, 
             32
         ]
     }, 
@@ -124,6 +129,9 @@
             16, 
             32
         ], 
+        "note": [
+            32
+        ], 
         "object": [
             16, 
             32
@@ -161,6 +169,7 @@
             32
         ], 
         "security": [
+            16, 
             32
         ], 
         "settings": [
@@ -291,6 +300,9 @@
         ]
     }, 
     "monochrome": {
+        "arrow_right_light": [
+            16
+        ], 
         "attachment": [
             16
         ], 
@@ -321,6 +333,9 @@
         "globe": [
             16
         ], 
+        "image": [
+            16
+        ], 
         "info": [
             16
         ], 
@@ -335,6 +350,9 @@
         ], 
         "link": [
             16
+        ], 
+        "lock": [
+            12
         ], 
         "longitude": [
             16
@@ -524,6 +542,9 @@
     }, 
     "view": {
         "calendar": [
+            16
+        ], 
+        "gallery": [
             16
         ], 
         "graph": [
