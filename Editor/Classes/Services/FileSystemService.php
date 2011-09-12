@@ -3,6 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Classes.Services
  */
+if (!isset($GLOBALS['basePath'])) {
+	header('HTTP/1.1 403 Forbidden');
+	exit;
+}
 require_once($basePath.'Editor/Classes/Log.php');
 
 class FileSystemService {
@@ -57,6 +61,47 @@ class FileSystemService {
 				while (($file = readdir($dh)) !== false) {
 					if (is_file($dir.$file) && !($file=='.' || $file=='..') ) {
 						array_push($out,$file);
+					}
+				}
+				closedir($dh);
+			}
+		}
+		return $out;
+	}
+	
+	function find($query) {
+		return FileSystemService::_find($query['dir'],$query);
+	}
+	
+	function _find($dir,$query) {
+		if ($dir[strlen($dir)-1]!='/') {
+			$dir = $dir.'/';
+		}
+		$out = array();
+		if (is_dir($dir)) {
+			if ($dh = opendir($dir)) {
+				while (($file = readdir($dh)) !== false) {
+					$path = $dir.$file;
+					if (is_array($query['exclude'])) {
+						$exclude = $query['exclude'];
+						if (in_array($path,$exclude)) {
+							continue;
+						}
+					}
+					if ($file[0]=='.') {
+						continue;
+					}
+					if (is_file($path)) {
+						if (isset($query['extension'])) {
+							$ext = FileSystemService::getFileExtension($path);
+							if ($ext!==$query['extension']) {
+								continue;
+							}
+						}
+						array_push($out,$path);
+					} else if (is_dir($path)) {
+						$found = FileSystemService::_find($path,$query);
+						$out = array_merge($found,$out);
 					}
 				}
 				closedir($dh);

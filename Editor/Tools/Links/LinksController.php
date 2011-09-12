@@ -1,4 +1,6 @@
 <?
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Security.php';
 require_once '../../Classes/Utilities/ValidateUtils.php';
 
 class LinksController {

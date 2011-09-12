@@ -3,6 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
+if (!isset($GLOBALS['basePath'])) {
+	header('HTTP/1.1 403 Forbidden');
+	exit;
+}
 if (($event=='publish' || $event=='delete') && $type=='object' && $subType=='image') {
 	$sql = "select distinct page_id from document_section,part_image where document_section.part_id=part_image.part_id and part_image.image_id=".$id;
 	$result = Database::select($sql);

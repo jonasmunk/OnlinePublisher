@@ -1,3 +1,11 @@
+<?php
+/**
+ * @package OnlinePublisher
+ * @subpackage Services.Preview
+ */
+require_once '../../../Config/Setup.php';
+require_once '../../Include/Security.php';
+?>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

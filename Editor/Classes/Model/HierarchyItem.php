@@ -3,6 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Classes.Model
  */
+if (!isset($GLOBALS['basePath'])) {
+	header('HTTP/1.1 403 Forbidden');
+	exit;
+}
 require_once($basePath.'Editor/Classes/Database.php');
 require_once($basePath.'Editor/Classes/Hierarchy.php');
 

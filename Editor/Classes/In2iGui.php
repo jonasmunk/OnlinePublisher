@@ -1,4 +1,8 @@
 <?
+if (!isset($GLOBALS['basePath'])) {
+	header('HTTP/1.1 403 Forbidden');
+	exit;
+}
 require_once($basePath.'Editor/Classes/Response.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');

@@ -22,9 +22,12 @@ if (!InternalSession::isLoggedIn()) {
 		Response::forbidden();
 	}
 	else if (isset($_GET['page'])) {
+		Response::forbidden();
 		header("Location: ".$baseUrl."Editor/Authentication.php?notloggedin=true&page=".$_GET['page']); 
 	}
 	else {
+		Log::debug('Sending forbidden');
+		Response::forbidden();
 		header("Location: ".$baseUrl."Editor/Authentication.php?notloggedin=true"); 
 	}
 	exit;
@@ -33,8 +36,10 @@ if (!InternalSession::isLoggedIn()) {
 else if (InternalSession::isTimedOut()) {
 	InternalSession::logOut();
 	if (isset($_GET['page'])) {
+		Response::forbidden();
 		header("Location: ".$baseUrl."Editor/Authentication.php?timeout=true&page=".$_GET['page']);
 	} else {
+		Response::forbidden();
 		header("Location: ".$baseUrl."Editor/Authentication.php?timeout=true");
 	}
 	exit;

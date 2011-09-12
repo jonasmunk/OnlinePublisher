@@ -4,6 +4,10 @@
  * @subpackage Classes.Interface
  */
 
+if (!isset($GLOBALS['basePath'])) {
+	header('HTTP/1.1 403 Forbidden');
+	exit;
+}
 class ListWriter {
 	function startList($options=array()) {
 		if ($options['unicode']==true) {

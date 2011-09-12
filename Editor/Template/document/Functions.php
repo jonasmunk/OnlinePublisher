@@ -3,10 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
-// Layout mode
-
-
-
+if (!isset($GLOBALS['basePath'])) {
+	header('HTTP/1.1 403 Forbidden');
+	exit;
+}
 
 // UNCATEGORIZED!!!
 
