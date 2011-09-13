@@ -12,6 +12,11 @@ require_once($basePath.'Editor/Classes/Page.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
+Object::$schema['weblogentry'] = array(
+	'text' => array('type'=>'string'),
+	'date'  => array('type'=>'datetime'),
+	'pageId' => array('type'=>'int','column'=>'page_id')
+);
 class Weblogentry extends Object {
 	var $text;
 	var $date;
@@ -20,6 +25,10 @@ class Weblogentry extends Object {
 
 	function Weblogentry() {
 		parent::Object('weblogentry');
+	}
+
+	function load($id) {
+		return Object::get($id,'weblogentry');
 	}
 	
 	function setText($text) {
@@ -58,41 +67,6 @@ class Weblogentry extends Object {
 	
 	////////////////////////////// Persistence ///////////////////////
 
-	function load($id) {
-		$obj = new Weblogentry();
-		if ($obj->_load($id)) {
-			$sql = "select page_id,text,UNIX_TIMESTAMP(date) as date from weblogentry where object_id=".$id;
-			$row = Database::selectFirst($sql);
-			if ($row) {
-				$obj->text=$row['text'];
-				$obj->date=$row['date'];
-				$obj->pageId=$row['page_id'];
-			}
-			return $obj;
-		} else {
-			return false;
-		}
-	}
-
-	function sub_create() {
-		$sql="insert into weblogentry (object_id,text,date,page_id) values (".
-		$this->id.
-		",".Database::text($this->text).
-		",".Database::datetime($this->date).
-		",".Database::int($this->pageId).
-		")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-		$sql = "update weblogentry set ".
-		"text=".Database::text($this->text).
-		",date=".Database::datetime($this->date).
-		",page_id=".Database::int($this->pageId).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
-
 	function sub_publish() {
 		$data =
 		'<weblogentry xmlns="'.parent::_buildnamespace('1.0').'">'.
@@ -102,10 +76,8 @@ class Weblogentry extends Object {
 		return $data;
 	}
 
-	function sub_remove() {
-		$sql = "delete from weblogentry where object_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from webloggroup_weblogentry where weblogentry_id=".$this->id;
+	function removeMore() {
+		$sql = "delete from webloggroup_weblogentry where weblogentry_id=".Database::int($this->id);
 		Database::delete($sql);
 	}
 	
@@ -114,31 +86,17 @@ class Weblogentry extends Object {
 	
 
 	function changeGroups($groups) {
-		$sql="delete from webloggroup_weblogentry where weblogentry_id=".$this->id;
+			Log::debug($groups);
+		if (!is_array($groups)) {
+			Log::debug('Not a group');
+			return;
+		}
+		$sql="delete from webloggroup_weblogentry where weblogentry_id=".Database::int($this->id);
 		Database::delete($sql);
 		foreach ($groups as $id) {
-			$sql="insert into webloggroup_weblogentry (weblogentry_id,webloggroup_id) values (".$this->id.",".$id.")";
+			$sql="insert into webloggroup_weblogentry (weblogentry_id,webloggroup_id) values (".Database::int($this->id).",".Database::int($id).")";
 			Database::insert($sql);
 		}
 	}
-	
-	/**
-	 * @static
-	 */
-    function search($query = array()) {
-        $out = array();
-        $sql = "select id from object,weblogentry where object.id=weblogentry.object_id";
-		$sql.=" order by object.title";
-        $result = Database::select($sql);
-		$ids = array();
-        while ($row = Database::next($result)) {
-            $ids[] = $row['id'];
-        }
-        Database::free($result);
-		foreach ($ids as $id) {
-			$out[] = Event::load($id);
-		}
-        return $out;
-    }
 }
 ?>

@@ -11,7 +11,7 @@ require_once '../../Classes/PartContext.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/SystemInfo.php';
-require_once 'DocumentController.php';
+require_once '../../Classes/Templates/DocumentTemplateController.php';
 require_once 'Functions.php';
 
 header('Content-Type: text/html; charset=UTF-8');
@@ -107,7 +107,7 @@ else if (getDocumentSection()!=0) {
 <input type="hidden" name="index"/>
 </form>
 <?
-$partContext = DocumentController::buildPartContext(InternalSession::getPageId());
+$partContext = DocumentTemplateController::buildPartContext(InternalSession::getPageId());
 $lastRowIndex = displayRows();
 ?>
 </div>

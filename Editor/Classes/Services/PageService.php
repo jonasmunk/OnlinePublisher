@@ -4,7 +4,6 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 require_once($basePath.'Editor/Classes/Page.php');
-require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 
 class PageService {
 	
@@ -19,10 +18,12 @@ class PageService {
 	
 	function getPagePreview($id,$template) {
 		$data = '';
-	    if ($controller = LegacyTemplateController::getController($template,$id)) {
-	        $result = $controller->build($id);
-	        $data = $result['data'];
-	    }
+		if ($controller = TemplateService::getController($template)) {
+			if (method_exists($controller,'build')) {
+				$result = $controller->build($id);
+	        	return $result['data'];
+			}
+		}
 		return $data;
 	}
 	
@@ -182,17 +183,18 @@ class PageService {
 	function _createTemplate($page) {
 		$template = TemplateService::getTemplateById($page->getTemplateId());
 		$page->templateUnique = $template->getUnique();
-		$controller = TemplateService::getLegacyTemplateController($page);
-		if ($controller && method_exists($controller,'create')) {
-			$controller->create($page);
+		if ($controller = TemplateService::getController($page->getTemplateUnique())) {
+			if (method_exists($controller,'create')) {
+				$controller->create($page);
+			}
 		}
 	}
 	
 	function delete($page) {
-
-		$controller = TemplateService::getLegacyTemplateController($page);
-		if ($controller && method_exists($controller,'delete')) {
-			$controller->delete();
+		if ($controller = TemplateService::getController($page->getTemplateUnique())) {
+			if (method_exists($controller,'delete')) {
+				$controller->delete($page);
+			}	
 		}
 		
 		$id = $page->getId();

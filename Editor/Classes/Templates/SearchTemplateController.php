@@ -1,35 +1,35 @@
-<?
+<?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.Search
+ * @subpackage Classes.Templates
  */
 if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
+require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class SearchController extends LegacyTemplateController {
-    
-    function SearchController($id) {
-        parent::LegacyTemplateController($id);
-    }
+class SearchTemplateController extends TemplateController
+{
+	function SearchTemplateController() {
+		parent::TemplateController('search');
+	}
 
 	function create($page) {
 		$sql="insert into search (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
-	
-	function delete() {
-		$sql="delete from search where page_id=".$this->id;
+
+	function delete($page) {
+		$sql="delete from search where page_id=".Database::int($page->getId());
 		Database::delete($sql);
 	}
-    
-    function build() {
+
+    function build($id) {
 		$data='<search xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/search/1.0/">';
 
-		$sql="select * from search where page_id=".$this->id;
+		$sql="select * from search where page_id=".Database::int($id);
 		$row = Database::selectFirst($sql);
 		$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 		$data.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
@@ -59,7 +59,7 @@ class SearchController extends LegacyTemplateController {
         return array('data' => $data, 'dynamic' => true, 'index' => '');
     }
 
-	function dynamic(&$state) {
+	function dynamic($id,&$state) {
 		if (Request::exists('query')) {
 			$searchPages = Request::getCheckbox('page');
 			$searchImages = Request::getCheckbox('image');
@@ -207,4 +207,3 @@ class SearchController extends LegacyTemplateController {
 		return $sql;
 	}
 }
-?>

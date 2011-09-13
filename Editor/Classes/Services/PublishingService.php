@@ -10,7 +10,6 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 
 class PublishingService {
 	
@@ -21,14 +20,16 @@ class PublishingService {
 		$dynamic=false;
 		$data='';
 		$index='';
-		$sql="select template.unique from page,template where page.template_id=template.id and page.id=".$id;
+		$sql="select template.unique from page,template where page.template_id=template.id and page.id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
-		    if ($controller = LegacyTemplateController::getController($row['unique'],$id)) {
-		        $result = $controller->build();
-		        $data = $result['data'];
-		        $index = $result['index'];
-		        $dynamic = $result['dynamic'];
-		    }
+			if ($controller = TemplateService::getController($row['unique'])) {
+				if (method_exists($controller,'build')) {
+			        $result = $controller->build($id);
+			        $data = $result['data'];
+			        $index = $result['index'];
+			        $dynamic = $result['dynamic'];
+				}	
+			}
 		}
 		$sql="update page set".
 			" data=".Database::text($data).

@@ -2,10 +2,12 @@
 op.WeblogTemplate = {
 	groups : [],
 	ignite : function() {
-		new hui.ui.Button({element:'weblog_new'}).listen({
-			$click : this.showNewEntry.bind(this)
-		})
-		hui.ui.listen(this);
+		hui.ui.require(['TextField','DateTimeField','Checkboxes'],function() {
+			new hui.ui.Button({element:'weblog_new'}).listen({
+				$click : this.showNewEntry.bind(this)
+			})
+			hui.ui.listen(this);
+		}.bind(this))
 	},
 	showNewEntry : function() {
 		if (!this.newBox) {
@@ -15,7 +17,7 @@ op.WeblogTemplate = {
 				{type:'TextField',options:{label:'Titel',key:'title'}},
 				{type:'DateTimeField',options:{label:'Dato',name:'newEntryDate',key:'date',allowNull:false}},
 				{type:'TextField',options:{label:'Text',key:'text',lines:8}},
-				{type:'Checkboxes',options:{label:'Grupper',items:this.groups,key:'group[]'}}
+				{type:'Checkboxes',options:{label:'Grupper',items:this.groups,key:'groups'}}
 			]);
 			var buttons = group.createButtons();
 			var cancel = hui.ui.Button.create({title:'Annuller',name:'cancelNewEntry'});
@@ -33,14 +35,14 @@ op.WeblogTemplate = {
 		this.newBox.hide();
 	},
 	$click$createNewEntry : function() {
-		var parms = {ajax:true,action:'createEntry','group[]':[]};
+		var parms = {ajax:true,action:'createEntry','groups':[]};
 		hui.override(parms,this.newForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
 		if (hui.isBlank(parms.title)) {
 			hui.ui.showMessage({text:'Der skal skrives en titel',duration:2000});
 			this.editForm.focus();
 			return;
-		} else if (parms['group[]'].length<1) {
+		} else if (parms.groups.length<1) {
 			hui.ui.showMessage({text:'Der skal vælges mindst een gruppe',duration:2000});
 			return;
 		}
@@ -90,10 +92,10 @@ op.WeblogTemplate = {
 			var box = this.editBox = hui.ui.Box.create({modal:true,width:600,absolute:true,padding:10,title:'Rediger indlæg',closable:true});
 			var form = this.editForm = hui.ui.Formula.create();
 			var group = form.buildGroup({above:true},[
-				{type:'Text',options:{label:'Titel',key:'title'}},
+				{type:'TextField',options:{label:'Titel',key:'title'}},
 				{type:'DateTimeField',options:{label:'Dato',name:'editEntryDate',key:'date',allowNull:false}},
-				{type:'Text',options:{label:'Text',key:'text',lines:8}},
-				{type:'Checkboxes',options:{label:'Grupper',items:this.groups,key:'group[]',name:'editEntryGroups'}}
+				{type:'TextField',options:{label:'Text',key:'text',lines:8}},
+				{type:'Checkboxes',options:{label:'Grupper',items:this.groups,key:'groups',name:'editEntryGroups'}}
 			]);
 			var buttons = group.createButtons();
 			var cancel = hui.ui.Button.create({title:'Annuller',name:'cancelEditEntry'});
@@ -105,7 +107,6 @@ op.WeblogTemplate = {
 		}
 		this.activeEntry = obj;
 		this.editForm.setValues(obj);
-		hui.ui.get('editEntryGroups').setValue(obj.groups);
 		this.editBox.show();
 		this.editForm.focus();
 	},
@@ -113,14 +114,14 @@ op.WeblogTemplate = {
 		this.editBox.hide();
 	},
 	$click$updateEditEntry : function() {
-		var parms = {ajax:true,action:'updateEntry','group[]':[],entryId:this.activeEntry.id};
+		var parms = {ajax:true,action:'updateEntry','groups':[],entryId:this.activeEntry.id};
 		hui.override(parms,this.editForm.getValues());
 		parms.date = parseInt(parms.date.getTime()/1000);
 		if (hui.isBlank(parms.title)) {
 			hui.ui.showMessage({text:'Der skal skrives en titel',duration:2000});
 			this.editForm.focus();
 			return;
-		} else if (parms['group[]'].length<1) {
+		} else if (parms.groups.length<1) {
 			hui.ui.showMessage({text:'Der skal vælges mindst een gruppe',duration:2000});
 			return;
 		}

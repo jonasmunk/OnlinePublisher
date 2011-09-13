@@ -3,9 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Authentication
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Request.php';
+require_once '../../Include/Private.php';
 
 $id = Request::getId();
 $title = Request::getEncodedString('title');

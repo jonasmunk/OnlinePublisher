@@ -1,36 +1,34 @@
-<?
+<?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.GuestBook
+ * @subpackage Classes.Templates
  */
 if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
-require_once($basePath.'Editor/Classes/Request.php');
+require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/Services/RenderingService.php');
 
-class GuestbookController extends LegacyTemplateController {
-    
-    function GuestbookController($id) {
-        parent::LegacyTemplateController($id);
-    }
+class GuestbookTemplateController extends TemplateController
+{
+	function GuestbookTemplateController() {
+		parent::TemplateController('guestbook');
+	}
 
 	function create($page) {
-		$sql="insert into guestbook (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
+		$sql="insert into guestbook (page_id,title) values (".Database::int($page->getId()).",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
-	
-	function delete() {
-		$sql="delete from guestbook where page_id=".$this->id;
+
+	function delete($page) {
+		$sql="delete from guestbook where page_id=".Database::int($page->getId());
 		Database::delete($sql);
-		$sql="delete from guestbook_item where page_id=".$this->id;
+		$sql="delete from guestbook_item where page_id=".Database::int($page->getId());
 		Database::delete($sql);
 	}
 
-	function build() {
+    function build($id) {
 		$data = '<guestbook xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/guestbook/1.0/">';
 		$data.= '<lang xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/internationalization/">';
 		$data.= '<text key="list-header-time">Tid</text>';
@@ -42,7 +40,7 @@ class GuestbookController extends LegacyTemplateController {
 		$data.= '<text key="newitem-label-name">Navn</text>';
 		$data.= '<text key="newitem-label-text">Besked</text>';
 		$data.= '</lang>';
-		$sql="select title,text from guestbook where page_id=".$this->id;
+		$sql="select title,text from guestbook where page_id=".Database::int($id);
 		$row = Database::selectFirst($sql);
 		$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
 		$data.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
@@ -50,9 +48,9 @@ class GuestbookController extends LegacyTemplateController {
 		$data.= '</guestbook>';
 		$index = $row['title'].' '.$row['text'];
         return array('data' => $data, 'dynamic' => true, 'index' => $index);
-	}
+    }
 
-	function dynamic(&$state) {		
+	function dynamic($id,&$state) {
 		if (Request::getBoolean('newitem')) {
 			$xml="<newitem/>";
 		}
@@ -60,10 +58,10 @@ class GuestbookController extends LegacyTemplateController {
 			if (Request::isPost() && Request::getBoolean('userinteraction')) {
 				$name = Request::getUnicodeString('name');
 				$text = Request::getUnicodeString('text');
-				$sql = "insert into guestbook_item (page_id,time,name,text) values (".$this->id.",now(),".Database::text($name).",".Database::text($text).")";
+				$sql = "insert into guestbook_item (page_id,time,name,text) values (".Database::int($id).",now(),".Database::text($name).",".Database::text($text).")";
 				Database::insert($sql);
 			}
-			$sql="select *,UNIX_TIMESTAMP(time) as unix from guestbook_item where page_id=".$this->id." order by time desc";
+			$sql="select *,UNIX_TIMESTAMP(time) as unix from guestbook_item where page_id=".Database::int($id)." order by time desc";
 			$result = Database::select($sql);
 			$num = mysql_num_rows($result);
 			$xml='<list>';
@@ -79,5 +77,5 @@ class GuestbookController extends LegacyTemplateController {
 		}
 		$state['data']=str_replace("<!--dynamic-->", $xml, $state['data']);
 	}
+
 }
-?>

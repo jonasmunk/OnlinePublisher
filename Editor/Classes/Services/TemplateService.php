@@ -47,21 +47,7 @@ class TemplateService {
 		require_once $path;
 		return new $class;
 	}
-	
-	function getLegacyTemplateController($page) {
-		global $basePath;
-		$unique = $page->getTemplateUnique();
-	    $controllerPath = $basePath.'Editor/Template/'.$unique.'/'.ucfirst($unique).'Controller.php';
-	    if (file_exists($controllerPath)) {
-		    require_once $controllerPath;
-		    $controllerClassName = ucfirst($unique).'Controller';
-	        $controller = new $controllerClassName($page->getId());
-	        return $controller;
-	    } else {
-	        return false;
-	    }
-	}
-	
+		
 	function getAvailableTemplates() {
 		global $basePath;
 		$arr = FileSystemService::listDirs($basePath."Editor/Template/");

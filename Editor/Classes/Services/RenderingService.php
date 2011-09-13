@@ -5,12 +5,12 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Classes/Services/XslService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
 require_once($basePath.'Editor/Classes/InternalSession.php');
 require_once($basePath.'Editor/Classes/ExternalSession.php');
 require_once($basePath.'Editor/Classes/SystemInfo.php');
 require_once($basePath.'Editor/Classes/Response.php');
 require_once($basePath.'Editor/Classes/Services/CacheService.php');
+require_once($basePath.'Editor/Classes/Services/TemplateService.php');
 
 class RenderingService {
 	
@@ -83,21 +83,15 @@ class RenderingService {
 		} else {
 			$contentDesign='basic';
 		}
-		if (file_exists($basePath.'style/'.$design.'/'.$agent.'/stylesheet.xsl')) {
-			$mainFile='stylesheet';
-			$mainDesign=$design;
-		} else if (file_exists($basePath.'style/'.$design.'/xslt/main.xsl')) {
+		if (Request::getBoolean('print')) {
+			$mainFile='main_print';
+			$mainDesign='basic';
+		} else if (Request::getBoolean('mini')) {
+			$mainFile='main_mini';
+			$mainDesign='basic';
+		} else {
 			$mainFile='main';
 			$mainDesign=$design;
-		} else if (file_exists($basePath.'style/'.$design.'/others/stylesheet.xsl')) {
-			$mainFile='stylesheet';
-			$mainDesign=$design;
-		} else if (file_exists($basePath.'style/'.$design.'/xslt/stylesheet.xsl')) {
-			$mainFile='stylesheet';
-			$mainDesign=$design;
-		} else {
-			$mainFile='stylesheet';
-			$mainDesign='basic';
 		}
 		$userId=0;
 		$userName='';
@@ -108,9 +102,6 @@ class RenderingService {
 			$userTitle=$user['title'];
 		}
 		$mainPath = $incPath.'style/'.$mainDesign.'/xslt/'.$mainFile.'.xsl';
-		if (Request::getBoolean('print')) {
-			$mainPath = $incPath.'style/'.$mainDesign.'/xslt/print.xsl';
-		}
 		$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
 	
 		$xslData='<?xml version="1.0" encoding="ISO-8859-1"?>'.
@@ -207,9 +198,11 @@ class RenderingService {
 	function applyContentDynamism($id,$template,&$data) {
 		global $basePath,$baseUrl;
 		$state = array('data' => $data,'redirect' => false,'override' => false);
-		$controller = LegacyTemplateController::getController($template,$id);
-		if (method_exists($controller,'dynamic')) {
-			$controller->dynamic($state);
+		if ($controller = TemplateService::getController($template)) {
+			if (method_exists($controller,'dynamic')) {
+				$controller->dynamic($id,$state);
+				return $state;
+			}
 		}
 		return $state;
 	}
@@ -252,9 +245,12 @@ class RenderingService {
 	
 		if ($row = Database::selectFirst($sql)) {
 			if (Request::getBoolean('ajax')) {
-				$ctrl = LegacyTemplateController::getController($row['template'],$id);
-				$ctrl->ajax();
-				exit;
+				if ($controller = TemplateService::getController($row['template'])) {
+					if (method_exists($controller,'ajax')) {
+						$controller->ajax($id);
+						exit;
+					}
+				}
 			}
 
 			$pageNS = 'http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/';

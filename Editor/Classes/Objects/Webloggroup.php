@@ -9,40 +9,26 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Classes/Object.php');
 
+Object::$schema['webloggroup'] = array();
+
 class WeblogGroup extends Object {
 
 	function WeblogGroup() {
 		parent::Object('webloggroup');
 	}
 	
-	function getIcon() {
-		return 'Element/Folder';
+	function load($id) {
+		return Object::get($id,'webloggroup');
 	}
 	
 	function getIn2iGuiIcon() {
 		return 'common/folder';
 	}
 
-	function load($id) {
-		$obj = new WeblogGroup();
-		$obj->_load($id);
-		return $obj;
-	}
-
-	function sub_create() {
-		$sql = "insert into webloggroup (object_id) values (".$this->id.")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-	}
-
-	function sub_remove() {
-		$sql="delete from webloggroup_weblogentry where webloggroup_id=".$this->id;
+	function removeMore() {
+		$sql="delete from webloggroup_weblogentry where webloggroup_id=".Database::int($this->id);
 		Database::delete($sql);
-		$sql="delete from weblog_webloggroup where webloggroup_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from webloggroup where object_id=".$this->id;
+		$sql="delete from weblog_webloggroup where webloggroup_id=".Database::int($this->id);
 		Database::delete($sql);
 	}
 	

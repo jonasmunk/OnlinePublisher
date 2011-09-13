@@ -102,7 +102,7 @@ class PartContext {
 			$atts.=' part-id="'.$partId.'"';
 		}
 		if ($partId!=null) {
-			Log::debug('Build link added: '.$partId);
+			//Log::debug('Build link added: '.$partId);
 		}
 		$this->buildDecorator->addReplacement($text,'<link'.$atts.'>','</link>',$partId);
 	}

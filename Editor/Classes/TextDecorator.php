@@ -45,36 +45,36 @@ class TextDecorator {
 			foreach ($filtered as $key => $value) {
 				$overlaps = strpos($key,$subject)!==false || strpos($subject,$key)!==false;
 				if ($overlaps) {
-					Log::debug("$subject and $key overlap");
+					//Log::debug("$subject and $key overlap");
 					if ($value['condition']!=$condition && $replacement['condition']==$condition) {
-						Log::debug("Removing «$key» since «$subject» matches condition");
+						//Log::debug("Removing «$key» since «$subject» matches condition");
 						unset($filtered[$key]);
 					} elseif ($value['condition']==$replacement['condition']) {
 						if (strlen($key)<strlen($subject)) {
-							Log::debug("Removing: $key since it is shorter than $subject with same condition");
+							//Log::debug("Removing: $key since it is shorter than $subject with same condition");
 							unset($filtered[$key]);
 						} else {
-							Log::debug("Will not remove $key since it is longer than $subject and with same condition");
+							//Log::debug("Will not remove $key since it is longer than $subject and with same condition");
 							$shouldAdd = false;
 						}
 					} else {
-						Log::debug("Will not remove $key");
+						//Log::debug("Will not remove $key");
 						$shouldAdd = false;
 					}
 				}
 			}
 			if ($shouldAdd) {
 				if ($replacement['condition']!=null && $replacement['condition']!=$condition) {
-					Log::debug("Will NOT add $subject since its condition is not correct");
+					//Log::debug("Will NOT add $subject since its condition is not correct");
 				} else {
-					Log::debug("Adding $subject");
+					//Log::debug("Adding $subject");
 					$filtered[$subject] = $replacement;
 				}
 			} else {
-				Log::debug("Will NOT add $subject");
+				//Log::debug("Will NOT add $subject");
 			}
 		}
-		Log::debugJSON($filtered);
+		//Log::debugJSON($filtered);
 		return array_values($filtered);
 	}
 	
@@ -84,7 +84,7 @@ class TextDecorator {
 		foreach ($filtered as $replacement) {
 			if ($condition==null || $replacement['condition']==null || $replacement['condition']==$condition) {
 				if ($replacement['condition']!=null) {
-					Log::debug('Condition='.$condition.' ,replacement.condition='.$replacement['condition']);
+					//Log::debug('Condition='.$condition.' ,replacement.condition='.$replacement['condition']);
 				}
 				$this->replacement($text,$rules,$replacement['subject'],$replacement['open'],$replacement['close']);
 			}

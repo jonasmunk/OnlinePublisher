@@ -1,59 +1,50 @@
-<?
+<?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.Document
+ * @subpackage Classes.Templates
  */
 if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
-require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
-require_once($basePath.'Editor/Classes/EventUtil.php');
+require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
+require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Objects/Calendarsource.php');
 require_once($basePath.'Editor/Classes/Objects/Event.php');
-require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/Request.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/EventUtil.php');
 
-class CalendarController extends LegacyTemplateController {
-    
-    function CalendarController($id) {
-        parent::LegacyTemplateController($id);
-    }
+class CalendarTemplateController extends TemplateController
+{
+	function CalendarTemplateController() {
+		parent::TemplateController('calendar');
+	}
 
 	function create($page) {
-		$sql="insert into calendarviewer (page_id,title) values (".$page->getId().",".Database::text($page->getTitle()).")";
+		$sql="insert into calendarviewer (page_id,title) values (".Database::int($page->getId()).",".Database::text($page->getTitle()).")";
 		Database::insert($sql);
 	}
-	
-	function delete() {
-		$sql="delete from calendarviewer where page_id=".$this->id;
+
+	function delete($page) {
+		$sql="delete from calendarviewer where page_id=".Database::int($page->getId());
 		Database::delete($sql);
-		$sql="delete from calendarviewer_object where page_id=".$this->id;
+		$sql="delete from calendarviewer_object where page_id=".Database::int($page->getId());
 		Database::delete($sql);
 	}
-    
-    function build() {
-		$sql="select * from calendarviewer where page_id=".$this->id;
-		$row = Database::selectFirst($sql);
+
+    function build($id) {
 		$data = '<calendar xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/calendar/1.0/">';
 		$data.= '<!--dynamic-->';
 		$data.= '</calendar>';
         return array('data' => $data, 'dynamic' => true, 'index' => '');
     }
 
-    function import(&$node) {
-    }
-    
-	function dynamic(&$state) {		
+	function dynamic($id,&$state) {
 		$refresh = Request::getBoolean('refresh');
 		$date = Request::getDate('date');
 		if (!$date) {
 			$date=DateUtils::stripTime(time());
 		}
-		$id = $this->id;
-		$sql="select * from calendarviewer where page_id = ".$id;
+		$sql="select * from calendarviewer where page_id = ".Database::int($id);
 		$setup = Database::selectFirst($sql);
 
 		$view = Request::getString('view');
@@ -288,5 +279,5 @@ class CalendarController extends LegacyTemplateController {
 		}
 		return $groups;
 	}
+
 }
-?>

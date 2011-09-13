@@ -1,65 +1,53 @@
-<?
+<?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.Weblog
+ * @subpackage Classes.Templates
  */
 if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/LegacyTemplateController.php');
-require_once $basePath.'Editor/Classes/Weblogentry.php';
-require_once($basePath.'Editor/Classes/Request.php');
-require_once($basePath.'Editor/Classes/Page.php');
-require_once($basePath.'Editor/Classes/Objects/Pageblueprint.php');
-require_once($basePath.'Editor/Classes/Webloggroup.php');
-require_once($basePath.'Editor/Classes/In2iGui.php');
-require_once($basePath.'Editor/Classes/InternalSession.php');
+require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Objects/Webloggroup.php');
+require_once($basePath.'Editor/Classes/Objects/Weblogentry.php');
+require_once($basePath.'Editor/Classes/Objects/Pageblueprint.php');
 
-class WeblogController extends LegacyTemplateController {
-    
-    function WeblogController($id) {
-        parent::LegacyTemplateController($id);
-    }
+class WeblogTemplateController extends TemplateController
+{
+	function WeblogTemplateController() {
+		parent::TemplateController('weblog');
+	}
 
 	function create($page) {
-		$sql="insert into weblog (page_id) values (".$page->getId().")";
+		$sql="insert into weblog (page_id) values (".Database::int($page->getId()).")";
 		Database::insert($sql);
 	}
-	
-	function delete() {
-		$sql="delete from weblog where page_id=".$this->id;
+
+	function delete($page) {
+		$sql="delete from weblog where page_id=".Database::int($page->getId());
 		Database::delete($sql);
-		$sql="delete from weblog_webloggroup where page_id=".$this->id;
+		$sql="delete from weblog_webloggroup where page_id=".Database::int($page->getId());
 		Database::delete($sql);
-	}
-	
-	function ajax() {
-		$action = Request::getString('action');
-		if ($action=='createEntry') {
-			$this->createEntry();
-		} else if ($action=='updateEntry') {
-			$this->updateEntry();
-		} else if ($action=='deleteEntry') {
-			$this->deleteEntry();
-		} else if ($action=='loadEntry') {
-			$id = Request::getInt('entryId');
-			$entry = Weblogentry::load($id);
-			$entry->loadGroups();
-			$entry->toUnicode();
-			In2iGui::sendObject($entry);
-		}
-	}
-	
-	function dynamic(&$state) {
-		$xml=$this->listEntries();
-		$state['data'] = str_replace("<!--dynamic-->", $xml, $state['data']);
 	}
 
-	function listEntries() {
+    function build($id) {
+		$sql="select * from weblog where page_id=".Database::int($id);
+		$row = Database::selectFirst($sql);
+		$data = '<weblog xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/weblog/1.0/">';
+		$data .= '<title>'.StringUtils::escapeXML($row['title']).'</title>';
+		$data.= '<!--dynamic--></weblog>';
+        return array('data' => $data, 'dynamic' => true, 'index' => '');
+    }
+
+	function dynamic($id,&$state) {
+		$xml = $this->_listEntries($id);
+		$state['data'] = str_replace("<!--dynamic-->", $xml, $state['data']);
+	}
+	
+	function _listEntries($id) {
 		$xml='';
-		$sql="select webloggroup_id as id from weblog_webloggroup where page_id=".InternalSession::getPageId();
+		$sql="select webloggroup_id as id from weblog_webloggroup where page_id=".Database::int($id);
 		$selectedGroups = Database::getIds($sql);
 		
 		$groups = WeblogGroup::search(array('page'=>$this->id));
@@ -68,7 +56,7 @@ class WeblogController extends LegacyTemplateController {
 		}
 		$xml .= '<list>';
 		
-		$sql="select distinct object.id,object.data as object_data,page.data as page_data,page.id as page_id,page.path from object,webloggroup_weblogentry,weblog_webloggroup,weblogentry left join page on weblogentry.page_id=page.id where weblog_webloggroup.page_id=".$this->id." and weblog_webloggroup.webloggroup_id=webloggroup_weblogentry.webloggroup_id and webloggroup_weblogentry.weblogentry_id=weblogentry.object_id and object.id=weblogentry.object_id order by weblogentry.date desc";
+		$sql="select distinct object.id,object.data as object_data,page.data as page_data,page.id as page_id,page.path from object,webloggroup_weblogentry,weblog_webloggroup,weblogentry left join page on weblogentry.page_id=page.id where weblog_webloggroup.page_id=".Database::int($id)." and weblog_webloggroup.webloggroup_id=webloggroup_weblogentry.webloggroup_id and webloggroup_weblogentry.weblogentry_id=weblogentry.object_id and object.id=weblogentry.object_id order by weblogentry.date desc";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$xml.='<entry';
@@ -94,9 +82,29 @@ class WeblogController extends LegacyTemplateController {
 		return $xml;
 	}
 
+	function ajax($id) {
+		$action = Request::getString('action');
+		if ($action=='createEntry') {
+			$this->createEntry($id);
+		} else if ($action=='updateEntry') {
+			$this->updateEntry();
+		} else if ($action=='deleteEntry') {
+			$this->deleteEntry();
+		} else if ($action=='loadEntry') {
+			$entryId = Request::getInt('entryId');
+			if ($entry = Weblogentry::load($entryId)) {
+				$entry->loadGroups();
+				$entry->toUnicode();
+				Response::sendObject($entry);
+			} else {
+				Response::badRequest();
+			}
+		}
+	}
+
 	function deleteEntry() {
-		$id = Request::getInt('entryId');
-		$entry = Weblogentry::load($id);
+		$entryId = Request::getInt('entryId');
+		$entry = Weblogentry::load($entryId);
 		if ($entry) {
 			if ($page = Page::load($entry->getPageId())) {
 				$page->delete();
@@ -105,10 +113,10 @@ class WeblogController extends LegacyTemplateController {
 		}
 	}
 
-	function createEntry() {
+	function createEntry($id) {
 		$title = Request::getUnicodeString('title');
 		$text = Request::getUnicodeString('text');
-		$groups = Request::getPostArray('group');
+		$groups = Request::getIntArrayComma('groups');
 		$date = Request::getInt('date');
 		if ($title=='' && count($groups)==0) {
 			return false;
@@ -118,7 +126,7 @@ class WeblogController extends LegacyTemplateController {
 		$entry->setText($text);
 		$entry->setDate($date);
 		
-		if ($blueprint = $this->getBlueprint()) {
+		if ($blueprint = $this->getBlueprint($id)) {
 			$page = new Page();
 			$page->setTitle($title);
 			$page->setTemplateId($blueprint->getTemplateId());
@@ -137,21 +145,19 @@ class WeblogController extends LegacyTemplateController {
 		$entry->changeGroups($groups);
 	}
 	
-	function getBlueprint() {
-		$sql = "select pageblueprint_id from weblog where page_id = ".$this->id;
+	function getBlueprint($id) {
+		$sql = "select pageblueprint_id from weblog where pageblueprint_id>0 and page_id = ".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
-			$blueprint = PageBlueprint::load($row['pageblueprint_id']);
-			return $blueprint;
-		} else {
-			return false;
+			return PageBlueprint::load($row['pageblueprint_id']);
 		}
+		return null;
 	}
 
 	function updateEntry() {
 		$id = Request::getPostInt('entryId');
 		$title = Request::getUnicodeString('title');
 		$text = Request::getUnicodeString('text');
-		$groups = Request::getPostArray('group');
+		$groups = Request::getIntArrayComma('groups');
 		$date = Request::getPostInt('date');
 		if ($title!='' && count($groups)>0) {
 			$entry = Weblogentry::load($id);
@@ -171,19 +177,4 @@ class WeblogController extends LegacyTemplateController {
 			}
 		}
 	}
-
-    
-    function build() {
-		$sql="select * from weblog where page_id=".$this->id;
-		$row = Database::selectFirst($sql);
-		$data = '<weblog xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/weblog/1.0/">';
-		$data .= '<title>'.StringUtils::escapeXML($row['title']).'</title>';
-		$data.= '<!--dynamic--></weblog>';
-        return array('data' => $data, 'dynamic' => true, 'index' => '');
-    }
-
-    function import(&$node) {
-    }
-    
 }
-?>
