@@ -248,7 +248,7 @@ class DocumentTemplateEditor
 			Log::debug('Row not found');
 			return;
 		}
-		$pageId=$row['page_id'];
+		$pageId = $row['page_id'];
 
 		
 		$sql="select * from document_column where row_id=".Database::int($rowId)." and `index`>=".Database::int($index);
@@ -266,5 +266,96 @@ class DocumentTemplateEditor
 		Database::update($sql);
 		
 		return $columnId;
+	}
+	
+	function moveSection($sectionId,$direction) {
+		$sql="select * from document_section where id=".Database::int($sectionId);
+		$row = Database::selectFirst($sql);
+		if (!$row || ($direction!==1 && $direction!==-1)) {
+			return;
+		}
+
+		$index = $row['index'];
+		$column = $row['column_id'];
+		$newIndex = $row['index']+$direction;
+	
+		$sql="select * from document_section where `index`=".Database::int($newIndex)." and column_id=".Database::int($column);
+		$row_next = Database::selectFirst($sql);
+	
+		if ($row_next) {
+			$next_id = $row_next['id'];
+			Database::update("update document_section set `index`=".Database::int($newIndex)." where id=".Database::int($sectionId));
+			Database::update("update document_section set `index`=".Database::int($index)." where id=".Database::int($next_id));
+			$sql="update page set changed=now() where id=".Database::int($row['page_id']);
+			Database::update($sql);
+		}
+	}
+	
+	function moveRow($rowId,$direction) {
+		$sql="select * from document_row where id=".Database::int($rowId);
+		$row = Database::selectFirst($sql);
+		if (!$row || ($direction!==1 && $direction!==-1)) {
+			Log::debug('Unable to move row');
+			return;
+		}
+
+		$index = $row['index'];
+		$newIndex = $index+$direction;
+		$sql="select * from document_row where `index`=".Database::int($newIndex)." and page_id=".Database::int($row['page_id']);
+
+		$row_next = Database::selectFirst($sql);
+		if ($row_next) {
+			$next_id = $row_next['id'];
+			Database::update("update document_row set `index`=".Database::int($newIndex)." where id=".Database::int($rowId));
+			Database::update("update document_row set `index`=".Database::int($index)." where id=".Database::int($next_id));
+			$sql="update page set changed=now() where id=".Database::int($row['page_id']);
+			Database::update($sql);
+		} else {
+			Log::debug('The other row was not found!');
+		}
+	}
+	
+	function moveColumn($columnId,$direction) {
+		$sql = "select * from document_column where id=".Database::int($columnId);
+		$row = Database::selectFirst($sql);
+		if (!$row || ($direction!==1 && $direction!==-1)) {
+			return;
+		}
+
+		$index = $row['index'];
+		$newIndex = $index+$direction;
+		$rowId = $row['row_id'];
+
+		$sql="select * from document_column where `index`=".Database::int($newIndex)." and row_id=".Database::int($rowId);
+		$row_next = Database::selectFirst($sql);
+		if ($row_next) {
+			$next_id = $row_next['id'];
+			Database::update("update document_column set `index`=".Database::int($newIndex)." where id=".Database::int($columnId));
+			Database::update("update document_column set `index`=".Database::int($index)." where id=".Database::int($next_id));
+
+			$sql="update page set changed=now() where id=".Database::int($row['page_id']);
+			Database::update($sql);
+		}
+	}
+	
+	function loadColumn($id) {
+		$sql = "select * from document_column where id=".Database::int($id);
+		if ($row = Database::selectFirst($sql)) {
+			return array( 'id' => intval($row['id']), 'width' => $row['width'] );
+		}
+		return null;
+	}
+	
+	function updateColumn($column) {
+		$sql = "select * from document_column where id=".Database::int($column['id']);
+		if ($row = Database::selectFirst($sql)) {
+			$sql="update document_column set width=".Database::text($column['width'])." where id=".Database::int($column['id']);
+			Database::update($sql);
+			$sql="update page set changed=now() where id=".Database::int($row['page_id']);
+			Database::update($sql);
+		} else {
+			Log::debug('Column not found...');
+			Log::debugJSON($column);
+		}
 	}
 }

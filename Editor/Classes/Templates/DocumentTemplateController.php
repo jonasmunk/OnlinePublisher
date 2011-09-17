@@ -19,7 +19,6 @@ class DocumentTemplateController extends TemplateController
 	}
 	
 	function create($page) {
-		Log::debug('Creating :-)');
 		$sql="insert into document (page_id) values (".Database::int($page->getId()).")";
 		Database::insert($sql);
 		
@@ -31,8 +30,6 @@ class DocumentTemplateController extends TemplateController
 	}
 	
 	function delete($page) {
-		Log::debug('Deleting :-)');
-		
 		$this->removeAll($page->getId());
 		$sql="delete from document where page_id=".Database::int($page->getId());
 		Database::delete($sql);
@@ -101,7 +98,6 @@ class DocumentTemplateController extends TemplateController
 	}
 	
 	function build($id) {
-		Log::debug('Building :-)');
 		$out = $this->getData($id);
         return array('data' => $out['xml'], 'dynamic' => $out['dynamic'], 'index' => $out['index']);
     }
@@ -209,7 +205,6 @@ class DocumentTemplateController extends TemplateController
 			$state['data']=str_replace('<!-- dynamic:part#'.$row['part_id'].' -->', $partData, $state['data']);
 		}
 		Database::free($result);
-		Log::debug($state);
 	}
 
 }

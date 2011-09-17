@@ -1,5 +1,6 @@
 var controller = {
 	parts : [],
+	pageId : 0,
 	sectionId : 0,
 	sectionIndex : 0,
 	columnId : 0,
@@ -127,6 +128,15 @@ var controller = {
 	saveScroll : function() {
 		hui.cookie.set('document.scroll',hui.getScrollTop());
 	},
+	setMainToolbar : function() {
+		try {
+			if (parent.Toolbar.location.href.indexOf('/Toolbar.php')==-1) {
+				parent.Toolbar.location='Toolbar.php?'+Math.random();
+			} else {
+				hui.log('Toolbar already correct!');
+			}
+		} catch (e) {}
+	},
 	$iconWasClicked$sectionActions : function(value,event) {
 		if (value=='edit') {
 			this.editSection();
@@ -200,13 +210,21 @@ var controller = {
 		this.sectionMenu.showAtPointer(event);
 		return false;
 	},
+	clickSection : function(info) {
+		if (info.event.altKey) {
+			document.location='Editor.php?section='+info.id;
+		}
+	},
 	editSection : function() {
 		document.location='Editor.php?section='+this.sectionId;
 	},
 	deleteSection : function() {
-		if (confirm(this.strings.get('confirm_delete_section'))) {
-			document.location='DeleteSection.php?section='+this.sectionId;
-		}
+		hui.ui.confirmOverlay({
+			text : this.strings.get('confirm_delete_section'),
+			onOk : function() {
+				document.location='data/DeleteSection.php?section='+this.sectionId;
+			}.bind(this)
+		});
 	},
 	showNewPartMenu : function(element,event,columnId,sectionIndex) {
 		this.lastSectionMode = true;
@@ -228,47 +246,133 @@ var controller = {
 	},
 	
 	columnOver : function(cell) {
-		hui.addClass(cell,'columnHover');
+		hui.addClass(cell,'editor_column_hover');
 	},
 	
 	columnOut : function(cell) {
-		hui.removeClass(cell,'columnHover');
-	},
-	
-	editColumn : function() {
-		document.location='Editor.php?column='+this.columnId;
+		hui.removeClass(cell,'editor_column_hover');
 	},
 	
 	moveSection : function(dir) {
-		document.location='MoveSection.php?section='+this.sectionId+'&dir='+dir;
+		document.location='data/MoveSection.php?section='+this.sectionId+'&dir='+dir;
 	},
 	
 	moveColumn : function(dir) {
-		document.location='MoveColumn.php?column='+this.columnId+'&dir='+dir;
+		document.location='data/MoveColumn.php?column='+this.columnId+'&dir='+dir;
 	},
 	
 	addColumn : function() {
-		document.location='AddColumn.php?row='+this.rowId+'&index='+(this.columnIndex+1);
+		document.location='data/AddColumn.php?row='+this.rowId+'&index='+(this.columnIndex+1);
 	},
 	
 	deleteColumn : function() {
 		if (confirm(this.strings.get('confirm_delete_column'))) {
-			document.location='DeleteColumn.php?column='+this.columnId;
+			document.location='data/DeleteColumn.php?column='+this.columnId;
 		}
 	},
 	
 	moveRow : function(dir) {
-		document.location='MoveRow.php?row='+this.rowId+'&dir='+dir;
+		document.location='data/MoveRow.php?row='+this.rowId+'&dir='+dir;
 	},
 	
 	addRow : function() {
-		document.location='AddRow.php?index='+(this.rowIndex+1);
+		document.location='data/AddRow.php?index='+(this.rowIndex+1)+'&pageId='+this.pageId;
 	},
 	
 	deleteRow : function() {
 		if (confirm(this.strings.get('confirm_delete_row'))) {
-			document.location='DeleteRow.php?row='+this.rowId;
+			document.location='data/DeleteRow.php?row='+this.rowId;
 		}
+	},
+	
+	///////////////////////////////// Columns /////////////////////////
+	
+	
+	editColumn : function() {
+		if (this.editedColumn) {
+			this._resetColumn();
+		}
+		
+		var node = hui.get('column'+this.columnId);
+		hui.addClass(node,'editor_column_highlighted');
+		this.editedColumn = {
+			id : this.columnId,
+			initialWidth : node.style.width,
+			node : node
+		}
+		hui.ui.request({
+			message : {start : 'Åbner kolonne...',delay:300},
+			url : 'data/LoadColumn.php',
+			parameters : { id : this.editedColumn.id },
+			onJSON : function(obj) {
+				var values = {preset:'dynamic',width:''};
+				if (obj.width=='min') {
+					values.preset='min';
+				} else if (obj.width=='max') {
+					values.preset='max';
+				} else if (!hui.isBlank(obj.width)) {
+					values.preset='specific';
+					values.width = obj.width;
+				}
+				columnWindow.show();
+				columnFormula.setValues(values);
+			}
+		})
+	},
+	$valuesChanged$columnFormula : function(values) {
+		var node = hui.get('column'+this.columnId);
+		if (node) {
+			if (values.preset=='min') {
+				node.style.width = '1%';
+			} else if (values.preset=='max') {
+				node.style.width = '100%';
+			} else if (values.preset=='dynamic') {
+				node.style.width = 'auto';
+			} else {
+				node.style.width=values.width || 'auto';
+			}
+		} else {
+			hui.log('Column node not found');
+		}
+	},
+	_resetColumn : function() {
+		this.editedColumn.node.style.width = this.editedColumn.initialWidth;
+		hui.removeClass(this.editedColumn.node,'editor_column_highlighted');
+		this.editedColumn = null;
+		columnFormula.reset();
+		columnWindow.hide();
+	},
+	$userClosedWindow$columnWindow : function() {
+		this._resetColumn();
+	},
+	$click$cancelColumn : function() {
+		this._resetColumn();
+	},
+	$click$deleteColumn : function() {
+		document.location='data/DeleteColumn.php?column='+this.editedColumn.id;
+	},
+	$submit$columnFormula : function(form) {
+		var values = form.getValues();
+		var p = {
+			id : this.editedColumn.id
+		};
+		if (values.preset=='min' || values.preset=='max') {
+			p.width = values.preset;
+		} else if (values.preset='specific') {
+			p.width = values.width;
+		}
+		hui.ui.request({
+			url : 'data/UpdateColumn.php',
+			parameters : p,
+			message : {start : 'Gemmer kolonne...',delay:300},
+			onSuccess : function() {
+				hui.ui.showMessage({text:'Kolonnen er gemt',duration:2000,icon:'common/success'})
+			}
+		});
+		hui.removeClass(this.editedColumn.node,'editor_column_highlighted');
+		this.editedColumn = null;
+		columnFormula.reset();
+		columnWindow.hide();
 	},
 	
 	////////////////////////////////// Links //////////////////////////
@@ -280,10 +384,14 @@ var controller = {
 		if (this.selectedTextInfo) {
 			this.linkPartId = this.selectedTextInfo.part;
 			this._highlightPart(this.linkPartId);
+		} else {
+			this.linkPartId = null;
 		}
+		linkScope.setEnabled(this.selectedTextInfo!=null);
 		linkFormula.reset();
 		linkFormula.setValues({
-			text : this.selectedText
+			text : this.selectedText,
+			scope : this.linkPartId ? 'part' : 'page'
 		});
 		linkWindow.show();
 		deleteLink.disable();
@@ -344,7 +452,7 @@ var controller = {
 			form.focus();
 			return;
 		}
-		var p = {text : values.text, id : this.linkId};
+		var p = {text : values.text, description : values.description, id : this.linkId};
 		if (values.page) {
 			p.type = 'page';
 			p.value = values.page;
@@ -358,7 +466,7 @@ var controller = {
 			p.type = 'email';
 			p.value = values.email;
 		}
-		if (values.limitToPart && this.linkPartId) {
+		if (values.scope=='part' && this.linkPartId) {
 			p.partId = this.linkPartId;
 		}
 		hui.ui.request({
@@ -403,11 +511,17 @@ var controller = {
 	},
 	
 	clickedLink : null,
+	panelLinkInfo : null,
+	
+	_clearLinkFocus : function() {
+		if (this.clickedLinkInfo) {
+			hui.removeClass(this.clickedLinkInfo.node,'editor_link_highlighted');
+		}
+	},
 	
 	linkWasClicked : function(info) {
-		visitLink.setEnabled(info.page!=undefined);
-		this.clickedLink = info;
-		linkPanel.position(info.node);
+		this._clearLinkFocus();
+		this.clickedLinkInfo = info;
 		var section = hui.firstAncestorByClass(info.node,'editor_section');
 		if (section) {
 			this.selectedTextInfo = hui.fromJSON(section.getAttribute('data'));
@@ -419,7 +533,18 @@ var controller = {
 			this.linkPartId = this.selectedTextInfo.part;
 			hui.log('link click: Part id is: '+this.linkPartId);
 		}
-		linkPanel.show();
+		hui.addClass(info.node,'editor_link_highlighted');
+		hui.ui.request({
+			url : 'data/LoadLinkInfo.php',
+			parameters : {id:info.id},
+			onJSON : function(obj) {
+				this.panelLinkInfo = obj;
+				linkInfo.setContent(obj.rendering);
+				linkPanel.position(info.node);
+				visitLink.setEnabled(obj.type=='page' || obj.type=='url');
+				linkPanel.show();
+			}.bind(this)
+		})
 	},
 	linkMenu : function(info) {
 		if (!this.linkContextMenu) {
@@ -430,19 +555,29 @@ var controller = {
 		}
 		this.linkContextMenu.showAtPointer(info.event);
 	},
-	$click$editLink : function() {
+	$click$cancelLinkPanel : function() {
+		this._clearLinkFocus();
 		linkPanel.hide();
-		this._loadLink(this.clickedLink.id);
+		this.clickedLinkInfo = null;
+	},
+	$click$editLink : function() {
+		this._clearLinkFocus();
+		linkPanel.hide();
+		this._loadLink(this.clickedLinkInfo.id);
 	},
 	$click$visitLink : function() {
-		if (this.clickedLink.page) {
-			parent.parent.location='../Edit.php?id='+this.clickedLink.page;
+		if (this.panelLinkInfo.type=='page') {
+			parent.location='../Edit.php?id='+this.panelLinkInfo.targetId;
+		}
+		if (this.panelLinkInfo.type=='url') {
+			alert(this.panelLinkInfo.targetValue)
+			window.open(this.panelLinkInfo.targetValue);
 		}
 	},
 	$click$limitLinkToPart : function() {
 		hui.ui.request({
 			url : 'data/BindLinkToPart.php',
-			parameters : {linkId:this.clickedLink.id,partId:this.clickedLink.part},
+			parameters : {linkId:this.clickedLinkInfo.id,partId:this.clickedLinkInfo.part},
 			message : {start:'Gemmer link',delay:300},
 			onSuccess : function() {
 				document.location.reload();
@@ -451,7 +586,7 @@ var controller = {
 	},
 	$click$deleteLinkPanel : function() {
 		linkPanel.hide();
-		this._deleteLink(this.clickedLink.id);
+		this._deleteLink(this.clickedLinkInfo.id);
 	},
 	$click$deleteLink : function() {
 		this._deleteLink(this.linkId);

@@ -20,7 +20,7 @@ var controller = {
 		window.parent.location='../../Tools/Pages/?action=pageproperties&amp;id='+this.pageId;
 	},
 	$click$newLink : function() {
-		var win = window.parent.frames[1].EditorFrame.getWindow();
+		var win = window.parent.frames[1];
 		win.controller.newLink();
 	},
 	$click$editLinks : function() {

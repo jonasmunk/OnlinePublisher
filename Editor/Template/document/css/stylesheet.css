@@ -10,7 +10,7 @@ body {
 
 div.editor_body
 {
-	padding: 8px;
+	padding: 40px 15px 15px;
 }
 
 form {
@@ -26,29 +26,27 @@ td.colButtonCell {
 	height: 10px;
 }
 
-td.column {
+td.editor_column
+{
 	border: 1px solid #eee;
 	vertical-align: top;
 }
 
-td.columnSelected {
-	border: 1px solid #33e;
-	vertical-align: top;
+td.editor_column_highlighted
+{
+	border: 1px solid #0065FF;
+	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
 }
 
-td.columnDesign {
-	border: 1px solid #ccc;
-	vertical-align: top;
-}
-
-td.columnHover
+td.editor_column_hover
 {
 	border: 1px solid #abf;
 }
 
 div.section_selected
 {
-	border: 1px solid #33e;
+	border: 1px solid #0065FF;
+	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
 }
 
 div.section
@@ -70,10 +68,15 @@ div.row {
 	opacity: 0.5;
 }
 
+a.editor_link_highlighted
+{
+	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
+}
+
 div.editor_part_highlighted
 {
-	border: 1px solid #CDF;
-	box-shadow: 0 0 5px #ABF, inset 0 0 5px #ABF;
+	border: 1px solid #0065FF;
+	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
 	border-radius: 4px;
 }
 
@@ -85,5 +88,5 @@ body.editor_details span.editor_link_bound
 	margin-left: -12px;
 	margin-top: 2px;
 	position: absolute;
-	background: url('../../../hui/icons/monochrome/lock12.png');
+	background: url('../../../../hui/icons/monochrome/lock12.png');
 }

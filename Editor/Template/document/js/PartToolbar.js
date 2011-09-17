@@ -7,8 +7,20 @@ var partToolbar = {
 	section : null,
 	
 	$ready : function() {
-		this.editorFrame = window.parent.Frame.EditorFrame;
-		var doc = this.editorFrame.getDocument();
+		this.editorFrame = window.parent.Frame;
+		if (!this.editorFrame) {
+			this.editorFrame = window.parent.frames[1];
+			if (!this.editorFrame) {
+				hui.log('No editor frame found!');
+				return;
+			}
+		}
+		var doc = hui.getFrameDocument(this.editorFrame);
+		if (!doc) {
+			hui.log('no document found!');
+			hui.log(this.editorFrame);
+			return;
+		}
 		this.partForm = doc.forms['PartForm'];
 		this.section = doc.getElementById('selectedSection');
 		
@@ -20,25 +32,30 @@ var partToolbar = {
 		sectionFloat.setValue(this.partForm['float'].value);
 	},
 	syncSize : function() {
-		var ctrl = this.editorFrame.getWindow().partController;
+		var ctrl = this.getMainController().partController;
 		if (ctrl && ctrl.syncSize) {
 			ctrl.syncSize();
 		}
 	},
 	cancel : function() {
-		this.editorFrame.setUrl('Editor.php?section=');
+		hui.getFrameDocument(this.editorFrame).location = 'Editor.php?section=';
 	},
 	save : function() {
 		this.partForm.submit();
 	},
 	deletePart : function() {
-		this.editorFrame.setUrl('DeleteSection.php?section='+this.sectionId);
+		hui.getFrameDocument(this.editorFrame).location = 'data/DeleteSection.php?section='+this.sectionId;
 	},
 	preview : function() {
 		this.getMainController().preview();
 	},
 	getMainController : function() {
-		return this.editorFrame.getWindow().partController;
+		return this.editorFrame.partController;
+		var win = this.editorFrame.partController;
+		if (!win) {
+			hui.log('Window not found');
+		}
+		return hui.getFrameWindow(this.editorFrame).partController;
 	},
 	$valueChanged$marginLeft : function(value) {
 		this.partForm.left.value=value;

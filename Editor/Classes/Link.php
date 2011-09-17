@@ -48,6 +48,10 @@ class Link {
 	    return $this->partId;
 	}
 	
+	function getTargetType() {
+	    return $this->targetType;
+	}
+	
 	
 	function setText($text) {
 	    $this->text = $text;

@@ -12,7 +12,7 @@ $text = Request::getEncodedString('text');
 $value = Request::getEncodedString('value');
 $type = Request::getString('type');
 $target = Request::getString('target');
-$alternative = Request::getEncodedString('alternative');
+$alternative = Request::getEncodedString('description');
 
 if ($id) {
 	$link=Link::load($id);

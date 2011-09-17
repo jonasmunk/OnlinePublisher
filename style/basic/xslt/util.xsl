@@ -35,8 +35,6 @@
 						id : <xsl:value-of select="@id"/>
 						, event : event
 						, node : this
-						<xsl:if test="@page">,page : <xsl:value-of select="@page"/></xsl:if>
-						<xsl:if test="@file">,file : <xsl:value-of select="@file"/></xsl:if>
 						<xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
 					}); return false;
 					</xsl:attribute>
@@ -45,8 +43,6 @@
 							id : <xsl:value-of select="@id"/>
 							, event : event
 							, node : this
-							<xsl:if test="@page">,page : <xsl:value-of select="@page"/></xsl:if>
-							<xsl:if test="@file">,file : <xsl:value-of select="@file"/></xsl:if>
 							<xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
 						});
 					</xsl:attribute>

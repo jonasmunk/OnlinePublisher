@@ -37,4 +37,4 @@ var partController = {
 	}
 }
 
-In2iGhui.ui.listen(partController);
+hui.ui.listen(partController);

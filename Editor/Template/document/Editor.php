@@ -12,7 +12,6 @@ require_once '../../Classes/Request.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/SystemInfo.php';
 require_once '../../Classes/Templates/DocumentTemplateController.php';
-require_once 'Functions.php';
 
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -21,151 +20,186 @@ $language = InternalSession::getLanguage();
 $strings = array(
 	'add_section' => array('da' => 'Tilføj afsnit','en' => 'Add section')
 );
+
+if (Request::exists('section')) {
+	$section = Request::getInt('section',null);
+}
+
+$pageId = InternalSession::getPageId();
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-<head>
-<title>Editor</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version=<?=SystemInfo::getDate()?>" />
-<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/basic/css/parts.php?version=<?=SystemInfo::getDate()?>" />
-<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/basic/css/document.css?version=<?=SystemInfo::getDate()?>" />
-<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/css/overwrite.css?version=<?=SystemInfo::getDate()?>" />
-<link rel="stylesheet" type="text/css" href="Stylesheet.css?version=<?=SystemInfo::getDate()?>" />
-<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script' rel='stylesheet' type='text/css' />
-<!--[if IE]>
-<link rel="stylesheet" type="text/css" href="StylesheetIE.css?version=<?=SystemInfo::getDate()?>" />
-<![endif]-->
-<? if (true || Request::getBoolean('dev')) { ?>
-<script type="text/javascript" src="../../../hui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
-<? } else { ?>
-<script type="text/javascript" src="../../../hui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
-<? } ?>
-<!--[if IE 8]>
-	<link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
-<![endif]-->
-<!--[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version=<?=SystemInfo::getDate()?>"> </link>
-<![endif]-->
-<!--[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version=<?=SystemInfo::getDate()?>"> </link>
-<![endif]-->
-<script type="text/javascript">
-hui.ui.context='../../../';
-hui.ui.language='<?=$language?>';
-</script>
-<script type="text/javascript" src="js/Controller.js?version=<?=SystemInfo::getDate()?>" charset="utf-8"></script>
-<script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?=SystemInfo::getDate()?>"></script>
-<script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js?version=<?=SystemInfo::getDate()?>"></script>
-<script type="text/javascript">
-controller.context='<?=$baseUrl?>';
+	<head>
+		<title>Editor</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version=<?=SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/basic/css/parts.php?version=<?=SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/basic/css/document.css?version=<?=SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/css/overwrite.css?version=<?=SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version=<?=SystemInfo::getDate()?>" />
+		<!--
+		<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script' rel='stylesheet' type='text/css' />-->
+		<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="css/msie.css?version=<?=SystemInfo::getDate()?>" />
+		<![endif]-->
+		<? if (true || Request::getBoolean('dev')) { ?>
+		<script type="text/javascript" src="../../../hui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
+		<? } else { ?>
+		<script type="text/javascript" src="../../../hui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
+		<? } ?>
+		<!--[if IE 8]>
+			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
+		<![endif]-->
+		<!--[if lt IE 7]>
+			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version=<?=SystemInfo::getDate()?>"> </link>
+		<![endif]-->
+		<!--[if IE 7]>
+			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version=<?=SystemInfo::getDate()?>"> </link>
+		<![endif]-->
+		<script type="text/javascript">
+			hui.ui.context='../../../';
+			hui.ui.language='<?=$language?>';
+		</script>
+		<script type="text/javascript" src="js/Controller.js?version=<?=SystemInfo::getDate()?>" charset="utf-8"></script>
+		<script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?=SystemInfo::getDate()?>"></script>
+		<script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js?version=<?=SystemInfo::getDate()?>"></script>
+		<script type="text/javascript">
+			controller.context='<?=$baseUrl?>';
+			controller.pageId = <?=$pageId?>;
+			<?
+			$parts = PartService::getParts();
+			foreach ($parts as $part => $info) {
+				echo "controller.parts.push({value:'".$part."',title:'".$info['name'][$language]."'});\n";
+			}
+			if ($section==null) {
+				echo "controller.setMainToolbar();\n";
+			} else if ($section>0) {
+				echo "controller.activeSection=".$section.";\n";
+			}
+			?>
+		</script>
+	</head>
+	<body class="editor">
+	<div class="editor_body">
+		<form action="data/AddSection.php" name="SectionAdder" method="get" style="margin: 0px;">
+			<input type="hidden" name="type"/>
+			<input type="hidden" name="part"/>
+			<input type="hidden" name="column"/>
+			<input type="hidden" name="index"/>
+		</form>
+		<?
+			$partContext = DocumentTemplateController::buildPartContext($pageId);
+			$lastRowIndex = displayRows($pageId);
+		?>
+	</div>
 <?
-$parts = PartService::getParts();
-foreach ($parts as $part => $info) {
-?>
-controller.parts.push({value:'<?=$part?>',title:'<?=$info['name'][$language]?>'});
-<?
-}
-?>
-</script>
-<?
-if (Request::exists('row')) {
-	setDocumentRow(Request::getInt('row',0));
-	setDocumentColumn(0);
-	setDocumentSection(0);
-}
-if (Request::exists('section')) {
-	setDocumentSection(Request::getInt('section',0));
-	setDocumentColumn(0);
-	setDocumentRow(0);
-}
-if (Request::exists('column')) {
-	setDocumentColumn(Request::getInt('column',0));
-	setDocumentSection(0);
-}
-if (getDocumentColumn()>0) {
-?>
-<script>try {parent.parent.Toolbar.location='ColumnToolbar.php?'+Math.random();} catch (e) {}</script>
-<?
-}
-else if (getDocumentSection()==0) {
-?>
-<script>try {parent.parent.Toolbar.location='Toolbar.php?'+Math.random();} catch (e) {}</script>
-<?
-}
-else if (getDocumentSection()!=0) {
-	echo '<script type="text/javascript">controller.activeSection='.getDocumentSection().';</script>';
-}
-?>
-</head>
-<body class="editor">
-<div class="editor_body">
-<form action="AddSection.php" name="SectionAdder" method="get" style="margin: 0px;">
-<input type="hidden" name="type"/>
-<input type="hidden" name="part"/>
-<input type="hidden" name="column"/>
-<input type="hidden" name="index"/>
-</form>
-<?
-$partContext = DocumentTemplateController::buildPartContext(InternalSession::getPageId());
-$lastRowIndex = displayRows();
-?>
-</div>
-<?
+if ($section==null) {
 $gui = '
 	<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
 	<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
 	<window width="400" name="linkWindow" padding="5" title="Link">
-	<formula name="linkFormula">
-		<group labels="above">
-			<text label="Tekst" key="text" multiline="true"/>
-			<checkbox label="Kun dette afsnit" key="limitToPart"/>
-		</group>
-		<space left="3" right="3" top="5">
-		<fieldset legend="Link">
-			<group>
-				<dropdown label="Side" key="page" name="linkPage" source="pageSource"/>
-				<dropdown label="Fil" key="file" name="linkFile" source="fileSource"/>
-				<text label="Adresse" key="url" name="linkUrl"/>
-				<text label="E-post" key="email" name="linkEmail"/>
+		<formula name="linkFormula">
+			<group labels="above">
+				<text label="Tekst" key="text" multiline="true"/>
+				<text label="Beskrivelse" key="description"/>
+				<radiobuttons label="Omfang" key="scope" name="linkScope">
+					<item value="page" text="Hele siden"/>
+					<item value="part" text="Kun dette afsnit"/>
+				</radiobuttons>
 			</group>
-		</fieldset>
-		</space>
-		<buttons top="5">
-			<button text="Slet" name="deleteLink">
-				<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
-			</button>
-			<button text="Annuller" name="cancelLink"/>
-			<button text="Opret" submit="true" highlighted="true" name="saveLink"/>
-		</buttons>
-	</formula>
+			<space left="3" right="3" top="5">
+			<fieldset legend="Link">
+				<group>
+					<dropdown label="Side" key="page" name="linkPage" source="pageSource"/>
+					<dropdown label="Fil" key="file" name="linkFile" source="fileSource"/>
+					<text label="Adresse" key="url" name="linkUrl"/>
+					<text label="E-post" key="email" name="linkEmail"/>
+				</group>
+			</fieldset>
+			</space>
+			<buttons top="5">
+				<button text="Slet" name="deleteLink">
+					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+				</button>
+				<button text="Annuller" name="cancelLink"/>
+				<button text="Opret" submit="true" highlighted="true" name="saveLink"/>
+			</buttons>
+		</formula>
 	</window>
 	
 	<boundpanel name="linkPanel" variant="light">
+		<space all="3" bottom="10">
+			<rendering name="linkInfo"/>
+		</space>
 		<buttons align="center">
-			<button text="Rediger" name="editLink" highlighted="true" variant="paper"/>
-			<button text="Slet" name="deleteLinkPanel" variant="paper">
+			<button text="Rediger" name="editLink" highlighted="true" variant="paper" small="true"/>
+			<button text="Slet" name="deleteLinkPanel" variant="paper" small="true">
 				<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
 			</button>
-			<button text="Besøg" name="visitLink" variant="paper"/>
+			<button text="Besøg" name="visitLink" variant="paper" small="true"/>
+			<!--
 			<button text="Kun dette afsnit" name="limitLinkToPart" variant="paper"/>
-			<button text="Annuller" click="linkPanel.hide()" variant="paper"/>
+			-->
+			<button text="Annuller" name="cancelLinkPanel" variant="paper" small="true"/>
 		</buttons>
 	</boundpanel>
 	
 	<menu name="linkMenu">
 		<item title="Slet"/>
 	</menu>
+
+	<window width="400" name="columnWindow" padding="5" title="Kolonne">
+		<formula name="columnFormula">
+			<group labels="above">
+				<radiobuttons label="Bredde..." key="preset">
+					<item value="dynamic" text="Efter indhold"/>
+					<item value="min" text="Mindst mulig"/>
+					<item value="max" text="Størst muligt"/>
+					<item value="specific" text="Speciel..."/>
+				</radiobuttons>
+				<style-length label="Bredde" key="width"/>
+			</group>
+			<buttons top="5">
+				<button text="Slet" name="deleteColumn">
+					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+				</button>
+				<button text="Annuller" name="cancelColumn"/>
+				<button text="Opdater" submit="true" highlighted="true" name="saveColumn"/>
+			</buttons>
+		</formula>
+	</window>
 ';
 echo In2iGui::renderFragment($gui);
+}
 ?>
 </body>
 </html>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?
-function displayRows() {
-	$selected = getDocumentRow();
-	$pageId = InternalSession::getPageId();
+function displayRows($pageId) {
 	$lastIndex = 0;
 	$sql="select * from document_row where page_id=".$pageId." order by `index`";
 	$result = Database::select($sql);
@@ -181,38 +215,32 @@ function displayRows() {
 }
 
 function displayColumns($rowId,$rowIndex) {
-	$lastIndex = 0;
-	$pageId = InternalSession::getPageId();
-	$selectedColumn = getDocumentColumn();
-	$sql="select * from document_column where page_id=".$pageId." and row_id=".$rowId." order by `index`";
+	$sql="select * from document_column where row_id=".Database::int($rowId)." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$columnWidth=$row['width'];
 		if ($columnWidth!='') {
 			if ($columnWidth=='min') {
-				$columnWidth=' width="1%"';
+				$columnWidth=' style="width: 1%"';
 			}
 			elseif ($columnWidth=='max') {
-				$columnWidth=' width="100%"';
+				$columnWidth=' style="width: 100%"';
 			}
 			else {
-				$columnWidth=' width="'.$columnWidth.'"';
+				$columnWidth=' style="width: '.$columnWidth.'"';
 			}
 		}
 		echo "\n";
-		echo '<td class="column'.($selectedColumn==$row['id'] ? 'Selected' : '').'" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
+		echo '<td class="editor_column" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
 		displaySections($row['id'],$row['index'],$rowId,$rowIndex);
 		echo '</td>';
 		echo "\n";
-		$lastIndex = $row['index'];
 	}
 	Database::free($result);
-	return $lastIndex;
 }
 
 function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
-	global $language,$strings;
-	$selected = getDocumentSection();
+	global $language,$strings,$section;
 	$lastIndex=0;
 	
 	$sql="select document_section.*,part.type as part_type from document_section left join part on document_section.part_id=part.id where column_id=".$columnId." order by `index`";
@@ -224,7 +252,7 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 			echo ' style="width: '.$row['width'].'"';
 		}
 		echo '>';
-		if ($row['id']==$selected) {
+		if ($row['id']==$section) {
 			sectionEditor($row['id'],$row['type'],$style,$row['part_id'],$row['part_type'],$row);
 		}
 		else {
@@ -234,7 +262,7 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
-	if ($selected==0) {
+	if ($section==null) {
 		echo '<div style="padding-top: 5px;">'.
 		'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" href="#" class="hui_button hui_button_small">'.
 		'<span><span>'.$strings['add_section'][$language].'</span></span>'.
@@ -265,7 +293,7 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 	$ctrl = PartService::getController($partType);
 	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
-		echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\'>';
+		echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
 		echo $ctrl->display($part,$partContext);
 		echo '</div>';
 	}
@@ -289,7 +317,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	}
 	echo
 	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section_selected">'.
-	'<form name="PartForm" action="UpdatePart.php" method="post" charset="utf-8">'.
+	'<form name="PartForm" action="data/UpdatePart.php" method="post" charset="utf-8">'.
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
 	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.
 	'<input type="hidden" name="section" value="'.$sectionId.'"/>'.
@@ -301,11 +329,11 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	'<input type="hidden" name="float" value="'.StringUtils::escapeXML($row['float']).'"/>';
 	echo $ctrl->editor($part,$partContext);
 	echo '</form></div>';
-	if ($ctrl && method_exists($ctrl,'editorGui')) {
+	if (method_exists($ctrl,'editorGui')) {
 		echo $ctrl->editorGui($part,$partContext);
 	}
 	echo '<script type="text/javascript">'.
-	'try {parent.parent.Toolbar.location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"} catch(e) {};'.
+	'try {parent.Toolbar.location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"} catch(e) {};'.
 	'function saveSection() {
 		document.forms.PartForm.submit();
 	}'.
