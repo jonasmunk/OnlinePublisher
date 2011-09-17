@@ -599,6 +599,7 @@ a.hui_button_paper, a.hui_button_paper span
 	height: 26px;
 	line-height: 26px;
 	font-family: Georgia,serif;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 14px;
 }
 
@@ -822,6 +823,13 @@ table.hui_formula_group
 {
 	width: 100%;
 	font-size: 0;
+}
+
+p.hui_formula_field_hint
+{
+	font-size: 9px;
+	color: #999;
+	margin: -5px 0 0 3px;
 }
 
 table.hui_formula_group_above
@@ -5802,18 +5810,18 @@ div.hui_radiobuttons
 	padding-top: 4px;
 }
 
-div.hui_radiobutton
+a.hui_radiobutton
 {
 	overflow: hidden;
 	margin-right: 10px;
 	font-size: 10pt;
 	cursor: default;
 	color: #004A80;
-	float: left;
+	display: inline-block;
 	line-height: 15px;
 }
 
-div.hui_radiobutton div
+a.hui_radiobutton span
 {
 	float: left;
 	background: url('../gfx/radiobutton.png') no-repeat;
@@ -5823,14 +5831,24 @@ div.hui_radiobutton div
 	cursor: pointer;
 }
 
-div.hui_radiobuttons div.hui_radiobutton
+div.hui_radiobuttons a.hui_radiobutton
 {
 	margin-bottom: 3px;
 }
 
-div.hui_radiobuttons div.hui_selected div
+div.hui_radiobuttons a.hui_radiobutton_selected span
 {
 	background-position: 0px -18px;
+}
+
+div.hui_radiobuttons_disabled a.hui_radiobutton
+{
+	color: #999;
+}
+
+div.hui_radiobuttons_disabled a.hui_radiobutton span
+{
+	opacity: .5;
 }/*********************************** Number **********************************/
 
 span.hui_numberfield
@@ -5924,4 +5942,21 @@ span.hui_numberfield_adaptive input
 	padding-right: 0;
 	padding-left: 0;
 	margin-left: -2px;
+}div.hui_rendering
+{
+	font-family: 'Lucida Grande', sans-serif;
+	font-family: Helvetica;
+	font-size: 12px;
+}
+div.hui_rendering p
+{
+	margin: 0;
+}
+.hui_rendering_dimmed
+{
+	color: #999;
+}
+.hui_rendering_minor
+{
+	font-size: 10px;
 }

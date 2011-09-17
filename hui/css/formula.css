@@ -53,6 +53,13 @@ table.hui_formula_group
 	font-size: 0;
 }
 
+p.hui_formula_field_hint
+{
+	font-size: 9px;
+	color: #999;
+	margin: -5px 0 0 3px;
+}
+
 table.hui_formula_group_above
 {
 	border-spacing: 0px;

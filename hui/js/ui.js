@@ -100,6 +100,9 @@ hui.ui._resize = function() {
 hui.ui.confirmOverlay = function(options) {
 	var node = options.element,
 		overlay;
+	if (!node) {
+		node = document.body;
+	}
 	if (options.widget) {
 		node = options.widget.getElement();
 	}

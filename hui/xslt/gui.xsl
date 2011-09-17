@@ -966,4 +966,18 @@
 	</script>
 </xsl:template>
 
+<xsl:template match="gui:rendering">
+	<div class="hui_rendering" id="{generate-id()}">
+		<xsl:apply-templates/>
+	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Rendering({
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>'
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+
+</xsl:template>
+
 </xsl:stylesheet>

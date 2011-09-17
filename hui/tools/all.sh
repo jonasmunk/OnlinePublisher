@@ -10,3 +10,4 @@ ${DIR}/compile.sh
 ${DIR}/docs_java.sh
 ${DIR}/docs_xsl.sh
 ${DIR}/icons.sh
+${DIR}/test_files.sh

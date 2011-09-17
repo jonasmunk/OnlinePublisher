@@ -614,6 +614,9 @@ hui.hasClass = function(element, className) {
 	if (!element || !element.className) {
 		return false
 	}
+	if (element.className==className) {
+		return true;
+	}
 	var a = element.className.split(/\s+/);
 	for (var i = 0; i < a.length; i++) {
 		if (a[i] == className) {
@@ -633,8 +636,11 @@ hui.addClass = function(element, className) {
 
 hui.removeClass = function(element, className) {
 	element = hui.get(element);
-	if (!element) {return};
-
+	if (!element || !element.className) {return};
+	if (element.className=='className') {
+		element.className='';
+		return;
+	}
 	var newClassName = '';
 	var a = element.className.split(/\s+/);
 	for (var i = 0; i < a.length; i++) {
@@ -866,7 +872,7 @@ hui.request = function(options) {
 					options.onSuccess(transport);
 				} else if (transport.status == 403 && options.onForbidden) {
 					options.onForbidden(transport);
-				} else if (options.onFailure) {
+				} else if (transport.status !== 0 && options.onFailure) {
 					options.onFailure(transport);
 				}
 			}
@@ -3928,6 +3934,9 @@ hui.ui._resize = function() {
 hui.ui.confirmOverlay = function(options) {
 	var node = options.element,
 		overlay;
+	if (!node) {
+		node = document.body;
+	}
 	if (options.widget) {
 		node = options.widget.getElement();
 	}
@@ -13037,6 +13046,7 @@ hui.ui.StyleLength.prototype = {
 		}
 		this.value = value;
 		if (changed) {
+			hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 			this.fire('valueChanged',this.getValue());
 		}
 	},
@@ -13515,19 +13525,20 @@ hui.ui.Radiobuttons = function(options) {
 	this.radios = [];
 	this.value = options.value;
 	this.defaultValue = this.value;
+	this.enabled = true;
 	hui.ui.extend(this);
 }
 
 hui.ui.Radiobuttons.prototype = {
-	click : function() {
+/*	click : function() {
 		this.value = !this.value;
 		this.updateUI();
-	},
+	},*/
 	/** @private */
 	updateUI : function() {
 		for (var i=0; i < this.radios.length; i++) {
 			var radio = this.radios[i];
-			hui.setClass(hui.get(radio.id),'hui_selected',radio.value==this.value);
+			hui.setClass(hui.get(radio.id),'hui_radiobutton_selected',radio.value==this.value);
 		};
 	},
 	setValue : function(value) {
@@ -13535,16 +13546,26 @@ hui.ui.Radiobuttons.prototype = {
 		this.updateUI();
 	},
 	getValue : function() {
+		if (!this.enabled) {
+			return null;
+		}
 		return this.value;
 	},
 	reset : function() {
 		this.setValue(this.defaultValue);
+	},
+	setEnabled : function(enabled) {
+		this.enabled = enabled == true;
+		hui.setClass(this.element,'hui_radiobuttons_disabled',!this.enabled);
 	},
 	registerRadiobutton : function(radio) {
 		this.radios.push(radio);
 		var element = hui.get(radio.id);
 		var self = this;
 		element.onclick = function() {
+			if (!self.enabled) {
+				return;
+			}
 			self.setValue(radio.value);
 			self.fire('valueChanged',radio.value);
 			hui.ui.callAncestors(self,'childValueChanged',radio.value);
@@ -13846,6 +13867,23 @@ hui.ui.TextField.prototype = {
 	updateOverflow : function() {
 		if (!this.multiline) return;
 		this.input.style.overflowY=this.input.clientHeight>=this.options.maxHeight ? 'auto' : 'hidden';
+	}
+}/** @constructor */
+hui.ui.Rendering = function(options) {
+	this.options = hui.override({clickObjects:false},options);
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	hui.ui.extend(this);
+	//hui.listen(this.element,'click',this._click.bind(this));
+}
+
+hui.ui.Rendering.prototype = {
+	_click : function(e) {
+		e = hui.event(e);
+		
+	},
+	setContent : function(html) {
+		this.element.innerHTML = html;
 	}
 }hui.ui.Graph = function(options) {
 	this.options = options;

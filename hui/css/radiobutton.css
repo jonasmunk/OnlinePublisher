@@ -7,18 +7,18 @@ div.hui_radiobuttons
 	padding-top: 4px;
 }
 
-div.hui_radiobutton
+a.hui_radiobutton
 {
 	overflow: hidden;
 	margin-right: 10px;
 	font-size: 10pt;
 	cursor: default;
 	color: #004A80;
-	float: left;
+	display: inline-block;
 	line-height: 15px;
 }
 
-div.hui_radiobutton div
+a.hui_radiobutton span
 {
 	float: left;
 	background: url('../gfx/radiobutton.png') no-repeat;
@@ -28,12 +28,22 @@ div.hui_radiobutton div
 	cursor: pointer;
 }
 
-div.hui_radiobuttons div.hui_radiobutton
+div.hui_radiobuttons a.hui_radiobutton
 {
 	margin-bottom: 3px;
 }
 
-div.hui_radiobuttons div.hui_selected div
+div.hui_radiobuttons a.hui_radiobutton_selected span
 {
 	background-position: 0px -18px;
+}
+
+div.hui_radiobuttons_disabled a.hui_radiobutton
+{
+	color: #999;
+}
+
+div.hui_radiobuttons_disabled a.hui_radiobutton span
+{
+	opacity: .5;
 }

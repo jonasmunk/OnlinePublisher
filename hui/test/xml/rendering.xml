@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" pad="10" title="Formula">
+	<box width="600" title="Title with toolbars" variant="textured" padding="10">
+		<toolbar>
+			<icon icon="common/settings" title="Hep hey!" name="changeViaHTML"/>
+		</toolbar>
+		<rendering name="rendering">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+				<p><strong>Front page</strong></p>
+				<p class="hui_rendering_minor hui_rendering_dimmed">Page</p>
+				<p class="hui_rendering_minor" style="margin-top: 5px;">The link is only for this section</p>
+			</html>
+		</rendering>
+	</box>
+	<script>
+		hui.ui.listen({
+			$click$changeViaHTML : function() {
+				rendering.setContent('<p>This is new content inserted</p>');
+			}
+		})
+	</script>
+</gui>

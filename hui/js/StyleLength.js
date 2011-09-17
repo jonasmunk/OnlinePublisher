@@ -78,6 +78,7 @@ hui.ui.StyleLength.prototype = {
 		}
 		this.value = value;
 		if (changed) {
+			hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 			this.fire('valueChanged',this.getValue());
 		}
 	},

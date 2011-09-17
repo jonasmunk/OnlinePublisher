@@ -73,8 +73,28 @@
 
 <xsl:template match="gui:group[@labels='above']/gui:custom">
 	<tr><td>
-			<xsl:if test="@label"><label><xsl:value-of select="@label"/></label></xsl:if>
-			<xsl:apply-templates/>
+		<xsl:if test="@label"><label><xsl:value-of select="@label"/></label></xsl:if>
+		<xsl:apply-templates/>
+	</td></tr>
+</xsl:template>
+
+<!-- Field -->
+
+<xsl:template match="gui:group/gui:field">
+	<tr>
+		<th><label><xsl:value-of select="@label"/></label></th>
+		<td class="hui_formula_group">
+			<div class="hui_formula_item"><xsl:apply-templates/></div>
+			<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
+		</td>
+	</tr>
+</xsl:template>
+
+<xsl:template match="gui:group[@labels='above']/gui:field">
+	<tr><td>
+		<xsl:if test="@label"><label><xsl:value-of select="@label"/></label></xsl:if>
+		<div class="hui_formula_item"><xsl:apply-templates/></div>
+		<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
 	</td></tr>
 </xsl:template>
 
@@ -325,10 +345,10 @@
 </xsl:template>
 
 <xsl:template match="gui:radiobuttons/gui:radiobutton | gui:radiobuttons/gui:item">
-	<div id="{generate-id()}">
-		<xsl:attribute name="class">hui_radiobutton <xsl:if test="@value=../@value">hui_selected</xsl:if></xsl:attribute>
-		<div><xsl:comment/></div><xsl:value-of select="@label"/><xsl:value-of select="@text"/>
-	</div>
+	<a id="{generate-id()}">
+		<xsl:attribute name="class">hui_radiobutton <xsl:if test="@value=../@value">hui_radiobutton_selected</xsl:if></xsl:attribute>
+		<span><xsl:comment/></span><xsl:value-of select="@label"/><xsl:value-of select="@text"/>
+	</a>
 </xsl:template>
 
 <!-- Checkbox -->

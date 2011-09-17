@@ -96,6 +96,18 @@
 					</group>
 				</formula>
 			</tab>
+			<tab title="Field" padding="10">
+				<formula name="formula2">
+					<group>
+						<field label="Language">
+							<dropdown label="Template:" source="itemsSource" value="c"/>
+						</field>
+						<field label="Username" hint="This is a hint describing something">
+							<textfield key="username"/>
+						</field>
+					</group>
+				</formula>
+			</tab>
 		</tabs>
 	</box>
 	<window name="win" width="400" padding="10">

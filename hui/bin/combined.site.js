@@ -614,6 +614,9 @@ hui.hasClass = function(element, className) {
 	if (!element || !element.className) {
 		return false
 	}
+	if (element.className==className) {
+		return true;
+	}
 	var a = element.className.split(/\s+/);
 	for (var i = 0; i < a.length; i++) {
 		if (a[i] == className) {
@@ -633,8 +636,11 @@ hui.addClass = function(element, className) {
 
 hui.removeClass = function(element, className) {
 	element = hui.get(element);
-	if (!element) {return};
-
+	if (!element || !element.className) {return};
+	if (element.className=='className') {
+		element.className='';
+		return;
+	}
 	var newClassName = '';
 	var a = element.className.split(/\s+/);
 	for (var i = 0; i < a.length; i++) {
@@ -866,7 +872,7 @@ hui.request = function(options) {
 					options.onSuccess(transport);
 				} else if (transport.status == 403 && options.onForbidden) {
 					options.onForbidden(transport);
-				} else if (options.onFailure) {
+				} else if (transport.status !== 0 && options.onFailure) {
 					options.onFailure(transport);
 				}
 			}
@@ -2427,6 +2433,9 @@ hui.ui._resize = function() {
 hui.ui.confirmOverlay = function(options) {
 	var node = options.element,
 		overlay;
+	if (!node) {
+		node = document.body;
+	}
 	if (options.widget) {
 		node = options.widget.getElement();
 	}

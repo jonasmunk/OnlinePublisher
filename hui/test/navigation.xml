@@ -56,6 +56,7 @@
         <item icon="common/page" title="layout" value="xml/layout.xml"/>
         <item icon="common/page" title="links" value="xml/links.xml"/>
         <item icon="common/page" title="list" value="xml/list.xml"/>
+        <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
         <item icon="common/page" title="richtext" value="xml/richtext.xml"/>
         <item icon="common/page" title="style" value="xml/style.xml"/>
         <item icon="common/page" title="tabs" value="xml/tabs.xml"/>
