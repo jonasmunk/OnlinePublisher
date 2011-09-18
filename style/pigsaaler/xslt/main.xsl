@@ -45,7 +45,7 @@
 					<p>Maren Hemmings Vej 13</p>
 					<p>9000 Aalborg, Denmark</p>
 					<p><em>CVR:</em> 33068271</p>
-					<!--<p><em>Tlf:</em> 70 20 60 77</p>-->
+					<p><em>Tlf:</em> 70 20 60 77</p>
 					<p><em>E-post: </em> <a href="mailto:pigsaaler@greenbenefit.dk"><span>pigsaaler@greenbenefit.dk</span></a></p>
 					<p><em>Åben:</em> Alle hverdage fra kl. 9 – 17</p>
 					<blockquote>
