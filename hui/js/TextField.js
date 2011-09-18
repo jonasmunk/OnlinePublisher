@@ -5,7 +5,7 @@
  * @constructor
  */
 hui.ui.TextField = function(options) {
-	this.options = hui.override({label:null,key:null,lines:1,live:false,maxHeight:100},options);
+	this.options = hui.override({label:null,key:null,lines:1,live:false,maxHeight:100,animateValueChage:true,animateUserChange:true},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	hui.ui.extend(this);
@@ -83,7 +83,7 @@ hui.ui.TextField.prototype = {
 		if (this.input.value==this.value) {return;}
 		this.value=this.input.value;
 		this.updateClass();
-		this.expand(true);
+		this.expand(this.options.animateUserChange);
 		hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 		this.fire('valueChanged',this.input.value);
 	},
@@ -117,7 +117,7 @@ hui.ui.TextField.prototype = {
 		}
 		this.value = value;
 		this.input.value = value;
-		this.expand(true);
+		this.expand(this.options.animateValueChange);
 	},
 	getValue : function() {
 		return this.input.value;
@@ -144,6 +144,7 @@ hui.ui.TextField.prototype = {
 	// Expanding
 	
 	$visibilityChanged : function() {
+		hui.log('Visibility changed!');
 		if (hui.dom.isVisible(this.element)) {
 			window.setTimeout(this.expand.bind(this));
 		}

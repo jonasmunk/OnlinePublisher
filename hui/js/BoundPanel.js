@@ -64,50 +64,53 @@ hui.ui.BoundPanel.prototype = {
 	},
 	/** Shows the panel */
 	show : function() {
-		if (!this.visible) {
-			if (this.options.target) {
-				this.position(hui.ui.get(this.options.target));
-			}
-			if (hui.browser.opacity) {
-				hui.setOpacity(this.element,0);
-			}
-			var vert;
-			if (this.relativePosition=='left') {
-				vert = false;
-				this.element.style.marginLeft='30px';
-			} else if (this.relativePosition=='right') {
-				vert = false;
-				this.element.style.marginLeft='-30px';
-			} else if (this.relativePosition=='top') {
-				vert = true;
-				this.element.style.marginTop='30px';
-			} else if (this.relativePosition=='bottom') {
-				vert = true;
-				this.element.style.marginTop='-30px';
-			}
-			hui.setStyle(this.element,{
-				visibility : 'hidden', display : 'block'
-			})
-			var width = this.element.clientWidth;
-			hui.setStyle(this.element,{
-				width : width+'px' , visibility : 'visible'
-			});
-			this.element.style.display='block';
-			if (hui.browser.opacity) {
-				hui.animate(this.element,'opacity',1,400,{ease:hui.ease.fastSlow});
-			}
-			hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
+		if (this.visible) {
+			return;
 		}
+		if (this.options.target) {
+			this.position(hui.ui.get(this.options.target));
+		}
+		if (hui.browser.opacity) {
+			hui.setOpacity(this.element,0);
+		}
+		var vert;
+		if (this.relativePosition=='left') {
+			vert = false;
+			this.element.style.marginLeft='30px';
+		} else if (this.relativePosition=='right') {
+			vert = false;
+			this.element.style.marginLeft='-30px';
+		} else if (this.relativePosition=='top') {
+			vert = true;
+			this.element.style.marginTop='30px';
+		} else if (this.relativePosition=='bottom') {
+			vert = true;
+			this.element.style.marginTop='-30px';
+		}
+		hui.setStyle(this.element,{
+			visibility : 'hidden', display : 'block'
+		})
+		this.element.style.visibility = 'visible';
+		this.element.style.display = 'block';
 		this.element.style.zIndex = hui.ui.nextPanelIndex();
+		hui.ui.callVisible(this);
+		if (hui.browser.opacity) {
+			hui.animate(this.element,'opacity',1,400,{ease:hui.ease.fastSlow});
+		}
+		hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
 		this.visible=true;
 	},
 	/** Hides the panel */
 	hide : function() {
+		if (!this.visible) {
+			return;
+		}
 		if (hui.browser.msie) {
 			this.element.style.display='none';
 		} else {
 			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,hideOnComplete:true});
 		}
+		hui.ui.callVisible(this);
 		this.visible=false;
 	},
 	/**
