@@ -66,6 +66,7 @@ $pageId = InternalSession::getPageId();
 		<script type="text/javascript">
 			controller.context='<?=$baseUrl?>';
 			controller.pageId = <?=$pageId?>;
+			controller.changed = <?=(PageService::isChanged($pageId) ? 'true' : 'false')?>;
 			<?
 			$parts = PartService::getParts();
 			foreach ($parts as $part => $info) {

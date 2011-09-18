@@ -3,6 +3,11 @@ div.part_section_person
 	padding-bottom: 10px;
 }
 
+div.part_person
+{
+	overflow: hidden;
+}
+
 div.part_person table
 {
 	border-spacing: 0;

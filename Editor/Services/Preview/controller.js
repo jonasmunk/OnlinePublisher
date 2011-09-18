@@ -45,6 +45,9 @@ var controller = {
 	},
 	getFrame : function() {
 		return window.parent.frames[0];
+	},
+	$click$viewHistory : function() {
+		window.frames[0].location = '../PageHistory/';
 	}
 };
 

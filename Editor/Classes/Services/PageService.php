@@ -268,14 +268,27 @@ class PageService {
 	
 	function reconstruct($pageId,$historyId) {		
 		$page = PageService::load($pageId);
-		
-		if ($controller = TemplateService::getController($page->getTemplateUnique())) {
+		if (!$page) {
+			Log::debug('Page not found: '.$pageId);
+		} else if ($controller = TemplateService::getController($page->getTemplateUnique())) {
 			$sql = "select data from page_history where id=".Database::int($historyId);
 			if ($row = Database::selectFirst($sql)) {
 				if ($doc = DOMUtils::parse($row['data'])) {
 					$controller->import($page->getId(),$doc);
+					PageService::markChanged($page->getId());
+					return true;
+				} else {
+					Log::debug('Unable to parse data: '.StringUtils::shortenString($row['data'],100));
+					Log::debug('Valid: '.(DOMUtils::isValid($row['data']) ? 'true' : 'false'));
+					
 				}
+			} else {
+				Log::debug('History not found: '.$historyId);
 			}
+		} else {
+			Log::debug('No controller found for...');
+			Log::debug($page);
 		}
+		return false;
 	}
 }

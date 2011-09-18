@@ -26,11 +26,6 @@ $gui='
 				<icon icon="common/link" title="{da:Rediger links;en:Edit links}" overlay="edit" name="editLinks"/>
 			</toolbar>
 		</tab>
-		<tab title="{da:Avanceret;en:Advanced}" background="light">
-			<toolbar>
-				<icon icon="common/time" title="{da:Historik;en:History}" name="history"/>
-			</toolbar>
-		</tab>
 	</tabs>
 </gui>';
 In2iGui::render($gui);

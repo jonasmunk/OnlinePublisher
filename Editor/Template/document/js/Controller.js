@@ -10,6 +10,7 @@ var controller = {
 	activeSection : 0,
 	ready : false,
 	selectedText : '',
+	changed : false,
 	strings : new hui.ui.Bundle({
 			edit_section : {da:'Rediger afsnit',en:'Edit section'},
 			delete_section : {da:'Slet afsnit',en:'Delete section'},
@@ -119,10 +120,22 @@ var controller = {
 			}
 			this.selectedText = hui.selection.getText();
 		}.bind(this));
-		window.onscroll=this.saveScroll;
+		window.onscroll = this.saveScroll;
 		var scroll = hui.cookie.get('document.scroll');
 		if (scroll) {
 			window.scrollTo(0,parseInt(scroll,10));
+		}
+		
+		if (this.changed) {
+			this._markToolbarChanged();
+		}
+	},
+	_markToolbarChanged : function() {
+		try {
+			parent.frames[0].controller.markChanged();
+		} catch (e) {
+			hui.log('Unable to mark toolbar changed...');
+			hui.log(e);
 		}
 	},
 	saveScroll : function() {
@@ -219,12 +232,9 @@ var controller = {
 		document.location='Editor.php?section='+this.sectionId;
 	},
 	deleteSection : function() {
-		hui.ui.confirmOverlay({
-			text : this.strings.get('confirm_delete_section'),
-			onOk : function() {
-				document.location='data/DeleteSection.php?section='+this.sectionId;
-			}.bind(this)
-		});
+		if (confirm(this.strings.get('confirm_delete_section'))) {
+			document.location='data/DeleteSection.php?section='+this.sectionId;
+		}
 	},
 	showNewPartMenu : function(element,event,columnId,sectionIndex) {
 		this.lastSectionMode = true;
@@ -366,8 +376,9 @@ var controller = {
 			parameters : p,
 			message : {start : 'Gemmer kolonne...',delay:300},
 			onSuccess : function() {
-				hui.ui.showMessage({text:'Kolonnen er gemt',duration:2000,icon:'common/success'})
-			}
+				hui.ui.showMessage({text:'Kolonnen er gemt',duration:2000,icon:'common/success'});
+				this._markToolbarChanged();
+			}.bind(this)
 		});
 		hui.removeClass(this.editedColumn.node,'editor_column_highlighted');
 		this.editedColumn = null;

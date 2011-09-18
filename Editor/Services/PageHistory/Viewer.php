@@ -1,49 +1,24 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Services.PageHistory
+ * @subpackage Templates.Document
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/Request.php';
-require_once '../../Classes/Utilities/DateUtils.php';
+require_once '../../Include/Private.php';
 
-$close = "index.php";
-$id = Request::getInt('id');
-$sql = "select UNIX_TIMESTAMP(page_history.time) as time,page_id from page_history where id=".$id;
-$row = Database::selectFirst($sql);
-$sql = "select id from page_history where page_id=".$row['page_id']." and time<".Database::datetime($row['time'])." order by time desc limit 1";
-$previous = Database::selectFirst($sql);
-$sql = "select id from page_history where page_id=".$row['page_id']." and time>".Database::datetime($row['time'])." order by time asc limit 1";
-$next = Database::selectFirst($sql);
+$pageId = InternalSession::getPageId();
 
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface background="Desktop">'.
-'<window xmlns="uri:Window" width="100%" height="100%" align="center" margin="10">'.
-'<titlebar title="'.DateUtils::formatDateTime($row['time']).'" icon="Basic/Time">'.
-'<close link="'.$close.'" help="Luk vinduet"/>'.
-'</titlebar>'.
-'<toolbar xmlns="uri:Toolbar">'.
-'<tool title="Luk" icon="Basic/Close" link="'.$close.'"/>'.
-'<divider/>'.
-($previous ? 
-'<direction direction="Left" title="Forrige" link="Viewer.php?id='.$previous['id'].'"/>'
-: '<direction direction="Left" title="Forrige" style="disabled"/>').
-($next ? 
-'<direction direction="Right" title="Næste" link="Viewer.php?id='.$next['id'].'"/>'
-: '<direction direction="Right" title="Næste" style="disabled"/>').
-'<divider/>'.
-'<tool title="Gendan version" icon="Basic/Refresh" link="javascript:window.parent.parent.location=\'Reconstruct.php?id='.$id.'\'"/>'.
-'</toolbar>'.
-'<content>'.
-'<iframe source="../Preview/viewer/?history='.$id.'" xmlns="uri:Frame"/>'.
-'</content>'.
-'</window>'.
-'</interface>'.
-'</xmlwebgui>';
+$gui='
+<gui xmlns="uri:hui" title="Links" padding="30">
+	<controller source="js/controller.js"/>
+	<source name="listSource" url="data/HistoryList.php">
+		<parameter key="pageId" value="'.$pageId.'"/>
+	</source>
+	<box width="700" title="Historik">
+		<toolbar>
+			<icon icon="common/close" text="Luk" name="close"/>
+		</toolbar>
+	</box>
+</gui>';
 
-$elements = array("Window","Toolbar","Frame");
-writeGui($xwg_skin,$elements,$gui);
+In2iGui::render($gui);
 ?>

@@ -27,10 +27,10 @@ class DBUCalendarParser {
 		
 		while ($pos!==false) {
 			$pos = strpos($string,'<tr',$pos+1);
-			Log::debug($pos);
+			//Log::debug($pos);
 			$end = strpos($string,'</tr>',$pos);
 			
-			Log::debug(substr($string,$pos,$end-$pos));
+			//Log::debug(substr($string,$pos,$end-$pos));
 		}
 		for ($i=0; $i < count($matches[0]); $i++) {
 			$event = new DBUCalendarEvent();

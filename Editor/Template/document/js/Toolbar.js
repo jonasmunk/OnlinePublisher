@@ -20,14 +20,15 @@ var controller = {
 		window.parent.location='../../Tools/Pages/?action=pageproperties&amp;id='+this.pageId;
 	},
 	$click$newLink : function() {
-		var win = window.parent.frames[1];
-		win.controller.newLink();
+		try {
+			window.parent.frames[1].controller.newLink();
+		} catch (e) {}
 	},
 	$click$editLinks : function() {
-		window.parent.frames[1].location='Links.php';
+		window.parent.frames[1].location = 'Links.php';
 	},
-	$click$history : function() {
-		window.parent.frames[1].EditorFrame.setUrl('../../Services/PageHistory/');
+	markChanged : function() {
+		publish.setEnabled(true);
 	}
 };
 

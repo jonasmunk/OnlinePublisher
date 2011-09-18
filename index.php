@@ -13,7 +13,6 @@ if (!file_exists('Config/Setup.php')) {
 }
 require_once 'Config/Setup.php';
 require_once 'Editor/Include/Public.php';
-require_once 'Editor/Include/XmlWebGui.php';
 require_once 'Editor/Classes/Request.php';
 require_once 'Editor/Classes/Response.php';
 require_once 'Editor/Classes/Database.php';

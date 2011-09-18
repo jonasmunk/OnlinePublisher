@@ -36,9 +36,11 @@ $gui='
 			</tab>
 			<tab title="Avanceret" background="light">
 				<toolbar>
+					<icon icon="common/time" text="Historik" name="viewHistory"/>
+					<!--<divider/>
 					<icon icon="common/note" title="Tilføj note" name="addNote" click="notePanel.show();noteFormula.focus()"/>
 					<divider/>
-					<icon icon="common/success" title="Godkend"/>
+					<icon icon="common/success" title="Godkend"/>-->
 				</toolbar>
 			</tab>
 		</tabs>
