@@ -7,7 +7,6 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
 require_once '../../Classes/Hierarchy.php';
-require_once '../../Classes/Graph.php';
 require_once '../../Classes/InternalSession.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Utilities/StringUtils.php';
@@ -38,10 +37,6 @@ $gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
 '<tool title="Vis siden" icon="Basic/View" style="Disabled"/>'.
 '<divider/>'.
 '<tool title="Ny side" icon="Template/Generic" overlay="New" link="NewPageTemplate.php?parent=0&amp;hierarchy='.$id.'&amp;reset=true" help="Opret en ny side i roden af hierarkiet"/>';
-if (Graph::canDisplay()) {
-	$gui.='<tool title="Vis graf" icon="File/png" link="HierarchyGraph.php?id='.$id.'&amp;format=png" target="Contents"/>';
-}
-//'<tool title="Vis graf" icon="File/pdf" link="HierarchyGraph.php?id='.$id.'&amp;format=pdf" target="Contents"/>'.
 $gui.=
 '<flexible/>'.
 '<searchfield title="Søgning" width="100" focus="true" name="freetext" method="post" action="PagesFrame.php"/>'.

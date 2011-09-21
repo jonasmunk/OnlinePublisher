@@ -18,12 +18,16 @@ class TestNewsService extends UnitTestCase {
 			return;
 		}
 		
+		$hierarchy = new Hierarchy();
+		$hierarchy->save();
+		
 		$design = new Design();
 		$design->setUnique('custom');
 		$design->save();
 		$this->assertTrue($design->getId()>0,'The design was not saved');
 		
 		$frame = new Frame();
+		$frame->setHierarchyId($hierarchy->getId());
 		$frame->save();
 		$this->assertTrue($frame->getId()>0,'The frame was not saved');
 		
@@ -62,6 +66,7 @@ class TestNewsService extends UnitTestCase {
 		$design->remove();
 		$frame->remove();
 		$blueprint->remove();
+		$hierarchy->remove();
 	}
 }
 ?>

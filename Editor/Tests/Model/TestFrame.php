@@ -9,22 +9,37 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class TestFrame extends AbstractObjectTest {
-    
-	function TestFrame() {
-		parent::AbstractObjectTest('frame');
-	}
+class TestFrame extends UnitTestCase {
 
 	function testProperties() {
+		$hierarchy = new Hierarchy();
+		$hierarchy->setName('My test hierarchy');
+		$hierarchy->save();
+		$this->assertNotNull($hierarchy->getId());
+		
 		$obj = new Frame();
-		$obj->setTitle('My frame');
+		$obj->setName('My frame name');
+		$obj->setTitle('My frame title');
+		$obj->setBottomText('This is the bottom text');
+		$this->assertFalse($obj->save(),'Should not be able to save until a hierarchy is set');
+		$this->assertFalse($obj->isPersistent());
+		$obj->setHierarchyId($hierarchy->getId());
 		$obj->save();
+		$this->assertTrue($obj->isPersistent());
 		
-		$obj2 = Frame::load($obj->getId());
-		$this->assertEqual($obj2->getTitle(),'My frame');
-		$this->assertTrue($obj->getChanged()<=time());
+		$loaded = Frame::load($obj->getId());
+		$this->assertNotNull($loaded);
+		$this->assertEqual($loaded->getName(),'My frame name');
+		$this->assertEqual($loaded->getTitle(),'My frame title');
+		$this->assertEqual($loaded->getBottomText(),'This is the bottom text');
+		$this->assertEqual($loaded->getHierarchyId(),$hierarchy->getId());
+		$this->assertTrue($loaded->getChanged()<=time());
 		
-		$obj2->remove();
+		$loaded->remove();
+		
+		$hierarchy->remove();
+		
+		$this->assertNull(Frame::load($obj->getId()));
 	}
 }
 ?>

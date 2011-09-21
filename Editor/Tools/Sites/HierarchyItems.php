@@ -9,7 +9,7 @@ require_once '../../Classes/Database.php';
 require_once '../../Classes/In2iGui.php';
 require_once '../../Classes/Request.php';
 require_once '../../Classes/Hierarchy.php';
-require_once '../../Classes/Frame.php';
+require_once '../../Classes/Model/Frame.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 
 $frameId = Request::getInt('frame');

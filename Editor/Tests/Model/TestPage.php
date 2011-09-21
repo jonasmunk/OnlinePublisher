@@ -18,7 +18,11 @@ class TestPage extends UnitTestCase {
 			return;
 		}
 		
+		$hierarchy = new Hierarchy();
+		$hierarchy->save();
+		
 		$frame = new Frame();
+		$frame->setHierarchyId($hierarchy->getId());
 		$frame->save();
 
 		$design = new Design();
@@ -67,7 +71,7 @@ class TestPage extends UnitTestCase {
 		$this->assertFalse(PageService::isChanged($page->getId()));
 		$page->setTitle('Test page');
 		$page->save();
-		sleep(2);
+		sleep(1);
 		PageService::markChanged($page->getId());
 		$this->assertTrue(PageService::isChanged($page->getId()));
 
@@ -104,6 +108,7 @@ class TestPage extends UnitTestCase {
 		
 		$this->assertTrue($frame->canRemove());
 		$this->assertTrue($frame->remove());
+		$hierarchy->remove();
 	}
 	
 }

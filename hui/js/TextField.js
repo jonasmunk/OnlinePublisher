@@ -144,7 +144,6 @@ hui.ui.TextField.prototype = {
 	// Expanding
 	
 	$visibilityChanged : function() {
-		hui.log('Visibility changed!');
 		if (hui.dom.isVisible(this.element)) {
 			window.setTimeout(this.expand.bind(this));
 		}

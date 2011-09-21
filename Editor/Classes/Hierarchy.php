@@ -116,6 +116,10 @@ class Hierarchy {
 	function create() {
 		HierarchyService::createHierarchy($this);
     }
+
+	function remove() {
+		return $this->delete();
+	}
     
     function delete() {
         if ($this->canDelete()) {
