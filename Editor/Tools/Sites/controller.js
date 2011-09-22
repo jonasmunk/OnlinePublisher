@@ -55,11 +55,11 @@ var mainController = {
 			previewer.show();
 			previewFrame.setUrl('../../Services/Preview/MiniPreview.php?id='+info.data.id+'&mini=true');
 		} else if (info.data.action=='viewPage') {
-			parent.location='../../Services/Preview/?id='+info.data.id;
+			document.location='../../Services/Preview/?id='+info.data.id;
 		} else if (info.data.action=='editPage') {
-			parent.location='../../Template/Edit.php?id='+info.data.id;
+			document.location='../../Template/Edit.php?id='+info.data.id;
 		} else if (info.data.action=='pageInfo') {
-			mainController.loadPage(info.data.id);
+			this.loadPage(info.data.id);
 		}
 	},
 	
