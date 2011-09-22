@@ -648,6 +648,7 @@
 			name:'<xsl:value-of select="@name"/>'
 			<xsl:if test="@target">,target:'<xsl:value-of select="@target"/>'</xsl:if>
 			<xsl:if test="@variant">,variant:'<xsl:value-of select="@variant"/>'</xsl:if>
+			<xsl:if test="@modal='true'">,modal:true</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

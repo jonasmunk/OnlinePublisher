@@ -4086,7 +4086,11 @@ hui.ui.nextTopIndex = function() {
 
 ///////////////////////////////// Curtain /////////////////////////////
 
-hui.ui.showCurtain = function(options,zIndex) {
+/**
+ * Shows a "curtain" behind an element
+ * @param options { widget:«widget», color:«cssColor | 'auto'», zIndex:«cssZindex» }
+ */
+hui.ui.showCurtain = function(options) {
 	var widget = options.widget;
 	if (!widget.curtain) {
 		widget.curtain = hui.build('div',{'class':'hui_curtain',style:'z-index:none'});
@@ -4103,7 +4107,15 @@ hui.ui.showCurtain = function(options,zIndex) {
 		});
 	}
 	if (options.color) {
-		widget.curtain.style.backgroundColor=options.color;
+		if (options.color=='auto') {
+			var color = hui.getStyle(document.body,'background-color');
+			if (color=='transparent' || color=='rgba(0, 0, 0, 0)') {
+				color='#fff';
+			}
+			widget.curtain.style.backgroundColor=color;
+		} else {
+			widget.curtain.style.backgroundColor=options.color;
+		}
 	}
 	if (hui.browser.msie) {
 		widget.curtain.style.height=hui.getDocumentHeight()+'px';
@@ -7685,7 +7697,7 @@ hui.ui.BoundPanel = function(options) {
  * @param {Object} options The options
  */
 hui.ui.BoundPanel.create = function(options) {
-	options = hui.override({name:null, top:0, left:0, width:null, padding: null}, options);
+	options = hui.override({name:null, top:0, left:0, width:null, padding: null, modal: false}, options);
 
 	
 	var html = 
@@ -7752,13 +7764,21 @@ hui.ui.BoundPanel.prototype = {
 		})
 		this.element.style.visibility = 'visible';
 		this.element.style.display = 'block';
-		this.element.style.zIndex = hui.ui.nextPanelIndex();
+		var index = hui.ui.nextPanelIndex();
+		this.element.style.zIndex = index;
 		hui.ui.callVisible(this);
 		if (hui.browser.opacity) {
 			hui.animate(this.element,'opacity',1,400,{ease:hui.ease.fastSlow});
 		}
 		hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
 		this.visible=true;
+		if (this.options.modal) {
+			hui.ui.showCurtain({widget:this,zIndex:index-1,color:'auto'});
+		}
+	},
+	$curtainWasClicked : function() {
+		hui.ui.hideCurtain(this);
+		this.hide();
 	},
 	/** Hides the panel */
 	hide : function() {
@@ -7815,17 +7835,19 @@ hui.ui.BoundPanel.prototype = {
 			node = node.getElement();
 		}
 		node = hui.get(node);
-		var offset = {left:hui.getLeft(node),top:hui.getTop(node)};
-		var scrollOffset = {left:hui.getScrollLeft(),top:hui.getScrollTop()};
+		var nodeOffset = {left:hui.getLeft(node),top:hui.getTop(node)};
+		var nodeScrollOffset = hui.getScrollOffset(node);
+		nodeOffset.top = nodeOffset.top-nodeScrollOffset.top;
+		var windowScrollOffset = {left:hui.getScrollLeft(),top:hui.getScrollTop()};
 		var dims = this.getDimensions();
 		var viewportWidth = hui.getViewPortWidth();
 		var viewportHeight = hui.getViewPortHeight();
-		var nodeLeft = offset.left-scrollOffset.left+hui.getScrollLeft();
+		var nodeLeft = nodeOffset.left-windowScrollOffset.left+hui.getScrollLeft();
 		var nodeWidth = node.clientWidth || node.offsetWidth;
 		var nodeHeight = node.clientHeight || node.offsetHeight;
-		var nodeTop = offset.top-scrollOffset.top+hui.getScrollTop();
+		var nodeTop = nodeOffset.top-windowScrollOffset.top+hui.getScrollTop();
 		var arrowLeft, arrowTop, left, top;
-		var vertical = (nodeTop-scrollOffset.top)/viewportHeight;
+		var vertical = (nodeTop-windowScrollOffset.top)/viewportHeight;
 		
 		if (vertical<.1) {
 			this.relativePosition='top';
@@ -7856,7 +7878,8 @@ hui.ui.BoundPanel.prototype = {
 			left = nodeLeft+nodeWidth+10;
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_left';
 			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
-			arrowTop = (dims.height-this.arrowWide)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
+			top = Math.min(top,viewportHeight-dims.height);
+			arrowTop = nodeTop-top;
 			if (this.options.variant=='light') {
 				arrowLeft=-11;
 				arrowTop+=2;
@@ -7868,7 +7891,8 @@ hui.ui.BoundPanel.prototype = {
 			left = nodeLeft-dims.width-10;
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_right';
 			top = Math.max(0,nodeTop+(nodeHeight-dims.height)/2);
-			arrowTop = (dims.height-this.arrowWide)/2+Math.min(0,nodeTop+(nodeHeight-dims.height)/2);
+			top = Math.min(top,viewportHeight-dims.height);
+			arrowTop = nodeTop-top;
 			if (this.options.variant=='light') {
 				arrowLeft=dims.width-1;
 				arrowTop+=2;
@@ -9482,11 +9506,7 @@ hui.ui.Overlay.prototype = {
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
-			var color = hui.getStyle(document.body,'background-color');
-			if (color=='transparent' || color=='rgba(0, 0, 0, 0)') {
-				color='#fff';
-			}
-			hui.ui.showCurtain({widget:this,zIndex:zIndex,color:color});
+			hui.ui.showCurtain({widget:this,zIndex:zIndex,color:'auto'});
 		}
 	},
 	/** private */

@@ -2585,7 +2585,11 @@ hui.ui.nextTopIndex = function() {
 
 ///////////////////////////////// Curtain /////////////////////////////
 
-hui.ui.showCurtain = function(options,zIndex) {
+/**
+ * Shows a "curtain" behind an element
+ * @param options { widget:«widget», color:«cssColor | 'auto'», zIndex:«cssZindex» }
+ */
+hui.ui.showCurtain = function(options) {
 	var widget = options.widget;
 	if (!widget.curtain) {
 		widget.curtain = hui.build('div',{'class':'hui_curtain',style:'z-index:none'});
@@ -2602,7 +2606,15 @@ hui.ui.showCurtain = function(options,zIndex) {
 		});
 	}
 	if (options.color) {
-		widget.curtain.style.backgroundColor=options.color;
+		if (options.color=='auto') {
+			var color = hui.getStyle(document.body,'background-color');
+			if (color=='transparent' || color=='rgba(0, 0, 0, 0)') {
+				color='#fff';
+			}
+			widget.curtain.style.backgroundColor=color;
+		} else {
+			widget.curtain.style.backgroundColor=options.color;
+		}
 	}
 	if (hui.browser.msie) {
 		widget.curtain.style.height=hui.getDocumentHeight()+'px';
