@@ -29,6 +29,11 @@
 				width: 600px;
 				text-align: left;
 			}
+			
+			div.document
+			{
+				padding: 10px 20px;
+			}
 		</style>
 	</head>
 	<body>
