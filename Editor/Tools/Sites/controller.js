@@ -16,6 +16,12 @@ var mainController = {
 		}
 	},
 	
+	//////////////// Search //////////////
+	
+	$valueChanged$search : function() {
+		selector.setValue('all');
+	},
+	
 	///////////////// List ///////////////
 	
 	$selectionChanged$list : function(item) {
@@ -43,6 +49,22 @@ var mainController = {
 		hui.ui.get('delete').setEnabled(false);
 		hui.ui.get('view').setEnabled(false);
 	},
+	$clickIcon$list : function(info) {
+		if (info.data.action=='previewPage') {
+			previewer.position(info.node);
+			previewer.show();
+			previewFrame.setUrl('../../Services/Preview/MiniPreview.php?id='+info.data.id+'&mini=true');
+		} else if (info.data.action=='viewPage') {
+			parent.location='../../Services/Preview/?id='+info.data.id;
+		} else if (info.data.action=='editPage') {
+			parent.location='../../Template/Edit.php?id='+info.data.id;
+		} else if (info.data.action=='pageInfo') {
+			mainController.loadPage(info.data.id);
+		}
+	},
+	
+	/////////////// Toolbar //////////////
+	
 	$click$edit : function() {
 		var obj = list.getFirstSelection();
 		if (obj.kind=='page') {

@@ -74,10 +74,13 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 					} else {
 						$writer->text($row['pagetitle']);
 					}
-					$writer->startIcons();
-						$writer->icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
+					$writer->startIcons()->
+						icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['pageid'])))->
+						icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
+						icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['pageid'])))->
+						icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['pageid'])))->
 					endIcons()->
-					endCell();
+				endCell();
 			}
 		} else if ($row['target_type']=='pageref') {
 			$writer->startCell(array('icon'=>$icon))->text($row['pagetitle'].'')->endCell();
@@ -131,37 +134,48 @@ function listPages() {
 
 	$writer = new ListWriter();
 
-	$writer->startList();
-	$writer->sort($sort,$direction);
-	$writer->window(array( 'total' => $total['total'], 'size' => $windowSize, 'page' => $windowPage ));
-	$writer->startHeaders();
-	$writer->header(array('title'=>'Titel','width'=>40,'key'=>'page.title','sortable'=>'true'));
-	$writer->header(array('title'=>'Skabelon','key'=>'template.unique','sortable'=>'true'));
-	//$writer->header(array('title'=>'Sti','key'=>'page.path','sortable'=>'true'));
-	$writer->header(array('title'=>'Sprog','key'=>'page.language','sortable'=>'true'));
-	$writer->header(array('title'=>'Ændret','key'=>'page.changed','sortable'=>'true'));
-	$writer->header(array('width'=>1));
-	$writer->endHeaders();
+	$writer->startList()->
+		sort($sort,$direction)->
+		window(array( 'total' => $total['total'], 'size' => $windowSize, 'page' => $windowPage ))->
+		startHeaders()->
+			header(array('title'=>'Titel','width'=>40,'key'=>'page.title','sortable'=>'true'))->
+			header(array('title'=>'Skabelon','key'=>'template.unique','sortable'=>'true'))->
+			header(array('title'=>'Sprog','key'=>'page.language','sortable'=>'true'))->
+			header(array('title'=>'Ændret','key'=>'page.changed','sortable'=>'true'))->
+			header(array('width'=>1))->
+		endHeaders();
 
 	$templates = TemplateService::getTemplatesKeyed();
 	$result = Database::select($sql['list']);
 	while ($row = Database::next($result)) {
-		$modified = $row['publishdelta']>0;
-		echo '<row id="'.$row['id'].'" title="'.StringUtils::escapeXML($row['title']).'" kind="page" icon="common/page">'.
-		'<cell icon="common/page"><line>'.StringUtils::escapeXML($row['title']).'</line>'.
-		($row['path'] ? '<line dimmed="true"><wrap>'.StringUtils::escapeXML($row['path']).'</wrap></line>' : '').
-		'</cell>'.
-		'<cell>'.StringUtils::escapeXML($templates[$row['unique']]['name']).'</cell>'.
-		//'<cell'.($row['path']=='' ? ' icon="monochrome/warning"' : '').'><line dimmed="true">'.StringUtils::escapeXML($row['path']).'</line></cell>'.
-		'<cell icon="'.GuiUtils::getLanguageIcon($row['language']).'"></cell>'.
-		'<cell'.($modified ? ' icon="monochrome/warning"' : '').'>'.StringUtils::escapeXML($row['changed']).'</cell>'.
-		'<cell align="right">'.
-			'<icons>'.
-			($row['searchable'] ? '' : '<icon icon="monochrome/nosearch"/>').
-			($row['disabled'] ? '<icon icon="monochrome/invisible"/>' : '').
-			'</icons>'.
-		'</cell>'.
-		'</row>';
+		$writer->startRow(array('id' => $row['id'], 'title' => $row['title'], 'kind' => 'page', 'icon' => 'common/page'))->
+			startCell(array('icon' => 'common/page'))->
+			startLine()->text($row['title'])->endLine();
+			if ($row['path']) {
+				$writer->startLine(array('dimmed'=>true))->startWrap()->text($row['path'])->endWrap()->endLine();
+			}
+			$writer->endCell()->
+			startCell()->text($templates[$row['unique']]['name'])->endCell()->
+			startCell(array('icon'=>GuiUtils::getLanguageIcon($row['language'])))->endCell()->
+			startCell()->text($row['changed']);
+		if ($row['publishdelta']>0) {
+			$writer->startIcons()->icon(array('icon'=>'monochrome/warning'))->endIcons();
+		}
+		$writer->endCell()->
+			startCell()->
+			startIcons()->
+				icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['id'])))->
+				icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['id'])))->
+				icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['id'])))->
+				icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['id'])));
+		if (!$row['searchable']) {
+			$writer->icon(array('icon'=>'monochrome/nosearch'));
+		}
+		if ($row['disabled']) {
+			$writer->icon(array('icon'=>'monochrome/invisible'));
+		}
+		$writer->endIcons()->endCell();
+		$writer->endRow();
 	}
 	Database::free($result);
 	$writer->endList();

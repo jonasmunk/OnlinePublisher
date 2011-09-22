@@ -24,9 +24,10 @@
 		<style>
 			body
 			{
-				-webkit-transform: scale(.3);
+				-webkit-transform: scale(.5);
 				-webkit-transform-origin: 0 0;
-				width: 800px;
+				width: 600px;
+				text-align: left;
 			}
 		</style>
 	</head>

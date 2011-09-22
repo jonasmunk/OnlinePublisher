@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Preview
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Page.php';
-require_once '../../Classes/Response.php';
-require_once '../../Classes/InternalSession.php';
+require_once '../../Include/Private.php';
 
 $page = Page::load(InternalSession::getPageId());
 

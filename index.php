@@ -62,7 +62,16 @@ if ($path!='') {
 	$page = RenderingService::buildPage(-1,$path);
 } else {
 	if ($id==-1) {
-		$id = RenderingService::findPage('home',"");
+		$id = RenderingService::findPage('home');
+		if ($id==null) {
+			$error = '<title>Ingen forside!</title>'.
+			'<note>Der er ikke opsat en forside til dette website.
+			Hvis du er redaktør på siden bør du logge ind i redigeringsværktøjet
+			og opsætte hvilken side der skal være forsiden.
+			</note>';
+			RenderingService::displayError($error,'');
+			exit;
+		}
 	}
 	$page = RenderingService::buildPage($id);	
 }

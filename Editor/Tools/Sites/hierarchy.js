@@ -18,9 +18,7 @@ hui.ui.listen({
 	},
 	$clickIcon$list : function(info) {
 		
-		if (info.data.action=='pageInfo') {
-			mainController.loadPage(info.data.id);
-		} else if (info.data.action=='moveItem') {
+		if (info.data.action=='moveItem') {
 			hui.ui.request({
 				message : {start : 'Flytter menupunkt...',delay : 300},
 				url:'MoveHierarchyItem.php',

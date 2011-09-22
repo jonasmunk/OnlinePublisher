@@ -57,6 +57,7 @@ $gui='
 	<source name="newPageHierarchySource" url="FrameHierarchyItems.php">
 		<parameter key="frame" value="@frameSelection.value"/>
 	</source>
+	
 	<layout>
 		<top>
 			<toolbar>
@@ -277,8 +278,12 @@ $gui='
 			<icon icon="common/page" title="Rammer" name="advancedFrames"/>
 			<icon icon="common/page" title="Skabeloner" name="advancedTemplates"/>
 		</toolbar>
-		<iframe height="300" name="advancedFrame"/>
+		<iframe height="400" name="advancedFrame"/>
 	</box>
+	
+	<boundpanel name="previewer" width="300" variant="light" modal="true" padding="5">
+		<iframe name="previewFrame" height="400"/>
+	</boundpanel>
 </gui>';
 In2iGui::render($gui);
 ?>

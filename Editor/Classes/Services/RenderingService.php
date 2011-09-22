@@ -306,22 +306,13 @@ class RenderingService {
 		}
 	}
 	
-	function findPage($type,$path=-1) {
-		$sql="select page_id from specialpage where type='".$type."' order by language asc";
+	function findPage($type) {
+		$sql="select page_id from specialpage where type=".Database::text($type)." order by language asc";
 		$row = Database::selectFirst($sql);
 		if ($row) {
 			return $row['page_id'];
-		} else if ($path!=-1) {
-			$error = '<title>Ingen forside!</title>'.
-			'<note>Der er ikke opsat en forside til dette website.
-			Hvis du er redaktør på siden bør du logge ind i redigeringsværktøjet
-			og opsætte hvilken side der skal være forsiden.
-			</note>';
-			RenderingService::displayError($error,$path);
-			exit;
-		} else {
-			return -1;
 		}
+		return null;
 	}
 	
 
@@ -409,5 +400,71 @@ class RenderingService {
 				CacheService::createPageCache($page['id'],$path,$html);
 			}
 		}
+	}
+	
+	function previewPage($options) {
+		$pageId = $options['pageId'];
+		$historyId = $options['historyId'];
+		
+		$sql="select page.id,UNIX_TIMESTAMP(page.published) as published, page.description,page.language,page.keywords,".
+		"page.title,page.dynamic,page.next_page,page.previous_page,".
+		"template.unique,frame.id as frameid,frame.title as frametitle,frame.data as framedata,frame.dynamic as framedynamic,".
+		" design.parameters,".
+		"design.`unique` as design, hierarchy.id as hierarchy".
+		" from page,template,frame,design,hierarchy".
+		" where page.frame_id=frame.id and page.template_id=template.id and page.design_id=design.object_id".
+		" and frame.hierarchy_id=hierarchy.id and page.id=".Database::int($pageId);
+		if ($row = Database::selectFirst($sql)) {
+			$template = $row['unique'];
+			$id = $row['id'];
+			if ($historyId>0) {
+				$sql = "select data from page_history where id=".Database::int($historyId);
+				if ($hist = Database::selectFirst($sql)) {
+					$data = $hist['data'];
+				} else {
+					$data = PageService::getPagePreview($id,$template);
+				}
+			} else {
+				$data = PageService::getPagePreview($id,$template);
+			}
+		
+			$stuff = RenderingService::applyContentDynamism($id,$template,$data);
+			$data = $stuff['data'];
+	
+			$framedata = $row['framedata'];
+			if ($row['framedynamic']) {
+				$framedata = RenderingService::applyFrameDynamism($row['frameid'],$framedata);
+			}
+			$design = $row['design'];
+			if (Request::exists('design')) {
+				$design = Request::getString('design');
+			}
+			else if (isset($_SESSION['debug.design'])) {
+				$design = $_SESSION['debug.design'];
+			}
+			$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.
+			'<page xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/" id="'.$id.'" title="'.StringUtils::escapeXML($row['title']).'">'.
+			'<meta>'.
+			'<description>'.StringUtils::escapeXML($row['description']).'</description>'.
+			'<keywords>'.StringUtils::escapeXML($row['keywords']).'</keywords>'.
+			RenderingService::buildDateTag('published',$row['published']).
+			'<language>'.StringUtils::escapeXML(strtolower($row['language'])).'</language>'.
+			'</meta>'.
+				'<design>'.
+				$row['parameters'].
+				'</design>'.
+			RenderingService::buildPageContext($id,$row['next_page'],$row['previous_page']).
+			'<frame xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/" title="'.StringUtils::escapeXML($row['frametitle']).'">'.
+			Hierarchy::build($row['hierarchy']).
+			$framedata.
+			'</frame>'.
+			'<content>'.
+			$data.
+			'</content>'.
+			'</page>';
+
+			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$options['relativePath'],'','?id='.$id.'&amp;',true);
+		}
+		return null;
 	}
 }
