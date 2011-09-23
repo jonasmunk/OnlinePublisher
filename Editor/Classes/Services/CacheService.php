@@ -27,6 +27,7 @@ class CacheService {
 	}
 	
 	function sendCachedPage($id,$path) {
+		return false;
 		if (Request::getBoolean('viewsource') || Request::getBoolean('mini') || Request::getString('design') || $_SESSION['debug.design']) {
 			return false;
 		}
