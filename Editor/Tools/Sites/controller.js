@@ -19,7 +19,10 @@ var mainController = {
 	//////////////// Search //////////////
 	
 	$valueChanged$search : function() {
-		selector.setValue('all');
+		var value = selector.getValue();
+		if (value.kind=='hierarchy' || value.kind=='hierarchyItem') {
+			selector.setValue('all');
+		}
 	},
 	
 	///////////////// List ///////////////
