@@ -286,6 +286,10 @@ $databaseTables = array(
 			array("image_id","int(11)","","","0",""),
 			array("imagegroup_id","int(11)","","","0","")
 		),
+	'issue' => array(
+			array("object_id","int(11)","","","0",""),
+			array("kind","varchar(255)","YES","","","")
+		),
 	'link' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("page_id","int(11)","","","0",""),
@@ -703,13 +707,20 @@ $databaseTables = array(
 		    array("parent_project_id","int(11)","","","0","")
 		),
 	'relation' => array(
+			array("from_type","varchar(255)","YES","","object",""),
 			array("from_object_id","int(11)","","","0",""),
+			array("to_type","varchar(255)","YES","","object",""),
 			array("to_object_id","int(11)","","","0",""),
 			array("kind","varchar(255)","YES","","","")
 		),
 	'remotepublisher' => array(
 			array("object_id","int(11)","","","0",""),
 			array("url","varchar(255)","YES","","","")
+		),
+	'review' => array(
+			array("object_id","int(11)","","","0",""),
+			array("accepted","tinyint(4)","YES","","0",""),
+			array("date","datetime","YES","","","")
 		),
 	'search' => array(
 			array("page_id","int(11)","","PRI","0",""),

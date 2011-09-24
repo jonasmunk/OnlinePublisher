@@ -8,9 +8,18 @@ var controller = {
 	},
 	pageDidLoad : function(id) {
 		this.pageId = id;
-		hui.ui.request({url:'viewer/data/LoadPageStatus.php',parameters:{id:id},onJSON:function(obj) {
-			publish.setEnabled(obj.changed);
-		}});
+		this._updateState();
+	},
+	_updateState : function() {
+		hui.ui.request({
+			url : 'data/LoadPageStatus.php',
+			parameters : {id:this.pageId},
+			onJSON : function(obj) {
+				publish.setEnabled(obj.changed);
+				var overlays = {none:null,accepted:'success',rejected:'stop'};
+				review.setOverlay(overlays[obj.review]);
+			}
+		});
 	},
 	pageDidChange : function() {
 		publish.setEnabled(true);
@@ -48,6 +57,35 @@ var controller = {
 	},
 	$click$viewHistory : function() {
 		window.frames[0].location = '../PageHistory/';
+	},
+	
+	///////////// Notes //////////////
+	
+	$click$addNote : function() {
+		notePanel.show();
+		noteFormula.focus();
+	},
+	
+	$click$review : function() {
+		reviewPanel.show();
+		reviewList.setUrl('data/ListReviews.php?pageId='+this.pageId);
+	},
+	$click$reviewReject : function() {
+		this._sendReview(false);
+	},
+	$click$reviewAccept : function() {
+		this._sendReview(true);
+	},
+	_sendReview : function(accepted) {
+		hui.ui.request({
+			url : 'data/Review.php',
+			parameters : {pageId : this.pageId, accepted : accepted},
+			onSuccess : function() {
+				hui.ui.showMessage({text:'Revisionen er gemt!',icon:'common/success',duration:2000});
+				reviewPanel.hide();
+				this._updateState();
+			}.bind(this)
+		});
 	}
 };
 

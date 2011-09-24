@@ -28,15 +28,15 @@ $gui='
 					<icon icon="common/info" title="Info" name="properties"/>
 					<divider/>
 					<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="true"/>
+					<divider/>
+					<icon icon="inset/stamp" title="Revidér" name="review"/>
 				</toolbar>
 			</tab>
 			<tab title="Avanceret" background="light">
 				<toolbar>
 					<icon icon="common/time" text="Historik" name="viewHistory"/>
-					<!--<divider/>
-					<icon icon="common/note" title="Tilføj note" name="addNote" click="notePanel.show();noteFormula.focus()"/>
 					<divider/>
-					<icon icon="common/success" title="Godkend"/>-->
+					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>
 				</toolbar>
 			</tab>
 		</tabs>
@@ -44,13 +44,25 @@ $gui='
 	<boundpanel target="addNote" name="notePanel" width="200">
 		<formula name="noteFormula">
 			<group labels="above">
-				<text label="Note:" key="word" multiline="true"/>
+				<text label="Note:" key="note" multiline="true"/>
+				<radiobuttons label="Type" value="improvement">
+					<item value="improvement" text="Forbedring"/>
+					<item value="error" text="Fejl"/>
+				</radiobuttons>
 			</group>
 			<buttons>
 				<button text="Annuller" click="notePanel.hide()" small="true"/>
 				<button text="Opret" highlighted="true" submit="true" small="true"/>
 			</buttons>
 		</formula>
+	</boundpanel>
+	<boundpanel target="review" name="reviewPanel" width="300">
+		<buttons align="center" bottom="10">
+			<button text="Annuller" click="reviewPanel.hide()"/>
+			<button text="Afvis" name="reviewReject"/>
+			<button text="Godkend" highlighted="true" name="reviewAccept"/>
+		</buttons>
+		<list name="reviewList"/>
 	</boundpanel>
 </gui>';
 

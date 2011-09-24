@@ -59,12 +59,26 @@ class Query {
 	}
 	
 	function withRelationFrom($object,$kind=null) {
-		$this->relationsFrom[] = array('id'=>$object->getId(),'kind'=>$kind);
+		$id = is_int($object) ? $object : $object->getId();
+		$this->relationsFrom[] = array('id'=>$id,'kind'=>$kind,'fromType'=>'object');
+		return $this;
+	}
+	
+	function withRelationFromPage($page,$kind=null) {
+		$id = is_int($page) ? $page : $page->getId();
+		$this->relationsFrom[] = array('id'=>$id,'kind'=>$kind,'fromType'=>'page');
 		return $this;
 	}
 	
 	function withRelationTo($object,$kind=null) {
-		$this->relationsTo[] = array('id'=>$object->getId(),'kind'=>$kind);
+		$id = is_int($object) ? $object : $object->getId();
+		$this->relationsTo[] = array('id'=>$id,'kind'=>$kind,'toType'=>'object');
+		return $this;
+	}
+	
+	function withRelationToPage($page,$kind=null) {
+		$id = is_int($page) ? $page : $page->getId();
+		$this->relationsTo[] = array('id'=>$id,'kind'=>$kind,'toType'=>'page');
 		return $this;
 	}
 
