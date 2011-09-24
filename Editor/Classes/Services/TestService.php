@@ -74,5 +74,46 @@ class TestService {
 		}
 		$test->run(new HtmlReporter());
 	}
+	
+	function createTestPage() {
+		$template = TemplateService::getTemplateByUnique('document');
+		if (!$template) {
+			TemplateService::install('template');
+			$template = TemplateService::getTemplateByUnique('document');
+		}
+		
+		$hierarchy = new Hierarchy();
+		$hierarchy->save();
+		
+		$frame = new Frame();
+		$frame->setHierarchyId($hierarchy->getId());
+		$frame->save();
+
+		$design = new Design();
+		$design->setUnique('custom');
+		$design->save();
+
+		$page = new Page();
+		
+		$page->setTemplateId($template->getId());
+		$page->setDesignId($design->getId());
+		$page->setFrameId($frame->getId());
+		
+		$page->setTitle('Test page');
+		$page->create();
+		
+		return $page;
+	}
+	
+	function removeTestPage($page) {
+		$frame = Frame::load($page->getFrameId());
+		$hierarchy = Hierarchy::load($frame->getHierarchyId());
+		$design = Design::load($page->getDesignId());
+		
+		$hierarchy->remove();
+		$frame->remove();
+		$design->remove();
+		$page->remove();
+	}
 
 }

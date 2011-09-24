@@ -31,7 +31,7 @@ function group($id) {
 	$feed->setLink($baseUrl);
 
 
-	$sql = "select object.id,object.title,object.note,object_link.target_type,UNIX_TIMESTAMP(news.startdate) as startdate,object_link.target_type,object_link.target_value from news,object,newsgroup_news left join object_link on object_link.object_id = id where object.id=news.object_id and newsgroup_news.news_id = news.object_id and newsgroup_news.newsgroup_id=".$id." order by startdate,id,object_link.position";
+	$sql = "select object.id,object.title,object.note,UNIX_TIMESTAMP(news.startdate) as startdate,object_link.target_type,object_link.target_value from news,newsgroup_news,object left join object_link on object.id = object_link.object_id where object.id=news.object_id and newsgroup_news.news_id = news.object_id and newsgroup_news.newsgroup_id=".Database::int($id)." order by startdate desc,id,object_link.position";
 	$result = Database::select($sql);
 	$ids[] = array();
 	while ($row = Database::next($result)) {
@@ -39,12 +39,15 @@ function group($id) {
 			$item = new FeedItem();
 			$item->setTitle($row['title']);
 			$item->setDescription($row['note']);
-			$item->setGuid($baseUrl.$row['id']);
 			if ($row['startdate']) {
 				$item->setPubDate($row['startdate']);
 			}
-			if ($row['target_type']) {
-				$item->setLink(buildLink($row['target_type'],$row['target_value']));
+			$link = buildLink($row['target_type'],$row['target_value']);
+			if ($link) {
+				$item->setGuid($link);
+				$item->setLink($link);
+			} else {
+				$item->setGuid($baseUrl.$row['id']);
 			}
 			$feed->addItem($item);
 			$ids[] = $row['id'];

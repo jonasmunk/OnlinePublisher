@@ -27,7 +27,7 @@ function listHierarhy() {
 	
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Menupunkt'));
+	$writer->header(array('title'=>'Menupunkt','width'=>30));
 	$writer->header(array('title'=>'Link','width'=>40));
 	$writer->header(array('title'=>'Sti'));
 	$writer->header(array('width'=>1));
@@ -98,7 +98,7 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 			$writer->startCell(array('icon'=>'monochrome/round_question'))->text($row['target_type'].'')->endCell();
 		}
 		$writer->
-		startCell()->startWrap()->text($row['page_path'])->endWrap()->endCell()->
+		startCell()->startLine(array('dimmed'=>true))->startWrap()->text($row['page_path'])->endWrap()->endLine()->endCell()->
 		startCell(array('wrap'=>false))->
 		startIcons()->
 			icon(array('icon'=>'monochrome/round_arrow_up','revealing'=>true,'data'=>array('action'=>'moveItem','direction'=>'up')))->
@@ -141,7 +141,7 @@ function listPages() {
 			header(array('title'=>'Titel','width'=>40,'key'=>'page.title','sortable'=>'true'))->
 			header(array('title'=>'Skabelon','key'=>'template.unique','sortable'=>'true'))->
 			header(array('title'=>'Sprog','key'=>'page.language','sortable'=>'true'))->
-			header(array('title'=>'Ændret','key'=>'page.changed','sortable'=>'true'))->
+			header(array('title'=>'Ændret','width'=>1,'key'=>'page.changed','sortable'=>'true'))->
 			header(array('width'=>1))->
 		endHeaders();
 
@@ -152,12 +152,12 @@ function listPages() {
 			startCell(array('icon' => 'common/page'))->
 			startLine()->text($row['title'])->endLine();
 			if ($row['path']) {
-				$writer->startLine(array('dimmed'=>true))->startWrap()->text($row['path'])->endWrap()->endLine();
+				$writer->startLine(array('dimmed'=>true,'mini'=>true))->startWrap()->text($row['path'])->endWrap()->endLine();
 			}
 			$writer->endCell()->
-			startCell()->text($templates[$row['unique']]['name'])->endCell()->
+			startCell(array('dimmed'=>true))->text($templates[$row['unique']]['name'])->endCell()->
 			startCell(array('icon'=>GuiUtils::getLanguageIcon($row['language'])))->endCell()->
-			startCell()->text($row['changed']);
+			startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($row['changed']));
 		if ($row['publishdelta']>0) {
 			$writer->startIcons()->icon(array('icon'=>'monochrome/warning'))->endIcons();
 		}
@@ -188,8 +188,7 @@ function buildPagesSql() {
 	$countSql ="select count(page.id) as total";
 
 	$sql = "select page.id,page.secure,page.searchable,page.disabled,page.path,page.title,template.unique,
-		date_format(page.changed,'%d/%m-%Y') as changed,
-		date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,
+		UNIX_TIMESTAMP(page.changed) as changed,
 		(page.changed-page.published) as publishdelta,page.language";
 
 	$sqlLimits = " from page,template";

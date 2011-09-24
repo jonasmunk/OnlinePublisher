@@ -65,11 +65,11 @@ foreach ($objects as $object) {
 			startLine()->startWrap()->text($object->getTitle())->endWrap()->endLine()->
 		endCell()->
 		startCell()->
-			startLine()->text(FileService::mimeTypeToLabel($object->getMimeType()))->endLine()->
+			startLine(array('dimmed'=>true))->text(FileService::mimeTypeToLabel($object->getMimeType()))->endLine()->
 			//startLine(array('dimmed'=>true))->text($object->getFilename())->endLine()->
 		endCell()->
-		startCell()->text(GuiUtils::bytesToString($object->getSize()))->endCell()->
-		startCell()->text(DateUtils::formatDateTime($object->getUpdated()))->endCell()->
+		startCell()->startLine(array('dimmed'=>true))->text(GuiUtils::bytesToString($object->getSize()))->endLine()->endCell()->
+		startCell()->startLine(array('dimmed'=>true))->text(DateUtils::formatDateTime($object->getUpdated()))->endLine()->endCell()->
 	endRow();
 }
 $writer->endList();

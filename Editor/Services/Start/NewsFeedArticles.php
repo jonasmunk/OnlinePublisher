@@ -30,11 +30,15 @@ $writer->startList(array('unicode'=>true));
 
 foreach($feed->getItems() as $item) {
 	$writer->startRow()->
-		startCell()->startLine()->text(StringUtils::fromUnicode($item->getTitle()))->endLine()->
-			startLine()->text(StringUtils::fromUnicode($item->getDescription()))->endline()->
-			startLine(array('dimmed'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
+		startCell()->startLine()->startStrong()->text(StringUtils::fromUnicode($item->getTitle()))->endStrong()->endLine()->
+			startLine(array('minor'=>true))->text(StringUtils::fromUnicode($item->getDescription()))->endline()->
+			startLine(array('dimmed'=>true,'mini'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
 		endCell()->
-		//startCell()->button(array('text'=>StringUtils::fromUnicode('Læs'),'data'=>array('url'=>$item->getLink())))->endCell()->
+		startCell();
+		if (StringUtils::isNotBlank($item->getLink())) {
+			$writer->button(array('text'=>StringUtils::fromUnicode('Læs'),'data'=>array('url'=>$item->getLink())));
+		}
+		$writer->endCell()->
 	endRow();
 		
 }

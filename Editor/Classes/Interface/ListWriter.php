@@ -96,6 +96,9 @@ class ListWriter {
 		if (isset($options['wrap'])) {
 			echo ' wrap="'.($options['wrap'] ? 'true' : 'false').'"';
 		}
+		if ($options['dimmed']) {
+			echo ' dimmed="true"';
+		}
 		echo '>';
 		return $this;
 	}
@@ -108,6 +111,8 @@ class ListWriter {
 	function startLine($options=array()) {
 		echo '<line'.
 		($options['dimmed'] ? ' dimmed="true"' : '').
+		($options['minor'] ? ' minor="true"' : '').
+		($options['mini'] ? ' mini="true"' : '').
 		'>';
 		return $this;
 	}
@@ -134,6 +139,16 @@ class ListWriter {
 	
 	function endDelete() {
 		echo '</delete>';
+		return $this;
+	}
+	
+	function startStrong() {
+		echo '<strong>';
+		return $this;
+	}
+	
+	function endStrong() {
+		echo '</strong>';
 		return $this;
 	}
 
@@ -163,6 +178,9 @@ class ListWriter {
 		}
 		if ($options['revealing']) {
 			echo ' revealing="true"';
+		}
+		if (isset($options['hint'])) {
+			echo ' hint="'.StringUtils::escapeXML($options['hint']).'"';
 		}
 		echo '/>';
 		return $this;

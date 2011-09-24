@@ -58,7 +58,7 @@ class ObjectService {
 			$row = Database::delete($sql);
 			$sql = "delete from `object_link` where object_id=".Database::int($object->getId());
 			$row = Database::delete($sql);
-			$sql = "delete from `relation` where from_object_id=".Database::int($object->getId())." or to_object_id=".Database::int($object->getId());
+			$sql = "delete from `relation` where (from_type='object' and from_object_id=".Database::int($object->getId()).") or (to_type='object' and to_object_id=".Database::int($object->getId()).")";
 			$row = Database::delete($sql);
 			$schema = Object::$schema[$object->getType()];
 			if (is_array($schema)) {
@@ -323,12 +323,40 @@ class ObjectService {
 			$limit.=')';
 			$parts['limits'][] = $limit;
 		}
-		if (count($query->getRelationsFrom())==1) {
+		/*if (count($query->getRelationsFrom())==1) {
 			$relationsFrom = $query->getRelationsFrom();
 			$relation = $relationsFrom[0];
 			$parts['tables'][] = 'relation as relation_from';
 			$parts['limits'][] = 'relation_from.to_object_id=object.id';
 			$parts['limits'][] = 'relation_from.from_object_id='.Database::int($relation['id']);
+		}*/
+		if (count($query->getRelationsFrom())>0) {
+			$relations = $query->getRelationsFrom();
+			for ($i=0; $i < count($relations); $i++) { 
+				$relation = $relations[$i];
+				$parts['tables'][] = 'relation as relation_from_'.$i;
+				$parts['limits'][] = 'relation_from_'.$i.'.to_object_id=object.id';
+				$parts['limits'][] = "relation_from_".$i.".to_type='object'";
+				$parts['limits'][] = "relation_from_".$i.".from_type=".Database::text($relation['fromType']);
+				$parts['limits'][] = 'relation_from_'.$i.'.from_object_id='.Database::int($relation['id']);
+				if ($relation['kind']) {
+					$parts['limits'][] = "relation_from_".$i.".kind=".Database::text($relation['kind']);
+				}
+			}
+		}
+		if (count($query->getRelationsTo())>0) {
+			$relations = $query->getRelationsTo();
+			for ($i=0; $i < count($relations); $i++) { 
+				$relation = $relations[$i];
+				$parts['tables'][] = 'relation as relation_to_'.$i;
+				$parts['limits'][] = 'relation_to_'.$i.'.from_object_id=object.id';
+				$parts['limits'][] = "relation_to_".$i.".from_type='object'";
+				$parts['limits'][] = "relation_to_".$i.".to_type=".Database::text($relation['toType']);
+				$parts['limits'][] = 'relation_to_'.$i.'.to_object_id='.Database::int($relation['id']);
+				if ($relation['kind']) {
+					$parts['limits'][] = "relation_to_".$i.".kind=".Database::text($relation['kind']);
+				}
+			}
 		}
 
 		if ($class = ObjectService::getInstance($query->getType())) {

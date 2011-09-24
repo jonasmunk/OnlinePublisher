@@ -60,13 +60,13 @@ class FeedSerializer {
 	
 	function buildTextTag($tagName,$value) {
 		if ($value) {
-			return '<'.$tagName.'>'.StringUtils::escapeXML($value).'</'.$tagName.'>';
+			return "\n<".$tagName.">".StringUtils::escapeXML($value)."</".$tagName.">";
 		}
 	}
 	
 	function buildDateTag($tagName,$value) {
 		if (strlen($value)>0) {
-			return '<'.$tagName.'>'.$this->serializeDate($value).'</'.$tagName.'>';
+			return "\n<".$tagName.">".$this->serializeDate($value)."</".$tagName.">";
 		}
 	}
 }
