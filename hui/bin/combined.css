@@ -2621,10 +2621,19 @@ p.hui_list_line
 	margin: 0;
 }
 
-p.hui_list_dimmed
+p.hui_list_dimmed, td.hui_list_dimmed
+{
+	color: #999;
+}
+
+p.hui_list_minor
+{
+	font-size: 10px;
+}
+
+p.hui_list_mini
 {
 	font-size: 9px;
-	color: #999;
 }
 
 span.hui_list_badge

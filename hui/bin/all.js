@@ -5698,6 +5698,9 @@ hui.ui.List.prototype = {
 				if (cells[j].getAttribute('align')) {
 					td.style.textAlign=cells[j].getAttribute('align');
 				}
+				if (cells[j].getAttribute('dimmed')=='true') {
+					td.className='hui_list_dimmed';
+				}
 				if (j==0 && level>1) {
 					td.style.paddingLeft = ((parseInt(level)-1)*16+5)+'px';
 				}
@@ -5801,6 +5804,9 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'icon')) {
 				var icon = hui.ui.createIcon(child.getAttribute('icon'),16);
 				var data = child.getAttribute('data');
+				if (child.getAttribute('hint')) {
+					icon.setAttribute('title',child.getAttribute('hint'));
+				}
 				if (data) {
 					icon.setAttribute('data',data);
 					hui.addClass(icon,'hui_list_action');
@@ -5813,6 +5819,12 @@ hui.ui.List.prototype = {
 				var line = hui.build('p',{'class':'hui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
 					hui.addClass(line,'hui_list_dimmed')
+				}
+				if (child.getAttribute('minor')=='true') {
+					hui.addClass(line,'hui_list_minor')
+				}
+				if (child.getAttribute('mini')=='true') {
+					hui.addClass(line,'hui_list_mini')
 				}
 				cell.appendChild(line);
 				this.parseCell(child,line);
@@ -5837,6 +5849,8 @@ hui.ui.List.prototype = {
 				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
 			} else if (hui.dom.isElement(child,'delete')) {
 				this.parseCell(child,hui.build('del',{parent:cell}));
+			} else if (hui.dom.isElement(child,'strong')) {
+				this.parseCell(child,hui.build('strong',{parent:cell}));
 			} else if (hui.dom.isElement(child,'badge')) {
 				this.parseCell(child,hui.build('span',{className:'hui_list_badge',parent:cell}));
 			}
@@ -7467,6 +7481,17 @@ hui.ui.Toolbar.Icon.prototype = {
 	/** Enables the icon */
 	enable : function() {
 		this.setEnabled(true);
+	},
+	setOverlay : function(overlay) {
+		var node = hui.firstByClass(this.element,'hui_icon_overlay');
+		if (node && !overlay) {
+			node.style.backgroundImage = '';
+		} else if (node && overlay) {
+			node.style.backgroundImage = "url('"+hui.ui.getIconUrl('overlay/'+overlay,32)+"')";
+		} else if (overlay) {
+			var parent = hui.firstByClass(this.element,'hui_icon');
+			hui.build('span',{'class':'hui_icon_overlay',parent:parent,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+overlay,32)+')'});
+		}
 	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {

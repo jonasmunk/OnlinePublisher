@@ -128,6 +128,17 @@ hui.ui.Toolbar.Icon.prototype = {
 	enable : function() {
 		this.setEnabled(true);
 	},
+	setOverlay : function(overlay) {
+		var node = hui.firstByClass(this.element,'hui_icon_overlay');
+		if (node && !overlay) {
+			node.style.backgroundImage = '';
+		} else if (node && overlay) {
+			node.style.backgroundImage = "url('"+hui.ui.getIconUrl('overlay/'+overlay,32)+"')";
+		} else if (overlay) {
+			var parent = hui.firstByClass(this.element,'hui_icon');
+			hui.build('span',{'class':'hui_icon_overlay',parent:parent,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+overlay,32)+')'});
+		}
+	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
 		if (selected) {
