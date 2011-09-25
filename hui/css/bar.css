@@ -255,6 +255,7 @@ div.hui_bar_layout span.hui_bar_text
     line-height: 28px;
     padding: 0 5px;
     text-shadow: 0 1px 0 #FFFFFF;
+	vertical-align: top;
 }
 
 div.hui_bar_layout span.hui_bar_text_header
@@ -266,6 +267,7 @@ div.hui_bar_layout span.hui_bar_text_header
 div.hui_bar_layout span.hui_segmented
 {
 	margin-top: 3px;
+	vertical-align: top;
 }
 
 div.hui_bar_layout span.hui_searchfield

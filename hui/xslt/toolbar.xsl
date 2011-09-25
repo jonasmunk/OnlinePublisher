@@ -243,7 +243,7 @@
 				<xsl:text> hui_bar_</xsl:text><xsl:value-of select="@variant"/>
 			</xsl:if>
 		</xsl:attribute>
-		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+		<xsl:if test="(@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)) or @visible='false'">
 			<xsl:attribute name="style">display:none;</xsl:attribute>
 		</xsl:if>
 		<div class="hui_bar_body">
@@ -303,6 +303,7 @@
 				<xsl:text> hui_bar_text_</xsl:text><xsl:value-of select="@variant"/>
 			</xsl:if>
 		</xsl:attribute>
+		<xsl:value-of select="@text"/>
 		<xsl:comment/>
 	</span>
 	<script type="text/javascript">

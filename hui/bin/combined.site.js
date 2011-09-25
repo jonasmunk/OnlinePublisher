@@ -2553,6 +2553,12 @@ hui.ui.changeState = function(state) {
 	}
 	hui.ui.state=state;
 	
+	this.reLayout();
+}
+
+hui.ui.reLayout = function() {
+	var all = hui.ui.objects,
+		obj;
 	for (key in all) {
 		obj = all[key];
 		if (obj['$$layoutChanged']) {

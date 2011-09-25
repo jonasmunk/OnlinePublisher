@@ -4054,6 +4054,12 @@ hui.ui.changeState = function(state) {
 	}
 	hui.ui.state=state;
 	
+	this.reLayout();
+}
+
+hui.ui.reLayout = function() {
+	var all = hui.ui.objects,
+		obj;
 	for (key in all) {
 		obj = all[key];
 		if (obj['$$layoutChanged']) {
@@ -11491,6 +11497,7 @@ hui.ui.Bar = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
+	this.visible = this.element.style.display=='none' ? false : null;
 	hui.ui.extend(this);
 };
 
@@ -11525,19 +11532,34 @@ hui.ui.Bar.prototype = {
 		});
 		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
+	/** Change the visibility of the bar
+	 * @param {boolean} If the bar should be visible
+	 */
+	setVisible : function(visible) {
+		if (this.visible===visible) {return}
+		if (visible) {
+			this.show();
+		} else {
+			this.hide();
+		}
+	},
 	show : function() {
 		if (this.options.absolute) {
 			this.element.style.visibility='visible';
 		} else {
 			this.element.style.display='';
+			hui.ui.reLayout();
 		}
+		this.visible = true;
 	},
 	hide : function() {
 		if (this.options.absolute) {
 			this.element.style.visibility='hidden';
 		} else {
 			this.element.style.display='none';
+			hui.ui.reLayout();
 		}
+		this.visible = false;
 	}
 }
 
