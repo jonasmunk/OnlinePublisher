@@ -17,6 +17,8 @@ if ($direction=='') $direction='ascending';
 
 if ($kind=='hierarchy' || $kind=='hierarchyItem') {
 	listHierarhy();
+} else if ($kind=='subset' && $value=='review') {
+	listReview();
 } else {
 	listPages();
 }
@@ -28,7 +30,7 @@ function listHierarhy() {
 	$writer->startList();
 	$writer->startHeaders();
 	$writer->header(array('title'=>'Menupunkt','width'=>30));
-	$writer->header(array('title'=>'Link','width'=>40));
+	$writer->header(array('title'=>'Link / Destination','width'=>40));
 	$writer->header(array('title'=>'Sti'));
 	$writer->header(array('width'=>1));
 	$writer->endHeaders();
@@ -40,6 +42,69 @@ function listHierarhy() {
 		$parent = intval($value);
 	}
 	listHierarhyLevel($writer,$hierarchyId,$parent,1);
+	
+	$writer->endList();	
+}
+
+function listReview() {
+	global $windowSize,$windowPage,$query,$sort,$kind,$value,$direction;
+	$writer = new ListWriter();
+	
+	$span = Request::getString('reviewSpan');
+	
+	$writer->startList()->
+		startHeaders()->
+			header(array('title'=>'Side','width'=>45))->
+			header(array('width'=>1))->
+			header(array('title'=>'Bruger'))->
+			header(array('title'=>'Tidspunkt','width'=>20))->
+			header(array('width'=>1))->
+		endHeaders();
+	$sql = "select page.id as page_id,page.title as page_title,user.title as user_title,UNIX_TIMESTAMP(review.date) as date,review.accepted
+from page,relation as page_review,relation as review_user,review,object as user 
+where page_review.from_type='page' and page_review.from_object_id=page.id
+and page_review.to_type='object' and page_review.to_object_id=review.object_id
+and review_user.from_type='object' and review_user.from_object_id=review.object_id
+and review_user.to_type='object' and review_user.to_object_id=user.id";
+	if ($span=='day') {
+		$sql.=' and review.date<'.Database::datetime(DateUtils::addDays(time(),-1));
+	} else if ($span=='week') {
+		$sql.=' and review.date<'.Database::datetime(DateUtils::addDays(time(),-7));
+	}
+	$sql.=" union
+		select page.id as page_id, page.title as page_title,'' as user_title, null as date, -1 as accepted 
+		from page where page.id not in(select relation.from_object_id from 	relation,review 
+		where relation.to_type='object' and relation.to_object_id=review.object_id)
+		order by date desc,page_title";
+	
+	$result = Database::select($sql);
+	while ($row = Database::next($result)) {
+		$writer->startRow(array('kind'=>'page','id'=>$row['page_id']))->
+			startCell(array('icon'=>'common/page'))->text($row['page_title'])->
+			endCell()->
+			startCell()->
+				startIcons()->
+					icon(array('icon'=>'monochrome/info','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['page_id'])))->
+					icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['page_id'])))->
+					icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['page_id'])))->
+					icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['page_id'])))->
+				endIcons()->
+			endCell();
+			if ($row['user_title']) {
+				$writer->startCell(array('icon'=>'common/user'))->text($row['user_title'])->endCell();
+			} else {
+				$writer->startCell()->endCell();
+			}
+			$writer->startCell()->text(DateUtils::formatFuzzy($row['date']))->endCell()->
+			startCell();
+			if ($row['accepted']!=-1) {
+				$writer->icon(array('icon' => $row['accepted'] ? 'common/success' : 'common/stop'));
+			}
+			$writer->endCell()->
+		endRow();
+			
+	}
+	Database::free($result);
 	
 	$writer->endList();	
 }
@@ -75,8 +140,8 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 						$writer->text($row['pagetitle']);
 					}
 					$writer->startIcons()->
+						icon(array('icon'=>'monochrome/info','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
 						icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['pageid'])))->
-						icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
 						icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['pageid'])))->
 						icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['pageid'])))->
 					endIcons()->
@@ -164,8 +229,8 @@ function listPages() {
 		$writer->endCell()->
 			startCell()->
 			startIcons()->
+				icon(array('icon'=>'monochrome/info','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['id'])))->
 				icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['id'])))->
-				icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['id'])))->
 				icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['id'])))->
 				icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['id'])));
 		if (!$row['searchable']) {
@@ -213,8 +278,12 @@ function buildPagesSql() {
 		}
 	} else if ($value=='changed') {
 		$sqlLimits.=" and page.changed>page.published";
+	} else if ($value=='nomenu') {
+		$sqlLimits.=" and page.id not in (select target_id from `hierarchy_item` where `target_type`='page')";
 	} else if ($value=='warnings') {
 		$sqlLimits.=" and (page.changed>page.published or page.path is null or page.path='')";
+	} else if ($value=='latest') {
+		$sqlLimits.=" and page.changed>".Database::datetime(DateUtils::addDays(time(),-1));
 	}
 	$sqlLimits.=" order by ".$sort.($direction=='ascending' ? ' asc' : ' desc');
 

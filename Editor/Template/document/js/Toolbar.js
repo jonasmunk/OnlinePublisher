@@ -2,7 +2,7 @@ var controller = {
 	pageId : null,
 	
 	$click$close : function() {
-		window.parent.location='../../Tools/Pages/index.php';
+		window.parent.location='../../Tools/Sites/';
 	},
 	$click$publish : function() {
 		hui.ui.request({url:'../../Services/Model/PublishPage.php',parameters:{id:this.pageId},onSuccess:function(obj) {
@@ -17,7 +17,7 @@ var controller = {
 		window.parent.location='../../Services/Preview/?id='+this.pageId;
 	},
 	$click$properties : function() {
-		window.parent.location='../../Tools/Pages/?action=pageproperties&amp;id='+this.pageId;
+		window.parent.location='../../Tools/Sites/?pageInfo='+this.pageId;
 	},
 	$click$newLink : function() {
 		try {

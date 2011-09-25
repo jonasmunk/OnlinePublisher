@@ -26,7 +26,7 @@ var controller = {
 	},
 	
 	$click$close : function() {
-		this.getFrame().location='../../Tools/Pages/';
+		this.getFrame().location='../../Tools/Sites/';
 	},
 	$click$edit : function() {
 		var frame = window.frames[0];

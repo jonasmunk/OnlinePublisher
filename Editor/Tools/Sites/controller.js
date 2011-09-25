@@ -25,6 +25,10 @@ var mainController = {
 		}
 	},
 	
+	$selectionChanged$selector : function(item) {
+		reviewBar.setVisible(item.value=='review');
+	},
+	
 	///////////////// List ///////////////
 	
 	$selectionChanged$list : function(item) {

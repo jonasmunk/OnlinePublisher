@@ -43,6 +43,7 @@ $gui='
 		<parameter key="query" value="@search.value"/>
 		<parameter key="kind" value="@selector.kind"/>
 		<parameter key="value" value="@selector.value"/>
+		<parameter key="reviewSpan" value="@reviewSpan.value"/>
 	</source>
 	<source name="pageFinderListSource" url="data/PageFinderList.php">
 		<parameter key="windowPage" value="@pageFinderList.window.page"/>
@@ -85,19 +86,31 @@ $gui='
 				<overflow>
 					<selection value="all" name="selector">
 						<item icon="common/page" title="Alle sider" value="all"/>
+						<item icon="common/time" title="Seneste" value="latest"/>
 						<title>Hierarkier</title>
 						<items source="hierarchySource"/>
 						<title>Sprog</title>
 						<items source="languageSource"/>
 						<title>Oversigter</title>
-						<item icon="common/news" title="Nyheder" value="news" kind="subset"/>
-						<item icon="common/warning" title="Advarsler" value="warnings"/>
-						<item icon="common/edit" title="Ændret" value="changed"/>
-						<item icon="common/delete" title="Uden menupunkt" value="nomenu"/>
+						<item icon="monochrome/news" title="Nyheder" value="news" kind="subset"/>
+						<item icon="monochrome/warning" title="Advarsler" value="warnings" kind="subset"/>
+						<item icon="monochrome/edit" title="Ændret" value="changed" kind="subset"/>
+						<item icon="monochrome/delete" title="Uden menupunkt" value="nomenu" kind="subset"/>
+						<item icon="monochrome/stamp" title="Revidering" value="review" kind="subset"/>
 					</selection>
 				</overflow>
 			</left>
 			<center>
+				<bar name="reviewBar" variant="layout" visible="false">
+					<text text="Her vises en oversigt over revidering af sider"/>
+					<right>
+					<segmented value="day" name="reviewSpan">
+						<item text="Vis alle" value="all"/>
+						<item text="Et døgn" value="day"/>
+						<item text="7 dage" value="week"/>
+					</segmented>
+					</right>
+				</bar>
 				<overflow>
 					<list name="list" source="pageListSource"/>
 				</overflow>

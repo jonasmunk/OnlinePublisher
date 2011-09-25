@@ -88,7 +88,7 @@ op.Editor = {
 			hui.log('The window has no parent! '+window.location);
 			return;
 		}
-		window.parent.location='../../../Tools/Pages/?action=pageproperties';
+		window.parent.location='../../../Tools/Sites/?pageInfo='+op.page.id;
 	}
 }
 

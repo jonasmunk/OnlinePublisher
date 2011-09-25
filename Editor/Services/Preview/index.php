@@ -35,8 +35,8 @@ $gui='
 			<tab title="Avanceret" background="light">
 				<toolbar>
 					<icon icon="common/time" text="Historik" name="viewHistory"/>
-					<divider/>
-					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>
+					<!--<divider/>
+					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>-->
 				</toolbar>
 			</tab>
 		</tabs>
