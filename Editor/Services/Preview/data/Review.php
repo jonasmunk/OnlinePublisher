@@ -21,16 +21,14 @@ if ($review) {
 	$review->setDate(time());
 	$review->setAccepted($accepted);
 	$review->save();
-	Log::debug('Updating existing review');
 } else {
 	$review = new Review();
 	$review->setTitle('My review');
-	$review->setAccepted(true);
+	$review->setAccepted($accepted);
 	$review->setDate(time());
 	$review->save();
 
 	RelationsService::relatePageToObject($page,$review,'reviewed');
 	RelationsService::relateObjectToObject($review,$user,'reviewer');	
-	Log::debug('Creating new review');
 }
 ?>
