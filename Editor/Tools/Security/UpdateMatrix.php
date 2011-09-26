@@ -5,11 +5,11 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/Response.php';
-require_once '../../Classes/Securityzone.php';
-require_once '../../Classes/Page.php';
-require_once '../../Classes/Request.php';
+require_once '../../Classes/Core/Database.php';
+require_once '../../Classes/Core/Response.php';
+require_once '../../Classes/Objects/Securityzone.php';
+require_once '../../Classes/Model/Page.php';
+require_once '../../Classes/Core/Request.php';
 require_once '../../Classes/Services/PageService.php';
 
 

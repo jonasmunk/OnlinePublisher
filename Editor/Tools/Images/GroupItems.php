@@ -5,9 +5,9 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Request.php';
+require_once '../../Classes/Core/Database.php';
+require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Classes/Core/Request.php';
 
 $writer = new ItemsWriter();
 

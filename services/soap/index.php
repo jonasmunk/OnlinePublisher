@@ -2,7 +2,7 @@
 // Pull in the NuSOAP code
 require_once '../../Editor/Include/Public.php';
 require_once('../../Editor/Libraries/nusoap/nusoap.php');
-require_once('../../Editor/Classes/SystemInfo.php');
+require_once('../../Editor/Classes/Core/SystemInfo.php');
 // Create the server instance
 $server = new soap_server;
 // Register the method to expose

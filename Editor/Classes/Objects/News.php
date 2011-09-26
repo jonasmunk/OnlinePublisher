@@ -7,7 +7,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Model/Object.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 require_once($basePath.'Editor/Classes/Services/ObjectService.php');
 
@@ -58,7 +58,7 @@ class News extends Object {
 	
 	function getGroupIds() {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Database.php');
+		require_once($basePath.'Editor/Classes/Core/Database.php');
 		$sql="select newsgroup_id as id from newsgroup_news where news_id=".$this->id;
 		return Database::getIds($sql);
 	}

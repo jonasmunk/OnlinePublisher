@@ -13,12 +13,12 @@ if (!file_exists('Config/Setup.php')) {
 }
 require_once 'Config/Setup.php';
 require_once 'Editor/Include/Public.php';
-require_once 'Editor/Classes/Request.php';
-require_once 'Editor/Classes/Response.php';
-require_once 'Editor/Classes/Database.php';
+require_once 'Editor/Classes/Core/Request.php';
+require_once 'Editor/Classes/Core/Response.php';
+require_once 'Editor/Classes/Core/Database.php';
 require_once 'Editor/Classes/Services/RenderingService.php';
 require_once 'Editor/Classes/Services/CacheService.php';
-require_once 'Editor/Classes/ExternalSession.php';
+require_once 'Editor/Classes/Core/ExternalSession.php';
 
 session_set_cookie_params(0);
 session_start();

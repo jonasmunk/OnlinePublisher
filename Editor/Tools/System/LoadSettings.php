@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Services/MailService.php';
 require_once '../../Classes/Services/SettingService.php';
 require_once '../../Classes/Integration/GoogleAnalytics.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Interface/In2iGui.php';
 
 $settings = array(
 	'ui' => array(

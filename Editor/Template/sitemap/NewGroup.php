@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Database.php';
+require_once '../../Classes/Core/Database.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 
 $close = 'Groups.php';

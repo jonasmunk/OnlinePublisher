@@ -7,8 +7,8 @@ require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
 require_once '../../../Classes/Utilities/DateUtils.php';
 require_once '../../../Classes/Objects/Calendarsource.php';
-require_once '../../../Classes/Request.php';
-require_once '../../../Classes/In2iGui.php';
+require_once '../../../Classes/Core/Request.php';
+require_once '../../../Classes/Interface/In2iGui.php';
 
 $force = Request::getBoolean('force');
 $sourceId = Request::getInt('sourceId');

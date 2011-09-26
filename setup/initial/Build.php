@@ -1,7 +1,7 @@
 <?
 require_once('../../Editor/Include/Public.php');
-require_once('../../Editor/Classes/Request.php');
-require_once('../../Editor/Classes/In2iGui.php');
+require_once('../../Editor/Classes/Core/Request.php');
+require_once('../../Editor/Classes/Interface/In2iGui.php');
 
 if (file_exists('../../Config/Setup.php')) {
 	In2iGui::sendObject(array('failure'=>'The configuration file already exists'));

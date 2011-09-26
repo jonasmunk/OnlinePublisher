@@ -5,9 +5,9 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Object.php';
-require_once '../../Classes/Page.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Model/Object.php';
+require_once '../../Classes/Model/Page.php';
+require_once '../../Classes/Interface/In2iGui.php';
 
 $writer = new ListWriter();
 

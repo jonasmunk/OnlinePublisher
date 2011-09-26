@@ -1,7 +1,7 @@
 <?
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once $basePath.'Editor/Classes/InternalSession.php';
+require_once $basePath.'Editor/Classes/Core/InternalSession.php';
 
 class ProjectsController {
 	

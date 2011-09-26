@@ -7,9 +7,9 @@ require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
 require_once '../../Editor/Classes/Services/FileSystemService.php';
 require_once '../../Editor/Classes/Modules/Images/ImageTransformationService.php';
-require_once '../../Editor/Classes/Database.php';
-require_once '../../Editor/Classes/Response.php';
-require_once '../../Editor/Classes/Request.php';
+require_once '../../Editor/Classes/Core/Database.php';
+require_once '../../Editor/Classes/Core/Response.php';
+require_once '../../Editor/Classes/Core/Request.php';
 
 session_set_cookie_params(0);
 session_start();

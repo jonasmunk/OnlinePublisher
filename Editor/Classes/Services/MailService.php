@@ -8,8 +8,8 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 require_once($basePath."Editor/Classes/Services/SettingService.php");
-require_once($basePath."Editor/Classes/Log.php");
-require_once($basePath.'Editor/Classes/Zend.php');
+require_once($basePath."Editor/Classes/Core/Log.php");
+require_once($basePath.'Editor/Classes/Libraries/Zend.php');
 require_once($basePath.'Editor/Libraries/Zend/Mail.php');
 require_once($basePath.'Editor/Libraries/Zend/Mail/Transport/Smtp.php');
 

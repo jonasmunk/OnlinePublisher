@@ -6,9 +6,9 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Hierarchy.php';
-require_once '../../Classes/InternalSession.php';
-require_once '../../Classes/Request.php';
+require_once '../../Classes/Model/Hierarchy.php';
+require_once '../../Classes/Core/InternalSession.php';
+require_once '../../Classes/Core/Request.php';
 require_once '../../Classes/Utilities/StringUtils.php';
 
 require_once 'PagesController.php';

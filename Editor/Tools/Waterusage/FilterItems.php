@@ -4,7 +4,7 @@
  * @subpackage Tools.Waterusage
  */
 require_once '../../Include/Private.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Interface/In2iGui.php';
 
 $years = WaterusageService::getYears();
 

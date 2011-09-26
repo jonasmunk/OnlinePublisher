@@ -7,8 +7,8 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Core/Database.php');
+require_once($basePath.'Editor/Classes/Model/Object.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 Object::$schema['calendarsource'] = array(
@@ -92,6 +92,8 @@ class Calendarsource extends Object {
 			return;
 		}
 		if (strpos($this->url,'dbu.dk')!==false) {
+			$this->synchronizeDBU();
+		} else if (strpos($this->url,'kampe.dhf.dk')!==false) {
 			$this->synchronizeDBU();
 		} else {
 			$this->synchronizeVCal();

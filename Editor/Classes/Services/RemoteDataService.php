@@ -7,8 +7,8 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/Core/Database.php');
+require_once($basePath.'Editor/Classes/Core/Log.php');
 require_once($basePath.'Editor/Classes/Network/RemoteData.php');
 
 class RemoteDataService {

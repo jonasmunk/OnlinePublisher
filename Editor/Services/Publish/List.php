@@ -5,8 +5,8 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Object.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Model/Object.php';
+require_once '../../Classes/Interface/In2iGui.php';
 require_once '../../Classes/Services/PublishingService.php';
 
 $pages = PublishingService::getUnpublishedPages();

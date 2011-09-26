@@ -1,7 +1,7 @@
 <?
 require_once('../../Editor/Include/Public.php');
-require_once('../../Editor/Classes/In2iGui.php');
-require_once('../../Editor/Classes/Request.php');
+require_once('../../Editor/Classes/Interface/In2iGui.php');
+require_once('../../Editor/Classes/Core/Request.php');
 
 $host = Request::getString('databaseHost');
 $name = Request::getString('databaseName');

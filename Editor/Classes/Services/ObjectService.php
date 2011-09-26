@@ -7,10 +7,10 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/Log.php');
-require_once($basePath.'Editor/Classes/Model/SearchResult.php');
-require_once($basePath.'Editor/Classes/EventManager.php');
+require_once($basePath.'Editor/Classes/Core/Database.php');
+require_once($basePath.'Editor/Classes/Core/Log.php');
+require_once($basePath.'Editor/Classes/Core/SearchResult.php');
+require_once($basePath.'Editor/Classes/Services/EventService.php');
 require_once($basePath.'Editor/Classes/Services/SchemaService.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
@@ -25,9 +25,15 @@ class ObjectService {
 	}
 	
 	function getInstance($type) {
+		if (!$type) {
+			return null;
+		}
 		ObjectService::importType($type);
 		$class = ucfirst($type);
-		return new $class;
+		if (class_exists($class,true)) {
+			return new $class;
+		}
+		return null;
 	}
 	
 	function importType($type) {
@@ -71,7 +77,7 @@ class ObjectService {
 			else if (method_exists($object,'sub_remove')) {
 				$object->sub_remove();
 			}
-			EventManager::fireEvent('delete','object',$object->getType(),$object->getId());
+			EventService::fireEvent('delete','object',$object->getType(),$object->getId());
 			return true;
 		}
 		return false;
@@ -85,7 +91,7 @@ class ObjectService {
 		$xml = $object->getCurrentXml();
 		$sql = "update `object` set data=".Database::text($xml).",`index`=".Database::text($index).",published=now() where id=".Database::int($object->getId());
 		Database::update($sql);
-		EventManager::fireEvent('publish','object',$object->getType(),$object->getId());
+		EventService::fireEvent('publish','object',$object->getType(),$object->getId());
 	}
 	
 	function load($id,$type) {
@@ -186,7 +192,7 @@ class ObjectService {
 		else if (method_exists($object,'sub_create')) {
 			$object->sub_create();
 		}
-		EventManager::fireEvent('create','object',$object->type,$object->id);
+		EventService::fireEvent('create','object',$object->type,$object->id);
 	}
 
 	
@@ -228,7 +234,7 @@ class ObjectService {
 		else if (method_exists($object,'sub_update')) {
 			$object->sub_update();
 		}
-		EventManager::fireEvent('update','object',$object->type,$object->id);
+		EventService::fireEvent('update','object',$object->type,$object->id);
 	}
 	
 	function toXml($object) {
@@ -323,13 +329,6 @@ class ObjectService {
 			$limit.=')';
 			$parts['limits'][] = $limit;
 		}
-		/*if (count($query->getRelationsFrom())==1) {
-			$relationsFrom = $query->getRelationsFrom();
-			$relation = $relationsFrom[0];
-			$parts['tables'][] = 'relation as relation_from';
-			$parts['limits'][] = 'relation_from.to_object_id=object.id';
-			$parts['limits'][] = 'relation_from.from_object_id='.Database::int($relation['id']);
-		}*/
 		if (count($query->getRelationsFrom())>0) {
 			$relations = $query->getRelationsFrom();
 			for ($i=0; $i < count($relations); $i++) { 
@@ -365,6 +364,7 @@ class ObjectService {
 			}
 		} else {
 			Log::debug('Unable to get class for type='.$query->getType());
+			return new SearchResult();
 		}
 		$x =  ObjectService::find($parts);
 		$result = new SearchResult();
@@ -379,6 +379,9 @@ class ObjectService {
 	function find($query = array()) {
     	global $basePath;
 		$type = $query['type'];
+		if (!$type) {
+			return null;
+		}
 		$schema = Object::$schema[$type];
 		if (!is_array($schema)) {
 			Log::debug('Unable to find schema for: '.$type);
@@ -451,7 +454,7 @@ class ObjectService {
 				$parts['columns'].=",`$type`.`$column`";
 			}
 		}
-		$list = Object::_find($parts,$query);
+		$list = ObjectService::_find($parts,$query);
 		
 		ObjectService::importType($type);
 		$class = ucfirst($type);
@@ -482,6 +485,50 @@ class ObjectService {
 			}
 			$list['result'][] = $obj;
     	}
+		return $list;
+	}
+	
+	function _find($parts,$query) {
+		$list = array('result' => array(),'rows' => array(),'windowPage' => 0,'windowSize' => 0,'total' => 0);
+
+		$sql = "select ".$parts['columns']." from ".$parts['tables'];
+		if (is_array($parts['joins']) && count($parts['joins'])>0) {
+			$sql.=" ".implode(' ',$parts['joins']);
+		}
+		if (is_array($parts['limits']) && count($parts['limits'])>0) {
+			$sql.=" where ".implode(' and ',$parts['limits']);
+		}
+		if (is_string($parts['limits']) && strlen($parts['limits'])>0) {
+			$sql.=" where ".$parts['limits'];
+		}
+		if (strlen($parts['ordering'])) {
+			$sql.=" order by ".$parts['ordering'];
+			if ($parts['direction']=='descending') {
+				$sql.=' desc';
+			} else if ($parts['direction']=='ascending') {
+				$sql.=' asc';
+			}
+		}
+		$start=0;
+		$end=1000;
+		if (isset($query['windowSize']) && isset($query['windowPage'])) {
+			$start = ($query['windowPage'])*$query['windowSize'];
+			$end = ($query['windowPage']+1)*$query['windowSize'];
+			$list['windowPage'] = $query['windowPage'];
+			$list['windowSize'] = $query['windowSize'];
+		}
+		$num = 1;
+		$size = 0;
+		$result = Database::select($sql);
+		$list['total'] = Database::size($result);
+    	while ($row = Database::next($result)) {
+			if ($num>=$start && $num<$end) {
+				$list['rows'][] = $row;
+				$size++;
+			}
+			$num++;
+    	}
+		Database::free($result);
 		return $list;
 	}
 }

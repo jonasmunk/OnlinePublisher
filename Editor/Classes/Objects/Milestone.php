@@ -7,7 +7,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Model/Object.php');
 
 Object::$schema['milestone'] = array(
 	'deadline'  => array('type'=>'datetime'),
@@ -100,7 +100,7 @@ class Milestone extends Object {
 	
 	function getTasks() {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Task.php');
+		require_once($basePath.'Editor/Classes/Objects/Task.php');
 		$output = array();
 		$sql = "select object_id from task,object where task.object_id = object.id and task.milestone_id=".$this->id." order by object.title";
 		$result = Database::select($sql);

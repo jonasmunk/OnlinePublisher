@@ -7,8 +7,8 @@ require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Services/ImageService.php';
 require_once '../../Classes/Parts/ImagePartController.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Log.php';
+require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Classes/Core/Log.php';
 
 // hide warnings
 error_reporting(E_ERROR);

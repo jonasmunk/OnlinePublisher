@@ -10,12 +10,12 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Parts/PartController.php');
 require_once($basePath.'Editor/Classes/Parts/ListPart.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/In2iGui.php');
+require_once($basePath.'Editor/Classes/Interface/In2iGui.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 require_once($basePath.'Editor/Classes/Objects/Calendarsource.php');
 require_once($basePath.'Editor/Classes/Objects/News.php');
 require_once($basePath.'Editor/Classes/Objects/Newssource.php');
-require_once($basePath.'Editor/Classes/Model/Query.php');
+require_once($basePath.'Editor/Classes/Core/Query.php');
 
 class ListPartController extends PartController
 {

@@ -5,9 +5,9 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/InternalSession.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Request.php';
+require_once '../../Classes/Core/InternalSession.php';
+require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Classes/Core/Request.php';
 
 if (Request::exists('id')) {
 	InternalSession::setPageId(Request::getInt('id'));

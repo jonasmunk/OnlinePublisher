@@ -11,7 +11,7 @@ require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Objects/Calendarsource.php');
 require_once($basePath.'Editor/Classes/Objects/Event.php');
-require_once($basePath.'Editor/Classes/EventUtil.php');
+require_once($basePath.'Editor/Classes/Utilities/EventUtils.php');
 
 class CalendarTemplateController extends TemplateController
 {
@@ -111,7 +111,7 @@ class CalendarTemplateController extends TemplateController
 			$xml.=DateUtils::buildTag('date',$timestamp);
 			$dayEvents = array();
 			foreach ($events as $event) {
-				$event = EventUtil::getEventInsidePeriod($timestamp,$timestampEnd,$event);
+				$event = EventUtils::getEventInsidePeriod($timestamp,$timestampEnd,$event);
 				if ($event!=null) {
 					$secs = DateUtils::getSecondsSinceMidnight($event['startDate']);
 					$top = ($secs-$startHour*60*60)/(24-$startHour)/60/60;
@@ -164,7 +164,7 @@ class CalendarTemplateController extends TemplateController
 			$xml.=DateUtils::buildTag('date',$timestamp);
 			$dayEvents = array();
 			foreach ($events as $event) {
-				$event = EventUtil::getEventInsidePeriod($timestamp,$timestampEnd,$event);
+				$event = EventUtils::getEventInsidePeriod($timestamp,$timestampEnd,$event);
 				if ($event!=null) {
 					$dayEvents[] = $event;
 				}
@@ -210,7 +210,7 @@ class CalendarTemplateController extends TemplateController
 			$xml.=DateUtils::buildTag('date',$timestamp);
 			$dayEvents = array();
 			foreach ($events as $event) {
-				$event = EventUtil::getEventInsidePeriod($timestamp,$timestampEnd,$event);
+				$event = EventUtils::getEventInsidePeriod($timestamp,$timestampEnd,$event);
 				if ($event!=null) {
 					$dayEvents[] = $event;
 				}
@@ -248,7 +248,7 @@ class CalendarTemplateController extends TemplateController
 			$event['collisionCount'] = 0;
 			foreach ($others as $other) {
 				if ($event['id']!=$other['id']) {
-					if (EventUtil::isEventsColliding($event,$other)) {
+					if (EventUtils::isEventsColliding($event,$other)) {
 						$collisions = $this->addToCollisionGroups($collisions,$event['id'],$other['id']);
 					}
 				}

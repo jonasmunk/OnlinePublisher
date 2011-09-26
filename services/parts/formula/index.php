@@ -1,11 +1,11 @@
 <?
 require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once('../../../Editor/Classes/Request.php');
-require_once('../../../Editor/Classes/Response.php');
+require_once('../../../Editor/Classes/Core/Request.php');
+require_once('../../../Editor/Classes/Core/Response.php');
 require_once('../../../Editor/Classes/Parts/FormulaPart.php');
 require_once('../../../Editor/Classes/Services/MailService.php');
-require_once('../../../Editor/Classes/Log.php');
+require_once('../../../Editor/Classes/Core/Log.php');
 require_once('../../../Editor/Classes/Utilities/StringUtils.php');
 
 $name = Request::getUnicodeString('name');

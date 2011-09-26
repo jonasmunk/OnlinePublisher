@@ -10,8 +10,8 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 require_once($basePath.'Editor/Classes/Utilities/DOMUtils.php');
-require_once($basePath.'Editor/Classes/ExternalSession.php');
-require_once($basePath.'Editor/Classes/Request.php');
+require_once($basePath.'Editor/Classes/Core/ExternalSession.php');
+require_once($basePath.'Editor/Classes/Core/Request.php');
 
 class AuthenticationTemplateController extends TemplateController
 {

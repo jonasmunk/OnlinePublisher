@@ -6,10 +6,10 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Services/ImageService.php';
-require_once '../../Classes/Response.php';
-require_once '../../Classes/InternalSession.php';
-require_once '../../Classes/In2iGui.php';
-require_once '../../Classes/Log.php';
+require_once '../../Classes/Core/Response.php';
+require_once '../../Classes/Core/InternalSession.php';
+require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Classes/Core/Log.php';
 
 Log::debug('Starting upload');
 

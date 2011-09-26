@@ -38,9 +38,7 @@ if ($type=='page') {
 		));
 	}
 } else {
-	$query = array('type'=>$type,'query'=>$text);
-	$list = Object::find($query);
-	$objects = $list['result'];
+	$objects = Query::after($type)->withText($text)->get();
 	foreach ($objects as $object) {
 		$writer->item(array(
 			'title' => $object->getTitle(),

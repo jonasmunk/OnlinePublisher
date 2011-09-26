@@ -7,7 +7,7 @@ if (file_exists('../../Config/Setup.php')) {
 $baseUrl = getBaseUrl();
 
 require_once('../../Editor/Include/Public.php');
-require_once('../../Editor/Classes/In2iGui.php');
+require_once('../../Editor/Classes/Interface/In2iGui.php');
 require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
 if (!is_dir($basePath."Config/") || !is_writable($basePath."Config/")) {

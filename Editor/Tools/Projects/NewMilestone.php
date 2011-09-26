@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Project.php';
+require_once '../../Classes/Objects/Project.php';
 
 $projectOptions = Project::optionSpider('',0,0);
 $close = 'Milestones.php';

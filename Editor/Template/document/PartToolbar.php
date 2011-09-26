@@ -6,7 +6,7 @@
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
 require_once '../../Classes/Services/PartService.php';
-require_once '../../Classes/In2iGui.php';
+require_once '../../Classes/Interface/In2iGui.php';
 
 // Get variables
 $partId = Request::getInt('partId');

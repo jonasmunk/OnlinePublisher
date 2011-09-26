@@ -7,7 +7,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Model/Object.php');
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
@@ -121,7 +121,7 @@ class Image extends Object {
 			}
 		}
 		foreach ($groups as $id) {
-			EventManager::fireEvent('relation_change','object','imagegroup',$id);
+			EventService::fireEvent('relation_change','object','imagegroup',$id);
 		}
 	}
 	
@@ -195,7 +195,7 @@ class Image extends Object {
 		$sql = "select imagegroup_id from imagegroup_image where image_id=".$this->id;
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			EventManager::fireEvent('relation_change','object','imagegroup',$row['imagegroup_id']);
+			EventService::fireEvent('relation_change','object','imagegroup',$row['imagegroup_id']);
 		}
 		Database::free($result);
 	}

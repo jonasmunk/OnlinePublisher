@@ -7,8 +7,8 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/Object.php');
+require_once($basePath.'Editor/Classes/Core/Database.php');
+require_once($basePath.'Editor/Classes/Model/Object.php');
 
 Object::$schema['address'] = array(
 	'street' => array('type'=>'string'),

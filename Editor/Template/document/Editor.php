@@ -5,12 +5,12 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Database.php';
+require_once '../../Classes/Core/Database.php';
 require_once '../../Classes/Services/PartService.php';
-require_once '../../Classes/PartContext.php';
-require_once '../../Classes/Request.php';
-require_once '../../Classes/InternalSession.php';
-require_once '../../Classes/SystemInfo.php';
+require_once '../../Classes/Parts/PartContext.php';
+require_once '../../Classes/Core/Request.php';
+require_once '../../Classes/Core/InternalSession.php';
+require_once '../../Classes/Core/SystemInfo.php';
 require_once '../../Classes/Templates/DocumentTemplateController.php';
 
 header('Content-Type: text/html; charset=UTF-8');

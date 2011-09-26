@@ -6,8 +6,8 @@
 
 require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once '../../../Editor/Classes/Database.php';
-require_once '../../../Editor/Classes/UserAgentAnalyzer.php';
+require_once '../../../Editor/Classes/Core/Database.php';
+require_once '../../../Editor/Classes/Network/UserAgentAnalyzer.php';
 
 statistics();
 

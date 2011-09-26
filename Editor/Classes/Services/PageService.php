@@ -3,7 +3,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Page.php');
+require_once($basePath.'Editor/Classes/Model/Page.php');
 
 class PageService {
 	
@@ -215,7 +215,7 @@ class PageService {
 		$sql="delete from securityzone_page where page_id=".Database::int($id);
 		Database::delete($sql);
 
-		EventManager::fireEvent('delete','page',$page->getTemplateUnique(),$id);
+		EventService::fireEvent('delete','page',$page->getTemplateUnique(),$id);
 	}
 
     function load($id) {

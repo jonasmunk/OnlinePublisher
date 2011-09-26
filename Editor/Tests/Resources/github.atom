@@ -66,7 +66,7 @@ m services/waterusage/write.php
     </author>
     <content type="html">
       &lt;pre>m Editor/Classes/GuiUtils.php
-m Editor/Classes/Project.php
+m Editor/Classes/Objects/Project.php
 m Editor/Classes/Utilities/StringUtils.php
 m Editor/Include/Functions.php
 m Editor/Services/ImageChooser/Icons.php
@@ -258,10 +258,10 @@ m services/waterusage/write.php
       <uri>https://github.com/in2isoft</uri>
     </author>
     <content type="html">
-      &lt;pre>- services/waterusage/classes/Database.php
+      &lt;pre>- services/waterusage/Classes/Core/Database.php
 - services/waterusage/classes/FileUpload.php
-- services/waterusage/classes/In2iGui.php
-- services/waterusage/classes/Request.php
+- services/waterusage/Classes/Interface/In2iGui.php
+- services/waterusage/Classes/Core/Request.php
 &lt;/pre>
       &lt;pre style='white-space:pre-wrap;width:81ex'>Removed unused classes&lt;/pre>
     </content>
@@ -342,7 +342,7 @@ m services/waterusage/write.php
       &lt;pre>m Editor/Classes/Design.php
 m Editor/Classes/Image.php
 - Editor/Classes/Imagegroup.php
-m Editor/Classes/InternalSession.php
+m Editor/Classes/Core/InternalSession.php
 m Editor/Classes/Model/Query.php
 + Editor/Classes/Model/SearchResult.php
 + Editor/Classes/Network/RemoteData.php
@@ -522,7 +522,7 @@ Conflicts:
       <uri>https://github.com/in2isoft</uri>
     </author>
     <content type="html">
-      &lt;pre>m Editor/Classes/InternalSession.php
+      &lt;pre>m Editor/Classes/Core/InternalSession.php
 + Editor/Classes/Templates/AuthenticationTemplate.php
 + Editor/Classes/Templates/AuthenticationTemplateController.php
 m Editor/Classes/Templates/TemplateController.php
@@ -618,7 +618,7 @@ m In2iGui/xslt/layout.xsl
       <uri>https://github.com/in2isoft</uri>
     </author>
     <content type="html">
-      &lt;pre>m Editor/Classes/InternalSession.php
+      &lt;pre>m Editor/Classes/Core/InternalSession.php
 m Editor/Classes/Object.php
 + Editor/Tools/Images/ChangeUploadAddToGroup.php
 m Editor/Tools/Images/GallerySource.php

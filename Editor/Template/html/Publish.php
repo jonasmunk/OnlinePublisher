@@ -5,9 +5,9 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Response.php';
+require_once '../../Classes/Core/Response.php';
 require_once '../../Classes/Services/PublishingService.php';
-require_once '../../Classes/InternalSession.php';
+require_once '../../Classes/Core/InternalSession.php';
 
 $id = InternalSession::getPageId();
 

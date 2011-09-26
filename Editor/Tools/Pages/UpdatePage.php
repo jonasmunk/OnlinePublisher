@@ -5,13 +5,13 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Classes/Database.php';
-require_once '../../Classes/Response.php';
-require_once '../../Classes/InternalSession.php';
-require_once '../../Classes/Request.php';
-require_once '../../Classes/Hierarchy.php';
-require_once '../../Classes/Page.php';
-require_once '../../Classes/EventManager.php';
+require_once '../../Classes/Core/Database.php';
+require_once '../../Classes/Core/Response.php';
+require_once '../../Classes/Core/InternalSession.php';
+require_once '../../Classes/Core/Request.php';
+require_once '../../Classes/Model/Hierarchy.php';
+require_once '../../Classes/Model/Page.php';
+require_once '../../Classes/Services/EventService.php';
 require_once '../../Classes/Services/CacheService.php';
 
 $id=Request::getInt('id',-1);
@@ -58,7 +58,7 @@ if ($hierarchyItemId>0) {
 CacheService::clearPageCache($id);
 
 // TODO : templateUnique instead of null
-EventManager::fireEvent('update','page',null,$id);
+EventService::fireEvent('update','page',null,$id);
 
 InternalSession::setToolSessionVar('pages','updateHier',true);
 Response::redirect('EditPage.php?id='.$id);

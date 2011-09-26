@@ -5,10 +5,10 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Classes/Services/XslService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/InternalSession.php');
-require_once($basePath.'Editor/Classes/ExternalSession.php');
-require_once($basePath.'Editor/Classes/SystemInfo.php');
-require_once($basePath.'Editor/Classes/Response.php');
+require_once($basePath.'Editor/Classes/Core/InternalSession.php');
+require_once($basePath.'Editor/Classes/Core/ExternalSession.php');
+require_once($basePath.'Editor/Classes/Core/SystemInfo.php');
+require_once($basePath.'Editor/Classes/Core/Response.php');
 require_once($basePath.'Editor/Classes/Services/CacheService.php');
 require_once($basePath.'Editor/Classes/Services/TemplateService.php');
 

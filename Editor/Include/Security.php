@@ -8,7 +8,7 @@ session_start();
 date_default_timezone_set('Europe/Copenhagen');
 $basePath = substr(__FILE__, 0,strpos(__FILE__,'Editor'));
 
-require_once($basePath."Editor/Classes/InternalSession.php");
+require_once($basePath."Editor/Classes/Core/InternalSession.php");
 
 if ($_SESSION['core.debug.simulateLatency']) {
 	usleep(rand(1000000,2000000));
@@ -16,8 +16,8 @@ if ($_SESSION['core.debug.simulateLatency']) {
 
 // If not logged in
 if (!InternalSession::isLoggedIn()) {
-	require_once($basePath."Editor/Classes/Request.php");
-	require_once($basePath."Editor/Classes/Response.php");
+	require_once($basePath."Editor/Classes/Core/Request.php");
+	require_once($basePath."Editor/Classes/Core/Response.php");
 	if (Request::getHeader('Ajax')) {
 		Response::forbidden();
 	}
@@ -54,7 +54,7 @@ function __autoload($class_name) {
 	if (class_exists($class_name)) {
 		return;
 	}
-	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/','Model/','Network/','Interface/','Modules/News/','Modules/Images/','Modules/Links/','Modules/Graphs/','Formats');
+	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/','Core/','Model/','Network/','Interface/','Modules/News/','Modules/Images/','Modules/Links/','Modules/Graphs/','Formats/');
 	foreach ($folders as $folder) {
 		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';
 		if (file_exists($path)) {

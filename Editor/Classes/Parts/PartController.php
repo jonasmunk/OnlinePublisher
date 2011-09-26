@@ -10,8 +10,8 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Services/XslService.php');
 require_once($basePath.'Editor/Classes/Services/PartService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/PartContext.php');
-require_once($basePath.'Editor/Classes/SystemInfo.php');
+require_once($basePath.'Editor/Classes/Parts/PartContext.php');
+require_once($basePath.'Editor/Classes/Core/SystemInfo.php');
 
 class PartController
 {

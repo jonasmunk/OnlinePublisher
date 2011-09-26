@@ -1,10 +1,10 @@
 <?
 require_once '../../Config/Setup.php';
 require_once('../../Editor/Include/Public.php');
-require_once('../../Editor/Classes/Request.php');
-require_once('../../Editor/Classes/Response.php');
+require_once('../../Editor/Classes/Core/Request.php');
+require_once('../../Editor/Classes/Core/Response.php');
 require_once('../../Editor/Classes/Utilities/DateUtils.php');
-require_once('../../Editor/Classes/Model/Query.php');
+require_once('../../Editor/Classes/Core/Query.php');
 
 $number = Request::getInt('number');
 $year = DateUtils::getCurrentYear();

@@ -5,12 +5,12 @@
  */
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
-require_once '../../../Classes/Database.php';
-require_once '../../../Classes/Hierarchy.php';
-require_once '../../../Classes/Request.php';
+require_once '../../../Classes/Core/Database.php';
+require_once '../../../Classes/Model/Hierarchy.php';
+require_once '../../../Classes/Core/Request.php';
 require_once '../../../Classes/Services/RenderingService.php';
 require_once '../../../Classes/Services/PageService.php';
-require_once '../../../Classes/InternalSession.php';
+require_once '../../../Classes/Core/InternalSession.php';
 require_once '../../../Classes/Utilities/StringUtils.php';
 
 $id = Request::getInt('id',0);

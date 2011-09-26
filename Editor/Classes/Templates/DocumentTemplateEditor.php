@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/Database.php');
+require_once($basePath.'Editor/Classes/Core/Database.php');
 require_once($basePath.'Editor/Classes/Parts/Part.php');
 require_once($basePath.'Editor/Classes/Services/PartService.php');
 

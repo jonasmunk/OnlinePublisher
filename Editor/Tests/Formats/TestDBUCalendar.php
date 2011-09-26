@@ -23,7 +23,7 @@ class TestDBUCalendar extends UnitTestCase {
 		$calendar = DBUCalendarParser::parseUrl($url);
 		$this->assertTrue($calendar!=false);
 		$events = $calendar->getEvents();
-		Log::debug($calendar);
+		$this->assertEqual(count($events),30,'There must be 30 events');
     }
 }
 ?>

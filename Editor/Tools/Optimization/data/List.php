@@ -5,6 +5,7 @@
  */
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
+require_once '../../../Classes/Modules/Inspection/InspectionService.php';
 
 $kind = Request::getString('kind');
 
@@ -135,9 +136,8 @@ function listWarning() {
 	$writer->endHeaders();
 
 
-	$problems = InternalProblem::findProblems();
+	$problems = InspectionService::performInspection(array('status'=>'warning','category'=>'content'));
 	foreach ($problems as $problem) {
-		$title = $problem->getTitle();
 		$entity = $problem->getEntity();
 		$writer->startRow();
 		if ($entity) {
@@ -145,7 +145,7 @@ function listWarning() {
 		} else {
 			$writer->startCell()->endCell();
 		}
-		$writer->startCell(array('icon'=>'common/warning'))->text($title)->endCell();
+		$writer->startCell(array('icon'=>'common/warning'))->text($problem->getText())->endCell();
 		$writer->startCell()->endCell();
 		$writer->endRow();
 	}

@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Objects/Image.php');
 require_once($basePath.'Editor/Classes/Objects/Imagegroup.php');
-require_once($basePath.'Editor/Classes/EventManager.php');
+require_once($basePath.'Editor/Classes/Services/EventService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class ImageService {
@@ -42,7 +42,7 @@ class ImageService {
 
 			$sql="insert into imagegroup_image (image_id, imagegroup_id) values (".$imageId.",".$groupId.")";
 			Database::insert($sql);
-			EventManager::fireEvent('relation_change','object','imagegroup',$groupId);
+			EventService::fireEvent('relation_change','object','imagegroup',$groupId);
 		}
 	}
 	

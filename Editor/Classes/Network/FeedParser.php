@@ -7,7 +7,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Log.php');
+require_once($basePath.'Editor/Classes/Core/Log.php');
 require_once($basePath.'Editor/Classes/Network/Feed.php');
 require_once($basePath.'Editor/Classes/Network/FeedItem.php');
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');

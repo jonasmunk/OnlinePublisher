@@ -7,8 +7,8 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Database.php');
-require_once($basePath.'Editor/Classes/EventManager.php');
+require_once($basePath.'Editor/Classes/Core/Database.php');
+require_once($basePath.'Editor/Classes/Services/EventService.php');
 
 class HierarchyService {
 	    	
@@ -165,7 +165,7 @@ class HierarchyService {
         $sql="update hierarchy set changed=now() where id=".Database::int($hierarchyId);
         Database::update($sql);
 	
-		EventManager::fireEvent('update','hierarchy',null,$hierarchyId);
+		EventService::fireEvent('update','hierarchy',null,$hierarchyId);
         return $hierarchyId;
     }
 	
