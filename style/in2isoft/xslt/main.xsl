@@ -30,7 +30,7 @@
 		<!--
 		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		-->
-		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		<meta name="google-site-verification" content="WMeBqZoNf7fYYk8Yvu8p05cFXnskJt1_Y6SJtXE-Ym0" />
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:style"/>
@@ -59,9 +59,11 @@
 				<div class="layout_body">
 					<xsl:if test="//p:page/@id=//p:context/p:home/@page">
 						<div id="poster">
+							<div id="poster_body">
 							<div id="poster_loader">0%</div>
 							<div class="left" id="poster_left"><div id="poster_inner_left"><xsl:comment/></div></div>
 							<div class="right" id="poster_right"><div id="poster_inner_right"><xsl:comment/></div></div>
+							</div>
 						</div>
 						<script type="text/javascript" src="{$path}style/{$design}/js/Poster.js"><xsl:comment/></script>
 					</xsl:if>

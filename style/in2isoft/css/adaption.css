@@ -1,8 +1,15 @@
-@media only screen and (device-width: 768px) and (orientation: landscape) {
-	div.layout_middle
+
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+
+	body span.hui_searchfield input 
 	{
-		background: red;
+		-webkit-appearance: caret;
 	}
+}
+
+@media all and (orientation:landscape) and (min-device-width: 768px) and (max-device-width: 1024px) {
+
 }
 
 @media screen and (max-width: 990px) {
@@ -10,12 +17,12 @@
 	div.layout
 	{
 		width: 100%;
-		background: red;
 	}
 	
 	div.layout_middle
 	{
 		box-shadow: none;
+		-webkit-box-shadow: none;
 		border-top: 1px solid #eee;
 		border-bottom: 1px solid #ddd;
 		border-radius: 0;
@@ -36,9 +43,9 @@
 	div.layout_info
 	{
 		margin: 0;
-		/*border-top: 1px solid #eee;*/
 		border-bottom: 1px solid #eee;
 		box-shadow: none;
+		-webkit-box-shadow: none;
 	}
 	
 	div.layout_info div.about
@@ -47,7 +54,29 @@
 	
 	#poster
 	{
-		display: none;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 880px) {
+	ul.layout_placards li.onlineme span
+	{
+		background-position: -20px -309px ;
+	}
+
+	ul.layout_placards li.onlinepublisher span
+	{
+		background-position: -20px -19px ;
+	}
+
+	ul.layout_placards li.onlineobjects span
+	{
+		background-position: -20px -159px ;
+	}
+
+	ul.layout_placards span
+	{
+		padding-left: 130px;
 	}
 }
 
@@ -55,19 +84,29 @@
 	
 	ul.layout_navigation li a
 	{
-		font-size: 14px;
-		margin-right: 2px;
+		font-size: 15px;
+		margin-right: 0px;
+	}
+	
+	ul.layout_navigation li a span
+	{
+		padding: 0 7px;
 	}
 	
 	ul.layout_sub_navigation li a
 	{
-		font-size: 10px;
 		margin-right: 2px;
 	}
 	
 	div.layout_inner_content
 	{
 		padding: 10px;
+	}
+
+	ul.layout_placards span
+	{
+		font-size: 14px;
+		line-height: 16px;
 	}
 }
 
@@ -77,6 +116,26 @@
 		font-size: 22px;
 	}
 	
+	h2.part_header
+	{
+		font-size: 18px;
+	}
+	
+	h3.part_header
+	{
+		font-size: 14px;
+	}
+
+	h4.part_header
+	{
+		font-size: 12px;
+	}
+	
+	h5.part_header, h6.part_header
+	{
+		font-size: 12px;
+	}
+
 	ul.layout_navigation li a
 	{
 		font-size: 12px;

@@ -6,7 +6,17 @@
 	height: 310px;
 	background: url('../gfx/poster_bg.png');
 	cursor: pointer;
+	overflow: hidden;
 }
+
+#poster_body
+{
+	width: 990px;
+	position: relative;
+	left: 50%;
+	margin-left: -495px;
+}
+
 #poster .left
 {
 	float: left;
@@ -116,7 +126,7 @@ ul.layout_placards strong
 	font-size: 24px;
 	font-weight: normal;
 	color: #89a;
-	padding: 10px 20px;
+	padding: 10px 10px;
 }
 
 ul.layout_placards em
