@@ -31,15 +31,20 @@ hui.ui.SearchField.prototype = {
 		hui.listen(this.field,'keyup',this.onKeyUp.bind(this));
 		var reset = hui.firstByTag(this.element,'a');
 		reset.tabIndex=-1;
-		var focus = function() {self.field.focus();self.field.select()};
-		hui.listen(this.element,'mousedown',focus);
-		hui.listen(this.element,'mouseup',focus);
+		if (!hui.browser.ipad) {
+			var focus = function() {self.field.focus();self.field.select()};
+			hui.listen(this.element,'mousedown',focus);
+			hui.listen(this.element,'mouseup',focus);
+			hui.listen(hui.firstByTag(this.element,'em'),'mousedown',focus);
+		} else {
+			var focus = function() {self.field.focus();};
+			hui.listen(hui.firstByTag(this.element,'em'),'click',focus);
+		}
 		hui.listen(reset,'mousedown',function(e) {
 			hui.stop(e);
 			self.reset();
 			focus()
 		});
-		hui.listen(hui.firstByTag(this.element,'em'),'mousedown',focus);
 		hui.listen(this.field,'focus',function() {
 			self.focused=true;
 			self.updateClass();
