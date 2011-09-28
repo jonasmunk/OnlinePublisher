@@ -31,19 +31,19 @@ foreach ($links as $link) {
 			startLine()->startWrap()->text($link->getTargetTitle())->endWrap();
 		if ($link->getTargetType()=='page') {
 			$writer->startIcons();
-			$writer->icon(array('icon' => 'monochrome/info_light','data' => array('action' => 'pageInfo', 'id' => $link->getTargetId()),'revealing' => true));
-			$writer->icon(array('icon' => 'monochrome/edit','data' => array('action' => 'editPage', 'id' => $link->getTargetId()),'revealing' => true));
-			$writer->icon(array('icon' => 'monochrome/view','data' => array('action' => 'viewPage', 'id' => $link->getTargetId()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/info_light','action'=>'true','data' => array('action' => 'pageInfo', 'id' => $link->getTargetId()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/edit','action'=>'true','data' => array('action' => 'editPage', 'id' => $link->getTargetId()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/view','action'=>'true','data' => array('action' => 'viewPage', 'id' => $link->getTargetId()),'revealing' => true));
 			$writer->endIcons();
 		}
 		else if ($link->getTargetType()=='file') {
 			$writer->startIcons();
-			$writer->icon(array('icon' => 'monochrome/info_light','data' => array('action' => 'fileInfo', 'id' => $link->getTargetId()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/info_light','action'=>'true','data' => array('action' => 'fileInfo', 'id' => $link->getTargetId()),'revealing' => true));
 			$writer->endIcons();
 		}
 		else if ($link->getTargetType()=='url') {
 			$writer->startIcons();
-			$writer->icon(array('icon' => 'monochrome/arrow_right_light','data' => array('action' => 'visitUrl', 'url' => $link->getTargetValue()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/arrow_right_light','action'=>'true','data' => array('action' => 'visitUrl', 'url' => $link->getTargetValue()),'revealing' => true));
 			$writer->endIcons();
 		}
 		$writer->endLine()->
@@ -51,7 +51,7 @@ foreach ($links as $link) {
 		endCell()->
 		startCell()->
 			startIcons()->
-			icon(array('icon' => 'monochrome/delete','data' => array('action' => 'deleteLink'),'revealing' => true))->
+			icon(array('icon' => 'monochrome/delete','action'=>'true','data' => array('action' => 'deleteLink'),'revealing' => true))->
 			endIcons()->
 		endCell()->
 	endRow();

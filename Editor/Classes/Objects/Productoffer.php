@@ -102,7 +102,7 @@ class ProductOffer extends Object {
 			$parts['ordering'].=' asc';
 		}
 		
-		$list = parent::_find($parts,$query);
+		$list = ObjectService::_find($parts,$query);
 		$list['result'] = array();
 		foreach ($list['rows'] as $row) {
 			$list['result'][] = ProductOffer::load($row['id']);

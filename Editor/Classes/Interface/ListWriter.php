@@ -179,6 +179,9 @@ class ListWriter {
 		if ($options['revealing']) {
 			echo ' revealing="true"';
 		}
+		if ($options['action']) {
+			echo ' action="true"';
+		}
 		if (isset($options['hint'])) {
 			echo ' hint="'.StringUtils::escapeXML($options['hint']).'"';
 		}

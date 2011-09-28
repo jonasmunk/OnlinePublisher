@@ -84,10 +84,10 @@ and review_user.to_type='object' and review_user.to_object_id=user.id";
 			endCell()->
 			startCell()->
 				startIcons()->
-					icon(array('icon'=>'monochrome/info','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['page_id'])))->
-					icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['page_id'])))->
-					icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['page_id'])))->
-					icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['page_id'])))->
+					icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['page_id'])))->
+					icon(array('icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editPage','id'=>$row['page_id'])))->
+					icon(array('icon'=>'monochrome/view','revealing'=>true,'action'=>true,'data'=>array('action'=>'viewPage','id'=>$row['page_id'])))->
+					icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'action'=>true,'data'=>array('action'=>'previewPage','id'=>$row['page_id'])))->
 				endIcons()->
 			endCell();
 			if ($row['user_title']) {
@@ -140,10 +140,10 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 						$writer->text($row['pagetitle']);
 					}
 					$writer->startIcons()->
-						icon(array('icon'=>'monochrome/info','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
-						icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['pageid'])))->
-						icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['pageid'])))->
-						icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['pageid'])))->
+						icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
+						icon(array('icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editPage','id'=>$row['pageid'])))->
+						icon(array('icon'=>'monochrome/view','revealing'=>true,'action'=>true,'data'=>array('action'=>'viewPage','id'=>$row['pageid'])))->
+						icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'action'=>true,'data'=>array('action'=>'previewPage','id'=>$row['pageid'])))->
 					endIcons()->
 				endCell();
 			}
@@ -166,8 +166,8 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		startCell()->startLine(array('dimmed'=>true))->startWrap()->text($row['page_path'])->endWrap()->endLine()->endCell()->
 		startCell(array('wrap'=>false))->
 		startIcons()->
-			icon(array('icon'=>'monochrome/round_arrow_up','revealing'=>true,'data'=>array('action'=>'moveItem','direction'=>'up')))->
-			icon(array('icon'=>'monochrome/round_arrow_down','revealing'=>true,'data'=>array('action'=>'moveItem','direction'=>'down')))->
+			icon(array('icon'=>'monochrome/round_arrow_up','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'up')))->
+			icon(array('icon'=>'monochrome/round_arrow_down','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'down')))->
 		endIcons()->
 		endCell()->
 		endRow();
@@ -229,10 +229,10 @@ function listPages() {
 		$writer->endCell()->
 			startCell()->
 			startIcons()->
-				icon(array('icon'=>'monochrome/info','revealing'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['id'])))->
-				icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editPage','id'=>$row['id'])))->
-				icon(array('icon'=>'monochrome/view','revealing'=>true,'data'=>array('action'=>'viewPage','id'=>$row['id'])))->
-				icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'data'=>array('action'=>'previewPage','id'=>$row['id'])));
+				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['id'])))->
+				icon(array('icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editPage','id'=>$row['id'])))->
+				icon(array('icon'=>'monochrome/view','revealing'=>true,'action'=>true,'data'=>array('action'=>'viewPage','id'=>$row['id'])))->
+				icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'action'=>true,'data'=>array('action'=>'previewPage','id'=>$row['id'])));
 		if (!$row['searchable']) {
 			$writer->icon(array('icon'=>'monochrome/nosearch'));
 		}

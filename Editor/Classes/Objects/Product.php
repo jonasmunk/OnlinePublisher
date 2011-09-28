@@ -211,7 +211,7 @@ class Product extends Object {
 		if (isset($query['productgroup'])) {
 			$parts['limits'] .= " and productgroup_product.product_id = object.id and productgroup_product.productgroup_id=".$query['productgroup'];
 		}
-		$list = parent::_find($parts,$query);
+		$list = ObjectService::_find($parts,$query);
 		$list['result'] = array();
 		foreach ($list['rows'] as $row) {
 			$list['result'][] = Product::load($row['id']);

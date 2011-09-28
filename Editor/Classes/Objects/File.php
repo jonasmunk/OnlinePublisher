@@ -135,7 +135,7 @@ class File extends Object {
 		if ($query['sort']=='title') {
 			$parts['ordering']="object.title";
 		}
-		$list = parent::_find($parts,$query);
+		$list = ObjectService::_find($parts,$query);
 		$list['result'] = array();
 		foreach ($list['rows'] as $row) {
 			$list['result'][] = File::load($row['id']);
