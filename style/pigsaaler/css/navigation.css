@@ -13,7 +13,7 @@ ul.case_navigation
 	position: absolute;
 	left: 50%;
 	text-align: right;
-	top: 30px;
+	top: 56px;
 	width: 900px;
 	margin-left: -450px;
 }
@@ -28,7 +28,7 @@ ul.case_navigation li
 ul.case_navigation li a
 {
 	text-decoration: none;
-	font-size: 12pt;
+	font-size: 10pt;
 	height: 37px;
 	cursor: pointer;
 	display: inline-block;
