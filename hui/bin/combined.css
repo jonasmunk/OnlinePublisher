@@ -2498,7 +2498,7 @@ div.hui_list table tbody tr:hover
 	cursor: pointer;
 }
 
-div.hui_list tr:hover .hui_icon_16
+/*div.hui_list tr:hover .hui_icon_16
 {
 	background-position: 0px -16px;
 }
@@ -2506,9 +2506,9 @@ div.hui_list tr:hover .hui_icon_16
 div.hui_list tr:hover span.hui_list_icons .hui_icon_16
 {
 	background-position: 0px 0px;
-}
+}*/
 
-div.hui_list tr:hover span.hui_list_icons .hui_icon_16:hover
+.hui_list_icon_action:hover
 {
 	background-position: 0px -16px;
 }

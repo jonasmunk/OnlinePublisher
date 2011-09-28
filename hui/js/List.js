@@ -398,16 +398,18 @@ hui.ui.List.prototype = {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
 				var icon = hui.ui.createIcon(child.getAttribute('icon'),16);
-				var data = child.getAttribute('data');
 				if (child.getAttribute('hint')) {
 					icon.setAttribute('title',child.getAttribute('hint'));
 				}
+				if (child.getAttribute('action')=='true') {
+					hui.addClass(icon,'hui_list_icon_action');
+				}
+				var data = child.getAttribute('data');
 				if (data) {
 					icon.setAttribute('data',data);
-					hui.addClass(icon,'hui_list_action');
-					if (child.getAttribute('revealing')==='true') {
-						hui.addClass(icon,'hui_list_revealing');
-					}
+				}
+				if (child.getAttribute('revealing')==='true') {
+					hui.addClass(icon,'hui_list_revealing');
 				}
 				cell.appendChild(icon);
 			} else if (hui.dom.isElement(child,'line')) {
@@ -647,7 +649,7 @@ hui.ui.List.prototype = {
 		row.onmousedown = function(e) {
 			if (self.busy) {return};
 			var event = hui.event(e);
-			var action = event.findByClass('hui_list_action');
+			var action = event.findByClass('hui_list_icon_action');
 			if (!action) {
 				self._rowDown(index);
 				hui.ui.startDrag(e,row);
@@ -684,7 +686,7 @@ hui.ui.List.prototype = {
 	},
 	_rowClick : function(index,e) {
 		e = hui.event(e);
-		var a = e.findByClass('hui_list_action');
+		var a = e.findByClass('hui_list_icon_action');
 		if (a) {
 			var data = a.getAttribute('data');
 			if (data) {
@@ -697,7 +699,7 @@ hui.ui.List.prototype = {
 	},
 	_rowDoubleClick : function(index,e) {
 		e = hui.event(e);
-		if (!e.findByClass('hui_list_action')) {
+		if (!e.findByClass('hui_list_icon_action')) {
 			var row = this.getFirstSelection();
 			if (row) {
 				this.fire('listRowWasOpened',row);

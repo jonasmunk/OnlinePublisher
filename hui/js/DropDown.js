@@ -225,7 +225,7 @@ hui.ui.DropDown.prototype = {
 		}
 		var self = this;
 		hui.each(this.items,function(item,i) {
-			var e = hui.build('a',{href:'#',text:item.label || item.title});
+			var e = hui.build('a',{href:'javascript://',text:item.label || item.title});
 			hui.listen(e,'mousedown',function(e) {
 				hui.stop(e);
 				self._itemClicked(item,i);

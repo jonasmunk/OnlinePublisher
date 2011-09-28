@@ -167,7 +167,7 @@ hui.ui.Checkboxes.Items.prototype = {
 		this.element.innerHTML='';
 		var self = this;
 		hui.each(items,function(item) {
-			var node = hui.build('a',{'class':'hui_checkbox',href:'#',html:'<span><span></span></span>'+item.title});
+			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript://',html:'<span><span></span></span>'+item.title});
 			hui.listen(node,'click',function(e) {
 				hui.stop(e);
 				node.focus();

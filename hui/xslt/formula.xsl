@@ -283,7 +283,7 @@
 </xsl:template>
 
 <xsl:template name="gui:dropdown" match="gui:dropdown">
-	<a id="{generate-id()}" href="#">
+	<a id="{generate-id()}" href="javascript://">
 		<xsl:if test="@width">
 			<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
 		</xsl:if>
@@ -375,7 +375,7 @@
 </xsl:template>
 
 <xsl:template name="gui:checkbox"  match="gui:checkbox">
-	<a id="{generate-id()}" href="#">
+	<a id="{generate-id()}" href="javascript://">
 		<xsl:attribute name="class">
 			<xsl:text>hui_checkbox</xsl:text>
 			<xsl:if test="@value='true'"> hui_checkbox_selected</xsl:if>
@@ -488,7 +488,7 @@
 </xsl:template>
 
 <xsl:template match="gui:button" name="gui:button">
-	<a id="{generate-id()}" href="#">
+	<a id="{generate-id()}" href="javascript://">
 		<xsl:attribute name="class">
 			hui_button
 			<xsl:if test="@variant">
