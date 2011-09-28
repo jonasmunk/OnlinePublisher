@@ -368,37 +368,41 @@ ul.layout_side_navigation ul
 
 div.layout_info
 {
-	padding-top: 10px;
 }
 
 div.layout_info h2
 {
-	margin: 0px 0px 10px;
+	margin: 0px 20px 10px 20px;
 	height: 26px;
 	text-indent: -1000px;
 	background: url('../gfx/headers.png') no-repeat;
 }
 
+div.layout_info p
+{
+	margin: 0 20px;
+}
+
 div.layout_info div.about
 {
 	float: left;
-	width: 560px;
-	padding: 10px 20px;
+	width: 66.4%;
+	padding: 20px 0;
 }
 
 div.layout_info div.about p
 {
 	font-size: 11pt;
 	line-height: 16pt;
-	margin: 11px 0 0;
+	margin-top: 11px;
 	color: #999;
 }
 
 div.layout_info div.contact
 {
 	float: left;
-	width: 260px;
-	padding: 10px 20px;
+	width: 33%;
+	padding: 20px 0;
 }
 
 div.layout_info div.contact h2
@@ -408,7 +412,6 @@ div.layout_info div.contact h2
 
 div.layout_info div.contact p
 {
-	margin: 0px 0px;
 	font-size: 9pt;
 	color: #666;
 	line-height: 16pt;
@@ -450,86 +453,6 @@ div.layout_info:hover a span
 div.layout_info:hover div.contact p.name
 {
 	color: #333;
-}
-
-/********************** Poster *********************/
-
-#poster
-{
-	width: 990px;
-	height: 310px;
-	background: url('../gfx/poster_bg.png');
-	cursor: pointer;
-}
-#poster .left
-{
-	float: left;
-	height: 310px;
-	width: 495px;
-	overflow: hidden;
-}
-
-#poster .right
-{
-	float: left;
-	height: 310px;
-	width: 495px;
-	overflow: hidden;
-}
-
-#poster .left div
-{
-	width: 990px;
-	height: 310px;
-	background: 245px 0px no-repeat;
-}
-#poster .right div
-{
-	width: 990px;
-	height: 310px;
-	background: 495px 0px no-repeat;
-}
-
-#poster_loader
-{
-	background: #000;
-	color:#FFFFFF;
-	left: 50%;
-	margin-left: -25px;
-	padding: 2px 5px;
-	position: absolute;
-	text-align: center;
-	top: 200px;
-	width: 50px;
-}
-
-/********************** Pacards ********************/
-
-div.layout_placards
-{
-	overflow: hidden;
-	height: 170px;
-	border-top: 1px solid #ddd;
-	padding-top: 15px;
-}
-
-a.layout_placard
-{
-	margin-left: 13px;
-	float: left;
-	width: 312px;
-	height: 164px;
-	background: url('../gfx/placards.png');
-}
-
-a.layout_placard_center
-{
-	background-position: left -164px;
-}
-
-a.layout_placard_right
-{
-	background-position: left -328px;
 }
 
 
@@ -619,89 +542,4 @@ p.layout_news_links
 	font-size: 8pt;
 	margin-top: 3px;
 	margin: 0;
-}
-
-
-
-
-@media screen and (max-width: 990px) {
-	
-	div.layout
-	{
-		width: 100%;
-	}
-	
-	div.layout_middle
-	{
-		box-shadow: none;
-		border-top: 1px solid #eee;
-		margin-top: -1px;
-	}
-	
-	div.document
-	{
-		overflow: hidden;
-	}
-	
-	form.search
-	{
-		position: absolute;
-		right: 5px;
-	}
-	
-	div.layout_info
-	{
-		margin: 0;
-		border-top: 1px solid #eee;
-		border-bottom: 1px solid #eee;
-		box-shadow: none;
-	}
-}
-
-@media screen and (max-width: 800px) {	
-	
-	ul.layout_navigation li a
-	{
-		font-size: 14px;
-		margin-right: 2px;
-	}
-	
-	ul.layout_sub_navigation li a
-	{
-		font-size: 10px;
-		margin-right: 2px;
-	}
-	
-	div.layout_inner_content
-	{
-		padding: 10px;
-	}
-}
-
-@media screen and (max-width: 700px) {	
-	h1.part_header
-	{
-		font-size: 22px;
-	}
-	
-	ul.layout_navigation li a
-	{
-		font-size: 12px;
-		margin-right: 2px;
-	}
-	
-	div.part_text
-	{
-		font-size: 10px;
-	}
-	
-	div.layout_sidebar
-	{
-		width: 149px;
-	}
-	
-	div.layout_content_sidebar div.layout_inner_content
-	{
-		margin-right: 150px;
-	}
 }

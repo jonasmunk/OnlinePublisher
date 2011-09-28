@@ -27,6 +27,10 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</title>
+		<!--
+		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+		-->
+		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		<meta name="google-site-verification" content="WMeBqZoNf7fYYk8Yvu8p05cFXnskJt1_Y6SJtXE-Ym0" />
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:style"/>
@@ -69,12 +73,18 @@
 								<a class="layout_placard layout_placard_center" href="{$path}produkter/onlineobjects/"><xsl:comment/></a>
 								<a class="layout_placard layout_placard_right" href="{$path}produkter/onlineme/"><xsl:comment/></a>
 							</div>
+							<ul class="layout_placards">
+								<li class="onlinepublisher">
+									<a href="{$path}produkter/onlinepublisher/"><strong>Online<em>Publisher</em></strong> - <span>Simpelt værktøj til opbygning og redigering af hjemmesider</span></a>
+								</li>
+								<li class="onlineobjects">
+									<a href="{$path}produkter/onlineobjects/"><strong>Online<em>Objects</em></strong> - <span>Fleksibelt grundsystem til web-applikationer</span></a>
+								</li>
+								<li class="onlineme">
+									<a href="{$path}produkter/onlineme/"><strong>Online<em>Me</em></strong> - <span>Byg en personlig hjemmeside i 2 skridt</span></a>
+								</li>
+							</ul>
 						</xsl:when>
-						<xsl:otherwise>
-							<div class="layout_box_foot">
-								<xsl:comment/>
-							</div>
-						</xsl:otherwise>
 					</xsl:choose>
 				</div>
 			</div>
