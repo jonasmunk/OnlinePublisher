@@ -35,6 +35,7 @@
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:style"/>
 		<xsl:call-template name="util:style-ie6"/>
+		<xsl:call-template name="util:style-lt-ie9"/>
 		<xsl:call-template name="util:scripts"/>
 	</head>
 	<body>
@@ -182,21 +183,17 @@
 <xsl:template match="h:hierarchy/h:item">
 	<xsl:if test="not(@hidden='true')">
 		<li>
+			<xsl:attribute name="class">
 			<xsl:choose>
-				<xsl:when test="position()>1 and //p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
-				<xsl:when test="position()>1 anddescendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
-				<xsl:when test="position()>1"><xsl:attribute name="class">normal</xsl:attribute></xsl:when>
+				<xsl:when test="position()>1 and //p:page/@id=@page">selected</xsl:when>
+				<xsl:when test="position()>1 and descendant-or-self::*/@page=//p:page/@id">highlighted</xsl:when>
+				<xsl:when test="position()=1">first</xsl:when>
+				<xsl:otherwise>normal</xsl:otherwise>
 			</xsl:choose>
+			</xsl:attribute>
 			<a>
 				<xsl:call-template name="util:link"/>
-				<xsl:choose>
-					<xsl:when test="position()=1">
-						<img src="{$path}style/{$design}/gfx/logo.png" alt="In2iSoft"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<span><xsl:value-of select="@title"/></span>
-					</xsl:otherwise>
-				</xsl:choose>
+				<span><xsl:value-of select="@title"/></span>
 			</a>
 		</li>
 	</xsl:if>

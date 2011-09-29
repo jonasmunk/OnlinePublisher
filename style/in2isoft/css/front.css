@@ -103,7 +103,7 @@ ul.layout_placards
 ul.layout_placards li
 {
 	float: left;
-	width: 33.33333%;
+	width: 33.333333333%;
 	font-size: 0;
 }
 
@@ -115,9 +115,9 @@ ul.layout_placards a
 	color: #333;
 }
 
-ul.layout_placards a:hover strong
+ul.layout_placards a:hover
 {
-	color: #456;
+	background: #f0f0f3;
 }
 
 ul.layout_placards strong
@@ -152,15 +152,15 @@ ul.layout_placards li.onlineme a
 
 ul.layout_placards li.onlineme span
 {
-	background: url('../gfx/sprite.png') left -309px ;
+	background: url('../gfx/graphics.png') -44px -415px;
 }
 
 ul.layout_placards li.onlinepublisher span
 {
-	background: url('../gfx/sprite.png') 0 -19px ;
+	background: url('../gfx/graphics.png') -44px -34px;
 }
 
 ul.layout_placards li.onlineobjects span
 {
-	background: url('../gfx/sprite.png') left -159px ;
+	background: url('../gfx/graphics.png') -44px -207px;
 }

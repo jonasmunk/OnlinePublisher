@@ -178,8 +178,14 @@
 </xsl:template>
 
 <xsl:template name="util:style-ie8">
-	<xsl:comment><![CDATA[[if gt IE 7]>
+	<xsl:comment><![CDATA[[if IE 8]>
 		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
+	<![endif]]]></xsl:comment>
+</xsl:template>
+
+<xsl:template name="util:style-lt-ie9">
+	<xsl:comment><![CDATA[[if lt IE 9]>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link>
 	<![endif]]]></xsl:comment>
 </xsl:template>
 

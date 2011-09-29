@@ -1,30 +1,3 @@
-div.layout_box_body, div.layout_head
-{
-	zoom: 1;
-}
-
-form.search div
-{
-	float: right;
-}
-
-form.search
-{
-	width: 140px;
-	margin-right: 5px;
-	margin-top: 10px;
-}
-
-div.layout_box_top, div.layout_box_top div, div.layout_box_bottom, div.layout_box_bottom div
-{
-	background-image: url('../gfx/layout_box.gif');
-}
-
-div.layout_box_middle, div.layout_box_middle div.layout_box_middle
-{
-	background-image: url('../gfx/layout_box_middle.gif');
-}
-
 div.part_imagegallery
 {
 	zoom: 1;
