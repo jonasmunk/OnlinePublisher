@@ -8,6 +8,8 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
+require_once($basePath.'Editor/Classes/Formats/HtmlTableParser.php');
+
 class DBUCalendarParser {
 
 	function parseURL($url) {
@@ -43,7 +45,7 @@ class DBUCalendarParser {
 			
 			$event = new DBUCalendarEvent();
 			$event->setStartDate($startDate);
-			$event->setEndDate($startDate);
+			$event->setEndDate($endDate);
 			$event->setHomeTeam($home);
 			$event->setGuestTeam($away);
 			$event->setLocation($location);
