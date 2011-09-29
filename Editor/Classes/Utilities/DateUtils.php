@@ -37,6 +37,17 @@ class DateUtils {
 		if (preg_match("/([0-9]{2})[-\/\.]([0-9]{2})[-\/\.]([0-9]{4})/mi",$str, $matches)) {
 			return mktime( 0,0, 0, $matches[2],$matches[1], $matches[3]);
 		}
+		else if (preg_match("/([0-9]{4})[-\/\.]([0-9]{2})[-\/\.]([0-9]{2})/mi",$str, $matches)) {
+			return mktime( 0,0, 0, $matches[2],$matches[3], $matches[1]);
+		}
+		return null;
+	}
+	
+		/** The goal of this method is to parse anything */
+	function parseDDMMYY($str) {
+		if (preg_match("/([0-9]{2})[-\/\.]([0-9]{2})[-\/\.]([0-9]{2})/mi",$str, $matches)) {
+			return mktime( 0,0, 0, $matches[2],$matches[1], intval($matches[3])+2000);
+		}
 		return null;
 	}
 	
@@ -232,7 +243,6 @@ class DateUtils {
 		$date = date('j',$timestamp);
 		return mktime(0,0,0,$month,$date,$year);
 	}
-
 	
 	function addSeconds($timestamp,$secs) {
 		$hours = date('H',$timestamp);
@@ -242,6 +252,26 @@ class DateUtils {
 		$month = date('n',$timestamp);
 		$date = date('j',$timestamp);
 		return mktime($hours,$minutes,$seconds+$secs,$month,$date,$year);
+	}
+	
+	function addMinutes($timestamp,$mins) {
+		$hours = date('H',$timestamp);
+		$minutes = date('i',$timestamp);
+		$seconds = date('s',$timestamp);
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime($hours,$minutes+$mins,$seconds,$month,$date,$year);
+	}
+	
+	function addHours($timestamp,$hrs) {
+		$hours = date('H',$timestamp);
+		$minutes = date('i',$timestamp);
+		$seconds = date('s',$timestamp);
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime($hours+$hrs,$minutes,$seconds,$month,$date,$year);
 	}
 	
 	function addDays($timestamp,$days) {

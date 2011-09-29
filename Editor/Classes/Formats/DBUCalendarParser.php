@@ -17,6 +17,43 @@ class DBUCalendarParser {
 		}
 		$cal = new DBUCalendar();
 		
+		$table = HtmlTableParser::parseUsingHeader($string);
+		$first = $table[0];
+		foreach ($first as $row) {
+			$date = $row['Dato'];
+			$time = $row['Kl.'];
+			$home = $row['Hjemmehold'];
+			$away = $row['Udehold'];
+			$location = $row['Spillested'];
+			$score = $row['Res'];
+			
+			if (StringUtils::isBlank($date) || StringUtils::isBlank($time)) {
+				continue;
+			}
+			$parts = preg_split('/:/',$time);
+			$parsed = DateUtils::parseDDMMYY($date);
+			if (!$parsed) {
+				$parsed = DateUtils::parse($date);
+			}
+			$parsed = DateUtils::addHours($parsed,intval($parts[0]));
+			$startDate = DateUtils::addMinutes($parsed,intval($parts[1]));
+			$endDate = DateUtils::addMinutes($parsed,60*1.75);
+			
+			Log::debug(print_r($row,true).' : '.DateUtils::formatLongDateTime($startDate).' > '.DateUtils::formatLongDateTime($endDate));
+			
+			$event = new DBUCalendarEvent();
+			$event->setStartDate($startDate);
+			$event->setEndDate($startDate);
+			$event->setHomeTeam($home);
+			$event->setGuestTeam($away);
+			$event->setLocation($location);
+			$event->setScore($score);
+			$cal->addEvent($event);
+
+		}
+		return $cal;
+		
+		
 		//$reg = '/<tr><td[^>]*>[0-9]+<\/td><td[^>]*>[^<]{3}<\/td><td>([0-9]{4})-([0-9]{2})-([0-9]{2})<\/td><td>([0-9]{2}):([0-9]{2})<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td>/i';
 		$reg = '/<tr><td[^>]*>[0-9]+<\/td><td[^>]*>[^<]*<\/td><td[^>]*>[^<]*<\/td><td[^>]*>([0-9]{4})-([0-9]{2})-([0-9]{2})<\/td><td[^>]*>([0-9]{2}):([0-9]{2})<\/td><td[^>]*>([^<]+)<\/td><td[^>]*>([^<]*)<\/td><td[^>]*>([^<]*)<\/td><td[^>]*>([^<]*)<\/td>/i';
 		//$reg = '/<tr><td[^>]*>[0-9]+<\/td><td[^>]*>[^<]*<\/td><td[^>]*>[^<]*<\/td><td[^>]*>([0-9]{4})-([0-9]{2})-([0-9]{2})<\/td><td>([0-9]{2}):([0-9]{2})<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td><td>([^<]+)<\/td>/i';

@@ -312,7 +312,7 @@ class StringUtils {
 			$to = strpos($str,$stop,$from+strlen($start));
 			if ($to!==false) {
 				$to+=strlen($stop);
-				Log::debug('From '.$from.' to '.$to);
+				//Log::debug('From '.$from.' to '.$to);
 				$extracted[] = substr($str,$from,$to-$from);
 				$pos = $to;
 			} else {
