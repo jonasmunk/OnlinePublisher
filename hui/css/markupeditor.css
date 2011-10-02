@@ -6,3 +6,9 @@ div.hui_markupeditor
 	outline: none;
 	cursor: text;
 }
+
+.hui_markupeditor_highlighted
+{
+	box-shadow: 0 0 5px #abf, 0 0 5px #abf;
+	border-radius: 3px;
+}

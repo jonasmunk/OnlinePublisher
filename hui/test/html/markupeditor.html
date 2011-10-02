@@ -3,10 +3,11 @@
 <head>
 	<title>HUI</title>
 	<!--<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />-->
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/markupeditor.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/button.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dropdown.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/bar.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/formula.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/colorpicker.css" rel="stylesheet" />
@@ -22,6 +23,8 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Formula.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/DropDown.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/MarkupEditor.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ColorPicker.js"></script>
 	<script type="text/javascript" charset="utf-8">
@@ -32,9 +35,75 @@
 
 <body>
 <script type="text/javascript" charset="utf-8">
+	hui.ui.listen({
+		$valueChanged$linkAddress : function() {
+			hui.ui.get('linkPage').reset();
+		},
+		$valueChanged$linkPage : function() {
+			hui.ui.get('linkAddress').reset();
+		},
+		
+		$click$setMarkup : function() {
+			var editor = hui.ui.get('markupEditor');
+			editor.setValue('<h1>New value</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>');
+			editor.focus();
+		}
+	});
+
 	hui.ui.onReady(function() {
+		var linkForm;
+		var linkDelegate = {
+			editLink : function(options) {
+				this.options = options;
+				linkForm.reset();
+				var node = options.node;
+				var info = hui.fromJSON(node.getAttribute('data'));
+				if (info) {
+					linkForm.setValues(info);
+				}
+				linkEditor.show();
+			},
+			$submit : function() {
+				this.options.node.setAttribute('data',hui.toJSON(linkForm.getValues()));
+				linkForm.reset();
+				linkEditor.hide();
+				this.options.onSuccess();
+			},
+			$userClosedWindow : function() {
+				this.options.onCancel();
+			}
+		}
+		
+		
+		var linkEditor = hui.ui.Window.create({padding:5,width:300});
+		var linkForm = hui.ui.Formula.create();
+		linkEditor.add(linkForm);
+		var group = linkForm.buildGroup({},[
+			{type : 'TextField', options:{key:'url',label:'Address:',name:'linkAddress'}},
+			{type : 'DropDown', options:{
+				name : 'linkPage',
+				label:'Page:',
+				key:'page',
+				items:[
+					{value:1,text:'Front page'},
+					{value:2,text:'Search page'},
+					{value:3,text:'Overview'}
+				]
+			}}
+		]);
+		var buttons = group.createButtons();
+		var ok = hui.ui.Button.create({text:'OK',submit:true});
+		buttons.add(ok);
+		
+		linkForm.listen(linkDelegate);
+		linkEditor.listen(linkDelegate);
+		
 		var win = hui.ui.Window.create({width:'500'});
-		var editor = hui.ui.MarkupEditor.create({value:'<h1>Lorem ipsum</h1><p>Lorem ipsum</p>'});
+		var editor = hui.ui.MarkupEditor.create({
+			name : 'markupEditor',
+			value : '<h1>Lorem ipsum</h1><p>Lorem ipsum</p><p>Lorem ipsum dolor sit amet, <a href="#" data=\'{"page":"1"}\'>consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',
+			linkDelegate : linkDelegate
+		});
 		var source = hui.ui.TextField.create({multiline:true});
 		var view = hui.ui.Button.create({text:'View source'}).listen({
 			$click:function() {
@@ -54,10 +123,10 @@
 		win.add(editor);
 		win.add(source);
 		win.add(view);
+		win.add(hui.ui.Button.create({text:'Set markup',name:'setMarkup'}))
 		win.show();
 		editor.focus();
 	})
 </script>
-<textarea id="source" style="height: 200px; width: 300px;"></textarea>
 </body>
 </html>

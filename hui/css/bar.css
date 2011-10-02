@@ -281,7 +281,7 @@ div.hui_bar_mini
 {
 	height: 22px;
 	background: #fafafa;
-	border: 1px solid #eee;
+	border: 1px solid #ddd;
 	border-radius: 3px;
 }
 
@@ -313,5 +313,13 @@ div.hui_bar_mini span.hui_bar_button_text
 
 div.hui_bar_mini a.hui_bar_button:hover
 {
-	background: none;
+	background: #ddd;
+}
+
+div.hui_bar_mini span.hui_bar_divider
+{
+	display: inline-block;
+	height: 22px;
+	border-left: 1px solid #ddd;
+	margin: 0 3px;
 }

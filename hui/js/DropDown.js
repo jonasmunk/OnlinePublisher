@@ -55,7 +55,7 @@ hui.ui.DropDown.prototype = {
 	_updateUI : function() {
 		var selected = this.items[this.index];
 		if (selected) {
-			var text = selected.label || selected.title || '';
+			var text = selected.label || selected.title || selected.text || '';
 			this.inner.innerHTML='';
 			hui.dom.addText(this.inner,hui.wrap(text));
 		} else if (this.options.placeholder) {
@@ -225,7 +225,7 @@ hui.ui.DropDown.prototype = {
 		}
 		var self = this;
 		hui.each(this.items,function(item,i) {
-			var e = hui.build('a',{href:'javascript://',text:item.label || item.title});
+			var e = hui.build('a',{href:'javascript://',text:item.label || item.title || item.text});
 			hui.listen(e,'mousedown',function(e) {
 				hui.stop(e);
 				self._itemClicked(item,i);

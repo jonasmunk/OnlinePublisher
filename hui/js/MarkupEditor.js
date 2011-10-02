@@ -86,13 +86,16 @@ hui.ui.MarkupEditor.prototype = {
 			var things = [
 				{key:'bold',icon:'edit/text_bold'},
 				{key:'italic',icon:'edit/text_italic'},
+				{divider:true},
 				{key:'color',icon:'common/color'},
 				/*{key:'image',icon:'common/image'},*/
-				{key:'addLink',icon:'common/link'},
+				{key:'addLink',icon:'monochrome/link'},
+				{divider:true},
 				{key:'align',value:'left',icon:'edit/text_align_left'},
 				{key:'align',value:'center',icon:'edit/text_align_center'},
 				{key:'align',value:'right',icon:'edit/text_align_right'},
 				{key:'align',value:'justify',icon:'edit/text_align_justify'},
+				{divider:true},
 				{key:'clear',icon:'edit/clear'}/*,
 				{key:'strong',icon:'edit/text_bold'}*/
 				
@@ -103,6 +106,10 @@ hui.ui.MarkupEditor.prototype = {
 			
 			this.bar = hui.ui.Bar.create({absolute:true,variant:'mini',small:true});
 			hui.each(things,function(info) {
+				if (info.divider) {
+					this.bar.addDivider();
+					return
+				}
 				var button = new hui.ui.Bar.Button.create({icon:info.icon,stopEvents:true});
 				button.listen({
 					$mousedown : function() { this._buttonClicked(info) }.bind(this)
@@ -111,6 +118,7 @@ hui.ui.MarkupEditor.prototype = {
 			}.bind(this));
 			this.bar.addToDocument();
 		}
+		hui.log('Showing bar');
 		this.bar.placeAbove(this);
 		this.bar.show();
 	},
@@ -144,24 +152,52 @@ hui.ui.MarkupEditor.prototype = {
 		}
 		this.colorPicker.show({avoid:this.element});
 	},
+	_highlightNode : function(node) {
+		if (this._highlightedNode) {
+			hui.removeClass(this._highlightedNode,'hui_markupeditor_highlighted');
+		}
+		this._highlightedNode = node;
+		if (node) {
+			hui.addClass(node,'hui_markupeditor_highlighted');
+		}
+	},
 	_showLinkEditor : function() {
-		if (!this.linkEditor) {
+		this.temporaryLink = this.impl.getOrCreateLink();
+		this._highlightNode(this.temporaryLink);
+		if (this.options.linkDelegate ) {
+			var delegate = this.options.linkDelegate;
+			delegate.editLink({
+				node:this.temporaryLink,
+				onSuccess : function() {
+					this._highlightNode(null)
+					this.temporaryLink = null;
+					hui.log('success');
+					this._valueChanged();
+				}.bind(this),
+				onCancel : function() {
+					this._highlightNode(null)
+					hui.log('cancelled');
+					this.temporaryLink = null;
+					this._valueChanged();
+				}.bind(this)
+			});
+		} else if (!this.linkEditor) {
 			this.linkEditor = hui.ui.Window.create({padding:5,width:300});
 			this.linkForm = hui.ui.Formula.create();
 			this.linkEditor.add(this.linkForm);
 			var group = this.linkForm.buildGroup({},[
 				{type : 'TextField', options:{key:'url',label:'Address:'}}
 			]);
-			this.linkEditor.add(this.linkForm);
 			var buttons = group.createButtons();
 			var ok = hui.ui.Button.create({text:'OK',submit:true});
 			this.linkForm.listen({$submit:this._updateLink.bind(this)});
 			buttons.add(ok);
 		}
-		this.temporaryLink = this.impl.getOrCreateLink();
-		this.linkForm.setValues({url:this.temporaryLink.href});
-		this.linkEditor.show({avoid:this.element});
-		this.linkForm.focus();
+		if (this.linkEditor) {
+			this.linkForm.setValues({url:this.temporaryLink.href});
+			this.linkEditor.show({avoid:this.element});
+			this.linkForm.focus();
+		}
 	},
 	_updateLink : function() {
 		var values = this.linkForm.getValues();
@@ -192,6 +228,7 @@ hui.ui.MarkupEditor.webkit = {
 		this.element.contentEditable = true;
 		var ctrl = this.controller = options.controller;
 		hui.listen(this.element,'focus',function() {
+			hui.log('Webkit focus');
 			ctrl.implFocused();
 		});
 		hui.listen(this.element,'blur',function() {
@@ -288,6 +325,7 @@ hui.ui.MarkupEditor.webkit = {
 		document.execCommand('removeFormat',null,null);
 	},
 	setHTML : function(html) {
+			hui.log('Setting html');
 		this.element.innerHTML = html;
 	},
 	getHTML : function() {

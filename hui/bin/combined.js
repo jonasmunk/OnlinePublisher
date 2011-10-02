@@ -5118,7 +5118,10 @@ hui.ui.Window.prototype = {
 		hui.dom.setText(this.title,title);
 	},
 	show : function(options) {
-		if (this.visible) {return}
+		if (this.visible) {
+			this.element.style.zIndex=hui.ui.nextPanelIndex();
+			return;
+		}
 		options = options || {};
 		hui.setStyle(this.element,{
 			zIndex : hui.ui.nextPanelIndex(), visibility : 'hidden', display : 'block'
@@ -6499,7 +6502,7 @@ hui.ui.DropDown.prototype = {
 	_updateUI : function() {
 		var selected = this.items[this.index];
 		if (selected) {
-			var text = selected.label || selected.title || '';
+			var text = selected.label || selected.title || selected.text || '';
 			this.inner.innerHTML='';
 			hui.dom.addText(this.inner,hui.wrap(text));
 		} else if (this.options.placeholder) {
@@ -6669,7 +6672,7 @@ hui.ui.DropDown.prototype = {
 		}
 		var self = this;
 		hui.each(this.items,function(item,i) {
-			var e = hui.build('a',{href:'javascript://',text:item.label || item.title});
+			var e = hui.build('a',{href:'javascript://',text:item.label || item.title || item.text});
 			hui.listen(e,'mousedown',function(e) {
 				hui.stop(e);
 				self._itemClicked(item,i);
@@ -7964,241 +7967,6 @@ hui.ui.BoundPanel.prototype = {
 			this.element.style.left=left+'px';
 		}
 	}
-}
-
-/* EOF *//**
- * @constructor
- */
-hui.ui.RichText = function(options) {
-	this.name = options.name;
-	var e = this.element = hui.get(options.element);
-	this.options = hui.override({debug:false,value:'',autoHideToolbar:true,style:'font-family: sans-serif;'},options);
-	this.textarea = hui.build('textarea');
-	e.appendChild(this.textarea);
-	this.editor = WysiHat.Editor.attach(this.textarea);
-	this.editor.setAttribute('frameborder','0');
-	/* @private */
-	this.toolbar = hui.firstByClass(e,'hui_richtext_toolbar');
-	this.toolbarContent = hui.firstByClass(e,'hui_richtext_toolbar_content');
-	this.value = this.options.value;
-	this.document = null;
-	this.ignited = false;
-	this.buildToolbar();
-	this.ignite();
-	hui.ui.extend(this);
-}
-
-hui.ui.RichText.actions = [
-	{key:'bold',				cmd:'bold',				value:null,		icon:'edit/text_bold'},
-	{key:'italic',				cmd:'italic',			value:null,		icon:'edit/text_italic'},
-	{key:'underline',			cmd:'underline',		value:null,		icon:'edit/text_underline'},
-	null,
-	{key:'justifyleft',			cmd:'justifyleft',		value:null,		icon:'edit/text_align_left'},
-	{key:'justifycenter',		cmd:'justifycenter',	value:null,		icon:'edit/text_align_center'},
-	{key:'justifyright',		cmd:'justifyright',		value:null,		icon:'edit/text_align_right'},
-	null,
-	{key:'increasefontsize',	cmd:'increasefontsize',	value:null,		icon:'edit/increase_font_size'},
-	{key:'decreasefontsize',	cmd:'decreasefontsize',	value:null,		icon:'edit/decrease_font_size'},
-	{key:'color',				cmd:null,				value:null,		icon:'common/color'}
-	/*,
-	null,
-	{key:'p',				cmd:'formatblock',		value:'p'},
-	{key:'h1',				cmd:'formatblock',		value:'h1'},
-	{key:'h2',				cmd:'formatblock',		value:'h2'},
-	{key:'h3',				cmd:'formatblock',		value:'h3'},
-	{key:'h4',				cmd:'formatblock',		value:'h4'},
-	{key:'h5',				cmd:'formatblock',		value:'h5'},
-	{key:'h6',				cmd:'formatblock',		value:'h6'},
-	{key:'removeformat', 	cmd:'removeformat', 	'value':null}*/
-];
-
-hui.ui.RichText.replaceInput = function(options) {
-	options = options || {};
-	var input = hui.get(options.input);
-	input.style.display='none';
-	options.value = input.value;
-	var obj = hui.ui.RichText.create(options);
-	input.parentNode.insertBefore(obj.element,input);
-	obj.ignite();
-}
-
-hui.ui.RichText.create = function(options) {
-	options = options || {};
-	options.element = hui.build('div',{'class':'hui_richtext',html:'<div class="hui_richtext_toolbar"><div class="hui_richtext_inner_toolbar"><div class="hui_richtext_toolbar_content"></div></div></div>'});
-	return new hui.ui.RichText(options);
-}
-
-hui.ui.RichText.prototype = {
-	isCompatible : function() {
-	    var agt=navigator.userAgent.toLowerCase();
-		return true;
-		return (agt.indexOf('msie 6')>-1 || agt.indexOf('msie 7')>-1 || (agt.indexOf('gecko')>-1 && agt.indexOf('safari')<0));
-	},
-	ignite : function() {
-		var self = this;
-		this.editor.observe("wysihat:loaded", function(event) {
-			if (this.ignited) {
-				return;
-			}
-			this.editor.setStyle(this.options.style);
-			this.editor.setRawContent(this.value);
-			this.document = this.editor.getDocument();
-			if (this.document.body) {
-				this.document.body.style.minHeight='100%';
-				this.document.body.style.margin='0';
-				this.document.documentElement.style.cursor='text';
-				this.document.documentElement.style.minHeight='100%';
-				Element.setStyle(this.document.body,this.options.style);
-			}
-			this.window = this.editor.getWindow();
-			Event.observe(this.window,'focus',function() {self.documentFocused()});
-			Event.observe(this.window,'blur',function() {self.documentBlurred()});
-			this.document.body.focus();
-			this.ignited = true;
-     	}.bind(this));
-		this.editor.observe("wysihat:change", function(event) {
-        	this.documentChanged();
-     	}.bind(this));
-	},
-	setHeight : function(height) {
-		this.editor.style.height=height+'px';
-	},
-	focus : function() {
-		try { // TODO : May only work in gecko
-			var r = this.document.createRange();
-			r.selectNodeContents(this.document.body);
-			this.window.getSelection().addRange(r);
-		} catch (ignore) {}
-		if (this.window)this.window.focus();
-	},
-	setValue : function(value) {
-		this.value = value;
-		this.editor.setRawContent(this.value);
-	},
-	getValue : function() {
-		return this.value;
-	},
-	deactivate : function() {
-		if (this.colorPicker) this.colorPicker.hide();
-		if (this.toolbar) this.toolbar.style.display='none';
-	},
-	
-	buildToolbar : function() {
-		this.toolbar.onmousedown = function() {this.toolbarMouseDown=true}.bind(this);
-		this.toolbar.onmouseup = function() {this.toolbarMouseDown=false}.bind(this);
-		var self = this;
-		var actions = hui.ui.RichText.actions;
-		for (var i=0; i < actions.length; i++) {
-			if (actions[i]==null) {
-				this.toolbarContent.appendChild(hui.build('div',{'class':'hui_richtext_divider'}));
-			} else {
-				var div = hui.build('div',{'class':'action action_'+actions[i].key});
-				div.title=actions[i].key;
-				div.huiRichTextAction = actions[i]
-				div.onclick = div.ondblclick = function(e) {return self.actionWasClicked(this.huiRichTextAction,e);}
-				var img = hui.build('img');
-				img.src=hui.ui.context+'/hui/gfx/trans.png';
-				if (actions[i].icon) {
-					div.style.backgroundImage='url('+hui.ui.getIconUrl(actions[i].icon,16)+')';
-				}
-				div.appendChild(img);
-				this.toolbarContent.appendChild(div);
-				div.onmousedown = hui.ui.RichText.stopEvent;
-			}
-		};
-	},
-	documentFocused : function() {
-		if (hui.browser.msie) {
-			this.toolbar.style.display='block';
-			return;
-		}
-		if (this.toolbar.style.display!='block') {
-			this.toolbar.style.marginTop='-40px';
-			hui.setOpacity(this.toolbar,0);
-			this.toolbar.style.display='block';
-			hui.animate(this.toolbar,'opacity',1,300);
-			hui.animate(this.toolbar,'margin-top','-32px',300);
-		}
-	},
-	
-	documentBlurred : function() {
-		if (this.toolbarMouseDown) return;
-		if (this.options.autoHideToolbar) {
-			if (hui.browser.msie) {
-				var self = this;
-				window.setTimeout(function() {
-					self.toolbar.style.display='none';
-				},100);
-				return;
-			}
-			hui.animate(this.toolbar,'opacity',0,300,{hideOnComplete:true});
-			hui.animate(this.toolbar,'margin-top','-40px',300);
-		}
-		this.documentChanged();
-		hui.ui.callDelegates(this,'richTextDidChange');
-	},
-	
-	documentChanged : function() {
-		this.value = this.editor.content();
-		if (this.options.input) {
-			hui.get(this.options.input).value=this.value;
-		}
-	},
-	
-	disabler : function(e) {
-		var evt = e ? e : window.event; 
-		if (evt.returnValue) {
-			evt.returnValue = false;
-		} else if (evt.preventDefault) {
-			evt.preventDefault( );
-		}
-		return false;
-	},
-	actionWasClicked : function(action,e) {
-		hui.ui.RichText.stopEvent(e);
-		if (action.key=='color') {
-			this.showColorPicker();
-		} else {
-			this.execCommand(action);
-		}
-		this.document.body.focus();
-		return false;
-	},
-	execCommand : function(action) {
-		this.editor.execCommand(action.cmd,false,action.value);
-		this.documentChanged();
-	},
-	showColorPicker : function() {
-		if (!this.colorPicker) {
-			var panel = hui.ui.Window.create({variant:'dark'});
-			var picker = hui.ui.ColorPicker.create();
-			picker.listen(this);
-			panel.add(picker);
-			panel.show();
-			this.colorPicker = panel;
-		}
-		this.colorPicker.show();
-	},
-	$colorWasHovered : function(color) {
-		//this.document.execCommand('forecolor',false,color);
-	},
-	$colorWasSelected : function(color) {
-		this.document.execCommand('forecolor',false,color);
-		this.documentChanged();
-	}
-}
-
-
-
-hui.ui.RichText.stopEvent = function(e) {
-  var evt = e ? e : window.event; 
-  if (evt.returnValue) {
-    evt.returnValue = false;
-  } else if (evt.preventDefault) {
-    evt.preventDefault( );
-  } else {
-    return false;
-  }
 }
 
 /* EOF *//**
@@ -11526,6 +11294,7 @@ hui.ui.Bar = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);
 	this.visible = this.element.style.display=='none' ? false : null;
+	this.body = hui.firstByClass(this.element,'hui_bar_body');
 	hui.ui.extend(this);
 };
 
@@ -11550,13 +11319,18 @@ hui.ui.Bar.prototype = {
 		document.body.appendChild(this.element);
 	},
 	add : function(widget) {
-		var body = hui.firstByClass(this.element,'hui_bar_body');
-		body.appendChild(widget.getElement());
+		this.body.appendChild(widget.getElement());
 	},
-	placeAbove : function(widget) {
+	addDivider : function() {
+		hui.build('span',{'class':'hui_bar_divider',parent:this.body})
+	},
+	placeAbove : function(widgetOrElement) {
+		if (widgetOrElement.getElement) {
+			widgetOrElement = widgetOrElement.getElement();
+		}
 		hui.place({
 			source:{element:this.element,vertical:1,horizontal:0},
-			target:{element:widget.getElement(),vertical:0,horizontal:0}
+			target:{element:widgetOrElement,vertical:0,horizontal:0}
 		});
 		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
@@ -12390,13 +12164,16 @@ hui.ui.MarkupEditor.prototype = {
 			var things = [
 				{key:'bold',icon:'edit/text_bold'},
 				{key:'italic',icon:'edit/text_italic'},
+				{divider:true},
 				{key:'color',icon:'common/color'},
 				/*{key:'image',icon:'common/image'},*/
-				{key:'addLink',icon:'common/link'},
+				{key:'addLink',icon:'monochrome/link'},
+				{divider:true},
 				{key:'align',value:'left',icon:'edit/text_align_left'},
 				{key:'align',value:'center',icon:'edit/text_align_center'},
 				{key:'align',value:'right',icon:'edit/text_align_right'},
 				{key:'align',value:'justify',icon:'edit/text_align_justify'},
+				{divider:true},
 				{key:'clear',icon:'edit/clear'}/*,
 				{key:'strong',icon:'edit/text_bold'}*/
 				
@@ -12407,6 +12184,10 @@ hui.ui.MarkupEditor.prototype = {
 			
 			this.bar = hui.ui.Bar.create({absolute:true,variant:'mini',small:true});
 			hui.each(things,function(info) {
+				if (info.divider) {
+					this.bar.addDivider();
+					return
+				}
 				var button = new hui.ui.Bar.Button.create({icon:info.icon,stopEvents:true});
 				button.listen({
 					$mousedown : function() { this._buttonClicked(info) }.bind(this)
@@ -12415,6 +12196,7 @@ hui.ui.MarkupEditor.prototype = {
 			}.bind(this));
 			this.bar.addToDocument();
 		}
+		hui.log('Showing bar');
 		this.bar.placeAbove(this);
 		this.bar.show();
 	},
@@ -12448,24 +12230,52 @@ hui.ui.MarkupEditor.prototype = {
 		}
 		this.colorPicker.show({avoid:this.element});
 	},
+	_highlightNode : function(node) {
+		if (this._highlightedNode) {
+			hui.removeClass(this._highlightedNode,'hui_markupeditor_highlighted');
+		}
+		this._highlightedNode = node;
+		if (node) {
+			hui.addClass(node,'hui_markupeditor_highlighted');
+		}
+	},
 	_showLinkEditor : function() {
-		if (!this.linkEditor) {
+		this.temporaryLink = this.impl.getOrCreateLink();
+		this._highlightNode(this.temporaryLink);
+		if (this.options.linkDelegate ) {
+			var delegate = this.options.linkDelegate;
+			delegate.editLink({
+				node:this.temporaryLink,
+				onSuccess : function() {
+					this._highlightNode(null)
+					this.temporaryLink = null;
+					hui.log('success');
+					this._valueChanged();
+				}.bind(this),
+				onCancel : function() {
+					this._highlightNode(null)
+					hui.log('cancelled');
+					this.temporaryLink = null;
+					this._valueChanged();
+				}.bind(this)
+			});
+		} else if (!this.linkEditor) {
 			this.linkEditor = hui.ui.Window.create({padding:5,width:300});
 			this.linkForm = hui.ui.Formula.create();
 			this.linkEditor.add(this.linkForm);
 			var group = this.linkForm.buildGroup({},[
 				{type : 'TextField', options:{key:'url',label:'Address:'}}
 			]);
-			this.linkEditor.add(this.linkForm);
 			var buttons = group.createButtons();
 			var ok = hui.ui.Button.create({text:'OK',submit:true});
 			this.linkForm.listen({$submit:this._updateLink.bind(this)});
 			buttons.add(ok);
 		}
-		this.temporaryLink = this.impl.getOrCreateLink();
-		this.linkForm.setValues({url:this.temporaryLink.href});
-		this.linkEditor.show({avoid:this.element});
-		this.linkForm.focus();
+		if (this.linkEditor) {
+			this.linkForm.setValues({url:this.temporaryLink.href});
+			this.linkEditor.show({avoid:this.element});
+			this.linkForm.focus();
+		}
 	},
 	_updateLink : function() {
 		var values = this.linkForm.getValues();
@@ -12496,6 +12306,7 @@ hui.ui.MarkupEditor.webkit = {
 		this.element.contentEditable = true;
 		var ctrl = this.controller = options.controller;
 		hui.listen(this.element,'focus',function() {
+			hui.log('Webkit focus');
 			ctrl.implFocused();
 		});
 		hui.listen(this.element,'blur',function() {
@@ -12592,6 +12403,7 @@ hui.ui.MarkupEditor.webkit = {
 		document.execCommand('removeFormat',null,null);
 	},
 	setHTML : function(html) {
+			hui.log('Setting html');
 		this.element.innerHTML = html;
 	},
 	getHTML : function() {

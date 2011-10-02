@@ -57,7 +57,10 @@ hui.ui.Window.prototype = {
 		hui.dom.setText(this.title,title);
 	},
 	show : function(options) {
-		if (this.visible) {return}
+		if (this.visible) {
+			this.element.style.zIndex=hui.ui.nextPanelIndex();
+			return;
+		}
 		options = options || {};
 		hui.setStyle(this.element,{
 			zIndex : hui.ui.nextPanelIndex(), visibility : 'hidden', display : 'block'

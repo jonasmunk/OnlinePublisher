@@ -7,6 +7,7 @@ hui.ui.Bar = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);
 	this.visible = this.element.style.display=='none' ? false : null;
+	this.body = hui.firstByClass(this.element,'hui_bar_body');
 	hui.ui.extend(this);
 };
 
@@ -31,13 +32,18 @@ hui.ui.Bar.prototype = {
 		document.body.appendChild(this.element);
 	},
 	add : function(widget) {
-		var body = hui.firstByClass(this.element,'hui_bar_body');
-		body.appendChild(widget.getElement());
+		this.body.appendChild(widget.getElement());
 	},
-	placeAbove : function(widget) {
+	addDivider : function() {
+		hui.build('span',{'class':'hui_bar_divider',parent:this.body})
+	},
+	placeAbove : function(widgetOrElement) {
+		if (widgetOrElement.getElement) {
+			widgetOrElement = widgetOrElement.getElement();
+		}
 		hui.place({
 			source:{element:this.element,vertical:1,horizontal:0},
-			target:{element:widget.getElement(),vertical:0,horizontal:0}
+			target:{element:widgetOrElement,vertical:0,horizontal:0}
 		});
 		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
