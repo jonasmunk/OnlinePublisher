@@ -17,6 +17,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Tabs.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Formula.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Toolbar.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Bar.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/List.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/SearchField.js"></script>
@@ -26,7 +27,6 @@
 </head>
 
 <body>
-	<button onclick="test1()">Test 1</button>
 <script type="text/javascript" charset="utf-8">
 		var normal = hui.ui.Window.create();
 		normal.add(hui.build('div',{style:'width: 200px; height: 200px;'}));
@@ -68,6 +68,9 @@
 		toolWin.addToBack(hui.ui.Button.create({icon:'monochrome/previous'}).click(function() {toolWin.flip()}));
 		toolWin.show();
 </script>
-
+<div style="position: fixed;">
+	<button onclick="toolWin.show()">Show window</button>
+</div>
+<div style="height: 2000px"></div>
 </body>
 </html>
