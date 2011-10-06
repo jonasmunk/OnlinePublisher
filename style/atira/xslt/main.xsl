@@ -455,7 +455,7 @@
 	<xsl:variable name="language" select="//p:page/p:meta/p:language"/>
 	<div class="ticker">
 		<div class="ticker_left">
-			<xsl:if test="$language='en'"><strong>Latest news:</strong></xsl:if>
+			<xsl:if test="$language='en'"><strong>Latest references:</strong></xsl:if>
 			<xsl:if test="$language!='en'"><strong>Seneste nyheder:</strong></xsl:if>
 			<a class="ticker_previous" href="javascript://"><span>Previous</span></a>
 			<a class="ticker_next" href="javascript://"><span>Next</span></a>

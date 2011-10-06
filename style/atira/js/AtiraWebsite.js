@@ -61,7 +61,7 @@ Atira.Website.Poster.prototype = {
 Atira.Website.Ticker = function() {
 	this.items = [];
 	this.activeItem = -1;
-	this.interval = 4000;
+	this.interval = 3000;
 	this.addBehavior();
 }
 
