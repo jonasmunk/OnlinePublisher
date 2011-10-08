@@ -45,4 +45,22 @@ class RelationsService {
 		Database::insert($sql);
 		return true;
 	}
+	
+	function relateObjectToPage($fromObject,$toPage,$kind='') {
+		if (!$fromObject || !$toPage) {
+			return false;
+		}
+		$sql = array(
+			'table' => 'relation',
+			'values' => array(
+				'from_type' => Database::text('object'),
+				'from_object_id' => Database::int($fromObject->getId()),
+				'to_type' => Database::text('page'),
+				'to_object_id' => Database::int($toPage->getId()),
+				'kind' => Database::text($kind)
+			)
+		);
+		Database::insert($sql);
+		return true;
+	}
 }

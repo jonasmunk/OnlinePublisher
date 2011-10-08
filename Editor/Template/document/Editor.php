@@ -149,16 +149,16 @@ $gui = '
 		<item title="Slet"/>
 	</menu>
 
-	<window width="400" name="columnWindow" padding="5" title="Kolonne">
+	<window width="300" name="columnWindow" padding="5" title="Kolonne">
 		<formula name="columnFormula">
 			<group labels="above">
-				<radiobuttons label="Bredde..." key="preset">
+				<radiobuttons label="Bredde..." key="preset" name="columnPreset">
 					<item value="dynamic" text="Efter indhold"/>
 					<item value="min" text="Mindst mulig"/>
 					<item value="max" text="Størst muligt"/>
 					<item value="specific" text="Speciel..."/>
 				</radiobuttons>
-				<style-length label="Bredde" key="width"/>
+				<style-length label="Speciel bredde" key="width" name="columnWidth"/>
 			</group>
 			<buttons top="5">
 				<button text="Slet" name="deleteColumn">

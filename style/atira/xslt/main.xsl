@@ -236,7 +236,7 @@
 				<xsl:otherwise>
 					<h2>About Atira</h2>
 					<p>Our technical area is servers-side application architecture, development, and implementation. Our business domain is Research Information Management. We supply our product Pure, an enterprise-class CERIF-based CRIS system.</p>
-					<p>Pure, released in 2003, is licensed for 38,141 research staff at our 69 references in 7 countries.</p>
+					<p>Pure, released in 2003, is licensed for 39,686 research staff at our 72 references in 8 countries.</p>
 					<!--
 					<p>Our technical area is servers-side application architecture, development, and implementation.
 						Our business domain is Research Information Management. We supply our product Pure, an enterprise-class CERIF-based CRIS system.</p>

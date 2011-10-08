@@ -24,21 +24,22 @@ foreach ($links as $link) {
 			$writer->startLine(array('dimmed'=>true))->text($link->getAlternative())->endLine();			
 		}
 		if ($link->getPartId()) {
-			$writer->startLine(array('dimmed'=>true))->text('Vises kun i afsnittet: '.$link->getPartId())->endLine();			
+			$writer->startLine(array('dimmed'=>true,'minor'=>true))->text('Vises kun i afsnittet: '.$link->getPartId())->endLine();			
 		}
 		$writer->endCell()->
 		startCell(array('icon'=>$link->getTargetIcon()))->
 			startLine()->startWrap()->text($link->getTargetTitle())->endWrap();
 		if ($link->getTargetType()=='page') {
 			$writer->startIcons();
-			$writer->icon(array('icon' => 'monochrome/info_light','action'=>'true','data' => array('action' => 'pageInfo', 'id' => $link->getTargetId()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/info','action'=>'true','data' => array('action' => 'pageInfo', 'id' => $link->getTargetId()),'revealing' => true));
 			$writer->icon(array('icon' => 'monochrome/edit','action'=>'true','data' => array('action' => 'editPage', 'id' => $link->getTargetId()),'revealing' => true));
 			$writer->icon(array('icon' => 'monochrome/view','action'=>'true','data' => array('action' => 'viewPage', 'id' => $link->getTargetId()),'revealing' => true));
 			$writer->endIcons();
 		}
 		else if ($link->getTargetType()=='file') {
 			$writer->startIcons();
-			$writer->icon(array('icon' => 'monochrome/info_light','action'=>'true','data' => array('action' => 'fileInfo', 'id' => $link->getTargetId()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/info','action'=>'true','data' => array('action' => 'fileInfo', 'id' => $link->getTargetId()),'revealing' => true));
+			$writer->icon(array('icon' => 'monochrome/view','action'=>'true','data' => array('action' => 'viewFile', 'id' => $link->getTargetId()),'revealing' => true));
 			$writer->endIcons();
 		}
 		else if ($link->getTargetType()=='url') {
@@ -47,7 +48,7 @@ foreach ($links as $link) {
 			$writer->endIcons();
 		}
 		$writer->endLine()->
-			startLine(array('dimmed'=>true))->text(LinkService::translateLinkType($link->getTargetType()))->endLine()->
+			startLine(array('dimmed'=>true,'minor'=>true))->text(LinkService::translateLinkType($link->getTargetType()))->endLine()->
 		endCell()->
 		startCell()->
 			startIcons()->

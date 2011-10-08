@@ -30,32 +30,34 @@ $gui='
 					<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="true"/>
 					<divider/>
 					<icon icon="inset/stamp" title="Revidér" name="review"/>
+					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>
 				</toolbar>
 			</tab>
 			<tab title="Avanceret" background="light">
 				<toolbar>
 					<icon icon="common/time" text="Historik" name="viewHistory"/>
-					<!--<divider/>
-					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>-->
+					divider/>
 				</toolbar>
 			</tab>
 		</tabs>
 	</dock>
+	
 	<boundpanel target="addNote" name="notePanel" width="200">
 		<formula name="noteFormula">
 			<group labels="above">
-				<text label="Note:" key="note" multiline="true"/>
-				<radiobuttons label="Type" value="improvement">
+				<text label="Note:" key="text" multiline="true"/>
+				<radiobuttons label="Type" value="improvement" key="kind">
 					<item value="improvement" text="Forbedring"/>
 					<item value="error" text="Fejl"/>
 				</radiobuttons>
 			</group>
 			<buttons>
-				<button text="Annuller" click="notePanel.hide()" small="true"/>
+				<button text="Annuller" name="cancelNote" small="true"/>
 				<button text="Opret" highlighted="true" submit="true" small="true"/>
 			</buttons>
 		</formula>
 	</boundpanel>
+	
 	<boundpanel target="review" name="reviewPanel" width="300">
 		<buttons align="center" bottom="10">
 			<button text="Annuller" click="reviewPanel.hide()"/>

@@ -16,12 +16,12 @@ var controller = {
 			delete_section : {da:'Slet afsnit',en:'Delete section'},
 			move_section_up : {da:'Flyt afsnit op',en:'Move section up'},
 			move_section_down : {da:'Flyt afsnit ned',en:'Move section down'},
-			edit_column : {da:'Rediger kolonne',en:'Edit column'},
+			add_column : {da:'Tilf\u00f8j kolonne',en:'Add column'},
+			edit_column : {da:'Indstil kolonne',en:'Column setup'},
 			move_right : {da:'Flyt til h\u00f8jre',en:'Move right'},
 			move_left : {da:'Flyt til venstre',en:'Move left'},
 			move_column_right : {da:'Flyt kolonne til h\u00f8jre',en:'Move column right'},
 			move_column_left : {da:'Flyt kolonne til venstre',en:'Move column left'},
-			add_column : {da:'Tilf\u00f8j kolonne',en:'Add column'},
 			delete_column : {da:'Slet kolonne',en:'Delete column'},
 			move_up : {da:'Flyt op',en:'Move up'},
 			move_down : {da:'Flyt ned',en:'Move down'},
@@ -55,10 +55,10 @@ var controller = {
 			{title:strings.get('move_section_down'),value:'moveSectionDown'},
 			null,
 			{title:strings.get('column'),children:[
+				{title:strings.get('add_column'),value:'addColumn'},
 				{title:strings.get('edit_column'),value:'editColumn'},
 				{title:strings.get('move_right'),value:'moveColumnRight'},
 				{title:strings.get('move_left'),value:'moveColumnLeft'},
-				{title:strings.get('add_column'),value:'addColumn'},
 				{title:strings.get('delete_column'),value:'deleteColumn'}
 			]},
 			{title:strings.get('row'),children:[
@@ -70,10 +70,10 @@ var controller = {
 		]);
 		this.columnMenu = hui.ui.Menu.create({name:'sectionMenu'});
 		this.columnMenu.addItems([
+				{title:strings.get('add_column'),value:'addColumn'},
 				{title:strings.get('edit_column'),value:'editColumn'},
 				{title:strings.get('move_column_right'),value:'moveColumnRight'},
 				{title:strings.get('move_column_left'),value:'moveColumnLeft'},
-				{title:strings.get('add_column'),value:'addColumn'},
 				{title:strings.get('delete_column'),value:'deleteColumn'},
 				null,
 				{title:strings.get('move_row_up'),value:'moveRowUp'},
@@ -328,6 +328,16 @@ var controller = {
 				columnFormula.setValues(values);
 			}
 		})
+	},
+	$valueChanged$columnWidth : function() {
+		columnPreset.setValue('specific');
+	},
+	$valueChanged$columnPreset : function(value) {
+		if (columnPreset.getValue()=='specific') {
+			columnWidth.focus();
+		} else {
+			columnWidth.reset();
+		}
 	},
 	$valuesChanged$columnFormula : function(values) {
 		var node = hui.get('column'+this.columnId);

@@ -28,6 +28,7 @@ class ListPartController extends PartController
 		$part->setTitle("Min liste");
 		$part->setTimeType('days');
 		$part->setVariant('box');
+		$part->setSortDirection('descending');
 		$part->setMaxItems(10);
 		$part->save();
 		return $part;

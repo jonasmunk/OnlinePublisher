@@ -5,10 +5,19 @@ var controller = {
 		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('service:preview');
 		}
+		this._refreshBase();
 	},
 	pageDidLoad : function(id) {
 		this.pageId = id;
 		this._updateState();
+		this._refreshBase();
+		this.$click$cancelNote();
+		reviewPanel.hide();
+	},
+	_refreshBase : function() {
+		try {
+			window.parent.baseController.refresh();
+		} catch (e) {}
 	},
 	_updateState : function() {
 		hui.ui.request({
@@ -65,6 +74,26 @@ var controller = {
 		notePanel.show();
 		noteFormula.focus();
 	},
+	$submit$noteFormula : function(form) {
+		var values = form.getValues();
+		hui.ui.request({
+			message : {start:'Gemmer note...',delay:300},
+			url : 'data/CreateNote.php',
+			parameters : {pageId : this.pageId, text : values.text, kind : values.kind},
+			onSuccess : function() {
+				hui.ui.showMessage({text:'Noten er gemt',icon:'common/success',duration:2000});
+				this._refreshBase();
+			}.bind(this)
+		});
+		noteFormula.reset();
+		notePanel.hide();
+	},
+	$click$cancelNote : function() {
+		noteFormula.reset();
+		notePanel.hide();
+	},
+	
+	//////////// Review //////////////
 	
 	$click$review : function() {
 		reviewPanel.show();

@@ -25,12 +25,31 @@ $categorized = ToolService::getCategorized();
 $lang = InternalSession::getLanguage();
 
 $gui='
-<gui xmlns="uri:hui" title="OnlinePublisher editor">
-	<controller source="Base.js"/>
+<gui xmlns="uri:hui" title="OnlinePublisher editor" state="pages">
+	<source name="searchSource" url="Services/Base/Search.php">
+		<parameter key="text" value="@search.value"/>
+	</source>
+	<source name="hierarchySource" url="Services/Base/Hierarchy.php"/>
+	<source name="issueSource" url="Services/Base/ListIssues.php"/>
+	<controller source="Services/Base/controller.js"/>
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
-		<!--<sidebar>
-			<searchfield adaptive="true"/>
-		</sidebar>-->
+		<sidebar collapsed="false">
+			<bar variant="layout_mini">
+				<button icon="monochrome/hierarchy" name="navPages" selected="true"/>
+				<button icon="monochrome/note" name="navNotes"/>
+				<!--<button icon="monochrome/stamp" name="navReview"/>
+				<button icon="monochrome/warning" name="navWarnings"/>-->
+			</bar>
+			<bar variant="layout" state="pages" name="searchBar">
+				<searchfield adaptive="true" name="search"/>
+			</bar>
+			<overflow>
+				<list name="list" source="searchSource" state="pages"/>
+				<selection value="all" name="selector" state="pages">
+					<items source="hierarchySource"/>
+				</selection>
+			</overflow>
+		</sidebar>
 		<tabs small="true">';
 			$tabs = array('edit'=>'{ Editing ; da: Redigering }','analyse'=>'{Analysis ; da:Analyse}','setup'=>'{ Setup ; da:Opsætning }');
 			foreach ($tabs as $tab => $tabTitle) {
@@ -57,6 +76,24 @@ $gui='
 			$gui.='
 		</tabs>
 	</dock>
+	
+	<boundpanel name="issuePanel" width="250">
+		<formula name="issueFormula">
+			<group labels="above">
+				<text label="Note:" key="text" multiline="true"/>
+				<radiobuttons label="Type" value="improvement" key="kind">
+					<item value="improvement" text="Forbedring"/>
+					<item value="error" text="Fejl"/>
+					<item value="unknown" text="Ukendt"/>
+				</radiobuttons>
+			</group>
+			<buttons>
+				<button text="Slet" name="deleteIssue" small="true"/>
+				<button text="Annuller" name="cancelIssue" small="true"/>
+				<button text="Gem" highlighted="true" submit="true" small="true" name="saveIssue"/>
+			</buttons>
+		</formula>
+	</boundpanel>
 </gui>';
 
 In2iGui::render($gui);

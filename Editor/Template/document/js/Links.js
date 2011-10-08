@@ -32,6 +32,9 @@ hui.ui.listen({
 		else if (info.data.action=='viewPage') {
 			parent.location='../../Services/Preview/?id='+info.data.id;
 		}
+		else if (info.data.action=='viewFile') {
+			window.open('../../../../?file='+info.data.id);
+		}
 		else if (info.data.action=='fileInfo') {
 			parent.location='../../Tools/Files/?fileInfo='+info.data.id;
 		}

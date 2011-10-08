@@ -64,7 +64,7 @@
 				<xsl:when test="@width='max'">
 					<xsl:attribute name="style">width: 100%;</xsl:attribute>
 				</xsl:when>
-				<xsl:when test="contains(@width,'%')">
+				<xsl:when test="contains(@width,'%') or contains(@width,'px')">
 					<xsl:attribute name="style">width: <xsl:value-of select="@width"/>;</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="@width">

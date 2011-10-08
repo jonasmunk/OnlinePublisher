@@ -23,7 +23,7 @@ $gui='
 				<icon icon="common/info" title="{da:Info;en:Info}" name="properties"/>
 				<divider/>
 				<icon icon="common/link" title="{da:Nyt link;en:New link}" overlay="new" name="newLink"/>
-				<icon icon="common/link" title="{da:Rediger links;en:Edit links}" overlay="edit" name="editLinks"/>
+				<icon icon="common/link" title="{da:Oversigt;en:Edit links}" overlay="view" name="editLinks"/>
 			</toolbar>
 		</tab>
 	</tabs>

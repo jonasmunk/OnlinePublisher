@@ -99,6 +99,9 @@ class ListWriter {
 		if ($options['dimmed']) {
 			echo ' dimmed="true"';
 		}
+		if ($options['width']) {
+			echo ' width="'.$options['width'].'"';
+		}
 		echo '>';
 		return $this;
 	}
