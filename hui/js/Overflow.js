@@ -27,7 +27,9 @@ hui.ui.Overflow.prototype = {
 			bottom = hui.getTop(parent)+parent.clientHeight,
 			sibs = hui.getAllNext(this.element);
 		for (var i=0; i < sibs.length; i++) {
-			bottom-=sibs[i].clientHeight;
+			if (hui.getStyle(sibs[i],'position')!='absolute') {
+				bottom-=sibs[i].clientHeight;
+			}
 		}
 		this.diff = -1 * (top + (viewport - bottom));
 		if (hui.browser.webkit && this.element.parentNode.className=='hui_layout_center') {

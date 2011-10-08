@@ -225,6 +225,12 @@ hui.ui.Selection.prototype = {
 				hui.log('Will not select first since im still busy');
 			}
 		}
+	},
+	show : function() {
+		this.element.style.display='';
+	},
+	hide : function() {
+		this.element.style.display='none';
 	}
 }
 

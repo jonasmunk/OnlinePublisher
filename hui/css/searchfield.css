@@ -83,6 +83,7 @@ span.hui_searchfield_dirty em,span.hui_searchfield_focus em, span.hui_searchfiel
 span.hui_searchfield_adaptive
 {
 	width: 100%;
+	min-width: 30px;
 }
 
 /*** Focus ***/

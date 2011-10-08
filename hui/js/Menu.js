@@ -9,7 +9,7 @@ hui.ui.Menu = function(options) {
 	this.subMenus = [];
 	this.visible = false;
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 hui.ui.Menu.create = function(options) {
@@ -22,19 +22,18 @@ hui.ui.Menu.create = function(options) {
 
 hui.ui.Menu.prototype = {
 	/** @private */
-	addBehavior : function() {
-		var self = this;
+	_addBehavior : function() {
 		this.hider = function() {
-			self.hide();
-		}
+			this.hide();
+		}.bind(this)
 		if (this.options.autoHide) {
 			var x = function(e) {
-				if (!hui.ui.isWithin(e,self.element) && (!self.options.parentElement || !hui.ui.isWithin(e,self.options.parentElement))) {
-					if (!self.isSubMenuVisible()) {
-						self.hide();
+				if (!hui.ui.isWithin(e,this.element) && (!this.options.parentElement || !hui.ui.isWithin(e,this.options.parentElement))) {
+					if (!this.isSubMenuVisible()) {
+						this.hide();
 					}
 				}
-			};
+			}.bind(this);
 			hui.listen(this.element,'mouseout',x);
 			if (this.options.parentElement) {
 				hui.listen(this.options.parentElement,'mouseout',x);

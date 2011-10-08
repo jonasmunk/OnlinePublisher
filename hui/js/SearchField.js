@@ -79,7 +79,7 @@ hui.ui.SearchField.prototype = {
 		return this.field.value=='';
 	},
 	isBlank : function() {
-		return this.field.value.strip()=='';
+		return hui.isBlank(this.field.value);
 	},
 	reset : function() {
 		this.field.value='';

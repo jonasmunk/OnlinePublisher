@@ -4467,6 +4467,7 @@ span.hui_searchfield_dirty em,span.hui_searchfield_focus em, span.hui_searchfiel
 span.hui_searchfield_adaptive
 {
 	width: 100%;
+	min-width: 30px;
 }
 
 /*** Focus ***/
@@ -4581,6 +4582,7 @@ div.hui_dock_sidebar
 	top: 0;
 	left: 0;
 	bottom: 0;
+	overflow: hidden;
 }
 
 div.hui_dock_sidebar_main
@@ -4591,6 +4593,61 @@ div.hui_dock_sidebar_main
 	bottom: 0;
 	left: 200px;
 }	
+
+div.hui_dock_sidebar_line
+{
+	position: absolute;
+	top: 0;
+	left: 195px;
+	bottom: 0;
+	width: 5px;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar_line
+{
+	background-color: #eee;
+	width: 9px;
+	border-right: 1px solid #ddd;
+	margin-left: -5px;
+	left: 5px;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar_line:hover
+{
+	background: #ddd;
+	border-color: #ccc;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar
+{
+	display: none;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar_main
+{
+	left: 10px;
+}
+
+div.hui_dock_sidebar_line:hover
+{
+	background: rgba(0,0,0,.1);
+	cursor: pointer;
+	cursor: col-resize;
+}
+
+div.hui_dock_sidebar_resizing
+{
+	cursor: col-resize;
+}
+
+div.hui_dock_sidebar_resizing div.hui_dock_sidebar_line
+{
+	display: none;
+}
+
+div.hui_dock_sidebar_resizing div.hui_dock_progress
+{
+	background: none;
 }div.hui_tabs_tab_light
 {
 	background: #fff;
@@ -5127,6 +5184,82 @@ div.hui_bar_mini span.hui_bar_divider
 	height: 22px;
 	border-left: 1px solid #ddd;
 	margin: 0 3px;
+}
+
+
+/******************* window mini variant ***************/
+
+div.hui_bar_layout_mini
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	height: 22px;
+	border-bottom: 1px solid #ddd;
+}
+
+div.hui_bar_layout_mini div.hui_bar_body
+{
+	background: none;
+	height: 22px;
+	overflow: hidden;
+}
+
+div.hui_bar_layout_mini div.hui_bar_right
+{
+	height: 22px;
+	background: none;
+}
+
+div.hui_bar_layout_mini div.hui_bar_left
+{
+	height: 22px;
+}
+
+
+div.hui_bar_layout_mini a.hui_bar_button
+{
+	height: 22px;
+	line-height: 22px;
+	background: none;
+	border: 1px solid transparent;
+	border-width: 0 1px;
+	padding: 0 5px;	
+}
+
+div.hui_bar_layout_mini a.hui_bar_button:hover
+{
+	background: #eee;
+	border-color: #ddd;
+}
+
+div.hui_bar_layout_mini a.hui_bar_button span.hui_icon_16
+{
+	vertical-align: top;
+	margin-top: 3px;
+}
+
+div.hui_bar_layout_mini a.hui_bar_button_selected, div.hui_bar_layout_mini a.hui_bar_button_selected:hover
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 80% , from(#abc), to(#EBF0F7));
+	background: -moz-linear-gradient(top, #bbb, #ddd);
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#bbbbbb, endColorstr=#dddddd);
+	border-color: #bbb;
+}
+
+div.hui_bar_layout_mini a.hui_bar_button_selected span.hui_icon_16
+{
+	background-position: 0 -16px;
+}
+
+div.hui_bar_layout_mini_top
+{
+	border-top: 1px solid #ddd;
+}
+
+div.hui_bar_layout_mini_bottom
+{
+	border-top: 1px solid #ddd;
 }div.hui_videoplayer
 {
 	font-size: 0;

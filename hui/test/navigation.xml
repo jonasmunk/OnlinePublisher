@@ -13,7 +13,9 @@
     <item icon="common/folder" title="HTML tests" value="HTML tests">
         <item icon="common/page" title="alert" value="html/alert.html"/>
         <item icon="common/page" title="animation" value="html/animation.html"/>
+        <item icon="common/page" title="bar" value="html/bar.html"/>
         <item icon="common/page" title="boundpanel" value="html/boundpanel.html"/>
+        <item icon="common/page" title="boundpanel_long" value="html/boundpanel_long.html"/>
         <item icon="common/page" title="colorpicker" value="html/colorpicker.html"/>
         <item icon="common/page" title="drawing" value="html/drawing.html"/>
         <item icon="common/page" title="editor" value="html/editor.html"/>

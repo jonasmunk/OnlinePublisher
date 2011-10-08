@@ -1209,7 +1209,7 @@ hui.getDocumentHeight = function() {
 //////////////////////////// Placement /////////////////////////
 
 /**
- * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPartMargin:«integer»})
+ * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
  */
 hui.place = function(options) {
 	var left = 0,
@@ -1241,6 +1241,34 @@ hui.place = function(options) {
 	src.style.top = top+'px';
 	src.style.left = left+'px';
 }
+
+/////////////////////////////// Drag ///////////////////////////
+
+hui.drag = {
+	register : function(options) {
+		hui.listen(options.element,'mousedown',function(e) {
+			hui.stop(e);
+			hui.drag.start(options);
+		})
+	},
+	
+	start : function(options) {
+		options.onStart();
+		var mover,upper;
+		mover = function(e) {
+			e = hui.event(e);
+			options.onMove(e);
+		}.bind(this);
+		hui.listen(window,'mousemove',mover);
+		upper = function() {
+			hui.unListen(window,'mousemove',mover);
+			hui.unListen(window,'mouseup',upper);
+			options.onEnd();
+		}.bind(this)
+		hui.listen(window,'mouseup',upper);
+	}
+}
+
 
 //////////////////////////// Preloader /////////////////////////
 
@@ -5119,9 +5147,10 @@ hui.ui.Window.prototype = {
 	},
 	show : function(options) {
 		if (this.visible) {
-			var top = hui.getScrollTop();
-			if (hui.getTop(this.element)<top || hui.getTop(this.element)>hui.getViewPortHeight()+top) {
-				hui.animate({node:this.element,css:{top:(top+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
+			var scrollTop = hui.getScrollTop();
+			var winTop = hui.getTop(this.element);
+			if (winTop < scrollTop || winTop+this.element.clientHeight > hui.getViewPortHeight()+scrollTop) {
+				hui.animate({node:this.element,css:{top:(scrollTop+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
 			}
 			this.element.style.zIndex=hui.ui.nextPanelIndex();
 			return;
@@ -5707,6 +5736,9 @@ hui.ui.List.prototype = {
 				}
 				if (cells[j].getAttribute('vertical-align')) {
 					td.style.verticalAlign=cells[j].getAttribute('vertical-align');
+				}
+				if (cells[j].getAttribute('width')) {
+					td.style.width=cells[j].getAttribute('width')+'%';
 				}
 				if (cells[j].getAttribute('align')) {
 					td.style.textAlign=cells[j].getAttribute('align');
@@ -7196,6 +7228,12 @@ hui.ui.Selection.prototype = {
 				hui.log('Will not select first since im still busy');
 			}
 		}
+	},
+	show : function() {
+		this.element.style.display='';
+	},
+	hide : function() {
+		this.element.style.display='none';
 	}
 }
 
@@ -9078,7 +9116,7 @@ hui.ui.Menu = function(options) {
 	this.subMenus = [];
 	this.visible = false;
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 hui.ui.Menu.create = function(options) {
@@ -9091,19 +9129,18 @@ hui.ui.Menu.create = function(options) {
 
 hui.ui.Menu.prototype = {
 	/** @private */
-	addBehavior : function() {
-		var self = this;
+	_addBehavior : function() {
 		this.hider = function() {
-			self.hide();
-		}
+			this.hide();
+		}.bind(this)
 		if (this.options.autoHide) {
 			var x = function(e) {
-				if (!hui.ui.isWithin(e,self.element) && (!self.options.parentElement || !hui.ui.isWithin(e,self.options.parentElement))) {
-					if (!self.isSubMenuVisible()) {
-						self.hide();
+				if (!hui.ui.isWithin(e,this.element) && (!this.options.parentElement || !hui.ui.isWithin(e,this.options.parentElement))) {
+					if (!this.isSubMenuVisible()) {
+						this.hide();
 					}
 				}
-			};
+			}.bind(this);
 			hui.listen(this.element,'mouseout',x);
 			if (this.options.parentElement) {
 				hui.listen(this.options.parentElement,'mouseout',x);
@@ -10580,6 +10617,7 @@ hui.ui.Dock = function(options) {
 	this.element = hui.get(options.element);
 	this.iframe = hui.firstByTag(this.element,'iframe');
 	this.progress = hui.firstByClass(this.element,'hui_dock_progress');
+	this.resizer = hui.firstByClass(this.element,'hui_dock_sidebar_line');
 	hui.listen(this.iframe,'load',this._load.bind(this));
 	//if (this.iframe.contentWindow) {
 	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();hui.log('Fast path!')}.bind(this));
@@ -10592,9 +10630,54 @@ hui.ui.Dock = function(options) {
 	}
 	this.busy = true;
 	hui.ui.listen(this);
+	this._addBehavior();
 }
 
 hui.ui.Dock.prototype = {
+	_addBehavior : function() {
+		if (this.resizer) {
+			this.sidebar = hui.firstByClass(this.element,'hui_dock_sidebar');
+			this.main = hui.firstByClass(this.element,'hui_dock_sidebar_main');
+			hui.drag.register({
+				element : this.resizer,
+				onStart : function() {
+					this.hasDragged = false;
+					hui.addClass(this.element,'hui_dock_sidebar_resizing');
+					this._setBusy(true);
+				}.bind(this),
+				onMove : function(e) {
+					var left = e.getLeft();
+					if (left<10) {
+						left=10;
+					}
+					this._updateSidebarWidth(left);
+					if (!this.hasDragged) {
+						hui.removeClass(this.element,'hui_dock_sidebar_collapsed');
+					}
+					this.hasDragged = true;
+				}.bind(this),
+				onEnd : function() {
+					this._setBusy(false);
+					if (!this.hasDragged) {
+						this.toggle();
+					} else if (this.latestWidth==10) {
+						this.collapse();
+					} else {
+						this.latestExpandedWidth = this.latestWidth;
+					}
+					hui.removeClass(this.element,'hui_dock_sidebar_resizing');
+					hui.ui.callVisible(this);
+					hui.ui.reLayout();
+				}.bind(this)
+			})
+		}
+	},
+	_updateSidebarWidth : function(width) {
+		this.latestWidth = width;
+		this.sidebar.style.width = (width-1)+'px';
+		this.main.style.left = width+'px';
+		this.resizer.style.left = (width-5)+'px';
+	},
 	/** Change the url of the iframe
 	 * @param {String} url The url to change the iframe to
 	 */
@@ -10603,13 +10686,29 @@ hui.ui.Dock.prototype = {
 		hui.getFrameDocument(this.iframe).location.href='about:blank';
 		hui.getFrameDocument(this.iframe).location.href=url;
 	},
+	collapse : function() {
+		hui.addClass(this.element,'hui_dock_sidebar_collapsed');
+		this._updateSidebarWidth(10);
+		hui.ui.callVisible(this);
+	},
+	expand : function() {
+		hui.removeClass(this.element,'hui_dock_sidebar_collapsed');
+		this._updateSidebarWidth(this.latestExpandedWidth || 200);
+		hui.ui.callVisible(this);
+	},
+	toggle : function() {
+		if (hui.hasClass(this.element,'hui_dock_sidebar_collapsed')) {
+			this.expand();
+		} else {
+			this.collapse();
+		}
+	},
 	_load : function() {
 		this._setBusy(false);
 	},
 	_setBusy : function(busy) {
 		if (busy) {
-			hui.log(this.iframe.clientWidth)
-			hui.setStyle(this.progress,{display:'block',style:'height:'+this.iframe.clientHeight+'px;width:'+this.iframe.clientWidth+'px'});
+			hui.setStyle(this.progress,{display:'block',height:this.iframe.clientHeight+'px',width:this.iframe.clientWidth+'px'});
 		} else {
 			this.progress.style.display = 'none';
 		}
@@ -11012,7 +11111,9 @@ hui.ui.Overflow.prototype = {
 			bottom = hui.getTop(parent)+parent.clientHeight,
 			sibs = hui.getAllNext(this.element);
 		for (var i=0; i < sibs.length; i++) {
-			bottom-=sibs[i].clientHeight;
+			if (hui.getStyle(sibs[i],'position')!='absolute') {
+				bottom-=sibs[i].clientHeight;
+			}
 		}
 		this.diff = -1 * (top + (viewport - bottom));
 		if (hui.browser.webkit && this.element.parentNode.className=='hui_layout_center') {
@@ -11140,7 +11241,7 @@ hui.ui.SearchField.prototype = {
 		return this.field.value=='';
 	},
 	isBlank : function() {
-		return this.field.value.strip()=='';
+		return hui.isBlank(this.field.value);
 	},
 	reset : function() {
 		this.field.value='';
@@ -12903,7 +13004,7 @@ hui.ui.StyleLength.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var e = this.element;
-		hui.listen(this.input,'focus',function() {hui.addClass(e,'hui_number_focused')});
+		hui.listen(this.input,'focus',function() {hui.addClass(e,'hui_numberfield_focused')});
 		hui.listen(this.input,'blur',this.blurEvent.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
@@ -12911,6 +13012,9 @@ hui.ui.StyleLength.prototype = {
 	},
 	/** @private */
 	parseValue : function(value) {
+		if (value===null || value===undefined) {
+			return null;
+		}
 		var num = parseFloat(value,10);
 		if (isNaN(num)) {
 			return null;
@@ -12928,7 +13032,7 @@ hui.ui.StyleLength.prototype = {
 	},
 	/** @private */
 	blurEvent : function() {
-		hui.removeClass(this.element,'hui_number_focused');
+		hui.removeClass(this.element,'hui_numberfield_focused');
 		this.updateInput();
 	},
 	/** @private */
@@ -12991,6 +13095,19 @@ hui.ui.StyleLength.prototype = {
 	setValue : function(value) {
 		this.value = this.parseValue(value);
 		this.updateInput();
+	},
+	focus : function() {
+		try {
+			this.input.focus();
+		} catch (e) {}		
+	},
+	focus : function() {
+		try {
+			this.input.focus();
+		} catch (e) {}		
+	},
+	reset : function() {
+		this.setValue('');
 	}
 }/////////////////////////// Date time /////////////////////////
 

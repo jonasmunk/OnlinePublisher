@@ -58,9 +58,10 @@ hui.ui.Window.prototype = {
 	},
 	show : function(options) {
 		if (this.visible) {
-			var top = hui.getScrollTop();
-			if (hui.getTop(this.element)<top || hui.getTop(this.element)>hui.getViewPortHeight()+top) {
-				hui.animate({node:this.element,css:{top:(top+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
+			var scrollTop = hui.getScrollTop();
+			var winTop = hui.getTop(this.element);
+			if (winTop < scrollTop || winTop+this.element.clientHeight > hui.getViewPortHeight()+scrollTop) {
+				hui.animate({node:this.element,css:{top:(scrollTop+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
 			}
 			this.element.style.zIndex=hui.ui.nextPanelIndex();
 			return;

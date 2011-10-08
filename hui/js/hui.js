@@ -1209,7 +1209,7 @@ hui.getDocumentHeight = function() {
 //////////////////////////// Placement /////////////////////////
 
 /**
- * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPartMargin:«integer»})
+ * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
  */
 hui.place = function(options) {
 	var left = 0,
@@ -1241,6 +1241,34 @@ hui.place = function(options) {
 	src.style.top = top+'px';
 	src.style.left = left+'px';
 }
+
+/////////////////////////////// Drag ///////////////////////////
+
+hui.drag = {
+	register : function(options) {
+		hui.listen(options.element,'mousedown',function(e) {
+			hui.stop(e);
+			hui.drag.start(options);
+		})
+	},
+	
+	start : function(options) {
+		options.onStart();
+		var mover,upper;
+		mover = function(e) {
+			e = hui.event(e);
+			options.onMove(e);
+		}.bind(this);
+		hui.listen(window,'mousemove',mover);
+		upper = function() {
+			hui.unListen(window,'mousemove',mover);
+			hui.unListen(window,'mouseup',upper);
+			options.onEnd();
+		}.bind(this)
+		hui.listen(window,'mouseup',upper);
+	}
+}
+
 
 //////////////////////////// Preloader /////////////////////////
 

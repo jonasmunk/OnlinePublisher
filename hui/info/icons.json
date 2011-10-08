@@ -284,11 +284,17 @@
         "public": [
             16
         ], 
+        "stamp": [
+            32
+        ], 
         "tools": [
             16
         ], 
         "user": [
             16
+        ], 
+        "view": [
+            32
         ]
     }, 
     "layout": {
@@ -336,6 +342,9 @@
         "globe": [
             16
         ], 
+        "graph": [
+            16
+        ], 
         "image": [
             16
         ], 
@@ -366,10 +375,16 @@
         "message": [
             32
         ], 
+        "news": [
+            16
+        ], 
         "next": [
             16
         ], 
         "nosearch": [
+            16
+        ], 
+        "nuclear": [
             16
         ], 
         "pin": [
@@ -402,6 +417,9 @@
         "round_x": [
             16
         ], 
+        "stamp": [
+            16
+        ], 
         "stop": [
             16
         ], 
@@ -428,7 +446,19 @@
         "new": [
             32
         ], 
+        "new_monochrome": [
+            32
+        ], 
+        "stop": [
+            32
+        ], 
+        "success": [
+            32
+        ], 
         "upload": [
+            32
+        ], 
+        "view": [
             32
         ], 
         "warning": [

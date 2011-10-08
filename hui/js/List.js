@@ -290,6 +290,9 @@ hui.ui.List.prototype = {
 				if (cells[j].getAttribute('vertical-align')) {
 					td.style.verticalAlign=cells[j].getAttribute('vertical-align');
 				}
+				if (cells[j].getAttribute('width')) {
+					td.style.width=cells[j].getAttribute('width')+'%';
+				}
 				if (cells[j].getAttribute('align')) {
 					td.style.textAlign=cells[j].getAttribute('align');
 				}
