@@ -88,7 +88,9 @@ $gui='
 				</radiobuttons>
 			</group>
 			<buttons>
-				<button text="Slet" name="deleteIssue" small="true"/>
+				<button text="Slet" name="deleteIssue" small="true">
+					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+				</button>
 				<button text="Annuller" name="cancelIssue" small="true"/>
 				<button text="Gem" highlighted="true" submit="true" small="true" name="saveIssue"/>
 			</buttons>

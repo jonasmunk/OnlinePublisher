@@ -7,6 +7,7 @@ require_once '../../../Include/Private.php';
 
 $pageId = Request::getInt('pageId');
 $text = Request::getEncodedString('text');
+$kind = Request::getEncodedString('kind');
 
 
 $user = User::load(InternalSession::getUserId());
@@ -19,7 +20,7 @@ if (!$user || !$page) {
 	$issue = new Issue();
 	$issue->setTitle(StringUtils::shortenString($text,30));
 	$issue->setNote($text);
-	$issue->setKind(Issue::$unknown);
+	$issue->setKind($kind);
 	$issue->save();
 
 	RelationsService::relateObjectToPage($issue,$page,'subject');
