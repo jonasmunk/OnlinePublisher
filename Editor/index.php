@@ -33,7 +33,7 @@ $gui='
 	<source name="issueSource" url="Services/Base/ListIssues.php"/>
 	<controller source="Services/Base/controller.js"/>
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
-		<sidebar collapsed="false">
+		<sidebar collapsed="true">
 			<bar variant="layout_mini">
 				<button icon="monochrome/hierarchy" name="navPages" selected="true"/>
 				<button icon="monochrome/note" name="navNotes"/>
