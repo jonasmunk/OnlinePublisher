@@ -28,15 +28,14 @@ $gui='
 					<icon icon="common/info" title="Info" name="properties"/>
 					<divider/>
 					<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="true"/>
-					<divider/>
-					<icon icon="inset/stamp" title="Revidér" name="review"/>
-					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>
 				</toolbar>
 			</tab>
 			<tab title="Avanceret" background="light">
 				<toolbar>
 					<icon icon="common/time" text="Historik" name="viewHistory"/>
-					divider/>
+					<divider/>
+					<icon icon="inset/stamp" title="Revidér" name="review"/>
+					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>
 				</toolbar>
 			</tab>
 		</tabs>
