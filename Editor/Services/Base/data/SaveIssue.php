@@ -14,5 +14,6 @@ if ($issue = Issue::load($id)) {
 	$issue->setNote($text);
 	$issue->setKind($kind);	
 	$issue->save();
+	$issue->publish();
 }
 ?>

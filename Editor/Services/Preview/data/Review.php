@@ -27,6 +27,7 @@ if ($review) {
 	$review->setAccepted($accepted);
 	$review->setDate(time());
 	$review->save();
+	$review->publish();
 
 	RelationsService::relatePageToObject($page,$review,'reviewed');
 	RelationsService::relateObjectToObject($review,$user,'reviewer');	
