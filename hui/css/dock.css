@@ -109,6 +109,7 @@ div.hui_dock_sidebar_collapsed div.hui_dock_sidebar_main
 
 div.hui_dock_sidebar_line:hover
 {
+	background: #ddd;
 	background: rgba(0,0,0,.1);
 	cursor: pointer;
 	cursor: col-resize;

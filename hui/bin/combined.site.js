@@ -1253,19 +1253,21 @@ hui.drag = {
 	},
 	
 	start : function(options) {
+		var target = hui.browser.msie ? document : window;
+		
 		options.onStart();
 		var mover,upper;
 		mover = function(e) {
 			e = hui.event(e);
 			options.onMove(e);
 		}.bind(this);
-		hui.listen(window,'mousemove',mover);
+		hui.listen(target,'mousemove',mover);
 		upper = function() {
-			hui.unListen(window,'mousemove',mover);
-			hui.unListen(window,'mouseup',upper);
+			hui.unListen(target,'mousemove',mover);
+			hui.unListen(target,'mouseup',upper);
 			options.onEnd();
 		}.bind(this)
-		hui.listen(window,'mouseup',upper);
+		hui.listen(target,'mouseup',upper);
 	}
 }
 
