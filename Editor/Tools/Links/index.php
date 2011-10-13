@@ -8,16 +8,20 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Interface/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="System">
+<gui xmlns="uri:hui" padding="10" title="Links" state="list">
 	<controller source="controller.js"/>
-	<source name="listSource" url="LinkList.php">
+	<source name="graphSource" url="data/GraphData.php">
+		<parameter key="source" value="@sourceSelector.value"/>
+		<parameter key="target" value="@targetSelector.value"/>
+	</source>
+	<source name="listSource" url="data/LinkList.php">
 		<parameter key="source" value="@sourceSelector.value"/>
 		<parameter key="target" value="@targetSelector.value"/>
 	</source>
 	<layout>
 		<top>
 			<toolbar>
-				<segmented value="list" label="Visning">
+				<segmented value="list" label="Visning" name="view">
 					<item icon="view/list" value="list"/>
 					<item icon="view/graph" value="graph"/>
 				</segmented>
@@ -43,7 +47,8 @@ $gui='
 			</left>
 			<middle>
 				<overflow>
-					<list name="list" source="listSource"/>
+					<list name="list" source="listSource" state="list"/>
+					<graph source="graphSource" name="graph" layout="d3" state="graph"/>
 				</overflow>
 			</middle>
 		</middle>
