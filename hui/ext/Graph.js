@@ -48,9 +48,21 @@ hui.ui.Graph.prototype = {
 	implNodeWasClicked : function(node) {
 		this.fire('clickNode',node);
 	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	refresh : function() {	
+		if (this.options.source) {
+			this.options.source.refresh();
+		}
+	},
 	show : function() {
-		hui.log('graph.show');
 		this.element.style.display='block';
+		this.refresh();
+	},
+	hide : function() {
+		this.element.style.display='none';
 	},
 	$$layout : function() {
 		hui.log('graph.layout');
@@ -100,7 +112,6 @@ hui.ui.Graph.Protoviz = {
 		};
 	},
 	setData : function(data) {
-		hui.log('Setting data...')
 		var colors = pv.Colors.category19();
 		data = this.convert(data);
 		
@@ -193,7 +204,16 @@ hui.ui.Graph.D3 = {
 		return {"nodes":[{"name":"Person","group":1,"icon":"monochrome/person"},{"name":"Email","group":1},{"name":"Group","group":1}],"links":[{"source":1,"target":0,"value":1},{"source":0,"target":0,"value":2},{"source":1,"target":2,"value":2}]};
 	},
 	
+	clear : function() {
+		if (this.layout) {
+			this.layout.stop();
+			this.vis.remove();
+			this._init();
+		}
+	},
+	
 	setData : function(data) {
+		this.clear();
 		var w = this.parent.element.clientWidth,
 	    h = this.parent.element.clientHeight;
 		var json = this._convert(data);
