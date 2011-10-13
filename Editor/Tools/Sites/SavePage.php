@@ -21,8 +21,5 @@ if ($page = Page::load($data->id)) {
 	$page->setDesignId($data->designId);
 	$page->setFrameId($data->frameId);
 	$page->save();
-
-	Hierarchy::markHierarchyOfPageChanged($page->getId());
-	PageService::markChanged($page->getId());	
 }
 ?>

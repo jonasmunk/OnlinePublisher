@@ -111,5 +111,59 @@ class TestPage extends UnitTestCase {
 		$hierarchy->remove();
 	}
 	
+	function testLinks() {
+		// Create two pages
+		$fromPage = TestService::createTestPage();
+		$toPage = TestService::createTestPage();
+		
+		// They should not be changed now
+		$this->assertFalse(PageService::isChanged($fromPage->getId()));
+		$this->assertFalse(PageService::isChanged($toPage->getId()));
+		
+		// Create news with link to a page
+		$news = new News();
+		$news->setTitle('Unit test news article');
+		$news->save();
+		ObjectLinkService::addLink($news,'Read it','This is the alternative',null,'page',$toPage->getId());
+		$news->publish();
+		
+		// Check that the news is not changed
+		$this->assertFalse(ObjectService::isChanged($news->getId()));
+		
+		// Create a link from one to the other
+		$link = new Link();
+		$link->setText('dummy');
+		$link->setPageId($fromPage->getId());
+		$link->setTypeAndValue('page',$toPage->getId());
+		$link->save();
+		
+		// Check that the links
+		$links = LinkService::getPageLinks($fromPage->getId());
+		$this->assertEqual(count($links),1);
+		
+		// Wait a little to make timestamps different
+		sleep(1);
+		
+		// Save the destination
+		$toPage->save();
+		
+		// Now the source of the link should be changed
+		$this->assertTrue(PageService::isChanged($fromPage->getId()));
+
+		// Now the news should be changed
+		$this->assertTrue(ObjectService::isChanged($news->getId()));
+
+	
+		// Remove the two pages
+		TestService::removeTestPage($fromPage);
+		TestService::removeTestPage($toPage);
+		
+		$news->remove();
+		
+		// Check that the links are removed
+		$links = LinkService::getPageLinks($fromPage->getId());
+		$this->assertEqual(count($links),0);
+	}
+	
 }
 ?>

@@ -22,24 +22,21 @@ class EventService {
 			$sql = "select distinct page_id from document_section,part_image where document_section.part_id=part_image.part_id and part_image.image_id=".$id;
 			$result = Database::select($sql);
 			while ($row=Database::next($result)) {
-				$sql = "update page set changed=now() where id=".$row['page_id'];
-				Database::update($sql);
+				PageService::markChanged($row['page_id']);
 			}
 			Database::free($result);
 		} elseif (($event=='publish' || $event=='delete') && $type=='object' && $subType=='person') {
 			$sql = "select distinct page_id from document_section,part_person where document_section.part_id=part_person.part_id and part_person.person_id=".$id;
 			$result = Database::select($sql);
 			while ($row=Database::next($result)) {
-				$sql = "update page set changed=now() where id=".$row['page_id'];
-				Database::update($sql);
+				PageService::markChanged($row['page_id']);
 			}
 			Database::free($result);
 		} elseif (($event=='publish' || $event=='delete' || $event=='update') && $type=='object' && $subType=='file') {
 			$sql = "select distinct page_id from document_section,part_file where document_section.part_id=part_file.part_id and part_file.file_id=".$id;
 			$result = Database::select($sql);
 			while ($row=Database::next($result)) {
-				$sql = "update page set changed=now() where id=".$row['page_id'];
-				Database::update($sql);
+				PageService::markChanged($row['page_id']);
 			}
 			Database::free($result);
 		}
@@ -58,14 +55,25 @@ class EventService {
 			// Mark objects changed if they link to a changed page
 		    $sql = "update object,object_link set object.updated=now() where object.id=object_link.object_id and object_link.target_type='page' and object_link.target_value=".Database::text($id);
 		    Database::update($sql);
+			
+			// Mark hierarchy changed
+			Hierarchy::markHierarchyOfPageChanged($id);
+			
+			// Mark pages that link to it as changed
+			$sql = "select page_id from link where target_type='page' and target_id=".Database::int($id);
+			$result = Database::select($sql);
+			while ($row = Database::next($result)) {
+				PageService::markChanged($row['page_id']);
+			}
+			Database::free($result);
 		}
 		else if ($type=='page' && $event=='delete') {
 			// Remove special pages if page is deleted
-		    $sql = "delete from specialpage where page_id=".$id;
+		    $sql = "delete from specialpage where page_id=".Database::int($id);
 		    Database::delete($sql);
-		    $sql = "update page set next_page=0 where next_page=".$id;
+		    $sql = "update page set next_page=0 where next_page=".Database::int($id);
 		    Database::update($sql);
-		    $sql = "update page set previous_page=0 where next_page=".$id;
+		    $sql = "update page set previous_page=0 where next_page=".Database::int($id);
 		    Database::update($sql);
 		}
 		

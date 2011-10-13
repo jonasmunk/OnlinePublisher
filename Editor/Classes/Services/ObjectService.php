@@ -82,6 +82,15 @@ class ObjectService {
 		}
 		return false;
 	}
+
+	function isChanged($id) {
+		$sql="select updated-published as delta from object where id=".Database::int($id);
+		$row = Database::selectFirst($sql);
+		if ($row['delta']>0) {
+			return true;
+		}
+		return false;
+	}
 	
 	function publish($object) {
 		if (!$object->isPersistent()) {

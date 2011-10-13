@@ -7,7 +7,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Core/Database.php');
+require_once($basePath.'Editor/Classes/Modules/Links/LinkService.php');
 
 class Link {
     
@@ -52,7 +52,6 @@ class Link {
 	    return $this->targetType;
 	}
 	
-	
 	function setText($text) {
 	    $this->text = $text;
 	}
@@ -70,7 +69,6 @@ class Link {
 	}
 	
 	function setTypeAndValue($type,$value) {
-		error_log($type.'>'.$value);
 		if ($type=='page' || $type=='file') {
 			$this->targetType = $type;
 			$this->targetId=intval($value);
@@ -115,58 +113,15 @@ class Link {
 	}
 
 	function load($id) {
-		$sql = "select * from link where id=".Database::int($id);
-        if ($row = Database::selectFirst($sql)) {
-			$link = new Link();
-			$link->setId(intval($id));
-			$link->setText($row['source_text']);
-			$link->setAlternative($row['alternative']);
-			$link->targetType=$row['target_type'];
-			$link->targetValue=$row['target_value'];
-			$link->targetId=intVal($row['target_id']);
-			$link->partId=intVal($row['part_id']);
-			$link->pageId=intVal($row['page_id']);
-			return $link;
-		}
-		return null;
+		return LinkService::load($id);
 	}
 	
 	function remove() {
-		$sql="delete from link where id=".Database::int($this->id);
-		Database::delete($sql);
+		return LinkService::save($this);
 	}
 	
 	function save() {
-		if (strlen($this->text)==0) {
-			return;
-		}
-		if ($this->id) {
-			$sql="update link set ".
-			"part_id=".Database::int($this->partId).
-			",page_id=".Database::int($this->pageId).
-			",source_text=".Database::text($this->text).
-			",target_type=".Database::text($this->targetType).
-			",target_value=".Database::text($this->targetValue).
-			",target_id=".Database::int($this->targetId).
-			",target=".Database::text($this->target).
-			",alternative=".Database::text($this->alternative).
-			" where id=".Database::int($this->id);
-			Database::update($sql);
-		} else {
-			$sql="insert into link (page_id,part_id,source_type,source_text,target_type,target_value,target_id,target,alternative
-				) values (".
-				Database::int($this->pageId).
-				",".Database::int($this->partId).
-				",'text',".
-				Database::text($this->text).",".
-				Database::text($this->targetType).",".
-				Database::text($this->targetValue).",".
-				Database::int($this->targetId).",".
-				Database::text($this->target).",".
-				Database::text($alternative).
-			")";
-			$this->id = Database::insert($sql);
-		}
+		LinkService::save($this);
 	}
 
 }

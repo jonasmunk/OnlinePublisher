@@ -7,18 +7,51 @@ class LinksController {
 	
 	function buildSQL($query=array()) {
 		$source = $query['source'];
-		// Page to page
+		$target = $query['target'];
 		$unions = array();
 		if ($source=='page' || $source=='all') {
-			$unions[] = "select 'Finished' as status,source_text as source_data,'page' as source_type,page.title as source_title,link.page_id as source_id,target_type,targetpage.title as target_value,target_id from link,page,page as targetpage where link.page_id=page.id and link.target_type='page' and link.target_id=targetpage.id";
-			// Page to url + email
-			$unions[] = "select 'Unknown' as status,source_text as source_data,'page' as source_type,page.title as source_title,link.page_id as source_id,target_type,target_value,target_id from link,page where link.page_id=page.id and (link.target_type='email' or link.target_type='url')";
+			// Page to page
+			if ($target=='page' || $target=='all') {
+				$unions[] = "select 'Finished' as status,source_text as source_data,'page' as source_type,page.title as source_title,
+link.page_id as source_id,target_type,targetpage.title as target_value,targetpage.id as target_id from link left join page as targetpage on link.target_id=targetpage.id,page
+ where link.page_id=page.id and link.target_type='page'";
+			}
+
+			// Page to url
+			if ($target=='url' || $target=='all') {
+				$unions[] = "select 'Unknown' as status,source_text as source_data,'page' as source_type,page.title as source_title,".
+					"link.page_id as source_id,target_type,target_value,target_id from link,page where link.page_id=page.id".
+					" and link.target_type='url'";
+			}
+
+			// Page to email
+			if ($target=='email' || $target=='all') {
+				$unions[] = "select 'Unknown' as status,source_text as source_data,'page' as source_type,page.title as source_title,".
+					"link.page_id as source_id,target_type,target_value,target_id from link,page where link.page_id=page.id".
+					" and link.target_type='email'";
+			}
+
 			// Page to file
-			$unions[] = "select 'Finished' as status,source_text as source_data,'page' as source_type,page.title as source_title,link.page_id as source_id,target_type,object.title as target_value,target_id from link,page,object where link.page_id=page.id and link.target_type='file' and link.target_id=object.id";
+			if ($target=='file' || $target=='all') {
+				$unions[] = "select 'Finished' as status,source_text as source_data,'page' as source_type,page.title as source_title,".
+					"link.page_id as source_id,target_type,object.title as target_value,target_id from link,page,object".
+					" where link.page_id=page.id and link.target_type='file' and link.target_id=object.id";
+			}
 		}
 		if ($source=='hierarchy' || $source=='all') {
 			// Hierarchy to page+pageref
-			$unions[] = "select 'Finished' as status,hierarchy_item.title as source_data,'hierarchy' as source_type,hierarchy.name as source_title,hierarchy_id as source_id,target_type,page.title as target_value,target_id from hierarchy_item,hierarchy,page where (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref') and page.id = hierarchy_item.target_id and hierarchy_item.hierarchy_id=hierarchy.id";
+			if ($target=='page' || $target=='all') {
+				$unions[] = "select 'Finished' as status,hierarchy_item.title as source_data,'hierarchy' as source_type,hierarchy.name as source_title,
+hierarchy_id as source_id,target_type,page.title as target_value,page.id as target_id from hierarchy_item left join page on page.id=hierarchy_item.target_id,hierarchy
+ where (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')
+ and hierarchy_item.hierarchy_id=hierarchy.id";
+			}
+			if ($target=='url' || $target=='all') {
+				$unions[] = "select 'Finished' as status,hierarchy_item.title as source_data,'hierarchy' as source_type,hierarchy.name as source_title,".
+					"hierarchy_id as source_id,target_type,hierarchy_item.target_value,target_id from hierarchy_item,hierarchy".
+					" where (hierarchy_item.target_type='url')".
+					" and hierarchy_item.hierarchy_id=hierarchy.id";
+			}
 		}
 		return implode($unions,' union ');
 	}
@@ -47,8 +80,14 @@ class LinksController {
 		}
 		switch ($data['target_type']) {
 		    case "page":
-		        $out['targetIcon'] = 'common/page';
-		        $out['targetLink'] = '#'.$data['target_id'];
+				if (!$data['target_id']) {
+					$out['message'] = 'Siden findes ikke';
+		        	$out['targetIcon'] = 'common/warning';
+					$out['targetTitle'] = 'Siden findes ikke';
+				} else {
+		        	$out['targetIcon'] = 'common/page';
+		        	$out['targetLink'] = '#'.$data['target_id'];
+				}
 		        break;
 		    case "pageref":
 		        $out['targetIcon'] = 'common/pagereference';
@@ -72,7 +111,7 @@ class LinksController {
 		    case "url":
 		        $out['targetIcon'] = 'common/internet';
 		        $out['targetLink'] = $data['target_value'];
-		        if (ValidateUtils::validateUrl($data['target_value'])) {
+		        if (ValidateUtils::validateHref($data['target_value'])) {
 		            $out['message'] = "Kontrollér manuelt";
 		        } else {
 		            $out['status'] = "Stopped";

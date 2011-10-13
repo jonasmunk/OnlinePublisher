@@ -65,4 +65,59 @@ class LinkService {
 	function translateLinkType($type) {
 		return LinkService::$types[$type]['da'];
 	}
+	
+	function load($id) {
+		$sql = "select * from link where id=".Database::int($id);
+        if ($row = Database::selectFirst($sql)) {
+			$link = new Link();
+			$link->setId(intval($id));
+			$link->setText($row['source_text']);
+			$link->setAlternative($row['alternative']);
+			$link->targetType=$row['target_type'];
+			$link->targetValue=$row['target_value'];
+			$link->targetId=intVal($row['target_id']);
+			$link->partId=intVal($row['part_id']);
+			$link->pageId=intVal($row['page_id']);
+			return $link;
+		}
+		return null;
+	}
+
+	function remove($link) {
+		$sql="delete from link where id=".Database::int($this->getId());
+		return Database::delete($sql);
+	}
+
+	function save($link) {
+		if (StringUtils::isBlank($link->getText())) {
+			return;
+		}
+		if ($link->id) {
+			$sql="update link set ".
+			"part_id=".Database::int($link->partId).
+			",page_id=".Database::int($link->pageId).
+			",source_text=".Database::text($link->text).
+			",target_type=".Database::text($link->targetType).
+			",target_value=".Database::text($link->targetValue).
+			",target_id=".Database::int($link->targetId).
+			",target=".Database::text($link->target).
+			",alternative=".Database::text($link->alternative).
+			" where id=".Database::int($link->id);
+			Database::update($sql);
+		} else {
+			$sql="insert into link (page_id,part_id,source_type,source_text,target_type,target_value,target_id,target,alternative
+				) values (".
+				Database::int($link->pageId).
+				",".Database::int($link->partId).
+				",'text',".
+				Database::text($link->text).",".
+				Database::text($link->targetType).",".
+				Database::text($link->targetValue).",".
+				Database::int($link->targetId).",".
+				Database::text($link->target).",".
+				Database::text($link->alternative).
+			")";
+			$this->id = Database::insert($sql);
+		}
+	}
 }

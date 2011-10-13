@@ -11,25 +11,34 @@ $gui='
 <gui xmlns="uri:hui" padding="10" title="System">
 	<controller source="controller.js"/>
 	<source name="listSource" url="LinkList.php">
-		<parameter key="subset" value="@selector.value"/>
+		<parameter key="source" value="@sourceSelector.value"/>
+		<parameter key="target" value="@targetSelector.value"/>
 	</source>
 	<layout>
 		<top>
 			<toolbar>
+				<segmented value="list" label="Visning">
+					<item icon="view/list" value="list"/>
+					<item icon="view/graph" value="graph"/>
+				</segmented>
 			</toolbar>
 		</top>
 		<middle>
 			<left>
-				<selection value="all" name="selector">
+				<selection value="all" name="sourceSelector">
+					<title>Kilde</title>
 					<item icon="common/folder" title="Alle" value="all"/>
-					<title>Kilder</title>
-					<item icon="common/page" title="Sider" value="source-page"/>
-					<item icon="common/hierarchy" title="Hierarkier" value="source-hierarchy"/>
-					<!--title>Mål</title>
-					<item icon="common/internet" title="Udgående" value="target-external"/>
-					<item icon="common/email" title="E-mail adresser" value="target-email"/>
-					<item icon="common/page" title="Sider" value="target-page"/>
-					<item icon="file/generic" title="Filer" value="target-file"/-->
+					<item icon="common/page" title="Sider" value="page"/>
+					<item icon="common/news" title="Nyheder" value="news"/>
+					<item icon="common/hierarchy" title="Hierarkier" value="hierarchy"/>
+				</selection>
+				<selection value="all" name="targetSelector">
+					<title>Mål</title>
+					<item icon="common/folder" title="Alle" value="all"/>
+					<item icon="common/internet" title="Adresser" value="url"/>
+					<item icon="common/email" title="E-mail-adresser" value="email"/>
+					<item icon="common/page" title="Sider" value="page"/>
+					<item icon="file/generic" title="Filer" value="file"/>
 				</selection>
 			</left>
 			<middle>

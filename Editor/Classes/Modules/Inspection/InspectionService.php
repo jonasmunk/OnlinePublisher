@@ -16,6 +16,8 @@ class InspectionService {
 		$inspections = array();
 		
 		InspectionService::checkFolders($inspections);
+		InspectionService::checkPageStructure($inspections);
+		InspectionService::checkFrameStructure($inspections);
 		InspectionService::checkPageContent($inspections);
 
 		$filtered = array();
@@ -27,6 +29,36 @@ class InspectionService {
 		}
 		
 		return $filtered;
+	}
+	
+	function checkPageStructure(&$inspections) {
+		$sql = "select title,id from page where design_id not in (select object_id from design)";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$entity = array('type'=>'page','title'=>$row['title'],'id'=>$row['id'],'icon'=>'common/page');
+			$inspection = new Inspection();
+			$inspection->setCategory('model');
+			$inspection->setEntity($entity);
+			$inspection->setStatus('error');
+			$inspection->setText('Siden har intet design');
+			$inspections[] = $inspection;
+		}
+		Database::free($result);
+	}
+	
+	function checkFrameStructure(&$inspections) {
+		$sql = "select name,id from frame where hierarchy_id not in (select id from hierarchy)";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$entity = array('type'=>'frame','title'=>$row['name'],'id'=>$row['id'],'icon'=>'common/page');
+			$inspection = new Inspection();
+			$inspection->setCategory('model');
+			$inspection->setEntity($entity);
+			$inspection->setStatus('error');
+			$inspection->setText('Opsætningen har intet hierarki');
+			$inspections[] = $inspection;
+		}
+		Database::free($result);
 	}
 	
 	function checkPageContent(&$inspections) {

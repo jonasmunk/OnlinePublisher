@@ -259,7 +259,14 @@ class PageService {
 			",design_id=".Database::int($page->getDesignId()).
 			",frame_id=".Database::int($page->getFrameId()).
 			" where id=".Database::int($page->getId());
-			return Database::update($sql);
+			$success = Database::update($sql);
+			
+			if ($success) {
+				PageService::markChanged($page->getId());
+				EventService::fireEvent('update','page',$page->getTemplateUnique(),$page->getId());
+			}
+			
+			return $success;
 		} else {
 			return PageService::create($page);
 		}

@@ -465,6 +465,8 @@ class RenderingService {
 
 			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$options['relativePath'],'','?id='.$id.'&amp;',true);
 		}
+		Log::debug('Unable to query: '.$pageId);
+		Log::debug($sql);
 		return null;
 	}
 }

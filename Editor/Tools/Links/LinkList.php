@@ -9,15 +9,10 @@ require_once '../../Classes/Interface/In2iGui.php';
 require_once '../../Classes/Core/Request.php';
 require_once 'LinksController.php';
 
-$subset = Request::getString('subset');
-$pair = split('-',$subset);
+$source = Request::getString('source');
+$target = Request::getString('target');
 
-$query = array();
-if ($pair[0]=='source') {
-	$query['source'] = $pair[1];
-} else {
-	$query['source'] = 'all';
-}
+$query = array('source'=>$source,'target'=>$target);
 
 $writer = new ListWriter();
 
@@ -36,7 +31,7 @@ while ($row = Database::next($result)) {
     $analyzed = LinksController::analyzeLink($row);
 	$writer->startRow();
 	$writer->startCell(array('icon'=>$analyzed['sourceIcon']))->text($analyzed['sourceTitle'])->endCell();
-	$writer->startCell()->text($analyzed['sourceData'])->endCell();
+	$writer->startCell()->startLine(array('dimmed'=>true))->text($analyzed['sourceData'])->endLine()->endCell();
 	$writer->startCell(array('icon'=>$analyzed['targetIcon']))->text($analyzed['targetTitle'])->endCell();
 	$writer->startCell()->text($analyzed['message'])->endCell();
 	$writer->endRow();
