@@ -23,7 +23,7 @@
 		<xsl:if test="img:link/@image and $editor!='true'">
 			<script type="text/javascript">
 			try {
-				op.registerImageViewer('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="img:link/@image"/><xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if><xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>,text:'<xsl:value-of select="img:link/@note"/>'});
+				op.registerImageViewer('part_image_<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="img:link/@image"/><xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if><xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>,text:'<xsl:value-of select="img:link/@note"/>'});
 			} catch (ignore) {}
 			</script>
 		</xsl:if>
@@ -52,11 +52,11 @@
 	<xsl:choose>
 		<xsl:when test="img:style/@frame">
 			<span class="part_image_frame_{img:style/@frame}">
-				<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="{generate-id()}"/>
+				<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
 			</span>
 		</xsl:when>
 		<xsl:otherwise>
-			<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="{generate-id()}"/>
+			<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>

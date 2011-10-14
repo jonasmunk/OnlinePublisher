@@ -10,7 +10,7 @@
 
 
 	<xsl:template match="ig:imagegallery">
-		<div id="{generate-id()}">
+		<div id="part_image_{generate-id()}">
 			<xsl:attribute name="class">
 				<xsl:text>part_imagegallery</xsl:text>
 				<xsl:if test="ig:display/@framed='true'"><xsl:text> part_imagegallery_framed</xsl:text></xsl:if>
@@ -26,10 +26,10 @@
 		</div>
 		<script type="text/javascript">
 			(function() {
-				var part = new op.part.ImageGallery({element:'<xsl:value-of select="generate-id()"/>',variant:'<xsl:value-of select="ig:display/@variant"/>',editor:<xsl:value-of select="$editor='true'"/>});
+				var part = new op.part.ImageGallery({element:'part_image_<xsl:value-of select="generate-id()"/>',variant:'<xsl:value-of select="ig:display/@variant"/>',editor:<xsl:value-of select="$editor='true'"/>});
 				with (part) {
 					<xsl:for-each select="o:object">
-						registerImage('<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="@id"/>,width:<xsl:value-of select="o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:sub/i:image/i:height"/>,text:'<xsl:value-of select="o:note"/>'});
+						registerImage('part_image_<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="@id"/>,width:<xsl:value-of select="o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:sub/i:image/i:height"/>,text:'<xsl:value-of select="o:note"/>'});
 					</xsl:for-each>
 					init();
 				}
@@ -62,7 +62,7 @@
 			<xsl:if test="../ig:display/@show-title='true'">
 				<span class="common_font"><xsl:value-of select="o:title"/></span>
 			</xsl:if>
-			<img src="{$path}services/images/?id={@id}&amp;height={$height}" style="height: {$height}px; width: {$width}px;" alt="" id="{generate-id()}"/>
+			<img src="{$path}services/images/?id={@id}&amp;height={$height}" style="height: {$height}px; width: {$width}px;" alt="" id="part_image_{generate-id()}"/>
 		</a>
 	</xsl:template>
 
