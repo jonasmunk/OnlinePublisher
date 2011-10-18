@@ -120,4 +120,174 @@ class LinkService {
 			$this->id = Database::insert($sql);
 		}
 	}
+	
+	function search($query) {
+		$sql = "select 
+
+			object.type as source_type,
+			object_link.object_id as source_id,
+			object.title as source_title,
+			'' as source_sub_type,
+			NULL as source_sub_id,
+			object_link.title as source_text,
+
+			object_link.target_type,
+			object_link.target_value,
+
+			page.id as target_page_id,
+			page.title as target_page_title,
+			file.id as target_file_id,
+			file.title as target_file_title 
+
+			from object_link 
+			left join page on object_link.target_value=page.id and object_link.target_type='page'
+			left join object as file on object_link.target_value=file.id and object_link.target_type='file'
+			,object where object_link.object_id = object.id
+
+			#and target_type='page'
+
+			union select 
+
+			'page' as source_type,
+			page.id as source_id,
+			page.title as source_title,
+			link.source_type as source_sub_type,
+			link.part_id as source_sub_id,
+
+			link.source_text as source_text,
+
+			target_type as target_type,
+			link.target_value,
+
+			target_page.id as target_page_id,
+			target_page.title as target_page_title,
+			file.id as target_file_id,
+			file.title as target_file_title
+
+			 from link
+			 left join page as target_page on link.target_id=target_page.id and link.target_type='page'
+			 left join object as file on link.target_id=file.id and link.target_type='file'
+			 , page where link.page_id = page.id
+ 
+			 union
+ 
+			 select
+			'page' as source_type,
+			page.id as source_id,
+			page.title as source_title,
+			part_link.source_type as source_sub_type,
+			part_link.part_id as source_sub_id,
+
+			'' as source_text,
+
+			target_type as target_type,
+			part_link.target_value,
+
+			target_page.id as target_page_id,
+			target_page.title as target_page_title,
+			file.id as target_file_id,
+			file.title as target_file_title
+
+			 from part_link
+			left join page as target_page on part_link.target_value=target_page.id and part_link.target_type='page'
+			left join object as file on part_link.target_value=file.id and part_link.target_type='file'
+			,part,page,document_section where part_link.part_id = part.id and part.id=document_section.part_id and page.id=document_section.page_id
+ 			and target_type!='sameimage'
+
+			union
+
+			 select
+			'hierarchy' as source_type,
+			hierarchy.id as source_id,
+			hierarchy.name as source_title,
+			null as source_sub_type,
+			null as source_sub_id,
+
+			hierarchy_item.title as source_text,
+
+			target_type as target_type,
+			hierarchy_item.target_value,
+
+			target_page.id as target_page_id,
+			target_page.title as target_page_title,
+			file.id as target_file_id,
+			file.title as target_file_title
+
+			 from hierarchy_item
+			left join page as target_page on hierarchy_item.target_id=target_page.id and (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')
+			left join object as file on hierarchy_item.target_id=file.id and hierarchy_item.target_type='file'
+			,hierarchy where hierarchy_item.`hierarchy_id`=hierarchy.id
+ 
+		";
+		$list = array();
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			if (!$query->getTargetType() || $query->getTargetType()==$row['target_type']) {
+				if (!$query->getSourceType() || $query->getSourceType()==$row['source_type']) {
+					$view = LinkService::buildView($row);
+					if (!$query->getOnlyWarnings() || ($query->getOnlyWarnings() && $view->getStatus()!=null)) {
+						$list[] = $view;
+					}
+				}
+			}
+		}
+		Database::free($result);
+		return $list;
+	}
+	
+	function buildView($row) {
+		$view = new LinkView();
+		$view->setSourceType($row['source_type']);
+		$view->setSourceId($row['source_id']);
+		$view->setSourceTitle($row['source_title']);
+		$view->setSourceText($row['source_text']);
+		if ($row['source_sub_type']=='entireimage') {
+			$view->setSourceText('*billede*');
+		}
+		$view->setTargetType($row['target_type']);
+		if ($row['target_type']=='pageref') {
+			$view->setTargetType('page');
+			if (!$row['target_page_id']) {
+				$view->setStatus(LinkView::$NOT_FOUND);
+				$view->setTargetId(-1);
+				$view->setTargetTitle('?');
+			} else {
+				$view->setTargetId($row['target_page_id']);
+				$view->setTargetTitle($row['target_page_title']);
+			}
+			
+		} else if ($row['target_type']=='page') {
+			if (!$row['target_page_id']) {
+				$view->setStatus(LinkView::$NOT_FOUND);
+				$view->setTargetId(-1);
+				$view->setTargetTitle('?');
+			} else {
+				$view->setTargetId($row['target_page_id']);
+				$view->setTargetTitle($row['target_page_title']);
+			}
+		}
+		else if ($row['target_type']=='file') {
+			if (!$row['target_file_id']) {
+				$view->setStatus(LinkView::$NOT_FOUND);
+				$view->setTargetId(-1);
+				$view->setTargetTitle('?');
+			} else {
+				$view->setTargetId($row['target_file_id']);
+				$view->setTargetTitle($row['target_file_title']);
+			}
+		} else if ($row['target_type']=='email') {
+			$view->setTargetId($row['target_value']);
+			$view->setTargetTitle($row['target_value']);
+			if (!ValidateUtils::validateEmail($row['target_value'])) {
+				$view->setStatus(LinkView::$INVALID);
+			}
+		} else if ($row['target_type']=='url') {
+			$view->setTargetId($row['target_value']);
+			$view->setTargetTitle($row['target_value']);
+			if (!ValidateUtils::validateHref($row['target_value'])) {
+				$view->setStatus(LinkView::$INVALID);
+			}
+		}
+		return $view;
+	}
 }

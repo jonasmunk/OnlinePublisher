@@ -13,10 +13,12 @@ $gui='
 	<source name="graphSource" url="data/GraphData.php">
 		<parameter key="source" value="@sourceSelector.value"/>
 		<parameter key="target" value="@targetSelector.value"/>
+		<parameter key="state" value="@stateSelector.value"/>
 	</source>
 	<source name="listSource" url="data/LinkList.php">
 		<parameter key="source" value="@sourceSelector.value"/>
 		<parameter key="target" value="@targetSelector.value"/>
+		<parameter key="state" value="@stateSelector.value"/>
 	</source>
 	<layout>
 		<top>
@@ -29,6 +31,11 @@ $gui='
 		</top>
 		<middle>
 			<left>
+				<selection value="all" name="stateSelector">
+					<title>Status</title>
+					<item icon="monochrome/round_question" title="Alle" value="all"/>
+					<item icon="monochrome/warning" title="Fejl" value="warnings"/>
+				</selection>
 				<selection value="all" name="sourceSelector">
 					<title>Kilde</title>
 					<item icon="common/folder" title="Alle" value="all"/>
