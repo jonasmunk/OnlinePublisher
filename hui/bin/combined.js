@@ -5840,7 +5840,7 @@ hui.ui.List.prototype = {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
 			cell.appendChild(hui.ui.createIcon(icon,16));
-			cell = hui.build('div',{parent:cell,style:'margin-left: 20px'});
+			cell = hui.build('div',{parent:cell,style:'margin-left: 21px'});
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];
@@ -11124,9 +11124,11 @@ hui.ui.Overflow.prototype = {
 	},
 	show : function() {
 		this.element.style.display='';
+		hui.ui.callVisible(this);
 	},
 	hide : function() {
 		this.element.style.display='none';
+		hui.ui.callVisible(this);
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {

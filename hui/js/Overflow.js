@@ -38,9 +38,11 @@ hui.ui.Overflow.prototype = {
 	},
 	show : function() {
 		this.element.style.display='';
+		hui.ui.callVisible(this);
 	},
 	hide : function() {
 		this.element.style.display='none';
+		hui.ui.callVisible(this);
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
