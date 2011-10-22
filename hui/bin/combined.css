@@ -2619,6 +2619,7 @@ div.hui_list_selection a.hui_list_selected
 p.hui_list_line
 {
 	margin: 0;
+	overflow: hidden;
 }
 
 p.hui_list_dimmed, td.hui_list_dimmed

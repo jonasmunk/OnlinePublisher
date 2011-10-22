@@ -256,15 +256,6 @@ hui.toIntArray = function(str) {
 	return array;
 }
 
-/** Scroll to an element */
-hui.scrollTo = function(element) {
-	element = hui.get(element);
-	if (element) {
-		var pos = hui.getPosition(element);
-		window.scrollTo(pos.left, pos.top-50);
-	}
-}
-
 ////////////////////// DOM ////////////////////
 
 /** @namespace */
@@ -604,6 +595,20 @@ hui.window = {
 			return document.documentElement.scrollTop;
 		}
 		return document.body.scrollTop;
+	}
+}
+hui.scrollTo = function(options) {
+	var node = options.element;
+	var pos = hui.getPosition(node);
+	var viewTop = hui.window.getScrollTop();
+	var viewHeight = hui.getViewPortHeight();
+	var viewBottom = viewTop+viewHeight;
+	hui.log({pos:pos,height:node.clientHeight,viewTop:viewTop,viewBottom:viewBottom});
+	if (viewTop<pos.top+node.clientHeight || (pos.top)<viewBottom) {
+		var top = pos.top-Math.round((viewHeight-node.clientHeight)/2);
+		top=Math.max(0,top);
+		hui.log(top);
+		window.scrollTo(0,top);
 	}
 }
 

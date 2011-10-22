@@ -18,7 +18,7 @@ line.hui_graph_link
 }
 .hui_node:hover .hui_graph_icon
 {
-	/*fill: #000;*/
+	fill: #000;
 }
 
 text.hui_graph_label
@@ -33,6 +33,7 @@ text.hui_graph_label
 .hui_node:hover text.hui_graph_label
 {
 	opacity: 1;
+	fill: #000;
 }
 
 div.hui_graph
