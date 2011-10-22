@@ -160,9 +160,13 @@ class ListWriter {
 		return $this;
 	}
 
-	function badge($text) {
+	function badge($mixed) {
 		echo '<badge>';
-		$this->text($text);
+		if (is_array($mixed)) {
+			$this->text($mixed['text']);
+		} else {
+			$this->text($text);
+		}
 		echo '</badge>';
 		return $this;
 	}

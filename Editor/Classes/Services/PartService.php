@@ -29,6 +29,19 @@ class PartService {
 		return $part;
 	}
 	
+	function getLinkText($partId) {
+		$text = '';
+		$sql = "select text,document_section.part_id from part_text,document_section where document_section.part_id=part_text.part_id and document_section.part_id=".Database::int($partId)."
+union select text,document_section.part_id from part_header,document_section where document_section.part_id=part_header.part_id and document_section.part_id=".Database::int($partId)."
+union select text,document_section.part_id from part_listing,document_section where document_section.part_id=part_listing.part_id and document_section.part_id=".Database::int($partId);
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$text.=' '.$row['text'];
+		}
+		Database::free($result);
+		return $text;
+	}
+	
 	function newInstance($type) {
 		global $basePath;
 		$class = ucfirst($type).'Part';

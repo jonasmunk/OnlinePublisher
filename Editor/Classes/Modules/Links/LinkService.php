@@ -85,6 +85,7 @@ class LinkService {
 
 	function remove($link) {
 		$sql="delete from link where id=".Database::int($this->getId());
+		Log::debug($sql);
 		return Database::delete($sql);
 	}
 
@@ -121,33 +122,62 @@ class LinkService {
 		}
 	}
 	
+	function getSourceIcon($view) {
+		$icons = array(
+			'hierarchy' => 'monochrome/hierarchy',
+			'file' => 'monochrome/file',
+			'url' => 'monochrome/globe',
+			'email' => 'monochrome/email',
+			'page' => 'common/page',
+			'news' => 'common/news'
+		);
+		return $icons[$view->getSourceType()];
+	}
+
+	function getTargetIcon($view) {
+		$icons = array(
+			'hierarchy' => 'monochrome/hierarchy',
+			'file' => 'monochrome/file',
+			'url' => 'monochrome/globe',
+			'email' => 'monochrome/email',
+			'page' => 'common/page',
+			'news' => 'common/news'
+		);
+		return $icons[$view->getTargetType()];
+	}
+	
 	function search($query) {
-		$sql = "select 
+		$unions = array();
+		$pageId = $query->getSourcePage();
+		if (!$pageId) {
+			$unions[] = "select 
+				object_link.id as id,
+				
+				object.type as source_type,
+				object_link.object_id as source_id,
+				object.title as source_title,
+				'' as source_sub_type,
+				NULL as source_sub_id,
+				object_link.title as source_text,
+				object_link.alternative as source_description,
 
-			object.type as source_type,
-			object_link.object_id as source_id,
-			object.title as source_title,
-			'' as source_sub_type,
-			NULL as source_sub_id,
-			object_link.title as source_text,
+				object_link.target_type,
+				object_link.target_value,
 
-			object_link.target_type,
-			object_link.target_value,
+				page.id as target_page_id,
+				page.title as target_page_title,
+				file.id as target_file_id,
+				file.title as target_file_title 
 
-			page.id as target_page_id,
-			page.title as target_page_title,
-			file.id as target_file_id,
-			file.title as target_file_title 
+				from object_link 
+				left join page on object_link.target_value=page.id and object_link.target_type='page'
+				left join object as file on object_link.target_value=file.id and object_link.target_type='file'
+				,object where object_link.object_id = object.id";
+		}
+		$unions[] = "select 
 
-			from object_link 
-			left join page on object_link.target_value=page.id and object_link.target_type='page'
-			left join object as file on object_link.target_value=file.id and object_link.target_type='file'
-			,object where object_link.object_id = object.id
-
-			#and target_type='page'
-
-			union select 
-
+			link.id as id,
+			
 			'page' as source_type,
 			page.id as source_id,
 			page.title as source_title,
@@ -155,6 +185,7 @@ class LinkService {
 			link.part_id as source_sub_id,
 
 			link.source_text as source_text,
+			link.alternative as source_description,
 
 			target_type as target_type,
 			link.target_value,
@@ -167,11 +198,11 @@ class LinkService {
 			 from link
 			 left join page as target_page on link.target_id=target_page.id and link.target_type='page'
 			 left join object as file on link.target_id=file.id and link.target_type='file'
-			 , page where link.page_id = page.id
- 
-			 union
- 
-			 select
+			 , page where link.page_id = page.id".($pageId ? " and page.id=".Database::int($pageId) : "");
+		
+		$unions[] = "select
+			part_link.id as id,
+			
 			'page' as source_type,
 			page.id as source_id,
 			page.title as source_title,
@@ -179,6 +210,7 @@ class LinkService {
 			part_link.part_id as source_sub_id,
 
 			'' as source_text,
+			part_link.alternative as source_description,
 
 			target_type as target_type,
 			part_link.target_value,
@@ -192,11 +224,11 @@ class LinkService {
 			left join page as target_page on part_link.target_value=target_page.id and part_link.target_type='page'
 			left join object as file on part_link.target_value=file.id and part_link.target_type='file'
 			,part,page,document_section where part_link.part_id = part.id and part.id=document_section.part_id and page.id=document_section.page_id
- 			and target_type!='sameimage'
-
-			union
-
-			 select
+ 			and target_type!='sameimage'".($pageId ? " and page.id=".Database::int($pageId) : "");
+		if (!$pageId) {
+		$unions[] = "select
+			hierarchy_item.id as id,
+			
 			'hierarchy' as source_type,
 			hierarchy.id as source_id,
 			hierarchy.name as source_title,
@@ -204,6 +236,7 @@ class LinkService {
 			null as source_sub_id,
 
 			hierarchy_item.title as source_text,
+ 			hierarchy_item.alternative as source_description,
 
 			target_type as target_type,
 			hierarchy_item.target_value,
@@ -216,16 +249,19 @@ class LinkService {
 			 from hierarchy_item
 			left join page as target_page on hierarchy_item.target_id=target_page.id and (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')
 			left join object as file on hierarchy_item.target_id=file.id and hierarchy_item.target_type='file'
-			,hierarchy where hierarchy_item.`hierarchy_id`=hierarchy.id
- 
-		";
+			,hierarchy where hierarchy_item.`hierarchy_id`=hierarchy.id";
+		}
+		$sql = join(' union ',$unions);
 		$list = array();
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			if (!$query->getTargetType() || $query->getTargetType()==$row['target_type']) {
 				if (!$query->getSourceType() || $query->getSourceType()==$row['source_type']) {
-					$view = LinkService::buildView($row);
-					if (!$query->getOnlyWarnings() || ($query->getOnlyWarnings() && $view->getStatus()!=null)) {
+					$view = LinkService::_buildView($row);
+					if ($query->getTextCheck()) {
+						LinkService::_checkText($view);
+					}
+					if (!$query->getOnlyWarnings() || ($query->getOnlyWarnings() && count($view->getErrors())>0)) {
 						$list[] = $view;
 					}
 				}
@@ -235,12 +271,34 @@ class LinkService {
 		return $list;
 	}
 	
-	function buildView($row) {
+	function _checkText($view) {
+		if ($view->getSourceType()=='page' && $view->getSourceSubType()=='text') {
+			$text = '';
+			if ($view->getSourceSubId()) {
+				$text = PartService::getLinkText($view->getSourceSubId());
+			} else {
+				$text = PageService::getLinkText($view->getSourceId());
+			}
+			$found = strpos($text,$view->getSourceText())!==false;
+			if (!$found) {
+				//Log::debug('"'.$view->getSourceText().'" not found in "'.$text.'"');
+				$view->addError(LinkView::$TEXT_NOT_FOUND,'The link text was not found');
+			}
+		}
+	}
+	
+	function _buildView($row) {
 		$view = new LinkView();
+		$view->setId(intval($row['id']));
 		$view->setSourceType($row['source_type']);
-		$view->setSourceId($row['source_id']);
+		$view->setSourceId(intval($row['source_id']));
+		if ($row['source_sub_id']) {
+			$view->setSourceSubId(intval($row['source_sub_id']));
+		}
+		$view->setSourceSubType($row['source_sub_type']);
 		$view->setSourceTitle($row['source_title']);
 		$view->setSourceText($row['source_text']);
+		$view->setSourceDescription($row['source_description']);
 		if ($row['source_sub_type']=='entireimage') {
 			$view->setSourceText('*billede*');
 		}
@@ -248,44 +306,44 @@ class LinkService {
 		if ($row['target_type']=='pageref') {
 			$view->setTargetType('page');
 			if (!$row['target_page_id']) {
-				$view->setStatus(LinkView::$NOT_FOUND);
+				$view->addError(LinkView::$TARGET_NOT_FOUND,'The target page does not exist');
 				$view->setTargetId(-1);
 				$view->setTargetTitle('?');
 			} else {
-				$view->setTargetId($row['target_page_id']);
+				$view->setTargetId(intval($row['target_page_id']));
 				$view->setTargetTitle($row['target_page_title']);
 			}
 			
 		} else if ($row['target_type']=='page') {
 			if (!$row['target_page_id']) {
-				$view->setStatus(LinkView::$NOT_FOUND);
+				$view->addError(LinkView::$TARGET_NOT_FOUND,'The target page does not exist');
 				$view->setTargetId(-1);
 				$view->setTargetTitle('?');
 			} else {
-				$view->setTargetId($row['target_page_id']);
+				$view->setTargetId(intval($row['target_page_id']));
 				$view->setTargetTitle($row['target_page_title']);
 			}
 		}
 		else if ($row['target_type']=='file') {
 			if (!$row['target_file_id']) {
-				$view->setStatus(LinkView::$NOT_FOUND);
+				$view->addError(LinkView::$TARGET_NOT_FOUND,'The target file does not exist');
 				$view->setTargetId(-1);
 				$view->setTargetTitle('?');
 			} else {
-				$view->setTargetId($row['target_file_id']);
+				$view->setTargetId(intval($row['target_file_id']));
 				$view->setTargetTitle($row['target_file_title']);
 			}
 		} else if ($row['target_type']=='email') {
 			$view->setTargetId($row['target_value']);
 			$view->setTargetTitle($row['target_value']);
 			if (!ValidateUtils::validateEmail($row['target_value'])) {
-				$view->setStatus(LinkView::$INVALID);
+				$view->addError(LinkView::$INVALID_ADDRESS,'The URL is invalid');
 			}
 		} else if ($row['target_type']=='url') {
 			$view->setTargetId($row['target_value']);
 			$view->setTargetTitle($row['target_value']);
 			if (!ValidateUtils::validateHref($row['target_value'])) {
-				$view->setStatus(LinkView::$INVALID);
+				$view->addError(LinkView::$INVALID_ADDRESS,'The e-mail is invalid');
 			}
 		}
 		return $view;

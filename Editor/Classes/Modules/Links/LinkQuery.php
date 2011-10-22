@@ -12,7 +12,9 @@ class LinkQuery {
 	
 	private $targetType;
 	private $sourceType;
+	private $sourcePage;
 	private $onlyWarnings = false;
+	private $textCheck = false;
 	
 	function withSourceType($sourceType) {
 		$this->sourceType = $sourceType;
@@ -24,8 +26,18 @@ class LinkQuery {
 		return $this;
 	}
 	
+	function withSourcePage($sourcePage) {
+		$this->sourcePage = $sourcePage;
+		return $this;
+	}
+
 	function withOnlyWarnings() {
 		$this->onlyWarnings = true;
+		return $this;
+	}
+	
+	function withTextCheck() {
+		$this->textCheck = true;
 		return $this;
 	}
 	
@@ -41,5 +53,12 @@ class LinkQuery {
 	    return $this->onlyWarnings;
 	}
 	
+	function getTextCheck() {
+	    return $this->textCheck;
+	}
+	
+	function getSourcePage() {
+	    return $this->sourcePage;
+	}
 	
 }

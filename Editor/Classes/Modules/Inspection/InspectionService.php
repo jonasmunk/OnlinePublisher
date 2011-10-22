@@ -19,6 +19,7 @@ class InspectionService {
 		InspectionService::checkPageStructure($inspections);
 		InspectionService::checkFrameStructure($inspections);
 		InspectionService::checkPageContent($inspections);
+		InspectionService::checkLinks($inspections);
 
 		$filtered = array();
 		
@@ -29,6 +30,25 @@ class InspectionService {
 		}
 		
 		return $filtered;
+	}
+
+	function checkLinks(&$inspections) {
+		$query = new LinkQuery();
+		$query->withTextCheck()->withOnlyWarnings();
+		$links = LinkService::search($query);
+
+		foreach ($links as $link) {
+			$entity = array('type'=>$link->getSourceType(),'title'=>$link->getSourceTitle(),'id'=>$link->getSourceId(),'icon'=>LinkService::getSourceIcon($link));
+			$errors = $link->getErrors();
+			foreach ($errors as $error) {
+				$inspection = new Inspection();
+				$inspection->setCategory('model');
+				$inspection->setEntity($entity);
+				$inspection->setStatus('error');
+				$inspection->setText($error['message']);
+				$inspections[] = $inspection;
+			}
+		}
 	}
 	
 	function checkPageStructure(&$inspections) {

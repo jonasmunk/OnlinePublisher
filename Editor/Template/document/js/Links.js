@@ -23,6 +23,9 @@ hui.ui.listen({
 				}
 			});
 		}
+		else if (info.data.action=='editLink') {
+			document.location='Editor.php?editLink='+info.row.id;
+		}
 		else if (info.data.action=='pageInfo') {
 			parent.location='../../Tools/Sites/?pageInfo='+info.data.id;
 		}
@@ -33,7 +36,7 @@ hui.ui.listen({
 			parent.location='../../Services/Preview/?id='+info.data.id;
 		}
 		else if (info.data.action=='viewFile') {
-			window.open('../../../../?file='+info.data.id);
+			window.open('../../../?file='+info.data.id);
 		}
 		else if (info.data.action=='fileInfo') {
 			parent.location='../../Tools/Files/?fileInfo='+info.data.id;

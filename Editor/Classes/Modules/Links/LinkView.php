@@ -10,12 +10,19 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class LinkView {
 	
-	static $NOT_FOUND = 'notfound';
-	static $INVALID = 'invalid';
+	static $TARGET_NOT_FOUND = 'notfound';
+	static $TEXT_NOT_FOUND = 'textnotfound';
+	static $INVALID_ADDRESS = 'invalidaddress';
+	
+	private $id;
 	
 	private $sourceType;
 	private $sourceId;
 	private $sourceTitle;
+	private $sourceDescription;
+	
+	private $sourceSubType;
+	private $sourceSubId;
 	
 	private $sourceText;
 	
@@ -23,7 +30,16 @@ class LinkView {
 	private $targetId;
 	private $targetTitle;
 	
-	private $status;
+	private $errors = array();
+	
+	function setId($id) {
+	    $this->id = $id;
+	}
+
+	function getId() {
+	    return $this->id;
+	}
+	
 	
 	function setSourceType($sourceType) {
 	    $this->sourceType = $sourceType;
@@ -41,6 +57,24 @@ class LinkView {
 	    return $this->sourceId;
 	}
 	
+	function setSourceSubId($sourceSubId) {
+	    $this->sourceSubId = $sourceSubId;
+	}
+
+	function getSourceSubId() {
+	    return $this->sourceSubId;
+	}
+	
+	function setSourceSubType($sourceSubType) {
+	    $this->sourceSubType = $sourceSubType;
+	}
+
+	function getSourceSubType() {
+	    return $this->sourceSubType;
+	}
+	
+	
+	
 	function setSourceTitle($sourceTitle) {
 	    $this->sourceTitle = $sourceTitle;
 	}
@@ -56,6 +90,15 @@ class LinkView {
 	function getSourceText() {
 	    return $this->sourceText;
 	}
+	
+	function setSourceDescription($sourceDescription) {
+	    $this->sourceDescription = $sourceDescription;
+	}
+
+	function getSourceDescription() {
+	    return $this->sourceDescription;
+	}
+	
 	
 	
 	function setTargetType($targetType) {
@@ -82,12 +125,23 @@ class LinkView {
 	    return $this->targetTitle;
 	}
 	
-	function setStatus($status) {
-	    $this->status = $status;
-	}
-
-	function getStatus() {
-	    return $this->status;
+	function getErrors() {
+	    return $this->errors;
 	}
 	
+	function addError($key,$message) {
+		$this->errors[] = array('key'=>$key,'message'=>$message);
+	}
+	
+	function hasError($key=null) {
+		if ($key===null && count($this->errors)>0) {
+			return true;
+		}
+		foreach ($this->errors as $error) {
+			if ($error['key']==$key) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

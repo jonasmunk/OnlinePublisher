@@ -117,7 +117,7 @@ class Link {
 	}
 	
 	function remove() {
-		return LinkService::save($this);
+		return LinkService::remove($this);
 	}
 	
 	function save() {

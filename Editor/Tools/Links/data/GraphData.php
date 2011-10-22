@@ -38,7 +38,7 @@ foreach ($links as $link) {
 	$sourceId = $link->getSourceType().'_'.$link->getSourceId();
 	$targetId = $link->getTargetType().'_'.$link->getTargetId();
 	$targetIcon = $icons[$link->getTargetType()];
-	if ($link->getStatus()) {
+	if ($link->hasError(LinkView::$TARGET_NOT_FOUND) || $link->hasError(LinkView::$INVALID_ADDRESS)) {
 		$targetIcon = 'monochrome/warning';
 	}
 	$graph->addNode(new GraphNode($sourceId,$link->getSourceTitle(),$icons[$link->getSourceType()]));

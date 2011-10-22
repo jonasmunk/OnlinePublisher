@@ -120,14 +120,19 @@ var controller = {
 			}
 			this.selectedText = hui.selection.getText();
 		}.bind(this));
-		window.onscroll = this.saveScroll;
-		var scroll = hui.cookie.get('document.scroll');
-		if (scroll) {
-			window.scrollTo(0,parseInt(scroll,10));
-		}
 		
 		if (this.changed) {
 			this._markToolbarChanged();
+		}
+		window.onscroll = this.saveScroll;
+		var editLink = hui.location.getInt('editLink');
+		if (editLink) {
+			this._loadLink(editLink);
+		} else {
+			var scroll = hui.cookie.get('document.scroll');
+			if (scroll) {
+				window.scrollTo(0,parseInt(scroll,10));
+			}
 		}
 	},
 	_markToolbarChanged : function() {
@@ -428,6 +433,7 @@ var controller = {
 		this._clearPartHighlight();
 		var node = hui.get('part'+id);
 		if (node) {
+			hui.scrollTo({element:node});
 			hui.addClass(node,'editor_part_highlighted');
 			this._highlightedPart = node;
 		}

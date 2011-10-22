@@ -11,6 +11,10 @@ hui.ui.listen({
 		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('tool:News');
 		}
+		var newsInfo = hui.location.getInt('newsInfo');
+		if (newsInfo) {
+			this.loadNews(newsInfo);
+		}
 	},
 	
 	$selectionChanged$list : function(item) {
