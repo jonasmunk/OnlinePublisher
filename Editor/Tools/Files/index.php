@@ -10,8 +10,6 @@ require_once '../../Classes/Services/FileSystemService.php';
 require_once '../../Classes/Utilities/GuiUtils.php';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
-$flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
-$flash = 'false';
 $gui='
 <gui xmlns="uri:hui" title="Filer" padding="10">
 	<controller source="controller.js"/>
@@ -62,14 +60,16 @@ $gui='
 		</middle>
 		<bottom/>
 	</layout>
+	
+	
 	<window title="Tilføjelse af ny fil" name="uploadWindow" width="300">
 		<tabs small="true" centered="true">
 			<tab title="Upload" padding="10">
-				<upload name="file" url="UploadFile.php" widget="upload" flash="'.$flash.'">
+				<upload name="file" url="UploadFile.php" widget="upload" multiple="true">
 					<placeholder title="Vælg filer på din computer..." text="Filen kan højest være '.$maxUploadSize.' stor"/>
 				</upload>
 				<buttons align="center" top="10">
-					<button name="cancelUpload" title="Annuller"/>
+					<button name="cancelUpload" title="Luk"/>
 					<button name="upload" title="Vælg filer..." highlighted="true"/>
 				</buttons>
 			</tab>
@@ -86,8 +86,9 @@ $gui='
 		</tabs>
 	</window>
 	
+	
 	<window title="Erstatning af fil" name="replaceWindow" width="300" padding="10">
-		<upload name="replaceFile" url="ReplaceFile.php" widget="replaceUpload" flash="false">
+		<upload name="replaceFile" url="ReplaceFile.php" widget="replaceUpload">
 			<placeholder title="Vælg en ny fil på din computer..." text="Filen kan højest være '.$maxUploadSize.' stor"/>
 		</upload>
 		<buttons align="center" top="10">
@@ -110,6 +111,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window title="Fil" name="fileWindow" icon="file/generic" width="300" padding="5">
 		<formula name="fileFormula">
 			<group labels="above">

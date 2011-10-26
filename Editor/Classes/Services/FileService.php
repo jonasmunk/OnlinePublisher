@@ -81,11 +81,11 @@ class FileService {
 		),
 		array('kind' => 'audio.windowsmedia', 'category' => 'audio', 'label' => 'Windows Media Audio',
 			'mimetypes' => array('audio/x-ms-wma'),
-			'extension'=>array()
+			'extensions'=>array()
 		),
 		array('kind' => 'audio.windowsmedia.playlist', 'category' => 'audio', 'label' => 'Windows Media Playlist',
-			'mimetypes' => array('application/vnd.ms-wpl'),
-			'extension'=>array('wpl')
+			'mimetypess' => array('application/vnd.ms-wpl'),
+			'extensions'=>array('wpl')
 		)
 		
 		
@@ -176,25 +176,24 @@ class FileService {
 	 */
 	function replaceUploadedFile($id) {
 		global $basePath;
-		Log::debug($_FILES);
-		$fileName=FileSystemService::safeFilename($_FILES['file']['name']);
-		$fileType=$_FILES["file"]["type"];
-		$tempFile=$_FILES['file']['tmp_name'];
+		$fileName = FileSystemService::safeFilename($_FILES['file']['name']);
+		$fileType = $_FILES["file"]["type"];
+		$tempFile = $_FILES['file']['tmp_name'];
 		$uploadDir = $basePath.'files/';
 		$filePath = $uploadDir . $fileName;
-		$fileSize=$_FILES["file"]["size"];
+		$fileSize = $_FILES["file"]["size"];
 
 		$filePath = FileSystemService::findFreeFilePath($filePath);
 		$fileName = FileSystemService::getFileBaseName($filePath);
 
-		$errorMessage=false;
+		$errorMessage = false;
 		$errorDetails='';
 
 		if (file_exists($filePath)) {
 			$errorMessage='Filen findes allerede';
 		}
 		else if (!move_uploaded_file($tempFile, $filePath)) {
-			$errorMessage='Kunne ikke flytte filen fra cachen';
+			$errorMessage = 'Kunne ikke flytte filen fra cachen';
 		}
 
 		if (!$errorMessage) {
@@ -202,7 +201,7 @@ class FileService {
 			$file = File::load($id);
 			if ($file) {
 				// Delete old file
-				$oldFilename=$file->getFilename();
+				$oldFilename = $file->getFilename();
 		
 				if (!unlink ($basePath.'files/'.$oldFilename)) {
 					$errorMessage='Kunne ikke slette alt fra serveren';
@@ -216,9 +215,7 @@ class FileService {
 				$errorMessage='Kunne ikke finde fil med id='.$id;
 			}
 		}
-		$response = array('success' => ($errorMessage===false),'errorMessage' => $errorMessage,'errorDetails' => $errorDetails);
-		Log::debug($response);
-		return $response;
+		return array('success' => ($errorMessage===false),'errorMessage' => $errorMessage,'errorDetails' => $errorDetails);
 	}
 	
 	/**

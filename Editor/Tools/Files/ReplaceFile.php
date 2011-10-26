@@ -10,7 +10,16 @@ require_once '../../Classes/Core/Response.php';
 require_once '../../Classes/Core/Request.php';
 require_once '../../Classes/Interface/In2iGui.php';
 
-$response = FileService::replaceUploadedFile(Request::getInt('id'));
+$id = Request::getInt('id');
+if (!$id) {
+	Log::debug('No id provided');
+	Response::badRequest();
+	exit;
+}
+
+$response = FileService::replaceUploadedFile($id);
+
+Log::debugJSON($response);
 
 if ($response['success']==true) {
 	In2iGui::respondUploadSuccess();

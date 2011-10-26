@@ -52,6 +52,9 @@ hui.ui.listen({
 	$click$cancelUpload : function() {
 		uploadWindow.hide();
 	},
+	$uploadDidFail$file : function() {
+		hui.ui.showMessage({icon:'common/warning',text:'Det lykkedes ikke at filføje filen. Den er måske for stor.',duration:5000});
+	},
 	$uploadDidCompleteQueue$file : function() {
 		filesSource.refresh();
 		typesSource.refresh();

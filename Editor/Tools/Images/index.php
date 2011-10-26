@@ -12,7 +12,6 @@ require_once '../../Classes/Utilities/GuiUtils.php';
 $uploadAddToGroup = InternalSession::getToolSessionVar('images','uploadAddToGroup',true) ? 'true' : 'false';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
-$flash = $_SERVER['SERVER_NAME']==='localhost' ? 'false' : 'true';
 
 $gui='
 <gui xmlns="uri:hui" title="Billeder" padding="10" state="gallery">
@@ -86,14 +85,14 @@ $gui='
 	<window title="Tilføjelse af nyt billede" name="uploadWindow" width="300">
 		<tabs small="true" centered="true">
 			<tab title="Upload" padding="10">
-				<upload name="file" url="UploadImage.php" widget="upload" flash="'.$flash.'">
+				<upload name="file" url="UploadImage.php" widget="upload" multiple="true">
 					<placeholder title="Vælg billeder på din computer..." text="Filen kan højest være '.$maxUploadSize.' stor"/>
 				</upload>
 				<block align="center" top="5">
 					<checkbox title="Tilføj til den valgte gruppe" name="uploadAddToGroup" value="'.$uploadAddToGroup.'"/>
 				</block>
 				<buttons align="center" top="10">
-					<button name="cancelUpload" title="Annuller"/>
+					<button name="cancelUpload" title="Luk"/>
 					<button name="upload" title="Vælg billeder..." highlighted="true"/>
 				</buttons>
 			</tab>

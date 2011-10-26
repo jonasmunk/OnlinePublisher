@@ -11,6 +11,8 @@ require_once '../../Classes/Interface/In2iGui.php';
 
 $response = FileService::createUploadedFile();
 
+//sleep(3);
+
 if ($response['success']==true) {
 	In2iGui::respondUploadSuccess();
 } else {
