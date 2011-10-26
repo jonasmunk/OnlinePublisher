@@ -743,7 +743,7 @@
 			name:'<xsl:value-of select="@name"/>',
 			url:'<xsl:value-of select="@url"/>',
 			button:'<xsl:value-of select="@button"/>'
-			<xsl:if test="@flash">,useFlash:<xsl:value-of select="@flash='true'"/></xsl:if>
+			<xsl:if test="@multiple">,multiple:<xsl:value-of select="@multiple='true'"/></xsl:if>
 			<xsl:if test="@chooseButton">,chooseButton:'<xsl:value-of select="@chooseButton"/>'</xsl:if>
 			<xsl:if test="@widget">,widget:'<xsl:value-of select="@widget"/>'</xsl:if>
 		});

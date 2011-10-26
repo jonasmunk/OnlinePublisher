@@ -43,6 +43,8 @@ hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trid
 hui.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
 /** If the browser is any version of Safari */
 hui.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
+/** If the browser is any version of Chrome */
+hui.browser.chrome = navigator.userAgent.indexOf('Chrome')!==-1;
 /** The version of WebKit (null if not WebKit) */
 hui.browser.webkitVersion = null;
 /** If the browser is Gecko based */
@@ -891,10 +893,44 @@ hui.request = function(options) {
 	};
 	var method = options.method.toUpperCase();
 	transport.open(method, options.url, options.async);
-	var body = '';
-    if (method=='POST' && options.parameters) {
+	var body = null;
+	if (method=='POST' && options.file) {
+		if (false) {
+			body = options.file;
+        	transport.setRequestHeader("Content-type", options.file.type);  
+        	transport.setRequestHeader("X_FILE_NAME", options.file.name);
+		} else {
+			body = new FormData();
+			body.append('file', options.file);
+			hui.log('The parameters are...');
+			hui.log(options.parameters)
+			if (options.parameters) {
+				for (param in options.parameters) {
+					body.append(param, options.parameters[param]);
+				}
+			}
+		}
+		if (options.onProgress) {
+			transport.upload.addEventListener("progress", function(e) {
+				options.onProgress(e.loaded,e.total);
+			}, false);
+		}
+		if (options.onLoad) {
+	        transport.upload.addEventListener("load", function(e) {
+				options.onLoad();
+			}, false); 
+		}
+	} else if (method=='POST' && options.files) {
+		body = new FormData();
+		//form.append('path', '/');
+		for (var i = 0; i < options.files.length; i++) {
+			body.append('file'+i, options.files[i]);
+		}
+	} else if (method=='POST' && options.parameters) {
 		body = hui.request._buildPostBody(options.parameters);
 		transport.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+	} else {
+		body = '';
 	}
 	if (options.headers) {
 		for (name in options.headers) {

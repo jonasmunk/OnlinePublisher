@@ -91,3 +91,38 @@
 {
   -webkit-transform: translateZ(-256px) rotateY(0deg) translateZ(256px);
 }
+
+/*********** Wiggle ***********/
+
+@-webkit-keyframes hui_wiggle {
+	0% {-webkit-transform:rotate(2deg);}
+	20% {-webkit-transform:rotate(-4deg);}
+	30% {-webkit-transform:rotate(3deg);}
+	40% {-webkit-transform:rotate(-1deg);}
+	50% {-webkit-transform:rotate(4deg);}
+	60% {-webkit-transform:rotate(-3deg);}
+	70% {-webkit-transform:rotate(2deg);}
+	80% {-webkit-transform:rotate(-4deg);}
+	90% {-webkit-transform:rotate(1deg);}
+	100% {-webkit-transform:rotate(2deg);}
+}
+
+@-moz-keyframes hui_wiggle {
+	0% {-webkit-transform:rotate(4deg);}
+	20% {-webkit-transform:rotate(-4deg);}
+	30% {-webkit-transform:rotate(4deg);}
+	40% {-webkit-transform:rotate(-4deg);}
+	50% {-webkit-transform:rotate(4deg);}
+	60% {-webkit-transform:rotate(-4deg);}
+	70% {-webkit-transform:rotate(4deg);}
+	80% {-webkit-transform:rotate(-4deg);}
+	90% {-webkit-transform:rotate(4deg);}
+	100% {-webkit-transform:rotate(4deg);}
+}
+
+.hui_effect_wiggle
+{
+	-webkit-animation: hui_wiggle 1s infinite;
+	-moz-animation: hui_wiggle 1s infinite;
+	animation: hui_wiggle 1s infinite;
+}
