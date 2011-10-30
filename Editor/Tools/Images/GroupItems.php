@@ -35,7 +35,7 @@ if ($notInGroup>0) {
 		'value'=>-1,
 		'title'=>'Ikke i gruppe',
 		'icon'=>'common/folder_grey',
-		'kind'=>'imagegroup',
+		'kind'=>'nogroup',
 		'badge' => $notInGroup,
 	);
 	$writer->startItem($options)->endItem();

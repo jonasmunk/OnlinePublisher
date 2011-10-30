@@ -19,7 +19,7 @@ $gui='
 		<list name="list" source="listSource"/>
 	</overflow>
 	
-	<window name="frameWindow" width="300" title="Ramme">
+	<window name="frameWindow" width="400" title="Ramme">
 		<tabs small="true" centered="true">
 			<tab title="Info" padding="5">
 				<formula name="frameFormula">
@@ -31,6 +31,15 @@ $gui='
 					</group>
 				</formula>
 			</tab>
+			<!--
+			<tab title="Søgning" padding="5">
+				<formula name="searchFormula">
+					<group>
+						<checkbox label="Aktiv:"/>
+						<dropdown key="searchPageId" label="Søgeside:" source="pageItems" placeholder="Vælg søgeside..."/>
+					</group>
+				</formula>
+			</tab>-->
 			<tab title="Top-links">
 				<toolbar centered="true">
 					<icon title="Tilføj link" icon="common/link" overlay="new" click="topLinks.addLink()"/>
