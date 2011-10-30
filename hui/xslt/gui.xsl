@@ -534,6 +534,7 @@
 			<xsl:if test="@selectable">selectable:<xsl:value-of select="@selectable"/>,</xsl:if>
 			state:'<xsl:value-of select="@state"/>',
 			windowSize:'<xsl:value-of select="gui:window/@size"/>'
+			<xsl:if test="@drop-files='true'">,dropFiles:true</xsl:if>
 		});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:column">
@@ -792,9 +793,9 @@ doc title:'Rich text' class:'hui.ui.RichText'
 		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
 			<xsl:attribute name="style">display:none</xsl:attribute>
 		</xsl:if>
-		<xsl:if test="@padding"><xsl:attribute name="style">padding:<xsl:value-of select="@padding"/>px;</xsl:attribute></xsl:if>
 		<div class="hui_gallery_progress"><xsl:comment/></div>
 		<div class="hui_gallery_body">
+			<xsl:if test="@padding"><xsl:attribute name="style">padding:<xsl:value-of select="@padding"/>px;</xsl:attribute></xsl:if>
 			<xsl:comment/>
 			<xsl:text>&#160;</xsl:text>
 		</div>
@@ -805,6 +806,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 			name:'<xsl:value-of select="@name"/>'
 			<xsl:if test="@source">,source:<xsl:value-of select="@source"/></xsl:if>
 			<xsl:if test="@state">,state:'<xsl:value-of select="@state"/>'</xsl:if>
+			<xsl:if test="@drop-files='true'">,dropFiles:true</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

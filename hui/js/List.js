@@ -51,6 +51,9 @@ hui.ui.List = function(options) {
 		this.window.size = parseInt(options.windowSize);
 	}
 	hui.ui.extend(this);
+	if (options.dropFiles) {
+		this._addDrop();
+	}
 	if (this.url)  {
 		this.refresh();
 	}
@@ -69,6 +72,15 @@ hui.ui.List.create = function(options) {
 }
 
 hui.ui.List.prototype = {
+	_addDrop : function() {
+		hui.drag.listen({
+			element : this.element,
+			hoverClass : 'hui_list_drop',
+			onFiles : function(files) {
+				this.fire('filesDropped',files);
+			}.bind(this)
+		})
+	},
 	/** Hides the list */
 	hide : function() {
 		this.element.style.display='none';

@@ -337,6 +337,15 @@ hui.dom = {
 			node = node.parentNode;
 		}
 		return true;
+	},
+ 	isDescendantOrSelf : function(element,parent) {
+		while (element) {
+			if (element==parent) {
+				return true;
+			}
+			element = element.parentNode;
+		}
+		return false;
 	}
 }
 
@@ -881,6 +890,8 @@ hui.request = function(options) {
 					options.onForbidden(transport);
 				} else if (transport.status !== 0 && options.onFailure) {
 					options.onFailure(transport);
+				} else if (transport.status == 0 && options.onAbort) {
+					options.onAbort(transport);
 				}
 			}
 		} catch (e) {
@@ -902,8 +913,6 @@ hui.request = function(options) {
 		} else {
 			body = new FormData();
 			body.append('file', options.file);
-			hui.log('The parameters are...');
-			hui.log(options.parameters)
 			if (options.parameters) {
 				for (param in options.parameters) {
 					body.append(param, options.parameters[param]);
@@ -1309,8 +1318,54 @@ hui.drag = {
 			options.onEnd();
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
+	},
+	_nativeListeners : [],
+	_activeDrop : null,
+	listen : function(options) {
+		hui.drag._nativeListeners.push(options);
+		if (hui.drag._nativeListeners.length>1) {return};
+		hui.listen(document.body,'dragenter',function(e) {
+			var l = hui.drag._nativeListeners;
+			var found = null;
+			for (var i=0; i < l.length; i++) {
+				var lmnt = l[i].element;
+				if (hui.dom.isDescendantOrSelf(e.target,lmnt)) {
+					found = l[i];
+					if (hui.drag._activeDrop==null || hui.drag._activeDrop!=found) {
+						hui.addClass(lmnt,found.hoverClass);
+					}
+					break;
+				}
+			};
+			if (hui.drag._activeDrop) {
+				//var foundElement = found ? found.element : null;
+				if (hui.drag._activeDrop!=found) {
+					hui.removeClass(hui.drag._activeDrop.element,hui.drag._activeDrop.hoverClass);
+				}
+			}
+			hui.drag._activeDrop = found;
+		});
+		
+		hui.listen(document.body,'dragover',function(e) {
+			hui.stop(e);
+		});
+		hui.listen(document.body,'drop',function(e) {
+			hui.stop(e);
+			var options = hui.drag._activeDrop;
+			hui.drag._activeDrop = null;
+			if (options) {
+				hui.removeClass(options.element,options.hoverClass);
+				if (options.onDrop) {
+					options.onDrop(e);
+				}
+				if (options.onFiles && e.dataTransfer && e.dataTransfer.files.length>0) {
+					options.onFiles(e.dataTransfer.files);
+				}
+			}
+		});
 	}
 }
+
 
 
 //////////////////////////// Preloader /////////////////////////
@@ -5541,6 +5596,9 @@ hui.ui.List = function(options) {
 		this.window.size = parseInt(options.windowSize);
 	}
 	hui.ui.extend(this);
+	if (options.dropFiles) {
+		this._addDrop();
+	}
 	if (this.url)  {
 		this.refresh();
 	}
@@ -5559,6 +5617,15 @@ hui.ui.List.create = function(options) {
 }
 
 hui.ui.List.prototype = {
+	_addDrop : function() {
+		hui.drag.listen({
+			element : this.element,
+			hoverClass : 'hui_list_drop',
+			onFiles : function(files) {
+				this.fire('filesDropped',files);
+			}.bind(this)
+		})
+	},
 	/** Hides the list */
 	hide : function() {
 		this.element.style.display='none';
@@ -9461,7 +9528,6 @@ hui.ui.Upload = function(options) {
 	this.name = options.name;
 	this.items = [];
 	this.busy = false;
-	this.loaded = false;
 	this._chooseImplementation();
 	hui.ui.extend(this);
 	this._addBehavior();
@@ -9487,6 +9553,46 @@ hui.ui.Upload.create = function(options) {
 }
 
 hui.ui.Upload.prototype = {
+	
+	/////////////// Public parts /////////////
+
+	/**
+	 * Change a parameter
+	 */
+	setParameter : function(name,value) {
+		this.options.parameters[name] = value;
+		this.impl.setParameter(name,value);
+	},
+	
+	/** @public */
+	clear : function() {
+		for (var i=0; i < this.items.length; i++) {
+			if (this.items[i]) {
+				this.items[i].destroy();
+			}
+		};
+		this.items = [];
+		this.itemContainer.style.display='none';
+		this.status.style.display='none';
+		if (this.placeholder) {
+			this.placeholder.style.display='block';
+		}
+	},
+	addDropTarget : function(options) {
+		if (options.element) {
+			hui.drag.listen({
+				element : options.element,
+				hoverClass : options.hoverClass,
+				onFiles : this._transferFiles.bind(this)
+			});
+		}
+	},
+	uploadFiles : function(files) {
+		this._transferFiles(files);
+	},
+
+	//////////////// Private parts ////////////////
+	
 	_chooseImplementation : function() {
 		var impls = hui.ui.Upload.implementations;
 		if (this.options.implementation) {
@@ -9520,49 +9626,17 @@ hui.ui.Upload.prototype = {
 		}
 		hui.ui.onReady(function() {
 			this.impl.initialize();
+			hui.drag.listen({
+				element : this.element,
+				hoverClass : 'hui_upload_drop',
+				onFiles : this._transferFiles.bind(this)
+			});
 		}.bind(this));
-		var lmnt = this.element;
-		hui.listen(this.element,'dragenter',function(e) {
-			hui.addClass(lmnt,'hui_upload_drop');
-		});
-		hui.listen(this.element,'dragover',function(e) {
-			hui.stop(e);
-		});
-		hui.listen(this.element,'dragleave',function(e) {
-			if (!hui.ui.isWithin(e,lmnt)) {
-				hui.removeClass(lmnt,'hui_upload_drop');
-			}
-			//hui.stop(e);
-		});
-		hui.listen(this.element,'drop',this._onDrop.bind(this));
-	},
-	/**
-	 * Change a parameter
-	 */
-	setParameter : function(name,value) {
-		this.options.parameters[name] = value;
-		this.impl.setParameter(name,value);
-	},
-	
-	/** @public */
-	clear : function() {
-		for (var i=0; i < this.items.length; i++) {
-			if (this.items[i]) {
-				this.items[i].destroy();
-			}
-		};
-		this.items = [];
-		this.itemContainer.style.display='none';
-		this.status.style.display='none';
-		if (this.placeholder) {
-			this.placeholder.style.display='block';
-		}
 	},
 	
 	//////////////////////////// Dropping ///////////////////////
 
-	_onDrop : function(e) {
-		hui.removeClass(this.element,'hui_upload_drop');
+/*	_onDrop : function(e) {
 		hui.log('Drop!')
 		hui.stop(e);
 			hui.log(e)
@@ -9573,6 +9647,9 @@ hui.ui.Upload.prototype = {
 			} else {
 				hui.log('No files...');
 				hui.log(e.dataTransfer.types)
+				if (hui.inArray(e.dataTransfer.types,'image/tiff')) {
+					hui.log(e.dataTransfer.getData('image/tiff'))
+				}
 				hui.log(e.dataTransfer.getData('text/plain'))
 				hui.log(e.dataTransfer.getData('text/html'))
 				hui.log(e.dataTransfer.getData('url'))
@@ -9580,30 +9657,7 @@ hui.ui.Upload.prototype = {
 		} else {
 			hui.log(e)
 		}
-	},
-	_transferFile : function(file) {
-		var item = this.$_addItem({name:file.name,size:file.size});
-		hui.request({
-			method : 'post',
-			file : file,
-			url : this.options.url,
-			parameters : this.options.parameters,
-			onProgress : function(current,total) {
-				item.updateProgress(current,total);
-			},
-			onLoad : function() {
-				hui.log('transferFile: load');
-			},
-			onSuccess : function() {
-				hui.log('transferFile: success');
-				this.$_itemSuccess(item);
-			}.bind(this),
-			onFailure : function() {
-				hui.log('transferFile: fail');
-				this.$_itemFail(item);
-			}.bind(this)
-		})
-	},
+	},*/
 	_transferFiles : function(files) {
 		if (files.length>0) {
 			if (!this.options.multiple) {
@@ -9616,8 +9670,36 @@ hui.ui.Upload.prototype = {
 			}
 		}
 	},
+	_transferFile : function(file) {
+		hui.log(file)
+		var item = this.$_addItem({name:file.name,size:file.size});
+		hui.request({
+			method : 'post',
+			file : file,
+			url : this.options.url,
+			parameters : this.options.parameters,
+			onProgress : function(current,total) {
+				item.updateProgress(current,total);
+			},
+			onLoad : function() {
+				hui.log('transferFile: load');
+			},
+			onAbort : function() {
+				this.$_itemFail(item);
+				item.setError('Afbrudt')
+			}.bind(this),
+			onSuccess : function() {
+				hui.log('transferFile: success');
+				this.$_itemSuccess(item);
+			}.bind(this),
+			onFailure : function() {
+				hui.log('transferFile: fail');
+				this.$_itemFail(item);
+			}.bind(this)
+		})
+	},
 
-	//////////////////////////// Impl ///////////////////////////
+	/////////////////////// Implementation ///////////////////////////
 	
 	$_addItem : function(info) {
 		if (!this.busy) {
@@ -9634,10 +9716,8 @@ hui.ui.Upload.prototype = {
 		item.setSuccess();
 		this.fire('uploadDidComplete',item.getInfo());
 		this._checkQueue();
-		if (!this.queueNodeDivider) {
-			this.queueNodeDivider = item.element;
-		}
-		var move = first!=null || this.items.length>0;
+		var move = first!=null || this.items.length>1;
+		move = move && item.element.nextSibling!=null;
 		
 		if (move && (first==null || first!=item.element.nextSibling)) {
 			var parent = item.element.parentNode;
@@ -9672,7 +9752,7 @@ hui.ui.Upload.prototype = {
 		}
 	},*/
 	
-	_implGetButtonContainer : function() {
+	$_getButtonContainer : function() {
 		var buttonContainer = hui.build('span',{'class':'hui_upload_button'});
 		if (this.options.widget) {
 			var w = hui.ui.get(this.options.widget);
@@ -9704,7 +9784,6 @@ hui.ui.Upload.prototype = {
 		this.busy = false;
 		this._setWidgetEnabled(true);
 		this.fire('uploadDidCompleteQueue');
-		this.queueNodeDivider = this.itemContainer.firstChild;
 	},
 	
 		
@@ -9720,8 +9799,9 @@ hui.ui.Upload.prototype = {
 		var rearrange = index>4;
 		var item = new hui.ui.Upload.Item(file,rearrange);
 		this.items[index] = item;
-		if (this.queueNodeDivider) {
-			this.itemContainer.insertBefore(item.element,this.queueNodeDivider);
+		var first = hui.firstByClass(this.itemContainer,'hui_upload_item_success');
+		if (first) {
+			this.itemContainer.insertBefore(item.element,first);
 		} else {
 			this.itemContainer.appendChild(item.element);
 		}
@@ -9732,6 +9812,11 @@ hui.ui.Upload.prototype = {
 		return item;
 	}
 }
+
+
+
+
+/////////////////// Item ///////////////////
 
 hui.ui.Upload.Item = function(info,rearrange) {
 	this.data = info;
@@ -9748,6 +9833,7 @@ hui.ui.Upload.Item = function(info,rearrange) {
 		hui.dom.setText(this.info,info.name);
 	}
 	this.finished = false;
+	this.error = false;
 }
 
 hui.ui.Upload.Item.prototype = {
@@ -9756,12 +9842,6 @@ hui.ui.Upload.Item.prototype = {
 	},
 	isFinished : function() {
 		return this.finished;
-	},
-	_setStatus : function(text) {
-		if (this._status!==text) {
-			hui.dom.setText(this.status,text);
-			this._status = text;
-		}
 	},
 	setError : function(error) {
 		this._setStatus(error || 'Fejl');
@@ -9795,39 +9875,23 @@ hui.ui.Upload.Item.prototype = {
 	},
 	destroy : function() {
 		hui.dom.remove(this.element);
+	},
+	_setStatus : function(text) {
+		if (this._status!==text) {
+			hui.dom.setText(this.status,text);
+			this._status = text;
+		}
 	}
 }
 
-if (window.SWFUpload) {
-(function(){
-	var e = hui.ui.Upload.errors = {};
-	e[SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED]			= 'Der er valgt for mange filer';
-	e[SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT]		= 'Filen er for stor';
-	e[SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE]					= 'Filen er tom';
-	e[SWFUpload.QUEUE_ERROR.INVALID_FILETYPE]				= 'Filens type er ikke understøttet';
-	e[SWFUpload.UPLOAD_ERROR.HTTP_ERROR]					= 'Der skete en netværksfejl';
-	e[SWFUpload.UPLOAD_ERROR.MISSING_UPLOAD_URL]			= 'Upload-adressen findes ikke';
-	e[SWFUpload.UPLOAD_ERROR.IO_ERROR]						= 'Der skete en IO-fejl';
-	e[SWFUpload.UPLOAD_ERROR.SECURITY_ERROR]				= 'Der skete en sikkerhedsfejl';
-	e[SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED]			= 'Upload-størrelsen er overskredet';
-	e[SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED]					= 'Upload af filen fejlede';
-	e[SWFUpload.UPLOAD_ERROR.SPECIFIED_FILE_ID_NOT_FOUND]	= 'Filens id kunne ikke findes';
-	e[SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED]		= 'Validering af filen fejlede';
-	e[SWFUpload.UPLOAD_ERROR.FILE_CANCELLED]				= 'Filen blev afbrudt';
-	e[SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED]				= 'Upload af filen blev stoppet';
-	var s = hui.ui.Upload.status = {};
-	s[SWFUpload.FILE_STATUS.QUEUED] 		= 'I kø';
-	s[SWFUpload.FILE_STATUS.IN_PROGRESS] 	= 'I gang';
-	s[SWFUpload.FILE_STATUS.ERROR] 			= 'Filen gav fejl';
-	s[SWFUpload.FILE_STATUS.COMPLETE] 		= 'Færdig';
-	s[SWFUpload.FILE_STATUS.CANCELLED] 		= 'Afbrudt';
-}())
-}
+//// Util ////
+
+hui.ui.Upload._nameIndex = 0;
 
 hui.ui.Upload._buildForm = function(widget) {
 	var options = widget.options;
 
-	hui.ui.Upload.Frame.nameIndex++;
+	hui.ui.Upload._nameIndex++;
 	var frameName = 'hui_upload_'+hui.ui.Upload.Frame.nameIndex;
 
 	var form = hui.build('form');
@@ -9866,8 +9930,6 @@ hui.ui.Upload.Frame.support = function() {
 	return {supported:true,multiple:false};
 }
 
-hui.ui.Upload.Frame.nameIndex = 0;
-
 hui.ui.Upload.Frame.prototype = {
 	
 	initialize : function() {
@@ -9881,12 +9943,12 @@ hui.ui.Upload.Frame.prototype = {
 		hui.listen(this.iframe,'load',function() {this._uploadComplete()}.bind(this));
 		
 		this.fileInput = hui.build('input',{'type':'file','name':options.fieldName});
-		hui.listen(this.fileInput,'change',this._submit.bind(this));
+		hui.listen(this.fileInput,'change',this._onSubmit.bind(this));
 		
 		form.appendChild(this.fileInput);
 		var span = hui.build('span',{'class':'hui_upload_button_input'});
 		span.appendChild(form);
-		var c = this.parent._implGetButtonContainer();		
+		var c = this.parent.$_getButtonContainer();		
 		c.insertBefore(span,c.firstChild);
 	},
 	setParameter : function(name,value) {
@@ -9911,7 +9973,7 @@ hui.ui.Upload.Frame.prototype = {
 	_getFileName : function() {
 		return this.fileInput.value.split('\\').pop();
 	},
-	_submit : function() {
+	_onSubmit : function() {
 		this.form.style.display='none';
 		this.uploading = true;
 		this._rebuildParameters();
@@ -10011,20 +10073,20 @@ hui.ui.Upload.Flash.prototype = {
 			file_types : options.types,
 			debug : !true,
 			post_params : options.parameters,
-			button_placeholder_id : 'x',
+			/*button_placeholder_id : 'x',
 			button_placeholder : placeholder,
 			button_width : '100%',
-			button_height : 30,
+			button_height : 30,*/
 
-			swfupload_loaded_handler : this.flashLoaded.bind(this),
-			file_queued_handler : this.fileQueued.bind(this),
-			file_queue_error_handler : this.fileQueueError.bind(this),
-			file_dialog_complete_handler : this.fileDialogComplete.bind(this),
-			upload_start_handler : this.uploadStart.bind(this),
-			upload_progress_handler : this.uploadProgress.bind(this),
-			upload_error_handler : this.uploadError.bind(this),
-			upload_success_handler : this.uploadSuccess.bind(this),
-			upload_complete_handler : this.uploadComplete.bind(this)
+			swfupload_loaded_handler : this._onFlashLoaded.bind(this),
+			file_queued_handler : this._onFileQueued.bind(this),
+			file_queue_error_handler : this._onFileQueueError.bind(this),
+			file_dialog_complete_handler : this._onFileDialogComplete.bind(this),
+			upload_start_handler : this._onUploadStart.bind(this),
+			upload_progress_handler : this._onUploadProgress.bind(this),
+			upload_error_handler : this._onUploadError.bind(this),
+			upload_success_handler : this._onUploadSuccess.bind(this),
+			upload_complete_handler : this._onUploadComplete.bind(this)
 		});
 	},
 	setParameter : function(key,value) {
@@ -10040,72 +10102,84 @@ hui.ui.Upload.Flash.prototype = {
 		url += '/'+relative;
 		return url;
 	},
-	/** @private */
-	flashLoaded : function() {
-		hui.log('flash loaded');
-		this.loaded = true;
+	
+	////// Flash listeners /////
+	
+	_onFlashLoaded : function() {
+		hui.log('Flash loaded');
 	},
-	/** @private */
-	fileQueued : function(file) {
+	_onFileQueued : function(file) {
 		var item = this.parent.$_addItem({name:file.name,size:file.size});
 		item.setWaiting();
 		this.items.push(item);
 	},
-	/** @private */
-	fileQueueError : function(file, error, message) {
-		hui.log('fileQueueError');
+	_onFileQueueError : function(file, error, message) {
+		hui.log('Flash: fileQueueError file:'+hui.toJSON(file)+', error:'+error+', message:'+message);
 		if (file!==null) {
 			var item = this.parent.$_addItem({name:file.name,size:file.size});
 			this.items.push(item);
 			this.parent.$_itemFail(item);
-			item.setError(hui.ui.Upload.errors[error]);
+			item.setError(hui.ui.Upload.Flash.errors[error]);
 		} else {
-			hui.ui.showMessage({text:hui.ui.Upload.errors[error],duration:4000});
+			hui.ui.showMessage({text:hui.ui.Upload.Flash.errors[error],duration:4000});
 		}
 	},
-	/** @private */
-	fileDialogComplete : function() {
-		hui.log('fileDialogComplete');
+	_onFileDialogComplete : function() {
+		hui.log('Flash: fileDialogComplete');
 		this.loader.startUpload();
 	},
-	/** @private */
-	uploadStart : function() {
+	_onUploadStart : function() {
 
 	},
-	/** @private */
-	uploadProgress : function(file,complete,total) {
-		this._updateStatus();
+	_onUploadProgress : function(file,complete,total) {
 		var item = this.items[file.index];
 		item.updateProgress(complete,total);
 	},
-	/** @private */
-	uploadError : function(file, error, message) {
-		hui.log('uploadError file:'+file+', error:'+error+', message:'+message);
+	_onUploadError : function(file, error, message) {
+		hui.log('Flash: uploadError file:'+file+', error:'+error+', message:'+message);
 		if (file) {
 			var item = this.items[file.index];
 			this.parent.$_itemFail(item);
-			item.setError(hui.ui.Upload.errors[error]);
+			item.setError(hui.ui.Upload.Flash.errors[error]);
 		}
 	},
 	/** @private */
-	uploadSuccess : function(file,data) {
-		hui.log('Flash: uploadSuccess file:'+hui.toJSON(file)+', data:'+data);
+	_onUploadSuccess : function(file,data) {
 		var item = this.items[file.index];
 		item.updateProgress(file.size,file.size);
 		this.parent.$_itemSuccess(item);
 	},
 	/** @private */
-	uploadComplete : function(file) {
-		hui.log('Flash: uploadComplete file:'+hui.toJSON(file));
+	_onUploadComplete : function(file) {
 		this.loader.startUpload();		
-		this._updateStatus();
-	},
-	_updateStatus : function() {
-		var s = this.loader.getStats();
-		
 	}
 }
 
+!(function() {
+	var e = hui.ui.Upload.Flash.errors = {};
+	var s = hui.ui.Upload.Flash.status = {};
+	if (window.SWFUpload) {
+		e[SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED]			= 'Der er valgt for mange filer';
+		e[SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT]		= 'Filen er for stor';
+		e[SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE]					= 'Filen er tom';
+		e[SWFUpload.QUEUE_ERROR.INVALID_FILETYPE]				= 'Filens type er ikke understøttet';
+		e[SWFUpload.UPLOAD_ERROR.HTTP_ERROR]					= 'Der skete en netværksfejl';
+		e[SWFUpload.UPLOAD_ERROR.MISSING_UPLOAD_URL]			= 'Upload-adressen findes ikke';
+		e[SWFUpload.UPLOAD_ERROR.IO_ERROR]						= 'Der skete en IO-fejl';
+		e[SWFUpload.UPLOAD_ERROR.SECURITY_ERROR]				= 'Der skete en sikkerhedsfejl';
+		e[SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED]			= 'Upload-størrelsen er overskredet';
+		e[SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED]					= 'Upload af filen fejlede';
+		e[SWFUpload.UPLOAD_ERROR.SPECIFIED_FILE_ID_NOT_FOUND]	= 'Filens id kunne ikke findes';
+		e[SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED]		= 'Validering af filen fejlede';
+		e[SWFUpload.UPLOAD_ERROR.FILE_CANCELLED]				= 'Filen blev afbrudt';
+		e[SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED]				= 'Upload af filen blev stoppet';
+		s[SWFUpload.FILE_STATUS.QUEUED] 		= 'I kø';
+		s[SWFUpload.FILE_STATUS.IN_PROGRESS] 	= 'I gang';
+		s[SWFUpload.FILE_STATUS.ERROR] 			= 'Filen gav fejl';
+		s[SWFUpload.FILE_STATUS.COMPLETE] 		= 'Færdig';
+		s[SWFUpload.FILE_STATUS.CANCELLED] 		= 'Afbrudt';
+	}
+})()
 
 
 
@@ -10136,7 +10210,7 @@ hui.ui.Upload.HTML5.prototype = {
 		var options = this.parent.options;
 		var span = hui.build('span',{'class':'hui_upload_button_input'});
 		this.fileInput = hui.build('input',{'type':'file','name':options.fieldName,'multiple':'multiple',parent:span});
-		var c = this.parent._implGetButtonContainer();		
+		var c = this.parent.$_getButtonContainer();		
 		c.insertBefore(span,c.firstChild);
 		hui.listen(this.fileInput,'change',this._submit.bind(this));
 	},
@@ -10223,6 +10297,9 @@ hui.ui.Gallery = function(options) {
 	this.height = 100;
 	this.revealing = false;
 	hui.ui.extend(this);
+	if (options.dropFiles) {
+		this._addDrop();
+	}
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
@@ -10239,6 +10316,15 @@ hui.ui.Gallery.create = function(options) {
 }
 
 hui.ui.Gallery.prototype = {
+	_addDrop : function() {
+		hui.drag.listen({
+			element : this.element,
+			hoverClass : 'hui_gallery_drop',
+			onFiles : function(files) {
+				this.fire('filesDropped',files);
+			}.bind(this)
+		})
+	},
 	hide : function() {
 		this.element.style.display='none';
 	},

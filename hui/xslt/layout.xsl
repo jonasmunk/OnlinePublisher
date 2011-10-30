@@ -133,6 +133,7 @@
 		dynamic : <xsl:value-of select="not(@height or @max-height or @min-height or @vertical)"/>
 		<xsl:if test="@vertical">,vertical:<xsl:value-of select="@vertical"/></xsl:if>
 		<xsl:if test="@state">,state:'<xsl:value-of select="@state"/>'</xsl:if>
+		<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
 	});
 	<xsl:call-template name="gui:createobject"/>
 </script>

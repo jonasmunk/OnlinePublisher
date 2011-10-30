@@ -2381,6 +2381,7 @@ div.hui_window_news div.hui_window_body
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	/*padding-right: 10px;*/
+	min-height: 100%;
 }
 
 div.hui_list_body
@@ -2709,6 +2710,21 @@ div.hui_list_busy div.hui_list_progress
 div.hui_list tr.hui_drop td
 {
 	background: #779cd6 url('../gfx/hover_bg.png');
+}
+
+
+/* Native drop */
+
+
+
+div.hui_list_drop
+{
+	background: #fff url('../gfx/hover_bg.png');
+}
+
+div.hui_list_drop table
+{
+	background: none;
 }div.hui_selection
 {
 	font-family: 'Lucida Grande','Verdana',sans-serif;
@@ -3837,6 +3853,12 @@ div.hui_progressbar_small_complete div
 }div.hui_gallery
 {
 	overflow: hidden;
+	min-height: 100%;
+}
+
+div.hui_gallery_drop
+{
+	background: #fff url('../gfx/hover_bg.png');
 }
 
 div.hui_gallery_item

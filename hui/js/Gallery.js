@@ -11,6 +11,9 @@ hui.ui.Gallery = function(options) {
 	this.height = 100;
 	this.revealing = false;
 	hui.ui.extend(this);
+	if (options.dropFiles) {
+		this._addDrop();
+	}
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
@@ -27,6 +30,15 @@ hui.ui.Gallery.create = function(options) {
 }
 
 hui.ui.Gallery.prototype = {
+	_addDrop : function() {
+		hui.drag.listen({
+			element : this.element,
+			hoverClass : 'hui_gallery_drop',
+			onFiles : function(files) {
+				this.fire('filesDropped',files);
+			}.bind(this)
+		})
+	},
 	hide : function() {
 		this.element.style.display='none';
 	},

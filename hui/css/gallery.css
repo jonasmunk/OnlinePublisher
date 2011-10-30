@@ -1,6 +1,12 @@
 div.hui_gallery
 {
 	overflow: hidden;
+	min-height: 100%;
+}
+
+div.hui_gallery_drop
+{
+	background: #fff url('../gfx/hover_bg.png');
 }
 
 div.hui_gallery_item

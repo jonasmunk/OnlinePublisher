@@ -337,6 +337,15 @@ hui.dom = {
 			node = node.parentNode;
 		}
 		return true;
+	},
+ 	isDescendantOrSelf : function(element,parent) {
+		while (element) {
+			if (element==parent) {
+				return true;
+			}
+			element = element.parentNode;
+		}
+		return false;
 	}
 }
 
@@ -881,6 +890,8 @@ hui.request = function(options) {
 					options.onForbidden(transport);
 				} else if (transport.status !== 0 && options.onFailure) {
 					options.onFailure(transport);
+				} else if (transport.status == 0 && options.onAbort) {
+					options.onAbort(transport);
 				}
 			}
 		} catch (e) {
@@ -902,8 +913,6 @@ hui.request = function(options) {
 		} else {
 			body = new FormData();
 			body.append('file', options.file);
-			hui.log('The parameters are...');
-			hui.log(options.parameters)
 			if (options.parameters) {
 				for (param in options.parameters) {
 					body.append(param, options.parameters[param]);
@@ -1309,8 +1318,54 @@ hui.drag = {
 			options.onEnd();
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
+	},
+	_nativeListeners : [],
+	_activeDrop : null,
+	listen : function(options) {
+		hui.drag._nativeListeners.push(options);
+		if (hui.drag._nativeListeners.length>1) {return};
+		hui.listen(document.body,'dragenter',function(e) {
+			var l = hui.drag._nativeListeners;
+			var found = null;
+			for (var i=0; i < l.length; i++) {
+				var lmnt = l[i].element;
+				if (hui.dom.isDescendantOrSelf(e.target,lmnt)) {
+					found = l[i];
+					if (hui.drag._activeDrop==null || hui.drag._activeDrop!=found) {
+						hui.addClass(lmnt,found.hoverClass);
+					}
+					break;
+				}
+			};
+			if (hui.drag._activeDrop) {
+				//var foundElement = found ? found.element : null;
+				if (hui.drag._activeDrop!=found) {
+					hui.removeClass(hui.drag._activeDrop.element,hui.drag._activeDrop.hoverClass);
+				}
+			}
+			hui.drag._activeDrop = found;
+		});
+		
+		hui.listen(document.body,'dragover',function(e) {
+			hui.stop(e);
+		});
+		hui.listen(document.body,'drop',function(e) {
+			hui.stop(e);
+			var options = hui.drag._activeDrop;
+			hui.drag._activeDrop = null;
+			if (options) {
+				hui.removeClass(options.element,options.hoverClass);
+				if (options.onDrop) {
+					options.onDrop(e);
+				}
+				if (options.onFiles && e.dataTransfer && e.dataTransfer.files.length>0) {
+					options.onFiles(e.dataTransfer.files);
+				}
+			}
+		});
 	}
 }
+
 
 
 //////////////////////////// Preloader /////////////////////////
