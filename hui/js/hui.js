@@ -1322,6 +1322,9 @@ hui.drag = {
 	_nativeListeners : [],
 	_activeDrop : null,
 	listen : function(options) {
+		if (hui.browser.msie) {
+			return;
+		}
 		hui.drag._nativeListeners.push(options);
 		if (hui.drag._nativeListeners.length>1) {return};
 		hui.listen(document.body,'dragenter',function(e) {
@@ -1358,7 +1361,8 @@ hui.drag = {
 				if (options.onDrop) {
 					options.onDrop(e);
 				}
-				if (options.onFiles && e.dataTransfer && e.dataTransfer.files.length>0) {
+				hui.log(e.dataTransfer.types)
+				if (options.onFiles && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 					options.onFiles(e.dataTransfer.files);
 				}
 			}
