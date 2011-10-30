@@ -1,24 +1,40 @@
 hui.ui.listen({
 	
+	userShowedUpload : false,
+	
+	$filesDropped$gallery : function(files) {
+		uploadWindow.show();
+		file.uploadFiles(files);
+	},
+	
 	///////////////////////// Uoload /////////////////////////
 	
 	$click$newFile : function() {
 		uploadWindow.show();
+		this.userShowedUpload = true;
 	},
 	$click$cancelUpload : function() {
 		uploadWindow.hide();
 	},
-	$uploadDidCompleteQueue$file : function() {
+	$uploadDidComplete$file : function() {
 		imagesSource.refresh();
 		groupSource.refresh();
-		subsetSource.refresh();
+		subsetSource.refresh();		
+	},
+	$uploadDidCompleteQueue$file : function() {
+		if (!this.userShowedUpload) {
+			//uploadWindow.hide();
+		}
+	},
+	$userClosedWindow$uploadWindow : function() {
+		this.userShowedUpload = false;
 	},
 	
 	////////////////////////// Fetch /////////////////////////
 	
 	$click$fetchImage : function() {
 		fetchImage.setEnabled(false);
-		hui.ui.showMessage({text:'Henter billede...'});
+		hui.ui.showMessage({text:'Henter billede...',busy:true});
 		hui.ui.request({url:'FetchImage.php',onSuccess:'imageFetched',parameters:fetchFormula.getValues()});
 	},
 	$click$cancelFetch : function() {
@@ -27,15 +43,15 @@ hui.ui.listen({
 	$success$imageFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();
-			hui.ui.showMessage({text:'Billedet er hentet',duration:2000});
+			hui.ui.showMessage({text:'Billedet er hentet',icon:'common/success',duration:2000});
+			imagesSource.refresh();
+			subsetSource.refresh();
+			groupSource.refresh();
 		} else {
 			hui.log(data);
-			hui.ui.showMessage({text:data.errorMessage,duration:2000});
+			hui.ui.showMessage({text:data.errorDetails,icon:'common/warning',duration:2000});
 		}
 		fetchImage.setEnabled(true);
-		imagesSource.refresh();
-		subsetSource.refresh();
-		groupSource.refresh();
 	},
 	$valueChanged$uploadAddToGroup : function(value) {
 		hui.ui.request({url:'ChangeUploadAddToGroup.php',parameters:{uploadAddToGroup:value ? 'true' : 'false'},onSuccess:function() {

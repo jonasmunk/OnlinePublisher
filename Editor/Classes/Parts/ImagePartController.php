@@ -121,6 +121,7 @@ class ImagePartController extends PartController
 				}
 				$xml.=$image['data'];
 			} else {
+				$xml.='<transform scale-method="'.$part->getScaleMethod().'" scale-width="'.$part->getScaleWidth().'" scale-height="'.$part->getScaleHeight().'"/>';
 				Log::debug('Unable to load image with id='.$part->getImageId());
 			}
 		}
@@ -278,6 +279,31 @@ class ImagePartController extends PartController
 	
 	function editorGui($part,$context) {
 		$gui='
+		<window title="Tilføj billede" name="imageUploadWindow" width="300">
+			<tabs small="true" centered="true">
+				<tab title="Upload" padding="10">
+					<upload name="imageUpload" url="../../Parts/image/Upload.php" widget="upload">
+						<placeholder title="Vælg et billede på din computer..." text="Billedets formatet skal være JPEG, PNG eller GIF"/>
+					</upload>
+					<buttons align="center" top="10">
+						<button name="cancelUpload" title="Luk"/>
+						<button name="upload" title="Vælg billede..." highlighted="true"/>
+					</buttons>
+				</tab>
+				<tab title="Hent fra nettet" padding="10">
+					<formula name="urlForm">
+						<group labels="above">
+						<text label="Adresse:" key="url"/>
+						</group>
+					</formula>
+					<buttons align="center">
+						<button name="cancelFetch" title="Luk"/>
+						<button name="createFromUrl" submit="true" title="Hent" highlighted="true"/>
+					</buttons>
+				</tab>
+			</tabs>			
+		</window>
+		
 		<window title="Avanceret" name="imageAdvancedWindow" width="300">
 			<formula name="imageAdvancedFormula">
 				<group>
@@ -324,6 +350,7 @@ class ImagePartController extends PartController
 								<item icon="view/gallery" value="gallery"/>
 							</segmented>
 							-->
+							<button small="true" text="Tilføj billede" click="imageUploadWindow.show()"/>
 							<right>
 							<searchfield expanded-width="200" name="search"/>
 							</right>

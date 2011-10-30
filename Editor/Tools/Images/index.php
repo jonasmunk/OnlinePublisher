@@ -9,7 +9,7 @@ require_once '../../Classes/Interface/In2iGui.php';
 require_once '../../Classes/Services/FileSystemService.php';
 require_once '../../Classes/Utilities/GuiUtils.php';
 
-$uploadAddToGroup = InternalSession::getToolSessionVar('images','uploadAddToGroup',true) ? 'true' : 'false';
+//$uploadAddToGroup = InternalSession::getToolSessionVar('images','uploadAddToGroup',true) ? 'true' : 'false';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
@@ -58,8 +58,8 @@ $gui='
 				</overflow>
 			</left>
 			<center>
-				<overflow>
-					<gallery name="gallery" source="imagesSource" padding="5" state="gallery"/>
+				<overflow name="mainArea">
+					<gallery name="gallery" source="imagesSource" padding="5" state="gallery" drop-files="true"/>
 					<list name="list" source="listSource" state="list"/>
 				</overflow>
 			</center>
@@ -87,11 +87,11 @@ $gui='
 			<tab title="Upload" padding="10">
 				<upload name="file" url="UploadImage.php" widget="upload" multiple="true">
 					<placeholder title="Vælg billeder på din computer..." text="Filen kan højest være '.$maxUploadSize.' stor"/>
-				</upload>
-				<block align="center" top="5">
-					<checkbox title="Tilføj til den valgte gruppe" name="uploadAddToGroup" value="'.$uploadAddToGroup.'"/>
-				</block>
-				<buttons align="center" top="10">
+				</upload>'.
+//				<!--<block align="center" top="5">
+//					<checkbox title="Tilføj til den valgte gruppe" name="uploadAddToGroup" value="'.$uploadAddToGroup.'"/>
+//				</block>-->
+				'<buttons align="center" top="10">
 					<button name="cancelUpload" title="Luk"/>
 					<button name="upload" title="Vælg billeder..." highlighted="true"/>
 				</buttons>

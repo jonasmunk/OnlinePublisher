@@ -46,6 +46,12 @@ hui.ui.listen({
 	
 	///////////////////////// Uoload /////////////////////////
 	
+	
+	$filesDropped$list : function(files) {
+		uploadWindow.show();
+		file.uploadFiles(files);
+	},
+	
 	$click$newFile : function() {
 		uploadWindow.show();
 	},

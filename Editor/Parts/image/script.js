@@ -9,6 +9,13 @@ var partController = {
 			frame : form.frame.value,
 			greyscale : form.greyscale.value=='true'
 		});
+		imageUpload.addDropTarget({
+			element : hui.get('part_image_container'),
+			hoverClass : 'editor_drop',
+			onDrop : function() {
+				imageUploadWindow.show();
+			}
+		});
 		pasteImage.setEnabled(hui.ui.ImagePaster.isSupported());
 		this.suppressLink();
 	},
@@ -40,68 +47,47 @@ var partController = {
 		}
 		var img = hui.firstByTag(container,'img');
 		if (img) {
-			hui.ui.listen(img,'click',this.showChooserWindow.bind(this));
+			hui.listen(img,'click',this.showChooserWindow.bind(this));
 		}
 	},
 	showUploadWindow : function() {
-		if (!this.uploadWindow) {
-			var win = this.uploadWindow = hui.ui.Window.create({title:'Tilføj billede',width:300});
-			var tabs = hui.ui.Tabs.create({small:true,centered:true});
-			var uploadTab = tabs.createTab({title:'Fra computer',padding:10});
-			win.add(tabs);
-			var buttons = hui.ui.Buttons.create({top: 10,align:'center'});
-			var cancel = hui.ui.Button.create({title:'Annuller'});
-			cancel.onClick(win.hide.bind(win));
-			var choose = hui.ui.Button.create({text:'Vælg billede...'});
-			buttons.add(choose);
-			buttons.add(cancel);
-			var upload = hui.ui.Upload.create({
-				name:'imageUpload',
-				useFlash : false,
-				url:'../../Parts/image/Upload.php',
-				widget:choose,
-				placeholder:{title:'Vælg en billedfil...',text:'Filen skal være i formatet JPEG, PNG eller GIF'},
-				parameters:{hep:'hey!'}
-			});
-			uploadTab.add(upload);
-			uploadTab.add(buttons);
-			var linkTab = tabs.createTab({title:'Fra nettet',padding:10});
-			var form = hui.ui.Formula.create({name:'urlForm'});
-			form.buildGroup({above:true},[
-				{type:'TextField',options:{label:'Internetaddresse:',key:'url'}}
-			]);
-			linkTab.add(form);
-			var create = hui.ui.Button.create({name:'createFromUrl',title:'Hent'});
-			linkTab.add(create);
-		}
-		this.uploadWindow.show();
+		imageUploadWindow.show();
 	},
 	$uploadDidCompleteQueue$imageUpload : function() {
-		//hui.ui.showMessage({text:'Billedet er tilføjet!',duration:2000});
 		hui.ui.request({'url':'../../Parts/image/UploadStatus.php',onJSON:function(status) {
 			document.forms.PartForm.imageId.value = status.id;
 			this.preview();
 		}.bind(this)});
 	},
-	$click$createFromUrl : function() {
+	$click$cancelUpload : function() {
+		imageUploadWindow.hide();
+	},
+	$click$cancelFetch : function() {
+		imageUploadWindow.hide();
+	},
+	$submit$urlForm : function() {
 		var form = hui.ui.get('urlForm');
 		var url = form.getValues()['url'];
 		if (hui.isBlank(url)) {
 			form.focus();
 			return;
 		}
-		hui.ui.showMessage({text:'Henter billede...'});
+		createFromUrl.disable();
+		hui.ui.showMessage({text:'Henter billede...',busy:true});
 		hui.ui.request({
 			url : '../../Parts/image/Fetch.php',
 			parameters : {url:url},
 			onJSON : function(status) {
 				if (status.success) {
-					hui.ui.showMessage({text:'Billedet er nu hentet',duration:2000});
+					urlForm.reset();
+					urlForm.focus();
+					hui.ui.hideMessage();
 					document.forms.PartForm.imageId.value = status.id;
 					this.preview();
 				} else {
-					hui.ui.showMessage({text:'Det lykkedes ikke at hente billedet',icon:'common/warning',duration:2000});
+					hui.ui.showMessage({text:'Det lykkedes ikke at hente billedet',icon:'common/warning',duration:3000});
 				}
+				createFromUrl.enable();
 			}.bind(this)
 		});
 		

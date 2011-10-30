@@ -28,6 +28,8 @@ if (!$direction) {
 	$direction='ascending';
 }
 
+InternalSession::setToolSessionVar('files','group',$group);
+
 $query = array('windowSize' => $windowSize,'windowPage' => $windowPage,'sort' => $sort,'direction' => $direction);
 
 //if ($type!='') $query['type'] = $type;

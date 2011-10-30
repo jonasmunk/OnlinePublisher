@@ -54,7 +54,7 @@ $gui='
 			</left>
 			<center>
 				<overflow>
-					<list name="list" source="filesSource"/>
+					<list name="list" source="filesSource" drop-files="true"/>
 				</overflow>
 			</center>
 		</middle>

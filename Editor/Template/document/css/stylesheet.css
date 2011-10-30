@@ -3,7 +3,8 @@ html
 	height: 100%;
 }
 
-body {
+body
+{
 	margin: 0px;
 	min-height: 100%;
 }
@@ -15,15 +16,6 @@ div.editor_body
 
 form {
 	margin: 0px;
-}
-
-img.Minicon {
-	margin: 1px;
-}
-
-td.colButtonCell {
-	width: 10px;
-	height: 10px;
 }
 
 td.editor_column
@@ -59,15 +51,6 @@ div.section_hover
 	border: dashed 1px #abf;
 }
 
-div.row {
-	margin-bottom: 1px;
-}
-
-
-.Disabled {
-	opacity: 0.5;
-}
-
 a.editor_link_highlighted
 {
 	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
@@ -89,4 +72,9 @@ body.editor_details span.editor_link_bound
 	margin-top: 2px;
 	position: absolute;
 	background: url('../../../../hui/icons/monochrome/lock12.png');
+}
+
+.editor_drop
+{
+	background: url('../../../../hui/gfx/hover_bg.png');
 }

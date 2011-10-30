@@ -9,7 +9,7 @@ require_once '../../Classes/Services/FileService.php';
 require_once '../../Classes/Core/Response.php';
 require_once '../../Classes/Interface/In2iGui.php';
 
-$response = FileService::createUploadedFile();
+$response = FileService::createUploadedFile('',InternalSession::getToolSessionVar('files','group'));
 
 //sleep(3);
 

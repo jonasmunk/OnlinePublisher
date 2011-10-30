@@ -19,13 +19,13 @@ Log::debug('Got response');
 Log::debug($response);
 
 if ($response['success']==true) {
-	if (InternalSession::getToolSessionVar('images','uploadAddToGroup',true)) {
+	//if (InternalSession::getToolSessionVar('images','uploadAddToGroup',true)) {
 		$group = InternalSession::getToolSessionVar('images','group');
 		error_log($group.' / '.$response['id']);
 		if ($group) {
 			ImageService::addImageToGroup($response['id'],$group);
 		}
-	}
+	//}
 	In2iGui::respondUploadSuccess();
 } else {
 	In2iGui::respondUploadFailure();

@@ -37,10 +37,25 @@
 			<xsl:attribute name="style">text-align: <xsl:value-of select="img:style/@align"/></xsl:attribute>
 		</xsl:if>
 		<xsl:value-of select="img:style/@frame"/>
-		<xsl:call-template name="img:buildimage"/>
-		<xsl:if test="$editor='true' and not(o:object)">
-			<span style="font-size: 12px;">Intet billede</span>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="$editor='true' and not(o:object)">
+				<div>
+					<xsl:attribute name="style">
+						<xsl:text>border: 2px dashed #eee; background: #fafafa; color: #aaa; border-radius: 5px; text-align: center; font-size: 20px; overflow: hidden;</xsl:text>
+					<xsl:choose>
+						<xsl:when test="img:transform/@scale-height>0">height:<xsl:value-of select="img:transform/@scale-height"/>px; line-height: <xsl:value-of select="img:transform/@scale-height"/>px;</xsl:when>
+						<xsl:otherwise>height: 100px; line-height: 100px;</xsl:otherwise>
+					</xsl:choose>
+					</xsl:attribute>
+					?</div>
+			</xsl:when>
+			<xsl:when test="not(o:object)">
+				<xsl:comment>No image</xsl:comment>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="img:buildimage"/>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:apply-templates select="img:text"/>
 	</div>
 </xsl:template>
