@@ -28,6 +28,7 @@ var baseController = {
 		navNotes.setSelected(true);
 		searchBar.hide();
 		selector.hide();
+		list.clear();
 		list.show();
 		list.setSource(issueSource);
 	},
@@ -40,6 +41,7 @@ var baseController = {
 		if (search.isBlank()) {
 			selector.show();
 			list.hide();
+			list.clear();
 		} else {
 			selector.hide();
 			list.show();

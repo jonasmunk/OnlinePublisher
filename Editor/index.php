@@ -25,7 +25,7 @@ $categorized = ToolService::getCategorized();
 $lang = InternalSession::getLanguage();
 
 $gui='
-<gui xmlns="uri:hui" title="OnlinePublisher editor" state="pages">
+<gui xmlns="uri:hui" title="OnlinePublisher editor">
 	<source name="searchSource" url="Services/Base/Search.php">
 		<parameter key="text" value="@search.value"/>
 	</source>
@@ -40,12 +40,12 @@ $gui='
 				<!--<button icon="monochrome/stamp" name="navReview"/>
 				<button icon="monochrome/warning" name="navWarnings"/>-->
 			</bar>
-			<bar variant="layout" state="pages" name="searchBar">
+			<bar variant="layout" name="searchBar">
 				<searchfield adaptive="true" name="search"/>
 			</bar>
 			<overflow>
-				<list name="list" source="searchSource" state="pages"/>
-				<selection value="all" name="selector" state="pages">
+				<list name="list" source="searchSource" visible="false"/>
+				<selection value="all" name="selector">
 					<items source="hierarchySource"/>
 				</selection>
 			</overflow>
