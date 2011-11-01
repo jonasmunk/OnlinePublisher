@@ -61,17 +61,17 @@
 @media screen and (max-width: 880px) {
 	ul.layout_placards li.onlineme span
 	{
-		background-position: -30px -309px ;
+		background-position: -64px -415px;
 	}
 
 	ul.layout_placards li.onlinepublisher span
 	{
-		background-position: -20px -19px ;
+		background-position: -64px -34px;
 	}
 
 	ul.layout_placards li.onlineobjects span
 	{
-		background-position: -20px -159px ;
+		background-position: -64px -207px;
 	}
 
 	ul.layout_placards span
@@ -82,6 +82,11 @@
 
 @media screen and (max-width: 800px) {	
 	
+	h1.part_header
+	{
+		font-size: 28px;
+	}
+
 	ul.layout_navigation li a
 	{
 		font-size: 15px;
@@ -105,8 +110,8 @@
 
 	ul.layout_placards span
 	{
-		font-size: 14px;
-		line-height: 16px;
+		font-size: 16px;
+		line-height: 18px;
 	}
 }
 

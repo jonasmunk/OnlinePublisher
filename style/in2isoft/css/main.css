@@ -1,3 +1,4 @@
+/*@import url(http://fonts.googleapis.com/css?family=Lato:300,400);*/
 
 
 /********************** Base ***********************/
@@ -40,13 +41,9 @@ div.document
 	text-align: left;
 }
 
-div.layout_sidebar
-{
-}
-
 div.layout_base
 {
-	padding-bottom: 100px;
+	padding-bottom: 130px;
 	width: 100%;
 }
 
@@ -66,9 +63,9 @@ div.layout_middle
 div.layout_info
 {
 	margin-top: 20px;
-	box-shadow: 0 1px 3px #aaa;
-	-webkit-box-shadow: 0 1px 3px #999;
-	background: #fff;
+	box-shadow: inset 0 1px 3px #DDD;
+	-webkit-box-shadow: inset 0 1px 3px #DDD;
+	background: #F6F6F6;
 	border-radius: 5px;
 	overflow: hidden;
 }
@@ -88,6 +85,7 @@ div.layout_content
 div.layout_content_sidebar
 {
 	padding-right: 0;
+	position: relative;
 }
 
 div.layout_inner_content
@@ -103,7 +101,10 @@ div.layout_content_sidebar div.layout_inner_content
 div.layout_sidebar
 {
 	width: 199px;
-	float: right;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	top: 0;
 	font-size: 11pt;
 	padding-top: 10px;
 	border-left: 1px solid #ddd;
@@ -124,7 +125,7 @@ p.layout_translation
 div.layout_footer
 {
 	font-size: 9pt;
-	margin-top: -90px;
+	margin-top: -110px;
 }
 
 div.layout_footer span
@@ -160,25 +161,25 @@ ul.layout_navigation
 {
 	float: left;
 	margin: 0px;
-	padding: 5px 0 0 12px;
+	padding: 5px 0 0 6px;
 	display: block;
 	overflow: hidden;
 	height: 44px;
 	cursor: default;
+	font-size: 0;
 }
 
 ul.layout_navigation li
 {
 	float: left;
 	list-style: none;
-	_width: 1%;
-	height: 54px;
+	height: 30px;
 	padding-top: 5px;
 }
 
 ul.layout_navigation li a
 {
-	display: block;
+	display: inline-block;
 	color: #333;
 	text-decoration: none;
 	font-size: 13pt;
@@ -191,14 +192,14 @@ ul.layout_navigation li a
 
 ul.layout_navigation li span
 {
-	display: block;
-	height: 32px;
+	display: inline-block;
+	height: 30px;
 	padding: 0px 8px;
 }
 
 ul.layout_navigation_selected li span
 {
-	color: #999;
+	color: #8f99aa;
 }
 
 ul.layout_navigation_selected:hover li span
@@ -227,6 +228,7 @@ ul.layout_navigation li.selected a, ul.layout_navigation li.highlighted a
 {
 	box-shadow: inset 0 1px 4px rgba(0,0,0,.15);
 	background: -webkit-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
+	background: -moz-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
 }
 
 ul.layout_navigation li.selected a
@@ -241,10 +243,10 @@ ul.layout_navigation li.selected a span, ul.layout_navigation li.highlighted a s
 
 ul.layout_navigation li.first a
 {
-	width: 110px;
-	height: 31px;
-	margin: -5px 10px 0 0;
-	background: url('../gfx/graphics.png') -13px -637px;
+	width: 170px;
+	height: 51px;
+	margin: -7px 10px 0 0;
+	background: url('../gfx/graphics.png') -140px -637px;
 	border-radius: 0;
 	box-shadow: none;
 	-webkit-box-shadow: none;
@@ -307,6 +309,7 @@ ul.layout_sub_navigation a span
 ul.layout_sub_navigation a:hover
 {
 	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+	background: -moz-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
 	box-shadow: inset 0 0 1px rgba(0,0,0,.3);
 }
 
@@ -317,8 +320,9 @@ ul.layout_sub_navigation a:hover span
 
 ul.layout_sub_navigation a.selected, ul.layout_sub_navigation a.highlighted
 {
-	box-shadow: inset 0 1px 4px rgba(0,0,0,.2);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
 	background: -webkit-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
+	background: -moz-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
 }
 
 ul.layout_sub_navigation a.selected span, ul.layout_sub_navigation a.highlighted span
@@ -387,10 +391,14 @@ div.layout_info
 
 div.layout_info h2
 {
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: 300;
+	font-size: 28px;
 	margin: 0px 20px 10px 20px;
-	height: 26px;
-	text-indent: -1000px;
-	background: url('../gfx/graphics.png');
+	height: 28px;
+	color: #666;
+	/*text-indent: -1000px;
+	background: url('../gfx/graphics.png');*/
 }
 
 div.layout_info div.about h2
@@ -409,28 +417,36 @@ div.layout_info div.about
 {
 	float: left;
 	width: 66.4%;
-	padding: 20px 0;
+	padding: 15px 0;
 }
 
 div.layout_info div.about p
 {
-	font-size: 11pt;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: 300;
+	font-size: 12pt;
 	line-height: 16pt;
 	margin-top: 11px;
-	color: #999;
+	color: #666;
+}
+
+body.windows div.layout_info div.about p, body.windows div.layout_info div.about p
+{
+	font-weight: normal;
 }
 
 div.layout_info div.contact
 {
 	float: left;
 	width: 33%;
-	padding: 20px 0;
+	padding: 15px 0;
 }
 
 div.layout_info div.contact h2
 {
 	background-position: -590px -722px;
 	width: 200px;
+	margin-left: 17px;
 }
 
 div.layout_info div.contact p
@@ -463,6 +479,11 @@ div.layout_info a span
 	color: #666;
 }
 
+div.layout_info:hover h2
+{
+	color: #000;
+}
+
 div.layout_info:hover div.about p
 {
 	color: #333;
@@ -484,8 +505,10 @@ div.layout_info:hover div.contact p.name
 form.search
 {
 	margin-top: 13px;
-	float: right;
+	position: absolute;
+	right: 0;
 }
+
 
 form.search .submit
 {
@@ -497,7 +520,10 @@ form.search .submit
 }
 
 
-
+p.layout_translation
+{
+	float: right;
+}
 
 
 

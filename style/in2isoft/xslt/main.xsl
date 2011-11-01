@@ -27,6 +27,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</title>
+		<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'/>
 		<!--
 		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		-->
@@ -39,12 +40,17 @@
 		<xsl:call-template name="util:scripts"/>
 	</head>
 	<body>
+		<script type="text/javascript">
+			if (hui.browser.windows) {
+				hui.addClass(document.body,'windows');
+			}
+		</script>
 		<div class="layout">
 			<div class="layout_head">
 				<ul>
 					<xsl:attribute name="class">
 						<xsl:text>layout_navigation</xsl:text>
-						<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id] and //p:page/@id!=//p:context/p:home/@page">
+						<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id] and not(//p:page/@id=//p:context/p:home/@page)">
 							<xsl:text> layout_navigation_selected</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
@@ -147,9 +153,9 @@
 		<xsl:if test="//p:context/p:translation">
 			<p class="layout_translation">
 			<xsl:for-each select="//p:context/p:translation">
-				<a class="common_link">
+				<a class="common">
 					<xsl:call-template name="util:link"/>
-					<span>This page in english</span>
+					<span>This page in <xsl:value-of select="@language"/></span>
 				</a>
 			</xsl:for-each>
 			</p>

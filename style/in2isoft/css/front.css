@@ -123,10 +123,12 @@ ul.layout_placards a:hover
 ul.layout_placards strong
 {
 	display: block;
-	font-size: 24px;
+	font-size: 30px;
 	font-weight: normal;
 	color: #89a;
 	padding: 10px 10px;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: 300;
 }
 
 ul.layout_placards em
@@ -138,11 +140,13 @@ ul.layout_placards em
 ul.layout_placards span
 {
 	display: block;
-	font-size: 16px;
+	font-size: 18px;
 	line-height: 22px;
 	padding: 0 20px 0 150px;
 	height: 120px;
 	color: #567;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: 300;
 }
 
 ul.layout_placards li.onlineme a

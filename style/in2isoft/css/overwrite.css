@@ -1,17 +1,49 @@
+
 body
 {
-	font-family: "Cantarell","Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
 }
 
 .part_header
 {
 	color: #333;
-	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: 300;
 }
 
 .part_header_1
 {
 	color: #3080CB;
+}
+
+h1.part_header, textarea.part_header_1
+{
+	font-size: 38px;
+	line-height: 42px;
+}
+
+.part_text
+{
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	/*letter-spacing: 1px;*/
+	word-spacing: 4px;
+}
+
+body.windows .part_text, body.windows .part_text
+{
+	font-weight: normal;
+}
+
+div.part_list h3
+{
+	font-weight: normal;
+}
+
+hr.part_horizontalrule {
+	border: none;
+	border-bottom: solid 1px #DDD;
 }
 
 /********************* Common *******************/
@@ -36,13 +68,15 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
 	color: #333;
-	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
-	font-weight: normal;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: 300;
 }
 
 h1.common
 {
 	color: #3080CB;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-weight: 300;
 }
 
 p.common, ul.common
@@ -56,4 +90,5 @@ p.common, ul.common
 .common_font
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
 }
