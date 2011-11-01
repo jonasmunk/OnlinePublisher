@@ -96,12 +96,15 @@ hui.ui.Window.prototype = {
 	hide : function() {
 		if (!this.visible) return;
 		if (hui.browser.opacity) {
-			hui.animate(this.element,'opacity',0,200,{hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,200,{onComplete:function() {
+				this.element.style.display='none';
+				hui.ui.callVisible(this);
+			}.bind(this)});
 		} else {
 			this.element.style.display='none';
+			hui.ui.callVisible(this);
 		}
 		this.visible = false;
-		hui.ui.callVisible(this);
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {

@@ -51,6 +51,8 @@ hui.browser.webkitVersion = null;
 hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
 /** If the browser is safari on iPad */
 hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad')!=-1;
+/** If the browser is on Windows */
+hui.browser.windows = navigator.userAgent.indexOf('Windows')!=-1;
 
 /** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
@@ -1322,6 +1324,9 @@ hui.drag = {
 	_nativeListeners : [],
 	_activeDrop : null,
 	listen : function(options) {
+		if (hui.browser.msie) {
+			return;
+		}
 		hui.drag._nativeListeners.push(options);
 		if (hui.drag._nativeListeners.length>1) {return};
 		hui.listen(document.body,'dragenter',function(e) {
@@ -1358,7 +1363,8 @@ hui.drag = {
 				if (options.onDrop) {
 					options.onDrop(e);
 				}
-				if (options.onFiles && e.dataTransfer && e.dataTransfer.files.length>0) {
+				hui.log(e.dataTransfer.types)
+				if (options.onFiles && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 					options.onFiles(e.dataTransfer.files);
 				}
 			}
@@ -5283,12 +5289,15 @@ hui.ui.Window.prototype = {
 	hide : function() {
 		if (!this.visible) return;
 		if (hui.browser.opacity) {
-			hui.animate(this.element,'opacity',0,200,{hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,200,{onComplete:function() {
+				this.element.style.display='none';
+				hui.ui.callVisible(this);
+			}.bind(this)});
 		} else {
 			this.element.style.display='none';
+			hui.ui.callVisible(this);
 		}
 		this.visible = false;
-		hui.ui.callVisible(this);
 	},
 	add : function(widgetOrNode) {
 		if (widgetOrNode.getElement) {
@@ -5648,6 +5657,10 @@ hui.ui.List.prototype = {
 			items.push(this.rows[this.selected[i]]);
 		};
 		return items;
+	},
+	/** Gets all rows of the list */
+	getRows : function() {
+		return this.rows;
 	},
 	/** Gets the first selection or null
 	 * @returns {Object} The first selected row
@@ -6339,6 +6352,7 @@ hui.ui.Tabs.prototype = {
 	tabWasClicked : function(index) {
 		this.activeTab = index;
 		this.updateGUI();
+		hui.ui.callVisible(this);
 	},
 	/** @private */
 	updateGUI : function() {
@@ -6792,6 +6806,7 @@ hui.ui.DropDown.prototype = {
 	},
 	/** @private */
 	$visibilityChanged : function() {
+		hui.log('visibilityChanged: '+hui.dom.isVisible(this.element));
 		if (hui.dom.isVisible(this.element)) {
 			if (this.options.source) {
 				// If there is a source, make sure it is initially 
@@ -13876,6 +13891,7 @@ hui.ui.Checkboxes.prototype = {
 		this.items.push(item);
 	},
 	registerItems : function(items) {
+		hui.log('registerItems')
 		items.parent = this;
 		this.subItems.push(items);
 	},
@@ -13914,6 +13930,7 @@ hui.ui.Checkboxes.Items = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
+	hui.log('itms')
 }
 
 hui.ui.Checkboxes.Items.prototype = {

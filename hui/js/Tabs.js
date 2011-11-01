@@ -58,6 +58,7 @@ hui.ui.Tabs.prototype = {
 	tabWasClicked : function(index) {
 		this.activeTab = index;
 		this.updateGUI();
+		hui.ui.callVisible(this);
 	},
 	/** @private */
 	updateGUI : function() {

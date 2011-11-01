@@ -116,6 +116,7 @@ hui.ui.Checkboxes.prototype = {
 		this.items.push(item);
 	},
 	registerItems : function(items) {
+		hui.log('registerItems')
 		items.parent = this;
 		this.subItems.push(items);
 	},
@@ -154,6 +155,7 @@ hui.ui.Checkboxes.Items = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
+	hui.log('itms')
 }
 
 hui.ui.Checkboxes.Items.prototype = {

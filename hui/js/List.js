@@ -104,6 +104,10 @@ hui.ui.List.prototype = {
 		};
 		return items;
 	},
+	/** Gets all rows of the list */
+	getRows : function() {
+		return this.rows;
+	},
 	/** Gets the first selection or null
 	 * @returns {Object} The first selected row
 	 */

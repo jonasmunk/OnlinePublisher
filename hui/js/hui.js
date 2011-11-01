@@ -51,6 +51,8 @@ hui.browser.webkitVersion = null;
 hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
 /** If the browser is safari on iPad */
 hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad')!=-1;
+/** If the browser is on Windows */
+hui.browser.windows = navigator.userAgent.indexOf('Windows')!=-1;
 
 /** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;

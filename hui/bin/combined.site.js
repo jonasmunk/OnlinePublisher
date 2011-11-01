@@ -51,6 +51,8 @@ hui.browser.webkitVersion = null;
 hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
 /** If the browser is safari on iPad */
 hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad')!=-1;
+/** If the browser is on Windows */
+hui.browser.windows = navigator.userAgent.indexOf('Windows')!=-1;
 
 /** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
@@ -1322,6 +1324,9 @@ hui.drag = {
 	_nativeListeners : [],
 	_activeDrop : null,
 	listen : function(options) {
+		if (hui.browser.msie) {
+			return;
+		}
 		hui.drag._nativeListeners.push(options);
 		if (hui.drag._nativeListeners.length>1) {return};
 		hui.listen(document.body,'dragenter',function(e) {
@@ -1358,7 +1363,8 @@ hui.drag = {
 				if (options.onDrop) {
 					options.onDrop(e);
 				}
-				if (options.onFiles && e.dataTransfer && e.dataTransfer.files.length>0) {
+				hui.log(e.dataTransfer.types)
+				if (options.onFiles && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 					options.onFiles(e.dataTransfer.files);
 				}
 			}

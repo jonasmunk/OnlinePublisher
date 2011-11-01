@@ -506,7 +506,7 @@
 -->
 <xsl:template match="gui:list">
 	<div class="hui_list" id="{generate-id()}">
-		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
+		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state) or @visible='false'">
 			<xsl:attribute name="style">display:none</xsl:attribute>
 		</xsl:if>
 		<div class="hui_list_progress"></div>
