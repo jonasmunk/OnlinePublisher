@@ -616,6 +616,7 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	setObjects : function(objects) {
+		objects = objects || [];
 		this.selected = [];
 		hui.dom.clear(this.body);
 		this.rows = [];

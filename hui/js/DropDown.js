@@ -199,7 +199,6 @@ hui.ui.DropDown.prototype = {
 	},
 	/** @private */
 	$visibilityChanged : function() {
-		hui.log('visibilityChanged: '+hui.dom.isVisible(this.element));
 		if (hui.dom.isVisible(this.element)) {
 			if (this.options.source) {
 				// If there is a source, make sure it is initially 
