@@ -124,9 +124,10 @@ ul.layout_placards strong
 {
 	display: block;
 	font-size: 30px;
+	line-height: 30px;
 	font-weight: normal;
 	color: #89a;
-	padding: 10px 10px;
+	padding: 8px 10px 15px;
 	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: 300;
 }
