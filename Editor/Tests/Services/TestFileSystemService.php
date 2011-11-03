@@ -28,6 +28,27 @@ class TestFileSystemService extends UnitTestCase {
         $this->assertTrue(FileSystemService::filenameToTitle('my_photo.jpg')=='My photo');
         $this->assertTrue(FileSystemService::filenameToTitle('')=='');
     }
+
+    function testOverwriteExtension() {
+        $this->assertEqual(FileSystemService::overwriteExtension('filnavn.php','html'),'filnavn.html');
+        $this->assertEqual(FileSystemService::overwriteExtension('filnavn.xml.php','html'),'filnavn.html');
+        $this->assertEqual(FileSystemService::overwriteExtension('filnavn.xml.php',''),'filnavn');
+        $this->assertEqual(FileSystemService::overwriteExtension('filnavn.xml.php',' '),'filnavn');
+        $this->assertEqual(FileSystemService::overwriteExtension('filnavn.xml.php',null),'filnavn');
+        $this->assertEqual(FileSystemService::overwriteExtension('/path/to/somewhere/filnavn.xml.php','jpg'),'/path/to/somewhere/filnavn.jpg');
+        $this->assertEqual(FileSystemService::overwriteExtension('/path/to/some.where/filnavn.xml.php','jpg'),'/path/to/some.where/filnavn.jpg');
+    }
+
+    function testJoin() {
+        $this->assertEqual(FileSystemService::join('a','b'),'a/b');
+        $this->assertEqual(FileSystemService::join('a/','b'),'a/b');
+        $this->assertEqual(FileSystemService::join('a','/b'),'a/b');
+        $this->assertEqual(FileSystemService::join('a/','/b'),'a/b');
+        $this->assertEqual(FileSystemService::join('a',''),'a');
+        $this->assertEqual(FileSystemService::join('','b'),'b');
+        $this->assertEqual(FileSystemService::join('a',null),'a');
+        $this->assertEqual(FileSystemService::join(null,'b'),'b');
+    }
     
     function testGetExtension() {
         $this->assertEqual(FileService::mimeTypeToExtension('image/jpeg'),'jpg');

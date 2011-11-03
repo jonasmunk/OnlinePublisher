@@ -69,6 +69,49 @@ class FileSystemService {
 		return $out;
 	}
 	
+	function join($base,$end) {
+		$out = '';
+		if (substr($base,-1)=='/') {
+			$base = substr($base,0,-1);
+		}
+		if ($end{0}=='/') {
+			$end = substr($end,1);
+		}
+		$out = $base;
+		if ($out && $end) {
+			$out.='/';
+		}
+		$out.=$end;
+		return $out;
+	}
+	
+	function remove($path) {
+		if (!file_exists($path)) {
+			error_log('Not found: '.$path);
+			return true;
+		}
+		if (is_dir($path)) {
+			if ($dh = opendir($path)) {
+				while (($file = readdir($dh)) !== false) {
+					$filePath = FileSystemService::join($path,$file);
+					if (!($file=='.' || $file=='..')) {
+						FileSystemService::remove($filePath);
+					}
+				}
+				closedir($dh);
+			} else {
+				error_log('Unable to opendir:'.$path);
+			}
+			rmdir($path);
+		}
+		else if (is_file($path)) {
+			unlink($path);
+		} else {
+			error_log('Unknown: '.$path);
+		}
+		return file_exists($path);
+	}
+	
 	function find($query) {
 		return FileSystemService::_find($query['dir'],$query);
 	}
@@ -81,14 +124,14 @@ class FileSystemService {
 		if (is_dir($dir)) {
 			if ($dh = opendir($dir)) {
 				while (($file = readdir($dh)) !== false) {
-					$path = $dir.$file;
+					$path = FileSystemService::join($dir,$file);
 					if (is_array($query['exclude'])) {
 						$exclude = $query['exclude'];
 						if (in_array($path,$exclude)) {
 							continue;
 						}
 					}
-					if ($file[0]=='.') {
+					if ($file{0}=='.') {
 						continue;
 					}
 					if (is_file($path)) {
@@ -179,6 +222,21 @@ class FileSystemService {
 		while (file_exists($path)) {
 			$path = $dir.'/'.$head.$count.'.'.$ext;
 			$count++;
+		}
+		return $path;
+	}
+	
+	function overwriteExtension($path,$extension) {
+		$offset = strrpos($path,'/');
+		$pos = strpos($path,'.',$offset);
+		if ($pos === false) {
+			$path = $path;
+		}
+		else {
+			$path = substr($path,0,$pos);
+		}
+		if (StringUtils::isNotBlank($extension)) {
+			$path = $path.'.'.$extension;
 		}
 		return $path;
 	}

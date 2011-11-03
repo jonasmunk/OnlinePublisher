@@ -11,17 +11,24 @@ class TemporaryFolder {
 	}
 	
 	function make() {
-		global $basePath;
-		$this->dir = $basePath.'local/cache/temp/'.time();
+		$this->dir = FileSystemService::getFreeTempPath();
 		if (mkdir($this->dir)) {
-			return $this->dir.'/';
+			return $this->dir;
 		} else {
 			return false;
 		}
 	}
 	
+	function getPath() {
+		return $this->dir;
+	}
+	
 	function remove() {
-		return rmdir($this->dir);
+		return FileSystemService::remove($this->dir);
+	}
+	
+	function getFiles() {
+		return FileSystemService::find(array('dir'=>$this->dir));
 	}
 }
 ?>

@@ -3,31 +3,34 @@
  * @package OnlinePublisher
  * @subpackage Tools.Images
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Services/ImageService.php';
-require_once '../../Classes/Core/Response.php';
-require_once '../../Classes/Core/InternalSession.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Core/Log.php';
+require_once '../../Include/Private.php';
 
-Log::debug('Starting upload');
+if (ZipService::uploadIsZipFile()) {
+	$group = InternalSession::getToolSessionVar('images','group');
+	$zip = ZipService::getUploadedZip();
+	$folder = $zip->extractToTemporaryFolder();
+	$files = $folder->getFiles();
+	foreach ($files as $file) {
+		$result = ImageService::createImageFromFile($file,null,null,$group);
+		if (!$result->getSuccess()) {
+			Log::debug($result);
+		}
+	}
+	$folder->remove();
+	In2iGui::respondUploadSuccess();
+	exit;
+}
 
 $response = ImageService::createUploadedImage();
 
-Log::debug('Got response');
-Log::debug($response);
-
-if ($response['success']==true) {
-	//if (InternalSession::getToolSessionVar('images','uploadAddToGroup',true)) {
-		$group = InternalSession::getToolSessionVar('images','group');
-		error_log($group.' / '.$response['id']);
-		if ($group) {
-			ImageService::addImageToGroup($response['id'],$group);
-		}
-	//}
+if ($response->getSuccess()) {
+	$group = InternalSession::getToolSessionVar('images','group');
+	if ($group) {
+		ImageService::addImageToGroup($response->getObject()->getId(),$group);
+	}
 	In2iGui::respondUploadSuccess();
 } else {
+	Log::debug($response);
 	In2iGui::respondUploadFailure();
 	exit;
 }

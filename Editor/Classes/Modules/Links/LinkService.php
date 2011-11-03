@@ -337,13 +337,13 @@ class LinkService {
 			$view->setTargetId($row['target_value']);
 			$view->setTargetTitle($row['target_value']);
 			if (!ValidateUtils::validateEmail($row['target_value'])) {
-				$view->addError(LinkView::$INVALID_ADDRESS,'The URL is invalid');
+				$view->addError(LinkView::$INVALID_ADDRESS,'The e-mail is invalid');
 			}
 		} else if ($row['target_type']=='url') {
 			$view->setTargetId($row['target_value']);
 			$view->setTargetTitle($row['target_value']);
 			if (!ValidateUtils::validateHref($row['target_value'])) {
-				$view->addError(LinkView::$INVALID_ADDRESS,'The e-mail is invalid');
+				$view->addError(LinkView::$INVALID_ADDRESS,'The URL is invalid');
 			}
 		}
 		return $view;

@@ -522,7 +522,7 @@ class ObjectService {
 		$end=1000;
 		if (isset($query['windowSize']) && isset($query['windowPage'])) {
 			$start = ($query['windowPage'])*$query['windowSize'];
-			$end = ($query['windowPage']+1)*$query['windowSize'];
+			$end = ($query['windowPage']+1)*$query['windowSize']+1;
 			$list['windowPage'] = $query['windowPage'];
 			$list['windowSize'] = $query['windowSize'];
 		}

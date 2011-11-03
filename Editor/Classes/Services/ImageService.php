@@ -158,7 +158,7 @@ class ImageService {
 		}
 		$temp = $basePath.'local/cache/temp/'.basename($url);
 		if (RemoteDataService::writeUrlToFile($url,$temp)) {
-			$result = ImageService::createImageFromFile($temp,basename($url),null,filesize($temp));
+			$result = ImageService::createImageFromFile($temp,basename($url));
 			unlink($temp);
 			return $result;
 		} else {
@@ -180,12 +180,12 @@ class ImageService {
 	function createUploadedImage($title="",$group=0) {
 		global $basePath;
 	
-		$fileName=$_FILES['file']['name'];
-		$fileName=FileSystemService::safeFilename($fileName);
-		$fileType=$_FILES["file"]["type"];
-		$tempFile=$_FILES['file']['tmp_name'];
-		$fileSize=$_FILES["file"]["size"];
-		return ImageService::createImageFromFile($tempFile,$fileName,$fileType,$fileSize,$title,$group);
+		$fileName = $_FILES['file']['name'];
+		//$fileName = FileSystemService::safeFilename($fileName);
+		//$fileType = $_FILES["file"]["type"];
+		$tempFile = $_FILES['file']['tmp_name'];
+		//$fileSize = $_FILES["file"]["size"];
+		return ImageService::createImageFromFile($tempFile,$fileName,$title,$group);
 	}
 	
 	function createImageFromBase64($data,$fileName=null,$title=null) {
@@ -252,70 +252,71 @@ class ImageService {
 		return $output;
 	}
 	
-	function createImageFromFile($tempPath,$fileName,$mimeType,$fileSize,$title=null,$group=null) {
+	function createImageFromFile($tempPath,$fileName=null,$title=null,$group=null) {
 		global $basePath;
-		$errorMessage=null;
-		$errorDetails=null;
-
-		$uploadDir = $basePath.'images/';
-		$filePath = $uploadDir . $fileName;
-		$imageWidth=0;
-		$imageHeight=0;
-
-		$filePath = FileSystemService::findFreeFilePath($filePath);
-		$fileName = FileSystemService::getFileBaseName($filePath);
+		
 		if (!file_exists($tempPath)) {
-			$errorMessage='Filen findes ikke';
-			$errorDetails='Sti:'.$tempPath;			
-		} else if (!ImageService::isSupportedImageFile($fileName,$mimeType)) {
-			$errorMessage='Filen er ikke et validt billede';
-			$errorDetails='mime: '.$mimeType.', filename:'.$fileName;
+			Log::debug('File not found: '.$tempPath);
+			return ImportResult::fail('Filen findes ikke');
+		}
+		
+		$info = ImageTransformationService::getImageInfo($tempPath);
+		if (!$info) {
+			Log::debug('Unable to get image info: '.$tempPath);
+			return ImportResult::fail('Filen er ikke et validt billede');
+		}
+
+		// If no file name then extract it from the path
+		if (StringUtils::isBlank($fileName)) {
+			$fileName = FileSystemService::getFileBaseName($tempPath);
+		}
+		
+		$uploadDir = FileSystemService::join($basePath,'images');
+		$filePath = FileSystemService::join($uploadDir,$fileName);
+		
+		// Make sure the file has the correct extension
+		$ext = FileService::mimeTypeToExtension($info['mime']);
+		$filePath = FileSystemService::overwriteExtension($filePath,$ext);
+		
+		// Find a free path
+		$filePath = FileSystemService::findFreeFilePath($filePath);
+		
+		// The new file name
+		$fileName = FileSystemService::getFileBaseName($filePath);
+		
+		if (!in_array($info['mime'],ImageService::$validTypes)) {
+			Log::debug('Unsupported: '.$info['mime']);
+			return ImportResult::fail('Filens format er ikke korrekt');
 		}
 		else if (!@copy($tempPath, $filePath)) {
-			$errorMessage='Kunne ikke kopiere filen fra cachen';
-			$errorDetails=$tempPath.' -> '.$filePath;
+			Log::debug('Could not copy: '.$tempPath.' -> '.$filePath);
+			return ImportResult::fail('Kunne ikke kopiere filen');
 		}
-		else {
-			// Get the size of the image
-			$imagehw = getimagesize($filePath);
-			$imageWidth = $imagehw[0];//imagesx($image);
-			$imageHeight = $imagehw[1];//imagesy($image);
 
-			// If any of the dimensions are 0 something went wrong
-			if ($imageWidth==0 || $imageHeight==0) {
-				$errorMessage='Kunne ikke finde billedets størrelse';
-				$errorDetails='Kan skyldes at filen ikke er et billede eller at det er et ukendt format';
-			}
-			// Only create the object if nothing went wrong
-			if ($errorMessage==null) {
-		
-				// If no title build one from filename
-				if ($title=='') {
-					$title = FileSystemService::filenameToTitle($fileName);
-				}
-	
-				// Create object
-				$image = new Image();
-				$image->setTitle($title);
-				$image->setFilename($fileName);
-				$image->setSize($fileSize);
-				$image->setMimetype($mimeType);
-				$image->setWidth($imageWidth);
-				$image->setHeight($imageHeight);
-				$image->create();
-				$image->publish();
-				if ($group>0) {
-					$image->changeGroups(array($group));
-				}
-				$imageId = $image->getId();
-			}
+		// If no title build one from filename
+		if (StringUtils::isBlank($title)) {
+			$title = FileSystemService::filenameToTitle($fileName);
 		}
-		return array(
-			'success' => ($errorMessage==null)
-			,'errorMessage' => $errorMessage
-			,'errorDetails' => $errorDetails,
-			'id'=>$imageId
-		);
+
+		// Create object
+		$image = new Image();
+		$image->setTitle($title);
+		$image->setFilename($fileName);
+		$image->setSize(filesize($filePath));
+		$image->setMimetype($info['mime']);
+		$image->setWidth($info['width']);
+		$image->setHeight($info['height']);
+		$image->create();
+		$image->publish();
+
+		if ($group>0) {
+			$image->changeGroups(array($group));
+		}
+		
+		$result = new ImportResult();
+		$result->setSuccess(true);
+		$result->setObject($image);
+		return $result;
 	}
 	
 	function getLatestImageId() {
@@ -338,14 +339,4 @@ class ImageService {
 		return (in_array($mimeType,ImageService::$validTypes) || in_array($extension,ImageService::$validExtensions));
 	}
 }
-
-class ImageImportResult {
-	
-	var $success = false;
-	var $errorTitle;
-	var $errorDescription;
-	
-	function isSuccess() {
-		return $this->success;
-	}
-}
+?>

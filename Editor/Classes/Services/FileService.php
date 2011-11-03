@@ -84,7 +84,7 @@ class FileService {
 			'extensions'=>array()
 		),
 		array('kind' => 'audio.windowsmedia.playlist', 'category' => 'audio', 'label' => 'Windows Media Playlist',
-			'mimetypess' => array('application/vnd.ms-wpl'),
+			'mimetypes' => array('application/vnd.ms-wpl'),
 			'extensions'=>array('wpl')
 		)
 		

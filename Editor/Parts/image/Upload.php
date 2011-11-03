@@ -15,8 +15,8 @@ error_reporting(E_ERROR);
 
 $response = ImageService::createUploadedImage();
 
-if ($response['success']) {
-	ImagePartController::setLatestUploadId($response['id']);
+if ($response->getSuccess()) {
+	ImagePartController::setLatestUploadId($response->getObject()->getId());
 	In2iGui::respondUploadSuccess();
 } else {
 	Log::debug($response);

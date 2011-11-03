@@ -29,7 +29,7 @@ class TestPHPFiles extends UnitTestCase {
 			if (in_array($rel,$excluded)) {
 				continue;
 			}
-			Log::debug($url);
+			//Log::debug($url);
 			$this->_checkURL($url);
 		}
 	}
