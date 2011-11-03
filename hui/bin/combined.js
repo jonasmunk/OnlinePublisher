@@ -4906,6 +4906,10 @@ hui.ui.Bundle.prototype = {
 	}
 }
 
+/**
+ * Import some widgets by name
+ * @param names Array of widgets to import
+ */
 hui.ui.require = function(names,func) {
 	for (var i = names.length - 1; i >= 0; i--){
 		names[i] = hui.ui.context+'hui/js/'+names[i]+'.js';
@@ -11373,6 +11377,11 @@ hui.ui.Input.prototype = {
 				hui.listen(p,'mousedown',this.focus.bind(this));
 				hui.listen(p,'click',this.focus.bind(this));
 			}
+		}
+		if (e.type=='submit') {
+			hui.listen(e,'click',function(event) {
+				this.fire('click',event);
+			}.bind(this));
 		}
 	},
 	_focused : function() {

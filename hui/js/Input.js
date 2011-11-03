@@ -34,6 +34,11 @@ hui.ui.Input.prototype = {
 				hui.listen(p,'click',this.focus.bind(this));
 			}
 		}
+		if (e.type=='submit') {
+			hui.listen(e,'click',function(event) {
+				this.fire('click',event);
+			}.bind(this));
+		}
 	},
 	_focused : function() {
 		var e = this.element,p = this.options.placeholderElement;

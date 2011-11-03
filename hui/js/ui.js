@@ -940,6 +940,10 @@ hui.ui.Bundle.prototype = {
 	}
 }
 
+/**
+ * Import some widgets by name
+ * @param names Array of widgets to import
+ */
 hui.ui.require = function(names,func) {
 	for (var i = names.length - 1; i >= 0; i--){
 		names[i] = hui.ui.context+'hui/js/'+names[i]+'.js';
