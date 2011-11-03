@@ -23,7 +23,11 @@ class FrameService {
 				'name' => Database::text($frame->getName()),
 				'bottomtext' => Database::text($frame->getBottomText()),
 				'hierarchy_id' => Database::int($frame->getHierarchyId()),
-				'changed' => Database::datetime(time())
+				'changed' => Database::datetime(time()),
+				'searchenabled' => Database::boolean($frame->getSearchEnabled()),
+				'searchpage_id' => Database::int($frame->getSearchPageId()),
+				'userstatusenabled' => Database::boolean($frame->getUserStatusEnabled()),
+				'userstatuspage_id' => Database::int($frame->getLoginPageId())
 			),
 			'where' => array( 'id' => $frame->getId())
 		);
@@ -116,7 +120,7 @@ class FrameService {
 	}
 	
 	function load($id) {
-		$sql = "select id,title,bottomtext,name,hierarchy_id,UNIX_TIMESTAMP(changed) as changed from frame where id=".Database::int($id);
+		$sql = "select id,title,bottomtext,name,hierarchy_id,UNIX_TIMESTAMP(changed) as changed,searchenabled,searchpage_id,userstatusenabled,userstatuspage_id from frame where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			$frame = new Frame();
 			$frame->setId(intval($row['id']));
@@ -124,6 +128,10 @@ class FrameService {
 			$frame->setBottomText($row['bottomtext']);
 			$frame->setName($row['name']);
 			$frame->setHierarchyId(intval($row['hierarchy_id']));
+			$frame->setSearchEnabled($row['searchenabled'] ? true : false);
+			$frame->setSearchPageId(intval($row['searchpage_id']));
+			$frame->setUserStatusEnabled($row['userstatusenabled'] ? true : false);
+			$frame->setLoginPageId(intval($row['userstatuspage_id']));
 			$frame->changed = intval($row['changed']);
 			return $frame;
 		}
@@ -177,6 +185,16 @@ class FrameService {
 		}
 		Database::free($result);
 		return $list;
+	}
+	
+	function getNewsBlock($frame) {
+		$sql = "select id,`index`,title,sortby,sortdir,maxitems,timetype,timecount,UNIX_TIMESTAMP(startdate) as startdate,UNIX_TIMESTAMP(enddate) as enddate from frame_newsblock where frame_id=".Database::int($frame->getId())." order by `index`";
+		$blocks = Database::selectAll($sql);
+		foreach ($blocks as &$block) {
+			$sql = "select newsgroup_id from frame_newsblock_newsgroup where frame_newsblock_id=".Database::int($block['id']);
+			$block['groups'] = Database::selectArray($sql);
+		}
+		return $blocks;
 	}
 }
 ?>

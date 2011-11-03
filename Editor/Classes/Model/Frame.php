@@ -18,6 +18,10 @@ class Frame {
 	var $bottomText;
 	var $hierarchyId;
 	var $changed;
+	var $searchEnabled;
+	var $searchPageId;
+	var $userStatusEnabled;
+	var $loginPageId;
 
     function Frame() {
     }
@@ -74,7 +78,38 @@ class Frame {
 	    return $this->bottomText;
 	}
 	
+	function setSearchEnabled($searchEnabled) {
+	    $this->searchEnabled = $searchEnabled;
+	}
+
+	function getSearchEnabled() {
+	    return $this->searchEnabled;
+	}
 	
+	function setSearchPageId($searchPageId) {
+	    $this->searchPageId = $searchPageId;
+	}
+
+	function getSearchPageId() {
+	    return $this->searchPageId;
+	}
+	
+	function setUserStatusEnabled($userStatusEnabled) {
+	    $this->userStatusEnabled = $userStatusEnabled;
+	}
+
+	function getUserStatusEnabled() {
+	    return $this->userStatusEnabled;
+	}
+	
+	function setLoginPageId($loginPageId) {
+	    $this->loginPageId = $loginPageId;
+	}
+
+	function getLoginPageId() {
+	    return $this->loginPageId;
+	}
+		
 	// Utils...
 
 	function load($id) {
