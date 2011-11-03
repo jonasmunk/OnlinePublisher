@@ -134,12 +134,12 @@ $gui='
 					<columns space="10">
 						<column>
 							<group labels="above">
-								<datetime label="Fra" key="startdate"/>
+								<datetime label="Fra" key="startdate" return-type="seconds"/>
 							</group>
 						</column>
 						<column>
 							<group labels="above">
-								<datetime label="Til" key="enddate"/>
+								<datetime label="Til" key="enddate" return-type="seconds"/>
 							</group>
 						</column>
 					</columns>

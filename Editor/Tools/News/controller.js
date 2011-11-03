@@ -150,13 +150,6 @@ hui.ui.listen({
 		var data = newsFormula.getValues();
 		data.id = this.newsId;
 		data.links = newsLinks.getValue();
-		
-		if (data.startdate) {
-			data.startdate=Math.round(data.startdate.getTime()/1000);
-		}
-		if (data.enddate) {
-			data.enddate=Math.round(data.enddate.getTime()/1000);
-		}
 		data.groups = newsGroups.getValue();
 		hui.ui.request({
 			url:'data/SaveNews.php',
