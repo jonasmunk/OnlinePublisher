@@ -12,7 +12,7 @@ if ($frame = Frame::load($id)) {
 		'topLinks' => FrameService::getLinks($frame,'top'),
 		'bottomLinks' => FrameService::getLinks($frame,'bottom'),
 		'canRemove' => FrameService::canRemove($frame),
-		'newsBlocks' => FrameService::getNewsBlock($frame)
+		'newsBlocks' => FrameService::getNewsBlocks($frame)
 	);
 	
 	

@@ -10,6 +10,7 @@ $topLinks = Request::getUnicodeObject('topLinks');
 $bottomLinks = Request::getUnicodeObject('bottomLinks');
 $search = Request::getUnicodeObject('search');
 $user = Request::getUnicodeObject('user');
+$newsBlocks = Request::getUnicodeObject('newsBlocks');
 
 if ($id>0) {
 	$object = Frame::load($id);
@@ -28,5 +29,6 @@ if ($object) {
 	$object->save();
 
 	FrameService::replaceLinks($object,$topLinks,$bottomLinks);
+	FrameService::replaceNewsBlocks($object,$newsBlocks);
 }
 ?>

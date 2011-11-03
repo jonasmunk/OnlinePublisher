@@ -42,7 +42,6 @@ class FrameService {
 	function getLinks($frame,$position) {
 		$links = array();
 		$sql = "select frame_link.*,page.title as page_title,object.title as object_title from frame_link left join page on page.id=`frame_link`.`target_id` left join object on object.id=`frame_link`.`target_id` where frame_link.frame_id=".Database::int($frame->getId())." and frame_link.position=".Database::text($position)." order by frame_link.`index`";
-		Log::debug($sql);
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$link = array(
@@ -187,7 +186,7 @@ class FrameService {
 		return $list;
 	}
 	
-	function getNewsBlock($frame) {
+	function getNewsBlocks($frame) {
 		$sql = "select id,`index`,title,sortby,sortdir,maxitems,timetype,timecount,UNIX_TIMESTAMP(startdate) as startdate,UNIX_TIMESTAMP(enddate) as enddate from frame_newsblock where frame_id=".Database::int($frame->getId())." order by `index`";
 		$blocks = Database::selectAll($sql);
 		foreach ($blocks as &$block) {
@@ -195,6 +194,48 @@ class FrameService {
 			$block['groups'] = Database::selectArray($sql);
 		}
 		return $blocks;
+	}
+	
+	function replaceNewsBlocks($frame,$blocks) {
+		Log::debug($blocks);
+		
+		if (!is_object($frame)) {
+			Log::debug('No frame provided');
+			return;
+		}
+		// Delete existing blocks
+		$sql = "delete from frame_newsblock where frame_id=".Database::int($frame->getId());
+		Database::delete($sql);
+		// Delete unassociated news groups
+		$sql = "delete from frame_newsblock_newsgroup where frame_newsblock_id not in (select id from frame_newsblock)";
+		Database::delete($sql);
+		
+		if (!is_array($blocks)) {
+			return;
+		}
+
+		for ($i=0; $i < count($blocks); $i++) {
+			$block = $blocks[$i];
+			if ($block->startdate) {
+				//$block->startdate = DateUtils::parseRFC3339($block->startdate);
+				//$block->enddate = DateUtils::parseRFC3339($block->enddate);
+			}
+			$sql = array(
+				'table'=>'frame_newsblock',
+				'values'=> array(
+					'frame_id' => Database::int($frame->getId()),
+					'title' => Database::text($block->title),
+					'sortby' => Database::text($block->sortby),
+					'sortdir' => Database::text($block->sortdir),
+					'maxitems' => Database::int($block->maxitems),
+					'timetype' => Database::text($block->timetype),
+					'timecount' => Database::int($block->timecount),
+					'startdate' => Database::datetime($block->startdate),
+					'enddate' => Database::datetime($block->enddate)
+				)
+			);
+			Database::insert($sql);
+		}
 	}
 }
 ?>

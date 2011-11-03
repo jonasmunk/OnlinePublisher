@@ -6,6 +6,8 @@ hui.ui.listen({
 		this.frameId = null;
 		frameWindow.show();
 		frameFormula.reset();
+		newsList.setObjects();
+		this._clearNews();
 		deleteFrame.setEnabled(false);
 		frameFormula.focus();
 	},
@@ -67,7 +69,8 @@ hui.ui.listen({
 				search : searchFormula.getValues(),
 				user : userFormula.getValues(),
 				topLinks : topLinks.getValue(),
-				bottomLinks : bottomLinks.getValue()
+				bottomLinks : bottomLinks.getValue(),
+				newsBlocks : newsList.getRows()
 			},
 			url : 'data/SaveFrame.php',
 			message : {start:'Gemmer ramme...',delay:300},
@@ -110,7 +113,7 @@ hui.ui.listen({
 			maxitems : 0,
 			timetype : 'always',
 			timecount : 0
-		})
+		});
 		newsWindow.show();
 		newsFormula.focus();
 		deleteNews.disable();

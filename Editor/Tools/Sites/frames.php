@@ -144,8 +144,8 @@ $gui='
 						<item value="9" title="9"/>
 						<item value="10" title="10"/>
 					</dropdown>
-					<datetime key="startdate" label="Fra"/>
-					<datetime key="enddate" label="Til"/>
+					<datetime key="startdate" label="Fra" return-type="seconds"/>
+					<datetime key="enddate" label="Til" return-type="seconds"/>
 				</group>
 			</fieldset>
 			<fieldset legend="Nyheder">
