@@ -16,6 +16,8 @@ $gui='
 	<controller source="controller.js"/>
 	<source name="listSource" url="List.php">
 		<parameter key="windowPage" value="@list.window.page"/>
+		<parameter key="sort" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="query" value="@search.value"/>
 		<parameter key="filter" value="@selector.value"/>
 	</source>

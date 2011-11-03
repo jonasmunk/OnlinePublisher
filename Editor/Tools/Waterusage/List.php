@@ -15,17 +15,22 @@ $filter = Request::getString('filter');
 $text = Request::getUnicodeString('query');
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
+$sort = Request::getString('sort');
+$direction = Request::getString('direction');
 
 if ($filter=='meters') {
-	listMeters($windowSize,$windowPage,$text);
+	listMeters($windowSize,$windowPage,$text,$sort,$direction);
 } else if ($filter=='log') {
 	listLog($windowSize,$windowPage,$text);
 } else {
 	listUsage($windowSize,$windowPage,$text,intval($filter));
 }
 
-function listMeters($windowSize, $windowPage, $text) {
-	$query = Query::after('watermeter')->orderBy('number')->withWindowPage($windowPage)->withWindowSize($windowSize)->withText($text);
+function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
+	if (!$sort) {
+		$sort = 'number';
+	}
+	$query = Query::after('watermeter')->orderBy($sort)->withDirection($direction)->withWindowPage($windowPage)->withWindowSize($windowSize)->withText($text);
 	$result = $query->search();
 
 	$writer = new ListWriter();
@@ -34,7 +39,7 @@ function listMeters($windowSize, $windowPage, $text) {
 	$writer->sort($sort,$direction);
 	$writer->window(array( 'total' => $result->getTotal(), 'size' => $windowSize, 'page' => $windowPage ));
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Nummer','width'=>40));
+	$writer->header(array('title'=>'Nummer','width'=>40,'key'=>'number','sortable'=>'true'));
 	$writer->header(array('title'=>'Adresse'));
 	$writer->header(array('title'=>'Værdi'));
 	$writer->header(array('title'=>'Aflæsningsdato'));

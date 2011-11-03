@@ -20,7 +20,6 @@ class WaterusageService {
 			$usage = new Waterusage();
 		}
 		$usage->setNumber($dummy->getNumber());
-		$usage->setYear($dummy->getYear());
 		$usage->setDate($dummy->getDate());
 		$usage->setValue($dummy->getValue());
 		$usage->save();
@@ -31,6 +30,15 @@ class WaterusageService {
 		$meter = Query::after('watermeter')->withProperty('number',$number)->first();
 		if ($meter) {
 			return WaterusageService::getSummaryByMeter($meter);
+		}
+		return null;
+	}
+	
+	function getLatestUsage($number) {
+		$meter = Query::after('watermeter')->withProperty('number',$number)->first();
+		if ($meter) {
+			$meter = Query::after('waterusage')->withProperty('watermeterId',$meter->getId())->orderBy('date')->descending()->withWindowSize(1)->first();
+			return $meter;
 		}
 		return null;
 	}
