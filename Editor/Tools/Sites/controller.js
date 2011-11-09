@@ -167,7 +167,7 @@ var mainController = {
 		values.id = this.activePage;
 		hui.ui.request({
 			message : {start : 'Gemmer side...',delay:300},
-			url : 'SavePage.php',
+			url : 'data/SavePage.php',
 			json : {data:values},
 			onSuccess : function() {
 				list.refresh();

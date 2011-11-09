@@ -260,7 +260,30 @@ union select text,document_section.page_id from part_listing,document_section wh
 	}
 
 	function save($page) {
+		$success = false;
 		if ($page->getId()>0) {
+			$existing = PageService::load($page->getId());
+			
+			if ($existing && StringUtils::isNotBlank($existing->getPath())) {
+				if ($page->getPath()!==$existing->getPath()) {
+					Log::debug('The path has changed!');
+					$path = Query::after('path')->withProperty('path',$existing->getPath())->first();
+					if ($path) {
+						Log::debug('Found existing path...');
+						Log::debug($path);
+						Log::debug('Point it at the new page...');
+						$path->setPageId($page->getId());
+					} else {
+						Log::debug('Creating new path...');
+						$path = new Path();
+						$path->setPath($existing->getPath());
+						$path->setPageId($page->getId());
+					}
+					$path->save();
+					$path->publish();
+				}
+			}
+			
 			$sql="update page set".
 			" title=".Database::text($page->getTitle()).
 			",description=".Database::text($page->getDescription()).
@@ -277,11 +300,17 @@ union select text,document_section.page_id from part_listing,document_section wh
 			if ($success) {
 				PageService::markChanged($page->getId());
 				EventService::fireEvent('update','page',$page->getTemplateUnique(),$page->getId());
-			}
-			
-			return $success;
+			}			
 		} else {
-			return PageService::create($page);
+			$success = PageService::create($page);
+		}
+		if ($success) {
+			if (StringUtils::isNotBlank($page->getPath())) {
+				$paths = Query::after('path')->withProperty('path',$page->getPath())->get();
+				foreach ($paths as $path) {
+					$path->remove();
+				}
+			}
 		}
 	}
 
