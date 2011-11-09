@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Start
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Network/FeedParser.php';
-require_once '../../Classes/Utilities/DateUtils.php';
+require_once '../../../Include/Private.php';
 
 $url = 'http://twitter.com/statuses/user_timeline/16827706.rss';
 $data = RemoteDataService::getRemoteData($url,60*30); // 30 minutes
