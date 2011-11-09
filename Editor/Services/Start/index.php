@@ -12,7 +12,7 @@ $gui='
 <gui xmlns="uri:hui" padding="10" title="Start">
 	<css url="style.css"/>
 	<controller name="controller" source="controller.js"/>
-	<source name="developerFeed" url="DeveloperFeedArticles.php"/>
+	<source name="developerFeed" url="data/DeveloperFeed.php"/>
 	<source name="commitFeed" url="CommitFeed.php"/>
 	<source name="newsFeed" url="NewsFeedArticles.php"/>
 	<source name="warningsList" url="data/WarningsList.php"/>

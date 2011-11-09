@@ -9,6 +9,8 @@ require_once('../../Editor/Classes/Services/WaterusageService.php');
 require_once('../../Editor/Classes/Utilities/DateUtils.php');
 require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
+sleep(3);
+
 $number = Request::getString('number');
 $date = Request::getString('date');
 $value = Request::getInt('value',null);
@@ -42,5 +44,5 @@ $usage->setDate($date);
 $usage->save();
 $usage->publish();
 
-Response::sendObject(array('success'=>true));
+Response::sendObject(array('success'=>true,'id'=>$usage->getId()));
 ?>
