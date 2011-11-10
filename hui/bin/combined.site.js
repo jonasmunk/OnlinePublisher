@@ -2923,7 +2923,7 @@ hui.ui.hideToolTip = function(options) {
 		if (!hui.browser.msie) {
 			hui.animate(t,'opacity',0,300,{hideOnComplete:true});
 		} else {
-			hui.style.display = 'none';
+			t.style.display = 'none';
 		}
 	}
 };
