@@ -302,6 +302,7 @@ div.placard div.poster_2 div.right
 .posters .left .box
 {
 	background: #fff url('../gfx/front.png') -87px -2px no-repeat;
+	background: white url('../gfx/front.png') -99px -452px no-repeat;
 }
 
 .posters .left strong
