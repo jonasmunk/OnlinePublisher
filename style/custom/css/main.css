@@ -3,6 +3,7 @@ body
 	background: #fafafa;
 	margin: 0;
 	padding: 20px;
+	text-align: center;
 }
 
 div.layout
@@ -11,6 +12,7 @@ div.layout
 	border: 1px solid #eee;
 	width: 980px;
 	margin: 0 auto;
+	text-align: left;
 }
 
 div.layout_content
