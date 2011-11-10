@@ -2,7 +2,7 @@ hui.ui.listen({
 	
 	
 	$ready : function() {
-		hui.require([hui.ui.context+'hui/lib/date.js',hui.ui.context+'hui/js/Input.js'],this._initialize.bind(this))
+		hui.require([hui.ui.context+'hui/lib/json2.js',hui.ui.context+'hui/lib/date.js',hui.ui.context+'hui/js/Input.js'],this._initialize.bind(this));
 	},
 	_initialize : function() {
 		this.latest = hui.get('latest');
@@ -131,7 +131,12 @@ hui.ui.listen({
 					hui.ui.showMessage({text:'Aflæsningen er registreret',icon:'common/success',duration:4000})
 				}
 				this._reset();
-			}.bind(this)
+			}.bind(this),
+			onException : function(obj) {
+				hui.log(obj);
+				hui.ui.showMessage({text:'Der skete en fejl i systemet, aflæsningen er måske ikke registreret',icon:'common/warning',duration:4000})
+				this._sending = false;
+			}
 		});
 	},
 	_reset : function() {

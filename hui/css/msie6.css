@@ -61,3 +61,10 @@ span.hui_searchfield, span.hui_searchfield span, a.hui_searchfield_reset
 {
 	background-image: url('../gfx/search_field.gif');
 }
+
+/* force tool tip small */
+div.hui_tooltip
+{
+	width: 1px;
+	white-space: nowrap;
+}
