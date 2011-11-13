@@ -7,12 +7,11 @@ require_once('../../Editor/Classes/Core/Query.php');
 require_once('../../Editor/Classes/Services/WaterusageService.php');
 require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
-sleep(1);
+///sleep(1);
 
 $number = Request::getString('number');
 
 $usage = WaterusageService::getLatestUsage($number);
-usleep(10000);
 if ($usage) {
 	Response::sendObject(array(
 		'found' => true,
