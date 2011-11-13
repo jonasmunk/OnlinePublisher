@@ -129,6 +129,9 @@ hui.ui.listen({
 			onJSON : function(obj) {
 				if (obj.success) {
 					hui.ui.showMessage({text:'Aflæsningen er registreret',icon:'common/success',duration:4000})
+					window.setTimeout(function() {
+						document.location = op.context+'services/waterusage/receipt.php?id='+obj.id;
+					},1000)
 				}
 				this._reset();
 			}.bind(this),

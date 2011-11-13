@@ -9,7 +9,7 @@ require_once('../../Editor/Classes/Services/WaterusageService.php');
 require_once('../../Editor/Classes/Utilities/DateUtils.php');
 require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
-sleep(3);
+sleep(1);
 
 $number = Request::getString('number');
 $date = Request::getString('date');
