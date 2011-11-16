@@ -21,6 +21,8 @@ if ($data->id>0) {
 	$obj = Waterusage::load($data->id);
 } else {
 	$obj = new Waterusage();
+	$obj->setSource(Waterusage::$ADMIN);
+	$obj->setStatus(Waterusage::$VALIDATED);
 }
 $obj->setWatermeterId($meter->getId());
 $obj->setValue($data->value);

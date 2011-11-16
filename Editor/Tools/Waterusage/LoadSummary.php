@@ -9,7 +9,5 @@ $data = Request::getObject('data');
 
 $summary = WaterusageService::getSummaryById($data->id);
 
-$summary->toUnicode();
-
-In2iGui::sendObject($summary);
+In2iGui::sendUnicodeObject($summary);
 ?>

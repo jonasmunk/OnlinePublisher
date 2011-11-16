@@ -32,11 +32,10 @@ function handleLine($line) {
 	$line = StringUtils::fromUnicode($line);
 	$words = preg_split('/;/',$line);
 	$number = $words[0];
-	$name = $words[1];
-	$street = $words[2];
-	$zipcode = $words[3];
-	$city = $words[4];
-	if (count($words)<5) {
+	$street = $words[1];
+	$zipcode = $words[2];
+	$city = $words[3];
+	if (count($words)<4) {
 		Log::logTool('waterusage','import','Line does not have at least 5 words: '.$line);
 		return;
 	}

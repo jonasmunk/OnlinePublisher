@@ -12,6 +12,7 @@ $gui='
 <gui xmlns="uri:hui" padding="10" title="Start">
 	<css url="style.css"/>
 	<controller name="controller" source="controller.js"/>
+	<source name="taskSource" url="data/TaskList.php"/>
 	<source name="developerFeed" url="data/DeveloperFeed.php"/>
 	<source name="commitFeed" url="CommitFeed.php"/>
 	<source name="newsFeed" url="NewsFeedArticles.php"/>
@@ -27,7 +28,8 @@ $gui='
 				<column>
 					<header icon="monochrome/message">Udvikling</header>
 					<overflow vertical="180">
-						<list source="developerFeed"/>
+						<list source="taskSource"/>
+						<!--<list source="developerFeed"/>-->
 					</overflow>
 				</column>
 				<column>

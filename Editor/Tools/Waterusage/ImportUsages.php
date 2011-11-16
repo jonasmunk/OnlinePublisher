@@ -63,6 +63,8 @@ function handleLine($line) {
 		$usage = new Waterusage();
 		$usage->setValue($value);
 		$usage->setWatermeterId($meter->getId());
+		$usage->setSource(Waterusage::$IMPORT);
+		$usage->setStatus(Waterusage::$VALIDATED);
 		$usage->setDate($date);
 		$usage->save();
 		$usage->publish();

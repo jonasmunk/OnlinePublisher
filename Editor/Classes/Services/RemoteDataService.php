@@ -32,6 +32,7 @@ class RemoteDataService {
 	}
 	
 	function writeUrlToFile($url,$path) {
+		$existing = file_exists($path);
 		$success = false;
 		if (!function_exists('curl_init')) {
 			if ($file = @fopen($url, "rb")) {
@@ -53,9 +54,14 @@ class RemoteDataService {
             	$success = curl_exec($ch);
 				fclose($file);
 				if (!$success) {
-					unlink($path);
+					$info = curl_getinfo($ch);
+					if (!$existing) {
+						unlink($path);
+					}
 					Log::debug('Unable to load url: '.$url);
+					Log::debug($info);
 				}
+				Log::debug('Success:');
 			} else {
 				Log::debug('Unable to open file path: '.$path);
 			}
@@ -88,10 +94,12 @@ class RemoteDataService {
 		$age = $now-$cached->getSynchronized();
 		if ($age>$maxAge) {
 			$success = RemoteDataService::writeUrlToFile($url,$path);
-			$cached->setTitle($url);
-			$cached->setSynchronized(mktime());
-			$cached->save();
-			$cached->publish();
+			if ($success) {
+				$cached->setTitle($url);
+				$cached->setSynchronized(mktime());
+				$cached->save();
+				$cached->publish();
+			}
 		}
 		$data = new RemoteData();
 		$data->setAge($age);

@@ -11,6 +11,7 @@ require_once '../../Classes/Core/Request.php';
 require_once '../../Classes/Utilities/DateUtils.php';
 require_once '../../Classes/Utilities/GuiUtils.php';
 
+$filterKind = Request::getString('filterKind');
 $filter = Request::getString('filter');
 $text = Request::getUnicodeString('query');
 $windowSize = Request::getInt('windowSize',30);
@@ -23,7 +24,7 @@ if ($filter=='meters') {
 } else if ($filter=='log') {
 	listLog($windowSize,$windowPage,$text);
 } else {
-	listUsage($windowSize,$windowPage,$text,intval($filter));
+	listUsage($windowSize,$windowPage,$text,$filterKind,intval($filter));
 }
 
 function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
@@ -41,7 +42,7 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 	$writer->startHeaders();
 	$writer->header(array('title'=>'Nummer','width'=>40,'key'=>'number','sortable'=>'true'));
 	$writer->header(array('title'=>'Adresse'));
-	$writer->header(array('title'=>'Værdi'));
+	$writer->header(array('title'=>'Seneste værdi'));
 	$writer->header(array('title'=>'Aflæsningsdato'));
 	$writer->endHeaders();
 
@@ -49,7 +50,12 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 		$address = Query::after('address')->withRelationFrom($object)->first();
 		$usage = Query::after('waterusage')->withProperty('watermeterId',$object->getId())->orderBy('date')->descending()->first();
 		$writer->startRow(array( 'kind'=>'watermeter', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
-		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->text( $object->getNumber() )->endCell();
+		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->
+			text( $object->getNumber() )->
+			startIcons()->
+				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'meterInfo','id'=>$object->getId())))->
+			endIcons()->
+		endCell();
 		if ($address) {
 			$writer->startCell(array( 'icon'=>$address->getIn2iGuiIcon() ))->text($address->toString())->endCell();
 		} else {
@@ -68,12 +74,22 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 	$writer->endList();
 }
 
-function listUsage($windowSize, $windowPage, $text, $year=null) {
+function listUsage($windowSize, $windowPage, $text, $filterKind, $year=null) {
+	$status = array(
+		Waterusage::$UNKNOWN => 'monochrome/round_question',
+		Waterusage::$VALIDATED => 'common/success',
+		Waterusage::$REJECTED => 'common/stop'
+	);
+	
+	
 	$query = Query::after('waterusage')->orderBy('date')->withWindowPage($windowPage)->withWindowSize($windowSize)->withText($text);
-	if ($year) {
+	if ($filterKind=='year') {
 		$from = DateUtils::getFirstInstanceOfYear($year);
 		$to = DateUtils::getLastInstanceOfYear($year);
 		$query->withPropertyBetween('date',$from,$to);
+	}
+	if ($filterKind=='status') {
+		$query->withProperty('status',$year);
 	}
 	$result = $query->search();
 
@@ -87,20 +103,38 @@ function listUsage($windowSize, $windowPage, $text, $year=null) {
 	$writer->header(array('title'=>'Værdi','width'=>30));
 	$writer->header(array('title'=>'Aflæsningsdato'));
 	$writer->header(array('title'=>'Opdateret'));
+	$writer->header(array('title'=>'Status'));
+	$writer->header(array('title'=>'Kilde'));
 	$writer->endHeaders();
 
 	foreach ($result->getList() as $object) {
 		$meter = Watermeter::load($object->getWatermeterId());
 		$writer->startRow(array( 'kind'=>'waterusage', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
 		if ($meter) {
-			$writer->startCell(array( 'icon'=>$meter->getIn2iGuiIcon() ))->text( $meter->getNumber() )->endCell();
+			$writer->startCell(array( 'icon'=>$meter->getIn2iGuiIcon() ))->text( $meter->getNumber() )->			
+				startIcons()->
+					icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'meterInfo','id'=>$meter->getId())))->
+				endIcons()->
+			endCell();
 		} else {
 			$writer->startCell(array( 'icon'=>'common/warning' ))->text( 'Ikke fundet' )->endCell();
 		}
-		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->text($object->getValue())->endCell();
-		$writer->startCell()->text(DateUtils::formatLongDate($object->getDate()))->endCell();
-		$writer->startCell()->text(DateUtils::formatFuzzy($object->getUpdated()))->endCell();
-		$writer->endRow();
+		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->
+			text($object->getValue())->
+			startIcons()->
+				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'usageInfo','id'=>$object->getId())))->
+			endIcons()->
+		endCell()->
+		startCell()->text(DateUtils::formatLongDate($object->getDate()))->endCell()->
+		startCell()->text(DateUtils::formatFuzzy($object->getUpdated()))->endCell()->
+		startCell(array('align'=>'center'))->
+			startIcons()->
+				icon(array('icon'=>WaterusageService::getStatusIcon($object->getStatus()),'action'=>true,'data'=>array('action'=>'usageStatus','id'=>$object->getId())))->
+			endIcons()->
+		
+		endCell()->
+		startCell(array('dimmed'=>true))->text(WaterusageService::getSourceText($object->getSource()))->endCell()->
+		endRow();
 	}
 	$writer->endList();
 }

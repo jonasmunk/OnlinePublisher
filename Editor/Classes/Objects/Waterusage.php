@@ -13,14 +13,25 @@ require_once($basePath.'Editor/Classes/Model/Object.php');
 Object::$schema['waterusage'] = array(
 	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id'),
 	'value'  => array('type'=>'int'),
-	'date'  => array('type'=>'datetime')
+	'date'  => array('type'=>'datetime'),
+	'status'  => array('type'=>'int'),
+	'source'  => array('type'=>'int')
 );
 class Waterusage extends Object {
+	
+	static $ADMIN = 0;
+	static $IMPORT = 1;
+	static $CLIENT = 2;
+	
+	static $UNKNOWN = 0;
+	static $VALIDATED = 1;
+	static $REJECTED = -1;
+	
 	var $watermeterId;
-	var $number;
-	var $year;
 	var $value;
 	var $date;
+	var $status;
+	var $source;
 
 	function Waterusage() {
 		parent::Object('waterusage');
@@ -58,6 +69,23 @@ class Waterusage extends Object {
 	function getDate() {
 	    return $this->date;
 	}
+	
+	function setStatus($status) {
+	    $this->status = $status;
+	}
+
+	function getStatus() {
+	    return $this->status;
+	}
+	
+	function setSource($source) {
+	    $this->source = $source;
+	}
+
+	function getSource() {
+	    return $this->source;
+	}
+	
 	
 	function sub_index() {
 		$words = array($this->number);

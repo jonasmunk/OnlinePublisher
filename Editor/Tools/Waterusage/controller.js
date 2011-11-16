@@ -65,6 +65,51 @@ hui.ui.listen({
 			this._editMeter(obj.id);
 		}
 	},
+	$clickIcon$list : function(info) {
+		if (info.data.action=='meterInfo') {
+			this._editMeter(info.data.id);
+		} else if (info.data.action=='usageInfo') {
+			this._editUsage(info.data.id);
+		} else if (info.data.action=='usageStatus') {
+			this._editStatus(info);
+		}
+	},
+	
+	
+	// Status ...
+
+	_statusId : null,
+	_editStatus : function(info) {
+		this._statusId = info.data.id;
+		statusPanel.position(info.node);
+		statusPanel.show();
+	},
+	
+	$click$cancelStatus : function() {
+		statusPanel.hide();
+	},
+	$click$rejectStatus : function() {
+		this._updateStatus(-1);
+	},
+	$click$acceptStatus : function() {
+		this._updateStatus(1);
+	},
+	_updateStatus : function(status) {
+		hui.ui.request({
+			url : 'data/UpdateStatus.php',
+			parameters : {id:this._statusId,status:status},
+			onSuccess : function() {
+				list.refresh();
+				filterSource.refresh();
+			}.bind(this)
+		})
+		statusPanel.hide();
+		this._statusId = null;
+	},
+	
+
+	// Usage ...
+
 	_editUsage : function(id) {
 		usageFormula.reset();
 		deleteUsage.setEnabled(false);
@@ -115,6 +160,7 @@ hui.ui.listen({
 	},
 	
 	// Meter
+	
 	
 	$click$newMeter : function() {
 		this.meterId = null;
@@ -266,10 +312,12 @@ hui.ui.listen({
 	$uploadDidCompleteQueue$metersUpload : function() {
 		hui.ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
 		list.refresh();
+		filterSource.refresh();
 	},
 	$uploadDidCompleteQueue$usagesUpload : function() {
 		hui.ui.showMessage({text:'Importen er fuldført',icon:'common/success',duration:2000});
 		list.refresh();
 		subUsageList.refresh();
+		filterSource.refresh();
 	}
 });

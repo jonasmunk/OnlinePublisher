@@ -83,8 +83,8 @@ hui.ui.listen({
 			date = this.date.getValue(),
 			value = this.value.getValue(),
 			valid = true;
-		if (number.length<8) {
-			this.number.setError('Skal være mindst 8 cifre');
+		if (number.length!=8) {
+			this.number.setError('Skal være 8 cifre');
 			valid = false;
 		} else {
 			this.number.setError()

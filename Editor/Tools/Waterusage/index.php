@@ -20,8 +20,9 @@ $gui='
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="query" value="@search.value"/>
 		<parameter key="filter" value="@selector.value"/>
+		<parameter key="filterKind" value="@selector.kind"/>
 	</source>
-	<source name="filterSource" url="FilterItems.php"/>
+	<source name="filterSource" url="data/FilterItems.php"/>
 	<layout>
 		<top>
 			<toolbar>
@@ -41,8 +42,7 @@ $gui='
 				<selection value="meters" name="selector">
 					<item icon="common/gauge" title="Målere" value="meters"/>
 					<item icon="file/generic" title="Log" value="log"/>
-					<title>Aflæsninger</title>
-					<item icon="common/water" title="Alle aflæsninger" value="usage"/>
+					
 					<items source="filterSource"/>
 				</selection>
 				</overflow>
@@ -180,7 +180,14 @@ $gui='
 			<button name="export" title="Eksportér" highlighted="true"/>
 		</buttons>
 	</boundpanel>
-
+	
+	<boundpanel name="statusPanel" padding="5" variant="light">
+		<buttons align="center">
+			<button text="Annuller" name="cancelStatus"/>
+			<button text="Afvis" name="rejectStatus"/>
+			<button title="Godkend" name="acceptStatus"/>
+		</buttons>
+	</boundpanel>
 </gui>';
 
 In2iGui::render($gui);

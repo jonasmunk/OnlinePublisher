@@ -14,13 +14,8 @@ class WatermeterSummary {
 	var $street;
 	var $zipcode;
 	var $city;
-	
-	function toUnicode() {
-		$this->number = StringUtils::toUnicode($this->number);
-		$this->street = StringUtils::toUnicode($this->street);
-		$this->zipcode = StringUtils::toUnicode($this->zipcode);
-		$this->city = StringUtils::toUnicode($this->city);
-	}
+	var $email;
+	var $phone;
 	
 	function setWatermeterId($watermeterId) {
 	    $this->watermeterId = $watermeterId;
@@ -60,6 +55,22 @@ class WatermeterSummary {
 
 	function getCity() {
 	    return $this->city;
+	}
+	
+	function setEmail($email) {
+	    $this->email = $email;
+	}
+
+	function getEmail() {
+	    return $this->email;
+	}
+	
+	function setPhone($phone) {
+	    $this->phone = $phone;
+	}
+
+	function getPhone() {
+	    return $this->phone;
 	}
 	
 }

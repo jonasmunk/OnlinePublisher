@@ -851,7 +851,9 @@ $databaseTables = array(
 			array("object_id","int(11)","YES","","0",""),
 			array("watermeter_id","int(11)","YES","","0",""),
 			array("value","int(11)","","","0",""),
-			array("date","datetime","YES","","","")
+			array("date","datetime","YES","","",""),
+			array("status","int(11)","","","0",""),
+			array("source","int(11)","","","0","")
 		),
 	'weblog' => array(
 			array("page_id","int(11)","YES","","",""),

@@ -39,6 +39,8 @@ if (!$meter) {
 
 $usage = new Waterusage();
 $usage->setWatermeterId($meter->getId());
+$usage->setSource(Waterusage::$CLIENT);
+$usage->setStatus(Waterusage::$UNKNOWN);
 $usage->setValue($value);
 $usage->setDate($date);
 $usage->save();

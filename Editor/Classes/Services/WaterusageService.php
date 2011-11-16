@@ -10,6 +10,10 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Modules/Water/WatermeterSummary.php');
 
 class WaterusageService {
+
+	static $STATUS_ICONS = array(0 => 'monochrome/round_question',1 => 'common/success',-1 => 'common/stop');
+	static $STATUS_TEXT = array(0 => 'Ukendt',1 => 'Valideret',-1 => 'Afvist');
+	static $SOURCE_TEXT = array(0 => 'Administrator',1 => 'Import',2 => 'Kunde');
 	
 	function overwrite($dummy) {
 		$sql="select object_id from waterusage where number=".Database::text($dummy->getNumber())." and year=".Database::int($dummy->getYear());
@@ -91,6 +95,16 @@ class WaterusageService {
 		return $years;
 	}
 	
+	function getYearCounts() {
+		$sql = "select DATE_FORMAT(waterusage.date, '%Y') as year,count(object_id) as count from waterusage group by DATE_FORMAT(waterusage.date, '%Y')";
+		return Database::selectAll($sql);
+	}
+	
+	function getStatusCounts() {
+		$sql = "select status as status,count(object_id) as count from waterusage group by status order by status";
+		return Database::selectAll($sql);
+	}
+	
 	function saveSummary($summary) {
 		$meter = Watermeter::load($summary->getWatermeterId());
 		if ($meter) {
@@ -117,5 +131,18 @@ class WaterusageService {
 			Log::debug('Meter not found');
 			// create new
 		}
+	}
+	
+		
+	function getStatusIcon($status) {
+		return WaterusageService::$STATUS_ICONS[$status];
+	}
+	
+	function getStatusText($status) {
+		return WaterusageService::$STATUS_TEXT[$status];
+	}
+	
+	function getSourceText($source) {
+		return WaterusageService::$SOURCE_TEXT[$source];
 	}
 }
