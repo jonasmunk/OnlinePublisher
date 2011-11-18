@@ -115,10 +115,9 @@ hui.ui.Source.prototype = {
 	/** @private */
 	end : function() {
 		this.busy=false;
+		hui.ui.callDelegates(this,'sourceIsNotBusy');
 		if (this.pendingRefresh) {
 			this.refresh();
-		} else {
-			hui.ui.callDelegates(this,'sourceIsNotBusy');
 		}
 	},
 	/** @private */
