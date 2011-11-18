@@ -43,6 +43,7 @@ if (Request::getBoolean('logout')) {
 	ExternalSession::logOut();
 }
 
+
 if (CacheService::sendCachedPage($id,$path)) {
 	exit;
 }

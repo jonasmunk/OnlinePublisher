@@ -10,7 +10,7 @@ $basePath = substr(__FILE__, 0,strpos(__FILE__,'Editor'));
 
 require_once($basePath."Editor/Classes/Core/InternalSession.php");
 
-if ($_SESSION['core.debug.simulateLatency']) {
+if (@$_SESSION['core.debug.simulateLatency']) {
 	usleep(rand(1000000,2000000));
 }
 

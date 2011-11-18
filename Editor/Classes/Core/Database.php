@@ -14,10 +14,17 @@ class Database {
 	}
 	
 	function testConnection() {
+		if (!function_exists('mysql_connect')) {
+			return false;
+		}
 		return Database::getConnection()!==false;
 	}
 	
 	function testServerConnection($host,$user,$password) {
+		if (!function_exists('mysql_connect')) {
+			return false;
+		}
+		
 		$con = @mysql_connect($host, $user,$password);
 		if (!$con) {
 			return false;
@@ -41,7 +48,7 @@ class Database {
 	}
 	
 	function debug($sql) {
-		if ($_SESSION['core.debug.logDatabaseQueries']) {
+		if (@$_SESSION['core.debug.logDatabaseQueries']) {
 			error_log($sql);
 		}
 	}
