@@ -7,7 +7,7 @@ JS_PATH=${DIR}"/../js/"
 BIN_PATH=${DIR}"/../bin/"
 
 ${DIR}/compile.sh
-${DIR}/docs_java.sh
+${DIR}/docs.sh
 ${DIR}/docs_xsl.sh
 ${DIR}/icons.sh
 ${DIR}/test_files.sh
