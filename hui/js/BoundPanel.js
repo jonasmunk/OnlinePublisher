@@ -55,6 +55,7 @@ hui.ui.BoundPanel.create = function(options) {
 /********************************* Public methods ***********************************/
 
 hui.ui.BoundPanel.prototype = {
+	/** Show or hide the panel */
 	toggle : function() {
 		if (!this.visible) {
 			this.show();
@@ -104,6 +105,7 @@ hui.ui.BoundPanel.prototype = {
 			hui.ui.showCurtain({widget:this,zIndex:index-1,color:'auto'});
 		}
 	},
+	/** @private */
 	$curtainWasClicked : function() {
 		hui.ui.hideCurtain(this);
 		this.hide();

@@ -373,6 +373,7 @@ hui.get = function(str) {
 	return str;
 }
 
+/** Get array of child elements of «node» */
 hui.getChildren = function(node) {
 	var children = [];
 	var x = node.childNodes;
@@ -437,6 +438,12 @@ hui.firstAncestorByClass = function(element,className) {
 	return null;
 }
 
+/**
+ * Get array of descendants of «node» with the name «name»
+ * @param node The node to start from
+ * @param name The name of the nodes to find
+ * @returns An array of nodes (not NodeList)
+ */
 hui.byTag = function(node,name) {
 	var nl = node.getElementsByTagName(name),
 		l=[];
@@ -1377,6 +1384,8 @@ hui.drag = {
 //////////////////////////// Preloader /////////////////////////
 
 /** @constructor
+ * A preloader for images
+ * Events: imageDidLoad(index), imageDidGiveError(index), imageDidAbort(index)
  * @param options {context:«prefix for urls»}
  */
 hui.Preloader = function(options) {
@@ -5034,10 +5043,9 @@ hui.ui.Source.prototype = {
 	/** @private */
 	end : function() {
 		this.busy=false;
+		hui.ui.callDelegates(this,'sourceIsNotBusy');
 		if (this.pendingRefresh) {
 			this.refresh();
-		} else {
-			hui.ui.callDelegates(this,'sourceIsNotBusy');
 		}
 	},
 	/** @private */
@@ -7934,6 +7942,7 @@ hui.ui.BoundPanel.create = function(options) {
 /********************************* Public methods ***********************************/
 
 hui.ui.BoundPanel.prototype = {
+	/** Show or hide the panel */
 	toggle : function() {
 		if (!this.visible) {
 			this.show();
@@ -7983,6 +7992,7 @@ hui.ui.BoundPanel.prototype = {
 			hui.ui.showCurtain({widget:this,zIndex:index-1,color:'auto'});
 		}
 	},
+	/** @private */
 	$curtainWasClicked : function() {
 		hui.ui.hideCurtain(this);
 		this.hide();

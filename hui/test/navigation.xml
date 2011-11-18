@@ -37,6 +37,7 @@
         <item icon="common/page" title="protovis" value="html/protovis.html"/>
         <item icon="common/page" title="require" value="html/require.html"/>
         <item icon="common/page" title="richtext" value="html/richtext.html"/>
+        <item icon="common/page" title="scrollto" value="html/scrollto.html"/>
         <item icon="common/page" title="selection" value="html/selection.html"/>
         <item icon="common/page" title="supa" value="html/supa.html"/>
         <item icon="common/page" title="upload" value="html/upload.html"/>
