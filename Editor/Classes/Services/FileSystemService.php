@@ -125,7 +125,7 @@ class FileSystemService {
 			if ($dh = opendir($dir)) {
 				while (($file = readdir($dh)) !== false) {
 					$path = FileSystemService::join($dir,$file);
-					if (is_array($query['exclude'])) {
+					if (is_array(@$query['exclude'])) {
 						$exclude = $query['exclude'];
 						if (in_array($path,$exclude)) {
 							continue;

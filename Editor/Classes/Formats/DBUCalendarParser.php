@@ -22,12 +22,12 @@ class DBUCalendarParser {
 		$table = HtmlTableParser::parseUsingHeader($string);
 		$first = $table[0];
 		foreach ($first as $row) {
-			$date = $row['Dato'];
-			$time = $row['Kl.'];
-			$home = $row['Hjemmehold'];
-			$away = $row['Udehold'];
-			$location = $row['Spillested'];
-			$score = $row['Res'];
+			$date = @$row['Dato'];
+			$time = @$row['Kl.'];
+			$home = @$row['Hjemmehold'];
+			$away = @$row['Udehold'];
+			$location = @$row['Spillested'];
+			$score = @$row['Res'];
 			
 			if (StringUtils::isBlank($date) || StringUtils::isBlank($time)) {
 				continue;
