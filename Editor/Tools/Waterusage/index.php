@@ -13,8 +13,8 @@ $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 
 $gui='
 <gui xmlns="uri:hui" title="Vandforbrug" padding="10" state="list">
-	<controller source="controller.js"/>
-	<source name="listSource" url="List.php">
+	<controller source="controller.js?v=1"/>
+	<source name="listSource" url="data/List.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
@@ -75,6 +75,10 @@ $gui='
 												</group>
 											</column>
 										</columns>
+										<group labels="above">
+											<text label="E-post" key="email"/>
+											<text label="Telefon" key="phone"/>
+										</group>
 										<buttons>
 											<button name="deleteMeter" title="Slet">
 												<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>

@@ -208,13 +208,13 @@ hui.ui.listen({
 		values.watermeterId = this.meterId;
 		saveMeter.setEnabled(false);
 		hui.ui.request({
-			json:{data:values},
-			url:'SaveSummary.php',
-			message:{start:'Gemmer information',success:'Informationen er gemt'},
-			onFailure:function() {
+			json : {data:values},
+			url : 'data/SaveSummary.php',
+			message : {start:'Gemmer information',success:'Informationen er gemt'},
+			onFailure : function() {
 				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			},
-			onSuccess:function() {
+			onSuccess : function() {
 				saveMeter.setEnabled(true);
 			}
 		});

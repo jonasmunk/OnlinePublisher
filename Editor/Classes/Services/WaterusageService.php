@@ -62,6 +62,8 @@ class WaterusageService {
 		}
 	}
 	
+	//select * from watermeter where not LENGTH(number)=8
+	
 	function getSummaryByMeter($meter) {
 		$summary = new WatermeterSummary();
 		$summary->setNumber($meter->getNumber());
@@ -70,6 +72,14 @@ class WaterusageService {
 			$summary->setStreet($address->getStreet());
 			$summary->setZipcode($address->getZipcode());
 			$summary->setCity($address->getCity());
+		}
+		$email = Query::after('emailaddress')->withRelationFrom($meter)->first();
+		if ($email) {
+			$summary->setEmail($email->getAddress());
+		}
+		$phone = Query::after('phonenumber')->withRelationFrom($meter)->first();
+		if ($phone) {
+			$summary->setPhone($phone->getNumber());
 		}
 		return $summary;
 	}
@@ -126,6 +136,42 @@ class WaterusageService {
 				$address->save();
 				$address->publish();
 				ObjectService::addRelation($meter,$address);
+			}
+			$email = Query::after('emailaddress')->withRelationFrom($meter)->first();
+			if (StringUtils::isBlank($summary->getEmail())) {
+				if ($email) {
+					$email->remove();
+				}
+			} else {
+				if ($email) {
+					$email->setAddress($summary->getEmail());
+					$email->save();
+					$email->publish();
+				} else {
+					$email = new EmailAddress();
+					$email->setAddress($summary->getEmail());
+					$email->save();
+					$email->publish();
+					ObjectService::addRelation($meter,$email);
+				}
+			}
+			$phone = Query::after('phonenumber')->withRelationFrom($meter)->first();
+			if (StringUtils::isBlank($summary->getPhone())) {
+				if ($phone) {
+					$phone->remove();
+				}
+			} else {
+				if ($phone) {
+					$phone->setNumber($summary->getPhone());
+					$phone->save();
+					$phone->publish();
+				} else {
+					$phone = new Phonenumber();
+					$phone->setNumber($summary->getPhone());
+					$phone->save();
+					$phone->publish();
+					ObjectService::addRelation($meter,$phone);
+				}
 			}
 		} else {
 			Log::debug('Meter not found');

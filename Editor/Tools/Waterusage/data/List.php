@@ -3,13 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Waterusage
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Objects/Waterusage.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Utilities/DateUtils.php';
-require_once '../../Classes/Utilities/GuiUtils.php';
+require_once '../../../Include/Private.php';
 
 $filterKind = Request::getString('filterKind');
 $filter = Request::getString('filter');
@@ -40,14 +34,17 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 	$writer->sort($sort,$direction);
 	$writer->window(array( 'total' => $result->getTotal(), 'size' => $windowSize, 'page' => $windowPage ));
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Nummer','width'=>40,'key'=>'number','sortable'=>'true'));
+	$writer->header(array('title'=>'Nummer','width'=>20,'key'=>'number','sortable'=>'true'));
 	$writer->header(array('title'=>'Adresse'));
+	$writer->header(array('title'=>'Kontakt'));
 	$writer->header(array('title'=>'Seneste værdi'));
 	$writer->header(array('title'=>'Aflæsningsdato'));
 	$writer->endHeaders();
 
 	foreach ($result->getList() as $object) {
 		$address = Query::after('address')->withRelationFrom($object)->first();
+		$phone = Query::after('phonenumber')->withRelationFrom($object)->first();
+		$email = Query::after('emailaddress')->withRelationFrom($object)->first();
 		$usage = Query::after('waterusage')->withProperty('watermeterId',$object->getId())->orderBy('date')->descending()->first();
 		$writer->startRow(array( 'kind'=>'watermeter', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
 		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->
@@ -55,12 +52,19 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 			startIcons()->
 				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'meterInfo','id'=>$object->getId())))->
 			endIcons()->
-		endCell();
+		endCell()->
+		startCell();
 		if ($address) {
-			$writer->startCell(array( 'icon'=>$address->getIn2iGuiIcon() ))->text($address->toString())->endCell();
-		} else {
-			$writer->startCell()->endCell();
+			$writer->startLine()->icon(array( 'icon'=>$address->getIn2iGuiIcon() ))->text($address->toString())->endLine();
 		}
+		$writer->endCell()->startCell();
+		if ($email) {
+			$writer->startLine()->icon(array( 'icon'=>$email->getIn2iGuiIcon() ))->text($email->getAddress())->endLine();
+		}
+		if ($phone) {
+			$writer->startLine()->icon(array( 'icon'=>$phone->getIn2iGuiIcon() ))->text($phone->getNumber())->endLine();
+		}
+		$writer->endCell();
 		if ($usage) {
 			$writer->startCell()->text($usage->getValue())->endCell();
 			$writer->startCell()->text(DateUtils::formatDate($usage->getDate()))->endCell();

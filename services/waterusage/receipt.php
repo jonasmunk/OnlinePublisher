@@ -6,6 +6,7 @@ require_once('../../Editor/Classes/Objects/Watermeter.php');
 require_once('../../Editor/Classes/Core/Request.php');
 require_once('../../Editor/Classes/Core/Response.php');
 require_once('../../Editor/Classes/Utilities/DateUtils.php');
+require_once('../../Editor/Classes/Utilities/StringBuilder.php');
 require_once('../../Editor/Classes/Core/Query.php');
 
 $id = Request::getInt('id');
@@ -27,6 +28,9 @@ if ($meter==null) {
 	exit;
 }
 
+
+$address = Query::after('address')->withRelationFrom($meter)->first();
+
 header("Content-Type: text/html; charset=UTF-8");
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -43,6 +47,11 @@ header("Content-Type: text/html; charset=UTF-8");
 	<table>
 		<tbody>
 			<tr><th>Målernummer:</th><td><?=number_format ( $meter->getNumber() , 0 , '' , ' ' )?></td></tr>
+			<?php if ($address) {?>
+			<tr><th>Adresse:</th><td><?=StringUtils::toUnicode($address->toString())?></td></tr>
+			<?php
+				}
+			?>
 			<tr><th>Værdi:</th><td><?=number_format ( $usage->getValue() , 0 , '' , '.' )?></td></tr>
 			<tr><th>Aflæsnings-dato:</th><td><?=DateUtils::formatDate($usage->getDate())?></td></tr>
 		</tbody>
