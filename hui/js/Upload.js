@@ -470,6 +470,14 @@ hui.ui.Upload.Frame.prototype = {
 			}.bind(this));
 		}
 	},
+	_rebuildFileInput : function() {
+		var options = this.parent.options;
+		var old = this.fileInput;
+		this.fileInput = hui.build('input',{'type':'file','name':options.fieldName});
+		hui.listen(this.fileInput,'change',this._onSubmit.bind(this));
+		hui.dom.replaceNode(old,this.fileInput);
+		hui.log('Frame: input replaced');
+	},
 	_getFileName : function() {
 		return this.fileInput.value.split('\\').pop();
 	},
@@ -480,7 +488,7 @@ hui.ui.Upload.Frame.prototype = {
 		this.form.submit();
 		this.item = this.parent.$_addItem({name:this._getFileName()});
 		this.item.setWaiting();
-		
+		this._rebuildFileInput();
 		hui.log('Frame: Upload started');
 	},
 	
