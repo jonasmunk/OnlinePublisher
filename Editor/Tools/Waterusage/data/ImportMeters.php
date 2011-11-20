@@ -3,17 +3,21 @@
  * @package OnlinePublisher
  * @subpackage Tools.Waterssage
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Network/FileUpload.php';
-require_once '../../Classes/Objects/Waterusage.php';
-require_once '../../Classes/Core/Database.php';
+require_once '../../../Include/Private.php';
 
 $upload = new FileUpload();
 $upload->process('file');
 $path = $upload->getFilePath();
+/*
+Log::logTool('waterusage','import','Starting import (meters)');
 $contents = file_get_contents($upload->getFilePath());
+$lines = preg_split("/\n/",$contents);
+foreach ($lines as $line) {
+	handleLine($line);
+}
+Log::logTool('waterusage','import','Import complete (meters)');
+In2iGui::respondUploadSuccess();
+exit;*/
 
 Log::logTool('waterusage','import','Starting import (meters)');
 $handle = @fopen($path, "r");
@@ -31,12 +35,28 @@ In2iGui::respondUploadSuccess();
 function handleLine($line) {
 	$line = StringUtils::fromUnicode($line);
 	$words = preg_split('/;/',$line);
-	$number = $words[0];
-	$street = $words[1];
-	$zipcode = $words[2];
-	$city = $words[3];
-	if (count($words)<4) {
-		Log::logTool('waterusage','import','Line does not have at least 5 words: '.$line);
+	$street = '';
+	$zipcode = '';
+	$city = '';
+	if (count($words)==2) {
+		$number = $words[0];
+		$address = $words[1];
+		$parsed = WaterusageService::parseAddress($address);
+		if ($parsed) {
+			$street = $parsed['street'];
+			$zipcode = $parsed['zipcode'];
+			$city = $parsed['city'];
+		} else {
+			Log::debug('Unable to parse address: '.$address);
+			Log::logTool('waterusage','import','Unable to parse address: '.$address);
+		}
+	} else if (count($words)==4) {
+		$number = $words[0];
+		$street = $words[1];
+		$zipcode = $words[2];
+		$city = $words[3];
+	} else {
+		Log::logTool('waterusage','import','Unable to parse line: '.$line);
 		return;
 	}
 	if (!ValidateUtils::validateDigits($number)) {

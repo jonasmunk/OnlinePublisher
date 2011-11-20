@@ -28,8 +28,8 @@ $gui='
 				<column>
 					<header icon="monochrome/message">Udvikling</header>
 					<overflow vertical="180">
-						<list source="taskSource"/>
-						<!--<list source="developerFeed"/>-->
+						<!--<list source="taskSource"/>-->
+						<list source="developerFeed"/>
 					</overflow>
 				</column>
 				<column>

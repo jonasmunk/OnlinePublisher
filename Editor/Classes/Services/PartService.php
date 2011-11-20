@@ -117,23 +117,6 @@ union select text,document_section.part_id from part_listing,document_section wh
 			'html' => array ( 'name' => array('da'=>'HTML','en'=>'HTML'), 'description' => '', 'priority' => 7 ),
 			'poster' => array ( 'name' => array('da'=>'Plakat','en'=>'Poster'), 'description' => '', 'priority' => 7 )
 		);
-		
-		
-		
-		$out = null;
-		if ($out == null) {
-			$out = array();	
-			$parts = PartService::getAvailableParts();
-			foreach ($parts as $part) {
-				$info = PartService::getPartInfo($part);
-				if ($info) {
-					$out[$part] = $info;
-				}
-			}
-			uasort($out,array("PartService", "compareParts"));
-		}
-		print_r($out);
-		return $out;
 	}
 
 	/**

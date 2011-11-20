@@ -120,17 +120,17 @@ $gui='
 	</window>
 	
 	<window title="Import" name="importWindow" width="300">
-		<tabs centered="true">
+		<tabs centered="true" small="true">
 			<tab title="Vandmålere" padding="10">
-				<upload name="metersUpload" url="ImportMeters.php" widget="meterImportButton" flash="false">
-					<placeholder title="Upload af CSV-fil med vandmålere" text="Filen skal have formatet (nummer;vej;postnummer;by) f.eks. (6778888;Toldbodvej 1;9370;Hals) og kan højest være '.$maxUploadSize.' stor"/>
+				<upload name="metersUpload" url="data/ImportMeters.php" widget="meterImportButton" flash="false">
+					<placeholder title="Upload af CSV-fil med vandmålere" text="Filen skal have formatet (nummer;vej;postnummer;by) f.eks. (6778888;Toldbodvej 1;9370;Hals) eller (nummer;adresse) f.eks. (6778888;Toldbodvej 1,9370 Hals) og kan højest være '.$maxUploadSize.' stor"/>
 				</upload>
 				<buttons align="center" top="10">
 					<button name="meterImportButton" title="Vælg filer..." highlighted="true"/>
 				</buttons>
 			</tab>
 			<tab title="Aflæsninger" padding="10">
-				<upload name="usagesUpload" url="ImportUsages.php" widget="usagesImportButton" flash="false">
+				<upload name="usagesUpload" url="data/ImportUsages.php" widget="usagesImportButton" flash="false">
 					<placeholder title="Upload af CSV-fil med aflæsninger" text="Filen skal have formatet (nummer;værdi;dato) f.eks. (6778888;21361;15/04/2011) og kan højest være '.$maxUploadSize.' stor"/>
 				</upload>
 				<buttons align="center" top="10">

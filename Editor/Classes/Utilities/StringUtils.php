@@ -241,8 +241,8 @@ class StringUtils {
 		}
 	}
 	
-	function startsWith($find,$str) {
-		return strpos($find,$str)===0;
+	function startsWith($str,$find) {
+		return strpos($str,$find)===0;
 	}
 	
 	function removeTags($string) {

@@ -133,6 +133,15 @@ class WaterusageService {
 		}
 	}
 	
+	function parseAddress($str) {
+		if (preg_match("/([^,]+),([\\w ]+,)[ ]?([0-9]+) ([\\w]+)/", $str,$matches)) {
+			return array('street'=>$matches[1],'zipcode'=>$matches[3],'city'=>$matches[4]);
+		}
+		if (preg_match("/([^,]+),[ ]?([0-9]+) ([\\w]+)/", $str,$matches)) {
+			return array('street'=>$matches[1],'zipcode'=>$matches[2],'city'=>$matches[3]);
+		}
+		return null;
+	}
 		
 	function getStatusIcon($status) {
 		return WaterusageService::$STATUS_ICONS[$status];
