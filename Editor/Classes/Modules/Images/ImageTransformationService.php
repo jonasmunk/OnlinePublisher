@@ -11,7 +11,7 @@ require_once($basePath.'Editor/Classes/Services/FileService.php');
 
 class ImageTransformationService {
 	
-	function &loadImage($path,$ext=null) {
+	function loadImage($path,$ext=null) {
 		if (file_exists($path)) {
 			if ($ext==null) {
 				$ext = FileSystemService::getFileExtension($path);
@@ -133,9 +133,9 @@ class ImageTransformationService {
 		if (isset($recipe['width']) || isset($recipe['height']) || isset($recipe['scale'])) {
 			$originalWidth = $originalInfo['width'];
 			$originalHeight = $originalInfo['height'];
-			$finalWidth = $recipe['width'];
-			$finalHeight = $recipe['height'];
-			$scale = $recipe['scale'];
+			$finalWidth = @$recipe['width'];
+			$finalHeight = @$recipe['height'];
+			$scale = @$recipe['scale'];
 			$left = 0;
 			$top = 0;
 			if ($scale) {
@@ -149,13 +149,13 @@ class ImageTransformationService {
 				if ($finalHeight==null) {
 					$finalHeight = round($originalInfo['height']/$originalInfo['width']*$finalWidth);
 				}
-				if ($recipe['method']=='stretch') {
+				if (@$recipe['method']=='stretch') {
 					// noop
-				} else if ($recipe['method']=='fit') {
+				} else if (@$recipe['method']=='fit') {
 					$finalSize = ImageTransformationService::fitInside($originalInfo,array('width'=>$finalWidth,'height'=>$finalHeight));
 					$finalWidth = $finalSize['width'];
 					$finalHeight = $finalSize['height'];
-				} else if ($recipe['method']=='crop') {
+				} else if (@$recipe['method']=='crop') {
 					$pos = ImageTransformationService::cropInside($originalInfo,array('width'=>$finalWidth,'height'=>$finalHeight));
 					$left = $pos['left'];
 					$top = $pos['top'];
@@ -171,7 +171,7 @@ class ImageTransformationService {
 			$image = $thumb;
 		}
 		// TODO: make filters an array so that they can be combined in different sequences
-		if (is_array($recipe['filters'])) {
+		if (isset($recipe['filters']) && is_array($recipe['filters'])) {
 			$filters = $recipe['filters'];
 			foreach ($filters as $filter) {
 				ImageTransformationService::applyFilter($image,$filter);
@@ -196,7 +196,7 @@ class ImageTransformationService {
 		} else if ($format=='gif') {
 			@imagegif($image,$recipe['destination']);
 		} else {
-			if ($recipe['quality']) {
+			if (isset($recipe['quality'])) {
 				@imagejpeg($image,$recipe['destination'],$recipe['quality']);
 			} else {
 				@imagejpeg($image,$recipe['destination']);

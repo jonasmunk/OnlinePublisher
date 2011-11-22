@@ -14,6 +14,7 @@ class Task extends Object {
 	var $completed=false;
 	var $containingObjectId=0;
 	var $milestoneId=0;
+	var $priority;
 
 	function Task() {
 		parent::Object('task');

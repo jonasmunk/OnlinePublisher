@@ -78,7 +78,7 @@ class TestService {
 	function createTestPage() {
 		$template = TemplateService::getTemplateByUnique('document');
 		if (!$template) {
-			TemplateService::install('template');
+			TemplateService::install('document');
 			$template = TemplateService::getTemplateByUnique('document');
 		}
 		

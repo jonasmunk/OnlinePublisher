@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class ListWriter {
 	function startList($options=array()) {
-		if ($options['unicode']==true) {
+		if (@$options['unicode']==true) {
 			header('Content-Type: text/xml; charset=utf-8');
 			echo '<?xml version="1.0" encoding="UTF-8"?><list>';
 		} else {
@@ -96,10 +96,10 @@ class ListWriter {
 		if (isset($options['wrap'])) {
 			echo ' wrap="'.($options['wrap'] ? 'true' : 'false').'"';
 		}
-		if ($options['dimmed']) {
+		if (@$options['dimmed']) {
 			echo ' dimmed="true"';
 		}
-		if ($options['width']) {
+		if (isset($options['width'])) {
 			echo ' width="'.$options['width'].'"';
 		}
 		echo '>';
@@ -113,9 +113,9 @@ class ListWriter {
 	
 	function startLine($options=array()) {
 		echo '<line'.
-		($options['dimmed'] ? ' dimmed="true"' : '').
-		($options['minor'] ? ' minor="true"' : '').
-		($options['mini'] ? ' mini="true"' : '').
+		(@$options['dimmed'] ? ' dimmed="true"' : '').
+		(@$options['minor'] ? ' minor="true"' : '').
+		(@$options['mini'] ? ' mini="true"' : '').
 		'>';
 		return $this;
 	}

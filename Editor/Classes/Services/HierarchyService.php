@@ -61,11 +61,11 @@ class HierarchyService {
 	}
 
 	function createItem($options) {
-		if (StringUtils::isBlank($options['title'])) {
+		if (StringUtils::isBlank(@$options['title'])) {
 			Log::debug('No title');
 			return false;
 		}
-		if (!in_array($options['targetType'],array('page','pageref','file','email','url'))) {
+		if (!in_array(@$options['targetType'],array('page','pageref','file','email','url'))) {
 			Log::debug('Invalid targetType');
 			return false;
 		}
@@ -104,7 +104,8 @@ class HierarchyService {
 		} else {
 			$index=1;
 		}
-		
+		$target_id = null;
+		$target_value = null;
 		if ($options['targetType']=='page' || $options['targetType']=='pageref' || $options['targetType']=='file') {
 			$target_id = $options['targetValue'];
 		} else {
@@ -115,8 +116,8 @@ class HierarchyService {
 		Database::text($options['title']).
 		",".Database::boolean($options['hidden']).
 		",'item'".
-		",".Database::int($options['hierarchyId']).
-		",".Database::int($options['parent']).
+		",".Database::int(@$options['hierarchyId']).
+		",".Database::int(@$options['parent']).
 		",".Database::int($index).
 		",".Database::text($options['targetType']).
 		",".Database::int($target_id).

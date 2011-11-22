@@ -42,7 +42,7 @@ class SchemaService {
 	}
 	
 	function getColumn($property,$info) {
-		if ($info['column']) {
+		if (isset($info['column'])) {
 			return $info['column'];
 		}
 		return $property;

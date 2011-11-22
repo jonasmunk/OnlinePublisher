@@ -12,7 +12,9 @@ class DateUtils {
 	
 	function parseRFC822($str) {
 		preg_match("/(.+)\, (\d+) (\w+) (\d+) (\d+):(\d+):(\d+) (.+)/i",$str, $matches);
-		
+		if (!$matches) {
+			return null;
+		}
 		$months = array("Jan" => 1,"Feb" => 2,"Mar" => 3,"Apr" => 4,"May" => 5,"Jun" => 6,"Jul" => 7,"Aug" => 8,"Sep" => 9,"Oct" => 10,"Nov" => 11,"Dec" => 12);
 		
 		return gmmktime ( $matches[5],$matches[6],$matches[7], $months[$matches[3]],$matches[2], $matches[4]);
@@ -90,7 +92,7 @@ class DateUtils {
 	function formatDate($timestamp,$options=array()) {
 		if ($timestamp==null) return '';
 		$format = "%e. %B";
-		if ($options['shortWeekday']) {
+		if (isset($options['shortWeekday'])) {
 			$format = "%a ".$format;
 		}
 		if (!isset($options['year']) || $options['year']) {

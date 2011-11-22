@@ -106,7 +106,7 @@ class LinkService {
 			" where id=".Database::int($link->id);
 			Database::update($sql);
 		} else {
-			$sql="insert into link (page_id,part_id,source_type,source_text,target_type,target_value,target_id,target,alternative
+			$sql="insert into link (page_id,part_id,source_type,source_text,target_type,target_value,target_id,alternative
 				) values (".
 				Database::int($link->pageId).
 				",".Database::int($link->partId).
@@ -115,7 +115,6 @@ class LinkService {
 				Database::text($link->targetType).",".
 				Database::text($link->targetValue).",".
 				Database::int($link->targetId).",".
-				Database::text($link->target).",".
 				Database::text($link->alternative).
 			")";
 			$this->id = Database::insert($sql);

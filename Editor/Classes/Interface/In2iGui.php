@@ -47,17 +47,17 @@ class In2iGui {
 	static function render(&$gui) {
 		global $basePath,$baseUrl;
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
-		if ($_GET['xhtml']=='false') {
+		if (@$_GET['xhtml']=='false') {
 			$xhtml=false;
 		}
-		$dev = $_GET['dev']=='true' ? 'true' : 'false';
+		$dev = @$_GET['dev']=='true' ? 'true' : 'false';
 		//$dev='true';
 		$xmlData='<?xml version="1.0" encoding="UTF-8"?>'.In2iGui::localize($gui,InternalSession::getLanguage());
 		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="'.($xhtml ? 'xml' : 'html').'"/>'.
 		'<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
-		'<xsl:variable name="profile">'.($_GET['profile']=='true' ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="profile">'.(@$_GET['profile']=='true' ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
 		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>'.

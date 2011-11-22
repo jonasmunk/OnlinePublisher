@@ -66,7 +66,7 @@ class ObjectService {
 			$row = Database::delete($sql);
 			$sql = "delete from `relation` where (from_type='object' and from_object_id=".Database::int($object->getId()).") or (to_type='object' and to_object_id=".Database::int($object->getId()).")";
 			$row = Database::delete($sql);
-			$schema = Object::$schema[$object->getType()];
+			$schema = @Object::$schema[$object->getType()];
 			if (is_array($schema)) {
 				$sql = "delete from `".$object->getType()."` where object_id=".Database::int($object->getId());
 				$row = Database::delete($sql);
@@ -112,7 +112,7 @@ class ObjectService {
 			$sql = "select object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable";
 			foreach ($schema as $property => $info) {
 				$column = SchemaService::getColumn($property,$info);
-				if ($info['type']=='datetime') {
+				if (@$info['type']=='datetime') {
 					$sql.=",UNIX_TIMESTAMP(`$type`.`$column`) as `$column`";
 				} else {
 					$sql.=",`$type`.`$column`";
@@ -135,13 +135,13 @@ class ObjectService {
 				$obj->searchable = ($row['searchable']==1);
 				foreach ($schema as $property => $info) {
 					$column = SchemaService::getColumn($property,$info);
-					if ($info['type']=='int') {
+					if (@$info['type']=='int') {
 						$obj->$property = intval($row[$column]);
-					} else if ($info['type']=='int') {
+					} else if (@$info['type']=='int') {
 						$obj->$property = floatval($row[$column]);
-					} else if ($info['type']=='datetime') {
+					} else if (@$info['type']=='datetime') {
 						$obj->$property = $row[$column] ? intval($row[$column]) : null;
-					} else if ($info['type']=='boolean') {
+					} else if (@$info['type']=='boolean') {
 						$obj->$property = $row[$column]==1 ? true : false;
 					} else {
 						$obj->$property = $row[$column];
@@ -172,7 +172,7 @@ class ObjectService {
 		Database::int($object->ownerId).
 		")";		
 		$object->id = Database::insert($sql);
-		$schema = Object::$schema[$object->type];
+		$schema = @Object::$schema[$object->type];
 		if (is_array($schema)) {
 			$sql = "insert into `".$object->type."` (object_id";
 			foreach ($schema as $property => $info) {
@@ -183,13 +183,13 @@ class ObjectService {
 			foreach ($schema as $property => $info) {
 				$column = SchemaService::getColumn($property,$info);
 				$sql.=",";
-				if ($info['type']=='int') {
+				if (@$info['type']=='int') {
 					$sql.=Database::int($object->$property);
-				} else if ($info['type']=='float') {
+				} else if (@$info['type']=='float') {
 					$sql.=Database::float($object->$property);
-				} else if ($info['type']=='datetime') {
+				} else if (@$info['type']=='datetime') {
 					$sql.=Database::datetime($object->$property);
-				} else if ($info['type']=='boolean') {
+				} else if (@$info['type']=='boolean') {
 					$sql.=Database::boolean($object->$property);
 				} else {
 					$sql.=Database::text($object->$property);
@@ -411,13 +411,13 @@ class ObjectService {
 		if (isset($query['direction'])) {
 			$parts['direction'] = $query['direction'];
 		}
-		if (is_array($query['limits'])) {
+		if (is_array(@$query['limits'])) {
 			$parts['limits'] = array_merge($parts['limits'],$query['limits']);
 		}
-		if (is_array($query['joins'])) {
+		if (is_array(@$query['joins'])) {
 			$parts['joins'] = array_merge($parts['joins'],$query['joins']);
 		}
-		if (is_array($query['fields'])) {
+		if (is_array(@$query['fields'])) {
 			foreach ($query['fields'] as $field => $value) {
 				if (isset($schema[$field])) {
 					if (isset($schema[$field]['column'])) {
@@ -454,10 +454,10 @@ class ObjectService {
 		}
 		foreach ($schema as $property => $info) {
 			$column = $property;
-			if ($info['column']) {
+			if (isset($info['column'])) {
 				$column = $info['column'];
 			}
-			if ($info['type']=='datetime') {
+			if (@$info['type']=='datetime') {
 				$parts['columns'].=",UNIX_TIMESTAMP(`$type`.`$column`) as `$column`";
 			} else {
 				$parts['columns'].=",`$type`.`$column`";
