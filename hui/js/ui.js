@@ -234,6 +234,21 @@ hui.ui.reLayout = function() {
 	}
 }
 
+//////////////////////////////// Windget //////////////////////////////
+
+hui.ui.Widget = function() {
+	
+}
+
+hui.ui.Widget.prototype = {
+	hide : function() {
+		this.element.style.display = 'none';
+	},
+	show : function() {
+		this.element.style.display = '';
+	}
+}
+
 ///////////////////////////////// Indexes /////////////////////////////
 
 hui.ui.nextIndex = function() {
