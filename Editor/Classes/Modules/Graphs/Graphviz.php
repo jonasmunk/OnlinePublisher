@@ -5,11 +5,11 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Classes/Core/TemporaryFolder.php');
 require_once($basePath.'Editor/Classes/Services/SettingService.php');
-class Graph {
+class Graphviz {
 
 	var $data;
 	
-	function Graph() {
+	function Graphviz() {
 		$this->data = array();
 	}
 	
