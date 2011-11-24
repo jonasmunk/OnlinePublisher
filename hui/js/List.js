@@ -1,25 +1,26 @@
 /**
- * <p><strong>Events:</strong></p>
- * <ul>
- * <li>listRowWasOpened - When a row is double clicked (rename to open)</li>
- * <li>selectionChanged - When a row is selected (rename to select)</li>
- * <li>selectionReset - When a selection is removed</li>
- * <li>clickButton(row,button) - When a button is clicked</li>
- * <li>clickIcon({row:row,data:data,node:node}) - When an icon is clicked</li>
- * </ul>
- * <p><strong>Bindings:</strong></p>
- * <ul>
- * <li><del>window</del></li>
- * <li>window.page</li>
- * <li>sort.direction</li>
- * <li>sort.key</li>
- * </ul>
- * <p><strong>XML:</strong></p>
- * <code>
- * &lt;list name=&quot;myList&quot; source=&quot;mySource&quot; state=&quot;list&quot;/&gt;
- * <br/><br/>
- * &lt;list name=&quot;list&quot; url=&quot;my_list_data.xml&quot; state=&quot;list&quot;/&gt;
- * </code>
+* <p><strong>Events:</strong></p>
+* <ul>
+* <li>listRowWasOpened - When a row is double clicked (rename to open)</li>
+* <li>selectionChanged - When a row is selected (rename to select)</li>
+* <li>selectionReset - When a selection is removed</li>
+* <li>clickButton({row:row,button:button}) - When a button is clicked</li>
+* <li>clickIcon({row:row,data:data,node:node}) - When an icon is clicked</li>
+* </ul>
+* <p><strong>Bindings:</strong></p>
+* <ul>
+* <li><del>window</del></li>
+* <li>window.page</li>
+* <li>sort.direction</li>
+* <li>sort.key</li>
+* </ul>
+* <p><strong>XML:</strong></p>
+* <code>
+* &lt;list name=&quot;myList&quot; source=&quot;mySource&quot; state=&quot;list&quot;/&gt;
+* <br/><br/>
+* &lt;list name=&quot;list&quot; url=&quot;my_list_data.xml&quot; state=&quot;list&quot;/&gt;
+* </code>
+ *
  *
  * @constructor
  * @param {Object} options The options : {url:null,source:null,selectable:«boolean»}

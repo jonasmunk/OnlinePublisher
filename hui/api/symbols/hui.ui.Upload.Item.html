@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.animation.Loop</title>
+		<title>JsDoc Reference - hui.ui.Upload.Item</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -392,7 +392,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hui.animation.Loop
+				Class hui.ui.Upload.Item
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -409,7 +409,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.animation.Loop.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Upload.Item.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -422,7 +422,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.animation.Loop.html#constructor">hui.animation.Loop</a></b>(recipe)
+								<b><a href="../symbols/hui.ui.Upload.Item.html#constructor">hui.ui.Upload.Item</a></b>(info, rearrange)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -438,7 +438,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.animation.Loop.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Upload.Item.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -451,7 +451,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.animation.Loop.html#next">next</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#destroy">destroy</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -460,7 +460,70 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.animation.Loop.html#start">start</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#getInfo">getInfo</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#hide">hide</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#isFinished">isFinished</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#setError">setError</a></b>(error)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#setProgress">setProgress</a></b>(value)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#setSuccess">setSuccess</a></b>(status)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#setWaiting">setWaiting</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Upload.Item.html#updateProgress">updateProgress</a></b>(complete, total)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -483,7 +546,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.animation.Loop</b>(recipe)
+						<b>hui.ui.Upload.Item</b>(info, rearrange)
 				</div>
 				
 				<div class="description">
@@ -499,7 +562,13 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								 <b>recipe</b>
+								 <b>info</b>
+								
+							</dt>
+								<dd></dd>
+						
+							<dt>
+								 <b>rearrange</b>
 								
 							</dt>
 								<dd></dd>
@@ -525,11 +594,11 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="next"> </a>
+					<a name="destroy"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>next</b>()
+					<b>destroy</b>()
 					
 					</div>
 					<div class="description">
@@ -550,11 +619,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="start"> </a>
+					<a name="getInfo"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>start</b>()
+					<b>getInfo</b>()
 					
 					</div>
 					<div class="description">
@@ -565,6 +634,231 @@ ul.inheritsList
 					
 					
 					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hide"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hide</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="isFinished"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>isFinished</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setError"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setError</b>(error)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>error</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setProgress"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setProgress</b>(value)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setSuccess"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setSuccess</b>(status)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>status</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setWaiting"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setWaiting</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="updateProgress"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>updateProgress</b>(complete, total)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>complete</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>total</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
@@ -587,7 +881,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Nov 24 2011 09:50:03 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Nov 24 2011 09:50:05 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

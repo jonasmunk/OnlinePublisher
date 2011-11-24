@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.animation.Loop</title>
+		<title>JsDoc Reference - hui.array</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -392,7 +392,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hui.animation.Loop
+				Namespace hui.array
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -409,8 +409,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.animation.Loop.">
-				<caption>Class Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.array.">
+				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -422,7 +422,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.animation.Loop.html#constructor">hui.animation.Loop</a></b>(recipe)
+								<b><a href="../symbols/hui.array.html#constructor">hui.array</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -438,7 +438,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.animation.Loop.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.array.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -449,18 +449,36 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.animation.Loop.html#next">next</a></b>()
+								<div class="fixedFont">hui.array.<b><a href="../symbols/hui.array.html#.add">add</a></b>(arr, value)
+								</div>
+								<div class="description">Add an object to an array if it not already exists</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.array.<b><a href="../symbols/hui.array.html#.contains">contains</a></b>(arr, value)
 								</div>
 								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.animation.Loop.html#start">start</a></b>()
+								<div class="fixedFont">hui.array.<b><a href="../symbols/hui.array.html#.flip">flip</a></b>(arr, value)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.array.<b><a href="../symbols/hui.array.html#.remove">remove</a></b>(arr, value)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -479,11 +497,11 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Class Detail
+					Namespace Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.animation.Loop</b>(recipe)
+						<b>hui.array</b>
 				</div>
 				
 				<div class="description">
@@ -494,17 +512,6 @@ ul.inheritsList
 				
 				
 				
-					
-						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
-						
-							<dt>
-								 <b>recipe</b>
-								
-							</dt>
-								<dd></dd>
-						
-						</dl>
 					
 					
 					
@@ -525,21 +532,38 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="next"> </a>
-					<div class="fixedFont">
+					<a name=".add"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<b>next</b>()
+					<span class="light">hui.array.</span><b>add</b>(arr, value)
 					
 					</div>
 					<div class="description">
-						
+						Add an object to an array if it not already exists
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>arr</b>
+									
+								</dt>
+								<dd>The array</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>value</b>
+									
+								</dt>
+								<dd>The object to add</dd>
+							
+							</dl>
 						
 						
 						
@@ -550,11 +574,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="start"> </a>
-					<div class="fixedFont">
+					<a name=".contains"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<b>start</b>()
+					<span class="light">hui.array.</span><b>contains</b>(arr, value)
 					
 					</div>
 					<div class="description">
@@ -565,6 +589,107 @@ ul.inheritsList
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".flip"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.array.</span><b>flip</b>(arr, value)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".remove"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.array.</span><b>remove</b>(arr, value)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						

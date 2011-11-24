@@ -143,7 +143,7 @@ hui.ui.Gallery.prototype = {
 	updateUI : function() {
 		var s = this.selected;
 		for (var i=0; i < this.nodes.length; i++) {
-			hui.setClass(this.nodes[i],'hui_gallery_item_selected',hui.inArray(s,i));
+			hui.setClass(this.nodes[i],'hui_gallery_item_selected',hui.array.contains(s,i));
 		};
 	},
 	/** @private */

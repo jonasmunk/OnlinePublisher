@@ -1,4 +1,6 @@
-
+/** A video player
+ * @constructor
+ */
 hui.ui.VideoPlayer = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
