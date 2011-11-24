@@ -43,7 +43,7 @@ header("Content-Type: text/html; charset=UTF-8");
 <body>
 <div class="receipt">
 	<h1>Kvittering for aflæsning af måler</h1>
-	<p>Aflæsningen er nu regsitreret med følgende oplysninger...</p>
+	<p>Aflæsningen er nu registreret med følgende oplysninger...</p>
 	<table>
 		<tbody>
 			<tr><th>Målernummer:</th><td><?=number_format ( $meter->getNumber() , 0 , '' , ' ' )?></td></tr>
@@ -53,7 +53,7 @@ header("Content-Type: text/html; charset=UTF-8");
 				}
 			?>
 			<tr><th>Værdi:</th><td><?=number_format ( $usage->getValue() , 0 , '' , '.' )?></td></tr>
-			<tr><th>Aflæsnings-dato:</th><td><?=DateUtils::formatDate($usage->getDate())?></td></tr>
+			<tr><th>Aflæsningsdato:</th><td><?=DateUtils::formatDate($usage->getDate())?></td></tr>
 		</tbody>
 		<tbody>
 			<tr><th>Registreret:</th><td><?=DateUtils::formatLongDateTime($usage->getUpdated())?></td></tr>
