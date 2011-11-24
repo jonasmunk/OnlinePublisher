@@ -208,6 +208,8 @@ hui.each = function(items,func) {
 
 /**
  * Converts a string to an int if it is only digits, otherwise remains a string
+ * @param {String} str The string to convert
+ * @returns {Object} An int of the string or the same string
  */
 hui.intOrString = function(str) {
 	if (hui.isDefined(str)) {
@@ -250,6 +252,12 @@ hui.array = {
 			}
 		}
 	},
+	/**
+	 * Check if an array contains a value
+	 * @param {Array} arr The array
+	 * @param {Object} value The object to check for
+	 * @returns {boolean} true if the value is in the array
+	 */
 	contains : function(arr,value) {
 		for (var i=0; i < arr.length; i++) {
 			if (arr[i]===value) {
