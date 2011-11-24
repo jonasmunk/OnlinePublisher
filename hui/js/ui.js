@@ -566,6 +566,7 @@ hui.ui.fadeOut = function(node,time) {
 	hui.animate(node,'opacity',0,time,{hideOnComplete:true});
 };
 
+/*
 hui.ui.bounceIn = function(node) {
 	if (hui.browser.msie) {
 		hui.setStyle(node,{'display':'block',visibility:'visible'});
@@ -577,7 +578,7 @@ hui.ui.bounceIn = function(node) {
 			hui.animate(node,'transform','scale(1)',400,{ease:hui.ease.backOut}); // rotate(0deg)
 		});
 	}
-};
+};*/
 
 //////////////////////////// Positioning /////////////////////////////
 
@@ -642,11 +643,11 @@ hui.ui.extend = function(obj,options) {
 	hui.ui.objects[obj.name] = obj;
 	obj.delegates = [];
 	obj.listen = function(delegate) {
-		hui.addToArray(this.delegates,delegate);
+		hui.array.add(this.delegates,delegate);
 		return this;
 	}
 	obj.removeDelegate = function(delegate) {
-		hui.removeFromArray(this.delegates,delegate);
+		hui.array.remove(this.delegates,delegate);
 	}
 	obj.clearDelegates = function() {
 		this.delegates = [];
@@ -940,6 +941,9 @@ hui.ui.parseSubItems = function(parent,array) {
 	};
 }
 
+/** A bundle of strings
+ * @constructor
+ */
 hui.ui.Bundle = function(strings) {
 	this.strings = strings;
 }

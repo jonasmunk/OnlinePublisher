@@ -64,7 +64,6 @@ hui.ui.Upload.prototype = {
 		this.impl.setParameter(name,value);
 	},
 	
-	/** @public */
 	clear : function() {
 		for (var i=0; i < this.items.length; i++) {
 			if (this.items[i]) {
@@ -147,7 +146,7 @@ hui.ui.Upload.prototype = {
 			} else {
 				hui.log('No files...');
 				hui.log(e.dataTransfer.types)
-				if (hui.inArray(e.dataTransfer.types,'image/tiff')) {
+				if (hui.array.contains(e.dataTransfer.types,'image/tiff')) {
 					hui.log(e.dataTransfer.getData('image/tiff'))
 				}
 				hui.log(e.dataTransfer.getData('text/plain'))
@@ -201,6 +200,7 @@ hui.ui.Upload.prototype = {
 
 	/////////////////////// Implementation ///////////////////////////
 	
+	/** @private */
 	$_addItem : function(info) {
 		if (!this.busy) {
 			this.fire('uploadDidStartQueue');
@@ -210,6 +210,7 @@ hui.ui.Upload.prototype = {
 		}
 		return this._addItem(info);
 	},
+	/** @private */
 	$_itemSuccess : function(item) {
 		var first = hui.firstByClass(this.itemContainer,'hui_upload_item_success');
 		item.setProgress(1);
@@ -235,6 +236,7 @@ hui.ui.Upload.prototype = {
 
 		
 	},
+	/** @private */
 	$_itemFail : function(item) {
 		item.setError('Upload af filen fejlede!');
 		this.fire('uploadDidFail',item.getInfo());
@@ -252,6 +254,7 @@ hui.ui.Upload.prototype = {
 		}
 	},*/
 	
+	/** @private */
 	$_getButtonContainer : function() {
 		var buttonContainer = hui.build('span',{'class':'hui_upload_button'});
 		if (this.options.widget) {
@@ -318,6 +321,10 @@ hui.ui.Upload.prototype = {
 
 /////////////////// Item ///////////////////
 
+/**
+ * @class
+ * @constructor
+ */
 hui.ui.Upload.Item = function(info,rearrange) {
 	this.data = info;
 	this.rearrange = rearrange;
@@ -422,6 +429,10 @@ hui.ui.Upload._buildForm = function(widget) {
 
 /////////////////////// Frame //////////////////////////
 
+/**
+ * @class
+ * @constructor
+ */
 hui.ui.Upload.Frame = function(parent) {
 	this.parent = parent;
 }
@@ -532,6 +543,10 @@ hui.ui.Upload.Frame.prototype = {
 
 /////////////////////// Flash //////////////////////////
 
+/**
+ * @class
+ * @constructor
+ */
 hui.ui.Upload.Flash = function(parent) {
 	this.parent = parent;
 	
@@ -699,6 +714,10 @@ hui.ui.Upload.Flash.prototype = {
 //////////////////// HTML5 //////////////////////
 
 
+/**
+ * @class
+ * @constructor
+ */
 hui.ui.Upload.HTML5 = function(parent) {
 	this.parent = parent;
 }

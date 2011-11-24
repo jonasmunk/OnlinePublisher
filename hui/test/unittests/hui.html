@@ -80,6 +80,17 @@
 				hui.ui.test.assertEquals(hui.toJSON(1),"1",'JSON of number');
 				hui.ui.test.assertEquals(hui.toJSON('abc'),'"abc"','JSON of string');
 				hui.ui.test.assertEquals(hui.toJSON([]),"[]",'JSON of array');
+				hui.ui.test.assertEquals(hui.toJSON(),undefined,'JSON of undefined');
+				hui.ui.test.assertEquals(hui.toJSON(null),"null",'JSON of null');
+				
+				var x = {a:'b'};
+				x.y = x;
+				try {
+					hui.ui.test.assertEquals(hui.toJSON(x),"null",'JSON of null');
+				} catch (e) {
+					hui.ui.test.assertDefined(e,'Should fail on circular reference');
+				}
+				
 				var object = {str:'ab"c',num:9.5,arr:[1,null,'ab"c']};
 				var roundtrip = hui.fromJSON(hui.toJSON(object));
 				hui.ui.test.assertEquals(roundtrip.str,object.str,'Test that strings are encoded/decoded correct');

@@ -107,7 +107,7 @@ hui.ui.Calendar.prototype = {
 			}
 			
 			window.setTimeout(function() {
-				hui.ui.bounceIn(node);
+				hui.effect.bounceIn({element:node});
 			},Math.random()*200)
 			hui.listen(node,'click',function() {
 				self.eventWasClicked(node);

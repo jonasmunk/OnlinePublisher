@@ -104,7 +104,7 @@ hui.ui.Overlay.prototype = {
 			});
 		}
 		if (this.visible) return;
-		hui.ui.bounceIn(this.element);
+		hui.effect.bounceIn({element:this.element});
 		this.visible = true;
 		if (options.autoHide && options.element) {
 			this.boundElement = options.element;

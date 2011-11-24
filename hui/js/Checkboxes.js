@@ -78,7 +78,7 @@ hui.ui.Checkboxes.prototype = {
 		this.setValue(values);
 	},
 	flipValue : function(value) {
-		hui.flipInArray(this.values,value);
+		hui.array.flip(this.values,value);
 		this.checkValues();
 		this.updateUI();
 		this.fire('valueChanged',this.values);
@@ -92,7 +92,7 @@ hui.ui.Checkboxes.prototype = {
 		var nodes = hui.byClass(this.element,'hui_checkbox');
 		for (i=0; i < this.items.length; i++) {
 			item = this.items[i];
-			found = hui.inArray(this.values,item.value);
+			found = hui.array.contains(this.values,item.value);
 			hui.setClass(nodes[i],'hui_checkbox_selected',found);
 		};
 	},

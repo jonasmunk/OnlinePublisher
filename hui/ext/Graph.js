@@ -1,3 +1,6 @@
+/** A graph
+ * @constructor
+ */
 hui.ui.Graph = function(options) {
 	this.options = options;
 	this.name = options.name;

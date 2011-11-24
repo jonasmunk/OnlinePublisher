@@ -1,3 +1,6 @@
+/** Grphviz viewer
+ * @constructor
+ */
 hui.ui.Graphviz = function(element,name,options) {
 		this.maxXdotVersion = 1.2;
 		this.systemScale = 4/3;

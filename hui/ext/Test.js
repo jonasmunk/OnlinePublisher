@@ -55,11 +55,11 @@ hui.ui.test = {
 	_fail : function(msg,obj1,obj2) {
 		if (window.console) {
 			console.error(msg);
+			console.info('Object 1:');
 			console.info(obj1);
-		}	
-		if (obj2!=undefined) {
-			console.info(obj2);
 		}
+			console.info('Object 2:');
+			console.info(obj2);
 		this._log(msg,true);
 		this.status.failures++;
 	},
@@ -100,6 +100,13 @@ hui.ui.test = {
 		}
 	},
 	assertDefined : function(value,msg) {
+		if (value===null || value==undefined) {
+			this._fail('Failure ('+msg+'), not false...',value);
+		} else {
+			this._succeed('Success, false'+(msg ? ': '+msg : ''));
+		}
+	},
+	assertDefined : function(value,msg) {
 		if (value===null || value===undefined) {
 			this._fail('Failure ('+msg+'), defined...',value);
 		} else {
@@ -108,7 +115,7 @@ hui.ui.test = {
 	},
 	assertEquals : function(obj1,obj2,msg) {
 		if (obj1!==obj2) {
-			this._fail('Failure ('+msg+'), not equal...',obj1,obj2);
+			this._fail('Failure ('+msg+') - '+obj1+'!=='+obj2+', not equal...',obj1,obj2);
 		} else {
 			this._succeed('Success, equal: '+obj1+'==='+obj2+(msg ? ', '+msg : ''));
 		}
