@@ -137,10 +137,12 @@ hui.ui.listen({
 						document.location = op.context+'services/waterusage/receipt.php?id='+obj.id;
 					},1000)
 				} else if (obj.key=='notfound') {
-					hui.ui.showMessage({text:'Målernummeret kunnne ikke findes, send en e-mail istedet',icon:'common/warning',duration:6000})
+					hui.ui.showMessage({text:'Målernummeret kunnne ikke findes, send venligst en e-mail istedet',icon:'common/warning',duration:6000})
 				} else {
+					hui.ui.showMessage({text:'Der skete en uventet fejl, send venligst en e-mail istedet',icon:'common/warning',duration:6000})
 					this._reset();
 				}
+				this._sending = false;
 			}.bind(this),
 			onException : function(obj) {
 				hui.log(obj);
