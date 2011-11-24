@@ -141,7 +141,7 @@ hui.ui.listen({
 	},
 	$click$deleteNews : function() {
 		var rows = newsList.getRows();
-		hui.removeFromArray(rows,this._editedNews);
+		hui.array.remove(rows,this._editedNews);
 		newsList.setObjects(rows);
 		newsFormula.reset();
 		newsWindow.hide();
