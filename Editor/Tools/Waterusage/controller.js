@@ -142,9 +142,11 @@ hui.ui.listen({
 		usageFormula.reset();
 		usageWindow.hide();
 		list.refresh();
+		filterSource.refresh();
 	},
 	$file$uploadDidCompleteQueue : function() {
 		list.refresh();
+		filterSource.refresh();
 	},
 	
 	// Export
@@ -227,6 +229,7 @@ hui.ui.listen({
 			message : {start:'Sletter måler...',success:'Måleren er slettet'},
 			onSuccess:function() {
 				list.refresh();
+				filterSource.refresh();
 				this.meterId = null;
 				this._resetSubUsage();
 				hui.ui.changeState('list');

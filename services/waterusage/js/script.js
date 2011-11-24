@@ -10,6 +10,8 @@ hui.ui.listen({
 		this.number = new hui.ui.Input({element:'number',name:'number',validator:this._validateNumber});
 		this.date = new hui.ui.Input({element:'date',validator:this._validateDate});
 		this.value = new hui.ui.Input({element:'value',validator:this._validateNumber});
+		this.phone = new hui.ui.Input({element:'phone'});
+		this.email = new hui.ui.Input({element:'email'});
 		this.submit = new hui.ui.Input({element:'submit',name:'submit'});
 		this._reset();
 	},
@@ -83,8 +85,8 @@ hui.ui.listen({
 			date = this.date.getValue(),
 			value = this.value.getValue(),
 			valid = true;
-		if (number.length!=8) {
-			this.number.setError('Skal være 8 cifre');
+		if (hui.isBlank(number)) {
+			this.number.setError('Skal udfyldes');
 			valid = false;
 		} else {
 			this.number.setError()
@@ -115,7 +117,9 @@ hui.ui.listen({
 		var params = {
 			number : this.number.getValue(),
 			date : this.date.getValue(),
-			value : this.value.getValue()
+			value : this.value.getValue(),
+			email : this.email.getValue(),
+			phone : this.phone.getValue()
 		}
 		this._sending = true;
 		hui.ui.request({
@@ -132,8 +136,11 @@ hui.ui.listen({
 					window.setTimeout(function() {
 						document.location = op.context+'services/waterusage/receipt.php?id='+obj.id;
 					},1000)
+				} else if (obj.key=='notfound') {
+					hui.ui.showMessage({text:'Målernummeret kunnne ikke findes, send en e-mail istedet',icon:'common/warning',duration:6000})
+				} else {
+					this._reset();
 				}
-				this._reset();
 			}.bind(this),
 			onException : function(obj) {
 				hui.log(obj);

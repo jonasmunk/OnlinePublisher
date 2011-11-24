@@ -137,45 +137,48 @@ class WaterusageService {
 				$address->publish();
 				ObjectService::addRelation($meter,$address);
 			}
-			$email = Query::after('emailaddress')->withRelationFrom($meter)->first();
-			if (StringUtils::isBlank($summary->getEmail())) {
-				if ($email) {
-					$email->remove();
-				}
-			} else {
-				if ($email) {
-					$email->setAddress($summary->getEmail());
-					$email->save();
-					$email->publish();
-				} else {
-					$email = new EmailAddress();
-					$email->setAddress($summary->getEmail());
-					$email->save();
-					$email->publish();
-					ObjectService::addRelation($meter,$email);
-				}
-			}
-			$phone = Query::after('phonenumber')->withRelationFrom($meter)->first();
-			if (StringUtils::isBlank($summary->getPhone())) {
-				if ($phone) {
-					$phone->remove();
-				}
-			} else {
-				if ($phone) {
-					$phone->setNumber($summary->getPhone());
-					$phone->save();
-					$phone->publish();
-				} else {
-					$phone = new Phonenumber();
-					$phone->setNumber($summary->getPhone());
-					$phone->save();
-					$phone->publish();
-					ObjectService::addRelation($meter,$phone);
-				}
-			}
+			WaterusageService::updateEmailOfMeter($meter,$summary->getEmail());
+			WaterusageService::updatePhoneOfMeter($meter,$summary->getPhone());
 		} else {
-			Log::debug('Meter not found');
-			// create new
+			Log::debug('Meter not found: '.$summary->getWatermeterId());
+		}
+	}
+	
+	function updateEmailOfMeter($meter,$address) {
+		$email = Query::after('emailaddress')->withRelationFrom($meter)->first();
+		if (StringUtils::isBlank($address) && $email) {
+			$email->remove();
+		} else {
+			if ($email) {
+				$email->setAddress($address);
+				$email->save();
+				$email->publish();
+			} else {
+				$email = new EmailAddress();
+				$email->setAddress($address);
+				$email->save();
+				$email->publish();
+				ObjectService::addRelation($meter,$email);
+			}
+		}
+	}
+	
+	function updatePhoneOfMeter($meter,$number) {
+		$phone = Query::after('phonenumber')->withRelationFrom($meter)->first();
+		if (StringUtils::isBlank($number) && $phone) {
+			$phone->remove();
+		} else {
+			if ($phone) {
+				$phone->setNumber($number);
+				$phone->save();
+				$phone->publish();
+			} else {
+				$phone = new Phonenumber();
+				$phone->setNumber($number);
+				$phone->save();
+				$phone->publish();
+				ObjectService::addRelation($meter,$phone);
+			}
 		}
 	}
 	

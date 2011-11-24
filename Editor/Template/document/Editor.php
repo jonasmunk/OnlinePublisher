@@ -38,7 +38,7 @@ $pageId = InternalSession::getPageId();
 		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/basic/css/document.css?version=<?=SystemInfo::getDate()?>" />
 		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/css/overwrite.css?version=<?=SystemInfo::getDate()?>" />
 		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version=<?=SystemInfo::getDate()?>" />
-		<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script' rel='stylesheet' type='text/css' />
+		<!--<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script' rel='stylesheet' type='text/css' />-->
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" href="css/msie.css?version=<?=SystemInfo::getDate()?>" />
 		<![endif]-->
