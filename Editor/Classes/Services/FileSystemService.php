@@ -74,7 +74,7 @@ class FileSystemService {
 		if (substr($base,-1)=='/') {
 			$base = substr($base,0,-1);
 		}
-		if ($end{0}=='/') {
+		if (strlen($end)>0 && $end{0}=='/') {
 			$end = substr($end,1);
 		}
 		$out = $base;

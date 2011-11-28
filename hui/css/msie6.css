@@ -68,3 +68,15 @@ div.hui_tooltip
 	width: 1px;
 	white-space: nowrap;
 }
+
+div.hui_message
+{
+	width: 1px;
+	white-space: nowrap;
+}
+
+span.hui_message_busy, div.hui_message span.hui_icon
+{
+	vertical-align: -4px;
+	margin-top: 6px;
+}

@@ -21,7 +21,7 @@ class TestFeeds extends UnitTestCase {
 		$feed = $parser->parseURL($url);
 		$this->assertTrue($feed!==false,'Unable to parse url: '.$url);
 		$this->assertEqual($feed->getTitle(),'Twitter / in2isoft');
-		$this->assertEqual($feed->getPubDate(),943920000);
+		$this->assertEqual($feed->getPubDate(),null);
 		$this->assertEqual($feed->getLink(),'http://twitter.com/in2isoft');
 		
 		$items = $feed->getItems();

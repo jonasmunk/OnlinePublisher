@@ -136,7 +136,7 @@ class DOMUtils {
 			return true;
 		}
 		else {
-			Log::debug('Invalid - code: '.$code.' ('.DOMUtils::$codes[$code].') / '.xml_error_string($code));
+			Log::debug('Invalid - code: '.$code.' ('.@DOMUtils::$codes[$code].') / '.xml_error_string($code));
 			return false;
 		}
 	}

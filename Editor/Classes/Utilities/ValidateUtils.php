@@ -32,6 +32,6 @@ class ValidateUtils {
 		$str = strval($str);
 		$pattern = "/[0-9]+/";
 	   	$num = preg_match($pattern,$str,$matches);
-		return $matches[0]===$str;
+		return @$matches[0]===$str;
 	}
 }

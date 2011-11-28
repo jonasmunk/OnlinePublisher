@@ -57,7 +57,7 @@ class Part
 			}
 			$sql.=")";
 			Database::insert($sql);
-			if (is_array($schema['relations'])) {
+			if (isset($schema['relations']) && is_array($schema['relations'])) {
 				foreach ($schema['relations'] as $field => $info) {
 					$getter = 'get'.ucfirst($field);
 					$ids = $this->$getter();
@@ -85,7 +85,7 @@ class Part
 		Database::update($sql);
 		
 		// Update relations
-		if (is_array($schema['relations'])) {
+		if (isset($schema['relations']) && is_array($schema['relations'])) {
 			foreach ($schema['relations'] as $field => $info) {
 				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".$this->id;
 				Database::delete($sql);
@@ -121,7 +121,7 @@ class Part
 		
 		// Delete relations
 		$schema = Part::$schema[$this->type];
-		if (is_array($schema['relations'])) {
+		if (isset($schema['relations']) && is_array($schema['relations'])) {
 			foreach ($schema['relations'] as $field => $info) {
 				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".Database::int($this->id);
 				Database::delete($sql);
@@ -149,12 +149,14 @@ class Part
 			Log::debug('No schema for '.$type);
 			return null;
 		}
-		foreach ($schema['fields'] as $field => $info) {
-			$column = $info['column'] ? $info['column'] : $field;
-			if ($info['type']=='datetime') {
-				$sql.=",UNIX_TIMESTAMP(`part_$type`.`$column`) as `$column`";
-			} else {
-				$sql.=",`part_$type`.`$column`";
+		if (isset($schema['fields']) && is_array($schema['fields'])) {
+			foreach ($schema['fields'] as $field => $info) {
+				$column = isset($info['column']) ? $info['column'] : $field;
+				if ($info['type']=='datetime') {
+					$sql.=",UNIX_TIMESTAMP(`part_$type`.`$column`) as `$column`";
+				} else {
+					$sql.=",`part_$type`.`$column`";
+				}
 			}
 		}
 		$sql.=" from part,part_".$type." where part.id=part_".$type.".part_id and part.id=".$id;
@@ -163,11 +165,11 @@ class Part
 			$part->setId($row['id']);
 			foreach ($schema['fields'] as $field => $info) {
 				$setter = 'set'.ucfirst($field);
-				$column = $info['column'] ? $info['column'] : $field;
+				$column = isset($info['column']) ? $info['column'] : $field;
 				$part->$setter($row[$column]);
 			}
 			
-			if (is_array($schema['relations'])) {
+			if (isset($schema['relations']) && is_array($schema['relations'])) {
 				foreach ($schema['relations'] as $field => $info) {
 					$setter = 'set'.ucfirst($field);
 					$sql = "select `".$info['toColumn']."` as id from `".$info['table']."` where `".$info['fromColumn']."`=".Database::int($id);

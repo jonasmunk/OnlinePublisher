@@ -114,7 +114,7 @@ class RenderingService {
 		'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.
 		'<xsl:variable name="page-path">'.$pagePath.'</xsl:variable>'.
 		'<xsl:variable name="template">'.$template.'</xsl:variable>'.
-		'<xsl:variable name="agent">'.StringUtils::escapeXML($_SERVER['HTTP_USER_AGENT']).'</xsl:variable>'.
+		'<xsl:variable name="agent">'.StringUtils::escapeXML(@$_SERVER['HTTP_USER_AGENT']).'</xsl:variable>'.
 		'<xsl:variable name="userid">'.StringUtils::escapeXML($userId).'</xsl:variable>'.
 		'<xsl:variable name="username">'.StringUtils::escapeXML($userName).'</xsl:variable>'.
 		'<xsl:variable name="usertitle">'.StringUtils::escapeXML($userTitle).'</xsl:variable>'.
@@ -237,10 +237,6 @@ class RenderingService {
 			$sql.=" and page.id=".$id;
 		} else {
 			$sql.=" and page.path=".Database::text($path);
-		}
-		// If disabled pages are not allowed
-		if (!$allowDisabled) {
-		    $sql.=" and page.disabled=0";
 		}
 	
 		if ($row = Database::selectFirst($sql)) {

@@ -155,11 +155,11 @@ class ListingPartController extends PartController
 			'i' => 'lower-roman',
 			'I' => 'upper-roman'
 		);
+		$type='disc';
 		if ($listing = DOMUtils::getFirstChildElement($node,'listing')) {
-			$type = $types[$listing->getAttribute('type')];
-		}
-		if (!$type) {
-			$type='disc';
+			if (isset($types[$listing->getAttribute('type')])) {
+				$type = $types[$listing->getAttribute('type')];
+			}
 		}
 		$this->parseXMLStyle($part,DOMUtils::getFirstDescendant($node,'style'));
 		$part->setListStyle($type);
