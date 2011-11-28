@@ -84,6 +84,7 @@ hui.ui.Graph.prototype = {
 	}
 }
 
+/** @namespace */
 hui.ui.Graph.Protoviz = {
 	init : function(parent) {
 		this.parent = parent;
@@ -151,6 +152,7 @@ hui.ui.Graph.Protoviz = {
 	
 }
 
+/** @namespace */
 hui.ui.Graph.D3 = {
 	init : function(parent) {
 		this.parent = parent;
@@ -358,6 +360,7 @@ hui.ui.Graph.D3 = {
 	}
 }
 
+/** @namespace */
 hui.ui.Graph.Raphael = {
 	init : function(parent) {
 		this.parent = parent;

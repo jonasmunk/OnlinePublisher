@@ -220,7 +220,7 @@ hui.ui.MarkupEditor.prototype = {
 	}
 }
 
-/** @private */
+/** @namespace */
 hui.ui.MarkupEditor.webkit = {
 	initialize : function(options) {
 		this.element = options.element;
@@ -334,7 +334,7 @@ hui.ui.MarkupEditor.webkit = {
 	}
 }
 
-/** @private */
+/** @namespace */
 hui.ui.MarkupEditor.MSIE = {
 	initialize : function(options) {
 		this.element = options.element;
@@ -407,7 +407,7 @@ hui.ui.MarkupEditor.MSIE = {
 	}
 }
 
-/** @private */
+/** @namespace */
 hui.ui.MarkupEditor.util = {
 	clean : function(node) {
 		var copy = node.cloneNode(true);

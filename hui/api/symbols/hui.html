@@ -287,6 +287,12 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Graph.html">hui.ui.Graph</a></li>
 	
+	<li><a href="../symbols/hui.ui.Graph.D3.html">hui.ui.Graph.D3</a></li>
+	
+	<li><a href="../symbols/hui.ui.Graph.Protoviz.html">hui.ui.Graph.Protoviz</a></li>
+	
+	<li><a href="../symbols/hui.ui.Graph.Raphael.html">hui.ui.Graph.Raphael</a></li>
+	
 	<li><a href="../symbols/hui.ui.Graphviz.html">hui.ui.Graphviz</a></li>
 	
 	<li><a href="../symbols/hui.ui.IFrame.html">hui.ui.IFrame</a></li>
@@ -314,6 +320,12 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.LocationPicker.html">hui.ui.LocationPicker</a></li>
 	
 	<li><a href="../symbols/hui.ui.MarkupEditor.html">hui.ui.MarkupEditor</a></li>
+	
+	<li><a href="../symbols/hui.ui.MarkupEditor.MSIE.html">hui.ui.MarkupEditor.MSIE</a></li>
+	
+	<li><a href="../symbols/hui.ui.MarkupEditor.util.html">hui.ui.MarkupEditor.util</a></li>
+	
+	<li><a href="../symbols/hui.ui.MarkupEditor.webkit.html">hui.ui.MarkupEditor.webkit</a></li>
 	
 	<li><a href="../symbols/hui.ui.Menu.html">hui.ui.Menu</a></li>
 	
@@ -354,6 +366,8 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.Tab.html">hui.ui.Tab</a></li>
 	
 	<li><a href="../symbols/hui.ui.Tabs.html">hui.ui.Tabs</a></li>
+	
+	<li><a href="../symbols/hui.ui.test.html">hui.ui.test</a></li>
 	
 	<li><a href="../symbols/hui.ui.TextField.html">hui.ui.TextField</a></li>
 	
@@ -521,7 +535,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.defer">defer</a></b>(func, bind)
 								</div>
-								<div class="description"></div>
+								<div class="description">Defer a function so it will fire when the current "thread" is done</div>
 							</td>
 						</tr>
 					
@@ -539,7 +553,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.escape">escape</a></b>(str)
 								</div>
-								<div class="description"></div>
+								<div class="description">Escape the html in a string (fast)</div>
 							</td>
 						</tr>
 					
@@ -548,7 +562,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.escapeHTML">escapeHTML</a></b>(str)
 								</div>
-								<div class="description">Escape the html in a string</div>
+								<div class="description">Escape the html in a string (robust)</div>
 							</td>
 						</tr>
 					
@@ -1381,7 +1395,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					
 					</div>
 					<div class="description">
-						
+						Defer a function so it will fire when the current "thread" is done
 						
 						
 					</div>
@@ -1393,16 +1407,16 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>func</b>
+									<span class="light fixedFont">{<a href="../symbols/Function.html">Function</a>}</span> <b>func</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The fundtion to defer</dd>
 							
 								<dt>
-									<b>bind</b>
+									<span class="light fixedFont">{Object}</span> <b>bind</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>Optional, the object to bind "this" to</dd>
 							
 							</dl>
 						
@@ -1460,12 +1474,12 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<a name=".escape"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{String}</span>
 					<span class="light">hui.</span><b>escape</b>(str)
 					
 					</div>
 					<div class="description">
-						
+						Escape the html in a string (fast)
 						
 						
 					</div>
@@ -1477,16 +1491,23 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>str</b>
+									<span class="light fixedFont">{String}</span> <b>str</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The text to escape</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The escaped text</dd>
+							
+							</dl>
 						
 						
 						
@@ -1496,12 +1517,12 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<a name=".escapeHTML"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{String}</span>
 					<span class="light">hui.</span><b>escapeHTML</b>(str)
 					
 					</div>
 					<div class="description">
-						Escape the html in a string
+						Escape the html in a string (robust)
 						
 						
 					</div>
@@ -1513,16 +1534,23 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>str</b>
+									<span class="light fixedFont">{String}</span> <b>str</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The text to escape</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The escaped text</dd>
+							
+							</dl>
 						
 						
 						
@@ -2513,7 +2541,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<a name=".intOrString"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{Object}</span>
 					<span class="light">hui.</span><b>intOrString</b>(str)
 					
 					</div>
@@ -2530,16 +2558,23 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>str</b>
+									<span class="light fixedFont">{String}</span> <b>str</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The string to convert</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Object}</span> An int of the string or the same string</dd>
+							
+							</dl>
 						
 						
 						
@@ -2783,7 +2818,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<a name=".override"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{Object}</span>
 					<span class="light">hui.</span><b>override</b>(original, subject)
 					
 					</div>
@@ -2800,22 +2835,29 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>original</b>
+									<span class="light fixedFont">{Object}</span> <b>original</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The object to override</dd>
 							
 								<dt>
-									<b>subject</b>
+									<span class="light fixedFont">{Object}</span> <b>subject</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The object to copy the properties from</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Object}</span> The original</dd>
+							
+							</dl>
 						
 						
 						
@@ -3271,7 +3313,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<a name=".trim"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{String}</span>
 					<span class="light">hui.</span><b>trim</b>(str)
 					
 					</div>
@@ -3288,16 +3330,23 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>str</b>
+									<span class="light fixedFont">{String}</span> <b>str</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The text to trim</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The trimmed text</dd>
+							
+							</dl>
 						
 						
 						
@@ -3361,7 +3410,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<a name=".wrap"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{String}</span>
 					<span class="light">hui.</span><b>wrap</b>(str)
 					
 					</div>
@@ -3378,16 +3427,23 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>str</b>
+									<span class="light fixedFont">{String}</span> <b>str</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The text to wrap</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The wrapped text</dd>
+							
+							</dl>
 						
 						
 						
@@ -3406,7 +3462,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Nov 24 2011 09:50:03 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Nov 28 2011 16:07:26 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

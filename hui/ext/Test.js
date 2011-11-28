@@ -1,3 +1,4 @@
+/** @namespace */
 hui.ui.test = {
 	status : null,
 	busy : 0,

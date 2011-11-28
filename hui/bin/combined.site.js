@@ -74,6 +74,11 @@ hui.log = function(obj) {
 	} catch (ignore) {};
 }
 
+/**
+ * Defer a function so it will fire when the current "thread" is done
+ * @param {Function} func The fundtion to defer
+ * @param {Object} bind Optional, the object to bind "this" to
+ */
 hui.defer = function(func,bind) {
 	if (bind) {
 		func = func.bind(bind);
@@ -81,7 +86,12 @@ hui.defer = function(func,bind) {
 	window.setTimeout(func);
 }
 
-/** Override the properties on the first argument with properties from the last object */
+/**
+ * Override the properties on the first argument with properties from the last object
+ * @param {Object} original The object to override
+ * @param {Object} subject The object to copy the properties from
+ * @return {Object} The original
+ */
 hui.override = function(original,subject) {
 	if (subject) {
 		for (prop in subject) {
@@ -91,7 +101,11 @@ hui.override = function(original,subject) {
 	return original;
 }
 
-/** Inserts invisible break chars in string so it will wrap */
+/**
+ * Inserts invisible break chars in string so it will wrap
+ * @param {String} str The text to wrap
+ * @returns {String} The wrapped text
+ */
 hui.wrap = function(str) {
 	if (str===null || str===undefined) {
 		return '';
@@ -99,19 +113,32 @@ hui.wrap = function(str) {
 	return str.split('').join("\u200B");
 }
 
-/** Trim whitespace including unicode chars */
+/**
+ * Trim whitespace including unicode chars
+ * @param {String} str The text to trim
+ * @returns {String} The trimmed text
+ */
 hui.trim = function(str) {
 	if (str===null || str===undefined) {return ''};
 	if (typeof(str)!='string') {str=new String(str)}
 	return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
 }
 
-/** Escape the html in a string */
+/**
+ * Escape the html in a string (robust)
+ * @param {String} str The text to escape
+ * @returns {String} The escaped text
+ */
 hui.escapeHTML = function(str) {
 	if (str===null || str===undefined) {return ''};
    	return hui.build('div',{text:str}).innerHTML;
 }
 
+/**
+ * Escape the html in a string (fast)
+ * @param {String} str The text to escape
+ * @returns {String} The escaped text
+ */
 hui.escape = function(str) {
 	if (!hui.isDefined(str)) {return ''};
 	return str.replace(/&/g,'&amp;').
@@ -156,10 +183,11 @@ hui.isArray = function(obj) {
 hui.string = {
 	
 	/**
-	Test that a string ends with another string
-	@param str The string to test
-	@param end The string to look for at the end
-	*/
+	 * Test that a string ends with another string
+	 * @param {String} str The string to test
+	 * @param {String} end The string to look for at the end
+	 * @returns {Boolean} True if «str» ends with «end»
+	 */
 	endsWith : function(str,end) {
 		if (!typeof(str)=='string' || !typeof(end)=='string') {
 			return false;
@@ -167,7 +195,11 @@ hui.string = {
 		return (str.match(end+"$")==end);
 	},
 	
-	/** Make a string camelized */
+	/** 
+	 * Make a string camelized
+	 * @param {String} The string to camelize
+	 * @returns {String} The camelized string
+	 */
 	camelize : function(str) {
 		if (str.indexOf('-')==-1) {return str}
 	    var oStringList = str.split('-');
@@ -208,6 +240,8 @@ hui.each = function(items,func) {
 
 /**
  * Converts a string to an int if it is only digits, otherwise remains a string
+ * @param {String} str The string to convert
+ * @returns {Object} An int of the string or the same string
  */
 hui.intOrString = function(str) {
 	if (hui.isDefined(str)) {
@@ -250,6 +284,12 @@ hui.array = {
 			}
 		}
 	},
+	/**
+	 * Check if an array contains a value
+	 * @param {Array} arr The array
+	 * @param {Object} value The object to check for
+	 * @returns {boolean} true if the value is in the array
+	 */
 	contains : function(arr,value) {
 		for (var i=0; i < arr.length; i++) {
 			if (arr[i]===value) {
@@ -2805,7 +2845,7 @@ hui.ui.reLayout = function() {
 	}
 }
 
-//////////////////////////////// Windget //////////////////////////////
+//////////////////////////////// Widget //////////////////////////////
 
 hui.ui.Widget = function() {
 	
