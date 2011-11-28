@@ -14,7 +14,7 @@ require_once '../../Editor/Classes/Core/Request.php';
 session_set_cookie_params(0);
 session_start();
 
-if ($_SESSION['core.debug.simulateLatency']) {
+if (@$_SESSION['core.debug.simulateLatency']) {
 	usleep(rand(1000000,2000000));
 }
 $id = Request::getId();

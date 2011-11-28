@@ -16,7 +16,23 @@ class ItemsWriter {
 	}
 
 	function startItem($options) {
-		echo '<item value="'.StringUtils::escapeXML($options['value']).'" title="'.StringUtils::escapeXML($options['title']).'" icon="'.$options['icon'].'" kind="'.$options['kind'].'" badge="'.$options['badge'].'">';
+		echo '<item';
+		if (isset($options['value'])) {
+			echo ' value="'.StringUtils::escapeXML($options['value']).'"';
+		}
+		if (isset($options['title'])) {
+			echo ' title="'.StringUtils::escapeXML($options['title']).'"';
+		}
+		if (isset($options['icon'])) {
+			echo ' icon="'.$options['icon'].'"';
+		}
+		if (isset($options['kind'])) {
+			echo ' kind="'.$options['kind'].'"';
+		}
+		if (isset($options['badge'])) {
+			echo ' badge="'.$options['badge'].'"';
+		}
+		echo '>';
 		return $this;
 	}
 
@@ -34,7 +50,7 @@ class ItemsWriter {
 		return $this;
 	}
 
-	function title($title) {
+	function title($title=null) {
 		echo '<title title="'.StringUtils::escapeXML($title).'"/>';
 		return $this;
 	}

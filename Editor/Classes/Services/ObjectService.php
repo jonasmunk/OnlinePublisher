@@ -501,10 +501,10 @@ class ObjectService {
 		$list = array('result' => array(),'rows' => array(),'windowPage' => 0,'windowSize' => 0,'total' => 0);
 
 		$sql = "select ".$parts['columns']." from ".$parts['tables'];
-		if (is_array($parts['joins']) && count($parts['joins'])>0) {
+		if (isset($parts['joins']) && is_array($parts['joins']) && count($parts['joins'])>0) {
 			$sql.=" ".implode(' ',$parts['joins']);
 		}
-		if (is_array($parts['limits']) && count($parts['limits'])>0) {
+		if (isset($parts['limits']) && is_array($parts['limits']) && count($parts['limits'])>0) {
 			$sql.=" where ".implode(' and ',$parts['limits']);
 		}
 		if (is_string($parts['limits']) && strlen($parts['limits'])>0) {
