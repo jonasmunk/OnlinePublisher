@@ -21,9 +21,6 @@ class ClassService {
 		foreach ($files as $path) {
 			preg_match('/([A-Za-z]+)\.php/i', $path,$matches);
 			$name = $matches[1];
-			if ($name == 'AbstractObjectTest') {
-				continue;
-			}
 			require_once($path);
 			$valid = false;
 			$parent = null;

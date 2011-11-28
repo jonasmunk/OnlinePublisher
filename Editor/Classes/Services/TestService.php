@@ -111,9 +111,9 @@ class TestService {
 		$design = Design::load($page->getDesignId());
 		
 		$hierarchy->remove();
+		$page->remove();
 		$frame->remove();
 		$design->remove();
-		$page->remove();
 	}
 
 }
