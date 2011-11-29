@@ -101,63 +101,25 @@ hui.override = function(original,subject) {
 	return original;
 }
 
-/**
- * Inserts invisible break chars in string so it will wrap
- * @param {String} str The text to wrap
- * @returns {String} The wrapped text
- */
-hui.wrap = function(str) {
-	if (str===null || str===undefined) {
-		return '';
-	}
-	return str.split('').join("\u200B");
-}
 
-/**
- * Trim whitespace including unicode chars
- * @param {String} str The text to trim
- * @returns {String} The trimmed text
- */
-hui.trim = function(str) {
-	if (str===null || str===undefined) {return ''};
-	if (typeof(str)!='string') {str=new String(str)}
-	return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
-}
 
-/**
- * Escape the html in a string (robust)
- * @param {String} str The text to escape
- * @returns {String} The escaped text
- */
-hui.escapeHTML = function(str) {
-	if (str===null || str===undefined) {return ''};
-   	return hui.build('div',{text:str}).innerHTML;
-}
 
-/**
- * Escape the html in a string (fast)
- * @param {String} str The text to escape
- * @returns {String} The escaped text
- */
-hui.escape = function(str) {
-	if (!hui.isDefined(str)) {return ''};
-	return str.replace(/&/g,'&amp;').
-		replace(/>/g,'&gt;').
-		replace(/</g,'&lt;').
-		replace(/"/g,'&quot;')
-}
+
+
 
 /**
  * Checks if a string has non-whitespace characters
  * @param {String} str The string
  */
 hui.isBlank = function(str) {
-	if (str===null || typeof(str)==='undefined' || str==='') {return true};
-	return typeof(str)=='string' && hui.trim(str).length==0;
+	if (str===null || typeof(str)==='undefined' || str==='') {
+		return true;
+	}
+	return typeof(str)=='string' && hui.string.trim(str).length==0;
 }
 
 /**
- * Checks that an object is not null or undefined
+ * Checks that an object is not null and not undefined
  * @param {Object} obj The object to check
  */
 hui.isDefined = function(obj) {
@@ -214,18 +176,62 @@ hui.string = {
 	    }
 
 	    return camelizedString;
+	},
+	/**
+ 	 * Trim whitespace including unicode chars
+	 * @param {String} str The text to trim
+	 * @returns {String} The trimmed text
+	 */
+	trim : function(str) {
+		if (str===null || str===undefined) {
+			return ''
+		}
+		if (typeof(str)!='string') {
+			str=new String(str)
+		}
+		return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
+	},
+	/**
+	 * Inserts invisible break chars in string so it will wrap
+	 * @param {String} str The text to wrap
+	 * @returns {String} The wrapped text
+	 */
+	wrap : function(str) {
+		if (str===null || str===undefined) {
+			return '';
+		}
+		return str.split('').join("\u200B");
+	},
+	/**
+	 * Escape the html in a string (robust)
+	 * @param {String} str The text to escape
+	 * @returns {String} The escaped text
+	 */
+	escapeHTML : function(str) {
+		if (str===null || str===undefined) {return ''};
+	   	return hui.build('div',{text:str}).innerHTML;
+	},
+	/**
+	 * Escape the html in a string (fast)
+	 * @param {String} str The text to escape
+	 * @returns {String} The escaped text
+	 */
+	escape : function(str) {
+		if (!hui.isDefined(str)) {return ''};
+		return str.replace(/&/g,'&amp;').
+			replace(/>/g,'&gt;').
+			replace(/</g,'&lt;').
+			replace(/"/g,'&quot;')
 	}
 }
 
-hui.indexInArray = function(arr,value) {
-	for (var i=0; i < arr.length; i++) {
-		if (arr[i]===value) {
-			return i;
-		}
-	};
-	return -1;
-}
-
+/**
+ * Loop through items in array or properties in an object.
+ * If «items» is an array «func» is called with each item.
+ * If «items» is an object «func» is called with each (key,value)
+ * @param {Object | Array} items The object or array to loop through
+ * @param {Function} func The callback to handle each item
+ */
 hui.each = function(items,func) {
 	if (hui.isArray(items)) {		
 		for (var i=0; i < items.length; i++) {
@@ -298,6 +304,12 @@ hui.array = {
 		};
 		return false;
 	},
+	/**
+	 * Add or remove a value from an array.
+	 * If the value exists all instances are removed, otherwise the value is added
+	 * @param {Array} arr The array to change
+	 * @param {Object} value The value to flip
+	 */
 	flip : function(arr,value) {
 		if (hui.array.contains(arr,value)) {
 			hui.array.remove(arr,value);
@@ -305,12 +317,31 @@ hui.array = {
 			arr.push(value);
 		}
 	},
+	/**
+	 * Remove all instances of a value from an array
+	 * @param {Array} arr The array to change
+	 * @param {Object} value The value to remove
+	 */
 	remove : function(arr,value) {
 		for (var i = arr.length - 1; i >= 0; i--){
 			if (arr[i]==value) {
 				arr.splice(i,1);
 			}
 		};
+	},
+	/**
+	 * Find the first index of a value in an array, -1 if not found
+	 * @param {Array} arr The array to inspect
+	 * @param {Object} value The value to find
+	 * @returns {Number} The index of the first occurrence, -1 if not found.
+	 */
+	indexOf : function(arr,value) {
+		for (var i=0; i < arr.length; i++) {
+			if (arr[i]===value) {
+				return i;
+			}
+		};
+		return -1;
 	}
 }
 
@@ -4732,7 +4763,7 @@ hui.ui.getTextAreaHeight = function(input) {
 	if (html[html.length-1]==='\n') {
 		html+='x';
 	}
-	html = hui.escape(html).replace(/\n/g,'<br/>');
+	html = hui.string.escape(html).replace(/\n/g,'<br/>');
 	t.innerHTML = html;
 	t.style.width=(input.clientWidth)+'px';
 	return t.clientHeight;
@@ -5276,7 +5307,7 @@ hui.ui.startDrag = function(e,element,options) {
 		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,16)+')';
 	}
 	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
-	proxy.innerHTML = info.title ? '<span>'+hui.escape(info.title)+'</span>' : '###';
+	proxy.innerHTML = info.title ? '<span>'+hui.string.escape(info.title)+'</span>' : '###';
 	hui.ui.dragging = true;
 	document.body.onselectstart = function () { return false; };
 };
@@ -6533,7 +6564,7 @@ hui.ui.Tabs.prototype = {
 	},
 	createTab : function(options) {
 		options = options || {};
-		var tab = hui.build('li',{html:'<a><span><span>'+hui.escape(options.title)+'</span></span></a>',parent:this.bar});
+		var tab = hui.build('li',{html:'<a><span><span>'+hui.string.escape(options.title)+'</span></span></a>',parent:this.bar});
 		this.addTabBehavior(tab,this.tabs.length);
 		this.tabs.push(tab);
 		var e = options.element = hui.build('div',{'class':'hui_tabs_tab'});
@@ -6834,10 +6865,10 @@ hui.ui.DropDown.prototype = {
 		if (selected) {
 			var text = selected.label || selected.title || selected.text || '';
 			this.inner.innerHTML='';
-			hui.dom.addText(this.inner,hui.wrap(text));
+			hui.dom.addText(this.inner,hui.string.wrap(text));
 		} else if (this.options.placeholder) {
 			this.inner.innerHTML='';
-			this.inner.appendChild(hui.build('em',{text:hui.escape(this.options.placeholder)}));
+			this.inner.appendChild(hui.build('em',{text:hui.string.escape(this.options.placeholder)}));
 		} else {
 			this.inner.innerHTML='';
 		}
@@ -7889,7 +7920,7 @@ hui.ui.Toolbar.SearchField.create = function(options) {
 	options.element = hui.build('div',{
 		'class' : options.adaptive ? 'hui_toolbar_search hui_toolbar_search_adaptive' : 'hui_toolbar_search',
 		html : '<div class="hui_searchfield"><strong class="hui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
-		'<span>'+hui.escape(options.title)+'</span>'
+		'<span>'+hui.string.escape(options.title)+'</span>'
 	});
 	return new hui.ui.Toolbar.SearchField(options);
 }
@@ -8763,7 +8794,7 @@ hui.ui.Picker.prototype = {
 				 hui.addClass(item,'hui_picker_item_selected');
 			}
 			item.innerHTML = '<div class="hui_picker_item_middle"><div class="hui_picker_item_middle">'+
-				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.escape(object.title)+'</strong></div>'+
+				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.string.escape(object.title)+'</strong></div>'+
 				'</div></div>'+
 				'<div class="hui_picker_item_bottom"><div><div></div></div></div>';
 			hui.listen(item,'mouseup',function() {
@@ -9731,8 +9762,8 @@ hui.ui.Upload.create = function(options) {
 		html : '<div class="hui_upload_items"></div>'+
 		'<div class="hui_upload_status"></div>'+
 		(options.placeholder ? '<div class="hui_upload_placeholder"><span class="hui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+hui.escape(options.placeholder.title)+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+hui.escape(options.placeholder.text)+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+hui.string.escape(options.placeholder.title)+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+hui.string.escape(options.placeholder.text)+'</p>' : '')+
 		'</div>' : '')
 	});
 	return new hui.ui.Upload(options);
@@ -11388,7 +11419,7 @@ hui.ui.Box.create = function(options) {
 		html : (options.closable ? '<a class="hui_box_close" href="#"></a>' : '')+
 			'<div class="hui_box_top"><div><div></div></div></div>'+
 			'<div class="hui_box_middle"><div class="hui_box_middle">'+
-			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.escape(options.title)+'</strong></div>' : '')+
+			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(options.title)+'</strong></div>' : '')+
 			'<div class="hui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+
@@ -12713,7 +12744,7 @@ hui.ui.Links.prototype = {
 			text = hui.build('div',{'class':'hui_links_text',text:item.text});
 			row.appendChild(text);
 
-			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.wrap(item.info)});
+			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.string.wrap(item.info)});
 			row.appendChild(infoNode);
 			remove = hui.ui.createIcon('monochrome/delete',16);
 			hui.addClass(remove,'hui_links_remove');
@@ -13118,7 +13149,7 @@ hui.ui.MarkupEditor.webkit = {
 			range.surroundContents(node);
 			selection.selectAllChildren(node);
 		}
-		//document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.selection.getText())+'</'+tag+'>');
+		//document.execCommand('inserthtml',null,'<'+tag+'>'+hui.string.escape(hui.selection.getText())+'</'+tag+'>');
 	},
 	_getInlineTag : function() {
 		var selection = window.getSelection();
@@ -13213,7 +13244,7 @@ hui.ui.MarkupEditor.MSIE = {
 		this.restoreSelection();
 	},
 	_wrapInTag : function(tag) {
-		document.execCommand('inserthtml',null,'<'+tag+'>'+hui.escape(hui.selection.getText())+'</'+tag+'>');
+		document.execCommand('inserthtml',null,'<'+tag+'>'+hui.string.escape(hui.selection.getText())+'</'+tag+'>');
 	},
 	_insertHTML : function(html) {
 		document.execCommand('inserthtml',null,html);
@@ -13866,7 +13897,7 @@ hui.ui.TokenField.prototype = {
 	getValue : function() {
 		var out = [];
 		hui.each(this.value,function(value) {
-			value = hui.trim(value);
+			value = hui.string.trim(value);
 			if (value.length>0) {
 				out.push(value);
 			}
@@ -14105,7 +14136,7 @@ hui.ui.Checkboxes.prototype = {
 	},
 	$itemsLoaded : function(items) {
 		hui.each(items,function(item) {
-			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.escape(item.title)});
+			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.string.escape(item.title)});
 			hui.listen(node,'click',function(e) {
 				hui.stop(e);
 				this.flipValue(item.value);
@@ -14169,7 +14200,7 @@ hui.ui.Checkboxes.Items.prototype = {
 		try {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
-			var index = hui.indexInArray(this.parent.values,item.value);
+			var index = hui.array.indexOf(this.parent.values,item.value);
 			hui.setClass(item.element,'hui_checkbox_selected',index!=-1);
 		};
 		} catch (e) {
@@ -15308,7 +15339,7 @@ hui.ui.Graphviz.prototype = {
 							var str = tokenizer.takeString();
 							if (!redraw_canvas && !str.match(/^\s*$/)) {
 //								hui.ui.Graphviz.debug('draw text ' + str + ' ' + x + ' ' + y + ' ' + text_align + ' ' + text_width);
-								str = hui.escapeHTML(str);
+								str = hui.string.escapeHTML(str);
 								do {
 									matches = str.match(/ ( +)/);
 									if (matches) {

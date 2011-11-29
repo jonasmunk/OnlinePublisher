@@ -33,14 +33,14 @@
 				hui.ui.test.assertEquals(hui.trim(['abc',1]),'abc,1','Array with values trims to comma separated');
 			},
 			function() { // Escaping
-				hui.ui.test.assertEquals(hui.escapeHTML(''),'','Escape empty string');
-				hui.ui.test.assertEquals(hui.escapeHTML(null),'','Escape NULL');
-				hui.ui.test.assertEquals(hui.escapeHTML(' '),' ','Escape space');
-				hui.ui.test.assertEquals(hui.escapeHTML('abc'),'abc','Escape string');
-				hui.ui.test.assertEquals(hui.escapeHTML('abc<>'),'abc&lt;&gt;','Escape <> string');
-				hui.ui.test.assertEquals(hui.escapeHTML('&'),'&amp;','Escape & string');
-				hui.ui.test.assertEquals(hui.escapeHTML('"'),'"','Escape " string');
-				hui.ui.test.assertEquals(hui.escapeHTML('This is <br>some <strong>common & general</strong> markup'),'This is &lt;br&gt;some &lt;strong&gt;common &amp; general&lt;/strong&gt; markup','Escape markup');
+				hui.ui.test.assertEquals(hui.string.escapeHTML(''),'','Escape empty string');
+				hui.ui.test.assertEquals(hui.string.escapeHTML(null),'','Escape NULL');
+				hui.ui.test.assertEquals(hui.string.escapeHTML(' '),' ','Escape space');
+				hui.ui.test.assertEquals(hui.string.escapeHTML('abc'),'abc','Escape string');
+				hui.ui.test.assertEquals(hui.string.escapeHTML('abc<>'),'abc&lt;&gt;','Escape <> string');
+				hui.ui.test.assertEquals(hui.string.escapeHTML('&'),'&amp;','Escape & string');
+				hui.ui.test.assertEquals(hui.string.escapeHTML('"'),'"','Escape " string');
+				hui.ui.test.assertEquals(hui.string.escapeHTML('This is <br>some <strong>common & general</strong> markup'),'This is &lt;br&gt;some &lt;strong&gt;common &amp; general&lt;/strong&gt; markup','Escape markup');
 			},
 			function() { // Test strings
 				hui.ui.test.assertTrue(hui.string.endsWith('Jonas','as'),'Ends with is correct');
@@ -61,19 +61,19 @@
 				hui.ui.test.assertFalse(hui.isArray(""),'String is not array');
 				hui.ui.test.assertFalse(hui.isArray(1),'Number is not array');
 				// inArray
-				hui.ui.test.assertTrue(hui.inArray(['a','b','c'],'b'),'Find string in array');
-				hui.ui.test.assertFalse(hui.inArray(['a','b','c'],'ab'),'Find string in array');
-				hui.ui.test.assertFalse(hui.inArray([0,'b','c'],null),'zero in array is not null');
-				hui.ui.test.assertFalse(hui.inArray([0,'b','c'],''),'zero in array is not empty string');
-				hui.ui.test.assertFalse(hui.inArray([1,'b','c'],'1'),'number in array is not string');
-				hui.ui.test.assertTrue(hui.inArray([null,'b','c'],null),'Find null in array');
-				hui.ui.test.assertTrue(hui.inArray(['','b','c'],''),'Find empty string in array');
+				hui.ui.test.assertTrue(hui.array.contains(['a','b','c'],'b'),'Find string in array');
+				hui.ui.test.assertFalse(hui.array.contains(['a','b','c'],'ab'),'Find string in array');
+				hui.ui.test.assertFalse(hui.array.contains([0,'b','c'],null),'zero in array is not null');
+				hui.ui.test.assertFalse(hui.array.contains([0,'b','c'],''),'zero in array is not empty string');
+				hui.ui.test.assertFalse(hui.array.contains([1,'b','c'],'1'),'number in array is not string');
+				hui.ui.test.assertTrue(hui.array.contains([null,'b','c'],null),'Find null in array');
+				hui.ui.test.assertTrue(hui.array.contains(['','b','c'],''),'Find empty string in array');
 				// indexInArray
-				hui.ui.test.assertEquals(hui.indexInArray(['','b','c'],'b'),1,'Find index of string in array');
-				hui.ui.test.assertEquals(hui.indexInArray(['','b',2],2),2,'Find index of number in array');
-				hui.ui.test.assertEquals(hui.indexInArray(['',null,0],0),2,'Find index of number in array');
-				hui.ui.test.assertEquals(hui.indexInArray(['',null,0],null),1,'Find index of NULL in array');
-				hui.ui.test.assertEquals(hui.indexInArray(['',' ',0],null),-1,'Not found in array');
+				hui.ui.test.assertEquals(hui.array.indexOf(['','b','c'],'b'),1,'Find index of string in array');
+				hui.ui.test.assertEquals(hui.array.indexOf(['','b',2],2),2,'Find index of number in array');
+				hui.ui.test.assertEquals(hui.array.indexOf(['',null,0],0),2,'Find index of number in array');
+				hui.ui.test.assertEquals(hui.array.indexOf(['',null,0],null),1,'Find index of NULL in array');
+				hui.ui.test.assertEquals(hui.array.indexOf(['',' ',0],null),-1,'Not found in array');
 			},
 			function() { // JSON
 				hui.ui.test.assertEquals(hui.toJSON({}),"{}",'JSON of empty object');

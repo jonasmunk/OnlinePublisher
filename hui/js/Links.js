@@ -86,7 +86,7 @@ hui.ui.Links.prototype = {
 			text = hui.build('div',{'class':'hui_links_text',text:item.text});
 			row.appendChild(text);
 
-			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.wrap(item.info)});
+			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.string.wrap(item.info)});
 			row.appendChild(infoNode);
 			remove = hui.ui.createIcon('monochrome/delete',16);
 			hui.addClass(remove,'hui_links_remove');

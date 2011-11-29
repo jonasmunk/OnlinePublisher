@@ -71,7 +71,7 @@ hui.ui.Picker.prototype = {
 				 hui.addClass(item,'hui_picker_item_selected');
 			}
 			item.innerHTML = '<div class="hui_picker_item_middle"><div class="hui_picker_item_middle">'+
-				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.escape(object.title)+'</strong></div>'+
+				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.string.escape(object.title)+'</strong></div>'+
 				'</div></div>'+
 				'<div class="hui_picker_item_bottom"><div><div></div></div></div>';
 			hui.listen(item,'mouseup',function() {

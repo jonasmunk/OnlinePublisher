@@ -57,10 +57,10 @@ hui.ui.DropDown.prototype = {
 		if (selected) {
 			var text = selected.label || selected.title || selected.text || '';
 			this.inner.innerHTML='';
-			hui.dom.addText(this.inner,hui.wrap(text));
+			hui.dom.addText(this.inner,hui.string.wrap(text));
 		} else if (this.options.placeholder) {
 			this.inner.innerHTML='';
-			this.inner.appendChild(hui.build('em',{text:hui.escape(this.options.placeholder)}));
+			this.inner.appendChild(hui.build('em',{text:hui.string.escape(this.options.placeholder)}));
 		} else {
 			this.inner.innerHTML='';
 		}

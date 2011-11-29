@@ -69,7 +69,7 @@ hui.ui.Tabs.prototype = {
 	},
 	createTab : function(options) {
 		options = options || {};
-		var tab = hui.build('li',{html:'<a><span><span>'+hui.escape(options.title)+'</span></span></a>',parent:this.bar});
+		var tab = hui.build('li',{html:'<a><span><span>'+hui.string.escape(options.title)+'</span></span></a>',parent:this.bar});
 		this.addTabBehavior(tab,this.tabs.length);
 		this.tabs.push(tab);
 		var e = options.element = hui.build('div',{'class':'hui_tabs_tab'});

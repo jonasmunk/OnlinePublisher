@@ -21,7 +21,7 @@ hui.ui.startDrag = function(e,element,options) {
 		proxy.style.backgroundImage = 'url('+hui.ui.getIconUrl(info.icon,16)+')';
 	}
 	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
-	proxy.innerHTML = info.title ? '<span>'+hui.escape(info.title)+'</span>' : '###';
+	proxy.innerHTML = info.title ? '<span>'+hui.string.escape(info.title)+'</span>' : '###';
 	hui.ui.dragging = true;
 	document.body.onselectstart = function () { return false; };
 };

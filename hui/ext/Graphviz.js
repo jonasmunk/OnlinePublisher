@@ -266,7 +266,7 @@ hui.ui.Graphviz.prototype = {
 							var str = tokenizer.takeString();
 							if (!redraw_canvas && !str.match(/^\s*$/)) {
 //								hui.ui.Graphviz.debug('draw text ' + str + ' ' + x + ' ' + y + ' ' + text_align + ' ' + text_width);
-								str = hui.escapeHTML(str);
+								str = hui.string.escapeHTML(str);
 								do {
 									matches = str.match(/ ( +)/);
 									if (matches) {

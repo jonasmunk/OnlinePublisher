@@ -45,8 +45,8 @@ hui.ui.Upload.create = function(options) {
 		html : '<div class="hui_upload_items"></div>'+
 		'<div class="hui_upload_status"></div>'+
 		(options.placeholder ? '<div class="hui_upload_placeholder"><span class="hui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+hui.escape(options.placeholder.title)+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+hui.escape(options.placeholder.text)+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+hui.string.escape(options.placeholder.title)+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+hui.string.escape(options.placeholder.text)+'</p>' : '')+
 		'</div>' : '')
 	});
 	return new hui.ui.Upload(options);

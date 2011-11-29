@@ -101,63 +101,25 @@ hui.override = function(original,subject) {
 	return original;
 }
 
-/**
- * Inserts invisible break chars in string so it will wrap
- * @param {String} str The text to wrap
- * @returns {String} The wrapped text
- */
-hui.wrap = function(str) {
-	if (str===null || str===undefined) {
-		return '';
-	}
-	return str.split('').join("\u200B");
-}
 
-/**
- * Trim whitespace including unicode chars
- * @param {String} str The text to trim
- * @returns {String} The trimmed text
- */
-hui.trim = function(str) {
-	if (str===null || str===undefined) {return ''};
-	if (typeof(str)!='string') {str=new String(str)}
-	return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
-}
 
-/**
- * Escape the html in a string (robust)
- * @param {String} str The text to escape
- * @returns {String} The escaped text
- */
-hui.escapeHTML = function(str) {
-	if (str===null || str===undefined) {return ''};
-   	return hui.build('div',{text:str}).innerHTML;
-}
 
-/**
- * Escape the html in a string (fast)
- * @param {String} str The text to escape
- * @returns {String} The escaped text
- */
-hui.escape = function(str) {
-	if (!hui.isDefined(str)) {return ''};
-	return str.replace(/&/g,'&amp;').
-		replace(/>/g,'&gt;').
-		replace(/</g,'&lt;').
-		replace(/"/g,'&quot;')
-}
+
+
 
 /**
  * Checks if a string has non-whitespace characters
  * @param {String} str The string
  */
 hui.isBlank = function(str) {
-	if (str===null || typeof(str)==='undefined' || str==='') {return true};
-	return typeof(str)=='string' && hui.trim(str).length==0;
+	if (str===null || typeof(str)==='undefined' || str==='') {
+		return true;
+	}
+	return typeof(str)=='string' && hui.string.trim(str).length==0;
 }
 
 /**
- * Checks that an object is not null or undefined
+ * Checks that an object is not null and not undefined
  * @param {Object} obj The object to check
  */
 hui.isDefined = function(obj) {
@@ -214,18 +176,62 @@ hui.string = {
 	    }
 
 	    return camelizedString;
+	},
+	/**
+ 	 * Trim whitespace including unicode chars
+	 * @param {String} str The text to trim
+	 * @returns {String} The trimmed text
+	 */
+	trim : function(str) {
+		if (str===null || str===undefined) {
+			return ''
+		}
+		if (typeof(str)!='string') {
+			str=new String(str)
+		}
+		return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
+	},
+	/**
+	 * Inserts invisible break chars in string so it will wrap
+	 * @param {String} str The text to wrap
+	 * @returns {String} The wrapped text
+	 */
+	wrap : function(str) {
+		if (str===null || str===undefined) {
+			return '';
+		}
+		return str.split('').join("\u200B");
+	},
+	/**
+	 * Escape the html in a string (robust)
+	 * @param {String} str The text to escape
+	 * @returns {String} The escaped text
+	 */
+	escapeHTML : function(str) {
+		if (str===null || str===undefined) {return ''};
+	   	return hui.build('div',{text:str}).innerHTML;
+	},
+	/**
+	 * Escape the html in a string (fast)
+	 * @param {String} str The text to escape
+	 * @returns {String} The escaped text
+	 */
+	escape : function(str) {
+		if (!hui.isDefined(str)) {return ''};
+		return str.replace(/&/g,'&amp;').
+			replace(/>/g,'&gt;').
+			replace(/</g,'&lt;').
+			replace(/"/g,'&quot;')
 	}
 }
 
-hui.indexInArray = function(arr,value) {
-	for (var i=0; i < arr.length; i++) {
-		if (arr[i]===value) {
-			return i;
-		}
-	};
-	return -1;
-}
-
+/**
+ * Loop through items in array or properties in an object.
+ * If «items» is an array «func» is called with each item.
+ * If «items» is an object «func» is called with each (key,value)
+ * @param {Object | Array} items The object or array to loop through
+ * @param {Function} func The callback to handle each item
+ */
 hui.each = function(items,func) {
 	if (hui.isArray(items)) {		
 		for (var i=0; i < items.length; i++) {
@@ -298,6 +304,12 @@ hui.array = {
 		};
 		return false;
 	},
+	/**
+	 * Add or remove a value from an array.
+	 * If the value exists all instances are removed, otherwise the value is added
+	 * @param {Array} arr The array to change
+	 * @param {Object} value The value to flip
+	 */
 	flip : function(arr,value) {
 		if (hui.array.contains(arr,value)) {
 			hui.array.remove(arr,value);
@@ -305,12 +317,31 @@ hui.array = {
 			arr.push(value);
 		}
 	},
+	/**
+	 * Remove all instances of a value from an array
+	 * @param {Array} arr The array to change
+	 * @param {Object} value The value to remove
+	 */
 	remove : function(arr,value) {
 		for (var i = arr.length - 1; i >= 0; i--){
 			if (arr[i]==value) {
 				arr.splice(i,1);
 			}
 		};
+	},
+	/**
+	 * Find the first index of a value in an array, -1 if not found
+	 * @param {Array} arr The array to inspect
+	 * @param {Object} value The value to find
+	 * @returns {Number} The index of the first occurrence, -1 if not found.
+	 */
+	indexOf : function(arr,value) {
+		for (var i=0; i < arr.length; i++) {
+			if (arr[i]===value) {
+				return i;
+			}
+		};
+		return -1;
 	}
 }
 
@@ -3231,7 +3262,7 @@ hui.ui.getTextAreaHeight = function(input) {
 	if (html[html.length-1]==='\n') {
 		html+='x';
 	}
-	html = hui.escape(html).replace(/\n/g,'<br/>');
+	html = hui.string.escape(html).replace(/\n/g,'<br/>');
 	t.innerHTML = html;
 	t.style.width=(input.clientWidth)+'px';
 	return t.clientHeight;
@@ -3996,7 +4027,7 @@ hui.ui.Box.create = function(options) {
 		html : (options.closable ? '<a class="hui_box_close" href="#"></a>' : '')+
 			'<div class="hui_box_top"><div><div></div></div></div>'+
 			'<div class="hui_box_middle"><div class="hui_box_middle">'+
-			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.escape(options.title)+'</strong></div>' : '')+
+			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(options.title)+'</strong></div>' : '')+
 			'<div class="hui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+

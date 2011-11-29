@@ -30,7 +30,7 @@ hui.ui.TokenField.prototype = {
 	getValue : function() {
 		var out = [];
 		hui.each(this.value,function(value) {
-			value = hui.trim(value);
+			value = hui.string.trim(value);
 			if (value.length>0) {
 				out.push(value);
 			}

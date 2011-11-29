@@ -125,7 +125,7 @@ hui.ui.Checkboxes.prototype = {
 	},
 	$itemsLoaded : function(items) {
 		hui.each(items,function(item) {
-			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.escape(item.title)});
+			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.string.escape(item.title)});
 			hui.listen(node,'click',function(e) {
 				hui.stop(e);
 				this.flipValue(item.value);
@@ -189,7 +189,7 @@ hui.ui.Checkboxes.Items.prototype = {
 		try {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
-			var index = hui.indexInArray(this.parent.values,item.value);
+			var index = hui.array.indexOf(this.parent.values,item.value);
 			hui.setClass(item.element,'hui_checkbox_selected',index!=-1);
 		};
 		} catch (e) {

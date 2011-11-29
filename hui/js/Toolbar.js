@@ -188,7 +188,7 @@ hui.ui.Toolbar.SearchField.create = function(options) {
 	options.element = hui.build('div',{
 		'class' : options.adaptive ? 'hui_toolbar_search hui_toolbar_search_adaptive' : 'hui_toolbar_search',
 		html : '<div class="hui_searchfield"><strong class="hui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
-		'<span>'+hui.escape(options.title)+'</span>'
+		'<span>'+hui.string.escape(options.title)+'</span>'
 	});
 	return new hui.ui.Toolbar.SearchField(options);
 }

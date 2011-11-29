@@ -620,7 +620,7 @@ hui.ui.getTextAreaHeight = function(input) {
 	if (html[html.length-1]==='\n') {
 		html+='x';
 	}
-	html = hui.escape(html).replace(/\n/g,'<br/>');
+	html = hui.string.escape(html).replace(/\n/g,'<br/>');
 	t.innerHTML = html;
 	t.style.width=(input.clientWidth)+'px';
 	return t.clientHeight;
