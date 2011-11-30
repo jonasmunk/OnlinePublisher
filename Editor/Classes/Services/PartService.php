@@ -18,6 +18,15 @@ class PartService {
 	
 	function load($type,$id) {
 		global $basePath;
+		if (!$type) {
+			Log::debug('Unable to load part with no type');
+			return null;
+		}
+		if (!$id) {
+			Log::debug('Unable to load part with no ID');
+			return null;
+		}
+		
 		$class = ucfirst($type).'Part';
 		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
 		if (!file_exists($path)) {
@@ -55,9 +64,14 @@ union select text,document_section.part_id from part_listing,document_section wh
 	
 	function getController($type) {
 		global $basePath;
+		if (!$type) {
+			Log::debug('Unable to get controller for no type');
+			return null;
+		}
 		$class = ucfirst($type).'PartController';
 		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
 		if (!file_exists($path)) {
+			Log::debug('Unable to find controller for: '.$type);
 			return null;
 		}
 		require_once $path;

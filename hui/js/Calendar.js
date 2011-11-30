@@ -5,8 +5,8 @@ hui.ui.Calendar = function(o) {
 	this.name = o.name;
 	this.options = hui.override({startHour:7,endHour:24},o);
 	this.element = hui.get(o.element);
-	this.head = hui.firstByTag(this.element,'thead');
-	this.body = hui.firstByTag(this.element,'tbody');
+	this.head = hui.get.firstByTag(this.element,'thead');
+	this.body = hui.get.firstByTag(this.element,'tbody');
 	this.date = new Date();
 	hui.ui.extend(this);
 	this.buildUI();
@@ -46,7 +46,7 @@ hui.ui.Calendar.prototype = {
 	},
 	clearEvents : function() {
 		this.events = [];
-		var nodes = hui.byClass(this.element,'hui_calendar_event');
+		var nodes = hui.get.byClass(this.element,'hui_calendar_event');
 		for (var i=0; i < nodes.length; i++) {
 			hui.dom.remove(nodes[i]);
 		};
@@ -87,7 +87,7 @@ hui.ui.Calendar.prototype = {
 		var week = this.getFirstDay().getWeekOfYear();
 		var year = this.getFirstDay().getYear();
 		hui.each(this.events,function(event) {
-			var day = hui.byClass(self.body,'hui_calendar_day')[event.startTime.getDay()-1];
+			var day = hui.get.byClass(self.body,'hui_calendar_day')[event.startTime.getDay()-1];
 			if (!day) {
 				return;
 			}
@@ -98,7 +98,7 @@ hui.ui.Calendar.prototype = {
 			var top = ((event.startTime.getHours()*60+event.startTime.getMinutes())/60-self.options.startHour)*40-1;
 			var height = (event.endTime.getTime()-event.startTime.getTime())/1000/60/60*40+1;
 			height = Math.min(pixels-top,height);
-			hui.setStyle(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
+			hui.style.set(node,{'marginTop':top+'px','height':height+'px',visibility:'hidden'});
 			var content = hui.build('div',{parent:node});
 			hui.build('p',{'class':'hui_calendar_event_time',text:event.startTime.dateFormat('H:i'),parent:content});
 			hui.build('p',{'class':'hui_calendar_event_text',text:event.text,parent:content});
@@ -120,12 +120,12 @@ hui.ui.Calendar.prototype = {
 	},
 	/** @private */
 	setBusy : function(busy) {
-		hui.setClass(this.element,'hui_calendar_busy',busy);
+		hui.cls.set(this.element,'hui_calendar_busy',busy);
 	},
 	/** @private */
 	updateUI : function() {
 		var first = this.getFirstDay();		
-		var days = hui.byClass(this.head,'day');
+		var days = hui.get.byClass(this.head,'day');
 		for (var i=0; i < days.length; i++) {
 			var date = new Date(first.getTime());
 			date.setDate(date.getDate()+i);
@@ -134,7 +134,7 @@ hui.ui.Calendar.prototype = {
 	},
 	/** @private */
 	buildUI : function() {
-		var bar = hui.firstByClass(this.element,'hui_calendar_bar');
+		var bar = hui.get.firstByClass(this.element,'hui_calendar_bar');
 		this.toolbar = hui.ui.Toolbar.create({labels:false});
 		bar.appendChild(this.toolbar.getElement());
 		var previous = hui.ui.Button.create({name:'huiCalendarPrevious',text:'',icon:'monochrome/previous'});
@@ -150,14 +150,14 @@ hui.ui.Calendar.prototype = {
 		this.datePickerButton.listen(this);
 		this.toolbar.add(this.datePickerButton);
 		
-		var time = hui.firstByClass(this.body,'hui_calendar_day');
+		var time = hui.get.firstByClass(this.body,'hui_calendar_day');
 		for (var i=this.options.startHour; i <= this.options.endHour; i++) {
 			var node = hui.build('div',{'class':'hui_calendar_time',html:'<span><em>'+i+':00</em></span>'});
 			if (i==this.options.startHour) {
-				hui.addClass(node,'hui_calendar_time_first');
+				hui.cls.add(node,'hui_calendar_time_first');
 			}
 			if (i==this.options.endHour) {
-				hui.addClass(node,'hui_calendar_time_last');
+				hui.cls.add(node,'hui_calendar_time_last');
 			}
 			time.appendChild(node);
 		};

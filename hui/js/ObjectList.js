@@ -5,7 +5,7 @@ hui.ui.ObjectList = function(o) {
 	this.options = hui.override({key:null},o);
 	this.name = o.name;
 	this.element = hui.get(o.element);
-	this.body = hui.firstByTag(this.element,'tbody');
+	this.body = hui.get.firstByTag(this.element,'tbody');
 	this.template = [];
 	this.objects = [];
 	hui.ui.extend(this);

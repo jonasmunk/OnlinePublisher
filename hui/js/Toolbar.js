@@ -82,9 +82,9 @@ hui.ui.Toolbar.Icon = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.key = options.key;
-	this.enabled = !hui.hasClass(this.element,'hui_toolbar_icon_disabled');
+	this.enabled = !hui.cls.has(this.element,'hui_toolbar_icon_disabled');
 	this.element.tabIndex=this.enabled ? 0 : -1;
-	this.icon = hui.firstByClass(this.element,'hui_icon');
+	this.icon = hui.get.firstByClass(this.element,'hui_icon');
 	if (!hui.browser.msie) {
 		this.element.removeAttribute('href');
 	}
@@ -118,7 +118,7 @@ hui.ui.Toolbar.Icon.prototype = {
 	setEnabled : function(enabled) {
 		this.enabled = enabled;
 		this.element.tabIndex=enabled ? 0 : -1;
-		hui.setClass(this.element,'hui_toolbar_icon_disabled',!this.enabled);
+		hui.cls.set(this.element,'hui_toolbar_icon_disabled',!this.enabled);
 	},
 	/** Disables the icon */
 	disable : function() {
@@ -129,13 +129,13 @@ hui.ui.Toolbar.Icon.prototype = {
 		this.setEnabled(true);
 	},
 	setOverlay : function(overlay) {
-		var node = hui.firstByClass(this.element,'hui_icon_overlay');
+		var node = hui.get.firstByClass(this.element,'hui_icon_overlay');
 		if (node && !overlay) {
 			node.style.backgroundImage = '';
 		} else if (node && overlay) {
 			node.style.backgroundImage = "url('"+hui.ui.getIconUrl('overlay/'+overlay,32)+"')";
 		} else if (overlay) {
-			var parent = hui.firstByClass(this.element,'hui_icon');
+			var parent = hui.get.firstByClass(this.element,'hui_icon');
 			hui.build('span',{'class':'hui_icon_overlay',parent:parent,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+overlay,32)+')'});
 		}
 	},
@@ -144,7 +144,7 @@ hui.ui.Toolbar.Icon.prototype = {
 		if (selected) {
 			this.element.blur();
 		}
-		hui.setClass(this.element,'hui_toolbar_icon_selected',selected);
+		hui.cls.set(this.element,'hui_toolbar_icon_selected',selected);
 	},
 	/** @private */
 	wasClicked : function() {
@@ -177,7 +177,7 @@ hui.ui.Toolbar.SearchField = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.field = hui.firstByTag(this.element,'input');
+	this.field = hui.get.firstByTag(this.element,'input');
 	this.value = this.field.value;
 	hui.ui.extend(this);
 	this.addBehavior();
@@ -227,8 +227,8 @@ hui.ui.Toolbar.SearchField.prototype = {
 hui.ui.Toolbar.Badge = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.label = hui.firstByTag(this.element,'strong');
-	this.text = hui.firstByTag(this.element,'span');
+	this.label = hui.get.firstByTag(this.element,'strong');
+	this.text = hui.get.firstByTag(this.element,'span');
 	hui.ui.extend(this);
 }
 

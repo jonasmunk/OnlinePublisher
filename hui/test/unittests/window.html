@@ -37,7 +37,7 @@
 				win.listen({$userClosedWindow:function() {
 					closeEventFired=true;
 				}});
-				var close = hui.firstByClass(win.getElement(),'hui_window_close');
+				var close = hui.get.firstByClass(win.getElement(),'hui_window_close');
 				hui.ui.test.click(close,function() {
 					hui.ui.test.assertTrue(closeEventFired,'userClosedWindow was fired');
 					win.show();

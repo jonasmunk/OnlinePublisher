@@ -9,9 +9,9 @@ hui.ui.TextField = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	hui.ui.extend(this);
-	this.input = hui.firstByClass(this.element,'hui_formula_text');
+	this.input = hui.get.firstByClass(this.element,'hui_formula_text');
 	this.multiline = this.input.tagName.toLowerCase() == 'textarea';
-	this.placeholder = hui.firstByClass(this.element,'hui_field_placeholder');
+	this.placeholder = hui.get.firstByClass(this.element,'hui_field_placeholder');
 	this.value = this.input.value;
 	if (this.placeholder) {
 		var self = this;
@@ -70,7 +70,7 @@ hui.ui.TextField.prototype = {
 		}
 	},
 	updateClass : function() {
-		hui.setClass(this.element,'hui_field_dirty',this.value.length>0);
+		hui.cls.set(this.element,'hui_field_dirty',this.value.length>0);
 	},
 	/** @private */
 	onKeyUp : function(e) {
@@ -133,7 +133,7 @@ hui.ui.TextField.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		hui.setClass(this.element,'hui_field_error',isError);
+		hui.cls.set(this.element,'hui_field_error',isError);
 		if (typeof(error) == 'string') {
 			hui.ui.showToolTip({text:error,element:this.element,key:this.name});
 		}

@@ -22,9 +22,9 @@ hui.ui.Upload = function(options) {
 		chooseButton : 'Choose files...'
 	},options);
 	this.element = hui.get(options.element);
-	this.itemContainer = hui.firstByClass(this.element,'hui_upload_items');
-	this.status = hui.firstByClass(this.element,'hui_upload_status');
-	this.placeholder = hui.firstByClass(this.element,'hui_upload_placeholder');
+	this.itemContainer = hui.get.firstByClass(this.element,'hui_upload_items');
+	this.status = hui.get.firstByClass(this.element,'hui_upload_status');
+	this.placeholder = hui.get.firstByClass(this.element,'hui_upload_placeholder');
 	this.name = options.name;
 	this.items = [];
 	this.busy = false;
@@ -212,7 +212,7 @@ hui.ui.Upload.prototype = {
 	},
 	/** @private */
 	$_itemSuccess : function(item) {
-		var first = hui.firstByClass(this.itemContainer,'hui_upload_item_success');
+		var first = hui.get.firstByClass(this.itemContainer,'hui_upload_item_success');
 		item.setProgress(1);
 		item.setSuccess();
 		this.fire('uploadDidComplete',item.getInfo());
@@ -302,7 +302,7 @@ hui.ui.Upload.prototype = {
 		var rearrange = index>4;
 		var item = new hui.ui.Upload.Item(file,rearrange);
 		this.items[index] = item;
-		var first = hui.firstByClass(this.itemContainer,'hui_upload_item_success');
+		var first = hui.get.firstByClass(this.itemContainer,'hui_upload_item_success');
 		if (first) {
 			this.itemContainer.insertBefore(item.element,first);
 		} else {
@@ -352,7 +352,7 @@ hui.ui.Upload.Item.prototype = {
 	},
 	setError : function(error) {
 		this._setStatus(error || 'Fejl');
-		hui.addClass(this.element,'hui_upload_item_error');
+		hui.cls.add(this.element,'hui_upload_item_error');
 		this.progress.hide();
 		this.progress.setValue(0);
 		this.finished = true;
@@ -361,7 +361,7 @@ hui.ui.Upload.Item.prototype = {
 		this._setStatus('Færdig');
 		this.progress.setValue(1);
 		this.finished = true;
-		hui.addClass(this.element,'hui_upload_item_success');
+		hui.cls.add(this.element,'hui_upload_item_success');
 	},
 	updateProgress : function(complete,total) {
 		this.setProgress(complete/total);
@@ -525,7 +525,7 @@ hui.ui.Upload.Frame.prototype = {
 		this.form.reset();
 	},
 	_isSuccessResponse : function() {
-		var doc = hui.getFrameDocument(this.iframe);
+		var doc = hui.frame.getDocument(this.iframe);
 		return doc.body.innerHTML.indexOf('SUCCESS')!==-1;
 	}
 }

@@ -19,8 +19,8 @@ var templateController = {
 		this._load();
 	},
 	_load : function() {
-		var base = hui.firstByClass(document.body,'authentication');
-		var h1 = hui.firstByTag(base,'h1');
+		var base = hui.get.firstByClass(document.body,'authentication');
+		var h1 = hui.get.firstByTag(base,'h1');
 		var title = hui.dom.getText(h1);
 		this.form.setValues({
 			title:title
@@ -34,8 +34,8 @@ var templateController = {
 			url : '../../../Template/authentication/Save.php',
 			parameters : values,
 			onSuccess : function() {
-				var base = hui.firstByClass(document.body,'authentication');
-				var h1 = hui.firstByTag(base,'h1');
+				var base = hui.get.firstByClass(document.body,'authentication');
+				var h1 = hui.get.firstByTag(base,'h1');
 				if (h1) {
 					hui.dom.setText(h1,values.title);
 				}

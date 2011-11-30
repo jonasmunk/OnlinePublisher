@@ -63,12 +63,12 @@ op.part.utils = {
 		hui.place({source:{element:this.spinner,vertical:.5,horizontal:.5},target:{element:node,vertical:.5,horizontal:.5},left:1,top:1})
 		window.clearTimeout(this.spinnerTimer);
 		this.spinnerTimer = window.setTimeout(function() {
-			hui.setOpacity(node,.5);
+			hui.style.setOpacity(node,.5);
 			this.spinner.style.display='';
 		}.bind(this),300);
 	},
 	hideSpinner : function(node) {
-		hui.setOpacity(node,1);
+		hui.style.setOpacity(node,1);
 		window.clearTimeout(this.spinnerTimer);
 		this.spinner.style.display='none';
 	}

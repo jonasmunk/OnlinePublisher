@@ -225,7 +225,7 @@ op.part.ImageGallery.changing = {
 				index = 0;
 			}
 			if (!first) {
-			hui.setOpacity(nodes[index],0)
+			hui.style.setOpacity(nodes[index],0)
 			nodes[index].style.zIndex=zIndex;
 			nodes[index].style.display='block';
 			hui.animate(nodes[index],'opacity',1,1000,{ease:hui.ease.slowFastSlow});
@@ -275,7 +275,7 @@ op.part.Formula.prototype = {
 
 op.part.Poster = function(options) {
 	this.element = hui.get(options.element);
-	this.pages = hui.byClass(this.element,'part_poster_page');
+	this.pages = hui.get.byClass(this.element,'part_poster_page');
 	this.index = 0;
 	this.delay = 5000;
 	this.callNext();
@@ -304,14 +304,14 @@ op.SearchField = function(o) {
 	this.field.onfocus = function() {
 		if (this.field.value==o.placeholder) {
 			this.field.value = '';
-			hui.addClass(this.field,o.placeholderClass);
+			hui.cls.add(this.field,o.placeholderClass);
 		} else {
 			this.field.select();
 		}
 	}.bind(this);
 	this.field.onblur = function() {
 		if (this.field.value=='') {
-			hui.addClass(this.field,o.placeholderClass);
+			hui.cls.add(this.field,o.placeholderClass);
 			this.field.value=o.placeholder;
 		}
 	}.bind(this);
@@ -335,8 +335,8 @@ op.Dissolver.prototype = {
 			this.pos=0;
 		}
 		var e = elm[this.pos];
-		hui.setOpacity(e,0);
-		hui.setStyle(e,{display:'block',zIndex:this.z});
+		hui.style.setOpacity(e,0);
+		hui.style.set(e,{display:'block',zIndex:this.z});
 		hui.animate(e,'opacity',1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function() {
 			window.setTimeout(this.next.bind(this),this.options.wait);
 		}.bind(this)});

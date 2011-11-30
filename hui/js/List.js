@@ -33,16 +33,16 @@ hui.ui.List = function(options) {
 		this.options.source.listen(this);
 	}
 	this.url = options.url;
-	this.table = hui.firstByTag(this.element,'table');
-	this.head = hui.firstByTag(this.element,'thead');
-	this.body = hui.firstByTag(this.element,'tbody');
+	this.table = hui.get.firstByTag(this.element,'table');
+	this.head = hui.get.firstByTag(this.element,'thead');
+	this.body = hui.get.firstByTag(this.element,'tbody');
 	this.columns = [];
 	this.rows = [];
 	this.selected = [];
-	this.navigation = hui.firstByClass(this.element,'hui_list_navigation');
-	this.count = hui.firstByClass(this.navigation,'hui_list_count');
-	this.windowPage = hui.firstByClass(this.navigation,'window_page');
-	this.windowPageBody = hui.firstByClass(this.navigation,'window_page_body');
+	this.navigation = hui.get.firstByClass(this.element,'hui_list_navigation');
+	this.count = hui.get.firstByClass(this.navigation,'hui_list_count');
+	this.windowPage = hui.get.firstByClass(this.navigation,'window_page');
+	this.windowPageBody = hui.get.firstByClass(this.navigation,'window_page_body');
 	this.parameters = {};
 	this.sortKey = null;
 	this.sortDirection = null;
@@ -364,7 +364,7 @@ hui.ui.List.prototype = {
 		this._setError(true);
 	},
 	_setError : function(error) {
-		hui.setClass(this.element,'hui_list_error',error);
+		hui.cls.set(this.element,'hui_list_error',error);
 	},
 	_setBusy : function(busy) {
 		this.busy = busy;
@@ -372,15 +372,15 @@ hui.ui.List.prototype = {
 		if (busy) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				hui.addClass(e,'hui_list_busy');
+				hui.cls.add(e,'hui_list_busy');
 				if (e.parentNode.className=='hui_overflow') {
-					hui.addClass(e,'hui_list_busy_large');
+					hui.cls.add(e,'hui_list_busy_large');
 				}
 			},300);
 		} else {
-			hui.removeClass(this.element,'hui_list_busy');
+			hui.cls.remove(this.element,'hui_list_busy');
 			if (this.element.parentNode.className=='hui_overflow') {
-				hui.removeClass(this.element,'hui_list_busy_large');
+				hui.cls.remove(this.element,'hui_list_busy_large');
 			}
 		}
 	},
@@ -422,26 +422,26 @@ hui.ui.List.prototype = {
 					icon.setAttribute('title',child.getAttribute('hint'));
 				}
 				if (child.getAttribute('action')=='true') {
-					hui.addClass(icon,'hui_list_icon_action');
+					hui.cls.add(icon,'hui_list_icon_action');
 				}
 				var data = child.getAttribute('data');
 				if (data) {
 					icon.setAttribute('data',data);
 				}
 				if (child.getAttribute('revealing')==='true') {
-					hui.addClass(icon,'hui_list_revealing');
+					hui.cls.add(icon,'hui_list_revealing');
 				}
 				cell.appendChild(icon);
 			} else if (hui.dom.isElement(child,'line')) {
 				var line = hui.build('p',{'class':'hui_list_line'});
 				if (child.getAttribute('dimmed')=='true') {
-					hui.addClass(line,'hui_list_dimmed')
+					hui.cls.add(line,'hui_list_dimmed')
 				}
 				if (child.getAttribute('minor')=='true') {
-					hui.addClass(line,'hui_list_minor')
+					hui.cls.add(line,'hui_list_minor')
 				}
 				if (child.getAttribute('mini')=='true') {
-					hui.addClass(line,'hui_list_mini')
+					hui.cls.add(line,'hui_list_mini')
 				}
 				cell.appendChild(line);
 				this.parseCell(child,line);
@@ -481,7 +481,7 @@ hui.ui.List.prototype = {
 		return null;
 	},
 	_buttonClick : function(button) {
-		var row = hui.firstParentByTag(button.getElement(),'tr');
+		var row = hui.get.firstParentByTag(button.getElement(),'tr');
 		var obj = this.rows[parseInt(row.getAttribute('data-index'),10)];
 		this.fire('clickButton',{row:obj,button:button});
 	},
@@ -577,7 +577,7 @@ hui.ui.List.prototype = {
 			}
 			if (h.sortable) {
 				hui.listen(th,'click',function() {this.sort(i)}.bind(this));
-				hui.addClass(th,'sortable');
+				hui.cls.add(th,'sortable');
 			}
 			th.appendChild(hui.build('span',{text:h.title}));
 			tr.appendChild(th);
@@ -697,10 +697,10 @@ hui.ui.List.prototype = {
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {
-			hui.removeClass(rows[this.selected[i]],'hui_list_selected');
+			hui.cls.remove(rows[this.selected[i]],'hui_list_selected');
 		}
 		for (i=0;i<indexes.length;i++) {
-			hui.addClass(rows[indexes[i]],'hui_list_selected');
+			hui.cls.add(rows[indexes[i]],'hui_list_selected');
 		}
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);

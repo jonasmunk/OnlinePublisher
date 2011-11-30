@@ -33,7 +33,7 @@
 	var panel = hui.ui.BoundPanel.create({variant:'light'});
 	panel.add(hui.build('div',{style:'height:200px; width: 400px;'}))
 	hui.onReady(function() {
-		var as = hui.byTag(document.body,'a');
+		var as = hui.get.byTag(document.body,'a');
 		hui.each(as,function(a) {
 			a.setAttribute('href','javascript://');
 			hui.listen(a,'click',function() {

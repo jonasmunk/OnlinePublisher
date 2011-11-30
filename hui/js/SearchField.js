@@ -3,11 +3,11 @@ hui.ui.SearchField = function(options) {
 	this.options = hui.override({expandedWidth:null},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.field = hui.firstByTag(this.element,'input');
+	this.field = hui.get.firstByTag(this.element,'input');
 	this.value = this.field.value;
-	this.adaptive = hui.hasClass(this.element,'hui_searchfield_adaptive');
+	this.adaptive = hui.cls.has(this.element,'hui_searchfield_adaptive');
 	hui.ui.onReady(function() {
-		this.initialWidth = parseInt(hui.getStyle(this.element,'width'))
+		this.initialWidth = parseInt(hui.style.get(this.element,'width'))
 	}.bind(this));
 	hui.ui.extend(this);
 	this.addBehavior();
@@ -29,16 +29,16 @@ hui.ui.SearchField.prototype = {
 	addBehavior : function() {
 		var self = this;
 		hui.listen(this.field,'keyup',this.onKeyUp.bind(this));
-		var reset = hui.firstByTag(this.element,'a');
+		var reset = hui.get.firstByTag(this.element,'a');
 		reset.tabIndex=-1;
 		if (!hui.browser.ipad) {
 			var focus = function() {self.field.focus();self.field.select()};
 			hui.listen(this.element,'mousedown',focus);
 			hui.listen(this.element,'mouseup',focus);
-			hui.listen(hui.firstByTag(this.element,'em'),'mousedown',focus);
+			hui.listen(hui.get.firstByTag(this.element,'em'),'mousedown',focus);
 		} else {
 			var focus = function() {self.field.focus();};
-			hui.listen(hui.firstByTag(this.element,'em'),'click',focus);
+			hui.listen(hui.get.firstByTag(this.element,'em'),'click',focus);
 		}
 		hui.listen(reset,'mousedown',function(e) {
 			hui.stop(e);

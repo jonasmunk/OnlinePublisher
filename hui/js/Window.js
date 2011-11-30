@@ -4,12 +4,12 @@
 hui.ui.Window = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.close = hui.firstByClass(this.element,'hui_window_close');
-	this.titlebar = hui.firstByClass(this.element,'hui_window_titlebar');
-	this.title = hui.firstByClass(this.titlebar,'hui_window_title');
-	this.content = hui.firstByClass(this.element,'hui_window_body');
-	this.front = hui.firstByClass(this.element,'hui_window_front');
-	this.back = hui.firstByClass(this.element,'hui_window_back');
+	this.close = hui.get.firstByClass(this.element,'hui_window_close');
+	this.titlebar = hui.get.firstByClass(this.element,'hui_window_titlebar');
+	this.title = hui.get.firstByClass(this.titlebar,'hui_window_title');
+	this.content = hui.get.firstByClass(this.element,'hui_window_body');
+	this.front = hui.get.firstByClass(this.element,'hui_window_front');
+	this.back = hui.get.firstByClass(this.element,'hui_window_back');
 	if (this.back) {
 		hui.effect.makeFlippable({container:this.element,front:this.front,back:this.back});
 	}
@@ -58,30 +58,30 @@ hui.ui.Window.prototype = {
 	},
 	show : function(options) {
 		if (this.visible) {
-			var scrollTop = hui.getScrollTop();
+			var scrollTop = hui.window.getScrollTop();
 			var winTop = hui.getTop(this.element);
-			if (winTop < scrollTop || winTop+this.element.clientHeight > hui.getViewPortHeight()+scrollTop) {
+			if (winTop < scrollTop || winTop+this.element.clientHeight > hui.window.getViewHeight()+scrollTop) {
 				hui.animate({node:this.element,css:{top:(scrollTop+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
 			}
 			this.element.style.zIndex=hui.ui.nextPanelIndex();
 			return;
 		}
 		options = options || {};
-		hui.setStyle(this.element,{
+		hui.style.set(this.element,{
 			zIndex : hui.ui.nextPanelIndex(), visibility : 'hidden', display : 'block'
 		})
 		var width = this.element.clientWidth;
-		hui.setStyle(this.element,{
+		hui.style.set(this.element,{
 			width : width+'px' , visibility : 'visible'
 		});
 		if (options.avoid) {
 			hui.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
 		} else {
 			if (!this.element.style.top) {
-				this.element.style.top = (hui.getScrollTop()+40)+'px';
+				this.element.style.top = (hui.window.getScrollTop()+40)+'px';
 			}
 			if (!this.element.style.left) {
-				this.element.style.left = Math.round((hui.getViewPortWidth()-width)/2)+'px';
+				this.element.style.left = Math.round((hui.window.getViewWidth()-width)/2)+'px';
 			}			
 		}
 		if (hui.browser.opacity) {
@@ -122,10 +122,10 @@ hui.ui.Window.prototype = {
 		this.back.appendChild(hui.ui.getElement(widgetOrNode));
 	},
 	setVariant : function(variant) {
-		hui.removeClass(this.element,'hui_window_dark');
-		hui.removeClass(this.element,'hui_window_light');
+		hui.cls.remove(this.element,'hui_window_dark');
+		hui.cls.remove(this.element,'hui_window_light');
 		if (variant=='dark' || variant=='light') {
-			hui.addClass(this.element,'hui_window_'+variant);
+			hui.cls.add(this.element,'hui_window_'+variant);
 		}
 	},
 	flip : function() {

@@ -45,18 +45,21 @@ class Part
 			"now(),now()".
 			")";
 			$this->id = Database::insert($sql);
-			$sql = "insert into part_".$this->type." (part_id";
+			
 			$columns = SchemaService::buildSqlColumns($schema);
+			$values = SchemaService::buildSqlValues($this,$schema);
+
+			$sql = "insert into part_".$this->type." (part_id";
 			if (strlen($columns)>0) {
 				$sql.=",".$columns;
 			}
 			$sql.=") values (".$this->id;
-			$values = SchemaService::buildSqlValues($this,$schema);
 			if (strlen($values)>0) {
 				$sql.=",".$values;
 			}
 			$sql.=")";
 			Database::insert($sql);
+			
 			if (isset($schema['relations']) && is_array($schema['relations'])) {
 				foreach ($schema['relations'] as $field => $info) {
 					$getter = 'get'.ucfirst($field);
@@ -76,13 +79,14 @@ class Part
 		$sql = "update part set updated=now(),dynamic=".Database::boolean($this->isDynamic())." where id=".$this->id;
 		Database::update($sql);
 		
-		$sql = "update part_".$this->type." set ";
 		
 		$schema = Part::$schema[$this->type];
-		$sql.=SchemaService::buildSqlSetters($this,$schema);
+		$setters = SchemaService::buildSqlSetters($this,$schema);
 		
-		$sql.=" where part_id=".$this->id;
-		Database::update($sql);
+		if (StringUtils::isNotBlank($setters)) {
+			$sql = "update part_".$this->type." set ".$setters." where part_id=".$this->id;
+			Database::update($sql);
+		}
 		
 		// Update relations
 		if (isset($schema['relations']) && is_array($schema['relations'])) {

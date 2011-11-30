@@ -3,7 +3,7 @@ hui.ui.Gallery = function(options) {
 	this.options = options || {};
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.body = hui.firstByClass(this.element,'hui_gallery_body');
+	this.body = hui.get.firstByClass(this.element,'hui_gallery_body');
 	this.objects = [];
 	this.nodes = [];
 	this.selected = [];
@@ -17,7 +17,7 @@ hui.ui.Gallery = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	if (this.element.parentNode && hui.hasClass(this.element.parentNode,'hui_overflow')) {
+	if (this.element.parentNode && hui.cls.has(this.element.parentNode,'hui_overflow')) {
 		this.revealing = true;
 		hui.listen(this.element.parentNode,'scroll',this._reveal.bind(this));
 	}
@@ -143,7 +143,7 @@ hui.ui.Gallery.prototype = {
 	updateUI : function() {
 		var s = this.selected;
 		for (var i=0; i < this.nodes.length; i++) {
-			hui.setClass(this.nodes[i],'hui_gallery_item_selected',hui.array.contains(s,i));
+			hui.cls.set(this.nodes[i],'hui_gallery_item_selected',hui.array.contains(s,i));
 		};
 	},
 	/** @private */
@@ -211,10 +211,10 @@ hui.ui.Gallery.prototype = {
 		if (busy) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				hui.addClass(e,'hui_gallery_busy');
+				hui.cls.add(e,'hui_gallery_busy');
 			},300);
 		} else {
-			hui.removeClass(this.element,'hui_gallery_busy');
+			hui.cls.remove(this.element,'hui_gallery_busy');
 		}
 	}
 }

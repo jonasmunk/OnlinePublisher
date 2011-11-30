@@ -32,12 +32,12 @@
 		var info = hui.get('info');
 		var update = function() {
 			var html = '';
-			html+='<p>documentWidth: '+hui.getDocumentWidth()+'</p>';
-			html+='<p>documentHeight: '+hui.getDocumentHeight()+'</p>';
-			html+='<p>viewPortWidth: '+hui.getViewPortWidth()+'</p>';
-			html+='<p>viewPortHeight: '+hui.getViewPortHeight()+'</p>';
-			html+='<p>scrollTop: '+hui.getScrollTop()+'</p>';
-			html+='<p>scrollLeft: '+hui.getScrollLeft()+'</p>';
+			html+='<p>documentWidth: '+hui.document.getWidth()+'</p>';
+			html+='<p>documentHeight: '+hui.document.getHeight()+'</p>';
+			html+='<p>viewPortWidth: '+hui.window.getViewWidth()+'</p>';
+			html+='<p>viewPortHeight: '+hui.window.getViewHeight()+'</p>';
+			html+='<p>scrollTop: '+hui.window.getScrollTop()+'</p>';
+			html+='<p>scrollLeft: '+hui.window.getScrollLeft()+'</p>';
 			info.innerHTML = html;
 		}
 		hui.listen(window,'resize',update);

@@ -4,7 +4,7 @@
  */
 hui.ui.Checkbox = function(o) {
 	this.element = hui.get(o.element);
-	this.control = hui.firstByTag(this.element,'span');
+	this.control = hui.get.firstByTag(this.element,'span');
 	this.options = o;
 	this.name = o.name;
 	this.value = o.value==='true' || o.value===true;
@@ -18,7 +18,7 @@ hui.ui.Checkbox = function(o) {
 hui.ui.Checkbox.create = function(o) {
 	var e = o.element = hui.build('a',{'class':'hui_checkbox',href:'javascript://',html:'<span><span></span></span>'});
 	if (o.value) {
-		hui.addClass(e,'hui_checkbox_selected');
+		hui.cls.add(e,'hui_checkbox_selected');
 	}
 	return new hui.ui.Checkbox(o);
 }
@@ -40,7 +40,7 @@ hui.ui.Checkbox.prototype = {
 	},
 	/** @private */
 	updateUI : function() {
-		hui.setClass(this.element,'hui_checkbox_selected',this.value);
+		hui.cls.set(this.element,'hui_checkbox_selected',this.value);
 	},
 	/** Sets the value
 	 * @param {Boolean} value Whether the checkbox is checked

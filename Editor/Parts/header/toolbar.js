@@ -20,9 +20,9 @@ hui.ui.listen({
 		this.form.level.value=value || '';
 		this.form.text.className="common_font part_header part_header_"+value;
 		for (var i=0;i<=6;i++) {
-			hui.removeClass(partToolbar.section,'part_section_header_'+i);
+			hui.cls.remove(partToolbar.section,'part_section_header_'+i);
 		}
-		hui.addClass(partToolbar.section,'part_section_header_'+value);
+		hui.cls.add(partToolbar.section,'part_section_header_'+value);
 		partToolbar.getMainController().syncSize();
 	},
 	$valueChanged$fontWeight : function(value) {

@@ -43,7 +43,7 @@ hui.ui.ImagePaster.prototype = {
 		hui.log('Initializing...');
 		if (hui.browser.msie) {
 			this.element.innerHTML = '<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width="0" height="0" style="border-width:0;"  id="rup" name="rup" codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_5_0-windows-i586.cab#Version=1,5,0,0"><param name="archive" value="'+hui.ui.context+'/hui/lib/supa/Supa.jar"><param name="code" value="de.christophlinder.supa.SupaApplet"><param name="mayscript" value="yes"><param name="scriptable" value="true"><param name="name" value="jsapplet"><param name="encoding" value="base64"><param name="previewscaler" value="original size"></object>';
-			this.applet = hui.firstByTag(this.element,'object');
+			this.applet = hui.get.firstByTag(this.element,'object');
 		} else {
 			this.applet = hui.build('applet',{
 				archive : hui.ui.context+"/hui/lib/supa/Supa.jar",

@@ -16,16 +16,16 @@ hui.ui.IFrame.prototype = {
 	 */
 	setUrl : function(url) {
 		this.element.setAttribute('src',url);
-		//hui.getFrameDocument(this.element).location.href=url;
+		//hui.frame.getDocument(this.element).location.href=url;
 	},
 	clear : function() {
 		this.setUrl('about:blank');
 	},
 	getDocument : function() {
-		return hui.getFrameDocument(this.element);
+		return hui.frame.getDocument(this.element);
 	},
 	getWindow : function() {
-		return hui.getFrameWindow(this.element);
+		return hui.frame.getWindow(this.element);
 	},
 	reload : function() {
 		this.getWindow().location.reload();

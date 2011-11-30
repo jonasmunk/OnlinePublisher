@@ -47,7 +47,7 @@ hui.ui.Links.prototype = {
 		e = new hui.Event(e);
 		e.stop();
 		var element = e.getElement();
-		if (hui.hasClass(element,'hui_links_remove')) {
+		if (hui.cls.has(element,'hui_links_remove')) {
 			var row = e.findByClass('hui_links_row');
 			hui.ui.confirmOverlay({element:element,text:'Vil du fjerne linket?',okText:'Ja, fjern',cancelText:'Annuller',onOk:function() {
 				this.items.splice(row.hui_index,1);
@@ -65,16 +65,16 @@ hui.ui.Links.prototype = {
 		if (row) {
 			var idx = row.hui_index;
 			if (this.selectedIndex!==null) {
-				var x = hui.byClass(this.element,'hui_links_row')[this.selectedIndex];
-				hui.removeClass(x,'hui_links_row_selected')
+				var x = hui.get.byClass(this.element,'hui_links_row')[this.selectedIndex];
+				hui.cls.remove(x,'hui_links_row_selected')
 			}
 			this.selectedIndex = idx;
-			hui.addClass(row,'hui_links_row_selected');
+			hui.cls.add(row,'hui_links_row_selected');
 			return this.items[idx];
 		}
 	},
 	build : function() {
-		var list = this.list || hui.firstByClass(this.element,'hui_links_list'),
+		var list = this.list || hui.get.firstByClass(this.element,'hui_links_list'),
 			i,item,row,infoNode,text,remove;
 		list.innerHTML='';
 		for (i=0; i < this.items.length; i++) {
@@ -89,7 +89,7 @@ hui.ui.Links.prototype = {
 			infoNode = hui.build('div',{'class':'hui_links_info',text:hui.string.wrap(item.info)});
 			row.appendChild(infoNode);
 			remove = hui.ui.createIcon('monochrome/delete',16);
-			hui.addClass(remove,'hui_links_remove');
+			hui.cls.add(remove,'hui_links_remove');
 			row.appendChild(remove);
 
 			list.appendChild(row);

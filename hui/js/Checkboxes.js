@@ -35,7 +35,7 @@ hui.ui.Checkboxes.create = function(o) {
 hui.ui.Checkboxes.prototype = {
 	/** @private */
 	addBehavior : function() {
-		var checks = hui.byClass(this.element,'hui_checkbox');
+		var checks = hui.get.byClass(this.element,'hui_checkbox');
 		hui.each(checks,function(check,i) {
 			hui.listen(check,'click',function(e) {
 				hui.stop(e);
@@ -89,11 +89,11 @@ hui.ui.Checkboxes.prototype = {
 		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
 		};
-		var nodes = hui.byClass(this.element,'hui_checkbox');
+		var nodes = hui.get.byClass(this.element,'hui_checkbox');
 		for (i=0; i < this.items.length; i++) {
 			item = this.items[i];
 			found = hui.array.contains(this.values,item.value);
-			hui.setClass(nodes[i],'hui_checkbox_selected',found);
+			hui.cls.set(nodes[i],'hui_checkbox_selected',found);
 		};
 	},
 	refresh : function() {
@@ -190,7 +190,7 @@ hui.ui.Checkboxes.Items.prototype = {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
 			var index = hui.array.indexOf(this.parent.values,item.value);
-			hui.setClass(item.element,'hui_checkbox_selected',index!=-1);
+			hui.cls.set(item.element,'hui_checkbox_selected',index!=-1);
 		};
 		} catch (e) {
 			alert(typeof(this.parent.values));

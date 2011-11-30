@@ -6,10 +6,10 @@ hui.ui.Alert = function(options) {
 	this.options = hui.override({modal:false},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
-	this.body = hui.firstByClass(this.element,'hui_alert_body');
-	this.content = hui.firstByClass(this.element,'hui_alert_content');
+	this.body = hui.get.firstByClass(this.element,'hui_alert_body');
+	this.content = hui.get.firstByClass(this.element,'hui_alert_content');
 	this.emotion = this.options.emotion;
-	this.title = hui.firstByTag(this.element,'h1');
+	this.title = hui.get.firstByTag(this.element,'h1');
 	hui.ui.extend(this);
 }
 
@@ -49,7 +49,7 @@ hui.ui.Alert.prototype = {
 		}
 		this.element.style.zIndex=zIndex;
 		this.element.style.display='block';
-		this.element.style.top=(hui.getScrollTop()+100)+'px';
+		this.element.style.top=(hui.window.getScrollTop()+100)+'px';
 		hui.animate(this.element,'opacity',1,200);
 		hui.animate(this.element,'margin-top','40px',600,{ease:hui.ease.elastic});
 	},
@@ -77,10 +77,10 @@ hui.ui.Alert.prototype = {
 	/** Sets the alert emotion */
 	setEmotion : function(/**String*/ emotion) {
 		if (this.emotion) {
-			hui.removeClass(this.body,this.emotion);
+			hui.cls.remove(this.body,this.emotion);
 		}
 		this.emotion = emotion;
-		hui.addClass(this.body,emotion);
+		hui.cls.add(this.body,emotion);
 	},
 	/** Updates multiple properties
 	 * @param {Object} options {title: «String», text: «String», emotion: «'smile' | 'gasp'»}

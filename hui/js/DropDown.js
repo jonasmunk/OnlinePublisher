@@ -70,7 +70,7 @@ hui.ui.DropDown.prototype = {
 		var as = this.selector.getElementsByTagName('a');
 		for (var i=0; i < as.length; i++) {
 			if (this.index==i) {
-				hui.addClass(as[i],'hui_selected');
+				hui.cls.add(as[i],'hui_selected');
 			} else {
 				as[i].className='';
 			}
@@ -84,10 +84,10 @@ hui.ui.DropDown.prototype = {
 		var el = this.element, s=this.selector;
 		el.focus();
 		if (!this.items) return;
-		var docHeight = hui.getDocumentHeight();
+		var docHeight = hui.document.getHeight();
 		if (docHeight<200) {
 			var left = hui.getLeft(this.element);
-			hui.setStyle(this.selector,{'left':left+'px',top:'5px'});
+			hui.style.set(this.selector,{'left':left+'px',top:'5px'});
 		} else {
 			var windowScrollTop = hui.window.getScrollTop();
 			var scrollOffsetTop = hui.getScrollOffset(this.element).top;
@@ -98,12 +98,12 @@ hui.ui.DropDown.prototype = {
 				top : scrollTop
 			});
 		}
-		hui.setStyle(s,{visibility:'hidden',display:'block',width:''});
+		hui.style.set(s,{visibility:'hidden',display:'block',width:''});
 		var height = Math.min(docHeight-hui.getTop(s)-5,200);
 		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
-		var space = hui.getViewPortWidth()-hui.getLeft(el)-20;
+		var space = hui.window.getViewWidth()-hui.getLeft(el)-20;
 		width = Math.min(width,space);
-		hui.setStyle(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
+		hui.style.set(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
 	},
 	/** @private */
 	_keyDown : function(e) {
@@ -187,11 +187,11 @@ hui.ui.DropDown.prototype = {
 	/** @private */
 	$sourceIsBusy : function() {
 		this.busy = true;
-		hui.setOpacity(this.element,.5);
+		hui.style.setOpacity(this.element,.5);
 	},
 	$sourceIsNotBusy : function() {
 		this.busy = false;
-		hui.setOpacity(this.element,1);
+		hui.style.setOpacity(this.element,1);
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
@@ -231,7 +231,7 @@ hui.ui.DropDown.prototype = {
 				self._itemClicked(item,i);
 			})
 			if (i==self.index) {
-				hui.addClass(e,'hui_selected')
+				hui.cls.add(e,'hui_selected')
 			};
 			self.selector.appendChild(e);
 		});

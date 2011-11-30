@@ -37,30 +37,30 @@
 				
 				hui.ui.test.assertEquals(hui.getTop('one'),10);
 				hui.ui.test.assertEquals(hui.get('one').clientWidth,320);
-				hui.ui.test.assertEquals(hui.getStyle('one','width'),'300px');
-				hui.ui.test.assertEquals(hui.getStyle('one','padding-top'),'10px');
-				hui.ui.test.assertEquals(hui.getStyle('one','padding'),'');
-				hui.ui.test.assertEquals(hui.getStyle('one','color'),'rgb(255, 0, 0)');
-				hui.ui.test.assertEquals(hui.getStyle('one','font-size'),'12px');
-				hui.ui.test.assertEquals(hui.getStyle('one','display'),'block');
-				hui.ui.test.assertEquals(hui.getStyle('one','border-top-width'),'2px');
-				hui.ui.test.assertEquals(hui.getStyle('one','border-width'),'');
-				hui.ui.test.assertEquals(hui.getStyle('one','opacity'),'1','Check opacity');
+				hui.ui.test.assertEquals(hui.style.get('one','width'),'300px');
+				hui.ui.test.assertEquals(hui.style.get('one','padding-top'),'10px');
+				hui.ui.test.assertEquals(hui.style.get('one','padding'),'');
+				hui.ui.test.assertEquals(hui.style.get('one','color'),'rgb(255, 0, 0)');
+				hui.ui.test.assertEquals(hui.style.get('one','font-size'),'12px');
+				hui.ui.test.assertEquals(hui.style.get('one','display'),'block');
+				hui.ui.test.assertEquals(hui.style.get('one','border-top-width'),'2px');
+				hui.ui.test.assertEquals(hui.style.get('one','border-width'),'');
+				hui.ui.test.assertEquals(hui.style.get('one','opacity'),'1','Check opacity');
 				if (hui.browser.webkit) {
-					hui.ui.test.assertEquals(hui.getStyle('one','background-color'),'rgba(0, 0, 0, 0)','Check background color');
-					hui.ui.test.assertEquals(hui.getStyle('one','line-height'),'normal');
+					hui.ui.test.assertEquals(hui.style.get('one','background-color'),'rgba(0, 0, 0, 0)','Check background color');
+					hui.ui.test.assertEquals(hui.style.get('one','line-height'),'normal');
 				} else {
-					hui.ui.test.assertEquals(hui.getStyle('one','background-color'),'transparent','Check background color');
-					hui.ui.test.assertEquals(hui.getStyle('one','line-height'),'16px');
+					hui.ui.test.assertEquals(hui.style.get('one','background-color'),'transparent','Check background color');
+					hui.ui.test.assertEquals(hui.style.get('one','line-height'),'16px');
 				}
 				
-				var fontFamily = hui.getStyle('one','font-family');
+				var fontFamily = hui.style.get('one','font-family');
 				hui.ui.test.assertTrue(fontFamily.indexOf('Verdana')!==-1);
 				hui.ui.test.assertTrue(fontFamily.indexOf('Tahoma')!==-1);
 				hui.ui.test.assertTrue(fontFamily.indexOf('sans-serif')!==-1);
 			},
 			function() { // Two
-				hui.ui.test.assertEquals(hui.getStyle('two','padding'),'10px 10px 10px 20px');
+				hui.ui.test.assertEquals(hui.style.get('two','padding'),'10px 10px 10px 20px');
 			},
 			function() { // Colors
 				var color = new hui.Color('red');

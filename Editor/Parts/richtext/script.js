@@ -1,7 +1,7 @@
 hui.ui.listen({
 	$ready : function() {
 		var container = hui.get('part_richtext');
-		var node = hui.firstByClass(container,'part_richtext') || container;
+		var node = hui.get.firstByClass(container,'part_richtext') || container;
 		this.editor = new hui.ui.MarkupEditor({replace:node});
 		this.editor.listen(this);
 		this.editor.focus();

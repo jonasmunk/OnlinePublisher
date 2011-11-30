@@ -127,7 +127,7 @@ hui.ui.Formula.prototype = {
 hui.ui.Formula.Group = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.body = hui.firstByTag(this.element,'tbody');
+	this.body = hui.get.firstByTag(this.element,'tbody');
 	this.options = hui.override({above:true},options);
 	hui.ui.extend(this);
 }
@@ -139,7 +139,7 @@ hui.ui.Formula.Group.create = function(options) {
 		{'class':'hui_formula_group'}
 	);
 	if (options.above) {
-		hui.addClass(element,'hui_formula_group_above');
+		hui.cls.add(element,'hui_formula_group_above');
 	}
 	element.appendChild(hui.build('tbody'));
 	return new hui.ui.Formula.Group(options);

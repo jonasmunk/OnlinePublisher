@@ -205,17 +205,29 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.browser.html">hui.browser</a></li>
 	
+	<li><a href="../symbols/hui.cls.html">hui.cls</a></li>
+	
 	<li><a href="../symbols/hui.Color.html">hui.Color</a></li>
 	
 	<li><a href="../symbols/hui.cookie.html">hui.cookie</a></li>
 	
+	<li><a href="../symbols/hui.document.html">hui.document</a></li>
+	
 	<li><a href="../symbols/hui.dom.html">hui.dom</a></li>
+	
+	<li><a href="../symbols/hui.drag.html">hui.drag</a></li>
 	
 	<li><a href="../symbols/hui.ease.html">hui.ease</a></li>
 	
 	<li><a href="../symbols/hui.effect.html">hui.effect</a></li>
 	
 	<li><a href="../symbols/hui.Event.html">hui.Event</a></li>
+	
+	<li><a href="../symbols/hui.form.html">hui.form</a></li>
+	
+	<li><a href="../symbols/hui.frame.html">hui.frame</a></li>
+	
+	<li><a href="../symbols/hui.get.html">hui.get</a></li>
 	
 	<li><a href="../symbols/hui.location.html">hui.location</a></li>
 	
@@ -224,6 +236,8 @@ ul.inheritsList
 	<li><a href="../symbols/hui.selection.html">hui.selection</a></li>
 	
 	<li><a href="../symbols/hui.string.html">hui.string</a></li>
+	
+	<li><a href="../symbols/hui.style.html">hui.style</a></li>
 	
 	<li><a href="../symbols/hui.ui.html">hui.ui</a></li>
 	
@@ -397,6 +411,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></li>
 	
+	<li><a href="../symbols/hui.window.html">hui.window</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -417,7 +433,7 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> &lt;/Users/jbm/Sites/onlinepublisher/hui/tools/../bin/all.js&gt;.
+					<br /><i>Defined in: </i> &lt;/Users/jbm/Sites/publisher/hui/tools/../bin/all.js&gt;.
 				
 			</p>
 
@@ -477,6 +493,42 @@ ul.inheritsList
 								<div class="fixedFont">hui.string.<b><a href="../symbols/hui.string.html#.endsWith">endsWith</a></b>(str, end)
 								</div>
 								<div class="description">Test that a string ends with another string</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.string.<b><a href="../symbols/hui.string.html#.escape">escape</a></b>(str)
+								</div>
+								<div class="description">Escape the html in a string (fast)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.string.<b><a href="../symbols/hui.string.html#.escapeHTML">escapeHTML</a></b>(str)
+								</div>
+								<div class="description">Escape the html in a string (robust)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.string.<b><a href="../symbols/hui.string.html#.trim">trim</a></b>(str)
+								</div>
+								<div class="description">Trim whitespace including unicode chars</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.string.<b><a href="../symbols/hui.string.html#.wrap">wrap</a></b>(str)
+								</div>
+								<div class="description">Inserts invisible break chars in string so it will wrap</div>
 							</td>
 						</tr>
 					
@@ -618,6 +670,178 @@ ul.inheritsList
 						
 						
 
+					<hr />
+				
+					<a name=".escape"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{String}</span>
+					<span class="light">hui.string.</span><b>escape</b>(str)
+					
+					</div>
+					<div class="description">
+						Escape the html in a string (fast)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>str</b>
+									
+								</dt>
+								<dd>The text to escape</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The escaped text</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".escapeHTML"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{String}</span>
+					<span class="light">hui.string.</span><b>escapeHTML</b>(str)
+					
+					</div>
+					<div class="description">
+						Escape the html in a string (robust)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>str</b>
+									
+								</dt>
+								<dd>The text to escape</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The escaped text</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".trim"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{String}</span>
+					<span class="light">hui.string.</span><b>trim</b>(str)
+					
+					</div>
+					<div class="description">
+						Trim whitespace including unicode chars
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>str</b>
+									
+								</dt>
+								<dd>The text to trim</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The trimmed text</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".wrap"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{String}</span>
+					<span class="light">hui.string.</span><b>wrap</b>(str)
+					
+					</div>
+					<div class="description">
+						Inserts invisible break chars in string so it will wrap
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>str</b>
+									
+								</dt>
+								<dd>The text to wrap</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The wrapped text</dd>
+							
+							</dl>
+						
+						
+						
+
 					
 				
 			
@@ -632,7 +856,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Nov 28 2011 20:57:38 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Nov 30 2011 16:18:07 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

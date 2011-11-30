@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script src="head.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.context='../../..';
+	</script>
+</head>
+<body>
+	
+	<div id="hey"></div>
+	
+	
+	<div id="containsSiblings">
+		<span id="hasSiblings"></span>
+		<!-- this is a comment -->
+		This is a text node
+		<hr/>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script type="text/javascript">
+		hui.ui.test.run([
+			function() { // Blank
+				var hey = hui.get('hey');
+				hui.ui.test.assertDefined(hey,'Find by id');
+				
+				hui.ui.test.assertEquals(hey,hui.get(hey),'Get the same');
+			},
+			function() {
+				var node = hui.get('hasSiblings');
+				var next = hui.get.next(node);
+				hui.ui.test.assertEquals(next.nodeName,'HR','The next is an <hr/>');
+				var last = hui.get.next(next);
+				hui.ui.test.assertEquals(last,null,'There should be no more');
+			}
+		]);
+	</script>
+</body>
+</html>

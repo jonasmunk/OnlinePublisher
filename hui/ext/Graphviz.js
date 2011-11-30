@@ -7,8 +7,8 @@ hui.ui.Graphviz = function(element,name,options) {
 		this.scale = 1;
 		this.padding = 8;
 		this.element = hui.get(element);
-		this.texts = hui.firstByClass(this.element,'hui_graphviz_texts');
-		this.canvas = hui.firstByTag(this.element,'canvas');
+		this.texts = hui.get.firstByClass(this.element,'hui_graphviz_texts');
+		this.canvas = hui.get.firstByTag(this.element,'canvas');
 		this.ctx = this.canvas.getContext('2d');
 
 		this.images = {};

@@ -4,7 +4,7 @@
 hui.ui.VideoPlayer = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
-	this.placeholder = hui.firstByTag(this.element,'div');
+	this.placeholder = hui.get.firstByTag(this.element,'div');
 	this.name = options.name;
 	this.state = {duration:0,time:0,loaded:0};
 	this.handlers = [hui.ui.VideoPlayer.HTML5,hui.ui.VideoPlayer.QuickTime,hui.ui.VideoPlayer.Embedded];

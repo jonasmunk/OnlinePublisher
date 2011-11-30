@@ -9,7 +9,7 @@ hui.ui.DatePicker = function(options) {
 	this.options = {};
 	hui.override(this.options,options);
 	this.cells = [];
-	this.title = hui.firstByTag(this.element,'strong');
+	this.title = hui.get.firstByTag(this.element,'strong');
 	this.today = new Date();
 	this.value = this.options.value ? new Date(this.options.value.getTime()) : new Date();
 	this.viewDate = new Date(this.value.getTime());
@@ -43,12 +43,12 @@ hui.ui.DatePicker.create = function(options) {
 hui.ui.DatePicker.prototype = {
 	_addBehavior : function() {
 		var self = this;
-		this.cells = hui.byTag(this.element,'td');
+		this.cells = hui.get.byTag(this.element,'td');
 		hui.each(this.cells,function(cell,index) {
 			hui.listen(cell,'mousedown',function() {self._selectCell(index)});
 		})
-		var next = hui.firstByClass(this.element,'hui_datepicker_next');
-		var previous = hui.firstByClass(this.element,'hui_datepicker_previous');
+		var next = hui.get.firstByClass(this.element,'hui_datepicker_next');
+		var previous = hui.get.firstByClass(this.element,'hui_datepicker_previous');
 		hui.listen(next,'mousedown',function() {self.next()});
 		hui.listen(previous,'mousedown',function() {self.previous()});
 	},
@@ -76,10 +76,10 @@ hui.ui.DatePicker.prototype = {
 				cell.className = '';
 			}
 			if (date.getDate()==this.value.getDate() && date.getMonth()==this.value.getMonth() && isSelectedYear) {
-				hui.addClass(cell,'hui_datepicker_selected');
+				hui.cls.add(cell,'hui_datepicker_selected');
 			}
 			if (date.getDate()==this.today.getDate() && date.getMonth()==this.today.getMonth() && date.getFullYear()==this.today.getFullYear()) {
-				hui.addClass(cell,'hui_datepicker_today');
+				hui.cls.add(cell,'hui_datepicker_today');
 			}
 			hui.dom.setText(cell,date.getDate());
 		};

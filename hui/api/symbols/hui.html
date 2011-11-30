@@ -205,17 +205,29 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.browser.html">hui.browser</a></li>
 	
+	<li><a href="../symbols/hui.cls.html">hui.cls</a></li>
+	
 	<li><a href="../symbols/hui.Color.html">hui.Color</a></li>
 	
 	<li><a href="../symbols/hui.cookie.html">hui.cookie</a></li>
 	
+	<li><a href="../symbols/hui.document.html">hui.document</a></li>
+	
 	<li><a href="../symbols/hui.dom.html">hui.dom</a></li>
+	
+	<li><a href="../symbols/hui.drag.html">hui.drag</a></li>
 	
 	<li><a href="../symbols/hui.ease.html">hui.ease</a></li>
 	
 	<li><a href="../symbols/hui.effect.html">hui.effect</a></li>
 	
 	<li><a href="../symbols/hui.Event.html">hui.Event</a></li>
+	
+	<li><a href="../symbols/hui.form.html">hui.form</a></li>
+	
+	<li><a href="../symbols/hui.frame.html">hui.frame</a></li>
+	
+	<li><a href="../symbols/hui.get.html">hui.get</a></li>
 	
 	<li><a href="../symbols/hui.location.html">hui.location</a></li>
 	
@@ -224,6 +236,8 @@ ul.inheritsList
 	<li><a href="../symbols/hui.selection.html">hui.selection</a></li>
 	
 	<li><a href="../symbols/hui.string.html">hui.string</a></li>
+	
+	<li><a href="../symbols/hui.style.html">hui.style</a></li>
 	
 	<li><a href="../symbols/hui.ui.html">hui.ui</a></li>
 	
@@ -397,6 +411,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></li>
 	
+	<li><a href="../symbols/hui.window.html">hui.window</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -417,7 +433,7 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> &lt;/Users/jbm/Sites/onlinepublisher/hui/tools/../bin/all.js&gt;.
+					<br /><i>Defined in: </i> &lt;/Users/jbm/Sites/publisher/hui/tools/../bin/all.js&gt;.
 				
 			</p>
 
@@ -470,15 +486,6 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.addClass">addClass</a></b>(element, className)
-								</div>
-								<div class="description">Add a class to an element</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.animate">animate</a></b>(options, style, value, duration, delegate)
 								</div>
 								<div class="description"></div>
@@ -488,52 +495,28 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.build">build</a></b>(tag, options)
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.build">build</a></b>(name, options)
 								</div>
-								<div class="description"></div>
+								<div class="description">Builds an element with the «name» and «options»
+<pre><strong>options:</strong> {
+ html : '<em>markup</em>', 
+ text : 'child text', 
+ parent : «Element», 
+ parentFirst : «Element», 
+ 'class' : 'css_class', 
+ className : 'css_class', 
+ style : 'color: blue;' 
+}
+Additional properties will be set as attributes
+
+</pre></div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.byClass">byClass</a></b>(parentElement, className, tag)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.byId">byId</a></b>(e, id)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.byTag">byTag</a></b>(node, name)
-								</div>
-								<div class="description">Get array of descendants of «node» with the name «name»</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.copyStyle">copyStyle</a></b>(source, target, styles)
-								</div>
-								<div class="description">Copy the style from one element to another</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.defer">defer</a></b>(func, bind)
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.defer">defer</a></b>(func, ?bind)
 								</div>
 								<div class="description">Defer a function so it will fire when the current "thread" is done</div>
 							</td>
@@ -551,24 +534,6 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.escape">escape</a></b>(str)
-								</div>
-								<div class="description">Escape the html in a string (fast)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.escapeHTML">escapeHTML</a></b>(str)
-								</div>
-								<div class="description">Escape the html in a string (robust)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.event">event</a></b>(event)
 								</div>
 								<div class="description">Creates an event wrapper for an event</div>
@@ -578,142 +543,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.firstAncestorByClass">firstAncestorByClass</a></b>(element, className)
-								</div>
-								<div class="description">Find the first ancestor with a given class (including self)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.firstByClass">firstByClass</a></b>(parentElement, className, tag)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.firstByTag">firstByTag</a></b>(parentElement, tag)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.firstParentByClass">firstParentByClass</a></b>(node, tag)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.firstParentByTag">firstParentByTag</a></b>(node, tag)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.fromJSON">fromJSON</a></b>(json)
-								</div>
-								<div class="description">Converts a JSON string into an object</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.get">get</a></b>(str)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getAllNext">getAllNext</a></b>(element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getAncestors">getAncestors</a></b>(element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getChildren">getChildren</a></b>(node)
-								</div>
-								<div class="description">Get array of child elements of «node»</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getDocumentHeight">getDocumentHeight</a></b>()
-								</div>
-								<div class="description">Get the width of the document (including the invisble part)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getDocumentWidth">getDocumentWidth</a></b>()
-								</div>
-								<div class="description">Get the height of the document (including the invisble part)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getFrameDocument">getFrameDocument</a></b>(frame)
-								</div>
-								<div class="description">Get the document object of a frame</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getFrameWindow">getFrameWindow</a></b>(frame)
-								</div>
-								<div class="description">Get the window object of a frame</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getLeft">getLeft</a></b>(element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getNext">getNext</a></b>(element)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -731,34 +561,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getScrollLeft">getScrollLeft</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getScrollOffset">getScrollOffset</a></b>(element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getScrollTop">getScrollTop</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getStyle">getStyle</a></b>(element, style)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -770,33 +573,6 @@ ul.inheritsList
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getTop">getTop</a></b>(element)
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getViewPortHeight">getViewPortHeight</a></b>()
-								</div>
-								<div class="description">Get the height of the viewport (the visible part of the page)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getViewPortWidth">getViewPortWidth</a></b>()
-								</div>
-								<div class="description">Get the width of the viewport (the visible part of the page)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.hasClass">hasClass</a></b>(element, className)
-								</div>
-								<div class="description">Check if an element has a class</div>
 							</td>
 						</tr>
 					
@@ -885,54 +661,9 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.removeClass">removeClass</a></b>(element, className)
-								</div>
-								<div class="description">Remove a class from an element</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.request">request</a></b>(options)
 								</div>
 								<div class="description">Send a HTTP request</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.scrollTo">scrollTo</a></b>(options)
-								</div>
-								<div class="description">Scroll to an element, will try to show the element in the middle of the screen and only scroll if it makes sence</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.setClass">setClass</a></b>(element, className, add)
-								</div>
-								<div class="description">Add or remove a class from an element</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.setOpacity">setOpacity</a></b>(element, opacity)
-								</div>
-								<div class="description">Cross browser way of setting opacity</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.setStyle">setStyle</a></b>(element, styles)
-								</div>
-								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -948,54 +679,9 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.toggleClass">toggleClass</a></b>(element, className)
-								</div>
-								<div class="description">Add or remove a class from an element</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.toIntArray">toIntArray</a></b>(str)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.toJSON">toJSON</a></b>(obj)
-								</div>
-								<div class="description">Converts an object into a JSON string</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.trim">trim</a></b>(str)
-								</div>
-								<div class="description">Trim whitespace including unicode chars</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.unListen">unListen</a></b>(element, type, listener, useCapture)
 								</div>
 								<div class="description">Remove an event listener from an element</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.wrap">wrap</a></b>(str)
-								</div>
-								<div class="description">Inserts invisible break chars in string so it will wrap</div>
 							</td>
 						</tr>
 					
@@ -1046,48 +732,6 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 				<div class="sectionTitle">
 					Method Detail
 				</div>
-				
-					<a name=".addClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>addClass</b>(element, className)
-					
-					</div>
-					<div class="description">
-						Add a class to an element
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Element}</span> <b>element</b>
-									
-								</dt>
-								<dd>The element to add the class to</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>className</b>
-									
-								</dt>
-								<dd>The class</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
 				
 					<a name=".animate"> </a>
 					<div class="fixedFont">&lt;static&gt; 
@@ -1152,54 +796,24 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<a name=".build"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">hui.</span><b>build</b>(tag, options)
+					<span class="light">{Element}</span>
+					<span class="light">hui.</span><b>build</b>(name, options)
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>tag</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>options</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
+						Builds an element with the «name» and «options»
+<pre><strong>options:</strong> {
+ html : '<em>markup</em>', 
+ text : 'child text', 
+ parent : «Element», 
+ parentFirst : «Element», 
+ 'class' : 'css_class', 
+ className : 'css_class', 
+ style : 'color: blue;' 
+}
+Additional properties will be set as attributes
 
-					<hr />
-				
-					<a name=".byClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>byClass</b>(parentElement, className, tag)
-					
-					</div>
-					<div class="description">
-						
+</pre>
 						
 						
 					</div>
@@ -1211,106 +825,16 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>parentElement</b>
+									<span class="light fixedFont">{String}</span> <b>name</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The name of the new element</dd>
 							
 								<dt>
-									<b>className</b>
+									<span class="light fixedFont">{Object}</span> <b>options</b>
 									
 								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>tag</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".byId"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>byId</b>(e, id)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>e</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>id</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".byTag"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>byTag</b>(node, name)
-					
-					</div>
-					<div class="description">
-						Get array of descendants of «node» with the name «name»
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>node</b>
-									
-								</dt>
-								<dd>The node to start from</dd>
-							
-								<dt>
-									<b>name</b>
-									
-								</dt>
-								<dd>The name of the nodes to find</dd>
+								<dd>The options</dd>
 							
 							</dl>
 						
@@ -1321,57 +845,9 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd>An array of nodes (not NodeList)</dd>
+								<dd><span class="light fixedFont">{Element}</span> The element</dd>
 							
 							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".copyStyle"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>copyStyle</b>(source, target, styles)
-					
-					</div>
-					<div class="description">
-						Copy the style from one element to another
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>source</b>
-									
-								</dt>
-								<dd>The element to copy from</dd>
-							
-								<dt>
-									<b>target</b>
-									
-								</dt>
-								<dd>The element to copy to</dd>
-							
-								<dt>
-									<b>styles</b>
-									
-								</dt>
-								<dd>An array of properties to copy</dd>
-							
-							</dl>
-						
-						
-						
-						
 						
 						
 						
@@ -1382,7 +858,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.</span><b>defer</b>(func, bind)
+					<span class="light">hui.</span><b>defer</b>(func, ?bind)
 					
 					</div>
 					<div class="description">
@@ -1404,7 +880,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 								<dd>The fundtion to defer</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Object}</span> <b>bind</b>
+									<span class="light fixedFont">{Object}</span> <b>?bind</b>
 									
 								</dt>
 								<dd>Optional, the object to bind "this" to</dd>
@@ -1464,92 +940,6 @@ If «items» is an object «func» is called with each (key,value)
 
 					<hr />
 				
-					<a name=".escape"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{String}</span>
-					<span class="light">hui.</span><b>escape</b>(str)
-					
-					</div>
-					<div class="description">
-						Escape the html in a string (fast)
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>str</b>
-									
-								</dt>
-								<dd>The text to escape</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{String}</span> The escaped text</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".escapeHTML"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{String}</span>
-					<span class="light">hui.</span><b>escapeHTML</b>(str)
-					
-					</div>
-					<div class="description">
-						Escape the html in a string (robust)
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>str</b>
-									
-								</dt>
-								<dd>The text to escape</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{String}</span> The escaped text</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
 					<a name=".event"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -1593,572 +983,11 @@ If «items» is an object «func» is called with each (key,value)
 
 					<hr />
 				
-					<a name=".firstAncestorByClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>firstAncestorByClass</b>(element, className)
-					
-					</div>
-					<div class="description">
-						Find the first ancestor with a given class (including self)
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>className</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".firstByClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>firstByClass</b>(parentElement, className, tag)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>parentElement</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>className</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>tag</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".firstByTag"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>firstByTag</b>(parentElement, tag)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>parentElement</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>tag</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".firstParentByClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>firstParentByClass</b>(node, tag)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>node</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>tag</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".firstParentByTag"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>firstParentByTag</b>(node, tag)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>node</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>tag</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".fromJSON"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{Object}</span>
-					<span class="light">hui.</span><b>fromJSON</b>(json)
-					
-					</div>
-					<div class="description">
-						Converts a JSON string into an object
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>json</b>
-									
-								</dt>
-								<dd>{String} The JSON string to parse</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Object}</span> The object</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".get"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>get</b>(str)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>str</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getAllNext"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getAllNext</b>(element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getAncestors"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getAncestors</b>(element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getChildren"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getChildren</b>(node)
-					
-					</div>
-					<div class="description">
-						Get array of child elements of «node»
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>node</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getDocumentHeight"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getDocumentHeight</b>()
-					
-					</div>
-					<div class="description">
-						Get the width of the document (including the invisble part)
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getDocumentWidth"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getDocumentWidth</b>()
-					
-					</div>
-					<div class="description">
-						Get the height of the document (including the invisble part)
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getFrameDocument"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getFrameDocument</b>(frame)
-					
-					</div>
-					<div class="description">
-						Get the document object of a frame
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>frame</b>
-									
-								</dt>
-								<dd>The frame to get the document from</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getFrameWindow"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getFrameWindow</b>(frame)
-					
-					</div>
-					<div class="description">
-						Get the window object of a frame
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>frame</b>
-									
-								</dt>
-								<dd>The frame to get the window from</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".getLeft"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
 					<span class="light">hui.</span><b>getLeft</b>(element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getNext"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getNext</b>(element)
 					
 					</div>
 					<div class="description">
@@ -2226,31 +1055,6 @@ If «items» is an object «func» is called with each (key,value)
 
 					<hr />
 				
-					<a name=".getScrollLeft"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getScrollLeft</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".getScrollOffset"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -2272,73 +1076,6 @@ If «items» is an object «func» is called with each (key,value)
 							
 								<dt>
 									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getScrollTop"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getScrollTop</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getStyle"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getStyle</b>(element, style)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>style</b>
 									
 								</dt>
 								<dd></dd>
@@ -2384,105 +1121,6 @@ If «items» is an object «func» is called with each (key,value)
 						
 						
 						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getViewPortHeight"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getViewPortHeight</b>()
-					
-					</div>
-					<div class="description">
-						Get the height of the viewport (the visible part of the page)
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getViewPortWidth"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getViewPortWidth</b>()
-					
-					</div>
-					<div class="description">
-						Get the width of the viewport (the visible part of the page)
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".hasClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{boolean}</span>
-					<span class="light">hui.</span><b>hasClass</b>(element, className)
-					
-					</div>
-					<div class="description">
-						Check if an element has a class
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Element}</span> <b>element</b>
-									
-								</dt>
-								<dd>The element</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>className</b>
-									
-								</dt>
-								<dd>The class</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{boolean}</span> true if the element has the class</dd>
-							
-							</dl>
 						
 						
 						
@@ -2852,48 +1490,6 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 
 					<hr />
 				
-					<a name=".removeClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>removeClass</b>(element, className)
-					
-					</div>
-					<div class="description">
-						Remove a class from an element
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Element}</span> <b>element</b>
-									
-								</dt>
-								<dd>The element to remove the class from</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>className</b>
-									
-								</dt>
-								<dd>The class</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".request"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -2936,174 +1532,6 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 
 					<hr />
 				
-					<a name=".scrollTo"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>scrollTo</b>(options)
-					
-					</div>
-					<div class="description">
-						Scroll to an element, will try to show the element in the middle of the screen and only scroll if it makes sence
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Object}</span> <b>options</b>
-									
-								</dt>
-								<dd>{element:«the element to scroll to»}</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>setClass</b>(element, className, add)
-					
-					</div>
-					<div class="description">
-						Add or remove a class from an element
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Element}</span> <b>element</b>
-									
-								</dt>
-								<dd>The element</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>className</b>
-									
-								</dt>
-								<dd>The class</dd>
-							
-								<dt>
-									<span class="light fixedFont">{boolean}</span> <b>add</b>
-									
-								</dt>
-								<dd>If the class should be added or removed</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setOpacity"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>setOpacity</b>(element, opacity)
-					
-					</div>
-					<div class="description">
-						Cross browser way of setting opacity
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>opacity</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setStyle"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>setStyle</b>(element, styles)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>styles</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".stop"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -3134,170 +1562,6 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 						
 						
 						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".toggleClass"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>toggleClass</b>(element, className)
-					
-					</div>
-					<div class="description">
-						Add or remove a class from an element
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Element}</span> <b>element</b>
-									
-								</dt>
-								<dd>The element</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>className</b>
-									
-								</dt>
-								<dd>The class</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".toIntArray"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>toIntArray</b>(str)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>str</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".toJSON"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{String}</span>
-					<span class="light">hui.</span><b>toJSON</b>(obj)
-					
-					</div>
-					<div class="description">
-						Converts an object into a JSON string
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>obj</b>
-									
-								</dt>
-								<dd>{Object} the object to convert</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{String}</span> A JSON representation</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".trim"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{String}</span>
-					<span class="light">hui.</span><b>trim</b>(str)
-					
-					</div>
-					<div class="description">
-						Trim whitespace including unicode chars
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>str</b>
-									
-								</dt>
-								<dd>The text to trim</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{String}</span> The trimmed text</dd>
-							
-							</dl>
 						
 						
 						
@@ -3356,49 +1620,6 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 						
 						
 
-					<hr />
-				
-					<a name=".wrap"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{String}</span>
-					<span class="light">hui.</span><b>wrap</b>(str)
-					
-					</div>
-					<div class="description">
-						Inserts invisible break chars in string so it will wrap
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>str</b>
-									
-								</dt>
-								<dd>The text to wrap</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{String}</span> The wrapped text</dd>
-							
-							</dl>
-						
-						
-						
-
 					
 				
 			
@@ -3413,7 +1634,7 @@ Example hui.place({target : {element : «node», horizontal : «0-1»}, source :
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Nov 28 2011 20:57:37 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Nov 30 2011 16:18:06 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

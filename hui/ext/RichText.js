@@ -10,8 +10,8 @@ hui.ui.RichText = function(options) {
 	this.editor = WysiHat.Editor.attach(this.textarea);
 	this.editor.setAttribute('frameborder','0');
 	/* @private */
-	this.toolbar = hui.firstByClass(e,'hui_richtext_toolbar');
-	this.toolbarContent = hui.firstByClass(e,'hui_richtext_toolbar_content');
+	this.toolbar = hui.get.firstByClass(e,'hui_richtext_toolbar');
+	this.toolbarContent = hui.get.firstByClass(e,'hui_richtext_toolbar_content');
 	this.value = this.options.value;
 	this.document = null;
 	this.ignited = false;
@@ -146,7 +146,7 @@ hui.ui.RichText.prototype = {
 		}
 		if (this.toolbar.style.display!='block') {
 			this.toolbar.style.marginTop='-40px';
-			hui.setOpacity(this.toolbar,0);
+			hui.style.setOpacity(this.toolbar,0);
 			this.toolbar.style.display='block';
 			hui.animate(this.toolbar,'opacity',1,300);
 			hui.animate(this.toolbar,'margin-top','-32px',300);

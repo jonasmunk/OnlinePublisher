@@ -21,6 +21,7 @@ $strings = array(
 	'add_section' => array('da' => 'Tilføj afsnit','en' => 'Add section')
 );
 
+$section = null;
 if (Request::exists('section')) {
 	$section = Request::getInt('section',null);
 }
@@ -290,12 +291,21 @@ function displaySection($sectionId,$type,$sectionIndex,$sectionStyle,$partId,$pa
 
 function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex) {
 	global $partContext;
+	if (!$partType) {
+		echo '<div class="editor_error">Error: The part could not be loaded (no type)</div>';
+		return;
+	}
+	
 	$ctrl = PartService::getController($partType);
 	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
-		echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
-		echo $ctrl->display($part,$partContext);
-		echo '</div>';
+		if ($part) {
+			echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
+			echo $ctrl->display($part,$partContext);
+			echo '</div>';			
+		} else {
+			echo '<div class="editor_error">Error: The part could not be loaded</div>';
+		}
 	}
 }
 

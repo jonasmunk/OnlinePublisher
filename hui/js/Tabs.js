@@ -6,17 +6,17 @@ hui.ui.Tabs = function(o) {
 	this.name = o.name;
 	this.element = hui.get(o.element);
 	this.activeTab = -1;
-	var x = hui.firstByClass(this.element,'hui_tabs_bar');
-	this.bar = hui.firstByTag(x,'ul');
+	var x = hui.get.firstByClass(this.element,'hui_tabs_bar');
+	this.bar = hui.get.firstByTag(x,'ul');
 	this.tabs = [];
 	var nodes = this.bar.getElementsByTagName('li');
 	for (var i=0; i < nodes.length; i++) {
 		if (!hui.browser.msie) {
-			hui.firstByTag(nodes[i],'a').removeAttribute('href');
+			hui.get.firstByTag(nodes[i],'a').removeAttribute('href');
 		}
 		this.tabs.push(nodes[i]);
 	};
-	this.contents = hui.byClass(this.element,'hui_tabs_tab');
+	this.contents = hui.get.byClass(this.element,'hui_tabs_tab');
 	this.addBehavior();
 	hui.ui.extend(this);
 }
@@ -63,7 +63,7 @@ hui.ui.Tabs.prototype = {
 	/** @private */
 	updateGUI : function() {
 		for (var i=0; i < this.tabs.length; i++) {
-			hui.setClass(this.tabs[i],'hui_tabs_selected',i==this.activeTab);
+			hui.cls.set(this.tabs[i],'hui_tabs_selected',i==this.activeTab);
 			this.contents[i].style.display = i==this.activeTab ? 'block' : 'none';
 		};
 	},
@@ -80,7 +80,7 @@ hui.ui.Tabs.prototype = {
 		this.element.appendChild(e);
 		if (this.activeTab==-1) {
 			this.activeTab=0;
-			hui.addClass(tab,'hui_tabs_selected');
+			hui.cls.add(tab,'hui_tabs_selected');
 		} else {
 			e.style.display='none';
 		}

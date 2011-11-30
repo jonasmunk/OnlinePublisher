@@ -15,7 +15,7 @@ var partToolbar = {
 				return;
 			}
 		}
-		var doc = hui.getFrameDocument(this.editorFrame);
+		var doc = hui.frame.getDocument(this.editorFrame);
 		if (!doc) {
 			hui.log('no document found!');
 			hui.log(this.editorFrame);
@@ -38,13 +38,13 @@ var partToolbar = {
 		}
 	},
 	cancel : function() {
-		hui.getFrameDocument(this.editorFrame).location = 'Editor.php?section=';
+		hui.frame.getDocument(this.editorFrame).location = 'Editor.php?section=';
 	},
 	save : function() {
 		this.partForm.submit();
 	},
 	deletePart : function() {
-		hui.getFrameDocument(this.editorFrame).location = 'data/DeleteSection.php?section='+this.sectionId;
+		hui.frame.getDocument(this.editorFrame).location = 'data/DeleteSection.php?section='+this.sectionId;
 	},
 	preview : function() {
 		this.getMainController().preview();
@@ -55,7 +55,7 @@ var partToolbar = {
 		if (!win) {
 			hui.log('Window not found');
 		}
-		return hui.getFrameWindow(this.editorFrame).partController;
+		return hui.frame.getWindow(this.editorFrame).partController;
 	},
 	$valueChanged$marginLeft : function(value) {
 		this.partForm.left.value=value;

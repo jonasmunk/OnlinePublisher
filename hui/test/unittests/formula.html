@@ -48,15 +48,15 @@
 			},
 			1000,
 			function() {
-				hui.ui.test.click(hui.firstByClass(document.body,'hui_numberfield_up'));
+				hui.ui.test.click(hui.get.firstByClass(document.body,'hui_numberfield_up'));
 				hui.ui.test.assertEquals(formula.getValues().number,11.56,'The number field has incremented value');
-				hui.ui.test.click(hui.firstByClass(document.body,'hui_numberfield_down'));
+				hui.ui.test.click(hui.get.firstByClass(document.body,'hui_numberfield_down'));
 				hui.ui.test.assertEquals(formula.getValues().number,10.56,'The number field has decremented value');
 			},
 			function() {
 				var textField = hui.ui.get('textField');
 				var node = textField.getElement();
-				var input = hui.firstByTag(node,'input');
+				var input = hui.get.firstByTag(node,'input');
 				hui.ui.test.assertDefined(input,'The field must have an input element');
 				textField.reset();
 				hui.ui.test.assertEquals(textField.getValue(),'','The value of the text field is ""');

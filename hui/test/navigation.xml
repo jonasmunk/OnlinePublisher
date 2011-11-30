@@ -3,6 +3,7 @@
     <title title="Tests"/>
     <item icon="common/folder" title="Unit tests" value="Unit tests">
         <item icon="common/page" title="animation" value="unittests/animation.html"/>
+        <item icon="common/page" title="dom" value="unittests/dom.html"/>
         <item icon="common/page" title="formula" value="unittests/formula.html"/>
         <item icon="common/page" title="hui" value="unittests/hui.html"/>
         <item icon="common/page" title="profile" value="unittests/profile.html"/>

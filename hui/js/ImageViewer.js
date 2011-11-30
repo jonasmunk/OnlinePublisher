@@ -12,15 +12,15 @@ hui.ui.ImageViewer = function(options) {
 		},options);
 	this.element = hui.get(options.element);
 	this.box = this.options.box;
-	this.viewer = hui.firstByClass(this.element,'hui_imageviewer_viewer');
-	this.innerViewer = hui.firstByClass(this.element,'hui_imageviewer_inner_viewer');
-	this.status = hui.firstByClass(this.element,'hui_imageviewer_status');
-	this.previousControl = hui.firstByClass(this.element,'hui_imageviewer_previous');
-	this.controller = hui.firstByClass(this.element,'hui_imageviewer_controller');
-	this.nextControl = hui.firstByClass(this.element,'hui_imageviewer_next');
-	this.playControl = hui.firstByClass(this.element,'hui_imageviewer_play');
-	this.closeControl = hui.firstByClass(this.element,'hui_imageviewer_close');
-	this.text = hui.firstByClass(this.element,'hui_imageviewer_text');
+	this.viewer = hui.get.firstByClass(this.element,'hui_imageviewer_viewer');
+	this.innerViewer = hui.get.firstByClass(this.element,'hui_imageviewer_inner_viewer');
+	this.status = hui.get.firstByClass(this.element,'hui_imageviewer_status');
+	this.previousControl = hui.get.firstByClass(this.element,'hui_imageviewer_previous');
+	this.controller = hui.get.firstByClass(this.element,'hui_imageviewer_controller');
+	this.nextControl = hui.get.firstByClass(this.element,'hui_imageviewer_next');
+	this.playControl = hui.get.firstByClass(this.element,'hui_imageviewer_play');
+	this.closeControl = hui.get.firstByClass(this.element,'hui_imageviewer_close');
+	this.text = hui.get.firstByClass(this.element,'hui_imageviewer_text');
 	this.dirty = false;
 	this.width = 600;
 	this.height = 460;
@@ -130,7 +130,7 @@ hui.ui.ImageViewer.prototype = {
 				'class' : 'hui_imageviewer_zoomer',
 				style : 'width:'+this.viewer.clientWidth+'px;height:'+this.viewer.clientHeight+'px'
 			});
-			this.element.insertBefore(this.zoomer,hui.firstByTag(this.element,'*'));
+			this.element.insertBefore(this.zoomer,hui.get.firstByTag(this.element,'*'));
 			hui.listen(this.zoomer,'mousemove',this.zoomMove.bind(this));
 			hui.listen(this.zoomer,'click',function() {
 				this.style.display='none';
@@ -170,10 +170,10 @@ hui.ui.ImageViewer.prototype = {
 	/** @private */
 	calculateSize : function() {
 		var snap = this.options.sizeSnap;
-		var newWidth = hui.getViewPortWidth()-this.options.perimeter;
+		var newWidth = hui.window.getViewWidth()-this.options.perimeter;
 		newWidth = Math.floor(newWidth/snap)*snap;
 		newWidth = Math.min(newWidth,this.options.maxWidth);
-		var newHeight = hui.getViewPortHeight()-this.options.perimeter;
+		var newHeight = hui.window.getViewHeight()-this.options.perimeter;
 		newHeight = Math.floor(newHeight/snap)*snap;
 		newHeight = Math.min(newHeight,this.options.maxHeight);
 		var maxWidth = 0;
@@ -208,10 +208,10 @@ hui.ui.ImageViewer.prototype = {
 		this.calculateSize();
 		this.updateUI();
 		var margin = this.options.margin;
-		hui.setStyle(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
-		hui.setStyle(this.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
-		hui.setStyle(this.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
-		hui.setStyle(this.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
+		hui.style.set(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
+		hui.style.set(this.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
+		hui.style.set(this.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
+		hui.style.set(this.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
 		this.box.show();
 		this.goToImage(false,0,false);
 		hui.listen(document,'keydown',this.keyListener);
@@ -235,7 +235,7 @@ hui.ui.ImageViewer.prototype = {
 			this.innerViewer.innerHTML='';
 			for (var i=0; i < this.images.length; i++) {
 				var element = hui.build('div',{'class':'hui_imageviewer_image'});
-				hui.setStyle(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
+				hui.style.set(element,{'width':(this.width+this.options.margin)+'px','height':(this.height-1)+'px'});
 				this.innerViewer.appendChild(element);
 			};
 			if (this.shouldShowController()) {
@@ -368,16 +368,16 @@ hui.ui.ImageViewer.prototype = {
 		var url = hui.ui.resolveImageUrl(this,this.images[index],this.width,this.height);
 		url = url.replace(/&amp;/g,'&');
 		this.innerViewer.childNodes[index].style.backgroundImage="url('"+url+"')";
-		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_abort',false);
-		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_error',false);
+		hui.cls.set(this.innerViewer.childNodes[index],'hui_imageviewer_image_abort',false);
+		hui.cls.set(this.innerViewer.childNodes[index],'hui_imageviewer_image_error',false);
 	},
 	/** @private */
 	imageDidGiveError : function(loaded,total,index) {
-		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_error',true);
+		hui.cls.set(this.innerViewer.childNodes[index],'hui_imageviewer_image_error',true);
 	},
 	/** @private */
 	imageDidAbort : function(loaded,total,index) {
-		hui.setClass(this.innerViewer.childNodes[index],'hui_imageviewer_image_abort',true);
+		hui.cls.set(this.innerViewer.childNodes[index],'hui_imageviewer_image_abort',true);
 	}
 }
 

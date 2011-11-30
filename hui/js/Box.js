@@ -6,8 +6,8 @@ hui.ui.Box = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.body = hui.firstByClass(this.element,'hui_box_body');
-	this.close = hui.firstByClass(this.element,'hui_box_close');
+	this.body = hui.get.firstByClass(this.element,'hui_box_body');
+	this.close = hui.get.firstByClass(this.element,'hui_box_close');
 	this.visible = !this.options.absolute;
 	if (this.close) {
 		hui.listen(this.close,'click',function(e) {
@@ -70,11 +70,11 @@ hui.ui.Box.prototype = {
 			hui.ui.showCurtain({widget:this,zIndex:index});
 		}
 		if (this.options.absolute) {
-			hui.setStyle(e,{display:'block',visibility:'hidden'});
+			hui.style.set(e,{display:'block',visibility:'hidden'});
 			var w = e.clientWidth;
-			var top = (hui.getViewPortHeight()-e.clientHeight)/2+hui.getScrollTop();
-			hui.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
-			hui.setStyle(e,{display:'block',visibility:'visible'});
+			var top = (hui.window.getViewHeight()-e.clientHeight)/2+hui.window.getScrollTop();
+			hui.style.set(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
+			hui.style.set(e,{display:'block',visibility:'visible'});
 		} else {
 			e.style.display='block';
 		}
@@ -86,8 +86,8 @@ hui.ui.Box.prototype = {
 		if (this.options.absolute && this.visible) {
 			var e = this.element;
 			var w = e.clientWidth;
-			var top = (hui.getViewPortHeight()-e.clientHeight)/2+hui.getScrollTop();
-			hui.setStyle(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
+			var top = (hui.window.getViewHeight()-e.clientHeight)/2+hui.window.getScrollTop();
+			hui.style.set(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
 		}
 	},
 	/**

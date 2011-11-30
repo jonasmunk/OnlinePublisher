@@ -36,7 +36,7 @@
 			hui.onReady(function() {
 				var id = <xsl:value-of select="../../@id"/>;
 				var node = hui.get('part_list_'+id);
-				hui.addClass(node,'part_list_busy');
+				hui.cls.add(node,'part_list_busy');
 				hui.log('Updating list ('+id+')');
 				hui.request({
 					url:'<xsl:value-of select="$path"/>services/parts/render/',

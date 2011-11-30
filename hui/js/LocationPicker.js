@@ -22,7 +22,7 @@ hui.ui.LocationPicker.prototype = {
 			var button = hui.ui.Button.create({text:'Luk'});
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
-			hui.setStyle(panel.element,{left:'-10000px',top:'-10000px',display:''});
+			hui.style.set(panel.element,{left:'-10000px',top:'-10000px',display:''});
 			this._whenReady(function() {
 		   	 	var mapOptions = {
 			      zoom: 15,

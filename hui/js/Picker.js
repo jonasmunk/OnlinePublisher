@@ -3,9 +3,9 @@ hui.ui.Picker = function(o) {
 	o = this.options = hui.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},o);
 	this.element = hui.get(o.element);
 	this.name = o.name;
-	this.container = hui.firstByClass(this.element,'hui_picker_container');
-	this.content = hui.firstByClass(this.element,'hui_picker_content');
-	this.title = hui.firstByClass(this.element,'hui_picker_title');
+	this.container = hui.get.firstByClass(this.element,'hui_picker_container');
+	this.content = hui.get.firstByClass(this.element,'hui_picker_content');
+	this.title = hui.get.firstByClass(this.element,'hui_picker_title');
 	this.objects = [];
 	this.selected = null;
 	this.value = null;
@@ -23,7 +23,7 @@ hui.ui.Picker.create = function(o) {
 		'</div></div>'+
 		'<div class="hui_picker_bottom"><div><div></div></div></div>'});
 	if (o.shadow==true) {
-		hui.addClass(o.element,'hui_picker_shadow')
+		hui.cls.add(o.element,'hui_picker_shadow')
 	}
 	return new hui.ui.Picker(o);
 }
@@ -62,13 +62,13 @@ hui.ui.Picker.prototype = {
 		} else {
 			width = this.container.clientWidth;
 		}
-		hui.setStyle(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
+		hui.style.set(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
 		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
 		this.content.style.height=(this.options.itemHeight+10)+'px';
 		hui.each(this.objects,function(object,i) {
 			var item = hui.build('div',{'class':'hui_picker_item',title:object.title});
 			if (self.value!=null && object[self.options.valueProperty]==self.value) {
-				 hui.addClass(item,'hui_picker_item_selected');
+				 hui.cls.add(item,'hui_picker_item_selected');
 			}
 			item.innerHTML = '<div class="hui_picker_item_middle"><div class="hui_picker_item_middle">'+
 				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.string.escape(object.title)+'</strong></div>'+
@@ -83,7 +83,7 @@ hui.ui.Picker.prototype = {
 	updateSelection : function() {
 		var children = this.content.childNodes;
 		for (var i=0; i < children.length; i++) {
-			hui.setClass(children[i],'hui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
+			hui.cls.set(children[i],'hui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
 		};
 	},
 	selectionChanged : function(value) {
@@ -132,7 +132,7 @@ hui.ui.Picker.prototype = {
 			width = this.container.parentNode.clientWidth-12;
 		}
 		width = Math.max(width,0);
-		hui.setStyle(this.container,{width:width+'px',display:'block'});
+		hui.style.set(this.container,{width:width+'px',display:'block'});
 	}
 }
 

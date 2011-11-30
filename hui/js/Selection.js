@@ -108,7 +108,7 @@ hui.ui.Selection.prototype = {
 	updateUI : function() {
 		var i;
 		for (i=0; i < this.items.length; i++) {
-			hui.setClass(this.items[i].element,'hui_selected',this.isSelection(this.items[i]));
+			hui.cls.set(this.items[i].element,'hui_selected',this.isSelection(this.items[i]));
 		};
 		for (i=0; i < this.subItems.length; i++) {
 			this.subItems[i].updateUI();
@@ -208,10 +208,10 @@ hui.ui.Selection.prototype = {
 		if (this.busy>0) {
 			var e = this.element;
 			this.busytimer = window.setTimeout(function() {
-				hui.addClass(e,'hui_selection_busy');
+				hui.cls.add(e,'hui_selection_busy');
 			},300);
 		} else {
-			hui.removeClass(this.element,'hui_selection_busy');
+			hui.cls.remove(this.element,'hui_selection_busy');
 		}
 	},
 	_checkValue : function() {
@@ -338,14 +338,14 @@ hui.ui.Selection.Items.prototype = {
 	},
 	/** @private */
 	toggle : function(node,item) {
-		if (hui.hasClass(node,'hui_disclosure_open')) {
+		if (hui.cls.has(node,'hui_disclosure_open')) {
 			this.disclosed[item.value] = false;
-			hui.getNext(node.parentNode).style.display='none';
-			hui.removeClass(node,'hui_disclosure_open');
+			hui.get.next(node.parentNode).style.display='none';
+			hui.cls.remove(node,'hui_disclosure_open');
 		} else {
 			this.disclosed[item.value] = true;
-			hui.getNext(node.parentNode).style.display='block';
-			hui.addClass(node,'hui_disclosure_open');
+			hui.get.next(node.parentNode).style.display='block';
+			hui.cls.add(node,'hui_disclosure_open');
 		}
 	},
 	/** @private */
@@ -374,7 +374,7 @@ hui.ui.Selection.Items.prototype = {
 	/** @private */
 	updateUI : function() {
 		for (var i=0; i < this.items.length; i++) {
-			hui.setClass(this.items[i].element,'hui_selected',this.parent.isSelection(this.items[i]));
+			hui.cls.set(this.items[i].element,'hui_selected',this.parent.isSelection(this.items[i]));
 		};
 	},
 	/** @private */

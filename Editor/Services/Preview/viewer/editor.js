@@ -103,7 +103,7 @@ op.Editor.Header = function(element,row,column,position) {
 	this.column = column;
 	this.position = position;
 	this.id = hui.ui.Editor.getPartId(this.element);
-	this.header = hui.firstByTag(this.element,'*');
+	this.header = hui.get.firstByTag(this.element,'*');
 	this.field = null;
 }
 
@@ -153,8 +153,8 @@ op.Editor.Header.prototype = {
 		hui.ui.Editor.get().partDidDeacivate(this);
 	},
 	_updateFieldStyle : function() {
-		hui.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
-		hui.copyStyle(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
+		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	},
 	getValue : function() {
 		return this.value;
@@ -170,7 +170,7 @@ op.Editor.Text = function(element,row,column,position) {
 	this.column = column;
 	this.position = position;
 	this.id = hui.ui.Editor.getPartId(this.element);
-	this.header = hui.firstByTag(this.element,'*');
+	this.header = hui.get.firstByTag(this.element,'*');
 	this.field = null;
 }
 
@@ -207,7 +207,7 @@ op.Editor.Text.prototype = {
 				parameters : {id:this.id,pageId:op.page.id,text:this.value,type:'text'},
 				onText : function(html) {
 					this.element.innerHTML=html;
-					this.header = hui.firstByTag(this.element,'*');
+					this.header = hui.get.firstByTag(this.element,'*');
 				}.bind(this)
 			});
 		}
@@ -221,8 +221,8 @@ op.Editor.Text.prototype = {
 		hui.ui.Editor.get().partDidDeacivate(this);
 	},
 	_updateFieldStyle : function() {
-		hui.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
-		hui.copyStyle(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
+		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	},
 	getValue : function() {
 		return this.value;
@@ -247,7 +247,7 @@ op.FieldResizer.prototype = {
 	resize : function(instantly,focused) {
 				
 		var field = this.options.field;
-		hui.copyStyle(field,this.dummy,[
+		hui.style.copy(field,this.dummy,[
 			'font-size','line-height','font-weight','letter-spacing','word-spacing','font-family','text-transform','font-variant','text-indent'
 		]);
 		var html = field.value;

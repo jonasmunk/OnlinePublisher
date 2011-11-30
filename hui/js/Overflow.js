@@ -21,13 +21,13 @@ hui.ui.Overflow.create = function(options) {
 
 hui.ui.Overflow.prototype = {
 	_calculate : function() {
-		var viewport = hui.getViewPortHeight(),
+		var viewport = hui.window.getViewHeight(),
 			parent = this.element.parentNode,
 			top = hui.getTop(this.element),
 			bottom = hui.getTop(parent)+parent.clientHeight,
-			sibs = hui.getAllNext(this.element);
+			sibs = hui.get.after(this.element);
 		for (var i=0; i < sibs.length; i++) {
-			if (hui.getStyle(sibs[i],'position')!='absolute') {
+			if (hui.style.get(sibs[i],'position')!='absolute') {
 				bottom-=sibs[i].clientHeight;
 			}
 		}
@@ -65,7 +65,7 @@ hui.ui.Overflow.prototype = {
 		var height;
 		if (!this.options.dynamic) {
 			if (this.options.vertical) {
-				height = hui.getViewPortHeight();
+				height = hui.window.getViewHeight();
 				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
 			}
 			return;
@@ -73,7 +73,7 @@ hui.ui.Overflow.prototype = {
 		if (this.diff===undefined) {
 			this._calculate();
 		}
-		height = hui.getViewPortHeight();
+		height = hui.window.getViewHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';
 	}
 }

@@ -42,7 +42,7 @@
 	<body>
 		<script type="text/javascript">
 			if (hui.browser.windows) {
-				hui.addClass(document.body,'windows');
+				hui.cls.add(document.body,'windows');
 			}
 		</script>
 		<div class="layout">

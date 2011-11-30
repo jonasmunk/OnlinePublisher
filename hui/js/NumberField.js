@@ -8,9 +8,9 @@ hui.ui.NumberField = function(o) {
 	this.options = hui.override({min:0,max:10000,value:null,decimals:0,allowNull:false},o);	
 	this.name = o.name;
 	var e = this.element = hui.get(o.element);
-	this.input = hui.firstByTag(e,'input');
-	this.up = hui.firstByClass(e,'hui_numberfield_up');
-	this.down = hui.firstByClass(e,'hui_numberfield_down');
+	this.input = hui.get.firstByTag(e,'input');
+	this.up = hui.get.firstByClass(e,'hui_numberfield_up');
+	this.down = hui.get.firstByClass(e,'hui_numberfield_down');
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	this.addBehavior();
@@ -29,7 +29,7 @@ hui.ui.NumberField.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var e = this.element;
-		hui.listen(this.input,'focus',function() {hui.addClass(e,'hui_numberfield_focused')});
+		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
 		hui.listen(this.input,'blur',this.blurEvent.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
@@ -39,7 +39,7 @@ hui.ui.NumberField.prototype = {
 	},
 	/** @private */
 	blurEvent : function() {
-		hui.removeClass(this.element,'hui_numberfield_focused');
+		hui.cls.remove(this.element,'hui_numberfield_focused');
 		this.updateField();
 	},
 	/** @private */

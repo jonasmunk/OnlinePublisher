@@ -3,10 +3,10 @@ if (!Atira.Website) {Atira.Website={};}
 
 Atira.Website.Poster = function(options) {
 	this.options = options || {random:false};
-	this.poster = hui.firstByClass(document.body,'placard');
-	this.inner = hui.firstByClass(document.body,'inner_placard');
+	this.poster = hui.get.firstByClass(document.body,'placard');
+	this.inner = hui.get.firstByClass(document.body,'inner_placard');
 	this.num = 1;
-	this.count = hui.byClass(this.poster,'poster').length;
+	this.count = hui.get.byClass(this.poster,'poster').length;
 	this.duration = 6000;
 	this.active = false;
 	this.paused = false;
@@ -67,11 +67,11 @@ Atira.Website.Ticker = function() {
 
 Atira.Website.Ticker.prototype = {
 	addBehavior : function() {
-		this.base = hui.firstByClass(document.body,'ticker');
+		this.base = hui.get.firstByClass(document.body,'ticker');
 		if (!this.base) return false;
-		this.item = hui.firstByClass(this.base,'item');
-		this.previousArrow = hui.firstByClass(this.base,'ticker_previous');
-		this.nextArrow = hui.firstByClass(this.base,'ticker_next');
+		this.item = hui.get.firstByClass(this.base,'item');
+		this.previousArrow = hui.get.firstByClass(this.base,'ticker_previous');
+		this.nextArrow = hui.get.firstByClass(this.base,'ticker_next');
 		var self = this;
 		this.base.onmouseover = function() {
 			self.pause();

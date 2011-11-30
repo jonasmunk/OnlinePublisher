@@ -303,11 +303,11 @@ class GuiUtils {
 			'DA' => 'flag/dk',
 			'DE' => 'flag/de'
 		);
-		return $languageIcons[$lang];
+		return @$languageIcons[$lang];
 	}
 	
 	function getLanguageName($lang) {
-		return GuiUtils::$languages[$lang];
+		return @GuiUtils::$languages[$lang];
 	}
 	
 	function getLanguages() {

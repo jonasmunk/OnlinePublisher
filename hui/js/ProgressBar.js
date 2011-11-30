@@ -11,7 +11,7 @@ hui.ui.ProgressBar = function(o) {
 	/** @private */
 	this.options = o || {};
 	/** @private */
-	this.indicator = hui.firstByTag(this.element,'div');
+	this.indicator = hui.get.firstByTag(this.element,'div');
 	hui.ui.extend(this);
 }
 
@@ -32,24 +32,24 @@ hui.ui.ProgressBar.prototype = {
 	setValue : function(value) {
 		var el = this.element;
 		if (this.waiting) {
-			hui.removeClass(el,this.WAITING);
+			hui.cls.remove(el,this.WAITING);
 		}
-		hui.setClass(el,this.COMPLETE,value==1);
+		hui.cls.set(el,this.COMPLETE,value==1);
 		hui.animate(this.indicator,'width',(value*100)+'%',200);
 	},
 	/** Mark progress as waiting */
 	setWaiting : function() {
 		this.waiting = true;
 		this.indicator.style.width=0;
-		hui.addClass(this.element,this.WAITING);
+		hui.cls.add(this.element,this.WAITING);
 	},
 	/** Reset the progress bar */
 	reset : function() {
 		var el = this.element;
 		if (this.waiting) {
-			hui.removeClass(el,this.WAITING);
+			hui.cls.remove(el,this.WAITING);
 		}
-		hui.removeClass(el,this.COMPLETE);
+		hui.cls.remove(el,this.COMPLETE);
 		this.indicator.style.width='0%';
 	},
 	/** Hide the progress bar */

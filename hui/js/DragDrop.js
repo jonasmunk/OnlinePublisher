@@ -53,12 +53,12 @@ hui.ui.dragListener = function(e) {
 	var target = hui.ui.findDropTarget(e.getElement());
 	if (target && hui.ui.dropTypes[target.dragDropInfo['kind']]) {
 		if (hui.ui.latestDropTarget) {
-			hui.removeClass(hui.ui.latestDropTarget,'hui_drop');
+			hui.cls.remove(hui.ui.latestDropTarget,'hui_drop');
 		}
-		hui.addClass(target,'hui_drop');
+		hui.cls.add(target,'hui_drop');
 		hui.ui.latestDropTarget = target;
 	} else if (hui.ui.latestDropTarget) {
-		hui.removeClass(hui.ui.latestDropTarget,'hui_drop');
+		hui.cls.remove(hui.ui.latestDropTarget,'hui_drop');
 		hui.ui.latestDropTarget = null;
 	}
 	return false;
@@ -81,7 +81,7 @@ hui.ui.dragEndListener = function(event) {
 	hui.unListen(document.body,'mouseup',hui.ui.dragEndListener);
 	hui.ui.dragging = false;
 	if (hui.ui.latestDropTarget) {
-		hui.removeClass(hui.ui.latestDropTarget,'hui_drop');
+		hui.cls.remove(hui.ui.latestDropTarget,'hui_drop');
 		hui.ui.callDelegatesDrop(hui.ui.dragInfo,hui.ui.latestDropTarget.dragDropInfo);
 		hui.ui.dragProxy.style.display='none';
 	} else {

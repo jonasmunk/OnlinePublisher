@@ -78,3 +78,9 @@ body.editor_details span.editor_link_bound
 {
 	background: url('../../../../hui/gfx/hover_bg.png');
 }
+
+div.editor_error
+{
+	color: #aaa;
+	font-size: 12px;
+}

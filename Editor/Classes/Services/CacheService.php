@@ -28,7 +28,7 @@ class CacheService {
 	
 	function sendCachedPage($id,$path) {
 		return false;
-		if (Request::getBoolean('viewsource') || Request::getBoolean('mini') || Request::getString('design') || $_SESSION['debug.design']) {
+		if (Request::getBoolean('viewsource') || Request::getBoolean('mini') || Request::getString('design') || @$_SESSION['debug.design']) {
 			return false;
 		}
 		$sql = "select page_cache.html,UNIX_TIMESTAMP(page.published) from page_cache,page,frame where page.secure=0 and page.dynamic=0 and page.id=page_cache.page_id and page.frame_id=frame.id and frame.dynamic=0";
@@ -51,7 +51,7 @@ class CacheService {
 	}
 	
 	function createPageCache($id,$path,$html) {
-		if (Request::getBoolean('viewsource') || Request::getString('design') || $_SESSION['debug.design']) {
+		if (Request::getBoolean('viewsource') || Request::getString('design') || @$_SESSION['debug.design']) {
 			return;
 		}
 		$html = Database::text($html);

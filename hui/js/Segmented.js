@@ -19,15 +19,15 @@ hui.ui.Segmented.prototype = {
 		if (a) {
 			var changed = false;
 			var value = a.getAttribute('rel');
-			var x = hui.byClass(this.element,'hui_segmented_selected');
+			var x = hui.get.byClass(this.element,'hui_segmented_selected');
 			for (var i=0; i < x.length; i++) {
-				hui.removeClass(x[i],'hui_segmented_selected');
+				hui.cls.remove(x[i],'hui_segmented_selected');
 			};
 			if (value===this.value && this.options.allowNull) {
 				changed=true;
 				this.value = null;
 			} else {
-				hui.addClass(a,'hui_segmented_selected');
+				hui.cls.add(a,'hui_segmented_selected');
 				changed=this.value!== value;
 				this.value = value;
 			}
@@ -45,10 +45,10 @@ hui.ui.Segmented.prototype = {
 		this.value = null;
 		for (var i=0; i < as.length; i++) {
 			if (as[i].getAttribute('rel')===value) {
-				hui.addClass(as[i],'hui_segmented_selected');
+				hui.cls.add(as[i],'hui_segmented_selected');
 				this.value=value;
 			} else {
-				hui.removeClass(as[i],'hui_segmented_selected');
+				hui.cls.remove(as[i],'hui_segmented_selected');
 			}
 		};
 	},

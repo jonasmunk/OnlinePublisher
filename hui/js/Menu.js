@@ -57,7 +57,7 @@ hui.ui.Menu.prototype = {
 				sub.showAtElement(element,e,'horizontal');
 			});
 			self.subMenus.push(sub);
-			hui.addClass(element,'hui_menu_item_children');
+			hui.cls.add(element,'hui_menu_item_children');
 		}
 		this.element.appendChild(element);
 	},
@@ -97,23 +97,23 @@ hui.ui.Menu.prototype = {
 		this.showAtPoint(point);
 	},
 	showAtPoint : function(pos) {
-		var innerWidth = hui.getViewPortWidth();
-		var innerHeight = hui.getViewPortHeight();
-		var scrollTop = hui.getScrollTop();
-		var scrollLeft = hui.getScrollLeft();
+		var innerWidth = hui.window.getViewWidth();
+		var innerHeight = hui.window.getViewHeight();
+		var scrollTop = hui.window.getScrollTop();
+		var scrollLeft = hui.window.getScrollLeft();
 		if (!this.visible) {
-			hui.setStyle(this.element,{'display':'block','visibility':'hidden',opacity:0});
+			hui.style.set(this.element,{'display':'block','visibility':'hidden',opacity:0});
 		}
 		var width = this.element.clientWidth;
 		var height = this.element.clientHeight;
 		var left = Math.min(pos.left,innerWidth-width-26+scrollLeft);
 		var top = Math.max(0,Math.min(pos.top,innerHeight-height-20+scrollTop));
-		hui.setStyle(this.element,{'top':top+'px','left':left+'px','visibility':'visible',zIndex:hui.ui.nextTopIndex()});
+		hui.style.set(this.element,{'top':top+'px','left':left+'px','visibility':'visible',zIndex:hui.ui.nextTopIndex()});
 		if (!this.element.style.width) {
 			this.element.style.width=(width+6)+'px';
 		}
 		if (!this.visible) {
-			hui.setStyle(this.element,{opacity:1});
+			hui.style.set(this.element,{opacity:1});
 			this.addHider();
 			this.visible = true;
 		}

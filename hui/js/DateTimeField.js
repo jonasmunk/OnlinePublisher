@@ -9,7 +9,7 @@ hui.ui.DateTimeField = function(o) {
 	this.outputFormat = 'd-m-Y H:i:s';
 	this.name = o.name;
 	this.element = hui.get(o.element);
-	this.input = hui.firstByTag(this.element,'input');
+	this.input = hui.get.firstByTag(this.element,'input');
 	this.options = hui.override({returnType:null,label:null,allowNull:true,value:null},o);
 	this.value = this.options.value;
 	hui.ui.extend(this);

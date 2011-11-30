@@ -154,11 +154,11 @@ hui.ui.MarkupEditor.prototype = {
 	},
 	_highlightNode : function(node) {
 		if (this._highlightedNode) {
-			hui.removeClass(this._highlightedNode,'hui_markupeditor_highlighted');
+			hui.cls.remove(this._highlightedNode,'hui_markupeditor_highlighted');
 		}
 		this._highlightedNode = node;
 		if (node) {
-			hui.addClass(node,'hui_markupeditor_highlighted');
+			hui.cls.add(node,'hui_markupeditor_highlighted');
 		}
 	},
 	_showLinkEditor : function() {
@@ -354,7 +354,7 @@ hui.ui.MarkupEditor.MSIE = {
 		}.bind(this));
 	},
 	_load : function() {
-		this.document = hui.getFrameDocument(this.iframe);
+		this.document = hui.frame.getDocument(this.iframe);
 		this.body = this.document.body;
 		this.body.contentEditable = true;
 		hui.listen(this.body,'keyup',this._keyUp.bind(this));
@@ -413,7 +413,7 @@ hui.ui.MarkupEditor.util = {
 		var copy = node.cloneNode(true);
 		this.replaceNodes(copy,{b:'strong',i:'em',font:'span'});
 
-		var apples = hui.byClass(copy,'Apple-style-span');
+		var apples = hui.get.byClass(copy,'Apple-style-span');
 		for (var i = apples.length - 1; i >= 0; i--){
 			apples[i].removeAttribute('class');
 		};

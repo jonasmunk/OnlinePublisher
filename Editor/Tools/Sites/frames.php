@@ -25,8 +25,8 @@ $gui='
 			<tab title="Info" padding="5">
 				<formula name="frameFormula">
 					<group>
-						<text label="Titel:" key="name"/>
-						<text label="Sidetitel:" key="title"/>
+						<text label="Navn:" key="name"/>
+						<text label="Titel:" key="title"/>
 						<text label="Bund-tekst:" key="bottomText" multiline="true"/>
 						<dropdown key="hierarchyId" label="Hierarki:" source="hierarchyItems" placeholder="Vælg..."/>
 					</group>

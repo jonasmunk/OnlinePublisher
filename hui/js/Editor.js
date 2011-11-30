@@ -43,16 +43,16 @@ hui.ui.Editor.prototype = {
 		}
 		var self = this;
 		this.parts = [];
-		var rows = hui.byClass(document.body,this.options.partClass);
+		var rows = hui.get.byClass(document.body,this.options.partClass);
 		hui.each(rows,function(row,i) {
-			var columns = hui.byClass(row,self.options.columnClass);
+			var columns = hui.get.byClass(row,self.options.columnClass);
 			self.reloadColumns(columns,i);
 			hui.each(columns,function(column,j) {
 				var parts = column.select('.'+self.options.partClass);
 				self.reloadParts(parts,i,j);
 			});
 		});
-		var parts = hui.byClass(document.body,this.options.partClass);
+		var parts = hui.get.byClass(document.body,this.options.partClass);
 		hui.each(this.parts,function(part) {
 			var i = parts.indexOf(part.element);
 			if (i!=-1) {
@@ -126,12 +126,12 @@ hui.ui.Editor.prototype = {
 	hoverColumn : function(column) {
 		this.hoveredColumn = column;
 		if (!this.active || this.activePart) return;
-		hui.addClass(column,'hui_editor_column_hover');
+		hui.cls.add(column,'hui_editor_column_hover');
 	},
 	
 	blurColumn : function() {
 		if (!this.active || !this.hoveredColumn) return;
-		hui.removeClass(this.hoveredColumn,'hui_editor_column_hover');
+		hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
 	},
 	
 	contextColumn : function(column,rowIndex,columnIndex,e) {
@@ -169,15 +169,15 @@ hui.ui.Editor.prototype = {
 	
 	editColumn : function(rowIndex,columnIndex) {
 		this.closeColumn();
-		var row = hui.byClass(document.body,'row')[rowIndex];
-		var c = this.activeColumn = hui.byClass(row,'column')[columnIndex];
-		hui.addClass(c,'hui_editor_column_edit');
+		var row = hui.get.byClass(document.body,'row')[rowIndex];
+		var c = this.activeColumn = hui.get.byClass(row,'column')[columnIndex];
+		hui.cls.add(c,'hui_editor_column_edit');
 		this.showColumnWindow();
 		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});
 	},
 	closeColumn : function() {
 		if (this.activeColumn) {
-			hui.removeClass(this.activeColumn,'hui_editor_column_edit');
+			hui.cls.remove(this.activeColumn,'hui_editor_column_edit');
 		}
 	},
 	showColumnWindow : function() {
@@ -220,7 +220,7 @@ hui.ui.Editor.prototype = {
 	hoverPart : function(part,event) {
 		if (!this.active || this.activePart) return;
 		this.hoveredPart = part;
-		hui.addClass(part.element,'hui_editor_part_hover');
+		hui.cls.add(part.element,'hui_editor_part_hover');
 		var self = this;
 		this.partControlTimer = window.setTimeout(function() {self.showPartControls()},200);
 	},
@@ -229,10 +229,10 @@ hui.ui.Editor.prototype = {
 		if (!this.active) return;
 		if (this.partControls && !hui.ui.isWithin(e,this.partControls.element)) {
 			this.hidePartControls();
-			hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');
+			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
 		}
 		if (!this.partControls && this.hoveredPart) {
-			hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');			
+			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');			
 		}
 	},
 	showPartEditControls : function() {
@@ -267,10 +267,10 @@ hui.ui.Editor.prototype = {
 		this.partControls.showAtElement(this.hoveredPart.element,{'horizontal':'right'});
 	},
 	hoverControls : function(e) {
-		hui.addClass(this.hoveredPart.element,'hui_editor_part_hover');
+		hui.cls.add(this.hoveredPart.element,'hui_editor_part_hover');
 	},
 	blurControls : function(e) {
-		hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');
+		hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
 		if (!hui.ui.isWithin(e,this.hoveredPart.element)) {
 			this.hidePartControls();
 		}
@@ -305,11 +305,11 @@ hui.ui.Editor.prototype = {
 		if (!this.active || this.activePart) return;
 		if (this.activePart) this.activePart.deactivate();
 		if (this.hoveredPart) {
-			hui.removeClass(this.hoveredPart.element,'hui_editor_part_hover');
+			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
 		}
 		this.activePart = part;
 		this.showPartEditControls();
-		hui.addClass(part.element,'hui_editor_part_active');
+		hui.cls.add(part.element,'hui_editor_part_active');
 		part.activate(function() {
 			//hui.ui.showMessage({text:'Loaded',duration:2000});
 		});
@@ -342,7 +342,7 @@ hui.ui.Editor.prototype = {
 		this.partEditor.show();*/
 	},
 	updatePartProperties : function(values) {
-		hui.setStyle(this.activePart.element,{
+		hui.style.set(this.activePart.element,{
 			marginTop:values.top,
 			marginBottom:values.bottom,
 			marginLeft:values.left,
@@ -371,7 +371,7 @@ hui.ui.Editor.prototype = {
 		return null;
 	},
 	partDidDeacivate : function(part) {
-		hui.removeClass(part.element,'hui_editor_part_active');
+		hui.cls.remove(part.element,'hui_editor_part_active');
 		this.activePart = null;
 		this.hidePartEditControls();
 	},
@@ -463,7 +463,7 @@ hui.ui.Editor.Header = function(element,row,column,position) {
 	this.column = column;
 	this.position = position;
 	this.id = hui.ui.Editor.getPartId(this.element);
-	this.header = hui.firstByTag(this.element,'*');
+	this.header = hui.get.firstByTag(this.element,'*');
 	this.field = null;
 }
 
@@ -501,8 +501,8 @@ hui.ui.Editor.Header.prototype = {
 		hui.ui.Editor.get().partDidDeacivate(this);
 	},
 	updateFieldStyle : function() {
-		hui.setStyle(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
-		hui.copyStyle(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
+		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		hui.style.copy(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
 	},
 	getValue : function() {
 		return this.value;
@@ -536,11 +536,11 @@ hui.ui.Editor.Html.prototype = {
 	},
 	buildStyle : function() {
 		return {
-			'textAlign':hui.getStyle(this.element,'text-align')
-			,'fontFamily':hui.getStyle(this.element,'font-family')
-			,'fontSize':hui.getStyle(this.element,'font-size')
-			,'fontWeight':hui.getStyle(this.element,'font-weight')
-			,'color':hui.getStyle(this.element,'color')
+			'textAlign':hui.style.get(this.element,'text-align')
+			,'fontFamily':hui.style.get(this.element,'font-family')
+			,'fontSize':hui.style.get(this.element,'font-size')
+			,'fontWeight':hui.style.get(this.element,'font-weight')
+			,'color':hui.style.get(this.element,'color')
 		}
 	},
 	cancel : function() {

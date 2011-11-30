@@ -12,7 +12,7 @@ hui.ui.Layout = function(options) {
 hui.ui.Layout.prototype = {
 	$$layout : function() {
 		if (hui.browser.gecko) {
-			var center = hui.firstByClass(this.element,'hui_layout_center');
+			var center = hui.get.firstByClass(this.element,'hui_layout_center');
 			if (center) {
 				center.style.height='100%';
 			}
@@ -24,12 +24,12 @@ hui.ui.Layout.prototype = {
 			return;
 		}
 		if (this.diff===undefined) {
-			var head = hui.firstByClass(this.element,'hui_layout_top');
-			var top = hui.firstByTag(head,'*').clientHeight;
-			var foot = hui.firstByTag(hui.firstByTag(this.element,'tfoot'),'td');
+			var head = hui.get.firstByClass(this.element,'hui_layout_top');
+			var top = hui.get.firstByTag(head,'*').clientHeight;
+			var foot = hui.get.firstByTag(hui.get.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
 			if (foot) {
-				bottom = hui.firstByTag(foot,'*').clientHeight;
+				bottom = hui.get.firstByTag(foot,'*').clientHeight;
 			}
 			top += hui.getTop(this.element);
 			this.diff = bottom+top;
@@ -38,9 +38,9 @@ hui.ui.Layout.prototype = {
 			} else {
 			}
 		}
-		var tbody = hui.firstByTag(this.element,'tbody');
-		var cell = hui.firstByTag(tbody,'td');
-		var height = (hui.getViewPortHeight()-this.diff+5);
+		var tbody = hui.get.firstByTag(this.element,'tbody');
+		var cell = hui.get.firstByTag(tbody,'td');
+		var height = (hui.window.getViewHeight()-this.diff+5);
 		cell.style.height = height+'px';
 	}
 };
@@ -54,7 +54,7 @@ hui.ui.Columns = function(options) {
 	this.name = options.name;
 	this.options = options || {};
 	this.element = hui.get(options.element);
-	this.body = hui.firstByTag(this.element,'tr');
+	this.body = hui.get.firstByTag(this.element,'tr');
 	hui.ui.extend(this);
 }
 
@@ -74,7 +74,7 @@ hui.ui.Columns.prototype = {
 	},
 	setColumnStyle : function(index,style) {
 		var c = this.ensureColumn(index);
-		hui.setStyle(c,style);
+		hui.style.set(c,style);
 	},
 	setColumnWidth : function(index,width) {
 		var c = this.ensureColumn(index);
@@ -82,11 +82,11 @@ hui.ui.Columns.prototype = {
 	},
 	/** @private */
 	ensureColumn : function(index) {
-		var children = hui.getChildren(this.body);
+		var children = hui.get.children(this.body);
 		for (var i=children.length-1;i<index;i++) {
 			this.body.appendChild(hui.build('td',{'class':'hui_columns_column'}));
 		}
-		return hui.getChildren(this.body)[index];
+		return hui.get.children(this.body)[index];
 	}
 }
 

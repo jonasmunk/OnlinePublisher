@@ -8,7 +8,7 @@ hui.ui.StyleLength = function(o) {
 	this.options = hui.override({value:null,min:0,max:1000,units:['px','pt','em','%'],defaultUnit:'px',allowNull:false},o);	
 	this.name = o.name;
 	var e = this.element = hui.get(o.element);
-	this.input = hui.firstByTag(e,'input');
+	this.input = hui.get.firstByTag(e,'input');
 	var as = e.getElementsByTagName('a');
 	this.up = as[0];
 	this.down = as[1];
@@ -21,7 +21,7 @@ hui.ui.StyleLength.prototype = {
 	/** @private */
 	addBehavior : function() {
 		var e = this.element;
-		hui.listen(this.input,'focus',function() {hui.addClass(e,'hui_numberfield_focused')});
+		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
 		hui.listen(this.input,'blur',this.blurEvent.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
@@ -49,7 +49,7 @@ hui.ui.StyleLength.prototype = {
 	},
 	/** @private */
 	blurEvent : function() {
-		hui.removeClass(this.element,'hui_numberfield_focused');
+		hui.cls.remove(this.element,'hui_numberfield_focused');
 		this.updateInput();
 	},
 	/** @private */

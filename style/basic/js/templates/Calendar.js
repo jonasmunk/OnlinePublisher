@@ -20,8 +20,8 @@ op.CalendarTemplate = function() {
 }
 
 op.CalendarTemplate.prototype.windowWasScrolled = function() {
-	var top = hui.getScrollTop();
-	var height = hui.getViewPortHeight();
+	var top = hui.window.getScrollTop();
+	var height = hui.window.getViewHeight();
 	var bottom = top+height;
 	for (var i=0;i<this.days.length;i++) {
 		if (this.maxDayEvents[i]>bottom) {
@@ -42,9 +42,9 @@ op.CalendarTemplate.prototype.createArrows = function() {
 }
 
 op.CalendarTemplate.prototype.analyze = function() {
-	this.days = hui.byClass(document.body,'day');
+	this.days = hui.get.byClass(document.body,'day');
 	for (var i=0;i<this.days.length;i++) {
-		var events = hui.byClass(this.days[i],'event');
+		var events = hui.get.byClass(this.days[i],'event');
 		for (var j=0;j<events.length;j++) {
 			var top = events[j].cumulativeOffset().top;
 			if (top>this.maxDayEvents[i]) {

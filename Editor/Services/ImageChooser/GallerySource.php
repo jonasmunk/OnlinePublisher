@@ -37,7 +37,7 @@ foreach ($objects as $object) {
 		'title' => $object->getTitle(),
 		'value' => $object->getId(),
 		'icon' => $object->getIn2iGuiIcon(),
-		'kind' => $type
+		'kind' => 'image'
 	));
 }
 

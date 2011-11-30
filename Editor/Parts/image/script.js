@@ -45,7 +45,7 @@ var partController = {
 		if (a) {
 			a.href='javascript:void(0)';
 		}
-		var img = hui.firstByTag(container,'img');
+		var img = hui.get.firstByTag(container,'img');
 		if (img) {
 			hui.listen(img,'click',this.showChooserWindow.bind(this));
 		}

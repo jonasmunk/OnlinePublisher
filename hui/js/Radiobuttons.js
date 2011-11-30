@@ -21,7 +21,7 @@ hui.ui.Radiobuttons.prototype = {
 	updateUI : function() {
 		for (var i=0; i < this.radios.length; i++) {
 			var radio = this.radios[i];
-			hui.setClass(hui.get(radio.id),'hui_radiobutton_selected',radio.value==this.value);
+			hui.cls.set(hui.get(radio.id),'hui_radiobutton_selected',radio.value==this.value);
 		};
 	},
 	setValue : function(value) {
@@ -39,7 +39,7 @@ hui.ui.Radiobuttons.prototype = {
 	},
 	setEnabled : function(enabled) {
 		this.enabled = enabled == true;
-		hui.setClass(this.element,'hui_radiobuttons_disabled',!this.enabled);
+		hui.cls.set(this.element,'hui_radiobuttons_disabled',!this.enabled);
 	},
 	registerRadiobutton : function(radio) {
 		this.radios.push(radio);

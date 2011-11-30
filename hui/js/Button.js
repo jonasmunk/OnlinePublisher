@@ -6,7 +6,7 @@ hui.ui.Button = function(options) {
 	this.options = options;
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.enabled = !hui.hasClass(this.element,'hui_button_disabled');
+	this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
 	hui.ui.extend(this);
 	this.addBehavior();
 }
@@ -31,7 +31,7 @@ hui.ui.Button.create = function(o) {
 	if (o.icon) {
 		var icon = hui.build('em',{'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(o.icon,16)+')'});
 		if (!o.text || o.text.length==0) {
-			hui.addClass(icon,'hui_button_icon_notext');
+			hui.cls.add(icon,'hui_button_icon_notext');
 		}
 		element3.appendChild(icon);
 	}
@@ -113,11 +113,11 @@ hui.ui.Button.prototype = {
 	},
 	/** Sets whether the button is highlighted */
 	setHighlighted : function(highlighted) {
-		hui.setClass(this.element,'hui_button_highlighted',highlighted);
+		hui.cls.set(this.element,'hui_button_highlighted',highlighted);
 	},
 	/** @private */
 	updateUI : function() {
-		hui.setClass(this.element,'hui_button_disabled',!this.enabled);
+		hui.cls.set(this.element,'hui_button_disabled',!this.enabled);
 	},
 	/** Sets the button text */
 	setText : function(text) {
@@ -134,7 +134,7 @@ hui.ui.Button.prototype = {
 hui.ui.Buttons = function(o) {
 	this.name = o.name;
 	this.element = hui.get(o.element);
-	this.body = hui.firstByClass(this.element,'hui_buttons_body');
+	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
 	hui.ui.extend(this);
 }
 
@@ -142,10 +142,10 @@ hui.ui.Buttons.create = function(o) {
 	o = hui.override({top:0},o);
 	var e = o.element = hui.build('div',{'class':'hui_buttons'});
 	if (o.align=='right') {
-		hui.addClass(e,'hui_buttons_right');
+		hui.cls.add(e,'hui_buttons_right');
 	}
 	if (o.align=='center') {
-		hui.addClass(e,'hui_buttons_center');
+		hui.cls.add(e,'hui_buttons_center');
 	}
 	if (o.top>0) {
 		e.style.paddingTop=o.top+'px';

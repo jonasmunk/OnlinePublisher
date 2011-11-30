@@ -52,7 +52,7 @@ hui.ui.Input.prototype = {
 		var result;
 		if (validator) {
 			result = validator.validate(value);
-			hui.setClass(this.element,'hui_invalid',!result.valid);
+			hui.cls.set(this.element,'hui_invalid',!result.valid);
 			return result.value;
 		}
 		return value;
@@ -78,7 +78,7 @@ hui.ui.Input.prototype = {
 	},
 	/** @private */
 	onBlur : function() {
-		hui.removeClass(this.element,'hui_invalid');
+		hui.cls.remove(this.element,'hui_invalid');
 		this.element.value = this.value || '';
 	},
 	getValue : function() {
@@ -102,7 +102,7 @@ hui.ui.Input.prototype = {
 	},
 	setError : function(error) {
 		var isError = error ? true : false;
-		hui.setClass(this.element,'hui_field_error',isError);
+		hui.cls.set(this.element,'hui_field_error',isError);
 		if (typeof(error) == 'string') {
 			hui.ui.showToolTip({text:error,element:this.element,key:this.name});
 		}

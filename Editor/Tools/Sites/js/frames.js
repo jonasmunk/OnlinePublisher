@@ -58,6 +58,7 @@ hui.ui.listen({
 	_saveFrame : function() {
 		var values = frameFormula.getValues();
 		if (hui.isBlank(values.title) || values.hierarchyId==null) {
+			hui.log(values);
 			hui.ui.showMessage({text:'Titel og hierarki skal udfyldes',icon:'common/warning',duration:2000});
 			frameFormula.focus();
 			return;
