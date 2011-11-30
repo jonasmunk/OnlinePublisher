@@ -128,7 +128,7 @@ hui.ui.Source.prototype = {
 			var str = t.responseText.replace(/^\s+|\s+$/g, ''),
 				json = null;
 			if (str.length>0) {
-				json = hui.fromJSON(t.responseText);
+				json = hui.string.fromJSON(t.responseText);
 			}
 			this.fire('objectsLoaded',json);
 		}

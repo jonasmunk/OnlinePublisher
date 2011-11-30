@@ -637,7 +637,7 @@ hui.ui.Upload.Flash.prototype = {
 		this.items.push(item);
 	},
 	_onFileQueueError : function(file, error, message) {
-		hui.log('Flash: fileQueueError file:'+hui.toJSON(file)+', error:'+error+', message:'+message);
+		hui.log('Flash: fileQueueError file:'+hui.string.toJSON(file)+', error:'+error+', message:'+message);
 		if (file!==null) {
 			var item = this.parent.$_addItem({name:file.name,size:file.size});
 			this.items.push(item);

@@ -76,23 +76,23 @@
 				hui.ui.test.assertEquals(hui.array.indexOf(['',' ',0],null),-1,'Not found in array');
 			},
 			function() { // JSON
-				hui.ui.test.assertEquals(hui.toJSON({}),"{}",'JSON of empty object');
-				hui.ui.test.assertEquals(hui.toJSON(1),"1",'JSON of number');
-				hui.ui.test.assertEquals(hui.toJSON('abc'),'"abc"','JSON of string');
-				hui.ui.test.assertEquals(hui.toJSON([]),"[]",'JSON of array');
-				hui.ui.test.assertEquals(hui.toJSON(),undefined,'JSON of undefined');
-				hui.ui.test.assertEquals(hui.toJSON(null),"null",'JSON of null');
+				hui.ui.test.assertEquals(hui.string.toJSON({}),"{}",'JSON of empty object');
+				hui.ui.test.assertEquals(hui.string.toJSON(1),"1",'JSON of number');
+				hui.ui.test.assertEquals(hui.string.toJSON('abc'),'"abc"','JSON of string');
+				hui.ui.test.assertEquals(hui.string.toJSON([]),"[]",'JSON of array');
+				hui.ui.test.assertEquals(hui.string.toJSON(),undefined,'JSON of undefined');
+				hui.ui.test.assertEquals(hui.string.toJSON(null),"null",'JSON of null');
 				
 				var x = {a:'b'};
 				x.y = x;
 				try {
-					hui.ui.test.assertEquals(hui.toJSON(x),"null",'JSON of null');
+					hui.ui.test.assertEquals(hui.string.toJSON(x),"null",'JSON of null');
 				} catch (e) {
 					hui.ui.test.assertDefined(e,'Should fail on circular reference');
 				}
 				
 				var object = {str:'ab"c',num:9.5,arr:[1,null,'ab"c']};
-				var roundtrip = hui.fromJSON(hui.toJSON(object));
+				var roundtrip = hui.string.fromJSON(hui.string.toJSON(object));
 				hui.ui.test.assertEquals(roundtrip.str,object.str,'Test that strings are encoded/decoded correct');
 				hui.ui.test.assertEquals(roundtrip.num,object.num,'Test that numbers are encoded/decoded correct');
 				hui.ui.test.assertEquals(roundtrip.arr[0],object.arr[0],'Test that arrays are encoded/decoded correct');

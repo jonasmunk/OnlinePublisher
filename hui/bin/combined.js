@@ -273,23 +273,6 @@ hui.string = {
 			replace(/>/g,'&gt;').
 			replace(/</g,'&lt;').
 			replace(/"/g,'&quot;')
-	},
-	/**
-	 * Converts a JSON string into an object
-	 * @param json {String} The JSON string to parse
-	 * @returns {Object} The object
-	 */
-	fromJSON = function(json) {
-		return JSON.parse(json);
-	},
-
-	/**
-	 * Converts an object into a JSON string
-	 * @param obj {Object} the object to convert
-	 * @returns {String} A JSON representation
-	 */
-	toJSON = function(obj) {
-		return JSON.stringify(obj);
 	}
 }
 
@@ -896,7 +879,7 @@ hui.window = {
 
 /////////////////////////// Class handling //////////////////////
 
-/** @namespace */
+
 hui.cls = {
 	/**
 	 * Check if an element has a class
@@ -981,6 +964,46 @@ hui.cls = {
 			hui.cls.remove(element,className);
 		}
 	}
+}
+
+hui.cls.has = hui.cls.has;
+
+hui.cls.add = hui.cls.add;
+
+hui.cls.remove = hui.cls.remove;
+
+hui.cls.toggle = hui.cls.toggle;
+
+hui.cls.set = hui.cls.set;
+
+
+
+
+
+
+
+
+
+
+
+///////////////////// JSON //////////////////////
+
+/**
+ * Converts a JSON string into an object
+ * @param json {String} The JSON string to parse
+ * @returns {Object} The object
+ */
+hui.string.fromJSON = function(json) {
+	return JSON.parse(json);
+}
+
+/**
+ * Converts an object into a JSON string
+ * @param obj {Object} the object to convert
+ * @returns {String} A JSON representation
+ */
+hui.string.toJSON = function(obj) {
+	return JSON.stringify(obj);
 }
 
 
@@ -5163,7 +5186,7 @@ hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
 	if (options.json) {
 		for (var key in options.json) {
-			options.parameters[key]=hui.toJSON(options.json[key]);
+			options.parameters[key]=hui.string.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
@@ -5181,7 +5204,7 @@ hui.ui.request = function(options) {
 			if (!hui.request.isXMLResponse(t)) {
 				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
-					json = hui.fromJSON(t.responseText);
+					json = hui.string.fromJSON(t.responseText);
 				} else {
 					json = '';
 				}
@@ -5194,7 +5217,7 @@ hui.ui.request = function(options) {
 		} else if (options.onJSON) {
 			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				json = hui.fromJSON(t.responseText);
+				json = hui.string.fromJSON(t.responseText);
 			} else {
 				json = null;
 			}
@@ -5427,7 +5450,7 @@ hui.ui.Source.prototype = {
 			var str = t.responseText.replace(/^\s+|\s+$/g, ''),
 				json = null;
 			if (str.length>0) {
-				json = hui.fromJSON(t.responseText);
+				json = hui.string.fromJSON(t.responseText);
 			}
 			this.fire('objectsLoaded',json);
 		}
@@ -6413,7 +6436,7 @@ hui.ui.List.prototype = {
 	_getData : function(node) {
 		var data = node.getAttribute('data');
 		if (data) {
-			return hui.fromJSON(data);
+			return hui.string.fromJSON(data);
 		}
 		return null;
 	},
@@ -6648,7 +6671,7 @@ hui.ui.List.prototype = {
 		if (a) {
 			var data = a.getAttribute('data');
 			if (data) {
-				this.fire('clickIcon',{row:this.rows[index],data:hui.fromJSON(data),node:a});
+				this.fire('clickIcon',{row:this.rows[index],data:hui.string.fromJSON(data),node:a});
 			}
 		}
 	},
@@ -8441,10 +8464,10 @@ hui.ui.BoundPanel.prototype = {
 		var vertical = (nodeOffset.top-windowScrollOffset.top+nodeScrollOffset.top)/viewportHeight;
 		vertical = positionOnScreen.top / viewportHeight;
 		hui.log(vertical)
-		hui.log(hui.toJSON({
+		hui.log(hui.string.toJSON({
 			nodeOffset : nodeOffset
 		}))
-		hui.log(hui.toJSON({
+		hui.log(hui.string.toJSON({
 			nodeScrollOffset : nodeScrollOffset,
 			windowScrollOffset : windowScrollOffset
 		}))
@@ -10538,7 +10561,7 @@ hui.ui.Upload.Flash.prototype = {
 		this.items.push(item);
 	},
 	_onFileQueueError : function(file, error, message) {
-		hui.log('Flash: fileQueueError file:'+hui.toJSON(file)+', error:'+error+', message:'+message);
+		hui.log('Flash: fileQueueError file:'+hui.string.toJSON(file)+', error:'+error+', message:'+message);
 		if (file!==null) {
 			var item = this.parent.$_addItem({name:file.name,size:file.size});
 			this.items.push(item);

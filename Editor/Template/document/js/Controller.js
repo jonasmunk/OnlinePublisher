@@ -114,7 +114,7 @@ var controller = {
 			e = hui.event(e);
 			var section = e.findByClass('editor_section');
 			if (section) {
-				this.selectedTextInfo = hui.fromJSON(section.getAttribute('data'));
+				this.selectedTextInfo = hui.string.fromJSON(section.getAttribute('data'));
 			} else {
 				this.selectedTextInfo = null;
 			}
@@ -551,7 +551,7 @@ var controller = {
 		this.clickedLinkInfo = info;
 		var section = hui.get.firstAncestorByClass(info.node,'editor_section');
 		if (section) {
-			this.selectedTextInfo = hui.fromJSON(section.getAttribute('data'));
+			this.selectedTextInfo = hui.string.fromJSON(section.getAttribute('data'));
 		} else {
 			hui.log('Section not found');
 			this.selectedTextInfo = null;

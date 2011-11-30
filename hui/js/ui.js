@@ -836,7 +836,7 @@ hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
 	if (options.json) {
 		for (var key in options.json) {
-			options.parameters[key]=hui.toJSON(options.json[key]);
+			options.parameters[key]=hui.string.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
@@ -854,7 +854,7 @@ hui.ui.request = function(options) {
 			if (!hui.request.isXMLResponse(t)) {
 				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
-					json = hui.fromJSON(t.responseText);
+					json = hui.string.fromJSON(t.responseText);
 				} else {
 					json = '';
 				}
@@ -867,7 +867,7 @@ hui.ui.request = function(options) {
 		} else if (options.onJSON) {
 			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				json = hui.fromJSON(t.responseText);
+				json = hui.string.fromJSON(t.responseText);
 			} else {
 				json = null;
 			}

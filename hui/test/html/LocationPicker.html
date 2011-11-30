@@ -23,7 +23,7 @@
 		var picker = new hui.ui.LocationPicker({});
 		picker.listen({
 			$locationChanged : function(loc) {
-				hui.log('Location changed: '+hui.toJSON(loc))
+				hui.log('Location changed: '+hui.string.toJSON(loc))
 			}
 		})
 	</script>

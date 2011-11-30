@@ -273,23 +273,6 @@ hui.string = {
 			replace(/>/g,'&gt;').
 			replace(/</g,'&lt;').
 			replace(/"/g,'&quot;')
-	},
-	/**
-	 * Converts a JSON string into an object
-	 * @param json {String} The JSON string to parse
-	 * @returns {Object} The object
-	 */
-	fromJSON = function(json) {
-		return JSON.parse(json);
-	},
-
-	/**
-	 * Converts an object into a JSON string
-	 * @param obj {Object} the object to convert
-	 * @returns {String} A JSON representation
-	 */
-	toJSON = function(obj) {
-		return JSON.stringify(obj);
 	}
 }
 
@@ -896,7 +879,7 @@ hui.window = {
 
 /////////////////////////// Class handling //////////////////////
 
-/** @namespace */
+
 hui.cls = {
 	/**
 	 * Check if an element has a class
@@ -981,6 +964,46 @@ hui.cls = {
 			hui.cls.remove(element,className);
 		}
 	}
+}
+
+hui.cls.has = hui.cls.has;
+
+hui.cls.add = hui.cls.add;
+
+hui.cls.remove = hui.cls.remove;
+
+hui.cls.toggle = hui.cls.toggle;
+
+hui.cls.set = hui.cls.set;
+
+
+
+
+
+
+
+
+
+
+
+///////////////////// JSON //////////////////////
+
+/**
+ * Converts a JSON string into an object
+ * @param json {String} The JSON string to parse
+ * @returns {Object} The object
+ */
+hui.string.fromJSON = function(json) {
+	return JSON.parse(json);
+}
+
+/**
+ * Converts an object into a JSON string
+ * @param obj {Object} the object to convert
+ * @returns {String} A JSON representation
+ */
+hui.string.toJSON = function(obj) {
+	return JSON.stringify(obj);
 }
 
 
@@ -3662,7 +3685,7 @@ hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
 	if (options.json) {
 		for (var key in options.json) {
-			options.parameters[key]=hui.toJSON(options.json[key]);
+			options.parameters[key]=hui.string.toJSON(options.json[key]);
 		}
 	}
 	var onSuccess = options.onSuccess;
@@ -3680,7 +3703,7 @@ hui.ui.request = function(options) {
 			if (!hui.request.isXMLResponse(t)) {
 				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
-					json = hui.fromJSON(t.responseText);
+					json = hui.string.fromJSON(t.responseText);
 				} else {
 					json = '';
 				}
@@ -3693,7 +3716,7 @@ hui.ui.request = function(options) {
 		} else if (options.onJSON) {
 			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
-				json = hui.fromJSON(t.responseText);
+				json = hui.string.fromJSON(t.responseText);
 			} else {
 				json = null;
 			}

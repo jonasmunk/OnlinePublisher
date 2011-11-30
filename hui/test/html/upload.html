@@ -147,10 +147,10 @@
 					this._log('uploadDidCompleteQueue');
 				},
 				$uploadDidComplete : function(info) {
-					this._log('uploadDidComplete: '+hui.toJSON(info));
+					this._log('uploadDidComplete: '+hui.string.toJSON(info));
 				},
 				$uploadDidFail : function(info) {
-					this._log('uploadDidFail: '+hui.toJSON(info));
+					this._log('uploadDidFail: '+hui.string.toJSON(info));
 				},
 				_log : function(str) {
 					log.value+=str+'\n';

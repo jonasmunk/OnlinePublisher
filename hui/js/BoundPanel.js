@@ -182,10 +182,10 @@ hui.ui.BoundPanel.prototype = {
 		var vertical = (nodeOffset.top-windowScrollOffset.top+nodeScrollOffset.top)/viewportHeight;
 		vertical = positionOnScreen.top / viewportHeight;
 		hui.log(vertical)
-		hui.log(hui.toJSON({
+		hui.log(hui.string.toJSON({
 			nodeOffset : nodeOffset
 		}))
-		hui.log(hui.toJSON({
+		hui.log(hui.string.toJSON({
 			nodeScrollOffset : nodeScrollOffset,
 			windowScrollOffset : windowScrollOffset
 		}))

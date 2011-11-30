@@ -61,7 +61,7 @@ op.WeblogTemplate = {
 			method : 'post',
 			parameters : parms,
 			onSuccess : function(t) {
-				var data = hui.fromJSON(t.responseText);
+				var data = hui.string.fromJSON(t.responseText);
 				this.editEntry(data);
 			}.bind(this),
 			onException : function(t,e) {

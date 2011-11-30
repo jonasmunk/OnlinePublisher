@@ -476,7 +476,7 @@ hui.ui.List.prototype = {
 	_getData : function(node) {
 		var data = node.getAttribute('data');
 		if (data) {
-			return hui.fromJSON(data);
+			return hui.string.fromJSON(data);
 		}
 		return null;
 	},
@@ -711,7 +711,7 @@ hui.ui.List.prototype = {
 		if (a) {
 			var data = a.getAttribute('data');
 			if (data) {
-				this.fire('clickIcon',{row:this.rows[index],data:hui.fromJSON(data),node:a});
+				this.fire('clickIcon',{row:this.rows[index],data:hui.string.fromJSON(data),node:a});
 			}
 		}
 	},

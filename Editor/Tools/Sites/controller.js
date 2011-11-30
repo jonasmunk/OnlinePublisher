@@ -340,7 +340,7 @@ var mainController = {
 		var designSelected = designPicker.getValue()!=null;
 		var frameSelected = frameSelection.getValue()!=null;
 		var titleFilled = !newPageTitle.isBlank();
-		//hui.log(hui.toJSON({templateSelected:templateSelected,designSelected:designSelected,frameSelected:frameSelected,titleFilled:titleFilled}));
+		//hui.log(hui.string.toJSON({templateSelected:templateSelected,designSelected:designSelected,frameSelected:frameSelected,titleFilled:titleFilled}));
 		createPage.setEnabled(templateSelected && designSelected && frameSelected && titleFilled);
 		newPagePrevious.setEnabled(!newPageWizard.isFirst());
 		newPageNext.setEnabled(!newPageWizard.isLast());

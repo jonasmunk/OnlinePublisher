@@ -49,7 +49,7 @@
 			var log = hui.get('log');
 			hui.ui.listen({
 				$valuesChanged$formula : function(values) {
-					hui.dom.setText(log,hui.toJSON(values));
+					hui.dom.setText(log,hui.string.toJSON(values));
 				}
 			})
 		}()
