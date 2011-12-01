@@ -3,6 +3,8 @@
 <head>
 	<title>HUI</title>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<style type="text/css" media="screen">
 		#target1
 		{
@@ -29,32 +31,32 @@
 <body>
 <button onclick="leftTopToLeftBottom()">left/top &rarr; left/bottom</button>
 <button onclick="leftTopToMiddleMiddle()">left/top &rarr; middle/middle</button>
-<button onclick="middleMiddleToLeftTop()">left/top &rarr; middle/middle</button>
+<button onclick="middleMiddleToLeftTop()">middle/middle &rarr; left/top</button>
 <button onclick="middleMiddleToMiddleMiddle()">middle/middle &rarr; middle/middle</button>
 
 <script type="text/javascript" charset="utf-8">
 	function leftTopToLeftBottom() {
 		hui.place({
-			source:{element:$('source1'),vertical:0,horizontal:0},
-			target:{element:$('target1'),vertical:1,horizontal:0}
+			source:{element:'source1',vertical:0,horizontal:0},
+			target:{element:'target1',vertical:1,horizontal:0}
 		})
 	}
 	function middleMiddleToLeftTop() {
 		hui.place({
-			source:{element:$('source1'),vertical:.5,horizontal:.5},
-			target:{element:$('target1'),vertical:0,horizontal:0}
+			source:{element:'source1',vertical:.5,horizontal:.5},
+			target:{element:'target1',vertical:0,horizontal:0}
 		})
 	}
 	function leftTopToMiddleMiddle() {
 		hui.place({
-			source:{element:$('source1'),vertical:0,horizontal:0},
-			target:{element:$('target1'),vertical:.5,horizontal:.5}
+			source:{element:'source1',vertical:0,horizontal:0},
+			target:{element:'target1',vertical:.5,horizontal:.5}
 		})
 	}
 	function middleMiddleToMiddleMiddle() {
 		hui.place({
-			source:{element:$('source1'),vertical:.5,horizontal:.5},
-			target:{element:$('target1'),vertical:.5,horizontal:.5}
+			source:{element:'source1',vertical:.5,horizontal:.5},
+			target:{element:'target1',vertical:.5,horizontal:.5}
 		})
 	}
 </script>

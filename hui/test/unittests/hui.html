@@ -25,12 +25,12 @@
 				hui.ui.test.assertTrue(hui.isDefined([]),'empty array is defined');
 			},
 			function() { // Trimming
-				hui.ui.test.assertEquals(hui.trim(''),'','Empty string trims to empty string');
-				hui.ui.test.assertEquals(hui.trim(null),'','NULL trims to empty string');
-				hui.ui.test.assertEquals(hui.trim(),'','undefined trims to empty string');
-				hui.ui.test.assertEquals(hui.trim(1),'1','number trims to string of number');
-				hui.ui.test.assertEquals(hui.trim([]),'','empty array trims to empty string');
-				hui.ui.test.assertEquals(hui.trim(['abc',1]),'abc,1','Array with values trims to comma separated');
+				hui.ui.test.assertEquals(hui.string.trim(''),'','Empty string trims to empty string');
+				hui.ui.test.assertEquals(hui.string.trim(null),'','NULL trims to empty string');
+				hui.ui.test.assertEquals(hui.string.trim(),'','undefined trims to empty string');
+				hui.ui.test.assertEquals(hui.string.trim(1),'1','number trims to string of number');
+				hui.ui.test.assertEquals(hui.string.trim([]),'','empty array trims to empty string');
+				hui.ui.test.assertEquals(hui.string.trim(['abc',1]),'abc,1','Array with values trims to comma separated');
 			},
 			function() { // Escaping
 				hui.ui.test.assertEquals(hui.string.escapeHTML(''),'','Escape empty string');

@@ -19,7 +19,7 @@ hui.ui.Graphviz = function(element,name,options) {
 
 hui.ui.Graphviz.create = function(name,options) {
 	var element = hui.build('div',{'class':'hui_graphviz'});
-	var texts = bui.build('div',{'class':'hui_graphviz_texts',style:'position:relative;'});
+	var texts = hui.build('div',{'class':'hui_graphviz_texts',style:'position:relative;'});
 	element.appendChild(texts);
 	element.appendChild(hui.build('canvas'));
 	return new hui.ui.Graphviz(element,name,options);

@@ -10,6 +10,8 @@
 		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
 	<![endif]-->
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
 	<style>
 		@-webkit-keyframes spin {
@@ -48,12 +50,12 @@
 	<button onclick="hui.animate('text','transform','rotate(180deg)',3000,{ease:hui.ease.bounce})">transform=rotate(180deg)</button>
 	<button onclick="hui.animate('text','transform','rotate(1000deg) scale(.1)',3000,{ease:hui.ease.bounce})">transform=rotate(1000deg) scale(.1)</button>
 	<button onclick="hui.animate('text','transform','rotate(0deg) scale(2)',3000,{ease:hui.ease.bounce})">transform=rotate(0deg) scale(2)</button>
-	<button onclick="hui.ui.bounceIn(hui.get('text'))">bounceIn</button>
+	<button onclick="hui.effect.bounceIn({element:hui.get('text')})">bounceIn</button>
 	<button onclick="hui.effect.flip({element:'flipper'})">Flip</button>
 	<button onclick="hui.effect.flip({element:'flipper',duration:'5s'})">Flip (5s)</button>
 	<hr/>
 	
-	<button onclick="hui.ui.bounceIn(hui.get('bubble'))">Bounce bubble in</button>
+	<button onclick="hui.effect.bounceIn({element:hui.get('bubble')})">Bounce bubble in</button>
 	<div style="height: 200px;"></div>
 
 <div class="hui_effect_wiggle" style="position: absolute; height: 30px; background: #eee; margin-top: -50px;">Im wiggly!</div>

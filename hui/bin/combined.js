@@ -273,6 +273,23 @@ hui.string = {
 			replace(/>/g,'&gt;').
 			replace(/</g,'&lt;').
 			replace(/"/g,'&quot;')
+	},
+	/**
+	 * Converts a JSON string into an object
+	 * @param json {String} The JSON string to parse
+	 * @returns {Object} The object
+	 */
+	fromJSON : function(json) {
+		return JSON.parse(json);
+	},
+
+	/**
+	 * Converts an object into a JSON string
+	 * @param obj {Object} the object to convert
+	 * @returns {String} A JSON representation
+	 */
+	toJSON : function(obj) {
+		return JSON.stringify(obj);
 	}
 }
 
@@ -879,7 +896,7 @@ hui.window = {
 
 /////////////////////////// Class handling //////////////////////
 
-
+/** @namespace */
 hui.cls = {
 	/**
 	 * Check if an element has a class
@@ -964,46 +981,6 @@ hui.cls = {
 			hui.cls.remove(element,className);
 		}
 	}
-}
-
-hui.cls.has = hui.cls.has;
-
-hui.cls.add = hui.cls.add;
-
-hui.cls.remove = hui.cls.remove;
-
-hui.cls.toggle = hui.cls.toggle;
-
-hui.cls.set = hui.cls.set;
-
-
-
-
-
-
-
-
-
-
-
-///////////////////// JSON //////////////////////
-
-/**
- * Converts a JSON string into an object
- * @param json {String} The JSON string to parse
- * @returns {Object} The object
- */
-hui.string.fromJSON = function(json) {
-	return JSON.parse(json);
-}
-
-/**
- * Converts an object into a JSON string
- * @param obj {Object} the object to convert
- * @returns {String} A JSON representation
- */
-hui.string.toJSON = function(obj) {
-	return JSON.stringify(obj);
 }
 
 
@@ -1623,11 +1600,13 @@ hui.document = {
 hui.place = function(options) {
 	var left = 0,
 		top = 0,
-		trgt = options.target.element,
+		src = hui.get(options.source.element),
+		trgt = hui.get(options.target.element),
 		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
+	
 	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
 	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
-	var src = options.source.element;
+	
 	left -= src.clientWidth * (options.source.horizontal || 0);
 	top -= src.clientHeight * (options.source.vertical || 0);
 	
@@ -10520,10 +10499,10 @@ hui.ui.Upload.Flash.prototype = {
 			file_types : options.types,
 			debug : !true,
 			post_params : options.parameters,
-			/*button_placeholder_id : 'x',
+			button_placeholder_id : 'x',
 			button_placeholder : placeholder,
 			button_width : '100%',
-			button_height : 30,*/
+			button_height : 30,
 
 			swfupload_loaded_handler : this._onFlashLoaded.bind(this),
 			file_queued_handler : this._onFileQueued.bind(this),

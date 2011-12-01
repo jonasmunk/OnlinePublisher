@@ -279,7 +279,7 @@ hui.string = {
 	 * @param json {String} The JSON string to parse
 	 * @returns {Object} The object
 	 */
-	fromJSON = function(json) {
+	fromJSON : function(json) {
 		return JSON.parse(json);
 	},
 
@@ -288,7 +288,7 @@ hui.string = {
 	 * @param obj {Object} the object to convert
 	 * @returns {String} A JSON representation
 	 */
-	toJSON = function(obj) {
+	toJSON : function(obj) {
 		return JSON.stringify(obj);
 	}
 }
@@ -1600,11 +1600,13 @@ hui.document = {
 hui.place = function(options) {
 	var left = 0,
 		top = 0,
-		trgt = options.target.element,
+		src = hui.get(options.source.element),
+		trgt = hui.get(options.target.element),
 		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
+	
 	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
 	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
-	var src = options.source.element;
+	
 	left -= src.clientWidth * (options.source.horizontal || 0);
 	top -= src.clientHeight * (options.source.vertical || 0);
 	

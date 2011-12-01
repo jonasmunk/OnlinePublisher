@@ -596,10 +596,10 @@ hui.ui.Upload.Flash.prototype = {
 			file_types : options.types,
 			debug : !true,
 			post_params : options.parameters,
-			/*button_placeholder_id : 'x',
+			button_placeholder_id : 'x',
 			button_placeholder : placeholder,
 			button_width : '100%',
-			button_height : 30,*/
+			button_height : 30,
 
 			swfupload_loaded_handler : this._onFlashLoaded.bind(this),
 			file_queued_handler : this._onFileQueued.bind(this),

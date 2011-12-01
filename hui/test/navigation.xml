@@ -37,7 +37,6 @@
         <item icon="common/page" title="progressbar" value="html/progressbar.html"/>
         <item icon="common/page" title="protovis" value="html/protovis.html"/>
         <item icon="common/page" title="require" value="html/require.html"/>
-        <item icon="common/page" title="richtext" value="html/richtext.html"/>
         <item icon="common/page" title="scrollto" value="html/scrollto.html"/>
         <item icon="common/page" title="selection" value="html/selection.html"/>
         <item icon="common/page" title="supa" value="html/supa.html"/>
