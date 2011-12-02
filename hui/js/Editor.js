@@ -91,7 +91,7 @@ hui.ui.Editor.prototype = {
 					part.type=match[1];
 					hui.listen(element,'click',function(e) {
 						e = hui.event(e);
-						if (!e.findByTag('a')) {
+						if (!e.findByTag('a') && e.altKey) {
 							self.editPart(part);
 						}
 					});
@@ -102,7 +102,7 @@ hui.ui.Editor.prototype = {
 						self.blurPart(e);
 					});
 					hui.listen(element,'mousedown',function(e) {
-						self.startPartDrag(e);
+						self.startPartDrag(element,e);
 					});
 					self.parts.push(part);
 				}
@@ -398,53 +398,39 @@ hui.ui.Editor.prototype = {
 		hui.ui.callDelegates(this,'addPart',info);
 	},
 	/**** Dragging ****/
-	startPartDrag : function(e) {
-		return true;
-		if (!this.active || this.activePart) return true;
+	startPartDrag : function(node,e) {
+		e = hui.event(e);
+		if (!this.active || this.activePart || !e.altKey) return true;
 		if (!this.dragProxy) {
 			this.dragProxy = hui.build('div',{'class':'hui_editor_dragproxy part part_header',parent:document.body});
 		}
+		e.stop();
 		var element = this.hoveredPart.element;
-		this.dragProxy.style.width = element.clientWidth+'px';
-		this.dragProxy.innerHTML = element.innerHTML;
-		hui.ui.Editor.startDrag(e,this.dragProxy);
-		return;
-		hui.listen(document.body,'mouseup',function() {
-			self.endPartDrag();
+		var proxy = this.dragProxy;
+		var diff = {
+			left : e.getLeft() - hui.getLeft(element),
+			top : e.getTop() - hui.getTop(element)
+		}
+		hui.log(diff)
+		hui.style.set(proxy,{ width : element.clientWidth+'px' , display : 'none'});
+		proxy.innerHTML = element.innerHTML;
+		hui.drag.start({
+			element : proxy,
+			onBeforeMove : function(e) {
+				proxy.style.display = 'block';
+			},
+			onMove : function(e) {
+				proxy.style.left = (e.getLeft()-diff.left)+'px';
+				proxy.style.top = (e.getTop()-diff.top)+'px';
+			},
+			onAfterMove : function(e) {
+				proxy.style.display = 'none';
+			},
+			onEnd : function() {
+				
+			}
 		})
-	},
-	dragPart : function() {
-		
-	},
-	endPartDrag : function() {
 	}
-}
-
-
-
-hui.ui.Editor.startDrag = function(e,element) {
-	hui.ui.Editor.dragElement = element;
-	hui.listen(document.body,'mousemove',hui.ui.Editor.dragListener);
-	hui.listen(document.body,'mouseup',hui.ui.Editor.dragEndListener);
-	hui.ui.Editor.startDragPos = {top:e.pointerY(),left:e.pointerX()};
-	e.stop();
-	return false;
-}
-
-hui.ui.Editor.dragListener = function(e) {
-	e = hui.event(e);
-	var element = hui.ui.Editor.dragElement;
-	element.style.left = e.getLeft()+'px';
-	element.style.top = e.getTop()+'px';
-	element.style.display='block';
-	return false;
-}
-
-hui.ui.Editor.dragEndListener = function(event) {
-	hui.unListen(document.body,'mousemove',hui.ui.Editor.dragListener);
-	hui.unListen(document.body,'mouseup',hui.ui.Editor.dragEndListener);
-	hui.ui.Editor.dragElement.style.display='none';
-	hui.ui.Editor.dragElement=null;
 }
 
 hui.ui.Editor.getPartId = function(element) {

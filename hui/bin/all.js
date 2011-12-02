@@ -1657,7 +1657,9 @@ hui.drag = {
 		upper = function() {
 			hui.unListen(target,'mousemove',mover);
 			hui.unListen(target,'mouseup',upper);
-			options.onEnd();
+			if (options.onEnd) {
+				options.onEnd();
+			}
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
 	},
@@ -9149,7 +9151,7 @@ hui.ui.Editor.prototype = {
 						self.blurPart(e);
 					});
 					hui.listen(element,'mousedown',function(e) {
-						self.startPartDrag(e);
+						self.startPartDrag(element,e);
 					});
 					self.parts.push(part);
 				}
@@ -9446,7 +9448,6 @@ hui.ui.Editor.prototype = {
 	},
 	/**** Dragging ****/
 	startPartDrag : function(e) {
-		return true;
 		if (!this.active || this.activePart) return true;
 		if (!this.dragProxy) {
 			this.dragProxy = hui.build('div',{'class':'hui_editor_dragproxy part part_header',parent:document.body});
@@ -9454,6 +9455,16 @@ hui.ui.Editor.prototype = {
 		var element = this.hoveredPart.element;
 		this.dragProxy.style.width = element.clientWidth+'px';
 		this.dragProxy.innerHTML = element.innerHTML;
+		var proxy = this.dragProxy;
+		hui.drag.start({
+			element : proxy,
+			onMove : function(e) {
+				proxy.style.left = e.getLeft()+'px';
+				proxy.style.top = e.getTop()+'px';
+			}
+		})
+		return;
+
 		hui.ui.Editor.startDrag(e,this.dragProxy);
 		return;
 		hui.listen(document.body,'mouseup',function() {

@@ -1045,6 +1045,8 @@ hui.Event = function(event) {
 	this.element = event.target ? event.target : event.srcElement;
 	/** If the shift key was pressed */
 	this.shiftKey = event.shiftKey;
+	/** If the alt key was pressed */
+	this.altKey = event.altKey;
 	/** If the return key was pressed */
 	this.returnKey = event.keyCode==13;
 	/** If the escape key was pressed */
@@ -1647,19 +1649,39 @@ hui.drag = {
 	start : function(options) {
 		var target = hui.browser.msie ? document : window;
 		
-		options.onStart();
-		var mover,upper;
+		if (options.onStart) {
+			options.onStart();
+		}
+		var mover,
+			upper,
+			moved = false;
 		mover = function(e) {
 			e = hui.event(e);
+			e.stop(e);
+			if (!moved && options.onBeforeMove) {
+				options.onBeforeMove(e);
+			}
+			moved = true;
 			options.onMove(e);
 		}.bind(this);
 		hui.listen(target,'mousemove',mover);
 		upper = function() {
 			hui.unListen(target,'mousemove',mover);
 			hui.unListen(target,'mouseup',upper);
-			options.onEnd();
+			if (options.onEnd) {
+				options.onEnd();
+			}
+			if (moved && options.onAfterMove) {
+				options.onAfterMove();
+			}
+			hui.drag._setSelect(true);
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
+		hui.drag._setSelect(false);
+	},
+	_setSelect : function(on) {
+		document.onselectstart = on ? null : function () { return false; };
+		document.body.style.webkitUserSelect = on ? null : 'none';
 	},
 	_nativeListeners : [],
 	_activeDrop : null,

@@ -1657,7 +1657,9 @@ hui.drag = {
 		upper = function() {
 			hui.unListen(target,'mousemove',mover);
 			hui.unListen(target,'mouseup',upper);
-			options.onEnd();
+			if (options.onEnd) {
+				options.onEnd();
+			}
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
 	},
