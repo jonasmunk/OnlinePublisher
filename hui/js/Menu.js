@@ -88,7 +88,7 @@ hui.ui.Menu.prototype = {
 		event = hui.event(event);
 		event.stop();
 		element = hui.get(element);
-		var point = hui.getPosition(element);
+		var point = hui.position.get(element);
 		if (position=='horizontal') {
 			point.left += element.clientWidth;
 		} else if (position=='vertical') {

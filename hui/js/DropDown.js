@@ -86,22 +86,22 @@ hui.ui.DropDown.prototype = {
 		if (!this.items) return;
 		var docHeight = hui.document.getHeight();
 		if (docHeight<200) {
-			var left = hui.getLeft(this.element);
+			var left = hui.position.getLeft(this.element);
 			hui.style.set(this.selector,{'left':left+'px',top:'5px'});
 		} else {
 			var windowScrollTop = hui.window.getScrollTop();
-			var scrollOffsetTop = hui.getScrollOffset(this.element).top;
+			var scrollOffsetTop = hui.position.getScrollOffset(this.element).top;
 			var scrollTop = windowScrollTop-scrollOffsetTop;
-			hui.place({
+			hui.position.place({
 				target : {element:this.element,vertical:1,horizontal:0},
 				source : {element:this.selector,vertical:0,horizontal:0},
 				top : scrollTop
 			});
 		}
 		hui.style.set(s,{visibility:'hidden',display:'block',width:''});
-		var height = Math.min(docHeight-hui.getTop(s)-5,200);
+		var height = Math.min(docHeight-hui.position.getTop(s)-5,200);
 		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
-		var space = hui.window.getViewWidth()-hui.getLeft(el)-20;
+		var space = hui.window.getViewWidth()-hui.position.getLeft(el)-20;
 		width = Math.min(width,space);
 		hui.style.set(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
 	},

@@ -60,7 +60,7 @@ op.part.utils = {
 				style : 'width: 24px; height: 24px; position: absolute; background: #fff url(\''+hui.ui.context+'hui/gfx/progress/spinner_white_24.gif\');'
 			});
 		}
-		hui.place({source:{element:this.spinner,vertical:.5,horizontal:.5},target:{element:node,vertical:.5,horizontal:.5},left:1,top:1})
+		hui.position.place({source:{element:this.spinner,vertical:.5,horizontal:.5},target:{element:node,vertical:.5,horizontal:.5},left:1,top:1})
 		window.clearTimeout(this.spinnerTimer);
 		this.spinnerTimer = window.setTimeout(function() {
 			hui.style.setOpacity(node,.5);

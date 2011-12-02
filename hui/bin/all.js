@@ -765,7 +765,7 @@ hui.build = function(name,options) {
 	return e;
 }
 
-hui.getTop = function(element) {
+hui.position.getTop = function(element) {
     element = hui.get(element);
 	if (element) {
 		var yPos = element.offsetTop,
@@ -779,7 +779,7 @@ hui.getTop = function(element) {
 	else return 0;
 }
 
-hui.getScrollOffset = function(element) {
+hui.position.getScrollOffset = function(element) {
     element = hui.get(element);
 	var top = 0, left = 0;
     do {
@@ -790,7 +790,7 @@ hui.getScrollOffset = function(element) {
 	return {top:top,left:left};
 }
 
-hui.getLeft = function(element) {
+hui.position.getLeft = function(element) {
     element = hui.get(element);
 	if (element) {
 		var xPos = element.offsetLeft,
@@ -804,10 +804,10 @@ hui.getLeft = function(element) {
 	else return 0;
 }
 
-hui.getPosition = function(element) {
+hui.position.get = function(element) {
 	return {
-		left : hui.getLeft(element),
-		top : hui.getTop(element)
+		left : hui.position.getLeft(element),
+		top : hui.position.getTop(element)
 	}
 }
 
@@ -846,7 +846,7 @@ hui.window = {
 	 */
 	scrollTo : function(options) {
 		var node = options.element;
-		var pos = hui.getPosition(node);
+		var pos = hui.position.get(node);
 		var viewTop = hui.window.getScrollTop();
 		var viewHeight = hui.window.getViewHeight();
 		var viewBottom = viewTop+viewHeight;
@@ -1595,14 +1595,14 @@ hui.document = {
 
 /**
  * Place on element relative to another
- * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
+ * Example hui.position.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
  */
-hui.place = function(options) {
+hui.position.place = function(options) {
 	var left = 0,
 		top = 0,
 		src = hui.get(options.source.element),
 		trgt = hui.get(options.target.element),
-		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
+		trgtPos = {left : hui.position.getLeft(trgt), top : hui.position.getTop(trgt) };
 	
 	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
 	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
@@ -4785,7 +4785,7 @@ hui.ui.showToolTip = function(options) {
 	}
 	t.onclick = function() {hui.ui.hideToolTip(options);};
 	var n = hui.get(options.element);
-	var pos = hui.getPosition(n);
+	var pos = hui.position.get(n);
 	hui.dom.setText(t.getElementsByTagName('div')[1],options.text);
 	if (t.style.display=='none' && hui.browser.opacity) {
 		hui.style.setOpacity(t,0);
@@ -4822,7 +4822,7 @@ hui.ui.getElement = function(widgetOrElement) {
 
 hui.ui.isWithin = function(e,element) {
 	e = new hui.Event(e);
-	var offset = {left:hui.getLeft(element),top:hui.getTop(element)};
+	var offset = {left:hui.position.getLeft(element),top:hui.position.getTop(element)};
 	var dims = {width:element.clientWidth,height:element.clientHeight};
 	return e.getLeft()>offset.left && e.getLeft()<offset.left+dims.width && e.getTop()>offset.top && e.getTop()<offset.top+dims.height;
 };
@@ -4921,8 +4921,8 @@ hui.ui.positionAtElement = function(element,target,options) {
 	if (origDisplay=='none') {
 		hui.style.set(element,{'visibility':'hidden','display':'block'});
 	}
-	var left = hui.getLeft(target),
-		top = hui.getTop(target);
+	var left = hui.position.getLeft(target),
+		top = hui.position.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
 		left = left+target.clientWidth-element.clientWidth;
@@ -5639,7 +5639,7 @@ hui.ui.Window.prototype = {
 	show : function(options) {
 		if (this.visible) {
 			var scrollTop = hui.window.getScrollTop();
-			var winTop = hui.getTop(this.element);
+			var winTop = hui.position.getTop(this.element);
 			if (winTop < scrollTop || winTop+this.element.clientHeight > hui.window.getViewHeight()+scrollTop) {
 				hui.animate({node:this.element,css:{top:(scrollTop+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
 			}
@@ -5655,7 +5655,7 @@ hui.ui.Window.prototype = {
 			width : width+'px' , visibility : 'visible'
 		});
 		if (options.avoid) {
-			hui.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
+			hui.position.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
 		} else {
 			if (!this.element.style.top) {
 				this.element.style.top = (hui.window.getScrollTop()+40)+'px';
@@ -5721,7 +5721,7 @@ hui.ui.Window.prototype = {
 	startDrag : function(e) {
 		var event = new hui.Event(e);
 		this.element.style.zIndex=hui.ui.nextPanelIndex();
-		var pos = { top : hui.getTop(this.element), left : hui.getLeft(this.element) };
+		var pos = { top : hui.position.getTop(this.element), left : hui.position.getLeft(this.element) };
 		this.dragState = {left:event.getLeft()-pos.left,top:event.getTop()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();
@@ -7082,22 +7082,22 @@ hui.ui.DropDown.prototype = {
 		if (!this.items) return;
 		var docHeight = hui.document.getHeight();
 		if (docHeight<200) {
-			var left = hui.getLeft(this.element);
+			var left = hui.position.getLeft(this.element);
 			hui.style.set(this.selector,{'left':left+'px',top:'5px'});
 		} else {
 			var windowScrollTop = hui.window.getScrollTop();
-			var scrollOffsetTop = hui.getScrollOffset(this.element).top;
+			var scrollOffsetTop = hui.position.getScrollOffset(this.element).top;
 			var scrollTop = windowScrollTop-scrollOffsetTop;
-			hui.place({
+			hui.position.place({
 				target : {element:this.element,vertical:1,horizontal:0},
 				source : {element:this.selector,vertical:0,horizontal:0},
 				top : scrollTop
 			});
 		}
 		hui.style.set(s,{visibility:'hidden',display:'block',width:''});
-		var height = Math.min(docHeight-hui.getTop(s)-5,200);
+		var height = Math.min(docHeight-hui.position.getTop(s)-5,200);
 		var width = Math.max(el.clientWidth-5,100,s.clientWidth+20);
-		var space = hui.window.getViewWidth()-hui.getLeft(el)-20;
+		var space = hui.window.getViewWidth()-hui.position.getLeft(el)-20;
 		width = Math.min(width,space);
 		hui.style.set(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
 	},
@@ -8428,8 +8428,8 @@ hui.ui.BoundPanel.prototype = {
 			node = node.getElement();
 		}
 		node = hui.get(node);
-		var nodeOffset = {left:hui.getLeft(node),top:hui.getTop(node)};
-		var nodeScrollOffset = hui.getScrollOffset(node);
+		var nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};
+		var nodeScrollOffset = hui.position.getScrollOffset(node);
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};
 				
 		var panelDimensions = this.getDimensions();
@@ -8677,7 +8677,7 @@ hui.ui.ImageViewer.prototype = {
 		if (!this.zoomInfo) {
 			return;
 		}
-		var offset = {left:hui.getLeft(this.zoomer),top:hui.getTop(this.zoomer)};
+		var offset = {left:hui.position.getLeft(this.zoomer),top:hui.position.getTop(this.zoomer)};
 		var x = (e.getLeft()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
 		var y = (e.getTop()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;
@@ -9719,7 +9719,7 @@ hui.ui.Menu.prototype = {
 		event = hui.event(event);
 		event.stop();
 		element = hui.get(element);
-		var point = hui.getPosition(element);
+		var point = hui.position.get(element);
 		if (position=='horizontal') {
 			point.left += element.clientWidth;
 		} else if (position=='vertical') {
@@ -9875,7 +9875,7 @@ hui.ui.Overlay.prototype = {
 			hui.style.set(this.element,{'display':'block',visibility:'hidden'});
 		}
 		if (options.element) {
-			hui.place({
+			hui.position.place({
 				source : {element:this.element,vertical:0,horizontal:.5},
 				target : {element:options.element,vertical:.5,horizontal:.5},
 				insideViewPort : true,
@@ -11404,7 +11404,7 @@ hui.ui.Layout.prototype = {
 			if (foot) {
 				bottom = hui.get.firstByTag(foot,'*').clientHeight;
 			}
-			top += hui.getTop(this.element);
+			top += hui.position.getTop(this.element);
 			this.diff = bottom+top;
 			if (this.element.parentNode!==document.body) {
 				this.diff+=15;
@@ -11968,8 +11968,8 @@ hui.ui.Overflow.prototype = {
 	_calculate : function() {
 		var viewport = hui.window.getViewHeight(),
 			parent = this.element.parentNode,
-			top = hui.getTop(this.element),
-			bottom = hui.getTop(parent)+parent.clientHeight,
+			top = hui.position.getTop(this.element),
+			bottom = hui.position.getTop(parent)+parent.clientHeight,
 			sibs = hui.get.after(this.element);
 		for (var i=0; i < sibs.length; i++) {
 			if (hui.style.get(sibs[i],'position')!='absolute') {
@@ -12296,7 +12296,7 @@ hui.ui.Bar.prototype = {
 		if (widgetOrElement.getElement) {
 			widgetOrElement = widgetOrElement.getElement();
 		}
-		hui.place({
+		hui.position.place({
 			source:{element:this.element,vertical:1,horizontal:0},
 			target:{element:widgetOrElement,vertical:0,horizontal:0}
 		});
@@ -13651,7 +13651,7 @@ hui.ui.ColorPicker.prototype = {
 	},
 	_hoverWheel1 : function(e) {
 		e = hui.event(e);
-		var pos = hui.getPosition(this.wheel1);
+		var pos = hui.position.get(this.wheel1);
 		var x = 4 * (e.getLeft() - pos.left);
 		var y = 4 * (e.getTop() - pos.top);
 
@@ -13689,7 +13689,7 @@ hui.ui.ColorPicker.prototype = {
 	_hoverWheel2 : function(e) {
 		var rgb,sat,val;
 		e = hui.event(e);
-		var pos = hui.getPosition(this.wheel2);
+		var pos = hui.position.get(this.wheel2);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 
@@ -13728,7 +13728,7 @@ hui.ui.ColorPicker.prototype = {
 	_hoverWheel3 : function(e) {
 		var rgb,sat,val;
 		e = hui.event(e);
-		var pos = hui.getPosition(this.wheel3);
+		var pos = hui.position.get(this.wheel3);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 

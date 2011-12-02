@@ -41,7 +41,7 @@ hui.ui.Bar.prototype = {
 		if (widgetOrElement.getElement) {
 			widgetOrElement = widgetOrElement.getElement();
 		}
-		hui.place({
+		hui.position.place({
 			source:{element:this.element,vertical:1,horizontal:0},
 			target:{element:widgetOrElement,vertical:0,horizontal:0}
 		});

@@ -149,7 +149,7 @@ hui.ui.ImageViewer.prototype = {
 		if (!this.zoomInfo) {
 			return;
 		}
-		var offset = {left:hui.getLeft(this.zoomer),top:hui.getTop(this.zoomer)};
+		var offset = {left:hui.position.getLeft(this.zoomer),top:hui.position.getTop(this.zoomer)};
 		var x = (e.getLeft()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
 		var y = (e.getTop()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;

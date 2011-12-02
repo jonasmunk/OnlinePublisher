@@ -149,7 +149,7 @@ hui.ui.ColorPicker.prototype = {
 	},
 	_hoverWheel1 : function(e) {
 		e = hui.event(e);
-		var pos = hui.getPosition(this.wheel1);
+		var pos = hui.position.get(this.wheel1);
 		var x = 4 * (e.getLeft() - pos.left);
 		var y = 4 * (e.getTop() - pos.top);
 
@@ -187,7 +187,7 @@ hui.ui.ColorPicker.prototype = {
 	_hoverWheel2 : function(e) {
 		var rgb,sat,val;
 		e = hui.event(e);
-		var pos = hui.getPosition(this.wheel2);
+		var pos = hui.position.get(this.wheel2);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 
@@ -226,7 +226,7 @@ hui.ui.ColorPicker.prototype = {
 	_hoverWheel3 : function(e) {
 		var rgb,sat,val;
 		e = hui.event(e);
-		var pos = hui.getPosition(this.wheel3);
+		var pos = hui.position.get(this.wheel3);
 		var x = (e.getLeft() - pos.left);
 		var y = (e.getTop() - pos.top);
 

@@ -408,8 +408,8 @@ hui.ui.Editor.prototype = {
 		var element = this.hoveredPart.element;
 		var proxy = this.dragProxy;
 		var diff = {
-			left : e.getLeft() - hui.getLeft(element),
-			top : e.getTop() - hui.getTop(element)
+			left : e.getLeft() - hui.position.getLeft(element),
+			top : e.getTop() - hui.position.getTop(element)
 		}
 		hui.log(diff)
 		hui.style.set(proxy,{ width : element.clientWidth+'px' , display : 'none'});

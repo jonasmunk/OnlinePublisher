@@ -59,7 +59,7 @@ hui.ui.Window.prototype = {
 	show : function(options) {
 		if (this.visible) {
 			var scrollTop = hui.window.getScrollTop();
-			var winTop = hui.getTop(this.element);
+			var winTop = hui.position.getTop(this.element);
 			if (winTop < scrollTop || winTop+this.element.clientHeight > hui.window.getViewHeight()+scrollTop) {
 				hui.animate({node:this.element,css:{top:(scrollTop+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
 			}
@@ -75,7 +75,7 @@ hui.ui.Window.prototype = {
 			width : width+'px' , visibility : 'visible'
 		});
 		if (options.avoid) {
-			hui.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
+			hui.position.place({insideViewPort : true, target : {element : options.avoid, vertical : .5, horizontal : 1}, source : {element : this.element, vertical : .5, horizontal : 0} });
 		} else {
 			if (!this.element.style.top) {
 				this.element.style.top = (hui.window.getScrollTop()+40)+'px';
@@ -141,7 +141,7 @@ hui.ui.Window.prototype = {
 	startDrag : function(e) {
 		var event = new hui.Event(e);
 		this.element.style.zIndex=hui.ui.nextPanelIndex();
-		var pos = { top : hui.getTop(this.element), left : hui.getLeft(this.element) };
+		var pos = { top : hui.position.getTop(this.element), left : hui.position.getLeft(this.element) };
 		this.dragState = {left:event.getLeft()-pos.left,top:event.getTop()-pos.top};
 		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
 		this.latestTime = new Date().getMilliseconds();

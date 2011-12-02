@@ -13,29 +13,26 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
-	<style>
-		@-webkit-keyframes spin {
-			from { -webkit-transform: rotateY(0); }
-			to   { -webkit-transform: rotateY(360deg); }
+	<script charset="utf-8" type="text/javascript" src="../../ext/Help.js"></script>
+	<style type="text/css" media="screen">
+		body {
+			font-family: Arial;
+			padding: 30px;			
 		}
-  
-		#webkit{
-			font-size: 30px;
-			-webkit-perspective : 1000;
-			-webkit-transform-style: preserve-3d;
-			-webkit-animation: spin 3.5s infinite ease;
-			background: #eee;
-			position: fixed;
-			right: 30px;
-			bottom: 50px;
+		button {
+			font-size: 15px;
 		}
-		
 	</style>
 </head>
 
-<body style="padding: 30px">
-	<button onclick="hui.animate('text','opacity',0,3000)">opacity=0</button>
-	<button onclick="hui.animate('text','opacity',1,3000)">opacity=1</button>
+<body>
+	
+	<button onclick="hui.animate({node:'text',css:{opacity:0},duration:3000})">
+		opacity=0
+	</button>
+	
+	<button onclick="hui.animate({node:'text',css:{opacity:1},duration:3000})">opacity=1</button>
+	
 	<button onclick="hui.animate('text','width','400px',3000)">width=400px</button>
 	<button onclick="hui.animate('text','font-size','72pt',3000)">font-size=72pt</button>
 	<button onclick="hui.animate('text','font-size','12pt',3000)">font-size=12pt</button>
@@ -44,39 +41,58 @@
 	<button onclick="hui.animate('text','color','#000',3000)">color=#000</button>
 	<button onclick="hui.animate('text','margin-left','50%',3000)">margin-left=50%</button>
 	<button onclick="hui.animate('text','margin-left','0%',3000,{ease:hui.ease.bounce})">margin-left=0%</button>
+	<hr/>
 	<button onclick="hui.animate('text','transform','scale(2)',1000,{ease:hui.ease.elastic})">transform=scale(2)</button>
 	<button onclick="hui.animate('text','transform','scale(1)',1000,{ease:hui.ease.elastic})">transform=scale(1)</button>
 	<button onclick="hui.animate('text','transform','rotate(40deg)',3000,{ease:hui.ease.bounce})">transform=rotate(40deg)</button>
 	<button onclick="hui.animate('text','transform','rotate(180deg)',3000,{ease:hui.ease.bounce})">transform=rotate(180deg)</button>
 	<button onclick="hui.animate('text','transform','rotate(1000deg) scale(.1)',3000,{ease:hui.ease.bounce})">transform=rotate(1000deg) scale(.1)</button>
 	<button onclick="hui.animate('text','transform','rotate(0deg) scale(2)',3000,{ease:hui.ease.bounce})">transform=rotate(0deg) scale(2)</button>
+	<hr/>
 	<button onclick="hui.effect.bounceIn({element:hui.get('text')})">bounceIn</button>
 	<button onclick="hui.effect.flip({element:'flipper'})">Flip</button>
 	<button onclick="hui.effect.flip({element:'flipper',duration:'5s'})">Flip (5s)</button>
 	<hr/>
 	
-	<button onclick="hui.effect.bounceIn({element:hui.get('bubble')})">Bounce bubble in</button>
-	<div style="height: 200px;"></div>
+	<button onclick="hui.ui.help.bubble({target:this})">Bounce bubble in</button>
+	<div style="height: 50px;"></div>
 
-<div class="hui_effect_wiggle" style="position: absolute; height: 30px; background: #eee; margin-top: -50px;">Im wiggly!</div>
-
-<p id="text">
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<p id="text" style="border: 1px solid #ddd; padding: 3px 5px;">
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+	Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+	Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+	Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </p>
 
 
 <div style="position: absolute; height: 200px; width: 1000px;" id="flipper">
-	<div id="face" style="width: 100%; height: 100%; background: #abc; position: absolute;">Front</div>
-	<div id="back" style="width: 100%; height: 100%; background: #cba; position: absolute; border-radius: 10px; -webkit-box-sizing: border-box; padding: 10px;">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	<div id="face" style="width: 100%; height: 100%; background: #abc; position: absolute;">
+		<div style="text-align: center; font-size: 100px; color: #fff; font-family: Arial; line-height: 200px;">Front</div>
+	</div>
+	<div id="back" style="width: 100%; height: 100%; background: #def; position: absolute; border-radius: 10px; -webkit-box-sizing: border-box; padding: 10px; border: 3px solid #cde;">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+		Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+		Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 	</div>
 </div>
 
 
-<div id="webkit">Hep hey</div>
+
+<div onclick="hui.cls.toggle(this,'hui_effect_wiggle')" style="font-size: 30px; background: #eee; position: fixed; right: 30px; bottom: 50px; cursor: pointer;">
+	Click me to start wiggling
+</div>
+
+<div onclick="hui.cls.toggle(this,'hui_effect_spin')" style="font-size: 30px; background: #eee; position: fixed; right: 30px; bottom: 120px; cursor: pointer;">
+	Click me to start spinning
+</div>
 
 <script>
-hui.effect.makeFlippable({container:'flipper',back:'back',front:'face'});
+hui.effect.makeFlippable({
+	container : 'flipper',
+	back : 'back',
+	front : 'face'
+});
 </script>
 
 <div id="bubble" style="display: none; width: 200px; height: 200px; border: 1px solid #aaa; border-radius: 100px; box-shadow: 0px 2px 8px rgba(0, 0, 0, .2),inset 0px 0px 50px rgba(255, 255, 255, 1),inset 0px 0px 50px rgba(255, 255, 255, 1),inset 0px 0px 20px rgba(255, 255, 255, 1); position: absolute; top: 20px; left: 30px;" onclick="this.style.display='none'"></div>

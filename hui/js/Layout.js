@@ -31,7 +31,7 @@ hui.ui.Layout.prototype = {
 			if (foot) {
 				bottom = hui.get.firstByTag(foot,'*').clientHeight;
 			}
-			top += hui.getTop(this.element);
+			top += hui.position.getTop(this.element);
 			this.diff = bottom+top;
 			if (this.element.parentNode!==document.body) {
 				this.diff+=15;

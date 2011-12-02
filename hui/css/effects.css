@@ -126,3 +126,18 @@
 	-moz-animation: hui_wiggle 1s infinite;
 	animation: hui_wiggle 1s infinite;
 }
+
+/********* Spin ***********/
+
+
+@-webkit-keyframes hui_spin {
+	from { -webkit-transform: rotateY(0); }
+	to   { -webkit-transform: rotateY(360deg); }
+}
+
+.hui_effect_spin
+{
+	-webkit-perspective : 1000;
+	-webkit-transform-style: preserve-3d;
+	-webkit-animation: hui_spin 3.5s infinite ease;
+}

@@ -231,6 +231,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.location.html">hui.location</a></li>
 	
+	<li><a href="../symbols/hui.position.html">hui.position</a></li>
+	
 	<li><a href="../symbols/hui.Preloader.html">hui.Preloader</a></li>
 	
 	<li><a href="../symbols/hui.selection.html">hui.selection</a></li>
@@ -632,33 +634,6 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.dragEndListener">dragEndListener</a></b>(event)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.dragListener">dragListener</a></b>(e)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#dragPart">dragPart</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#editColumn">editColumn</a></b>(rowIndex, columnIndex)
@@ -671,15 +646,6 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#editPart">editPart</a></b>(part)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#endPartDrag">endPartDrag</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -911,18 +877,9 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Editor.<b><a href="../symbols/hui.ui.Editor.html#.startDrag">startDrag</a></b>(e, element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#startPartDrag">startPartDrag</a></b>(e)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editor.html#startPartDrag">startPartDrag</a></b>(node, e)
 								</div>
 								<div class="description">* Dragging ***</div>
 							</td>
@@ -1584,103 +1541,6 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".dragEndListener"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.Editor.</span><b>dragEndListener</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".dragListener"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.Editor.</span><b>dragListener</b>(e)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>e</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="dragPart"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>dragPart</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name="editColumn"> </a>
 					<div class="fixedFont">
 					
@@ -1749,31 +1609,6 @@ ul.inheritsList
 								<dd></dd>
 							
 							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="endPartDrag"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>endPartDrag</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
 						
 						
 						
@@ -2598,53 +2433,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".startDrag"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.Editor.</span><b>startDrag</b>(e, element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>e</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name="startPartDrag"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>startPartDrag</b>(e)
+					<b>startPartDrag</b>(node, e)
 					
 					</div>
 					<div class="description">
@@ -2658,6 +2451,12 @@ ul.inheritsList
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>node</b>
+									
+								</dt>
+								<dd></dd>
 							
 								<dt>
 									<b>e</b>
@@ -2724,7 +2523,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Dec 01 2011 16:06:48 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Dec 02 2011 10:33:36 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

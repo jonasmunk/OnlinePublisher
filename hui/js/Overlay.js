@@ -96,7 +96,7 @@ hui.ui.Overlay.prototype = {
 			hui.style.set(this.element,{'display':'block',visibility:'hidden'});
 		}
 		if (options.element) {
-			hui.place({
+			hui.position.place({
 				source : {element:this.element,vertical:0,horizontal:.5},
 				target : {element:options.element,vertical:.5,horizontal:.5},
 				insideViewPort : true,

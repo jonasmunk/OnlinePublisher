@@ -454,7 +454,7 @@ hui.ui.showToolTip = function(options) {
 	}
 	t.onclick = function() {hui.ui.hideToolTip(options);};
 	var n = hui.get(options.element);
-	var pos = hui.getPosition(n);
+	var pos = hui.position.get(n);
 	hui.dom.setText(t.getElementsByTagName('div')[1],options.text);
 	if (t.style.display=='none' && hui.browser.opacity) {
 		hui.style.setOpacity(t,0);
@@ -491,7 +491,7 @@ hui.ui.getElement = function(widgetOrElement) {
 
 hui.ui.isWithin = function(e,element) {
 	e = new hui.Event(e);
-	var offset = {left:hui.getLeft(element),top:hui.getTop(element)};
+	var offset = {left:hui.position.getLeft(element),top:hui.position.getTop(element)};
 	var dims = {width:element.clientWidth,height:element.clientHeight};
 	return e.getLeft()>offset.left && e.getLeft()<offset.left+dims.width && e.getTop()>offset.top && e.getTop()<offset.top+dims.height;
 };
@@ -590,8 +590,8 @@ hui.ui.positionAtElement = function(element,target,options) {
 	if (origDisplay=='none') {
 		hui.style.set(element,{'visibility':'hidden','display':'block'});
 	}
-	var left = hui.getLeft(target),
-		top = hui.getTop(target);
+	var left = hui.position.getLeft(target),
+		top = hui.position.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
 		left = left+target.clientWidth-element.clientWidth;

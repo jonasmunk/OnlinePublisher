@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.ui.Flash</title>
+		<title>JsDoc Reference - hui.position</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -424,7 +424,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace hui.ui.Flash
+				Namespace hui.position
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -441,7 +441,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Flash.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.position.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -454,7 +454,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.ui.Flash.html#constructor">hui.ui.Flash</a></b>
+								<b><a href="../symbols/hui.position.html#constructor">hui.position</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -470,7 +470,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Flash.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.position.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -483,7 +483,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Flash.<b><a href="../symbols/hui.ui.Flash.html#.getFullVersion">getFullVersion</a></b>()
+								<div class="fixedFont">hui.position.<b><a href="../symbols/hui.position.html#.get">get</a></b>(element)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -492,9 +492,37 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Flash.<b><a href="../symbols/hui.ui.Flash.html#.getMajorVersion">getMajorVersion</a></b>()
+								<div class="fixedFont">hui.position.<b><a href="../symbols/hui.position.html#.getLeft">getLeft</a></b>(element)
 								</div>
-								<div class="description">Gets the major version of flash</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.position.<b><a href="../symbols/hui.position.html#.getScrollOffset">getScrollOffset</a></b>(element)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.position.<b><a href="../symbols/hui.position.html#.getTop">getTop</a></b>(element)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.position.<b><a href="../symbols/hui.position.html#.place">place</a></b>(options)
+								</div>
+								<div class="description">Place on element relative to another
+Example hui.position.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})</div>
 							</td>
 						</tr>
 					
@@ -515,7 +543,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.ui.Flash</b>
+						<b>hui.position</b>
 				</div>
 				
 				<div class="description">
@@ -546,11 +574,11 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".getFullVersion"> </a>
+					<a name=".get"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.ui.Flash.</span><b>getFullVersion</b>()
+					<span class="light">hui.position.</span><b>get</b>(element)
 					
 					</div>
 					<div class="description">
@@ -561,6 +589,17 @@ ul.inheritsList
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
@@ -571,21 +610,141 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".getMajorVersion"> </a>
+					<a name=".getLeft"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.ui.Flash.</span><b>getMajorVersion</b>()
+					<span class="light">hui.position.</span><b>getLeft</b>(element)
 					
 					</div>
 					<div class="description">
-						Gets the major version of flash
+						
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getScrollOffset"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.position.</span><b>getScrollOffset</b>(element)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getTop"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.position.</span><b>getTop</b>(element)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".place"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.position.</span><b>place</b>(options)
+					
+					</div>
+					<div class="description">
+						Place on element relative to another
+Example hui.position.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>options</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						

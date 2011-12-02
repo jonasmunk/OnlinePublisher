@@ -765,7 +765,7 @@ hui.build = function(name,options) {
 	return e;
 }
 
-hui.getTop = function(element) {
+hui.position.getTop = function(element) {
     element = hui.get(element);
 	if (element) {
 		var yPos = element.offsetTop,
@@ -779,7 +779,7 @@ hui.getTop = function(element) {
 	else return 0;
 }
 
-hui.getScrollOffset = function(element) {
+hui.position.getScrollOffset = function(element) {
     element = hui.get(element);
 	var top = 0, left = 0;
     do {
@@ -790,7 +790,7 @@ hui.getScrollOffset = function(element) {
 	return {top:top,left:left};
 }
 
-hui.getLeft = function(element) {
+hui.position.getLeft = function(element) {
     element = hui.get(element);
 	if (element) {
 		var xPos = element.offsetLeft,
@@ -804,10 +804,10 @@ hui.getLeft = function(element) {
 	else return 0;
 }
 
-hui.getPosition = function(element) {
+hui.position.get = function(element) {
 	return {
-		left : hui.getLeft(element),
-		top : hui.getTop(element)
+		left : hui.position.getLeft(element),
+		top : hui.position.getTop(element)
 	}
 }
 
@@ -846,7 +846,7 @@ hui.window = {
 	 */
 	scrollTo : function(options) {
 		var node = options.element;
-		var pos = hui.getPosition(node);
+		var pos = hui.position.get(node);
 		var viewTop = hui.window.getScrollTop();
 		var viewHeight = hui.window.getViewHeight();
 		var viewBottom = viewTop+viewHeight;
@@ -1595,14 +1595,14 @@ hui.document = {
 
 /**
  * Place on element relative to another
- * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
+ * Example hui.position.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
  */
-hui.place = function(options) {
+hui.position.place = function(options) {
 	var left = 0,
 		top = 0,
 		src = hui.get(options.source.element),
 		trgt = hui.get(options.target.element),
-		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
+		trgtPos = {left : hui.position.getLeft(trgt), top : hui.position.getTop(trgt) };
 	
 	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
 	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
@@ -3284,7 +3284,7 @@ hui.ui.showToolTip = function(options) {
 	}
 	t.onclick = function() {hui.ui.hideToolTip(options);};
 	var n = hui.get(options.element);
-	var pos = hui.getPosition(n);
+	var pos = hui.position.get(n);
 	hui.dom.setText(t.getElementsByTagName('div')[1],options.text);
 	if (t.style.display=='none' && hui.browser.opacity) {
 		hui.style.setOpacity(t,0);
@@ -3321,7 +3321,7 @@ hui.ui.getElement = function(widgetOrElement) {
 
 hui.ui.isWithin = function(e,element) {
 	e = new hui.Event(e);
-	var offset = {left:hui.getLeft(element),top:hui.getTop(element)};
+	var offset = {left:hui.position.getLeft(element),top:hui.position.getTop(element)};
 	var dims = {width:element.clientWidth,height:element.clientHeight};
 	return e.getLeft()>offset.left && e.getLeft()<offset.left+dims.width && e.getTop()>offset.top && e.getTop()<offset.top+dims.height;
 };
@@ -3420,8 +3420,8 @@ hui.ui.positionAtElement = function(element,target,options) {
 	if (origDisplay=='none') {
 		hui.style.set(element,{'visibility':'hidden','display':'block'});
 	}
-	var left = hui.getLeft(target),
-		top = hui.getTop(target);
+	var left = hui.position.getLeft(target),
+		top = hui.position.getTop(target);
 	var vert=options.vertical || null;
 	if (options.horizontal && options.horizontal=='right') {
 		left = left+target.clientWidth-element.clientWidth;
@@ -3951,7 +3951,7 @@ hui.ui.ImageViewer.prototype = {
 		if (!this.zoomInfo) {
 			return;
 		}
-		var offset = {left:hui.getLeft(this.zoomer),top:hui.getTop(this.zoomer)};
+		var offset = {left:hui.position.getLeft(this.zoomer),top:hui.position.getTop(this.zoomer)};
 		var x = (e.getLeft()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
 		var y = (e.getTop()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
 		this.zoomer.scrollLeft = x;

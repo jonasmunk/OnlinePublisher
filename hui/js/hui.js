@@ -724,16 +724,16 @@ hui.get.firstByTag = function(node,tag) {
  *  text : 'child text', 
  *  parent : «Element», 
  *  parentFirst : «Element», 
- *  'class' : 'css_class', 
+ *  class : 'css_class', 
  *  className : 'css_class', 
  *  style : 'color: blue;' 
  *}
- * Additional properties will be set as attributes
  *
+ * Additional properties will be set as attributes
  * </pre>
  * @param {String} name The name of the new element
  * @param {Object} options The options
- * @returns {Element} The element
+ * @returns {Element} The new element
  */
 hui.build = function(name,options) {
 	var e = document.createElement(name);
@@ -765,51 +765,97 @@ hui.build = function(name,options) {
 	return e;
 }
 
-hui.getTop = function(element) {
-    element = hui.get(element);
-	if (element) {
-		var yPos = element.offsetTop,
-			tempEl = element.offsetParent;
-		while (tempEl != null) {
-			yPos += tempEl.offsetTop;
-			tempEl = tempEl.offsetParent;
+
+
+
+
+
+
+
+/////////////////////// Position ///////////////////////
+
+/** @namespace */
+hui.position = {
+	getTop : function(element) {
+	    element = hui.get(element);
+		if (element) {
+			var yPos = element.offsetTop,
+				tempEl = element.offsetParent;
+			while (tempEl != null) {
+				yPos += tempEl.offsetTop;
+				tempEl = tempEl.offsetParent;
+			}
+			return yPos;
 		}
-		return yPos;
-	}
-	else return 0;
-}
-
-hui.getScrollOffset = function(element) {
-    element = hui.get(element);
-	var top = 0, left = 0;
-    do {
-      top += element.scrollTop  || 0;
-      left += element.scrollLeft || 0;
-      element = element.parentNode;
-    } while (element);
-	return {top:top,left:left};
-}
-
-hui.getLeft = function(element) {
-    element = hui.get(element);
-	if (element) {
-		var xPos = element.offsetLeft,
-			tempEl = element.offsetParent;
-		while (tempEl != null) {
-			xPos += tempEl.offsetLeft;
-			tempEl = tempEl.offsetParent;
+		else return 0;
+	},
+	getLeft : function(element) {
+	    element = hui.get(element);
+		if (element) {
+			var xPos = element.offsetLeft,
+				tempEl = element.offsetParent;
+			while (tempEl != null) {
+				xPos += tempEl.offsetLeft;
+				tempEl = tempEl.offsetParent;
+			}
+			return xPos;
 		}
-		return xPos;
+		else return 0;
+	},
+	get : function(element) {
+		return {
+			left : hui.position.getLeft(element),
+			top : hui.position.getTop(element)
+		}
+	},
+	getScrollOffset : function(element) {
+	    element = hui.get(element);
+		var top = 0, left = 0;
+	    do {
+	      top += element.scrollTop  || 0;
+	      left += element.scrollLeft || 0;
+	      element = element.parentNode;
+	    } while (element);
+		return {top:top,left:left};
+	},
+	/**
+	 * Place on element relative to another
+	 * Example hui.position.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
+	 */
+	place : function(options) {
+		var left = 0,
+			top = 0,
+			src = hui.get(options.source.element),
+			trgt = hui.get(options.target.element),
+			trgtPos = {left : hui.position.getLeft(trgt), top : hui.position.getTop(trgt) };
+
+		left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
+		top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
+
+		left -= src.clientWidth * (options.source.horizontal || 0);
+		top -= src.clientHeight * (options.source.vertical || 0);
+
+		if (options.insideViewPort) {
+			var w = hui.window.getViewWidth();
+			if (left + src.clientWidth > w) {
+				left = w - src.clientWidth - (options.viewPartMargin || 0);
+				hui.log(options.viewPartMargin)
+			}
+			if (left < 0) {left=0}
+			if (top < 0) {top=0}
+		}
+		if (options.top) {
+			top += options.top;
+		}
+		if (options.left) {
+			left += options.left;
+		}
+
+		src.style.top = top+'px';
+		src.style.left = left+'px';
 	}
-	else return 0;
 }
 
-hui.getPosition = function(element) {
-	return {
-		left : hui.getLeft(element),
-		top : hui.getTop(element)
-	}
-}
 
 
 
@@ -846,7 +892,7 @@ hui.window = {
 	 */
 	scrollTo : function(options) {
 		var node = options.element;
-		var pos = hui.getPosition(node);
+		var pos = hui.position.get(node);
 		var viewTop = hui.window.getScrollTop();
 		var viewHeight = hui.window.getViewHeight();
 		var viewBottom = viewTop+viewHeight;
@@ -999,7 +1045,7 @@ hui.cls = {
  * @param {Element} element The element to listen on
  * @param {String} type The event to listen for
  * @param {Function} listener The function to be called
- * @param {boolean} useCapture If the listener should "capture"
+ * @param {boolean} ?useCapture If the listener should "capture"
  */
 hui.listen = function(element,type,listener,useCapture) {
 	element = hui.get(element);
@@ -1201,13 +1247,40 @@ hui.onReady = function(delegate) {
 
 /**
  * Send a HTTP request
- * @param options The options
+ * <pre><strong>options:</strong> {
+ *  method : «'<strong>POST</strong>' | 'get' | 'rEmOVe'»,
+ *  async : <strong>true</strong>,
+ *  headers : {<strong>Ajax : true</strong>, header : 'value'},
+ *  file : «HTML5-file»,
+ *  files : «HTML5-files»,
+ *  parameters : {key : 'value'},
  *
- * <p><strong>Options:</strong></p>
- * <ul>
- * <li><strong>method</strong>: 'POST' | 'GET' (can be upper or lower case)</li>
- * <li><strong>onSuccess</strong>: «function(transport)» Called when the request succeeded</li>
- * </ul>
+ *  onSuccess : function(transport) {
+ *    // when status is 200
+ *  },
+ *  onForbidden : function(transport) {
+ *    // when status is 403
+ *  },
+ *  onAbort : function(transport) {
+ *    // when request is aborted
+ *  },
+ *  onFailure : function(transport) {
+ *    // when status is not 200 (if status is 403 and onForbidden is set then onFailure will not be called)
+ *  },
+ *  onException : function(exception,transport) {
+ *    // When an exception has occurred while calling on«Something», If not set the exception will be thrown
+ *  },
+ *  onProgress : function(current,total) {
+ *    // Progress for file uploads (maybe also other requests?)
+ *  },
+ *  onLoad : functon() {
+ *    // When file upload is transfered?
+ *  }
+ *}
+ * </pre>
+ *
+ * @param options The options
+ * @returns {XMLHttpRequest} The transport
  */
 hui.request = function(options) {
 	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
@@ -1591,46 +1664,6 @@ hui.document = {
 
 
 
-
-
-//////////////////////////// Placement /////////////////////////
-
-/**
- * Place on element relative to another
- * Example hui.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
- */
-hui.place = function(options) {
-	var left = 0,
-		top = 0,
-		src = hui.get(options.source.element),
-		trgt = hui.get(options.target.element),
-		trgtPos = {left : hui.getLeft(trgt), top : hui.getTop(trgt) };
-	
-	left = trgtPos.left + trgt.clientWidth * (options.target.horizontal || 0);
-	top = trgtPos.top + trgt.clientHeight * (options.target.vertical || 0);
-	
-	left -= src.clientWidth * (options.source.horizontal || 0);
-	top -= src.clientHeight * (options.source.vertical || 0);
-	
-	if (options.insideViewPort) {
-		var w = hui.window.getViewWidth();
-		if (left + src.clientWidth > w) {
-			left = w - src.clientWidth - (options.viewPartMargin || 0);
-			hui.log(options.viewPartMargin)
-		}
-		if (left < 0) {left=0}
-		if (top < 0) {top=0}
-	}
-	if (options.top) {
-		top += options.top;
-	}
-	if (options.left) {
-		left += options.left;
-	}
-	
-	src.style.top = top+'px';
-	src.style.left = left+'px';
-}
 
 
 

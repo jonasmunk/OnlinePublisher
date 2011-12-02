@@ -1,8 +1,25 @@
 /////////////////////////// Animation ///////////////////////////
 
-hui.animate = function(options,style,value,duration,delegate) {
+/**
+ * Animate something
+ * <pre><strong>options:</strong> {
+ *  node : «Element», 
+ *  css : { fontSize : '11px', color : '#f00', opacity : 0.5 }, 
+ *  duration : 1000, // 1sec 
+ *  ease : function(num) {},
+ *  onComplete : function() {}
+ *}
+ * 
+ * @param {Element | Object} options Options or an element
+ * @param {String} style The css property
+ * @param {String} value The css value
+ * @param {Number} duration The duration in milisecons
+ * @param {Object} deleagte The options if first param is an element
+ * 
+ */
+hui.animate = function(options,property,value,duration,delegate) {
 	if (typeof(options)=='string' || hui.dom.isElement(options)) {
-		hui.animation.get(options).animate(null,value,style,duration,delegate);
+		hui.animation.get(options).animate(null,value,property,duration,delegate);
 	} else {
 		var item = hui.animation.get(options.node);
 		for (prop in options.css) {
@@ -18,13 +35,13 @@ hui.animation = {
 	latestId : 0,
 	get : function(element) {
 		element = hui.get(element);
-		if (!element.n2iAnimationId) {
-			element.n2iAnimationId = this.latestId++;
+		if (!element.huiAnimationId) {
+			element.huiAnimationId = this.latestId++;
 		}
-		if (!this.objects[element.n2iAnimationId]) {
-			this.objects[element.n2iAnimationId] = new hui.animation.Item(element);
+		if (!this.objects[element.huiAnimationId]) {
+			this.objects[element.huiAnimationId] = new hui.animation.Item(element);
 		}
-		return this.objects[element.n2iAnimationId];
+		return this.objects[element.huiAnimationId];
 	},
 	start : function() {
 		if (!this.running) {

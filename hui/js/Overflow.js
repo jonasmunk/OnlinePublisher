@@ -23,8 +23,8 @@ hui.ui.Overflow.prototype = {
 	_calculate : function() {
 		var viewport = hui.window.getViewHeight(),
 			parent = this.element.parentNode,
-			top = hui.getTop(this.element),
-			bottom = hui.getTop(parent)+parent.clientHeight,
+			top = hui.position.getTop(this.element),
+			bottom = hui.position.getTop(parent)+parent.clientHeight,
 			sibs = hui.get.after(this.element);
 		for (var i=0; i < sibs.length; i++) {
 			if (hui.style.get(sibs[i],'position')!='absolute') {
