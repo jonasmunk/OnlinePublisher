@@ -19,11 +19,11 @@ if (Request::isPost()) {
 		ToolService::install('system'); // Ensure that the system tool is present
 		In2iGui::sendObject(array('success' => true));
 	} else {
-		usleep(rand(5000000,10000000));
+		usleep(rand(1500000,3000000));
 		In2iGui::sendObject(array('success' => false));
 	}
 } else {
-	usleep(rand(5000000,10000000));
+	usleep(rand(1500000,3000000));
 	In2iGui::sendObject(array('success' => false));
 }
 exit;

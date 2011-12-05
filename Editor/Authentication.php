@@ -28,7 +28,7 @@ $mailEnabled = MailService::getEnabled();
 $gui='
 <gui xmlns="uri:hui" padding="10" title="'.SystemInfo::getTitle().'" state="'.$state.'">
 	<controller name="controller" source="Authentication.js"/>
-	<box width="300" top="100" variant="rounded">
+	<box width="300" top="100" variant="rounded" name="box">
 		<space all="10" top="5" bottom="5">
 			<formula name="formula" state="login">
 				<header>Adgangskontrol</header>

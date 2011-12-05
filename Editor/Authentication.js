@@ -39,14 +39,31 @@ var controller = {
 		});
 	},
 	$submit$formula : function() {
+		if (this.loggingIn) {
+			return;
+		}
+		var values = formula.getValues();
+		if (username.isBlank()) {
+			username.stress();
+			username.focus();
+			return;
+		}
+		if (password.isBlank()) {
+			password.stress();
+			password.focus();
+			return;
+		}
 		hui.ui.showMessage({text:'Logger ind...',busy:true,delay:100});
+		this.loggingIn = true;
+		login.disable();
 		hui.ui.request({
 			url:'Services/Core/Authentication.php',
-			onSuccess:'login',
-			parameters:formula.getValues(),
+			onSuccess : 'login',
+			parameters : values,
 			onFailure:function() {
 				hui.ui.showMessage({text:'Der skete en fejl internt i systemet!',icon:'common/warning',duration:4000});
-			}
+				this._enableLogin();
+			}.bind(this)
 		});
 	},
 	$success$login : function(data) {
@@ -59,9 +76,15 @@ var controller = {
 				document.location = page===null ? './index.php' : '.?page='+page;
 			}
 		} else {
+			hui.ui.stress(box);
 			hui.ui.showMessage({text:'Brugeren blev ikke fundet!',icon:'common/warning',duration:2000});
 			formula.focus();
 		}
+		this._enableLogin();
+	},
+	_enableLogin : function() {
+		this.loggingIn = false;
+		login.enable();
 	},
 	
 	$click$forgot : function() {
