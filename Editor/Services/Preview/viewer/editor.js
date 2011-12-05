@@ -12,6 +12,8 @@ op.Editor = {
 		if (op.page.template=='document') {
 			var editor = hui.ui.Editor.get();
 			editor.setOptions({
+				rowClass:'document_row',
+				columnClass:'document_column',
 				partClass:'part_section'
 			});
 			editor.addPartController('header','Overskrift',op.Editor.Header);
