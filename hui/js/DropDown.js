@@ -157,6 +157,9 @@ hui.ui.DropDown.prototype = {
 			this.options.source.refresh();
 		}
 	},
+	stress : function() {
+		hui.ui.stress(this);
+	},
 	focus : function() {
 		try {this.element.focus()} catch (ignore) {}
 	},

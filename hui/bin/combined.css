@@ -3505,6 +3505,22 @@ div.hui_overlay_icon:hover
 .hui_editor_column_edit
 {
 	outline: 2px dashed #3875d7 !important;
+}
+
+div.hui_editor_drop_placeholder
+{
+	position: relative;
+	overflow: hidden;
+	height: 0px;
+}
+
+div.hui_editor_drop_placeholder div
+{
+	height: 100%;
+	border: 2px dashed #DDD;
+	background: #F6F6F6;
+	border-radius: 10px;
+	box-sizing: border-box;
 }div.hui_menu
 {
 	display: none;
@@ -5688,7 +5704,21 @@ div.hui_links_row:hover span.hui_links_remove
 	-moz-animation: hui_wiggle 1s infinite;
 	animation: hui_wiggle 1s infinite;
 }
-div.hui_colorpicker
+
+/********* Spin ***********/
+
+
+@-webkit-keyframes hui_spin {
+	from { -webkit-transform: rotateY(0); }
+	to   { -webkit-transform: rotateY(360deg); }
+}
+
+.hui_effect_spin
+{
+	-webkit-perspective : 1000;
+	-webkit-transform-style: preserve-3d;
+	-webkit-animation: hui_spin 3.5s infinite ease;
+}div.hui_colorpicker
 {
 	margin-bottom: -3px;
 	border: 1px solid #ddd;

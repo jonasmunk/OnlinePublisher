@@ -436,6 +436,22 @@ div.hui_overlay_icon:hover
 .hui_editor_column_edit
 {
 	outline: 2px dashed #3875d7 !important;
+}
+
+div.hui_editor_drop_placeholder
+{
+	position: relative;
+	overflow: hidden;
+	height: 0px;
+}
+
+div.hui_editor_drop_placeholder div
+{
+	height: 100%;
+	border: 2px dashed #DDD;
+	background: #F6F6F6;
+	border-radius: 10px;
+	box-sizing: border-box;
 }div.hui_overlay
 {
 	display: none;

@@ -428,6 +428,9 @@ hui.dom = {
 		oldNode.parentNode.insertBefore(newNode,oldNode);
 		oldNode.parentNode.removeChild(oldNode);
 	},
+	insertBefore : function(target,newNode) {
+		target.parentNode.insertBefore(newNode,target);
+	},
 	replaceHTML : function(node,html) {
 		node = hui.get(node);
 		node.innerHTML=html;

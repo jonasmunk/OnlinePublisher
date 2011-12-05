@@ -524,6 +524,15 @@ hui.ui.addFocusClass = function(o) {
 	});
 };
 
+hui.ui.stress = function(widget) {
+	var e = widget.element;
+	hui.cls.add(e,'hui_effect_wiggle');
+	window.setTimeout(function() {
+		hui.cls.remove(e,'hui_effect_wiggle');
+	},1000);
+	
+}
+
 
 /////////////////////////////// Validation /////////////////////////////
 

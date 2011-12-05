@@ -111,6 +111,9 @@ hui.ui.TextField.prototype = {
 	reset : function() {
 		this.setValue('');
 	},
+	stress : function() {
+		hui.ui.stress(this);
+	},
 	setValue : function(value) {
 		if (value===undefined || value===null) {
 			value='';
