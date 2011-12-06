@@ -62,6 +62,7 @@ hui.ui.Editor.prototype = {
 				self._reloadParts(parts,i,j);
 			});
 		});
+		/*
 		var parts = hui.get.byClass(document.body,this.options.partClass);
 		hui.each(this.parts,function(part) {
 			var i = parts.indexOf(part.element);
@@ -70,6 +71,7 @@ hui.ui.Editor.prototype = {
 			}
 		});
 		this._reloadParts(parts,-1,-1);
+		*/
 	},
 	_reloadColumns : function(columns,rowIndex) {
 		var self = this;
@@ -441,6 +443,7 @@ hui.ui.Editor.prototype = {
 			draggedElement : element
 		}
 		proxy.innerHTML = element.innerHTML;
+		hui.log('startDrag')
 		hui.drag.start({
 			element : proxy,
 			onBeforeMove : this._onBeforeDrag.bind(this),
@@ -466,13 +469,13 @@ hui.ui.Editor.prototype = {
 					}
 					var h = this._dragColumnHeights[info.rowIndex+'-'+info.columnIndex];
 					hui.log(info.columnIndex+': '+h)
-					hui.animate({node:info.placeholder,css:{height : h+'px'},duration:500,ease:hui.ease.slowFastSlow});
-					//info.placeholder.style.height='100px';
+					//hui.animate({node:info.placeholder,css:{height : h+'px'},duration:500,ease:hui.ease.slowFastSlow});
 					hui.animate({node:this.dragProxy,css:{width:(info.right-info.left)+'px'},duration:300,ease:hui.ease.slowFastSlow});
 					this._activeDragPlaceholder = info.placeholder;
 					this._dropInfo = info;
-					break;
-				}
+					hui.style.set(this._dropMarker,{width:(info.right-info.left)+'px',left:info.left+'px',top:info.top+'px',display:'block'});
+				}	
+				break;
 			}
 		};
 	},
@@ -483,28 +486,90 @@ hui.ui.Editor.prototype = {
 			display : 'block',
 			visibility : 'visible',
 			height  : dragged.clientHeight+'px',
-			width  : dragged.clientWidth+'px'
+			width  : dragged.clientWidth+'px',
+			transform : 'scale(1)',
+			opacity: 1
 		});
-		dragged.style.display='none';
+		hui.animate({node:this.dragProxy,css:{transform:'scale(1.3)'},duration:1000,ease:hui.ease.slowFastSlow});
+		hui.style.setOpacity(dragged,0.5);
 		this._dragging = true;
+		if (!this._dropMarker) {
+			this._dropMarker = hui.build('div',{'class':'hui_editor_dropmarker',parent:document.body});
+		}
 	},
 	_onAfterDrag : function(e) {
-		this.dragProxy.style.display = 'none';
-		if (this._dropInfo) {
-			if (this._dragInfo.draggedElement!==this._dropInfo.part) {
-				hui.dom.remove(this._dragInfo.draggedElement);
-				hui.dom.insertBefore(this._dropInfo.part,this._dragInfo.draggedElement);
+		var proxy = this.dragProxy,
+			dragged = this._dragInfo.draggedElement,
+			dropInfo = this._dropInfo;
+			hui.animate({node:proxy,css:{transform:'scale(1)',left:dropInfo.left+'px',top:dropInfo.top+'px',opacity:0.5},duration:500,ease:hui.ease.slowFastSlow});
+		if (dropInfo) {
+			var column = this._getColumn(dropInfo.rowIndex,dropInfo.columnIndex);
+			var parts = hui.get.byClass(column,this.options.partClass);
+			if (parts[dropInfo.partIndex] != dragged) {
+				this.fire('partWasMoved',{dragged:dragged,rowIndex : dropInfo.rowIndex,columnIndex : dropInfo.columnIndex,partIndex : dropInfo.partIndex, 
+					onSuccess : function() {
+						var h = this._dragColumnHeights[dropInfo.rowIndex+'-'+dropInfo.columnIndex];
+						//var h = dragged.clientHeight;
+						dragged.style.webkitTransformOrigin='0 0';
+						var dummy = hui.build('div');
+						if (dropInfo.partIndex>=parts.length) {
+							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.dom.remove(dragged);
+								column.appendChild(dragged);
+								hui.animate({node:dragged,css:{transform:'scale(1)',height:h+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+									dragged.style.height='';
+								}});
+							}});
+						} else {	
+							hui.dom.insertBefore(parts[dropInfo.partIndex],dummy);
+							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.dom.remove(dragged);
+								hui.dom.insertBefore(parts[dropInfo.partIndex],dragged);
+								//hui.animate({node:dragged,css:{transform:'scale(1)',height:h+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+								//	dragged.style.height='';
+								//}});
+							}});
+							hui.animate({node:dummy,css:{height:h+'px'},duration:600,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.dom.replaceNode(dummy,dragged);
+								hui.style.set(dragged,{transform:'scale(1)',opacity:0,height:''})
+								hui.animate({node:dragged,css:{opacity:1},duration:500,ease:hui.ease.slowFastSlow});
+							}});
+						}
+						this._cleanDrag();
+					}.bind(this),
+					onFailure : function() {
+						this._cleanDrag();
+					}.bind(this)
+				});
+			} else {	
+				this._cleanDrag();
 			}
 		}
-		this._dragInfo.draggedElement.style.display='';
+	},
+	_cleanDrag : function() {
+		var proxy = this.dragProxy;
+		hui.animate({node:proxy,css:{opacity:0},duration:500,delay:500,ease:hui.ease.slowFastSlow
+		,onComplete:function() {
+				proxy.style.display='none';
+			}
+			});
+		hui.style.setOpacity(this._dragInfo.draggedElement,1);
 		var p = hui.get.byClass(document.body,'hui_editor_drop_placeholder');
 		for (var i=0; i < p.length; i++) {
 			hui.dom.remove(p[i]);
 		};
 		this.dropTargets = [];
 		this._dragging = false;
+		if (this._dropMarker) {
+			this._dropMarker.style.display='none'
+		}
 	},
-	
+	_getColumn : function(rowIndex,columnIndex) {
+		var rows = hui.get.byClass(document.body,this.options.rowClass);
+		var row = rows[rowIndex];
+		var columns = hui.get.byClass(row,this.options.columnClass);
+		return columns[columnIndex];
+	},
 	
 	
 	_activeDragPlaceholder : null,
@@ -533,10 +598,12 @@ hui.ui.Editor.prototype = {
 				var height = colHeights[i+'-'+j] = proxy.clientHeight;
 				var parts = hui.get.byClass(column,this.options.partClass);
 				var len = hui.position.getTop(column);
-				for (var k=0; k < parts.length; k++) {
+				var max = hui.position.getTop(column)+column.clientHeight;
+				var k=0;
+				for (; k < parts.length; k++) {
 					var part = parts[k];
 					if (part==draggedPart) {
-						continue;
+						//continue;
 					}
 					var placeholder = hui.build('div',{className:'hui_editor_drop_placeholder',html:'<div></div>'});
 					hui.dom.insertBefore(part,placeholder);
@@ -548,14 +615,28 @@ hui.ui.Editor.prototype = {
 						left : hui.position.getLeft(part),
 						right : hui.position.getLeft(part)+part.clientWidth,
 						top : len, //hui.position.getTop(part),
-						bottom : len+part.clientHeight/2, //hui.position.getTop(part)+part.clientHeight,
+						bottom : Math.min(max,len+part.clientHeight/2), //hui.position.getTop(part)+part.clientHeight,
 						placeholder : placeholder
 					}
 					len+=part.clientHeight;
-					hui.log(info)
 					infos.push(info);
 				};
 				
+				var placeholder = hui.build('div',{className:'hui_editor_drop_placeholder',html:'<div></div>'});
+				column.appendChild(placeholder);
+				var info = {
+					rowIndex : i,
+					columnIndex : j,
+					partIndex : k+1,
+					part : part,
+					left : hui.position.getLeft(part),
+					right : hui.position.getLeft(part)+part.clientWidth,
+					top : len, //hui.position.getTop(part),
+					bottom : Math.min(max,len+40),
+					placeholder : placeholder
+				}
+				len+=part.clientHeight;
+				infos.push(info);
 			}
 		}
 	}

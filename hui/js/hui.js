@@ -1453,7 +1453,9 @@ hui.style = {
 	},
 	set : function(element,styles) {
 		for (style in styles) {
-			if (style==='opacity') {
+			if (style==='transform') {
+				element.style['webkitTransform'] = styles[style];
+			} else if (style==='opacity') {
 				hui.style.setOpacity(element,styles[style]);
 			} else {
 				element.style[style] = styles[style];
