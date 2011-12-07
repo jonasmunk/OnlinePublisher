@@ -405,13 +405,6 @@ textarea.hui_editor_html
 	width: 100%;
 }
 
-div.hui_editor_dragproxy
-{
-	position: absolute;
-	top: 0px;
-	left: 0px;
-}
-
 .hui_editor_part_active
 {
 	outline: 1px dashed #3875d7;
@@ -452,6 +445,24 @@ div.hui_editor_drop_placeholder div
 	background: #F6F6F6;
 	border-radius: 10px;
 	box-sizing: border-box;
+}
+
+div.hui_editor_dragproxy
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1001;
+	-webkit-transform-origin: 0 0;
+}
+
+div.hui_editor_dropmarker
+{
+	position: absolute;
+	height: 1px;
+	background: #ABF;
+	box-shadow: 0 0 4px 1px #abf;
+	z-index: 1000;
 }div.hui_overlay
 {
 	display: none;

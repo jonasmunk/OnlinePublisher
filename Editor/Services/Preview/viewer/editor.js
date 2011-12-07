@@ -30,6 +30,9 @@ op.Editor = {
 			hui.log('Unable to find toolbar controller');
 		}
 	},
+	$partWasMoved : function(info) {
+		info.onSuccess();
+	},
 	$partChanged : function() {
 		var ctrl = this.getToolbarController();
 		if (ctrl) {

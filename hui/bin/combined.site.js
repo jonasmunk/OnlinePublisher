@@ -1453,7 +1453,9 @@ hui.style = {
 	},
 	set : function(element,styles) {
 		for (style in styles) {
-			if (style==='opacity') {
+			if (style==='transform') {
+				element.style['webkitTransform'] = styles[style];
+			} else if (style==='opacity') {
 				hui.style.setOpacity(element,styles[style]);
 			} else {
 				element.style[style] = styles[style];
@@ -3565,7 +3567,7 @@ hui.ui.extend = function(obj,options) {
 		this.delegates = [];
 	}
 	obj.fire = function(method,value,event) {
-		hui.ui.callDelegates(this,method,value,event);
+		return hui.ui.callDelegates(this,method,value,event);
 	}
 	obj.fireProperty = function(key,value) {
 		hui.ui.firePropertyChange(this,key,value);
@@ -3628,23 +3630,23 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
 	}
-	var result = null;
+	var result = undefined;
 	if (obj.delegates) {
 		for (var i=0; i < obj.delegates.length; i++) {
 			var delegate = obj.delegates[i];
-			var thisResult = null;
+			var thisResult = undefined;
 			if (obj.name && delegate['$'+method+'$'+obj.name]) {
 				thisResult = delegate['$'+method+'$'+obj.name](value,event);
 			} else if (delegate['$'+method]) {
 				thisResult = delegate['$'+method](value,event);
 			}
-			if (result==null && thisResult!=null && typeof(thisResult)!='undefined') {
+			if (result===undefined && thisResult!==undefined && typeof(thisResult)!='undefined') {
 				result = thisResult;
 			}
 		};
 	}
 	var superResult = hui.ui.callSuperDelegates(obj,method,value,event);
-	if (result==null && superResult!=null) {
+	if (result===undefined && superResult!==undefined) {
 		result = superResult;
 	}
 	return result;
@@ -3652,16 +3654,16 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 
 hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
-	var result = null;
+	var result = undefined;
 	for (var i=0; i < hui.ui.delegates.length; i++) {
 		var delegate = hui.ui.delegates[i];
-		var thisResult = null;
+		var thisResult = undefined;
 		if (obj.name && delegate['$'+method+'$'+obj.name]) {
 			thisResult = delegate['$'+method+'$'+obj.name](value,event);
 		} else if (delegate['$'+method]) {
 			thisResult = delegate['$'+method](value,event);
 		}
-		if (result==null && thisResult!=null && typeof(thisResult)!='undefined') {
+		if (result===undefined && thisResult!==undefined && typeof(thisResult)!='undefined') {
 			result = thisResult;
 		}
 	};
