@@ -449,6 +449,7 @@ div.hui_editor_drop_placeholder div
 
 div.hui_editor_dragproxy
 {
+	text-align: left;
 	position: absolute;
 	top: 0px;
 	left: 0px;

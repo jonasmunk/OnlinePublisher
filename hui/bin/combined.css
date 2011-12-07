@@ -3518,6 +3518,7 @@ div.hui_editor_drop_placeholder div
 
 div.hui_editor_dragproxy
 {
+	text-align: left;
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -3565,6 +3566,7 @@ div.hui_menu_item
 	padding: 0px 8px;
 	cursor: pointer;
 	height: 18px;
+	text-align: left;
 }
 
 div.hui_menu_item:hover

@@ -1,4 +1,11 @@
 /**
+ * Editing of documents composed of different parts
+ *
+ * <pre>
+ * <strong>Events</strong>
+ * $partWasMoved : function(info)
+ * $addPart
+ * </pre>
  * @constructor
  */
 hui.ui.Editor = function() {
@@ -21,6 +28,7 @@ hui.ui.Editor.get = function() {
 }
 
 hui.ui.Editor.prototype = {
+	/** Start the editor */
 	ignite : function() {
 		hui.listen(window,'keydown',this._onKeyDown.bind(this));
 		hui.listen(window,'keyup',this._onKeyUp.bind(this));
@@ -77,10 +85,10 @@ hui.ui.Editor.prototype = {
 		var self = this;
 		hui.each(columns,function(column,columnIndex) {
 			hui.listen(column,'mouseover',function() {
-				self.hoverColumn(column);
+				self._onHoverColumn(column);
 			});
 			hui.listen(column,'mouseout',function() {
-				self.blurColumn();
+				self._onBlurColumn();
 			});
 			hui.listen(column,'contextmenu',function(e) {
 				self.contextColumn(column,rowIndex,columnIndex,e);
@@ -97,11 +105,11 @@ hui.ui.Editor.prototype = {
 				var handler = self._getPartController(match[1]);
 				if (handler) {
 					var part = new handler.controller(element,row,column,partIndex);
-					part.type=match[1];
+					part.type = match[1];
 					hui.listen(element,'click',function(e) {
 						e = hui.event(e);
 						if (!e.findByTag('a') && e.altKey) {
-							self.editPart(part);
+							self._editPart(part);
 						}
 					});
 					hui.listen(element,'mouseover',function(e) {
@@ -111,10 +119,13 @@ hui.ui.Editor.prototype = {
 						self.blurPart(e);
 					});
 					self.parts.push(part);
-				}	
-					hui.listen(element,'mousedown',function(e) {
-						self._startPartDrag(element,e);
+				}
+				hui.listen(element,'mousedown',function(e) {
+					self._startPartDrag({
+						element : element,
+						event : e
 					});
+				});
 			}
 		});
 	},
@@ -132,13 +143,15 @@ hui.ui.Editor.prototype = {
 	
 	///////////////////////// Columns ////////////////////////
 	
-	hoverColumn : function(column) {
+	_onHoverColumn : function(column) {
 		this.hoveredColumn = column;
-		if (!this.active || this.activePart) return;
+		if (!this.active || this.activePart) {
+			return;
+		}
 		hui.cls.add(column,'hui_editor_column_hover');
 	},
 	
-	blurColumn : function() {
+	_onBlurColumn : function() {
 		if (!this.active || !this.hoveredColumn) return;
 		hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
 	},
@@ -162,6 +175,7 @@ hui.ui.Editor.prototype = {
 		this.hoveredColumnIndex=columnIndex;
 		this.columnMenu.showAtPointer(e);
 	},
+	/** @private */
 	$itemWasClicked$huiEditorColumnMenu : function(value) {
 		if (value=='removeColumn') {
 			this.fire('removeColumn',{'row':this.hoveredRow,'column':this.hoveredColumnIndex});
@@ -182,7 +196,7 @@ hui.ui.Editor.prototype = {
 		var c = this.activeColumn = hui.get.byClass(row,'column')[columnIndex];
 		hui.cls.add(c,'hui_editor_column_edit');
 		this.showColumnWindow();
-		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});
+		this.columnEditorForm.setValues({width:hui.style.get(c,'width'),paddingLeft:hui.style.get(c,'padding-left')});
 	},
 	closeColumn : function() {
 		if (this.activeColumn) {
@@ -208,6 +222,7 @@ hui.ui.Editor.prototype = {
 		}
 		this.columnEditor.show();
 	},
+	/** @private */
 	$userClosedWindow$columnEditor : function() {
 		this.closeColumn();
 		var values = this.columnEditorForm.getValues();
@@ -240,7 +255,7 @@ hui.ui.Editor.prototype = {
 		window.clearTimeout(this.partControlTimer);
 		if (!this.active) return;
 		if (this.partControls && !hui.ui.isWithin(e,this.partControls.element)) {
-			this.hidePartControls();
+			this._hidePartControls();
 			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
 		}
 		if (!this.partControls && this.hoveredPart) {
@@ -263,12 +278,8 @@ hui.ui.Editor.prototype = {
 			this.partControls.addIcon('new','common/new');
 			this.partControls.addIcon('delete','common/delete');
 			var self = this;
-			hui.listen(this.partControls.getElement(),'mouseout',function(e) {
-				self.blurControls(e);
-			});
-			hui.listen(this.partControls.getElement(),'mouseover',function(e) {
-				self.hoverControls(e);
-			});
+			hui.listen(this.partControls.getElement(),'mouseout',this._blurControls.bind(this));
+			hui.listen(this.partControls.getElement(),'mouseover',this._hoverControls.bind(this));
 			this.partControls.listen(this);
 		}
 		if (this.hoveredPart.column==-1) {
@@ -278,24 +289,26 @@ hui.ui.Editor.prototype = {
 		}
 		this.partControls.showAtElement(this.hoveredPart.element,{'horizontal':'right'});
 	},
-	hoverControls : function(e) {
+	_hoverControls : function(e) {
 		hui.cls.add(this.hoveredPart.element,'hui_editor_part_hover');
 	},
-	blurControls : function(e) {
+	_blurControls : function(e) {
 		hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
 		if (!hui.ui.isWithin(e,this.hoveredPart.element)) {
-			this.hidePartControls();
+			this._hidePartControls();
 		}
 	},
+	/** @private */
 	$iconWasClicked$huiEditorPartActions : function(key,event) {
 		if (key=='delete') {
 			this.deletePart(this.hoveredPart);
 		} else if (key=='new') {
 			this.newPart(event);
 		} else if (key=='edit') {
-			this.editPart(this.hoveredPart);
+			this._editPart(this.hoveredPart);
 		}
 	},
+	/** @private */
 	$iconWasClicked$huiEditorPartEditActions : function(key,event) {
 		if (key=='cancel') {
 			this.cancelPart(this.activePart);
@@ -303,17 +316,17 @@ hui.ui.Editor.prototype = {
 			this.savePart(this.activePart);
 		}
 	},
-	hidePartControls : function() {
+	_hidePartControls : function() {
 		if (this.partControls) {
 			this.partControls.hide();
 		}
 	},
-	hidePartEditControls : function() {
+	_hidePartEditControls : function() {
 		if (this.partEditControls) {
 			this.partEditControls.hide();
 		}
 	},
-	editPart : function(part) {
+	_editPart : function(part) {
 		if (!this.active || this.activePart) return;
 		if (this.activePart) this.activePart.deactivate();
 		if (this.hoveredPart) {
@@ -326,11 +339,11 @@ hui.ui.Editor.prototype = {
 			//hui.ui.showMessage({text:'Loaded',duration:2000});
 		});
 		window.clearTimeout(this.partControlTimer);
-		this.hidePartControls();
-		this.blurColumn();
-		this.showPartEditor();
+		this._hidePartControls();
+		this._onBlurColumn();
+		this._showPartEditor();
 	},
-	showPartEditor : function() {
+	_showPartEditor : function() {
 		 // TODO: Disabled!
 		/*if (!this.partEditor) {
 			var w = this.partEditor = hui.ui.Window.create({padding:5,title:'Afstande',close:false,variant:'dark',width: 200});
@@ -387,7 +400,7 @@ hui.ui.Editor.prototype = {
 	partDidDeacivate : function(part) {
 		hui.cls.remove(part.element,'hui_editor_part_active');
 		this.activePart = null;
-		this.hidePartEditControls();
+		this._hidePartEditControls();
 	},
 	partChanged : function(part) {
 		hui.ui.callDelegates(part,'partChanged');
@@ -407,7 +420,7 @@ hui.ui.Editor.prototype = {
 		}
 		this.newPartMenu.showAtPointer(e);
 	},
-	itemWasClicked$huiEditorNewPartMenu : function(value) {
+	$itemWasClicked$huiEditorNewPartMenu : function(value) {
 		var info = {row:this.hoveredPart.row,column:this.hoveredPart.column,position:this.hoveredPart.position+1,type:value};
 		hui.ui.callDelegates(this,'addPart',info);
 	},
@@ -425,24 +438,35 @@ hui.ui.Editor.prototype = {
 	
 	dragProxy : null,
 	
-	_startPartDrag : function(node,e) {
+	_startPartDrag : function(info) {
 		if (!this.active || this.activePart || !this.live) {
 			return true;
 		}
-		if (!this.dragProxy) {
-			this.dragProxy = hui.build('div',{'class':'hui_editor_dragproxy part part_header',parent:document.body,style:'display:none;'});
-		}
-		e = hui.event(e);
+		hui.log(info)
+		var e = hui.event(info.event),
+			element = info.element;
 		e.stop();
-		var element = node;
+		
+		if (!this.dragProxy) {
+			this.dragProxy = hui.build('div',{'class':'hui_editor_dragproxy',parent:document.body,style:'display:none;'});
+		}
 		var proxy = this.dragProxy;
+		proxy.innerHTML = element.innerHTML;
+		
+		var pos = this._getPartPosition(element);
+		if (!pos) {
+			return;
+		}
 		
 		this._dragInfo = {
 			diffLeft : e.getLeft() - hui.position.getLeft(element),
 			diffTop : e.getTop() - hui.position.getTop(element),
-			draggedElement : element
+			draggedElement : element,
+			partIndex : pos.partIndex,
+			rowIndex : pos.rowIndex,
+			columnIndex : pos.columnIndex,
+			initialHeight : element.clientHeight
 		}
-		proxy.innerHTML = element.innerHTML;
 		hui.log('startDrag')
 		hui.drag.start({
 			element : proxy,
@@ -453,6 +477,32 @@ hui.ui.Editor.prototype = {
 				
 			}
 		})
+	},
+	_onBeforeDrag : function() {
+		var dragged = this._dragInfo.draggedElement,
+			proxy = this.dragProxy;
+		
+		
+		this._insertDropPlaceholders();
+		
+		hui.style.set(proxy,{
+			display : 'block',
+			visibility : 'visible',
+			height  : dragged.clientHeight+'px',
+			width  : dragged.clientWidth+'px',
+			transform : 'scale(1)',
+			opacity: 1
+		});
+		
+		hui.animate({node:this.dragProxy,css:{transform:'scale(1.1)'},duration:1000,ease:hui.ease.slowFastSlow});
+		
+		hui.style.setOpacity(dragged,0.5);
+		
+		this._dragging = true;
+		
+		if (!this._dropMarker) {
+			this._dropMarker = hui.build('div',{'class':'hui_editor_dropmarker',parent:document.body});
+		}
 	},
 	_onDrag : function(e) {
 		var left = e.getLeft();
@@ -479,60 +529,63 @@ hui.ui.Editor.prototype = {
 			}
 		};
 	},
-	_onBeforeDrag : function() {
-		var dragged = this._dragInfo.draggedElement;
-		this._insertDropPlaceholders();
-		hui.style.set(this.dragProxy,{
-			display : 'block',
-			visibility : 'visible',
-			height  : dragged.clientHeight+'px',
-			width  : dragged.clientWidth+'px',
-			transform : 'scale(1)',
-			opacity: 1
-		});
-		hui.animate({node:this.dragProxy,css:{transform:'scale(1.3)'},duration:1000,ease:hui.ease.slowFastSlow});
-		hui.style.setOpacity(dragged,0.5);
-		this._dragging = true;
-		if (!this._dropMarker) {
-			this._dropMarker = hui.build('div',{'class':'hui_editor_dropmarker',parent:document.body});
-		}
-	},
 	_onAfterDrag : function(e) {
 		var proxy = this.dragProxy,
+			dragInfo = this._dragInfo,
 			dragged = this._dragInfo.draggedElement,
 			dropInfo = this._dropInfo;
-			hui.animate({node:proxy,css:{transform:'scale(1)',left:dropInfo.left+'px',top:dropInfo.top+'px',opacity:0.5},duration:500,ease:hui.ease.slowFastSlow});
+		
 		if (dropInfo) {
+			var newHeight = this._dragColumnHeights[dropInfo.rowIndex+'-'+dropInfo.columnIndex];
+			
+			var top = dropInfo.top,
+				left = dropInfo.left;
+				
+			if ((dragInfo.columnIndex == dropInfo.columnIndex && dragInfo.partIndex < dropInfo.partIndex) || dragInfo.rowIndex < dropInfo.rowIndex) {
+				top = top - dragInfo.initialHeight;
+			}
+			top+=3;
+			left++;
+			// Move the proxy top new position
+			hui.animate({
+				node : proxy,
+				css : {
+					transform : 'scale(1)',
+					left : left+'px',
+					top : top+'px',
+					opacity : 0.5},
+				duration : 500,
+				ease : hui.ease.slowFastSlow
+			});
+			
+			
 			var column = this._getColumn(dropInfo.rowIndex,dropInfo.columnIndex);
+			
 			var parts = hui.get.byClass(column,this.options.partClass);
+			
 			if (parts[dropInfo.partIndex] != dragged) {
 				this.fire('partWasMoved',{dragged:dragged,rowIndex : dropInfo.rowIndex,columnIndex : dropInfo.columnIndex,partIndex : dropInfo.partIndex, 
 					onSuccess : function() {
-						var h = this._dragColumnHeights[dropInfo.rowIndex+'-'+dropInfo.columnIndex];
-						//var h = dragged.clientHeight;
 						dragged.style.webkitTransformOrigin='0 0';
 						var dummy = hui.build('div');
 						if (dropInfo.partIndex>=parts.length) {
-							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+							hui.animate({node:dragged,css:{height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
 								hui.dom.remove(dragged);
 								column.appendChild(dragged);
-								hui.animate({node:dragged,css:{transform:'scale(1)',height:h+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.animate({node:dragged,css:{transform:'scale(1)',height:newHeight+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
 									dragged.style.height='';
 								}});
 							}});
-						} else {	
+						} else {
 							hui.dom.insertBefore(parts[dropInfo.partIndex],dummy);
-							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
-								hui.dom.remove(dragged);
-								hui.dom.insertBefore(parts[dropInfo.partIndex],dragged);
-								//hui.animate({node:dragged,css:{transform:'scale(1)',height:h+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
-								//	dragged.style.height='';
-								//}});
-							}});
-							hui.animate({node:dummy,css:{height:h+'px'},duration:600,ease:hui.ease.slowFastSlow,onComplete:function() {
+							hui.animate({node:dummy,css:{height:newHeight+'px'},duration:600,ease:hui.ease.slowFastSlow,onComplete:function() {
 								hui.dom.replaceNode(dummy,dragged);
 								hui.style.set(dragged,{transform:'scale(1)',opacity:0,height:''})
 								hui.animate({node:dragged,css:{opacity:1},duration:500,ease:hui.ease.slowFastSlow});
+							}});
+							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.dom.remove(dragged);
+								hui.dom.insertBefore(parts[dropInfo.partIndex],dragged);
 							}});
 						}
 						this._cleanDrag();
@@ -548,11 +601,10 @@ hui.ui.Editor.prototype = {
 	},
 	_cleanDrag : function() {
 		var proxy = this.dragProxy;
-		hui.animate({node:proxy,css:{opacity:0},duration:500,delay:500,ease:hui.ease.slowFastSlow
-		,onComplete:function() {
+		hui.animate({node:proxy,css:{opacity:0},duration:500,delay:500,ease:hui.ease.slowFastSlow,onComplete:function() {
 				proxy.style.display='none';
 			}
-			});
+		});
 		hui.style.setOpacity(this._dragInfo.draggedElement,1);
 		var p = hui.get.byClass(document.body,'hui_editor_drop_placeholder');
 		for (var i=0; i < p.length; i++) {
@@ -569,6 +621,22 @@ hui.ui.Editor.prototype = {
 		var row = rows[rowIndex];
 		var columns = hui.get.byClass(row,this.options.columnClass);
 		return columns[columnIndex];
+	},
+	_getPartPosition : function(element) {
+		var rows = hui.get.byClass(document.body,this.options.rowClass);
+		for (var i=0; i < rows.length; i++) {
+			
+			var columns = hui.get.byClass(rows[i],this.options.columnClass);
+			for (var j=0; j < columns.length; j++) {
+				var parts = hui.get.byClass(columns[j],this.options.partClass);
+				for (var k=0; k < parts.length; k++) {
+					if (element===parts[k]) {
+						return {rowIndex:i,columnIndex:j,partIndex:k};
+					}
+				};
+			};
+		};
+		return null;
 	},
 	
 	

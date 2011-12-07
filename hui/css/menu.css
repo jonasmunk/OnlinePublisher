@@ -31,6 +31,7 @@ div.hui_menu_item
 	padding: 0px 8px;
 	cursor: pointer;
 	height: 18px;
+	text-align: left;
 }
 
 div.hui_menu_item:hover

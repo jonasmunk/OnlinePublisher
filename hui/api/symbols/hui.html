@@ -231,6 +231,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.location.html">hui.location</a></li>
 	
+	<li><a href="../symbols/hui.position.html">hui.position</a></li>
+	
 	<li><a href="../symbols/hui.Preloader.html">hui.Preloader</a></li>
 	
 	<li><a href="../symbols/hui.selection.html">hui.selection</a></li>
@@ -486,9 +488,16 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.animate">animate</a></b>(options, style, value, duration, delegate)
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.animate">animate</a></b>(options, style, value, duration, deleagte)
 								</div>
-								<div class="description"></div>
+								<div class="description">Animate something
+<pre><strong>options:</strong> {
+ node : «Element», 
+ css : { fontSize : '11px', color : '#f00', opacity : 0.5 }, 
+ duration : 1000, // 1sec 
+ ease : function(num) {},
+ onComplete : function() {}
+}</div>
 							</td>
 						</tr>
 					
@@ -503,12 +512,12 @@ ul.inheritsList
  text : 'child text', 
  parent : «Element», 
  parentFirst : «Element», 
- 'class' : 'css_class', 
+ class : 'css_class', 
  className : 'css_class', 
  style : 'color: blue;' 
 }
-Additional properties will be set as attributes
 
+Additional properties will be set as attributes
 </pre></div>
 							</td>
 						</tr>
@@ -537,42 +546,6 @@ Additional properties will be set as attributes
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.event">event</a></b>(event)
 								</div>
 								<div class="description">Creates an event wrapper for an event</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getLeft">getLeft</a></b>(element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getPosition">getPosition</a></b>(element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getScrollOffset">getScrollOffset</a></b>(element)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.getTop">getTop</a></b>(element)
-								</div>
-								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -615,7 +588,7 @@ Additional properties will be set as attributes
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.listen">listen</a></b>(element, type, listener, useCapture)
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.listen">listen</a></b>(element, type, listener, ?useCapture)
 								</div>
 								<div class="description">Add an event listener to an element</div>
 							</td>
@@ -651,19 +624,40 @@ Additional properties will be set as attributes
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.place">place</a></b>(options)
-								</div>
-								<div class="description">Place on element relative to another
-Example hui.position.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.request">request</a></b>(options)
 								</div>
-								<div class="description">Send a HTTP request</div>
+								<div class="description">Send a HTTP request
+<pre><strong>options:</strong> {
+ method : «'<strong>POST</strong>' | 'get' | 'rEmOVe'»,
+ async : <strong>true</strong>,
+ headers : {<strong>Ajax : true</strong>, header : 'value'},
+ file : «HTML5-file»,
+ files : «HTML5-files»,
+ parameters : {key : 'value'},
+
+ onSuccess : function(transport) {
+   // when status is 200
+ },
+ onForbidden : function(transport) {
+   // when status is 403
+ },
+ onAbort : function(transport) {
+   // when request is aborted
+ },
+ onFailure : function(transport) {
+   // when status is not 200 (if status is 403 and onForbidden is set then onFailure will not be called)
+ },
+ onException : function(exception,transport) {
+   // When an exception has occurred while calling on«Something», If not set the exception will be thrown
+ },
+ onProgress : function(current,total) {
+   // Progress for file uploads (maybe also other requests?)
+ },
+ onLoad : functon() {
+   // When file upload is transfered?
+ }
+}
+</pre></div>
 							</td>
 						</tr>
 					
@@ -737,11 +731,18 @@ Example hui.position.place({target : {element : «node», horizontal : «0-1»},
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.</span><b>animate</b>(options, style, value, duration, delegate)
+					<span class="light">hui.</span><b>animate</b>(options, style, value, duration, deleagte)
 					
 					</div>
 					<div class="description">
-						
+						Animate something
+<pre><strong>options:</strong> {
+ node : «Element», 
+ css : { fontSize : '11px', color : '#f00', opacity : 0.5 }, 
+ duration : 1000, // 1sec 
+ ease : function(num) {},
+ onComplete : function() {}
+}
 						
 						
 					</div>
@@ -753,34 +754,34 @@ Example hui.position.place({target : {element : «node», horizontal : «0-1»},
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>options</b>
+									<span class="light fixedFont">{Element | Object}</span> <b>options</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>Options or an element</dd>
 							
 								<dt>
-									<b>style</b>
+									<span class="light fixedFont">{String}</span> <b>style</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The css property</dd>
 							
 								<dt>
-									<b>value</b>
+									<span class="light fixedFont">{String}</span> <b>value</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The css value</dd>
 							
 								<dt>
-									<b>duration</b>
+									<span class="light fixedFont">{Number}</span> <b>duration</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The duration in milisecons</dd>
 							
 								<dt>
-									<b>delegate</b>
+									<span class="light fixedFont">{Object}</span> <b>deleagte</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The options if first param is an element</dd>
 							
 							</dl>
 						
@@ -807,12 +808,12 @@ Example hui.position.place({target : {element : «node», horizontal : «0-1»},
  text : 'child text', 
  parent : «Element», 
  parentFirst : «Element», 
- 'class' : 'css_class', 
+ class : 'css_class', 
  className : 'css_class', 
  style : 'color: blue;' 
 }
-Additional properties will be set as attributes
 
+Additional properties will be set as attributes
 </pre>
 						
 						
@@ -845,7 +846,7 @@ Additional properties will be set as attributes
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Element}</span> The element</dd>
+								<dd><span class="light fixedFont">{Element}</span> The new element</dd>
 							
 							</dl>
 						
@@ -977,150 +978,6 @@ If «items» is an object «func» is called with each (key,value)
 								<dd><span class="light fixedFont">{<a href="../symbols/hui.Event.html">hui.Event</a>}</span> An event wrapper</dd>
 							
 							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getLeft"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getLeft</b>(element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getPosition"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getPosition</b>(element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getScrollOffset"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getScrollOffset</b>(element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getTop"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>getTop</b>(element)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
 						
 						
 						
@@ -1282,7 +1139,7 @@ If «items» is an object «func» is called with each (key,value)
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.</span><b>listen</b>(element, type, listener, useCapture)
+					<span class="light">hui.</span><b>listen</b>(element, type, listener, ?useCapture)
 					
 					</div>
 					<div class="description">
@@ -1316,7 +1173,7 @@ If «items» is an object «func» is called with each (key,value)
 								<dd>The function to be called</dd>
 							
 								<dt>
-									<span class="light fixedFont">{boolean}</span> <b>useCapture</b>
+									<span class="light fixedFont">{boolean}</span> <b>?useCapture</b>
 									
 								</dt>
 								<dd>If the listener should "capture"</dd>
@@ -1453,52 +1310,46 @@ If «items» is an object «func» is called with each (key,value)
 
 					<hr />
 				
-					<a name=".place"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.</span><b>place</b>(options)
-					
-					</div>
-					<div class="description">
-						Place on element relative to another
-Example hui.position.place({target : {element : «node», horizontal : «0-1»}, source : {element : «node», vertical : «0 - 1»}, insideViewPort:«boolean», viewPortMargin:«integer»})
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>options</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".request"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{XMLHttpRequest}</span>
 					<span class="light">hui.</span><b>request</b>(options)
 					
 					</div>
 					<div class="description">
 						Send a HTTP request
+<pre><strong>options:</strong> {
+ method : «'<strong>POST</strong>' | 'get' | 'rEmOVe'»,
+ async : <strong>true</strong>,
+ headers : {<strong>Ajax : true</strong>, header : 'value'},
+ file : «HTML5-file»,
+ files : «HTML5-files»,
+ parameters : {key : 'value'},
+
+ onSuccess : function(transport) {
+   // when status is 200
+ },
+ onForbidden : function(transport) {
+   // when status is 403
+ },
+ onAbort : function(transport) {
+   // when request is aborted
+ },
+ onFailure : function(transport) {
+   // when status is not 200 (if status is 403 and onForbidden is set then onFailure will not be called)
+ },
+ onException : function(exception,transport) {
+   // When an exception has occurred while calling on«Something», If not set the exception will be thrown
+ },
+ onProgress : function(current,total) {
+   // Progress for file uploads (maybe also other requests?)
+ },
+ onLoad : functon() {
+   // When file upload is transfered?
+ }
+}
+</pre>
 						
 						
 					</div>
@@ -1513,19 +1364,20 @@ Example hui.position.place({target : {element : «node», horizontal : «0-1»},
 									<b>options</b>
 									
 								</dt>
-								<dd>The options
-
-<p><strong>Options:</strong></p>
-<ul>
-<li><strong>method</strong>: 'POST' | 'GET' (can be upper or lower case)</li>
-<li><strong>onSuccess</strong>: «function(transport)» Called when the request succeeded</li>
-</ul></dd>
+								<dd>The options</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{XMLHttpRequest}</span> The transport</dd>
+							
+							</dl>
 						
 						
 						
@@ -1634,7 +1486,7 @@ Example hui.position.place({target : {element : «node», horizontal : «0-1»},
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Dec 01 2011 16:06:47 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Dec 07 2011 13:20:32 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

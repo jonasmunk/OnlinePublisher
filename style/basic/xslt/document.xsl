@@ -35,7 +35,7 @@
 	</xsl:template>
 
 	<xsl:template match="doc:row">
-		<table width="100%">
+		<table width="100%" class="document_row">
 			<tr>
 				<xsl:apply-templates/>
 			</tr>
