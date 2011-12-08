@@ -31,7 +31,10 @@ op.Editor = {
 		}
 	},
 	$partWasMoved : function(info) {
-		info.onSuccess();
+		window.setTimeout(function() {
+			info.onSuccess();
+		},500)
+		
 	},
 	$partChanged : function() {
 		var ctrl = this.getToolbarController();

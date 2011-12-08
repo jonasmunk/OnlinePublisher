@@ -9332,7 +9332,7 @@ hui.ui.Editor.prototype = {
 		var c = this.activeColumn = hui.get.byClass(row,'column')[columnIndex];
 		hui.cls.add(c,'hui_editor_column_edit');
 		this.showColumnWindow();
-		this.columnEditorForm.setValues({width:c.getStyle('width'),paddingLeft:c.getStyle('padding-left')});
+		this.columnEditorForm.setValues({width:hui.style.get(c,'width'),paddingLeft:hui.style.get(c,'padding-left')});
 	},
 	closeColumn : function() {
 		if (this.activeColumn) {
