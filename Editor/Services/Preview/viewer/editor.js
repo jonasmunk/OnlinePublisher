@@ -40,14 +40,17 @@ op.Editor = {
 		}
 		hui.ui.request({
 			url : op.context+'Editor/Template/document/live/MoveSection.php',
-			parameters : p
+			parameters : p,
+			onSuccess : function() {
+				info.onSuccess();
+				this._signalChange();
+			}.bind(this)
 		})
-		window.setTimeout(function() {
-			info.onSuccess();
-		},500)
-		
 	},
 	$partChanged : function() {
+		this._signalChange();
+	},
+	_signalChange : function() {
 		var ctrl = this.getToolbarController();
 		if (ctrl) {
 			ctrl.pageDidChange();

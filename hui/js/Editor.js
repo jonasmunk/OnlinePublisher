@@ -243,7 +243,6 @@ hui.ui.Editor.prototype = {
 	
 	hoverPart : function(part,event) {
 		if (!this.active || this.activePart || !this.live || this.dragging) {
-			hui.log(!this.live)
 			return;
 		}
 		this.hoveredPart = part;
@@ -282,7 +281,7 @@ hui.ui.Editor.prototype = {
 			hui.listen(this.partControls.getElement(),'mouseover',this._hoverControls.bind(this));
 			this.partControls.listen(this);
 		}
-		if (this.hoveredPart.column==-1) {
+		if (this.hoveredPart.column==-1 || true) {
 			this.partControls.hideIcons(['new','delete']);
 		} else {
 			this.partControls.showIcons(['new','delete']);
@@ -442,9 +441,11 @@ hui.ui.Editor.prototype = {
 		if (!this.active || this.activePart || !this.live) {
 			return true;
 		}
-		hui.log(info)
 		var e = hui.event(info.event),
 			element = info.element;
+		if (!e.altKey) {
+			return;
+		}
 		e.stop();
 		
 		if (!this.dragProxy) {

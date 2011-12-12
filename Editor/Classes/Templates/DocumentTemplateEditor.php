@@ -335,6 +335,9 @@ class DocumentTemplateEditor
 		
 		DocumentTemplateEditor::_rebuildColumn($column['id']);
 		DocumentTemplateEditor::_rebuildColumn($section['column_id']);
+		
+		$sql="update page set changed=now() where id=".Database::int($pageId);
+		Database::update($sql);
 	}
 	
 	function _rebuildColumn($id) {
