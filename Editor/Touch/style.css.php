@@ -2,6 +2,7 @@
 html
 {
 	height: 100%;
+	background: #000;
 }
 
 body

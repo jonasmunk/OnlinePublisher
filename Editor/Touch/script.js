@@ -18,7 +18,7 @@ hui.touch.makeScrollable = function(id) {
 	},false);	
 }
 
-hui.touch.makeScrollable('container');
+//hui.touch.makeScrollable('container');
 
 	document.getElementById('mover').ontouchmove = function(e){
 		if(e.touches.length == 1){ // Only deal with one finger
