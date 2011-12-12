@@ -86,6 +86,11 @@
 			<xsl:if test="@width"> width: <xsl:value-of select="@width"/>;</xsl:if>
 		</xsl:variable>
 		<div style="{$style}">
+			<xsl:if test="$preview='true'">
+				<xsl:attribute name="data">
+					<xsl:text>{&quot;id&quot;:</xsl:text><xsl:value-of select="@id"/><xsl:text>}</xsl:text>
+				</xsl:attribute>
+			</xsl:if>
 			<xsl:if test="$preview='true' and part:part">
 				<xsl:attribute name="id"><xsl:text>part-</xsl:text><xsl:value-of select="part:part/@id"/></xsl:attribute>
 			</xsl:if>

@@ -31,6 +31,17 @@ op.Editor = {
 		}
 	},
 	$partWasMoved : function(info) {
+		var data = hui.string.fromJSON(info.dragged.getAttribute('data'));
+		var p = {
+			sectionId : data.id,
+			rowIndex : info.rowIndex,
+			columnIndex : info.columnIndex,
+			sectionIndex : info.partIndex
+		}
+		hui.ui.request({
+			url : op.context+'Editor/Template/document/live/MoveSection.php',
+			parameters : p
+		})
 		window.setTimeout(function() {
 			info.onSuccess();
 		},500)

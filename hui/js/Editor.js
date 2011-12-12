@@ -549,7 +549,7 @@ hui.ui.Editor.prototype = {
 			}
 			top+=3;
 			left++;
-			// Move the proxy top new position
+			// Move the proxy to new position
 			hui.animate({
 				node : proxy,
 				css : {
@@ -581,14 +581,12 @@ hui.ui.Editor.prototype = {
 						} else {
 							hui.dom.insertBefore(parts[dropInfo.partIndex],dummy);
 							hui.animate({node:dummy,css:{height:newHeight+'px'},duration:600,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.dom.remove(dragged);
 								hui.dom.replaceNode(dummy,dragged);
 								hui.style.set(dragged,{transform:'scale(1)',opacity:0,height:''})
 								hui.animate({node:dragged,css:{opacity:1},duration:500,ease:hui.ease.slowFastSlow});
 							}});
-							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
-								hui.dom.remove(dragged);
-								hui.dom.insertBefore(parts[dropInfo.partIndex],dragged);
-							}});
+							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow});
 						}
 						this._cleanDrag();
 					}.bind(this),

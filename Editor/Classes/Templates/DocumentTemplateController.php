@@ -127,7 +127,7 @@ class DocumentTemplateController extends TemplateController
 					if ($sec['width']!='') $attrs.=' width="'.$sec['width'].'"';
 
 
-					$output.= '<section'.$attrs.'>';
+					$output.= '<section id="'.$sec['id'].'"'.$attrs.'>';
 					$partArr = $this->partPublish($sec['type'],$sec['id'],$id,$sec['part_id'],$sec['part_type'],$context);
 					$output.= $partArr['output'];
 					$index.= ' '.$partArr['index'];

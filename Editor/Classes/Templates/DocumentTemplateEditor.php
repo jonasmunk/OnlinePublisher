@@ -290,6 +290,62 @@ class DocumentTemplateEditor
 			Database::update($sql);
 		}
 	}
+
+
+	/**
+	 * Zero-based!
+	 * array('sectionId' => «id»,'rowIndex' => «int»,'columnIndex' => «int»,'sectionIndex' => «int»)
+	 */
+	function moveSectionFar($params) {
+		Log::debug($params);
+		$sql="select * from document_section where id=".Database::int($params['sectionId']);
+		$section = Database::selectFirst($sql);
+		if (!$section) {
+			return;
+		}
+		$pageId = $section['page_id'];
+		$sql="select * from document_row where page_id=".Database::int($pageId)." order by `index`";
+		$rows = Database::selectAll($sql);
+		
+		
+		$row = @$rows[$params['rowIndex']];
+		if (!$row) {
+			Log::debug('Row not found: pageId='.$pageId.', rowIndex='.$params['rowIndex']);
+			return;
+		}
+		$sql="select * from document_column where row_id=".Database::int($row['id'])." order by `index`";
+		$columns = Database::selectAll($sql);
+		
+		$column = @$columns[$params['columnIndex']];
+
+		if (!$column) {
+			return;
+		}
+		
+		$sql="select * from document_section where column_id=".Database::int($column['id'])." and `index`>".Database::int($params['sectionIndex'])." order by `index`";
+		$sections = Database::selectAll($sql);
+		for ($i=0; $i < count($selctions); $i++) {
+			$sec = $sections[$i];
+			$sql = "update document_section set `index`=".Database::int($sec['index']+1)." where id = ".Database::int($sec['id']);
+			Database::update($sql);			
+		}
+
+		$sql = "update document_section set `index`=".Database::int($params['sectionIndex']+1).",column_id=".Database::int($column['id'])." where id = ".Database::int($section['id']);
+		Database::update($sql);
+		
+		DocumentTemplateEditor::_rebuildColumn($column['id']);
+		DocumentTemplateEditor::_rebuildColumn($section['column_id']);
+	}
+	
+	function _rebuildColumn($id) {
+		$sql="select * from document_section where column_id=".Database::int($id)." order by `index`";
+		$sections = Database::selectAll($sql);
+		for ($i=0; $i < count($selctions); $i++) { 
+			$sql = "update document_section set `index`=".Database::int($i+1)." where id = ".Database::int($sections[$i]['id']);
+			Database::update($sql);
+		}
+	}
+
 	
 	function moveRow($rowId,$direction) {
 		$sql="select * from document_row where id=".Database::int($rowId);
