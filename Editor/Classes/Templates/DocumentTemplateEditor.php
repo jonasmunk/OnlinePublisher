@@ -293,24 +293,23 @@ class DocumentTemplateEditor
 
 
 	/**
-	 * Zero-based!
-	 * array('sectionId' => «id»,'rowIndex' => «int»,'columnIndex' => «int»,'sectionIndex' => «int»)
+	 * The indices are Zero-based!
+	 * @param $params Example: array('sectionId' => «id»,'rowIndex' => «int»,'columnIndex' => «int»,'sectionIndex' => «int»)
 	 */
 	function moveSectionFar($params) {
 		Log::debug($params);
 		$sql="select * from document_section where id=".Database::int($params['sectionId']);
 		$section = Database::selectFirst($sql);
 		if (!$section) {
+			Log::debug('The sesion with id='.$params['sectionId'].' could not be found');
 			return;
 		}
 		$pageId = $section['page_id'];
 		$sql="select * from document_row where page_id=".Database::int($pageId)." order by `index`";
 		$rows = Database::selectAll($sql);
-		
-		
 		$row = @$rows[$params['rowIndex']];
 		if (!$row) {
-			Log::debug('Row not found: pageId='.$pageId.', rowIndex='.$params['rowIndex']);
+			Log::debug('Row not found: pageId='.$pageId.', rowIndex='.$params['rowIndex'].'. Row count is '.count($rows));
 			return;
 		}
 		$sql="select * from document_column where row_id=".Database::int($row['id'])." order by `index`";
@@ -319,15 +318,16 @@ class DocumentTemplateEditor
 		$column = @$columns[$params['columnIndex']];
 
 		if (!$column) {
+			Log::debug('Column not found: pageId='.$pageId.', rowIndex='.$params['rowIndex'].', columnIndex='.$params['columnIndex'].'. Column count is '.count($columns));
 			return;
 		}
 		
 		$sql="select * from document_section where column_id=".Database::int($column['id'])." and `index`>".Database::int($params['sectionIndex'])." order by `index`";
 		$sections = Database::selectAll($sql);
-		for ($i=0; $i < count($selctions); $i++) {
+		for ($i=0; $i < count($sections); $i++) {
 			$sec = $sections[$i];
 			$sql = "update document_section set `index`=".Database::int($sec['index']+1)." where id = ".Database::int($sec['id']);
-			Database::update($sql);			
+			Database::update($sql);
 		}
 
 		$sql = "update document_section set `index`=".Database::int($params['sectionIndex']+1).",column_id=".Database::int($column['id'])." where id = ".Database::int($section['id']);
@@ -340,7 +340,7 @@ class DocumentTemplateEditor
 	function _rebuildColumn($id) {
 		$sql="select * from document_section where column_id=".Database::int($id)." order by `index`";
 		$sections = Database::selectAll($sql);
-		for ($i=0; $i < count($selctions); $i++) { 
+		for ($i=0; $i < count($sections); $i++) { 
 			$sql = "update document_section set `index`=".Database::int($i+1)." where id = ".Database::int($sections[$i]['id']);
 			Database::update($sql);
 		}

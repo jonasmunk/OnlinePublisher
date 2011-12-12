@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tests.General
+ * @subpackage Tests.Templates
  */
 
 if (!isset($GLOBALS['basePath'])) {
