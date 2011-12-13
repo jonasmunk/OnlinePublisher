@@ -1,5 +1,11 @@
 /**
  * An alert
+ * <pre><strong>options:</strong> {
+ *  element : «Element | ID»,
+ *  name : «String»,
+ *  modal : «true | <strong>false</strong>»
+ * }
+ * </pre>
  * @constructor
  */
 hui.ui.Alert = function(options) {
@@ -15,7 +21,15 @@ hui.ui.Alert = function(options) {
 
 /**
  * Creates a new instance of an alert
- * <br/><strong>options:</strong> { name: «String», title: «String», text: «String», emotion: «'smile' | 'gasp'», modal: «Boolean»}
+ * <pre><strong>options:</strong> {
+ *  title : «String»,
+ *  text : «String»,
+ *  emotion: «'smile' | 'gasp'»,
+ *
+ *  modal : «true | <strong>false</strong>»,
+ *  name : «String»
+ * }
+ * </pre>
  * @static
  */
 hui.ui.Alert.create = function(options) {
@@ -59,23 +73,29 @@ hui.ui.Alert.prototype = {
 		hui.animate(this.element,'margin-top','0px',200);
 		hui.ui.hideCurtain(this);
 	},
-	/** Sets the alert title */
-	setTitle : function(/**String*/ text) {
+	/** Sets the alert title
+	 * @param {String} text The new title
+	 */
+	setTitle : function(text) {
 		if (!this.title) {
 			this.title = hui.build('h1',{parent:this.content});
 		}
 		hui.dom.setText(this.title,text);
 		
 	},
-	/** Sets the alert text */
-	setText : function(/**String*/ text) {
+	/** Sets the alert text
+	 * @param {String} text The new text
+	 */
+	setText : function(text) {
 		if (!this.text) {
 			this.text = hui.build('p',{parent:this.content});
 		}
 		hui.dom.setText(this.text,text || '');
 	},
-	/** Sets the alert emotion */
-	setEmotion : function(/**String*/ emotion) {
+	/** Sets the alert emotion
+	 * @param {String} emotion Can be 'smile' or 'gasp'
+	 */
+	setEmotion : function(emotion) {
 		if (this.emotion) {
 			hui.cls.remove(this.body,this.emotion);
 		}
@@ -91,7 +111,9 @@ hui.ui.Alert.prototype = {
 		this.setText(options.text || null);
 		this.setEmotion(options.emotion || null);
 	},
-	/** Adds a Button to the alert */
+	/** Adds a Button to the alert
+	 * @param {hui.ui.Button} button The button to add
+	 */
 	addButton : function(button) {
 		if (!this.buttons) {
 			this.buttons = hui.ui.Buttons.create({align:'right'});

@@ -958,6 +958,9 @@ hui.cls = {
 		if (!element || !element.className) {
 			return false
 		}
+		if (element.hasClassName) {
+			return element.hasClassName(className);
+		}
 		if (element.className==className) {
 			return true;
 		}
@@ -976,8 +979,12 @@ hui.cls = {
 	 */
 	add : function(element, className) {
 	    element = hui.get(element);
-		if (!element) {return};
-
+		if (!element) {
+			return
+		}
+		if (element.addClassName) {
+			element.addClassName(className);
+		}
 	    hui.cls.remove(element, className);
 	    element.className += ' ' + className;
 	},
@@ -989,6 +996,9 @@ hui.cls = {
 	remove : function(element, className) {
 		element = hui.get(element);
 		if (!element || !element.className) {return};
+		if (element.removeClassName) {
+			element.removeClassName(className);
+		}
 		if (element.className=='className') {
 			element.className='';
 			return;

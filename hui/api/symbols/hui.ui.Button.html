@@ -456,7 +456,15 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/hui.ui.Button.html#constructor">hui.ui.Button</a></b>(options)
 							</div>
-							<div class="description"></div>
+							<div class="description">A push button
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»,
+ data : «Object»,
+ confirm : {text : «String», okText : «String», cancelText : «String»},
+ submit : «Boolean»
+}
+</pre></div>
 						</td>
 					</tr>
 				</tbody>
@@ -483,7 +491,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.Button.html#click">click</a></b>(func)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Button.html#click">click</a></b>(func?)
 								</div>
 								<div class="description">Registers a function as a click listener or issues a click</div>
 							</td>
@@ -492,9 +500,22 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Button.<b><a href="../symbols/hui.ui.Button.html#.create">create</a></b>(o)
+								<div class="fixedFont">hui.ui.Button.<b><a href="../symbols/hui.ui.Button.html#.create">create</a></b>(options)
 								</div>
-								<div class="description">Creates a new button</div>
+								<div class="description">Creates a new button
+<pre><strong>options:</strong> {
+ text : «String»,
+ title : «String», // deprecated
+ highlighted : «true | <strong>false</strong>»,
+ enabled : «<strong>true</strong> | false»,
+ icon : «String»,
+
+ name : «String»,
+ data : «Object»,
+ confirm : {text : «String», okText : «String», cancelText : «String»},
+ submit : «Boolean»
+}
+</pre></div>
 							</td>
 						</tr>
 					
@@ -521,7 +542,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.Button.html#focus">focus</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Focus the button</div>
 							</td>
 						</tr>
 					
@@ -530,7 +551,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.Button.html#getData">getData</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Get the data object for the button</div>
 							</td>
 						</tr>
 					
@@ -564,7 +585,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.Button.html#setText">setText</a></b>(text)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Button.html#setText">setText</a></b>()
 								</div>
 								<div class="description">Sets the button text</div>
 							</td>
@@ -591,7 +612,15 @@ ul.inheritsList
 				</div>
 				
 				<div class="description">
-					
+					A push button
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»,
+ data : «Object»,
+ confirm : {text : «String», okText : «String», cancelText : «String»},
+ submit : «Boolean»
+}
+</pre>
 					
 				</div>
 				
@@ -606,7 +635,7 @@ ul.inheritsList
 								 <b>options</b>
 								
 							</dt>
-								<dd></dd>
+								<dd>{Object} The options</dd>
 						
 						</dl>
 					
@@ -633,7 +662,7 @@ ul.inheritsList
 					<div class="fixedFont">
 					
 					
-					<b>click</b>(func)
+					<b>click</b>(func?)
 					
 					</div>
 					<div class="description">
@@ -649,10 +678,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>func</b>
+									<b>func?</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Function} The function to run when clicked, leave out to issue a click</dd>
 							
 							</dl>
 						
@@ -669,11 +698,24 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.ui.Button.</span><b>create</b>(o)
+					<span class="light">hui.ui.Button.</span><b>create</b>(options)
 					
 					</div>
 					<div class="description">
 						Creates a new button
+<pre><strong>options:</strong> {
+ text : «String»,
+ title : «String», // deprecated
+ highlighted : «true | <strong>false</strong>»,
+ enabled : «<strong>true</strong> | false»,
+ icon : «String»,
+
+ name : «String»,
+ data : «Object»,
+ confirm : {text : «String», okText : «String», cancelText : «String»},
+ submit : «Boolean»
+}
+</pre>
 						
 						
 					</div>
@@ -685,7 +727,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>o</b>
+									<b>options</b>
 									
 								</dt>
 								<dd></dd>
@@ -759,7 +801,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Focus the button
 						
 						
 					</div>
@@ -779,12 +821,12 @@ ul.inheritsList
 					<a name="getData"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{Object}</span>
 					<b>getData</b>()
 					
 					</div>
 					<div class="description">
-						
+						Get the data object for the button
 						
 						
 					</div>
@@ -795,6 +837,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Object}</span> The data object</dd>
+							
+							</dl>
 						
 						
 						
@@ -824,7 +873,7 @@ ul.inheritsList
 									<b>func</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Function} The fundtion to invoke when clicked click</dd>
 							
 							</dl>
 						
@@ -860,7 +909,7 @@ ul.inheritsList
 									<b>enabled</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Boolean} If the button should be enabled</dd>
 							
 							</dl>
 						
@@ -896,7 +945,7 @@ ul.inheritsList
 									<b>highlighted</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Boolean} If the button should be highlighted</dd>
 							
 							</dl>
 						
@@ -913,7 +962,7 @@ ul.inheritsList
 					<div class="fixedFont">
 					
 					
-					<b>setText</b>(text)
+					<b>setText</b>()
 					
 					</div>
 					<div class="description">
@@ -929,7 +978,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>text</b>
+									<b></b>
 									
 								</dt>
 								<dd></dd>
@@ -957,7 +1006,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Dec 07 2011 13:20:33 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 13 2011 15:29:31 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
