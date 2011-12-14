@@ -18,7 +18,13 @@
 		<hr/>
 	</div>
 	
+	<div id="hasClass" class="myclass">
+		
+	</div>
 	
+	<div id="alsoHasClass" class="myclass myotherclass">
+		
+	</div>
 	
 	
 	
@@ -40,6 +46,17 @@
 				hui.ui.test.assertEquals(next.nodeName,'HR','The next is an <hr/>');
 				var last = hui.get.next(next);
 				hui.ui.test.assertEquals(last,null,'There should be no more');
+			},
+			function() {
+				var node = hui.get('hasClass');
+				hui.ui.test.assertTrue(hui.cls.has(node,'myclass'),'Node should have class');
+				hui.ui.test.assertFalse(hui.cls.has(node,'dsjadha'),'Node should not have class');
+			},
+			function() {
+				var node = hui.get('alsoHasClass');
+				hui.ui.test.assertTrue(hui.cls.has(node,'myclass'),'Node should have class');
+				hui.ui.test.assertTrue(hui.cls.has(node,'myotherclass'),'Node should have class');
+				hui.ui.test.assertFalse(hui.cls.has(node,'dsjadha'),'Node should not have class');
 			}
 		]);
 	</script>

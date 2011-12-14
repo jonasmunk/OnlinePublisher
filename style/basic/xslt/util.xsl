@@ -156,7 +156,7 @@
 	</xsl:comment></script>
 	<xsl:if test="$preview='true'">
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}Editor/Template/{$template}/js/editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}Editor/Template/{$template}/js/editor.php?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
 </xsl:template>
 

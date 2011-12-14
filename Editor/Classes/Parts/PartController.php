@@ -39,6 +39,10 @@ class PartController
 		$this->type = $type;
 	}
 	
+	function getType() {
+	    return $this->type;
+	}	
+	
 	function build($part,$context) {
 		if (!$part) {
 			return '';
@@ -87,6 +91,10 @@ class PartController
 	
 	function getNamespace($version='1.0') {
 		return 'http://uri.in2isoft.com/onlinepublisher/part/'.$this->type.'/'.$version.'/';
+	}
+	
+	function isLiveEnabled() {
+		return false;
 	}
 	
 	function getNewPart() {

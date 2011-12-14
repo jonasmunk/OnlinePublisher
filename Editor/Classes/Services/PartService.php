@@ -132,6 +132,15 @@ union select text,document_section.part_id from part_listing,document_section wh
 			'poster' => array ( 'name' => array('da'=>'Plakat','en'=>'Poster'), 'description' => '', 'priority' => 7 )
 		);
 	}
+	
+	function getAllControllers() {
+		$controllers = array();
+		$parts = PartService::getParts();
+		foreach ($parts as $key => $value) {
+			$controllers[] = PartService::getController($key);
+		}
+		return $controllers;
+	}
 
 	/**
 	 * Used to sort arrays of tools

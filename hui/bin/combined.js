@@ -410,6 +410,15 @@ hui.dom = {
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
 	},
+	firstChild : function(node) {
+		var children = node.childNodes;
+		for (var i=0; i < children.length; i++) {
+			if (children[i].nodeType==hui.ELEMENT_NODE) {
+				return children[i];
+			}
+		};
+		return null;
+	},
 	clear : function(node) {
 		var children = node.childNodes;
 		for (var i = children.length - 1; i >= 0; i--) {

@@ -17,6 +17,11 @@ class HeaderPartController extends PartController
 		parent::PartController('header');
 	}
 	
+	function isLiveEnabled() {
+		return true;
+	}
+
+	
 	function createPart() {
 		$part = new HeaderPart();
 		$part->setText('Velkommen');
