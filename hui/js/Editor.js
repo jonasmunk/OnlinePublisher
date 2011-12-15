@@ -104,7 +104,7 @@ hui.ui.Editor.prototype = {
 			if (match && match[1]) {
 				var handler = self._getPartController(match[1]);
 				if (handler) {
-					var part = new handler.controller(element,row,column,partIndex);
+					var part = new handler.controller({element:element});
 					part.type = match[1];
 					hui.listen(element,'click',function(e) {
 						e = hui.event(e);

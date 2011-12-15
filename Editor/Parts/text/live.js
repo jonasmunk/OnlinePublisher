@@ -1,11 +1,8 @@
 /**
  * @constructor
  */
-op.Editor.Text = function(element,row,column,position) {
-	this.element = hui.get(element);
-	this.row = row;
-	this.column = column;
-	this.position = position;
+op.Editor.Text = function(options) {
+	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.header = hui.get.firstByTag(this.element,'*');
 	this.field = null;
@@ -57,11 +54,13 @@ op.Editor.Text.prototype = {
 		this.element.removeChild(this.field);
 		hui.ui.Editor.get().partDidDeacivate(this);
 	},
+	getValue : function() {
+		return this.value;
+	},
+	
+	
 	_updateFieldStyle : function() {
 		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
 		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
-	},
-	getValue : function() {
-		return this.value;
 	}
 }
