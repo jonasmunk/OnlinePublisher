@@ -2,10 +2,18 @@
 
 /**
  * A text field
+ * <pre><strong>options:</strong> {
+ *  element : «Element | ID»,
+ *  name : «String»,
+ *  key : «String»,
+ *  label : «String»,
+ *  maxHeight : «<strong>100</strong> | integer»,
+ *  animateUserChange : «<strong>true</strong> | false»
+ * }
  * @constructor
  */
 hui.ui.TextField = function(options) {
-	this.options = hui.override({label:null,key:null,lines:1,live:false,maxHeight:100,animateValueChage:true,animateUserChange:true},options);
+	this.options = hui.override({label:null,key:null,lines:1,maxHeight:100,animateUserChange:true},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	hui.ui.extend(this);
@@ -13,18 +21,25 @@ hui.ui.TextField = function(options) {
 	this.multiline = this.input.tagName.toLowerCase() == 'textarea';
 	this.placeholder = hui.get.firstByClass(this.element,'hui_field_placeholder');
 	this.value = this.input.value;
-	if (this.placeholder) {
-		var self = this;
-		hui.ui.onReady(function() {
-			window.setTimeout(function() {
-				self.value = self.input.value;
-				self.updateClass();
-			},500);
-		});
-	}
-	this.addBehavior();
+	this._addBehavior();
 }
 
+
+/**
+ * Creates a new text field
+ * <pre><strong>options:</strong> {
+ *  value : «String»,
+ *  label : «String»,
+ *  multiline : «true | <strong>false</strong>»,
+ *  lines : «<strong>1</strong> | integer»,
+ *
+ *  name : «String»,
+ *  key : «String»,
+ *  maxHeight : «<strong>100</strong> | integer»,
+ *  animateUserChange : «<strong>true</strong> | false»
+ * }
+ * </pre>
+ */
 hui.ui.TextField.create = function(options) {
 	options = hui.override({lines:1},options);
 	var node,input;
@@ -50,13 +65,21 @@ hui.ui.TextField.create = function(options) {
 }
 
 hui.ui.TextField.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
+		if (this.placeholder) {
+			var self = this;
+			hui.ui.onReady(function() {
+				window.setTimeout(function() {
+					self.value = self.input.value;
+					self._updateClass();
+				},500);
+			});
+		}
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
-		hui.listen(this.input,'keyup',this.onKeyUp.bind(this));
+		hui.listen(this.input,'keyup',this._onKeyUp.bind(this));
 		var p = this.element.getElementsByTagName('em')[0];
 		if (p) {
-			this.updateClass();
+			this._updateClass();
 			hui.listen(p,'mousedown',function() {
 				window.setTimeout(function() {
 					this.input.focus();
@@ -69,11 +92,10 @@ hui.ui.TextField.prototype = {
 			}.bind(this));
 		}
 	},
-	updateClass : function() {
+	_updateClass : function() {
 		hui.cls.set(this.element,'hui_field_dirty',this.value.length>0);
 	},
-	/** @private */
-	onKeyUp : function(e) {
+	_onKeyUp : function(e) {
 		if (!this.multiline && e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
 			var form = hui.ui.getAncestor(this,'hui_formula');
@@ -82,11 +104,12 @@ hui.ui.TextField.prototype = {
 		}
 		if (this.input.value==this.value) {return;}
 		this.value=this.input.value;
-		this.updateClass();
-		this.expand(this.options.animateUserChange);
+		this._updateClass();
+		this._expand(this.options.animateUserChange);
 		hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 		this.fire('valueChanged',this.input.value);
 	},
+	/** ??? */
 	updateFromNode : function(node) {
 		if (node.firstChild) {
 			this.setValue(node.firstChild.nodeValue);
@@ -94,46 +117,66 @@ hui.ui.TextField.prototype = {
 			this.setValue(null);
 		}
 	},
+	/** ??? */
 	updateFromObject : function(data) {
 		this.setValue(data.value);
 	},
+	/** Focus the text field */
 	focus : function() {
 		try {
 			this.input.focus();
 		} catch (e) {}
 	},
+	/** Select the text in the text field */
 	select : function() {
 		try {
 			this.input.focus();
 			this.input.select();
 		} catch (e) {}
 	},
+	/** Clear the value of the text field */
 	reset : function() {
 		this.setValue('');
 	},
+	/** Draw attention to the field */
 	stress : function() {
 		hui.ui.stress(this);
 	},
+	/** Set the value of the field
+	 * @value {String} The value 
+	 */
 	setValue : function(value) {
 		if (value===undefined || value===null) {
 			value='';
 		}
 		this.value = value;
 		this.input.value = value;
-		this.expand(this.options.animateValueChange);
+		this._expand(this.options.animateValueChange);
 	},
+	/** Get the value
+	 * @returns {String} The value
+	 */
 	getValue : function() {
 		return this.input.value;
 	},
 	getLabel : function() {
 		return this.options.label;
 	},
+	/** Check if the value is empty ('' / the empty string)
+	 * @returns {Boolean} True if the value the empty string 
+	 */
 	isEmpty : function() {
 		return this.input.value=='';
 	},
+	/** Check if the value has any non-white-space characters
+	 * @returns {Boolean} True if the value is blank
+	 */
 	isBlank : function() {
 		return hui.isBlank(this.input.value);
 	},
+	/** Mark the field with error
+	 * @value {String | Boolean} The error message or true to mark the field
+	 */
 	setError : function(error) {
 		var isError = error ? true : false;
 		hui.cls.set(this.element,'hui_field_error',isError);
@@ -144,33 +187,38 @@ hui.ui.TextField.prototype = {
 			hui.ui.hideToolTip({key:this.name});
 		}
 	},
-	// Expanding
 	
+	
+	// Expanding...
+	
+	/** @private */
 	$visibilityChanged : function() {
 		if (hui.dom.isVisible(this.element)) {
-			window.setTimeout(this.expand.bind(this));
+			window.setTimeout(this._expand.bind(this));
 		}
 	},
-	/** @private */
-	expand : function(animate) {
-		if (!this.multiline) {return};
-		if (!hui.dom.isVisible(this.element)) {return};
+	_expand : function(animate) {
+		if (!this.multiline || !hui.dom.isVisible(this.element)) {
+			return
+		};
 		var textHeight = hui.ui.getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
 		textHeight = Math.min(textHeight,this.options.maxHeight);
 		if (animate) {
-			this.updateOverflow();
+			this._updateOverflow();
 			hui.animate(this.input,'height',textHeight+'px',300,{ease:hui.ease.slowFastSlow,onComplete:function() {
-				this.updateOverflow();
+				this._updateOverflow();
 				}.bind(this)
 			});
 		} else {
-			this.input.style.height=textHeight+'px';
-			this.updateOverflow();
+			this.input.style.height = textHeight+'px';
+			this._updateOverflow();
 		}
 	},
-	updateOverflow : function() {
-		if (!this.multiline) return;
-		this.input.style.overflowY=this.input.clientHeight>=this.options.maxHeight ? 'auto' : 'hidden';
+	_updateOverflow : function() {
+		if (!this.multiline) {
+			return;
+		}
+		this.input.style.overflowY = this.input.clientHeight >= this.options.maxHeight ? 'auto' : 'hidden';
 	}
 }

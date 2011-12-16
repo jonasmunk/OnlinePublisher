@@ -456,7 +456,15 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/hui.ui.TextField.html#constructor">hui.ui.TextField</a></b>(options)
 							</div>
-							<div class="description">A text field</div>
+							<div class="description">A text field
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»,
+ key : «String»,
+ label : «String»,
+ maxHeight : «<strong>100</strong> | integer»,
+ animateUserChange : «<strong>true</strong> | false»
+}</div>
 						</td>
 					</tr>
 				</tbody>
@@ -481,20 +489,23 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#$visibilityChanged">$visibilityChanged</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.TextField.<b><a href="../symbols/hui.ui.TextField.html#.create">create</a></b>(options)
 								</div>
-								<div class="description"></div>
+								<div class="description">Creates a new text field
+<pre><strong>options:</strong> {
+ value : «String»,
+ label : «String»,
+ multiline : «true | <strong>false</strong>»,
+ lines : «<strong>1</strong> | integer»,
+
+ name : «String»,
+ key : «String»,
+ maxHeight : «<strong>100</strong> | integer»,
+ animateUserChange : «<strong>true</strong> | false»
+}
+</pre></div>
 							</td>
 						</tr>
 					
@@ -503,7 +514,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#focus">focus</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Focus the text field</div>
 							</td>
 						</tr>
 					
@@ -521,7 +532,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#getValue">getValue</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Get the value</div>
 							</td>
 						</tr>
 					
@@ -530,7 +541,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#isBlank">isBlank</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Check if the value has any non-white-space characters</div>
 							</td>
 						</tr>
 					
@@ -539,7 +550,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#isEmpty">isEmpty</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Check if the value is empty ('' / the empty string)</div>
 							</td>
 						</tr>
 					
@@ -548,7 +559,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#reset">reset</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Clear the value of the text field</div>
 							</td>
 						</tr>
 					
@@ -557,7 +568,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#select">select</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Select the text in the text field</div>
 							</td>
 						</tr>
 					
@@ -566,7 +577,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#setError">setError</a></b>(error)
 								</div>
-								<div class="description"></div>
+								<div class="description">Mark the field with error</div>
 							</td>
 						</tr>
 					
@@ -575,7 +586,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#setValue">setValue</a></b>(value)
 								</div>
-								<div class="description"></div>
+								<div class="description">Set the value of the field</div>
 							</td>
 						</tr>
 					
@@ -584,16 +595,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#stress">stress</a></b>()
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#updateClass">updateClass</a></b>()
-								</div>
-								<div class="description"></div>
+								<div class="description">Draw attention to the field</div>
 							</td>
 						</tr>
 					
@@ -602,7 +604,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#updateFromNode">updateFromNode</a></b>(node)
 								</div>
-								<div class="description"></div>
+								<div class="description">???</div>
 							</td>
 						</tr>
 					
@@ -611,16 +613,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#updateFromObject">updateFromObject</a></b>(data)
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.TextField.html#updateOverflow">updateOverflow</a></b>()
-								</div>
-								<div class="description"></div>
+								<div class="description">???</div>
 							</td>
 						</tr>
 					
@@ -646,6 +639,14 @@ ul.inheritsList
 				
 				<div class="description">
 					A text field
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»,
+ key : «String»,
+ label : «String»,
+ maxHeight : «<strong>100</strong> | integer»,
+ animateUserChange : «<strong>true</strong> | false»
+}
 					
 				</div>
 				
@@ -683,31 +684,6 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="$visibilityChanged"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>$visibilityChanged</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".create"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -716,7 +692,19 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Creates a new text field
+<pre><strong>options:</strong> {
+ value : «String»,
+ label : «String»,
+ multiline : «true | <strong>false</strong>»,
+ lines : «<strong>1</strong> | integer»,
+
+ name : «String»,
+ key : «String»,
+ maxHeight : «<strong>100</strong> | integer»,
+ animateUserChange : «<strong>true</strong> | false»
+}
+</pre>
 						
 						
 					</div>
@@ -752,7 +740,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Focus the text field
 						
 						
 					</div>
@@ -797,12 +785,12 @@ ul.inheritsList
 					<a name="getValue"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{String}</span>
 					<b>getValue</b>()
 					
 					</div>
 					<div class="description">
-						
+						Get the value
 						
 						
 					</div>
@@ -813,6 +801,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The value</dd>
+							
+							</dl>
 						
 						
 						
@@ -822,12 +817,12 @@ ul.inheritsList
 					<a name="isBlank"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{Boolean}</span>
 					<b>isBlank</b>()
 					
 					</div>
 					<div class="description">
-						
+						Check if the value has any non-white-space characters
 						
 						
 					</div>
@@ -838,6 +833,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> True if the value is blank</dd>
+							
+							</dl>
 						
 						
 						
@@ -847,12 +849,12 @@ ul.inheritsList
 					<a name="isEmpty"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{Boolean}</span>
 					<b>isEmpty</b>()
 					
 					</div>
 					<div class="description">
-						
+						Check if the value is empty ('' / the empty string)
 						
 						
 					</div>
@@ -863,6 +865,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> True if the value the empty string</dd>
+							
+							</dl>
 						
 						
 						
@@ -877,7 +886,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Clear the value of the text field
 						
 						
 					</div>
@@ -902,7 +911,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Select the text in the text field
 						
 						
 					</div>
@@ -927,7 +936,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Mark the field with error
 						
 						
 					</div>
@@ -963,7 +972,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Set the value of the field
 						
 						
 					</div>
@@ -999,32 +1008,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="updateClass"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>updateClass</b>()
-					
-					</div>
-					<div class="description">
-						
+						Draw attention to the field
 						
 						
 					</div>
@@ -1049,7 +1033,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						???
 						
 						
 					</div>
@@ -1085,7 +1069,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						???
 						
 						
 					</div>
@@ -1111,31 +1095,6 @@ ul.inheritsList
 						
 						
 
-					<hr />
-				
-					<a name="updateOverflow"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>updateOverflow</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
 					
 				
 			
@@ -1150,7 +1109,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 13 2011 15:29:31 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Dec 16 2011 12:36:06 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
