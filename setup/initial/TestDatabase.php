@@ -1,4 +1,4 @@
-<?
+<?php
 require_once('../../Editor/Include/Public.php');
 require_once('../../Editor/Classes/Interface/In2iGui.php');
 require_once('../../Editor/Classes/Core/Request.php');

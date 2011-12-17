@@ -10,6 +10,11 @@ require_once('../../Editor/Include/Public.php');
 require_once('../../Editor/Classes/Interface/In2iGui.php');
 require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
+if (!function_exists('xslt_create')) {
+	Response::internalServerError('No XSLT processor');
+	exit;
+}
+
 if (!is_dir($basePath."Config/") || !is_writable($basePath."Config/")) {
 $gui='
 <gui xmlns="uri:hui" padding="10">
