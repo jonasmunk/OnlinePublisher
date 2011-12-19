@@ -6043,28 +6043,29 @@ hui.ui.Formula.Group.prototype = {
 		return b;
 	}
 }/**
-* <p><strong>Events:</strong></p>
-* <ul>
-* <li>listRowWasOpened - When a row is double clicked (rename to open)</li>
-* <li>selectionChanged - When a row is selected (rename to select)</li>
-* <li>selectionReset - When a selection is removed</li>
-* <li>clickButton({row:row,button:button}) - When a button is clicked</li>
-* <li>clickIcon({row:row,data:data,node:node}) - When an icon is clicked</li>
-* </ul>
-* <p><strong>Bindings:</strong></p>
-* <ul>
-* <li><del>window</del></li>
-* <li>window.page</li>
-* <li>sort.direction</li>
-* <li>sort.key</li>
-* </ul>
-* <p><strong>XML:</strong></p>
-* <code>
-* &lt;list name=&quot;myList&quot; source=&quot;mySource&quot; state=&quot;list&quot;/&gt;
-* <br/><br/>
-* &lt;list name=&quot;list&quot; url=&quot;my_list_data.xml&quot; state=&quot;list&quot;/&gt;
-* </code>
+ * A list
+ * <pre><strong>options:</strong> {
+ *  element : «Element | ID»,
+ *  name : «String»,
+ *  url : «String»,
+ *  source : «hui.ui.Source»,
+ *  selectable : «<strong>true</strong> | false»,
+ *  dropFiles : «true | <strong>false</strong>»
+ * }
  *
+ * <strong>Events:</strong>
+ * $listRowWasOpened - When a row is double clicked (rename to open)
+ * $selectionChanged - When a row is selected (rename to select)
+ * $selectionReset - When a selection is removed
+ * $clickButton({row:row,button:button}) - When a button is clicked
+ * $clickIcon({row:row,data:data,node:node}) - When an icon is clicked
+ *
+ * <strong>Bindings:</strong>
+ * <del>window</del>
+ * window.page
+ * sort.direction
+ * sort.key
+ * </pre>
  *
  * @constructor
  * @param {Object} options The options : {url:null,source:null,selectable:«boolean»}
@@ -6336,6 +6337,7 @@ hui.ui.List.prototype = {
 		this.head.appendChild(headTr);
 		var frag = document.createDocumentFragment();
 		var rows = doc.getElementsByTagName('row');
+		hui.log(rows)
 		for (i=0; i < rows.length; i++) {
 			var cells = rows[i].getElementsByTagName('cell');
 			var row = document.createElement('tr');
@@ -7539,7 +7541,7 @@ hui.ui.Button.create = function(options) {
 		element3.appendChild(icon);
 	}
 	if (options.text && options.text.length>0) {
-		hui.dom.addText(element3,o.text);
+		hui.dom.addText(element3,options.text);
 	}
 	if (options.title && options.title.length>0) {
 		hui.dom.addText(element3,options.title);

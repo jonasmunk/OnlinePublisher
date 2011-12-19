@@ -58,7 +58,7 @@ hui.ui.Button.create = function(options) {
 		element3.appendChild(icon);
 	}
 	if (options.text && options.text.length>0) {
-		hui.dom.addText(element3,o.text);
+		hui.dom.addText(element3,options.text);
 	}
 	if (options.title && options.title.length>0) {
 		hui.dom.addText(element3,options.title);
