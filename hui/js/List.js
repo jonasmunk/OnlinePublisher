@@ -10,9 +10,9 @@
  * }
  *
  * <strong>Events:</strong>
- * $listRowWasOpened - When a row is double clicked (rename to open)
- * $selectionChanged - When a row is selected (rename to select)
- * $selectionReset - When a selection is removed
+ * $listRowWasOpened(row) - When a row is double clicked (rename to open)
+ * $selectionChanged() - When a row is selected (rename to select)
+ * $selectionReset() - When a previous selection is removed (nothing is selected)
  * $clickButton({row:row,button:button}) - When a button is clicked
  * $clickIcon({row:row,data:data,node:node}) - When an icon is clicked
  *

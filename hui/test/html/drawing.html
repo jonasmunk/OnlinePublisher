@@ -19,10 +19,13 @@
 <body>
 	<script type="text/javascript" charset="utf-8">
 		hui.onReady(function() {
-			var d = hui.ui.Drawing.create();
+			var d = hui.ui.Drawing.create({width:500,height:400,parent:document.body});
 			document.body.appendChild(d.element);
-			d.addLine();
+			d.addLine({x1:0,y1:0,x2:300,y2:300,color:'#f00'});
+			window.line1 = d.addLine({x1:20,y1:30,x2:100,y2:300,width:2});
 		})
 	</script>
+	<button onclick="window.line1.setFrom(100,200)">Change line</button>
+	<button onclick="window.line1.setTo(400,50)">Change line</button>
 </body>
 </html>

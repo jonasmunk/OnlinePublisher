@@ -7,6 +7,9 @@
  *  confirm : {text : «String», okText : «String», cancelText : «String»},
  *  submit : «Boolean»
  * }
+ *
+ * <strong>Events:</strong>
+ * $click(button) - When the button is clicked (and possibly confirmed)
  * </pre>
  * @param options {Object} The options
  * @constructor
