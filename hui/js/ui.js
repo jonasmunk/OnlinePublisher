@@ -50,7 +50,11 @@ hui.onReady(function() {
 	};
 });
 
-/** Get a widget by name */
+/**
+ * Get a widget by name
+ * @param nameOrWidget {Widget | String} Get a widget by name, if the parameter is already a widget it is returned
+ * @return {Widget} The widget with the name or null
+ */
 hui.ui.get = function(nameOrWidget) {
 	if (nameOrWidget) {
 		if (nameOrWidget.element) {
@@ -95,7 +99,17 @@ hui.ui._resize = function() {
 }
 
 /**
- * @param options { element:«node», widget:«widget», text:«string», okText:«string», cancelText«string», onOk:«function»}
+ * Show a confirming overlay
+ * <pre><strong>options:</strong> {
+ *  element : «Element», // the element to show at
+ *  widget : «Widget», // the widget to show at
+ *  text : «String», // the text message
+ *  okText : «String», // text of OK button
+ *  cancelText «String», // text of cancel button
+ *  onOk: «Function» // called when user clicks the OK button
+ * }
+ * </pre>
+ * @param options {Object} The options
  */
 hui.ui.confirmOverlay = function(options) {
 	var node = options.element,
@@ -132,6 +146,10 @@ hui.ui.confirmOverlay = function(options) {
 	overlay.show({element:node});
 }
 
+/**
+ * Unregisters a widget
+ * @param widget {Widget} The widget to destroy 
+ */
 hui.ui.destroy = function(widget) {
 	var objects = hui.ui.objects;
 	delete(objects[widget.name]);
@@ -480,6 +498,11 @@ hui.ui.hideToolTip = function(options) {
 
 /////////////////////////////// Utilities /////////////////////////////
 
+/**
+ * Get the element of a widget if not already an element
+ * @param widgetOrElement {Widget | Element} The widget to get the element for
+ * @returns {Element} The element or null
+ */
 hui.ui.getElement = function(widgetOrElement) {
 	if (hui.dom.isElement(widgetOrElement)) {
 		return widgetOrElement;
@@ -514,6 +537,10 @@ hui.ui.wrapInField = function(e) {
 	return w;
 };
 
+/**
+ * Add focus class to an element
+ * @param options {Object} {element : «Element», class : «String»}
+ */
 hui.ui.addFocusClass = function(o) {
 	var ce = o.classElement || o.element, c = o['class'];
 	hui.listen(o.element,'focus',function() {
@@ -524,6 +551,10 @@ hui.ui.addFocusClass = function(o) {
 	});
 };
 
+/**
+ * Make a widget draw attention to itself
+ * @param widget {Widget} The widget to stress
+ */
 hui.ui.stress = function(widget) {
 	var e = widget.element;
 	hui.cls.add(e,'hui_effect_wiggle');

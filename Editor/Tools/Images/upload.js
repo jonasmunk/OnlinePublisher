@@ -7,6 +7,10 @@ hui.ui.listen({
 		file.uploadFiles(files);
 	},
 	
+	$urlDropped$gallery : function(url) {
+		this._fetch(url);
+	},
+	
 	///////////////////////// Uoload /////////////////////////
 	
 	$click$newFile : function() {
@@ -33,9 +37,17 @@ hui.ui.listen({
 	////////////////////////// Fetch /////////////////////////
 	
 	$click$fetchImage : function() {
+		var values = fetchFormula.getValues();
+		this._fetch(values.url);
+	},
+	_fetch : function(url) {
 		fetchImage.setEnabled(false);
 		hui.ui.showMessage({text:'Henter billede...',busy:true});
-		hui.ui.request({url:'FetchImage.php',onSuccess:'imageFetched',parameters:fetchFormula.getValues()});
+		hui.ui.request({
+			url : 'FetchImage.php',
+			onSuccess : 'imageFetched',
+			parameters : {url : url}
+		});
 	},
 	$click$cancelFetch : function() {
 		uploadWindow.hide();

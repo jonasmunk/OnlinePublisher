@@ -36,6 +36,9 @@ hui.ui.Gallery.prototype = {
 			hoverClass : 'hui_gallery_drop',
 			onFiles : function(files) {
 				this.fire('filesDropped',files);
+			}.bind(this),
+			onURL : function(url) {
+				this.fire('urlDropped',url);
 			}.bind(this)
 		})
 	},
@@ -72,7 +75,7 @@ hui.ui.Gallery.prototype = {
 		this.body.innerHTML='';
 		var self = this;
 		hui.each(this.objects,function(object,i) {
-			var url = self.resolveImageUrl(object),
+			var url = self._resolveImageUrl(object),
 				top = 0;
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
@@ -82,13 +85,10 @@ hui.ui.Gallery.prototype = {
 			}
 			var img = hui.build('img',{style:'margin:'+top+'px auto 0px'});
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
-			if (self.revealing) {
-			//	img.style.visibility='hidden';
-			}
 			var item = hui.build('div',{'class' : 'hui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
 			item.appendChild(img);
 			hui.listen(item,'click',function() {
-				self.itemClicked(i);
+				self._itemClicked(i);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
 			item.onmousedown=function(e) {
@@ -139,15 +139,13 @@ hui.ui.Gallery.prototype = {
 			}
 		};
 	},
-	/** @private */
-	updateUI : function() {
+	_updateUI : function() {
 		var s = this.selected;
 		for (var i=0; i < this.nodes.length; i++) {
 			hui.cls.set(this.nodes[i],'hui_gallery_item_selected',hui.array.contains(s,i));
 		};
 	},
-	/** @private */
-	resolveImageUrl : function(img) {
+	_resolveImageUrl : function(img) {
 		return hui.ui.resolveImageUrl(this,img,this.width,this.height);
 		for (var i=0; i < this.delegates.length; i++) {
 			if (this.delegates[i]['$resolveImageUrl']) {
@@ -156,14 +154,13 @@ hui.ui.Gallery.prototype = {
 		};
 		return '';
 	},
-	/** @private */
-	itemClicked : function(index) {
+	_itemClicked : function(index) {
 		if (this.busy) {
 			return;
 		}
 		this.selected = [index];
 		this.fire('selectionChanged');
-		this.updateUI();
+		this._updateUI();
 	},
 	getFirstSelection : function() {
 		if (this.selected.length>0) {
@@ -200,6 +197,7 @@ hui.ui.Gallery.prototype = {
 	$sourceIsNotBusy : function() {
 		this._setBusy(false);
 	},
+	/** @private */
 	$visibilityChanged : function() {
 		if (hui.dom.isVisible(this.element)) {
 			this._reveal();

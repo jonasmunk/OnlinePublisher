@@ -136,6 +136,7 @@
 		</xsl:when>
 		<xsl:otherwise>
 			<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/ImageViewer.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
 	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>

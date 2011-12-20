@@ -103,7 +103,7 @@ hui.ui.Graph.Protoviz = {
 			parent.implIsReady();
 		}.bind(this))		
 	},
-	convert : function(data) {
+	_convert : function(data) {
 		var result = {nodes:[],links:[]};
 		for (var i=0; i < data.nodes.length; i++) {
 			var node = data.nodes[i];
@@ -124,7 +124,7 @@ hui.ui.Graph.Protoviz = {
 	},
 	setData : function(data) {
 		var colors = pv.Colors.category19();
-		data = this.convert(data);
+		data = this._convert(data);
 		
 		var force = this.vis.add(pv.Layout.Force)
 		    .nodes(data.nodes)

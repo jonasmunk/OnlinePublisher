@@ -1786,6 +1786,13 @@ hui.drag = {
 				if (options.onFiles && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 					options.onFiles(e.dataTransfer.files);
 				}
+				else if (hui.array.contains(e.dataTransfer.types,'public.url')) {
+					var url = e.dataTransfer.getData('public.url');
+					hui.log('URL: '+url);
+					if (options.onURL) {
+						options.onURL(url);
+					}
+				}
 			}
 		});
 	}
