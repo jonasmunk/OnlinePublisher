@@ -3942,40 +3942,75 @@ hui.ui.require = function(names,func) {
 }
 /* EOF */
 /**
- @constructor
+ * An image slideshow viewer
+ * <pre><strong>options:</strong> {
+ *  element : «Element | ID»,
+ *  name : «String»,
+ *  perimeter : «Integer»,
+ *  sizeSnap : «Integer»,
+ *  margin : «Integer»,
+ *  ease : «Function»,
+ *  easeEnd : «Function»,
+ *  easeAuto : «Function»,
+ *  easeReturn : «Function»,
+ *  transition : «Integer»,
+ *  transitionEnd : «Integer»,
+ *  transitionReturn : «Integer»
+ * }
+ * </pre>
+ * @constructor
  */
 hui.ui.ImageViewer = function(options) {
+	
 	this.options = hui.override({
-		maxWidth:800,maxHeight:600,perimeter:100,sizeSnap:100,
-		margin:0,
-		ease:hui.ease.slowFastSlow,
-		easeEnd:hui.ease.bounce,
-		easeAuto:hui.ease.slowFastSlow,
-		easeReturn:hui.ease.cubicInOut,transition:400,transitionEnd:1000,transitionReturn:300
-		},options);
+		maxWidth : 800,
+		maxHeight : 600,
+		perimeter : 100,
+		sizeSnap : 100,
+		margin : 0,
+		ease : hui.ease.slowFastSlow,
+		easeEnd : hui.ease.bounce,
+		easeAuto : hui.ease.slowFastSlow,
+		easeReturn : hui.ease.cubicInOut,
+		transition : 400,
+		transitionEnd : 1000,
+		transitionReturn : 300
+	},options);
+	
+	// Collect elements ...
 	this.element = hui.get(options.element);
 	this.box = this.options.box;
 	this.viewer = hui.get.firstByClass(this.element,'hui_imageviewer_viewer');
 	this.innerViewer = hui.get.firstByClass(this.element,'hui_imageviewer_inner_viewer');
+	
 	this.status = hui.get.firstByClass(this.element,'hui_imageviewer_status');
+	
 	this.previousControl = hui.get.firstByClass(this.element,'hui_imageviewer_previous');
 	this.controller = hui.get.firstByClass(this.element,'hui_imageviewer_controller');
 	this.nextControl = hui.get.firstByClass(this.element,'hui_imageviewer_next');
 	this.playControl = hui.get.firstByClass(this.element,'hui_imageviewer_play');
 	this.closeControl = hui.get.firstByClass(this.element,'hui_imageviewer_close');
+	
 	this.text = hui.get.firstByClass(this.element,'hui_imageviewer_text');
+	
+	// State ...
 	this.dirty = false;
 	this.width = 600;
 	this.height = 460;
 	this.index = 0;
-	this.playing=false;
+	this.playing = false;
 	this.name = options.name;
 	this.images = [];
+	
+	// Behavior ...
 	this.box.listen(this);
 	this._addBehavior();
 	hui.ui.extend(this);
 }
 
+/**
+ * Creates a new image viewer
+ */
 hui.ui.ImageViewer.create = function(options) {
 	options = options || {};
 	var element = options.element = hui.build('div',
@@ -3990,10 +4025,9 @@ hui.ui.ImageViewer.create = function(options) {
 		'<a class="hui_imageviewer_next"></a>'+
 		'<a class="hui_imageviewer_close"></a>'+
 		'</div></div></div>'});
-	var box = hui.ui.Box.create({absolute:true,modal:true,closable:true});
+	var box = options.box = hui.ui.Box.create({absolute:true,modal:true,closable:true});
 	box.add(element);
 	box.addToDocument();
-	options.box=box;
 	return new hui.ui.ImageViewer(options);
 }
 

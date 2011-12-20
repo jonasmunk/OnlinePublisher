@@ -488,9 +488,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.addFocusClass">addFocusClass</a></b>(o)
+								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.addFocusClass">addFocusClass</a></b>(options)
 								</div>
-								<div class="description"></div>
+								<div class="description">Add focus class to an element</div>
 							</td>
 						</tr>
 					
@@ -589,7 +589,16 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.confirmOverlay">confirmOverlay</a></b>(options)
 								</div>
-								<div class="description"></div>
+								<div class="description">Show a confirming overlay
+<pre><strong>options:</strong> {
+ element : «Element», // the element to show at
+ widget : «Widget», // the widget to show at
+ text : «String», // the text message
+ okText : «String», // text of OK button
+ cancelText «String», // text of cancel button
+ onOk: «Function» // called when user clicks the OK button
+}
+</pre></div>
 							</td>
 						</tr>
 					
@@ -607,7 +616,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.destroy">destroy</a></b>(widget)
 								</div>
-								<div class="description"></div>
+								<div class="description">Unregisters a widget</div>
 							</td>
 						</tr>
 					
@@ -697,7 +706,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.getElement">getElement</a></b>(widgetOrElement)
 								</div>
-								<div class="description"></div>
+								<div class="description">Get the element of a widget if not already an element</div>
 							</td>
 						</tr>
 					
@@ -931,7 +940,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.stress">stress</a></b>(widget)
 								</div>
-								<div class="description"></div>
+								<div class="description">Make a widget draw attention to itself</div>
 							</td>
 						</tr>
 					
@@ -1005,11 +1014,11 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.ui.</span><b>addFocusClass</b>(o)
+					<span class="light">hui.ui.</span><b>addFocusClass</b>(options)
 					
 					</div>
 					<div class="description">
-						
+						Add focus class to an element
 						
 						
 					</div>
@@ -1021,10 +1030,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>o</b>
+									<b>options</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Object} {element : «Element», class : «String»}</dd>
 							
 							</dl>
 						
@@ -1489,7 +1498,16 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Show a confirming overlay
+<pre><strong>options:</strong> {
+ element : «Element», // the element to show at
+ widget : «Widget», // the widget to show at
+ text : «String», // the text message
+ okText : «String», // text of OK button
+ cancelText «String», // text of cancel button
+ onOk: «Function» // called when user clicks the OK button
+}
+</pre>
 						
 						
 					</div>
@@ -1504,7 +1522,7 @@ ul.inheritsList
 									<b>options</b>
 									
 								</dt>
-								<dd>{ element:«node», widget:«widget», text:«string», okText:«string», cancelText«string», onOk:«function»}</dd>
+								<dd>{Object} The options</dd>
 							
 							</dl>
 						
@@ -1567,7 +1585,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Unregisters a widget
 						
 						
 					</div>
@@ -1582,7 +1600,7 @@ ul.inheritsList
 									<b>widget</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Widget} The widget to destroy</dd>
 							
 							</dl>
 						
@@ -1808,7 +1826,7 @@ ul.inheritsList
 					<a name=".get"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{Widget}</span>
 					<span class="light">hui.ui.</span><b>get</b>(nameOrWidget)
 					
 					</div>
@@ -1828,13 +1846,20 @@ ul.inheritsList
 									<b>nameOrWidget</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Widget | String} Get a widget by name, if the parameter is already a widget it is returned</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Widget}</span> The widget with the name or null</dd>
+							
+							</dl>
 						
 						
 						
@@ -1965,12 +1990,12 @@ ul.inheritsList
 					<a name=".getElement"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{Element}</span>
 					<span class="light">hui.ui.</span><b>getElement</b>(widgetOrElement)
 					
 					</div>
 					<div class="description">
-						
+						Get the element of a widget if not already an element
 						
 						
 					</div>
@@ -1985,13 +2010,20 @@ ul.inheritsList
 									<b>widgetOrElement</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Widget | Element} The widget to get the element for</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Element}</span> The element or null</dd>
+							
+							</dl>
 						
 						
 						
@@ -2894,7 +2926,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Make a widget draw attention to itself
 						
 						
 					</div>
@@ -2909,7 +2941,7 @@ ul.inheritsList
 									<b>widget</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>{Widget} The widget to stress</dd>
 							
 							</dl>
 						
@@ -2995,7 +3027,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Dec 19 2011 21:37:55 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 20 2011 21:32:29 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

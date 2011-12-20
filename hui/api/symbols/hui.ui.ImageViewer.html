@@ -456,7 +456,22 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/hui.ui.ImageViewer.html#constructor">hui.ui.ImageViewer</a></b>(options)
 							</div>
-							<div class="description"></div>
+							<div class="description">An image slideshow viewer
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»,
+ perimeter : «Integer»,
+ sizeSnap : «Integer»,
+ margin : «Integer»,
+ ease : «Function»,
+ easeEnd : «Function»,
+ easeAuto : «Function»,
+ easeReturn : «Function»,
+ transition : «Integer»,
+ transitionEnd : «Integer»,
+ transitionReturn : «Integer»
+}
+</pre></div>
 						</td>
 					</tr>
 				</tbody>
@@ -485,7 +500,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#addImage">addImage</a></b>(img)
 								</div>
-								<div class="description"></div>
+								<div class="description">Add an image to the stack</div>
 							</td>
 						</tr>
 					
@@ -494,16 +509,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#addImages">addImages</a></b>(images)
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#adjustSize">adjustSize</a></b>()
-								</div>
-								<div class="description"></div>
+								<div class="description">Add multiple images to the stack</div>
 							</td>
 						</tr>
 					
@@ -512,7 +518,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#clearImages">clearImages</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Clear all images in the stack</div>
 							</td>
 						</tr>
 					
@@ -521,25 +527,16 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.ImageViewer.<b><a href="../symbols/hui.ui.ImageViewer.html#.create">create</a></b>(options)
 								</div>
-								<div class="description"></div>
+								<div class="description">Creates a new image viewer</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#hide">hide</a></b>(index)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#hide">hide</a></b>()
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#keyListener">keyListener</a></b>(e)
-								</div>
-								<div class="description"></div>
+								<div class="description">Hide the image viewer</div>
 							</td>
 						</tr>
 					
@@ -548,7 +545,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#next">next</a></b>(user)
 								</div>
-								<div class="description"></div>
+								<div class="description">Go to the next image</div>
 							</td>
 						</tr>
 					
@@ -557,7 +554,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#pause">pause</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Pauseslideshow</div>
 							</td>
 						</tr>
 					
@@ -566,7 +563,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#play">play</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Start playing slideshow</div>
 							</td>
 						</tr>
 					
@@ -575,7 +572,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#playOrPause">playOrPause</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Start or pause slideshow</div>
 							</td>
 						</tr>
 					
@@ -584,25 +581,16 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#previous">previous</a></b>(user)
 								</div>
-								<div class="description"></div>
+								<div class="description">Go to the previous image</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#resetPlay">resetPlay</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#show">show</a></b>(index?)
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#show">show</a></b>(index)
-								</div>
-								<div class="description"></div>
+								<div class="description">Show the image viewer</div>
 							</td>
 						</tr>
 					
@@ -611,25 +599,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#showById">showById</a></b>(id)
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#timer">timer</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ImageViewer.html#zoomMove">zoomMove</a></b>(e)
-								</div>
-								<div class="description"></div>
+								<div class="description">Show the image viewer starting at the image with a certain id.</div>
 							</td>
 						</tr>
 					
@@ -654,7 +624,22 @@ ul.inheritsList
 				</div>
 				
 				<div class="description">
-					
+					An image slideshow viewer
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»,
+ perimeter : «Integer»,
+ sizeSnap : «Integer»,
+ margin : «Integer»,
+ ease : «Function»,
+ easeEnd : «Function»,
+ easeAuto : «Function»,
+ easeReturn : «Function»,
+ transition : «Integer»,
+ transitionEnd : «Integer»,
+ transitionReturn : «Integer»
+}
+</pre>
 					
 				</div>
 				
@@ -700,7 +685,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Add an image to the stack
 						
 						
 					</div>
@@ -712,10 +697,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>img</b>
+									<span class="light fixedFont">{Object}</span> <b>img</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>An image object representing an image</dd>
 							
 							</dl>
 						
@@ -736,7 +721,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Add multiple images to the stack
 						
 						
 					</div>
@@ -748,37 +733,12 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>images</b>
+									<span class="light fixedFont">{Array}</span> <b>images</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>An array of image objects</dd>
 							
 							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="adjustSize"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>adjustSize</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
 						
 						
 						
@@ -797,7 +757,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Clear all images in the stack
 						
 						
 					</div>
@@ -822,7 +782,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Creates a new image viewer
 						
 						
 					</div>
@@ -854,64 +814,17 @@ ul.inheritsList
 					<div class="fixedFont">
 					
 					
-					<b>hide</b>(index)
+					<b>hide</b>()
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>index</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="keyListener"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>keyListener</b>(e)
-					
-					</div>
-					<div class="description">
-						
+						Hide the image viewer
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>e</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
 						
 						
 						
@@ -930,7 +843,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Go to the next image
 						
 						
 					</div>
@@ -942,10 +855,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>user</b>
+									<span class="light fixedFont">{Boolean}</span> <b>user</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>If it is initiated by the user</dd>
 							
 							</dl>
 						
@@ -966,7 +879,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Pauseslideshow
 						
 						
 					</div>
@@ -991,7 +904,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Start playing slideshow
 						
 						
 					</div>
@@ -1016,7 +929,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Start or pause slideshow
 						
 						
 					</div>
@@ -1041,7 +954,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Go to the previous image
 						
 						
 					</div>
@@ -1053,37 +966,12 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>user</b>
+									<span class="light fixedFont">{Boolean}</span> <b>user</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>If it is initiated by the user</dd>
 							
 							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="resetPlay"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>resetPlay</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
 						
 						
 						
@@ -1098,11 +986,11 @@ ul.inheritsList
 					<div class="fixedFont">
 					
 					
-					<b>show</b>(index)
+					<b>show</b>(index?)
 					
 					</div>
 					<div class="description">
-						
+						Show the image viewer
 						
 						
 					</div>
@@ -1114,10 +1002,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>index</b>
+									<span class="light fixedFont">{Integer}</span> <b>index?</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>Optional index to start from (zero-based)</dd>
 							
 							</dl>
 						
@@ -1138,68 +1026,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>id</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="timer"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>timer</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="zoomMove"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>zoomMove</b>(e)
-					
-					</div>
-					<div class="description">
-						
+						Show the image viewer starting at the image with a certain id. Will not show if image is not found
 						
 						
 					</div>
@@ -1211,10 +1038,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>e</b>
+									<span class="light fixedFont">{Integer}</span> <b>id</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The id if the image to start with</dd>
 							
 							</dl>
 						
@@ -1239,7 +1066,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Dec 19 2011 21:37:56 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 20 2011 21:32:30 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
