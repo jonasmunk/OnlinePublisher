@@ -12,18 +12,25 @@ require_once 'Classes/Core/SystemInfo.php';
 require_once 'Classes/Services/MailService.php';
 
 
+
 if (Request::getBoolean('logout')) {
 	InternalSession::logOut();
 }
 
-if (!DatabaseUtil::isUpToDate()) {
+if (!Database::testConnection()) {
+	$state = 'noConnection';
+}
+else if (!DatabaseUtil::isUpToDate()) {
 	$state = 'databaseWarning';
 } else {
 	$state = 'login';
 }
+if (Database::testConnection()) {
+	$mailEnabled = MailService::getEnabled();
+} else {
+	$mailEnabled = false;
+}
 
-$mailEnabled = MailService::getEnabled();
-//$mailEnabled = false;
 
 $gui='
 <gui xmlns="uri:hui" padding="10" title="'.SystemInfo::getTitle().'" state="'.$state.'">
@@ -90,6 +97,14 @@ $gui='
 						<button title="{Sign in;da:Log ind}" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="{Update;da:Opdater}" name="updateDatabase" highlighted="true"/>
 					</buttons>
+				</space>
+			</fragment>
+			<fragment state="noConnection">
+				<space all="5">
+					<text align="center">
+						<h>{da:Databasen kan ikke tilgås;en:The database Cannot be reached}</h>
+						<p>{da:Kontroller venligst at systemet er konfigureret korrekt og at databasen kører; en:Please make sure the system i configured correctly and the database is running}</p>
+					</text>
 				</space>
 			</fragment>
 		</space>

@@ -1,7 +1,7 @@
 <?php
 if (file_exists('../../Config/Setup.php')) {
 	session_write_close();
-	header('Location: ../');
+	header('Location: ../../');
 	exit;
 }
 $baseUrl = getBaseUrl();
@@ -10,28 +10,28 @@ require_once('../../Editor/Include/Public.php');
 require_once('../../Editor/Classes/Interface/In2iGui.php');
 require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
-if (!function_exists('xslt_create')) {
+if (!function_exists('xslt_create') && !class_exists('xsltProcessor')) {
 	Response::internalServerError('No XSLT processor');
 	exit;
 }
 
 if (!is_dir($basePath."Config/") || !is_writable($basePath."Config/")) {
-$gui='
-<gui xmlns="uri:hui" padding="10">
-	<controller source="controller.js"/>
-	<box width="400" top="30" variant="rounded">
-		<space left="30" right="30" top="10" bottom="10">
-		<text>
-			<h>The configuration file does not exist and I cannot help create it</h>
-			<p>The file should be located at Config/Setup.php, but I cannot write the file so you have to do it yourself.</p>
-			<p>Good luck :-)</p>
-		</text>
-		</space>
-	</box>
-</gui>
-';
-In2iGui::render($gui);
-exit;
+	$gui='
+	<gui xmlns="uri:hui" padding="10">
+		<controller source="controller.js"/>
+		<box width="400" top="30" variant="rounded">
+			<space left="30" right="30" top="10" bottom="10">
+			<text>
+				<h>The configuration file does not exist and I cannot help create it</h>
+				<p>The file should be located at Config/Setup.php, but I cannot write the file so you have to do it yourself.</p>
+				<p>Good luck :-)</p>
+			</text>
+			</space>
+		</box>
+	</gui>
+	';
+	In2iGui::render($gui);
+	exit;
 }
 $gui='
 <gui xmlns="uri:hui" padding="10">

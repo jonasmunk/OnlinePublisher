@@ -12,14 +12,13 @@ require_once($basePath.'Editor/Classes/Core/Database.php');
 class DatabaseUtil {
 
 	/**
-	 * Chacks whether the database is up to date
+	 * Checks whether the database is up to date
 	 * @return boolean True if the database is up to date
 	 */
 	function isUpToDate() {
 		global $basePath;
 		$output = false;
 		$hash = md5_file($basePath.'/Editor/Info/Database.php');
-	
 		$sql = "select `value` from `setting` where `domain`='system' and `subdomain`='database' and `key`='database-hash'";
 		if ($row=Database::selectFirst($sql)) {
 			if ($row['value']==$hash) {
