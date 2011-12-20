@@ -6092,9 +6092,9 @@ hui.ui.Formula.Group.prototype = {
  * }
  *
  * <strong>Events:</strong>
- * $listRowWasOpened - When a row is double clicked (rename to open)
- * $selectionChanged - When a row is selected (rename to select)
- * $selectionReset - When a selection is removed
+ * $listRowWasOpened(row) - When a row is double clicked (rename to open)
+ * $selectionChanged() - When a row is selected (rename to select)
+ * $selectionReset() - When a previous selection is removed (nothing is selected)
  * $clickButton({row:row,button:button}) - When a button is clicked
  * $clickIcon({row:row,data:data,node:node}) - When an icon is clicked
  *
@@ -7539,6 +7539,9 @@ hui.ui.Alert.prototype = {
  *  confirm : {text : «String», okText : «String», cancelText : «String»},
  *  submit : «Boolean»
  * }
+ *
+ * <strong>Events:</strong>
+ * $click(button) - When the button is clicked (and possibly confirmed)
  * </pre>
  * @param options {Object} The options
  * @constructor
@@ -15132,6 +15135,9 @@ hui.ui.NumberField.prototype = {
  *  maxHeight : «<strong>100</strong> | integer»,
  *  animateUserChange : «<strong>true</strong> | false»
  * }
+ *
+ * <strong>Events:</strong>
+ * $valueChanged(value) - When the value of the field is changed by the user
  * @constructor
  */
 hui.ui.TextField = function(options) {

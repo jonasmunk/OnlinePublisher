@@ -10,6 +10,9 @@
  *  maxHeight : «<strong>100</strong> | integer»,
  *  animateUserChange : «<strong>true</strong> | false»
  * }
+ *
+ * <strong>Events:</strong>
+ * $valueChanged(value) - When the value of the field is changed by the user
  * @constructor
  */
 hui.ui.TextField = function(options) {
