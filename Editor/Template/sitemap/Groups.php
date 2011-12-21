@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package OnlinePublisher
  * @subpackage Templates.Sitemap

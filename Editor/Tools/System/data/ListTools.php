@@ -17,7 +17,6 @@ $writer->startList(array('unicode'=>true))->
 		header(array('title'=>'','width'=>1))->
 	endHeaders();
 
-$designs = Query::after('design')->get();
 foreach ($available as $key) {
 	$info = ToolService::getInfo($key);
 	$writer->

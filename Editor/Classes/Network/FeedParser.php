@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package OnlinePublisher
  * @subpackage Classes.Network
@@ -28,9 +28,9 @@ class FeedParser {
 		$doc = new DOMDocument('1.0','UTF-8');
 		if (@$doc->load($url)) {
 			if ($doc->documentElement->nodeName=='rss') {
-				$this->parseRSS(&$doc,$feed);
+				$this->parseRSS($doc,$feed);
 			} else if ($doc->documentElement->nodeName=='feed') {
-				$this->parseAtom(&$doc,$feed);
+				$this->parseAtom($doc,$feed);
 			}
 			return $feed;
 		} else {
@@ -60,7 +60,7 @@ class FeedParser {
 			$feed->setImage(DOMUtils::getFirstChildText($channel,'image'));
 			$feed->setRating(DOMUtils::getFirstChildText($channel,'rating'));
 		}
-		$this->parseRSSItems(&$doc,$feed);
+		$this->parseRSSItems($doc,$feed);
 	}
 	
 	function parseRSSItems(&$doc,&$feed) {

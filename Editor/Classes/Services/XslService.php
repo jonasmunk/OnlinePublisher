@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package OnlinePublisher
  * @subpackage Classes.Services
@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class XslService {
 	
-	function transform($xmlData,$xslData) {
+	static function transform($xmlData,$xslData) {
 		if (function_exists('xslt_create')) {
 			$arguments = array('/_xml' => $xmlData,'/_xsl' => $xslData);
 			$xp = xslt_create();

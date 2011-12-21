@@ -10,7 +10,7 @@ require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class In2iGui {
 
-	function display($elements,&$xmlData) {
+	static function display($elements,&$xmlData) {
 		global $basePath;
 		$skin = 'In2ition';
 		$xmlData='<?xml version="1.0" encoding="ISO-8859-1"?>'.$xmlData;
@@ -85,7 +85,7 @@ class In2iGui {
 		}
 	}
 	
-	function localize($xml,$language='en') {
+	static function localize($xml,$language='en') {
 		
 		$pattern = "/({[^}]+})/mi";
 		preg_match_all($pattern, $xml, $matches,PREG_OFFSET_CAPTURE);
@@ -105,7 +105,7 @@ class In2iGui {
 		return $xml;
 	}
 	
-	function extract($str) {
+	static function extract($str) {
 		$parsed = array();
 		$str = substr($str,1,-1);
 		$parts = explode(';',$str);
@@ -122,7 +122,7 @@ class In2iGui {
 		return $parsed;
 	}
 	
-	function renderFragment($gui) {
+	static function renderFragment($gui) {
 		global $basePath,$baseUrl;
 		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:hui">'.In2iGui::localize($gui).'</subgui>';
 		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
@@ -141,12 +141,12 @@ class In2iGui {
 		return $result;
 	}
 	
-	function sendObject($obj) {
+	static function sendObject($obj) {
 		header('Content-Type: text/plain; charset=utf-8');
 		echo In2iGui::toJSON($obj);
 	}
 	
-	function sendUnicodeObject($obj) {
+	static function sendUnicodeObject($obj) {
 		foreach ($obj as $key => $value) {
 			if (is_string($value)) {
 				if (is_array($obj)) {
@@ -159,7 +159,7 @@ class In2iGui {
 		In2iGui::sendObject($obj);
 	}
 	
-	function toJSON($obj) {
+	static function toJSON($obj) {
 		global $basePath;
 		if (function_exists('json_encode')) {
 			return json_encode($obj);
@@ -169,33 +169,33 @@ class In2iGui {
 		return $json->encode($obj);
 	}
 	
-	function respondSuccess() {
+	static function respondSuccess() {
 		header('Content-Type: text/xml');
 		echo '<?xml version="1.0" encoding="UTF-8"?><success/>';
 	}
 
-	function respondFailure() {
+	static function respondFailure() {
 		Response::badRequest();
 		header('Content-Type: text/xml');
 		echo '<?xml version="1.0" encoding="UTF-8"?><failure/>';
 	}
 
-	function respondUploadSuccess() {
+	static function respondUploadSuccess() {
 		header('Content-Type: text/plain');
 		echo 'SUCCESS';
 	}
 
-	function respondUploadFailure() {
+	static function respondUploadFailure() {
 		Response::badRequest();
 		header('Content-Type: text/plain');
 		echo 'FAILURE';
 	}
 	
-	function toDateTime($stamp) {
+	static function toDateTime($stamp) {
 		return date("YmdHis",$stamp);
 	}
 	
-	function buildOptions($objects,$selected=array()) {
+	static function buildOptions($objects,$selected=array()) {
 		$gui='';
 		foreach ($objects as $object) {
 			$gui.='<option title="'.StringUtils::escapeXML($object->getTitle()).'" value="'.StringUtils::escapeXML($object->getId()).'" selected="'.(in_array($object->getId(), $selected) ? 'true' : 'false').'"/>';
@@ -203,18 +203,18 @@ class In2iGui {
 		return $gui;
 	}
 	
-	function escape($input) {
+	static function escape($input) {
 		error_log('In2iGui::escape is deprecated');
 		return StringUtils::escapeXML($input);
 	}
 	
-	function escapeUnicode($input) {
+	static function escapeUnicode($input) {
 		$output = str_replace('<', '&#60;', $input);
 		$output = str_replace('>', '&#62;', $output);
 		return $output;
 	}
 	
-	function presentDate($timestamp) {
+	static function presentDate($timestamp) {
 		if ($timestamp==null) return '';
 		setlocale(LC_TIME, "da_DK");
 		return strftime("%e. %b %Y",$timestamp);
@@ -226,7 +226,7 @@ class In2iGui {
         return $string; 
     } 
 
-    function _privateXMLEntities($num) 
+    static function _privateXMLEntities($num) 
     { 
 	if ($num==3) {return '';}
     $chars = array( 
@@ -261,11 +261,11 @@ class In2iGui {
         return (($num > 127 && $num < 160) ? $chars[$num] : "&#".$num.";" ); 
     } 
 
-	function _htmlnumericentities(&$str){
+	static function _htmlnumericentities(&$str){
 	  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
 	}
 	
-	function toLinks($links) {
+	static function toLinks($links) {
 		$out = array();
 		foreach ($links as $link) {
 			$link->toUnicode();
@@ -281,7 +281,7 @@ class In2iGui {
 		return $out;
 	}
 	
-	function fromLinks($links) {
+	static function fromLinks($links) {
 		if (!is_array($links)) return;
 		global $basePath;
 		require_once($basePath.'Editor/Classes/Model/ObjectLink.php');
