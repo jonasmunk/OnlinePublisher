@@ -206,6 +206,10 @@ class ImageTransformationService {
 	}
 	
 	function sendFile($path,$mimeType) {
+		if (!file_exists($path)) {
+			error_log('Cannot send image, path does not exist: '.$path);
+			return;
+		}
 		if (!$mimeType) {
 			if ($info = ImageTransformationService::getImageInfo($path)) {
 				$mimeType = $info['mime'];

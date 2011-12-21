@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" padding="10" title="System">
+<gui xmlns="uri:hui" padding="10" title="Windows">
 	<controller name="controller" source="windows.js"/>
 	<layout>
 		<top>

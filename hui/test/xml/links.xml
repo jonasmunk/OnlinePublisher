@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" title="Box">
+<gui xmlns="uri:hui" title="Links">
 	<source name="pageSource" url="data/page_items.xml"/>
 	<source name="fileSource" url="data/source_items.xml"/>
-	<box width="300">
+	<box width="300" title="Links">
 		<links name="myLinks" pageSource="pageSource" fileSource="fileSource"/>
 		<button click="myLinks.addLink()" title="Add link"/>
 		<button name="button" title="Set links!"/>

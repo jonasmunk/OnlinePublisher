@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" pad="10" title="Formula">
-	<box width="600" title="Title with toolbars" variant="textured" padding="10">
+<gui xmlns="uri:hui" pad="10" title="Rendering">
+	
+	<box width="600" title="Title with toolbars" padding="10">
 		<toolbar>
-			<icon icon="common/settings" title="Hep hey!" name="changeViaHTML"/>
+			<icon icon="common/settings" title="Change contents" name="changeViaHTML"/>
 		</toolbar>
 		<rendering name="rendering">
 			<html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,4 +21,5 @@
 			}
 		})
 	</script>
+	
 </gui>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" title="List" padding="10">
+<gui xmlns="uri:hui" title="Toolbar" padding="10">
 	<source name="itemsSource" url="data/source_items.xml"/>
 	<script>
 		hui.ui.listen({
