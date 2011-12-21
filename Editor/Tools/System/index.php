@@ -68,6 +68,7 @@ $gui='
 					<bar state="inspection" variant="layout">
 						<segmented value="all" name="inspectionCategory">
 							<item text="Alle" value="all"/>
+							<item text="Omgivelser" value="environment"/>
 							<item text="System" value="system"/>
 							<item text="Indhold" value="content"/>
 							<item text="Model" value="model"/>

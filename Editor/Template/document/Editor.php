@@ -34,41 +34,41 @@ $pageId = InternalSession::getPageId();
 	<head>
 		<title>Editor</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version=<?=SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/basic/css/parts.php?version=<?=SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/basic/css/document.css?version=<?=SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="<?=$baseUrl?>style/<?=$design?>/css/overwrite.css?version=<?=SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version=<?=SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version=<?php echo SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>style/basic/css/parts.php?version=<?php echo SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>style/basic/css/document.css?version=<?php echo SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>style/<?php echo $design?>/css/overwrite.css?version=<?php echo SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version=<?php echo SystemInfo::getDate()?>" />
 		<!--<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script' rel='stylesheet' type='text/css' />-->
 		<!--[if IE]>
-		<link rel="stylesheet" type="text/css" href="css/msie.css?version=<?=SystemInfo::getDate()?>" />
+		<link rel="stylesheet" type="text/css" href="css/msie.css?version=<?php echo SystemInfo::getDate()?>" />
 		<![endif]-->
-		<? if (true || Request::getBoolean('dev')) { ?>
-		<script type="text/javascript" src="../../../hui/bin/combined.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
-		<? } else { ?>
-		<script type="text/javascript" src="../../../hui/bin/minimized.js?version=<?=SystemInfo::getDate()?>" charset="UTF-8"></script>
-		<? } ?>
+		<?php if (true || Request::getBoolean('dev')) { ?>
+		<script type="text/javascript" src="../../../hui/bin/combined.js?version=<?php echo SystemInfo::getDate()?>" charset="UTF-8"></script>
+		<?php } else { ?>
+		<script type="text/javascript" src="../../../hui/bin/minimized.js?version=<?php echo SystemInfo::getDate()?>" charset="UTF-8"></script>
+		<?php } ?>
 		<!--[if IE 8]>
-			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version=<?=SystemInfo::getDate()?>"> </link>
+			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version=<?php echo SystemInfo::getDate()?>"> </link>
 		<![endif]-->
 		<!--[if lt IE 7]>
-			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version=<?=SystemInfo::getDate()?>"> </link>
+			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version=<?php echo SystemInfo::getDate()?>"> </link>
 		<![endif]-->
 		<!--[if IE 7]>
-			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version=<?=SystemInfo::getDate()?>"> </link>
+			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version=<?php echo SystemInfo::getDate()?>"> </link>
 		<![endif]-->
 		<script type="text/javascript">
 			hui.ui.context='../../../';
-			hui.ui.language='<?=$language?>';
+			hui.ui.language='<?php echo $language?>';
 		</script>
-		<script type="text/javascript" src="js/Controller.js?version=<?=SystemInfo::getDate()?>" charset="utf-8"></script>
-		<script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?=SystemInfo::getDate()?>"></script>
-		<script type="text/javascript" src="<?=$baseUrl?>style/basic/js/OnlinePublisher.js?version=<?=SystemInfo::getDate()?>"></script>
+		<script type="text/javascript" src="js/Controller.js?version=<?php echo SystemInfo::getDate()?>" charset="utf-8"></script>
+		<script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?php echo SystemInfo::getDate()?>"></script>
+		<script type="text/javascript" src="<?php echo $baseUrl?>style/basic/js/OnlinePublisher.js?version=<?php echo SystemInfo::getDate()?>"></script>
 		<script type="text/javascript">
-			controller.context='<?=$baseUrl?>';
-			controller.pageId = <?=$pageId?>;
-			controller.changed = <?=(PageService::isChanged($pageId) ? 'true' : 'false')?>;
-			<?
+			controller.context='<?php echo $baseUrl?>';
+			controller.pageId = <?php echo $pageId?>;
+			controller.changed = <?php echo (PageService::isChanged($pageId) ? 'true' : 'false')?>;
+			<?php
 			$parts = PartService::getParts();
 			foreach ($parts as $part => $info) {
 				echo "controller.parts.push({value:'".$part."',title:'".$info['name'][$language]."'});\n";
@@ -89,12 +89,12 @@ $pageId = InternalSession::getPageId();
 			<input type="hidden" name="column"/>
 			<input type="hidden" name="index"/>
 		</form>
-		<?
+		<?php
 			$partContext = DocumentTemplateController::buildPartContext($pageId);
 			$lastRowIndex = displayRows($pageId);
 		?>
 	</div>
-<?
+<?php
 if ($section==null) {
 $gui = '
 	<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
@@ -199,7 +199,7 @@ echo In2iGui::renderFragment($gui);
 
 
 
-<?
+<?php
 function displayRows($pageId) {
 	$lastIndex = 0;
 	$sql="select * from document_row where page_id=".$pageId." order by `index`";

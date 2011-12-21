@@ -15,6 +15,15 @@ class PageService {
 	function exists($id) {
 		return !Database::isEmpty("select id from page where id=".Database::int($id));
 	}
+
+	function getLatestPageId() {
+		$sql="select id from page order by changed desc limit 1";
+		$row = Database::selectFirst($sql);
+		if ($row) {
+			return intval($row['id']);
+		}
+		return null;
+	}
 	
 	function getPagePreview($id,$template) {
 		$data = '';

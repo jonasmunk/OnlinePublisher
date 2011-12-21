@@ -19,6 +19,7 @@ class InspectionService {
 		InspectionService::checkPageStructure($inspections);
 		InspectionService::checkFrameStructure($inspections);
 		InspectionService::checkPageContent($inspections);
+		InspectionService::checkEnvironment($inspections);
 		InspectionService::checkLinks($inspections);
 
 		$filtered = array();
@@ -30,6 +31,37 @@ class InspectionService {
 		}
 		
 		return $filtered;
+	}
+	
+	function checkEnvironment(&$inspections) {
+		{
+			$ok = class_exists('XSLTProcessor');
+			$inspection = new Inspection();
+			$inspection->setCategory('environment');
+			$inspection->setEntity(array('type'=>'api','title'=>'XSL-transformation','id'=>'XSLTProcessor','icon'=>'common/object'));
+			$inspection->setStatus($ok ? 'ok' : 'error');
+			$inspection->setText($ok ? 'XSLT er installeret' : 'XSLT mangler');
+			$inspections[] = $inspection;
+		}
+		{
+			$ok = function_exists('curl_init');
+			$inspection = new Inspection();
+			$inspection->setCategory('environment');
+			$inspection->setEntity(array('type'=>'api','title'=>'Netværksklient (CURL)','id'=>'curl','icon'=>'common/object'));
+			$inspection->setStatus($ok ? 'ok' : 'error');
+			$inspection->setText($ok ? 'Netværksklient er installeret' : 'Netværksklient mangler');
+			$inspections[] = $inspection;
+		}
+		{
+			$ok = function_exists('gd_info');
+			$inspection = new Inspection();
+			$inspection->setCategory('environment');
+			$inspection->setEntity(array('type'=>'api','title'=>'Billedbehandling (GD)','id'=>'curl','icon'=>'common/object'));
+			$inspection->setStatus($ok ? 'ok' : 'error');
+			$inspection->setText($ok ? 'Billedbehandling er installeret' : 'Billedbehandling mangler');
+			$inspections[] = $inspection;
+		}
+		
 	}
 
 	function checkLinks(&$inspections) {

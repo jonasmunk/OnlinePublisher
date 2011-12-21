@@ -3,12 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates
  */
-require_once '../../Config/Setup.php';
-require_once '../Include/Security.php';
-require_once '../Classes/Core/Response.php';
-require_once '../Classes/Core/Request.php';
-require_once '../Classes/Core/InternalSession.php';
-require_once '../Classes/Services/RenderingService.php';
+require_once '../Include/Private.php';
 
 $id=Request::getId();
 if (!($id>0)) {
@@ -17,9 +12,12 @@ if (!($id>0)) {
 if (!($id>0)) {
 	$id = RenderingService::findPage('home');
 }
+if (!($id>0)) {
+	$id = PageService::getLatestPageId();
+}
 if ($id>0) {
 	InternalSession::setPageId($id);
-	$sql = "select `template`.`unique` as template,`design`.`unique` as design from page,template,design where page.template_id = template.id and page.design_id=design.object_id and page.id=".$id;
+	$sql = "select `template`.`unique` as template,`design`.`unique` as design from page,template,design where page.template_id = template.id and page.design_id=design.object_id and page.id=".Database::int($id);
 	if ($row = Database::selectFirst($sql)) {
 		InternalSession::setPageDesign($row['design']);
 		if ($ctrl = TemplateService::getController($row['template'])) {
@@ -31,6 +29,19 @@ if ($id>0) {
 	}
 }
 else {
-	echo "no page";
+	$gui = '
+	<gui xmlns="uri:hui" padding="10">
+		<controller source="controller.js"/>
+		<box width="400" top="30" variant="rounded">
+			<space left="30" right="30" top="10" bottom="10">
+			<text align="center">
+				<h>{da:Siden kunne ikke findes;en:The could not be found}</h>
+				<p>{da:Er du sikker på at der findes nogen sider?;en:Are you sure there are any pages?}</p>
+			</text>
+			</space>
+		</box>
+	</gui>
+	';
+	In2iGui::render($gui);
 }
 ?>
