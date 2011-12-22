@@ -8,7 +8,11 @@ hui.ui.listen({
 	},
 	
 	$urlDropped$gallery : function(url) {
-		this._fetch(url);
+		if (hui.string.startsWith(url,'data:')) {
+			hui.ui.showMessage({text:'Denne type er desværre endnu ikke understøttet',duration:3000});
+		} else {
+			this._fetch(url);
+		}
 	},
 	
 	///////////////////////// Uoload /////////////////////////
@@ -61,7 +65,7 @@ hui.ui.listen({
 			groupSource.refresh();
 		} else {
 			hui.log(data);
-			hui.ui.showMessage({text:data.errorDetails,icon:'common/warning',duration:2000});
+			hui.ui.showMessage({text:data.message,icon:'common/warning',duration:2000});
 		}
 		fetchImage.setEnabled(true);
 	},

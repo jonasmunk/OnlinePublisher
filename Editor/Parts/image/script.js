@@ -65,10 +65,14 @@ var partController = {
 	$click$cancelFetch : function() {
 		imageUploadWindow.hide();
 	},
+	$click$createFromUrl : function() {
+		this.$submit$urlForm();
+	},
 	$submit$urlForm : function() {
 		var form = hui.ui.get('urlForm');
 		var url = form.getValues()['url'];
 		if (hui.isBlank(url)) {
+			hui.ui.showMessage({text:'Adressen er tom',duration:3000});
 			form.focus();
 			return;
 		}
@@ -82,7 +86,7 @@ var partController = {
 					urlForm.reset();
 					urlForm.focus();
 					hui.ui.hideMessage();
-					document.forms.PartForm.imageId.value = status.id;
+					document.forms.PartForm.imageId.value = status.object.id;
 					this.preview();
 				} else {
 					hui.ui.showMessage({text:'Det lykkedes ikke at hente billedet',icon:'common/warning',duration:3000});

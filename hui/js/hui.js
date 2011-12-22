@@ -196,6 +196,18 @@ hui.isArray = function(obj) {
 hui.string = {
 	
 	/**
+	 * Test that a string start with another string
+	 * @param {String} str The string to test
+	 * @param {String} start The string to look for at the start
+	 * @returns {Boolean} True if «str» starts with «start»
+	 */
+	startsWith : function(str,start) {
+		if (!typeof(str)=='string' || !typeof(start)=='string') {
+			return false;
+		}
+		return (str.match("^"+start)==start);
+	},
+	/**
 	 * Test that a string ends with another string
 	 * @param {String} str The string to test
 	 * @param {String} end The string to look for at the end
@@ -716,7 +728,7 @@ hui.get.firstByTag = function(node,tag) {
 }
 
 
-
+hui.get.firstChild = hui.dom.firstChild;
 
 
 
@@ -1782,14 +1794,13 @@ hui.drag = {
 				if (options.onDrop) {
 					options.onDrop(e);
 				}
-				hui.log(e.dataTransfer.types)
+				//hui.log(e.dataTransfer.types)
 				if (options.onFiles && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 					options.onFiles(e.dataTransfer.files);
 				}
-				else if (hui.array.contains(e.dataTransfer.types,'public.url')) {
+				else if (options.onURL && hui.array.contains(e.dataTransfer.types,'public.url')) {
 					var url = e.dataTransfer.getData('public.url');
-					hui.log('URL: '+url);
-					if (options.onURL) {
+					if (options.onURL && !hui.string.startsWith(url,'data:')) {
 						options.onURL(url);
 					}
 				}

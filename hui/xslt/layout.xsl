@@ -12,7 +12,7 @@
     ···
 </space>
 -->
-<xsl:template match="gui:space | gui:block">
+<xsl:template match="gui:space">
 	<div class="hui_space">
 		<xsl:attribute name="style">
 			<xsl:if test="@all">padding: <xsl:value-of select="@all"/>px;</xsl:if>

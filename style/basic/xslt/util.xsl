@@ -129,14 +129,28 @@
 	<![endif]]]></xsl:comment>
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
-			<script src="{$path}hui{$timestamp-url}/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<!--
-			<script src="{$path}hui{$timestamp-url}/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			-->
+			<xsl:choose>
+				<xsl:when test="$development='true'">
+					<script src="{$path}hui{$timestamp-url}/bin/combined.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+					<script src="{$path}hui{$timestamp-url}/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+				</xsl:when>
+				<xsl:otherwise>
+					<script src="{$path}hui{$timestamp-url}/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:when>
+		<xsl:when test="$development='true'">
+			<script src="{$path}hui{$timestamp-url}/js/hui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/hui_animation.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/hui_color.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/hui_require.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/ui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/ImageViewer.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/Box.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/SearchField.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:otherwise>
 			<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/ImageViewer.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
 	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>

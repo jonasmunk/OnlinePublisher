@@ -196,6 +196,18 @@ hui.isArray = function(obj) {
 hui.string = {
 	
 	/**
+	 * Test that a string start with another string
+	 * @param {String} str The string to test
+	 * @param {String} start The string to look for at the start
+	 * @returns {Boolean} True if «str» starts with «start»
+	 */
+	startsWith : function(str,start) {
+		if (!typeof(str)=='string' || !typeof(start)=='string') {
+			return false;
+		}
+		return (str.match("^"+start)==start);
+	},
+	/**
 	 * Test that a string ends with another string
 	 * @param {String} str The string to test
 	 * @param {String} end The string to look for at the end
@@ -716,7 +728,7 @@ hui.get.firstByTag = function(node,tag) {
 }
 
 
-
+hui.get.firstChild = hui.dom.firstChild;
 
 
 
@@ -1782,14 +1794,13 @@ hui.drag = {
 				if (options.onDrop) {
 					options.onDrop(e);
 				}
-				hui.log(e.dataTransfer.types)
+				//hui.log(e.dataTransfer.types)
 				if (options.onFiles && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 					options.onFiles(e.dataTransfer.files);
 				}
-				else if (hui.array.contains(e.dataTransfer.types,'public.url')) {
+				else if (options.onURL && hui.array.contains(e.dataTransfer.types,'public.url')) {
 					var url = e.dataTransfer.getData('public.url');
-					hui.log('URL: '+url);
-					if (options.onURL) {
+					if (options.onURL && !hui.string.startsWith(url,'data:')) {
 						options.onURL(url);
 					}
 				}
@@ -4079,7 +4090,7 @@ hui.ui.ImageViewer.prototype = {
 		if (this._shouldShowController()) {
 			this.ctrlHider = window.setTimeout(this._hideController.bind(this),2000);
 			if (hui.browser.msie) {
-				this.controller.show();
+				this.controller.style.display='block';
 			} else {
 				hui.ui.fadeIn(this.controller,200);
 			}
@@ -4088,7 +4099,7 @@ hui.ui.ImageViewer.prototype = {
 	_hideController : function() {
 		if (!this.overController) {
 			if (hui.browser.msie) {
-				this.controller.hide();
+				this.controller.style.display='none';
 			} else {
 				hui.ui.fadeOut(this.controller,500);
 			}
@@ -4372,16 +4383,16 @@ hui.ui.ImageViewer.prototype = {
 				'class' : 'hui_imageviewer_zoomer',
 				style : 'width:'+this.viewer.clientWidth+'px;height:'+this.viewer.clientHeight+'px'
 			});
-			this.element.insertBefore(this.zoomer,hui.get.firstByTag(this.element,'*'));
+			this.element.insertBefore(this.zoomer,hui.dom.firstChild(this.element));
 			hui.listen(this.zoomer,'mousemove',this._onZoomMove.bind(this));
 			hui.listen(this.zoomer,'click',function() {
-				this.style.display='none';
-			});
+				this.zoomer.style.display='none';
+			}.bind(this));
 		}
 		this.pause();
 		var size = this._getLargestSize({width:2000,height:2000},img);
 		var url = hui.ui.resolveImageUrl(this,img,size.width,size.height);
-		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px;"><img src="'+url+'"/></div>';
+		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px; margin: 0 auto;"><img src="'+url+'"/></div>';
 		this.zoomer.style.display = 'block';
 		this.zoomInfo = {width:size.width,height:size.height};
 		this._onZoomMove(e);

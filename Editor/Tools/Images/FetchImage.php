@@ -3,15 +3,16 @@
  * @package OnlinePublisher
  * @subpackage Tools.Images
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Services/ImageService.php';
-require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Include/Private.php';
 
 $url = Request::getString('url');
 
 $response = ImageService::createImageFromUrl($url);
-
+if ($response->getSuccess()) {
+	$group = InternalSession::getToolSessionVar('images','group');
+	if ($group) {
+		ImageService::addImageToGroup($response->getObject()->getId(),$group);
+	}
+}
 In2iGui::sendObject($response);
 ?>

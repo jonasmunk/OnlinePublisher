@@ -548,7 +548,7 @@ hui.ui.Editor.prototype = {
 			if ((dragInfo.columnIndex == dropInfo.columnIndex && dragInfo.partIndex < dropInfo.partIndex) || dragInfo.rowIndex < dropInfo.rowIndex) {
 				top = top - dragInfo.initialHeight;
 			}
-			top+=3;
+			//top+=3;
 			left++;
 			// Move the proxy to new position
 			hui.animate({
@@ -691,7 +691,7 @@ hui.ui.Editor.prototype = {
 						bottom : bottom,
 						position : hui.position.getTop(part)
 					}
-					current+=part.clientHeight;
+					current += part.clientHeight;
 					infos.push(info);
 					previous = part;
 				};
@@ -716,7 +716,9 @@ hui.ui.Editor.prototype = {
 					position : position,
 					bottom : max-top > 20 ? max : top+20
 				}
-				current+=part.clientHeight;
+				if (part) {
+					current += part.clientHeight;
+				}
 				infos.push(info);
 			}
 		}

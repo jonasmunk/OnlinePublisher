@@ -150,25 +150,24 @@ class ImageService {
 		$error = false;
 
 		if (StringUtils::isBlank($url)) {
-			return array(
-				'success' => false,
-				'errorMessage' => 'Adressen er ikke valid',
-				'errorDetails' => 'Du skal udfylde hvilken adresse billedet skal hentes fra.'
-			);
+			$result = new ImportResult();
+			$result->setSuccess(false);
+			$result->setMessage('Adressen er ikke valid');
+			return $result;
 		}
 		$temp = $basePath.'local/cache/temp/'.basename($url);
 		if (RemoteDataService::writeUrlToFile($url,$temp)) {
 			$result = ImageService::createImageFromFile($temp,basename($url));
-			unlink($temp);
+			@unlink($temp);
 			return $result;
 		} else {
 			Log::debug('Unable to load url: '.$url);
 		}
-		return array(
-			'success' => false,
-			'errorMessage' => 'Kunne ikke hente billede',
-			'errorDetails' => 'Den angivne adresse kunne ikke kontaktes.'
-		);
+		
+		$result = new ImportResult();
+		$result->setSuccess(false);
+		$result->setMessage('Billedet kunne ikke hentes');
+		return $result;
 	}
 
 	/**

@@ -136,7 +136,7 @@ hui.ui.ImageViewer.prototype = {
 		if (this._shouldShowController()) {
 			this.ctrlHider = window.setTimeout(this._hideController.bind(this),2000);
 			if (hui.browser.msie) {
-				this.controller.show();
+				this.controller.style.display='block';
 			} else {
 				hui.ui.fadeIn(this.controller,200);
 			}
@@ -145,7 +145,7 @@ hui.ui.ImageViewer.prototype = {
 	_hideController : function() {
 		if (!this.overController) {
 			if (hui.browser.msie) {
-				this.controller.hide();
+				this.controller.style.display='none';
 			} else {
 				hui.ui.fadeOut(this.controller,500);
 			}
@@ -429,16 +429,16 @@ hui.ui.ImageViewer.prototype = {
 				'class' : 'hui_imageviewer_zoomer',
 				style : 'width:'+this.viewer.clientWidth+'px;height:'+this.viewer.clientHeight+'px'
 			});
-			this.element.insertBefore(this.zoomer,hui.get.firstByTag(this.element,'*'));
+			this.element.insertBefore(this.zoomer,hui.dom.firstChild(this.element));
 			hui.listen(this.zoomer,'mousemove',this._onZoomMove.bind(this));
 			hui.listen(this.zoomer,'click',function() {
-				this.style.display='none';
-			});
+				this.zoomer.style.display='none';
+			}.bind(this));
 		}
 		this.pause();
 		var size = this._getLargestSize({width:2000,height:2000},img);
 		var url = hui.ui.resolveImageUrl(this,img,size.width,size.height);
-		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px;"><img src="'+url+'"/></div>';
+		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px; margin: 0 auto;"><img src="'+url+'"/></div>';
 		this.zoomer.style.display = 'block';
 		this.zoomInfo = {width:size.width,height:size.height};
 		this._onZoomMove(e);

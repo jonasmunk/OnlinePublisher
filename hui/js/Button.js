@@ -104,6 +104,8 @@ hui.ui.Button.prototype = {
 			var form = hui.ui.getAncestor(this,'hui_formula');
 			if (form) {
 				form.submit();
+			} else {
+				hui.log('No form found to submit');
 			}
 		}
 	},
