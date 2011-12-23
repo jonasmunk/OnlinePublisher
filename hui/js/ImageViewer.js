@@ -138,7 +138,7 @@ hui.ui.ImageViewer.prototype = {
 			if (hui.browser.msie) {
 				this.controller.style.display='block';
 			} else {
-				hui.ui.fadeIn(this.controller,200);
+				hui.effect.fadeIn({element:this.controller,duration:200});
 			}
 		}
 	},
@@ -147,7 +147,7 @@ hui.ui.ImageViewer.prototype = {
 			if (hui.browser.msie) {
 				this.controller.style.display='none';
 			} else {
-				hui.ui.fadeOut(this.controller,500);
+				hui.effect.fadeOut({element:this.controller,duration:500});
 			}
 		}
 	},

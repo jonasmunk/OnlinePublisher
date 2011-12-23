@@ -9,7 +9,7 @@ hui.ui.Input = function(options) {
 	hui.ui.extend(this);
 	this._addBehavior();
 	if (this.options.placeholderElement && this.value!='') {
-		hui.ui.fadeOut(this.options.placeholderElement,0);
+		hui.style.set(this.options.placeholderElement,{opacity:0,display:'none'});
 	}
 	this._checkPlaceholder();
 	try { // IE hack
@@ -43,7 +43,7 @@ hui.ui.Input.prototype = {
 	_focused : function() {
 		var e = this.element,p = this.options.placeholderElement;
 		if (p && e.value=='') {
-			hui.ui.fadeOut(p,0);
+			hui.style.set(p,{opacity:0,display:'none'});
 		}
 	},
 	/** @private */
@@ -59,7 +59,7 @@ hui.ui.Input.prototype = {
 	},
 	_checkPlaceholder : function() {
 		if (this.options.placeholderElement && this.value=='') {
-			hui.ui.fadeIn(this.options.placeholderElement,200);
+			hui.effect.fadeIn({element:this.options.placeholderElement,duration:200});
 		}
 		if (this.isPassword && !hui.browser.msie) {
 			this.element.type='password';

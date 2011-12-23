@@ -1657,6 +1657,47 @@ hui.effect = {
 				hui.animate(node,'transform','scale(1)',400,{ease:hui.ease.backOut}); // rotate(0deg)
 			});
 		}
+	},
+	/**
+	 * Fade an element in - making it visible
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 */
+	fadeIn : function(options) {
+		var node = options.element;
+		if (hui.style.get(node,'display')=='none') {
+			hui.style.set(node,{opacity : 0,display : 'inherit'});
+		}
+		hui.animate({
+			node : node,
+			css : { opacity : 1 },
+			delay : options.delay || null,
+			duration : options.duration || 500
+		});
+	},
+	/**
+	 * Fade an element out - making it invisible
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 */
+	fadeOut : function(options) {
+		hui.animate({
+			node : options.element,
+			css : { opacity : 0 },
+			delay : options.delay || null,
+			duration : options.duration || 500,
+			hideOnComplete : true
+		});
+	},
+	/**
+	 * Make an element wiggle
+	 * @param {Object} options {element : «Element», duration : «milliseconds» }
+	 */
+	wiggle : function(options) {
+		var e = hui.ui.getElement(widget);
+		hui.cls.add(options.element,'hui_effect_wiggle');
+		window.setTimeout(function() {
+			hui.cls.remove(options.element,'hui_effect_wiggle');
+		},options.duration || 1000);
+	
 	}
 }
 
@@ -1708,13 +1749,28 @@ hui.document = {
 
 /** @namespace */
 hui.drag = {
+	/** Register dragging on an element
+	 * <pre><strong>options:</strong> {
+	 *  element : «Element»
+	 *  <em>see hui.drag.start for more options</em>
+	 * }
+	 * @param {Object} options The options
+	 */
 	register : function(options) {
 		hui.listen(options.element,'mousedown',function(e) {
 			hui.stop(e);
 			hui.drag.start(options);
 		})
 	},
-	
+	/** Start dragging
+	 * <pre><strong>options:</strong> {
+	 *  onBeforeMove : function(event), // Called when the cursor moves for the first time
+	 *  onMove : function(event), // Called when the cursor moves
+	 *  onAfterMove : function(event), // Called if the cursor has moved
+	 *  onEnd : function(event), // Called when the mouse is released, even if the cursor has not moved
+	 * }
+	 * @param {Object} options The options
+	 */
 	start : function(options) {
 		var target = hui.browser.msie ? document : window;
 		
@@ -1754,6 +1810,15 @@ hui.drag = {
 	},
 	_nativeListeners : [],
 	_activeDrop : null,
+	/** Listen for native drops
+	 * <pre><strong>options:</strong> {
+	 *  hoverClass : «String»,
+	 *  onDrop : function(event),
+	 *  onFiles : function(fileArray),
+	 *  onURL : function(url)
+	 * }
+	 * @param {Object} options The options
+	 */
 	listen : function(options) {
 		if (hui.browser.msie) {
 			return;
@@ -3007,6 +3072,11 @@ hui.ui.get = function(nameOrWidget) {
 	return null;
 };
 
+/**
+ * Get a localized text, defaults to english or the key
+ * @param {String} key The key of the text
+ * @returns {String} The localized string
+ */
 hui.ui.getText = function(key) {
 	var x = this.texts[key];
 	if (!x) {return key}
@@ -3469,13 +3539,13 @@ hui.ui.createIcon = function(icon,size) {
 	return hui.build('span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
-hui.ui.wrapInField = function(e) {
+hui.ui.wrapInField = function(element) {
 	var w = hui.build('div',{'class':'hui_field',html:
 		'<span class="hui_field_top"><span><span></span></span></span>'+
 		'<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content"></span></span></span>'+
 		'<span class="hui_field_bottom"><span><span></span></span></span>'
 	});
-	hui.get.firstByClass(w,'hui_field_content').appendChild(e);
+	hui.get.firstByClass(w,'hui_field_content').appendChild(element);
 	return w;
 };
 
@@ -3498,12 +3568,8 @@ hui.ui.addFocusClass = function(o) {
  * @param widget {Widget} The widget to stress
  */
 hui.ui.stress = function(widget) {
-	var e = widget.element;
-	hui.cls.add(e,'hui_effect_wiggle');
-	window.setTimeout(function() {
-		hui.cls.remove(e,'hui_effect_wiggle');
-	},1000);
-	
+	var e = hui.ui.getElement(widget);
+	hui.effect.wiggle({element:e,duration:1000});
 }
 
 
@@ -3534,33 +3600,6 @@ hui.ui.NumberValidator.prototype = {
 		return {valid:true,value:number};
 	}
 }
-
-/////////////////////////////// Animation /////////////////////////////
-
-hui.ui.fadeIn = function(node,time) {
-	if (hui.style.get(node,'display')=='none') {
-		hui.style.set(node,{opacity:0,display:''});
-	}
-	hui.animate(node,'opacity',1,time);
-};
-
-hui.ui.fadeOut = function(node,time) {
-	hui.animate(node,'opacity',0,time,{hideOnComplete:true});
-};
-
-/*
-hui.ui.bounceIn = function(node) {
-	if (hui.browser.msie) {
-		hui.style.set(node,{'display':'block',visibility:'visible'});
-	} else {
-		hui.style.set(node,{'display':'block','opacity':0,visibility:'visible'});
-		hui.animate(node,'transform','scale(0.1)',0);// rotate(10deg)
-		window.setTimeout(function() {
-			hui.animate(node,'opacity',1,300);
-			hui.animate(node,'transform','scale(1)',400,{ease:hui.ease.backOut}); // rotate(0deg)
-		});
-	}
-};*/
 
 //////////////////////////// Positioning /////////////////////////////
 
@@ -3701,10 +3740,11 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 	var result = undefined;
 	if (obj.delegates) {
 		for (var i=0; i < obj.delegates.length; i++) {
-			var delegate = obj.delegates[i];
-			var thisResult = undefined;
-			if (obj.name && delegate['$'+method+'$'+obj.name]) {
-				thisResult = delegate['$'+method+'$'+obj.name](value,event);
+			var delegate = obj.delegates[i],
+				thisResult = undefined,
+				method = '$'+method+'$'+obj.name;
+			if (obj.name && delegate[method]) {
+				thisResult = delegate[method](value,event);
 			} else if (delegate['$'+method]) {
 				thisResult = delegate['$'+method](value,event);
 			}
@@ -3943,7 +3983,8 @@ hui.ui.Bundle.prototype = {
 
 /**
  * Import some widgets by name
- * @param names Array of widgets to import
+ * @param {Array} names Array of widgets to import
+ * @param {Function} func The function to call when finished
  */
 hui.ui.require = function(names,func) {
 	for (var i = names.length - 1; i >= 0; i--){
@@ -4092,7 +4133,7 @@ hui.ui.ImageViewer.prototype = {
 			if (hui.browser.msie) {
 				this.controller.style.display='block';
 			} else {
-				hui.ui.fadeIn(this.controller,200);
+				hui.effect.fadeIn({element:this.controller,duration:200});
 			}
 		}
 	},
@@ -4101,7 +4142,7 @@ hui.ui.ImageViewer.prototype = {
 			if (hui.browser.msie) {
 				this.controller.style.display='none';
 			} else {
-				hui.ui.fadeOut(this.controller,500);
+				hui.effect.fadeOut({element:this.controller,duration:500});
 			}
 		}
 	},

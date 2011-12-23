@@ -126,6 +126,10 @@
 	<link rel="stylesheet" href="{$context}/hui/ext/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script src="{$context}/hui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
+<xsl:if test="//gui:tiles">
+	<link rel="stylesheet" href="{$context}/hui/ext/tiles.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+	<script src="{$context}/hui/ext/Tiles.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
 <xsl:for-each select="gui:localize[@source]">
 	<script src="{@source}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:for-each>
@@ -149,8 +153,19 @@
 	</xsl:for-each>
 </script>
 <xsl:call-template name="dwr-setup"/>
+<xsl:for-each select="//gui:style">
+	<style>
+		<xsl:value-of select="."/>
+	</style>
+</xsl:for-each>
 </head>
 <body class="hui">
+	<xsl:attribute name="class">
+		<xsl:text>hui</xsl:text>
+		<xsl:if test="@background">
+			<xsl:text> hui_bg_</xsl:text><xsl:value-of select="@background"/>
+		</xsl:if>
+	</xsl:attribute>
 	<xsl:if test="gui:dock">
 		<xsl:attribute name="style">overflow:hidden;</xsl:attribute>
 	</xsl:if>
@@ -161,6 +176,8 @@
 </body>
 </html>
 </xsl:template>
+
+<xsl:template match="gui:style"></xsl:template>
 
 <!--doc title:'DWR setup'
 <dwr base="«url»">
@@ -501,7 +518,7 @@
 <!--             List            -->
 
 <!--doc title:'List' class:'hui.ui.List'
-<list name="«text»" state="«text»" url="«url»" source="«source»">
+<list name="«text»" state="«text»" url="«url»" source="«source»" selectable="«boolean»">
     <window size="«integer»" />
     <column key="«text»" title="«text»" width="«'min'»" />
 </list>
@@ -934,6 +951,22 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 <xsl:template match="html:html">
 	<xsl:copy-of select="child::*|child::text()"/>
+</xsl:template>
+
+<xsl:template match="gui:html">
+	<xsl:copy-of select="child::*|child::text()"/>
+</xsl:template>
+
+<xsl:template match="gui:div|gui:span|gui:strong|gui:p|gui:em">
+	<xsl:element name="{name()}">
+		<xsl:if test="@style">
+			<xsl:attribute name="style"><xsl:value-of select="@style"/></xsl:attribute>
+		</xsl:if>
+		<xsl:if test="@class">
+			<xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute>
+		</xsl:if>
+		<xsl:apply-templates/>
+	</xsl:element>
 </xsl:template>
 
 <xsl:template match="gui:text">

@@ -1657,6 +1657,47 @@ hui.effect = {
 				hui.animate(node,'transform','scale(1)',400,{ease:hui.ease.backOut}); // rotate(0deg)
 			});
 		}
+	},
+	/**
+	 * Fade an element in - making it visible
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 */
+	fadeIn : function(options) {
+		var node = options.element;
+		if (hui.style.get(node,'display')=='none') {
+			hui.style.set(node,{opacity : 0,display : 'inherit'});
+		}
+		hui.animate({
+			node : node,
+			css : { opacity : 1 },
+			delay : options.delay || null,
+			duration : options.duration || 500
+		});
+	},
+	/**
+	 * Fade an element out - making it invisible
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 */
+	fadeOut : function(options) {
+		hui.animate({
+			node : options.element,
+			css : { opacity : 0 },
+			delay : options.delay || null,
+			duration : options.duration || 500,
+			hideOnComplete : true
+		});
+	},
+	/**
+	 * Make an element wiggle
+	 * @param {Object} options {element : «Element», duration : «milliseconds» }
+	 */
+	wiggle : function(options) {
+		var e = hui.ui.getElement(widget);
+		hui.cls.add(options.element,'hui_effect_wiggle');
+		window.setTimeout(function() {
+			hui.cls.remove(options.element,'hui_effect_wiggle');
+		},options.duration || 1000);
+	
 	}
 }
 
@@ -1708,13 +1749,28 @@ hui.document = {
 
 /** @namespace */
 hui.drag = {
+	/** Register dragging on an element
+	 * <pre><strong>options:</strong> {
+	 *  element : «Element»
+	 *  <em>see hui.drag.start for more options</em>
+	 * }
+	 * @param {Object} options The options
+	 */
 	register : function(options) {
 		hui.listen(options.element,'mousedown',function(e) {
 			hui.stop(e);
 			hui.drag.start(options);
 		})
 	},
-	
+	/** Start dragging
+	 * <pre><strong>options:</strong> {
+	 *  onBeforeMove : function(event), // Called when the cursor moves for the first time
+	 *  onMove : function(event), // Called when the cursor moves
+	 *  onAfterMove : function(event), // Called if the cursor has moved
+	 *  onEnd : function(event), // Called when the mouse is released, even if the cursor has not moved
+	 * }
+	 * @param {Object} options The options
+	 */
 	start : function(options) {
 		var target = hui.browser.msie ? document : window;
 		
@@ -1754,6 +1810,15 @@ hui.drag = {
 	},
 	_nativeListeners : [],
 	_activeDrop : null,
+	/** Listen for native drops
+	 * <pre><strong>options:</strong> {
+	 *  hoverClass : «String»,
+	 *  onDrop : function(event),
+	 *  onFiles : function(fileArray),
+	 *  onURL : function(url)
+	 * }
+	 * @param {Object} options The options
+	 */
 	listen : function(options) {
 		if (hui.browser.msie) {
 			return;

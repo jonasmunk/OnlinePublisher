@@ -63,8 +63,13 @@
 -->
 <xsl:template match="gui:header">
 	<h2 class="hui_header">
-		<xsl:if test="@icon"><span class="hui_icon_2" style="background-image: url('{$context}/hui/icons/{@icon}32.png')"><xsl:comment/></span></xsl:if>
-		<xsl:apply-templates/></h2>
+		<xsl:if test="@icon">
+			<span class="hui_icon_2" style="background-image: url('{$context}/hui/icons/{@icon}32.png')">
+				<xsl:comment/>
+			</span>
+		</xsl:if>
+		<xsl:apply-templates/>
+	</h2>
 </xsl:template>
 
 <!--doc title:'Split'
@@ -370,6 +375,74 @@
 	<div style="position:fixed; top: {@top}px; bottom: 0; width: 100%">
 		<xsl:apply-templates/>
 	</div>
+</xsl:template>
+
+
+
+
+
+
+
+
+
+<xsl:template match="gui:tiles">
+	<div class="hui_tiles" id="{generate-id()}">
+		<xsl:apply-templates/>
+	</div>
+	<script type="text/javascript">
+	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Tiles({
+		element : '<xsl:value-of select="generate-id()"/>',
+		<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+	});
+	<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+<xsl:template match="gui:tiles/gui:tile">
+	<div class="hui_tile">
+		<xsl:attribute name="style">
+			width: <xsl:value-of select="@width"/>%;
+			height: <xsl:value-of select="@height"/>%; 
+			left: <xsl:value-of select="@left"/>%; 
+			top: <xsl:value-of select="@top"/>%; 
+			padding: <xsl:value-of select="../@space div 2"/>px;
+		</xsl:attribute>
+		<div>
+			<xsl:attribute name="class">
+				<xsl:text>hui_tile_body</xsl:text>
+				<xsl:if test="@background">
+					<xsl:text> hui_tile_color</xsl:text>
+				</xsl:if>
+				<xsl:if test="@variant">
+					<xsl:text> hui_tile_</xsl:text><xsl:value-of select="@variant"/>
+				</xsl:if>
+			</xsl:attribute>
+			<xsl:if test="@background">
+				<xsl:attribute name="style">
+					background-color: <xsl:value-of select="@background"/>;
+				</xsl:attribute>
+			</xsl:if>
+			<xsl:apply-templates/>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:tile/gui:title">
+	<div class="hui_tile_title">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:tile/gui:actions">
+	<div class="hui_tile_actions">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:tile/gui:actions/gui:icon">
+	<a class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png')">
+		<xsl:comment/>
+	</a>
 </xsl:template>
 
 </xsl:stylesheet>

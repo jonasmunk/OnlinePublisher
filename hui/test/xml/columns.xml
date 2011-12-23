@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" title="Columns" padding="10">
+	<columns space="20">
+		<column>
+			<html xmlns="http://www.w3.org/1999/xhtml">
+				<div style="height: 100px; background: #abc;">Left</div>
+			</html>
+		</column>
+		<column width="300px">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+				<div style="height: 100px; background: #bcd;">Right (width=300px)</div>
+			</html>
+		</column>
+	</columns>
+</gui>

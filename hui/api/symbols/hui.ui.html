@@ -641,24 +641,6 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.fadeIn">fadeIn</a></b>(node, time)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.fadeOut">fadeOut</a></b>(node, time)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.firePropertyChange">firePropertyChange</a></b>(obj, name, value)
 								</div>
 								<div class="description"></div>
@@ -724,7 +706,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.getText">getText</a></b>(key)
 								</div>
-								<div class="description"></div>
+								<div class="description">Get a localized text, defaults to english or the key</div>
 							</td>
 						</tr>
 					
@@ -956,7 +938,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.wrapInField">wrapInField</a></b>(e)
+								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.wrapInField">wrapInField</a></b>(element)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -1691,90 +1673,6 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".fadeIn"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.</span><b>fadeIn</b>(node, time)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>node</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>time</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".fadeOut"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.</span><b>fadeOut</b>(node, time)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>node</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>time</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".firePropertyChange"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -2075,12 +1973,12 @@ ul.inheritsList
 					<a name=".getText"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
+					<span class="light">{String}</span>
 					<span class="light">hui.ui.</span><b>getText</b>(key)
 					
 					</div>
 					<div class="description">
-						
+						Get a localized text, defaults to english or the key
 						
 						
 					</div>
@@ -2092,16 +1990,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>key</b>
+									<span class="light fixedFont">{String}</span> <b>key</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The key of the text</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The localized string</dd>
+							
+							</dl>
 						
 						
 						
@@ -2734,16 +2639,16 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>names</b>
+									<span class="light fixedFont">{Array}</span> <b>names</b>
 									
 								</dt>
 								<dd>Array of widgets to import</dd>
 							
 								<dt>
-									<b>func</b>
+									<span class="light fixedFont">{<a href="../symbols/Function.html">Function</a>}</span> <b>func</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The function to call when finished</dd>
 							
 							</dl>
 						
@@ -2983,7 +2888,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.ui.</span><b>wrapInField</b>(e)
+					<span class="light">hui.ui.</span><b>wrapInField</b>(element)
 					
 					</div>
 					<div class="description">
@@ -2999,7 +2904,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>e</b>
+									<b>element</b>
 									
 								</dt>
 								<dd></dd>
@@ -3027,7 +2932,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Dec 21 2011 10:20:51 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Dec 23 2011 17:10:39 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
