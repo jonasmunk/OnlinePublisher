@@ -378,28 +378,57 @@
 </xsl:template>
 
 
+<xsl:template match="gui:pages">
+	<div id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_pages</xsl:text>
+		</xsl:attribute>
+		<xsl:for-each select="gui:page">
+			<div class="hui_pages_page">
+				<xsl:if test="position()>1">
+					<xsl:attribute name="style">display:none;</xsl:attribute>
+				</xsl:if>
+				<xsl:apply-templates/>
+				<xsl:comment/>
+			</div>			
+		</xsl:for-each>
+		<xsl:apply-templates/>
+	</div>
+	<script type="text/javascript">
+	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Pages({
+		element : '<xsl:value-of select="generate-id()"/>'
+		<xsl:if test="@name">,name : '<xsl:value-of select="@name"/>'</xsl:if>
+	});
+	<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
 
-
-
-
-
+<xsl:template match="gui:pages/gui:page">
+</xsl:template>
 
 
 <xsl:template match="gui:tiles">
-	<div class="hui_tiles" id="{generate-id()}">
+	<div id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_tiles</xsl:text>
+			<xsl:if test="@reveal='true'">
+				<xsl:text> hui_tiles_revealing</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">
 	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Tiles({
-		element : '<xsl:value-of select="generate-id()"/>',
-		<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+		element : '<xsl:value-of select="generate-id()"/>'
+		<xsl:if test="@name">,name : '<xsl:value-of select="@name"/>'</xsl:if>
+		<xsl:if test="@reveal='true'">,reveal : true</xsl:if>
 	});
 	<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
 
 <xsl:template match="gui:tiles/gui:tile">
-	<div class="hui_tile">
+	<div class="hui_tile" id="{generate-id()}">
 		<xsl:attribute name="style">
 			width: <xsl:value-of select="@width"/>%;
 			height: <xsl:value-of select="@height"/>%; 
@@ -422,15 +451,36 @@
 					background-color: <xsl:value-of select="@background"/>;
 				</xsl:attribute>
 			</xsl:if>
-			<xsl:apply-templates/>
+			<xsl:choose>
+				<xsl:when test="gui:title">
+					<div class="hui_tile_title">
+						<xsl:value-of select="gui:title"/>
+					</div>
+					<div class="hui_tile_content">
+						<xsl:apply-templates/>
+					</div>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</div>
 	</div>
+	<script type="text/javascript">
+	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Tile({
+		element : '<xsl:value-of select="generate-id()"/>'
+		<xsl:if test="@name">,name : '<xsl:value-of select="@name"/>'</xsl:if>
+	});
+	<xsl:call-template name="gui:createobject"/>
+	</script>
 </xsl:template>
 
 <xsl:template match="gui:tile/gui:title">
+	<!--
 	<div class="hui_tile_title">
 		<xsl:apply-templates/>
 	</div>
+	-->
 </xsl:template>
 
 <xsl:template match="gui:tile/gui:actions">
@@ -440,7 +490,12 @@
 </xsl:template>
 
 <xsl:template match="gui:tile/gui:actions/gui:icon">
-	<a class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png')">
+	<a class="hui_icon_16 hui_tile_icon" style="background-image: url('{$context}/hui/icons/{@icon}16.png')">
+		<xsl:if test="@key">
+			<xsl:attribute name="data-hui-key">
+				<xsl:value-of select="@key"/>
+			</xsl:attribute>
+		</xsl:if>
 		<xsl:comment/>
 	</a>
 </xsl:template>

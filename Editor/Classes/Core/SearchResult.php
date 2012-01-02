@@ -22,7 +22,7 @@ class SearchResult {
 	function getList() {
 	    return $this->list;
 	}
-	
+		
 	function setTotal($total) {
 	    $this->total = $total;
 	}

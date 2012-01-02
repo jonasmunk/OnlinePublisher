@@ -4,7 +4,12 @@ hui.ui.listen({
 			window.parent.baseController.changeSelection('service:start');
 		}
 	},
-	$clickButton : function(info) {
-		window.open(info.button.getData().url);
+	$clickIcon$newsList : function(info) {
+		window.open(info.data.url);
+	},
+	$clickIcon$taskList : function(info) {
+		if (info.data.action=='edit') {
+			document.location='../../Template/Edit.php?id='+info.data.id;
+		}
 	}
 })

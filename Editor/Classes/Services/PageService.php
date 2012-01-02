@@ -109,45 +109,70 @@ union select text,document_section.page_id from part_listing,document_section wh
 	}
 	
 	function search($query) {
-		$countSql ="select count(page.id) as total";
 
-		$sql = "select page.id,page.secure,page.path,page.title,template.unique,
-			date_format(page.changed,'%d/%m-%Y') as changed,
-			date_format(page.changed,'%Y%m%d%h%i%s') as changedindex,
-			(page.changed-page.published) as publishdelta,page.language";
-
-		$sqlLimits = " from page,template";
-		$sqlLimits .= " where page.template_id=template.id ";
+		$select = new SelectBuilder();
+		
+		$select->addTable('page')->addTable('template');
+		
+		$select->addColumns(array(
+			"page.id",
+			"page.secure",
+			"page.path",
+			"page.title",
+			"template.unique",
+			"date_format(page.changed,'%d/%m-%Y') as changed",
+			"date_format(page.changed,'%Y%m%d%h%i%s') as changedindex",
+			"(page.changed-page.published) as publishdelta",
+			"page.language"
+		));
+			
+		$select->addLimit("page.template_id=template.id");
+		
+		// Free text search...
 		$text = $query->getText();
 		if (StringUtils::isNotBlank($text)) {
-			$sqlLimits.=" and (page.title like ".Database::search($text).
+			$select->addLimit(
+				"(page.title like ".Database::search($text).
 				" or page.`index` like ".Database::search($text).
 				" or page.description like ".Database::search($text).
-				" or page.keywords like ".Database::search($text).")";
+				" or page.keywords like ".Database::search($text).")"
+			);
+		}
+		// Relations...
+		if (count($query->getRelationsFrom())>0) {
+			$relations = $query->getRelationsFrom();
+			for ($i=0; $i < count($relations); $i++) { 
+				$relation = $relations[$i];
+				$select->addTable('relation as relation_from_'.$i);
+				$select->addLimit('relation_from_'.$i.'.to_object_id=page.id');
+				$select->addLimit("relation_from_".$i.".to_type='page'");
+				$select->addLimit("relation_from_".$i.".from_type=".Database::text($relation['fromType']));
+				$select->addLimit('relation_from_'.$i.'.from_object_id='.Database::int($relation['id']));
+				if ($relation['kind']) {
+					$select->addLimit("relation_from_".$i.".kind=".Database::text($relation['kind']));
+				}
+			}
 		}
 		$ordering = $query->getOrdering();
 		for ($i=0; $i < count($ordering); $i++) { 
-			if ($i==0) {
-				$sqlLimits.=" order by ".$ordering[$i];
-			} else {
-				$sqlLimits.=",".$ordering[$i];
-			}
-		}
-		if (count($ordering)>0) {
-			$sqlLimits.= $query->getDirection()=='ascending' ? ' asc' : ' desc';
+			$select->addOrdering($ordering,$query->getDirection()=='descending');
 		}
 
 		$windowPage = $query->getWindowPage();
 		$windowSize = $query->getWindowSize();
 
-		$listSql = $sql.$sqlLimits." limit ".($windowPage*$windowSize).",".(($windowPage+1)*$windowSize);
+		$select->setFrom($windowPage*$windowSize)->setTo(($windowPage+1)*$windowSize);
 		
-		$count = Database::selectFirst($countSql.$sqlLimits);
-		$list = Database::selectAll($listSql);
 		$result = new SearchResult();
-		
-		$result->setTotal(intval($count['total']));
+
+		$list = Database::selectAll($select->toSQL());
 		$result->setList($list);
+		
+		$select->clearFromAndTo()->clearColumns();
+		$select->addColumn("count(page.id) as total");
+		
+		$count = Database::selectFirst($select->toSQL());
+		$result->setTotal(intval($count['total']));
 		
 		return $result;
 	}

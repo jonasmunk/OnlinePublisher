@@ -735,9 +735,9 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 		for (var i=0; i < obj.delegates.length; i++) {
 			var delegate = obj.delegates[i],
 				thisResult = undefined,
-				method = '$'+method+'$'+obj.name;
-			if (obj.name && delegate[method]) {
-				thisResult = delegate[method](value,event);
+				x = '$'+method+'$'+obj.name;
+			if (obj.name && delegate[x]) {
+				thisResult = delegate[x](value,event);
 			} else if (delegate['$'+method]) {
 				thisResult = delegate['$'+method](value,event);
 			}

@@ -1660,7 +1660,7 @@ hui.effect = {
 	},
 	/**
 	 * Fade an element in - making it visible
-	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», onComplete : «Function» }
 	 */
 	fadeIn : function(options) {
 		var node = options.element;
@@ -1671,12 +1671,13 @@ hui.effect = {
 			node : node,
 			css : { opacity : 1 },
 			delay : options.delay || null,
-			duration : options.duration || 500
+			duration : options.duration || 500,
+			onComplete : options.onComplete
 		});
 	},
 	/**
 	 * Fade an element out - making it invisible
-	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», onComplete : «Function» }
 	 */
 	fadeOut : function(options) {
 		hui.animate({
@@ -1684,7 +1685,8 @@ hui.effect = {
 			css : { opacity : 0 },
 			delay : options.delay || null,
 			duration : options.duration || 500,
-			hideOnComplete : true
+			hideOnComplete : true,
+			onComplete : options.onComplete
 		});
 	},
 	/**
@@ -1692,7 +1694,7 @@ hui.effect = {
 	 * @param {Object} options {element : «Element», duration : «milliseconds» }
 	 */
 	wiggle : function(options) {
-		var e = hui.ui.getElement(widget);
+		var e = hui.ui.getElement(options.element);
 		hui.cls.add(options.element,'hui_effect_wiggle');
 		window.setTimeout(function() {
 			hui.cls.remove(options.element,'hui_effect_wiggle');
@@ -5243,9 +5245,9 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 		for (var i=0; i < obj.delegates.length; i++) {
 			var delegate = obj.delegates[i],
 				thisResult = undefined,
-				method = '$'+method+'$'+obj.name;
-			if (obj.name && delegate[method]) {
-				thisResult = delegate[method](value,event);
+				x = '$'+method+'$'+obj.name;
+			if (obj.name && delegate[x]) {
+				thisResult = delegate[x](value,event);
 			} else if (delegate['$'+method]) {
 				thisResult = delegate['$'+method](value,event);
 			}
@@ -17832,5 +17834,119 @@ hui.ui.ImagePaster.prototype = {
 			var container = hui.build('div',{className:'hui_imagepaster_preview',parent:this.element});
 			this.preview = hui.build('img',{src:'data:image/png;base64,'+this.data,parent:container});
 		}
+	}
+}/**
+ * Tiles
+ * @constructor
+ */
+hui.ui.Tiles = function(options) {
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	this.tiles = hui.get.children(this.element);
+	hui.ui.extend(this);
+	this._addBehavior();
+	if (this.options.reveal) {
+		hui.onReady(this._reveal.bind(this));
+	}
+}
+
+hui.ui.Tiles.prototype = {
+	_addBehavior : function() {
+	},
+	_reveal : function() {
+		for (var i=0; i < this.tiles.length; i++) {
+			var tile = this.tiles[i];
+			this._bounce(tile);
+		};
+	},
+	_bounce : function(tile) {
+		hui.effect.fadeIn({element:tile,delay:Math.random()*500});		
+	}
+}
+
+hui.ui.Tile = function(options) {
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	hui.ui.extend(this);
+	this.fullScreen = false;
+	this.initial = {
+		width : this.element.style.width,
+		height : this.element.style.height,
+		top : this.element.style.top,
+		left : this.element.style.left
+	}
+	this._addBehavior();
+}
+
+hui.ui.Tile._zIndex = 0;
+
+hui.ui.Tile.prototype = {
+	_addBehavior : function() {
+		hui.listen(this.element,'click',function(e) {
+			e = hui.event(e);
+			if (hui.cls.has(e.element,'hui_tile_icon')) {
+				var key = e.element.getAttribute('data-hui-key');
+				this.fire('clickIcon',{key:key,tile:this});
+			}
+		}.bind(this))
+	},
+	toggleFullScreen : function() {
+		if (this.fullScreen) {
+			hui.animate({
+				node : this.element,
+				css : this.initial,
+				duration : 1000,
+				ease : hui.ease.elastic
+			});			
+		} else {
+			hui.ui.Tile._zIndex++;
+			this.element.style.zIndex = hui.ui.Tile._zIndex;
+			hui.animate({
+				node : this.element,
+				css : {top:'0%',left:'0%',width:'100%',height:'100%'},
+				duration : 1000,
+				ease : hui.ease.elastic
+			});			
+		}
+		this.fullScreen = !this.fullScreen;
+	}
+}/**
+ * Pages
+ * @constructor
+ */
+hui.ui.Pages = function(options) {
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	this.pages = hui.get.children(this.element);
+	this.index = 0;
+	hui.ui.extend(this);
+	//hui.listen(this.element,'click',this.next.bind(this));
+}
+
+hui.ui.Pages.prototype = {
+	next : function() {
+		var current = this.pages[this.index];
+		this.index = this.pages.length <= this.index+1 ? 0 : this.index+1;
+		this._transition({hide:current,show:this.pages[this.index]});
+	},
+	previous : function() {
+		var current = this.pages[this.index];
+		this.index = this.index == 0 ? this.pages.length-1 : this.index-1;
+		this._transition({hide:current,show:this.pages[this.index]});
+	},
+	_transition : function(options) {
+		var hide = options.hide,
+			show = options.show;
+		hui.style.set(hide,{position:'absolute',width:this.element.clientWidth+'px'});
+		hui.style.set(show,{position:'absolute',width:this.element.clientWidth+'px',display:'block',opacity:0});
+		hui.effect.fadeOut({element:hide,onComplete:function() {
+			hui.style.set(hide,{width : '',position:'',display:'none'});
+		}});
+		hui.effect.fadeIn({element:show,onComplete:function() {
+			hui.style.set(show,{width : '',position:''});
+		}});
 	}
 }

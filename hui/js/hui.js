@@ -1660,7 +1660,7 @@ hui.effect = {
 	},
 	/**
 	 * Fade an element in - making it visible
-	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», onComplete : «Function» }
 	 */
 	fadeIn : function(options) {
 		var node = options.element;
@@ -1671,12 +1671,13 @@ hui.effect = {
 			node : node,
 			css : { opacity : 1 },
 			delay : options.delay || null,
-			duration : options.duration || 500
+			duration : options.duration || 500,
+			onComplete : options.onComplete
 		});
 	},
 	/**
 	 * Fade an element out - making it invisible
-	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds» }
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», onComplete : «Function» }
 	 */
 	fadeOut : function(options) {
 		hui.animate({
@@ -1684,7 +1685,8 @@ hui.effect = {
 			css : { opacity : 0 },
 			delay : options.delay || null,
 			duration : options.duration || 500,
-			hideOnComplete : true
+			hideOnComplete : true,
+			onComplete : options.onComplete
 		});
 	},
 	/**
@@ -1692,7 +1694,7 @@ hui.effect = {
 	 * @param {Object} options {element : «Element», duration : «milliseconds» }
 	 */
 	wiggle : function(options) {
-		var e = hui.ui.getElement(widget);
+		var e = hui.ui.getElement(options.element);
 		hui.cls.add(options.element,'hui_effect_wiggle');
 		window.setTimeout(function() {
 			hui.cls.remove(options.element,'hui_effect_wiggle');

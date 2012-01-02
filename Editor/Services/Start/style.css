@@ -1,3 +1,17 @@
+div.box
+{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-shadow: 0px 1px 5px rgba(0,0,0,.1);
+}
+
+
 div.header
 {
 	background: url('../../Resources/large_logo.png') 20px 10px no-repeat;
@@ -9,7 +23,8 @@ div.header span.date
 {
 	float: left;
 	margin-left: 415px;
-	margin-top: 34px;
+	margin-top: 37px;
+	font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;
 	font-size: 14px;
 	color: #aaa;
 }

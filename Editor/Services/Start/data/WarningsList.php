@@ -3,22 +3,19 @@
  * @package OnlinePublisher
  * @subpackage Services.Start
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
-require_once '../../../Classes/Interface/In2iGui.php';
-require_once '../../../Classes/Network/FeedParser.php';
-require_once '../../../Classes/Modules/Warnings/WarningService.php';
+require_once '../../../Include/Private.php';
+require_once '../../../Classes/Modules/Inspection/InspectionService.php';
 
-$warnings = WarningService::getWarnings();
+$result = InspectionService::performInspection(array());
 
 $writer = new ListWriter();
 
 $writer->startList(array('unicode'=>true));
 
-foreach($warnings as $warning) {
-	$entity = $warning->getEntity();
+foreach($result as $item) {
+	$entity = $item->getEntity();
 	$writer->startRow()->
-		startCell(array('icon'=>'monochrome/warning'))->startLine()->text($warning->getText())->endLine()->
+		startCell(array('icon'=>'monochrome/warning'))->startLine()->text($item->getText())->endLine()->
 		endCell()->
 		startCell(array('icon'=>$entity['icon']))->text($entity['title'])->endCell()->
 	endRow();

@@ -130,6 +130,10 @@
 	<link rel="stylesheet" href="{$context}/hui/ext/tiles.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script src="{$context}/hui/ext/Tiles.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
+<xsl:if test="//gui:pages">
+	<link rel="stylesheet" href="{$context}/hui/ext/pages.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+	<script src="{$context}/hui/ext/Pages.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
 <xsl:for-each select="gui:localize[@source]">
 	<script src="{@source}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:for-each>
@@ -524,7 +528,13 @@
 </list>
 -->
 <xsl:template match="gui:list">
-	<div class="hui_list" id="{generate-id()}">
+	<div id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_list</xsl:text>
+			<xsl:if test="@variant">
+				<xsl:text> hui_list_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state) or @visible='false'">
 			<xsl:attribute name="style">display:none</xsl:attribute>
 		</xsl:if>

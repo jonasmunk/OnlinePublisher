@@ -15,6 +15,8 @@ class PageQuery {
 	private $direction = 'ascending';
 	private $windowPage = 0;
 	private $windowSize = 100;
+	private $relationsFrom = array();
+	private $relationsTo = array();
 	
 	function rows() {
 		return new PageQuery();
@@ -75,6 +77,38 @@ class PageQuery {
 	
 	function getOrdering() {
 		return $this->ordering;
+	}
+	
+	function withRelationFrom($object,$kind=null) {
+		$id = is_int($object) ? $object : $object->getId();
+		$this->relationsFrom[] = array('id'=>$id,'kind'=>$kind,'fromType'=>'object');
+		return $this;
+	}
+	
+	function withRelationFromPage($page,$kind=null) {
+		$id = is_int($page) ? $page : $page->getId();
+		$this->relationsFrom[] = array('id'=>$id,'kind'=>$kind,'fromType'=>'page');
+		return $this;
+	}
+	
+	function withRelationTo($object,$kind=null) {
+		$id = is_int($object) ? $object : $object->getId();
+		$this->relationsTo[] = array('id'=>$id,'kind'=>$kind,'toType'=>'object');
+		return $this;
+	}
+	
+	function withRelationToPage($page,$kind=null) {
+		$id = is_int($page) ? $page : $page->getId();
+		$this->relationsTo[] = array('id'=>$id,'kind'=>$kind,'toType'=>'page');
+		return $this;
+	}
+	
+	function getRelationsTo() {
+	    return $this->relationsTo;
+	}
+	
+	function getRelationsFrom() {
+	    return $this->relationsFrom;
 	}
 	
 	function search() {
