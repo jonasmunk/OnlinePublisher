@@ -7,6 +7,7 @@
  * }
  * </pre>
  * @constructor
+ * @param {Object} options The options
  */
 hui.ui.Alert = function(options) {
 	this.options = hui.override({modal:false},options);
@@ -31,6 +32,7 @@ hui.ui.Alert = function(options) {
  * }
  * </pre>
  * @static
+ * @param {Object} options The options
  */
 hui.ui.Alert.create = function(options) {
 	options = hui.override({title:'',text:'',emotion:null,title:null},options);

@@ -1,4 +1,10 @@
 /**
+ * A bar
+ * <pre><strong>options:</strong> {
+ *  element : «Element»,
+ *  name : «String»
+ * }
+ * </pre>
  * @constructor
  * @param {Object} options The options
  */
@@ -11,6 +17,19 @@ hui.ui.Bar = function(options) {
 	hui.ui.extend(this);
 };
 
+
+/**
+ * Creates a new bar
+ * <pre><strong>options:</strong> {
+ *  variant : «null | 'window' | 'mini' | 'layout' | 'layout_mini' | 'window_mini'»,
+ *  absolute : «true | <strong>false</strong>»,
+ *
+ *  name : «String»
+ * }
+ * </pre>
+ * @static
+ * @param {Object} options The options
+ */
 hui.ui.Bar.create = function(options) {
 	options = options || {};
 	var cls = 'hui_bar';
@@ -28,12 +47,18 @@ hui.ui.Bar.create = function(options) {
 }
 
 hui.ui.Bar.prototype = {
+	/** Add the bar to the page */
 	addToDocument : function() {
 		document.body.appendChild(this.element);
 	},
+	/**
+	 * Add a widget to the bar
+	 * @param {Widget} widget The widget to add
+	 */
 	add : function(widget) {
 		this.body.appendChild(widget.getElement());
 	},
+	/** Add a divider to the bar */
 	addDivider : function() {
 		hui.build('span',{'class':'hui_bar_divider',parent:this.body})
 	},
@@ -48,7 +73,7 @@ hui.ui.Bar.prototype = {
 		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
 	/** Change the visibility of the bar
-	 * @param {boolean} If the bar should be visible
+	 * @param {Boolean} visible If the bar should be visible
 	 */
 	setVisible : function(visible) {
 		if (this.visible===visible) {return}
@@ -58,6 +83,7 @@ hui.ui.Bar.prototype = {
 			this.hide();
 		}
 	},
+	/** Show the bar */
 	show : function() {
 		if (this.options.absolute) {
 			this.element.style.visibility='visible';
@@ -67,6 +93,7 @@ hui.ui.Bar.prototype = {
 		}
 		this.visible = true;
 	},
+	/** Hide the bar */
 	hide : function() {
 		if (this.options.absolute) {
 			this.element.style.visibility='hidden';
@@ -79,6 +106,12 @@ hui.ui.Bar.prototype = {
 }
 
 /**
+ * A bar button
+ * <pre><strong>options:</strong> {
+ *  element : «Element»,
+ *  name : «String»
+ * }
+ * </pre>
  * @constructor
  * @param {Object} options The options
  */
@@ -88,10 +121,23 @@ hui.ui.Bar.Button = function(options) {
 	this.element = hui.get(options.element);
 	hui.listen(this.element,'click',this._click.bind(this));
 	hui.listen(this.element,'mousedown',this._mousedown.bind(this));
-	hui.listen(this.element,'mouseup',function(e) {hui.stop(e)});
+	hui.listen(this.element,'mouseup',hui.stop);
 	hui.ui.extend(this);
 };
 
+
+
+/**
+ * Creates a new bar button
+ * <pre><strong>options:</strong> {
+ *  icon : «String»,
+ *
+ *  name : «String»
+ * }
+ * </pre>
+ * @static
+ * @param {Object} options The options
+ */
 hui.ui.Bar.Button.create = function(options) {
 	options = options || {};
 	var e = options.element = hui.build('a',{'class':'hui_bar_button'});
@@ -114,12 +160,21 @@ hui.ui.Bar.Button.prototype = {
 			hui.stop(e);
 		}
 	},
-	setSelected : function(highlighted) {
-		hui.cls.set(this.element,'hui_bar_button_selected',highlighted);
+	/** Mark the button as selected
+	 * @param {Boolean} selected If it should be marked selected
+	 */
+	setSelected : function(selected) {
+		hui.cls.set(this.element,'hui_bar_button_selected',selected);
 	}
 }
 
 /**
+ * A bar text
+ * <pre><strong>options:</strong> {
+ *  element : «Element»,
+ *  name : «String»
+ * }
+ * </pre>
  * @constructor
  * @param {Object} options The options
  */
@@ -131,6 +186,9 @@ hui.ui.Bar.Text = function(options) {
 };
 
 hui.ui.Bar.Text.prototype = {
+	/** Change the text
+	 * @param {String} str The text
+	 */
 	setText : function(str) {
 		hui.dom.setText(this.element,str);
 	}

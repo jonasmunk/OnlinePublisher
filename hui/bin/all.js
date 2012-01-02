@@ -798,7 +798,9 @@ hui.build = function(name,options) {
 
 /////////////////////// Position ///////////////////////
 
-/** @namespace */
+/** @namespace
+ * Functions for getting and changing the position of elements
+ */
 hui.position = {
 	getTop : function(element) {
 	    element = hui.get(element);
@@ -7467,6 +7469,7 @@ hui.ui.DropDown.prototype = {
  * }
  * </pre>
  * @constructor
+ * @param {Object} options The options
  */
 hui.ui.Alert = function(options) {
 	this.options = hui.override({modal:false},options);
@@ -7491,6 +7494,7 @@ hui.ui.Alert = function(options) {
  * }
  * </pre>
  * @static
+ * @param {Object} options The options
  */
 hui.ui.Alert.create = function(options) {
 	options = hui.override({title:'',text:'',emotion:null,title:null},options);
@@ -12287,7 +12291,7 @@ hui.ui.Box.prototype = {
 		this.visible = true;
 		hui.ui.callVisible(this);
 	},
-	/** private */
+	/** @private */
 	$$layout : function() {
 		if (this.options.absolute && this.visible) {
 			var e = this.element;
@@ -12874,6 +12878,12 @@ hui.ui.LocationPicker.prototype = {
 }
 
 /* EOF *//**
+ * A bar
+ * <pre><strong>options:</strong> {
+ *  element : «Element»,
+ *  name : «String»
+ * }
+ * </pre>
  * @constructor
  * @param {Object} options The options
  */
@@ -12886,6 +12896,19 @@ hui.ui.Bar = function(options) {
 	hui.ui.extend(this);
 };
 
+
+/**
+ * Creates a new bar
+ * <pre><strong>options:</strong> {
+ *  variant : «null | 'window' | 'mini' | 'layout' | 'layout_mini' | 'window_mini'»,
+ *  absolute : «true | <strong>false</strong>»,
+ *
+ *  name : «String»
+ * }
+ * </pre>
+ * @static
+ * @param {Object} options The options
+ */
 hui.ui.Bar.create = function(options) {
 	options = options || {};
 	var cls = 'hui_bar';
@@ -12903,12 +12926,18 @@ hui.ui.Bar.create = function(options) {
 }
 
 hui.ui.Bar.prototype = {
+	/** Add the bar to the page */
 	addToDocument : function() {
 		document.body.appendChild(this.element);
 	},
+	/**
+	 * Add a widget to the bar
+	 * @param {Widget} widget The widget to add
+	 */
 	add : function(widget) {
 		this.body.appendChild(widget.getElement());
 	},
+	/** Add a divider to the bar */
 	addDivider : function() {
 		hui.build('span',{'class':'hui_bar_divider',parent:this.body})
 	},
@@ -12923,7 +12952,7 @@ hui.ui.Bar.prototype = {
 		this.element.style.zIndex = hui.ui.nextTopIndex();
 	},
 	/** Change the visibility of the bar
-	 * @param {boolean} If the bar should be visible
+	 * @param {Boolean} visible If the bar should be visible
 	 */
 	setVisible : function(visible) {
 		if (this.visible===visible) {return}
@@ -12933,6 +12962,7 @@ hui.ui.Bar.prototype = {
 			this.hide();
 		}
 	},
+	/** Show the bar */
 	show : function() {
 		if (this.options.absolute) {
 			this.element.style.visibility='visible';
@@ -12942,6 +12972,7 @@ hui.ui.Bar.prototype = {
 		}
 		this.visible = true;
 	},
+	/** Hide the bar */
 	hide : function() {
 		if (this.options.absolute) {
 			this.element.style.visibility='hidden';
@@ -12954,6 +12985,12 @@ hui.ui.Bar.prototype = {
 }
 
 /**
+ * A bar button
+ * <pre><strong>options:</strong> {
+ *  element : «Element»,
+ *  name : «String»
+ * }
+ * </pre>
  * @constructor
  * @param {Object} options The options
  */
@@ -12963,10 +13000,23 @@ hui.ui.Bar.Button = function(options) {
 	this.element = hui.get(options.element);
 	hui.listen(this.element,'click',this._click.bind(this));
 	hui.listen(this.element,'mousedown',this._mousedown.bind(this));
-	hui.listen(this.element,'mouseup',function(e) {hui.stop(e)});
+	hui.listen(this.element,'mouseup',hui.stop);
 	hui.ui.extend(this);
 };
 
+
+
+/**
+ * Creates a new bar button
+ * <pre><strong>options:</strong> {
+ *  icon : «String»,
+ *
+ *  name : «String»
+ * }
+ * </pre>
+ * @static
+ * @param {Object} options The options
+ */
 hui.ui.Bar.Button.create = function(options) {
 	options = options || {};
 	var e = options.element = hui.build('a',{'class':'hui_bar_button'});
@@ -12989,12 +13039,21 @@ hui.ui.Bar.Button.prototype = {
 			hui.stop(e);
 		}
 	},
-	setSelected : function(highlighted) {
-		hui.cls.set(this.element,'hui_bar_button_selected',highlighted);
+	/** Mark the button as selected
+	 * @param {Boolean} selected If it should be marked selected
+	 */
+	setSelected : function(selected) {
+		hui.cls.set(this.element,'hui_bar_button_selected',selected);
 	}
 }
 
 /**
+ * A bar text
+ * <pre><strong>options:</strong> {
+ *  element : «Element»,
+ *  name : «String»
+ * }
+ * </pre>
  * @constructor
  * @param {Object} options The options
  */
@@ -13006,6 +13065,9 @@ hui.ui.Bar.Text = function(options) {
 };
 
 hui.ui.Bar.Text.prototype = {
+	/** Change the text
+	 * @param {String} str The text
+	 */
 	setText : function(str) {
 		hui.dom.setText(this.element,str);
 	}
@@ -14837,12 +14899,11 @@ hui.ui.Checkboxes = function(options) {
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	this.items = options.items || [];
-	this.sources = [];
 	this.subItems = [];
 	this.values = options.values || options.value || []; // values is deprecated
 	hui.ui.extend(this);
 	this.addBehavior();
-	this.updateUI();
+	this._updateUI();
 	if (options.url) {
 		new hui.ui.Source({url:options.url,delegate:this});
 	}
@@ -14874,11 +14935,7 @@ hui.ui.Checkboxes.prototype = {
 	getValue : function() {
 		return this.values;
 	},
-	/** @deprecated */
-	getValues : function() {
-		return this.values;
-	},
-	checkValues : function() {
+	_checkValues : function() {
 		var newValues = [];
 		for (var i=0; i < this.values.length; i++) {
 			var value = this.values[i],
@@ -14888,7 +14945,7 @@ hui.ui.Checkboxes.prototype = {
 				found = found || this.items[j].value===value;
 			}
 			for (j=0; j < this.subItems.length; j++) {
-				found = found || this.subItems[j].hasValue(value);
+				found = found || this.subItems[j]._hasValue(value);
 			};
 			if (found) {
 				newValues.push(value);
@@ -14897,25 +14954,21 @@ hui.ui.Checkboxes.prototype = {
 		this.values=newValues;
 	},
 	setValue : function(values) {
-		this.values=values;
-		this.checkValues();
-		this.updateUI();
-	},
-	/** @deprecated */
-	setValues : function(values) {
-		this.setValue(values);
+		this.values = values;
+		this._checkValues();
+		this._updateUI();
 	},
 	flipValue : function(value) {
 		hui.array.flip(this.values,value);
-		this.checkValues();
-		this.updateUI();
+		this._checkValues();
+		this._updateUI();
 		this.fire('valueChanged',this.values);
 		hui.ui.callAncestors(this,'childValueChanged',this.values);
 	},
-	updateUI : function() {
+	_updateUI : function() {
 		var i,item,found;
 		for (i=0; i < this.subItems.length; i++) {
-			this.subItems[i].updateUI();
+			this.subItems[i]._updateUI();
 		};
 		var nodes = hui.get.byClass(this.element,'hui_checkbox');
 		for (i=0; i < this.items.length; i++) {
@@ -14932,10 +14985,18 @@ hui.ui.Checkboxes.prototype = {
 	reset : function() {
 		this.setValues([]);
 	},
-	registerSource : function(source) {
-		source.parent = this;
-		this.sources.push(source);
+	getLabel : function() {
+		return this.options.label;
 	},
+	/** @private @deprecated */
+	setValues : function(values) {
+		this.setValue(values);
+	},
+	/** @private @deprecated */
+	getValues : function() {
+		return this.values;
+	},
+	/** @private */
 	registerItem : function(item) {
 		// If it is a number, treat it as such
 		if (parseInt(item.value)==item.value) {
@@ -14943,14 +15004,12 @@ hui.ui.Checkboxes.prototype = {
 		}
 		this.items.push(item);
 	},
+	/** @private */
 	registerItems : function(items) {
-		hui.log('registerItems')
 		items.parent = this;
 		this.subItems.push(items);
 	},
-	getLabel : function() {
-		return this.options.label;
-	},
+	/** @private */
 	$itemsLoaded : function(items) {
 		hui.each(items,function(item) {
 			var node = hui.build('a',{'class':'hui_checkbox',href:'javascript:void(0);',html:'<span><span></span></span>'+hui.string.escape(item.title)});
@@ -14962,8 +15021,8 @@ hui.ui.Checkboxes.prototype = {
 			this.element.appendChild(node);
 			this.items.push(item);
 		}.bind(this));
-		this.checkValues();
-		this.updateUI();
+		this._checkValues();
+		this._updateUI();
 	}
 }
 
@@ -14992,6 +15051,7 @@ hui.ui.Checkboxes.Items.prototype = {
 			this.options.source.refresh();
 		}
 	},
+	/** @private */
 	$itemsLoaded : function(items) {
 		this.checkboxes = [];
 		this.element.innerHTML='';
@@ -15001,19 +15061,19 @@ hui.ui.Checkboxes.Items.prototype = {
 			hui.listen(node,'click',function(e) {
 				hui.stop(e);
 				node.focus();
-				self.itemWasClicked(item)
+				self._onItemClick(item)
 			});
 			hui.ui.addFocusClass({element:node,'class':'hui_checkbox_focused'});
 			self.element.appendChild(node);
 			self.checkboxes.push({title:item.title,element:node,value:item.value});
 		});
-		this.parent.checkValues();
-		this.updateUI();
+		this.parent._checkValues();
+		this._updateUI();
 	},
-	itemWasClicked : function(item) {
+	_onItemClick : function(item) {
 		this.parent.flipValue(item.value);
 	},
-	updateUI : function() {
+	_updateUI : function() {
 		try {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			var item = this.checkboxes[i];
@@ -15025,7 +15085,7 @@ hui.ui.Checkboxes.Items.prototype = {
 			alert(e);
 		}
 	},
-	hasValue : function(value) {
+	_hasValue : function(value) {
 		for (var i=0; i < this.checkboxes.length; i++) {
 			if (this.checkboxes[i].value==value) {
 				return true;
@@ -17947,6 +18007,7 @@ hui.ui.Pages.prototype = {
 		}});
 		hui.effect.fadeIn({element:show,onComplete:function() {
 			hui.style.set(show,{width : '',position:''});
-		}});
+			hui.ui.callVisible(this);
+		}.bind(this)});
 	}
 }

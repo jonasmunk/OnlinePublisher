@@ -798,7 +798,9 @@ hui.build = function(name,options) {
 
 /////////////////////// Position ///////////////////////
 
-/** @namespace */
+/** @namespace
+ * Functions for getting and changing the position of elements
+ */
 hui.position = {
 	getTop : function(element) {
 	    element = hui.get(element);
@@ -4537,7 +4539,7 @@ hui.ui.Box.prototype = {
 		this.visible = true;
 		hui.ui.callVisible(this);
 	},
-	/** private */
+	/** @private */
 	$$layout : function() {
 		if (this.options.absolute && this.visible) {
 			var e = this.element;

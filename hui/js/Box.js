@@ -81,7 +81,7 @@ hui.ui.Box.prototype = {
 		this.visible = true;
 		hui.ui.callVisible(this);
 	},
-	/** private */
+	/** @private */
 	$$layout : function() {
 		if (this.options.absolute && this.visible) {
 			var e = this.element;
