@@ -3,12 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Start
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Network/FeedParser.php';
-require_once '../../Classes/Utilities/DateUtils.php';
-require_once '../../Classes/Services/RemoteDataService.php';
+require_once '../../../Include/Private.php';
 
 $url = 'https://github.com/in2isoft/OnlinePublisher/commits/master.atom';
 $data = RemoteDataService::getRemoteData($url,60*30); // 30 minutes

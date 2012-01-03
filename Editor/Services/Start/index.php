@@ -14,8 +14,8 @@ $gui='
 	<controller name="controller" source="controller.js"/>
 	<source name="taskSource" url="data/TaskList.php"/>
 	<source name="developerFeed" url="data/DeveloperFeed.php"/>
-	<source name="commitFeed" url="CommitFeed.php"/>
-	<source name="newsFeed" url="NewsFeedArticles.php"/>
+	<source name="commitFeed" url="data/CommitFeed.php"/>
+	<source name="newsFeed" url="data/NewsFeedArticles.php"/>
 	<source name="warningsList" url="data/WarningsList.php"/>
 	<div class="box">
 		<div class="header">
