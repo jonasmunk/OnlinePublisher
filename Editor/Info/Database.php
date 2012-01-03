@@ -589,6 +589,10 @@ $databaseTables = array(
 			array("part_id","int(11)","","","0",""),
 			array("html","text","YES","","",""),
 		),
+	'part_table' => array(
+			array("part_id","int(11)","","","0",""),
+			array("html","text","YES","","",""),
+		),
 	'part_text' => array(
 			array("part_id","int(11)","","","0",""),
 			array("text","text","YES","","",""),
