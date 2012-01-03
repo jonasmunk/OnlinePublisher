@@ -29,49 +29,95 @@ $gui='
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>Opgaver</title>
-					<list source="taskSource" name="taskList"/>
+					<overflow>
+					<list source="taskSource" name="taskList" indent="10" selectable="false">
+						<empty>
+							<space all="10">
+							<text>
+								<p><strong>Der er ingen opgaver lige nu</strong></p>
+								<p>Du kan oprette noter for sider under visningen af en side.</p>
+								<p>Det gøres under fanebladet "Avanceret".</p>
+							</text>
+							</space>
+						</empty>
+					</list>
+					</overflow>
 				</tile>
-				<tile width="30" height="100" top="0" left="30" background="#396" name="developmentTile">
+				<tile width="30" height="100" top="0" left="30" variant="light" name="developmentTile"><!--background="#396" -->
 					<actions>
 						<icon icon="monochrome/round_arrow_left" key="previous"/>
 						<icon icon="monochrome/round_arrow_right" key="next"/>
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>Udvikling</title>
-					<pages name="developmentPages">
+					<pages name="developmentPages" height="full">
 						<page>
-							<list source="newsFeed" name="newsList" variant="white" selectable="false"/>
+							<overflow>
+								<list source="newsFeed" name="newsList" selectable="false" indent="10"/>
+							</overflow>
 						</page>
 						<page>
-							<list source="developerFeed" variant="white" selectable="false"/>
+							<overflow>
+								<list source="developerFeed" selectable="false" indent="10"/>
+							</overflow>
 						</page>
 						<page>
-							<list source="commitFeed" variant="white" selectable="false"/>
-						</page>
-						<page>
-							<div style="color: #fff; font-family: \'Helvetica Neue\'; padding: 0 10px; font-size: 14px; line-height: 18px; font-weight: 100;">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</div>
+							<overflow>
+								<list source="commitFeed" selectable="false" indent="10"/>
+							</overflow>
 						</page>
 					</pages>
 				</tile>
-				<tile width="40" height="50" top="0" left="60" background="#a3a">
+				<tile width="40" height="50" top="0" left="60" variant="light">
 					<actions>
-						<icon icon="monochrome/info"/>
-						<icon icon="monochrome/edit" key="edit"/>
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
-					<title>Statistik</title>
-					<list source="warningsList"/>
+					<title>Feedback</title>
+					<overflow>
+					<pages name="feedbackPages">
+						<page>
+							<formula padding="10" name="feedbackForm">
+								<group labels="above">
+									<text multiline="true" label="Skriv til os med ris, ros eller spørgsmål"/>
+									<buttons>
+										<button text="Send" submit="true"/>
+									</buttons>
+								</group>
+							</formula>
+						</page>
+						<page>
+							<text align="center" top="20">
+								<h>Tak for det</h>
+								<p>Du vil hurtigst muligt blive kontaktet med et svar.</p>
+							</text>
+							<buttons align="center" small="true">
+								<button text="OK" click="feedbackPages.previous()"/>
+							</buttons>
+						</page>
+					</pages>
+					</overflow>
 				</tile>
-				<tile width="40" height="50" top="50" left="60" background="#399">
+				<tile width="40" height="50" top="50" left="60" variant="light">
 					<actions>
-						<icon icon="monochrome/info"/>
-						<icon icon="monochrome/edit" key="edit"/>
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>Hjælp</title>
-					<list source="warningsList"/>
+					<div class="help">
+						<columns>
+							<column>
+								<a href="javascript://" class="buoy" onclick="window.open(\'http://www.in2isoft.dk/support/onlinepublisher/\')">
+									<span style=""></span>
+									<strong>Brugervejledning</strong>
+								</a>
+							</column>
+							<column>
+								<a href="javascript://" class="stamp" onclick="window.open(\'http://www.in2isoft.dk/kontakt/\')">
+									<span style=""></span>
+									<strong>Kontakt udviklerne</strong>
+								</a>
+							</column>
+						</columns>
+					</div>
 				</tile>
 			</tiles>
 		</div>

@@ -14,7 +14,7 @@ div.box
 
 div.header
 {
-	background: url('../../Resources/large_logo.png') 20px 10px no-repeat;
+	background: url('../../Resources/large_logo.png') 18px 14px no-repeat;
 	height: 70px;
 	border-bottom: 1px solid #ddd;
 }
@@ -23,8 +23,45 @@ div.header span.date
 {
 	float: left;
 	margin-left: 415px;
-	margin-top: 37px;
+	margin-top: 40px;
 	font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;
 	font-size: 14px;
 	color: #aaa;
+}
+
+
+.help
+{
+	text-align: center;
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	margin-top: -20px;
+}
+.help a
+{
+	display: inline-block;
+	text-decoration: none;
+}
+.help a strong
+{
+	display: block;
+	color: #333;
+	font-size: 12px;
+	font-weight: normal;
+}
+.help a.buoy span
+{
+	display: inline-block; width: 64px; height: 64px; background: url('../../../hui/icons/common/lifebuoy64.png')
+}
+.help a.stamp span
+{
+	display: inline-block; width: 64px; height: 64px; background: url('../../../hui/icons/common/stamp64.png')
+}
+.help a:hover span
+{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background-position: 0 -64px;
 }

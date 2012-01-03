@@ -11,5 +11,24 @@ hui.ui.listen({
 		if (info.data.action=='edit') {
 			document.location='../../Template/Edit.php?id='+info.data.id;
 		}
+		if (info.data.action=='view') {
+			document.location='../../Services/Preview/?id='+info.data.id;
+		}
+	},
+	
+	$submit$feedbackForm : function() {
+		var values = feedbackForm.getValues();
+		hui.ui.showMessage({text:'Sender besked...',busy:true})
+		hui.ui.request({
+			url : 'data/SendFeedback.php',
+			parameters : values,
+			onFailure : function() {
+				hui.ui.showMessage({text:'Det lykkedes desværre ikke at sende beskeden',icon:'common/warning',duration:3000})
+			},
+			onSuccess : function() {
+				hui.ui.hideMessage();
+				feedbackPages.next();
+			}
+		})
 	}
 })

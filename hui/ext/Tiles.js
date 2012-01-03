@@ -61,7 +61,10 @@ hui.ui.Tile.prototype = {
 				node : this.element,
 				css : this.initial,
 				duration : 1000,
-				ease : hui.ease.elastic
+				ease : hui.ease.elastic,
+				onComplete : function() {
+					hui.ui.reLayout()
+				}
 			});			
 		} else {
 			hui.ui.Tile._zIndex++;
@@ -70,7 +73,10 @@ hui.ui.Tile.prototype = {
 				node : this.element,
 				css : {top:'0%',left:'0%',width:'100%',height:'100%'},
 				duration : 1000,
-				ease : hui.ease.elastic
+				ease : hui.ease.elastic,
+				onComplete : function() {
+					hui.ui.reLayout()
+				}
 			});			
 		}
 		this.fullScreen = !this.fullScreen;

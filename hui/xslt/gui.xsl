@@ -552,6 +552,11 @@
 				</thead>
 				<tbody><xsl:comment/></tbody>
 			</table>
+			<xsl:if test="gui:empty">
+				<div class="hui_list_empty">
+					<xsl:apply-templates select="gui:empty"/>
+				</div>
+			</xsl:if>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -564,6 +569,7 @@
 			state:'<xsl:value-of select="@state"/>',
 			windowSize:'<xsl:value-of select="gui:window/@size"/>'
 			<xsl:if test="@drop-files='true'">,dropFiles:true</xsl:if>
+			<xsl:if test="@indent">,indent:<xsl:value-of select="@indent"/></xsl:if>
 		});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:column">
@@ -967,7 +973,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	<xsl:copy-of select="child::*|child::text()"/>
 </xsl:template>
 
-<xsl:template match="gui:div|gui:span|gui:strong|gui:p|gui:em">
+<xsl:template match="gui:div|gui:span|gui:strong|gui:p|gui:em|gui:a">
 	<xsl:element name="{name()}">
 		<xsl:if test="@style">
 			<xsl:attribute name="style"><xsl:value-of select="@style"/></xsl:attribute>
@@ -975,15 +981,26 @@ doc title:'Rich text' class:'hui.ui.RichText'
 		<xsl:if test="@class">
 			<xsl:attribute name="class"><xsl:value-of select="@class"/></xsl:attribute>
 		</xsl:if>
+		<xsl:if test="@id">
+			<xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+		</xsl:if>
+		<xsl:if test="@href">
+			<xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
+		</xsl:if>
+		<xsl:if test="@onclick">
+			<xsl:attribute name="onclick"><xsl:value-of select="@onclick"/></xsl:attribute>
+		</xsl:if>
 		<xsl:apply-templates/>
 	</xsl:element>
 </xsl:template>
 
 <xsl:template match="gui:text">
 	<div class="hui_text">
-		<xsl:if test="@align">
-			<xsl:attribute name="style">text-align:<xsl:value-of select="@align"/>;</xsl:attribute>
-		</xsl:if>
+		<xsl:attribute name="style">
+			<xsl:if test="@align">text-align:<xsl:value-of select="@align"/>;</xsl:if>
+			<xsl:if test="@top">padding-top:<xsl:value-of select="@top"/>px;</xsl:if>
+			<xsl:if test="@bottom">padding-bottom:<xsl:value-of select="@bottom"/>px;</xsl:if>
+		</xsl:attribute>
 		<xsl:apply-templates/>
 	</div>
 </xsl:template>

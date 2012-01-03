@@ -2461,10 +2461,16 @@ div.hui_list table tbody td
 	vertical-align: top;
 }
 
-div.hui_list table tbody td .object
+.hui_list_object
 {
 	overflow: hidden;
 	padding-bottom: 2px;
+	line-height: 16px;
+}
+
+div.hui_list .hui_list_object .hui_icon
+{
+	margin: 0 2px 0 0;
 }
 
 div.hui_list .hui_icon
@@ -2757,9 +2763,14 @@ div.hui_list_white td.hui_list_dimmed
 	color: rgba(255,255,255,.7);
 }
 
-div.hui_list table tbody td
+div.hui_list_white table tbody td
 {
 	border-color: rgba(255,255,255,.1);
+}
+
+div.hui_list_empty
+{
+	display: none;
 }div.hui_selection
 {
 	font-family: 'Lucida Grande','Verdana',sans-serif;

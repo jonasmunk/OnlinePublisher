@@ -16,11 +16,11 @@ require_once($basePath.'Editor/Libraries/Zend/Mail/Transport/Smtp.php');
 class MailService {
 	
 	function sendToStandard($subject,$body) {
-		MailService::send(MailService::getStandardEmail(), MailService::getStandardName(),$subject,$body);
+		return MailService::send(MailService::getStandardEmail(), MailService::getStandardName(),$subject,$body);
 	}
 	
 	function sendToFeedback($subject,$body) {
-		MailService::send(MailService::getFeedbackEmail(), MailService::getFeedbackName(),$subject,$body);
+		return MailService::send(MailService::getFeedbackEmail(), MailService::getFeedbackName(),$subject,$body);
 	}
 	
 	function send($email,$name,$subject,$body) {

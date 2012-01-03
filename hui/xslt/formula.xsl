@@ -502,7 +502,7 @@
 				<xsl:when test="@small='true' and @highlighted='true'">
 					<xsl:text> hui_button_small hui_button_small_highlighted</xsl:text>
 				</xsl:when>
-				<xsl:when test="@small='true'">
+				<xsl:when test="@small='true' or ../@small='true'">
 					<xsl:text> hui_button_small</xsl:text>
 				</xsl:when>
 				<xsl:when test="@highlighted='true'">

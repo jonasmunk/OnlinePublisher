@@ -34,6 +34,7 @@ hui.ui.Pages.prototype = {
 		hui.effect.fadeIn({element:show,onComplete:function() {
 			hui.style.set(show,{width : '',position:''});
 			hui.ui.callVisible(this);
+			hui.ui.reLayout();
 		}.bind(this)});
 	}
 }

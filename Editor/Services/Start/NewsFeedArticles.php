@@ -37,7 +37,7 @@ foreach($feed->getItems() as $item) {
 		startCell();
 		if (StringUtils::isNotBlank($item->getLink())) {
 			$writer->startIcons()->
-				icon(array('icon'=>'monochrome/arrow_right_light','action'=>true,'data'=>array('url'=>$item->getLink())))->
+				icon(array('icon'=>'monochrome/round_arrow_right','action'=>true,'revealing'=>true,'data'=>array('url'=>$item->getLink())))->
 			endIcons();
 			//$writer->button(array('text'=>StringUtils::fromUnicode('Læs'),'data'=>array('url'=>$item->getLink())));
 		}

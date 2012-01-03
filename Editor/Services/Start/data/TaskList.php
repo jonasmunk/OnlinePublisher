@@ -7,6 +7,8 @@ require_once '../../../Include/Private.php';
 
 $list = Query::after('issue')->get();
 
+//$list = array();
+
 $writer = new ListWriter();
 
 $writer->startList();
@@ -19,12 +21,11 @@ foreach($list as $item) {
 	}
 	$writer->startRow()->
 		startCell()->
-			startLine()->startStrong()->text($item->getTitle())->endStrong()->endLine()->
-			startLine(array('mini'=>true))->text($item->getNote())->endLine()->
-			startLine(array('dimmed'=>true,'mini'=>true))->text($item->getKind())->endLine();
+			startLine(array('mini'=>false))->text($item->getNote())->endLine();
 		if ($page) {
-			$writer->startLine()->text($page['title'])->endLine();
+			$writer->startLine(array('top'=>3))->object(array('icon'=>'common/page','text'=>$page['title']))->endLine();
 		}
+		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text($item->getKind())->endLine();
 		$writer->endCell()->
 		startCell(array('width'=>1));
 		if ($page!==null) {

@@ -116,6 +116,7 @@ class ListWriter {
 		(@$options['dimmed'] ? ' dimmed="true"' : '').
 		(@$options['minor'] ? ' minor="true"' : '').
 		(@$options['mini'] ? ' mini="true"' : '').
+		(@$options['top'] ? ' top="'.$options['top'].'"' : '').
 		'>';
 		return $this;
 	}

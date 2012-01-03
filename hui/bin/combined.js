@@ -6144,7 +6144,8 @@ hui.ui.Formula.Group.prototype = {
  *  url : «String»,
  *  source : «hui.ui.Source»,
  *  selectable : «<strong>true</strong> | false»,
- *  dropFiles : «true | <strong>false</strong>»
+ *  dropFiles : «true | <strong>false</strong>»,
+ *  indent : «Integer»
  * }
  *
  * <strong>Events:</strong>
@@ -6165,7 +6166,7 @@ hui.ui.Formula.Group.prototype = {
  * @param {Object} options The options : {url:null,source:null,selectable:«boolean»}
  */
 hui.ui.List = function(options) {
-	this.options = hui.override({url:null,source:null,selectable:true},options);
+	this.options = hui.override({url:null,source:null,selectable:true,indent:null},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	if (this.options.source) {
@@ -6208,7 +6209,8 @@ hui.ui.List = function(options) {
  *  url : «String»,
  *  source : «hui.ui.Source»,
  *  selectable : «<strong>true</strong> | false»,
- *  dropFiles : «true | <strong>false</strong>»
+ *  dropFiles : «true | <strong>false</strong>»,
+ *  indent : «Integer»
  * }
  * @param {Object} options The options
  */
@@ -6468,6 +6470,8 @@ hui.ui.List.prototype = {
 				}
 				if (j==0 && level>1) {
 					td.style.paddingLeft = ((parseInt(level)-1)*16+5)+'px';
+				} else if (j==0 && this.options.indent!=null) {
+					td.style.paddingLeft = this.options.indent+'px';
 				}
 				this.parseCell(cells[j],td);
 				row.appendChild(td);
@@ -6485,6 +6489,7 @@ hui.ui.List.prototype = {
 			this.rows.push(info);
 		};
 		this.body.appendChild(frag);
+		this._setEmpty(rows.length==0);
 		this.fire('selectionReset');
 	},
 	
@@ -6532,6 +6537,12 @@ hui.ui.List.prototype = {
 			if (this.element.parentNode.className=='hui_overflow') {
 				hui.cls.remove(this.element,'hui_list_busy_large');
 			}
+		}
+	},
+	_setEmpty : function(empty) {
+		var lmnt = hui.get.firstByClass(this.element,'hui_list_empty');
+		if (lmnt) {
+			lmnt.style.display = empty ? 'block' : '';
 		}
 	},
 	
@@ -6593,10 +6604,13 @@ hui.ui.List.prototype = {
 				if (child.getAttribute('mini')=='true') {
 					hui.cls.add(line,'hui_list_mini')
 				}
+				if (child.getAttribute('top')) {
+					line.style.paddingTop=child.getAttribute('top')+'px';
+				}
 				cell.appendChild(line);
 				this.parseCell(child,line);
 			} else if (hui.dom.isElement(child,'object')) {
-				var obj = hui.build('div',{'class':'object'});
+				var obj = hui.build('div',{'class':'hui_list_object'});
 				if (child.getAttribute('icon')) {
 					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),16));
 				}
@@ -6807,7 +6821,7 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	createObject : function(object) {
-		var node = hui.build('div',{'class':'object'});
+		var node = hui.build('div',{'class':'hui_list_object'});
 		if (object.icon) {
 			node.appendChild(hui.ui.createIcon(object.icon,16));
 		}

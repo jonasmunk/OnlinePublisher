@@ -382,6 +382,9 @@
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_pages</xsl:text>
+			<xsl:if test="@height='full'">
+				<xsl:text> hui_pages_full</xsl:text>
+			</xsl:if>
 		</xsl:attribute>
 		<xsl:for-each select="gui:page">
 			<div class="hui_pages_page">
