@@ -237,7 +237,7 @@ class RenderingService {
 		if ($path==null) {
 			$sql.=" and page.id=".$id;
 		} else {
-			$sql.=" and page.path=".Database::text($path);
+			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/').")";
 		}
 	
 		if ($row = Database::selectFirst($sql)) {
