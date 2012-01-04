@@ -57,7 +57,8 @@ $gui='
 				if ($tools) {
 					$gui.='<tab title="'.$tabTitle.'" background="light"><toolbar name="'.$tab.'Toolbar">';
 					foreach ($tools as $key => $tool) {
-						$gui.='<icon title="'.$tool->name->$lang.'" icon="'.$tool->icon.'" action="dock.setUrl(\'Tools/'.$tool->key.'/\')" key="tool:'.$tool->key.'"/>';
+						$deprecated = $tool->key == 'Pages';
+						$gui.='<icon title="'.$tool->name->$lang.$deprecated.'" icon="'.$tool->icon.'" action="dock.setUrl(\'Tools/'.$tool->key.'/\')" key="tool:'.$tool->key.'"'.($deprecated ? ' overlay="warning"' : '').'/>';
 					}
 					$gui.='
 					<right>

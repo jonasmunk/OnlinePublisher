@@ -18,7 +18,7 @@ hui.ui.DateTimeField = function(o) {
 }
 
 hui.ui.DateTimeField.create = function(options) {
-	var node = hui.build('span',{'class':'hui_formula_text_singleline'});
+	var node = hui.build('span',{'class':'hui_field_singleline'});
 	hui.build('input',{'class':'hui_formula_text',parent:node});
 	options.element = hui.ui.wrapInField(node);
 	return new hui.ui.DateTimeField(options);

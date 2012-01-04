@@ -39,15 +39,32 @@
 				hui.ui.test.assertEquals(hui.get('one').clientWidth,320);
 				hui.ui.test.assertEquals(hui.style.get('one','width'),'300px');
 				hui.ui.test.assertEquals(hui.style.get('one','padding-top'),'10px');
-				hui.ui.test.assertEquals(hui.style.get('one','padding'),'');
-				hui.ui.test.assertEquals(hui.style.get('one','color'),'rgb(255, 0, 0)');
+				
+				if (hui.browser.msie7 || hui.browser.msie8) {
+					hui.ui.test.assertEquals(hui.style.get('one','padding'),'10px');
+					hui.ui.test.assertEquals(hui.style.get('one','color'),'red');
+				} else {
+					hui.ui.test.assertEquals(hui.style.get('one','padding'),'');
+					hui.ui.test.assertEquals(hui.style.get('one','color'),'rgb(255, 0, 0)');
+				}
 				hui.ui.test.assertEquals(hui.style.get('one','font-size'),'12px');
 				hui.ui.test.assertEquals(hui.style.get('one','display'),'block');
-				hui.ui.test.assertEquals(hui.style.get('one','border-top-width'),'2px');
-				hui.ui.test.assertEquals(hui.style.get('one','border-width'),'');
-				hui.ui.test.assertEquals(hui.style.get('one','opacity'),'1','Check opacity');
+				hui.ui.test.assertEquals(hui.style.get('one','border-top-width'),'2px','Check top width');
+				if (hui.browser.msie7 || hui.browser.msie8) {
+					hui.ui.test.assertEquals(hui.style.get('one','border-width'),'2px');
+				} else {
+					hui.ui.test.assertEquals(hui.style.get('one','border-width'),'');
+				}
+				if (hui.browser.opacity) {
+					hui.ui.test.assertEquals(hui.style.get('one','opacity'),'1','Check opacity');
+				} else {
+					hui.ui.test.assertEquals(hui.style.get('one','opacity'),undefined,'Check opacity');
+				}
 				if (hui.browser.webkit) {
 					hui.ui.test.assertEquals(hui.style.get('one','background-color'),'rgba(0, 0, 0, 0)','Check background color');
+					hui.ui.test.assertEquals(hui.style.get('one','line-height'),'normal');
+				} else if (hui.browser.msie) {
+					hui.ui.test.assertEquals(hui.style.get('one','background-color'),'transparent','Check background color');
 					hui.ui.test.assertEquals(hui.style.get('one','line-height'),'normal');
 				} else {
 					hui.ui.test.assertEquals(hui.style.get('one','background-color'),'transparent','Check background color');

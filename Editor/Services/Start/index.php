@@ -78,9 +78,9 @@ $gui='
 						<page>
 							<formula padding="10" name="feedbackForm">
 								<group labels="above">
-									<text multiline="true" label="Skriv til os med ris, ros eller spørgsmål"/>
+									<text multiline="true" label="Skriv til os med ris, ros eller spørgsmål" key="message"/>
 									<buttons>
-										<button text="Send" submit="true"/>
+										<button text="Send" submit="true" name="sendFeedback"/>
 									</buttons>
 								</group>
 							</formula>

@@ -61,6 +61,26 @@ class InspectionService {
 			$inspection->setText($ok ? 'Billedbehandling er installeret' : 'Billedbehandling mangler');
 			$inspections[] = $inspection;
 		}
+		{
+			$ok = function_exists('iconv_get_encoding');
+			$inspection = new Inspection();
+			$inspection->setCategory('environment');
+			$inspection->setEntity(array('type'=>'api','title'=>'Tekstkonvertering (ICONV)','id'=>'iconv','icon'=>'common/object'));
+			$inspection->setStatus($ok ? 'ok' : 'error');
+			$inspection->setText($ok ? 'Tekstkonvertering er installeret' : 'Tekstkonvertering mangler');
+			$inspections[] = $inspection;
+		}
+		{
+			$ok = function_exists('openssl_encrypt');
+			$inspection = new Inspection();
+			$inspection->setCategory('environment');
+			$inspection->setEntity(array('type'=>'api','title'=>'Krypteret netværk (OPENSSL)','id'=>'openssl','icon'=>'common/object'));
+			$inspection->setStatus($ok ? 'ok' : 'error');
+			$inspection->setText($ok ? 'Krypteret netværk er installeret' : 'Krypteret netværk mangler');
+			$inspections[] = $inspection;
+		}
+		
+		
 		
 	}
 

@@ -439,7 +439,7 @@ div.hui_window_dark div.hui_field span
 	background-image: url('../gfx/field_dark.png');
 }
 
-div.hui_window_dark div.hui_field span.hui_formula_text_singleline, div.hui_window_dark div.hui_field span.hui_formula_text_multiline
+div.hui_window_dark div.hui_field span.hui_field_singleline, div.hui_window_dark div.hui_field span.hui_formula_text_multiline
 {
 	background: none;
 }

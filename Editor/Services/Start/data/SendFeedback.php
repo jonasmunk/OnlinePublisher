@@ -5,8 +5,6 @@
  */
 require_once '../../../Include/Private.php';
 
-sleep(2);
-
 $message = Request::getString('message');
 
 $success = MailService::sendToFeedback('Feedback',$message);

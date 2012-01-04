@@ -18,15 +18,19 @@ hui.ui.listen({
 	
 	$submit$feedbackForm : function() {
 		var values = feedbackForm.getValues();
-		hui.ui.showMessage({text:'Sender besked...',busy:true})
+		hui.ui.showMessage({text:'Sender besked...',busy:true});
+		sendFeedback.disable();
 		hui.ui.request({
 			url : 'data/SendFeedback.php',
 			parameters : values,
 			onFailure : function() {
 				hui.ui.showMessage({text:'Det lykkedes desværre ikke at sende beskeden',icon:'common/warning',duration:3000})
+				sendFeedback.enable();
 			},
 			onSuccess : function() {
+				feedbackForm.reset();
 				hui.ui.hideMessage();
+				sendFeedback.enable();
 				feedbackPages.next();
 			}
 		})
