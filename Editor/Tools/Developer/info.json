@@ -1,6 +1,6 @@
 {
 	"key" : "Developer",
-	"icon" : "common/settings",
+	"icon" : "common/tools",
 	"name" : {"da" : "Udvikler", "en" : "Developer"},
 	"description" : {"da" : "Udviklerværktøjer", "en" : "Developer tools"},
 	"category" : "analyse",

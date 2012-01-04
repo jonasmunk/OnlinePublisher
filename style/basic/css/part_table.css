@@ -1,0 +1,18 @@
+div.part_table table
+{
+	font-size: 12px;
+	border-spacing: 0;
+}
+
+div.part_table th
+{
+	background: #fafafa;
+	border-bottom: 1px solid #eee;
+	padding: 1px 3px;
+}
+
+div.part_table td
+{
+	border-bottom: 1px solid #eee;
+	padding: 1px 3px;
+}

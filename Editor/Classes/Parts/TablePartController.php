@@ -19,8 +19,8 @@ class TablePartController extends PartController
 	}
 	
 	function createPart() {
-		$part = new RichtextPart();
-		$part->setHtml('<table><thead><tr><th>Header</th><th>Header</th></tr></thead><tbody><tr><td>Cell</td><td>Cell</td></tr></tbody></table>');
+		$part = new TablePart();
+		$part->setHtml('<table><thead><tr><th>Header</th><th>Header</th></tr></thead><tbody><tr><td>Cell</td><td>Cell</td></tr><tr><td>Cell</td><td>Cell</td></tr></tbody></table>');
 		$part->save();
 		return $part;
 	}
@@ -35,6 +35,31 @@ class TablePartController extends PartController
 		'<div id="part_table">'.$this->render($part,$context).'</div>'.
 		'<input type="hidden" name="html" value="'.StringUtils::escapeXML(StringUtils::fromUnicode($part->getHtml())).'"/>'.
 		'<script src="'.$baseUrl.'Editor/Parts/table/script.js" type="text/javascript" charset="utf-8"></script>';
+	}
+	
+	function editorGui($part,$context) {
+		$gui='
+		<window title="Kilde" name="sourceWindow" width="500">
+			<formula name="sourceFormula">
+				<group labels="above">
+					<text multiline="true" key="source" max-height="500"/>
+				</group>
+				<buttons>
+					<button name="applySource" title="OK"/>
+				</buttons>
+			</formula>
+		</window>
+		';
+		return In2iGui::renderFragment($gui);
+	}
+
+	function getToolbars() {
+		return array(
+			'Tabel' => '
+				<icon icon="common/clean" text="Ryd op" name="clean"/>
+				<icon icon="file/generic" text="Kilde" overlay="edit" name="editSource"/>
+				'
+			);
 	}
 	
 	function getFromRequest($id) {

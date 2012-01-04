@@ -35,10 +35,9 @@
 				margin: 3px;
 			}
 			
-			a.icon32
+			a.icon:hover
 			{
-				height: 32px;
-				width: 32px;
+				background-position: 0 -100%;
 			}
 		</style>
 		<script src="../bin/combined.js"></script>
@@ -59,7 +58,7 @@
 							hui.log(size)	
 							hui.build('a',{
 								'class' : 'icon icon'+size,
-								style : "background:url('../icons/"+group+"/"+icon+size+".png'); width:"+size+"px;height:"+size+"px;",
+								style : "background-image:url('../icons/"+group+"/"+icon+size+".png'); width:"+size+"px;height:"+size+"px;",
 								parent : groupNode,
 								title : group+'/'+icon
 							});

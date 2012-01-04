@@ -50,19 +50,19 @@
         <item icon="common/page" title="box" value="xml/box.xml"/>
         <item icon="common/page" title="button" value="xml/button.xml"/>
         <item icon="common/page" title="calendar" value="xml/calendar.xml"/>
+        <item icon="common/page" title="columns" value="xml/columns.xml"/>
         <item icon="common/page" title="dropdown" value="xml/dropdown.xml"/>
         <item icon="common/page" title="formula" value="xml/formula.xml"/>
         <item icon="common/page" title="formula_fieldset" value="xml/formula_fieldset.xml"/>
         <item icon="common/page" title="graph" value="xml/graph.xml"/>
         <item icon="common/page" title="graphviz" value="xml/graphviz.xml"/>
-        <item icon="common/page" title="images" value="xml/images.xml"/>
         <item icon="common/page" title="layout" value="xml/layout.xml"/>
         <item icon="common/page" title="links" value="xml/links.xml"/>
         <item icon="common/page" title="list" value="xml/list.xml"/>
         <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
-        <item icon="common/page" title="richtext" value="xml/richtext.xml"/>
         <item icon="common/page" title="style" value="xml/style.xml"/>
         <item icon="common/page" title="tabs" value="xml/tabs.xml"/>
+        <item icon="common/page" title="tiles" value="xml/tiles.xml"/>
         <item icon="common/page" title="toolbar" value="xml/toolbar.xml"/>
         <item icon="common/page" title="windows" value="xml/windows.xml"/>
     </item>
