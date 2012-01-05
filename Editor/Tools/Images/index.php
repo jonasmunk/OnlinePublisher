@@ -18,7 +18,7 @@ $gui='
 	<controller source="controller.js"/>
 	<controller source="groups.js"/>
 	<controller source="upload.js"/>
-	<source name="subsetSource" url="Selection.php"/>
+	<source name="subsetSource" url="data/Selection.php"/>
 	<source name="groupOptionsSource" url="../../Services/Model/Items.php?type=imagegroup"/>
 	<source name="groupSource" url="GroupItems.php"/>
 	<!--<source name="typesSource" url="TypeItems.php"/>-->

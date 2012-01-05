@@ -229,7 +229,6 @@ var controller = {
 		return false;
 	},
 	clickSection : function(info) {
-		alert(hui.event(info.event).altKey);
 		if (info.event.altKey) {
 			document.location='Editor.php?section='+info.id;
 		}

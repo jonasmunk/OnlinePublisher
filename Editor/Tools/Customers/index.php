@@ -48,10 +48,8 @@ $gui='
 						<item icon="common/person" title="Alle personer" value="person"/>
 						<item icon="common/email" title="Alle postlister" value="mailinglist"/>
 						<item icon="common/folder" title="Alle grupper" value="persongroup"/>
-						<title>Grupper</title>
-						<items name="groupSelection" source="personGroupSource"/>
-						<title>Postlister</title>
-						<items name="mailinglistSelection" source="mailinglistSource"/>
+						<items name="groupSelection" source="personGroupSource" title="Grupper"/>
+						<items name="mailinglistSelection" source="mailinglistSource" title="Postlister"/>
 					</selection>
 				</overflow>
 			</left>
