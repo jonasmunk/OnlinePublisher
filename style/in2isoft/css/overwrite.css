@@ -94,6 +94,13 @@ h3.part_header, textarea.part_header_3
 	font-weight: 400;
 }
 
+h4.part_header, textarea.part_header_4,
+h5.part_header, textarea.part_header_5,
+h6.part_header, textarea.part_header_6
+{
+	font-weight: 400;
+}
+
 div.part_section_header_3
 {
 	padding-bottom: 5px;

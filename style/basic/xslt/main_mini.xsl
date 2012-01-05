@@ -28,6 +28,7 @@
 				-webkit-transform-origin: 0 0;
 				width: 600px;
 				text-align: left;
+				background: #fff;
 			}
 			
 			div.document

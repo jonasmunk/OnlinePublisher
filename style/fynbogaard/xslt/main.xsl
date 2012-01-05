@@ -45,7 +45,7 @@
 			Fynbogaard · Bjerrevej 318 · Bjerre · 8783 Hornsyld · Mobil 26 14 87 36
 		</div>
 	</div>
-	<!--xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-8'"/></xsl:call-template-->
+	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-16'"/></xsl:call-template>
 </body>
 </html>
 </xsl:template>

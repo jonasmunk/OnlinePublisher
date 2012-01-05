@@ -6,6 +6,32 @@
 	{
 		-webkit-appearance: caret;
 	}
+	
+	body,
+	.common_font,
+	div.part_text,
+	div.part_listing,
+	ul.layout_sub_navigation_selected a span,
+	ul.layout_navigation_selected li span
+	{
+		/*font-family: 'Helvetica Neue','Helvetica','Arial',sans-serif;*/
+		font-weight: 400;
+	}
+	
+	div.part_text
+	{
+		line-height: 1.2em;
+	}
+	
+	div.part_listing span.part_listing_first,
+	div.part_news_item_title,
+	h3.part_header,
+	h4.part_header,
+	h5.part_header,
+	h6.part_header
+	{
+		font-weight: 600;
+	}
 }
 
 @media all and (orientation:landscape) and (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -85,6 +111,7 @@
 	h1.part_header
 	{
 		font-size: 28px;
+		line-height: 1.2em;
 	}
 
 	ul.layout_navigation li a
@@ -105,13 +132,47 @@
 	
 	div.layout_inner_content
 	{
-		padding: 10px;
+		padding: 10px 20px;
 	}
 
 	ul.layout_placards span
 	{
 		font-size: 16px;
 		line-height: 18px;
+	}
+	
+	div.layout_sidebar
+	{
+		position: static;
+		float: right;
+		border: 1px solid #ddd;
+		background: #fafafa;
+		margin: 20px;
+		padding: 10px;
+		width: 160px;
+		border-radius: 5px;
+	}
+	
+	/*
+	div.part_text,
+	div.part_listing
+	{
+		font-family: 'Helvetica Neue','Helvetica','Arial',sans-serif;
+	}*/
+	
+	ul.layout_side_navigation
+	{
+		margin: 0;
+	}
+	
+	div.layout_content_sidebar div.layout_inner_content
+	{
+		margin-right: 0;
+	}
+	
+	div.document
+	{
+		overflow: visible;
 	}
 }
 
@@ -147,18 +208,41 @@
 		margin-right: 2px;
 	}
 	
-	div.part_text
+	div.part_text,
+	div.part_listing
 	{
-		font-size: 10px;
+		font-size: 10pt;
 	}
 	
-	div.layout_sidebar
+	div.part_listing span.part_listing_first
 	{
-		width: 30%;
+		font-size: 11pt;
+	}
+}
+
+@media screen and (max-width: 600px) {
+
+	div.layout_info div.contact,
+	div.layout_info div.about
+	{
+		width: auto;
+		float: none;
 	}
 	
-	div.layout_content_sidebar div.layout_inner_content
+	ul.layout_navigation
 	{
-		margin-right: 31%;
+		height: auto;
+	}
+	
+	div.layout_middle_top,
+	ul.layout_sub_navigation
+	{
+		height: auto;
+	}
+	
+	form.search
+	{
+		position: static;
+		margin: 5px 10px;
 	}
 }
