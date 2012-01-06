@@ -354,6 +354,33 @@ div.hui_list_drop table
 	background: none;
 }
 
+/*** Light variant ***/
+
+div.hui_list_light table thead th
+{
+	background: none;
+	border-bottom: 1px solid #ddd;
+	color: #aaa;
+}
+
+div.hui_list_light th.sortable:hover
+{
+	background: #f6f6f6;
+	color: #666;
+}
+
+div.hui_list_light th.sort_ascending, div.hui_list_light th.sort_descending
+{
+	background: none;
+	color: #000;
+	font-weight: bold;
+}
+
+div.hui_list_light th.sort_ascending:hover, div.hui_list_light th.sort_descending:hover
+{
+	background: #f6f6f6;
+	color: #000;
+}
 
 /*** White variant ***/
 

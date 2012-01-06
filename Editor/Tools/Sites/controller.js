@@ -36,7 +36,7 @@ var mainController = {
 			hui.ui.get('edit').setEnabled(true);
 			hui.ui.get('info').enable();
 			hui.ui.get('delete').enable();
-			hui.ui.get('view').enable();			
+			hui.ui.get('view').enable();
 		} else if (item.kind=='hierarchyItem') {
 			var page = item.data && item.data.page;
 			hui.ui.get('edit').setEnabled(page);
