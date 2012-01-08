@@ -175,6 +175,10 @@
 	</xsl:if>
 </xsl:template>
 
+<xsl:template name="util:scripts-adaptive">
+	<script src="{$path}hui{$timestamp-url}/lib/ios-orientationchange-fix.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+</xsl:template>
+
 <xsl:template name="util:html-attributes">
 	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
 	<xsl:if test="//p:page/p:meta/p:language">
@@ -331,7 +335,7 @@
 </xsl:template>
 
 <xsl:template name="util:googleanalytics">
-	<xsl:param name="code"/>
+	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
 	<xsl:if test="not($preview='true')">
 		<script type="text/javascript">
 		try {

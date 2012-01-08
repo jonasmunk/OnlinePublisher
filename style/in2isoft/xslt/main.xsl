@@ -38,6 +38,7 @@
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
 		<xsl:call-template name="util:scripts"/>
+		<xsl:call-template name="util:scripts-adaptive"/>
 	</head>
 	<body>
 		<script type="text/javascript">

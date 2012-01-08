@@ -231,7 +231,10 @@ class RenderingService {
 		" template.unique as template,frame.id as frameid,frame.title as frametitle,".
 		" frame.data as framedata,frame.dynamic as framedynamic,design.`unique` as design,".
 		" design.parameters,".
-		" hierarchy.data as hierarchy from page,template,frame,design,hierarchy".
+		" hierarchy.data as hierarchy, ".
+		" setting.value as analytics_key".
+		" from page,template,frame,design,hierarchy".
+		" left join setting on setting.subdomain='googleanalytics' and setting.`key`='webprofile'".
 		" where page.frame_id=frame.id and page.template_id=template.id".
 		" and page.design_id=design.object_id and frame.hierarchy_id=hierarchy.id";
 		if ($path==null) {
@@ -239,7 +242,7 @@ class RenderingService {
 		} else {
 			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/').")";
 		}
-	
+		Log::debug($sql);
 		if ($row = Database::selectFirst($sql)) {
 			if (Request::getBoolean('ajax')) {
 				if ($controller = TemplateService::getController($row['template'])) {
@@ -273,6 +276,7 @@ class RenderingService {
 			'<keywords>'.StringUtils::escapeXML($row['keywords']).'</keywords>'.
 			RenderingService::buildDateTag('published',$row['published']).
 			'<language>'.StringUtils::escapeXML(strtolower($row['language'])).'</language>'.
+			($row['analytics_key'] ? '<analytics key="'.StringUtils::escapeXML($row['analytics_key']).'"/>' : '').
 			'</meta>'.
 			RenderingService::buildPageContext($row['id'],$row['next_page'],$row['previous_page']).
 			'<design>'.
