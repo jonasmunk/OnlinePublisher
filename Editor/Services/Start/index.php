@@ -29,7 +29,7 @@ $gui='
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>Opgaver</title>
-					<overflow>
+					<overflow full="true">
 					<list source="taskSource" name="taskList" indent="10" selectable="false">
 						<empty>
 							<space all="10">
@@ -52,17 +52,17 @@ $gui='
 					<title>Udvikling</title>
 					<pages name="developmentPages" height="full">
 						<page>
-							<overflow>
+							<overflow full="true">
 								<list source="newsFeed" name="newsList" selectable="false" indent="10"/>
 							</overflow>
 						</page>
 						<page>
-							<overflow>
+							<overflow full="true">
 								<list source="developerFeed" selectable="false" indent="10"/>
 							</overflow>
 						</page>
 						<page>
-							<overflow>
+							<overflow full="true">
 								<list source="commitFeed" selectable="false" indent="10"/>
 							</overflow>
 						</page>
@@ -73,28 +73,28 @@ $gui='
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>Feedback</title>
-					<overflow>
-					<pages name="feedbackPages">
-						<page>
-							<formula padding="10" name="feedbackForm">
-								<group labels="above">
-									<text multiline="true" label="Skriv til os med ris, ros eller spørgsmål" key="message"/>
-									<buttons>
-										<button text="Send" submit="true" name="sendFeedback"/>
-									</buttons>
-								</group>
-							</formula>
-						</page>
-						<page>
-							<text align="center" top="20">
-								<h>Tak for det</h>
-								<p>Du vil hurtigst muligt blive kontaktet med et svar.</p>
-							</text>
-							<buttons align="center" small="true">
-								<button text="OK" click="feedbackPages.previous()"/>
-							</buttons>
-						</page>
-					</pages>
+					<overflow full="true">
+						<pages name="feedbackPages">
+							<page>
+								<formula padding="10" name="feedbackForm">
+									<group labels="above">
+										<text multiline="true" label="Skriv til os med ris, ros eller spørgsmål" key="message"/>
+										<buttons>
+											<button text="Send" submit="true" name="sendFeedback"/>
+										</buttons>
+									</group>
+								</formula>
+							</page>
+							<page>
+								<text align="center" top="20">
+									<h>Tak for det</h>
+									<p>Du vil hurtigst muligt blive kontaktet med et svar.</p>
+								</text>
+								<buttons align="center" small="true">
+									<button text="OK" click="feedbackPages.previous()"/>
+								</buttons>
+							</page>
+						</pages>
 					</overflow>
 				</tile>
 				<tile width="40" height="50" top="50" left="60" variant="light">
@@ -122,25 +122,6 @@ $gui='
 			</tiles>
 		</div>
 	</div>
-	<script>
-		hui.ui.listen({
-			$clickIcon : function(info) {
-				if (info.key=="expand") {
-					info.tile.toggleFullScreen();
-				}
-			},
-			$clickIcon$developmentTile : function(info) {
-				if (info.key=="expand") {
-					info.tile.toggleFullScreen();
-				}
-				else if (info.key=="next") {
-					developmentPages.next();
-				} else if (info.key=="previous") {
-					developmentPages.previous();
-				}
-			}
-		})
-	</script>
 </gui>';
 
 In2iGui::render($gui);

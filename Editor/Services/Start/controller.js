@@ -15,6 +15,23 @@ hui.ui.listen({
 			document.location='../../Services/Preview/?id='+info.data.id;
 		}
 	},
+
+	$clickIcon : function(info) {
+		if (info.key=="expand") {
+			info.tile.toggleFullScreen();
+		}
+	},
+	$clickIcon$developmentTile : function(info) {
+		if (info.key=="expand") {
+			info.tile.toggleFullScreen();
+			developmentPages.expand();
+		}
+		else if (info.key=="next") {
+			developmentPages.next();
+		} else if (info.key=="previous") {
+			developmentPages.previous();
+		}
+	},
 	
 	$submit$feedbackForm : function() {
 		var values = feedbackForm.getValues();
