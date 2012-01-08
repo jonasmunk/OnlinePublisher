@@ -99,7 +99,7 @@ hui.ui._frameLoaded = function(win) {
 /** @private */
 hui.ui._resize = function() {
 	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--) {
-		hui.ui.layoutWidgets[i]['$$layout']();
+		hui.ui.layoutWidgets[i]['$$resize']();
 	};
 }
 
@@ -251,8 +251,8 @@ hui.ui.reLayout = function() {
 		obj;
 	for (key in all) {
 		obj = all[key];
-		if (obj['$$layoutChanged']) {
-			obj['$$layoutChanged']();
+		if (obj['$$layout']) {
+			obj['$$layout']();
 		}
 	}
 }
@@ -680,7 +680,7 @@ hui.ui.extend = function(obj,options) {
 	if (!obj.valueForProperty) {
 		obj.valueForProperty = function(p) {return this[p]};
 	}
-	if (obj['$$layout']) {
+	if (obj['$$resize']) {
 		hui.ui.layoutWidgets.push(obj);
 	}
 };

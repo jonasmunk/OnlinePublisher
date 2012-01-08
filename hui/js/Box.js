@@ -82,7 +82,7 @@ hui.ui.Box.prototype = {
 		hui.ui.callVisible(this);
 	},
 	/** @private */
-	$$layout : function() {
+	$$resize : function() {
 		if (this.options.absolute && this.visible) {
 			var e = this.element;
 			var w = e.clientWidth;

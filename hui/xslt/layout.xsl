@@ -117,7 +117,8 @@
 	</xsl:attribute>
 	<xsl:attribute name="style">
 		<xsl:choose>
-			<xsl:when test="@height or @max-height or @min-height">
+			<xsl:when test="@height or @max-height or @min-height or @full='true'">
+				<xsl:if test="@full='true'">height: 100%;</xsl:if>
 				<xsl:if test="@height">height: <xsl:value-of select="@height"/>px;</xsl:if>
 				<xsl:if test="@max-height">max-height: <xsl:value-of select="@max-height"/>px;</xsl:if>
 				<xsl:if test="@min-height">min-height: <xsl:value-of select="@min-height"/>px;</xsl:if>
@@ -135,7 +136,7 @@
 <script type="text/javascript">
 	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Overflow({
 		element : '<xsl:value-of select="generate-id()"/>',
-		dynamic : <xsl:value-of select="not(@height or @max-height or @min-height or @vertical)"/>
+		dynamic : <xsl:value-of select="not(@height or @max-height or @min-height or @vertical or @full='true')"/>
 		<xsl:if test="@vertical">,vertical:<xsl:value-of select="@vertical"/></xsl:if>
 		<xsl:if test="@state">,state:'<xsl:value-of select="@state"/>'</xsl:if>
 		<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>

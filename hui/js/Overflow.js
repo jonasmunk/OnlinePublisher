@@ -52,16 +52,32 @@ hui.ui.Overflow.prototype = {
 		}
 		return this;
 	},
-	$$layoutChanged : function() {
+	/** @private */
+	$$layout : function() {
 		if (!this.options.dynamic) {return}
+		/*
+		var hasSiblings = false;
+		var sibs = this.element.parentNode.childNodes;
+		for (var i=0; i < sibs.length; i++) {
+			if (sibs[i]!==this.element && hui.dom.isElement(sibs[i]) && sibs[i].nodeName!='script' && hui.style.get(sibs[i],'position')!='absolute') {
+				hasSiblings = true;
+				hui.log(sibs[i])
+				break;
+			}
+		};
+		if (!hasSiblings) {
+			hui.log('Fast path!');
+			this.$$resize();
+			return;
+		}*/
 		this.element.style.height='0px';
 		window.setTimeout(function() {
 			this._calculate();
-			this.$$layout();
+			this.$$resize();
 		}.bind(this))
 	},
 	/** @private */
-	$$layout : function() {
+	$$resize : function() {
 		var height;
 		if (!this.options.dynamic) {
 			if (this.options.vertical) {

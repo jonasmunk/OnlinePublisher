@@ -2768,6 +2768,7 @@ div.hui_list_light th.sort_ascending, div.hui_list_light th.sort_descending
 div.hui_list_light th.sort_ascending:hover, div.hui_list_light th.sort_descending:hover
 {
 	background: #f6f6f6;
+	color: #000;
 }
 
 /*** White variant ***/

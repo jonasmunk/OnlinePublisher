@@ -74,13 +74,13 @@ hui.ui.Graph.prototype = {
 			this.options.source.refreshFirst();
 		}
 	},
-	$$layout : function() {
+	$$resize : function() {
 		hui.log('graph.layout');
 		this.impl.resize(this.element.parentNode.clientWidth,this.element.parentNode.clientHeight);
 	},
-	$$layoutChanged : function() {
+	$$layout : function() {
 		hui.log('graph.layoutChanged');
-		window.setTimeout(this.$$layout.bind(this),100);
+		window.setTimeout(this.$$resize.bind(this),100);
 	}
 }
 

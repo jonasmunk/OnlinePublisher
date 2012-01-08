@@ -10,7 +10,7 @@ hui.ui.Layout = function(options) {
 }
 
 hui.ui.Layout.prototype = {
-	$$layout : function() {
+	$$resize : function() {
 		if (hui.browser.gecko) {
 			var center = hui.get.firstByClass(this.element,'hui_layout_center');
 			if (center) {

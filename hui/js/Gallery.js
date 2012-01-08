@@ -104,7 +104,7 @@ hui.ui.Gallery.prototype = {
 		this._reveal();
 	},
 	/** @private */
-	$$layout : function() {
+	$$resize : function() {
 		if (this.nodes.length>0) {
 			this._reveal();
 		}
