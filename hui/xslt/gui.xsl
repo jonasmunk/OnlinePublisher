@@ -1065,4 +1065,28 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 </xsl:template>
 
+
+<xsl:template match="gui:icon">
+	<span id="{generate-id()}">
+		<xsl:attribute name="style">background-image: url('<xsl:value-of select="$context"/>/hui/icons/<xsl:value-of select="@icon"/><xsl:value-of select="@size"/>.png');</xsl:attribute>
+		<xsl:attribute name="class">hui_icon_<xsl:value-of select="@size"/></xsl:attribute>
+		<xsl:comment/>
+	</span>
+</xsl:template>
+
+
+<xsl:template match="gui:icon[@text]">
+	<a id="{generate-id()}" href="javascript://" class="hui_icon_labeled hui_icon_labeled_{@size}">
+		<xsl:if test="@click">
+			<xsl:attribute name="onclick"><xsl:value-of select="@click"/></xsl:attribute>
+		</xsl:if>
+	<span>
+		<xsl:attribute name="style">background-image: url('<xsl:value-of select="$context"/>/hui/icons/<xsl:value-of select="@icon"/><xsl:value-of select="@size"/>.png');</xsl:attribute>
+		<xsl:attribute name="class">hui_icon_<xsl:value-of select="@size"/></xsl:attribute>
+		<xsl:comment/>
+	</span>
+	<strong><xsl:value-of select="@text"/></strong>
+	</a>
+</xsl:template>
+
 </xsl:stylesheet>

@@ -94,6 +94,36 @@ span.hui_icon_24
 	vertical-align: middle;
 }
 
+span.hui_icon_64
+{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	vertical-align: middle;
+}
+
+a.hui_icon_labeled
+{
+	display: inline-block;	
+	vertical-align: middle;
+	text-align: center;
+	text-decoration: none;
+}
+
+a.hui_icon_labeled strong
+{
+	display: block;
+	color: #333;
+	font-size: 12px;
+	font-weight: normal;
+	margin-top: 2px;
+}
+
+a.hui_icon_labeled:hover span.hui_icon_64
+{
+	background-position: 0 -64px;
+}
+
 /************************* disclosure **********************/
 
 span.hui_disclosure

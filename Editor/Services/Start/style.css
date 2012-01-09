@@ -29,6 +29,34 @@ div.header span.date
 	color: #aaa;
 }
 
+span.user
+{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 0;
+}
+
+span.user strong
+{
+	vertical-align: middle;
+	margin-left: 3px;
+	font-size: 12px;
+}
+
+span.user em
+{
+	vertical-align: middle;
+	margin-left: 3px;
+	margin-right: 5px;
+	font-size: 11px;
+	font-style: normal;
+	display: inline-block;
+	color: #999;
+}
+
+
+
 
 .help
 {
@@ -37,31 +65,4 @@ div.header span.date
 	width: 100%;
 	top: 50%;
 	margin-top: -20px;
-}
-.help a
-{
-	display: inline-block;
-	text-decoration: none;
-}
-.help a strong
-{
-	display: block;
-	color: #333;
-	font-size: 12px;
-	font-weight: normal;
-}
-.help a.buoy span
-{
-	display: inline-block; width: 64px; height: 64px; background: url('../../../hui/icons/common/lifebuoy64.png')
-}
-.help a.stamp span
-{
-	display: inline-block; width: 64px; height: 64px; background: url('../../../hui/icons/common/stamp64.png')
-}
-.help a:hover span
-{
-	display: inline-block;
-	width: 64px;
-	height: 64px;
-	background-position: 0 -64px;
 }

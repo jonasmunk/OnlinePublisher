@@ -8,6 +8,8 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Interface/In2iGui.php';
 require_once '../../Classes/Core/SystemInfo.php';
 
+$user = User::load(InternalSession::getUserId());
+
 $gui='
 <gui xmlns="uri:hui" padding="10" title="Start">
 	<css url="style.css"/>
@@ -20,6 +22,12 @@ $gui='
 	<div class="box">
 		<div class="header">
 			<span class="date"> version: '.SystemInfo::getFormattedDate().'</span>
+			<span class="user">
+				<icon icon="common/user" size="16"/>
+				<strong>'.StringUtils::escapeXml($user->getTitle()).'</strong>
+				<em>('.StringUtils::escapeXml($user->getUsername()).')</em>
+				<button small="true" variant="paper" text="Indstillinger" name="userSettings"/>
+			</span>
 		</div>
 		<div style="position: absolute; top: 76px; bottom: 5px; left: 5px; right: 5px; overflow: hidden;">
 			<tiles space="10">
@@ -105,16 +113,10 @@ $gui='
 					<div class="help">
 						<columns>
 							<column>
-								<a href="javascript://" class="buoy" onclick="window.open(\'http://www.in2isoft.dk/support/onlinepublisher/\')">
-									<span style=""></span>
-									<strong>Brugervejledning</strong>
-								</a>
+								<icon icon="common/lifebuoy" size="64" text="Brugervejledning" click="window.open(\'http://www.in2isoft.dk/support/onlinepublisher/\')"/>
 							</column>
 							<column>
-								<a href="javascript://" class="stamp" onclick="window.open(\'http://www.in2isoft.dk/kontakt/\')">
-									<span style=""></span>
-									<strong>Kontakt udviklerne</strong>
-								</a>
+								<icon icon="common/stamp" size="64" text="Kontakt udviklerne" click="window.open(\'http://www.in2isoft.dk/kontakt/\')"/>
 							</column>
 						</columns>
 					</div>
