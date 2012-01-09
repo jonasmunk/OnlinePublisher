@@ -45,7 +45,7 @@ class TablePartController extends PartController
 					<text multiline="true" key="source" max-height="500"/>
 				</group>
 				<buttons>
-					<button name="applySource" title="OK"/>
+					<button name="applySource" title="OK" click="sourceWindow.hide()"/>
 				</buttons>
 			</formula>
 		</window>
