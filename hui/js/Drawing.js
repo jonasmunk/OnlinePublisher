@@ -12,12 +12,15 @@ hui.ui.Drawing = function(options) {
 
 hui.ui.Drawing.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{'class':'hui_drawing'});
+	var e = options.element = hui.build('div',{'class':'hui_drawing',style:'position: relative; overflow: hidden;'});
 	if (options.height) {
-		e.style.height=options.height+'px';
+		e.style.height = options.height+'px';
 	}
 	if (options.width) {
-		e.style.width=options.width+'px';
+		e.style.width = options.width+'px';
+	}
+	if (options.parent) {
+		options.parent.appendChild(e);
 	}
 	return new hui.ui.Drawing(options);
 }
@@ -26,6 +29,19 @@ hui.ui.Drawing.prototype = {
 	addLine : function(options) {
 		var node = this._build({tag:'line',parent:this.svg,attributes:{x1:options.x1,y1:options.y1,x2:options.x2,y2:options.y2,style:'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)}});
 		return new hui.ui.Drawing.Line(node);
+	},
+	addElement : function(options) {
+		var node = hui.build('div',{style:'position:absolute;left:0;top:0;',parent:this.element,html:options.html});
+		if (options.movable) {
+			hui.drag.register({
+				element : node,
+				onMove : function(e) {
+					node.style.left = e.getLeft()+'px';
+					node.style.top = e.getTop()+'px';
+				}
+			})
+		}
+		return new hui.ui.Drawing.Element(node);
 	},
 	_build : function(options) {
 		var node = document.createElementNS('http://www.w3.org/2000/svg',options.tag);
@@ -46,12 +62,27 @@ hui.ui.Drawing.Line = function(node) {
 }
 
 hui.ui.Drawing.Line.prototype = {
-	setFrom : function(x,y) {
-		this.node.setAttribute('x1',x);
-		this.node.setAttribute('y1',y);
+	setFrom : function(point) {
+		this.node.setAttribute('x1',point.x);
+		this.node.setAttribute('y1',point.y);
 	},
-	setTo : function(x,y) {
-		this.node.setAttribute('x2',x);
-		this.node.setAttribute('y2',y);
+	setTo : function(point) {
+		this.node.setAttribute('x2',point.x);
+		this.node.setAttribute('y2',point.y);
+	}
+}
+
+hui.ui.Drawing.Element = function(node) {
+	this.node = node;
+}
+
+hui.ui.Drawing.Element.prototype = {
+	setPosition : function(point) {
+		this.node.style.left = point.x+'px';
+		this.node.style.top = point.y+'px';
+	},
+	setCenter : function(point) {
+		this.node.style.left = (point.x - this.node.clientWidth/2)+'px';
+		this.node.style.top = (point.y - this.node.clientHeight/2)+'px';
 	}
 }
