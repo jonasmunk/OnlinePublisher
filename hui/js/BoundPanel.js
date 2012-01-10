@@ -115,10 +115,13 @@ hui.ui.BoundPanel.prototype = {
 		if (!this.visible) {
 			return;
 		}
-		if (hui.browser.msie) {
+		if (!hui.browser.opacity) {
 			this.element.style.display='none';
 		} else {
 			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,hideOnComplete:true});
+		}
+		if (this.options.modal) {
+			hui.ui.hideCurtain(this);
 		}
 		hui.ui.callVisible(this);
 		this.visible=false;

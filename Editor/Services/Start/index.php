@@ -124,6 +124,23 @@ $gui='
 			</tiles>
 		</div>
 	</div>
+	
+	<boundpanel name="settingsPanel" variant="light" width="200" padding="10" modal="true">
+		<formula>
+			<group>
+				<dropdown label="Sprog">
+					<item title="Dansk" value="da"/>
+					<item title="Engelsk" value="da"/>
+				</dropdown>
+				<field label="Kode">
+					<button text="Skift kodeord" variant="paper" small="true"/>
+				</field>
+			</group>
+		</formula>
+		<buttons align="right">
+			<button variant="paper" text="OK" name="saveSettings"/>
+		</buttons>
+	</boundpanel>
 </gui>';
 
 In2iGui::render($gui);

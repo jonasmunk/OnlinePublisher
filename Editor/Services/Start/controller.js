@@ -32,7 +32,13 @@ hui.ui.listen({
 			developmentPages.previous();
 		}
 	},
-	
+	$click$userSettings : function() {
+		settingsPanel.position(userSettings);
+		settingsPanel.show();
+	},
+	$click$saveSettings : function() {
+		settingsPanel.hide();
+	},
 	$submit$feedbackForm : function() {
 		var values = feedbackForm.getValues();
 		hui.ui.showMessage({text:'Sender besked...',busy:true});
