@@ -499,6 +499,9 @@
 				<xsl:when test="@variant and @small='true'">
 					<xsl:text> hui_button_small_</xsl:text><xsl:value-of select="@variant"/>
 				</xsl:when>
+				<xsl:when test="@variant and @mini='true'">
+					<xsl:text> hui_button_mini_</xsl:text><xsl:value-of select="@variant"/>
+				</xsl:when>
 				<xsl:when test="@small='true' and @highlighted='true'">
 					<xsl:text> hui_button_small hui_button_small_highlighted</xsl:text>
 				</xsl:when>

@@ -19,6 +19,7 @@ class PartContext {
 	var $buildDecorator;
 	var $indexDecorator;
 	var $synchronize;
+	var $language;
 	
 	function PartContext() {
 		$this->displayLinks = array();
@@ -51,6 +52,14 @@ class PartContext {
 	
 	function getDesign() {
 	    return $this->design;
+	}
+	
+	function setLanguage($language) {
+	    $this->language = $language;
+	}
+	
+	function getLanguage() {
+	    return $this->language;
 	}
 	
 	function setSynchronize($synchronize) {

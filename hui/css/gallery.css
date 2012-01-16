@@ -41,6 +41,11 @@ div.hui_gallery_item_error
 	border-radius: 5px;
 }
 
+div.hui_gallery_item_error img
+{
+	display: none;
+}
+
 div.hui_gallery_item:hover
 {
 	border-color: #eee;

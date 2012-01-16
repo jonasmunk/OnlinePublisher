@@ -34,6 +34,8 @@
 		<button variant="paper" icon="monochrome/delete"/>
 		<button variant="paper" text="Paper variant (small)" small="true"/>
 		<button variant="paper" text="Paper variant (small + disabled)" small="true" disabled="true"/>
+		<button variant="paper" text="Paper variant (mini)" mini="true"/>
+		<button variant="paper" text="Paper variant (mini + disabled)" mini="true" disabled="true"/>
 		<header>Actions</header>
 		<button title="Confirmation" click="hui.ui.showMessage({text:'Action approved!',duration:2000})">
 			<confirm text="Are you sure?" ok="Yes" cancel="No"/>

@@ -17780,17 +17780,25 @@ hui.ui.Drawing.prototype = {
 		return new hui.ui.Drawing.Line(node);
 	},
 	addElement : function(options) {
-		var node = hui.build('div',{style:'position:absolute;left:0;top:0;',parent:this.element,html:options.html});
+		var node = hui.build('div',{style:'position:absolute;left:0;top:0;',parent:this.element,html:options.html}),
+			element = new hui.ui.Drawing.Element(node);
 		if (options.movable) {
 			hui.drag.register({
 				element : node,
+				onBeforeMove : function(e) {
+					this.fire('shapeWillMove',{shape:element,event:e});
+				}.bind(this),
 				onMove : function(e) {
 					node.style.left = e.getLeft()+'px';
 					node.style.top = e.getTop()+'px';
-				}
+					this.fire('shapeMoved',{shape:element,event:e});
+				}.bind(this),
+				onAfterMove : function(e) {
+					this.fire('shapeWasMoved',{shape:element,event:e});
+				}.bind(this)
 			})
 		}
-		return new hui.ui.Drawing.Element(node);
+		return element;
 	},
 	_build : function(options) {
 		var node = document.createElementNS('http://www.w3.org/2000/svg',options.tag);

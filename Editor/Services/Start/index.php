@@ -26,7 +26,7 @@ $gui='
 				<icon icon="common/user" size="16"/>
 				<strong>'.StringUtils::escapeXml($user->getTitle()).'</strong>
 				<em>('.StringUtils::escapeXml($user->getUsername()).')</em>
-				<button small="true" variant="paper" text="Indstillinger" name="userSettings"/>
+				<button mini="true" variant="paper" text="Indstillinger" name="userSettings"/>
 			</span>
 		</div>
 		<div style="position: absolute; top: 76px; bottom: 5px; left: 5px; right: 5px; overflow: hidden;">
@@ -133,14 +133,28 @@ $gui='
 					<item title="Engelsk" value="da"/>
 				</dropdown>
 				<field label="Kode">
-					<button text="Skift kodeord" variant="paper" small="true"/>
+					<button text="Skift kodeord" variant="paper" mini="true" click="settingsPanel.hide();passwordBox.show()"/>
 				</field>
 			</group>
 		</formula>
 		<buttons align="right">
-			<button variant="paper" text="OK" name="saveSettings"/>
+			<button variant="paper" text="OK" small="true" name="saveSettings"/>
 		</buttons>
 	</boundpanel>
+	
+	<box title="Skift kode" closable="true" name="passwordBox" absolute="true" width="400" modal="true" padding="10">
+		<formula>
+			<group>
+				<text label="Tidligere kode" secret="true"/>
+				<text label="Ny kode" secret="true"/>
+				<text label="Ny kode igen" secret="true"/>
+			</group>
+		</formula>
+		<buttons align="right">
+			<button text="Cancel"/>
+			<button text="Skift" highlighted="true"/>
+		</buttons>
+	</box>
 </gui>';
 
 In2iGui::render($gui);

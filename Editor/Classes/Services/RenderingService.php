@@ -69,17 +69,17 @@ class RenderingService {
 
 		$agent='xslt';
 		if (function_exists('xslt_create')) {
-			$incPath='../../';
+			$incPath = '../../';
 		}
 		else {
-			$incPath=$path;
+			$incPath = $path;
 		}
 		if (file_exists($basePath.'style/'.$design.'/xslt/'.$template.'.xsl')) {
-			$contentDesign=$design;
+			$contentDesign = $design;
 			$agent='xslt';
 		} else if (file_exists($basePath.'style/basic/xslt/'.$template.'.xsl')) {
-			$contentDesign='basic';
-			$agent='xslt';
+			$contentDesign = 'basic';
+			$agent = 'xslt';
 		} else {
 			$contentDesign='basic';
 		}

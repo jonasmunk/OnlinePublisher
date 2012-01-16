@@ -384,6 +384,28 @@ a.hui_button_paper:focus
 	border-color: rgb(1,105,255);
 }
 
+
+
+/** Icon **/
+
+a.hui_button_paper em.hui_button_icon
+{
+	margin-left: -6px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+a.hui_button_paper em.hui_button_icon_notext
+{
+    margin-right: -5px;
+}
+
+
+
+
+
+/** Small paper **/
+
 a.hui_button_small_paper, a.hui_button_small_paper span
 {
 	height: 20px;
@@ -398,14 +420,28 @@ a.hui_button_small_paper span span
 	line-height: 18px;
 }
 
-a.hui_button_paper em.hui_button_icon
+
+
+
+
+/** Mini paper **/
+
+a.hui_button_mini_paper
 {
-	margin-left: -6px;
-    margin-right: 5px;
-    margin-top: 5px;
+	border-radius: 16px;
 }
 
-a.hui_button_paper em.hui_button_icon_notext
+a.hui_button_mini_paper, a.hui_button_mini_paper span
 {
-    margin-right: -5px;
+	height: 16px;
+	line-height: 16px;
+	font-size: 0;
+}
+
+a.hui_button_mini_paper span span
+{
+	margin: 0;
+	padding: 0 10px;
+	font-size: 10px;
+	line-height: 16px;
 }
