@@ -33,11 +33,18 @@
 	
 	<script type="text/javascript">
 		hui.ui.test.run([
+			function() {
+				hui.ui.test.assertEquals(hui.string.camelize('font-size'),'fontSize');
+				hui.ui.test.assertEquals(hui.string.camelize('fontSize'),'fontSize');
+				hui.ui.test.assertEquals(hui.string.camelize('color'),'color');
+			},
+			
 			function() { // One
 				
 				hui.ui.test.assertEquals(hui.position.getTop('one'),10);
 				hui.ui.test.assertEquals(hui.get('one').clientWidth,320);
 				hui.ui.test.assertEquals(hui.style.get('one','width'),'300px');
+				hui.ui.test.assertEquals(hui.style.get('one','padding-top'),'10px');
 				hui.ui.test.assertEquals(hui.style.get('one','padding-top'),'10px');
 				
 				if (hui.browser.msie7 || hui.browser.msie8) {

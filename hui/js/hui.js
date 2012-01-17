@@ -1495,6 +1495,11 @@ hui.style = {
 			}
 		}
 	},
+	/**
+	 * Get the computed style of an element
+	 * @param {Element} element The element
+	 * @param {String} style The CSS property in the form font-size NOT fontSize; 
+	 */
 	get : function(element, style) {
 		element = hui.get(element);
 		var cameled = hui.string.camelize(style);

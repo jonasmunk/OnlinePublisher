@@ -9,6 +9,7 @@ document.write('<link charset="utf-8" title="front" media="screen" type="text/cs
 	'	<link rel="stylesheet" type="text/css" href="../../css/msie8.css"> </link>'+
 	'<![endif]-->'+
 	'<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>'+
+	'<script charset="utf-8" type="text/javascript" src="../../js/hui_require.js"></script>'+
 	'<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>'+
 	'<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>'+
 	'<script charset="utf-8" type="text/javascript" src="../../lib/date.js"></script>'+

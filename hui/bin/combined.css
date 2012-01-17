@@ -4073,6 +4073,11 @@ div.hui_gallery_item_error
 	border-radius: 5px;
 }
 
+div.hui_gallery_item_error img
+{
+	display: none;
+}
+
 div.hui_gallery_item:hover
 {
 	border-color: #eee;
@@ -5977,6 +5982,7 @@ div.hui_locationfield input
 	width: 100%;
 	background: none;
 	height: 16px;
+	outline: none;
 }
 
 a.hui_locationfield_picker
@@ -6006,7 +6012,6 @@ span.hui_locationfield_latitude
 span.hui_locationfield_latitude span, span.hui_locationfield_longitude span
 {
 	display: block;
-	width: 100%;
 	height: 16px;
 	padding-left: 16px;
 }

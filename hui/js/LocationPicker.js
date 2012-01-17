@@ -15,11 +15,11 @@ hui.ui.LocationPicker = function(options) {
 hui.ui.LocationPicker.prototype = {
 	show : function(options) {
 		if (!this.panel) {
-			var panel = this.panel = hui.ui.BoundPanel.create({width:300});
-			var mapContainer = hui.build('div',{style:'width:300px;height:300px'});
+			var panel = this.panel = hui.ui.BoundPanel.create({width:302});
+			var mapContainer = hui.build('div',{style:'width:300px;height:300px;border:1px solid #bbb;'});
 			panel.add(mapContainer);
 			var buttons = hui.ui.Buttons.create({align:'right',top:5});
-			var button = hui.ui.Button.create({text:'Luk'});
+			var button = hui.ui.Button.create({text:'Luk',small:true});
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
 			hui.style.set(panel.element,{left:'-10000px',top:'-10000px',display:''});
