@@ -3,13 +3,33 @@
 <head>
 	<title>HUI</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!--
+	<script charset="utf-8" type="text/javascript" src="../../bin/all.js"></script>
+	-->
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Drawing.js"></script>
 	<script charset="utf-8" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+	<!--
 	<script charset="utf-8" type="text/javascript" src="../../lib/arbor/lib/arbor.js"></script>
+	-->
+
+	<script src="../../lib/arbor/src/etc.js"></script>
+	<script src="../../lib/arbor/src/kernel.js"></script>
+	<script src="../../lib/arbor/src/graphics/colors.js"></script>
+	<script src="../../lib/arbor/src/graphics/primitives.js"></script>
+	<script src="../../lib/arbor/src/graphics/graphics.js"></script>
+	<script src="../../lib/arbor/src/tween/easing.js"></script>
+	<script src="../../lib/arbor/src/tween/tween.js"></script>
+	<script src="../../lib/arbor/src/physics/barnes-hut.js"></script>
+	<script src="../../lib/arbor/src/physics/atoms.js"></script>
+	<script src="../../lib/arbor/src/physics/physics.js"></script>
+	<script src="../../lib/arbor/src/physics/system.js"></script>
+	<script src="../../lib/arbor/src/dev.js"></script>
+	
 	<script type="text/javascript" charset="utf-8">
 		hui.ui.context='../../..';
 	</script>
@@ -99,6 +119,7 @@
 		var myRenderer = {
   			init:  function(system){ console.log("starting",system) },
   			redraw : function() {
+				hui.log('redraw')
 				system.eachNode(function(node,point) {
 					if (draggedNode==node) {
 						return;
@@ -162,8 +183,8 @@
 		system.addEdge("E", "C", {type:'connection',line:drawing.addLine({x1:0,y1:0,x2:0,y2:0,color:'#aaa'})})
 		system.addEdge("F", "C", {type:'connection',line:drawing.addLine({x1:0,y1:0,x2:0,y2:0,color:'#aaa'})})
 		system.addEdge("F", "D", {type:'connection',line:drawing.addLine({x1:0,y1:0,x2:0,y2:0,color:'#aaa'})})
-		system.stop();
-		//system.start();
+		//system.stop();
+		system.start();
 		hui.ui.listen({
 			$shapeWillMove : function(info) {
 				var node = info.shape.x;

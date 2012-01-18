@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" pad="10" title="Pages">
+	<box width="600" title="Pages" variant="textured">
+		<toolbar>
+			<icon icon="common/color" title="Hep hey!" click="pages.next()"/>
+			<icon icon="common/folder" title="Show values" click="pages.previous()"/>
+		</toolbar>
+		<div style="height: 400px">
+			<pages name="pages">
+				<page> 
+					<div style="background: url('http://farm1.staticflickr.com/103/263966036_ee04032cc8_z.jpg?zz=1'); height: 400px;"></div>
+				</page>
+				<page> 
+					<div style="background: url('http://farm8.staticflickr.com/7175/6470586439_11461583a7_z.jpg'); height: 400px;"></div>
+				</page>
+				<page> 
+					<div style="background: url('http://farm8.staticflickr.com/7166/6509690011_4dbb8d9f8b_z.jpg'); height: 400px;"></div>
+				</page>
+			</pages>
+		</div>
+	</box>
+</gui>
