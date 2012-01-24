@@ -9,9 +9,8 @@ $message = Request::getEncodedString('message');
 
 $user = User::load(InternalSession::getUserId());
 
-$success = postIt(,);
 
-$request = new HttpRequest('http://localhost/~jbm/Publisher/services/issues/create/');
+$request = new HttpRequest('http://www.in2isoft.dk/services/issues/create/');
 $request->setParameters(array('description'=>$message,'site'=>$baseUrl,'user'=>$user->getUsername()));
 
 $client = new HttpClient();
@@ -19,8 +18,8 @@ $client = new HttpClient();
 $response = $client->send($request);
 
 //$success = MailService::sendToFeedback('Feedback',$message);
-
-if (!$success) {
+Log::debug($response->getStatusCode());
+if (!$response->isSuccess()) {
 	In2iGui::respondFailure();
 }
 

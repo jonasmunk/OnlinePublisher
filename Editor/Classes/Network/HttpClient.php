@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class HttpClient {
 
-	function request($request) {
+	function send($request) {
 		$body = http_build_query($request->getParameters(),'','&');
 	
 		$session = curl_init($request->getUrl());
@@ -18,7 +18,18 @@ class HttpClient {
 		curl_setopt ($session, CURLOPT_POSTFIELDS, $body);
 		curl_setopt ($session, CURLOPT_FOLLOWLOCATION, 1);
 		curl_exec ($session);
+		$info = null;
+		if(!curl_errno($session))
+		{
+			$info = curl_getinfo($session);
+			Log::debug($info);
+			Log::debug('Status: '.$info['http_code']);
+		}
 		curl_close ($session);
-		return true;
+		$response = new HttpResponse();
+		if ($info!==null) {
+			$response->setStatusCode($info['http_code']);
+		}
+		return $response;
 	}
 }

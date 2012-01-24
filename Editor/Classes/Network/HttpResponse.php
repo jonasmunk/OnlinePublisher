@@ -15,7 +15,15 @@ class HttpResponse {
 	function HttpResponse() {
 	}
 
+	function setStatusCode($statusCode) {
+		$this->statusCode = $statusCode;
+	}
+
 	function getStatusCode() {
 		return $this->statusCode;
+	}
+	
+	function isSuccess() {
+		return $this->statusCode == 200;
 	}
 }
