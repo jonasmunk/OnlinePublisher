@@ -63,7 +63,7 @@
 		<hr/>
 		<h2>Kontakt</h2>
 		<p>Buster Munk</p>
-		<p>Tlf: 29 20 31 40</p>
+		<p>Tlf: 53 74 01 02</p>
 		<p><a href="mailto:bustermunk@gmail.com">bustermunk@gmail.com</a></p>
 	</div>
 	<script type="text/javascript">
