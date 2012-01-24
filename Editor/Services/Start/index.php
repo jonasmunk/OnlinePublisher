@@ -105,7 +105,7 @@ $gui='
 						</pages>
 					</overflow>
 				</tile>
-				<tile width="40" height="50" top="50" left="60" variant="light">
+				<tile width="40" height="50" top="50" left="60" variant="light" name="helpTile">
 					<actions>
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
@@ -113,10 +113,10 @@ $gui='
 					<div class="help">
 						<columns>
 							<column>
-								<icon icon="common/lifebuoy" size="64" text="Brugervejledning" click="window.open(\'http://www.in2isoft.dk/support/onlinepublisher/\')"/>
+								<icon icon="common/lifebuoy" size="64" text="Brugervejledning" name="userManual"/>
 							</column>
 							<column>
-								<icon icon="common/stamp" size="64" text="Kontakt udviklerne" click="window.open(\'http://www.in2isoft.dk/kontakt/\')"/>
+								<icon icon="common/stamp" size="64" text="Kontakt udviklerne" name="contact"/>
 							</column>
 						</columns>
 					</div>

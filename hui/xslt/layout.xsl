@@ -15,6 +15,15 @@
 		<xsl:attribute name="class">hui_icon_<xsl:value-of select="@size"/></xsl:attribute>
 		<xsl:comment/>
 	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Icon({
+			element : '<xsl:value-of select="generate-id()"/>',
+			icon : '<xsl:value-of select="@icon"/>',
+			size : <xsl:value-of select="@size"/>
+			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
 </xsl:template>
 
 
@@ -23,13 +32,22 @@
 		<xsl:if test="@click">
 			<xsl:attribute name="onclick"><xsl:value-of select="@click"/></xsl:attribute>
 		</xsl:if>
-	<span>
-		<xsl:attribute name="style">background-image: url('<xsl:value-of select="$context"/>/hui/icons/<xsl:value-of select="@icon"/><xsl:value-of select="@size"/>.png');</xsl:attribute>
-		<xsl:attribute name="class">hui_icon_<xsl:value-of select="@size"/></xsl:attribute>
-		<xsl:comment/>
-	</span>
-	<strong><xsl:value-of select="@text"/></strong>
+		<span>
+			<xsl:attribute name="style">background-image: url('<xsl:value-of select="$context"/>/hui/icons/<xsl:value-of select="@icon"/><xsl:value-of select="@size"/>.png');</xsl:attribute>
+			<xsl:attribute name="class">hui_icon_<xsl:value-of select="@size"/></xsl:attribute>
+			<xsl:comment/>
+		</span>
+		<strong><xsl:value-of select="@text"/></strong>
 	</a>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Icon({
+			element : '<xsl:value-of select="generate-id()"/>',
+			icon : '<xsl:value-of select="@icon"/>',
+			size : <xsl:value-of select="@size"/>
+			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
 </xsl:template>
 	
 <!--doc title:'Space'

@@ -32,6 +32,7 @@ hui.ui.listen({
 			developmentPages.previous();
 		}
 	},
+	
 	$click$userSettings : function() {
 		settingsPanel.position(userSettings);
 		settingsPanel.show();
@@ -57,5 +58,18 @@ hui.ui.listen({
 				feedbackPages.next();
 			}
 		})
+	},
+	
+	
+	$clickIcon$helpTile : function(info) {
+		info.tile.toggleFullScreen();
+		userManual.setSize(info.tile.isFullScreen() ? 128 : 64);
+		contact.setSize(info.tile.isFullScreen() ? 128 : 64);
+	},
+	$click$userManual : function() {
+		window.open('http://www.in2isoft.dk/support/onlinepublisher/');
+	},
+	$click$contact : function() {
+		window.open('http://www.in2isoft.dk/kontakt/');
 	}
 })

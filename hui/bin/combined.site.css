@@ -102,6 +102,14 @@ span.hui_icon_64
 	vertical-align: middle;
 }
 
+span.hui_icon_128
+{
+	display: inline-block;
+	width: 128px;
+	height: 128px;
+	vertical-align: middle;
+}
+
 a.hui_icon_labeled
 {
 	display: inline-block;	
@@ -119,9 +127,19 @@ a.hui_icon_labeled strong
 	margin-top: 2px;
 }
 
+a.hui_icon_labeled_128 strong
+{
+	font-size: 18px;
+}
+
 a.hui_icon_labeled:hover span.hui_icon_64
 {
 	background-position: 0 -64px;
+}
+
+a.hui_icon_labeled:hover span.hui_icon_128
+{
+	background-position: 0 -128px;
 }
 
 /************************* disclosure **********************/

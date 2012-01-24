@@ -55,6 +55,9 @@ hui.ui.Tile.prototype = {
 			}
 		}.bind(this))
 	},
+	isFullScreen : function() {
+		return this.fullScreen;
+	},
 	toggleFullScreen : function() {
 		if (this.fullScreen) {
 			hui.animate({

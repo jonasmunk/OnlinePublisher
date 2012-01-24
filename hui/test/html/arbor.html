@@ -189,18 +189,16 @@
 			$shapeWillMove : function(info) {
 				var node = info.shape.x;
 				draggedNode = node;
-				hui.log('shapeWillMove')
+				//hui.log('shapeWillMove')
 			},
 			$shapeMoved : function(info) {
 				var node = info.shape.x;
 				draggedPoint = arbor.Point(info.event.getLeft(), info.event.getTop());
 				node.p = system.fromScreen(arbor.Point(info.event.getLeft(), info.event.getTop()));
-				hui.log(node.fixed)
-				//node.mass = 1;
-				//system.stop();
+				
 			},
 			$shapeWasMoved : function(info) {
-				hui.log('shapeWasMoved')
+				//hui.log('shapeWasMoved')
 				draggedNode = undefined;
 			}
 		})
