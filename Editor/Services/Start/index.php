@@ -133,7 +133,7 @@ $gui='
 					<item title="Engelsk" value="da"/>
 				</dropdown>
 				<field label="Kode">
-					<button text="Skift kodeord" variant="paper" mini="true" click="settingsPanel.hide();passwordBox.show()"/>
+					<button text="Skift kodeord" variant="paper" mini="true" name="changePassword"/>
 				</field>
 			</group>
 		</formula>
@@ -143,17 +143,17 @@ $gui='
 	</boundpanel>
 	
 	<box title="Skift kode" closable="true" name="passwordBox" absolute="true" width="400" modal="true" padding="10">
-		<formula>
+		<formula name="passwordFormula">
 			<group>
-				<text label="Tidligere kode" secret="true"/>
-				<text label="Ny kode" secret="true"/>
-				<text label="Ny kode igen" secret="true"/>
+				<text label="Tidligere kode" key="old" secret="true"/>
+				<text label="Ny kode" key="password" secret="true"/>
+				<text label="Ny kode igen" key="password2" secret="true"/>
 			</group>
+			<buttons align="right">
+				<button text="Cancel"/>
+				<button text="Skift" highlighted="true" submit="true"/>
+			</buttons>
 		</formula>
-		<buttons align="right">
-			<button text="Cancel"/>
-			<button text="Skift" highlighted="true"/>
-		</buttons>
 	</box>
 </gui>';
 

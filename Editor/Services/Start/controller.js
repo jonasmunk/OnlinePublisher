@@ -71,5 +71,43 @@ hui.ui.listen({
 	},
 	$click$contact : function() {
 		window.open('http://www.in2isoft.dk/kontakt/');
+	},
+	
+	// Password...
+$ready : function() {
+	this.$click$changePassword();
+},
+	$click$changePassword : function() {
+		settingsPanel.hide();
+		passwordBox.show();
+		passwordFormula.focus();
+	},
+	$submit$passwordFormula : function(form) {
+		var values = form.getValues();
+		if (hui.isBlank(values.old) || hui.isBlank(values.password) || hui.isBlank(values.password2)) {
+			hui.ui.showMessage({text:'Alle felter skal udfyldes',icon:'common/warning',duration:3000});
+			passwordFormula.focus();
+			return;
+		}
+		if (values.password!==values.password2) {
+			hui.ui.showMessage({text:'De to kodeord er ikke ens',icon:'common/warning',duration:3000});
+			passwordFormula.focus();
+			return;
+		}
+		submitPassword.disable();
+		hui.ui.request({
+			url : 'data/ChangePassword.php',
+			parameters : values,
+			onFailure : function() {
+				hui.ui.showMessage({text:'Det lykkedes desværre ikke at ændre kodeordet',icon:'common/warning',duration:3000})
+				submitPassword.enable();
+			},
+			onSuccess : function() {
+				feedbackForm.reset();
+				hui.ui.hideMessage();
+				submitPassword.enable();
+				feedbackPages.next();
+			}
+		})
 	}
 })

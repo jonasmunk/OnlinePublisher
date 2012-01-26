@@ -28,6 +28,7 @@ if (StringUtils::isBlank($description)) {
 $issue = new Issue();
 $issue->setTitle($user.' from '.$site);
 $issue->setNote($description);
+$issue->setKind(Issue::$feedback);
 $issue->save();
 
 Log::debug($issue);
