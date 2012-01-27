@@ -151,7 +151,7 @@ $gui='
 			</group>
 			<buttons align="right">
 				<button text="Cancel"/>
-				<button text="Skift" highlighted="true" submit="true"/>
+				<button text="Skift" highlighted="true" submit="true" name="submitPassword"/>
 			</buttons>
 		</formula>
 	</box>

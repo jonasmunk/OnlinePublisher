@@ -74,9 +74,9 @@ hui.ui.listen({
 	},
 	
 	// Password...
-$ready : function() {
-	this.$click$changePassword();
-},
+	$ready : function() {
+		this.$click$changePassword();
+	},
 	$click$changePassword : function() {
 		settingsPanel.hide();
 		passwordBox.show();
@@ -95,6 +95,7 @@ $ready : function() {
 			return;
 		}
 		submitPassword.disable();
+		hui.ui.showMessage({text:'Ændrer kodeord...',busy:true});
 		hui.ui.request({
 			url : 'data/ChangePassword.php',
 			parameters : values,
@@ -104,9 +105,8 @@ $ready : function() {
 			},
 			onSuccess : function() {
 				feedbackForm.reset();
-				hui.ui.hideMessage();
+				hui.ui.showMessage({text:'Det lykkedes desværre ikke at ændre kodeordet',icon:'common/success',duration:3000})
 				submitPassword.enable();
-				feedbackPages.next();
 			}
 		})
 	}
