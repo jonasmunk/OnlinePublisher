@@ -6,9 +6,14 @@
 require_once '../../../Include/Private.php';
 
 $old = Request::getEncodedString('old');
-$password = Request::getEncodedString('new');
+$password = Request::getEncodedString('password');
 
-$user = AuthenticationService::getUser('jbm',$old);
+if (StringUtils::isBlank($old) || StringUtils::isBlank($password)) {
+	Response::badRequest();
+}
+
+
+$user = AuthenticationService::getUser(InternalSession::getUsername(),$old);
 
 if ($user) {
 	AuthenticationService::setPassword($user,$password);

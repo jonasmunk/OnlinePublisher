@@ -145,12 +145,12 @@ $gui='
 	<box title="Skift kode" closable="true" name="passwordBox" absolute="true" width="400" modal="true" padding="10">
 		<formula name="passwordFormula">
 			<group>
-				<text label="Tidligere kode" key="old" secret="true"/>
+				<text label="Nuværende kode" key="old" secret="true"/>
 				<text label="Ny kode" key="password" secret="true"/>
 				<text label="Ny kode igen" key="password2" secret="true"/>
 			</group>
 			<buttons align="right">
-				<button text="Cancel"/>
+				<button text="Cancel" name="cancelPassword"/>
 				<button text="Skift" highlighted="true" submit="true" name="submitPassword"/>
 			</buttons>
 		</formula>

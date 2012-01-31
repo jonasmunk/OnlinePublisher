@@ -74,13 +74,15 @@ hui.ui.listen({
 	},
 	
 	// Password...
-	$ready : function() {
-		this.$click$changePassword();
-	},
+	
 	$click$changePassword : function() {
 		settingsPanel.hide();
 		passwordBox.show();
 		passwordFormula.focus();
+	},
+	$click$cancelPassword : function() {
+		passwordFormula.reset();
+		passwordBox.hide();
 	},
 	$submit$passwordFormula : function(form) {
 		var values = form.getValues();
@@ -104,9 +106,10 @@ hui.ui.listen({
 				submitPassword.enable();
 			},
 			onSuccess : function() {
-				feedbackForm.reset();
-				hui.ui.showMessage({text:'Det lykkedes desværre ikke at ændre kodeordet',icon:'common/success',duration:3000})
+				hui.ui.showMessage({text:'Kodeordet er nu ændret',icon:'common/success',duration:3000})
+				passwordFormula.reset();
 				submitPassword.enable();
+				passwordBox.hide();
 			}
 		})
 	}
