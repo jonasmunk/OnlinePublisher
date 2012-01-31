@@ -26,7 +26,7 @@ $gui='
 				<icon icon="common/user" size="16"/>
 				<strong>'.StringUtils::escapeXml($user->getTitle()).'</strong>
 				<em>('.StringUtils::escapeXml($user->getUsername()).')</em>
-				<button mini="true" variant="paper" text="Indstillinger" name="userSettings"/>
+				<button mini="true" variant="paper" text="{Settings ; da:Indstillinger}" name="userSettings"/>
 			</span>
 		</div>
 		<div style="position: absolute; top: 76px; bottom: 5px; left: 5px; right: 5px; overflow: hidden;">
@@ -36,7 +36,7 @@ $gui='
 						<icon icon="monochrome/info"/>
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
-					<title>Opgaver</title>
+					<title>{Tasks ; da: Opgaver }</title>
 					<overflow full="true">
 					<list source="taskSource" name="taskList" indent="10" selectable="false">
 						<empty>
@@ -57,7 +57,7 @@ $gui='
 						<icon icon="monochrome/round_arrow_right" key="next"/>
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
-					<title>Udvikling</title>
+					<title>{Development ; da: Udvikling }</title>
 					<pages name="developmentPages" height="full">
 						<page>
 							<overflow full="true">
@@ -86,7 +86,7 @@ $gui='
 							<page>
 								<formula padding="10" name="feedbackForm">
 									<group labels="above">
-										<text multiline="true" label="Skriv til os med ris, ros eller spørgsmål" key="message"/>
+										<text multiline="true" label="{Write us with improvements and questions ; da: Skriv til os med ris, ros eller spørgsmål }" key="message"/>
 										<buttons>
 											<button text="Send" submit="true" name="sendFeedback"/>
 										</buttons>
@@ -126,11 +126,11 @@ $gui='
 	</div>
 	
 	<boundpanel name="settingsPanel" variant="light" width="200" padding="10" modal="true">
-		<formula>
+		<formula name="settingsFormula">
 			<group>
-				<dropdown label="Sprog">
+				<dropdown label="Sprog" key="language" value="'.InternalSession::getLanguage().'">
 					<item title="Dansk" value="da"/>
-					<item title="Engelsk" value="da"/>
+					<item title="Engelsk" value="en"/>
 				</dropdown>
 				<field label="Kode">
 					<button text="Skift kodeord" variant="paper" mini="true" name="changePassword"/>

@@ -112,5 +112,22 @@ hui.ui.listen({
 				passwordBox.hide();
 			}
 		})
+	},
+	
+	// Setttings...
+	
+	$click$saveSettings : function() {
+		var values = settingsFormula.getValues();
+		hui.ui.request({
+			url : 'data/UpdateSettings.php',
+			parameters : values,
+			onSuccess : function() {
+				if (window.parent) {
+					window.parent.location.reload();
+				} else {
+					window.location.reload();					
+				}
+			}
+		})
 	}
 })

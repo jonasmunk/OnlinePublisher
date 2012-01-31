@@ -20,8 +20,8 @@ foreach($list as $item) {
 		$page = $pages[0];
 	}
 	$writer->startRow()->
-		startCell()->
-			startLine(array('mini'=>false))->text($item->getNote())->endLine();
+		startCell();
+		$writer->startLine(array('mini'=>false))->text($item->getNote())->endLine();
 		if ($page) {
 			$writer->startLine(array('top'=>3))->object(array('icon'=>'common/page','text'=>$page['title']))->endLine();
 		}

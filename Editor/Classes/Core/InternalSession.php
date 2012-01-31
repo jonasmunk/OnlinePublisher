@@ -50,7 +50,16 @@ class InternalSession {
 
 	static function getLanguage() {
 		//return 'en';
+		if (isset($_SESSION['core.user.language'])) {
+			return $_SESSION['core.user.language'];
+		}
 		return 'da';
+	}
+
+	static function setLanguage($language) {
+		if ($language=='da' || $language=='en') {
+			$_SESSION['core.user.language'] = $language;
+		}
 	}
 
 	/**
