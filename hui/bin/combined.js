@@ -4781,6 +4781,11 @@ hui.ui.Widget = function() {
 }
 
 hui.ui.Widget.prototype = {
+	_init : function(options) {
+		this.options = options;
+		this.name = options.name;
+		this.element = hui.get(options.element);
+	},
 	hide : function() {
 		this.element.style.display = 'none';
 	},
@@ -14686,11 +14691,6 @@ hui.ui.StyleLength.prototype = {
 			this.input.focus();
 		} catch (e) {}		
 	},
-	focus : function() {
-		try {
-			this.input.focus();
-		} catch (e) {}		
-	},
 	reset : function() {
 		this.setValue('');
 	}
@@ -15592,4 +15592,42 @@ hui.ui.Icon.prototype = {
 		inner.className = 'hui_icon_'+this.size;
 		inner.style.backgroundImage = 'url('+hui.ui.getIconUrl(this.options.icon,this.size)+')';
 	}
+}/////////////////////////// Color field /////////////////////////
+
+/**
+ * A component for geo-location
+ * @constructor
+ */
+hui.ui.ColorField = function(options) {
+	this.options = hui.override({value:null},options);
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	this.value = this.options.value;
+	hui.ui.extend(this);
+	this.setValue(this.value);
+	this._addBehavior();
 }
+
+hui.ui.ColorField.prototype = {
+	_addBehavior : function() {
+		
+	},
+	
+	getValue : function() {
+		return this.value ? this.value.number+this.value.unit : '';
+	},
+	setValue : function(value) {
+		this.value = value;
+	},
+	focus : function() {
+		try {
+			this.input.focus();
+		} catch (e) {}		
+	},
+	reset : function() {
+		this.setValue('');
+	}
+	
+}
+
+/* EOF */

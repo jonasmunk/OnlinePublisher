@@ -3280,6 +3280,11 @@ hui.ui.Widget = function() {
 }
 
 hui.ui.Widget.prototype = {
+	_init : function(options) {
+		this.options = options;
+		this.name = options.name;
+		this.element = hui.get(options.element);
+	},
 	hide : function() {
 		this.element.style.display = 'none';
 	},

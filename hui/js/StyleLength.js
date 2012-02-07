@@ -118,11 +118,6 @@ hui.ui.StyleLength.prototype = {
 			this.input.focus();
 		} catch (e) {}		
 	},
-	focus : function() {
-		try {
-			this.input.focus();
-		} catch (e) {}		
-	},
 	reset : function() {
 		this.setValue('');
 	}

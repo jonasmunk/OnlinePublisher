@@ -227,11 +227,13 @@
 			<xsl:if test="@max">,max:<xsl:value-of select="@max"/></xsl:if>
 			<xsl:if test="@decimals">,decimals:<xsl:value-of select="@decimals"/></xsl:if>
 			<xsl:if test="@allow-null">,allowNull:true</xsl:if>
-			<xsl:if test="@value">,value:parseInt(<xsl:value-of select="@value"/>)</xsl:if>
+			<xsl:if test="@value">,value : '<xsl:value-of select="@value"/>'</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
+
+
 
 <!-- Style length -->
 
@@ -265,6 +267,44 @@
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
+
+
+
+<!-- Color field -->
+
+<xsl:template match="gui:group/gui:colorfield">
+	<tr>
+		<th><label><xsl:value-of select="@label"/></label></th>
+		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:style-color"/></div></td>
+	</tr>
+</xsl:template>
+
+<xsl:template match="gui:group[@labels='above']/gui:colorfield">
+	<tr><td>
+		<label><xsl:value-of select="@label"/></label>
+		<div class="hui_formula_item"><xsl:call-template name="gui:style-color"/></div>
+	</td></tr>
+</xsl:template>
+
+<xsl:template name="gui:colorfield" match="gui:colorfield">
+	<span class="hui_style_color" id="{generate-id()}">
+		<span><span><input type="text" value="{@value}"/></span></span>
+	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ColorField({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>',
+			key:'<xsl:value-of select="@key"/>'
+			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
+			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+
+
 
 <!-- dropdown -->
 

@@ -9,4 +9,8 @@ hui.ui.Finder = function(options) {
 	hui.ui.extend(this);
 }
 
+hui.ui.Finder.create = function(options) {
+	return new hui.ui.Finder();
+}
+
 hui.ui.Finder.prototype = new hui.ui.Widget();

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.style</title>
+		<title>JsDoc Reference - hui.ui.Icon</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -430,7 +430,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace hui.style
+				Class hui.ui.Icon
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -447,8 +447,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.style.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Icon.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -460,9 +460,17 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.style.html#constructor">hui.style</a></b>
+								<b><a href="../symbols/hui.ui.Icon.html#constructor">hui.ui.Icon</a></b>(options)
 							</div>
-							<div class="description"></div>
+							<div class="description">A push button
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»
+}
+
+<strong>Events:</strong>
+$click(button) - When the icon is clicked
+</pre></div>
 						</td>
 					</tr>
 				</tbody>
@@ -476,7 +484,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.style.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Icon.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -487,38 +495,11 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.style.<b><a href="../symbols/hui.style.html#.copy">copy</a></b>(source, target, styles)
-								</div>
-								<div class="description">Copy the style from one element to another</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.style.<b><a href="../symbols/hui.style.html#.get">get</a></b>(element, style)
-								</div>
-								<div class="description">Get the computed style of an element</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.style.<b><a href="../symbols/hui.style.html#.set">set</a></b>(element, styles)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Icon.html#setSize">setSize</a></b>(size)
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.style.<b><a href="../symbols/hui.style.html#.setOpacity">setOpacity</a></b>(element, opacity)
-								</div>
-								<div class="description">Cross browser way of setting opacity</div>
 							</td>
 						</tr>
 					
@@ -535,21 +516,40 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.style</b>
+						<b>hui.ui.Icon</b>(options)
 				</div>
 				
 				<div class="description">
-					
+					A push button
+<pre><strong>options:</strong> {
+ element : «Element | ID»,
+ name : «String»
+}
+
+<strong>Events:</strong>
+$click(button) - When the icon is clicked
+</pre>
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								 <b>options</b>
+								
+							</dt>
+								<dd>{Object} The options</dd>
+						
+						</dl>
 					
 					
 					
@@ -570,101 +570,11 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".copy"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="setSize"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">hui.style.</span><b>copy</b>(source, target, styles)
-					
-					</div>
-					<div class="description">
-						Copy the style from one element to another
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>source</b>
-									
-								</dt>
-								<dd>The element to copy from</dd>
-							
-								<dt>
-									<b>target</b>
-									
-								</dt>
-								<dd>The element to copy to</dd>
-							
-								<dt>
-									<b>styles</b>
-									
-								</dt>
-								<dd>An array of properties to copy</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".get"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.style.</span><b>get</b>(element, style)
-					
-					</div>
-					<div class="description">
-						Get the computed style of an element
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Element}</span> <b>element</b>
-									
-								</dt>
-								<dd>The element</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>style</b>
-									
-								</dt>
-								<dd>The CSS property in the form font-size NOT fontSize;</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".set"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.style.</span><b>set</b>(element, styles)
+					<b>setSize</b>(size)
 					
 					</div>
 					<div class="description">
@@ -680,55 +590,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>styles</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setOpacity"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.style.</span><b>setOpacity</b>(element, opacity)
-					
-					</div>
-					<div class="description">
-						Cross browser way of setting opacity
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>element</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>opacity</b>
+									<b>size</b>
 									
 								</dt>
 								<dd></dd>

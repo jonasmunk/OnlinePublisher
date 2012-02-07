@@ -14,6 +14,7 @@
     <item icon="common/folder" title="HTML tests" value="HTML tests">
         <item icon="common/page" title="alert" value="html/alert.html"/>
         <item icon="common/page" title="animation" value="html/animation.html"/>
+        <item icon="common/page" title="arbor" value="html/arbor.html"/>
         <item icon="common/page" title="bar" value="html/bar.html"/>
         <item icon="common/page" title="boundpanel" value="html/boundpanel.html"/>
         <item icon="common/page" title="boundpanel_long" value="html/boundpanel_long.html"/>
@@ -26,6 +27,7 @@
         <item icon="common/page" title="graphviz" value="html/graphviz.html"/>
         <item icon="common/page" title="imagepaster" value="html/imagepaster.html"/>
         <item icon="common/page" title="infoview" value="html/infoview.html"/>
+        <item icon="common/page" title="jquery" value="html/jquery.html"/>
         <item icon="common/page" title="LocationPicker" value="html/LocationPicker.html"/>
         <item icon="common/page" title="markupeditor" value="html/markupeditor.html"/>
         <item icon="common/page" title="menu" value="html/menu.html"/>
@@ -59,6 +61,7 @@
         <item icon="common/page" title="layout" value="xml/layout.xml"/>
         <item icon="common/page" title="links" value="xml/links.xml"/>
         <item icon="common/page" title="list" value="xml/list.xml"/>
+        <item icon="common/page" title="pages" value="xml/pages.xml"/>
         <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
         <item icon="common/page" title="style" value="xml/style.xml"/>
         <item icon="common/page" title="tabs" value="xml/tabs.xml"/>
