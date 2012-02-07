@@ -6,5 +6,9 @@ hui.ui.listen({
 	
 	$click$editSource : function() {
 		partToolbar.getMainController().editSource();
+	},
+	
+	$click$addRow : function() {
+		partToolbar.getMainController().addRow();
 	}
 })

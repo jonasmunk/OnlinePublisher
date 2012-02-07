@@ -452,6 +452,14 @@ hui.dom = {
 	insertBefore : function(target,newNode) {
 		target.parentNode.insertBefore(newNode,target);
 	},
+	insertAfter : function(target,newNode) {
+		var next = target.nextSibling;
+		if (next) {
+			next.parentNode.insertBefore(newNode,next);			
+		} else {
+			target.parentNode.appendChild(newNode);
+		}
+	},
 	replaceHTML : function(node,html) {
 		node = hui.get(node);
 		node.innerHTML=html;

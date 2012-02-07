@@ -49,6 +49,19 @@ class TablePartController extends PartController
 				</buttons>
 			</formula>
 		</window>
+
+		<window title="Kilde" name="propertiesWindow" width="500">
+			<formula name="propertiesFormula">
+				<group labels="above">
+					<style-length key="width"/>
+				</group>
+				<!--
+				<buttons>
+					<button name="applyProperties" title="OK" click="sourceWindow.hide()"/>
+				</buttons>
+				-->
+			</formula>
+		</window>
 		';
 		return In2iGui::renderFragment($gui);
 	}
@@ -57,6 +70,7 @@ class TablePartController extends PartController
 		return array(
 			'Tabel' => '
 				<icon icon="common/clean" text="Ryd op" name="clean"/>
+				<icon icon="common/info" text="Info" name="info"/>
 				<icon icon="file/generic" text="Kilde" overlay="edit" name="editSource"/>
 				'
 			);
