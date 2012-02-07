@@ -975,7 +975,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	<xsl:copy-of select="child::*|child::text()"/>
 </xsl:template>
 
-<xsl:template match="gui:div|gui:span|gui:strong|gui:p|gui:em|gui:a">
+<xsl:template match="gui:div|gui:span|gui:strong|gui:p|gui:em|gui:a|gui:input">
 	<xsl:element name="{name()}">
 		<xsl:if test="@style">
 			<xsl:attribute name="style"><xsl:value-of select="@style"/></xsl:attribute>

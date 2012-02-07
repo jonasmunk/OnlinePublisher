@@ -349,8 +349,8 @@
 			<xsl:for-each select="gui:item">
 				
 				addItem({
-					title:'<xsl:value-of select="@title"/><xsl:value-of select="@label"/>',
-					value:hui.intOrString('<xsl:call-template name="gui:escapeScript"><xsl:with-param name="text" select="@value"/></xsl:call-template>')
+					title : '<xsl:value-of select="@title"/><xsl:value-of select="@label"/><xsl:value-of select="@text"/>',
+					value : hui.intOrString('<xsl:call-template name="gui:escapeScript"><xsl:with-param name="text" select="@value"/></xsl:call-template>')
 				});
 			</xsl:for-each>
 		}
