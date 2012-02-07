@@ -1,0 +1,33 @@
+#intro
+{
+	font: 100 20px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	text-align: center;
+	text-transform: uppercase;
+	position: absolute;
+	width: 100%;
+	top: 40%;
+	letter-spacing: -16px;
+	color: #fff;
+	line-height: 60px;
+}
+
+div.auth
+{
+	font: 100 40px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	text-align: center;
+	text-transform: uppercase;
+	position: absolute;
+	letter-spacing: 4px;
+	width: 100%;
+	top: 40%;
+	line-height: 60px;
+}
+
+div.auth input
+{
+	border: none;
+	font: 100 40px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font-size: 40px;
+	position: absolute;
+	outline: none;
+}
