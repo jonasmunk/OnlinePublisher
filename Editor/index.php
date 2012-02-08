@@ -26,12 +26,14 @@ $lang = InternalSession::getLanguage();
 
 $gui='
 <gui xmlns="uri:hui" title="OnlinePublisher editor">
-	<source name="searchSource" url="Services/Base/Search.php">
+	<source name="searchSource" url="Services/Base/data/Search.php">
 		<parameter key="text" value="@search.value"/>
 	</source>
-	<source name="hierarchySource" url="Services/Base/Hierarchy.php"/>
-	<source name="issueSource" url="Services/Base/ListIssues.php"/>
-	<source name="reviewSource" url="Services/Base/data/ListReview.php"/>
+	<source name="hierarchySource" url="Services/Base/data/Hierarchy.php"/>
+	<source name="issueSource" url="Services/Base/data/ListIssues.php"/>
+	<source name="reviewSource" url="Services/Base/data/ListReview.php">
+		<parameter key="subset" value="@reviewSubset.value"/>
+	</source>
 	<controller source="Services/Base/controller.js"/>
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
 		<sidebar collapsed="true">
@@ -45,7 +47,7 @@ $gui='
 				<searchfield adaptive="true" name="search"/>
 			</bar>
 			<bar variant="layout" name="reviewBar" visible="false">
-				<dropdown value="unreviewed">
+				<dropdown value="unreviewed" name="reviewSubset">
 					<item text="Ikke revideret" value="unreviewed"/>
 					<item text="Godkendte" value="accepted"/>
 					<item text="Afviste" value="rejected"/>

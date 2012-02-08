@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Customers
  */
-require_once '../../Include/Private.php';
+require_once '../../../Include/Private.php';
 
 $writer = new ListWriter();
 
@@ -16,7 +16,7 @@ $writer->startList();
 		$writer->startRow(array('id'=>$issue->getId(),'kind'=>$issue->getType()))->
 			startCell()->
 				startLine()->text($issue->getNote())->endLine()->
-				startLine(array('minor'=>true,'dimmed'=>true))->text($issue->getKind())->endLine()->
+				startLine(array('minor'=>true,'dimmed'=>true))->text(IssueService::translateKind($issue->getKind()))->endLine()->
 			endCell()->
 			startCell(array('width'=>1));
 			$writer->startIcons()->
