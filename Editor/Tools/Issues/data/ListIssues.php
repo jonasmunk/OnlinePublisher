@@ -25,7 +25,7 @@ foreach($list as $item) {
 		if ($page) {
 			$writer->startLine(array('top'=>3))->object(array('icon'=>'common/page','text'=>$page['title']))->endLine();
 		}
-		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text($item->getKind())->endLine();
+		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text(IssueService::translateKind($item->getKind()))->endLine();
 		$writer->endCell()->
 		startCell(array('width'=>1));
 		if ($page!==null) {

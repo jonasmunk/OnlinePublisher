@@ -308,3 +308,8 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 	background: url('../gfx/backgrounds/brushed_alu.png');	
 }
 
+.hui_bg_sand_light, body.hui_bg_sand_light
+{
+	background: url('../gfx/backgrounds/sand_light.png');
+}
+

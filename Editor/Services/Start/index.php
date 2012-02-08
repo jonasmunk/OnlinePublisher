@@ -37,8 +37,8 @@ $gui='
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>{Tasks ; da: Opgaver }</title>
-					<overflow full="true">
-					<list source="taskSource" name="taskList" indent="10" selectable="false">
+					<overflow full="true" background="sand_light">
+					<list source="taskSource" name="taskList" variant="transparent" selectable="false">
 						<empty>
 							<space all="10">
 							<text>
@@ -109,14 +109,14 @@ $gui='
 					<actions>
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
-					<title>Hjælp</title>
+					<title>{Help ; da: Hjælp}</title>
 					<div class="help">
 						<columns>
 							<column>
-								<icon icon="common/lifebuoy" size="64" text="Brugervejledning" name="userManual"/>
+								<icon icon="common/lifebuoy" size="64" text="{User manual ; da: Brugervejledning}" name="userManual"/>
 							</column>
 							<column>
-								<icon icon="common/stamp" size="64" text="Kontakt udviklerne" name="contact"/>
+								<icon icon="common/stamp" size="64" text="{Contact the developers ; da : Kontakt udviklerne}" name="contact"/>
 							</column>
 						</columns>
 					</div>
@@ -128,12 +128,12 @@ $gui='
 	<boundpanel name="settingsPanel" variant="light" width="200" padding="10" modal="true">
 		<formula name="settingsFormula">
 			<group>
-				<dropdown label="Sprog" key="language" value="'.InternalSession::getLanguage().'">
-					<item title="Dansk" value="da"/>
-					<item title="Engelsk" value="en"/>
+				<dropdown label="{Language; da: Sprog}" key="language" value="'.InternalSession::getLanguage().'">
+					<item title="{Danish; da: Dansk}" value="da"/>
+					<item title="{English; da: Engelsk}" value="en"/>
 				</dropdown>
-				<field label="Kode">
-					<button text="Skift kodeord" variant="paper" mini="true" name="changePassword"/>
+				<field label="{Password ; da: Kode}">
+					<button text="{Change password; da:Skift kodeord}" variant="paper" mini="true" name="changePassword"/>
 				</field>
 			</group>
 		</formula>
@@ -142,16 +142,16 @@ $gui='
 		</buttons>
 	</boundpanel>
 	
-	<box title="Skift kode" closable="true" name="passwordBox" absolute="true" width="400" modal="true" padding="10">
+	<box title="{Change password; da:Skift kode}" closable="true" name="passwordBox" absolute="true" width="400" modal="true" padding="10">
 		<formula name="passwordFormula">
 			<group>
-				<text label="Nuværende kode" key="old" secret="true"/>
-				<text label="Ny kode" key="password" secret="true"/>
-				<text label="Ny kode igen" key="password2" secret="true"/>
+				<text label="{Existing password; da: Nuværende kode}" key="old" secret="true"/>
+				<text label="{New password; da: Ny kode}" key="password" secret="true"/>
+				<text label="{New password; da: Ny kode igen}" key="password2" secret="true"/>
 			</group>
 			<buttons align="right">
-				<button text="Cancel" name="cancelPassword"/>
-				<button text="Skift" highlighted="true" submit="true" name="submitPassword"/>
+				<button text="{Cancel; da: Annuller}" name="cancelPassword"/>
+				<button text="{Change; da : Skift}" highlighted="true" submit="true" name="submitPassword"/>
 			</buttons>
 		</formula>
 	</box>

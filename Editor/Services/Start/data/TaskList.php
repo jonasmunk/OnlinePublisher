@@ -14,25 +14,19 @@ $writer = new ListWriter();
 $writer->startList();
 
 foreach($list as $item) {
-	$pages = PageQuery::rows()->withRelationFrom($item)->search()->getList();
-	$page = null;
-	if ($pages) {
-		$page = $pages[0];
-	}
+	$page = PageQuery::getRows()->withRelationFrom($item)->first();
 	$writer->startRow()->
-		startCell();
+		startCell(array('variant'=>'card'));
 		$writer->startLine(array('mini'=>false))->text($item->getNote())->endLine();
+		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text(IssueService::translateKind($item->getKind()))->endLine();
 		if ($page) {
-			$writer->startLine(array('top'=>3))->object(array('icon'=>'common/page','text'=>$page['title']))->endLine();
-		}
-		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text($item->getKind())->endLine();
-		$writer->endCell()->
-		startCell(array('width'=>1));
-		if ($page!==null) {
-			$writer->startIcons()->
-				icon(array('icon'=>'monochrome/view','action'=>true,'revealing'=>true,'data'=>array('id'=>$page['id'],'action'=>'view')))->
-				icon(array('icon'=>'monochrome/edit','action'=>true,'revealing'=>true,'data'=>array('id'=>$page['id'],'action'=>'edit')))->
-			endIcons();
+			$writer->startLine(array('class'=>'task_page'))->
+				object(array('icon'=>'common/page','text'=>$page['title']))->
+				startIcons()->
+					icon(array('icon'=>'monochrome/view','action'=>true,'revealing'=>true,'data'=>array('id'=>$page['id'],'action'=>'view')))->
+					icon(array('icon'=>'monochrome/edit','action'=>true,'revealing'=>true,'data'=>array('id'=>$page['id'],'action'=>'edit')))->
+				endIcons()->
+			endLine();
 		}
 		$writer->endCell()->
 	endRow();

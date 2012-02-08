@@ -552,7 +552,12 @@
 					<xsl:apply-templates select="gui:column"/>
 					</tr>
 				</thead>
-				<tbody><xsl:comment/></tbody>
+				<tbody>
+					<xsl:if test="not(@selectable) or @selectable='true'">
+						<xsl:attribute name="class">hui_list_selectable</xsl:attribute>
+					</xsl:if>
+					<xsl:comment/>
+				</tbody>
 			</table>
 			<xsl:if test="gui:empty">
 				<div class="hui_list_empty">

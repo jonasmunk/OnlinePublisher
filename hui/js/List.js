@@ -434,6 +434,10 @@ hui.ui.List.prototype = {
 	
 	/** @private */
 	parseCell : function(node,cell) {
+		var variant = node.getAttribute('variant');
+		if (variant!=null && variant!='') {
+			cell = hui.build('div',{parent:cell,className : 'hui_list_cell_'+variant});
+		}
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
 			cell.appendChild(hui.ui.createIcon(icon,16));
@@ -471,6 +475,9 @@ hui.ui.List.prototype = {
 				}
 				if (child.getAttribute('mini')=='true') {
 					hui.cls.add(line,'hui_list_mini')
+				}
+				if (child.getAttribute('class')) {
+					hui.cls.add(line,child.getAttribute('class'))
 				}
 				if (child.getAttribute('top')) {
 					line.style.paddingTop=child.getAttribute('top')+'px';

@@ -102,6 +102,9 @@ class ListWriter {
 		if (isset($options['width'])) {
 			echo ' width="'.$options['width'].'"';
 		}
+		if (isset($options['variant'])) {
+			echo ' variant="'.$options['variant'].'"';
+		}
 		echo '>';
 		return $this;
 	}
@@ -117,6 +120,7 @@ class ListWriter {
 		(@$options['minor'] ? ' minor="true"' : '').
 		(@$options['mini'] ? ' mini="true"' : '').
 		(@$options['top'] ? ' top="'.$options['top'].'"' : '').
+		(@$options['class'] ? ' class="'.$options['class'].'"' : '').
 		'>';
 		return $this;
 	}

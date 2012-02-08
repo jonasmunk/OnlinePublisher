@@ -21,6 +21,10 @@ class PageQuery {
 	function rows() {
 		return new PageQuery();
 	}
+
+	function getRows() {
+		return new PageQuery();
+	}
 	
 	function withText($text) {
 		$this->text = $text;
@@ -113,5 +117,17 @@ class PageQuery {
 	
 	function search() {
 		return PageService::search($this);
+	}
+	
+	function asList() {
+		return $this->search()->getList();
+	}
+	
+	function first() {
+		$list = $this->search()->getList();
+		if ($list) {
+			return $list[0];
+		}
+		return null;
 	}
 }

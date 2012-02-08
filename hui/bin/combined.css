@@ -308,6 +308,11 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 	background: url('../gfx/backgrounds/brushed_alu.png');	
 }
 
+.hui_bg_sand_light, body.hui_bg_sand_light
+{
+	background: url('../gfx/backgrounds/sand_light.png');
+}
+
 
 div.hui_buttons
 {
@@ -2543,6 +2548,7 @@ div.hui_list table tbody td
 	border-bottom: 1px solid #eee;
 	padding: 2px 5px;
 	vertical-align: top;
+	cursor: default;
 }
 
 .hui_list_object
@@ -2550,6 +2556,7 @@ div.hui_list table tbody td
 	overflow: hidden;
 	padding-bottom: 2px;
 	line-height: 16px;
+	display: inline-block;
 }
 
 div.hui_list .hui_list_object .hui_icon
@@ -2593,7 +2600,7 @@ div.hui_list tbody tr:hover .hui_list_revealing
 	visibility: visible;
 }
 
-div.hui_list table tbody tr:hover
+div.hui_list table tbody.hui_list_selectable tr:hover
 {
 	background-color: #EBF0F7;
 	cursor: pointer;
@@ -2612,6 +2619,7 @@ div.hui_list tr:hover span.hui_list_icons .hui_icon_16
 .hui_list_icon_action:hover
 {
 	background-position: 0px -16px;
+	cursor: pointer;
 }
 
 div.hui_list table tbody tr.hui_list_selected
@@ -2827,6 +2835,8 @@ div.hui_list_drop table
 	background: none;
 }
 
+
+
 /*** Light variant ***/
 
 div.hui_list_light table thead th
@@ -2855,6 +2865,8 @@ div.hui_list_light th.sort_ascending:hover, div.hui_list_light th.sort_descendin
 	color: #000;
 }
 
+
+
 /*** White variant ***/
 
 div.hui_list_white table
@@ -2882,6 +2894,32 @@ div.hui_list_white table tbody td
 div.hui_list_empty
 {
 	display: none;
+}
+
+/*** White variant ***/
+
+div.hui_list_transparent table tbody td
+{
+	border: none;
+	padding: 0;
+}
+
+div.hui_list_transparent table
+{
+	background: none;
+}
+
+
+
+
+div.hui_list_cell_card
+{
+	margin: 5px 5px 2px 5px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-color: #f3f3f3 #e3e3e3 #ccc;
+	box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	padding: 2px 4px;
 }div.hui_selection
 {
 	font-family: 'Lucida Grande','Verdana',sans-serif;

@@ -43,11 +43,7 @@ $gui='
 				<text label="Titel" key="title"/>
 				<text label="Tekst" key="note" multiline="true"/>
 				<dropdown label="Type" key="kind">
-					<item value="unknown" text="Ukendt"/>
-					<item value="improvement" text="Forbedring"/>
-					<item value="task" text="Opgave"/>
-					<item value="feedback" text="Feedback"/>
-					<item value="error" text="Fejl"/>
+					'.GuiUtils::buildTranslatedItems(IssueService::getKinds()).'
 				</dropdown>
 				<buttons>
 					<button name="cancelIssue" title="Annuller"/>

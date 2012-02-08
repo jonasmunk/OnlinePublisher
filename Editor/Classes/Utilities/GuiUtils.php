@@ -187,6 +187,18 @@ class GuiUtils {
 		return $output;
 	}
 	
+	function buildTranslatedItems($items) {
+		$output = '';
+		
+		foreach ($items as $key => $texts) {
+			$lang = InternalSession::getLanguage();
+			$title = isset($texts[$lang]) ? $texts[$lang] : $texts['en'];
+			$output.='<item text="'.StringUtils::escapeXML($title).'" value="'.$key.'"/>';
+		}
+		
+		return $output;
+	}
+	
 	function buildEntity($object) {
 		return '<entity icon="'.$object->getIcon().'" title="'.StringUtils::escapeXML($object->getTitle()).'" value="'.$object->getId().'"/>';
 	}
