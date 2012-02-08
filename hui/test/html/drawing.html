@@ -23,6 +23,8 @@
 			document.body.appendChild(d.element);
 			d.addLine({x1:0,y1:0,x2:300,y2:300,color:'#f00'});
 			window.line1 = d.addLine({x1:20,y1:30,x2:100,y2:300,width:2});
+			
+			d.addCircle({cx:100,cy:100,r:50,fill:'#48f',width:0});
 		})
 	</script>
 	<button onclick="window.line1.setFrom(100,200)">Change line</button>

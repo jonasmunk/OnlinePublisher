@@ -27,8 +27,30 @@ hui.ui.Drawing.create = function(options) {
 
 hui.ui.Drawing.prototype = {
 	addLine : function(options) {
-		var node = this._build({tag:'line',parent:this.svg,attributes:{x1:options.x1,y1:options.y1,x2:options.x2,y2:options.y2,style:'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)}});
+		var node = this._build({
+			tag:'line',
+			parent:this.svg,
+			attributes:{
+				x1 : options.x1,
+				y1 : options.y1,
+				x2 : options.x2,
+				y2 : options.y2,
+				style:'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
+			}
+		});
 		return new hui.ui.Drawing.Line(node);
+	},
+	addCircle : function(options) {
+		var node = this._build({
+			tag:'circle',
+			parent:this.svg,
+			attributes : {
+				cx : options.cx,
+				cy : options.cy,
+				r : options.r,
+				style : 'stroke:'+(options.color || '#000')+'; fill:'+(options.fill || '#fff')+'; stroke-width:'+(options.width==undefined ? 1 : options.width)}
+		});
+		return new hui.ui.Drawing.Circle(node);
 	},
 	addElement : function(options) {
 		var node = hui.build('div',{style:'position:absolute;left:0;top:0;',parent:this.element,html:options.html}),
@@ -99,6 +121,14 @@ hui.ui.Drawing.Line.prototype = {
 		this.node.setAttribute('y2',point.y);
 	}
 }
+
+hui.ui.Drawing.Circle = function(node) {
+	this.node = node;
+}
+
+hui.ui.Drawing.Circle.prototype = {
+}
+
 
 hui.ui.Drawing.Element = function(node) {
 	this.node = node;
