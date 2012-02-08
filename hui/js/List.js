@@ -257,9 +257,13 @@ hui.ui.List.prototype = {
 		}
 		this.sortKey = key;
 	},
+	_debug : function(obj) {
+		hui.log(obj);
+	},
 
 	/** @private */
 	$listLoaded : function(doc) {
+		this._debug('List loaded');
 		this._setError(false);
 		this.selected = [];
 		this.parseWindow(doc);
@@ -369,10 +373,12 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	$sourceIsBusy : function() {
+		this._debug('$sourceIsBusy');
 		this._setBusy(true);
 	},
 	/** @private */
 	$sourceIsNotBusy : function() {
+		this._debug('$sourceIsNotBusy');
 		this._setBusy(false);
 	},
 	/** @private */

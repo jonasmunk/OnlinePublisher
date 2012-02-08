@@ -31,17 +31,32 @@ $gui='
 	</source>
 	<source name="hierarchySource" url="Services/Base/Hierarchy.php"/>
 	<source name="issueSource" url="Services/Base/ListIssues.php"/>
+	<source name="reviewSource" url="Services/Base/data/ListReview.php"/>
 	<controller source="Services/Base/controller.js"/>
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
 		<sidebar collapsed="true">
 			<bar variant="layout_mini">
 				<button icon="monochrome/hierarchy" name="navPages" selected="true"/>
 				<button icon="monochrome/note" name="navNotes"/>
-				<!--<button icon="monochrome/stamp" name="navReview"/>
-				<button icon="monochrome/warning" name="navWarnings"/>-->
+				<button icon="monochrome/stamp" name="navReview"/>
+				<!--<button icon="monochrome/warning" name="navWarnings"/>-->
 			</bar>
 			<bar variant="layout" name="searchBar">
 				<searchfield adaptive="true" name="search"/>
+			</bar>
+			<bar variant="layout" name="reviewBar" visible="false">
+				<dropdown value="unreviewed">
+					<item text="Ikke revideret" value="unreviewed"/>
+					<item text="Godkendte" value="accepted"/>
+					<item text="Afviste" value="rejected"/>
+				</dropdown>
+				<!--
+				<segmented value="day" name="reviewSpan">
+					<item text="Vis alle" value="all"/>
+					<item text="Et døgn" value="day"/>
+					<item text="7 dage" value="week"/>
+				</segmented>
+				-->
 			</bar>
 			<overflow>
 				<list name="list" source="searchSource" visible="false"/>

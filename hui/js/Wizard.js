@@ -41,12 +41,12 @@ hui.ui.Wizard.prototype = {
 	/** Goes to the step with the index (0-based) */
 	goToStep : function(index) {
 		var c = this.container;
-		c.style.height=c.clientHeight+'px';
+		c.style.height = c.clientHeight+'px';
 		hui.cls.remove(this.anchors[this.selected],'hui_selected');
-		this.steps[this.selected].style.display='none';
+		this.steps[this.selected].style.display = 'none';
 		hui.cls.add(this.anchors[index],'hui_selected');
-		this.steps[index].style.display='block';
-		this.selected=index;
+		this.steps[index].style.display = 'block';
+		this.selected = index;
 		hui.animate(c,'height',this.steps[index].clientHeight+'px',500,{ease:hui.ease.slowFastSlow,onComplete:function() {
 			c.style.height='';
 		}});

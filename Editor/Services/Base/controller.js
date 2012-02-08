@@ -26,7 +26,9 @@ var baseController = {
 	$click$navNotes : function() {
 		navPages.setSelected(!true);
 		navNotes.setSelected(true);
+		navReview.setSelected(!true);
 		searchBar.hide();
+		reviewBar.hide();
 		selector.hide();
 		list.clear();
 		list.show();
@@ -36,8 +38,9 @@ var baseController = {
 	$click$navPages : function() {
 		navPages.setSelected(true);
 		navNotes.setSelected(!true);
+		navReview.setSelected(!true);
 		searchBar.show();
-		list.setSource(searchSource);
+		reviewBar.hide();
 		if (search.isBlank()) {
 			selector.show();
 			list.hide();
@@ -46,6 +49,19 @@ var baseController = {
 			selector.hide();
 			list.show();
 		}
+		list.setSource(searchSource);
+	},
+	
+	$click$navReview : function() {
+		navPages.setSelected(!true);
+		navNotes.setSelected(!true);
+		navReview.setSelected(true);
+		searchBar.hide();
+		reviewBar.show();
+		selector.hide();
+		list.clear();
+		list.show();
+		list.setSource(reviewSource);
 	},
 	
 	

@@ -3,8 +3,12 @@
 <gui xmlns="uri:hui" pad="10" title="Pages">
 	<box width="600" title="Pages" variant="textured">
 		<toolbar>
-			<icon icon="common/color" title="Hep hey!" click="pages.next()"/>
-			<icon icon="common/folder" title="Show values" click="pages.previous()"/>
+			<icon icon="inset/view" title="Next" click="pages.next()"/>
+			<icon icon="common/folder" title="Previous" click="pages.previous()"/>
+			<segmented>
+				<item icon="monochrome/round_arrow_left"/>
+				<item icon="monochrome/round_arrow_right"/>
+			</segmented>
 		</toolbar>
 		<div style="height: 400px">
 			<pages name="pages">

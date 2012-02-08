@@ -63,7 +63,7 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="common/page" title="Ny side" overlay="new" name="newPage"/>
-				<icon icon="common/hierarchy_item" title="Nyt underpunkt" overlay="new" name="newHierarchyItem" disabled="true"/>
+				<icon icon="common/hierarchy_item" title="Nyt punkt" overlay="new" name="newHierarchyItem" disabled="true"/>
 				<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" name="newHierarchy"/>
 				<divider/>
 				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>-->

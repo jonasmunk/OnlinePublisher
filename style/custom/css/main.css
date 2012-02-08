@@ -25,6 +25,7 @@ div.layout_content
 div.layout_header
 {
 	height: 100px;
+	/*
 	background: #434E59;
     background: -webkit-gradient(linear,0 0,0 bottom,from(#eeeeee),to(#ffffff));
     background: -moz-linear-gradient(#eeeeee, #ffffff);
@@ -32,6 +33,7 @@ div.layout_header
     background: linear-gradient(#eeeeee, #ffffff);
     -ms-filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#ffffff);
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#ffffff);
+	*/
 }
 
 p.layout_logo

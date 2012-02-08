@@ -113,6 +113,7 @@ var controller = {
 				hui.ui.showMessage({text:'Revisionen er gemt!',icon:'common/success',duration:2000});
 				reviewPanel.hide();
 				this._updateState();
+				this._refreshBase();
 			}.bind(this)
 		});
 	}

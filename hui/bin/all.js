@@ -15208,7 +15208,7 @@ hui.ui.NumberField = function(o) {
 	this.input = hui.get.firstByTag(e,'input');
 	this.up = hui.get.firstByClass(e,'hui_numberfield_up');
 	this.down = hui.get.firstByClass(e,'hui_numberfield_down');
-	this.value = this.options.value;
+	this.value = parseInt(this.options.value,10);
 	hui.ui.extend(this);
 	this.addBehavior();
 }
@@ -15622,7 +15622,7 @@ hui.ui.ColorField.prototype = {
 	},
 	
 	getValue : function() {
-		return this.value ? this.value.number+this.value.unit : '';
+		return this.value;
 	},
 	setValue : function(value) {
 		this.value = value;
