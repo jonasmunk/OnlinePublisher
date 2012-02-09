@@ -10,5 +10,9 @@ hui.ui.listen({
 	
 	$click$addRow : function() {
 		partToolbar.getMainController().addRow();
+	},
+	
+	$click$showInfo : function() {
+		partToolbar.getMainController().showInfo();
 	}
 })

@@ -239,7 +239,7 @@
 
 <xsl:template match="gui:group/gui:style-length">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
+		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
 		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:style-length"/></div></td>
 	</tr>
 </xsl:template>

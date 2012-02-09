@@ -50,16 +50,11 @@ class TablePartController extends PartController
 			</formula>
 		</window>
 
-		<window title="Kilde" name="propertiesWindow" width="500">
+		<window title="Egenskaber" name="propertiesWindow" icon="monochrome/info" width="300" padding="10">
 			<formula name="propertiesFormula">
-				<group labels="above">
-					<style-length key="width"/>
+				<group labels="before">
+					<style-length key="width" label="Width"/>
 				</group>
-				<!--
-				<buttons>
-					<button name="applyProperties" title="OK" click="sourceWindow.hide()"/>
-				</buttons>
-				-->
 			</formula>
 		</window>
 		';
@@ -70,8 +65,10 @@ class TablePartController extends PartController
 		return array(
 			'Tabel' => '
 				<icon icon="common/clean" text="Ryd op" name="clean"/>
-				<icon icon="common/info" text="Info" name="info"/>
+				<icon icon="common/info" text="Info" name="showInfo"/>
 				<icon icon="file/generic" text="Kilde" overlay="edit" name="editSource"/>
+				<divider/>
+				<icon icon="file/generic" text="Ny rakke" overlay="add" name="addRow"/>
 				'
 			);
 	}
