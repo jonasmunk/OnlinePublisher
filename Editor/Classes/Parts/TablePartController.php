@@ -52,9 +52,16 @@ class TablePartController extends PartController
 
 		<window title="Egenskaber" name="propertiesWindow" icon="monochrome/info" width="300" padding="10">
 			<formula name="propertiesFormula">
-				<group labels="before">
-					<style-length key="width" label="Width"/>
-				</group>
+				<fieldset legen="Tabel">
+					<group labels="before">
+						<style-length key="width" label="Width"/>
+					</group>
+				</fieldset>
+				<fieldset legen="Celle">
+					<group labels="before">
+						<text key="cellBackground" label="Baggrund"/>
+					</group>
+				</fieldset>
 			</formula>
 		</window>
 		';
@@ -68,7 +75,8 @@ class TablePartController extends PartController
 				<icon icon="common/info" text="Info" name="showInfo"/>
 				<icon icon="file/generic" text="Kilde" overlay="edit" name="editSource"/>
 				<divider/>
-				<icon icon="file/generic" text="Ny rakke" overlay="add" name="addRow"/>
+				<icon icon="file/generic" text="Ny række" overlay="add" name="addRow"/>
+				<icon icon="file/generic" text="Ny kolonne" overlay="add" name="addColumn"/>
 				'
 			);
 	}

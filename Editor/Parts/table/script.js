@@ -7,9 +7,17 @@ var partController = {
 			this._syncValue();
 			this._syncSource();
 		}.bind(this));
+		hui.listen(this.base,'contextmenu',this._onMenu.bind(this));
 		this._syncInfo();
 		this.showInfo();
 	},
+	
+	
+	_onMenu : function(e) {
+		e = hui.event(e);
+		
+	},
+	
 	_getTable : function() {
 		var found = hui.get.firstByTag(this.container,'table');
 		if (!found) {
@@ -36,16 +44,13 @@ var partController = {
 	},
 	addRow : function() {
 		var table = this._getTable();
-		var trs = hui.get.byTag(table,'tr');
-		if (trs.length>0) {
-			var last = trs[trs.length-1];
-			var tr = hui.build('tr');
-			hui.dom.insertAfter(last,tr);
-			var cells = hui.get.children(last);
-			for (var i=0; i < cells.length; i++) {
-				hui.build(cells[i].nodeName,{parent:tr,html:cells[i].innerHTML});
-			};
-		}
+		hui.table.addRow(table);
+		this._syncValue();
+		this._syncSource();
+	},
+	addColumn : function() {
+		var table = this._getTable();
+		hui.table.addColumn(table);
 		this._syncValue();
 		this._syncSource();
 	},
@@ -88,5 +93,29 @@ var partController = {
 	}
 	
 };
+
+hui.table = {
+	addRow : function(table) {
+		var trs = hui.get.byTag(table,'tr');
+		if (trs.length>0) {
+			var last = trs[trs.length-1];
+			var tr = hui.build('tr');
+			hui.dom.insertAfter(last,tr);
+			var cells = hui.get.children(last);
+			for (var i=0; i < cells.length; i++) {
+				hui.build(cells[i].nodeName,{parent:tr,html:cells[i].innerHTML});
+			};
+		}
+	},
+	addColumn : function(table) {
+		var trs = hui.get.byTag(table,'tr');
+		for (var i=0; i < trs.length; i++) {
+			var tr = trs[i];
+			var cells = hui.get.children(tr);
+			var last = cells[cells.length-1];
+			hui.build(last.nodeName,{parent:tr,html:last.innerHTML});
+		};
+	}
+}
 
 hui.ui.listen(partController);
