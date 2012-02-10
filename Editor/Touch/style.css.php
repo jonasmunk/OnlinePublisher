@@ -54,6 +54,14 @@ div.sidebar
 	height: 100%;
 }
 
+div.sidebar ul
+{
+	list-style: none;
+	color: #fff;
+	margin: 0;
+	padding: 5px;
+	font-family: 'Lucida Grande',"Helvetica Neue", Helvetica, sans-serif;
+}
 
 .button
 {
@@ -92,19 +100,36 @@ div.sidebar
 	margin-top: 6px;
 }
 
+div.main
+{
+}
 
 div.page
 {
-	height: 800px;
+	position: fixed;
+	top: 40px;
+	bottom: 40px;
 	overflow: hidden;
 	margin: 10px;
 	background: #fff;/*url('<?=baseit('../../hui/gfx/backgrounds/sand_light.png')?>');*/
 	font-family: Palatino;
 	color: #321;
 	border-radius: 3px;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
-
+div.bottom_bar
+{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	height: 40px;
+	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#333), to(#000));
+	border-bottom: 1px solid #333;
+	font-size: 0;
+}
 
 
 @media screen and (orientation:portrait) {
@@ -116,9 +141,9 @@ div.page
 		display: none;
 	}
 	
-	div.page
+	div.main
 	{
-		height: 800px;
+		/*height: 800px;*/
 	}
 }
 
@@ -132,9 +157,9 @@ div.page
 		display: block;
 	}
 	
-	div.page
+	div.bottom_bar
 	{
-		height: 600px;
+		left: 300px;
 	}
 
 }
