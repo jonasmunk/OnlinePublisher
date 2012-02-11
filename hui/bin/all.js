@@ -15223,6 +15223,9 @@ hui.ui.NumberField = function(o) {
 	this.up = hui.get.firstByClass(e,'hui_numberfield_up');
 	this.down = hui.get.firstByClass(e,'hui_numberfield_down');
 	this.value = parseInt(this.options.value,10);
+	if (isNaN(this.value)) {
+		this.value = null;
+	}
 	hui.ui.extend(this);
 	this.addBehavior();
 }
