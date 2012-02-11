@@ -38,6 +38,7 @@
 						<xsl:apply-templates select="p:content"/>
 					</div>
 				</div>
+				<xsl:call-template name="util:googleanalytics"/>
 			</body>
 		</html>
 	</xsl:template>

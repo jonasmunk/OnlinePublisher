@@ -16,7 +16,7 @@ if (Request::isPost()) {
 	$username=Request::getPostString('username');
 	$password=Request::getPostString('password');
 	if (InternalSession::logIn($username,$password)) {
-		ToolService::install('system'); // Ensure that the system tool is present
+		ToolService::install('System'); // Ensure that the system tool is present
 		In2iGui::sendObject(array('success' => true));
 	} else {
 		usleep(rand(1500000,3000000));
