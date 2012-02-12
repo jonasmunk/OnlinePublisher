@@ -6,8 +6,8 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 class SystemInfo {
 	
-	private static $date = 24;
-	private static $month = 1;
+	private static $date = 12;
+	private static $month = 2;
 	private static $year = 2012;
 	private static $feedbackMail = "jonasmunk@mac.com";
 	private static $feedbackName = "Jonas Munk";
