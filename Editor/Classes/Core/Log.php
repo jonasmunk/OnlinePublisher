@@ -15,7 +15,7 @@ class Log {
 	
 	function debug($object) {
 		global $baseUrl;
-		if (strpos('/~jbm/',$baseUrl)!==false || true) {
+		if (strpos('/~jbm/',$baseUrl)!==false) {
 			error_log(print_r($object,true));
 		}
 	}
@@ -26,6 +26,10 @@ class Log {
 			$object = StringUtils::toJSON($object);
 			error_log(print_r($object,true));
 		}
+	}
+	
+	function info($object) {
+		error_log('INFO: '.print_r($object,true));
 	}
 	
 	function warn($object) {

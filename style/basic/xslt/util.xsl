@@ -336,7 +336,7 @@
 
 <xsl:template name="util:googleanalytics">
 	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
-	<xsl:if test="not($preview='true')">
+	<xsl:if test="not($preview='true') and $code!=''">
 		<script type="text/javascript">
 		try {
 			if (document.location.hostname!=="localhost") {

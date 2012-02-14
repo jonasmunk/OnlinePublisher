@@ -242,7 +242,6 @@ class RenderingService {
 		} else {
 			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/').")";
 		}
-		Log::debug($sql);
 		if ($row = Database::selectFirst($sql)) {
 			if (Request::getBoolean('ajax')) {
 				if ($controller = TemplateService::getController($row['template'])) {
