@@ -4,6 +4,7 @@ var partController = {
 		this.base = hui.get.firstByClass(container,'part_table') || container;
 		this.base.setAttribute('contenteditable','true');
 		hui.listen(this.base,'keyup',function() {
+			this._checkMarkup();
 			this._syncValue();
 			this._syncSource();
 		}.bind(this));
@@ -17,12 +18,31 @@ var partController = {
 		e = hui.event(e);
 		
 	},
-	
+	_checkMarkup : function() {
+		var children = hui.get.children(this.base);
+		if (children.length!==1) {
+			this._rebuildMarkup();
+		} else if (children[0].nodeName.toLowerCase()!=='table') {
+			this._rebuildMarkup();
+		}
+	},
+	_rebuildMarkup : function() {
+		var found = hui.get.firstByTag(this.base,'table');
+		if (found) {
+			found.parentNode.removeChild(found);
+			this.base.innerHTML = '';
+			this.base.appendChild(found);
+		} else {
+			this.base.innerHTML = '';
+			var table = hui.build('table',{parent:this.base});
+			hui.build('tbody',{parent:table});
+		}
+	},
 	_getTable : function() {
-		var found = hui.get.firstByTag(this.container,'table');
+		var found = hui.get.firstByTag(this.base,'table');
 		if (!found) {
-			found = hui.build('table',{parent:this.container});
-			hui.build('tbody',{parent:found})
+			found = hui.build('table',{parent:this.base});
+			hui.build('tbody',{parent:found});
 		}
 		return found;
 	},
