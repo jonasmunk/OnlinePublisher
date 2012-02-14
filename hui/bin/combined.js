@@ -19,7 +19,7 @@ var hui = {
     KEY_PAGEUP : 33,
     KEY_PAGEDOWN : 34,
     KEY_INSERT : 45
-}
+};
 
 
 
@@ -31,29 +31,29 @@ hui.browser.opera = /opera/i.test(navigator.userAgent);
 /** If the browser is any version of InternetExplorer */
 hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent);
 /** If the browser is InternetExplorer 6 */
-hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
+hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6') !== -1;
 /** If the browser is InternetExplorer 7 */
-hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
+hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7') !== -1;
 /** If the browser is InternetExplorer 8 */
-hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
+hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8') !== -1;
 /** If the browser is InternetExplorer 9 */
-hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
+hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9') !== -1;
 /** If the browser is InternetExplorer 9 in compatibility mode */
-hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0')!==-1;
+hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0') !== -1;
 /** If the browser is WebKit based */
-hui.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
+hui.browser.webkit = navigator.userAgent.indexOf('WebKit') !== -1;
 /** If the browser is any version of Safari */
-hui.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
+hui.browser.safari = navigator.userAgent.indexOf('Safari') !== -1;
 /** If the browser is any version of Chrome */
-hui.browser.chrome = navigator.userAgent.indexOf('Chrome')!==-1;
+hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** The version of WebKit (null if not WebKit) */
 hui.browser.webkitVersion = null;
 /** If the browser is Gecko based */
-hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
+hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko') !== -1;
 /** If the browser is safari on iPad */
-hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad')!=-1;
+hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad') !== -1;
 /** If the browser is on Windows */
-hui.browser.windows = navigator.userAgent.indexOf('Windows')!=-1;
+hui.browser.windows = navigator.userAgent.indexOf('Windows') !== -1;
 
 /** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
@@ -12091,51 +12091,6 @@ hui.ui.Layout.prototype = {
 	}
 };
 
-
-/**
- * @constructor
- * @param {Object} options { element «Node | id», name: «String» }
- */
-hui.ui.Columns = function(options) {
-	this.name = options.name;
-	this.options = options || {};
-	this.element = hui.get(options.element);
-	this.body = hui.get.firstByTag(this.element,'tr');
-	hui.ui.extend(this);
-}
-
-/**
- * Creates a new Columns opject
- */
-hui.ui.Columns.create = function(options) {
-	options = options || {};
-	options.element = hui.build('table',{'class' : 'hui_columns',html : '<tbody><tr></tr></tbody>'});
-	return new hui.ui.Columns(options);
-}
-
-hui.ui.Columns.prototype = {
-	addToColumn : function(index,widget) {
-		var c = this.ensureColumn(index);
-		c.appendChild(widget.getElement());
-	},
-	setColumnStyle : function(index,style) {
-		var c = this.ensureColumn(index);
-		hui.style.set(c,style);
-	},
-	setColumnWidth : function(index,width) {
-		var c = this.ensureColumn(index);
-		c.style.width=width+'px';
-	},
-	/** @private */
-	ensureColumn : function(index) {
-		var children = hui.get.children(this.body);
-		for (var i=children.length-1;i<index;i++) {
-			this.body.appendChild(hui.build('td',{'class':'hui_columns_column'}));
-		}
-		return hui.get.children(this.body)[index];
-	}
-}
-
 /* EOF *//**
  * A dock
  * @param {Object} The options
@@ -15653,6 +15608,49 @@ hui.ui.ColorField.prototype = {
 		this.setValue('');
 	}
 	
+}
+
+/* EOF *//**
+ * @constructor
+ * @param {Object} options { element «Node | id», name: «String» }
+ */
+hui.ui.Columns = function(options) {
+	this.name = options.name;
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	this.body = hui.get.firstByTag(this.element,'tr');
+	hui.ui.extend(this);
+}
+
+/**
+ * Creates a new Columns opject
+ */
+hui.ui.Columns.create = function(options) {
+	options = options || {};
+	options.element = hui.build('table',{'class' : 'hui_columns',html : '<tbody><tr></tr></tbody>'});
+	return new hui.ui.Columns(options);
+}
+
+hui.ui.Columns.prototype = {
+	addToColumn : function(index,widget) {
+		var c = this._ensureColumn(index);
+		c.appendChild(widget.getElement());
+	},
+	setColumnStyle : function(index,style) {
+		var c = this._ensureColumn(index);
+		hui.style.set(c,style);
+	},
+	setColumnWidth : function(index,width) {
+		var c = this._ensureColumn(index);
+		c.style.width=width+'px';
+	},
+	_ensureColumn : function(index) {
+		var children = hui.get.children(this.body);
+		for (var i=children.length-1;i<index;i++) {
+			this.body.appendChild(hui.build('td',{'class':'hui_columns_column'}));
+		}
+		return hui.get.children(this.body)[index];
+	}
 }
 
 /* EOF */
