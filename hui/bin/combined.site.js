@@ -19,7 +19,7 @@ var hui = {
     KEY_PAGEUP : 33,
     KEY_PAGEDOWN : 34,
     KEY_INSERT : 45
-}
+};
 
 
 
@@ -31,29 +31,29 @@ hui.browser.opera = /opera/i.test(navigator.userAgent);
 /** If the browser is any version of InternetExplorer */
 hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent);
 /** If the browser is InternetExplorer 6 */
-hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6')!==-1;
+hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6') !== -1;
 /** If the browser is InternetExplorer 7 */
-hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7')!==-1;
+hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7') !== -1;
 /** If the browser is InternetExplorer 8 */
-hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8')!==-1;
+hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8') !== -1;
 /** If the browser is InternetExplorer 9 */
-hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9')!==-1;
+hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9') !== -1;
 /** If the browser is InternetExplorer 9 in compatibility mode */
-hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0')!==-1;
+hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0') !== -1;
 /** If the browser is WebKit based */
-hui.browser.webkit = navigator.userAgent.indexOf('WebKit')!==-1;
+hui.browser.webkit = navigator.userAgent.indexOf('WebKit') !== -1;
 /** If the browser is any version of Safari */
-hui.browser.safari = navigator.userAgent.indexOf('Safari')!==-1;
+hui.browser.safari = navigator.userAgent.indexOf('Safari') !== -1;
 /** If the browser is any version of Chrome */
-hui.browser.chrome = navigator.userAgent.indexOf('Chrome')!==-1;
+hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** The version of WebKit (null if not WebKit) */
 hui.browser.webkitVersion = null;
 /** If the browser is Gecko based */
-hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko')!=-1;
+hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko') !== -1;
 /** If the browser is safari on iPad */
-hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad')!=-1;
+hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad') !== -1;
 /** If the browser is on Windows */
-hui.browser.windows = navigator.userAgent.indexOf('Windows')!=-1;
+hui.browser.windows = navigator.userAgent.indexOf('Windows') !== -1;
 
 /** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
