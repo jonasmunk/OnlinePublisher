@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class TestTest extends AbstractObjectTest {
+class TestTask extends AbstractObjectTest {
     
 	function TestTask() {
 		parent::AbstractObjectTest('task');

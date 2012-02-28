@@ -52,12 +52,17 @@ class TablePartController extends PartController
 
 		<window title="Egenskaber" name="propertiesWindow" icon="monochrome/info" width="300" padding="10">
 			<formula name="propertiesFormula">
-				<fieldset legen="Tabel">
+				<fieldset legend="Tabel">
 					<group labels="before">
+						<dropdown label="Variant">
+							<item text="Moderne"/>
+							<item text="Markant"/>
+						</dropdown>
 						<style-length key="width" label="Width"/>
 					</group>
 				</fieldset>
-				<fieldset legen="Celle">
+				<space height="10"/>
+				<fieldset legend="Celle">
 					<group labels="before">
 						<text key="cellBackground" label="Baggrund"/>
 					</group>

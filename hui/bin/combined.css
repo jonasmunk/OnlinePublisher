@@ -313,6 +313,11 @@ div.browser .column div.selected, div.browser .column div.selected:hover
 	background: url('../gfx/backgrounds/sand_light.png');
 }
 
+.hui_bg_sand_grey, body.hui_bg_sand_grey
+{
+	background: url('../gfx/backgrounds/sand_grey.png');
+}
+
 
 div.hui_buttons
 {

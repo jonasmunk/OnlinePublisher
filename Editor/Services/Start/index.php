@@ -33,11 +33,11 @@ $gui='
 			<tiles space="10">
 				<tile width="30" height="100" top="0" left="0" variant="light" name="taskTile">
 					<actions>
-						<icon icon="monochrome/info"/>
+						<!--icon icon="monochrome/info"/-->
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>{Tasks ; da: Opgaver }</title>
-					<overflow full="true" background="sand_light">
+					<overflow full="true" background="sand_grey">
 					<list source="taskSource" name="taskList" variant="transparent" selectable="false">
 						<empty>
 							<space all="10">
@@ -51,7 +51,7 @@ $gui='
 					</list>
 					</overflow>
 				</tile>
-				<tile width="30" height="100" top="0" left="30" variant="light" name="developmentTile"><!--background="#396" -->
+				<tile width="30" height="100" top="0" left="30" variant="light" name="developmentTile">
 					<actions>
 						<icon icon="monochrome/round_arrow_left" key="previous"/>
 						<icon icon="monochrome/round_arrow_right" key="next"/>
