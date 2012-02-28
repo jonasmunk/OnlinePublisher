@@ -35,7 +35,7 @@ $gui='
 					<icon icon="common/time" text="Historik" name="viewHistory"/>
 					<divider/>
 					<icon icon="inset/stamp" title="Revidér" name="review"/>
-					<icon icon="common/note" title="Tilføj note" name="addNote" overlay="new_monochrome"/>
+					<icon icon="common/note" title="Ny note" name="addNote" overlay="new_monochrome"/>
 				</toolbar>
 			</tab>
 		</tabs>

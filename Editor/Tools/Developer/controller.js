@@ -17,14 +17,19 @@ hui.ui.listen({
 			hui.ui.changeState('frame');
 		}
 		if (item.value=='phpInfo') {
+			iframe.clear();
 			iframe.setUrl('data/PhpInfo.php');
 		} else if (item.value=='session') {
+			iframe.clear();
 			iframe.setUrl('data/Session.php');
 		} else if (item.kind=='test') {
+			iframe.clear();
 			iframe.setUrl('data/RunTest.php?test='+item.value);
 		} else if (item.kind=='testgroup') {
+			iframe.clear();
 			iframe.setUrl('data/RunTest.php?group='+item.value);
 		} else if (item.kind=='alltests') {
+			iframe.clear();
 			iframe.setUrl('data/RunTest.php?all=true');
 		}
 	},
