@@ -2098,7 +2098,33 @@ hui.location = {
 
 
 
-
+hui.xml = {
+	transform : function(xml,xsl) {
+		if (window.ActiveXObject) {
+			return xml.transformNode(xsl);
+		} else if (document.implementation && document.implementation.createDocument) {
+			try {
+			  	var pro = new XSLTProcessor();
+			  	pro.importStylesheet(xsl);
+			    return pro.transformToFragment(xml,document);				
+			} catch (e) {
+				hui.log(e);
+			}
+		}
+	},
+	parse : function(xml) {
+		var doc;
+		if (window.DOMParser) {
+  			var parser=new DOMParser();
+  			doc = parser.parseFromString(xml,"text/xml");
+  		} else {
+  			doc = new ActiveXObject("Microsoft.XMLDOM");
+			doc.async = false;
+  			doc.loadXML(xml); 
+  		}
+		return doc;
+	}
+}
 
 
 
@@ -7943,6 +7969,15 @@ hui.ui.Selection.prototype = {
 	reset : function() {
 		this.setValue(null);
 	},
+	
+	addItems : function(options) {
+		options.element = hui.build('div',{parent:this.element});
+		var items = new hui.ui.Selection.Items(options);
+		items.parent = this;
+		this.subItems.push(items);
+	},
+	
+	
 	/** @private */
 	updateUI : function() {
 		var i;
@@ -14487,7 +14522,7 @@ hui.ui.LocationField = function(options) {
 
 hui.ui.LocationField.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{'class':'hui_locationfield'});
+	var e = options.element = hui.build('span',{'class':'hui_locationfield'});
 	var b = hui.build('span',{html:'<span class="hui_locationfield_latitude"><span><input/></span></span><span class="hui_locationfield_longitude"><span><input/></span></span>'});
 	e.appendChild(hui.ui.wrapInField(b));
 	e.appendChild(hui.build('a',{'class':'hui_locationfield_picker',href:'javascript:void(0);'}));
@@ -15572,25 +15607,26 @@ hui.ui.Icon.prototype = {
 		inner.className = 'hui_icon_'+this.size;
 		inner.style.backgroundImage = 'url('+hui.ui.getIconUrl(this.options.icon,this.size)+')';
 	}
-}/////////////////////////// Color field /////////////////////////
+}/////////////////////////// Color input /////////////////////////
 
 /**
- * A component for geo-location
+ * A component for color input
  * @constructor
  */
-hui.ui.ColorField = function(options) {
+hui.ui.ColorInput = function(options) {
 	this.options = hui.override({value:null},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
+	this.button = hui.get.firstByTag('a',this.element);
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	this.setValue(this.value);
 	this._addBehavior();
 }
 
-hui.ui.ColorField.prototype = {
+hui.ui.ColorInput.prototype = {
 	_addBehavior : function() {
-		
+		alert(this.button)
 	},
 	
 	getValue : function() {

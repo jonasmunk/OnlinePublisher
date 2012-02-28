@@ -104,6 +104,15 @@ hui.ui.Selection.prototype = {
 	reset : function() {
 		this.setValue(null);
 	},
+	
+	addItems : function(options) {
+		options.element = hui.build('div',{parent:this.element});
+		var items = new hui.ui.Selection.Items(options);
+		items.parent = this;
+		this.subItems.push(items);
+	},
+	
+	
 	/** @private */
 	updateUI : function() {
 		var i;

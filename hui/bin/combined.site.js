@@ -2098,7 +2098,33 @@ hui.location = {
 
 
 
-
+hui.xml = {
+	transform : function(xml,xsl) {
+		if (window.ActiveXObject) {
+			return xml.transformNode(xsl);
+		} else if (document.implementation && document.implementation.createDocument) {
+			try {
+			  	var pro = new XSLTProcessor();
+			  	pro.importStylesheet(xsl);
+			    return pro.transformToFragment(xml,document);				
+			} catch (e) {
+				hui.log(e);
+			}
+		}
+	},
+	parse : function(xml) {
+		var doc;
+		if (window.DOMParser) {
+  			var parser=new DOMParser();
+  			doc = parser.parseFromString(xml,"text/xml");
+  		} else {
+  			doc = new ActiveXObject("Microsoft.XMLDOM");
+			doc.async = false;
+  			doc.loadXML(xml); 
+  		}
+		return doc;
+	}
+}
 
 
 

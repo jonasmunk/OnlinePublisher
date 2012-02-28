@@ -2,13 +2,16 @@
 
 /******************************** Location *************************/
 
-div.hui_locationfield
+span.hui_locationfield
 {
 	padding-right: 18px;
 	position: relative;
+	display: inline-block;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-div.hui_locationfield input
+span.hui_locationfield input
 {
 	border: 0;
 	margin: 0;

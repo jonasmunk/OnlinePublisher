@@ -21,7 +21,7 @@ hui.ui.LocationField = function(options) {
 
 hui.ui.LocationField.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{'class':'hui_locationfield'});
+	var e = options.element = hui.build('span',{'class':'hui_locationfield'});
 	var b = hui.build('span',{html:'<span class="hui_locationfield_latitude"><span><input/></span></span><span class="hui_locationfield_longitude"><span><input/></span></span>'});
 	e.appendChild(hui.ui.wrapInField(b));
 	e.appendChild(hui.build('a',{'class':'hui_locationfield_picker',href:'javascript:void(0);'}));

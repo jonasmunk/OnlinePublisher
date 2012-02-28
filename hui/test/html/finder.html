@@ -18,6 +18,10 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Finder.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Overflow.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Columns.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Selection.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Source.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Overlay.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/DragDrop.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		hui.ui.state = '';
 		hui.ui.context = '../../..';
@@ -29,7 +33,8 @@
 		hui.onReady(function() {
 			var finder = hui.ui.Finder.create({
 				title : 'Select page',
-				listUrl : '../xml/data/list_users.xml'
+				listUrl : 'data/list_pages.xml',
+				selectionUrl : 'data/finder_selection.xml'
 			});
 			finder.show();
 		})

@@ -272,29 +272,13 @@
 
 <!-- Color field -->
 
-<xsl:template match="gui:group/gui:colorfield">
-	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
-		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:style-color"/></div></td>
-	</tr>
-</xsl:template>
-
-<xsl:template match="gui:group[@labels='above']/gui:colorfield">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:style-color"/></div>
-	</td></tr>
-</xsl:template>
-
-<xsl:template name="gui:colorfield" match="gui:colorfield">
-	<span class="hui_style_color" id="{generate-id()}">
-		<span><span><input type="text" value="{@value}"/></span></span>
+<xsl:template match="gui:color-input">
+	<span class="hui_colorinput" id="{generate-id()}">
+		<span><span><input type="text" value="{@value}"/></span></span><a class="hui_colorinput" href="javascript://"><xsl:comment/></a>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ColorField({
-			element:'<xsl:value-of select="generate-id()"/>',
-			name:'<xsl:value-of select="@name"/>',
-			key:'<xsl:value-of select="@key"/>'
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ColorInput({
+			element:'<xsl:value-of select="generate-id()"/>'
 			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
 			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
 			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
@@ -304,6 +288,29 @@
 </xsl:template>
 
 
+
+<xsl:template match="gui:location-input">
+	<span class="hui_locationfield" id="{generate-id()}">
+		
+		<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
+			<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
+				<span>
+					<span class="hui_locationfield_latitude"><span><input/></span></span><span class="hui_locationfield_longitude"><span><input/></span></span>
+				</span>
+			</span></span></span>
+			<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
+		<a class="hui_locationfield_picker" href="javascript://"><xsl:comment/></a>
+	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.LocationField({
+			element:'<xsl:value-of select="generate-id()"/>'
+			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
+			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
 
 
 <!-- dropdown -->

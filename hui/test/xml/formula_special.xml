@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" padding="10" title="Drop down">
+	<controller name="controller" source="dropdown.js"/>
+	<source name="itemsSource" url="data/items_languages.xml"/>
+	<box width="600" title="Drop down" variant="textured" padding="10">
+		<toolbar>
+			<icon icon="common/folder" title="Show values" name="showValues"/>
+			<icon icon="common/color" title="Refresh source" action="itemsSource.refresh()"/>
+			<icon icon="common/folder" title="Build" name="build"/>
+		</toolbar>
+		<formula name="formula">
+			<group labels="above">
+				<field label="Color">
+					<color-input/>
+				</field>
+				<field label="Location">
+					<location-input/>
+				</field>
+			</group>
+		</formula>
+	</box>
+</gui>

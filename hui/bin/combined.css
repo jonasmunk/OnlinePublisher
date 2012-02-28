@@ -6024,13 +6024,16 @@ div.hui_colorpicker_swatches a
 
 /******************************** Location *************************/
 
-div.hui_locationfield
+span.hui_locationfield
 {
 	padding-right: 18px;
 	position: relative;
+	display: inline-block;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-div.hui_locationfield input
+span.hui_locationfield input
 {
 	border: 0;
 	margin: 0;
@@ -6399,4 +6402,18 @@ div.hui_rendering p
 .hui_rendering_minor
 {
 	font-size: 10px;
+}span.hui_colorinput input
+{
+	border: 1px solid #ddd;
+	border-color: #eee #ddd #ccc;
+	box-shadow: inset 0 2px 3px #eee;
+	border-radius: 3px;
+}
+
+a.hui_colorinput
+{
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	background: red;
 }
