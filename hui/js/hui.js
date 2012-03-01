@@ -422,6 +422,7 @@ hui.dom = {
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
 	},
+	// TODO: Move to hui.get
 	firstChild : function(node) {
 		var children = node.childNodes;
 		for (var i=0; i < children.length; i++) {
@@ -462,7 +463,7 @@ hui.dom = {
 	},
 	replaceHTML : function(node,html) {
 		node = hui.get(node);
-		node.innerHTML=html;
+		node.innerHTML = html;
 	},
 	runScripts : function(node) {
 		var scripts = node.getElementsByTagName('script');
@@ -1121,6 +1122,9 @@ hui.unListen = function(el,type,listener,useCapture) {
  * @returns {hui.Event} An event wrapper
  */
 hui.event = function(event) {
+	if (event!==undefined && event.huiEvent===true) {
+		return event;
+	}
 	return new hui.Event(event);
 }
 
@@ -1129,6 +1133,7 @@ hui.event = function(event) {
  * @param event The DOM event
  */
 hui.Event = function(event) {
+	this.huiEvent = true;
 	/** The event */
 	this.event = event = event || window.event;
 	/** The target element */
