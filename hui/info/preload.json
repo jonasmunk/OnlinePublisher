@@ -1,4 +1,4 @@
-[
+[	
 	"/icons/application/files32.png",
 	"/icons/application/pages32.png",
 	"/icons/application/statistics32.png",
@@ -11,6 +11,7 @@
 	"/gfx/progress/spinner_grey_32.gif",
 	
 	"/icons/common/success32.png",
+	"/icons/common/success24.png",
 
 	"/icons/common/delete32.png",
 	"/icons/common/image32.png",
