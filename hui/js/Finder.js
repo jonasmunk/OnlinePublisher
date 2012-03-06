@@ -23,13 +23,19 @@ hui.ui.Finder.prototype = {
 	
 	_build : function() {
 		this.window = hui.ui.Window.create({title:this.options.title,width:500});
-		var columns = hui.ui.Columns.create();
-		this.window.add(columns);
+
+		var layout = hui.ui.Layout.create();
+		this.window.add(layout);
+
+		//var columns = hui.ui.Columns.create();
+		//this.window.add(columns);
 		var left = hui.ui.Overflow.create({height:400});
-		columns.addToColumn(0,left);
+		//columns.addToColumn(0,left);
+		layout.addToLeft(left);
 		var right = hui.ui.Overflow.create({height:400});
-		columns.addToColumn(1,right);
-		columns.setColumnWidth(0,160);
+		layout.addToCenter(right);
+		//columns.addToColumn(1,right);
+		//columns.setColumnWidth(0,160);
 		
 		this.list = hui.ui.List.create({url:this.options.listUrl});
 		this.list.listen({
