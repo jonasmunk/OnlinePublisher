@@ -103,37 +103,17 @@ op.Editor = {
 	
 	editDesign : function() {
 		if (!this.designWindow) {
-			var win = this.designWindow = hui.ui.Window.create({width:300,title:'Design',icon:'common/info',padding:10,variant:'dark'});
-			var form = this.designFormula = hui.ui.Formula.create();
-			form.listen({
-				$submit : function() {
-					var values = form.getValues();
-					hui.ui.request({
-						url : 'data/SaveDesignParameters.php',
-						parameters : {id:op.page.id,parameters:hui.string.toJSON(values)},
-						onSuccess : function() {
-							hui.ui.showMessage({text:'Indstillingerne er gemt', duration:3000});
-						}
-					})
-				}
-			})
-			this.designGroup = this.designFormula.createGroup();
-			
-			var group = this.designFormula.createGroup();
-			var buttons = group.createButtons();
-			var btn = hui.ui.Button.create({text:'Opdater',submit:true});
-			buttons.add(btn);
-			
-			win.add(form);
 			hui.ui.request({
 				url : 'data/LoadDesignInfo.php',
 				parameters : {id:op.page.id},
 				message : {start:'Henter design info...',delay:300},
-				onJSON : function(obj) {
-					if (obj.parameters) {
-						this._buildDesignForm(obj.parameters);
+				onJSON : function(parameters) {
+					if (parameters.length>0) {
+						this._buildDesignForm(parameters);
+						this.designWindow.show();
+					} else {
+						hui.ui.showMessage({text:'Dette design har ingen indstillinger',duration:3000})
 					}
-					this.designWindow.show();
 				}.bind(this)
 			})
 		} else {
@@ -142,10 +122,39 @@ op.Editor = {
 	},
 	
 	_buildDesignForm : function(parameters) {
+		var win = this.designWindow = hui.ui.Window.create({width:300,title:'Design',icon:'common/info',padding:10,variant:'dark'});
+		var form = this.designFormula = hui.ui.Formula.create();
+		form.listen({
+			$submit : function() {
+				var values = form.getValues();
+				hui.ui.request({
+					url : 'data/SaveDesignParameters.php',
+					parameters : {id:op.page.id,parameters:hui.string.toJSON(values)},
+					onSuccess : function() {
+						hui.ui.showMessage({text:'Indstillingerne er gemt', duration:3000});
+						document.location.reload();
+					}
+				})
+			}
+		})
+		this.designGroup = this.designFormula.createGroup();
+		
+		var group = this.designFormula.createGroup();
+		var buttons = group.createButtons();
+		var btn = hui.ui.Button.create({text:'Opdater',submit:true});
+		buttons.add(btn);
+		
+		win.add(form);
+		
 		for (var i=0; i < parameters.length; i++) {
 			var parm = parameters[i];
-			if (parm.type=='text') {
-				var field = hui.ui.TextField.create({key:parm.key,label:parm.label,value:'hey!'});
+			if (parm.type=='text' || parm.type=='color') {
+				var field = hui.ui.TextField.create({key:parm.key,label:parm.label,value:parm.value});
+				this.designGroup.add(field);
+			}
+			if (parm.type=='selection') {
+				parm.options.unshift({});
+				var field = hui.ui.DropDown.create({key:parm.key,label:parm.label,value:parm.value,items:parm.options});
 				this.designGroup.add(field);
 			}
 		};

@@ -25,5 +25,25 @@ class TestDesignService extends UnitTestCase {
 			$this->assertTrue($valid,"The design $design is not valid");
 		}
 	}
+
+    function testParameters() {
+		$custom = new Design();
+		$custom->setUnique('custom');
+		$custom->save();
+		
+		$parameters = DesignService::loadParameters($custom->getId());
+		
+		Log::debug($parameters);
+
+
+		$this->assertTrue(count($parameters)>0);
+		
+		DesignService::saveParameters($custom->getId(),array('title'=>'Ullamcorper Magna Parturient'));
+		
+		$parameters = DesignService::loadParameters($custom->getId());
+		$this->assertEqual($parameters[0]['value'],'Ullamcorper Magna Parturient');
+
+		$custom->remove();
+    }
 }
 ?>

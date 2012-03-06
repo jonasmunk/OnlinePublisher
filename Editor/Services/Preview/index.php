@@ -37,7 +37,7 @@ $gui='
 					<icon icon="inset/stamp" title="Revidér" name="review"/>
 					<icon icon="common/note" title="Ny note" name="addNote" overlay="new_monochrome"/>
 					<divider/>
-					<icon icon="common/info" title="Info" name="design"/>
+					<icon icon="common/settings" title="Design" name="design"/>
 				</toolbar>
 			</tab>
 		</tabs>

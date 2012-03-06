@@ -3,6 +3,21 @@
 	"description" : "Customizable design",
 	"owner" : "Open source",
 	"parameters" : [
-		{"key" : "title", "type" : "text", "label" : "Titel"}
+		{"key" : "title", "type" : "text", "label" : "Titel"},
+		{"key" : "background-color", "type" : "color", "label" : "Baggrundsfarve"},
+		{"key" : "background-image", "type" : "selection", "label" : "Baggrundsbillede", "options" : [
+			{"label" : "Blomster", "value" : "flowers"},
+			{"label" : "Hippie", "value" : "flowerpower"},
+			{"label" : "Skyer", "value" : "clouds"},
+			{"label" : "Sand", "value" : "sand"},
+			{"label" : "Træ", "value" : "wood"},
+			{"label" : "Retro blå", "value" : "retro_blue"},
+			{"label" : "Mørke striber", "value" : "stripes_dark"},
+			{"label" : "Grønne cirkler", "value" : "circles_green"},
+			{"label" : "Swirl", "value" : "swirl"}
+		]},
+		{"key" : "background-texture", "type" : "selection", "label" : "Baggrundstekstur", "options" : [
+			{"label" : "Matrice", "value" : "matrix"}
+		]}
 	]
 }

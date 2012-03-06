@@ -7527,7 +7527,7 @@ hui.ui.DropDown.prototype = {
 		}
 		var self = this;
 		hui.each(this.items,function(item,i) {
-			var e = hui.build('a',{href:'javascript://',text:item.label || item.title || item.text});
+			var e = hui.build('a',{href:'javascript://',text : item.label || item.title || item.text || ''});
 			hui.listen(e,'mousedown',function(e) {
 				hui.stop(e);
 				self._itemClicked(item,i);
@@ -12113,7 +12113,31 @@ hui.ui.Layout = function(options) {
 	hui.ui.extend(this);
 }
 
+hui.ui.Layout.create = function(options) {
+	options = hui.override({text:'',highlighted:false,enabled:true},options);
+	options.element = hui.build('table',{'class' : 'hui_layout'});
+	options.element.innerHTML = '<tbody class="hui_layout"><tr class="hui_layout_middle"><td class="hui_layout_middle">'+
+			'<table class="hui_layout_middle"><tr>'+
+			'<td class="hui_layout_left hui_context_sidebar"><div class="hui_layout_left"></div></td>'+
+			'<td class="hui_layout_center"></td>'+
+			'</tr></table>'+
+			'</td></tr></tbody>';
+	return new hui.ui.Layout(options);
+}
+
 hui.ui.Layout.prototype = {
+	
+	addToLeft : function(widget) {
+		var tbody = hui.get.firstByClass(this.element,'hui_layout_left');
+		tbody.appendChild(widget.element);
+	},
+	
+	addToCenter : function(widget) {
+		var tbody = hui.get.firstByClass(this.element,'hui_layout_center');
+		tbody.appendChild(widget.element);
+	},
+	
+	/** @private */
 	$$resize : function() {
 		if (hui.browser.gecko) {
 			var center = hui.get.firstByClass(this.element,'hui_layout_center');

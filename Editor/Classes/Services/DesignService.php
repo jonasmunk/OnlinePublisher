@@ -32,17 +32,43 @@ class DesignService {
 		$info = JsonService::readFile($path);
 		return $info;
 	}
+
+	function loadParameters($id) {
+		$out = array();
+		$design = Design::load($id);
+		$info = DesignService::getInfo($design->getUnique());
+		if ($info->parameters) {
+			$sql = "select * from design_parameter where design_id=".Database::int($id);
+			$rows = Database::selectAll($sql);
+			foreach ($info->parameters as $parameter) {
+				$arr = get_object_vars($parameter);
+				foreach ($rows as $row) {
+					if ($row['key']==$arr['key']) {
+						$arr['value'] = $row['value'];
+						break;
+					}
+				}
+				$out[] = $arr;
+			}
+		}
+		return $out;
+	}
 	
 	function saveParameters($id,$parameters) {
 		$design = Design::load($id);
-		Log::debug($parameters);
+		$sql = "delete from design_parameter where design_id=".Database::int($id);
+		Database::delete($sql);
 		$xml = '';
 		foreach ($parameters as $key => $value) {
-			$xml.='<parameter key="'.$key.'">'.
-				StringUtils::escapeXML($value).
-				'</parameter>';
+			$sql = "insert into design_parameter (design_id,`key`,`value`) values (".Database::int($id).",".Database::text($key).",".Database::text($value).")";
+			Database::insert($sql);
+			if (StringUtils::isNotBlank($value)) {				
+				$xml.='<parameter key="'.$key.'">'.
+					StringUtils::escapeXML($value).
+					'</parameter>';
+			}
 		}
-		Log::debug($xml);
+		
 		$design->setParameters($xml);
 		$design->save();
 		$design->publish();

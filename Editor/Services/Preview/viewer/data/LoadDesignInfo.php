@@ -11,9 +11,11 @@ $page = Page::load($id);
 
 $designId = $page->getDesignId();
 
-$design = Design::load($designId);
+//$design = Design::load($designId);
 
-$info = DesignService::getInfo($design->getUnique());
+$info = DesignService::loadParameters($designId);
 
-Response::sendUnicodeObject($info);
+
+
+Response::sendObject($info);
 ?>

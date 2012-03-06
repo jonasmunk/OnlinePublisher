@@ -21,8 +21,23 @@
 				<xsl:call-template name="util:metatags"/>
 				<xsl:call-template name="util:style"/>
 				<xsl:call-template name="util:scripts"/>
+				<xsl:if test="//p:design/p:parameter[@key='background-color']">
+					<style>
+						body {
+							background-color: <xsl:value-of select="//p:design/p:parameter[@key='background-color']"/>;
+						}
+					</style>
+				</xsl:if>
 			</head>
 			<body>
+				<xsl:attribute name="class">
+					<xsl:if test="//p:design/p:parameter[@key='background-image']">
+						<xsl:text>design_bg_</xsl:text><xsl:value-of select="//p:design/p:parameter[@key='background-image']"/>
+					</xsl:if>
+					<xsl:if test="//p:design/p:parameter[@key='background-texture']">
+						<xsl:text> design_texture_</xsl:text><xsl:value-of select="//p:design/p:parameter[@key='background-texture']"/>
+					</xsl:if>
+				</xsl:attribute>
 				<div class="layout">
 					<div class="layout_header">
 						<p class="layout_logo">
