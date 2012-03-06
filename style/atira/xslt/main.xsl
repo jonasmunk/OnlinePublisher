@@ -29,7 +29,7 @@
 	<xsl:call-template name="util:scripts"/>
 	<script src="{$path}style/{$design}/js/AtiraWebsite.js?1" type="text/javascript"><xsl:comment/></script>
 </head>
-<body class="{$agent}">
+<body>
 	<xsl:if test="//p:design/p:parameter[@key='variant']/.='news'">
 		<xsl:attribute name="class">news</xsl:attribute>
 	</xsl:if>
@@ -235,8 +235,8 @@
 				</xsl:when>
 				<xsl:otherwise>
 					<h2>About Atira</h2>
-					<p>Our technical area is servers-side application architecture, development, and implementation. Our business domain is Research Information Management. We supply our product Pure, an enterprise-class CERIF-based CRIS system.</p>
-					<p>Pure, released in 2003, is licensed for 40,846 research staff at our 73 references in 8 countries.</p>
+					<p>Our technical area is server-side application architecture, development, and implementation. Our business domain is Research Information Management. We supply our product Pure, an enterprise-class CERIF-based CRIS system.</p>
+					<p>Pure, released in 2003, is licensed for 47,900 research staff at our 75 references in 8 countries.</p>
 					<!--
 					<p>Our technical area is servers-side application architecture, development, and implementation.
 						Our business domain is Research Information Management. We supply our product Pure, an enterprise-class CERIF-based CRIS system.</p>
@@ -572,6 +572,11 @@
 					<div class="small_poster">
 						<xsl:choose>
 							<xsl:when test="$language='en'">
+								<!--
+								<h2><strong>season</strong> greetings</h2>
+								<p>See the world's first CERIF-inspired Christmas tree :-)</p>
+								<a href="{$path}en/merrychristmas2011.html" class="button"><span>Visit</span></a>
+								-->
 								<h2><strong>pure</strong> references</h2>
 								<p>See which universities and other institutions use Pure</p>
 								<a href="{$path}en/pure/references/" class="button"><span>Visit</span></a>
