@@ -2,8 +2,8 @@ div.part_poster
 {
 	border: 1px solid #ddd;
 	border-radius: 4px;
-	padding: 10px;
 	overflow: hidden;
+	position: relative;
 }
 
 p.part_poster_title
@@ -16,4 +16,40 @@ p.part_poster_title
 p.part_poster_text
 {
 	font-size: 12px;
+}
+
+div.part_poster_navigator
+{
+	position: absolute;
+	font-size: 0;
+	width: 100%;
+	text-align: center;
+	margin-top: -15px;
+}
+
+div.part_poster_navigator a
+{
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #eee;
+	margin-right: 3px;
+}
+
+div.part_poster_navigator a.part_poster_current
+{
+	background: #aaa;
+}
+
+
+
+div.part_poster_page
+{
+	padding: 10px;
+}
+
+div.part_poster_page img
+{
+	float: right;
 }

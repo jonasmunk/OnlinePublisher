@@ -1,5 +1,8 @@
 {
 	"name" : "Custom",
 	"description" : "Customizable design",
-	"owner" : "Open source"
+	"owner" : "Open source",
+	"parameters" : [
+		{"key" : "title", "type" : "text", "label" : "Titel"}
+	]
 }

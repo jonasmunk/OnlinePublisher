@@ -16,7 +16,39 @@ var partController = {
 	
 	_onMenu : function(e) {
 		e = hui.event(e);
-		
+		if (!this.menu) {
+			this.menu = hui.ui.Menu.create({name:'tableMenu'});
+			this.menu.addItems([
+				{title:'Slet række',value:'deleteRow'},
+				{title:'Flyt op',value:'moveUp'},
+				{title:'Flyt ned',value:'moveDown'},
+				null,
+				{title:'Slet kolonne',value:'deleteColumn'},
+				{title:'Flyt til venstre',value:'moveLeft'},
+				{title:'Flyt til højre',value:'moveRight'}
+			]);
+		}
+		this._contextNode = e.element;
+		this.menu.showAtPointer(e);
+	},
+	
+	$select$tableMenu : function(value) {
+		if (value === 'deleteRow') {
+			var tr = hui.get.firstParentByTag(this._contextNode, 'tr');
+			if (tr) {
+				hui.dom.remove(tr);
+			}
+		} else if (value == 'deleteColumn') {
+			var index = hui.get.before(this._contextNode).length;
+			var table = this._getTable();
+			var trs = table.getElementsByTagName('tr');
+			for (var i=0; i < trs.length; i++) {
+				var tdhs = hui.get.children(trs[i]);
+				if (tdhs.length>index) {
+					hui.dom.remove(tdhs[index]);
+				}
+			};
+		}
 	},
 	_checkMarkup : function() {
 		var children = hui.get.children(this.base);

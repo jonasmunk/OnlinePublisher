@@ -3,7 +3,8 @@
 <xsl:stylesheet version="1.0"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:p="http://uri.in2isoft.com/onlinepublisher/part/poster/1.0/"
- exclude-result-prefixes="p"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ exclude-result-prefixes="p util"
  >
 
 <xsl:template match="p:poster">
@@ -32,14 +33,29 @@
 			<xsl:attribute name="style">display:none;</xsl:attribute>
 		</xsl:if>
 		<xsl:if test="p:image">
-			<img style="float: right;">
+			<img>
 				<xsl:attribute name="src">
-					<xsl:value-of select="$path"/><xsl:text>services/images/?id=</xsl:text><xsl:value-of select="p:image/@id"/><xsl:text>&amp;height=200</xsl:text>
+					<xsl:value-of select="$path"/><xsl:text>services/images/?id=</xsl:text><xsl:value-of select="p:image/@id"/><xsl:text>&amp;format=png</xsl:text>
+					<xsl:choose>
+						<xsl:when test="p:image/@height">
+							<xsl:text>&amp;height=</xsl:text><xsl:value-of select="p:image/@height"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:text>&amp;height=200</xsl:text>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:attribute>
 			</img>
 		</xsl:if>
 		<p class="part_poster_title"><xsl:value-of select="p:title"/></p>
 		<p class="part_poster_text"><xsl:value-of select="p:text"/></p>
+		<xsl:for-each select="p:link">
+			<p class="part_poster_link">				
+				<a class="common"><xsl:call-template name="util:link"/>
+					<span><xsl:value-of select="."/></span>
+				</a>
+			</p>
+		</xsl:for-each>
 	</div>
 </xsl:template>
 

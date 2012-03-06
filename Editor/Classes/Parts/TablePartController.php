@@ -69,6 +69,10 @@ class TablePartController extends PartController
 				</fieldset>
 			</formula>
 		</window>
+		
+		<menu name="tableMenu">
+			<item text="Remove row" value="removeRow"/>
+		</menu>
 		';
 		return In2iGui::renderFragment($gui);
 	}

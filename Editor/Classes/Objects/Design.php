@@ -10,11 +10,13 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Model/Object.php');
 
 Object::$schema['design'] = array(
-	'unique' => array('type'=>'string')
+	'unique' => array('type'=>'string'),
+	'parameters' => array('type'=>'string')
 );
 class Design extends Object {
     
     var $unique;
+	var $parameters;
     
     function Design() {
 		parent::Object('design');
@@ -30,6 +32,14 @@ class Design extends Object {
 
     function getUnique() {
         return $this->unique;
+    }
+    
+    function setParameters($parameters) {
+        $this->parameters = $parameters;
+    }
+
+    function getParameters() {
+        return $this->parameters;
     }
 	
 	function getIn2iGuiIcon() {

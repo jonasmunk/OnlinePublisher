@@ -25,7 +25,16 @@
 			<body>
 				<div class="layout">
 					<div class="layout_header">
-						<p class="layout_logo"><xsl:value-of select="f:frame/@title"/><xsl:comment/></p>
+						<p class="layout_logo">
+							<xsl:choose>
+								<xsl:when test="//p:design/p:parameter[@key='title']">
+									<xsl:value-of select="//p:design/p:parameter[@key='title']"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="f:frame/@title"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						<xsl:comment/></p>
 					</div>
 					<div class="layout_navigation">
 						<xsl:call-template name="util:hierarchy-first-level"/>

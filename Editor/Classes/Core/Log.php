@@ -15,14 +15,14 @@ class Log {
 	
 	function debug($object) {
 		global $baseUrl;
-		if (strpos('/~jbm/',$baseUrl)!==false) {
+		if (strpos($baseUrl,'/~jbm/')!==false) {
 			error_log(print_r($object,true));
 		}
 	}
 	
 	function debugJSON($object) {
 		global $baseUrl;
-		if (strpos('/~jbm/',$baseUrl)!==false || true) {
+		if (strpos($baseUrl,'/~jbm/')!==false) {
 			$object = StringUtils::toJSON($object);
 			error_log(print_r($object,true));
 		}

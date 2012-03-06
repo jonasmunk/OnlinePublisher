@@ -610,6 +610,9 @@ hui.get.next = function(element) {
 	if (!element) {
 		return null;
 	}
+	if (element.nextElementSibling) {
+		return element.nextElementSibling;
+	}
 	if (!element.nextSibling) {
 		return null;
 	}
@@ -621,6 +624,21 @@ hui.get.next = function(element) {
     	return next;
 	}
 	return null;
+}
+
+hui.get.before = function(element) {
+	var elements = [];
+	if (element) {
+		var nodes = element.parentNode.childNodes;
+		for (var i=0; i < nodes.length; i++) {
+			if (nodes[i]==element) {
+				break;
+			} else if (nodes[i].nodeType===1) {
+				elements.push(nodes[i]);
+			}
+		};
+	}
+	return elements;
 }
 
 /**

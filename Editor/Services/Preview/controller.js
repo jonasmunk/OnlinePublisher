@@ -68,6 +68,13 @@ var controller = {
 		window.frames[0].location = '../PageHistory/';
 	},
 	
+	///////////// Design /////////////
+	
+	$click$design : function() {
+		var frame = window.frames[0];
+		frame.op.Editor.editDesign();
+	},
+	
 	///////////// Notes //////////////
 	
 	$click$addNote : function() {

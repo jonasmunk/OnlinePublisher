@@ -33,6 +33,22 @@ class DesignService {
 		return $info;
 	}
 	
+	function saveParameters($id,$parameters) {
+		$design = Design::load($id);
+		Log::debug($parameters);
+		$xml = '';
+		foreach ($parameters as $key => $value) {
+			$xml.='<parameter key="'.$key.'">'.
+				StringUtils::escapeXML($value).
+				'</parameter>';
+		}
+		Log::debug($xml);
+		$design->setParameters($xml);
+		$design->save();
+		$design->publish();
+		Log::debug($design);
+	}
+	
 	function validate($name) {
 		global $basePath;
 		$valid = true;

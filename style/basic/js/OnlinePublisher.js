@@ -278,17 +278,27 @@ op.part.Poster = function(options) {
 	this.pages = hui.get.byClass(this.element,'part_poster_page');
 	this.index = 0;
 	this.delay = 5000;
+	this.indicators = [];
+	this._buildNavigator();
 	this.callNext();
 }
 
 op.part.Poster.prototype = {
+	_buildNavigator : function() {
+		this.navigator = hui.build('div',{'class':'part_poster_navigator',parent:this.element});
+		for (var i=0; i < this.pages.length; i++) {
+			this.indicators.push(hui.build('a',{parent:this.navigator,href:'javascript://','class' : i==0 ? 'part_poster_current' : ''}));
+		};
+	},
 	next : function() {
 		this.pages[this.index].style.display='none';
+		hui.cls.remove(this.indicators[this.index],'part_poster_current');
 		this.index++;
 		if (this.index>=this.pages.length) {
 			this.index = 0;
 		}
 		this.pages[this.index].style.display='block';
+		hui.cls.add(this.indicators[this.index],'part_poster_current');
 		this.callNext();
 	},
 	callNext : function() {

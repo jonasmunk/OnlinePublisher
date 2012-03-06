@@ -172,7 +172,7 @@ var controller = {
 			document.forms.PartForm.submit();
 		}
 	},
-	$select : function(value) {
+	$select$sectionMenu : function(value) {
 		switch (value) {
 			case 'editSection' : this.editSection(); break;
 			case 'deleteSection' : this.deleteSection(); break;
