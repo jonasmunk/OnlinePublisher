@@ -50,9 +50,9 @@
 								</xsl:otherwise>
 							</xsl:choose>
 						<xsl:comment/></p>
-					</div>
 					<div class="layout_navigation">
 						<xsl:call-template name="util:hierarchy-first-level"/>
+					</div>
 					</div>
 					<div class="layout_sidebar">
 						<xsl:call-template name="util:hierarchy-after-first-level"/>

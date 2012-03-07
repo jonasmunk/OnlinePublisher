@@ -14,10 +14,13 @@
 			{"label" : "Retro blå", "value" : "retro_blue"},
 			{"label" : "Mørke striber", "value" : "stripes_dark"},
 			{"label" : "Grønne cirkler", "value" : "circles_green"},
-			{"label" : "Swirl", "value" : "swirl"}
+			{"label" : "Swirl", "value" : "swirl"},
+			{"label" : "Håndtegnede blomster", "value" : "handdrawn_flowers"}
 		]},
 		{"key" : "background-texture", "type" : "selection", "label" : "Baggrundstekstur", "options" : [
-			{"label" : "Matrice", "value" : "matrix"}
+			{"label" : "Matrice", "value" : "matrix"},
+			{"label" : "Plaid", "value" : "plaid"},
+			{"label" : "Linjer", "value" : "lines"}
 		]}
 	]
 }
