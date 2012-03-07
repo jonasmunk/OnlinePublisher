@@ -5,6 +5,7 @@
 	"parameters" : [
 		{"key" : "title", "type" : "text", "label" : "Titel"},
 		{"key" : "background-color", "type" : "color", "label" : "Baggrundsfarve"},
+		{"key" : "logo-image", "type" : "image", "label" : "Logo"},
 		{"key" : "background-image", "type" : "selection", "label" : "Baggrundsbillede", "options" : [
 			{"label" : "Blomster", "value" : "flowers"},
 			{"label" : "Hippie", "value" : "flowerpower"},

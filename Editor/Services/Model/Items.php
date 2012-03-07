@@ -11,6 +11,12 @@ $text = Request::getString('query');
 $writer = new ItemsWriter();
 
 $writer->startItems();
+if (Request::getBoolean('includeEmpty')) {
+		$writer->item(array(
+			'title' => '',
+			'value' => ''
+		));
+}
 if ($type=='page') {
 	$sql = "select page.id,page.title from page order by page.title";
 	$result = Database::select($sql);

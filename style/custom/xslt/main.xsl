@@ -40,6 +40,15 @@
 				</xsl:attribute>
 				<div class="layout">
 					<div class="layout_header">
+						<xsl:if test="//p:design/p:parameter[@key='logo-image']">
+							<img class="layout_logo" width="{//p:design/p:parameter[@key='logo-image']/p:image/@width}" height="{//p:design/p:parameter[@key='logo-image']/p:image/@height}">
+								<xsl:attribute name="src">
+									<xsl:value-of select="$path"/>
+									<xsl:text>services/images/?id=</xsl:text>
+									<xsl:value-of select="//p:design/p:parameter[@key='logo-image']/p:image/@id"/>
+								</xsl:attribute>
+							</img>
+						</xsl:if>
 						<p class="layout_logo">
 							<xsl:choose>
 								<xsl:when test="//p:design/p:parameter[@key='title']">

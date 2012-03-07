@@ -157,6 +157,10 @@ op.Editor = {
 				var field = hui.ui.DropDown.create({key:parm.key,label:parm.label,value:parm.value,items:parm.options});
 				this.designGroup.add(field);
 			}
+			if (parm.type=='image') {
+				var field = hui.ui.DropDown.create({key:parm.key,label:parm.label,value:parm.value,url:'../../Model/Items.php?type=image&includeEmpty=true'});
+				this.designGroup.add(field);
+			}
 		};
 	}
 }

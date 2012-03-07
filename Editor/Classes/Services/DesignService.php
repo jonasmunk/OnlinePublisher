@@ -54,18 +54,38 @@ class DesignService {
 		return $out;
 	}
 	
+	function _getType($key,$info) {
+		if ($info->parameters) {
+			foreach ($info->parameters as $parameter) {
+				if ($parameter->key == $key) {
+					return $parameter->type;
+				}
+			}
+		}
+		return null;
+	}
+	
 	function saveParameters($id,$parameters) {
 		$design = Design::load($id);
+		$info = DesignService::getInfo($design->getUnique());
 		$sql = "delete from design_parameter where design_id=".Database::int($id);
 		Database::delete($sql);
 		$xml = '';
 		foreach ($parameters as $key => $value) {
+			$type = DesignService::_getType($key,$info);
 			$sql = "insert into design_parameter (design_id,`key`,`value`) values (".Database::int($id).",".Database::text($key).",".Database::text($value).")";
 			Database::insert($sql);
 			if (StringUtils::isNotBlank($value)) {				
-				$xml.='<parameter key="'.$key.'">'.
-					StringUtils::escapeXML($value).
-					'</parameter>';
+				$xml.='<parameter key="'.$key.'">';
+				if ($type=='image') {
+					$image = Image::load($value);
+					if ($image) {
+						$xml.='<image id="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'"/>';
+					}
+				} else {
+					$xml.=StringUtils::escapeXML($value);
+				}
+				$xml.='</parameter>';
 			}
 		}
 		

@@ -36,6 +36,12 @@ div.layout_header
 	*/
 }
 
+div.layout_header img
+{
+	float: left;
+	margin: 10px 10px 0 20px;
+}
+
 p.layout_logo
 {
 	margin: 0;
