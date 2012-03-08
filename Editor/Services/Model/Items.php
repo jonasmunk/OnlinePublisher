@@ -44,7 +44,7 @@ if ($type=='page') {
 		));
 	}
 } else {
-	$objects = Query::after($type)->withText($text)->get();
+	$objects = Query::after($type)->withText($text)->orderBy('title')->withWindowSize(1000)->get();
 	foreach ($objects as $object) {
 		$writer->item(array(
 			'title' => $object->getTitle(),

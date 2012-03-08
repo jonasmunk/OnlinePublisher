@@ -73,3 +73,8 @@ p.task_page
 	border-top: 1px solid #eee;
 	padding: 5px 0 2px;
 }
+
+div.hui_list_cell_card
+{
+	padding: 6px 8px;
+}

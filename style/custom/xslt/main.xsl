@@ -40,15 +40,7 @@
 				</xsl:attribute>
 				<div class="layout">
 					<div class="layout_header">
-						<xsl:if test="//p:design/p:parameter[@key='logo-image']">
-							<img class="layout_logo" width="{//p:design/p:parameter[@key='logo-image']/p:image/@width}" height="{//p:design/p:parameter[@key='logo-image']/p:image/@height}">
-								<xsl:attribute name="src">
-									<xsl:value-of select="$path"/>
-									<xsl:text>services/images/?id=</xsl:text>
-									<xsl:value-of select="//p:design/p:parameter[@key='logo-image']/p:image/@id"/>
-								</xsl:attribute>
-							</img>
-						</xsl:if>
+						<xsl:call-template name="logo"/>
 						<p class="layout_logo">
 							<xsl:choose>
 								<xsl:when test="//p:design/p:parameter[@key='title']">
@@ -74,6 +66,33 @@
 				<xsl:call-template name="util:googleanalytics"/>
 			</body>
 		</html>
+	</xsl:template>
+	
+	<xsl:template name="logo">
+		<xsl:if test="//p:design/p:parameter[@key='logo-image']">
+			<xsl:choose>
+				<xsl:when test="//p:design/p:parameter[@key='logo-image']/p:image/@height>58">
+					<img class="layout_logo">
+						<xsl:attribute name="src">
+							<xsl:value-of select="$path"/>
+							<xsl:text>services/images/?id=</xsl:text>
+							<xsl:value-of select="//p:design/p:parameter[@key='logo-image']/p:image/@id"/>
+							<xsl:text>&amp;height=58</xsl:text>
+						</xsl:attribute>
+					</img>
+					
+				</xsl:when>
+				<xsl:otherwise>
+					<img class="layout_logo" width="{//p:design/p:parameter[@key='logo-image']/p:image/@width}" height="{//p:design/p:parameter[@key='logo-image']/p:image/@height}">
+						<xsl:attribute name="src">
+							<xsl:value-of select="$path"/>
+							<xsl:text>services/images/?id=</xsl:text>
+							<xsl:value-of select="//p:design/p:parameter[@key='logo-image']/p:image/@id"/>
+						</xsl:attribute>
+					</img>
+			</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
 	</xsl:template>
 	
 </xsl:stylesheet>
