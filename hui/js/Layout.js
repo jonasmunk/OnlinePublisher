@@ -41,8 +41,10 @@ hui.ui.Layout.prototype = {
 				center.style.height='100%';
 			}
 		}
-		if (!hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9) {
-			return;
+		if (!window.navigator.userAgent.indexOf('AppleWebKit/536')) {
+			if (!hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9) {
+				return;
+			}			
 		}
 		if (!hui.dom.isVisible(this.element)) {
 			return;
