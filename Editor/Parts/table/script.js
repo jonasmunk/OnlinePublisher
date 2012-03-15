@@ -73,8 +73,8 @@ var partController = {
 	_getTable : function() {
 		var found = hui.get.firstByTag(this.base,'table');
 		if (!found) {
-			found = hui.build('table',{parent:this.base});
-			hui.build('tbody',{parent:found});
+			hui.log('Adding table');
+			found = hui.build('table',{parent:this.base,html:'<tbody><tr><td>Cell</td></tr></tbody>'});
 		}
 		return found;
 	},
@@ -157,10 +157,18 @@ hui.table = {
 			for (var i=0; i < cells.length; i++) {
 				hui.build(cells[i].nodeName,{parent:tr,html:cells[i].innerHTML});
 			};
+		} else {
+			var body = hui.get.firstByTag(table,'tbody') || table;
+			hui.build('tr',{parent:body,html:'<td>Cell</td>'});
 		}
 	},
 	addColumn : function(table) {
 		var trs = hui.get.byTag(table,'tr');
+		if (trs.length==0) {
+			var body = hui.get.firstByTag(table,'tbody') || table;
+			hui.build('tr',{parent:body,html:'<td>Cell</td>'});
+			return;
+		}
 		for (var i=0; i < trs.length; i++) {
 			var tr = trs[i];
 			var cells = hui.get.children(tr);

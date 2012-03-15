@@ -84,8 +84,8 @@ class TablePartController extends PartController
 				<icon icon="common/info" text="Info" name="showInfo"/>
 				<icon icon="file/generic" text="Kilde" overlay="edit" name="editSource"/>
 				<divider/>
-				<icon icon="file/generic" text="Ny række" overlay="add" name="addRow"/>
-				<icon icon="file/generic" text="Ny kolonne" overlay="add" name="addColumn"/>
+				<icon icon="file/generic" text="Ny række" overlay="new" name="addRow"/>
+				<icon icon="file/generic" text="Ny kolonne" overlay="new" name="addColumn"/>
 				'
 			);
 	}
