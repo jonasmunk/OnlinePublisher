@@ -626,6 +626,26 @@ hui.get.next = function(element) {
 	return null;
 }
 
+hui.get.previous = function(element) {
+	if (!element) {
+		return null;
+	}
+	if (element.previousElementSibling) {
+		return element.previousElementSibling;
+	}
+	if (!element.previousSibling) {
+		return null;
+	}
+	var previous = element.previousSibling;
+	while (previous && previous.nodeType!=1) {
+		previous = previous.previousSibling;
+	}
+	if (previous && previous.nodeType==1) { 
+    	return previous;
+	}
+	return null;
+}
+
 hui.get.before = function(element) {
 	var elements = [];
 	if (element) {
@@ -1120,6 +1140,21 @@ hui.listen = function(element,type,listener,useCapture) {
 }
 
 /**
+ * Add an event listener to an element, it will only fire once
+ * @param {Element} element The element to listen on
+ * @param {String} type The event to listen for
+ * @param {Function} listener The function to be called
+ */
+hui.listenOnce = function(element,type,listener) {	
+	var func;
+	func = function() {
+		listener();
+		hui.unListen(element,type,func)
+	}
+	hui.listen(element,type,func);
+}
+
+/**
  * Remove an event listener from an element
  * @param {Element} element The element to remove listener from
  * @param {String} type The event to remove
@@ -1232,6 +1267,19 @@ hui.Event.prototype = {
 		while (parent) {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	find : function(func) {
+		
+		var parent = this.element;
+		while (parent) {
+			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
+				if (func(parent)) {
+					return parent;
+				};
 			}
 			parent = parent.parentNode;
 		}
@@ -1645,7 +1693,12 @@ hui.selection = {
 			node : hui.selection.getNode(doc),
 			text : hui.selection.getText(doc)
 		}
-	}
+	},
+	enable : function(on) {
+		hui.log('Set selection: '+on);
+		document.onselectstart = on ? null : function () { return false; };
+		document.body.style.webkitUserSelect = on ? null : 'none';
+	},
 }
 
 
@@ -1839,14 +1892,10 @@ hui.drag = {
 			if (moved && options.onAfterMove) {
 				options.onAfterMove();
 			}
-			hui.drag._setSelect(true);
+			hui.selection.enable(true);
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
-		hui.drag._setSelect(false);
-	},
-	_setSelect : function(on) {
-		document.onselectstart = on ? null : function () { return false; };
-		document.body.style.webkitUserSelect = on ? null : 'none';
+		hui.selection.enable(false);
 	},
 	_nativeListeners : [],
 	_activeDrop : null,
@@ -5761,7 +5810,7 @@ hui.ui.startDrag = function(e,element,options) {
 	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
 	proxy.innerHTML = info.title ? '<span>'+hui.string.escape(info.title)+'</span>' : '###';
 	hui.ui.dragging = true;
-	document.body.onselectstart = function () { return false; };
+	hui.selection.enable(false);
 };
 
 /** @private */
@@ -5827,7 +5876,7 @@ hui.ui.dragEndListener = function(event) {
 		hui.animate(hui.ui.dragProxy,'top',(hui.ui.startDragPos.top-5)+'px',200,{ease:hui.ease.fastSlow,hideOnComplete:true});
 	}
 	hui.ui.latestDropTarget=null;
-	document.body.onselectstart=null;
+	hui.selection.enable(false);
 };
 
 /** @private */
@@ -5996,7 +6045,7 @@ hui.ui.Window.prototype = {
 		hui.listen(document,'mouseup',this.upListener);
 		hui.listen(document,'mousedown',this.upListener);
 		event.stop();
-		document.body.onselectstart = function () { return false; };
+		hui.selection.enable(false);
 		return false;
 	},
 	/** @private */
@@ -6024,7 +6073,7 @@ hui.ui.Window.prototype = {
 		hui.unListen(document,'mousemove',this.moveListener);
 		hui.unListen(document,'mouseup',this.upListener);
 		hui.unListen(document,'mousedown',this.upListener);
-		document.body.onselectstart = null;
+		hui.selection.enable(false);
 	}
 }
 
@@ -10483,16 +10532,19 @@ hui.ui.Menu.prototype = {
 		}
 	},
 	hide : function() {
-		if (!this.visible) return;
+		if (!this.visible) {return};
 		var self = this;
-		hui.animate(this.element,'opacity',0,200,{onComplete:function() {
-			self.element.style.display='none';
-		}});
+		hui.animate(this.element, 'opacity', 0, 200, {
+			onComplete : function() {
+				self.element.style.display='none';
+			}
+		});
 		this.removeHider();
 		for (var i=0; i < this.subMenus.length; i++) {
 			this.subMenus[i].hide();
 		};
 		this.visible = false;
+		this.fire('hide');
 	},
 	isSubMenuVisible : function() {
 		for (var i=0; i < this.subMenus.length; i++) {

@@ -28,11 +28,15 @@ class TablePartController extends PartController
 	function display($part,$context) {
 		return $this->render($part,$context);
 	}
+	
+	function getIndex($part) {
+		return StringUtils::removeTags($part->getHtml());
+	}
 		
 	function editor($part,$context) {
 		global $baseUrl;
 		return
-		'<div id="part_table">'.$this->render($part,$context).'</div>'.
+		'<div id="part_table" class="part_table common_font">'.$part->getHtml().'</div>'.
 		'<input type="hidden" name="html" value="'.StringUtils::escapeXML(StringUtils::fromUnicode($part->getHtml())).'"/>'.
 		'<script src="'.$baseUrl.'Editor/Parts/table/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
@@ -54,19 +58,39 @@ class TablePartController extends PartController
 			<formula name="propertiesFormula">
 				<fieldset legend="Tabel">
 					<group labels="before">
-						<dropdown label="Variant">
+						<!--
+						<dropdown label="Variant" key="variant">
 							<item text="Moderne"/>
 							<item text="Markant"/>
+						</dropdown>
+						-->
+						<dropdown label="Hoved" key="head" name="tableHead">
+							<item text="Ingen" value="0"/>
+							<item text="1 række" value="1"/>
+							<item text="2 rækker" value="2"/>
+							<item text="3 rækker" value="3"/>
+							<item text="4 rækker" value="4"/>
+							<item text="5 rækker" value="5"/>
+						</dropdown>
+						<dropdown label="Bund" key="foot" name="tableFoot">
+							<item text="Ingen" value="0"/>
+							<item text="1 række" value="1"/>
+							<item text="2 rækker" value="2"/>
+							<item text="3 rækker" value="3"/>
+							<item text="4 rækker" value="4"/>
+							<item text="5 rækker" value="5"/>
 						</dropdown>
 						<style-length key="width" label="Width"/>
 					</group>
 				</fieldset>
+				<!--
 				<space height="10"/>
 				<fieldset legend="Celle">
 					<group labels="before">
 						<text key="cellBackground" label="Baggrund"/>
 					</group>
 				</fieldset>
+				-->
 			</formula>
 		</window>
 		
@@ -82,23 +106,27 @@ class TablePartController extends PartController
 			'Tabel' => '
 				<icon icon="common/clean" text="Ryd op" name="clean"/>
 				<icon icon="common/info" text="Info" name="showInfo"/>
-				<icon icon="file/generic" text="Kilde" overlay="edit" name="editSource"/>
+				<icon icon="file/text" text="Kilde" overlay="edit" name="editSource"/>
 				<divider/>
-				<icon icon="file/generic" text="Ny række" overlay="new" name="addRow"/>
-				<icon icon="file/generic" text="Ny kolonne" overlay="new" name="addColumn"/>
+				<icon icon="table/row" text="Ny række" overlay="new" name="addRow"/>
+				<icon icon="table/column" text="Ny kolonne" overlay="new" name="addColumn"/>
 				'
 			);
 	}
 	
 	function getFromRequest($id) {
 		$part = TablePart::load($id);
-		$part->setHtml(Request::getUnicodeString('html'));
+		$html = Request::getUnicodeString('html');
+		$html = str_replace('contenteditable="true"', '', $html);
+		$part->setHtml($html);
 		return $part;
 	}
 	
 	function buildSub($part,$context) {
 		$html = $part->getHtml();
 		if (DOMUtils::isValidFragment($html)) {
+			$html = $this->insertLinks($part,$context);
+			//$html = $context->decorateForBuild($html,$part->getId());
 			return '<table xmlns="'.$this->getNamespace().'" valid="true">'.
 			$html.
 			'</table>';
@@ -108,6 +136,23 @@ class TablePartController extends PartController
 			'<![CDATA['.$html.']]>'.
 			'</table>';
 		}
+	}
+	
+	function insertLinks($part,$context) {
+		$html = $part->getHtml();
+		preg_match_all("/<[^>]+>/u",$html,$matches,PREG_OFFSET_CAPTURE);
+		$out = '';
+		$index = 0;
+		foreach ($matches[0] as $found) {
+			if ($found[1]-$index > 0) {
+				$str = substr($html,$index,$found[1]-$index);
+				$str = $context->decorateForBuild($str,$part->getId());
+				$out.=$str;
+			}
+			$index = $found[1] + strlen($found[0]);
+			$out.= $found[0];
+		}
+		return $out;
 	}
 	
 	function importSub($node,$part) {

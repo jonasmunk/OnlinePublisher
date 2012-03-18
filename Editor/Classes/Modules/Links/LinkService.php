@@ -280,7 +280,8 @@ class LinkService {
 			}
 			$found = strpos($text,$view->getSourceText())!==false;
 			if (!$found) {
-				//Log::debug('"'.$view->getSourceText().'" not found in "'.$text.'"');
+				Log::debug('"'.$view->getSourceText().'" not found in "'.$text.'"');
+				Log::debug($view);
 				$view->addError(LinkView::$TEXT_NOT_FOUND,'The link text was not found');
 			}
 		}

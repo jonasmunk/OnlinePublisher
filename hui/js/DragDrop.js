@@ -23,7 +23,7 @@ hui.ui.startDrag = function(e,element,options) {
 	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
 	proxy.innerHTML = info.title ? '<span>'+hui.string.escape(info.title)+'</span>' : '###';
 	hui.ui.dragging = true;
-	document.body.onselectstart = function () { return false; };
+	hui.selection.enable(false);
 };
 
 /** @private */
@@ -89,7 +89,7 @@ hui.ui.dragEndListener = function(event) {
 		hui.animate(hui.ui.dragProxy,'top',(hui.ui.startDragPos.top-5)+'px',200,{ease:hui.ease.fastSlow,hideOnComplete:true});
 	}
 	hui.ui.latestDropTarget=null;
-	document.body.onselectstart=null;
+	hui.selection.enable(false);
 };
 
 /** @private */

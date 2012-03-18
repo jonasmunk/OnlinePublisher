@@ -119,16 +119,19 @@ hui.ui.Menu.prototype = {
 		}
 	},
 	hide : function() {
-		if (!this.visible) return;
+		if (!this.visible) {return};
 		var self = this;
-		hui.animate(this.element,'opacity',0,200,{onComplete:function() {
-			self.element.style.display='none';
-		}});
+		hui.animate(this.element, 'opacity', 0, 200, {
+			onComplete : function() {
+				self.element.style.display='none';
+			}
+		});
 		this.removeHider();
 		for (var i=0; i < this.subMenus.length; i++) {
 			this.subMenus[i].hide();
 		};
 		this.visible = false;
+		this.fire('hide');
 	},
 	isSubMenuVisible : function() {
 		for (var i=0; i < this.subMenus.length; i++) {

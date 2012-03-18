@@ -103,7 +103,7 @@ class StringUtils {
 	}
 	
 	function insertLineBreakTags($input,$tag) {
-		return str_replace(array("\r\n","\r","\n"), $tag, $input);;
+		return str_replace(array("\r\n","\r","\n"), $tag, $input);
 	}
 	
 	function toBoolean($var) {

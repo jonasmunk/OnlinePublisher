@@ -8,7 +8,7 @@ require_once '../../../Include/Private.php';
 $id = Request::getInt('id');
 
 if ($info = LinkService::getLinkInfo($id)) {
-	Response::sendObject(array(
+	Response::sendUnicodeObject(array(
 		'id' => $info->getId(),
 		'text' => $info->getSourceText(),
 		'type' => $info->getTargetType(),
@@ -18,7 +18,7 @@ if ($info = LinkService::getLinkInfo($id)) {
 		'rendering' => 
 			'<p><strong>'.$info->getTargetTitle().'</strong></p>
 			<p class="hui_rendering_dimmed">'.LinkService::translateLinkType($info->getTargetType()).'</p>'.
-			($info->getPartId()>0 ? '<p style="margin-top: 5px;">Kun dette afsnit</p>' : '')
+			'<p style="margin-top: 5px;">'.($info->getPartId()>0 ? 'Kun indsat i dette afsnit' : 'Indsat i hele siden').'</p>'
 	));
-}
+} else 
 ?>
