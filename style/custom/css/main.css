@@ -70,7 +70,7 @@ div.layout_navigation ul
 
 div.layout_navigation li
 {
-	display: inline-block;
+	display: inline;
 	height: 30px;
 	border-right: 1px dotted #eee;
 }

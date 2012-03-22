@@ -32,45 +32,84 @@ op.ignite = function() {
 
 op.showLogin = function() {
 	if (!this.loginBox) {
-		if (this.loadingLogin) {return}
+		if (this.loadingLogin) {
+			hui.log('Aborting, the box is loading')
+			return;
+		}
 		this.loadingLogin = true;
 		hui.ui.showMessage({text:'Indlæser...',busy:true,delay:300});
 		hui.ui.require(['Formula','Button','TextField'],
 			function() {
 				hui.ui.hideMessage();
-				var box = this.loginBox = hui.ui.Box.create({width:300,title:'Adgangskontrol',modal:true,absolute:true,closable:true,padding:10});
+				var box = this.loginBox = hui.ui.Box.create({width:300,title:'Adgangskontrol',modal:true,absolute:true,closable:true,curtainCloses:true,padding:10});
 				this.loginBox.addToDocument();
-				var form = hui.ui.Formula.create();
-				form.listen({$submit:function() {
-					var values = form.getValues();
-					op.login(values.username,values.password);
-				}});
+				var form = this.loginForm = hui.ui.Formula.create();
+				form.listen({
+					$submit : function() {
+						if (!box.isVisible()) {
+							// Be sure to not submit if no box
+							return;
+						}
+						var values = form.getValues();
+						op.login(values.username,values.password);
+					},
+					$close : function() {
+						// Be sure to blur the login form
+						document.body.focus();
+					}
+				});
 				var g = form.buildGroup(null,[
 					{type:'TextField',options:{label:'Brugernavn',key:'username'}},
 					{type:'TextField',options:{label:'Kodeord',key:'password',secret:true}}
 				]);
 				var b = g.createButtons();
+				
+				var forgot = hui.ui.Button.create({text:'Glemt kode...'})
+				forgot.listen({$click:function() {
+					document.location = op.context+'Editor/Authentication.php?forgot=true';
+				}});
+				b.add(forgot);
+				
 				var cancel = hui.ui.Button.create({text:'Annuller'})
 				cancel.listen({$click:function() {
 					form.reset();
 					box.hide();
 				}});
 				b.add(cancel);
+				
 				b.add(hui.ui.Button.create({text:'Log ind',highlighted:true,submit:true}));
 				this.loginBox.add(form);
 				this.loginBox.show();
 				window.setTimeout(function() {
 					form.focus();
 				},100);
-			}
+				this.loadingLogin = false;
+				op.startListening();
+			}.bind(this)
 		);
 	} else {
 		this.loginBox.show();
+		this.loginForm.focus();
 	}
 }
 
+op.startListening = function() {
+	hui.listen(window,'keyup',function(e) {
+		e = hui.event(e);
+		if (e.escapeKey && this.loginBox.isVisible()) {
+			this.loginBox.hide();
+		}
+	}.bind(this));
+}
+
 op.login = function(username,password) {
-	hui.ui.request({
+	if (hui.isBlank(username) || hui.isBlank(password)) {
+		hui.ui.showMessage({text:'Udfyld venligst begge felter',duration:3000});
+		this.loginForm.focus();
+		return;
+	}
+
+	hui.ui.request({		
 		message : {start:'Logger ind...',delay:300},
 		url : op.context+'Editor/Services/Core/Authentication.php',
 		parameters : {username:username,password:password},
