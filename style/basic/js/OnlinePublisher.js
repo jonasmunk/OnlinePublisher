@@ -10,6 +10,7 @@ op.ignite = function() {
 		document.onkeydown=function(e) {
 			e = hui.event(e);
 			if(e.returnKey && e.shiftKey) {
+				e.stop();
 				var temp;
 				temp = function(e) {
 					e = hui.event(e);
@@ -98,6 +99,12 @@ op.startListening = function() {
 		e = hui.event(e);
 		if (e.escapeKey && this.loginBox.isVisible()) {
 			this.loginBox.hide();
+			var a = hui.get.firstByTag(document.body,'a');
+			if (a) {
+				a.focus();
+				a.blur();
+			}
+			document.body.blur();
 		}
 	}.bind(this));
 }
