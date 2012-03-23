@@ -2178,10 +2178,15 @@ hui.xml = {
 			try {
 			  	var pro = new XSLTProcessor();
 			  	pro.importStylesheet(xsl);
-			    return pro.transformToFragment(xml,document);				
+				hui.log(pro)
+				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
+			    return pro.transformToFragment(xml,ownerDocument);				
 			} catch (e) {
 				hui.log(e);
+				throw e;
 			}
+		} else {
+			hui.log('No XSLT!');
 		}
 	},
 	parse : function(xml) {

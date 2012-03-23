@@ -165,6 +165,16 @@ hui.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
+
+
+/**
+ * Checks if an object is a string
+ * @param {Object} obj The object to check
+ */
+hui.isString = function(obj) {
+	return typeof(obj)==='string';
+}
+
 /**
  * Checks if an object is an array
  * @param {Object} obj The object to check

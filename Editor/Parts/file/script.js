@@ -1,6 +1,21 @@
 op.part.File = {
 	$ready : function() {
 		this.buildWindow();
+		this.showFinder();
+	},
+	showFinder : function() {
+		var finder = hui.ui.Finder.create({
+			title : 'Vælg fil',
+			listUrl : '../../Services/Model/ListFiles.php?windowSize=10',
+			selectionUrl : '../../Tools/Files/GroupItems.php'
+		});
+		finder.listen({
+			$select : function(obj) {
+				document.forms.PartForm.fileId.value=obj.id;
+				this.preview();
+			}.bind(this)
+		})
+		finder.show();
 	},
 	buildWindow : function() {
 		var form = document.forms.PartForm;

@@ -798,7 +798,7 @@ hui.ui.firePropertyChange = function(obj,name,value) {
 };
 
 hui.ui.bind = function(expression,delegate) {
-	if (expression.charAt(0)=='@') {
+	if (hui.isString(expression) && expression.charAt(0)=='@') {
 		var pair = expression.substring(1).split('.');
 		var obj = hui.ui.get(pair[0]);
 		if (!obj) {

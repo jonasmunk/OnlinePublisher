@@ -42,10 +42,11 @@ hui.ui.Finder.prototype = {
 		layout.addToCenter(right);
 		
 		
-		this.list = hui.ui.List.create({url:this.options.listUrl});
+		var list = this.list = hui.ui.List.create();
+		
 		this.list.listen({
 			$listRowWasOpened : function(row) {
-				alert(0)
+				
 			},
 			
 			$selectionChanged : this._selectionChanged.bind(this)
@@ -56,6 +57,20 @@ hui.ui.Finder.prototype = {
 		var src = new hui.ui.Source({url : this.options.selectionUrl});
 		this.selection.addItems({source:src})
 		left.add(this.selection);
+		
+		
+		var listSource = new hui.ui.Source({
+			url : this.options.listUrl,
+			parameters:[
+				{key:'group',value:'@'+this.selection.name+'.value'},
+				{key:'windowSize',value:10},
+				{key:'query',value:'@'+search.name+'.value'},
+				{key:'windowPage',value:'@'+list.name+'.window.page'},
+				{key:'direction',value:'@'+list.name+'.sort.direction'},
+				{key:'sort',value:'@'+list.name+'.sort.key'}
+			]
+		});
+		this.list.setSource(listSource);
 		
 		src.refresh();
 	},
