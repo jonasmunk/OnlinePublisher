@@ -45,6 +45,9 @@ hui.ui.Formula.prototype = {
 	},
 	/** Sets the values of the descendants */
 	setValues : function(values) {
+		if (!hui.isDefined(values)) {
+			return;
+		}
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key) {

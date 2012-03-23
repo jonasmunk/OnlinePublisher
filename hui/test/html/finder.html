@@ -13,6 +13,8 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Bar.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/SearchField.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/List.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Layout.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
@@ -37,6 +39,11 @@
 				listUrl : 'data/list_pages.xml',
 				selectionUrl : 'data/finder_selection.xml'
 			});
+			finder.listen({
+				$select : function(obj) {
+					alert(obj)
+				}
+			})
 			finder.show();
 		})
 		
@@ -44,6 +51,11 @@
 			var xml = hui.xml.parse('<?xml version="1.0"?><gui xmlns="uri:hui" padding="20" title="Box"></gui>');
 			var xsl = t.responseXML;
 			var result = hui.xml.transform(xml,xsl);
+			if (result) {
+				document.body.appendChild(result);
+			}
+			hui.log(xml);
+			hui.log(xsl);
 			hui.log(result);
 		}})
 		
