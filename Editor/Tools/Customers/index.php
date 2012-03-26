@@ -31,7 +31,7 @@ $gui='
 	<layout>
 		<top>
 		<toolbar>
-			<icon icon="common/person" title="Ny person" name="newPerson" overlay="new"/>
+			<icon icon="common/user" title="Ny person" name="newPerson" overlay="new"/>
 			<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
 			<icon icon="common/email" title="Ny postliste" name="newMailinglist" overlay="new"/>
 			<divider/>

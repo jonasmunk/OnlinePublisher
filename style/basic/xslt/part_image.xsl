@@ -36,7 +36,6 @@
 		<xsl:if test="img:style/@align">
 			<xsl:attribute name="style">text-align: <xsl:value-of select="img:style/@align"/></xsl:attribute>
 		</xsl:if>
-		<xsl:value-of select="img:style/@frame"/>
 		<xsl:choose>
 			<xsl:when test="$editor='true' and not(o:object)">
 				<div>
@@ -67,7 +66,13 @@
 	<xsl:choose>
 		<xsl:when test="img:style/@frame">
 			<span class="part_image_frame_{img:style/@frame}">
-				<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
+				<span class="part_image_frame_{img:style/@frame}_top"><span><span><xsl:comment/></span></span></span>
+				<span class="part_image_frame_{img:style/@frame}_middle">
+					<span>
+						<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
+					</span>
+				</span>
+				<span class="part_image_frame_{img:style/@frame}_bottom"><span><span><xsl:comment/></span></span></span>
 			</span>
 		</xsl:when>
 		<xsl:otherwise>

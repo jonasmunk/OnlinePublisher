@@ -312,6 +312,7 @@ class ImagePartController extends PartController
 					<dropdown label="Ramme" key="frame">
 						<item title="Ingen" value=""/>
 						<item title="Let" value="light"/>
+						<item title="Elegant" value="elegant"/>
 					</dropdown>
 					<buttons>
 						<button name="pasteImage" text="Indsæt fra udklipsholder"/>

@@ -24,3 +24,72 @@ span.part_image_frame_light
 	background: #fff;
 	display: inline-block;
 }
+
+
+
+/************************* Elegant ***************************/
+
+span.part_image_frame_elegant
+{
+	display: inline-block;
+}
+
+span.part_image_frame_elegant_top
+{
+	display: block;
+	height: 34px;
+	padding-left: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') left top no-repeat;
+}
+
+span.part_image_frame_elegant_top span
+{
+	display: block;
+	height: 34px;
+	padding-right: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') right -34px no-repeat;
+}
+
+span.part_image_frame_elegant_top span span
+{
+	height: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') left -68px repeat-x;
+}
+
+span.part_image_frame_elegant_bottom
+{
+	display: block;
+	height: 34px;
+	padding-left: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') left -102px no-repeat;
+}
+
+span.part_image_frame_elegant_bottom span
+{
+	display: block;
+	height: 34px;
+	padding-right: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') right -136px no-repeat;
+}
+
+span.part_image_frame_elegant_bottom span span
+{
+	height: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') left -170px repeat-x;
+}
+
+
+span.part_image_frame_elegant_middle
+{
+	padding-left: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') left -204px no-repeat;
+	font-size: 0px;
+	display: block;
+}
+
+span.part_image_frame_elegant_middle span
+{
+	padding-right: 34px;
+	background: url('../../basic/gfx/frames/elegant.png') right -454px no-repeat;
+	display: block;
+}
