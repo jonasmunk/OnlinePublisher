@@ -2,7 +2,8 @@ var partController = {
 	$ready : function() {
 		var container = this.container = hui.get('part_table');
 		this.base = hui.get.firstByClass(container,'part_table') || container;
-		this.base.setAttribute('contenteditable','true');
+		var table = this._getTable();
+		table.setAttribute('contenteditable','true');
 		hui.listen(this.base,'keyup',function() {
 			this._checkMarkup();
 			this._syncValue();
@@ -15,31 +16,56 @@ var partController = {
 	
 	
 	_onMenu : function(e) {
+		hui.selection.enable(false);
+		hui.listenOnce(document.body,'mouseup',function() {
+			hui.selection.enable(true);
+		}.bind(this));
 		e = hui.event(e);
-		if (!this.menu) {
-			this.menu = hui.ui.Menu.create({name:'tableMenu'});
-			this.menu.addItems([
-				{title:'Slet række',value:'deleteRow'},
-				{title:'Flyt op',value:'moveUp'},
-				{title:'Flyt ned',value:'moveDown'},
-				null,
-				{title:'Slet kolonne',value:'deleteColumn'},
-				{title:'Flyt til venstre',value:'moveLeft'},
-				{title:'Flyt til højre',value:'moveRight'}
-			]);
+		
+		if (this.selectedCell) {
+			this.selectedCell.style.border='';
 		}
-		this._contextNode = e.element;
-		this.menu.showAtPointer(e);
+		
+		var td = e.findByTag('td');
+		if (td && !hui.cls.has(td,'editor_column')) {
+			this.selectedCell = td;
+			td.style.border='1px solid red';
+		
+			if (!this.menu) {
+				this.menu = hui.ui.Menu.create({name:'tableMenu'});
+				this.menu.addItems([
+					{title:'Slet række',value:'deleteRow'},
+					{title:'Flyt op',value:'moveUp'},
+					{title:'Flyt ned',value:'moveDown'},
+					null,
+					{title:'Slet kolonne',value:'deleteColumn'},
+					{title:'Flyt til venstre',value:'moveLeft'},
+					{title:'Flyt til højre',value:'moveRight'}
+				]);
+			}
+			this.menu.showAtPointer(e);
+		}
+	},
+	$hide$tableMenu : function() {
+		if (this.selectedCell) {
+			this.selectedCell.style.border='';
+		}
+	},
+	
+	_setSelect : function(on) {
+		hui.log('Set selection: '+on);
+		document.onselectstart = on ? null : function () { return false; };
+		document.body.style.webkitUserSelect = on ? null : 'none';
 	},
 	
 	$select$tableMenu : function(value) {
 		if (value === 'deleteRow') {
-			var tr = hui.get.firstParentByTag(this._contextNode, 'tr');
+			var tr = hui.get.firstParentByTag(this.selectedCell, 'tr');
 			if (tr) {
 				hui.dom.remove(tr);
 			}
 		} else if (value == 'deleteColumn') {
-			var index = hui.get.before(this._contextNode).length;
+			var index = hui.get.before(this.selectedCell).length;
 			var table = this._getTable();
 			var trs = table.getElementsByTagName('tr');
 			for (var i=0; i < trs.length; i++) {
@@ -48,6 +74,54 @@ var partController = {
 					hui.dom.remove(tdhs[index]);
 				}
 			};
+		} else if (value == 'moveRight') {
+			var index = hui.get.before(this.selectedCell).length;
+			var table = this._getTable();
+			var trs = table.getElementsByTagName('tr');
+			for (var i=0; i < trs.length; i++) {
+				var tdhs = hui.get.children(trs[i]);
+				if (tdhs.length>index) {
+					var cell = tdhs[index];
+					var next = hui.get.next(cell);
+					if (next) {
+						hui.dom.remove(next);
+						hui.dom.insertBefore(cell,next);
+					}
+				}
+			};
+		} else if (value == 'moveLeft') {
+			var index = hui.get.before(this.selectedCell).length;
+			var table = this._getTable();
+			var trs = table.getElementsByTagName('tr');
+			for (var i=0; i < trs.length; i++) {
+				var tdhs = hui.get.children(trs[i]);
+				if (tdhs.length>index) {
+					var cell = tdhs[index];
+					var previous = hui.get.previous(cell);
+					if (previous) {
+						hui.dom.remove(cell);
+						hui.dom.insertBefore(previous,cell);
+					}
+				}
+			};
+		} else if (value == 'moveUp') {
+			var tr = hui.get.firstParentByTag(this.selectedCell, 'tr');
+			if (tr) {
+				var previous = hui.get.previous(tr);
+				if (previous) {
+					hui.dom.remove(tr);
+					hui.dom.insertBefore(previous,tr);
+				}
+			}
+		} else if (value == 'moveDown') {
+			var tr = hui.get.firstParentByTag(this.selectedCell, 'tr');
+			if (tr) {
+				var next = hui.get.next(tr);
+				if (next) {
+					hui.dom.remove(next);
+					hui.dom.insertBefore(tr,next);
+				}
+			}
 		}
 	},
 	_checkMarkup : function() {
@@ -73,8 +147,9 @@ var partController = {
 	_getTable : function() {
 		var found = hui.get.firstByTag(this.base,'table');
 		if (!found) {
-			found = hui.build('table',{parent:this.base});
-			hui.build('tbody',{parent:found});
+			hui.log('Adding table');
+			found = hui.build('table',{parent:this.base,html:'<tbody><tr><td>Cell</td></tr></tbody>'});
+			found.setAttribute('contenteditable','true');
 		}
 		return found;
 	},
@@ -110,23 +185,64 @@ var partController = {
 		propertiesWindow.show();
 	},
 	_syncSource : function() {
-		sourceFormula.setValues({source:this.base.innerHTML});
+		var html = this.base.innerHTML;
+		html = html.replace(/\Wcontenteditable="true"/g, "");
+		sourceFormula.setValues({source:html});
 	},
 	_syncInfo : function() {
 		var table = this._getTable();
 		propertiesFormula.setValues({
-			width : table.style.width
+			width : table.style.width,
+			head : hui.table.getRowCount(table,'thead'),
+			foot : hui.table.getRowCount(table,'tfoot')
 		});
 	},
 	_syncValue : function() {
 		document.forms.PartForm.html.value = this.base.innerHTML;
+		var table = this._getTable();
+		table.setAttribute('contenteditable','true');
+	},
+	$valueChanged$tableHead : function(count) {
+		this._changePart('thead',count);
+	},
+	$valueChanged$tableFoot : function(count) {
+		this._changePart('tfoot',count);
+	},
+	_changePart : function(tag,count) {	
+		var table = this._getTable();
+		var head = hui.get.firstByTag(table,tag);
+		var headCount = 0;
+		if (!head) {
+			head = hui.build(tag,{parent:table});
+		}
+		var trs = hui.get.byTag(head,'tr');
+		if (trs.length>count) {
+			for (var i=0; i < trs.length; i++) {
+				if (i>=count) {
+					hui.dom.remove(trs[i]);
+				}
+			};
+		}
+		var missing = count - trs.length;
+		if (missing > 0) {
+			var firstTr = hui.get.firstByTag(table,'tr');
+			var cols = hui.get.children(firstTr).length;
+			for (var i=0; i < missing; i++) {
+				var tr = hui.build('tr',{parent:head});
+				for (var j=0; j < cols; j++) {
+					hui.build('th',{parent:tr,text:'Head'});
+				};
+			}
+		}
+		this._syncSource();
+		this._syncValue();
 	},
 	
 	// Source...
 	
 	editSource : function() {
 		sourceWindow.show();
-		sourceFormula.setValues({source:this.base.innerHTML});
+		this._syncSource();
 	},
 	$valuesChanged$sourceFormula : function(values) {
 		this.base.innerHTML = values.source;
@@ -147,6 +263,14 @@ var partController = {
 };
 
 hui.table = {
+	getRowCount : function(table,part) {
+		var head = hui.get.firstByTag(table,part);
+		var headCount = 0;
+		if (head) {
+			headCount = hui.get.byTag(head,'tr').length;
+		}
+		return headCount;
+	},
 	addRow : function(table) {
 		var trs = hui.get.byTag(table,'tr');
 		if (trs.length>0) {
@@ -157,10 +281,18 @@ hui.table = {
 			for (var i=0; i < cells.length; i++) {
 				hui.build(cells[i].nodeName,{parent:tr,html:cells[i].innerHTML});
 			};
+		} else {
+			var body = hui.get.firstByTag(table,'tbody') || table;
+			hui.build('tr',{parent:body,html:'<td>Cell</td>'});
 		}
 	},
 	addColumn : function(table) {
 		var trs = hui.get.byTag(table,'tr');
+		if (trs.length==0) {
+			var body = hui.get.firstByTag(table,'tbody') || table;
+			hui.build('tr',{parent:body,html:'<td>Cell</td>'});
+			return;
+		}
 		for (var i=0; i < trs.length; i++) {
 			var tr = trs[i];
 			var cells = hui.get.children(tr);

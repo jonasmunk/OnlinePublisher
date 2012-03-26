@@ -626,6 +626,26 @@ hui.get.next = function(element) {
 	return null;
 }
 
+hui.get.previous = function(element) {
+	if (!element) {
+		return null;
+	}
+	if (element.previousElementSibling) {
+		return element.previousElementSibling;
+	}
+	if (!element.previousSibling) {
+		return null;
+	}
+	var previous = element.previousSibling;
+	while (previous && previous.nodeType!=1) {
+		previous = previous.previousSibling;
+	}
+	if (previous && previous.nodeType==1) { 
+    	return previous;
+	}
+	return null;
+}
+
 hui.get.before = function(element) {
 	var elements = [];
 	if (element) {
@@ -1120,6 +1140,21 @@ hui.listen = function(element,type,listener,useCapture) {
 }
 
 /**
+ * Add an event listener to an element, it will only fire once
+ * @param {Element} element The element to listen on
+ * @param {String} type The event to listen for
+ * @param {Function} listener The function to be called
+ */
+hui.listenOnce = function(element,type,listener) {	
+	var func;
+	func = function() {
+		listener();
+		hui.unListen(element,type,func)
+	}
+	hui.listen(element,type,func);
+}
+
+/**
  * Remove an event listener from an element
  * @param {Element} element The element to remove listener from
  * @param {String} type The event to remove
@@ -1232,6 +1267,19 @@ hui.Event.prototype = {
 		while (parent) {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	find : function(func) {
+		
+		var parent = this.element;
+		while (parent) {
+			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
+				if (func(parent)) {
+					return parent;
+				};
 			}
 			parent = parent.parentNode;
 		}
@@ -1645,7 +1693,12 @@ hui.selection = {
 			node : hui.selection.getNode(doc),
 			text : hui.selection.getText(doc)
 		}
-	}
+	},
+	enable : function(on) {
+		hui.log('Set selection: '+on);
+		document.onselectstart = on ? null : function () { return false; };
+		document.body.style.webkitUserSelect = on ? null : 'none';
+	},
 }
 
 
@@ -1839,14 +1892,10 @@ hui.drag = {
 			if (moved && options.onAfterMove) {
 				options.onAfterMove();
 			}
-			hui.drag._setSelect(true);
+			hui.selection.enable(true);
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
-		hui.drag._setSelect(false);
-	},
-	_setSelect : function(on) {
-		document.onselectstart = on ? null : function () { return false; };
-		document.body.style.webkitUserSelect = on ? null : 'none';
+		hui.selection.enable(false);
 	},
 	_nativeListeners : [],
 	_activeDrop : null,
@@ -2129,10 +2178,15 @@ hui.xml = {
 			try {
 			  	var pro = new XSLTProcessor();
 			  	pro.importStylesheet(xsl);
-			    return pro.transformToFragment(xml,document);				
+				hui.log(pro)
+				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
+			    return pro.transformToFragment(xml,ownerDocument);				
 			} catch (e) {
 				hui.log(e);
+				throw e;
 			}
+		} else {
+			hui.log('No XSLT!');
 		}
 	},
 	parse : function(xml) {
@@ -4535,11 +4589,7 @@ hui.ui.Box = function(options) {
 	this.close = hui.get.firstByClass(this.element,'hui_box_close');
 	this.visible = !this.options.absolute;
 	if (this.close) {
-		hui.listen(this.close,'click',function(e) {
-			hui.stop(e);
-			this.hide();
-			this.fire('boxWasClosed');
-		}.bind(this));
+		hui.listen(this.close,'click',this._close.bind(this));
 	}
 	hui.ui.extend(this);
 };
@@ -4568,6 +4618,13 @@ hui.ui.Box.create = function(options) {
 };
 
 hui.ui.Box.prototype = {
+	_close : function(e) {
+		hui.stop(e);
+		this.hide();
+		this.fire('boxWasClosed'); // Deprecated
+		this.fire('close');
+	},
+	
 	/**
 	 * Adds the box to the end of the body
 	 */
@@ -4591,7 +4648,7 @@ hui.ui.Box.prototype = {
 		var e = this.element;
 		if (this.options.modal) {
 			var index = hui.ui.nextPanelIndex();
-			e.style.zIndex=index+1;
+			e.style.zIndex = index+1;
 			hui.ui.showCurtain({widget:this,zIndex:index});
 		}
 		if (this.options.absolute) {
@@ -4605,6 +4662,10 @@ hui.ui.Box.prototype = {
 		}
 		this.visible = true;
 		hui.ui.callVisible(this);
+	},
+	/** If the box is visible */
+	isVisible : function() {
+		return this.visible;
 	},
 	/** @private */
 	$$resize : function() {
@@ -4625,8 +4686,11 @@ hui.ui.Box.prototype = {
 		hui.ui.callVisible(this);
 	},
 	/** @private */
-	curtainWasClicked : function() {
+	$curtainWasClicked : function() {
 		this.fire('boxCurtainWasClicked');
+		if (this.options.curtainCloses) {
+			this._close();
+		}
 	}
 };/** @constructor */
 hui.ui.SearchField = function(options) {

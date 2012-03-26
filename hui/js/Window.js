@@ -152,7 +152,7 @@ hui.ui.Window.prototype = {
 		hui.listen(document,'mouseup',this.upListener);
 		hui.listen(document,'mousedown',this.upListener);
 		event.stop();
-		document.body.onselectstart = function () { return false; };
+		hui.selection.enable(false);
 		return false;
 	},
 	/** @private */
@@ -180,7 +180,7 @@ hui.ui.Window.prototype = {
 		hui.unListen(document,'mousemove',this.moveListener);
 		hui.unListen(document,'mouseup',this.upListener);
 		hui.unListen(document,'mousedown',this.upListener);
-		document.body.onselectstart = null;
+		hui.selection.enable(false);
 	}
 }
 

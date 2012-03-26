@@ -165,6 +165,16 @@ hui.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
+
+
+/**
+ * Checks if an object is a string
+ * @param {Object} obj The object to check
+ */
+hui.isString = function(obj) {
+	return typeof(obj)==='string';
+}
+
 /**
  * Checks if an object is an array
  * @param {Object} obj The object to check
@@ -622,6 +632,26 @@ hui.get.next = function(element) {
 	}
 	if (next && next.nodeType==1) { 
     	return next;
+	}
+	return null;
+}
+
+hui.get.previous = function(element) {
+	if (!element) {
+		return null;
+	}
+	if (element.previousElementSibling) {
+		return element.previousElementSibling;
+	}
+	if (!element.previousSibling) {
+		return null;
+	}
+	var previous = element.previousSibling;
+	while (previous && previous.nodeType!=1) {
+		previous = previous.previousSibling;
+	}
+	if (previous && previous.nodeType==1) { 
+    	return previous;
 	}
 	return null;
 }
@@ -1120,6 +1150,21 @@ hui.listen = function(element,type,listener,useCapture) {
 }
 
 /**
+ * Add an event listener to an element, it will only fire once
+ * @param {Element} element The element to listen on
+ * @param {String} type The event to listen for
+ * @param {Function} listener The function to be called
+ */
+hui.listenOnce = function(element,type,listener) {	
+	var func;
+	func = function() {
+		listener();
+		hui.unListen(element,type,func)
+	}
+	hui.listen(element,type,func);
+}
+
+/**
  * Remove an event listener from an element
  * @param {Element} element The element to remove listener from
  * @param {String} type The event to remove
@@ -1232,6 +1277,19 @@ hui.Event.prototype = {
 		while (parent) {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	find : function(func) {
+		
+		var parent = this.element;
+		while (parent) {
+			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
+				if (func(parent)) {
+					return parent;
+				};
 			}
 			parent = parent.parentNode;
 		}
@@ -1645,7 +1703,12 @@ hui.selection = {
 			node : hui.selection.getNode(doc),
 			text : hui.selection.getText(doc)
 		}
-	}
+	},
+	enable : function(on) {
+		hui.log('Set selection: '+on);
+		document.onselectstart = on ? null : function () { return false; };
+		document.body.style.webkitUserSelect = on ? null : 'none';
+	},
 }
 
 
@@ -1839,14 +1902,10 @@ hui.drag = {
 			if (moved && options.onAfterMove) {
 				options.onAfterMove();
 			}
-			hui.drag._setSelect(true);
+			hui.selection.enable(true);
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
-		hui.drag._setSelect(false);
-	},
-	_setSelect : function(on) {
-		document.onselectstart = on ? null : function () { return false; };
-		document.body.style.webkitUserSelect = on ? null : 'none';
+		hui.selection.enable(false);
 	},
 	_nativeListeners : [],
 	_activeDrop : null,
@@ -2129,10 +2188,15 @@ hui.xml = {
 			try {
 			  	var pro = new XSLTProcessor();
 			  	pro.importStylesheet(xsl);
-			    return pro.transformToFragment(xml,document);				
+				hui.log(pro)
+				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
+			    return pro.transformToFragment(xml,ownerDocument);				
 			} catch (e) {
 				hui.log(e);
+				throw e;
 			}
+		} else {
+			hui.log('No XSLT!');
 		}
 	},
 	parse : function(xml) {

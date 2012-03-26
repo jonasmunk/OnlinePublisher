@@ -19,8 +19,8 @@
 		</xsl:choose>
 		</div>
 	</xsl:template>
-	
-	<xsl:template mode="copy-no-ns" match="*">
+
+	<xsl:template mode="copy-no-ns" match="rt:richtext//*">
 		<xsl:element name="{name(.)}">
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates mode="copy-no-ns"/>

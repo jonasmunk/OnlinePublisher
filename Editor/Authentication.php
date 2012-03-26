@@ -130,12 +130,12 @@ $gui='
 		<textfield adaptive="true" multiline="true" name="databaseLog"/>
 	</window>
 
-	<window name="adminWindow" width="300" padding="10" title="{Create administrator;da:Opret administrator}">
+	<window name="adminWindow" width="300" padding="10" title="{Create administrator; da: Opret administrator}">
 		<formula name="adminFormula">
 			<text align="center">
-				<p>{da:Log ind med super-bruger for at oprette en ny administrator;en:Log in as super-user in order to create a new administrator}</p>
+				<p>{da:Log ind med super-brugeren for at oprette en ny administrator;en:Log in as the super-user in order to create a new administrator}</p>
 			</text>
-			<fieldset legend="Super user">
+			<fieldset legend="{Super user ; da: Super-bruger}">
 				<group>
 					<text label="{Username;da:Brugernavn}" key="superUsername"/>
 					<text label="{Password;da:Kodeord}" key="superPassword" secret="true"/>

@@ -13,11 +13,11 @@ if (!file_exists('../Config/Setup.php')) {
 require_once '../Config/Setup.php';
 require_once 'Include/Security.php';
 
-$start='Services/Start/';
+$start = 'Services/Start/';
 if (Request::exists("page")) {
-	$page=Request::getInt('page');
+	$page = Request::getInt('page');
 	InternalSession::setPageId($page);
-	$start='Services/Preview/';
+	$start = 'Services/Preview/';
 }
 
 $categorized = ToolService::getCategorized();

@@ -23,6 +23,9 @@ var controller = {
 		if (hui.location.getBoolean('logout')) {
 			hui.ui.showMessage({text:'Du er nu logget ud',icon:'common/success',duration:2000});
 		}
+		else if (hui.location.getBoolean('forgot')) {
+			this.$click$forgot();
+		}
 		hui.ui.request({
 			method : 'GET',
 			url : '../hui/info/preload.json',

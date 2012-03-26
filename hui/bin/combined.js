@@ -626,6 +626,26 @@ hui.get.next = function(element) {
 	return null;
 }
 
+hui.get.previous = function(element) {
+	if (!element) {
+		return null;
+	}
+	if (element.previousElementSibling) {
+		return element.previousElementSibling;
+	}
+	if (!element.previousSibling) {
+		return null;
+	}
+	var previous = element.previousSibling;
+	while (previous && previous.nodeType!=1) {
+		previous = previous.previousSibling;
+	}
+	if (previous && previous.nodeType==1) { 
+    	return previous;
+	}
+	return null;
+}
+
 hui.get.before = function(element) {
 	var elements = [];
 	if (element) {
@@ -1120,6 +1140,21 @@ hui.listen = function(element,type,listener,useCapture) {
 }
 
 /**
+ * Add an event listener to an element, it will only fire once
+ * @param {Element} element The element to listen on
+ * @param {String} type The event to listen for
+ * @param {Function} listener The function to be called
+ */
+hui.listenOnce = function(element,type,listener) {	
+	var func;
+	func = function() {
+		listener();
+		hui.unListen(element,type,func)
+	}
+	hui.listen(element,type,func);
+}
+
+/**
  * Remove an event listener from an element
  * @param {Element} element The element to remove listener from
  * @param {String} type The event to remove
@@ -1232,6 +1267,19 @@ hui.Event.prototype = {
 		while (parent) {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				return parent;
+			}
+			parent = parent.parentNode;
+		}
+		return null;
+	},
+	find : function(func) {
+		
+		var parent = this.element;
+		while (parent) {
+			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
+				if (func(parent)) {
+					return parent;
+				};
 			}
 			parent = parent.parentNode;
 		}
@@ -1645,7 +1693,12 @@ hui.selection = {
 			node : hui.selection.getNode(doc),
 			text : hui.selection.getText(doc)
 		}
-	}
+	},
+	enable : function(on) {
+		hui.log('Set selection: '+on);
+		document.onselectstart = on ? null : function () { return false; };
+		document.body.style.webkitUserSelect = on ? null : 'none';
+	},
 }
 
 
@@ -1839,14 +1892,10 @@ hui.drag = {
 			if (moved && options.onAfterMove) {
 				options.onAfterMove();
 			}
-			hui.drag._setSelect(true);
+			hui.selection.enable(true);
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
-		hui.drag._setSelect(false);
-	},
-	_setSelect : function(on) {
-		document.onselectstart = on ? null : function () { return false; };
-		document.body.style.webkitUserSelect = on ? null : 'none';
+		hui.selection.enable(false);
 	},
 	_nativeListeners : [],
 	_activeDrop : null,
@@ -2129,10 +2178,15 @@ hui.xml = {
 			try {
 			  	var pro = new XSLTProcessor();
 			  	pro.importStylesheet(xsl);
-			    return pro.transformToFragment(xml,document);				
+				hui.log(pro)
+				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
+			    return pro.transformToFragment(xml,ownerDocument);				
 			} catch (e) {
 				hui.log(e);
+				throw e;
 			}
+		} else {
+			hui.log('No XSLT!');
 		}
 	},
 	parse : function(xml) {
@@ -5761,7 +5815,7 @@ hui.ui.startDrag = function(e,element,options) {
 	hui.ui.startDragPos = {top:e.getTop(),left:e.getLeft()};
 	proxy.innerHTML = info.title ? '<span>'+hui.string.escape(info.title)+'</span>' : '###';
 	hui.ui.dragging = true;
-	document.body.onselectstart = function () { return false; };
+	hui.selection.enable(false);
 };
 
 /** @private */
@@ -5827,7 +5881,7 @@ hui.ui.dragEndListener = function(event) {
 		hui.animate(hui.ui.dragProxy,'top',(hui.ui.startDragPos.top-5)+'px',200,{ease:hui.ease.fastSlow,hideOnComplete:true});
 	}
 	hui.ui.latestDropTarget=null;
-	document.body.onselectstart=null;
+	hui.selection.enable(false);
 };
 
 /** @private */
@@ -5996,7 +6050,7 @@ hui.ui.Window.prototype = {
 		hui.listen(document,'mouseup',this.upListener);
 		hui.listen(document,'mousedown',this.upListener);
 		event.stop();
-		document.body.onselectstart = function () { return false; };
+		hui.selection.enable(false);
 		return false;
 	},
 	/** @private */
@@ -6024,7 +6078,7 @@ hui.ui.Window.prototype = {
 		hui.unListen(document,'mousemove',this.moveListener);
 		hui.unListen(document,'mouseup',this.upListener);
 		hui.unListen(document,'mousedown',this.upListener);
-		document.body.onselectstart = null;
+		hui.selection.enable(false);
 	}
 }
 
@@ -6075,6 +6129,9 @@ hui.ui.Formula.prototype = {
 	},
 	/** Sets the values of the descendants */
 	setValues : function(values) {
+		if (!hui.isDefined(values)) {
+			return;
+		}
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
 			if (d[i].options && d[i].options.key) {
@@ -10483,16 +10540,19 @@ hui.ui.Menu.prototype = {
 		}
 	},
 	hide : function() {
-		if (!this.visible) return;
+		if (!this.visible) {return};
 		var self = this;
-		hui.animate(this.element,'opacity',0,200,{onComplete:function() {
-			self.element.style.display='none';
-		}});
+		hui.animate(this.element, 'opacity', 0, 200, {
+			onComplete : function() {
+				self.element.style.display='none';
+			}
+		});
 		this.removeHider();
 		for (var i=0; i < this.subMenus.length; i++) {
 			this.subMenus[i].hide();
 		};
 		this.visible = false;
+		this.fire('hide');
 	},
 	isSubMenuVisible : function() {
 		for (var i=0; i < this.subMenus.length; i++) {
@@ -12145,8 +12205,10 @@ hui.ui.Layout.prototype = {
 				center.style.height='100%';
 			}
 		}
-		if (!hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9) {
-			return;
+		if (!window.navigator.userAgent.indexOf('AppleWebKit/536')) {
+			if (!hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9) {
+				return;
+			}			
 		}
 		if (!hui.dom.isVisible(this.element)) {
 			return;
@@ -12306,11 +12368,7 @@ hui.ui.Box = function(options) {
 	this.close = hui.get.firstByClass(this.element,'hui_box_close');
 	this.visible = !this.options.absolute;
 	if (this.close) {
-		hui.listen(this.close,'click',function(e) {
-			hui.stop(e);
-			this.hide();
-			this.fire('boxWasClosed');
-		}.bind(this));
+		hui.listen(this.close,'click',this._close.bind(this));
 	}
 	hui.ui.extend(this);
 };
@@ -12339,6 +12397,13 @@ hui.ui.Box.create = function(options) {
 };
 
 hui.ui.Box.prototype = {
+	_close : function(e) {
+		hui.stop(e);
+		this.hide();
+		this.fire('boxWasClosed'); // Deprecated
+		this.fire('close');
+	},
+	
 	/**
 	 * Adds the box to the end of the body
 	 */
@@ -12362,7 +12427,7 @@ hui.ui.Box.prototype = {
 		var e = this.element;
 		if (this.options.modal) {
 			var index = hui.ui.nextPanelIndex();
-			e.style.zIndex=index+1;
+			e.style.zIndex = index+1;
 			hui.ui.showCurtain({widget:this,zIndex:index});
 		}
 		if (this.options.absolute) {
@@ -12376,6 +12441,10 @@ hui.ui.Box.prototype = {
 		}
 		this.visible = true;
 		hui.ui.callVisible(this);
+	},
+	/** If the box is visible */
+	isVisible : function() {
+		return this.visible;
 	},
 	/** @private */
 	$$resize : function() {
@@ -12396,8 +12465,11 @@ hui.ui.Box.prototype = {
 		hui.ui.callVisible(this);
 	},
 	/** @private */
-	curtainWasClicked : function() {
+	$curtainWasClicked : function() {
 		this.fire('boxCurtainWasClicked');
+		if (this.options.curtainCloses) {
+			this._close();
+		}
 	}
 };/**
  * @constructor
@@ -15736,4 +15808,71 @@ hui.ui.Columns.prototype = {
 	}
 }
 
-/* EOF */
+/* EOF */////////////////////////// Finder ///////////////////////////
+
+/**
+ * A "finder" for finding objects
+ * @constructor
+ */
+hui.ui.Finder = function(options) {
+	this.options = hui.override({title:'Finder',close:true},options);
+	hui.ui.extend(this);
+}
+
+hui.ui.Finder.create = function(options) {
+	return new hui.ui.Finder(options);
+}
+
+hui.ui.Finder.prototype = {
+	show : function() {
+		if (!this.window) {
+			this._build();
+		}
+		this.window.show();
+	},
+	
+	_build : function() {
+		var win = this.window = hui.ui.Window.create({title:this.options.title,width:500});
+
+		var bar = hui.ui.Bar.create({variant:'layout'});
+		
+		var layout = hui.ui.Layout.create();
+		win.add(layout);
+
+		var left = hui.ui.Overflow.create({height:400});
+		layout.addToLeft(left);
+		
+		
+		var search = hui.ui.SearchField.create();
+		bar.add(search);
+		
+		layout.addToCenter(bar);
+
+		var right = hui.ui.Overflow.create({height:400});
+		layout.addToCenter(right);
+		
+		
+		this.list = hui.ui.List.create({url:this.options.listUrl});
+		this.list.listen({
+			$listRowWasOpened : function(row) {
+				alert(0)
+			},
+			
+			$selectionChanged : this._selectionChanged.bind(this)
+		})
+		right.add(this.list);
+		
+		this.selection = hui.ui.Selection.create();
+		var src = new hui.ui.Source({url : this.options.selectionUrl});
+		this.selection.addItems({source:src})
+		left.add(this.selection);
+		
+		src.refresh();
+	},
+	
+	_selectionChanged : function() {
+		var row = this.list.getFirstSelection();
+		this.fire('select',row);
+	}
+}
+

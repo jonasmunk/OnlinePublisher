@@ -122,7 +122,7 @@ var mainController = {
 	$drop$page$language : function(dragged,dropped) {
 		hui.ui.request({
 			message : {start:'Ændrer sprog...',delay:300},
-			url : 'ChangeLanguage.php',
+			url : 'data/ChangeLanguage.php',
 			json : {data : {id:dragged.id,language:dropped.value}},
 			onSuccess : function() {
 				hui.ui.showMessage({text:'Sproget er ændret',icon:'common/success',duration:2000});

@@ -12,19 +12,24 @@ require_once '../../Classes/Services/ToolService.php';
 require_once '../../Classes/Objects/User.php';
 
 if (Request::isPost()) {
+	
 	$page = Request::getPostInt('page');
-	$username=Request::getPostString('username');
-	$password=Request::getPostString('password');
+	$username = Request::getPostString('username');
+	$password = Request::getPostString('password');
+	
 	if (InternalSession::logIn($username,$password)) {
 		ToolService::install('System'); // Ensure that the system tool is present
 		In2iGui::sendObject(array('success' => true));
 	} else {
-		usleep(rand(1500000,3000000));
+		usleep(rand(1500000,3000000)); // Wait for random amount of time
 		In2iGui::sendObject(array('success' => false));
 	}
+	
 } else {
-	usleep(rand(1500000,3000000));
+	
+	usleep(rand(1500000,3000000));  // Wait for random amount of time
 	In2iGui::sendObject(array('success' => false));
+
 }
 exit;
 ?>
