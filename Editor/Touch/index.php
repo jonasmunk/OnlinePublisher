@@ -24,11 +24,9 @@ header("Content-Type: text/html; charset=UTF-8");
 
 <body style="overflow: hidden;">
 	<div class="bar">
-		<a>←Hep hey</a>
+		<a>←Back</a>
 		<a>◀</a>
 		<a>▶</a>
-		<a style="font-size: 28px; font-family: 'Apple Symbols'; font-weight: normal;">⚒</a>
-		<a style="font-size: 28px; font-family: 'Apple Symbols'; font-weight: normal;">⚙</a>
 	</div>
 	<div class="sidebar">
 		<ul id="list"></ul>
