@@ -6,8 +6,9 @@ op.part.File = {
 	showFinder : function() {
 		var finder = hui.ui.Finder.create({
 			title : 'Vælg fil',
-			listUrl : '../../Services/Model/ListFiles.php?windowSize=10',
-			selectionUrl : '../../Tools/Files/GroupItems.php'
+			listUrl : '../../Services/Model/ListFiles.php',
+			selectionUrl : '../../Tools/Files/GroupItems.php',
+			search : {parameter:'query'}
 		});
 		finder.listen({
 			$select : function(obj) {
