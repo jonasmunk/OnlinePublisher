@@ -165,6 +165,16 @@ hui.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
+
+
+/**
+ * Checks if an object is a string
+ * @param {Object} obj The object to check
+ */
+hui.isString = function(obj) {
+	return typeof(obj)==='string';
+}
+
 /**
  * Checks if an object is an array
  * @param {Object} obj The object to check
@@ -1789,6 +1799,18 @@ hui.effect = {
 		hui.cls.add(options.element,'hui_effect_wiggle');
 		window.setTimeout(function() {
 			hui.cls.remove(options.element,'hui_effect_wiggle');
+		},options.duration || 1000);
+	
+	},
+	/**
+	 * Make an element shake
+	 * @param {Object} options {element : «Element», duration : «milliseconds» }
+	 */
+	shake : function(options) {
+		var e = hui.ui.getElement(options.element);
+		hui.cls.add(options.element,'hui_effect_shake');
+		window.setTimeout(function() {
+			hui.cls.remove(options.element,'hui_effect_shake');
 		},options.duration || 1000);
 	
 	}
@@ -3925,7 +3947,7 @@ hui.ui.firePropertyChange = function(obj,name,value) {
 };
 
 hui.ui.bind = function(expression,delegate) {
-	if (expression.charAt(0)=='@') {
+	if (hui.isString(expression) && expression.charAt(0)=='@') {
 		var pair = expression.substring(1).split('.');
 		var obj = hui.ui.get(pair[0]);
 		if (!obj) {
@@ -4623,6 +4645,9 @@ hui.ui.Box.prototype = {
 		this.hide();
 		this.fire('boxWasClosed'); // Deprecated
 		this.fire('close');
+	},
+	shake : function() {
+		hui.effect.shake({element:this.element});
 	},
 	
 	/**

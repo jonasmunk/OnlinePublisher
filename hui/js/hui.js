@@ -1801,6 +1801,18 @@ hui.effect = {
 			hui.cls.remove(options.element,'hui_effect_wiggle');
 		},options.duration || 1000);
 	
+	},
+	/**
+	 * Make an element shake
+	 * @param {Object} options {element : «Element», duration : «milliseconds» }
+	 */
+	shake : function(options) {
+		var e = hui.ui.getElement(options.element);
+		hui.cls.add(options.element,'hui_effect_shake');
+		window.setTimeout(function() {
+			hui.cls.remove(options.element,'hui_effect_shake');
+		},options.duration || 1000);
+	
 	}
 }
 
