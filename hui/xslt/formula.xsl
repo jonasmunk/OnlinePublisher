@@ -135,7 +135,13 @@
 			<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
 			<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
 				<span class="hui_field_singleline">
-				<input class="hui_formula_text" value="{@value}"><xsl:if test="@secret='true'"><xsl:attribute name="type">password</xsl:attribute></xsl:if></input>
+				<input class="hui_formula_text" value="{@value}">
+					<xsl:if test="@secret='true'"><xsl:attribute name="type">password</xsl:attribute></xsl:if>
+					<xsl:if test="@correction='false'">
+						<xsl:attribute name="autocapitalize">off</xsl:attribute>
+						<xsl:attribute name="autocorrect">off</xsl:attribute>
+					</xsl:if>
+				</input>
 				</span>
 			</span></span></span>
 			<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>

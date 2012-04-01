@@ -13091,7 +13091,7 @@ hui.ui.Bar = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);
 	this.visible = this.element.style.display=='none' ? false : null;
-	this.body = hui.get.firstByClass(this.element,'hui_bar_body');
+	this.body = hui.get.firstByClass(this.element,'hui_bar_left');
 	hui.ui.extend(this);
 };
 
@@ -13120,7 +13120,8 @@ hui.ui.Bar.create = function(options) {
 	options.element = hui.build('div',{
 		'class' : cls
 	});
-	hui.build('div',{'class':'hui_bar_body',parent:options.element});
+	var body = hui.build('div',{'class':'hui_bar_body',parent:options.element});
+	hui.build('div',{'class':'hui_bar_left',parent:body});
 	return new hui.ui.Bar(options);
 }
 
@@ -13139,6 +13140,10 @@ hui.ui.Bar.prototype = {
 	/** Add a divider to the bar */
 	addDivider : function() {
 		hui.build('span',{'class':'hui_bar_divider',parent:this.body})
+	},
+	addToRight : function(widget) {
+		var right = this._getRight();
+		right.appendChild(widget.getElement());
 	},
 	placeAbove : function(widgetOrElement) {
 		if (widgetOrElement.getElement) {
@@ -13180,6 +13185,16 @@ hui.ui.Bar.prototype = {
 			hui.ui.reLayout();
 		}
 		this.visible = false;
+	},
+	_getRight : function() {
+		if (!this.right) {
+			this.right = hui.get.firstByClass(this.element,'hui_bar_right');
+			if (!this.right) {
+				var body = hui.get.firstByClass(this.element,'hui_bar_body');
+				this.right = hui.build('div',{'class':'hui_bar_right',parentFirst:body});
+			}
+		}
+		return this.right;
 	}
 }
 
@@ -15868,8 +15883,8 @@ hui.ui.Finder.prototype = {
 		
 		if (this.options.search) {
 			var bar = hui.ui.Bar.create({variant:'layout'});
-			var search = hui.ui.SearchField.create();
-			bar.add(search);
+			var search = hui.ui.SearchField.create({expandedWidth:200});
+			bar.addToRight(search);
 			layout.addToCenter(bar);
 		}
 		
@@ -15890,8 +15905,8 @@ hui.ui.Finder.prototype = {
 		})
 		right.add(this.list);
 		
-		this.selection = hui.ui.Selection.create();
-		var src = new hui.ui.Source({url : this.options.selectionUrl});
+		this.selection = hui.ui.Selection.create({value : this.options.selection.value});
+		var src = new hui.ui.Source({url : this.options.selection.url});
 		this.selection.addItems({source:src})
 		left.add(this.selection);
 		
@@ -15908,7 +15923,7 @@ hui.ui.Finder.prototype = {
 		}
 		
 		var listSource = new hui.ui.Source({
-			url : this.options.listUrl,
+			url : this.options.list.url,
 			parameters : parameters
 		});
 		this.list.setSource(listSource);

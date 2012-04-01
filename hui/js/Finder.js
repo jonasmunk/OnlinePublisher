@@ -33,8 +33,8 @@ hui.ui.Finder.prototype = {
 		
 		if (this.options.search) {
 			var bar = hui.ui.Bar.create({variant:'layout'});
-			var search = hui.ui.SearchField.create();
-			bar.add(search);
+			var search = hui.ui.SearchField.create({expandedWidth:200});
+			bar.addToRight(search);
 			layout.addToCenter(bar);
 		}
 		
@@ -55,8 +55,8 @@ hui.ui.Finder.prototype = {
 		})
 		right.add(this.list);
 		
-		this.selection = hui.ui.Selection.create();
-		var src = new hui.ui.Source({url : this.options.selectionUrl});
+		this.selection = hui.ui.Selection.create({value : this.options.selection.value});
+		var src = new hui.ui.Source({url : this.options.selection.url});
 		this.selection.addItems({source:src})
 		left.add(this.selection);
 		
@@ -73,7 +73,7 @@ hui.ui.Finder.prototype = {
 		}
 		
 		var listSource = new hui.ui.Source({
-			url : this.options.listUrl,
+			url : this.options.list.url,
 			parameters : parameters
 		});
 		this.list.setSource(listSource);
