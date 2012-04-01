@@ -52,6 +52,11 @@ hui.ui.listen({
 		})
 	},
 	loadPage : function(id) {
-		hui.get('container').innerHTML = '<div>'+id+'</div>';
+		hui.ui.request({
+			url : 'data/page_contents.php?id='+id+'&content=true',
+			onSuccess : function(t) {
+				hui.get('container').innerHTML = t.responseText;
+			}
+		})
 	}
 })

@@ -3,6 +3,8 @@ html
 {
 	height: 100%;
 	background: #000;
+	overflow: hidden;
+	-webkit-overflow-scrolling: none;
 }
 
 body
@@ -47,6 +49,7 @@ div.page
 	font-family: Palatino;
 	color: #321;
 	border-radius: 3px;
+	padding: 10px;
 }
 
 
@@ -156,7 +159,7 @@ div.bottom_bar
 		display: none;
 	}
 	
-	div.page
+	div.main
 	{
 		left: 0;
 	}
