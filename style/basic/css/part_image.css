@@ -93,3 +93,48 @@ span.part_image_frame_elegant_middle span
 	background: url('../../basic/gfx/frames/elegant.png') right -1204px no-repeat;
 	display: block;
 }
+
+
+
+span.part_image_frame_shadow_slant
+{
+	display: inline-block;
+}
+
+span.part_image_frame_shadow_slant_middle
+{
+	padding-left: 5px;
+	display: block;
+}
+
+span.part_image_frame_shadow_slant_middle span
+{
+	padding-right: 5px;
+	display: block;
+}
+
+span.part_image_frame_shadow_slant_bottom
+{
+	display: block;
+	position: relative;
+	height: 10px;
+}
+
+span.part_image_frame_shadow_slant_bottom span
+{
+	position: absolute;
+	background: url('../../basic/gfx/frames/shadow.png');
+	width: 50%;
+	display: block;
+	height: 10px;
+}
+
+span.part_image_frame_shadow_slant_bottom span span
+{
+	position: absolute;
+	background: url('../../basic/gfx/frames/shadow.png') 100% -10px;
+	width: 100%;
+	display: block;
+	height: 10px;
+	right: -100%;
+}
