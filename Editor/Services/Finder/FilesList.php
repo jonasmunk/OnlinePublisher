@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Customers
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/ListWriter.php';
-require_once '../../Classes/Model/Object.php';
-require_once '../../Classes/Core/Request.php';
+require_once '../../Include/Private.php';
 
 $queryString = Request::getUnicodeString('query');
 $windowSize = Request::getInt('windowSize',30);

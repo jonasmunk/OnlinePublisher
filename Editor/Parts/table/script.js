@@ -123,6 +123,8 @@ var partController = {
 				}
 			}
 		}
+		this._syncValue();
+		this._syncSource();
 	},
 	_checkMarkup : function() {
 		var children = hui.get.children(this.base);
@@ -230,7 +232,7 @@ var partController = {
 			for (var i=0; i < missing; i++) {
 				var tr = hui.build('tr',{parent:head});
 				for (var j=0; j < cols; j++) {
-					hui.build('th',{parent:tr,text:'Head'});
+					hui.build('th',{parent:tr,text:tag=='thead' ? 'Header' : 'Footer'});
 				};
 			}
 		}
