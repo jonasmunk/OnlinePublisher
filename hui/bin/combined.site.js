@@ -1705,7 +1705,6 @@ hui.selection = {
 		}
 	},
 	enable : function(on) {
-		hui.log('Set selection: '+on);
 		document.onselectstart = on ? null : function () { return false; };
 		document.body.style.webkitUserSelect = on ? null : 'none';
 	},

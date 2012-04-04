@@ -343,7 +343,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 		echo $ctrl->editorGui($part,$partContext);
 	}
 	echo '<script type="text/javascript">'.
-	'try {parent.Toolbar.location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"} catch(e) {};'.
+	'try {parent.frames[0].location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"} catch(e) {hui.log("Unable to set toolbar");hui.log(e);};'.
 	'function saveSection() {
 		document.forms.PartForm.submit();
 	}'.
