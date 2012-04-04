@@ -108,16 +108,16 @@
 }
 
 @-moz-keyframes hui_wiggle {
-	0% {-webkit-transform:rotate(4deg);}
-	20% {-webkit-transform:rotate(-4deg);}
-	30% {-webkit-transform:rotate(4deg);}
-	40% {-webkit-transform:rotate(-4deg);}
-	50% {-webkit-transform:rotate(4deg);}
-	60% {-webkit-transform:rotate(-4deg);}
-	70% {-webkit-transform:rotate(4deg);}
-	80% {-webkit-transform:rotate(-4deg);}
-	90% {-webkit-transform:rotate(4deg);}
-	100% {-webkit-transform:rotate(4deg);}
+	0% {-moz-transform:rotate(4deg);}
+	20% {-moz-transform:rotate(-4deg);}
+	30% {-moz-transform:rotate(4deg);}
+	40% {-moz-transform:rotate(-4deg);}
+	50% {-moz-transform:rotate(4deg);}
+	60% {-moz-transform:rotate(-4deg);}
+	70% {-moz-transform:rotate(4deg);}
+	80% {-moz-transform:rotate(-4deg);}
+	90% {-moz-transform:rotate(4deg);}
+	100% {-moz-transform:rotate(4deg);}
 }
 
 .hui_effect_wiggle
@@ -135,11 +135,19 @@
 	to   { -webkit-transform: rotateY(360deg); }
 }
 
+@-moz-keyframes hui_spin {
+	from { -moz-transform: rotateY(0); }
+	to   { -moz-transform: rotateY(360deg); }
+}
+
 .hui_effect_spin
 {
 	-webkit-perspective : 1000;
 	-webkit-transform-style: preserve-3d;
 	-webkit-animation: hui_spin 3.5s infinite ease;
+	-moz-perspective : 1000;
+	-moz-transform-style: preserve-3d;
+	-moz-animation: hui_spin 3.5s infinite ease;
 }
 
 /*********** Wobble **********/

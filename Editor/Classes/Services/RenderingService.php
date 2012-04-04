@@ -404,7 +404,7 @@ class RenderingService {
 	
 	function previewPage($options) {
 		$pageId = $options['pageId'];
-		$historyId = $options['historyId'];
+		$historyId = @$options['historyId'];
 		
 		$sql="select page.id,UNIX_TIMESTAMP(page.published) as published, page.description,page.language,page.keywords,".
 		"page.title,page.dynamic,page.next_page,page.previous_page,".
