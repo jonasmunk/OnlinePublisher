@@ -6,7 +6,6 @@
 require_once '../../../Include/Private.php';
 
 $main = Request::getString('main');
-$queryString = Request::getUnicodeString('query');
 
 if ($main=='pages') {
 	listPages();
@@ -14,6 +13,62 @@ if ($main=='pages') {
 	listProducts();
 } else if ($main=='persons') {
 	listPersons();
+} else {
+	listImages($text);
+}
+
+function listImages($text) {
+
+	$group = Request::getInt('main',null);
+	$text = Request::getUnicodeString('text');
+	$windowSize = Request::getInt('windowSize',30);
+	$windowPage = Request::getInt('windowPage',0);
+	$sort = Request::getString('sort');
+	$direction = Request::getString('direction');
+	if ($sort=='') $sort='title';
+	if ($direction=='') $direction='ascending';
+
+	$query = Query::after('image')->withText($text)->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction);
+	if ($group===-1) {
+		$query->withCustom('nogroup',true);
+	} else if ($group) {
+		$query->withCustom('group',$group);
+	}
+
+
+	$result = $query->search();
+	$list = $result->getList();
+	
+	$writer = new ListWriter();
+
+	$writer->
+	startList(array('unicode'=>true))->
+		sort($sort,$direction)->
+		window(array('total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage))->
+		startHeaders()->
+			header(array('title'=>'Billede','width'=>40))->
+			header(array('title'=>'Størrelse'))->
+			header(array('title'=>''))->
+		endHeaders();
+
+
+	foreach ($list as $image) {
+		$writer->
+		startRow(array('kind'=>'image','id'=>$image->getId(),'icon'=>'common/image','title'=>$image->getTitle()))->
+			startCell(array('icon'=>'common/image'))->
+				startLine()->text($image->getTitle())->endLine()->
+			endCell()->
+			startCell()->
+				text(GuiUtils::bytesToString($image->getSize()))->
+			endCell()->
+			startCell()->
+				text($image->getWidth().' x '.$image->getHeight())->
+			endCell()->
+		endRow();	
+	}
+	Database::free($result);
+
+	$writer->endList();
 }
 
 function listProducts() {

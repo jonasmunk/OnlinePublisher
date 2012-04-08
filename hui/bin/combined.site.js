@@ -165,6 +165,16 @@ hui.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
 }
 
+
+
+/**
+ * Checks if an object is a string
+ * @param {Object} obj The object to check
+ */
+hui.isString = function(obj) {
+	return typeof(obj)==='string';
+}
+
 /**
  * Checks if an object is an array
  * @param {Object} obj The object to check
@@ -3925,7 +3935,7 @@ hui.ui.firePropertyChange = function(obj,name,value) {
 };
 
 hui.ui.bind = function(expression,delegate) {
-	if (expression.charAt(0)=='@') {
+	if (hui.isString(expression) && expression.charAt(0)=='@') {
 		var pair = expression.substring(1).split('.');
 		var obj = hui.ui.get(pair[0]);
 		if (!obj) {

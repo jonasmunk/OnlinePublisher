@@ -28,8 +28,9 @@ $gui='
 		<parameter key="subset" value="@subsetSelection.value"/>
 	</source>
 	<source name="listSource" url="data/ListImages.php">
-		<parameter key="query" value="@search.value"/>
+		<parameter key="text" value="@search.value"/>
 		<parameter key="main" value="@selector.value"/>
+		<parameter key="windowPage" value="@list.window.page"/>
 	</source>
 	<layout>
 		<top>
@@ -43,6 +44,11 @@ $gui='
 				</icon>
 				<icon icon="file/generic" title="Hent" overlay="download" name="download" disabled="true"/>
 				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
+				<divider/>
+				<segmented label="Visning" value="gallery" name="viewSwitch">
+					<item value="list" icon="view/list"/>
+					<item value="gallery" icon="view/gallery"/>
+				</segmented>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 				</right>

@@ -15,6 +15,10 @@ hui.ui.listen({
 		//return true;
 	},
 	
+	$valueChanged$viewSwitch : function(value) {
+		hui.ui.changeState(value);
+	},
+	
 	$drop$image$imagegroup : function(dragged,dropped) {
 		hui.ui.request({
 			url:'AddImageToGroup.php',
@@ -34,9 +38,11 @@ hui.ui.listen({
 	
 	$selectionChanged$selector : function(item) {
 		if (item.value=='pages' || item.value=='products' || item.value=='persons') {
+			//list.clear();
 			hui.ui.changeState('list');
+			viewSwitch.setValue('list');
 		} else {
-			hui.ui.changeState('gallery');
+			//hui.ui.changeState('gallery');
 		}
 	},
 	
@@ -67,7 +73,6 @@ hui.ui.listen({
 		if (obj.id===this.imageId) {
 			this._cancelImage();
 		}
-
 	},
 	$click$deleteImage : function() {
 		if (!this.imageId) {
@@ -80,7 +85,9 @@ hui.ui.listen({
 		var obj = gallery.getFirstSelection();
 		this._loadImage(obj.id);
 	},
-	
+	$listRowWasOpened$list : function(row) {
+		this._loadImage(row.id);
+	},
 	$itemOpened$gallery : function(item) {
 		this._loadImage(item.id);
 	},
