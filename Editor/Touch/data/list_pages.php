@@ -10,7 +10,5 @@ foreach ($pages as $page) {
 	$list[] = array('id' => $page['id'],'title' => $page['title']);
 }
 
-Log::debug('list_pages.php');
-
 Response::sendUnicodeObject($list);
 ?>

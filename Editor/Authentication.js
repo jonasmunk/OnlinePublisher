@@ -79,7 +79,8 @@ var controller = {
 				document.location = page===null ? './index.php' : '.?page='+page;
 			}
 		} else {
-			hui.ui.stress(box);
+			box.shake();
+			//hui.ui.stress(box);
 			hui.ui.showMessage({text:'Brugeren blev ikke fundet!',icon:'common/warning',duration:2000});
 			formula.focus();
 		}

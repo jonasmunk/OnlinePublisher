@@ -42,10 +42,20 @@ hui.ui.listen({
 			url : 'data/list_pages.php',
 			onJSON : function(list) {
 				var c = hui.get('list');
-				for (var i=0; i < list.length; i++) {
-					var item = list[i];
-					hui.build('li',{text:item.title,parent:c});
-				};
+				hui.each(list,function(item) {
+					var li = hui.build('li',{text:item.title,parent:c});
+					hui.listen(li,'click',function() {
+						this.loadPage(item.id);
+					}.bind(this))
+				}.bind(this));
+			}.bind(this)
+		})
+	},
+	loadPage : function(id) {
+		hui.ui.request({
+			url : 'data/page_contents.php?id='+id+'&content=true',
+			onSuccess : function(t) {
+				hui.get('container').innerHTML = t.responseText;
 			}
 		})
 	}

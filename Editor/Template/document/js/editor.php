@@ -11,9 +11,9 @@ hui.ui.listen({
 	$ready : function() {
 		var editor = hui.ui.Editor.get();
 		editor.setOptions({
-			rowClass:'document_row',
-			columnClass:'document_column',
-			partClass:'part_section'
+			rowClass : 'document_row',
+			columnClass : 'document_column',
+			partClass : 'part_section'
 		});
 		editor.addPartController('header','Overskrift',op.Editor.Header);
 		editor.addPartController('text','Text',op.Editor.Text);

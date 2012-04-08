@@ -1705,7 +1705,6 @@ hui.selection = {
 		}
 	},
 	enable : function(on) {
-		hui.log('Set selection: '+on);
 		document.onselectstart = on ? null : function () { return false; };
 		document.body.style.webkitUserSelect = on ? null : 'none';
 	},
@@ -1799,6 +1798,18 @@ hui.effect = {
 		hui.cls.add(options.element,'hui_effect_wiggle');
 		window.setTimeout(function() {
 			hui.cls.remove(options.element,'hui_effect_wiggle');
+		},options.duration || 1000);
+	
+	},
+	/**
+	 * Make an element shake
+	 * @param {Object} options {element : «Element», duration : «milliseconds» }
+	 */
+	shake : function(options) {
+		var e = hui.ui.getElement(options.element);
+		hui.cls.add(options.element,'hui_effect_shake');
+		window.setTimeout(function() {
+			hui.cls.remove(options.element,'hui_effect_shake');
 		},options.duration || 1000);
 	
 	}

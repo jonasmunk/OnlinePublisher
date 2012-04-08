@@ -40,7 +40,7 @@ $gui='
 			<formula name="formula" state="login">
 				<header>Adgangskontrol</header>
 				<group>
-					<text name="username" label="Brugernavn:"/>
+					<text name="username" label="Brugernavn:" correction="false"/>
 					<text name="password" secret="true" label="Kodeord:"/>
 					<buttons>
 						<button name="cancel" title="Annuller" url="../"/>

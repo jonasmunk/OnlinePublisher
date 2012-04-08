@@ -19,6 +19,7 @@ if ($response->getSuccess()) {
 	ImagePartController::setLatestUploadId($response->getObject()->getId());
 	In2iGui::respondUploadSuccess();
 } else {
+	ImagePartController::setLatestUploadId(null);
 	Log::debug($response);
 	In2iGui::respondUploadFailure();
 }

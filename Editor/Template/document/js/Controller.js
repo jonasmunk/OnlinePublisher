@@ -148,12 +148,14 @@ var controller = {
 	},
 	setMainToolbar : function() {
 		try {
-			if (parent.Toolbar.location.href.indexOf('/Toolbar.php')==-1) {
-				parent.Toolbar.location='Toolbar.php?'+Math.random();
+			if (parent.frames[0].location.href.indexOf('/Toolbar.php')==-1) {
+				parent.frames[0].location='Toolbar.php?'+Math.random();
 			} else {
 				hui.log('Toolbar already correct!');
 			}
-		} catch (e) {}
+		} catch (e) {
+			hui.log('Unable to set main controller');
+		}
 	},
 	$iconWasClicked$sectionActions : function(value,event) {
 		if (value=='edit') {

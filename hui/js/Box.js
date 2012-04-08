@@ -45,6 +45,9 @@ hui.ui.Box.prototype = {
 		this.fire('boxWasClosed'); // Deprecated
 		this.fire('close');
 	},
+	shake : function() {
+		hui.effect.shake({element:this.element});
+	},
 	
 	/**
 	 * Adds the box to the end of the body

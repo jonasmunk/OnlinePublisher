@@ -90,9 +90,10 @@ hui.ui.Editor.prototype = {
 			hui.listen(column,'mouseout',function() {
 				self._onBlurColumn();
 			});
+			/*
 			hui.listen(column,'contextmenu',function(e) {
 				self.contextColumn(column,rowIndex,columnIndex,e);
-			});
+			});*/
 		});
 	},
 	_reloadParts : function(parts,row,column) {

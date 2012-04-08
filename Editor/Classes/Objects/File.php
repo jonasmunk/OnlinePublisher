@@ -102,6 +102,16 @@ class File extends Object {
 	
 	/********************** Search *****************/
 	
+	
+	function addCustomSearch($query,&$parts) {
+		$custom = $query->getCustom();
+		if (isset($custom['group'])) {
+			$parts['tables'][] = 'filegroup_file';
+			$parts['limits'][] = 'filegroup_file.file_id=object.id';
+			$parts['limits'][] = 'filegroup_file.filegroup_id='.$custom['group'];
+		}
+	}
+	
     function find($query = array()) {
     	$parts = array();
 		$parts['columns'] = 'object.id';

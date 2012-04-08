@@ -54,10 +54,17 @@ var partController = {
 		imageUploadWindow.show();
 	},
 	$uploadDidCompleteQueue$imageUpload : function() {
-		hui.ui.request({'url':'../../Parts/image/UploadStatus.php',onJSON:function(status) {
-			document.forms.PartForm.imageId.value = status.id;
-			this.preview();
-		}.bind(this)});
+		hui.ui.request({
+			'url' : '../../Parts/image/UploadStatus.php',
+			onJSON : function(status) {
+				if (status.id) {
+					document.forms.PartForm.imageId.value = status.id;
+					this.preview();
+				} else {
+					hui.ui.showMessage({text:'Det lykkedes ikke at overføre billedet',icon:'common/warning',duration:3000});
+				}
+			}.bind(this)
+		});
 	},
 	$click$cancelUpload : function() {
 		imageUploadWindow.hide();

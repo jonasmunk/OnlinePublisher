@@ -89,6 +89,9 @@ class RenderingService {
 		} else if (Request::getBoolean('mini')) {
 			$mainFile='main_mini';
 			$mainDesign='basic';
+		} else if (Request::getBoolean('content')) {
+			$mainFile='main_content';
+			$mainDesign='basic';
 		} else {
 			$mainFile='main';
 			$mainDesign=$design;
@@ -404,7 +407,7 @@ class RenderingService {
 	
 	function previewPage($options) {
 		$pageId = $options['pageId'];
-		$historyId = $options['historyId'];
+		$historyId = @$options['historyId'];
 		
 		$sql="select page.id,UNIX_TIMESTAMP(page.published) as published, page.description,page.language,page.keywords,".
 		"page.title,page.dynamic,page.next_page,page.previous_page,".
@@ -462,8 +465,8 @@ class RenderingService {
 			$data.
 			'</content>'.
 			'</page>';
-
-			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$options['relativePath'],'','?id='.$id.'&amp;',true);
+			$relativeUrl = isset($options['relativeUrl']) ? $options['relativeUrl'] : $options['relativePath'];
+			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true);
 		}
 		Log::debug('Unable to query: '.$pageId);
 		Log::debug($sql);

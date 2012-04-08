@@ -61,5 +61,16 @@ class FilePartController extends PartController
 			}
 		}
 	}
+	
+	
+	function getToolbars() {
+		return array(
+			'Fil' =>
+			'<script source="../../Parts/file/toolbar.js"/>
+			<icon icon="common/search" title="V&#230;lg fil" name="chooseFile"/>
+		'
+		);
+	}
+			
 }
 ?>
