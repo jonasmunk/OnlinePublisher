@@ -18,13 +18,13 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
 	color: #000;
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
 	font-weight: normal;
 }
 
 p.common, ul.common
 {
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
 	font-size: 11pt;
 	line-height: 160%;
 	text-align: justify;
@@ -32,7 +32,7 @@ p.common, ul.common
 
 .common_font
 {
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
 }
 
 .part_text
@@ -53,7 +53,7 @@ div.part_listing, textarea.part_listing {
 .part_header
 {
 	color: #000;
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
 	font-weight: normal;
 }
 
