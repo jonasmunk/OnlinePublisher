@@ -175,6 +175,7 @@ var controller = {
 		}
 	},
 	$select$sectionMenu : function(value) {
+		hui.log(value)
 		switch (value) {
 			case 'editSection' : this.editSection(); break;
 			case 'deleteSection' : this.deleteSection(); break;
