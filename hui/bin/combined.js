@@ -1205,6 +1205,8 @@ hui.Event = function(event) {
 	this.shiftKey = event.shiftKey;
 	/** If the alt key was pressed */
 	this.altKey = event.altKey;
+	/** If the command key was pressed */
+	this.metaKey = event.metaKey;
 	/** If the return key was pressed */
 	this.returnKey = event.keyCode==13;
 	/** If the escape key was pressed */
@@ -5804,6 +5806,10 @@ hui.ui.Source.prototype = {
 				p.value=value;
 			}
 		};
+		this.refreshLater();
+	},
+	/** Will refresh, but wait a little to let others contribute */
+	refreshLater : function() {
 		window.clearTimeout(this.paramDelay);
 		this.paramDelay = window.setTimeout(function() {
 			this.refresh();
@@ -6455,19 +6461,22 @@ hui.ui.List.prototype = {
 		this.resetState();
 		this.refresh();
 	},
-	/** Clears the data of the list */
+	/** Clears the data of the list and removes its data source */
 	clear : function() {
+		this.empty();
+		if (this.options.source) {
+			this.options.source.removeDelegate(this);
+		}
+		this.options.source = null;
+		this.url = null;
+	},
+	empty : function() {
 		this.selected = [];
 		this.columns = [];
 		this.rows = [];
 		this.navigation.style.display='none';
 		hui.dom.clear(this.body);
 		hui.dom.clear(this.head);
-		if (this.options.source) {
-			this.options.source.removeDelegate(this);
-		}
-		this.options.source = null;
-		this.url = null;
 	},
 	/** Resets the window state of the navigator */
 	resetState : function() {
@@ -6497,7 +6506,7 @@ hui.ui.List.prototype = {
 	/** @private */
 	refresh : function() {
 		if (this.options.source) {
-			this.options.source.refresh();
+			this.options.source.refreshLater();
 			return;
 		}
 		if (!this.url) return;
@@ -11589,8 +11598,12 @@ hui.ui.Gallery.prototype = {
 	},
 	show : function() {
 		this.element.style.display='';
+		if (this.options.source) {
+			this.options.source.refresh();
+		}
 	},
 	setObjects : function(objects) {
+		this.selected = [];
 		this.objects = objects;
 		this.render();
 		this.fire('selectionReset');
@@ -11629,11 +11642,11 @@ hui.ui.Gallery.prototype = {
 			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
 			var item = hui.build('div',{'class' : 'hui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
 			item.appendChild(img);
-			hui.listen(item,'click',function() {
-				self._itemClicked(i);
+			hui.listen(item,'click',function(e) {
+				self._itemClicked(i,e);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
-			item.onmousedown=function(e) {
+			item.onmousedown = function(e) {
 				hui.ui.startDrag(e,item);
 				return false;
 			};
@@ -11696,13 +11709,44 @@ hui.ui.Gallery.prototype = {
 		};
 		return '';
 	},
-	_itemClicked : function(index) {
+	_itemClicked : function(index,e) {
 		if (this.busy) {
 			return;
 		}
-		this.selected = [index];
+		e = hui.event(e);
+		if (e.metaKey) {
+			hui.array.flip(this.selected,index);
+		} else {
+			this.selected = [index];
+		}
 		this.fire('selectionChanged');
 		this._updateUI();
+	},
+	isOneSelection : function() {
+		return this.selected.length==1;
+	},
+	getSelectionSize : function() {
+		return this.selected.length;
+	},
+	getSelection : function() {
+		var selection = [];
+		for (var i=0; i < this.selected.length; i++) {
+			var obj = this.objects[this.selected[i]];
+			if (obj) {
+				selection.push(obj);
+			}
+		};
+		return selection;
+	},
+	getSelectionIds : function() {
+		var selection = [];
+		for (var i=0; i < this.selected.length; i++) {
+			var obj = this.objects[this.selected[i]];
+			if (obj) {
+				selection.push(obj.id);
+			}
+		};
+		return selection;
 	},
 	getFirstSelection : function() {
 		if (this.selected.length>0) {
