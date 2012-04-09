@@ -29,6 +29,11 @@ op.ignite = function() {
 			return true;
 		}
 	}
+	if (hui.browser.msie7) {
+		hui.onReady(function() {
+			hui.cls.add(document.body.parentNode,'msie7');
+		});
+	}
 }
 
 op.showLogin = function() {

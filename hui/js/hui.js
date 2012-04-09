@@ -1709,7 +1709,7 @@ hui.selection = {
 	enable : function(on) {
 		document.onselectstart = on ? null : function () { return false; };
 		document.body.style.webkitUserSelect = on ? null : 'none';
-	},
+	}
 }
 
 
