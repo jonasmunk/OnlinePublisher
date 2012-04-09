@@ -34,15 +34,10 @@ class DBUCalendarParser {
 			}
 			$parts = preg_split('/:/',$time);
 			$parsed = DateUtils::parse($date);
-			if (!$parsed) {
-				$parsed = DateUtils::parseDDMMYY($date);
-			}
 			$parsed = DateUtils::addHours($parsed,intval($parts[0]));
 			$startDate = DateUtils::addMinutes($parsed,intval($parts[1]));
 			$endDate = DateUtils::addMinutes($parsed,60*1.75);
-			
-			Log::debug(print_r($row,true).' : '.DateUtils::formatLongDateTime($startDate).' > '.DateUtils::formatLongDateTime($endDate));
-			
+						
 			$event = new DBUCalendarEvent();
 			$event->setStartDate($startDate);
 			$event->setEndDate($endDate);

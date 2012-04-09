@@ -30,24 +30,22 @@ class DateUtils {
 		} else if (preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})Z/mi",$date, $matches)) {
 			return gmmktime( $matches[4],$matches[5], $matches[6], $matches[2],$matches[3], $matches[1]);
 		}
-		Log::debug('Could not parse date: '.$date);
+		Log::debug('Could not parse date: '.$date.' as RFC3339');
 		return null;
 	}
 	
 	/** The goal of this method is to parse anything */
 	function parse($str) {
+		// DD-MM-YYYY
 		if (preg_match("/([0-9]{2})[-\/\.]([0-9]{2})[-\/\.]([0-9]{4})/mi",$str, $matches)) {
 			return mktime( 0,0, 0, $matches[2],$matches[1], $matches[3]);
 		}
-		else if (preg_match("/([0-9]{4})[-\/\.]([0-9]{2})[-\/\.]([0-9]{2})/mi",$str, $matches)) {
+		// YYYY-MM-DD
+		else if (preg_match("/([0-9]{4})[-\/\.]([0-9]{1,2})[-\/\.]([0-9]{1,2})/mi",$str, $matches)) {
 			return mktime( 0,0, 0, $matches[2],$matches[3], $matches[1]);
 		}
-		return null;
-	}
-	
-		/** The goal of this method is to parse anything */
-	function parseDDMMYY($str) {
-		if (preg_match("/([0-9]{2})[-\/\.]([0-9]{2})[-\/\.]([0-9]{2})/mi",$str, $matches)) {
+		// DD-MM-YY
+		else if (preg_match("/([0-9]{2})[-\/\.]?([0-9]{2})[-\/\.]?([0-9]{2})/mi",$str, $matches)) {
 			return mktime( 0,0, 0, $matches[2],$matches[1], intval($matches[3])+2000);
 		}
 		return null;

@@ -16,14 +16,66 @@ class TestDBUCalendar extends UnitTestCase {
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
-		$url = $baseUrl.'Editor/Tests/Resources/Kampprogram.xls';
-		if ($url[0]=='/') {
-			$url = 'http://localhost'.$url;
-		}
+		$url = TestService::getResourceUrl('Kampprogram.xls');
 		$calendar = DBUCalendarParser::parseUrl($url);
 		$this->assertTrue($calendar!=false);
 		$events = $calendar->getEvents();
 		$this->assertEqual(count($events),30,'There must be 30 events');
+		$first = $events[0];
+		$this->assertEqual("Chang Stadion",$first->getLocation());
+		$this->assertEqual("Aalborg Chang",$first->getHomeTeam());
+		$this->assertEqual("Aalborg KFUM",$first->getGuestTeam());
+		$this->assertEqual(1302278400,$first->getStartDate());
+		$this->assertEqual(1302284700,$first->getEndDate());
+
+		$this->assertEqual(' 8. Apr 2011 kl. 18:00',DateUtils::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual(' 8. Apr 2011 kl. 19:45',DateUtils::formatLongDateTime($first->getEndDate()));
+
+
     }
+
+    function testOtherDate() {
+		global $baseUrl,$basePath;
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
+
+		$url = TestService::getResourceUrl('Kampprogram_other_date.xls');
+		$calendar = DBUCalendarParser::parseUrl($url);
+		$this->assertTrue($calendar!=false);
+		$events = $calendar->getEvents();
+		$this->assertEqual(count($events),30,'There must be 30 events');
+		$first = $events[0];
+		$this->assertEqual("Hals Stadion",$first->getLocation());
+		$this->assertEqual("Hals FS  (2)",$first->getHomeTeam());
+		$this->assertEqual("Hals FS (1)",$first->getGuestTeam());
+		$this->assertEqual(1334336400,$first->getStartDate());
+		$this->assertEqual(1334342700,$first->getEndDate());
+		$this->assertEqual('13. Apr 2012 kl. 19:00',DateUtils::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual('13. Apr 2012 kl. 20:45',DateUtils::formatLongDateTime($first->getEndDate()));
+    }
+
+    function testHandball() {
+		global $baseUrl,$basePath;
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
+
+		$url = TestService::getResourceUrl('Kampprogram_haandbold.xls');
+		$calendar = DBUCalendarParser::parseUrl($url);
+		$this->assertTrue($calendar!=false);
+		$events = $calendar->getEvents();
+		$this->assertEqual(count($events),62,'There must be 62 events, there are: '.count($events));
+		$first = $events[0];
+		$this->assertEqual("Flauenskjoldhallen",$first->getLocation());
+		$this->assertEqual("Dybvad Håndbold Flauenskjold IF",$first->getHomeTeam());
+		$this->assertEqual("Vestbjerg IF",$first->getGuestTeam());
+		$this->assertEqual(1317556200,$first->getStartDate());
+		$this->assertEqual(1317559500,$first->getEndDate());
+
+		$this->assertEqual(' 2. Okt 2011 kl. 13:50',DateUtils::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual(' 2. Okt 2011 kl. 14:45',DateUtils::formatLongDateTime($first->getEndDate()));
+    }
+
 }
 ?>

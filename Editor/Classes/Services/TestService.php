@@ -14,6 +14,15 @@ require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
 
 class TestService {
 	
+	function getResourceUrl($name) {
+		global $baseUrl;
+		$url = $baseUrl.'Editor/Tests/Resources/'.$name;
+		if ($url[0]=='/') {
+			$url = 'http://localhost'.$url;
+		}
+		return $url;
+	}
+	
 	function getGroups() {
 		global $basePath;
 		$out = array();

@@ -23,6 +23,22 @@ class TestDateUtils extends UnitTestCase {
 		$date = '15.04/1980';
 		$stamp = DateUtils::parse($date);
 		$this->assertEqual(DateUtils::formatLongDate($stamp,'en_US'),'15. Apr 1980');
+
+		$date = '1980-04-15';
+		$stamp = DateUtils::parse($date);
+		$this->assertEqual(DateUtils::formatLongDate($stamp,'en_US'),'15. Apr 1980');
+
+		$date = '1980-4-15';
+		$stamp = DateUtils::parse($date);
+		$this->assertEqual(DateUtils::formatLongDate($stamp,'en_US'),'15. Apr 1980');
+
+		$date = '15.04/10';
+		$stamp = DateUtils::parse($date);
+		$this->assertEqual(DateUtils::formatLongDate($stamp,'en_US'),'15. Apr 2010');
+
+		$date = '150410';
+		$stamp = DateUtils::parse($date);
+		$this->assertEqual(DateUtils::formatLongDate($stamp,'en_US'),'15. Apr 2010');
 	}
 
 	function testParseRFC3339() {
