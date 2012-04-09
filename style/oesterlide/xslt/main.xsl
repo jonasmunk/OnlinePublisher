@@ -7,7 +7,8 @@
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
- exclude-result-prefixes="p f h n o util"
+ xmlns:hr="http://uri.in2isoft.com/onlinepublisher/part/horizontalrule/1.0/"
+ exclude-result-prefixes="p f h n o util hr"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
 
@@ -57,13 +58,19 @@
 		-->
 		<xsl:apply-templates select="p:content"/>
 		<div class="layout_bottom">
-			Fynbogaard · Bjerrevej 318 · Bjerre · 8783 Hornsyld · Mobil 26 14 87 36
+			<div class="layout_bottom_effect"><xsl:comment/></div>
 		</div>
 	</div>
 	</div>
-	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-16'"/></xsl:call-template>
+	<xsl:call-template name="util:googleanalytics"/>
 </body>
 </html>
+</xsl:template>
+
+<xsl:template match="hr:horizontalrule">
+	<span><xsl:comment/></span>
+	<div><xsl:comment/></div>
+	<hr class="part_horizontalrule"/>
 </xsl:template>
 
 
@@ -95,75 +102,75 @@
 
 
 <xsl:template match="h:hierarchy/h:item">
-<xsl:if test="not(@hidden='true')">
-<xsl:variable name="style">
-<xsl:choose>
-<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-<xsl:otherwise>normal</xsl:otherwise>
-</xsl:choose>
-</xsl:variable>
-<li class="{$style}">
-<a>
-<xsl:call-template name="util:link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
-</li>
-</xsl:if>
+	<xsl:if test="not(@hidden='true')">
+	<xsl:variable name="style">
+	<xsl:choose>
+	<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+	<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+	<xsl:otherwise>normal</xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
+	<li class="{$style}">
+	<a>
+	<xsl:call-template name="util:link"/>
+	<span><xsl:value-of select="@title"/></span>
+	</a>
+	</li>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="secondlevel">
-<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-	<ul class="case_sub_navigation">
-		<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-	</ul>
-</xsl:if>
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+		<ul class="case_sub_navigation">
+			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
+		</ul>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="thirdlevel">
-<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-	<ul class="case_side_navigation">
-		<xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-	</ul>
-</xsl:if>
+	<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+		<ul class="case_side_navigation">
+			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
+		</ul>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template match="h:hierarchy/h:item/h:item">
-<xsl:variable name="style">
-<xsl:choose>
-<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-</xsl:choose>
-</xsl:variable>
-<xsl:if test="not(@hidden='true')">
-<li>
-<a class="{$style}">
-<xsl:call-template name="util:link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
-</li>
-</xsl:if>
+	<xsl:variable name="style">
+	<xsl:choose>
+	<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+	<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+	</xsl:choose>
+	</xsl:variable>
+	<xsl:if test="not(@hidden='true')">
+	<li>
+	<a class="{$style}">
+	<xsl:call-template name="util:link"/>
+	<span><xsl:value-of select="@title"/></span>
+	</a>
+	</li>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template match="h:item">
-<xsl:variable name="style">
-<xsl:choose>
-<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-<xsl:otherwise>standard</xsl:otherwise>
-</xsl:choose>
-</xsl:variable>
-<xsl:if test="not(@hidden='true')">
-<li>
-<a class="{$style}">
-<xsl:call-template name="util:link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
-<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
-<ul><xsl:apply-templates/></ul>
-</xsl:if>
-</li>
-</xsl:if>
+	<xsl:variable name="style">
+	<xsl:choose>
+	<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+	<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+	<xsl:otherwise>standard</xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
+	<xsl:if test="not(@hidden='true')">
+	<li>
+	<a class="{$style}">
+	<xsl:call-template name="util:link"/>
+	<span><xsl:value-of select="@title"/></span>
+	</a>
+	<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
+	<ul><xsl:apply-templates/></ul>
+	</xsl:if>
+	</li>
+	</xsl:if>
 </xsl:template>
 
 
@@ -174,37 +181,37 @@
 
 
 <xsl:template match="f:links/f:top">
-<div class="links_top">
-<div>
-<xsl:apply-templates select="//f:frame/f:userstatus"/> · 
-<a title="Udskriv siden" class="common" href="?id={//p:page/@id}&amp;print=true">Udskriv</a>
-<xsl:apply-templates/>
-</div>
-</div>
+	<div class="links_top">
+	<div>
+	<xsl:apply-templates select="//f:frame/f:userstatus"/> · 
+	<a title="Udskriv siden" class="common" href="?id={//p:page/@id}&amp;print=true">Udskriv</a>
+	<xsl:apply-templates/>
+	</div>
+	</div>
 </xsl:template>
 
 <xsl:template match="f:links/f:bottom">
-<div class="case_links">
-<xsl:apply-templates/>
-<xsl:if test="f:link"><span>&#160;&#183;&#160;</span></xsl:if>
-<a title="XHTML 1.1" class="common" href="http://validator.w3.org/check?uri=referer"><span>XHTML 1.1</span></a>
-</div>
+	<div class="case_links">
+	<xsl:apply-templates/>
+	<xsl:if test="f:link"><span>&#160;&#183;&#160;</span></xsl:if>
+	<a title="XHTML 1.1" class="common" href="http://validator.w3.org/check?uri=referer"><span>XHTML 1.1</span></a>
+	</div>
 </xsl:template>
 
 <xsl:template match="f:links/f:bottom/f:link">
-<xsl:if test="position()>1"><span>&#160;&#183;&#160;</span></xsl:if>
-<a title="{@alternative}" class="common">
-<xsl:call-template name="util:link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
+	<xsl:if test="position()>1"><span>&#160;&#183;&#160;</span></xsl:if>
+	<a title="{@alternative}" class="common">
+	<xsl:call-template name="util:link"/>
+	<span><xsl:value-of select="@title"/></span>
+	</a>
 </xsl:template>
 
 <xsl:template match="f:links/f:top/f:link">
-<span>&#160;&#183;&#160;</span>
-<a title="{@alternative}" class="common">
-<xsl:call-template name="util:link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
+	<span>&#160;&#183;&#160;</span>
+	<a title="{@alternative}" class="common">
+	<xsl:call-template name="util:link"/>
+	<span><xsl:value-of select="@title"/></span>
+	</a>
 </xsl:template>
 
 
@@ -216,10 +223,10 @@
 
 
 <xsl:template match="f:text/f:bottom">
-<span class="text">
-	<xsl:comment/>
-<xsl:apply-templates/>
-</span>
+	<span class="text">
+		<xsl:comment/>
+		<xsl:apply-templates/>
+	</span>
 </xsl:template>
 
 <xsl:template match="f:text/f:bottom/f:break">
@@ -228,68 +235,16 @@
 
 
 <xsl:template match="f:text/f:bottom/f:link">
-<a title="{@alternative}" class="common">
-<xsl:call-template name="util:link"/>
-<span><xsl:apply-templates/></span>
-</a>
+	<a title="{@alternative}" class="common">
+		<xsl:call-template name="util:link"/>
+		<span><xsl:apply-templates/></span>
+	</a>
 </xsl:template>
 
 
 
 
-<!--            News              -->
 
-
-
-
-
-<xsl:template match="f:newsblock">
-<div class="case_news">
-<h2><xsl:value-of select="@title"/></h2>
-<xsl:apply-templates/>
-</div>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:object">
-<div class="case_news_item">
-<h3>
-<xsl:value-of select="o:title"/>
-</h3>
-<p class="case_news_text">
-<xsl:apply-templates select="o:note"/>
-</p>
-<xsl:apply-templates select="o:sub/n:news/n:startdate"/>
-<xsl:apply-templates select="o:links"/>
-</div>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:links">
-<p class="case_news_links">
-<xsl:apply-templates/>
-</p>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:note">
-<xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:break">
-<br/>
-</xsl:template>
-
-<xsl:template match="f:newsblock//n:startdate">
-<p class="case_news_date"> <xsl:value-of select="@day"/>/<xsl:value-of select="@month"/><!--/<xsl:value-of select="substring(@year,3,2)"/>--></p>
-</xsl:template>
-
-<xsl:template match="f:newsblock//o:link">
-<xsl:if test="position()>1"><xsl:text> </xsl:text></xsl:if>
-<a title="{@alternative}" class="common">
-<xsl:call-template name="util:link"/>
-<span>
-<xsl:value-of select="@title"/>
-</span>
-</a>
-</xsl:template>
 
 
 

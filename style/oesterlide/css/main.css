@@ -31,9 +31,20 @@ div.layout_bottom
 {
 	text-align: center;
 	color: #999;
-	height: 40px;
+	height: 180px;
 	line-height: 40px;
 	font-size: 12px;
+	position: relative;
+}
+
+div.layout_bottom_effect
+{
+	width: 235px;
+	height: 140px;
+	position: absolute;
+	background: url('../gfx/sprite.jpg') -277px -35px no-repeat;
+	left: 20px;
+	top: 20px;
 }
 
 div.layout_top p
