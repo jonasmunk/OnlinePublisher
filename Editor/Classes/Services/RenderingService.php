@@ -110,8 +110,8 @@ class RenderingService {
 		$xslData='<?xml version="1.0" encoding="ISO-8859-1"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="html" indent="no" encoding="ISO-8859-1"/>'.
-		'<xsl:include href="'.$mainPath.'"/>'.
 		'<xsl:include href="'.$templatePath.'"/>'.
+		'<xsl:include href="'.$mainPath.'"/>'.
 		'<xsl:variable name="design">'.$design.'</xsl:variable>'.
 		'<xsl:variable name="path">'.$urlPath.'</xsl:variable>'.
 		'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.
