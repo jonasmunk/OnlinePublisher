@@ -1205,6 +1205,8 @@ hui.Event = function(event) {
 	this.shiftKey = event.shiftKey;
 	/** If the alt key was pressed */
 	this.altKey = event.altKey;
+	/** If the command key was pressed */
+	this.metaKey = event.metaKey;
 	/** If the return key was pressed */
 	this.returnKey = event.keyCode==13;
 	/** If the escape key was pressed */

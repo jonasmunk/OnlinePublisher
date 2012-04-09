@@ -31,6 +31,7 @@ $gui='
 		<parameter key="text" value="@search.value"/>
 		<parameter key="main" value="@selector.value"/>
 		<parameter key="windowPage" value="@list.window.page"/>
+		<parameter key="subset" value="@subsetSelection.value"/>
 	</source>
 	<layout>
 		<top>

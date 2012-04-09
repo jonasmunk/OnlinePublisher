@@ -170,7 +170,7 @@ class ListWriter {
 		if (is_array($mixed)) {
 			$this->text($mixed['text']);
 		} else {
-			$this->text($text);
+			$this->text($mixed);
 		}
 		echo '</badge>';
 		return $this;

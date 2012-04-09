@@ -172,19 +172,22 @@ hui.ui.List.prototype = {
 		this.resetState();
 		this.refresh();
 	},
-	/** Clears the data of the list */
+	/** Clears the data of the list and removes its data source */
 	clear : function() {
+		this.empty();
+		if (this.options.source) {
+			this.options.source.removeDelegate(this);
+		}
+		this.options.source = null;
+		this.url = null;
+	},
+	empty : function() {
 		this.selected = [];
 		this.columns = [];
 		this.rows = [];
 		this.navigation.style.display='none';
 		hui.dom.clear(this.body);
 		hui.dom.clear(this.head);
-		if (this.options.source) {
-			this.options.source.removeDelegate(this);
-		}
-		this.options.source = null;
-		this.url = null;
 	},
 	/** Resets the window state of the navigator */
 	resetState : function() {
@@ -214,7 +217,7 @@ hui.ui.List.prototype = {
 	/** @private */
 	refresh : function() {
 		if (this.options.source) {
-			this.options.source.refresh();
+			this.options.source.refreshLater();
 			return;
 		}
 		if (!this.url) return;

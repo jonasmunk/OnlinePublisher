@@ -16,6 +16,14 @@ hui.ui.listen({
 	},
 	
 	$valueChanged$viewSwitch : function(value) {
+		if (value=='gallery') {
+			var selection = selector.getValue().value;
+			if (selection=='pages' || selection=='products' || selection=='persons') {
+				selector.setValue('all');
+			}
+		} else {
+			this.$selectionReset$gallery();
+		}
 		hui.ui.changeState(value);
 	},
 	
@@ -38,7 +46,6 @@ hui.ui.listen({
 	
 	$selectionChanged$selector : function(item) {
 		if (item.value=='pages' || item.value=='products' || item.value=='persons') {
-			//list.clear();
 			hui.ui.changeState('list');
 			viewSwitch.setValue('list');
 		} else {
@@ -47,10 +54,11 @@ hui.ui.listen({
 	},
 	
 	$selectionChanged$gallery : function() {
-		hui.ui.get('delete').setEnabled(true);
-		hui.ui.get('view').setEnabled(true);
-		hui.ui.get('download').setEnabled(true);
-		hui.ui.get('info').setEnabled(true);
+		var count = gallery.getSelectionSize();
+		hui.ui.get('delete').setEnabled(count>0);
+		hui.ui.get('view').setEnabled(count==1);
+		hui.ui.get('download').setEnabled(count==1);
+		hui.ui.get('info').setEnabled(count==1);
 	},
 	$selectionReset$gallery : function() {
 		hui.ui.get('delete').setEnabled(false);
@@ -68,6 +76,21 @@ hui.ui.listen({
 		document.location = 'DownloadImage.php?id='+obj.id;
 	},
 	$click$delete : function() {
+		var selection = gallery.getSelectionIds();
+		
+		hui.ui.request({
+			url:'data/DeleteImages.php',
+			json:{ids:selection},
+			message:{start:'Sletter billede...',delay:300},
+			onSuccess:function() {
+				imagesSource.refresh();
+				groupSource.refresh();
+				subsetSource.refresh();
+				hui.ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
+			}
+		});
+		return;
+		
 		var obj = gallery.getFirstSelection();
 		this._deleteImage(obj.id);
 		if (obj.id===this.imageId) {

@@ -162,6 +162,10 @@ hui.ui.Source.prototype = {
 				p.value=value;
 			}
 		};
+		this.refreshLater();
+	},
+	/** Will refresh, but wait a little to let others contribute */
+	refreshLater : function() {
 		window.clearTimeout(this.paramDelay);
 		this.paramDelay = window.setTimeout(function() {
 			this.refresh();

@@ -19,6 +19,7 @@ if ($main=='pages') {
 
 function listImages($text) {
 
+	$subset = Request::getString('subset');
 	$group = Request::getInt('main',null);
 	$text = Request::getUnicodeString('text');
 	$windowSize = Request::getInt('windowSize',30);
@@ -34,6 +35,9 @@ function listImages($text) {
 	} else if ($group) {
 		$query->withCustom('group',$group);
 	}
+	if ($subset=='latest') {
+		$query->withCustom('createdAfter',DateUtils::addDays(mktime(),-1));
+	}
 
 
 	$result = $query->search();
@@ -48,7 +52,9 @@ function listImages($text) {
 		startHeaders()->
 			header(array('title'=>'Billede','width'=>40))->
 			header(array('title'=>'Størrelse'))->
-			header(array('title'=>''))->
+			header(array('title'=>'Højde'))->
+			header(array('title'=>'Bredde'))->
+			header(array('title'=>'Type'))->
 		endHeaders();
 
 
@@ -62,7 +68,13 @@ function listImages($text) {
 				text(GuiUtils::bytesToString($image->getSize()))->
 			endCell()->
 			startCell()->
-				text($image->getWidth().' x '.$image->getHeight())->
+				text($image->getHeight())->
+			endCell()->
+			startCell()->
+				text($image->getWidth())->
+			endCell()->
+			startCell()->
+				text(FileService::mimeTypeToLabel($image->getMimetype()))->
 			endCell()->
 		endRow();	
 	}

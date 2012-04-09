@@ -10,11 +10,12 @@ $writer = new ItemsWriter();
 $pages = ImageService::getNumberOfPagesWithImages();
 $persons = ImageService::getNumberOfPersonsWithImages();
 $products = ImageService::getNumberOfProductsWithImages();
+$latest = Query::after('image')->withCustom('createdAfter',DateUtils::addDays(mktime(),-1))->search()->getTotal();
 
 $writer->
 startItems()->
 	startItem(array('title'=>'Alle billeder','badge'=>ImageService::getTotalImageCount(),'icon'=>'common/image','value'=>'all'))->endItem()->
-	startItem(array('title'=>'Seneste døgn','icon'=>'common/time','value'=>'latest'))->endItem()->
+	startItem(array('title'=>'Seneste døgn','icon'=>'common/time','value'=>'latest','badge'=>$latest))->endItem()->
 	title('Anvendelse')->
 	item(array(
 		'title' => 'Ikke anvendt',
