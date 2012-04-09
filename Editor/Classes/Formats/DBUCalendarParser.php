@@ -33,9 +33,9 @@ class DBUCalendarParser {
 				continue;
 			}
 			$parts = preg_split('/:/',$time);
-			$parsed = DateUtils::parseDDMMYY($date);
+			$parsed = DateUtils::parse($date);
 			if (!$parsed) {
-				$parsed = DateUtils::parse($date);
+				$parsed = DateUtils::parseDDMMYY($date);
 			}
 			$parsed = DateUtils::addHours($parsed,intval($parts[0]));
 			$startDate = DateUtils::addMinutes($parsed,intval($parts[1]));
