@@ -16,7 +16,7 @@ hui.ui.NumberField = function(o) {
 		this.value = null;
 	}
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 /** Creates a new number field */
@@ -29,24 +29,21 @@ hui.ui.NumberField.create = function(o) {
 }
 
 hui.ui.NumberField.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var e = this.element;
 		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
-		hui.listen(this.input,'blur',this.blurEvent.bind(this));
-		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
+		hui.listen(this.input,'blur',this._onBlur.bind(this));
+		hui.listen(this.input,'keyup',this._onKey.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
-		hui.listen(this.up,'dblclick',this.upEvent.bind(this));
+		//hui.listen(this.up,'dblclick',this.upEvent.bind(this));
 		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
-		hui.listen(this.down,'dblclick',this.upEvent.bind(this));
+		//hui.listen(this.down,'dblclick',this.upEvent.bind(this));
 	},
-	/** @private */
-	blurEvent : function() {
+	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
 		this.updateField();
 	},
-	/** @private */
-	keyEvent : function(e) {
+	_onKey : function(e) {
 		e = e || window.event;
 		if (e.keyCode==hui.KEY_UP) {
 			hui.stop(e);

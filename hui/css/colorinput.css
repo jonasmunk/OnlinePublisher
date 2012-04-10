@@ -1,9 +1,22 @@
 span.hui_colorinput input
 {
-	border: 1px solid #ddd;
-	border-color: #eee #ddd #ccc;
-	box-shadow: inset 0 2px 3px #eee;
-	border-radius: 3px;
+	border-color:#BBBBBB #CCCCCC #DDDDDD;
+	border-style:solid;
+	border-width:1px;
+	width: 100px;
+	margin: 0;
+	padding: 1px 0px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 3px #ddd;
+	font-size: 12px;
+	height: 16px;
+}
+
+span.hui_colorinput input:focus
+{
+	outline: none;
+	-webkit-box-shadow: inset 0 1px 3px #ddd, 0 0 5px #68f;
 }
 
 a.hui_colorinput
@@ -11,5 +24,7 @@ a.hui_colorinput
 	position: absolute;
 	width: 16px;
 	height: 16px;
-	background: red;
+	border: 1px solid #CCC;
+	margin-left: 3px;
+	margin-top: 1px;
 }

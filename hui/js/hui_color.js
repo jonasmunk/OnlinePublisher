@@ -91,8 +91,12 @@ hui.Color.prototype = {
 	toRGB : function () {
         return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
     },
+	isDefined : function() {
+		return !(this.r===undefined || this.g===undefined || this.b===undefined);
+	},
 	/** Get the color as #ff0000 */
 	toHex : function() {
+		if (!this.isDefined()) {return null}
         var r = this.r.toString(16);
         var g = this.g.toString(16);
         var b = this.b.toString(16);

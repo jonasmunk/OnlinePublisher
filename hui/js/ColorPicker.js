@@ -114,7 +114,6 @@ hui.ui.ColorPicker.prototype = {
 		var input = e.findByTag('input');
 		if (input) {input.focus()}
 	},
-	/** @private */
 	_pickColor : function(e) {
 		hui.stop(e);
 		this.fire('colorWasSelected',this.color);
