@@ -2903,8 +2903,12 @@ hui.Color.prototype = {
 	toRGB : function () {
         return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
     },
+	isDefined : function() {
+		return !(this.r===undefined || this.g===undefined || this.b===undefined);
+	},
 	/** Get the color as #ff0000 */
 	toHex : function() {
+		if (!this.isDefined()) {return null}
         var r = this.r.toString(16);
         var g = this.g.toString(16);
         var b = this.b.toString(16);
@@ -14559,7 +14563,6 @@ hui.ui.ColorPicker.prototype = {
 		var input = e.findByTag('input');
 		if (input) {input.focus()}
 	},
-	/** @private */
 	_pickColor : function(e) {
 		hui.stop(e);
 		this.fire('colorWasSelected',this.color);
@@ -15423,7 +15426,7 @@ hui.ui.NumberField = function(o) {
 		this.value = null;
 	}
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 /** Creates a new number field */
@@ -15436,24 +15439,21 @@ hui.ui.NumberField.create = function(o) {
 }
 
 hui.ui.NumberField.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var e = this.element;
 		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
-		hui.listen(this.input,'blur',this.blurEvent.bind(this));
-		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
+		hui.listen(this.input,'blur',this._onBlur.bind(this));
+		hui.listen(this.input,'keyup',this._onKey.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
-		hui.listen(this.up,'dblclick',this.upEvent.bind(this));
+		//hui.listen(this.up,'dblclick',this.upEvent.bind(this));
 		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
-		hui.listen(this.down,'dblclick',this.upEvent.bind(this));
+		//hui.listen(this.down,'dblclick',this.upEvent.bind(this));
 	},
-	/** @private */
-	blurEvent : function() {
+	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
 		this.updateField();
 	},
-	/** @private */
-	keyEvent : function(e) {
+	_onKey : function(e) {
 		e = e || window.event;
 		if (e.keyCode==hui.KEY_UP) {
 			hui.stop(e);
@@ -15823,23 +15823,36 @@ hui.ui.ColorInput = function(options) {
 	this.options = hui.override({value:null},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.button = hui.get.firstByTag('a',this.element);
+	this.button = hui.get.firstByTag(this.element,'a');
+	this.input = new hui.ui.Input({
+		element : hui.get.firstByTag(this.element,'input'),
+		validator : {
+			validate : function(value) {
+				var color = new hui.Color(value);
+				return {valid:true,value:color.toHex()};
+			}
+		}
+	});
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	this.setValue(this.value);
+	this._syncValue();
 	this._addBehavior();
 }
 
 hui.ui.ColorInput.prototype = {
 	_addBehavior : function() {
-		alert(this.button)
+		hui.listen(this.button, 'click',this._onButtonClick.bind(this));
 	},
-	
+	_syncValue : function() {
+		this.button.style.backgroundColor = this.value;
+		this.input.setValue(this.value);
+	},
 	getValue : function() {
 		return this.value;
 	},
 	setValue : function(value) {
 		this.value = value;
+		this._syncValue();
 	},
 	focus : function() {
 		try {
@@ -15848,8 +15861,25 @@ hui.ui.ColorInput.prototype = {
 	},
 	reset : function() {
 		this.setValue('');
+	},
+	_onBlur : function() {
+		hui.Color.parse(this.value);
+	},
+	_onButtonClick : function() {
+		if (!this.panel) {
+			this.panel = hui.ui.BoundPanel.create({modal:true});
+			this.picker = hui.ui.ColorPicker.create();
+			this.picker.listen(this);
+			this.panel.add(this.picker);
+		}
+		this.panel.position(this.button);
+		this.panel.show();
+	},
+	/** @private */
+	$colorWasSelected : function(color) {
+		this.panel.hide();
+		this.setValue(color);
 	}
-	
 }
 
 /* EOF *//**

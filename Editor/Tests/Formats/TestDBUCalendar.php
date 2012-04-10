@@ -77,5 +77,27 @@ class TestDBUCalendar extends UnitTestCase {
 		$this->assertEqual(' 2. Okt 2011 kl. 14:45',DateUtils::formatLongDateTime($first->getEndDate()));
     }
 
+    function testU19drenge() {
+		global $baseUrl,$basePath;
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
+		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
+
+		$url = TestService::getResourceUrl('Kampprogram_U19drenge.xls');
+		$calendar = DBUCalendarParser::parseUrl($url);
+		$this->assertTrue($calendar!=false);
+		$events = $calendar->getEvents();
+		$this->assertEqual(count($events),24,'There must be 24 events, there are: '.count($events));
+		$first = $events[0];
+		$this->assertEqual("Holtet Stadion",$first->getLocation());
+		$this->assertEqual("VHG/GS/UB/HIF/HFS",$first->getHomeTeam());
+		$this->assertEqual("Støvring IF",$first->getGuestTeam());
+		$this->assertEqual(1334334600,$first->getStartDate());
+		$this->assertEqual(1334339100,$first->getEndDate());
+
+		$this->assertEqual('13. Apr 2012 kl. 18:30',DateUtils::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual('13. Apr 2012 kl. 19:45',DateUtils::formatLongDateTime($first->getEndDate()));
+    }
+
 }
 ?>
