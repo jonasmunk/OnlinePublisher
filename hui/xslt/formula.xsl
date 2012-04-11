@@ -624,6 +624,10 @@
 	</tr>
 </xsl:template>
 
+<xsl:template match="gui:image-input">
+	<xsl:call-template name="gui:imagepicker"/>
+</xsl:template>
+
 <xsl:template name="gui:imagepicker">
 	<div class="hui_imagepicker" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
 	<script type="text/javascript">

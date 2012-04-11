@@ -8,9 +8,18 @@
 		<formula name="formulatore">
 			<group labels="above">
 				<field label="Color:">
-					<color-input/>
+					<color-input key="color"/>
+				</field>
+				<field label="Photo:">
+					<image-input source="data/source_images.xml" key="photo"/>
+				</field>
+				<field label="Location:">
+					<location-input key="location"/>
 				</field>
 			</group>
+			<buttons>
+				<button click="hui.log(formulatore.getValues())" text="Data"/>
+			</buttons>
 		</formula>
 	</box>
 	

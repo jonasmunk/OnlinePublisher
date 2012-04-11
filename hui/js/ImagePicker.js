@@ -25,6 +25,9 @@ hui.ui.ImagePicker.prototype = {
 	getObject : function() {
 		return this.object;
 	},
+	getValue : function() {
+		return this.object;
+	},
 	reset : function() {
 		this.object = null;
 		this.updateUI();
@@ -32,10 +35,10 @@ hui.ui.ImagePicker.prototype = {
 	/** @private */
 	updateUI : function() {
 		if (this.object==null) {
-			this.element.style.backgroundImage='';
+			this.element.style.backgroundImage = '';
 		} else {
 			var url = hui.ui.resolveImageUrl(this,this.object,48,48);
-			this.element.style.backgroundImage='url('+url+')';
+			this.element.style.backgroundImage = 'url('+url+')';
 		}
 	},
 	/** @private */
@@ -47,11 +50,11 @@ hui.ui.ImagePicker.prototype = {
 			var buttons = hui.ui.Buttons.create({align:'right'});
 			var close = hui.ui.Button.create({text:'Luk',highlighted:true});
 			close.listen({
-				$click:function() {self.hidePicker()}
+				$click : function() {self.hidePicker()}
 			});
 			var remove = hui.ui.Button.create({text:'Fjern'});
 			remove.listen({
-				$click:function() {self.setObject(null);self.hidePicker()}
+				$click : function() {self.setObject(null);self.hidePicker()}
 			});
 			buttons.add(remove).add(close);
 			this.picker.add(this.content);

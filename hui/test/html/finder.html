@@ -36,8 +36,8 @@
 		hui.onReady(function() {
 			var finder = hui.ui.Finder.create({
 				title : 'Select page',
-				listUrl : 'data/list_pages.xml',
-				selectionUrl : 'data/finder_selection.xml'
+				list : {url:'data/list_pages.xml'},
+				selection : {url:'data/finder_selection.xml'}
 			});
 			finder.listen({
 				$select : function(obj) {

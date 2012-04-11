@@ -152,7 +152,6 @@ hui.ui.Checkboxes.Items = function(options) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-	hui.log('itms')
 }
 
 hui.ui.Checkboxes.Items.prototype = {
