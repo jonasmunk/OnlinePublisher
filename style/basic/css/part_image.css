@@ -148,6 +148,7 @@ span.part_image_frame_shadow_slant_bottom
 	display: block;
 	position: relative;
 	height: 10px;
+	text-align: left; /* IE7 */
 }
 
 span.part_image_frame_shadow_slant_bottom span
