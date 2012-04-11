@@ -106,6 +106,7 @@ hui.ui.Gallery.prototype = {
 			self.nodes.push(item);
 		});
 		this._reveal();
+		this.fireSizeChange();
 	},
 	/** @private */
 	$$resize : function() {

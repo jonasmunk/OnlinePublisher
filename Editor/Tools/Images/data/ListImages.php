@@ -46,7 +46,7 @@ function listImages($text) {
 	$writer = new ListWriter();
 
 	$writer->
-	startList(array('unicode'=>true))->
+	startList(array('unicode'=>true,'checkboxes'=>true))->
 		sort($sort,$direction)->
 		window(array('total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage))->
 		startHeaders()->

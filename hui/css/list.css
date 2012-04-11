@@ -343,6 +343,42 @@ div.hui_list tr.hui_drop td
 }
 
 
+a.list_checkbox
+{
+	display: inline-block;
+	border: 1px solid #ddd;
+	background: #fff;
+	border-radius: 2px;
+	width: 12px;
+	height: 12px;
+	margin-top: 2px;
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	text-align: center;
+	line-height: 11px;
+	font-weight: bold;
+	color: transparent;
+	text-shadow: none;
+}
+
+a.list_checkbox_checked
+{
+	color: #333;
+}
+
+td.list_checkbox
+{
+	text-align: center;
+}
+
+div.hui_list table thead th.list_check
+{
+	width: 1%;
+	color: #666;
+	text-align: center;
+}
+
 /* Native drop */
 
 

@@ -16,6 +16,17 @@ div.hui_gallery_item
 	margin: 4px;
 }
 
+div.hui_gallery
+{
+	text-align: center;
+}
+
+div.hui_gallery_item
+{
+	display: inline-block;
+	float: none;
+}
+
 div.hui_gallery_item_busy
 {
 	background: url('../gfx/progress/spinner_white_16.gif') center center no-repeat;

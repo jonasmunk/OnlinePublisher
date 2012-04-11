@@ -188,6 +188,7 @@ hui.ui.Selection.prototype = {
 				this.itemWasDoubleClicked(item);
 			}.bind(this));
 		}.bind(this));
+		this.fireSizeChange();
 	},
 	/** @private */
 	isSelection : function(item) {
@@ -287,6 +288,7 @@ hui.ui.Selection.Items.prototype = {
 		}
 		this.parent.updateUI();
 		this.parent._checkValue();
+		this.fireSizeChange();
 	},
 	$sourceIsBusy : function() {
 		this.parent._setBusy(true);

@@ -28,7 +28,7 @@
  * @param {Object} options The options : {url:null,source:null,selectable:«boolean»}
  */
 hui.ui.List = function(options) {
-	this.options = hui.override({url:null,source:null,selectable:true,indent:null},options);
+	this.options = hui.override({url:null,source:null,selectable:true,indent:null,selectMany:false},options);
 	this.element = hui.get(options.element);
 	this.name = options.name;
 	if (this.options.source) {
@@ -269,19 +269,23 @@ hui.ui.List.prototype = {
 		this._debug('List loaded');
 		this._setError(false);
 		this.selected = [];
-		this.parseWindow(doc);
+		this._parseWindow(doc);
 		this.buildNavigation();
 		hui.dom.clear(this.head);
 		hui.dom.clear(this.body);
 		this.rows = [];
 		this.columns = [];
+		this.checkboxMode = doc.documentElement.getAttribute('checkboxes')==='true';
 		var headTr = document.createElement('tr');
 		var sort = doc.getElementsByTagName('sort');
 		this.sortKey=null;
 		this.sortDirection=null;
 		if (sort.length>0) {
-			this.sortKey=sort[0].getAttribute('key');
-			this.sortDirection=sort[0].getAttribute('direction');
+			this.sortKey = sort[0].getAttribute('key');
+			this.sortDirection = sort[0].getAttribute('direction');
+		}
+		if (this.checkboxMode) {
+			var th = hui.build('th',{className:'list_check',parent:headTr,text:'\u00D7'});
 		}
 		var headers = doc.getElementsByTagName('header');
 		var i;
@@ -317,6 +321,12 @@ hui.ui.List.prototype = {
 			var cells = rows[i].getElementsByTagName('cell');
 			var row = document.createElement('tr');
 			row.setAttribute('data-index',i);
+			
+			if (this.checkboxMode) {
+				var td = hui.build('td',{parent:row,className:'list_checkbox'});
+				hui.build('a',{className:'list_checkbox',parent:td,text:'\u00D7'});
+			}
+			
 			var icon = rows[i].getAttribute('icon');
 			var title = rows[i].getAttribute('title');
 			var level = rows[i].getAttribute('level');
@@ -360,6 +370,7 @@ hui.ui.List.prototype = {
 		this.body.appendChild(frag);
 		this._setEmpty(rows.length==0);
 		this.fire('selectionReset');
+		this.fireSizeChange();
 	},
 	
 	/** @private */
@@ -373,6 +384,7 @@ hui.ui.List.prototype = {
 			this.setData(data);
 		}
 		this.fire('selectionReset');
+		this.fireSizeChange();
 	},
 	/** @private */
 	$sourceIsBusy : function() {
@@ -527,8 +539,7 @@ hui.ui.List.prototype = {
 		var obj = this.rows[parseInt(row.getAttribute('data-index'),10)];
 		this.fire('clickButton',{row:obj,button:button});
 	},
-	/** @private */
-	parseWindow : function(doc) {
+	_parseWindow : function(doc) {
 		var wins = doc.getElementsByTagName('window');
 		if (wins.length>0) {
 			var win = wins[0];
@@ -714,7 +725,7 @@ hui.ui.List.prototype = {
 			var event = hui.event(e);
 			var action = event.findByClass('hui_list_icon_action');
 			if (!action) {
-				self._rowDown(index);
+				self._rowDown(index,event);
 				hui.ui.startDrag(e,row);
 				return false;
 			}
@@ -733,9 +744,6 @@ hui.ui.List.prototype = {
 	},
 	/** @private */
 	changeSelection : function(indexes) {
-		if (!this.options.selectable) {
-			return;
-		}
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {
@@ -757,8 +765,21 @@ hui.ui.List.prototype = {
 			}
 		}
 	},
-	_rowDown : function(index) {
-		this.changeSelection([index]);
+	_rowDown : function(index,event) {
+		var check = event.findByClass('list_checkbox');
+		if (check) {
+			hui.cls.toggle(check,'list_checkbox_checked');
+		}
+		if (!this.options.selectable) {
+			return;
+		}
+		if (event.metaKey && this.options.selectMany) {
+			var newSelection = this.selected.slice(0);
+			hui.array.flip(newSelection,index);
+			this.changeSelection(newSelection);
+		} else {
+			this.changeSelection([index]);
+		} 
 	},
 	_rowDoubleClick : function(index,e) {
 		e = hui.event(e);

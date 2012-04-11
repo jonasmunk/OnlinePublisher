@@ -174,7 +174,9 @@
 			<xsl:text>display:none;</xsl:text>
 		</xsl:if>
 	</xsl:attribute>
+	<div class="hui_overflow_top"><xsl:comment/></div>
 	<xsl:apply-templates/>
+	<div class="hui_overflow_bottom"><xsl:comment/></div>
 </div>
 <script type="text/javascript">
 	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Overflow({

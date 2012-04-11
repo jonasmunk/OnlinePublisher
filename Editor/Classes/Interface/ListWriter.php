@@ -12,11 +12,16 @@ class ListWriter {
 	function startList($options=array()) {
 		if (@$options['unicode']==true) {
 			header('Content-Type: text/xml; charset=utf-8');
-			echo '<?xml version="1.0" encoding="UTF-8"?><list>';
+			echo '<?xml version="1.0" encoding="UTF-8"?>';
 		} else {
 			header('Content-Type: text/xml; charset=iso-8859-1');
-			echo '<?xml version="1.0" encoding="ISO-8859-1"?><list>';
+			echo '<?xml version="1.0" encoding="ISO-8859-1"?>';
 		}
+		echo '<list';
+		if (@$options['checkboxes']==true) {
+			echo ' checkboxes="true"';
+		}
+		echo '>';
 		return $this;
 	}
 

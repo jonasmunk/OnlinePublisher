@@ -3831,6 +3831,9 @@ hui.ui.extend = function(obj,options) {
 	obj.fireProperty = function(key,value) {
 		hui.ui.firePropertyChange(this,key,value);
 	}
+	obj.fireSizeChange = function() {
+		hui.ui.callAncestors(obj,'$$childSizeChanged');
+	}
 	if (!obj.getElement) {
 		obj.getElement = function() {
 			return this.element;
