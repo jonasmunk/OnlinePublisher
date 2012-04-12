@@ -35,7 +35,7 @@ hui.ui.Overflow.prototype = {
 			}
 		}
 		this.diff = -1 * (top + (viewport - bottom));
-		if (hui.browser.webkit && this.element.parentNode.className=='hui_layout_center') {
+		if (hui.browser.webkit && (this.element.parentNode.className=='hui_layout_center' || hui.cls.has(this.element.parentNode,'hui_layout_left'))) {
 			this.diff++;
 		}
 	},
@@ -74,7 +74,10 @@ hui.ui.Overflow.prototype = {
 	},
 	/** @private */
 	$$layout : function() {
-		if (!this.options.dynamic) {return}
+		if (!this.options.dynamic) {
+			this._checkShadows();
+			return
+		}
 		/*
 		var hasSiblings = false;
 		var sibs = this.element.parentNode.childNodes;
@@ -104,6 +107,7 @@ hui.ui.Overflow.prototype = {
 				height = hui.window.getViewHeight();
 				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
 			}
+			this._checkShadows();
 			return;
 		}
 		if (this.diff===undefined) {

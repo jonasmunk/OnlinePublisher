@@ -270,7 +270,7 @@ hui.ui.List.prototype = {
 		this._setError(false);
 		this.selected = [];
 		this._parseWindow(doc);
-		this.buildNavigation();
+		this._buildNavigation();
 		hui.dom.clear(this.head);
 		hui.dom.clear(this.body);
 		this.rows = [];
@@ -352,7 +352,7 @@ hui.ui.List.prototype = {
 				} else if (j==0 && this.options.indent!=null) {
 					td.style.paddingLeft = this.options.indent+'px';
 				}
-				this.parseCell(cells[j],td);
+				this._parseCell(cells[j],td);
 				row.appendChild(td);
 				if (!title) {
 					title = hui.dom.getText(cells[j]);
@@ -363,7 +363,7 @@ hui.ui.List.prototype = {
 			};
 			var info = {id:rows[i].getAttribute('id'),kind:rows[i].getAttribute('kind'),icon:icon,title:title,index:i,data:this._getData(rows[i])};
 			row.dragDropInfo = info;
-			this.addRowBehavior(row,i);
+			this._addRowBehavior(row,i);
 			frag.appendChild(row);
 			this.rows.push(info);
 		};
@@ -446,9 +446,7 @@ hui.ui.List.prototype = {
 		};
 		return out;
 	},
-	
-	/** @private */
-	parseCell : function(node,cell) {
+	_parseCell : function(node,cell) {
 		var variant = node.getAttribute('variant');
 		if (variant!=null && variant!='') {
 			cell = hui.build('div',{parent:cell,className : 'hui_list_cell_'+variant});
@@ -498,7 +496,7 @@ hui.ui.List.prototype = {
 					line.style.paddingTop=child.getAttribute('top')+'px';
 				}
 				cell.appendChild(line);
-				this.parseCell(child,line);
+				this._parseCell(child,line);
 			} else if (hui.dom.isElement(child,'object')) {
 				var obj = hui.build('div',{'class':'hui_list_object'});
 				if (child.getAttribute('icon')) {
@@ -510,7 +508,7 @@ hui.ui.List.prototype = {
 				cell.appendChild(obj);
 			} else if (hui.dom.isElement(child,'icons')) {
 				var icons = hui.build('span',{'class':'hui_list_icons'});
-				this.parseCell(child,icons);
+				this._parseCell(child,icons);
 				cell.appendChild(icons);
 			} else if (hui.dom.isElement(child,'button')) {
 				var button = hui.ui.Button.create({text:child.getAttribute('text'),small:true,rounded:true,data:this._getData(child)});
@@ -519,11 +517,11 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'wrap')) {
 				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
 			} else if (hui.dom.isElement(child,'delete')) {
-				this.parseCell(child,hui.build('del',{parent:cell}));
+				this._parseCell(child,hui.build('del',{parent:cell}));
 			} else if (hui.dom.isElement(child,'strong')) {
-				this.parseCell(child,hui.build('strong',{parent:cell}));
+				this._parseCell(child,hui.build('strong',{parent:cell}));
 			} else if (hui.dom.isElement(child,'badge')) {
-				this.parseCell(child,hui.build('span',{className:'hui_list_badge',parent:cell}));
+				this._parseCell(child,hui.build('span',{className:'hui_list_badge',parent:cell}));
 			}
 		};
 	},
@@ -552,8 +550,7 @@ hui.ui.List.prototype = {
 			this.window.page = 0;
 		}
 	},
-	/** @private */
-	buildNavigation : function() {
+	_buildNavigation : function() {
 		var self = this;
 		var pages = this.window.size>0 ? Math.ceil(this.window.total/this.window.size) : 0;
 		if (pages<2) {
@@ -568,7 +565,7 @@ hui.ui.List.prototype = {
 		if (pages<2) {
 			this.windowPage.style.display='none';	
 		} else {
-			var indices = this.buildPages(pages,this.window.page);
+			var indices = this._buildPages(pages,this.window.page);
 			for (var i=0; i < indices.length; i++) {
 				var index = indices[i];
 				if (index==='') {
@@ -578,7 +575,7 @@ hui.ui.List.prototype = {
 					a.appendChild(document.createTextNode(index+1));
 					a.setAttribute('data-index',index);
 					a.onmousedown = function() {
-						self.windowPageWasClicked(this);
+						self._onPageClick(this);
 						return false;
 					}
 					if (index==self.window.page) {
@@ -590,8 +587,7 @@ hui.ui.List.prototype = {
 			this.windowPage.style.display='block';
 		}
 	},
-	/** @private */
-	buildPages : function(count,selected) {
+	_buildPages : function(count,selected) {
 		var pages = [];
 		var x = false;
 		for (var i=0;i<count;i++) {
@@ -614,7 +610,7 @@ hui.ui.List.prototype = {
 		this.window.total = win.total || 0;
 		this.window.size = win.size || 0;
 		this.window.page = win.page || 0;
-		this.buildNavigation();
+		this._buildNavigation();
 		this._buildHeaders(data.headers);
 		this._buildRows(data.rows);
 	},
@@ -665,7 +661,7 @@ hui.ui.List.prototype = {
 			tr.dragDropInfo = info;
 			hui.log(this._getData(tr))
 			self.rows.push({id:r.id,kind:r.kind,icon:icon,title:title,index:i,data:r.data});
-			this.addRowBehavior(tr,i);
+			this._addRowBehavior(tr,i);
 		}.bind(this));
 	},
 	/** @private */
@@ -687,13 +683,13 @@ hui.ui.List.prototype = {
 					if (hui.isArray(value)) {
 						for (var k=0; k < value.length; k++) {
 							if (value[k].constructor == Object) {
-								cell.appendChild(this.createObject(value[k]));
+								cell.appendChild(this._createObject(value[k]));
 							} else {
 								cell.appendChild(hui.build('div',{text:value}));
 							}
 						};
 					} else if (value.constructor == Object) {
-						cell.appendChild(this.createObject(value[j]));
+						cell.appendChild(this._createObject(value[j]));
 					} else {
 						hui.dom.addText(cell,value);
 						title = title==null ? value : title;
@@ -704,12 +700,12 @@ hui.ui.List.prototype = {
 			var info = {id:obj.id,kind:obj.kind,title:title};
 			row.dragDropInfo = info;
 			this.body.appendChild(row);
-			this.addRowBehavior(row,i);
+			this._addRowBehavior(row,i);
 			this.rows.push(obj);
 		};
 	},
 	/** @private */
-	createObject : function(object) {
+	_createObject : function(object) {
 		var node = hui.build('div',{'class':'hui_list_object'});
 		if (object.icon) {
 			node.appendChild(hui.ui.createIcon(object.icon,16));
@@ -718,32 +714,31 @@ hui.ui.List.prototype = {
 		return node;
 	},
 	/** @private */
-	addRowBehavior : function(row,index) {
+	_addRowBehavior : function(row,index) {
 		var self = this;
 		row.onmousedown = function(e) {
 			if (self.busy) {return};
 			var event = hui.event(e);
 			var action = event.findByClass('hui_list_icon_action');
 			if (!action) {
-				self._rowDown(index,event);
+				self._onRowDown(index,event);
 				hui.ui.startDrag(e,row);
 				return false;
 			}
 		}
 		row.ondblclick = function(e) {
 			if (self.busy) {return};
-			self._rowDoubleClick(index,e);
+			self._onRowDoubleClick(index,e);
 			hui.selection.clear();
 			return false;
 		}
 		row.onclick = function(e) {
 			if (self.busy) {return};
-			self._rowClick(index,e);
+			self._onRowClick(index,e);
 			return false;
 		}
 	},
-	/** @private */
-	changeSelection : function(indexes) {
+	_changeSelection : function(indexes) {
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
 		for (i=0;i<this.selected.length;i++) {
@@ -755,7 +750,7 @@ hui.ui.List.prototype = {
 		this.selected = indexes;
 		this.fire('selectionChanged',this.rows[indexes[0]]);
 	},
-	_rowClick : function(index,e) {
+	_onRowClick : function(index,e) {
 		e = hui.event(e);
 		var a = e.findByClass('hui_list_icon_action');
 		if (a) {
@@ -765,7 +760,7 @@ hui.ui.List.prototype = {
 			}
 		}
 	},
-	_rowDown : function(index,event) {
+	_onRowDown : function(index,event) {
 		var check = event.findByClass('list_checkbox');
 		if (check) {
 			hui.cls.toggle(check,'list_checkbox_checked');
@@ -776,12 +771,12 @@ hui.ui.List.prototype = {
 		if (event.metaKey && this.options.selectMany) {
 			var newSelection = this.selected.slice(0);
 			hui.array.flip(newSelection,index);
-			this.changeSelection(newSelection);
+			this._changeSelection(newSelection);
 		} else {
-			this.changeSelection([index]);
+			this._changeSelection([index]);
 		} 
 	},
-	_rowDoubleClick : function(index,e) {
+	_onRowDoubleClick : function(index,e) {
 		e = hui.event(e);
 		if (!e.findByClass('hui_list_icon_action')) {
 			var row = this.getFirstSelection();
@@ -791,7 +786,7 @@ hui.ui.List.prototype = {
 		}
 	},
 	/** @private */
-	windowPageWasClicked : function(tag) {
+	_onPageClick : function(tag) {
 		var index = parseInt(tag.getAttribute('data-index'));
 		this.window.page = index;
 		hui.ui.firePropertyChange(this,'window',this.window);

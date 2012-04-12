@@ -4,7 +4,7 @@
 	<controller name="controller" source="formula.js"/>
 	<source name="itemsSource" url="data/source_items.xml"/>
 	
-	<box width="600" title="Title with toolbars" variant="textured" padding="10">
+	<box width="600" title="Special inputs" variant="textured" padding="10">
 		<formula name="formulatore">
 			<group labels="above">
 				<field label="Color:">
@@ -18,7 +18,24 @@
 				</field>
 			</group>
 			<buttons>
+				<button click='formulatore.setValues({color: "#ff2ead",location: {latitude: 56.64242820898831, longitude: 10.16157250976562}})' text="Set data"/>
 				<button click="hui.log(formulatore.getValues())" text="Data"/>
+			</buttons>
+		</formula>
+	</box>
+
+	<box width="600" title="Dates" variant="textured" padding="10">
+		<formula name="dateForm">
+			<group labels="above">
+				<field label="Seconds:">
+					<datetime-input label="Date (secs):" key="date-seconds" return-type="seconds"/>
+				</field>
+				<field label="Date:">
+					<datetime-input label="Date:" key="date"/>
+				</field>
+			</group>
+			<buttons>
+				<button click="hui.log(dateForm.getValues())" text="Data"/>
 			</buttons>
 		</formula>
 	</box>
@@ -47,8 +64,6 @@
 						<number label="Number (min -300):" key="number2" min="-300"/>
 						<number label="Number (min 300):" key="number2" min="300"/>
 						<style-length label="Style length:" key="style" value="15px"/>
-						<datetime label="Date (secs):" key="date-seconds" return-type="seconds"/>
-						<datetime label="Date:" key="date"/>
 						<checkbox label="Internal access:" key="internal"/>
 						<checkbox label="External access:" key="external"/>
 						<checkboxes label="Groups:" key="groups">

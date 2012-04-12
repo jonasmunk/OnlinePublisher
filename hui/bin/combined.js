@@ -12907,7 +12907,10 @@ hui.ui.Overflow.prototype = {
 	},
 	/** @private */
 	$$layout : function() {
-		if (!this.options.dynamic) {return}
+		if (!this.options.dynamic) {
+			this._checkShadows();
+			return
+		}
 		/*
 		var hasSiblings = false;
 		var sibs = this.element.parentNode.childNodes;
@@ -12937,6 +12940,7 @@ hui.ui.Overflow.prototype = {
 				height = hui.window.getViewHeight();
 				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
 			}
+			this._checkShadows();
 			return;
 		}
 		if (this.diff===undefined) {

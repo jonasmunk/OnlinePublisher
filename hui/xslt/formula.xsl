@@ -116,7 +116,7 @@
 	</td></tr>
 </xsl:template>
 
-<xsl:template name="gui:text" match="gui:textfield">
+<xsl:template name="gui:text" match="gui:textfield | gui:text-input">
 	<xsl:choose>
 		<xsl:when test="@lines>1 or @multiline='true'">
 			<div class="hui_field hui_longfield" id="{generate-id()}">
@@ -177,7 +177,7 @@
 	</td></tr>
 </xsl:template>
 
-<xsl:template name="gui:datetime">
+<xsl:template name="gui:datetime" match="gui:datetime-input">
 	<div class="hui_field" id="{generate-id()}">
 		<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
 		<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">

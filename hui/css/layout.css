@@ -68,11 +68,6 @@ div.hui_overflow_top
 	display: none;
 }
 
-div.hui_overflow_upper div.hui_overflow_top
-{
-	display: block;
-}
-
 div.hui_overflow_bottom
 {
 	-webkit-mask-box-image: -webkit-linear-gradient(left,transparent 0%,rgba(0, 0, 0, .8) 50%,transparent 100%);
@@ -88,6 +83,7 @@ div.hui_overflow_bottom
 	width: 100%;
 	position: absolute;
 	bottom: 0;
+	display: none;
 }
 
 
