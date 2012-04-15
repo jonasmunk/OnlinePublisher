@@ -16,7 +16,7 @@ hui.ui.listen({
 			this.loadFile(fileInfo);
 		}
 	},
-	$selectionChanged$list : function(item) {
+	$select$list : function(item) {
 		hui.ui.get('delete').setEnabled(true);
 		hui.ui.get('view').setEnabled(true);
 		hui.ui.get('download').setEnabled(true);
@@ -30,7 +30,7 @@ hui.ui.listen({
 		hui.ui.get('info').setEnabled(false);
 		hui.ui.get('replace').setEnabled(false);
 	},
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		this.loadFile(obj.id);
 	},
 	

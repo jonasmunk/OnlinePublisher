@@ -4,7 +4,7 @@ hui.ui.listen({
 	
 	_issueId : null,
 	
-	$listRowWasOpened$list : function(row) {
+	$open$list : function(row) {
 		hui.ui.request({
 			url : 'data/LoadIssue.php',
 			parameters : { id : row.id },

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.ui.List</title>
+		<title>JsDoc Reference - hui.ui.Structure</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -436,7 +436,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hui.ui.List
+				Class hui.ui.Structure
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -453,7 +453,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.List.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Structure.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -466,34 +466,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.ui.List.html#constructor">hui.ui.List</a></b>(options)
+								<b><a href="../symbols/hui.ui.Structure.html#constructor">hui.ui.Structure</a></b>(options)
 							</div>
-							<div class="description">A list
-<pre><strong>options:</strong> {
- element : «Element | ID»,
- name : «String»,
- url : «String»,
- source : «hui.ui.Source»,
- selectable : «<strong>true</strong> | false»,
- dropFiles : «true | <strong>false</strong>»,
- indent : «Integer»
-}
-
-<strong>Events:</strong>
-$open(row) - When a row is double clicked (rename to open)
-$select(firstRow) - When a row is selected
-$selectionReset() - When a previous selection is removed (nothing is selected)
-$check(row) - When a row is checked or unchecked
-$checkedReset() - When checks are removed
-$clickButton({row:row,button:button}) - When a button is clicked
-$clickIcon({row:row,data:data,node:node}) - When an icon is clicked
-
-<strong>Bindings:</strong>
-<del>window</del>
-window.page
-sort.direction
-sort.key
-</pre></div>
+							<div class="description"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -507,7 +482,7 @@ sort.key
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.List.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Structure.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -520,127 +495,9 @@ sort.key
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#clear">clear</a></b>()
-								</div>
-								<div class="description">Clears the data of the list and removes its data source</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.List.<b><a href="../symbols/hui.ui.List.html#.create">create</a></b>(options)
-								</div>
-								<div class="description">Creates a new list widget
-<pre><strong>options:</strong> {
- maxHeight : «Integer»,
-
- name : «String»,
- url : «String»,
- source : «hui.ui.Source»,
- selectable : «<strong>true</strong> | false»,
- dropFiles : «true | <strong>false</strong>»,
- indent : «Integer»
-}</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#empty">empty</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Structure.html#$$resize">$$resize</a></b>()
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#getFirstSelection">getFirstSelection</a></b>()
-								</div>
-								<div class="description">Gets the first selection or null</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#getRows">getRows</a></b>()
-								</div>
-								<div class="description">Gets all rows of the list</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#getSelection">getSelection</a></b>()
-								</div>
-								<div class="description">Gets an array of selections</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#getSelectionSize">getSelectionSize</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#hide">hide</a></b>()
-								</div>
-								<div class="description">Hides the list</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#resetState">resetState</a></b>()
-								</div>
-								<div class="description">Resets the window state of the navigator</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#setParameter">setParameter</a></b>(key, value)
-								</div>
-								<div class="description">Add a parameter</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#setSource">setSource</a></b>(source)
-								</div>
-								<div class="description">Sets the lists data source and refreshes it if it is new</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#setUrl">setUrl</a></b>(url)
-								</div>
-								<div class="description">Set an url to load data from, and load the data</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.List.html#show">show</a></b>()
-								</div>
-								<div class="description">Shows the list</div>
 							</td>
 						</tr>
 					
@@ -661,36 +518,11 @@ sort.key
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.ui.List</b>(options)
+						<b>hui.ui.Structure</b>(options)
 				</div>
 				
 				<div class="description">
-					A list
-<pre><strong>options:</strong> {
- element : «Element | ID»,
- name : «String»,
- url : «String»,
- source : «hui.ui.Source»,
- selectable : «<strong>true</strong> | false»,
- dropFiles : «true | <strong>false</strong>»,
- indent : «Integer»
-}
-
-<strong>Events:</strong>
-$open(row) - When a row is double clicked (rename to open)
-$select(firstRow) - When a row is selected
-$selectionReset() - When a previous selection is removed (nothing is selected)
-$check(row) - When a row is checked or unchecked
-$checkedReset() - When checks are removed
-$clickButton({row:row,button:button}) - When a button is clicked
-$clickIcon({row:row,data:data,node:node}) - When an icon is clicked
-
-<strong>Bindings:</strong>
-<del>window</del>
-window.page
-sort.direction
-sort.key
-</pre>
+					
 					
 				</div>
 				
@@ -705,7 +537,7 @@ sort.key
 								<span class="light fixedFont">{Object}</span>  <b>options</b>
 								
 							</dt>
-								<dd>The options : {url:null,source:null,selectable:«boolean»}</dd>
+								<dd>{ element «Node | id», name: «String» }</dd>
 						
 						</dl>
 					
@@ -728,396 +560,15 @@ sort.key
 					Method Detail
 				</div>
 				
-					<a name="clear"> </a>
+					<a name="$$resize"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>clear</b>()
-					
-					</div>
-					<div class="description">
-						Clears the data of the list and removes its data source
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".create"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.List.</span><b>create</b>(options)
-					
-					</div>
-					<div class="description">
-						Creates a new list widget
-<pre><strong>options:</strong> {
- maxHeight : «Integer»,
-
- name : «String»,
- url : «String»,
- source : «hui.ui.Source»,
- selectable : «<strong>true</strong> | false»,
- dropFiles : «true | <strong>false</strong>»,
- indent : «Integer»
-}
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Object}</span> <b>options</b>
-									
-								</dt>
-								<dd>The options</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="empty"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>empty</b>()
+					<b>$$resize</b>()
 					
 					</div>
 					<div class="description">
 						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="getFirstSelection"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Object}</span>
-					<b>getFirstSelection</b>()
-					
-					</div>
-					<div class="description">
-						Gets the first selection or null
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Object}</span> The first selected row</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getRows"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Array}</span>
-					<b>getRows</b>()
-					
-					</div>
-					<div class="description">
-						Gets all rows of the list
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Array}</span> The all rows</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getSelection"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Array}</span>
-					<b>getSelection</b>()
-					
-					</div>
-					<div class="description">
-						Gets an array of selections
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Array}</span> The selected rows</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getSelectionSize"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>getSelectionSize</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="hide"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>hide</b>()
-					
-					</div>
-					<div class="description">
-						Hides the list
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="resetState"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>resetState</b>()
-					
-					</div>
-					<div class="description">
-						Resets the window state of the navigator
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setParameter"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setParameter</b>(key, value)
-					
-					</div>
-					<div class="description">
-						Add a parameter
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>key</b>
-									
-								</dt>
-								<dd>The key</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>value</b>
-									
-								</dt>
-								<dd>The value</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setSource"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setSource</b>(source)
-					
-					</div>
-					<div class="description">
-						Sets the lists data source and refreshes it if it is new
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{<a href="../symbols/hui.ui.Source.html">hui.ui.Source</a>}</span> <b>source</b>
-									
-								</dt>
-								<dd>The source</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setUrl"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setUrl</b>(url)
-					
-					</div>
-					<div class="description">
-						Set an url to load data from, and load the data
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>url</b>
-									
-								</dt>
-								<dd>The url</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="show"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>show</b>()
-					
-					</div>
-					<div class="description">
-						Shows the list
 						
 						
 					</div>
@@ -1146,7 +597,7 @@ sort.key
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Apr 15 2012 13:30:18 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Apr 15 2012 13:30:19 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

@@ -44,7 +44,7 @@ hui.ui.listen({
 	},
 	
 	
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		if (item.value=='pages' || item.value=='products' || item.value=='persons') {
 			hui.ui.changeState('list');
 			viewSwitch.setValue('list');
@@ -53,30 +53,70 @@ hui.ui.listen({
 		}
 	},
 	
-	$selectionChanged$gallery : function() {
-		var count = gallery.getSelectionSize();
+	
+	
+	// Selection
+	
+	$select$list : function() {
+		this._updateIcons();
+	},
+	_updateIcons : function() {
+		var count = 0;
+		if (hui.ui.state == 'list') {
+			count = list.getSelectionSize();
+		} else {
+			count = gallery.getSelectionSize();
+		}
 		hui.ui.get('delete').setEnabled(count>0);
 		hui.ui.get('view').setEnabled(count==1);
 		hui.ui.get('download').setEnabled(count==1);
 		hui.ui.get('info').setEnabled(count==1);
 	},
+	
+	$select$gallery : function() {
+		this._updateIcons();
+	},
 	$selectionReset$gallery : function() {
-		hui.ui.get('delete').setEnabled(false);
-		hui.ui.get('view').setEnabled(false);
-		hui.ui.get('download').setEnabled(false);
-		hui.ui.get('info').setEnabled(false);
+		this._updateIcons();
+	},
+	
+	
+	
+	// Toolbar icons
+	
+	_getSelectionIds : function() {
+		if (hui.ui.state=='list') {
+			return list.getSelectionIds();
+		} else {
+			return gallery.getSelectionIds();
+		}		
+	},
+	
+	_getFirstSelection : function() {
+		if (hui.ui.state=='list') {
+			return list.getFirstSelection();
+		} else {
+			return gallery.getFirstSelection();
+		}		
 	},
 	
 	$click$view : function() {
-		var obj = gallery.getFirstSelection();
-		window.open('../../../services/images/?id='+obj.id,"filewindow"+obj.id);
+		var obj = this._getFirstSelection();
+		if (obj) {
+			window.open('../../../services/images/?id='+obj.id,"filewindow"+obj.id);
+		}
 	},
 	$click$download : function() {
-		var obj = gallery.getFirstSelection();
-		document.location = 'DownloadImage.php?id='+obj.id;
+		var obj = this._getFirstSelection();
+		if (obj) {
+			document.location = 'data/DownloadImage.php?id='+obj.id;
+		}
 	},
 	$click$delete : function() {
-		var selection = gallery.getSelectionIds();
+		var selection = this._getSelectionIds();
+		if (selection.size==0) {
+			return;
+		}
 		
 		hui.ui.request({
 			url:'data/DeleteImages.php',
@@ -108,7 +148,7 @@ hui.ui.listen({
 		var obj = gallery.getFirstSelection();
 		this._loadImage(obj.id);
 	},
-	$listRowWasOpened$list : function(row) {
+	$open$list : function(row) {
 		this._loadImage(row.id);
 	},
 	$itemOpened$gallery : function(item) {

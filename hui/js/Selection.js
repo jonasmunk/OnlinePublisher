@@ -134,7 +134,7 @@ hui.ui.Selection.prototype = {
 	},
 	/** @private */
 	fireChange : function() {
-		this.fire('selectionChanged',this.selection);
+		this.fire('select',this.selection);
 		this.fireProperty('value',this.selection ? this.selection.value : null);
 		this.fireProperty('kind',this.selection ? this.selection.kind : null);
 		for (var i=0; i < this.subItems.length; i++) {
@@ -358,6 +358,7 @@ hui.ui.Selection.Items.prototype = {
 			hui.get.next(node.parentNode).style.display='block';
 			hui.cls.add(node,'hui_disclosure_open');
 		}
+		this.parent.fireSizeChange();
 	},
 	/** @private */
 	isHierarchy : function(items) {

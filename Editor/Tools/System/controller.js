@@ -7,7 +7,7 @@ hui.ui.listen({
 		}
 	},
 	
-	$selectionChanged$selector : function(obj) {
+	$select$selector : function(obj) {
 		if (obj.value=='settings') {
 			hui.ui.changeState('settings');
 			list.clear();
@@ -43,7 +43,7 @@ hui.ui.listen({
 			list.setUrl('data/ListDesigns.php');
 		}
 	},
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		//var obj = list.getFirstSelection();
 		if (obj.kind=='webloggroup') {
 			this.loadWeblogGroup(obj.id);

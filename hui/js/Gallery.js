@@ -169,7 +169,7 @@ hui.ui.Gallery.prototype = {
 		} else {
 			this.selected = [index];
 		}
-		this.fire('selectionChanged');
+		this.fire('select',this.selected);
 		this._updateUI();
 	},
 	isOneSelection : function() {

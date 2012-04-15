@@ -1,5 +1,5 @@
 hui.ui.listen({
-	$selectionChanged$selector : function(obj) {
+	$select$selector : function(obj) {
 		if (obj.value=='settings') {
 			if (!this.loaded) {
 				this.loaded = true;

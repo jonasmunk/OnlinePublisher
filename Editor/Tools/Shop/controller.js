@@ -15,7 +15,7 @@ hui.ui.listen({
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
 	
-	$selectionChanged$selector : function(obj) {
+	$select$selector : function(obj) {
 		if (obj.value=='productgroup') {
 			list.loadData('../../Services/Model/ListObjects.php?type=productgroup');
 		} else if (obj.value=='product') {
@@ -38,7 +38,7 @@ hui.ui.listen({
 		}
 	},
 	
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		var data = {id:obj.id};
 		if (obj.kind=='productoffer') {
 			offerFormula.reset();

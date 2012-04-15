@@ -21,7 +21,7 @@ hui.ui.listen({
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
 	
-	$selectionChanged$selector : function(obj) {
+	$select$selector : function(obj) {
 		if (obj.value=='mailinglist') {
 			list.setSource(mailinglistListSource);
 		} else if (obj.value=='persongroup') {
@@ -40,7 +40,7 @@ hui.ui.listen({
 		hui.ui.request({json:{data:data},url:'AddPersonToGroup.php',onSuccess:'addPersonToGroup'});
 	},
 	
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		var data = {id:obj.id};
 		if (obj.kind=='mailinglist') {
 			mailinglistFormula.reset();

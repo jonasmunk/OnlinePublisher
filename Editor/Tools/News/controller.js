@@ -17,7 +17,7 @@ hui.ui.listen({
 		}
 	},
 	
-	$selectionChanged$list : function(item) {
+	$select$list : function(item) {
 		if (item.kind=='news') {
 			hui.ui.get('delete').setEnabled(true);
 			hui.ui.get('info').setEnabled(true);
@@ -29,7 +29,7 @@ hui.ui.listen({
 		hui.ui.get('info').setEnabled(false);
 		hui.ui.get('duplicate').setEnabled(false);
 	},
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		this.loadNews(obj.id);
 	},
 	
@@ -37,7 +37,7 @@ hui.ui.listen({
 		list.resetState();
 	},
 	
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		list.resetState();
 		if (item.kind=='newssource') {
 			hui.ui.changeState('source');

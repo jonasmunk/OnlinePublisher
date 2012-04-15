@@ -210,6 +210,10 @@ class ImageTransformationService {
 			error_log('Cannot send image, path does not exist: '.$path);
 			return;
 		}
+		if (!is_readable($path)) {
+			error_log('Cannot send image, path is not readable: '.$path);
+			return;
+		}
 		if (!$mimeType) {
 			if ($info = ImageTransformationService::getImageInfo($path)) {
 				$mimeType = $info['mime'];

@@ -7,10 +7,10 @@ hui.ui.listen({
 			synchronizeSource.setEnabled(false);
 		}
 	},
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		synchronizeSource.setEnabled(item.kind=='calendarsource');
 	},
-	$listRowWasOpened$list : function(row) {
+	$open$list : function(row) {
 		if (row.kind=='calendarsource') {
 			this.editSource(row.id);
 		}

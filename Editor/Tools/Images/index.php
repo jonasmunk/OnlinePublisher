@@ -29,11 +29,11 @@ $gui='
 	</source>
 	<source name="listSource" url="data/ListImages.php">
 		<parameter key="text" value="@search.value"/>
-		<parameter key="main" value="@selector.value"/>
-		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="subset" value="@subsetSelection.value"/>
+		<parameter key="group" value="@groupSelection.value"/>
+		<parameter key="windowPage" value="@list.window.page"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/image" title="{Add file ; da:Tilføj billede}" overlay="upload" name="newFile"/>
@@ -52,6 +52,7 @@ $gui='
 				</segmented>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
+					<space width="5"/>
 				</right>
 			</toolbar>
 		</top>
@@ -67,12 +68,12 @@ $gui='
 			<center>
 				<overflow name="mainArea">
 					<gallery name="gallery" source="imagesSource" padding="5" state="gallery" drop-files="true"/>
-					<list name="list" source="listSource" state="list"/>
+					<list name="list" source="listSource" state="list" drop-files="true"/>
 				</overflow>
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">

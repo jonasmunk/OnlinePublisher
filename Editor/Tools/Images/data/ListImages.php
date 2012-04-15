@@ -5,13 +5,13 @@
  */
 require_once '../../../Include/Private.php';
 
-$main = Request::getString('main');
+$subset = Request::getString('subset');
 
-if ($main=='pages') {
+if ($subset=='pages') {
 	listPages();
-} else if ($main=='products') {
+} else if ($subset=='products') {
 	listProducts();
-} else if ($main=='persons') {
+} else if ($subset=='persons') {
 	listPersons();
 } else {
 	listImages($text);
@@ -20,16 +20,14 @@ if ($main=='pages') {
 function listImages($text) {
 
 	$subset = Request::getString('subset');
-	$group = Request::getInt('main',null);
+	$group = Request::getInt('group',null);
 	$text = Request::getUnicodeString('text');
 	$windowSize = Request::getInt('windowSize',30);
 	$windowPage = Request::getInt('windowPage',0);
-	$sort = Request::getString('sort');
-	$direction = Request::getString('direction');
-	if ($sort=='') $sort='title';
-	if ($direction=='') $direction='ascending';
-
-	$query = Query::after('image')->withText($text)->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction);
+	$sort = Request::getString('sort','title');
+	$direction = Request::getString('direction','ascending');
+	
+	$query = Query::after('image')->withText($text)->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction)->orderBy($sort);
 	if ($group===-1) {
 		$query->withCustom('nogroup',true);
 	} else if ($group) {
@@ -37,6 +35,8 @@ function listImages($text) {
 	}
 	if ($subset=='latest') {
 		$query->withCustom('createdAfter',DateUtils::addDays(mktime(),-1));
+	} else if ($subset=='unused') {
+		$query->withCustom('unused',true);
 	}
 
 

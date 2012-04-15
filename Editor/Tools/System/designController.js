@@ -1,7 +1,7 @@
 hui.ui.listen({
 	id : null,
 	
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		if (obj.kind=='design') {
 			designFormula.reset();
 			designEditor.show();

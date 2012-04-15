@@ -6,7 +6,7 @@ hui.ui.listen({
 			window.parent.baseController.changeSelection('tool:Central');
 		}
 	},
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		this.loadSite(obj.id);
 	},
 

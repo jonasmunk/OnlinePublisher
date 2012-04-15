@@ -2,7 +2,7 @@ hui.ui.listen({
 	
 	sourceId : null,
 	
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		if (item.kind=='newssource') {
 			sourceHeader.setText(item.title);
 			this.updateSourceInfo(item.value);

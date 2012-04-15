@@ -5,12 +5,12 @@ hui.ui.listen({
 	
 	//////// List ////////
 	
-	$listRowWasOpened$list : function(item) {
+	$open$list : function(item) {
 		if (item.kind=='event') {
 			this.loadEvent(item.id);
 		}
 	},
-	$selectionChanged$list : function(value) {
+	$select$list : function(value) {
 		if (value.kind=='event') {
 			deleteItem.setEnabled(true);
 			editItem.setEnabled(true);

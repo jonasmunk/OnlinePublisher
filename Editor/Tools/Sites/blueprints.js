@@ -9,7 +9,7 @@ hui.ui.listen({
 		deleteBlueprint.setEnabled(false);
 		blueprintFormula.focus();
 	},
-	$listRowWasOpened : function(row) {
+	$open : function(row) {
 		this.loadBlueprint(row.id);
 	},
 	loadBlueprint : function(id) {

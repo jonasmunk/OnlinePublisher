@@ -14,7 +14,7 @@ $gui='
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="kind" value="@selector.value"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/new" title="Tilføj kontrolord" name="newWord" click="newWordPanel.show();wordFormula.focus()"/>
@@ -59,7 +59,7 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	<boundpanel target="newWord" name="newWordPanel" width="200">
 		<formula name="wordFormula">

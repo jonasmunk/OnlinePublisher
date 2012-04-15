@@ -15,7 +15,7 @@ var controller = {
 	$drop$icon$folder : function(dragged,target) {
 		hui.ui.alert({text:Object.toJSON(dragged)+' was dropped on '+Object.toJSON(target)});
 	},
-	$listRowWasOpened$list : function(info) {
+	$open$list : function(info) {
 		alert(Object.toJSON(info))
 	},
 	$buttonClick$list : function(info,button) {

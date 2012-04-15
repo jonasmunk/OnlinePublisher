@@ -67,11 +67,11 @@ hui.ui.Finder.prototype = {
 		var list = this.list = hui.ui.List.create();
 		
 		this.list.listen({
-			$listRowWasOpened : function(row) {
+			$open : function(row) {
 				
 			},
 			
-			$selectionChanged : this._selectionChanged.bind(this)
+			$select : this._selectionChanged.bind(this)
 		})
 		right.add(this.list);
 		

@@ -13,7 +13,7 @@ hui.ui.listen({
 		selector.setValue('list');
 		reconstruct.disable();
 	},
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		if (item.value=='list') {
 			viewerFrame.clear();
 			hui.ui.changeState('list');

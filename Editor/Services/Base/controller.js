@@ -65,7 +65,7 @@ var baseController = {
 	},
 	
 	
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		if (item.kind=='page') {
 			dock.setUrl('Services/Preview/?id='+item.value);
 		}
@@ -90,7 +90,7 @@ var baseController = {
 		}
 	},
 	
-	$selectionChanged$list : function() {
+	$select$list : function() {
 		var row = list.getFirstSelection();
 		if (row.kind=='page') {
 			dock.setUrl('Services/Preview/?id='+row.id);

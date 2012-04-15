@@ -25,13 +25,13 @@ var mainController = {
 		}
 	},
 	
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		reviewBar.setVisible(item.value=='review');
 	},
 	
 	///////////////// List ///////////////
 	
-	$selectionChanged$list : function(item) {
+	$select$list : function(item) {
 		if (item.kind=='page') {
 			hui.ui.get('edit').setEnabled(true);
 			hui.ui.get('info').enable();
@@ -114,7 +114,7 @@ var mainController = {
 			this.loadPage(obj.id);
 		}
 	},
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		if (obj.kind=='page') {
 			this.loadPage(obj.id);
 		}
@@ -219,7 +219,7 @@ var mainController = {
 	$click$addTranslation : function() {
 		pageFinder.show({avoid:pageEditor.getElement()});
 	},
-	$listRowWasOpened$pageFinderList : function(row) {
+	$open$pageFinderList : function(row) {
 		if (!this.activePage) {
 			return;
 		}
@@ -307,19 +307,19 @@ var mainController = {
 		this.loadPage(info.id);
 	},
 	
-	$selectionChanged$templatePicker : function() {
+	$select$templatePicker : function() {
 		newPageWizard.next();
 		this._checkNewPage();
 	},
-	$selectionChanged$designPicker : function() {
+	$select$designPicker : function() {
 		newPageWizard.next();
 		this._checkNewPage();
 	},
-	$selectionChanged$frameSelection : function() {
+	$select$frameSelection : function() {
 		newPageWizard.next();
 		this._checkNewPage();
 	},
-	$selectionChanged$menuItemSelection : function() {
+	$select$menuItemSelection : function() {
 		newPageWizard.next();
 		this._checkNewPage();
 		newPageTitle.focus();

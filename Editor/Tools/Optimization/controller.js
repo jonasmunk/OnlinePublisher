@@ -6,7 +6,7 @@ hui.ui.listen({
 		this._loadSettings();
 	},
 	
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		if (item.value=='overview') {
 			hui.ui.changeState('overview');
 		} else {

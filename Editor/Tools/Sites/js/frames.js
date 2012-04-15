@@ -11,7 +11,7 @@ hui.ui.listen({
 		deleteFrame.setEnabled(false);
 		frameFormula.focus();
 	},
-	$listRowWasOpened$list : function(row) {
+	$open$list : function(row) {
 		this.loadFrame(row.id);
 	},
 	loadFrame : function(id) {
@@ -134,7 +134,7 @@ hui.ui.listen({
 		newsList.setObjects(rows);
 		newsWindow.hide();
 	},
-	$listRowWasOpened$newsList : function(row) {
+	$open$newsList : function(row) {
 		this._editedNews = row;
 		newsFormula.setValues(row);
 		newsWindow.show();

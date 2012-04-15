@@ -549,4 +549,56 @@
 	</a>
 </xsl:template>
 
+
+
+
+<xsl:template match="gui:structure">
+	<div class="hui_structure" id="{generate-id()}">
+		<xsl:apply-templates/>
+	</div>
+	<script type="text/javascript">
+	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Structure({
+		element : '<xsl:value-of select="generate-id()"/>'
+		<xsl:if test="@name">,name : '<xsl:value-of select="@name"/>'</xsl:if>
+	});
+	<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+<xsl:template match="gui:structure/gui:top">
+	<div class="hui_structure_top">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:structure/gui:middle">
+	<div class="hui_structure_middle">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:structure/gui:middle/gui:left">
+	<div class="hui_structure_left hui_context_sidebar">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:structure/gui:middle/gui:center">
+	<div class="hui_structure_center">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:structure/gui:middle/gui:right">
+	<div class="hui_structure_right">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:structure/gui:bottom">
+	<div class="hui_structure_bottom">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
+
 </xsl:stylesheet>

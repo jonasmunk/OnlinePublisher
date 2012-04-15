@@ -7,7 +7,7 @@ var controller = {
 		graph.load(url);
 		
 	},
-	$selectionChanged : function() {
+	$select : function() {
 		this.refresh();
 	},
 	$click$smaller : function() {

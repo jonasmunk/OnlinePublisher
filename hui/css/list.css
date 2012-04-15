@@ -343,7 +343,7 @@ div.hui_list tr.hui_drop td
 }
 
 
-a.list_checkbox
+a.hui_list_checkbox
 {
 	display: inline-block;
 	border: 1px solid #ddd;
@@ -362,12 +362,17 @@ a.list_checkbox
 	text-shadow: none;
 }
 
-a.list_checkbox_checked
+tr.hui_list_checked
+{
+	background: #ffe;
+}
+
+tr.hui_list_checked a.hui_list_checkbox
 {
 	color: #333;
 }
 
-td.list_checkbox
+td.hui_list_checkbox
 {
 	text-align: center;
 }

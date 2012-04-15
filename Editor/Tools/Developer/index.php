@@ -11,7 +11,7 @@ $gui='
 	<source name="testsSource" url="data/ListTests.php"/>
 	<source name="graphSource" url="data/GraphData.php"/>
 	<source name="classesSource" url="data/ListClasses.php"/>
-	<layout>
+	<structure>
 		<top>
 		<toolbar>
 			<!--divider/-->
@@ -57,7 +57,7 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 </gui>';
 In2iGui::render($gui);
 ?>

@@ -11,7 +11,7 @@ var partController = {
 		toolbar.add(searchField);
 		win.add(toolbar);
 		list.listen({
-			$selectionChanged : function(obj) {
+			$select : function(obj) {
 				document.forms.PartForm.personId.value=obj.id;
 				partController.preview();
 			}

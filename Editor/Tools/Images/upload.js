@@ -3,11 +3,24 @@ hui.ui.listen({
 	userShowedUpload : false,
 	
 	$filesDropped$gallery : function(files) {
+		this._filesDropped(files);
+	},
+	$filesDropped$list : function(files) {
+		this._filesDropped(files);
+	},
+	_filesDropped : function(files) {
 		uploadWindow.show();
 		file.uploadFiles(files);
 	},
 	
 	$urlDropped$gallery : function(url) {
+		this._urlDroppped(url);
+	},
+	$urlDropped$list : function(url) {
+		this._urlDroppped(url);
+	},
+	_urlDroppped : function(url) {
+		hui.log(url);
 		if (hui.string.startsWith(url,'data:')) {
 			hui.ui.showMessage({text:'Denne type er desværre endnu ikke understøttet',duration:3000});
 		} else {
@@ -26,6 +39,7 @@ hui.ui.listen({
 	},
 	$uploadDidComplete$file : function() {
 		imagesSource.refresh();
+		listSource.refresh();
 		groupSource.refresh();
 		subsetSource.refresh();		
 	},
@@ -60,6 +74,7 @@ hui.ui.listen({
 		if (data.success) {
 			fetchFormula.reset();
 			hui.ui.showMessage({text:'Billedet er hentet',icon:'common/success',duration:2000});
+			listSource.refresh();
 			imagesSource.refresh();
 			subsetSource.refresh();
 			groupSource.refresh();

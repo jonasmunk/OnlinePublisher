@@ -40,6 +40,7 @@ hui.ui.Overflow.prototype = {
 		}
 	},
 	_checkShadows : function() {
+		if (hui.browser.msie) {return}
 		if (this.element.scrollTop>0) {
 			this.topShadow.style.display = 'block';
 			this.topShadow.style.top = this.element.scrollTop+'px';

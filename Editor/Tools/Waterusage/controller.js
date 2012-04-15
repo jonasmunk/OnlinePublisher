@@ -49,7 +49,7 @@ hui.ui.listen({
 		usageWindow.hide();
 	},
 	
-	$selectionChanged$selector : function() {
+	$select$selector : function() {
 		hui.ui.changeState('list');
 	},
 	
@@ -57,7 +57,7 @@ hui.ui.listen({
 		hui.ui.changeState('list');
 	},
 	
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		if (obj.kind=='waterusage') {
 			this._editUsage(obj.id);
 		}
@@ -280,7 +280,7 @@ hui.ui.listen({
 		subUsageFormula.reset();
 		subUsageWindow.hide();
 	},
-	$listRowWasOpened$subUsageList : function(obj) {
+	$open$subUsageList : function(obj) {
 		hui.ui.request({
 			json : {data:{id:obj.id}},
 			url : '../../Services/Model/LoadObject.php',

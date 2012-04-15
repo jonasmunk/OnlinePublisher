@@ -6,7 +6,7 @@ hui.ui.listen({
 	],
 	
 
-	$selectionChanged$selector : function(item) {
+	$select$selector : function(item) {
 		newHierarchyItem.setEnabled(item.kind=='hierarchy' || item.kind=='hierarchyItem');
 	},
 	$selectionWasOpened : function(obj) {
@@ -32,7 +32,7 @@ hui.ui.listen({
 			window.open(info.data.url);
 		}		
 	},
-	$listRowWasOpened$list : function(obj) {
+	$open$list : function(obj) {
 		if (obj.kind=='hierarchyItem') {
 			this.loadHierarchyItem(obj.id);
 		}

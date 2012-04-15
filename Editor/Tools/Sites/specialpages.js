@@ -9,7 +9,7 @@ hui.ui.listen({
 		deleteSpecialPage.setEnabled(false);
 		specialPageFormula.focus();
 	},
-	$listRowWasOpened : function(row) {
+	$open : function(row) {
 		this.loadSpecialPage(row.id);
 	},
 	loadSpecialPage : function(id) {

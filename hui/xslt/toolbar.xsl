@@ -315,7 +315,7 @@
 	</script>
 </xsl:template>
 
-<xsl:template match="gui:bar//gui:space">
+<xsl:template match="gui:bar//gui:space | gui:toolbar//gui:space">
 	<span class="gui_bar_space">
 		<xsl:if test="@width">
 			<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" title="Structure" padding="10">
+	<controller name="controller" source="list.js"/>
+	<source name="itemsSource" url="data/source_items.xml"/>
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
+				<divider/>
+				<icon icon="common/user" title="List users" action="list.setUrl('data/list_users.xml')"/>
+				<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')" selected="true"/>
+				<divider/>
+				<icon icon="common/color" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
+				<icon icon="common/folder" title="List icons" action="hui.ui.showMessage({text:'hey',duration:2000})"/>
+				<divider/>
+				<icon icon="geo/map" title="Map"/>
+				<right>
+					<searchfield title="Søgning" placeholder="Søg her..." expandedWidth="200"/>
+				</right>
+			</toolbar>
+			<toolbar labels="false" border="top">
+				<button title="Opret"/>
+				<button title="Rediger" highlighted="true"/>
+				<button title="Opret" small="true" rounded="true"/>
+				<button icon="common/delete"/>
+				<button icon="common/delete" title=""/>
+				<button icon="common/delete" title="Delete"/>
+					<searchfield placeholder="Søg her..." expandedWidth="200"/>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<overflow>
+				<selection value="user" name="selector">
+					<item icon="common/person" title="Brugere" value="user"/>
+					<item icon="common/folder" title="Database" value="database" kind="folder"/>
+					<item icon="common/person" title="Alle objekter" value="object"/>
+					<title>Hey</title>
+					<items source="itemsSource"/>
+				</selection>
+				</overflow>
+			</left>
+			<center>
+				<toolbar labels="false" border="bottom">
+					<button title="Opret"/>
+					<button title="Opret"/>
+					<button title="Opret"/>
+				</toolbar>
+				<overflow>
+					<list name="list" url="data/list_users.xml"/>
+				</overflow>
+				<toolbar labels="false" border="top">
+					<button title="Opret"/>
+					<button title="Opret"/>
+					<button title="Opret"/>
+				</toolbar>
+			</center>
+		</middle>
+		<bottom>
+			<toolbar labels="false">
+				<button title="Opret" small="true" rounded="true"/>
+			</toolbar>
+		</bottom>
+	</structure>
+</gui>
