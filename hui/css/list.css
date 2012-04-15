@@ -358,7 +358,9 @@ a.hui_list_checkbox
 	text-align: center;
 	line-height: 11px;
 	font-weight: bold;
-	color: transparent;
+	color: #333;
+	overflow: hidden;
+	text-indent: -20px;
 	text-shadow: none;
 }
 
@@ -369,7 +371,7 @@ tr.hui_list_checked
 
 tr.hui_list_checked a.hui_list_checkbox
 {
-	color: #333;
+	text-indent: 0px;
 }
 
 td.hui_list_checkbox

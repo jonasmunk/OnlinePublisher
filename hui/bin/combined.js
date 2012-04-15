@@ -6308,10 +6308,7 @@ hui.ui.Formula.Group.prototype = {
  *
  * <strong>Events:</strong>
  * $open(row) - When a row is double clicked (rename to open)
- * $select(firstRow) - When a row is selected
- * $selectionReset() - When a previous selection is removed (nothing is selected)
- * $check(row) - When a row is checked or unchecked
- * $checkedReset() - When checks are removed
+ * $select(firstRow) - When a row is (un)selected/(un)checked
  * $clickButton({row:row,button:button}) - When a button is clicked
  * $clickIcon({row:row,data:data,node:node}) - When an icon is clicked
  *
@@ -6614,6 +6611,7 @@ hui.ui.List.prototype = {
 		}
 		if (this.checkboxMode) {
 			var th = hui.build('th',{className:'list_check',parent:headTr,text:'\u00D7'});
+			hui.listen(th,'click',this._checkAll.bind(this));
 		}
 		var headers = doc.getElementsByTagName('header');
 		var i;
@@ -6698,6 +6696,7 @@ hui.ui.List.prototype = {
 		this.body.appendChild(frag);
 		this._setEmpty(rows.length==0);
 		this.fire('selectionReset');
+		this.fire('select');
 		this.fireSizeChange();
 	},
 	
@@ -6712,6 +6711,7 @@ hui.ui.List.prototype = {
 			this.setData(data);
 		}
 		this.fire('selectionReset');
+		this.fire('select');
 		this.fireSizeChange();
 	},
 	/** @private */
@@ -7073,6 +7073,13 @@ hui.ui.List.prototype = {
 			return false;
 		}
 	},
+	_checkAll : function() {
+		for (var i=0; i < this.rows.length; i++) {
+			hui.array.flip(this.checked,i);
+		};
+		this._drawChecks();
+		this._changeSelection([]);
+	},
 	_toggleChecked : function(index) {
 		hui.array.flip(this.checked,index);
 		this._drawChecks();
@@ -7118,6 +7125,7 @@ hui.ui.List.prototype = {
 		if (!this.options.selectable) {
 			return;
 		}
+		this.checked = [];
 		if (event.metaKey && this.options.selectMany) {
 			var newSelection = this.selected.slice(0);
 			hui.array.flip(newSelection,index);

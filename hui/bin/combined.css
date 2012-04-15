@@ -2876,7 +2876,9 @@ a.hui_list_checkbox
 	text-align: center;
 	line-height: 11px;
 	font-weight: bold;
-	color: transparent;
+	color: #333;
+	overflow: hidden;
+	text-indent: -20px;
 	text-shadow: none;
 }
 
@@ -2887,7 +2889,7 @@ tr.hui_list_checked
 
 tr.hui_list_checked a.hui_list_checkbox
 {
-	color: #333;
+	text-indent: 0px;
 }
 
 td.hui_list_checkbox
@@ -6666,7 +6668,7 @@ div.hui_structure_top
 	background: #fff;
 	background: #CCC -webkit-gradient(linear, 0% 0%, 0% 100% , from(white), to(#F0F0F0));
 	background: -moz-linear-gradient(top, white, #F0F0F0);
-	filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#EEE);
+	filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#F0F0F0);
 }
 
 div.hui_structure_bottom
@@ -6680,8 +6682,8 @@ div.hui_structure_bottom
 	right: 0;
 	background: #fff;
 	background: #CCC -webkit-gradient(linear, 0% 0%, 0% 100% , from(white), to(#F0F0F0));
-background: -moz-linear-gradient(top, white, #F0F0F0);
-filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#EEE);
+	background: -moz-linear-gradient(top, white, #F0F0F0);
+	filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#F0F0F0);
 }
 
 div.hui_structure_middle
