@@ -412,18 +412,6 @@
 </xsl:template>
 
 
-<!--doc title:'Structure'
-<structure top="«pixels»">
-    ···
-</structure>
--->
-<xsl:template match="gui:structure">
-	<div style="position:fixed; top: {@top}px; bottom: 0; width: 100%">
-		<xsl:apply-templates/>
-	</div>
-</xsl:template>
-
-
 <xsl:template match="gui:pages">
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">

@@ -9464,7 +9464,7 @@ hui.ui.ImageViewer.prototype = {
 	
 	_preload : function() {
 		var guiLoader = new hui.Preloader();
-		guiLoader.addImages(hui.ui.context+'hui/gfx/imageviewer_controls.png');
+		guiLoader.addImages(hui.ui.context+'/hui/gfx/imageviewer_controls.png');
 		var self = this;
 		guiLoader.setDelegate({allImagesDidLoad:function() {self._preloadImages()}});
 		guiLoader.load();
@@ -9640,7 +9640,7 @@ hui.ui.Picker.prototype = {
 		if (this.value==value) return;
 		this.value = value;
 		this.updateSelection();
-		this.fire('selectionChanged',value);
+		this.fire('select',value);
 	},
 	
 	// Dragging

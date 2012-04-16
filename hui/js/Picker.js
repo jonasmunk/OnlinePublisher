@@ -91,7 +91,7 @@ hui.ui.Picker.prototype = {
 		if (this.value==value) return;
 		this.value = value;
 		this.updateSelection();
-		this.fire('selectionChanged',value);
+		this.fire('select',value);
 	},
 	
 	// Dragging
