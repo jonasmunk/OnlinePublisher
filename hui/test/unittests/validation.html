@@ -20,46 +20,46 @@
 </head>
 <body>
 	<script type="text/javascript">
-		hui.ui.test.run([
+		hui.test.run([
 			function() {
 				var result,validator = new hui.ui.NumberValidator({min:0,max:10});
 				
 				result = validator.validate(10);
-				hui.ui.test.assertTrue(result.valid,'10 is valid');
+				hui.test.assertTrue(result.valid,'10 is valid');
 				
 				result = validator.validate('abc');
-				hui.ui.test.assertTrue(!result.valid,'abc is invalid');
+				hui.test.assertTrue(!result.valid,'abc is invalid');
 				
 				result = validator.validate(0);
-				hui.ui.test.assertTrue(result.valid,'0 is valid');
+				hui.test.assertTrue(result.valid,'0 is valid');
 				
 				result = validator.validate('0.5');
-				hui.ui.test.assertTrue(result.valid,'"0.5" is valid');
-				hui.ui.test.assertEquals(result.value,0.5,'new value = 0.5');
+				hui.test.assertTrue(result.valid,'"0.5" is valid');
+				hui.test.assertEquals(result.value,0.5,'new value = 0.5');
 				
 				result = validator.validate(' 5.5abc');
-				hui.ui.test.assertTrue(result.valid,'" 5.5abc" is valid');
-				hui.ui.test.assertEquals(result.value,5.5,'new value = 5.5');
+				hui.test.assertTrue(result.valid,'" 5.5abc" is valid');
+				hui.test.assertEquals(result.value,5.5,'new value = 5.5');
 				
 				result = validator.validate(11);
-				hui.ui.test.assertTrue(!result.valid,'It is not valid');
-				hui.ui.test.assertEquals(result.value,10,'new value = 10');
+				hui.test.assertTrue(!result.valid,'It is not valid');
+				hui.test.assertEquals(result.value,10,'new value = 10');
 				
 				result = validator.validate(-1);
-				hui.ui.test.assertTrue(!result.valid,'It is not valid');
-				hui.ui.test.assertEquals(result.value,0,'new value = 0');
+				hui.test.assertTrue(!result.valid,'It is not valid');
+				hui.test.assertEquals(result.value,0,'new value = 0');
 			},
 			function() {
 				var validator = new hui.ui.NumberValidator({min:0,max:10,allowNull:true});
 				
 				result = validator.validate(10);
-				hui.ui.test.assertTrue(result.valid,'10 is valid');
+				hui.test.assertTrue(result.valid,'10 is valid');
 				
 				result = validator.validate('');
-				hui.ui.test.assertTrue(result.valid,'"" is valid');
+				hui.test.assertTrue(result.valid,'"" is valid');
 
 				result = validator.validate('  ');
-				hui.ui.test.assertTrue(result.valid,'"  " is valid');
+				hui.test.assertTrue(result.valid,'"  " is valid');
 			},
 			function() {
 				var validator = new hui.ui.NumberValidator({min:-10,max:10});
@@ -69,32 +69,32 @@
 					element:input,
 					validator:validator
 				});
-				hui.ui.test.assertNotEquals(field.getValue(),input.value,'field value = input value');
-				hui.ui.test.assertEquals('abc',input.value,'field value = input value');
-				hui.ui.test.assertEquals(field.getValue(),0,'field value = 0');
+				hui.test.assertNotEquals(field.getValue(),input.value,'field value = input value');
+				hui.test.assertEquals('abc',input.value,'field value = input value');
+				hui.test.assertEquals(field.getValue(),0,'field value = 0');
 				
 				field.setValue('hfsajfh akjfhakjfhad kj');
-				hui.ui.test.assertEquals(field.getValue(),0,'field value = 0');
+				hui.test.assertEquals(field.getValue(),0,'field value = 0');
 				
 				field.setValue(10000);
-				hui.ui.test.assertEquals(field.getValue(),10,'field value = 10');
+				hui.test.assertEquals(field.getValue(),10,'field value = 10');
 				
 				field.setValue(-10000);
-				hui.ui.test.assertEquals(field.getValue(),-10,'field value = -10');
+				hui.test.assertEquals(field.getValue(),-10,'field value = -10');
 				
 				field.setValue();
-				hui.ui.test.assertEquals(field.getValue(),0,'field value = 0');
+				hui.test.assertEquals(field.getValue(),0,'field value = 0');
 				
-				hui.ui.test.type( input, "ab", function() {
-					hui.ui.test.assertEquals(field.getValue(),0,'field value = 0');
+				hui.test.type( input, "ab", function() {
+					hui.test.assertEquals(field.getValue(),0,'field value = 0');
 					field.setValue();
-					hui.ui.test.assertEquals(field.getValue(),0,'field value = 0');
-					hui.ui.test.type( input, "2",function() {
-						hui.ui.test.assertEquals(input.value,'2','input value = "2"');
-						hui.ui.test.assertEquals(field.getValue(),2,'field value = 2');
-						hui.ui.test.type( input, "0", function() {
-							hui.ui.test.assertEquals(input.value,'20','input value = "20"');
-							hui.ui.test.assertEquals(field.getValue(),10,'field value = 10');
+					hui.test.assertEquals(field.getValue(),0,'field value = 0');
+					hui.test.type( input, "2",function() {
+						hui.test.assertEquals(input.value,'2','input value = "2"');
+						hui.test.assertEquals(field.getValue(),2,'field value = 2');
+						hui.test.type( input, "0", function() {
+							hui.test.assertEquals(input.value,'20','input value = "20"');
+							hui.test.assertEquals(field.getValue(),10,'field value = 10');
 						} );
 					} );
 				});
@@ -106,9 +106,9 @@
 					element:input,
 					validator:validator
 				});
-				hui.ui.test.assertNotEquals(field.getValue(),input.value,'field value = input value');
-				hui.ui.test.assertEquals('    ',input.value,'field value = input value');
-				hui.ui.test.assertEquals(field.getValue(),null,'field value = null');
+				hui.test.assertNotEquals(field.getValue(),input.value,'field value = input value');
+				hui.test.assertEquals('    ',input.value,'field value = input value');
+				hui.test.assertEquals(field.getValue(),null,'field value = null');
 			}
 		]);
 	</script>

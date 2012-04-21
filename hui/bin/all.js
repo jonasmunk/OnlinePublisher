@@ -18200,7 +18200,7 @@ hui.ui.Graphviz.colors={
 	yellow4:[139,139,0],
 	yellowgreen:[154,205,50]
 };/** @namespace */
-hui.ui.test = {
+hui.test = {
 	status : null,
 	busy : 0,
 	run : function(recipe) {

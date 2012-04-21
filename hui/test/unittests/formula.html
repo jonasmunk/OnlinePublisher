@@ -20,15 +20,17 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var win,formula;
-		var now = new Date();
-		hui.ui.test.run([
+		var win,formula,
+			assert = hui.test.assert,
+			now = new Date();
+
+		hui.test.run([
 			function() {
 				win = hui.ui.Window.create({title:'This is the window title',width:200,padding:10,name:'myWindow'});
 				formula = hui.ui.Formula.create({name:'myForm'});
 				win.add(formula);
 				win.show();
-				hui.ui.test.assertEquals(hui.ui.get('myForm'),formula,'Could get form by name');
+				assert.equals(hui.ui.get('myForm'),formula,'Could get form by name');
 				formula.buildGroup(null,[
 					{type:'TextField',options:{name:'textField',key:'text',value:'This is some text',label:'Text label'}},
 					{type:'DateTimeField',options:{key:'date',value:now,label:'Date label'}},
@@ -39,29 +41,29 @@
 			},
 			function() {
 				var values = formula.getValues();
-				hui.ui.test.assertEquals(values.text,'This is some text','The text field has value');
-				hui.ui.test.assertEquals(values.date,now,'The date field has value');
-				hui.ui.test.assertEquals(values.number,10.56,'The number field has value');
-				hui.ui.test.assertEquals(values.drop,'da','The drop down has value');
-				hui.ui.test.assertEquals(values.location.latitude,57.535354,'The latitude has value');
-				hui.ui.test.assertEquals(values.location.longitude,10.7428479,'The longitude has value');
+				assert.equals(values.text,'This is some text','The text field has value');
+				assert.equals(values.date,now,'The date field has value');
+				assert.equals(values.number,10.56,'The number field has value');
+				assert.equals(values.drop,'da','The drop down has value');
+				assert.equals(values.location.latitude,57.535354,'The latitude has value');
+				assert.equals(values.location.longitude,10.7428479,'The longitude has value');
 			},
 			1000,
 			function() {
-				hui.ui.test.click(hui.get.firstByClass(document.body,'hui_numberfield_up'));
-				hui.ui.test.assertEquals(formula.getValues().number,11.56,'The number field has incremented value');
-				hui.ui.test.click(hui.get.firstByClass(document.body,'hui_numberfield_down'));
-				hui.ui.test.assertEquals(formula.getValues().number,10.56,'The number field has decremented value');
+				hui.test.click(hui.get.firstByClass(document.body,'hui_numberfield_up'));
+				assert.equals(formula.getValues().number,11.56,'The number field has incremented value');
+				hui.test.click(hui.get.firstByClass(document.body,'hui_numberfield_down'));
+				assert.equals(formula.getValues().number,10.56,'The number field has decremented value');
 			},
 			function() {
 				var textField = hui.ui.get('textField');
 				var node = textField.getElement();
 				var input = hui.get.firstByTag(node,'input');
-				hui.ui.test.assertDefined(input,'The field must have an input element');
+				assert.defined(input,'The field must have an input element');
 				textField.reset();
-				hui.ui.test.assertEquals(textField.getValue(),'','The value of the text field is ""');
-				hui.ui.test.type(input,'hep hey',function() {
-					hui.ui.test.assertEquals(textField.getValue(),'hep hey','The text field has updated its value');
+				assert.equals(textField.getValue(),'','The value of the text field is ""');
+				hui.test.type(input,'hep hey',function() {
+					assert.equals(textField.getValue(),'hep hey','The text field has updated its value');
 				});
 			}
 		]);

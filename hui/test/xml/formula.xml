@@ -4,6 +4,8 @@
 	<controller name="controller" source="formula.js"/>
 	<source name="itemsSource" url="data/source_items.xml"/>
 	
+	<space height="30"/>
+	
 	<box width="600" title="Special inputs" variant="textured" padding="10">
 		<formula name="formulatore">
 			<group labels="above">
@@ -19,10 +21,12 @@
 			</group>
 			<buttons>
 				<button click='formulatore.setValues({color: "#ff2ead",location: {latitude: 56.64242820898831, longitude: 10.16157250976562}})' text="Set data"/>
-				<button click="hui.log(formulatore.getValues())" text="Data"/>
+				<button click="logForm(formulatore)" text="Data"/>
 			</buttons>
 		</formula>
 	</box>
+
+	<space height="30"/>
 
 	<box width="600" title="Dates" variant="textured" padding="10">
 		<formula name="dateForm">
@@ -40,6 +44,98 @@
 		</formula>
 	</box>
 	
+	<space height="30"/>
+
+	<box width="600" title="Drop downs" variant="textured" padding="10">
+		<formula name="dateForm">
+			<group labels="above">
+				<field label="No initial value:">
+					<dropdown key="template">
+						<item title="Lorem inpsum" value="1"/>
+						<item title="Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" value="2"/>
+						<item title="Ut enim ad minim veniam" value="3"/>
+						<item title="Excepteur sint occaecat" value="4"/>
+					</dropdown>
+				</field>
+				<field label="Initial long value:">
+					<dropdown key="template" value="2">
+						<item title="Lorem inpsum" value="1"/>
+						<item title="Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue." value="2"/>
+						<item title="Ut enim ad minim veniam" value="3"/>
+						<item title="Excepteur sint occaecat" value="4"/>
+					</dropdown>
+				</field>
+				<field label="Initial long value:">
+					<dropdown key="template" value="2">
+						<item title="Lorem inpsum" value="1"/>
+						<item title="MaecenasfaucibusmollisinterdumVestibulumidligulaportafeliseuismodsemperMorbleorisusportaacconsecteturacvestibulumaterosNullavitaeelitliberoapharetraaugue" value="2"/>
+						<item title="Ut enim ad minim veniam" value="3"/>
+						<item title="Excepteur sint occaecat" value="4"/>
+					</dropdown>
+				</field>
+				<field label="Many items:">
+					<dropdown key="template" value="2">
+						<item title="Lorem inpsum" value="1"/>
+						<item title="Ut enim ad minim veniam" value="2"/>
+						<item title="Excepteur sint occaecat" value="3"/>
+						<item title="Mattis Egestas Inceptos" value="4"/>
+						<item title="Mattis Egestas Inceptos" value="5"/>
+						<item title="Mattis Egestas Inceptos" value="6"/>
+						<item title="Mattis Egestas Inceptos" value="7"/>
+						<item title="Mattis Egestas Inceptos" value="8"/>
+						<item title="Mattis Egestas Inceptos" value="9"/>
+						<item title="Mattis Egestas Inceptos" value="10"/>
+						<item title="Mattis Egestas Inceptos" value="11"/>
+						<item title="Mattis Egestas Inceptos" value="12"/>
+						<item title="Mattis Egestas Inceptos" value="13"/>
+						<item title="Mattis Egestas Inceptos" value="14"/>
+						<item title="Mattis Egestas Inceptos" value="15"/>
+						<item title="Mattis Egestas Inceptos" value="16"/>
+						<item title="Mattis Egestas Inceptos" value="17"/>
+						<item title="Mattis Egestas Inceptos" value="18"/>
+						<item title="Mattis Egestas Inceptos" value="19"/>
+						<item title="Mattis Egestas Inceptos" value="20"/>
+						<item title="Mattis Egestas Inceptos" value="21"/>
+						<item title="Mattis Egestas Inceptos" value="22"/>
+						<item title="Mattis Egestas Inceptos" value="23"/>
+						<item title="Mattis Egestas Inceptos" value="24"/>
+						<item title="Mattis Egestas Inceptos" value="25"/>
+						<item title="Mattis Egestas Inceptos" value="26"/>
+						<item title="Mattis Egestas Inceptos" value="27"/>
+						<item title="Mattis Egestas Inceptos" value="28"/>
+						<item title="Mattis Egestas Inceptos" value="29"/>
+						<item title="Mattis Egestas Inceptos" value="30"/>
+						<item title="Mattis Egestas Inceptos" value="31"/>
+						<item title="Mattis Egestas Inceptos" value="32"/>
+						<item title="Mattis Egestas Inceptos" value="33"/>
+						<item title="Mattis Egestas Inceptos" value="34"/>
+						<item title="Mattis Egestas Inceptos" value="35"/>
+						<item title="Mattis Egestas Inceptos" value="36"/>
+						<item title="Mattis Egestas Inceptos" value="37"/>
+						<item title="Mattis Egestas Inceptos" value="38"/>
+						<item title="Mattis Egestas Inceptos" value="39"/>
+						<item title="Mattis Egestas Inceptos" value="40"/>
+						<item title="Mattis Egestas Inceptos" value="41"/>
+						<item title="Mattis Egestas Inceptos" value="42"/>
+						<item title="Mattis Egestas Inceptos" value="43"/>
+						<item title="Mattis Egestas Inceptos" value="44"/>
+						<item title="Mattis Egestas Inceptos" value="45"/>
+						<item title="Mattis Egestas Inceptos" value="46"/>
+						<item title="Mattis Egestas Inceptos" value="47"/>
+						<item title="Mattis Egestas Inceptos" value="48"/>
+						<item title="Mattis Egestas Inceptos" value="49"/>
+						<item title="Mattis Egestas Inceptos" value="50"/>
+					</dropdown>
+				</field>
+			</group>
+			<buttons>
+				<button click="hui.log(dateForm.getValues())" text="Data"/>
+			</buttons>
+		</formula>
+	</box>
+	
+	<space height="30"/>
+
 	<box width="600" title="Title with toolbars" variant="textured">
 		<toolbar>
 			<icon icon="common/color" title="Hep hey!" selected="true"/>
@@ -51,12 +147,6 @@
 			<tab title="Formula 1" padding="10">
 				<formula name="formula1">
 					<group labels="above">
-						<dropdown label="Template:" key="template" value="2">
-							<item title="Lorem inpsum" value="1"/>
-							<item title="Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" value="2"/>
-							<item title="Ut enim ad minim veniam" value="3"/>
-							<item title="Excepteur sint occaecat" value="4"/>
-						</dropdown>
 						<text label="Brugernavn:" key="username"/>
 						<text secret="true" label="Kodeord:" key="password"/>
 						<text label="Notat:" lines="6" key="note"/>
@@ -145,6 +235,19 @@
 			</tab>
 		</tabs>
 	</box>
+	
+	<window name="log" width="400" padding="5" title="Log">
+		<textfield label="Notat:" lines="6" name="logfield"/>
+	</window>
+	
+	<script>
+		var logForm = function(name) {
+			var values = hui.get(name).getValues();
+			logfield.setValue(hui.string.toJSON(values));
+			log.show();
+		}
+	</script>
+	
 	<window name="win" width="400" padding="10">
 		<formula name="formula2">
 			<group>

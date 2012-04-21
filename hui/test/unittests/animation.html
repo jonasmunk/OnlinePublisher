@@ -32,37 +32,37 @@
 	</div>
 	
 	<script type="text/javascript">
-		hui.ui.test.run([
+		hui.test.run([
 			2000,
 			function() { // parsing
 				var parsed;
 				
 				parsed = hui.animation._parseStyle('12px');
-				hui.ui.test.assertEquals(parsed.unit,'px');
-				hui.ui.test.assertEquals(parsed.value,12);
+				hui.test.assertEquals(parsed.unit,'px');
+				hui.test.assertEquals(parsed.value,12);
 
 				parsed = hui.animation._parseStyle('12.4%');
-				hui.ui.test.assertEquals(parsed.unit,'%');
-				hui.ui.test.assertEquals(parsed.value,12.4);
+				hui.test.assertEquals(parsed.unit,'%');
+				hui.test.assertEquals(parsed.value,12.4);
 
 				parsed = hui.animation._parseStyle('#f00');
-				hui.ui.test.assertEquals(parsed.unit,null);
-				hui.ui.test.assertEquals(parsed.value.red,255);
-				hui.ui.test.assertEquals(parsed.value.green,0);
-				hui.ui.test.assertEquals(parsed.value.blue,0);
+				hui.test.assertEquals(parsed.unit,null);
+				hui.test.assertEquals(parsed.value.red,255);
+				hui.test.assertEquals(parsed.value.green,0);
+				hui.test.assertEquals(parsed.value.blue,0);
 
 				parsed = hui.animation._parseStyle('blue');
-				hui.ui.test.assertEquals(parsed.unit,null);
-				hui.ui.test.assertEquals(parsed.value.red,0);
-				hui.ui.test.assertEquals(parsed.value.green,0);
-				hui.ui.test.assertEquals(parsed.value.blue,255);
+				hui.test.assertEquals(parsed.unit,null);
+				hui.test.assertEquals(parsed.value.red,0);
+				hui.test.assertEquals(parsed.value.green,0);
+				hui.test.assertEquals(parsed.value.blue,255);
 			},
 			function() { // One		
 				hui.animate('one','width','200px',1000);
 			},
 			1100,
 			function() { // Two
-				hui.ui.test.assertEquals(hui.get('one').clientWidth,220);
+				hui.test.assertEquals(hui.get('one').clientWidth,220);
 			},
 			function() {
 				hui.animate({node:'one',css:{width:'500px',color:'green',borderWidth:'10px',opacity:0,transform:'rotate(90deg)'},duration:1000});
@@ -73,7 +73,7 @@
 			},
 			1000,
 			function() {
-				hui.ui.test.assertEquals(hui.get('one').clientWidth,270);
+				hui.test.assertEquals(hui.get('one').clientWidth,270);
 			}
 		]);
 	</script>

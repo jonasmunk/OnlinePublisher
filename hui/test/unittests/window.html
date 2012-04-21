@@ -10,14 +10,14 @@
 <body>
 	<script type="text/javascript">
 		var win;
-		hui.ui.test.run([
+		hui.test.run([
 			function() {
 				win = hui.ui.Window.create({title:'This is the window title',width:200,name:'myWindow'});
-				hui.ui.test.assertEquals(hui.ui.get('myWindow'),win,'Could get window by name');
+				hui.test.assertEquals(hui.ui.get('myWindow'),win,'Could get window by name');
 			},
 			function() {
 				win.show();
-				hui.ui.test.assertVisible(win.getElement(),'Window is visible');
+				hui.test.assertVisible(win.getElement(),'Window is visible');
 			},
 			1000,
 			function(){
@@ -25,7 +25,7 @@
 			},
 			1000,
 			function() {
-				hui.ui.test.assertNotVisible(win.getElement(),'Window is not visible');
+				hui.test.assertNotVisible(win.getElement(),'Window is not visible');
 			},
 			function() {
 				win.show();
@@ -38,8 +38,8 @@
 					closeEventFired=true;
 				}});
 				var close = hui.get.firstByClass(win.getElement(),'hui_window_close');
-				hui.ui.test.click(close,function() {
-					hui.ui.test.assertTrue(closeEventFired,'userClosedWindow was fired');
+				hui.test.click(close,function() {
+					hui.test.assertTrue(closeEventFired,'userClosedWindow was fired');
 					win.show();
 				});
 			},

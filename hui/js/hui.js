@@ -50,6 +50,8 @@ hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 hui.browser.webkitVersion = null;
 /** If the browser is Gecko based */
 hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko') !== -1;
+/** If the browser is Gecko based */
+hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** If the browser is safari on iPad */
 hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad') !== -1;
 /** If the browser is on Windows */

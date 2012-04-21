@@ -11,7 +11,11 @@ hui.ui.NumberField = function(o) {
 	this.input = hui.get.firstByTag(e,'input');
 	this.up = hui.get.firstByClass(e,'hui_numberfield_up');
 	this.down = hui.get.firstByClass(e,'hui_numberfield_down');
-	this.value = parseInt(this.options.value,10);
+	if (hui.isString(this.options.value)) {
+		this.value = parseInt(this.options.value,10);
+	} else {
+		this.value = this.options.value;
+	}
 	if (isNaN(this.value)) {
 		this.value = null;
 	}

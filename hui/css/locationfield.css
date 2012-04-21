@@ -9,6 +9,7 @@ span.hui_locationfield
 	display: inline-block;
 	width: 100%;
 	box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
 
 span.hui_locationfield input
