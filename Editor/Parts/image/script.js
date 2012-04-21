@@ -22,8 +22,8 @@ var partController = {
 	$resolveImageUrl : function(obj,width,height) {
 		return '../../../services/images/?id='+obj.value+'&width='+width+'&height='+height;
 	},
-	$select$imageGallery : function(list) {
-		var id = list.getFirstSelection().value;
+	$select$imageGallery : function() {
+		var id = imageGallery.getFirstSelection().value;
 		document.forms.PartForm.imageId.value = id;
 		this.preview();
 	},
