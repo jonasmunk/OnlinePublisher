@@ -50,6 +50,8 @@ hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 hui.browser.webkitVersion = null;
 /** If the browser is Gecko based */
 hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko') !== -1;
+/** If the browser is Gecko based */
+hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** If the browser is safari on iPad */
 hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad') !== -1;
 /** If the browser is on Windows */
@@ -15538,7 +15540,11 @@ hui.ui.NumberField = function(o) {
 	this.input = hui.get.firstByTag(e,'input');
 	this.up = hui.get.firstByClass(e,'hui_numberfield_up');
 	this.down = hui.get.firstByClass(e,'hui_numberfield_down');
-	this.value = parseInt(this.options.value,10);
+	if (hui.isString(this.options.value)) {
+		this.value = parseInt(this.options.value,10);
+	} else {
+		this.value = this.options.value;
+	}
 	if (isNaN(this.value)) {
 		this.value = null;
 	}
