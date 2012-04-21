@@ -24,6 +24,7 @@
 <body>
 <script type="text/javascript" charset="utf-8">
 	var panel = hui.ui.BoundPanel.create({variant:'light'});
+	//var panel = hui.ui.BoundPanel.create();
 	panel.add(hui.build('div',{style:'height:200px; width: 400px;'}))
 	//panel.show();
 </script>
@@ -43,5 +44,6 @@
 	<a style="position:absolute; left: 10px; bottom: 50px;" href="javascript:void(0)" onclick="panel.position(this);panel.show();return false;">Show here</a>
 	<a style="position:absolute; right: 10px; bottom: 50px;" href="javascript:void(0)" onclick="panel.position(this);panel.show();return false;">Show here</a>
 
+	<a style="position:absolute; right: 110px; bottom: 150px; height: 100px; width: 100px; background: #eee;" href="javascript:void(0)" onclick="panel.position(this);panel.show();return false;">Show here</a>
 </body>
 </html>

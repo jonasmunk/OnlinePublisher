@@ -9,6 +9,7 @@ div.hui_structure_top
 	min-height: 26px;
 	border: 1px solid #ccc;
 	border-radius: 6px 6px 0 0;
+	padding: 0 5px;
 	background: #fff;
 	background: #CCC -webkit-gradient(linear, 0% 0%, 0% 100% , from(white), to(#F0F0F0));
 	background: -moz-linear-gradient(top, white, #F0F0F0);

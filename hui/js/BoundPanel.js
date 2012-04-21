@@ -10,7 +10,7 @@ hui.ui.BoundPanel = function(options) {
 	this.visible = false;
 	this.content = hui.get.firstByClass(this.element,'hui_boundpanel_content');
 	this.arrow = hui.get.firstByClass(this.element,'hui_boundpanel_arrow');
-	this.arrowWide = 32;
+	this.arrowWide = 37;
 	this.arrowNarrow = 18;
 	if (options.variant=='light') {
 		this.arrowWide = 23;
@@ -229,6 +229,8 @@ hui.ui.BoundPanel.prototype = {
 			top = Math.min(Math.max(top,min),max);
 			arrowTop = nodeOffset.top-top;
 			arrowTop-= (nodeScrollOffset.top-windowScrollOffset.top);
+			arrowTop-=this.arrowWide/2;
+			arrowTop+=nodeHeight/2;
 			if (this.options.variant=='light') {
 				arrowLeft=-11;
 				arrowTop+=2;
@@ -247,6 +249,8 @@ hui.ui.BoundPanel.prototype = {
 			top = Math.min(Math.max(top,min),max);
 			arrowTop = nodeOffset.top-top;
 			arrowTop-= (nodeScrollOffset.top-windowScrollOffset.top);
+				arrowTop-=this.arrowWide/2;
+				arrowTop+=nodeHeight/2;
 			if (this.options.variant=='light') {
 				arrowLeft=panelDimensions.width-1;
 				arrowTop+=2;

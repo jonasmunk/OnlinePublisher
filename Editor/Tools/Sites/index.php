@@ -59,7 +59,7 @@ $gui='
 		<parameter key="frame" value="@frameSelection.value"/>
 	</source>
 	
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/page" title="Ny side" overlay="new" name="newPage"/>
@@ -118,7 +118,7 @@ $gui='
 		<bottom>
 			
 		</bottom>
-	</layout>
+	</structure>
 	
 	<window name="pageEditor" width="400" title="Side" icon="common/page">
 		<toolbar variant="window">
