@@ -30,7 +30,7 @@ hui.ui.listen({
 		if (obj.value=='databaseInfo') {
 			list.setUrl('data/ListDatabaseInfo.php');
 		} else if (obj.value=='user') {
-			list.setUrl('ListUsers.php');
+			list.setUrl('data/ListUsers.php');
 		} else if (obj.value=='object') {
 			list.setSource(allObjectsSource);
 		} else if (obj.value=='log') {

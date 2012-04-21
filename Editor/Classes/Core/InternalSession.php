@@ -27,6 +27,8 @@ class InternalSession {
     		$_SESSION['core.user.id']=$user->getId();
     		$_SESSION['core.user.username']=$user->getUsername();
     		$_SESSION['core.user.administrator']=$user->getAdministrator();
+    		$_SESSION['core.user.language'] = $user->getLanguage() | 'da';
+			Log::debug($_SESSION['core.user.language']);
     		InternalSession::registerActivity();
     		Log::logUser('login','');
     		return true;

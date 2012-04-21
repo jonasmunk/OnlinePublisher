@@ -835,6 +835,7 @@ $databaseTables = array(
 			array("username","varchar(50)","","","",""),
 			array("password","varchar(50)","","","",""),
 			array("email","varchar(50)","","","",""),
+			array("language","varchar(5)","","","",""),
 			array("internal","tinyint(1)","","","0",""),
 			array("external","tinyint(1)","","","0",""),
 			array("administrator","tinyint(1)","","","0",""),

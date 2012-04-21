@@ -18,12 +18,14 @@ class TestUser extends AbstractObjectTest {
 	function testProperties() {
 		$obj = new User();
 		$obj->setTitle('Jonas Munk');
+		$obj->setLanguage('en');
 		$obj->save();
 		
-		$obj2 = User::load($obj->getId());
-		$this->assertEqual($obj2->getTitle(),$obj->getTitle());
+		$loaded = User::load($obj->getId());
+		$this->assertEqual($loaded->getTitle(),$obj->getTitle());
+		$this->assertEqual('en',$loaded->getLanguage());
 		
-		$obj2->remove();
+		$loaded->remove();
 	}
 	
 	function testAuthentication() {

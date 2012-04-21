@@ -14,6 +14,7 @@ Object::$schema['user'] = array(
 	'username'   => array('type'=>'text'),
 	'password'  => array('type'=>'text'),
 	'email'  => array('type'=>'text'),
+	'language'  => array('type'=>'language'),
 	'internal'  => array('type'=>'boolean'),
 	'external'  => array('type'=>'boolean'),
 	'administrator'  => array('type'=>'boolean'),
@@ -24,6 +25,7 @@ class User extends Object {
 	var $username;
 	var $password;
 	var $email;
+	var $language;
 	var $internal = false;
 	var $external = false;
 	var $administrator = false;
@@ -87,6 +89,14 @@ class User extends Object {
 
 	function getAdministrator() {
 		return $this->administrator;
+	}
+
+	function setLanguage($language) {
+		$this->language = $language;
+	}
+
+	function getLanguage() {
+		return $this->language;
 	}
 	
 	function setSecure($secure) {
