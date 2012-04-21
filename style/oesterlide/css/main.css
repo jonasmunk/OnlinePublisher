@@ -27,6 +27,15 @@ div.layout_top
 	position: relative;
 }
 
+div.layout_top_fade
+{
+	position: absolute;
+	background: url('../gfx/top.jpg') 0 -236px;
+	height: 236px;
+	width: 100%;
+	visibility: hidden;
+}
+
 div.layout_bottom
 {
 	text-align: center;
@@ -71,29 +80,35 @@ div.layout_front
 span.layout_languages
 {
 	position: absolute;
-	right: 5px;
-	top: 5px;
+	right: 20px;
+	bottom: 12px;
+}
+
+span.layout_languages a
+{
+	background: url('../gfx/flags.png') no-repeat;
+	display: inline-block;
+	height: 22px;
+	padding-left: 24px;
+	text-decoration: none;
+	color: #333;
+	font-style: italic;
+	font-size: 10pt;
+	line-height: 21px;
+}
+
+span.layout_languages a:hover
+{
+	text-decoration: underline;
 }
 
 a.layout_language_en
 {
-	background: url('../../basic/gfx/flags/gb.gif') no-repeat;
-	display: inline-block;
-	width: 16px;
-	height: 16px;
 }
 
-a.layout_language_da
+span.layout_languages a.layout_language_da
 {
-	background: url('../../basic/gfx/flags/dk.gif') no-repeat;
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-}
-
-span.layout_languages span
-{
-	display: none;
+	background-position: 0 -26px;
 }
 
 /***************** Navigation *****************/

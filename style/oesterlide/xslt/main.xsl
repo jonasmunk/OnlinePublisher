@@ -42,14 +42,14 @@
 	<div class="layout_bg">
 	<div class="layout">
 		<div class="layout_top">
+			<div class="layout_top_fade"><xsl:comment/></div>
 			<p>Østerlide ferielejlighed</p>
-			<xsl:comment/>
 			<div class="layout_navigation">
+				<ul class="layout_navigation">
+					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
+				</ul>
+			</div>
 			<xsl:call-template name="util:languages"/>
-			<ul class="layout_navigation">
-				<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
-			</ul>
-		</div>
 		</div>
 		<!--
 		<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
@@ -63,6 +63,19 @@
 	</div>
 	</div>
 	<xsl:call-template name="util:googleanalytics"/>
+	<script>
+		hui.onReady(function() {
+			var fade = hui.get.firstByClass(document.body,'layout_top_fade');
+			var top = fade.parentNode;
+			hui.style.set(fade,{opacity:0,visibility:'visible'});
+			hui.listen(top,'mouseover',function() {
+				hui.animate({node:fade,css:{opacity:1},duration:200,ease:hui.ease.slowFast});
+			})
+			hui.listen(top,'mouseout',function() {
+				hui.animate({node:fade,css:{opacity:0},duration:2000,ease:hui.ease.slowFast});
+			})
+		})
+	</script>
 </body>
 </html>
 </xsl:template>
@@ -82,23 +95,6 @@
 </xsl:template>
 
 
-<!--            User status                 -->
-
-
-
-<xsl:template match="f:userstatus">
-	<xsl:choose>
-		<xsl:when test="$userid>0">
-		<span class="userstatus">Bruger: <strong><xsl:value-of select="$usertitle"/></strong></span>
-		<xsl:text> · </xsl:text>
-		<a href="./?id={@page}&amp;logout=true" class="common">Log ud</a>
-		</xsl:when>
-		<xsl:otherwise>
-		<a href="./?id={@page}" class="common">Log ind</a>
-		</xsl:otherwise>
-	</xsl:choose>
-</xsl:template>
-
 
 
 <xsl:template match="h:hierarchy/h:item">
@@ -116,22 +112,6 @@
 	<span><xsl:value-of select="@title"/></span>
 	</a>
 	</li>
-	</xsl:if>
-</xsl:template>
-
-<xsl:template name="secondlevel">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul class="case_sub_navigation">
-			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-		</ul>
-	</xsl:if>
-</xsl:template>
-
-<xsl:template name="thirdlevel">
-	<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul class="case_side_navigation">
-			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-		</ul>
 	</xsl:if>
 </xsl:template>
 
@@ -245,30 +225,6 @@
 
 
 
-
-
-
-<!--                  Search                     -->
-
-
-<xsl:template name="search">
-<xsl:if test="f:frame/f:search">
-<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
-<div>
-<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
-<xsl:for-each select="f:frame/f:search/f:types/f:type">
-<input type="hidden" name="{@unique}" value="on"/>
-</xsl:for-each>
-<input type="text" class="text" name="query" id="searchfield"/>
-<input type="submit" class="submit" value="Søg"/>
-</div>
-</form>
-<script type="text/javascript"><xsl:comment>
-new op.SearchField({element:'searchfield',placeholder:'Søg her!'});
-</xsl:comment>
-</script>
-</xsl:if>
-</xsl:template>
 
 
 
