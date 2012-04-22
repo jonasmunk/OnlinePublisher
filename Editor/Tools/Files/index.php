@@ -23,7 +23,7 @@ $gui='
 		<parameter key="type" value="@typeSelection.value"/>
 		<parameter key="main" value="@selector.value"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="file/generic" title="{Add file ; da:Tilføj fil}" overlay="upload" name="newFile"/>
@@ -59,7 +59,7 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	
 	<window title="Tilføjelse af ny fil" name="uploadWindow" width="300">

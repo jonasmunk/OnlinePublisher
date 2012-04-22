@@ -13,7 +13,7 @@ $gui='
 	<source name="productListSource" url="data/ListProducts.php"/>
 	<source name="groupSource" url="../../Services/Model/Items.php?type=productgroup"/>
 	<source name="typeSource" url="../../Services/Model/Items.php?type=producttype"/>
-	<layout>
+	<structure>
 		<top>
 		<toolbar>
 			<icon icon="common/product" title="Nyt produkt" name="newProduct" overlay="new"/>
@@ -40,7 +40,8 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
+	
 	<window name="offerEditor" width="300" title="Bud" pad="5">
 		<formula name="offerFormula">
 			<group>
@@ -55,6 +56,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="groupEditor" width="300" title="Gruppe" pad="5">
 		<formula name="groupFormula">
 			<group>
@@ -68,6 +70,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="typeEditor" width="300" title="Type" pad="5">
 		<formula name="typeFormula">
 			<group>
@@ -81,6 +84,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="productEditor" width="500" title="Produkt">
 		<formula name="productFormula">
 			<tabs small="true" centered="true">

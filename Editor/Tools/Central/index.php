@@ -11,7 +11,7 @@ $gui='
 	<source name="listSource" url="data/List.php">
 		<parameter key="subset" value="@selector.value"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/internet" text="Nyt site" name="newSite"/>
@@ -23,14 +23,14 @@ $gui='
 					<item icon="common/folder" title="Alle" value="all"/>
 				</selection>
 			</left>
-			<middle>
+			<center>
 				<overflow>
 					<list name="list" source="listSource"/>
 				</overflow>
-			</middle>
+			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	<window title="Site" name="siteWindow" width="300" padding="5">
 		<formula name="siteFormula">

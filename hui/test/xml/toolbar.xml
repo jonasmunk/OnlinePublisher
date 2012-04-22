@@ -9,7 +9,7 @@
 			}
 		})
 	</script>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
@@ -98,7 +98,7 @@
 				</right>
 			</toolbar>
 		</bottom>
-	</layout>
+	</structure>
 	
 	<window name="pageEditor" width="300" title="Side">
 		<toolbar centered="true" variant="window">

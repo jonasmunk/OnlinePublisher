@@ -20,7 +20,7 @@ $gui='
 		<parameter key="target" value="@targetSelector.value"/>
 		<parameter key="state" value="@stateSelector.value"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<segmented value="list" label="Visning" name="view">
@@ -52,15 +52,15 @@ $gui='
 					<item icon="file/generic" title="Filer" value="file"/>
 				</selection>
 			</left>
-			<middle>
+			<center>
 				<overflow>
 					<list name="list" source="listSource" state="list"/>
 					<graph source="graphSource" name="graph" layout="d3" state="graph"/>
 				</overflow>
-			</middle>
+			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 </gui>';
 //$gui='<gui xmlns="uri:hui" pad="10" title="System"><upload/></gui>';
 

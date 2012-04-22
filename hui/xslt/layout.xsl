@@ -541,7 +541,15 @@
 
 
 <xsl:template match="gui:structure">
-	<div class="hui_structure" id="{generate-id()}">
+	<div id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_structure</xsl:text>
+			<xsl:if test="not(@height)">
+				<xsl:text> hui_structure_full</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
+		<xsl:if test="@height"><xsl:attribute name="style">height:<xsl:value-of select="@height"/>px;</xsl:attribute></xsl:if>
+		
 		<xsl:apply-templates/>
 	</div>
 	<script type="text/javascript">

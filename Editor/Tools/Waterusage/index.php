@@ -23,7 +23,7 @@ $gui='
 		<parameter key="filterKind" value="@selector.kind"/>
 	</source>
 	<source name="filterSource" url="data/FilterItems.php"/>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="file/generic" title="Importér" overlay="upload" name="import"/>
@@ -105,7 +105,7 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	<window title="Aflæsning" icon="common/water" name="subUsageWindow" width="300" padding="5">
 		<formula name="subUsageFormula">

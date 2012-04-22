@@ -14,7 +14,7 @@ $gui='
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="kind" value="@selector.value"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/info" title="Info" name="info"/>
@@ -35,7 +35,7 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 
 	<window title="Sag" name="issueWindow" icon="common/folder" width="300" padding="5">
 		<formula name="issueFormula">

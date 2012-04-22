@@ -5,7 +5,7 @@
 	<source name="itemsSource" url="data/source_items.xml"/>
 	<source name="listSource" url="data/list_icons.xml"/>
 	<source name="languagesSource" url="data/items_languages.xml"/>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/page" title="Opret side" overlay="new" action="newPage.show()"/>
@@ -44,7 +44,8 @@
 				</overflow>
 			</center>
 		</middle>
-	</layout>
+	</structure>
+	
 	<window name="newPage" width="300" title="Ny side" padding="5">
 		<formula>
 			<group labels="besides">

@@ -29,7 +29,7 @@ $gui='
 		<parameter key="query" value="@searchField.value"/>
 	</source>
 	<source name="cachesSource" url="data/CacheList.php"/>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/user" title="Ny bruger" name="newUser" overlay="new"/>
@@ -169,7 +169,8 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
+	
 	<window name="userEditor" width="300" title="Bruger" padding="5">
 		<formula name="userFormula">
 			<overflow height="200">
@@ -195,6 +196,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="pathEditor" width="300" title="Sti" padding="5">
 		<formula name="pathFormula">
 			<group>
@@ -208,6 +210,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="weblogGroupEditor" width="300" title="Weblog gruppe" padding="5">
 		<formula name="weblogGroupFormula">
 			<group>

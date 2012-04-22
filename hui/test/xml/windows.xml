@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" padding="10" title="Windows">
 	<controller name="controller" source="windows.js"/>
-	<layout>
+	<structure>
 		<top>
 		<toolbar>
 			<icon icon="common/folder" title="Mørk" overlay="new" action="dark.toggle()"/>
@@ -11,9 +11,9 @@
 		</toolbar>
 		</top>
 		<middle>
-			</middle>
+			</center>
 		<bottom/>
-	</layout>
+	</structure>
 	<window name="dark" width="300" title="Bruger" padding="5" variant="dark">
 		<formula>
 			<group>

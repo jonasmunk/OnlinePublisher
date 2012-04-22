@@ -17,7 +17,7 @@ $gui='
 	<source name="selectionSource" url="data/Items.php">
 		<parameter key="pageId" value="'.$pageId.'"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/close" text="Luk" name="close"/>
@@ -35,7 +35,7 @@ $gui='
 				</selection>
 				</overflow>
 			</left>
-			<middle>
+			<center>
 				<bar state="viewer" variant="layout">
 					<text name="viewerHeader" variant="header"/>
 					<right>
@@ -48,10 +48,10 @@ $gui='
 				<overflow state="list">
 					<list name="list" source="listSource"/>
 				</overflow>
-			</middle>
+			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	<boundpanel name="messagePanel" width="300">
 		<formula name="messageFormula">

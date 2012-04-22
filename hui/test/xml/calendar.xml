@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" pad="10" title="Calendar">
 	<controller name="controller" source="controller.js"/>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
@@ -33,5 +33,5 @@
 		<bottom>
 			
 		</bottom>
-	</layout>
+	</structure>
 </gui>

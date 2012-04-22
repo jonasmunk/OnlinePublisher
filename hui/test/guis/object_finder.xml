@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
 <gui xmlns="uri:hui" pad="10" title="Box">
 	<window title="Vælg billede" name="finder" width="600">
-		<layout>
+		<structure height="500">
 			<middle>
 				<left>
 					<overflow height="400">
@@ -29,7 +29,7 @@
 					</overflow>
 				</center>
 			</middle>
-		</layout>
+		</structure>
 	</window>
 	<script>
 		finder.show()

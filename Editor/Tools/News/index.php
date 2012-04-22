@@ -28,7 +28,8 @@ $gui='
 		<parameter key="main" value="@selector.value"/>
 		<parameter key="source" value="@sourceSelection.value"/>
 	</source>
-	<layout>
+	
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/news" title="Ny nyhed" name="newNews" overlay="new"/>
@@ -86,7 +87,7 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">

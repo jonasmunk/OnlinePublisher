@@ -3,7 +3,7 @@
 <gui xmlns="uri:hui" title="List" padding="10">
 	<controller name="controller" source="list.js"/>
 	<source name="itemsSource" url="data/source_items.xml"/>
-	<layout>
+	<structure>
 		<top>
 		<toolbar>
 			<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
@@ -33,5 +33,5 @@
 				</overflow>
 			</center>
 		</middle>
-	</layout>
+	</structure>
 </gui>

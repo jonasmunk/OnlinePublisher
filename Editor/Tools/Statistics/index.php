@@ -15,7 +15,7 @@ $gui='
 		<parameter key="kind" value="@selector.value"/>
 		<parameter key="time" value="@time.value"/>
 	</source>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/edit" title="Rediger" disabled="true"/>
@@ -23,6 +23,7 @@ $gui='
 		</top>
 		<middle>
 			<left>
+				<overflow>
 				<selection name="selector" value="pages">
 					<item icon="common/page" title="Sider" value="pages"/>
 					<item icon="common/page" title="Sidestier" value="pagePath"/>
@@ -37,15 +38,16 @@ $gui='
 					<item icon="common/time" title="Seneste måned" value="month"/>
 					<item icon="common/time" title="Seneste uge" value="week"/>
 				</selection>
+				</overflow>
 			</left>
-			<middle>
+			<center>
 				<overflow>
 					<list name="list" source="listSource"/>
 				</overflow>
-			</middle>
+			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 </gui>';
 
 In2iGui::render($gui);

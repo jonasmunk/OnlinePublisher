@@ -38,9 +38,13 @@ div.hui_structure_middle
 	top: 58px;
 	left: 0;
 	right: 0;
+	background: #fff;
+}
+
+div.hui_structure_full div.hui_structure_middle
+{
 	border-right: 1px solid #ccc;
 	border-left: 1px solid #ccc;
-	background: #fff;
 }
 
 div.hui_structure_center

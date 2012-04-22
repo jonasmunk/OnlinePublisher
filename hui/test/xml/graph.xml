@@ -3,7 +3,7 @@
 <gui xmlns="uri:hui" title="Graph">
 	<controller source="graph.js"/>
 	<source url="data/graph_family.json" name="soirce"/>
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/refresh" title="Test"/>
@@ -25,6 +25,6 @@
 		</middle>
 		<bottom>
 		</bottom>
-	</layout>
+	</structure>
 </gui>
 

@@ -44,7 +44,7 @@ $gui='
 		<parameter key="endTime" value="@calendarView.endTime"/>
 	</source>
 	
-	<layout>
+	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/calendar" title="Ny kalender" overlay="new" name="newCalendar"/>
@@ -86,7 +86,7 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
 	
 	<window title="Kilde" name="sourceWindow" width="300" padding="5">
 		<formula name="sourceFormula">

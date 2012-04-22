@@ -28,7 +28,8 @@ $gui='
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="query" value="@search.value"/>
 	</source>
-	<layout>
+	
+	<structure>
 		<top>
 		<toolbar>
 			<icon icon="common/user" title="Ny person" name="newPerson" overlay="new"/>
@@ -60,7 +61,8 @@ $gui='
 			</center>
 		</middle>
 		<bottom/>
-	</layout>
+	</structure>
+	
 	<window name="personEditor" width="460" title="Person">
 		<formula name="personFormula">
 			<tabs small="true" centered="true">
@@ -186,6 +188,7 @@ $gui='
 			</buttons>
 		</formula>
 	</window>
+	
 	<window name="mailinglistEditor" width="300" title="Postliste" padding="5">
 		<formula name="mailinglistFormula">
 			<group>
@@ -199,6 +202,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 	<window name="groupEditor" width="300" title="Gruppe" padding="5">
 		<formula name="groupFormula">
 			<group>
@@ -212,6 +216,7 @@ $gui='
 			</group>
 		</formula>
 	</window>
+	
 </gui>';
 In2iGui::render($gui);
 ?>
