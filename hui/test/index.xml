@@ -3,9 +3,9 @@
 <gui xmlns="uri:hui" title="HUI tests">
 	<source url="navigation.xml" name="navSource"/>
 	<listen for="selector">
-		<selectionChanged>
+		<select>
 			dock.setUrl(selector.getValue().value);
-		</selectionChanged>
+		</select>
 	</listen>
 	<dock url="unittests/hui.html" name="dock" position="bottom" frame-name="Desktop">
 		<sidebar>
