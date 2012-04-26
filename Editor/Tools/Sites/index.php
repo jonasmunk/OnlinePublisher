@@ -5,8 +5,15 @@
  */
 require_once '../../Include/Private.php';
 
+$simulate = Request::getBoolean('simulate');
+
 $designItems='';
 $designs = Query::after('design')->get();
+
+if ($simulate) {
+	$designs = array($designs[0]);
+}
+
 foreach ($designs as $design) {
 	$designItems.='<item title="'.StringUtils::escapeXML($design->getTitle()).'" image="../../../style/'.$design->getUnique().'/info/Preview128.png" value="'.$design->getId().'"/>';
 }
@@ -238,7 +245,7 @@ $gui='
 				'.$templateItems.'
 				</picker>
 			</step>
-			<step title="Design" icon="common/color">
+			<step title="Design" key="design" icon="common/color">
 				<picker title="Vælg design" item-height="128" item-width="128" name="designPicker" shadow="true">
 				'.$designItems.'
 				</picker>

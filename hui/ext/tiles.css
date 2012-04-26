@@ -75,7 +75,7 @@ div.hui_tile_light
 
 div.hui_tile_light div.hui_tile_title
 {
-	border-bottom: 1px solid #eee;
+	/*border-bottom: 1px solid #eee;*/
 }
 
 div.hui_tile_actions
