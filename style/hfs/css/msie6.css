@@ -1,0 +1,51 @@
+div.layout_header, div.layout_bar, div.layout_sub_bar, div.layout_base
+{
+	text-align: center;
+}
+
+div.layout_content
+{
+	text-align: left;
+}
+
+div.layout_inner_content
+{
+	height: 300px;
+}
+
+ul.layout_navigation li *
+{
+	float: left;
+}
+
+ul.layout_navigation
+{
+	margin: 0;
+}
+
+ul.layout_sub_navigation
+{
+	margin: 3px 0 0;
+}
+
+div.layout_box_body, div.layout_head
+{
+	zoom: 1;
+}
+
+form.search div
+{
+	float: right;
+}
+
+form.search
+{
+	width: 140px;
+	margin-right: 5px;
+	margin-top: 10px;
+}
+
+*
+{
+	zoom: 1;
+}
