@@ -290,8 +290,8 @@
 	<script type="text/javascript">
 		(function() {
 			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Wizard({
-				element:'<xsl:value-of select="generate-id()"/>',
-				name:'<xsl:value-of select="@name"/>'
+				element : '<xsl:value-of select="generate-id()"/>',
+				name : '<xsl:value-of select="@name"/>'
 			});
 			<xsl:call-template name="gui:createobject"/>
 		})();
