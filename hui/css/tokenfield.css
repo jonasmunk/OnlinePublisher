@@ -25,7 +25,8 @@ input.hui_tokenfield_token
 
 input.hui_tokenfield_token:focus
 {
-	border-color: #68f;
+	border-color: #2678ff;
+	outline: 4px auto #2678ff;
 }
 
 div.hui_window_dark input.hui_tokenfield_token

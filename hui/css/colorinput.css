@@ -1,15 +1,17 @@
 span.hui_colorinput
 {
-	width: 120px;
 	display: inline-block;
 	position: relative;
+	vertical-align: middle;
+	margin-right: 24px;
 }
 
 span.hui_colorinput input
 {
 	border: 0px;
 	font-size: 9pt;
-	width: 110px;
+	font-family: Monaco,monospace;
+	width: 60px;
 	border: none;
 	margin: 0;
 	margin-top: -1px;
@@ -32,4 +34,10 @@ a.hui_colorinput
 	border: 1px solid #CCC;
 	margin-left: 3px;
 	margin-top: 1px;
+	text-decoration: none;
+	font-size: 13px;
+	font-family: Tahoma;
+	text-align: center;
+	color: #ccc;
+	line-height: 20px;
 }

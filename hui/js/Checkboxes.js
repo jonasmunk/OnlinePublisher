@@ -12,7 +12,7 @@ hui.ui.Checkboxes = function(options) {
 	this.subItems = [];
 	this.values = options.values || options.value || []; // values is deprecated
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 	this._updateUI();
 	if (options.url) {
 		new hui.ui.Source({url:options.url,delegate:this});
@@ -32,10 +32,10 @@ hui.ui.Checkboxes.create = function(o) {
 }
 
 hui.ui.Checkboxes.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var checks = hui.get.byClass(this.element,'hui_checkbox');
 		hui.each(checks,function(check,i) {
+			hui.ui.addFocusClass({element:check,'class':'hui_checkbox_focused'});
 			hui.listen(check,'click',function(e) {
 				hui.stop(e);
 				this.flipValue(this.items[i].value);

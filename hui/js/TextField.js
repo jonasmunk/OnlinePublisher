@@ -112,18 +112,6 @@ hui.ui.TextField.prototype = {
 		hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 		this.fire('valueChanged',this.input.value);
 	},
-	/** ??? */
-	updateFromNode : function(node) {
-		if (node.firstChild) {
-			this.setValue(node.firstChild.nodeValue);
-		} else {
-			this.setValue(null);
-		}
-	},
-	/** ??? */
-	updateFromObject : function(data) {
-		this.setValue(data.value);
-	},
 	/** Focus the text field */
 	focus : function() {
 		try {

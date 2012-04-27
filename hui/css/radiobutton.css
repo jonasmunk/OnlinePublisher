@@ -1,10 +1,10 @@
 /******************************* Radio button **************************/
 
-div.hui_radiobuttons
+span.hui_radiobuttons
 {
-	overflow: hidden;
-	margin-bottom: 5px;
-	padding-top: 4px;
+	vertical-align: middle;
+	display: inline-block;
+	font-size: 0;
 }
 
 a.hui_radiobutton
@@ -15,35 +15,77 @@ a.hui_radiobutton
 	cursor: default;
 	color: #004A80;
 	display: inline-block;
-	line-height: 15px;
-}
-
-a.hui_radiobutton span
-{
-	float: left;
-	background: url('../gfx/radiobutton.png') no-repeat;
-	width: 18px;
-	height: 18px;
-	margin-right: 3px;
 	cursor: pointer;
 }
 
-div.hui_radiobuttons a.hui_radiobutton
+span.hui_radiobutton_button
 {
-	margin-bottom: 3px;
+	vertical-align: top;
+	display: inline-block;
+	background: url('../gfx/radiobutton.png') no-repeat;
+	width: 20px;
+	height: 20px;
+	margin-right: 3px;
 }
 
-div.hui_radiobuttons a.hui_radiobutton_selected span
+span.hui_radiobutton_button span
 {
-	background-position: 0px -18px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
 }
 
-div.hui_radiobuttons_disabled a.hui_radiobutton
+a.hui_radiobutton:hover span.hui_radiobutton_button
 {
-	color: #999;
+	background-position: 0 -20px;
 }
 
-div.hui_radiobuttons_disabled a.hui_radiobutton span
+a.hui_radiobutton:active span.hui_radiobutton_button
+{
+	background-position: 0 -40px;
+}
+
+a.hui_radiobutton:focus
+{
+	outline: none;
+}
+
+
+a.hui_radiobutton:focus span.hui_radiobutton_label
+{
+	text-shadow: #3366ff 0px 0px 2px;
+	color: #002244;
+}
+
+a.hui_radiobutton:focus span.hui_radiobutton_button
+{
+	background-position: 0 -60px;
+}
+
+a.hui_radiobutton:hover:focus span.hui_radiobutton_button
+{
+	background-position: 0 -80px;
+}
+
+a.hui_radiobutton:actve:focus span.hui_radiobutton_button
+{
+	background-position: 0 -100px;
+}
+
+span.hui_radiobutton_label
+{
+	vertical-align: top;
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+}
+
+a.hui_radiobutton_selected span.hui_radiobutton_button span
+{
+	background: url('../gfx/radiobutton.png') 0 -120px no-repeat;
+}
+
+span.hui_radiobuttons_disabled
 {
 	opacity: .5;
 }

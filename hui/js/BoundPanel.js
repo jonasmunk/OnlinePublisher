@@ -163,11 +163,19 @@ hui.ui.BoundPanel.prototype = {
 	/** Position the panel at a node
 	 * @param {Node} node The node the panel should be positioned at 
 	 */
-	position : function(node) {
-		if (node.getElement) {
-			node = node.getElement();
+	position : function(options) {
+		var node,
+			position;
+		if (options.getElement) {
+			node = options.getElement();
 		}
-		node = hui.get(node);
+		if (options.element) {
+			node = options.element;
+			position = options.position;
+		} else {
+			node = hui.get(options);
+		}
+		
 		var nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};
 		var nodeScrollOffset = hui.position.getScrollOffset(node);
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};
@@ -184,16 +192,12 @@ hui.ui.BoundPanel.prototype = {
 		}
 		var vertical = (nodeOffset.top-windowScrollOffset.top+nodeScrollOffset.top)/viewportHeight;
 		vertical = positionOnScreen.top / viewportHeight;
-		hui.log(vertical)
-		hui.log(hui.string.toJSON({
-			nodeOffset : nodeOffset
-		}))
-		hui.log(hui.string.toJSON({
-			nodeScrollOffset : nodeScrollOffset,
-			windowScrollOffset : windowScrollOffset
-		}))
 		
-		if (vertical<.1) {
+		if (position=='vertical') {
+			vertical = vertical>.5 ? .9 : .1;
+		}
+		
+		if (vertical<=.1) {
 			this.relativePosition='top';
 			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_top';
 			if (this.options.variant=='light') {
@@ -201,11 +205,11 @@ hui.ui.BoundPanel.prototype = {
 			} else {
 				arrowTop = this.arrowNarrow*-1+2;
 			}
-			left = Math.min(viewportWidth-panelDimensions.width-3,Math.max(3,nodeLeft+(nodeWidth/2)-((panelDimensions.width)/2)));
+			left = Math.min(viewportWidth-panelDimensions.width-2,Math.max(3,nodeLeft+(nodeWidth/2)-((panelDimensions.width)/2)));
 			arrowLeft = (nodeLeft+nodeWidth/2)-left-this.arrowNarrow;
 			top = nodeOffset.top+nodeHeight+8 - (nodeScrollOffset.top-windowScrollOffset.top);
 		}
-		else if (vertical>.9) {
+		else if (vertical>=.9) {
 			this.relativePosition='bottom';
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_bottom';
 			if (this.options.variant=='light') {

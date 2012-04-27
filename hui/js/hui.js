@@ -1922,8 +1922,11 @@ hui.drag = {
 		hui.listen(target,'mouseup',upper);
 		hui.selection.enable(false);
 	},
+	
 	_nativeListeners : [],
+	
 	_activeDrop : null,
+	
 	/** Listen for native drops
 	 * <pre><strong>options:</strong> {
 	 *  hoverClass : «String»,

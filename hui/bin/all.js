@@ -1922,8 +1922,11 @@ hui.drag = {
 		hui.listen(target,'mouseup',upper);
 		hui.selection.enable(false);
 	},
+	
 	_nativeListeners : [],
+	
 	_activeDrop : null,
+	
 	/** Listen for native drops
 	 * <pre><strong>options:</strong> {
 	 *  hoverClass : «String»,
@@ -8987,11 +8990,19 @@ hui.ui.BoundPanel.prototype = {
 	/** Position the panel at a node
 	 * @param {Node} node The node the panel should be positioned at 
 	 */
-	position : function(node) {
-		if (node.getElement) {
-			node = node.getElement();
+	position : function(options) {
+		var node,
+			position;
+		if (options.getElement) {
+			node = options.getElement();
 		}
-		node = hui.get(node);
+		if (options.element) {
+			node = options.element;
+			position = options.position;
+		} else {
+			node = hui.get(options);
+		}
+		
 		var nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};
 		var nodeScrollOffset = hui.position.getScrollOffset(node);
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};
@@ -9008,16 +9019,12 @@ hui.ui.BoundPanel.prototype = {
 		}
 		var vertical = (nodeOffset.top-windowScrollOffset.top+nodeScrollOffset.top)/viewportHeight;
 		vertical = positionOnScreen.top / viewportHeight;
-		hui.log(vertical)
-		hui.log(hui.string.toJSON({
-			nodeOffset : nodeOffset
-		}))
-		hui.log(hui.string.toJSON({
-			nodeScrollOffset : nodeScrollOffset,
-			windowScrollOffset : windowScrollOffset
-		}))
 		
-		if (vertical<.1) {
+		if (position=='vertical') {
+			vertical = vertical>.5 ? .9 : .1;
+		}
+		
+		if (vertical<=.1) {
 			this.relativePosition='top';
 			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_top';
 			if (this.options.variant=='light') {
@@ -9025,11 +9032,11 @@ hui.ui.BoundPanel.prototype = {
 			} else {
 				arrowTop = this.arrowNarrow*-1+2;
 			}
-			left = Math.min(viewportWidth-panelDimensions.width-3,Math.max(3,nodeLeft+(nodeWidth/2)-((panelDimensions.width)/2)));
+			left = Math.min(viewportWidth-panelDimensions.width-2,Math.max(3,nodeLeft+(nodeWidth/2)-((panelDimensions.width)/2)));
 			arrowLeft = (nodeLeft+nodeWidth/2)-left-this.arrowNarrow;
 			top = nodeOffset.top+nodeHeight+8 - (nodeScrollOffset.top-windowScrollOffset.top);
 		}
-		else if (vertical>.9) {
+		else if (vertical>=.9) {
 			this.relativePosition='bottom';
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_bottom';
 			if (this.options.variant=='light') {
@@ -15050,8 +15057,8 @@ hui.ui.DateTimeField = function(o) {
 	this.options = hui.override({returnType:null,label:null,allowNull:true,value:null},o);
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	this.addBehavior();
-	this.updateUI();
+	this._addBehavior();
+	this._updateUI();
 }
 
 hui.ui.DateTimeField.create = function(options) {
@@ -15062,19 +15069,9 @@ hui.ui.DateTimeField.create = function(options) {
 }
 
 hui.ui.DateTimeField.prototype = {
-	addBehavior : function() {
+	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
-		hui.listen(this.input,'blur',this.check.bind(this));
-	},
-	updateFromNode : function(node) {
-		if (node.firstChild) {
-			this.setValue(node.firstChild.nodeValue);
-		} else {
-			this.setValue(null);
-		}
-	},
-	updateFromObject : function(data) {
-		this.setValue(data.value);
+		hui.listen(this.input,'blur',this._check.bind(this));
 	},
 	focus : function() {
 		try {this.input.focus();} catch (ignore) {}
@@ -15091,9 +15088,9 @@ hui.ui.DateTimeField.prototype = {
 			this.value = new Date();
 			this.value.setTime(parseInt(value)*1000);
 		}
-		this.updateUI();
+		this._updateUI();
 	},
-	check : function() {
+	_check : function() {
 		var str = this.input.value;
 		var parsed = null;
 		for (var i=0; i < this.inputFormats.length && parsed==null; i++) {
@@ -15102,7 +15099,7 @@ hui.ui.DateTimeField.prototype = {
 		if (this.options.allowNull || parsed!=null) {
 			this.value = parsed;
 		}
-		this.updateUI();
+		this._updateUI();
 	},
 	getValue : function() {
 		if (this.value!=null && this.options.returnType=='seconds') {
@@ -15116,7 +15113,7 @@ hui.ui.DateTimeField.prototype = {
 	getLabel : function() {
 		return this.options.label;
 	},
-	updateUI : function() {
+	_updateUI : function() {
 		if (this.value) {
 			this.input.value = this.value.dateFormat(this.outputFormat);
 		} else {
@@ -15281,7 +15278,7 @@ hui.ui.Checkboxes = function(options) {
 	this.subItems = [];
 	this.values = options.values || options.value || []; // values is deprecated
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 	this._updateUI();
 	if (options.url) {
 		new hui.ui.Source({url:options.url,delegate:this});
@@ -15301,10 +15298,10 @@ hui.ui.Checkboxes.create = function(o) {
 }
 
 hui.ui.Checkboxes.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var checks = hui.get.byClass(this.element,'hui_checkbox');
 		hui.each(checks,function(check,i) {
+			hui.ui.addFocusClass({element:check,'class':'hui_checkbox_focused'});
 			hui.listen(check,'click',function(e) {
 				hui.stop(e);
 				this.flipValue(this.items[i].value);
@@ -15534,7 +15531,7 @@ hui.ui.Radiobuttons.prototype = {
  * @constructor
  */
 hui.ui.NumberField = function(o) {
-	this.options = hui.override({min:0,max:10000,value:null,decimals:0,allowNull:false},o);	
+	this.options = hui.override({min:0,max:10000,value:null,tickSize:1,decimals:0,allowNull:false},o);	
 	this.name = o.name;
 	var e = this.element = hui.get(o.element);
 	this.input = hui.get.firstByTag(e,'input');
@@ -15564,7 +15561,7 @@ hui.ui.NumberField.create = function(o) {
 hui.ui.NumberField.prototype = {
 	_addBehavior : function() {
 		var e = this.element;
-		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
+		hui.listen(this.input,'focus',this._onFocus.bind(this));
 		hui.listen(this.input,'blur',this._onBlur.bind(this));
 		hui.listen(this.input,'keyup',this._onKey.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
@@ -15575,6 +15572,13 @@ hui.ui.NumberField.prototype = {
 	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
 		this.updateField();
+		if (this.sliderPanel) {
+			this.sliderPanel.hide();
+		}
+	},
+	_onFocus : function() {
+		hui.cls.add(this.element,'hui_numberfield_focused');
+		this._showSlider();
 	},
 	_onKey : function(e) {
 		e = e || window.event;
@@ -15598,14 +15602,14 @@ hui.ui.NumberField.prototype = {
 		if (this.value===null) {
 			this.setLocalValue(this.options.min,true);
 		} else {
-			this.setLocalValue(this.value-1,true);
+			this.setLocalValue(this.value-this.options.tickSize,true);
 		}
 		this.updateField();
 	},
 	/** @private */
 	upEvent : function(e) {
 		hui.stop(e);
-		this.setLocalValue(this.value+1,true);
+		this.setLocalValue(this.value+this.options.tickSize,true);
 		this.updateField();
 	},
 	/** Sets focus */
@@ -15655,6 +15659,23 @@ hui.ui.NumberField.prototype = {
 			this.value = Math.min(Math.max(0,this.options.min),this.options.max);
 		}
 		this.updateField();
+	},
+	_onSliderChange : function(value) {
+		var conv = this.options.min+(Math.min(this.options.max,100)-this.options.min)*value;
+		this.setLocalValue(conv);
+		this.updateField();
+	},
+	_showSlider : function() {
+		return;
+		if (!this.sliderPanel) {
+			this.sliderPanel = hui.ui.BoundPanel.create({variant:'light'});
+			this.slider = hui.ui.Slider.create({width:200})
+			this.slider.element.style.margin='0 3px';
+			this.slider.listen({$valueChanged : this._onSliderChange.bind(this)})
+			this.sliderPanel.add(this.slider);
+		}
+		this.sliderPanel.position({element:this.element,position:'vertical'});
+		this.sliderPanel.show();
 	}
 }///////////////////////// Text /////////////////////////
 
@@ -15769,18 +15790,6 @@ hui.ui.TextField.prototype = {
 		this._expand(this.options.animateUserChange);
 		hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 		this.fire('valueChanged',this.input.value);
-	},
-	/** ??? */
-	updateFromNode : function(node) {
-		if (node.firstChild) {
-			this.setValue(node.firstChild.nodeValue);
-		} else {
-			this.setValue(null);
-		}
-	},
-	/** ??? */
-	updateFromObject : function(data) {
-		this.setValue(data.value);
 	},
 	/** Focus the text field */
 	focus : function() {
@@ -15978,10 +15987,15 @@ hui.ui.ColorInput.prototype = {
 	_syncValue : function() {
 		this.button.style.backgroundColor = this.value;
 		this.input.setValue(this.value);
+		this._syncColor();
+	},
+	_syncColor : function() {		
+		this.button.innerHTML = this.value ? '' : '?';
+		this.button.style.backgroundColor = this.value;	
 	},
 	_onInputChange : function(value) {
 		this.value = value;
-		this.button.style.backgroundColor = this.value;	
+		this._syncColor();
 	},
 	getValue : function() {
 		return this.value;
@@ -16196,6 +16210,78 @@ hui.ui.Structure.prototype = {
 			m.style.top = (t ? t.clientHeight+2 : 0)+'px'
 			m.style.bottom = (b ? b.clientHeight+2 : 0)+'px'
 		}
+	}
+}/**
+ * @constructor
+ * @param {Object} options The options : {modal:false}
+ */
+hui.ui.Slider = function(options) {
+	this.options = hui.override({value:0},options);
+	this.name = options.name;
+	
+	this.element = hui.get(options.element);
+	this.handler = hui.get.firstByTag(options.element,'a');
+	hui.ui.extend(this)
+	this.position = 0;
+	this.value = 0;
+	
+	this._addBehavior();
+}
+
+hui.ui.Slider.create = function(options) {
+	options = hui.override({},options);
+	var e = options.element = hui.build('span',{'class':'hui_slider',html:'<a href="javascript://"></a><span></span>'});
+	if (options.width) {
+		e.style.width = options.width+'px';
+	}
+	return new hui.ui.Slider(options);
+}
+
+hui.ui.Slider.prototype = {
+	_addBehavior : function() {
+		hui.drag.register({
+			element : this.handler,
+			onBeforeMove : this._onBeforeMove.bind(this),
+			onMove : this._onMove.bind(this),
+			onAfterMove : this._onAfterMove.bind(this)
+		})
+	},
+	_onBeforeMove : function(event) {
+		var pos = hui.position.get(this.handler);
+		this.dragInfo = {
+			left : hui.position.getLeft(this.element),
+			diff : event.getLeft()-pos.left,
+			max : this.element.clientWidth-this.handler.clientWidth-5
+		};
+		hui.cls.add(this.element,'hui_slider_active');
+	},
+	_onMove : function(event) {
+		var left = event.getLeft()-this.dragInfo.left
+		left = (left-this.dragInfo.diff);
+		left = Math.max(left,5);
+		left = Math.min(left,this.dragInfo.max);
+		this.handler.style.left = left+'px'
+		this._setPosition((left-5)/(this.dragInfo.max-5));
+		hui.log(this.position)
+	},
+	_onAfterMove : function() {
+		hui.cls.remove(this.element,'hui_slider_active');
+	},
+	
+	_setPosition : function(pos) {
+		this.position = pos;
+		this.fire('valueChanged',pos);
+	},
+	setValue : function(value) {
+		var pos = Math.max(0,Math.min(value,1));
+		var width = this.element.clientWidth-10-this.handler.clientWidth;
+		hui.animate({
+			node : this.handler,
+			css : { left: (pos*width+5)+'px'},
+			duration : 200,
+			ease : hui.ease.fastSlow
+		})
+		this.position = this.value = pos;
 	}
 }/** A graph
  * @constructor

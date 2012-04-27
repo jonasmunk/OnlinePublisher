@@ -214,7 +214,7 @@
 	</td></tr>
 </xsl:template>
 
-<xsl:template name="gui:number">
+<xsl:template name="gui:number" match="gui:number-input">
 	<span id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_numberfield</xsl:text>
@@ -234,6 +234,7 @@
 			<xsl:if test="@decimals">,decimals:<xsl:value-of select="@decimals"/></xsl:if>
 			<xsl:if test="@allow-null">,allowNull:true</xsl:if>
 			<xsl:if test="@value">,value : '<xsl:value-of select="@value"/>'</xsl:if>
+			<xsl:if test="@tick-size">,tickSize : <xsl:value-of select="@tick-size"/></xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
@@ -257,7 +258,7 @@
 	</td></tr>
 </xsl:template>
 
-<xsl:template name="gui:style-length">
+<xsl:template name="gui:style-length" match="gui:style-length-input">
 	<span class="hui_style_length hui_numberfield" id="{generate-id()}">
 		<span><span><input type="text" value="{@value}"/><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
 	</span>
@@ -396,10 +397,10 @@
 	</td></tr>
 </xsl:template>
 
-<xsl:template name="gui:radiobuttons">
-	<div class="hui_radiobuttons" id="{generate-id()}">
+<xsl:template name="gui:radiobuttons" match="gui:radiobuttons">
+	<span class="hui_radiobuttons" id="{generate-id()}">
 		<xsl:apply-templates/>
-	</div>
+	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Radiobuttons({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>','value':'<xsl:value-of select="@value"/>','key':'<xsl:value-of select="@key"/>'});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
@@ -412,9 +413,13 @@
 </xsl:template>
 
 <xsl:template match="gui:radiobuttons/gui:radiobutton | gui:radiobuttons/gui:item">
-	<a id="{generate-id()}">
-		<xsl:attribute name="class">hui_radiobutton <xsl:if test="@value=../@value">hui_radiobutton_selected</xsl:if></xsl:attribute>
-		<span><xsl:comment/></span><xsl:value-of select="@label"/><xsl:value-of select="@text"/>
+	<a id="{generate-id()}" href="javascript://">
+		<xsl:attribute name="class">
+			<xsl:text>hui_radiobutton</xsl:text>
+			<xsl:if test="@value=../@value"> hui_radiobutton_selected</xsl:if>
+		</xsl:attribute>
+		<span class="hui_radiobutton_button"><span><xsl:comment/></span></span>
+		<span class="hui_radiobutton_label"><xsl:value-of select="@label"/><xsl:value-of select="@text"/></span>
 	</a>
 </xsl:template>
 
@@ -494,9 +499,9 @@
 </xsl:template>
 
 <xsl:template match="gui:checkboxes/gui:items">
-	<div id="{generate-id()}">
+	<span id="{generate-id()}">
 		<xsl:comment/>
-	</div>
+	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Checkboxes.Items({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>',source:<xsl:value-of select="@source"/>});
 		<xsl:call-template name="gui:createobject"/>
@@ -647,6 +652,8 @@
 	</script>
 </xsl:template>
 
+
+
 <!--             Tokens            -->
 
 <xsl:template match="gui:group/gui:tokens">
@@ -680,6 +687,24 @@
 		<xsl:call-template name="gui:createobject"/>
 	</script>
 </xsl:template>
+
+
+
+<xsl:template match="gui:slider">
+	<span class="hui_slider" id="{generate-id()}">
+		<xsl:if	test="@width"><xsl:attribute name="style">width: <xsl:value-of select="@width"/>px;</xsl:attribute></xsl:if>
+		<a href="javascript://"><xsl:comment/></a><span><xsl:comment/></span>
+	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Slider({
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>',
+			'key' : '<xsl:value-of select="@key"/>'
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
 
 
 

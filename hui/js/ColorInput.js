@@ -40,10 +40,15 @@ hui.ui.ColorInput.prototype = {
 	_syncValue : function() {
 		this.button.style.backgroundColor = this.value;
 		this.input.setValue(this.value);
+		this._syncColor();
+	},
+	_syncColor : function() {		
+		this.button.innerHTML = this.value ? '' : '?';
+		this.button.style.backgroundColor = this.value;	
 	},
 	_onInputChange : function(value) {
 		this.value = value;
-		this.button.style.backgroundColor = this.value;	
+		this._syncColor();
 	},
 	getValue : function() {
 		return this.value;

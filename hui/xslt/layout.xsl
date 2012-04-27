@@ -51,7 +51,7 @@
 </xsl:template>
 	
 <!--doc title:'Space'
-<space all="«pixels»" left="«pixels»" right="«pixels»" top="«pixels»" bottom="«pixels»" align="«left | center | right»" height="«pixels»">
+<space all="«pixels»" left="«pixels»" right="«pixels»" top="«pixels»" bottom="«pixels»" align="«left | center | right»" height="«pixels»" width="«pixels»">
     ···
 </space>
 -->
@@ -69,6 +69,11 @@
 		<xsl:comment/>
 		<xsl:apply-templates/>
 	</div>
+</xsl:template>
+
+
+<xsl:template match="gui:space[@width]">
+	<span style="display: inline-block; font-size: 0; width: 20px;"><xsl:comment/></span>
 </xsl:template>
 
 <!--doc title:'Columns'

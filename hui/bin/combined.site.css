@@ -1482,13 +1482,13 @@ span.hui_field_bottom, span.hui_field_bottom span
 {
 	display: block;
 	font-size: 0;
-	background: url('../gfx/field.png') 0 -19px no-repeat;
-	height: 4px;
+	background: url('../gfx/field.png') 0 -20px no-repeat;
+	height: 5px;
 }
 
 span.hui_field_bottom span
 {
-	background-position: 100% -23px;
+	background-position: 100% -25px;
 	background-repeat: no-repeat;
 }
 
@@ -1502,7 +1502,7 @@ span.hui_field_bottom span span
 span.hui_field_middle
 {
 	display: block;
-	background: url('../gfx/field.png') 0 -27px no-repeat;
+	background: url('../gfx/field.png') 0 -30px no-repeat;
 }
 
 span.hui_field_middle span.hui_field_middle
@@ -1535,12 +1535,12 @@ span.hui_field_content
 
 .hui_field_focused span.hui_field_bottom
 {
-	background-position: 0 -846px;
+	background-position: 0 -847px;
 }
 
 .hui_field_focused span.hui_field_bottom span
 {
-	background-position: 100% -850px;
+	background-position: 100% -852px;
 }
 
 .hui_field_focused span.hui_field_bottom span span
@@ -1550,7 +1550,7 @@ span.hui_field_content
 
 .hui_field_focused span.hui_field_middle
 {
-	background-position: 0 -854px;
+	background-position: 0 -857px;
 }
 
 .hui_field_focused span.hui_field_middle span.hui_field_middle

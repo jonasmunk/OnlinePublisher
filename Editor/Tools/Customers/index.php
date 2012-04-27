@@ -104,7 +104,7 @@ $gui='
 								</column>
 							</columns>
 						</column>
-						<column width="60px">
+						<column width="70px">
 							<group labels="above">
 								<imagepicker label="Billede:" name="personImage" source="../../Services/Model/ImagePicker.php"/>
 							</group>

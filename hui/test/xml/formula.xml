@@ -5,6 +5,31 @@
 	<source name="itemsSource" url="data/source_items.xml"/>
 	
 	<space height="30"/>
+	<box width="800" title="Special inputs" variant="textured" padding="10">
+		<text-input/>
+		<checkbox/><checkbox/>
+		<radiobuttons>
+			<item text="Hey" value="1"/>
+			<item text="Hey" value="2"/>
+		</radiobuttons>
+		<color-input/>
+		<dropdown key="template">
+			<item title="Lorem inpsum" value="1"/>
+			<item title="Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" value="2"/>
+			<item title="Ut enim ad minim veniam" value="3"/>
+			<item title="Excepteur sint occaecat" value="4"/>
+		</dropdown>
+		<button text="Click me"/>
+		<button text="Click me" highlighted="true"/>
+		<button text="Click me" small="true"/>
+		<button text="Click me" small="true" highlighted="true"/>
+		<number-input/>
+		<style-length-input/>
+		<searchfield/>
+		<slider key="slider" width="100"/>
+	</box>
+	
+	<space height="30"/>
 	
 	<box width="600" title="Special inputs" variant="textured" padding="10">
 		<formula name="formulatore">
@@ -17,6 +42,21 @@
 				</field>
 				<field label="Location:">
 					<location-input key="location"/>
+				</field>
+				<field label="Slider:">
+					<slider key="slider" name="sliderTest" width="200"/>
+					<space width="10"/>
+					<number-input name="sliderValue" tick-size="0.1" min="0" max="1"/>
+					<script>
+						hui.ui.listen({
+							$valueChanged$sliderTest : function(value) {
+								sliderValue.setValue(value);
+							},
+							$valueChanged$sliderValue : function(value) {
+								sliderTest.setValue(value);
+							}
+						})
+					</script>
 				</field>
 			</group>
 			<buttons>
@@ -56,6 +96,58 @@
 			</group>
 			<buttons>
 				<button click="logForm(numForm)" text="Data"/>
+			</buttons>
+		</formula>
+	</box>
+
+	<space height="30"/>
+	
+	<box width="600" title="Text" variant="textured" padding="10">
+		<formula name="textForm">
+			<group labels="above">
+				<text label="Username:" key="username"/>
+				<text label="Password:" secret="true" key="password"/>
+				<text label="Note:" multiline="true" key="note"/>
+			</group>
+			<buttons>
+				<button click="logForm(textForm)" text="Data"/>
+			</buttons>
+		</formula>
+	</box>
+
+	<space height="30"/>
+	
+	<box width="600" title="Text" variant="textured" padding="10">
+		<formula name="checkForm">
+			<group labels="above">
+				<checkbox label="Internal access:" key="internal"/>
+				<checkbox label="External access:" key="external"/>
+				<checkboxes label="Groups:" key="groups">
+					<item title="Fixed" value="fixed"/>
+					<items source="itemsSource"/>
+				</checkboxes>
+			</group>
+			<buttons>
+				<button click="logForm(checkForm)" text="Data"/>
+			</buttons>
+		</formula>
+	</box>
+
+	<space height="30"/>
+	
+	<box width="600" title="Text" variant="textured" padding="10">
+		<formula name="otherForm">
+			<group labels="above">
+				<style-length label="Style length:" key="style" value="15px"/>
+				<tokens label="Tokens:" key="tokens"/>
+				<radiobuttons label="Radios:" key="radios">
+					<radiobutton label="Lorem" value="lorem"/>
+					<radiobutton label="Ipsum" value="ipsum"/>
+					<radiobutton label="Dolor" value="dolor"/>
+				</radiobuttons>
+			</group>
+			<buttons>
+				<button click="logForm(otherForm)" text="Data"/>
 			</buttons>
 		</formula>
 	</box>
@@ -149,6 +241,28 @@
 			</buttons>
 		</formula>
 	</box>
+
+	<space height="30"/>
+	
+	<box width="600" title="Text" variant="textured" padding="10">
+		<formula name="objectListForm">
+			<group labels="above">
+				<field label="Object list">
+					<objectlist key="objectlist">
+						<text key="email" label="E-mail"/>
+						<select key="context" label="Context">
+							<option value="home" label="Home"/>
+							<option value="work" label="Work"/>
+							<option value="school" label="School"/>
+						</select>
+					</objectlist>
+				</field>
+			</group>
+			<buttons>
+				<button click="logForm(objectListForm)" text="Data"/>
+			</buttons>
+		</formula>
+	</box>
 	
 	<space height="30"/>
 
@@ -163,21 +277,6 @@
 			<tab title="Formula 1" padding="10">
 				<formula name="formula1">
 					<group labels="above">
-						<text label="Brugernavn:" key="username"/>
-						<text secret="true" label="Kodeord:" key="password"/>
-						<text label="Notat:" lines="6" key="note"/>
-						<style-length label="Style length:" key="style" value="15px"/>
-						<checkbox label="Internal access:" key="internal"/>
-						<checkbox label="External access:" key="external"/>
-						<checkboxes label="Groups:" key="groups">
-							<items source="itemsSource"/>
-						</checkboxes>
-						<tokens label="Tokens:" key="tokens"/>
-						<radiobuttons label="Radios:" key="radios">
-							<radiobutton label="Lorem" value="lorem"/>
-							<radiobutton label="Ipsum" value="ipsum"/>
-							<radiobutton label="Dolor" value="dolor"/>
-						</radiobuttons>
 						<custom label="Object list:">
 							<objectlist key="objectlist">
 								<text key="email" label="E-mail"/>

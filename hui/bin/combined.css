@@ -1117,13 +1117,13 @@ span.hui_field_bottom, span.hui_field_bottom span
 {
 	display: block;
 	font-size: 0;
-	background: url('../gfx/field.png') 0 -19px no-repeat;
-	height: 4px;
+	background: url('../gfx/field.png') 0 -20px no-repeat;
+	height: 5px;
 }
 
 span.hui_field_bottom span
 {
-	background-position: 100% -23px;
+	background-position: 100% -25px;
 	background-repeat: no-repeat;
 }
 
@@ -1137,7 +1137,7 @@ span.hui_field_bottom span span
 span.hui_field_middle
 {
 	display: block;
-	background: url('../gfx/field.png') 0 -27px no-repeat;
+	background: url('../gfx/field.png') 0 -30px no-repeat;
 }
 
 span.hui_field_middle span.hui_field_middle
@@ -1170,12 +1170,12 @@ span.hui_field_content
 
 .hui_field_focused span.hui_field_bottom
 {
-	background-position: 0 -846px;
+	background-position: 0 -847px;
 }
 
 .hui_field_focused span.hui_field_bottom span
 {
-	background-position: 100% -850px;
+	background-position: 100% -852px;
 }
 
 .hui_field_focused span.hui_field_bottom span span
@@ -1185,7 +1185,7 @@ span.hui_field_content
 
 .hui_field_focused span.hui_field_middle
 {
-	background-position: 0 -854px;
+	background-position: 0 -857px;
 }
 
 .hui_field_focused span.hui_field_middle span.hui_field_middle
@@ -1337,7 +1337,7 @@ div.hui_window_dark a.hui_checkbox
 {
 	display: inline-block;
 	height: 26px;
-	background: url('../gfx/dropdown.png') -19px top no-repeat;
+	background: url('../gfx/dropdown.png') -16px 0 no-repeat;
 	outline: none;
 	text-decoration: none;
 	color: #333;
@@ -1351,60 +1351,75 @@ a.hui_dropdown span
 {
 	display: block;
 	height: 26px;
-	background: url('../gfx/dropdown.png') right -52px no-repeat;
+	background: url('../gfx/dropdown.png') right -26px no-repeat;
 }
 
 a.hui_dropdown span span
 {
-	margin: 0 25px 0 6px;
-	background: url('../gfx/dropdown.png') left -26px repeat-x;
-	padding-left: 2px;
+	margin: 0 21px 0 5px;
+	background: url('../gfx/dropdown.png') left -52px repeat-x;
+	padding-left: 3px;
 	padding-right: 10px;
 }
 
 a.hui_dropdown:hover
 {
-	background-position: -19px -156px;
+	background-position: -16px -78px;
 }
 
 a.hui_dropdown:hover span
 {
-	background-position: right -208px;
+	background-position: right -104px;
 }
 
 a.hui_dropdown:hover span span
 {
-	background-position: left -182px;
+	background-position: left -130px;
+}
+
+a.hui_dropdown:active
+{
+	background-position: -16px -156px;
+}
+
+a.hui_dropdown:active span
+{
+	background-position: right -182px;
+}
+
+a.hui_dropdown:active span span
+{
+	background-position: left -208px;
 }
 
 a.hui_dropdown_focused
 {
-	background-position: -19px -78px;
+	background-position: -16px -234px;
 }
 
 a.hui_dropdown_focused span
 {
-	background-position: right -130px;
+	background-position: right -260px;
 }
 
 a.hui_dropdown_focused span span
 {
-	background-position: left -104px;
+	background-position: left -286px;
 }
 
 a.hui_dropdown_focused:hover
 {
-	background-position: -19px -234px;
+	background-position: -16px -312px;
 }
 
 a.hui_dropdown_focused:hover span
 {
-	background-position: right -286px;
+	background-position: right -338px;
 }
 
 a.hui_dropdown_focused:hover span span
 {
-	background-position: left -260px;
+	background-position: left -364px;
 }
 
 a.hui_dropdown strong
@@ -3270,6 +3285,7 @@ div.hui_boundpanel_content
 {
 	/*width: 200px;*/
 	overflow: hidden;
+	font-size: 0;
 }
 
 /* Top */
@@ -6344,7 +6360,8 @@ input.hui_tokenfield_token
 
 input.hui_tokenfield_token:focus
 {
-	border-color: #68f;
+	border-color: #2678ff;
+	outline: 4px auto #2678ff;
 }
 
 div.hui_window_dark input.hui_tokenfield_token
@@ -6480,11 +6497,11 @@ div.hui_infoview_click:hover
 
 /******************************* Radio button **************************/
 
-div.hui_radiobuttons
+span.hui_radiobuttons
 {
-	overflow: hidden;
-	margin-bottom: 5px;
-	padding-top: 4px;
+	vertical-align: middle;
+	display: inline-block;
+	font-size: 0;
 }
 
 a.hui_radiobutton
@@ -6495,35 +6512,77 @@ a.hui_radiobutton
 	cursor: default;
 	color: #004A80;
 	display: inline-block;
-	line-height: 15px;
-}
-
-a.hui_radiobutton span
-{
-	float: left;
-	background: url('../gfx/radiobutton.png') no-repeat;
-	width: 18px;
-	height: 18px;
-	margin-right: 3px;
 	cursor: pointer;
 }
 
-div.hui_radiobuttons a.hui_radiobutton
+span.hui_radiobutton_button
 {
-	margin-bottom: 3px;
+	vertical-align: top;
+	display: inline-block;
+	background: url('../gfx/radiobutton.png') no-repeat;
+	width: 20px;
+	height: 20px;
+	margin-right: 3px;
 }
 
-div.hui_radiobuttons a.hui_radiobutton_selected span
+span.hui_radiobutton_button span
 {
-	background-position: 0px -18px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
 }
 
-div.hui_radiobuttons_disabled a.hui_radiobutton
+a.hui_radiobutton:hover span.hui_radiobutton_button
 {
-	color: #999;
+	background-position: 0 -20px;
 }
 
-div.hui_radiobuttons_disabled a.hui_radiobutton span
+a.hui_radiobutton:active span.hui_radiobutton_button
+{
+	background-position: 0 -40px;
+}
+
+a.hui_radiobutton:focus
+{
+	outline: none;
+}
+
+
+a.hui_radiobutton:focus span.hui_radiobutton_label
+{
+	text-shadow: #3366ff 0px 0px 2px;
+	color: #002244;
+}
+
+a.hui_radiobutton:focus span.hui_radiobutton_button
+{
+	background-position: 0 -60px;
+}
+
+a.hui_radiobutton:hover:focus span.hui_radiobutton_button
+{
+	background-position: 0 -80px;
+}
+
+a.hui_radiobutton:actve:focus span.hui_radiobutton_button
+{
+	background-position: 0 -100px;
+}
+
+span.hui_radiobutton_label
+{
+	vertical-align: top;
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+}
+
+a.hui_radiobutton_selected span.hui_radiobutton_button span
+{
+	background: url('../gfx/radiobutton.png') 0 -120px no-repeat;
+}
+
+span.hui_radiobuttons_disabled
 {
 	opacity: .5;
 }/*********************************** Number **********************************/
@@ -6534,6 +6593,8 @@ span.hui_numberfield
 	background: url('../gfx/number.png') -11px top no-repeat;
 	height: 25px;
 	position: relative;
+	font-size: 0;
+	vertical-align: middle;
 }
 
 span.hui_numberfield span
@@ -6638,16 +6699,18 @@ div.hui_rendering p
 	font-size: 10px;
 }span.hui_colorinput
 {
-	width: 120px;
 	display: inline-block;
 	position: relative;
+	vertical-align: middle;
+	margin-right: 24px;
 }
 
 span.hui_colorinput input
 {
 	border: 0px;
 	font-size: 9pt;
-	width: 110px;
+	font-family: Monaco,monospace;
+	width: 60px;
 	border: none;
 	margin: 0;
 	margin-top: -1px;
@@ -6670,6 +6733,12 @@ a.hui_colorinput
 	border: 1px solid #CCC;
 	margin-left: 3px;
 	margin-top: 1px;
+	text-decoration: none;
+	font-size: 13px;
+	font-family: Tahoma;
+	text-align: center;
+	color: #ccc;
+	line-height: 20px;
 }div.hui_structure
 {
 	height: 100%;
@@ -6734,4 +6803,40 @@ div.hui_structure_left
 	bottom: 0;
 	position: absolute;
 	width: 200px;
+}span.hui_slider
+{
+	display: inline-block;
+	width: 100%;
+	height: 18px;
+	position: relative;
+	font-size: 0;
+}
+
+span.hui_slider span
+{
+	display: inline-block;
+	margin-top: 6px;
+	height: 6px;
+	background: #ddd;
+	width: 100%;
+	box-shadow: inset 0px 1px 2px #aaa;
+	border-radius: 3px;
+}
+
+span.hui_slider a
+{
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	box-shadow: inset 0px -3px 5px #ddd,0 1px 3px rgba(0,0,0,.5);
+	border-radius: 50%;
+	left: 5px;
+	top: 0;
+	background: #fff;
+}
+
+span.hui_slider a:hover,
+span.hui_slider_active a
+{
+	background: #f6f6f6;
 }

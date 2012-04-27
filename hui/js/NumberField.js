@@ -5,7 +5,7 @@
  * @constructor
  */
 hui.ui.NumberField = function(o) {
-	this.options = hui.override({min:0,max:10000,value:null,decimals:0,allowNull:false},o);	
+	this.options = hui.override({min:0,max:10000,value:null,tickSize:1,decimals:0,allowNull:false},o);	
 	this.name = o.name;
 	var e = this.element = hui.get(o.element);
 	this.input = hui.get.firstByTag(e,'input');
@@ -35,7 +35,7 @@ hui.ui.NumberField.create = function(o) {
 hui.ui.NumberField.prototype = {
 	_addBehavior : function() {
 		var e = this.element;
-		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
+		hui.listen(this.input,'focus',this._onFocus.bind(this));
 		hui.listen(this.input,'blur',this._onBlur.bind(this));
 		hui.listen(this.input,'keyup',this._onKey.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
@@ -46,6 +46,13 @@ hui.ui.NumberField.prototype = {
 	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
 		this.updateField();
+		if (this.sliderPanel) {
+			this.sliderPanel.hide();
+		}
+	},
+	_onFocus : function() {
+		hui.cls.add(this.element,'hui_numberfield_focused');
+		this._showSlider();
 	},
 	_onKey : function(e) {
 		e = e || window.event;
@@ -69,14 +76,14 @@ hui.ui.NumberField.prototype = {
 		if (this.value===null) {
 			this.setLocalValue(this.options.min,true);
 		} else {
-			this.setLocalValue(this.value-1,true);
+			this.setLocalValue(this.value-this.options.tickSize,true);
 		}
 		this.updateField();
 	},
 	/** @private */
 	upEvent : function(e) {
 		hui.stop(e);
-		this.setLocalValue(this.value+1,true);
+		this.setLocalValue(this.value+this.options.tickSize,true);
 		this.updateField();
 	},
 	/** Sets focus */
@@ -126,5 +133,22 @@ hui.ui.NumberField.prototype = {
 			this.value = Math.min(Math.max(0,this.options.min),this.options.max);
 		}
 		this.updateField();
+	},
+	_onSliderChange : function(value) {
+		var conv = this.options.min+(Math.min(this.options.max,100)-this.options.min)*value;
+		this.setLocalValue(conv);
+		this.updateField();
+	},
+	_showSlider : function() {
+		return;
+		if (!this.sliderPanel) {
+			this.sliderPanel = hui.ui.BoundPanel.create({variant:'light'});
+			this.slider = hui.ui.Slider.create({width:200})
+			this.slider.element.style.margin='0 3px';
+			this.slider.listen({$valueChanged : this._onSliderChange.bind(this)})
+			this.sliderPanel.add(this.slider);
+		}
+		this.sliderPanel.position({element:this.element,position:'vertical'});
+		this.sliderPanel.show();
 	}
 }

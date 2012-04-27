@@ -13,8 +13,8 @@ hui.ui.DateTimeField = function(o) {
 	this.options = hui.override({returnType:null,label:null,allowNull:true,value:null},o);
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	this.addBehavior();
-	this.updateUI();
+	this._addBehavior();
+	this._updateUI();
 }
 
 hui.ui.DateTimeField.create = function(options) {
@@ -25,19 +25,9 @@ hui.ui.DateTimeField.create = function(options) {
 }
 
 hui.ui.DateTimeField.prototype = {
-	addBehavior : function() {
+	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
-		hui.listen(this.input,'blur',this.check.bind(this));
-	},
-	updateFromNode : function(node) {
-		if (node.firstChild) {
-			this.setValue(node.firstChild.nodeValue);
-		} else {
-			this.setValue(null);
-		}
-	},
-	updateFromObject : function(data) {
-		this.setValue(data.value);
+		hui.listen(this.input,'blur',this._check.bind(this));
 	},
 	focus : function() {
 		try {this.input.focus();} catch (ignore) {}
@@ -54,9 +44,9 @@ hui.ui.DateTimeField.prototype = {
 			this.value = new Date();
 			this.value.setTime(parseInt(value)*1000);
 		}
-		this.updateUI();
+		this._updateUI();
 	},
-	check : function() {
+	_check : function() {
 		var str = this.input.value;
 		var parsed = null;
 		for (var i=0; i < this.inputFormats.length && parsed==null; i++) {
@@ -65,7 +55,7 @@ hui.ui.DateTimeField.prototype = {
 		if (this.options.allowNull || parsed!=null) {
 			this.value = parsed;
 		}
-		this.updateUI();
+		this._updateUI();
 	},
 	getValue : function() {
 		if (this.value!=null && this.options.returnType=='seconds') {
@@ -79,7 +69,7 @@ hui.ui.DateTimeField.prototype = {
 	getLabel : function() {
 		return this.options.label;
 	},
-	updateUI : function() {
+	_updateUI : function() {
 		if (this.value) {
 			this.input.value = this.value.dateFormat(this.outputFormat);
 		} else {
