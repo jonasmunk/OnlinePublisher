@@ -15956,6 +15956,7 @@ hui.ui.ColorInput = function(options) {
 			}
 		}
 	});
+	this.input.listen({$valueChanged:this._onInputChange.bind(this)})
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	this._syncValue();
@@ -15977,6 +15978,10 @@ hui.ui.ColorInput.prototype = {
 	_syncValue : function() {
 		this.button.style.backgroundColor = this.value;
 		this.input.setValue(this.value);
+	},
+	_onInputChange : function(value) {
+		this.value = value;
+		this.button.style.backgroundColor = this.value;	
 	},
 	getValue : function() {
 		return this.value;
