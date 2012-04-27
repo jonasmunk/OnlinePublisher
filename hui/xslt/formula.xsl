@@ -280,7 +280,14 @@
 
 <xsl:template match="gui:color-input">
 	<span class="hui_colorinput" id="{generate-id()}">
-		<span><span><input type="text" value="{@value}"/></span></span><a class="hui_colorinput" href="javascript://"><xsl:comment/></a>
+		<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
+			<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
+				<span class="hui_field_singleline"><input type="text" value="{@value}"/></span>
+			</span></span></span>
+		<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
+		
+		
+		<a class="hui_colorinput" href="javascript://"><xsl:comment/></a>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ColorInput({

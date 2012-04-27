@@ -45,14 +45,14 @@ hui.ui.ImagePicker.prototype = {
 	showPicker : function() {
 		if (!this.picker) {
 			var self = this;
-			this.picker = hui.ui.BoundPanel.create();
+			this.picker = hui.ui.BoundPanel.create({modal:true});
 			this.content = hui.build('div',{'class':'hui_imagepicker_thumbs'});
 			var buttons = hui.ui.Buttons.create({align:'right'});
-			var close = hui.ui.Button.create({text:'Luk',highlighted:true});
+			var close = hui.ui.Button.create({text:'Luk',highlighted:true,small:true});
 			close.listen({
 				$click : function() {self.hidePicker()}
 			});
-			var remove = hui.ui.Button.create({text:'Fjern'});
+			var remove = hui.ui.Button.create({text:'Fjern',small:true});
 			remove.listen({
 				$click : function() {self.setObject(null);self.hidePicker()}
 			});

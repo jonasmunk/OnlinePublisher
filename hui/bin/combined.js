@@ -8766,14 +8766,14 @@ hui.ui.ImagePicker.prototype = {
 	showPicker : function() {
 		if (!this.picker) {
 			var self = this;
-			this.picker = hui.ui.BoundPanel.create();
+			this.picker = hui.ui.BoundPanel.create({modal:true});
 			this.content = hui.build('div',{'class':'hui_imagepicker_thumbs'});
 			var buttons = hui.ui.Buttons.create({align:'right'});
-			var close = hui.ui.Button.create({text:'Luk',highlighted:true});
+			var close = hui.ui.Button.create({text:'Luk',highlighted:true,small:true});
 			close.listen({
 				$click : function() {self.hidePicker()}
 			});
-			var remove = hui.ui.Button.create({text:'Fjern'});
+			var remove = hui.ui.Button.create({text:'Fjern',small:true});
 			remove.listen({
 				$click : function() {self.setObject(null);self.hidePicker()}
 			});
@@ -13170,7 +13170,7 @@ hui.ui.LocationPicker = function(options) {
 hui.ui.LocationPicker.prototype = {
 	show : function(options) {
 		if (!this.panel) {
-			var panel = this.panel = hui.ui.BoundPanel.create({width:302});
+			var panel = this.panel = hui.ui.BoundPanel.create({width:302,modal:true});
 			var mapContainer = hui.build('div',{style:'width:300px;height:300px;border:1px solid #bbb;'});
 			panel.add(mapContainer);
 			var buttons = hui.ui.Buttons.create({align:'right',top:5});
@@ -15584,7 +15584,7 @@ hui.ui.NumberField.prototype = {
 		} else if (e.keyCode==hui.KEY_DOWN) {
 			this.downEvent();
 		} else {
-			var parsed = parseInt(this.input.value,10);
+			var parsed = parseFloat(this.input.value,10);
 			if (!isNaN(parsed)) {
 				this.setLocalValue(parsed,true);
 			} else {
@@ -15624,7 +15624,7 @@ hui.ui.NumberField.prototype = {
 	},
 	/** Sets the value */
 	setValue : function(value) {
-		value = parseInt(value,10);
+		value = parseFloat(value,10);
 		if (!isNaN(value)) {
 			this.setLocalValue(value,false);
 		}
@@ -15962,8 +15962,16 @@ hui.ui.ColorInput = function(options) {
 	this._addBehavior();
 }
 
+hui.ui.ColorInput.create = function(options) {
+	options = options || {};
+	var e = options.element = hui.build('span',{'class':'hui_colorinput',html:'<span class="hui_field_top"><span><span></span></span></span><span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content"><span class="hui_field_singleline"><input type="text" value=""/></span></span></span></span><span class="hui_field_bottom"><span><span></span></span></span><a class="hui_colorinput" href="javascript://"></a>'});
+		
+	return new hui.ui.ColorInput(options);
+}
+
 hui.ui.ColorInput.prototype = {
 	_addBehavior : function() {
+		hui.ui.addFocusClass({element:this.input.element,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.button, 'click',this._onButtonClick.bind(this));
 	},
 	_syncValue : function() {
@@ -16177,7 +16185,11 @@ hui.ui.Structure = function(options) {
 hui.ui.Structure.prototype = {
 	$$resize : function() {
 		var t = hui.get.firstByClass(this.element,'hui_structure_top');
+		var b = hui.get.firstByClass(this.element,'hui_structure_bottom');
 		var m = hui.get.firstByClass(this.element,'hui_structure_middle');
-		m.style.top = (t.clientHeight+2)+'px'
+		if (m) {
+			m.style.top = (t ? t.clientHeight+2 : 0)+'px'
+			m.style.bottom = (b ? b.clientHeight+2 : 0)+'px'
+		}
 	}
 }

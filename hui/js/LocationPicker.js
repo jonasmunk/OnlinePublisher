@@ -15,7 +15,7 @@ hui.ui.LocationPicker = function(options) {
 hui.ui.LocationPicker.prototype = {
 	show : function(options) {
 		if (!this.panel) {
-			var panel = this.panel = hui.ui.BoundPanel.create({width:302});
+			var panel = this.panel = hui.ui.BoundPanel.create({width:302,modal:true});
 			var mapContainer = hui.build('div',{style:'width:300px;height:300px;border:1px solid #bbb;'});
 			panel.add(mapContainer);
 			var buttons = hui.ui.Buttons.create({align:'right',top:5});

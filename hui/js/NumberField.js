@@ -55,7 +55,7 @@ hui.ui.NumberField.prototype = {
 		} else if (e.keyCode==hui.KEY_DOWN) {
 			this.downEvent();
 		} else {
-			var parsed = parseInt(this.input.value,10);
+			var parsed = parseFloat(this.input.value,10);
 			if (!isNaN(parsed)) {
 				this.setLocalValue(parsed,true);
 			} else {
@@ -95,7 +95,7 @@ hui.ui.NumberField.prototype = {
 	},
 	/** Sets the value */
 	setValue : function(value) {
-		value = parseInt(value,10);
+		value = parseFloat(value,10);
 		if (!isNaN(value)) {
 			this.setLocalValue(value,false);
 		}

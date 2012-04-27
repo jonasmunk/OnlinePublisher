@@ -18,19 +18,32 @@ hui.ui.ColorInput = function(options) {
 			}
 		}
 	});
+	this.input.listen({$valueChanged:this._onInputChange.bind(this)})
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	this._syncValue();
 	this._addBehavior();
 }
 
+hui.ui.ColorInput.create = function(options) {
+	options = options || {};
+	var e = options.element = hui.build('span',{'class':'hui_colorinput',html:'<span class="hui_field_top"><span><span></span></span></span><span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content"><span class="hui_field_singleline"><input type="text" value=""/></span></span></span></span><span class="hui_field_bottom"><span><span></span></span></span><a class="hui_colorinput" href="javascript://"></a>'});
+		
+	return new hui.ui.ColorInput(options);
+}
+
 hui.ui.ColorInput.prototype = {
 	_addBehavior : function() {
+		hui.ui.addFocusClass({element:this.input.element,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.button, 'click',this._onButtonClick.bind(this));
 	},
 	_syncValue : function() {
 		this.button.style.backgroundColor = this.value;
 		this.input.setValue(this.value);
+	},
+	_onInputChange : function(value) {
+		this.value = value;
+		this.button.style.backgroundColor = this.value;	
 	},
 	getValue : function() {
 		return this.value;
