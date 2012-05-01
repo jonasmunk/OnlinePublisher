@@ -27,7 +27,7 @@
 <body>
 	<div id="log"></div>
 	<script type="text/javascript" charset="utf-8">
-		var win = hui.ui.Window.create({width:300,padding:5});
+		var win = hui.ui.Window.create({width:300,padding:5,variant:'dark'});
 		var form = hui.ui.Formula.create({name:'formula'});
 		var group = form.buildGroup({above:false},[
 			{type:'DropDown',options:{label:'Drop down',name:'dropdown',value:1,items:[{value:1,title:'Number one'},{value:2,title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}]}},

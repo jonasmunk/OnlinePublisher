@@ -1664,38 +1664,42 @@ div.hui_window_light table.hui_formula_group label
 }
 
 
-div.hui_window_dark table.hui_formula_group label, div.hui_window_dark div.hui_checkbox, div.hui_window_dark div.hui_radiobutton, div.hui_window_dark th.hui_objectlist
+body .hui_context_dark table.hui_formula_group label, 
+.hui_context_dark .hui_checkbox, 
+.hui_context_dark span.hui_radiobutton_label, 
+.hui_context_dark th.hui_objectlist
 {
 	color: #fff;
 	background: none;
 }
 
-div.hui_window_dark .hui_formula_text
+.hui_context_dark .hui_formula_text
 {
 	color: #fff;
 }
 
-div.hui_window_dark div.hui_field span
+.hui_context_dark div.hui_field span
 {
 	background-image: url('../gfx/field_dark.png');
 }
 
-div.hui_window_dark div.hui_field span.hui_field_singleline, div.hui_window_dark div.hui_field span.hui_formula_text_multiline
+.hui_context_dark div.hui_field span.hui_field_singleline, 
+.hui_context_dark div.hui_field span.hui_formula_text_multiline
 {
 	background: none;
 }
 
-div.hui_window_dark div.hui_field span.hui_field_content
+.hui_context_dark div.hui_field span.hui_field_content
 {
 	background: #222222;
 }
 
-div.hui_window_dark div.hui_field span.hui_field_singleline
+.hui_context_dark div.hui_field span.hui_field_singleline
 {
 	background: none;
 }
 
-div.hui_window_dark a.hui_checkbox
+.hui_context_dark a.hui_checkbox
 {
 	color: #fff;
 }

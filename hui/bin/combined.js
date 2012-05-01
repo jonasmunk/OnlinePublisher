@@ -5952,7 +5952,7 @@ hui.ui.Window = function(options) {
 	}
 	this.visible = false;
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 hui.ui.Window.create = function(options) {
@@ -5970,12 +5970,14 @@ hui.ui.Window.create = function(options) {
 		'</div></div></div>'+
 		'<div class="hui_window_bottom"><div class="hui_window_bottom"><div class="hui_window_bottom"></div></div></div></div>';
 	options.element = hui.build('div',{'class':'hui_window'+(options.variant ? ' hui_window_'+options.variant : ''),html:html,parent:document.body});
+	if (options.variant=='dark') {
+		hui.cls.add(options.element,'hui_context_dark');
+	}
 	return new hui.ui.Window(options);
 }
 
 hui.ui.Window.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var self = this;
 		if (this.close) {
 			hui.listen(this.close,'click',function(e) {
@@ -6061,9 +6063,11 @@ hui.ui.Window.prototype = {
 	setVariant : function(variant) {
 		hui.cls.remove(this.element,'hui_window_dark');
 		hui.cls.remove(this.element,'hui_window_light');
-		if (variant=='dark' || variant=='light') {
+		hui.cls.remove(this.element,'hui_window_news');
+		if (variant=='dark' || variant=='light' || variant=='news') {
 			hui.cls.add(this.element,'hui_window_'+variant);
 		}
+		hui.cls.set(this.element,'hui_context_dark',variant=='dark');
 	},
 	flip : function() {
 		if (this.back) {

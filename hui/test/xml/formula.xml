@@ -393,6 +393,7 @@
 				<buttons top="10">
 					<button title="Normal" click="win.setVariant(null)"/>
 					<button title="Dark" click="win.setVariant('dark')"/>
+					<button title="News" click="win.setVariant('news')"/>
 					<button title="Light" click="win.setVariant('light')" highlighted="true"/>
 				</buttons>
 			</group>
