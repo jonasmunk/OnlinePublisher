@@ -288,7 +288,7 @@
 		<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
 		
 		
-		<a class="hui_colorinput" href="javascript://"><xsl:comment/></a>
+		<a class="hui_colorinput" href="javascript://" tabindex="-1"><xsl:comment/></a>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ColorInput({

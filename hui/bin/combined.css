@@ -1448,9 +1448,9 @@ div.hui_dropdown_selector
 	background: #fff;
 	border: 1px solid #ddd;
 	font-size: 12px;
-	-webkit-box-shadow: 0px 3px 5px #999;
+	-webkit-box-shadow: 0px 2px 6px rgba(0,0,0,.1);
 	-webkit-border: none;
-	-moz-box-shadow: 0px 3px 5px #999;
+	-moz-box-shadow: 0px 2px 6px rgba(0,0,0,.1);
 	overflow: auto;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	text-align: left;
@@ -6649,6 +6649,12 @@ a.hui_numberfield_down
 	bottom: 3px;
 }
 
+a.hui_numberfield_up:hover, 
+a.hui_numberfield_down:hover
+{
+	background: rgba(0,0,0,.1);
+}
+
 span.hui_numberfield_focused
 {
 	background-position: -11px -75px;
@@ -6728,9 +6734,10 @@ a.hui_colorinput
 	top: 1px;
 	right: -22px;
 	position: absolute;
-	width: 19px;
-	height: 19px;
+	width: 20px;
+	height: 20px;
 	border: 1px solid #CCC;
+	border-radius: 2px;
 	margin-left: 3px;
 	margin-top: 1px;
 	text-decoration: none;
@@ -6739,6 +6746,7 @@ a.hui_colorinput
 	text-align: center;
 	color: #ccc;
 	line-height: 20px;
+	outline: none;
 }div.hui_structure
 {
 	height: 100%;
