@@ -734,7 +734,12 @@
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_window</xsl:text>
-			<xsl:if test="@variant"><xsl:text> hui_window_</xsl:text><xsl:value-of select="@variant"/></xsl:if>
+			<xsl:if test="@variant">
+				<xsl:text> hui_window_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+			<xsl:if test="@variant='dark'">
+				<xsl:text> hui_context_dark</xsl:text>
+			</xsl:if>
 		</xsl:attribute>
 		<xsl:apply-templates select="gui:back"/>
 		<div class="hui_window_front">

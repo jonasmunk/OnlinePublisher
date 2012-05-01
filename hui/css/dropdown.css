@@ -1,14 +1,8 @@
 a.hui_dropdown
 {
-	background-image: url('../gfx/dropdown.png');
-}
-
-
-a.hui_dropdown
-{
 	display: inline-block;
 	height: 26px;
-	background-position: -16px 0;
+	background: url('../gfx/dropdown.png') -16px 0 no-repeat;
 	outline: none;
 	text-decoration: none;
 	color: #333;
@@ -16,6 +10,7 @@ a.hui_dropdown
 	line-height: 26px;
 	vertical-align: middle;
 	text-align: left;
+	
 }
 
 a.hui_dropdown span
