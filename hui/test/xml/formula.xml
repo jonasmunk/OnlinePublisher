@@ -19,7 +19,9 @@
 			<item title="Ut enim ad minim veniam" value="3"/>
 			<item title="Excepteur sint occaecat" value="4"/>
 		</dropdown>
-		<button text="Click me"/>
+		<button text="Click me">
+			<confirm text="Are you sure?"/>
+		</button>
 		<button text="Click me" highlighted="true"/>
 		<button text="Click me" small="true"/>
 		<button text="Click me" small="true" highlighted="true"/>
