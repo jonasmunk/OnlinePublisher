@@ -15684,7 +15684,7 @@ hui.ui.NumberField.prototype = {
 		this.updateField();
 	},
 	_onSliderChange : function(value) {
-		var conv = this.options.min+(Math.min(this.options.max,100)-this.options.min)*value;
+		var conv = this.options.min+(this.options.max-this.options.min)*value;
 		this.setLocalValue(conv,true);
 		this.updateField();
 	},
