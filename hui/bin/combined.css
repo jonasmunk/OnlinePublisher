@@ -764,6 +764,23 @@ a.hui_button_mini_paper span span
 	padding: 0 10px;
 	font-size: 10px;
 	line-height: 16px;
+}
+
+
+
+
+
+.hui_context_dark a.hui_button,
+.hui_context_dark a.hui_button span
+{
+	background-image: url('../gfx/button_overlay.png');
+	color: #fff;
+}
+
+.hui_context_dark a.hui_button_highlighted, 
+.hui_context_dark a.hui_button_highlighted span
+{
+	background-image: url('../gfx/button_overlay_highlighted.png');
 }div.hui_curtain
 {
 	width: 100%;
@@ -1339,15 +1356,9 @@ body .hui_context_dark table.hui_formula_group label,
 	color: #fff;
 }a.hui_dropdown
 {
-	background-image: url('../gfx/dropdown.png');
-}
-
-
-a.hui_dropdown
-{
 	display: inline-block;
 	height: 26px;
-	background-position: -16px 0;
+	background: url('../gfx/dropdown.png') -16px 0 no-repeat;
 	outline: none;
 	text-decoration: none;
 	color: #333;
@@ -1355,6 +1366,7 @@ a.hui_dropdown
 	line-height: 26px;
 	vertical-align: middle;
 	text-align: left;
+	
 }
 
 a.hui_dropdown span
@@ -6361,19 +6373,17 @@ span.hui_locationfield_longitude
 div.hui_tokenfield
 {
 	overflow: hidden;
-	padding-left:3px;
-	padding-top:3px;
+	padding-top: 1px;
+	padding-left: 3px;
 }
 
 input.hui_tokenfield_token
 {
 	border-color:#BBBBBB #CCCCCC #DDDDDD;
 	border-style:solid;
-	border-width:1px;
+	border-width: 1px;
 	width: 50px;
-	margin-right: 5px;
-	margin-bottom: 5px;
-	float: left;
+	margin: 0 5px 5px 0;
 	padding: 1px 0px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
@@ -6387,11 +6397,12 @@ input.hui_tokenfield_token:focus
 	outline: 4px auto #2678ff;
 }
 
-div.hui_window_dark input.hui_tokenfield_token
+div.hui_context_dark input.hui_tokenfield_token
 {
 	background: #222;
 	border: 1px solid #444;
 	color: #fff;
+	-webkit-box-shadow: inset 0 1px 3px #000;
 }a.hui_checkbox
 {
 	overflow: hidden;

@@ -5,7 +5,7 @@
  * @constructor
  */
 hui.ui.NumberField = function(o) {
-	this.options = hui.override({min:0,max:10000,value:null,tickSize:1,decimals:0,allowNull:false},o);	
+	this.options = hui.override({min:0,max:undefined,value:null,tickSize:1,decimals:0,allowNull:false},o);	
 	this.name = o.name;
 	var e = this.element = hui.get(o.element);
 	this.input = hui.get.firstByTag(e,'input');
@@ -53,6 +53,7 @@ hui.ui.NumberField.prototype = {
 	_onFocus : function() {
 		hui.cls.add(this.element,'hui_numberfield_focused');
 		this._showSlider();
+		this._updateSlider();
 	},
 	_onKey : function(e) {
 		e = e || window.event;
@@ -118,12 +119,26 @@ hui.ui.NumberField.prototype = {
 		if (value===null || value===undefined && this.options.allowNull) {
 			this.value = null;
 		} else {
-			this.value = Math.min(Math.max(value,this.options.min),this.options.max);
+			if (this.options.min!==undefined) {
+				value = Math.max(value,this.options.min)
+			}
+			if (this.options.max!==undefined) {
+				value = Math.min(value,this.options.max)
+			}
+			this.value = this._round(value);
 		}
 		if (fire && orig!==this.value) {
 			hui.ui.callAncestors(this,'childValueChanged',this.value);
 			this.fire('valueChanged',this.value);
 		}
+		this._updateSlider();
+	},
+	_round : function(value) {
+		if (this.options.decimals!==undefined) {
+			var x = Math.pow(10,this.options.decimals);
+			value = Math.round(value * x) / x;
+		}
+		return value;
 	},
 	/** Resets the field */
 	reset : function() {
@@ -136,11 +151,13 @@ hui.ui.NumberField.prototype = {
 	},
 	_onSliderChange : function(value) {
 		var conv = this.options.min+(Math.min(this.options.max,100)-this.options.min)*value;
-		this.setLocalValue(conv);
+		this.setLocalValue(conv,true);
 		this.updateField();
 	},
 	_showSlider : function() {
-		return;
+		if (this.options.min===undefined || this.options.max===undefined) {
+			return;
+		}
 		if (!this.sliderPanel) {
 			this.sliderPanel = hui.ui.BoundPanel.create({variant:'light'});
 			this.slider = hui.ui.Slider.create({width:200})
@@ -150,5 +167,10 @@ hui.ui.NumberField.prototype = {
 		}
 		this.sliderPanel.position({element:this.element,position:'vertical'});
 		this.sliderPanel.show();
+	},
+	_updateSlider : function() {
+		if (this.slider) {
+			this.slider.setValue((this.value -this.options.min) / (this.options.max-this.options.min))
+		}
 	}
 }

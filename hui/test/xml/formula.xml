@@ -48,7 +48,7 @@
 				<field label="Slider:">
 					<slider key="slider" name="sliderTest" width="200"/>
 					<space width="10"/>
-					<number-input name="sliderValue" tick-size="0.1" min="0" max="1"/>
+					<number-input name="sliderValue" tick-size="0.1" decimals="2" min="0" max="1"/>
 					<script>
 						hui.ui.listen({
 							$valueChanged$sliderTest : function(value) {
@@ -361,7 +361,7 @@
 			log.show();
 		}
 		hui.onReady(function() {
-		win.show()
+		//win.show()
 		}) 
 	</script>
 	
