@@ -16,12 +16,10 @@ hui.ui.Picker = function(o) {
 hui.ui.Picker.create = function(o) {
 	o = hui.override({shadow:true},o);
 	o.element = hui.build('div',{'class':'hui_picker',
-		html:'<div class="hui_picker_top"><div><div></div></div></div>'+
-		'<div class="hui_picker_middle"><div class="hui_picker_middle">'+
+		html:'<div class="hui_picker_middle"><div class="hui_picker_middle">'+
 		(o.title ? '<div class="hui_picker_title">'+o.title+'</div>' : '')+
 		'<div class="hui_picker_container"><div class="hui_picker_content"></div></div>'+
-		'</div></div>'+
-		'<div class="hui_picker_bottom"><div><div></div></div></div>'});
+		'</div></div>'});
 	if (o.shadow==true) {
 		hui.cls.add(o.element,'hui_picker_shadow')
 	}
@@ -30,6 +28,13 @@ hui.ui.Picker.create = function(o) {
 
 hui.ui.Picker.prototype = {
 	addBehavior : function() {
+		hui.drag.register({
+			element : this.element,
+			onBeforeMove : this._onBeforeMove.bind(this),
+			onMove : this._onMove.bind(this),
+			onAfterMove : this._onAfterMove.bind(this)
+		});
+		return;
 		var self = this;
 		hui.listen(this.content,'mousedown',function(e) {
 			self.startDrag(e);
@@ -62,22 +67,22 @@ hui.ui.Picker.prototype = {
 		} else {
 			width = this.container.clientWidth;
 		}
-		hui.style.set(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
+		hui.style.set(this.container,{width:width+'px',height:(this.options.itemHeight+14)+'px'});
 		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
-		this.content.style.height=(this.options.itemHeight+10)+'px';
+		this.content.style.height=(this.options.itemHeight+14)+'px';
 		hui.each(this.objects,function(object,i) {
-			var item = hui.build('div',{'class':'hui_picker_item',title:object.title});
+			var item = hui.build('div',{
+				'class' : 'hui_picker_item',
+				title : object.title,
+				html : '<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.string.escape(object.title)+'</strong></div>',
+				parent : self.content
+			});
 			if (self.value!=null && object[self.options.valueProperty]==self.value) {
 				 hui.cls.add(item,'hui_picker_item_selected');
 			}
-			item.innerHTML = '<div class="hui_picker_item_middle"><div class="hui_picker_item_middle">'+
-				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.string.escape(object.title)+'</strong></div>'+
-				'</div></div>'+
-				'<div class="hui_picker_item_bottom"><div><div></div></div></div>';
 			hui.listen(item,'mouseup',function() {
 				self.selectionChanged(object[self.options.valueProperty])
 			});
-			self.content.appendChild(item);
 		});
 	},
 	updateSelection : function() {
@@ -94,34 +99,20 @@ hui.ui.Picker.prototype = {
 		this.fire('select',value);
 	},
 	
-	// Dragging
-	startDrag : function(e) {
-		e = new hui.Event(e);
-		e.stop();
-		var self = this;
+	_onBeforeMove : function(e) {
 		this.dragX = e.getLeft();
 		this.dragScroll = this.container.scrollLeft;
-		hui.ui.Picker.mousemove = function(e) {self.drag(e);return false;}
-		hui.ui.Picker.mouseup = hui.ui.Picker.mousedown = function(e) {self.endDrag(e);return false;}
-		hui.listen(window.document,'mousemove',hui.ui.Picker.mousemove);
-		hui.listen(window.document,'mouseup',hui.ui.Picker.mouseup);
-		hui.listen(window.document,'mousedown',hui.ui.Picker.mouseup);
-	},
-	drag : function(e) {
-		e = new hui.Event(e);
-		e.stop();
 		this.dragging = true;
+	},
+	_onMove : function(e) {
 		this.container.scrollLeft=this.dragX-e.getLeft()+this.dragScroll;
 	},
-	endDrag : function(e) {
-		this.dragging = false;
-		hui.stop(e);
-		hui.unListen(window.document,'mousemove',hui.ui.Picker.mousemove);
-		hui.unListen(window.document,'mouseup',hui.ui.Picker.mouseup);
-		hui.unListen(window.document,'mousedown',hui.ui.Picker.mouseup);
+	_onAfterMove : function(e) {
 		var size = this.options.itemWidth+14;
 		hui.animate(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
+		this.dragging = false;
 	},
+	
 	$visibilityChanged : function() {
 		if (!hui.dom.isVisible(this.container)) {return}
 		this.container.style.display='none';

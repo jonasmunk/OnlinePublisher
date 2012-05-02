@@ -4,40 +4,6 @@
 	background: #b9bec6;
 }
 
-.hui_picker_top, .hui_picker_top div
-{
-	font-size: 1px;
-	height: 7px;
-	background: url('../gfx/picker_bg.png') left -14px repeat-x;
-}
-
-.hui_picker_top div
-{
-	background: url('../gfx/picker_bg.png') left 0px no-repeat;
-}
-
-.hui_picker_top div div
-{
-	background: url('../gfx/picker_bg.png') right -7px no-repeat;
-}
-
-.hui_picker_bottom, .hui_picker_bottom div
-{
-	font-size: 1px;
-	height: 7px;
-	background: url('../gfx/picker_bg.png') left -35px repeat-x;
-}
-
-.hui_picker_bottom div
-{
-	background: url('../gfx/picker_bg.png') left -21px no-repeat;
-}
-
-.hui_picker_bottom div div
-{
-	background: url('../gfx/picker_bg.png') right -28px no-repeat;
-}
-
 .hui_picker_middle
 {
 	background: url('../gfx/picker_bg_middle.png') right 0px repeat-y;
@@ -74,6 +40,8 @@ div.hui_picker_title
 	padding: 5px;
 	margin: 1px 2px 0px;
 	font-size: 0;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .hui_picker_item strong
@@ -100,8 +68,6 @@ div.hui_picker_title
 {
 	background-color: #3875D7;
 	background-color: rgba(56,117,215,.7);
-	-moz-border-radius: 5px;
-	border-radius: 5px;
 }
 
 div.hui_picker_shadow div.hui_picker_item_selected
@@ -110,42 +76,15 @@ div.hui_picker_shadow div.hui_picker_item_selected
 	border-radius: 3px;
 }
 
-div.hui_picker_shadow div.hui_picker_item
+div.hui_picker_shadow div.hui_picker_item div
 {
-	padding: 4px 3px 1px;
+	box-shadow: 0 2px 5px rgba(0,0,0,.5);
 }
 
 div.hui_picker_shadow div.hui_picker_item_middle
 {
 	background: url('../gfx/picker_item.png') left -12px no-repeat;
 	padding-left: 2px;
-}
-
-div.hui_picker_shadow div.hui_picker_item_middle div.hui_picker_item_middle
-{
-	padding: 0px 2px 0px 0px;
-	background-position: right -12px;
-}
-
-div.hui_picker_shadow div.hui_picker_item_bottom
-{
-	background: url('../gfx/picker_item.png') left 0px no-repeat;
-	font-size: 0px;
-	height: 4px;
-	padding-left: 4px;
-}
-
-div.hui_picker_shadow div.hui_picker_item_bottom div
-{
-	background: url('../gfx/picker_item.png') right -4px no-repeat;
-	height: 4px;
-	padding-right: 4px;
-}
-
-div.hui_picker_shadow div.hui_picker_item_bottom div div
-{
-	background: url('../gfx/picker_item.png') right -8px repeat-x;
-	padding: 0px;
 }
 
 
