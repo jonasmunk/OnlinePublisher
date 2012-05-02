@@ -18,22 +18,26 @@
 </head>
 
 <body>
-<script type="text/javascript" charset="utf-8">
-	var objects = [
-		{value:'basic',title:'Basal',image:'../gfx/thumbnail.png'},
-		{value:'modern',title:'Moderne',image:'../gfx/thumbnail.png'},
-		{value:'cartoon',title:'Tegneserie',image:'../gfx/thumbnail.png'},
-		{value:'ocean',title:'Ocean',image:'../gfx/thumbnail.png'},
-		{value:'snow',title:'Snow',image:'../gfx/thumbnail.png'},
-		{value:'beach',title:'Beach',image:'../gfx/thumbnail.png'}
-	];
+	<script type="text/javascript" charset="utf-8">
+		var objects = [
+			{value:'basic',title:'Basal',image:'../gfx/thumbnail.png'},
+			{value:'modern',title:'Moderne',image:'../gfx/thumbnail.png'},
+			{value:'cartoon',title:'Tegneserie',image:'../gfx/thumbnail.png'},
+			{value:'ocean',title:'Ocean',image:'../gfx/thumbnail.png'},
+			{value:'snow',title:'Snow',image:'../gfx/thumbnail.png'},
+			{value:'beach',title:'Beach',image:'../gfx/thumbnail.png'}
+		];
 
-	var win = hui.ui.Window.create({title:'Skift skabelon',variant:'light',padding:5,width:300});
-	var picker = hui.ui.Picker.create({name:'templatePicker',itemWidth:92,itemHeight:120});
-	picker.setObjects(objects);
-	win.add(picker);
-	win.show();
-</script>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		var win = hui.ui.Window.create({title:'Skift skabelon',variant:'light',padding:5,width:300});
+		var picker = hui.ui.Picker.create({name:'templatePicker',itemWidth:92,itemHeight:120});
+		picker.setObjects(objects);
+		win.add(picker);
+		win.show();
+	</script>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+		Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+		Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</p>
 </body>
 </html>

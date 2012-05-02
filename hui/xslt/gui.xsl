@@ -941,7 +941,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 <!--doc title:'Picker' class:'hui.ui.Picker'
 <picker name="«name»" shadow="«boolean»" title="«text»" item-height="«pixels»" item-width="«pixels»">
     <item title="«text»" value="«text»" image="«url»" />
-	<item title="«text»" value="«text»" image="«url»" />
+    <item title="«text»" value="«text»" image="«url»" />
 </picker>
 -->
 <xsl:template match="gui:picker">
@@ -956,6 +956,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 				<div class="hui_picker_title"><xsl:value-of select="@title"/></div>
 			</xsl:if>
 		<div class="hui_picker_container"><div class="hui_picker_content"><xsl:comment/></div></div>
+		<div class="hui_picker_pages"><a>1</a><a>2</a><a>3</a></div>
 		</div></div>
 		<div class="hui_picker_bottom"><div><div></div></div></div>
 	</div>

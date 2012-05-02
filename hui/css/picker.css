@@ -101,11 +101,13 @@ div.hui_picker_title
 	background-color: #3875D7;
 	background-color: rgba(56,117,215,.7);
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 div.hui_picker_shadow div.hui_picker_item_selected
 {
 	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 div.hui_picker_shadow div.hui_picker_item
@@ -146,3 +148,58 @@ div.hui_picker_shadow div.hui_picker_item_bottom div div
 	padding: 0px;
 }
 
+
+div.hui_picker_bottom, div.hui_picker_top
+{
+	display: none;
+}
+
+.hui_picker_middle, .hui_picker_middle .hui_picker_middle
+{
+	background: none;
+	padding: 0;
+}
+
+div.hui_picker
+{
+	padding: 10px 0;
+	box-shadow: inset 0 2px 10px rgba(0,0,0,.3);
+	background: url('../gfx/picker_bg_middle.png');
+	background: url('../gfx/backgrounds/brushed_lighter.png');
+}
+
+div.hui_picker_content
+{
+	padding: 0 8px;
+}
+
+div.hui_picker_pages
+{
+	text-align: center;
+}
+
+div.hui_picker_pages a
+{
+	display: inline-block;
+	min-width: 12px;
+	padding: 0 2px;
+	height: 16px;
+	line-height: 16px;
+	font-size: 11px;
+	cursor: pointer;
+	border-radius: 8px;
+	background: rgba(0,0,0,.1);
+	color: #666;
+	margin: 0 2px;
+}
+
+div.hui_picker_pages a:first-child
+{
+	background: rgba(0,0,0,.2);
+	color: #fff;
+}
+
+div.hui_picker_pages a:hover
+{
+	background: rgba(0,0,0,.2);
+}
