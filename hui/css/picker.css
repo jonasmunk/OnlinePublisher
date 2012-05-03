@@ -2,6 +2,7 @@
 .hui_picker
 {
 	background: #b9bec6;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
 .hui_picker_middle
@@ -18,7 +19,6 @@
 
 div.hui_picker_title
 {
-	font-family: 'Lucida Grande','Verdana',sans-serif;
 	font-size: 10pt;
 	color: #2c3a52;
 	padding: 2px 10px;
@@ -46,7 +46,6 @@ div.hui_picker_title
 
 .hui_picker_item strong
 {
-	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 10px;
 	display: inline-block;
 	height: 15px;

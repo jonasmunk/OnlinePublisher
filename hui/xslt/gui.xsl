@@ -950,13 +950,11 @@ doc title:'Rich text' class:'hui.ui.RichText'
 			<xsl:text>hui_picker</xsl:text>
 			<xsl:if test="@shadow='true'"><xsl:text> hui_picker_shadow</xsl:text></xsl:if>
 		</xsl:attribute>
-		<div class="hui_picker_middle"><div class="hui_picker_middle">
 			<xsl:if test="@title">
 				<div class="hui_picker_title"><xsl:value-of select="@title"/></div>
 			</xsl:if>
 		<div class="hui_picker_container"><div class="hui_picker_content"><xsl:comment/></div></div>
 		<div class="hui_picker_pages"><a>1</a><a>2</a><a>3</a></div>
-		</div></div>
 	</div>
 	<script type="text/javascript">
 		(function() {
