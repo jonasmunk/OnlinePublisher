@@ -49,7 +49,6 @@ hui.ui.Slider.prototype = {
 		left = Math.min(left,this.dragInfo.max);
 		this.handler.style.left = left+'px'
 		this._setPosition((left-5)/(this.dragInfo.max-5));
-		hui.log(this.position)
 	},
 	_onAfterMove : function() {
 		hui.cls.remove(this.element,'hui_slider_active');

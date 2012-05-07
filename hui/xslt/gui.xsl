@@ -734,7 +734,12 @@
 	<div id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_window</xsl:text>
-			<xsl:if test="@variant"><xsl:text> hui_window_</xsl:text><xsl:value-of select="@variant"/></xsl:if>
+			<xsl:if test="@variant">
+				<xsl:text> hui_window_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+			<xsl:if test="@variant='dark'">
+				<xsl:text> hui_context_dark</xsl:text>
+			</xsl:if>
 		</xsl:attribute>
 		<xsl:apply-templates select="gui:back"/>
 		<div class="hui_window_front">
@@ -936,7 +941,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 <!--doc title:'Picker' class:'hui.ui.Picker'
 <picker name="«name»" shadow="«boolean»" title="«text»" item-height="«pixels»" item-width="«pixels»">
     <item title="«text»" value="«text»" image="«url»" />
-	<item title="«text»" value="«text»" image="«url»" />
+    <item title="«text»" value="«text»" image="«url»" />
 </picker>
 -->
 <xsl:template match="gui:picker">
@@ -945,14 +950,11 @@ doc title:'Rich text' class:'hui.ui.RichText'
 			<xsl:text>hui_picker</xsl:text>
 			<xsl:if test="@shadow='true'"><xsl:text> hui_picker_shadow</xsl:text></xsl:if>
 		</xsl:attribute>
-		<div class="hui_picker_top"><div><div></div></div></div>
-		<div class="hui_picker_middle"><div class="hui_picker_middle">
 			<xsl:if test="@title">
 				<div class="hui_picker_title"><xsl:value-of select="@title"/></div>
 			</xsl:if>
 		<div class="hui_picker_container"><div class="hui_picker_content"><xsl:comment/></div></div>
-		</div></div>
-		<div class="hui_picker_bottom"><div><div></div></div></div>
+		<div class="hui_picker_pages"><a>1</a><a>2</a><a>3</a></div>
 	</div>
 	<script type="text/javascript">
 		(function() {

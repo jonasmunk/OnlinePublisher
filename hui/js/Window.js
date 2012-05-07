@@ -32,7 +32,11 @@ hui.ui.Window.create = function(options) {
 		'">'+
 		'</div></div></div>'+
 		'<div class="hui_window_bottom"><div class="hui_window_bottom"><div class="hui_window_bottom"></div></div></div></div>';
-	options.element = hui.build('div',{'class':'hui_window'+(options.variant ? ' hui_window_'+options.variant : ''),html:html,parent:document.body});
+	var cls = 'hui_window'+(options.variant ? ' hui_window_'+options.variant : '');
+	if (options.variant=='dark') {
+		cls+=' hui_context_dark';
+	}
+	options.element = hui.build('div',{'class':cls,html:html,parent:document.body});
 	if (options.variant=='dark') {
 		hui.cls.add(options.element,'hui_context_dark');
 	}

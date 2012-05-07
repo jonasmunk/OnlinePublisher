@@ -445,3 +445,20 @@ a.hui_button_mini_paper span span
 	font-size: 10px;
 	line-height: 16px;
 }
+
+
+
+
+
+.hui_context_dark a.hui_button,
+.hui_context_dark a.hui_button span
+{
+	background-image: url('../gfx/button_overlay.png');
+	color: #fff;
+}
+
+.hui_context_dark a.hui_button_highlighted, 
+.hui_context_dark a.hui_button_highlighted span
+{
+	background-image: url('../gfx/button_overlay_highlighted.png');
+}

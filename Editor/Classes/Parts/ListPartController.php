@@ -92,8 +92,8 @@ class ListPartController extends PartController
 						</group>
 						<fieldset legend="Begrænsning">
 							<group labels="before">
-								<number label="Dage" value="'.$part->getTimeCount().'" key="time_count"/>
-								<number label="Maksimalt antal" value="'.$part->getMaxItems().'" key="maxitems"/>
+								<number label="Dage" value="'.$part->getTimeCount().'" key="time_count" max="1000"/>
+								<number label="Maksimalt antal" value="'.$part->getMaxItems().'" key="maxitems" min="0" max="100"/>
 							</group>
 						</fieldset>
 						<space height="10"/>
@@ -104,7 +104,7 @@ class ListPartController extends PartController
 									<item value="ascending" text="Stigende"/>
 								</radiobuttons>
 								<checkbox label="Vis tekst" value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
-								<number label="Tekstlængde" value="'.$part->getMaxTextLength().'" key="maxtextlength"/>
+								<number label="Tekstlængde" value="'.$part->getMaxTextLength().'" key="maxtextlength" min="0" max="2000"/>
 								<checkbox label="Vis kilde" value="'.($part->getShowSource() ? 'true' : 'false').'" key="show_source"/>
 								<checkbox label="Vis tidszone" value="'.($part->getShowTimezone() ? 'true' : 'false').'" key="show_timezone"/>
 								<dropdown label="Tidszone">

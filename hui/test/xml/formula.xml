@@ -48,7 +48,7 @@
 				<field label="Slider:">
 					<slider key="slider" name="sliderTest" width="200"/>
 					<space width="10"/>
-					<number-input name="sliderValue" tick-size="0.1" min="0" max="1"/>
+					<number-input name="sliderValue" tick-size="0.1" decimals="2" min="0" max="1"/>
 					<script>
 						hui.ui.listen({
 							$valueChanged$sliderTest : function(value) {
@@ -360,9 +360,12 @@
 			logfield.setValue(hui.string.toJSON(values));
 			log.show();
 		}
+		hui.onReady(function() {
+		//win.show()
+		}) 
 	</script>
 	
-	<window name="win" width="400" padding="10">
+	<window name="win" width="400" padding="10" variant="dark">
 		<formula name="formula2">
 			<group>
 				<dropdown label="Template:" key="template" source="itemsSource" value="c"/>
