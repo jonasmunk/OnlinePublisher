@@ -5987,13 +5987,16 @@ hui.ui.Window.prototype = {
 			hui.listen(this.close,'click',function(e) {
 				this.hide();
 				this.fire('userClosedWindow');
-			}.bind(this)
-			);
+			}.bind(this));
 			hui.listen(this.close,'mousedown',function(e) {hui.stop(e)});
 		}
-		this.titlebar.onmousedown = function(e) {self.startDrag(e);return false;};
+		hui.drag.register({
+			element : this.titlebar,
+			onBeforeMove : this._onBeforeMove.bind(this) ,
+ 			onMove : this._onMove.bind(this)
+		});
 		hui.listen(this.element,'mousedown',function() {
-			self.element.style.zIndex=hui.ui.nextPanelIndex();
+			self.element.style.zIndex = hui.ui.nextPanelIndex();
 		});
 	},
 	setTitle : function(title) {
@@ -6080,52 +6083,18 @@ hui.ui.Window.prototype = {
 		}
 	},
 
-////////////////////////////// Dragging ////////////////////////////////
-
-	/** @private */
-	startDrag : function(e) {
-		var event = new hui.Event(e);
-		this.element.style.zIndex=hui.ui.nextPanelIndex();
-		var pos = { top : hui.position.getTop(this.element), left : hui.position.getLeft(this.element) };
-		this.dragState = {left:event.getLeft()-pos.left,top:event.getTop()-pos.top};
-		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
-		this.latestTime = new Date().getMilliseconds();
-		var self = this;
-		this.moveListener = function(e) {self.drag(e)};
-		this.upListener = function(e) {self.endDrag(e)};
-		hui.listen(document,'mousemove',this.moveListener);
-		hui.listen(document,'mouseup',this.upListener);
-		hui.listen(document,'mousedown',this.upListener);
-		event.stop();
-		hui.selection.enable(false);
-		return false;
-	},
-	/** @private */
-	calc : function(top,left) {
-		// TODO: No need to do this all the time
-		this.a = this.latestPosition.left-left;
-		this.b = this.latestPosition.top-top;
-		this.dist = Math.sqrt(Math.pow((this.a),2),Math.pow((this.b),2));
-		this.latestTime = new Date().getMilliseconds();
-		this.latestPosition = {'top':top,'left':left};
-	},
-	/** @private */
-	drag : function(e) {
-		var event = new hui.Event(e);
+	_onBeforeMove : function(e) {
+		e = hui.event(e);
+		this.element.style.zIndex = hui.ui.nextPanelIndex();
+		var pos = hui.position.get(this.element);
+		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
 		this.element.style.right = 'auto';
-		var top = (event.getTop()-this.dragState.top);
-		var left = (event.getLeft()-this.dragState.left);
+	},
+	_onMove : function(e) {
+		var top = (e.getTop()-this.dragState.top);
+		var left = (e.getLeft()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
-		//this.calc(top,left);
-		return false;
-	},
-	/** @private */
-	endDrag : function(e) {
-		hui.unListen(document,'mousemove',this.moveListener);
-		hui.unListen(document,'mouseup',this.upListener);
-		hui.unListen(document,'mousedown',this.upListener);
-		hui.selection.enable(false);
 	}
 }
 
@@ -9569,140 +9538,168 @@ hui.ui.ImageViewer.prototype = {
 }
 
 /* EOF *//** @constructor */
-hui.ui.Picker = function(o) {
-	o = this.options = hui.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},o);
-	this.element = hui.get(o.element);
-	this.name = o.name;
+hui.ui.Picker = function(options) {
+	options = this.options = hui.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},options);
+	this.element = hui.get(options.element);
+	this.name = options.name;
 	this.container = hui.get.firstByClass(this.element,'hui_picker_container');
 	this.content = hui.get.firstByClass(this.element,'hui_picker_content');
 	this.title = hui.get.firstByClass(this.element,'hui_picker_title');
+	this.pages = [];
 	this.objects = [];
 	this.selected = null;
 	this.value = null;
-	this.addBehavior();
+	this._addBehavior();
 	hui.ui.extend(this);
 }
 
-hui.ui.Picker.create = function(o) {
-	o = hui.override({shadow:true},o);
-	o.element = hui.build('div',{'class':'hui_picker',
-		html:'<div class="hui_picker_top"><div><div></div></div></div>'+
-		'<div class="hui_picker_middle"><div class="hui_picker_middle">'+
-		(o.title ? '<div class="hui_picker_title">'+o.title+'</div>' : '')+
+hui.ui.Picker.create = function(options) {
+	options = hui.override({shadow:true},options);
+	options.element = hui.build('div',{'class':'hui_picker',
+		html:''+
+		(options.title ? '<div class="hui_picker_title">'+options.title+'</div>' : '')+
 		'<div class="hui_picker_container"><div class="hui_picker_content"></div></div>'+
-		'</div></div>'+
-		'<div class="hui_picker_bottom"><div><div></div></div></div>'});
-	if (o.shadow==true) {
-		hui.cls.add(o.element,'hui_picker_shadow')
+		'<div class="hui_picker_pages"></div>'+
+		''});
+	if (options.shadow==true) {
+		hui.cls.add(options.element,'hui_picker_shadow')
 	}
-	return new hui.ui.Picker(o);
+	return new hui.ui.Picker(options);
 }
 
 hui.ui.Picker.prototype = {
-	addBehavior : function() {
-		var self = this;
-		hui.listen(this.content,'mousedown',function(e) {
-			self.startDrag(e);
-			return false;
+	_addBehavior : function() {
+		hui.drag.register({
+			element : this.element,
+			onBeforeMove : this._onBeforeMove.bind(this),
+			onMove : this._onMove.bind(this),
+			onAfterMove : this._onAfterMove.bind(this)
 		});
+		hui.listen(this.element,'click',this._onClick.bind(this));
+	},
+	_onClick : function(e) {
+		if (this.dragging) {
+			return;
+		}
+		e = hui.event(e);
+		var page = e.findByClass('hui_picker_page');
+		if (page) {
+			this.goToPage(parseInt(page.getAttribute('data-index')));
+		}
+	},
+	goToPage : function(index) {
+		var pos = Math.round(this.container.clientWidth*index);
+		pos = Math.min(pos,this.content.clientWidth-this.container.clientWidth);
+		this._scrollTo(pos,hui.ease.fastSlow);
 	},
 	setObjects : function(objects) {
 		this.selected = null;
 		this.objects = objects || [];
-		this.updateUI();
+		this._updateUI();
 	},
 	setValue : function(value) {
 		this.value = value;
-		this.updateSelection();
+		this._updateSelection();
 	},
 	getValue : function() {
 		return this.value;
 	},
 	reset : function() {
 		this.value = null;
-		this.updateSelection();
+		this._updateSelection();
 	},
-	updateUI : function() {
+	_updateUI : function() {
 		var self = this,
 			width;
-		this.content.innerHTML='';
-		this.container.scrollLeft=0;
+		this.content.innerHTML = '';
+		this.container.scrollLeft = 0;
 		if (this.options.itemsVisible) {
 			width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
 			width = this.container.clientWidth;
 		}
-		hui.style.set(this.container,{width:width+'px',height:(this.options.itemHeight+10)+'px'});
-		this.content.style.width=(this.objects.length*(this.options.itemWidth+14))+'px';
-		this.content.style.height=(this.options.itemHeight+10)+'px';
+		hui.style.set(this.container,{
+			width : width+'px',
+			height : (this.options.itemHeight+14)+'px'
+		});
+		hui.style.set(this.content,{
+			width : (this.objects.length*(this.options.itemWidth+14))+'px',
+			height : height=(this.options.itemHeight+14)+'px'
+		});
 		hui.each(this.objects,function(object,i) {
-			var item = hui.build('div',{'class':'hui_picker_item',title:object.title});
+			var item = hui.build('div',{
+				'class' : 'hui_picker_item',
+				title : object.title,
+				html : '<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.string.escape(object.title)+'</strong></div>',
+				parent : self.content
+			});
 			if (self.value!=null && object[self.options.valueProperty]==self.value) {
 				 hui.cls.add(item,'hui_picker_item_selected');
 			}
-			item.innerHTML = '<div class="hui_picker_item_middle"><div class="hui_picker_item_middle">'+
-				'<div style="width:'+self.options.itemWidth+'px;height:'+self.options.itemHeight+'px; overflow: hidden; background-image:url(\''+object.image+'\')"><strong>'+hui.string.escape(object.title)+'</strong></div>'+
-				'</div></div>'+
-				'<div class="hui_picker_item_bottom"><div><div></div></div></div>';
 			hui.listen(item,'mouseup',function() {
-				self.selectionChanged(object[self.options.valueProperty])
+				self._onItemClick(object[self.options.valueProperty])
 			});
-			self.content.appendChild(item);
 		});
+		this._updatePages();
 	},
-	updateSelection : function() {
+	_updatePages : function() {
+		var pageCount = Math.ceil(this.content.clientWidth / this.container.clientWidth);
+		var pages= hui.get.firstByClass(this.element,'hui_picker_pages');
+		hui.dom.clear(pages);
+		for (var i=1; i <= pageCount; i++) {
+			hui.build('a',{
+				parent : pages,
+				text : i,
+				className : 'hui_picker_page',
+				'data-index' : i-1
+			});
+		};
+	},
+	_updateSelection : function() {
 		var children = this.content.childNodes;
 		for (var i=0; i < children.length; i++) {
 			hui.cls.set(children[i],'hui_picker_item_selected',this.value!=null && this.objects[i][this.options.valueProperty]==this.value);
 		};
 	},
-	selectionChanged : function(value) {
+	_onItemClick : function(value) {
 		if (this.dragging) return;
 		if (this.value==value) return;
 		this.value = value;
-		this.updateSelection();
+		this._updateSelection();
 		this.fire('select',value);
 	},
 	
-	// Dragging
-	startDrag : function(e) {
-		e = new hui.Event(e);
-		e.stop();
-		var self = this;
+	_onBeforeMove : function(e) {
 		this.dragX = e.getLeft();
 		this.dragScroll = this.container.scrollLeft;
-		hui.ui.Picker.mousemove = function(e) {self.drag(e);return false;}
-		hui.ui.Picker.mouseup = hui.ui.Picker.mousedown = function(e) {self.endDrag(e);return false;}
-		hui.listen(window.document,'mousemove',hui.ui.Picker.mousemove);
-		hui.listen(window.document,'mouseup',hui.ui.Picker.mouseup);
-		hui.listen(window.document,'mousedown',hui.ui.Picker.mouseup);
-	},
-	drag : function(e) {
-		e = new hui.Event(e);
-		e.stop();
 		this.dragging = true;
+	},
+	_onMove : function(e) {
 		this.container.scrollLeft=this.dragX-e.getLeft()+this.dragScroll;
 	},
-	endDrag : function(e) {
-		this.dragging = false;
-		hui.stop(e);
-		hui.unListen(window.document,'mousemove',hui.ui.Picker.mousemove);
-		hui.unListen(window.document,'mouseup',hui.ui.Picker.mouseup);
-		hui.unListen(window.document,'mousedown',hui.ui.Picker.mouseup);
+	_onAfterMove : function(e) {
 		var size = this.options.itemWidth+14;
-		hui.animate(this.container,'scrollLeft',Math.round(this.container.scrollLeft/size)*size,500,{ease:hui.ease.bounceOut});
+		var pos = Math.round(this.container.scrollLeft/size)*size;
+		this._scrollTo(pos);
+		this.dragging = false;
 	},
+	_scrollTo : function(pos,ease) {
+		ease = ease || hui.ease.bounceOut;
+		hui.animate(this.container,'scrollLeft',pos,500,{ease:ease});
+	},
+	
 	$visibilityChanged : function() {
-		if (!hui.dom.isVisible(this.container)) {return}
+		if (!hui.dom.isVisible(this.element)) {return}
 		this.container.style.display='none';
 		var width;
 		if (this.options.itemsVisible) {
 			width = this.options.itemsVisible*(this.options.itemWidth+14);
 		} else {
-			width = this.container.parentNode.clientWidth-12;
+			width = this.container.parentNode.clientWidth;
 		}
 		width = Math.max(width,0);
 		hui.style.set(this.container,{width:width+'px',display:'block'});
+		this._updatePages();
 	}
 }
 
