@@ -10,13 +10,13 @@ var controller = {
 		list.loadData('data/list_users.xml');
 	},
 	$drop$user$folder : function(dragged,target) {
-		hui.ui.alert({text:Object.toJSON(dragged)+' was dropped on '+Object.toJSON(target)});
+		hui.ui.alert({text:hui.string.toJSON(dragged)+' was dropped on '+hui.string.toJSON(target)});
 	},
 	$drop$icon$folder : function(dragged,target) {
-		hui.ui.alert({text:Object.toJSON(dragged)+' was dropped on '+Object.toJSON(target)});
+		hui.ui.alert({text:hui.string.toJSON(dragged)+' was dropped on '+hui.string.toJSON(target)});
 	},
 	$open$list : function(info) {
-		alert(Object.toJSON(info))
+		alert(hui.string.toJSON(info))
 	},
 	$buttonClick$list : function(info,button) {
 		hui.log('Button was clicked...');
