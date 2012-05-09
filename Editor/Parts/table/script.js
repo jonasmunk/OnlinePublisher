@@ -173,7 +173,7 @@ var partController = {
 	},
 	addRow : function() {
 		var table = this._getTable();
-		hui.table.addRow(table);
+		hui.table.addRow(table,'tbody');
 		this._syncValue();
 		this._syncSource();
 	},
@@ -273,8 +273,12 @@ hui.table = {
 		}
 		return headCount;
 	},
-	addRow : function(table) {
-		var trs = hui.get.byTag(table,'tr');
+	addRow : function(table,part) {
+		if (part) {
+			var trs = hui.get.byTag(hui.get.firstByTag(table,part),'tr');			
+		} else {
+			var trs = hui.get.byTag(table,'tr');
+		}
 		if (trs.length>0) {
 			var last = trs[trs.length-1];
 			var tr = hui.build('tr');
