@@ -11,9 +11,12 @@ var partController = {
 		toolbar.add(searchField);
 		win.add(toolbar);
 		list.listen({
-			$select : function(obj) {
-				document.forms.PartForm.personId.value=obj.id;
-				partController.preview();
+			$select : function() {
+				var obj = list.getFirstSelection();
+				if (obj) {
+					document.forms.PartForm.personId.value = obj.id;
+					partController.preview();
+				}
 			}
 		});
 		searchField.listen({
@@ -33,6 +36,7 @@ var partController = {
 		list.setSource(src);
 	},
 	preview : function() {
+		hui.log('preview')
 		op.part.utils.updatePreview({
 			node : 'part_person_container',
 			form : document.forms.PartForm,

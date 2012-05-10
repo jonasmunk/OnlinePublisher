@@ -296,6 +296,7 @@ hui.ui.List.prototype = {
 	$listLoaded : function(doc) {
 		this._debug('List loaded');
 		this._setError(false);
+		var hadSelection = this.selected.length>0 || this.checked.length>0;
 		this.selected = [];
 		this.checked = [];
 		this._parseWindow(doc);
@@ -400,12 +401,15 @@ hui.ui.List.prototype = {
 		this.body.appendChild(frag);
 		this._setEmpty(rows.length==0);
 		this.fire('selectionReset');
-		this.fire('select');
+		if (hadSelection) {
+			this.fire('select');
+		}
 		this.fireSizeChange();
 	},
 	
 	/** @private */
 	$objectsLoaded : function(data) {
+		var hadSelection = this.selected.length>0 || this.checked.length>0;
 		this._setError(false);
 		if (data==null) {
 			// NOOP
@@ -415,7 +419,9 @@ hui.ui.List.prototype = {
 			this.setData(data);
 		}
 		this.fire('selectionReset');
-		this.fire('select');
+		if (hadSelection) {
+			this.fire('select');
+		}
 		this.fireSizeChange();
 	},
 	/** @private */
