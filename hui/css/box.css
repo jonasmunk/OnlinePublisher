@@ -8,12 +8,29 @@ div.hui_box
 
 a.hui_box_close
 {
-	width: 30px;
-	height: 30px;
+	width: 29px;
+	height: 31px;
 	background: url('../gfx/box_close.png') left top no-repeat;
 	position: absolute;
 	margin: -10px 0 0 -10px;
 	z-index: 200;
+}
+
+a.hui_box_close:hover
+{
+	background-position: 0 -31px;
+}
+
+a.hui_box_close:focus
+{
+	background-position: 0 -62px;
+	outline: none;
+}
+
+a.hui_box_close:focus:hover
+{
+	background-position: 0 -93px;
+	outline: none;
 }
 
 div.hui_box_absolute

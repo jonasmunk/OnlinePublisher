@@ -9711,7 +9711,7 @@ hui.ui.Picker.prototype = {
 		hui.animate(this.container,'scrollLeft',pos,500,{ease : ease,onComplete : this._updatePager.bind(this)});
 	},
 	_updatePager : function() {
-		var page = Math.floor(this.container.scrollLeft / this.container.clientWidth);
+		var page = Math.ceil(this.container.scrollLeft / this.container.clientWidth);
 		hui.log(page)
 		var pages = hui.get.byClass(this.element,'hui_picker_page');
 		for (var i=0; i < pages.length; i++) {
