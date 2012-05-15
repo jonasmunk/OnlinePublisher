@@ -132,6 +132,14 @@ hui.each = function(items,func) {
 }
 
 /**
+ * @param {Object} condition The condition to test
+ * @param {String} text The text to return when condition evaluates to true
+ */
+hui.when = function(condition,text) {
+	return condition ? text : '';
+}
+
+/**
  * Converts a string to an int if it is only digits, otherwise remains a string
  * @param {String} str The string to convert
  * @returns {Object} An int of the string or the same string

@@ -16,12 +16,12 @@ hui.ui.Picker = function(options) {
 
 hui.ui.Picker.create = function(options) {
 	options = hui.override({shadow:true},options);
-	options.element = hui.build('div',{'class':'hui_picker',
-		html:''+
-		(options.title ? '<div class="hui_picker_title">'+options.title+'</div>' : '')+
+	options.element = hui.build('div',{
+		'class' : 'hui_picker',
+		html : hui.when(options.title,'<div class="hui_picker_title">'+options.title+'</div>')+
 		'<div class="hui_picker_container"><div class="hui_picker_content"></div></div>'+
-		'<div class="hui_picker_pages"></div>'+
-		''});
+		'<div class="hui_picker_pages"></div>'
+	});
 	if (options.shadow==true) {
 		hui.cls.add(options.element,'hui_picker_shadow')
 	}
@@ -105,13 +105,13 @@ hui.ui.Picker.prototype = {
 	},
 	_updatePages : function() {
 		var pageCount = Math.ceil(this.content.clientWidth / this.container.clientWidth);
-		var pages= hui.get.firstByClass(this.element,'hui_picker_pages');
+		var pages = hui.get.firstByClass(this.element,'hui_picker_pages');
 		hui.dom.clear(pages);
 		for (var i=1; i <= pageCount; i++) {
 			hui.build('a',{
 				parent : pages,
 				text : i,
-				className : 'hui_picker_page',
+				className : 'hui_picker_page'+hui.when(i==1,' hui_picker_page_selected'),
 				'data-index' : i-1
 			});
 		};
@@ -136,7 +136,7 @@ hui.ui.Picker.prototype = {
 		this.dragging = true;
 	},
 	_onMove : function(e) {
-		this.container.scrollLeft=this.dragX-e.getLeft()+this.dragScroll;
+		this.container.scrollLeft = this.dragX-e.getLeft()+this.dragScroll;
 	},
 	_onAfterMove : function(e) {
 		var size = this.options.itemWidth+14;
@@ -146,7 +146,15 @@ hui.ui.Picker.prototype = {
 	},
 	_scrollTo : function(pos,ease) {
 		ease = ease || hui.ease.bounceOut;
-		hui.animate(this.container,'scrollLeft',pos,500,{ease:ease});
+		hui.animate(this.container,'scrollLeft',pos,500,{ease : ease,onComplete : this._updatePager.bind(this)});
+	},
+	_updatePager : function() {
+		var page = Math.ceil(this.container.scrollLeft / this.container.clientWidth);
+		hui.log(page)
+		var pages = hui.get.byClass(this.element,'hui_picker_page');
+		for (var i=0; i < pages.length; i++) {
+			hui.cls.set(pages[i],'hui_picker_page_selected',page==i);
+		};
 	},
 	
 	$visibilityChanged : function() {

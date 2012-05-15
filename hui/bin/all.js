@@ -132,6 +132,14 @@ hui.each = function(items,func) {
 }
 
 /**
+ * @param {Object} condition The condition to test
+ * @param {String} text The text to return when condition evaluates to true
+ */
+hui.when = function(condition,text) {
+	return condition ? text : '';
+}
+
+/**
  * Converts a string to an int if it is only digits, otherwise remains a string
  * @param {String} str The string to convert
  * @returns {Object} An int of the string or the same string
@@ -7865,6 +7873,9 @@ hui.ui.Button = function(options) {
 	this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
 	hui.ui.extend(this);
 	this.addBehavior();
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 /**
@@ -7886,6 +7897,12 @@ hui.ui.Button = function(options) {
 hui.ui.Button.create = function(options) {
 	options = hui.override({text:'',highlighted:false,enabled:true},options);
 	var className = 'hui_button'+(options.highlighted ? ' hui_button_highlighted' : '');
+	if (options.variant) {
+		className+=' hui_button_'+options.variant;
+	}
+	if (options.small && options.variant) {
+		className+=' hui_button_small_'+options.variant;
+	}
 	if (options.small) {
 		className+=' hui_button_small'+(options.highlighted ? ' hui_button_small_highlighted' : '');
 	}
@@ -9561,12 +9578,12 @@ hui.ui.Picker = function(options) {
 
 hui.ui.Picker.create = function(options) {
 	options = hui.override({shadow:true},options);
-	options.element = hui.build('div',{'class':'hui_picker',
-		html:''+
-		(options.title ? '<div class="hui_picker_title">'+options.title+'</div>' : '')+
+	options.element = hui.build('div',{
+		'class' : 'hui_picker',
+		html : hui.when(options.title,'<div class="hui_picker_title">'+options.title+'</div>')+
 		'<div class="hui_picker_container"><div class="hui_picker_content"></div></div>'+
-		'<div class="hui_picker_pages"></div>'+
-		''});
+		'<div class="hui_picker_pages"></div>'
+	});
 	if (options.shadow==true) {
 		hui.cls.add(options.element,'hui_picker_shadow')
 	}
@@ -9650,13 +9667,13 @@ hui.ui.Picker.prototype = {
 	},
 	_updatePages : function() {
 		var pageCount = Math.ceil(this.content.clientWidth / this.container.clientWidth);
-		var pages= hui.get.firstByClass(this.element,'hui_picker_pages');
+		var pages = hui.get.firstByClass(this.element,'hui_picker_pages');
 		hui.dom.clear(pages);
 		for (var i=1; i <= pageCount; i++) {
 			hui.build('a',{
 				parent : pages,
 				text : i,
-				className : 'hui_picker_page',
+				className : 'hui_picker_page'+hui.when(i==1,' hui_picker_page_selected'),
 				'data-index' : i-1
 			});
 		};
@@ -9681,7 +9698,7 @@ hui.ui.Picker.prototype = {
 		this.dragging = true;
 	},
 	_onMove : function(e) {
-		this.container.scrollLeft=this.dragX-e.getLeft()+this.dragScroll;
+		this.container.scrollLeft = this.dragX-e.getLeft()+this.dragScroll;
 	},
 	_onAfterMove : function(e) {
 		var size = this.options.itemWidth+14;
@@ -9691,7 +9708,15 @@ hui.ui.Picker.prototype = {
 	},
 	_scrollTo : function(pos,ease) {
 		ease = ease || hui.ease.bounceOut;
-		hui.animate(this.container,'scrollLeft',pos,500,{ease:ease});
+		hui.animate(this.container,'scrollLeft',pos,500,{ease : ease,onComplete : this._updatePager.bind(this)});
+	},
+	_updatePager : function() {
+		var page = Math.floor(this.container.scrollLeft / this.container.clientWidth);
+		hui.log(page)
+		var pages = hui.get.byClass(this.element,'hui_picker_page');
+		for (var i=0; i < pages.length; i++) {
+			hui.cls.set(pages[i],'hui_picker_page_selected',page==i);
+		};
 	},
 	
 	$visibilityChanged : function() {
@@ -15082,7 +15107,8 @@ hui.ui.DateTimeField.create = function(options) {
 hui.ui.DateTimeField.prototype = {
 	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
-		hui.listen(this.input,'blur',this._check.bind(this));
+		hui.listen(this.input,'blur',this._onBlur.bind(this));
+		hui.listen(this.input,'focus',this._onFocus.bind(this));
 	},
 	focus : function() {
 		try {this.input.focus();} catch (ignore) {}
@@ -15130,6 +15156,53 @@ hui.ui.DateTimeField.prototype = {
 		} else {
 			this.input.value = ''
 		}
+	},
+	_onBlur : function() {
+		this._check();
+		if (this.panel) {
+			this.panel.hide();
+		}
+	},
+	_onFocus : function() {
+		this._showPanel();
+	},
+	_showPanel : function() {
+		if (!this.panel) {
+			this.panel = hui.ui.BoundPanel.create({variant:'light'});
+			var b = hui.ui.Buttons.create();
+			b.add(hui.ui.Button.create({
+				text : 'Idag',
+				small : true,
+				variant : 'paper',
+				listener : {$click:this.goToday.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '12:00',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.setHour(12)}.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '00:00',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.setHour(0)}.bind(this)}
+			}));
+			this.panel.add(b)
+		}
+		this.panel.position({element:this.element,position:'vertical'});
+		this.panel.show();
+	},
+	goToday : function() {
+		this.setValue(new Date());
+	},
+	setHour : function(hours) {
+		var newDate = this.value==null ? new Date() : new Date(this.value.getTime());
+		newDate.setMilliseconds(0);
+		newDate.setSeconds(0);
+		newDate.setMinutes(0);
+		newDate.setHours(hours);
+		this.setValue(newDate);
 	}
 }/**
  * A tokens component

@@ -3791,7 +3791,7 @@ div.hui_picker_pages a
 	margin: 0 2px;
 }
 
-div.hui_picker_pages a:first-child
+div.hui_picker_pages a.hui_picker_page_selected
 {
 	background: rgba(0,0,0,.2);
 	color: #fff;
