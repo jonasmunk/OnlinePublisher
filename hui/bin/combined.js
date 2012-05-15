@@ -5040,7 +5040,7 @@ hui.ui.confirm = function(options) {
 		ok = hui.ui.get(name+'_ok');
 		ok.setText(options.ok || 'OK');
 		ok.setHighlighted(options.highlighted=='ok');
-		ok.clearDelegates();
+		ok.clearListeners();
 		hui.ui.get(name+'_cancel').setText(options.ok || 'Cancel');
 		hui.ui.get(name+'_cancel').setHighlighted(options.highlighted=='cancel');
 		if (options.cancel) {hui.ui.get(name+'_cancel').setText(options.cancel);}
@@ -5325,10 +5325,10 @@ hui.ui.extend = function(obj,options) {
 		hui.array.add(this.delegates,delegate);
 		return this;
 	}
-	obj.removeDelegate = function(delegate) {
+	obj.unListen = function(delegate) {
 		hui.array.remove(this.delegates,delegate);
 	}
-	obj.clearDelegates = function() {
+	obj.clearListeners = function() {
 		this.delegates = [];
 	}
 	obj.fire = function(method,value,event) {
@@ -6453,7 +6453,7 @@ hui.ui.List.prototype = {
 	setSource : function(source) {
 		if (this.options.source!=source) {
 			if (this.options.source) {
-				this.options.source.removeDelegate(this);
+				this.options.source.unListen(this);
 			}
 			source.listen(this);
 			this.options.source = source;
@@ -6466,7 +6466,7 @@ hui.ui.List.prototype = {
 	 */
 	setUrl : function(url) {
 		if (this.options.source) {
-			this.options.source.removeDelegate(this);
+			this.options.source.unListen(this);
 			this.options.source=null;
 		}
 		this.url = url;
@@ -6481,7 +6481,7 @@ hui.ui.List.prototype = {
 	clear : function() {
 		this._empty();
 		if (this.options.source) {
-			this.options.source.removeDelegate(this);
+			this.options.source.unListen(this);
 		}
 		this.options.source = null;
 		this.url = null;
@@ -11887,7 +11887,7 @@ hui.ui.Gallery.prototype = {
 	setSource : function(source) {
 		if (this.options.source!=source) {
 			if (this.options.source) {
-				this.options.source.removeDelegate(this);
+				this.options.source.unListen(this);
 			}
 			source.listen(this);
 			this.options.source = source;

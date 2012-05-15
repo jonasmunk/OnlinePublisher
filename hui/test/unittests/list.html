@@ -37,7 +37,16 @@
 				assert.true(state.selectionWasReset,'The $selectionReset event was fired');
 			},
 			function() {
-				
+				list.clearListeners();
+				list.listen({
+					$select : function() {
+						state.itemWasSelected = true;
+					}
+				});
+				var tbody = hui.get.firstByTag(list.element,'tbody');
+				assert.defined(tbody);
+				hui.test.click(hui.get.firstByTag(tbody,'td'));
+				assert.true(state.itemWasSelected,'$select should have fired at this point')
 			}
 		]);
 	</script>

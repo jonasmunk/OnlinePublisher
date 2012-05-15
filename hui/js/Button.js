@@ -21,6 +21,9 @@ hui.ui.Button = function(options) {
 	this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
 	hui.ui.extend(this);
 	this.addBehavior();
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 /**
@@ -42,6 +45,12 @@ hui.ui.Button = function(options) {
 hui.ui.Button.create = function(options) {
 	options = hui.override({text:'',highlighted:false,enabled:true},options);
 	var className = 'hui_button'+(options.highlighted ? ' hui_button_highlighted' : '');
+	if (options.variant) {
+		className+=' hui_button_'+options.variant;
+	}
+	if (options.small && options.variant) {
+		className+=' hui_button_small_'+options.variant;
+	}
 	if (options.small) {
 		className+=' hui_button_small'+(options.highlighted ? ' hui_button_small_highlighted' : '');
 	}

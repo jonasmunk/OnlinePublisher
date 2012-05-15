@@ -175,7 +175,7 @@ hui.ui.List.prototype = {
 	setSource : function(source) {
 		if (this.options.source!=source) {
 			if (this.options.source) {
-				this.options.source.removeDelegate(this);
+				this.options.source.unListen(this);
 			}
 			source.listen(this);
 			this.options.source = source;
@@ -188,7 +188,7 @@ hui.ui.List.prototype = {
 	 */
 	setUrl : function(url) {
 		if (this.options.source) {
-			this.options.source.removeDelegate(this);
+			this.options.source.unListen(this);
 			this.options.source=null;
 		}
 		this.url = url;
@@ -203,7 +203,7 @@ hui.ui.List.prototype = {
 	clear : function() {
 		this._empty();
 		if (this.options.source) {
-			this.options.source.removeDelegate(this);
+			this.options.source.unListen(this);
 		}
 		this.options.source = null;
 		this.url = null;

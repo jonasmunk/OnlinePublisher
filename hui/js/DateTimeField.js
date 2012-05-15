@@ -27,7 +27,8 @@ hui.ui.DateTimeField.create = function(options) {
 hui.ui.DateTimeField.prototype = {
 	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
-		hui.listen(this.input,'blur',this._check.bind(this));
+		hui.listen(this.input,'blur',this._onBlur.bind(this));
+		hui.listen(this.input,'focus',this._onFocus.bind(this));
 	},
 	focus : function() {
 		try {this.input.focus();} catch (ignore) {}
@@ -75,5 +76,52 @@ hui.ui.DateTimeField.prototype = {
 		} else {
 			this.input.value = ''
 		}
+	},
+	_onBlur : function() {
+		this._check();
+		if (this.panel) {
+			this.panel.hide();
+		}
+	},
+	_onFocus : function() {
+		this._showPanel();
+	},
+	_showPanel : function() {
+		if (!this.panel) {
+			this.panel = hui.ui.BoundPanel.create({variant:'light'});
+			var b = hui.ui.Buttons.create();
+			b.add(hui.ui.Button.create({
+				text : 'Idag',
+				small : true,
+				variant : 'paper',
+				listener : {$click:this.goToday.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '12:00',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.setHour(12)}.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '00:00',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.setHour(0)}.bind(this)}
+			}));
+			this.panel.add(b)
+		}
+		this.panel.position({element:this.element,position:'vertical'});
+		this.panel.show();
+	},
+	goToday : function() {
+		this.setValue(new Date());
+	},
+	setHour : function(hours) {
+		var newDate = this.value==null ? new Date() : new Date(this.value.getTime());
+		newDate.setMilliseconds(0);
+		newDate.setSeconds(0);
+		newDate.setMinutes(0);
+		newDate.setHours(hours);
+		this.setValue(newDate);
 	}
 }

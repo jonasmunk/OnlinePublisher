@@ -126,13 +126,6 @@ hui.test = {
 		}
 	},
 	assertDefined : function(value,msg) {
-		if (value===null || value==undefined) {
-			this._fail('Failure ('+msg+'), not false...',value);
-		} else {
-			this._succeed('Success, false'+(msg ? ': '+msg : ''));
-		}
-	},
-	assertDefined : function(value,msg) {
 		if (value===null || value===undefined) {
 			this._fail('Failure ('+msg+'), defined...',value);
 		} else {

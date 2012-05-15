@@ -5040,7 +5040,7 @@ hui.ui.confirm = function(options) {
 		ok = hui.ui.get(name+'_ok');
 		ok.setText(options.ok || 'OK');
 		ok.setHighlighted(options.highlighted=='ok');
-		ok.clearDelegates();
+		ok.clearListeners();
 		hui.ui.get(name+'_cancel').setText(options.ok || 'Cancel');
 		hui.ui.get(name+'_cancel').setHighlighted(options.highlighted=='cancel');
 		if (options.cancel) {hui.ui.get(name+'_cancel').setText(options.cancel);}
@@ -5325,10 +5325,10 @@ hui.ui.extend = function(obj,options) {
 		hui.array.add(this.delegates,delegate);
 		return this;
 	}
-	obj.removeDelegate = function(delegate) {
+	obj.unListen = function(delegate) {
 		hui.array.remove(this.delegates,delegate);
 	}
-	obj.clearDelegates = function() {
+	obj.clearListeners = function() {
 		this.delegates = [];
 	}
 	obj.fire = function(method,value,event) {
@@ -6453,7 +6453,7 @@ hui.ui.List.prototype = {
 	setSource : function(source) {
 		if (this.options.source!=source) {
 			if (this.options.source) {
-				this.options.source.removeDelegate(this);
+				this.options.source.unListen(this);
 			}
 			source.listen(this);
 			this.options.source = source;
@@ -6466,7 +6466,7 @@ hui.ui.List.prototype = {
 	 */
 	setUrl : function(url) {
 		if (this.options.source) {
-			this.options.source.removeDelegate(this);
+			this.options.source.unListen(this);
 			this.options.source=null;
 		}
 		this.url = url;
@@ -6481,7 +6481,7 @@ hui.ui.List.prototype = {
 	clear : function() {
 		this._empty();
 		if (this.options.source) {
-			this.options.source.removeDelegate(this);
+			this.options.source.unListen(this);
 		}
 		this.options.source = null;
 		this.url = null;
@@ -11887,7 +11887,7 @@ hui.ui.Gallery.prototype = {
 	setSource : function(source) {
 		if (this.options.source!=source) {
 			if (this.options.source) {
-				this.options.source.removeDelegate(this);
+				this.options.source.unListen(this);
 			}
 			source.listen(this);
 			this.options.source = source;
@@ -18345,10 +18345,16 @@ hui.test = {
 	status : null,
 	busy : 0,
 	run : function(recipe) {
+		this.errorHandler = hui.listen(window,'error',function(e) {
+			hui.log(e)
+			hui.ui.showMessage({text:'Error ('+e.message+') ['+e.lineno+']',icon:'common/warning'});
+			throw e;
+		});
 		this.status = {failures:0,successes:0};
 		this.busy = 0;
 		hui.ui.showMessage({text:'Running test',busy:true});
 		this._next(0,recipe);
+		
 	},
 	_next : function(num,recipe) {
 		if (recipe[num]===undefined) {
@@ -18373,6 +18379,7 @@ hui.test = {
 		} else {
 			hui.ui.showMessage({text:'Success',icon:'common/success',duration:2000});
 		}
+		hui.unListen(window,'error',this.errorHandler);
 	},
 	click : function(node,func) {
 		this.busy++;
@@ -18455,13 +18462,6 @@ hui.test = {
 	},
 	assertFalse : function(value,msg) {
 		if (value!==false) {
-			this._fail('Failure ('+msg+'), not false...',value);
-		} else {
-			this._succeed('Success, false'+(msg ? ': '+msg : ''));
-		}
-	},
-	assertDefined : function(value,msg) {
-		if (value===null || value==undefined) {
 			this._fail('Failure ('+msg+'), not false...',value);
 		} else {
 			this._succeed('Success, false'+(msg ? ': '+msg : ''));
