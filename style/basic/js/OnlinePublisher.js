@@ -325,10 +325,11 @@ op.part.Formula.prototype = {
 ///////////////// Poster //////////////////
 
 op.part.Poster = function(options) {
+	this.options = hui.override({duration:2000,delay:5000},options);
 	this.element = hui.get(options.element);
+	this.container = hui.get.firstByClass(this.element,'part_poster_pages');
 	this.pages = hui.get.byClass(this.element,'part_poster_page');
 	this.index = 0;
-	this.delay = 5000;
 	this.indicators = [];
 	this._buildNavigator();
 	this.callNext();
@@ -342,20 +343,92 @@ op.part.Poster.prototype = {
 		};
 	},
 	next : function() {
-		this.pages[this.index].style.display='none';
+		var recipe = {container:this.container,duration:this.options.duration};
+		recipe.hide = {element:this.pages[this.index],effect:'slideLeft'};
 		hui.cls.remove(this.indicators[this.index],'part_poster_current');
 		this.index++;
 		if (this.index>=this.pages.length) {
 			this.index = 0;
 		}
-		this.pages[this.index].style.display='block';
+		recipe.show = {element : this.pages[this.index],effect:'slideRight'};
 		hui.cls.add(this.indicators[this.index],'part_poster_current');
+		hui.transition(recipe);
 		this.callNext();
 	},
 	callNext : function() {
-		window.setTimeout(this.next.bind(this),this.delay);
+		window.setTimeout(this.next.bind(this),this.options.delay);
 	}
 }
+
+
+
+hui.transition = function(options) {
+	var hide = options.hide,
+		show = options.show;
+	var showController = hui.transition[show.effect],
+		hideController = hui.transition[hide.effect];
+		
+	hui.style.set(options.container,{height:options.container.clientHeight+'px',position:'relative'})
+	hui.style.set(hide.element,{width:options.container.clientWidth+'px',position:'absolute',boxSizing:'border-box'})
+	hui.style.set(show.element,{width:options.container.clientWidth+'px',position:'absolute',display:'block',visibility:'hidden',boxSizing:'border-box'})
+	
+	hui.animate({
+		node : options.container,
+		css : {height:show.element.clientHeight+'px'},
+		duration : options.duration+50,
+		onComplete : function() {
+			hui.style.set(options.container,{height:'',position:''})
+		}
+	})
+	hideController.hide(hide.element,options.duration,function() {
+		hui.style.set(hide.element,{display:'none',position:'static',width:''})
+	})
+	
+	showController.beforeShow(show.element);
+	hui.style.set(show.element,{display:'block',visibility:'visible'})
+	showController.show(show.element,options.duration,function() {
+		hui.style.set(show.element,{position:'static',width:''})
+	});
+}
+
+hui.transition.css = function(options) {
+	this.options = options;
+}
+
+hui.transition.css.prototype = {
+	beforeShow : function(element) {
+		hui.style.set(element,this.options.hidden)
+	},
+	show : function(element,duration,onComplete) {
+		hui.animate({
+			node : element,
+			css : this.options.visible,
+			duration : duration,
+			ease : hui.ease.slowFastSlow,
+			onComplete : onComplete
+		})
+	},
+	hide : function(element,duration,onComplete) {
+		hui.animate({
+			node : element,
+			css : this.options.hidden,
+			duration : duration,
+			ease : hui.ease.slowFastSlow,
+			onComplete : function() {
+				onComplete();
+				hui.style.set(element,this.options.visible);
+			}.bind(this)
+		})
+	}
+}
+
+hui.transition.dissolve = new hui.transition.css({visible:{opacity:1},hidden:{opacity:0}});
+
+hui.transition.scale = new hui.transition.css({visible:{opacity:1,transform:'scale(1)'},hidden:{opacity:0,transform:'scale(.9)'}});
+
+hui.transition.slideLeft = new hui.transition.css({visible:{opacity:1,marginLeft:'0%'},hidden:{opacity:0,marginLeft:'-100%'}});
+
+hui.transition.slideRight = new hui.transition.css({visible:{opacity:1,marginLeft:'0%'},hidden:{opacity:0,marginLeft:'100%'}});
 
 ///////////////// Search field //////////////////
 

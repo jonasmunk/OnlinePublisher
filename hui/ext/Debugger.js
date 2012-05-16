@@ -1,6 +1,6 @@
 /**
  * Help stuff
- * @namespace
+ * @namespace 
  */
 hui.ui.Debugger = {
 	showList : function() {

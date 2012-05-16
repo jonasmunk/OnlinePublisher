@@ -218,7 +218,7 @@ hui.ui.Gallery.prototype = {
 	setSource : function(source) {
 		if (this.options.source!=source) {
 			if (this.options.source) {
-				this.options.source.removeDelegate(this);
+				this.options.source.unListen(this);
 			}
 			source.listen(this);
 			this.options.source = source;

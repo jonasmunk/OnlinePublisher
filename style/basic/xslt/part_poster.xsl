@@ -9,7 +9,9 @@
 
 <xsl:template match="p:poster">
 	<div class="part_poster" id="{generate-id()}">
-		<xsl:apply-templates/>
+		<div class="part_poster_pages">
+			<xsl:apply-templates/>
+		</div>
 		<xsl:comment/>
 	</div>
 	<xsl:if test="$editor!='true'">

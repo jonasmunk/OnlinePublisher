@@ -2,18 +2,21 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" padding="10" title="Windows">
 	<controller name="controller" source="windows.js"/>
+	
 	<structure>
 		<top>
-		<toolbar>
-			<icon icon="common/folder" title="Mørk" overlay="new" action="dark.toggle()"/>
-			<icon icon="common/folder" title="Standard" action="standard.toggle()"/>
-			<icon icon="common/folder" title="Lys" action="light.toggle()"/>
-		</toolbar>
+			<toolbar>
+				<icon icon="common/folder" title="Mørk" overlay="new" action="dark.toggle()"/>
+				<icon icon="common/folder" title="Standard" action="standard.toggle()"/>
+				<icon icon="common/folder" title="Lys" action="light.toggle()"/>
+				<icon icon="common/folder" title="News" action="news.toggle()"/>
+			</toolbar>
 		</top>
 		<middle>
-			</center>
+			</middle>
 		<bottom/>
 	</structure>
+	
 	<window name="dark" width="300" title="Bruger" padding="5" variant="dark">
 		<formula>
 			<group>
@@ -31,6 +34,7 @@
 			</group>
 		</formula>
 	</window>
+	
 	<window name="standard" width="300" title="Bruger" padding="5">
 		<formula>
 			<group>
@@ -48,6 +52,7 @@
 			</group>
 		</formula>
 	</window>
+	
 	<window name="light" width="300" title="Bruger" padding="5" variant="light">
 		<formula>
 			<group>
@@ -65,6 +70,7 @@
 			</group>
 		</formula>
 	</window>
+	
 	<window name="flipper" width="300" title="Flipper" padding="5">
 		<button click="flipper.flip()" title="Flip"/>
 		<back>

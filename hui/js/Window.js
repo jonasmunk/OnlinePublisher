@@ -50,13 +50,16 @@ hui.ui.Window.prototype = {
 			hui.listen(this.close,'click',function(e) {
 				this.hide();
 				this.fire('userClosedWindow');
-			}.bind(this)
-			);
+			}.bind(this));
 			hui.listen(this.close,'mousedown',function(e) {hui.stop(e)});
 		}
-		this.titlebar.onmousedown = function(e) {self.startDrag(e);return false;};
+		hui.drag.register({
+			element : this.titlebar,
+			onBeforeMove : this._onBeforeMove.bind(this) ,
+ 			onMove : this._onMove.bind(this)
+		});
 		hui.listen(this.element,'mousedown',function() {
-			self.element.style.zIndex=hui.ui.nextPanelIndex();
+			self.element.style.zIndex = hui.ui.nextPanelIndex();
 		});
 	},
 	setTitle : function(title) {
@@ -143,52 +146,18 @@ hui.ui.Window.prototype = {
 		}
 	},
 
-////////////////////////////// Dragging ////////////////////////////////
-
-	/** @private */
-	startDrag : function(e) {
-		var event = new hui.Event(e);
-		this.element.style.zIndex=hui.ui.nextPanelIndex();
-		var pos = { top : hui.position.getTop(this.element), left : hui.position.getLeft(this.element) };
-		this.dragState = {left:event.getLeft()-pos.left,top:event.getTop()-pos.top};
-		this.latestPosition = {left: this.dragState.left, top:this.dragState.top};
-		this.latestTime = new Date().getMilliseconds();
-		var self = this;
-		this.moveListener = function(e) {self.drag(e)};
-		this.upListener = function(e) {self.endDrag(e)};
-		hui.listen(document,'mousemove',this.moveListener);
-		hui.listen(document,'mouseup',this.upListener);
-		hui.listen(document,'mousedown',this.upListener);
-		event.stop();
-		hui.selection.enable(false);
-		return false;
-	},
-	/** @private */
-	calc : function(top,left) {
-		// TODO: No need to do this all the time
-		this.a = this.latestPosition.left-left;
-		this.b = this.latestPosition.top-top;
-		this.dist = Math.sqrt(Math.pow((this.a),2),Math.pow((this.b),2));
-		this.latestTime = new Date().getMilliseconds();
-		this.latestPosition = {'top':top,'left':left};
-	},
-	/** @private */
-	drag : function(e) {
-		var event = new hui.Event(e);
+	_onBeforeMove : function(e) {
+		e = hui.event(e);
+		this.element.style.zIndex = hui.ui.nextPanelIndex();
+		var pos = hui.position.get(this.element);
+		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
 		this.element.style.right = 'auto';
-		var top = (event.getTop()-this.dragState.top);
-		var left = (event.getLeft()-this.dragState.left);
+	},
+	_onMove : function(e) {
+		var top = (e.getTop()-this.dragState.top);
+		var left = (e.getLeft()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
-		//this.calc(top,left);
-		return false;
-	},
-	/** @private */
-	endDrag : function(e) {
-		hui.unListen(document,'mousemove',this.moveListener);
-		hui.unListen(document,'mouseup',this.upListener);
-		hui.unListen(document,'mousedown',this.upListener);
-		hui.selection.enable(false);
 	}
 }
 

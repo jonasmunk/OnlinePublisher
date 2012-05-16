@@ -132,6 +132,14 @@ hui.each = function(items,func) {
 }
 
 /**
+ * @param {Object} condition The condition to test
+ * @param {String} text The text to return when condition evaluates to true
+ */
+hui.when = function(condition,text) {
+	return condition ? text : '';
+}
+
+/**
  * Converts a string to an int if it is only digits, otherwise remains a string
  * @param {String} str The string to convert
  * @returns {Object} An int of the string or the same string
@@ -3539,7 +3547,7 @@ hui.ui.confirm = function(options) {
 		ok = hui.ui.get(name+'_ok');
 		ok.setText(options.ok || 'OK');
 		ok.setHighlighted(options.highlighted=='ok');
-		ok.clearDelegates();
+		ok.clearListeners();
 		hui.ui.get(name+'_cancel').setText(options.ok || 'Cancel');
 		hui.ui.get(name+'_cancel').setHighlighted(options.highlighted=='cancel');
 		if (options.cancel) {hui.ui.get(name+'_cancel').setText(options.cancel);}
@@ -3824,10 +3832,10 @@ hui.ui.extend = function(obj,options) {
 		hui.array.add(this.delegates,delegate);
 		return this;
 	}
-	obj.removeDelegate = function(delegate) {
+	obj.unListen = function(delegate) {
 		hui.array.remove(this.delegates,delegate);
 	}
-	obj.clearDelegates = function() {
+	obj.clearListeners = function() {
 		this.delegates = [];
 	}
 	obj.fire = function(method,value,event) {

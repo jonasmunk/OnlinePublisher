@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script src="head.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.context='../../..';
+	</script>
+	<script charset="utf-8" type="text/javascript" src="../../js/DragDrop.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/List.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Source.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var assert = hui.test.assert;
+		var list;
+		var state = {
+			selectionWasReset : false
+		}
+		hui.test.run([
+			function() {
+				var src = new hui.ui.Source({url:'data/list_data.xml'});
+				list = hui.ui.List.create({source:src});
+				list.listen({
+					$selectionReset : function() {
+						state.selectionWasReset = true;
+					},
+					$select : function() {
+						assert.true(false,'$select should not fire at this point')
+					}
+				})
+				assert.defined(list);
+				document.body.appendChild(list.element)
+			},
+			1000,
+			function() {
+				assert.true(state.selectionWasReset,'The $selectionReset event was fired');
+			},
+			function() {
+				list.clearListeners();
+				list.listen({
+					$select : function() {
+						state.itemWasSelected = true;
+					}
+				});
+				var tbody = hui.get.firstByTag(list.element,'tbody');
+				assert.defined(tbody);
+				hui.test.click(hui.get.firstByTag(tbody,'td'));
+				assert.true(state.itemWasSelected,'$select should have fired at this point')
+			}
+		]);
+	</script>
+</body>
+</html>
