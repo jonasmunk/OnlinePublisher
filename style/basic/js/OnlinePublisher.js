@@ -325,7 +325,7 @@ op.part.Formula.prototype = {
 ///////////////// Poster //////////////////
 
 op.part.Poster = function(options) {
-	this.options = hui.override({duration:2000,delay:5000},options);
+	this.options = hui.override({duration:500,delay:5000},options);
 	this.element = hui.get(options.element);
 	this.container = hui.get.firstByClass(this.element,'part_poster_pages');
 	this.pages = hui.get.byClass(this.element,'part_poster_page');

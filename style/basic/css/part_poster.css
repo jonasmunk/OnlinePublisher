@@ -16,6 +16,7 @@ p.part_poster_title
 p.part_poster_text
 {
 	font-size: 12px;
+	margin: 5px 0;
 }
 
 div.part_poster_navigator
@@ -42,7 +43,10 @@ div.part_poster_navigator a.part_poster_current
 	background: #aaa;
 }
 
-
+div.part_poster_pages
+{
+	overflow: hidden;
+}
 
 div.part_poster_page
 {
