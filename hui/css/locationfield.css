@@ -34,6 +34,11 @@ a.hui_locationfield_picker
 	font-size: 0;
 }
 
+a.hui_locationfield_picker:hover
+{
+	background-position: 0 -16px;
+}
+
 span.hui_locationfield_latitude, span.hui_locationfield_longitude
 {
 	display: inline-block;
