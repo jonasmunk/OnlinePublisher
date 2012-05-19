@@ -29,6 +29,13 @@ hui.ui.DateTimeField.prototype = {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'blur',this._onBlur.bind(this));
 		hui.listen(this.input,'focus',this._onFocus.bind(this));
+		var a = hui.get.firstByTag(this.element,'a');
+		hui.listen(a,'click',this._onClickIcon.bind(this));
+	},
+	_onClickIcon : function(e) {
+		hui.stop(e);
+		this.input.focus();
+		this._showPicker();
 	},
 	focus : function() {
 		try {this.input.focus();} catch (ignore) {}
@@ -82,6 +89,9 @@ hui.ui.DateTimeField.prototype = {
 		if (this.panel) {
 			this.panel.hide();
 		}
+		if (this.datePickerPanel) {
+			this.datePickerPanel.hide();
+		}
 	},
 	_onFocus : function() {
 		this._showPanel();
@@ -89,12 +99,24 @@ hui.ui.DateTimeField.prototype = {
 	_showPanel : function() {
 		if (!this.panel) {
 			this.panel = hui.ui.BoundPanel.create({variant:'light'});
-			var b = hui.ui.Buttons.create();
+			var b = hui.ui.Buttons.create({align:'center'});
 			b.add(hui.ui.Button.create({
 				text : 'Idag',
 				small : true,
 				variant : 'paper',
 				listener : {$click:this.goToday.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '+ dag',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.addDays(1)}.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '+ uge',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.addDays(7)}.bind(this)}
 			}));
 			b.add(hui.ui.Button.create({
 				text : '12:00',
@@ -108,20 +130,57 @@ hui.ui.DateTimeField.prototype = {
 				variant : 'paper',
 				listener : {$click:function() {this.setHour(0)}.bind(this)}
 			}));
+			b.add(hui.ui.Button.create({
+				text : 'Kalender',
+				small : true,
+				variant : 'paper',
+				listener : {$click:this._showPicker.bind(this)}
+			}));
 			this.panel.add(b)
 		}
 		this.panel.position({element:this.element,position:'vertical'});
 		this.panel.show();
 	},
 	goToday : function() {
-		this.setValue(new Date());
+		var newDate = this._getValueOrNowCopy();
+		var now = new Date();
+		newDate.setDate(now.getDate());
+		newDate.setMonth(now.getMonth());
+		newDate.setFullYear(now.getFullYear());
+		this.setValue(newDate);
+	},
+	addDays : function(num) {
+		var newDate = this._getValueOrNowCopy();
+		newDate.setDate(newDate.getDate()+num);
+		this.setValue(newDate);
 	},
 	setHour : function(hours) {
-		var newDate = this.value==null ? new Date() : new Date(this.value.getTime());
+		var newDate = this._getValueOrNowCopy();
 		newDate.setMilliseconds(0);
 		newDate.setSeconds(0);
 		newDate.setMinutes(0);
 		newDate.setHours(hours);
 		this.setValue(newDate);
+	},
+	_getValueOrNowCopy : function() {
+		return this.value==null ? new Date() : new Date(this.value.getTime());
+	},
+	_showPicker : function() {
+		
+		if (this.panel) {
+			this.panel.hide();
+		}
+		if (!this.datePickerPanel) {
+			this.datePickerPanel = hui.ui.BoundPanel.create({variant:'light'});
+			this.datePicker = hui.ui.DatePicker.create({value:this.value});
+			this.datePicker.listen({
+				$dateChanged : function(date) {
+					this.setValue(date)
+				}.bind(this)
+			});
+			this.datePickerPanel.add(this.datePicker);
+		}
+		this.datePickerPanel.position(this.element);
+		this.datePickerPanel.show();
 	}
 }

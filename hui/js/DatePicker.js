@@ -45,12 +45,12 @@ hui.ui.DatePicker.prototype = {
 		var self = this;
 		this.cells = hui.get.byTag(this.element,'td');
 		hui.each(this.cells,function(cell,index) {
-			hui.listen(cell,'mousedown',function() {self._selectCell(index)});
+			hui.listen(cell,'mousedown',function(e) {hui.stop(e);self._selectCell(index)});
 		})
 		var next = hui.get.firstByClass(this.element,'hui_datepicker_next');
 		var previous = hui.get.firstByClass(this.element,'hui_datepicker_previous');
-		hui.listen(next,'mousedown',function() {self.next()});
-		hui.listen(previous,'mousedown',function() {self.previous()});
+		hui.listen(next,'mousedown',function(e) {hui.stop(e);self.next()});
+		hui.listen(previous,'mousedown',function(e) {hui.stop(e);self.previous()});
 	},
 	/** Set the date
 	  * @param date The js Date to set
