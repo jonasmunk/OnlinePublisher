@@ -410,7 +410,8 @@ a.hui_datetime
 	padding: 2px;
 }
 
-a.hui_datetime span
+a.hui_datetime span,
+body .hui_context_dark a.hui_datetime span
 {
 	background: url('../icons/input/datetime14.png') no-repeat;
 	display: inline-block;
@@ -418,7 +419,8 @@ a.hui_datetime span
 	height: 14px;
 }
 
-a.hui_datetime:hover span
+a.hui_datetime:hover span,
+body .hui_context_dark a.hui_datetime:hover span
 {
 	background-position: 0 -14px;
 }

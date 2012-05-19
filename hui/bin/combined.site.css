@@ -1227,7 +1227,7 @@ a.hui_button_small_paper, a.hui_button_small_paper span
 a.hui_button_small_paper span span
 {
 	margin: 0;
-	padding: 0 10px;
+	padding: 0 5px;
 	font-size: 11px;
 	line-height: 18px;
 }
@@ -1675,7 +1675,30 @@ table.hui_objectlist th.hui_objectlist1
 	padding-left: 0px;
 }
 
+a.hui_datetime
+{
+	position: absolute;
+	margin-left: -17px;
+	margin-top: -1px;
+	font-size: 0;
+	cursor: pointer;
+	padding: 2px;
+}
 
+a.hui_datetime span,
+body .hui_context_dark a.hui_datetime span
+{
+	background: url('../icons/input/datetime14.png') no-repeat;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+}
+
+a.hui_datetime:hover span,
+body .hui_context_dark a.hui_datetime:hover span
+{
+	background-position: 0 -14px;
+}
 
 /************************* Override for windows *******************/
 

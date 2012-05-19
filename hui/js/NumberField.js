@@ -172,5 +172,12 @@ hui.ui.NumberField.prototype = {
 		if (this.slider) {
 			this.slider.setValue((this.value -this.options.min) / (this.options.max-this.options.min))
 		}
+	},
+	/** @private */
+	$$parentMoved : function() {
+		if (this.sliderPanel && this.sliderPanel.isVisible()) {
+			this.sliderPanel.position({element:this.element,position:'vertical'});
+			this.sliderPanel.show();
+		}
 	}
 }

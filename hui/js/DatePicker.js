@@ -56,6 +56,9 @@ hui.ui.DatePicker.prototype = {
 	  * @param date The js Date to set
 	  */
 	setValue : function(date) {
+		if (!date) {
+			date = new Date();
+		}
 		this.value = new Date(date.getTime());
 		this.viewDate = new Date(date.getTime());
 		this.viewDate.setDate(1);

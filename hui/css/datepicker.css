@@ -1,6 +1,6 @@
 div.hui_datepicker
 {
-	padding-left: 1px;
+	/*padding-left: 1px;*/
 }
 
 div.hui_datepicker table
@@ -29,6 +29,11 @@ div.hui_datepicker td
 	line-height: 12px;
 	cursor: pointer;
 	background: #fff;
+}
+
+div.hui_datepicker td:hover
+{
+	background: #eee;
 }
 
 td.hui_datepicker_dimmed

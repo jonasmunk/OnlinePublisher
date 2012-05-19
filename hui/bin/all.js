@@ -1152,6 +1152,9 @@ hui.cls = {
  */
 hui.listen = function(element,type,listener,useCapture) {
 	element = hui.get(element);
+	if (!element) {
+		return;
+	}
 	if(document.addEventListener) {
 		element.addEventListener(type,listener,useCapture ? true : false);
 	} else {
@@ -6001,7 +6004,8 @@ hui.ui.Window.prototype = {
 		hui.drag.register({
 			element : this.titlebar,
 			onBeforeMove : this._onBeforeMove.bind(this) ,
- 			onMove : this._onMove.bind(this)
+ 			onMove : this._onMove.bind(this),
+			onAfterMove : this._onAfterMove.bind(this)
 		});
 		hui.listen(this.element,'mousedown',function() {
 			self.element.style.zIndex = hui.ui.nextPanelIndex();
@@ -6103,6 +6107,9 @@ hui.ui.Window.prototype = {
 		var left = (e.getLeft()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
+	},
+	_onAfterMove : function() {
+		hui.ui.callDescendants(this,'$$parentMoved');
 	}
 }
 
@@ -8893,6 +8900,7 @@ hui.ui.BoundPanel.prototype = {
 	/** Shows the panel */
 	show : function() {
 		if (this.visible) {
+			this.element.style.zIndex = hui.ui.nextPanelIndex();
 			return;
 		}
 		if (this.options.target) {
@@ -8952,6 +8960,12 @@ hui.ui.BoundPanel.prototype = {
 		}
 		hui.ui.callVisible(this);
 		this.visible=false;
+	},
+	/**
+	 * If the panel is currently visible
+	 */
+	isVisible : function() {
+		return this.visible;
 	},
 	/**
 	 * Adds a widget or element to the panel
@@ -12263,17 +12277,20 @@ hui.ui.DatePicker.prototype = {
 		var self = this;
 		this.cells = hui.get.byTag(this.element,'td');
 		hui.each(this.cells,function(cell,index) {
-			hui.listen(cell,'mousedown',function() {self._selectCell(index)});
+			hui.listen(cell,'mousedown',function(e) {hui.stop(e);self._selectCell(index)});
 		})
 		var next = hui.get.firstByClass(this.element,'hui_datepicker_next');
 		var previous = hui.get.firstByClass(this.element,'hui_datepicker_previous');
-		hui.listen(next,'mousedown',function() {self.next()});
-		hui.listen(previous,'mousedown',function() {self.previous()});
+		hui.listen(next,'mousedown',function(e) {hui.stop(e);self.next()});
+		hui.listen(previous,'mousedown',function(e) {hui.stop(e);self.previous()});
 	},
 	/** Set the date
 	  * @param date The js Date to set
 	  */
 	setValue : function(date) {
+		if (!date) {
+			date = new Date();
+		}
 		this.value = new Date(date.getTime());
 		this.viewDate = new Date(date.getTime());
 		this.viewDate.setDate(1);
@@ -15100,6 +15117,7 @@ hui.ui.DateTimeField = function(o) {
 hui.ui.DateTimeField.create = function(options) {
 	var node = hui.build('span',{'class':'hui_field_singleline'});
 	hui.build('input',{'class':'hui_formula_text',parent:node});
+	hui.build('a',{'class':'hui_datetime',href:'javascript://',tabIndex:'-1',html:'<span></span>',parent:node});
 	options.element = hui.ui.wrapInField(node);
 	return new hui.ui.DateTimeField(options);
 }
@@ -15108,7 +15126,16 @@ hui.ui.DateTimeField.prototype = {
 	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'blur',this._onBlur.bind(this));
+		hui.listen(this.input,'keyup',this._parse.bind(this));
 		hui.listen(this.input,'focus',this._onFocus.bind(this));
+		var a = hui.get.firstByTag(this.element,'a');
+		hui.listen(a,'mousedown',hui.stop);
+		hui.listen(a,'click',this._onClickIcon.bind(this));
+	},
+	_onClickIcon : function(e) {
+		hui.stop(e);
+		this.input.focus();
+		this._showPicker();
 	},
 	focus : function() {
 		try {this.input.focus();} catch (ignore) {}
@@ -15127,7 +15154,8 @@ hui.ui.DateTimeField.prototype = {
 		}
 		this._updateUI();
 	},
-	_check : function() {
+	_parse : function() {
+		var originalTime = this.value ? this.value.getTime() : 0;
 		var str = this.input.value;
 		var parsed = null;
 		for (var i=0; i < this.inputFormats.length && parsed==null; i++) {
@@ -15136,6 +15164,17 @@ hui.ui.DateTimeField.prototype = {
 		if (this.options.allowNull || parsed!=null) {
 			this.value = parsed;
 		}
+		if (this.datePicker) {
+			this.datePicker.setValue(this.value);
+		}
+		var newTime =  this.value ? this.value.getTime() : 0;
+		if (originalTime!=newTime) {
+			hui.ui.callAncestors(this,'childValueChanged',this.value);
+			this.fire('valueChanged',this.value);
+		}
+	},
+	_check : function() {
+		this._parse();
 		this._updateUI();
 	},
 	getValue : function() {
@@ -15162,6 +15201,9 @@ hui.ui.DateTimeField.prototype = {
 		if (this.panel) {
 			this.panel.hide();
 		}
+		if (this.datePickerPanel) {
+			this.datePickerPanel.hide();
+		}
 	},
 	_onFocus : function() {
 		this._showPanel();
@@ -15169,12 +15211,24 @@ hui.ui.DateTimeField.prototype = {
 	_showPanel : function() {
 		if (!this.panel) {
 			this.panel = hui.ui.BoundPanel.create({variant:'light'});
-			var b = hui.ui.Buttons.create();
+			var b = hui.ui.Buttons.create({align:'center'});
 			b.add(hui.ui.Button.create({
 				text : 'Idag',
 				small : true,
 				variant : 'paper',
 				listener : {$click:this.goToday.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '+ dag',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.addDays(1)}.bind(this)}
+			}));
+			b.add(hui.ui.Button.create({
+				text : '+ uge',
+				small : true,
+				variant : 'paper',
+				listener : {$click:function() {this.addDays(7)}.bind(this)}
 			}));
 			b.add(hui.ui.Button.create({
 				text : '12:00',
@@ -15188,21 +15242,76 @@ hui.ui.DateTimeField.prototype = {
 				variant : 'paper',
 				listener : {$click:function() {this.setHour(0)}.bind(this)}
 			}));
+			/*
+			b.add(hui.ui.Button.create({
+				text : 'Kalender',
+				small : true,
+				variant : 'paper',
+				listener : {$click:this._showPicker.bind(this)}
+			}));*/
 			this.panel.add(b)
 		}
 		this.panel.position({element:this.element,position:'vertical'});
 		this.panel.show();
 	},
 	goToday : function() {
-		this.setValue(new Date());
+		var newDate = this._getValueOrNowCopy();
+		var now = new Date();
+		newDate.setDate(now.getDate());
+		newDate.setMonth(now.getMonth());
+		newDate.setFullYear(now.getFullYear());
+		this.setValue(newDate);
+	},
+	addDays : function(num) {
+		var newDate = this._getValueOrNowCopy();
+		newDate.setDate(newDate.getDate()+num);
+		this.setValue(newDate);
 	},
 	setHour : function(hours) {
-		var newDate = this.value==null ? new Date() : new Date(this.value.getTime());
+		var newDate = this._getValueOrNowCopy();
 		newDate.setMilliseconds(0);
 		newDate.setSeconds(0);
 		newDate.setMinutes(0);
 		newDate.setHours(hours);
 		this.setValue(newDate);
+	},
+	_getValueOrNowCopy : function() {
+		return this.value==null ? new Date() : new Date(this.value.getTime());
+	},
+	_showPicker : function() {
+		if (this.panel) {
+			this.panel.hide();
+		}
+		if (!this.datePickerPanel) {
+			this.datePickerPanel = hui.ui.BoundPanel.create({variant:'light'});
+			this.datePicker = hui.ui.DatePicker.create({value:this.value});
+			this.datePicker.listen({
+				$dateChanged : function(date) {
+					this.setValue(date)
+				}.bind(this)
+			});
+			this.datePickerPanel.add(this.datePicker);
+		}
+		this.datePicker.setValue(this.value);
+		this.datePickerPanel.position(this.element);
+		this.datePickerPanel.show();
+	},
+	/** @private */
+	$$parentMoved : function() {
+		if (this.datePickerPanel && this.datePickerPanel.isVisible()) {
+			this.datePickerPanel.position(this.element);
+			this.datePickerPanel.show();
+		}
+		if (this.panel && this.panel.isVisible()) {
+			this.panel.position({element:this.element,position:'vertical'});
+			this.panel.show();
+		}
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (this.datePickerPanel) {
+			this.datePickerPanel.hide();
+		}
 	}
 }/**
  * A tokens component
@@ -15782,6 +15891,13 @@ hui.ui.NumberField.prototype = {
 		if (this.slider) {
 			this.slider.setValue((this.value -this.options.min) / (this.options.max-this.options.min))
 		}
+	},
+	/** @private */
+	$$parentMoved : function() {
+		if (this.sliderPanel && this.sliderPanel.isVisible()) {
+			this.sliderPanel.position({element:this.element,position:'vertical'});
+			this.sliderPanel.show();
+		}
 	}
 }///////////////////////// Text /////////////////////////
 
@@ -16353,6 +16469,7 @@ hui.ui.Slider.prototype = {
 		})
 	},
 	_onBeforeMove : function(event) {
+		this.dragging = true;
 		var pos = hui.position.get(this.handler);
 		this.dragInfo = {
 			left : hui.position.getLeft(this.element),
@@ -16370,7 +16487,9 @@ hui.ui.Slider.prototype = {
 		this._setPosition((left-5)/(this.dragInfo.max-5));
 	},
 	_onAfterMove : function() {
+		this.dragging = false;
 		hui.cls.remove(this.element,'hui_slider_active');
+		this.fire('valueChanged',this.position);
 	},
 	
 	_setPosition : function(pos) {
@@ -16380,12 +16499,14 @@ hui.ui.Slider.prototype = {
 	setValue : function(value) {
 		var pos = Math.max(0,Math.min(value,1));
 		var width = this.element.clientWidth-10-this.handler.clientWidth;
-		hui.animate({
-			node : this.handler,
-			css : { left: (pos*width+5)+'px'},
-			duration : 200,
-			ease : hui.ease.fastSlow
-		})
+		if (!this.dragging) {
+			hui.animate({
+				node : this.handler,
+				css : { left: (pos*width+5)+'px'},
+				duration : 200,
+				ease : hui.ease.fastSlow
+			})			
+		}
 		this.position = this.value = pos;
 	}
 }/** A graph

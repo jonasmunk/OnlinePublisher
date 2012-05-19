@@ -66,6 +66,7 @@ hui.ui.BoundPanel.prototype = {
 	/** Shows the panel */
 	show : function() {
 		if (this.visible) {
+			this.element.style.zIndex = hui.ui.nextPanelIndex();
 			return;
 		}
 		if (this.options.target) {
@@ -125,6 +126,12 @@ hui.ui.BoundPanel.prototype = {
 		}
 		hui.ui.callVisible(this);
 		this.visible=false;
+	},
+	/**
+	 * If the panel is currently visible
+	 */
+	isVisible : function() {
+		return this.visible;
 	},
 	/**
 	 * Adds a widget or element to the panel

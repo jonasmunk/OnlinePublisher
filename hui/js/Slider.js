@@ -34,6 +34,7 @@ hui.ui.Slider.prototype = {
 		})
 	},
 	_onBeforeMove : function(event) {
+		this.dragging = true;
 		var pos = hui.position.get(this.handler);
 		this.dragInfo = {
 			left : hui.position.getLeft(this.element),
@@ -51,7 +52,9 @@ hui.ui.Slider.prototype = {
 		this._setPosition((left-5)/(this.dragInfo.max-5));
 	},
 	_onAfterMove : function() {
+		this.dragging = false;
 		hui.cls.remove(this.element,'hui_slider_active');
+		this.fire('valueChanged',this.position);
 	},
 	
 	_setPosition : function(pos) {
@@ -61,12 +64,14 @@ hui.ui.Slider.prototype = {
 	setValue : function(value) {
 		var pos = Math.max(0,Math.min(value,1));
 		var width = this.element.clientWidth-10-this.handler.clientWidth;
-		hui.animate({
-			node : this.handler,
-			css : { left: (pos*width+5)+'px'},
-			duration : 200,
-			ease : hui.ease.fastSlow
-		})
+		if (!this.dragging) {
+			hui.animate({
+				node : this.handler,
+				css : { left: (pos*width+5)+'px'},
+				duration : 200,
+				ease : hui.ease.fastSlow
+			})			
+		}
 		this.position = this.value = pos;
 	}
 }

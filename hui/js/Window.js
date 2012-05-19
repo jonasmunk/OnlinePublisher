@@ -56,7 +56,8 @@ hui.ui.Window.prototype = {
 		hui.drag.register({
 			element : this.titlebar,
 			onBeforeMove : this._onBeforeMove.bind(this) ,
- 			onMove : this._onMove.bind(this)
+ 			onMove : this._onMove.bind(this),
+			onAfterMove : this._onAfterMove.bind(this)
 		});
 		hui.listen(this.element,'mousedown',function() {
 			self.element.style.zIndex = hui.ui.nextPanelIndex();
@@ -158,6 +159,9 @@ hui.ui.Window.prototype = {
 		var left = (e.getLeft()-this.dragState.left);
 		this.element.style.top = Math.max(top,0)+'px';
 		this.element.style.left = Math.max(left,0)+'px';
+	},
+	_onAfterMove : function() {
+		hui.ui.callDescendants(this,'$$parentMoved');
 	}
 }
 

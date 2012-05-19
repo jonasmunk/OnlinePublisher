@@ -1152,6 +1152,9 @@ hui.cls = {
  */
 hui.listen = function(element,type,listener,useCapture) {
 	element = hui.get(element);
+	if (!element) {
+		return;
+	}
 	if(document.addEventListener) {
 		element.addEventListener(type,listener,useCapture ? true : false);
 	} else {

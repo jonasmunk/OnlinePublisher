@@ -20,6 +20,7 @@ hui.ui.DateTimeField = function(o) {
 hui.ui.DateTimeField.create = function(options) {
 	var node = hui.build('span',{'class':'hui_field_singleline'});
 	hui.build('input',{'class':'hui_formula_text',parent:node});
+	hui.build('a',{'class':'hui_datetime',href:'javascript://',tabIndex:'-1',html:'<span></span>',parent:node});
 	options.element = hui.ui.wrapInField(node);
 	return new hui.ui.DateTimeField(options);
 }
@@ -28,8 +29,10 @@ hui.ui.DateTimeField.prototype = {
 	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'blur',this._onBlur.bind(this));
+		hui.listen(this.input,'keyup',this._parse.bind(this));
 		hui.listen(this.input,'focus',this._onFocus.bind(this));
 		var a = hui.get.firstByTag(this.element,'a');
+		hui.listen(a,'mousedown',hui.stop);
 		hui.listen(a,'click',this._onClickIcon.bind(this));
 	},
 	_onClickIcon : function(e) {
@@ -54,7 +57,8 @@ hui.ui.DateTimeField.prototype = {
 		}
 		this._updateUI();
 	},
-	_check : function() {
+	_parse : function() {
+		var originalTime = this.value ? this.value.getTime() : 0;
 		var str = this.input.value;
 		var parsed = null;
 		for (var i=0; i < this.inputFormats.length && parsed==null; i++) {
@@ -63,6 +67,17 @@ hui.ui.DateTimeField.prototype = {
 		if (this.options.allowNull || parsed!=null) {
 			this.value = parsed;
 		}
+		if (this.datePicker) {
+			this.datePicker.setValue(this.value);
+		}
+		var newTime =  this.value ? this.value.getTime() : 0;
+		if (originalTime!=newTime) {
+			hui.ui.callAncestors(this,'childValueChanged',this.value);
+			this.fire('valueChanged',this.value);
+		}
+	},
+	_check : function() {
+		this._parse();
 		this._updateUI();
 	},
 	getValue : function() {
@@ -130,12 +145,13 @@ hui.ui.DateTimeField.prototype = {
 				variant : 'paper',
 				listener : {$click:function() {this.setHour(0)}.bind(this)}
 			}));
+			/*
 			b.add(hui.ui.Button.create({
 				text : 'Kalender',
 				small : true,
 				variant : 'paper',
 				listener : {$click:this._showPicker.bind(this)}
-			}));
+			}));*/
 			this.panel.add(b)
 		}
 		this.panel.position({element:this.element,position:'vertical'});
@@ -166,7 +182,6 @@ hui.ui.DateTimeField.prototype = {
 		return this.value==null ? new Date() : new Date(this.value.getTime());
 	},
 	_showPicker : function() {
-		
 		if (this.panel) {
 			this.panel.hide();
 		}
@@ -180,7 +195,25 @@ hui.ui.DateTimeField.prototype = {
 			});
 			this.datePickerPanel.add(this.datePicker);
 		}
+		this.datePicker.setValue(this.value);
 		this.datePickerPanel.position(this.element);
 		this.datePickerPanel.show();
+	},
+	/** @private */
+	$$parentMoved : function() {
+		if (this.datePickerPanel && this.datePickerPanel.isVisible()) {
+			this.datePickerPanel.position(this.element);
+			this.datePickerPanel.show();
+		}
+		if (this.panel && this.panel.isVisible()) {
+			this.panel.position({element:this.element,position:'vertical'});
+			this.panel.show();
+		}
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (this.datePickerPanel) {
+			this.datePickerPanel.hide();
+		}
 	}
 }

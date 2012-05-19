@@ -12,6 +12,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../lib/date.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
@@ -22,6 +23,10 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Checkbox.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/NumberField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/DateTimeField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/BoundPanel.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/DatePicker.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Slider.js"></script>
 </head>
 
 <body>
@@ -35,7 +40,8 @@
 			{type:'Checkbox',options:{label:'Checkbox',key:'checkbox2'}},
 			{type:'TextField',options:{label:'One line',key:'text1',name:'text1'}},
 			{type:'TextField',options:{label:'Two lines',key:'text2',lines:2}},
-			{type:'NumberField',options:{label:'Number filed',key:'text2'}}
+			{type:'DateTimeField',options:{label:'Date',key:'date'}},
+			{type:'NumberField',options:{label:'Number field',key:'text2',min:-2,max:2,value:0}}
 			]);
 		var buttons = group.createButtons();
 		buttons.add(hui.ui.Button.create({text:'Stress!',name:'stress'}));
