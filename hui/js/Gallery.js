@@ -100,7 +100,7 @@ hui.ui.Gallery.prototype = {
 				return false;
 			};
 			hui.listen(item,'dblclick',function() {
-				self.itemDoubleClicked(i);
+				self._onItemDoubleClick(i);
 			});
 			self.body.appendChild(item);
 			self.nodes.push(item);
@@ -108,33 +108,31 @@ hui.ui.Gallery.prototype = {
 		this._reveal();
 		this.fireSizeChange();
 	},
-	/** @private */
-	$$resize : function() {
-		if (this.nodes.length>0) {
-			this._reveal();
-		}
-	},
 	_reveal : function() {
-		if (!this.revealing) {return}
+		if (!this.revealing) {
+			return;
+		}
 		var container = this.element.parentNode;
-		var limit = container.scrollTop+container.clientHeight;
-		if (limit<=this.maxRevealed) {
+		var limit = container.scrollTop + container.clientHeight;
+		if (limit <= this.maxRevealed) {
 			return;
 		}
 		this.maxRevealed = limit;
 		for (var i=0,l=this.nodes.length; i < l; i++) {
 			var item = this.nodes[i];
 			if (item.revealed) {continue}
-			if (item.offsetTop<limit) {
+			if (item.offsetTop < limit) {
 				var img = item.getElementsByTagName('img')[0];
 				item.className = 'hui_gallery_item hui_gallery_item_busy';
 				var self = this;
 				img.onload = function() {
-					this.parentNode.className = 'hui_gallery_item';
-					if (this.height<this.width) {
-						var top = (self.height-(self.height*this.height/this.width))/2;
-						this.style.marginTop = top+'px';
-					}
+					hui.defer(function() {
+						this.parentNode.className = 'hui_gallery_item';
+						if (this.height < this.width) {
+							var top = (self.height-(self.height*this.height/this.width))/2;
+							this.style.marginTop = top+'px';
+						}						
+					},this);
 				}
 				img.onerror = function() {
 					this.parentNode.className = 'hui_gallery_item hui_gallery_item_error';
@@ -204,8 +202,7 @@ hui.ui.Gallery.prototype = {
 		}
 		return null;
 	},
-	/** @private */
-	itemDoubleClicked : function(index) {
+	_onItemDoubleClick : function(index) {
 		if (this.busy) {
 			return;
 		}
@@ -236,6 +233,12 @@ hui.ui.Gallery.prototype = {
 	/** @private */
 	$visibilityChanged : function() {
 		if (hui.dom.isVisible(this.element)) {
+			this._reveal();
+		}
+	},
+	/** @private */
+	$$resize : function() {
+		if (this.nodes.length > 0) {
 			this._reveal();
 		}
 	},

@@ -62,12 +62,12 @@ div.layout_header
 
 div.layout_logo
 {
-	background: #fff url('../gfx/sprite.png') -10px -320px no-repeat;
+	background: white url('../gfx/sprite.png') -9px -320px no-repeat;
 	position: absolute;
-	box-shadow: 0 1px 3px #aaa;
+	box-shadow: 0 1px 3px #AAA;
 	width: 150px;
-	right: 10px;
-	top: 40px;
+	right: 20px;
+	top: 31px;
 	height: 160px;
 }
 
@@ -85,13 +85,12 @@ div.layout_content
 
 div.layout_content_sidebar
 {
-	background: url('../gfx/line.png') 775px top repeat-y;
 	padding-right: 0;
 }
 
 div.layout_inner_content
 {
-	padding: 0px 10px;
+	padding: 0px 20px;
 }
 
 div.layout_content_sidebar div.layout_inner_content
@@ -141,11 +140,6 @@ div.layout_links
 
 /***************** Top navigation *************/
 
-div.layout_bar
-{
-	height: 43px;	
-}
-
 ul.layout_navigation
 {
 	font-family: Arial;
@@ -190,12 +184,13 @@ ul.layout_navigation li span
 
 ul.layout_navigation li span span
 {
+	padding: 0px;
 }
 
 ul.layout_navigation li.selected a span span, 
 ul.layout_navigation li.highlighted a span span
 {
-	border-bottom: 3px solid #fff;
+	border-bottom: 2px solid #fff;
 }
 
 ul.layout_navigation img
@@ -210,17 +205,16 @@ ul.layout_navigation img
 
 ul.layout_sub_navigation
 {
-	margin: 3px auto 0;
-	padding: 0px 0 0 8px;
+
+	margin: 0;
+	padding: 0 0 0 10px;
 	display: block;
 	overflow: hidden;
-	height: 28px;
-	line-height: 28px;
+	height: 32px;
+	line-height: 32px;
 	list-style: none;
 	font-size: 10pt;
 	cursor: default;
-	border-bottom: 1px solid #DDDDDD;
-	width: 960px;
 }
 
 ul.layout_sub_navigation li
@@ -272,9 +266,10 @@ ul.layout_sub_navigation a.selected span, ul.layout_sub_navigation a.highlighted
 
 ul.layout_side_navigation
 {
+	box-shadow: 0 1px 4px #AAA;
 	list-style: none;
-	margin: 0 0 30px 15px;
-	padding: 0px;
+	margin: 35px 20px 30px 15px;
+	padding: 10px 0px;
 	font-size: 10pt;
 	line-height: 22px;
 }
@@ -283,7 +278,7 @@ ul.layout_side_navigation a
 {
 	color: #333;
 	text-decoration: none;
-	padding: 1px 5px;
+	padding: 1px 5px 1px 10px;
 }
 
 ul.layout_side_navigation a:hover
@@ -528,40 +523,16 @@ a.layout_placard_right
 
 /************************** Search *********************/
 
-form.search
+form.layout_search
 {
-	background: url('../gfx/search.png') top left repeat-x;
-	margin-right: 13px;
-	margin-top: 13px;
-	float: right;
+	position: absolute;
 	height: 24px;
 	font-size: 0px;
+	top: 200px;
+	right: 18px;
 }
 
-form.search div
-{
-	background: url('../gfx/search.png') bottom right no-repeat;
-	height: 24px;
-	padding-left: 8px;
-}
-
-form.search input.text
-{
-	border: none;
-	background: none;
-	padding-top: 4px;
-	font-size: 9pt;
-	color: #999;
-	width: 140px;
-	font: Verdana, tahoma,sans-serif;
-}
-
-form.search input.text:focus
-{
-	color: #333;
-}
-
-form.search .submit
+form.layout_search .submit
 {
 	position: absolute;
 	top: 0px;
@@ -570,7 +541,10 @@ form.search .submit
 	display: none;
 }
 
-
+form.layout_search span.hui_searchfield
+{
+	width: 155px;
+}
 
 
 
@@ -592,7 +566,6 @@ div.layout_news h2
 	margin: 0 0 5px;
 	font-size: 11pt;
 	color: #999;
-	border-bottom: 1px solid #ddd;
 	padding: 0 10px 3px;
 }
 
@@ -605,7 +578,7 @@ div.layout_news_item
 div.layout_news_item h3
 {
 	font-size: 9pt;
-	color: #456;
+	color: #555;
 	font-weight: normal;
 	padding-bottom: 3px;
 	margin: 0;
@@ -613,7 +586,7 @@ div.layout_news_item h3
 
 p.layout_news_text
 {
-	color:#678;
+	color:#777;
 	font-size:8pt;
 	line-height:10pt;
 	margin: 0 0 3px;

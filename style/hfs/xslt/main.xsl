@@ -35,8 +35,6 @@
 				<ul class="layout_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
 		</div>
 		<div class="layout_head">
-			<div class="layout_bar">
-			</div>
 		</div>
 		<div class="layout_base">
 			<xsl:call-template name="secondlevel"/>
@@ -306,22 +304,21 @@
 
 
 <xsl:template name="search">
-<xsl:if test="f:frame/f:search">
-<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
-<div>
-<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
-<xsl:for-each select="f:frame/f:search/f:types/f:type">
-<input type="hidden" name="{@unique}" value="on"/>
-</xsl:for-each>
-<input type="text" class="text" name="query" id="searchfield"/>
-<input type="submit" class="submit" value="Søg"/>
-</div>
-</form>
-<script type="text/javascript"><xsl:comment>
-new op.SearchField({element:'searchfield',placeholder:'Søg her!'});
-</xsl:comment>
-</script>
-</xsl:if>
+	<xsl:if test="f:frame/f:search">
+		<form action="{$path}" method="get" class="layout_search" accept-charset="UTF-8">
+			<div>
+				<span class="hui_searchfield" id="search"><em class="hui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="hui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
+				<script type="text/javascript">
+					new hui.ui.SearchField({element:'search'});
+				</script>
+				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
+				<xsl:for-each select="f:frame/f:search/f:types/f:type">
+				<input type="hidden" name="{@unique}" value="on"/>
+				</xsl:for-each>
+				<input type="submit" class="submit" value="Søg"/>
+			</div>
+		</form>
+	</xsl:if>
 </xsl:template>
 
 

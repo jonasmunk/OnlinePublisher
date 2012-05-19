@@ -145,8 +145,10 @@ hui.ui.listen({
 		this._cancelImage();
 	},
 	$click$info : function() {
-		var obj = gallery.getFirstSelection();
-		this._loadImage(obj.id);
+		var obj = this._getFirstSelection();
+		if (obj) {
+			this._loadImage(obj.id);
+		}
 	},
 	$open$list : function(row) {
 		this._loadImage(row.id);
