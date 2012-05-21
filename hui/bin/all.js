@@ -15315,6 +15315,9 @@ hui.ui.DateTimeField.prototype = {
 		if (this.datePickerPanel) {
 			this.datePickerPanel.hide();
 		}
+		if (this.panel) {
+			this.panel.hide();
+		}
 	}
 }/**
  * A tokens component

@@ -183,7 +183,7 @@
 		<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
 			<span class="hui_field_singleline">
 				<input type="text" class="hui_formula_text"/>
-				<a class="hui_datetime" href="javascript://"><span><xsl:comment/></span></a>
+				<a class="hui_datetime" href="javascript://" tabindex="-1"><span><xsl:comment/></span></a>
 			</span>
 		</span></span></span>
 		<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
