@@ -127,6 +127,7 @@ $gui='
 		<tabs small="true" centered="true">
 		
 			<tab title="Nyhed" padding="10">
+				<space left="5" right="5">
 				<formula name="newsFormula">
 					<group labels="above">
 						<text label="Titel" key="title"/>
@@ -150,6 +151,7 @@ $gui='
 						</checkboxes>
 					</group>
 				</formula>
+				</space>
 			</tab>
 			
 			<tab title="Links">
@@ -163,7 +165,7 @@ $gui='
 			
 		</tabs>
 		
-		<buttons right="10" bottom="10" align="right">
+		<buttons right="15" bottom="10" align="right">
 			<button name="cancelNews" title="Annuller"/>
 			<button name="deleteNews" title="Slet">
 				<confirm text="Er du sikker?" ok="Ja, slet nyheden" cancel="Annuller"/>
