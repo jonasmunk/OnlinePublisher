@@ -43,7 +43,7 @@ $pageId = InternalSession::getPageId();
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" href="css/msie.css?version=<?php echo SystemInfo::getDate()?>" />
 		<![endif]-->
-		<?php if (Request::getBoolean('dev')) { ?>
+		<?php if (Request::getBoolean('dev') || true) { ?>
 		<script type="text/javascript" src="../../../hui/bin/combined.js?version=<?php echo SystemInfo::getDate()?>" charset="UTF-8"></script>
 		<script type="text/javascript" src="../../../hui/js/Menu.js?version=<?php echo SystemInfo::getDate()?>" charset="UTF-8"></script>
 		<?php } else { ?>

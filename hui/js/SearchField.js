@@ -6,12 +6,10 @@ hui.ui.SearchField = function(options) {
 	this.field = hui.get.firstByTag(this.element,'input');
 	this.value = this.field.value;
 	this.adaptive = hui.cls.has(this.element,'hui_searchfield_adaptive');
-	hui.ui.onReady(function() {
-		this.initialWidth = parseInt(hui.style.get(this.element,'width'))
-	}.bind(this));
+	this.initialWidth = null;
 	hui.ui.extend(this);
-	this.addBehavior();
-	this.updateClass()
+	this._addBehavior();
+	this._updateClass()
 }
 
 hui.ui.SearchField.create = function(options) {
@@ -26,9 +24,9 @@ hui.ui.SearchField.create = function(options) {
 
 hui.ui.SearchField.prototype = {
 	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var self = this;
-		hui.listen(this.field,'keyup',this.onKeyUp.bind(this));
+		hui.listen(this.field,'keyup',this._onKeyUp.bind(this));
 		var reset = hui.get.firstByTag(this.element,'a');
 		reset.tabIndex=-1;
 		if (!hui.browser.ipad) {
@@ -45,32 +43,35 @@ hui.ui.SearchField.prototype = {
 			self.reset();
 			focus()
 		});
-		hui.listen(this.field,'focus',function() {
-			self.focused=true;
-			self.updateClass();
-		});
-		hui.listen(this.field,'blur',function() {
-			self.focused=false;
-			self.updateClass();
-		});
-		if (this.options.expandedWidth>0) {
-			this.field.onfocus = function() {
-				hui.animate(self.element,'width',self.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
+		hui.listen(this.field,'focus',this._onFocus.bind(this));
+		hui.listen(this.field,'blur',this._onBlur.bind(this));
+	},
+	_onFocus : function() {
+		this.focused = true;
+		this._updateClass();
+		if (this.options.expandedWidth > 0) {
+			if (this.initialWidth==null) {
+				this.initialWidth = parseInt(hui.style.get(this.element,'width'));
 			}
-			this.field.onblur = function() {
-				hui.animate(self.element,'width',self.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
-			}
+			hui.animate(this.element,'width',this.options.expandedWidth+'px',500,{ease:hui.ease.slowFastSlow});
 		}
 	},
-	onKeyUp : function(e) {
-		this.fieldChanged();
+	_onBlur : function() {
+		this.focused = false;
+		this._updateClass();
+		if (this.initialWidth!==null) {
+			hui.animate(this.element,'width',this.initialWidth+'px',500,{ease:hui.ease.slowFastSlow,delay:100});
+		}
+	},
+	_onKeyUp : function(e) {
+		this._fieldChanged();
 		if (e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
 		}
 	},
 	setValue : function(value) {
-		this.field.value=value===undefined || value===null ? '' : value;
-		this.fieldChanged();
+		this.field.value = value===undefined || value===null ? '' : value;
+		this._fieldChanged();
 	},
 	getValue : function() {
 		return this.field.value;
@@ -83,10 +84,10 @@ hui.ui.SearchField.prototype = {
 	},
 	reset : function() {
 		this.field.value='';
-		this.fieldChanged();
+		this._fieldChanged();
 	},
 	/** @private */
-	updateClass : function() {
+	_updateClass : function() {
 		var className = 'hui_searchfield';
 		if (this.adaptive) {
 			className+=' hui_searchfield_adaptive';
@@ -100,11 +101,10 @@ hui.ui.SearchField.prototype = {
 		}
 		this.element.className=className;
 	},
-	/** @private */
-	fieldChanged : function() {
+	_fieldChanged : function() {
 		if (this.field.value!=this.value) {
 			this.value=this.field.value;
-			this.updateClass();
+			this._updateClass();
 			this.fire('valueChanged',this.value);
 			hui.ui.firePropertyChange(this,'value',this.value);
 		}

@@ -67,10 +67,54 @@ class FilePartController extends PartController
 		return array(
 			'Fil' =>
 			'<script source="../../Parts/file/toolbar.js"/>
+			<icon icon="common/new" title="Tilføj fil" name="addFile"/>
 			<icon icon="common/search" title="V&#230;lg fil" name="chooseFile"/>
 		'
 		);
 	}
-			
+	
+	
+	
+	function editorGui($part,$context) {
+		$gui='
+		<window title="Tilføj fil" name="fileUploadWindow" width="300" padding="10">
+			<upload name="fileUpload" url="../../Parts/file/Upload.php" widget="upload">
+				<placeholder title="Vælg en fil på din computer..." text="Filens størrelse må højest være '.GuiUtils::bytesToString(FileSystemService::getMaxUploadSize()).'."/>
+			</upload>
+			<buttons align="center" top="10">
+				<button name="cancelUpload" title="Luk"/>
+				<button name="upload" title="Vælg fil..." highlighted="true"/>
+			</buttons>
+		</window>
+		<!--
+		<window title="Avanceret" name="imageAdvancedWindow" width="300">
+			<formula name="imageAdvancedFormula">
+				<group>
+					<text label="Tekst" multiline="true" key="text"/>
+					<checkbox key="greyscale" label="Gråtone"/>
+					<dropdown label="Ramme" key="frame">
+						<item title="Ingen" value=""/>
+						<item title="Let" value="light"/>
+						<item title="Elegant" value="elegant"/>
+						<item title="Skygge" value="shadow_slant"/>
+					</dropdown>
+					<buttons>
+						<button name="pasteImage" text="Indsæt fra udklipsholder"/>
+					</buttons>
+				</group>
+			</formula>
+		</window>
+		-->
+		';
+		return In2iGui::renderFragment($gui);
+	}
+	
+	function setLatestUploadId($id) {
+		$_SESSION['part.file.latest_upload_id'] = $id;
+	}
+	
+	function getLatestUploadId() {
+		return $_SESSION['part.file.latest_upload_id'];
+	}	
 }
 ?>

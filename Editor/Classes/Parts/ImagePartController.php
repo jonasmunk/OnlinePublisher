@@ -283,7 +283,7 @@ class ImagePartController extends PartController
 			<tabs small="true" centered="true">
 				<tab title="Upload" padding="10">
 					<upload name="imageUpload" url="../../Parts/image/Upload.php" widget="upload">
-						<placeholder title="Vælg et billede på din computer..." text="Billedets formatet skal være JPEG, PNG eller GIF"/>
+						<placeholder title="Vælg et billede på din computer..." text="Billedets format skal være JPEG, PNG eller GIF. Filens størrelse må højest være '.GuiUtils::bytesToString(FileSystemService::getMaxUploadSize()).'."/>
 					</upload>
 					<buttons align="center" top="10">
 						<button name="cancelUpload" title="Luk"/>

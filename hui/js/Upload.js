@@ -1,15 +1,16 @@
 /**
- * @class
- * @constructor
- *
- * Options
- * {url:'',parameters:{}}
+ * A component for uploading files 
+ * <pre><strong>options:</strong> {
+ * url:'',
+ * parameters:{}}
  *
  * Events:
  * uploadDidCompleteQueue - when all files are done
  * uploadDidStartQueue - when the upload starts
  * uploadDidComplete(file) - when a single file is successfull
  * uploadDidFail(file) - when a single file fails
+ * </pre>
+ * @constructor
  */
 hui.ui.Upload = function(options) {
 	this.options = hui.override({

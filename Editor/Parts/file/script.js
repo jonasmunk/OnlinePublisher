@@ -1,6 +1,6 @@
 var partController = {
 	$ready : function() {
-		this.showFinder();
+		//this.showFinder();
 	},
 	showFinder : function() {
 		if (!this.finder) {
@@ -25,6 +25,25 @@ var partController = {
 			form : document.forms.PartForm,
 			type : 'file'
 		});
+	},
+	addFile : function() {
+		fileUploadWindow.show();
+	},
+	$uploadDidCompleteQueue$fileUpload : function() {
+		hui.ui.request({
+			'url' : '../../Parts/file/UploadStatus.php',
+			onJSON : function(status) {
+				if (status.id) {
+					document.forms.PartForm.fileId.value = status.id;
+					this.preview();
+				} else {
+					hui.ui.showMessage({text:'Det lykkedes ikke at overføre filen, måske er den for stor',icon:'common/warning',duration:3000});
+				}
+			}.bind(this)
+		});
+	},
+	$click$cancelUpload : function() {
+		fileUploadWindow.hide();
 	}
 }
 

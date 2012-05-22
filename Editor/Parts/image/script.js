@@ -61,7 +61,7 @@ var partController = {
 					document.forms.PartForm.imageId.value = status.id;
 					this.preview();
 				} else {
-					hui.ui.showMessage({text:'Det lykkedes ikke at overføre billedet',icon:'common/warning',duration:3000});
+					hui.ui.showMessage({text:'Billedet kunne ikke tilføjes, det kan være for stort eller af en ukendt type',icon:'common/warning',duration:3000});
 				}
 			}.bind(this)
 		});

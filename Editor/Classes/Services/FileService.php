@@ -250,7 +250,7 @@ class FileService {
 		else if (!move_uploaded_file($tempFile, $filePath)) {
 			$errorMessage='Kunne ikke flytte filen fra cachen';
 		}
-
+		$result = new ImportResult();
 		if (!$errorMessage) {
 
 			if ($title=='') {
@@ -269,12 +269,13 @@ class FileService {
 
 			// Add to group
 			if ($group>0) {
-				$sql="insert into filegroup_file (file_id,filegroup_id)".
-				" values (".$fileId.",".$group.")";
+				$sql="insert into filegroup_file (file_id,filegroup_id) values (".Database::int($fileId).",".Database::int($group).")";
 				Database::insert($sql);
 			}
+			$result->setSuccess(true);
+			$result->setObject($file);
 		}
-		return array('success' => ($errorMessage===false),'errorMessage' => $errorMessage,'errorDetails' => $errorDetails);
+		return $result;
 	}
 	
 	function createFromUrl($url) {
