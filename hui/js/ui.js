@@ -145,6 +145,9 @@ hui.ui.confirmOverlay = function(options) {
 	overlay.add(ok);
 	var cancel = hui.ui.Button.create({text:options.cancelText || 'Cancel'});
 	cancel.onClick(function() {
+		if (options.onCancel) {
+			options.onCancel();
+		}
 		overlay.hide();
 	});
 	overlay.add(cancel);
