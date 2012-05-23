@@ -503,7 +503,7 @@
 	<items name="«text»" source="«name»"/>
 </checkboxes>
 -->
-<xsl:template name="gui:checkboxes">
+<xsl:template name="gui:checkboxes" match="gui:checkboxes">
 	<div class="hui_checkboxes" id="{generate-id()}">
 		<xsl:if test="@max-height"><xsl:attribute name="style">max-height:<xsl:value-of select="@max-height"/>px; overflow: auto;</xsl:attribute></xsl:if>
 		<xsl:apply-templates/>
@@ -674,7 +674,7 @@
 <!--doc title:'Tokens (string list)' class:'hui.ui.TokenField' module:'input'
 <tokens name="«text»" key="«text»"/>
 -->
-<xsl:template name="gui:tokens">
+<xsl:template match="gui:tokens">
 	<div class="hui_tokenfield" id="{generate-id()}">
 		<xsl:comment/>
 	</div>
