@@ -355,6 +355,11 @@
 	</td></tr>
 </xsl:template>
 
+<!--doc title:'Drop down' class:'hui.ui.DropDown' module:'input'
+<dropdown name="«text»" key="«text»" value="«text»" source="«name»" url="«url»" placeholder="«text»" adaptive="«boolean»" width="«pixels»">
+	<item value="«text»" text="«text»"/>
+</dropdown>
+-->
 <xsl:template name="gui:dropdown" match="gui:dropdown">
 	<a id="{generate-id()}" href="javascript://">
 		<xsl:if test="@width">
@@ -391,7 +396,7 @@
 	</script>
 </xsl:template>
 
-<!-- Radio buttons -->
+
 
 
 
@@ -409,12 +414,23 @@
 	</td></tr>
 </xsl:template>
 
+
+<!--doc title:'Radio buttons' class:'hui.ui.Radiobuttons' module:'input'
+<radiobuttons name="«text»" key="«text»" value="«text»">
+	<item value="«text»" text="«text»"/>
+</radiobuttons>
+-->
 <xsl:template name="gui:radiobuttons" match="gui:radiobuttons">
 	<span class="hui_radiobuttons" id="{generate-id()}">
 		<xsl:apply-templates/>
 	</span>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Radiobuttons({element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>','value':'<xsl:value-of select="@value"/>','key':'<xsl:value-of select="@key"/>'});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Radiobuttons({
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>',
+			value : '<xsl:value-of select="@value"/>',
+			key : '<xsl:value-of select="@key"/>'
+		});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:radiobutton | gui:item">
 				registerRadiobutton({id:'<xsl:value-of select="generate-id()"/>','value':'<xsl:value-of select="@value"/>'});
@@ -435,7 +451,10 @@
 	</a>
 </xsl:template>
 
-<!-- Checkbox -->
+
+
+
+
 
 <xsl:template match="gui:group/gui:checkbox">
 	<tr>
@@ -451,6 +470,9 @@
 	</td></tr>
 </xsl:template>
 
+<!--doc title:'Check box' class:'hui.ui.Checkbox' module:'input'
+<checkbox name="«text»" key="«text»" value="«boolean»"/>
+-->
 <xsl:template name="gui:checkbox"  match="gui:checkbox">
 	<a id="{generate-id()}" href="javascript://">
 		<xsl:attribute name="class">
@@ -471,22 +493,16 @@
 	</script>
 </xsl:template>
 
-<!-- Checkboxes -->
 
-<xsl:template match="gui:group/gui:checkboxes">
-	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="hui_formula_item"><xsl:call-template name="gui:checkboxes"/></div></td>
-	</tr>
-</xsl:template>
 
-<xsl:template match="gui:group[@labels='above']/gui:checkboxes">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:checkboxes"/></div>
-	</td></tr>
-</xsl:template>
 
+
+<!--doc title:'Check boxes' class:'hui.ui.Checkboxes' module:'input'
+<checkboxes name="«text»" key="«text»" max-height="«pixels»">
+	<item value="«text»" text="«text»"/>
+	<items name="«text»" source="«name»"/>
+</checkboxes>
+-->
 <xsl:template name="gui:checkboxes">
 	<div class="hui_checkboxes" id="{generate-id()}">
 		<xsl:if test="@max-height"><xsl:attribute name="style">max-height:<xsl:value-of select="@max-height"/>px; overflow: auto;</xsl:attribute></xsl:if>
@@ -503,7 +519,7 @@
 				registerItems(<xsl:value-of select="generate-id()"/>_obj);
 			</xsl:for-each>
 			<xsl:for-each select="gui:item">
-				registerItem({title:'<xsl:value-of select="@title"/>',value:hui.intOrString('<xsl:value-of select="@value"/>')});
+				registerItem({title:'<xsl:value-of select="@title"/><xsl:value-of select="@text"/>',value:hui.intOrString('<xsl:value-of select="@value"/>')});
 			</xsl:for-each>
 		}
 		<xsl:call-template name="gui:createobject"/>
@@ -526,11 +542,7 @@
 	</a>
 </xsl:template>
 
-<!-- Buttons -->
 
-<xsl:template match="gui:formula/gui:buttons">
-	<xsl:call-template name="gui:buttons"/>
-</xsl:template>
 
 <xsl:template match="gui:group/gui:buttons">
 	<tr>
@@ -540,6 +552,11 @@
 	</tr>
 </xsl:template>
 
+<!--doc title:'Buttons' class:'hui.ui.Buttons' module:'action'
+<buttons small="«boolean»" mini="«boolean»" aling="«'left' | 'center' | 'right'»" padding="«pixels»" top="«pixels»" left="«pixels»" right="«pixels»" bottom="«pixels»">
+	<button···/>
+</buttons>
+-->
 <xsl:template match="gui:buttons" name="gui:buttons">
 	<div>
 		<xsl:attribute name="class">
@@ -564,12 +581,17 @@
 	</div>
 </xsl:template>
 
+<!--doc title:'Button' class:'hui.ui.Button' module:'action'
+<button text="«text»" icon="«icon»" name="«text»" small="«boolean»" mini="«boolean»" highlighted="«boolean»" disabled="«boolean»" variant="«'paper'»" submit="«boolean»" click="«script»" url="«url»">
+    <confirm text="«text»" ok="«text»" cancel="«text»"/>
+</button>
+-->
 <xsl:template match="gui:button" name="gui:button">
 	<a id="{generate-id()}" href="javascript://">
 		<xsl:attribute name="class">
-			hui_button
+			<xsl:text>hui_button</xsl:text>
 			<xsl:if test="@variant">
-				<xsl:text>hui_button_</xsl:text><xsl:value-of select="@variant"/>
+				<xsl:text> hui_button_</xsl:text><xsl:value-of select="@variant"/>
 			</xsl:if>
 			<xsl:if test="@disabled='true'"> hui_button_disabled</xsl:if>
 			<xsl:choose>
@@ -628,31 +650,11 @@
 </xsl:template>
 
 
-<!--                Image picker                -->
 
-<xsl:template match="gui:group/gui:imagepicker">
-	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
-		<td>
-			<xsl:call-template name="gui:imagepicker"/>
-		</td>
-	</tr>
-</xsl:template>
-
-<xsl:template match="gui:group[@labels='above']/gui:imagepicker">
-	<tr>
-		<td>
-			<label><xsl:value-of select="@label"/></label>
-			<xsl:call-template name="gui:imagepicker"/>
-		</td>
-	</tr>
-</xsl:template>
-
+<!--doc title:'Image input' class:'hui.ui.ImagePicker' module:'input'
+<image-input name="«text»" source="«url»"/>
+-->
 <xsl:template match="gui:image-input">
-	<xsl:call-template name="gui:imagepicker"/>
-</xsl:template>
-
-<xsl:template name="gui:imagepicker">
 	<div class="hui_imagepicker" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImagePicker({
@@ -668,24 +670,10 @@
 
 <!--             Tokens            -->
 
-<xsl:template match="gui:group/gui:tokens">
-	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
-		<td>
-			<xsl:call-template name="gui:tokens"/>
-		</td>
-	</tr>
-</xsl:template>
 
-<xsl:template match="gui:group[@labels='above']/gui:tokens">
-	<tr>
-		<td>
-			<label><xsl:value-of select="@label"/></label>
-			<xsl:call-template name="gui:tokens"/>
-		</td>
-	</tr>
-</xsl:template>
-
+<!--doc title:'Tokens (string list)' class:'hui.ui.TokenField' module:'input'
+<tokens name="«text»" key="«text»"/>
+-->
 <xsl:template name="gui:tokens">
 	<div class="hui_tokenfield" id="{generate-id()}">
 		<xsl:comment/>
@@ -701,7 +689,9 @@
 </xsl:template>
 
 
-
+<!--doc title:'Slider' class:'hui.ui.Slider' module:'input'
+<slider name="«text»" key="«text»" width="«pixels»"/>
+-->
 <xsl:template match="gui:slider">
 	<span class="hui_slider" id="{generate-id()}">
 		<xsl:if	test="@width"><xsl:attribute name="style">width: <xsl:value-of select="@width"/>px;</xsl:attribute></xsl:if>
@@ -720,17 +710,14 @@
 
 
 
-<!--             Object List             -->
-
-
-
-
-<xsl:template match="gui:group/gui:objectlist">
-	<tr><td colspan="2">
-		<xsl:call-template name="gui:objectlist"/>
-	</td></tr>
-</xsl:template>
-
+<!--doc title:'Object list' class:'hui.ui.ObjectList' module:'input'
+<objectlist name="«text»" key="«text»">
+    <text key="«text»" label="«text»"/>
+    <select key="«text»" label="«text»">
+        <option value="«text»" text="«text»"/>
+    </select>
+</objectlist>
+-->
 <xsl:template match="gui:objectlist" name="gui:objectlist">
 	<table cellspacing="0" cellpadding="0" id="{generate-id()}" class="hui_objectlist">
 		<xsl:if test="gui:text/@label">
@@ -766,7 +753,7 @@
 	<xsl:variable name="id" select="generate-id()"/>
 	var <xsl:value-of select="$id"/> = new hui.ui.ObjectList.Select('<xsl:value-of select="@key"/>');
 	<xsl:for-each select="gui:option">
-		<xsl:value-of select="$id"/>.addOption('<xsl:value-of select="@value"/>','<xsl:value-of select="@label"/>');
+		<xsl:value-of select="$id"/>.addOption('<xsl:value-of select="@value"/>','<xsl:value-of select="@label"/><xsl:value-of select="@text"/>');
 	</xsl:for-each>
 	registerTemplateItem(<xsl:value-of select="generate-id()"/>);
 </xsl:template>

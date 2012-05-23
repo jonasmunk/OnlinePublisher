@@ -124,12 +124,16 @@ class NewsPartController extends PartController
 						</group>
 						<fieldset legend="Nyheder">
 							<group labels="above">
-								<checkboxes label="Grupper" name="newsGroups">
-								'.GuiUtils::buildObjectItems('newsgroup').'
-								</checkboxes>
-								<dropdown label="Nyheder" name="newsNews">
-								'.GuiUtils::buildObjectItems('news').'
-								</dropdown>
+								<field label="Grupper">
+									<checkboxes name="newsGroups">
+									'.GuiUtils::buildObjectItems('newsgroup').'
+									</checkboxes>
+								</field>
+								<field label="Nyheder">
+									<dropdown name="newsNews">
+									'.GuiUtils::buildObjectItems('news').'
+									</dropdown>
+								</field>
 							</group>
 						</fieldset>
 					</formula>

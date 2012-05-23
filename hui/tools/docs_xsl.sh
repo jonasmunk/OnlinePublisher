@@ -9,7 +9,7 @@ from xml.sax.saxutils import escape
 
 
 
-base = '/Users/jbm/Sites/onlinepublisher/hui'
+#base = '/Users/jbm/Sites/onlinepublisher/hui'
 
 base = os.getcwd()+'/..'
 

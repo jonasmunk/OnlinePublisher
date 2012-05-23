@@ -106,7 +106,9 @@ $gui='
 						</column>
 						<column width="70px">
 							<group labels="above">
-								<imagepicker label="Billede:" name="personImage" source="../../Services/Model/ImagePicker.php"/>
+								<field label="Billede">
+									<image-input name="personImage" source="../../Services/Model/ImagePicker.php"/>
+								</field>
 							</group>
 						</column>
 					</columns>
@@ -160,17 +162,23 @@ $gui='
 					<columns space="5">
 						<column>
 							<group>
-								<checkboxes label="Postlister:" name="personMailinglists">
-									<items source="mailinglistSource"/>
-								</checkboxes>
-								<checkbox label="Søgbar:" name="personSearchable"/>
+								<field label="Postlister:">
+									<checkboxes name="personMailinglists">
+										<items source="mailinglistSource"/>
+									</checkboxes>
+								</field>
+								<field label="Søgbar:">
+									<checkbox name="personSearchable"/>
+								</field>
 							</group>
 						</column>
 						<column>
 							<group>
-								<checkboxes label="Grupper:" name="personGroups">
-									<items source="personGroupSource"/>
-								</checkboxes>
+								<field label="Grupper:">
+									<checkboxes name="personGroups">
+										<items source="personGroupSource"/>
+									</checkboxes>
+								</field>
 							</group>
 						</column>
 					</columns>

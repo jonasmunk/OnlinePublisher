@@ -25,7 +25,9 @@
 				<text label="Notat:" lines="6"/>
 				<checkbox label="Intern adgang:"/>
 				<checkbox label="Ekstern adgang:"/>
-				<tokens label="Tokens:"/>
+				<field label="Tokens:">
+					<tokens/>
+				</field>
 				<buttons top="10">
 					<button title="Gem" highlighted="true"/>
 					<button title="Slet"/>
@@ -43,7 +45,9 @@
 				<text label="Notat:" lines="6"/>
 				<checkbox label="Intern adgang:"/>
 				<checkbox label="Ekstern adgang:"/>
-				<tokens label="Tokens:"/>
+				<field label="Tokens:">
+					<tokens/>
+				</field>
 				<buttons top="10">
 					<button title="Gem" highlighted="true"/>
 					<button title="Slet"/>
@@ -61,7 +65,9 @@
 				<text label="Notat:" lines="6"/>
 				<checkbox label="Intern adgang:"/>
 				<checkbox label="Ekstern adgang:"/>
-				<tokens label="Tokens:"/>
+				<field label="Tokens:">
+					<tokens/>
+				</field>
 				<buttons top="10">
 					<button title="Gem" highlighted="true"/>
 					<button title="Slet"/>
@@ -81,7 +87,9 @@
 					<text label="Notat:" lines="6"/>
 					<checkbox label="Intern adgang:"/>
 					<checkbox label="Ekstern adgang:"/>
-					<tokens label="Tokens:"/>
+					<field label="Tokens:">
+						<tokens/>
+					</field>
 					<buttons top="10">
 						<button title="Gem" highlighted="true"/>
 						<button title="Slet"/>
@@ -100,7 +108,9 @@
 				<text label="Notat:" lines="6"/>
 				<checkbox label="Intern adgang:"/>
 				<checkbox label="Ekstern adgang:"/>
-				<tokens label="Tokens:"/>
+				<field label="Tokens:">
+					<tokens/>
+				</field>
 				<buttons top="10">
 					<button title="Gem" highlighted="true"/>
 					<button title="Slet"/>

@@ -120,23 +120,31 @@ class ListPartController extends PartController
 					<formula padding="10" name="dataFormula">
 						<fieldset legend="Nyheder">
 							<group labels="above">
-								<checkboxes label="Grupper" key="newsGroups">
-								'.GuiUtils::buildObjectItems('newsgroup').'
-								</checkboxes>
-								<checkboxes label="Kilder" key="newsSources">
-								'.GuiUtils::buildObjectItems('newssource').'
-								</checkboxes>
+								<field label="Grupper">
+									<checkboxes key="newsGroups">
+									'.GuiUtils::buildObjectItems('newsgroup').'
+									</checkboxes>
+								</field>
+								<field label="Kilder">
+									<checkboxes key="newsSources">
+									'.GuiUtils::buildObjectItems('newssource').'
+									</checkboxes>							
+								</field>
 							</group>
 						</fieldset>
 						<space height="10"/>
 						<fieldset legend="Begivenheder">
 							<group labels="above">
-								<checkboxes label="Kalendere" key="calendars">
-								'.GuiUtils::buildObjectItems('calendar').'
-								</checkboxes>
-								<checkboxes label="Kilder" key="calendarSources">
-								'.GuiUtils::buildObjectItems('calendarsource').'
-								</checkboxes>
+								<field label="Kalendere">
+									<checkboxes key="calendars">
+									'.GuiUtils::buildObjectItems('calendar').'
+									</checkboxes>
+								</field>
+								<field label="Kilder">
+									<checkboxes key="calendarSources">
+									'.GuiUtils::buildObjectItems('calendarsource').'
+									</checkboxes>
+								</field>
 							</group>
 						</fieldset>
 					</formula>

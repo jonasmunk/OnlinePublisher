@@ -6,6 +6,7 @@
         <item icon="common/page" title="dom" value="unittests/dom.html"/>
         <item icon="common/page" title="formula" value="unittests/formula.html"/>
         <item icon="common/page" title="hui" value="unittests/hui.html"/>
+        <item icon="common/page" title="list" value="unittests/list.html"/>
         <item icon="common/page" title="profile" value="unittests/profile.html"/>
         <item icon="common/page" title="style" value="unittests/style.html"/>
         <item icon="common/page" title="validation" value="unittests/validation.html"/>
@@ -22,6 +23,7 @@
         <item icon="common/page" title="drawing" value="html/drawing.html"/>
         <item icon="common/page" title="editor" value="html/editor.html"/>
         <item icon="common/page" title="effects" value="html/effects.html"/>
+        <item icon="common/page" title="finder" value="html/finder.html"/>
         <item icon="common/page" title="force" value="html/force.html"/>
         <item icon="common/page" title="formula" value="html/formula.html"/>
         <item icon="common/page" title="graphviz" value="html/graphviz.html"/>
@@ -41,6 +43,7 @@
         <item icon="common/page" title="require" value="html/require.html"/>
         <item icon="common/page" title="scrollto" value="html/scrollto.html"/>
         <item icon="common/page" title="selection" value="html/selection.html"/>
+        <item icon="common/page" title="slider" value="html/slider.html"/>
         <item icon="common/page" title="supa" value="html/supa.html"/>
         <item icon="common/page" title="upload" value="html/upload.html"/>
         <item icon="common/page" title="upload_webkit" value="html/upload_webkit.html"/>
@@ -56,13 +59,16 @@
         <item icon="common/page" title="dropdown" value="xml/dropdown.xml"/>
         <item icon="common/page" title="formula" value="xml/formula.xml"/>
         <item icon="common/page" title="formula_fieldset" value="xml/formula_fieldset.xml"/>
+        <item icon="common/page" title="formula_special" value="xml/formula_special.xml"/>
         <item icon="common/page" title="graph" value="xml/graph.xml"/>
         <item icon="common/page" title="graphviz" value="xml/graphviz.xml"/>
         <item icon="common/page" title="layout" value="xml/layout.xml"/>
         <item icon="common/page" title="links" value="xml/links.xml"/>
         <item icon="common/page" title="list" value="xml/list.xml"/>
         <item icon="common/page" title="pages" value="xml/pages.xml"/>
+        <item icon="common/page" title="picker" value="xml/picker.xml"/>
         <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
+        <item icon="common/page" title="structure" value="xml/structure.xml"/>
         <item icon="common/page" title="style" value="xml/style.xml"/>
         <item icon="common/page" title="tabs" value="xml/tabs.xml"/>
         <item icon="common/page" title="tiles" value="xml/tiles.xml"/>

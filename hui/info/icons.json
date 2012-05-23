@@ -1,5 +1,8 @@
 {
     "application": {
+        "developer": [
+            32
+        ], 
         "files": [
             16, 
             32
@@ -270,6 +273,9 @@
         "generic": [
             16, 
             32
+        ], 
+        "text": [
+            32
         ]
     }, 
     "flag": {
@@ -287,6 +293,11 @@
         "map": [
             16, 
             32
+        ]
+    }, 
+    "input": {
+        "datetime": [
+            14
         ]
     }, 
     "inset": {
@@ -588,6 +599,17 @@
         ], 
         "text_transform_uppercase": [
             16
+        ]
+    }, 
+    "table": {
+        "cell": [
+            32
+        ], 
+        "column": [
+            32
+        ], 
+        "row": [
+            32
         ]
     }, 
     "transparent": {

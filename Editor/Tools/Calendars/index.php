@@ -129,9 +129,11 @@ $gui='
 				<text label="Lokation" key="location"/>
 				<datetime label="Fra" key="startdate"/>
 				<datetime label="Til" key="enddate"/>
-				<checkboxes label="Kalendere" key="calendars" name="eventCalendars">
-					<items source="calendarItemsSource"/>
-				</checkboxes>
+				<field label="Kalendere">
+					<checkboxes key="calendars" name="eventCalendars">
+						<items source="calendarItemsSource"/>
+					</checkboxes>
+				</field>
 				<buttons>
 					<button name="cancelEvent" title="Annuller"/>
 					<button name="deleteEvent" title="Slet">

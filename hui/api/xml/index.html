@@ -3,7 +3,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 <link rel="stylesheet" href="stylesheet.css" type="text/css"/><link rel="stylesheet" href="../../bin/minimized.css" type="text/css"/><script src="../../bin/minimized.js"></script><script src="script.js"></script><title>HUI XML format docs</title>
 </head>
-<body><p class="modules"><a href="javascript://"><span>All</span></a> <a href="javascript://" data="selection"><span>Selection</span></a> <a href="javascript://" data="container"><span>Container</span></a> <a href="javascript://" data="unknown"><span>Unknown</span></a> <a href="javascript://" data="base"><span>Base</span></a> <a href="javascript://" data="action"><span>Action</span></a> <a href="javascript://" data="input"><span>Input</span></a> <a href="javascript://" data="layout"><span>Layout</span></a> </p><div class="component input"><h2>Formula <span class="module">input</span></h2>
+<body><p class="modules"><a href="javascript://"><span>All</span></a> <a href="javascript://" data="selection"><span>Selection</span></a> <a href="javascript://" data="container"><span>Container</span></a> <a href="javascript://" data="unknown"><span>Unknown</span></a> <a href="javascript://" data="base"><span>Base</span></a> <a href="javascript://" data="Unknown"><span>Unknown</span></a> <a href="javascript://" data="action"><span>Action</span></a> <a href="javascript://" data="input"><span>Input</span></a> <a href="javascript://" data="layout"><span>Layout</span></a> </p><div class="component input"><h2>Formula <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Formula.html"><span>hui.ui.Formula</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;formula name="«name»" state="«text»" padding="«pixels»"&gt;
     &lt;group···&gt;
@@ -27,7 +27,7 @@
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;datetime-input name="«text»" key="«text»" return-type="«'date' | 'seconds'»"/&gt;
 </pre></div><div class="component input"><h2>Number input <span class="module">input</span></h2>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;number-input name="«text»" key="«text»" adaptive="«boolean»" min="«number»" max="«number»" decimals="«integer»" value="«number»" allow-null="«boolean»" tick-size="«number»"/&gt;
-</pre></div><div class="component input"><h2>Number input <span class="module">input</span></h2>
+</pre></div><div class="component input"><h2>CSS length input <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.StyleLength.html"><span>hui.ui.StyleLength</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;style-length-input name="«text»" key="«text»" value="«css-length»"/&gt;
 </pre></div><div class="component input"><h2>Color input <span class="module">input</span></h2>
@@ -36,6 +36,52 @@
 </pre></div><div class="component input"><h2>Location input <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.LocationField.html"><span>hui.ui.LocationField</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;location-input name="«text»" key="«text»" /&gt;
+</pre></div><div class="component input"><h2>Drop down <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.DropDown.html"><span>hui.ui.DropDown</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;dropdown name="«text»" key="«text»" value="«text»" source="«name»" url="«url»" placeholder="«text»" adaptive="«boolean»" width="«pixels»"&gt;
+	&lt;item value="«text»" text="«text»"/&gt;
+&lt;/dropdown&gt;
+</pre></div><div class="component input"><h2>Radio buttons <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Radiobuttons.html"><span>hui.ui.Radiobuttons</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;radiobuttons name="«text»" key="«text»" value="«text»"&gt;
+	&lt;item value="«text»" text="«text»"/&gt;
+&lt;/radiobuttons&gt;
+</pre></div><div class="component input"><h2>Check box <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Checkbox.html"><span>hui.ui.Checkbox</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;checkbox name="«text»" key="«text»" value="«boolean»"/&gt;
+</pre></div><div class="component input"><h2>Check boxes <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Checkboxes.html"><span>hui.ui.Checkboxes</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;checkboxes name="«text»" key="«text»" max-height="«pixels»"&gt;
+	&lt;item value="«text»" text="«text»"/&gt;
+	&lt;items name="«text»" source="«name»"/&gt;
+&lt;/checkboxes&gt;
+</pre></div><div class="component action"><h2>Buttons <span class="module">action</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Buttons.html"><span>hui.ui.Buttons</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;buttons small="«boolean»" mini="«boolean»" aling="«'left' | 'center' | 'right'»" padding="«pixels»" top="«pixels»" left="«pixels»" right="«pixels»" bottom="«pixels»"&gt;
+	&lt;button···/&gt;
+&lt;/buttons&gt;
+</pre></div><div class="component action"><h2>Button <span class="module">action</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Button.html"><span>hui.ui.Button</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;button text="«text»" icon="«icon»" name="«text»" small="«boolean»" mini="«boolean»" highlighted="«boolean»" disabled="«boolean»" variant="«'paper'»" submit="«boolean»" click="«script»" url="«url»"&gt;
+    &lt;confirm text="«text»" ok="«text»" cancel="«text»"/&gt;
+&lt;/button&gt;
+</pre></div><div class="component input"><h2>Image input <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.ImagePicker.html"><span>hui.ui.ImagePicker</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;image-input name="«text»" source="«url»"/&gt;
+</pre></div><div class="component input"><h2>Tokens (string list) <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.TokenField.html"><span>hui.ui.TokenField</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;tokens name="«text»" key="«text»"/&gt;
+</pre></div><div class="component input"><h2>Slider <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Slider.html"><span>hui.ui.Slider</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;slider name="«text»" key="«text»" width="«pixels»"/&gt;
+</pre></div><div class="component input"><h2>Object list <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.ObjectList.html"><span>hui.ui.ObjectList</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;objectlist name="«text»" key="«text»"&gt;
+    &lt;text key="«text»" label="«text»"/&gt;
+    &lt;select key="«text»" label="«text»"&gt;
+        &lt;option value="«text»" text="«text»"/&gt;
+    &lt;/select&gt;
+&lt;/objectlist&gt;
 </pre></div><div class="component base"><h2>Gui <span class="module">base</span></h2>
 <p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;gui title="«text»" state="«text»" padding="«pixels»"&gt;
     &lt;controller source="«url»" name="«name»"/&gt;
@@ -279,7 +325,7 @@
     	···
 	&lt;/bottom&gt;
 &lt;/structure&gt;
-</pre></div><div class="component"><h2>Graph</h2>
+</pre></div><div class="component Unknown"><h2>Graph <span class="module">Unknown</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Graph.html"><span>hui.ui.Graph</span></a></p>
 <p class="file">File: <a href="../../xslt/other.xsl"><span>other.xsl</span></a></p><pre>&lt;graph name="«name»" layout="«?»" source="«source»"/&gt;
 </pre></div></body>

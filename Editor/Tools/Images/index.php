@@ -122,9 +122,11 @@ $gui='
 		<formula name="imageFormula">
 			<group labels="above">
 				<text label="Titel" key="title"/>
-				<checkboxes label="Grupper:" name="imageGroups" key="groups" max-height="200">
-					<items source="groupOptionsSource"/>
-				</checkboxes>
+				<field label="Grupper:">
+					<checkboxes name="imageGroups" key="groups" max-height="200">
+						<items source="groupOptionsSource"/>
+					</checkboxes>
+				</field>
 				<buttons>
 					<button name="cancelImage" title="Annuller"/>
 					<button name="deleteImage" title="Slet">

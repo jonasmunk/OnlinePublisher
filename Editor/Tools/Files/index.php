@@ -116,9 +116,11 @@ $gui='
 		<formula name="fileFormula">
 			<group labels="above">
 				<text label="Titel" key="title"/>
-				<checkboxes label="Grupper:" name="fileGroups" key="groups">
-					<items source="groupSource"/>
-				</checkboxes>
+				<field label="Grupper:">
+					<checkboxes name="fileGroups" key="groups">
+						<items source="groupSource"/>
+					</checkboxes>
+				</field>
 				<buttons>
 					<button name="cancelFile" title="Annuller"/>
 					<button name="deleteFile" title="Slet">

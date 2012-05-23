@@ -28,7 +28,9 @@
 					<group>
 						<text label="Note:" lines="6"/>
 						<checkbox label="Checkbox:"/>
-						<tokens label="Tokens:"/>
+						<field label="Tokens:">
+							<tokens/>
+						</field>
 					</group>
 				</formula>
 			</tab>

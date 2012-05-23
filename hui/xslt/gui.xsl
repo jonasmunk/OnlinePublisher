@@ -11,7 +11,6 @@
 <!--xsl:include href="iphone.xsl"/-->
 <xsl:include href="layout.xsl"/>
 <xsl:include href="formula.xsl"/>
-<!--xsl:include href="view.xsl"/--> <!-- TODO: remove this -->
 <xsl:include href="toolbar.xsl"/>
 <xsl:include href="links.xsl"/>
 <xsl:include href="other.xsl"/>

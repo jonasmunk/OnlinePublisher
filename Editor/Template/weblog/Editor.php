@@ -17,9 +17,11 @@ $gui='
 					<item title="Ingen skabelon" value="0"/>
 					'.GuiUtils::buildObjectItems('pageblueprint').'
 				</dropdown>
-				<checkboxes key="groups" label="Grupper">
-					'.GuiUtils::buildObjectItems('webloggroup').'
-				</checkboxes>
+				<field label="Grupper">
+					<checkboxes key="groups">
+						'.GuiUtils::buildObjectItems('webloggroup').'
+					</checkboxes>
+				</field>
 				<buttons>
 					<button title="Opdater" name="save" highlighted="true" disabled="true"/>
 				</buttons>

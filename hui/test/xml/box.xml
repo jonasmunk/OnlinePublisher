@@ -26,7 +26,9 @@
 				<text label="Kodeord:"/>
 				<checkbox label="Intern adgang:"/>
 				<checkbox label="Ekstern adgang:"/>
-				<tokens label="Tokens:"/>
+				<field label="Tokens:">
+					<tokens/>
+				</field>
 				<buttons top="10">
 					<button title="Annuller"/>
 					<button title="Slet"/>
@@ -43,7 +45,9 @@
 				<text label="Kodeord:"/>
 				<checkbox label="Intern adgang:"/>
 				<checkbox label="Ekstern adgang:"/>
-				<tokens label="Tokens:"/>
+				<field label="Tokens:">
+					<tokens/>
+				</field>
 				<buttons top="10">
 					<button title="Gem" highlighted="true"/>
 					<button title="Slet"/>
@@ -61,7 +65,9 @@
 				<text label="Kodeord:"/>
 				<checkbox label="Intern adgang:"/>
 				<checkbox label="Ekstern adgang:"/>
-				<tokens label="Tokens:"/>
+				<field label="Tokens:">
+					<tokens/>
+				</field>
 				<buttons top="10">
 					<button title="Gem" highlighted="true"/>
 					<button title="Slet"/>

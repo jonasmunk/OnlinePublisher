@@ -150,9 +150,11 @@ $gui='
 			</fieldset>
 			<fieldset legend="Nyheder">
 				<group>
-				<checkboxes key="groups" label="Grupper">
-					<items source="newsGroupItems"/>
-				</checkboxes>
+					<field label="Grupper">
+						<checkboxes key="groups">
+							<items source="newsGroupItems"/>
+						</checkboxes>
+					</field>
 				</group>
 			</fieldset>
 			</overflow>

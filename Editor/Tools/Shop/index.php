@@ -114,7 +114,9 @@ $gui='
 						</column>
 						<column width="60px">
 							<group labels="above">
-								<imagepicker label="Billede:" name="productImage" source="../../Services/Model/ImagePicker.php"/>
+								<field label="Billede:">
+									<image-input name="productImage" source="../../Services/Model/ImagePicker.php"/>
+								</field>
 							</group>
 						</column>
 					</columns>
@@ -159,9 +161,11 @@ $gui='
 						</column>
 						<column>
 							<group>
-								<checkboxes label="Grupper:" name="productGroups">
-									<items source="groupSource"/>
-								</checkboxes>
+								<field label="Grupper:">
+									<checkboxes name="productGroups">
+										<items source="groupSource"/>
+									</checkboxes>
+								</field>
 							</group>
 						</column>
 					</columns>

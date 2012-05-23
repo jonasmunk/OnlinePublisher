@@ -146,9 +146,11 @@ $gui='
 						</column>
 					</columns>
 					<group labels="above">
-						<checkboxes label="Grupper:" name="newsGroups">
-							<items source="groupSource"/>
-						</checkboxes>
+						<field label="Grupper:">
+							<checkboxes name="newsGroups">
+								<items source="groupSource"/>
+							</checkboxes>
+						</field>
 					</group>
 				</formula>
 				</space>
@@ -198,9 +200,11 @@ $gui='
 				</column>
 			</columns>
 			<group labels="above">
-				<checkboxes label="Grupper:" key="groups">
-					<items source="groupSource"/>
-				</checkboxes>
+				<field label="Grupper:">
+					<checkboxes key="groups">
+						<items source="groupSource"/>
+					</checkboxes>
+				</field>
 			</group>
 			<buttons>
 				<button name="cancelNewArticle" title="Annuller" click="newNewsBox.hide()"/>
