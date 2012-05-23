@@ -5,7 +5,7 @@
  * @constructor
  */
 hui.ui.StyleLength = function(o) {
-	this.options = hui.override({value:null,min:0,max:1000,units:['px','pt','em','%'],defaultUnit:'px',allowNull:false},o);	
+	this.options = hui.override({value:null,min:0,max:1000,units:['px','pt','em','%'],initialValue:null,defaultUnit:'px',allowNull:false},o);	
 	this.name = o.name;
 	var e = this.element = hui.get(o.element);
 	this.input = hui.get.firstByTag(e,'input');
@@ -14,15 +14,15 @@ hui.ui.StyleLength = function(o) {
 	this.down = as[1];
 	this.value = this.parseValue(this.options.value);
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 hui.ui.StyleLength.prototype = {
 	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var e = this.element;
 		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
-		hui.listen(this.input,'blur',this.blurEvent.bind(this));
+		hui.listen(this.input,'blur',this._onBlur.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
 		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
 		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
@@ -47,8 +47,7 @@ hui.ui.StyleLength.prototype = {
 		parsed.number = Math.max(this.options.min,Math.min(this.options.max,parsed.number));
 		return parsed;
 	},
-	/** @private */
-	blurEvent : function() {
+	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
 		this.updateInput();
 	},
@@ -85,8 +84,14 @@ hui.ui.StyleLength.prototype = {
 			this.fire('valueChanged',this.getValue());
 		}
 	},
+	_setInitialValue : function() {
+		if (!this.value && this.options.initialValue) {
+			this.setValue(this.options.initialValue);
+		}
+	},
 	/** @private */
 	downEvent : function() {
+		this._setInitialValue();
 		if (this.value) {
 			this.checkAndSetValue({number:Math.max(this.options.min,this.value.number-1),unit:this.value.unit});
 		} else {
@@ -96,6 +101,7 @@ hui.ui.StyleLength.prototype = {
 	},
 	/** @private */
 	upEvent : function() {
+		this._setInitialValue();
 		if (this.value) {
 			this.checkAndSetValue({number:Math.min(this.options.max,this.value.number+1),unit:this.value.unit});
 		} else {
@@ -106,6 +112,9 @@ hui.ui.StyleLength.prototype = {
 	
 	// Public
 	
+	setInitialValue : function(value) {
+		this.options.initialValue = value;
+	},
 	getValue : function() {
 		return this.value ? this.value.number+this.value.unit : '';
 	},

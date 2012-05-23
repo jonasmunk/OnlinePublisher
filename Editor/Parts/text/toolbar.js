@@ -16,6 +16,8 @@ hui.ui.listen({
 		textIndent.setValue(this.form.textIndent.value);
 		imageId.setValue(this.form.imageId.value);
 		imageFloat.setValue(this.form.imageFloat.value);
+		fontSize.setInitialValue(hui.style.get(this.form.text,'font-size'));
+		lineHeight.setInitialValue(hui.style.get(this.form.text,'line-height'));
 	},
 	$valueChanged$fontWeight : function(value) {
 		this.form.fontWeight.value=value || '';
