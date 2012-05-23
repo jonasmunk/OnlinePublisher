@@ -113,17 +113,17 @@ $gui='
 					<columns space="10">
 						<column>
 							<group labels="above">
-								<custom label="Email:">
+								<field label="Email:">
 									<objectlist name="personEmails">
 										<text key="address"/>
 									</objectlist>
-								</custom>
-								<custom label="Telefon:">
+								</field>
+								<field label="Telefon:">
 									<objectlist name="personPhones">
 										<text key="number" label="Nummer"/>
 										<text key="context" label="Kontekst"/>
 									</objectlist>
-								</custom>
+								</field>
 							</group>
 							<group>
 								<radiobuttons name="personSex" label="Køn:" value="1">

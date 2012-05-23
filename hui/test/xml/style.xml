@@ -6,7 +6,9 @@
 	<box width="600" variant="textured">
 		<toolbar>
 			<number label="Style length:" key="style" value="15"/>
-			<style-length label="Style length:" key="style" value="15px"/>
+			<field label="Style length:">
+				<style-length-input key="style" value="15px"/>
+			</field>
 			<segmented label="Alignment" value="left" name="segmentedBar">
 				<item icon="edit/text_align_left" value="left"/>
 				<item icon="edit/text_align_center" value="center"/>
@@ -22,7 +24,9 @@
 			<tab title="Formula 1" padding="10">
 				<formula name="formula1">
 					<group labels="above">
-						<style-length label="Style length:" key="style" value="15px"/>
+						<field label="Style length:">
+							<style-length-input key="style" value="15px"/>
+						</field>
 						<field label="Color">
 							<colorfield key="color" value="red"/>
 						</field>

@@ -30,7 +30,9 @@
 					<number label="Number:" key="number"/>
 					<number label="Number (min -300):" key="number2" min="-300"/>
 					<number label="Number (min 300):" key="number2" min="300"/>
-					<style-length label="Style length:" key="style" value="15px"/>
+					<field label="Style length:">
+						<style-length-input key="style" value="15px"/>
+					</field>
 				</group>
 			</fieldset>
 			<buttons top="10">

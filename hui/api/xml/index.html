@@ -1,92 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-<link rel="stylesheet" href="stylesheet.css" type="text/css"/><title>HUI XML format docs</title>
+<link rel="stylesheet" href="stylesheet.css" type="text/css"/><link rel="stylesheet" href="../../bin/minimized.css" type="text/css"/><script src="../../bin/minimized.js"></script><script src="script.js"></script><title>HUI XML format docs</title>
 </head>
-<body><h2>Gui</h2>
-<p>File: gui.xsl</p><div><pre>
-&lt;gui title="«text»" state="«text»" padding="«pixels»"&gt;
+<body><p class="modules"><a href="javascript://"><span>All</span></a> <a href="javascript://" data="selection"><span>Selection</span></a> <a href="javascript://" data="container"><span>Container</span></a> <a href="javascript://" data="unknown"><span>Unknown</span></a> <a href="javascript://" data="base"><span>Base</span></a> <a href="javascript://" data="action"><span>Action</span></a> <a href="javascript://" data="input"><span>Input</span></a> <a href="javascript://" data="layout"><span>Layout</span></a> </p><div class="component input"><h2>Formula <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Formula.html"><span>hui.ui.Formula</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;formula name="«name»" state="«text»" padding="«pixels»"&gt;
+    &lt;group···&gt;
+        ···
+    &lt;/group&gt;
+&lt;/formula&gt;
+</pre></div><div class="component input"><h2>Fieldset <span class="module">input</span></h2>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;fieldset legend="«text»"&gt;
+    ···
+&lt;/fieldset&gt;
+</pre></div><div class="component input"><h2>Field <span class="module">input</span></h2>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;group&gt;
+    &lt;field label="«text»" hint="«text»"&gt;
+        ···
+    &lt;/field&gt;
+&lt;/group&gt;
+</pre></div><div class="component input"><h2>Text input <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.TextField.html"><span>hui.ui.TextField</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;text-input name="«name»" multiline="«boolean»" value="«text»"/&gt;
+</pre></div><div class="component input"><h2>Date-time input <span class="module">input</span></h2>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;datetime-input name="«text»" key="«text»" return-type="«'date' | 'seconds'»"/&gt;
+</pre></div><div class="component input"><h2>Number input <span class="module">input</span></h2>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;number-input name="«text»" key="«text»" adaptive="«boolean»" min="«number»" max="«number»" decimals="«integer»" value="«number»" allow-null="«boolean»" tick-size="«number»"/&gt;
+</pre></div><div class="component input"><h2>Number input <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.StyleLength.html"><span>hui.ui.StyleLength</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;style-length-input name="«text»" key="«text»" value="«css-length»"/&gt;
+</pre></div><div class="component input"><h2>Color input <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.ColorInput.html"><span>hui.ui.ColorInput</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;color-input name="«text»" key="«text»" value="«css-color»"/&gt;
+</pre></div><div class="component input"><h2>Location input <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.LocationField.html"><span>hui.ui.LocationField</span></a></p>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;location-input name="«text»" key="«text»" /&gt;
+</pre></div><div class="component base"><h2>Gui <span class="module">base</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;gui title="«text»" state="«text»" padding="«pixels»"&gt;
     &lt;controller source="«url»" name="«name»"/&gt;
     &lt;controller source="«url»" name="«name»"/&gt;
     ···
 &lt;/gui&gt;
-</pre></div>
-<h2>DWR setup</h2>
-<p>File: gui.xsl</p><div><pre>
-&lt;dwr base="«url»"&gt;
+</pre></div><div class="component base"><h2>DWR interface <span class="module">base</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;dwr base="«url»"&gt;
     &lt;interface name="«text»"/&gt;
     &lt;interface name="«text»"/&gt;
 &lt;/dwr&gt;
-</pre></div>
-<h2>Data source</h2>
-<p>File: gui.xsl</p><div><pre>
-&lt;source url="«url»" dwr="«text»" lazy="«boolean»"&gt;
+</pre></div><div class="component base"><h2>Data source <span class="module">base</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Source.html"><span>hui.ui.Source</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;source url="«url»" dwr="«text»" lazy="«boolean»"&gt;
     &lt;parameter key="«text»" value="«expression»"/&gt;
 &lt;/source&gt;
-</pre></div>
-<h2>Sub-GUI</h2>
-<p>File: gui.xsl</p><div><pre>
-&lt;subgui&gt;
+</pre></div><div class="component base"><h2>Sub-GUI <span class="module">base</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;subgui&gt;
     ···
 &lt;/subgui&gt;
-</pre></div>
-<h2>Script</h2>
-<p>File: gui.xsl</p><div><pre>
-&lt;script&gt;
+</pre></div><div class="component base"><h2>Script <span class="module">base</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;script&gt;
     «text»
 &lt;/script&gt;
-</pre></div>
-<h2>Listener</h2>
-<p>File: gui.xsl</p><div><pre>
-&lt;listen&gt;
+</pre></div><div class="component base"><h2>Listener <span class="module">base</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;listen&gt;
     &lt;«name» for="«event»"&gt;
         «text»
     &lt;/«name»&gt;
 &lt;/listen&gt;
-</pre></div>
-<h2>Dock</h2>
-<p>Class: <a href="../symbols/hui.ui.Dock.html">hui.ui.Dock</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;dock url="«url»" frame-name="«text»" position="« top | bottom »" name="«name»"&gt;
+</pre></div><div class="component layout"><h2>Dock <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Dock.html"><span>hui.ui.Dock</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;dock url="«url»" frame-name="«text»" position="« top | bottom »" name="«name»"&gt;
     &lt;sidebar&gt;
         ···
     &lt;/sidebar&gt;
     &lt;tabs/&gt; | &lt;toolbar/&gt;
 &lt;/dock&gt;
-</pre></div>
-<h2>IFrame</h2>
-<p>Class: <a href="../symbols/hui.ui.IFrame.html">hui.ui.IFrame</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;iframe source="«url»" id="«text»" state="«text»" name="«name»" height="«pixels»" /&gt;
-</pre></div>
-<h2>Selection</h2>
-<p>Class: <a href="../symbols/hui.ui.Selection.html">hui.ui.Selection</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;selection name="«name»" value="«text»"&gt;
+</pre></div><div class="component layout"><h2>Space <span class="module">layout</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;frames&gt;
+	&lt;frame name="«text»" source="«url»" scrolling="«boolean»"/&gt;
+&lt;/frames&gt;
+</pre></div><div class="component layout"><h2>IFrame <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.IFrame.html"><span>hui.ui.IFrame</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;iframe source="«url»" id="«text»" state="«text»" name="«name»" height="«pixels»" /&gt;
+</pre></div><div class="component selection"><h2>Selection <span class="module">selection</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Selection.html"><span>hui.ui.Selection</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;selection name="«name»" value="«text»" state="«text»" value="«text»"&gt;
     &lt;item value="«text»" title="«text»" badge="«text»" icon="«icon»" /&gt;
     &lt;items ··· /&gt;
     &lt;title&gt;«text»&lt;/title&gt;
 &lt;/selection&gt;
-</pre></div>
-<h2>Selection items</h2>
-<p>Class: <a href="../symbols/hui.ui.Selection.Items.html">hui.ui.Selection.Items</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;selection ···&gt;
+</pre></div><div class="component selection"><h2>Selection items <span class="module">selection</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Selection.Items.html"><span>hui.ui.Selection.Items</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;selection ···&gt;
     &lt;items name="«text»" title="«text»" source="«source»" title="«text»" /&gt;
 &lt;/selection&gt;
-</pre></div>
-<h2>List</h2>
-<p>Class: <a href="../symbols/hui.ui.List.html">hui.ui.List</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;list name="«text»" state="«text»" url="«url»" source="«source»" selectable="«boolean»"&gt;
+</pre></div><div class="component selection"><h2>List <span class="module">selection</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.List.html"><span>hui.ui.List</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;list name="«text»" state="«text»" url="«url»" source="«source»" selectable="«boolean»"&gt;
     &lt;window size="«integer»" /&gt;
     &lt;column key="«text»" title="«text»" width="«'min'»" /&gt;
 &lt;/list&gt;
-</pre></div>
-<h2>Tabs</h2>
-<p>Class: <a href="../symbols/hui.ui.Tabs.html">hui.ui.Tabs</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;tabs name="«text»" small="«boolean»" centered="«boolean»" below="«boolean»"&gt;
+</pre></div><div class="component layout"><h2>Tabs <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Tabs.html"><span>hui.ui.Tabs</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;tabs name="«text»" small="«boolean»" centered="«boolean»" below="«boolean»"&gt;
     &lt;tab title="«text»" padding="«pixels»"&gt;
         ···
     &lt;/tab&gt;
@@ -94,64 +109,71 @@
         ···
     &lt;/tab&gt;
 &lt;/tabs&gt;
-</pre></div>
-<h2>Bound panel</h2>
-<p>Class: <a href="../symbols/hui.ui.BoundPanel.html">hui.ui.BoundPanel</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;boundpanel name="«name»" target="«name»" width="«pixels»" padding="«pixels»"&gt;
+</pre></div><div class="component container"><h2>Bound panel <span class="module">container</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.BoundPanel.html"><span>hui.ui.BoundPanel</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;boundpanel name="«name»" target="«name»" width="«pixels»" padding="«pixels»"&gt;
     ···
 &lt;/boundpanel&gt;
-</pre></div>
-<h2>Window</h2>
-<p>Class: <a href="../symbols/hui.ui.Window.html">hui.ui.Window</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;window name="«name»" title="«text»" icon="«icon»" close="«boolean»" width="«pixels»" padding="«pixels»" variant="« dark | light | news »"&gt;
+</pre></div><div class="component container"><h2>Window <span class="module">container</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Window.html"><span>hui.ui.Window</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;window name="«name»" title="«text»" icon="«icon»" close="«boolean»" width="«pixels»" padding="«pixels»" variant="« dark | light | news »"&gt;
     ···
     &lt;back&gt;
         ···
     &lt;/back&gt;
 &lt;/window&gt;
-</pre></div>
-<h2>Upload</h2>
-<p>Class: <a href="../symbols/hui.ui.Upload.html">hui.ui.Upload</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;upload name="«name»" url="«url»" button="«text»" chooseButton="«name»" widget="«name»" flash="«boolean»"&gt;
+</pre></div><div class="component unknown"><h2>Upload <span class="module">unknown</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Upload.html"><span>hui.ui.Upload</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;upload name="«name»" url="«url»" button="«text»" chooseButton="«name»" widget="«name»"&gt;
     &lt;placeholder title="«text»" text="«text»"/&gt;
 &lt;/upload&gt;
-</pre></div>
-</pre></div>
-<h2>Gallery</h2>
-<p>Class: <a href="../symbols/hui.ui.Gallery.html">hui.ui.Gallery</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;gallery name="«name»" source="«name»" padding="«pixels»" state="«state»" /&gt;
-</pre></div>
-<h2>Calendar</h2>
-<p>Class: <a href="../symbols/hui.ui.Calendar.html">hui.ui.Calendar</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;calendar name="«name»" source="«name»" startHour="«integer»" endHour="«integer»" /&gt;
-</pre></div>
-<h2>Graphviz</h2>
-<p>Class: <a href="../symbols/hui.ui.Graphviz.html">hui.ui.Graphviz</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;graphviz name="«name»" /&gt;
-</pre></div>
-<h2>Picker</h2>
-<p>Class: <a href="../symbols/hui.ui.Picker.html">hui.ui.Picker</a></p>
-<p>File: gui.xsl</p><div><pre>
-&lt;picker name="«name»" shadow="«boolean»" title="«text»" item-height="«pixels»" item-width="«pixels»"&gt;
+</pre></div><div class="component selection"><h2>Gallery <span class="module">selection</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Gallery.html"><span>hui.ui.Gallery</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;gallery name="«name»" source="«name»" padding="«pixels»" state="«state»" drop-files="«boolean»"/&gt;
+</pre></div><div class="component selection"><h2>Calendar <span class="module">selection</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Calendar.html"><span>hui.ui.Calendar</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;calendar name="«name»" source="«name»" start-hour="«integer»" end-hour="«integer»" /&gt;
+</pre></div><div class="component selection"><h2>Graphviz <span class="module">selection</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Graphviz.html"><span>hui.ui.Graphviz</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;graphviz name="«name»" /&gt;
+</pre></div><div class="component selection"><h2>Picker <span class="module">selection</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Picker.html"><span>hui.ui.Picker</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;picker name="«name»" shadow="«boolean»" title="«text»" item-height="«pixels»" item-width="«pixels»"&gt;
     &lt;item title="«text»" value="«text»" image="«url»" /&gt;
-	&lt;item title="«text»" value="«text»" image="«url»" /&gt;
+    &lt;item title="«text»" value="«text»" image="«url»" /&gt;
 &lt;/picker&gt;
-</pre></div>
-<h2>Space</h2>
-<p>File: layout.xsl</p><div><pre>
-&lt;space all="«pixels»" left="«pixels»" right="«pixels»" top="«pixels»" bottom="«pixels»" align="«left | center | right»" height="«pixels»"&gt;
+</pre></div><div class="component layout"><h2>HTML <span class="module">layout</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;html xmlns="«'http://www.w3.org/1999/xhtml'»"&gt;
+    ···
+&lt;/html&gt;
+</pre></div><div class="component layout"><h2>Text <span class="module">layout</span></h2>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;text align="«'left' | 'center' | 'right'»" top="«pixels»" bottom="«pixels»"&gt;
+    &lt;h|header&gt;···&lt;/h|header&gt;
+    &lt;p&gt;···&lt;/p&gt;
+    ···
+&lt;/text&gt;
+</pre></div><div class="component action"><h2>Link <span class="module">action</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Link.html"><span>hui.ui.Link</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;link name="«name»"&gt;
+    ····
+&lt;/link&gt;
+</pre></div><div class="component input"><h2>Segmented <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Segmented.html"><span>hui.ui.Segmented</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;segmented name="«name»" value="«text»" allow-null="«boolean»"&gt;
+    &lt;item text="«text»" value="«text»" icon="«icon»" /&gt;
+&lt;/segmented&gt;
+</pre></div><div class="component layout"><h2>Rendering <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Rendering.html"><span>hui.ui.Rendering</span></a></p>
+<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;rendering name="«name»"/&gt;
+</pre></div><div class="component action"><h2>Icon <span class="module">action</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Icon.html"><span>hui.ui.Icon</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;icon name="«text»" icon="«icon»" size="«pixels»" text="«text»"/&gt;
+</pre></div><div class="component layout"><h2>Space <span class="module">layout</span></h2>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;space all="«pixels»" left="«pixels»" right="«pixels»" top="«pixels»" bottom="«pixels»" align="«left | center | right»" height="«pixels»" width="«pixels»"&gt;
     ···
 &lt;/space&gt;
-</pre></div>
-<h2>Columns</h2>
-<p>File: layout.xsl</p><div><pre>
-&lt;columns space="«pixels»"&gt;
+</pre></div><div class="component layout"><h2>Columns <span class="module">layout</span></h2>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;columns space="«pixels»"&gt;
     &lt;column width="«css-length»"&gt;
         ···
     &lt;/column&gt;
@@ -159,14 +181,10 @@
     ···
     &lt;/column&gt;
 &lt;/columns&gt;
-</pre></div>
-<h2>Header</h2>
-<p>File: layout.xsl</p><div><pre>
-&lt;header icon="«icon»"&gt;«text»&lt;/header&gt;
-</pre></div>
-<h2>Split</h2>
-<p>File: layout.xsl</p><div><pre>
-&lt;split&gt;
+</pre></div><div class="component layout"><h2>Header <span class="module">layout</span></h2>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;header icon="«icon»"&gt;«text»&lt;/header&gt;
+</pre></div><div class="component layout"><h2>Split <span class="module">layout</span></h2>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;split&gt;
     &lt;sidebar&gt;
         ···
     &lt;/sidebar&gt;
@@ -177,35 +195,27 @@
         ···
     &lt;/content&gt;
 &lt;/split&gt;
-</pre></div>
-<h2>Overflow</h2>
-<p>Class: <a href="../symbols/hui.ui.Overflow.html">hui.ui.Overflow</a></p>
-<p>File: layout.xsl</p><div><pre>
-&lt;overflow background="«background»" vertical="«pixels»" height="«pixels»" min-height="«pixels»" max-height="«pixels»" state="«text»"&gt;
+</pre></div><div class="component layout"><h2>Overflow <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Overflow.html"><span>hui.ui.Overflow</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;overflow background="«background»" vertical="«pixels»" height="«pixels»" min-height="«pixels»" max-height="«pixels»" state="«text»"&gt;
     ···
 &lt;/overflow&gt;
-</pre></div>
-<h2>Box</h2>
-<p>Class: <a href="../symbols/hui.ui.Box.html">hui.ui.Box</a></p>
-<p>File: layout.xsl</p><div><pre>
-&lt;box variant="«?»" closable="«boolean»" absolute="«boolean»" width="«pixels»" top="«pixels»" name="«name»" title="«text»" state="«text»" modal="«boolean»"&gt;
+</pre></div><div class="component layout"><h2>Box <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Box.html"><span>hui.ui.Box</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;box variant="«?»" closable="«boolean»" absolute="«boolean»" width="«pixels»" top="«pixels»" name="«name»" title="«text»" state="«text»" modal="«boolean»"&gt;
     &lt;toolbar/&gt;
     ···
 &lt;/box&gt;
-</pre></div>
-<h2>Wizard</h2>
-<p>Class: <a href="../symbols/hui.ui.Wizard.html">hui.ui.Wizard</a></p>
-<p>File: layout.xsl</p><div><pre>
-&lt;wizard name="«name»"&gt;
+</pre></div><div class="component layout"><h2>Wizard <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Wizard.html"><span>hui.ui.Wizard</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;wizard name="«name»"&gt;
     &lt;step frame="«boolean»" icon="«icon»" title="«text»"&gt;
         ···
     &lt;/step&gt;
 &lt;/wizard&gt;
-</pre></div>
-<h2>Layout</h2>
-<p>Class: <a href="../symbols/hui.ui.Layout.html">hui.ui.Layout</a></p>
-<p>File: layout.xsl</p><div><pre>
-&lt;layout name="«name»"&gt;
+</pre></div><div class="component layout"><h2>Layout <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Layout.html"><span>hui.ui.Layout</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;layout name="«name»"&gt;
     &lt;top&gt;
         ···
     &lt;/top&gt;
@@ -221,24 +231,56 @@
         ···
     &lt;/botttom&gt;
 &lt;/layout&gt;
-</pre></div>
-<h2>Fragment</h2>
-<p>Class: <a href="../symbols/hui.ui.Fragment.html">hui.ui.Fragment</a></p>
-<p>File: layout.xsl</p><div><pre>
-&lt;fragment name="«name»" state="«text»" height="«'full'»" background="«background»" visible="«boolean»"&gt;
+</pre></div><div class="component layout"><h2>Fragment <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Fragment.html"><span>hui.ui.Fragment</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;fragment name="«name»" state="«text»" height="«'full'»" background="«background»" visible="«boolean»"&gt;
     ···
 &lt;/fragment&gt;
-</pre></div>
-<h2>Structure</h2>
-<p>File: layout.xsl</p><div><pre>
-&lt;structure top="«pixels»"&gt;
-    ···
+</pre></div><div class="component layout"><h2>Pages <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Pages.html"><span>hui.ui.Pages</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;pages name="«name»" height="«'full'»"&gt;
+    &lt;page&gt;
+        ···
+    &lt;/page&gt;
+    &lt;page&gt;
+        ···
+    &lt;/page&gt;
+&lt;/pages&gt;
+</pre></div><div class="component layout"><h2>Tiles <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Tiles.html"><span>hui.ui.Tiles</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;tiles name="«name»" reveal="«boolean»"&gt;
+	&lt;tile width="«percent»" height="«percent»" left="«percent»" top="«percent»" padding="«pixels»" background="«css-color»" variant="«'light'»"&gt;
+		&lt;title&gt;«text»&lt;/title&gt;
+		&lt;actions&gt;
+			&lt;icon icon="«icon»" key="«text»"/&gt;
+			&lt;icon icon="«icon»" key="«text»"/&gt;
+		&lt;/actions&gt;
+    	···
+	&lt;/tile&gt;
+&lt;/pages&gt;
+</pre></div><div class="component layout"><h2>Structure <span class="module">layout</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Structure.html"><span>hui.ui.Structure</span></a></p>
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;structure name="«name»" height="«pixels»"&gt;
+	&lt;top&gt;
+    	···
+	&lt;/top&gt;
+	&lt;middle&gt;
+		&lt;left&gt;
+	    	···
+		&lt;/left&gt;
+		&lt;center&gt;
+	    	···
+		&lt;/center&gt;
+		&lt;right&gt;
+	    	···
+		&lt;/right&gt;
+	&lt;/middle&gt;
+	&lt;bottom&gt;
+    	···
+	&lt;/bottom&gt;
 &lt;/structure&gt;
-</pre></div>
-<h2>Graph</h2>
-<p>Class: <a href="../symbols/hui.ui.Graph.html">hui.ui.Graph</a></p>
-<p>File: other.xsl</p><div><pre>
-&lt;graph name="«name»" layout="«?»" source="«source»"/&gt;
-</pre></div>
-</body>
+</pre></div><div class="component"><h2>Graph</h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Graph.html"><span>hui.ui.Graph</span></a></p>
+<p class="file">File: <a href="../../xslt/other.xsl"><span>other.xsl</span></a></p><pre>&lt;graph name="«name»" layout="«?»" source="«source»"/&gt;
+</pre></div></body>
 </html>

@@ -18,7 +18,7 @@
 
 <xsl:output encoding="UTF-8" omit-xml-declaration="yes" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
 
-<!--doc title:'Gui'
+<!--doc title:'Gui' module:'base'
 <gui title="«text»" state="«text»" padding="«pixels»">
     <controller source="«url»" name="«name»"/>
     <controller source="«url»" name="«name»"/>
@@ -189,7 +189,10 @@
 
 <xsl:template match="gui:style"></xsl:template>
 
-<!--doc title:'DWR setup'
+
+
+
+<!--doc title:'DWR interface' module:'base'
 <dwr base="«url»">
     <interface name="«text»"/>
     <interface name="«text»"/>
@@ -206,6 +209,9 @@
 		</script>
 	</xsl:if>
 </xsl:template>
+
+
+
 
 <xsl:template name="gui:createobject">
 	<xsl:if test="@name and @name!=''">
@@ -231,7 +237,10 @@
 	</xsl:choose>
 </xsl:template>
 
-<!--doc title:'Data source' class:'hui.ui.Source
+
+
+
+<!--doc title:'Data source' class:'hui.ui.Source' module:'base'
 <source url="«url»" dwr="«text»" lazy="«boolean»">
     <parameter key="«text»" value="«expression»"/>
 </source>
@@ -254,7 +263,10 @@
 	</script>
 </xsl:template>
 
-<!--doc title:'Sub-GUI'
+
+
+
+<!--doc title:'Sub-GUI' module:'base'
 <subgui>
     ···
 </subgui>
@@ -265,7 +277,10 @@
 	</div>
 </xsl:template>
 
-<!--doc title:'Script'
+
+
+
+<!--doc title:'Script' module:'base'
 <script>
     «text»
 </script>
@@ -276,7 +291,10 @@
 	</script>
 </xsl:template>
 
-<!--doc title:'Listener'
+
+
+
+<!--doc title:'Listener' module:'base'
 <listen>
     <«name» for="«event»">
         «text»
@@ -295,7 +313,11 @@
 	</script>	
 </xsl:template>
 
-<!--doc title:'Dock' class:'hui.ui.Dock'
+
+
+
+
+<!--doc title:'Dock' class:'hui.ui.Dock' module:'layout'
 <dock url="«url»" frame-name="«text»" position="« top | bottom »" name="«name»">
     <sidebar>
         ···
@@ -376,6 +398,14 @@
 	<div class="hui_dock_sidebar_line"><xsl:comment/></div>
 </xsl:template>
 
+
+
+
+<!--doc title:'Space' module:'layout'
+<frames>
+	<frame name="«text»" source="«url»" scrolling="«boolean»"/>
+</frames>
+-->
 <xsl:template match="gui:frames">
 	<html>
 		<head>
@@ -396,7 +426,11 @@
 	</html>
 </xsl:template>
 
-<!--doc title:'IFrame' class:'hui.ui.IFrame'
+
+
+
+
+<!--doc title:'IFrame' class:'hui.ui.IFrame' module:'layout'
 <iframe source="«url»" id="«text»" state="«text»" name="«name»" height="«pixels»" />
 -->
 <xsl:template match="gui:iframe">
@@ -436,8 +470,8 @@
 	
 
 
-<!--doc title:'Selection' class:'hui.ui.Selection'
-<selection name="«name»" value="«text»">
+<!--doc title:'Selection' class:'hui.ui.Selection' module:'selection'
+<selection name="«name»" value="«text»" state="«text»" value="«text»">
     <item value="«text»" title="«text»" badge="«text»" icon="«icon»" />
     <items ··· />
     <title>«text»</title>
@@ -499,7 +533,9 @@
 	</div>
 </xsl:template>
 
-<!--doc title:'Selection items' class:'hui.ui.Selection.Items'
+
+
+<!--doc title:'Selection items' class:'hui.ui.Selection.Items' module:'selection'
 <selection ···>
     <items name="«text»" title="«text»" source="«source»" title="«text»" />
 </selection>
@@ -525,9 +561,11 @@
 	<div class="hui_selection_title"><span><xsl:value-of select="."/></span></div>
 </xsl:template>
 
-<!--             List            -->
 
-<!--doc title:'List' class:'hui.ui.List'
+
+
+
+<!--doc title:'List' class:'hui.ui.List' module:'selection'
 <list name="«text»" state="«text»" url="«url»" source="«source»" selectable="«boolean»">
     <window size="«integer»" />
     <column key="«text»" title="«text»" width="«'min'»" />
@@ -602,9 +640,12 @@
 	</th>
 </xsl:template>
 
-<!--                             Tabs                             -->
 
-<!--doc title:'Tabs' class:'hui.ui.Tabs'
+
+
+
+
+<!--doc title:'Tabs' class:'hui.ui.Tabs' module:'layout'
 <tabs name="«text»" small="«boolean»" centered="«boolean»" below="«boolean»">
     <tab title="«text»" padding="«pixels»">
         ···
@@ -675,9 +716,11 @@
 </xsl:template>
 
 
-<!-- Bound panel -->
 
-<!--doc title:'Bound panel' class:'hui.ui.BoundPanel'
+
+
+
+<!--doc title:'Bound panel' class:'hui.ui.BoundPanel' module:'container'
 <boundpanel name="«name»" target="«name»" width="«pixels»" padding="«pixels»">
     ···
 </boundpanel>
@@ -720,9 +763,11 @@
 	</script>
 </xsl:template>
 
-<!-- Window -->
 
-<!--doc title:'Window' class:'hui.ui.Window'
+
+
+
+<!--doc title:'Window' class:'hui.ui.Window' module:'container'
 <window name="«name»" title="«text»" icon="«icon»" close="«boolean»" width="«pixels»" padding="«pixels»" variant="« dark | light | news »">
     ···
     <back>
@@ -776,10 +821,11 @@
 </xsl:template>
 
 
-<!-- Upload -->
 
-<!--doc title:'Upload' class:'hui.ui.Upload'
-<upload name="«name»" url="«url»" button="«text»" chooseButton="«name»" widget="«name»" flash="«boolean»">
+
+
+<!--doc title:'Upload' class:'hui.ui.Upload' module:'unknown'
+<upload name="«name»" url="«url»" button="«text»" chooseButton="«name»" widget="«name»">
     <placeholder title="«text»" text="«text»"/>
 </upload>
 -->
@@ -812,7 +858,7 @@
 </xsl:template>
 
 
-<!-- Rich text -->
+
 
 <!--
 doc title:'Rich text' class:'hui.ui.RichText'
@@ -834,10 +880,10 @@ doc title:'Rich text' class:'hui.ui.RichText'
 -->
 
 
-<!-- Gallery -->
 
-<!--doc title:'Gallery' class:'hui.ui.Gallery'
-<gallery name="«name»" source="«name»" padding="«pixels»" state="«state»" />
+
+<!--doc title:'Gallery' class:'hui.ui.Gallery' module:'selection'
+<gallery name="«name»" source="«name»" padding="«pixels»" state="«state»" drop-files="«boolean»"/>
 -->
 <xsl:template match="gui:gallery">
 	<div class="hui_gallery" id="{generate-id()}">
@@ -865,10 +911,11 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 
 
-<!-- Calendar -->
 
-<!--doc title:'Calendar' class:'hui.ui.Calendar'
-<calendar name="«name»" source="«name»" startHour="«integer»" endHour="«integer»" />
+
+
+<!--doc title:'Calendar' class:'hui.ui.Calendar' module:'selection'
+<calendar name="«name»" source="«name»" start-hour="«integer»" end-hour="«integer»" />
 -->
 <xsl:template match="gui:calendar">
 	<div class="hui_calendar" id="{generate-id()}">
@@ -908,8 +955,8 @@ doc title:'Rich text' class:'hui.ui.RichText'
 			element:'<xsl:value-of select="generate-id()"/>'
 			,name:'<xsl:value-of select="@name"/>'
 			,state:'<xsl:value-of select="@state"/>'
-			<xsl:if test="@startHour">,startHour:<xsl:value-of select="@startHour"/></xsl:if>
-			<xsl:if test="@endHour">,endHour:<xsl:value-of select="@endHour"/></xsl:if>
+			<xsl:if test="@start-hour">,startHour:<xsl:value-of select="@start-hour"/></xsl:if>
+			<xsl:if test="@end-hour">,endHour:<xsl:value-of select="@end-hour"/></xsl:if>
 			<xsl:if test="@source">,source:<xsl:value-of select="@source"/></xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
@@ -918,9 +965,9 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 
 
-<!-- Graphviz -->
 
-<!--doc title:'Graphviz' class:'hui.ui.Graphviz'
+
+<!--doc title:'Graphviz' class:'hui.ui.Graphviz' module:'selection'
 <graphviz name="«name»" />
 -->
 <xsl:template match="gui:graphviz">
@@ -936,9 +983,10 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	</script>
 </xsl:template>
 
-<!-- Picker -->
 
-<!--doc title:'Picker' class:'hui.ui.Picker'
+
+
+<!--doc title:'Picker' class:'hui.ui.Picker' module:'selection'
 <picker name="«name»" shadow="«boolean»" title="«text»" item-height="«pixels»" item-width="«pixels»">
     <item title="«text»" value="«text»" image="«url»" />
     <item title="«text»" value="«text»" image="«url»" />
@@ -978,6 +1026,15 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	</script>
 </xsl:template>
 
+
+
+
+
+<!--doc title:'HTML' module:'layout'
+<html xmlns="«'http://www.w3.org/1999/xhtml'»">
+    ···
+</html>
+-->
 <xsl:template match="html:html">
 	<xsl:copy-of select="child::*|child::text()"/>
 </xsl:template>
@@ -1007,6 +1064,19 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	</xsl:element>
 </xsl:template>
 
+
+
+
+
+
+
+<!--doc title:'Text' module:'layout'
+<text align="«'left' | 'center' | 'right'»" top="«pixels»" bottom="«pixels»">
+    <h|header>···</h|header>
+    <p>···</p>
+    ···
+</text>
+-->
 <xsl:template match="gui:text">
 	<div class="hui_text">
 		<xsl:attribute name="style">
@@ -1018,6 +1088,22 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	</div>
 </xsl:template>
 
+<xsl:template match="gui:text/gui:header | gui:text/gui:h">
+	<h1><xsl:apply-templates/></h1>
+</xsl:template>
+
+<xsl:template match="gui:text/gui:p">
+	<p><xsl:apply-templates/></p>
+</xsl:template>
+
+
+
+
+<!--doc title:'Link' class:'hui.ui.Link' module:'action'
+<link name="«name»">
+    ····
+</link>
+-->
 <xsl:template match="gui:link">
 	<a href="javascript:void(0);" class="hui_link" id="{generate-id()}"><span><xsl:apply-templates/></span></a>
 	<script type="text/javascript">
@@ -1029,14 +1115,15 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	</script>
 </xsl:template>
 
-<xsl:template match="gui:text/gui:header | gui:text/gui:h">
-	<h1><xsl:apply-templates/></h1>
-</xsl:template>
 
-<xsl:template match="gui:text/gui:p">
-	<p><xsl:apply-templates/></p>
-</xsl:template>
 
+
+
+<!--doc title:'Segmented' class:'hui.ui.Segmented' module:'input'
+<segmented name="«name»" value="«text»" allow-null="«boolean»">
+    <item text="«text»" value="«text»" icon="«icon»" />
+</segmented>
+-->
 <xsl:template match="gui:segmented" name="gui:segmented">
 	<span class="hui_segmented" id="{generate-id()}">
 		<xsl:for-each select="gui:item">
@@ -1064,6 +1151,13 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	</script>
 </xsl:template>
 
+
+
+
+
+<!--doc title:'Rendering' class:'hui.ui.Rendering' module:'layout'
+<rendering name="«name»"/>
+-->
 <xsl:template match="gui:rendering">
 	<div class="hui_rendering" id="{generate-id()}">
 		<xsl:apply-templates/>

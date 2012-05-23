@@ -80,7 +80,9 @@ class TablePartController extends PartController
 							<item text="4 rækker" value="4"/>
 							<item text="5 rækker" value="5"/>
 						</dropdown>
-						<style-length key="width" label="Width"/>
+						<field label="Width">
+							<style-length-input key="width"/>
+						</field>
 					</group>
 				</fieldset>
 				<!--

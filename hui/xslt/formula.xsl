@@ -8,6 +8,13 @@
     exclude-result-prefixes="gui fn"
     >
 
+<!--doc title:'Formula' class:'hui.ui.Formula' module:'input'
+<formula name="«name»" state="«text»" padding="«pixels»">
+    <group···>
+        ···
+    </group>
+</formula>
+-->
 <xsl:template match="gui:formula">
 	<form class="hui_formula hui_formula" id="{generate-id()}">
 		<xsl:attribute name="style">
@@ -57,6 +64,11 @@
 	</fieldset>
 </xsl:template>
 
+<!--doc title:'Fieldset' module:'input'
+<fieldset legend="«text»">
+    ···
+</fieldset>
+-->
 <xsl:template match="gui:formula//gui:fieldset">
 	<div class="hui_formula_fieldset">
 		<strong class="hui_formula_fieldset"><xsl:value-of select="@legend"/></strong>
@@ -64,22 +76,15 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="gui:group/gui:custom">
-	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
-		<td><xsl:apply-templates/></td>
-	</tr>
-</xsl:template>
-
-<xsl:template match="gui:group[@labels='above']/gui:custom">
-	<tr><td>
-		<xsl:if test="@label"><label><xsl:value-of select="@label"/></label></xsl:if>
-		<xsl:apply-templates/>
-	</td></tr>
-</xsl:template>
-
 <!-- Field -->
 
+<!--doc title:'Field' module:'input'
+<group>
+    <field label="«text»" hint="«text»">
+        ···
+    </field>
+</group>
+-->
 <xsl:template match="gui:group/gui:field">
 	<tr>
 		<th><label><xsl:value-of select="@label"/></label></th>
@@ -116,6 +121,10 @@
 	</td></tr>
 </xsl:template>
 
+
+<!--doc title:'Text input' class:'hui.ui.TextField' module:'input'
+<text-input name="«name»" multiline="«boolean»" value="«text»"/>
+-->
 <xsl:template name="gui:text" match="gui:textfield | gui:text-input">
 	<xsl:choose>
 		<xsl:when test="@lines>1 or @multiline='true'">
@@ -177,6 +186,12 @@
 	</td></tr>
 </xsl:template>
 
+
+
+
+<!--doc title:'Date-time input' module:'input'
+<datetime-input name="«text»" key="«text»" return-type="«'date' | 'seconds'»"/>
+-->
 <xsl:template name="gui:datetime" match="gui:datetime-input">
 	<div class="hui_field" id="{generate-id()}">
 		<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
@@ -199,6 +214,9 @@
 	</script>
 </xsl:template>
 
+
+
+
 <!-- Number -->
 
 <xsl:template match="gui:group/gui:number">
@@ -215,6 +233,9 @@
 	</td></tr>
 </xsl:template>
 
+<!--doc title:'Number input' module:'input'
+<number-input name="«text»" key="«text»" adaptive="«boolean»" min="«number»" max="«number»" decimals="«integer»" value="«number»" allow-null="«boolean»" tick-size="«number»"/>
+-->
 <xsl:template name="gui:number" match="gui:number-input">
 	<span id="{generate-id()}">
 		<xsl:attribute name="class">
@@ -243,22 +264,11 @@
 
 
 
-<!-- Style length -->
 
-<xsl:template match="gui:group/gui:style-length">
-	<tr>
-		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:style-length"/></div></td>
-	</tr>
-</xsl:template>
 
-<xsl:template match="gui:group[@labels='above']/gui:style-length">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:style-length"/></div>
-	</td></tr>
-</xsl:template>
-
+<!--doc title:'CSS length input' class:'hui.ui.StyleLength' module:'input'
+<style-length-input name="«text»" key="«text»" value="«css-length»"/>
+-->
 <xsl:template name="gui:style-length" match="gui:style-length-input">
 	<span class="hui_style_length hui_numberfield" id="{generate-id()}">
 		<span><span><input type="text" value="{@value}"/><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
@@ -269,8 +279,6 @@
 			name:'<xsl:value-of select="@name"/>',
 			key:'<xsl:value-of select="@key"/>'
 			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
-			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
-			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
@@ -278,8 +286,11 @@
 
 
 
-<!-- Color field -->
 
+
+<!--doc title:'Color input' class:'hui.ui.ColorInput' module:'input'
+<color-input name="«text»" key="«text»" value="«css-color»"/>
+-->
 <xsl:template match="gui:color-input">
 	<span class="hui_colorinput" id="{generate-id()}">
 		<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
@@ -287,8 +298,6 @@
 				<span class="hui_field_singleline"><input type="text" value="{@value}"/></span>
 			</span></span></span>
 		<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
-		
-		
 		<a class="hui_colorinput" href="javascript://" tabindex="-1"><xsl:comment/></a>
 	</span>
 	<script type="text/javascript">
@@ -304,6 +313,9 @@
 
 
 
+<!--doc title:'Location input' class:'hui.ui.LocationField' module:'input'
+<location-input name="«text»" key="«text»" />
+-->
 <xsl:template match="gui:location-input">
 	<span class="hui_locationfield" id="{generate-id()}">
 		
@@ -319,7 +331,6 @@
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.LocationField({
 			element:'<xsl:value-of select="generate-id()"/>'
-			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
 			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
 			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
 		});

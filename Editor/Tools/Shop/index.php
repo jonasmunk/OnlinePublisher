@@ -119,17 +119,17 @@ $gui='
 						</column>
 					</columns>
 					<group labels="above">
-						<custom label="Attributter:">
+						<field label="Attributter:">
 							<objectlist name="productAttributes">
 								<text key="name" label="Navn"/>
 								<text key="value" label="Værdi"/>
 							</objectlist>
-						</custom>
+						</field>
 					</group>
 				</tab>
 				<tab title="Priser" padding="5">
 				<group labels="above">
-					<custom label="Priser:">
+					<field label="Priser:">
 						<objectlist name="productPrices">
 							<text key="amount" label="Antal"/>
 							<select label="Enhed:" key="type">
@@ -146,7 +146,7 @@ $gui='
 								<option value="USD" label="Amerikansk dollar"/>
 							</select>
 						</objectlist>
-					</custom>
+					</field>
 				</group>
 				</tab>
 				<tab title="Indstillinger" padding="5">

@@ -3,6 +3,8 @@
 import os
 import re
 import codecs
+from collections import deque
+from sets import Set
 from xml.sax.saxutils import escape
 
 
@@ -16,27 +18,15 @@ end = re.compile('-->*')
 
 titleReg = re.compile('title:\'([^\']+)\'')
 classReg = re.compile('class:\'([^\']+)\'')
+moduleReg = re.compile('module:\'([^\']+)\'')
 
 dest = codecs.open(base+'/api/xml/index.html', mode='w', encoding='utf-8')
 
-dest.write('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">')
-dest.write('<html>\n<head>\n<meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n')
-dest.write('<link rel="stylesheet" href="stylesheet.css" type="text/css"/>')
-dest.write('<title>HUI XML format docs</title>\n</head>\n<body>')
 
-dir = base+"/icons/"
-groups = os.listdir(dir)
-for group in groups :
-	
-	if os.path.isdir(dir+group) and group[0]!='.':
-		icons = os.listdir(dir+group)
-		for icon in icons :
-			if icon[0]!='.' :
-				print group+'/'+icon
 
-#stuff = os.walk(dir);
-#for thing in stuff :
-#	print thing
+
+components = deque()
+modules = Set()
 
 dir = base+"/xslt/"
 files = os.listdir(dir)
@@ -48,29 +38,66 @@ for file in files :
 		f = codecs.open(filename, mode='r', encoding='utf-8')
 		lines = f.readlines()
 		indoc = False
+		info = dict()
 		for line in lines:
 			if start.match(line) : 
+				info = dict({'file':file,'sample':'','title':'Untitled'})
+				components.append(info)
 				indoc=True
-				m = titleReg.search(line)
-				print ' - '+m.group(1)
-				if m : dest.write('<h2>'+m.group(1)+'</h2>\n')
-				else : dest.write('<h2>!!!</h2>\n')
-				m = classReg.search(line)
-				if m : dest.write('<p>Class: <a href="../symbols/'+m.group(1)+'.html">'+m.group(1)+'</a></p>\n')
-				dest.write('<p>File: '+file+'</p>')
-				dest.write('<div><pre>\n')
+				titleMatch = titleReg.search(line)
+				if titleMatch : 
+					info['title'] = titleMatch.group(1)
+				print ' - '+info['title']
+				
+				classMatch = classReg.search(line)
+				if classMatch : info['class'] = classMatch.group(1)
+				
+				
+				moduleMatch = moduleReg.search(line)
+				if moduleMatch : 
+					info['module'] = moduleMatch.group(1)
+					modules.add(moduleMatch.group(1))
+				else : print 'NO MODULE: '+info['title']+' / '+file
+				
 			elif end.match(line) : 
 				indoc=False
-				dest.write('</pre></div>\n')
 			elif indoc :
-				
-				dest.write(escape(line))
+				info['sample'] += line
 		f.close();
-		
-#filename = os.environ.get('PYTHONSTARTUP')
 
-#f = codecs.open('unicode.rst')
+print modules
 
+dest.write('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">')
+dest.write('<html>\n<head>\n<meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n')
+dest.write('<link rel="stylesheet" href="stylesheet.css" type="text/css"/>')
+dest.write('<link rel="stylesheet" href="../../bin/minimized.css" type="text/css"/>')
+dest.write('<script src="../../bin/minimized.js"></script>')
+dest.write('<script src="script.js"></script>')
+dest.write('<title>HUI XML format docs</title>\n</head>\n<body>')
+
+dest.write('<p class="modules">')
+dest.write('<a href="javascript://"><span>All</span></a> ')
+for module in modules :
+	dest.write('<a href="javascript://" data="'+module+'"><span>'+module.capitalize()+'</span></a> ')
+dest.write('</p>')
+
+
+for component in components :
+	dest.write('<div class="component')
+	if 'module' in component :
+		dest.write(' '+component['module'])
+	dest.write('">')
+	dest.write('<h2>'+component['title'])
+	if 'module' in component :
+		dest.write(' <span class="module">'+component['module']+'</span>')
+	dest.write('</h2>\n')
+	if 'class' in component :
+		dest.write('<p class="class">Class: <a href="../symbols/'+component['class']+'.html"><span>'+component['class']+'</span></a></p>\n')
+	dest.write('<p class="file">File: <a href="../../xslt/'+component['file']+'"><span>'+component['file']+'</span></a></p>')
+	dest.write('<pre>')
+	dest.write(escape(component['sample']))
+	dest.write('</pre>')
+	dest.write('</div>')
+	
 dest.write('</body>\n</html>')
 dest.close()
-#print lines

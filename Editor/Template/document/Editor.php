@@ -160,7 +160,9 @@ $gui = '
 					<item value="max" text="Størst muligt"/>
 					<item value="specific" text="Speciel..."/>
 				</radiobuttons>
-				<style-length label="Speciel bredde" key="width" name="columnWidth"/>
+				<field label="Speciel bredde">
+					<style-length-input key="width" name="columnWidth"/>
+				</field>
 			</group>
 			<buttons top="5">
 				<button text="Slet" name="deleteColumn">
