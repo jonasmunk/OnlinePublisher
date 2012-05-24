@@ -46,10 +46,12 @@ $gui='
 				<icon icon="file/generic" title="Hent" overlay="download" name="download" disabled="true"/>
 				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
 				<divider/>
-				<segmented label="Visning" value="gallery" name="viewSwitch">
-					<item value="list" icon="view/list"/>
-					<item value="gallery" icon="view/gallery"/>
-				</segmented>
+				<field label="Visning">
+					<segmented value="gallery" name="viewSwitch">
+						<item value="list" icon="view/list"/>
+						<item value="gallery" icon="view/gallery"/>
+					</segmented>
+				</field>
 				<right>
 					<searchfield title="Søgning" name="search" expandedWidth="200"/>
 					<space width="5"/>

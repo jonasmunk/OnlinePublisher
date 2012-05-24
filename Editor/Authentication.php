@@ -40,8 +40,12 @@ $gui='
 			<formula name="formula" state="login">
 				<header>Adgangskontrol</header>
 				<group>
-					<text name="username" label="Brugernavn:" correction="false"/>
-					<text name="password" secret="true" label="Kodeord:"/>
+					<field label="Brugernavn:">
+						<text-input name="username" correction="false"/>
+					</field>
+					<field label="Kodeord:">
+						<text-input name="password" secret="true"/>
+					</field>
 					<buttons>
 						<button name="cancel" title="Annuller" url="../"/>
 						<button name="login" title="Log ind" highlighted="true" submit="true"/>
@@ -53,7 +57,9 @@ $gui='
 				<header>Genfind kodeord</header>
 				<text><p>Skriv dit brugernavn eller e-mail, så sender vi dig en e-mail om hvordan du kan ændre din kode...</p></text>
 				<group labels="above">
-					<text key="nameOrMail" label="Brugernavn eller e-mail:"/>
+					<field label="Brugernavn eller e-mail:">
+						<text-input key="nameOrMail"/>
+					</field>
 					<buttons>
 						<button title="Ny bruger" name="createAdmin"/>
 						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
@@ -117,8 +123,12 @@ $gui='
 				<p>{da:Log ind med super-bruger for at opdatere databasen;en:Log in as super-user in order to update the database}</p>
 			</text>
 			<group>
-				<text label="{Username;da:Brugernavn}" key="username"/>
-				<text label="{Password;da:Kodeord}" key="password" secret="true"/>
+				<field label="{Username;da:Brugernavn}">
+					<text-input key="username"/>
+				</field>
+				<field label="{Password;da:Kodeord}">
+					<text-input key="password" secret="true"/>
+				</field>
 			</group>
 			<buttons>
 				<button text="{Update;da:Opdater}" submit="true" highlighted="true"/>
@@ -127,7 +137,7 @@ $gui='
 	</window>
 
 	<window title="Log" name="databaseLogWindow" width="500">
-		<textfield adaptive="true" multiline="true" name="databaseLog"/>
+		<text-input adaptive="true" multiline="true" name="databaseLog"/>
 	</window>
 
 	<window name="adminWindow" width="300" padding="10" title="{Create administrator; da: Opret administrator}">
@@ -137,15 +147,23 @@ $gui='
 			</text>
 			<fieldset legend="{Super user ; da: Super-bruger}">
 				<group>
-					<text label="{Username;da:Brugernavn}" key="superUsername"/>
-					<text label="{Password;da:Kodeord}" key="superPassword" secret="true"/>
+					<field label="{Username;da:Brugernavn}">
+						<text-input key="superUsername"/>
+					</field>
+					<field label="{Password;da:Kodeord}">
+						<text-input key="superPassword" secret="true"/>
+					</field>
 				</group>
 			</fieldset>
 			<space height="10"/>
 			<fieldset legend="Administrator">
 				<group>
-					<text label="{Username;da:Brugernavn}" key="adminUsername"/>
-					<text label="{Password;da:Kodeord}" key="adminPassword" secret="true"/>
+					<field label="{Username;da:Brugernavn}">
+						<text-input key="adminUsername"/>
+					</field>
+					<field label="{Password;da:Kodeord}">
+						<text-input key="adminPassword" secret="true"/>
+					</field>
 				</group>
 			</fieldset>
 			<buttons top="10">

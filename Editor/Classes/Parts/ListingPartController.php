@@ -170,59 +170,88 @@ class ListingPartController extends PartController
 		return array(
 			'Punktopstilling' =>
 			'
-			<segmented label="Symbol" name="listStyle">
-				<item icon="style/list-style-disc" value="disc"/>
-				<item icon="style/list-style-square" value="square"/>
-				<item icon="style/list-style-circle" value="circle"/>
-				<item icon="style/list-style-decimal" value="decimal"/>
-				<item icon="style/list-style-lower-alpha" value="lower-alpha"/>
-				<item icon="style/list-style-upper-alpha" value="upper-alpha"/>
-				<item icon="style/list-style-lower-roman" value="lower-roman"/>
-				<item icon="style/list-style-upper-roman" value="upper-roman"/>
-			</segmented>
-			<style-length label="St&#248;rrelse" name="fontSize"/>
-			<segmented label="Placering" name="textAlign" allow-null="true">
-				<item icon="style/text_align_left" value="left"/>
-				<item icon="style/text_align_center" value="center"/>
-				<item icon="style/text_align_right" value="right"/>
-				<item icon="style/text_align_justify" value="justify"/>
-			</segmented>
+			<field label="Symbol">
+				<segmented name="listStyle">
+					<item icon="style/list-style-disc" value="disc"/>
+					<item icon="style/list-style-square" value="square"/>
+					<item icon="style/list-style-circle" value="circle"/>
+					<item icon="style/list-style-decimal" value="decimal"/>
+					<item icon="style/list-style-lower-alpha" value="lower-alpha"/>
+					<item icon="style/list-style-upper-alpha" value="upper-alpha"/>
+					<item icon="style/list-style-lower-roman" value="lower-roman"/>
+					<item icon="style/list-style-upper-roman" value="upper-roman"/>
+				</segmented>
+			</field>
+			<field label="St&#248;rrelse">
+				<style-length-input name="fontSize"/>
+			</field>
+			<field label="Placering">
+				<segmented name="textAlign" allow-null="true">
+					<item icon="style/text_align_left" value="left"/>
+					<item icon="style/text_align_center" value="center"/>
+					<item icon="style/text_align_right" value="right"/>
+					<item icon="style/text_align_justify" value="justify"/>
+				</segmented>
+			</field>
 			<divider/>
-			<dropdown label="Skrift" name="fontFamily" width="180">
-				'.$this->getFontItems().'
-			</dropdown>
-			<style-length label="Linjeh&#248;jde" name="lineHeight"/>
-			<textfield label="Farve" name="color" width="60"/>
-			<segmented label="Fed" name="fontWeight" allow-null="true">
-				<item icon="style/text_normal" value="normal"/>
-				<item icon="style/text_bold" value="bold"/>
-			</segmented>
-			<segmented label="Kursiv" name="fontStyle" allow-null="true">
-				<item icon="style/text_normal" value="normal"/>
-				<item icon="style/text_italic" value="italic"/>
-			</segmented>',
+			<field label="Skrift">
+				<dropdown name="fontFamily" width="180">
+					'.$this->getFontItems().'
+				</dropdown>
+			</field>
+			<field label="Linjeh&#248;jde">
+				<style-length-input name="lineHeight"/>
+			</field>
+			<field label="Farve">
+				<text-input name="color" width="60"/>
+			</field>
+			<field label="Fed">
+				<segmented name="fontWeight" allow-null="true">
+					<item icon="style/text_normal" value="normal"/>
+					<item icon="style/text_bold" value="bold"/>
+				</segmented>
+			</field>
+			<field label="Kursiv">
+				<segmented name="fontStyle" allow-null="true">
+					<item icon="style/text_normal" value="normal"/>
+					<item icon="style/text_italic" value="italic"/>
+				</segmented>
+			</field>
+			',
 			
 		'Avanceret' =>
 			'
-			<style-length label="Ord-mellemrum" name="wordSpacing"/>
-			<style-length label="Tegn-mellemrum" name="letterSpacing"/>
-			<style-length label="Indrykning" name="textIndent"/>
-			<segmented label="Bogstaver" name="textTransform" allow-null="true">
-				<item icon="style/text_normal" value="normal"/>
-				<item icon="style/text_transform_capitalize" value="capitalize"/>
-				<item icon="style/text_transform_uppercase" value="uppercase"/>
-				<item icon="style/text_transform_lowercase" value="lowercase"/>
-			</segmented>
-			<segmented label="Variant" name="fontVariant" allow-null="true">
-				<item icon="style/font_variant_normal" value="normal"/>
-				<item icon="style/font_variant_smallcaps" value="small-caps"/>
-			</segmented>
-			<segmented label="Streg" name="textDecoration" allow-null="true">
-				<item icon="style/text_normal" value="none"/>
-				<item icon="style/text_decoration_underline" value="underline"/>
-				<item icon="style/text_decoration_linethrough" value="line-through"/>
-				<item icon="style/text_decoration_overline" value="overline"/>
-			</segmented>
+			<field label="Ord-mellemrum">
+				<style-length-input name="wordSpacing"/>
+			</field>
+			<field label="Tegn-mellemrum">
+				<style-length-input name="letterSpacing"/>
+			</field>
+			<field label="Indrykning">
+				<style-length-input name="textIndent"/>
+			</field>
+			<field label="Bogstaver">
+				<segmented name="textTransform" allow-null="true">
+					<item icon="style/text_normal" value="normal"/>
+					<item icon="style/text_transform_capitalize" value="capitalize"/>
+					<item icon="style/text_transform_uppercase" value="uppercase"/>
+					<item icon="style/text_transform_lowercase" value="lowercase"/>
+				</segmented>
+			</field>
+			<field label="Variant">
+				<segmented name="fontVariant" allow-null="true">
+					<item icon="style/font_variant_normal" value="normal"/>
+					<item icon="style/font_variant_smallcaps" value="small-caps"/>
+				</segmented>
+			</field>
+			<field label="Streg">
+				<segmented name="textDecoration" allow-null="true">
+					<item icon="style/text_normal" value="none"/>
+					<item icon="style/text_decoration_underline" value="underline"/>
+					<item icon="style/text_decoration_linethrough" value="line-through"/>
+					<item icon="style/text_decoration_overline" value="overline"/>
+				</segmented>
+			</field>
 			'
 			);
 	}

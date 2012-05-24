@@ -16,13 +16,16 @@
 				<divider/>
 				<icon icon="common/user" title="List users" selected="true"/>
 				<divider/>
-				<number title="Venstre"/>
-				<dropdown title="Billedgruppe" placeholder="Vælg..." source="itemsSource">
-				</dropdown>
+				<field label="Venstre">
+					<number-input/>
+				</field>
+				<field title="Billedgruppe">
+					<dropdown placeholder="Vælg..." source="itemsSource"/>
+				</field>
 				<grid>
 					<row>
 						<cell label="Max antal:">
-							<number/>
+							<number-input/>
 						</cell>
 						<cell label="Gruppe:">
 							<dropdown value="1">
@@ -35,14 +38,15 @@
 					</row>
 					<row>
 						<cell label="Min antal:">
-							<number/>
+							<number-input/>
 						</cell>
 						<cell label="">
-							<textfield/>
+							<text-input/>
 						</cell>
 					</row>
 				</grid>
-					<segmented label="Level" value="1">
+				<field label="Level">
+					<segmented value="1">
 						<item text="1" value="1"/>
 						<item text="2" value="2"/>
 						<item text="3" value="3"/>
@@ -50,6 +54,7 @@
 						<item text="5" value="5"/>
 						<item text="6" value="6"/>
 					</segmented>
+				</field>
 				<button title="Small button" small="true"/>
 				<button title="Regular button"/>
 				<right>
@@ -69,10 +74,10 @@
 			</left>
 			<center>
 				<toolbar border="bottom">
-				<icon icon="common/folder" title="Folder"/>
+					<icon icon="common/folder" title="Folder"/>
 					<button title="Click me" small="true" rounded="true"/>
 					<dropdown placeholder="Vælg..." source="itemsSource"/>
-					<textfield/>
+					<text-input/>
 					<right>
 						<searchfield expandedWidth="200" placeholder="Search"/>
 					</right>

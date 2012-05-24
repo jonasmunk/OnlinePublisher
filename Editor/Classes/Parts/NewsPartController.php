@@ -111,16 +111,22 @@ class NewsPartController extends PartController
 				<tab title="Indstillinger" padding="10">
 					<formula>
 						<group labels="above">
-							<text label="Titel" value="'.StringUtils::escapeXML($part->getTitle()).'" name="newsTitle"/>
-							<radiobuttons label="Variant" value="'.$part->getVariant().'" name="newsVariant">
-								<item label="Liste" value="list"/>
-								<item label="Boks" value="box"/>
-							</radiobuttons>
-							<radiobuttons label="Justering" value="'.$part->getAlign().'" name="newsAlign">
-								<item label="Venstre" value="left"/>
-								<item label="Midte" value="center"/>
-								<item label="Hoejre" value="right"/>
-							</radiobuttons>
+							<field label="Titel">
+								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" name="newsTitle"/>
+							</field>
+							<field label="Variant">
+								<radiobuttons value="'.$part->getVariant().'" name="newsVariant">
+									<item label="Liste" value="list"/>
+									<item label="Boks" value="box"/>
+								</radiobuttons>
+							</field>
+							<field label="Justering">
+								<radiobuttons value="'.$part->getAlign().'" name="newsAlign">
+									<item label="Venstre" value="left"/>
+									<item label="Midte" value="center"/>
+									<item label="Hoejre" value="right"/>
+								</radiobuttons>
+							</field>
 						</group>
 						<fieldset legend="Nyheder">
 							<group labels="above">
@@ -141,26 +147,36 @@ class NewsPartController extends PartController
 				<tab title="Visning" padding="10">
 					<formula>
 						<group labels="above">
-							<radiobuttons label="Retning" value="'.$part->getSortDir().'" name="newsSortDir">
-								<item label="Faldende" value="descending"/>
-								<item label="Stigende" value="ascending"/>
-							</radiobuttons>
-							<radiobuttons label="Sorter efter" value="'.$part->getSortBy().'" name="newsSortBy">
-								<item label="Startdato" value="startdate"/>
-								<item label="Slutdato" value="enddate"/>
-								<item label="Titel" value="title"/>
-							</radiobuttons>
-							<number label="Maksimalt antal" name="newsMaxItems" value="'.$part->getMaxItems().'"/>
-							<dropdown label="Tid" name="newsTimeType" value="'.$part->getTimeType().'">
-								<item label="Altid" value="always"/>
-								<item label="Lige nu" value="now"/>
-								<item label="Seneste timer..." value="hours"/>
-								<item label="Seneste dage..." value="days"/>
-								<item label="Seneste uger..." value="weeks"/>
-								<item label="Seneste m&#229;neder..." value="months"/>
-								<item label="Seneste &#229;r..." value="years"/>
-							</dropdown>
-							<number label="Antal" name="newsTimeCount" value="'.$part->getTimeCount().'"/>
+							<field label="Retning">
+								<radiobuttons value="'.$part->getSortDir().'" name="newsSortDir">
+									<item label="Faldende" value="descending"/>
+									<item label="Stigende" value="ascending"/>
+								</radiobuttons>
+							</field>
+							<field label="Sorter efter">
+								<radiobuttons value="'.$part->getSortBy().'" name="newsSortBy">
+									<item label="Startdato" value="startdate"/>
+									<item label="Slutdato" value="enddate"/>
+									<item label="Titel" value="title"/>
+								</radiobuttons>
+							</field>
+							<field label="Maksimalt antal">
+								<number-input name="newsMaxItems" value="'.$part->getMaxItems().'"/>
+							</field>
+							<field label="Tid">
+								<dropdown name="newsTimeType" value="'.$part->getTimeType().'">
+									<item label="Altid" value="always"/>
+									<item label="Lige nu" value="now"/>
+									<item label="Seneste timer..." value="hours"/>
+									<item label="Seneste dage..." value="days"/>
+									<item label="Seneste uger..." value="weeks"/>
+									<item label="Seneste m&#229;neder..." value="months"/>
+									<item label="Seneste &#229;r..." value="years"/>
+								</dropdown>
+							</field>
+							<field label="Antal">
+								<number-input name="newsTimeCount" value="'.$part->getTimeCount().'"/>
+							</number-input>
 						</group>
 					</formula>
 				</tab>

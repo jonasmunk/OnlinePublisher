@@ -293,7 +293,9 @@ class ImagePartController extends PartController
 				<tab title="Hent fra nettet" padding="10">
 					<formula name="urlForm">
 						<group labels="above">
-						<text label="Adresse:" key="url"/>
+							<field label="Adresse:">
+								<text key="url"/>
+							</field>
 						</group>
 					</formula>
 					<buttons align="center">
@@ -307,14 +309,20 @@ class ImagePartController extends PartController
 		<window title="Avanceret" name="imageAdvancedWindow" width="300">
 			<formula name="imageAdvancedFormula">
 				<group>
-					<text label="Tekst" multiline="true" key="text"/>
-					<checkbox key="greyscale" label="Gråtone"/>
-					<dropdown label="Ramme" key="frame">
-						<item title="Ingen" value=""/>
-						<item title="Let" value="light"/>
-						<item title="Elegant" value="elegant"/>
-						<item title="Skygge" value="shadow_slant"/>
-					</dropdown>
+					<field label="Tekst">
+						<text multiline="true" key="text"/>
+					</field>
+					<field label="Gråtone">
+						<checkbox key="greyscale"/>
+					</field>
+					<field label="Ramme">
+						<dropdown key="frame">
+							<item title="Ingen" value=""/>
+							<item title="Let" value="light"/>
+							<item title="Elegant" value="elegant"/>
+							<item title="Skygge" value="shadow_slant"/>
+						</dropdown>
+					</field>
 					<buttons>
 						<button name="pasteImage" text="Indsæt fra udklipsholder"/>
 					</buttons>
@@ -375,24 +383,26 @@ class ImagePartController extends PartController
 			<icon icon="common/new" title="Tilf&#248;j billede" name="addImage"/>
 			<icon icon="common/search" title="V&#230;lg billede" name="chooseImage"/>
 			<divider/>
-			<segmented label="Placering" name="alignment" allow-null="true">
-				<item icon="style/align_left" value="left"/>
-				<item icon="style/align_center" value="center"/>
-				<item icon="style/align_right" value="right"/>
-			</segmented>
+			<field label="Placering">
+				<segmented name="alignment" allow-null="true">
+					<item icon="style/align_left" value="left"/>
+					<item icon="style/align_center" value="center"/>
+					<item icon="style/align_right" value="right"/>
+				</segmented>
+			</field>
 			<divider/>
 			<grid>
 				<row>
 					<cell label="Bredde:" width="80" right="5">
-						<number adaptive="true" allow-null="true" name="scaleWidth"/>
+						<number-input adaptive="true" allow-null="true" name="scaleWidth"/>
 					</cell>
 					<cell label="Procent:" width="80">
-						<number adaptive="true" allow-null="true" name="scalePercent"/>
+						<number-input adaptive="true" allow-null="true" name="scalePercent"/>
 					</cell>
 				</row>
 				<row>
 					<cell label="H&#248;jde:" width="80" right="5">
-						<number adaptive="true" allow-null="true" name="scaleHeight"/>
+						<number-input adaptive="true" allow-null="true" name="scaleHeight"/>
 					</cell>
 				</row>
 			</grid>
@@ -400,7 +410,7 @@ class ImagePartController extends PartController
 			<!--grid>
 				<row>
 					<cell label="Text:" width="200" right="5">
-						<textfield name="text" label="text"/>
+						<text-input name="text" label="text"/>
 					</cell>
 				</row>
 				<row>
@@ -420,7 +430,7 @@ class ImagePartController extends PartController
 						</dropdown>
 					</cell>
 					<cell label="URL:" width="100" right="10">
-						<textfield name="url"/>
+						<text-input name="url"/>
 					</cell>
 					<cell label="Billede:" width="200" right="10">
 						<dropdown name="image" adaptive="true">
@@ -435,7 +445,7 @@ class ImagePartController extends PartController
 						</dropdown>
 					</cell>
 					<cell label="E-mail:" width="100" right="10">
-						<textfield name="email"/>
+						<text-input name="email"/>
 					</cell>
 					<cell label="Samme billede:" right="10">
 						<checkbox name="sameimage"/>

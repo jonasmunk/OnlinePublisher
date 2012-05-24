@@ -138,6 +138,13 @@
 	</script>
 </xsl:template>
 
+<xsl:template match="gui:toolbar//gui:field">
+	<span class="hui_toolbar_item">
+		<span class="hui_toolbar_item_body"><xsl:apply-templates/></span>
+		<span class="hui_toolbar_label"><xsl:value-of select="@label"/></span>
+	</span>
+</xsl:template>
+
 <!-- ///////////////////// table ///////////////////// -->
 
 
@@ -175,25 +182,12 @@
 <xsl:template match="gui:toolbar//gui:grid/gui:row/gui:cell/gui:label">
 	<label class="hui_toolbar_grid"><xsl:apply-templates/></label>
 </xsl:template>
+
 <!-- Inputs -->
 
 <xsl:template match="gui:toolbar//gui:checkboxes">
 	<span class="hui_toolbar_item">
 		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:checkboxes"/></span>
-		<span class="hui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
-	</span>
-</xsl:template>
-
-<xsl:template match="gui:toolbar//gui:number">
-	<span class="hui_toolbar_item">
-		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:number"/></span>
-		<span class="hui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
-	</span>
-</xsl:template>
-
-<xsl:template match="gui:toolbar//gui:style-length">
-	<span class="hui_toolbar_item">
-		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:style-length"/></span>
 		<span class="hui_toolbar_label"><xsl:value-of select="@title"/><xsl:value-of select="@label"/></span>
 	</span>
 </xsl:template>
@@ -205,31 +199,11 @@
 	</span>
 </xsl:template>
 
-<xsl:template match="gui:toolbar//gui:segmented[@label]">
-	<span class="hui_toolbar_item">
-		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:segmented"/></span>
-		<span class="hui_toolbar_label"><xsl:value-of select="@label"/></span>
-	</span>
-</xsl:template>
 
-<xsl:template match="gui:toolbar//gui:textfield">
-	<span class="hui_toolbar_item">
-		<span class="hui_toolbar_item_body"><xsl:call-template name="gui:text"/></span>
-		<span class="hui_toolbar_label"><xsl:value-of select="@label"/></span>
-	</span>
-</xsl:template>
 
-<xsl:template match="gui:toolbar//gui:cell/gui:number">
-	<xsl:call-template name="gui:number"/>
-</xsl:template>
 
-<xsl:template match="gui:toolbar//gui:cell/gui:textfield">
-	<xsl:call-template name="gui:text"/>
-</xsl:template>
 
-<xsl:template match="gui:toolbar//gui:cell/gui:dropdown">
-	<xsl:call-template name="gui:dropdown"/>
-</xsl:template>
+
 
 
 <!-- Bar -->

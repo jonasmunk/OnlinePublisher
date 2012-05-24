@@ -5,20 +5,26 @@
 	<source name="itemsSource" url="data/source_items.xml"/>
 	<box width="600" variant="textured">
 		<toolbar>
-			<number label="Style length:" key="style" value="15"/>
+			<field label="Style length:">
+				<number-input key="style" value="15"/>
+			</field>
 			<field label="Style length:">
 				<style-length-input key="style" value="15px"/>
 			</field>
-			<segmented label="Alignment" value="left" name="segmentedBar">
-				<item icon="edit/text_align_left" value="left"/>
-				<item icon="edit/text_align_center" value="center"/>
-				<item icon="edit/text_align_right" value="right"/>
-			</segmented>
-			<segmented label="Alignment (allow null)" value="left" name="segmentedBarNull" allow-null="true">
-				<item icon="edit/text_align_left" value="left"/>
-				<item icon="edit/text_align_center" value="center"/>
-				<item icon="edit/text_align_right" value="right"/>
-			</segmented>
+			<field label="Alignment">
+				<segmented value="left" name="segmentedBar">
+					<item icon="edit/text_align_left" value="left"/>
+					<item icon="edit/text_align_center" value="center"/>
+					<item icon="edit/text_align_right" value="right"/>
+				</segmented>
+			</field>
+			<field label="Alignment (allow null)">
+				<segmented value="left" name="segmentedBarNull" allow-null="true">
+					<item icon="edit/text_align_left" value="left"/>
+					<item icon="edit/text_align_center" value="center"/>
+					<item icon="edit/text_align_right" value="right"/>
+				</segmented>
+			</field>
 		</toolbar>
 		<tabs>
 			<tab title="Formula 1" padding="10">
@@ -30,12 +36,12 @@
 						<field label="Color">
 							<colorfield key="color" value="red"/>
 						</field>
-						<buttons top="10">
-							<button title="Gem" highlighted="true"/>
-							<button title="Slet"/>
-							<button title="Annuller"/>
-						</buttons>
 					</group>
+					<buttons top="10">
+						<button title="Slet"/>
+						<button title="Annuller"/>
+						<button title="Gem" highlighted="true"/>
+					</buttons>
 				</formula>
 				<segmented value="left" name="segmented">
 					<item icon="edit/text_align_left" value="left"/>

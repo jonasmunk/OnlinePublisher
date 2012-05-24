@@ -44,16 +44,22 @@ $gui='
 	
 	<window name="offerEditor" width="300" title="Bud" pad="5">
 		<formula name="offerFormula">
-			<group>
-				<text name="offerOffer" label="Bud:"/>
-				<datetime name="offerExpiry" label="Deadline:"/>
-				<text name="offerNote" label="Notat:" lines="6"/>
-				<buttons>
-					<button name="cancelOffer" title="Annuller"/>
-					<button name="deleteOffer" title="Slet"/>
-					<button name="saveOffer" title="Gem" highlighted="true"/>
-				</buttons>
-			</group>
+			<fields>
+				<field label="Bud:">
+					<text-input name="offerOffer"/>
+				</field>
+				<field label="Deadline:">
+					<datetime-input name="offerExpiry"/>
+				</field>
+				<field label="Notat:">
+					<text-input name="offerNote" lines="6"/>
+				</field>
+			</fields>
+			<buttons>
+				<button name="cancelOffer" title="Annuller"/>
+				<button name="deleteOffer" title="Slet"/>
+				<button name="saveOffer" title="Gem" highlighted="true"/>
+			</buttons>
 		</formula>
 	</window>
 	

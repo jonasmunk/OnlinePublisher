@@ -27,9 +27,15 @@
 			<fieldset legend="This is a group">
 				<group labels="above">
 					<text label="Notat:" lines="6" key="note"/>
-					<number label="Number:" key="number"/>
-					<number label="Number (min -300):" key="number2" min="-300"/>
-					<number label="Number (min 300):" key="number2" min="300"/>
+					<field label="Number:">
+						<number-input key="number"/>
+					</field>
+					<field label="Number (min -300):">
+						<number-input key="number2" min="-300"/>
+					</field>
+					<field label="Number (min 300):">
+						<number-input key="number2" min="300"/>
+					</field>
 					<field label="Style length:">
 						<style-length-input key="style" value="15px"/>
 					</field>

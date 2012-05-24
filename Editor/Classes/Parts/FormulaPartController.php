@@ -51,12 +51,12 @@ class FormulaPartController extends PartController
 			<grid>
 				<row>
 					<cell label="Modtager navn:" width="180">
-						<textfield adaptive="true" name="receiverName"/>
+						<text-input adaptive="true" name="receiverName"/>
 					</cell>
 				</row>
 				<row>
 					<cell label="Modtager e-mail:" width="180">
-						<textfield adaptive="true" name="receiverEmail"/>
+						<text-input adaptive="true" name="receiverEmail"/>
 					</cell>
 				</row>
 			</grid>

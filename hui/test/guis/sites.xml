@@ -53,7 +53,9 @@
 				<text label="Beskrivelse:" lines="6"/>
 				<text label="Sti:"/>
 				<text label="Nøgleord:"/>
-				<datetime label="Dato:"/>
+				<field label="Dato:">
+					<datetime-input/>
+				</field>
 				<dropdown label="Sprog:" source="languagesSource"/>
 				<dropdown label="Design:" source="languagesSource"/>
 				<dropdown label="Opsætning:" source="languagesSource"/>

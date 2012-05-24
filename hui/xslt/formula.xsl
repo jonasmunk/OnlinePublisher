@@ -43,19 +43,19 @@
 	<div class="hui_formula_header"><xsl:apply-templates/></div>
 </xsl:template>
 
-<xsl:template match="gui:formula//gui:group">
+<xsl:template match="gui:formula//gui:group | gui:formula//gui:fields">
 	<table class="hui_formula_group">
 		<xsl:apply-templates/>
 	</table>
 </xsl:template>
 
-<xsl:template match="gui:formula//gui:group[@labels='above']">
+<xsl:template match="gui:formula//gui:group[@labels='above'] | gui:formula//gui:fields[@labels='above']">
 	<table class="hui_formula_group hui_formula_group_above">
 		<xsl:apply-templates/>
 	</table>
 </xsl:template>
 
-<xsl:template match="gui:formula//gui:group[@legend]">
+<xsl:template match="gui:formula//gui:group[@legend] | gui:formula//gui:fields[@legend]">
 	<fieldset>
 		<legend><xsl:value-of select="@legend"/></legend>
 		<table class="group">
@@ -170,21 +170,7 @@
 	</script>
 </xsl:template>
 
-<!-- Date time -->
 
-<xsl:template match="gui:group/gui:datetime">
-	<tr>
-		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="hui_formula_item"><xsl:call-template name="gui:datetime"/></div></td>
-	</tr>
-</xsl:template>
-
-<xsl:template match="gui:group[@labels='above']/gui:datetime">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:datetime"/></div>
-	</td></tr>
-</xsl:template>
 
 
 

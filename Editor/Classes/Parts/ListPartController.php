@@ -92,8 +92,12 @@ class ListPartController extends PartController
 						</group>
 						<fieldset legend="Begrænsning">
 							<group labels="before">
-								<number label="Dage" value="'.$part->getTimeCount().'" key="time_count" max="1000"/>
-								<number label="Maksimalt antal" value="'.$part->getMaxItems().'" key="maxitems" min="0" max="100"/>
+								<field label="Dage">
+									<number-input value="'.$part->getTimeCount().'" key="time_count" max="1000"/>
+								</field>
+								<field label="Maksimalt antal">
+									<number-input value="'.$part->getMaxItems().'" key="maxitems" min="0" max="100"/>
+								</field>
 							</group>
 						</fieldset>
 						<space height="10"/>
@@ -104,7 +108,9 @@ class ListPartController extends PartController
 									<item value="ascending" text="Stigende"/>
 								</radiobuttons>
 								<checkbox label="Vis tekst" value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
-								<number label="Tekstlængde" value="'.$part->getMaxTextLength().'" key="maxtextlength" min="0" max="2000"/>
+								<field label="Tekstlængde">
+									<number-input value="'.$part->getMaxTextLength().'" key="maxtextlength" min="0" max="2000"/>
+								</field>
 								<checkbox label="Vis kilde" value="'.($part->getShowSource() ? 'true' : 'false').'" key="show_source"/>
 								<checkbox label="Vis tidszone" value="'.($part->getShowTimezone() ? 'true' : 'false').'" key="show_timezone"/>
 								<dropdown label="Tidszone">
@@ -121,14 +127,10 @@ class ListPartController extends PartController
 						<fieldset legend="Nyheder">
 							<group labels="above">
 								<field label="Grupper">
-									<checkboxes key="newsGroups">
-									'.GuiUtils::buildObjectItems('newsgroup').'
-									</checkboxes>
+									<checkboxes key="newsGroups">'.GuiUtils::buildObjectItems('newsgroup').'</checkboxes>
 								</field>
 								<field label="Kilder">
-									<checkboxes key="newsSources">
-									'.GuiUtils::buildObjectItems('newssource').'
-									</checkboxes>							
+									<checkboxes key="newsSources">'.GuiUtils::buildObjectItems('newssource').'</checkboxes>							
 								</field>
 							</group>
 						</fieldset>
@@ -136,14 +138,10 @@ class ListPartController extends PartController
 						<fieldset legend="Begivenheder">
 							<group labels="above">
 								<field label="Kalendere">
-									<checkboxes key="calendars">
-									'.GuiUtils::buildObjectItems('calendar').'
-									</checkboxes>
+									<checkboxes key="calendars">'.GuiUtils::buildObjectItems('calendar').'</checkboxes>
 								</field>
 								<field label="Kilder">
-									<checkboxes key="calendarSources">
-									'.GuiUtils::buildObjectItems('calendarsource').'
-									</checkboxes>
+									<checkboxes key="calendarSources">'.GuiUtils::buildObjectItems('calendarsource').'</checkboxes>
 								</field>
 							</group>
 						</fieldset>

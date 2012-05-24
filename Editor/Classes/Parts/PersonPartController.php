@@ -165,11 +165,13 @@ class PersonPartController extends PartController
 	function getToolbars() {
 		return array('Person' => '
 			<script source="../../Parts/person/toolbar.js"/>
-			<segmented label="Placering" name="alignment" allow-null="true">
-				<item icon="style/align_left" value="left"/>
-				<item icon="style/align_center" value="center"/>
-				<item icon="style/align_right" value="right"/>
-			</segmented>
+			<field label="Placering">
+				<segmented name="alignment" allow-null="true">
+					<item icon="style/align_left" value="left"/>
+					<item icon="style/align_center" value="center"/>
+					<item icon="style/align_right" value="right"/>
+				</segmented>
+			</field>
 			<divider/>
 			<grid>
 				<row>

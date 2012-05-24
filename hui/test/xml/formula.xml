@@ -91,10 +91,18 @@
 	<box width="600" title="Numbers" variant="textured" padding="10">
 		<formula name="numForm">
 			<group labels="above">
-				<number label="Number:" key="number"/>
-				<number label="Number (min -300):" key="number2" min="-300"/>
-				<number label="Number (min 300):" key="number2" min="300"/>
-				<number label="Number (min -1, max 1, decimals:2):" decimals="2" key="number2" min="-1" max="1"/>
+				<field label="Number:">
+					<number-input key="number"/>
+				</field>
+				<field label="Number (min -300):">
+					<number-input key="number2" min="-300"/>
+				</field>
+				<field label="Number (min 300):">
+					<number-input key="number2" min="300"/>
+				</field>
+				<field label="Number (min -1, max 1, decimals:2):">
+					<number-input decimals="2" key="number2" min="-1" max="1"/>
+				</field>
 			</group>
 			<buttons>
 				<button click="logForm(numForm)" text="Data"/>
@@ -306,14 +314,30 @@
 			<tab title="Formula 2" padding="10">
 				<formula name="formula2">
 					<group>
-						<dropdown label="Template:" key="template" source="itemsSource" value="c"/>
-						<text label="Brugernavn:" key="username"/>
-						<password label="Kodeord:" key="password"/>
-						<text label="Notat:" lines="6" key="note"/>
-						<datetime label="Date (secs):" key="date-seconds" return-type="seconds"/>
-						<datetime label="Date:" key="date"/>
-						<checkbox label="Internal access:" key="internal"/>
-						<checkbox label="External access:" key="external"/>
+						<field label="Template:">
+							<dropdown key="template" source="itemsSource" value="c"/>
+						</field>
+						<field label="Brugernavn:">
+							<text-input key="username"/>
+						</field>
+						<field label="Kodeord:">
+							<text-input secret="true" key="password"/>
+						</field>
+						<field label="Notat:">
+							<text-input lines="6" key="note"/>
+						</field>
+						<field label="Date (secs):">
+							<datetime-input key="date-seconds" return-type="seconds"/>
+						</field>
+						<field label="Date:">
+							<datetime-input key="date"/>
+						</field>
+						<field label="Internal access:">
+							<checkbox key="internal"/>
+						</field>
+						<field label="External access:">
+							<checkbox key="external"/>
+						</field>
 						<field label="Groups:">
 							<checkboxes key="groups">
 								<source url="source_items.xml"/>
@@ -322,11 +346,13 @@
 						<field label="Tokens:">
 							<tokens key="tokens"/>
 						</field>
-						<radiobuttons label="Radios:" key="radios">
-							<radiobutton label="Lorem" value="lorem"/>
-							<radiobutton label="Ipsum" value="ipsum"/>
-							<radiobutton label="Dolor" value="dolor"/>
-						</radiobuttons>
+						<field label="Radios:">
+							<radiobuttons key="radios">
+								<radiobutton label="Lorem" value="lorem"/>
+								<radiobutton label="Ipsum" value="ipsum"/>
+								<radiobutton label="Dolor" value="dolor"/>
+							</radiobuttons>
+						</field>
 						<field label="Object list:">
 							<objectlist key="objectlist">
 								<text key="email" label="E-mail"/>
@@ -352,7 +378,7 @@
 							<dropdown label="Template:" source="itemsSource" value="c"/>
 						</field>
 						<field label="Username" hint="This is a hint describing something">
-							<textfield key="username"/>
+							<text-input key="username"/>
 						</field>
 					</group>
 				</formula>
@@ -378,14 +404,30 @@
 	<window name="win" width="400" padding="10" variant="dark">
 		<formula name="formula2">
 			<group>
-				<dropdown label="Template:" key="template" source="itemsSource" value="c"/>
-				<text label="Brugernavn:" key="username"/>
-				<password label="Kodeord:" key="password"/>
-				<text label="Notat:" lines="6" key="note"/>
-				<datetime label="Date (secs):" key="date-seconds" return-type="seconds"/>
-				<datetime label="Date:" key="date"/>
-				<checkbox label="Internal access:" key="internal"/>
-				<checkbox label="External access:" key="external"/>
+				<field label="Template:">
+					<dropdown key="template" source="itemsSource" value="c"/>
+				</field>
+				<field label="Brugernavn:">
+					<text-input key="username"/>
+				</field>
+				<field label="Kodeord:">
+					<text-input secret="true" key="password"/>
+				</field>
+				<field label="Notat:">
+					<text-input lines="6" key="note"/>
+				</field>
+				<field label="Date (secs):">
+					<datetime-input key="date-seconds" return-type="seconds"/>
+				</field>
+				<field label="Date:">
+					<datetime-input key="date"/>
+				</field>
+				<field label="Internal access:">
+					<checkbox key="internal"/>
+				</field>
+				<field label="External access:">
+					<checkbox key="external"/>
+				</field>
 				<field label="Groups:">
 					<checkboxes key="groups">
 						<source url="source_items.xml"/>
@@ -394,11 +436,13 @@
 				<field label="Tokens:">
 					<tokens key="tokens"/>
 				</field>
-				<radiobuttons label="Radios:" key="radios">
-					<radiobutton label="Lorem" value="lorem"/>
-					<radiobutton label="Ipsum" value="ipsum"/>
-					<radiobutton label="Dolor" value="dolor"/>
-				</radiobuttons>
+				<field label="Radios:">
+					<radiobuttons key="radios">
+						<radiobutton label="Lorem" value="lorem"/>
+						<radiobutton label="Ipsum" value="ipsum"/>
+						<radiobutton label="Dolor" value="dolor"/>
+					</radiobuttons>
+				</field>
 				<field label="Object list:">
 					<objectlist key="objectlist">
 						<text key="email" label="E-mail"/>

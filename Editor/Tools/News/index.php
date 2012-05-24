@@ -109,7 +109,9 @@ $gui='
 			<group labels="above">
 				<text label="Titel" key="title"/>
 				<text label="Adresse" key="url"/>
-				<number label="Interval (sekunder)" key="syncInterval"/>
+				<field label="Interval (sekunder)">
+					<number-input key="syncInterval"/>
+				</field>
 				<buttons>
 					<button name="cancelSource" title="Annuller"/>
 					<button name="deleteSource" title="Slet">
@@ -136,12 +138,16 @@ $gui='
 					<columns space="10">
 						<column>
 							<group labels="above">
-								<datetime label="Fra" key="startdate" return-type="seconds"/>
+								<field label="Fra">
+									<datetime-input key="startdate" return-type="seconds"/>
+								</field>
 							</group>
 						</column>
 						<column>
 							<group labels="above">
-								<datetime label="Til" key="enddate" return-type="seconds"/>
+								<field label="Til">
+									<datetime-input key="enddate" return-type="seconds"/>
+								</field>
 							</group>
 						</column>
 					</columns>
@@ -190,12 +196,16 @@ $gui='
 			<columns>
 				<column>
 				<group labels="above">
-					<datetime label="Fra" key="startdate"/>
+					<field label="Fra">
+						<datetime-input key="startdate"/>
+					</field>
 				</group>
 				</column>
 				<column>
 				<group labels="above">
-					<datetime label="Til" key="enddate"/>
+					<field label="Til">
+						<datetime-input key="enddate"/>
+					</field>
 				</group>
 				</column>
 			</columns>

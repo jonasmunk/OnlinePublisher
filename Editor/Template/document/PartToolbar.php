@@ -53,17 +53,29 @@ $gui='
 					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
 				</icon>
 				<divider/>
-				<style-length label="Venstre" name="marginLeft"/>
-				<style-length label="H&#248;jre" name="marginRight"/>
-				<style-length label="Top" name="marginTop"/>
-				<style-length label="Bund" name="marginBottom"/>
+				<field label="Venstre">
+					<style-length-input name="marginLeft"/>
+				</field>
+				<field label="H&#248;jre">
+					<style-length-input name="marginRight"/>
+				</field>
+				<field label="Top">
+					<style-length-input name="marginTop"/>
+				</field>
+				<field label="Bund">
+					<style-length-input name="marginBottom"/>
+				</field>
 				<divider/>
-				<style-length label="Bredde" name="sectionWidth"/>
-				<segmented label="Tekstoml&#248;b" name="sectionFloat" allow-null="true">
-					<item icon="style/float_none" value=""/>
-					<item icon="style/float_left" value="left"/>
-					<item icon="style/float_right" value="right"/>
-				</segmented>
+				<field label="Bredde">
+					<style-length-input name="sectionWidth"/>
+				</field>
+				<field label="Tekstoml&#248;b">
+					<segmented name="sectionFloat" allow-null="true">
+						<item icon="style/float_none" value=""/>
+						<item icon="style/float_left" value="left"/>
+						<item icon="style/float_right" value="right"/>
+					</segmented>
+				</field>
 			</toolbar>
 		</tab>
 	</tabs>

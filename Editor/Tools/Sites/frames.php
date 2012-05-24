@@ -25,10 +25,18 @@ $gui='
 			<tab title="Info" padding="5">
 				<formula name="frameFormula">
 					<group>
-						<text label="Navn:" key="name"/>
-						<text label="Titel:" key="title"/>
-						<text label="Bund-tekst:" key="bottomText" multiline="true"/>
-						<dropdown key="hierarchyId" label="Hierarki:" source="hierarchyItems" placeholder="Vælg..."/>
+						<field label="Navn:">
+							<text-input key="name"/>
+						</field>
+						<field label="Titel:">
+							<text-input key="title"/>
+						</field>
+						<field label="Bund-tekst:">
+							<text-input key="bottomText" multiline="true"/>
+						</field>
+						<field label="Hierarki:">
+							<dropdown key="hierarchyId" source="hierarchyItems" placeholder="Vælg..."/>
+						</field>
 					</group>
 				</formula>
 			</tab>
@@ -144,8 +152,13 @@ $gui='
 						<item value="9" title="9"/>
 						<item value="10" title="10"/>
 					</dropdown>
-					<datetime key="startdate" label="Fra" return-type="seconds"/>
-					<datetime key="enddate" label="Til" return-type="seconds"/>
+					
+					<field label="Fra">
+						<datetime-input key="startdate" return-type="seconds"/>
+					</field>
+					<field label="Til">
+						<datetime-input key="enddate" return-type="seconds"/>
+					</field>
 				</group>
 			</fieldset>
 			<fieldset legend="Nyheder">

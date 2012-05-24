@@ -23,10 +23,12 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<segmented value="list" label="Visning" name="view">
-					<item icon="view/list" value="list"/>
-					<item icon="view/graph" value="graph"/>
-				</segmented>
+				<field label="Visning">
+					<segmented value="list" name="view">
+						<item icon="view/list" value="list"/>
+						<item icon="view/graph" value="graph"/>
+					</segmented>
+				</field>
 			</toolbar>
 		</top>
 		<middle>

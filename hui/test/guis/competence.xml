@@ -12,8 +12,12 @@
 					<item title="Anden" value="0"/>
 					<item title="Arbejdsfunktion" value="0"/>
 				</dropdown>
-				<datetime label="Startdato:"/>
-				<datetime label="Slutdato:"/>
+				<field label="Startdato:">
+					<datetime/>
+				</field>
+				<field label="Slutdato:">
+					<datetime/>
+				</field>
 				<buttons top="5">
 					<button title="Annuller" action="hui.log(formula.getValues());"/>
 					<button title="Opret" highlighted="true"/>

@@ -5,10 +5,12 @@
 		<toolbar>
 			<icon icon="inset/view" title="Next" click="pages.next()"/>
 			<icon icon="common/folder" title="Previous" click="pages.previous()"/>
-			<segmented>
-				<item icon="monochrome/round_arrow_left"/>
-				<item icon="monochrome/round_arrow_right"/>
-			</segmented>
+			<field>
+				<segmented>
+					<item icon="monochrome/round_arrow_left"/>
+					<item icon="monochrome/round_arrow_right"/>
+				</segmented>
+			</field>
 		</toolbar>
 		<div style="height: 400px">
 			<pages name="pages">

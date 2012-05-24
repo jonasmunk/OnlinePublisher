@@ -60,24 +60,36 @@ $gui='
 									<box variant="rounded" padding="10">
 									<formula name="summaryFormula">
 										<group labels="above">
-											<text label="Nummer" key="number"/>
-											<text label="Gade" key="street"/>
+											<field label="Nummer">
+												<text-input key="number"/>
+											</field>
+											<field label="Gade">
+												<text-input key="street"/>
+											</field>
 										</group>
 										<columns>
 											<column width="100px">
 												<group labels="above">
-													<text label="Postnummer" key="zipcode"/>
+													<field label="Postnummer">
+														<text-input key="zipcode"/>
+													</field>
 												</group>
 											</column>
 											<column>
 												<group labels="above">
-													<text label="By" key="city"/>
+													<field label="By">
+														<text-input key="city"/>
+													</field>
 												</group>
 											</column>
 										</columns>
 										<group labels="above">
-											<text label="E-post" key="email"/>
-											<text label="Telefon" key="phone"/>
+											<field label="E-post">
+												<text-input key="email"/>
+											</field>
+											<field label="Telefon">
+												<text-input key="phone"/>
+											</field>
 										</group>
 										<buttons>
 											<button name="deleteMeter" title="Slet">
@@ -110,8 +122,12 @@ $gui='
 	<window title="Aflæsning" icon="common/water" name="subUsageWindow" width="300" padding="5">
 		<formula name="subUsageFormula">
 			<group labels="above">
-				<number label="Værdi" key="value" max="1000000000"/>
-				<datetime label="Tidspunkt" key="date" return-type="seconds"/>
+				<field label="Værdi">
+					<number-input key="value" max="1000000000"/>
+				</field>
+				<field label="Tidspunkt">
+					<datetime-input key="date" return-type="seconds"/>
+				</field>
 				<buttons>
 					<button name="cancelSubUsage" title="Annuller"/>
 					<button name="deleteSubUsage" title="Slet">
@@ -147,10 +163,15 @@ $gui='
 	<window title="Aflæsning" icon="common/water" name="usageWindow" width="300" padding="5">
 		<formula name="usageFormula">
 			<group labels="above">
-				<text label="Nummer" key="number"/>
-				<!--<number label="År" key="year"/>-->
-				<number label="Værdi" key="value" max="1000000000"/>
-				<datetime label="Tidspunkt" key="date" return-type="seconds"/>
+				<field label="Nummer">
+					<text-input key="number"/>
+				</field>
+				<field label="Værdi">
+					<number-input key="value" max="1000000000"/>
+				</field>
+				<field label="Tidspunkt">
+					<datetime-input key="date" return-type="seconds"/>
+				</field>
 				<buttons>
 					<button name="cancelUsage" title="Annuller"/>
 					<button name="deleteUsage" title="Slet">
@@ -165,7 +186,9 @@ $gui='
 	<window title="Vandmåler" icon="common/gauge" name="meterWindow" width="300" padding="5">
 		<formula name="meterFormula">
 			<group labels="above">
-				<text label="Nummer" key="number"/>
+				<field label="Nummer">
+					<text-input key="number"/>
+				</field>
 				<buttons>
 					<button name="cancelMeter" title="Annuller"/>
 					<button name="createMeter" submit="true" title="Opret" highlighted="true"/>

@@ -90,14 +90,20 @@ class FilePartController extends PartController
 		<window title="Avanceret" name="imageAdvancedWindow" width="300">
 			<formula name="imageAdvancedFormula">
 				<group>
-					<text label="Tekst" multiline="true" key="text"/>
-					<checkbox key="greyscale" label="Gråtone"/>
-					<dropdown label="Ramme" key="frame">
-						<item title="Ingen" value=""/>
-						<item title="Let" value="light"/>
-						<item title="Elegant" value="elegant"/>
-						<item title="Skygge" value="shadow_slant"/>
-					</dropdown>
+					<field label="Tekst">
+						<text-input multiline="true" key="text"/>
+					</field>
+					<field label="Gråtone">
+						<checkbox key="greyscale"/>
+					</field>
+					<field label="Ramme">
+						<dropdown key="frame">
+							<item title="Ingen" value=""/>
+							<item title="Let" value="light"/>
+							<item title="Elegant" value="elegant"/>
+							<item title="Skygge" value="shadow_slant"/>
+						</dropdown>
+					</field>
 					<buttons>
 						<button name="pasteImage" text="Indsæt fra udklipsholder"/>
 					</buttons>
