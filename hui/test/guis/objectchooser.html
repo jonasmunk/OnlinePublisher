@@ -17,6 +17,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Tabs.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Formula.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Toolbar.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/SearchField.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/List.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		hui.ui.context='../../..';
@@ -29,7 +30,7 @@
 		
 		var toolWin = hui.ui.Window.create({width:300,top:50,left:300});
 		var toolbar = hui.ui.Toolbar.create({labels:false});
-		toolbar.add(hui.ui.Toolbar.SearchField.create({title:'Test',adaptive:true}));
+		toolbar.add(hui.ui.SearchField.create({title:'Test',adaptive:true}));
 		toolWin.add(toolbar);
 		toolWin.add(hui.ui.List.create({url:'../xml/data/list_users.xml'}));
 		toolWin.show();

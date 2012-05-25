@@ -43,7 +43,9 @@ $gui='
 				</icon>
 				<icon icon="common/duplicate" title="Dubler" name="duplicate" disabled="true"/>
 				<right>
-					<searchfield title="Søgning" name="search" expandedWidth="200"/>
+					<field label="Søgning">
+						<searchfield name="search" expanded-width="200"/>
+					</field>
 				</right>
 			</toolbar>
 		</top>

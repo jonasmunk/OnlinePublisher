@@ -2117,29 +2117,6 @@ a.hui_toolbar_icon_disabled:hover span.hui_icon
 	background-position: 0 0;
 }
 
-/********************************* Search *************************/
-
-span.hui_toolbar_search
-{
-	height: 58px;
-	vertical-align: middle;
-	display: inline-block;
-	text-align: center;
-}
-
-span.hui_toolbar_search span.hui_searchfield
-{
-	margin: 12px 0px 3px;
-}
-
-span.hui_toolbar_search_label
-{
-	display: block;
-	color:#334455;
-	font-size:11px;
-	text-align: center;
-}
-
 /********************** Buttons ********************/
 
 div.hui_toolbar a.hui_button
@@ -2291,6 +2268,11 @@ span.hui_toolbar_item span.hui_numberfield
 span.hui_toolbar_item a.hui_dropdown
 {
 	margin-top: 7px;
+}
+
+span.hui_toolbar_item span.hui_searchfield
+{
+	margin-top: 8px;
 }
 
 span.hui_toolbar_item .hui_checkboxes

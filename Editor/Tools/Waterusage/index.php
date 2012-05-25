@@ -32,7 +32,9 @@ $gui='
 				<icon icon="common/gauge" title="Ny måler" overlay="new" name="newMeter"/>
 				<icon icon="common/water" title="Ny aflæsning" overlay="new" name="newUsage"/>
 				<right>
-					<searchfield title="Søgning" name="search" expandedWidth="200"/>
+					<field label="Søgning">
+						<searchfield name="search" expanded-width="200"/>
+					</field>
 				</right>
 			</toolbar>
 		</top>

@@ -37,7 +37,9 @@ $gui='
 				<icon icon="common/internet" title="Ny sti" name="newPath" overlay="new"/>
 				<icon icon="common/color" title="Nyt design" name="newDesign" overlay="new"/>
 				<right>
-					<searchfield title="Søgning" name="searchField"/>
+					<field label="Søgning">
+						<searchfield name="searchField"/>
+					</field>
 				</right>
 			</toolbar>
 		</top>

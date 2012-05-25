@@ -8,9 +8,9 @@
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/page" title="Opret side" overlay="new" action="newPage.show()"/>
+				<icon icon="common/page" title="Opret side" overlay="new" click="newPage.show()"/>
 				<divider/>
-				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>
+				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="box.show()"/>
 				<right>
 					<search title="Søgning"/>
 				</right>
@@ -84,9 +84,9 @@
 			</step>
 		</wizard>
 		<buttons top="10" align="right">
-			<button title="Forrige" action="box.hide()"/>
-			<button title="Næste" action="box.hide()"/>
-			<button title="Annuller" action="box.hide()"/>
+			<button title="Forrige" click="box.hide()"/>
+			<button title="Næste" click="box.hide()"/>
+			<button title="Annuller" click="box.hide()"/>
 			<button title="Gem" highlighted="true"/>
 		</buttons>
 	</box>

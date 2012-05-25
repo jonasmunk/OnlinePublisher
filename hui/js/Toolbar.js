@@ -170,56 +170,6 @@ hui.ui.Toolbar.Icon.prototype = {
 }
 
 
-/////////////////////// Search field ///////////////////////
-
-/** @constructor */
-hui.ui.Toolbar.SearchField = function(options) {
-	this.options = options;
-	this.element = hui.get(options.element);
-	this.name = options.name;
-	this.field = hui.get.firstByTag(this.element,'input');
-	this.value = this.field.value;
-	hui.ui.extend(this);
-	this.addBehavior();
-}
-
-hui.ui.Toolbar.SearchField.create = function(options) {
-	options = options || {};
-	options.element = hui.build('div',{
-		'class' : options.adaptive ? 'hui_toolbar_search hui_toolbar_search_adaptive' : 'hui_toolbar_search',
-		html : '<div class="hui_searchfield"><strong class="hui_searchfield_button"></strong><div><div><input type="text"/></div></div></div>'+
-		'<span>'+hui.string.escape(options.title)+'</span>'
-	});
-	return new hui.ui.Toolbar.SearchField(options);
-}
-
-hui.ui.Toolbar.SearchField.prototype = {
-	getValue : function() {
-		return this.field.value;
-	},
-	addBehavior : function() {
-		var self = this;
-		this.field.onkeyup = function() {
-			self.fieldChanged();
-		}
-		if (!this.options.adaptive) {
-			this.field.onfocus = function() {
-				hui.animate(this,'width','120px',500,{ease:hui.ease.slowFastSlow});
-			}
-			this.field.onblur = function() {
-				hui.animate(this,'width','80px',500,{ease:hui.ease.slowFastSlow});
-			}
-		}
-	},
-	fieldChanged : function() {
-		if (this.field.value!=this.value) {
-			this.value=this.field.value;
-			hui.ui.callDelegates(this,'valueChanged');
-			hui.ui.firePropertyChange(this,'value',this.value);
-		}
-	}
-}
-
 
 //////////////////////// Badge ///////////////////////
 

@@ -3,7 +3,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 <link rel="stylesheet" href="stylesheet.css" type="text/css"/><link rel="stylesheet" href="../../bin/minimized.css" type="text/css"/><script src="../../bin/minimized.js"></script><script src="script.js"></script><title>HUI XML format docs</title>
 </head>
-<body><p class="modules"><a href="javascript://"><span>All</span></a> <a href="javascript://" data="selection"><span>Selection</span></a> <a href="javascript://" data="container"><span>Container</span></a> <a href="javascript://" data="unknown"><span>Unknown</span></a> <a href="javascript://" data="base"><span>Base</span></a> <a href="javascript://" data="Unknown"><span>Unknown</span></a> <a href="javascript://" data="action"><span>Action</span></a> <a href="javascript://" data="input"><span>Input</span></a> <a href="javascript://" data="layout"><span>Layout</span></a> </p><div class="component input"><h2>Formula <span class="module">input</span></h2>
+<body><p class="modules"><a href="javascript://"><span>All</span></a> <a href="javascript://" data="bar"><span>Bar</span></a> <a href="javascript://" data="selection"><span>Selection</span></a> <a href="javascript://" data="container"><span>Container</span></a> <a href="javascript://" data="unknown"><span>Unknown</span></a> <a href="javascript://" data="base"><span>Base</span></a> <a href="javascript://" data="Unknown"><span>Unknown</span></a> <a href="javascript://" data="action"><span>Action</span></a> <a href="javascript://" data="input"><span>Input</span></a> <a href="javascript://" data="layout"><span>Layout</span></a> </p><div class="component input"><h2>Formula <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Formula.html"><span>hui.ui.Formula</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;formula name="«name»" state="«text»" padding="«pixels»"&gt;
     &lt;group···&gt;
@@ -328,5 +328,75 @@
 </pre></div><div class="component Unknown"><h2>Graph <span class="module">Unknown</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Graph.html"><span>hui.ui.Graph</span></a></p>
 <p class="file">File: <a href="../../xslt/other.xsl"><span>other.xsl</span></a></p><pre>&lt;graph name="«name»" layout="«?»" source="«source»"/&gt;
+</pre></div><div class="component bar"><h2>Toolbar <span class="module">bar</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Toolbar.html"><span>hui.ui.Toolbar</span></a></p>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;toolbar name="«name»" variant="«?»" border="«'top' | 'bottom'»" labels="«boolean»" fixed-height="«boolean»"&gt;
+    ···
+	&lt;right&gt;
+		···
+	&lt;/right&gt;
+&lt;/toolbar&gt;
+</pre></div><div class="component bar"><h2>Toolbar icon <span class="module">bar</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Toolbar.Icon.html"><span>hui.ui.Toolbar.Icon</span></a></p>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;toolbar···&gt;
+    ···
+    &lt;icon name="«name»" icon="«icon»" overlay="«overlay»" text="«text»" selected="«boolean»" disabled="«boolean»" click="«script»"&gt;
+        &lt;confirm text="«text»" ok="«text»" cancel="«text»"/&gt;
+    &lt;/icon&gt;
+    ···
+&lt;/toolbar&gt;
+</pre></div><div class="component input"><h2>Search field <span class="module">input</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.SearchField.html"><span>hui.ui.SearchField</span></a></p>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;searchfield name="«text»" adaptive="«true»" width="«pixels»" expanded-width="«pixels»"/&gt;
+</pre></div><div class="component bar"><h2>Toolbar badge <span class="module">bar</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Toolbar.Badge.html"><span>hui.ui.Toolbar.Badge</span></a></p>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;badge name="«text»" label="«text»" text="«text»" icon="«icon»"/&gt;
+</pre></div><div class="component bar"><h2>Toolbar field <span class="module">bar</span></h2>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;toolbar···&gt;
+    ···
+    &lt;field label="«text»"&gt;
+        ···
+    &lt;/field&gt;
+    ···
+&lt;/toolbar&gt;
+</pre></div><div class="component bar"><h2>Toolbar grid <span class="module">bar</span></h2>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;toolbar···&gt;
+    ···
+    &lt;grid&gt;
+        &lt;row&gt;
+            &lt;cell width="«pixels»" left="«pixels»" right="«pixels»"&gt;
+                ···
+            &lt;/cell&gt;
+            &lt;cell···&gt;&lt;label&gt;«text»&lt;/label&gt;&lt;/cell&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+            &lt;cell···&gt;
+            &lt;/cell&gt;
+        &lt;/row&gt;
+    &lt;/grid&gt;
+    ···
+&lt;/toolbar&gt;
+</pre></div><div class="component bar"><h2>Bar <span class="module">bar</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Bar.html"><span>hui.ui.Bar</span></a></p>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;bar name="«text»" state="«text»"&gt;
+    ···
+    &lt;right&gt;
+        ···
+    &lt;/right&gt;
+&lt;/bar&gt;
+</pre></div><div class="component bar"><h2>Bar button <span class="module">bar</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Bar.Button.html"><span>hui.ui.Bar.Button</span></a></p>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;bar···&gt;
+    &lt;button name="«text»" icon="«icon»" text="«text»" selected="«boolean»" click="«script»"/&gt;
+&lt;/bar&gt;
+</pre></div><div class="component bar"><h2>Bar text <span class="module">bar</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Bar.Text.html"><span>hui.ui.Bar.Text</span></a></p>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;bar···&gt;
+    &lt;text name="«text»" text="«text»" variant="«?»"/&gt;
+&lt;/bar&gt;
+</pre></div><div class="component bar"><h2>Bar space <span class="module">bar</span></h2>
+<p class="file">File: <a href="../../xslt/toolbar.xsl"><span>toolbar.xsl</span></a></p><pre>&lt;bar | toolbar···&gt;
+    &lt;space width="«pixels»"/&gt;
+&lt;/bar | toolbar&gt;
 </pre></div></body>
 </html>

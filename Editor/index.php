@@ -75,18 +75,18 @@ $gui='
 					$gui.='<tab title="'.$tabTitle.'" background="light"><toolbar name="'.$tab.'Toolbar">';
 					foreach ($tools as $key => $tool) {
 						$deprecated = $tool->key == 'Pages';
-						$gui.='<icon title="'.$tool->name->$lang.'" icon="'.$tool->icon.'" action="dock.setUrl(\'Tools/'.$tool->key.'/\')" key="tool:'.$tool->key.'"'.($deprecated ? ' overlay="warning"' : '').'/>';
+						$gui.='<icon title="'.$tool->name->$lang.'" icon="'.$tool->icon.'" click="dock.setUrl(\'Tools/'.$tool->key.'/\')" key="tool:'.$tool->key.'"'.($deprecated ? ' overlay="warning"' : '').'/>';
 					}
 					$gui.='
 					<right>
-					<icon title="{ View ; da:Vis }" icon="common/view" action="dock.setUrl(\'Services/Preview/\')" key="service:preview"/>
-					<icon title="{ Edit ; da:Rediger }" icon="common/edit" action="dock.setUrl(\'Template/Edit.php/\')" key="service:edit"/>
-					<icon title="{ Publish ; da:Udgiv }" icon="common/internet" overlay="upload" action="baseController.goPublish()" key="service:publish"/>
+					<icon title="{ View ; da:Vis }" icon="common/view" click="dock.setUrl(\'Services/Preview/\')" key="service:preview"/>
+					<icon title="{ Edit ; da:Rediger }" icon="common/edit" click="dock.setUrl(\'Template/Edit.php/\')" key="service:edit"/>
+					<icon title="{ Publish ; da:Udgiv }" icon="common/internet" overlay="upload" click="baseController.goPublish()" key="service:publish"/>
 					<!--<divider/>
 					<search title="Søgning"/>-->
 					<divider/>
-					<icon title="Start" icon="common/play" action="dock.setUrl(\'Services/Start/\')" key="service:start"/>
-					<icon title="{ Exit ; da: Log ud }" icon="common/stop" action="document.location=\'Authentication.php?logout=true\'"/>
+					<icon title="Start" icon="common/play" click="dock.setUrl(\'Services/Start/\')" key="service:start"/>
+					<icon title="{ Exit ; da: Log ud }" icon="common/stop" click="document.location=\'Authentication.php?logout=true\'"/>
 					</right>
 					</toolbar></tab>';
 				}

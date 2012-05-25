@@ -6,10 +6,10 @@
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/folder" title="Mørk" overlay="new" action="dark.toggle()"/>
-				<icon icon="common/folder" title="Standard" action="standard.toggle()"/>
-				<icon icon="common/folder" title="Lys" action="light.toggle()"/>
-				<icon icon="common/folder" title="News" action="news.toggle()"/>
+				<icon icon="common/folder" title="Mørk" overlay="new" click="dark.toggle()"/>
+				<icon icon="common/folder" title="Standard" click="standard.toggle()"/>
+				<icon icon="common/folder" title="Lys" click="light.toggle()"/>
+				<icon icon="common/folder" title="News" click="news.toggle()"/>
 			</toolbar>
 		</top>
 		<middle>

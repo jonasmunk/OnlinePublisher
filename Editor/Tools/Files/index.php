@@ -37,7 +37,9 @@ $gui='
 				<icon icon="file/generic" title="Erstat" name="replace" overlay="change" disabled="true"/>
 				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
 				<right>
-					<searchfield title="Søgning" name="search" expandedWidth="200"/>
+					<field label="Søgning">
+						<searchfield name="search" expanded-width="200"/>
+					</field>
 				</right>
 			</toolbar>
 		</top>

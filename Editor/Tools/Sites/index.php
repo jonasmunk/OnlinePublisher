@@ -73,7 +73,7 @@ $gui='
 				<icon icon="common/hierarchy_item" title="Nyt punkt" overlay="new" name="newHierarchyItem" disabled="true"/>
 				<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" name="newHierarchy"/>
 				<divider/>
-				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" action="box.show()"/>-->
+				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="box.show()"/>-->
 				<icon icon="common/edit" title="Rediger" name="edit" disabled="true"/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
 				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
@@ -81,7 +81,9 @@ $gui='
 					<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet" cancel="Annuller"/>
 				</icon>
 				<right>
-					<searchfield title="Søgning" name="search" expandedWidth="200"/>
+					<field label="Søgning">
+						<searchfield name="search" expanded-width="200"/>
+					</field>
 					<divider/>
 					<icon icon="common/settings" title="Avanceret" name="advanced"/>
 				</right>

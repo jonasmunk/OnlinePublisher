@@ -135,10 +135,13 @@ class MailinglistPartController extends PartController
 
 	function getToolbars() {
 		return array(
-			'Postliste' =>
-				'<checkboxes name="lists" label="Postlister">
-				'.GuiUtils::buildObjectItems('mailinglist').'
-				</checkboxes>'
-			);
+			'Postliste' => '
+				<field label="Postlister">
+					<checkboxes name="lists">
+					'.GuiUtils::buildObjectItems('mailinglist').'
+					</checkboxes>
+				</field>
+			'
+		);
 	}
 }

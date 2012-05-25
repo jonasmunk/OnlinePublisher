@@ -53,8 +53,9 @@ $gui='
 					</segmented>
 				</field>
 				<right>
-					<searchfield title="Søgning" name="search" expandedWidth="200"/>
-					<space width="5"/>
+					<field label="Søgning">
+						<searchfield name="search" expanded-width="200"/>
+					</field>
 				</right>
 			</toolbar>
 		</top>

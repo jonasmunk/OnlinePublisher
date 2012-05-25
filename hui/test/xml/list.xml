@@ -6,14 +6,14 @@
 	<structure>
 		<top>
 		<toolbar>
-			<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
+			<icon icon="common/refresh" title="Refresh" click="list.refresh()"/>
 			<divider/>
-			<icon icon="common/user" title="List users" action="list.setUrl('data/list_users.xml')"/>
-			<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')"/>
-			<icon icon="common/folder" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
-			<icon icon="common/settings" title="List buttons" action="list.setUrl('data/list_buttons.xml')"/>
-			<icon icon="common/settings" title="List hierarchy" action="list.setUrl('data/list_hierarchy.xml')"/>
-			<icon icon="common/settings" title="List mixed" action="list.setUrl('data/list_mixed.xml')"/>
+			<icon icon="common/user" title="List users" click="list.setUrl('data/list_users.xml')"/>
+			<icon icon="common/color" title="List icons" click="list.setUrl('data/list_icons.xml')"/>
+			<icon icon="common/folder" title="List icons (json)" click="list.setUrl('data/list_icons.json')"/>
+			<icon icon="common/settings" title="List buttons" click="list.setUrl('data/list_buttons.xml')"/>
+			<icon icon="common/settings" title="List hierarchy" click="list.setUrl('data/list_hierarchy.xml')"/>
+			<icon icon="common/settings" title="List mixed" click="list.setUrl('data/list_mixed.xml')"/>
 			<search title="Søgning"/>
 		</toolbar>
 		</top>

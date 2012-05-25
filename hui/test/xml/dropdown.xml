@@ -6,7 +6,7 @@
 	<box width="600" title="Drop down" variant="textured" padding="10">
 		<toolbar>
 			<icon icon="common/folder" title="Show values" name="showValues"/>
-			<icon icon="common/color" title="Refresh source" action="itemsSource.refresh()"/>
+			<icon icon="common/color" title="Refresh source" click="itemsSource.refresh()"/>
 			<icon icon="common/folder" title="Build" name="build"/>
 		</toolbar>
 		<formula name="formula">

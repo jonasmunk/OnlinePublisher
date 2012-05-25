@@ -12,7 +12,7 @@
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
+				<icon icon="common/refresh" title="Refresh" click="list.refresh()"/>
 				<divider/>
 				<icon icon="common/user" title="List users" selected="true"/>
 				<divider/>
@@ -58,7 +58,9 @@
 				<button title="Small button" small="true"/>
 				<button title="Regular button"/>
 				<right>
-					<searchfield title="Søgning" expandedWidth="200" placeholder="Search"/>
+					<field label="Søgning">
+						<searchfield expanded-width="200" placeholder="Search"/>
+					</field>
 				</right>
 			</toolbar>
 		</top>
@@ -79,7 +81,7 @@
 					<dropdown placeholder="Vælg..." source="itemsSource"/>
 					<text-input/>
 					<right>
-						<searchfield expandedWidth="200" placeholder="Search"/>
+						<searchfield expanded-width="200" placeholder="Search"/>
 					</right>
 				</toolbar>
 				<overflow>
@@ -89,7 +91,7 @@
 					<button title="Click me" small="true" rounded="true"/>
 					<dropdown placeholder="Vælg..." source="itemsSource"/>
 					<right>
-						<searchfield expandedWidth="200" placeholder="Search"/>
+						<searchfield expanded-width="200" placeholder="Search"/>
 					</right>
 				</toolbar>
 			</center>
@@ -99,7 +101,7 @@
 				<button title="Click me" small="true" rounded="true"/>
 				<button title="Click me" small="true" rounded="true"/>
 				<right>
-					<searchfield expandedWidth="200" placeholder="Search"/>
+					<searchfield expanded-width="200" placeholder="Search"/>
 				</right>
 			</toolbar>
 		</bottom>

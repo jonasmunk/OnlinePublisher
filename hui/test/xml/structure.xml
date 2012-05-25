@@ -6,17 +6,19 @@
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/refresh" title="Refresh" action="list.refresh()"/>
+				<icon icon="common/refresh" title="Refresh" click="list.refresh()"/>
 				<divider/>
-				<icon icon="common/user" title="List users" action="list.setUrl('data/list_users.xml')"/>
-				<icon icon="common/color" title="List icons" action="list.setUrl('data/list_icons.xml')" selected="true"/>
+				<icon icon="common/user" title="List users" click="list.setUrl('data/list_users.xml')"/>
+				<icon icon="common/color" title="List icons" click="list.setUrl('data/list_icons.xml')" selected="true"/>
 				<divider/>
-				<icon icon="common/color" title="List icons (json)" action="list.setUrl('data/list_icons.json')"/>
-				<icon icon="common/folder" title="List icons" action="hui.ui.showMessage({text:'hey',duration:2000})"/>
+				<icon icon="common/color" title="List icons (json)" click="list.setUrl('data/list_icons.json')"/>
+				<icon icon="common/folder" title="List icons" click="hui.ui.showMessage({text:'hey',duration:2000})"/>
 				<divider/>
 				<icon icon="geo/map" title="Map"/>
 				<right>
-					<searchfield title="Søgning" placeholder="Søg her..." expandedWidth="200"/>
+					<field label="Søgning">
+						<searchfield placeholder="Søg her..." expanded-width="200"/>
+					</field>
 				</right>
 			</toolbar>
 			<toolbar labels="false" border="top">
@@ -26,7 +28,7 @@
 				<button icon="common/delete"/>
 				<button icon="common/delete" title=""/>
 				<button icon="common/delete" title="Delete"/>
-					<searchfield placeholder="Søg her..." expandedWidth="200"/>
+				<searchfield placeholder="Søg her..." expanded-width="200"/>
 			</toolbar>
 		</top>
 		<middle>

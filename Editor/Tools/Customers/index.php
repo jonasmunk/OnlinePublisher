@@ -38,7 +38,9 @@ $gui='
 			<divider/>
 			<icon icon="common/letter" title="Send email" name="sendEmail"/>
 			<right>
-				<searchfield title="Søgning" name="search" expandedWidth="200"/>
+				<field title="Søgning">
+					<searchfield name="search" expanded-width="200"/>
+				</field>
 			</right>
 		</toolbar>
 		</top>
