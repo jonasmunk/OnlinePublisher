@@ -43,16 +43,24 @@ $gui='
 			<tab title="Søgning" padding="5">
 				<formula name="searchFormula">
 					<group>
-						<checkbox label="Aktiv:" key="enabled"/>
-						<dropdown key="pageId" label="Søgeside:" source="pageItems" placeholder="Vælg søgeside..."/>
+						<field label="Aktiv:">
+							<checkbox key="enabled"/>
+						</field>
+						<field label="Søgeside:">
+							<dropdown key="pageId" source="pageItems" placeholder="Vælg søgeside..."/>
+						</field>
 					</group>
 				</formula>
 			</tab>
 			<tab title="Bruger" padding="5">
 				<formula name="userFormula">
 					<group>
-						<checkbox label="Aktiv:" key="enabled"/>
-						<dropdown key="pageId" label="Login-side:" source="pageItems" placeholder="Vælg login-side..."/>
+						<field label="Aktiv:">
+							<checkbox key="enabled"/>
+						</field>
+						<field label="Login-side:">
+							<dropdown key="pageId" source="pageItems" placeholder="Vælg login-side..."/>
+						</field>
 					</group>
 				</formula>
 			</tab>
@@ -91,68 +99,79 @@ $gui='
 	<window name="newsWindow" width="300" title="Nyhedsblok" padding="5">
 		<formula name="newsFormula">
 			<group>
-				<text label="Titel:" key="title"/>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
 			</group>
 			<overflow height="300">
 			<fieldset legend="Visning">
 				<group>
-					<dropdown label="Sorter efter" key="sortby">
-						<item value="startdate" title="Startdato"/>
-						<item value="enddate" title="Slutdato"/>
-						<item value="title" title="Titel"/>
-					</dropdown>
-					<dropdown label="Retning" key="sortdir">
-						<item value="ascending" title="Stigende"/>
-						<item value="descending" title="Faldende"/>
-					</dropdown>
-					<dropdown label="Maks. antal" key="maxitems">
-						<item value="0" title="Uendeligt"/>
-						<item value="1" title="1"/>
-						<item value="2" title="2"/>
-						<item value="3" title="3"/>
-						<item value="4" title="4"/>
-						<item value="5" title="5"/>
-						<item value="6" title="6"/>
-						<item value="7" title="7"/>
-						<item value="8" title="8"/>
-						<item value="9" title="9"/>
-						<item value="10" title="10"/>
-						<item value="11" title="11"/>
-						<item value="12" title="12"/>
-						<item value="13" title="13"/>
-						<item value="14" title="14"/>
-						<item value="15" title="15"/>
-						<item value="20" title="20"/>
-						<item value="25" title="25"/>
-					</dropdown>
+					<field label="Sorter efter">
+						<dropdown key="sortby">
+							<item value="startdate" title="Startdato"/>
+							<item value="enddate" title="Slutdato"/>
+							<item value="title" title="Titel"/>
+						</dropdown>
+					</field>
+					<field label="Retning">
+						<dropdown key="sortdir">
+							<item value="ascending" title="Stigende"/>
+							<item value="descending" title="Faldende"/>
+						</dropdown>
+					</field>
+					<field label="Maks. antal">
+						<dropdown key="maxitems">
+							<item value="0" title="Uendeligt"/>
+							<item value="1" title="1"/>
+							<item value="2" title="2"/>
+							<item value="3" title="3"/>
+							<item value="4" title="4"/>
+							<item value="5" title="5"/>
+							<item value="6" title="6"/>
+							<item value="7" title="7"/>
+							<item value="8" title="8"/>
+							<item value="9" title="9"/>
+							<item value="10" title="10"/>
+							<item value="11" title="11"/>
+							<item value="12" title="12"/>
+							<item value="13" title="13"/>
+							<item value="14" title="14"/>
+							<item value="15" title="15"/>
+							<item value="20" title="20"/>
+							<item value="25" title="25"/>
+						</dropdown>
+					</field>
 				</group>
 			</fieldset>
 			<fieldset legend="Tid">
 				<group>
-					<dropdown key="timetype" label="Tid">
-						<item value="always" title="Altid"/>
-						<item value="now" title="Lige nu"/>
-						<item value="interval" title="Interval"/>
-						<item value="hours" title="Seneste timer..."/>
-						<item value="days" title="Seneste dage..."/>
-						<item value="weeks" title="Seneste uger..."/>
-						<item value="months" title="Seneste måneder..."/>
-						<item value="years" title="Seneste år..."/>
-					</dropdown>
-					<dropdown label="Antal" key="timecount">
-						<item value="0" title="Uendeligt"/>
-						<item value="1" title="1"/>
-						<item value="2" title="2"/>
-						<item value="3" title="3"/>
-						<item value="4" title="4"/>
-						<item value="5" title="5"/>
-						<item value="6" title="6"/>
-						<item value="7" title="7"/>
-						<item value="8" title="8"/>
-						<item value="9" title="9"/>
-						<item value="10" title="10"/>
-					</dropdown>
-					
+					<field label="Tid">
+						<dropdown key="timetype">
+							<item value="always" title="Altid"/>
+							<item value="now" title="Lige nu"/>
+							<item value="interval" title="Interval"/>
+							<item value="hours" title="Seneste timer..."/>
+							<item value="days" title="Seneste dage..."/>
+							<item value="weeks" title="Seneste uger..."/>
+							<item value="months" title="Seneste måneder..."/>
+							<item value="years" title="Seneste år..."/>
+						</dropdown>
+					</field>
+					<field label="Antal">
+						<dropdown key="timecount">
+							<item value="0" title="Uendeligt"/>
+							<item value="1" title="1"/>
+							<item value="2" title="2"/>
+							<item value="3" title="3"/>
+							<item value="4" title="4"/>
+							<item value="5" title="5"/>
+							<item value="6" title="6"/>
+							<item value="7" title="7"/>
+							<item value="8" title="8"/>
+							<item value="9" title="9"/>
+							<item value="10" title="10"/>
+						</dropdown>
+					</field>
 					<field label="Fra">
 						<datetime-input key="startdate" return-type="seconds"/>
 					</field>

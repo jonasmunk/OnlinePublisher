@@ -95,10 +95,18 @@ $gui='
 	<window title="Kilde" name="sourceWindow" width="300" padding="5">
 		<formula name="sourceFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
-				<text label="Titel (visning)" key="displayTitle"/>
-				<text label="Adresse" key="url" multiline="true"/>
-				<text label="Filter" key="filter"/>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
+				<field label="Titel (visning)">
+					<text-input key="displayTitle"/>
+				</field>
+				<field label="Adresse">
+					<text-input key="url" multiline="true"/>
+				</field>
+				<field label="Filter">
+					<text-input key="filter"/>
+				</field>
 				<field label="Interval (sekunder)">
 					<number-input key="syncInterval"/>
 				</field>
@@ -117,7 +125,7 @@ $gui='
 		<formula name="calendarFormula">
 			<group labels="above">
 				<field label="Titel">
-					<text key="title"/>
+					<text-input key="title"/>
 				</field>
 			</group>
 			<buttons>

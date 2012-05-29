@@ -88,7 +88,9 @@ class ListPartController extends PartController
 				<tab title="Indstillinger" padding="10">
 					<formula name="formula">
 						<group labels="above">
-							<text label="Titel" value="'.StringUtils::escapeXML($part->getTitle()).'" key="title"/>
+							<field label="Titel">
+								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" key="title"/>
+							</field>
 						</group>
 						<fieldset legend="Begrænsning">
 							<group labels="before">
@@ -103,20 +105,30 @@ class ListPartController extends PartController
 						<space height="10"/>
 						<fieldset legend="Visning">
 							<group>
-								<radiobuttons key="sort_direction" label="Retning" value="'.StringUtils::escapeXML($part->getSortDirection()).'">
-									<item value="descending" text="Faldende"/>
-									<item value="ascending" text="Stigende"/>
-								</radiobuttons>
-								<checkbox label="Vis tekst" value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
+								<field label="Retning">
+									<radiobuttons key="sort_direction" value="'.StringUtils::escapeXML($part->getSortDirection()).'">
+										<item value="descending" text="Faldende"/>
+										<item value="ascending" text="Stigende"/>
+									</radiobuttons>
+								</field>
+								<field label="Vis tekst">
+									<checkbox value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
+								</checkbox>
 								<field label="Tekstlængde">
 									<number-input value="'.$part->getMaxTextLength().'" key="maxtextlength" min="0" max="2000"/>
 								</field>
-								<checkbox label="Vis kilde" value="'.($part->getShowSource() ? 'true' : 'false').'" key="show_source"/>
-								<checkbox label="Vis tidszone" value="'.($part->getShowTimezone() ? 'true' : 'false').'" key="show_timezone"/>
-								<dropdown label="Tidszone">
-									<item value="" text="Standard"/>
-									'.$zoneItems.'
-								</dropdown>
+								<field label="Vis kilde">
+									<checkbox value="'.($part->getShowSource() ? 'true' : 'false').'" key="show_source"/>
+								</field>
+								<field label="Vis tidszone">
+									<checkbox value="'.($part->getShowTimezone() ? 'true' : 'false').'" key="show_timezone"/>
+								</field>
+								<field label="Tidszone">
+									<dropdown>
+										<item value="" text="Standard"/>
+										'.$zoneItems.'
+									</dropdown>
+								</field>
 							</group>
 						</fieldset>
 					</formula>

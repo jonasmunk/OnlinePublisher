@@ -13,20 +13,28 @@
 		<formula name="formula1">
 			<fieldset legend="This is a group">
 				<group labels="above">
-					<text label="Brugernavn:" key="username"/>
-					<text secret="true" label="Kodeord:" key="password"/>
-					<dropdown label="Template:" key="template" value="2">
-						<item title="Lorem inpsum" value="1"/>
-						<item title="Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" value="2"/>
-						<item title="Ut enim ad minim veniam" value="3"/>
-						<item title="Excepteur sint occaecat" value="4"/>
-					</dropdown>
+					<field label="Brugernavn:">
+						<text-input key="username"/>
+					</field>
+					<field label="Kodeord:">
+						<text-input secret="true" key="password"/>
+					</field>
+					<field label="Template:">
+						<dropdown key="template" value="2">
+							<item title="Lorem inpsum" value="1"/>
+							<item title="Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" value="2"/>
+							<item title="Ut enim ad minim veniam" value="3"/>
+							<item title="Excepteur sint occaecat" value="4"/>
+						</dropdown>
+					</field>
 				</group>
 			</fieldset>
 			<space height="10"/>
 			<fieldset legend="This is a group">
 				<group labels="above">
-					<text label="Notat:" lines="6" key="note"/>
+					<field label="Notat:">
+						<text-input lines="6" key="note"/>
+					</field>
 					<field label="Number:">
 						<number-input key="number"/>
 					</field>

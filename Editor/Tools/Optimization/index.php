@@ -48,9 +48,15 @@ $gui='
 							</toolbar>
 							<formula name="settingsFormula">
 								<group labels="above">
-									<text label="Hvad er hjemmesidens formål:" multiline="true" key="purpose"/>
-									<text label="Hvilke målgrupper har siden:" multiline="true" key="audiences"/>
-									<text label="Hvad er success-kriterierne for siden" multiline="true" key="successcriteria"/>
+									<field label="Hvad er hjemmesidens formål:">
+										<text-input multiline="true" key="purpose"/>
+									</field>
+									<field label="Hvilke målgrupper har siden:">
+										<text-input multiline="true" key="audiences"/>
+									</field>
+									<field label="Hvad er success-kriterierne for siden">
+										<text-input multiline="true" key="successcriteria"/>
+									</field>
 								</group>
 							</formula>
 						</box>
@@ -64,7 +70,9 @@ $gui='
 	<boundpanel target="newWord" name="newWordPanel" width="200">
 		<formula name="wordFormula">
 			<group labels="above">
-				<text label="Ord:" key="word"/>
+				<field label="Ord:">
+					<text-input key="word"/>
+				</field>
 			</group>
 			<buttons>
 				<button text="Luk" click="newWordPanel.hide()" small="true"/>

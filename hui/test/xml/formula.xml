@@ -115,9 +115,15 @@
 	<box width="600" title="Text" variant="textured" padding="10">
 		<formula name="textForm">
 			<group labels="above">
-				<text label="Username:" key="username"/>
-				<text label="Password:" secret="true" key="password"/>
-				<text label="Note:" multiline="true" key="note"/>
+				<field label="Username:">
+					<text-input key="username"/>
+				</field>
+				<field label="Password:">
+					<text-input secret="true" key="password"/>
+				</field>
+				<field label="Note:">
+					<text-input multiline="true" key="note"/>
+				</field>
 			</group>
 			<buttons>
 				<button click="logForm(textForm)" text="Data"/>
@@ -130,8 +136,12 @@
 	<box width="600" title="Text" variant="textured" padding="10">
 		<formula name="checkForm">
 			<group labels="above">
-				<checkbox label="Internal access:" key="internal"/>
-				<checkbox label="External access:" key="external"/>
+				<field label="Internal access:">
+					<checkbox key="internal"/>
+				</field>
+				<field label="External access:">
+					<checkbox key="external"/>
+				</field>
 				<field label="Groups:">
 					<checkboxes key="groups">
 						<item title="Fixed" value="fixed"/>
@@ -156,11 +166,13 @@
 				<field label="Tokens:">
 					<tokens key="tokens"/>
 				</field>
-				<radiobuttons label="Radios:" key="radios">
-					<radiobutton label="Lorem" value="lorem"/>
-					<radiobutton label="Ipsum" value="ipsum"/>
-					<radiobutton label="Dolor" value="dolor"/>
-				</radiobuttons>
+				<field label="Radios:">
+					<radiobuttons key="radios">
+						<radiobutton label="Lorem" value="lorem"/>
+						<radiobutton label="Ipsum" value="ipsum"/>
+						<radiobutton label="Dolor" value="dolor"/>
+					</radiobuttons>
+				</field>
 			</group>
 			<buttons>
 				<button click="logForm(otherForm)" text="Data"/>

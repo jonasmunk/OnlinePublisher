@@ -77,6 +77,17 @@ table.hui_formula_group label
 	font-weight: normal;
 }
 
+label.hui_formula_field
+{
+	color: #004A80;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 13px;
+	display: block;
+	padding-left: 2px;
+}
+
+
 table.hui_formula_group_above label
 {
 	line-height: 13px;
@@ -432,6 +443,11 @@ div.hui_window table.hui_formula_group label
 {
 	background: rgb(231,231,231);
 	padding: 0px 2px;
+}
+
+div.hui_window label.hui_formula_field
+{
+	background: rgb(231,231,231);
 }
 
 div.hui_window div.hui_formula_fieldset table.hui_formula_group label

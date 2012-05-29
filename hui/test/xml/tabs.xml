@@ -6,8 +6,12 @@
 			<tab title="Large tabs" padding="10">
 				<formula>
 					<group>
-						<text label="Username:"/>
-						<text label="Password:"/>
+						<field label="Username:">
+							<text-input/>
+						</field>
+						<field label="Password:">
+							<text-input/>
+						</field>
 					</group>
 				</formula>
 			</tab>
@@ -18,16 +22,24 @@
 			<tab title="Small tabs" padding="10">
 				<formula>
 					<group>
-						<text label="Username:"/>
-						<text label="Password:"/>
+						<field label="Username:">
+							<text-input/>
+						</field>
+						<field label="Password:">
+							<text-input/>
+						</field>
 					</group>
 				</formula>
 			</tab>
 			<tab title="Small tabs" padding="10">
 				<formula>
 					<group>
-						<text label="Note:" lines="6"/>
-						<checkbox label="Checkbox:"/>
+						<field label="Note:">
+							<text-input lines="6"/>
+						</field>
+						<field label="Checkbox:">
+							<checkbox/>
+						</field>
 						<field label="Tokens:">
 							<tokens/>
 						</field>

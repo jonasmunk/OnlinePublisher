@@ -76,7 +76,9 @@
 	</div>
 </xsl:template>
 
-<!-- Field -->
+
+
+
 
 <!--doc title:'Field' module:'input'
 <group>
@@ -103,23 +105,17 @@
 	</td></tr>
 </xsl:template>
 
-<!-- Text -->
-
-<xsl:template match="gui:group/gui:text">
-	<tr>
-		<th>
-			<xsl:if test="not(@lines>1) and not(@multiline='true')"><xsl:attribute name="class">hui_formula_middle</xsl:attribute></xsl:if>
-			<label><xsl:value-of select="@label"/></label></th>
-		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:text"/></div></td>
-	</tr>
+<xsl:template match="gui:field">
+	<div class="hui_formula_field">
+		<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
+		<div class="hui_formula_item"><xsl:apply-templates/></div>
+		<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
+	</div>
 </xsl:template>
 
-<xsl:template match="gui:group[@labels='above']/gui:text">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:text"/></div>
-	</td></tr>
-</xsl:template>
+
+
+
 
 
 <!--doc title:'Text input' class:'hui.ui.TextField' module:'input'
@@ -203,21 +199,6 @@
 
 
 
-<!-- Number -->
-
-<xsl:template match="gui:group/gui:number">
-	<tr>
-		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:number"/></div></td>
-	</tr>
-</xsl:template>
-
-<xsl:template match="gui:group[@labels='above']/gui:number">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:number"/></div>
-	</td></tr>
-</xsl:template>
 
 <!--doc title:'Number input' module:'input'
 <number-input name="«text»" key="«text»" adaptive="«boolean»" min="«number»" max="«number»" decimals="«integer»" value="«number»" allow-null="«boolean»" tick-size="«number»"/>
@@ -325,25 +306,12 @@
 </xsl:template>
 
 
-<!-- dropdown -->
 
-<xsl:template match="gui:group/gui:dropdown">
-	<tr>
-		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td class="hui_formula_group"><div class="hui_formula_item"><xsl:call-template name="gui:dropdown"/></div></td>
-	</tr>
-</xsl:template>
 
-<xsl:template match="gui:group[@labels='above']/gui:dropdown">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:dropdown"/></div>
-	</td></tr>
-</xsl:template>
 
 <!--doc title:'Drop down' class:'hui.ui.DropDown' module:'input'
 <dropdown name="«text»" key="«text»" value="«text»" source="«name»" url="«url»" placeholder="«text»" adaptive="«boolean»" width="«pixels»">
-	<item value="«text»" text="«text»"/>
+    <item value="«text»" text="«text»"/>
 </dropdown>
 -->
 <xsl:template name="gui:dropdown" match="gui:dropdown">
@@ -386,24 +354,10 @@
 
 
 
-<xsl:template match="gui:group/gui:radiobuttons">
-	<tr>
-		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="hui_formula_item"><xsl:call-template name="gui:radiobuttons"/></div></td>
-	</tr>
-</xsl:template>
-
-<xsl:template match="gui:group[@labels='above']/gui:radiobuttons">
-	<tr><td>
-		<label><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:call-template name="gui:radiobuttons"/></div>
-	</td></tr>
-</xsl:template>
-
 
 <!--doc title:'Radio buttons' class:'hui.ui.Radiobuttons' module:'input'
 <radiobuttons name="«text»" key="«text»" value="«text»">
-	<item value="«text»" text="«text»"/>
+    <item value="«text»" text="«text»"/>
 </radiobuttons>
 -->
 <xsl:template name="gui:radiobuttons" match="gui:radiobuttons">
@@ -442,19 +396,6 @@
 
 
 
-<xsl:template match="gui:group/gui:checkbox">
-	<tr>
-		<th class="hui_formula_middle"><label><xsl:value-of select="@label"/></label></th>
-		<td><div class="hui_formula_item"><xsl:call-template name="gui:checkbox"/></div></td>
-	</tr>
-</xsl:template>
-
-<xsl:template match="gui:group[@labels='above']/gui:checkbox">
-	<tr><td>
-		<label style="float: left; line-height: 21px; padding-right: 5px; height: 24px;"><xsl:value-of select="@label"/></label>
-		<xsl:call-template name="gui:checkbox"/>
-	</td></tr>
-</xsl:template>
 
 <!--doc title:'Check box' class:'hui.ui.Checkbox' module:'input'
 <checkbox name="«text»" key="«text»" value="«boolean»"/>
@@ -485,8 +426,8 @@
 
 <!--doc title:'Check boxes' class:'hui.ui.Checkboxes' module:'input'
 <checkboxes name="«text»" key="«text»" max-height="«pixels»">
-	<item value="«text»" text="«text»"/>
-	<items name="«text»" source="«name»"/>
+    <item value="«text»" text="«text»"/>
+    <items name="«text»" source="«name»"/>
 </checkboxes>
 -->
 <xsl:template name="gui:checkboxes" match="gui:checkboxes">
@@ -540,7 +481,7 @@
 
 <!--doc title:'Buttons' class:'hui.ui.Buttons' module:'action'
 <buttons small="«boolean»" mini="«boolean»" aling="«'left' | 'center' | 'right'»" padding="«pixels»" top="«pixels»" left="«pixels»" right="«pixels»" bottom="«pixels»">
-	<button···/>
+    <button···/>
 </buttons>
 -->
 <xsl:template match="gui:buttons" name="gui:buttons">

@@ -103,7 +103,9 @@ $gui='
 									<space all="10" bottom="5">
 										<formula name="uiFormula">
 											<group>
-												<checkbox key="experimentalRichText" label="Moderne rig tekst editor:"/>
+												<field label="Moderne rig tekst editor:">
+													<checkbox key="experimentalRichText"/>
+												</field>
 											</group>
 										</formula>
 									</space>
@@ -112,18 +114,36 @@ $gui='
 									<space all="10" bottom="5">
 										<formula name="emailFormula">
 											<group>
-												<checkbox key="enabled" label="Aktiv:"/>
-												<text key="server" label="Server:"/>
-												<text key="port" label="Port:"/>
-												<text key="username" label="Brugernavn:"/>
-												<text key="password" secret="true" label="Kodeord:"/>
-												<text key="standardName" label="Navn:"/>
-												<text key="standardEmail" label="E-mail:"/>
+												<field label="Aktiv:">
+													<checkbox key="enabled"/>
+												</field>
+												<field label="Server:">
+													<text-input key="server"/>
+												</field>
+												<field label="Port:">
+													<text-input key="port"/>
+												</field>
+												<field label="Brugernavn:">
+													<text-input key="username"/>
+												</field>
+												<field label="Kodeord:">
+													<text-input key="password" secret="true"/>
+												</field>
+												<field label="Navn:">
+													<text-input key="standardName"/>
+												</field>
+												<field label="E-mail:">
+													<text-input key="standardEmail"/>
+												</field>
 											</group>
 											<fieldset legend="Feedback">
 											<group>
-												<text key="feedbackName" label="Feedback-navn:"/>
-												<text key="feedbackEmail" label="Feedback E-mail:"/>
+												<field label="Feedback-navn:">
+													<text-input key="feedbackName"/>
+												</field>
+												<field label="Feedback E-mail:">
+													<text-input key="feedbackEmail"/>
+												</field>
 											</group>
 											</fieldset>
 											<group>
@@ -139,10 +159,18 @@ $gui='
 									<space all="10" bottom="5">
 										<formula name="analyticsFormula">
 											<group>
-												<text key="username" label="Brugernavn:"/>
-												<text secret="true" key="password" label="Kodeord:"/>
-												<text key="profile" label="Profil ID:"/>
-												<text key="webProfile" label="Web profil ID:"/>
+												<field label="Brugernavn:">
+													<text-input key="username"/>
+												</field>
+												<field label="Kodeord:">
+													<text-input secret="true" key="password"/>
+												</field>
+												<field label="Profil ID:">
+													<text-input key="profile"/>
+												</field>
+												<field label="Web profil ID:">
+													<text-input key="webProfile"/>
+												</field>
 												<buttons>
 													<button name="testAnalytics" title="Test"/>
 													<button name="saveAnalytics" title="Opdater" highlighted="true"/>
@@ -155,7 +183,9 @@ $gui='
 									<space all="10" bottom="5">
 										<formula name="onlineobjectsFormula">
 											<group>
-												<text key="url" label="Adresse:"/>
+												<field label="Adresse:">
+													<text-input key="url"/>
+												</field>
 												<buttons>
 													<button name="testOnlineObjects" title="Test"/>
 													<button name="saveOnlineObjects" title="Opdater" highlighted="true"/>
@@ -177,14 +207,30 @@ $gui='
 		<formula name="userFormula">
 			<overflow height="200">
 			<group>
-				<text name="userTitle" label="Titel:"/>
-				<text name="userUsername" label="Brugernavn:"/>
-				<text name="userPassword" secret="true" label="Kodeord:"/>
-				<text name="userEmail" label="E-mail:"/>
-				<text name="userNote" label="Notat:" lines="6"/>
-				<checkbox name="userInternal" label="Intern adgang:"/>
-				<checkbox name="userExternal" label="Ekstern adgang:"/>
-				<checkbox name="userAdministrator" label="Administrator:"/>
+				<field label="Titel:">
+					<text-input name="userTitle"/>
+				</field>
+				<field label="Brugernavn:">
+					<text-input name="userUsername"/>
+				</field>
+				<field label="Kodeord:">
+					<text-input name="userPassword" secret="true"/>
+				</field>
+				<field label="E-mail:">
+					<text-input name="userEmail"/>
+				</field>
+				<field label="Notat:">
+					<text-input name="userNote" lines="6"/>
+				</field>
+				<field label="Intern adgang:">
+					<checkbox name="userInternal"/>
+				</field>
+				<field label="Ekstern adgang:">
+					<checkbox name="userExternal"/>
+				</field>
+				<field label="Administrator:">
+					<checkbox name="userAdministrator"/>
+				</field>
 			</group>
 			</overflow>
 			<group>
@@ -202,8 +248,12 @@ $gui='
 	<window name="pathEditor" width="300" title="Sti" padding="5">
 		<formula name="pathFormula">
 			<group>
-				<text key="path" label="Sti:"/>
-				<dropdown key="pageId" label="Side:" placeholder="Vælg side..." url="../../Services/Model/Items.php?type=page"/>
+				<field label="Sti:">
+					<text-input key="path"/>
+				</field>
+				<field label="Side:">
+					<dropdown key="pageId" placeholder="Vælg side..." url="../../Services/Model/Items.php?type=page"/>
+				</field>
 				<buttons>
 					<button name="cancelPath" title="Annuller"/>
 					<button name="deletePath" title="Slet"/>
@@ -216,8 +266,12 @@ $gui='
 	<window name="weblogGroupEditor" width="300" title="Weblog gruppe" padding="5">
 		<formula name="weblogGroupFormula">
 			<group>
-				<text key="title" label="Titel:"/>
-				<text key="note" label="Notat:" lines="10"/>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="Notat:">
+					<text-input key="note" lines="10"/>
+				</field>
 				<buttons>
 					<button name="cancelWeblogGroup" title="Annuller"/>
 					<button name="deleteWeblogGroup" title="Slet"/>
@@ -230,8 +284,12 @@ $gui='
 	<window name="designEditor" width="300" title="Design" padding="5">
 		<formula name="designFormula">
 			<group>
-				<text key="title" label="Titel:"/>
-				<dropdown key="unique" label="Design:" placeholder="Vælg design..." url="data/DesignItems.php"/>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="Design:">
+					<dropdown key="unique" placeholder="Vælg design..." url="data/DesignItems.php"/>
+				</field>
 				<buttons>
 					<button name="cancelDesign" title="Annuller"/>
 					<button name="deleteDesign" title="Slet">
@@ -246,10 +304,18 @@ $gui='
 	<window name="emailTestWindow" width="300" title="Test af E-mail" padding="5">
 		<formula name="emailTestFormula">
 			<group labels="above">
-				<text key="name" label="Navn:"/>
-				<text key="email" label="E-mail:"/>
-				<text key="subject" label="Emne:"/>
-				<text key="body" label="Besked:" lines="5"/>
+				<field label="Navn:">
+					<text-input key="name"/>
+				</field>
+				<field label="E-mail:">
+					<text-input key="email"/>
+				</field>
+				<field label="Emne:">
+					<text-input key="subject"/>
+				</field>
+				<field label="Besked:">
+					<text-input key="body" multiline="true"/>
+				</field>
 				<buttons>
 					<button name="testEmail" title="Test" highlighted="true"/>
 				</buttons>
@@ -257,7 +323,6 @@ $gui='
 		</formula>
 	</window>
 </gui>';
-//$gui='<gui xmlns="uri:hui" pad="10" title="System"><upload/></gui>';
 
 In2iGui::render($gui);
 ?>

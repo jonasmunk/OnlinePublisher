@@ -94,7 +94,9 @@ $gui='
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
 				<buttons>
 					<button name="cancelGroup" title="Annuller"/>
 					<button name="deleteGroup" title="Slet">
@@ -109,8 +111,12 @@ $gui='
 	<window title="Kilde" name="sourceWindow" icon="common/internet" width="300" padding="5">
 		<formula name="sourceFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
-				<text label="Adresse" key="url"/>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
+				<field label="Adresse">
+					<text-input key="url"/>
+				</field>
 				<field label="Interval (sekunder)">
 					<number-input key="syncInterval"/>
 				</field>
@@ -134,23 +140,23 @@ $gui='
 				<space left="5" right="5">
 				<formula name="newsFormula">
 					<group labels="above">
-						<text label="Titel" key="title"/>
-						<text label="Note" key="note" multiline="true"/>
+						<field label="Titel">
+							<text-input key="title"/>
+						</field>
+						<field label="Note">
+							<text-input key="note" multiline="true"/>
+						</field>
 					</group>
 					<columns space="10">
 						<column>
-							<group labels="above">
-								<field label="Fra">
-									<datetime-input key="startdate" return-type="seconds"/>
-								</field>
-							</group>
+							<field label="Fra">
+								<datetime-input key="startdate" return-type="seconds"/>
+							</field>
 						</column>
 						<column>
-							<group labels="above">
-								<field label="Til">
-									<datetime-input key="enddate" return-type="seconds"/>
-								</field>
-							</group>
+							<field label="Til">
+								<datetime-input key="enddate" return-type="seconds"/>
+							</field>
 						</column>
 					</columns>
 					<group labels="above">
@@ -189,26 +195,32 @@ $gui='
 	<box title="Ny artikel" name="newArticleBox" absolute="true" padding="10" modal="true" width="636" variant="textured" closable="true">
 		<formula name="articleFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
-				<text label="Opsummering" key="summary" multiline="true"/>
-				<text label="Tekst" key="text" multiline="true"/>
-				<text label="Link" key="linkText"/>
-				<dropdown label="Skabelon" key="blueprint" name="articleBlueprint">'.$blueprintItems.'</dropdown>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
+				<field label="Opsummering">
+					<text-input key="summary" multiline="true"/>
+				</field>
+				<field label="Tekst">
+					<text-input key="text" multiline="true"/>
+				</field>
+				<field label="Link">
+					<text-input key="linkText"/>
+				</field>
+				<field label="Skabelon">
+					<dropdown key="blueprint" name="articleBlueprint">'.$blueprintItems.'</dropdown>
+				</field>
 			</group>
 			<columns>
 				<column>
-				<group labels="above">
 					<field label="Fra">
 						<datetime-input key="startdate"/>
 					</field>
-				</group>
 				</column>
 				<column>
-				<group labels="above">
 					<field label="Til">
 						<datetime-input key="enddate"/>
 					</field>
-				</group>
 				</column>
 			</columns>
 			<group labels="above">

@@ -49,21 +49,39 @@
 	<window name="newPage" width="300" title="Ny side" padding="5">
 		<formula>
 			<group labels="besides">
-				<text label="Titel:"/>
-				<text label="Beskrivelse:" lines="6"/>
-				<text label="Sti:"/>
-				<text label="Nøgleord:"/>
+				<field label="Titel:">
+					<text-input/>
+				</field>
+				<field label="Beskrivelse:">
+					<text-input lines="6"/>
+				</field>
+				<field label="Sti:">
+					<text-input/>
+				</field>
+				<field label="Nøgleord:">
+					<text-input/>
+				</field>
 				<field label="Dato:">
 					<datetime-input/>
 				</field>
-				<dropdown label="Sprog:" source="languagesSource"/>
-				<dropdown label="Design:" source="languagesSource"/>
-				<dropdown label="Opsætning:" source="languagesSource"/>
-				<checkbox label="Inaktiv:"/>
-				<checkbox label="Søgbar:"/>
+				<field label="Sprog:">
+					<dropdown source="languagesSource"/>
+				</field>
+				<field label="Design:">
+					<dropdown source="languagesSource"/>
+				</field>
+				<field label="Opsætning:">
+					<dropdown source="languagesSource"/>
+				</field>
+				<field label="Inaktiv:">
+					<checkbox/>
+				</field>
+				<field label="Inaktiv:">
+					<checkboxx/>
+				</field>
 				<buttons top="10">
-				<button title="Annuller"/>
-				<button title="Gem" highlighted="true"/>
+					<button title="Annuller"/>
+					<button title="Gem" highlighted="true"/>
 				</buttons>
 			</group>
 		</formula>
@@ -76,9 +94,12 @@
 			<step title="Egenskaber">
 				<formula>
 					<group labels="above">
-						<text label="Titel:"/>
-						<text label="Sti:"/>
-						<select label="Sprog:"/>
+						<field label="Titel:">
+							<text-input/>
+						</field>
+						<field label="Sti:">
+							<text-input/>
+						</field>
 					</group>
 				</formula>
 			</step>

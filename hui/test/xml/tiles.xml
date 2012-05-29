@@ -39,7 +39,9 @@
 				<p class="title">Help</p>
 				<formula padding="5">
 					<group labels="above">
-						<text multiline="true"/>
+						<field>
+							<text-input multiline="true"/>
+						</field>
 						<buttons>
 							<button text="Send" highlighted="true" small="true"/>
 						</buttons>
@@ -63,7 +65,9 @@
 					<page>
 						<formula padding="5">
 							<group labels="above">
-								<text multiline="true"/>
+								<field>
+									<text-input multiline="true"/>
+								</field>
 								<buttons>
 									<button text="Send" highlighted="true" small="true"/>
 								</buttons>
@@ -86,7 +90,9 @@
 		<boundpanel name="developmentPanel" width="200">
 			<formula name="developmentFormula">
 				<group labels="above">
-					<text label="Title"/>
+					<field label="Title">
+						<text-input/>
+					</field>
 					<buttons>
 						<button text="Cancel" click="developmentPanel.hide()" small="true"/>
 						<button text="Save" highlighted="true" small="true"/>

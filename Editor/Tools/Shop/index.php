@@ -66,8 +66,12 @@ $gui='
 	<window name="groupEditor" width="300" title="Gruppe" pad="5">
 		<formula name="groupFormula">
 			<group>
-				<text key="title" label="Titel:"/>
-				<text key="note" label="Notat:" lines="10"/>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="Notat:">
+					<text-input key="note" lines="10"/>
+				</field>
 				<buttons>
 					<button name="cancelGroup" title="Annuller"/>
 					<button name="deleteGroup" title="Slet"/>
@@ -80,8 +84,12 @@ $gui='
 	<window name="typeEditor" width="300" title="Type" pad="5">
 		<formula name="typeFormula">
 			<group>
-				<text name="typeTitle" label="Titel:"/>
-				<text name="typeNote" label="Notat:" lines="10"/>
+				<field label="Titel:">
+					<text-input name="typeTitle"/>
+				</field>
+				<field label="Notat:">
+					<text-input name="typeNote" lines="10"/>
+				</field>
 				<buttons>
 					<button name="deleteType" title="Slet"/>
 					<button name="cancelType" title="Annuller"/>
@@ -97,33 +105,31 @@ $gui='
 				<tab title="Produkt" padding="5">
 					<columns space="10">
 						<column>
-							<group labels="above">
-								<text name="productTitle" label="Titel:"/>
-							</group>
+							<field label="Titel:">
+								<text-input name="productTitle"/>
+							</field>
 						</column>
 						<column>
-							<group labels="above">
-								<text name="productNumber" label="Nummer:"/>
-							</group>
+							<field label="Nummer:">
+								<text-input name="productNumber"/>
+							</field>
 						</column>
 						<column>
-							<group labels="above">
-								<dropdown label="type" name="productType" source="typeSource"/>
-							</group>
+							<field label="type">
+								<dropdown name="productType" source="typeSource" adaptive="true"/>
+							</field>
 						</column>
 					</columns>
 					<columns flexible="true" space="5">
 						<column>
-							<group labels="above">				
-								<text name="productNote" label="Beskrivelse:" lines="6"/>
-							</group>
+							<field label="Beskrivelse:">				
+								<text-input name="productNote" multiline="true"/>
+							</field>
 						</column>
 						<column width="60px">
-							<group labels="above">
-								<field label="Billede:">
-									<image-input name="productImage" source="../../Services/Model/ImagePicker.php"/>
-								</field>
-							</group>
+							<field label="Billede:">
+								<image-input name="productImage" source="../../Services/Model/ImagePicker.php"/>
+							</field>
 						</column>
 					</columns>
 					<group labels="above">
@@ -161,8 +167,12 @@ $gui='
 					<columns>
 						<column>
 							<group>
-								<checkbox label="Søgbar:" name="productSearchable"/>
-								<checkbox label="Tillad bud:" name="productAllowOffer"/>
+								<field label="Søgbar:">
+									<checkbox name="productSearchable"/>
+								</field>
+								<field label="Tillad bud:">
+									<checkbox name="productAllowOffer"/>
+								</field>
 							</group>
 						</column>
 						<column>

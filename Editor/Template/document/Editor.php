@@ -103,20 +103,34 @@ $gui = '
 	<window width="400" name="linkWindow" padding="5" title="Link">
 		<formula name="linkFormula">
 			<group labels="above">
-				<text label="Tekst" key="text" multiline="true"/>
-				<text label="Beskrivelse" key="description"/>
-				<radiobuttons label="Omfang" key="scope" name="linkScope">
-					<item value="page" text="Hele siden"/>
-					<item value="part" text="Kun dette afsnit"/>
-				</radiobuttons>
+				<field label="Tekst">
+					<text-input key="text" multiline="true"/>
+				</field>
+				<field label="Beskrivelse">
+					<text-input key="description"/>
+				</field>
+				<field label="Omfang">
+					<radiobuttons key="scope" name="linkScope">
+						<item value="page" text="Hele siden"/>
+						<item value="part" text="Kun dette afsnit"/>
+					</radiobuttons>
+				</field>
 			</group>
 			<space left="3" right="3" top="5">
 			<fieldset legend="Link">
 				<group>
-					<dropdown label="Side" key="page" name="linkPage" source="pageSource"/>
-					<dropdown label="Fil" key="file" name="linkFile" source="fileSource"/>
-					<text label="Adresse" key="url" name="linkUrl"/>
-					<text label="E-post" key="email" name="linkEmail"/>
+					<field label="Side">
+						<dropdown key="page" name="linkPage" source="pageSource"/>
+					</field>
+					<field label="Fil">
+						<dropdown key="file" name="linkFile" source="fileSource"/>
+					</field>
+					<field label="Adresse">
+						<text-input key="url" name="linkUrl"/>
+					</field>
+					<field label="E-post">
+						<text-input key="email" name="linkEmail"/>
+					</field>
 				</group>
 			</fieldset>
 			</space>
@@ -154,12 +168,14 @@ $gui = '
 	<window width="300" name="columnWindow" padding="5" title="Kolonne">
 		<formula name="columnFormula">
 			<group labels="above">
-				<radiobuttons label="Bredde..." key="preset" name="columnPreset">
-					<item value="dynamic" text="Efter indhold"/>
-					<item value="min" text="Mindst mulig"/>
-					<item value="max" text="Størst muligt"/>
-					<item value="specific" text="Speciel..."/>
-				</radiobuttons>
+				<field label="Bredde...">
+					<radiobuttons key="preset" name="columnPreset">
+						<item value="dynamic" text="Efter indhold"/>
+						<item value="min" text="Mindst mulig"/>
+						<item value="max" text="Størst muligt"/>
+						<item value="specific" text="Speciel..."/>
+					</radiobuttons>
+				</field>
 				<field label="Speciel bredde">
 					<style-length-input key="width" name="columnWidth"/>
 				</field>

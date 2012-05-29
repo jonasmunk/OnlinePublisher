@@ -19,8 +19,8 @@
 
 <!--doc title:'Gui' module:'base'
 <gui title="«text»" state="«text»" padding="«pixels»">
-    <controller source="«url»" name="«name»"/>
-    <controller source="«url»" name="«name»"/>
+    <controller source="«url»"/>
+    <controller source="«url»"/>
     ···
 </gui>
 -->

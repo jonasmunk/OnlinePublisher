@@ -500,14 +500,14 @@
 
 <!--doc title:'Tiles' class:'hui.ui.Tiles' module:'layout'
 <tiles name="«name»" reveal="«boolean»">
-	<tile width="«percent»" height="«percent»" left="«percent»" top="«percent»" padding="«pixels»" background="«css-color»" variant="«'light'»">
-		<title>«text»</title>
-		<actions>
-			<icon icon="«icon»" key="«text»"/>
-			<icon icon="«icon»" key="«text»"/>
-		</actions>
-    	···
-	</tile>
+    <tile width="«percent»" height="«percent»" left="«percent»" top="«percent»" padding="«pixels»" background="«css-color»" variant="«'light'»">
+        <title>«text»</title>
+        <actions>
+            <icon icon="«icon»" key="«text»"/>
+            <icon icon="«icon»" key="«text»"/>
+        </actions>
+        ···
+    </tile>
 </pages>
 -->
 <xsl:template match="gui:tiles">
@@ -604,23 +604,23 @@
 
 <!--doc title:'Structure' class:'hui.ui.Structure' module:'layout'
 <structure name="«name»" height="«pixels»">
-	<top>
-    	···
-	</top>
-	<middle>
-		<left>
-	    	···
-		</left>
-		<center>
-	    	···
-		</center>
-		<right>
-	    	···
-		</right>
-	</middle>
-	<bottom>
-    	···
-	</bottom>
+    <top>
+        ···
+    </top>
+    <middle>
+        <left>
+            ···
+        </left>
+        <center>
+            ···
+        </center>
+        <right>
+            ···
+        </right>
+    </middle>
+    <bottom>
+        ···
+    </bottom>
 </structure>
 -->
 <xsl:template match="gui:structure">

@@ -13,18 +13,28 @@
 			</toolbar>
 		</top>
 		<middle>
-			</middle>
+		</middle>
 		<bottom/>
 	</structure>
 	
 	<window name="dark" width="300" title="Bruger" padding="5" variant="dark">
 		<formula>
 			<group>
-				<text label="Brugernavn:"/>
-				<text label="Kodeord:"/>
-				<text label="Notat:" lines="6"/>
-				<checkbox label="Intern adgang:"/>
-				<checkbox label="Ekstern adgang:"/>
+				<field label="Brugernavn:">
+					<text-input/>
+				</field>
+				<field label="Kodeord:">
+					<text-input/>
+				</field>
+				<field label="Notat:">
+					<text-input lines="6"/>
+				</field>
+				<field label="Intern adgang:">
+					<checkbox/>
+				</field>
+				<field label="Ekstern adgang:">
+					<checkbox/>
+				</field>
 				<field label="Tokens:">
 					<tokens/>
 				</field>
@@ -40,11 +50,21 @@
 	<window name="standard" width="300" title="Bruger" padding="5">
 		<formula>
 			<group>
-				<text label="Brugernavn:"/>
-				<text label="Kodeord:"/>
-				<text label="Notat:" lines="6"/>
-				<checkbox label="Intern adgang:"/>
-				<checkbox label="Ekstern adgang:"/>
+				<field label="Brugernavn:">
+					<text-input/>
+				</field>
+				<field label="Kodeord:">
+					<text-input/>
+				</field>
+				<field label="Notat:">
+					<text-input lines="6"/>
+				</field>
+				<field label="Intern adgang:">
+					<checkbox/>
+				</field>
+				<field label="Ekstern adgang:">
+					<checkbox/>
+				</field>
 				<field label="Tokens:">
 					<tokens/>
 				</field>
@@ -60,11 +80,21 @@
 	<window name="light" width="300" title="Bruger" padding="5" variant="light">
 		<formula>
 			<group>
-				<text label="Brugernavn:"/>
-				<text label="Kodeord:"/>
-				<text label="Notat:" lines="6"/>
-				<checkbox label="Intern adgang:"/>
-				<checkbox label="Ekstern adgang:"/>
+				<field label="Brugernavn:">
+					<text-input/>
+				</field>
+				<field label="Kodeord:">
+					<text-input/>
+				</field>
+				<field label="Notat:">
+					<text-input lines="6"/>
+				</field>
+				<field label="Intern adgang:">
+					<checkbox/>
+				</field>
+				<field label="Ekstern adgang:">
+					<checkbox/>
+				</field>
 				<field label="Tokens:">
 					<tokens/>
 				</field>
@@ -82,11 +112,21 @@
 		<back>
 			<formula>
 				<group>
-					<text label="Brugernavn:"/>
-					<text label="Kodeord:"/>
-					<text label="Notat:" lines="6"/>
-					<checkbox label="Intern adgang:"/>
-					<checkbox label="Ekstern adgang:"/>
+					<field label="Brugernavn:">
+						<text-input/>
+					</field>
+					<field label="Kodeord:">
+						<text-input/>
+					</field>
+					<field label="Notat:">
+						<text-input lines="6"/>
+					</field>
+					<field label="Intern adgang:">
+						<checkbox/>
+					</field>
+					<field label="Ekstern adgang:">
+						<checkbox/>
+					</field>
 					<field label="Tokens:">
 						<tokens/>
 					</field>
@@ -103,11 +143,21 @@
 	<window name="news" width="300" title="Nyhed" padding="5" variant="news">
 		<formula>
 			<group>
-				<text label="Brugernavn:"/>
-				<text label="Kodeord:"/>
-				<text label="Notat:" lines="6"/>
-				<checkbox label="Intern adgang:"/>
-				<checkbox label="Ekstern adgang:"/>
+				<field label="Brugernavn:">
+					<text-input/>
+				</field>
+				<field label="Kodeord:">
+					<text-input/>
+				</field>
+				<field label="Notat:">
+					<text-input lines="6"/>
+				</field>
+				<field label="Intern adgang:">
+					<checkbox/>
+				</field>
+				<field label="Ekstern adgang:">
+					<checkbox/>
+				</field>
 				<field label="Tokens:">
 					<tokens/>
 				</field>

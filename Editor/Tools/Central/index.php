@@ -35,8 +35,12 @@ $gui='
 	<window title="Site" name="siteWindow" width="300" padding="5">
 		<formula name="siteFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
-				<text label="Adresse" key="url"/>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
+				<field label="Adresse">
+					<text-input key="url"/>
+				</field>
 				<buttons>
 					<button name="cancelSite" title="Annuller"/>
 					<button name="deleteSite" title="Slet">

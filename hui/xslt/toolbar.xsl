@@ -14,9 +14,9 @@
 <!--doc title:'Toolbar' class:'hui.ui.Toolbar' module:'bar'
 <toolbar name="«name»" variant="«?»" border="«'top' | 'bottom'»" labels="«boolean»" fixed-height="«boolean»">
     ···
-	<right>
-		···
-	</right>
+    <right>
+        ···
+    </right>
 </toolbar>
 -->
 <xsl:template match="gui:toolbar" name="gui:toolbar">

@@ -46,7 +46,9 @@ class TablePartController extends PartController
 		<window title="Kilde" name="sourceWindow" width="500">
 			<formula name="sourceFormula">
 				<group labels="above">
-					<text multiline="true" key="source" max-height="500"/>
+					<field>
+						<text-input multiline="true" key="source" max-height="500"/>
+					</field>
 				</group>
 				<buttons>
 					<button name="applySource" title="OK" click="sourceWindow.hide()"/>
@@ -59,27 +61,33 @@ class TablePartController extends PartController
 				<fieldset legend="Tabel">
 					<group labels="before">
 						<!--
-						<dropdown label="Variant" key="variant">
-							<item text="Moderne"/>
-							<item text="Markant"/>
-						</dropdown>
+						<field label="Variant">
+							<dropdown key="variant">
+								<item text="Moderne"/>
+								<item text="Markant"/>
+							</dropdown>
+						</field>
 						-->
-						<dropdown label="Hoved" key="head" name="tableHead">
-							<item text="Ingen" value="0"/>
-							<item text="1 række" value="1"/>
-							<item text="2 rækker" value="2"/>
-							<item text="3 rækker" value="3"/>
-							<item text="4 rækker" value="4"/>
-							<item text="5 rækker" value="5"/>
-						</dropdown>
-						<dropdown label="Bund" key="foot" name="tableFoot">
-							<item text="Ingen" value="0"/>
-							<item text="1 række" value="1"/>
-							<item text="2 rækker" value="2"/>
-							<item text="3 rækker" value="3"/>
-							<item text="4 rækker" value="4"/>
-							<item text="5 rækker" value="5"/>
-						</dropdown>
+						<field label="Hoved">
+							<dropdown key="head" name="tableHead">
+								<item text="Ingen" value="0"/>
+								<item text="1 række" value="1"/>
+								<item text="2 rækker" value="2"/>
+								<item text="3 rækker" value="3"/>
+								<item text="4 rækker" value="4"/>
+								<item text="5 rækker" value="5"/>
+							</dropdown>
+						</field>
+						<field label="Bund">
+							<dropdown key="foot" name="tableFoot">
+								<item text="Ingen" value="0"/>
+								<item text="1 række" value="1"/>
+								<item text="2 rækker" value="2"/>
+								<item text="3 rækker" value="3"/>
+								<item text="4 rækker" value="4"/>
+								<item text="5 rækker" value="5"/>
+							</dropdown>
+						</field>
 						<field label="Width">
 							<style-length-input key="width"/>
 						</field>
@@ -89,7 +97,9 @@ class TablePartController extends PartController
 				<space height="10"/>
 				<fieldset legend="Celle">
 					<group labels="before">
-						<text key="cellBackground" label="Baggrund"/>
+						<field label="Baggrund">
+							<text-input key="cellBackground"/>
+						</field>
 					</group>
 				</fieldset>
 				-->

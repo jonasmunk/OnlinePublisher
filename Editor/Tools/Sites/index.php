@@ -145,22 +145,38 @@ $gui='
 		<fragment name="pageInfoFragment">
 			<formula name="pageFormula" padding="5">
 				<group labels="above">
-					<text key="title" label="Titel:"/>
-					<text key="description" label="Beskrivelse:" lines="5"/>
+					<field label="Titel:">
+						<text-input key="title"/>
+					</field>
+					<field label="Beskrivelse:">
+						<text-input key="description" label="Beskrivelse:" multiline="true"/>
+					</field>
 				</group>
 				<group>
-					<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
-						'.$languageItems.'
-					</dropdown>
-					<dropdown key="designId" label="Design:">
-						'.$designItems.'
-					</dropdown>
-					<dropdown key="frameId" label="Opsætning:">
-						'.$frameItems.'
-					</dropdown>
-					<text key="path" label="Sti:"/>
-					<checkbox key="searchable" label="Søgbar:"/>
-					<checkbox key="disabled" label="Inaktiv:"/>
+					<field label="Sprog:">
+						<dropdown key="language" placeholder="Vælg sprog...">
+							'.$languageItems.'
+						</dropdown>
+					</field>
+					<field label="Design:">
+						<dropdown key="designId">
+							'.$designItems.'
+						</dropdown>
+					</field>
+					<field label="Opsætning:">
+						<dropdown key="frameId">
+							'.$frameItems.'
+						</dropdown>
+					</field>
+					<field label="Sti:">
+						<text-input key="path"/>
+					</field>
+					<field label="Søgbar:">
+						<checkbox key="searchable"/>
+					</field>
+					<field label="Inaktiv:">
+						<checkbox key="disabled"/>
+					</field>
 					<buttons>
 						<button name="cancelPage" title="Annuller"/>
 						<button name="deletePage" title="Slet">
@@ -196,10 +212,14 @@ $gui='
 	<window name="hierarchyEditor" width="300" title="Hierarki" padding="5" icon="common/hierarchy">
 		<formula name="hierarchyFormula">
 			<group>
-				<text key="name" label="Titel:"/>
-				<dropdown key="language" label="Sprog:" placeholder="Vælg sprog...">
-					'.$languageItems.'
-				</dropdown>
+				<field label="Titel:">
+					<text-input key="name"/>
+				</field>
+				<field label="Sprog:">
+					<dropdown key="language" placeholder="Vælg sprog...">
+						'.$languageItems.'
+					</dropdown>
+				</field>
 			</group>
 			<group>
 				<buttons>
@@ -216,16 +236,30 @@ $gui='
 	<window name="hierarchyItemEditor" width="300" title="Menupunkt" padding="5">
 		<formula name="hierarchyItemFormula">
 			<group>
-				<text key="title" label="Titel:"/>
-				<checkbox key="hidden" label="Skjult:"/>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="Skjult:">
+					<checkbox key="hidden"/>
+				</field>
 			</group>
 			<fieldset legend="Link">
 				<group>
-					<dropdown key="page" label="Side:" source="pagesSource" name="hierarchyItemPage"/>
-					<checkbox key="reference" label="Reference" name="hierarchyItemReference"/>
-					<dropdown key="file" label="Fil:" source="filesSource" name="hierarchyItemFile"/>
-					<text key="url" label="URL:" name="hierarchyItemURL"/>
-					<text key="email" label="E-post:" name="hierarchyItemEmail"/>
+					<field label="Side:">
+						<dropdown key="page" source="pagesSource" name="hierarchyItemPage"/>
+					</field>
+					<field label="Reference">
+						<checkbox key="reference" name="hierarchyItemReference"/>
+					</field>
+					<field label="Fil:">
+						<dropdown key="file" source="filesSource" name="hierarchyItemFile"/>
+					</field>
+					<field label="URL:">
+						<text-input key="url" name="hierarchyItemURL"/>
+					</field>
+					<field label="E-post:">
+						<text-input key="email" name="hierarchyItemEmail"/>
+					</field>
 				</group>				
 			</fieldset>
 			<group>
@@ -273,13 +307,23 @@ $gui='
 				<overflow max-height="200" min-height="160">
 				<formula name="newPageFormula">
 					<group labels="above">
-						<text label="Titel:" name="newPageTitle" key="title"/>
-						<text label="Menupunkt:" key="menuItem"/>
-						<text label="Sti:" key="path"/>
-						<dropdown label="Sprog:" key="language" placeholder="Vælg sprog...">
-							'.$languageItems.'
-						</dropdown>
-						<text label="Beskrivelse:" lines="4" key="description"/>
+						<field label="Titel:">
+							<text-input name="newPageTitle" key="title"/>
+						</field>
+						<field label="Menupunkt:">
+							<text-input key="menuItem"/>
+						</field>
+						<field label="Sti:">
+							<text-input key="path"/>
+						</field>
+						<field label="Sprog:">
+							<dropdown key="language" placeholder="Vælg sprog...">
+								'.$languageItems.'
+							</dropdown>
+						</field>
+						<field label="Beskrivelse:">
+							<text-input multiline="true" key="description"/>
+						</field>
 					</group>
 				</formula>
 				</overflow>

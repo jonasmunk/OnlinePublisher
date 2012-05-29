@@ -39,8 +39,12 @@ $gui='
 			<formula name="formula" state="login">
 				<header>Vælg ny kode</header>
 				<group labels="above">
-					<text name="password1" secret="true" label="Kodeord:"/>
-					<text name="password2" secret="true" label="Kodeord (gentag):"/>
+					<field label="Kodeord:">
+						<text-input name="password1" secret="true"/>
+					</field>
+					<field label="Kodeord (gentag):">
+						<text-input name="password2" secret="true"/>
+					</field>
 					<buttons>
 						<button name="cancel" title="Annuller" url="Authentication.php"/>
 						<button name="change" title="Skift kode" highlighted="true" submit="true"/>

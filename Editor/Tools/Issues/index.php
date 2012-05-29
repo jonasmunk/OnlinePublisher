@@ -40,11 +40,17 @@ $gui='
 	<window title="Sag" name="issueWindow" icon="common/folder" width="300" padding="5">
 		<formula name="issueFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
-				<text label="Tekst" key="note" multiline="true"/>
-				<dropdown label="Type" key="kind">
-					'.GuiUtils::buildTranslatedItems(IssueService::getKinds()).'
-				</dropdown>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
+				<field label="Tekst">
+					<text-input key="note" multiline="true"/>
+				</field>
+				<field label="Type">
+					<dropdown key="kind">
+						'.GuiUtils::buildTranslatedItems(IssueService::getKinds()).'
+					</dropdown>
+				</field>
 				<buttons>
 					<button name="cancelIssue" title="Annuller"/>
 					<button name="deleteIssue" title="Slet">

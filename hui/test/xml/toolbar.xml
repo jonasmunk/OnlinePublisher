@@ -119,8 +119,12 @@
 		</toolbar>
 		<formula name="pageFormula" padding="5">
 			<group labels="above">
-				<text key="title" label="Titel:"/>
-				<text key="description" label="Beskrivelse:" lines="5"/>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="Beskrivelse:">
+					<text-input key="description" lines="5"/>
+				</field>
 			</group>
 			<group>
 				<buttons>

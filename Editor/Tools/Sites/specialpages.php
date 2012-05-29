@@ -20,15 +20,21 @@ $gui='
 	<window name="specialPageWindow" width="300" title="Speciel side" padding="5">
 		<formula name="specialPageFormula">
 			<group>
-				<dropdown key="pageId" label="Side:" source="pageItems"/>
-				<dropdown key="language" label="Sprog:">
-					<item value="" title="Intet"/>
-					<item value="DA" title="Dansk"/>
-					<item value="EN" title="Engelsk"/>
-				</dropdown>
-				<dropdown key="type" label="Type:">
-					<item value="home" title="Forside"/>
-				</dropdown>
+				<field label="Side:">
+					<dropdown key="pageId" source="pageItems"/>
+				</field>
+				<field label="Sprog:">
+					<dropdown key="language">
+						<item value="" title="Intet"/>
+						<item value="DA" title="Dansk"/>
+						<item value="EN" title="Engelsk"/>
+					</dropdown>
+				</field>
+				<field label="Type:">
+					<dropdown key="type">
+						<item value="home" title="Forside"/>
+					</dropdown>
+				</field>
 				<buttons>
 					<button name="cancelSpecialPage" title="Annuller"/>
 					<button name="deleteSpecialPage" title="Slet">

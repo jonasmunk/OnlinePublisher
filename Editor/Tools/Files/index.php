@@ -77,12 +77,12 @@ $gui='
 			</tab>
 			<tab title="Hent fra nettet" padding="10">
 				<formula name="fetchFormula">
-					<group labels="above">
-					<text label="Adresse:" key="url"/>
+					<field label="Adresse:">
+						<text-input key="url"/>
+					</field>
 					<buttons>
 						<button name="fetchFile" title="Hent" highlighted="true"/>
 					</buttons>
-					</group>
 				</formula>
 			</tab>
 		</tabs>
@@ -102,35 +102,39 @@ $gui='
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
-				<buttons>
-					<button name="cancelGroup" title="Annuller"/>
-					<button name="deleteGroup" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet gruppen" cancel="Nej"/>
-					</button>
-					<button name="saveGroup" title="Gem" highlighted="true"/>
-				</buttons>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
 			</group>
+			<buttons>
+				<button name="cancelGroup" title="Annuller"/>
+				<button name="deleteGroup" title="Slet">
+					<confirm text="Er du sikker?" ok="Ja, slet gruppen" cancel="Nej"/>
+				</button>
+				<button name="saveGroup" title="Gem" highlighted="true"/>
+			</buttons>
 		</formula>
 	</window>
 	
 	<window title="Fil" name="fileWindow" icon="file/generic" width="300" padding="5">
 		<formula name="fileFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
 				<field label="Grupper:">
 					<checkboxes name="fileGroups" key="groups">
 						<items source="groupSource"/>
 					</checkboxes>
 				</field>
-				<buttons>
-					<button name="cancelFile" title="Annuller"/>
-					<button name="deleteFile" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet filen" cancel="Annuller"/>
-					</button>
-					<button name="updateFile" title="Gem" highlighted="true"/>
-				</buttons>
 			</group>
+			<buttons>
+				<button name="cancelFile" title="Annuller"/>
+				<button name="deleteFile" title="Slet">
+					<confirm text="Er du sikker?" ok="Ja, slet filen" cancel="Annuller"/>
+				</button>
+				<button name="updateFile" title="Gem" highlighted="true"/>
+			</buttons>
 		</formula>
 	</window>
 </gui>';

@@ -22,10 +22,18 @@ $gui='
 	<window name="blueprintWindow" width="300" title="Skabelon" padding="5">
 		<formula name="blueprintFormula">
 			<group>
-				<text key="title" label="Titel:"/>
-				<dropdown key="designId" label="Design:" source="designItems"/>
-				<dropdown key="frameId" label="Ramme:" source="frameItems"/>
-				<dropdown key="templateId" label="Skabelon:" source="templateItems"/>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="Design:">
+					<dropdown key="designId" source="designItems"/>
+				</field>
+				<field label="Ramme:">
+					<dropdown key="frameId" source="frameItems"/>
+				</field>
+				<field label="Skabelon:">
+					<dropdown key="templateId" source="templateItems"/>
+				</field>
 				<buttons>
 					<button name="cancelBlueprint" title="Annuller"/>
 					<button name="deleteBlueprint" title="Slet">

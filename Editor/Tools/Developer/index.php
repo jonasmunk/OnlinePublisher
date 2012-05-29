@@ -40,8 +40,12 @@ $gui='
 						<box width="300" top="30" title="Settings" padding="10">
 							<formula name="settingsFormula">
 								<group>
-									<checkbox key="simulateLatency" label="Simulate network latency:" value="'.($_SESSION['core.debug.simulateLatency'] ? 'true' : 'false').'"/>
-									<checkbox key="logDatabaseQueries" label="Log database queries:" value="'.($_SESSION['core.debug.logDatabaseQueries'] ? 'true' : 'false').'"/>
+									<field label="Simulate network latency:">
+										<checkbox key="simulateLatency" value="'.($_SESSION['core.debug.simulateLatency'] ? 'true' : 'false').'"/>
+									</field>
+									<field label="Log database queries:">
+										<checkbox key="logDatabaseQueries" value="'.($_SESSION['core.debug.logDatabaseQueries'] ? 'true' : 'false').'"/>
+									</field>
 								</group>
 							</formula>
 						</box>

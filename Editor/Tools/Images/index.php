@@ -81,7 +81,9 @@ $gui='
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
 				<buttons>
 					<button name="cancelGroup" title="Annuller"/>
 					<button name="deleteGroup" title="Slet">
@@ -98,11 +100,8 @@ $gui='
 			<tab title="Upload" padding="10">
 				<upload name="file" url="UploadImage.php" widget="upload" multiple="true">
 					<placeholder title="Vælg billeder på din computer..." text="Filen kan højest være '.$maxUploadSize.' stor"/>
-				</upload>'.
-//				<!--<block align="center" top="5">
-//					<checkbox title="Tilføj til den valgte gruppe" name="uploadAddToGroup" value="'.$uploadAddToGroup.'"/>
-//				</block>-->
-				'<buttons align="center" top="10">
+				</upload>
+				<buttons align="center" top="10">
 					<button name="cancelUpload" title="Luk"/>
 					<button name="upload" title="Vælg billeder..." highlighted="true"/>
 				</buttons>
@@ -110,7 +109,9 @@ $gui='
 			<tab title="Hent fra nettet" padding="10">
 				<formula name="fetchFormula">
 					<group labels="above">
-					<text label="Adresse:" key="url"/>
+						<field label="Adresse:">
+							<text-input key="url"/>
+						</field>
 					</group>
 				</formula>
 				<buttons align="center">
@@ -124,7 +125,9 @@ $gui='
 	<window title="Billede" name="imageWindow" icon="file/generic" width="300" padding="5">
 		<formula name="imageFormula">
 			<group labels="above">
-				<text label="Titel" key="title"/>
+				<field label="Titel">
+					<text-input key="title"/>
+				</field>
 				<field label="Grupper:">
 					<checkboxes name="imageGroups" key="groups" max-height="200">
 						<items source="groupOptionsSource"/>

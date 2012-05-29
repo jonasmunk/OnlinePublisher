@@ -12,20 +12,24 @@ $gui='
 	<box width="360" top="30" padding="10" title="Indstillinger til weblog">
 		<formula name="formula">
 			<group labels="above">
-				<text key="title" label="Titel:"/>
-				<dropdown key="blueprint" label="Skabelon til ny side:">
-					<item title="Ingen skabelon" value="0"/>
-					'.GuiUtils::buildObjectItems('pageblueprint').'
-				</dropdown>
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="Skabelon til ny side:">
+					<dropdown key="blueprint">
+						<item title="Ingen skabelon" value="0"/>
+						'.GuiUtils::buildObjectItems('pageblueprint').'
+					</dropdown>
+				</field>
 				<field label="Grupper">
 					<checkboxes key="groups">
 						'.GuiUtils::buildObjectItems('webloggroup').'
 					</checkboxes>
 				</field>
-				<buttons>
-					<button title="Opdater" name="save" highlighted="true" disabled="true"/>
-				</buttons>
 			</group>
+			<buttons>
+				<button title="Opdater" name="save" highlighted="true" disabled="true"/>
+			</buttons>
 		</formula>
 	</box>
 </gui>

@@ -56,7 +56,9 @@ $gui='
 	<boundpanel name="messagePanel" width="300">
 		<formula name="messageFormula">
 			<group labels="above">
-				<text multiline="true" key="message" value="animate-value-change"/>
+				<field>
+					<text-input multiline="true" key="message" value="animate-value-change"/>
+				</field>
 			</group>
 			<buttons>
 				<button text="Annuller" name="cancelMessage"/>

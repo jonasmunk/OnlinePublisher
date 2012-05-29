@@ -86,7 +86,9 @@ $gui='
 							<page>
 								<formula padding="10" name="feedbackForm">
 									<group labels="above">
-										<text multiline="true" label="{Write us with improvements and questions ; da: Skriv til os med ris, ros eller spørgsmål }" key="message"/>
+										<field label="{Write us with improvements and questions ; da: Skriv til os med ris, ros eller spørgsmål }">
+											<text-input multiline="true" key="message"/>
+										</field>
 										<buttons>
 											<button text="Send" submit="true" name="sendFeedback"/>
 										</buttons>
@@ -128,10 +130,12 @@ $gui='
 	<boundpanel name="settingsPanel" variant="light" width="200" padding="10" modal="true">
 		<formula name="settingsFormula">
 			<group>
-				<dropdown label="{Language; da: Sprog}" key="language" value="'.InternalSession::getLanguage().'">
-					<item title="{Danish; da: Dansk}" value="da"/>
-					<item title="{English; da: Engelsk}" value="en"/>
-				</dropdown>
+				<field label="{Language; da: Sprog}">
+					<dropdown key="language" value="'.InternalSession::getLanguage().'">
+						<item title="{Danish; da: Dansk}" value="da"/>
+						<item title="{English; da: Engelsk}" value="en"/>
+					</dropdown>
+				</field>
 				<field label="{Password ; da: Kode}">
 					<button text="{Change password; da:Skift kodeord}" variant="paper" mini="true" name="changePassword"/>
 				</field>
@@ -145,9 +149,15 @@ $gui='
 	<box title="{Change password; da:Skift kode}" closable="true" name="passwordBox" absolute="true" width="400" modal="true" padding="10">
 		<formula name="passwordFormula">
 			<group>
-				<text label="{Existing password; da: Nuværende kode}" key="old" secret="true"/>
-				<text label="{New password; da: Ny kode}" key="password" secret="true"/>
-				<text label="{New password; da: Ny kode igen}" key="password2" secret="true"/>
+				<field label="{Existing password; da: Nuværende kode}">
+					<text-input key="old" secret="true"/>
+				</field>
+				<field label="{New password; da: Ny kode}">
+					<text-input key="password" secret="true"/>
+				</field>
+				<field label="{New password; da: Ny kode igen}">
+					<text-input key="password2" secret="true"/>
+				</field>
 			</group>
 			<buttons align="right">
 				<button text="{Cancel; da: Annuller}" name="cancelPassword"/>

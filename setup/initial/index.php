@@ -44,13 +44,27 @@ $gui='
 		</space>
 		<formula name="formula">
 			<group>
-				<text name="baseUrl" label="Web address:" value="'.StringUtils::escapeXML($baseUrl).'"/>
-				<text name="databaseHost" label="Database host:" value="localhost"/>
-				<text name="databaseName" label="Database name:" value="onlinepublisher"/>
-				<text name="databaseUser" label="Database user:"/>
-				<text name="databasePassword" label="Database password:" secret="true"/>
-				<text name="superUser" label="Super user:"/>
-				<text name="superPassword" label="Super password:" secret="true"/>
+				<field label="Web address:">
+					<text-input name="baseUrl" value="'.StringUtils::escapeXML($baseUrl).'"/>
+				</field>
+				<field label="Database host:">
+					<text-input name="databaseHost" value="localhost"/>
+				</field>
+				<field label="Database name:">
+					<text-input name="databaseName" value="onlinepublisher"/>
+				</field>
+				<field label="Database user:">
+					<text-input name="databaseUser"/>
+				</field>
+				<field label="Database password:">
+					<text-input name="databasePassword" secret="true"/>
+				</field>
+				<field label="Super user:">
+					<text-input name="superUser"/>
+				</field>
+				<field label="Super password:">
+					<text-input name="superPassword" secret="true"/>
+				</field>
 				<buttons>
 					<button title="Test database" name="test"/>
 					<button title="OK" name="save" highlighted="true"/>

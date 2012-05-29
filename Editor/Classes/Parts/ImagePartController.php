@@ -294,7 +294,7 @@ class ImagePartController extends PartController
 					<formula name="urlForm">
 						<group labels="above">
 							<field label="Adresse:">
-								<text key="url"/>
+								<text-input key="url"/>
 							</field>
 						</group>
 					</formula>
@@ -310,7 +310,7 @@ class ImagePartController extends PartController
 			<formula name="imageAdvancedFormula">
 				<group>
 					<field label="Tekst">
-						<text multiline="true" key="text"/>
+						<text-input multiline="true" key="text"/>
 					</field>
 					<field label="Gråtone">
 						<checkbox key="greyscale"/>

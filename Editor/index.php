@@ -98,12 +98,16 @@ $gui='
 	<boundpanel name="issuePanel" width="250">
 		<formula name="issueFormula">
 			<group labels="above">
-				<text label="Note:" key="text" multiline="true"/>
-				<radiobuttons label="Type" value="improvement" key="kind">
-					<item value="improvement" text="Forbedring"/>
-					<item value="error" text="Fejl"/>
-					<item value="unknown" text="Ukendt"/>
-				</radiobuttons>
+				<field label="Note:">
+					<text-input key="text" multiline="true"/>
+				</field>
+				<field label="Type">
+					<radiobuttons value="improvement" key="kind">
+						<item value="improvement" text="Forbedring"/>
+						<item value="error" text="Fejl"/>
+						<item value="unknown" text="Ukendt"/>
+					</radiobuttons>
+				</field>
 			</group>
 			<buttons>
 				<button text="Slet" name="deleteIssue" small="true">

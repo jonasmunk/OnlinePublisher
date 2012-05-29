@@ -68,50 +68,48 @@ $gui='
 	<window name="personEditor" width="460" title="Person">
 		<formula name="personFormula">
 			<tabs small="true" centered="true">
-				<tab title="Person" padding="5">
+				<tab title="Person" padding="10">
 					<columns flexible="true" space="10">
 						<column>
 							<columns space="10">
 								<column>
-									<group labels="above">
-										<text name="personFirstname" label="Fornavn:"/>
-									</group>
+									<field label="Fornavn:">
+										<text-input name="personFirstname"/>
+									</field>
 								</column>
 								<column>
-									<group labels="above">
-										<text name="personMiddlename" label="Mellemnavn:"/>
-									</group>
+									<field label="Mellemnavn:">
+										<text-input name="personMiddlename"/>
+									</field>
 								</column>
 								<column>
-								<group labels="above">
-									<text name="personSurname" label="Efternavn:"/>
-								</group>
+									<field label="Efternavn:">
+										<text-input name="personSurname"/>
+									</field>
 								</column>
 							</columns>
 							<columns space="10">
 								<column>
-									<group labels="above">
-										<text name="personJobtitle" label="Jobtitel:"/>
-									</group>
+									<field label="Jobtitel:">
+										<text-input name="personJobtitle"/>
+									</field>
 								</column>
 								<column>
-									<group labels="above">
-										<text name="personInitials" label="Initialer:"/>
-									</group>
+									<field label="Initialer:">
+										<text-input name="personInitials"/>
+									</field>
 								</column>
 								<column>
-								<group labels="above">
-									<text name="personNickname" label="Kaldenavn:"/>
-								</group>
+									<field label="Kaldenavn:">
+										<text-input name="personNickname"/>
+									</field>
 								</column>
 							</columns>
 						</column>
 						<column width="70px">
-							<group labels="above">
-								<field label="Billede">
-									<image-input name="personImage" source="../../Services/Model/ImagePicker.php"/>
-								</field>
-							</group>
+							<field label="Billede">
+								<image-input name="personImage" source="../../Services/Model/ImagePicker.php"/>
+							</field>
 						</column>
 					</columns>
 					<columns space="10">
@@ -130,32 +128,38 @@ $gui='
 								</field>
 							</group>
 							<group>
-								<radiobuttons name="personSex" label="Køn:" value="1">
-									<radiobutton value="1" label="Mand"/>
-									<radiobutton value="0" label="Kvinde"/>
-								</radiobuttons>
+								<field label="Køn:">
+									<radiobuttons name="personSex" value="1">
+										<radiobutton value="1" label="Mand"/>
+										<radiobutton value="0" label="Kvinde"/>
+									</radiobuttons>
+								</field>
 							</group>
 						</column>
 						<column>
-							<group labels="above">
-								<text name="personStreetname" label="Adresse:"/>
-							</group>
+							<field label="Adresse:">
+								<text-input name="personStreetname"/>
+							</field>
 							
 							<columns space="10">
 								<column>
-									<group labels="above">
-										<text name="personZipcode" label="Postnr:"/>
-									</group>
+									<field label="Postnr:">
+										<text-input name="personZipcode"/>
+									</field>
 								</column>
 								<column>
-									<group labels="above">
-										<text name="personCity" label="By:"/>
-									</group>
+									<field label="By:">
+										<text-input name="personCity"/>
+									</field>
 								</column>
 							</columns>
 							<group labels="above">
-								<text name="personCountry" label="Land:"/>
-								<text name="personWebaddress" label="Internet:"/>
+								<field label="Land:">
+									<text-input name="personCountry"/>
+								</field>
+								<field label="Internet:">
+									<text-input name="personWebaddress"/>
+								</field>
 							</group>
 						</column>
 					</columns>
@@ -186,9 +190,9 @@ $gui='
 					</columns>
 				</tab>
 				<tab title="Information" padding="10">
-					<group labels="above">
-						<text name="personNote" label="Notat:" lines="5"/>
-					</group>
+					<field label="Notat:">
+						<text-input name="personNote" multiline="true"/>
+					</field>
 				</tab>
 			</tabs>
 			<buttons padding="5">
@@ -202,8 +206,12 @@ $gui='
 	<window name="mailinglistEditor" width="300" title="Postliste" padding="5">
 		<formula name="mailinglistFormula">
 			<group>
-				<text name="mailinglistTitle" label="Titel:"/>
-				<text name="mailinglistNote" label="Notat:" lines="10"/>
+				<field label="Titel:">
+					<text-input name="mailinglistTitle"/>
+				</field>
+				<field label="Notat:">
+					<text-input name="mailinglistNote" lines="10"/>
+				</field>
 				<buttons top="5">
 					<button name="cancelMailinglist" title="Annuller"/>
 					<button name="deleteMailinglist" title="Slet"/>
@@ -216,8 +224,12 @@ $gui='
 	<window name="groupEditor" width="300" title="Gruppe" padding="5">
 		<formula name="groupFormula">
 			<group>
-				<text name="groupTitle" label="Titel:"/>
-				<text name="groupNote" label="Notat:" lines="10"/>
+				<field label="Titel:">
+					<text-input name="groupTitle"/>
+				</field>
+				<field label="Notat:">
+					<text-input name="groupNote" lines="10"/>
+				</field>
 				<buttons>
 					<button name="cancelGroup" title="Annuller"/>
 					<button name="deleteGroup" title="Slet"/>

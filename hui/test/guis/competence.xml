@@ -6,12 +6,18 @@
 			<header>Ny begvienhed</header>
 			<space height="5"/>
 			<group>
-				<text label="Betegnelse:"/>
-				<text label="Sted:"/>
-				<dropdown label="Type:">
-					<item title="Anden" value="0"/>
-					<item title="Arbejdsfunktion" value="0"/>
-				</dropdown>
+				<field label="Betegnelse:">
+					<text-input/>
+				</field>
+				<field label="Sted:">
+					<text-input/>
+				</field>
+				<field label="Type:">
+					<dropdown>
+						<item title="Anden" value="0"/>
+						<item title="Arbejdsfunktion" value="0"/>
+					</dropdown>
+				</field>
 				<field label="Startdato:">
 					<datetime/>
 				</field>
