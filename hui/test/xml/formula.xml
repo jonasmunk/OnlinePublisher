@@ -35,7 +35,7 @@
 	
 	<box width="600" title="Special inputs" variant="textured" padding="10">
 		<formula name="formulatore">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Color:">
 					<color-input key="color"/>
 				</field>
@@ -60,7 +60,7 @@
 						})
 					</script>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click='formulatore.setValues({color: "#ff2ead",location: {latitude: 56.64242820898831, longitude: 10.16157250976562}})' text="Set data"/>
 				<button click="logForm(formulatore)" text="Data"/>
@@ -72,14 +72,14 @@
 
 	<box width="600" title="Dates" variant="textured" padding="10">
 		<formula name="dateForm">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Seconds:">
 					<datetime-input label="Date (secs):" key="date-seconds" return-type="seconds"/>
 				</field>
 				<field label="Date:">
 					<datetime-input label="Date:" key="date"/>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click="hui.log(dateForm.getValues())" text="Data"/>
 			</buttons>
@@ -90,7 +90,7 @@
 
 	<box width="600" title="Numbers" variant="textured" padding="10">
 		<formula name="numForm">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Number:">
 					<number-input key="number"/>
 				</field>
@@ -103,7 +103,7 @@
 				<field label="Number (min -1, max 1, decimals:2):">
 					<number-input decimals="2" key="number2" min="-1" max="1"/>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click="logForm(numForm)" text="Data"/>
 			</buttons>
@@ -114,7 +114,7 @@
 	
 	<box width="600" title="Text" variant="textured" padding="10">
 		<formula name="textForm">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Username:">
 					<text-input key="username"/>
 				</field>
@@ -124,7 +124,7 @@
 				<field label="Note:">
 					<text-input multiline="true" key="note"/>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click="logForm(textForm)" text="Data"/>
 			</buttons>
@@ -135,7 +135,7 @@
 	
 	<box width="600" title="Text" variant="textured" padding="10">
 		<formula name="checkForm">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Internal access:">
 					<checkbox key="internal"/>
 				</field>
@@ -148,7 +148,7 @@
 						<items source="itemsSource"/>
 					</checkboxes>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click="logForm(checkForm)" text="Data"/>
 			</buttons>
@@ -159,7 +159,7 @@
 	
 	<box width="600" title="Text" variant="textured" padding="10">
 		<formula name="otherForm">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Style length:">
 					<style-length-input key="style" value="15px"/>
 				</field>
@@ -173,7 +173,7 @@
 						<radiobutton label="Dolor" value="dolor"/>
 					</radiobuttons>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click="logForm(otherForm)" text="Data"/>
 			</buttons>
@@ -184,7 +184,7 @@
 
 	<box width="600" title="Drop downs" variant="textured" padding="10">
 		<formula name="dateForm">
-			<group labels="above">
+			<fields labels="above">
 				<field label="No initial value:">
 					<dropdown key="template">
 						<item title="Lorem inpsum" value="1"/>
@@ -263,7 +263,7 @@
 						<item title="Mattis Egestas Inceptos" value="50"/>
 					</dropdown>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click="hui.log(dateForm.getValues())" text="Data"/>
 			</buttons>
@@ -274,7 +274,7 @@
 	
 	<box width="600" title="Text" variant="textured" padding="10">
 		<formula name="objectListForm">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Object list">
 					<objectlist key="objectlist">
 						<text key="email" label="E-mail"/>
@@ -285,7 +285,7 @@
 						</select>
 					</objectlist>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button click="logForm(objectListForm)" text="Data"/>
 			</buttons>
@@ -304,7 +304,7 @@
 		<tabs>
 			<tab title="Formula 1" padding="10">
 				<formula name="formula1">
-					<group labels="above">
+					<fields labels="above">
 						<field label="Object list:">
 							<objectlist key="objectlist">
 								<text key="email" label="E-mail"/>
@@ -320,12 +320,12 @@
 							<button title="Slet"/>
 							<button title="Annuller"/>
 						</buttons>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 			<tab title="Formula 2" padding="10">
 				<formula name="formula2">
-					<group>
+					<fields>
 						<field label="Template:">
 							<dropdown key="template" source="itemsSource" value="c"/>
 						</field>
@@ -380,19 +380,19 @@
 							<button title="Slet"/>
 							<button title="Annuller"/>
 						</buttons>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 			<tab title="Field" padding="10">
 				<formula name="formula2">
-					<group>
+					<fields>
 						<field label="Language">
 							<dropdown label="Template:" source="itemsSource" value="c"/>
 						</field>
 						<field label="Username" hint="This is a hint describing something">
 							<text-input key="username"/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 		</tabs>
@@ -415,7 +415,7 @@
 	
 	<window name="win" width="400" padding="10" variant="dark">
 		<formula name="formula2">
-			<group>
+			<fields>
 				<field label="Template:">
 					<dropdown key="template" source="itemsSource" value="c"/>
 				</field>
@@ -471,7 +471,7 @@
 					<button title="News" click="win.setVariant('news')"/>
 					<button title="Light" click="win.setVariant('light')" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 </gui>

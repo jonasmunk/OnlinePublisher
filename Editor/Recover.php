@@ -38,7 +38,7 @@ $gui='
 		' : '
 			<formula name="formula" state="login">
 				<header>Vælg ny kode</header>
-				<group labels="above">
+				<fields labels="above">
 					<field label="Kodeord:">
 						<text-input name="password1" secret="true"/>
 					</field>
@@ -49,7 +49,7 @@ $gui='
 						<button name="cancel" title="Annuller" url="Authentication.php"/>
 						<button name="change" title="Skift kode" highlighted="true" submit="true"/>
 					</buttons>
-				</group>
+				</fields>
 			</formula>
 			<fragment state="success">
 				<text>

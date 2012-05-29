@@ -61,38 +61,38 @@ $gui='
 								<column width="300px">
 									<box variant="rounded" padding="10">
 									<formula name="summaryFormula">
-										<group labels="above">
+										<fields labels="above">
 											<field label="Nummer">
 												<text-input key="number"/>
 											</field>
 											<field label="Gade">
 												<text-input key="street"/>
 											</field>
-										</group>
+										</fields>
 										<columns>
 											<column width="100px">
-												<group labels="above">
+												<fields labels="above">
 													<field label="Postnummer">
 														<text-input key="zipcode"/>
 													</field>
-												</group>
+												</fields>
 											</column>
 											<column>
-												<group labels="above">
+												<fields labels="above">
 													<field label="By">
 														<text-input key="city"/>
 													</field>
-												</group>
+												</fields>
 											</column>
 										</columns>
-										<group labels="above">
+										<fields labels="above">
 											<field label="E-post">
 												<text-input key="email"/>
 											</field>
 											<field label="Telefon">
 												<text-input key="phone"/>
 											</field>
-										</group>
+										</fields>
 										<buttons>
 											<button name="deleteMeter" title="Slet">
 												<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
@@ -123,7 +123,7 @@ $gui='
 	
 	<window title="Aflæsning" icon="common/water" name="subUsageWindow" width="300" padding="5">
 		<formula name="subUsageFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Værdi">
 					<number-input key="value" max="1000000000"/>
 				</field>
@@ -137,7 +137,7 @@ $gui='
 					</button>
 					<button name="saveSubUsage" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
@@ -164,7 +164,7 @@ $gui='
 	
 	<window title="Aflæsning" icon="common/water" name="usageWindow" width="300" padding="5">
 		<formula name="usageFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Nummer">
 					<text-input key="number"/>
 				</field>
@@ -181,13 +181,13 @@ $gui='
 					</button>
 					<button name="saveUsage" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 
 	<window title="Vandmåler" icon="common/gauge" name="meterWindow" width="300" padding="5">
 		<formula name="meterFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Nummer">
 					<text-input key="number"/>
 				</field>
@@ -195,7 +195,7 @@ $gui='
 					<button name="cancelMeter" title="Annuller"/>
 					<button name="createMeter" submit="true" title="Opret" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	

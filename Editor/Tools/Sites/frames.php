@@ -24,7 +24,7 @@ $gui='
 		<tabs small="true" centered="true">
 			<tab title="Info" padding="5">
 				<formula name="frameFormula">
-					<group>
+					<fields>
 						<field label="Navn:">
 							<text-input key="name"/>
 						</field>
@@ -37,31 +37,31 @@ $gui='
 						<field label="Hierarki:">
 							<dropdown key="hierarchyId" source="hierarchyItems" placeholder="Vælg..."/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 			<tab title="Søgning" padding="5">
 				<formula name="searchFormula">
-					<group>
+					<fields>
 						<field label="Aktiv:">
 							<checkbox key="enabled"/>
 						</field>
 						<field label="Søgeside:">
 							<dropdown key="pageId" source="pageItems" placeholder="Vælg søgeside..."/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 			<tab title="Bruger" padding="5">
 				<formula name="userFormula">
-					<group>
+					<fields>
 						<field label="Aktiv:">
 							<checkbox key="enabled"/>
 						</field>
 						<field label="Login-side:">
 							<dropdown key="pageId" source="pageItems" placeholder="Vælg login-side..."/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 			<tab title="Top-links">
@@ -98,14 +98,14 @@ $gui='
 	
 	<window name="newsWindow" width="300" title="Nyhedsblok" padding="5">
 		<formula name="newsFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
-			</group>
+			</fields>
 			<overflow height="300">
 			<fieldset legend="Visning">
-				<group>
+				<fields>
 					<field label="Sorter efter">
 						<dropdown key="sortby">
 							<item value="startdate" title="Startdato"/>
@@ -141,10 +141,10 @@ $gui='
 							<item value="25" title="25"/>
 						</dropdown>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			<fieldset legend="Tid">
-				<group>
+				<fields>
 					<field label="Tid">
 						<dropdown key="timetype">
 							<item value="always" title="Altid"/>
@@ -178,16 +178,16 @@ $gui='
 					<field label="Til">
 						<datetime-input key="enddate" return-type="seconds"/>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			<fieldset legend="Nyheder">
-				<group>
+				<fields>
 					<field label="Grupper">
 						<checkboxes key="groups">
 							<items source="newsGroupItems"/>
 						</checkboxes>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			</overflow>
 			<buttons align="right" top="5">

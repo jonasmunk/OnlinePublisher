@@ -93,7 +93,7 @@ $gui='
 	
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -104,20 +104,20 @@ $gui='
 					</button>
 					<button name="saveGroup" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 
 	<window title="Kilde" name="sourceWindow" icon="common/internet" width="300" padding="5">
 		<formula name="sourceFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
 				<field label="Adresse">
 					<text-input key="url"/>
 				</field>
-				<field label="Interval (sekunder)">
+				<field label="Interval (sekunder)" hint="1 time = 3600 sekunder">
 					<number-input key="syncInterval"/>
 				</field>
 				<buttons>
@@ -127,7 +127,7 @@ $gui='
 					</button>
 					<button submit="true" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
@@ -139,14 +139,14 @@ $gui='
 			<tab title="Nyhed" padding="10">
 				<space left="5" right="5">
 				<formula name="newsFormula">
-					<group labels="above">
+					<fields labels="above">
 						<field label="Titel">
 							<text-input key="title"/>
 						</field>
 						<field label="Note">
 							<text-input key="note" multiline="true"/>
 						</field>
-					</group>
+					</fields>
 					<columns space="10">
 						<column>
 							<field label="Fra">
@@ -159,13 +159,13 @@ $gui='
 							</field>
 						</column>
 					</columns>
-					<group labels="above">
+					<fields labels="above">
 						<field label="Grupper:">
 							<checkboxes name="newsGroups">
 								<items source="groupSource"/>
 							</checkboxes>
 						</field>
-					</group>
+					</fields>
 				</formula>
 				</space>
 			</tab>
@@ -194,7 +194,7 @@ $gui='
 	
 	<box title="Ny artikel" name="newArticleBox" absolute="true" padding="10" modal="true" width="636" variant="textured" closable="true">
 		<formula name="articleFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -210,7 +210,7 @@ $gui='
 				<field label="Skabelon">
 					<dropdown key="blueprint" name="articleBlueprint">'.$blueprintItems.'</dropdown>
 				</field>
-			</group>
+			</fields>
 			<columns>
 				<column>
 					<field label="Fra">
@@ -223,13 +223,13 @@ $gui='
 					</field>
 				</column>
 			</columns>
-			<group labels="above">
+			<fields labels="above">
 				<field label="Grupper:">
 					<checkboxes key="groups">
 						<items source="groupSource"/>
 					</checkboxes>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button name="cancelNewArticle" title="Annuller" click="newNewsBox.hide()"/>
 				<button name="createNewArticle" title="Opret" highlighted="true" submit="true"/>

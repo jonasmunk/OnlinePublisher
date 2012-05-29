@@ -89,7 +89,7 @@ class FilePartController extends PartController
 		<!--
 		<window title="Avanceret" name="imageAdvancedWindow" width="300">
 			<formula name="imageAdvancedFormula">
-				<group>
+				<fields>
 					<field label="Tekst">
 						<text-input multiline="true" key="text"/>
 					</field>
@@ -107,7 +107,7 @@ class FilePartController extends PartController
 					<buttons>
 						<button name="pasteImage" text="Indsæt fra udklipsholder"/>
 					</buttons>
-				</group>
+				</fields>
 			</formula>
 		</window>
 		-->

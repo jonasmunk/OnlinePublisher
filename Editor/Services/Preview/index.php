@@ -45,7 +45,7 @@ $gui='
 	
 	<boundpanel target="addNote" name="notePanel" width="200">
 		<formula name="noteFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Note:">
 					<text-input key="text" multiline="true"/>
 				</field>
@@ -55,7 +55,7 @@ $gui='
 						<item value="error" text="Fejl"/>
 					</radiobuttons>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button text="Annuller" name="cancelNote" small="true"/>
 				<button text="Opret" highlighted="true" submit="true" small="true"/>

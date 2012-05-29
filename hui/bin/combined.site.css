@@ -1322,7 +1322,7 @@ div.hui_window div.hui_formula_fieldset
 	padding-bottom: 5px;
 }
 
-table.hui_formula_group
+table.hui_formula_fields
 {
 	width: 100%;
 	font-size: 0;
@@ -1335,7 +1335,7 @@ p.hui_formula_field_hint
 	margin: -5px 0 0 3px;
 }
 
-table.hui_formula_group_above
+table.hui_formula_fields_above
 {
 	border-spacing: 0px;
 }
@@ -1345,26 +1345,35 @@ form.hui_formula table.split
 	border-spacing: 5px 0px;
 }
 
-table.hui_formula_group label
+td.hui_fields_buttons
+{
+	border-spacing: 0px;
+}
+
+label.hui_formula_field
 {
 	color: #004A80;
 	font-size: 12px;
 	font-weight: normal;
+	line-height: 13px;
+	display: inline-block;
+	padding-left: 2px;
 }
 
-table.hui_formula_group_above label
+
+table.hui_formula_fields_above label.hui_formula_field
 {
 	line-height: 13px;
 	display: inline-block;
 	padding-left: 2px;
 }
 
-table.hui_formula_group th label
+table.hui_formula_fields th label.hui_formula_field
 {
 	font-size: 9pt;
 }
 
-table.hui_formula_group th
+table.hui_formula_fields th
 {
 	width: 1%;
 	vertical-align: top;
@@ -1374,19 +1383,19 @@ table.hui_formula_group th
 	white-space: nowrap;
 }
 
-table.hui_formula_group th.hui_formula_middle
+table.hui_formula_fields th.hui_formula_middle
 {
 	vertical-align: middle;
 	line-height: normal;
 	padding-bottom: 5px;
 }
 
-table.hui_formula_group_above th
+table.hui_formula_fields_above th
 {
 	text-align: left;
 }
 
-table.hui_formula_group_above div.hui_tokenfield
+table.hui_formula_fields_above div.hui_tokenfield
 {
 	margin-bottom: 2px;
 }
@@ -1458,25 +1467,12 @@ textarea.hui_formula_text::-webkit-scrollbar-thumb
 	border: 1px solid #ddd;
 }
 
-form.hui_formula fieldset
-{
-	border: 1px solid #ccc;
-	margin: 0px;
-	padding: 0px 8px 5px 6px;
-}
-
-form.hui_formula fieldset legend
-{
-	font-size: 9pt;
-	color: #999;
-}
-
-td.hui_formula_group
+td.hui_formula_field
 {
 	padding: 0;
 }
 
-div.hui_formula_item
+div.hui_formula_field_body
 {
 	padding-bottom: 5px;
 	font-size: 0;
@@ -1703,25 +1699,26 @@ body .hui_context_dark a.hui_datetime:hover span
 /************************* Override for windows *******************/
 
 
-div.hui_window table.hui_formula_group label
+
+div.hui_window label.hui_formula_field
 {
 	background: rgb(231,231,231);
-	padding: 0px 2px;
 }
 
-div.hui_window div.hui_formula_fieldset table.hui_formula_group label
+div.hui_formula_fieldset label.hui_formula_field,
+div.hui_window_news label.hui_formula_field
 {
 	background: none;
 }
 
-div.hui_window_light table.hui_formula_group label
+div.hui_window_light label.hui_formula_field
 {
 	color: #004A80;
 	background: rgb(229,229,229);
 }
 
 
-body .hui_context_dark table.hui_formula_group label, 
+body .hui_context_dark label.hui_formula_field, 
 .hui_context_dark .hui_checkbox, 
 .hui_context_dark span.hui_radiobutton_label, 
 .hui_context_dark th.hui_objectlist

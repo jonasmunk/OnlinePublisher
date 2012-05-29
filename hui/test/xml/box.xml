@@ -21,7 +21,7 @@
 			<icon icon="common/view" title="Show hidden box" click="absoluteBox.show();"/>
 		</toolbar>
 		<formula>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -42,13 +42,13 @@
 					<button title="Slet"/>
 					<button title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</box>
 	<space height="40"/>
 	<box width="400" padding="10" title="Title with no toolbar">
 		<formula>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -69,7 +69,7 @@
 					<button title="Slet"/>
 					<button title="Annuller"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</box>
 	
@@ -77,7 +77,7 @@
 	
 	<box width="400" padding="10" variant="textured">
 		<formula>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -98,7 +98,7 @@
 					<button title="Slet"/>
 					<button title="Annuller"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</box>
 	

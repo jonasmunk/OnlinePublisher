@@ -114,7 +114,7 @@ $gui='
 					</columns>
 					<columns space="10">
 						<column>
-							<group labels="above">
+							<fields labels="above">
 								<field label="Email:">
 									<objectlist name="personEmails">
 										<text key="address"/>
@@ -126,15 +126,15 @@ $gui='
 										<text key="context" label="Kontekst"/>
 									</objectlist>
 								</field>
-							</group>
-							<group>
+							</fields>
+							<fields>
 								<field label="Køn:">
 									<radiobuttons name="personSex" value="1">
 										<radiobutton value="1" label="Mand"/>
 										<radiobutton value="0" label="Kvinde"/>
 									</radiobuttons>
 								</field>
-							</group>
+							</fields>
 						</column>
 						<column>
 							<field label="Adresse:">
@@ -153,21 +153,21 @@ $gui='
 									</field>
 								</column>
 							</columns>
-							<group labels="above">
+							<fields labels="above">
 								<field label="Land:">
 									<text-input name="personCountry"/>
 								</field>
 								<field label="Internet:">
 									<text-input name="personWebaddress"/>
 								</field>
-							</group>
+							</fields>
 						</column>
 					</columns>
 				</tab>
 				<tab title="Indstillinger" padding="10">
 					<columns space="5">
 						<column>
-							<group>
+							<fields>
 								<field label="Postlister:">
 									<checkboxes name="personMailinglists">
 										<items source="mailinglistSource"/>
@@ -176,16 +176,16 @@ $gui='
 								<field label="Søgbar:">
 									<checkbox name="personSearchable"/>
 								</field>
-							</group>
+							</fields>
 						</column>
 						<column>
-							<group>
+							<fields>
 								<field label="Grupper:">
 									<checkboxes name="personGroups">
 										<items source="personGroupSource"/>
 									</checkboxes>
 								</field>
-							</group>
+							</fields>
 						</column>
 					</columns>
 				</tab>
@@ -205,7 +205,7 @@ $gui='
 	
 	<window name="mailinglistEditor" width="300" title="Postliste" padding="5">
 		<formula name="mailinglistFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input name="mailinglistTitle"/>
 				</field>
@@ -217,13 +217,13 @@ $gui='
 					<button name="deleteMailinglist" title="Slet"/>
 					<button name="saveMailinglist" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="groupEditor" width="300" title="Gruppe" padding="5">
 		<formula name="groupFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input name="groupTitle"/>
 				</field>
@@ -235,7 +235,7 @@ $gui='
 					<button name="deleteGroup" title="Slet"/>
 					<button name="saveGroup" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	

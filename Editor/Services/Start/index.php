@@ -85,14 +85,14 @@ $gui='
 						<pages name="feedbackPages">
 							<page>
 								<formula padding="10" name="feedbackForm">
-									<group labels="above">
+									<fields labels="above">
 										<field label="{Write us with improvements and questions ; da: Skriv til os med ris, ros eller spørgsmål }">
 											<text-input multiline="true" key="message"/>
 										</field>
 										<buttons>
 											<button text="Send" submit="true" name="sendFeedback"/>
 										</buttons>
-									</group>
+									</fields>
 								</formula>
 							</page>
 							<page>
@@ -129,7 +129,7 @@ $gui='
 	
 	<boundpanel name="settingsPanel" variant="light" width="200" padding="10" modal="true">
 		<formula name="settingsFormula">
-			<group>
+			<fields>
 				<field label="{Language; da: Sprog}">
 					<dropdown key="language" value="'.InternalSession::getLanguage().'">
 						<item title="{Danish; da: Dansk}" value="da"/>
@@ -139,7 +139,7 @@ $gui='
 				<field label="{Password ; da: Kode}">
 					<button text="{Change password; da:Skift kodeord}" variant="paper" mini="true" name="changePassword"/>
 				</field>
-			</group>
+			</fields>
 		</formula>
 		<buttons align="right">
 			<button variant="paper" text="OK" small="true" name="saveSettings"/>
@@ -148,7 +148,7 @@ $gui='
 	
 	<box title="{Change password; da:Skift kode}" closable="true" name="passwordBox" absolute="true" width="400" modal="true" padding="10">
 		<formula name="passwordFormula">
-			<group>
+			<fields>
 				<field label="{Existing password; da: Nuværende kode}">
 					<text-input key="old" secret="true"/>
 				</field>
@@ -158,7 +158,7 @@ $gui='
 				<field label="{New password; da: Ny kode igen}">
 					<text-input key="password2" secret="true"/>
 				</field>
-			</group>
+			</fields>
 			<buttons align="right">
 				<button text="{Cancel; da: Annuller}" name="cancelPassword"/>
 				<button text="{Change; da : Skift}" highlighted="true" submit="true" name="submitPassword"/>

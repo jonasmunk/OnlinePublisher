@@ -231,12 +231,6 @@ div.hui_window_news div.hui_window_content div.hui_window_content
 	background: none;
 }
 
-div.hui_window_news table.hui_formula_group label,
-div.hui_window_news label.hui_formula_field
-{
-	background: none;
-}
-
 div.hui_window_news div.hui_window_body
 {
 	margin: 0;

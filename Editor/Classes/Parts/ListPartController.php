@@ -87,24 +87,24 @@ class ListPartController extends PartController
 			<tabs small="true" centered="true">
 				<tab title="Indstillinger" padding="10">
 					<formula name="formula">
-						<group labels="above">
+						<fields labels="above">
 							<field label="Titel">
 								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" key="title"/>
 							</field>
-						</group>
+						</fields>
 						<fieldset legend="Begrænsning">
-							<group labels="before">
+							<fields labels="before">
 								<field label="Dage">
 									<number-input value="'.$part->getTimeCount().'" key="time_count" max="1000"/>
 								</field>
 								<field label="Maksimalt antal">
 									<number-input value="'.$part->getMaxItems().'" key="maxitems" min="0" max="100"/>
 								</field>
-							</group>
+							</fields>
 						</fieldset>
 						<space height="10"/>
 						<fieldset legend="Visning">
-							<group>
+							<fields>
 								<field label="Retning">
 									<radiobuttons key="sort_direction" value="'.StringUtils::escapeXML($part->getSortDirection()).'">
 										<item value="descending" text="Faldende"/>
@@ -129,7 +129,7 @@ class ListPartController extends PartController
 										'.$zoneItems.'
 									</dropdown>
 								</field>
-							</group>
+							</fields>
 						</fieldset>
 					</formula>
 				</tab>
@@ -137,25 +137,25 @@ class ListPartController extends PartController
 					<overflow max-height="300">
 					<formula padding="10" name="dataFormula">
 						<fieldset legend="Nyheder">
-							<group labels="above">
+							<fields labels="above">
 								<field label="Grupper">
 									<checkboxes key="newsGroups">'.GuiUtils::buildObjectItems('newsgroup').'</checkboxes>
 								</field>
 								<field label="Kilder">
 									<checkboxes key="newsSources">'.GuiUtils::buildObjectItems('newssource').'</checkboxes>							
 								</field>
-							</group>
+							</fields>
 						</fieldset>
 						<space height="10"/>
 						<fieldset legend="Begivenheder">
-							<group labels="above">
+							<fields labels="above">
 								<field label="Kalendere">
 									<checkboxes key="calendars">'.GuiUtils::buildObjectItems('calendar').'</checkboxes>
 								</field>
 								<field label="Kilder">
 									<checkboxes key="calendarSources">'.GuiUtils::buildObjectItems('calendarsource').'</checkboxes>
 								</field>
-							</group>
+							</fields>
 						</fieldset>
 					</formula>
 					</overflow>

@@ -5,14 +5,14 @@
 		<tabs>
 			<tab title="Large tabs" padding="10">
 				<formula>
-					<group>
+					<fields>
 						<field label="Username:">
 							<text-input/>
 						</field>
 						<field label="Password:">
 							<text-input/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 			<tab title="Large tabs" padding="10">
@@ -21,19 +21,19 @@
 		<tabs small="true">
 			<tab title="Small tabs" padding="10">
 				<formula>
-					<group>
+					<fields>
 						<field label="Username:">
 							<text-input/>
 						</field>
 						<field label="Password:">
 							<text-input/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 			<tab title="Small tabs" padding="10">
 				<formula>
-					<group>
+					<fields>
 						<field label="Note:">
 							<text-input lines="6"/>
 						</field>
@@ -43,7 +43,7 @@
 						<field label="Tokens:">
 							<tokens/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</tab>
 		</tabs>

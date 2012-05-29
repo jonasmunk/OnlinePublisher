@@ -10,9 +10,9 @@
 
 <!--doc title:'Formula' class:'hui.ui.Formula' module:'input'
 <formula name="«name»" state="«text»" padding="«pixels»">
-    <group···>
+    <fields···>
         ···
-    </group>
+    </fields>
 </formula>
 -->
 <xsl:template match="gui:formula">
@@ -43,25 +43,21 @@
 	<div class="hui_formula_header"><xsl:apply-templates/></div>
 </xsl:template>
 
-<xsl:template match="gui:formula//gui:group | gui:formula//gui:fields">
-	<table class="hui_formula_group">
+<!--doc title:'Fields' module:'input'
+<fields labels="«'above' | 'besides'»">
+    ···
+</fields>
+-->
+<xsl:template match="gui:fields">
+	<table class="hui_formula_fields">
+		<xsl:attribute name="class">
+			<xsl:text>hui_formula_fields</xsl:text>
+			<xsl:if test="@labels='above'">
+				<xsl:text> hui_formula_fields_above</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:apply-templates/>
 	</table>
-</xsl:template>
-
-<xsl:template match="gui:formula//gui:group[@labels='above'] | gui:formula//gui:fields[@labels='above']">
-	<table class="hui_formula_group hui_formula_group_above">
-		<xsl:apply-templates/>
-	</table>
-</xsl:template>
-
-<xsl:template match="gui:formula//gui:group[@legend] | gui:formula//gui:fields[@legend]">
-	<fieldset>
-		<legend><xsl:value-of select="@legend"/></legend>
-		<table class="group">
-			<xsl:apply-templates/>
-		</table>
-	</fieldset>
 </xsl:template>
 
 <!--doc title:'Fieldset' module:'input'
@@ -69,14 +65,12 @@
     ···
 </fieldset>
 -->
-<xsl:template match="gui:formula//gui:fieldset">
+<xsl:template match="gui:fieldset">
 	<div class="hui_formula_fieldset">
 		<strong class="hui_formula_fieldset"><xsl:value-of select="@legend"/></strong>
 		<xsl:apply-templates/>
 	</div>
 </xsl:template>
-
-
 
 
 
@@ -87,20 +81,25 @@
     </field>
 </group>
 -->
-<xsl:template match="gui:group/gui:field">
+<xsl:template match="gui:fields/gui:field">
 	<tr>
-		<th><label><xsl:value-of select="@label"/></label></th>
-		<td class="hui_formula_group">
-			<div class="hui_formula_item"><xsl:apply-templates/></div>
+		<th>
+			<xsl:if test="gui:text-input[not(@multiline='true')] | gui:dropdown | gui:checkbox | gui:datetime-input">
+				<xsl:attribute name="class">hui_formula_middle</xsl:attribute>
+			</xsl:if>
+			<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
+		</th>
+		<td class="hui_formula_field">
+			<div class="hui_formula_field_body"><xsl:apply-templates/></div>
 			<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
 		</td>
 	</tr>
 </xsl:template>
 
-<xsl:template match="gui:group[@labels='above']/gui:field">
+<xsl:template match="gui:fields[@labels='above']/gui:field">
 	<tr><td>
-		<xsl:if test="@label"><label><xsl:value-of select="@label"/></label></xsl:if>
-		<div class="hui_formula_item"><xsl:apply-templates/></div>
+		<xsl:if test="@label"><label class="hui_formula_field"><xsl:value-of select="@label"/></label></xsl:if>
+		<div class="hui_formula_field_body"><xsl:apply-templates/></div>
 		<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
 	</td></tr>
 </xsl:template>
@@ -108,7 +107,7 @@
 <xsl:template match="gui:field">
 	<div class="hui_formula_field">
 		<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
-		<div class="hui_formula_item"><xsl:apply-templates/></div>
+		<div class="hui_formula_field_body"><xsl:apply-templates/></div>
 		<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
 	</div>
 </xsl:template>
@@ -471,9 +470,12 @@
 
 
 
-<xsl:template match="gui:group/gui:buttons">
+<xsl:template match="gui:fields/gui:buttons">
 	<tr>
-		<td colspan="2" style="border-spacing: 0px;">
+		<td class="hui_fields_buttons">
+			<xsl:if test="not(../@labels='above')">
+				<xsl:attribute name="colspan">2</xsl:attribute>
+			</xsl:if>
 			<xsl:call-template name="gui:buttons"/>
 		</td>
 	</tr>

@@ -39,7 +39,7 @@ $gui='
 
 	<window title="Sag" name="issueWindow" icon="common/folder" width="300" padding="5">
 		<formula name="issueFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -58,7 +58,7 @@ $gui='
 					</button>
 					<button name="saveIssue" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	

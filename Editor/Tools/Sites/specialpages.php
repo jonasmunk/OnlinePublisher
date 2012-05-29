@@ -19,7 +19,7 @@ $gui='
 	
 	<window name="specialPageWindow" width="300" title="Speciel side" padding="5">
 		<formula name="specialPageFormula">
-			<group>
+			<fields>
 				<field label="Side:">
 					<dropdown key="pageId" source="pageItems"/>
 				</field>
@@ -42,7 +42,7 @@ $gui='
 					</button>
 					<button name="saveSpecialPage" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 

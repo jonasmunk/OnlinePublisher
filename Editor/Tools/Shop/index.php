@@ -65,7 +65,7 @@ $gui='
 	
 	<window name="groupEditor" width="300" title="Gruppe" pad="5">
 		<formula name="groupFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
@@ -77,13 +77,13 @@ $gui='
 					<button name="deleteGroup" title="Slet"/>
 					<button name="saveGroup" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="typeEditor" width="300" title="Type" pad="5">
 		<formula name="typeFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input name="typeTitle"/>
 				</field>
@@ -95,7 +95,7 @@ $gui='
 					<button name="cancelType" title="Annuller"/>
 					<button name="saveType" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
@@ -132,17 +132,17 @@ $gui='
 							</field>
 						</column>
 					</columns>
-					<group labels="above">
+					<fields labels="above">
 						<field label="Attributter:">
 							<objectlist name="productAttributes">
 								<text key="name" label="Navn"/>
 								<text key="value" label="Værdi"/>
 							</objectlist>
 						</field>
-					</group>
+					</fields>
 				</tab>
 				<tab title="Priser" padding="5">
-				<group labels="above">
+				<fields labels="above">
 					<field label="Priser:">
 						<objectlist name="productPrices">
 							<text key="amount" label="Antal"/>
@@ -161,33 +161,33 @@ $gui='
 							</select>
 						</objectlist>
 					</field>
-				</group>
+				</fields>
 				</tab>
 				<tab title="Indstillinger" padding="5">
 					<columns>
 						<column>
-							<group>
+							<fields>
 								<field label="Søgbar:">
 									<checkbox name="productSearchable"/>
 								</field>
 								<field label="Tillad bud:">
 									<checkbox name="productAllowOffer"/>
 								</field>
-							</group>
+							</fields>
 						</column>
 						<column>
-							<group>
+							<fields>
 								<field label="Grupper:">
 									<checkboxes name="productGroups">
 										<items source="groupSource"/>
 									</checkboxes>
 								</field>
-							</group>
+							</fields>
 						</column>
 					</columns>
 				</tab>
 			</tabs>
-			<group>
+			<fields>
 				<buttons>
 					<button name="cancelProduct" title="Annuller"/>
 					<button name="deleteProduct" title="Slet">
@@ -195,7 +195,7 @@ $gui='
 					</button>
 					<button name="saveProduct" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 </gui>';

@@ -102,18 +102,18 @@ $gui='
 								<tab title="Brugergrænseflade">
 									<space all="10" bottom="5">
 										<formula name="uiFormula">
-											<group>
+											<fields>
 												<field label="Moderne rig tekst editor:">
 													<checkbox key="experimentalRichText"/>
 												</field>
-											</group>
+											</fields>
 										</formula>
 									</space>
 								</tab>
 								<tab title="E-mail">
 									<space all="10" bottom="5">
 										<formula name="emailFormula">
-											<group>
+											<fields>
 												<field label="Aktiv:">
 													<checkbox key="enabled"/>
 												</field>
@@ -135,30 +135,30 @@ $gui='
 												<field label="E-mail:">
 													<text-input key="standardEmail"/>
 												</field>
-											</group>
+											</fields>
 											<fieldset legend="Feedback">
-											<group>
+											<fields>
 												<field label="Feedback-navn:">
 													<text-input key="feedbackName"/>
 												</field>
 												<field label="Feedback E-mail:">
 													<text-input key="feedbackEmail"/>
 												</field>
-											</group>
+											</fields>
 											</fieldset>
-											<group>
+											<fields>
 												<buttons>
 													<button title="Test" name="showEmailTest"/>
 													<button title="Opdater" name="saveEmail" highlighted="true"/>
 												</buttons>
-											</group>
+											</fields>
 										</formula>
 									</space>
 								</tab>
 								<tab title="Google Analytics">
 									<space all="10" bottom="5">
 										<formula name="analyticsFormula">
-											<group>
+											<fields>
 												<field label="Brugernavn:">
 													<text-input key="username"/>
 												</field>
@@ -175,14 +175,14 @@ $gui='
 													<button name="testAnalytics" title="Test"/>
 													<button name="saveAnalytics" title="Opdater" highlighted="true"/>
 												</buttons>
-											</group>
+											</fields>
 										</formula>
 									</space>
 								</tab>
 								<tab title="OnlineObjects">
 									<space all="10" bottom="5">
 										<formula name="onlineobjectsFormula">
-											<group>
+											<fields>
 												<field label="Adresse:">
 													<text-input key="url"/>
 												</field>
@@ -190,7 +190,7 @@ $gui='
 													<button name="testOnlineObjects" title="Test"/>
 													<button name="saveOnlineObjects" title="Opdater" highlighted="true"/>
 												</buttons>
-											</group>
+											</fields>
 										</formula>
 									</space>
 								</tab>
@@ -206,7 +206,7 @@ $gui='
 	<window name="userEditor" width="300" title="Bruger" padding="5">
 		<formula name="userFormula">
 			<overflow height="200">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input name="userTitle"/>
 				</field>
@@ -231,9 +231,9 @@ $gui='
 				<field label="Administrator:">
 					<checkbox name="userAdministrator"/>
 				</field>
-			</group>
+			</fields>
 			</overflow>
-			<group>
+			<fields>
 				<buttons>
 					<button name="cancelUser" title="Annuller"/>
 					<button name="deleteUser" title="Slet">
@@ -241,13 +241,13 @@ $gui='
 					</button>
 					<button name="saveUser" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="pathEditor" width="300" title="Sti" padding="5">
 		<formula name="pathFormula">
-			<group>
+			<fields>
 				<field label="Sti:">
 					<text-input key="path"/>
 				</field>
@@ -259,13 +259,13 @@ $gui='
 					<button name="deletePath" title="Slet"/>
 					<button name="savePath" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="weblogGroupEditor" width="300" title="Weblog gruppe" padding="5">
 		<formula name="weblogGroupFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
@@ -277,13 +277,13 @@ $gui='
 					<button name="deleteWeblogGroup" title="Slet"/>
 					<button name="saveWeblogGroup" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="designEditor" width="300" title="Design" padding="5">
 		<formula name="designFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
@@ -297,13 +297,13 @@ $gui='
 					</button>
 					<button name="saveDesign" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="emailTestWindow" width="300" title="Test af E-mail" padding="5">
 		<formula name="emailTestFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Navn:">
 					<text-input key="name"/>
 				</field>
@@ -319,7 +319,7 @@ $gui='
 				<buttons>
 					<button name="testEmail" title="Test" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 </gui>';

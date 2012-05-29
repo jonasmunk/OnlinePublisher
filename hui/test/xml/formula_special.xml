@@ -10,14 +10,14 @@
 			<icon icon="common/folder" title="Build" name="build"/>
 		</toolbar>
 		<formula name="formula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Color">
 					<color-input/>
 				</field>
 				<field label="Location">
 					<location-input/>
 				</field>
-			</group>
+			</fields>
 		</formula>
 	</box>
 </gui>

@@ -94,7 +94,7 @@ $gui='
 	
 	<window title="Kilde" name="sourceWindow" width="300" padding="5">
 		<formula name="sourceFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -117,17 +117,17 @@ $gui='
 					</button>
 					<button name="saveSource" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window title="Kalender" name="calendarWindow" width="300" padding="5">
 		<formula name="calendarFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button name="cancelCalendar" title="Annuller"/>
 				<button name="deleteCalendar" title="Slet">
@@ -140,7 +140,7 @@ $gui='
 	
 	<window title="Begivenhed" icon="common/time" name="eventWindow" width="300" padding="5">
 		<formula name="eventFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -165,7 +165,7 @@ $gui='
 					</button>
 					<button name="saveEvent" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	

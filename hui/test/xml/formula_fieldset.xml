@@ -12,7 +12,7 @@
 		</toolbar>
 		<formula name="formula1">
 			<fieldset legend="This is a group">
-				<group labels="above">
+				<fields labels="above">
 					<field label="Brugernavn:">
 						<text-input key="username"/>
 					</field>
@@ -27,11 +27,11 @@
 							<item title="Excepteur sint occaecat" value="4"/>
 						</dropdown>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			<space height="10"/>
 			<fieldset legend="This is a group">
-				<group labels="above">
+				<fields labels="above">
 					<field label="Notat:">
 						<text-input lines="6" key="note"/>
 					</field>
@@ -47,7 +47,7 @@
 					<field label="Style length:">
 						<style-length-input key="style" value="15px"/>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			<buttons top="10">
 				<button title="Gem" highlighted="true"/>

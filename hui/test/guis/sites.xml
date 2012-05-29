@@ -48,7 +48,7 @@
 	
 	<window name="newPage" width="300" title="Ny side" padding="5">
 		<formula>
-			<group labels="besides">
+			<fields labels="besides">
 				<field label="Titel:">
 					<text-input/>
 				</field>
@@ -83,7 +83,7 @@
 					<button title="Annuller"/>
 					<button title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	<box absolute="true" name="box" padding="10" modal="true" width="500" variant="textured" title="Ny side">
@@ -93,14 +93,14 @@
 			</step>
 			<step title="Egenskaber">
 				<formula>
-					<group labels="above">
+					<fields labels="above">
 						<field label="Titel:">
 							<text-input/>
 						</field>
 						<field label="Sti:">
 							<text-input/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 			</step>
 		</wizard>

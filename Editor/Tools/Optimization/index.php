@@ -47,7 +47,7 @@ $gui='
 								<icon icon="common/save" text="Gem" name="saveSettings"/>
 							</toolbar>
 							<formula name="settingsFormula">
-								<group labels="above">
+								<fields labels="above">
 									<field label="Hvad er hjemmesidens formål:">
 										<text-input multiline="true" key="purpose"/>
 									</field>
@@ -57,7 +57,7 @@ $gui='
 									<field label="Hvad er success-kriterierne for siden">
 										<text-input multiline="true" key="successcriteria"/>
 									</field>
-								</group>
+								</fields>
 							</formula>
 						</box>
 					</fragment>
@@ -69,11 +69,11 @@ $gui='
 	
 	<boundpanel target="newWord" name="newWordPanel" width="200">
 		<formula name="wordFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Ord:">
 					<text-input key="word"/>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button text="Luk" click="newWordPanel.hide()" small="true"/>
 				<button text="Opret" highlighted="true" submit="true" small="true"/>

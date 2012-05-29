@@ -119,12 +119,7 @@ hui.ui.NumberField.prototype = {
 		if (value===null || value===undefined && this.options.allowNull) {
 			this.value = null;
 		} else {
-			if (this.options.min!==undefined) {
-				value = Math.max(value,this.options.min)
-			}
-			if (this.options.max!==undefined) {
-				value = Math.min(value,this.options.max)
-			}
+			value = this._getValueWithinRange(value);
 			this.value = this._round(value);
 		}
 		if (fire && orig!==this.value) {
@@ -145,9 +140,18 @@ hui.ui.NumberField.prototype = {
 		if (this.options.allowNull) {
 			this.value = null;
 		} else {
-			this.value = Math.min(Math.max(0,this.options.min),this.options.max);
+			this.value = this._getValueWithinRange(0);
 		}
 		this.updateField();
+	},
+	_getValueWithinRange : function(value) {
+		if (hui.isDefined(this.options.min)) {
+			value = Math.max(value,this.options.min);
+		}
+		if (hui.isDefined(this.options.max)) {
+			value = Math.min(value,this.options.max);
+		}
+		return value;
 	},
 	_onSliderChange : function(value) {
 		var conv = this.options.min+(this.options.max-this.options.min)*value;

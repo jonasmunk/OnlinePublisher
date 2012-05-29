@@ -144,15 +144,15 @@ $gui='
 		</toolbar>
 		<fragment name="pageInfoFragment">
 			<formula name="pageFormula" padding="5">
-				<group labels="above">
+				<fields labels="above">
 					<field label="Titel:">
 						<text-input key="title"/>
 					</field>
 					<field label="Beskrivelse:">
 						<text-input key="description" label="Beskrivelse:" multiline="true"/>
 					</field>
-				</group>
-				<group>
+				</fields>
+				<fields>
 					<field label="Sprog:">
 						<dropdown key="language" placeholder="Vælg sprog...">
 							'.$languageItems.'
@@ -184,7 +184,7 @@ $gui='
 						</button>
 						<button name="savePage" title="Gem" highlighted="true"/>
 					</buttons>
-				</group>
+				</fields>
 			</formula>
 		</fragment>
 		<fragment name="pageTranslationFragment" visible="false">
@@ -211,7 +211,7 @@ $gui='
 
 	<window name="hierarchyEditor" width="300" title="Hierarki" padding="5" icon="common/hierarchy">
 		<formula name="hierarchyFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input key="name"/>
 				</field>
@@ -220,8 +220,8 @@ $gui='
 						'.$languageItems.'
 					</dropdown>
 				</field>
-			</group>
-			<group>
+			</fields>
+			<fields>
 				<buttons>
 					<button name="cancelHierarchy" title="Annuller"/>
 					<button name="deleteHierarchy" title="Slet">
@@ -229,22 +229,22 @@ $gui='
 					</button>
 					<button name="saveHierarchy" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="hierarchyItemEditor" width="300" title="Menupunkt" padding="5">
 		<formula name="hierarchyItemFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
 				<field label="Skjult:">
 					<checkbox key="hidden"/>
 				</field>
-			</group>
+			</fields>
 			<fieldset legend="Link">
-				<group>
+				<fields>
 					<field label="Side:">
 						<dropdown key="page" source="pagesSource" name="hierarchyItemPage"/>
 					</field>
@@ -260,9 +260,9 @@ $gui='
 					<field label="E-post:">
 						<text-input key="email" name="hierarchyItemEmail"/>
 					</field>
-				</group>				
+				</fields>				
 			</fieldset>
-			<group>
+			<fields>
 				<buttons>
 					<button name="cancelHierarchyItem" title="Annuller"/>
 					<button name="deleteHierarchyItem" title="Slet">
@@ -270,7 +270,7 @@ $gui='
 					</button>
 					<button name="saveHierarchyItem" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
@@ -306,7 +306,7 @@ $gui='
 			<step title="Egenskaber" padding="10" frame="true" icon="common/info">
 				<overflow max-height="200" min-height="160">
 				<formula name="newPageFormula">
-					<group labels="above">
+					<fields labels="above">
 						<field label="Titel:">
 							<text-input name="newPageTitle" key="title"/>
 						</field>
@@ -324,7 +324,7 @@ $gui='
 						<field label="Beskrivelse:">
 							<text-input multiline="true" key="description"/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 				</overflow>
 			</step>

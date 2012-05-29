@@ -118,15 +118,15 @@
 			</right>
 		</toolbar>
 		<formula name="pageFormula" padding="5">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
 				<field label="Beskrivelse:">
 					<text-input key="description" lines="5"/>
 				</field>
-			</group>
-			<group>
+			</fields>
+			<fields>
 				<buttons>
 					<button name="cancelPage" title="Annuller"/>
 					<button name="deletePage" title="Slet">
@@ -134,7 +134,7 @@
 					</button>
 					<button name="savePage" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 </gui>

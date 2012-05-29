@@ -10,7 +10,7 @@
 			<icon icon="common/folder" title="Build" name="build"/>
 		</toolbar>
 		<formula name="formula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Predefined items:">
 					<dropdown name="predefined" value="2">
 						<item title="Lorem inpsum" value="1"/>
@@ -25,7 +25,7 @@
 				<field label="From url:">
 					<dropdown name="fromUrl" url="data/items_loremipsum.xml"/>
 				</field>
-			</group>
+			</fields>
 		</formula>
 	</box>
 </gui>

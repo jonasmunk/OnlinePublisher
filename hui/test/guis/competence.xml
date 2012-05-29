@@ -5,7 +5,7 @@
 		<formula name="formula">
 			<header>Ny begvienhed</header>
 			<space height="5"/>
-			<group>
+			<fields>
 				<field label="Betegnelse:">
 					<text-input/>
 				</field>
@@ -28,7 +28,7 @@
 					<button title="Annuller" action="hui.log(formula.getValues());"/>
 					<button title="Opret" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</box>
 </gui>

@@ -101,11 +101,11 @@ $gui='
 	
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button name="cancelGroup" title="Annuller"/>
 				<button name="deleteGroup" title="Slet">
@@ -118,7 +118,7 @@ $gui='
 	
 	<window title="Fil" name="fileWindow" icon="file/generic" width="300" padding="5">
 		<formula name="fileFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -127,7 +127,7 @@ $gui='
 						<items source="groupSource"/>
 					</checkboxes>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button name="cancelFile" title="Annuller"/>
 				<button name="deleteFile" title="Slet">

@@ -5,7 +5,7 @@
 		<formula>
 			<header>OnlinePublisher Login</header>
 			<space height="5"/>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -16,7 +16,7 @@
 					<button title="Annuller"/>
 					<button title="Log in" highlighted="true" action="hui.ui.alert({title:'The user does not exist',emotion:'gasp',button:'Hey!'});"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</box>
 </gui>

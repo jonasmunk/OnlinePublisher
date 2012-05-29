@@ -102,7 +102,7 @@ $gui = '
 	<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
 	<window width="400" name="linkWindow" padding="5" title="Link">
 		<formula name="linkFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Tekst">
 					<text-input key="text" multiline="true"/>
 				</field>
@@ -115,10 +115,10 @@ $gui = '
 						<item value="part" text="Kun dette afsnit"/>
 					</radiobuttons>
 				</field>
-			</group>
+			</fields>
 			<space left="3" right="3" top="5">
 			<fieldset legend="Link">
-				<group>
+				<fields>
 					<field label="Side">
 						<dropdown key="page" name="linkPage" source="pageSource"/>
 					</field>
@@ -131,7 +131,7 @@ $gui = '
 					<field label="E-post">
 						<text-input key="email" name="linkEmail"/>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			</space>
 			<buttons top="5">
@@ -167,7 +167,7 @@ $gui = '
 
 	<window width="300" name="columnWindow" padding="5" title="Kolonne">
 		<formula name="columnFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Bredde...">
 					<radiobuttons key="preset" name="columnPreset">
 						<item value="dynamic" text="Efter indhold"/>
@@ -179,7 +179,7 @@ $gui = '
 				<field label="Speciel bredde">
 					<style-length-input key="width" name="columnWidth"/>
 				</field>
-			</group>
+			</fields>
 			<buttons top="5">
 				<button text="Slet" name="deleteColumn">
 					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>

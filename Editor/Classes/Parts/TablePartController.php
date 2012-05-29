@@ -45,11 +45,11 @@ class TablePartController extends PartController
 		$gui='
 		<window title="Kilde" name="sourceWindow" width="500">
 			<formula name="sourceFormula">
-				<group labels="above">
+				<fields labels="above">
 					<field>
 						<text-input multiline="true" key="source" max-height="500"/>
 					</field>
-				</group>
+				</fields>
 				<buttons>
 					<button name="applySource" title="OK" click="sourceWindow.hide()"/>
 				</buttons>
@@ -59,7 +59,7 @@ class TablePartController extends PartController
 		<window title="Egenskaber" name="propertiesWindow" icon="monochrome/info" width="300" padding="10">
 			<formula name="propertiesFormula">
 				<fieldset legend="Tabel">
-					<group labels="before">
+					<fields labels="before">
 						<!--
 						<field label="Variant">
 							<dropdown key="variant">
@@ -92,15 +92,15 @@ class TablePartController extends PartController
 							<style-length-input key="width"/>
 						</field>
 					</group>
-				</fieldset>
+				</fields>
 				<!--
 				<space height="10"/>
 				<fieldset legend="Celle">
-					<group labels="before">
+					<fields labels="before">
 						<field label="Baggrund">
 							<text-input key="cellBackground"/>
 						</field>
-					</group>
+					</fields>
 				</fieldset>
 				-->
 			</formula>

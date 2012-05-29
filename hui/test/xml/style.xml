@@ -29,14 +29,14 @@
 		<tabs>
 			<tab title="Formula 1" padding="10">
 				<formula name="formula1">
-					<group labels="above">
+					<fields labels="above">
 						<field label="Style length:">
 							<style-length-input key="style" value="15px"/>
 						</field>
 						<field label="Color">
 							<colorfield key="color" value="red"/>
 						</field>
-					</group>
+					</fields>
 					<buttons top="10">
 						<button title="Slet"/>
 						<button title="Annuller"/>

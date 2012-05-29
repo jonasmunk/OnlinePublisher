@@ -34,7 +34,7 @@ $gui='
 	
 	<window title="Site" name="siteWindow" width="300" padding="5">
 		<formula name="siteFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -48,7 +48,7 @@ $gui='
 					</button>
 					<button name="saveSite" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 </gui>';

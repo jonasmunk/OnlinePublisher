@@ -21,7 +21,7 @@ $gui='
 	
 	<window name="blueprintWindow" width="300" title="Skabelon" padding="5">
 		<formula name="blueprintFormula">
-			<group>
+			<fields>
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
@@ -41,7 +41,7 @@ $gui='
 					</button>
 					<button name="saveBlueprint" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 

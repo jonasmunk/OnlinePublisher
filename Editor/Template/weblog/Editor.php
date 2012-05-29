@@ -11,7 +11,7 @@ $gui='
 	<controller source="controller.js"/>
 	<box width="360" top="30" padding="10" title="Indstillinger til weblog">
 		<formula name="formula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel:">
 					<text-input key="title"/>
 				</field>
@@ -26,7 +26,7 @@ $gui='
 						'.GuiUtils::buildObjectItems('webloggroup').'
 					</checkboxes>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button title="Opdater" name="save" highlighted="true" disabled="true"/>
 			</buttons>

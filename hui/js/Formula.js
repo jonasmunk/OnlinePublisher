@@ -97,11 +97,11 @@ hui.ui.Formula.prototype = {
 		hui.each(recipe,function(item) {
 			if (hui.ui.Formula[item.type]) {
 				var w = hui.ui.Formula[item.type].create(item.options);
-				g.add(w);
+				g.add(w,item.label);
 			}
 			else if (hui.ui[item.type]) {
 				var w = hui.ui[item.type].create(item.options);
-				g.add(w);
+				g.add(w,item.label);
 			} else {
 				hui.log('buildGroup: Unable to find type: '+item.type);
 			}
@@ -139,32 +139,32 @@ hui.ui.Formula.Group = function(options) {
 hui.ui.Formula.Group.create = function(options) {
 	options = hui.override({above:true},options);
 	var element = options.element = hui.build('table',
-		{'class':'hui_formula_group'}
+		{'class':'hui_formula_fields'}
 	);
 	if (options.above) {
-		hui.cls.add(element,'hui_formula_group_above');
+		hui.cls.add(element,'hui_formula_fields_above');
 	}
 	element.appendChild(hui.build('tbody'));
 	return new hui.ui.Formula.Group(options);
 }
 
 hui.ui.Formula.Group.prototype = {
-	add : function(widget) {
+	add : function(widget,label) {
 		var tr = hui.build('tr');
 		this.body.appendChild(tr);
-		var td = hui.build('td',{'class':'hui_formula_group'});
-		if (widget.getLabel) {
-			var label = widget.getLabel();
-			if (label) {
-				if (this.options.above) {
-					hui.build('label',{text:label,parent:td});
-				} else {
-					var th = hui.build('th',{parent:tr});
-					hui.build('label',{text:label,parent:th});
-				}
+		var td = hui.build('td',{'class':'hui_formula_field'});
+		if (!label && widget.getLabel) {
+			label = widget.getLabel();
+		}
+		if (label) {
+			if (this.options.above) {
+				hui.build('label',{className:'hui_formula_field',text:label,parent:td});
+			} else {
+				var th = hui.build('th',{parent:tr,className:'hui_formula_middle'});
+				hui.build('label',{className:'hui_formula_field',text:label,parent:th});
 			}
 		}
-		var item = hui.build('div',{'class':'hui_formula_item'});
+		var item = hui.build('div',{'class':'hui_formula_field_body'});
 		item.appendChild(widget.getElement());
 		td.appendChild(item);
 		tr.appendChild(td);

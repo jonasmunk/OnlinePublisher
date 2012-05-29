@@ -106,24 +106,24 @@ hui.ui.Links.prototype = {
 			var win = this.editWindow = hui.ui.Window.create({title:'Link',width:300,padding:5});
 			var form = this.editForm = hui.ui.Formula.create();
 			var g = form.buildGroup({above:false},[
-				{type:'TextField',options:{label:'Tekst',key:'text'}}
+				{label:'Tekst',type:'TextField',options:{key:'text'}}
 			]);
 			
-			var url = hui.ui.TextField.create({label:'URL',key:'url'});
-			g.add(url);
-			this.inputs['url']=url;
+			var url = hui.ui.TextField.create({key:'url'});
+			g.add(url,'URL');
+			this.inputs['url'] = url;
 			
-			var email = hui.ui.TextField.create({label:'E-mail',key:'email'});
-			g.add(email);
-			this.inputs['email']=email;
+			var email = hui.ui.TextField.create({key:'email'});
+			g.add(email,'E-mail');
+			this.inputs['email'] = email;
 			
-			page = hui.ui.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
-			g.add(page);
-			this.inputs['page']=page;
+			page = hui.ui.DropDown.create({key:'page',source:this.options.pageSource});
+			g.add(page,'Side');
+			this.inputs['page'] = page;
 			
-			file = hui.ui.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
-			g.add(file);
-			this.inputs['file']=file;
+			file = hui.ui.DropDown.create({key:'file',source:this.options.fileSource});
+			g.add(file,'Fil');
+			this.inputs['file'] = file;
 			
 			var self = this;
 			hui.each(this.inputs,function(key,value) {

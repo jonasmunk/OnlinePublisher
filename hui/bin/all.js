@@ -6215,11 +6215,11 @@ hui.ui.Formula.prototype = {
 		hui.each(recipe,function(item) {
 			if (hui.ui.Formula[item.type]) {
 				var w = hui.ui.Formula[item.type].create(item.options);
-				g.add(w);
+				g.add(w,item.label);
 			}
 			else if (hui.ui[item.type]) {
 				var w = hui.ui[item.type].create(item.options);
-				g.add(w);
+				g.add(w,item.label);
 			} else {
 				hui.log('buildGroup: Unable to find type: '+item.type);
 			}
@@ -6257,32 +6257,32 @@ hui.ui.Formula.Group = function(options) {
 hui.ui.Formula.Group.create = function(options) {
 	options = hui.override({above:true},options);
 	var element = options.element = hui.build('table',
-		{'class':'hui_formula_group'}
+		{'class':'hui_formula_fields'}
 	);
 	if (options.above) {
-		hui.cls.add(element,'hui_formula_group_above');
+		hui.cls.add(element,'hui_formula_fields_above');
 	}
 	element.appendChild(hui.build('tbody'));
 	return new hui.ui.Formula.Group(options);
 }
 
 hui.ui.Formula.Group.prototype = {
-	add : function(widget) {
+	add : function(widget,label) {
 		var tr = hui.build('tr');
 		this.body.appendChild(tr);
-		var td = hui.build('td',{'class':'hui_formula_group'});
-		if (widget.getLabel) {
-			var label = widget.getLabel();
-			if (label) {
-				if (this.options.above) {
-					hui.build('label',{text:label,parent:td});
-				} else {
-					var th = hui.build('th',{parent:tr});
-					hui.build('label',{text:label,parent:th});
-				}
+		var td = hui.build('td',{'class':'hui_formula_field'});
+		if (!label && widget.getLabel) {
+			label = widget.getLabel();
+		}
+		if (label) {
+			if (this.options.above) {
+				hui.build('label',{className:'hui_formula_field',text:label,parent:td});
+			} else {
+				var th = hui.build('th',{parent:tr,className:'hui_formula_middle'});
+				hui.build('label',{className:'hui_formula_field',text:label,parent:th});
 			}
 		}
-		var item = hui.build('div',{'class':'hui_formula_item'});
+		var item = hui.build('div',{'class':'hui_formula_field_body'});
 		item.appendChild(widget.getElement());
 		td.appendChild(item);
 		tr.appendChild(td);
@@ -14045,24 +14045,24 @@ hui.ui.Links.prototype = {
 			var win = this.editWindow = hui.ui.Window.create({title:'Link',width:300,padding:5});
 			var form = this.editForm = hui.ui.Formula.create();
 			var g = form.buildGroup({above:false},[
-				{type:'TextField',options:{label:'Tekst',key:'text'}}
+				{label:'Tekst',type:'TextField',options:{key:'text'}}
 			]);
 			
-			var url = hui.ui.TextField.create({label:'URL',key:'url'});
-			g.add(url);
-			this.inputs['url']=url;
+			var url = hui.ui.TextField.create({key:'url'});
+			g.add(url,'URL');
+			this.inputs['url'] = url;
 			
-			var email = hui.ui.TextField.create({label:'E-mail',key:'email'});
-			g.add(email);
-			this.inputs['email']=email;
+			var email = hui.ui.TextField.create({key:'email'});
+			g.add(email,'E-mail');
+			this.inputs['email'] = email;
 			
-			page = hui.ui.DropDown.create({label:'Side',key:'page',source:this.options.pageSource});
-			g.add(page);
-			this.inputs['page']=page;
+			page = hui.ui.DropDown.create({key:'page',source:this.options.pageSource});
+			g.add(page,'Side');
+			this.inputs['page'] = page;
 			
-			file = hui.ui.DropDown.create({label:'Fil',key:'file',source:this.options.fileSource});
-			g.add(file);
-			this.inputs['file']=file;
+			file = hui.ui.DropDown.create({key:'file',source:this.options.fileSource});
+			g.add(file,'Fil');
+			this.inputs['file'] = file;
 			
 			var self = this;
 			hui.each(this.inputs,function(key,value) {
@@ -15807,12 +15807,7 @@ hui.ui.NumberField.prototype = {
 		if (value===null || value===undefined && this.options.allowNull) {
 			this.value = null;
 		} else {
-			if (this.options.min!==undefined) {
-				value = Math.max(value,this.options.min)
-			}
-			if (this.options.max!==undefined) {
-				value = Math.min(value,this.options.max)
-			}
+			value = this._getValueWithinRange(value);
 			this.value = this._round(value);
 		}
 		if (fire && orig!==this.value) {
@@ -15833,9 +15828,18 @@ hui.ui.NumberField.prototype = {
 		if (this.options.allowNull) {
 			this.value = null;
 		} else {
-			this.value = Math.min(Math.max(0,this.options.min),this.options.max);
+			this.value = this._getValueWithinRange(0);
 		}
 		this.updateField();
+	},
+	_getValueWithinRange : function(value) {
+		if (hui.isDefined(this.options.min)) {
+			value = Math.max(value,this.options.min);
+		}
+		if (hui.isDefined(this.options.max)) {
+			value = Math.min(value,this.options.max);
+		}
+		return value;
 	},
 	_onSliderChange : function(value) {
 		var conv = this.options.min+(this.options.max-this.options.min)*value;

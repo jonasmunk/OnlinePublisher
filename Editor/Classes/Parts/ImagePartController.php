@@ -292,11 +292,11 @@ class ImagePartController extends PartController
 				</tab>
 				<tab title="Hent fra nettet" padding="10">
 					<formula name="urlForm">
-						<group labels="above">
+						<fields labels="above">
 							<field label="Adresse:">
 								<text-input key="url"/>
 							</field>
-						</group>
+						</fields>
 					</formula>
 					<buttons align="center">
 						<button name="cancelFetch" title="Luk"/>
@@ -308,7 +308,7 @@ class ImagePartController extends PartController
 		
 		<window title="Avanceret" name="imageAdvancedWindow" width="300">
 			<formula name="imageAdvancedFormula">
-				<group>
+				<fields>
 					<field label="Tekst">
 						<text-input multiline="true" key="text"/>
 					</field>
@@ -326,7 +326,7 @@ class ImagePartController extends PartController
 					<buttons>
 						<button name="pasteImage" text="Indsæt fra udklipsholder"/>
 					</buttons>
-				</group>
+				</fields>
 			</formula>
 		</window>
 		

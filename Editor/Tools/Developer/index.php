@@ -39,14 +39,14 @@ $gui='
 					<fragment height="full" background="wood">
 						<box width="300" top="30" title="Settings" padding="10">
 							<formula name="settingsFormula">
-								<group>
+								<fields>
 									<field label="Simulate network latency:">
 										<checkbox key="simulateLatency" value="'.($_SESSION['core.debug.simulateLatency'] ? 'true' : 'false').'"/>
 									</field>
 									<field label="Log database queries:">
 										<checkbox key="logDatabaseQueries" value="'.($_SESSION['core.debug.logDatabaseQueries'] ? 'true' : 'false').'"/>
 									</field>
-								</group>
+								</fields>
 							</formula>
 						</box>
 					</fragment>

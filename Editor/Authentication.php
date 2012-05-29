@@ -39,7 +39,7 @@ $gui='
 		<space all="10" top="5" bottom="5">
 			<formula name="formula" state="login">
 				<header>Adgangskontrol</header>
-				<group>
+				<fields>
 					<field label="Brugernavn:">
 						<text-input name="username" correction="false"/>
 					</field>
@@ -50,13 +50,13 @@ $gui='
 						<button name="cancel" title="Annuller" url="../"/>
 						<button name="login" title="Log ind" highlighted="true" submit="true"/>
 					</buttons>
-				</group>
+				</fields>
 			</formula>
 			<formula name="recoveryForm" state="recover">
 				'.($mailEnabled ? '
 				<header>Genfind kodeord</header>
 				<text><p>Skriv dit brugernavn eller e-mail, så sender vi dig en e-mail om hvordan du kan ændre din kode...</p></text>
-				<group labels="above">
+				<fields labels="above">
 					<field label="Brugernavn eller e-mail:">
 						<text-input key="nameOrMail"/>
 					</field>
@@ -65,19 +65,19 @@ $gui='
 						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="Find" name="recover" highlighted="true" submit="true"/>
 					</buttons>
-				</group>
+				</fields>
 				' : '
 				<header>Genfind kodeord</header>
 				<text>
 					<p>Systemet er ikke konfigureret til at sende e-mail. Kontakt den ansvarlige for systemet for at få adgang.</p>
 					<p>Du kan også oprette en ny administrator hvis du kender super-brugeren.</p>
 				</text>
-				<group labels="above">
+				<fields labels="above">
 					<buttons>
 						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="Ny bruger" name="createAdmin"/>
 					</buttons>
-				</group>				
+				</fields>				
 				'
 				).'
 			</formula>
@@ -122,14 +122,14 @@ $gui='
 			<text align="center">
 				<p>{da:Log ind med super-bruger for at opdatere databasen;en:Log in as super-user in order to update the database}</p>
 			</text>
-			<group>
+			<fields>
 				<field label="{Username;da:Brugernavn}">
 					<text-input key="username"/>
 				</field>
 				<field label="{Password;da:Kodeord}">
 					<text-input key="password" secret="true"/>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button text="{Update;da:Opdater}" submit="true" highlighted="true"/>
 			</buttons>
@@ -146,25 +146,25 @@ $gui='
 				<p>{da:Log ind med super-brugeren for at oprette en ny administrator;en:Log in as the super-user in order to create a new administrator}</p>
 			</text>
 			<fieldset legend="{Super user ; da: Super-bruger}">
-				<group>
+				<fields>
 					<field label="{Username;da:Brugernavn}">
 						<text-input key="superUsername"/>
 					</field>
 					<field label="{Password;da:Kodeord}">
 						<text-input key="superPassword" secret="true"/>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			<space height="10"/>
 			<fieldset legend="Administrator">
-				<group>
+				<fields>
 					<field label="{Username;da:Brugernavn}">
 						<text-input key="adminUsername"/>
 					</field>
 					<field label="{Password;da:Kodeord}">
 						<text-input key="adminPassword" secret="true"/>
 					</field>
-				</group>
+				</fields>
 			</fieldset>
 			<buttons top="10">
 				<button text="{Create;da:Opret}" submit="true" highlighted="true"/>

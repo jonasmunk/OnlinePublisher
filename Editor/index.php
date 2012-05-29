@@ -97,7 +97,7 @@ $gui='
 	
 	<boundpanel name="issuePanel" width="250">
 		<formula name="issueFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Note:">
 					<text-input key="text" multiline="true"/>
 				</field>
@@ -108,7 +108,7 @@ $gui='
 						<item value="unknown" text="Ukendt"/>
 					</radiobuttons>
 				</field>
-			</group>
+			</fields>
 			<buttons>
 				<button text="Slet" name="deleteIssue" small="true">
 					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>

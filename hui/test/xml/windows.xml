@@ -19,7 +19,7 @@
 	
 	<window name="dark" width="300" title="Bruger" padding="5" variant="dark">
 		<formula>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -43,13 +43,13 @@
 					<button title="Slet"/>
 					<button title="Annuller"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="standard" width="300" title="Bruger" padding="5">
 		<formula>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -73,13 +73,13 @@
 					<button title="Slet"/>
 					<button title="Annuller"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
 	<window name="light" width="300" title="Bruger" padding="5" variant="light">
 		<formula>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -103,7 +103,7 @@
 					<button title="Slet"/>
 					<button title="Annuller"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
@@ -111,7 +111,7 @@
 		<button click="flipper.flip()" title="Flip"/>
 		<back>
 			<formula>
-				<group>
+				<fields>
 					<field label="Brugernavn:">
 						<text-input/>
 					</field>
@@ -135,14 +135,14 @@
 						<button title="Slet"/>
 						<button title="Annuller" click="flipper.flip()"/>
 					</buttons>
-				</group>
+				</fields>
 			</formula>
 		</back>
 	</window>
 
 	<window name="news" width="300" title="Nyhed" padding="5" variant="news">
 		<formula>
-			<group>
+			<fields>
 				<field label="Brugernavn:">
 					<text-input/>
 				</field>
@@ -166,7 +166,7 @@
 					<button title="Slet"/>
 					<button title="Annuller"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 

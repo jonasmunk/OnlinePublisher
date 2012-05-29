@@ -43,7 +43,7 @@ $gui='
 		</text>
 		</space>
 		<formula name="formula">
-			<group>
+			<fields>
 				<field label="Web address:">
 					<text-input name="baseUrl" value="'.StringUtils::escapeXML($baseUrl).'"/>
 				</field>
@@ -69,7 +69,7 @@ $gui='
 					<button title="Test database" name="test"/>
 					<button title="OK" name="save" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</box>
 </gui>

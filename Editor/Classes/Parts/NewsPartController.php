@@ -110,7 +110,7 @@ class NewsPartController extends PartController
 			<tabs small="true" centered="true">
 				<tab title="Indstillinger" padding="10">
 					<formula>
-						<group labels="above">
+						<fields labels="above">
 							<field label="Titel">
 								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" name="newsTitle"/>
 							</field>
@@ -127,9 +127,9 @@ class NewsPartController extends PartController
 									<item label="Hoejre" value="right"/>
 								</radiobuttons>
 							</field>
-						</group>
+						</fields>
 						<fieldset legend="Nyheder">
-							<group labels="above">
+							<fields labels="above">
 								<field label="Grupper">
 									<checkboxes name="newsGroups">
 									'.GuiUtils::buildObjectItems('newsgroup').'
@@ -140,13 +140,13 @@ class NewsPartController extends PartController
 									'.GuiUtils::buildObjectItems('news').'
 									</dropdown>
 								</field>
-							</group>
+							</fields>
 						</fieldset>
 					</formula>
 				</tab>
 				<tab title="Visning" padding="10">
 					<formula>
-						<group labels="above">
+						<fields labels="above">
 							<field label="Retning">
 								<radiobuttons value="'.$part->getSortDir().'" name="newsSortDir">
 									<item label="Faldende" value="descending"/>
@@ -176,8 +176,8 @@ class NewsPartController extends PartController
 							</field>
 							<field label="Antal">
 								<number-input name="newsTimeCount" value="'.$part->getTimeCount().'"/>
-							</number-input>
-						</group>
+							</field>
+						</fields>
 					</formula>
 				</tab>
 			</tabs>

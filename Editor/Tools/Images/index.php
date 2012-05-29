@@ -80,7 +80,7 @@ $gui='
 	
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -91,7 +91,7 @@ $gui='
 					</button>
 					<button name="saveGroup" title="Gem" highlighted="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 	
@@ -108,11 +108,11 @@ $gui='
 			</tab>
 			<tab title="Hent fra nettet" padding="10">
 				<formula name="fetchFormula">
-					<group labels="above">
+					<fields labels="above">
 						<field label="Adresse:">
 							<text-input key="url"/>
 						</field>
-					</group>
+					</fields>
 				</formula>
 				<buttons align="center">
 					<button name="cancelFetch" title="Annuller"/>
@@ -124,7 +124,7 @@ $gui='
 	
 	<window title="Billede" name="imageWindow" icon="file/generic" width="300" padding="5">
 		<formula name="imageFormula">
-			<group labels="above">
+			<fields labels="above">
 				<field label="Titel">
 					<text-input key="title"/>
 				</field>
@@ -140,7 +140,7 @@ $gui='
 					</button>
 					<button name="saveImage" title="Gem" highlighted="true" submit="true"/>
 				</buttons>
-			</group>
+			</fields>
 		</formula>
 	</window>
 </gui>';
