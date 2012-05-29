@@ -45,7 +45,7 @@ hui.ui.NumberField.prototype = {
 	},
 	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
-		this.updateField();
+		this._updateField();
 		if (this.sliderPanel) {
 			this.sliderPanel.hide();
 		}
@@ -79,13 +79,13 @@ hui.ui.NumberField.prototype = {
 		} else {
 			this.setLocalValue(this.value-this.options.tickSize,true);
 		}
-		this.updateField();
+		this._updateField();
 	},
 	/** @private */
 	upEvent : function(e) {
 		hui.stop(e);
 		this.setLocalValue(this.value+this.options.tickSize,true);
-		this.updateField();
+		this._updateField();
 	},
 	/** Sets focus */
 	focus : function() {
@@ -107,10 +107,10 @@ hui.ui.NumberField.prototype = {
 		if (!isNaN(value)) {
 			this.setLocalValue(value,false);
 		}
-		this.updateField();
+		this._updateField();
 	},
 	/** @private */
-	updateField : function() {
+	_updateField : function() {
 		this.input.value = this.value===null || this.value===undefined ? '' : this.value;
 	},
 	/** @private */
@@ -142,7 +142,7 @@ hui.ui.NumberField.prototype = {
 		} else {
 			this.value = this._getValueWithinRange(0);
 		}
-		this.updateField();
+		this._updateField();
 	},
 	_getValueWithinRange : function(value) {
 		if (hui.isDefined(this.options.min)) {
@@ -156,7 +156,7 @@ hui.ui.NumberField.prototype = {
 	_onSliderChange : function(value) {
 		var conv = this.options.min+(this.options.max-this.options.min)*value;
 		this.setLocalValue(conv,true);
-		this.updateField();
+		this._updateField();
 	},
 	_showSlider : function() {
 		if (this.options.min===undefined || this.options.max===undefined) {

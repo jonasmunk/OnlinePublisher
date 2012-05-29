@@ -24,8 +24,8 @@ hui.ui.StyleLength.prototype = {
 		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
 		hui.listen(this.input,'blur',this._onBlur.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
-		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
-		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
+		hui.listen(this.up,'mousedown',this._upEvent.bind(this));
+		hui.listen(this.down,'mousedown',this._downEvent.bind(this));
 	},
 	/** @private */
 	parseValue : function(value) {
@@ -49,26 +49,25 @@ hui.ui.StyleLength.prototype = {
 	},
 	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
-		this.updateInput();
+		this._updateInput();
 	},
 	/** @private */
 	keyEvent : function(e) {
 		e = e || window.event;
 		if (e.keyCode==hui.KEY_UP) {
 			hui.stop(e);
-			this.upEvent();
+			this._upEvent();
 		} else if (e.keyCode==hui.KEY_DOWN) {
-			this.downEvent();
+			this._downEvent();
 		} else {
-			this.checkAndSetValue(this.parseValue(this.input.value));
+			this._checkAndSetValue(this.parseValue(this.input.value));
 		}
 	},
 	/** @private */
-	updateInput : function() {
+	_updateInput : function() {
 		this.input.value = this.getValue();
 	},
-	/** @private */
-	checkAndSetValue : function(value) {
+	_checkAndSetValue : function(value) {
 		var old = this.value;
 		var changed = false;
 		if (old===null && value===null) {
@@ -89,25 +88,23 @@ hui.ui.StyleLength.prototype = {
 			this.setValue(this.options.initialValue);
 		}
 	},
-	/** @private */
-	downEvent : function() {
+	_downEvent : function() {
 		this._setInitialValue();
 		if (this.value) {
-			this.checkAndSetValue({number:Math.max(this.options.min,this.value.number-1),unit:this.value.unit});
+			this._checkAndSetValue({number:Math.max(this.options.min,this.value.number-1),unit:this.value.unit});
 		} else {
-			this.checkAndSetValue({number:this.options.min,unit:this.options.defaultUnit});
+			this._checkAndSetValue({number:this.options.min,unit:this.options.defaultUnit});
 		}
-		this.updateInput();
+		this._updateInput();
 	},
-	/** @private */
-	upEvent : function() {
+	_upEvent : function() {
 		this._setInitialValue();
 		if (this.value) {
-			this.checkAndSetValue({number:Math.min(this.options.max,this.value.number+1),unit:this.value.unit});
+			this._checkAndSetValue({number:Math.min(this.options.max,this.value.number+1),unit:this.value.unit});
 		} else {
-			this.checkAndSetValue({number:this.options.min+1,unit:this.options.defaultUnit});
+			this._checkAndSetValue({number:this.options.min+1,unit:this.options.defaultUnit});
 		}
-		this.updateInput();
+		this._updateInput();
 	},
 	
 	// Public
@@ -120,7 +117,7 @@ hui.ui.StyleLength.prototype = {
 	},
 	setValue : function(value) {
 		this.value = this.parseValue(value);
-		this.updateInput();
+		this._updateInput();
 	},
 	focus : function() {
 		try {

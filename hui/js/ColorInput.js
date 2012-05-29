@@ -21,7 +21,8 @@ hui.ui.ColorInput = function(options) {
 	this.input.listen({$valueChanged:this._onInputChange.bind(this)})
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	this._syncValue();
+	this._syncInput();
+	this._syncColorButton();
 	this._addBehavior();
 }
 
@@ -37,38 +38,32 @@ hui.ui.ColorInput.prototype = {
 		hui.ui.addFocusClass({element:this.input.element,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.button, 'click',this._onButtonClick.bind(this));
 	},
-	_syncValue : function() {
-		this.button.style.backgroundColor = this.value;
+	_syncInput : function() {
 		this.input.setValue(this.value);
-		this._syncColor();
 	},
-	_syncColor : function() {		
+	_syncColorButton : function() {		
 		this.button.innerHTML = this.value ? '' : '?';
 		this.button.style.backgroundColor = this.value;	
 	},
 	_onInputChange : function(value) {
+		var changed = value!=this.value;
 		this.value = value;
-		this._syncColor();
+		this._syncColorButton();
+		if (changed) {
+			this._fireChange();
+		}
 	},
-	getValue : function() {
-		return this.value;
-	},
-	setValue : function(value) {
-		this.value = value;
-		this._syncValue();
-	},
-	focus : function() {
-		try {
-			this.input.focus();
-		} catch (e) {}		
-	},
-	reset : function() {
-		this.setValue('');
+	_fireChange : function() {
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
+		this.fire('valueChanged',this.value)		
 	},
 	_onBlur : function() {
 		hui.Color.parse(this.value);
 	},
 	_onButtonClick : function() {
+		if (hui.window.getViewHeight()<200) {
+			return; // TODO: mini picker
+		}
 		if (!this.panel) {
 			this.panel = hui.ui.BoundPanel.create({modal:true});
 			this.picker = hui.ui.ColorPicker.create();
@@ -82,6 +77,26 @@ hui.ui.ColorInput.prototype = {
 	$colorWasSelected : function(color) {
 		this.panel.hide();
 		this.setValue(color);
+		this._fireChange();
+	},
+	
+	// Public...
+	
+	getValue : function() {
+		return this.value;
+	},
+	setValue : function(value) {
+		this.value = value;
+		this._syncInput();
+		this._syncColorButton();
+	},
+	focus : function() {
+		try {
+			this.input.focus();
+		} catch (e) {}		
+	},
+	reset : function() {
+		this.setValue('');
 	}
 }
 

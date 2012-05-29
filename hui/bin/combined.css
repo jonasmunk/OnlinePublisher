@@ -2257,7 +2257,8 @@ span.hui_toolbar_item_body
 	text-align: center;
 }
 
-span.hui_toolbar_item span.hui_numberfield
+span.hui_toolbar_item span.hui_numberfield,
+span.hui_toolbar_item span.hui_colorinput
 {
 	top: 8px;
 }
@@ -2284,7 +2285,7 @@ span.hui_toolbar_item .hui_field
 
 span.hui_toolbar_item span.hui_segmented
 {
-	margin-top: 9px;
+	margin-top: 10px;
 }
 
 

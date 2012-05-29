@@ -18,6 +18,8 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/ColorInput.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Input.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ColorPicker.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Bar.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
@@ -33,11 +35,11 @@
 				win.show();
 				assert.equals(hui.ui.get('myForm'),formula,'Could get form by name');
 				formula.buildGroup(null,[
-					{type:'TextField',options:{name:'textField',key:'text',value:'This is some text',label:'Text label'}},
-					{type:'DateTimeField',options:{key:'date',value:now,label:'Date label'}},
-					{type:'NumberField',options:{key:'number',value:10.56,decimals:2,label:'Number label'}},
-					{type:'DropDown',options:{key:'drop',value:'da',label:'Drop label',items:[{value:'da',label:'Danish'},{value:'en',title:'English'},{value:'abc',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}]}},
-					{type:'LocationField',options:{key:'location',value:{latitude:57.535354,longitude:10.7428479},label:'Location label'}},
+					{type:'TextField',label:'Text label',options:{name:'textField',key:'text',value:'This is some text'}},
+					{type:'DateTimeField',label:'Date label',options:{key:'date',value:now}},
+					{type:'NumberField',label:'Number label',options:{key:'number',value:10.56,decimals:2}},
+					{type:'DropDown',label:'Drop label',options:{key:'drop',value:'da',items:[{value:'da',label:'Danish'},{value:'en',title:'English'},{value:'abc',title:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}]}},
+					{type:'LocationField',label:'Location label',options:{key:'location',value:{latitude:57.535354,longitude:10.7428479}}},
 					{label:'Color',type:'ColorInput',options:{key:'color',value:'#f00'}}
 				]);
 			},

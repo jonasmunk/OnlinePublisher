@@ -14955,8 +14955,8 @@ hui.ui.StyleLength.prototype = {
 		hui.listen(this.input,'focus',function() {hui.cls.add(e,'hui_numberfield_focused')});
 		hui.listen(this.input,'blur',this._onBlur.bind(this));
 		hui.listen(this.input,'keyup',this.keyEvent.bind(this));
-		hui.listen(this.up,'mousedown',this.upEvent.bind(this));
-		hui.listen(this.down,'mousedown',this.downEvent.bind(this));
+		hui.listen(this.up,'mousedown',this._upEvent.bind(this));
+		hui.listen(this.down,'mousedown',this._downEvent.bind(this));
 	},
 	/** @private */
 	parseValue : function(value) {
@@ -14980,26 +14980,25 @@ hui.ui.StyleLength.prototype = {
 	},
 	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
-		this.updateInput();
+		this._updateInput();
 	},
 	/** @private */
 	keyEvent : function(e) {
 		e = e || window.event;
 		if (e.keyCode==hui.KEY_UP) {
 			hui.stop(e);
-			this.upEvent();
+			this._upEvent();
 		} else if (e.keyCode==hui.KEY_DOWN) {
-			this.downEvent();
+			this._downEvent();
 		} else {
-			this.checkAndSetValue(this.parseValue(this.input.value));
+			this._checkAndSetValue(this.parseValue(this.input.value));
 		}
 	},
 	/** @private */
-	updateInput : function() {
+	_updateInput : function() {
 		this.input.value = this.getValue();
 	},
-	/** @private */
-	checkAndSetValue : function(value) {
+	_checkAndSetValue : function(value) {
 		var old = this.value;
 		var changed = false;
 		if (old===null && value===null) {
@@ -15020,25 +15019,23 @@ hui.ui.StyleLength.prototype = {
 			this.setValue(this.options.initialValue);
 		}
 	},
-	/** @private */
-	downEvent : function() {
+	_downEvent : function() {
 		this._setInitialValue();
 		if (this.value) {
-			this.checkAndSetValue({number:Math.max(this.options.min,this.value.number-1),unit:this.value.unit});
+			this._checkAndSetValue({number:Math.max(this.options.min,this.value.number-1),unit:this.value.unit});
 		} else {
-			this.checkAndSetValue({number:this.options.min,unit:this.options.defaultUnit});
+			this._checkAndSetValue({number:this.options.min,unit:this.options.defaultUnit});
 		}
-		this.updateInput();
+		this._updateInput();
 	},
-	/** @private */
-	upEvent : function() {
+	_upEvent : function() {
 		this._setInitialValue();
 		if (this.value) {
-			this.checkAndSetValue({number:Math.min(this.options.max,this.value.number+1),unit:this.value.unit});
+			this._checkAndSetValue({number:Math.min(this.options.max,this.value.number+1),unit:this.value.unit});
 		} else {
-			this.checkAndSetValue({number:this.options.min+1,unit:this.options.defaultUnit});
+			this._checkAndSetValue({number:this.options.min+1,unit:this.options.defaultUnit});
 		}
-		this.updateInput();
+		this._updateInput();
 	},
 	
 	// Public
@@ -15051,7 +15048,7 @@ hui.ui.StyleLength.prototype = {
 	},
 	setValue : function(value) {
 		this.value = this.parseValue(value);
-		this.updateInput();
+		this._updateInput();
 	},
 	focus : function() {
 		try {
@@ -15733,7 +15730,7 @@ hui.ui.NumberField.prototype = {
 	},
 	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_numberfield_focused');
-		this.updateField();
+		this._updateField();
 		if (this.sliderPanel) {
 			this.sliderPanel.hide();
 		}
@@ -15767,13 +15764,13 @@ hui.ui.NumberField.prototype = {
 		} else {
 			this.setLocalValue(this.value-this.options.tickSize,true);
 		}
-		this.updateField();
+		this._updateField();
 	},
 	/** @private */
 	upEvent : function(e) {
 		hui.stop(e);
 		this.setLocalValue(this.value+this.options.tickSize,true);
-		this.updateField();
+		this._updateField();
 	},
 	/** Sets focus */
 	focus : function() {
@@ -15795,10 +15792,10 @@ hui.ui.NumberField.prototype = {
 		if (!isNaN(value)) {
 			this.setLocalValue(value,false);
 		}
-		this.updateField();
+		this._updateField();
 	},
 	/** @private */
-	updateField : function() {
+	_updateField : function() {
 		this.input.value = this.value===null || this.value===undefined ? '' : this.value;
 	},
 	/** @private */
@@ -15830,7 +15827,7 @@ hui.ui.NumberField.prototype = {
 		} else {
 			this.value = this._getValueWithinRange(0);
 		}
-		this.updateField();
+		this._updateField();
 	},
 	_getValueWithinRange : function(value) {
 		if (hui.isDefined(this.options.min)) {
@@ -15844,7 +15841,7 @@ hui.ui.NumberField.prototype = {
 	_onSliderChange : function(value) {
 		var conv = this.options.min+(this.options.max-this.options.min)*value;
 		this.setLocalValue(conv,true);
-		this.updateField();
+		this._updateField();
 	},
 	_showSlider : function() {
 		if (this.options.min===undefined || this.options.max===undefined) {
@@ -16163,7 +16160,8 @@ hui.ui.ColorInput = function(options) {
 	this.input.listen({$valueChanged:this._onInputChange.bind(this)})
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	this._syncValue();
+	this._syncInput();
+	this._syncColorButton();
 	this._addBehavior();
 }
 
@@ -16179,38 +16177,32 @@ hui.ui.ColorInput.prototype = {
 		hui.ui.addFocusClass({element:this.input.element,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.button, 'click',this._onButtonClick.bind(this));
 	},
-	_syncValue : function() {
-		this.button.style.backgroundColor = this.value;
+	_syncInput : function() {
 		this.input.setValue(this.value);
-		this._syncColor();
 	},
-	_syncColor : function() {		
+	_syncColorButton : function() {		
 		this.button.innerHTML = this.value ? '' : '?';
 		this.button.style.backgroundColor = this.value;	
 	},
 	_onInputChange : function(value) {
+		var changed = value!=this.value;
 		this.value = value;
-		this._syncColor();
+		this._syncColorButton();
+		if (changed) {
+			this._fireChange();
+		}
 	},
-	getValue : function() {
-		return this.value;
-	},
-	setValue : function(value) {
-		this.value = value;
-		this._syncValue();
-	},
-	focus : function() {
-		try {
-			this.input.focus();
-		} catch (e) {}		
-	},
-	reset : function() {
-		this.setValue('');
+	_fireChange : function() {
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
+		this.fire('valueChanged',this.value)		
 	},
 	_onBlur : function() {
 		hui.Color.parse(this.value);
 	},
 	_onButtonClick : function() {
+		if (hui.window.getViewHeight()<200) {
+			return; // TODO: mini picker
+		}
 		if (!this.panel) {
 			this.panel = hui.ui.BoundPanel.create({modal:true});
 			this.picker = hui.ui.ColorPicker.create();
@@ -16224,6 +16216,26 @@ hui.ui.ColorInput.prototype = {
 	$colorWasSelected : function(color) {
 		this.panel.hide();
 		this.setValue(color);
+		this._fireChange();
+	},
+	
+	// Public...
+	
+	getValue : function() {
+		return this.value;
+	},
+	setValue : function(value) {
+		this.value = value;
+		this._syncInput();
+		this._syncColorButton();
+	},
+	focus : function() {
+		try {
+			this.input.focus();
+		} catch (e) {}		
+	},
+	reset : function() {
+		this.setValue('');
 	}
 }
 

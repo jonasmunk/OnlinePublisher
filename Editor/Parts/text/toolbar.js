@@ -16,6 +16,9 @@ hui.ui.listen({
 		textIndent.setValue(this.form.textIndent.value);
 		imageId.setValue(this.form.imageId.value);
 		imageFloat.setValue(this.form.imageFloat.value);
+		this._updateInitialValues();
+	},
+	_updateInitialValues : function() {
 		fontSize.setInitialValue(hui.style.get(this.form.text,'font-size'));
 		lineHeight.setInitialValue(hui.style.get(this.form.text,'line-height'));
 	},
@@ -28,6 +31,7 @@ hui.ui.listen({
 		this.form.fontSize.value=value || '';
 		this.form.text.style.fontSize=value || '';
 		partToolbar.getMainController().syncSize();
+		this._updateInitialValues();
 	},
 	$valueChanged$textAlign : function(value) {
 		this.form.textAlign.value=value || '';
