@@ -6,10 +6,14 @@
 <body><p class="modules"><a href="javascript://"><span>All</span></a> <a href="javascript://" data="bar"><span>Bar</span></a> <a href="javascript://" data="selection"><span>Selection</span></a> <a href="javascript://" data="container"><span>Container</span></a> <a href="javascript://" data="unknown"><span>Unknown</span></a> <a href="javascript://" data="base"><span>Base</span></a> <a href="javascript://" data="Unknown"><span>Unknown</span></a> <a href="javascript://" data="action"><span>Action</span></a> <a href="javascript://" data="input"><span>Input</span></a> <a href="javascript://" data="layout"><span>Layout</span></a> </p><div class="component input"><h2>Formula <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Formula.html"><span>hui.ui.Formula</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;formula name="«name»" state="«text»" padding="«pixels»"&gt;
-    &lt;group···&gt;
+    &lt;fields···&gt;
         ···
-    &lt;/group&gt;
+    &lt;/fields&gt;
 &lt;/formula&gt;
+</pre></div><div class="component input"><h2>Fields <span class="module">input</span></h2>
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;fields labels="«'above' | 'besides'»"&gt;
+    ···
+&lt;/fields&gt;
 </pre></div><div class="component input"><h2>Fieldset <span class="module">input</span></h2>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;fieldset legend="«text»"&gt;
     ···
@@ -39,12 +43,12 @@
 </pre></div><div class="component input"><h2>Drop down <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.DropDown.html"><span>hui.ui.DropDown</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;dropdown name="«text»" key="«text»" value="«text»" source="«name»" url="«url»" placeholder="«text»" adaptive="«boolean»" width="«pixels»"&gt;
-	&lt;item value="«text»" text="«text»"/&gt;
+    &lt;item value="«text»" text="«text»"/&gt;
 &lt;/dropdown&gt;
 </pre></div><div class="component input"><h2>Radio buttons <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Radiobuttons.html"><span>hui.ui.Radiobuttons</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;radiobuttons name="«text»" key="«text»" value="«text»"&gt;
-	&lt;item value="«text»" text="«text»"/&gt;
+    &lt;item value="«text»" text="«text»"/&gt;
 &lt;/radiobuttons&gt;
 </pre></div><div class="component input"><h2>Check box <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Checkbox.html"><span>hui.ui.Checkbox</span></a></p>
@@ -52,13 +56,13 @@
 </pre></div><div class="component input"><h2>Check boxes <span class="module">input</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Checkboxes.html"><span>hui.ui.Checkboxes</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;checkboxes name="«text»" key="«text»" max-height="«pixels»"&gt;
-	&lt;item value="«text»" text="«text»"/&gt;
-	&lt;items name="«text»" source="«name»"/&gt;
+    &lt;item value="«text»" text="«text»"/&gt;
+    &lt;items name="«text»" source="«name»"/&gt;
 &lt;/checkboxes&gt;
 </pre></div><div class="component action"><h2>Buttons <span class="module">action</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Buttons.html"><span>hui.ui.Buttons</span></a></p>
 <p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;buttons small="«boolean»" mini="«boolean»" aling="«'left' | 'center' | 'right'»" padding="«pixels»" top="«pixels»" left="«pixels»" right="«pixels»" bottom="«pixels»"&gt;
-	&lt;button···/&gt;
+    &lt;button···/&gt;
 &lt;/buttons&gt;
 </pre></div><div class="component action"><h2>Button <span class="module">action</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Button.html"><span>hui.ui.Button</span></a></p>
@@ -84,8 +88,8 @@
 &lt;/objectlist&gt;
 </pre></div><div class="component base"><h2>Gui <span class="module">base</span></h2>
 <p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;gui title="«text»" state="«text»" padding="«pixels»"&gt;
-    &lt;controller source="«url»" name="«name»"/&gt;
-    &lt;controller source="«url»" name="«name»"/&gt;
+    &lt;controller source="«url»"/&gt;
+    &lt;controller source="«url»"/&gt;
     ···
 &lt;/gui&gt;
 </pre></div><div class="component base"><h2>DWR interface <span class="module">base</span></h2>
@@ -295,35 +299,35 @@
 </pre></div><div class="component layout"><h2>Tiles <span class="module">layout</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Tiles.html"><span>hui.ui.Tiles</span></a></p>
 <p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;tiles name="«name»" reveal="«boolean»"&gt;
-	&lt;tile width="«percent»" height="«percent»" left="«percent»" top="«percent»" padding="«pixels»" background="«css-color»" variant="«'light'»"&gt;
-		&lt;title&gt;«text»&lt;/title&gt;
-		&lt;actions&gt;
-			&lt;icon icon="«icon»" key="«text»"/&gt;
-			&lt;icon icon="«icon»" key="«text»"/&gt;
-		&lt;/actions&gt;
-    	···
-	&lt;/tile&gt;
+    &lt;tile width="«percent»" height="«percent»" left="«percent»" top="«percent»" padding="«pixels»" background="«css-color»" variant="«'light'»"&gt;
+        &lt;title&gt;«text»&lt;/title&gt;
+        &lt;actions&gt;
+            &lt;icon icon="«icon»" key="«text»"/&gt;
+            &lt;icon icon="«icon»" key="«text»"/&gt;
+        &lt;/actions&gt;
+        ···
+    &lt;/tile&gt;
 &lt;/pages&gt;
 </pre></div><div class="component layout"><h2>Structure <span class="module">layout</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Structure.html"><span>hui.ui.Structure</span></a></p>
 <p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;structure name="«name»" height="«pixels»"&gt;
-	&lt;top&gt;
-    	···
-	&lt;/top&gt;
-	&lt;middle&gt;
-		&lt;left&gt;
-	    	···
-		&lt;/left&gt;
-		&lt;center&gt;
-	    	···
-		&lt;/center&gt;
-		&lt;right&gt;
-	    	···
-		&lt;/right&gt;
-	&lt;/middle&gt;
-	&lt;bottom&gt;
-    	···
-	&lt;/bottom&gt;
+    &lt;top&gt;
+        ···
+    &lt;/top&gt;
+    &lt;middle&gt;
+        &lt;left&gt;
+            ···
+        &lt;/left&gt;
+        &lt;center&gt;
+            ···
+        &lt;/center&gt;
+        &lt;right&gt;
+            ···
+        &lt;/right&gt;
+    &lt;/middle&gt;
+    &lt;bottom&gt;
+        ···
+    &lt;/bottom&gt;
 &lt;/structure&gt;
 </pre></div><div class="component Unknown"><h2>Graph <span class="module">Unknown</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Graph.html"><span>hui.ui.Graph</span></a></p>
