@@ -22,11 +22,6 @@ $gui='
 				<icon icon="common/info" title="Info" name="properties"/>
 			</toolbar>
 		</tab>
-		<tab title="Avanceret" background="light">
-			<toolbar>
-				<icon icon="common/time" title="Historik" name="history"/>
-			</toolbar>
-		</tab>
 	</tabs>
 </gui>';
 In2iGui::render($gui);

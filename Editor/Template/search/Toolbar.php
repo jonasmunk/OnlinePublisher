@@ -3,47 +3,25 @@
  * @package OnlinePublisher
  * @subpackage Templates.Search
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Core/Database.php';
-require_once '../../Classes/Core/InternalSession.php';
-require_once 'Functions.php';
+require_once '../../Include/Private.php';
 
-
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<dock xmlns="uri:Dock" orientation="Top">'.
-'<content>'.
-documentTab().
-'</content>'.
-'</dock>'.
-'</xmlwebgui>';
-
-$elements = array("Dock","DockForm","Script");
-writeGui($xwg_skin,$elements,$gui);
-
-function documentTab() {
-	$pageId = getSearchId();
-	$output=
-	'<tool title="Luk" icon="Basic/Close" link="../../Tools/Pages/index.php" target="_parent"/>'.
-	'<divider/>'.
-	(pageIsChanged()
-	? '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" link="Publish.php" badge="!" badgestyle="Hilited"/>'
-	: '<tool title="Udgiv" icon="Basic/Internet" overlay="Upload" style="Disabled"/>'
-	).
-	'<tool title="Vis ændringer" icon="Basic/View" link="../../Services/Preview/" target="_parent"/>'.
-	'<tool title="Egenskaber" icon="Basic/Info" link="../../Tools/Pages/?action=pageproperties&amp;id='.InternalSession::getPageId().'" target="_parent" help="Vis sidens egenskaber i side-værktøjet"/>';
-	return $output;
-}
-
-function pageIsChanged() {
-	$sql="select changed-published as delta from page where id=".getSearchId();
-	$row = Database::selectFirst($sql);
-	if ($row['delta']>0) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
+$gui='
+<gui xmlns="uri:hui" title="Dokument">
+	<controller source="toolbar.js"/>
+	<script>
+	controller.pageId='.InternalSession::getPageId().';
+	</script>
+	<tabs small="true" below="true">
+		<tab title="SÃ¸gning" background="light">
+			<toolbar>
+				<icon icon="common/close" title="Luk" name="close"/>
+				<divider/>
+				<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="'.(PageService::isChanged(InternalSession::getPageId()) ? 'false' : 'true').'"/>
+				<icon icon="common/view" title="Vis" name="preview"/>
+				<icon icon="common/info" title="Info" name="properties"/>
+			</toolbar>
+		</tab>
+	</tabs>
+</gui>';
+In2iGui::render($gui);
 ?>
