@@ -78,6 +78,7 @@ div.hui_picker_shadow div.hui_picker_item_selected
 div.hui_picker_shadow div.hui_picker_item div
 {
 	box-shadow: 0 2px 5px rgba(0,0,0,.5);
+	-ms-box-shadow: 0 2px 5px rgba(0,0,0,.5);
 }
 
 div.hui_picker_shadow div.hui_picker_item_middle

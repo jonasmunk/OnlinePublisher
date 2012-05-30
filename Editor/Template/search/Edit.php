@@ -5,28 +5,17 @@
  */
 require_once '../../../Config/Setup.php';
 require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Core/Request.php';
-require_once 'Functions.php';
 
-if (Request::exists('id')) {
-	setSearchId(Request::getInt('id'));
-}
+$gui='
+<frames xmlns="uri:hui">
+	<frame source="Toolbar.php" scrolling="false" name="Toolbar"/>
+	<frame source="Editor.php" name="Frame"/>
+	<script>
+		if (window.parent!=window) {
+			window.parent.baseController.changeSelection("service:edit");
+		}
+	</script>
+</frames>';
 
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface xmlns="uri:Frame">'.
-'<dock align="top" id="Root">'.
-'<frame name="Toolbar" source="Toolbar.php" scrolling="false"/>'.
-'<frame name="Editor" source="Properties.php"/>'.
-'</dock>'.
-'<script xmlns="uri:Script">
-	if (window.parent!=window) {
-		window.parent.baseController.changeSelection("service:edit");
-	}
-</script>'.
-'</interface>'.
-'</xmlwebgui>';
-
-$elements = array("Frame","Script");
-writeGui($xwg_skin,$elements,$gui);
+In2iGui::render($gui);
 ?>

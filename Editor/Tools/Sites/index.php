@@ -65,7 +65,6 @@ $gui='
 	<source name="newPageHierarchySource" url="FrameHierarchyItems.php">
 		<parameter key="frame" value="@frameSelection.value"/>
 	</source>
-	
 	<structure>
 		<top>
 			<toolbar>
@@ -328,7 +327,7 @@ $gui='
 				</formula>
 				</overflow>
 			</step>
-		</wizard>
+		</wizard>-->
 		<buttons top="10" align="right">
 			<button title="Forrige" name="newPagePrevious"/>
 			<button title="Næste" name="newPageNext"/>

@@ -43,7 +43,7 @@ hui.ui.ColorInput.prototype = {
 	},
 	_syncColorButton : function() {		
 		this.button.innerHTML = this.value ? '' : '?';
-		this.button.style.backgroundColor = this.value;	
+		this.button.style.backgroundColor = this.value ? this.value : '';	
 	},
 	_onInputChange : function(value) {
 		var changed = value!=this.value;

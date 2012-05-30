@@ -193,10 +193,10 @@ class ListWriter {
 		if (isset($options['data'])) {
 			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
 		}
-		if ($options['revealing']) {
+		if (@$options['revealing']) {
 			echo ' revealing="true"';
 		}
-		if ($options['action']) {
+		if (@$options['action']) {
 			echo ' action="true"';
 		}
 		if (isset($options['hint'])) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
-<gui xmlns="uri:hui" title="System">
+<gui xmlns="uri:hui" title="System" padding="10">
 	<controller name="controller" source="list.js"/>
 	<source name="itemsSource" url="data/source_items.xml"/>
 	<source name="listSource" url="data/list_icons.xml"/>
@@ -44,6 +44,9 @@
 				</overflow>
 			</center>
 		</middle>
+		<bottom>
+			
+		</bottom>
 	</structure>
 	
 	<window name="newPage" width="300" title="Ny side" padding="5">
@@ -77,7 +80,7 @@
 					<checkbox/>
 				</field>
 				<field label="Inaktiv:">
-					<checkboxx/>
+					<checkbox/>
 				</field>
 				<buttons top="10">
 					<button title="Annuller"/>

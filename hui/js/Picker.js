@@ -85,7 +85,7 @@ hui.ui.Picker.prototype = {
 		});
 		hui.style.set(this.content,{
 			width : (this.objects.length*(this.options.itemWidth+14))+'px',
-			height : height=(this.options.itemHeight+14)+'px'
+			height : (this.options.itemHeight+14)+'px'
 		});
 		hui.each(this.objects,function(object,i) {
 			var item = hui.build('div',{
@@ -104,9 +104,14 @@ hui.ui.Picker.prototype = {
 		this._updatePages();
 	},
 	_updatePages : function() {
-		var pageCount = Math.ceil(this.content.clientWidth / this.container.clientWidth);
+		var cw = this.container.clientWidth;
+		if (!cw) {
+			return;
+		}
+		var pageCount = Math.ceil(this.content.clientWidth / cw);
 		var pages = hui.get.firstByClass(this.element,'hui_picker_pages');
 		hui.dom.clear(pages);
+		if (pageCount<2) {return}
 		for (var i=1; i <= pageCount; i++) {
 			hui.build('a',{
 				parent : pages,

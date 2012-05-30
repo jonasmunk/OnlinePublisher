@@ -19,10 +19,10 @@
 					</dropdown>
 				</field>
 				<field label="Startdato:">
-					<datetime/>
+					<datetime-input/>
 				</field>
 				<field label="Slutdato:">
-					<datetime/>
+					<datetime-input/>
 				</field>
 				<buttons top="5">
 					<button title="Annuller" action="hui.log(formula.getValues());"/>
