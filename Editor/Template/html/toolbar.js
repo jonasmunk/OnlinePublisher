@@ -1,6 +1,8 @@
 var controller = {
 	pageId : null,
-	
+	markChanged : function() {
+		publish.enable();
+	},
 	$click$close : function() {
 		window.parent.location='../../Tools/Sites/';
 	},

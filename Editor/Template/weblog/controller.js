@@ -14,7 +14,7 @@ hui.ui.listen({
 		values.id = this.id;
 		hui.ui.request({url:'Save.php',json:{data:values},onSuccess:function(values) {
 			save.enable();
-			window.parent.Toolbar.publish.enable();
+			window.parent.frames[0].controller.markChanged();
 			hui.ui.showMessage({text:'Ændringerne er nu gemt',duration:2000});
 		}});
 	}

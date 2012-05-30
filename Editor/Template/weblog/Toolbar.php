@@ -10,14 +10,14 @@ $gui='
 <gui xmlns="uri:hui" title="Dokument">
 	<controller source="toolbar.js"/>
 	<script>
-	controller.pageId='.InternalSession::getPageId().';
+	controller.pageId='.Request::getId().';
 	</script>
 	<tabs small="true" below="true">
 		<tab title="Weblog" background="light">
 			<toolbar>
 				<icon icon="common/close" title="Luk" name="close"/>
 				<divider/>
-				<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="'.(PageService::isChanged(InternalSession::getPageId()) ? 'false' : 'true').'"/>
+				<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="'.(PageService::isChanged(Request::getId()) ? 'false' : 'true').'"/>
 				<icon icon="common/view" title="Vis" name="preview"/>
 				<icon icon="common/info" title="Info" name="properties"/>
 			</toolbar>

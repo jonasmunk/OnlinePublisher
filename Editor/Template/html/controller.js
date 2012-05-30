@@ -7,6 +7,7 @@ var controller = {
 			parameters : {id:this.id},
 			onJSON : function(values) {
 				formula.setValues(values);
+				formula.focus();
 			}.bind(this)
 		});
 	},
@@ -14,7 +15,7 @@ var controller = {
 		save.enable();
 		//hui.ui.stress(save);
 	},
-	$click$save : function() {
+	$submit$formula : function() {
 		save.disable();
 		var values = formula.getValues();
 		values.id = this.id;
@@ -22,7 +23,7 @@ var controller = {
 			url : 'data/Save.php',
 			parameters : values,
 			onJSON : function(obj) {
-				window.parent.Toolbar.publish.enable();
+				window.parent.frames[0].controller.markChanged();
 				hui.ui.showMessage({text:'Ændringerne er nu gemt'+(obj.valid ? ' (valid)' : ' (invalid)'),duration:2000});
 			}
 		});
