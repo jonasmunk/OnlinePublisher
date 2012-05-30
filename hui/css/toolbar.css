@@ -137,7 +137,7 @@ a.hui_toolbar_icon span.hui_icon
 {
 	height: 32px;
 	width: 32px;
-	margin: 0px auto 2px auto;
+	margin: 0px auto 1px auto;
 	display: inline-block;
 }
 
@@ -313,7 +313,7 @@ span.hui_toolbar_item
 span.hui_toolbar_item_body
 {
 	display:block;
-	height: 40px;
+	height: 39px;
 	text-align: center;
 }
 

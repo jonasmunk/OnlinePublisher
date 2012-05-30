@@ -1,26 +1,20 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.Html
+ * @subpackage Templates.HTML
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
+require_once '../../Include/Private.php';
 
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface xmlns="uri:Frame">'.
-'<dock align="top" id="Root" tabs="true">'.
-'<frame name="Toolbar" source="Toolbar.php" scrolling="false"/>'.
-'<frame name="Editor" source="Editor.php"/>'.
-'</dock>'.
-'<script xmlns="uri:Script">
-	if (window.parent!=window) {
-		window.parent.baseController.changeSelection("service:edit");
-	}
-</script>'.
-'</interface>'.
-'</xmlwebgui>';
+$gui='
+<frames xmlns="uri:hui">
+	<frame source="Toolbar.php?id='.Request::getId().'" scrolling="false" name="Toolbar"/>
+	<frame source="Editor.php?id='.Request::getId().'" name="Frame"/>
+	<script>
+		if (window.parent!=window) {
+			window.parent.baseController.changeSelection("service:edit");
+		}
+	</script>
+</frames>';
 
-$elements = array("Frame","Script");
-writeGui($xwg_skin,$elements,$gui);
+In2iGui::render($gui);
 ?>

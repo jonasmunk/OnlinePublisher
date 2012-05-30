@@ -3,8 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Weblog
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
+require_once '../../Include/Private.php';
 
 $gui='
 <frames xmlns="uri:hui">

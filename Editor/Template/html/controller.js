@@ -20,10 +20,10 @@ var controller = {
 		values.id = this.id;
 		hui.ui.request({
 			url : 'data/Save.php',
-			json : {data:values},
-			onSuccess : function(values) {
+			parameters : values,
+			onJSON : function(obj) {
 				window.parent.Toolbar.publish.enable();
-				hui.ui.showMessage({text:'Ændringerne er nu gemt',duration:2000});
+				hui.ui.showMessage({text:'Ændringerne er nu gemt'+(obj.valid ? ' (valid)' : ' (invalid)'),duration:2000});
 			}
 		});
 	}

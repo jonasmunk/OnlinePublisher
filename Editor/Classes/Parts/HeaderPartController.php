@@ -167,7 +167,7 @@ class HeaderPartController extends PartController
 				<style-length-input name="lineHeight"/>
 			</field>
 			<field label="Farve">
-				<text-input name="color" width="60"/>
+				<color-input name="color"/>
 			</field>
 			<field label="Fed">
 				<segmented name="fontWeight" allow-null="true">

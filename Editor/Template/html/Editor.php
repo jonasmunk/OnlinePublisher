@@ -1,42 +1,32 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.Html
+ * @subpackage Templates.HTML
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Include/XmlWebGui.php';
-require_once '../../Classes/Core/InternalSession.php';
-require_once '../../Classes/Utilities/StringUtils.php';
+require_once '../../Include/Private.php';
 
-$sql="select * from html where page_id=".InternalSession::getPageId();
-$row = Database::selectFirst($sql);
-
-$gui='<xmlwebgui xmlns="uri:XmlWebGui"><configuration path="../../../"/>'.
-'<interface background="Desktop" onload="parent.Toolbar.location=\'Toolbar.php?\'+Math.random();">'.
-'<window xmlns="uri:Window" width="100%" align="center" margin="10">'.
-'<titlebar title="HTML">'.
-'<close link="../../Tools/Pages/index.php" target="_parent"/>'.
-'</titlebar>'.
-'<toolbar xmlns="uri:Toolbar">'.
-'<tool title="Upload HTML-dokument" icon="File/html" overlay="Upload" link="Upload.php"/>'.
-'</toolbar>'.
-'<content padding="5" background="true">'.
-'<form xmlns="uri:Form" action="Update.php" method="post" name="Formula" focus="data">'.
-'<group size="Small" badgeplacement="above">'.
-'<textfield badge="Titel:" name="title">'.StringUtils::escapeXML($row['title']).'</textfield>'.
-'<textfield badge="HTML-kode:" name="html" lines="20">'.StringUtils::escapeXML($row['html']).'</textfield>'.
-'<buttongroup size="Large">'.
-'<button title="Luk" link="../../Tools/Pages/index.php" target="_parent"/>'.
-'<button title="Opdater" submit="true" style="Hilited"/>'.
-'</buttongroup>'.
-'</group>'.
-'</form>'.
-'</content>'.
-'</window>'.
-'</interface>'.
-'</xmlwebgui>';
-
-$elements = array("Window","Toolbar","Form");
-writeGui($xwg_skin,$elements,$gui);
+$gui='
+<gui xmlns="uri:hui" padding="10">
+	<controller source="controller.js"/>
+	<script>
+		controller.id = '.Request::getId().';
+	</script>
+	<box width="800" top="10" padding="10" title="HTML">
+		<formula name="formula">
+			<fields labels="above">
+				<field label="Titel:">
+					<text-input key="title"/>
+				</field>
+				<field label="HTML:">
+					<text-input key="html" multiline="true"/>
+				</field>
+			</fields>
+			<buttons>
+				<button title="Opdater" name="save" highlighted="true" disabled="true"/>
+			</buttons>
+		</formula>
+	</box>
+</gui>
+';
+In2iGui::render($gui);
 ?>

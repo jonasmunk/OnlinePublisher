@@ -10,13 +10,43 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class Search {
 	
+	static $TYPES = array('pages'=>'Sider','images'=>'Billeder','files'=>'Filer','news'=>'Nyheder','products'=>'Produkter','persons'=>'Personer');
+	static $PARTS = array('label'=>'text','enabled'=>'boolean','default'=>'boolean','hidden'=>'boolean');
+	
 	var $id;
 	var $title;
+	var $text;
 	
 	var $pagesLabel;
 	var $pagesEnabled;
 	var $pagesDefault;
 	var $pagesHidden;
+
+	var $imagesLabel;
+	var $imagesEnabled;
+	var $imagesDefault;
+	var $imagesHidden;
+
+	var $filesLabel;
+	var $filesEnabled;
+	var $filesDefault;
+	var $filesHidden;
+
+	var $newsLabel;
+	var $newsEnabled;
+	var $newsDefault;
+	var $newsHidden;
+
+	var $productsLabel;
+	var $productsEnabled;
+	var $productsDefault;
+	var $productsHidden;
+
+	var $personsLabel;
+	var $personsEnabled;
+	var $personsDefault;
+	var $personsHidden;
+
 	
 	function setId($id) {
 	    $this->id = $id;
@@ -34,61 +64,32 @@ class Search {
 	    return $this->title;
 	}
 	
-	function setPagesLabel($pagesLabel) {
-	    $this->pagesLabel = $pagesLabel;
+	function setText($text) {
+	    $this->text = $text;
 	}
 
-	function getPagesLabel() {
-	    return $this->pagesLabel;
+	function getText() {
+	    return $this->text;
 	}
 	
-	function setPagesEnabled($pagesEnabled) {
-	    $this->pagesEnabled = $pagesEnabled;
-	}
-
-	function getPagesEnabled() {
-	    return $this->pagesEnabled;
-	}
-	
-	function setPagesDefault($pagesDefault) {
-	    $this->pagesDefault = $pagesDefault;
-	}
-
-	function getPagesDefault() {
-	    return $this->pagesDefault;
-	}
-	
-	function setPagesHidden($pagesHidden) {
-	    $this->pagesHidden = $pagesHidden;
-	}
-
-	function getPagesHidden() {
-	    return $this->pagesHidden;
-	}
-	
-	function getPagesState() {
-		if (!$this->pagesEnabled) {
-			return 'inactive';
-		}
-		if ($this->pagesEnabled && !$this->pagesHidden && !$this->pagesDefault) {
-			return 'possible';
-		}
-		if ($this->pagesEnabled && !$this->pagesHidden && $this->pagesDefault) {
-			return 'chosen';
-		}
-		return 'automatic';
-	}
-	
+		
 	function save() {
 		$sql = "update search set ".
-			"title=".Database::text($this->title).
+			"title=".Database::text($this->title).",`text`=".Database::text($this->text);
 			
-			",pageslabel=".Database::text($this->pagesLabel).
-			",pagesenabled=".Database::boolean($this->pagesEnabled).
-			",pagesdefault=".Database::boolean($this->pagesDefault).
-			",pageshidden=".Database::boolean($this->pagesHidden).
-			
-			" where page_id=".$this->id;
+		foreach (Search::$TYPES as $type => $label) {
+			foreach (Search::$PARTS as $part => $kind) {
+				$method = $type.ucfirst($part);
+				$sql.=",".$type.$part."=";
+				if ($kind=='boolean') {
+					$sql.=Database::boolean($this->$method);
+				} else {
+					$sql.=Database::text($this->$method);
+				}
+			}
+		}			
+		
+		$sql.=" where page_id=".$this->id;
 		Database::update($sql);
 		
 		PageService::markChanged($this->id);
@@ -100,12 +101,14 @@ class Search {
 			$obj = new Search();
 			$obj->setId(intval($row['page_id']));
 			$obj->setTitle($row['title']);
+			$obj->setText($row['text']);
 			
-			$obj->setPagesLabel($row['pageslabel']);
-			$obj->setPagesEnabled($row['pagesenabled'] ? true : false);
-			$obj->setPagesDefault($row['pagesdefault'] ? true : false);
-			$obj->setPagesHidden($row['pageshidden'] ? true : false);
-			
+			foreach (Search::$TYPES as $type => $label) {
+				foreach (Search::$PARTS as $part => $kind) {
+					$method = $type.ucfirst($part);
+					$obj->$method = $kind=='boolean' ? ($row[$type.$part] ? true : false) : $row[$type.$part];
+				}
+			}
 			return $obj;
 		}
 		return null;

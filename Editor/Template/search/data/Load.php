@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Search
  */
-require_once '../../Include/Private.php';
+require_once '../../../Include/Private.php';
 
 $id = Request::getId();
 
