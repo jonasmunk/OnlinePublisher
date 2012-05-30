@@ -67,4 +67,14 @@ hui.ui.listen({
 		});
 		this._resetSiteWindow();
 	},
+	
+	$click$refresh : function() {
+		hui.ui.request({
+			url : 'data/Refresh.php',
+			message : { start : 'Opdaterer...', delay : 300 },
+			onSuccess : function() {
+				list.refresh();
+			}
+		})
+	}
 });

@@ -776,18 +776,6 @@ $databaseTables = array(
 			array("value","varchar(255)","YES","","",""),
 			array("user_id","int(11)","YES","","0",""),
 		),
-	'sitemap' => array(
-			array("page_id","int(11)","","","0",""),
-			array("title","varchar(255)","YES","","",""),
-			array("text","text","YES","","","")
-		),
-	'sitemap_group' => array(
-			array("id","int(11)","","PRI","","auto_increment"),
-			array("hierarchy_id","int(11)","","","0",""),
-			array("position","int(11)","","","0",""),
-			array("title","varchar(255)","YES","","",""),
-			array("page_id","int(11)","","","0","")
-		),
 	'specialpage' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("page_id","int(11)","","","0",""),

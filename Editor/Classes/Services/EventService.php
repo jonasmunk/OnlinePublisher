@@ -40,10 +40,6 @@ class EventService {
 			}
 			Database::free($result);
 		}
-		if ($type=='hierarchy') {
-			$sql = "update page,template set page.changed=now() where page.template_id=template.id and template.unique='sitemap'";
-			Database::update($sql);
-		}
 		if ($type=='object' && $subType=='image' && ($event=='publish' || $event=='delete')) {
 			// Update persons and news with images	
 		    $sql = "update object,person set object.updated=now() where object.id=person.object_id and image_id=".$id;

@@ -37,6 +37,7 @@ hui.ui.Checkbox.prototype = {
 		this.updateUI();
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 		this.fire('valueChanged',this.value);
+		hui.ui.firePropertyChange(this,'value',this.value);
 	},
 	/** @private */
 	updateUI : function() {

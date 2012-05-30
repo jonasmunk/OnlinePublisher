@@ -10,11 +10,24 @@ $gui='
 	<controller source="controller.js"/>
 	<source name="listSource" url="data/List.php">
 		<parameter key="subset" value="@selector.value"/>
+		<parameter key="templates" value="@showTemplates.value"/>
+		<parameter key="tools" value="@showTools.value"/>
+		<parameter key="email" value="@showEmail.value"/>
 	</source>
 	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/internet" text="Nyt site" name="newSite"/>
+				<icon icon="common/refresh" text="Opdatér" name="refresh"/>
+				<field label="Vis skabeloner">
+					<checkbox name="showTemplates"/>
+				</field>
+				<field label="Vis værktøjer">
+					<checkbox name="showTools"/>
+				</field>
+				<field label="Vis e-mail">
+					<checkbox name="showEmail"/>
+				</field>
 			</toolbar>
 		</top>
 		<middle>

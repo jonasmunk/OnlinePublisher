@@ -2263,7 +2263,8 @@ span.hui_toolbar_item span.hui_colorinput
 	top: 8px;
 }
 
-span.hui_toolbar_item a.hui_dropdown
+span.hui_toolbar_item a.hui_dropdown,
+span.hui_toolbar_item a.hui_checkbox
 {
 	margin-top: 7px;
 }

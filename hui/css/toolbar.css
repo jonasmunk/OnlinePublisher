@@ -313,7 +313,7 @@ span.hui_toolbar_item
 span.hui_toolbar_item_body
 {
 	display:block;
-	height: 38px;
+	height: 40px;
 	text-align: center;
 }
 
@@ -321,6 +321,11 @@ span.hui_toolbar_item span.hui_numberfield,
 span.hui_toolbar_item span.hui_colorinput
 {
 	top: 8px;
+}
+
+span.hui_toolbar_item a.hui_checkbox
+{
+	margin-top: 11px;
 }
 
 span.hui_toolbar_item a.hui_dropdown
