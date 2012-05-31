@@ -19,6 +19,6 @@ if ($obj) {
 	}
 	$obj->save();
 } else {
-	Response::sendNotFound();
+	Response::notFound();
 }
 ?>

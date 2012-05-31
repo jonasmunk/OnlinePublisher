@@ -11,6 +11,6 @@ $sql="select * from html where page_id=".Database::int($id);
 if ($row = Database::getRow($sql)) {
 	Response::sendUnicodeObject($row);
 } else {
-	Response::sendNotFound();
+	Response::notFound();
 }
 ?>

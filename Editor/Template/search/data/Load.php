@@ -11,6 +11,6 @@ $obj = Search::load($id);
 if ($obj) {
 	Response::sendUnicodeObject($obj);
 } else {
-	Response::sendNotFound();
+	Response::notFound();
 }
 ?>
