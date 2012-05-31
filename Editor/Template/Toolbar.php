@@ -1,9 +1,10 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Templates.Search
+ * @subpackage Templates
  */
-require_once '../../Include/Private.php';
+require_once '../../Config/Setup.php';
+require_once '../Include/Security.php';
 
 $gui='
 <gui xmlns="uri:hui" title="Dokument">
@@ -12,7 +13,7 @@ $gui='
 	controller.pageId='.Request::getId().';
 	</script>
 	<tabs small="true" below="true">
-		<tab title="Søgning" background="light">
+		<tab title="'.Request::getString('title').'" background="light">
 			<toolbar>
 				<icon icon="common/close" title="Luk" name="close"/>
 				<divider/>
