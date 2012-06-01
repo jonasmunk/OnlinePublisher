@@ -27,21 +27,11 @@ $gui='
 			</fields>
 			<overflow max-height="200">
 			';
-			foreach (Search::$TYPES as $key => $label) {
+			foreach (SearchTemplate::$TYPES as $key => $label) {
 				$gui.='
 				<space height="10"/>
 				<fieldset legend="'.$label.'">
 					<fields>
-						<!--
-						<field label="Opførsel">
-							<dropdown key="'.$key.'State">
-								<item value="inactive" text="Inaktiv"/>
-								<item value="possible" text="Kan vælges"/>
-								<item value="active" text="Altid aktiv"/>
-								<item value="automatic" text="Valgt på forhånd"/>
-							</dropdown>
-						</field>
-						-->
 						<field label="Tekst">
 							<text-input key="'.$key.'Label"/>
 						</field>

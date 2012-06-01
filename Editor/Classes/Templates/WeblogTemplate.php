@@ -8,7 +8,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-class Weblog {
+class WeblogTemplate {
 	
 	var $id;
 	var $title;
@@ -64,12 +64,12 @@ class Weblog {
 	function load($id) {
 		$sql="select * from weblog where page_id=".Database::int($id);
 		if ($row = Database::getRow($sql)) {
-			$obj = new Weblog();
+			$obj = new WeblogTemplate();
 			$obj->setId(intval($row['page_id']));
 			$obj->setTitle($row['title']);
 			$obj->setPageBlueprintId(intval($row['pageblueprint_id']));
 			
-			$sql="select webloggroup_id as id from weblog_webloggroup where page_id=".InternalSession::getPageId();
+			$sql="select webloggroup_id as id from weblog_webloggroup where page_id=".Database::int($id);
 			$groups = Database::selectIntArray($sql);
 			$obj->setGroupIds($groups);
 			

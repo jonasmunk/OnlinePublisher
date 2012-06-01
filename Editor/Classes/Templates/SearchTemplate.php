@@ -8,7 +8,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-class Search {
+class SearchTemplate {
 	
 	static $TYPES = array('pages'=>'Sider','images'=>'Billeder','files'=>'Filer','news'=>'Nyheder','products'=>'Produkter','persons'=>'Personer');
 	static $PARTS = array('label'=>'text','enabled'=>'boolean','default'=>'boolean','hidden'=>'boolean');
@@ -77,8 +77,8 @@ class Search {
 		$sql = "update search set ".
 			"title=".Database::text($this->title).",`text`=".Database::text($this->text);
 			
-		foreach (Search::$TYPES as $type => $label) {
-			foreach (Search::$PARTS as $part => $kind) {
+		foreach (SearchTemplate::$TYPES as $type => $label) {
+			foreach (SearchTemplate::$PARTS as $part => $kind) {
 				$method = $type.ucfirst($part);
 				$sql.=",".$type.$part."=";
 				if ($kind=='boolean') {
@@ -89,7 +89,7 @@ class Search {
 			}
 		}			
 		
-		$sql.=" where page_id=".$this->id;
+		$sql.=" where page_id=".Database::int($this->id);
 		Database::update($sql);
 		
 		PageService::markChanged($this->id);
@@ -98,13 +98,13 @@ class Search {
 	function load($id) {
 		$sql="select * from search where page_id=".Database::int($id);
 		if ($row = Database::getRow($sql)) {
-			$obj = new Search();
+			$obj = new SearchTemplate();
 			$obj->setId(intval($row['page_id']));
 			$obj->setTitle($row['title']);
 			$obj->setText($row['text']);
 			
-			foreach (Search::$TYPES as $type => $label) {
-				foreach (Search::$PARTS as $part => $kind) {
+			foreach (SearchTemplate::$TYPES as $type => $label) {
+				foreach (SearchTemplate::$PARTS as $part => $kind) {
 					$method = $type.ucfirst($part);
 					$obj->$method = $kind=='boolean' ? ($row[$type.$part] ? true : false) : $row[$type.$part];
 				}

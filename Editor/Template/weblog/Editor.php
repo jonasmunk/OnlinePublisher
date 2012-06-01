@@ -9,6 +9,9 @@ require_once '../../Include/Security.php';
 $gui='
 <gui xmlns="uri:hui" padding="10">
 	<controller source="controller.js"/>
+	<script>
+		controller.id = '.Request::getId().';
+	</script>
 	<box width="360" top="30" padding="10" title="Indstillinger til weblog">
 		<formula name="formula">
 			<fields labels="above">

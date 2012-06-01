@@ -1,9 +1,8 @@
 hui.ui.listen({
-	id:null,
+	id : null,
 	
 	$ready : function() {
 		hui.ui.request({url:'Load.php',onJSON:function(values) {
-			this.id = values.id;
 			formula.setValues(values);
 			save.enable();
 		}.bind(this)});
@@ -15,7 +14,7 @@ hui.ui.listen({
 		hui.ui.request({url:'Save.php',json:{data:values},onSuccess:function(values) {
 			save.enable();
 			window.parent.frames[0].controller.markChanged();
-			hui.ui.showMessage({text:'Ændringerne er nu gemt',duration:2000});
+			hui.ui.showMessage({text:'Ændringerne er nu gemt',icon:'common/success',duration:2000});
 		}});
 	}
 });
