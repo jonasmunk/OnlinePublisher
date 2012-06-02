@@ -9,6 +9,7 @@ date_default_timezone_set('Europe/Copenhagen');
 $basePath = substr(__FILE__, 0,strpos(__FILE__,'Editor'));
 
 require_once($basePath."Editor/Classes/Core/InternalSession.php");
+require_once($basePath."Editor/Include/Classloader.php");
 
 if (@$_SESSION['core.debug.simulateLatency']) {
 	usleep(rand(1000000,2000000));
@@ -49,18 +50,5 @@ else {
 	InternalSession::registerActivity();
 }
 
-function __autoload($class_name) {
-	global $basePath;
-	if (class_exists($class_name)) {
-		return;
-	}
-	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/','Core/','Model/','Network/','Interface/','Modules/News/','Modules/Images/','Modules/Links/','Modules/Graphs/','Modules/Review/','Formats/');
-	foreach ($folders as $folder) {
-		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';
-		if (file_exists($path)) {
-	    	require_once $path;
-			break;
-		}
-	}
-}
+
 ?>

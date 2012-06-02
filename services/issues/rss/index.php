@@ -1,23 +1,12 @@
 <?php
 require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once('../../../Editor/Classes/Core/Request.php');
-require_once('../../../Editor/Classes/Core/Response.php');
-require_once('../../../Editor/Classes/Core/Query.php');
-require_once('../../../Editor/Classes/Objects/Issue.php');
-require_once '../../../Editor/Classes/Network/Feed.php';
-require_once '../../../Editor/Classes/Network/FeedItem.php';
-require_once '../../../Editor/Classes/Network/FeedSerializer.php';
-require_once('../../../Editor/Classes/Utilities/StringUtils.php');
-
-
 
 $list = Query::after('issue')->get();
 
-
 $feed = new Feed();
-$feed->setTitle('Nyheder');
-$feed->setDescription('Nyheder');
+$feed->setTitle('Issues');
+$feed->setDescription('Issues');
 $feed->setPubDate(gmmktime());
 $feed->setLastBuildDate(gmmktime());
 $feed->setLink($baseUrl);
