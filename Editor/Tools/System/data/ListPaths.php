@@ -14,8 +14,8 @@ $writer->header(array('title'=>'Side','width'=>30));
 $writer->header(array('title'=>'Side-sti','width'=>30));
 $writer->endHeaders();
 
-$list = Object::find(array('type'=>'path'));
-foreach ($list['result'] as $item) {
+$list = Query::after('path')->get();
+foreach ($list as $item) {
 	$page = Page::load($item->getPageId());
 	$writer->startRow(array('kind'=>'path','id'=>$item->getId()));
 	$writer->startCell(array('icon'=>$item->getIn2iGuiIcon()))->text($item->getPath())->endCell();

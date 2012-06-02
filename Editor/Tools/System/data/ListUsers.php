@@ -18,8 +18,8 @@ $writer->header(array('title'=>'Ekstern'));
 $writer->header(array('title'=>'Administrator'));
 $writer->endHeaders();
 
-$list = Object::find(array('type'=>'user'));
-foreach ($list['result'] as $item) {
+$list = Query::after('user')->get();
+foreach ($list as $item) {
 	$writer->startRow(array('kind'=>'user','id'=>$item->getId()));
 	$writer->startCell(array('icon'=>$item->getIn2iGuiIcon()))->text($item->getTitle())->endCell();
 	$writer->startCell()->text($item->getUsername())->endCell();
