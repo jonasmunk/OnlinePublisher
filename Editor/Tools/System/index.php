@@ -106,7 +106,13 @@ $gui='
 												<field label="Moderne rig tekst editor:">
 													<checkbox key="experimentalRichText"/>
 												</field>
+												<field label="Shared secret">
+													<text-input key="sharedSecret"/>
+												</field>
 											</fields>
+											<buttons>
+												<button title="Opdater" name="saveUI" highlighted="true"/>
+											</buttons>
 										</formula>
 									</space>
 								</tab>

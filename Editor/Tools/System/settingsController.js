@@ -16,12 +16,11 @@ hui.ui.listen({
 	
 	//UI
 	
-	$valuesChanged$uiFormula : function(value) {
-		var data = {'ui':value};
-		hui.ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:'saveUI'});
-	},
-	$success$saveUI : function() {
-		hui.ui.showMessage({text:'Gemt!',icon:'common/success',duration:2000});
+	$click$saveUI : function(value) {
+		var data = {'ui':uiFormula.getValues()};
+		hui.ui.request({json:{data:data},url:'SaveSettings.php',onSuccess:function() {
+			hui.ui.showMessage({text:'Gemt!',icon:'common/success',duration:2000})
+		}});
 	},
 	
 	// OnlineObjects
