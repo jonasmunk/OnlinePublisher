@@ -14,7 +14,7 @@ $data = Request::getObject('data');
 
 if ($data->ui) {
 	SettingService::setSetting('part','richtext','experimetal',$data->ui->experimentalRichText);
-	SettingService::setSetting('system','security','sharedsecret',$data->ui->sharedSecret);
+	SettingService::setSharedSecret($data->ui->sharedSecret);
 }
 if ($data->onlineobjects) {
 	SettingService::setOnlineObjectsUrl($data->onlineobjects->url);

@@ -1,5 +1,8 @@
 hui.ui.listen({
-		
+	$click$groupInfo : function() {
+		var item = selector.getValue();
+		this._openGroup(item.value);		
+	},
 	$click$newGroup : function() {
 		this.groupId = null;
 		deleteGroup.setEnabled(false);
@@ -23,7 +26,11 @@ hui.ui.listen({
 				json:{data:values},
 				url:'SaveGroup.php',
 				message:{start:'Gemmer gruppe...',success:'Gruppen er gemt',delay:300},
-				onSuccess:'groupSaved'
+				onSuccess : function() {
+					groupTitle.setText(values.title);
+					groupSource.refresh();
+					groupOptionsSource.refresh();
+				}
 			});
 			this.groupId = null;
 			groupFormula.reset();
@@ -33,13 +40,15 @@ hui.ui.listen({
 	$submit$groupFormula : function() {
 		this.$click$saveGroup();
 	},
-	$success$groupSaved : function() {
-		groupSource.refresh();
-		groupOptionsSource.refresh();
-	},
 	$selectionWasOpened$selector : function(item) {
+		if (item.type!='imagegroup') {
+			return;
+		}
+		this._openGroup(item.value);
+	},
+	_openGroup : function(id) {
 		hui.ui.request({
-			parameters:{id:item.value},
+			parameters:{id:id},
 			url:'../../Services/Model/LoadObject.php',
 			onSuccess:'loadGroup',
 			message:{start:'Åbner gruppe...',delay:300}
