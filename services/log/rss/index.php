@@ -6,10 +6,13 @@
 
 require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once '../../../Editor/Classes/Core/Database.php';
-require_once '../../../Editor/Classes/Network/Feed.php';
-require_once '../../../Editor/Classes/Network/FeedItem.php';
-require_once '../../../Editor/Classes/Network/FeedSerializer.php';
+
+$requestSecret = Request::getString('secret');
+$secret = SettingService::getSharedSecret();
+
+if (StringUtils::isBlank($secret) || StringUtils::isBlank($requestSecret) || $requestSecret!==$secret) {
+	exit;
+}
 
 
 $feed = new Feed();
@@ -24,7 +27,7 @@ $result = Database::select($sql);
 while ($row = Database::next($result)) {
 	$item = new FeedItem();
 	$item->setTitle($row['event'].': '.$row['user']);
-	$item->setDescription('USER: '.$row['user']);
+	$item->setDescription('USER: '.$row['user'].' - '.$row['message']);
 	$item->setPubDate($row['timestamp']);
 	$item->setGuid($baseUrl.$row['id']);
 	$feed->addItem($item);

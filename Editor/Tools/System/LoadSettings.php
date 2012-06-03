@@ -13,7 +13,7 @@ require_once '../../Classes/Interface/In2iGui.php';
 $settings = array(
 	'ui' => array(
 		'experimentalRichText' => SettingService::getSetting('part','richtext','experimetal') ? true : false,
-		'sharedSecret' => SettingService::getSetting('system','security','sharedsecret')
+		'sharedSecret' => SettingService::getSharedSecret()
 	),
 	'email'=>array(
 		'enabled' => MailService::getEnabled(),

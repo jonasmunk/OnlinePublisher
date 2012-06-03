@@ -69,5 +69,13 @@ class SettingService {
 	function setOnlineObjectsUrl($value) {
 		return SettingService::setSetting('system','onlineobjects','url',$value);
 	}
+	
+	function getSharedSecret() {
+		return SettingService::getSetting('system','security','sharedsecret');
+	}
+	
+	function setSharedSecret($value) {
+		return SettingService::setSetting('system','security','sharedsecret',$value);
+	}
 }
 ?>

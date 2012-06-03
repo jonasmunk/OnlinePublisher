@@ -3,7 +3,7 @@ require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
 
 $requestSecret = Request::getString('secret');
-$secret = SettingService::getSetting('system','security','sharedsecret');
+$secret = SettingService::getSharedSecret();
 
 if (StringUtils::isBlank($secret) || StringUtils::isBlank($requestSecret) || $requestSecret!==$secret) {
 	exit;
