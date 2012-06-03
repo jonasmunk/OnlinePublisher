@@ -69,6 +69,12 @@ $gui='
 				</overflow>
 			</left>
 			<center>
+				<bar name="groupBar" variant="layout" visible="false">
+					<text name="groupTitle"/>
+					<right>
+						<button text="Info" small="true" name="groupInfo"/>
+					</right>
+				</bar>
 				<overflow name="mainArea">
 					<gallery name="gallery" source="imagesSource" padding="5" state="gallery" drop-files="true"/>
 					<list name="list" source="listSource" state="list" drop-files="true"/>

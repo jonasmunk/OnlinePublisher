@@ -51,6 +51,8 @@ hui.ui.listen({
 		} else {
 			//hui.ui.changeState('gallery');
 		}
+		groupBar.setVisible(item.kind=='imagegroup');
+		groupTitle.setText(item.title);
 	},
 	
 	
