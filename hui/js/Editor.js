@@ -145,6 +145,9 @@ hui.ui.Editor.prototype = {
 	///////////////////////// Columns ////////////////////////
 	
 	_onHoverColumn : function(column) {
+		if (this.hoveredColumn) {
+			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
+		}
 		this.hoveredColumn = column;
 		if (!this.active || this.activePart) {
 			return;
@@ -152,8 +155,8 @@ hui.ui.Editor.prototype = {
 		hui.cls.add(column,'hui_editor_column_hover');
 	},
 	
-	_onBlurColumn : function() {
-		if (!this.active || !this.hoveredColumn) return;
+	_onBlurColumn : function(e) {
+		if (!this.active || !this.hoveredColumn || hui.ui.isWithin(e,this.hoveredColumn)) return;
 		hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
 	},
 	
@@ -243,7 +246,7 @@ hui.ui.Editor.prototype = {
 	///////////////////////// Parts //////////////////////////
 	
 	hoverPart : function(part,event) {
-		if (!this.active || this.activePart || !this.live || this.dragging) {
+		if (!this.active || this.activePart || !this.live || this.dragging || this.busy) {
 			return;
 		}
 		this.hoveredPart = part;
@@ -253,6 +256,9 @@ hui.ui.Editor.prototype = {
 	},
 	blurPart : function(e) {
 		window.clearTimeout(this.partControlTimer);
+		if (hui.ui.isWithin(e,this.hoveredPart.element)) {
+			return;
+		}
 		if (!this.active) return;
 		if (this.partControls && !hui.ui.isWithin(e,this.partControls.element)) {
 			this._hidePartControls();
@@ -384,10 +390,14 @@ hui.ui.Editor.prototype = {
 		this.activePart = null;
 	},
 	savePart : function(part) {
-		hui.log('savePart')
-		part.save();
-		this.hidePartEditor();
-		this.activePart = null;
+		this.busy = true;
+		part.save({
+			callback : function() {
+				this.hidePartEditor();
+				this.activePart = null;
+				this.busy = false;
+			}.bind(this)
+		});
 	},
 	getEditorForElement : function(element) {
 		for (var i=0; i < this.parts.length; i++) {
@@ -731,6 +741,7 @@ hui.ui.Editor.prototype = {
 }
 
 hui.ui.Editor.getPartId = function(element) {
+	if (!element.id) return;
 	var m = element.id.match(/part\-([\d]+)/i);
 	if (m && m.length>0) return m[1];
 }
@@ -740,11 +751,8 @@ hui.ui.Editor.getPartId = function(element) {
 /**
  * @constructor
  */
-hui.ui.Editor.Header = function(element,row,column,position) {
-	this.element = hui.get(element);
-	this.row = row;
-	this.column = column;
-	this.position = position;
+hui.ui.Editor.Header = function(options) {
+	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.header = hui.get.firstByTag(this.element,'*');
 	this.field = null;
@@ -797,11 +805,8 @@ hui.ui.Editor.Header.prototype = {
 /**
  * @constructor
  */
-hui.ui.Editor.Html = function(element,row,column,position) {
-	this.element = hui.get(element);
-	this.row = row;
-	this.column = column;
-	this.position = position;
+hui.ui.Editor.Html = function(options) {
+	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.field = null;
 }

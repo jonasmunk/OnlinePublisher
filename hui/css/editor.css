@@ -30,12 +30,14 @@ div.hui_overlay_icon:hover
 
 .hui_editor_part_hover
 {
-	background: url('../gfx/hover_bg.png');
+	/*background: url('../gfx/hover_bg.png');*/
+	outline: 1px dashed rgba(0,0,0,.2);
 }
 
 .hui_editor_column_hover
 {
-	outline: 1px dashed #3875d7;
+	/*outline: 1px dashed #3875d7;*/
+	outline: 1px dashed rgba(0,0,0,.2);
 }
 
 .hui_editor_column_edit
