@@ -139,10 +139,10 @@ class ImageTransformationService {
 			$left = 0;
 			$top = 0;
 			if ($scale) {
-				Log::debug($recipe);
+				//Log::debug($recipe);
 				$finalWidth = round($originalInfo['width'] * $scale / 100);
 				$finalHeight = round($originalInfo['height'] * $scale / 100);
-				Log::debug(array($originalInfo,$finalWidth,$finalHeight));
+				//Log::debug(array($originalInfo,$finalWidth,$finalHeight));
 			} else {
 				if ($finalWidth==null) {
 					$finalWidth = round($originalInfo['width']/$originalInfo['height']*$finalHeight);
