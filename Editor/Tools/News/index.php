@@ -92,20 +92,22 @@ $gui='
 	</structure>
 	
 	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
-		<formula name="groupFormula">
-			<fields labels="above">
-				<field label="Titel">
-					<text-input key="title"/>
-				</field>
-				<buttons>
-					<button name="cancelGroup" title="Annuller"/>
-					<button name="deleteGroup" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet gruppen" cancel="Nej"/>
-					</button>
-					<button name="saveGroup" title="Gem" highlighted="true"/>
-				</buttons>
-			</fields>
-		</formula>
+		<space left="5" right="5" bottom="3">
+			<formula name="groupFormula">
+				<fields labels="above">
+					<field label="Titel">
+						<text-input key="title"/>
+					</field>
+					<buttons>
+						<button name="cancelGroup" title="Annuller"/>
+						<button name="deleteGroup" title="Slet">
+							<confirm text="Er du sikker?" ok="Ja, slet gruppen" cancel="Nej"/>
+						</button>
+						<button name="saveGroup" title="Gem" highlighted="true"/>
+					</buttons>
+				</fields>
+			</formula>
+		</space>
 	</window>
 
 	<window title="Kilde" name="sourceWindow" icon="common/internet" width="300" padding="5">
@@ -181,7 +183,7 @@ $gui='
 			
 		</tabs>
 		
-		<buttons right="15" bottom="10" align="right">
+		<buttons right="16" bottom="10" align="right">
 			<button name="cancelNews" title="Annuller"/>
 			<button name="deleteNews" title="Slet">
 				<confirm text="Er du sikker?" ok="Ja, slet nyheden" cancel="Annuller"/>
