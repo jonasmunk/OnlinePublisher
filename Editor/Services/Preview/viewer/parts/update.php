@@ -4,7 +4,7 @@
  * @subpackage Services.Preview
  */
 require_once '../../../../Include/Private.php';
-usleep(2000000);
+//usleep(2000000);
 $id = Request::getInt('id');
 $pageId = Request::getInt('pageId');
 $type = Request::getString('type');
