@@ -1,0 +1,25 @@
+div.part_map
+{
+	position: relative;
+	display: inline-block;
+	border: 8px solid #fff;
+	box-shadow: 0 1px 4px rgba(0,0,0,.4),  0 3px 8px rgba(0,0,0,.1);
+	height
+}
+div.part_map_effect
+{
+	position: absolute; width: 100%; height: 100%;
+	background-size: 33.33333% 33.33333%;
+	background: -webkit-linear-gradient(330deg,transparent 50%,rgba(0,0,0,0.15) 100%), -webkit-linear-gradient(300deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%);
+}
+
+a.part_map_pin
+{
+	background: url('../../basic/gfx/part_map_pin.png');
+	position: absolute;
+	width: 29px;
+	height: 30px;
+	left: 50%;
+	top: 50%;
+	margin: -15px 0 0 -15px;
+}

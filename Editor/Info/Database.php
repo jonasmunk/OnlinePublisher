@@ -539,6 +539,10 @@ $databaseTables = array(
 			array("part_id","int(11)","","","0",""),
 			array("mailinglist_id","int(11)","","","0","")
 		),
+	'part_map' => array(
+			array("part_id","int(11)","","","0",""),
+			array("maptype","varchar(11)","YES","","","")
+		),
 	'part_news' => array(
 			array("part_id","int(11)","","","0",""),
 			array("align","varchar(20)","YES","","",""),

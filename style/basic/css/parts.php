@@ -15,4 +15,5 @@ include 'part_formula.css';
 include 'part_richtext.css';
 include 'part_poster.css';
 include 'part_table.css';
+include 'part_map.css';
 ?>

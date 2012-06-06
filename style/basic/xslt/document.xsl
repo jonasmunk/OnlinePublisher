@@ -27,6 +27,7 @@
 	<xsl:include href="part_formula.xsl"/>
 	<xsl:include href="part_poster.xsl"/>
 	<xsl:include href="part_table.xsl"/>
+	<xsl:include href="part_map.xsl"/>
 
 	<xsl:template match="doc:content">
 		<div class="document">

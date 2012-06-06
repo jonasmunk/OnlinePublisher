@@ -131,7 +131,8 @@ union select html as text,document_section.part_id from part_table,document_sect
 			'list' => array ( 'name' => array('da'=>'Liste','en'=>'List') ),
 			'mailinglist' => array ( 'name' => array('da'=>'Postliste','en'=>'Mailing list') ),
 			'html' => array ( 'name' => array('da'=>'HTML','en'=>'HTML') ),
-			'poster' => array ( 'name' => array('da'=>'Plakat','en'=>'Poster') )
+			'poster' => array ( 'name' => array('da'=>'Plakat','en'=>'Poster') ),
+			'map' => array ( 'name' => array('da'=>'Kort','en'=>'Map') )
 		);
 	}
 	
@@ -153,7 +154,8 @@ union select html as text,document_section.part_id from part_table,document_sect
 			'list' => $parts['list'],
 			'mailinglist' => $parts['mailinglist'],
 			'html' => $parts['html'],
-			'poster' => $parts['poster']
+			'poster' => $parts['poster'],
+			'map' => $parts['map']
 		);
 		return $menu;
 	}
