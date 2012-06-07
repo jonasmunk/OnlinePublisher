@@ -113,7 +113,7 @@ class ListPartController extends PartController
 								</field>
 								<field label="Vis tekst">
 									<checkbox value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
-								</checkbox>
+								</field>
 								<field label="Tekstlængde">
 									<number-input value="'.$part->getMaxTextLength().'" key="maxtextlength" min="0" max="2000"/>
 								</field>

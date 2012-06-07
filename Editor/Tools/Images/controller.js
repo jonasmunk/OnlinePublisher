@@ -34,6 +34,7 @@ hui.ui.listen({
 			message:{start:'Tilføjer til gruppe...',delay:300},
 			onSuccess:function() {
 				imagesSource.refresh();
+				listSource.refresh();
 				groupSource.refresh();
 			}
 		});
@@ -126,6 +127,7 @@ hui.ui.listen({
 			message:{start:'Sletter billede...',delay:300},
 			onSuccess:function() {
 				imagesSource.refresh();
+				listSource.refresh();
 				groupSource.refresh();
 				subsetSource.refresh();
 				hui.ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
@@ -175,6 +177,7 @@ hui.ui.listen({
 			message:{start:'Gemmer billede...',delay:300},
 			onSuccess:function() {
 				imagesSource.refresh();
+				listSource.refresh();
 				groupSource.refresh();
 				hui.ui.showMessage({text:'Billedet er gemt!',icon:'common/success',duration:2000});			
 			}
@@ -208,6 +211,7 @@ hui.ui.listen({
 			message:{start:'Sletter billede...',delay:300},
 			onSuccess:function() {
 				imagesSource.refresh();
+				listSource.refresh();
 				groupSource.refresh();
 				subsetSource.refresh();
 				hui.ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});

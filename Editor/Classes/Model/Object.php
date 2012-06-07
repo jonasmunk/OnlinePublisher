@@ -10,11 +10,10 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Core/Database.php');
 require_once($basePath.'Editor/Classes/Core/InternalSession.php');
 require_once($basePath.'Editor/Classes/Core/Log.php');
-require_once($basePath.'Editor/Classes/Model/Persistent.php');
 require_once($basePath.'Editor/Classes/Services/ObjectService.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
-class Object implements Persistent {
+class Object {
 	var $id;
 	var $title;
 	var $created;

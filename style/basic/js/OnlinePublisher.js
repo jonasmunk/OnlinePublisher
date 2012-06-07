@@ -91,6 +91,9 @@ op.showLogin = function() {
 				},100);
 				this.loadingLogin = false;
 				op.startListening();
+				var p = new hui.Preloader({context:hui.ui.context+'hui/icons/'});
+				p.addImages('common/success24.png');
+				p.load();
 			}.bind(this)
 		);
 	} else {
