@@ -28,59 +28,39 @@ if (Request::exists('section')) {
 
 $pageId = InternalSession::getPageId();
 
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-	<head>
+$stamp = SystemInfo::getDate();
+
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html>
+		<head>
 		<title>Editor</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version=<?php echo SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>style/basic/css/parts.php?version=<?php echo SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>style/basic/css/document.css?version=<?php echo SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>style/<?php echo $design?>/css/overwrite.css?version=<?php echo SystemInfo::getDate()?>" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version=<?php echo SystemInfo::getDate()?>" />
-		<!--<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script' rel='stylesheet' type='text/css' />-->
-		<!--[if IE]>
-		<link rel="stylesheet" type="text/css" href="css/msie.css?version=<?php echo SystemInfo::getDate()?>" />
-		<![endif]-->
-		<?php if (Request::getBoolean('dev') || true) { ?>
-		<script type="text/javascript" src="../../../hui/bin/combined.js?version=<?php echo SystemInfo::getDate()?>" charset="UTF-8"></script>
-		<script type="text/javascript" src="../../../hui/js/Menu.js?version=<?php echo SystemInfo::getDate()?>" charset="UTF-8"></script>
-		<?php } else { ?>
-		<script type="text/javascript" src="../../../hui/bin/minimized.js?version=<?php echo SystemInfo::getDate()?>" charset="UTF-8"></script>
-		<?php } ?>
-		<!--[if IE 8]>
-			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version=<?php echo SystemInfo::getDate()?>"> </link>
-		<![endif]-->
-		<!--[if lt IE 7]>
-			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version=<?php echo SystemInfo::getDate()?>"> </link>
-		<![endif]-->
-		<!--[if IE 7]>
-			<link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version=<?php echo SystemInfo::getDate()?>"> </link>
-		<![endif]-->
+		<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version='.$stamp.'" />
+		<link rel="stylesheet" type="text/css" href="../../../style/basic/css/parts.php?version='.$stamp.'" />
+		<link rel="stylesheet" type="text/css" href="../../../style/basic/css/document.css?version='.$stamp.'" />
+		<link rel="stylesheet" type="text/css" href="../../../style/'.$design.'/css/overwrite.css?version='.$stamp.'" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version='.$stamp.'" />
+		<!--[if IE 8]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version='.$stamp.'"> </link><![endif]-->
+		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version='.$stamp.'"> </link><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version='.$stamp.'"> </link><![endif]-->		
+		<!--<link href="http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script" rel="stylesheet" type="text/css" />-->
+		<script type="text/javascript" src="js/combined.php?version='.$stamp.'" charset="UTF-8"></script>
 		<script type="text/javascript">
-			hui.ui.context='../../../';
-			hui.ui.language='<?php echo $language?>';
-		</script>
-		<script type="text/javascript" src="js/Controller.js?version=<?php echo SystemInfo::getDate()?>" charset="utf-8"></script>
-		<script type="text/javascript" src="../../Services/Parts/js/parts.js?version=<?php echo SystemInfo::getDate()?>"></script>
-		<script type="text/javascript" src="<?php echo $baseUrl?>style/basic/js/OnlinePublisher.js?version=<?php echo SystemInfo::getDate()?>"></script>
-		<script type="text/javascript">
-			controller.context='<?php echo $baseUrl?>';
-			controller.pageId = <?php echo $pageId?>;
-			controller.changed = <?php echo (PageService::isChanged($pageId) ? 'true' : 'false')?>;
-			<?php
-			$parts = PartService::getParts();
-			foreach ($parts as $part => $info) {
-				echo "controller.parts.push({value:'".$part."',title:'".$info['name'][$language]."'});\n";
-			}
-			if ($section==null) {
-				echo "controller.setMainToolbar();\n";
-			} else if ($section>0) {
-				echo "controller.activeSection=".$section.";\n";
-			}
-			?>
-		</script>
+			hui.ui.context = "../../../";
+			hui.ui.language = "'.$language.'";
+			controller.context = "'.$baseUrl.'";
+			controller.pageId = '.$pageId.';
+			controller.changed = '.(PageService::isChanged($pageId) ? 'true' : 'false')."\n";
+		$parts = PartService::getParts();
+		foreach ($parts as $part => $info) {
+			echo "controller.parts.push({value:'".$part."',title:'".$info['name'][$language]."'});\n";
+		}
+		if ($section==null) {
+			echo "controller.setMainToolbar();\n";
+		} else if ($section>0) {
+			echo "controller.activeSection=".$section.";\n";
+		}
+		echo '</script>
 	</head>
 	<body class="editor">
 	<div class="editor_body">
@@ -90,111 +70,115 @@ $pageId = InternalSession::getPageId();
 			<input type="hidden" name="column"/>
 			<input type="hidden" name="index"/>
 		</form>
-		<?php
-			$partContext = DocumentTemplateController::buildPartContext($pageId);
-			$lastRowIndex = displayRows($pageId);
-		?>
-	</div>
-<?php
+		';
+	$partContext = DocumentTemplateController::buildPartContext($pageId);
+	displayRows($pageId);
+	echo '</div>';
+
 if ($section==null) {
-$gui = '
-	<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
-	<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
-	<window width="400" name="linkWindow" padding="5" title="Link">
-		<formula name="linkFormula">
-			<fields labels="above">
-				<field label="Tekst">
-					<text-input key="text" multiline="true"/>
-				</field>
-				<field label="Beskrivelse">
-					<text-input key="description"/>
-				</field>
-				<field label="Omfang">
-					<radiobuttons key="scope" name="linkScope">
-						<item value="page" text="Hele siden"/>
-						<item value="part" text="Kun dette afsnit"/>
-					</radiobuttons>
-				</field>
-			</fields>
-			<space left="3" right="3" top="5">
-			<fieldset legend="Link">
-				<fields>
-					<field label="Side">
-						<dropdown key="page" name="linkPage" source="pageSource"/>
+	$gui = '
+		<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
+		<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
+		<window width="400" name="linkWindow" padding="5" title="Link">
+			<formula name="linkFormula">
+				<fields labels="above">
+					<field label="Tekst">
+						<text-input key="text" multiline="true"/>
 					</field>
-					<field label="Fil">
-						<dropdown key="file" name="linkFile" source="fileSource"/>
+					<field label="Beskrivelse">
+						<text-input key="description"/>
 					</field>
-					<field label="Adresse">
-						<text-input key="url" name="linkUrl"/>
-					</field>
-					<field label="E-post">
-						<text-input key="email" name="linkEmail"/>
+					<field label="Omfang">
+						<radiobuttons key="scope" name="linkScope">
+							<item value="page" text="Hele siden"/>
+							<item value="part" text="Kun dette afsnit"/>
+						</radiobuttons>
 					</field>
 				</fields>
-			</fieldset>
+				<space left="3" right="3" top="5">
+				<fieldset legend="Link">
+					<fields>
+						<field label="Side">
+							<dropdown key="page" name="linkPage" source="pageSource"/>
+						</field>
+						<field label="Fil">
+							<dropdown key="file" name="linkFile" source="fileSource"/>
+						</field>
+						<field label="Adresse">
+							<text-input key="url" name="linkUrl"/>
+						</field>
+						<field label="E-post">
+							<text-input key="email" name="linkEmail"/>
+						</field>
+					</fields>
+				</fieldset>
+				</space>
+				<buttons top="5">
+					<button text="Slet" name="deleteLink">
+						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+					</button>
+					<button text="Annuller" name="cancelLink"/>
+					<button text="Opret" submit="true" highlighted="true" name="saveLink"/>
+				</buttons>
+			</formula>
+		</window>
+	
+		<boundpanel name="linkPanel" variant="light">
+			<space all="3" bottom="10">
+				<rendering name="linkInfo"/>
 			</space>
-			<buttons top="5">
-				<button text="Slet" name="deleteLink">
+			<buttons align="center">
+				<button text="Rediger" name="editLink" highlighted="true" variant="paper" small="true"/>
+				<button text="Slet" name="deleteLinkPanel" variant="paper" small="true">
 					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
 				</button>
-				<button text="Annuller" name="cancelLink"/>
-				<button text="Opret" submit="true" highlighted="true" name="saveLink"/>
+				<button text="Besøg" name="visitLink" variant="paper" small="true"/>
+				<!--
+				<button text="Kun dette afsnit" name="limitLinkToPart" variant="paper"/>
+				-->
+				<button text="Annuller" name="cancelLinkPanel" variant="paper" small="true"/>
 			</buttons>
-		</formula>
-	</window>
+		</boundpanel>
 	
-	<boundpanel name="linkPanel" variant="light">
-		<space all="3" bottom="10">
-			<rendering name="linkInfo"/>
-		</space>
-		<buttons align="center">
-			<button text="Rediger" name="editLink" highlighted="true" variant="paper" small="true"/>
-			<button text="Slet" name="deleteLinkPanel" variant="paper" small="true">
-				<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
-			</button>
-			<button text="Besøg" name="visitLink" variant="paper" small="true"/>
-			<!--
-			<button text="Kun dette afsnit" name="limitLinkToPart" variant="paper"/>
-			-->
-			<button text="Annuller" name="cancelLinkPanel" variant="paper" small="true"/>
-		</buttons>
-	</boundpanel>
-	
-	<menu name="linkMenu">
-		<item title="Slet"/>
-	</menu>
+		<menu name="linkMenu">
+			<item title="Slet" key="delete"/>
+		</menu>
 
-	<window width="300" name="columnWindow" padding="5" title="Kolonne">
-		<formula name="columnFormula">
-			<fields labels="above">
-				<field label="Bredde...">
-					<radiobuttons key="preset" name="columnPreset">
-						<item value="dynamic" text="Efter indhold"/>
-						<item value="min" text="Mindst mulig"/>
-						<item value="max" text="Størst muligt"/>
-						<item value="specific" text="Speciel..."/>
-					</radiobuttons>
-				</field>
-				<field label="Speciel bredde">
-					<style-length-input key="width" name="columnWidth"/>
-				</field>
-			</fields>
-			<buttons top="5">
-				<button text="Slet" name="deleteColumn">
-					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
-				</button>
-				<button text="Annuller" name="cancelColumn"/>
-				<button text="Opdater" submit="true" highlighted="true" name="saveColumn"/>
-			</buttons>
-		</formula>
-	</window>
-';
-echo In2iGui::renderFragment($gui);
+		<window width="300" name="columnWindow" padding="5" title="Kolonne">
+			<formula name="columnFormula">
+				<fields labels="above">
+					<field label="Bredde...">
+						<radiobuttons key="preset" name="columnPreset">
+							<item value="dynamic" text="Efter indhold"/>
+							<item value="min" text="Mindst mulig"/>
+							<item value="max" text="Størst muligt"/>
+							<item value="specific" text="Speciel..."/>
+						</radiobuttons>
+					</field>
+					<field label="Speciel bredde">
+						<style-length-input key="width" name="columnWidth"/>
+					</field>
+				</fields>
+				<buttons top="5">
+					<button text="Slet" name="deleteColumn">
+						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+					</button>
+					<button text="Annuller" name="cancelColumn"/>
+					<button text="Opdater" submit="true" highlighted="true" name="saveColumn"/>
+				</buttons>
+			</formula>
+		</window>
+
+		<menu name="columnMenu">
+			<item title="Tilføj kolonne" key="addColumn"/>
+		</menu>
+
+
+	';
+	echo In2iGui::renderFragment($gui);
 }
+echo '</body></html>';
 ?>
-</body>
-</html>
 
 
 
@@ -251,7 +235,9 @@ function displayColumns($rowId,$rowIndex) {
 			}
 		}
 		echo "\n";
-		echo '<td class="editor_column" id="column'.$row['id'].'"'.$columnWidth.' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"  oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
+		echo '<td class="editor_column" id="column'.$row['id'].'"'.$columnWidth;
+		echo ' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"';
+		echo ' oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
 		displaySections($row['id'],$row['index'],$rowId,$rowIndex);
 		echo '</td>';
 		echo "\n";
@@ -361,8 +347,12 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	if (method_exists($ctrl,'editorGui')) {
 		echo $ctrl->editorGui($part,$partContext);
 	}
-	echo '<script type="text/javascript">'.
-	'try {parent.frames[0].location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"} catch(e) {hui.log("Unable to set toolbar");hui.log(e);};'.
+	echo '<script type="text/javascript">
+	try {
+		parent.frames[0].location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"
+	} catch(e) {
+		hui.log("Unable to set toolbar");hui.log(e);
+	};'.
 	'function saveSection() {
 		document.forms.PartForm.submit();
 	}'.

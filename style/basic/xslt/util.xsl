@@ -31,7 +31,7 @@
 			<xsl:choose>
 				<xsl:when test="@id">
 					<xsl:attribute name="onclick">
-					controller.linkWasClicked({
+					linkController.linkWasClicked({
 						id : <xsl:value-of select="@id"/>
 						, event : event
 						, node : this
@@ -39,7 +39,7 @@
 					}); return false;
 					</xsl:attribute>
 					<xsl:attribute name="oncontextmenu">
-						controller.linkMenu({
+						linkController.linkMenu({
 							id : <xsl:value-of select="@id"/>
 							, event : event
 							, node : this
