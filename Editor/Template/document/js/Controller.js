@@ -53,6 +53,7 @@ var controller = {
 	}),
 	$ready : function() {
 		var strings = this.strings;
+		
 		this.sectionMenu = hui.ui.Menu.create({name:'sectionMenu'});
 		this.sectionMenu.addItems([
 			{title:strings.get('edit_section'),value:'editSection'},
@@ -74,7 +75,8 @@ var controller = {
 				{title:strings.get('delete_row'),value:'deleteRow'}
 			]}
 		]);
-		this.columnMenu = hui.ui.Menu.create({name:'sectionMenu'});
+		
+		this.columnMenu = hui.ui.Menu.create({name:'columnMenu'});
 		this.columnMenu.addItems([
 				{title:strings.get('add_column'),value:'addColumn'},
 				{title:strings.get('edit_column'),value:'editColumn'},
@@ -87,6 +89,7 @@ var controller = {
 				{title:strings.get('add_row'),value:'addRow'},
 				{title:strings.get('delete_row'),value:'deleteRow'}
 		]);
+		
 		this.partMenu = hui.ui.Menu.create({name:'partMenu'});
 		this.partMenu.addItems(this.parts);
 		
@@ -176,17 +179,23 @@ var controller = {
 		}
 	},
 	$select$sectionMenu : function(value) {
+		this._onMenu(value);
+	},
+	$select$columnMenu : function(value) {
+		this._onMenu(value);
+	},
+	_onMenu : function(value) {
 		switch (value) {
 			case 'editSection' : this.editSection(); break;
 			case 'deleteSection' : this.deleteSection(); break;
 			case 'moveSectionUp' : this.moveSection(-1); break;
 			case 'moveSectionDown' : this.moveSection(1); break;
 			
-			case 'editColumn' : this.editColumn(this.columnId); break;
+			case 'editColumn' : columnsController.editColumn(this.columnId); break;
 			case 'addColumn' : this.addColumn(); break;
-			case 'deleteColumn' : this.deleteColumn(); break;
-			case 'moveColumnLeft' : this.moveColumn(-1); break;
-			case 'moveColumnRight' : this.moveColumn(1); break;
+			case 'deleteColumn' : columnsController.deleteColumn(this.columnId); break;
+			case 'moveColumnLeft' : columnsController.moveColumn(this.columnId,-1); break;
+			case 'moveColumnRight' : columnsController.moveColumn(this.columnId,1); break;
 			
 			case 'addRow' : this.addRow(); break;
 			case 'deleteRow' : this.deleteRow(); break;
@@ -280,19 +289,9 @@ var controller = {
 	moveSection : function(dir) {
 		document.location='data/MoveSection.php?section='+this.sectionId+'&dir='+dir;
 	},
-	
-	moveColumn : function(dir) {
-		document.location='data/MoveColumn.php?column='+this.columnId+'&dir='+dir;
-	},
-	
+		
 	addColumn : function() {
 		document.location='data/AddColumn.php?row='+this.rowId+'&index='+(this.columnIndex+1);
-	},
-	
-	deleteColumn : function() {
-		if (confirm(this.strings.get('confirm_delete_column'))) {
-			document.location='data/DeleteColumn.php?column='+this.columnId;
-		}
 	},
 	
 	moveRow : function(dir) {

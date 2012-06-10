@@ -21,6 +21,8 @@ if (Request::getBoolean('dev') || true) {
 	echo "\n";
 	require_once('LinksController.js');
 	echo "\n";
+	require_once('Columns.js');
+	echo "\n";
 	require_once('../../../Services/Parts/js/parts.js');
 	echo "\n";
 	require_once('../../../../style/basic/js/OnlinePublisher.js');

@@ -6,7 +6,7 @@ var columnsController = {
 		if (this.editedColumn) {
 			this._resetColumn();
 		}
-		
+		this.columnId = columnId;
 		var node = hui.get('column'+this.columnId);
 		hui.cls.add(node,'editor_column_highlighted');
 		this.editedColumn = {
@@ -33,6 +33,16 @@ var columnsController = {
 			}
 		})
 	},
+	moveColumn : function(id, dir) {
+		document.location='data/MoveColumn.php?column='+id+'&dir='+dir;
+	},
+	
+	deleteColumn : function(id) {
+		if (confirm(controller.strings.get('confirm_delete_column'))) {
+			document.location='data/DeleteColumn.php?column='+id;
+		}
+	},
+
 	$valueChanged$columnWidth : function() {
 		columnPreset.setValue('specific');
 	},
