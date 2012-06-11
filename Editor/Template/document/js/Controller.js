@@ -1,37 +1,13 @@
 var controller = {
 	parts : [],
 	pageId : 0,
-	sectionId : 0,
-	sectionIndex : 0,
-	columnId : 0,
-	columnIndex : 0,
-	rowId : 0,
-	rowIndex : 0,
+
 	activeSection : 0,
 	ready : false,
 	selectedText : '',
 	changed : false,
+	
 	strings : new hui.ui.Bundle({
-			edit_section : {da:'Rediger afsnit',en:'Edit section'},
-			delete_section : {da:'Slet afsnit',en:'Delete section'},
-			move_section_up : {da:'Flyt afsnit op',en:'Move section up'},
-			move_section_down : {da:'Flyt afsnit ned',en:'Move section down'},
-			add_column : {da:'Tilf\u00f8j kolonne',en:'Add column'},
-			edit_column : {da:'Indstil kolonne',en:'Column setup'},
-			move_right : {da:'Flyt til h\u00f8jre',en:'Move right'},
-			move_left : {da:'Flyt til venstre',en:'Move left'},
-			move_column_right : {da:'Flyt kolonne til h\u00f8jre',en:'Move column right'},
-			move_column_left : {da:'Flyt kolonne til venstre',en:'Move column left'},
-			delete_column : {da:'Slet kolonne',en:'Delete column'},
-			move_up : {da:'Flyt op',en:'Move up'},
-			move_down : {da:'Flyt ned',en:'Move down'},
-			move_row_up : {da:'Flyt r\u00e6kke op',en:'Move row up'},
-			move_row_down : {da:'Flyt r\u00e6kke ned',en:'Move row down'},
-			add_row : {da:'Tilf\u00f8j r\u00e6kke',en:'Add row'},
-			delete_row : {da:'Slet r\u00e6kke',en:'Delete row'},
-			column : {da:'Kolonne',en:'Column'},
-			row : {da:'R\u00e6kke',en:'Row'},
-			
 			cancel : { da : 'Annuller', en : 'Cancel' },
 			
 			confirm_delete_section : {
@@ -51,44 +27,9 @@ var controller = {
 				en:'Are you sure you want to delete the row?\n\nThe action cannot be undone.\n'
 			}
 	}),
+	
 	$ready : function() {
 		var strings = this.strings;
-		
-		this.sectionMenu = hui.ui.Menu.create({name:'sectionMenu'});
-		this.sectionMenu.addItems([
-			{title:strings.get('edit_section'),value:'editSection'},
-			{title:strings.get('delete_section'),value:'deleteSection'},
-			{title:strings.get('move_section_up'),value:'moveSectionUp'},
-			{title:strings.get('move_section_down'),value:'moveSectionDown'},
-			null,
-			{title:strings.get('column'),children:[
-				{title:strings.get('add_column'),value:'addColumn'},
-				{title:strings.get('edit_column'),value:'editColumn'},
-				{title:strings.get('move_right'),value:'moveColumnRight'},
-				{title:strings.get('move_left'),value:'moveColumnLeft'},
-				{title:strings.get('delete_column'),value:'deleteColumn'}
-			]},
-			{title:strings.get('row'),children:[
-				{title:strings.get('move_up'),value:'moveRowUp'},
-				{title:strings.get('move_down'),value:'moveRowDown'},
-				{title:strings.get('add_row'),value:'addRow'},
-				{title:strings.get('delete_row'),value:'deleteRow'}
-			]}
-		]);
-		
-		this.columnMenu = hui.ui.Menu.create({name:'columnMenu'});
-		this.columnMenu.addItems([
-				{title:strings.get('add_column'),value:'addColumn'},
-				{title:strings.get('edit_column'),value:'editColumn'},
-				{title:strings.get('move_column_right'),value:'moveColumnRight'},
-				{title:strings.get('move_column_left'),value:'moveColumnLeft'},
-				{title:strings.get('delete_column'),value:'deleteColumn'},
-				null,
-				{title:strings.get('move_row_up'),value:'moveRowUp'},
-				{title:strings.get('move_row_down'),value:'moveRowDown'},
-				{title:strings.get('add_row'),value:'addRow'},
-				{title:strings.get('delete_row'),value:'deleteRow'}
-		]);
 		
 		this.partMenu = hui.ui.Menu.create({name:'partMenu'});
 		this.partMenu.addItems(this.parts);
@@ -163,12 +104,13 @@ var controller = {
 	},
 	$iconWasClicked$sectionActions : function(value,event) {
 		if (value=='edit') {
-			this.editSection();
+			this.editSection(this.hoverInfo.sectionId);
 		} else if (value=='new') {
 			this.lastSectionMode = false;
+			this.menuInfo = this.hoverInfo;
 			this.partMenu.showAtPointer(event);
 		} else if (value=='delete') {
-			this.deleteSection();
+			this.deleteSection(this.hoverInfo.sectionId);
 		}
 	},
 	$iconWasClicked$sectionEditActions : function(value) {
@@ -186,41 +128,44 @@ var controller = {
 	},
 	_onMenu : function(value) {
 		switch (value) {
-			case 'editSection' : this.editSection(); break;
-			case 'deleteSection' : this.deleteSection(); break;
-			case 'moveSectionUp' : this.moveSection(-1); break;
-			case 'moveSectionDown' : this.moveSection(1); break;
+			case 'editSection' : this.editSection(this.menuInfo.sectionId); break;
+			case 'deleteSection' : this.deleteSection(this.menuInfo.sectionId); break;
+			case 'moveSectionUp' : this.moveSection(this.menuInfo.sectionId,-1); break;
+			case 'moveSectionDown' : this.moveSection(this.menuInfo.sectionId,1); break;
 			
-			case 'editColumn' : columnsController.editColumn(this.columnId); break;
-			case 'addColumn' : this.addColumn(); break;
-			case 'deleteColumn' : columnsController.deleteColumn(this.columnId); break;
-			case 'moveColumnLeft' : columnsController.moveColumn(this.columnId,-1); break;
-			case 'moveColumnRight' : columnsController.moveColumn(this.columnId,1); break;
+			case 'editColumn' : columnsController.editColumn(this.menuInfo.columnId); break;
+			case 'addColumn' : this.addColumn(this.menuInfo.rowId,this.menuInfo.columnIndex+1); break;
+			case 'deleteColumn' : columnsController.deleteColumn(this.menuInfo.columnId); break;
+			case 'moveColumnLeft' : columnsController.moveColumn(this.menuInfo.columnId,-1); break;
+			case 'moveColumnRight' : columnsController.moveColumn(this.menuInfo.columnId,1); break;
 			
-			case 'addRow' : this.addRow(); break;
-			case 'deleteRow' : this.deleteRow(); break;
-			case 'moveRowUp' : this.moveRow(-1); break;
-			case 'moveRowDown' : this.moveRow(1); break;
+			case 'addRow' : this.addRow(this.menuInfo.rowIndex+1); break;
+			case 'deleteRow' : this.deleteRow(this.menuInfo.rowId); break;
+			case 'moveRowUp' : this.moveRow(this.menuInfo.rowId,-1); break;
+			case 'moveRowDown' : this.moveRow(this.menuInfo.rowId,1); break;
 		}
 	},
 	$select$partMenu : function(value) {
-		document.forms.SectionAdder.type.value='part';
-		document.forms.SectionAdder.part.value=value;
+		var form = document.forms.SectionAdder;
+		form.type.value = 'part';
+		form.part.value = value;
 		if (this.lastSectionMode) {
-			document.forms.SectionAdder.column.value=this.columnId;
-			document.forms.SectionAdder.index.value=this.sectionIndex;
+			form.column.value = this.menuInfo.columnId;
+			form.index.value = this.menuInfo.sectionIndex;
 		}
-		document.forms.SectionAdder.submit();
+		form.submit();
 	},
 	
 	//////////////////// Sections ///////////////////
 	
-	sectionOver : function(cell,sectionId,columnId,indexVal) {
+	sectionOver : function(cell,sectionId,columnId,sectionIndex) {
 		if (this.activeSection || !this.ready) return;
 		hui.cls.add(cell,'section_hover');
-		this.sectionId=sectionId;
-		document.forms.SectionAdder.column.value=columnId;
-		document.forms.SectionAdder.index.value=indexVal;
+		this.hoverInfo = {
+			sectionId : sectionId,
+			sectionIndex : sectionIndex,
+			columnId : columnId
+		}
 		this.partControls.showAtElement(cell,{'horizontal':'right',autoHide:true});
 	},
 	sectionOut : function(cell,event) {
@@ -231,50 +176,56 @@ var controller = {
 		if (this.activeSection || this.selectedText) {
 			return true;
 		}
-	    this.sectionId = sectionId;
-	    this.sectionIndex = sectionIndex;
-	    this.columnId = columnId;
-	    this.columnIndex = columnIndex;
-	    this.rowId = rowId;
-	    this.rowIndex = rowIndex;
-		this.sectionMenu.showAtPointer(event);
+		this.menuInfo = {
+		    sectionId : sectionId,
+		    sectionIndex : sectionIndex,
+		    columnId : columnId,
+		    columnIndex : columnIndex,
+		    rowId : rowId,
+		    rowIndex : rowIndex
+		}
+		sectionMenu.showAtPointer(event);
 		return false;
 	},
 	clickSection : function(info) {
 		if (info.event.altKey) {
-			document.location='Editor.php?section='+info.id;
+			document.location = 'Editor.php?section='+info.id;
 		}
 	},
-	editSection : function() {
-		document.location='Editor.php?section='+this.sectionId;
+	editSection : function(id) {
+		document.location = 'Editor.php?section='+id;
 	},
-	deleteSection : function() {
+	deleteSection : function(id) {
 		hui.ui.confirmOverlay({
-			element : hui.get('section'+this.sectionId),
+			element : hui.get('section'+id),
 			text : this.strings.get('confirm_delete_section'),
 			okText : this.strings.get('confirm_delete_ok'),
 			cancelText : this.strings.get('cancel'),
 			onOk : function() {
-				document.location='data/DeleteSection.php?section='+this.sectionId;
+				document.location = 'data/DeleteSection.php?section='+id;
 			}.bind(this)
 		})
 	},
-	showNewPartMenu : function(element,event,columnId,sectionIndex) {
+	showNewPartMenu : function(info) {
 		this.lastSectionMode = true;
-	    this.columnId=columnId;
-	    this.sectionIndex=sectionIndex;
-		this.partMenu.showAtElement(element,event);
+		this.menuInfo = {
+	    	columnId : info.columnId,
+	    	sectionIndex : info.sectionIndex
+		}
+		this.partMenu.showAtElement(info.element,info.event);
 	},
 	
 	showColumnMenu : function(element,event,columnId,columnIndex,rowId,rowIndex) {
 		if (this.activeSection || this.selectedText) {
 			return true;
 		}
-	    this.columnId = columnId;
-	    this.columnIndex = columnIndex;
-	    this.rowId = rowId;
-	    this.rowIndex = rowIndex;
-		this.columnMenu.showAtPointer(event);
+		this.menuInfo = {
+	    	columnId : columnId,
+	    	columnIndex : columnIndex,
+	    	rowId : rowId,
+	    	rowIndex : rowIndex
+		};
+		columnMenu.showAtPointer(event);
 		return false;
 	},
 	
@@ -286,25 +237,25 @@ var controller = {
 		hui.cls.remove(cell,'editor_column_hover');
 	},
 	
-	moveSection : function(dir) {
-		document.location='data/MoveSection.php?section='+this.sectionId+'&dir='+dir;
+	moveSection : function(id,dir) {
+		document.location='data/MoveSection.php?section='+id+'&dir='+dir;
 	},
 		
-	addColumn : function() {
-		document.location='data/AddColumn.php?row='+this.rowId+'&index='+(this.columnIndex+1);
+	addColumn : function(row,index) {
+		document.location='data/AddColumn.php?row='+row+'&index='+index;
 	},
 	
-	moveRow : function(dir) {
-		document.location='data/MoveRow.php?row='+this.rowId+'&dir='+dir;
+	moveRow : function(id,dir) {
+		document.location='data/MoveRow.php?row='+id+'&dir='+dir;
 	},
 	
-	addRow : function() {
-		document.location='data/AddRow.php?index='+(this.rowIndex+1)+'&pageId='+this.pageId;
+	addRow : function(index) {
+		document.location='data/AddRow.php?index='+index+'&pageId='+this.pageId;
 	},
 	
-	deleteRow : function() {
+	deleteRow : function(id) {
 		if (confirm(this.strings.get('confirm_delete_row'))) {
-			document.location='data/DeleteRow.php?row='+this.rowId;
+			document.location='data/DeleteRow.php?row='+id;
 		}
 	}
 

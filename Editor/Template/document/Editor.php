@@ -141,7 +141,41 @@ if ($section==null) {
 		</boundpanel>
 	
 		<menu name="linkMenu">
-			<item title="Slet" key="delete"/>
+			<item text="Slet" value="delete"/>
+		</menu>
+	
+		<menu name="columnMenu">
+			<item text="{Add column; da:Tilføj kolonne}" value="addColumn"/>
+			<item text="{Edit column; da:Instil kolonne}" value="editColumn"/>
+			<item text="{Move right; da:Flyt kolonne til højre}" value="moveColumnRight"/>
+			<item text="{Move left; da:Flyt kolonne til venstre}" value="moveColumnLeft"/>
+			<item text="{Delete column; da:Slet kolonne}" value="deleteColumn"/>
+			<divider/>
+			<item text="{Move up; da:Flyt op}" value="moveRowUp"/>
+			<item text="{Move down; da:Flyt ned}" value="moveRowDown"/>
+			<item text="{Add row; da:Tilføj række}" value="addRow"/>
+			<item text="{Delete row; da:Slet række}" value="deleteRow"/>
+		</menu>
+	
+		<menu name="sectionMenu">
+			<item text="{Edit section; da:Rediger sektion}" value="editSection"/>
+			<item text="{Delete section; da:Slet sektion}" value="deleteSection"/>
+			<item text="{Move section up; da:Flyt sektion op}" value="moveSectionUp"/>
+			<item text="{Move section down; da:Flyt sektion ned}" value="moveSectionDown"/>
+			<divider/>
+			<item text="{Column ; da:Kolonne}">
+				<item text="{Add column; da:Tilføj kolonne}" value="addColumn"/>
+				<item text="{Edit column; da:Instil kolonne}" value="editColumn"/>
+				<item text="{Move right; da:Flyt kolonne til højre}" value="moveColumnRight"/>
+				<item text="{Move left; da:Flyt kolonne til venstre}" value="moveColumnLeft"/>
+				<item text="{Delete column; da:Slet kolonne}" value="deleteColumn"/>
+			</item>
+			<item text="{Row ; da:Række}">
+				<item text="{Move up; da:Flyt op}" value="moveRowUp"/>
+				<item text="{Move down; da:Flyt ned}" value="moveRowDown"/>
+				<item text="{Add row; da:Tilføj række}" value="addRow"/>
+				<item text="{Delete row; da:Slet række}" value="deleteRow"/>
+			</item>
 		</menu>
 
 		<window width="300" name="columnWindow" padding="5" title="Kolonne">
@@ -269,13 +303,13 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	}
 	Database::free($result);
 	if ($section==null) {
-		echo '<div style="padding-top: 5px;">'.
-		'<a onclick="controller.showNewPartMenu(this,event,'.$columnId.','.($lastIndex+1).'); return false" href="#" class="hui_button hui_button_small">'.
+		echo '<div style="padding: 5px;">'.
+		'<a onclick="controller.showNewPartMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($lastIndex+1).'}); return false" href="#" class="hui_button hui_button_paper hui_button_small hui_button_small_paper">'.
 		'<span><span>'.$strings['add_section'][$language].'</span></span>'.
 		'</a>'.
 		'</div>';
 	} else {
-		echo '<div style="padding-top: 5px;"><a class="hui_button hui_button_small hui_button_disabled"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
+		echo '<div style="padding: 5px;"><a class="hui_button hui_button_paper hui_button_small hui_button_small_paper"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
 	}
 }
 

@@ -177,13 +177,7 @@ var linkController = {
 		})
 	},
 	linkMenu : function(info) {
-		if (!this.linkContextMenu) {
-			this.linkContextMenu = hui.ui.Menu.create({name:'linkMenu'});
-			this.linkContextMenu.addItems([
-				{title:'Slet',value:'delete'}
-			]);
-		}
-		this.linkContextMenu.showAtPointer(info.event);
+		linkMenu.showAtPointer(info.event);
 	},
 	$click$cancelLinkPanel : function() {
 		this._clearLinkFocus();

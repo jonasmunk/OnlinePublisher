@@ -1171,4 +1171,30 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 </xsl:template>
 
+
+<xsl:template match="gui:menu">
+	<script type="text/javascript">
+		(function() {
+			var menu = <xsl:value-of select="generate-id()"/>_obj = hui.ui.Menu.create({name:'<xsl:value-of select="@name"/>'});
+			var items = [];
+			<xsl:apply-templates/>
+			menu.addItems(items);
+			<xsl:call-template name="gui:createobject"/>
+		})();
+	</script>
+	
+</xsl:template>
+
+<xsl:template match="gui:menu//gui:item">
+	items.push({text:'<xsl:value-of select="@text"/>',value:'<xsl:value-of select="@value"/>',children:(function() {
+		var items = [];
+		<xsl:apply-templates/>
+		return items;
+	})()});
+</xsl:template>
+
+<xsl:template match="gui:menu//gui:divider">
+	items.push(null);
+</xsl:template>
+
 </xsl:stylesheet>
