@@ -1,6 +1,6 @@
 {
 	"key" : "Images",
-	"icon" : "common/image",
+	"icon" : "application/photos",
 	"name" : {"da" : "Billeder", "en" : "Images"},
 	"description" : {"da" : "Tilføj og organisér billeder", "en" : "Add and manage images"},
 	"category" : "edit",
