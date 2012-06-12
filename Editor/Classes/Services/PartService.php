@@ -143,19 +143,23 @@ union select html as text,document_section.part_id from part_table,document_sect
 			'text' => $parts['text'],
 			'listing' => $parts['listing'],
 			'image' => $parts['image'],
-			'imagegallery' => $parts['imagegallery'],
 			'horizontalrule' => $parts['horizontalrule'],
 			'table' => $parts['table'],
+			'x' => 'divider',
 			'richtext' => $parts['richtext'],
 			'file' => $parts['file'],
-			'person' => $parts['person'],
-			'news' => $parts['news'],
-			'formula' => $parts['formula'],
-			'list' => $parts['list'],
-			'mailinglist' => $parts['mailinglist'],
-			'html' => $parts['html'],
-			'poster' => $parts['poster'],
-			'map' => $parts['map']
+			'imagegallery' => $parts['imagegallery'],
+			'y' => 'divider',
+			'advanced' => array('name'=>array('da'=>'Avanceret','en'=>'Advanced'),'children'=>array(
+				'person' => $parts['person'],
+				'news' => $parts['news'],
+				'formula' => $parts['formula'],
+				'list' => $parts['list'],
+				'mailinglist' => $parts['mailinglist'],
+				'html' => $parts['html'],
+				'poster' => $parts['poster'],
+				'map' => $parts['map']				
+			))
 		);
 		return $menu;
 	}

@@ -38,9 +38,21 @@ var columnsController = {
 	},
 	
 	deleteColumn : function(id) {
-		if (confirm(controller.strings.get('confirm_delete_column'))) {
-			document.location='data/DeleteColumn.php?column='+id;
-		}
+		controller.partControls.hide();
+		var node = hui.get('column'+id);
+		hui.cls.add(node,'editor_column_highlighted');
+		hui.ui.confirmOverlay({
+			element : node,
+			text : controller.strings.get('confirm_delete_column'),
+			okText : controller.strings.get('confirm_delete_ok'),
+			cancelText : controller.strings.get('cancel'),
+			onOk : function() {
+				document.location='data/DeleteColumn.php?column='+id;
+			},
+			onCancel : function() {
+				hui.cls.remove(node,'editor_column_highlighted');
+			}
+		})
 	},
 
 	$valueChanged$columnWidth : function() {

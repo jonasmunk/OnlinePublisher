@@ -22,7 +22,10 @@ hui.ui.Menu.create = function(options) {
 
 hui.ui.Menu.prototype = {
 	_addBehavior : function() {
-		this.hider = this.hide.bind(this);
+		this.hider = function() {
+			this.hide()
+			this.fire('cancel');
+		}.bind(this);
 		if (this.options.autoHide) {
 			var x = function(e) {
 				if (!hui.ui.isWithin(e,this.element) && (!this.options.parentElement || !hui.ui.isWithin(e,this.options.parentElement))) {

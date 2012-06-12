@@ -62,3 +62,26 @@ span.hui_overlay_text
 	margin-top: 2px;
 	cursor: default;
 }
+
+/*** Light variant ***/
+
+div.hui_overlay_light
+{
+	background: #fafafa;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	padding: 0 3px;
+	height: 36px;
+}
+
+div.hui_overlay_light div.hui_inner_overlay
+{
+	background: none;
+	padding: 0;
+	height: 36px;
+}
+
+div.hui_overlay_light div.hui_overlay_icon
+{
+	margin-top: 2px;
+}

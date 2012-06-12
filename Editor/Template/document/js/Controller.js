@@ -1,8 +1,8 @@
 var controller = {
-	parts : [],
 	pageId : 0,
+	activeSection : null,
 
-	activeSection : 0,
+
 	ready : false,
 	selectedText : '',
 	changed : false,
@@ -11,32 +11,33 @@ var controller = {
 			cancel : { da : 'Annuller', en : 'Cancel' },
 			
 			confirm_delete_section : {
-				da:'Vil du virkelig slette afsnittet? Det kan ikke fortrydes.\n',
+				da:'Vil du slette afsnittet? Det kan ikke fortrydes.\n',
 				en:'Delete the section? It cannot be undone.\n'
 			},
 			confirm_delete_ok : {
-				da : 'Ja, slet afsnit',
-				en : 'Yes, delete section'
+				da : 'Ja, slet',
+				en : 'Yes, delete'
 			},
 			confirm_delete_column : {
-				da:'Er du sikker p\u00e5 at du vil slette kolonnen?\n\nHandlingen kan ikke fortrydes.\n',
-				en:'Are you sure you want to delete the column?\n\nThe action cannot be undone.\n'
+				da:'Vil du slette kolonnen?\n\Det kan ikke fortrydes.\n',
+				en:'Delete the column?\n\nIt cannot be undone.\n'
 			},
 			confirm_delete_row : {
-				da:'Er du sikker p\u00e5 at du vil slette r\u00e6kken?\n\nHandlingen kan ikke fortrydes.\n',
-				en:'Are you sure you want to delete the row?\n\nThe action cannot be undone.\n'
+				da:'Vil du slette r\u00e6kken?\n\Det kan ikke fortrydes.\n',
+				en:'Delete the row?\n\nIt cannot be undone.\n'
 			}
 	}),
 	
 	$ready : function() {
 		var strings = this.strings;
 		
-		this.partMenu = hui.ui.Menu.create({name:'partMenu'});
-		this.partMenu.addItems(this.parts);
+		if (!this.activeSection) {
+			this._buildSectionAdders();
+		}
 		
-		this.partControls = hui.ui.Overlay.create({name:'sectionActions'});
+		this.partControls = hui.ui.Overlay.create({name:'sectionActions',variant:'light'});
 		this.partControls.addIcon('edit','common/edit');
-		this.partControls.addIcon('new','common/new');
+		//this.partControls.addIcon('new','common/new');
 		this.partControls.addIcon('delete','common/delete');
 		
 		if (this.activeSection) {
@@ -80,6 +81,57 @@ var controller = {
 			window.scrollTo(0,parseInt(scroll,10));
 		}
 	},
+	_buildSectionAdders : function() {
+		var adders = hui.build('div',{parent:document.body});
+		var columns = hui.get.byClass(document.body,'editor_column');
+		for (var i=0; i < columns.length; i++) {
+			var column = columns[i],
+				columnId = parseInt(column.getAttribute('data-id')),
+				pos = hui.position.get(column);
+			var sections = hui.get.byClass(column,'editor_section');
+			var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+pos.top+'px; width:'+column.clientWidth+'px;',className:'editor_section_adder',html:'<div><span>+</span></div>',parent:adders});
+			adder.columnId = columnId;
+			adder.sectionIndex = 0;
+			for (var j=0; j < sections.length; j++) {
+				var section = sections[j];
+				var pos = hui.position.get(section);
+				var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+(pos.top+section.clientHeight)+'px; width:'+column.clientWidth+'px;',html:'<div><span>+</span></div>',className:'editor_section_adder',parent:adders});
+				adder.columnId = columnId;
+				adder.sectionIndex = j+1;
+			};
+		};
+		hui.listen(adders,'click',function(e) {
+			if (this.stickyAdder) {
+				hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
+			}
+			e = hui.event(e);
+			var adder = e.findByClass('editor_section_adder');
+			this.menuInfo = {
+				columnId : adder.columnId,
+				sectionIndex : adder.sectionIndex+1
+			};
+			this.stickyAdder = adder;
+			hui.cls.add(adder,'editor_section_adder_sticky');
+			partMenu.showAtPointer(e);
+		}.bind(this))
+		hui.listen(adders,'mouseover',function(e) {
+			e = hui.event(e);
+			var adder = e.findByClass('editor_section_adder');
+			//hui.cls.add(hui.get('column'+adder.columnId),'editor_column_hover');
+			this.partControls.hide();
+		}.bind(this))
+	},
+	
+	$hide$partMenu : function() {
+		if (this.stickyAdder) {
+			hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
+		}
+	},
+	
+	_onClickAdder : function() {
+		
+	},
+	
 	_markToolbarChanged : function() {
 		try {
 			parent.frames[0].controller.markChanged();
@@ -108,7 +160,7 @@ var controller = {
 		} else if (value=='new') {
 			this.lastSectionMode = false;
 			this.menuInfo = this.hoverInfo;
-			this.partMenu.showAtPointer(event);
+			partMenu.showAtPointer(event);
 		} else if (value=='delete') {
 			this.deleteSection(this.hoverInfo.sectionId);
 		}
@@ -146,30 +198,34 @@ var controller = {
 		}
 	},
 	$select$partMenu : function(value) {
-		var form = document.forms.SectionAdder;
-		form.type.value = 'part';
-		form.part.value = value;
-		if (this.lastSectionMode) {
-			form.column.value = this.menuInfo.columnId;
-			form.index.value = this.menuInfo.sectionIndex;
-		}
-		form.submit();
+		hui.ui.request({
+			url : 'data/AddSection.php',
+			message : {start:'Tilføjer sektion',delay:300},
+			parameters : {
+				type: 'part',
+				part : value,
+				column : this.menuInfo.columnId,
+				index : this.menuInfo.sectionIndex
+			},
+			onJSON : function(obj) {
+				document.location = 'Editor.php?section='+obj.sectionId;
+			}
+		})
 	},
 	
 	//////////////////// Sections ///////////////////
 	
 	sectionOver : function(cell,sectionId,columnId,sectionIndex) {
 		if (this.activeSection || !this.ready) return;
-		hui.cls.add(cell,'section_hover');
 		this.hoverInfo = {
 			sectionId : sectionId,
 			sectionIndex : sectionIndex,
 			columnId : columnId
 		}
-		this.partControls.showAtElement(cell,{'horizontal':'right',autoHide:true});
+		this.partControls.showAtElement(cell,{'horizontal':'right',autoHide:true,top:2});
+		addHoverClass(cell,'editor_section_hover');
 	},
 	sectionOut : function(cell,event) {
-		hui.cls.remove(cell,'section_hover');
 		return;
 	},
 	showSectionMenu : function(element,event,sectionId,sectionIndex,columnId,columnIndex,rowId,rowIndex) {
@@ -196,14 +252,20 @@ var controller = {
 		document.location = 'Editor.php?section='+id;
 	},
 	deleteSection : function(id) {
+		this.partControls.hide();
+		var element = hui.get('section'+id);
+		hui.cls.add(element,'editor_part_highlighted');
 		hui.ui.confirmOverlay({
-			element : hui.get('section'+id),
+			element : element,
 			text : this.strings.get('confirm_delete_section'),
 			okText : this.strings.get('confirm_delete_ok'),
 			cancelText : this.strings.get('cancel'),
 			onOk : function() {
 				document.location = 'data/DeleteSection.php?section='+id;
-			}.bind(this)
+			}.bind(this),
+			onCancel : function() {
+				hui.cls.remove(element,'editor_part_highlighted');
+			}
 		})
 	},
 	showNewPartMenu : function(info) {
@@ -212,7 +274,7 @@ var controller = {
 	    	columnId : info.columnId,
 	    	sectionIndex : info.sectionIndex
 		}
-		this.partMenu.showAtElement(info.element,info.event);
+		partMenu.showAtElement(info.element,info.event);
 	},
 	
 	showColumnMenu : function(element,event,columnId,columnIndex,rowId,rowIndex) {
@@ -230,11 +292,10 @@ var controller = {
 	},
 	
 	columnOver : function(cell) {
-		hui.cls.add(cell,'editor_column_hover');
+		addHoverClass(cell,'editor_column_hover');
 	},
 	
 	columnOut : function(cell) {
-		hui.cls.remove(cell,'editor_column_hover');
 	},
 	
 	moveSection : function(id,dir) {
@@ -254,14 +315,40 @@ var controller = {
 	},
 	
 	deleteRow : function(id) {
-		if (confirm(this.strings.get('confirm_delete_row'))) {
-			document.location='data/DeleteRow.php?row='+id;
-		}
+		
+		controller.partControls.hide();
+		var node = hui.get('row'+id);
+		hui.cls.add(node,'editor_row_highlighted');
+		hui.ui.confirmOverlay({
+			element : node,
+			text : controller.strings.get('confirm_delete_row'),
+			okText : controller.strings.get('confirm_delete_ok'),
+			cancelText : controller.strings.get('cancel'),
+			onOk : function() {
+				document.location='data/DeleteRow.php?row='+id;
+			},
+			onCancel : function() {
+				hui.cls.remove(node,'editor_row_highlighted');
+			}
+		})
 	}
 
 };
 
 hui.ui.listen(controller);
+
+
+function addHoverClass(cell,className) {
+			hui.cls.add(cell,className);
+	var hider = null;
+	hider = function(e) {
+		if (!hui.ui.isWithin(e,cell)) {
+			hui.cls.remove(cell,className);
+			hui.unListen(document.body,'mousemove',hider);
+		}
+	}
+	hui.listen(document.body,'mousemove',hider);
+}
 
 if (!op) {var op={}}
 

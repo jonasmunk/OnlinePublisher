@@ -7,10 +7,12 @@ require_once '../../../Include/Private.php';
 
 header('Content-type: text/javascript');
 
-if (Request::getBoolean('dev') || true) {
+if (Request::getBoolean('dev')) {
 	require_once('../../../../hui/bin/combined.js');
 	echo "\n";
 	require_once('../../../../hui/js/Menu.js');
+	echo "\n";
+	require_once('../../../../hui/js/Overlay.js');
 	echo "\n";
 } else {
 	echo "\n";

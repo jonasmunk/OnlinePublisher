@@ -44,17 +44,13 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version='.$stamp.'"> </link><![endif]-->
 		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version='.$stamp.'"> </link><![endif]-->		
 		<!--<link href="http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script" rel="stylesheet" type="text/css" />-->
-		<script type="text/javascript" src="js/combined.php?version='.$stamp.'" charset="UTF-8"></script>
+		<script type="text/javascript" src="js/combined.php?version='.$stamp.(Request::getBoolean('dev') ? '&dev=true' : '').'" charset="UTF-8"></script>
 		<script type="text/javascript">
 			hui.ui.context = "../../../";
 			hui.ui.language = "'.$language.'";
 			controller.context = "'.$baseUrl.'";
 			controller.pageId = '.$pageId.';
 			controller.changed = '.(PageService::isChanged($pageId) ? 'true' : 'false')."\n";
-		$parts = PartService::getParts();
-		foreach ($parts as $part => $info) {
-			echo "controller.parts.push({value:'".$part."',title:'".$info['name'][$language]."'});\n";
-		}
 		if ($section==null) {
 			echo "controller.setMainToolbar();\n";
 		} else if ($section>0) {
@@ -64,15 +60,12 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 	</head>
 	<body class="editor">
 	<div class="editor_body">
-		<form action="data/AddSection.php" name="SectionAdder" method="get" style="margin: 0px;">
-			<input type="hidden" name="type"/>
-			<input type="hidden" name="part"/>
-			<input type="hidden" name="column"/>
-			<input type="hidden" name="index"/>
-		</form>
 		';
+	
 	$partContext = DocumentTemplateController::buildPartContext($pageId);
+	
 	displayRows($pageId);
+	
 	echo '</div>';
 
 if ($section==null) {
@@ -177,6 +170,26 @@ if ($section==null) {
 				<item text="{Delete row; da:Slet række}" value="deleteRow"/>
 			</item>
 		</menu>
+		
+		<menu name="partMenu">
+			
+		';
+		$parts = PartService::getPartMenu();
+		foreach ($parts as $part => $info) {
+			if ($info=='divider') {
+				$gui.='<divider/>';
+				continue;
+			}
+			$gui.='<item text="'.$info['name'][$language].'" value="'.$part.'">';
+			if (is_array($info['children'])) {
+				foreach ($info['children'] as $subPart => $subInfo) {
+					$gui.='<item text="'.$subInfo['name'][$language].'" value="'.$subPart.'"/>';
+				}
+			}
+			$gui.='</item>';
+		}
+		$gui.='
+		</menu>
 
 		<window width="300" name="columnWindow" padding="5" title="Kolonne">
 			<formula name="columnFormula">
@@ -269,7 +282,7 @@ function displayColumns($rowId,$rowIndex) {
 			}
 		}
 		echo "\n";
-		echo '<td class="editor_column" id="column'.$row['id'].'"'.$columnWidth;
+		echo '<td class="editor_column" data-id="'.$row['id'].'" id="column'.$row['id'].'"'.$columnWidth;
 		echo ' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"';
 		echo ' oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
 		displaySections($row['id'],$row['index'],$rowId,$rowIndex);

@@ -928,6 +928,13 @@ hui.position = {
 		left -= src.clientWidth * (options.source.horizontal || 0);
 		top -= src.clientHeight * (options.source.vertical || 0);
 
+		if (options.top) {
+			top += options.top;
+		}
+		if (options.left) {
+			left += options.left;
+		}
+
 		if (options.insideViewPort) {
 			var w = hui.window.getViewWidth();
 			if (left + src.clientWidth > w) {
@@ -936,14 +943,12 @@ hui.position = {
 			}
 			if (left < 0) {left=0}
 			if (top < 0) {top=0}
+			
+			var height = hui.window.getViewHeight();
+			var vertMax = hui.window.getScrollTop()+hui.window.getViewHeight()-src.clientHeight,
+				vertMin = hui.window.getScrollTop();
+			top = Math.max(Math.min(top,vertMax),vertMin);
 		}
-		if (options.top) {
-			top += options.top;
-		}
-		if (options.left) {
-			left += options.left;
-		}
-
 		src.style.top = top+'px';
 		src.style.left = left+'px';
 	}
@@ -10591,11 +10596,14 @@ hui.ui.Menu.create = function(options) {
 
 hui.ui.Menu.prototype = {
 	_addBehavior : function() {
-		this.hider = this.hide.bind(this);
+		this.hider = function() {
+			this.hide()
+			this.fire('cancel');
+		}.bind(this);
 		if (this.options.autoHide) {
 			var x = function(e) {
 				if (!hui.ui.isWithin(e,this.element) && (!this.options.parentElement || !hui.ui.isWithin(e,this.options.parentElement))) {
-					if (!this.isSubMenuVisible()) {
+					if (!this._isSubMenuVisible()) {
 						this.hide();
 					}
 				}
@@ -10611,12 +10619,12 @@ hui.ui.Menu.prototype = {
 	},
 	addItem : function(item) {
 		var self = this;
-		var element = hui.build('div',{'class':'hui_menu_item',text:item.title});
+		var element = hui.build('div',{'class':'hui_menu_item',text:item.title || item.text});
 		hui.listen(element,'click',function(e) {
 			hui.stop(e);
 			self._onItemClick(item.value);
 		});
-		if (item.children) {
+		if (item.children && item.children.length>0) {
 			var sub = hui.ui.Menu.create({autoHide:true,parentElement:element});
 			sub.addItems(item.children);
 			hui.listen(element,'mouseover',function(e) {
@@ -10686,7 +10694,7 @@ hui.ui.Menu.prototype = {
 		}
 		if (!this.visible) {
 			hui.style.set(this.element,{opacity:1});
-			this.addHider();
+			this._addHider();
 			this.visible = true;
 		}
 	},
@@ -10698,23 +10706,23 @@ hui.ui.Menu.prototype = {
 				self.element.style.display='none';
 			}
 		});
-		this.removeHider();
+		this._removeHider();
 		for (var i=0; i < this.subMenus.length; i++) {
 			this.subMenus[i].hide();
 		};
 		this.visible = false;
 		this.fire('hide');
 	},
-	isSubMenuVisible : function() {
+	_isSubMenuVisible : function() {
 		for (var i=0; i < this.subMenus.length; i++) {
 			if (this.subMenus[i].visible) return true;
 		};
 		return false;
 	},
-	addHider : function() {
+	_addHider : function() {
 		hui.listen(document.body,'click',this.hider);
 	},
-	removeHider : function() {
+	_removeHider : function() {
 		hui.unListen(document.body,'click',this.hider);
 	}
 }
@@ -10740,7 +10748,7 @@ hui.ui.Overlay = function(options) {
  */
 hui.ui.Overlay.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{className:'hui_overlay',style:'display:none',html:'<div class="hui_inner_overlay"><div class="hui_inner_overlay"></div></div>'});
+	var e = options.element = hui.build('div',{className:'hui_overlay'+(options.variant ? ' hui_overlay_'+options.variant : ''),style:'display:none',html:'<div class="hui_inner_overlay"><div class="hui_inner_overlay"></div></div>'});
 	document.body.appendChild(e);
 	return new hui.ui.Overlay(options);
 }

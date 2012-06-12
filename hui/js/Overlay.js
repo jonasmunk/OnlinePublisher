@@ -17,7 +17,7 @@ hui.ui.Overlay = function(options) {
  */
 hui.ui.Overlay.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{className:'hui_overlay',style:'display:none',html:'<div class="hui_inner_overlay"><div class="hui_inner_overlay"></div></div>'});
+	var e = options.element = hui.build('div',{className:'hui_overlay'+(options.variant ? ' hui_overlay_'+options.variant : ''),style:'display:none',html:'<div class="hui_inner_overlay"><div class="hui_inner_overlay"></div></div>'});
 	document.body.appendChild(e);
 	return new hui.ui.Overlay(options);
 }
@@ -74,7 +74,7 @@ hui.ui.Overlay.prototype = {
 		if (hui.browser.msie) {
 			this.element.style.display='block';
 		} else {
-			hui.style.set(this.element,{'display':'block','opacity':0});
+			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
 		}
 		this.visible = true;
@@ -85,8 +85,8 @@ hui.ui.Overlay.prototype = {
 		}
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();
-			this.element.style.zIndex=zIndex+1;
-			hui.ui.showCurtain({widget:this,zIndex:zIndex});
+			this.element.style.zIndex = zIndex+1;
+			hui.ui.showCurtain({ widget : this, zIndex : zIndex });
 		}
 		return;
 	},

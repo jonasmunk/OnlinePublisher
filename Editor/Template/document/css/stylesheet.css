@@ -24,6 +24,12 @@ td.editor_column
 	vertical-align: top;
 }
 
+table.editor_row_highlighted
+{
+	border: 1px solid #0065FF;
+	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
+}
+
 td.editor_column_highlighted
 {
 	border: 1px solid #0065FF;
@@ -38,17 +44,22 @@ td.editor_column_hover
 div.section_selected
 {
 	border: 1px solid #0065FF;
+	border-radius: 3px;
+	margin: -1px;
 	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
 }
 
 div.section
 {
 	border: 1px solid transparent;
+   	-webkit-transition-property : border-color;	
+  	-webkit-transition-duration: 200ms;
 }
 
-div.section_hover
+div.editor_section_hover
 {
 	border: dashed 1px #abf;
+  	-webkit-transition-duration: 1500ms;
 }
 
 a.editor_link_highlighted
@@ -59,8 +70,9 @@ a.editor_link_highlighted
 div.editor_part_highlighted
 {
 	border: 1px solid #0065FF;
+	margin: -1px;
 	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
-	border-radius: 4px;
+	border-radius: 3px;
 }
 
 body.editor_details span.editor_link_bound
@@ -83,4 +95,64 @@ div.editor_error
 {
 	color: #aaa;
 	font-size: 12px;
+}
+
+div.editor_section_adder
+{
+	margin-top: -2px;
+	position: absolute;
+	padding: 2px 0;
+	cursor: pointer;
+}
+
+div.editor_section_adder div
+{
+	height: 4px;
+	border-radius: 2px;
+	position: relative;
+	opacity: 0;
+	background: #0065FF;
+   	-webkit-transition-property : opacity;
+  	-webkit-transition-duration: 200ms;
+  	-webkit-transition-delay: 100ms;
+}
+
+div.editor_section_adder div span
+{
+	display: none;
+	background: #0065FF;
+	/*background: #3a3;*/
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	line-height: 20px;
+	font-size: 18px;
+	font-family: Arial;
+	border-radius: 50%;
+	margin: -8px 0 0 -10px;
+	color: #fff;
+	text-align: center;
+	letter-spacing: -1px;
+	left: 50%;
+}
+
+div.editor_section_adder:hover div
+{
+	/*background: #3a3;*/
+	opacity: .5;
+  	-webkit-transition-duration: 500ms;
+}
+
+div.editor_section_adder:hover div span,
+div.editor_section_adder_sticky div span
+{
+	display: block;
+}
+
+div.editor_section_adder_sticky div,
+div.editor_section_adder_sticky:hover div
+{
+	background: #0065FF;
+	box-shadow: 0 0 5px #0065FF;
+	opacity: .7;
 }

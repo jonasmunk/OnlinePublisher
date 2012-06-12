@@ -928,6 +928,13 @@ hui.position = {
 		left -= src.clientWidth * (options.source.horizontal || 0);
 		top -= src.clientHeight * (options.source.vertical || 0);
 
+		if (options.top) {
+			top += options.top;
+		}
+		if (options.left) {
+			left += options.left;
+		}
+
 		if (options.insideViewPort) {
 			var w = hui.window.getViewWidth();
 			if (left + src.clientWidth > w) {
@@ -936,14 +943,12 @@ hui.position = {
 			}
 			if (left < 0) {left=0}
 			if (top < 0) {top=0}
+			
+			var height = hui.window.getViewHeight();
+			var vertMax = hui.window.getScrollTop()+hui.window.getViewHeight()-src.clientHeight,
+				vertMin = hui.window.getScrollTop();
+			top = Math.max(Math.min(top,vertMax),vertMin);
 		}
-		if (options.top) {
-			top += options.top;
-		}
-		if (options.left) {
-			left += options.left;
-		}
-
 		src.style.top = top+'px';
 		src.style.left = left+'px';
 	}

@@ -3895,8 +3895,12 @@ div.hui_editor_dropmarker
 	border: 1px solid #bbb;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	-webkit-box-shadow: 0px 3px 5px #999;
-	-moz-box-shadow: 0px 3px 5px #999;
+	-ms-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+	-moz-box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+	-ms-box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+	box-shadow: 0px 2px 5px rgba(0,0,0,.15);
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	min-width: 120px;
 	padding: 4px 0px;
@@ -3997,6 +4001,29 @@ span.hui_overlay_text
 	font-size: 12px;
 	margin-top: 2px;
 	cursor: default;
+}
+
+/*** Light variant ***/
+
+div.hui_overlay_light
+{
+	background: #fafafa;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	padding: 0 3px;
+	height: 36px;
+}
+
+div.hui_overlay_light div.hui_inner_overlay
+{
+	background: none;
+	padding: 0;
+	height: 36px;
+}
+
+div.hui_overlay_light div.hui_overlay_icon
+{
+	margin-top: 2px;
 }div.hui_upload
 {
 	overflow: hidden;
