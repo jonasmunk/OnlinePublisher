@@ -3271,11 +3271,23 @@ hui.ui._frameLoaded = function(win) {
 	hui.ui.callSuperDelegates(this,'frameLoaded',win);
 }
 
+hui.ui._resizeFirst = true;
+
 /** @private */
 hui.ui._resize = function() {
 	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--) {
 		hui.ui.layoutWidgets[i]['$$resize']();
 	};
+	window.clearTimeout(this._delayedResize);
+	if (!hui.ui._resizeFirst) {
+		this._delayedResize = window.setTimeout(hui.ui._afterResize,1000);
+	}
+	hui.ui._resizeFirst = false;
+}
+
+hui.ui._afterResize = function() {
+	hui.log('afterResize')
+	hui.ui.callSuperDelegates(hui.ui,'$afterResize');
 }
 
 /**

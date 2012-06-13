@@ -81,45 +81,54 @@ var controller = {
 			window.scrollTo(0,parseInt(scroll,10));
 		}
 	},
+	$$afterResize : function() {
+		this._buildSectionAdders();
+	},
 	_buildSectionAdders : function() {
-		var adders = hui.build('div',{parent:document.body});
+		if (!this.adders) {
+			this.adders = hui.build('div',{parent:document.body});
+			hui.listen(this.adders,'click',function(e) {
+				if (this.stickyAdder) {
+					hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
+				}
+				e = hui.event(e);
+				var adder = e.findByClass('editor_section_adder');
+				this.menuInfo = {
+					columnId : adder.columnId,
+					sectionIndex : adder.sectionIndex+1
+				};
+				this.stickyAdder = adder;
+				hui.cls.add(adder,'editor_section_adder_sticky');
+				partMenu.showAtPointer(e);
+			}.bind(this))
+			hui.listen(this.adders,'mouseover',function(e) {
+				e = hui.event(e);
+				var adder = e.findByClass('editor_section_adder');
+				//hui.cls.add(hui.get('column'+adder.columnId),'editor_column_hover');
+				this.partControls.hide();
+			}.bind(this))
+		} else {
+			this.adders.innerHTML = '';
+		}
+		
+		
 		var columns = hui.get.byClass(document.body,'editor_column');
 		for (var i=0; i < columns.length; i++) {
 			var column = columns[i],
 				columnId = parseInt(column.getAttribute('data-id')),
 				pos = hui.position.get(column);
 			var sections = hui.get.byClass(column,'editor_section');
-			var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+pos.top+'px; width:'+column.clientWidth+'px;',className:'editor_section_adder',html:'<div><span>+</span></div>',parent:adders});
+			var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+pos.top+'px; width:'+column.clientWidth+'px;',className:'editor_section_adder',html:'<div><span>+</span></div>',parent:this.adders});
 			adder.columnId = columnId;
 			adder.sectionIndex = 0;
 			for (var j=0; j < sections.length; j++) {
 				var section = sections[j];
 				var pos = hui.position.get(section);
-				var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+(pos.top+section.clientHeight)+'px; width:'+column.clientWidth+'px;',html:'<div><span>+</span></div>',className:'editor_section_adder',parent:adders});
+				var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+(pos.top+section.clientHeight)+'px; width:'+column.clientWidth+'px;',html:'<div><span>+</span></div>',className:'editor_section_adder',parent:this.adders});
 				adder.columnId = columnId;
 				adder.sectionIndex = j+1;
 			};
 		};
-		hui.listen(adders,'click',function(e) {
-			if (this.stickyAdder) {
-				hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
-			}
-			e = hui.event(e);
-			var adder = e.findByClass('editor_section_adder');
-			this.menuInfo = {
-				columnId : adder.columnId,
-				sectionIndex : adder.sectionIndex+1
-			};
-			this.stickyAdder = adder;
-			hui.cls.add(adder,'editor_section_adder_sticky');
-			partMenu.showAtPointer(e);
-		}.bind(this))
-		hui.listen(adders,'mouseover',function(e) {
-			e = hui.event(e);
-			var adder = e.findByClass('editor_section_adder');
-			//hui.cls.add(hui.get('column'+adder.columnId),'editor_column_hover');
-			this.partControls.hide();
-		}.bind(this))
 	},
 	
 	$hide$partMenu : function() {
@@ -344,7 +353,11 @@ function addHoverClass(cell,className) {
 	hider = function(e) {
 		if (!hui.ui.isWithin(e,cell)) {
 			hui.cls.remove(cell,className);
-			hui.unListen(document.body,'mousemove',hider);
+			try {
+				hui.unListen(document.body,'mousemove',hider);
+			} catch (e) {
+				hui.log('unable to stop listening: document='+document);
+			}
 		}
 	}
 	hui.listen(document.body,'mousemove',hider);
