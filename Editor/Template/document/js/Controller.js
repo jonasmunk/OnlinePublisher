@@ -118,19 +118,22 @@ var controller = {
 				columnId = parseInt(column.getAttribute('data-id')),
 				pos = hui.position.get(column);
 			var sections = hui.get.byClass(column,'editor_section');
-			var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+pos.top+'px; width:'+column.clientWidth+'px;',className:'editor_section_adder',html:'<div><span>+</span></div>',parent:this.adders});
+			var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+pos.top+'px; width:'+column.clientWidth+'px;',className:'editor_section_adder',html:'<div><span><em></em><strong></strong></span></div>',parent:this.adders});
 			adder.columnId = columnId;
 			adder.sectionIndex = 0;
 			for (var j=0; j < sections.length; j++) {
 				var section = sections[j];
 				var pos = hui.position.get(section);
-				var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+(pos.top+section.clientHeight)+'px; width:'+column.clientWidth+'px;',html:'<div><span>+</span></div>',className:'editor_section_adder',parent:this.adders});
+				var adder = hui.build('div',{style:'left:'+pos.left+'px;top:'+(pos.top+section.clientHeight)+'px; width:'+column.clientWidth+'px;',html:'<div><span><em></em><strong></strong></span></div>',className:'editor_section_adder',parent:this.adders});
 				adder.columnId = columnId;
 				adder.sectionIndex = j+1;
 			};
 		};
 	},
-	
+	$hide$sectionMenu : function() {
+		var section = hui.get('section'+this.menuInfo.sectionId);
+		hui.cls.remove(section,'editor_part_highlighted');			
+	},
 	$hide$partMenu : function() {
 		if (this.stickyAdder) {
 			hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
@@ -241,6 +244,9 @@ var controller = {
 		if (this.activeSection || this.selectedText) {
 			return true;
 		}
+		
+		var section = hui.get('section'+sectionId);
+		hui.cls.add(section,'editor_part_highlighted');
 		this.menuInfo = {
 		    sectionId : sectionId,
 		    sectionIndex : sectionIndex,

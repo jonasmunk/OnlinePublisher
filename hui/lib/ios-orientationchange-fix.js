@@ -5,7 +5,7 @@
 (function(w){
     var doc = w.document;
 
-    if( !doc.querySelectorAll ){ return; }
+    if( !hui.browser.ipad || !doc.querySelectorAll || !w.addEventListener){ return; }
 
     var meta = doc.querySelectorAll( "meta[name=viewport]" )[ 0 ],
         initialContent = meta && meta.getAttribute( "content" ),
