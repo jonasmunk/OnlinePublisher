@@ -91,8 +91,8 @@ class TablePartController extends PartController
 						<field label="Width">
 							<style-length-input key="width"/>
 						</field>
-					</group>
-				</fields>
+					</fields>
+				</fieldset>
 				<!--
 				<space height="10"/>
 				<fieldset legend="Celle">
