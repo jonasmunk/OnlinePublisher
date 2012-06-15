@@ -4772,11 +4772,23 @@ hui.ui._frameLoaded = function(win) {
 	hui.ui.callSuperDelegates(this,'frameLoaded',win);
 }
 
+hui.ui._resizeFirst = true;
+
 /** @private */
 hui.ui._resize = function() {
 	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--) {
 		hui.ui.layoutWidgets[i]['$$resize']();
 	};
+	window.clearTimeout(this._delayedResize);
+	if (!hui.ui._resizeFirst) {
+		this._delayedResize = window.setTimeout(hui.ui._afterResize,1000);
+	}
+	hui.ui._resizeFirst = false;
+}
+
+hui.ui._afterResize = function() {
+	hui.log('afterResize')
+	hui.ui.callSuperDelegates(hui.ui,'$afterResize');
 }
 
 /**
@@ -10805,7 +10817,7 @@ hui.ui.Overlay.prototype = {
 		if (hui.browser.msie) {
 			this.element.style.display='block';
 		} else {
-			hui.style.set(this.element,{'display':'block','opacity':0});
+			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
 		}
 		this.visible = true;
@@ -10816,8 +10828,8 @@ hui.ui.Overlay.prototype = {
 		}
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();
-			this.element.style.zIndex=zIndex+1;
-			hui.ui.showCurtain({widget:this,zIndex:zIndex});
+			this.element.style.zIndex = zIndex+1;
+			hui.ui.showCurtain({ widget : this, zIndex : zIndex });
 		}
 		return;
 	},

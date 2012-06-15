@@ -22,6 +22,12 @@ td.editor_column
 {
 	border: 1px solid #eee;
 	vertical-align: top;
+   	-webkit-transition-property : border-color;	
+  	-webkit-transition-duration: 200ms;
+   	-moz-transition-property : border-color;	
+  	-moz-transition-duration: 200ms;
+   	-ms-transition-property : border-color;	
+  	-ms-transition-duration: 200ms;
 }
 
 table.editor_row_highlighted
@@ -39,6 +45,8 @@ td.editor_column_highlighted
 td.editor_column_hover
 {
 	border: 1px solid #abf;
+  	-webkit-transition-delay: 1000ms;
+  	-webkit-transition-duration: 400ms;
 }
 
 div.section_selected
@@ -59,7 +67,8 @@ div.section
 div.editor_section_hover
 {
 	border: dashed 1px #abf;
-  	-webkit-transition-duration: 1500ms;
+  	-webkit-transition-delay: 300ms;
+  	-webkit-transition-duration: 400ms;
 }
 
 a.editor_link_highlighted
@@ -111,7 +120,6 @@ div.editor_section_adder div
 	border-radius: 2px;
 	position: relative;
 	opacity: 0;
-	background: #0065FF;
    	-webkit-transition-property : opacity;
   	-webkit-transition-duration: 200ms;
   	-webkit-transition-delay: 100ms;
@@ -126,19 +134,36 @@ div.editor_section_adder div span
 	width: 18px;
 	height: 18px;
 	line-height: 20px;
-	font-size: 18px;
+	font-size: 0;
 	font-family: Arial;
 	border-radius: 50%;
 	margin: -8px 0 0 -10px;
 	color: #fff;
-	text-align: center;
-	letter-spacing: -1px;
 	left: 50%;
+}
+
+div.editor_section_adder em
+{
+	width: 2px;
+	height: 10px;
+	background: #fff;
+	position: absolute;
+	margin: 4px 0 0 8px;
+}
+
+div.editor_section_adder strong
+{
+	width: 10px;
+	height: 2px;
+	background: #fff;
+	position: absolute;
+	margin: 8px 0 0 4px;
 }
 
 div.editor_section_adder:hover div
 {
 	/*background: #3a3;*/
+	background: #0065FF;
 	opacity: .5;
   	-webkit-transition-duration: 500ms;
 }

@@ -21,7 +21,7 @@ var controller = {
 	},
 	$click$newLink : function() {
 		try {
-			window.parent.frames[1].controller.newLink();
+			window.parent.frames[1].linkController.newLink();
 		} catch (e) {}
 	},
 	$click$editLinks : function() {
