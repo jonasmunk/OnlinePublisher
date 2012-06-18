@@ -19,7 +19,7 @@ var linkController = {
 		linkScope.setEnabled(this.selectedTextInfo!=null);
 		linkFormula.reset();
 		linkFormula.setValues({
-			text : this.selectedText,
+			text : controller.selectedText,
 			scope : this.linkPartId ? 'part' : 'page'
 		});
 		linkWindow.show();
