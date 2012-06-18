@@ -541,7 +541,12 @@ $databaseTables = array(
 		),
 	'part_map' => array(
 			array("part_id","int(11)","","","0",""),
-			array("maptype","varchar(11)","YES","","","")
+			array("provider","varchar(50)","YES","","",""),
+			array("maptype","varchar(50)","YES","","",""),
+			array("markers","text","YES","","",""),
+			array("zoom","int(11)","","","0",""),
+			array("width","varchar(11)","YES","","",""),
+			array("height","varchar(11)","YES","","","")
 		),
 	'part_news' => array(
 			array("part_id","int(11)","","","0",""),

@@ -11,7 +11,14 @@
 			<a class="part_map_pin"><xsl:comment/></a>
 			<div class="part_map_effect"><xsl:comment/></div>
 			<div style="overflow: hidden; height: 400px;">
-				<img src="http://maps.googleapis.com/maps/api/staticmap?center=-15.800513,-47.91378&amp;zoom=11&amp;size=640x430&amp;sensor=false&amp;maptype={@maptype}" style="width: 640px; height: 430px;"/>
+				<xsl:choose>
+					<xsl:when test="map:marker">
+				<img src="http://maps.googleapis.com/maps/api/staticmap?center={map:marker/@latitude},{map:marker/@longitude}&amp;zoom={@zoom}&amp;size=640x430&amp;sensor=false&amp;maptype={@maptype}" style="width: 640px; height: 430px;"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<img src="http://maps.googleapis.com/maps/api/staticmap?center=-15.800513,-47.91378&amp;zoom={@zoom}&amp;size=640x430&amp;sensor=false&amp;maptype={@maptype}" style="width: 640px; height: 430px;"/>
+					</xsl:otherwise>
+				</xsl:choose>
 			</div>
 		</div>
 	</xsl:template>

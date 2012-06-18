@@ -14948,6 +14948,8 @@ hui.ui.LocationField.prototype = {
 	},
 	$locationChanged : function(loc) {
 		this.setValue(loc);
+		this.fire('valueChanged',this.value);
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
 	},
 	$valueChanged : function() {
 		var lat = this.latField.getValue();
@@ -14958,6 +14960,8 @@ hui.ui.LocationField.prototype = {
 			this.value = {latitude:lat,longitude:lng};
 		}
 		this.updatePicker();
+		this.fire('valueChanged',this.value);
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
 	}
 }/////////////////////////// Style length /////////////////////////
 
