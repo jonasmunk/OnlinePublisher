@@ -181,7 +181,7 @@ if ($section==null) {
 				continue;
 			}
 			$gui.='<item text="'.$info['name'][$language].'" value="'.$part.'">';
-			if (is_array($info['children'])) {
+			if (isset($info['children']) && is_array($info['children'])) {
 				foreach ($info['children'] as $subPart => $subInfo) {
 					$gui.='<item text="'.$subInfo['name'][$language].'" value="'.$subPart.'"/>';
 				}
