@@ -33,6 +33,9 @@ op.part.utils = {
 			parameters : params,
 			onSuccess : function(t) {
 				options.node.innerHTML=t.responseText;
+				if (options.runScripts) {
+					hui.dom.runScripts(options.node);
+				}
 				if (options.onComplete) {
 					options.onComplete();
 				}

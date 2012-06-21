@@ -32,6 +32,8 @@ class SchemaService {
 				$sql.=Database::text($value);
 			} else if ($info['type']=='int') {
 				$sql.=Database::int($value);
+			} else if ($info['type']=='float') {
+				$sql.=Database::float($value);
 			} else if ($info['type']=='boolean') {
 				$sql.=Database::boolean($value);
 			} else if ($info['type']=='datetime') {
@@ -82,6 +84,8 @@ class SchemaService {
 				$sql.=Database::text($value);
 			} else if ($info['type']=='int') {
 				$sql.=Database::int($value);
+			} else if ($info['type']=='float') {
+				$sql.=Database::float($value);
 			} else if ($info['type']=='boolean') {
 				$sql.=Database::boolean($value);
 			} else if ($info['type']=='datetime') {

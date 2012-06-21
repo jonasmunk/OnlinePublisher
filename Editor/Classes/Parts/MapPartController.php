@@ -25,6 +25,7 @@ class MapPartController extends PartController
 		$part->setWidth('500px');
 		$part->setHeight('300px');
 		$part->save();
+		Log::debug($part);
 		return $part;
 	}
 	
@@ -37,18 +38,21 @@ class MapPartController extends PartController
 		return
 		$this->buildHiddenFields(array(
 			"provider" => $part->getProvider(),
+			"longitude" => $part->getLongitude(),
+			"latitude" => $part->getLatitude(),
 			"maptype" => $part->getMaptype(),
 			"zoom" => $part->getZoom(),
 			"markers" => $part->getMarkers(),
 			"mapwidth" => $part->getWidth(),
-			"mapheight" => $part->getHeight()
+			"mapheight" => $part->getHeight(),
+			"frame" => $part->getFrame()
 		)).
 		'<div id="part_map_container">'.
 		$this->render($part,$context).
 		'</div>
 		<script src="'.$baseUrl.'Editor/Parts/map/editor.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-		partController.setMarkers('.StringUtils::fromJSON($part->getMarkers()).');
+		//partController.setMarkers('.StringUtils::fromJSON($part->getMarkers()).');
 		</script>';
 	}
 	
@@ -57,14 +61,42 @@ class MapPartController extends PartController
 		$part->setProvider(Request::getUnicodeString('provider'));
 		$part->setMaptype(Request::getUnicodeString('maptype'));
 		$part->setMarkers(Request::getUnicodeString('markers'));
+		$part->setLongitude(Request::getFloat('longitude'));
+		$part->setLatitude(Request::getFloat('latitude'));
 		$part->setZoom(Request::getInt('zoom'));
 		$part->setWidth(Request::getString('mapwidth'));
 		$part->setHeight(Request::getString('mapheight'));
+		$part->setFrame(Request::getString('frame'));
+		Log::debug($part);
 		return $part;
 	}
 	
 	function buildSub($part,$context) {
-		$xml = '<map xmlns="'.$this->getNamespace().'" maptype="'.$part->getMaptype().'" zoom="'.$part->getZoom().'">'.
+		$xml = '<map xmlns="'.$this->getNamespace().'" maptype="'.$part->getMaptype().'" zoom="'.$part->getZoom().'" provider="'.$part->getProvider().'"';
+		if ($part->getFrame()) {
+			$xml.=' frame="'.$part->getFrame().'"';
+		}
+		if ($part->getWidth()) {
+			if ($part->getProvider()=='google-static') {
+				$xml.=' width="'.intval($part->getWidth()).'"';
+			} else {
+				$xml.=' width="'.$part->getWidth().'"';
+			}
+		}
+		if ($part->getHeight()) {
+			if ($part->getProvider()=='google-static') {
+				$xml.=' height="'.intval($part->getHeight()).'"';
+			} else {
+				$xml.=' height="'.$part->getHeight().'"';
+			}
+		}
+		if ($part->getLongitude()) {
+			$xml.=' longitude="'.$part->getLongitude().'"';
+		}
+		if ($part->getLatitude()) {
+			$xml.=' latitude="'.$part->getLatitude().'"';
+		}
+		$xml.='>';
 		$markers = StringUtils::fromJSON(StringUtils::toUnicode($part->getMarkers()));
 		if (is_array($markers)) {
 			foreach ($markers as $marker) {
@@ -93,7 +125,7 @@ class MapPartController extends PartController
 						<text-input multiline="true" key="text"/>
 					</field>
 					<field label="Lokation">
-						<location-input key="point"/>
+						<location-input key="center"/>
 					</field>
 				</fields>
 				<fields>
@@ -107,10 +139,19 @@ class MapPartController extends PartController
 						<dropdown key="maptype">
 							<item title="Veje" value="roadmap"/>
 							<item title="Terræn" value="terrain"/>
+							<item title="Satellit" value="satellite"/>
+							<item title="Hybrid" value="hybrid"/>
 						</dropdown>
 					</field>
 					<field label="Zoom">
 						<number-input key="zoom" min="1" max="25"/>
+					</field>
+				</fields>
+				<fields>
+					<field label="Ramme">
+						<dropdown key="frame">
+							'.$this->getFrameOptions().'
+						</dropdown>
 					</field>
 					<field label="Bredde">
 						<style-length-input key="width"/>

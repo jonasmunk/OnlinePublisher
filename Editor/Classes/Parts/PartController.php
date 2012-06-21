@@ -203,6 +203,14 @@ class PartController
 		return null;
 	}
 	
+	function getFrameOptions() {
+		return '
+			<item title="Ingen" value=""/>
+			<item title="Let" value="light"/>
+			<item title="Elegant" value="elegant"/>
+			<item title="Skygge" value="shadow_slant"/>';
+	}
+	
 	function getFontItems() {
 		return '<item value="" title=""/>
 				<item value="sans-serif" title="*Sans-serif*"/>

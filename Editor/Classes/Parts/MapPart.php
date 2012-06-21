@@ -12,22 +12,30 @@ require_once($basePath.'Editor/Classes/Parts/Part.php');
 Part::$schema['map'] = array(
 	'fields' => array(
 		'provider' => array( 'type' => 'text' ),
+		'latitude' => array( 'type' => 'float' ),
+		'longitude' => array( 'type' => 'float' ),
+		'text' => array( 'type' => 'text' ),
 		'maptype' => array( 'type' => 'text' ),
 		'markers' => array( 'type' => 'text' ),
 		'zoom' => array( 'type' => 'int' ),
 		'width' => array( 'type' => 'text' ),
-		'height' => array( 'type' => 'text' )
+		'height' => array( 'type' => 'text' ),
+		'frame' => array( 'type' => 'text' )
 	)
 );
 
 class MapPart extends Part
 {
 	var $provider;
+	var $latitude;
+	var $longitude;
+	var $text;
 	var $maptype;
 	var $markers;
 	var $zoom;
 	var $width;
 	var $height;
+	var $frame;
 	
 	function MapPart() {
 		parent::Part('map');
@@ -35,6 +43,30 @@ class MapPart extends Part
 	
 	function load($id) {
 		return Part::load('map',$id);
+	}
+	
+	function setLatitude($latitude) {
+	    $this->latitude = $latitude;
+	}
+
+	function getLatitude() {
+	    return $this->latitude;
+	}
+	
+	function setLongitude($longitude) {
+	    $this->longitude = $longitude;
+	}
+
+	function getLongitude() {
+	    return $this->longitude;
+	}
+	
+	function setText($text) {
+	    $this->text = $text;
+	}
+
+	function getText() {
+	    return $this->text;
 	}
 	
 	function setMaptype($maptype) {
@@ -83,6 +115,14 @@ class MapPart extends Part
 
 	function getHeight() {
 	    return $this->height;
+	}
+	
+	function setFrame($frame) {
+	    $this->frame = $frame;
+	}
+
+	function getFrame() {
+	    return $this->frame;
 	}
 	
 }

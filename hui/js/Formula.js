@@ -50,8 +50,8 @@ hui.ui.Formula.prototype = {
 		}
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
-			if (d[i].options && d[i].options.key) {
-				var key = d[i].options.key;
+			if (d[i].options && (d[i].options.key || d[i].options.name)) {
+				var key = d[i].options.key || d[i].options.name;
 				if (key && values[key]!==undefined) {
 					d[i].setValue(values[key]);
 				}

@@ -312,7 +312,12 @@ hui.string = {
 	 * @returns {Object} The object
 	 */
 	fromJSON : function(json) {
-		return JSON.parse(json);
+		try {
+			return JSON.parse(json);
+		} catch (e) {
+			hui.log(e);
+			return null;
+		}
 	},
 
 	/**

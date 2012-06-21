@@ -84,7 +84,7 @@
 <xsl:template match="gui:fields/gui:field">
 	<tr>
 		<th>
-			<xsl:if test="gui:text-input[not(@multiline='true')] | gui:dropdown | gui:checkbox | gui:datetime-input">
+			<xsl:if test="gui:text-input[not(@multiline='true')] | gui:dropdown | gui:checkbox | gui:datetime-input | gui:style-length-input | gui:number-input">
 				<xsl:attribute name="class">hui_formula_middle</xsl:attribute>
 			</xsl:if>
 			<label class="hui_formula_field"><xsl:value-of select="@label"/></label>

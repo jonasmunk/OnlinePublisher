@@ -29,6 +29,9 @@ header("Content-Type: text/html; charset=UTF-8");
 		<a>▶</a>
 	</div>
 	<div class="sidebar">
+		<div class="bar">
+			<a>Search</a>
+		</div>
 		<ul id="list"></ul>
 	</div>
 	<div class="main">

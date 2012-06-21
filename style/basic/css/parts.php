@@ -1,5 +1,6 @@
 <?php
 header('Content-type: text/css');
+include 'shared.css';
 include 'part_file.css';
 include 'part_header.css';
 include 'part_horizontalrule.css';

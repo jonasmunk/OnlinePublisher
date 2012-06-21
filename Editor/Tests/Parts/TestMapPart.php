@@ -29,10 +29,14 @@ class TestMapPart extends UnitTestCase {
 	function testProperties() {
 		$obj = new MapPart();
 		$obj->setMaptype('terrain');
+		$obj->setLongitude(-34.560859);
+		$obj->setLatitude(-58.491211);
 		$obj->save();
 		
 		$loaded = MapPart::load($obj->getId());
 		$this->assertEqual($loaded->getMaptype(),'terrain');
+		$this->assertEqual($loaded->getLongitude(),-34.560859);
+		$this->assertEqual($loaded->getLatitude(),-58.491211);
 		
 		$loaded->remove();
 	}

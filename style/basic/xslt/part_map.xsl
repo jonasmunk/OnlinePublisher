@@ -6,21 +6,112 @@
  exclude-result-prefixes="map"
  >
 
+	<xsl:template match="map:map[@frame]">
+		<span class="part_map shared_frame_{@frame}">
+			<span class="shared_frame_{@frame}_top"><span><span><xsl:comment/></span></span></span>
+			<span class="shared_frame_{@frame}_middle">
+				<span class="shared_frame_{@frame}_middle">
+					<span class="shared_frame_{@frame}_content">
+						<xsl:call-template name="map:internal"/>
+					</span>
+				</span>
+			</span>
+			<span class="shared_frame_{@frame}_bottom"><span><span><xsl:comment/></span></span></span>
+		</span>
+	</xsl:template>
+
 	<xsl:template match="map:map">
-		<div class="part_map">
-			<a class="part_map_pin"><xsl:comment/></a>
-			<div class="part_map_effect"><xsl:comment/></div>
-			<div style="overflow: hidden; height: 400px;">
-				<xsl:choose>
-					<xsl:when test="map:marker">
-				<img src="http://maps.googleapis.com/maps/api/staticmap?center={map:marker/@latitude},{map:marker/@longitude}&amp;zoom={@zoom}&amp;size=640x430&amp;sensor=false&amp;maptype={@maptype}" style="width: 640px; height: 430px;"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<img src="http://maps.googleapis.com/maps/api/staticmap?center=-15.800513,-47.91378&amp;zoom={@zoom}&amp;size=640x430&amp;sensor=false&amp;maptype={@maptype}" style="width: 640px; height: 430px;"/>
-					</xsl:otherwise>
-				</xsl:choose>
-			</div>
-		</div>
+		<xsl:call-template name="map:internal"/>
+	</xsl:template>
+
+	<xsl:template name="map:internal">
+		<xsl:choose>
+			<xsl:when test="@provider='google-interactive'">
+				<xsl:call-template name="map:google-interactive"/>			
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="map:google-static"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="map:google-static">
+		<xsl:variable name="height">
+			<xsl:choose>
+				<xsl:when test="number(@height)&gt;=640">
+					<xsl:value-of select="number(640)"/>
+				</xsl:when>
+				<xsl:when test="number(@height)&gt;0 and number(@height)&lt;=640">
+					<xsl:value-of select="number(@height)"/>
+				</xsl:when>
+				<xsl:otherwise>400</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="fake-height">
+			<xsl:choose>
+				<xsl:when test="$height&lt;610">
+					<xsl:value-of select="$height+30"/>
+				</xsl:when>
+				<xsl:otherwise><xsl:value-of select="$height"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="width">
+			<xsl:choose>
+				<xsl:when test="number(@width)&gt;=640">
+					<xsl:value-of select="number(640)"/>
+				</xsl:when>
+				<xsl:when test="number(@width)&gt;0">
+					<xsl:value-of select="number(@width)"/>
+				</xsl:when>
+				<xsl:otherwise>640</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<span class="part_map_static">
+			<a class="part_map_static_pin"><xsl:comment/></a>
+			<span class="part_map_static_effect"><xsl:comment/></span>
+			<span class="part_map_static_content" style="height: {$height}px;">
+				<img src="http://maps.googleapis.com/maps/api/staticmap?center={@latitude},{@longitude}&amp;zoom={@zoom}&amp;size={$width}x{$fake-height}&amp;sensor=false&amp;maptype={@maptype}" style="width: {$width}px; height: {$fake-height}px;"/>
+			</span>
+		</span>
+	</xsl:template>
+	
+	<xsl:template name="map:google-interactive">
+		<span class="part_map_interactive" id="map_{../../@id}">
+			<xsl:attribute name="style">
+				<xsl:text>min-height: 30px;</xsl:text>
+				<xsl:if test="@width">
+					<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>;</xsl:text>
+				</xsl:if>
+				<xsl:if test="@height">
+					<xsl:text>height: </xsl:text><xsl:value-of select="@height"/><xsl:text>;</xsl:text>
+				</xsl:if>
+				<xsl:if test="not(@height)">
+					<xsl:text>height: 300px;</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
+			<xsl:comment/>
+		</span>
+		<script type="text/javascript">
+			(function() {
+				var options = {
+					element : 'map_<xsl:value-of select="../../@id"/>',
+					markers : [],
+					zoom : <xsl:value-of select="@zoom"/>,
+					type : '<xsl:value-of select="@maptype"/>'
+					<xsl:if test="@longitude and @latitude">
+						,center : {latitude:<xsl:value-of select="@latitude"/>,longitude:<xsl:value-of select="@longitude"/>}
+					</xsl:if>
+				};
+				<xsl:for-each select="map:marker">
+					options.markers.push({
+						text : '<xsl:value-of select="@text"/>',
+						latitude : <xsl:value-of select="@latitude"/>,
+						longitude : <xsl:value-of select="@longitude"/>
+					})
+				</xsl:for-each>
+				new op.part.Map(options);
+			})()
+		</script>
 	</xsl:template>
 
 </xsl:stylesheet>

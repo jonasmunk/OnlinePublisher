@@ -65,14 +65,16 @@
 	<xsl:variable name="height"><xsl:call-template name="img:buildheight"/></xsl:variable>
 	<xsl:choose>
 		<xsl:when test="img:style/@frame">
-			<span class="part_image_frame_{img:style/@frame}">
-				<span class="part_image_frame_{img:style/@frame}_top"><span><span><xsl:comment/></span></span></span>
-				<span class="part_image_frame_{img:style/@frame}_middle">
-					<span>
-						<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
+			<span class="shared_frame_{img:style/@frame}">
+				<span class="shared_frame_{img:style/@frame}_top"><span><span><xsl:comment/></span></span></span>
+				<span class="shared_frame_{img:style/@frame}_middle">
+					<span class="shared_frame_{img:style/@frame}_middle">
+						<span class="shared_frame_{img:style/@frame}_content">
+							<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
+						</span>
 					</span>
 				</span>
-				<span class="part_image_frame_{img:style/@frame}_bottom"><span><span><xsl:comment/></span></span></span>
+				<span class="shared_frame_{img:style/@frame}_bottom"><span><span><xsl:comment/></span></span></span>
 			</span>
 		</xsl:when>
 		<xsl:otherwise>

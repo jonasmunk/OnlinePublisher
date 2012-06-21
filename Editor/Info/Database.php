@@ -542,11 +542,15 @@ $databaseTables = array(
 	'part_map' => array(
 			array("part_id","int(11)","","","0",""),
 			array("provider","varchar(50)","YES","","",""),
+			array("latitude","decimal(20,17)","YES","","",""),
+			array("longitude","decimal(20,17)","YES","","",""),
+			array("text","text","YES","","",""),
 			array("maptype","varchar(50)","YES","","",""),
 			array("markers","text","YES","","",""),
 			array("zoom","int(11)","","","0",""),
 			array("width","varchar(11)","YES","","",""),
-			array("height","varchar(11)","YES","","","")
+			array("height","varchar(11)","YES","","",""),
+			array("frame","varchar(50)","YES","","","")
 		),
 	'part_news' => array(
 			array("part_id","int(11)","","","0",""),

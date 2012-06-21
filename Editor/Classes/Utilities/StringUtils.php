@@ -72,6 +72,9 @@ class StringUtils {
 	}
 	
 	function escapeXML($str) {
+		if (is_float($str)) {
+			$str = (string) $str;
+		}
 		$str = StringUtils::stripInvalidXml($str);
 		$str = StringUtils::htmlNumericEntities($str);
 		$str = str_replace('&#151;', '-', $str);

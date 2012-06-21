@@ -10,7 +10,7 @@ html
 body
 {
 	margin:0;
-	background: #000 url('<?=baseit('gfx/leather.jpg')?>');
+	background: #fff;
 	height: 100%;
 	overflow: hidden;
 	-webkit-overflow-scrolling: none;
@@ -21,19 +21,35 @@ div.sidebar
 	position: absolute;
 	left: 0;
 	top: 0;
-	width: 300px;
-	background-image: -webkit-gradient(linear, 0 0, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,.4))), url('<?=baseit('../../hui/gfx/backgrounds/sand_dark.png')?>');
+	width: 299px;
+	background-image: -webkit-gradient(linear, 0 0, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,.4)))');
 	height: 100%;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
+	border-right: 1px solid #ddd;
+}
+
+div.sidebar ul
+{
+	list-style: none;
+	color: #666;
+	margin: 0;
+	padding: 0;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+div.sidebar ul li
+{
+	border-bottom: 1px solid #eee;
+	padding: 7px 0 7px 15px;
 }
 
 
 div.main
 {
 	position: fixed;
-	top: 40px;
-	bottom: 40px;
+	top: 41px;
+	bottom: 41px;
 	right: 0;
 	left: 300px;
 	overflow: scroll;
@@ -44,8 +60,8 @@ div.main
 
 div.page
 {
-	margin: 10px;
-	background: #fff;/*url('<?=baseit('../../hui/gfx/backgrounds/sand_light.png')?>');*/
+	margin: 20px;
+	background: #fff;
 	font-family: Palatino;
 	color: #321;
 	border-radius: 3px;
@@ -57,8 +73,8 @@ div.page
 div.bar
 {
 	height: 40px;
-	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#333), to(#000));
-	border-bottom: 1px solid #333;
+	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#fff), to(#ddd));
+	border-bottom: 1px solid #ccc;
 	font-size: 0;
 }
 
@@ -67,57 +83,23 @@ div.bar a
 	display: inline-block;
 	line-height: 28px;
 	height: 28px;
-	margin: 5px 0 0 5px;
-	border: 1px solid #111;
-	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#555), to(#222));
-	color: #fff;
+	margin: 6px 0 0 5px;
+	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#fff), to(#bbb));
+	color: #666;
 	padding: 0 8px;
-	text-shadow: 0px 1px 0 #000;
-	-webkit-box-shadow: 0 0 1px #ddd,0 1px 1px #333;
+	text-shadow: 0px -1px 0 #fff;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.3), 0 0 1px #fff;
 	-webkit-background-origin: padding-box;
 	-webkit-background-clip: border-box;
 	-webkit-border-radius: 3px;
 	-webkit-background-clip: padding-box;	
-	font-family: 'Lucida Grande',"Helvetica Neue", Helvetica, sans-serif;
-	font-weight: bold;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	font-weight: normal;
 	font-size: 13pt;
 	vertical-align: top;
 }
 
-div.sidebar ul
-{
-	list-style: none;
-	color: #fff;
-	margin: 0;
-	padding: 0;
-	font-family: 'Lucida Grande',"Helvetica Neue", Helvetica, sans-serif;
-}
 
-div.sidebar ul li
-{
-	border-top: 1px solid #333;
-	border-bottom: 1px solid #000;
-	padding: 5px 0 5px 10px;
-}
-
-.button
-{
-	display: inline-block;
-	font-family: 'Lucida Grande',"Helvetica Neue", Helvetica, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	padding: 0 10px;
-	height: 30px;
-	line-height: 30px;
-	border: 3px solid #111;
-	background: #000 -webkit-gradient( linear, left top, left bottom, from(#555), to(#000), color-stop(0.51, #222), color-stop(0.5, #333) );
-	color: #fff;
-	text-shadow: 0px 1px 0 #000;
-	-webkit-background-origin: padding-box;
-	-webkit-background-clip: border-box;
-	-webkit-border-radius: 8px;
-	-webkit-background-clip: padding-box;
-}
 
 .button:hover, .button.cancel, .button:active, .button.cancel:active
 {
@@ -143,10 +125,8 @@ div.bottom_bar
 	bottom: 0;
 	right: 0;
 	left: 0;
-	height: 40px;
-	background-image: -webkit-gradient(linear, 0 0, left bottom, from(#333), to(#000));
-	border-bottom: 1px solid #333;
-	font-size: 0;
+	border-bottom: none;
+	border-top: 1px solid #ddd;
 }
 
 

@@ -317,10 +317,7 @@ class ImagePartController extends PartController
 					</field>
 					<field label="Ramme">
 						<dropdown key="frame">
-							<item title="Ingen" value=""/>
-							<item title="Let" value="light"/>
-							<item title="Elegant" value="elegant"/>
-							<item title="Skygge" value="shadow_slant"/>
+							'.$this->getFrameOptions().'
 						</dropdown>
 					</field>
 					<buttons>

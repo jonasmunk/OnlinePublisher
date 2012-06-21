@@ -4,25 +4,37 @@ var demo = {
 	},
 	start : function() {
 		hui.ui.showMessage({text:'Ready...',busy:true});
-		this._go('start2',1000)
+		this._go('start2',500)
 	},
 	start2 : function() {
 		hui.ui.showMessage({text:'...set...',busy:true});
-		this._go('start3',2000)
+		this._go('start3',500)
 	},
 	start3 : function() {
 		hui.ui.showMessage({text:'GO!',icon:'common/success'});
-		this._go('showWindow',2000)
+		this._go('showWindow',1000)
 	},
 	showWindow : function() {
-		var win = hui.ui.Window.create({title:'This is a window',width:500});
-		win.add(hui.build('div',{html:'<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>'}))
+		var win = this.win = hui.ui.Window.create({title:'This is a window',width:500});
+		win.add(hui.build('div',{html:'<p style="text-align: center; font: 13px Arial;">This is a simple window</p>'}))
+		win.addToBack(hui.build('div',{html:'<p style="text-align: center; font: 13px Arial; color: #fff;">A window has a back side :-)</p>'}))
 		win.show();
 		hui.ui.hideMessage();
-		hui.ui.confirmOverlay({widget:win,text:'Are you ready for the next?',onOk : function() {
-			win.hide();
+		this._go('darkWindow',2000)
+	},
+	darkWindow : function() {
+		this.win.setVariant('dark')
+		this._go('flipWindow',2000)
+	},
+	flipWindow : function() {
+		this.win.flip();
+		this._go('afterWindow',2000)
+	},
+	afterWindow : function() {
+		this.win.hide();
+		hui.ui.confirmOverlay({text:'Next is animation... are you ready?',onOk : function() {
 			demo.animation();
-		}})
+		}.bind(this)})		
 	},
 	animation : function() {
 		hui.ui.showMessage({text:'I can animate...'});
@@ -37,4 +49,4 @@ var demo = {
 		}})
 	}
 }
-hui.ui.onReady(demo.animation.bind(demo));
+hui.ui.onReady(demo.start.bind(demo));
