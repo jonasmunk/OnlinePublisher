@@ -7,7 +7,13 @@
  >
 
 	<xsl:template match="map:map[@frame]">
-		<span class="part_map shared_frame_{@frame}">
+		<span>
+			<xsl:attribute name="class">
+				<xsl:text>part_map shared_frame_</xsl:text><xsl:value-of select="@frame"/>
+				<xsl:if test="not(@width) and @provider='google-interactive'">
+					<xsl:text> shared_frame_adaptive</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
 			<span class="shared_frame_{@frame}_top"><span><span><xsl:comment/></span></span></span>
 			<span class="shared_frame_{@frame}_middle">
 				<span class="shared_frame_{@frame}_middle">
@@ -72,6 +78,9 @@
 			<span class="part_map_static_content" style="height: {$height}px;">
 				<img src="http://maps.googleapis.com/maps/api/staticmap?center={@latitude},{@longitude}&amp;zoom={@zoom}&amp;size={$width}x{$fake-height}&amp;sensor=false&amp;maptype={@maptype}" style="width: {$width}px; height: {$fake-height}px;"/>
 			</span>
+			<xsl:if test="map:text">
+				<span class="part_map_static_text"><xsl:value-of select="map:text"/></span>
+			</xsl:if>
 		</span>
 	</xsl:template>
 	
@@ -82,6 +91,9 @@
 				<xsl:if test="@width">
 					<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>;</xsl:text>
 				</xsl:if>
+				<xsl:if test="not(@width)">
+					<xsl:text>width:100%;</xsl:text>
+				</xsl:if>
 				<xsl:if test="@height">
 					<xsl:text>height: </xsl:text><xsl:value-of select="@height"/><xsl:text>;</xsl:text>
 				</xsl:if>
@@ -91,6 +103,9 @@
 			</xsl:attribute>
 			<xsl:comment/>
 		</span>
+		<xsl:if test="map:text">
+			<span class="part_map_text"><xsl:value-of select="map:text"/></span>
+		</xsl:if>
 		<script type="text/javascript">
 			(function() {
 				var options = {

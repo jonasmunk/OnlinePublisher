@@ -1,3 +1,12 @@
+span.shared_frame_adaptive
+{
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+
 span.shared_frame_light
 {
 	padding: 4px;
@@ -74,6 +83,11 @@ span.shared_frame_elegant_middle span.shared_frame_elegant_middle
 	padding-left: 0;
 	padding-right: 34px;
 	background: url('../../basic/gfx/frames/elegant.png') right -1204px no-repeat;
+	display: block;
+}
+
+span.shared_frame_elegant_content
+{
 	display: block;
 }
 

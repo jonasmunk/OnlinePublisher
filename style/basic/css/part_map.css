@@ -33,7 +33,27 @@ span.part_map_static_content
 	overflow: hidden;
 }
 
+span.part_map_static_text
+{
+	position: absolute;
+	white-space: pre;
+	font-size: 12px;
+	left: 0;
+	top: 0;
+	background: #fff;
+	padding: 4px 7px;
+	border: 1px solid #eee;
+}
+
+/** Interactive */
+
 span.part_map_interactive
 {
 	display: inline-block;
+}
+
+div.part_map_bubble
+{
+	font-size: 12px;
+	white-space: pre;
 }

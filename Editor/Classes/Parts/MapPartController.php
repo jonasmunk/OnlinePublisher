@@ -20,8 +20,11 @@ class MapPartController extends PartController
 	function createPart() {
 		$part = new MapPart();
 		$part->setMaptype('roadmap');
-		$part->setZoom(11);
+		$part->setZoom(16);
 		$part->setProvider('google-static');
+		$part->setLatitude(48.85843994078143);
+		$part->setLongitude(2.2944796085357666);
+		$part->setFrame('shadow_slant');
 		$part->setWidth('500px');
 		$part->setHeight('300px');
 		$part->save();
@@ -42,6 +45,7 @@ class MapPartController extends PartController
 			"latitude" => $part->getLatitude(),
 			"maptype" => $part->getMaptype(),
 			"zoom" => $part->getZoom(),
+			"text" => $part->getText(),
 			"markers" => $part->getMarkers(),
 			"mapwidth" => $part->getWidth(),
 			"mapheight" => $part->getHeight(),
@@ -64,6 +68,7 @@ class MapPartController extends PartController
 		$part->setLongitude(Request::getFloat('longitude'));
 		$part->setLatitude(Request::getFloat('latitude'));
 		$part->setZoom(Request::getInt('zoom'));
+		$part->setText(Request::getString('text'));
 		$part->setWidth(Request::getString('mapwidth'));
 		$part->setHeight(Request::getString('mapheight'));
 		$part->setFrame(Request::getString('frame'));
@@ -97,6 +102,9 @@ class MapPartController extends PartController
 			$xml.=' latitude="'.$part->getLatitude().'"';
 		}
 		$xml.='>';
+		if ($part->getText()) {
+			$xml.='<text>'.StringUtils::escapeXML($part->getText()).'</text>';
+		}
 		$markers = StringUtils::fromJSON(StringUtils::toUnicode($part->getMarkers()));
 		if (is_array($markers)) {
 			foreach ($markers as $marker) {
@@ -121,7 +129,7 @@ class MapPartController extends PartController
 		<window title="Indstillinger" name="mapWindow" width="300" padding="10">
 			<formula name="mapFormula">
 				<fields labels="above">
-					<field label="Adresse">
+					<field label="Text">
 						<text-input multiline="true" key="text"/>
 					</field>
 					<field label="Lokation">
@@ -146,8 +154,6 @@ class MapPartController extends PartController
 					<field label="Zoom">
 						<number-input key="zoom" min="1" max="25"/>
 					</field>
-				</fields>
-				<fields>
 					<field label="Ramme">
 						<dropdown key="frame">
 							'.$this->getFrameOptions().'
@@ -160,6 +166,9 @@ class MapPartController extends PartController
 						<style-length-input key="height"/>
 					</field>
 				</fields>
+				<buttons>
+					<button name="currentLocation" text="Min lokation"/>
+				</buttons>
 			</formula>
 		</window>
 		';

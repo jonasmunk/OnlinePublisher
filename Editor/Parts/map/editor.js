@@ -10,6 +10,7 @@ var partController = {
 			provider : form.provider.value,
 			width : form.mapwidth.value,
 			height : form.mapheight.value,
+			text : form.text.value,
 			frame : form.frame.value,
 			center : {latitude:parseFloat(form.latitude.value),longitude:parseFloat(form.longitude.value)}
 		};
@@ -27,6 +28,7 @@ var partController = {
 		form.mapheight.value = values.height;
 		form.maptype.value = values.maptype;
 		form.zoom.value = values.zoom;
+		form.text.value = values.text;
 		form.latitude.value = values.center ? values.center.latitude : '';
 		form.longitude.value = values.center ? values.center.longitude : '';
 		form.frame.value = values.frame;
@@ -36,6 +38,14 @@ var partController = {
 		}];
 		form.markers.value = hui.string.toJSON(markers);*/
 		this.preview();
+	},
+	$click$currentLocation : function() {
+		try {
+            navigator.geolocation && navigator.geolocation.getCurrentPosition(function (pos) {
+                mapFormula.setValues({center:{latitude:pos.coords.latitude, longitude:pos.coords.longitude}});
+				this.$valuesChanged$mapFormula(mapFormula.getValues());
+            }.bind(this));
+        } catch (e) {}
 	},
 	preview : function() {
 		op.part.utils.updatePreview({

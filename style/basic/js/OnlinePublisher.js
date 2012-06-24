@@ -424,6 +424,16 @@ op.part.Map.prototype = {
       				new google.maps.Point(0,0), // Location (sprite)
       				new google.maps.Point(8, 26)) // anchor
 		    	});
+			var text = hui.get.firstByClass(this.element,'part_map_text');
+			if (text) {
+				var info = new google.maps.InfoWindow({
+					content : hui.build('div',{
+						text : text.innerHTML,
+						'class' : 'part_map_bubble'
+					})
+				})				
+				info.open(this.map,marker);
+			}
 		return
 		    var marker = new google.maps.Marker({
 		        position: new google.maps.LatLng(this.options.center.latitude, this.options.center.longitude),
