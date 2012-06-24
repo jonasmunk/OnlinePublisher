@@ -42,7 +42,7 @@
 				<xsl:call-template name="thirdlevel"/>
 				<div class="case_contact">
 					<h2>GB Pigsåler</h2>
-					<p>Maren Hemmings Vej 13</p>
+					<p>Vossvej 29 A</p>
 					<p>9000 Aalborg, Denmark</p>
 					<p><em>CVR:</em> 33068271</p>
 					<p><em>Tlf:</em> 70 20 60 77</p>

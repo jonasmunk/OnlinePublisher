@@ -36,7 +36,7 @@
 							<h3>Kontakt</h3>
 							<p><strong>Green Benefit</strong></p>
 							<div class="layout_address">
-							<p>Maren Hemmings Vej 13</p>
+							<p>Vossvej 29 A</p>
 							<p>9000 Aalborg</p>
 							<p>Denmark</p>
 							</div>

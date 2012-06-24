@@ -43,7 +43,7 @@
 						<div class="layout_box_top"><div><xsl:comment/></div></div>
 						<div class="layout_box_middle">
 							<h2>Green Benefit</h2>
-							<p>Maren Hemmings Vej 13</p>
+							<p>Vossvej 29 A</p>
 							<p>9000 Aalborg</p>
 							<p>Denmark</p>
 							<p><a href="mailto:info@greenbenefit.dk"><span>info@greenbenefit.dk</span></a></p>
