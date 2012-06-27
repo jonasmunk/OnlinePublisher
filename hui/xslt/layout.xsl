@@ -184,6 +184,9 @@
 		<xsl:if test="@background">
 			<xsl:text> hui_bg_</xsl:text><xsl:value-of select="@background"/>
 		</xsl:if>
+		<xsl:if test="@shadow-variant">
+			<xsl:text> hui_overflow_shadow_</xsl:text><xsl:value-of select="@shadow-variant"/>
+		</xsl:if>
 	</xsl:attribute>
 	<xsl:attribute name="style">
 		<xsl:choose>
@@ -201,7 +204,8 @@
 			<xsl:text>display:none;</xsl:text>
 		</xsl:if>
 	</xsl:attribute>
-	<div class="hui_overflow_top"><xsl:comment/></div>
+	<div class="hui_overflow_top">
+		<xsl:comment/></div>
 	<xsl:apply-templates/>
 	<div class="hui_overflow_bottom"><xsl:comment/></div>
 </div>

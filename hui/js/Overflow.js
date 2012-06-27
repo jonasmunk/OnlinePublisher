@@ -49,7 +49,7 @@ hui.ui.Overflow.prototype = {
 		}
 		if(this.element.scrollHeight-this.element.scrollTop-this.element.clientHeight>0) {
 			this.bottomShadow.style.display = 'block';
-			this.bottomShadow.style.top = (this.element.scrollTop+this.element.clientHeight-8)+'px';
+			this.bottomShadow.style.top = (this.element.scrollTop+this.element.clientHeight-this.bottomShadow.clientHeight)+'px';
 		} else {
 			this.bottomShadow.style.display = 'none';
 		}

@@ -86,6 +86,28 @@ div.hui_overflow_bottom
 	display: none;
 }
 
+div.hui_overflow_shadow_white div.hui_overflow_bottom
+{
+	height: 16px;
+	-webkit-mask-box-image: none;
+	background-image: -webkit-linear-gradient(bottom,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: -moz-linear-gradient(bottom,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: -ms-linear-gradient(bottom,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: -o-linear-gradient(bottom,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: linear-gradient(bottom,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+}
+
+div.hui_overflow_shadow_white div.hui_overflow_top
+{
+	height: 16px;
+	-webkit-mask-box-image: none;
+	background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: -o-linear-gradient(top,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+	background-image: linear-gradient(top,rgba(255, 255, 255, 1),rgba(255, 255, 255, .5) 70%,rgba(255, 255, 255, 0));
+}
+
 
 .hui_context_sidebar div.hui_overflow_bottom
 {
