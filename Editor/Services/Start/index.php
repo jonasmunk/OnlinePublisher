@@ -60,17 +60,17 @@ $gui='
 					<title>{Development ; da: Udvikling }</title>
 					<pages name="developmentPages" height="full">
 						<page>
-							<overflow full="true">
+							<overflow full="true" shadow-variant="white">
 								<list source="newsFeed" name="newsList" selectable="false" indent="10"/>
 							</overflow>
 						</page>
 						<page>
-							<overflow full="true">
+							<overflow full="true" shadow-variant="white">
 								<list source="developerFeed" selectable="false" indent="10"/>
 							</overflow>
 						</page>
 						<page>
-							<overflow full="true">
+							<overflow full="true" shadow-variant="white">
 								<list source="commitFeed" selectable="false" indent="10"/>
 							</overflow>
 						</page>
@@ -81,7 +81,7 @@ $gui='
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>Feedback</title>
-					<overflow full="true">
+					<overflow full="true" shadow-variant="white">
 						<pages name="feedbackPages">
 							<page>
 								<formula padding="10" name="feedbackForm">
