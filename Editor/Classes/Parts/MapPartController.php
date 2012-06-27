@@ -68,7 +68,7 @@ class MapPartController extends PartController
 		$part->setLongitude(Request::getFloat('longitude'));
 		$part->setLatitude(Request::getFloat('latitude'));
 		$part->setZoom(Request::getInt('zoom'));
-		$part->setText(Request::getString('text'));
+		$part->setText(Request::getUnicodeString('text'));
 		$part->setWidth(Request::getString('mapwidth'));
 		$part->setHeight(Request::getString('mapheight'));
 		$part->setFrame(Request::getString('frame'));
@@ -119,7 +119,18 @@ class MapPartController extends PartController
 	
 	function importSub($node,$part) {
 		if ($map = DOMUtils::getFirstDescendant($node,'map')) {
-			$part->setMaptype($map->getAttribute('maptype'));
+			$mapType = $map->getAttribute('maptype');
+			if (StringUtils::isNotBlank($mapType)) {
+				$part->setMaptype($mapType);
+			}
+			$longitude = $map->getAttribute('longitude');
+			if (StringUtils::isNotBlank($longitude)) {
+				$part->setLongitude(floatval($longitude));
+			}
+			$latitude = $map->getAttribute('latitude');
+			if (StringUtils::isNotBlank($latitude)) {
+				$part->setLatitude(floatval($latitude));
+			}
 		}
 		
 	}

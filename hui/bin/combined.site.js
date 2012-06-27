@@ -2241,15 +2241,29 @@ hui.xml = {
 	parse : function(xml) {
 		var doc;
 		if (window.DOMParser) {
-  			var parser=new DOMParser();
+  			var parser = new DOMParser();
   			doc = parser.parseFromString(xml,"text/xml");
+			if (doc.getElementsByTagName('parsererror').length>0) {
+				return null;
+			}
   		} else {
   			doc = new ActiveXObject("Microsoft.XMLDOM");
 			doc.async = false;
   			doc.loadXML(xml); 
   		}
 		return doc;
-	}
+	},
+	serialize : function(node) {
+  		try {
+      		return (new XMLSerializer()).serializeToString(node);
+  		} catch (e) {
+     		try {
+        		return node.xml;
+     		}
+     		catch (e) {}
+     	}
+		return null;
+   	}
 }
 
 

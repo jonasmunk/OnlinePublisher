@@ -19,7 +19,21 @@ class PosterPartController extends PartController
 	
 	function createPart() {
 		$part = new PosterPart();
-		$part->setRecipe('<page><title>Min plakat</title><text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</text></page>');
+		$imageId = ObjectService::getLatestId('image');
+		$recipe = '
+			<pages>
+				<page>
+					'.($imageId ? '<image id="'.$imageId.'"/>' : '').'
+					<title>Vehicula Tellus Tristique Ornare</title>
+					<text>Vestibulum id ligula porta felis euismod semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</text>
+				</page>
+				<page>
+					<title>Cras Mollis Vestibulum Lorem</title>
+					<text>Vestibulum id ligula porta felis euismod semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</text>
+				</page>
+			</pages>
+		';
+		$part->setRecipe($recipe);
 		$part->save();
 		return $part;
 	}
@@ -29,19 +43,58 @@ class PosterPartController extends PartController
 	}
 	
 	function editor($part,$context) {
+		global $baseUrl;
 		return
-		'<textarea id="part_poster_textarea" name="recipe" style="width: 100%; height: 300px; border: none; padding: 0;">'.
-		StringUtils::escapeXML($part->getRecipe()).
-		'</textarea>'.
-		'<script type="text/javascript">'.
-		'document.getElementById("part_poster_textarea").focus();'.
-		'document.getElementById("part_poster_textarea").select();'.
-		'</script>';
+		$this->buildHiddenFields(array(
+			"recipe" => $part->getRecipe()
+		)).
+		'<div id="part_poster_container">'.
+		$this->render($part,$context).
+		'</div>
+		<script src="'.$baseUrl.'Editor/Parts/poster/poster_editor.js" type="text/javascript" charset="utf-8"></script>';
+	}
+	
+	function editorGui($part,$context) {
+		$gui='
+			<window title="Side" name="pageWindow" width="300">
+				<toolbar variant="window">
+					<icon icon="common/previous" text="Move left"/>
+					<icon icon="common/next" text="Move right"/>
+					<right>
+						<icon icon="common/Delete" text="Delete"/>
+						<icon icon="common/new" text="Add"/>
+					</right>
+				</toolbar>
+				<formula name="pageFormula" padding="10">
+					<fields labels="above">
+						<field label="Title">
+							<text-input key="title"/>
+						</field>
+						<field label="Text">
+							<text-input multiline="true" key="text" max-height="500"/>
+						</field>
+					</fields>
+					<buttons>
+						<button name="savePage" title="{Save ; da: Gem}" click="sourceWindow.hide()"/>
+					</buttons>
+				</formula>
+			</window>
+			
+			<window title="Kilde" name="sourceWindow" width="600">
+				<formula name="sourceFormula">
+						<text-input multiline="true" key="recipe" max-height="500"/>
+					<buttons right="3" bottom="2" top="1">
+						<button name="applySource" title="{Save ; da: Gem}"/>
+					</buttons>
+				</formula>			
+			</window>
+			';
+		return In2iGui::renderFragment($gui);
 	}
 	
 	function getFromRequest($id) {
 		$part = PosterPart::load($id);
-		$part->setRecipe(Request::getUnicodeString('recipe'));
+		$part->setRecipe(Request::getEncodedString('recipe'));
 		return $part;
 	}
 	

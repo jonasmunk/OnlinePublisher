@@ -85,6 +85,7 @@ var controller = {
 		this._buildSectionAdders();
 	},
 	_buildSectionAdders : function() {
+		return;
 		if (!this.adders) {
 			this.adders = hui.build('div',{parent:document.body});
 			hui.listen(this.adders,'click',function(e) {
@@ -130,6 +131,21 @@ var controller = {
 			};
 		};
 	},
+
+	showAdderMenu : function(options) {
+		if (this.stickyAdder) {
+			hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
+		}
+		this.partControls.hide();
+		this.menuInfo = {
+			columnId : options.columnId,
+			sectionIndex : options.sectionIndex
+		};
+		this.stickyAdder = options.element;
+		hui.cls.add(options.element,'editor_section_adder_sticky');
+		partMenu.showAtPointer(options.event);
+		this.menuMode = true;
+	},
 	$hide$sectionMenu : function() {
 		var section = hui.get('section'+this.menuInfo.sectionId);
 		hui.cls.remove(section,'editor_part_highlighted');			
@@ -138,6 +154,7 @@ var controller = {
 		if (this.stickyAdder) {
 			hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
 		}
+		this.menuMode = false;
 	},
 	
 	_onClickAdder : function() {
@@ -228,7 +245,7 @@ var controller = {
 	//////////////////// Sections ///////////////////
 	
 	sectionOver : function(cell,sectionId,columnId,sectionIndex) {
-		if (this.activeSection || !this.ready) return;
+		if (this.activeSection || this.menuMode || !this.ready) return;
 		this.hoverInfo = {
 			sectionId : sectionId,
 			sectionIndex : sectionIndex,

@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 class StringUtils {
 	
 	function isBlank($str) {
-		return $str===null || strlen(trim($str))==0;
+		return $str===null || strlen(trim($str))===0;
 	}
 	
 	function isNotBlank($str) {

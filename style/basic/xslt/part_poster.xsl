@@ -8,32 +8,49 @@
  >
 
 <xsl:template match="p:poster">
-	<div class="part_poster" id="{generate-id()}">
-		<div class="part_poster_pages">
-			<xsl:apply-templates/>
-		</div>
+	<div id="part_poster_{../../@id}">
+		<xsl:attribute name="class">
+			<xsl:text>part_poster</xsl:text>
+			<xsl:if test="p:pages/@variant">
+				<xsl:text> part_poster_</xsl:text><xsl:value-of select="p:pages/@variant"/>
+			</xsl:if>
+		</xsl:attribute>
+		<xsl:apply-templates/>
 		<xsl:comment/>
 	</div>
-	<xsl:if test="$editor!='true'">
-		<script type="text/javascript">
-		try {
-			new op.part.Poster({element:'<xsl:value-of select="generate-id()"/>'});
-		} catch (e) {
-			hui.log(e)
-		}
-		</script>
-	</xsl:if>
+	<script type="text/javascript">
+	try {
+		new op.part.Poster({
+			element : 'part_poster_<xsl:value-of select="../../@id"/>',
+			name : 'part_poster_<xsl:value-of select="../../@id"/>',
+			editmode : <xsl:value-of select="$editor='true'"/>
+		});
+	} catch (e) {
+		hui.log(e)
+	}
+	</script>
 </xsl:template>
 
 <xsl:template match="p:recipe">
 	<xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="p:pages">
+	<div class="part_poster_pages">
+		<xsl:apply-templates select="p:page"/>
+	</div>
+</xsl:template>
+
+
 <xsl:template match="p:page">
-	<div class="part_poster_page">
+	<div data-label="{@label}">
 		<xsl:if test="position()!=1">
 			<xsl:attribute name="style">display:none;</xsl:attribute>
 		</xsl:if>
+		<xsl:attribute name="class">
+			<xsl:text>part_poster_page</xsl:text>
+		</xsl:attribute>
+		<div class="part_poster_page_content">
 		<xsl:if test="p:image">
 			<img>
 				<xsl:attribute name="src">
@@ -47,10 +64,20 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:attribute>
+				<xsl:attribute name="style">
+					<xsl:choose>
+						<xsl:when test="p:image/@height">
+							<xsl:text>height:</xsl:text><xsl:value-of select="p:image/@height"/><xsl:text>px;</xsl:text>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:text>height: 200px;</xsl:text>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:attribute>
 			</img>
 		</xsl:if>
-		<p class="part_poster_title"><xsl:value-of select="p:title"/></p>
-		<p class="part_poster_text"><xsl:value-of select="p:text"/></p>
+		<p class="part_poster_title"><xsl:value-of select="p:title"/><xsl:comment/></p>
+		<p class="part_poster_text"><xsl:value-of select="p:text"/><xsl:comment/></p>
 		<xsl:for-each select="p:link">
 			<p class="part_poster_link">				
 				<a class="common"><xsl:call-template name="util:link"/>
@@ -58,6 +85,7 @@
 				</a>
 			</p>
 		</xsl:for-each>
+		</div>
 	</div>
 </xsl:template>
 

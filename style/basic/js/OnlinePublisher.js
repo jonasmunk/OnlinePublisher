@@ -328,38 +328,55 @@ op.part.Formula.prototype = {
 ///////////////// Poster //////////////////
 
 op.part.Poster = function(options) {
-	this.options = hui.override({duration:500,delay:5000},options);
+	this.options = hui.override({duration:1500,delay:5000},options);
+	this.name = options.name;
 	this.element = hui.get(options.element);
 	this.container = hui.get.firstByClass(this.element,'part_poster_pages');
 	this.pages = hui.get.byClass(this.element,'part_poster_page');
 	this.index = 0;
 	this.indicators = [];
 	this._buildNavigator();
-	this.callNext();
+	this._callNext();
+	hui.listen(this.element,'click',this._onClick.bind(this));
+	hui.ui.extend(this);
 }
 
 op.part.Poster.prototype = {
 	_buildNavigator : function() {
 		this.navigator = hui.build('div',{'class':'part_poster_navigator',parent:this.element});
 		for (var i=0; i < this.pages.length; i++) {
-			this.indicators.push(hui.build('a',{parent:this.navigator,href:'javascript://','class' : i==0 ? 'part_poster_current' : ''}));
+			this.indicators.push(hui.build('a',{parent:this.navigator,data:i,href:'javascript://','class' : i==0 ? 'part_poster_current' : ''}));
 		};
 	},
 	next : function() {
+		var index = this.index+1;
+		if (index>=this.pages.length) {
+			index = 0;
+		}
+		this.goToPage(index);
+	},
+	goToPage : function(index) {
+		window.clearTimeout(this.timer);
 		var recipe = {container:this.container,duration:this.options.duration};
 		recipe.hide = {element:this.pages[this.index],effect:'slideLeft'};
 		hui.cls.remove(this.indicators[this.index],'part_poster_current');
-		this.index++;
-		if (this.index>=this.pages.length) {
-			this.index = 0;
-		}
+		this.index = index;
 		recipe.show = {element : this.pages[this.index],effect:'slideRight'};
 		hui.cls.add(this.indicators[this.index],'part_poster_current');
 		hui.transition(recipe);
-		this.callNext();
+		this._callNext();		
 	},
-	callNext : function() {
-		window.setTimeout(this.next.bind(this),this.options.delay);
+	_callNext : function() {
+		if (!this.options.editmode) {
+			this.timer = window.setTimeout(this.next.bind(this),this.options.delay);
+		}
+	},
+	_onClick : function(e) {
+		e = hui.event(e);
+		var a = e.findByTag('a');
+		if (a) {
+			this.goToPage(parseInt(a.getAttribute('data')));
+		}
 	}
 }
 
@@ -458,7 +475,8 @@ hui.transition = function(options) {
 	hui.animate({
 		node : options.container,
 		css : {height:show.element.clientHeight+'px'},
-		duration : options.duration+50,
+		duration : options.duration+10,
+		ease : hui.ease.slowFastSlow,
 		onComplete : function() {
 			hui.style.set(options.container,{height:'',position:''})
 		}

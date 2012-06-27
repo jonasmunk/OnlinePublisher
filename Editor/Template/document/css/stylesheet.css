@@ -106,12 +106,19 @@ div.editor_error
 	font-size: 12px;
 }
 
+div.editor_section_adder_container
+{
+	position: relative;
+}
+
 div.editor_section_adder
 {
-	margin-top: -2px;
+	width: 100%;
+	margin-top: -5px;
 	position: absolute;
 	padding: 2px 0;
 	cursor: pointer;
+	z-index: 10;
 }
 
 div.editor_section_adder div

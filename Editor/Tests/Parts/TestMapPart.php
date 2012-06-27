@@ -42,8 +42,11 @@ class TestMapPart extends UnitTestCase {
 	}
 
 	function testImport() {
+		
 		$obj = new MapPart();
 		$obj->setMaptype('Please get me back!');
+		$obj->setLongitude(-34.560859);
+		$obj->setLatitude(-58.491211);
 		$ctrl = new MapPartController();
 		
 		$xml = $ctrl->build($obj,new PartContext());
@@ -54,6 +57,24 @@ class TestMapPart extends UnitTestCase {
 		
 		$this->assertNotNull($imported);
 		$this->assertIdentical($imported->getMaptype(),$obj->getMaptype());
+		$this->assertIdentical($imported->getLongitude(),$obj->getLongitude());
+		$this->assertIdentical($imported->getLatitude(),$obj->getLatitude());
+	}
+
+	function testEmptyImport() {
+		$obj = new MapPart();
+		$ctrl = new MapPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getMaptype(),$obj->getMaptype());
+		$this->assertIdentical($imported->getLongitude(),$obj->getLongitude());
+		$this->assertIdentical($imported->getLatitude(),$obj->getLatitude());
 	}
 }
 ?>
