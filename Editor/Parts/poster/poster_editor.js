@@ -9,6 +9,9 @@ var partPosterController = {
 		var form = document.forms.PartForm;
 		var recipe = form.recipe.value;
 		this.dom = hui.xml.parse(recipe);
+		if (!this.dom) {
+			
+		}
 		sourceFormula.setValues({
 			recipe : recipe
 		})

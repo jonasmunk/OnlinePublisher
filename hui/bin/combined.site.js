@@ -2229,8 +2229,7 @@ hui.xml = {
 		} else if (document.implementation && document.implementation.createDocument) {
 			try {
 			  	var pro = new XSLTProcessor();
-			  	pro.importStylesheet(xsl);
-				hui.log(pro)
+			  	pro.importStylesheet(xsl);	
 				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
 			    return pro.transformToFragment(xml,ownerDocument);				
 			} catch (e) {
@@ -2247,6 +2246,7 @@ hui.xml = {
   			var parser = new DOMParser();
   			doc = parser.parseFromString(xml,"text/xml");
 			if (doc.getElementsByTagName('parsererror').length>0) {
+				hui.log(doc.getElementsByTagName('parsererror'))
 				return null;
 			}
   		} else {

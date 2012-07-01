@@ -336,7 +336,9 @@ op.part.Poster = function(options) {
 	this.index = 0;
 	this.indicators = [];
 	this._buildNavigator();
-	this._callNext();
+	if (!this.options.editmode) {
+		this._callNext();
+	}
 	hui.listen(this.element,'click',this._onClick.bind(this));
 	hui.ui.extend(this);
 }
@@ -370,13 +372,13 @@ op.part.Poster.prototype = {
 		recipe.show = {element : this.pages[this.index],effect:'slideRight'};
 		hui.cls.add(this.indicators[this.index],'part_poster_current');
 		hui.transition(recipe);
-		this._callNext();
+		if (!this.options.editmode) {
+			this._callNext();
+		}
 		this.fire('pageChanged',index);
 	},
 	_callNext : function() {
-		if (!this.options.editmode) {
-			this.timer = window.setTimeout(this.next.bind(this),this.options.delay);
-		}
+		this.timer = window.setTimeout(this.next.bind(this),this.options.delay);
 	},
 	_onClick : function(e) {
 		e = hui.event(e);
