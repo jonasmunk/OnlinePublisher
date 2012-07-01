@@ -2,10 +2,10 @@
 	Used to choose an image
 	@constructor
 */
-hui.ui.ImagePicker = function(o) {
-	this.name = o.name;
-	this.options = o || {};
-	this.element = hui.get(o.element);
+hui.ui.ImagePicker = function(options) {
+	this.name = options.name;
+	this.options = hui.override({width:48,height:48},options);
+	this.element = hui.get(options.element);
 	this.images = [];
 	this.object = null;
 	this.thumbnailsLoaded = false;

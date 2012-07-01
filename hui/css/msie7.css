@@ -54,7 +54,7 @@ div.hui_toolbar_icon div.hui_icon
 
 a.hui_toolbar_icon_disabled
 {
-	filter: alpha(opacity = 50);
+	filter: alpha(opacity = 30);
 	background-color: #F2F2F3;
 }
 

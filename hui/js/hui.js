@@ -829,14 +829,17 @@ hui.get.firstChild = hui.dom.firstChild;
  * </pre>
  * @param {String} name The name of the new element
  * @param {Object} options The options
+ * @param {Document} doc (Optional) The document to create the element for
  * @returns {Element} The new element
  */
-hui.build = function(name,options) {
-	var e = document.createElement(name);
+hui.build = function(name,options,doc) {
+	
+	var doc = doc || document,
+		e = doc.createElement(name);
 	if (options) {
 		for (prop in options) {
 			if (prop=='text') {
-				e.appendChild(document.createTextNode(options.text));
+				e.appendChild(doc.createTextNode(options.text));
 			} else if (prop=='html') {
 				e.innerHTML=options.html;
 			} else if (prop=='parent') {

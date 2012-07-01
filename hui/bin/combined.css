@@ -2127,8 +2127,9 @@ a.hui_toolbar_icon strong
 
 a.hui_toolbar_icon_disabled
 {
-	opacity: 0.5;
+	opacity: 0.3;
 	cursor: default;
+	-webkit-filter: saturate(0);
 }
 
 a.hui_toolbar_icon_disabled:hover span.hui_icon

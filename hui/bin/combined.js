@@ -829,14 +829,17 @@ hui.get.firstChild = hui.dom.firstChild;
  * </pre>
  * @param {String} name The name of the new element
  * @param {Object} options The options
+ * @param {Document} doc (Optional) The document to create the element for
  * @returns {Element} The new element
  */
-hui.build = function(name,options) {
-	var e = document.createElement(name);
+hui.build = function(name,options,doc) {
+	
+	var doc = doc || document,
+		e = doc.createElement(name);
 	if (options) {
 		for (prop in options) {
 			if (prop=='text') {
-				e.appendChild(document.createTextNode(options.text));
+				e.appendChild(doc.createTextNode(options.text));
 			} else if (prop=='html') {
 				e.innerHTML=options.html;
 			} else if (prop=='parent') {
@@ -8722,10 +8725,10 @@ hui.ui.Toolbar.Badge.prototype = {
 	Used to choose an image
 	@constructor
 */
-hui.ui.ImagePicker = function(o) {
-	this.name = o.name;
-	this.options = o || {};
-	this.element = hui.get(o.element);
+hui.ui.ImagePicker = function(options) {
+	this.name = options.name;
+	this.options = hui.override({width:48,height:48},options);
+	this.element = hui.get(options.element);
 	this.images = [];
 	this.object = null;
 	this.thumbnailsLoaded = false;
