@@ -31,6 +31,11 @@
 	</script>
 </xsl:template>
 
+<xsl:template match="p:invalid">
+	<span style="color: #999; font-size: 12px;">Invalid</span>
+</xsl:template>
+
+
 <xsl:template match="p:recipe">
 	<xsl:apply-templates/>
 </xsl:template>

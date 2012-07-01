@@ -301,7 +301,9 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		$style=buildSectionStyle($row);
-		echo '<div class="editor_section_adder_container"><div class="editor_section_adder" onclick="controller.showAdderMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($row['index']).'}); return false"><div><span><em></em><strong></strong></span></div></div></div>';
+		if ($section==null) {
+			echo '<div class="editor_section_adder_container"><div class="editor_section_adder" onclick="controller.showAdderMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($row['index']).'}); return false"><div><span><em></em><strong></strong></span></div></div></div>';
+		}
 		echo '<div id="section'.$row['id'].'"';
 		if ($row['width']) {
 			echo ' style="width: '.$row['width'].'"';
@@ -317,7 +319,9 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 		$lastIndex = $row['index'];
 	}
 	Database::free($result);
-	echo '<div class="editor_section_adder_container"><div class="editor_section_adder" onclick="controller.showAdderMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.(($lastIndex+1)).'}); return false"><div><span><em></em><strong></strong></span></div></div></div>';
+	if ($section==null) {
+		echo '<div class="editor_section_adder_container"><div class="editor_section_adder" onclick="controller.showAdderMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.(($lastIndex+1)).'}); return false"><div><span><em></em><strong></strong></span></div></div></div>';
+	}
 	if ($section==null) {
 		echo '<div style="padding: 5px;">'.
 		'<a onclick="controller.showNewPartMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($lastIndex+1).'}); return false" href="#" class="hui_button hui_button_paper hui_button_small hui_button_small_paper">'.
@@ -325,7 +329,7 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 		'</a>'.
 		'</div>';
 	} else {
-		echo '<div style="padding: 5px;"><a class="hui_button hui_button_paper hui_button_small hui_button_small_paper"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
+		echo '<div style="padding: 5px;"><a class="hui_button hui_button_paper hui_button_small hui_button_small_paper '.($section!=null ? 'hui_button_disabled' : '').'"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
 	}
 }
 
@@ -345,7 +349,7 @@ function displaySection($sectionId,$type,$sectionIndex,$sectionStyle,$partId,$pa
 }
 
 function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex) {
-	global $partContext;
+	global $partContext,$section;
 	if (!$partType) {
 		echo '<div class="editor_error">Error: The part could not be loaded (no type)</div>';
 		return;
@@ -355,7 +359,7 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
 		if ($part) {
-			echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
+			echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section '.($section!=null ? 'editor_section_inactive' : '').'"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
 			echo $ctrl->display($part,$partContext);
 			echo '</div>';			
 		} else {

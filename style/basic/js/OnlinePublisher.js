@@ -355,6 +355,12 @@ op.part.Poster.prototype = {
 		}
 		this.goToPage(index);
 	},
+	setPage : function(index) {
+		if (index==this.index) return;
+		this.pages[this.index].style.display = 'none';
+		this.pages[index].style.display = 'block';
+		this.index = index;
+	},
 	goToPage : function(index) {
 		window.clearTimeout(this.timer);
 		var recipe = {container:this.container,duration:this.options.duration};
@@ -364,7 +370,8 @@ op.part.Poster.prototype = {
 		recipe.show = {element : this.pages[this.index],effect:'slideRight'};
 		hui.cls.add(this.indicators[this.index],'part_poster_current');
 		hui.transition(recipe);
-		this._callNext();		
+		this._callNext();
+		this.fire('pageChanged',index);
 	},
 	_callNext : function() {
 		if (!this.options.editmode) {

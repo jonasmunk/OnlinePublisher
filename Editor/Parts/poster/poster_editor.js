@@ -5,20 +5,27 @@ var partPosterController = {
 	pageIndex : 0,
 	
 	$ready : function() {
-		pageWindow.show();
+		sourceWindow.show();
 		var form = document.forms.PartForm;
 		var recipe = form.recipe.value;
 		this.dom = hui.xml.parse(recipe);
 		sourceFormula.setValues({
 			recipe : recipe
 		})
-		sourceWindow.show();
 		this._setPage(0);
+		pageWindow.show();
 	},
 	_connectToWidget : function() {
 		this.widget = hui.ui.get('part_poster_'+document.forms.PartForm.id.value);
+		this.widget.setPage(this.pageIndex);
 		this.widget.listen(this);
 	},
+	
+	// part listener
+	$pageChanged : function(index) {
+		this._setPage(index);
+	},
+	
 	$valuesChanged$sourceFormula : function(values) {
 		var dom = hui.xml.parse(values.recipe);
 		if (dom) {
@@ -44,22 +51,46 @@ var partPosterController = {
 			node.appendChild(text);
 		}
 		hui.dom.setText(text,values.text);
-		var xml = hui.xml.serialize(this.dom);
-		document.forms.PartForm.recipe.value = xml;
-		sourceFormula.setValues({recipe:xml})
-		this.preview();
+
+		var title = hui.get.firstByTag(node,'title');
+		if (!title) {
+			title = this.dom.createElement('title');
+			node.appendChild(title);
+		}
+		hui.dom.setText(title,values.title);
+
+		this._syncDom();
 	},
 	_setPage : function(index) {
 		this.pageIndex = index;
 		var values = {};
 		var node = this.dom.getElementsByTagName('page')[index];
 		var text = hui.get.firstByTag(node,'text');
-		values.text = hui.dom.getText(text);
+		if (text) {
+			values.text = hui.dom.getText(text);
+		}
 
 		var title = hui.get.firstByTag(node,'title');
-		values.title = hui.dom.getText(title);
+		if (title) {
+			values.title = hui.dom.getText(title);
+		}
 
 		pageFormula.setValues(values);
+	},
+	_syncDom : function() {
+		var xml = hui.xml.serialize(this.dom);
+		document.forms.PartForm.recipe.value = xml;
+		sourceFormula.setValues({recipe:xml})
+		this.preview();
+	},
+	
+	// Page controls ...
+	
+	$click$addPage : function() {
+		var pages = this.dom.getElementsByTagName('pages')[0];
+		if (pages) {
+			
+		}
 	}
 };
 

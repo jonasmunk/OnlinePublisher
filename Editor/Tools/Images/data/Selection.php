@@ -27,7 +27,7 @@ if ($pages > 0) {
 	$writer->item(array(
 		'title' => 'Sider',
 		'badge' => $pages,
-		'icon' => 'common/page',
+		'icon' => 'monochrome/file',
 		'value' => 'pages')
 	);
 }
@@ -35,7 +35,7 @@ if ($persons > 0) {
 	$writer->item(array(
 		'title' => 'Personer',
 		'badge' => $persons,
-		'icon' => 'common/person',
+		'icon' => 'monochrome/person',
 		'value' => 'persons')
 	);	
 }
@@ -43,7 +43,7 @@ if ($products > 0) {
 	$writer->item(array(
 		'title' => 'Produkter',
 		'badge' => $products,
-		'icon' => 'common/product',
+		'icon' => 'monochrome/package',
 		'value' => 'products')
 	);
 }

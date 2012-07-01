@@ -20,19 +20,17 @@ class PosterPartController extends PartController
 	function createPart() {
 		$part = new PosterPart();
 		$imageId = ObjectService::getLatestId('image');
-		$recipe = '
-			<pages>
-				<page>
-					'.($imageId ? '<image id="'.$imageId.'"/>' : '').'
-					<title>Vehicula Tellus Tristique Ornare</title>
-					<text>Vestibulum id ligula porta felis euismod semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</text>
-				</page>
-				<page>
-					<title>Cras Mollis Vestibulum Lorem</title>
-					<text>Vestibulum id ligula porta felis euismod semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</text>
-				</page>
-			</pages>
-		';
+		$recipe = '<pages>
+	<page>
+		'.($imageId ? '<image id="'.$imageId.'"/>' : '').'
+		<title>Vehicula Tellus Tristique Ornare</title>
+		<text>Vestibulum id ligula porta felis euismod semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</text>
+	</page>
+	<page>
+		<title>Cras Mollis Vestibulum Lorem</title>
+		<text>Nullam quis risus eget urna mollis ornare vel eu leo. Etiam porta sem malesuada magna mollis euismod.</text>
+	</page>
+</pages>';
 		$part->setRecipe($recipe);
 		$part->save();
 		return $part;
@@ -94,16 +92,18 @@ class PosterPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = PosterPart::load($id);
-		$part->setRecipe(Request::getEncodedString('recipe'));
+		$part->setRecipe(Request::getUnicodeString('recipe')); // do not use getEncodedString
 		return $part;
 	}
 	
 	function buildSub($part,$context) {
-		$valid = DOMUtils::isValidFragment($part->getRecipe());
-		return 
+		// Important to convert to unicode before validating
+		$valid = DOMUtils::isValidFragment(StringUtils::toUnicode($part->getRecipe()));
+		$xml =
 		'<poster xmlns="'.$this->getNamespace().'">'.
 		($valid ? '<recipe>'.$part->getRecipe().'</recipe>' : '<invalid/>').
 		'</poster>';
+		return $xml;
 	}
 	
 	function importSub($node,$part) {

@@ -57,11 +57,18 @@ div.section_selected
 	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
 }
 
-div.section
+div.editor_section
 {
 	border: 1px solid transparent;
    	-webkit-transition-property : border-color;	
   	-webkit-transition-duration: 200ms;
+	min-height: 10px;
+}
+
+div.editor_section_inactive
+{
+	-webkit-filter: saturate(0);
+	opacity: .5;
 }
 
 div.editor_section_hover
