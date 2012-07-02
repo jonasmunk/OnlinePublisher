@@ -3886,6 +3886,11 @@ hui.ui.extend = function(obj,options) {
 	obj.fire = function(method,value,event) {
 		return hui.ui.callDelegates(this,method,value,event);
 	}
+	obj.fireValueChange = function() {
+		obj.fire('valueChanged',obj.value);
+		hui.ui.firePropertyChange(obj,'value',obj.value);
+		hui.ui.callAncestors(obj,'childValueChanged',obj.value);
+	}
 	obj.fireProperty = function(key,value) {
 		hui.ui.firePropertyChange(this,key,value);
 	}
@@ -4888,10 +4893,9 @@ hui.ui.SearchField.prototype = {
 	},
 	_fieldChanged : function() {
 		if (this.field.value!=this.value) {
-			this.value=this.field.value;
+			this.value = this.field.value;
 			this._updateClass();
-			this.fire('valueChanged',this.value);
-			hui.ui.firePropertyChange(this,'value',this.value);
+			this.fireValueChange();
 		}
 	}
 }

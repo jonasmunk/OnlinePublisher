@@ -123,8 +123,7 @@ hui.ui.NumberField.prototype = {
 			this.value = this._round(value);
 		}
 		if (fire && orig!==this.value) {
-			hui.ui.callAncestors(this,'childValueChanged',this.value);
-			this.fire('valueChanged',this.value);
+			this.fireValueChange();
 		}
 		this._updateSlider();
 	},

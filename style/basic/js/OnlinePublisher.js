@@ -362,8 +362,12 @@ op.part.Poster.prototype = {
 		this.pages[this.index].style.display = 'none';
 		this.pages[index].style.display = 'block';
 		this.index = index;
+		for (var i=0; i < this.indicators.length; i++) {
+			hui.cls.set(this.indicators[i],'part_poster_current',i==index);
+		};
 	},
 	goToPage : function(index) {
+		if (index==this.index) return;
 		window.clearTimeout(this.timer);
 		var recipe = {container:this.container,duration:this.options.duration};
 		recipe.hide = {element:this.pages[this.index],effect:'slideLeft'};

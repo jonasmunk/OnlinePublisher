@@ -18,6 +18,9 @@ var partPosterController = {
 		this._setPage(0);
 		pageWindow.show();
 	},
+	$resolveImageUrl : function(img,width,height) {
+		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
+	},
 	_connectToWidget : function() {
 		this.widget = hui.ui.get('part_poster_'+document.forms.PartForm.id.value);
 		this.widget.setPage(this.pageIndex);
@@ -32,8 +35,10 @@ var partPosterController = {
 	$valuesChanged$sourceFormula : function(values) {
 		var dom = hui.xml.parse(values.recipe);
 		if (dom) {
+			this.dom = dom;
 			document.forms.PartForm.recipe.value = values.recipe;
 			this.preview();
+			this._setPage(this.pageIndex);
 		}
 	},
 	preview : function() {
@@ -62,6 +67,19 @@ var partPosterController = {
 		}
 		hui.dom.setText(title,values.title);
 
+		var image = hui.get.firstByTag(node,'image');
+		if (!image) {
+			image = this.dom.createElement('image');
+			node.appendChild(image);
+		}
+		hui.log(values)
+		if (values.image) {
+			image.setAttribute('id',values.image.id);
+		} else {
+			image.removeAttribute('id');
+		}
+
+
 		this._syncDom();
 	},
 	_setPage : function(index) {
@@ -76,6 +94,15 @@ var partPosterController = {
 		var title = hui.get.firstByTag(node,'title');
 		if (title) {
 			values.title = hui.dom.getText(title);
+		}
+		var image = hui.get.firstByTag(node,'image');
+		if (image && image.getAttribute('id')) {
+			var id = parseInt(image.getAttribute('id'));
+			if (id) {
+				values.image = {id : id};
+			}
+		} else {
+			values.image = null;
 		}
 
 		pageFormula.setValues(values);

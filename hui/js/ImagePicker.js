@@ -7,42 +7,42 @@ hui.ui.ImagePicker = function(options) {
 	this.options = hui.override({width:48,height:48},options);
 	this.element = hui.get(options.element);
 	this.images = [];
-	this.object = null;
+	this.value = null;
 	this.thumbnailsLoaded = false;
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 hui.ui.ImagePicker.prototype = {
-	/** @private */
-	addBehavior : function() {
-		this.element.onclick = this.showPicker.bind(this);
+	_addBehavior : function() {
+		hui.listen(this.element,'click',this._showPicker.bind(this));
 	},
 	setObject : function(obj) {
-		this.object = obj;
-		this.updateUI();
+		this.value = obj;
+		this._updateUI();
 	},
 	getObject : function() {
-		return this.object;
+		return this.value;
 	},
 	getValue : function() {
-		return this.object;
+		return this.value;
+	},
+	setValue : function(obj) {
+		this.setObject(obj);
 	},
 	reset : function() {
-		this.object = null;
-		this.updateUI();
+		this.value = null;
+		this._updateUI();
 	},
-	/** @private */
-	updateUI : function() {
-		if (this.object==null) {
+	_updateUI : function() {
+		if (this.value==null) {
 			this.element.style.backgroundImage = '';
 		} else {
-			var url = hui.ui.resolveImageUrl(this,this.object,48,48);
+			var url = hui.ui.resolveImageUrl(this,this.value,this.options.width,this.options.height);
 			this.element.style.backgroundImage = 'url('+url+')';
 		}
 	},
-	/** @private */
-	showPicker : function() {
+	_showPicker : function() {
 		if (!this.picker) {
 			var self = this;
 			this.picker = hui.ui.BoundPanel.create({modal:true});
@@ -50,11 +50,15 @@ hui.ui.ImagePicker.prototype = {
 			var buttons = hui.ui.Buttons.create({align:'right'});
 			var close = hui.ui.Button.create({text:'Luk',highlighted:true,small:true});
 			close.listen({
-				$click : function() {self.hidePicker()}
+				$click : function() {self._hidePicker()}
 			});
 			var remove = hui.ui.Button.create({text:'Fjern',small:true});
 			remove.listen({
-				$click : function() {self.setObject(null);self.hidePicker()}
+				$click : function() {
+					self.setObject(null);
+					self._hidePicker()
+					self._fireChange();
+				}
 			});
 			buttons.add(remove).add(close);
 			this.picker.add(this.content);
@@ -63,38 +67,39 @@ hui.ui.ImagePicker.prototype = {
 		this.picker.position(this.element);
 		this.picker.show();
 		if (!this.thumbnailsLoaded) {
-			this.updateImages();
+			this._updateImages();
 			this.thumbnailsLoaded = true;
 		}
 	},
-	/** @private */
-	hidePicker : function() {
+	_hidePicker : function() {
 		this.picker.hide();
 	},
-	/** @private */
-	updateImages : function() {
+	_fireChange : function() {
+		this.fireValueChange();
+	},
+	_updateImages : function() {
 		var self = this;
 		hui.request({
 			onSuccess:function(t) {
-				self.parse(t.responseXML);
+				self._parse(t.responseXML);
 			},
-			url:this.options.source
+			url : this.options.source
 		});
 	},
-	/** @private */
-	parse : function(doc) {
+	_parse : function(doc) {
 		this.content.innerHTML='';
 		var images = doc.getElementsByTagName('image');
 		var self = this;
 		for (var i=0; i < images.length; i++) {
-			var id = images[i].getAttribute('id');
-			var img = {id:images[i].getAttribute('id')};
+			var id = parseInt(images[i].getAttribute('id'));
+			var img = {id:id};
 			var url = hui.ui.resolveImageUrl(this,img,48,48);
 			var thumb = hui.build('div',{'class':'hui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
 			thumb.huiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.huiObject);
-				self.hidePicker();
+				self._hidePicker();
+				self._fireChange();
 			}
 			this.content.appendChild(thumb);
 		};

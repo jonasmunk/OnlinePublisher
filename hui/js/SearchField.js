@@ -103,10 +103,9 @@ hui.ui.SearchField.prototype = {
 	},
 	_fieldChanged : function() {
 		if (this.field.value!=this.value) {
-			this.value=this.field.value;
+			this.value = this.field.value;
 			this._updateClass();
-			this.fire('valueChanged',this.value);
-			hui.ui.firePropertyChange(this,'value',this.value);
+			this.fireValueChange();
 		}
 	}
 }

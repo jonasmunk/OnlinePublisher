@@ -689,6 +689,11 @@ hui.ui.extend = function(obj,options) {
 	obj.fire = function(method,value,event) {
 		return hui.ui.callDelegates(this,method,value,event);
 	}
+	obj.fireValueChange = function() {
+		obj.fire('valueChanged',obj.value);
+		hui.ui.firePropertyChange(obj,'value',obj.value);
+		hui.ui.callAncestors(obj,'childValueChanged',obj.value);
+	}
 	obj.fireProperty = function(key,value) {
 		hui.ui.firePropertyChange(this,key,value);
 	}

@@ -71,6 +71,9 @@ class PosterPartController extends PartController
 						<field label="Text">
 							<text-input multiline="true" key="text" max-height="500"/>
 						</field>
+						<field label="Image">
+							<image-input key="image" source="../../Services/Model/ImagePicker.php"/>
+						</field>
 					</fields>
 					<buttons>
 						<button name="savePage" title="{Save ; da: Gem}" click="sourceWindow.hide()"/>

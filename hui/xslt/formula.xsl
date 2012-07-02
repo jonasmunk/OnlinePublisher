@@ -587,9 +587,10 @@
 	<div class="hui_imagepicker" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImagePicker({
-			element:'<xsl:value-of select="generate-id()"/>',
-			name:'<xsl:value-of select="@name"/>',
-			source:'<xsl:value-of select="@source"/>'
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>',
+			key : '<xsl:value-of select="@key"/>',
+			source : '<xsl:value-of select="@source"/>'
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

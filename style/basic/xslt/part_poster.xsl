@@ -56,7 +56,7 @@
 			<xsl:text>part_poster_page</xsl:text>
 		</xsl:attribute>
 		<div class="part_poster_page_content">
-		<xsl:if test="p:image">
+		<xsl:if test="p:image[@id]">
 			<img>
 				<xsl:attribute name="src">
 					<xsl:value-of select="$path"/><xsl:text>services/images/?id=</xsl:text><xsl:value-of select="p:image/@id"/><xsl:text>&amp;format=png</xsl:text>
