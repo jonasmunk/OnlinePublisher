@@ -56,11 +56,11 @@ class PosterPartController extends PartController
 		$gui='
 			<window title="Side" name="pageWindow" width="300">
 				<toolbar variant="window">
-					<icon icon="common/previous" text="Move left"/>
-					<icon icon="common/next" text="Move right"/>
+					<icon icon="common/previous" text="Move left" name="moveLeft"/>
+					<icon icon="common/next" text="Move right" name="moveRight"/>
 					<right>
-						<icon icon="common/Delete" text="Delete"/>
-						<icon icon="common/new" text="Add"/>
+						<icon icon="common/Delete" text="Delete" name="deletePage"/>
+						<icon icon="common/new" text="Add" name="addPage"/>
 					</right>
 				</toolbar>
 				<formula name="pageFormula" padding="10">
@@ -83,7 +83,7 @@ class PosterPartController extends PartController
 			
 			<window title="Kilde" name="sourceWindow" width="600">
 				<formula name="sourceFormula">
-						<text-input multiline="true" key="recipe" max-height="500"/>
+					<code-input key="recipe"/>
 					<buttons right="3" bottom="2" top="1">
 						<button name="applySource" title="{Save ; da: Gem}"/>
 					</buttons>

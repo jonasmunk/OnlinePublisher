@@ -5,7 +5,6 @@ var partPosterController = {
 	pageIndex : 0,
 	
 	$ready : function() {
-		sourceWindow.show();
 		var form = document.forms.PartForm;
 		var recipe = form.recipe.value;
 		this.dom = hui.xml.parse(recipe);
@@ -16,7 +15,8 @@ var partPosterController = {
 			recipe : recipe
 		})
 		this._setPage(0);
-		pageWindow.show();
+		sourceWindow.show({avoid:form});
+		pageWindow.show({avoid:form});
 	},
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
@@ -38,15 +38,16 @@ var partPosterController = {
 			this.dom = dom;
 			document.forms.PartForm.recipe.value = values.recipe;
 			this.preview();
-			this._setPage(this.pageIndex);
+			var pages = this._getPages();
+			this._setPage(Math.max(this.pageIndex,pages.length-1));
 		}
 	},
-	preview : function() {
+	preview : function(immediate) {
 		op.part.utils.updatePreview({
 			node : hui.get('part_poster_container'),
 			form : document.forms.PartForm,
 			type : 'poster',
-			delay : 500,
+			delay : immediate ? 0 : 500,
 			runScripts : true,
 			onComplete : this._connectToWidget.bind(this)
 		});
@@ -72,7 +73,6 @@ var partPosterController = {
 			image = this.dom.createElement('image');
 			node.appendChild(image);
 		}
-		hui.log(values)
 		if (values.image) {
 			image.setAttribute('id',values.image.id);
 		} else {
@@ -81,11 +81,16 @@ var partPosterController = {
 
 
 		this._syncDom();
+		this.preview();
 	},
 	_setPage : function(index) {
+		var pages = this._getPages();
+		if (index < 0 || index > pages.length-1) {
+			return;
+		}
 		this.pageIndex = index;
 		var values = {};
-		var node = this.dom.getElementsByTagName('page')[index];
+		var node = pages[index];
 		var text = hui.get.firstByTag(node,'text');
 		if (text) {
 			values.text = hui.dom.getText(text);
@@ -111,151 +116,95 @@ var partPosterController = {
 		var xml = hui.xml.serialize(this.dom);
 		document.forms.PartForm.recipe.value = xml;
 		sourceFormula.setValues({recipe:xml})
-		this.preview();
+	},
+	_getRootNode : function() {
+		return this.dom.getElementsByTagName('pages')[0];
 	},
 	
 	// Page controls ...
 	
 	$click$addPage : function() {
-		var pages = this.dom.getElementsByTagName('pages')[0];
-		if (pages) {
+		var root = this._getRootNode();
+		if (root) {
+			var pages = this._getPages();
 			
+			var page = hui.build('page',{},this.dom);
+			hui.build('title',{parent:page,text:'Vestibulum Condimentum Mollis Sit Parturient'},this.dom);
+			hui.build('text',{parent:page,text:'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur blandit tempus porttitor.'},this.dom);
+			hui.dom.insertAfter(pages[this.pageIndex],page);
+			
+			this._syncDom();
+			this.preview(true);
+			this._setPage(this.pageIndex+1);
 		}
+	},
+	$click$deletePage : function() {
+		var pages = this._getPages();
+		if (pages) {
+			var len = pages.length;
+			if (len > 1 && len-1 >= this.pageIndex) {
+				var page = pages[this.pageIndex];
+				hui.dom.remove(page);
+				this._syncDom();
+				this.preview(true);
+				this._setPage(Math.max(0,this.pageIndex-1));
+			}
+		}		
+	},
+	$click$moveLeft : function() {
+		var pages = this._getPages();
+		if (pages==null || pages.length<2) {
+			return;
+		}
+		var page = pages[this.pageIndex];
+		if (this.pageIndex==0) {
+			var parent = page.parentNode;
+			hui.dom.remove(page);
+			parent.appendChild(page);
+			this._setPage(pages.length-1);
+		} else {
+			hui.dom.remove(page);
+			var previous = pages[this.pageIndex-1];
+			hui.dom.insertBefore(previous,page);
+			this._setPage(this.pageIndex-1);
+		}
+		this._syncDom();
+		this.preview(true);
+	},
+	$click$moveRight : function(){
+		var pages = this._getPages();
+		if (pages==null || pages.length<2) {
+			return;
+		}
+		var page = pages[this.pageIndex];
+		if (this.pageIndex >= pages.length-1) {
+			hui.dom.remove(page);
+			hui.dom.insertBefore(pages[0],page);
+			this._setPage(0);
+		} else {
+			var next = pages[this.pageIndex+1];
+			hui.dom.remove(page);
+			hui.dom.insertAfter(next,page);
+			this._setPage(this.pageIndex+1);
+		}
+		this._syncDom();
+		this.preview(true);
+	},
+	_getPages: function(){
+		var root = this._getRootNode();
+		if (root) {
+			var children = [];
+			var x = root.childNodes;
+			for (var i=0; i < x.length; i++) {
+				if (x[i].nodeName && x[i].nodeName.toLowerCase()=='page') {
+					children.push(x[i]);
+				}
+			};
+			return children;
+		}
+		return null;
 	}
 };
 
 hui.ui.listen(partPosterController);
 
-function tabHandleKeyDown(evt) { 
-    var tab = String.fromCharCode(9); 
-    var e = window.event || evt; 
-    var t = e.target ? e.target : e.srcElement ? e.srcElement : e.which; 
-    var scrollTop = t.scrollTop; 
-    var k = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which; 
-    if (k == 9 && !e.ctrlKey && !e.altKey) { 
-        if(t.setSelectionRange){ 
-            e.preventDefault(); 
-            var ss = t.selectionStart; 
-            var se = t.selectionEnd; 
-            // Multi line selection 
-            if (ss != se && t.value.slice(ss,se).indexOf("\n") != -1) { 
-                if(ss>0){ 
-                    ss = t.value.slice(0,ss).lastIndexOf("\n")+1; 
-                } 
-                var pre = t.value.slice(0,ss); 
-                var sel = t.value.slice(ss,se); 
-                var post = t.value.slice(se,t.value.length); 
-                if(e.shiftKey){ 
-                    var a = sel.split("\n") 
-                    for (i=0;i<a.length;i++){ 
-                        if(a[i].slice(0,1)==tab||a[i].slice(0,1)==' ' ){ 
-                            a[i]=a[i].slice(1,a[i].length) 
-                        } 
-                    } 
-                    sel = a.join("\n"); 
-                    t.value = pre.concat(sel,post); 
-                    t.selectionStart = ss; 
-                    t.selectionEnd = pre.length + sel.length; 
-                } 
-                else{ 
-                    sel = sel.replace(/\n/g,"\n"+tab); 
-                    pre = pre.concat(tab); 
-                    t.value = pre.concat(sel,post); 
-                    t.selectionStart = ss; 
-                    t.selectionEnd = se + (tab.length * sel.split("\n").length); 
-                } 
-            } 
-            // Single line selection 
-            else { 
-                if(e.shiftKey){  
-                    var brt = t.value.slice(0,ss); 
-                    var ch = brt.slice(brt.length-1,brt.length); 
-                    if(ch == tab||ch== ' '){ 
-                        t.value = brt.slice(0,brt.length-1).concat(t.value.slice(ss,t.value.length)); 
-                        t.selectionStart = ss-1; 
-                        t.selectionEnd = se-1; 
-                    } 
-                } 
-                else{ 
-                    t.value = t.value.slice(0,ss).concat(tab).concat(t.value.slice(ss,t.value.length)); 
-                    if (ss == se) { 
-                        t.selectionStart = t.selectionEnd = ss + tab.length; 
-                    } 
-                    else { 
-                        t.selectionStart = ss + tab.length; 
-                        t.selectionEnd = se + tab.length; 
-                    } 
-                } 
-            } 
-        } 
-        else{ 
-            e.returnValue=false; 
-            var r = document.selection.createRange(); 
-            var br = document.body.createTextRange(); 
-            br.moveToElementText(t); 
-            br.setEndPoint("EndToStart", r); 
-            //Single line selection 
-            if (r.text.length==0||r.text.indexOf("\n") == -1) { 
-                if(e.shiftKey){      
-                    var ch = br.text.slice(br.text.length-1,br.text.length); 
-                    if(ch==tab||ch==' '){ 
-                        br.text = br.text.slice(0,br.text.length-1) 
-                        r.setEndPoint("StartToEnd", br); 
-                    } 
-                } 
-                else{ 
-                    var rtn = t.value.slice(br.text.length,br.text.length+1); 
-                    if(rtn!=r.text.slice(0,1)){ 
-                        br.text = br.text.concat(rtn);  
-                    } 
-                    br.text = br.text.concat(tab);  
-                } 
-                var nr = document.body.createTextRange(); 
-                nr.setEndPoint("StartToEnd", br); 
-                nr.setEndPoint("EndToEnd", r); 
-                nr.select(); 
-            } 
-            //Multi line selection 
-            else{ 
-                if(e.shiftKey){      
-                    var a = r.text.split("\r\n") 
-                    var rt = t.value.slice(br.text.length,br.text.length+2); 
-                    if(rt==r.text.slice(0,2)){ 
-                        var p = br.text.lastIndexOf("\r\n".concat(tab)); 
-                        if(p!=-1){ 
-                            br.text = br.text.slice(0,p+2).concat(br.text.slice(p+3,br.text.length)); 
-                        } 
-                    } 
-                    for (i=0;i<a.length;i++){ 
-                        var ch = a[i].length>0&&a[i].slice(0,1); 
-                        if(ch==tab||ch==' '){ 
-                            a[i]=a[i].slice(1,a[i].length) 
-                        } 
-                    } 
-                    r.text = a.join("\r\n"); 
-                } 
-                else{ 
-                    if(br.text.length>0){ 
-                        var rt = t.value.slice(br.text.length,br.text.length+2); 
-                        if(rt!=r.text.slice(0,2)){ 
-                            r.text = tab.concat(r.text.split("\r\n").join("\r\n".concat(tab))); 
-                        } 
-                        else{ 
-                            var p = br.text.slice(0,ss).lastIndexOf("\r\n")+2;   
-                            br.text = br.text.slice(0,p).concat(tab,br.text.slice(p,br.text.length)); 
-                            r.text = r.text.split("\r\n").join("\r\n".concat(tab)); 
-                        } 
-                    } 
-                    else{ 
-                        r.text = tab.concat(r.text).split("\r\n").join("\r\n".concat(tab)); 
-                    } 
-                }  
-                var nr = document.body.createTextRange(); 
-                nr.setEndPoint("StartToEnd", br); 
-                nr.setEndPoint("EndToEnd", r); 
-                nr.select(); 
-            } 
-        } 
-    } 
-    t.scrollTop = scrollTop; 
-} 

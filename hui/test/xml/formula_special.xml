@@ -17,7 +17,22 @@
 				<field label="Location">
 					<location-input/>
 				</field>
+				<field label="Code">
+					<code-input name="code"/>
+				</field>
 			</fields>
 		</formula>
 	</box>
+	<script>
+		hui.ui.listen({
+			$ready : function() {
+				hui.ui.request({
+					url : document.location,
+					onSuccess : function(t) {
+						code.setValue(t.responseText)
+					}
+				})
+			}
+		})
+	</script>
 </gui>

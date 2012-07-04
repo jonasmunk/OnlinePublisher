@@ -2245,8 +2245,9 @@ hui.xml = {
 		if (window.DOMParser) {
   			var parser = new DOMParser();
   			doc = parser.parseFromString(xml,"text/xml");
-			if (doc.getElementsByTagName('parsererror').length>0) {
-				hui.log(doc.getElementsByTagName('parsererror'))
+			var errors = doc.getElementsByTagName('parsererror');
+			if (errors.length>0 && errors[0].textContent) {
+				hui.log(errors[0].textContent)
 				return null;
 			}
   		} else {

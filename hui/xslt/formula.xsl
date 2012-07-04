@@ -598,6 +598,27 @@
 
 
 
+
+<!--doc title:'Code input' class:'hui.ui.CodeInput' module:'input'
+<code-input name="«text»"/>
+-->
+<xsl:template match="gui:code-input">
+	<div class="hui_codeinput" id="{generate-id()}">
+		<textarea spellcheck="false"><xsl:text></xsl:text></textarea>
+		<xsl:comment/>
+	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.CodeInput({
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>',
+			key : '<xsl:value-of select="@key"/>'
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+
+
 <!--             Tokens            -->
 
 

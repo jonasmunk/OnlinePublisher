@@ -11,8 +11,8 @@
 	<div id="part_poster_{../../@id}">
 		<xsl:attribute name="class">
 			<xsl:text>part_poster</xsl:text>
-			<xsl:if test="p:pages/@variant">
-				<xsl:text> part_poster_</xsl:text><xsl:value-of select="p:pages/@variant"/>
+			<xsl:if test="p:recipe/p:pages/@variant">
+				<xsl:text> part_poster_</xsl:text><xsl:value-of select="p:recipe/p:pages/@variant"/>
 			</xsl:if>
 		</xsl:attribute>
 		<xsl:apply-templates/>
@@ -49,13 +49,21 @@
 
 <xsl:template match="p:page">
 	<div data-label="{@label}">
-		<xsl:if test="position()!=1">
-			<xsl:attribute name="style">display:none;</xsl:attribute>
-		</xsl:if>
+		<xsl:attribute name="style">
+			<xsl:if test="position()!=1">
+				<xsl:text>display:none;</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:attribute name="class">
 			<xsl:text>part_poster_page</xsl:text>
 		</xsl:attribute>
 		<div class="part_poster_page_content">
+			<xsl:if test="../@height">
+				<xsl:attribute name="style">
+				height:<xsl:value-of select="../@height"/>px;
+				</xsl:attribute>
+			</xsl:if>
+
 		<xsl:if test="p:image[@id]">
 			<img>
 				<xsl:attribute name="src">
@@ -63,6 +71,9 @@
 					<xsl:choose>
 						<xsl:when test="p:image/@height">
 							<xsl:text>&amp;height=</xsl:text><xsl:value-of select="p:image/@height"/>
+						</xsl:when>
+						<xsl:when test="../@height">
+							<xsl:text>&amp;height=</xsl:text><xsl:value-of select="../@height"/>
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:text>&amp;height=200</xsl:text>
@@ -73,6 +84,9 @@
 					<xsl:choose>
 						<xsl:when test="p:image/@height">
 							<xsl:text>height:</xsl:text><xsl:value-of select="p:image/@height"/><xsl:text>px;</xsl:text>
+						</xsl:when>
+						<xsl:when test="../@height">
+							<xsl:text>height:</xsl:text><xsl:value-of select="../@height"/><xsl:text>px;</xsl:text>
 						</xsl:when>
 						<xsl:otherwise>
 							<xsl:text>height: 200px;</xsl:text>
