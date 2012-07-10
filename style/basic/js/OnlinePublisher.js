@@ -358,7 +358,9 @@ op.part.Poster.prototype = {
 		this.goToPage(index);
 	},
 	setPage : function(index) {
-		if (index==this.index) return;
+		if (index===null || index===undefined || index == this.index || this.pages.length-1 < index) {
+			return;
+		}
 		this.pages[this.index].style.display = 'none';
 		this.pages[index].style.display = 'block';
 		this.index = index;

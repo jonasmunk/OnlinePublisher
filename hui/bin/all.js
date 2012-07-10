@@ -5373,6 +5373,9 @@ hui.ui.extend = function(obj,options) {
 		obj.element = hui.get(options.element);
 		obj.name = options.name;
 	}
+	if (hui.ui.objects[obj.name]) {
+		hui.log('Widget replaced: '+obj.name);
+	}
 	hui.ui.objects[obj.name] = obj;
 	obj.delegates = [];
 	obj.listen = function(delegate) {

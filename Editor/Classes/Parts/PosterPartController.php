@@ -54,6 +54,27 @@ class PosterPartController extends PartController
 	
 	function editorGui($part,$context) {
 		$gui='
+			<window title="Side" name="posterWindow" width="300">
+				<toolbar variant="window">
+					<icon icon="common/play" text="Play" name="playPoster"/>
+					<icon icon="common/info" text="Pages" name="showPages"/>
+					<icon icon="file/text" overlay="edit" text="Source" name="showSource"/>
+				</toolbar>
+				<formula name="posterFormula" padding="10">
+					<fields labels="above">
+						<field label="Height">
+							<number-input key="height"/>
+						</field>
+						<field label="Appearance">
+							<dropdown key="variant">
+								<item value="light" text="Light"/>
+								<item value="inset" text="Inset"/>
+							</dropdown>
+						</field>
+					</fields>
+				</formula>
+			</window>
+
 			<window title="Side" name="pageWindow" width="300">
 				<toolbar variant="window">
 					<icon icon="common/previous" text="Move left" name="moveLeft"/>
@@ -75,9 +96,6 @@ class PosterPartController extends PartController
 							<image-input key="image" source="../../Services/Model/ImagePicker.php"/>
 						</field>
 					</fields>
-					<buttons>
-						<button name="savePage" title="{Save ; da: Gem}" click="sourceWindow.hide()"/>
-					</buttons>
 				</formula>
 			</window>
 			

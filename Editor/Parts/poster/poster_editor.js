@@ -15,8 +15,8 @@ var partPosterController = {
 			recipe : recipe
 		})
 		this._setPage(0);
-		sourceWindow.show({avoid:form});
-		pageWindow.show({avoid:form});
+		posterWindow.show({avoid:form});
+		pageWindow.show({avoid:posterWindow.element});
 	},
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
@@ -32,6 +32,10 @@ var partPosterController = {
 		this._setPage(index);
 	},
 	
+	$click$showSource : function() {
+		sourceWindow.show({avoid:document.forms.PartForm});		
+	},
+	
 	$valuesChanged$sourceFormula : function(values) {
 		var dom = hui.xml.parse(values.recipe);
 		if (dom) {
@@ -39,7 +43,15 @@ var partPosterController = {
 			document.forms.PartForm.recipe.value = values.recipe;
 			this.preview();
 			var pages = this._getPages();
-			this._setPage(Math.max(this.pageIndex,pages.length-1));
+			if (pages.length>0) {
+				if (this.pageIndex==null) {
+					this.pageIndex == 0;
+				}
+				this._setPage(Math.min(this.pageIndex,pages.length-1));
+			} else {
+				this.pageIndex = null;
+				pageFormula.reset();
+			}
 		}
 	},
 	preview : function(immediate) {
@@ -86,6 +98,7 @@ var partPosterController = {
 	_setPage : function(index) {
 		var pages = this._getPages();
 		if (index < 0 || index > pages.length-1) {
+			hui.log('Illegal index: '+index)
 			return;
 		}
 		this.pageIndex = index;
@@ -94,6 +107,8 @@ var partPosterController = {
 		var text = hui.get.firstByTag(node,'text');
 		if (text) {
 			values.text = hui.dom.getText(text);
+		} else {
+			hui.log('No text node found');
 		}
 
 		var title = hui.get.firstByTag(node,'title');
