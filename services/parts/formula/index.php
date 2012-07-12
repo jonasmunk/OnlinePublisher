@@ -9,7 +9,7 @@ require_once('../../../Editor/Classes/Core/Log.php');
 require_once('../../../Editor/Classes/Objects/Issue.php');
 require_once('../../../Editor/Classes/Utilities/StringUtils.php');
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 $part = FormulaPart::load($data->id);
 if (!$part) {
