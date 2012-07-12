@@ -480,3 +480,24 @@ hr.part_horizontalrule
 	border: none;
 	border-bottom: solid 2px #ddd;
 }
+
+/******************** Formula *******************/
+
+p.part_formula_label,
+p.part_formula_fieldset_legend
+{
+	color: #fff;
+}
+
+p.part_formula_hint,
+div.part_formula_fieldset_dotted span.part_formula_prefix span
+{
+	color: #bbb;
+}
+
+div.part_formula_fieldset_dotted p.part_formula_label,
+div.part_formula_fieldset_dotted p.part_formula_input,
+div.part_formula_fieldset_dotted span.part_formula_prefix span
+{
+	background: #383c3a;
+}

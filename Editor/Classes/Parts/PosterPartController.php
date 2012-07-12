@@ -102,9 +102,6 @@ class PosterPartController extends PartController
 			<window title="Kilde" name="sourceWindow" width="600">
 				<formula name="sourceFormula">
 					<code-input key="recipe"/>
-					<buttons right="3" bottom="2" top="1">
-						<button name="applySource" title="{Save ; da: Gem}"/>
-					</buttons>
 				</formula>			
 			</window>
 			';

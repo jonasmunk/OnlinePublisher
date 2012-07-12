@@ -12,13 +12,15 @@ require_once($basePath.'Editor/Classes/Parts/Part.php');
 Part::$schema['formula'] = array(
 	'fields' => array(
 		'receiverName'   => array('type'=>'text','column'=>'receivername'),
-		'receiverEmail'   => array('type'=>'text','column'=>'receiveremail')
+		'receiverEmail'   => array('type'=>'text','column'=>'receiveremail'),
+		'recipe' => array( 'type' => 'text' )
 	)
 );
 class FormulaPart extends Part
 {
 	var $receiverName;
 	var $receiverEmail;
+	var $recipe;
 	
 	function FormulaPart() {
 		parent::Part('formula');
@@ -42,6 +44,14 @@ class FormulaPart extends Part
 
 	function getReceiverEmail() {
 	    return $this->receiverEmail;
+	}
+	
+	function setRecipe($recipe) {
+	    $this->recipe = $recipe;
+	}
+
+	function getRecipe() {
+	    return $this->recipe;
 	}
 	
 }

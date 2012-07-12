@@ -9,5 +9,8 @@ hui.ui.listen({
 	},
 	$valueChanged$receiverEmail : function() {
 		partToolbar.partForm.receiverEmail.value=receiverEmail.getValue();
+	},
+	$click$showSource : function() {
+		partToolbar.getMainController().showSource();
 	}
 });

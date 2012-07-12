@@ -1,30 +1,144 @@
-form.part_formula
+div.part_formula form
+{
+	margin: 0;
+	display: block;
+}
+
+div.part_formula p
 {
 	margin: 0;
 }
 
-.part_formula p
-{
-	margin: 0 0 5px;
-}
-
-.part_formula p.part_formula_label
+p.part_formula_label
 {
 	margin: 0;
 	font-weight: bold;
 	font-size: 11px;
+	line-height: 14px;
 }
 
-input.part_formula_text, textarea.part_formula_text
+span.part_formula_required
 {
+	color: #f06;
+	font-size: 21px;
+	font-family: Georgia,'Times New Roman';
+	position: absolute;
+	margin: 4px 0 0 3px;
+	font-weight: normal;
+}
+
+div.part_formula_field
+{
+	margin-bottom: 5px;
+}
+
+p.part_formula_hint
+{
+	margin: -1px 0 0;
+	font-size: 9px;
+	color: #999;
+}
+
+p.part_formula_input
+{
+	font-size: 0;
+}
+
+div.part_formula_fieldset
+{
+	margin-bottom: 10px;
+}
+
+p.part_formula_fieldset_legend
+{
+	text-decoration: underline;
+	font-size: 11px;
+	margin-bottom: 5px;
+}
+
+div.part_formula_fieldset_dotted div.part_formula_field
+{
+	height: 15px;
+	border-bottom: 1px dotted #ccc;
+	position: relative;
+}
+
+div.part_formula_fieldset_dotted p.part_formula_label
+{
+	position: absolute;
+	height: 20px;
+	padding-right: 3px;
+	background: #fff;
+	line-height: 24px;
+}
+
+div.part_formula_fieldset_dotted p.part_formula_input
+{
+	position: absolute;
+	right: 0;
+	width: 50px;
+	padding-left: 4px;
+	background: #fff;
+	font-size: 12px;
+}
+
+div.part_formula_fieldset_dotted p.part_formula_input input
+{
+	margin-top: 3px;
+}
+
+div.part_formula_fieldset_dotted span.part_formula_prefix
+{
+	position: absolute;
+	margin-left: -200px;
 	width: 200px;
+	font-size: 11px;
+	height: 20px;
+	text-align: right;
+}
+
+div.part_formula_fieldset_dotted span.part_formula_prefix span
+{
+	display: inline-block;
+	height: 20px;
+	background: #fff;
+	line-height: 24px;
+	padding-right: 6px;
+	padding-left: 6px;
+	color: #999;
+}
+
+
+
+input.part_formula_input, textarea.part_formula_input
+{
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	border: 1px solid #eee;
 	border-color: #ccc #ddd #eee;
 	font-size: 11px;
 	padding: 1px 0;
+	margin: 0;
 }
 
-textarea.part_formula_text
+textarea.part_formula_input
 {
 	height: 100px;
+}
+
+div.part_formula table
+{
+	border-spacing: 0;
+	width: 100%;
+}
+
+td.part_formula_column
+{
+	padding: 0 0 0 10px;
+}
+
+td.part_formula_column_first
+{
+	padding: 0;
 }

@@ -297,27 +297,56 @@ op.part.ImageGallery.changing = {
 op.part.Formula = function(options) {
 	this.element = hui.get(options.element);
 	this.id = options.id;
+	this.inputs = options.inputs;
 	hui.listen(this.element,'submit',this._send.bind(this));
 }
 
 op.part.Formula.prototype = {
 	_send : function(e) {
 		hui.stop(e);
-		var name = this.element.name.value;
-		var email = this.element.email.value;
-		var message = this.element.message.value;
-		if (hui.isBlank(name) || hui.isBlank(email) || hui.isBlank(message)) {
-			hui.ui.showMessage({text:'Alle felter skal udfyldes',duration:2000});
-			this.element.name.focus();
-			return;
-		}
-		hui.ui.showMessage({text:'Sender besked...'});
+		
+		var fields = [];
+		
+		for (var i=0; i < this.inputs.length; i++) {
+			var info = this.inputs[i];
+			var input = hui.get(info.id);
+			var validation = info.validation;
+			if (validation.required) {
+				if (hui.isBlank(input.value)) {
+					hui.ui.showMessage({text : validation.message,duration:2000});
+					input.focus();
+					return;
+				}
+			}
+			if (validation.syntax=='email' && !hui.isBlank(input.value)) {
+				var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\\n".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA\n-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				if (!re.test(input.value)) {
+					hui.ui.showMessage({text : validation.message ,duration:2000});
+					input.focus();
+					return;
+				}
+			}
+			fields.push({
+				label : info.label,
+				value : input.value
+			})
+		};
+		
 		var url = op.page.path+'services/parts/formula/';
-		var parms = {name:name,email:email,message:message,id:this.id};
-		hui.ui.request({url:url,parameters:parms,onSuccess:this._onSuccess.bind(this),onFailure:this._onFailure.bind(this)});
+		var data = {
+			id : this.id,
+			fields : fields
+		}
+		hui.ui.showMessage({text:'Sender besked...',busy:true});
+		hui.ui.request({
+			url : url,
+			json : {data:data},
+			onSuccess : this._onSuccess.bind(this),
+			onFailure : this._onFailure.bind(this)
+		});
 	},
 	_onSuccess : function() {
-		hui.ui.showMessage({text:'Beskeden er nu sendt',duration:2000});
+		hui.ui.showMessage({text:'Beskeden er nu sendt',icon:'common/success',duration:2000});
 		this.element.reset();
 	},
 	_onFailure : function() {

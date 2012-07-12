@@ -436,7 +436,8 @@ $databaseTables = array(
 	'part_formula' => array(
 			array("part_id","int(11)","","","0",""),
 			array("receivername","varchar(255)","YES","","",""),
-			array("receiveremail","varchar(255)","YES","","","")
+			array("receiveremail","varchar(255)","YES","","",""),
+			array("recipe","text","YES","","","")
 		),
 	'part_header' => array(
 			array("part_id","int(11)","","","0",""),

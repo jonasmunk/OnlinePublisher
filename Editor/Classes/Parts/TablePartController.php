@@ -45,14 +45,7 @@ class TablePartController extends PartController
 		$gui='
 		<window title="Kilde" name="sourceWindow" width="500">
 			<formula name="sourceFormula">
-				<fields labels="above">
-					<field>
-						<text-input multiline="true" key="source" max-height="500"/>
-					</field>
-				</fields>
-				<buttons>
-					<button name="applySource" title="OK" click="sourceWindow.hide()"/>
-				</buttons>
+				<code-input key="source"/>
 			</formula>
 		</window>
 
