@@ -12,7 +12,7 @@
 			<xsl:call-template name="p:content"/>
 	</xsl:if>
 	<xsl:if test="$editor!='true'">
-		<form id="{generate-id()}">
+		<form id="{generate-id()}" onsubmit="return false">
 			<xsl:call-template name="p:content"/>
 		</form>
 		<script type="text/javascript">
