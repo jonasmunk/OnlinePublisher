@@ -30,6 +30,7 @@ $issue->setTitle($user.' from '.$site);
 $issue->setNote($description);
 $issue->setKind(Issue::$feedback);
 $issue->save();
+$issue->publish();
 
 Log::debug($issue);
 ?>
