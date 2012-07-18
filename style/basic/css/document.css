@@ -1,3 +1,9 @@
+table.document_row
+{
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 td.document_column
 {
 	padding-left: 10px;

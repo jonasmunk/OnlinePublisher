@@ -116,6 +116,19 @@ body.windows h1.part_header
 	font-weight: 300;
 }
 
+/************** Poster ************/
+
+p.part_poster_text
+{
+	font-size: 14px;
+	font-weight: 300;
+}
+
+p.part_poster_title
+{
+	font-weight: 400;
+}
+
 
 /*************** text *************/
 
