@@ -55,6 +55,13 @@ class FormulaPartController extends PartController
 			'</formula>';
 	}
 	
+	function importSub($node,$part) {
+		$recipe = DOMUtils::getFirstDescendant($node,'recipe');
+		$xml = DOMUtils::getInnerXML($recipe);
+		$xml = DOMUtils::stripNamespaces($xml);
+		$part->setRecipe($xml);
+	}
+	
 	function getToolbars() {
 		return array(
 			'Formular' => '

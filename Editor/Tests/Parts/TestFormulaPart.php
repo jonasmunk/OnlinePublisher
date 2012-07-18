@@ -38,5 +38,21 @@ class TestFormulaPart extends UnitTestCase {
 		
 		$obj2->remove();
 	}
+
+	function testImport() {
+		$recipe = '<form/>';
+		$obj = new FormulaPart();
+		$obj->setRecipe($recipe);
+		$ctrl = new FormulaPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getRecipe(),$obj->getRecipe());
+	}
 }
 ?>
