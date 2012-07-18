@@ -54,19 +54,23 @@ class PosterPartController extends PartController
 	
 	function editorGui($part,$context) {
 		$gui='
-			<window title="Side" name="posterWindow" width="300">
+			<window title="{Poster;da:Plakat}" name="posterWindow" width="300">
 				<toolbar variant="window">
-					<icon icon="common/play" text="Play" name="playPoster"/>
-					<icon icon="common/info" text="Pages" name="showPages"/>
-					<icon icon="file/text" overlay="edit" text="Source" name="showSource"/>
+					<!--<icon icon="common/play" text="{Play ; da:Afspil}" name="playPoster"/>-->
+					<icon icon="common/previous" text="{Previous ; da:Forrige}" name="goPrevious"/>
+					<icon icon="common/next" text="{Next ; da:Næste}" name="goNext"/>
+					<divider/>
+					<icon icon="common/info" text="{Page ; da:Side}" name="showPages"/>
+					<icon icon="file/text" overlay="edit" text="{Source ; da:Kilde}" name="showSource"/>
 				</toolbar>
 				<formula name="posterFormula" padding="10">
 					<fields labels="above">
 						<field label="Height">
-							<number-input key="height"/>
+							<number-input key="height" allow-null="true" min="20" max="500"/>
 						</field>
 						<field label="Appearance">
 							<dropdown key="variant">
+								<item value="" text="Standard"/>
 								<item value="light" text="Light"/>
 								<item value="inset" text="Inset"/>
 							</dropdown>
