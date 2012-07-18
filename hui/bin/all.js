@@ -15858,9 +15858,13 @@ hui.ui.NumberField.prototype = {
 	},
 	/** Sets the value */
 	setValue : function(value) {
-		value = parseFloat(value,10);
-		if (!isNaN(value)) {
-			this._setLocalValue(value,false);
+		if (value===null || value===undefined) {
+			this._setLocalValue(null,false);
+		} else {
+			value = parseFloat(value,10);
+			if (!isNaN(value)) {
+				this._setLocalValue(value,false);
+			}
 		}
 		this._updateField();
 	},

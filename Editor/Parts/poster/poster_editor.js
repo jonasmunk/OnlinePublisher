@@ -15,8 +15,10 @@ var partPosterController = {
 			recipe : recipe
 		})
 		this._setPage(0);
+		this._syncPosterForm();
 		posterWindow.show({avoid:form});
 		pageWindow.show({avoid:posterWindow.element});
+		this.widget = hui.ui.get('part_poster_'+document.forms.PartForm.id.value);
 	},
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
@@ -35,6 +37,15 @@ var partPosterController = {
 	$click$showSource : function() {
 		sourceWindow.show({avoid:document.forms.PartForm});		
 	},
+	$click$showPages : function() {
+		pageWindow.show({avoid:posterWindow.element});
+	},
+	$click$goNext : function() {
+		this.widget.next();
+	},
+	$click$goPrevious : function() {
+		this.widget.previous();
+	},
 	
 	$valuesChanged$sourceFormula : function(values) {
 		var dom = hui.xml.parse(values.recipe);
@@ -52,6 +63,7 @@ var partPosterController = {
 				this.pageIndex = null;
 				pageFormula.reset();
 			}
+			this._syncPosterForm();
 		}
 	},
 	preview : function(immediate) {
@@ -95,6 +107,21 @@ var partPosterController = {
 		this._syncDom();
 		this.preview();
 	},
+	$valuesChanged$posterFormula : function(values) {
+		var root = this._getRootNode();
+		if (values.variant) {
+			root.setAttribute('variant',values.variant);
+		} else {
+			root.removeAttribute('variant');
+		}
+		if (values.height) {
+			root.setAttribute('height',values.height);
+		} else {
+			root.removeAttribute('height');
+		}
+		this._syncDom();
+		this.preview();
+	},
 	_setPage : function(index) {
 		var pages = this._getPages();
 		if (index < 0 || index > pages.length-1) {
@@ -132,8 +159,28 @@ var partPosterController = {
 		document.forms.PartForm.recipe.value = xml;
 		sourceFormula.setValues({recipe:xml})
 	},
+	_syncPosterForm : function() {
+		var root = this._getRootNode();
+		if (root) {
+			var values = {
+				variant : root.getAttribute('variant'),
+				height : this._intVal(root.getAttribute('height'))
+			};
+			posterFormula.setValues(values);
+		} else {
+			posterFormula.reset();
+		}
+	},
 	_getRootNode : function() {
 		return this.dom.getElementsByTagName('pages')[0];
+	},
+	_intVal : function(str) {
+		if (hui.isDefined(str)) {
+			if (/^[0-9]+$/.exec(str)) {
+				return parseInt(str,10);
+			}
+		}
+		return null;
 	},
 	
 	// Page controls ...

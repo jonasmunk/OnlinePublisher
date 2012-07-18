@@ -386,6 +386,13 @@ op.part.Poster.prototype = {
 		}
 		this.goToPage(index);
 	},
+	previous : function() {
+		var index = this.index - 1;
+		if (index<0) {
+			index = this.pages.length - 1;
+		}
+		this.goToPage(index);
+	},
 	setPage : function(index) {
 		if (index===null || index===undefined || index == this.index || this.pages.length-1 < index) {
 			return;

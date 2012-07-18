@@ -14,7 +14,13 @@ p.part_poster_title
 p.part_poster_text
 {
 	font-size: 12px;
-	margin: 5px 0 20px;
+	margin: 5px 0 5px;
+}
+
+p.part_poster_link
+{
+	font-size: 12px;
+	margin: 5px 0 5px;
 }
 
 div.part_poster_navigator
