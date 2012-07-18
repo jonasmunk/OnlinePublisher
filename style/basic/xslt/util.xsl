@@ -153,6 +153,9 @@
 			<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
+	<xsl:comment><![CDATA[[if lt IE 8]>
+	<script type="text/javascript" src="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
+	<![endif]]]></xsl:comment>
 	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
 		hui.ui.context = '<xsl:value-of select="$path"/>';
