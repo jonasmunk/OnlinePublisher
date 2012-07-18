@@ -124,6 +124,11 @@ p.part_poster_text
 	font-weight: 300;
 }
 
+p.part_poster_link
+{
+	font-size: 14px;
+}
+
 p.part_poster_title
 {
 	font-weight: 400;
