@@ -5,8 +5,11 @@
  * @constructor
  */
 hui.ui.Finder = function(options) {
-	this.options = hui.override({title:'Finder'},options);
+	this.options = hui.override({title:'Finder',selection:{},list:{}},options);
 	hui.ui.extend(this);
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 /**
@@ -24,7 +27,8 @@ hui.ui.Finder = function(options) {
  *  },
  *  search : { 
  *      parameter : «String» 
- *  }
+ *  },
+ *  listener : {$select : function(object) {}}
  * }
  * </pre>
  */
@@ -40,7 +44,11 @@ hui.ui.Finder.prototype = {
 		}
 		this.window.show();
 	},
-	
+	hide : function() {
+		if (this.window) {
+			this.window.hide();
+		}
+	},
 	_build : function() {
 		var win = this.window = hui.ui.Window.create({title:this.options.title,width:600});
 

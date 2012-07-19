@@ -4,17 +4,20 @@
  * A drop down selector
  * @constructor
  */
-hui.ui.DropDown = function(o) {
-	this.options = hui.override({label:null,placeholder:null,url:null,source:null},o);
-	this.name = o.name;
-	var e = this.element = hui.get(o.element);
+hui.ui.DropDown = function(options) {
+	this.options = hui.override({label:null,placeholder:null,url:null,source:null},options);
+	this.name = options.name;
+	var e = this.element = hui.get(options.element);
 	this.inner = e.getElementsByTagName('strong')[0];
-	this.items = o.items || [];
+	this.items = options.items || [];
 	this.index = -1;
 	this.value = this.options.value || null;
 	this.dirty = true;
 	this.busy = false;
 	hui.ui.extend(this);
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 	this._addBehavior();
 	this._updateIndex();
 	this._updateUI();
