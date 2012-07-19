@@ -532,6 +532,7 @@ hui.transition = function(options) {
 			hui.style.set(options.container,{height:'',position:''})
 		}
 	})
+	hideController.beforeHide(hide.element);
 	hideController.hide(hide.element,options.duration,function() {
 		hui.style.set(hide.element,{display:'none',position:'static',width:''})
 	})
@@ -559,6 +560,9 @@ hui.transition.css.prototype = {
 			ease : hui.ease.slowFastSlow,
 			onComplete : onComplete
 		})
+	},
+	beforeHide : function(element) {
+		hui.style.set(element,this.options.visible);
 	},
 	hide : function(element,duration,onComplete) {
 		hui.animate({
