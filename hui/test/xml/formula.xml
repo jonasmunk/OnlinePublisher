@@ -39,9 +39,6 @@
 				<field label="Color:">
 					<color-input key="color"/>
 				</field>
-				<field label="Photo:">
-					<image-input source="data/source_images.xml" key="photo"/>
-				</field>
 				<field label="Location:">
 					<location-input key="location"/>
 				</field>

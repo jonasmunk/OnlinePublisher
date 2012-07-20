@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" padding="10" title="Drop down">
-	<controller name="controller" source="dropdown.js"/>
+<gui xmlns="uri:hui" padding="10" title="Formula (special)">
+	<controller name="controller" source="formula_special.js"/>
 	<source name="itemsSource" url="data/items_languages.xml"/>
 	<box width="600" title="Drop down" variant="textured" padding="10">
 		<toolbar>
 			<icon icon="common/folder" title="Show values" name="showValues"/>
-			<icon icon="common/color" title="Refresh source" click="itemsSource.refresh()"/>
 			<icon icon="common/folder" title="Build" name="build"/>
 		</toolbar>
 		<formula name="formula">
@@ -17,22 +16,25 @@
 				<field label="Location">
 					<location-input/>
 				</field>
+				<field label="Photo:">
+					<image-input source="data/source_images.xml" key="photo"/>
+				</field>
+				<field label="Link:">
+					<object-input>
+						<type key="url" label="Adresse"/>
+						<type key="email" label="E-mail"/>
+						<type key="page" label="Side">
+							<finder title="Vælg side" list-url="data/list_users.xml"/>
+						</type>
+						<type key="file" label="Fil">
+							<finder title="Vælg fil" list-url="data/list_news.xml"/>
+						</type>
+					</object-input>
+				</field>
 				<field label="Code">
 					<code-input name="code"/>
 				</field>
 			</fields>
 		</formula>
 	</box>
-	<script>
-		hui.ui.listen({
-			$ready : function() {
-				hui.ui.request({
-					url : document.location,
-					onSuccess : function(t) {
-						code.setValue(t.responseText)
-					}
-				})
-			}
-		})
-	</script>
 </gui>

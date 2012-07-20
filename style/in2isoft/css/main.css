@@ -216,7 +216,7 @@ ul.layout_navigation_selected:hover li span
 
 ul.layout_navigation li.normal a:hover
 {
-	background: #ffffff;
+	background: #eee;
 	background: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
@@ -234,8 +234,9 @@ ul.layout_navigation li.normal a:hover span
 ul.layout_navigation li.selected a, ul.layout_navigation li.highlighted a
 {
 	box-shadow: inset 0 1px 4px rgba(0,0,0,.15);
+	background: #eee;
 	background: -webkit-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
-	background: -moz-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
+	background: -moz-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%);
 }
 
 ul.layout_navigation li.selected a
@@ -324,8 +325,10 @@ ul.layout_sub_navigation a span
 
 ul.layout_sub_navigation a:hover
 {
-	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
-	background: -moz-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+	background: #f3f3f3;
+	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%);
+	background: -moz-linear-gradient(top, #ffffff 0%,#eeeeee 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%);
 	box-shadow: inset 0 0 1px rgba(0,0,0,.3);
 }
 
@@ -337,15 +340,19 @@ ul.layout_sub_navigation a:hover span
 ul.layout_sub_navigation a.selected, ul.layout_sub_navigation a.highlighted
 {
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
-	background: -webkit-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
-	background: -moz-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
+	background: #f3f3f3;
+	background: -webkit-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%);
+	background: -moz-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%);
+	background: -ms-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%);
 }
 
 ul.layout_sub_navigation a.selected, ul.layout_sub_navigation a.highlighted
 {
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .15);
+	background: #f3f3f3;
 	background: -webkit-linear-gradient(top, #EEEFF0 0%,#FAFAFA 100%);
 	background: -moz-linear-gradient(top, #EEEFF0 0%,#FAFAFA 100%);
+	background: -ms-linear-gradient(top, #EEEFF0 0%,#FAFAFA 100%);
 }
 
 

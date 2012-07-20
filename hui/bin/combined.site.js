@@ -286,6 +286,18 @@ hui.string = {
 		return str.split('').join("\u200B");
 	},
 	/**
+	 * Shorten a string to a maximum length
+	 * @param {String} str The text to shorten
+	 * @param {int} length The maximum length
+	 * @returns {String} The shortened text
+	 */
+	shorten : function(str,length) {
+		if (str.length > length) {
+			return str.substring(0,length-3)+'...';
+		}
+		return str;
+	},
+	/**
 	 * Escape the html in a string (robust)
 	 * @param {String} str The text to escape
 	 * @returns {String} The escaped text

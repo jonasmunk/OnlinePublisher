@@ -286,6 +286,18 @@ hui.string = {
 		return str.split('').join("\u200B");
 	},
 	/**
+	 * Shorten a string to a maximum length
+	 * @param {String} str The text to shorten
+	 * @param {int} length The maximum length
+	 * @returns {String} The shortened text
+	 */
+	shorten : function(str,length) {
+		if (str.length > length) {
+			return str.substring(0,length-3)+'...';
+		}
+		return str;
+	},
+	/**
 	 * Escape the html in a string (robust)
 	 * @param {String} str The text to escape
 	 * @returns {String} The escaped text
@@ -7529,17 +7541,20 @@ hui.ui.ObjectList.Select.prototype = {
  * A drop down selector
  * @constructor
  */
-hui.ui.DropDown = function(o) {
-	this.options = hui.override({label:null,placeholder:null,url:null,source:null},o);
-	this.name = o.name;
-	var e = this.element = hui.get(o.element);
+hui.ui.DropDown = function(options) {
+	this.options = hui.override({label:null,placeholder:null,url:null,source:null},options);
+	this.name = options.name;
+	var e = this.element = hui.get(options.element);
 	this.inner = e.getElementsByTagName('strong')[0];
-	this.items = o.items || [];
+	this.items = options.items || [];
 	this.index = -1;
 	this.value = this.options.value || null;
 	this.dirty = true;
 	this.busy = false;
 	hui.ui.extend(this);
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 	this._addBehavior();
 	this._updateIndex();
 	this._updateUI();
@@ -16229,10 +16244,9 @@ hui.ui.ColorInput = function(options) {
 		}
 	});
 	this.input.listen({$valueChanged:this._onInputChange.bind(this)})
-	this.value = this.options.value;
+	this.value = null;
 	hui.ui.extend(this);
-	this._syncInput();
-	this._syncColorButton();
+	this.setValue(this.options.value);
 	this._addBehavior();
 }
 
@@ -16296,7 +16310,7 @@ hui.ui.ColorInput.prototype = {
 		return this.value;
 	},
 	setValue : function(value) {
-		this.value = value;
+		this.value = new hui.Color(value).toHex();
 		this._syncInput();
 		this._syncColorButton();
 	},
@@ -16360,8 +16374,11 @@ hui.ui.Columns.prototype = {
  * @constructor
  */
 hui.ui.Finder = function(options) {
-	this.options = hui.override({title:'Finder'},options);
+	this.options = hui.override({title:'Finder',selection:{},list:{}},options);
 	hui.ui.extend(this);
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 /**
@@ -16379,7 +16396,8 @@ hui.ui.Finder = function(options) {
  *  },
  *  search : { 
  *      parameter : «String» 
- *  }
+ *  },
+ *  listener : {$select : function(object) {}}
  * }
  * </pre>
  */
@@ -16395,7 +16413,11 @@ hui.ui.Finder.prototype = {
 		}
 		this.window.show();
 	},
-	
+	hide : function() {
+		if (this.window) {
+			this.window.hide();
+		}
+	},
 	_build : function() {
 		var win = this.window = hui.ui.Window.create({title:this.options.title,width:600});
 
@@ -16574,7 +16596,7 @@ hui.ui.CodeInput = function(options) {
 	this.name = options.name;
 	var e = this.element = hui.get(options.element);
 	this.textarea = hui.get.firstByTag(e,'textarea');
-	this.value = e.value;
+	this.value = this.textarea.value;
 	hui.ui.extend(this);
 	this._addBehavior();
 }

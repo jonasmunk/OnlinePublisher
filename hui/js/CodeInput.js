@@ -7,7 +7,7 @@ hui.ui.CodeInput = function(options) {
 	this.name = options.name;
 	var e = this.element = hui.get(options.element);
 	this.textarea = hui.get.firstByTag(e,'textarea');
-	this.value = e.value;
+	this.value = this.textarea.value;
 	hui.ui.extend(this);
 	this._addBehavior();
 }
