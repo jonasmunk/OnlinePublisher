@@ -375,6 +375,9 @@ hui.ui.List.prototype = {
 				if (cells[j].getAttribute('align')) {
 					td.style.textAlign=cells[j].getAttribute('align');
 				}
+				if (cells[j].getAttribute('class')) {
+					hui.cls.add(td,cells[j].getAttribute('class'));
+				}
 				if (cells[j].getAttribute('dimmed')=='true') {
 					td.className='hui_list_dimmed';
 				}

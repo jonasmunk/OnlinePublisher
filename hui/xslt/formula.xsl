@@ -397,7 +397,7 @@
 
 
 <!--doc title:'Check box' class:'hui.ui.Checkbox' module:'input'
-<checkbox name="«text»" key="«text»" value="«boolean»"/>
+<checkbox name="«text»" key="«text»" value="«boolean»" label="«text»"/>
 -->
 <xsl:template name="gui:checkbox"  match="gui:checkbox">
 	<a id="{generate-id()}" href="javascript://">
@@ -406,7 +406,7 @@
 			<xsl:if test="@value='true'"> hui_checkbox_selected</xsl:if>
 		</xsl:attribute>
 		<span><span><xsl:comment/></span></span>
-		<xsl:value-of select="@title"/>
+		<xsl:value-of select="@title"/><xsl:value-of select="@text"/><xsl:value-of select="@label"/>
 	</a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Checkbox({

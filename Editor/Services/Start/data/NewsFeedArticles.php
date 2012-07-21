@@ -26,11 +26,11 @@ $writer->startList(array('unicode'=>true));
 
 foreach($feed->getItems() as $item) {
 	$writer->startRow()->
-		startCell()->startLine()->startStrong()->text(StringUtils::fromUnicode($item->getTitle()))->endStrong()->endLine()->
+		startCell(array('class'=>'news'))->startLine()->startStrong()->text(StringUtils::fromUnicode($item->getTitle()))->endStrong()->endLine()->
 			startLine(array('minor'=>true))->text(StringUtils::fromUnicode($item->getDescription()))->endline()->
 			startLine(array('dimmed'=>true,'mini'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
 		endCell()->
-		startCell();
+		startCell(array('class'=>'news'));
 		if (StringUtils::isNotBlank($item->getLink())) {
 			$writer->startIcons()->
 				icon(array('icon'=>'monochrome/round_arrow_right','action'=>true,'revealing'=>true,'data'=>array('url'=>$item->getLink())))->

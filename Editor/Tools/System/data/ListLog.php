@@ -5,22 +5,36 @@
  */
 require_once '../../../Include/Private.php';
 
+$page = Request::getInt('windowPage');
+$showIpSession = Request::getBoolean('showIpSession');
+$size = 40;
+
+$result = LogService::getEntries(array(
+	'page' => $page,
+	'size' => $size,
+	'category' => Request::getString('category'),
+	'event' => Request::getString('event')
+));
+
 $writer = new ListWriter();
 
-$writer->startList();
-$writer->startHeaders();
-$writer->header(array('title'=>'Tidspunkt'));
-$writer->header(array('title'=>'Kategori'));
-$writer->header(array('title'=>'Begivenhed'));
-$writer->header(array('title'=>'Entitet'));
-$writer->header(array('title'=>'Besked'));
-$writer->header(array('title'=>'Bruger'));
-$writer->header(array('title'=>'IP'));
-$writer->header(array('title'=>'Session'));
+$writer->startList()->
+	sort('time','descending')->
+	window(array( 'total' => $result->getTotal(), 'size' => $size, 'page' => $page ))->
+	startHeaders()->
+		header(array('title'=>'Tidspunkt','key'=>'time'))->
+		header(array('title'=>'Kategori'))->
+		header(array('title'=>'Begivenhed'))->
+		header(array('title'=>'Entitet'))->
+		header(array('title'=>'Besked'))->
+		header(array('title'=>'Bruger'));
+	if ($showIpSession) {		
+		$writer->header(array('title'=>'IP'));
+		$writer->header(array('title'=>'Session'));
+	}
 $writer->endHeaders();
 
-$list = LogService::getEntries();
-foreach ($list as $row) {
+foreach ($result->getList() as $row) {
 	$writer->startRow(array('kind'=>'logEntry','id'=>$row['id']));
 	$writer->startCell()->text(DateUtils::formatLongDateTime($row['time']))->endCell();
 	$writer->startCell()->text($row['category'])->endCell();
@@ -28,8 +42,10 @@ foreach ($list as $row) {
 	$writer->startCell()->text($row['entity'])->endCell();
 	$writer->startCell()->text($row['message'])->endCell();
 	$writer->startCell()->text($row['username'])->endCell();
-	$writer->startCell()->text($row['ip'])->endCell();
-	$writer->startCell()->text($row['session'])->endCell();
+	if ($showIpSession) {
+		$writer->startCell()->text($row['ip'])->endCell();
+		$writer->startCell()->text($row['session'])->endCell();		
+	}
 	$writer->endRow();
 }
 $writer->endList();

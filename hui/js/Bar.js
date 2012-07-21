@@ -90,6 +90,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Show the bar */
 	show : function() {
+		if (this.visible) {return}
 		if (this.options.absolute) {
 			this.element.style.visibility='visible';
 		} else {
@@ -97,9 +98,11 @@ hui.ui.Bar.prototype = {
 			hui.ui.reLayout();
 		}
 		this.visible = true;
+		hui.ui.callVisible(this);
 	},
 	/** Hide the bar */
 	hide : function() {
+		if (!this.visible) {return}
 		if (this.options.absolute) {
 			this.element.style.visibility='hidden';
 		} else {
@@ -107,6 +110,7 @@ hui.ui.Bar.prototype = {
 			hui.ui.reLayout();
 		}
 		this.visible = false;
+		hui.ui.callVisible(this);
 	},
 	_getRight : function() {
 		if (!this.right) {

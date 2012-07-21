@@ -6731,6 +6731,9 @@ hui.ui.List.prototype = {
 				if (cells[j].getAttribute('align')) {
 					td.style.textAlign=cells[j].getAttribute('align');
 				}
+				if (cells[j].getAttribute('class')) {
+					hui.cls.add(td,cells[j].getAttribute('class'));
+				}
 				if (cells[j].getAttribute('dimmed')=='true') {
 					td.className='hui_list_dimmed';
 				}
@@ -13436,6 +13439,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Show the bar */
 	show : function() {
+		if (this.visible) {return}
 		if (this.options.absolute) {
 			this.element.style.visibility='visible';
 		} else {
@@ -13443,9 +13447,11 @@ hui.ui.Bar.prototype = {
 			hui.ui.reLayout();
 		}
 		this.visible = true;
+		hui.ui.callVisible(this);
 	},
 	/** Hide the bar */
 	hide : function() {
+		if (!this.visible) {return}
 		if (this.options.absolute) {
 			this.element.style.visibility='hidden';
 		} else {
@@ -13453,6 +13459,7 @@ hui.ui.Bar.prototype = {
 			hui.ui.reLayout();
 		}
 		this.visible = false;
+		hui.ui.callVisible(this);
 	},
 	_getRight : function() {
 		if (!this.right) {

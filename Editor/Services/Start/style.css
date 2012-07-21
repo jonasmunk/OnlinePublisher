@@ -78,3 +78,14 @@ div.hui_list_cell_card
 {
 	padding: 6px 8px;
 }
+
+td.news
+{
+	padding-top: 6px !important;
+	padding-bottom: 6px !important;
+}
+
+td.news p.hui_list_mini
+{
+	margin-top: 5px;
+}

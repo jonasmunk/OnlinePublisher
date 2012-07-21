@@ -27,8 +27,13 @@ $gui='
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="query" value="@searchField.value"/>
+		<parameter key="showIpSession" value="@logIpSession.value"/>
+		<parameter key="category" value="@logCategory.value"/>
+		<parameter key="event" value="@logEvent.value"/>
 	</source>
 	<source name="cachesSource" url="data/CacheList.php"/>
+	<source name="logCategoriesSource" url="data/LogCategoryItems.php"/>
+	<source name="logEventsSource" url="data/LogEventItems.php"/>
 	<structure>
 		<top>
 			<toolbar>
@@ -85,6 +90,11 @@ $gui='
 						<right>
 							<button text="Refresh" click="inspectionList.refresh()" small="true"/>
 						</right>
+					</bar>
+					<bar name="logBar" variant="layout" visible="false">
+						<dropdown value="all" name="logCategory" source="logCategoriesSource"/>
+						<dropdown value="all" name="logEvent" source="logEventsSource"/>
+						<checkbox name="logIpSession" label="Show IP + session"/>
 					</bar>
 					<list name="list" source="allObjectsSource" state="list"/>
 					<list name="inspectionList" source="inspectionSource" state="inspection"/>
