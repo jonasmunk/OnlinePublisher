@@ -115,6 +115,9 @@ class ListWriter {
 		if (isset($options['variant'])) {
 			echo ' variant="'.$options['variant'].'"';
 		}
+		if (isset($options['class'])) {
+			echo ' class="'.$options['class'].'"';
+		}
 		echo '>';
 		return $this;
 	}

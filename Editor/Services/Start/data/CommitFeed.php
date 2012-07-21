@@ -29,7 +29,7 @@ foreach($feed->getItems() as $item) {
 		continue;
 	}
 	$writer->startRow()->
-		startCell()->
+		startCell(array('class'=>'news'))->
 			startLine()->text($title)->endLine()->
 			startLine(array('dimmed'=>true,'mini'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
 		endCell()->
