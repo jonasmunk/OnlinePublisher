@@ -10,22 +10,18 @@ if (!isset($GLOBALS['basePath'])) {
 require_once($basePath.'Editor/Classes/Core/Database.php');
 require_once($basePath.'Editor/Classes/Core/InternalSession.php');
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
+require_once($basePath.'Editor/Classes/Services/ConfigurationService.php');
 
 class Log {
 	
 	function debug($object) {
-		global $baseUrl;
-		if (strpos($baseUrl,'/~jbm/')!==false) {
+		if (ConfigurationService::isDebug()) {
 			error_log(print_r($object,true));
 		}
 	}
 	
 	function debugJSON($object) {
-		global $baseUrl;
-		if (strpos($baseUrl,'/~jbm/')!==false) {
-			$object = StringUtils::toJSON($object);
-			error_log(print_r($object,true));
-		}
+		Log::debug(StringUtils::toJSON($object));
 	}
 	
 	function info($object) {

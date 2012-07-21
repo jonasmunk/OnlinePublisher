@@ -27,6 +27,8 @@ $gui='
 				<overflow>
 				<selection value="overview" name="selector">
 					<item icon="common/info" title="Oversigt" value="overview"/>
+					<title>Advarsler</title>
+					<item icon="common/warning" title="Forespørgsler" value="pagenotfound"/>
 					<item icon="common/warning" title="Advarsler" value="warnings"/>
 					<title>Sprog</title>
 					<item icon="common/search" title="Søgeindeks" value="index"/>

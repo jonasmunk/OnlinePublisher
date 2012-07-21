@@ -51,17 +51,22 @@ class ListWriter {
 	
 	function header($options=array()) {
 		echo '<header';
-		if (isset($options['title'])) {
-			echo ' title="'.$options['title'].'"';
+		if (is_string($options)) {
+			echo ' title="'.StringUtils::escapeXML($options).'"';
 		}
-		if (isset($options['width'])) {
-			echo ' width="'.$options['width'].'"';
-		}
-		if (isset($options['key'])) {
-			echo ' key="'.$options['key'].'"';
-		}
-		if (isset($options['sortable'])) {
-			echo ' sortable="'.($options['sortable'] ? 'true' : 'false').'"';
+		else if (is_array($options)) {
+			if (isset($options['title'])) {
+				echo ' title="'.StringUtils::escapeXML($options['title']).'"';
+			}
+			if (isset($options['width'])) {
+				echo ' width="'.$options['width'].'"';
+			}
+			if (isset($options['key'])) {
+				echo ' key="'.$options['key'].'"';
+			}
+			if (isset($options['sortable'])) {
+				echo ' sortable="'.($options['sortable'] ? 'true' : 'false').'"';
+			}
 		}
 		echo '/>';
 		return $this;

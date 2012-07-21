@@ -10,13 +10,8 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ConfigurationService {
 	
-	function getSuperUsername() {
-		global $superUser;
-		return $superUser;
-	}
-	
-	function getSuperPassword() {
-		global $superPassword;
-		return $superPassword;
+	function isDebug() {
+		global $CONFIG;
+		return (isset($CONFIG) && $CONFIG['debug']);
 	}
 }

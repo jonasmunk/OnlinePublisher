@@ -14,7 +14,9 @@ hui.ui.listen({
 			if (item.value=='warnings') {
 				listDescription.setText('Viser advarsler om manglende indhold med mere');
 			} else if (item.value=='wordcheck') {
-				listDescription.setText('Liste over sætninger det bør forekomme på siden');
+				listDescription.setText('Liste over sætninger det bør forekomme på sider');
+			} else if (item.value=='pagenotfound') {
+				listDescription.setText('Viser alle forespørsler der ikke kunne findes');
 			} else {
 				listDescription.setText();
 			}

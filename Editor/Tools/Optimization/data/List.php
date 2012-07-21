@@ -15,6 +15,8 @@ if ($kind=='index') {
 	listWords();
 } else if ($kind=='wordcheck') {
 	listWordCheck();
+} else if ($kind=='pagenotfound') {
+	listPageNotFound();
 } else {
 	listWarning();
 }
@@ -66,13 +68,13 @@ function listWordCheck() {
 			$writer->startCell(array('icon'=>'common/page'))->
 				text($row['count'])->
 				startIcons()->
-					icon(array('icon'=>'monochrome/info_light','revealing'=>true,'data'=>array('action'=>'view')))->
+					icon(array('icon'=>'monochrome/info_light','revealing'=>true,'action'=>true,'data'=>array('action'=>'view')))->
 				endIcons()->
 			endCell();
 		}
 		$writer->startCell(array('wrap'=>false))->
 			startIcons()->
-				icon(array('icon'=>'monochrome/delete','revealing'=>true,'data'=>array('action'=>'delete')))->
+				icon(array('icon'=>'monochrome/delete','revealing'=>true,'action'=>true,'data'=>array('action'=>'delete')))->
 			endIcons()->
 		endCell();
 		$writer->endRow();
@@ -147,6 +149,32 @@ function listWarning() {
 		}
 		$writer->startCell(array('icon'=>'common/warning'))->text($problem->getText())->endCell();
 		$writer->startCell()->endCell();
+		$writer->endRow();
+	}
+	$writer->endList();
+}
+
+function listPageNotFound() {
+	
+	$result = LogService::getPageNotFoundOverview();
+	
+	$writer = new ListWriter();
+
+	$writer->startList();
+	$writer->startHeaders();
+	$writer->header(array('title'=>'Antal hits'));
+	$writer->header(array('title'=>'Fra'));
+	$writer->header(array('title'=>'Til'));
+	$writer->header(array('title'=>'Sti'));
+	$writer->endHeaders();
+
+
+	foreach ($result->getList() as $row) {
+		$writer->startRow();
+		$writer->startCell()->text($row['count'])->endCell();
+		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($row['first']))->endCell();
+		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($row['last']))->endCell();
+		$writer->startCell()->text(substr($row['message'],4))->endCell();
 		$writer->endRow();
 	}
 	$writer->endList();

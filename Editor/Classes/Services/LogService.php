@@ -48,6 +48,13 @@ class LogService {
 		return $result;
 	}
 	
+	function getPageNotFoundOverview() {
+		$sql = "select count(id) as `count`,UNIX_TIMESTAMP(min(time)) as first,UNIX_TIMESTAMP(max(time)) as last,message from log where event='pagenotfound' group by message order by max(time) desc";
+		$result = new SearchResult();
+		$result->setList(Database::selectAll($sql));
+		return $result;
+	}
+	
 	function getUsedCategories() {
 		return Database::selectArray("select distinct category from log order by category");
 	}
