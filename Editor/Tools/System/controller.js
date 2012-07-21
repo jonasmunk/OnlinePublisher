@@ -42,6 +42,7 @@ hui.ui.listen({
 		} else if (obj.value=='design') {
 			list.setUrl('data/ListDesigns.php');
 		}
+		logBar.setVisible(obj.value=='log')
 	},
 	$open$list : function(obj) {
 		//var obj = list.getFirstSelection();

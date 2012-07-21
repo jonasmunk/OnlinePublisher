@@ -74,7 +74,7 @@ class Newssourceitem extends Object {
 	
 	
 	function getIn2iGuiIcon() {
-		return 'common/file';
+		return 'file/generic';
 	}
 	
 	function addCustomSearch($query,&$parts) {
