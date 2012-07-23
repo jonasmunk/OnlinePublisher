@@ -133,7 +133,7 @@ var partPosterController = {
 	},
 	_setPage : function(index) {
 		var pages = this._getPages();
-		if (index < 0 || index > pages.length-1) {
+		if (!pages || index < 0 || index > pages.length-1) {
 			hui.log('Illegal index: '+index)
 			return;
 		}
@@ -202,6 +202,9 @@ var partPosterController = {
 		}
 	},
 	_getRootNode : function() {
+		if (!this.dom) {
+			return null;
+		}
 		return this.dom.getElementsByTagName('pages')[0];
 	},
 	_intVal : function(str) {

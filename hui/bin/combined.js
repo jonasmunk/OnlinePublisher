@@ -16851,10 +16851,7 @@ hui.ui.ObjectInput.prototype = {
 	},
 	_selectObject : function(type,object) {
 		this.value = {type : type.key, value : object};
-		var title = hui.get.firstByClass(this.element,'hui_objectinput_title'),
-			icon = hui.get.firstByClass(this.element,'hui_objectinput_icon');
-		hui.dom.setText(title,hui.string.shorten(object.title,40));
-		icon.style.backgroundImage = 'url(\''+hui.ui.getIconUrl(object.icon,16)+'\')';
+		this._updateUI();
 		this._closeAllFinders();
 		this.fireValueChange();
 	},
@@ -16867,23 +16864,36 @@ hui.ui.ObjectInput.prototype = {
 		}
 		this._fileFinder.show();
 	},
-	
-	getValue : function() {
-		return this.value;
-	},
-	setValue : function(value) {
-		this.value = value;
+	_updateUI : function() {
+		var value = value.this;
 		if (!hui.isDefined(value)) {
 			this.dropDown.setValue('none');
 			this.input.style.display = this.object.style.display = 'none';
 		} else {
 			var type = this._getType(value.type);
 			if (type) {
-				this.dropDown.setValue(value.type);
+				this.dropdown.setValue(value.type);
 				this.input.style.display = !type.finderOptions ? '' : 'none';
-				this.object.style.display = type.finderOptions ? '' : 'none';				
+				this.object.style.display = type.finderOptions ? '' : 'none';
+				if (!type.finderOptions) {
+					this.input.value = value.value;
+				} else {
+					var title = hui.get.firstByClass(this.element,'hui_objectinput_title'),
+						icon = hui.get.firstByClass(this.element,'hui_objectinput_icon');
+					hui.dom.setText(title,hui.string.shorten(value.value.title,40));
+					icon.style.backgroundImage = 'url(\''+hui.ui.getIconUrl(value.value.icon,16)+'\')';
+				}
 			}
-		}
+		}		
+	},
+	
+	
+	getValue : function() {
+		return this.value;
+	},
+	setValue : function(value) {
+		this.value = value;
+		this._updateUI();
 	},
 	reset : function() {
 		this.setValue(null);
