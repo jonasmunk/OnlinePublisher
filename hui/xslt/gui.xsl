@@ -123,6 +123,7 @@
 		<script src="{$context}/hui/js/Structure.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Slider.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/CodeInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/ObjectInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	</xsl:when>
 	<xsl:otherwise>
 		<script src="{$context}/hui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -135,10 +136,6 @@
 <xsl:if test="//gui:tiles">
 	<link rel="stylesheet" href="{$context}/hui/ext/tiles.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script src="{$context}/hui/ext/Tiles.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-</xsl:if>
-<xsl:if test="//gui:object-input">
-	<link rel="stylesheet" href="{$context}/hui/css/objectinput.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
-	<script src="{$context}/hui/js/ObjectInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:pages">
 	<link rel="stylesheet" href="{$context}/hui/ext/pages.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>

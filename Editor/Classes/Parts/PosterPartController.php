@@ -99,6 +99,34 @@ class PosterPartController extends PartController
 						<field label="Image">
 							<image-input key="image" source="../../Services/Model/ImagePicker.php"/>
 						</field>
+						<field label="Link tekst:">
+							<text-input key="linktext"/>
+						</field>
+						<field label="Link:">
+							<object-input key="link">
+								<type key="url" label="Adresse"/>
+								<type key="email" label="E-mail"/>
+								<type key="page" label="Side">
+									<finder title="Vælg side"
+										list-url="../../Services/Finder/PagesList.php"
+										selection-url="../../Services/Finder/PagesSelection.php"
+										selection-value="all"
+										selection-parameter="group"
+										search-parameter="query"
+									/>
+								</type>
+								<type key="file" label="Fil">
+									<finder title="Vælg fil" 
+										list-url="../../Services/Finder/FilesList.php"
+										selection-url="../../Services/Finder/FilesSelection.php"
+										selection-value="all"
+										selection-parameter="group"
+										search-parameter="query"
+									/>
+								</type>
+							</object-input>
+						</field>
+
 					</fields>
 				</formula>
 			</window>

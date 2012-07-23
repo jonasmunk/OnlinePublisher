@@ -287,7 +287,7 @@ function buildPagesSql() {
 	}
 	$sqlLimits.=" order by ".$sort.($direction=='ascending' ? ' asc' : ' desc');
 
-	$listSql = $sql.$sqlLimits." limit ".($windowPage*$windowSize).",".(($windowPage+1)*$windowSize);
+	$listSql = $sql.$sqlLimits." limit ".($windowPage*$windowSize).",".$windowSize;
 
 	return array('list'=>$listSql,'total'=>$countSql.$sqlLimits);
 }

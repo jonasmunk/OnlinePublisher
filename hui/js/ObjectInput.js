@@ -29,7 +29,6 @@ hui.ui.ObjectInput.prototype = {
 	},
 	_buildDropDownOptions : function() {
 		var options = [{value:'none',text:'Intet link'}];
-		hui.log(this.options.types)
 		for (var i=0; i < this.options.types.length; i++) {
 			var type = this.options.types[i];
 			options.push({value:type.key,text:type.label})
@@ -108,6 +107,17 @@ hui.ui.ObjectInput.prototype = {
 	},
 	setValue : function(value) {
 		this.value = value;
+		if (!hui.isDefined(value)) {
+			this.dropDown.setValue('none');
+			this.input.style.display = this.object.style.display = 'none';
+		} else {
+			var type = this._getType(value.type);
+			if (type) {
+				this.dropDown.setValue(value.type);
+				this.input.style.display = !type.finderOptions ? '' : 'none';
+				this.object.style.display = type.finderOptions ? '' : 'none';				
+			}
+		}
 	},
 	reset : function() {
 		this.setValue(null);

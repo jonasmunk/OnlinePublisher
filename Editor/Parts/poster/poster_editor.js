@@ -102,7 +102,16 @@ var partPosterController = {
 		} else {
 			image.removeAttribute('id');
 		}
-
+		var link = hui.get.firstByTag(node,'link');
+		if (!hui.isBlank(values.linktext)) {
+			if (!link) {
+				link = this.dom.createElement('link');
+				node.appendChild(link);
+			}
+			hui.dom.setText(link,values.linktext);
+		} else if (link) {
+			hui.dom.remove(link);
+		}
 
 		this._syncDom();
 		this.preview();
@@ -150,6 +159,27 @@ var partPosterController = {
 			}
 		} else {
 			values.image = null;
+		}
+
+		var link = hui.get.firstByTag(node,'link');
+		if (link) {
+			values.linktext = hui.dom.getText(link);
+			var url = link.getAttribute('url');
+			if (url) {
+				values.link = {type : 'url',value : url};
+			}
+			var email = link.getAttribute('email');
+			if (email) {
+				values.link = {type : 'email',value : email};
+			}
+			var page = link.getAttribute('page');
+			if (page) {
+				values.link = {type : 'page',value : {id:parseInt(page,10),title:'!!Unknown title'}};
+			}
+			var file = link.getAttribute('file');
+			if (file) {
+				values.link = {type : 'file',value : {id:parseInt(file,10),title:'!!Unknown title'}};
+			}
 		}
 
 		pageFormula.setValues(values);

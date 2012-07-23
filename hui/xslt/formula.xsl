@@ -647,7 +647,13 @@
 					<xsl:if test="gui:finder">
 						,finderOptions : {
 							title : '<xsl:value-of select="gui:finder/@title"/>',
-							list : {url:'<xsl:value-of select="gui:finder/@list-url"/>'}
+							list : {url:'<xsl:value-of select="gui:finder/@list-url"/>'},
+							selection : {
+								url : '<xsl:value-of select="gui:finder/@selection-url"/>',
+								value : '<xsl:value-of select="gui:finder/@selection-value"/>',
+								parameter : '<xsl:value-of select="gui:finder/@selection-parameter"/>'
+							},
+							search : {parameter : '<xsl:value-of select="gui:finder/@search-parameter"/>'}
 						}
 					</xsl:if>
 				})

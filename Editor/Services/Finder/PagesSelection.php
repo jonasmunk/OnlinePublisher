@@ -16,6 +16,7 @@ $writer->item(array(
 	'kind' => 'all'
 ));
 
+/*
 $writer->title('Grupper');
 
 $groups = FileService::getGroupCounts();
@@ -27,13 +28,11 @@ foreach ($groups as $group) {
 		'icon' => 'common/folder',
 		'kind' => 'filegroup'
 	);
-	if ($group['count']>0) {
-		$options['badge']=$group['count'];
+	if ($group['filecount']>0) {
+		$options['badge']=$group['filecount'];
 	}
 	$writer->startItem($options)->endItem();	
-}
+}*/
 
 $writer->endItems();
 ?>
-
-
