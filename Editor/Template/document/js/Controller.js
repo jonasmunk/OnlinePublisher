@@ -37,7 +37,7 @@ var controller = {
 		
 		this.partControls = hui.ui.Overlay.create({name:'sectionActions',variant:'light'});
 		this.partControls.addIcon('edit','common/edit');
-		//this.partControls.addIcon('new','common/new');
+		this.partControls.addIcon('new','common/new');
 		this.partControls.addIcon('delete','common/delete');
 		
 		if (this.activeSection) {
