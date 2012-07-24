@@ -1,10 +1,10 @@
 /**
  * @constructor
  */
-hui.ui.ObjectList = function(o) {
-	this.options = hui.override({key:null},o);
-	this.name = o.name;
-	this.element = hui.get(o.element);
+hui.ui.ObjectList = function(options) {
+	this.options = hui.override({key:null},options);
+	this.name = options.name;
+	this.element = hui.get(options.element);
 	this.body = hui.get.firstByTag(this.element,'tbody');
 	this.template = [];
 	this.objects = [];
@@ -156,6 +156,7 @@ hui.ui.ObjectList.Text.prototype = {
 		var field = hui.ui.wrapInField(input);
 		this.wrapper = new hui.ui.Input({element:input});
 		this.wrapper.listen(this);
+		hui.ui.addFocusClass({element:input,classElement:field,'class':'hui_field_focused'});
 		return field;
 	},
 	$valueChanged : function(value) {

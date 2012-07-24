@@ -35,10 +35,11 @@ hui.ui.Formula.prototype = {
 		var data = {};
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
-			if (d[i].options && d[i].options.key && d[i].getValue) {
-				data[d[i].options.key] = d[i].getValue();
-			} else if (d[i].name && d[i].getValue) {
-				data[d[i].name] = d[i].getValue();
+			var widget = d[i];
+			if (widget.options && widget.options.key && widget.getValue) {
+				data[widget.options.key] = widget.getValue();
+			} else if (widget.name && widget.getValue) {
+				data[widget.name] = widget.getValue();
 			}
 		};
 		return data;

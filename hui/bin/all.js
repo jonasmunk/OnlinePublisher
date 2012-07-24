@@ -6213,10 +6213,11 @@ hui.ui.Formula.prototype = {
 		var data = {};
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
-			if (d[i].options && d[i].options.key && d[i].getValue) {
-				data[d[i].options.key] = d[i].getValue();
-			} else if (d[i].name && d[i].getValue) {
-				data[d[i].name] = d[i].getValue();
+			var widget = d[i];
+			if (widget.options && widget.options.key && widget.getValue) {
+				data[widget.options.key] = widget.getValue();
+			} else if (widget.name && widget.getValue) {
+				data[widget.name] = widget.getValue();
 			}
 		};
 		return data;
@@ -7332,10 +7333,10 @@ hui.ui.Tab.prototype = {
 /* EOF *//**
  * @constructor
  */
-hui.ui.ObjectList = function(o) {
-	this.options = hui.override({key:null},o);
-	this.name = o.name;
-	this.element = hui.get(o.element);
+hui.ui.ObjectList = function(options) {
+	this.options = hui.override({key:null},options);
+	this.name = options.name;
+	this.element = hui.get(options.element);
 	this.body = hui.get.firstByTag(this.element,'tbody');
 	this.template = [];
 	this.objects = [];
@@ -7487,6 +7488,7 @@ hui.ui.ObjectList.Text.prototype = {
 		var field = hui.ui.wrapInField(input);
 		this.wrapper = new hui.ui.Input({element:input});
 		this.wrapper.listen(this);
+		hui.ui.addFocusClass({element:input,classElement:field,'class':'hui_field_focused'});
 		return field;
 	},
 	$valueChanged : function(value) {
@@ -16865,7 +16867,7 @@ hui.ui.ObjectInput.prototype = {
 		this._fileFinder.show();
 	},
 	_updateUI : function() {
-		var value = value.this;
+		var value = this.value;
 		if (!hui.isDefined(value)) {
 			this.dropDown.setValue('none');
 			this.input.style.display = this.object.style.display = 'none';

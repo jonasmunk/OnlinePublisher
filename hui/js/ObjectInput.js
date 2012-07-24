@@ -99,7 +99,7 @@ hui.ui.ObjectInput.prototype = {
 		this._fileFinder.show();
 	},
 	_updateUI : function() {
-		var value = value.this;
+		var value = this.value;
 		if (!hui.isDefined(value)) {
 			this.dropDown.setValue('none');
 			this.input.style.display = this.object.style.display = 'none';
