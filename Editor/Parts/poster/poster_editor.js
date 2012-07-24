@@ -109,6 +109,21 @@ var partPosterController = {
 				node.appendChild(link);
 			}
 			hui.dom.setText(link,values.linktext);
+			
+			link.removeAttribute('url');
+			link.removeAttribute('email');
+			link.removeAttribute('file');
+			link.removeAttribute('page');
+			
+					hui.log(values.link)
+			if (values.link.type!='none') {
+				if (values.link.type=='url' || values.link.type=='email') {
+					link.setAttribute(values.link.type,values.link.value);
+				} else if (values.link.value){
+					link.setAttribute(values.link.type,values.link.value.id);
+				} else {
+				}
+			}
 		} else if (link) {
 			hui.dom.remove(link);
 		}

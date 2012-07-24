@@ -12835,7 +12835,7 @@ hui.ui.Input = function(options) {
 	this._checkPlaceholder();
 	try { // IE hack
 		if (e==document.activeElement) {
-			this._focused();
+			this._onFocus();
 		}
 	} catch (e) {}
 }
@@ -12844,10 +12844,10 @@ hui.ui.Input.prototype = {
 	_addBehavior : function() {
 		var e = this.element,
 			p = this.options.placeholderElement;
-		hui.listen(e,'keyup',this.keyDidStrike.bind(this));
-		hui.listen(e,'blur',this.onBlur.bind(this));
+		hui.listen(e,'keyup',this._onKeyUp.bind(this));
+		hui.listen(e,'blur',this._onBlur.bind(this));
 		if (p) {
-			hui.listen(e,'focus',this._focused.bind(this));
+			hui.listen(e,'focus',this._onFocus.bind(this));
 			hui.listen(e,'blur',this._checkPlaceholder.bind(this));
 			if (p) {
 				p.style.cursor='text';
@@ -12861,7 +12861,7 @@ hui.ui.Input.prototype = {
 			}.bind(this));
 		}
 	},
-	_focused : function() {
+	_onFocus : function() {
 		var e = this.element,p = this.options.placeholderElement;
 		if (p && e.value=='') {
 			hui.style.set(p,{opacity:0,display:'none'});
@@ -12887,7 +12887,7 @@ hui.ui.Input.prototype = {
 		}
 	},
 	/** @private */
-	keyDidStrike : function() {
+	_onKeyUp : function() {
 		if (this.value!==this.element.value) {
 			var newValue = this._validate(this.element.value);
 			var changed = newValue!==this.value;
@@ -12898,7 +12898,7 @@ hui.ui.Input.prototype = {
 		}
 	},
 	/** @private */
-	onBlur : function() {
+	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_invalid');
 		this.element.value = this.value || '';
 	},
@@ -16776,7 +16776,10 @@ hui.ui.ObjectInput = function(options) {
 	this.types = this.options.types;	
 	this.name = options.name;
 	this.value = options.value;
-	this.input = hui.get.firstByTag(e,'input')
+	this.input = new hui.ui.Input({element:hui.get.firstByTag(e,'input')});
+	this.input.listen({
+		$valueChanged : this._onInputChange.bind(this)
+	})
 	this.object = hui.get.firstByClass(e,'hui_objectinput_object')
 	this.dropdown = new hui.ui.DropDown({
 		element : hui.get.firstByClass(e,'hui_dropdown'),
@@ -16810,14 +16813,19 @@ hui.ui.ObjectInput.prototype = {
 			}
 		};
 	},
+	_onInputChange : function(value) {
+		this.value = {type:this.dropdown.getValue(),value:value};
+		this._updateUI();
+		this.fireValueChange();
+	},
 	_onDropDownChange : function(value) {
 		this._closeAllFinders();
 		var type = this._getType(value);
 		if (!type) {
-			this.input.style.display = this.object.style.display = 'none';
+			this.input.element.style.display = this.object.style.display = 'none';
 			return;
 		}
-		this.input.style.display = !type.finderOptions ? '' : 'none';
+		this.input.element.style.display = !type.finderOptions ? '' : 'none';
 		this.object.style.display = type.finderOptions ? '' : 'none';
 		if (type.finderOptions) {
 			if (!type._finder) {
@@ -16870,12 +16878,12 @@ hui.ui.ObjectInput.prototype = {
 		var value = this.value;
 		if (!hui.isDefined(value)) {
 			this.dropDown.setValue('none');
-			this.input.style.display = this.object.style.display = 'none';
+			this.input.element.style.display = this.object.style.display = 'none';
 		} else {
 			var type = this._getType(value.type);
 			if (type) {
 				this.dropdown.setValue(value.type);
-				this.input.style.display = !type.finderOptions ? '' : 'none';
+				this.input.element.style.display = !type.finderOptions ? '' : 'none';
 				this.object.style.display = type.finderOptions ? '' : 'none';
 				if (!type.finderOptions) {
 					this.input.value = value.value;

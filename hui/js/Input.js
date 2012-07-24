@@ -14,7 +14,7 @@ hui.ui.Input = function(options) {
 	this._checkPlaceholder();
 	try { // IE hack
 		if (e==document.activeElement) {
-			this._focused();
+			this._onFocus();
 		}
 	} catch (e) {}
 }
@@ -23,10 +23,10 @@ hui.ui.Input.prototype = {
 	_addBehavior : function() {
 		var e = this.element,
 			p = this.options.placeholderElement;
-		hui.listen(e,'keyup',this.keyDidStrike.bind(this));
-		hui.listen(e,'blur',this.onBlur.bind(this));
+		hui.listen(e,'keyup',this._onKeyUp.bind(this));
+		hui.listen(e,'blur',this._onBlur.bind(this));
 		if (p) {
-			hui.listen(e,'focus',this._focused.bind(this));
+			hui.listen(e,'focus',this._onFocus.bind(this));
 			hui.listen(e,'blur',this._checkPlaceholder.bind(this));
 			if (p) {
 				p.style.cursor='text';
@@ -40,7 +40,7 @@ hui.ui.Input.prototype = {
 			}.bind(this));
 		}
 	},
-	_focused : function() {
+	_onFocus : function() {
 		var e = this.element,p = this.options.placeholderElement;
 		if (p && e.value=='') {
 			hui.style.set(p,{opacity:0,display:'none'});
@@ -66,7 +66,7 @@ hui.ui.Input.prototype = {
 		}
 	},
 	/** @private */
-	keyDidStrike : function() {
+	_onKeyUp : function() {
 		if (this.value!==this.element.value) {
 			var newValue = this._validate(this.element.value);
 			var changed = newValue!==this.value;
@@ -77,7 +77,7 @@ hui.ui.Input.prototype = {
 		}
 	},
 	/** @private */
-	onBlur : function() {
+	_onBlur : function() {
 		hui.cls.remove(this.element,'hui_invalid');
 		this.element.value = this.value || '';
 	},

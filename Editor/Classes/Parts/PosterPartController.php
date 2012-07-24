@@ -29,6 +29,7 @@ class PosterPartController extends PartController
 	<page>
 		<title>Cras Mollis Vestibulum Lorem</title>
 		<text>Nullam quis risus eget urna mollis ornare vel eu leo. Etiam porta sem malesuada magna mollis euismod.</text>
+		<link url="http://www.somewhere.com">Commodo Dolor Tristique</link>
 	</page>
 </pages>';
 		$part->setRecipe($recipe);
