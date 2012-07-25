@@ -38,20 +38,6 @@ class PartService {
 		return $part;
 	}
 	
-	function getLinkText($partId) {
-		$text = '';
-		$sql = "select text,document_section.part_id from part_text,document_section where document_section.part_id=part_text.part_id and document_section.part_id=".Database::int($partId)."
-union select text,document_section.part_id from part_header,document_section where document_section.part_id=part_header.part_id and document_section.part_id=".Database::int($partId)."
-union select text,document_section.part_id from part_listing,document_section where document_section.part_id=part_listing.part_id and document_section.part_id=".Database::int($partId)."
-union select html as text,document_section.part_id from part_table,document_section where document_section.part_id=part_table.part_id and document_section.part_id=".Database::int($partId);
-		$result = Database::select($sql);
-		while ($row = Database::next($result)) {
-			$text.=' '.$row['text'];
-		}
-		Database::free($result);
-		return $text;
-	}
-	
 	function newInstance($type) {
 		global $basePath;
 		$class = ucfirst($type).'Part';
@@ -204,6 +190,64 @@ union select html as text,document_section.part_id from part_table,document_sect
 		}
 		else {
 			return false;
+		}
+	}
+	
+	function getLinkText($partId) {
+		$text = '';
+		$sql = "select text,document_section.part_id from part_text,document_section where document_section.part_id=part_text.part_id and document_section.part_id=".Database::int($partId)."
+union select text,document_section.part_id from part_header,document_section where document_section.part_id=part_header.part_id and document_section.part_id=".Database::int($partId)."
+union select text,document_section.part_id from part_listing,document_section where document_section.part_id=part_listing.part_id and document_section.part_id=".Database::int($partId)."
+union select html as text,document_section.part_id from part_table,document_section where document_section.part_id=part_table.part_id and document_section.part_id=".Database::int($partId);
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$text.=' '.$row['text'];
+		}
+		Database::free($result);
+		return $text;
+	}
+	
+	function getSingleLink($part,$sourceType=null) {
+	    $sql = "select part_link.*,page.path from part_link left join page on page.id=part_link.target_value and part_link.target_type='page' where part_id=".Database::int($part->getId());
+	    if (!is_null($sourceType)) {
+	        $sql.=" and source_type=".Database::text($sourceType);
+	    }
+	    if ($row = Database::selectFirst($sql)) {
+	        return $row;
+	    } else {
+	        return false;
+	    }
+	}
+	
+	function removeLinks($partId) {
+		$sql = "delete from part_link where part_id=".Database::int($partId);
+		Database::delete($sql);
+	}
+	
+	function getLinks($part) {
+		$links = array();
+		
+		return $links;
+	}
+	
+	function saveLink($link) { /* PartLink */
+		if ($link->id) {
+			$sql="update link set ".
+			"part_id=".Database::int($link->partId).
+			",source_type=".Database::text($link->sourceType).
+			",target_type=".Database::text($link->targetType).
+			",target_value=".Database::text($link->targetValue).
+			" where id=".Database::int($link->id);
+			Database::update($sql);
+		} else {
+			$sql="insert into link (part_id,source_type,target_type,target_value
+				) values (".
+				Database::int($link->partId).",".
+				Database::text($link->sourceType).",".
+				Database::text($link->targetType).",".
+				Database::text($link->targetValue).
+			")";
+			$this->id = Database::insert($sql);
 		}
 	}
 }

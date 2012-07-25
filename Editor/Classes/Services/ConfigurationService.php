@@ -12,6 +12,6 @@ class ConfigurationService {
 	
 	function isDebug() {
 		global $CONFIG;
-		return (isset($CONFIG) && $CONFIG['debug']);
+		return (isset($CONFIG) && isset($CONFIG['debug']) && $CONFIG['debug']==true);
 	}
 }

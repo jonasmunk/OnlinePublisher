@@ -18,6 +18,7 @@ var partPosterController = {
 		this._syncPosterForm();
 		posterWindow.show({avoid:form});
 		pageWindow.show({avoid:posterWindow.element});
+		sourceWindow.show();
 		this.widget = hui.ui.get('part_poster_'+document.forms.PartForm.id.value);
 	},
 	$resolveImageUrl : function(img,width,height) {
@@ -114,9 +115,7 @@ var partPosterController = {
 			link.removeAttribute('email');
 			link.removeAttribute('file');
 			link.removeAttribute('page');
-			
-					hui.log(values.link)
-			if (values.link.type!='none') {
+			if (values.link.type!='none' && values.link.value) {
 				if (values.link.type=='url' || values.link.type=='email') {
 					link.setAttribute(values.link.type,values.link.value);
 				} else if (values.link.value){

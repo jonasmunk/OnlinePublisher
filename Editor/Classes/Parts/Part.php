@@ -122,6 +122,9 @@ class Part
 
 		$sql = "delete from link where part_id=".Database::int($this->id);
 		Database::delete($sql);
+
+		$sql = "delete from part_link where part_id=".Database::int($this->id);
+		Database::delete($sql);
 		
 		// Delete relations
 		$schema = Part::$schema[$this->type];

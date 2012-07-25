@@ -81,6 +81,7 @@
         <item icon="common/page" title="object_finder" value="guis/object_finder.xml"/>
         <item icon="common/page" title="objectchooser" value="guis/objectchooser.html"/>
         <item icon="common/page" title="person_part" value="guis/person_part.xml"/>
+        <item icon="common/page" title="search_template" value="guis/search_template.xml"/>
         <item icon="common/page" title="sites" value="guis/sites.xml"/>
         <item icon="common/page" title="starttool" value="guis/starttool.xml"/>
     </item>

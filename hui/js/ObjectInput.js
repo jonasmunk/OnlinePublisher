@@ -71,9 +71,14 @@ hui.ui.ObjectInput.prototype = {
 				})
 			}
 			type._finder.show();
+			this.value = {type:value,value:null}
 		} else  {
 			this.input.focus();
+			this.input.setValue('');
+			this.value = {type:value,value:''}
 		}
+		this._updateUI();
+		this.fireValueChange();
 	},
 	_closeAllFinders : function() {
 		for (var i=0; i < this.types.length; i++) {
@@ -122,8 +127,13 @@ hui.ui.ObjectInput.prototype = {
 				} else {
 					var title = hui.get.firstByClass(this.element,'hui_objectinput_title'),
 						icon = hui.get.firstByClass(this.element,'hui_objectinput_icon');
-					hui.dom.setText(title,hui.string.shorten(value.value.title,40));
-					icon.style.backgroundImage = 'url(\''+hui.ui.getIconUrl(value.value.icon,16)+'\')';
+					if (!value.value) {
+						this.object.style.display = 'none';
+					} else {
+						this.object.style.display = '';
+						hui.dom.setText(title,hui.string.shorten(value.value.title,40));
+						icon.style.backgroundImage = 'url(\''+hui.ui.getIconUrl(type.icon,16)+'\')';
+					}
 				}
 			}
 		}		

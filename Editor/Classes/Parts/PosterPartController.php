@@ -37,6 +37,22 @@ class PosterPartController extends PartController
 		return $part;
 	}
 	
+	function updateAdditional($part) {
+		LinkService::removePartLinks($part->getId());
+		$recipe = $part->getRecipe();
+		$dom = DOMUtils::parse($recipe);
+		if ($dom) {
+			$links = $dom->getElementsByTagName('link');
+			for ($i=0; $i < $links->length; $i++) { 
+				$node = $links->item($i);
+				$link = new Link();
+				$link->setPartId($part->getId());
+				$link->setText(DOMUtils::getText($node));
+				$link->save();
+			}
+		}
+	}
+	
 	function display($part,$context) {
 		return $this->render($part,$context);
 	}
@@ -107,7 +123,7 @@ class PosterPartController extends PartController
 							<object-input key="link">
 								<type key="url" label="Adresse"/>
 								<type key="email" label="E-mail"/>
-								<type key="page" label="Side">
+								<type key="page" label="Side" icon="common/page">
 									<finder title="Vælg side"
 										list-url="../../Services/Finder/PagesList.php"
 										selection-url="../../Services/Finder/PagesSelection.php"
@@ -116,7 +132,7 @@ class PosterPartController extends PartController
 										search-parameter="query"
 									/>
 								</type>
-								<type key="file" label="Fil">
+								<type key="file" label="Fil" icon="file/generic">
 									<finder title="Vælg fil" 
 										list-url="../../Services/Finder/FilesList.php"
 										selection-url="../../Services/Finder/FilesSelection.php"

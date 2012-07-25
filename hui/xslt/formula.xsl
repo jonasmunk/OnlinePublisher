@@ -643,7 +643,8 @@
 			<xsl:for-each select="gui:type">
 				types.push({
 					label : '<xsl:value-of select="@label"/>',
-					key : '<xsl:value-of select="@key"/>'
+					key : '<xsl:value-of select="@key"/>',
+					icon : '<xsl:value-of select="@icon"/>'
 					<xsl:if test="gui:finder">
 						,finderOptions : {
 							title : '<xsl:value-of select="gui:finder/@title"/>',

@@ -289,9 +289,10 @@ hui.string = {
 	 * Shorten a string to a maximum length
 	 * @param {String} str The text to shorten
 	 * @param {int} length The maximum length
-	 * @returns {String} The shortened text
+	 * @returns {String} The shortened text, '' if undefined or null string
 	 */
 	shorten : function(str,length) {
+		if (!hui.isDefined(str)) {return ''};
 		if (str.length > length) {
 			return str.substring(0,length-3)+'...';
 		}
