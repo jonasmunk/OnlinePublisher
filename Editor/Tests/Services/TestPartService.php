@@ -11,6 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class TestPartService extends UnitTestCase {
     
+	/** Test link functionality of part service */
     function testLinks() {
 		$part = new PosterPart();
 		$part->save();
@@ -22,12 +23,23 @@ class TestPartService extends UnitTestCase {
 		$link->setTargetValue('C');
 		$link->save();
 		
+		$loadedLinks = PartService::getLinks($part);
 		
+		$this->assertEqual(count($loadedLinks),1);
+		
+		$loaded = $loadedLinks[0];
 		
 		$this->assertTrue($link->getId()>0);
-		$this->assertEqual($link->getSourceType());
+		$this->assertEqual($loaded->getSourceType(),$link->getSourceType());
+		$this->assertEqual($loaded->getTargetType(),$link->getTargetType());
+		$this->assertEqual($loaded->getTargetValue(),$link->getTargetValue());
 		
-		PartService::removeLinks($part->getId());
+		$link->setSourceType
+		
+		
+		PartService::removeLinks($part);
+		
+		$this->assertEqual(count(PartService::getLinks($part)),0);
 		$part->remove();
     }
 }

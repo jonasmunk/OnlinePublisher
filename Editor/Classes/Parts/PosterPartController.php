@@ -17,6 +17,7 @@ class PosterPartController extends PartController
 		parent::PartController('poster');
 	}
 	
+	/** This function creates a new part */
 	function createPart() {
 		$part = new PosterPart();
 		$imageId = ObjectService::getLatestId('image');
@@ -38,17 +39,25 @@ class PosterPartController extends PartController
 	}
 	
 	function updateAdditional($part) {
-		LinkService::removePartLinks($part->getId());
+		PartService::removeLinks($part);
 		$recipe = $part->getRecipe();
 		$dom = DOMUtils::parse($recipe);
 		if ($dom) {
 			$links = $dom->getElementsByTagName('link');
 			for ($i=0; $i < $links->length; $i++) { 
 				$node = $links->item($i);
-				$link = new Link();
+				$link = new PartLink();
 				$link->setPartId($part->getId());
-				$link->setText(DOMUtils::getText($node));
+				$types = array('url','email','page','file');
+				foreach ($types as $type) {
+					$value = $node->getAttribute($type);
+					if ($value) {
+						$link->setTargetType($type);
+						$link->setTargetValue($value);
+					}
+				}
 				$link->save();
+				Log::debug($link);
 			}
 		}
 	}
@@ -59,7 +68,7 @@ class PosterPartController extends PartController
 	
 	function editor($part,$context) {
 		global $baseUrl;
-		return
+		$html =
 		$this->buildHiddenFields(array(
 			"recipe" => $part->getRecipe()
 		)).
@@ -67,6 +76,26 @@ class PosterPartController extends PartController
 		$this->render($part,$context).
 		'</div>
 		<script src="'.$baseUrl.'Editor/Parts/poster/poster_editor.js" type="text/javascript" charset="utf-8"></script>';
+		$infos = array();
+		$links = PartService::getLinks($part);
+		foreach ($links as $link) {
+			if ($link->getTargetType()=='page') {
+				$page = Page::load($link->getTargetValue());
+				if ($page) {
+					$infos[] = array('id' => $page->getId(),'title'=>$page->getTitle());
+				}
+			}
+			else if ($link->getTargetType()=='file') {
+				$file = File::load($link->getTargetValue());
+				if ($file) {
+					$infos[] = array('type'=>$link->getTargetType(),'id' => $file->getId(),'title'=>$file->getTitle());
+				}
+			}
+		}
+		$html.='<script type="text/javascript">
+		partPosterController.setLinkInfo('.StringUtils::toJSON($infos).');
+		</script>';
+		return $html;
 	}
 	
 	function editorGui($part,$context) {
