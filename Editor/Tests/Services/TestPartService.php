@@ -17,9 +17,15 @@ class TestPartService extends UnitTestCase {
 		
 		$link = new PartLink();
 		$link->setPartId($part->getId());
+		$link->setSourceType('A');
+		$link->setTargetType('B');
+		$link->setTargetValue('C');
 		$link->save();
 		
+		
+		
 		$this->assertTrue($link->getId()>0);
+		$this->assertEqual($link->getSourceType());
 		
 		PartService::removeLinks($part->getId());
 		$part->remove();
