@@ -4,7 +4,6 @@
  * @subpackage Templates.Document
  */
 require_once '../../../Include/Private.php';
-
 $type = Request::getString('part_type');
 $id = Request::getInt('id');
 $section = Request::getInt('section');

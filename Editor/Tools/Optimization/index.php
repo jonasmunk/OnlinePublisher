@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Interface/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="System" state="overview">
+<gui xmlns="uri:hui" padding="10" title="{Optimization;da:Optimering}" state="overview">
 	<controller source="controller.js"/>
 	<source name="listSource" url="data/List.php">
 		<parameter key="windowPage" value="@list.window.page"/>
@@ -17,7 +17,7 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/new" title="Tilføj kontrolord" name="newWord" click="newWordPanel.show();wordFormula.focus()"/>
+				<icon icon="common/new" title="Tilføj kontrolord" name="newWord"/>
 				<!--icon icon="common/edit" title="Rediger"/>
 				-->
 			</toolbar>
@@ -58,6 +58,12 @@ $gui='
 									</field>
 									<field label="Hvad er success-kriterierne for siden">
 										<text-input multiline="true" key="successcriteria"/>
+									</field>
+									<field label="Profiler" hint="Her kan du holde styr på internet sider hvor din organisation er listet">
+										<objectlist key="profiles">
+											<text key="name" label="Title"/>
+											<text key="url" label="Adresse"/>
+										</objectlist>
 									</field>
 								</fields>
 							</formula>

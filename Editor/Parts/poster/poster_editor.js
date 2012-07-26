@@ -3,6 +3,7 @@ var partPosterController = {
 	widget : null,
 	dom : null,
 	pageIndex : 0,
+	linkInfo : null,
 	
 	$ready : function() {
 		var form = document.forms.PartForm;
@@ -18,7 +19,12 @@ var partPosterController = {
 		this._syncPosterForm();
 		posterWindow.show({avoid:form});
 		pageWindow.show({avoid:posterWindow.element});
+		sourceWindow.show();
 		this.widget = hui.ui.get('part_poster_'+document.forms.PartForm.id.value);
+	},
+	
+	setLinkInfo : function(linkInfo) {
+		this.linkInfo = linkInfo;
 	},
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
@@ -109,6 +115,19 @@ var partPosterController = {
 				node.appendChild(link);
 			}
 			hui.dom.setText(link,values.linktext);
+			
+			link.removeAttribute('url');
+			link.removeAttribute('email');
+			link.removeAttribute('file');
+			link.removeAttribute('page');
+			if (values.link.type!='none' && values.link.value) {
+				if (values.link.type=='url' || values.link.type=='email') {
+					link.setAttribute(values.link.type,values.link.value);
+				} else if (values.link.value){
+					link.setAttribute(values.link.type,values.link.value.id);
+				} else {
+				}
+			}
 		} else if (link) {
 			hui.dom.remove(link);
 		}

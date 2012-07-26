@@ -8,7 +8,10 @@ hui.ui.ObjectInput = function(options) {
 	this.types = this.options.types;	
 	this.name = options.name;
 	this.value = options.value;
-	this.input = hui.get.firstByTag(e,'input')
+	this.input = new hui.ui.Input({element:hui.get.firstByTag(e,'input')});
+	this.input.listen({
+		$valueChanged : this._onInputChange.bind(this)
+	})
 	this.object = hui.get.firstByClass(e,'hui_objectinput_object')
 	this.dropdown = new hui.ui.DropDown({
 		element : hui.get.firstByClass(e,'hui_dropdown'),
@@ -42,14 +45,19 @@ hui.ui.ObjectInput.prototype = {
 			}
 		};
 	},
+	_onInputChange : function(value) {
+		this.value = {type:this.dropdown.getValue(),value:value};
+		this._updateUI();
+		this.fireValueChange();
+	},
 	_onDropDownChange : function(value) {
 		this._closeAllFinders();
 		var type = this._getType(value);
 		if (!type) {
-			this.input.style.display = this.object.style.display = 'none';
+			this.input.element.style.display = this.object.style.display = 'none';
 			return;
 		}
-		this.input.style.display = !type.finderOptions ? '' : 'none';
+		this.input.element.style.display = !type.finderOptions ? '' : 'none';
 		this.object.style.display = type.finderOptions ? '' : 'none';
 		if (type.finderOptions) {
 			if (!type._finder) {
@@ -63,9 +71,14 @@ hui.ui.ObjectInput.prototype = {
 				})
 			}
 			type._finder.show();
+			this.value = {type:value,value:null}
 		} else  {
 			this.input.focus();
+			this.input.setValue('');
+			this.value = {type:value,value:''}
 		}
+		this._updateUI();
+		this.fireValueChange();
 	},
 	_closeAllFinders : function() {
 		for (var i=0; i < this.types.length; i++) {
@@ -99,23 +112,28 @@ hui.ui.ObjectInput.prototype = {
 		this._fileFinder.show();
 	},
 	_updateUI : function() {
-		var value = value.this;
+		var value = this.value;
 		if (!hui.isDefined(value)) {
 			this.dropDown.setValue('none');
-			this.input.style.display = this.object.style.display = 'none';
+			this.input.element.style.display = this.object.style.display = 'none';
 		} else {
 			var type = this._getType(value.type);
 			if (type) {
 				this.dropdown.setValue(value.type);
-				this.input.style.display = !type.finderOptions ? '' : 'none';
+				this.input.element.style.display = !type.finderOptions ? '' : 'none';
 				this.object.style.display = type.finderOptions ? '' : 'none';
 				if (!type.finderOptions) {
 					this.input.value = value.value;
 				} else {
 					var title = hui.get.firstByClass(this.element,'hui_objectinput_title'),
 						icon = hui.get.firstByClass(this.element,'hui_objectinput_icon');
-					hui.dom.setText(title,hui.string.shorten(value.value.title,40));
-					icon.style.backgroundImage = 'url(\''+hui.ui.getIconUrl(value.value.icon,16)+'\')';
+					if (!value.value) {
+						this.object.style.display = 'none';
+					} else {
+						this.object.style.display = '';
+						hui.dom.setText(title,hui.string.shorten(value.value.title,40));
+						icon.style.backgroundImage = 'url(\''+hui.ui.getIconUrl(type.icon,16)+'\')';
+					}
 				}
 			}
 		}		

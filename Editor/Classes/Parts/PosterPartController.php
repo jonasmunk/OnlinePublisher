@@ -17,6 +17,7 @@ class PosterPartController extends PartController
 		parent::PartController('poster');
 	}
 	
+	/** This function creates a new part */
 	function createPart() {
 		$part = new PosterPart();
 		$imageId = ObjectService::getLatestId('image');
@@ -29,11 +30,36 @@ class PosterPartController extends PartController
 	<page>
 		<title>Cras Mollis Vestibulum Lorem</title>
 		<text>Nullam quis risus eget urna mollis ornare vel eu leo. Etiam porta sem malesuada magna mollis euismod.</text>
+		<link url="http://www.somewhere.com">Commodo Dolor Tristique</link>
 	</page>
 </pages>';
 		$part->setRecipe($recipe);
 		$part->save();
 		return $part;
+	}
+	
+	function updateAdditional($part) {
+		PartService::removeLinks($part);
+		$recipe = $part->getRecipe();
+		$dom = DOMUtils::parse($recipe);
+		if ($dom) {
+			$links = $dom->getElementsByTagName('link');
+			for ($i=0; $i < $links->length; $i++) { 
+				$node = $links->item($i);
+				$link = new PartLink();
+				$link->setPartId($part->getId());
+				$types = array('url','email','page','file');
+				foreach ($types as $type) {
+					$value = $node->getAttribute($type);
+					if ($value) {
+						$link->setTargetType($type);
+						$link->setTargetValue($value);
+					}
+				}
+				$link->save();
+				Log::debug($link);
+			}
+		}
 	}
 	
 	function display($part,$context) {
@@ -42,7 +68,7 @@ class PosterPartController extends PartController
 	
 	function editor($part,$context) {
 		global $baseUrl;
-		return
+		$html =
 		$this->buildHiddenFields(array(
 			"recipe" => $part->getRecipe()
 		)).
@@ -50,6 +76,26 @@ class PosterPartController extends PartController
 		$this->render($part,$context).
 		'</div>
 		<script src="'.$baseUrl.'Editor/Parts/poster/poster_editor.js" type="text/javascript" charset="utf-8"></script>';
+		$infos = array();
+		$links = PartService::getLinks($part);
+		foreach ($links as $link) {
+			if ($link->getTargetType()=='page') {
+				$page = Page::load($link->getTargetValue());
+				if ($page) {
+					$infos[] = array('id' => $page->getId(),'title'=>$page->getTitle());
+				}
+			}
+			else if ($link->getTargetType()=='file') {
+				$file = File::load($link->getTargetValue());
+				if ($file) {
+					$infos[] = array('type'=>$link->getTargetType(),'id' => $file->getId(),'title'=>$file->getTitle());
+				}
+			}
+		}
+		$html.='<script type="text/javascript">
+		partPosterController.setLinkInfo('.StringUtils::toJSON($infos).');
+		</script>';
+		return $html;
 	}
 	
 	function editorGui($part,$context) {
@@ -106,7 +152,7 @@ class PosterPartController extends PartController
 							<object-input key="link">
 								<type key="url" label="Adresse"/>
 								<type key="email" label="E-mail"/>
-								<type key="page" label="Side">
+								<type key="page" label="Side" icon="common/page">
 									<finder title="Vælg side"
 										list-url="../../Services/Finder/PagesList.php"
 										selection-url="../../Services/Finder/PagesSelection.php"
@@ -115,7 +161,7 @@ class PosterPartController extends PartController
 										search-parameter="query"
 									/>
 								</type>
-								<type key="file" label="Fil">
+								<type key="file" label="Fil" icon="file/generic">
 									<finder title="Vælg fil" 
 										list-url="../../Services/Finder/FilesList.php"
 										selection-url="../../Services/Finder/FilesSelection.php"

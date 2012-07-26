@@ -85,7 +85,6 @@ class LinkService {
 
 	function remove($link) {
 		$sql="delete from link where id=".Database::int($this->getId());
-		Log::debug($sql);
 		return Database::delete($sql);
 	}
 

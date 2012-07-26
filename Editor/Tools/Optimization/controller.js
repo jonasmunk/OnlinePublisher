@@ -22,6 +22,11 @@ hui.ui.listen({
 			}
 		}
 	},
+	$click$newWord : function() {
+		newWordPanel.show();
+		wordFormula.focus();
+	},
+	
 	$click$saveSettings : function() {
 		var values = settingsFormula.getValues();
 		hui.ui.request({

@@ -643,7 +643,8 @@
 			<xsl:for-each select="gui:type">
 				types.push({
 					label : '<xsl:value-of select="@label"/>',
-					key : '<xsl:value-of select="@key"/>'
+					key : '<xsl:value-of select="@key"/>',
+					icon : '<xsl:value-of select="@icon"/>'
 					<xsl:if test="gui:finder">
 						,finderOptions : {
 							title : '<xsl:value-of select="gui:finder/@title"/>',
@@ -736,9 +737,11 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ObjectList({element:'<xsl:value-of select="generate-id()"/>'
-			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
-			,key:'<xsl:value-of select="@key"/>'});
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ObjectList({
+			element : '<xsl:value-of select="generate-id()"/>'
+			,key:'<xsl:value-of select="@key"/>'
+			<xsl:if test="@name">,name : '<xsl:value-of select="@name"/>'</xsl:if>
+		});
 		<xsl:call-template name="gui:createobject"/>
 		with (<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:apply-templates select="gui:text | gui:select"/>
