@@ -15,6 +15,7 @@ class PartLink {
 	var $id;
 	var $partId;
 	var $sourceType;
+	var $sourceText;
 	var $targetType;
 	var $targetValue;
 	
@@ -42,6 +43,15 @@ class PartLink {
 	function getSourceType() {
 	    return $this->sourceType;
 	}
+	
+	function setSourceText($sourceText) {
+	    $this->sourceText = $sourceText;
+	}
+
+	function getSourceText() {
+	    return $this->sourceText;
+	}
+	
 	
 	function setTargetType($targetType) {
 	    $this->targetType = $targetType;

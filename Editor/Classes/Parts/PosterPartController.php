@@ -48,6 +48,7 @@ class PosterPartController extends PartController
 				$node = $links->item($i);
 				$link = new PartLink();
 				$link->setPartId($part->getId());
+				$link->setSourceText(DOMUtils::getText($node));
 				$types = array('url','email','page','file');
 				foreach ($types as $type) {
 					$value = $node->getAttribute($type);
@@ -57,7 +58,6 @@ class PosterPartController extends PartController
 					}
 				}
 				$link->save();
-				Log::debug($link);
 			}
 		}
 	}
@@ -76,25 +76,6 @@ class PosterPartController extends PartController
 		$this->render($part,$context).
 		'</div>
 		<script src="'.$baseUrl.'Editor/Parts/poster/poster_editor.js" type="text/javascript" charset="utf-8"></script>';
-		$infos = array();
-		$links = PartService::getLinks($part);
-		foreach ($links as $link) {
-			if ($link->getTargetType()=='page') {
-				$page = Page::load($link->getTargetValue());
-				if ($page) {
-					$infos[] = array('id' => $page->getId(),'title'=>$page->getTitle());
-				}
-			}
-			else if ($link->getTargetType()=='file') {
-				$file = File::load($link->getTargetValue());
-				if ($file) {
-					$infos[] = array('type'=>$link->getTargetType(),'id' => $file->getId(),'title'=>$file->getTitle());
-				}
-			}
-		}
-		$html.='<script type="text/javascript">
-		partPosterController.setLinkInfo('.StringUtils::toJSON($infos).');
-		</script>';
 		return $html;
 	}
 	
@@ -152,7 +133,7 @@ class PosterPartController extends PartController
 							<object-input key="link">
 								<type key="url" label="Adresse"/>
 								<type key="email" label="E-mail"/>
-								<type key="page" label="Side" icon="common/page">
+								<type key="page" label="Side" icon="common/page" lookup-url="../../Services/Model/LoadPage.php">
 									<finder title="Vælg side"
 										list-url="../../Services/Finder/PagesList.php"
 										selection-url="../../Services/Finder/PagesSelection.php"
@@ -161,7 +142,7 @@ class PosterPartController extends PartController
 										search-parameter="query"
 									/>
 								</type>
-								<type key="file" label="Fil" icon="file/generic">
+								<type key="file" label="Fil" icon="file/generic" lookup-url="../../Services/Model/LoadObject.php">
 									<finder title="Vælg fil" 
 										list-url="../../Services/Finder/FilesList.php"
 										selection-url="../../Services/Finder/FilesSelection.php"

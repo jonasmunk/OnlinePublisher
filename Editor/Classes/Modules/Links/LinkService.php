@@ -207,7 +207,7 @@ class LinkService {
 			part_link.source_type as source_sub_type,
 			part_link.part_id as source_sub_id,
 
-			'' as source_text,
+			source_text,
 			part_link.alternative as source_description,
 
 			target_type as target_type,
@@ -219,6 +219,7 @@ class LinkService {
 			file.title as target_file_title
 
 			 from part_link
+			
 			left join page as target_page on part_link.target_value=target_page.id and part_link.target_type='page'
 			left join object as file on part_link.target_value=file.id and part_link.target_type='file'
 			,part,page,document_section where part_link.part_id = part.id and part.id=document_section.part_id and page.id=document_section.page_id

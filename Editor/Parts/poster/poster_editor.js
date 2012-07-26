@@ -3,7 +3,6 @@ var partPosterController = {
 	widget : null,
 	dom : null,
 	pageIndex : 0,
-	linkInfo : null,
 	
 	$ready : function() {
 		var form = document.forms.PartForm;
@@ -21,10 +20,6 @@ var partPosterController = {
 		pageWindow.show({avoid:posterWindow.element});
 		sourceWindow.show();
 		this.widget = hui.ui.get('part_poster_'+document.forms.PartForm.id.value);
-	},
-	
-	setLinkInfo : function(linkInfo) {
-		this.linkInfo = linkInfo;
 	},
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
@@ -193,12 +188,17 @@ var partPosterController = {
 			}
 			var page = link.getAttribute('page');
 			if (page) {
-				values.link = {type : 'page',value : {id:parseInt(page,10),title:'!!Unknown title'}};
+				var id = parseInt(page,10);
+				values.link = {type : 'page',value : {id : id}};
 			}
 			var file = link.getAttribute('file');
 			if (file) {
-				values.link = {type : 'file',value : {id:parseInt(file,10),title:'!!Unknown title'}};
+				var id = parseInt(file,10);
+				values.link = {type : 'file',value : {id : id}};
 			}
+		} else {
+			values.linktext = '';
+			values.link = null;
 		}
 
 		pageFormula.setValues(values);

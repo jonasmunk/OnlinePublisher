@@ -250,6 +250,7 @@ union select html as text,document_section.part_id from part_table,document_sect
 			$link->setId(intval($row['id']));
 			$link->setPartId(intval($row['part_id']));
 			$link->setSourceType($row['source_type']);
+			$link->setSourceText($row['source_text']);
 			$link->setTargetType($row['target_type']);
 			$link->setTargetValue($row['target_value']);
 			$links[] = $link;
@@ -260,19 +261,22 @@ union select html as text,document_section.part_id from part_table,document_sect
 	
 	/** Saves a link */
 	function saveLink($link) { /* PartLink */
+		Log::debug($link);
 		if ($link->id) {
 			$sql="update part_link set ".
 			"part_id=".Database::int($link->partId).
 			",source_type=".Database::text($link->sourceType).
+			",source_text=".Database::text($link->sourceText).
 			",target_type=".Database::text($link->targetType).
 			",target_value=".Database::text($link->targetValue).
 			" where id=".Database::int($link->id);
 			Database::update($sql);
 		} else {
-			$sql="insert into part_link (part_id,source_type,target_type,target_value
+			$sql="insert into part_link (part_id,source_type,source_text,target_type,target_value
 				) values (".
 				Database::int($link->partId).",".
 				Database::text($link->sourceType).",".
+				Database::text($link->sourceText).",".
 				Database::text($link->targetType).",".
 				Database::text($link->targetValue).
 			")";
