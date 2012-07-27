@@ -1,10 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<script src="head.js"></script>
-	<script type="text/javascript" charset="utf-8">
-		hui.ui.context='../../..';
-	</script>
 	<style>
 		body
 		{
@@ -51,7 +48,7 @@
 				assert.equals(hui.style.get('one','padding-top'),'10px');
 				assert.equals(hui.style.get('one','padding-right'),'10px');
 				
-				if (hui.browser.msie7 || hui.browser.msie8 || hui.browser.chrome) {
+				if (hui.browser.msie7 || hui.browser.msie8 || hui.browser.webkitVersion>=536) {
 					assert.equals(hui.style.get('one','padding'),'10px');
 				} else {
 					assert.equals(hui.style.get('one','padding'),'');
@@ -60,7 +57,7 @@
 				assert.equals(hui.style.get('one','font-size'),'12px');
 				assert.equals(hui.style.get('one','display'),'block');
 				assert.equals(hui.style.get('one','border-top-width'),'2px','Check top width');
-				if (hui.browser.msie7 || hui.browser.msie8 || hui.browser.chrome) {
+				if (hui.browser.msie7 || hui.browser.msie8 || hui.browser.webkitVersion>=536) {
 					assert.equals(hui.style.get('one','border-width'),'2px');
 				} else {
 					assert.equals(hui.style.get('one','border-width'),'');
@@ -87,7 +84,7 @@
 				assert.true(fontFamily.indexOf('sans-serif')!==-1);
 			},
 			function() { // Two
-				assert.equals(hui.style.get('two','padding'),'10px 10px 10px 20px');
+				assert.equals(hui.style.get('two','padding'),'10px 10px 10px 20px','Check padding of #two');
 			},
 			function() { // Colors
 				
