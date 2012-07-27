@@ -78,18 +78,32 @@ class PosterPartController extends PartController
 		<script src="'.$baseUrl.'Editor/Parts/poster/poster_editor.js" type="text/javascript" charset="utf-8"></script>';
 		return $html;
 	}
+
+	function getToolbars() {
+		return array(
+			'Plakat' => '
+					<icon icon="common/previous" text="{Previous ; da:Forrige}" name="goPrevious"/>
+					<icon icon="common/next" text="{Next ; da:Næste}" name="goNext"/>
+					<divider/>
+					<icon icon="file/generic" text="{Page ; da:Side}" name="showPageInfo"/>
+					<icon icon="common/info" text="{Info ; da:Info}" name="showInfo"/>
+					<icon icon="file/text" overlay="edit" text="{Source ; da:Kilde}" name="showSource"/>
+				'
+			);
+	}
 	
 	function editorGui($part,$context) {
 		$gui='
 			<window title="{Poster;da:Plakat}" name="posterWindow" width="300">
+			<!--
 				<toolbar variant="window">
-					<!--<icon icon="common/play" text="{Play ; da:Afspil}" name="playPoster"/>-->
 					<icon icon="common/previous" text="{Previous ; da:Forrige}" name="goPrevious"/>
 					<icon icon="common/next" text="{Next ; da:Næste}" name="goNext"/>
 					<divider/>
 					<icon icon="common/info" text="{Page ; da:Side}" name="showPages"/>
 					<icon icon="file/text" overlay="edit" text="{Source ; da:Kilde}" name="showSource"/>
 				</toolbar>
+				-->
 				<formula name="posterFormula" padding="10">
 					<fields labels="above">
 						<field label="Height">
@@ -108,10 +122,12 @@ class PosterPartController extends PartController
 
 			<window title="Side" name="pageWindow" width="300">
 				<toolbar variant="window">
-					<icon icon="common/previous" text="Move left" name="moveLeft"/>
-					<icon icon="common/next" text="Move right" name="moveRight"/>
+					<icon icon="common/move_left" text="Move left" name="moveLeft"/>
+					<icon icon="common/move_right" text="Move right" name="moveRight"/>
 					<right>
-						<icon icon="common/Delete" text="Delete" name="deletePage"/>
+						<icon icon="common/Delete" text="Delete" name="deletePage">
+							<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+						</icon>
 						<icon icon="common/new" text="Add" name="addPage"/>
 					</right>
 				</toolbar>

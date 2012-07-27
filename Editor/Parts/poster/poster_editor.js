@@ -1,4 +1,4 @@
-var partPosterController = {
+var partController = {
 	
 	widget : null,
 	dom : null,
@@ -16,9 +16,7 @@ var partPosterController = {
 		})
 		this._setPage(0);
 		this._syncPosterForm();
-		posterWindow.show({avoid:form});
-		pageWindow.show({avoid:posterWindow.element});
-		sourceWindow.show();
+		pageWindow.show();
 		this.widget = hui.ui.get('part_poster_'+document.forms.PartForm.id.value);
 	},
 	$resolveImageUrl : function(img,width,height) {
@@ -35,17 +33,29 @@ var partPosterController = {
 		this._setPage(index);
 	},
 	
+	showInfo : function() {
+		posterWindow.show();
+	},
+	
+	showPageInfo : function() {
+		pageWindow.show();
+	},
+	
+	showSource : function() {
+		sourceWindow.show();
+	},
+	goNext : function() {
+		this.widget.next();
+	},
+	goPrevious : function() {
+		this.widget.previous();
+	},
+	
 	$click$showSource : function() {
 		sourceWindow.show({avoid:document.forms.PartForm});		
 	},
 	$click$showPages : function() {
 		pageWindow.show({avoid:posterWindow.element});
-	},
-	$click$goNext : function() {
-		this.widget.next();
-	},
-	$click$goPrevious : function() {
-		this.widget.previous();
 	},
 	
 	$valuesChanged$sourceFormula : function(values) {
@@ -115,7 +125,7 @@ var partPosterController = {
 			link.removeAttribute('email');
 			link.removeAttribute('file');
 			link.removeAttribute('page');
-			if (values.link.type!='none' && values.link.value) {
+			if (values.link!=null && values.link.type!='none' && values.link.value) {
 				if (values.link.type=='url' || values.link.type=='email') {
 					link.setAttribute(values.link.type,values.link.value);
 				} else if (values.link.value){
@@ -320,5 +330,5 @@ var partPosterController = {
 	}
 };
 
-hui.ui.listen(partPosterController);
+hui.ui.listen(partController);
 
