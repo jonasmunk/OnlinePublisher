@@ -488,6 +488,7 @@ $databaseTables = array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("part_id","int(11)","","","0",""),
 			array("source_type","varchar(20)","YES","","",""),
+			array("source_text","text","YES","","",""),
 			array("target","varchar(10)","YES","","",""),
 			array("target_type","varchar(10)","YES","","",""),
 			array("target_value","text","YES","","",""),
