@@ -45,6 +45,9 @@
 			if (hui.browser.windows) {
 				hui.cls.add(document.body,'windows');
 			}
+			if (hui.browser.msie) {
+				hui.cls.add(document.body,'msie');
+			}
 		</script>
 		<div class="layout">
 			<div class="layout_head">
