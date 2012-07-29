@@ -191,4 +191,21 @@ hui.ui.Toolbar.Badge.prototype = {
 	}
 }
 
+//////////////////////// More ///////////////////////
+
+/** @constructor */
+hui.ui.Toolbar.More = function(options) {
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	this.button = hui.get.firstByClass(this.element,'hui_toolbar_more');
+	hui.listen(this.button,'click',this.toggle.bind(this));
+	hui.ui.extend(this);
+}
+
+hui.ui.Toolbar.More.prototype = {
+	toggle : function() {
+	 	hui.cls.toggle(this.element,'hui_toolbar_more_expanded');
+	}
+}
+
 /* EOF */

@@ -24,6 +24,13 @@ $gui='
 				<divider/>
 				<icon icon="common/link" title="{da:Nyt link;en:New link}" overlay="new" name="newLink"/>
 				<icon icon="common/link" title="{da:Oversigt;en:Edit links}" overlay="view" name="editLinks"/>
+				<!--
+				<more text="{More...;da:Mere...}">
+					<divider/>
+					<icon icon="file/generic" title="{Export;da:Eksportér}" overlay="download" name="export"/>
+					<icon icon="file/generic" title="{Import;da:Importér}" overlay="upload" name="import"/>
+				</more>
+				-->
 			</toolbar>
 		</tab>
 	</tabs>

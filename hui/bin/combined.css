@@ -2366,6 +2366,54 @@ label.hui_toolbar_grid
 	font-size: 11px;
 	color: #334455;
 	vertical-align: middle;
+}
+
+
+/************************** More ************************/
+
+span.hui_toolbar_more
+{
+	display: inline-block;
+}
+
+a.hui_toolbar_more
+{
+	display: inline-block;
+	font-size: 12px;
+	border-radius: 9px;
+	height: 18px;
+	background: #e4e4e4;
+	line-height: 18px;
+	padding: 0 10px;
+	color: #666;
+	text-decoration: none;
+	margin: 0 5px;
+}
+
+a.hui_toolbar_more:hover
+{
+	background: #ddd;
+	color: #333;
+}
+
+.hui_tabs_tab_light a.hui_toolbar_more
+{
+	background: #f3f3f3;
+}
+
+.hui_tabs_tab_light a.hui_toolbar_more:hover
+{
+	background: #eaeaea;
+}
+
+span.hui_toolbar_more_content
+{
+	display: none;
+}
+
+span.hui_toolbar_more_expanded span.hui_toolbar_more_content
+{
+	display: inline-block;
 }.hui_window
 {
 	position: absolute;

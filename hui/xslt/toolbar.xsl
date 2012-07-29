@@ -58,6 +58,23 @@
 	<span class="hui_divider"><xsl:comment /></span>
 </xsl:template>
 
+<xsl:template match="gui:toolbar//gui:more">
+	<span class="hui_toolbar_more" id="{generate-id()}">
+		<span class="hui_toolbar_more_content">
+			<xsl:apply-templates/>
+			<xsl:comment/>
+		</span>
+		<a class="hui_toolbar_more" href="javascript://"><xsl:value-of select="@text"/></a>
+	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Toolbar.More({
+			element:'<xsl:value-of select="generate-id()"/>',
+			name:'<xsl:value-of select="@name"/>'
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
 <!--doc title:'Toolbar icon' class:'hui.ui.Toolbar.Icon' module:'bar'
 <toolbar···>
     ···

@@ -19,7 +19,7 @@
 				<field label="Venstre">
 					<number-input/>
 				</field>
-				<field title="Billedgruppe">
+				<field label="Billedgruppe">
 					<dropdown placeholder="Vælg..." source="itemsSource"/>
 				</field>
 				<grid>
@@ -79,9 +79,14 @@
 					<icon icon="common/folder" title="Folder"/>
 					<button title="Click me" small="true" rounded="true"/>
 					<dropdown placeholder="Vælg..." source="itemsSource"/>
-					<text-input/>
+					<!--<text-input width="100"/>-->
+					<more text="More">
+						<button title="Click me" small="true" rounded="true"/>
+					</more>
 					<right>
+						<field label="Search">
 						<searchfield expanded-width="200" placeholder="Search"/>
+						</field>
 					</right>
 				</toolbar>
 				<overflow>
