@@ -15,6 +15,11 @@ hui.ui.listen({
 		letterSpacing.setValue(this.form.letterSpacing.value);
 		textIndent.setValue(this.form.textIndent.value);
 		level.setValue(this.form['level'].value);
+		this._updateInitialValues();
+	},
+	_updateInitialValues : function() {
+		fontSize.setInitialValue(hui.style.get(this.form.text,'font-size'));
+		lineHeight.setInitialValue(hui.style.get(this.form.text,'line-height'));
 	},
 	$valueChanged$level : function(value) {
 		this.form.level.value=value || '';
@@ -34,6 +39,7 @@ hui.ui.listen({
 		this.form.fontSize.value=value || '';
 		this.form.text.style.fontSize=value || '';
 		partToolbar.getMainController().syncSize();
+		this._updateInitialValues();
 	},
 	$valueChanged$textAlign : function(value) {
 		this.form.textAlign.value=value || '';
