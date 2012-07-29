@@ -13,9 +13,9 @@ if (!$id) {
 if (!$id) {
 	Response::badRequest();
 } else {
-	$obj=Object::load($id);
+	$obj = Page::load($id);
 	if (!$obj) {
-		Response::notFound('Unable to load object with id='.$id);
+		Response::notFound('Unable to load page with id='.$id);
 	} else {
 		$obj->toUnicode();
 		In2iGui::sendObject($obj);

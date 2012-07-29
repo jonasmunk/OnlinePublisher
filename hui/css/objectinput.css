@@ -4,6 +4,11 @@ div.hui_objectinput
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
+div.hui_objectinput_busy
+{
+	opacity: .5;
+}
+
 span.hui_objectinput_body
 {
 	margin-left: 106px;

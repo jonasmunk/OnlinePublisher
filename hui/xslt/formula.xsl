@@ -644,7 +644,8 @@
 				types.push({
 					label : '<xsl:value-of select="@label"/>',
 					key : '<xsl:value-of select="@key"/>',
-					icon : '<xsl:value-of select="@icon"/>'
+					icon : '<xsl:value-of select="@icon"/>',
+					lookupUrl : '<xsl:value-of select="@lookup-url"/>'
 					<xsl:if test="gui:finder">
 						,finderOptions : {
 							title : '<xsl:value-of select="gui:finder/@title"/>',

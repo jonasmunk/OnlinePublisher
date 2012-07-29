@@ -21,6 +21,7 @@ class TestPartService extends UnitTestCase {
 		$link->setSourceType('A');
 		$link->setTargetType('B');
 		$link->setTargetValue('C');
+		$link->setSourceText('Fringilla');
 		$link->save();
 		
 		$loadedLinks = PartService::getLinks($part);
@@ -33,8 +34,25 @@ class TestPartService extends UnitTestCase {
 		$this->assertEqual($loaded->getSourceType(),$link->getSourceType());
 		$this->assertEqual($loaded->getTargetType(),$link->getTargetType());
 		$this->assertEqual($loaded->getTargetValue(),$link->getTargetValue());
+		$this->assertEqual($loaded->getSourceText(),$link->getSourceText());
 		
-		$link->setSourceType
+		// Modify the link
+		$link->setSourceType('X');
+		$link->setTargetType('Y');
+		$link->setTargetValue('Z');
+		$link->save();
+
+		$loadedLinks = PartService::getLinks($part);
+		
+		$this->assertEqual(count($loadedLinks),1);
+		
+		$loaded = $loadedLinks[0];
+		
+		$this->assertTrue($link->getId()>0);
+		$this->assertEqual($loaded->getSourceType(),$link->getSourceType());
+		$this->assertEqual($loaded->getTargetType(),$link->getTargetType());
+		$this->assertEqual($loaded->getTargetValue(),$link->getTargetValue());
+		$this->assertEqual($loaded->getSourceText(),$link->getSourceText());
 		
 		
 		PartService::removeLinks($part);

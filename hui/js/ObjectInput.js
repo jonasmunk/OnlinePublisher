@@ -114,7 +114,7 @@ hui.ui.ObjectInput.prototype = {
 	_updateUI : function() {
 		var value = this.value;
 		if (!hui.isDefined(value)) {
-			this.dropDown.setValue('none');
+			this.dropdown.setValue('none');
 			this.input.element.style.display = this.object.style.display = 'none';
 		} else {
 			var type = this._getType(value.type);
@@ -131,12 +131,32 @@ hui.ui.ObjectInput.prototype = {
 						this.object.style.display = 'none';
 					} else {
 						this.object.style.display = '';
-						hui.dom.setText(title,hui.string.shorten(value.value.title,40));
+						if (hui.isDefined(value.value.title)) {
+							hui.dom.setText(title,hui.string.shorten(value.value.title,40));
+						} else {
+							this._setBusy(true);
+							hui.ui.request({
+								url : type.lookupUrl,
+								parameters : {id:value.value.id},
+								onJSON : function(obj) {
+									hui.dom.setText(title,hui.string.shorten(obj.title,40));
+									this._setBusy(false);
+								}.bind(this),
+								onFailure : function() {
+									hui.dom.setText(title,'!!Error');
+									this._setBusy(false);
+								}.bind(this)
+							})
+						}
 						icon.style.backgroundImage = 'url(\''+hui.ui.getIconUrl(type.icon,16)+'\')';
 					}
 				}
 			}
 		}		
+	},
+	_setBusy : function(busy) {
+		this.busy = busy;
+		hui.cls.set(this.element,'hui_objectinput_busy',busy)
 	},
 	
 	
