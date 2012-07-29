@@ -247,7 +247,7 @@ op.part.ImageGallery.prototype = {
 		}
 	},
 	showImage : function(id) {
-		if (!this.viewer) {
+		if (!this.imageViewer) {
 			this.imageViewer = hui.ui.ImageViewer.create({maxWidth:2000,maxHeight:2000,perimeter:40,sizeSnap:10});
 			this.imageViewer.listen(op.imageViewerDelegate);
 		}

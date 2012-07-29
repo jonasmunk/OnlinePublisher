@@ -259,12 +259,43 @@ hui.ui.ImageViewer.prototype = {
 		this.box.show();
 		this._goToImage(false,0,false);
 		hui.listen(document,'keydown',this._keyListener);
+		this.visible = true;
+		this._setHash(true);
+	},
+	_setHash : function(visible) {
+		//return; // Disabled
+		if (!this._listening) {
+			this._listening = true;
+			if (!hui.browser.msie6 && !hui.browser.msie7) {
+				hui.listen(window,'hashchange',this._onHashChange.bind(this));
+			}
+		}
+		if (visible) {
+			document.location='#imageviewer';
+		} else {
+			hui.location.clearHash();
+		}
+	},
+	_onHashChange : function() {
+		if (this._changing) return;
+		this._changing = true;
+		if (hui.location.hasHash('imageviewer') && !this.visible) {
+			this.show();
+		} else if (!hui.location.hasHash('imageviewer') && this.visible) {
+			this.hide();
+		}
+		this._changing = false;
 	},
 	/** Hide the image viewer */
 	hide: function() {
+		this._hide();
+	},
+	_hide : function() {
 		this.pause();
 		this.box.hide();
 		hui.unListen(document,'keydown',this._keyListener);
+		this.visible = false;
+		this._setHash(false);	
 	},
 
 
