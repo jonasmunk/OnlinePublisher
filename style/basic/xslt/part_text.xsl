@@ -34,15 +34,29 @@
 
 
 <xsl:template match="txt:image">
-	<img src="{$path}services/images/?id={o:object/@id}">
+	<xsl:variable name="src"><xsl:call-template name="txt:buildsrc"/></xsl:variable>
+	
+	<img src="{$src}">
 	<xsl:attribute name="class">
 		<xsl:choose>
-		<xsl:when test="@float='left'"><xsl:text>part_text_image_left</xsl:text></xsl:when>
-		<xsl:otherwise><xsl:text>part_text_image_right</xsl:text></xsl:otherwise>
+			<xsl:when test="@float='left'"><xsl:text>part_text_image_left</xsl:text></xsl:when>
+			<xsl:otherwise><xsl:text>part_text_image_right</xsl:text></xsl:otherwise>
 		</xsl:choose>
 	</xsl:attribute>
 	</img>
 </xsl:template>
+
+<xsl:template name="txt:buildsrc">
+	<xsl:value-of select="$path"/><xsl:text>services/images/?id=</xsl:text>
+	<xsl:value-of select="o:object/@id"/>
+	<xsl:if test="@width">
+		<xsl:text>&amp;width=</xsl:text><xsl:value-of select="@width"/>
+	</xsl:if>
+	<xsl:if test="@height">
+		<xsl:text>&amp;height=</xsl:text><xsl:value-of select="@height"/>
+	</xsl:if>
+</xsl:template>
+
 
 <xsl:template match="txt:p">
 	<p>

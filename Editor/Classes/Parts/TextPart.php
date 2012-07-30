@@ -26,7 +26,9 @@ Part::$schema['text'] = array(
 		'fontStyle' => array( 'type' => 'text', 'column' => 'fontstyle' ),
 		'fontVariant' => array( 'type' => 'text', 'column' => 'fontvariant' ),
 		'imageId' => array( 'type' => 'int', 'column' => 'image_id' ),
-		'imageFloat' => array( 'type' => 'text', 'column' => 'imagefloat' )
+		'imageFloat' => array( 'type' => 'text', 'column' => 'imagefloat' ),
+		'imageWidth' => array( 'type' => 'int', 'column' => 'imagewidth' ),
+		'imageHeight' => array( 'type' => 'int', 'column' => 'imageheight' )
 	)
 );
 class TextPart extends Part
@@ -47,6 +49,8 @@ class TextPart extends Part
 	var $fontVariant;
 	var $imageId;
 	var $imageFloat;
+	var $imageWidth;
+	var $imageHeight;
 	
 	function TextPart() {
 		parent::Part('text');
@@ -186,6 +190,22 @@ class TextPart extends Part
 
 	function getImageFloat() {
 	    return $this->imageFloat;
+	}
+	
+	function setImageWidth($imageWidth) {
+	    $this->imageWidth = $imageWidth;
+	}
+
+	function getImageWidth() {
+	    return $this->imageWidth;
+	}
+	
+	function setImageHeight($imageHeight) {
+	    $this->imageHeight = $imageHeight;
+	}
+
+	function getImageHeight() {
+	    return $this->imageHeight;
 	}
 	
 }

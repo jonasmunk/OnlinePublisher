@@ -8,6 +8,7 @@
 	font-size: 9pt;
 	line-height: 1.4em;
 	color: #333;
+	overflow: hidden;
 }
 
 div.part_text p

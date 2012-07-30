@@ -60,7 +60,57 @@ class TextPartController extends PartController
 		'<input type="hidden" name="textDecoration" value="'.StringUtils::escapeXML($part->getTextDecoration()).'"/>'.
 		'<input type="hidden" name="imageId" value="'.StringUtils::escapeXML($part->getImageId()).'"/>'.
 		'<input type="hidden" name="imageFloat" value="'.StringUtils::escapeXML($part->getImageFloat()).'"/>'.
+		'<input type="hidden" name="imageWidth" value="'.StringUtils::escapeXML($part->getImageWidth()).'"/>'.
+		'<input type="hidden" name="imageHeight" value="'.StringUtils::escapeXML($part->getImageHeight()).'"/>'.
 		'<script src="'.$baseUrl.'Editor/Parts/text/script.js" type="text/javascript" charset="utf-8"></script>';
+	}
+	
+	function editorGui($part,$context) {
+		$gui='		
+		<source name="gallerySource" url="../../Services/ImageChooser/GallerySource.php">
+			<parameter key="text" value="@search.value"/>
+			<parameter key="subset" value="@imageChooserSelection.value"/>
+			<parameter key="group" value="@imageGroupSelection.value"/>
+		</source>
+		<source name="groupOptionsSource" url="../../Services/Model/Items.php?type=imagegroup"/>
+		
+		<window title="Vælg billede" name="imageChooser" width="700" icon="common/search">
+			<layout>
+				<middle>
+					<left>
+						<overflow height="400">
+							<selection value="all" name="imageChooserSelection">
+								<item text="Alle billeder" icon="common/image" value="all"/>
+								<item text="Seneste" icon="common/time" value="latest"/>
+								<item text="Ikke brugt" icon="monochrome/round_question" value="unused"/>
+								<title>Grupper</title>
+								<item text="Uden gruppe" icon="common/folder_grey" value="nogroup"/>
+								<items source="groupOptionsSource" name="imageGroupSelection"/>
+							</selection>
+						</overflow>
+					</left>
+					<center>
+						<bar variant="layout">
+							<!--
+							<segmented>
+								<item icon="view/list" value="list"/>
+								<item icon="view/gallery" value="gallery"/>
+							</segmented>
+							<button small="true" text="Tilføj billede" click="imageUploadWindow.show()"/>
+							-->
+							<right>
+							<searchfield expanded-width="200" name="search"/>
+							</right>
+						</bar>
+						<overflow height="375">
+							<gallery source="gallerySource" name="imageGallery"/>
+						</overflow>
+					</center>
+				</middle>
+			</layout>
+		</window>
+		';
+		return In2iGui::renderFragment($gui);
 	}
 	
 	function getFromRequest($id) {
@@ -82,6 +132,10 @@ class TextPartController extends PartController
 			$part->setTextDecoration(Request::getString('textDecoration'));
 			$part->setImageId(Request::getInt('imageId'));
 			$part->setImageFloat(Request::getString('imageFloat'));
+			$width = Request::getInt('imageWidth');
+			$part->setImageWidth($width > 0 ? $width : null);
+			$height = Request::getInt('imageHeight');
+			$part->setImageHeight($height > 0 ? $height : null);
 		}
 		return $part;
 	}
@@ -97,7 +151,14 @@ class TextPartController extends PartController
 		if ($part->getImageId()>0) {
 			$data = Object::getObjectData($part->getImageId());
 			if (StringUtils::isNotBlank($data)) {
-				$xml.='<image float="'.StringUtils::escapeXML($part->getImageFloat()).'">'.$data.'</image>';
+				$xml.='<image float="'.StringUtils::escapeXML($part->getImageFloat()).'"';
+				if ($part->getImageWidth() > 0) {
+					$xml.=' width="'.$part->getImageWidth().'"';
+				}
+				if ($part->getImageHeight() > 0) {
+					$xml.=' height="'.$part->getImageHeight().'"';
+				}
+				$xml.='>'.$data.'</image>';
 			}
 		}
 		$xml.= '<p>'.$text.'</p>';
@@ -207,12 +268,27 @@ class TextPartController extends PartController
 			
 		'Billede' =>
 			'
+			<icon text="Vælg billede" icon="common/image" overlay="search" name="chooseImage"/>
 			<field label="Billede">
 				<dropdown name="imageId" width="180">
 					<item value="" title=""/>
 					'.GuiUtils::buildObjectItems('image').'
 				</dropdown>
 			</field>
+			<divider/>
+			<grid left="5" right="5">
+				<row>
+					<cell label="Bredde:" width="80" right="10">
+						<number-input adaptive="true" allow-null="true" name="imageWidth"/>
+					</cell>
+				</row>
+				<row>
+					<cell label="H&#248;jde:" width="80" right="10">
+						<number-input adaptive="true" allow-null="true" name="imageHeight"/>
+					</cell>
+				</row>
+			</grid>
+			<divider/>
 			<field label="Placering">
 				<segmented name="imageFloat">
 					<item icon="style/float_left" value="left"/>

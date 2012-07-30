@@ -210,8 +210,15 @@
 <xsl:template match="gui:toolbar//gui:grid">
 	<span class="hui_toolbar_grid">
 	<table class="hui_toolbar_grid">
-		<xsl:if test="@left">
-			<xsl:attribute name="style">margin-left:<xsl:value-of select="@left"/>px;</xsl:attribute>
+		<xsl:if test="@left or @right">
+		<xsl:attribute name="style">
+			<xsl:if test="@left">
+				margin-left:<xsl:value-of select="@left"/>px;
+			</xsl:if>
+			<xsl:if test="@right">
+				margin-right:<xsl:value-of select="@right"/>px;
+			</xsl:if>
+		</xsl:attribute>
 		</xsl:if>
 		<xsl:apply-templates/>
 	</table>

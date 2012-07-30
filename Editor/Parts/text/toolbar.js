@@ -1,4 +1,4 @@
-hui.ui.listen({
+var textPartToolbar = {
 	$ready : function() {
 		this.form = partToolbar.partForm;
 		fontWeight.setValue(this.form.fontWeight.value);
@@ -16,7 +16,15 @@ hui.ui.listen({
 		textIndent.setValue(this.form.textIndent.value);
 		imageId.setValue(this.form.imageId.value);
 		imageFloat.setValue(this.form.imageFloat.value);
+		imageWidth.setValue(this._toLength(this.form.imageWidth.value));
+		imageHeight.setValue(this._toLength(this.form.imageHeight.value));
 		this._updateInitialValues();
+	},
+	_toLength : function(value) {
+		if (value=='0') {
+			return '';
+		}
+		return value;
 	},
 	_updateInitialValues : function() {
 		fontSize.setInitialValue(hui.style.get(this.form.text,'font-size'));
@@ -94,5 +102,15 @@ hui.ui.listen({
 	$valueChanged$imageFloat : function(value) {
 		this.form.imageFloat.value=value || '';
 		this.form.text.style.imageFloat=value || '';
+	},
+	$valueChanged$imageHeight : function(value) {
+		this.form.imageHeight.value=value || '';
+	},
+	$valueChanged$imageWidth : function(value) {
+		this.form.imageWidth.value=value || '';
+	},
+	$click$chooseImage : function() {
+		partToolbar.getMainController().chooseImage();
 	}
-});
+}
+hui.ui.listen(textPartToolbar);

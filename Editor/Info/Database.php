@@ -625,7 +625,9 @@ $databaseTables = array(
 			array("fontstyle","varchar(50)","YES","","",""),
 			array("fontvariant","varchar(50)","YES","","",""),
 			array("image_id","int(11)","YES","","",""),
-			array("imagefloat","varchar(50)","YES","","left","")
+			array("imagefloat","varchar(50)","YES","","left",""),
+			array("imagewidth","int(11)","YES","","",""),
+			array("imageheight","int(11)","YES","","","")
 		),
 	'path' => array(
 			array("object_id","int(11)","","","0",""),
