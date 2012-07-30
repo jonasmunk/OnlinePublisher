@@ -32,10 +32,10 @@ foreach ($templates as $template) {
 }
 
 $languageItems = '
-	<item value="" title="Intet"/>
-	<item value="DA" title="Dansk"/>
-	<item value="EN" title="Engelsk"/>
-	<item value="DE" title="Tysk"/>
+	<item value="" title="{None;da:Intet}"/>
+	<item value="DA" title="{Danish;da:Dansk}"/>
+	<item value="EN" title="{English;da:Engelsk}"/>
+	<item value="DE" title="{German;da:Tysk}"/>
 ';
 
 $gui='
@@ -68,23 +68,23 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/page" title="Ny side" overlay="new" name="newPage"/>
-				<icon icon="common/hierarchy_item" title="Nyt punkt" overlay="new" name="newHierarchyItem" disabled="true"/>
-				<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" name="newHierarchy"/>
+				<icon icon="common/page" title="{New page;da:Ny side}" overlay="new" name="newPage"/>
+				<icon icon="common/hierarchy_item" title="{New point;da:Nyt punkt}" overlay="new" name="newHierarchyItem" disabled="true"/>
+				<icon icon="common/hierarchy" title="{New hierarchy;da:Nyt hierarki}" overlay="new" name="newHierarchy"/>
 				<divider/>
 				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="box.show()"/>-->
-				<icon icon="common/edit" title="Rediger" name="edit" disabled="true"/>
+				<icon icon="common/edit" title="{Edit ; da:Rediger}" name="edit" disabled="true"/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
-				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
-				<icon icon="common/delete" title="Slet" name="delete" disabled="true">
-					<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet" cancel="Annuller"/>
+				<icon icon="common/view" title="{Show ; da:Vis}" name="view" disabled="true"/>
+				<icon icon="common/delete" title="{Delete;da:Slet}" name="delete" disabled="true">
+					<confirm text="{Are you sure? It cannot be undone; da:Er du sikker? Det kan ikke fortrydes!}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel;da:Annuller}"/>
 				</icon>
 				<right>
-					<field label="Søgning">
+					<field label="{Search; da:Søgning}">
 						<searchfield name="search" expanded-width="200"/>
 					</field>
 					<divider/>
-					<icon icon="common/settings" title="Avanceret" name="advanced"/>
+					<icon icon="common/settings" title="{Advanced;da:Avanceret}" name="advanced"/>
 				</right>
 			</toolbar>
 		</top>
@@ -92,29 +92,29 @@ $gui='
 			<left>
 				<overflow>
 					<selection value="all" name="selector">
-						<item icon="common/page" title="Alle sider" value="all"/>
-						<item icon="common/time" title="Seneste" value="latest"/>
-						<title>Hierarkier</title>
+						<item icon="common/page" title="{All pages; da:Alle sider}" value="all"/>
+						<item icon="common/time" title="{Latest; da:Seneste}" value="latest"/>
+						<title>{Hierarchies;da:Hierarkier}</title>
 						<items source="hierarchySource"/>
-						<title>Sprog</title>
+						<title>{Language; da:Sprog}</title>
 						<items source="languageSource"/>
 						<title>Oversigter</title>
-						<item icon="monochrome/news" title="Nyheder" value="news" kind="subset"/>
-						<item icon="monochrome/warning" title="Advarsler" value="warnings" kind="subset"/>
-						<item icon="monochrome/edit" title="Ændret" value="changed" kind="subset"/>
-						<item icon="monochrome/delete" title="Uden menupunkt" value="nomenu" kind="subset"/>
-						<item icon="monochrome/stamp" title="Revidering" value="review" kind="subset"/>
+						<item icon="monochrome/news" title="{News ; da:Nyheder}" value="news" kind="subset"/>
+						<item icon="monochrome/warning" title="{Warnings ; da:Advarsler}" value="warnings" kind="subset"/>
+						<item icon="monochrome/edit" title="{Changed ; da:Ændret}" value="changed" kind="subset"/>
+						<item icon="monochrome/delete" title="{No menu item ; da:Uden menupunkt}" value="nomenu" kind="subset"/>
+						<item icon="monochrome/stamp" title="{Review ; da:Revidering}" value="review" kind="subset"/>
 					</selection>
 				</overflow>
 			</left>
 			<center>
 				<bar name="reviewBar" variant="layout" visible="false">
-					<text text="Her vises en oversigt over revidering af sider"/>
+					<text text="{Shows a list of page reviews; da:Her vises en oversigt over revidering af sider}"/>
 					<right>
 					<segmented value="day" name="reviewSpan">
-						<item text="Vis alle" value="all"/>
-						<item text="Et døgn" value="day"/>
-						<item text="7 dage" value="week"/>
+						<item text="{Show all; da:Vis alle}" value="all"/>
+						<item text="{24 hours; da:Et døgn}" value="day"/>
+						<item text="{7 days; da:7 dage}" value="week"/>
 					</segmented>
 					</right>
 				</bar>
@@ -128,31 +128,31 @@ $gui='
 		</bottom>
 	</structure>
 	
-	<window name="pageEditor" width="400" title="Side" icon="common/page">
+	<window name="pageEditor" width="400" title="{Page ; da:Side}" icon="common/page">
 		<toolbar variant="window">
 			<icon icon="common/info" text="Info" selected="true" name="pageInfo"/>
 			<!--
 			<icon icon="common/settings" text="Avanceret" click="pageEditor.flip()"/>
 			-->
-			<icon icon="common/flag" text="Sprog" name="pageTranslation"/>
+			<icon icon="common/flag" text="{Language; da:Sprog}" name="pageTranslation"/>
 			<right>
-			<icon icon="common/internet" text="Udgiv" overlay="upload" name="publishPage" disabled="true"/>
-			<icon icon="common/edit" text="Rediger" name="editPage"/>
-			<icon icon="common/view" text="Vis" name="viewPage"/>
+			<icon icon="common/internet" text="{Publish; da:Udgiv}" overlay="upload" name="publishPage" disabled="true"/>
+			<icon icon="common/edit" text="{Edit ; da:Rediger}" name="editPage"/>
+			<icon icon="common/view" text="{Show ; da:Vis}" name="viewPage"/>
 			</right>
 		</toolbar>
 		<fragment name="pageInfoFragment">
 			<formula name="pageFormula" padding="5">
 				<fields labels="above">
-					<field label="Titel:">
+					<field label="{Title ; da: Titel}:">
 						<text-input key="title"/>
 					</field>
-					<field label="Beskrivelse:">
-						<text-input key="description" label="Beskrivelse:" multiline="true"/>
+					<field label="{Description; da:Beskrivelse}:">
+						<text-input key="description" multiline="true"/>
 					</field>
 				</fields>
 				<fields>
-					<field label="Sprog:">
+					<field label="{Language; da:Sprog}:">
 						<dropdown key="language" placeholder="Vælg sprog...">
 							'.$languageItems.'
 						</dropdown>
@@ -162,26 +162,26 @@ $gui='
 							'.$designItems.'
 						</dropdown>
 					</field>
-					<field label="Opsætning:">
+					<field label="{Setup; da:Opsætning}:">
 						<dropdown key="frameId">
 							'.$frameItems.'
 						</dropdown>
 					</field>
-					<field label="Sti:">
+					<field label="{Path; da:Sti}:">
 						<text-input key="path"/>
 					</field>
-					<field label="Søgbar:">
+					<field label="{Searchable; da:Søgbar}:">
 						<checkbox key="searchable"/>
 					</field>
-					<field label="Inaktiv:">
+					<field label="{Inactive; da:Inaktiv}:">
 						<checkbox key="disabled"/>
 					</field>
 					<buttons>
-						<button name="cancelPage" title="Annuller"/>
-						<button name="deletePage" title="Slet">
-							<confirm text="Er du sikker? Det kan ikke fortrydes!" ok="Ja, slet side" cancel="Nej"/>
+						<button name="cancelPage" title="{Cancel; da:Annuller}"/>
+						<button name="deletePage" title="{Delete; da:Slet}">
+							<confirm text="{Are you sure? It cannot be undone! ; da:Er du sikker? Det kan ikke fortrydes!}" ok="{Yes, delete page; da:Ja, slet side}" cancel="{No; da:Nej}"/>
 						</button>
-						<button name="savePage" title="Gem" highlighted="true"/>
+						<button name="savePage" title="{Save; da:Gem}" highlighted="true"/>
 					</buttons>
 				</fields>
 			</formula>
@@ -193,7 +193,7 @@ $gui='
 			</bar>-->
 			<list name="pageTranslationList" selectable="false"/>
 			<buttons top="5" left="5" bottom="3">
-				<button text="Tilføj oversættelse" highlighted="true" small="true" name="addTranslation"/>
+				<button text="{Add translation; da:Tilføj oversættelse}" highlighted="true" small="true" name="addTranslation"/>
 			</buttons>
 		</fragment>
 		<back>
