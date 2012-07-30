@@ -46,6 +46,22 @@ class ImageService {
 		}
 	}
 	
+	function getGroupCounts() {
+		$out = array();
+		$sql="select distinct object.id,object.title,count(image.object_id) as imagecount from imagegroup, imagegroup_image, image,object  where imagegroup_image.imagegroup_id=imagegroup.object_id and imagegroup_image.image_id = image.object_id and object.id=imagegroup.object_id group by imagegroup.object_id union select object.id,object.title,'0' from object left join imagegroup_image on imagegroup_image.imagegroup_id=object.id where object.type='imagegroup' and imagegroup_image.image_id is null order by title";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$out[] = array(
+				'id' => $row['id'],
+				'title' => $row['title'],
+				'count' => $row['imagecount']
+			);
+		}
+		Database::free($result);
+		return $out;
+	}
+
+	
 	function getTotalImageCount() {
     	$sql= "select count(object.id) as num FROM object,image where image.object_id=object.id";
         if ($row = Database::selectFirst($sql)) {

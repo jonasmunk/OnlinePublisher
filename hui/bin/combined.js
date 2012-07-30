@@ -8812,7 +8812,27 @@ hui.ui.ImageInput.prototype = {
 			this.element.style.backgroundImage = 'url('+url+')';
 		}
 	},
+	_showFinder : function() {
+		if (!this.finder) {
+			this.finder = hui.ui.Finder.create(
+				this.options.finder
+			);
+			this.finder.listen({
+				$select : function(object) {
+					this.setObject(object);
+					this._fireChange();
+					this.finder.hide();
+				}.bind(this)
+			})
+		}
+		this.finder.show();
+	},
 	_showPicker : function() {
+		if (this.options.finder) {
+			this._showFinder();
+			return;
+		}
+		
 		if (!this.picker) {
 			var self = this;
 			this.picker = hui.ui.BoundPanel.create({modal:true});
@@ -8843,6 +8863,15 @@ hui.ui.ImageInput.prototype = {
 	},
 	_hidePicker : function() {
 		this.picker.hide();
+	},
+		/** @private */
+	$visibilityChanged : function() {
+		if (this.picker && !hui.dom.isVisible(this.element)) {
+			this.picker.hide();
+		}
+		if (this.finder && !hui.dom.isVisible(this.element)) {
+			this.finder.hide();
+		}
 	},
 	_fireChange : function() {
 		this.fireValueChange();
@@ -16544,7 +16573,9 @@ hui.ui.Finder.prototype = {
 	
 	_selectionChanged : function() {
 		var row = this.list.getFirstSelection();
-		this.fire('select',row);
+		if (row!=null) {
+			this.fire('select',row);
+		}
 	}
 }
 
@@ -16904,29 +16935,11 @@ hui.ui.ObjectInput.prototype = {
 			}
 		}
 	},
-	_showPageFinder : function() {
-		if (!this._pageFinder) {
-			this._pageFinder = hui.ui.Finder.create({
-				title : 'Vælg side',
-				selection : {}
-			});
-		}
-		this._pageFinder.show();
-	},
 	_selectObject : function(type,object) {
 		this.value = {type : type.key, value : object};
 		this._updateUI();
 		this._closeAllFinders();
 		this.fireValueChange();
-	},
-	_showFileFinder : function() {
-		if (!this._fileFinder) {
-			this._fileFinder = hui.ui.Finder.create({
-				title : 'Vælg fil',
-				selection : {}
-			});
-		}
-		this._fileFinder.show();
 	},
 	_updateUI : function() {
 		var value = this.value;

@@ -12,7 +12,7 @@ $sort = Request::getString('sort','title');
 $direction = Request::getString('direction','ascending');
 $group = Request::getInt('group',0);
 
-$query = Query::after('file')->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction)->orderBy($sort)->withText($queryString);
+$query = Query::after('image')->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction)->orderBy($sort)->withText($queryString);
 if ($group) {
 	$query->withCustom('group',$group);
 }

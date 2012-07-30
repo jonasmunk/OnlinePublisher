@@ -117,7 +117,9 @@ hui.ui.Finder.prototype = {
 	
 	_selectionChanged : function() {
 		var row = this.list.getFirstSelection();
-		this.fire('select',row);
+		if (row!=null) {
+			this.fire('select',row);
+		}
 	}
 }
 

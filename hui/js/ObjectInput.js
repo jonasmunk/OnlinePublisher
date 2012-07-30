@@ -87,29 +87,11 @@ hui.ui.ObjectInput.prototype = {
 			}
 		}
 	},
-	_showPageFinder : function() {
-		if (!this._pageFinder) {
-			this._pageFinder = hui.ui.Finder.create({
-				title : 'Vælg side',
-				selection : {}
-			});
-		}
-		this._pageFinder.show();
-	},
 	_selectObject : function(type,object) {
 		this.value = {type : type.key, value : object};
 		this._updateUI();
 		this._closeAllFinders();
 		this.fireValueChange();
-	},
-	_showFileFinder : function() {
-		if (!this._fileFinder) {
-			this._fileFinder = hui.ui.Finder.create({
-				title : 'Vælg fil',
-				selection : {}
-			});
-		}
-		this._fileFinder.show();
 	},
 	_updateUI : function() {
 		var value = this.value;
