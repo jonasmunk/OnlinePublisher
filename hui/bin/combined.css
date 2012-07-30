@@ -2948,9 +2948,31 @@ div.hui_list_busy td
 	color: #999;
 }
 
+/** errors **/
+
+div.hui_list_error_content
+{
+	display: none;
+}
+
 div.hui_list_error td
 {
 	color: red;
+}
+
+div.hui_list_error div.hui_list_error_content
+{
+	display: block;
+}
+
+p.hui_list_error_text
+{
+	background: url('../gfx/warning_large.png') center 13px no-repeat;
+	padding-top: 50px;
+	font-size: 12px;
+	text-align: center;
+	color: #999;
+	margin: 0;
 }
 
 div.hui_list td a.hui_button

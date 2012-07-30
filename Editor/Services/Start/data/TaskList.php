@@ -17,7 +17,7 @@ foreach($list as $item) {
 	$page = PageQuery::getRows()->withRelationFrom($item)->first();
 	$writer->startRow()->
 		startCell(array('variant'=>'card'));
-		$writer->startLine(array('mini'=>false))->text($item->getNote())->endLine();
+		$writer->startLine(array('mini'=>false))->text(StringUtils::shortenString($item->getNote(),300))->endLine();
 		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text(IssueService::translateKind($item->getKind()))->endLine();
 		if ($page) {
 			$writer->startLine(array('class'=>'task_page'))->

@@ -1464,6 +1464,7 @@ hui.request = function(options) {
 					options.onAbort(transport);
 				}
 			}
+			//hui.request._forget(transport);
 		} catch (e) {
 			if (options.onException) {
 				options.onException(e,transport)
@@ -1517,8 +1518,25 @@ hui.request = function(options) {
 		}
 	}
 	transport.send(body);
+	//hui.request._transports.push(transport);
+	//hui.log('Add: '+hui.request._transports.length);
 	return transport;
 }
+/*
+hui.request._transports = [];
+
+hui.request._forget = function(t) {
+	hui.log('Forget: '+hui.request._transports.length);
+	hui.array.remove(hui.request._transports, t);
+}
+
+hui.request.abort = function() {
+	window.stop();
+	for (var i = hui.request._transports.length - 1; i >= 0; i--){
+		hui.log('aborting: '+hui.request._transports[i].readyState)
+		hui.request._transports[i].abort();
+	};
+}*/
 
 /**
  * Check if a http request has a valid XML response
@@ -12659,7 +12677,19 @@ hui.ui.Dock.prototype = {
 	 */
 	setUrl : function(url) {
 		this._setBusy(true);
-		hui.frame.getDocument(this.iframe).location.href='about:blank';
+		/*
+		var win = hui.frame.getWindow(this.iframe);
+		try {
+			hui.log('Trying to abort!');
+			if (win['hui']) {
+				win.hui.request.abort();
+			} else {
+				hui.log('No HUI found');
+			}
+		} catch (e) {
+			hui.log(e)
+		}*/
+		//hui.frame.getDocument(this.iframe).location.href='about:blank';
 		hui.frame.getDocument(this.iframe).location.href=url;
 	},
 	collapse : function() {

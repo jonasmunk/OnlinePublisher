@@ -74,7 +74,19 @@ hui.ui.Dock.prototype = {
 	 */
 	setUrl : function(url) {
 		this._setBusy(true);
-		hui.frame.getDocument(this.iframe).location.href='about:blank';
+		/*
+		var win = hui.frame.getWindow(this.iframe);
+		try {
+			hui.log('Trying to abort!');
+			if (win['hui']) {
+				win.hui.request.abort();
+			} else {
+				hui.log('No HUI found');
+			}
+		} catch (e) {
+			hui.log(e)
+		}*/
+		//hui.frame.getDocument(this.iframe).location.href='about:blank';
 		hui.frame.getDocument(this.iframe).location.href=url;
 	},
 	collapse : function() {

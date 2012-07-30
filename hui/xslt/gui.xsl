@@ -607,6 +607,14 @@
 					<xsl:apply-templates select="gui:empty"/>
 				</div>
 			</xsl:if>
+			<xsl:if test="gui:error">
+				<div class="hui_list_error_content">
+					<xsl:if test="gui:error/@text">
+						<p class="hui_list_error_text"><xsl:value-of select="gui:error/@text"/></p>
+					</xsl:if>
+					<xsl:apply-templates select="gui:error"/>
+				</div>
+			</xsl:if>
 		</div>
 	</div>
 	<script type="text/javascript">

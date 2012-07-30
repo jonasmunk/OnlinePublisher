@@ -49,6 +49,7 @@ class RemoteDataService {
 	        $ch = curl_init();
 	        curl_setopt($ch, CURLOPT_URL, $url);
 	        curl_setopt($ch, CURLOPT_HEADER, 0);
+			//curl_setopt($ch, CURLOPT_TIMEOUT, 2);
 			if ($file = fopen($path, "wb")) {
 		    	curl_setopt($ch, CURLOPT_FILE, $file);
             	$success = curl_exec($ch);

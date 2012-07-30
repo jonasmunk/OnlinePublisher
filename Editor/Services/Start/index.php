@@ -61,17 +61,23 @@ $gui='
 					<pages name="developmentPages" height="full">
 						<page>
 							<overflow full="true" shadow-variant="white">
-								<list source="newsFeed" name="newsList" selectable="false" indent="10"/>
+								<list source="newsFeed" name="newsList" selectable="false" indent="10">
+									<error text="{It was not possible to list news; da:Det lykkedes ikke at hente nyheder}"/>
+								</list>
 							</overflow>
 						</page>
 						<page>
 							<overflow full="true" shadow-variant="white">
-								<list source="developerFeed" selectable="false" indent="10"/>
+								<list source="developerFeed" selectable="false" indent="10">
+									<error text="{It was not possible to list news; da:Det lykkedes ikke at hente nyheder}"/>
+								</list>
 							</overflow>
 						</page>
 						<page>
 							<overflow full="true" shadow-variant="white">
-								<list source="commitFeed" selectable="false" indent="10"/>
+								<list source="commitFeed" selectable="false" indent="10">
+									<error text="{It was not possible to list news; da:Det lykkedes ikke at hente nyheder}"/>
+								</list>
 							</overflow>
 						</page>
 					</pages>
