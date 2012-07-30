@@ -82,7 +82,7 @@
 		<script src="{$context}/hui/js/Button.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Selection.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Toolbar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-		<script src="{$context}/hui/js/ImagePicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/ImageInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/BoundPanel.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Picker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/ImageViewer.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>

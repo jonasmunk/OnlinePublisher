@@ -580,17 +580,29 @@
 
 
 
-<!--doc title:'Image input' class:'hui.ui.ImagePicker' module:'input'
+<!--doc title:'Image input' class:'hui.ui.ImageInput' module:'input'
 <image-input name="«text»" source="«url»"/>
 -->
 <xsl:template match="gui:image-input">
-	<div class="hui_imagepicker" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
+	<div class="hui_imageinput" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImagePicker({
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImageInput({
 			element : '<xsl:value-of select="generate-id()"/>',
 			name : '<xsl:value-of select="@name"/>',
 			key : '<xsl:value-of select="@key"/>',
 			source : '<xsl:value-of select="@source"/>'
+			<xsl:if test="gui:finder">
+				,finder : {
+					title : '<xsl:value-of select="gui:finder/@title"/>',
+					list : {url:'<xsl:value-of select="gui:finder/@list-url"/>'},
+					selection : {
+						url : '<xsl:value-of select="gui:finder/@selection-url"/>',
+						value : '<xsl:value-of select="gui:finder/@selection-value"/>',
+						parameter : '<xsl:value-of select="gui:finder/@selection-parameter"/>'
+					},
+					search : {parameter : '<xsl:value-of select="gui:finder/@search-parameter"/>'}
+				}
+			</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

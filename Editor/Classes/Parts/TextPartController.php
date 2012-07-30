@@ -278,12 +278,12 @@ class TextPartController extends PartController
 			<divider/>
 			<grid left="5" right="5">
 				<row>
-					<cell label="Bredde:" width="80" right="10">
+					<cell label="Bredde:" width="80">
 						<number-input adaptive="true" allow-null="true" name="imageWidth"/>
 					</cell>
 				</row>
 				<row>
-					<cell label="H&#248;jde:" width="80" right="10">
+					<cell label="H&#248;jde:" width="80">
 						<number-input adaptive="true" allow-null="true" name="imageHeight"/>
 					</cell>
 				</row>

@@ -8772,7 +8772,7 @@ hui.ui.Toolbar.More.prototype = {
 	Used to choose an image
 	@constructor
 */
-hui.ui.ImagePicker = function(options) {
+hui.ui.ImageInput = function(options) {
 	this.name = options.name;
 	this.options = hui.override({width:48,height:48},options);
 	this.element = hui.get(options.element);
@@ -8783,7 +8783,7 @@ hui.ui.ImagePicker = function(options) {
 	this._addBehavior();
 }
 
-hui.ui.ImagePicker.prototype = {
+hui.ui.ImageInput.prototype = {
 	_addBehavior : function() {
 		hui.listen(this.element,'click',this._showPicker.bind(this));
 	},
@@ -8816,7 +8816,7 @@ hui.ui.ImagePicker.prototype = {
 		if (!this.picker) {
 			var self = this;
 			this.picker = hui.ui.BoundPanel.create({modal:true});
-			this.content = hui.build('div',{'class':'hui_imagepicker_thumbs'});
+			this.content = hui.build('div',{'class':'hui_imageinput_thumbs'});
 			var buttons = hui.ui.Buttons.create({align:'right'});
 			var close = hui.ui.Button.create({text:'Luk',highlighted:true,small:true});
 			close.listen({
@@ -8864,7 +8864,7 @@ hui.ui.ImagePicker.prototype = {
 			var id = parseInt(images[i].getAttribute('id'));
 			var img = {id:id};
 			var url = hui.ui.resolveImageUrl(this,img,48,48);
-			var thumb = hui.build('div',{'class':'hui_imagepicker_thumbnail',style:'background-image:url('+url+')'});
+			var thumb = hui.build('div',{'class':'hui_imageinput_thumbnail',style:'background-image:url('+url+')'});
 			thumb.huiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.huiObject);
