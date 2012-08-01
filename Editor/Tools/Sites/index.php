@@ -102,7 +102,7 @@ $gui='
 						<title>Oversigter</title>
 						<item icon="monochrome/news" title="{News ; da:Nyheder}" value="news" kind="subset"/>
 						<item icon="monochrome/warning" title="{Warnings ; da:Advarsler}" value="warnings" kind="subset"/>
-						<item icon="monochrome/edit" title="{Changed ; da:Ændret}" value="changed" kind="subset"/>
+						<item icon="monochrome/edit" title="{Modified ; da:Ændret}" value="changed" kind="subset"/>
 						<item icon="monochrome/delete" title="{No menu item ; da:Uden menupunkt}" value="nomenu" kind="subset"/>
 						<item icon="monochrome/stamp" title="{Review ; da:Revidering}" value="review" kind="subset"/>
 					</selection>

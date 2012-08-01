@@ -15,7 +15,7 @@ foreach ($counts as $row) {
 	$options = array('kind'=>'language');
 	if ($row['language']==null || count($row['language'])==0) {
 		$options['icon'] = 'monochrome/round_question';
-		$options['title'] = 'Intet sprog';
+		$options['title'] = array('No language', 'da'=>'Intet sprog');
 	} else {
 		$options['icon'] = GuiUtils::getLanguageIcon($row['language']);
 		$options['title'] = GuiUtils::getLanguageName($row['language']);

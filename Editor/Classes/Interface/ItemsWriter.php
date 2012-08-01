@@ -21,7 +21,7 @@ class ItemsWriter {
 			echo ' value="'.StringUtils::escapeXML($options['value']).'"';
 		}
 		if (isset($options['title'])) {
-			echo ' title="'.StringUtils::escapeXML($options['title']).'"';
+			echo ' title="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
 		}
 		if (isset($options['icon'])) {
 			echo ' icon="'.$options['icon'].'"';
