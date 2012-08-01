@@ -21,6 +21,7 @@ function listImages($text) {
 
 	$subset = Request::getString('subset');
 	$group = Request::getInt('group',null);
+	InternalSession::setToolSessionVar('images','group',$group);
 	$text = Request::getUnicodeString('text');
 	$windowSize = Request::getInt('windowSize',30);
 	$windowPage = Request::getInt('windowPage',0);
@@ -50,10 +51,10 @@ function listImages($text) {
 		sort($sort,$direction)->
 		window(array('total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage))->
 		startHeaders()->
-			header(array('title'=>'Billede','width'=>40))->
-			header(array('title'=>'Størrelse'))->
-			header(array('title'=>'Højde'))->
-			header(array('title'=>'Bredde'))->
+			header(array('title'=>array('Image','da'=>'Billede'),'width'=>40))->
+			header(array('title'=>array('Size', 'da'=>'Størrelse')))->
+			header(array('title'=>array('Height', 'da'=>'Højde')))->
+			header(array('title'=>array('Width', 'da'=>'Bredde')))->
 			header(array('title'=>'Type'))->
 		endHeaders();
 

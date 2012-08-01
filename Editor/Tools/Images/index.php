@@ -20,9 +20,9 @@ $gui='
 	<controller source="upload.js"/>
 	<source name="subsetSource" url="data/Selection.php"/>
 	<source name="groupOptionsSource" url="../../Services/Model/Items.php?type=imagegroup"/>
-	<source name="groupSource" url="GroupItems.php"/>
+	<source name="groupSource" url="data/GroupItems.php"/>
 	<!--<source name="typesSource" url="TypeItems.php"/>-->
-	<source name="imagesSource" url="GallerySource.php">
+	<source name="imagesSource" url="data/GallerySource.php">
 		<parameter key="text" value="@search.value"/>
 		<parameter key="group" value="@groupSelection.value"/>
 		<parameter key="subset" value="@subsetSelection.value"/>
@@ -36,24 +36,24 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/image" title="{Add file ; da:Tilføj billede}" overlay="upload" name="newFile"/>
+				<icon icon="common/image" title="{Add image ; da:Tilføj billede}" overlay="upload" name="newFile"/>
 				<icon icon="common/folder" title="{New group; da:Ny gruppe}" name="newGroup" overlay="new"/>
 				<divider/>
 				<icon icon="common/info" title="Info" name="info" disabled="true"/>
-				<icon icon="common/delete" title="Slet" name="delete" disabled="true">
-					<confirm text="Er du sikker?" ok="Ja, slet billedet" cancel="Annuller"/>
+				<icon icon="common/delete" title="{Delete; da:Slet}" name="delete" disabled="true">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete image; da:Ja, slet billedet}" cancel="{No; da:Nej}"/>
 				</icon>
-				<icon icon="file/generic" title="Hent" overlay="download" name="download" disabled="true"/>
-				<icon icon="common/view" title="Vis" name="view" disabled="true"/>
+				<icon icon="file/generic" title="{Download; da:Hent}" overlay="download" name="download" disabled="true"/>
+				<icon icon="common/view" title="{View; da:Vis}" name="view" disabled="true"/>
 				<divider/>
-				<field label="Visning">
+				<field label="{View; da:Visning}">
 					<segmented value="gallery" name="viewSwitch">
 						<item value="list" icon="view/list"/>
 						<item value="gallery" icon="view/gallery"/>
 					</segmented>
 				</field>
 				<right>
-					<field label="Søgning">
+					<field label="{Search; da:Søgning}">
 						<searchfield name="search" expanded-width="200"/>
 					</field>
 				</right>
@@ -64,7 +64,7 @@ $gui='
 				<overflow>
 					<selection value="all" name="selector">
 						<items source="subsetSource" name="subsetSelection"/>
-						<items source="groupSource" name="groupSelection" title="Grupper"/>
+						<items source="groupSource" name="groupSelection" title="{Groups; da:Grupper}"/>
 					</selection>
 				</overflow>
 			</left>
@@ -84,67 +84,67 @@ $gui='
 		<bottom/>
 	</structure>
 	
-	<window title="Gruppe" name="groupWindow" icon="common/folder" width="300" padding="5">
+	<window title="{Group; da:Gruppe}" name="groupWindow" icon="common/folder" width="300" padding="5">
 		<formula name="groupFormula">
 			<fields labels="above">
-				<field label="Titel">
+				<field label="{Title; da:Titel}">
 					<text-input key="title"/>
 				</field>
 				<buttons>
-					<button name="cancelGroup" title="Annuller"/>
-					<button name="deleteGroup" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet gruppen" cancel="Nej"/>
+					<button name="cancelGroup" title="{Cancel; da:Annuller}"/>
+					<button name="deleteGroup" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure? da:Er du sikker?}" ok="{Yes, delete group; da:Ja, slet gruppen}" cancel="{No; da:Nej}"/>
 					</button>
-					<button name="saveGroup" title="Gem" highlighted="true"/>
+					<button name="saveGroup" title="{Save; da:Gem}" highlighted="true"/>
 				</buttons>
 			</fields>
 		</formula>
 	</window>
 	
-	<window title="Tilføjelse af nyt billede" name="uploadWindow" width="300">
+	<window title="{Addition on new image; da:Tilføjelse af nyt billede}" name="uploadWindow" width="300">
 		<tabs small="true" centered="true">
 			<tab title="Upload" padding="10">
-				<upload name="file" url="UploadImage.php" widget="upload" multiple="true">
-					<placeholder title="Vælg billeder på din computer..." text="Filen kan højest være '.$maxUploadSize.' stor"/>
+				<upload name="file" url="actions/UploadImage.php" widget="upload" multiple="true">
+					<placeholder title="{Choose images on your computer...; da:Vælg billeder på din computer...}" text="{The file can at most be '.$maxUploadSize.' large; da:Filen kan højest være '.$maxUploadSize.' stor}"/>
 				</upload>
 				<buttons align="center" top="10">
-					<button name="cancelUpload" title="Luk"/>
-					<button name="upload" title="Vælg billeder..." highlighted="true"/>
+					<button name="cancelUpload" title="{Close; da:Luk}"/>
+					<button name="upload" title="{Choose images...; da:Vælg billeder...}" highlighted="true"/>
 				</buttons>
 			</tab>
-			<tab title="Hent fra nettet" padding="10">
+			<tab title="{Fetch from the net; da:Hent fra nettet}" padding="10">
 				<formula name="fetchFormula">
 					<fields labels="above">
-						<field label="Adresse:">
+						<field label="{Address; da:Adresse}:">
 							<text-input key="url"/>
 						</field>
 					</fields>
 				</formula>
 				<buttons align="center">
-					<button name="cancelFetch" title="Annuller"/>
-					<button name="fetchImage" title="Hent" highlighted="true"/>
+					<button name="cancelFetch" title="{Cancel; da:Annuller}"/>
+					<button name="fetchImage" title="{Fetch; da:Hent}" highlighted="true"/>
 				</buttons>
 			</tab>
 		</tabs>
 	</window>
 	
-	<window title="Billede" name="imageWindow" icon="file/generic" width="300" padding="5">
+	<window title="{Image; da:Billede}" name="imageWindow" icon="common/image" width="300" padding="5">
 		<formula name="imageFormula">
 			<fields labels="above">
-				<field label="Titel">
+				<field label="{Title; da:Titel}">
 					<text-input key="title"/>
 				</field>
-				<field label="Grupper:">
+				<field label="{Groups; da:Grupper}:">
 					<checkboxes name="imageGroups" key="groups" max-height="200">
 						<items source="groupOptionsSource"/>
 					</checkboxes>
 				</field>
 				<buttons>
-					<button name="cancelImage" title="Annuller"/>
-					<button name="deleteImage" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet billedet" cancel="Annuller"/>
+					<button name="cancelImage" title="{Cancel; da:Annuller}"/>
+					<button name="deleteImage" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete image; da:Ja, slet billedet}" cancel="{Cancel; da:Annuller}"/>
 					</button>
-					<button name="saveImage" title="Gem" highlighted="true" submit="true"/>
+					<button name="saveImage" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>

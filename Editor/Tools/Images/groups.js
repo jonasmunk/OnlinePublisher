@@ -18,14 +18,14 @@ hui.ui.listen({
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			hui.ui.showMessage({text:'Du skal angive en titel!',duration:2000});
+			hui.ui.showMessage({text:{en:'The title is required', da:'Titlen er krævet'},duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
 			hui.ui.request({
-				json:{data:values},
-				url:'SaveGroup.php',
-				message:{start:'Gemmer gruppe...',success:'Gruppen er gemt',delay:300},
+				json : {data:values},
+				url : 'actions/SaveGroup.php',
+				message : {start: {en:'Saving group...', da:'Gemmer gruppe...'},success:{en:'The group has been saved', da:'Gruppen er gemt'},delay:300},
 				onSuccess : function() {
 					groupTitle.setText(values.title);
 					groupSource.refresh();
@@ -41,17 +41,17 @@ hui.ui.listen({
 		this.$click$saveGroup();
 	},
 	$selectionWasOpened$selector : function(item) {
-		if (item.type!='imagegroup') {
+		if (item.kind!='imagegroup') {
 			return;
 		}
 		this._openGroup(item.value);
 	},
 	_openGroup : function(id) {
 		hui.ui.request({
-			parameters:{id:id},
-			url:'../../Services/Model/LoadObject.php',
-			onSuccess:'loadGroup',
-			message:{start:'Åbner gruppe...',delay:300}
+			parameters : {id:id},
+			url : '../../Services/Model/LoadObject.php',
+			onSuccess : 'loadGroup',
+			message : {start:{en:'Loading group...', da:'Åbner gruppe...'},delay:300}
 		});
 	},
 	$success$loadGroup : function(data) {
@@ -63,18 +63,17 @@ hui.ui.listen({
 	},
 	$click$deleteGroup : function() {
 		hui.ui.request({
-			json:{data:{id:this.groupId}},
-			url:'../../Services/Model/DeleteObject.php',
-			onSuccess:'deleteGroup',
-			message:{start:'Sletter gruppe...',success:'Gruppen er slettet',delay:300}
+			message : {start: {en:'Deleting group...', da:'Sletter gruppe...'},success:{en:'The group has been deleted', da:'Gruppen er slettet'},delay:300},
+			json : {data:{id:this.groupId}},
+			url : '../../Services/Model/DeleteObject.php',
+			onSuccess : function() {
+				groupSource.refresh();
+				groupOptionsSource.refresh();
+			}
 		});
 		this.groupId = null;
 		groupFormula.reset();
 		groupWindow.hide();
-	},
-	$success$deleteGroup : function() {
-		groupSource.refresh();
-		groupOptionsSource.refresh();
 	}
 	
 });

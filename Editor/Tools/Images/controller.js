@@ -29,10 +29,10 @@ hui.ui.listen({
 	
 	$drop$image$imagegroup : function(dragged,dropped) {
 		hui.ui.request({
-			url:'AddImageToGroup.php',
-			json:{data:{image:dragged.id,group:dropped.value}},
-			message:{start:'Tilføjer til gruppe...',delay:300},
-			onSuccess:function() {
+			url : 'actions/AddImageToGroup.php',
+			json : {data:{image:dragged.id,group:dropped.value}},
+			message : {start:{en:'Adding to group...', da:'Tilføjer til gruppe...'},delay:300},
+			onSuccess : function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
@@ -46,6 +46,7 @@ hui.ui.listen({
 	
 	
 	$select$selector : function(item) {
+		list.resetState();
 		if (item.value=='pages' || item.value=='products' || item.value=='persons') {
 			hui.ui.changeState('list');
 			viewSwitch.setValue('list');
@@ -54,6 +55,9 @@ hui.ui.listen({
 		}
 		groupBar.setVisible(item.kind=='imagegroup');
 		groupTitle.setText(item.title);
+	},
+	$valueChanged$search : function() {
+		list.resetState();
 	},
 	
 	
@@ -112,7 +116,7 @@ hui.ui.listen({
 	$click$download : function() {
 		var obj = this._getFirstSelection();
 		if (obj) {
-			document.location = 'data/DownloadImage.php?id='+obj.id;
+			document.location = 'actions/DownloadImage.php?id='+obj.id;
 		}
 	},
 	$click$delete : function() {
@@ -122,15 +126,15 @@ hui.ui.listen({
 		}
 		
 		hui.ui.request({
-			url:'data/DeleteImages.php',
+			url:'actions/DeleteImages.php',
 			json:{ids:selection},
-			message:{start:'Sletter billede...',delay:300},
+			message:{start:{en:'Deleting image..', da:'Sletter billede...'},delay:300},
 			onSuccess:function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
 				subsetSource.refresh();
-				hui.ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
+				hui.ui.showMessage({text:{en:'The image has been deleted', da:'Billedet er nu slettet'},icon:'common/success',duration:2000});
 			}
 		});
 		return;
@@ -172,14 +176,14 @@ hui.ui.listen({
 		var data = imageFormula.getValues();
 		data.id = this.imageId;
 		hui.ui.request({
-			url:'SaveImage.php',
+			url:'actions/SaveImage.php',
 			json:{data:data},
-			message:{start:'Gemmer billede...',delay:300},
+			message:{start:{en:'Saving image...', da:'Gemmer billede...'},delay:300},
 			onSuccess:function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
-				hui.ui.showMessage({text:'Billedet er gemt!',icon:'common/success',duration:2000});			
+				hui.ui.showMessage({text:{en:'The image has been saved', da:'Billedet er gemt'},icon:'common/success',duration:2000});			
 			}
 		});
 		self._cancelImage();
@@ -192,9 +196,9 @@ hui.ui.listen({
 	_loadImage : function(id) {
 		var self = this;
 		hui.ui.request({
-			url:'LoadImage.php',
+			url:'data/LoadImage.php',
 			parameters:{id:id},
-			message:{start:'Åbner billede...',delay:300},
+			message:{start:{en:'Loading image...',da:'Åbner billede...'},delay:300},
 			onJSON:function(data) {
 				self.imageId = id;
 				imageFormula.setValues(data.image);
@@ -206,15 +210,15 @@ hui.ui.listen({
 	},
 	_deleteImage : function(id) {
 		hui.ui.request({
-			url:'DeleteImage.php',
+			url:'actions/DeleteImage.php',
 			parameters:{id:id},
-			message:{start:'Sletter billede...',delay:300},
+			message:{start:{en:'Deleting image...', da:'Sletter billede...'},delay:300},
 			onSuccess:function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
 				subsetSource.refresh();
-				hui.ui.showMessage({text:'Billedet er nu slettet',icon:'common/success',duration:2000});
+				hui.ui.showMessage({text:{en:'The image has been deleted',da:'Billedet er slettet'},icon:'common/success',duration:2000});
 			}
 		});
 	},

@@ -168,7 +168,7 @@ class ImageService {
 		if (StringUtils::isBlank($url)) {
 			$result = new ImportResult();
 			$result->setSuccess(false);
-			$result->setMessage('Adressen er ikke valid');
+			$result->setMessage(array('en'=>'The address is invalid', 'da'=>'Adressen er ikke valid'));
 			return $result;
 		}
 		$temp = $basePath.'local/cache/temp/'.basename($url);
@@ -182,7 +182,7 @@ class ImageService {
 		
 		$result = new ImportResult();
 		$result->setSuccess(false);
-		$result->setMessage('Billedet kunne ikke hentes');
+		$result->setMessage(array('en'=>'The image could not be fecthed','da'=>'Billedet kunne ikke hentes'));
 		return $result;
 	}
 
@@ -272,13 +272,13 @@ class ImageService {
 		
 		if (!file_exists($tempPath)) {
 			Log::debug('File not found: '.$tempPath);
-			return ImportResult::fail('Filen findes ikke');
+			return ImportResult::fail(array('en'=>'The file could not be found', 'da'=>'Filen findes ikke'));
 		}
 		
 		$info = ImageTransformationService::getImageInfo($tempPath);
 		if (!$info) {
 			Log::debug('Unable to get image info: '.$tempPath);
-			return ImportResult::fail('Filen er ikke et validt billede');
+			return ImportResult::fail(array('en'=>'The file is not a valid image', 'da'=>'Filen er ikke et validt billede'));
 		}
 
 		// If no file name then extract it from the path
@@ -301,11 +301,11 @@ class ImageService {
 		
 		if (!in_array($info['mime'],ImageService::$validTypes)) {
 			Log::debug('Unsupported: '.$info['mime']);
-			return ImportResult::fail('Filens format er ikke korrekt');
+			return ImportResult::fail(array('en'=>'The file format is not supported', 'da'=>'Filens format er ikke understøttet'));
 		}
 		else if (!@copy($tempPath, $filePath)) {
 			Log::debug('Could not copy: '.$tempPath.' -> '.$filePath);
-			return ImportResult::fail('Kunne ikke kopiere filen');
+			return ImportResult::fail(array('en'=>'Unable to copy file', 'da'=>'Kunne ikke kopiere filen'));
 		}
 
 		// If no title build one from filename

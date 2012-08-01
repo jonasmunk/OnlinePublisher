@@ -51,7 +51,7 @@ class ItemsWriter {
 	}
 
 	function title($title=null) {
-		echo '<title title="'.StringUtils::escapeXML($title).'"/>';
+		echo '<title title="'.StringUtils::escapeXML(GuiUtils::getTranslated($title)).'"/>';
 		return $this;
 	}
 

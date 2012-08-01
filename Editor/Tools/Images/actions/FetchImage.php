@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Images
  */
-require_once '../../Include/Private.php';
+require_once '../../../Include/Private.php';
 
 $url = Request::getString('url');
 

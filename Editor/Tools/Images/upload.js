@@ -22,7 +22,7 @@ hui.ui.listen({
 	_urlDroppped : function(url) {
 		hui.log(url);
 		if (hui.string.startsWith(url,'data:')) {
-			hui.ui.showMessage({text:'Denne type er desværre endnu ikke understøttet',duration:3000});
+			hui.ui.showMessage({text:{en:'This type is not supported',da:'Denne type er desværre endnu ikke understøttet'},duration:3000});
 		} else {
 			this._fetch(url);
 		}
@@ -60,9 +60,9 @@ hui.ui.listen({
 	},
 	_fetch : function(url) {
 		fetchImage.setEnabled(false);
-		hui.ui.showMessage({text:'Henter billede...',busy:true});
+		hui.ui.showMessage({text:{en:'Fetching image...', da:'Henter billede...'},busy:true});
 		hui.ui.request({
-			url : 'FetchImage.php',
+			url : 'actions/FetchImage.php',
 			onSuccess : 'imageFetched',
 			parameters : {url : url}
 		});
@@ -73,7 +73,7 @@ hui.ui.listen({
 	$success$imageFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();
-			hui.ui.showMessage({text:'Billedet er hentet',icon:'common/success',duration:2000});
+			hui.ui.showMessage({text:{en:'The image has been fetched', da:'Billedet er hentet'},icon:'common/success',duration:2000});
 			listSource.refresh();
 			imagesSource.refresh();
 			subsetSource.refresh();
@@ -83,10 +83,5 @@ hui.ui.listen({
 			hui.ui.showMessage({text:data.message,icon:'common/warning',duration:2000});
 		}
 		fetchImage.setEnabled(true);
-	},
-	$valueChanged$uploadAddToGroup : function(value) {
-		hui.ui.request({url:'ChangeUploadAddToGroup.php',parameters:{uploadAddToGroup:value ? 'true' : 'false'},onSuccess:function() {
-			hui.log('Saved: '+value);
-		}})
 	}
 })

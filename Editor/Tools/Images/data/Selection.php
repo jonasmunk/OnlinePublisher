@@ -14,18 +14,18 @@ $latest = Query::after('image')->withCustom('createdAfter',DateUtils::addDays(mk
 
 $writer->
 startItems()->
-	startItem(array('title'=>'Alle billeder','badge'=>ImageService::getTotalImageCount(),'icon'=>'common/image','value'=>'all'))->endItem()->
-	startItem(array('title'=>'Seneste døgn','icon'=>'common/time','value'=>'latest','badge'=>$latest))->endItem()->
-	title('Anvendelse')->
+	startItem(array('title'=>array('All images', 'da'=>'Alle billeder'),'badge'=>ImageService::getTotalImageCount(),'icon'=>'common/image','value'=>'all'))->endItem()->
+	startItem(array('title'=>array('Latest 24 hours','da'=>'Seneste døgn'),'icon'=>'common/time','value'=>'latest','badge'=>$latest))->endItem()->
+	title(array('Usage', 'da'=>'Anvendelse'))->
 	item(array(
-		'title' => 'Ikke anvendt',
+		'title' => array('Unused','da'=>'Ikke anvendt'),
 		'badge' => ImageService::getUnusedImagesCount(),
 		'icon' => 'monochrome/round_question',
 		'value' => 'unused')
 	);
 if ($pages > 0) {
 	$writer->item(array(
-		'title' => 'Sider',
+		'title' => array('Pages', 'da'=>'Sider'),
 		'badge' => $pages,
 		'icon' => 'monochrome/file',
 		'value' => 'pages')
@@ -33,7 +33,7 @@ if ($pages > 0) {
 }
 if ($persons > 0) {
 	$writer->item(array(
-		'title' => 'Personer',
+		'title' => array('Persons','da'=>'Personer'),
 		'badge' => $persons,
 		'icon' => 'monochrome/person',
 		'value' => 'persons')
@@ -41,7 +41,7 @@ if ($persons > 0) {
 }
 if ($products > 0) {
 	$writer->item(array(
-		'title' => 'Produkter',
+		'title' => array('Products','da'=>'Produkter'),
 		'badge' => $products,
 		'icon' => 'monochrome/package',
 		'value' => 'products')

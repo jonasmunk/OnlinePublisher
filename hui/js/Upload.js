@@ -352,14 +352,14 @@ hui.ui.Upload.Item.prototype = {
 		return this.finished;
 	},
 	setError : function(error) {
-		this._setStatus(error || 'Fejl');
+		this._setStatus(error || hui.ui.getTranslated({en:'Error',da:'Fejl'}));
 		hui.cls.add(this.element,'hui_upload_item_error');
 		this.progress.hide();
 		this.progress.setValue(0);
 		this.finished = true;
 	},
 	setSuccess : function(status) {
-		this._setStatus('Færdig');
+		this._setStatus(hui.ui.getTranslated({en:'Complete',da:'Færdig'}));
 		this.progress.setValue(1);
 		this.finished = true;
 		hui.cls.add(this.element,'hui_upload_item_success');
@@ -369,7 +369,7 @@ hui.ui.Upload.Item.prototype = {
 		return this;
 	},
 	setProgress : function(value) {
-		this._setStatus('Overfører');
+		this._setStatus(hui.ui.getTranslated({en:'Transfering',da:'Overfører'}));
 		this.progress.setValue(Math.min(0.9999,value));
 		return this;
 	},

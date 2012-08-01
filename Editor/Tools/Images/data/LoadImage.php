@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Images
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Objects/Image.php';
+require_once '../../../Include/Private.php';
 
 $id = Request::getInt('id');
 $image=Image::load($id);
