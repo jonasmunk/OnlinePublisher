@@ -6,10 +6,9 @@
 require_once '../../../Include/Private.php';
 
 $id = Request::getInt('id');
-$obj = SpecialPage::load($id);
-if ($obj) {
-	Response::sendUnicodeObject($obj);
+if ($obj = SpecialPage::load($id)) {
+	$obj->remove();
 } else {
-	Response::notFound();
+	Response::badRequest();
 }
 ?>

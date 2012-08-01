@@ -19,6 +19,7 @@ var mainController = {
 	//////////////// Search //////////////
 	
 	$valueChanged$search : function() {
+		list.resetState();
 		var value = selector.getValue();
 		if (value.kind=='hierarchy' || value.kind=='hierarchyItem') {
 			selector.setValue('all');
@@ -26,6 +27,7 @@ var mainController = {
 	},
 	
 	$select$selector : function(item) {
+		list.resetState();
 		reviewBar.setVisible(item.value=='review');
 	},
 	
@@ -75,31 +77,31 @@ var mainController = {
 	$click$edit : function() {
 		var obj = list.getFirstSelection();
 		if (obj.kind=='page') {
-			document.location='../../Template/Edit.php?id='+obj.id;
+			document.location = '../../Template/Edit.php?id='+obj.id;
 		}
 	},
 	$click$view : function() {
 		var obj = list.getFirstSelection();
 		if (obj.kind=='page') {
-			document.location='../../Services/Preview/?id='+obj.id;
+			document.location = '../../Services/Preview/?id='+obj.id;
 		}
 	},
 	$click$delete : function() {
 		var obj = list.getFirstSelection();
-		if (obj.kind=='page') {
+		if (obj.kind == 'page') {
 			this.deletePage(obj.id);
 		}
 	},
 	deletePage : function(id) {
-		if (this.activePage==id) {
+		if (this.activePage == id) {
 			pageFormula.reset();
 			pageEditor.hide();
 			pageFinder.hide();
 			this.activePage = 0;
 		}
 		hui.ui.request({
-			message : {start:'Sletter side...',delay:300,success:'Siden er nu slettet'},
-			url : 'DeletePage.php',
+			message : { start : {en:'Deleting page...', da:'Sletter side...'}, delay : 300, success : {en:'The page has been deleted', da:'Siden er nu slettet'} },
+			url : 'actions/DeletePage.php',
 			parameters : { id : id },
 			onSuccess : function() {
 				list.refresh();
@@ -121,11 +123,11 @@ var mainController = {
 	},
 	$drop$page$language : function(dragged,dropped) {
 		hui.ui.request({
-			message : {start:'Ændrer sprog...',delay:300},
-			url : 'data/ChangeLanguage.php',
+			message : {start:{en:'Changing language...', da:'Ændrer sprog...'},delay:300},
+			url : 'actions/ChangeLanguage.php',
 			json : {data : {id:dragged.id,language:dropped.value}},
 			onSuccess : function() {
-				hui.ui.showMessage({text:'Sproget er ændret',icon:'common/success',duration:2000});
+				hui.ui.showMessage({text:{en:'The language is changed', da:'Sproget er ændret'},icon:'common/success',duration:2000});
 				list.refresh();
 				languageSource.refresh();
 			}
@@ -136,7 +138,7 @@ var mainController = {
 	
 	loadPage : function(id) {
 		hui.ui.request({
-			message : {start : 'Åbner side...',delay:300},
+			message : {start : {en:'Loading page...', da:'Åbner side...'},delay:300},
 			url : 'data/LoadPage.php',
 			onSuccess : 'pageLoaded',
 			parameters : {id:id}
@@ -166,8 +168,8 @@ var mainController = {
 		var values = pageFormula.getValues();
 		values.id = this.activePage;
 		hui.ui.request({
-			message : {start : 'Gemmer side...',delay:300},
-			url : 'data/SavePage.php',
+			message : {start: {en:'Saving page..', da:'Gemmer side...'}, delay: 300, success: {en:'The page is saved', da:'Siden er gemt'}},
+			url : 'actions/SavePage.php',
 			json : {data:values},
 			onSuccess : function() {
 				list.refresh();
@@ -203,10 +205,10 @@ var mainController = {
 		pageTranslation.element.blur();
 	},
 	$clickIcon$pageTranslationList : function(info) {
-		hui.ui.confirmOverlay({element:info.node,text:'Er du sikker?',okText:'Ja, fjern',cancelText:'Nej',onOk : function() {
+		hui.ui.confirmOverlay({element:info.node,text:{en:'Are you sure?', da:'Er du sikker?'},okText:{en:'Yes, delete', da:'Ja, fjern'},cancelText:{en:'No', da:'Nej'},onOk : function() {
 			hui.ui.request({
-				message : {start:'Sletter oversættelse...',delay:300},
-				url : 'data/DeletePageTranslation.php',
+				message : {start:{en:'Deleting translation...', da:'Sletter oversættelse...'},delay:300},
+				url : 'actions/DeletePageTranslation.php',
 				parameters : {id:info.row.id},
 				onSuccess : function() {
 					pageTranslationList.refresh();
@@ -224,8 +226,8 @@ var mainController = {
 			return;
 		}
 		hui.ui.request({
-			message : {start:'Tilføjer oversættelse...',delay:300},
-			url : 'data/AddPageTranslation.php',
+			message : {start:{en:'Adding translation...', da:'Tilføjer oversættelse...'},delay:300},
+			url : 'actions/AddPageTranslation.php',
 			parameters : {page:this.activePage,translation:row.id},
 			onSuccess : function() {
 				pageTranslationList.refresh();
@@ -237,7 +239,7 @@ var mainController = {
 	},
 	$click$publishPage : function() {
 		hui.ui.request({
-			message : {start:'Udgiver side...',delay:300},
+			message : {start:{en:'Publishing page...',da:'Udgiver side...'},delay:300},
 			url : '../../Services/Model/PublishPage.php',
 			parameters : {id:this.activePage},
 			onSuccess : function() {
@@ -270,16 +272,16 @@ var mainController = {
 		var form = newPageFormula.getValues();
 		if (template===null) {
 			newPageWizard.goToStep(0);
-			hui.ui.showMessage({text:'Der er ikke valgt en skabelon',duration:2000});
+			hui.ui.showMessage({text:{en:'No type is selected',da:'Der er ikke valgt en type'},duration:2000});
 		} else if (design===null) {
 			newPageWizard.goToStep(1);
-			hui.ui.showMessage({text:'Der er ikke valgt et design',duration:2000});
+			hui.ui.showMessage({text:{en:'No design is selected',da:'Der er ikke valgt et design'},duration:2000});
 		} else if (frame===null) {
 			newPageWizard.goToStep(2);
-			hui.ui.showMessage({text:'Der er ikke valgt en grundopsætning',duration:2000});
+			hui.ui.showMessage({text:{en:'No setup is selected',da:'Der er ikke valgt en opsætning'},duration:2000});
 		} else if (form.title=='') {
 			newPageWizard.goToStep(4);
-			hui.ui.showMessage({text:'Der er ikke udfyldt en titel',duration:2000});
+			hui.ui.showMessage({text:{en:'No title is provided', da:'Der er ikke udfyldt en titel'},duration:2000});
 			newPageTitle.focus();
 		} else {
 			var data = {design:design,template:template,frame:frame.value,menuItemId:menuItem.value,menuItemKind:menuItem.kind};
@@ -292,8 +294,8 @@ var mainController = {
 				}
 			}
 			hui.ui.request({
-				message : {start:'Opretter side...',delay:300},
-				url : 'data/CreatePage.php',
+				message : {start:{en:'Creating page', da:'Opretter side...'},delay:300},
+				url : 'actions/CreatePage.php',
 				onSuccess : 'pageCreated',
 				parameters : data
 			});
@@ -340,7 +342,6 @@ var mainController = {
 		var designSelected = designPicker.getValue()!=null;
 		var frameSelected = frameSelection.getValue()!=null;
 		var titleFilled = !newPageTitle.isBlank();
-		//hui.log(hui.string.toJSON({templateSelected:templateSelected,designSelected:designSelected,frameSelected:frameSelected,titleFilled:titleFilled}));
 		createPage.setEnabled(templateSelected && designSelected && frameSelected && titleFilled);
 		newPagePrevious.setEnabled(!newPageWizard.isFirst());
 		newPageNext.setEnabled(!newPageWizard.isLast());

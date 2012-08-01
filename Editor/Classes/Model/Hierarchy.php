@@ -311,7 +311,7 @@ class Hierarchy {
         Database::update($sql);
 	}
 	
-	function relocateItem($move,$targetItem,$targetHierarchy) {
+	function relocateItem($move,$targetItem=0,$targetHierarchy=0) {
 
 		// Get info about hierarchy item
 		$sql = "select * from hierarchy_item where id=".Database::int($move);
@@ -319,19 +319,27 @@ class Hierarchy {
 			$moveHierarchy = $row['hierarchy_id'];
 			$moveParent = $row['parent'];
 		} else {
-			return array('success'=>false,'message'=>'Punktet findes ikke');
+			return array('success'=>false,'message'=>array('en'=>'The item could not be found', 'da'=>'Punktet findes ikke'));
+		}
+		if ($targetItem>0) {
+			$sql = "select * from hierarchy_item where id=".Database::int($targetItem);
+			if ($row = Database::selectFirst($sql)) {
+				$targetHierarchy = $row['hierarchy_id'];
+			} else {
+				return array('success'=>false,'message'=>array('en'=>'The target could not be found', 'da'=>'Punktet findes ikke'));
+			}
 		}
 
 		if ($targetHierarchy>0 && $targetHierarchy!=$moveHierarchy) {
-			return array('success'=>false,'message'=>'Du kan ikke flyttet et punkt til et andet hierarki');
+			return array('success'=>false,'message'=>array('en'=>'The item cannot be moved to another hierarchy','da'=>'Punktet kan ikke flyttes til et andet hierarki'));
 		} else if ($moveParent==$targetItem) {
-			return array('success'=>false,'message'=>'Punktet har allerede denne position');
+			return array('success'=>false,'message'=>array('en'=>'The item is already located here', 'da'=>'Punktet har allerede denne position'));
 		} else if ($move==$targetItem) {
-			return array('success'=>false,'message'=>'Du kan ikke flyttet et punkt til sig selv');
+			return array('success'=>false,'message'=>array('en'=>'The item cannot be moved to itself','da'=>'Punktet kan ikke flyttes til sig selv'));
 		} else {
 			$path = Hierarchy::getAncestorPath($targetItem);
 			if (in_array($move,$path)) {
-				return array('success'=>false,'message'=>'Du kan ikke flyttet et punkt til et punkt under sig selv');
+				return array('success'=>false,'message'=>array('en' => 'The item cannot be moved to a sub item', 'da'=>'Punktet kan ikke flyttes til et underpunkt'));
 			}
 		}
 

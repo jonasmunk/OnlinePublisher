@@ -19,7 +19,7 @@ hui.ui.listen({
 		hui.ui.request({
 			parameters : {id:id},
 			url : 'data/LoadSpecialPage.php',
-			message : {start:'Åbner speciel side...',delay:300},
+			message : {start:{en:'Loading special page...', da:'Åbner speciel side...'},delay:300},
 			onJSON : function(data) {
 				specialPageFormula.setValues(data);
 				specialPageWindow.show();
@@ -38,15 +38,15 @@ hui.ui.listen({
 	$submit$specialPageFormula : function() {
 		var values = specialPageFormula.getValues();
 		if (!values.pageId || !values.type) {
-			hui.ui.showMessage({text:'Side og type skal udfyldes',icon:'common/warning',duration:2000});
+			hui.ui.showMessage({text:{en:'Page and type is requied', da:'Side og type skal udfyldes'},icon:'common/warning',duration:2000});
 			specialPageFormula.focus();
 			return;
 		}
 		values.id = this.specialPageId;
 		hui.ui.request({
 			json : {data:values},
-			url : 'data/SaveSpecialPage.php',
-			message : {start:'Gemmer speciel side...',delay:300},
+			url : 'actions/SaveSpecialPage.php',
+			message : {start:{en:'Saving special page...', da:'Gemmer speciel side...'},delay:300},
 			onSuccess : function() {
 				listSource.refresh();
 			}.bind(this)
@@ -59,8 +59,8 @@ hui.ui.listen({
 		deleteSpecialPage.setEnabled(false);
 		hui.ui.request({
 			parameters : { id : this.specialPageId },
-			url : 'data/DeleteSpecialPage.php',
-			message : {start:'Sletter speciel side...',delay:300},
+			url : 'actions/DeleteSpecialPage.php',
+			message : {start:{en:'Deleting special page...', da:'Sletter speciel side...'},delay:300},
 			onSuccess : function() {
 				listSource.refresh();
 			}.bind(this)

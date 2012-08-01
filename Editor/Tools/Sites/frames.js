@@ -22,7 +22,7 @@ hui.ui.listen({
 		hui.ui.request({
 			parameters : {id:id},
 			url : 'data/LoadFrame.php',
-			message : {start:'Åbner ramme...',delay:300},
+			message : {start:{en:'Loading setup...', da:'Åbner opsætning...'},delay:300},
 			onJSON : function(data) {
 				frameFormula.setValues(data.frame);
 				searchFormula.setValues({
@@ -59,7 +59,7 @@ hui.ui.listen({
 		var values = frameFormula.getValues();
 		if (hui.isBlank(values.title) || values.hierarchyId==null) {
 			hui.log(values);
-			hui.ui.showMessage({text:'Titel og hierarki skal udfyldes',icon:'common/warning',duration:2000});
+			hui.ui.showMessage({text:{en:'Title and hierarchy is required',da:'Titel og hierarki skal udfyldes'},icon:'common/warning',duration:2000});
 			frameFormula.focus();
 			return;
 		}
@@ -73,8 +73,8 @@ hui.ui.listen({
 				bottomLinks : bottomLinks.getValue(),
 				newsBlocks : newsList.getRows()
 			},
-			url : 'data/SaveFrame.php',
-			message : {start:'Gemmer ramme...',delay:300},
+			url : 'actions/SaveFrame.php',
+			message : {start:{en:'Saving setup', da:'Gemmer opsætning...'},delay:300},
 			onSuccess : function() {
 				listSource.refresh();
 			}.bind(this)
@@ -88,8 +88,8 @@ hui.ui.listen({
 		deleteFrame.setEnabled(false);
 		hui.ui.request({
 			parameters : { id : this.frameId },
-			url : 'data/DeleteFrame.php',
-			message : {start:'Sletter ramme...',delay:300},
+			url : 'actions/DeleteFrame.php',
+			message : {start:{en:'Deleting setup...', da:'Sletter ramme...'},delay:300},
 			onSuccess : function() {
 				listSource.refresh();
 			}.bind(this)

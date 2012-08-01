@@ -25,6 +25,11 @@ class PageService {
 		return null;
 	}
 	
+	function getLanguageCounts() {
+		$sql="select language,count(id) as count from page group by language order by language";
+		return Database::selectAll($sql);
+	}
+	
 	function getPagePreview($id,$template) {
 		$data = '';
 		if ($controller = TemplateService::getController($template)) {

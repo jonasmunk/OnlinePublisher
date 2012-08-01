@@ -26,7 +26,7 @@ foreach ($list as $row) {
 		startCell()->icon(array('icon'=>GuiUtils::getLanguageIcon($row['language'])))->endCell()->
 		startCell()->
 			startIcons()->
-				icon(array('icon'=>'monochrome/delete','data'=>array('action'=>'delete')))->
+				icon(array('icon'=>'monochrome/delete','action'=>true,'data'=>array('action'=>'delete')))->
 			endIcons()->
 		endCell()->
 	endRow();

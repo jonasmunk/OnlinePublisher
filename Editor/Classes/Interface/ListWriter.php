@@ -56,7 +56,7 @@ class ListWriter {
 		}
 		else if (is_array($options)) {
 			if (isset($options['title'])) {
-				echo ' title="'.StringUtils::escapeXML($options['title']).'"';
+				echo ' title="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
 			}
 			if (isset($options['width'])) {
 				echo ' width="'.$options['width'].'"';
@@ -71,7 +71,7 @@ class ListWriter {
 		echo '/>';
 		return $this;
 	}
-	
+		
 	function startRow($options=array()) {
 		echo '<row';
 		if (isset($options['id'])) {
@@ -174,6 +174,7 @@ class ListWriter {
 	}
 
 	function text($text) {
+		$text = GuiUtils::getTranslated($text);
 		echo StringUtils::escapeXMLBreak($text,'<break/>');
 		return $this;
 	}

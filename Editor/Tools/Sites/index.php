@@ -60,16 +60,17 @@ $gui='
 	</source>
 	<source name="pagesSource" url="../../Services/Model/Items.php?type=page"/>
 	<source name="filesSource" url="../../Services/Model/Items.php?type=file"/>
-	<source name="languageSource" url="LanguageItems.php"/>
-	<source name="hierarchySource" url="HierarchyItems.php"/>
-	<source name="newPageHierarchySource" url="FrameHierarchyItems.php">
+	<source name="languageSource" url="data/LanguageItems.php"/>
+	<source name="hierarchySource" url="data/HierarchyMenuItems.php"/>
+	<source name="newPageHierarchySource" url="data/FrameHierarchyItems.php">
 		<parameter key="frame" value="@frameSelection.value"/>
 	</source>
+	
 	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/page" title="{New page;da:Ny side}" overlay="new" name="newPage"/>
-				<icon icon="common/hierarchy_item" title="{New point;da:Nyt punkt}" overlay="new" name="newHierarchyItem" disabled="true"/>
+				<icon icon="common/hierarchy_item" title="{New menu item;da:Nyt menupunkt}" overlay="new" name="newHierarchyItem" disabled="true"/>
 				<icon icon="common/hierarchy" title="{New hierarchy;da:Nyt hierarki}" overlay="new" name="newHierarchy"/>
 				<divider/>
 				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="box.show()"/>-->
@@ -201,126 +202,126 @@ $gui='
 		</back>
 	</window>
 	
-	<window name="pageFinder" width="400" title="Vælg side">
+	<window name="pageFinder" width="400" title="{Choose page; da:Vælg side}">
 		<searchfield adaptive="true" name="pageFinderSearch"/>
 		<overflow max-height="200">
 		<list source="pageFinderListSource" name="pageFinderList"/>
 		</overflow>
 	</window>
 
-	<window name="hierarchyEditor" width="300" title="Hierarki" padding="5" icon="common/hierarchy">
+	<window name="hierarchyEditor" width="300" title="{Hierarchy; da:Hierarki}" padding="5" icon="common/hierarchy">
 		<formula name="hierarchyFormula">
 			<fields>
-				<field label="Titel:">
+				<field label="{Title; da:Titel}:">
 					<text-input key="name"/>
 				</field>
-				<field label="Sprog:">
-					<dropdown key="language" placeholder="Vælg sprog...">
+				<field label="{Language; da:Sprog}:">
+					<dropdown key="language" placeholder="{Choose language; da:Vælg sprog...}">
 						'.$languageItems.'
 					</dropdown>
 				</field>
 			</fields>
 			<fields>
 				<buttons>
-					<button name="cancelHierarchy" title="Annuller"/>
-					<button name="deleteHierarchy" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet hierarki" cancel="Nej"/>
+					<button name="cancelHierarchy" title="{Cancel; da:Annuller}"/>
+					<button name="deleteHierarchy" title="{Delete; da:Slet}">
+						<confirm text="{Are your sure?; da:Er du sikker?}" ok="{Yes, delete hierarchy; da:Ja, slet hierarki}" cancel="{No; da:Nej}"/>
 					</button>
-					<button name="saveHierarchy" title="Gem" highlighted="true" submit="true"/>
+					<button name="saveHierarchy" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>
 	</window>
 	
-	<window name="hierarchyItemEditor" width="300" title="Menupunkt" padding="5">
+	<window name="hierarchyItemEditor" width="300" title="{Menu item; da:Menupunkt}" padding="5">
 		<formula name="hierarchyItemFormula">
 			<fields>
-				<field label="Titel:">
+				<field label="{Title; da:Titel}:">
 					<text-input key="title"/>
 				</field>
-				<field label="Skjult:">
+				<field label="{Hidden; da:Skjult}:">
 					<checkbox key="hidden"/>
 				</field>
 			</fields>
 			<fieldset legend="Link">
 				<fields>
-					<field label="Side:">
+					<field label="{Page; da:Side}:">
 						<dropdown key="page" source="pagesSource" name="hierarchyItemPage"/>
 					</field>
-					<field label="Reference">
+					<field label="{Referral; da:Reference}">
 						<checkbox key="reference" name="hierarchyItemReference"/>
 					</field>
-					<field label="Fil:">
+					<field label="{File; da:Fil}:">
 						<dropdown key="file" source="filesSource" name="hierarchyItemFile"/>
 					</field>
 					<field label="URL:">
 						<text-input key="url" name="hierarchyItemURL"/>
 					</field>
-					<field label="E-post:">
+					<field label="{E-mail; da:E-post}:">
 						<text-input key="email" name="hierarchyItemEmail"/>
 					</field>
 				</fields>				
 			</fieldset>
 			<fields>
 				<buttons>
-					<button name="cancelHierarchyItem" title="Annuller"/>
-					<button name="deleteHierarchyItem" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet punkt" cancel="Annuller"/>
+					<button name="cancelHierarchyItem" title="{Cancel; da:Annuller}"/>
+					<button name="deleteHierarchyItem" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete item; da:Ja, slet punkt}" cancel="{Cancel; da:Annuller}"/>
 					</button>
-					<button name="saveHierarchyItem" title="Gem" highlighted="true"/>
+					<button name="saveHierarchyItem" title="{Save; da:Gem}" highlighted="true"/>
 				</buttons>
 			</fields>
 		</formula>
 	</window>
 	
-	<box absolute="true" name="newPageBox" padding="10" modal="true" width="636" variant="textured" title="Oprettelse af ny side" closable="true">
+	<box absolute="true" name="newPageBox" padding="10" modal="true" width="636" variant="textured" title="{Creation of new page; da:Oprettelse af ny side}" closable="true">
 		<wizard name="newPageWizard">
-			<step title="Skabelon" icon="file/generic">
-				<picker title="Vælg skabelon" name="templatePicker" shadow="true" item-height="128" item-width="96">
+			<step title="{Type; da:Type}" icon="file/generic">
+				<picker title="{Choose type; da:Vælg type}" name="templatePicker" shadow="true" item-height="128" item-width="96">
 				'.$templateItems.'
 				</picker>
 			</step>
 			<step title="Design" key="design" icon="common/color">
-				<picker title="Vælg design" item-height="128" item-width="128" name="designPicker" shadow="true">
+				<picker title="{Choose design; da:Vælg design}" item-height="128" item-width="128" name="designPicker" shadow="true">
 				'.$designItems.'
 				</picker>
 			</step>
-			<step title="Grundopsætning" icon="common/settings" padding="10" frame="true">
+			<step title="{Setup; da:Grundopsætning}" icon="common/settings" padding="10" frame="true">
 				<overflow max-height="200" min-height="160">
 					<selection name="frameSelection">
 						'.$frameItems.'
 					</selection>
 				</overflow>
 			</step>
-			<step title="Menupunkt" padding="10" frame="true" icon="common/hierarchy">
+			<step title="{Menu item; da:Menupunkt}" padding="10" frame="true" icon="common/hierarchy">
 				<overflow height="160">
 					<selection name="menuItemSelection">
 						<items source="newPageHierarchySource"/>
 					</selection>
 				</overflow>
 				<buttons top="10">
-					<button name="noMenuItem" title="Intet menupunkt" small="true" rounded="true"/>
+					<button name="noMenuItem" title="{No menu item; da:Intet menupunkt}" small="true" rounded="true"/>
 				</buttons>
 			</step>
-			<step title="Egenskaber" padding="10" frame="true" icon="common/info">
+			<step title="{Properties; da:Egenskaber}" padding="10" frame="true" icon="common/info">
 				<overflow max-height="200" min-height="160">
 				<formula name="newPageFormula">
 					<fields labels="above">
-						<field label="Titel:">
+						<field label="{Title; da:Titel}:">
 							<text-input name="newPageTitle" key="title"/>
 						</field>
-						<field label="Menupunkt:">
+						<field label="{Menu item; da:Menupunkt}:">
 							<text-input key="menuItem"/>
 						</field>
-						<field label="Sti:">
+						<field label="{Path; da:Sti}:">
 							<text-input key="path"/>
 						</field>
-						<field label="Sprog:">
-							<dropdown key="language" placeholder="Vælg sprog...">
+						<field label="{Language; da:Sprog}:">
+							<dropdown key="language" placeholder="{Choose language...; da:Vælg sprog...}">
 								'.$languageItems.'
 							</dropdown>
 						</field>
-						<field label="Beskrivelse:">
+						<field label="{Description; da:Beskrivelse}:">
 							<text-input multiline="true" key="description"/>
 						</field>
 					</fields>
@@ -329,18 +330,18 @@ $gui='
 			</step>
 		</wizard>-->
 		<buttons top="10" align="right">
-			<button title="Forrige" name="newPagePrevious"/>
-			<button title="Næste" name="newPageNext"/>
-			<button title="Annuller" name="newPageCancel"/>
-			<button title="Opret side" name="createPage" highlighted="true"/>
+			<button title="{Previous; da:Forrige}" name="newPagePrevious"/>
+			<button title="{Next; da:Næste}" name="newPageNext"/>
+			<button title="{Cancel; da:Annuller}" name="newPageCancel"/>
+			<button title="{Create page; da:Opret side}" name="createPage" highlighted="true"/>
 		</buttons>
 	</box>
 	
-	<box absolute="true" name="advancedBox" modal="true" width="636" variant="textured" title="Avanceret" closable="true">
+	<box absolute="true" name="advancedBox" modal="true" width="636" variant="textured" title="{Advanced; da:Avanceret}" closable="true">
 		<toolbar>
-			<icon icon="common/page" title="Specielle sider" selected="true" name="advancedSpecialPages"/>
-			<icon icon="common/page" title="Rammer" name="advancedFrames"/>
-			<icon icon="common/page" title="Skabeloner" name="advancedTemplates"/>
+			<icon icon="common/page" title="{Special pages; da:Specielle sider}" selected="true" name="advancedSpecialPages"/>
+			<icon icon="common/page" title="{Setups; da:Opsætninger}" name="advancedFrames"/>
+			<icon icon="common/page" title="{Templates; da:Skabeloner}" name="advancedTemplates"/>
 		</toolbar>
 		<iframe height="400" name="advancedFrame"/>
 	</box>

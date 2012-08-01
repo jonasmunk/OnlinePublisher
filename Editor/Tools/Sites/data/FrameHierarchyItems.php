@@ -3,14 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Sites
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Database.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Model/Hierarchy.php';
-require_once '../../Classes/Model/Frame.php';
-
+require_once '../../../Include/Private.php';
 
 $frameId = Request::getInt('frame');
 
@@ -34,8 +27,8 @@ $writer->endItems();
 function encodeLevel($parent,$hierarchyId,&$writer) {
    	$sql="select hierarchy_item.*,page.disabled,page.path from hierarchy_item".
     	" left join page on page.id = hierarchy_item.target_id and (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')".
-    	" where parent=".$parent.
-    	" and hierarchy_id=".$hierarchyId.
+    	" where parent=".Database::int($parent).
+    	" and hierarchy_id=".Database::int($hierarchyId).
     	" order by `index`";
     $result = Database::select($sql);
     while ($row = Database::next($result)) {

@@ -140,16 +140,32 @@ class DateUtils {
 			$diff = time()-$timestamp;
 			if ($diff>0) {
 				if ($diff<60) {
-					return 'for '.$diff.' sekunder siden';
+					if (InternalSession::getLanguage()=='da') {
+						return 'for '.$diff.' sekunder siden';
+					} else {
+						return 'about '.$diff.' seconds ago';
+					}
 				} else if ($diff<3600) {
 					$minutes = floor($diff/60);
-					return 'for '.$minutes.($minutes==1 ? ' minut siden' : ' minutter siden');
+					if (InternalSession::getLanguage()=='da') {
+						return 'for '.$minutes.($minutes==1 ? ' minut siden' : ' minutter siden');
+					} else {
+						return 'about '.$minutes.($minutes==1 ? ' minute ago' : ' minutes ago');
+					}
 				} else if ($diff<3600*24) {
 					$minutes = floor($diff/60/60);
-					return 'for '.$minutes.($minutes==1 ? ' time siden' : ' timer siden');
+					if (InternalSession::getLanguage()=='da') {
+						return 'for '.$minutes.($minutes==1 ? ' time siden' : ' timer siden');
+					} else {
+						return 'about '.$minutes.($minutes==1 ? ' hour ago' : ' hours ago');
+					}
 				} else if ($diff<3600*24*4) {
 					$days = floor($diff/3600/24);
-					return 'for '.$days.($days==1 ? ' dag' : ' dage').' siden kl. '.DateUtils::formatShortTime($timestamp,$locale);
+					if (InternalSession::getLanguage()=='da') {
+						return 'for '.$days.($days==1 ? ' dag' : ' dage').' siden kl. '.DateUtils::formatShortTime($timestamp,$locale);
+					} else {
+						return 'about '.$days.($days==1 ? ' day' : ' days').' ago at '.DateUtils::formatShortTime($timestamp,$locale);
+					}
 				}
 			}
 			if (strftime('%Y',time())!==strftime('%Y',$timestamp)) {

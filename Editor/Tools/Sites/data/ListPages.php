@@ -27,13 +27,13 @@ function listHierarhy() {
 	global $windowSize,$windowPage,$query,$sort,$kind,$value,$direction;
 	$writer = new ListWriter();
 	
-	$writer->startList();
-	$writer->startHeaders();
-	$writer->header(array('title'=>'Menupunkt','width'=>30));
-	$writer->header(array('title'=>'Link / Destination','width'=>40));
-	$writer->header(array('title'=>'Sti'));
-	$writer->header(array('width'=>1));
-	$writer->endHeaders();
+	$writer->startList()->
+		startHeaders()->
+			header(array('title'=>array('Menu item','da'=>'Menupunkt'),'width'=>30))->
+			header(array('title'=>'Link / Destination','width'=>40))->
+			header(array('title'=>array('Path','da'=>'Sti')))->
+			header(array('width'=>1))->
+		endHeaders();
 	if ($kind=='hierarchy') {
 		$hierarchyId = intval($value);
 		$parent = null;
@@ -54,10 +54,10 @@ function listReview() {
 	
 	$writer->startList()->
 		startHeaders()->
-			header(array('title'=>'Side','width'=>45))->
+			header(array('title'=>array('Page','da'=>'Side'),'width'=>45))->
 			header(array('width'=>1))->
-			header(array('title'=>'Bruger'))->
-			header(array('title'=>'Tidspunkt','width'=>20))->
+			header(array('title'=>array('User','da'=>'Bruger')))->
+			header(array('title'=>array('Time','da'=>'Tidspunkt'),'width'=>20))->
 			header(array('width'=>1))->
 		endHeaders();
 	$sql = "select page.id as page_id,page.title as page_title,user.title as user_title,UNIX_TIMESTAMP(review.date) as date,review.accepted
@@ -110,7 +110,7 @@ and review_user.to_type='object' and review_user.to_object_id=user.id";
 }
 
 function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
-	$sql=buildHierarchySql($hierarchyId,$parent);
+	$sql = buildHierarchySql($hierarchyId,$parent);
 	$result = Database::select($sql['list']);
 	while ($row = Database::next($result)) {
 		$icon=Hierarchy::getItemIcon($row['target_type']);
@@ -130,7 +130,7 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		$writer->endCell();
 		if ($row['target_type']=='page') {
 			if (!$row['pageid']) {
-				$writer->startCell(array('icon'=>'common/warning'))->text('Ingen side!')->endCell();
+				$writer->startCell(array('icon'=>'common/warning'))->text(array('No page','da'=>'Ingen side!'))->endCell();
 			} else {
 				$writer->
 					startCell(array('icon'=>$icon));
@@ -203,10 +203,10 @@ function listPages() {
 		sort($sort,$direction)->
 		window(array( 'total' => $total['total'], 'size' => $windowSize, 'page' => $windowPage ))->
 		startHeaders()->
-			header(array('title'=>'Titel','width'=>40,'key'=>'page.title','sortable'=>'true'))->
-			header(array('title'=>'Skabelon','key'=>'template.unique','sortable'=>'true'))->
-			header(array('title'=>'Sprog','key'=>'page.language','sortable'=>'true'))->
-			header(array('title'=>'Ændret','width'=>1,'key'=>'page.changed','sortable'=>'true'))->
+			header(array('title'=>array('Title','da'=>'Titel'),'width'=>40,'key'=>'page.title','sortable'=>'true'))->
+			header(array('title'=>'Type','key'=>'template.unique','sortable'=>'true'))->
+			header(array('title'=>array('Language','da'=>'Sprog'),'key'=>'page.language','sortable'=>'true'))->
+			header(array('title'=>array('Modified','da'=>'Ændret'),'width'=>1,'key'=>'page.changed','sortable'=>'true'))->
 			header(array('width'=>1))->
 		endHeaders();
 

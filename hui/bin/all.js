@@ -4875,9 +4875,9 @@ hui.ui.confirmOverlay = function(options) {
 		hui.ui.confirmOverlays[node] = overlay;
 	}
 	if (options.text) {
-		overlay.addText(options.text);
+		overlay.addText(hui.ui.getTranslated(options.text));
 	}
-	var ok = hui.ui.Button.create({text:options.okText || 'OK',highlighted:'true'});
+	var ok = hui.ui.Button.create({text:hui.ui.getTranslated(options.okText) || 'OK',highlighted:'true'});
 	ok.click(function() {
 		if (options.onOk) {
 			options.onOk();
@@ -4885,7 +4885,7 @@ hui.ui.confirmOverlay = function(options) {
 		overlay.hide();
 	});
 	overlay.add(ok);
-	var cancel = hui.ui.Button.create({text:options.cancelText || 'Cancel'});
+	var cancel = hui.ui.Button.create({text:hui.ui.getTranslated(options.cancelText) || 'Cancel'});
 	cancel.onClick(function() {
 		if (options.onCancel) {
 			options.onCancel();
@@ -5182,17 +5182,18 @@ hui.ui.showMessage = function(options) {
 		}
 		document.body.appendChild(hui.ui.message);
 	}
+	var text = hui.ui.getTranslated(options.text) || '';
 	var inner = hui.ui.message.getElementsByTagName('div')[1];
 	if (options.icon) {
 		hui.dom.clear(inner);
 		inner.appendChild(hui.ui.createIcon(options.icon,24));
-		hui.dom.addText(inner,options.text);
+		hui.dom.addText(inner,text);
 	}
 	else if (options.busy) {
 		inner.innerHTML='<span class="hui_message_busy"></span>';
-		hui.dom.addText(inner,options.text);
+		hui.dom.addText(inner,text);
 	} else {
-		hui.dom.setText(inner,options.text);
+		hui.dom.setText(inner,text);
 	}
 	hui.ui.message.style.display = 'block';
 	hui.ui.message.style.zIndex = hui.ui.nextTopIndex();
@@ -5206,6 +5207,21 @@ hui.ui.showMessage = function(options) {
 		hui.ui.messageTimer = window.setTimeout(hui.ui.hideMessage,options.duration);
 	}
 };
+
+hui.ui.getTranslated = function(value) {
+	if (!hui.isDefined(value) || hui.isString(value)) {
+		return value;
+	}
+	if (value[hui.ui.language]) {
+		return value[hui.ui.language];
+	}
+	if (value[null]) {
+		return value[null];
+	}
+	for (key in value) {
+		return value[key];
+	}
+}
 
 hui.ui.hideMessage = function() {
 	window.clearTimeout(hui.ui.messageDelayTimer);

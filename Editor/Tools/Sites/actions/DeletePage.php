@@ -6,10 +6,8 @@
 require_once '../../../Include/Private.php';
 
 $id = Request::getInt('id');
-$obj = SpecialPage::load($id);
-if ($obj) {
-	Response::sendUnicodeObject($obj);
-} else {
-	Response::notFound();
-}
+
+$page = Page::load($id);
+
+$page->delete();
 ?>

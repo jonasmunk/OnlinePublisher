@@ -20,7 +20,7 @@ hui.ui.listen({
 		hui.ui.request({
 			json : {data:data},
 			url : '../../Services/Model/LoadObject.php',
-			message : {start:'Åbner skabelon...',delay:300},
+			message : {start:{en:'Loading template...', da:'Åbner skabelon...'},delay:300},
 			onJSON : function(data) {
 				blueprintFormula.setValues(data);
 				blueprintWindow.show();
@@ -39,15 +39,15 @@ hui.ui.listen({
 	$submit$blueprintFormula : function() {
 		var values = blueprintFormula.getValues();
 		if (hui.isBlank(values.title) || !values.designId || !values.frameId || !values.templateId) {
-			hui.ui.showMessage({text:'Udfyld venligst alle felter',icon:'common/warning',duration:2000});
+			hui.ui.showMessage({text:{en:'Please fill in all fields', da:'Udfyld venligst alle felter'},icon:'common/warning',duration:2000});
 			blueprintFormula.focus();
 			return;
 		}
 		values.id = this.blueprintId;
 		hui.ui.request({
 			json : {data:values},
-			url : 'data/SaveBlueprint.php',
-			message : {start:'Gemmer skabelon...',delay:300},
+			url : 'actions/SaveBlueprint.php',
+			message : {start:{en:'Saving template...', da:'Gemmer skabelon...'},delay:300},
 			onSuccess : function() {
 				listSource.refresh();
 			}.bind(this)
@@ -61,7 +61,7 @@ hui.ui.listen({
 		hui.ui.request({
 			json : {data:{id:this.blueprintId}},
 			url : '../../Services/Model/DeleteObject.php',
-			message : {start:'Sletter skabelon...',delay:300},
+			message : {start:{en:'Deleting template...', da:'Sletter skabelon...'},delay:300},
 			onSuccess : function() {
 				listSource.refresh();
 			}.bind(this)

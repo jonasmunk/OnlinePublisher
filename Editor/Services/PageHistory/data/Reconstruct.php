@@ -10,7 +10,7 @@ $pageId = InternalSession::getPageId();
 
 $success = PageService::reconstruct($pageId,$historyId);
 
-Response::sendObject(array(
+Response::sendUnicodeObject(array(
 	'success' => $success
 ));
 ?>

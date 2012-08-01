@@ -4,6 +4,7 @@
  * @subpackage Tools.Sites
  */
 require_once '../../../Include/Private.php';
+
 $id = Request::getInt('id');
 $data = Request::getUnicodeObject('frame');
 $topLinks = Request::getUnicodeObject('topLinks');
