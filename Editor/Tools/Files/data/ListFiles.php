@@ -3,15 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Files
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Objects/File.php';
-require_once '../../Classes/Services/FileService.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Utilities/GuiUtils.php';
-require_once '../../Classes/Utilities/DateUtils.php';
-require_once '../../Classes/Core/Log.php';
+require_once '../../../Include/Private.php';
 
 $main = Request::getString('main');
 $group = Request::getInt('group');
@@ -54,10 +46,10 @@ $writer->startList();
 $writer->sort($sort,$direction);
 $writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' => $windowPage ));
 $writer->startHeaders();
-$writer->header(array('title'=>'Titel','width'=>40));
+$writer->header(array('title'=>array('Title','da'=>'Titel'),'width'=>40));
 $writer->header(array('title'=>'Type'));
-$writer->header(array('title'=>'Størrelse'));
-$writer->header(array('title'=>'Ændringsdato'));
+$writer->header(array('title'=>array('Size','da'=>'Størrelse')));
+$writer->header(array('title'=>array('Modified','da'=>'Ændret')));
 $writer->endHeaders();
 
 foreach ($objects as $object) {

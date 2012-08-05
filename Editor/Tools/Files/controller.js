@@ -33,15 +33,25 @@ hui.ui.listen({
 	$open$list : function(obj) {
 		this.loadFile(obj.id);
 	},
+	$valueChanged$search : function() {
+		list.resetState();
+	},
+	$select$selector : function() {
+		list.resetState();
+	},
 	
 	//////////////////////// Dragging ////////////////////////
 	
 	$drop$file$filegroup : function(dragged,dropped) {
-		hui.ui.request({url:'AddFileToGroup.php',onSuccess:'fileMoved',json:{data:{file:dragged.id,group:dropped.value}}});
-	},
-	$success$fileMoved : function() {
-		filesSource.refresh();
-		groupSource.refresh();
+		hui.ui.request({
+			url : 'actions/AddFileToGroup.php',
+			message : {start:{en:'Adding to group...', da:'Tilføjer til gruppe...'},delay:300,success:{en:'The file has been added to the group',da:'Filen er blevet tilføjet til gruppen'}},
+			json : {data:{file:dragged.id,group:dropped.value}},
+			onSuccess : function() {
+				filesSource.refresh();
+				groupSource.refresh();
+			}
+		});
 	},
 	
 	///////////////////////// Uoload /////////////////////////
@@ -59,7 +69,7 @@ hui.ui.listen({
 		uploadWindow.hide();
 	},
 	$uploadDidFail$file : function() {
-		hui.ui.showMessage({icon:'common/warning',text:'Det lykkedes ikke at filføje filen. Den er måske for stor.',duration:5000});
+		hui.ui.showMessage({icon:'common/warning',text:{en:'Unable to add file. It may be too large.',da:'Det lykkedes ikke at filføje filen. Den er måske for stor.'},duration:5000});
 	},
 	$uploadDidCompleteQueue$file : function() {
 		filesSource.refresh();
@@ -70,13 +80,13 @@ hui.ui.listen({
 	
 	$click$fetchFile : function() {
 		fetchFile.setEnabled(false);
-		hui.ui.showMessage({text:'Henter fil...',busy:true});
-		hui.ui.request({url:'FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
+		hui.ui.showMessage({text:{en:'Fetching file...',da:'Henter fil...'},busy:true});
+		hui.ui.request({url:'actions/FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
 	},
 	$success$fileFetched : function(data) {
 		if (data.success) {
 			fetchFormula.reset();
-			hui.ui.showMessage({text:'Filen er hentet',icon:'common/success',duration:2000});
+			hui.ui.showMessage({text:{da:'The file has been fetched',da:'Filen er hentet'},icon:'common/success',duration:2000});
 			filesSource.refresh();
 			groupSource.refresh();
 			typesSource.refresh();
@@ -91,8 +101,8 @@ hui.ui.listen({
 	$click$delete : function() {
 		var obj = list.getFirstSelection();
 		hui.ui.request({
-			message : {start : 'Sletter fil...', delay : 300},
-			url : 'DeleteFile.php',
+			message : {start : {en:'Deleting file...',da:'Sletter fil...'}, delay : 300},
+			url : 'actions/DeleteFile.php',
 			onSuccess : 'fileDeleted',
 			parameters : {id:obj.id}
 		});
@@ -104,7 +114,7 @@ hui.ui.listen({
 		filesSource.refresh();
 		groupSource.refresh();
 		typesSource.refresh();
-		hui.ui.showMessage({text:'Filen er nu slettet',duration:2000});
+		hui.ui.showMessage({text:{en:'The file has been deleted',da:'Filen er nu slettet'},icon:'common/success',duration:2000});
 	},
 	$click$view : function() {
 		var obj = list.getFirstSelection();
@@ -112,7 +122,7 @@ hui.ui.listen({
 	},
 	$click$download : function() {
 		var obj = list.getFirstSelection();
-		document.location = 'DownloadFile.php?id='+obj.id;
+		document.location = 'actions/DownloadFile.php?id='+obj.id;
 	},
 	$click$info : function() {
 		var obj = list.getFirstSelection();
@@ -124,7 +134,7 @@ hui.ui.listen({
 	loadFile : function(id) {
 		hui.ui.request({
 			message : {start : 'Åbner fil...',delay:300},
-			url : 'LoadFile.php',
+			url : 'data/LoadFile.php',
 			onSuccess : 'fileLoaded',
 			parameters : {id:id}
 		});
@@ -135,18 +145,19 @@ hui.ui.listen({
 		fileFormula.setValues(data.file);
 		fileGroups.setValue(data.groups);
 		fileWindow.show();
+		fileFormula.focus();
 	},
 	$click$cancelFile : function() {
 		this.fileId = null;
 		fileFormula.reset();
 		fileWindow.hide();
 	},
-	$click$updateFile : function() {
+	$submit$fileFormula : function() {
 		var data = fileFormula.getValues();
 		data.id = this.fileId;
 		hui.ui.request({
-			message : {start : 'Gemmer fil...',delay:300},
-			url : 'UpdateFile.php',
+			message : {start : {en:'Saving file...',da:'Gemmer fil...'},delay:300},
+			url : 'actions/UpdateFile.php',
 			onSuccess : 'fileUpdated',
 			json : {data:data}
 		});
@@ -162,10 +173,10 @@ hui.ui.listen({
 	$click$deleteFile : function() {
 		this.closeFileAfterDeletion = true;
 		hui.ui.request({
-			message : {start : 'Sletter fil...', delay : 300},
-			url:'DeleteFile.php',
-			onSuccess:'fileDeleted',
-			parameters:{id:this.fileId}
+			message : {start : {en:'Deleting file...',da:'Sletter fil...'}, delay : 300},
+			url : 'actions/DeleteFile.php',
+			onSuccess : 'fileDeleted',
+			parameters : {id:this.fileId}
 		});
 		this.$click$cancelFile();
 	},
@@ -188,14 +199,14 @@ hui.ui.listen({
 		if (this.groupId===null) {return};
 		var values = groupFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			hui.ui.showMessage({text:'Du skal angive en titel!',duration:2000});
+			hui.ui.showMessage({text:{en:'The title is required',da:'Titlen er krævet'},icon:'common/warning',duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
 			hui.ui.request({
-				message : { start : 'Gemmer gruppe...', delay : 300 },
+				message : { start : {en:'Saving group...',da:'Gemmer gruppe...'}, delay : 300 },
 				json : {data:values},
-				url : 'SaveGroup.php',
+				url : 'actions/SaveGroup.php',
 				onSuccess : function() {groupSource.refresh()}
 			});
 			this.groupId = null;
@@ -209,10 +220,10 @@ hui.ui.listen({
 	$selectionWasOpened$selector : function(item) {
 		if (item.kind!='filegroup') {return}
 		hui.ui.request({
-			message : { start : 'Åbner gruppe...', delay : 300 },
-			parameters:{id:item.value},
-			url:'../../Services/Model/LoadObject.php',
-			onSuccess:'loadGroup'
+			message : { start : {en:'Loading group...',da:'Åbner gruppe...'}, delay : 300 },
+			parameters : {id:item.value},
+			url : '../../Services/Model/LoadObject.php',
+			onSuccess : 'loadGroup'
 		});
 	},
 	$success$loadGroup : function(data) {
@@ -224,10 +235,10 @@ hui.ui.listen({
 	},
 	$click$deleteGroup : function() {
 		hui.ui.request({
-			message : { start : 'Sletter gruppe...', delay : 300 },
-			json:{data:{id:this.groupId}},
-			url:'../../Services/Model/DeleteObject.php',
-			onSuccess:'deleteGroup'
+			message : { start : {en:'Deleting group...',da:'Sletter gruppe...'}, delay : 300 },
+			json : {data:{id:this.groupId}},
+			url : '../../Services/Model/DeleteObject.php',
+			onSuccess : 'deleteGroup'
 		});
 		this.groupId = null;
 		groupFormula.reset();

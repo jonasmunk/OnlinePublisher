@@ -2031,14 +2031,15 @@ hui.drag = {
 				if (options.onDrop) {
 					options.onDrop(e);
 				}
-				//hui.log(e.dataTransfer.types)
-				if (options.onFiles && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length>0) {
-					options.onFiles(e.dataTransfer.files);
-				}
-				else if (options.onURL && hui.array.contains(e.dataTransfer.types,'public.url')) {
-					var url = e.dataTransfer.getData('public.url');
-					if (options.onURL && !hui.string.startsWith(url,'data:')) {
-						options.onURL(url);
+				if (e.dataTransfer) {
+					if (options.onFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
+						options.onFiles(e.dataTransfer.files);
+					}
+					else if (options.onURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
+						var url = e.dataTransfer.getData('public.url');
+						if (options.onURL && !hui.string.startsWith(url,'data:')) {
+							options.onURL(url);
+						}
 					}
 				}
 			}

@@ -101,15 +101,15 @@ $gui='
 		</formula>
 	</window>
 	
-	<window title="{Addition on new image; da:Tilføjelse af nyt billede}" name="uploadWindow" width="300">
+	<window title="{Addition on images; da:Tilføjelse af billeder}" name="uploadWindow" width="300">
 		<tabs small="true" centered="true">
-			<tab title="Upload" padding="10">
+			<tab title="{Upload; da:Overførsel}" padding="10">
 				<upload name="file" url="actions/UploadImage.php" widget="upload" multiple="true">
-					<placeholder title="{Choose images on your computer...; da:Vælg billeder på din computer...}" text="{The file can at most be '.$maxUploadSize.' large; da:Filen kan højest være '.$maxUploadSize.' stor}"/>
+					<placeholder title="{Select images on your computer...; da:Vælg billeder på din computer...}" text="{The file can at most be '.$maxUploadSize.' large; da:Filen kan højest være '.$maxUploadSize.' stor}"/>
 				</upload>
 				<buttons align="center" top="10">
 					<button name="cancelUpload" title="{Close; da:Luk}"/>
-					<button name="upload" title="{Choose images...; da:Vælg billeder...}" highlighted="true"/>
+					<button name="upload" title="{Select images...; da:Vælg billeder...}" highlighted="true"/>
 				</buttons>
 			</tab>
 			<tab title="{Fetch from the net; da:Hent fra nettet}" padding="10">

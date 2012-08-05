@@ -36,6 +36,7 @@ hui.ui.listen({
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
+				hui.ui.showMessage({text:{en:'The file has been added to the group',da:'Filen er blevet tilføjet til gruppen'},icon:'common/success',duration:2000})
 			}
 		});
 	},
