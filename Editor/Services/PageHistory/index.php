@@ -20,9 +20,9 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/close" text="Luk" name="close"/>
+				<icon icon="common/close" text="{Close; da:Luk}" name="close"/>
 				<divider/>
-				<icon icon="common/refresh" text="Gendan" name="reconstruct" disabled="true"/>
+				<icon icon="common/refresh" text="{Reconstruct; da:Gendan}" name="reconstruct" disabled="true"/>
 			</toolbar>
 		</top>
 		<middle>
@@ -30,7 +30,7 @@ $gui='
 				<overflow>
 				<selection name="selector" value="list">
 					<item icon="view/list" title="Oversigt" value="list"/>
-					<title>Versioner</title>
+					<title>{Versions: da:Versioner}</title>
 					<items source="selectionSource"/>
 				</selection>
 				</overflow>
@@ -39,7 +39,7 @@ $gui='
 				<bar state="viewer" variant="layout">
 					<text name="viewerHeader" variant="header"/>
 					<right>
-						<button small="true" name="closeViewer" text="Luk"/>
+						<button small="true" name="closeViewer" text="{Close; da:Luk}"/>
 					</right>
 				</bar>
 				<overflow state="viewer">
@@ -61,8 +61,8 @@ $gui='
 				</field>
 			</fields>
 			<buttons>
-				<button text="Annuller" name="cancelMessage"/>
-				<button text="Gem" submit="true" highlighted="true"/>
+				<button text="{Cancel; da:Annuller}" name="cancelMessage"/>
+				<button text="{Save; da:Gem}" submit="true" highlighted="true"/>
 			</buttons>
 		</formula>
 	</boundpanel>

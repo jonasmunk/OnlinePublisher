@@ -25,8 +25,8 @@ while ($row = Database::next($result)) {
 	$writer->startRow(array('id'=>$row['id']))->
 		startCell(array('icon'=>'common/user'))->text($row['title'])->endCell()->
 		startCell(array('wrap'=>false))->text(DateUtils::formatLongDateTime($row['time']))->endCell()->
-		startCell()->text($row['message'])->startIcons()->icon(array('icon'=>'monochrome/edit','revealing'=>true,'data'=>array('action'=>'editMessage')))->endIcons()->endCell()->
-		startCell()->button(array('text'=>'Vis'))->endCell()->
+		startCell()->text($row['message'])->startIcons()->icon(array('icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editMessage')))->endIcons()->endCell()->
+		startCell()->button(array('text'=>array('View','da'=>'Vis')))->endCell()->
 		endRow();
 }
 Database::free($result);

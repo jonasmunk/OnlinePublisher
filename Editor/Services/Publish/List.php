@@ -17,7 +17,7 @@ $writer = new ListWriter();
 
 $writer->startList();
 $writer->startHeaders();
-$writer->header(array('title'=>'Titel','width'=>70));
+$writer->header(array('title'=>array('Title','da'=>'Titel'),'width'=>70));
 $writer->header(array('title'=>'Type','width'=>30));
 $writer->header();
 $writer->endHeaders();
@@ -26,7 +26,7 @@ foreach ($pages as $page) {
 	$writer->startRow(array('kind'=>'page','id'=>$page['id']));
 	$writer->startCell(array('icon'=>'common/page'))->text($page['title'])->endCell();
 	$writer->startCell()->text('Side')->endCell();
-	$writer->startCell(array('wrap'=>false))->button(array('text'=>'Udgiv'))->endCell();
+	$writer->startCell(array('wrap'=>false))->button(array('text'=>array('Publish','da'=>'Udgiv')))->endCell();
 	$writer->endRow();
 }
 
@@ -34,7 +34,7 @@ foreach ($hierarchies as $hierarchy) {
 	$writer->startRow(array('kind'=>'hierarchy','id'=>$hierarchy['id']));
 	$writer->startCell(array('icon'=>'common/hierarchy'))->text($hierarchy['name'])->endCell();
 	$writer->startCell()->text('Hierarki')->endCell();
-	$writer->startCell(array('wrap'=>false))->button(array('text'=>'Udgiv'))->endCell();
+	$writer->startCell(array('wrap'=>false))->button(array('text'=>array('Publish','da'=>'Udgiv')))->endCell();
 	$writer->endRow();	
 }
 
@@ -42,7 +42,7 @@ foreach ($objects as $object) {
 	$writer->startRow(array('kind'=>'object','id'=>$object->getId()));
 	$writer->startCell(array('icon'=>$object->getIn2iGuiIcon()))->text($object->getTitle())->endCell();
 	$writer->startCell()->text($object->getType())->endCell();
-	$writer->startCell(array('wrap'=>false))->button(array('text'=>'Udgiv'))->endCell();
+	$writer->startCell(array('wrap'=>false))->button(array('text'=>array('Publish','da'=>'Udgiv')))->endCell();
 	$writer->endRow();
 }
 

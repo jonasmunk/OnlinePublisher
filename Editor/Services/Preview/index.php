@@ -19,23 +19,23 @@ $gui='
 	<controller source="controller.js"/>
 	<dock url="viewer/'.($edit ? '#edit' : '').'" name="dock" position="top" frame-name="Preview">
 		<tabs small="true" below="true">
-			<tab title="Vis ændringer" background="light">
+			<tab title="{View changes; da:Vis ændringer}" background="light">
 				<toolbar>
-					<icon icon="common/close" title="Luk" name="close"/>
+					<icon icon="common/close" title="{Close; da:Luk}" name="close"/>
 					<divider/>
-					<icon icon="common/edit" title="Rediger" name="edit"/>
-					<icon icon="common/view" title="Vis udgivet" name="view"/>
+					<icon icon="common/edit" title="{Edit; da:Rediger}" name="edit"/>
+					<icon icon="common/view" title="{View published; da:Vis udgivet}" name="view"/>
 					<icon icon="common/info" title="Info" name="properties"/>
 					<divider/>
-					<icon icon="common/internet" overlay="upload" title="Udgiv" name="publish" disabled="true"/>
+					<icon icon="common/internet" overlay="upload" title="{Publish; da:Udgiv}" name="publish" disabled="true"/>
 				</toolbar>
 			</tab>
-			<tab title="Avanceret" background="light">
+			<tab title="{Advanced; da:Avanceret}" background="light">
 				<toolbar>
-					<icon icon="common/time" text="Historik" name="viewHistory"/>
+					<icon icon="common/time" text="{History; da:Historik}" name="viewHistory"/>
 					<divider/>
-					<icon icon="inset/stamp" title="Revidér" name="review"/>
-					<icon icon="common/note" title="Ny note" name="addNote" overlay="new_monochrome"/>
+					<icon icon="inset/stamp" title="{Revise; da:Revidér}" name="review"/>
+					<icon icon="common/note" title="{New note; da:Ny note}" name="addNote" overlay="new_monochrome"/>
 					<divider/>
 					<icon icon="common/settings" title="Design" name="design"/>
 				</toolbar>
@@ -51,23 +51,23 @@ $gui='
 				</field>
 				<field label="Type">
 					<radiobuttons value="improvement" key="kind">
-						<item value="improvement" text="Forbedring"/>
-						<item value="error" text="Fejl"/>
+						<item value="improvement" text="{Improvement; da:Forbedring}"/>
+						<item value="error" text="{Error; da:Fejl}"/>
 					</radiobuttons>
 				</field>
 			</fields>
 			<buttons>
-				<button text="Annuller" name="cancelNote" small="true"/>
-				<button text="Opret" highlighted="true" submit="true" small="true"/>
+				<button text="{Cancel; da:Annuller}" name="cancelNote" small="true"/>
+				<button text="{Create; da:Opret}" highlighted="true" submit="true" small="true"/>
 			</buttons>
 		</formula>
 	</boundpanel>
 	
 	<boundpanel target="review" name="reviewPanel" width="300">
 		<buttons align="center" bottom="10">
-			<button text="Annuller" click="reviewPanel.hide()"/>
-			<button text="Afvis" name="reviewReject"/>
-			<button text="Godkend" highlighted="true" name="reviewAccept"/>
+			<button text="{Cancel; da:Annuller}" click="reviewPanel.hide()"/>
+			<button text="{Reject; da:Afvis}" name="reviewReject"/>
+			<button text="{Accept; da:Godkend}" highlighted="true" name="reviewAccept"/>
 		</buttons>
 		<list name="reviewList"/>
 	</boundpanel>

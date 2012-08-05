@@ -216,7 +216,7 @@ class ListWriter {
 	}
 
 	function button($options=array()) {
-		echo '<button text="'.StringUtils::escapeXML($options['text']).'"';
+		echo '<button text="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['text'])).'"';
 		if (isset($options['data'])) {
 			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
 		}
