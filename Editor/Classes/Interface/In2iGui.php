@@ -235,7 +235,7 @@ class In2iGui {
 	static function toLinks($links) {
 		$out = array();
 		foreach ($links as $link) {
-			$link->toUnicode();
+			//$link->toUnicode();
 			$out[] = array(
 				'id' => $link->getId(), 
 				'text' => $link->getText(), 

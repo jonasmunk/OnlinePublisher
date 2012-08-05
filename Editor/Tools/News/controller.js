@@ -52,11 +52,15 @@ hui.ui.listen({
 	//////////////////////// Dragging ////////////////////////
 	
 	$drop$news$newsgroup : function(dragged,dropped) {
-		hui.ui.request({url:'data/AddNewsToGroup.php',onSuccess:'newsMoved',json:{data:{file:dragged.id,group:dropped.value}}});
-	},
-	$success$newsMoved : function() {
-		newsSource.refresh();
-		groupSource.refresh();
+		hui.ui.request({
+			url : 'actions/AddNewsToGroup.php',
+			message : {start:{en:'Adding to group...', da:'Tilføjer til gruppe...'},delay:300,success:{en:'The news item has been added to the group',da:'Nyheden er blevet tilføjet til gruppen'}},
+			json : {data:{file:dragged.id,group:dropped.value}},
+			onSuccess : function() {
+				newsSource.refresh();
+				groupSource.refresh();
+			}
+		});
 	},
 	
 	//////////////////////// Actions /////////////////////////
@@ -67,10 +71,10 @@ hui.ui.listen({
 			this.closeNewsAfterDeletion = true;
 		}
 		hui.ui.request({
-			url:'data/DeleteNews.php',
-			onSuccess:'fileDeleted',
-			parameters:{id:obj.id},
-			message : {start:'Sletter nyhed...',delay:300}
+			url : 'actions/DeleteNews.php',
+			onSuccess : 'fileDeleted',
+			parameters : {id:obj.id},
+			message : {start:{en:'Deleting news item', da:'Sletter nyhed...'},delay:300}
 		});
 	},
 	$success$fileDeleted : function(response) {
@@ -95,7 +99,7 @@ hui.ui.listen({
 			url : 'data/LoadNews.php',
 			onSuccess : 'duplicateLoaded',
 			parameters : {id:obj.id},
-			message : {start:'Opretter kopi...',delay:300}
+			message : {start:{en:'Creating copy...',da:'Opretter kopi...'},delay:300}
 		});
 	},
 	$success$duplicateLoaded : function(data) {
@@ -125,7 +129,7 @@ hui.ui.listen({
 			url:'data/LoadNews.php',
 			onSuccess:'newsLoaded',
 			parameters:{id:id},
-			message:{start:'Åbner nyhed...',delay:300}
+			message:{start:{en:'Loading news item...',da:'Åbner nyhed...'},delay:300}
 		});
 	},
 	
@@ -152,10 +156,10 @@ hui.ui.listen({
 		data.links = newsLinks.getValue();
 		data.groups = newsGroups.getValue();
 		hui.ui.request({
-			url:'data/SaveNews.php',
-			onSuccess:'newsUpdated',
-			json:{data:data},
-			message:{start:'Gemmer nyhed...',delay:300}
+			url : 'actions/SaveNews.php',
+			onSuccess : 'newsUpdated',
+			json : {data:data},
+			message : {start:{en:'Saving news item...',da:'Gemmer nyhed...'},delay:300}
 		});
 		this.newsId = null;
 		newsFormula.reset();
@@ -167,10 +171,10 @@ hui.ui.listen({
 	},
 	$click$deleteNews : function() {
 		hui.ui.request({
-			url : 'data/DeleteNews.php',
+			url : 'actions/DeleteNews.php',
 			onSuccess : 'newsDeleted',
 			parameters : {id:this.newsId},
-			message : {start:'Sletter nyhed...',delay:300}
+			message : {start:{en:'Deleting news item...',da:'Sletter nyhed...'},delay:300}
 		});
 	},
 	$success$newsDeleted : function() {
@@ -199,15 +203,15 @@ hui.ui.listen({
 	$click$saveGroup : function() {
 		var values = groupFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			hui.ui.showMessage({text:'Du skal angive en titel',duration:2000});
+			hui.ui.showMessage({text:{en:'The title is required',da:'Titlen er krævet'},duration:2000});
 			groupFormula.focus();
 		} else {
 			values.id = this.groupId;
 			hui.ui.request({
-				json:{data:values},
-				url:'data/SaveGroup.php',
-				onSuccess:'groupSaved',
-				message:{start:'Gemmer gruppe...',delay:300}
+				json : {data:values},
+				url : 'actions/SaveGroup.php',
+				onSuccess : 'groupSaved',
+				message : {start:{en:'Saving group...',da:'Gemmer gruppe...'},delay:300}
 			});
 		}
 	},
@@ -234,7 +238,7 @@ hui.ui.listen({
 			parameters:{id:id},
 			url:'../../Services/Model/LoadObject.php',
 			onSuccess:'loadGroup',
-			message:{start:'Åbner gruppe...',delay:300}
+			message:{start:{en:'Loading group...',da:'Åbner gruppe...'},delay:300}
 		});
 	},
 	$success$loadGroup : function(data) {
@@ -249,7 +253,7 @@ hui.ui.listen({
 			json : {data:{id:this.groupId}},
 			url : '../../Services/Model/DeleteObject.php',
 			onSuccess : 'deleteGroup',
-			message:{start:'Sletter gruppe...',delay:300}
+			message:{start:{en:'Deleting group...',da:'Sletter gruppe...'},delay:300}
 		});
 	},
 	$success$deleteGroup : function() {
@@ -268,7 +272,7 @@ hui.ui.listen({
 	$click$newArticle : function() {
 		newArticleBox.show();
 		articleFormula.setValues({
-			linkText : 'Læs mere...',
+			linkText : hui.ui.language=='da' ? 'Læs mere...' : 'Read more...',
 			startdate : new Date()
 		});
 		articleBlueprint.selectFirst();
@@ -277,12 +281,12 @@ hui.ui.listen({
 	$submit$articleFormula : function() {
 		var values = articleFormula.getValues();
 		if (hui.isBlank(values.title)) {
-			hui.ui.showMessage({text:'Titlen skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:{en:'The title is required',da:'Titlen er krævet'},duration:2000});
 			articleFormula.focus();
 			return;
 		}
 		if (!values.blueprint) {
-			hui.ui.showMessage({text:'Skabelon skal vælges',duration:2000});
+			hui.ui.showMessage({text:{en:'The template is required',da:'Skabelonen er krævet'},duration:2000});
 			return;
 		}
 		if (values.startdate) {
@@ -293,8 +297,8 @@ hui.ui.listen({
 		}
 		hui.ui.request({
 			json : {data:values},
-			url : 'data/CreateArticle.php',
-			message : {start:'Opretter artikel...',success:'Artiklen er oprettet'},
+			url : 'actions/CreateArticle.php',
+			message : {start:{en:'Creating article',da:'Opretter artikel...'},success:{en:'The article has been created',da:'Artiklen er oprettet'}},
 			onSuccess : function() {
 				articleFormula.reset();
 				newArticleBox.hide();

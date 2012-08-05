@@ -3,27 +3,20 @@
  * @package OnlinePublisher
  * @subpackage Tools.News
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
-require_once '../../../Classes/Interface/In2iGui.php';
-require_once '../../../Classes/Objects/News.php';
-require_once '../../../Classes/Core/Request.php';
-require_once '../../../Classes/Utilities/DateUtils.php';
-require_once '../../../Classes/Services/ObjectLinkService.php';
-require_once '../../../Classes/Services/NewsService.php';
-require_once '../../../Classes/Core/Log.php';
+require_once '../../../Include/Private.php';
 
 $sourceId = Request::getInt('source');
 
 if ($sourceId) {
+	NewsService::synchronizeSource($sourceId);
+
 	$writer = new ListWriter();
 
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Titel','width'=>70));
-	$writer->header(array('title'=>'Dato'));
+	$writer->header(array('title'=>array('Title','da'=>'Titel'),'width'=>70));
+	$writer->header(array('title'=>array('Date','da'=>'Dato')));
 	$writer->endHeaders();
-	NewsService::synchronizeSource($sourceId);
 	
 	$items = Query::after('newssourceitem')->withProperty('newssource_id',$sourceId)->orderBy('date')->descending()->get();
 
@@ -78,15 +71,15 @@ $linkCounts = ObjectLinkService::getLinkCounts($objects);
 
 $writer = new ListWriter();
 
-$writer->startList();
-$writer->sort($sort,$direction);
-$writer->window(array( 'total' => $result->getTotal(), 'size' => $windowSize, 'page' => $windowPage ));
-$writer->startHeaders();
-$writer->header(array('title'=>'Titel','width'=>40,'key'=>'title','sortable'=>true));
-$writer->header(array('title'=>'Startdato','key'=>'startdate','sortable'=>true));
-$writer->header(array('title'=>'Slutdato','key'=>'enddate','sortable'=>true));
-$writer->header(array('width'=>1));
-$writer->endHeaders();
+$writer->startList()->
+	sort($sort,$direction)->
+	window(array( 'total' => $result->getTotal(), 'size' => $windowSize, 'page' => $windowPage ))->
+	startHeaders()->
+		header(array('title'=>array('Title','da'=>'Titel'),'width'=>40,'key'=>'title','sortable'=>true))->
+		header(array('title'=>array('Start date','da'=>'Startdato'),'key'=>'startdate','sortable'=>true))->
+		header(array('title'=>array('End date','da'=>'Slutdato'),'key'=>'enddate','sortable'=>true))->
+		header(array('width'=>1))->
+	endHeaders();
 
 foreach ($objects as $object) {
 	$active = false;

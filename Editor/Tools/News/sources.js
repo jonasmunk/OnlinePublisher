@@ -14,7 +14,7 @@ hui.ui.listen({
 			parameters : {id:id},
 			url : '../../Services/Model/LoadObject.php',
 			onJSON : function(obj) {
-				sourceText.setText(' - synkroniseret: '+new Date(obj.synchronized*1000));
+				sourceText.setText((hui.ui.language=='da' ? ' - synkroniseret: ' : ' - synchronized: ')+new Date(obj.synchronized*1000));
 			}
 		});
 	},
@@ -22,8 +22,8 @@ hui.ui.listen({
 		var item = selector.getValue();
 		synchronize.disable();
 		hui.ui.request({
-			message : {start:'Synkroniserer kilde...',success:'Kilden er nu synkroniseret'},
-			url : 'data/SyncSource.php',
+			message : {start:{en:'Synchronizing source',da:'Synkroniserer kilde...'},success:{en:'The source has been synchronized',da:'Kilden er nu synkroniseret'}},
+			url : 'actions/SyncSource.php',
 			parameters : {id:item.value},
 			onSuccess : function() {
 				list.refresh();
@@ -50,13 +50,13 @@ hui.ui.listen({
 		var values = sourceFormula.getValues();
 		values.id = this.sourceId;
 		if (hui.isBlank(values.title)) {
-			hui.ui.showMessage({text:'Du skal angive en titel',duration:2000});
+			hui.ui.showMessage({text:{en:'The title is required',da:'Titlen er krævet'},duration:2000});
 			sourceFormula.focus();
 		} else {
 			hui.ui.request({
 				json : {data:values},
-				url : 'data/SaveSource.php',
-				message : {start:'Gemmer kilde...',delay:300},
+				url : 'actions/SaveSource.php',
+				message : {start:{en:'Saving source...',da:'Gemmer kilde...'},delay:300},
 				onSuccess : function() {
 					sourcesSource.refresh();
 				}
@@ -79,7 +79,7 @@ hui.ui.listen({
 			parameters : {id:id},
 			url : '../../Services/Model/LoadObject.php',
 			onSuccess : 'sourceLoaded',
-			message : {start:'Åbner kilde...',delay:300}
+			message : {start:{en:'Loading source...',da:'Åbner kilde...'},delay:300}
 		});
 	},
 	$success$sourceLoaded : function(data) {
@@ -94,7 +94,7 @@ hui.ui.listen({
 			json : {data:{id:this.sourceId}},
 			url : '../../Services/Model/DeleteObject.php',
 			onSuccess : 'deleteSource',
-			message : {start:'Sletter kilde...',delay:300}
+			message : {start:{en:'Deleting source...',da:'Sletter kilde...'},delay:300}
 		});
 	},
 	$success$deleteSource : function() {
