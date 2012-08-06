@@ -217,7 +217,7 @@ hui.ui.listen({
 	$submit$groupFormula : function() {
 		this.$click$saveGroup();
 	},
-	$selectionWasOpened$selector : function(item) {
+	$open$selector : function(item) {
 		if (item.kind!='filegroup') {return}
 		hui.ui.request({
 			message : { start : {en:'Loading group...',da:'Åbner gruppe...'}, delay : 300 },

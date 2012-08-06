@@ -1,5 +1,5 @@
 hui.ui.listen({
-	$selectionWasOpened$selector : function(item) {
+	$open$selector : function(item) {
 		if (item.kind=='calendarsource') {
 			this.editSource(item.value);
 			synchronizeSource.setEnabled(true);

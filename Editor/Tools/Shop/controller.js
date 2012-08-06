@@ -28,7 +28,7 @@ hui.ui.listen({
 			list.loadData('data/ListProducts.php?producttype='+obj.value);
 		}
 	},
-	$selectionWasOpened : function() {
+	$open$selector : function() {
 		var obj = selector.getValue();
 		if (obj.kind=='productgroup') {
 			this.loadGroup(obj.value);

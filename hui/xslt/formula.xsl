@@ -48,7 +48,7 @@
     ···
 </fields>
 -->
-<xsl:template match="gui:fields">
+<xsl:template match="gui:fields[not(@labels='above')]">
 	<table class="hui_formula_fields">
 		<xsl:attribute name="class">
 			<xsl:text>hui_formula_fields</xsl:text>
@@ -84,7 +84,7 @@
 <xsl:template match="gui:fields/gui:field">
 	<tr>
 		<th>
-			<xsl:if test="gui:text-input[not(@multiline='true')] | gui:dropdown | gui:checkbox | gui:datetime-input | gui:style-length-input | gui:number-input">
+			<xsl:if test="gui:text-input[not(@multiline='true')] | gui:dropdown | gui:checkbox | gui:datetime-input | gui:style-length-input | gui:number-input | gui:radiobuttons">
 				<xsl:attribute name="class">hui_formula_middle</xsl:attribute>
 			</xsl:if>
 			<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
@@ -97,14 +97,17 @@
 </xsl:template>
 
 <xsl:template match="gui:fields[@labels='above']/gui:field">
+	<xsl:call-template name="gui:field"/>
+	<!--
 	<tr><td>
 		<xsl:if test="@label"><label class="hui_formula_field"><xsl:value-of select="@label"/></label></xsl:if>
 		<div class="hui_formula_field_body"><xsl:apply-templates/></div>
 		<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
 	</td></tr>
+	-->
 </xsl:template>
 
-<xsl:template match="gui:field">
+<xsl:template match="gui:field" name="gui:field">
 	<div class="hui_formula_field">
 		<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
 		<div class="hui_formula_field_body"><xsl:apply-templates/></div>
@@ -584,13 +587,24 @@
 <image-input name="«text»" source="«url»"/>
 -->
 <xsl:template match="gui:image-input">
-	<div class="hui_imageinput" id="{generate-id()}" tabindex="0"><xsl:comment/></div>
+	<div class="hui_imageinput" id="{generate-id()}" tabindex="0">
+		<xsl:if test="@size">
+			<xsl:attribute name="style">
+				<xsl:text>width:</xsl:text><xsl:value-of select="@size"/><xsl:text>px; height:</xsl:text><xsl:value-of select="@size"/><xsl:text>px;</xsl:text>
+			</xsl:attribute>
+		</xsl:if>
+		<xsl:comment/>
+	</div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImageInput({
 			element : '<xsl:value-of select="generate-id()"/>',
 			name : '<xsl:value-of select="@name"/>',
 			key : '<xsl:value-of select="@key"/>',
 			source : '<xsl:value-of select="@source"/>'
+			<xsl:if test="@size">
+				,width: <xsl:value-of select="@size"/>
+				,height: <xsl:value-of select="@size"/>
+			</xsl:if>
 			<xsl:if test="gui:finder">
 				,finder : {
 					title : '<xsl:value-of select="gui:finder/@title"/>',

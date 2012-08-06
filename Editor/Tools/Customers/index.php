@@ -8,11 +8,11 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Interface/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="Customers">
+<gui xmlns="uri:hui" padding="10" title="{People; da:Personer}">
 	<controller source="controller.js"/>
 	<source name="personGroupSource" url="../../Services/Model/Items.php?type=persongroup"/>
 	<source name="mailinglistSource" url="../../Services/Model/Items.php?type=mailinglist"/>
-	<source name="personListSource" url="ListPersons.php">
+	<source name="personListSource" url="data/ListPersons.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
@@ -23,22 +23,26 @@ $gui='
 	<source name="mailinglistListSource" url="../../Services/Model/ListObjects.php?type=mailinglist">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="query" value="@search.value"/>
+		<parameter key="sort" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
 	</source>
 	<source name="groupListSource" url="../../Services/Model/ListObjects.php?type=persongroup">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="query" value="@search.value"/>
+		<parameter key="sort" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
 	</source>
 	
 	<structure>
 		<top>
 		<toolbar>
-			<icon icon="common/user" title="Ny person" name="newPerson" overlay="new"/>
-			<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
-			<icon icon="common/email" title="Ny postliste" name="newMailinglist" overlay="new"/>
+			<icon icon="common/user" title="{New person; da:Ny person}" name="newPerson" overlay="new"/>
+			<icon icon="common/folder" title="{New group; da:Ny gruppe}" name="newGroup" overlay="new"/>
+			<icon icon="common/email" title="{New mailing list; da:Ny postliste}" name="newMailinglist" overlay="new"/>
 			<divider/>
-			<icon icon="common/letter" title="Send email" name="sendEmail"/>
+			<icon icon="common/letter" title="{Send e-mail; da:Afsend e-post}" name="sendEmail"/>
 			<right>
-				<field title="Søgning">
+				<field label="{Search; da:Søgning}">
 					<searchfield name="search" expanded-width="200"/>
 				</field>
 			</right>
@@ -48,11 +52,11 @@ $gui='
 			<left>
 				<overflow>
 					<selection value="person" name="selector">
-						<item icon="common/person" title="Alle personer" value="person"/>
-						<item icon="common/email" title="Alle postlister" value="mailinglist"/>
-						<item icon="common/folder" title="Alle grupper" value="persongroup"/>
-						<items name="groupSelection" source="personGroupSource" title="Grupper"/>
-						<items name="mailinglistSelection" source="mailinglistSource" title="Postlister"/>
+						<item icon="common/person" title="{All people; da:Alle personer}" value="person"/>
+						<item icon="common/email" title="{All mailing lists; da:Alle postlister}" value="mailinglist"/>
+						<item icon="common/folder" title="{All groups; da:Alle grupper}" value="persongroup"/>
+						<items name="groupSelection" source="personGroupSource" title="{Groups; da:Grupper}"/>
+						<items name="mailinglistSelection" source="mailinglistSource" title="{Mailing lists; da:Postlister}"/>
 					</selection>
 				</overflow>
 			</left>
@@ -73,114 +77,121 @@ $gui='
 						<column>
 							<columns space="10">
 								<column>
-									<field label="Fornavn:">
+									<field label="{First name; da:Fornavn}:">
 										<text-input name="personFirstname"/>
 									</field>
 								</column>
 								<column>
-									<field label="Mellemnavn:">
+									<field label="{Middle name; da:Mellemnavn}:">
 										<text-input name="personMiddlename"/>
 									</field>
 								</column>
 								<column>
-									<field label="Efternavn:">
+									<field label="{Last name; da:Efternavn}:">
 										<text-input name="personSurname"/>
 									</field>
 								</column>
 							</columns>
 							<columns space="10">
 								<column>
-									<field label="Jobtitel:">
+									<field label="{Job title; da:Jobtitel}:">
 										<text-input name="personJobtitle"/>
 									</field>
 								</column>
 								<column>
-									<field label="Initialer:">
+									<field label="{Initials; da:Initialer}:">
 										<text-input name="personInitials"/>
 									</field>
 								</column>
 								<column>
-									<field label="Kaldenavn:">
+									<field label="{Call name; da:Kaldenavn}:">
 										<text-input name="personNickname"/>
 									</field>
 								</column>
 							</columns>
 						</column>
-						<column width="70px">
-							<field label="Billede">
-								<image-input name="personImage" source="../../Services/Model/ImagePicker.php"/>
+						<column width="74px">
+							<field label="{Image; da:Billede}">
+								<image-input name="personImage" size="68">
+									<finder title="{Select image; da:Vælg billede}" 
+										list-url="../../Services/Finder/ImagesList.php"
+										selection-url="../../Services/Finder/ImagesSelection.php"
+										selection-value="all"
+										selection-parameter="group"
+										search-parameter="query"
+									/>
+								</image-input>
 							</field>
 						</column>
 					</columns>
 					<columns space="10">
 						<column>
 							<fields labels="above">
-								<field label="Email:">
+								<field label="{E-mail; da:E-post}:">
 									<objectlist name="personEmails">
 										<text key="address"/>
 									</objectlist>
 								</field>
-								<field label="Telefon:">
+								<field label="{Phone; da:Telefon}:">
 									<objectlist name="personPhones">
-										<text key="number" label="Nummer"/>
-										<text key="context" label="Kontekst"/>
+										<text key="number" label="{Number; da:Nummer}"/>
+										<text key="context" label="{Context; da:Kontekst}"/>
 									</objectlist>
 								</field>
 							</fields>
 							<fields>
-								<field label="Køn:">
+								<field label="{Gender; da:Køn}:">
 									<radiobuttons name="personSex" value="1">
-										<radiobutton value="1" label="Mand"/>
-										<radiobutton value="0" label="Kvinde"/>
+										<radiobutton value="1" label="{Male; da:Mand}"/>
+										<radiobutton value="0" label="{Female; da:Kvinde}"/>
 									</radiobuttons>
 								</field>
 							</fields>
 						</column>
 						<column>
-							<field label="Adresse:">
+							<field label="{Address; da:Adresse}:">
 								<text-input name="personStreetname"/>
 							</field>
-							
 							<columns space="10">
 								<column>
-									<field label="Postnr:">
+									<field label="{Postal code; da:Postnr}:">
 										<text-input name="personZipcode"/>
 									</field>
 								</column>
 								<column>
-									<field label="By:">
+									<field label="{City; da:By}:">
 										<text-input name="personCity"/>
 									</field>
 								</column>
 							</columns>
 							<fields labels="above">
-								<field label="Land:">
+								<field label="{Country; da:Land}:">
 									<text-input name="personCountry"/>
 								</field>
-								<field label="Internet:">
+								<field label="{Web address; da:Internetadresse}:">
 									<text-input name="personWebaddress"/>
 								</field>
 							</fields>
 						</column>
 					</columns>
 				</tab>
-				<tab title="Indstillinger" padding="10">
+				<tab title="{Settings; da:Indstillinger}" padding="10">
 					<columns space="5">
 						<column>
 							<fields>
-								<field label="Postlister:">
+								<field label="{Mailing lists; da:Postlister}:">
 									<checkboxes name="personMailinglists">
 										<items source="mailinglistSource"/>
 									</checkboxes>
 								</field>
-								<field label="Søgbar:">
+								<field label="{Searchable; da:Søgbar}:">
 									<checkbox name="personSearchable"/>
 								</field>
 							</fields>
 						</column>
 						<column>
 							<fields>
-								<field label="Grupper:">
+								<field label="{Groups; da:Grupper}:">
 									<checkboxes name="personGroups">
 										<items source="personGroupSource"/>
 									</checkboxes>
@@ -190,50 +201,56 @@ $gui='
 					</columns>
 				</tab>
 				<tab title="Information" padding="10">
-					<field label="Notat:">
+					<field label="{Note; da:Notat}:">
 						<text-input name="personNote" multiline="true"/>
 					</field>
 				</tab>
 			</tabs>
 			<buttons padding="5">
-				<button name="deletePerson" title="Slet"/>
-				<button name="cancelPerson" title="Annuller"/>
-				<button name="savePerson" title="Gem" highlighted="true"/>
+				<button name="cancelPerson" title="{Cancel; da:Annuller}"/>
+				<button name="deletePerson" title="{Delete; da:Slet}">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete person; da: Ja, slet person}" cancel="{No; da:Nej}"/>
+				</button>
+				<button name="savePerson" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 			</buttons>
 		</formula>
 	</window>
 	
-	<window name="mailinglistEditor" width="300" title="Postliste" padding="5">
+	<window name="mailinglistEditor" width="300" title="{Mailing list; da:Postliste}" padding="5">
 		<formula name="mailinglistFormula">
 			<fields>
-				<field label="Titel:">
+				<field label="{Title; da:Titel}:">
 					<text-input name="mailinglistTitle"/>
 				</field>
-				<field label="Notat:">
+				<field label="{Note; da:Notat}:">
 					<text-input name="mailinglistNote" lines="10"/>
 				</field>
 				<buttons top="5">
-					<button name="cancelMailinglist" title="Annuller"/>
-					<button name="deleteMailinglist" title="Slet"/>
-					<button name="saveMailinglist" title="Gem" highlighted="true"/>
+					<button name="cancelMailinglist" title="{Cancel; da:Annuller}"/>
+					<button name="deleteMailinglist" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete mailing list; da: Ja, slet postliste}" cancel="{No; da:Nej}"/>
+					</button>
+					<button name="saveMailinglist" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>
 	</window>
 	
-	<window name="groupEditor" width="300" title="Gruppe" padding="5">
+	<window name="groupEditor" width="300" title="{Group; da:Gruppe}" padding="5">
 		<formula name="groupFormula">
 			<fields>
-				<field label="Titel:">
+				<field label="{Title; da:Titel}:">
 					<text-input name="groupTitle"/>
 				</field>
-				<field label="Notat:">
-					<text-input name="groupNote" lines="10"/>
+				<field label="{Note; da:Notat}:">
+					<text-input name="groupNote" multiline="true"/>
 				</field>
 				<buttons>
-					<button name="cancelGroup" title="Annuller"/>
-					<button name="deleteGroup" title="Slet"/>
-					<button name="saveGroup" title="Gem" highlighted="true"/>
+					<button name="cancelGroup" title="{Cancel; da:Annuller}"/>
+					<button name="deleteGroup" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete group; da: Ja, slet gruppe}" cancel="{No; da:Nej}"/>
+					</button>
+					<button name="saveGroup" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>

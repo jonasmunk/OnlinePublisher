@@ -22,6 +22,7 @@ hui.ui.listen({
 	},
 	
 	$select$selector : function(obj) {
+		list.resetState();
 		if (obj.value=='mailinglist') {
 			list.setSource(mailinglistListSource);
 		} else if (obj.value=='persongroup') {
@@ -31,41 +32,47 @@ hui.ui.listen({
 		}
 		sendEmail.setEnabled(obj.kind=='mailinglist');
 	},
-	
+	$valueChanged$search : function() {
+		list.resetState();
+	},
+	$open$selector : function(obj) {
+		if (obj.kind=='persongroup') {
+			this.loadGroup(obj.value);
+		} else if (obj.kind=='mailinglist') {
+			this.loadMailinglist(obj.value);
+		}
+	},
+	$open$list : function(obj) {
+		if (obj.kind=='mailinglist') {
+			this.loadMailinglist(obj.id);
+		} else if (obj.kind=='persongroup') {
+			this.loadGroup(obj.id);
+		} else if (obj.kind=='person') {
+			this.loadPerson(obj.id);
+		}
+	},
 	$drop$person$persongroup : function(dragged,target) {
 		var data = {
 			personId : dragged.id,
 			personGroupId : target.value
 		}
-		hui.ui.request({json:{data:data},url:'AddPersonToGroup.php',onSuccess:'addPersonToGroup'});
+		hui.ui.request({
+			json:{data:data},
+			message : {
+				start : {en:'Adding to group...', da:'Tilføjer til gruppe...'},
+				delay : 300,
+				success : {en:'The person has been added to the group',da:'Personen er blevet tilføjet til gruppen'}
+			},
+			url : 'actions/AddPersonToGroup.php',
+			onSuccess : function() {
+				personGroupSource.refresh();
+				list.refresh();
+			}
+		});
 	},
 	
-	$open$list : function(obj) {
-		var data = {id:obj.id};
-		if (obj.kind=='mailinglist') {
-			mailinglistFormula.reset();
-			deleteMailinglist.setEnabled(false);
-			saveMailinglist.setEnabled(false);
-			hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadMailinglist'});
-		} else if (obj.kind=='persongroup') {
-			groupFormula.reset();
-			deleteGroup.setEnabled(false);
-			saveGroup.setEnabled(false);
-			saveGroup.setEnabled(false);
-			hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
-		} else if (obj.kind=='person') {
-			this.loadPerson(obj.id);
-		}
-	},
 	
-	///////////////////////////////////// Person /////////////////////////////
 	
-	loadPerson : function(id) {
-		personFormula.reset();
-		deletePerson.setEnabled(false);
-		savePerson.setEnabled(false);
-		hui.ui.request({json:{data:{id:id}},url:'LoadPerson.php',onSuccess:'loadPerson'});
-	},
 	
 	$click$newPerson : function() {
 		this.personId = 0;
@@ -91,7 +98,29 @@ hui.ui.listen({
 		groupTitle.focus();
 	},
 	
-	$click$saveMailinglist : function() {
+	////////////////////// Mailing list //////////////////////////
+
+	loadMailinglist : function(id) {
+		mailinglistFormula.reset();
+		deleteMailinglist.setEnabled(false);
+		saveMailinglist.setEnabled(false);
+		hui.ui.request({
+			json : {data:{id:id}},
+			message : {start:{en:'Loading mailing list...',da:'Henter postliste...'},delay:300},
+			url : '../../Services/Model/LoadObject.php',
+			onJSON : function(data) {
+				this.mailinglistId = data.id;
+				mailinglistTitle.setValue(data.title);
+				mailinglistNote.setValue(data.note);
+				mailinglistEditor.show();
+				deleteMailinglist.setEnabled(true);
+				saveMailinglist.setEnabled(true);
+				mailinglistTitle.focus();
+			}.bind(this)
+		});		
+	},
+	
+	$submit$mailinglistFormula : function() {
 		var title = mailinglistTitle.getValue();
 		var note = mailinglistNote.getValue();
 		if (title.length==0) {
@@ -99,33 +128,54 @@ hui.ui.listen({
 			return;
 		}
 		var data = {id:this.mailinglistId,title:title,note:note};
-		hui.ui.request({json:{data:data},url:'SaveMailinglist.php',onSuccess:'saveMailinglist'});
-	},
-	$success$saveMailinglist : function(t) {
+		mailinglistFormula.reset();
 		mailinglistEditor.hide();
-		mailinglistSource.refresh();
-		list.refresh();
+		hui.ui.request({
+			message : {start:{en:'Saving mailinglist...',da:'Gemmer postliste...'},delay:300},
+			json : {data:data},
+			url : 'actions/SaveMailinglist.php',
+			onSuccess : function() {
+				mailinglistSource.refresh();
+				list.refresh();
+			}
+		});
 	},
 	
-	$click$saveGroup : function() {
-		var title = groupTitle.getValue();
-		var note = groupNote.getValue();
-		if (title.length==0) {
-			groupTitle.focus();
-			return;
-		}
-		var data = {id:this.groupId,title:title,note:note};
-		hui.ui.request({json:{data:data},url:'SaveGroup.php',onSuccess:'saveGroup'});
-	},
-	$success$saveGroup : function(t) {
-		groupEditor.hide();
-		personGroupSource.refresh();
-		list.refresh();
-		personGroups.refresh();
+	$click$deleteMailinglist : function() {
+		mailinglistEditor.hide();
+		mailinglistFormula.reset();
+		hui.ui.request({
+			message : {start:{en:'Deleting mailing list...',da:'Sletter postliste...',delay:300}},
+			json : {data:{id:this.mailinglistId}},
+			url : '../../Services/Model/DeleteObject.php',
+			onSuccess : function() {
+				mailinglistSource.refresh();
+				list.refresh();				
+			}
+		});
 	},
 	
+	$click$cancelMailinglist : function() {
+		this.mailinglistId = 0;
+		mailinglistFormula.reset();
+		mailinglistEditor.hide();
+	},
+
+	//////////////////////////// Person /////////////////////////
 	
-	$click$savePerson : function() {
+	loadPerson : function(id) {
+		personFormula.reset();
+		deletePerson.setEnabled(false);
+		savePerson.setEnabled(false);
+		hui.ui.request({
+			message : {start:{en:'Loading person...',da:'Henter person...'},delay:300},
+			json : {data:{id:id}},
+			url : 'data/LoadPerson.php',
+			onSuccess : 'loadPerson'
+		});
+	},
+
+	$submit$personFormula : function() {
 		var person = {
 			id : this.personId,
 			firstname : personFirstname.getValue(),
@@ -149,34 +199,18 @@ hui.ui.listen({
 		var groups = personGroups.getValues();
 		var mailinglists = personMailinglists.getValues();
 		var data = {person:person,emails:emails,phones:phones,groups:groups,mailinglists:mailinglists};
-		hui.ui.request({json:{data:data},url:'SavePerson.php',onSuccess:'savePerson'});
-	},
-	$success$savePerson : function(t) {
+		personFormula.reset();
 		personEditor.hide();
-		list.refresh();
+		hui.ui.request({
+			json : {data:data},
+			message : {start:{en:'Saving person...',da:'Gemmer person...'},delay:300},
+			url : 'actions/SavePerson.php',
+			onSuccess : function() {
+				list.refresh();
+			}
+		});
 	},
 	
-	$submit$mailinglistFormula : function() {
-		this.$click$saveMailinglist();
-	},
-	$success$loadMailinglist : function(data) {
-		this.mailinglistId = data.id;
-		mailinglistTitle.setValue(data.title);
-		mailinglistNote.setValue(data.note);
-		mailinglistEditor.show();
-		deleteMailinglist.setEnabled(true);
-		saveMailinglist.setEnabled(true);
-		mailinglistTitle.focus();
-	},
-	$success$loadGroup : function(data) {
-		this.groupId = data.id;
-		groupTitle.setValue(data.title);
-		groupNote.setValue(data.note);
-		groupEditor.show();
-		deleteGroup.setEnabled(true);
-		saveGroup.setEnabled(true);
-		groupTitle.focus();
-	},
 	$success$loadPerson : function(data) {
 		this.personId = data.person.id;
 		personFirstname.setValue(data.person.firstname);
@@ -205,45 +239,85 @@ hui.ui.listen({
 		personEditor.show();
 		personFirstname.focus();
 	},
-	getImageUrl$personImage : function(picker) {
-		var obj = picker.getObject();
-		return '../../../services/images/?id='+obj.id+'&width=48&height=48&format=jpg';
+	$click$deletePerson : function() {
+		personEditor.hide();
+		personFormula.reset();
+		hui.ui.request({
+			message : {start:{en:'Deleting person...',da:'Sletter person...'},delay:300},
+			json : {data:{id:this.personId}},
+			url : '../../Services/Model/DeleteObject.php',
+			onSuccess : function() {
+				list.refresh();
+			}
+		});
+	},
+	$click$cancelPerson : function() {
+		this.personId = 0;
+		personFormula.reset();
+		personEditor.hide();
 	},
 	
-	$click$deleteMailinglist : function() {
-		hui.ui.request({json:{data:{id:this.mailinglistId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteMailinglist'});
+
+	////////////////////////////// Group ///////////////////////////
+
+	loadGroup : function(id) {
+		groupFormula.reset();
+		deleteGroup.setEnabled(false);
+		saveGroup.setEnabled(false);
+		saveGroup.setEnabled(false);
+		hui.ui.request({
+			json : {data:{id:id}},
+			message : {start:{en:'Loading group...',da:'Henter gruppe...'},delay:300},
+			url : '../../Services/Model/LoadObject.php',
+			onJSON : function(data) {
+				this.groupId = data.id;
+				groupTitle.setValue(data.title);
+				groupNote.setValue(data.note);
+				groupEditor.show();
+				deleteGroup.setEnabled(true);
+				saveGroup.setEnabled(true);
+				groupTitle.focus();
+			}.bind(this)
+		});
 	},
-	$success$deleteMailinglist : function(t) {
-		mailinglistEditor.hide();
-		mailinglistFormula.reset();
-		mailinglistSource.refresh();
-		list.refresh();
+	
+	$submit$groupFormula : function() {
+		var title = groupTitle.getValue();
+		var note = groupNote.getValue();
+		if (title.length==0) {
+			groupTitle.focus();
+			return;
+		}
+		groupEditor.hide();
+		groupFormula.reset();
+		var data = {id:this.groupId,title:title,note:note};
+		hui.ui.request({
+			json : {data:data},
+			message : {start:{en:'Saving group...',da:'Gemmer gruppe...',delay:300}},
+			url : 'actions/SaveGroup.php',
+			onSuccess : function() {
+				personGroupSource.refresh();
+				list.refresh();
+				personGroups.refresh();
+			}
+		});
 	},
 	
 	$click$deleteGroup : function() {
-		hui.ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
-	},
-	$success$deleteGroup : function(t) {
 		groupEditor.hide();
 		groupFormula.reset();
-		personGroupSource.refresh();
-		list.refresh();
+		hui.ui.request({
+			message : {start:{en:'Deleting group...',da:'Sletter gruppe...'},delay:300},
+			json : {data:{id:this.groupId}},
+			url : '../../Services/Model/DeleteObject.php',
+			onSuccess : function() {
+				personGroupSource.refresh();
+				list.refresh();
+			}
+		});
 	},
 	
-	$click$deletePerson : function() {
-		hui.ui.request({json:{data:{id:this.personId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePerson'});
-	},
-	$success$deletePerson : function() {
-		personEditor.hide();
-		personFormula.reset();
-		list.refresh();
-	},
 	
-	$click$cancelMailinglist : function() {
-		this.mailinglistId = 0;
-		mailinglistFormula.reset();
-		mailinglistEditor.hide();
-	},
 	
 	$click$cancelGroup : function() {
 		this.groupId = 0;
@@ -251,26 +325,24 @@ hui.ui.listen({
 		groupEditor.hide();
 	},
 	
-	$click$cancelPerson : function() {
-		this.personId = 0;
-		personFormula.reset();
-		personEditor.hide();
-	},
 	
 	////////////////////////// Send email ////////////////////////
 	
 	$click$sendEmail : function() {
 		var data = {id:selector.getValue().value};
-		hui.ui.request({json:{data:data},url:'GetMailinglistEmails.php',onSuccess:'sendEmail'});
-	},
-	
-	$success$sendEmail : function(data) {
-		var mails = []
-		for (var i=0; i < data.length; i++) {
-			mails.push(data[i].address);
-		}
-		if (mails.length>0) {
-			document.location.href='mailto:?bcc='+mails.join(',');
-		}
+		hui.ui.request({
+			json : {data:data},
+			url : 'data/GetMailinglistEmails.php',
+			onJSON : function(data) {
+				hui.log(data)
+				var mails = []
+				for (var i=0; i < data.length; i++) {
+					mails.push(data[i].address);
+				}
+				if (mails.length>0) {
+					document.location.href='mailto:?bcc='+mails.join(',');
+				}
+			}
+		});
 	}
 });

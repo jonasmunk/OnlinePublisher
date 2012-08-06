@@ -69,7 +69,7 @@ hui.ui.listen({
 		var item = selector.getValue();
 		this.loadSource(item.value);
 	},
-	$selectionWasOpened$selector : function(item) {
+	$open$selector : function(item) {
 		if (item.kind=='newssource') {
 			this.loadSource(item.value);
 		}

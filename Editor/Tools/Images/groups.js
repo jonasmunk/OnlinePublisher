@@ -40,7 +40,7 @@ hui.ui.listen({
 	$submit$groupFormula : function() {
 		this.$click$saveGroup();
 	},
-	$selectionWasOpened$selector : function(item) {
+	$open$selector : function(item) {
 		if (item.kind!='imagegroup') {
 			return;
 		}

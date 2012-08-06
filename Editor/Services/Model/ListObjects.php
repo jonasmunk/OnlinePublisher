@@ -27,17 +27,21 @@ if ($queryString!='') $query['query'] = $queryString;
 
 $list = Object::find($query);
 $objects = $list['result'];
-header('Content-Type: text/xml;');
-echo '<?xml version="1.0" encoding="UTF-8"?>';
-echo '<list>';
-echo '<sort key="'.$sort.'" direction="'.$direction.'"/>';
-echo '<window total="'.$list['total'].'" size="'.$list['windowSize'].'" page="'.$list['windowPage'].'"/>';
-echo '<headers>'.
-'<header title="Titel" width="30" key="title" sortable="true"/>'.
-'<header title="Notat" width="30"/>'.
-($type=='' ? '<header title="Type" key="type" sortable="true"/>' : '').
-'<header title="Ændringsdato" key="updated" sortable="true"/>'.
-'</headers>';
+
+$writer = new ListWriter();
+
+$writer->startList()->
+	sort($sort,$direction)->
+	window(array('total'=>$list['total'],'size'=>$list['windowSize'],'page'=>$list['windowPage']))->
+	startHeaders()->
+		header(array('title'=>array('Title','da'=>'Titel'),'key'=>'title','sortable'=>true))->
+		header(array('title'=>array('Note','da'=>'Notat')));
+	if ($type=='') {
+		$writer->header(array('title'=>'Type','key'=>'title','sortable'=>true));
+	}
+	$writer->header(array('title'=>array('Modified','da'=>'Ændret'),'key'=>'updated','sortable'=>true));
+	$writer->endHeaders();
+
 foreach ($objects as $object) {
 	echo '<row id="'.$object->getId().'" kind="'.$object->getType().'" icon="'.$object->getIn2iGuiIcon().'" title="'.StringUtils::escapeXML($object->getTitle()).'">'.
 	'<cell icon="'.$object->getIn2iGuiIcon().'">'.StringUtils::escapeXML($object->getTitle()).'</cell>'.
@@ -47,5 +51,5 @@ foreach ($objects as $object) {
 	'</row>';
 }
 
-echo '</list>';
+$writer->endList();
 ?>

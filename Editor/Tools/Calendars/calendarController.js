@@ -1,5 +1,5 @@
 hui.ui.listen({
-	$selectionWasOpened$selector : function(item) {
+	$open$selector : function(item) {
 		if (item.kind=='calendar') {
 			hui.ui.request({parameters:{id:item.value},url:'../../Services/Model/LoadObject.php',onSuccess:'loadCalendar'});
 		}

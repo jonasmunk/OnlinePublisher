@@ -289,7 +289,7 @@ hui.ui.List.prototype = {
 		this.sortKey = key;
 	},
 	_debug : function(obj) {
-		hui.log(obj);
+		//hui.log(obj);
 	},
 
 	/** @private */

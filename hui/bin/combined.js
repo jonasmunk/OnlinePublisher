@@ -6682,7 +6682,7 @@ hui.ui.List.prototype = {
 		this.sortKey = key;
 	},
 	_debug : function(obj) {
-		hui.log(obj);
+		//hui.log(obj);
 	},
 
 	/** @private */
@@ -8197,7 +8197,7 @@ hui.ui.Selection = function(options) {
 			item.element = element;
 			this.addItemBehavior(element,item);
 		};
-		this.selection = this.getSelectionWithValue(this.options.value);
+		this.selection = this._getSelectionWithValue(this.options.value);
 		this.updateUI();
 	} else if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
@@ -8235,7 +8235,7 @@ hui.ui.Selection.prototype = {
 	/** Set the selected item
 	 * @param {Object} value The selected item */
 	setValue : function(value) {
-		var item = this.getSelectionWithValue(value);
+		var item = this._getSelectionWithValue(value);
 		if (item===null) {
 			this.selection = null;
 		} else {
@@ -8245,8 +8245,7 @@ hui.ui.Selection.prototype = {
 		this.updateUI();
 		this.fireChange();
 	},
-	/** @private */
-	getSelectionWithValue : function(value) {
+	_getSelectionWithValue : function(value) {
 		var i;
 		for (i=0; i < this.items.length; i++) {
 			if (this.items[i].value==value) {
@@ -8265,7 +8264,6 @@ hui.ui.Selection.prototype = {
 	},
 	/** Changes selection to the first item */
 	selectFirst : function() {
-		hui.log('selecting first')
 		var i;
 		for (i=0; i < this.items.length; i++) {
 			this.changeSelection(this.items[i]);
@@ -8332,7 +8330,7 @@ hui.ui.Selection.prototype = {
 		var item = {id:id,title:title,icon:icon,badge:badge,element:element,value:value,kind:kind};
 		this.items.push(item);
 		this.addItemBehavior(element,item);
-		this.selection = this.getSelectionWithValue(this.options.value);
+		this.selection = this._getSelectionWithValue(this.options.value);
 	},
 	*/
 	/** @private */
@@ -8342,7 +8340,7 @@ hui.ui.Selection.prototype = {
 		}.bind(this));
 		hui.listen(node,'dblclick',function(e) {
 			hui.stop(e);
-			this.itemWasDoubleClicked(item);
+			this._onDoubleClick(item);
 		}.bind(this));
 		node.dragDropInfo = item;
 	},
@@ -8364,7 +8362,7 @@ hui.ui.Selection.prototype = {
 			}.bind(this));
 			hui.listen(node,'dblclick',function(e) {
 				hui.stop(e);
-				this.itemWasDoubleClicked(item);
+				this._onDoubleClick(item);
 			}.bind(this));
 		}.bind(this));
 		this.fireSizeChange();
@@ -8386,10 +8384,9 @@ hui.ui.Selection.prototype = {
 		if (this.busy>0) {return}
 		this.changeSelection(item);
 	},
-	/** @private */
-	itemWasDoubleClicked : function(item) {
+	_onDoubleClick : function(item) {
 		if (this.busy>0) {return}
-		this.fire('selectionWasOpened',item);
+		this.fire('open',item);
 	},
 	_setBusy : function(busy) {
 		this.busy+= busy ? 1 : -1;
@@ -8405,7 +8402,7 @@ hui.ui.Selection.prototype = {
 	},
 	_checkValue : function() {
 		if (!this.selection) {return}
-		var item = this.getSelectionWithValue(this.selection.value);
+		var item = this._getSelectionWithValue(this.selection.value);
 		if (!item) {
 			hui.log('Value not found: '+this.selection.value);
 			if (!this.busy) {
@@ -8517,7 +8514,7 @@ hui.ui.Selection.Items.prototype = {
 			}.bind(this));
 			hui.listen(node,'dblclick',function(e) {
 				hui.stop(e);
-				this.parent.itemWasDoubleClicked(item);
+				this.parent._onDoubleClick(item);
 			}.bind(this));
 			level.appendChild(node);
 			var info = {title:item.title,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};

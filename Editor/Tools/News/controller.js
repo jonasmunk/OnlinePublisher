@@ -224,7 +224,7 @@ hui.ui.listen({
 		groupFormula.reset();
 		groupWindow.hide();
 	},
-	$selectionWasOpened$selector : function(item) {
+	$open$selector : function(item) {
 		if (item.kind=='newsgroup') {
 			this.loadGroup(item.value);
 		}

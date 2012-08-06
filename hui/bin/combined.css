@@ -3340,12 +3340,13 @@ div.hui_window_dark .hui_selection_item span
 	margin-top: 4px;
 }div.hui_imageinput
 {
-	width: 52px;
-	height: 52px;
+	width: 50px;
+	height: 50px;
 	border: 1px solid #ddd;
 	cursor: pointer;
 	background: #fff center center no-repeat;
 	margin-top: 2px;
+	padding: 1px;
 }
 
 .hui_imageinput_thumbs
