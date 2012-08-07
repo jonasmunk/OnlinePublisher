@@ -473,7 +473,7 @@
 
 
 
-<xsl:template match="gui:fields/gui:buttons">
+<xsl:template match="gui:fields[not(@labels='above')]/gui:buttons">
 	<tr>
 		<td class="hui_fields_buttons">
 			<xsl:if test="not(../@labels='above')">

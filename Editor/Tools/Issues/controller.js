@@ -22,7 +22,7 @@ hui.ui.listen({
 		var values = issueFormula.getValues();
 		values.id = this._issueId;
 		hui.ui.request({
-			url : 'data/SaveIssue.php',
+			url : 'actions/SaveIssue.php',
 			json : {data : values},
 			onSuccess : function() {
 				list.refresh();
@@ -32,7 +32,7 @@ hui.ui.listen({
 	},
 	$click$deleteIssue : function() {
 		hui.ui.request({
-			url : 'data/DeleteIssue.php',
+			url : 'actions/DeleteIssue.php',
 			parameters : {id : this._issueId},
 			onSuccess : function() {
 				list.refresh();

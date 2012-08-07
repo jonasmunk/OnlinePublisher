@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Interface/In2iGui.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="System">
+<gui xmlns="uri:hui" padding="10" title="Issues">
 	<controller source="controller.js"/>
 	<source name="listSource" url="data/ListIssues.php">
 		<parameter key="windowPage" value="@list.window.page"/>
@@ -24,7 +24,7 @@ $gui='
 			<left>
 				<overflow>
 				<selection value="overview" name="selector">
-					<item icon="view/list" title="Oversigt" value="overview"/>
+					<item icon="view/list" title="{Overview; da:Oversigt}" value="overview"/>
 				</selection>
 				</overflow>
 			</left>
@@ -37,13 +37,13 @@ $gui='
 		<bottom/>
 	</structure>
 
-	<window title="Sag" name="issueWindow" icon="common/folder" width="300" padding="5">
+	<window title="{Issue; da:Sag}" name="issueWindow" icon="common/folder" width="300" padding="5">
 		<formula name="issueFormula">
 			<fields labels="above">
-				<field label="Titel">
+				<field label="{Title; da:Titel}">
 					<text-input key="title"/>
 				</field>
-				<field label="Tekst">
+				<field label="{Text; da:Tekst}">
 					<text-input key="note" multiline="true"/>
 				</field>
 				<field label="Type">
@@ -52,11 +52,11 @@ $gui='
 					</dropdown>
 				</field>
 				<buttons>
-					<button name="cancelIssue" title="Annuller"/>
-					<button name="deleteIssue" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet opgaven" cancel="Nej"/>
+					<button name="cancelIssue" title="{Cancel; da:Annuller}"/>
+					<button name="deleteIssue" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete issue; da:Ja, slet sagen}" cancel="{No; da:Nej}"/>
 					</button>
-					<button name="saveIssue" title="Gem" highlighted="true" submit="true"/>
+					<button name="saveIssue" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>
