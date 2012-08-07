@@ -3,13 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Images
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Services/FileSystemService.php';
-require_once '../../Classes/Utilities/GuiUtils.php';
-
-//$uploadAddToGroup = InternalSession::getToolSessionVar('images','uploadAddToGroup',true) ? 'true' : 'false';
+require_once '../../Include/Private.php';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 

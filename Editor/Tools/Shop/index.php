@@ -3,12 +3,10 @@
  * @package OnlinePublisher
  * @subpackage Tools.Customers
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Include/Private.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="Butik">
+<gui xmlns="uri:hui" padding="10" title="{Shop; da:Butik}">
 	<controller source="controller.js"/>
 	<source name="productListSource" url="data/ListProducts.php"/>
 	<source name="groupSource" url="../../Services/Model/Items.php?type=productgroup"/>
