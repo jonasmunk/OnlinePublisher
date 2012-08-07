@@ -21,7 +21,7 @@ hui.ui.listen({
 	$submit$calendarFormula : function() {
 		var data = calendarFormula.getValues();
 		data.id = this.calendarId;
-		hui.ui.request({url:'data/SaveCalendar.php',onSuccess:'saveCalendar',json:{data:data}});
+		hui.ui.request({url:'actions/SaveCalendar.php',onSuccess:'saveCalendar',json:{data:data}});
 	},
 	$success$saveCalendar : function() {
 		this.sourceId = null;
@@ -38,7 +38,7 @@ hui.ui.listen({
 		calendarFormula.focus();
 	},
 	$click$deleteCalendar : function() {
-		hui.ui.request({url:'data/DeleteCalendar.php',onSuccess:'deleteCalendar',parameters:{id:this.calendarId}});
+		hui.ui.request({url:'actions/DeleteCalendar.php',onSuccess:'deleteCalendar',parameters:{id:this.calendarId}});
 	},
 	$success$deleteCalendar : function() {
 		this.calendarId = null;

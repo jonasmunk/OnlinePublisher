@@ -1,18 +1,12 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Files
+ * @subpackage Tools.Calendars
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Services/FileSystemService.php';
-require_once '../../Classes/Utilities/GuiUtils.php';
-
-$maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
+require_once '../../Include/Private.php';
 
 $gui='
-<gui xmlns="uri:hui" title="Documents" padding="10" state="list">
+<gui xmlns="uri:hui" title="{Calendars; da:Kalendere}" padding="10" state="list">
 
 	<controller source="controller.js"/>
 	<controller source="sourceController.js"/>
@@ -47,24 +41,24 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/calendar" title="Ny kalender" overlay="new" name="newCalendar"/>
-				<icon icon="common/internet" title="Ny kilde" overlay="new" name="newSource"/>
-				<icon icon="common/time" title="Ny begivenhed" overlay="new" name="newEvent"/>
+				<icon icon="common/calendar" title="{New calendar; da:Ny kalender}" overlay="new" name="newCalendar"/>
+				<icon icon="common/internet" title="{New source; da:Ny kilde}" overlay="new" name="newSource"/>
+				<icon icon="common/time" title="{New event; da:Ny begivenhed}" overlay="new" name="newEvent"/>
 				<divider/>
-				<icon icon="common/refresh" title="Synkroniser" name="synchronizeSource" disabled="true"/>
-				<icon icon="common/delete" title="Slet" disabled="true" name="deleteItem">
-					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
+				<icon icon="common/refresh" title="{Synchronize; da:Synkroniser}" name="synchronizeSource" disabled="true"/>
+				<icon icon="common/delete" title="{Delete; da:Slet}" disabled="true" name="deleteItem">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 				</icon>
-				<icon icon="common/edit" title="Rediger" disabled="true" name="editItem"/>
+				<icon icon="common/edit" title="{Edit; da:Rediger}" disabled="true" name="editItem"/>
 				<divider/>
-				<field label="Visning">
+				<field label="{View; da:Visning}">
 					<segmented value="list" name="viewSelection">
 						<item icon="view/list" value="list"/>
 						<item icon="view/calendar" value="calendar"/>
 					</segmented>
 				</field>
 				<right>
-					<field label="Søgning">
+					<field label="{Search; da:Søgning}">
 						<searchfield name="search" expanded-width="200"/>
 					</field>
 				</right>
@@ -74,11 +68,9 @@ $gui='
 			<left>
 				<overflow>
 				<selection value="overview" name="selector">
-					<item icon="common/files" title="Oversigt" value="overview"/>
-					<title>Kallendere</title>
-					<items source="calendarItemsSource" name="calendarSelection"/>
-					<title>Kilder</title>
-					<items source="sourcesItemsSource" name="sourceSelection"/>
+					<item icon="common/files" title="{Overview; da:Oversigt}" value="overview"/>
+					<items source="calendarItemsSource" name="calendarSelection" title="{Calendars; da:Kalendere}"/>
+					<items source="sourcesItemsSource" name="sourceSelection" title="{Sources; da:Kilder}"/>
 				</selection>
 				</overflow>
 			</left>
@@ -92,80 +84,80 @@ $gui='
 		<bottom/>
 	</structure>
 	
-	<window title="Kilde" name="sourceWindow" width="300" padding="5">
+	<window title="{Source; da:Kilde}" name="sourceWindow" width="300" padding="5">
 		<formula name="sourceFormula">
 			<fields labels="above">
-				<field label="Titel">
+				<field label="{Title; da:Titel}">
 					<text-input key="title"/>
 				</field>
-				<field label="Titel (visning)">
+				<field label="{Title (display); da:Titel (visning)}">
 					<text-input key="displayTitle"/>
 				</field>
-				<field label="Adresse">
+				<field label="{Address; da:Adresse}">
 					<text-input key="url" multiline="true"/>
 				</field>
 				<field label="Filter">
 					<text-input key="filter"/>
 				</field>
-				<field label="Interval (sekunder)">
+				<field label="Interval ({seconds; da:sekunder})">
 					<number-input key="syncInterval"/>
-				</field>
-				<buttons>
-					<button name="cancelSource" title="Annuller"/>
-					<button name="deleteSource" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
-					</button>
-					<button name="saveSource" title="Gem" highlighted="true"/>
-				</buttons>
-			</fields>
-		</formula>
-	</window>
-	
-	<window title="Kalender" name="calendarWindow" width="300" padding="5">
-		<formula name="calendarFormula">
-			<fields labels="above">
-				<field label="Titel">
-					<text-input key="title"/>
 				</field>
 			</fields>
 			<buttons>
-				<button name="cancelCalendar" title="Annuller"/>
-				<button name="deleteCalendar" title="Slet">
-					<confirm text="Er du sikker" ok="Ja, slet" cancel="Annuller"/>
+				<button name="cancelSource" title="{Cancel; da:Annuller}"/>
+				<button name="deleteSource" title="{Delete; da:Slet}">
+					<confirm text="(Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 				</button>
-				<button name="saveCalendar" title="Gem" highlighted="true" submit="true"/>
+				<button name="saveSource" title="{Save; da:Gem}" highlighted="true"/>
 			</buttons>
 		</formula>
 	</window>
 	
-	<window title="Begivenhed" icon="common/time" name="eventWindow" width="300" padding="5">
-		<formula name="eventFormula">
+	<window title="{Calendar; da:Kalender}" name="calendarWindow" width="300" padding="5">
+		<formula name="calendarFormula">
 			<fields labels="above">
-				<field label="Titel">
+				<field label="{Title; da:Titel}">
 					<text-input key="title"/>
 				</field>
-				<field label="Lokation">
+			</fields>
+			<buttons>
+				<button name="cancelCalendar" title="{Cancel; da:Annuller}"/>
+				<button name="deleteCalendar" title="{Delete; da:Slet}">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+				</button>
+				<button name="saveCalendar" title="{Save; da:Gem}" highlighted="true" submit="true"/>
+			</buttons>
+		</formula>
+	</window>
+	
+	<window title="{Event; da:Begivenhed}" icon="common/time" name="eventWindow" width="300" padding="5">
+		<formula name="eventFormula">
+			<fields labels="above">
+				<field label="{Title; da:Titel}">
+					<text-input key="title"/>
+				</field>
+				<field label="{Location; da:Lokation}">
 					<text-input key="location"/>
 				</field>
-				<field label="Fra">
+				<field label="{From; da:Fra}">
 					<datetime-input key="startdate"/>
 				</field>
-				<field label="Til">
+				<field label="{To; da:Til}">
 					<datetime-input key="enddate"/>
 				</field>
-				<field label="Kalendere">
+				<field label="{Calendars; da:Kalendere}">
 					<checkboxes key="calendars" name="eventCalendars">
 						<items source="calendarItemsSource"/>
 					</checkboxes>
 				</field>
-				<buttons>
-					<button name="cancelEvent" title="Annuller"/>
-					<button name="deleteEvent" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
-					</button>
-					<button name="saveEvent" title="Gem" highlighted="true" submit="true"/>
-				</buttons>
 			</fields>
+			<buttons>
+				<button name="cancelEvent" title="{Cancel; da:Annuller}"/>
+				<button name="deleteEvent" title="{Delete; da:Slet}">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+				</button>
+				<button name="saveEvent" title="{Save; da:Gem}" highlighted="true" submit="true"/>
+			</buttons>
 		</formula>
 	</window>
 	

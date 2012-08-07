@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Developer
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
-require_once '../../../Classes/Objects/Calendarsource.php';
-require_once '../../../Classes/Core/Request.php';
-require_once '../../../Classes/Interface/In2iGui.php';
+require_once '../../../Include/Private.php';
 
 $force = Request::getBoolean('force');
 $sourceId = Request::getInt('sourceId');
@@ -28,7 +24,7 @@ function listSource($id,$force) {
 	$out = array();
 
 	foreach ($events as $event) {
-		$out[] = array('startTime'=>$event['startDate'],'endTime'=>$event['endDate'],'text'=>mb_convert_encoding($event['summary'], "UTF-8","ISO-8859-1"));
+		$out[] = array('startTime'=>$event['startDate'],'endTime'=>$event['endDate'],'text'=>$event['summary']);
 	}
-	In2iGui::sendObject($out);
+	Response::sendUnicodeObject($out);
 }

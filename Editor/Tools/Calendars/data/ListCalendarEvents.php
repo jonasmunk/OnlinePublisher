@@ -1,14 +1,9 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Developer
+ * @subpackage Tools.Calendars
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
-require_once '../../../Classes/Utilities/DateUtils.php';
-require_once '../../../Classes/Objects/Event.php';
-require_once '../../../Classes/Core/Request.php';
-require_once '../../../Classes/Interface/In2iGui.php';
+require_once '../../../Include/Private.php';
 
 $calendarId = Request::getInt('calendarId');
 if ($calendarId>0) {
@@ -28,10 +23,10 @@ function listEvents($id,$force) {
 	//$writer->sort($sort,$direction);
 	//$writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' => $windowPage ));
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Titel','width'=>40));
-	$writer->header(array('title'=>'Lokation'));
+	$writer->header(array('title'=>array('Title','da'=>'Titel'),'width'=>40));
+	$writer->header(array('title'=>array('Location','da'=>'Lokation')));
 	$writer->header(array('title'=>'Start'));
-	$writer->header(array('title'=>'Slut'));
+	$writer->header(array('title'=>array('End','da'=>'Slut')));
 	$writer->endHeaders();
 
 	foreach ($events as $event) {

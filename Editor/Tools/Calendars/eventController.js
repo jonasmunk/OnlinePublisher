@@ -63,23 +63,23 @@ hui.ui.listen({
 		if (data.startdate) {
 			data.startdate=Math.round(data.startdate.getTime()/1000);
 		} else {
-			hui.ui.showMessage({text:'Startdato skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:{en:'The start date is required',da:'Startdatoen skal udfyldes'},duration:2000});
 			eventFormula.focus();
 			return;
 		}
 		if (data.enddate) {
 			data.enddate=Math.round(data.enddate.getTime()/1000);
 		} else {
-			hui.ui.showMessage({text:'Slutdato skal udfyldes',duration:2000});
+			hui.ui.showMessage({text:{en:'The end date is required',da:'Slutdatoen skal udfyldes'},duration:2000});
 			eventFormula.focus();
 			return;
 		}
 		if (data.calendars.length<1) {
-			hui.ui.showMessage({text:'Der skal vælges mindst een kalender',duration:2000});
+			hui.ui.showMessage({text:{en:'At least one kalendar must be selected',da:'Mindst een kalender skal vælges'},duration:2000});
 			eventFormula.focus();
 			return;
 		}
-		hui.ui.request({url:'data/SaveEvent.php',onSuccess:'saveEvent',json:{data:data}});
+		hui.ui.request({url:'actions/SaveEvent.php',onSuccess:'saveEvent',json:{data:data}});
 	},
 	$success$saveEvent : function() {
 		this.eventId = null;
@@ -103,7 +103,7 @@ hui.ui.listen({
 		this.deleteEvent(this.eventId);
 	},
 	deleteEvent : function(id) {
-		hui.ui.request({url:'data/DeleteEvent.php',onSuccess:'deleteEvent',parameters:{id:id}});
+		hui.ui.request({url:'actions/DeleteEvent.php',onSuccess:'deleteEvent',parameters:{id:id}});
 	},
 	$success$deleteEvent : function() {
 		this.eventId = null;

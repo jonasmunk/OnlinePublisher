@@ -18,7 +18,7 @@ hui.ui.listen({
 	editSource : function(id) {
 		sourceFormula.reset();
 		hui.ui.request({
-			message : {start:'Åbner kilde...',delay:300},
+			message : {start:{en:'Loading source...',da:'Henter kilde...'},delay:300},
 			parameters : {id:id},
 			url : '../../Services/Model/LoadObject.php',
 			onSuccess : 'loadSource'
@@ -39,7 +39,7 @@ hui.ui.listen({
 	$click$saveSource : function() {
 		var data = sourceFormula.getValues();
 		data.id = this.sourceId;
-		hui.ui.request({url:'data/SaveCalendarSource.php',onSuccess:'saveSource',json:{data:data}});
+		hui.ui.request({url:'actions/SaveCalendarSource.php',onSuccess:'saveSource',json:{data:data}});
 	},
 	$success$saveSource : function() {
 		this.sourceId = null;
@@ -49,7 +49,7 @@ hui.ui.listen({
 		list.refresh();
 	},
 	$click$deleteSource : function() {
-		hui.ui.request({url:'data/DeleteCalendarSource.php',onSuccess:'deleteSource',parameters:{id:this.sourceId}});
+		hui.ui.request({url:'actions/DeleteCalendarSource.php',onSuccess:'deleteSource',parameters:{id:this.sourceId}});
 	},
 	$success$deleteSource : function() {
 		this.sourceId = null;
@@ -70,8 +70,8 @@ hui.ui.listen({
 	$click$synchronizeSource : function() {
 		var value = selector.getValue();
 		if (value.kind=='calendarsource') {
-			hui.ui.showMessage({text:'Synkroniserer kilde...'});
-			hui.ui.request({url:'data/SyncCalendarSource.php',onSuccess:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
+			hui.ui.showMessage({text:{en:'Synchronizing source...',da:'Synkroniserer kilde...'}});
+			hui.ui.request({url:'actions/SyncCalendarSource.php',onSuccess:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
 		}
 	},
 	$success$synchronizeSource : function() {
@@ -79,6 +79,6 @@ hui.ui.listen({
 		list.refresh();
 	},
 	$failure$synchronizeSource : function() {
-		hui.ui.showMessage({text:'Synkronisering fejlede!',duration:2000});
+		hui.ui.showMessage({text:{en:'Synchronization failed',da:'Synkronisering fejlede'},duration:2000});
 	}
 });

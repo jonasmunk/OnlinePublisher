@@ -3,12 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Developer
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
-require_once '../../../Classes/Utilities/DateUtils.php';
-require_once '../../../Classes/Objects/Calendarsource.php';
-require_once '../../../Classes/Core/Request.php';
-require_once '../../../Classes/Interface/In2iGui.php';
+require_once '../../../Include/Private.php';
 
 $force = Request::getBoolean('force');
 $sourceId = Request::getInt('sourceId');
@@ -32,12 +27,12 @@ function listSource($id,$force) {
 	//$writer->sort($sort,$direction);
 	//$writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' => $windowPage ));
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Titel + note','width'=>30));
-	$writer->header(array('title'=>'Lokation','width'=>20));
+	$writer->header(array('title'=>array('Title','da'=>'Titel'),'width'=>30));
+	$writer->header(array('title'=>array('Location','da'=>'Lokation'),'width'=>20));
 	$writer->header(array('title'=>'URL'));
 	$writer->header(array('title'=>'Start','width'=>1));
-	$writer->header(array('title'=>'Slut','width'=>1));
-	$writer->header(array('title'=>'Bonus','width'=>1));
+	$writer->header(array('title'=>array('End','da'=>'Slut'),'width'=>1));
+	$writer->header(array('width'=>1));
 	$writer->endHeaders();
 
 	foreach ($events as $event) {

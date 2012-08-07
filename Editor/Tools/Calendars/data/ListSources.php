@@ -11,11 +11,11 @@ $writer = new ListWriter();
 
 $writer->startList()
 	->startHeaders()
-		->header(array('title'=>'Titel','width'=>30))
-		->header(array('title'=>'Adresse'))
+		->header(array('title'=>array('Title','da'=>'Titel'),'width'=>30))
+		->header(array('title'=>array('Address','da'=>'Adresse')))
 		->header(array('title'=>'Filter'))
 		->header(array('title'=>'Interval'))
-		->header(array('title'=>'Synkroniseret'))
+		->header(array('title'=>array('Synchronized','da'=>'Synkroniseret')))
 	->endHeaders();
 
 foreach ($sources as $source) {
