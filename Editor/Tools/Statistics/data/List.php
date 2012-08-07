@@ -3,11 +3,8 @@
  * @package OnlinePublisher
  * @subpackage Tools.Optimization
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Integration/GoogleAnalytics.php';
+require_once '../../../Include/Private.php';
+require_once '../../../Classes/Integration/GoogleAnalytics.php';
 
 $kind = Request::getString('kind');
 $time = Request::getString('time');
@@ -45,8 +42,8 @@ $writer->startList();
 if ($result) {
 	$writer->startHeaders();
 	$writer->header(array('title'=>''));
-	$writer->header(array('title'=>'Sidevisninger'));
-	$writer->header(array('title'=>'Besøg'));
+	$writer->header(array('title'=>array('Pageviews','da'=>'Sidevisninger')));
+	$writer->header(array('title'=>array('Visitors','da'=>'Besøgende')));
 	$writer->endHeaders();
 
 	foreach ($result as $row) {

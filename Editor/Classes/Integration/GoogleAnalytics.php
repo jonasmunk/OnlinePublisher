@@ -52,6 +52,7 @@ class GoogleAnalytics {
 			));
 			return true;
 		} catch (Exception $e) {
+			Log::debug($e);
 			return false;
 		}
 	}
