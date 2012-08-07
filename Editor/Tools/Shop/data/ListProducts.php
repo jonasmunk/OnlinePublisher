@@ -26,8 +26,8 @@ $writer = new ListWriter();
 $writer->startList()->
 	window(array('total'=>$list['total'],'size'=>$list['windowSize'],'number'=>$list['windowNumber']))->
 	startHeaders()->
-		header(array('title'=>'Produkt','width'=>40))->
-		header(array('title'=>'Number','width'=>30))->
+		header(array('title'=>array('Product','da'=>'Produkt'),'width'=>40))->
+		header(array('title'=>array('Number','da'=>'Nummer'),'width'=>30))->
 		header(array('title'=>'Type','width'=>30))->
 	endHeaders();
 

@@ -16,22 +16,22 @@ $gui='
 	<structure>
 		<top>
 		<toolbar>
-			<icon icon="common/product" title="Nyt produkt" name="newProduct" overlay="new"/>
-			<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
-			<icon icon="common/folder" title="Ny type" name="newType" overlay="new"/>
+			<icon icon="common/product" title="{New product; da:Nyt produkt}" name="newProduct" overlay="new"/>
+			<icon icon="common/folder" title="{New group; da:Ny gruppe}" name="newGroup" overlay="new"/>
+			<icon icon="common/folder" title="{New type; da:Ny type}" name="newType" overlay="new"/>
 		</toolbar>
 		</top>
 		<middle>
 			<left>
+				<overflow>
 				<selection value="product" name="selector">
-					<item icon="common/product" title="Alle produkter" value="product"/>
-					<item icon="common/email" title="Alle bud" value="productoffer"/>
-					<item icon="common/folder" title="Alle grupper" value="productgroup"/>
-					<title>Grupper</title>
-					<items source="groupSource"/>
-					<title>Typer</title>
-					<items source="typeSource"/>
+					<item icon="common/product" title="{All products; da:Alle produkter}" value="product"/>
+					<item icon="common/email" title="{All offers; da:Alle bud}" value="productoffer"/>
+					<item icon="common/folder" title="{All groups; da:Alle grupper}" value="productgroup"/>
+					<items source="groupSource" title="{Groups; da:Grupper}"/>
+					<items source="typeSource" title="{Types; da:Typer}"/>
 				</selection>
+				</overflow>
 			</left>
 			<center>
 				<overflow>
@@ -42,40 +42,44 @@ $gui='
 		<bottom/>
 	</structure>
 	
-	<window name="offerEditor" width="300" title="Bud" pad="5">
+	<window name="offerEditor" width="300" title="{Offer; da:Bud}" pad="5">
 		<formula name="offerFormula">
 			<fields>
-				<field label="Bud:">
+				<field label="{Offer; da:Bud}:">
 					<text-input name="offerOffer"/>
 				</field>
 				<field label="Deadline:">
 					<datetime-input name="offerExpiry"/>
 				</field>
-				<field label="Notat:">
+				<field label="{Note; da:Notat}:">
 					<text-input name="offerNote" lines="6"/>
 				</field>
 			</fields>
 			<buttons>
-				<button name="cancelOffer" title="Annuller"/>
-				<button name="deleteOffer" title="Slet"/>
-				<button name="saveOffer" title="Gem" highlighted="true"/>
+				<button name="cancelOffer" title="{Cancel; da:Annuller}"/>
+				<button name="deleteOffer" title="{Delete; da:Slet}">
+					<confirm text="{Are you sure? da:Er du sikker?}" ok="{Yes, delete offer; da:Ja, slet bud}" cancel="{No; da:Nej}"/>
+				</button>
+				<button name="saveOffer" title="{Save; da:Gem}" highlighted="true"/>
 			</buttons>
 		</formula>
 	</window>
 	
-	<window name="groupEditor" width="300" title="Gruppe" pad="5">
+	<window name="groupEditor" width="300" title="{Group; da:Gruppe}" pad="5">
 		<formula name="groupFormula">
 			<fields>
-				<field label="Titel:">
+				<field label="{Title; da:Titel}:">
 					<text-input key="title"/>
 				</field>
-				<field label="Notat:">
+				<field label="{Note; da:Notat}:">
 					<text-input key="note" lines="10"/>
 				</field>
 				<buttons>
-					<button name="cancelGroup" title="Annuller"/>
-					<button name="deleteGroup" title="Slet"/>
-					<button name="saveGroup" title="Gem" highlighted="true" submit="true"/>
+					<button name="cancelGroup" title="{Cancel; da:Annuller}"/>
+					<button name="deleteGroup" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete group; da:Ja, slet gruppen}" cancel="{No; da:Nej}"/>
+					</button>
+					<button name="saveGroup" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>
@@ -84,100 +88,102 @@ $gui='
 	<window name="typeEditor" width="300" title="Type" pad="5">
 		<formula name="typeFormula">
 			<fields>
-				<field label="Titel:">
+				<field label="{Title; da:Titel}:">
 					<text-input name="typeTitle"/>
 				</field>
-				<field label="Notat:">
+				<field label="{Note; da:Notat}:">
 					<text-input name="typeNote" lines="10"/>
 				</field>
 				<buttons>
-					<button name="deleteType" title="Slet"/>
-					<button name="cancelType" title="Annuller"/>
-					<button name="saveType" title="Gem" highlighted="true"/>
+					<button name="cancelType" title="{Cancel; da:Annuller}"/>
+					<button name="deleteType" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete type; da:Ja, slet typen}" cancel="{No; da:Nej}"/>
+					</button>
+					<button name="saveType" title="{Save; da:Gem}" highlighted="true"/>
 				</buttons>
 			</fields>
 		</formula>
 	</window>
 	
-	<window name="productEditor" width="500" title="Produkt">
+	<window name="productEditor" width="500" title="{Product; da:Produkt}">
 		<formula name="productFormula">
 			<tabs small="true" centered="true">
-				<tab title="Produkt" padding="5">
+				<tab title="{Product; da:Produkt}" padding="5">
 					<columns space="10">
 						<column>
-							<field label="Titel:">
+							<field label="{Title; da:Titel}:">
 								<text-input name="productTitle"/>
 							</field>
 						</column>
 						<column>
-							<field label="Nummer:">
+							<field label="{Number; da:Nummer}:">
 								<text-input name="productNumber"/>
 							</field>
 						</column>
 						<column>
-							<field label="type">
+							<field label="Type">
 								<dropdown name="productType" source="typeSource" adaptive="true"/>
 							</field>
 						</column>
 					</columns>
 					<columns flexible="true" space="5">
 						<column>
-							<field label="Beskrivelse:">				
+							<field label="{Description; da:Beskrivelse}:">				
 								<text-input name="productNote" multiline="true"/>
 							</field>
 						</column>
 						<column width="60px">
-							<field label="Billede:">
+							<field label="{Image; da:Billede}:">
 								<image-input name="productImage" source="../../Services/Model/ImagePicker.php"/>
 							</field>
 						</column>
 					</columns>
 					<fields labels="above">
-						<field label="Attributter:">
+						<field label="{Attributes; da:Attributter}:">
 							<objectlist name="productAttributes">
-								<text key="name" label="Navn"/>
-								<text key="value" label="Værdi"/>
+								<text key="name" label="{Name; da:Navn}"/>
+								<text key="value" label="{Value; da:Værdi}"/>
 							</objectlist>
 						</field>
 					</fields>
 				</tab>
-				<tab title="Priser" padding="5">
+				<tab title="{Prices; da:Priser}" padding="5">
 				<fields labels="above">
-					<field label="Priser:">
+					<field label="{Prices; da:Priser}:">
 						<objectlist name="productPrices">
-							<text key="amount" label="Antal"/>
-							<select label="Enhed:" key="type">
-								<option value="unit" label="enhed"/>
-								<option value="meter" label="meter"/>
-								<option value="squaremeter" label="kvadratmeter"/>
-								<option value="cubicmeter" label="kubikmeter"/>
-								<option value="gram" label="gram"/>
+							<text key="amount" label="{Amount; da:Antal}"/>
+							<select label="{Unit; da:Enhed}:" key="type">
+								<option value="unit" label="{unit; da:enhed}"/>
+								<option value="meter" label="{meters; da:meter}"/>
+								<option value="squaremeter" label="{square meters; da:kvadratmeter}"/>
+								<option value="cubicmeter" label="{cubic meters; da:kubikmeter}"/>
+								<option value="gram" label="{grams; da:gram}"/>
 							</select>
-							<text key="price" label="Pris"/>
-							<select key="currency" label="Valuta">
-								<option value="DKK" label="Dansk krone"/>
+							<text key="price" label="{Price; da:Pris}"/>
+							<select key="currency" label="{Currency; da:Valuta}">
+								<option value="DKK" label="{Danish krone; da:Dansk krone}"/>
 								<option value="EUR" label="Euro"/>
-								<option value="USD" label="Amerikansk dollar"/>
+								<option value="USD" label="{American Dolar; da:Amerikansk dollar}"/>
 							</select>
 						</objectlist>
 					</field>
 				</fields>
 				</tab>
-				<tab title="Indstillinger" padding="5">
+				<tab title="{Settings; da:Indstillinger}" padding="5">
 					<columns>
 						<column>
 							<fields>
-								<field label="Søgbar:">
+								<field label="{Searchable; da:Søgbar}:">
 									<checkbox name="productSearchable"/>
 								</field>
-								<field label="Tillad bud:">
+								<field label="{Allow offer; da:Tillad bud}:">
 									<checkbox name="productAllowOffer"/>
 								</field>
 							</fields>
 						</column>
 						<column>
 							<fields>
-								<field label="Grupper:">
+								<field label="{Groups; da:Grupper}:">
 									<checkboxes name="productGroups">
 										<items source="groupSource"/>
 									</checkboxes>
@@ -189,11 +195,11 @@ $gui='
 			</tabs>
 			<fields>
 				<buttons>
-					<button name="cancelProduct" title="Annuller"/>
-					<button name="deleteProduct" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja,slet produkt" cancel="Nej"/>
+					<button name="cancelProduct" title="{Cancel; da:Annuller}"/>
+					<button name="deleteProduct" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete product; da:Ja, slet produkt}" cancel="{No; da:Nej}"/>
 					</button>
-					<button name="saveProduct" title="Gem" highlighted="true"/>
+					<button name="saveProduct" title="{Save; da:Gem}" highlighted="true"/>
 				</buttons>
 			</fields>
 		</formula>

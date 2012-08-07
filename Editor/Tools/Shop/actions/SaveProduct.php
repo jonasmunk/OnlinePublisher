@@ -3,10 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Shop
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Objects/Product.php';
+require_once '../../../Include/Private.php';
 
 $data = Request::getUnicodeObject('data');
 if (intval($data->product->id)>0) {

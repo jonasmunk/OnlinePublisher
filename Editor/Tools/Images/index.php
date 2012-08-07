@@ -93,7 +93,7 @@ $gui='
 				<buttons>
 					<button name="cancelGroup" title="{Cancel; da:Annuller}"/>
 					<button name="deleteGroup" title="{Delete; da:Slet}">
-						<confirm text="{Are you sure? da:Er du sikker?}" ok="{Yes, delete group; da:Ja, slet gruppen}" cancel="{No; da:Nej}"/>
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete group; da:Ja, slet gruppen}" cancel="{No; da:Nej}"/>
 					</button>
 					<button name="saveGroup" title="{Save; da:Gem}" highlighted="true"/>
 				</buttons>

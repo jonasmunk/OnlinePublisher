@@ -1,12 +1,9 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Customers
+ * @subpackage Tools.Shop
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Objects/Productgroup.php';
+require_once '../../../Include/Private.php';
 
 $data = Request::getUnicodeObject('data');
 

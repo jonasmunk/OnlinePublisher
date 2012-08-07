@@ -21,7 +21,7 @@ hui.ui.listen({
 		} else if (obj.value=='product') {
 			list.loadData('data/ListProducts.php');
 		} else if (obj.value=='productoffer') {
-			list.loadData('ListOffers.php');
+			list.loadData('data/ListOffers.php');
 		} else if (obj.kind=='productgroup') {
 			list.loadData('data/ListProducts.php?productgroup='+obj.value);
 		} else if (obj.kind=='producttype') {
@@ -102,7 +102,7 @@ hui.ui.listen({
 			groups:productGroups.getValues()
 		};
 		hui.log(data);
-		hui.ui.request({json:{data:data},url:'SaveProduct.php',onSuccess:'saveProduct'});
+		hui.ui.request({json:{data:data},url:'actions/SaveProduct.php',onSuccess:'saveProduct'});
 	},
 	$success$saveProduct : function() {
 		list.refresh();
@@ -158,7 +158,7 @@ hui.ui.listen({
 			note:offerNote.getValue(),
 			expiry:offerExpiry.getValue()
 		};
-		hui.ui.request({json:{data:data},url:'SaveOffer.php',onSuccess:'saveOffer'});
+		hui.ui.request({json:{data:data},url:'actions/SaveOffer.php',onSuccess:'saveOffer'});
 	},
 	$success$saveOffer : function() {
 		offerEditor.hide();
@@ -211,7 +211,7 @@ hui.ui.listen({
 			return;
 		}
 		data.id=this.groupId;
-		hui.ui.request({json:{data:data},url:'SaveGroup.php',onSuccess:'saveGroup'});
+		hui.ui.request({json:{data:data},url:'actions/SaveGroup.php',onSuccess:'saveGroup'});
 	},
 	$success$saveGroup : function() {
 		groupEditor.hide();
@@ -264,7 +264,7 @@ hui.ui.listen({
 			title:typeTitle.getValue(),
 			note:typeNote.getValue()
 		};
-		hui.ui.request({json:{data:data},url:'SaveType.php',onSuccess:'saveType'});
+		hui.ui.request({json:{data:data},url:'actions/SaveType.php',onSuccess:'saveType'});
 	},
 	$success$saveType : function() {
 		typeEditor.hide();
