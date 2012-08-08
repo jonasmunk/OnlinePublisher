@@ -209,7 +209,7 @@ class ListWriter {
 			echo ' action="true"';
 		}
 		if (isset($options['hint'])) {
-			echo ' hint="'.StringUtils::escapeXML($options['hint']).'"';
+			echo ' hint="'.StringUtils::escapeXML(StringUtils::toJSON($options['hint'])).'"';
 		}
 		echo '/>';
 		return $this;

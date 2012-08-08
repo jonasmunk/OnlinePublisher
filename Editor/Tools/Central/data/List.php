@@ -16,14 +16,14 @@ $writer = new ListWriter();
 
 $writer->startList(array('unicode'=>true));
 $writer->startHeaders();
-$writer->header(array('title'=>'Titel'));
-$writer->header(array('title'=>'Adresse'));
+$writer->header(array('title'=>array('Title','da'=>'Titel')));
+$writer->header(array('title'=>array('Address','da'=>'Adresse')));
 $writer->header(array('title'=>'Version'));
 if ($showTools) {
-	$writer->header(array('title'=>'Værktøjer'));
+	$writer->header(array('title'=>array('Tools','da'=>'Værktøjer')));
 }
 if ($showTemplates) {
-	$writer->header(array('title'=>'Skabeloner'));	
+	$writer->header(array('title'=>array('Templates','da'=>'Skabeloner')));	
 }
 if ($showEmail) {
 	$writer->header(array('title'=>'E-mail'));
@@ -72,7 +72,7 @@ function writeTemplates($writer,$obj) {
 			$writer->startLine()->object(array('icon'=>in_array($template,$used) ? 'common/success' : 'monochrome/round_question','text'=>$template))->endLine();
 		} 
 	} else {
-		$writer->object(array('icon'=>'monochrome/warning','text'=>'Not available'));		
+		$writer->object(array('icon'=>'monochrome/warning','text'=>array('Not available','da'=>'Ikke tilgængelig')));		
 	}
 }
 
@@ -88,7 +88,7 @@ function writeTools($writer,$obj) {
 			$writer->startLine()->object(array('icon'=>'common/success','text'=>$tool))->endLine();
 		}
 	} else {
-		$writer->object(array('icon'=>'monochrome/warning','text'=>'Not available'));		
+		$writer->object(array('icon'=>'monochrome/warning','text'=>array('Not available','da'=>'Ikke tilgængelig')));		
 	}
 }
 
@@ -96,18 +96,18 @@ function writeEmail($writer,$obj) {
 	if ($obj && property_exists($obj,'email')) {
 		$email = $obj->email;
 		if ($email->enabled) {
-			$writer->startLine()->object(array('icon'=>'common/success','text'=>'Enabled'))->endLine();
+			$writer->startLine()->object(array('icon'=>'common/success','text'=>array('Enabled','da'=>'Slået til')))->endLine();
 		} else {
-			$writer->startLine()->object(array('icon'=>'common/stop','text'=>'Not enabled'))->endLine();
+			$writer->startLine()->object(array('icon'=>'common/stop','text'=>array('Disabled','da'=>'Slået fra')))->endLine();
 		}
 		$writer->startLine()->object(array('icon'=>$email->server ? 'common/success' : 'common/stop','text'=>'Server'))->endLine();
-		$writer->startLine()->object(array('icon'=>$email->username ? 'common/success' : 'common/stop','text'=>'Username'))->endLine();
-		$writer->startLine()->object(array('icon'=>$email->password ? 'common/success' : 'common/stop','text'=>'Password'))->endLine();
-		$writer->startLine()->object(array('icon'=>$email->standardEmail ? 'common/success' : 'common/stop','text'=>'Standard email'))->endLine();
-		$writer->startLine()->object(array('icon'=>$email->standardName ? 'common/success' : 'common/stop','text'=>'Standard name'))->endLine();
-		$writer->startLine()->object(array('icon'=>$email->feedbackEmail ? 'common/success' : 'common/stop','text'=>'Feedback email'))->endLine();
-		$writer->startLine()->object(array('icon'=>$email->feedbackName ? 'common/success' : 'common/stop','text'=>'Feedback name'))->endLine();
+		$writer->startLine()->object(array('icon'=>$email->username ? 'common/success' : 'common/stop','text'=>array('Username','da'=>'Brugernavn')))->endLine();
+		$writer->startLine()->object(array('icon'=>$email->password ? 'common/success' : 'common/stop','text'=>array('Password','da'=>'Kodeord')))->endLine();
+		$writer->startLine()->object(array('icon'=>$email->standardEmail ? 'common/success' : 'common/stop','text'=>array('Standard e-email','da'=>'Standard e-post')))->endLine();
+		$writer->startLine()->object(array('icon'=>$email->standardName ? 'common/success' : 'common/stop','text'=>array('Standard name','da'=>'Standard navn')))->endLine();
+		$writer->startLine()->object(array('icon'=>$email->feedbackEmail ? 'common/success' : 'common/stop','text'=>array('Feedback e-email','da'=>'Feedback e-post')))->endLine();
+		$writer->startLine()->object(array('icon'=>$email->feedbackName ? 'common/success' : 'common/stop','text'=>array('Feedback name','da'=>'Feedback navn')))->endLine();
 	} else {
-		$writer->object(array('icon'=>'monochrome/warning','text'=>'Not available'));
+		$writer->object(array('icon'=>'monochrome/warning','text'=>array('Not available','da'=>'Ikke tilgængelig')));
 	}
 }

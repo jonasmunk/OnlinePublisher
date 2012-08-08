@@ -3,10 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Links
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
-require_once '../../../Classes/Interface/In2iGui.php';
-require_once '../../../Classes/Core/Request.php';
+require_once '../../../Include/Private.php';
 
 $source = Request::getString('source');
 $target = Request::getString('target');
@@ -33,10 +30,10 @@ $writer = new ListWriter();
 
 $writer->startList();
 $writer->startHeaders();
-$writer->header(array('title'=>'Kilde'));
+$writer->header(array('title'=>array('Source','da'=>'Kilde')));
 $writer->header(array('width'=>1));
 $writer->header();
-$writer->header(array('title'=>'Mål'));
+$writer->header(array('title'=>array('Target','da'=>'Mål')));
 $writer->header(array('title'=>'Status'));
 $writer->endHeaders();
 
@@ -73,7 +70,7 @@ foreach ($links as $link) {
 		$writer->endCell()->
 		startCell()->startLine(array('dimmed'=>true))->text($link->getSourceText());
 		if ($link->hasError(LinkView::$TEXT_NOT_FOUND)) {
-			$writer->startIcons()->icon(array('icon'=>'common/warning','hint'=>'Teksten findes ikke'))->endIcons();
+			$writer->startIcons()->icon(array('icon'=>'common/warning','hint'=>array('The text does not exist','Teksten findes ikke')))->endIcons();
 		}
 		$writer->endLine()->endCell()->
 		startCell(array('icon'=>$targetIcon))->startWrap()->text($link->getTargetTitle())->endWrap();

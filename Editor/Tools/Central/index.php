@@ -17,15 +17,15 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/internet" text="Nyt site" name="newSite"/>
-				<icon icon="common/refresh" text="Opdatér" name="refresh"/>
-				<field label="Vis skabeloner">
+				<icon icon="common/internet" text="{New site; da:Nyt site}" name="newSite"/>
+				<icon icon="common/refresh" text="{Update; da:Opdatér}" name="refresh"/>
+				<field label="{Show templates; da:Vis skabeloner}">
 					<checkbox name="showTemplates"/>
 				</field>
-				<field label="Vis værktøjer">
+				<field label="{Show tools; da:Vis værktøjer}">
 					<checkbox name="showTools"/>
 				</field>
-				<field label="Vis e-mail">
+				<field label="{Show e-mail; da:Vis e-mail}">
 					<checkbox name="showEmail"/>
 				</field>
 			</toolbar>
@@ -33,7 +33,7 @@ $gui='
 		<middle>
 			<left>
 				<selection value="all" name="selector">
-					<item icon="common/folder" title="Alle" value="all"/>
+					<item icon="common/folder" title="{All; da:Alle}" value="all"/>
 				</selection>
 			</left>
 			<center>
@@ -48,18 +48,18 @@ $gui='
 	<window title="Site" name="siteWindow" width="300" padding="5">
 		<formula name="siteFormula">
 			<fields labels="above">
-				<field label="Titel">
+				<field label="{Title; da:Titel}">
 					<text-input key="title"/>
 				</field>
-				<field label="Adresse">
+				<field label="{Address; da:Adresse}">
 					<text-input key="url"/>
 				</field>
 				<buttons>
-					<button name="cancelSite" title="Annuller"/>
-					<button name="deleteSite" title="Slet">
-						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
+					<button name="cancelSite" title="{Cancel; da:Annuller}"/>
+					<button name="deleteSite" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 					</button>
-					<button name="saveSite" title="Gem" highlighted="true" submit="true"/>
+					<button name="saveSite" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>
