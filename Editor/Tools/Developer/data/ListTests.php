@@ -9,7 +9,7 @@ $writer = new ItemsWriter();
 $writer->startItems();
 
 $groups = TestService::getGroups();
-$writer->startItem(array('title'=>'Alle tests','value'=>'alltests','kind'=>'alltests','icon'=>'file/generic'))->endItem();
+$writer->startItem(array('title'=>array('All tests','da'=>'Alle test'),'value'=>'alltests','kind'=>'alltests','icon'=>'file/generic'))->endItem();
 foreach ($groups as $group) {
 	$writer->startItem(array('title'=>$group,'value'=>$group,'kind'=>'testgroup','icon'=>'common/folder'));
 	$tests = TestService::getTestsInGroup($group);

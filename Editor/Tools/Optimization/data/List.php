@@ -3,8 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Optimization
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
+require_once '../../../Include/Private.php';
 require_once '../../../Classes/Modules/Inspection/InspectionService.php';
 
 $kind = Request::getString('kind');
@@ -26,8 +25,8 @@ function listIndex() {
 
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Side','width'=>'30'));
-	$writer->header(array('title'=>'Indeks'));
+	$writer->header(array('title'=>array('Page','da'=>'Side'),'width'=>'30'));
+	$writer->header(array('title'=>array('Index','da'=>'Indeks')));
 	$writer->endHeaders();
 
 	$sql = "select `index`,title from page";
@@ -51,8 +50,8 @@ function listWordCheck() {
 
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Side','width'=>'30'));
-	$writer->header(array('title'=>'Antal'));
+	$writer->header(array('title'=>array('Page','da'=>'Side'),'width'=>'30'));
+	$writer->header(array('title'=>array('Count','da'=>'Antal')));
 	$writer->header(array('width'=>'1'));
 	$writer->endHeaders();
 
@@ -63,7 +62,7 @@ function listWordCheck() {
 		$writer->startRow(array('id'=>$word->getId()));
 		$writer->startCell(array('icon'=>'monochrome/dot'))->text($word->getTitle())->endCell();
 		if ($row['count']==0) {
-			$writer->startCell(array('icon'=>'common/warning'))->text('Ikke findet')->endCell();
+			$writer->startCell(array('icon'=>'common/warning'))->text(array('Not found','da'=>'Ikke findet'))->endCell();
 		} else {
 			$writer->startCell(array('icon'=>'common/page'))->
 				text($row['count'])->
@@ -109,8 +108,8 @@ function listWords() {
 	$writer->startList();
 	$writer->window(array( 'total' => $total, 'size' => $size, 'page' => $page ));
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Ord','width'=>'50'));
-	$writer->header(array('title'=>'Frekvens'));
+	$writer->header(array('title'=>array('Word','da'=>'Ord'),'width'=>'50'));
+	$writer->header(array('title'=>array('Count','da'=>'Antal')));
 	$writer->endHeaders();
 
 	foreach ($counts as $word => $freq) {
@@ -162,10 +161,10 @@ function listPageNotFound() {
 
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>'Antal hits'));
-	$writer->header(array('title'=>'Fra'));
-	$writer->header(array('title'=>'Til'));
-	$writer->header(array('title'=>'Sti'));
+	$writer->header(array('title'=>array('Hit count','da'=>'Antal forspørgsler')));
+	$writer->header(array('title'=>array('From','da'=>'Fra')));
+	$writer->header(array('title'=>array('To','da'=>'Til')));
+	$writer->header(array('title'=>array('Path','da'=>'Sti')));
 	$writer->endHeaders();
 
 

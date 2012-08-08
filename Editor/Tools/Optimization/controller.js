@@ -12,11 +12,15 @@ hui.ui.listen({
 		} else {
 			hui.ui.changeState('list');
 			if (item.value=='warnings') {
-				listDescription.setText('Viser advarsler om manglende indhold med mere');
+				listDescription.setText({en:'Shows warnings for missing content and more',da:'Viser advarsler om manglende indhold med mere'});
 			} else if (item.value=='wordcheck') {
-				listDescription.setText('Liste over sætninger det bør forekomme på sider');
+				listDescription.setText({en:'List of sentences that should appear on pages',da:'Liste over sætninger det bør forekomme på sider'});
+			} else if (item.value=='index') {
+				listDescription.setText({en:'Shows the search index for all pages',da:'Viser søgeindekset for alle sider'});
+			} else if (item.value=='words') {
+				listDescription.setText({en:'Shows all words and how often they appear',da:'Viser alle ord og hvor ofte de optræder'});
 			} else if (item.value=='pagenotfound') {
-				listDescription.setText('Viser alle forespørsler der ikke kunne findes');
+				listDescription.setText({en:'Shows all requests that could not be found',da:'Viser alle forespørsler der ikke kunne findes'});
 			} else {
 				listDescription.setText();
 			}
@@ -30,24 +34,30 @@ hui.ui.listen({
 	$click$saveSettings : function() {
 		var values = settingsFormula.getValues();
 		hui.ui.request({
-			message : {start:'Gemmer oversigt',delay:300,success:'Oversigten er gemt'},
-			url : 'data/SaveSettings.php',
+			message : {start:{en:'Saving overview...',da:'Gemmer oversigt...'},delay:300,success:{en:'The overview has been saved',da:'Oversigten er gemt'}},
+			url : 'actions/SaveSettings.php',
 			json : {data:values}
 		})
 	},
 	_loadSettings : function() {
 		hui.ui.request({
-			message : {start:'Indlæser oversigt',delay:300},
+			message : {start:{en:'Loading overview...',da:'Henter oversigt...'},delay:300},
 			url : 'data/LoadSettings.php',
 			onJSON : function(values) {
 				settingsFormula.setValues(values);
 			}
 		});
 	},
+	$clickIcon$phrasePageList : function(info) {
+		if (info.data.action=='edit' && info.row.kind=='page') {
+			document.location = '../../Template/Edit.php?id='+info.row.id;
+		}
+		else if (info.data.action=='view' && info.row.kind=='page') {
+			document.location = '../../Services/Preview/?id='+info.row.id;
+		}
+	},
 	$clickIcon$list : function(info) {
-		if (info.data.action=='view' && info.row.type=='page') {
-			parent.location = '../Template/Edit.php?id='+(info.row.id);
-		} else if (info.data.action=='delete') {
+		if (info.data.action=='delete') {
 			hui.ui.confirmOverlay({
 				element : info.node,
 				text : 'Er du sikker?',
@@ -56,7 +66,7 @@ hui.ui.listen({
 				onOk : function() {
 					hui.ui.request({
 						url : '../../Services/Model/DeleteObject.php',
-						message : {start:'Sletter ord...',delay:300,success:'Ordet er slettet'},
+						message : {start:{en:'Deleting words...',da:'Sletter ord...'},delay:300,success:{en:'The word has been deleted',da:'Ordet er slettet'}},
 						parameters : {id:info.row.id},
 						onSuccess : function() {
 							list.refresh();
@@ -73,9 +83,9 @@ hui.ui.listen({
 	$submit$wordFormula : function() {
 		var word = wordFormula.getValues().word;
 		hui.ui.request({
-			url : 'data/AddTestPhrase.php',
-			message : {start:'Gemmer ord...',delay:300,success:'Ordet er tilføjet'},
-			parameters:{word:word},
+			url : 'actions/AddTestPhrase.php',
+			message : {start:{en:'Adding word...',da:'Tilføjer ord...'},delay:300,success:{en:'The word is added',da:'Ordet er tilføjet'}},
+			parameters : {word:word},
 			onSuccess : function() {
 				list.refresh();
 				wordFormula.reset();

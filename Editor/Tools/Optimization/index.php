@@ -3,9 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Optimization
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Include/Private.php';
 
 $gui='
 <gui xmlns="uri:hui" padding="10" title="{Optimization;da:Optimering}" state="overview">
@@ -17,7 +15,7 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/new" title="Tilføj kontrolord" name="newWord"/>
+				<icon icon="common/new" title="{Add control word; da:Tilføj kontrolord}" name="newWord"/>
 				<!--icon icon="common/edit" title="Rediger"/>
 				-->
 			</toolbar>
@@ -26,43 +24,43 @@ $gui='
 			<left>
 				<overflow>
 				<selection value="overview" name="selector">
-					<item icon="common/info" title="Oversigt" value="overview"/>
-					<title>Advarsler</title>
-					<item icon="common/warning" title="Forespørgsler" value="pagenotfound"/>
-					<item icon="common/warning" title="Advarsler" value="warnings"/>
+					<item icon="common/info" title="{Overview; da:Oversigt}" value="overview"/>
+					<title>{Warnings; da:Advarsler}</title>
+					<item icon="common/warning" title="{Requests; da:Forespørgsler}" value="pagenotfound"/>
+					<item icon="common/warning" title="{Warnings; da:Advarsler}" value="warnings"/>
 					<title>Sprog</title>
-					<item icon="common/search" title="Søgeindeks" value="index"/>
-					<item icon="common/info" title="Unikke ord" value="words"/>
-					<item icon="common/info" title="Kontroller ord" value="wordcheck"/>
+					<item icon="common/search" title="{Search index; da:Søgeindeks}" value="index"/>
+					<item icon="common/info" title="{Unique words; da:Unikke ord}" value="words"/>
+					<item icon="common/info" title="{Control words; da:Kontroller ord}" value="wordcheck"/>
 				</selection>
 				</overflow>
 			</left>
 			<center>
+				<bar state="list" variant="layout">
+					<text name="listDescription"/>
+				</bar>
 				<overflow>
-					<bar state="list" variant="layout">
-						<text name="listDescription"/>
-					</bar>
 					<list name="list" source="listSource" state="list"/>
 					<fragment state="overview" height="full" background="vichy">
-						<box width="500" padding="10" top="20" title="Oversigt">
+						<box width="500" padding="10" top="20" title="{Overview; da:Oversigt}">
 							<toolbar>
-								<icon icon="common/save" text="Gem" name="saveSettings"/>
+								<icon icon="common/save" text="{Save; da:Gem}" name="saveSettings"/>
 							</toolbar>
 							<formula name="settingsFormula">
 								<fields labels="above">
-									<field label="Hvad er hjemmesidens formål:">
+									<field label="{What is the purpose of the website?; da:Hvad er hjemmesidens formål}:">
 										<text-input multiline="true" key="purpose"/>
 									</field>
-									<field label="Hvilke målgrupper har siden:">
+									<field label="{What are the target audiences?; da:Hvilke målgrupper har siden}:">
 										<text-input multiline="true" key="audiences"/>
 									</field>
-									<field label="Hvad er success-kriterierne for siden">
+									<field label="{What are the success criteria for the website?; da:Hvad er success-kriterierne for siden?}:">
 										<text-input multiline="true" key="successcriteria"/>
 									</field>
-									<field label="Profiler" hint="Her kan du holde styr på internet sider hvor din organisation er listet">
+									<field label="{Profiles; da:Profiler}" hint="{Here you can keep track of external sites where your website is listed; da:Her kan du holde styr på internet sider hvor din hjemmeside er listet}">
 										<objectlist key="profiles">
-											<text key="name" label="Title"/>
-											<text key="url" label="Adresse"/>
+											<text key="name" label="{Title; da:Titel}"/>
+											<text key="url" label="{Address; da:Adresse}"/>
 										</objectlist>
 									</field>
 								</fields>
@@ -78,24 +76,21 @@ $gui='
 	<boundpanel target="newWord" name="newWordPanel" width="200">
 		<formula name="wordFormula">
 			<fields labels="above">
-				<field label="Ord:">
+				<field label="{Word; da:Ord}:">
 					<text-input key="word"/>
 				</field>
 			</fields>
 			<buttons>
-				<button text="Luk" click="newWordPanel.hide()" small="true"/>
-				<button text="Opret" highlighted="true" submit="true" small="true"/>
+				<button text="{Close; da:Luk}" click="newWordPanel.hide()" small="true"/>
+				<button text="{Add; da:Tilføj}" highlighted="true" submit="true" small="true"/>
 			</buttons>
 		</formula>
 	</boundpanel>
 	
-	<boundpanel name="wordPanel" width="300" title="Sider med ordet">
+	<boundpanel name="wordPanel" width="300" title="Sider med ordet" modal="true" variant="light">
 		<overflow height="200">
-			<list name="phrasePageList"/>
+			<list name="phrasePageList" variant="light" selectable="false"/>
 		</overflow>
-		<buttons top="10">
-			<button small="true" text="Luk" click="wordPanel.hide()" highlighted="true"/>
-		</buttons>
 	</boundpanel>
 	
 </gui>';

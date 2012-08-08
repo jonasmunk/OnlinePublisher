@@ -209,6 +209,6 @@ hui.ui.Bar.Text.prototype = {
 	 * @param {String} str The text
 	 */
 	setText : function(str) {
-		hui.dom.setText(this.element,str);
+		hui.dom.setText(this.element,hui.ui.getTranslated(str));
 	}
 }
