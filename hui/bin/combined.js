@@ -6722,6 +6722,9 @@ hui.ui.List.prototype = {
 			if (width && width!='') {
 				th.style.width=width+'%';
 			}
+			if (headers[i].getAttribute('align')) {
+				th.style.textAlign=headers[i].getAttribute('align');
+			}
 			if (sortable) {
 				var self = this;
 				th.huiIndex = i;
@@ -6888,7 +6891,7 @@ hui.ui.List.prototype = {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
 			cell.appendChild(hui.ui.createIcon(icon,16));
-			cell = hui.build('div',{parent:cell,style:'margin-left: 21px'});
+			cell = hui.build('div',{parent:cell,style:'margin-left: 21px; padding-top: 1px;'});
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];

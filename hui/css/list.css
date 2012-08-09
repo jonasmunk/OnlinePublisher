@@ -114,6 +114,12 @@ span.hui_list_icons .hui_icon
 	margin: 0 3px 0 0;
 }
 
+div.hui_list .hui_icon_12
+{
+	margin-top: 1px;
+}
+
+
 .hui_list_revealing
 {
 	visibility: hidden;

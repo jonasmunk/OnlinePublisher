@@ -329,6 +329,9 @@ hui.ui.List.prototype = {
 			if (width && width!='') {
 				th.style.width=width+'%';
 			}
+			if (headers[i].getAttribute('align')) {
+				th.style.textAlign=headers[i].getAttribute('align');
+			}
 			if (sortable) {
 				var self = this;
 				th.huiIndex = i;
@@ -495,7 +498,7 @@ hui.ui.List.prototype = {
 		var icon = node.getAttribute('icon');
 		if (icon!=null && icon!='') {
 			cell.appendChild(hui.ui.createIcon(icon,16));
-			cell = hui.build('div',{parent:cell,style:'margin-left: 21px'});
+			cell = hui.build('div',{parent:cell,style:'margin-left: 21px; padding-top: 1px;'});
 		}
 		for (var i=0; i < node.childNodes.length; i++) {
 			var child = node.childNodes[i];
@@ -504,7 +507,8 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
-				var icon = hui.ui.createIcon(child.getAttribute('icon'),16);
+				var size = child.getAttribute('size') || 16;
+				var icon = hui.ui.createIcon(child.getAttribute('icon'),size);
 				if (child.getAttribute('hint')) {
 					icon.setAttribute('title',child.getAttribute('hint'));
 				}
@@ -549,6 +553,9 @@ hui.ui.List.prototype = {
 				cell.appendChild(obj);
 			} else if (hui.dom.isElement(child,'icons')) {
 				var icons = hui.build('span',{'class':'hui_list_icons'});
+				if (child.getAttribute('left')) {
+					icons.style.marginLeft=child.getAttribute('left')+'px';
+				}
 				this._parseCell(child,icons);
 				cell.appendChild(icons);
 			} else if (hui.dom.isElement(child,'button')) {
