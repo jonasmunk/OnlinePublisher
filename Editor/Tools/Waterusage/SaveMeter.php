@@ -8,7 +8,7 @@ require_once '../../Include/Security.php';
 require_once '../../Classes/Core/Request.php';
 require_once '../../Classes/Objects/Watermeter.php';
 
-$data = Request::getUnicodeObject('data');
+$data = Request::getObject('data');
 
 if ($data->id>0) {
 	$obj = Watermeter::load($data->id);

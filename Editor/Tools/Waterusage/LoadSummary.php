@@ -9,5 +9,5 @@ $data = Request::getObject('data');
 
 $summary = WaterusageService::getSummaryById($data->id);
 
-Response::sendUnicodeObject($summary);
+Response::sendObject($summary);
 ?>

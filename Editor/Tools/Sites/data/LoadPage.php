@@ -10,7 +10,7 @@ $id = Request::getInt('id');
 $page=Page::load($id);
 $page->setData(null);
 
-Response::sendUnicodeObject(array(
+Response::sendObject(array(
 	'page'=>$page
 ));
 ?>

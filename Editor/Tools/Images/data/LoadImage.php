@@ -10,5 +10,5 @@ $image = Image::load($id);
 
 $groups = $image->getGroupIds();
 
-Response::sendUnicodeObject(array('image' => $image, 'groups' => $groups));
+Response::sendObject(array('image' => $image, 'groups' => $groups));
 ?>

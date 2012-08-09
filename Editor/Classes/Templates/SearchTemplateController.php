@@ -71,7 +71,7 @@ class SearchTemplateController extends TemplateController
 			if ($method=='') {
 				$method='all';
 			}
-			$query = Request::getUnicodeString('query');
+			$query = Request::getString('query');
 			$xml = '<parameters method="'.$method.'">';
 			$xml .= '<query>'.StringUtils::escapeXML($query).'</query>';
 			$xml .= '<types>';

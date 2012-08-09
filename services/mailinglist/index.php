@@ -5,8 +5,8 @@ require_once('../../Editor/Classes/Objects/Person.php');
 require_once('../../Editor/Info/SystemInfo.php');
 require_once '../../Classes/Utilities/StringUtils.php';
 
-$name = Request::getUnicodeString('name');
-$email = Request::getUnicodeString('email');
+$name = Request::getString('name');
+$email = Request::getString('email');
 
 if (strlen($name)==0) {
 	$error = '<error key="noname"/>';

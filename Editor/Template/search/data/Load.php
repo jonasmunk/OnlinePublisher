@@ -9,7 +9,7 @@ $id = Request::getId();
 
 $obj = SearchTemplate::load($id);
 if ($obj) {
-	Response::sendUnicodeObject($obj);
+	Response::sendObject($obj);
 } else {
 	Response::notFound();
 }

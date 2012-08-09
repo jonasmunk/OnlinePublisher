@@ -9,11 +9,11 @@ require_once('../../Editor/Classes/Core/Request.php');
 require_once('../../Editor/Classes/Core/Response.php');
 require_once('../../Editor/Classes/Utilities/ValidateUtils.php');
 
-$name = Request::getUnicodeString('name');
-$email = Request::getUnicodeString('email');
+$name = Request::getString('name');
+$email = Request::getString('email');
 $pageId = Request::getInt('pageId');
 $productId = Request::getInt('productId');
-$bid = Request::getUnicodeString('offer');
+$bid = Request::getString('offer');
 
 if ($name=='') {
 	Response::redirect('../../?id='.$pageId.'&makeOffer='.$productId.'&productlistingError=noName&productlistingEmail='.$email.'&productlistingOffer='.$bid.'&productlistingName='.$name);

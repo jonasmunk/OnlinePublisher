@@ -60,7 +60,7 @@ class NewsPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = NewsPart::load($id);
-		$part->setTitle(Request::getUnicodeString('title'));
+		$part->setTitle(Request::getString('title'));
 		$part->setVariant(Request::getString('variant'));
 		$part->setMode(Request::getString('mode'));
 		$part->setSortBy(Request::getString('sortby'));

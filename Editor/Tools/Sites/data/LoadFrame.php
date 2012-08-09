@@ -16,7 +16,7 @@ if ($frame = Frame::load($id)) {
 	);
 	
 	
-	Response::sendUnicodeObject($object);
+	Response::sendObject($object);
 } else {
 	Response::notFound();
 }

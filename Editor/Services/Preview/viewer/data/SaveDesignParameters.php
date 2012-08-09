@@ -6,7 +6,7 @@
 require_once '../../../../Include/Private.php';
 
 $id = Request::getInt('id');
-$parameters = Request::getUnicodeObject('parameters');
+$parameters = Request::getObject('parameters');
 
 $page = Page::load($id);
 

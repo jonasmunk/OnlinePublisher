@@ -6,11 +6,11 @@
 require_once '../../../../Include/Private.php';
 
 $id = Request::getInt('id');
-$title = Request::getUnicodeString('title');
-$description = Request::getUnicodeString('description');
-$keywords = Request::getUnicodeString('keywords');
-$path = Request::getUnicodeString('path');
-$language = Request::getUnicodeString('language');
+$title = Request::getString('title');
+$description = Request::getString('description');
+$keywords = Request::getString('keywords');
+$path = Request::getString('path');
+$language = Request::getString('language');
 
 $page = Page::load($id);
 $page->setTitle($title);

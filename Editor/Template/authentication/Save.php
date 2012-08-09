@@ -6,7 +6,7 @@
 require_once '../../Include/Private.php';
 
 $id = Request::getId();
-$title = Request::getEncodedString('title');
+$title = Request::getString('title');
 
 if ($obj = AuthenticationTemplate::load($id)) {
 	$obj->setTitle($title);

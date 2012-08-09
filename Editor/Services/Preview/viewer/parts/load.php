@@ -9,5 +9,5 @@ $id = Request::getInt('id');
 $type = Request::getString('type');
 
 $part = PartService::load($type,$id);
-Response::sendUnicodeObject($part);
+Response::sendObject($part);
 ?>

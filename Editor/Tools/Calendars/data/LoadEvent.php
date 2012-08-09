@@ -10,5 +10,5 @@ $event = Event::load($id);
 
 $groups = $event->getCalendarIds();
 
-Response::sendUnicodeObject(array('event' => $event, 'calendars' => $groups));
+Response::sendObject(array('event' => $event, 'calendars' => $groups));
 ?>

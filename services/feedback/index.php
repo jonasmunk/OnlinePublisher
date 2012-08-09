@@ -7,9 +7,9 @@ require_once('../../Editor/Classes/Objects/Feedback.php');
 require_once('../../Editor/Classes/Services/MailService.php');
 require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
-$name = Request::getUnicodeString('name');
-$email = Request::getUnicodeString('email');
-$message = Request::getUnicodeString('message');
+$name = Request::getString('name');
+$email = Request::getString('email');
+$message = Request::getString('message');
 
 $feedback = new Feedback();
 $feedback->setName($name);

@@ -9,7 +9,7 @@ $id = Request::getInt('id');
 $file = File::load($id);
 if ($file) {
 	$file->remove();
-	Response::sendUnicodeObject(array('success'=>true));
+	Response::sendObject(array('success'=>true));
 } else {
 	Response::notFound();
 }

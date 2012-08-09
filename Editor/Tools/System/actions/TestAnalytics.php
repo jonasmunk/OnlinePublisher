@@ -7,5 +7,5 @@ require_once '../../../Include/Private.php';
 
 $result = GoogleAnalytics::test();
 
-Response::sendUnicodeObject($result);
+Response::sendObject($result);
 ?>

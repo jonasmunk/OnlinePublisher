@@ -1,12 +1,5 @@
 <?php
-require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once('../../../Editor/Classes/Core/SystemInfo.php');
-require_once('../../../Editor/Classes/Core/Response.php');
-require_once('../../../Editor/Classes/Services/TemplateService.php');
-require_once('../../../Editor/Classes/Services/MailService.php');
-require_once('../../../Editor/Classes/Services/ToolService.php');
-require_once('../../../Editor/Classes/Utilities/StringUtils.php');
 
 Response::sendObject(array(
 	'date' => SystemInfo::getDate(),

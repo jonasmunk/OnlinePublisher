@@ -8,7 +8,7 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 $product = Product::load($data->id);
 
-Response::sendUnicodeObject(array(
+Response::sendObject(array(
 	'product' => $product,
 	'attributes' => $product->getAttributes(),
 	'prices' => $product->getPrices(),

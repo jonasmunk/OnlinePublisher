@@ -121,7 +121,7 @@ class TablePartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = TablePart::load($id);
-		$html = Request::getUnicodeString('html');
+		$html = Request::getString('html');
 		$html = str_replace('contenteditable="true"', '', $html);
 		$part->setHtml($html);
 		return $part;

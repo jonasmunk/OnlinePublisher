@@ -6,7 +6,7 @@
 require_once '../../../../Config/Setup.php';
 require_once '../../../Include/Security.php';
 
-$data = Request::getUnicodeObject('data');
+$data = Request::getObject('data');
 
 if ($data->id>0) {
 	$object = Pageblueprint::load($data->id);

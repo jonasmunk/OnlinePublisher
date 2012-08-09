@@ -9,5 +9,5 @@ $url = Request::getString('url');
 
 $response = FileService::createFromUrl($url);
 
-Response::sendUnicodeObject($response);
+Response::sendObject($response);
 ?>

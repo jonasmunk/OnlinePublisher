@@ -12,7 +12,7 @@ if ($file) {
 
 	$links = In2iGui::toLinks($file->getLinks());
 
-	Response::sendUnicodeObject(array('news' => $file, 'groups' => $groups, 'links' => $links));
+	Response::sendObject(array('news' => $file, 'groups' => $groups, 'links' => $links));
 } else {
 	Response::notFound();
 }

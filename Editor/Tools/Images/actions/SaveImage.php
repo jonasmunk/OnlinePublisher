@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$data = Request::getUnicodeObject('data');
+$data = Request::getObject('data');
 
 $object = Image::load($data->id);
 if ($object) {

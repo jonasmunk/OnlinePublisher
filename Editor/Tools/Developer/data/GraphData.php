@@ -50,5 +50,5 @@ while ($row = Database::next($result)) {
 }
 Database::free($result);
 
-Response::sendUnicodeObject($gr)
+Response::sendObject($gr)
 ?>

@@ -37,7 +37,7 @@ class ImagePartController extends PartController
 	function getFromRequest($id) {
 		$part = ImagePart::load($id);
 		$part->setImageId(Request::getInt('imageId'));
-		$part->setText(Request::getUnicodeString('text'));
+		$part->setText(Request::getString('text'));
 		$part->setAlign(Request::getString('align'));
 		$part->setScaleMethod(Request::getString('scalemethod'));
 		$part->setScalePercent(Request::getInt('scalepercent'));

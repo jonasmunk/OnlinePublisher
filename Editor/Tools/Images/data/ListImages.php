@@ -22,7 +22,7 @@ function listImages($text) {
 	$subset = Request::getString('subset');
 	$group = Request::getInt('group',null);
 	InternalSession::setToolSessionVar('images','group',$group);
-	$text = Request::getUnicodeString('text');
+	$text = Request::getString('text');
 	$windowSize = Request::getInt('windowSize',30);
 	$windowPage = Request::getInt('windowPage',0);
 	$sort = Request::getString('sort','title');

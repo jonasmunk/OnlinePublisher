@@ -9,7 +9,7 @@ $id = Request::getId();
 
 $object = Issue::load($id);
 if ($object) {
-	Response::sendUnicodeObject($object);
+	Response::sendObject($object);
 } else {
 	Response::notFound();
 }

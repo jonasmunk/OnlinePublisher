@@ -5,10 +5,10 @@
  */
 require_once '../../../Include/Private.php';
 
-$data = Request::getUnicodeObject('data');
+$data = Request::getObject('data');
 if (MailService::send($data->email,$data->name,$data->subject,$data->body)) {
-	Response::sendUnicodeObject(array('success'=>true));
+	Response::sendObject(array('success'=>true));
 } else {
-	Response::sendUnicodeObject(array('success'=>false));
+	Response::sendObject(array('success'=>false));
 }
 ?>

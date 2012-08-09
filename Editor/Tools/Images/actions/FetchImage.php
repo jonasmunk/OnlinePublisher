@@ -14,5 +14,5 @@ if ($response->getSuccess()) {
 		ImageService::addImageToGroup($response->getObject()->getId(),$group);
 	}
 }
-Response::sendUnicodeObject($response);
+Response::sendObject($response);
 ?>

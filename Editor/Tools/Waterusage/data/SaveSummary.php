@@ -6,7 +6,7 @@
 require_once '../../../Include/Private.php';
 require_once '../../../Classes/Modules/Water/WatermeterSummary.php';
 
-$data = Request::getUnicodeObject('data');
+$data = Request::getObject('data');
 
 $summary = new WatermeterSummary();
 $summary->setWatermeterId($data->watermeterId);

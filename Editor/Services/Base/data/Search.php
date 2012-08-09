@@ -9,7 +9,7 @@ require_once '../../../Classes/Interface/ListWriter.php';
 require_once '../../../Classes/Model/Object.php';
 require_once '../../../Classes/Core/Request.php';
 
-$text = Request::getUnicodeString('text');
+$text = Request::getString('text');
 
 $writer = new ListWriter();
 if (StringUtils::isBlank($text)) {

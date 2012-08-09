@@ -54,13 +54,13 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual("æ",StringUtils::toUnicode(StringUtils::fromUnicode('æ')));
 		
 		$obj = array('first'=>'æ','sub'=>array('one'=>'æ'));
-		$obj = StringUtils::convertToUnicode($obj);
+		$obj = StringUtils::toUnicode($obj);
 		$this->assertEqual("Ã¦",$obj['first']);
 		$this->assertEqual("Ã¦",$obj['sub']['one']);
 		
 		$group = new ImageGroup();
 		$group->setTitle('æ');
-		StringUtils::convertToUnicode($group);
+		StringUtils::toUnicode($group);
 		$this->assertEqual("Ã¦",$group->getTitle());
 	}
 

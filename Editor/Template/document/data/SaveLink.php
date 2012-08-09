@@ -8,11 +8,11 @@ require_once '../../../Include/Private.php';
 $id = Request::getInt('id');
 $partId = Request::getInt('partId',null);
 $pageId = InternalSession::getPageId();
-$text = Request::getEncodedString('text');
-$value = Request::getEncodedString('value');
+$text = Request::getString('text');
+$value = Request::getString('value');
 $type = Request::getString('type');
 $target = Request::getString('target');
-$alternative = Request::getEncodedString('description');
+$alternative = Request::getString('description');
 
 if ($id) {
 	$link=Link::load($id);

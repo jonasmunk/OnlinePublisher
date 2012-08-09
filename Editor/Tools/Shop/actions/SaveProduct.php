@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$data = Request::getUnicodeObject('data');
+$data = Request::getObject('data');
 if (intval($data->product->id)>0) {
 	$product = Product::load($data->product->id);
 } else {

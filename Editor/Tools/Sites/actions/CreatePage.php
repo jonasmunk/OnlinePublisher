@@ -8,12 +8,12 @@ require_once '../../../Include/Private.php';
 $design = Request::getInt('design');
 $frame = Request::getInt('frame');
 $template = Request::getInt('template');
-$title = Request::getUnicodeString('title');
-$menuItem = Request::getUnicodeString('menuItem');
-$description = Request::getUnicodeString('description');
-$path = Request::getUnicodeString('path');
-$language = Request::getUnicodeString('language');
-$menuItemKind = Request::getUnicodeString('menuItemKind');
+$title = Request::getString('title');
+$menuItem = Request::getString('menuItem');
+$description = Request::getString('description');
+$path = Request::getString('path');
+$language = Request::getString('language');
+$menuItemKind = Request::getString('menuItemKind');
 $menuItemId = Request::getInt('menuItemId');
 
 if ($menuItem=='') {

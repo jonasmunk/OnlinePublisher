@@ -62,13 +62,13 @@ class MapPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = MapPart::load($id);
-		$part->setProvider(Request::getUnicodeString('provider'));
-		$part->setMaptype(Request::getUnicodeString('maptype'));
-		$part->setMarkers(Request::getUnicodeString('markers'));
+		$part->setProvider(Request::getString('provider'));
+		$part->setMaptype(Request::getString('maptype'));
+		$part->setMarkers(Request::getString('markers'));
 		$part->setLongitude(Request::getFloat('longitude'));
 		$part->setLatitude(Request::getFloat('latitude'));
 		$part->setZoom(Request::getInt('zoom'));
-		$part->setText(Request::getUnicodeString('text'));
+		$part->setText(Request::getString('text'));
 		$part->setWidth(Request::getString('mapwidth'));
 		$part->setHeight(Request::getString('mapheight'));
 		$part->setFrame(Request::getString('frame'));

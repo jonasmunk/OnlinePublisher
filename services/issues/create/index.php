@@ -8,9 +8,9 @@ require_once('../../../Editor/Classes/Objects/Issue.php');
 require_once('../../../Editor/Classes/Services/MailService.php');
 require_once('../../../Editor/Classes/Utilities/StringUtils.php');
 
-$user = Request::getEncodedString('user');
-$site = Request::getEncodedString('site');
-$description = Request::getEncodedString('description');
+$user = Request::getString('user');
+$site = Request::getString('site');
+$description = Request::getString('description');
 
 if (StringUtils::isBlank($user)) {
 	Log::debug('No user!');

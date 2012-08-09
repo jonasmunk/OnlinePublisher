@@ -26,5 +26,5 @@ function listSource($id,$force) {
 	foreach ($events as $event) {
 		$out[] = array('startTime'=>$event['startDate'],'endTime'=>$event['endDate'],'text'=>$event['summary']);
 	}
-	Response::sendUnicodeObject($out);
+	Response::sendObject($out);
 }

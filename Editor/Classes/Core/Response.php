@@ -5,15 +5,11 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 class Response {
-	
+		
 	static function sendObject($obj) {
+		$obj = StringUtils::toUnicode($obj);
 		header('Content-Type: text/plain; charset=utf-8');
 		echo StringUtils::toJSON($obj);
-	}
-	
-	static function sendUnicodeObject($obj) {
-		$obj = StringUtils::convertToUnicode($obj);
-		Response::sendObject($obj);
 	}
 		
 	static function redirect($url) {

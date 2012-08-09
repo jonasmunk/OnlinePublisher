@@ -20,7 +20,7 @@ if ($row = Database::getRow($sql)) {
 		$row[$type][] = intval($item['id']);
 	}
 	
-	Response::sendUnicodeObject($row);
+	Response::sendObject($row);
 } else {
 	Response::notFound();
 }

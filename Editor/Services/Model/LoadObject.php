@@ -17,7 +17,7 @@ if (!$id) {
 	if (!$obj) {
 		Response::notFound('Unable to load object with id='.$id);
 	} else {
-		Response::sendUnicodeObject($obj);
+		Response::sendObject($obj);
 	}
 }
 ?>

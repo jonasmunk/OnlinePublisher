@@ -45,8 +45,8 @@ class ListPartController extends PartController
 	function getFromRequest($id) {
 		$part = ListPart::load($id);
 		$part->setObjectIds(Request::getIntArrayComma('objects'));
-		$part->setTitle(Request::getUnicodeString('title'));
-		$part->setSortDirection(Request::getUnicodeString('sort_direction'));
+		$part->setTitle(Request::getString('title'));
+		$part->setSortDirection(Request::getString('sort_direction'));
 		$part->setTimeCount(Request::getInt('time_count'));
 		$part->setMaxItems(Request::getInt('maxitems'));
 		$part->setMaxTextLength(Request::getInt('maxtextlength'));

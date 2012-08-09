@@ -8,5 +8,5 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 $list = Mailinglist::load($data->id);
 $mails = $list->getEmails();
-Response::sendUnicodeObject($mails);
+Response::sendObject($mails);
 ?>

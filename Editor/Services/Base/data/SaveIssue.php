@@ -6,8 +6,8 @@
 require_once '../../../Include/Private.php';
 
 $id = Request::getInt('id');
-$text = Request::getEncodedString('text');
-$kind = Request::getEncodedString('kind');
+$text = Request::getString('text');
+$kind = Request::getString('kind');
 
 if ($issue = Issue::load($id)) {
 	$issue->setTitle(StringUtils::shortenString($text,30));

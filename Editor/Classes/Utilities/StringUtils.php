@@ -42,21 +42,21 @@ class StringUtils {
 		$output=str_replace("\n", $tag, $output);
 		return $output;
 	}
-	
+	/*
 	function toUnicode($str) {
 		return mb_convert_encoding($str, "UTF-8","ISO-8859-1");
-	}
+	}*/
 	
-	function convertToUnicode($obj) {
+	function toUnicode($obj) {
 		if (is_string($obj)) {
-			return StringUtils::toUnicode($obj);
+			return mb_convert_encoding($obj, "UTF-8","ISO-8859-1");
 		} else if (is_object($obj)) {
 			foreach ($obj as $key => $value) {
-				$obj->$key = StringUtils::convertToUnicode($value);
+				$obj->$key = StringUtils::toUnicode($value);
 			}
 		} else if (is_array($obj)) {
 			foreach ($obj as $key => $value) {
-				$obj[$key] = StringUtils::convertToUnicode($value);
+				$obj[$key] = StringUtils::toUnicode($value);
 			}
 		}
 		return $obj;

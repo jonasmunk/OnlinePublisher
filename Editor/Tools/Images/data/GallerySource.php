@@ -7,7 +7,7 @@ require_once '../../../Include/Private.php';
 
 $subset = Request::getString('subset');
 $group = Request::getInt('group',null);
-$text = Request::getEncodedString('text');
+$text = Request::getString('text');
 
 InternalSession::setToolSessionVar('images','group',$group);
 
@@ -25,5 +25,5 @@ if ($group===-1) {
 }
 $list = $query->search()->getList();
 
-Response::sendUnicodeObject($list);
+Response::sendObject($list);
 ?>

@@ -17,5 +17,5 @@ $arr = array(
 	'description'=>$page->getDescription()
 );
 
-Response::sendUnicodeObject($arr);
+Response::sendObject($arr);
 ?>

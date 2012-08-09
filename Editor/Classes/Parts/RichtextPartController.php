@@ -72,7 +72,7 @@ class RichtextPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = RichtextPart::load($id);
-		$part->setHtml(Request::getUnicodeString('html'));
+		$part->setHtml(Request::getString('html'));
 		return $part;
 	}
 	

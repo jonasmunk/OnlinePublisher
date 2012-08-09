@@ -8,5 +8,5 @@ require_once '../../Include/Private.php';
 $url = Request::getString('url');
 
 $response = ImageService::createImageFromUrl($url);
-Response::sendUnicodeObject($response);
+Response::sendObject($response);
 ?>

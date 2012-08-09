@@ -32,5 +32,5 @@ $settings = array(
 	)
 );
 
-Response::sendUnicodeObject($settings);
+Response::sendObject($settings);
 ?>

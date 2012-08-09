@@ -94,7 +94,7 @@ class WeblogTemplateController extends TemplateController
 			$entryId = Request::getInt('entryId');
 			if ($entry = Weblogentry::load($entryId)) {
 				$entry->loadGroups();
-				Response::sendUnicodeObject($entry);
+				Response::sendObject($entry);
 			} else {
 				Response::badRequest();
 			}
@@ -113,8 +113,8 @@ class WeblogTemplateController extends TemplateController
 	}
 
 	function createEntry($id) {
-		$title = Request::getUnicodeString('title');
-		$text = Request::getUnicodeString('text');
+		$title = Request::getString('title');
+		$text = Request::getString('text');
 		$groups = Request::getIntArrayComma('groups');
 		$date = Request::getInt('date');
 		if ($title=='' && count($groups)==0) {
@@ -153,11 +153,11 @@ class WeblogTemplateController extends TemplateController
 	}
 
 	function updateEntry() {
-		$id = Request::getPostInt('entryId');
-		$title = Request::getUnicodeString('title');
-		$text = Request::getUnicodeString('text');
+		$id = Request::getInt('entryId');
+		$title = Request::getString('title');
+		$text = Request::getString('text');
 		$groups = Request::getIntArrayComma('groups');
-		$date = Request::getPostInt('date');
+		$date = Request::getInt('date');
 		if ($title!='' && count($groups)>0) {
 			$entry = Weblogentry::load($id);
 			$entry->setTitle($title);

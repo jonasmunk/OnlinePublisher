@@ -10,7 +10,7 @@ if ($file=File::load($id)) {
 
 	$groups = $file->getGroupIds();
 
-	Response::sendUnicodeObject(array('file' => $file, 'groups' => $groups));
+	Response::sendObject(array('file' => $file, 'groups' => $groups));
 } else {
 	Response::notFound();
 }

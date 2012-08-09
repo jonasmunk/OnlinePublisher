@@ -9,7 +9,7 @@ $kind = Request::getString('kind');
 $value = Request::getInt('value');
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
-$text = Request::getUnicodeString('query');
+$text = Request::getString('query');
 $sort = Request::getString('sort');
 $direction = Request::getString('direction');
 if ($sort=='') {

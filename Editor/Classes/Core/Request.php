@@ -45,6 +45,10 @@ class Request {
 		$output=str_replace('\\"', '"', $output);
 		$output=str_replace('\\\'', '\'', $output);
 		$output=str_replace('\\\\', '\\', $output);
+		//if (strpos($_SERVER['CONTENT_TYPE'],'UTF-8')!==false) {
+			$output = StringUtils::fromUnicode($output);
+		//}
+		//error_log($_SERVER['CONTENT_TYPE']);
 		return $output;
 	}
 
@@ -55,21 +59,6 @@ class Request {
 	 */
 	function getCheckbox($key) {
 		return Request::getString($key)=='on';
-	}
-
-	/**
-	 * Gets a string and converts it to ISO-8859-1 if it is in Unicode
-	 */
-	function getEncodedString($key) {
-		if (strpos($_SERVER['CONTENT_TYPE'],'UTF-8')!==false) {
-			return Request::getUnicodeString($key);
-		}
-		return Request::getString($key);
-	}
-	
-	function getUnicodeString($key) {
-		$value = Request::getString($key);
-		return StringUtils::fromUnicode($value);
 	}
 
 	/**
@@ -179,105 +168,18 @@ class Request {
 			return '';
 		}
 	}
-
-	function getPostDateInFormat($key,$format) {
-		$value = Request::getPostString($key);
-		$parsed = strptime($value, $format);
-		$stamp = mktime ( $parsed['tm_hour'] , $parsed['tm_min'] , $parsed['tm_sec'], $parsed['tm_mon']+1, $parsed['tm_mday'], $parsed['tm_year'] );
-		error_log($value);
-		error_log(print_r($parsed,true));
-		error_log(strftime($format, $stamp));
-		return $stamp;
-	}
-
-
-	/**
-	 * Gets a integer variable passed thru the POST protocol
-	 * @param string $key The name of the variable
-	 * @param string $default Optional: The value to return if the variable is not set
-	 * or not a number. Defaults to 0.
-	 * @return int The value of the variable, $default if variable not set or not numeric
-	 */
-	function getPostInt($key,$default=0) {
-		if (isset($_POST[$key]) && is_numeric($_POST[$key])) {
-			return intval($_POST[$key]);
-		}
-		else {
-			return $default;
-		}
-	}
 	
 	function getObject($key) {
-		global $basePath;
-		require_once($basePath.'Editor/Libraries/json/JSON2.php');
-		//$json = new Services_JSON();
-		//return $json->decode(Request::getString($key));
-		return json_decode(Request::getString($key));
-	}
-	
-	function getUnicodeObject($key) {
-		$obj = Request::getObject($key);
+		$obj = StringUtils::fromJSON(Request::getString($key));
 		if ($obj!==null) {
-			Request::convertFromUnicode($obj);
+			StringUtils::fromUnicode($obj);
 		}
 		return $obj;
 	}
-	
-	function convertFromUnicode($obj) {
-		if (is_object($obj)) {
-			foreach ($obj as $key => $value) {
-				if (is_string($value)) {
-					$obj->$key = StringUtils::fromUnicode($value);
-				} else if (is_object($value) || is_array($value)) {
-					Request::convertFromUnicode($value);
-				}
-			}
-		} else if (is_array($obj)) {
-			for ($i=0; $i < count($obj); $i++) { 
-				if (is_string($obj[$i])) {
-					$obj[$i] = StringUtils::fromUnicode($value);
-				} else if (is_object($obj[$i]) || is_array($obj[$i])) {
-					Request::convertFromUnicode($obj[$i]);
-				}
-			}
-		}
-	}
 
-	/**
-	 * Gets a text string variable passed thru the get protocol
-	 * @param string $key The name of the variable
-	 * @return string The value of the variable, '' if variable not set
-	 */
-	function getPostString($key) {
-		if (isset($_POST[$key])) {
-			$output=$_POST[$key];
-			$output=str_replace('\\"', '"', $output);
-			$output=str_replace('\\\'', '\'', $output);
-			$output=str_replace('\\\\', '\\', $output);
-			return $output;
-		}
-		else {
-			return '';
-		}
-	}
 	
 	function isPost() {
 		return $_SERVER['REQUEST_METHOD']=='POST';
-	}
-
-	/**
-	 * Gets the array value of a variable passed thru the post protocol
-	 * @param string $key The name of the variable
-	 * @return array the array value of the variable,
-	 *         an empty array if variable is not an array
-	 */
-	function getPostArray($key) {
-		if (isset($_POST[$key]) && is_array($_POST[$key])) {
-			return $_POST[$key];
-		}
-		else {
-			return array();
-		}
 	}
 
 	/**

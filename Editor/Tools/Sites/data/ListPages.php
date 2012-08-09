@@ -7,7 +7,7 @@ require_once '../../../Include/Private.php';
 
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
-$query = Request::getUnicodeString('query');
+$query = Request::getString('query');
 $sort = Request::getString('sort');
 $kind = Request::getString('kind');
 $value = Request::getString('value');

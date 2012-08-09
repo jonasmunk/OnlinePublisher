@@ -10,5 +10,5 @@ $obj = Image::load($id);
 if ($obj) {
 	$obj->remove();
 }
-Response::sendUnicodeObject(array('success'=>true));
+Response::sendObject(array('success'=>true));
 ?>

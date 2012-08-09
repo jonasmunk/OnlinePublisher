@@ -6,12 +6,12 @@
 require_once '../../../Include/Private.php';
 
 $id = Request::getInt('id');
-$data = Request::getUnicodeObject('frame');
-$topLinks = Request::getUnicodeObject('topLinks');
-$bottomLinks = Request::getUnicodeObject('bottomLinks');
-$search = Request::getUnicodeObject('search');
-$user = Request::getUnicodeObject('user');
-$newsBlocks = Request::getUnicodeObject('newsBlocks');
+$data = Request::getObject('frame');
+$topLinks = Request::getObject('topLinks');
+$bottomLinks = Request::getObject('bottomLinks');
+$search = Request::getObject('search');
+$user = Request::getObject('user');
+$newsBlocks = Request::getObject('newsBlocks');
 
 if ($id>0) {
 	$object = Frame::load($id);

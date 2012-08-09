@@ -38,7 +38,7 @@ if ($sourceId) {
 $main = Request::getString('main');
 $group = Request::getInt('group');
 $type = Request::getString('type');
-$queryString = Request::getUnicodeString('query');
+$queryString = Request::getString('query');
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
 $sort = Request::getString('sort');

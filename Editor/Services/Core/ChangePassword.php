@@ -9,10 +9,10 @@ if (Request::isPost()) {
 	$key = Request::getString('key');
 	$password = Request::getString('password');
 	if (AuthenticationService::updatePasswordForEmailValidationSession($key,$password)) {
-		Response::sendUnicodeObject(array('success' => true));
+		Response::sendObject(array('success' => true));
 		exit;
 		
 	}
 }
-Response::sendUnicodeObject(array('success' => false,'message' => 'Det lykkedes desværre ikke at ændre kodeordet'));
+Response::sendObject(array('success' => false,'message' => 'Det lykkedes desværre ikke at ændre kodeordet'));
 ?>

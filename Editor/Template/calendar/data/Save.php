@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$data = Request::getUnicodeObject('data');
+$data = Request::getObject('data');
 if ($data) {
 	$sql = "update calendarviewer set title=".Database::text($data->title).",weekview_starthour=".Database::int($data->weekview_starthour)." where page_id=".Database::int($data->id);
 	Database::update($sql);	

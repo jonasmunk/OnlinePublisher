@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$message = Request::getEncodedString('message');
+$message = Request::getString('message');
 
 $user = User::load(InternalSession::getUserId());
 

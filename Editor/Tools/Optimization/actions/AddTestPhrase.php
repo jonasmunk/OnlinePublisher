@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$word = Request::getUnicodeString('word');
+$word = Request::getString('word');
 
 $phrase = new Testphrase();
 $phrase->setTitle($word);

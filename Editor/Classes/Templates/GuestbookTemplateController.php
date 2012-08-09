@@ -56,8 +56,8 @@ class GuestbookTemplateController extends TemplateController
 		}
 		else {
 			if (Request::isPost() && Request::getBoolean('userinteraction')) {
-				$name = Request::getUnicodeString('name');
-				$text = Request::getUnicodeString('text');
+				$name = Request::getString('name');
+				$text = Request::getString('text');
 				$sql = "insert into guestbook_item (page_id,time,name,text) values (".Database::int($id).",now(),".Database::text($name).",".Database::text($text).")";
 				Database::insert($sql);
 			}

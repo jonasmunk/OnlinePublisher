@@ -18,7 +18,7 @@ if ($review) {
 	$reviewStatus = $review->getAccepted() ? 'accepted' : 'rejected';
 }
 
-Response::sendUnicodeObject(array(
+Response::sendObject(array(
 	'changed' => PageService::isChanged($id),
 	'review' => $reviewStatus
 ));

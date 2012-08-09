@@ -42,9 +42,9 @@ class FormulaPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = FormulaPart::load($id);
-		$part->setReceiverName(Request::getUnicodeString('receiverName'));
-		$part->setReceiverEmail(Request::getUnicodeString('receiverEmail'));
-		$part->setRecipe(Request::getUnicodeString('recipe'));
+		$part->setReceiverName(Request::getString('receiverName'));
+		$part->setReceiverEmail(Request::getString('receiverEmail'));
+		$part->setRecipe(Request::getString('recipe'));
 		return $part;
 	}
 	

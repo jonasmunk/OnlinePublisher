@@ -14,5 +14,5 @@ $values = array(
 	'groups' => $weblog->getGroupIds()
 );
 
-Response::sendUnicodeObject($values);
+Response::sendObject($values);
 ?>

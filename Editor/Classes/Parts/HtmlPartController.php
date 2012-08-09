@@ -41,7 +41,7 @@ class HtmlPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = HtmlPart::load($id);
-		$part->setHtml(Request::getUnicodeString('html'));
+		$part->setHtml(Request::getString('html'));
 		return $part;
 	}
 	

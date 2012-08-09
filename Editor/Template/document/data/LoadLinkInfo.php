@@ -8,7 +8,7 @@ require_once '../../../Include/Private.php';
 $id = Request::getInt('id');
 
 if ($info = LinkService::getLinkInfo($id)) {
-	Response::sendUnicodeObject(array(
+	Response::sendObject(array(
 		'id' => $info->getId(),
 		'text' => $info->getSourceText(),
 		'type' => $info->getTargetType(),

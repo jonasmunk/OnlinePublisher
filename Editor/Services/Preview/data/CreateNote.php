@@ -6,8 +6,8 @@
 require_once '../../../Include/Private.php';
 
 $pageId = Request::getInt('pageId');
-$text = Request::getEncodedString('text');
-$kind = Request::getEncodedString('kind');
+$text = Request::getString('text');
+$kind = Request::getString('kind');
 
 
 $user = User::load(InternalSession::getUserId());

@@ -5,7 +5,7 @@
  */
 require_once '../../Include/Private.php';
 
-$text = Request::getUnicodeString('query');
+$text = Request::getString('query');
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
 $sort = Request::getString('sort','title');

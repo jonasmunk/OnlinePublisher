@@ -46,5 +46,5 @@ foreach ($links as $link) {
 	$graph->addEdge($sourceId,$targetId);
 }
 
-Response::sendUnicodeObject($graph);
+Response::sendObject($graph);
 ?>

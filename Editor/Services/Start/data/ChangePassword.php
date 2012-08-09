@@ -5,8 +5,8 @@
  */
 require_once '../../../Include/Private.php';
 
-$old = Request::getEncodedString('old');
-$password = Request::getEncodedString('password');
+$old = Request::getString('old');
+$password = Request::getString('password');
 
 if (StringUtils::isBlank($old) || StringUtils::isBlank($password)) {
 	Response::badRequest();

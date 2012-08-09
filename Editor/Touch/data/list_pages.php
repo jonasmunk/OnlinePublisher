@@ -10,5 +10,5 @@ foreach ($pages as $page) {
 	$list[] = array('id' => $page['id'],'title' => $page['title']);
 }
 
-Response::sendUnicodeObject($list);
+Response::sendObject($list);
 ?>

@@ -47,9 +47,9 @@ class MailinglistPartController extends PartController
 	}
 	
 	function buildSub($part,$context) {
-		$action = Request::getUnicodeString($part->getId().'_action');
-		$name = Request::getUnicodeString($part->getId().'_name');
-		$email = Request::getUnicodeString($part->getId().'_email');
+		$action = Request::getString($part->getId().'_action');
+		$name = Request::getString($part->getId().'_name');
+		$email = Request::getString($part->getId().'_email');
 		$subscribe_error = '';
 		$subscribe_body = '';
 		$unsubscribe_error = '';

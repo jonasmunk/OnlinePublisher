@@ -193,7 +193,7 @@ class PosterPartController extends PartController
 	
 	function getFromRequest($id) {
 		$part = PosterPart::load($id);
-		$part->setRecipe(Request::getUnicodeString('recipe')); // do not use getEncodedString
+		$part->setRecipe(Request::getString('recipe')); // do not use getEncodedString
 		return $part;
 	}
 	
