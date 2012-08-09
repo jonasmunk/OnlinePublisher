@@ -108,45 +108,6 @@ class In2iGui {
 		return $result;
 	}
 	
-	static function sendObject($obj) {
-		header('Content-Type: text/plain; charset=utf-8');
-		echo In2iGui::toJSON($obj);
-	}
-	
-	static function sendUnicodeObject($obj) {
-		foreach ($obj as $key => $value) {
-			if (is_string($value)) {
-				if (is_array($obj)) {
-					$obj[$key] = StringUtils::toUnicode($value);
-				} else {
-					$obj->$key = StringUtils::toUnicode($value);
-				}
-			}
-		}
-		In2iGui::sendObject($obj);
-	}
-	
-	static function toJSON($obj) {
-		global $basePath;
-		if (function_exists('json_encode')) {
-			return json_encode($obj);
-		}
-		require_once($basePath.'Editor/Libraries/json/JSON2.php');
-		$json = new Services_JSON();
-		return $json->encode($obj);
-	}
-	
-	static function respondSuccess() {
-		header('Content-Type: text/xml');
-		echo '<?xml version="1.0" encoding="UTF-8"?><success/>';
-	}
-
-	static function respondFailure() {
-		Response::badRequest();
-		header('Content-Type: text/xml');
-		echo '<?xml version="1.0" encoding="UTF-8"?><failure/>';
-	}
-
 	static function respondUploadSuccess() {
 		header('Content-Type: text/plain');
 		echo 'SUCCESS';
@@ -158,84 +119,9 @@ class In2iGui {
 		echo 'FAILURE';
 	}
 	
-	static function toDateTime($stamp) {
-		return date("YmdHis",$stamp);
-	}
-	
-	static function buildOptions($objects,$selected=array()) {
-		$gui='';
-		foreach ($objects as $object) {
-			$gui.='<option title="'.StringUtils::escapeXML($object->getTitle()).'" value="'.StringUtils::escapeXML($object->getId()).'" selected="'.(in_array($object->getId(), $selected) ? 'true' : 'false').'"/>';
-		}
-		return $gui;
-	}
-	
-	static function escape($input) {
-		error_log('In2iGui::escape is deprecated');
-		return StringUtils::escapeXML($input);
-	}
-	
-	static function escapeUnicode($input) {
-		$output = str_replace('<', '&#60;', $input);
-		$output = str_replace('>', '&#62;', $output);
-		return $output;
-	}
-	
-	static function presentDate($timestamp) {
-		if ($timestamp==null) return '';
-		setlocale(LC_TIME, "da_DK");
-		return strftime("%e. %b %Y",$timestamp);
-	}
-	
-	function _xmlEntities($string) 
-    { 
-        $string = preg_replace('/[^\x09\x0A\x0D\x20-\x7F]/e', 'In2iGui::_privateXMLEntities("$0")', $string); 
-        return $string; 
-    } 
-
-    static function _privateXMLEntities($num) 
-    { 
-	if ($num==3) {return '';}
-    $chars = array( 
-        128 => '&#8364;', 
-        130 => '&#8218;', 
-        131 => '&#402;', 
-        132 => '&#8222;', 
-        133 => '&#8230;', 
-        134 => '&#8224;', 
-        135 => '&#8225;', 
-        136 => '&#710;', 
-        137 => '&#8240;', 
-        138 => '&#352;', 
-        139 => '&#8249;', 
-        140 => '&#338;', 
-        142 => '&#381;', 
-        145 => '&#8216;', 
-        146 => '&#8217;', 
-        147 => '&#8220;', 
-        148 => '&#8221;', 
-        149 => '&#8226;', 
-        150 => '&#8211;', 
-        151 => '&#8212;', 
-        152 => '&#732;', 
-        153 => '&#8482;', 
-        154 => '&#353;', 
-        155 => '&#8250;', 
-        156 => '&#339;', 
-        158 => '&#382;', 
-        159 => '&#376;'); 
-        $num = ord($num); 
-        return (($num > 127 && $num < 160) ? $chars[$num] : "&#".$num.";" ); 
-    } 
-
-	static function _htmlnumericentities(&$str){
-	  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
-	}
-	
 	static function toLinks($links) {
 		$out = array();
 		foreach ($links as $link) {
-			//$link->toUnicode();
 			$out[] = array(
 				'id' => $link->getId(), 
 				'text' => $link->getText(), 

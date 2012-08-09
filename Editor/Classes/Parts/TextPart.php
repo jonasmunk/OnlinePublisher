@@ -55,11 +55,7 @@ class TextPart extends Part
 	function TextPart() {
 		parent::Part('text');
 	}
-	
-	function toUnicode() {
-		$this->text = mb_convert_encoding($this->text, "UTF-8","ISO-8859-1");
-	}
-	
+		
 	function load($id) {
 		return Part::load('text',$id);
 	}

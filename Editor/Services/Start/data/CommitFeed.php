@@ -8,14 +8,14 @@ require_once '../../../Include/Private.php';
 $url = 'https://github.com/in2isoft/OnlinePublisher/commits/master.atom';
 $data = RemoteDataService::getRemoteData($url,60*30); // 30 minutes
 if (!$data->isHasData()) {
-	In2iGui::respondFailure();
+	Response::badGateway();
 	exit;	
 }
 $parser = new FeedParser();
 $feed = $parser->parseURL($data->getFile());
 
 if (!$feed) {
-	In2iGui::respondFailure();
+	Response::badGateway();
 	exit;	
 }
 

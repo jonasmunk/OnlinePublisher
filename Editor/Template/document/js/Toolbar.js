@@ -5,9 +5,13 @@ var controller = {
 		window.parent.location='../../Tools/Sites/';
 	},
 	$click$publish : function() {
-		hui.ui.request({url:'../../Services/Model/PublishPage.php',parameters:{id:this.pageId},onSuccess:function(obj) {
-			publish.setEnabled(false);
-		}});
+		hui.ui.request({
+			url : '../../Services/Model/PublishPage.php',
+			parameters : {id:this.pageId},
+			onSuccess : function() {
+				publish.setEnabled(false);
+			}
+		});
 	},
 	/*
 	$click$publish : function() {

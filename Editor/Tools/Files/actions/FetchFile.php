@@ -9,5 +9,5 @@ $url = Request::getString('url');
 
 $response = FileService::createFromUrl($url);
 
-In2iGui::sendObject($response);
+Response::sendUnicodeObject($response);
 ?>

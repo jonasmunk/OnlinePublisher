@@ -10,6 +10,6 @@ $id = Request::getInt('id');
 $result = Hierarchy::deleteItem($id);
 
 if ($result===null) {
-	In2iGui::respondFailure();
+	Response::badRequest();
 }
 ?>

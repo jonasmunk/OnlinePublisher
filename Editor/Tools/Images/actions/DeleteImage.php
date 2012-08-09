@@ -10,5 +10,5 @@ $obj = Image::load($id);
 if ($obj) {
 	$obj->remove();
 }
-In2iGui::sendUnicodeObject(array('success'=>true));
+Response::sendUnicodeObject(array('success'=>true));
 ?>

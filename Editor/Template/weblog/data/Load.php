@@ -14,5 +14,5 @@ $values = array(
 	'groups' => $weblog->getGroupIds()
 );
 
-In2iGui::sendUnicodeObject($values);
+Response::sendUnicodeObject($values);
 ?>

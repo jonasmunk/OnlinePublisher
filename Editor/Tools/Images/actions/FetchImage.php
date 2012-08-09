@@ -14,5 +14,5 @@ if ($response->getSuccess()) {
 		ImageService::addImageToGroup($response->getObject()->getId(),$group);
 	}
 }
-In2iGui::sendObject($response);
+Response::sendUnicodeObject($response);
 ?>

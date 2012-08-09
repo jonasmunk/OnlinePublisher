@@ -194,6 +194,13 @@ class GuiUtils {
 				return $value[$lang];
 			}
 			return $value[0];
+		} else if (is_object($value)) {
+			$lang = InternalSession::getLanguage();
+			if (isset($value->$lang)) {
+				return $value->$lang;
+			}
+			return $value->en;
+			
 		}
 		return $value;		
 	}

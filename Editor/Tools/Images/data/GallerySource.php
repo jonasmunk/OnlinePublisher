@@ -25,5 +25,5 @@ if ($group===-1) {
 }
 $list = $query->search()->getList();
 
-In2iGui::sendObject($list);
+Response::sendUnicodeObject($list);
 ?>

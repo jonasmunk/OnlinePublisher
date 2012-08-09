@@ -94,8 +94,7 @@ class WeblogTemplateController extends TemplateController
 			$entryId = Request::getInt('entryId');
 			if ($entry = Weblogentry::load($entryId)) {
 				$entry->loadGroups();
-				$entry->toUnicode();
-				Response::sendObject($entry);
+				Response::sendUnicodeObject($entry);
 			} else {
 				Response::badRequest();
 			}

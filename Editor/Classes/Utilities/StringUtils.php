@@ -62,13 +62,24 @@ class StringUtils {
 		return $obj;
 	}
 	
-	function fromUnicode($str) {
-		$str = str_replace("\xe2\x80\x9c",'"',$str);
-		$str = str_replace("\xe2\x80\x9d",'"',$str);
-		$str = str_replace("\xe2\x80\x93",'-',$str);
-		$str = str_replace("\xca\xbc",'\'',$str);
-		$str = str_replace("\xca\xbb",'\'',$str);
-		return mb_convert_encoding($str,"ISO-8859-1", "UTF-8");
+	function fromUnicode($obj) {
+		if (is_string($obj)) {
+			$str = str_replace("\xe2\x80\x9c",'"',$obj);
+			$str = str_replace("\xe2\x80\x9d",'"',$str);
+			$str = str_replace("\xe2\x80\x93",'-',$str);
+			$str = str_replace("\xca\xbc",'\'',$str);
+			$str = str_replace("\xca\xbb",'\'',$str);
+			return mb_convert_encoding($str,"ISO-8859-1", "UTF-8");
+		} else if (is_object($obj)) {
+			foreach ($obj as $key => $value) {
+				$obj->$key = StringUtils::fromUnicode($value);
+			}
+		} else if (is_array($obj)) {
+			foreach ($obj as $key => $value) {
+				$obj[$key] = StringUtils::fromUnicode($value);
+			}
+		}
+		return $obj;
 	}
 	
 	function escapeXML($str) {

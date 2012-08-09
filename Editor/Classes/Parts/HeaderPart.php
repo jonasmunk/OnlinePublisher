@@ -49,11 +49,7 @@ class HeaderPart extends Part
 	function HeaderPart() {
 		parent::Part('header');
 	}
-	
-	function toUnicode() {
-		$this->text = mb_convert_encoding($this->text, "UTF-8","ISO-8859-1");
-	}
-	
+		
 	function load($id) {
 		return Part::load('header',$id);
 	}

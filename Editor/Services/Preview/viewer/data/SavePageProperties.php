@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Preview
  */
-require_once '../../../../../Config/Setup.php';
-require_once '../../../../Include/Security.php';
-require_once '../../../../Classes/Core/Request.php';
-require_once '../../../../Classes/Interface/In2iGui.php';
-require_once '../../../../Classes/Model/Page.php';
+require_once '../../../../Include/Private.php';
 
 $id = Request::getInt('id');
 $title = Request::getUnicodeString('title');
@@ -24,5 +20,4 @@ $page->setPath($path);
 $page->setLanguage($language);
 $page->save();
 
-In2iGui::respondSuccess();
 ?>

@@ -30,14 +30,7 @@ class Page {
     
     function Page() {
     }
-	
-	function toUnicode() {
-		$this->title = mb_convert_encoding($this->title, "UTF-8","ISO-8859-1");
-		$this->description = mb_convert_encoding($this->description, "UTF-8","ISO-8859-1");
-		$this->keywords = mb_convert_encoding($this->keywords, "UTF-8","ISO-8859-1");
-		$this->path = mb_convert_encoding($this->path, "UTF-8","ISO-8859-1");
-	}
-    
+	    
     function setId($id) {
         $this->id = $id;
     }

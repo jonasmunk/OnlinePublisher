@@ -17,8 +17,7 @@ if (!$id) {
 	if (!$obj) {
 		Response::notFound('Unable to load object with id='.$id);
 	} else {
-		$obj->toUnicode();
-		In2iGui::sendObject($obj);
+		Response::sendUnicodeObject($obj);
 	}
 }
 ?>

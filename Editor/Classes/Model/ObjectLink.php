@@ -77,11 +77,6 @@ class ObjectLink {
 	    return $this->objectId;
 	}
 	
-	function toUnicode() {
-		$this->text = mb_convert_encoding($this->text, "UTF-8","ISO-8859-1");
-		$this->value = mb_convert_encoding($this->value, "UTF-8","ISO-8859-1");
-	}
-
 	static $icons = array('file' => 'monochrome/file', 'page' => 'common/page', 'url' => 'monochrome/globe', 'email' => 'monochrome/email');
 	
 	function getIcon() {

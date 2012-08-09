@@ -3,15 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Model
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Model/Object.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Objects/Emailaddress.php';
-require_once '../../Classes/Objects/Person.php';
-require_once '../../Classes/Core/Query.php';
-require_once '../../Classes/Objects/Phonenumber.php';
+require_once '../../Include/Private.php';
 
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
@@ -36,7 +28,7 @@ $writer->startList(array('unicode'=>true))->
 
 foreach ($persons as $object) {
 	$writer->
-		startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>"common/person",'title'=>In2iGui::escape($object->getTitle())))->
+		startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>"common/person",'title'=>$object->getTitle()))->
 			startCell(array('icon'=>'common/person'))->startWrap()->text($object->getTitle())->endWrap()->endCell()->
 			startCell();
 			buildAddress($object,$writer);
@@ -66,14 +58,14 @@ function buildAddress($person,$writer) {
 function buildEmails($person,$writer) {
 	$mails = Query::after('emailaddress')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($mails as $mail) {
-		$writer->object(array('icon'=>"common/email",'text'=>In2iGui::escape($mail->getAddress())));
+		$writer->object(array('icon'=>"common/email",'text'=>$mail->getAddress()));
 	}
 }
 
 function buildPhones($person,$writer) {
 	$phones = Query::after('phonenumber')->withProperty('containingObjectId',$person->getId())->get();
 	foreach ($phones as $phone) {
-		$writer->object(array('icon'=>"common/phone",'text'=>In2iGui::escape($phone->getNumber())));
+		$writer->object(array('icon'=>"common/phone",'text'=>$phone->getNumber()));
 	}
 }
 ?>

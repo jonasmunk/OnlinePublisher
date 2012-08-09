@@ -12,7 +12,7 @@ $usage = Waterusage::load($data->id);
 $meter = Watermeter::load($usage->getWatermeterId());
 
 
-In2iGui::sendObject(array(
+Response::sendUnicodeObject(array(
 	'id' => $usage->getId(),
 	'number' => $meter->getNumber(),
 	'value' => $usage->getValue(),

@@ -171,7 +171,7 @@ class ListPartController extends PartController
 		$data['calendars'] = $this->buildValues('calendar',$part);
 		$data['newsGroups'] = $this->buildValues('newsgroup',$part);
 		$data['newsSources'] = $this->buildValues('newssource',$part);
-		return In2iGui::toJSON($data);
+		return StringUtils::toJSON($data);
 	}
 	
 	function buildValues($type,$part) {

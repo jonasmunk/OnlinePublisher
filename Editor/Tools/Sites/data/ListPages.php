@@ -224,7 +224,7 @@ function listPages() {
 			startCell(array('icon'=>GuiUtils::getLanguageIcon($row['language'])))->endCell()->
 			startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($row['changed']));
 		if ($row['publishdelta']>0) {
-			$writer->startIcons()->icon(array('icon'=>'monochrome/warning'))->endIcons();
+			$writer->startIcons(array('left'=>3))->icon(array('icon'=>'monochrome/warning','size'=>12))->endIcons();
 		}
 		$writer->endCell()->
 			startCell()->

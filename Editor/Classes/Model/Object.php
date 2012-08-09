@@ -95,14 +95,6 @@ class Object {
 		return $this->id>0;
 	}
 	
-	function toUnicode() {
-		foreach ($this as $key => $value) {
-			if (is_string($value)) {
-				$this->$key = StringUtils::toUnicode($value);
-			}
-		}
-	}
-	
 	function create() {
 		return ObjectService::create($this);
 	}

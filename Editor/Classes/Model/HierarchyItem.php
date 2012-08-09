@@ -70,10 +70,6 @@ class HierarchyItem {
 	    return $this->targetValue;
 	}
 	
-	function toUnicode() {
-		$this->title = mb_convert_encoding($this->title, "UTF-8","ISO-8859-1");
-	}
-
 	function load($id) {
 		$sql = "select id,title,hidden,target_type,target_value,target_id from hierarchy_item where id=".Database::int($id);
 		$result = Database::select($sql);

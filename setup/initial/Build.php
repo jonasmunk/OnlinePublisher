@@ -1,14 +1,12 @@
 <?php
-require_once('../../Editor/Include/Public.php');
-require_once('../../Editor/Classes/Core/Request.php');
-require_once('../../Editor/Classes/Interface/In2iGui.php');
+require_once('../../Editor/Include/Private.php');
 
 if (file_exists('../../Config/Setup.php')) {
-	In2iGui::sendObject(array('failure'=>'The configuration file already exists'));
+	Response::sendUnicodeObject(array('failure'=>'The configuration file already exists'));
 	exit;
 }
 if (!is_dir($basePath."Config/") || !is_writable($basePath."Config/")) {
-	In2iGui::sendObject(array('failure'=>'The configuration folder is not writable'));
+	Response::sendUnicodeObject(array('failure'=>'The configuration folder is not writable'));
 	exit;
 }
 
@@ -33,9 +31,9 @@ $config[] = '?>';
 
 $data = implode("\r\n",$config);
 if (@file_put_contents($basePath."Config/Setup.php",$data)) {
-	In2iGui::sendObject(array('success'=>true));
+	Response::sendUnicodeObject(array('success'=>true));
 } else {
-	In2iGui::sendObject(array('failure'=>'Unable to create the configuration file (permission denied)'));
+	Response::sendUnicodeObject(array('failure'=>'Unable to create the configuration file (permission denied)'));
 }
 
 ?>

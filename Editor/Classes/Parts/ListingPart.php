@@ -49,11 +49,7 @@ class ListingPart extends Part
 	function ListingPart() {
 		parent::Part('listing');
 	}
-	
-	function toUnicode() {
-		$this->text = mb_convert_encoding($this->text, "UTF-8","ISO-8859-1");
-	}
-	
+		
 	function load($id) {
 		return Part::load('listing',$id);
 	}

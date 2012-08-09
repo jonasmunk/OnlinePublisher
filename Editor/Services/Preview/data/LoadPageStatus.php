@@ -18,9 +18,7 @@ if ($review) {
 	$reviewStatus = $review->getAccepted() ? 'accepted' : 'rejected';
 }
 
-Log::debug($reviewStatus);
-
-In2iGui::sendObject(array(
+Response::sendUnicodeObject(array(
 	'changed' => PageService::isChanged($id),
 	'review' => $reviewStatus
 ));

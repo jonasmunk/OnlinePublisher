@@ -11,5 +11,5 @@ $targetHierarchy = Request::getInt('targetHierarchy',0);
 
 $response = Hierarchy::relocateItem($move,$targetItem,$targetHierarchy);
 
-In2iGui::sendObject($response);
+Response::sendUnicodeObject($response);
 ?>

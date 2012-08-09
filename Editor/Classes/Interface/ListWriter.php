@@ -64,6 +64,9 @@ class ListWriter {
 			if (isset($options['key'])) {
 				echo ' key="'.$options['key'].'"';
 			}
+			if (isset($options['align'])) {
+				echo ' align="'.$options['align'].'"';
+			}
 			if (isset($options['sortable'])) {
 				echo ' sortable="'.($options['sortable'] ? 'true' : 'false').'"';
 			}
@@ -118,8 +121,15 @@ class ListWriter {
 		if (isset($options['class'])) {
 			echo ' class="'.$options['class'].'"';
 		}
+		if (isset($options['align'])) {
+			echo ' align="'.$options['align'].'"';
+		}
 		echo '>';
 		return $this;
+	}
+	
+	function cell($str) {
+		return $this->startCell()->text($str)->endCell();
 	}
 	
 	function endCell() {
@@ -198,6 +208,9 @@ class ListWriter {
 	}
 	
 	function icon($options=array()) {
+		if (is_string($options)) {
+			$options = array('icon'=>$options);
+		}
 		echo '<icon icon="'.$options['icon'].'"';
 		if (isset($options['data'])) {
 			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
@@ -209,7 +222,10 @@ class ListWriter {
 			echo ' action="true"';
 		}
 		if (isset($options['hint'])) {
-			echo ' hint="'.StringUtils::escapeXML(StringUtils::toJSON($options['hint'])).'"';
+			echo ' hint="'.StringUtils::escapeXML(StringUtils::getTranslated($options['hint'])).'"';
+		}
+		if (isset($options['size'])) {
+			echo ' size="'.StringUtils::escapeXML($options['size']).'"';
 		}
 		echo '/>';
 		return $this;
@@ -224,8 +240,12 @@ class ListWriter {
 		return $this;
 	}
 	
-	function startIcons() {
-		echo '<icons>';
+	function startIcons($options=array()) {
+		echo '<icons';
+		if (isset($options['left'])) {
+			echo ' left="'.StringUtils::escapeXML($options['left']).'"';
+		}		
+		echo '>';
 		return $this;
 	}
 	
