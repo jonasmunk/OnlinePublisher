@@ -9,9 +9,9 @@ $writer = new ListWriter();
 
 $writer->startList();
 $writer->startHeaders();
-$writer->header(array('title'=>'Sti','width'=>40));
-$writer->header(array('title'=>'Side','width'=>30));
-$writer->header(array('title'=>'Side-sti','width'=>30));
+$writer->header(array('title'=>array('Path','da'=>'Sti'),'width'=>40));
+$writer->header(array('title'=>array('Page','da'=>'Side'),'width'=>30));
+$writer->header(array('title'=>array('Page path','da'=>'Side-sti'),'width'=>30));
 $writer->endHeaders();
 
 $list = Query::after('path')->get();
@@ -22,7 +22,7 @@ foreach ($list as $item) {
 	if ($page) {
 		$writer->startCell(array('icon'=>$page->getIn2iGuiIcon()))->text($page->getTitle())->endCell();
 	} else {
-		$writer->startCell(array('icon'=>'monochrome/warning'))->text('!!! ingen !!!')->endCell();
+		$writer->startCell(array('icon'=>'common/warning'))->text(array('No page','da'=>'Ingen siden'))->endCell();
 	}
 	$writer->startCell()->text($page ? $page->getPath() : '')->endCell();
 	$writer->endRow();

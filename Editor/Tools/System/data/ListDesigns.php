@@ -10,7 +10,7 @@ $writer = new ListWriter();
 $writer->startList()->
 	startHeaders()->
 		header(array('title'=>'Design','width'=>40))->
-		header(array('title'=>'Nøgle','width'=>30))->
+		header(array('title'=>array('Key','da'=>'Nøgle'),'width'=>30))->
 	endHeaders();
 
 $designs = Query::after('design')->get();

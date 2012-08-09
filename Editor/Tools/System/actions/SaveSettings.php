@@ -3,14 +3,9 @@
  * @package OnlinePublisher
  * @subpackage Tools.System
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Services/MailService.php';
-require_once '../../Classes/Services/SettingService.php';
-require_once '../../Classes/Integration/GoogleAnalytics.php';
+require_once '../../../Include/Private.php';
 
-$data = Request::getObject('data');
+$data = Request::getUnicodeObject('data');
 
 if ($data->ui) {
 	SettingService::setSetting('part','richtext','experimetal',$data->ui->experimentalRichText);

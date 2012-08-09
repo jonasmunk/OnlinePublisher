@@ -1,6 +1,7 @@
 hui.ui.listen({
 	weblogGroupId : 0,
 	userId : 0,
+	
 	$ready : function() {
 		if (window.parent!=window) {
 			window.parent.baseController.changeSelection('tool:System');
@@ -111,7 +112,7 @@ hui.ui.listen({
 			external:userExternal.getValue(),
 			administrator:userAdministrator.getValue()
 		};
-		hui.ui.request({json:{data:data},url:'SaveUser.php',onSuccess:'saveUser'});
+		hui.ui.request({json:{data:data},url:'actions/SaveUser.php',onSuccess:'saveUser'});
 	},
 	$success$saveUser : function() {
 		userEditor.hide();
@@ -169,7 +170,7 @@ hui.ui.listen({
 	$click$saveWeblogGroup : function() {
 		var data = weblogGroupFormula.getValues();
 		data.id = this.weblogGroupId;
-		hui.ui.request({json:{data:data},url:'SaveWeblogGroup.php',onSuccess:'saveWeblogGroup'});
+		hui.ui.request({json:{data:data},url:'actions/SaveWeblogGroup.php',onSuccess:'saveWeblogGroup'});
 	},
 	$success$saveWeblogGroup : function() {
 		weblogGroupEditor.hide();
@@ -188,7 +189,7 @@ hui.ui.listen({
 	$click$savePath : function() {
 		var data = pathFormula.getValues();
 		data.id=this.pathId;
-		hui.ui.request({json:{data:data},url:'SavePath.php',onSuccess:'savePath'});
+		hui.ui.request({json:{data:data},url:'actions/SavePath.php',onSuccess:'savePath'});
 	},
 	$success$savePath : function() {
 		pathEditor.hide();
@@ -229,7 +230,7 @@ hui.ui.listen({
 			hui.ui.request({
 				message : {start : 'Afinstallerer skabelon',delay:300},
 				parameters : {key:data.key},
-				url : 'data/UninstallTemplate.php',
+				url : 'actions/UninstallTemplate.php',
 				onSuccess : function() {
 					list.refresh();
 				}
@@ -238,7 +239,7 @@ hui.ui.listen({
 			hui.ui.request({
 				message : {start : 'Installerer skabelon',delay:300},
 				parameters : {key:data.key},
-				url : 'data/InstallTemplate.php',
+				url : 'actions/InstallTemplate.php',
 				onSuccess : function() {
 					list.refresh();
 				}
@@ -247,7 +248,7 @@ hui.ui.listen({
 			hui.ui.request({
 				message : {start : 'Installerer værktøj',delay:300},
 				parameters : {key:data.key},
-				url : 'data/InstallTool.php',
+				url : 'actions/InstallTool.php',
 				onSuccess : function() {
 					list.refresh();
 				}
@@ -256,7 +257,7 @@ hui.ui.listen({
 			hui.ui.request({
 				message : {start : 'Afinstallerer værktøj',delay:300},
 				parameters : {key:data.key},
-				url : 'data/UninstallTool.php',
+				url : 'actions/UninstallTool.php',
 				onSuccess : function() {
 					list.refresh();
 				}
@@ -270,7 +271,7 @@ hui.ui.listen({
 		hui.ui.request({
 			message : {start:'Rydder cache...',delay:300},
 			parameters : {type:info.button.getData().type},
-			url : 'data/ClearCache.php',
+			url : 'actions/ClearCache.php',
 			onSuccess : function() {
 				cachesList.refresh();
 			}

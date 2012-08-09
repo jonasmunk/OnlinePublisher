@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.System
  */
-require_once '../../Include/Private.php';
+require_once '../../../Include/Private.php';
 
 $data = Request::getUnicodeObject('data');
 

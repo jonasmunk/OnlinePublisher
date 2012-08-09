@@ -9,13 +9,13 @@ $writer = new ListWriter();
 
 $writer->startList();
 $writer->startHeaders();
-$writer->header(array('title'=>'Navn','width'=>40));
-$writer->header(array('title'=>'Brugernavn'));
-$writer->header(array('title'=>'E-mail'));
-$writer->header(array('title'=>'Sprog'));
-$writer->header(array('title'=>'Intern'));
-$writer->header(array('title'=>'Ekstern'));
-$writer->header(array('title'=>'Administrator'));
+$writer->header(array('title'=>array('Name','da'=>'Navn'),'width'=>40));
+$writer->header(array('title'=>array('Username','da'=>'Brugernavn')));
+$writer->header(array('title'=>array('E-mail','da'=>'E-post')));
+$writer->header(array('title'=>array('Language','da'=>'Sprog')));
+$writer->header(array('title'=>array('Internal','da'=>'Intern'),'align'=>'center'));
+$writer->header(array('title'=>array('External','da'=>'Ekstern'),'align'=>'center'));
+$writer->header(array('title'=>'Administrator','align'=>'center'));
 $writer->endHeaders();
 
 $list = Query::after('user')->get();
@@ -25,9 +25,21 @@ foreach ($list as $item) {
 	$writer->startCell()->text($item->getUsername())->endCell();
 	$writer->startCell()->text($item->getEmail())->endCell();
 	$writer->startCell()->text($item->getLanguage())->endCell();
-	$writer->startCell()->text($item->getInternal() ? 'Ja' : 'Nej')->endCell();
-	$writer->startCell()->text($item->getExternal() ? 'Ja' : 'Nej')->endCell();
-	$writer->startCell()->text($item->getAdministrator() ? 'Ja' : 'Nej')->endCell();
+	$writer->startCell(array('align'=>'center'));
+	if ($item->getInternal()) {
+		$writer->startIcons()->icon('monochrome/checkmark')->endIcons();
+	}
+	$writer->endCell();
+	$writer->startCell(array('align'=>'center'));
+	if ($item->getExternal()) {
+		$writer->startIcons()->icon('monochrome/checkmark')->endIcons();
+	}
+	$writer->endCell();
+	$writer->startCell(array('align'=>'center'));
+	if ($item->getAdministrator()) {
+		$writer->startIcons()->icon('monochrome/checkmark')->endIcons();
+	}
+	$writer->endCell();
 	$writer->endRow();
 }
 $writer->endList();

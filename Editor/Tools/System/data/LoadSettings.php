@@ -3,12 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tool.System
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Services/MailService.php';
-require_once '../../Classes/Services/SettingService.php';
-require_once '../../Classes/Integration/GoogleAnalytics.php';
-require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../../Include/Private.php';
 
 $settings = array(
 	'ui' => array(
@@ -37,5 +32,5 @@ $settings = array(
 	)
 );
 
-In2iGui::sendObject($settings);
+Response::sendUnicodeObject($settings);
 ?>

@@ -11,29 +11,28 @@ $server = mysql_get_server_info($con);
 $host = mysql_get_host_info($con);
 $protocol = mysql_get_proto_info($con);
 $client = mysql_get_client_info();
-$tables = DatabaseUtil::getTables();
 
-header('Content-Type: text/xml;');
-echo '<?xml version="1.0"?>
-<list>
-<headers>
-	<header title="Egenskab" width="30"/>
-	<header title="Værdi" width="70"/>
-</headers>
-<row>
-	<cell>Server</cell><cell>'.$server.'</cell>
-</row>
-<row>
-	<cell>Klient</cell><cell>'.$client.'</cell>
-</row>
-<row>
-	<cell>Vært</cell><cell>'.$host.'</cell>
-</row>
-<row>
-	<cell>Protokol</cell><cell>'.$protocol.'</cell>
-</row>
-<row>
-	<cell>Status</cell><cell>'.$status.'</cell>
-</row>
-</list>';
+$writer = new ListWriter();
+
+$writer->startList()->
+	startHeaders()->
+		header(array('title'=>array('Property','da'=>'Egenskab'),'width'=>30))->
+		header(array('title'=>array('Value','da'=>'V�rdi'),'width'=>70))->
+	endHeaders()->
+	startRow()->
+		cell('Server')->cell($server)->
+	endRow()->
+	startRow()->
+		cell('Client')->cell($client)->
+	endRow()->
+	startRow()->
+		cell('Host')->cell($host)->
+	endRow()->
+	startRow()->
+		cell('Protocol')->cell($protocol)->
+	endRow()->
+	startRow()->
+		cell('Status')->cell($status)->
+	endRow()->
+endList();
 ?>

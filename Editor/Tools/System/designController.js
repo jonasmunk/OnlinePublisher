@@ -40,7 +40,7 @@ hui.ui.listen({
 			designFormula.focus();
 		} else {
 			values.id = this.id;
-			hui.ui.request({json:{data:values},url:'SaveDesign.php',onSuccess:'designSaved'});
+			hui.ui.request({json:{data:values},url:'actions/SaveDesign.php',onSuccess:'designSaved'});
 		}
 	},
 	$success$designSaved : function() {

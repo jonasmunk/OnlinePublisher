@@ -7,37 +7,33 @@ require_once '../../../Include/Private.php';
 
 
 
+$writer = new ListWriter();
 
-header('Content-Type: text/xml;');
-echo '<?xml version="1.0"?>
-<list>
-<headers>
-	<header title="Tabel" width="30"/>
-	<header title="Kolonner" width="20"/>
-	<header title="Status" width="50"/>
-</headers>';
+$writer->startList()->
+	startHeaders()->
+		header(array('title'=>array('Table','da'=>'Tabel'),'width'=>30))->
+		header(array('title'=>array('Columns','da'=>'Kolonner'),'width'=>20))->
+		header(array('title'=>array('Status','da'=>'Status'),'width'=>50))->
+	endHeaders();
 
 $tables = DatabaseUtil::getTables();
 foreach ($tables as $table) {
 	$columns = DatabaseUtil::getTableColumns($table);
 	$errors = DatabaseUtil::checkTable($table,$columns);
-	echo '
-	<row>
-	<cell>'.$table.'</cell>
-	<cell>'.count($columns).'</cell>
-	<cell>'.implode('<break/>',$errors).'</cell>
-	</row>
-	';
+	$writer->startRow()->
+		cell($table)->
+		cell(count($columns))->
+		cell(implode("\n",$errors))->
+	endRow();
 }
+
 $missingTables=DatabaseUtil::findMissingTables($tables);
 foreach ($missingTables as $table) {
-	echo '
-	<row>
-	<cell>'.$table.'</cell>
-	<cell>?</cell>
-	<cell>Table not in database</cell>
-	</row>
-	';
+	$writer->startRow()->
+		cell($table)->
+		cell('?')->
+		cell(array('The table is missing','da'=>'Tabellen mangler'))->
+	endRow();
 }
-echo '</list>';
+$writer->endList();
 ?>
