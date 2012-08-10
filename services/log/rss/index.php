@@ -3,8 +3,6 @@
  * @package OnlinePublisher
  * @subpackage Public.Services.Log
  */
-
-require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
 
 $requestSecret = Request::getString('secret');

@@ -47,7 +47,7 @@ var controller = {
 	},
 	$click$properties : function() {
 		var frame = window.frames[0];
-		frame.op.Editor.editProperties();
+		frame.op.Editor.editProperties(hui.ui.language);
 	},
 	$click$view : function() {
 		window.parent.location='ViewPublished.php';

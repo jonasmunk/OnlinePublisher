@@ -3,8 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Sites
  */
-require_once '../../../../Config/Setup.php';
-require_once '../../../Include/Security.php';
+require_once '../../../Include/Private.php';
 
 $id = Request::getInt('page');
 

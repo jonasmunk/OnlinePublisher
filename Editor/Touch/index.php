@@ -1,7 +1,5 @@
 <?php
-require_once '../../Config/Setup.php';
-require_once '../Include/Security.php';
-require_once '../Classes/Services/RenderingService.php';
+require_once '../Include/Private.php';
 
 header("Content-Type: text/html; charset=UTF-8");
 ?><!DOCTYPE html>

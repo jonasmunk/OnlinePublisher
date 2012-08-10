@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Publish
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Model/Object.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Services/PublishingService.php';
+require_once '../../Include/Private.php';
 
 $pages = PublishingService::getUnpublishedPages();
 $hierarchies = PublishingService::getUnpublishedHierarchies();

@@ -1,4 +1,5 @@
 op.Editor = {
+	language : 'en',
 	$ready : function() {
 		var ctrl = this.getToolbarController();
 		if (ctrl) { // May not be loaded yet
@@ -44,36 +45,39 @@ op.Editor = {
 		}
 	},
 	
-	editProperties : function() {
+	editProperties : function(language) {
+		this.language = language;
 		if (!this.propertiesWindow) {
-			var win = this.propertiesWindow = hui.ui.Window.create({width:300,title:'Info',icon:'common/info',padding:10,variant:'dark'});
+			var originalLanguage = hui.ui.language;
+			hui.ui.language = language;
+			var win = this.propertiesWindow = hui.ui.Window.create({width:300,title:'Info',icon:'common/info',padding:10});
 			var form = this.propertiesFormula = hui.ui.Formula.create();
 			var group = form.buildGroup({above:true},[
-				{type:'TextField',options:{label:'Titel:',key:'title'}},
-				{type:'TextField',options:{label:'Beskrivelse:',key:'description',multiline:true}},
-				{type:'TextField',options:{label:'Nøgelord:',key:'keywords'}},
-				{type:'TextField',options:{label:'Sti:',key:'path'}},
-				{type:'DropDown',options:{
-					label:'Sprog:',
-					key:'language',
-					items:[{value:'',title:'Intet'},{value:'DA',title:'Dansk'},{value:'EN',title:'Engelsk'},{value:'DE',title:'Tysk'}]
+				{type:'TextField',label:{en:'Title:',da:'Titel:'},options:{key:'title'}},
+				{type:'TextField',label:{en:'Description:',da:'Beskrivelse:'},options:{key:'description',multiline:true}},
+				{type:'TextField',label:{en:'Keywords:',da:'Nøgelord:'},options:{key:'keywords'}},
+				{type:'TextField',label:{en:'Path:',da:'Sti:'},options:{key:'path'}},
+				{type:'DropDown',label:{en:'Language:',da:'Sprog:'},options:{
+					key : 'language',
+					url : '../../Model/LanguageItems.php'
 				}}
 			]);
 			var buttons = group.createButtons();
-			var more = hui.ui.Button.create({text:'Mere...'});
+			var more = hui.ui.Button.create({text:{en:'More...',da:'Mere...'}});
 			more.click(this.moreProperties.bind(this));
 			buttons.add(more);
 
-			var update = hui.ui.Button.create({text:'Opdater',highlighted:true});
+			var update = hui.ui.Button.create({text:{en:'Update',da:'Opdater'},highlighted:true});
 			update.click(this.saveProperties.bind(this));
 			buttons.add(update);
 			win.add(form);
+			hui.ui.language = originalLanguage;
 		}
 		hui.ui.request({
-			url:'data/LoadPageProperties.php',
-			parameters:{id:op.page.id},
-			message : {start:'Henter sidens info...',delay:300},
-			onJSON:function(obj) {
+			url : 'data/LoadPageProperties.php',
+			parameters : {id:op.page.id},
+			message : {start:language=='da' ? 'Henter info...' : 'Loading info...',delay:300},
+			onJSON : function(obj) {
 				this.propertiesFormula.setValues(obj);
 				this.propertiesWindow.show();
 			}.bind(this)
@@ -82,13 +86,14 @@ op.Editor = {
 	saveProperties : function() {
 		var values = this.propertiesFormula.getValues();
 		values.id = op.page.id;
+		this.propertiesFormula.reset();
+		this.propertiesWindow.hide();
 		hui.ui.request({
-			url:'data/SavePageProperties.php',
-			parameters:values,
-			message : {start:'Gemmer sidens info...',delay:300},
-			onSuccess:function() {
-				this.propertiesFormula.reset();
-				this.propertiesWindow.hide();
+			url : 'data/SavePageProperties.php',
+			parameters : values,
+			message : {start:this.language=='da' ? 'Gemmer info...' : 'Saving info...',delay:300},
+			onSuccess : function() {
+				hui.ui.showMessage({text:this.language=='da' ? 'Informationen er gemt' : 'The information is saved',icon:'common/success',duration:2000});
 			}.bind(this)
 		});
 	},

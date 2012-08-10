@@ -4,14 +4,7 @@
  * @subpackage Public.Services.Log
  */
 
-require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once '../../../Editor/Classes/Core/Database.php';
-require_once '../../../Editor/Classes/Network/Feed.php';
-require_once '../../../Editor/Classes/Network/FeedItem.php';
-require_once '../../../Editor/Classes/Network/FeedSerializer.php';
-require_once '../../../Editor/Classes/Core/Request.php';
-require_once '../../../Editor/Classes/Core/Response.php';
 
 $group = Request::getInt('group');
 if ($group>0) {

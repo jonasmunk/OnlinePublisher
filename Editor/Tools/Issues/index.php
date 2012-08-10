@@ -3,9 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Optimization
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Include/Private.php';
 
 $gui='
 <gui xmlns="uri:hui" padding="10" title="Issues">

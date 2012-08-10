@@ -152,6 +152,9 @@ hui.ui.confirmOverlay = function(options) {
 		if (options.onOk) {
 			options.onOk();
 		}
+		if (options['$ok']) {
+			options.$ok();
+		}
 		overlay.hide();
 	});
 	overlay.add(ok);
@@ -159,6 +162,9 @@ hui.ui.confirmOverlay = function(options) {
 	cancel.onClick(function() {
 		if (options.onCancel) {
 			options.onCancel();
+		}
+		if (options['$cancel']) {
+			options.$cancel();
 		}
 		overlay.hide();
 	});
@@ -992,12 +998,13 @@ hui.ui.parseSubItems = function(parent,array) {
 			var sub = [];
 			hui.ui.parseSubItems(node,sub);
 			array.push({
-				title:node.getAttribute('title'),
-				value:node.getAttribute('value'),
-				icon:node.getAttribute('icon'),
-				kind:node.getAttribute('kind'),
-				badge:node.getAttribute('badge'),
-				children:sub
+				text : node.getAttribute('text'),
+				title : node.getAttribute('title'),
+				value : node.getAttribute('value'),
+				icon : node.getAttribute('icon'),
+				kind : node.getAttribute('kind'),
+				badge : node.getAttribute('badge'),
+				children : sub
 			});
 		}
 	};

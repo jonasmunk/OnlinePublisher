@@ -3,10 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Public
  */
-require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
-require_once '../../Editor/Classes/Modules/Images/Gradient.php';
-require_once '../../Editor/Classes/Core/Request.php';
 
 //http://62.107.96.100/~jbm/Publisher/src/util/gradient/?vertical=true&width=10&height=50&gradient=0,50,50,230;100,100,100,255
 

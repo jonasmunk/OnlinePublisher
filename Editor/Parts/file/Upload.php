@@ -3,13 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Parts.File
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Services/FileService.php';
-require_once '../../Classes/Core/Response.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Parts/FilePartController.php';
-require_once '../../Classes/Core/Log.php';
+require_once '../../Include/Private.php';
 
 $response = FileService::createUploadedFile();
 

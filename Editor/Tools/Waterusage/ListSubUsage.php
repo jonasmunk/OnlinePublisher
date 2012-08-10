@@ -3,13 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Waterusage
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Objects/Waterusage.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Utilities/DateUtils.php';
-require_once '../../Classes/Utilities/GuiUtils.php';
+require_once '../../Include/Private.php';
 
 $meterId = Request::getInt('meterId');
 $windowSize = Request::getInt('windowSize',30);

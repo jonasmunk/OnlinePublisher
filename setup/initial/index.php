@@ -7,8 +7,6 @@ if (file_exists('../../Config/Setup.php')) {
 $baseUrl = getBaseUrl();
 
 require_once('../../Editor/Include/Public.php');
-require_once('../../Editor/Classes/Interface/In2iGui.php');
-require_once('../../Editor/Classes/Utilities/StringUtils.php');
 
 if (!function_exists('xslt_create') && !class_exists('xsltProcessor')) {
 	Response::internalServerError('No XSLT processor');

@@ -38,14 +38,12 @@ hui.ui.DropDown.create = function(options) {
 }
 
 hui.ui.DropDown.prototype = {
-	/** @private */
 	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.element,'class':'hui_dropdown_focused'});
 		hui.listen(this.element,'click',this._click.bind(this));
 		hui.listen(this.element,'blur',this._hideSelector.bind(this));
 		hui.listen(this.element,'keydown',this._keyDown.bind(this));
 	},
-	/** @private */
 	_updateIndex : function() {
 		this.index=-1;
 		for (var i=0; i < this.items.length; i++) {
@@ -54,7 +52,6 @@ hui.ui.DropDown.prototype = {
 			}
 		};
 	},
-	/** @private */
 	_updateUI : function() {
 		var selected = this.items[this.index];
 		if (selected) {
@@ -79,7 +76,6 @@ hui.ui.DropDown.prototype = {
 			}
 		};
 	},
-	/** @private */
 	_click : function(e) {
 		if (this.busy) {return}
 		hui.stop(e);
@@ -108,7 +104,6 @@ hui.ui.DropDown.prototype = {
 		width = Math.min(width,space);
 		hui.style.set(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
 	},
-	/** @private */
 	_keyDown : function(e) {
 		if (this.busy) {return}
 		if (this.items.length==0) {
@@ -141,6 +136,7 @@ hui.ui.DropDown.prototype = {
 			this.setValue(this.items[0].value);
 		}
 	},
+	/** Get the value of the selected item */
 	getValue : function() {
 		return this.value;
 	},
@@ -149,12 +145,15 @@ hui.ui.DropDown.prototype = {
 		this._updateIndex();
 		this._updateUI();
 	},
+	/** Set the value to null */
 	reset : function() {
 		this.setValue(null);
 	},
+	/** Get the label */
 	getLabel : function() {
 		return this.options.label;
 	},
+	/** Refresh the associated source */
 	refresh : function() {
 		if (this.options.source) {
 			this.options.source.refresh();
@@ -195,6 +194,7 @@ hui.ui.DropDown.prototype = {
 		this.busy = true;
 		hui.style.setOpacity(this.element,.5);
 	},
+	/** @private */
 	$sourceIsNotBusy : function() {
 		this.busy = false;
 		hui.style.setOpacity(this.element,1);
@@ -219,7 +219,6 @@ hui.ui.DropDown.prototype = {
 		if (!this.selector) {return}
 		this.selector.style.display='none';
 	},
-	/** @private */
 	_buildSelector : function() {
 		if (!this.dirty || !this.items) {return};
 		if (!this.selector) {
@@ -243,7 +242,6 @@ hui.ui.DropDown.prototype = {
 		});
 		this.dirty = false;
 	},
-	/** @private */
 	_itemClicked : function(item,index) {
 		this.index = index;
 		var changed = this.value!=this.items[index].value;

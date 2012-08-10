@@ -86,6 +86,14 @@ span.hui_icon_2, span.hui_icon_32, a.hui_icon_32
 	vertical-align: middle;
 }
 
+span.hui_icon_12, a.hui_icon_12
+{
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	vertical-align: middle;
+}
+
 span.hui_icon_24
 {
 	display: inline-block;

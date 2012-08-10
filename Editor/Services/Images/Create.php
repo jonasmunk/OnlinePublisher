@@ -3,8 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Services.Support
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
+require_once '../../Include/Private.php';
 
 $data = Request::getString('data');
 $title = Request::getString('title');

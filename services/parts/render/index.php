@@ -1,8 +1,5 @@
 <?php
-require_once '../../../Config/Setup.php';
 require_once '../../../Editor/Include/Public.php';
-require_once '../../../Editor/Classes/Core/Request.php';
-require_once '../../../Editor/Classes/Services/PartService.php';
 
 $type = Request::getString('type');
 $id = Request::getInt('id');

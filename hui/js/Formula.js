@@ -158,6 +158,7 @@ hui.ui.Formula.Group.prototype = {
 			label = widget.getLabel();
 		}
 		if (label) {
+			label = hui.ui.getTranslated(label);
 			if (this.options.above) {
 				hui.build('label',{className:'hui_formula_field',text:label,parent:td});
 			} else {

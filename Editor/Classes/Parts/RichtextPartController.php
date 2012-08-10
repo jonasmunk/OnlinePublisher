@@ -78,11 +78,13 @@ class RichtextPartController extends PartController
 	
 	function buildSub($part,$context) {
 		$html = $part->getHtml();
-		if (DOMUtils::isValidFragment($html)) {
+		if (DOMUtils::isValidFragment(StringUtils::toUnicode($html))) {
 			return '<richtext xmlns="'.$this->getNamespace().'" valid="true">'.
 			$html.
 			'</richtext>';
 		} else {
+			Log::debug('RichtextPartController: The markup is invalid...');
+			Log::debug($html);
 			return 
 			'<richtext xmlns="'.$this->getNamespace().'" valid="false">'.
 			'<![CDATA['.$html.']]>'.

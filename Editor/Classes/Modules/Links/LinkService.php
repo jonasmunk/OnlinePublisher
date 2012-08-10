@@ -63,7 +63,7 @@ class LinkService {
 	}
 	
 	function translateLinkType($type) {
-		return LinkService::$types[$type]['da'];
+		return GuiUtils::getTranslated(LinkService::$types[$type]);
 	}
 	
 	function load($id) {
@@ -280,9 +280,7 @@ class LinkService {
 			}
 			$found = strpos($text,$view->getSourceText())!==false;
 			if (!$found) {
-				Log::debug('"'.$view->getSourceText().'" not found in "'.$text.'"');
-				Log::debug($view);
-				$view->addError(LinkView::$TEXT_NOT_FOUND,'The link text was not found');
+				$view->addError(LinkView::$TEXT_NOT_FOUND,array('The link text was not found','da'=>'Link-teksten kunne ikke findes'));
 			}
 		}
 	}
@@ -306,7 +304,7 @@ class LinkService {
 		if ($row['target_type']=='pageref') {
 			$view->setTargetType('page');
 			if (!$row['target_page_id']) {
-				$view->addError(LinkView::$TARGET_NOT_FOUND,'The target page does not exist');
+				$view->addError(LinkView::$TARGET_NOT_FOUND,array('The target page does not exist','da'=>'Siden findes ikke'));
 				$view->setTargetId(-1);
 				$view->setTargetTitle('?');
 			} else {
@@ -316,7 +314,7 @@ class LinkService {
 			
 		} else if ($row['target_type']=='page') {
 			if (!$row['target_page_id']) {
-				$view->addError(LinkView::$TARGET_NOT_FOUND,'The target page does not exist');
+				$view->addError(LinkView::$TARGET_NOT_FOUND,array('The target page does not exist','da'=>'Siden findes ikke'));
 				$view->setTargetId(-1);
 				$view->setTargetTitle('?');
 			} else {
@@ -326,7 +324,7 @@ class LinkService {
 		}
 		else if ($row['target_type']=='file') {
 			if (!$row['target_file_id']) {
-				$view->addError(LinkView::$TARGET_NOT_FOUND,'The target file does not exist');
+				$view->addError(LinkView::$TARGET_NOT_FOUND,array('The target file does not exist','da'=>'Filen findes ikke'));
 				$view->setTargetId(-1);
 				$view->setTargetTitle('?');
 			} else {
@@ -337,13 +335,13 @@ class LinkService {
 			$view->setTargetId($row['target_value']);
 			$view->setTargetTitle($row['target_value']);
 			if (!ValidateUtils::validateEmail($row['target_value'])) {
-				$view->addError(LinkView::$INVALID_ADDRESS,'The e-mail is invalid');
+				$view->addError(LinkView::$INVALID_ADDRESS,array('The e-mail is invalid','da'=>'E-post-adressen er ikke valid'));
 			}
 		} else if ($row['target_type']=='url') {
 			$view->setTargetId($row['target_value']);
 			$view->setTargetTitle($row['target_value']);
 			if (!ValidateUtils::validateHref($row['target_value'])) {
-				$view->addError(LinkView::$INVALID_ADDRESS,'The URL is invalid');
+				$view->addError(LinkView::$INVALID_ADDRESS,array('The address is invalid','da'=>'Adressen er ikke valid'));
 			}
 		}
 		return $view;

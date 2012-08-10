@@ -4883,6 +4883,9 @@ hui.ui.confirmOverlay = function(options) {
 		if (options.onOk) {
 			options.onOk();
 		}
+		if (options['$ok']) {
+			options.$ok();
+		}
 		overlay.hide();
 	});
 	overlay.add(ok);
@@ -4890,6 +4893,9 @@ hui.ui.confirmOverlay = function(options) {
 	cancel.onClick(function() {
 		if (options.onCancel) {
 			options.onCancel();
+		}
+		if (options['$cancel']) {
+			options.$cancel();
 		}
 		overlay.hide();
 	});
@@ -5723,12 +5729,13 @@ hui.ui.parseSubItems = function(parent,array) {
 			var sub = [];
 			hui.ui.parseSubItems(node,sub);
 			array.push({
-				title:node.getAttribute('title'),
-				value:node.getAttribute('value'),
-				icon:node.getAttribute('icon'),
-				kind:node.getAttribute('kind'),
-				badge:node.getAttribute('badge'),
-				children:sub
+				text : node.getAttribute('text'),
+				title : node.getAttribute('title'),
+				value : node.getAttribute('value'),
+				icon : node.getAttribute('icon'),
+				kind : node.getAttribute('kind'),
+				badge : node.getAttribute('badge'),
+				children : sub
 			});
 		}
 	};
@@ -6372,6 +6379,7 @@ hui.ui.Formula.Group.prototype = {
 			label = widget.getLabel();
 		}
 		if (label) {
+			label = hui.ui.getTranslated(label);
 			if (this.options.above) {
 				hui.build('label',{className:'hui_formula_field',text:label,parent:td});
 			} else {
@@ -6900,7 +6908,8 @@ hui.ui.List.prototype = {
 			} else if (hui.dom.isElement(child,'break')) {
 				cell.appendChild(document.createElement('br'));
 			} else if (hui.dom.isElement(child,'icon')) {
-				var icon = hui.ui.createIcon(child.getAttribute('icon'),16);
+				var size = child.getAttribute('size') || 16;
+				var icon = hui.ui.createIcon(child.getAttribute('icon'),size);
 				if (child.getAttribute('hint')) {
 					icon.setAttribute('title',child.getAttribute('hint'));
 				}
@@ -6945,6 +6954,9 @@ hui.ui.List.prototype = {
 				cell.appendChild(obj);
 			} else if (hui.dom.isElement(child,'icons')) {
 				var icons = hui.build('span',{'class':'hui_list_icons'});
+				if (child.getAttribute('left')) {
+					icons.style.marginLeft=child.getAttribute('left')+'px';
+				}
 				this._parseCell(child,icons);
 				cell.appendChild(icons);
 			} else if (hui.dom.isElement(child,'button')) {
@@ -7619,14 +7631,12 @@ hui.ui.DropDown.create = function(options) {
 }
 
 hui.ui.DropDown.prototype = {
-	/** @private */
 	_addBehavior : function() {
 		hui.ui.addFocusClass({element:this.element,'class':'hui_dropdown_focused'});
 		hui.listen(this.element,'click',this._click.bind(this));
 		hui.listen(this.element,'blur',this._hideSelector.bind(this));
 		hui.listen(this.element,'keydown',this._keyDown.bind(this));
 	},
-	/** @private */
 	_updateIndex : function() {
 		this.index=-1;
 		for (var i=0; i < this.items.length; i++) {
@@ -7635,7 +7645,6 @@ hui.ui.DropDown.prototype = {
 			}
 		};
 	},
-	/** @private */
 	_updateUI : function() {
 		var selected = this.items[this.index];
 		if (selected) {
@@ -7660,7 +7669,6 @@ hui.ui.DropDown.prototype = {
 			}
 		};
 	},
-	/** @private */
 	_click : function(e) {
 		if (this.busy) {return}
 		hui.stop(e);
@@ -7689,7 +7697,6 @@ hui.ui.DropDown.prototype = {
 		width = Math.min(width,space);
 		hui.style.set(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
 	},
-	/** @private */
 	_keyDown : function(e) {
 		if (this.busy) {return}
 		if (this.items.length==0) {
@@ -7722,6 +7729,7 @@ hui.ui.DropDown.prototype = {
 			this.setValue(this.items[0].value);
 		}
 	},
+	/** Get the value of the selected item */
 	getValue : function() {
 		return this.value;
 	},
@@ -7730,12 +7738,15 @@ hui.ui.DropDown.prototype = {
 		this._updateIndex();
 		this._updateUI();
 	},
+	/** Set the value to null */
 	reset : function() {
 		this.setValue(null);
 	},
+	/** Get the label */
 	getLabel : function() {
 		return this.options.label;
 	},
+	/** Refresh the associated source */
 	refresh : function() {
 		if (this.options.source) {
 			this.options.source.refresh();
@@ -7776,6 +7787,7 @@ hui.ui.DropDown.prototype = {
 		this.busy = true;
 		hui.style.setOpacity(this.element,.5);
 	},
+	/** @private */
 	$sourceIsNotBusy : function() {
 		this.busy = false;
 		hui.style.setOpacity(this.element,1);
@@ -7800,7 +7812,6 @@ hui.ui.DropDown.prototype = {
 		if (!this.selector) {return}
 		this.selector.style.display='none';
 	},
-	/** @private */
 	_buildSelector : function() {
 		if (!this.dirty || !this.items) {return};
 		if (!this.selector) {
@@ -7824,7 +7835,6 @@ hui.ui.DropDown.prototype = {
 		});
 		this.dirty = false;
 	},
-	/** @private */
 	_itemClicked : function(item,index) {
 		this.index = index;
 		var changed = this.value!=this.items[index].value;
@@ -8026,23 +8036,20 @@ hui.ui.Button.create = function(options) {
 	if (!options.enabled) {
 		className+=' hui_button_disabled';
 	}
+	var text = options.text ? hui.ui.getTranslated(options.text) : null;
+	if (options.title) { // Deprecated
+		text = hui.ui.getTranslated(options.title);
+	}
 	var element = options.element = hui.build('a',{'class':className,href:'javascript://'});
-	var element2 = document.createElement('span');
-	element.appendChild(element2);
-	var element3 = document.createElement('span');
-	element2.appendChild(element3);
+	var inner = hui.build('span',{parent:hui.build('span',{parent:element})});
 	if (options.icon) {
-		var icon = hui.build('em',{'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(options.icon,16)+')'});
-		if (!options.text || options.text.length==0) {
+		var icon = hui.build('em',{parent:inner,'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(options.icon,16)+')'});
+		if (!text) {
 			hui.cls.add(icon,'hui_button_icon_notext');
 		}
-		element3.appendChild(icon);
 	}
-	if (options.text && options.text.length>0) {
-		hui.dom.addText(element3,options.text);
-	}
-	if (options.title && options.title.length>0) {
-		hui.dom.addText(element3,options.title);
+	if (text) {
+		hui.dom.addText(inner,text);
 	}
 	return new hui.ui.Button(options);
 }
@@ -8136,7 +8143,7 @@ hui.ui.Button.prototype = {
 	 * @param
 	 */
 	setText : function(text) {
-		hui.dom.setText(this.element.getElementsByTagName('span')[1], text);
+		hui.dom.setText(this.element.getElementsByTagName('span')[1], hui.ui.getTranslated(text));
 	},
 	/**
 	 * Get the data object for the button

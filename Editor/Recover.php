@@ -2,15 +2,7 @@
 /**
  * @package OnlinePublisher
  */
-require_once '../Config/Setup.php';
 require_once 'Include/Public.php';
-require_once 'Classes/Core/Request.php';
-require_once 'Classes/Interface/In2iGui.php';
-require_once 'Classes/Utilities/DatabaseUtil.php';
-require_once 'Classes/Core/InternalSession.php';
-require_once 'Classes/Core/SystemInfo.php';
-require_once 'Classes/Utilities/StringUtils.php';
-require_once 'Classes/Services/MailService.php';
 
 $error = null;
 $key = Request::getString('key');

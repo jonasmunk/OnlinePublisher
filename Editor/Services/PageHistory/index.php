@@ -29,7 +29,7 @@ $gui='
 			<left>
 				<overflow>
 				<selection name="selector" value="list">
-					<item icon="view/list" title="Oversigt" value="list"/>
+					<item icon="view/list" title="{Overview; da:Oversigt}" value="list"/>
 					<title>{Versions: da:Versioner}</title>
 					<items source="selectionSource"/>
 				</selection>

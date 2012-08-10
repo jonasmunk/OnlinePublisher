@@ -3,11 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Waterusage
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Core/Response.php';
-require_once '../../Classes/Formats/CSVWriter.php';
+require_once '../../Include/Private.php';
 
 $view = Request::getBoolean('view');
 

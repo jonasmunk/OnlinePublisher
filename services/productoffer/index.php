@@ -1,13 +1,5 @@
 <?php
-require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
-require_once('../../Editor/Classes/Objects/Product.php');
-require_once('../../Editor/Classes/Objects/Person.php');
-require_once('../../Editor/Classes/Objects/Productoffer.php');
-require_once('../../Editor/Classes/Objects/Emailaddress.php');
-require_once('../../Editor/Classes/Core/Request.php');
-require_once('../../Editor/Classes/Core/Response.php');
-require_once('../../Editor/Classes/Utilities/ValidateUtils.php');
 
 $name = Request::getString('name');
 $email = Request::getString('email');

@@ -3,13 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Public
  */
-require_once '../../Config/Setup.php';
 require_once '../../Editor/Include/Public.php';
-require_once '../../Editor/Classes/Services/FileSystemService.php';
-require_once '../../Editor/Classes/Core/Database.php';
-require_once '../../Editor/Classes/Core/Response.php';
-require_once '../../Editor/Classes/Core/Request.php';
-
 
 //$target = time()+2;
 //while (time()<$target) {}

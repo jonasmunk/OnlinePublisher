@@ -222,7 +222,7 @@ class ListWriter {
 			echo ' action="true"';
 		}
 		if (isset($options['hint'])) {
-			echo ' hint="'.StringUtils::escapeXML(StringUtils::getTranslated($options['hint'])).'"';
+			echo ' hint="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['hint'])).'"';
 		}
 		if (isset($options['size'])) {
 			echo ' size="'.StringUtils::escapeXML($options['size']).'"';

@@ -11,9 +11,9 @@ $writer = new ListWriter();
 
 $writer->startList()->
 	startHeaders()->
-		header(array('title'=>'Bruger','width'=>20))->
-		header(array('title'=>'Tidspunkt','width'=>20))->
-		header(array('title'=>'Beskrivelse'))->
+		header(array('title'=>array('User','da'=>'Bruger'),'width'=>20))->
+		header(array('title'=>array('Time','da'=>'Tidspunkt'),'width'=>20))->
+		header(array('title'=>array('Description','da'=>'Beskrivelse')))->
 		header(array('width'=>1))->
 	endHeaders();
 
