@@ -3,9 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Include/Private.php';
 
 $gui='
 <frames xmlns="uri:hui">

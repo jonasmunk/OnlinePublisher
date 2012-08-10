@@ -16,7 +16,7 @@ $writer = new ListWriter();
 
 $writer->startList()->
 	startHeaders()->
-		header(array('title'=>'Kilde','width'=>30))->
+		header(array('title'=>array('Source','da'=>'Kilde'),'width'=>30))->
 		header(array('title'=>'Destination'))->
 		header()->
 		header(array('width'=>1))->
@@ -28,7 +28,7 @@ foreach ($links as $link) {
 			startLine()->text($link->getSourceText());
 			$writer->startIcons();
 		if ($link->hasError(LinkView::$TEXT_NOT_FOUND)) {
-			$writer->icon(array('icon'=>'common/warning','hint'=>'Teksten findes ikke'));
+			$writer->icon(array('icon'=>'monochrome/warning','size'=>12,'hint'=>array('The text was not found','da'=>'Teksten findes ikke')));
 		}
 		$writer->icon(array('icon'=>'common/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editLink')))->endIcons();
 		
@@ -39,7 +39,7 @@ foreach ($links as $link) {
 			$writer->startLine(array('dimmed'=>true))->text($link->getSourceDescription())->endLine();			
 		}
 		if ($link->getSourceSubId()) {
-			$writer->startLine(array('dimmed'=>true,'minor'=>true))->text('Vises kun i afsnittet: '.$link->getSourceSubId())->endLine();			
+			$writer->startLine(array('dimmed'=>true,'minor'=>true))->text(array('Only shown in the section: '.$link->getSourceSubId(),'da'=>'Vises kun i afsnittet: '.$link->getSourceSubId()))->endLine();			
 		}
 		$writer->endCell()->
 		startCell(array('icon'=>LinkService::getTargetIcon($link)))->

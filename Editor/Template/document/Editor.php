@@ -3,15 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.Document
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Core/Database.php';
-require_once '../../Classes/Services/PartService.php';
-require_once '../../Classes/Parts/PartContext.php';
-require_once '../../Classes/Core/Request.php';
-require_once '../../Classes/Core/InternalSession.php';
-require_once '../../Classes/Core/SystemInfo.php';
-require_once '../../Classes/Templates/DocumentTemplateController.php';
+require_once '../../Include/Private.php';
 
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -73,46 +65,47 @@ if ($section==null) {
 	$gui = '
 		<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
 		<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
+		
 		<window width="400" name="linkWindow" padding="5" title="Link">
 			<formula name="linkFormula">
 				<fields labels="above">
-					<field label="Tekst">
+					<field label="{Text; da:Tekst}">
 						<text-input key="text" multiline="true"/>
 					</field>
-					<field label="Beskrivelse">
+					<field label="{Description; da:Beskrivelse}">
 						<text-input key="description"/>
 					</field>
-					<field label="Omfang">
+					<field label="{Scope; da:Rækkevidde}">
 						<radiobuttons key="scope" name="linkScope">
-							<item value="page" text="Hele siden"/>
-							<item value="part" text="Kun dette afsnit"/>
+							<item value="page" text="{Entire page; da:Hele siden}"/>
+							<item value="part" text="{Only this section; da:Kun dette afsnit}"/>
 						</radiobuttons>
 					</field>
 				</fields>
 				<space left="3" right="3" top="5">
 				<fieldset legend="Link">
 					<fields>
-						<field label="Side">
+						<field label="{Page; da:Side}">
 							<dropdown key="page" name="linkPage" source="pageSource"/>
 						</field>
-						<field label="Fil">
+						<field label="{File; da:Fil}">
 							<dropdown key="file" name="linkFile" source="fileSource"/>
 						</field>
-						<field label="Adresse">
+						<field label="{Address; da:Adresse}">
 							<text-input key="url" name="linkUrl"/>
 						</field>
-						<field label="E-post">
+						<field label="{E-mail; da:E-post}">
 							<text-input key="email" name="linkEmail"/>
 						</field>
 					</fields>
 				</fieldset>
 				</space>
 				<buttons top="5">
-					<button text="Slet" name="deleteLink">
-						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+					<button text="{Delete; da:Slet}" name="deleteLink">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
 					</button>
-					<button text="Annuller" name="cancelLink"/>
-					<button text="Opret" submit="true" highlighted="true" name="saveLink"/>
+					<button text="{Cancel; da:Annuller}" name="cancelLink"/>
+					<button text="{Create; da:Opret}" submit="true" highlighted="true" name="saveLink"/>
 				</buttons>
 			</formula>
 		</window>
@@ -122,20 +115,20 @@ if ($section==null) {
 				<rendering name="linkInfo"/>
 			</space>
 			<buttons align="center">
-				<button text="Rediger" name="editLink" highlighted="true" variant="paper" small="true"/>
-				<button text="Slet" name="deleteLinkPanel" variant="paper" small="true">
-					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+				<button text="{Edit; da:Rediger}" name="editLink" highlighted="true" variant="paper" small="true"/>
+				<button text="{Delete; da:Slet}" name="deleteLinkPanel" variant="paper" small="true">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
 				</button>
-				<button text="Besøg" name="visitLink" variant="paper" small="true"/>
+				<button text="{Visit; da:Besøg}" name="visitLink" variant="paper" small="true"/>
 				<!--
-				<button text="Kun dette afsnit" name="limitLinkToPart" variant="paper"/>
+				<button text="{Only this section; da:Kun dette afsnit}" name="limitLinkToPart" variant="paper"/>
 				-->
-				<button text="Annuller" name="cancelLinkPanel" variant="paper" small="true"/>
+				<button text="{Cancel; da:Annuller}" name="cancelLinkPanel" variant="paper" small="true"/>
 			</buttons>
 		</boundpanel>
 	
 		<menu name="linkMenu">
-			<item text="Slet" value="delete"/>
+			<item text="{Delete; da:Slet}" value="delete"/>
 		</menu>
 	
 		<menu name="columnMenu">
@@ -192,33 +185,33 @@ if ($section==null) {
 		$gui.='
 		</menu>
 
-		<window width="300" name="columnWindow" padding="5" title="Kolonne">
+		<window width="300" name="columnWindow" padding="5" title="{Column; da:Kolonne}">
 			<formula name="columnFormula">
 				<fields labels="above">
-					<field label="Bredde...">
+					<field label="{Width...; da:Bredde...}">
 						<radiobuttons key="preset" name="columnPreset">
-							<item value="dynamic" text="Efter indhold"/>
-							<item value="min" text="Mindst mulig"/>
-							<item value="max" text="Størst muligt"/>
-							<item value="specific" text="Speciel..."/>
+							<item value="dynamic" text="{Match content; da:Efter indhold}"/>
+							<item value="min" text="{Minimal; da:Mindst mulig}"/>
+							<item value="max" text="{Maximal; da:Størst muligt}"/>
+							<item value="specific" text="{Special; da:Speciel...}"/>
 						</radiobuttons>
 					</field>
-					<field label="Speciel bredde">
+					<field label="{Width; da:Bredde}">
 						<style-length-input key="width" name="columnWidth"/>
 					</field>
 				</fields>
 				<buttons top="5">
-					<button text="Slet" name="deleteColumn">
-						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+					<button text="{Delete; da:Slet}" name="deleteColumn">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
 					</button>
-					<button text="Annuller" name="cancelColumn"/>
-					<button text="Opdater" submit="true" highlighted="true" name="saveColumn"/>
+					<button text="{Cancel; da:Annuller}" name="cancelColumn"/>
+					<button text="{Update; da:Opdater}" submit="true" highlighted="true" name="saveColumn"/>
 				</buttons>
 			</formula>
 		</window>
 
 		<menu name="columnMenu">
-			<item title="Tilføj kolonne" key="addColumn"/>
+			<item title="{Add column; da:Tilføj kolonne}" key="addColumn"/>
 		</menu>
 
 

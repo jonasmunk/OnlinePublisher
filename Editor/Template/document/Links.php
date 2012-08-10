@@ -11,7 +11,7 @@ $gui='
 	<source name="linksSource" url="data/LinksList.php"/>
 	<box width="700" title="Links">
 		<toolbar>
-			<icon icon="common/close" text="Luk" name="close"/>
+			<icon icon="common/close" text="{Close;da:Luk}" name="close"/>
 		</toolbar>
 		<list name="list" source="linksSource"/>
 	</box>

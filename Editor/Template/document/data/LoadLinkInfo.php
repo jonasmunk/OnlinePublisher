@@ -18,7 +18,12 @@ if ($info = LinkService::getLinkInfo($id)) {
 		'rendering' => 
 			'<p><strong>'.$info->getTargetTitle().'</strong></p>
 			<p class="hui_rendering_dimmed">'.LinkService::translateLinkType($info->getTargetType()).'</p>'.
-			'<p style="margin-top: 5px;">'.($info->getPartId()>0 ? 'Kun indsat i dette afsnit' : 'Indsat i hele siden').'</p>'
+			'<p style="margin-top: 5px;">'.
+			( $info->getPartId()>0 ? 
+					GuiUtils::getTranslated(array('Only inserted in this section','da'=>'Kun indsat i dette afsnit')) : 
+					GuiUtils::getTranslated(array('Inserted everywhere on page','da'=>'Indsat overalt på siden'))
+			).
+			'</p>'
 	));
 } else 
 ?>

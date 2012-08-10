@@ -24,7 +24,7 @@ var linkController = {
 		});
 		linkWindow.show();
 		deleteLink.disable();
-		saveLink.setText('Opret');
+		saveLink.setText({en:'Create',da:'Opret'});
 		linkFormula.focus();
 	},
 	$click$cancelLink : function() {
@@ -73,12 +73,12 @@ var linkController = {
 	$submit$linkFormula : function(form) {
 		var values = form.getValues();
 		if (hui.isBlank(values.text)) {
-			hui.ui.showMessage({text:'Skriv den tekst hvor der skal linkes fra',duration:2000});
+			hui.ui.showMessage({text:{en:'Please fill in the text to link from',da:'Skriv den tekst hvor der skal linkes fra'},duration:2000});
 			form.focus();
 			return;
 		}
 		if (hui.isBlank(values.email) && hui.isBlank(values.url) && values.page==null && values.file==null) {
-			hui.ui.showMessage({text:'Du skal vælge et mål for linket',duration:2000});
+			hui.ui.showMessage({text:{en:'Please select the target of the link',da:'Du skal vælge et mål for linket'},duration:2000});
 			form.focus();
 			return;
 		}
@@ -102,7 +102,7 @@ var linkController = {
 		hui.ui.request({
 			url : 'data/SaveLink.php',
 			parameters : p,
-			message : {start:'Indsætter link',delay:300},
+			message : {start:{en:'Inserting link...',da:'Indsætter link...'},delay:300},
 			onSuccess : function() {
 				document.location.reload();
 			}
@@ -116,7 +116,7 @@ var linkController = {
 		hui.ui.request({
 			url : 'data/LoadLink.php',
 			parameters : {id:id},
-			message : {start:'Henter link',delay:300},
+			message : {start:{en:'Loading link...',da:'Henter link...'},delay:300},
 			onJSON : function(obj) {
 				this.linkId = obj.id;
 				if (obj.partId) {
@@ -135,7 +135,7 @@ var linkController = {
 				linkFormula.setValues(obj);
 				linkWindow.show();
 				deleteLink.enable();
-				saveLink.setText('Opdater');
+				saveLink.setText({en:'Update',da:'Opdater'});
 			}.bind(this)
 		});
 	},
@@ -202,7 +202,7 @@ var linkController = {
 		hui.ui.request({
 			url : 'data/BindLinkToPart.php',
 			parameters : {linkId:this.clickedLinkInfo.id,partId:this.clickedLinkInfo.part},
-			message : {start:'Gemmer link',delay:300},
+			message : {start:{en:'Saving link...',da:'Gemmer link...'},delay:300},
 			onSuccess : function() {
 				document.location.reload();
 			}
@@ -222,7 +222,7 @@ var linkController = {
 		hui.ui.request({
 			url : 'data/DeleteLink.php',
 			parameters : {id:id},
-			message : {start:'Sletter link',delay:300},
+			message : {start:{en:'Deleting link...',da:'Sletter link...'},delay:300},
 			onSuccess : function() {
 				document.location.reload();
 			}

@@ -9,10 +9,10 @@ hui.ui.listen({
 		if (info.data.action=='deleteLink') {
 			hui.ui.confirmOverlay({
 				element : info.node,
-				text : 'Er du sikker?',
-				okText : 'Ja, fjern',
-				cancelText : 'Nej',
-				onOk : function() {
+				text : {en:'Are you sure?',da:'Er du sikker?'},
+				okText : {en:'Yes, delete',da:'Ja, fjern'},
+				cancelText : {en:'No',da:'Nej'},
+				$ok : function() {
 					hui.ui.request({
 						url : 'data/DeleteLink.php',
 						parameters : {id:info.row.id},

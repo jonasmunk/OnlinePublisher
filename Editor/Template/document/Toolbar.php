@@ -1,9 +1,5 @@
 <?php
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Interface/In2iGui.php';
-require_once '../../Classes/Core/InternalSession.php';
-require_once '../../Classes/Services/PageService.php';
+require_once '../../Include/Private.php';
 
 $changed = PageService::isChanged(InternalSession::getPageId());
 

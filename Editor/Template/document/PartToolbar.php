@@ -3,10 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Templates.FrontPage
  */
-require_once '../../../Config/Setup.php';
-require_once '../../Include/Security.php';
-require_once '../../Classes/Services/PartService.php';
-require_once '../../Classes/Interface/In2iGui.php';
+require_once '../../Include/Private.php';
 
 // Get variables
 $partId = Request::getInt('partId');
