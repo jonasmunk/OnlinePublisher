@@ -43,9 +43,9 @@ var columnsController = {
 		hui.cls.add(node,'editor_column_highlighted');
 		hui.ui.confirmOverlay({
 			element : node,
-			text : controller.strings.get('confirm_delete_column'),
-			okText : controller.strings.get('confirm_delete_ok'),
-			cancelText : controller.strings.get('cancel'),
+			text : {da:'Vil du slette kolonnen? Det kan ikke fortrydes.', en:'Delete the column? It cannot be undone.'},
+			okText : {en:'Yes, delete',da:'Ja, slet'},
+			cancelText : {en:'No',da:'Nej'},
 			onOk : function() {
 				document.location='data/DeleteColumn.php?column='+id;
 			},
@@ -110,9 +110,9 @@ var columnsController = {
 		hui.ui.request({
 			url : 'data/UpdateColumn.php',
 			parameters : p,
-			message : {start : 'Gemmer kolonne...',delay:300},
+			message : {start : {en:'Saving column...',da:'Gemmer kolonne...'},delay:300},
 			onSuccess : function() {
-				hui.ui.showMessage({text:'Kolonnen er gemt',duration:2000,icon:'common/success'});
+				hui.ui.showMessage({text:{en:'The column is saved',da:'Kolonnen er gemt'},duration:2000,icon:'common/success'});
 				this._markToolbarChanged();
 			}.bind(this)
 		});

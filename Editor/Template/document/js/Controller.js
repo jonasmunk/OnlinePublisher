@@ -6,28 +6,7 @@ var controller = {
 	ready : false,
 	selectedText : '',
 	changed : false,
-	
-	strings : new hui.ui.Bundle({
-			cancel : { da : 'Annuller', en : 'Cancel' },
-			
-			confirm_delete_section : {
-				da:'Vil du slette afsnittet? Det kan ikke fortrydes.\n',
-				en:'Delete the section? It cannot be undone.\n'
-			},
-			confirm_delete_ok : {
-				da : 'Ja, slet',
-				en : 'Yes, delete'
-			},
-			confirm_delete_column : {
-				da:'Vil du slette kolonnen?\n\Det kan ikke fortrydes.\n',
-				en:'Delete the column?\n\nIt cannot be undone.\n'
-			},
-			confirm_delete_row : {
-				da:'Vil du slette r\u00e6kken?\n\Det kan ikke fortrydes.\n',
-				en:'Delete the row?\n\nIt cannot be undone.\n'
-			}
-	}),
-	
+		
 	$ready : function() {
 		var strings = this.strings;
 		
@@ -147,8 +126,10 @@ var controller = {
 		this.menuMode = true;
 	},
 	$hide$sectionMenu : function() {
-		var section = hui.get('section'+this.menuInfo.sectionId);
-		hui.cls.remove(section,'editor_part_highlighted');			
+		if (this.menuInfo) {
+			var section = hui.get('section'+this.menuInfo.sectionId);
+			hui.cls.remove(section,'editor_part_highlighted');
+		}
 	},
 	$hide$partMenu : function() {
 		if (this.stickyAdder) {
@@ -286,12 +267,13 @@ var controller = {
 	deleteSection : function(id) {
 		this.partControls.hide();
 		var element = hui.get('section'+id);
+		hui.log(element)
 		hui.cls.add(element,'editor_part_highlighted');
 		hui.ui.confirmOverlay({
 			element : element,
-			text : this.strings.get('confirm_delete_section'),
-			okText : this.strings.get('confirm_delete_ok'),
-			cancelText : this.strings.get('cancel'),
+			text : {da:'Vil du slette afsnittet? Det kan ikke fortrydes.',en:'Delete the section? It cannot be undone.'},
+			okText : {da : 'Ja, slet',en : 'Yes, delete'},
+			cancelText : { da : 'Annuller', en : 'Cancel' },
 			onOk : function() {
 				document.location = 'data/DeleteSection.php?section='+id;
 			}.bind(this),
@@ -299,6 +281,7 @@ var controller = {
 				hui.cls.remove(element,'editor_part_highlighted');
 			}
 		})
+		this.menuInfo = null;
 	},
 	showNewPartMenu : function(info) {
 		this.lastSectionMode = true;
@@ -353,9 +336,9 @@ var controller = {
 		hui.cls.add(node,'editor_row_highlighted');
 		hui.ui.confirmOverlay({
 			element : node,
-			text : controller.strings.get('confirm_delete_row'),
-			okText : controller.strings.get('confirm_delete_ok'),
-			cancelText : controller.strings.get('cancel'),
+			text : {da:'Vil du slette r\u00e6kken? Det kan ikke fortrydes.',en:'Delete the row? It cannot be undone.'},
+			okText : {da : 'Ja, slet',en : 'Yes, delete'},
+			cancelText : { da : 'Annuller', en : 'Cancel' },
 			onOk : function() {
 				document.location='data/DeleteRow.php?row='+id;
 			},
