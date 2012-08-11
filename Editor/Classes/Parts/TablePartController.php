@@ -43,15 +43,15 @@ class TablePartController extends PartController
 	
 	function editorGui($part,$context) {
 		$gui='
-		<window title="Kilde" name="sourceWindow" width="500">
+		<window title="{Source; da:Kilde}" name="sourceWindow" width="500">
 			<formula name="sourceFormula">
 				<code-input key="source"/>
 			</formula>
 		</window>
 
-		<window title="Egenskaber" name="propertiesWindow" icon="monochrome/info" width="300" padding="10">
+		<window title="{Properties; da:Egenskaber}" name="propertiesWindow" icon="monochrome/info" width="300" padding="10">
 			<formula name="propertiesFormula">
-				<fieldset legend="Tabel">
+				<fieldset legend="{Table; da:Tabel}">
 					<fields labels="before">
 						<!--
 						<field label="Variant">
@@ -61,36 +61,36 @@ class TablePartController extends PartController
 							</dropdown>
 						</field>
 						-->
-						<field label="Hoved">
+						<field label="{Head; da:Hoved}">
 							<dropdown key="head" name="tableHead">
-								<item text="Ingen" value="0"/>
-								<item text="1 række" value="1"/>
-								<item text="2 rækker" value="2"/>
-								<item text="3 rækker" value="3"/>
-								<item text="4 rækker" value="4"/>
-								<item text="5 rækker" value="5"/>
+								<item text="{None; da:Ingen}" value="0"/>
+								<item text="{1 row; da:1 række}" value="1"/>
+								<item text="{2 rows; da:2 rækker}" value="2"/>
+								<item text="{3 rows; da:3 rækker}" value="3"/>
+								<item text="{4 rows; da:4 rækker}" value="4"/>
+								<item text="{5 rows; da:5 rækker}" value="5"/>
 							</dropdown>
 						</field>
-						<field label="Bund">
+						<field label="{Footer; da:Bund}">
 							<dropdown key="foot" name="tableFoot">
-								<item text="Ingen" value="0"/>
-								<item text="1 række" value="1"/>
-								<item text="2 rækker" value="2"/>
-								<item text="3 rækker" value="3"/>
-								<item text="4 rækker" value="4"/>
-								<item text="5 rækker" value="5"/>
+								<item text="{None; da:Ingen}" value="0"/>
+								<item text="{1 row; da:1 række}" value="1"/>
+								<item text="{2 rows; da:2 rækker}" value="2"/>
+								<item text="{3 rows; da:3 rækker}" value="3"/>
+								<item text="{4 rows; da:4 rækker}" value="4"/>
+								<item text="{5 rows; da:5 rækker}" value="5"/>
 							</dropdown>
 						</field>
-						<field label="Width">
+						<field label="{Width; da: Bredde}">
 							<style-length-input key="width"/>
 						</field>
 					</fields>
 				</fieldset>
 				<!--
 				<space height="10"/>
-				<fieldset legend="Celle">
+				<fieldset legend="{Cell; da:Celle}">
 					<fields labels="before">
-						<field label="Baggrund">
+						<field label="{Background; da:Baggrund}">
 							<text-input key="cellBackground"/>
 						</field>
 					</fields>
@@ -100,8 +100,16 @@ class TablePartController extends PartController
 		</window>
 		
 		<menu name="tableMenu">
-			<item text="Remove row" value="removeRow"/>
+			<item text="{Delete row; da:Slet række}" value="deleteRow"/>
+			<item text="{Move up; da:Flyt op}" value="moveUp"/>
+			<item text="{Move down; da:Flyt ned}" value="moveDown"/>
+			<divider/>
+			<item text="{Delete column; da:Slet kolonne}" value="deleteRow"/>
+			<item text="{Move left; da:Flyt til venstre}" value="moveLeft"/>
+			<item text="{Move right; da:Flyt til højre}" value="moveRight"/>
 		</menu>
+
+
 		';
 		return In2iGui::renderFragment($gui);
 	}
@@ -109,12 +117,12 @@ class TablePartController extends PartController
 	function getToolbars() {
 		return array(
 			'Tabel' => '
-				<icon icon="common/clean" text="Ryd op" name="clean"/>
+				<icon icon="common/clean" text="{Clean; da:Ryd op}" name="clean"/>
 				<icon icon="common/info" text="Info" name="showInfo"/>
-				<icon icon="file/text" text="Kilde" overlay="edit" name="editSource"/>
+				<icon icon="file/text" text="{Source; da:Kilde}" overlay="edit" name="editSource"/>
 				<divider/>
-				<icon icon="table/row" text="Ny række" overlay="new" name="addRow"/>
-				<icon icon="table/column" text="Ny kolonne" overlay="new" name="addColumn"/>
+				<icon icon="table/row" text="{New row; da:Ny række}" overlay="new" name="addRow"/>
+				<icon icon="table/column" text="{New column; da:Ny kolonne}" overlay="new" name="addColumn"/>
 				'
 			);
 	}

@@ -192,12 +192,12 @@ class TextPartController extends PartController
 	
 	function getToolbars() {
 		return array(
-			'Tekst' =>
+			GuiUtils::getTranslated(array('Text','da'=>'Tekst')) =>
 			'
-			<field label="St&#248;rrelse">
-				<style-length-input name="fontSize"/>
+			<field label="{Size; da:St'."\xf8".'rrelse}">
+				<style-length-input name="fontSize" width="90"/>
 			</field>
-			<field label="Placering">
+			<field label="{Justify; da:Justering}">
 				<segmented name="textAlign" allow-null="true">
 					<item icon="style/text_align_left" value="left"/>
 					<item icon="style/text_align_center" value="center"/>
@@ -206,24 +206,24 @@ class TextPartController extends PartController
 				</segmented>
 			</field>
 			<divider/>
-			<field label="Skrift">
-				<dropdown name="fontFamily" width="180">
+			<field label="{Font; da:Skrift}">
+				<dropdown name="fontFamily" width="120">
 					'.$this->getFontItems().'
 				</dropdown>
 			</field>
-			<field label="Linjeh&#248;jde">
-				<style-length-input name="lineHeight"/>
+			<field label="{Line height; da:Linjeh'."\xf8".'jde}">
+				<style-length-input name="lineHeight" width="90"/>
 			</field>
-			<field label="Farve">
+			<field label="{Color; da:Farve}">
 				<color-input name="color"/>
 			</field>
-			<field label="Fed">
+			<field label="{Weight; da:Fed}">
 				<segmented name="fontWeight" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_bold" value="bold"/>
 				</segmented>
 			</field>
-			<field label="Kursiv">
+			<field label="{Italic; da:Kursiv}">
 				<segmented name="fontStyle" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_italic" value="italic"/>
@@ -231,18 +231,18 @@ class TextPartController extends PartController
 			</field>
 			',
 			
-		'Avanceret' =>
+		GuiUtils::getTranslated(array('Advanced','da'=>'Avanceret')) =>
 			'
-			<field label="Ord-mellemrum">
-				<style-length-input name="wordSpacing"/>
+			<field label="{Word spacing; da:Ord-mellemrum}">
+				<style-length-input name="wordSpacing" width="90"/>
 			</field>
-			<field label="Tegn-mellemrum">
-				<style-length-input name="letterSpacing"/>
+			<field label="{Letter spacing; da:Tegn-mellemrum}">
+				<style-length-input name="letterSpacing" width="90"/>
 			</field>
-			<field label="Indrykning">
-				<style-length-input name="textIndent"/>
+			<field label="{Indentation; da:Indrykning}">
+				<style-length-input name="textIndent" width="90"/>
 			</field>
-			<field label="Bogstaver">
+			<field label="{Letters; da:Bogstaver}">
 				<segmented name="textTransform" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_transform_capitalize" value="capitalize"/>
@@ -256,7 +256,7 @@ class TextPartController extends PartController
 					<item icon="style/font_variant_smallcaps" value="small-caps"/>
 				</segmented>
 			</field>
-			<field label="Streg">
+			<field label="{Stroke; da:Streg}">
 				<segmented name="textDecoration" allow-null="true">
 					<item icon="style/text_normal" value="none"/>
 					<item icon="style/text_decoration_underline" value="underline"/>
@@ -266,10 +266,10 @@ class TextPartController extends PartController
 			</field>
 			',
 			
-		'Billede' =>
+		GuiUtils::getTranslated(array('Image','da'=>'Billede')) =>
 			'
-			<icon text="Vælg billede" icon="common/image" overlay="search" name="chooseImage"/>
-			<field label="Billede">
+			<icon text="{Select image; da:Vælg billede}" icon="common/image" overlay="search" name="chooseImage"/>
+			<field label="{Image; da:Billede}">
 				<dropdown name="imageId" width="180">
 					<item value="" title=""/>
 					'.GuiUtils::buildObjectItems('image').'
@@ -278,18 +278,18 @@ class TextPartController extends PartController
 			<divider/>
 			<grid left="5" right="5">
 				<row>
-					<cell label="Bredde:" width="80">
+					<cell label="{Width; da:Bredde}:" width="80">
 						<number-input adaptive="true" allow-null="true" name="imageWidth"/>
 					</cell>
 				</row>
 				<row>
-					<cell label="H&#248;jde:" width="80">
+					<cell label="{Height; da:H'."\xf8".'jde}:" width="80">
 						<number-input adaptive="true" allow-null="true" name="imageHeight"/>
 					</cell>
 				</row>
 			</grid>
 			<divider/>
-			<field label="Placering">
+			<field label="{Placement; da:Placering}">
 				<segmented name="imageFloat">
 					<item icon="style/float_left" value="left"/>
 					<item icon="style/float_right" value="right"/>

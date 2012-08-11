@@ -6079,7 +6079,7 @@ hui.ui.Window.create = function(options) {
 		if (options.icon) {
 			html+='<span class="hui_window_icon" style="background-image: url('+hui.ui.getIconUrl(options.icon,16)+')"></span>';
 		}
-	html+='<span class="hui_window_title">'+options.title+'</span></div></div></div>'+
+	html+='<span class="hui_window_title">'+hui.ui.getTranslated(options.title)+'</span></div></div></div>'+
 		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
 		(options.width ? 'width:'+options.width+'px;':'')+
 		(options.padding ? 'padding:'+options.padding+'px;':'')+

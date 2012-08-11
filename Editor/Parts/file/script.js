@@ -5,7 +5,7 @@ var partController = {
 	showFinder : function() {
 		if (!this.finder) {
 			this.finder = hui.ui.Finder.create({
-				title : 'Vælg fil',
+				title : {en:'Select file',da:'Vælg fil'},
 				list : {url : '../../Services/Finder/FilesList.php'},
 				selection : {value : 'all', parameter : 'group', url : '../../Services/Finder/FilesSelection.php'},
 				search : {parameter : 'query'}

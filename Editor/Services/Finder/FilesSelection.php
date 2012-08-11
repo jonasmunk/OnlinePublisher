@@ -11,12 +11,12 @@ $writer->startItems();
 
 $writer->item(array(
 	'value' => 'all',
-	'title' => 'Alle',
+	'title' => array('All','da'=>'Alle'),
 	'icon' => 'common/files',
 	'kind' => 'all'
 ));
 
-$writer->title('Grupper');
+$writer->title(array('Groups','da'=>'Grupper'));
 
 $groups = FileService::getGroupCounts();
 

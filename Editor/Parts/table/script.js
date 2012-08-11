@@ -31,19 +31,7 @@ var partController = {
 			this.selectedCell = td;
 			td.style.border='1px solid red';
 		
-			if (!this.menu) {
-				this.menu = hui.ui.Menu.create({name:'tableMenu'});
-				this.menu.addItems([
-					{title:'Slet række',value:'deleteRow'},
-					{title:'Flyt op',value:'moveUp'},
-					{title:'Flyt ned',value:'moveDown'},
-					null,
-					{title:'Slet kolonne',value:'deleteColumn'},
-					{title:'Flyt til venstre',value:'moveLeft'},
-					{title:'Flyt til højre',value:'moveRight'}
-				]);
-			}
-			this.menu.showAtPointer(e);
+			tableMenu.showAtPointer(e);
 		}
 	},
 	$hide$tableMenu : function() {

@@ -70,27 +70,27 @@ class ImagegalleryPartController extends PartController
 		return array(
 			'Billedgalleri' =>
 				'<script source="../../Parts/imagegallery/toolbar.js"/>
-				<field label="Billedgruppe">
+				<field label="{Image group; da:Billedgruppe}">
 					<dropdown width="200" name="group">
 					'.GuiUtils::buildObjectItems('imagegroup').'
 					</dropdown>
 				</field>
-				<field label="H&#248;jde">
+				<field label="{Height; da:Højde}">
 					<number-input name="height"/>
 				</field>
 				<divider/>
 				<field label="Variant">
 					<dropdown name="variant">
-						<item value="floating" title="Flydende"/>
-						<item value="changing" title="Skiftende"/>
+						<item value="floating" title="{Floating; da:Flydende}"/>
+						<item value="changing" title="{Shifting; da:Skiftende}"/>
 					</dropdown>
 				</field>
 				<grid>
 					<row>
-						<cell right="5"><checkbox name="showTitle"/><label>Vis titel</label></cell>
+						<cell right="5"><checkbox name="showTitle"/><label>{Show title; da:Vis titel}</label></cell>
 					</row>
 					<row>
-						<cell right="5"><checkbox name="framed"/><label>Indrammet</label></cell>
+						<cell right="5"><checkbox name="framed"/><label>{Framed; da:Indrammet}</label></cell>
 					</row>
 				</grid>'
 		);

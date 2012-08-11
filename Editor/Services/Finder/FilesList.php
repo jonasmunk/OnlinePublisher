@@ -26,7 +26,7 @@ $writer->startList()->
 	sort($sort,$direction)->
 	window(array('total'=>$result->getTotal(),'size'=>$result->getWindowSize(),'page'=>$result->getWindowPage()))->
 	startHeaders()->
-		header(array('title'=>'Titel','width'=>30,'key'=>'title','sortable'=>true))->
+		header(array('title'=>array('Title','da'=>'Titel'),'width'=>30,'key'=>'title','sortable'=>true))->
 	endHeaders();
 	foreach ($objects as $object) {
 		$writer->startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()))->

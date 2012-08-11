@@ -165,7 +165,7 @@ class PersonPartController extends PartController
 	function getToolbars() {
 		return array('Person' => '
 			<script source="../../Parts/person/toolbar.js"/>
-			<field label="Placering">
+			<field label="{Alignment; da:Placering}">
 				<segmented name="alignment" allow-null="true">
 					<item icon="style/align_left" value="left"/>
 					<item icon="style/align_center" value="center"/>
@@ -175,45 +175,45 @@ class PersonPartController extends PartController
 			<divider/>
 			<grid>
 				<row>
-					<cell right="5"><checkbox name="showFirstName"/><label>Fornavn</label></cell>
-					<cell right="5"><checkbox name="showMiddleName"/><label>Mellemnavn</label></cell>
-					<cell right="5"><checkbox name="showSurname"/><label>Efternavn</label></cell>
+					<cell right="5"><checkbox name="showFirstName"/><label>{First name;da:Fornavn}</label></cell>
+					<cell right="5"><checkbox name="showMiddleName"/><label>{Middle name; da:Mellemnavn}</label></cell>
+					<cell right="5"><checkbox name="showSurname"/><label>{Last name; da:Efternavn}</label></cell>
 				</row>
 				<row>
-					<cell right="5"><checkbox name="showInitials"/><label>Initialer</label></cell>
-					<cell right="5"><checkbox name="showNickname"/><label>Kaldenavn</label></cell>
-					<cell right="5"><checkbox name="showSex"/><label>Koen</label></cell>
-				</row>
-			</grid>
-			<divider/>
-			<grid>
-				<row>
-					<cell right="5"><checkbox name="showImage"/><label>Billede</label></cell>
-				</row>
-				<row>
-					<cell right="5"><checkbox name="showWebaddress"/><label>Webadresse</label></cell>
+					<cell right="5"><checkbox name="showInitials"/><label>{Initials; da:Initialer}</label></cell>
+					<cell right="5"><checkbox name="showNickname"/><label>{Call name; da:Kaldenavn}</label></cell>
+					<cell right="5"><checkbox name="showSex"/><label>{Gender; da:Køn}</label></cell>
 				</row>
 			</grid>
 			<divider/>
 			<grid>
 				<row>
-					<cell right="5"><checkbox name="showStreetname"/><label>Gade</label></cell>
-					<cell right="5"><checkbox name="showCity"/><label>By</label></cell>
+					<cell right="5"><checkbox name="showImage"/><label>{Image; da:Billede}</label></cell>
 				</row>
 				<row>
-					<cell right="5"><checkbox name="showZipcode"/><label>Postnummer</label></cell>
-					<cell right="5"><checkbox name="showCountry"/><label>Land</label></cell>
+					<cell right="5"><checkbox name="showWebaddress"/><label>{Web address; da:Webadresse}</label></cell>
 				</row>
 			</grid>
 			<divider/>
 			<grid>
 				<row>
-					<cell right="5"><checkbox name="showEmailPrivate"/><label>Email (privat)</label></cell>
-					<cell right="5"><checkbox name="showPhonePrivate"/><label>Telefon (privat)</label></cell>
+					<cell right="5"><checkbox name="showStreetname"/><label>{Streen; da:Gade}</label></cell>
+					<cell right="5"><checkbox name="showCity"/><label>{City; da:By}</label></cell>
 				</row>
 				<row>
-					<cell right="5"><checkbox name="showEmailJob"/><label>Email (job)</label></cell>
-					<cell right="5"><checkbox name="showPhoneJob"/><label>Telefon (job)</label></cell>
+					<cell right="5"><checkbox name="showZipcode"/><label>{Postal code; da:Postnummer}</label></cell>
+					<cell right="5"><checkbox name="showCountry"/><label>{Country; da:Land}</label></cell>
+				</row>
+			</grid>
+			<divider/>
+			<grid>
+				<row>
+					<cell right="5"><checkbox name="showEmailPrivate"/><label>{E-mail (private); da:E-post (privat)}</label></cell>
+					<cell right="5"><checkbox name="showPhonePrivate"/><label>{Phone (private); da:Telefon (privat)}</label></cell>
+				</row>
+				<row>
+					<cell right="5"><checkbox name="showEmailJob"/><label>{E-mail (work); da:E-post (job)}</label></cell>
+					<cell right="5"><checkbox name="showPhoneJob"/><label>{Phone (work); da:Telefon (job)}</label></cell>
 				</row>
 			</grid>
 		');

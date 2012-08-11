@@ -92,7 +92,7 @@ var baseController = {
 	
 	$select$list : function() {
 		var row = list.getFirstSelection();
-		if (row.kind=='page') {
+		if (row && row.kind=='page') {
 			dock.setUrl('Services/Preview/?id='+row.id);
 		}
 	},

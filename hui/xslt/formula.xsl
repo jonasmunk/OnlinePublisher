@@ -207,6 +207,9 @@
 -->
 <xsl:template name="gui:number" match="gui:number-input">
 	<span id="{generate-id()}">
+		<xsl:if test="@width">
+			<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
+		</xsl:if>
 		<xsl:attribute name="class">
 			<xsl:text>hui_numberfield</xsl:text>
 			<xsl:if test="@adaptive='true'"><xsl:text> hui_numberfield_adaptive</xsl:text></xsl:if>
@@ -239,7 +242,13 @@
 <style-length-input name="«text»" key="«text»" value="«css-length»"/>
 -->
 <xsl:template name="gui:style-length" match="gui:style-length-input">
-	<span class="hui_style_length hui_numberfield" id="{generate-id()}">
+	<span id="{generate-id()}">
+		<xsl:if test="@width">
+			<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
+		</xsl:if>
+		<xsl:attribute name="class">
+			<xsl:text>hui_style_length hui_numberfield</xsl:text>
+		</xsl:attribute>
 		<span><span><input type="text" value="{@value}"/><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
 	</span>
 	<script type="text/javascript">

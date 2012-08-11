@@ -168,9 +168,9 @@ class ListingPartController extends PartController
 	
 	function getToolbars() {
 		return array(
-			'Punktopstilling' =>
+			GuiUtils::getTranslated(array('Bullet list','da'=>'Punktopstilling')) =>
 			'
-			<field label="Symbol">
+			<field label="{Bullet; da:Symbol}">
 				<segmented name="listStyle">
 					<item icon="style/list-style-disc" value="disc"/>
 					<item icon="style/list-style-square" value="square"/>
@@ -182,10 +182,10 @@ class ListingPartController extends PartController
 					<item icon="style/list-style-upper-roman" value="upper-roman"/>
 				</segmented>
 			</field>
-			<field label="St&#248;rrelse">
-				<style-length-input name="fontSize"/>
+			<field label="{Size; da:Størrelse}">
+				<style-length-input name="fontSize" width="90"/>
 			</field>
-			<field label="Placering">
+			<field label="{Justify; da:Placering}">
 				<segmented name="textAlign" allow-null="true">
 					<item icon="style/text_align_left" value="left"/>
 					<item icon="style/text_align_center" value="center"/>
@@ -194,24 +194,24 @@ class ListingPartController extends PartController
 				</segmented>
 			</field>
 			<divider/>
-			<field label="Skrift">
-				<dropdown name="fontFamily" width="180">
+			<field label="{Font; da:Skrift}">
+				<dropdown name="fontFamily" width="120">
 					'.$this->getFontItems().'
 				</dropdown>
 			</field>
-			<field label="Linjeh&#248;jde">
-				<style-length-input name="lineHeight"/>
+			<field label="{Line-height; da:Linjehøjde}">
+				<style-length-input name="lineHeight" width="90"/>
 			</field>
-			<field label="Farve">
+			<field label="{Font; da:Farve}">
 				<text-input name="color" width="60"/>
 			</field>
-			<field label="Fed">
+			<field label="{Weight; da:Fed}">
 				<segmented name="fontWeight" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_bold" value="bold"/>
 				</segmented>
 			</field>
-			<field label="Kursiv">
+			<field label="{Italic; da:Kursiv}">
 				<segmented name="fontStyle" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_italic" value="italic"/>
@@ -219,18 +219,18 @@ class ListingPartController extends PartController
 			</field>
 			',
 			
-		'Avanceret' =>
+		GuiUtils::getTranslated(array('Advanced','da'=>'Avanceret')) =>
 			'
-			<field label="Ord-mellemrum">
-				<style-length-input name="wordSpacing"/>
+			<field label="{Word spacing; da:Ord-mellemrum}">
+				<style-length-input name="wordSpacing" width="90"/>
 			</field>
-			<field label="Tegn-mellemrum">
-				<style-length-input name="letterSpacing"/>
+			<field label="{Letter spacing; da:Tegn-mellemrum}">
+				<style-length-input name="letterSpacing" width="90"/>
 			</field>
-			<field label="Indrykning">
-				<style-length-input name="textIndent"/>
+			<field label="{Indentation; da:Indrykning}">
+				<style-length-input name="textIndent" width="90"/>
 			</field>
-			<field label="Bogstaver">
+			<field label="{Letters; da:Bogstaver}">
 				<segmented name="textTransform" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_transform_capitalize" value="capitalize"/>
@@ -244,7 +244,7 @@ class ListingPartController extends PartController
 					<item icon="style/font_variant_smallcaps" value="small-caps"/>
 				</segmented>
 			</field>
-			<field label="Streg">
+			<field label="{Stroke; da:Streg}">
 				<segmented name="textDecoration" allow-null="true">
 					<item icon="style/text_normal" value="none"/>
 					<item icon="style/text_decoration_underline" value="underline"/>

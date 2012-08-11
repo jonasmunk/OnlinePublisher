@@ -339,9 +339,17 @@ em.hui_field_placeholder
 
 /******* Special lenght for style *******/
 
-span.hui_style_length input
+span.hui_style_length
 {
-	width: 50px;
+	width: 120px;
+}
+
+body span.hui_style_length input
+{
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+	margin-left: -3px;
 }
 
 /************************************** Buttons *********************************/

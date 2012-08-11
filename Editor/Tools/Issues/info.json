@@ -1,6 +1,6 @@
 {
 	"key" : "Issues",
-	"icon" : "common/folder",
+	"icon" : "application/inbox",
 	"name" : {"da" : "Opgaver", "en" : "Issues"},
 	"description" : {"da" : "Opgaver", "en" : "Issues"},
 	"category" : "analyse",

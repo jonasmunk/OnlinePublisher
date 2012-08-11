@@ -197,10 +197,10 @@ class PartController
 	
 	function getFrameOptions() {
 		return '
-			<item title="Ingen" value=""/>
-			<item title="Let" value="light"/>
+			<item title="{None; da:Ingen}" value=""/>
+			<item title="{Light; da:Let}" value="light"/>
 			<item title="Elegant" value="elegant"/>
-			<item title="Skygge" value="shadow_slant"/>';
+			<item title="{Shaddow; da:Skygge}" value="shadow_slant"/>';
 	}
 	
 	function getFontItems() {

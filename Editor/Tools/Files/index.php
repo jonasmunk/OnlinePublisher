@@ -46,7 +46,7 @@ $gui='
 					<item icon="common/files" title="{All; da:Alle}" value="all"/>
 					<item icon="common/time" title="{Latest 24 hours; da:Seneste døgn}" value="latest"/>
 					<items source="groupSource" name="groupSelection" title="{Groups; da:Grupper}"/>
-					<items source="typesSource" name="typeSelection" title="{Type; da:Typer}"/>
+					<items source="typesSource" name="typeSelection" title="{Types; da:Typer}"/>
 				</selection>
 				</overflow>
 			</left>

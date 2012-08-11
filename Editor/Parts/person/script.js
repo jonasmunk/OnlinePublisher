@@ -4,7 +4,7 @@ var partController = {
 	},
 	buildWindow : function() {
 		var form = document.forms.PartForm,
-			win = hui.ui.Window.create({title:'Vælg person',width:400,close:false}),
+			win = hui.ui.Window.create({title:{en:'Select person',da:'Vælg person'},width:400,close:false}),
 			toolbar = hui.ui.Toolbar.create({labels:false}),
 			searchField = hui.ui.SearchField.create({name:'search',adaptive:true}),
 			list = hui.ui.List.create({name:'list',maxHeight:300});

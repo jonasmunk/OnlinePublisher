@@ -31,10 +31,10 @@ $gui='
 			foreach ($part->getToolbars() as $title => $body) {
 				$gui.='<tab title="'.$title.'" background="light">
 				<toolbar fixed-height="true">
-					<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
-					<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
-					<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()">
-						<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
+					<icon icon="common/stop" title="{Cancel; da:Annuller}" click="partToolbar.cancel()"/>
+					<icon icon="common/save" title="{Save; da:Gem}" click="partToolbar.save()"/>
+					<icon icon="common/delete" title="{Delete; da:Slet}" click="partToolbar.deletePart()">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 					</icon>
 					<divider/>'.$body.
 				'</toolbar>
@@ -42,31 +42,31 @@ $gui='
 			}
 		}
 		$gui.='
-		<tab title="Afstande" background="light">
+		<tab title="{Positioning; da:Afstande}" background="light">
 			<toolbar fixed-height="true">
-				<icon icon="common/stop" title="Annuller" click="partToolbar.cancel()"/>
-				<icon icon="common/save" title="Gem" click="partToolbar.save()"/>
-				<icon icon="common/delete" title="Slet" click="partToolbar.deletePart()">
-					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Annuller"/>
+				<icon icon="common/stop" title="{Cancel; da:Annuller}" click="partToolbar.cancel()"/>
+				<icon icon="common/save" title="{Save; da:Gem}" click="partToolbar.save()"/>
+				<icon icon="common/delete" title="{Delete; da:Slet}" click="partToolbar.deletePart()">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 				</icon>
 				<divider/>
-				<field label="Venstre">
-					<style-length-input name="marginLeft"/>
+				<field label="{Left; da:Venstre}">
+					<style-length-input name="marginLeft" width="90"/>
 				</field>
-				<field label="H&#248;jre">
-					<style-length-input name="marginRight"/>
+				<field label="{Right; da:H'."\xf8".'jre}">
+					<style-length-input name="marginRight" width="90"/>
 				</field>
-				<field label="Top">
-					<style-length-input name="marginTop"/>
+				<field label="{Top; da:Top}">
+					<style-length-input name="marginTop" width="90"/>
 				</field>
-				<field label="Bund">
-					<style-length-input name="marginBottom"/>
+				<field label="{Bottom; da:Bund}">
+					<style-length-input name="marginBottom" width="90"/>
 				</field>
 				<divider/>
-				<field label="Bredde">
-					<style-length-input name="sectionWidth"/>
+				<field label="{Width; da:Bredde}">
+					<style-length-input name="sectionWidth" width="90"/>
 				</field>
-				<field label="Tekstoml&#248;b">
+				<field label="{Wrapping; da:Tekstoml'."\xf8".'b}">
 					<segmented name="sectionFloat" allow-null="true">
 						<item icon="style/float_none" value=""/>
 						<item icon="style/float_left" value="left"/>

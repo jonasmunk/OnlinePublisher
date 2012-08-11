@@ -134,9 +134,9 @@ class HeaderPartController extends PartController
 		
 	function getToolbars() {
 		return array(
-			'Overskrift' =>
+			GuiUtils::getTranslated(array('Header','da'=>'Overskrift')) =>
 			'
-			<field label="Niveau">
+			<field label="{Level; da:Niveau}">
 				<segmented name="level">
 					<item text="1" value="1"/>
 					<item text="2" value="2"/>
@@ -146,10 +146,10 @@ class HeaderPartController extends PartController
 					<item text="6" value="6"/>
 				</segmented>
 			</field>
-			<field label="St&#248;rrelse">
-				<style-length-input name="fontSize"/>
+			<field label="{Size; da:St'."\xf8".'rrelse}">
+				<style-length-input name="fontSize" width="90"/>
 			</field>
-			<field label="Placering">
+			<field label="{Alignment; da:Justering}">
 				<segmented name="textAlign" allow-null="true">
 					<item icon="style/text_align_left" value="left"/>
 					<item icon="style/text_align_center" value="center"/>
@@ -158,42 +158,42 @@ class HeaderPartController extends PartController
 				</segmented>
 			</field>
 			<divider/>
-			<field label="Skrift">
-				<dropdown name="fontFamily" width="180">
+			<field label="{Font; da:Skrift}">
+				<dropdown name="fontFamily" width="120">
 					'.$this->getFontItems().'
 				</dropdown>
 			</field>
-			<field label="Linjeh&#248;jde">
-				<style-length-input name="lineHeight"/>
+			<field label="{Line height; da:Linjeh'."\xf8".'jde}">
+				<style-length-input name="lineHeight" width="90"/>
 			</field>
-			<field label="Farve">
+			<field label="{Color; da:Farve}">
 				<color-input name="color"/>
 			</field>
-			<field label="Fed">
+			<field label="{Weight; da:Fed}">
 				<segmented name="fontWeight" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_bold" value="bold"/>
 				</segmented>
 			</field>
-			<field label="Kursiv">
+			<field label="{Italic; da:Kursiv}">
 				<segmented name="fontStyle" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_italic" value="italic"/>
 				</segmented>
 			</field>
 			',
-		'Avanceret' =>
+		GuiUtils::getTranslated(array('Advanced','da'=>'Avanceret')) =>
 			'
-			<field label="Ord-mellemrum">
-				<style-length-input name="wordSpacing"/>
+			<field label="{Word spacing; da:Ord-mellemrum}">
+				<style-length-input name="wordSpacing" width="90"/>
 			</field>
-			<field label="Tegn-mellemrum">
-				<style-length-input name="letterSpacing"/>
+			<field label="{Letter spacing; da:Tegn-mellemrum}">
+				<style-length-input name="letterSpacing" width="90"/>
 			</field>
-			<field label="Indrykning">
-				<style-length-input name="textIndent"/>
+			<field label="{Indentation; da:Indrykning}">
+				<style-length-input name="textIndent" width="90"/>
 			</field>
-			<field label="Bogstaver">
+			<field label="{Letters; da:Bogstaver}">
 				<segmented name="textTransform" allow-null="true">
 					<item icon="style/text_normal" value="normal"/>
 					<item icon="style/text_transform_capitalize" value="capitalize"/>
@@ -207,7 +207,7 @@ class HeaderPartController extends PartController
 					<item icon="style/font_variant_smallcaps" value="small-caps"/>
 				</segmented>
 			</field>
-			<field label="Streg">
+			<field label="{Stroke; da:Streg}">
 				<segmented name="textDecoration" allow-null="true">
 					<item icon="style/text_normal" value="none"/>
 					<item icon="style/text_decoration_underline" value="underline"/>
