@@ -135,8 +135,8 @@ class MailinglistPartController extends PartController
 
 	function getToolbars() {
 		return array(
-			'Postliste' => '
-				<field label="Postlister">
+			GuiUtils::getTranslated(array('Mailing list','da'=>'Postliste')) => '
+				<field label="{Mailing lists; da:Postlister}">
 					<checkboxes name="lists">
 					'.GuiUtils::buildObjectItems('mailinglist').'
 					</checkboxes>

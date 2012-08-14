@@ -25,6 +25,14 @@ class PageService {
 		return null;
 	}
 	
+	function getLanguage($id) {
+		$sql = "select language from page where id=".Database::int($id);
+		if ($row = Database::selectFirst($sql)) {
+			return strtolower($row['language']);
+		}
+		return null;
+	}
+	
 	function getLanguageCounts() {
 		$sql="select language,count(id) as count from page group by language order by language";
 		return Database::selectAll($sql);

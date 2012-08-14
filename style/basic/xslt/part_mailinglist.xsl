@@ -13,19 +13,19 @@
 	
 	<xsl:template match="ml:mailinglist/ml:subscribe">
 		<xsl:variable name="lang_title"><xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">Subscribe to newsletter</xsl:when>
+			<xsl:when test="$language='en'">Subscribe to newsletter</xsl:when>
 			<xsl:otherwise>Tilmeld nyhedsbrev</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<xsl:variable name="lang_success"><xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">You have now subscribed to the newsletter</xsl:when>
+			<xsl:when test="$language='en'">You have now subscribed to the newsletter</xsl:when>
 			<xsl:otherwise>Du er nu tilmeldt postlisten</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<xsl:variable name="lang_name"><xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">Name</xsl:when>
+			<xsl:when test="$language='en'">Name</xsl:when>
 			<xsl:otherwise>Navn</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<xsl:variable name="lang_subscribe"><xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">Subscribe</xsl:when>
+			<xsl:when test="$language='en'">Subscribe</xsl:when>
 			<xsl:otherwise>Tilmeld</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<xsl:copy-of select="child::*|child::text()"/>
@@ -89,15 +89,15 @@
 	
 	<xsl:template match="ml:mailinglist/ml:unsubscribe">
 		<xsl:variable name="lang_title"><xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">Unsubscribe from newsletter</xsl:when>
+			<xsl:when test="$language='en'">Unsubscribe from newsletter</xsl:when>
 			<xsl:otherwise>Frameld nyhedsbrev</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<xsl:variable name="lang_success"><xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">You have now unsubscribed from the newsletter</xsl:when>
+			<xsl:when test="$language='en'">You have now unsubscribed from the newsletter</xsl:when>
 			<xsl:otherwise>Du er nu frameldt postlisten</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<xsl:variable name="lang_unsubscribe"><xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">Unsubscribe</xsl:when>
+			<xsl:when test="$language='en'">Unsubscribe</xsl:when>
 			<xsl:otherwise>Frameld</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<div class="part_mailinglist_box part_mailinglist_unsubscribe">
@@ -148,28 +148,28 @@
 	
 	<xsl:template match="ml:error[@key='noname']">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">Name must be provided</xsl:when>
+			<xsl:when test="$language='en'">Name must be provided</xsl:when>
 			<xsl:otherwise>Navn skal udfyldes</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	
 	<xsl:template match="ml:error[@key='noemail']">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">E-mail must be provided</xsl:when>
+			<xsl:when test="$language='en'">E-mail must be provided</xsl:when>
 			<xsl:otherwise>E-mail-adressen skal udfyldes</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	
 	<xsl:template match="ml:error[@key='invalidemail']">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">The e-mail address is not valid</xsl:when>
+			<xsl:when test="$language='en'">The e-mail address is not valid</xsl:when>
 			<xsl:otherwise>E-mail-adressen er ikke valid</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	
 	<xsl:template match="ml:error[@key='notsubscribed']">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='en'">The e-mail address was not found</xsl:when>
+			<xsl:when test="$language='en'">The e-mail address was not found</xsl:when>
 			<xsl:otherwise>E-mail-adressen blev ikke fundet</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

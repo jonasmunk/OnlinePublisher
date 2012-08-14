@@ -149,6 +149,7 @@ class DocumentTemplateController extends TemplateController
 
 	function buildPartContext($pageId) {
 		$context = new PartContext();
+		$context->setLanguage(PageService::getLanguage($pageId));
 		
 		//////////////////// Find links ///////////////////
 		$sql = "select link.*,page.path from link left join page on page.id=link.target_id and link.target_type='page' where page_id=".Database::int($pageId)." and source_type='text'";

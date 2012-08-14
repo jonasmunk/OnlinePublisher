@@ -9,9 +9,6 @@ header('Content-Type: text/html; charset=UTF-8');
 
 $design = InternalSession::getPageDesign();
 $language = InternalSession::getLanguage();
-$strings = array(
-	'add_section' => array('da' => 'Tilføj afsnit','en' => 'Add section')
-);
 
 $section = null;
 if (Request::exists('section')) {
@@ -287,7 +284,7 @@ function displayColumns($rowId,$rowIndex) {
 }
 
 function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
-	global $language,$strings,$section;
+	global $language,$section;
 	$lastIndex=0;
 	
 	$sql="select document_section.*,part.type as part_type from document_section left join part on document_section.part_id=part.id where column_id=".$columnId." order by `index`";
@@ -318,11 +315,11 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	if ($section==null) {
 		echo '<div style="padding: 5px;">'.
 		'<a onclick="controller.showNewPartMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($lastIndex+1).'}); return false" href="#" class="hui_button hui_button_paper hui_button_small hui_button_small_paper">'.
-		'<span><span>'.$strings['add_section'][$language].'</span></span>'.
+		'<span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span>'.
 		'</a>'.
 		'</div>';
 	} else {
-		echo '<div style="padding: 5px;"><a class="hui_button hui_button_paper hui_button_small hui_button_small_paper '.($section!=null ? 'hui_button_disabled' : '').'"><span><span>'.$strings['add_section'][$language].'</span></span></a></div>';
+		echo '<div style="padding: 5px;"><a class="hui_button hui_button_paper hui_button_small hui_button_small_paper '.($section!=null ? 'hui_button_disabled' : '').'"><span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span></a></div>';
 	}
 }
 

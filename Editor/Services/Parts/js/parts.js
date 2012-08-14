@@ -28,6 +28,7 @@ op.part.utils = {
 		this.showSpinner(options.node);
 		var url = controller.context+'Editor/Services/Parts/Preview.php?type='+options.type;
 		var params = hui.form.getValues(options.form);
+		params.pageId = controller.pageId;
 		hui.ui.request({
 			url : url,
 			parameters : params,

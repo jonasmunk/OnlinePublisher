@@ -31,7 +31,7 @@ class RenderingService {
 		$xml.= '</message>';
 		header("Content-Type: text/html; charset=UTF-8");
 		header("HTTP/1.0 404 Not Found");
-		echo RenderingService::applyStylesheet($xml,"basic","error",$path,$path,$path,'',false);
+		echo RenderingService::applyStylesheet($xml,"basic","error",$path,$path,$path,'',false,'en');
 	}
 	
 	function buildPageContext($id,$nextPage,$previousPage) {
@@ -64,7 +64,7 @@ class RenderingService {
 		return $output;
 	}
 	
-	function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationPath,$pagePath,$preview) {
+	function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationPath,$pagePath,$preview,$language) {
 		global $basePath;
 
 		$agent='xslt';
@@ -128,6 +128,7 @@ class RenderingService {
 		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(isset($GLOBALS['OP']) && $GLOBALS['OP']['urlrewrite'] ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
+		'<xsl:variable name="language">'.$language.'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
 	
@@ -299,6 +300,7 @@ class RenderingService {
 			    'template' => $template,
 			    'published' => $row['published'],
 			    'secure' => $row['secure'],
+				'language' => strtolower($row['language']),
 			    'redirect' => $redirect,
 				'dynamic' => $row['dynamic'],
 				'framedynamic' => $row['framedynamic']
@@ -393,7 +395,7 @@ class RenderingService {
 			header('Content-type: text/xml');
 			echo $page['xml'];
 		} else {
-			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false);
+			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false,'en');
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
 			header("Cache-Control: public");
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
@@ -466,7 +468,7 @@ class RenderingService {
 			'</content>'.
 			'</page>';
 			$relativeUrl = isset($options['relativeUrl']) ? $options['relativeUrl'] : $options['relativePath'];
-			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true);
+			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true,'en');
 		}
 		Log::debug('Unable to query: '.$pageId);
 		Log::debug($sql);

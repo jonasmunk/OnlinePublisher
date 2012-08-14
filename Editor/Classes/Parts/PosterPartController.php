@@ -81,13 +81,13 @@ class PosterPartController extends PartController
 
 	function getToolbars() {
 		return array(
-			'Plakat' => '
-					<icon icon="common/previous" text="{Previous ; da:Forrige}" name="goPrevious"/>
-					<icon icon="common/next" text="{Next ; da:Næste}" name="goNext"/>
-					<divider/>
-					<icon icon="file/generic" text="{Page ; da:Side}" name="showPageInfo"/>
-					<icon icon="common/info" text="{Info ; da:Info}" name="showInfo"/>
-					<icon icon="file/text" overlay="edit" text="{Source ; da:Kilde}" name="showSource"/>
+			GuiUtils::getTranslated(array('Poster','da'=>'Plakat')) => '
+				<icon icon="common/previous" text="{Previous ; da:Forrige}" name="goPrevious"/>
+				<icon icon="common/next" text="{Next ; da:Næste}" name="goNext"/>
+				<divider/>
+				<icon icon="file/generic" text="{Page ; da:Side}" name="showPageInfo"/>
+				<icon icon="common/info" text="{Info ; da:Info}" name="showInfo"/>
+				<icon icon="file/text" overlay="edit" text="{Source ; da:Kilde}" name="showSource"/>
 				'
 			);
 	}
@@ -106,42 +106,42 @@ class PosterPartController extends PartController
 				-->
 				<formula name="posterFormula" padding="10">
 					<fields labels="above">
-						<field label="Height">
+						<field label="{Højde; da:Height}">
 							<number-input key="height" allow-null="true" min="20" max="500"/>
 						</field>
-						<field label="Appearance">
+						<field label="{Appearance; da:Udseende}">
 							<dropdown key="variant">
 								<item value="" text="Standard"/>
-								<item value="light" text="Light"/>
-								<item value="inset" text="Inset"/>
+								<item value="light" text="{Lys; da:Light}"/>
+								<item value="inset" text="{Nedsunket; da:Inset}"/>
 							</dropdown>
 						</field>
 					</fields>
 				</formula>
 			</window>
 
-			<window title="Side" name="pageWindow" width="300">
+			<window title="{Page; da:Side}" name="pageWindow" width="300">
 				<toolbar variant="window">
-					<icon icon="common/move_left" text="Move left" name="moveLeft"/>
-					<icon icon="common/move_right" text="Move right" name="moveRight"/>
+					<icon icon="common/move_left" text="{Move left; da:Flyt til venstre}" name="moveLeft"/>
+					<icon icon="common/move_right" text="{Move right; da:Flyt til højre}" name="moveRight"/>
 					<right>
-						<icon icon="common/Delete" text="Delete" name="deletePage">
-							<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+						<icon icon="common/Delete" text="{Delete; da:Slet}" name="deletePage">
+							<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
 						</icon>
-						<icon icon="common/new" text="Add" name="addPage"/>
+						<icon icon="common/new" text="{Add; da:Tilføj}" name="addPage"/>
 					</right>
 				</toolbar>
 				<formula name="pageFormula" padding="10">
 					<fields labels="above">
-						<field label="Title">
+						<field label="{Title; da:Titel}">
 							<text-input key="title"/>
 						</field>
-						<field label="Text">
+						<field label="{Text; da:Tekst}">
 							<text-input multiline="true" key="text" max-height="500"/>
 						</field>
-						<field label="Image">
+						<field label="{Image; da:Billede}">
 							<image-input key="image" source="../../Services/Model/ImagePicker.php">
-								<finder title="Vælg fil" 
+								<finder title="{Select file; da:Vælg fil}" 
 									list-url="../../Services/Finder/ImagesList.php"
 									selection-url="../../Services/Finder/ImagesSelection.php"
 									selection-value="all"
@@ -150,15 +150,15 @@ class PosterPartController extends PartController
 								/>
 							</image-input>
 						</field>
-						<field label="Link tekst:">
+						<field label="{Link text; da:Link tekst}:">
 							<text-input key="linktext"/>
 						</field>
 						<field label="Link:">
 							<object-input key="link">
-								<type key="url" label="Adresse"/>
-								<type key="email" label="E-mail"/>
-								<type key="page" label="Side" icon="common/page" lookup-url="../../Services/Model/LoadPage.php">
-									<finder title="Vælg side"
+								<type key="url" label="{Address; da:Adresse}"/>
+								<type key="email" label="{E-mail; da:E-post}"/>
+								<type key="page" label="{Page; da:Side}" icon="common/page" lookup-url="../../Services/Model/LoadPage.php">
+									<finder title="{Select page; da:Vælg side}"
 										list-url="../../Services/Finder/PagesList.php"
 										selection-url="../../Services/Finder/PagesSelection.php"
 										selection-value="all"
@@ -166,8 +166,8 @@ class PosterPartController extends PartController
 										search-parameter="query"
 									/>
 								</type>
-								<type key="file" label="Fil" icon="file/generic" lookup-url="../../Services/Model/LoadObject.php">
-									<finder title="Vælg fil" 
+								<type key="file" label="{File; da:Fil}" icon="file/generic" lookup-url="../../Services/Model/LoadObject.php">
+									<finder title="{Select file; da:Vælg fil}" 
 										list-url="../../Services/Finder/FilesList.php"
 										selection-url="../../Services/Finder/FilesSelection.php"
 										selection-value="all"
@@ -182,7 +182,7 @@ class PosterPartController extends PartController
 				</formula>
 			</window>
 			
-			<window title="Kilde" name="sourceWindow" width="600">
+			<window title="{Source; da:Kilde}" name="sourceWindow" width="600">
 				<formula name="sourceFormula">
 					<code-input key="recipe"/>
 				</formula>			

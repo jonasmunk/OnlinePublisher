@@ -117,6 +117,7 @@ class PartController
 		'<xsl:variable name="urlrewrite">'.(isset($GLOBALS['OP']) && $GLOBALS['OP']['urlrewrite'] ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="highquality">false</xsl:variable>'.
+		'<xsl:variable name="language">'.strtolower($context->getLanguage()).'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
 		return XslService::transform($xmlData,$xslData);

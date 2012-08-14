@@ -19,7 +19,7 @@ class NewsPartController extends PartController
 	
 	function createPart() {
 		$part = new NewsPart();
-		$part->setTitle('Seneste nyt');
+		$part->setTitle(GuiUtils::getTranslated(array('Seneste nyt','da'=>'Latest news')));
 		$part->setVariant('box');
 		$part->setMode('single');
 		$part->setSortDir('ascending');
@@ -106,36 +106,37 @@ class NewsPartController extends PartController
 	
 	function editorGui($part,$context) {
 		$gui='
-		<window title="Nyheder" name="newsWindow" width="300">
+		<window title="{News; da:Nyheder}" name="newsWindow" width="300">
 			<tabs small="true" centered="true">
-				<tab title="Indstillinger" padding="10">
+				<tab title="{Settings; da:Indstillinger}" padding="10">
 					<formula>
 						<fields labels="above">
-							<field label="Titel">
+							<field label="{Title; da:Titel}">
 								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" name="newsTitle"/>
 							</field>
 							<field label="Variant">
 								<radiobuttons value="'.$part->getVariant().'" name="newsVariant">
-									<item label="Liste" value="list"/>
-									<item label="Boks" value="box"/>
+									<item label="{List; da:Liste}" value="list"/>
+									<item label="{Box; da:Boks}" value="box"/>
 								</radiobuttons>
 							</field>
-							<field label="Justering">
+							<field label="{Alignment; da:Justering}">
 								<radiobuttons value="'.$part->getAlign().'" name="newsAlign">
-									<item label="Venstre" value="left"/>
-									<item label="Midte" value="center"/>
-									<item label="Hoejre" value="right"/>
+									<item label="{Left; da:Venstre}" value="left"/>
+									<item label="{Center; da:Midte}" value="center"/>
+									<item label="{Right; da:Højre}" value="right"/>
 								</radiobuttons>
 							</field>
 						</fields>
-						<fieldset legend="Nyheder">
+						<space height="10"/>
+						<fieldset legend="{News; da:Nyheder}">
 							<fields labels="above">
-								<field label="Grupper">
+								<field label="{Groups; da:Grupper}">
 									<checkboxes name="newsGroups">
 									'.GuiUtils::buildObjectItems('newsgroup').'
 									</checkboxes>
 								</field>
-								<field label="Nyheder">
+								<field label="{News; da:Nyheder}">
 									<dropdown name="newsNews">
 									'.GuiUtils::buildObjectItems('news').'
 									</dropdown>
@@ -144,37 +145,37 @@ class NewsPartController extends PartController
 						</fieldset>
 					</formula>
 				</tab>
-				<tab title="Visning" padding="10">
+				<tab title="{Appearance; da:Visning}" padding="10">
 					<formula>
 						<fields labels="above">
-							<field label="Retning">
+							<field label="{Direction; da:Retning}">
 								<radiobuttons value="'.$part->getSortDir().'" name="newsSortDir">
-									<item label="Faldende" value="descending"/>
-									<item label="Stigende" value="ascending"/>
+									<item label="{Descending; da:Faldende}" value="descending"/>
+									<item label="{Ascending; da:Stigende}" value="ascending"/>
 								</radiobuttons>
 							</field>
-							<field label="Sorter efter">
+							<field label="{Ordering; da:Sortering}">
 								<radiobuttons value="'.$part->getSortBy().'" name="newsSortBy">
-									<item label="Startdato" value="startdate"/>
-									<item label="Slutdato" value="enddate"/>
-									<item label="Titel" value="title"/>
+									<item label="{Start date; da:Startdato}" value="startdate"/>
+									<item label="{End date; da:Slutdato}" value="enddate"/>
+									<item label="{Title; da:Titel}" value="title"/>
 								</radiobuttons>
 							</field>
-							<field label="Maksimalt antal">
+							<field label="{Maximum number of items; da:Maksimalt antal}">
 								<number-input name="newsMaxItems" value="'.$part->getMaxItems().'"/>
 							</field>
-							<field label="Tid">
+							<field label="{Time; da:Tid}">
 								<dropdown name="newsTimeType" value="'.$part->getTimeType().'">
-									<item label="Altid" value="always"/>
-									<item label="Lige nu" value="now"/>
-									<item label="Seneste timer..." value="hours"/>
-									<item label="Seneste dage..." value="days"/>
-									<item label="Seneste uger..." value="weeks"/>
-									<item label="Seneste m&#229;neder..." value="months"/>
-									<item label="Seneste &#229;r..." value="years"/>
+									<item label="{Always; da:Altid}" value="always"/>
+									<item label="{Now; da:Lige nu}" value="now"/>
+									<item label="{Latest hours...; da:Seneste timer...}" value="hours"/>
+									<item label="{Latest days...; da:Seneste dage...}" value="days"/>
+									<item label="{Latest weeks...; da:Seneste uger...}" value="weeks"/>
+									<item label="{Latest months...; da:Seneste måneder...}" value="months"/>
+									<item label="{Latest years...; da:Seneste år...}" value="years"/>
 								</dropdown>
 							</field>
-							<field label="Antal">
+							<field label="{Count; da:Antal}">
 								<number-input name="newsTimeCount" value="'.$part->getTimeCount().'"/>
 							</field>
 						</fields>

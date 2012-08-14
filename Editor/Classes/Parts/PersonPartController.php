@@ -197,7 +197,7 @@ class PersonPartController extends PartController
 			<divider/>
 			<grid>
 				<row>
-					<cell right="5"><checkbox name="showStreetname"/><label>{Streen; da:Gade}</label></cell>
+					<cell right="5"><checkbox name="showStreetname"/><label>{Street; da:Gade}</label></cell>
 					<cell right="5"><checkbox name="showCity"/><label>{City; da:By}</label></cell>
 				</row>
 				<row>

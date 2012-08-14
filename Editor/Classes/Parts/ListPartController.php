@@ -85,45 +85,45 @@ class ListPartController extends PartController
 		$gui='
 		<window title="Liste" name="listWindow" width="300" close="false">
 			<tabs small="true" centered="true">
-				<tab title="Indstillinger" padding="10">
+				<tab title="{Settings; da:Indstillinger}" padding="10">
 					<formula name="formula">
 						<fields labels="above">
-							<field label="Titel">
+							<field label="{Title; da:Titel}">
 								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" key="title"/>
 							</field>
 						</fields>
-						<fieldset legend="Begrænsning">
+						<fieldset legend="{Limitation; da:Begrænsning}">
 							<fields labels="before">
-								<field label="Dage">
+								<field label="{Days; da:Dage}">
 									<number-input value="'.$part->getTimeCount().'" key="time_count" max="1000"/>
 								</field>
-								<field label="Maksimalt antal">
+								<field label="{Maximum count; da:Maksimalt antal}">
 									<number-input value="'.$part->getMaxItems().'" key="maxitems" min="0" max="100"/>
 								</field>
 							</fields>
 						</fieldset>
 						<space height="10"/>
-						<fieldset legend="Visning">
+						<fieldset legend="{Appearance; da:Visning}">
 							<fields>
-								<field label="Retning">
+								<field label="{Direction; da:Retning}">
 									<radiobuttons key="sort_direction" value="'.StringUtils::escapeXML($part->getSortDirection()).'">
-										<item value="descending" text="Faldende"/>
-										<item value="ascending" text="Stigende"/>
+										<item value="descending" text="{Descending; da:Faldende}"/>
+										<item value="ascending" text="{Ascending; da:Stigende}"/>
 									</radiobuttons>
 								</field>
-								<field label="Vis tekst">
+								<field label="{Show text; da:Vis tekst}">
 									<checkbox value="'.($part->getShowText() ? 'true' : 'false').'" key="show_text"/>
 								</field>
-								<field label="Tekstlængde">
+								<field label="{Text length; da:Tekstlængde}">
 									<number-input value="'.$part->getMaxTextLength().'" key="maxtextlength" min="0" max="2000"/>
 								</field>
-								<field label="Vis kilde">
+								<field label="{Show source; da:Vis kilde}">
 									<checkbox value="'.($part->getShowSource() ? 'true' : 'false').'" key="show_source"/>
 								</field>
-								<field label="Vis tidszone">
+								<field label="{Show time zone; da:Vis tidszone}">
 									<checkbox value="'.($part->getShowTimezone() ? 'true' : 'false').'" key="show_timezone"/>
 								</field>
-								<field label="Tidszone">
+								<field label="{Time zone; da:Tidszone}">
 									<dropdown>
 										<item value="" text="Standard"/>
 										'.$zoneItems.'
@@ -136,23 +136,23 @@ class ListPartController extends PartController
 				<tab title="Data">
 					<overflow max-height="300">
 					<formula padding="10" name="dataFormula">
-						<fieldset legend="Nyheder">
+						<fieldset legend="{News; da:Nyheder}">
 							<fields labels="above">
-								<field label="Grupper">
+								<field label="{Groups; da:Grupper}">
 									<checkboxes key="newsGroups">'.GuiUtils::buildObjectItems('newsgroup').'</checkboxes>
 								</field>
-								<field label="Kilder">
+								<field label="{Sources; da:Kilder}">
 									<checkboxes key="newsSources">'.GuiUtils::buildObjectItems('newssource').'</checkboxes>							
 								</field>
 							</fields>
 						</fieldset>
 						<space height="10"/>
-						<fieldset legend="Begivenheder">
+						<fieldset legend="{Events; da:Begivenheder}">
 							<fields labels="above">
-								<field label="Kalendere">
+								<field label="{Calendars; da:Kalendere}">
 									<checkboxes key="calendars">'.GuiUtils::buildObjectItems('calendar').'</checkboxes>
 								</field>
-								<field label="Kilder">
+								<field label="{Sources; da:Kilder}">
 									<checkboxes key="calendarSources">'.GuiUtils::buildObjectItems('calendarsource').'</checkboxes>
 								</field>
 							</fields>

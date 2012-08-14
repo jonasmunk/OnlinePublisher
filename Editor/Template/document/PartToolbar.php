@@ -53,7 +53,7 @@ $gui='
 				<field label="{Left; da:Venstre}">
 					<style-length-input name="marginLeft" width="90"/>
 				</field>
-				<field label="{Right; da:H'."\xf8".'jre}">
+				<field label="{Right; da:Højre}">
 					<style-length-input name="marginRight" width="90"/>
 				</field>
 				<field label="{Top; da:Top}">
@@ -66,7 +66,7 @@ $gui='
 				<field label="{Width; da:Bredde}">
 					<style-length-input name="sectionWidth" width="90"/>
 				</field>
-				<field label="{Wrapping; da:Tekstoml'."\xf8".'b}">
+				<field label="{Wrapping; da:Tekstomløb}">
 					<segmented name="sectionFloat" allow-null="true">
 						<item icon="style/float_none" value=""/>
 						<item icon="style/float_left" value="left"/>

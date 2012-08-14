@@ -17,7 +17,7 @@
 		<xsl:if test="not(l:item)">
 			<p class="part_list_nodata">				
 				<xsl:choose>
-					<xsl:when test="//p:page/p:meta/p:language='en'">
+					<xsl:when test="$language='en'">
 						<xsl:text>There are currently no events</xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
@@ -40,7 +40,7 @@
 				hui.log('Updating list ('+id+')');
 				hui.request({
 					url:'<xsl:value-of select="$path"/>services/parts/render/',
-					parameters:{type:'list',id:id,synchronize:'true'},
+					parameters:{type:'list',id:id,synchronize:'true',pageId:op.page.id},
 					onSuccess : function(t) {
 						node.parentNode.innerHTML = t.responseText;
 						hui.log('Finished list ('+id+')');
@@ -93,7 +93,7 @@
 <xsl:template match="l:item/l:start-date">
 	<p class="part_list_date">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='da'"><xsl:text>Fra: </xsl:text></xsl:when>
+			<xsl:when test="$language='da'"><xsl:text>Fra: </xsl:text></xsl:when>
 			<xsl:otherwise><xsl:text>From: </xsl:text></xsl:otherwise>
 		</xsl:choose>
 		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>
@@ -106,7 +106,7 @@
 <xsl:template match="l:item/l:end-date">
 	<p class="part_list_date">
 		<xsl:choose>
-			<xsl:when test="//p:page/p:meta/p:language='da'"><xsl:text>Til: </xsl:text></xsl:when>
+			<xsl:when test="$language='da'"><xsl:text>Til: </xsl:text></xsl:when>
 			<xsl:otherwise><xsl:text>To: </xsl:text></xsl:otherwise>
 		</xsl:choose>
 		<xsl:call-template name="util:long-date-time"><xsl:with-param name="node" select="."/></xsl:call-template>

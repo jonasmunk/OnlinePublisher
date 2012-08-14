@@ -250,7 +250,7 @@
 <xsl:template name="util:weekday">
 	<xsl:param name="node"/>
 	<xsl:choose>
-		<xsl:when test="//p:page/p:meta/p:language='en'">
+		<xsl:when test="$language='en'">
 			<xsl:choose>
 				<xsl:when test="$node/@weekday=0">Sunday</xsl:when>
 				<xsl:when test="$node/@weekday=1">Monday</xsl:when>
@@ -278,7 +278,7 @@
 <xsl:template name="util:month">
 	<xsl:param name="node"/>
 	<xsl:choose>
-		<xsl:when test="//p:page/p:meta/p:language='en'">
+		<xsl:when test="$language='en'">
 			<xsl:choose>
 				<xsl:when test="number($node/@month)=1">January</xsl:when>
 				<xsl:when test="number($node/@month)=2">February</xsl:when>
@@ -316,7 +316,7 @@
 <xsl:template name="util:long-date-time">
 	<xsl:param name="node"/>
 	<xsl:choose>
-		<xsl:when test="//p:page/p:meta/p:language='en'">
+		<xsl:when test="$language='en'">
 			<xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
 			<xsl:text>, </xsl:text>
 			<xsl:value-of select="number($node/@day)"/><xsl:text> </xsl:text>
@@ -367,7 +367,7 @@
 
 <xsl:template name="util:languages">
 	<span class="layout_languages">
-		<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=//p:page/p:meta/p:language and not(@language=//p:page/p:context/p:translation/@language)]">
+		<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=$language and not(@language=//p:page/p:context/p:translation/@language)]">
 			<xsl:call-template name="util:language"/>
 		</xsl:for-each>
 		<xsl:for-each select="//p:page/p:context/p:translation">

@@ -64,18 +64,18 @@ class FormulaPartController extends PartController
 	
 	function getToolbars() {
 		return array(
-			'Formular' => '
+			GuiUtils::getTranslated(array('Formula','da'=>'Formular')) => '
 			<script source="../../Parts/formula/toolbar.js"/>
 			<icon icon="file/text" overlay="edit" text="{Show source;da:Vis kilde}" name="showSource"/>
 			<divider/>
 			<grid>
 				<row>
-					<cell label="Modtager navn:" width="180">
+					<cell label="{Receivers name; da:Modtager navn}:" width="180">
 						<text-input adaptive="true" name="receiverName"/>
 					</cell>
 				</row>
 				<row>
-					<cell label="Modtager e-mail:" width="180">
+					<cell label="{Receivers e-mail; da:Modtagers e-post}:" width="180">
 						<text-input adaptive="true" name="receiverEmail"/>
 					</cell>
 				</row>
@@ -85,7 +85,7 @@ class FormulaPartController extends PartController
 	
 	function editorGui($part,$context) {
 		$gui='
-			<window title="Kilde" name="sourceWindow" width="600">
+			<window title="{Source; da:Kilde}" name="sourceWindow" width="600">
 				<formula name="sourceFormula">
 					<code-input key="recipe"/>
 				</formula>			
