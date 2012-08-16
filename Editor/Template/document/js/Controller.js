@@ -39,18 +39,7 @@ var controller = {
 				}
 			});			
 		}
-		this.ready = true;
-		hui.listen(document.body,'mouseup',function(e) {
-			e = hui.event(e);
-			var section = e.findByClass('editor_section');
-			if (section) {
-				this.selectedTextInfo = hui.string.fromJSON(section.getAttribute('data'));
-			} else {
-				this.selectedTextInfo = null;
-			}
-			this.selectedText = hui.selection.getText();
-		}.bind(this));
-		
+		this.ready = true;		
 		if (this.changed) {
 			this._markToolbarChanged();
 		}

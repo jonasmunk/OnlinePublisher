@@ -4,6 +4,15 @@ var linkController = {
 		if (editLink) {
 			this._loadLink(editLink);
 		}
+		hui.listen(document.body,'mouseup',function(e) {
+			e = hui.event(e);
+			var section = e.findByClass('editor_section');
+			if (section) {
+				this.selectedTextInfo = hui.string.fromJSON(section.getAttribute('data'));
+			} else {
+				this.selectedTextInfo = null;
+			}
+		}.bind(this));
 	},
 
 	linkId : null,
@@ -19,7 +28,7 @@ var linkController = {
 		linkScope.setEnabled(this.selectedTextInfo!=null);
 		linkFormula.reset();
 		linkFormula.setValues({
-			text : controller.selectedText,
+			text : hui.selection.getText(),
 			scope : this.linkPartId ? 'part' : 'page'
 		});
 		linkWindow.show();
@@ -104,7 +113,7 @@ var linkController = {
 			parameters : p,
 			message : {start:{en:'Inserting link...',da:'Indsætter link...'},delay:300},
 			onSuccess : function() {
-				document.location.reload();
+				document.location='Editor.php';
 			}
 		});
 		linkFormula.reset();

@@ -52,8 +52,8 @@ function listImages($text) {
 		window(array('total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage))->
 		startHeaders()->
 			header(array('title'=>array('Image','da'=>'Billede'),'width'=>40))->
-			header(array('title'=>array('Size', 'da'=>'StÃ¸rrelse')))->
-			header(array('title'=>array('Height', 'da'=>'HÃ¸jde')))->
+			header(array('title'=>array('Size', 'da'=>'Størrelse')))->
+			header(array('title'=>array('Height', 'da'=>'Højde')))->
 			header(array('title'=>array('Width', 'da'=>'Bredde')))->
 			header(array('title'=>'Type'))->
 		endHeaders();
@@ -91,8 +91,8 @@ function listProducts() {
 	$writer->
 	startList(array('unicode'=>true))->
 		startHeaders()->
-			header(array('title'=>'Billede','width'=>40))->
-			header(array('title'=>'Produkt'))->
+			header(array('title'=>array('Image','da'=>'Billede'),'width'=>40))->
+			header(array('title'=>array('Product','da'=>'Produkt')))->
 		endHeaders();
 
 	$result = ImageService::getProductImageRelations();
@@ -128,7 +128,7 @@ function listPersons() {
 	$writer->
 	startList(array('unicode'=>true))->
 		startHeaders()->
-			header(array('title'=>'Billede','width'=>40))->
+			header(array('title'=>array('Image','da'=>'Billede'),'width'=>40))->
 			header(array('title'=>'Person'))->
 		endHeaders();
 
@@ -166,9 +166,9 @@ function listPages() {
 	$writer->
 	startList(array('unicode'=>true))->
 		startHeaders()->
-			header(array('title'=>'Billede','width'=>40))->
-			header(array('title'=>'Side'))->
-			header(array('title'=>'Afsnit'))->
+			header(array('title'=>array('Image','da'=>'Billede'),'width'=>40))->
+			header(array('title'=>array('Page','da'=>'Side')))->
+			header(array('title'=>array('Section','da'=>'Afsnit')))->
 		endHeaders();
 
 	$result = ImageService::getPageImageRelations();
