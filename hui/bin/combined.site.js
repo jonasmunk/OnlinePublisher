@@ -132,6 +132,7 @@ hui.each = function(items,func) {
 }
 
 /**
+ * Return text if condition is met
  * @param {Object} condition The condition to test
  * @param {String} text The text to return when condition evaluates to true
  */
@@ -2370,6 +2371,7 @@ hui.animation = {
 	objects : {},
 	running : false,
 	latestId : 0,
+	/** Get an animation item for a node */
 	get : function(element) {
 		element = hui.get(element);
 		if (!element.huiAnimationId) {
@@ -2380,6 +2382,7 @@ hui.animation = {
 		}
 		return this.objects[element.huiAnimationId];
 	},
+	/** Start animating any pending tasks */ 
 	start : function() {
 		if (!this.running) {
 			hui.animation._render();
@@ -2509,6 +2512,10 @@ hui.animation._parseStyle = function(value) {
 
 ///////////////////////////// Item ///////////////////////////////
 
+/** 
+ * @constructor
+ * An animation item describing what to animate on an element
+ */
 hui.animation.Item = function(element) {
 	this.element = element;
 	this.work = [];

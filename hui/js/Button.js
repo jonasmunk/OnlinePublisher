@@ -178,27 +178,27 @@ hui.ui.Button.prototype = {
 ////////////////////////////////// Buttons /////////////////////////////
 
 /** @constructor */
-hui.ui.Buttons = function(o) {
-	this.name = o.name;
-	this.element = hui.get(o.element);
+hui.ui.Buttons = function(options) {
+	this.name = options.name;
+	this.element = hui.get(options.element);
 	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
 	hui.ui.extend(this);
 }
 
-hui.ui.Buttons.create = function(o) {
-	o = hui.override({top:0},o);
-	var e = o.element = hui.build('div',{'class':'hui_buttons'});
-	if (o.align=='right') {
+hui.ui.Buttons.create = function(options) {
+	options = hui.override({top:0},options);
+	var e = options.element = hui.build('div',{'class':'hui_buttons'});
+	if (options.align=='right') {
 		hui.cls.add(e,'hui_buttons_right');
 	}
-	if (o.align=='center') {
+	if (options.align=='center') {
 		hui.cls.add(e,'hui_buttons_center');
 	}
-	if (o.top>0) {
-		e.style.paddingTop=o.top+'px';
+	if (options.top > 0) {
+		e.style.paddingTop=options.top+'px';
 	}
 	hui.build('div',{'class':'hui_buttons_body',parent:e});
-	return new hui.ui.Buttons(o);
+	return new hui.ui.Buttons(options);
 }
 
 hui.ui.Buttons.prototype = {

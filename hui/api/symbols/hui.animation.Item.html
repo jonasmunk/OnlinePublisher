@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.ui.Graph.D3</title>
+		<title>JsDoc Reference - hui.animation.Item</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -444,7 +444,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace hui.ui.Graph.D3
+				Class hui.animation.Item
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -461,8 +461,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Graph.D3.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.animation.Item.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -474,7 +474,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.ui.Graph.D3.html#constructor">hui.ui.Graph.D3</a></b>
+								<b><a href="../symbols/hui.animation.Item.html#constructor">hui.animation.Item</a></b>(element)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -490,7 +490,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Graph.D3.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.animation.Item.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -501,9 +501,18 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Graph.D3.<b><a href="../symbols/hui.ui.Graph.D3.html#.buildIcon">buildIcon</a></b>(icon, parent)
+								<div class="fixedFont"><b><a href="../symbols/hui.animation.Item.html#animate">animate</a></b>(from, to, property, duration, delegate)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.animation.Item.html#getWork">getWork</a></b>(property)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -512,34 +521,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Graph.D3.<b><a href="../symbols/hui.ui.Graph.D3.html#.clear">clear</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Graph.D3.<b><a href="../symbols/hui.ui.Graph.D3.html#.init">init</a></b>(parent)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Graph.D3.<b><a href="../symbols/hui.ui.Graph.D3.html#.resize">resize</a></b>(width, height)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.Graph.D3.<b><a href="../symbols/hui.ui.Graph.D3.html#.setData">setData</a></b>(data)
+								<div class="fixedFont">hui.animation.Item.<b><a href="../symbols/hui.animation.Item.html#.parseTransform">parseTransform</a></b>(value, element)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -558,11 +540,11 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.ui.Graph.D3</b>
+						<b>hui.animation.Item</b>(element)
 				</div>
 				
 				<div class="description">
@@ -573,6 +555,17 @@ ul.inheritsList
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								 <b>element</b>
+								
+							</dt>
+								<dd></dd>
+						
+						</dl>
 					
 					
 					
@@ -593,11 +586,11 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".buildIcon"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="animate"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">hui.ui.Graph.D3.</span><b>buildIcon</b>(icon, parent)
+					<b>animate</b>(from, to, property, duration, delegate)
 					
 					</div>
 					<div class="description">
@@ -613,13 +606,31 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>icon</b>
+									<b>from</b>
 									
 								</dt>
 								<dd></dd>
 							
 								<dt>
-									<b>parent</b>
+									<b>to</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>property</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>duration</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>delegate</b>
 									
 								</dt>
 								<dd></dd>
@@ -635,36 +646,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".clear"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="getWork"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">hui.ui.Graph.D3.</span><b>clear</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".init"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.Graph.D3.</span><b>init</b>(parent)
+					<b>getWork</b>(property)
 					
 					</div>
 					<div class="description">
@@ -680,7 +666,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>parent</b>
+									<b>property</b>
 									
 								</dt>
 								<dd></dd>
@@ -696,11 +682,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".resize"> </a>
+					<a name=".parseTransform"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.ui.Graph.D3.</span><b>resize</b>(width, height)
+					<span class="light">hui.animation.Item.</span><b>parseTransform</b>(value, element)
 					
 					</div>
 					<div class="description">
@@ -716,49 +702,13 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>width</b>
+									<b>value</b>
 									
 								</dt>
 								<dd></dd>
 							
 								<dt>
-									<b>height</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setData"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.Graph.D3.</span><b>setData</b>(data)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>data</b>
+									<b>element</b>
 									
 								</dt>
 								<dd></dd>
@@ -786,7 +736,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Aug 16 2012 14:47:45 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Aug 16 2012 14:47:43 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

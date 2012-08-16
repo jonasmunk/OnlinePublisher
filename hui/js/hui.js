@@ -132,6 +132,7 @@ hui.each = function(items,func) {
 }
 
 /**
+ * Return text if condition is met
  * @param {Object} condition The condition to test
  * @param {String} text The text to return when condition evaluates to true
  */

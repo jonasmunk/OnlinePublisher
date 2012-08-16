@@ -132,6 +132,7 @@ hui.each = function(items,func) {
 }
 
 /**
+ * Return text if condition is met
  * @param {Object} condition The condition to test
  * @param {String} text The text to return when condition evaluates to true
  */
@@ -2370,6 +2371,7 @@ hui.animation = {
 	objects : {},
 	running : false,
 	latestId : 0,
+	/** Get an animation item for a node */
 	get : function(element) {
 		element = hui.get(element);
 		if (!element.huiAnimationId) {
@@ -2380,6 +2382,7 @@ hui.animation = {
 		}
 		return this.objects[element.huiAnimationId];
 	},
+	/** Start animating any pending tasks */ 
 	start : function() {
 		if (!this.running) {
 			hui.animation._render();
@@ -2509,6 +2512,10 @@ hui.animation._parseStyle = function(value) {
 
 ///////////////////////////// Item ///////////////////////////////
 
+/** 
+ * @constructor
+ * An animation item describing what to animate on an element
+ */
 hui.animation.Item = function(element) {
 	this.element = element;
 	this.work = [];
@@ -8157,27 +8164,27 @@ hui.ui.Button.prototype = {
 ////////////////////////////////// Buttons /////////////////////////////
 
 /** @constructor */
-hui.ui.Buttons = function(o) {
-	this.name = o.name;
-	this.element = hui.get(o.element);
+hui.ui.Buttons = function(options) {
+	this.name = options.name;
+	this.element = hui.get(options.element);
 	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
 	hui.ui.extend(this);
 }
 
-hui.ui.Buttons.create = function(o) {
-	o = hui.override({top:0},o);
-	var e = o.element = hui.build('div',{'class':'hui_buttons'});
-	if (o.align=='right') {
+hui.ui.Buttons.create = function(options) {
+	options = hui.override({top:0},options);
+	var e = options.element = hui.build('div',{'class':'hui_buttons'});
+	if (options.align=='right') {
 		hui.cls.add(e,'hui_buttons_right');
 	}
-	if (o.align=='center') {
+	if (options.align=='center') {
 		hui.cls.add(e,'hui_buttons_center');
 	}
-	if (o.top>0) {
-		e.style.paddingTop=o.top+'px';
+	if (options.top > 0) {
+		e.style.paddingTop=options.top+'px';
 	}
 	hui.build('div',{'class':'hui_buttons_body',parent:e});
-	return new hui.ui.Buttons(o);
+	return new hui.ui.Buttons(options);
 }
 
 hui.ui.Buttons.prototype = {
