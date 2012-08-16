@@ -146,7 +146,7 @@ class HeaderPartController extends PartController
 					<item text="6" value="6"/>
 				</segmented>
 			</field>
-			<field label="{Size; da:St'."\xf8".'rrelse}">
+			<field label="{Size; da:Størrelse}">
 				<style-length-input name="fontSize" width="90"/>
 			</field>
 			<field label="{Alignment; da:Justering}">
@@ -163,7 +163,7 @@ class HeaderPartController extends PartController
 					'.$this->getFontItems().'
 				</dropdown>
 			</field>
-			<field label="{Line height; da:Linjeh'."\xf8".'jde}">
+			<field label="{Line height; da:Linjehøjde}">
 				<style-length-input name="lineHeight" width="90"/>
 			</field>
 			<field label="{Color; da:Farve}">

@@ -194,7 +194,7 @@ class TextPartController extends PartController
 		return array(
 			GuiUtils::getTranslated(array('Text','da'=>'Tekst')) =>
 			'
-			<field label="{Size; da:St'."\xf8".'rrelse}">
+			<field label="{Size; da:Størrelse}">
 				<style-length-input name="fontSize" width="90"/>
 			</field>
 			<field label="{Justify; da:Justering}">
@@ -211,7 +211,7 @@ class TextPartController extends PartController
 					'.$this->getFontItems().'
 				</dropdown>
 			</field>
-			<field label="{Line height; da:Linjeh'."\xf8".'jde}">
+			<field label="{Line height; da:Linjehøjde}">
 				<style-length-input name="lineHeight" width="90"/>
 			</field>
 			<field label="{Color; da:Farve}">
@@ -283,7 +283,7 @@ class TextPartController extends PartController
 					</cell>
 				</row>
 				<row>
-					<cell label="{Height; da:H'."\xf8".'jde}:" width="80">
+					<cell label="{Height; da:Højde}:" width="80">
 						<number-input adaptive="true" allow-null="true" name="imageHeight"/>
 					</cell>
 				</row>

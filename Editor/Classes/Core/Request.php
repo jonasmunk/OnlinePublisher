@@ -32,6 +32,10 @@ class Request {
 	 * @return string The value of the variable, '' if variable not set
 	 */
 	function getString($key,$default='') {
+		return StringUtils::fromUnicode(Request::getStringAsUnicode($key,$defualt));
+	}
+
+	function getStringAsUnicode($key,$default='') {
 		if (isset($_POST[$key])) {
 			$output=$_POST[$key];
 		} else if (isset($_GET[$key])) {
@@ -45,10 +49,6 @@ class Request {
 		$output=str_replace('\\"', '"', $output);
 		$output=str_replace('\\\'', '\'', $output);
 		$output=str_replace('\\\\', '\\', $output);
-		//if (strpos($_SERVER['CONTENT_TYPE'],'UTF-8')!==false) {
-			$output = StringUtils::fromUnicode($output);
-		//}
-		//error_log($_SERVER['CONTENT_TYPE']);
 		return $output;
 	}
 
@@ -170,7 +170,7 @@ class Request {
 	}
 	
 	function getObject($key) {
-		$obj = StringUtils::fromJSON(Request::getString($key));
+		$obj = StringUtils::fromJSON(Request::getStringAsUnicode($key));
 		if ($obj!==null) {
 			StringUtils::fromUnicode($obj);
 		}
