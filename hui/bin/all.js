@@ -7941,7 +7941,7 @@ hui.ui.Alert.prototype = {
 		if (!this.title) {
 			this.title = hui.build('h1',{parent:this.content});
 		}
-		hui.dom.setText(this.title,text);
+		hui.dom.setText(this.title,hui.ui.getTranslated(text));
 		
 	},
 	/** Sets the alert text
@@ -7951,7 +7951,7 @@ hui.ui.Alert.prototype = {
 		if (!this.text) {
 			this.text = hui.build('p',{parent:this.content});
 		}
-		hui.dom.setText(this.text,text || '');
+		hui.dom.setText(this.text,hui.ui.getTranslated(text));
 	},
 	/** Sets the alert emotion
 	 * @param {String} emotion Can be 'smile' or 'gasp'
@@ -8694,9 +8694,6 @@ hui.ui.Toolbar.Icon = function(options) {
 	this.enabled = !hui.cls.has(this.element,'hui_toolbar_icon_disabled');
 	this.element.tabIndex=this.enabled ? 0 : -1;
 	this.icon = hui.get.firstByClass(this.element,'hui_icon');
-	if (!hui.browser.msie) {
-		this.element.removeAttribute('href');
-	}
 	hui.ui.extend(this);
 	this.addBehavior();
 }

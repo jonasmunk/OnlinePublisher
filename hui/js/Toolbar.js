@@ -85,9 +85,6 @@ hui.ui.Toolbar.Icon = function(options) {
 	this.enabled = !hui.cls.has(this.element,'hui_toolbar_icon_disabled');
 	this.element.tabIndex=this.enabled ? 0 : -1;
 	this.icon = hui.get.firstByClass(this.element,'hui_icon');
-	if (!hui.browser.msie) {
-		this.element.removeAttribute('href');
-	}
 	hui.ui.extend(this);
 	this.addBehavior();
 }

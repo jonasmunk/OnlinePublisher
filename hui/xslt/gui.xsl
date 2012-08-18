@@ -690,7 +690,7 @@
 				<xsl:if test="position()=1">
 					<xsl:attribute name="class">hui_tabs_selected</xsl:attribute>
 				</xsl:if>
-				<a href="javascript:void(0)"><span><span><xsl:value-of select="@title"/></span></span></a>
+				<a><span><span><xsl:value-of select="@title"/></span></span></a>
 			</li>
 		</xsl:for-each>
 		</ul>

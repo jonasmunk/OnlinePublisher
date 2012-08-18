@@ -82,7 +82,7 @@ hui.ui.Alert.prototype = {
 		if (!this.title) {
 			this.title = hui.build('h1',{parent:this.content});
 		}
-		hui.dom.setText(this.title,text);
+		hui.dom.setText(this.title,hui.ui.getTranslated(text));
 		
 	},
 	/** Sets the alert text
@@ -92,7 +92,7 @@ hui.ui.Alert.prototype = {
 		if (!this.text) {
 			this.text = hui.build('p',{parent:this.content});
 		}
-		hui.dom.setText(this.text,text || '');
+		hui.dom.setText(this.text,hui.ui.getTranslated(text));
 	},
 	/** Sets the alert emotion
 	 * @param {String} emotion Can be 'smile' or 'gasp'

@@ -64,7 +64,7 @@
 			<xsl:apply-templates/>
 			<xsl:comment/>
 		</span>
-		<a class="hui_toolbar_more" href="javascript://"><xsl:value-of select="@text"/></a>
+		<a class="hui_toolbar_more"><xsl:value-of select="@text"/></a>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Toolbar.More({
@@ -85,7 +85,7 @@
 </toolbar>
 -->
 <xsl:template match="gui:toolbar//gui:icon">
-	<a id="{generate-id()}" href="javascript://">
+	<a id="{generate-id()}">
 		<xsl:attribute name="class">
 			<xsl:text>hui_toolbar_icon</xsl:text>
 			<xsl:if test="@selected='true'"> hui_toolbar_icon_selected</xsl:if>
@@ -136,7 +136,7 @@
 			<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
 		</xsl:if>
 		<em class="hui_searchfield_placeholder"><xsl:value-of select="@placeholder"/><xsl:comment/></em>
-		<a href="javascript:void(0);" class="hui_searchfield_reset"><xsl:comment/></a>
+		<a class="hui_searchfield_reset"><xsl:comment/></a>
 		<span><span><input type="text"/></span></span>
 	</span>
 	<script type="text/javascript">
@@ -313,7 +313,7 @@
 		<xsl:text>hui_bar_button</xsl:text>
 		<xsl:if test="@selected='true'"><xsl:text> hui_bar_button_selected</xsl:text></xsl:if>
 	</xsl:variable>
-	<a id="{generate-id()}" class="{$class}" href="javascript:void(0);">
+	<a id="{generate-id()}" class="{$class}">
 		<xsl:if test="@icon">
 			<span class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></span>
 		</xsl:if>
