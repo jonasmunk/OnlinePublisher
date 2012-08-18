@@ -80,6 +80,7 @@ hui.ui.TextField.prototype = {
 		}
 		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
 		hui.listen(this.input,'keyup',this._onKeyUp.bind(this));
+		hui.listen(this.input,'keydown',this._onKeyDown.bind(this));
 		var p = this.element.getElementsByTagName('em')[0];
 		if (p) {
 			this._updateClass();
@@ -98,13 +99,16 @@ hui.ui.TextField.prototype = {
 	_updateClass : function() {
 		hui.cls.set(this.element,'hui_field_dirty',this.value.length>0);
 	},
-	_onKeyUp : function(e) {
+	_onKeyDown : function(e) {
 		if (!this.multiline && e.keyCode===hui.KEY_RETURN) {
+			hui.stop(e);
 			this.fire('submit');
 			var form = hui.ui.getAncestor(this,'hui_formula');
 			if (form) {form.submit();}
 			return;
 		}
+	},
+	_onKeyUp : function(e) {
 		if (this.input.value==this.value) {return;}
 		this.value=this.input.value;
 		this._updateClass();
