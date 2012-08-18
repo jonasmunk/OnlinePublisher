@@ -18,8 +18,8 @@ if (StringUtils::isBlank($key)) {
 	);
 } else if (!AuthenticationService::isValidEmailValidationSession($key)) {
 	$error = array(
-		'title' => 'Tiden er udløbet eller linket er allerede anvendt',
-		'text' => 'Af sikkerhedsmæssige grunde er der en begrænset periode du kan anvende linket i e-mailen og det kan kun anvendes een gang. Prøv venligst igen ved at lave en ny forespørgelse.'
+		'title' => array('The link has expired or has already been used','da'=>'Tiden er udløbet eller linket er allerede anvendt'),
+		'text' => array('For security reasons there is a limited time you can use the link from the e-mail and it can only be used one time. Please try making a new request.','da'=>'Af sikkerhedsmæssige grunde er der en begrænset periode du kan anvende linket i e-mailen og det kan kun anvendes een gang. Prøv venligst igen ved at lave en ny forespørgelse.')
 	);
 }
 
@@ -58,14 +58,14 @@ $gui='
 					<p>{You should now be able to log into the system...; da:Du burde nu kunne logge ind i systemet...}</p>
 				</text>
 				<buttons align="right" top="5">
-					<button highlighted="true" title="Gå til godkendelse..." url="Authentication.php"/>
+					<button highlighted="true" title="{Log in...; da;Log ind...}" url="Authentication.php"/>
 				</buttons>
 			</fragment>
 		').'
 		</space>
 	</box>
 	<text align="center">
-		<p><link name="english">English</link> <link name="danish">Dansk</link></p>
+		<p><link name="english">English</link> · <link name="danish">Dansk</link></p>
 	</text>
 </gui>';
 

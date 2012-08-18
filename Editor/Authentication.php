@@ -95,7 +95,7 @@ $gui='
 						<p>{da:Du kan opdatere databasen hvis du kender super-brugeren; en:You can update the database if you know the super user}</p>
 					</text>
 					<buttons align="center" top="5">
-						<button title="{Sign in;da:Log ind}" click="hui.ui.changeState(\'login\');formula.focus()"/>
+						<button title="{Ignore;da:Ignorér}" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="{Update;da:Opdater}" name="updateDatabase" highlighted="true"/>
 					</buttons>
 				</space>
@@ -103,7 +103,7 @@ $gui='
 			<fragment state="noConnection">
 				<space all="5">
 					<text align="center">
-						<h>{da:Databasen kan ikke tilgås;en:The database Cannot be reached}</h>
+						<h>{da:Databasen kan ikke tilgås;en:The database cannot be reached}</h>
 						<p>{da:Kontroller venligst at systemet er konfigureret korrekt og at databasen kører; en:Please make sure the system i configured correctly and the database is running}</p>
 					</text>
 				</space>
@@ -113,9 +113,11 @@ $gui='
 	<fragment state="login">
 		<text align="center">
 			<p><link name="forgot">{Forgot password?; da:Glemt kodeord?}</link></p>
-			<p><link name="english">English</link> <link name="danish">Dansk</link></p>
 		</text>
 	</fragment>
+		<text align="center">
+			<p><link name="english">English</link> · <link name="danish">Dansk</link></p>
+		</text>
 
 	<window name="databaseWindow" width="300" padding="5" title="{Update database;da:Opdatér databasen}">
 		<formula name="databaseFormula">

@@ -6,22 +6,22 @@ var controller = {
 	$submit$formula : function() {
 		var values = formula.getValues();
 		if (hui.isBlank(values.password1) || hui.isBlank(values.password2)) {
-			hui.ui.showMessage({text:'Begge kodeord skal være udfyldt',duration:2000});
+			hui.ui.showMessage({text:{en:'Please fill in both password',da:'Begge kodeord skal være udfyldt'},duration:2000});
 			formula.focus();
 			return;
 		} else if (values.password1!==values.password2) {
-			hui.ui.showMessage({text:'Det to kodeord skal være ens',duration:2000});
+			hui.ui.showMessage({text:{en:'The two passwords must be the same',da:'De to kodeord skal være ens'},duration:2000});
 			formula.focus();
 			return;
 		}
 		change.disable();
-		hui.ui.showMessage({text:'Ændrer kode...'});
+		hui.ui.showMessage({text:{en:'Changing password...',da:'Ændrer kode...'}});
 		hui.ui.request({
 			url : 'Services/Core/ChangePassword.php',
 			onSuccess : 'change',
 			parameters : {key:this.key,password:values.password1},
 			onFailure : function() {
-				hui.ui.showMessage({text:'Der skete en fejl internt i systemet!',duration:2000});
+				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},duration:2000});
 				change.enable();
 			}
 		});
@@ -32,7 +32,7 @@ var controller = {
 			hui.ui.hideMessage();
 			hui.ui.changeState('success');
 		} else {
-			hui.ui.showMessage({text:'Det lykkedes ikke at ændre kodeordet',duration:2000});
+			hui.ui.showMessage({text:{en:'It was not possible to change the password',da:'Det lykkedes ikke at ændre kodeordet'},duration:2000});
 		}
 	},
 	$click$english : function() {
