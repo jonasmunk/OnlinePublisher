@@ -395,7 +395,7 @@ class RenderingService {
 			header('Content-type: text/xml');
 			echo $page['xml'];
 		} else {
-			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false,'en');
+			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false,$page['language']);
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
 			header("Cache-Control: public");
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");

@@ -26,7 +26,7 @@ hui.ui.Box.create = function(options) {
 		html : (options.closable ? '<a class="hui_box_close" href="#"></a>' : '')+
 			'<div class="hui_box_top"><div><div></div></div></div>'+
 			'<div class="hui_box_middle"><div class="hui_box_middle">'+
-			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(options.title)+'</strong></div>' : '')+
+			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(hui.ui.getTranslated(options.title))+'</strong></div>' : '')+
 			'<div class="hui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+

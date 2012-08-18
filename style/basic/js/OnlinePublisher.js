@@ -47,7 +47,7 @@ op.showLogin = function() {
 		hui.ui.require(['Formula','Button','TextField'],
 			function() {
 				hui.ui.hideMessage();
-				var box = this.loginBox = hui.ui.Box.create({width:300,title:'Adgangskontrol',modal:true,absolute:true,closable:true,curtainCloses:true,padding:10});
+				var box = this.loginBox = hui.ui.Box.create({width:300,title:{en:'Access control',da:'Adgangskontrol'},modal:true,absolute:true,closable:true,curtainCloses:true,padding:10});
 				this.loginBox.addToDocument();
 				var form = this.loginForm = hui.ui.Formula.create();
 				form.listen({
@@ -58,25 +58,21 @@ op.showLogin = function() {
 						}
 						var values = form.getValues();
 						op.login(values.username,values.password);
-					},
-					$close : function() {
-						// Be sure to blur the login form
-						document.body.focus();
 					}
 				});
 				var g = form.buildGroup(null,[
-					{type:'TextField',options:{label:'Brugernavn',key:'username'}},
-					{type:'TextField',options:{label:'Kodeord',key:'password',secret:true}}
+					{type:'TextField',options:{label:{en:'Username',da:'Brugernavn'},key:'username'}},
+					{type:'TextField',options:{label:{en:'Password',da:'Kodeord'},key:'password',secret:true}}
 				]);
 				var b = g.createButtons();
 				
-				var forgot = hui.ui.Button.create({text:'Glemt kode...'})
+				var forgot = hui.ui.Button.create({text:{en:'Forgot password?',da:'Glemt kode?'}})
 				forgot.listen({$click:function() {
 					document.location = op.context+'Editor/Authentication.php?forgot=true';
 				}});
 				b.add(forgot);
 				
-				var cancel = hui.ui.Button.create({text:'Annuller'})
+				var cancel = hui.ui.Button.create({text:{en:'Cancel',da:'Annuller'}})
 				cancel.listen({$click:function() {
 					form.reset();
 					box.hide();
@@ -84,7 +80,7 @@ op.showLogin = function() {
 				}});
 				b.add(cancel);
 				
-				b.add(hui.ui.Button.create({text:'Log ind',highlighted:true,submit:true}));
+				b.add(hui.ui.Button.create({text:{en:'Log in',da:'Log ind'},highlighted:true,submit:true}));
 				this.loginBox.add(form);
 				this.loginBox.show();
 				window.setTimeout(function() {
@@ -120,25 +116,25 @@ op.startListening = function() {
 
 op.login = function(username,password) {
 	if (hui.isBlank(username) || hui.isBlank(password)) {
-		hui.ui.showMessage({text:'Udfyld venligst begge felter',duration:3000});
+		hui.ui.showMessage({text:{en:'Please fill in both fields',da:'Udfyld venligst begge felter'},duration:3000});
 		this.loginForm.focus();
 		return;
 	}
 
 	hui.ui.request({		
-		message : {start:'Logger ind...',delay:300},
+		message : {start:{en:'Logging in...',da:'Logger ind...'},delay:300},
 		url : op.context+'Editor/Services/Core/Authentication.php',
 		parameters : {username:username,password:password},
 		onJSON : function(response) {
 			if (response.success) {
-				hui.ui.showMessage({text:'Du er nu logget ind!',icon:'common/success',duration:4000});
+				hui.ui.showMessage({text:{en:'You are now logged in',da:'Du er nu logget ind'},icon:'common/success',duration:4000});
 				op.igniteEditor();
 			} else {
-				hui.ui.showMessage({text:'Brugeren blev ikke fundet',icon:'common/warning',duration:4000});
+				hui.ui.showMessage({text:{en:'The user was not found',da:'Brugeren blev ikke fundet'},icon:'common/warning',duration:4000});
 			}
 		},
 		onFailure : function() {
-			hui.ui.showMessage({text:'Der skete en fejl internt i systemet!',icon:'common/warning',duration:4000});
+			hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
 		}
 	});
 }

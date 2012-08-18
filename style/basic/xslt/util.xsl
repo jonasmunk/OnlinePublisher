@@ -159,6 +159,7 @@
 	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	<script type="text/javascript"><xsl:comment>
 		hui.ui.context = '<xsl:value-of select="$path"/>';
+		hui.ui.language = '<xsl:value-of select="$language"/>';
 		op.context = '<xsl:value-of select="$path"/>';
 		op.page.id=<xsl:value-of select="@id"/>;
 		op.page.template='<xsl:value-of select="$template"/>';
