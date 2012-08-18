@@ -43,7 +43,7 @@ op.showLogin = function() {
 			return;
 		}
 		this.loadingLogin = true;
-		hui.ui.showMessage({text:'Indlæser...',busy:true,delay:300});
+		hui.ui.showMessage({text:{en:'Loading...',da:'Indlæser...'},busy:true,delay:300});
 		hui.ui.require(['Formula','Button','TextField'],
 			function() {
 				hui.ui.hideMessage();
@@ -80,6 +80,7 @@ op.showLogin = function() {
 				cancel.listen({$click:function() {
 					form.reset();
 					box.hide();
+					document.body.focus();
 				}});
 				b.add(cancel);
 				

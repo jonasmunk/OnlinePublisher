@@ -9,14 +9,14 @@ var controller = {
 			if (hui.browser.msie9compat) {
 				hui.ui.alert({
 					emotion : 'gasp',
-					title : '"Compatibility View" er slået til',
-					text : 'Det ser ud til at du har slået "Compatibility View" til. Slå det venligst fra for en mere stabil oplevelse. Det gøres ved at klikke på det blå dokument-ikon i adresse linjen øverst.'
+					title : {en:'"Compatibility View" is turned on',da:'"Compatibility View" er slået til'},
+					text : {en:'It looks like you have turned "Compatibility View" on. Please turn it off for a more stable experience. It is done by clicking the blue icon next to the address field above',da:'Det ser ud til at du har slået "Compatibility View" til. Slå det venligst fra for en mere stabil oplevelse. Det gøres ved at klikke på det blå dokument-ikon i adresse linjen øverst.'}
 				});
 			} else {
 				hui.ui.alert({
 					emotion : 'gasp',
-					title : 'Din software er forældet',
-					text : 'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
+					title : {en:'Your software is too old',da:'Din software er forældet'},
+					text : {en:'The system does not support versions of Internet Explorer less than 8. Please upgrade to the latest version or continue at your own risk',da:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'}
 				});
 			}
 		}

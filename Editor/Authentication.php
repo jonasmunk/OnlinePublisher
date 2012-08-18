@@ -42,7 +42,7 @@ $gui='
 						<text-input name="password" secret="true"/>
 					</field>
 					<buttons>
-						<button name="cancel" title="{Cancel; da:Annuller}" url="../"/>
+						<button title="{Cancel; da:Annuller}" url="../"/>
 						<button name="login" title="{Log in; da:Log ind}" highlighted="true" submit="true"/>
 					</buttons>
 				</fields>
@@ -57,7 +57,7 @@ $gui='
 					</field>
 					<buttons>
 						<button title="{New user; da:Ny bruger}" name="createAdmin"/>
-						<button name="cancel" title="{Cancel; da:Annuller}" click="hui.ui.changeState(\'login\');formula.focus()"/>
+						<button title="{Cancel; da:Annuller}" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="Find" name="recover" highlighted="true" submit="true"/>
 					</buttons>
 				</fields>
@@ -69,7 +69,7 @@ $gui='
 				</text>
 				<fields labels="above">
 					<buttons>
-						<button name="cancel" title="{Cancel; da:Annuller}" click="hui.ui.changeState(\'login\');formula.focus()"/>
+						<button title="{Cancel; da:Annuller}" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="{New user; da:Ny bruger}" name="createAdmin"/>
 					</buttons>
 				</fields>				
