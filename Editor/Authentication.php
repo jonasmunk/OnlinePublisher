@@ -22,6 +22,10 @@ if (Database::testConnection()) {
 	$mailEnabled = false;
 }
 
+if (Request::exists('language')) {
+	InternalSession::setLanguage(Request::getString('language'));
+}
+
 
 $gui='
 <gui xmlns="uri:hui" padding="10" title="'.SystemInfo::getTitle().'" state="'.$state.'">
@@ -29,44 +33,44 @@ $gui='
 	<box width="300" top="100" variant="rounded" name="box">
 		<space all="10" top="5" bottom="5">
 			<formula name="formula" state="login">
-				<header>Adgangskontrol</header>
+				<header>{Access control; da:Adgangskontrol}</header>
 				<fields>
-					<field label="Brugernavn:">
+					<field label="{Username; da:Brugernavn}:">
 						<text-input name="username" correction="false"/>
 					</field>
-					<field label="Kodeord:">
+					<field label="{Password; da:Kodeord}:">
 						<text-input name="password" secret="true"/>
 					</field>
 					<buttons>
-						<button name="cancel" title="Annuller" url="../"/>
-						<button name="login" title="Log ind" highlighted="true" submit="true"/>
+						<button name="cancel" title="{Cancel; da:Annuller}" url="../"/>
+						<button name="login" title="{Log in; da:Log ind}" highlighted="true" submit="true"/>
 					</buttons>
 				</fields>
 			</formula>
 			<formula name="recoveryForm" state="recover">
 				'.($mailEnabled ? '
-				<header>Genfind kodeord</header>
-				<text><p>Skriv dit brugernavn eller e-mail, så sender vi dig en e-mail om hvordan du kan ændre din kode...</p></text>
+				<header>{Recover password; da:Genfind kodeord}</header>
+				<text><p>{Please provide your username or e-mail and we will send you an e-mail describing how you can change your password...; da:Skriv dit brugernavn eller e-mail, så sender vi dig en e-mail om hvordan du kan ændre din kode...}</p></text>
 				<fields labels="above">
-					<field label="Brugernavn eller e-mail:">
+					<field label="{Username or e-mail; da:Brugernavn eller e-mail}:">
 						<text-input key="nameOrMail"/>
 					</field>
 					<buttons>
-						<button title="Ny bruger" name="createAdmin"/>
-						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
+						<button title="{New user; da:Ny bruger}" name="createAdmin"/>
+						<button name="cancel" title="{Cancel; da:Annuller}" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="Find" name="recover" highlighted="true" submit="true"/>
 					</buttons>
 				</fields>
 				' : '
-				<header>Genfind kodeord</header>
+				<header>{Recover password; da:Genfind kodeord}</header>
 				<text>
-					<p>Systemet er ikke konfigureret til at sende e-mail. Kontakt den ansvarlige for systemet for at få adgang.</p>
-					<p>Du kan også oprette en ny administrator hvis du kender super-brugeren.</p>
+					<p>{The system is not configured to send e-mails. Please contact the responsible for the system in order to get access; da:Systemet er ikke konfigureret til at sende e-mail. Kontakt den ansvarlige for systemet for at få adgang.}</p>
+					<p>{You can create a new administrator if you know the super user.; da:Du kan også oprette en ny administrator hvis du kender super-brugeren.}</p>
 				</text>
 				<fields labels="above">
 					<buttons>
-						<button name="cancel" title="Annuller" click="hui.ui.changeState(\'login\');formula.focus()"/>
-						<button title="Ny bruger" name="createAdmin"/>
+						<button name="cancel" title="{Cancel; da:Annuller}" click="hui.ui.changeState(\'login\');formula.focus()"/>
+						<button title="{New user; da:Ny bruger}" name="createAdmin"/>
 					</buttons>
 				</fields>				
 				'
@@ -75,8 +79,8 @@ $gui='
 			<fragment state="recoveryMessage">
 				<space all="5">
 					<text align="center">
-						<h>Der er nu sendt en e-mail</h>
-						<p>Du skulle inden længe modtage en e-mail der beskriver hvordan du kan ændre dit kodeord. Hvis du ikke har modtaget den inden ca. et kvarter bør du kontakte den ansvarlige for webstedet.</p>
+						<h>{An e-mail has been sent; da:Der er nu sendt en e-mail}</h>
+						<p>{You should in a short time receive an e-mail describing how you can change your password. If you do not receive the e-mail within 15 min. then please contact the responsible for the website.; da:Du skulle inden længe modtage en e-mail der beskriver hvordan du kan ændre dit kodeord. Hvis du ikke har modtaget den inden ca. et kvarter bør du kontakte den ansvarlige for webstedet.}</p>
 					</text>
 					<buttons align="center" top="5">
 						<button title="OK" click="hui.ui.changeState(\'login\');formula.focus()"/>
@@ -106,7 +110,12 @@ $gui='
 			</fragment>
 		</space>
 	</box>
-	<fragment state="login"><text align="center"><p><link name="forgot">Glemt kodeord</link></p></text></fragment>
+	<fragment state="login">
+		<text align="center">
+			<p><link name="forgot">{Forgot password?; da:Glemt kodeord?}</link></p>
+			<p><link name="english">English</link> <link name="danish">Dansk</link></p>
+		</text>
+	</fragment>
 
 	<window name="databaseWindow" width="300" padding="5" title="{Update database;da:Opdatér databasen}">
 		<formula name="databaseFormula">

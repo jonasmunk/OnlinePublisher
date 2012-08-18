@@ -14,9 +14,9 @@ var controller = {
 				});
 			} else {
 				hui.ui.alert({
-					emotion:'gasp',
-					title:'Din software er forældet',
-					text:'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
+					emotion : 'gasp',
+					title : 'Din software er forældet',
+					text : 'Systemet understøtter ikke Internet Explorer tidligere end version 8. Opgrader venligst til en nyere version eller fortsæt på eget ansvar.'
 				});
 			}
 		}
@@ -40,6 +40,12 @@ var controller = {
 				p.load();
 			}
 		});
+	},
+	$click$english : function() {
+		document.location='Authentication.php?language=en';
+	},
+	$click$danish : function() {
+		document.location='Authentication.php?language=da';
 	},
 	$submit$formula : function() {
 		if (this.loggingIn) {

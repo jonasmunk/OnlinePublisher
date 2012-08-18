@@ -1114,11 +1114,11 @@ doc title:'Rich text' class:'hui.ui.RichText'
 </link>
 -->
 <xsl:template match="gui:link">
-	<a href="javascript:void(0);" class="hui_link" id="{generate-id()}"><span><xsl:apply-templates/></span></a>
+	<a href="javascript://" class="hui_link" id="{generate-id()}"><span><xsl:apply-templates/></span></a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Link({
-			element:'<xsl:value-of select="generate-id()"/>',
-			name:'<xsl:value-of select="@name"/>'
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>'
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

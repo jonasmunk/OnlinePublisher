@@ -34,5 +34,12 @@ var controller = {
 		} else {
 			hui.ui.showMessage({text:'Det lykkedes ikke at ændre kodeordet',duration:2000});
 		}
+	},
+	$click$english : function() {
+		hui.location.setParameter('language','en');
+	},
+	$click$danish : function() {
+		hui.location.setParameter('language','da');
 	}
+
 }
