@@ -88,6 +88,7 @@ class ListingPartController extends PartController
 			$part->setLineHeight(Request::getString('lineHeight'));
 			$part->setFontWeight(Request::getString('fontWeight'));
 			$part->setFontStyle(Request::getString('fontStyle'));
+			$part->setColor(Request::getString('color'));
 			$part->setWordSpacing(Request::getString('wordSpacing'));
 			$part->setLetterSpacing(Request::getString('letterSpacing'));
 			$part->setTextIndent(Request::getString('textIndent'));
@@ -203,7 +204,7 @@ class ListingPartController extends PartController
 				<style-length-input name="lineHeight" width="90"/>
 			</field>
 			<field label="{Font; da:Farve}">
-				<text-input name="color" width="60"/>
+				<color-input name="color"/>
 			</field>
 			<field label="{Weight; da:Fed}">
 				<segmented name="fontWeight" allow-null="true">

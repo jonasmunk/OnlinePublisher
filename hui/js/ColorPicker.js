@@ -15,6 +15,9 @@ hui.ui.ColorPicker = function(options) {
 	this.wheel3 = this.pages[2];
 	this.swatches = this.pages[3];
 	hui.ui.extend(this);
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 	this.addBehavior();
 	this.buildData();
 }

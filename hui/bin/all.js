@@ -14826,6 +14826,9 @@ hui.ui.ColorPicker = function(options) {
 	this.wheel3 = this.pages[2];
 	this.swatches = this.pages[3];
 	hui.ui.extend(this);
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 	this.addBehavior();
 	this.buildData();
 }
@@ -16435,6 +16438,7 @@ hui.ui.ColorInput.prototype = {
 	},
 	_onButtonClick : function() {
 		if (hui.window.getViewHeight()<200) {
+			this.fire('select',this.value)		
 			return; // TODO: mini picker
 		}
 		if (!this.panel) {

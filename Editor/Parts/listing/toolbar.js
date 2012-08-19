@@ -16,6 +16,13 @@ hui.ui.listen({
 		textIndent.setValue(this.form.textIndent.value);
 		listStyle.setValue(this.form['type'].value);
 	},
+	$select$color : function(value) {
+		partToolbar.getMainController().showColorWindow(function(value) {
+			color.setValue(value);
+			this.form.color.value=value || '';
+			this.form.text.style.color=value || '';
+		}.bind(this));
+	},
 	$valueChanged$fontWeight : function(value) {
 		this.form.fontWeight.value=value || '';
 		this.form.text.style.fontWeight=value || '';

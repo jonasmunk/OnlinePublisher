@@ -17,6 +17,13 @@ hui.ui.listen({
 		level.setValue(this.form['level'].value);
 		this._updateInitialValues();
 	},
+	$select$color : function(value) {
+		partToolbar.getMainController().showColorWindow(function(value) {
+			color.setValue(value);
+			this.form.color.value=value || '';
+			this.form.text.style.color=value || '';
+		}.bind(this));
+	},
 	_updateInitialValues : function() {
 		fontSize.setInitialValue(hui.style.get(this.form.text,'font-size'));
 		lineHeight.setInitialValue(hui.style.get(this.form.text,'line-height'));

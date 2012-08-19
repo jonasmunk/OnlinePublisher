@@ -20,6 +20,13 @@ var textPartToolbar = {
 		imageHeight.setValue(this._toLength(this.form.imageHeight.value));
 		this._updateInitialValues();
 	},
+	$select$color : function(value) {
+		partToolbar.getMainController().showColorWindow(function(value) {
+			color.setValue(value);
+			this.form.color.value=value || '';
+			this.form.text.style.color=value || '';
+		}.bind(this));
+	},
 	_toLength : function(value) {
 		if (value=='0') {
 			return '';
