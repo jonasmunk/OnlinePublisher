@@ -29,6 +29,7 @@ hui.ui.Window.create = function(options) {
 		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
 		(options.width ? 'width:'+options.width+'px;':'')+
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
+		(options.padding ? 'padding-bottom:'+Math.max(0,options.padding-2)+'px;':'')+
 		'">'+
 		'</div></div></div>'+
 		'<div class="hui_window_bottom"><div class="hui_window_bottom"><div class="hui_window_bottom"></div></div></div></div>';
