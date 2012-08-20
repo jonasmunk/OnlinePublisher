@@ -32,7 +32,7 @@ class Request {
 	 * @return string The value of the variable, '' if variable not set
 	 */
 	function getString($key,$default='') {
-		return StringUtils::fromUnicode(Request::getStringAsUnicode($key,$defualt));
+		return StringUtils::fromUnicode(Request::getStringAsUnicode($key,$default));
 	}
 
 	function getStringAsUnicode($key,$default='') {
