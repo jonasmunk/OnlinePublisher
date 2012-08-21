@@ -165,5 +165,21 @@ class TestPage extends UnitTestCase {
 		$this->assertEqual(count($links),0);
 	}
 	
+	function TestRendering() {
+		$page = TestService::createTestPage();
+		
+		$url = ConfigurationService::getCompleteBaseUrl().'?id='.$page->getId();
+		
+		$response = HttpClient::send(new HttpRequest($url));
+		$this->assertEqual($response->getStatusCode(),200);
+		
+		$page->setDisabled(true);
+		$page->save();
+		
+		$response = HttpClient::send(new HttpRequest($url));
+		$this->assertEqual($response->getStatusCode(),404);
+		
+		TestService::removeTestPage($page);
+	}
 }
 ?>

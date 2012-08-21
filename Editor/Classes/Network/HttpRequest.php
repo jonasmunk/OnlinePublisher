@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 class HttpRequest {
 	
 	private $url;
-	private $parameters;
+	private $parameters = array();
 	
 	function HttpRequest($url=null) {
 		$this->url = $url;

@@ -230,7 +230,7 @@ class RenderingService {
 	}
 	
 	function buildPage($id,$path=null) {
-		$sql="select page.id,page.secure,UNIX_TIMESTAMP(page.published) as published,".
+		$sql="select page.id,page.path,page.secure,UNIX_TIMESTAMP(page.published) as published,".
 		" page.title,page.description,page.language,page.keywords,page.data,page.dynamic,page.next_page,page.previous_page,".
 		" template.unique as template,frame.id as frameid,frame.title as frametitle,".
 		" frame.data as framedata,frame.dynamic as framedynamic,design.`unique` as design,".
@@ -240,11 +240,12 @@ class RenderingService {
 		" from page,template,frame,design,hierarchy".
 		" left join setting on setting.subdomain='googleanalytics' and setting.`key`='webprofile'".
 		" where page.frame_id=frame.id and page.template_id=template.id".
+		" and page.disabled=0".
 		" and page.design_id=design.object_id and frame.hierarchy_id=hierarchy.id";
 		if ($path==null) {
 			$sql.=" and page.id=".$id;
 		} else {
-			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/').")";
+			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/')." or page.path=".Database::text('/'.$path).")";
 		}
 		if ($row = Database::selectFirst($sql)) {
 			if (Request::getBoolean('ajax')) {
@@ -263,6 +264,12 @@ class RenderingService {
 			$template = $row['template'];
 			$redirect = false;
 		
+			if (StringUtils::isNotBlank($row['path']) && $path==null) {
+				if ($row['path']!==$path) {
+					$redirect = ConfigurationService::getBaseUrl().$row['path'];
+				}
+			}
+			
 			if ($row['dynamic']) {
 				$content = RenderingService::applyContentDynamism($row['id'],$template,$data);
 				$data = $content['data'];

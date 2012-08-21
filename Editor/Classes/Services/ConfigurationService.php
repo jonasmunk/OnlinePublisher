@@ -14,4 +14,20 @@ class ConfigurationService {
 		global $CONFIG;
 		return (isset($CONFIG) && isset($CONFIG['debug']) && $CONFIG['debug']==true);
 	}
+	
+	function getBaseUrl() {
+		global $CONFIG,$baseUrl;
+		if (isset($CONFIG) && isset($CONFIG['baseUrl'])) {
+			return $CONFIG['baseUrl'];
+		}
+		return $baseUrl;
+	}
+	
+	function getCompleteBaseUrl() {
+		$url = ConfigurationService::getBaseUrl();
+		if (!StringUtils::startsWith($url,'http')) {
+			$url = 'http://localhost'.$url;
+		}
+		return $url;
+	}
 }

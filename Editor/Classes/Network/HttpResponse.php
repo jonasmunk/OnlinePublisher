@@ -11,6 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 class HttpResponse {
 	
 	private $statusCode;
+	private $data;
 	
 	function HttpResponse() {
 	}
@@ -22,6 +23,15 @@ class HttpResponse {
 	function getStatusCode() {
 		return $this->statusCode;
 	}
+	
+	function setData($data) {
+	    $this->data = $data;
+	}
+
+	function getData() {
+	    return $this->data;
+	}
+	
 	
 	function isSuccess() {
 		return $this->statusCode == 200;

@@ -12,7 +12,7 @@ require_once($basePath.'Editor/Classes/Services/FileService.php');
 class ImageTransformationService {
 	
 	function loadImage($path,$ext=null) {
-		if (file_exists($path)) {
+		if (file_exists($path) && is_readable($path)) {
 			if ($ext==null) {
 				$ext = FileSystemService::getFileExtension($path);
 				$ext = strtolower($ext);
@@ -129,6 +129,10 @@ class ImageTransformationService {
 	
 	function transform($recipe) {
 		$image = ImageTransformationService::loadImage($recipe['path']);
+		if ($image==null) {
+			Log::debug('Unable to load image: '.$recipe['path']);
+			return;
+		}
 		$originalInfo = ImageTransformationService::getImageInfo($recipe['path']);
 		if (isset($recipe['width']) || isset($recipe['height']) || isset($recipe['scale'])) {
 			$originalWidth = $originalInfo['width'];

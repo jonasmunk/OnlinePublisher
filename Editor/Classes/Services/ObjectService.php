@@ -480,13 +480,13 @@ class ObjectService {
 			$obj->searchable = ($row['searchable']==1);
 			foreach ($schema as $property => $info) {
 				$column = Object::getColumn($property,$info);
-				if ($info['type']=='int') {
+				if (isset($info['type']) && $info['type']=='int') {
 					$obj->$property = intval($row[$column]);
-				} else if ($info['type']=='float') {
+				} else if (isset($info['type']) && $info['type']=='float') {
 					$obj->$property = floatval($row[$column]);
-				} else if ($info['type']=='datetime') {
+				} else if (isset($info['type']) && $info['type']=='datetime') {
 					$obj->$property = $row[$column] ? intval($row[$column]) : null;
-				} else if ($info['type']=='boolean') {
+				} else if (isset($info['type']) && $info['type']=='boolean') {
 					$obj->$property = $row[$column]==1 ? true : false;
 				} else {
 					$obj->$property = $row[$column];
