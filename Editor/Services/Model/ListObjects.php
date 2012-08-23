@@ -19,7 +19,7 @@ $query = array('windowSize' => $windowSize,'windowPage' => $windowPage,'sort' =>
 if ($type!='') $query['type'] = $type;
 if ($queryString!='') $query['query'] = $queryString;
 
-$list = Object::find($query);
+$list = ObjectService::findAny($query);
 $objects = $list['result'];
 
 $writer = new ListWriter();

@@ -13,7 +13,7 @@ if (!$id) {
 if (!$id) {
 	Response::badRequest();
 } else {
-	$obj=Object::load($id);
+	$obj = Object::load($id);
 	if (!$obj) {
 		Response::notFound('Unable to load object with id='.$id);
 	} else {
