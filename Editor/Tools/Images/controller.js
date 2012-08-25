@@ -5,10 +5,7 @@ hui.ui.listen({
 	],
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Images');
-		}
-
+		hui.ui.tellContainers('changeSelection','tool:Images');
 	},
 	$accessDenied : function() {
 		//alert('Access denied');

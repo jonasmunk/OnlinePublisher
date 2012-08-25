@@ -8,9 +8,7 @@ hui.ui.listen({
 	fileId : null,
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Files');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Files');
 		var fileInfo = hui.location.getInt('fileInfo');
 		if (fileInfo) {
 			this.loadFile(fileInfo);

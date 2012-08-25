@@ -3,9 +3,7 @@ hui.ui.listen({
 	userId : 0,
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:System');
-		}
+		hui.ui.tellContainers('changeSelection','tool:System');
 	},
 	
 	$select$selector : function(obj) {

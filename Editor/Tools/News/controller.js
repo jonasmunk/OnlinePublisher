@@ -8,9 +8,7 @@ hui.ui.listen({
 	fileId : null,
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:News');
-		}
+		hui.ui.tellContainers('changeSelection','tool:News');
 		var newsInfo = hui.location.getInt('newsInfo');
 		if (newsInfo) {
 			this.loadNews(newsInfo);

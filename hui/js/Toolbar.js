@@ -29,6 +29,15 @@ hui.ui.Toolbar.prototype = {
 				widget.setSelected(widget.key==key);
 			}
 		};
+	},
+	getByKey : function(key) {
+		var desc = hui.ui.getDescendants(this);
+		for (var i=0; i < desc.length; i++) {
+			var widget = desc[i];
+			if (widget.key==key) {
+				return widget;
+			}
+		};
 	}
 }
 
@@ -134,6 +143,16 @@ hui.ui.Toolbar.Icon.prototype = {
 		} else if (overlay) {
 			var parent = hui.get.firstByClass(this.element,'hui_icon');
 			hui.build('span',{'class':'hui_icon_overlay',parent:parent,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+overlay,32)+')'});
+		}
+	},
+	setBadge : function(value) {
+		var node = hui.get.firstByClass(this.element,'hui_icon_badge');
+		if (!node && !hui.isBlank(value)) {
+			node = hui.build('span',{'class':'hui_icon_badge',parent:hui.get.firstByClass(this.element,'hui_icon'),text:value});
+		} else if (hui.isBlank(value) && node) {
+			hui.dom.remove(node);
+		} else if (node) {
+			hui.dom.setText(node,value);
 		}
 	},
 	/** Sets wether the icon should be selected */

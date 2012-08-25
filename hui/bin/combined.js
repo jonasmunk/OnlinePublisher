@@ -5308,8 +5308,8 @@ hui.ui.getIconUrl = function(icon,size) {
 	return hui.ui.context+'/hui/icons/'+icon+size+'.png';
 };
 
-hui.ui.createIcon = function(icon,size) {
-	return hui.build('span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
+hui.ui.createIcon = function(icon,size,tag) {
+	return hui.build(tag || 'span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
 hui.ui.wrapInField = function(element) {
@@ -5543,6 +5543,27 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 	}
 	return result;
 };
+
+hui.ui.tellContainers = function(event,value) {
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
+
+hui.ui._tellContainers = function(event,value) {
+	hui.ui.callSuperDelegates({},event,value);
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
 
 hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
@@ -6090,6 +6111,7 @@ hui.ui.Window.create = function(options) {
 		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
 		(options.width ? 'width:'+options.width+'px;':'')+
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
+		(options.padding ? 'padding-bottom:'+Math.max(0,options.padding-2)+'px;':'')+
 		'">'+
 		'</div></div></div>'+
 		'<div class="hui_window_bottom"><div class="hui_window_bottom"><div class="hui_window_bottom"></div></div></div></div>';
@@ -8491,6 +8513,19 @@ hui.ui.Selection.Items.prototype = {
 		this.parent._setBusy(false);
 	},
 	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			if (this.options.source) {
+				// If there is a source, make sure it is initially 
+				this.options.source.refreshFirst();
+			}			
+		}
+	},
+	/** @private */
 	buildLevel : function(parent,items,inc,open) {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);
@@ -8638,6 +8673,15 @@ hui.ui.Toolbar.prototype = {
 				widget.setSelected(widget.key==key);
 			}
 		};
+	},
+	getByKey : function(key) {
+		var desc = hui.ui.getDescendants(this);
+		for (var i=0; i < desc.length; i++) {
+			var widget = desc[i];
+			if (widget.key==key) {
+				return widget;
+			}
+		};
 	}
 }
 
@@ -8743,6 +8787,16 @@ hui.ui.Toolbar.Icon.prototype = {
 		} else if (overlay) {
 			var parent = hui.get.firstByClass(this.element,'hui_icon');
 			hui.build('span',{'class':'hui_icon_overlay',parent:parent,style:'background-image: url('+hui.ui.getIconUrl('overlay/'+overlay,32)+')'});
+		}
+	},
+	setBadge : function(value) {
+		var node = hui.get.firstByClass(this.element,'hui_icon_badge');
+		if (!node && hui.isBlank(value)) {
+			node = hui.build('span',{'class':'hui_icon_badge',parent:hui.get.firstByClass(this.element,'hui_icon'),text:value});
+		} else if (!hui.isBlank(value) && node) {
+			hui.dom.remove(node);
+		} else if (node) {
+			hui.dom.setText(node,value);
 		}
 	},
 	/** Sets wether the icon should be selected */

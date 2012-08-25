@@ -10,7 +10,8 @@ var controller = {
 			parameters : {id:this.pageId},
 			onSuccess : function() {
 				publish.setEnabled(false);
-			}
+				hui.ui.tellContainers('pageChanged',this.pageId);
+			}.bind(this)
 		});
 	},
 	/*

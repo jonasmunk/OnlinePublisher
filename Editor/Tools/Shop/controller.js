@@ -6,9 +6,7 @@ hui.ui.listen({
 		{drag:'product',drop:'producttype'}
 	],
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Shop');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Shop');
 	},
 	
 	$resolveImageUrl : function(img,width,height) {

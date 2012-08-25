@@ -1,8 +1,6 @@
 hui.ui.listen({
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Optimization');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Optimization');
 		this._loadSettings();
 	},
 	

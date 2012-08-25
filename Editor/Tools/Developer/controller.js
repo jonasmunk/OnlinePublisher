@@ -1,8 +1,6 @@
 hui.ui.listen({
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Developer');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Developer');
 	},
 	$select$selector : function(item) {
 		if (item.value=='settings') {

@@ -2,9 +2,7 @@ hui.ui.listen({
 	siteId : null,
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Central');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Central');
 	},
 	$open$list : function(obj) {
 		this.loadSite(obj.id);

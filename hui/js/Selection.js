@@ -295,6 +295,19 @@ hui.ui.Selection.Items.prototype = {
 		this.parent._setBusy(false);
 	},
 	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			if (this.options.source) {
+				// If there is a source, make sure it is initially 
+				this.options.source.refreshFirst();
+			}			
+		}
+	},
+	/** @private */
 	buildLevel : function(parent,items,inc,open) {
 		if (!items) return;
 		var hierarchical = this.isHierarchy(items);

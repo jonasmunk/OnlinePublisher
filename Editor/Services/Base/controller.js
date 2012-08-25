@@ -2,7 +2,7 @@ var baseController = {
 	$ready : function() {
 		
 	},
-	changeSelection : function(key) {
+	$changeSelection : function(key) {
 		if (window['editToolbar']) {
 			editToolbar.setSelection(key);
 		}
@@ -12,6 +12,29 @@ var baseController = {
 		if (window['setupToolbar']) {
 			setupToolbar.setSelection(key);
 		}
+		this.refresh();
+	},
+	$pageChanged : function() {
+		hui.log('Fetching status');
+		hui.ui.request({
+			url : 'Services/Base/data/Status.php',
+			onJSON : function(obj) {
+				hui.log(obj);
+				if (window['editToolbar']) {
+					editToolbar.getByKey('service:publish').setBadge(obj.unpublished || null);
+				}
+				if (window['analyseToolbar']) {
+					analyseToolbar.getByKey('service:publish').setBadge(obj.unpublished || null);
+				}
+				if (window['setupToolbar']) {
+					setupToolbar.getByKey('service:publish').setBadge(obj.unpublished || null);
+				}
+			}
+		})
+	},
+	changeSelection : function(key) {
+	},
+	$refreshBase : function() {
 		this.refresh();
 	},
 	refresh : function() {

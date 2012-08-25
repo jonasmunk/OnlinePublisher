@@ -1,9 +1,6 @@
 hui.ui.listen({
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Calendars');
-		}
-
+		hui.ui.tellContainers('changeSelection','tool:Calendars');
 	},
 	$valueChanged$viewSelection : function(value) {
 		hui.ui.changeState(value);

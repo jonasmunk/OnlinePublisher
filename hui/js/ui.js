@@ -806,6 +806,27 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 	return result;
 };
 
+hui.ui.tellContainers = function(event,value) {
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
+
+hui.ui._tellContainers = function(event,value) {
+	hui.ui.callSuperDelegates({},event,value);
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
+
 hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
 	var result = undefined;

@@ -1,10 +1,7 @@
 op.Editor = {
 	language : 'en',
 	$ready : function() {
-		var ctrl = this.getToolbarController();
-		if (ctrl) { // May not be loaded yet
-			ctrl.pageDidLoad(op.page.id);
-		}
+		hui.ui.tellContainers('pageLoaded',op.page.id);
 		if (hui.location.hasHash('edit')) {
 			if (templateController!==undefined) {
 				templateController.edit();
@@ -39,10 +36,7 @@ op.Editor = {
 		this._signalChange();
 	},
 	_signalChange : function() {
-		var ctrl = this.getToolbarController();
-		if (ctrl) {
-			ctrl.pageDidChange();
-		}
+		hui.ui.tellContainers('pageChanged',op.page.id);
 	},
 	
 	editProperties : function(language) {

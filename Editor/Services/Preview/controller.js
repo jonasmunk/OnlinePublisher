@@ -2,12 +2,12 @@ var controller = {
 	pageId : null,
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('service:preview');
-		}
+		hui.ui.tellContainers('changeSelection','service:preview');
 		this._refreshBase();
 	},
 	pageDidLoad : function(id) {
+	},
+	$pageLoaded : function(id) {
 		this.pageId = id;
 		this._updateState();
 		this._refreshBase();
@@ -15,9 +15,7 @@ var controller = {
 		reviewPanel.hide();
 	},
 	_refreshBase : function() {
-		try {
-			window.parent.baseController.refresh();
-		} catch (e) {}
+		hui.ui.tellContainers('refreshBase');
 	},
 	_updateState : function() {
 		hui.ui.request({
@@ -30,7 +28,7 @@ var controller = {
 			}
 		});
 	},
-	pageDidChange : function() {
+	$pageChanged : function() {
 		publish.setEnabled(true);
 	},
 	
@@ -58,6 +56,7 @@ var controller = {
 			parameters : {id:this.pageId},
 			onSuccess : function(obj) {
 				publish.setEnabled(false);
+				hui.ui.tellContainers('pageChanged',this.pageId);
 			}
 		});
 	},

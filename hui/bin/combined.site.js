@@ -3807,8 +3807,8 @@ hui.ui.getIconUrl = function(icon,size) {
 	return hui.ui.context+'/hui/icons/'+icon+size+'.png';
 };
 
-hui.ui.createIcon = function(icon,size) {
-	return hui.build('span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
+hui.ui.createIcon = function(icon,size,tag) {
+	return hui.build(tag || 'span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
 hui.ui.wrapInField = function(element) {
@@ -4042,6 +4042,27 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 	}
 	return result;
 };
+
+hui.ui.tellContainers = function(event,value) {
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
+
+hui.ui._tellContainers = function(event,value) {
+	hui.ui.callSuperDelegates({},event,value);
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
 
 hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
