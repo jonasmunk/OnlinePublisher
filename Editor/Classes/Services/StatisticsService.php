@@ -25,4 +25,19 @@ class StatisticsService {
 		Database::insert($sql);
 	}
 	
+	function getPageHits($rows) {
+		$ids = array();
+		$counts = array();
+		foreach ($rows as $row) {
+			$ids[] = $row['id'];
+		}
+		if (count($ids) > 0) {			
+			$sql = "select count(id) as hits,value as id from statistics where type='page' and value in (".join($ids,',').") group by value";
+			$result = Database::selectAll($sql);
+			foreach ($result as $row) {
+				$counts[$row['id']] = $row['hits'];
+			}
+		}
+		return $counts;
+	}
 }

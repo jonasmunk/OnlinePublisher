@@ -212,8 +212,9 @@ function listPages() {
 		endHeaders();
 
 	$templates = TemplateService::getTemplatesKeyed();
-	$result = Database::select($sql['list']);
-	while ($row = Database::next($result)) {
+	$rows = Database::selectAll($sql['list']);
+	$hits = StatisticsService::getPageHits($rows);
+	foreach ($rows as $row) {
 		$writer->startRow(array('id' => $row['id'], 'title' => $row['title'], 'kind' => 'page', 'icon' => 'common/page'))->
 			startCell(array('icon' => 'common/page'))->
 			startLine()->text($row['title'])->endLine();
@@ -227,7 +228,7 @@ function listPages() {
 		if ($row['publishdelta']>0) {
 			$writer->startIcons(array('left'=>3))->icon(array('icon'=>'monochrome/warning','size'=>12))->endIcons();
 		}
-		$writer->startCell()->text($row['hits'])->endCell();
+		$writer->startCell()->text($hits[$row['id']])->endCell();
 		$writer->endCell()->
 			startCell()->
 			startIcons()->
@@ -256,9 +257,9 @@ function buildPagesSql() {
 
 	$sql = "select page.id,page.secure,page.searchable,page.disabled,page.path,page.title,template.unique,
 		UNIX_TIMESTAMP(page.changed) as changed,
-		(page.changed-page.published) as publishdelta,page.language,count(statistics.id) as hits";
+		(page.changed-page.published) as publishdelta,page.language";
 
-	$sqlLimits = " from page left join `statistics` on page.id=statistics.value ,template";
+	$sqlLimits = " from page,template";
 	if ($kind=='subset' && $value=='news') {
 		$sqlLimits.=",news, object_link";
 	}
@@ -287,10 +288,9 @@ function buildPagesSql() {
 	} else if ($value=='latest') {
 		$sqlLimits.=" and page.changed>".Database::datetime(DateUtils::addDays(time(),-1));
 	}
-	$sqlLimits.=" group by page.id order by ".$sort.($direction=='ascending' ? ' asc' : ' desc');
+	$sqlLimits.=" order by ".$sort.($direction=='ascending' ? ' asc' : ' desc');
 
 	$listSql = $sql.$sqlLimits." limit ".($windowPage*$windowSize).",".$windowSize;
-	Log::debug($listSql);
 	return array('list'=>$listSql,'total'=>$countSql.$sqlLimits);
 }
 ?>
