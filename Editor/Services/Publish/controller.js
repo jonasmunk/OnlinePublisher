@@ -8,6 +8,7 @@ hui.ui.listen({
 			parameters:{id:item.row.id,kind:item.row.kind},
 			onSuccess : function() {
 				listSource.refresh();
+				hui.ui.tellContainers('pageChanged');
 			}
 		});
 	},
@@ -25,6 +26,7 @@ hui.ui.listen({
 			url:'PublishAll.php',
 			onSuccess : function() {
 				listSource.refresh();
+				hui.ui.tellContainers('pageChanged');
 			}
 		});
 	}
