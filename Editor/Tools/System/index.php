@@ -223,28 +223,34 @@ $gui='
 			<overflow height="200">
 			<fields>
 				<field label="{Title; da:Titel}:">
-					<text-input name="userTitle"/>
+					<text-input key="title"/>
 				</field>
 				<field label="{Username; da:Brugernavn}:">
-					<text-input name="userUsername"/>
+					<text-input key="username"/>
 				</field>
 				<field label="{Password; da:Kodeord}:">
-					<text-input name="userPassword" secret="true"/>
+					<text-input key="password" secret="true"/>
+				</field>
+				<field label="{Language; da:Sprog}:">
+					<dropdown key="language">
+						<item title="{Danish; da: Dansk}" value="da"/>
+						<item title="{English; da: Engelsk}" value="en"/>
+					</dropdown>
 				</field>
 				<field label="{E-post; da:E-mail}:">
-					<text-input name="userEmail"/>
+					<text-input key="email"/>
 				</field>
 				<field label="{Note; da:Notat}:">
-					<text-input name="userNote" lines="6"/>
+					<text-input key="note" lines="6"/>
 				</field>
 				<field label="{Internal access; da:Intern adgang}:">
-					<checkbox name="userInternal"/>
+					<checkbox key="internal"/>
 				</field>
 				<field label="{External access; da:Ekstern adgang}:">
-					<checkbox name="userExternal"/>
+					<checkbox key="external"/>
 				</field>
 				<field label="Administrator:">
-					<checkbox name="userAdministrator"/>
+					<checkbox key="administrator"/>
 				</field>
 			</fields>
 			</overflow>

@@ -71,17 +71,12 @@ hui.ui.listen({
 	},
 	$success$loadUser : function(data) {
 		this.userId = data.id;
-		userTitle.setValue(data.title);
-		userUsername.setValue(data.username);
-		userEmail.setValue(data.email);
-		userAdministrator.setValue(data.administrator);
-		userInternal.setValue(data.internal);
-		userExternal.setValue(data.external);
-		userNote.setValue(data.note);
+		data.password = null;
+		userFormula.setValues(data);
 		userEditor.show();
 		saveUser.setEnabled(true);
 		deleteUser.setEnabled(true);
-		userTitle.focus();
+		userFormula.focus();
 	},
 	$click$newUser : function() {
 		this.userId = 0;
@@ -94,22 +89,14 @@ hui.ui.listen({
 		userFormula.reset();
 	},
 	$click$saveUser : function() {
-		if (userUsername.isEmpty()) {
+		var data = userFormula.getValues();
+		data.id = this.userId;
+		if (hui.isBlank(data.username)) {
 			hui.ui.showMessage({text:'Brugernavnet er ikke udfyldt',duration:2000});
-			userUsername.focus();
+			userFormula.focus();
 			return;
 		}
-		var data = {
-			id:this.userId,
-			title:userTitle.getValue(),
-			note:userNote.getValue(),
-			username:userUsername.getValue(),
-			password:userPassword.getValue(),
-			email:userEmail.getValue(),
-			internal:userInternal.getValue(),
-			external:userExternal.getValue(),
-			administrator:userAdministrator.getValue()
-		};
+		hui.log(data);
 		hui.ui.request({json:{data:data},url:'actions/SaveUser.php',onSuccess:'saveUser'});
 	},
 	$success$saveUser : function() {
