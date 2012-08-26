@@ -21,32 +21,34 @@ class DBUCalendarParser {
 		
 		$table = HtmlTableParser::parseUsingHeader($string);
 		$first = $table[0];
-		foreach ($first as $row) {
-			$date = @$row['Dato'];
-			$time = @$row['Kl.'];
-			$home = @$row['Hjemmehold'];
-			$away = @$row['Udehold'];
-			$location = @$row['Spillested'];
-			$score = @$row['Res'];
+		if (is_array($first)) {			
+			foreach ($first as $row) {
+				$date = @$row['Dato'];
+				$time = @$row['Kl.'];
+				$home = @$row['Hjemmehold'];
+				$away = @$row['Udehold'];
+				$location = @$row['Spillested'];
+				$score = @$row['Res'];
 			
-			if (StringUtils::isBlank($date) || StringUtils::isBlank($time)) {
-				continue;
-			}
-			$parts = preg_split('/:/',$time);
-			$parsed = DateUtils::parse($date);
-			$parsed = DateUtils::addHours($parsed,intval($parts[0]));
-			$startDate = DateUtils::addMinutes($parsed,intval($parts[1]));
-			$endDate = DateUtils::addMinutes($parsed,60*1.75);
+				if (StringUtils::isBlank($date) || StringUtils::isBlank($time)) {
+					continue;
+				}
+				$parts = preg_split('/:/',$time);
+				$parsed = DateUtils::parse($date);
+				$parsed = DateUtils::addHours($parsed,intval($parts[0]));
+				$startDate = DateUtils::addMinutes($parsed,intval($parts[1]));
+				$endDate = DateUtils::addMinutes($parsed,60*1.75);
 						
-			$event = new DBUCalendarEvent();
-			$event->setStartDate($startDate);
-			$event->setEndDate($endDate);
-			$event->setHomeTeam($home);
-			$event->setGuestTeam($away);
-			$event->setLocation($location);
-			$event->setScore($score);
-			$cal->addEvent($event);
+				$event = new DBUCalendarEvent();
+				$event->setStartDate($startDate);
+				$event->setEndDate($endDate);
+				$event->setHomeTeam($home);
+				$event->setGuestTeam($away);
+				$event->setLocation($location);
+				$event->setScore($score);
+				$cal->addEvent($event);
 
+			}
 		}
 		return $cal;
 		
