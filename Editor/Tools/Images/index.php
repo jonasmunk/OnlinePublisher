@@ -95,7 +95,7 @@ $gui='
 		</formula>
 	</window>
 	
-	<window title="{Addition on images; da:Tilføjelse af billeder}" name="uploadWindow" width="300">
+	<window title="{Addition of images; da:Tilføjelse af billeder}" name="uploadWindow" width="300">
 		<tabs small="true" centered="true">
 			<tab title="{Upload; da:Overførsel}" padding="10">
 				<upload name="file" url="actions/UploadImage.php" widget="upload" multiple="true">
@@ -122,25 +122,32 @@ $gui='
 		</tabs>
 	</window>
 	
-	<window title="{Image; da:Billede}" name="imageWindow" icon="common/image" width="300" padding="5">
+	<window title="{Image; da:Billede}" name="imageWindow" icon="common/image" width="450" padding="5">
 		<formula name="imageFormula">
-			<fields labels="above">
-				<field label="{Title; da:Titel}">
-					<text-input key="title"/>
-				</field>
-				<field label="{Groups; da:Grupper}:">
-					<checkboxes name="imageGroups" key="groups" max-height="200">
-						<items source="groupOptionsSource"/>
-					</checkboxes>
-				</field>
-				<buttons>
-					<button name="cancelImage" title="{Cancel; da:Annuller}"/>
-					<button name="deleteImage" title="{Delete; da:Slet}">
-						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete image; da:Ja, slet billedet}" cancel="{Cancel; da:Annuller}"/>
-					</button>
-					<button name="saveImage" title="{Save; da:Gem}" highlighted="true" submit="true"/>
-				</buttons>
-			</fields>
+			<columns>
+				<column width="180px">
+					<div style="width: 150px; min-height: 50px; max-height: 300px; overflow: hidden; background: #fff no-repeat; font-size: 0; padding: 3px; border: 1px solid #ddd; margin: 5px;" id="photo"></div>
+				</column>
+				<column>
+					<fields labels="above">
+						<field label="{Title; da:Titel}">
+							<text-input key="title"/>
+						</field>
+						<field label="{Groups; da:Grupper}:">
+							<checkboxes name="imageGroups" key="groups" max-height="200">
+								<items source="groupOptionsSource"/>
+							</checkboxes>
+						</field>
+					</fields>
+				</column>
+			</columns>
+			<buttons>
+				<button name="cancelImage" title="{Cancel; da:Annuller}"/>
+				<button name="deleteImage" title="{Delete; da:Slet}">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete image; da:Ja, slet billedet}" cancel="{Cancel; da:Annuller}"/>
+				</button>
+				<button name="saveImage" title="{Save; da:Gem}" highlighted="true" submit="true"/>
+			</buttons>
 		</formula>
 	</window>
 </gui>';
