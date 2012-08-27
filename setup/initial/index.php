@@ -4,45 +4,33 @@ if (file_exists('../../Config/Setup.php')) {
 	header('Location: ../../');
 	exit;
 }
-$baseUrl = getBaseUrl();
 
-require_once('../../Editor/Include/Public.php');
+require_once("inc.php");
+
 
 if (!function_exists('xslt_create') && !class_exists('xsltProcessor')) {
 	Response::internalServerError('No XSLT processor');
 	exit;
 }
 
-if (!is_dir($basePath."Config/") || !is_writable($basePath."Config/")) {
-	$gui='
-	<gui xmlns="uri:hui" padding="10">
-		<controller source="controller.js"/>
-		<box width="400" top="30" variant="rounded">
-			<space left="30" right="30" top="10" bottom="10">
-			<text>
-				<h>The configuration file does not exist and I cannot help create it</h>
-				<p>The file should be located at Config/Setup.php, but I cannot write the file so you have to do it yourself.</p>
-				<p>Good luck :-)</p>
-			</text>
-			</space>
-		</box>
-	</gui>
-	';
-	In2iGui::render($gui);
-	exit;
-}
+$canWrite = is_dir($basePath."Config/") && is_writable($basePath."Config/");
+
 $gui='
 <gui xmlns="uri:hui" padding="10">
 	<controller source="controller.js"/>
 	<box width="500" top="30" padding="10" title="Initial setup">
 		<space left="10" right="10" top="5" bottom="10">
 		<text>
-			<p>The configuration file "Config/Setup.php" was not found, this will help create it...</p>
+			<p>The configuration file "Config/Setup.php" was not found, this will help you create it...</p>
+			'.($canWrite
+				? '<p>It looks like we can create the file for you.</p>'
+				: '<p>It looks like we cannot wite the file so you have to create is yourself</p>'
+			).'
 		</text>
 		</space>
 		<formula name="formula">
 			<fields>
-				<field label="Web address:">
+				<field label="Base address:">
 					<text-input name="baseUrl" value="'.StringUtils::escapeXML($baseUrl).'"/>
 				</field>
 				<field label="Database host:">
@@ -63,22 +51,20 @@ $gui='
 				<field label="Super password:">
 					<text-input name="superPassword" secret="true"/>
 				</field>
-				<buttons>
-					<button title="Test database" name="test"/>
-					<button title="OK" name="save" highlighted="true"/>
-				</buttons>
 			</fields>
 		</formula>
+		<field label="Configuration file:" hint="Put the text above into the file: Config/Setup.php">
+			<code-input name="preview"/>
+		</field>
+		<buttons align="right" top="20">
+			<button title="Test database" name="test"/>
+			'.($canWrite 
+			? '<button title="Create configuration file" name="save" highlighted="true"/>'
+			: '').'
+		</buttons>
 	</box>
 </gui>
 ';
 In2iGui::render($gui);
 exit;
-
-function getBaseUrl() {
-	$uri = $_SERVER['REQUEST_URI'];
-	$find = 'setup/initial/';
-	$pos = strpos($uri,$find);
-	return 'http://'.$_SERVER['SERVER_NAME'].'/'.substr($uri,0,$pos);
-}
 ?>

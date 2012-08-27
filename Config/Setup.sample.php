@@ -4,6 +4,22 @@
  * @subpackage Config
  */
 
+$CONFIG = array(
+	'database' => array(
+		'host' => 'localhost',
+		'user' => 'root',
+		'password' => 'secret',
+		'database' => 'onlinepubisher'
+	),
+	
+	'baseUrl' => '/~username/path/to/site/',
+	
+	'super' => array(
+		'user' => 'peter',
+		'password' => '$u9er$ecr3t'
+	)
+);
+
 $superUser="peter";
 $superPassword="$u9er$ecr3t";
 

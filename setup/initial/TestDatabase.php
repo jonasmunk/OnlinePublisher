@@ -1,5 +1,5 @@
 <?php
-require_once('../../Editor/Include/Public.php');
+require_once("inc.php");
 
 $host = Request::getString('databaseHost');
 $name = Request::getString('databaseName');

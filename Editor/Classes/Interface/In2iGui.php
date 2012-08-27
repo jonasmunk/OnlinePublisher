@@ -25,7 +25,7 @@ class In2iGui {
 		'<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
 		'<xsl:variable name="profile">'.(@$_GET['profile']=='true' ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
+		'<xsl:variable name="context">'.substr(ConfigurationService::getBaseUrl(),0,-1).'</xsl:variable>'.
 		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>'.
 		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>';
 		$xslData.='<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
@@ -96,7 +96,7 @@ class In2iGui {
 		'<xsl:output method="xml"/>'.
 		'<xsl:variable name="dev">false</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="context">'.substr($baseUrl,0,-1).'</xsl:variable>'.
+		'<xsl:variable name="context">'.substr(ConfigurationService::getBaseUrl(),0,-1).'</xsl:variable>'.
 		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>'.
 		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
