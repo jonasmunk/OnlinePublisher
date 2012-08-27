@@ -291,6 +291,27 @@
 
 
 
+
+<!--doc title:'Font input' class:'hui.ui.FontInput' module:'input'
+<font-input name="«text»" key="«text»" value="«css-color»"/>
+-->
+<xsl:template match="gui:font-input">
+	<span class="hui_fontinput" id="{generate-id()}">
+		<a class="hui_dropdown" href="javascript://"><span><span><strong><xsl:comment/></strong></span></span></a>
+		<a class="hui_fontinput" href="javascript://" tabindex="-1"><xsl:comment/></a>
+	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.FontInput({
+			element:'<xsl:value-of select="generate-id()"/>'
+			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
+			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+
 <!--doc title:'Location input' class:'hui.ui.LocationField' module:'input'
 <location-input name="«text»" key="«text»" />
 -->

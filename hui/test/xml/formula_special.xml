@@ -13,6 +13,9 @@
 				<field label="Color">
 					<color-input/>
 				</field>
+				<field label="Font">
+					<font-input/>
+				</field>
 				<field label="Location">
 					<location-input/>
 				</field>

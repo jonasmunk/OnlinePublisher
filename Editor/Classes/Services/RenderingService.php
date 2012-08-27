@@ -266,7 +266,7 @@ class RenderingService {
 		
 			if (StringUtils::isNotBlank($row['path']) && $path==null) {
 				if ($row['path']!==$path) {
-					$redirect = ConfigurationService::getBaseUrl().$row['path'];
+					$redirect = StringUtils::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
 				}
 			}
 			

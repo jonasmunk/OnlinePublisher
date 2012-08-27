@@ -16,7 +16,7 @@ hui.ui.listen({
 		textIndent.setValue(this.form.textIndent.value);
 		listStyle.setValue(this.form['type'].value);
 	},
-	$select$color : function(value) {
+	$clickPicker$color : function(value) {
 		partToolbar.getMainController().showColorWindow(function(value) {
 			color.setValue(value);
 			this.form.color.value=value || '';

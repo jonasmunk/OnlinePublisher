@@ -259,6 +259,10 @@ class StringUtils {
 		return strpos($str,$find)===0;
 	}
 	
+	function endsWith($str,$find) {
+		return strrpos($str,$find)===strlen($str)-strlen($find);
+	}
+	
 	function removeTags($string) {
 		return preg_replace("/<[\/a-z]+[^>]*>/i", '', $string);
 	}
@@ -312,6 +316,27 @@ class StringUtils {
 	        }
 	    }
 	    return $ret;
+	}
+	
+	function concatUrl($str1,$str2) {
+		$str1 = trim(StringUtils::toString($str1));
+		$str2 = trim(StringUtils::toString($str2));
+		if ($str1==='' && $str2==='') {
+			return '';
+		}
+		else if ($str1==='') {
+			return $str2;
+		}
+		else if ($str2==='') {
+			return $str1;
+		}
+		else if (StringUtils::endsWith($str1,'/') && StringUtils::startsWith($str2,'/')) {
+			return $str1.substr($str2,1);
+		}
+		else if (StringUtils::endsWith($str1,'/') || StringUtils::startsWith($str2,'/')) {
+			return $str1.$str2;
+		}
+		return $str1.'/'.$str2;		
 	}
 	
 	function extract($str,$start,$stop) {

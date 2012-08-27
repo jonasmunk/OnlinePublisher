@@ -5308,8 +5308,8 @@ hui.ui.getIconUrl = function(icon,size) {
 	return hui.ui.context+'/hui/icons/'+icon+size+'.png';
 };
 
-hui.ui.createIcon = function(icon,size) {
-	return hui.build('span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
+hui.ui.createIcon = function(icon,size,tag) {
+	return hui.build(tag || 'span',{'class':'hui_icon hui_icon_'+size,style:'background-image: url('+hui.ui.getIconUrl(icon,size)+')'});
 };
 
 hui.ui.wrapInField = function(element) {
@@ -6090,6 +6090,7 @@ hui.ui.Window.create = function(options) {
 		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
 		(options.width ? 'width:'+options.width+'px;':'')+
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
+		(options.padding ? 'padding-bottom:'+Math.max(0,options.padding-2)+'px;':'')+
 		'">'+
 		'</div></div></div>'+
 		'<div class="hui_window_bottom"><div class="hui_window_bottom"><div class="hui_window_bottom"></div></div></div></div>';
@@ -9071,13 +9072,16 @@ hui.ui.BoundPanel.prototype = {
 		}
 		if (!hui.browser.opacity) {
 			this.element.style.display='none';
+			hui.ui.callVisible(this);
 		} else {
-			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,onComplete:function() {
+				this.element.style.display='none';
+				hui.ui.callVisible(this);
+			}.bind(this)});
 		}
 		if (this.options.modal) {
 			hui.ui.hideCurtain(this);
 		}
-		hui.ui.callVisible(this);
 		this.visible=false;
 	},
 	/**
@@ -16438,7 +16442,7 @@ hui.ui.ColorInput.prototype = {
 	},
 	_onButtonClick : function() {
 		if (hui.window.getViewHeight()<200) {
-			this.fire('select',this.value)		
+			this.fire('clickPicker',this.value)		
 			return; // TODO: mini picker
 		}
 		if (!this.panel) {
@@ -17066,7 +17070,218 @@ hui.ui.ObjectInput.prototype = {
 	reset : function() {
 		this.setValue(null);
 	}
-}/** A graph
+}/////////////////////////// Color input /////////////////////////
+
+/**
+ * A component for font input
+ * @constructor
+ */
+hui.ui.FontInput = function(options) {
+	this.options = hui.override({value:null},options);
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	this.button = hui.get.firstByClass(this.element,'hui_fontinput');
+	this.dropdown = new hui.ui.DropDown({
+		element : hui.get.firstByClass(this.element,'hui_dropdown'),
+		items : hui.ui.FontPicker.fonts
+	});
+	this.value = null;
+	hui.ui.extend(this);
+	this.setValue(this.options.value);
+	this._addBehavior();
+}
+
+hui.ui.FontInput.create = function(options) {
+	options = options || {};
+	var e = options.element = hui.build('span',{'class':'hui_colorinput',html:'<span class="hui_field_top"><span><span></span></span></span><span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content"><span class="hui_field_singleline"><input type="text" value=""/></span></span></span></span><span class="hui_field_bottom"><span><span></span></span></span><a tabindex="-1" class="hui_colorinput" href="javascript://"></a>'});
+		
+	return new hui.ui.ColorInput(options);
+}
+
+hui.ui.FontInput.prototype = {
+	_addBehavior : function() {
+		hui.listen(this.button, 'click',this._onButtonClick.bind(this));
+	},
+	_syncInput : function() {
+		this.dropdown.setValue(this.value);
+	},
+	_fireChange : function() {
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
+		this.fire('valueChanged',this.value)		
+	},
+	_onBlur : function() {
+		hui.Color.parse(this.value);
+	},
+	_onButtonClick : function() {
+		if (hui.window.getViewHeight()<200) {
+			this.fire('clickPicker',this.value)		
+			return; // TODO: mini picker
+		}
+		if (!this.panel) {
+			this.panel = hui.ui.BoundPanel.create({modal:true,variant:'light'});
+			this.picker = hui.ui.FontPicker.create();
+			this.picker.listen(this);
+			this.panel.add(this.picker);
+		}
+		this.panel.position(this.button);
+		this.panel.show();
+	},
+	/** @private */
+	$select : function(font) {
+		this.panel.hide();
+		this.setValue(font.value);
+		this._fireChange();
+	},
+	
+	// Public...
+	
+	getValue : function() {
+		return this.value;
+	},
+	setValue : function(value) {
+		this.value = value;
+		this._syncInput();
+	},
+	focus : function() {
+		try {
+			this.input.focus();
+		} catch (e) {}		
+	},
+	reset : function() {
+		this.setValue('');
+	}
+}
+
+/* EOF *//**
+	@constructor
+	@param options The options (non)
+*/
+hui.ui.FontPicker = function(options) {
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	this.fonts = options.fonts.concat(options.additionalFonts);
+	this.previews = {};
+	this.options = options;
+	hui.override(this.options,options);
+	hui.ui.extend(this);
+	this._addBehavior();
+}
+
+hui.ui.FontPicker.fonts =[
+	{text:'Verdana',value:'Verdana,sans-serif'},
+	{text:'Tahoma',value:'Tahoma,Geneva,sans-serif'},
+	{text:'Trebuchet',value:'Trebuchet MS,Helvetica,sans-serif'},
+	{text:'Geneva',value:'Geneva,Tahoma,sans-serif'},
+	{text:'Helvetica',value:'Helvetica,Arial,sans-serif'},
+	{text:'Helvetica Neue',value:'Helvetica Neue,Helvetica,Arial,sans-serif'},
+	{text:'Arial',value:'Arial,Helvetica,sans-serif'},
+	{text:'Arial Black',value:'Arial Black,Gadget,Arial,sans-serif'},
+	{text:'Impact',value:'Impact,Charcoal,Arial Black,Gadget,Arial,sans-serif'},
+
+	{text:'Times New Roman',value:'Times New Roman,Times,serif'},
+	{text:'Times',value:'Times,Times New Roman,serif'},
+	{text:'Book Antiqua',value:'Book Antiqua,Palatino,serif'},
+	{text:'Palatino',value:'Palatino,Book Antiqua,serif'},
+	{text:'Georgia',value:'Georgia,Book Antiqua,Palatino,serif'},
+	{text:'Garamond',value:'Garamond,Times New Roman,Times,serif'},
+
+	{text:'Comic Sans',value:'Comic Sans MS,cursive'},
+
+	{text:'Courier New',value:'Courier New,Courier,monospace'},
+	{text:'Courier',value:'Courier,Courier New,monospace'},
+	{text:'Lucida Console',value:'Lucida Console,Monaco,monospace'},
+	{text:'Monaco',value:'Monaco,Lucida Console,monospace'}
+]
+
+hui.ui.FontPicker.create = function(options) {
+	options = hui.override({
+		fonts : hui.ui.FontPicker.fonts,
+		additionalFonts : []
+	},options);
+	
+	var fonts = options.fonts.concat(options.additionalFonts);
+	
+	var element = options.element = hui.build('div',{
+		'class' : 'hui_fontpicker'
+		});
+	for (var i=0; i < fonts.length; i++) {
+		var font = fonts[i];
+		var node = hui.build('div',{parent:element,'class':'hui_fontpicker_item',text:font.text,style:'font-family:'+font.value+';'});
+		var icon = hui.ui.createIcon('monochrome/info',16,'a');
+		node.appendChild(icon);
+		node.huiIndex = i;
+	};
+	return new hui.ui.FontPicker(options);
+}
+
+hui.ui.FontPicker.prototype = {
+	_addBehavior : function() {
+		hui.listen(this.element,'click',this._onClick.bind(this));
+	},
+	_onClick : function(e) {
+		e = hui.event(e);
+		var node = e.findByClass('hui_fontpicker_item');
+		if (node) {
+			var a = e.findByClass('hui_icon');
+			var font = this.fonts[node.huiIndex];
+			if (a) {
+				this._buildPreview(font);
+			} else {
+				this.fire('select',font);
+			}
+		}
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (!hui.dom.isVisible(this.element)) {
+			hui.each(this.previews,function(key,value) {
+				value.hide();
+			})
+		}
+	},
+	_buildPreview : function(font) {
+		if (this.previews[font.name]) {
+			this.previews[font.name].show();
+			return;
+		}
+		var e = hui.build('div',{className:'hui_fontpicker_example',style:'font-family:'+font.value+';'});
+
+		var weights = [100,200,300,'normal',500,600,'bold','bolder'];
+		var sizes = ['9pt','10pt','11pt','12pt','13pt','14pt','16px','18pt'];
+
+		var html = '<h1>'+font.text+'</h1>';
+		
+		html+='<p style="font-size: 12px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>';
+		
+		html+='<table>';
+		html+='<thead><tr><th></th>';
+		for (var i=0; i < weights.length; i++) {
+			html+='<th>'+weights[i]+'</th>';
+		};
+		html+='</tr></thead>';
+
+		html+='<tbody>';
+		for (var i=0; i < sizes.length; i++) {
+			html+='<tr><th>'+sizes[i]+'</th>';
+			for (var j=0; j < weights.length; j++) {
+				html+='<td style="font-weight: '+weights[j]+'; font-size:'+sizes[i]+';">Pack my box with five dozen liquor jugs</td>';
+			};
+		};
+		html+='</tbody>';
+		e.innerHTML = html;
+		var win = hui.ui.Window.create({title:font.text,padding:3});
+		win.add(e);
+		this.previews[font.name] = win;
+		win.show();
+	}
+}
+
+/* EOF */
+
+
+
+
+/** A graph
  * @constructor
  */
 hui.ui.Graph = function(options) {

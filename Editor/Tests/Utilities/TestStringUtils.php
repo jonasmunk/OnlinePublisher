@@ -107,6 +107,11 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertTrue(StringUtils::startsWith('Merge branch','Merge'));
 	}
 	
+	function testEndsWith() {
+		$this->assertTrue(StringUtils::endsWith('Merge branch','branch'));
+		$this->assertTrue(StringUtils::endsWith('http://www.humanize.dk/','/'));
+	}
+	
 	function testRemoveTags() {
 		$this->assertEqual('Jonas Munk',StringUtils::removeTags('Jonas <b>Munk</b>'));
 		$this->assertEqual('Jonas Munk',StringUtils::removeTags('Jonas <b >Munk</b>'));
@@ -127,6 +132,14 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual($extracted[0],'<table><tr><td>hdsjfhafkhk</td></tr></table>');
 		$this->assertEqual($extracted[1],'<table></table>');
 		$this->assertEqual($extracted[2],'<table border="1">--</table>');
+	}
+	
+	function testConcatUrl() {
+		$this->assertEqual(StringUtils::concatUrl(null,null),'');
+		$this->assertEqual(StringUtils::concatUrl('http://www.humanize.dk/',null),'http://www.humanize.dk/');
+		$this->assertEqual(StringUtils::concatUrl('http://www.humanize.dk','/path/to/somewhere.html'),'http://www.humanize.dk/path/to/somewhere.html');
+		$this->assertEqual(StringUtils::concatUrl('http://www.humanize.dk/','path/to/somewhere.html'),'http://www.humanize.dk/path/to/somewhere.html');
+		$this->assertEqual(StringUtils::concatUrl('http://www.humanize.dk/','/path/to/somewhere.html'),'http://www.humanize.dk/path/to/somewhere.html');
 	}
 }
 ?>

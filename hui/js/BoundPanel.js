@@ -118,13 +118,16 @@ hui.ui.BoundPanel.prototype = {
 		}
 		if (!hui.browser.opacity) {
 			this.element.style.display='none';
+			hui.ui.callVisible(this);
 		} else {
-			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,hideOnComplete:true});
+			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,onComplete:function() {
+				this.element.style.display='none';
+				hui.ui.callVisible(this);
+			}.bind(this)});
 		}
 		if (this.options.modal) {
 			hui.ui.hideCurtain(this);
 		}
-		hui.ui.callVisible(this);
 		this.visible=false;
 	},
 	/**

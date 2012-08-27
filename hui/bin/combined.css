@@ -7144,4 +7144,11 @@ span.hui_objectinput_title
 	margin-left: 3px;
 	display: inline-block;
 	vertical-align: middle;
+}a.hui_fontinput
+{
+	background: red;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
 }
