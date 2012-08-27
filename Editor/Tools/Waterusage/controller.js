@@ -3,9 +3,7 @@ hui.ui.listen({
 	meterId : null,
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Waterusage');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Waterusage');
 	},
 	
 	$valueChanged$search : function(value) {

@@ -37,7 +37,8 @@ var controller = {
 					hui.cls.remove(document.body,'editor_details');
 					controller.detailsMode = false;
 				}
-			});			
+			});
+			hui.ui.tellContainers('pageChanged',this.pageId);		
 		}
 		this.ready = true;		
 		if (this.changed) {

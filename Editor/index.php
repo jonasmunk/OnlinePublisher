@@ -19,6 +19,11 @@ if (Request::exists("page")) {
 	$start = 'Services/Preview/';
 }
 
+$unpublished = PublishingService::getTotalUnpublishedCount();
+if ($unpublished==0) {
+	$unpublished = '';
+}
+
 $categorized = ToolService::getCategorized();
 
 $lang = InternalSession::getLanguage();
@@ -80,7 +85,7 @@ $gui='
 					<right>
 					<icon title="{ View ; da:Vis }" icon="common/view" click="dock.setUrl(\'Services/Preview/\')" key="service:preview"/>
 					<icon title="{ Edit ; da:Rediger }" icon="common/edit" click="dock.setUrl(\'Template/Edit.php/\')" key="service:edit"/>
-					<icon title="{ Publish ; da:Udgiv }" icon="common/internet" overlay="upload" click="baseController.goPublish()" key="service:publish"/>
+					<icon title="{ Publish ; da:Udgiv }" icon="common/internet" overlay="upload" click="baseController.goPublish()" badge="'.$unpublished.'" key="service:publish"/>
 					<!--<divider/>
 					<search title="Søgning"/>-->
 					<divider/>

@@ -207,12 +207,14 @@ function listPages() {
 			header(array('title'=>'Type','key'=>'template.unique','sortable'=>'true'))->
 			header(array('title'=>array('Language','da'=>'Sprog'),'key'=>'page.language','sortable'=>'true'))->
 			header(array('title'=>array('Modified','da'=>'Ændret'),'width'=>1,'key'=>'page.changed','sortable'=>'true'))->
+			header(array('title'=>array('Hits','da'=>'Hits'),'width'=>1))->
 			header(array('width'=>1))->
 		endHeaders();
 
 	$templates = TemplateService::getTemplatesKeyed();
-	$result = Database::select($sql['list']);
-	while ($row = Database::next($result)) {
+	$rows = Database::selectAll($sql['list']);
+	$hits = StatisticsService::getPageHits($rows);
+	foreach ($rows as $row) {
 		$writer->startRow(array('id' => $row['id'], 'title' => $row['title'], 'kind' => 'page', 'icon' => 'common/page'))->
 			startCell(array('icon' => 'common/page'))->
 			startLine()->text($row['title'])->endLine();
@@ -226,6 +228,7 @@ function listPages() {
 		if ($row['publishdelta']>0) {
 			$writer->startIcons(array('left'=>3))->icon(array('icon'=>'monochrome/warning','size'=>12))->endIcons();
 		}
+		$writer->startCell()->text($hits[$row['id']])->endCell();
 		$writer->endCell()->
 			startCell()->
 			startIcons()->
@@ -288,7 +291,6 @@ function buildPagesSql() {
 	$sqlLimits.=" order by ".$sort.($direction=='ascending' ? ' asc' : ' desc');
 
 	$listSql = $sql.$sqlLimits." limit ".($windowPage*$windowSize).",".$windowSize;
-
 	return array('list'=>$listSql,'total'=>$countSql.$sqlLimits);
 }
 ?>

@@ -5,10 +5,7 @@ hui.ui.listen({
 	],
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Images');
-		}
-
+		hui.ui.tellContainers('changeSelection','tool:Images');
 	},
 	$accessDenied : function() {
 		//alert('Access denied');
@@ -195,18 +192,20 @@ hui.ui.listen({
 		this.imageId = null;
 	},
 	_loadImage : function(id) {
-		var self = this;
+		var photo = hui.get('photo');
+		photo.innerHTML = '';
 		hui.ui.request({
-			url:'data/LoadImage.php',
-			parameters:{id:id},
-			message:{start:{en:'Loading image...',da:'Åbner billede...'},delay:300},
-			onJSON:function(data) {
-				self.imageId = id;
+			url : 'data/LoadImage.php',
+			parameters : {id:id},
+			message : {start:{en:'Loading image...',da:'Åbner billede...'},delay:300},
+			onJSON : function(data) {
+				this.imageId = id;
 				imageFormula.setValues(data.image);
 				imageGroups.setValue(data.groups);
 				imageWindow.show();
 				imageFormula.focus();
-			}
+				hui.build('img',{src:'../../../services/images/?id='+id+'&width=150',parent:photo});
+			}.bind(this)
 		});
 	},
 	_deleteImage : function(id) {

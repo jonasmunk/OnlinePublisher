@@ -5,6 +5,13 @@ if (!op) {
 op.preview = false;
 op.page = {id:null,path:null,template:null};
 
+hui.onReady(function() {
+	hui.request({
+		url : op.context+'services/statistics/',
+		parameters : {page : op.page.id,referer:document.referer}
+	});
+})
+
 op.ignite = function() {
 	if (!this.preview) {
 		document.onkeydown=function(e) {

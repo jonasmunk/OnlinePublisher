@@ -1,8 +1,6 @@
 hui.ui.listen({
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('service:start');
-		}
+		hui.ui.tellContainers('changeSelection','service:start');
 	},
 	$clickIcon$newsList : function(info) {
 		window.open(info.data.url);

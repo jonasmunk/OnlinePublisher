@@ -7,9 +7,7 @@ var mainController = {
 	],
 	
 	$ready : function() {
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Sites');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Sites');
 		var pageInfo = hui.location.getInt('pageInfo');
 		if (pageInfo) {
 			this.loadPage(pageInfo);

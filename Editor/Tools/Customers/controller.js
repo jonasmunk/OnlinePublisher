@@ -12,9 +12,7 @@ hui.ui.listen({
 		if (person) {
 			this.loadPerson(person);
 		}
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection('tool:Customers');
-		}
+		hui.ui.tellContainers('changeSelection','tool:Customers');
 	},
 	
 	$resolveImageUrl : function(img,width,height) {

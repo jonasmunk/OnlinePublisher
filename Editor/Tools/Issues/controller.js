@@ -1,5 +1,6 @@
 hui.ui.listen({
 	$ready : function() {
+		hui.ui.tellContainers('changeSelection','tool:Issues');
 	},
 	
 	_issueId : null,

@@ -738,6 +738,7 @@ hui.ui.extend = function(obj,options) {
 	}
 };
 
+/** Send a global drag and drop message */
 hui.ui.callDelegatesDrop = function(dragged,dropped) {
 	for (var i=0; i < hui.ui.delegates.length; i++) {
 		if (hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
@@ -746,6 +747,7 @@ hui.ui.callDelegatesDrop = function(dragged,dropped) {
 	}
 };
 
+/** Send a message to all ancestors of a widget */
 hui.ui.callAncestors = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
 	var d = hui.ui.getAncestors(obj);
@@ -756,6 +758,7 @@ hui.ui.callAncestors = function(obj,method,value,event) {
 	};
 };
 
+/** Send a message to all descendants of a widget */
 hui.ui.callDescendants = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
@@ -771,10 +774,12 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 	};
 };
 
+/** Signal that a widget has changed visibility */
 hui.ui.callVisible = function(widget) {
 	hui.ui.callDescendants(widget,'$visibilityChanged');
 }
 
+/** Listen for global events */
 hui.ui.listen = function(delegate) {
 	hui.ui.delegates.push(delegate);
 }
@@ -805,6 +810,30 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 	}
 	return result;
 };
+
+/**
+ * Sends a message to parent frames
+ */
+hui.ui.tellContainers = function(event,value) {
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
+
+hui.ui._tellContainers = function(event,value) {
+	hui.ui.callSuperDelegates({},event,value);
+	if (window.parent!=window) {
+		try {
+			window.parent.hui.ui._tellContainers(event,value);
+		} catch (e) {
+			//hui.log('Unable to callContainers')
+		}
+	}
+}
 
 hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;

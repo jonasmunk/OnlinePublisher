@@ -99,14 +99,14 @@ $gui='
 				<field label="Filter">
 					<text-input key="filter"/>
 				</field>
-				<field label="Interval ({seconds; da:sekunder})">
+				<field label="{Interval (seconds); da:Interval (sekunder)}">
 					<number-input key="syncInterval"/>
 				</field>
 			</fields>
 			<buttons>
 				<button name="cancelSource" title="{Cancel; da:Annuller}"/>
 				<button name="deleteSource" title="{Delete; da:Slet}">
-					<confirm text="(Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 				</button>
 				<button name="saveSource" title="{Save; da:Gem}" highlighted="true"/>
 			</buttons>

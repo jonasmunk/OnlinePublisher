@@ -23,6 +23,7 @@ $user->setEmail($data->email);
 $user->setInternal($data->internal);
 $user->setExternal($data->external);
 $user->setAdministrator($data->administrator);
+$user->setLanguage($data->language);
 $user->save();
 $user->publish();
 ?>

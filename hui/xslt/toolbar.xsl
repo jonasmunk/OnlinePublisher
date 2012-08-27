@@ -97,6 +97,9 @@
 				<xsl:if test="@overlay">
 					<span class="hui_icon_overlay" style="background-image: url('{$context}/hui/icons/overlay/{@overlay}32.png')"><xsl:comment/></span>
 				</xsl:if>
+				<xsl:if test="@badge!=''">
+					<span class="hui_icon_badge"><xsl:value-of select="@badge"/></span>
+				</xsl:if>
 				<xsl:comment/>
 			</span>
 			<strong><xsl:value-of select="@title"/><xsl:value-of select="@text"/></strong>

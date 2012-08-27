@@ -412,6 +412,7 @@
 <xsl:template match="gui:frames">
 	<html>
 		<head>
+			<script src="{$context}/hui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			<xsl:apply-templates select="gui:script"/>
 		</head>
 		<frameset rows="84,*" framespacing="0" frameborder="0" border="0">

@@ -72,6 +72,20 @@ class PublishingService {
 		
 	}
 	
+	function getTotalUnpublishedCount() {
+		$count = 0;
+		$sql = "select count(page.id) as count from page where changed>published
+			union
+			select count(hierarchy.id) as count from hierarchy where changed>published
+			union
+			select count(object.id) as count from object where updated>published";
+		$rows = Database::selectAll($sql);
+		foreach ($rows as $row) {
+			$count+=intval($row['count']);
+		}
+		return $count;
+	}
+	
 	function getUnpublishedPages() {
 		$sql="select page.id,page.title,template.unique as template from page,template where page.template_id=template.id and changed>published";
 		return Database::selectAll($sql);
@@ -86,13 +100,18 @@ class PublishingService {
 		$result = array();
 		$sql = "select id from object where updated>published";
 		$ids = Database::getIds($sql);
+		$notFound = array();
 		foreach ($ids as $id) {
 			if ($object = Object::load($id)) {
 				$result[] = $object;
 			} else {
+				$notFound[] = $id;
 				Log::debug('Unable to load object: '.$id);
 			}
 			
+		}
+		if ($notFound) {
+			Log::debug('Not found:'.join($notFound,','));
 		}
 		return $result;
 	}

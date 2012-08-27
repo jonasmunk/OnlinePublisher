@@ -10,9 +10,7 @@ $gui='
 	<frame source="Toolbar.php" scrolling="false" name="Toolbar"/>
 	<frame source="Editor.php" name="Frame"/>
 	<script>
-		if (window.parent!=window) {
-			window.parent.baseController.changeSelection("service:edit");
-		}
+		hui.ui.tellContainers("changeSelection","service:edit");
 	</script>
 </frames>';
 

@@ -2,6 +2,7 @@ span.hui_segmented
 {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
+	border-radius: 3px;
 	background: #fff;
 	border: 1px solid #AAAAAA;
 	border-color: #ddd #ccc #aaa;
@@ -23,6 +24,7 @@ span.hui_segmented a
 	padding: 0 3px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	border-radius: 2px;
 	outline: none;
 }
 

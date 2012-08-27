@@ -139,6 +139,7 @@ a.hui_toolbar_icon span.hui_icon
 	width: 32px;
 	margin: 0px auto 1px auto;
 	display: inline-block;
+	position: relative;
 }
 
 span.hui_icon_overlay
@@ -147,6 +148,24 @@ span.hui_icon_overlay
 	width: 32px;
 	background: right bottom no-repeat;
 	display:inline-block;
+}
+
+span.hui_icon_badge
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#f69), to(#f03));
+	border: 1px solid #d00;
+	color: #fff;
+	display:inline-block;
+	font-size: 10px;
+	height: 11px;
+	line-height: 11px;
+	position: absolute;
+	padding: 0 2px;
+	border-radius: 4px;
+	font-family: Arial;
+	right: -5px;
+	bottom: -2px;
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 
 

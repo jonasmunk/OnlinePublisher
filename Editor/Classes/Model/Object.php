@@ -206,24 +206,7 @@ class Object {
 	}
 
     function load($id) {
-    	global $basePath;
-    	$object = false;
-    	$sql = "select type from object where id =".Database::int($id);
-    	if ($row = Database::selectFirst($sql)) {
-    		$unique = ucfirst($row['type']);
-			if (!$unique) {
-				Log::debug('Unable to load object by id: '.$id);
-				return false;
-			}
-			if (file_exists($basePath.'Editor/Classes/'.$unique.'.php')) {
-    			require_once($basePath.'Editor/Classes/'.$unique.'.php');
-			} else {
-				require_once($basePath.'Editor/Classes/Objects/'.$unique.'.php');
-			}
-    		$class = new $unique;
-    		$object = $class->load($id);
-    	}
-    	return $object;
+		return ObjectService::loadAny($id);
     }
     
     function getObjectData($id) {
@@ -237,48 +220,5 @@ class Object {
     	return $data;
     }
 
-
-
-    function find($query = array()) {
-    	global $basePath;
-    	$parts = array();
-		$parts['columns'] = 'object.id,object.type';
-		$parts['tables'] = 'object';
-		$parts['limits'] = array();
-		$parts['ordering'] = 'object.title';
-		$parts['direction'] = $query['direction'];
-    	
-		if ($query['sort']=='title') {
-			$parts['ordering']="object.title";
-		} else if ($query['sort']=='type') {
-			$parts['ordering']="object.type";
-		} else if ($query['sort']=='updated') {
-			$parts['ordering']="object.updated";
-		}
-		if (isset($query['type'])) {
-			$parts['limits'][]='object.type='.Database::text($query['type']);
-		}
-		if (isset($query['query'])) {
-			$parts['limits'][]='`index` like '.Database::search($query['query']);
-		}
-		$list = ObjectService::_find($parts,$query);
-		$list['result'] = array();
-		foreach ($list['rows'] as $row) {
-			if ($row['type']=='') {
-				error_log('Could not load '.$row['id'].' it has no type');
-				continue;
-			}
-	    	$className = ucfirst($row['type']);
-			ObjectService::importType($row['type']);
-    		$class = new $className;
-    		$object = $class->load($row['id']);
-			if ($object) {
-				$list['result'][] = $object;
-			} else {
-				error_log('Could not load '.$row['id']);
-			}
-		}
-		return $list;
-	}
 }
 ?>
