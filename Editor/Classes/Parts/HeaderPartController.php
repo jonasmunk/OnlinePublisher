@@ -58,7 +58,6 @@ class HeaderPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return
 		'<textarea class="part_header common_font part_header_'.$part->getLevel().'" name="text" id="part_header_textarea" style="border: 1px solid lightgrey; width: 100%; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; '.$this->buildCSSStyle($part).'">'.
 		StringUtils::escapeXML($part->getText()).
@@ -77,7 +76,7 @@ class HeaderPartController extends PartController
 		'<input type="hidden" name="textTransform" value="'.StringUtils::escapeXML($part->getTextTransform()).'"/>'.
 		'<input type="hidden" name="fontVariant" value="'.StringUtils::escapeXML($part->getFontVariant()).'"/>'.
 		'<input type="hidden" name="textDecoration" value="'.StringUtils::escapeXML($part->getTextDecoration()).'"/>'.
-		'<script src="'.$baseUrl.'Editor/Parts/header/script.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/header/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function getIndex($part) {

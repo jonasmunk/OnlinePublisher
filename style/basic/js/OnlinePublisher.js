@@ -5,14 +5,9 @@ if (!op) {
 op.preview = false;
 op.page = {id:null,path:null,template:null};
 
-hui.onReady(function() {
-	hui.request({
-		url : op.context+'services/statistics/',
-		parameters : {page : op.page.id,referer:document.referer}
-	});
-})
 
 op.ignite = function() {
+	djhasshsdjak.hey();
 	if (!this.preview) {
 		document.onkeydown=function(e) {
 			e = hui.event(e);
@@ -35,6 +30,10 @@ op.ignite = function() {
 			}
 			return true;
 		}
+		hui.request({
+			url : op.context+'services/statistics/',
+			parameters : {page : op.page.id, referer : document.referer, uri : document.location.href}
+		});
 	}
 	if (hui.browser.msie7) {
 		hui.onReady(function() {

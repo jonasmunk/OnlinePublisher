@@ -27,7 +27,8 @@ class AuthenticationService {
 	}
 	
 	function isSuperUser($username,$password) {
-		global $superUser,$superPassword;
+		$superUser = ConfigurationService::getSuperUsername();
+		$superPassword = ConfigurationService::getSuperPassword();
 		if (StringUtils::isBlank($username) || StringUtils::isBlank($password) || StringUtils::isBlank($superUser) || StringUtils::isBlank($superPassword)) {
 			return false;
 		}
@@ -85,12 +86,11 @@ class AuthenticationService {
 	}
 
 	function createValidationSession($user) {
-	    global $baseUrl;
 	    $unique = md5(uniqid(rand(), true));
 	    $limit = time() + 60*60; // 1 hour into future
 
 	    $body = "Klik på følgende link for at ændre dit kodeord til brugeren \"".$user->getUsername()."\": \n\n".
-	    $baseUrl."Editor/Recover.php?key=".$unique;
+	    ConfigurationService::getBaseUrl()."Editor/Recover.php?key=".$unique;
 	    if (MailService::send(StringUtils::fromUnicode($user->getEmail()),StringUtils::fromUnicode($user->getTitle()),"OnlinePublisher - ændring af kodeord",$body)) {
 		    $sql = "insert into email_validation_session (`unique`,`user_id`,`email`,`timelimit`)".
 		    " values (".

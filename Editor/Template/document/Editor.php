@@ -38,7 +38,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 			op.context = "../../../";
 			hui.ui.context = "../../../";
 			hui.ui.language = "'.$language.'";
-			controller.context = "'.$baseUrl.'";
+			controller.context = "'.ConfigurationService::getBaseUrl().'";
 			controller.pageId = '.$pageId.';
 			controller.changed = '.(PageService::isChanged($pageId) ? 'true' : 'false')."\n";
 		if ($section==null) {

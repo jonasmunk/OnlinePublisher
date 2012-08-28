@@ -37,7 +37,6 @@ class MapPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return
 		$this->buildHiddenFields(array(
 			"provider" => $part->getProvider(),
@@ -54,7 +53,7 @@ class MapPartController extends PartController
 		'<div id="part_map_container">'.
 		$this->render($part,$context).
 		'</div>
-		<script src="'.$baseUrl.'Editor/Parts/map/editor.js" type="text/javascript" charset="utf-8"></script>
+		<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/map/editor.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 		//partController.setMarkers('.StringUtils::fromJSON($part->getMarkers()).');
 		</script>';

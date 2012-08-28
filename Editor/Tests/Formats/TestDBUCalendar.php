@@ -12,7 +12,7 @@ if (!isset($GLOBALS['basePath'])) {
 class TestDBUCalendar extends UnitTestCase {
     
     function testIt() {
-		global $baseUrl,$basePath;
+		global $basePath;
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
@@ -35,7 +35,7 @@ class TestDBUCalendar extends UnitTestCase {
     }
 
     function testOtherDate() {
-		global $baseUrl,$basePath;
+		global $basePath;
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
@@ -56,7 +56,7 @@ class TestDBUCalendar extends UnitTestCase {
     }
 
     function testHandball() {
-		global $baseUrl,$basePath;
+		global $basePath;
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
@@ -78,7 +78,7 @@ class TestDBUCalendar extends UnitTestCase {
     }
 
     function testU19drenge() {
-		global $baseUrl,$basePath;
+		global $basePath;
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
 		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');

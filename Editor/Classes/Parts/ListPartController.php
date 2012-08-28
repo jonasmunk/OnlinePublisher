@@ -57,7 +57,6 @@ class ListPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return 
 	    '<input type="hidden" name="time_count" value="'.$part->getTimeCount().'"/>'.
 	    '<input type="hidden" name="maxitems" value="'.$part->getMaxItems().'"/>'.
@@ -68,7 +67,7 @@ class ListPartController extends PartController
 	    '<input type="hidden" name="show_source" value="'.($part->getShowSource() ? 'true' : 'false').'"/>'.
 	    '<input type="hidden" name="show_text" value="'.($part->getShowText() ? 'true' : 'false').'"/>'.
 	    '<input type="hidden" name="show_timezone" value="'.($part->getShowTimezone() ? 'true' : 'false').'"/>'.
-		'<script src="'.$baseUrl.'Editor/Parts/list/script.js" type="text/javascript" charset="utf-8"></script>'.
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/list/script.js" type="text/javascript" charset="utf-8"></script>'.
 		'<script type="text/javascript">
 		op.part.List.setData('.$this->buildData($part).');'.
 		'</script>'.

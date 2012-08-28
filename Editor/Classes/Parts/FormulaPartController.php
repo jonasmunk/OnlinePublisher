@@ -27,7 +27,6 @@ class FormulaPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return
 		$this->buildHiddenFields(array(
 			"receiverName" => $part->getReceiverName(),
@@ -37,7 +36,7 @@ class FormulaPartController extends PartController
 		'<div id="part_formula_container">'.
 		$this->render($part,$context).
 		'</div>'.
-		'<script src="'.$baseUrl.'Editor/Parts/formula/formula_editor.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/formula/formula_editor.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function getFromRequest($id) {

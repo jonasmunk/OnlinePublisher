@@ -126,7 +126,7 @@ class RenderingService {
 		'<xsl:variable name="editor">false</xsl:variable>'.
 		'<xsl:variable name="development">'.(Request::getBoolean('dev') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="urlrewrite">'.(isset($GLOBALS['OP']) && $GLOBALS['OP']['urlrewrite'] ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="language">'.$language.'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
@@ -201,7 +201,6 @@ class RenderingService {
 	}
 	
 	function applyContentDynamism($id,$template,&$data) {
-		global $basePath,$baseUrl;
 		$state = array('data' => $data,'redirect' => false,'override' => false);
 		if ($controller = TemplateService::getController($template)) {
 			if (method_exists($controller,'dynamic')) {
@@ -213,14 +212,13 @@ class RenderingService {
 	}
 	
 	function handleMissingPage($path) {
-		global $baseUrl;
 		// See if there is a page redirect
 		$sql = "select page.id,page.path from path left join page on page.id=path.page_id where path.path=".Database::text($path);
 		if ($row = Database::selectFirst($sql)) {
 			if ($row['path']!='') {
-				Response::redirectMoved($baseUrl.$row['path']);
+				Response::redirectMoved(ConfigurationService::getBaseUrl().$row['path']);
 			} else if ($row['id']>0) {
-				Response::redirectMoved($baseUrl.'?id='.$row['id']);
+				Response::redirectMoved(ConfigurationService::getBaseUrl().'?id='.$row['id']);
 			} else {
 				RenderingService::sendNotFound();
 			}

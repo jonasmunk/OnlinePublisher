@@ -73,7 +73,6 @@ class ImagePartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		$link = $this->getSingleLink($part,'entireimage');
 		if (!$link) {
 			$link = array('target_type'=>'','target_value'=>'');
@@ -92,8 +91,8 @@ class ImagePartController extends PartController
 			'frame' => $part->getFrame()
 		)).
 		'<div id="part_image_container">'.$this->render($part,$context).'</div>'.
-		'<script src="'.$baseUrl.'hui/ext/ImagePaster.js" type="text/javascript" charset="utf-8"></script>'.
-		'<script src="'.$baseUrl.'Editor/Parts/image/script.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'hui/ext/ImagePaster.js" type="text/javascript" charset="utf-8"></script>'.
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/image/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function display($part,$context) {

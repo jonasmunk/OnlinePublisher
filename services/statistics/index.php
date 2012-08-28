@@ -1,5 +1,9 @@
 <?php
 require_once '../../Editor/Include/Public.php';
 
-StatisticsService::registerPage(Request::getInt('page'),Request::getString('referer'));
+StatisticsService::registerPage(array(
+	'id' => Request::getInt('page'),
+	'referer' => Request::getString('referer'),
+	'uri' => Request::getString('uri')
+));
 ?>

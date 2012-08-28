@@ -15,7 +15,7 @@ $feed->setTitle('Issues');
 $feed->setDescription('Issues');
 $feed->setPubDate(gmmktime());
 $feed->setLastBuildDate(gmmktime());
-$feed->setLink($baseUrl);
+$feed->setLink(ConfigurationService::getBaseUrl());
 
 foreach ($list as $issue) {
 	$item = new FeedItem();

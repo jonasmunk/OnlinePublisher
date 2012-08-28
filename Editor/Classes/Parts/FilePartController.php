@@ -30,10 +30,9 @@ class FilePartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return '<div id="part_file_container">'.$this->render($part,$context).'</div>'.
 		'<input type="hidden" name="fileId" value="'.$part->getFileId().'"/>'.
-		'<script src="'.$baseUrl.'Editor/Parts/file/script.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/file/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function getFromRequest($id) {
