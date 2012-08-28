@@ -55,7 +55,6 @@ class Database {
 	
 	function getConnection() {
 		$config = ConfigurationService::getDatabase();
-		Log::debug($config);
 		if (!isset($GLOBALS['OP_CON'])) {
 			$con = @mysql_connect($config['host'], $config['user'],$config['password'],false);
 			if (!$con) {

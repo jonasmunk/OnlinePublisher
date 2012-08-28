@@ -19,9 +19,8 @@ class StatisticsService {
 			$userhost = $_SERVER['REMOTE_HOST'];
 		}
 		$country='';
-
 		$sql="insert into statistics (time,type,value,ip,country,agent,method,uri,language,session,referer,host) values (".
-		"now(),'page',".Database::int($options['id']).",".Database::text($ip).",".Database::text($country).",".Database::text($agent).",".Database::text($method).",".Database::text($options['uri']).",".Database::text($language).",".Database::text($session).",".Database::text($options['referer']).",".Database::text($userhost).")";
+		"now(),'page',".Database::int($options['id']).",".Database::text($ip).",".Database::text($country).",".Database::text($agent).",".Database::text($method).",".Database::text($options['uri']).",".Database::text($language).",".Database::text($session).",".Database::text($options['referrer']).",".Database::text($userhost).")";
 		Database::insert($sql);
 	}
 	

@@ -7,7 +7,7 @@ op.page = {id:null,path:null,template:null};
 
 
 op.ignite = function() {
-	djhasshsdjak.hey();
+	//djhasshsdjak.hey();
 	if (!this.preview) {
 		document.onkeydown=function(e) {
 			e = hui.event(e);
@@ -32,7 +32,7 @@ op.ignite = function() {
 		}
 		hui.request({
 			url : op.context+'services/statistics/',
-			parameters : {page : op.page.id, referer : document.referer, uri : document.location.href}
+			parameters : {page : op.page.id, referrer : document.referrer, uri : document.location.href}
 		});
 	}
 	if (hui.browser.msie7) {
