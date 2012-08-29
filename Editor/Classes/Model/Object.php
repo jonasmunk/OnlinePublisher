@@ -161,15 +161,7 @@ class Object {
 	function get($id,$type) {
 		return ObjectService::load($id,$type);
 	}
-	
-	// TODO: Deprecated
-	function getColumn($property,$info) {
-		if (isset($info['column'])) {
-			return $info['column'];
-		}
-		return $property;
-	}
-	
+		
     /*=========================== links =======================*/
 
 	function updateLinks($links) {

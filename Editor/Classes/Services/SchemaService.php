@@ -14,33 +14,51 @@ class SchemaService {
 	
 	function buildSqlSetters($obj,$schema) {
 		$sql = '';
-		foreach ($schema['fields'] as $field => $info) {
-			$column = $field;
-			if (isset($info['column'])) {
-				$column = $info['column'];
-			}
-			if (strlen($sql)>0) {
+		$fields = isset($schema['fields']) ? $schema['fields'] : $schema;
+		if (!is_array($fields)) {
+			Log::debug('No fields found...');
+			Log::debug($schema);
+		}
+		foreach ($fields as $field => $info) {
+			$column = SchemaService::getColumn($field,$info);
+			if (strlen($sql) > 0) {
 				$sql.=',';
 			}
-			$sql.="`".$column."`=";
+			$sql.= "`".$column."`=";
 			$getter = "get".ucfirst($field);
 			if (!method_exists($obj,$getter)) {
 				Log::warn($getter.' does not exist');
 			}
 			$value = $obj->$getter();
-			if ($info['type']=='text') {
-				$sql.=Database::text($value);
-			} else if ($info['type']=='int') {
-				$sql.=Database::int($value);
-			} else if ($info['type']=='float') {
-				$sql.=Database::float($value);
-			} else if ($info['type']=='boolean') {
-				$sql.=Database::boolean($value);
-			} else if ($info['type']=='datetime') {
-				$sql.=Database::datetime($value);
-			}
+			$sql.= SchemaService::_formatValue($info['type'],$value);
 		}
 		return $sql;
+	}
+	
+	function _formatValue($type,$value) {
+		if ($type == 'int') {
+			return Database::int($value);
+		} else if ($type == 'float') {
+			return Database::float($value);
+		} else if ($type == 'boolean') {
+			return Database::boolean($value);
+		} else if ($type == 'datetime') {
+			return Database::datetime($value);
+		}
+		return Database::text($value);
+	}
+	
+	function getRowValue($type,$value) {
+		if ($type == 'int') {
+			return intval($value);
+		} else if ($type == 'float') {
+ 			return floatval($row[$column]);
+		} else if ($type=='datetime') {
+			return $value ? intval($value) : null;
+		} else if ($type=='boolean') {
+			return $value==1 ? true : false;
+		}
+		return $value;
 	}
 	
 	function getColumn($property,$info) {
@@ -80,17 +98,7 @@ class SchemaService {
 				Log::warn($getter.' does not exist');
 			}
 			$value = $obj->$getter();
-			if ($info['type']=='text') {
-				$sql.=Database::text($value);
-			} else if ($info['type']=='int') {
-				$sql.=Database::int($value);
-			} else if ($info['type']=='float') {
-				$sql.=Database::float($value);
-			} else if ($info['type']=='boolean') {
-				$sql.=Database::boolean($value);
-			} else if ($info['type']=='datetime') {
-				$sql.=Database::datetime($value);
-			}
+			$sql.= SchemaService::_formatValue($info['type'],$value);
 		}
 		return $sql;
 	}

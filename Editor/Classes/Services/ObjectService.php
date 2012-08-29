@@ -86,7 +86,7 @@ class ObjectService {
 	function isChanged($id) {
 		$sql="select updated-published as delta from object where id=".Database::int($id);
 		$row = Database::selectFirst($sql);
-		if ($row['delta']>0) {
+		if ($row['delta'] > 0) {
 			return true;
 		}
 		return false;
@@ -228,30 +228,20 @@ class ObjectService {
 			return;
 		}
 		$sql = "update `object` set ".
-		"title=".Database::text($object->getTitle()).
-		",note=".Database::text($object->getNote()).
-		",updated=now()".
-		",searchable=".Database::boolean($object->searchable).
-		",owner_id=".Database::int($object->ownerId).
-		" where id=".Database::int($object->id);
+			"title=".Database::text($object->getTitle()).
+			",note=".Database::text($object->getNote()).
+			",updated=now()".
+			",searchable=".Database::boolean($object->searchable).
+			",owner_id=".Database::int($object->ownerId).
+			" where id=".Database::int($object->id);
 		Database::update($sql);
+
 		$schema = Object::$schema[$object->type];
 		if (is_array($schema)) {
 			$sql = "update `".$object->type."` set object_id=".Database::int($object->id);
-			foreach ($schema as $property => $info) {
-				$column = SchemaService::getColumn($property,$info);
-				$sql.=",`".$column."`=";
-				if ($info['type']=='int') {
-					$sql.=Database::int($object->$property);
-				} else if ($info['type']=='float') {
-					$sql.=Database::float($object->$property);
-				} else if ($info['type']=='datetime') {
-					$sql.=Database::datetime($object->$property);
-				} else if ($info['type']=='boolean') {
-					$sql.=Database::boolean($object->$property);
-				} else {
-					$sql.=Database::text($object->$property);
-				}
+			$setters = SchemaService::buildSqlSetters($object,$schema);
+			if ($setters) {
+				$sql.=",".$setters;
 			}
 			$sql.=" where object_id=".Database::int($object->id);
 			Database::update($sql);
@@ -265,12 +255,14 @@ class ObjectService {
 	function toXml($object) {
 		$ns = 'http://uri.in2isoft.com/onlinepublisher/class/object/1.0/';
 		$xml = '<object xmlns="'.$ns.'" id="'.$object->id.'" type="'.$object->type.'">'.
-		'<title>'.StringUtils::escapeXML($object->title).'</title>'.
-		'<note>'.StringUtils::escapeXMLBreak($object->note,'<break/>').'</note>'.
-		DateUtils::buildTag('created',$object->created).
-		DateUtils::buildTag('updated',$object->updated).
-		DateUtils::buildTag('published',$object->published);
+			'<title>'.StringUtils::escapeXML($object->title).'</title>'.
+			'<note>'.StringUtils::escapeXMLBreak($object->note,'<break/>').'</note>'.
+			DateUtils::buildTag('created',$object->created).
+			DateUtils::buildTag('updated',$object->updated).
+			DateUtils::buildTag('published',$object->published);
+		
 		$links='';
+		
 		$sql = "select object_link.*,page.path from object_link left join page on page.id=object_link.target_value and object_link.target_type='page' where object_id=".$object->id." order by position";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -299,6 +291,7 @@ class ObjectService {
 			$links.='/>';
 		}
 		Database::free($result);
+		
 		if ($links!='') {
 			$xml.='<links>'.$links.'</links>';
 		}
@@ -307,7 +300,7 @@ class ObjectService {
 			$xml.=$object->sub_publish();
 		}
 		$xml.='</sub>'.
-		'</object>';
+			'</object>';
 		return $xml;
 	}
 
@@ -494,18 +487,8 @@ class ObjectService {
 			$obj->ownerId = intval($row['owner_id']);
 			$obj->searchable = ($row['searchable']==1);
 			foreach ($schema as $property => $info) {
-				$column = Object::getColumn($property,$info);
-				if (isset($info['type']) && $info['type']=='int') {
-					$obj->$property = intval($row[$column]);
-				} else if (isset($info['type']) && $info['type']=='float') {
-					$obj->$property = floatval($row[$column]);
-				} else if (isset($info['type']) && $info['type']=='datetime') {
-					$obj->$property = $row[$column] ? intval($row[$column]) : null;
-				} else if (isset($info['type']) && $info['type']=='boolean') {
-					$obj->$property = $row[$column]==1 ? true : false;
-				} else {
-					$obj->$property = $row[$column];
-				}
+				$column = SchemaService::getColumn($property,$info);
+				$obj->$property = SchemaService::getRowValue(@$info['type'],@$row[$column]);
 			}
 			$list['result'][] = $obj;
     	}
