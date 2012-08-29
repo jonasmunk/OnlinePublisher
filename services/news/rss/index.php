@@ -15,13 +15,12 @@ if ($group>0) {
 
 
 function group($id) {
-	global $baseUrl;
 	$feed = new Feed();
 	$feed->setTitle('Nyheder');
 	$feed->setDescription('Nyheder');
 	$feed->setPubDate(gmmktime());
 	$feed->setLastBuildDate(gmmktime());
-	$feed->setLink($baseUrl);
+	$feed->setLink(ConfigurationService::getBaseUrl());
 
 
 	$sql = "select object.id,object.title,object.note,UNIX_TIMESTAMP(news.startdate) as startdate,object_link.target_type,object_link.target_value from news,newsgroup_news,object left join object_link on object.id = object_link.object_id where object.id=news.object_id and newsgroup_news.news_id = news.object_id and newsgroup_news.newsgroup_id=".Database::int($id)." order by startdate desc,id,object_link.position";
@@ -40,7 +39,7 @@ function group($id) {
 				$item->setGuid($link);
 				$item->setLink($link);
 			} else {
-				$item->setGuid($baseUrl.$row['id']);
+				$item->setGuid(ConfigurationService::getBaseUrl().$row['id']);
 			}
 			$feed->addItem($item);
 			$ids[] = $row['id'];
@@ -55,12 +54,11 @@ function group($id) {
 }
 
 function buildLink($type,$value) {
-	global $baseUrl;
 	if ($type=='page') {
-       return $baseUrl.'?id='.$value;
+       return ConfigurationService::getBaseUrl().'?id='.$value;
 	}
     else if ($type=='file') {
-       return $baseUrl.'?file='.$value;
+       return ConfigurationService::getBaseUrl().'?file='.$value;
 	}
     else if ($type=='url' || $type=='email') {
         return $value;

@@ -22,10 +22,10 @@ if ($id>0) {
 		InternalSession::setPageDesign($row['design']);
 		if ($ctrl = TemplateService::getController($row['template'])) {
 			if ($ctrl->isClientSide()) {
-				Response::redirect($baseUrl.'Editor/Services/Preview/?id='.$id.'&edit=true');
+				Response::redirect(ConfigurationService::getBaseUrl().'Editor/Services/Preview/?id='.$id.'&edit=true');
 			}
 		}
-		Response::redirect($baseUrl.'Editor/Template/'.$row['template'].'/Edit.php?id='.$id);
+		Response::redirect(ConfigurationService::getBaseUrl().'Editor/Template/'.$row['template'].'/Edit.php?id='.$id);
 	}
 }
 else {

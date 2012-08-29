@@ -70,7 +70,6 @@ class PersonPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return
 		'<input type="hidden" name="align" value="'.$part->getAlign().'"/>'.
 		'<input type="hidden" name="show_firstname" value="'.$this->_intToBool($part->getShowFirstName()).'"/>'.
@@ -94,7 +93,7 @@ class PersonPartController extends PartController
 		'<div align="'.$part->getAlign().'">'.
 		'<div id="part_person_container">'.$this->render($part,$context).'</div>'.
 		'</div>'.
-		'<script src="'.$baseUrl.'Editor/Parts/person/script.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/person/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function _intToBool($val){

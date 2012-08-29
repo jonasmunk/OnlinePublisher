@@ -30,19 +30,18 @@ class RichtextPartController extends PartController
 	}
 		
 	function editor($part,$context) {
-		global $baseUrl;
 		$modern = SettingService::getSetting('part','richtext','experimetal');
 		if ($modern) {
 			return
 			'<div id="part_richtext">'.$this->render($part,$context).'</div>'.
 			'<input type="hidden" name="html" value="'.StringUtils::escapeXML(StringUtils::fromUnicode($part->getHtml())).'"/>'.
-			'<script src="'.$baseUrl.'Editor/Parts/richtext/script.js" type="text/javascript" charset="utf-8"></script>';
+			'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/richtext/script.js" type="text/javascript" charset="utf-8"></script>';
 		} else {
 			return
 			'<textarea class="Part-richtext" id="PartRichtextTextarea" name="html" style="width: 100%; height: 250px;">'.
 			StringUtils::escapeXML($part->getHtml()).
 			'</textarea>'.
-			'<script language="javascript" type="text/javascript" src="'.$baseUrl.'Editor/Libraries/tinymce/tiny_mce.js"></script>
+			'<script language="javascript" type="text/javascript" src="'.ConfigurationService::getBaseUrl().'Editor/Libraries/tinymce/tiny_mce.js"></script>
 			<script language="javascript" type="text/javascript">
 			tinyMCE.init({
 				mode : "textareas",
@@ -50,7 +49,7 @@ class RichtextPartController extends PartController
 				entity_encoding : "numeric",
 				convert_fonts_to_spans : true,
 				language : "en",
-				content_css : "'.$baseUrl.'style/'.$context->getDesign().'/editors/'.$context->getTemplate().'_richtext.css",
+				content_css : "'.ConfigurationService::getBaseUrl().'style/'.$context->getDesign().'/editors/'.$context->getTemplate().'_richtext.css",
 				theme_advanced_toolbar_location : "top",
 				theme_advanced_toolbar_align : "left",
 				theme_advanced_path_location : "bottom", //preview,emotions,iespell,flash,advimage,

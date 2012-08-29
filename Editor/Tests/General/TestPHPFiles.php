@@ -12,7 +12,7 @@ if (!isset($GLOBALS['basePath'])) {
 class TestPHPFiles extends UnitTestCase {
 	
 	function testIt() {
-		global $basePath,$baseUrl;
+		global $basePath;
 		
 		$base = $basePath.'Editor/';
 		
@@ -24,7 +24,7 @@ class TestPHPFiles extends UnitTestCase {
 		$this->assertTrue(is_dir($base));
 		foreach ($files as $file) {
 			$rel = substr($file,strlen($base));
-			$url = 'http://localhost'.$baseUrl.'Editor/'.$rel;
+			$url = ConfigurationService::getCompleteBaseUrl().'Editor/'.$rel;
 			$excluded = array('Authentication.php','Recover.php','Include/Public.php','Touch/style.css.php','Services/Core/RecoverPassword.php','Services/Core/Authentication.php','Services/Core/ChangePassword.php');
 			if (in_array($rel,$excluded)) {
 				continue;

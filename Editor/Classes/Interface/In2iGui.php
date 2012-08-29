@@ -11,7 +11,7 @@ require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 class In2iGui {
 
 	static function render(&$gui) {
-		global $basePath,$baseUrl;
+		global $basePath;
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
 		if (@$_GET['xhtml']=='false') {
 			$xhtml=false;
@@ -89,7 +89,7 @@ class In2iGui {
 	}
 	
 	static function renderFragment($gui) {
-		global $basePath,$baseUrl;
+		global $basePath;
 		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:hui">'.In2iGui::localize($gui,InternalSession::getLanguage()).'</subgui>';
 		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.

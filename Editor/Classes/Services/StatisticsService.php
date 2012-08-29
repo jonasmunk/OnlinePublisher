@@ -7,10 +7,10 @@ require_once($basePath.'Editor/Classes/Model/Page.php');
 
 class StatisticsService {
 	
-	function registerPage($id,$referer) {
+	function registerPage($options) {
 		$ip = getenv("REMOTE_ADDR");
-		$method = getenv('REQUEST_METHOD');
-		$uri = getenv('REQUEST_URI');
+		$method = 'GET';//getenv('REQUEST_METHOD');
+		//$uri = getenv('REQUEST_URI');
 		$language = getenv('HTTP_ACCEPT_LANGUAGE');
 		$session = session_id();
 		$agent = $_SERVER['HTTP_USER_AGENT'];
@@ -19,9 +19,8 @@ class StatisticsService {
 			$userhost = $_SERVER['REMOTE_HOST'];
 		}
 		$country='';
-
 		$sql="insert into statistics (time,type,value,ip,country,agent,method,uri,language,session,referer,host) values (".
-		"now(),'page',".Database::int($id).",".Database::text($ip).",".Database::text($country).",".Database::text($agent).",".Database::text($method).",".Database::text($uri).",".Database::text($language).",".Database::text($session).",".Database::text($referer).",".Database::text($userhost).")";
+		"now(),'page',".Database::int($options['id']).",".Database::text($ip).",".Database::text($country).",".Database::text($agent).",".Database::text($method).",".Database::text($options['uri']).",".Database::text($language).",".Database::text($session).",".Database::text($options['referrer']).",".Database::text($userhost).")";
 		Database::insert($sql);
 	}
 	

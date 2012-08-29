@@ -67,7 +67,6 @@ class PosterPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		$html =
 		$this->buildHiddenFields(array(
 			"recipe" => $part->getRecipe()
@@ -75,7 +74,7 @@ class PosterPartController extends PartController
 		'<div id="part_poster_container">'.
 		$this->render($part,$context).
 		'</div>
-		<script src="'.$baseUrl.'Editor/Parts/poster/poster_editor.js" type="text/javascript" charset="utf-8"></script>';
+		<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/poster/poster_editor.js" type="text/javascript" charset="utf-8"></script>';
 		return $html;
 	}
 

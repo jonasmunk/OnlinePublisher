@@ -40,14 +40,13 @@ class ImagegalleryPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return
 	    '<input type="hidden" name="group" value="'.$part->getImageGroupId().'"/>'.
 	    '<input type="hidden" name="height" value="'.$part->getHeight().'"/>'.
 	    '<input type="hidden" name="framed" value="'.StringUtils::toBoolean($part->getFramed()).'"/>'.
 	    '<input type="hidden" name="showTitle" value="'.StringUtils::toBoolean($part->getShowTitle()).'"/>'.
 	    '<input type="hidden" name="variant" value="'.$part->getVariant().'"/>'.
-		'<script src="'.$baseUrl.'Editor/Parts/imagegallery/script.js" type="text/javascript" charset="utf-8"></script>'.
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/imagegallery/script.js" type="text/javascript" charset="utf-8"></script>'.
 		'<div id="part_imagegallery_container">'.$this->render($part,$context).'</div>';
 	}
 		

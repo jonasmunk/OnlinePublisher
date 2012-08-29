@@ -34,11 +34,10 @@ class TablePartController extends PartController
 	}
 		
 	function editor($part,$context) {
-		global $baseUrl;
 		return
 		'<div id="part_table" class="part_table common_font">'.$part->getHtml().'</div>'.
 		'<input type="hidden" name="html" value="'.StringUtils::escapeXML(StringUtils::fromUnicode($part->getHtml())).'"/>'.
-		'<script src="'.$baseUrl.'Editor/Parts/table/script.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/table/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function editorGui($part,$context) {

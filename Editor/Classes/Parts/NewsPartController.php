@@ -82,7 +82,6 @@ class NewsPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 
 		$groups = $part->getNewsGroupIds();
 
@@ -101,7 +100,7 @@ class NewsPartController extends PartController
 		'<div id="part_news_preview">'.
 		$this->render($part,$context).
 		'</div>'.
-		'<script src="'.$baseUrl.'Editor/Parts/news/Script.js"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/news/Script.js"></script>';
 	}
 	
 	function editorGui($part,$context) {

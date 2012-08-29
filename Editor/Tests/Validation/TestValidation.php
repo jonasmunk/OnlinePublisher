@@ -12,7 +12,6 @@ if (!isset($GLOBALS['basePath'])) {
 class TestValidation extends UnitTestCase {
 
 	function testCreate() {
-		global $baseUrl;
 		$template = TemplateService::getTemplateByUnique('document');
 		if (!$template) {
 			Log::debug('Skipping test since no document template exists');
@@ -44,7 +43,7 @@ class TestValidation extends UnitTestCase {
 				
 		$designs = DesignService::getAvailableDesigns();
 		foreach ($designs as $name => $info) {
-			$url = 'http://localhost'.$baseUrl.'?id='.$page->getId().'&design='.$name;
+			$url = ConfigurationService::getCompleteBaseUrl().'?id='.$page->getId().'&design='.$name;
 			$file = new RemoteFile($url);
 			$html = $file->getData();
 			$this->assertTrue(strpos($html, '<meta http-equiv="content-type" content="text/html; charset=utf-8"/>')!==false,'The design "'.$name.'" has no content-type');

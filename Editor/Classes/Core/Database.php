@@ -54,13 +54,13 @@ class Database {
 	}
 	
 	function getConnection() {
-		global $database_host, $database_user,$database_password,$database;
+		$config = ConfigurationService::getDatabase();
 		if (!isset($GLOBALS['OP_CON'])) {
-			$con = @mysql_connect($database_host, $database_user,$database_password,false);
+			$con = @mysql_connect($config['host'], $config['user'],$config['password'],false);
 			if (!$con) {
 				return false;
 			}
-			@mysql_select_db($database,$con);
+			@mysql_select_db($config['database'],$con);
 			if (mysql_errno($con)>0) {
 				return false;
 			}

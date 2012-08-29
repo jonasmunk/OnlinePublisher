@@ -40,7 +40,6 @@ class TextPartController extends PartController
 	}
 	
 	function editor($part,$context) {
-		global $baseUrl;
 		return
 		'<textarea class="part_text common_font" name="text" id="PartTextTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;'.$this->buildCSSStyle($part).'">'.
 		StringUtils::escapeXML($part->getText()).
@@ -62,7 +61,7 @@ class TextPartController extends PartController
 		'<input type="hidden" name="imageFloat" value="'.StringUtils::escapeXML($part->getImageFloat()).'"/>'.
 		'<input type="hidden" name="imageWidth" value="'.StringUtils::escapeXML($part->getImageWidth()).'"/>'.
 		'<input type="hidden" name="imageHeight" value="'.StringUtils::escapeXML($part->getImageHeight()).'"/>'.
-		'<script src="'.$baseUrl.'Editor/Parts/text/script.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/text/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function editorGui($part,$context) {

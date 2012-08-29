@@ -10,7 +10,7 @@ $message = Request::getString('message');
 $user = User::load(InternalSession::getUserId());
 
 $request = new HttpRequest('http://www.in2isoft.dk/services/issues/create/');
-$request->setParameters(array('description'=>$message,'site'=>$baseUrl,'user'=>$user->getUsername()));
+$request->setParameters(array('description'=>$message,'site'=>ConfigurationService::getBaseUrl(),'user'=>$user->getUsername()));
 
 $client = new HttpClient();
 

@@ -127,6 +127,19 @@
 	<xsl:comment><![CDATA[[if IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
+	<script type="text/javascript">
+		window.onerror = function(errorMsg, url, lineNumber) {
+			try {
+				hui.request({
+					url : '<xsl:value-of select="$path"/>services/issues/create/',
+					parameters : {user:'unknown',site:'this',description:errorMsg+"\nfile: "+url+"\nline: "+lineNumber},
+					onSuccess : function() {
+						hui.log('sent error')
+					} 
+				})
+			} catch (ignore) {}
+		}
+	</script>
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
 			<xsl:choose>
