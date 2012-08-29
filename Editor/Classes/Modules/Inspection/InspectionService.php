@@ -21,11 +21,12 @@ class InspectionService {
 		InspectionService::checkPageContent($inspections);
 		InspectionService::checkEnvironment($inspections);
 		InspectionService::checkLinks($inspections);
+		InspectionService::checkObjects($inspections);
 
 		$filtered = array();
 		
 		foreach ($inspections as $inspection) {
-			if (($query['status'] == 'all' || $query['status']==$inspection->getStatus()) && ($query['category'] == 'all' || $query['category']==$inspection->getCategory())) {
+			if ((!isset($query['status']) || $query['status'] == 'all' || $query['status']==$inspection->getStatus()) && (!isset($query['category']) || $query['category'] == 'all' || $query['category']==$inspection->getCategory())) {
 				$filtered[] = $inspection;
 			}
 		}
@@ -133,8 +134,27 @@ class InspectionService {
 		Database::free($result);
 	}
 	
+	function checkObjects(&$inspections) {
+		$sql = "select id,title,type from object";
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$loaded = Object::load($row['id']);
+			if (!$loaded) {
+				$entity = array('type'=>$row['type'],'title'=>$row['title'],'id'=>$row['id'],'icon'=>'common/object');
+				$inspection = new Inspection();
+				$inspection->setCategory('model');
+				$inspection->setEntity($netity);
+				$inspection->setStatus('error');
+				$inspection->setText('The object could not be loaded ('.$row['id'].' / '.$row['type'].')');
+				$inspections[] = $inspection;
+			}
+				
+		}
+		Database::free($result);
+	}
+	
 	function checkPageContent(&$inspections) {
-		$sql = "select title,id,description from page order by title";
+		$sql = "select title,id,description,path from page order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$valid = true;

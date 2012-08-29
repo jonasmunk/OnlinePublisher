@@ -15,7 +15,8 @@ $gui='
 	<source name="developerFeed" url="data/DeveloperFeed.php"/>
 	<source name="commitFeed" url="data/CommitFeed.php"/>
 	<source name="newsFeed" url="data/NewsFeedArticles.php"/>
-	<source name="warningsList" url="data/WarningsList.php"/>
+	<source name="warningsList" url="data/WarningsList.php?status=warning"/>
+	<source name="errorsList" url="data/WarningsList.php?status=error"/>
 	<div class="box">
 		<div class="header">
 			<span class="date"> version: '.SystemInfo::getFormattedDate().'</span>
@@ -34,19 +35,33 @@ $gui='
 						<icon icon="monochrome/expand" key="expand"/>
 					</actions>
 					<title>{Tasks ; da: Opgaver }</title>
-					<overflow full="true" background="sand_grey">
-					<list source="taskSource" name="taskList" variant="transparent" selectable="false">
-						<empty>
-							<space all="10">
-							<text>
-								<p><strong>Der er ingen opgaver lige nu</strong></p>
-								<p>Du kan oprette noter for sider under visningen af en side.</p>
-								<p>Det gøres under fanebladet "Avanceret".</p>
-							</text>
-							</space>
-						</empty>
-					</list>
-					</overflow>
+					<pages name="issuePages" height="full">
+						<page>
+							<overflow full="true" background="sand_grey">
+							<list source="taskSource" name="taskList" variant="transparent" selectable="false">
+								<empty>
+									<space all="10">
+									<text>
+										<p><strong>Der er ingen opgaver lige nu</strong></p>
+										<p>Du kan oprette noter for sider under visningen af en side.</p>
+										<p>Det gøres under fanebladet "Avanceret".</p>
+									</text>
+									</space>
+								</empty>
+							</list>
+							</overflow>
+						</page>
+						<page>
+							<overflow full="true" shadow-variant="white">
+								<list source="warningsList" selectable="false"/>
+							</overflow>
+						</page>
+						<page>
+							<overflow full="true" shadow-variant="white">
+								<list source="errorsList" selectable="false"/>
+							</overflow>
+						</page>
+					</pages>
 				</tile>
 				<tile width="30" height="100" top="0" left="30" variant="light" name="developmentTile">
 					<actions>
