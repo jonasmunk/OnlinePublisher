@@ -46,7 +46,7 @@ op.CalendarTemplate.prototype.analyze = function() {
 	for (var i=0;i<this.days.length;i++) {
 		var events = hui.get.byClass(this.days[i],'event');
 		for (var j=0;j<events.length;j++) {
-			var top = events[j].cumulativeOffset().top;
+			var top = hui.position.getTop(events[j]);
 			if (top>this.maxDayEvents[i]) {
 				this.maxDayEvents[i]=top;
 			}
