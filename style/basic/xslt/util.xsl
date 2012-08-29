@@ -131,10 +131,15 @@
 		window.onerror = function(errorMsg, url, lineNumber) {
 			try {
 				hui.request({
-					url : '<xsl:value-of select="$path"/>services/issues/create/',
-					parameters : {user:'unknown',site:'this',description:errorMsg+"\nfile: "+url+"\nline: "+lineNumber},
+					url : '<xsl:value-of select="$path"/>services/issues/scripterror/',
+					parameters : {
+						message : errorMsg,
+						file : url,
+						line : lineNumber,
+						url : document.location.href
+					},
 					onSuccess : function() {
-						hui.log('sent error')
+						hui.log('Sent error');
 					} 
 				})
 			} catch (ignore) {}
