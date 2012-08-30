@@ -209,7 +209,7 @@ class FileService {
 				$file->setFilename($fileName);
 				$file->setSize($fileSize);
 				$file->setMimetype($fileType);
-				$file->update();
+				$file->save();
 				$file->publish();
 			} else {
 				$errorMessage='Kunne ikke finde fil med id='.$id;

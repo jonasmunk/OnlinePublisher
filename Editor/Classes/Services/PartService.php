@@ -17,10 +17,62 @@ require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 
 class PartService {
 	
-	/** 
-	* Loads a type based on the type and ID
-	*/
 	function load($type,$id) {
+		if (!$id) {
+			return null;
+		}
+		global $basePath;
+		$class = ucfirst($type).'Part';
+		if (!file_exists($basePath.'Editor/Classes/Parts/'.$class.'.php')) {
+			return null;
+		}
+		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
+		$sql = "select part.id";
+		$schema = Part::$schema[$type];
+		if (!$schema) {
+			Log::debug('No schema for '.$type);
+			return null;
+		}
+		if (isset($schema['fields']) && is_array($schema['fields'])) {
+			foreach ($schema['fields'] as $field => $info) {
+				$column = isset($info['column']) ? $info['column'] : $field;
+				if ($info['type']=='datetime') {
+					$sql.=",UNIX_TIMESTAMP(`part_$type`.`$column`) as `$column`";
+				} else {
+					$sql.=",`part_$type`.`$column`";
+				}
+			}
+		}
+		$sql.=" from part,part_".$type." where part.id=part_".$type.".part_id and part.id=".$id;
+		if ($row = Database::selectFirst($sql)) {
+			$part = new $class();
+			$part->setId($row['id']);
+			foreach ($schema['fields'] as $field => $info) {
+				$setter = 'set'.ucfirst($field);
+				$column = isset($info['column']) ? $info['column'] : $field;
+				$part->$setter($row[$column]);
+			}
+			
+			if (isset($schema['relations']) && is_array($schema['relations'])) {
+				foreach ($schema['relations'] as $field => $info) {
+					$setter = 'set'.ucfirst($field);
+					$sql = "select `".$info['toColumn']."` as id from `".$info['table']."` where `".$info['fromColumn']."`=".Database::int($id);
+					$ids = Database::getIds($sql);
+					$part->$setter($ids);
+				}
+			}
+			
+			return $part;
+		}
+		return null;
+	}
+	
+	
+	
+	/* 
+	* Loads a type based on the type and ID
+	* @Deprecated
+	function _load($type,$id) {
 		global $basePath;
 		if (!$type) {
 			Log::debug('Unable to load part with no type');
@@ -40,6 +92,103 @@ class PartService {
 		$instance = new $class;
 		$part = $instance->load($id);
 		return $part;
+	}
+		*/
+
+	function remove($part) {
+		
+		$sql = "delete from part where id=".Database::int($part->getId());
+		Database::delete($sql);
+
+		$sql = "delete from part_".$part->getType()." where part_id=".Database::int($part->getId());
+		Database::delete($sql);
+
+		$sql = "delete from link where part_id=".Database::int($part->getId());
+		Database::delete($sql);
+
+		$sql = "delete from part_link where part_id=".Database::int($part->getId());
+		Database::delete($sql);
+		
+		// Delete relations
+		$schema = Part::$schema[$part->getType()];
+		if (isset($schema['relations']) && is_array($schema['relations'])) {
+			foreach ($schema['relations'] as $field => $info) {
+				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".Database::int($part->getId());
+				Database::delete($sql);
+			}
+		}
+	}
+	
+	function save($part) {
+		if ($part->isPersistent()) {
+			PartService::update($part);
+		} else {
+			$schema = Part::$schema[$part->getType()];
+			
+			$sql = "insert into part (type,dynamic,created,updated) values (".
+			Database::text($part->getType()).",".
+			Database::boolean($part->isDynamic()).",".
+			"now(),now()".
+			")";
+			$part->setId(Database::insert($sql));
+			
+			$columns = SchemaService::buildSqlColumns($schema);
+			$values = SchemaService::buildSqlValues($part,$schema);
+
+			$sql = "insert into part_".$part->getType()." (part_id";
+			if (strlen($columns)>0) {
+				$sql.=",".$columns;
+			}
+			$sql.=") values (".$part->getId();
+			if (strlen($values) > 0) {
+				$sql.=",".$values;
+			}
+			$sql.=")";
+			Database::insert($sql);
+			
+			if (isset($schema['relations']) && is_array($schema['relations'])) {
+				foreach ($schema['relations'] as $field => $info) {
+					$getter = 'get'.ucfirst($field);
+					$ids = $part->$getter();
+					if ($ids!==null) {
+						foreach ($ids as $id) {
+							$sql = "insert into ".$info['table']." (".$info['fromColumn'].",".$info['toColumn'].") values (".Database::int($part->getId()).",".Database::int($id).")";
+							Database::insert($sql);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	function update($part) {
+		$sql = "update part set updated=now(),dynamic=".Database::boolean($part->isDynamic())." where id=".Database::int($part->getId());
+		Database::update($sql);
+		
+		
+		$schema = Part::$schema[$part->getType()];
+		$setters = SchemaService::buildSqlSetters($part,$schema);
+		
+		if (StringUtils::isNotBlank($setters)) {
+			$sql = "update part_".$part->getType()." set ".$setters." where part_id=".Database::int($part->getId());
+			Database::update($sql);
+		}
+		
+		// Update relations
+		if (isset($schema['relations']) && is_array($schema['relations'])) {
+			foreach ($schema['relations'] as $field => $info) {
+				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".$part->getId();
+				Database::delete($sql);
+				$getter = 'get'.ucfirst($field);
+				$ids = $part->$getter();
+				if ($ids!==null) {
+					foreach ($ids as $id) {
+						$sql = "insert into ".$info['table']." (".$info['fromColumn'].",".$info['toColumn'].") values (".Database::int($part->getId()).",".Database::int($id).")";
+						Database::insert($sql);
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -280,7 +429,7 @@ union select html as text,document_section.part_id from part_table,document_sect
 				Database::text($link->targetType).",".
 				Database::text($link->targetValue).
 			")";
-			$this->id = Database::insert($sql);
+			$link->id = Database::insert($sql);
 		}
 	}
 }

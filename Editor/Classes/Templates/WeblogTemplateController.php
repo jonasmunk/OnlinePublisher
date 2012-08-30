@@ -163,7 +163,7 @@ class WeblogTemplateController extends TemplateController
 			$entry->setTitle($title);
 			$entry->setText($text);
 			$entry->setDate($date);
-			$entry->update();
+			$entry->save();
 			$entry->changeGroups($groups);
 			$entry->publish();
 			

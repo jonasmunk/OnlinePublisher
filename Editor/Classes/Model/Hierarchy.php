@@ -132,7 +132,7 @@ class Hierarchy {
     }
 
 	function save() {
-		if ($this->id>0) {
+		if ($this->id > 0) {
 			$this->update();
 		} else {
 			$this->create();
