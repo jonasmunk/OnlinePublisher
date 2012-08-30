@@ -8,9 +8,6 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
-
 class CSVWriter {
 	
 	var $dirty = false;

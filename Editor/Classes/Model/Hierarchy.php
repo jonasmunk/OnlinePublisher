@@ -7,11 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Services/EventService.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/Services/FileService.php');
-require_once($basePath.'Editor/Classes/Services/CacheService.php');
-require_once($basePath.'Editor/Classes/Services/HierarchyService.php');
 
 class Hierarchy {
     

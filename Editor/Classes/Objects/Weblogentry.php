@@ -7,10 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Model/Object.php');
-require_once($basePath.'Editor/Classes/Model/Page.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 Object::$schema['weblogentry'] = array(
 	'text' => array('type'=>'string'),

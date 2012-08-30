@@ -28,7 +28,7 @@ class ClassService {
 			if (class_exists($name)) {
 				$valid = true;
 				$parent = get_parent_class($name);
-				$instance = new $name;
+				$instance = @new $name;
 				$props = get_object_vars($instance);
 			}
 			$classes[] = array(

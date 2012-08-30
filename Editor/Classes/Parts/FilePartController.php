@@ -7,10 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Parts/PartController.php');
-require_once($basePath.'Editor/Classes/Parts/FilePart.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/Services/FileService.php');
 
 class FilePartController extends PartController
 {

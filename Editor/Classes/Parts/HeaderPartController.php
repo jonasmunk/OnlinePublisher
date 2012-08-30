@@ -7,9 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Parts/PartController.php');
-require_once($basePath.'Editor/Classes/Parts/HeaderPart.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class HeaderPartController extends PartController
 {

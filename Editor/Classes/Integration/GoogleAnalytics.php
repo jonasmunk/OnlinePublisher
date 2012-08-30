@@ -8,7 +8,6 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 require_once($basePath."Editor/Libraries/gapi/gapi.class.php");
-require_once($basePath."Editor/Classes/Services/SettingService.php");
 
 class GoogleAnalytics {
 	

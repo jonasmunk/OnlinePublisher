@@ -9,7 +9,6 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
 require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
-require_once($basePath.'Editor/Classes/Services/FileSystemService.php');
 require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
 
 class TestService {

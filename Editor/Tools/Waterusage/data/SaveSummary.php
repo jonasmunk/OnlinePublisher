@@ -4,7 +4,6 @@
  * @subpackage Tools.Waterusage
  */
 require_once '../../../Include/Private.php';
-require_once '../../../Classes/Modules/Water/WatermeterSummary.php';
 
 $data = Request::getObject('data');
 

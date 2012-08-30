@@ -12,10 +12,6 @@ if (!isset($GLOBALS['basePath'])) {
 class TestDBUCalendar extends UnitTestCase {
     
     function testIt() {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
 		$url = TestService::getResourceUrl('Kampprogram.xls');
 		$calendar = DBUCalendarParser::parseUrl($url);
 		$this->assertTrue($calendar!=false);
@@ -35,10 +31,6 @@ class TestDBUCalendar extends UnitTestCase {
     }
 
     function testOtherDate() {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
 
 		$url = TestService::getResourceUrl('Kampprogram_other_date.xls');
 		$calendar = DBUCalendarParser::parseUrl($url);
@@ -56,11 +48,6 @@ class TestDBUCalendar extends UnitTestCase {
     }
 
     function testHandball() {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
-
 		$url = TestService::getResourceUrl('Kampprogram_haandbold.xls');
 		$calendar = DBUCalendarParser::parseUrl($url);
 		$this->assertTrue($calendar!=false);
@@ -78,10 +65,6 @@ class TestDBUCalendar extends UnitTestCase {
     }
 
     function testU19drenge() {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
 
 		$url = TestService::getResourceUrl('Kampprogram_U19drenge.xls');
 		$calendar = DBUCalendarParser::parseUrl($url);

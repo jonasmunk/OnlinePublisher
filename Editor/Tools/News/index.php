@@ -4,7 +4,6 @@
  * @subpackage Tools.Files
  */
 require_once '../../Include/Private.php';
-require_once '../../Classes/Services/FileSystemService.php';
 
 $maxUploadSize = GuiUtils::bytesToString(FileSystemService::getMaxUploadSize());
 

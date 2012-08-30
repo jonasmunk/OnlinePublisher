@@ -4,7 +4,6 @@
  * @subpackage Tools.Optimization
  */
 require_once '../../../Include/Private.php';
-require_once '../../../Classes/Integration/GoogleAnalytics.php';
 
 $kind = Request::getString('kind');
 $time = Request::getString('time');

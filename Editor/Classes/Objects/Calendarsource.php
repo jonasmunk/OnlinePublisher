@@ -7,9 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Core/Database.php');
-require_once($basePath.'Editor/Classes/Model/Object.php');
-require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 Object::$schema['calendarsource'] = array(
 	'url'				=> array('type'=>'string'),
@@ -116,9 +113,6 @@ class Calendarsource extends Object {
 	
 	function synchronizeDBU() {
 		global $basePath;
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarParser.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendar.php');
-		require_once($basePath.'Editor/Classes/Formats/DBUCalendarEvent.php');
 		$parser = new DBUCalendarParser();
 		$cal = $parser->parseURL($this->url);
 		if ($cal) {
@@ -158,8 +152,6 @@ class Calendarsource extends Object {
 	}
 	
 	function synchronizeVCal() {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Formats/VCalParser.php');
 		$parser = new VCalParser();
 		$cal = $parser->parseURL($this->url);
 		if ($cal) {

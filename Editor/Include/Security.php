@@ -8,7 +8,6 @@ session_start();
 date_default_timezone_set('Europe/Copenhagen');
 $basePath = substr(__FILE__, 0,strpos(__FILE__,'Editor'));
 
-require_once($basePath."Editor/Classes/Core/InternalSession.php");
 require_once($basePath."Editor/Include/Classloader.php");
 
 if (@$_SESSION['core.debug.simulateLatency']) {
@@ -17,8 +16,6 @@ if (@$_SESSION['core.debug.simulateLatency']) {
 
 // If not logged in
 if (!InternalSession::isLoggedIn()) {
-	require_once($basePath."Editor/Classes/Core/Request.php");
-	require_once($basePath."Editor/Classes/Core/Response.php");
 	if (Request::getHeader('Ajax')) {
 		Response::forbidden();
 	}

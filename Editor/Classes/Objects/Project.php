@@ -7,8 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Model/Object.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class Project extends Object {
 	var $parentProjectId=0;
@@ -130,8 +128,6 @@ class Project extends Object {
 	}
 	
 	function getSubTasks($filter=array()) {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Objects/Task.php');
 		$output = array();
 		$ids = array();
 		if ($filter['includeSubProjects']==true) {
@@ -151,8 +147,6 @@ class Project extends Object {
 	}
 	
 	function getSubProblems($filter=array()) {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Objects/Problem.php');
 		$output = array();
 		$ids = array();
 		if ($filter['includeSubProjects']) {
@@ -171,8 +165,6 @@ class Project extends Object {
 	}
 	
 	function getMilestones($filter=array()) {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Objects/Milestone.php');
 		
 		$ids = array();
 		if ($filter['includeSubProjects']==true) {

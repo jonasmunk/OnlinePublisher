@@ -7,8 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Model/Object.php');
-require_once($basePath.'Editor/Classes/Utilities/DateUtils.php');
 
 Object::$schema['event'] = array(
 	'location'   => array('type'=>'string'),
@@ -60,8 +58,6 @@ class Event extends Object {
 	////////////////////////////// Utils ///////////////////////////
 	
 	function getCalendarIds() {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Core/Database.php');
 		$sql="select calendar_id as id from calendar_event where event_id=".$this->id;
 		return Database::getIds($sql);
 	}

@@ -7,11 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Templates/TemplateController.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
-require_once($basePath.'Editor/Classes/Objects/Calendarsource.php');
-require_once($basePath.'Editor/Classes/Objects/Event.php');
-require_once($basePath.'Editor/Classes/Utilities/EventUtils.php');
 
 class CalendarTemplateController extends TemplateController
 {

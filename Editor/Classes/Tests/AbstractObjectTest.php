@@ -21,12 +21,17 @@ class AbstractObjectTest extends UnitTestCase {
     
     function testLoad() {
 		Log::debug('Testing load!');
+		if (!$this->type) {
+			Log::debug('No type...');
+			Log::debug($this);
+		}
 		$class = ucfirst($this->type);
 		$obj = new $class();
         $this->assertNull($obj->load(0));
     }
 
     function testCreate() {
+		
 		$class = ucfirst($this->type);
         $obj = new $class();
 		if (method_exists($this,'makeValid')) {

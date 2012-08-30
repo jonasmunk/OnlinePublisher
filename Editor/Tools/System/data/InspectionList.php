@@ -4,7 +4,6 @@
  * @subpackage Tools.System
  */
 require_once '../../../Include/Private.php';
-require_once '../../../Classes/Modules/Inspection/InspectionService.php';
 
 $writer = new ListWriter();
 

@@ -4,7 +4,6 @@
  * @subpackage Tools.Optimization
  */
 require_once '../../../Include/Private.php';
-require_once '../../../Classes/Modules/Inspection/InspectionService.php';
 
 $kind = Request::getString('kind');
 

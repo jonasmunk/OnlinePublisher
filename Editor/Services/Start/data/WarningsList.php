@@ -4,7 +4,6 @@
  * @subpackage Services.Start
  */
 require_once '../../../Include/Private.php';
-require_once '../../../Classes/Modules/Inspection/InspectionService.php';
 
 $inspections = InspectionService::performInspection(array('status'=>Request::getString('status')));
 

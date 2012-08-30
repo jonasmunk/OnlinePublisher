@@ -7,8 +7,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Model/Object.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 Object::$schema['person'] = array(
 	'firstname' => array('type'=>'string'),
@@ -388,8 +386,6 @@ class Person extends Object {
 	}
 	
 	function updateEmailAddresses($new) {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Objects/Emailaddress.php');
 		$mails = Query::after('emailaddress')->withProperty('containingObjectId',$this->getId())->get();
 		$foundIds = array();
 		foreach ($new as $email) { 
@@ -420,8 +416,6 @@ class Person extends Object {
 	}
 	
 	function updatePhoneNumbers($new) {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Objects/Phonenumber.php');
 		$numbers = Query::after('phonenumber')->withProperty('containingObjectId',$this->getId())->get();
 		$foundIds = array();
 		foreach ($new as $number) { 

@@ -3,10 +3,6 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Core/Response.php');
-require_once($basePath.'Editor/Classes/Core/SystemInfo.php');
-require_once($basePath.'Editor/Classes/Core/InternalSession.php');
-require_once($basePath.'Editor/Classes/Utilities/StringUtils.php');
 
 class In2iGui {
 
@@ -136,8 +132,6 @@ class In2iGui {
 	
 	static function fromLinks($links) {
 		if (!is_array($links)) return;
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Model/ObjectLink.php');
 		$out = array();
 		foreach ($links as $link) {
 			$objectLink = new ObjectLink();

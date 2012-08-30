@@ -160,14 +160,10 @@ class Object {
     /*=========================== links =======================*/
 
 	function updateLinks($links) {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Services/ObjectLinkService.php');
 		return ObjectLinkService::updateLinks($this->id,$links);
 	}
 	
 	function getLinks() {
-		global $basePath;
-		require_once($basePath.'Editor/Classes/Services/ObjectLinkService.php');
 		return ObjectLinkService::search(array('objectId'=>$this->id));
 	}
 
