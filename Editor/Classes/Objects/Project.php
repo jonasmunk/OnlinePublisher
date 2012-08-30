@@ -25,12 +25,6 @@ class Project extends Object {
 		return $this->parentProjectId;
 	}
 	
-	/////////////////////////////// GUI ////////////////////////////
-	
-	function getIcon() {
-	    return 'Tool/Knowledgebase';
-	}
-
     /////////////////////////// Persistence ////////////////////////
 
 	function load($id) {

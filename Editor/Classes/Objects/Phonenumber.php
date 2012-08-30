@@ -62,12 +62,8 @@ class Phonenumber extends Object {
 	}
 	
 	/////////////////////////// GUI /////////////////////////
-	
+		
 	function getIcon() {
-	    return 'Element/PhoneNumber';
-	}
-	
-	function getIn2iGuiIcon() {
 		return "common/phone";
 	}
 }

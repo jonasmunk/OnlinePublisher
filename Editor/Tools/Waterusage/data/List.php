@@ -46,8 +46,8 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 		$phone = Query::after('phonenumber')->withRelationFrom($object)->first();
 		$email = Query::after('emailaddress')->withRelationFrom($object)->first();
 		$usage = Query::after('waterusage')->withProperty('watermeterId',$object->getId())->orderBy('date')->descending()->first();
-		$writer->startRow(array( 'kind'=>'watermeter', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
-		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->
+		$writer->startRow(array( 'kind'=>'watermeter', 'id'=>$object->getId(), 'icon'=>$object->getIcon(), 'title'=>$object->getTitle() ));
+		$writer->startCell(array( 'icon'=>$object->getIcon() ))->
 			text( $object->getNumber() )->
 			startIcons()->
 				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'meterInfo','id'=>$object->getId())))->
@@ -55,14 +55,14 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 		endCell()->
 		startCell();
 		if ($address) {
-			$writer->startLine()->icon(array( 'icon'=>$address->getIn2iGuiIcon() ))->text($address->toString())->endLine();
+			$writer->startLine()->icon(array( 'icon'=>$address->getIcon() ))->text($address->toString())->endLine();
 		}
 		$writer->endCell()->startCell();
 		if ($email) {
-			$writer->startLine()->icon(array( 'icon'=>$email->getIn2iGuiIcon() ))->text($email->getAddress())->endLine();
+			$writer->startLine()->icon(array( 'icon'=>$email->getIcon() ))->text($email->getAddress())->endLine();
 		}
 		if ($phone) {
-			$writer->startLine()->icon(array( 'icon'=>$phone->getIn2iGuiIcon() ))->text($phone->getNumber())->endLine();
+			$writer->startLine()->icon(array( 'icon'=>$phone->getIcon() ))->text($phone->getNumber())->endLine();
 		}
 		$writer->endCell();
 		if ($usage) {
@@ -113,9 +113,9 @@ function listUsage($windowSize, $windowPage, $text, $filterKind, $year=null) {
 
 	foreach ($result->getList() as $object) {
 		$meter = Watermeter::load($object->getWatermeterId());
-		$writer->startRow(array( 'kind'=>'waterusage', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
+		$writer->startRow(array( 'kind'=>'waterusage', 'id'=>$object->getId(), 'icon'=>$object->getIcon(), 'title'=>$object->getTitle() ));
 		if ($meter) {
-			$writer->startCell(array( 'icon'=>$meter->getIn2iGuiIcon() ))->text( $meter->getNumber() )->			
+			$writer->startCell(array( 'icon'=>$meter->getIcon() ))->text( $meter->getNumber() )->			
 				startIcons()->
 					icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'meterInfo','id'=>$meter->getId())))->
 				endIcons()->
@@ -123,7 +123,7 @@ function listUsage($windowSize, $windowPage, $text, $filterKind, $year=null) {
 		} else {
 			$writer->startCell(array( 'icon'=>'common/warning' ))->text( 'Ikke fundet' )->endCell();
 		}
-		$writer->startCell(array( 'icon'=>$object->getIn2iGuiIcon() ))->
+		$writer->startCell(array( 'icon'=>$object->getIcon() ))->
 			text($object->getValue())->
 			startIcons()->
 				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'usageInfo','id'=>$object->getId())))->

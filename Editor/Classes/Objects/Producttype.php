@@ -21,7 +21,7 @@ class ProductType extends Object {
 		return Object::get($id,'producttype');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
         return "common/folder";
 	}
 

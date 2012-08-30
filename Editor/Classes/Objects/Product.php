@@ -220,12 +220,8 @@ class Product extends Object {
 	}
 	
 	/////////////////////////// GUI /////////////////////////
-	
+		
 	function getIcon() {
-	    return 'Element/Product';
-	}
-	
-	function getIn2iGuiIcon() {
 		return 'common/product';
 	}
 }

@@ -40,7 +40,7 @@ class Issue extends Object {
 	
 	
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'file/generic';
 	}
 }

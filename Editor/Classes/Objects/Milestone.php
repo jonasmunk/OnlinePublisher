@@ -139,7 +139,7 @@ class Milestone extends Object {
 	/////////////////////////// GUI /////////////////////////
 	
 	function getIcon() {
-	    return 'Basic/Time';
+	    return 'common/time';
 	}
 }
 ?>

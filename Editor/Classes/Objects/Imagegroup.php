@@ -21,7 +21,7 @@ class ImageGroup extends Object {
 		return Object::get($id,'imagegroup');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
         return "common/folder";
 	}
 

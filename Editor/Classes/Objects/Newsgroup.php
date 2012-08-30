@@ -50,7 +50,7 @@ class NewsGroup extends Object {
 		}
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
         return "common/folder";
 	}
 }

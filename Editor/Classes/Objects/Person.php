@@ -382,16 +382,8 @@ class Person extends Object {
 	}
 	
 	/////////////////////////// GUI /////////////////////////
-	
+		
 	function getIcon() {
-	    if ($this->sex) {
-	        return "Role/Male";
-	    } else {
-	        return "Role/Female";
-	    }
-	}
-	
-	function getIn2iGuiIcon() {
 		return "common/person";
 	}
 	

@@ -42,7 +42,7 @@ foreach ($hierarchies as $hierarchy) {
 
 foreach ($objects as $object) {
 	$writer->startRow(array('kind'=>'object','id'=>$object->getId()));
-	$writer->startCell(array('icon'=>$object->getIn2iGuiIcon()))->text($object->getTitle())->endCell();
+	$writer->startCell(array('icon'=>$object->getIcon()))->text($object->getTitle())->endCell();
 	$writer->startCell()->text($object->getType())->endCell();
 	$writer->startCell(array('wrap'=>false))->button(array('text'=>array('Publish','da'=>'Udgiv')))->endCell();
 	$writer->endRow();

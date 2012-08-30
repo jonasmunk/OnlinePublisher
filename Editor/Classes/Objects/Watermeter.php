@@ -24,7 +24,7 @@ class Watermeter extends Object {
 		return Object::get($id,'watermeter');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return "common/gauge";
 	}
 	

@@ -37,8 +37,8 @@ $writer->startList()->
 	$writer->endHeaders();
 
 foreach ($objects as $object) {
-	$writer->startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()))->
-		startCell(array('icon'=>$object->getIn2iGuiIcon()))->
+	$writer->startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>$object->getIcon(),'title'=>$object->getTitle()))->
+		startCell(array('icon'=>$object->getIcon()))->
 			text($object->getTitle())->
 		endCell()->
 		cell($object->getNote());

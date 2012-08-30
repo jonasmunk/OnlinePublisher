@@ -52,12 +52,8 @@ class EmailAddress extends Object {
 	}
 	
 	/////////////////////////// GUI /////////////////////////
-	
+		
 	function getIcon() {
-	    return 'Element/EmailAddress';
-	}
-	
-	function getIn2iGuiIcon() {
 		return "common/email";
 	}
 }

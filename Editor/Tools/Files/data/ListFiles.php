@@ -54,8 +54,8 @@ $writer->endHeaders();
 
 foreach ($objects as $object) {
 	$writer->
-	startRow(array('kind'=>'file','id'=>$object->getId(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()))->
-		startCell(array('icon'=>$object->getIn2iGuiIcon()))->
+	startRow(array('kind'=>'file','id'=>$object->getId(),'icon'=>$object->getIcon(),'title'=>$object->getTitle()))->
+		startCell(array('icon'=>$object->getIcon()))->
 			startLine()->startWrap()->text($object->getTitle())->endWrap()->endLine()->
 		endCell()->
 		startCell()->

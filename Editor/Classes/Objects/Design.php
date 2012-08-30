@@ -42,7 +42,7 @@ class Design extends Object {
         return $this->parameters;
     }
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'common/color';
 	}
 

@@ -228,7 +228,7 @@ function listPages() {
 		if ($row['publishdelta']>0) {
 			$writer->startIcons(array('left'=>3))->icon(array('icon'=>'monochrome/warning','size'=>12))->endIcons();
 		}
-		$writer->startCell()->text($hits[$row['id']])->endCell();
+		$writer->startCell()->text(@$hits[$row['id']])->endCell();
 		$writer->endCell()->
 			startCell()->
 			startIcons()->
@@ -245,7 +245,6 @@ function listPages() {
 		$writer->endIcons()->endCell();
 		$writer->endRow();
 	}
-	Database::free($result);
 	$writer->endList();
 }
 

@@ -90,8 +90,8 @@ foreach ($objects as $object) {
 	} else if ($object->getEndDate()==null && $object->getStartDate()<time()) {
 		$active = true;
 	}
-	$writer->startRow(array('kind'=>'news','id'=>$object->getId(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()));
-	$writer->startCell(array('icon'=>$object->getIn2iGuiIcon()))->text($object->getTitle())->endCell();
+	$writer->startRow(array('kind'=>'news','id'=>$object->getId(),'icon'=>$object->getIcon(),'title'=>$object->getTitle()));
+	$writer->startCell(array('icon'=>$object->getIcon()))->text($object->getTitle())->endCell();
 	$writer->startCell();
 	$writer->text(DateUtils::formatDateTime($object->getStartdate()))->endCell();
 	$writer->startCell()->text(DateUtils::formatDateTime($object->getEnddate()))->endCell();
@@ -100,7 +100,7 @@ foreach ($objects as $object) {
 		$writer->icon(array('icon'=>'monochrome/invisible'));	
 	}
 	//$writer->icon(array('icon'=>($active ? 'monochrome/play' : 'monochrome/invisible')));
-	if ($linkCounts[$object->getId()]>0) {
+	if (isset($linkCounts[$object->getId()]) && $linkCounts[$object->getId()]>0) {
 		$writer->icon(array('icon'=>"monochrome/link"));
 	}
 	$writer->endIcons()->endCell();

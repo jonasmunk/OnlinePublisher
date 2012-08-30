@@ -17,7 +17,7 @@ $designs = Query::after('design')->get();
 foreach ($designs as $item) {
 	$writer->
 	startRow(array('kind'=>'design','id'=>$item->getId()))->
-		startCell(array('icon'=>$item->getIn2iGuiIcon()))->text($item->getTitle())->endCell()->
+		startCell(array('icon'=>$item->getIcon()))->text($item->getTitle())->endCell()->
 		startCell()->text($item->getUnique())->endCell()->
 	endRow();
 }

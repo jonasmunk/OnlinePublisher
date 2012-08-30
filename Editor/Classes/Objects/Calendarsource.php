@@ -64,12 +64,8 @@ class Calendarsource extends Object {
 	function getDisplayTitle() {
 	    return $this->displayTitle;
 	}
-	
+		
 	function getIcon() {
-		return 'Basic/Internet';
-	}
-	
-	function getIn2iGuiIcon() {
 		return 'common/internet';
 	}
 	

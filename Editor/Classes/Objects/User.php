@@ -39,7 +39,7 @@ class User extends Object {
 		return Object::get($id,'user');
 	}
 
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'common/user';
 	}
 

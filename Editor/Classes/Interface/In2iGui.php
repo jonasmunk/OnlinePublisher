@@ -63,7 +63,7 @@ class In2iGui {
 			}
 			$old = $matches[0][$i][0];
 			$parts = In2iGui::extract($old);
-			$new = array_key_exists($language,$parts) ? $parts[$language] : $parts['any'];
+			$new = array_key_exists($language,$parts) ? $parts[$language] : @$parts['any'];
 			$xml = substr_replace ( $xml , $new , $pos+$diff ,strlen($old));
 			
 			$diff = $diff + strlen($new)-strlen($old);

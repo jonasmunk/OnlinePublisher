@@ -113,11 +113,6 @@ class Task extends Object {
 		$sql = "delete from task where object_id=".$this->id;
 		Database::delete($sql);
 	}
-	
-	/////////////////////////// GUI /////////////////////////
-	
-	function getIcon() {
-	    return 'Part/Generic';
-	}
+
 }
 ?>

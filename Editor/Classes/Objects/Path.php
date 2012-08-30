@@ -49,7 +49,7 @@ class Path extends Object {
 		
 	/////////////////////////// GUI /////////////////////////
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 	    return 'monochrome/globe';
 	}
 }

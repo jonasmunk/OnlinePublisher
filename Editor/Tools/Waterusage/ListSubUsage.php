@@ -24,7 +24,7 @@ $writer->header(array('title'=>'Opdateret'));
 $writer->endHeaders();
 
 foreach ($result->getList() as $object) {
-	$writer->startRow(array( 'kind'=>'waterusage', 'id'=>$object->getId(), 'icon'=>$object->getIn2iGuiIcon(), 'title'=>$object->getTitle() ));
+	$writer->startRow(array( 'kind'=>'waterusage', 'id'=>$object->getId(), 'icon'=>$object->getIcon(), 'title'=>$object->getTitle() ));
 	$writer->startCell()->text($object->getValue())->endCell();
 	$writer->startCell()->text(DateUtils::formatLongDate($object->getDate()))->endCell();
 	$writer->startCell()->text(DateUtils::formatLongDateTime($object->getUpdated()))->endCell();

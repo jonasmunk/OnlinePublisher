@@ -29,8 +29,8 @@ $writer->startList()->
 		header(array('title'=>array('Title','da'=>'Titel'),'width'=>30,'key'=>'title','sortable'=>true))->
 	endHeaders();
 	foreach ($objects as $object) {
-		$writer->startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>$object->getIn2iGuiIcon(),'title'=>$object->getTitle()))->
-			startCell(array('icon'=>$object->getIn2iGuiIcon()))->startWrap()->text($object->getTitle())->endWrap()->endCell()->
+		$writer->startRow(array('id'=>$object->getId(),'kind'=>$object->getType(),'icon'=>$object->getIcon(),'title'=>$object->getTitle()))->
+			startCell(array('icon'=>$object->getIcon()))->startWrap()->text($object->getTitle())->endWrap()->endCell()->
 		endRow();
 	}
 $writer->endList();

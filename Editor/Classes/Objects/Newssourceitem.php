@@ -73,7 +73,7 @@ class Newssourceitem extends Object {
 	}
 	
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'file/generic';
 	}
 	

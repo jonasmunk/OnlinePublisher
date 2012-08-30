@@ -41,7 +41,7 @@ class Waterusage extends Object {
 		return Object::get($id,'waterusage');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return "common/water";
 	}
 	

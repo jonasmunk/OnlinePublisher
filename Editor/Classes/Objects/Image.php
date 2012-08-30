@@ -35,10 +35,6 @@ class Image extends Object {
 	}
 	
 	function getIcon() {
-	    return 'Element/Image';
-	}
-	
-	function getIn2iGuiIcon() {
 	    return 'common/image';
 	}
 

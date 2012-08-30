@@ -25,7 +25,7 @@ class Calendar extends Object {
 		Database::delete($sql);
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'common/calendar';
 	}
 }

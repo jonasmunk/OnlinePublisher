@@ -21,7 +21,7 @@ $writer->startList()
 foreach ($sources as $source) {
 	$writer
 		->startRow(array('kind'=>'calendarsource','id'=>$source->getId()))
-		->startCell(array('icon'=>$source->getIn2iGuiIcon()))
+		->startCell(array('icon'=>$source->getIcon()))
 			->startLine()->text($source->getTitle())->endLine()
 			->startLine(array('dimmed'=>true))->text($source->getDisplayTitle())->endLine()
 		->endCell()

@@ -36,7 +36,7 @@ foreach ($objects as $object) {
 	$writer->item(array(
 		'title' => $object->getTitle(),
 		'value' => $object->getId(),
-		'icon' => $object->getIn2iGuiIcon(),
+		'icon' => $object->getIcon(),
 		'kind' => 'image'
 	));
 }

@@ -33,7 +33,7 @@ foreach ($offers as $object) {
 	$person = Person::load($object->getPersonId());
 	$mails = Query::after('emailaddress')->withProperty('containingObjectId',$person->getId())->get();
 	$writer->startRow(array('id'=>$object->getId(),'kind'=>$object->getType()))->
-		startCell(array('icon'=>$product->getIn2iGuiIcon()))->text($product->getTitle())->endCell()->
+		startCell(array('icon'=>$product->getIcon()))->text($product->getTitle())->endCell()->
 		startCell()->text($object->getOffer())->endCell()->
 		startCell()->text($object->getExpiry())->endCell()->
 		startCell()->text($object->getTitle())->endCell()->

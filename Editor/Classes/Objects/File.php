@@ -24,7 +24,7 @@ class File extends Object {
 		parent::Object('file');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
         return "file/generic";
 	}
 

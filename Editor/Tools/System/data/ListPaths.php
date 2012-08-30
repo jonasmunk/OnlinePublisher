@@ -18,9 +18,9 @@ $list = Query::after('path')->get();
 foreach ($list as $item) {
 	$page = Page::load($item->getPageId());
 	$writer->startRow(array('kind'=>'path','id'=>$item->getId()));
-	$writer->startCell(array('icon'=>$item->getIn2iGuiIcon()))->text($item->getPath())->endCell();
+	$writer->startCell(array('icon'=>$item->getIcon()))->text($item->getPath())->endCell();
 	if ($page) {
-		$writer->startCell(array('icon'=>$page->getIn2iGuiIcon()))->text($page->getTitle())->endCell();
+		$writer->startCell(array('icon'=>$page->getIcon()))->text($page->getTitle())->endCell();
 	} else {
 		$writer->startCell(array('icon'=>'common/warning'))->text(array('No page','da'=>'Ingen siden'))->endCell();
 	}

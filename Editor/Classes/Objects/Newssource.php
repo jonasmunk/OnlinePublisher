@@ -61,7 +61,7 @@ class Newssource extends Object {
 	}
 	
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'common/internet';
 	}
 	

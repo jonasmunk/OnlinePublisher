@@ -16,7 +16,7 @@ class PersonGroup extends Object {
 		parent::Object('persongroup');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'common/folder';
 	}
 	

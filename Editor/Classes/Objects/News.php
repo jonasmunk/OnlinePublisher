@@ -133,12 +133,8 @@ class News extends Object {
 	}
 	
 	/////////////////////////// GUI /////////////////////////
-	
+		
 	function getIcon() {
-        return "Part/News";
-	}
-	
-	function getIn2iGuiIcon() {
         return "common/news";
 	}
 }

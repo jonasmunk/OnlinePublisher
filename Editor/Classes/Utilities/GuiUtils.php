@@ -217,14 +217,6 @@ class GuiUtils {
 		return $output;
 	}
 	
-	function buildEntity($object) {
-		return '<entity icon="'.$object->getIcon().'" title="'.StringUtils::escapeXML($object->getTitle()).'" value="'.$object->getId().'"/>';
-	}
-	
-	function buildImageEntity($image) {
-		return '<entity image="../../../services/images/?id='.$image->getId().'&amp;width=32&amp;height=32&amp;format=jpg&amp;timestamp='.$image->getUpdated().'" title="'.StringUtils::escapeXML($image->getTitle()).'" value="'.$image->getId().'"/>';
-	}
-	
 	/**
 	 * Builds select-options for a particular type of object
 	 * @param string $type The type of object

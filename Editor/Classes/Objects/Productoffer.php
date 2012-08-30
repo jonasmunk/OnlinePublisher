@@ -166,10 +166,6 @@ class ProductOffer extends Object {
 	/////////////////////////// GUI /////////////////////////
 	
 	function getIcon() {
-	    return 'Element/Generic';
-	}
-	
-	function getIn2iGuiIcon() {
 		return "common/object";
 	}
 }

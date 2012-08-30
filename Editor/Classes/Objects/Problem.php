@@ -79,8 +79,5 @@ class Problem extends Object {
 		return $data;
 	}
 	
-	function getIcon() {
-	    return 'Basic/Stop';
-	}
 }
 ?>

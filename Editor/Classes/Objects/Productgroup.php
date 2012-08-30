@@ -29,10 +29,6 @@ class ProductGroup extends Object {
 	/////////////////////////// GUI /////////////////////////
 	
 	function getIcon() {
-	    return 'Element/Folder';
-	}
-
-	function getIn2iGuiIcon() {
 	    return 'common/folder';
 	}
 }

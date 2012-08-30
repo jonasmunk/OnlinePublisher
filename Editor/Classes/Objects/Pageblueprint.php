@@ -26,11 +26,7 @@ class PageBlueprint extends Object {
 	function load($id) {
 		return Object::get($id,'pageblueprint');
 	}
-	
-	function getIcon() {
-		return "Element/Template";
-	}
-	
+		
 	function setDesignId($designId) {
 	    $this->designId = $designId;
 	}

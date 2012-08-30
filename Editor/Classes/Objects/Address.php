@@ -34,7 +34,7 @@ class Address extends Object {
 		return Object::get($id,'address');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return "geo/map";
 	}
 	

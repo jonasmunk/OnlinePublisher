@@ -21,7 +21,7 @@ class WeblogGroup extends Object {
 		return Object::get($id,'webloggroup');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'common/folder';
 	}
 

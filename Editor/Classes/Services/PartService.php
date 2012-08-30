@@ -66,34 +66,6 @@ class PartService {
 		}
 		return null;
 	}
-	
-	
-	
-	/* 
-	* Loads a type based on the type and ID
-	* @Deprecated
-	function _load($type,$id) {
-		global $basePath;
-		if (!$type) {
-			Log::debug('Unable to load part with no type');
-			return null;
-		}
-		if (!$id) {
-			Log::debug('Unable to load part with no ID');
-			return null;
-		}
-		
-		$class = ucfirst($type).'Part';
-		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
-		if (!file_exists($path)) {
-			return null;
-		}
-		require_once $path;
-		$instance = new $class;
-		$part = $instance->load($id);
-		return $part;
-	}
-		*/
 
 	function remove($part) {
 		

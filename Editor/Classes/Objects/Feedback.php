@@ -60,7 +60,7 @@ class Feedback extends Object {
 	
 	/////////////////////////// GUI /////////////////////////
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
         return "common/object";
 	}
 }

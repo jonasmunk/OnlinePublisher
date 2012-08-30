@@ -16,7 +16,7 @@ class Mailinglist extends Object {
 		parent::Object('mailinglist');
 	}
 	
-	function getIn2iGuiIcon() {
+	function getIcon() {
 		return 'common/email';
 	}
 	
