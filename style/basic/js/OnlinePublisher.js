@@ -7,7 +7,6 @@ op.page = {id:null,path:null,template:null};
 
 
 op.ignite = function() {
-	//djhasshsdjak.hey();
 	if (!this.preview) {
 		document.onkeydown=function(e) {
 			e = hui.event(e);

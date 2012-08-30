@@ -19,6 +19,13 @@ hui.ui.listen({
 			info.tile.toggleFullScreen();
 		}
 	},
+
+	$clickIcon$taskTile : function(info) {
+		if (info.key=="expand") {
+			info.tile.toggleFullScreen();
+			issuePages.expand();
+		}
+	},
 	$clickIcon$developmentTile : function(info) {
 		if (info.key=="expand") {
 			info.tile.toggleFullScreen();
