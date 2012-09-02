@@ -16,19 +16,6 @@ class Newsgroup extends Object {
 		parent::Object('newsgroup');
 	}
 	
-	function search() {
-		$results = array();
-		$sql = "select id from object where type='newsgroup' order by title";
-		$result = Database::select($sql);
-		while ($row = Database::next($result)) {
-			$obj = new NewsGroup();
-			$obj->_load($row['id']);
-			$results[] = $obj;
-		}
-		Database::free($result);
-		return $results;
-	}
-	
 	function load($id) {
 		return Object::get($id,'newsgroup');
 	}
