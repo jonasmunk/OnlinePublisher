@@ -37,9 +37,9 @@ if (Request::getBoolean('logout')) {
 }
 
 
-if (CacheService::sendCachedPage($id,$path)) {
-	exit;
-}
+//if (CacheService::sendCachedPage($id,$path)) {
+//	exit;
+//}
 
 if (strlen($path)>0) {
 	$relative = str_repeat('../',substr_count($path,'/'));
@@ -52,22 +52,20 @@ if (strlen($relative)==0) {
 	$relative = './';
 }
 
-if ($path!='') {	
-	$page = RenderingService::buildPage(-1,$path);
-} else {
-	if ($id==-1) {
-		$id = RenderingService::findPage('home');
-		if ($id==null) {
-			$error = '<title>Ingen forside!</title>'.
-			'<note>Der er ikke opsat en forside til dette website.
-			Hvis du er redaktør på siden bør du logge ind i redigeringsværktøjet
-			og opsætte hvilken side der skal være forsiden.
-			</note>';
-			RenderingService::displayError($error,'');
-			exit;
-		}
+$page = RenderingService::buildPage($id,$path);
+if (!$page) {
+	$id = RenderingService::findPage('home');
+	if ($id==null) {
+		$error = '<title>Ingen forside!</title>'.
+		'<note>Der er ikke opsat en forside til dette website.
+		Hvis du er redaktør på siden bør du logge ind i redigeringsværktøjet
+		og opsætte hvilken side der skal være forsiden.
+		</note>';
+		RenderingService::displayError($error,'');
+		exit;
 	}
-	$page = RenderingService::buildPage($id);	
+	Log::debug('Found home: '.$id);
+	$page = RenderingService::buildPage($id);
 }
 
 if (!$page) {
