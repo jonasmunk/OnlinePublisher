@@ -8,9 +8,9 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 
 if ($data->id>0) {
-	$design = FileGroup::load($data->id);
+	$design = Filegroup::load($data->id);
 } else {
-	$design = new FileGroup();
+	$design = new Filegroup();
 }
 $design->setTitle($data->title);
 $design->save();
