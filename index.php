@@ -64,7 +64,7 @@ if (!$page) {
 		RenderingService::displayError($error,'');
 		exit;
 	}
-	Log::debug('Found home: '.$id);
+	//Log::debug('Found home: '.$id);
 	$page = RenderingService::buildPage($id);
 }
 

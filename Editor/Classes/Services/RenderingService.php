@@ -220,7 +220,7 @@ class RenderingService {
 	}
 	
 	function buildPage($id,$path=null) {
-		Log::debug('buildPage: id:('.$id.') path:('.$path.')');
+		//Log::debug('buildPage: id:('.$id.') path:('.$path.')');
 		$sql="select page.id,page.path,page.secure,UNIX_TIMESTAMP(page.published) as published,".
 		" page.title,page.description,page.language,page.keywords,page.data,page.dynamic,page.next_page,page.previous_page,".
 		" template.unique as template,frame.id as frameid,frame.title as frametitle,".
@@ -236,7 +236,7 @@ class RenderingService {
 		if ($id > 0) {
 			$sql.=" and page.id=".Database::int($id);
 		} else {
-			Log::debug('Paths: ('.$path.') ('.$path.'/) (/'.$path.')');
+			//Log::debug('Paths: ('.$path.') ('.$path.'/) (/'.$path.')');
 			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/')." or page.path=".Database::text('/'.$path).")";
 		}
 		if ($row = Database::selectFirst($sql)) {
@@ -257,7 +257,7 @@ class RenderingService {
 			$redirect = false;
 		
 			if (StringUtils::isNotBlank($row['path']) && StringUtils::isBlank($path) && $id>0) {
-				Log::debug('Redirect: requested:('.$path.') page:('.$row['path'].') id:('.$id.')');
+				//Log::debug('Redirect: requested:('.$path.') page:('.$row['path'].') id:('.$id.')');
 				if ($row['path']) {
 					$redirect = StringUtils::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
 				}
