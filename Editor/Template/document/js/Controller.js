@@ -106,9 +106,7 @@ var controller = {
 	},
 
 	showAdderMenu : function(options) {
-		if (this.stickyAdder) {
-			hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
-		}
+		this._hideMenus();
 		this.partControls.hide();
 		this.menuInfo = {
 			columnId : options.columnId,
@@ -164,6 +162,7 @@ var controller = {
 		} else if (value=='new') {
 			this.lastSectionMode = false;
 			this.menuInfo = this.hoverInfo;
+			this._hideMenus();
 			partMenu.showAtPointer(event);
 		} else if (value=='delete') {
 			this.deleteSection(this.hoverInfo.sectionId);
@@ -244,7 +243,13 @@ var controller = {
 			if (old) {
 				hui.cls.remove(old,'editor_part_highlighted');
 			}
-		}		
+		}
+		sectionMenu.hide({immediate:true});
+		partMenu.hide({immediate:true});
+		columnMenu.hide({immediate:true});
+		if (this.stickyAdder) {
+			hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
+		}
 	},
 	sectionOver : function(cell,sectionId,columnId,sectionIndex) {
 		if (this.activeSection || this.menuMode || !this.ready) return;
@@ -275,6 +280,7 @@ var controller = {
 		    rowIndex : rowIndex
 		}
 		sectionMenu.showAtPointer(event);
+		hui.selection.clear();
 		return false;
 	},
 	clickSection : function(info) {
@@ -342,6 +348,7 @@ var controller = {
 		if (this.activeSection || this.selectedText) {
 			return true;
 		}
+		this._hideMenus();
 		this.menuInfo = {
 	    	columnId : columnId,
 	    	columnIndex : columnIndex,
