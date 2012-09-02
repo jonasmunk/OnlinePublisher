@@ -16,7 +16,12 @@ $gui='
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/edit" title="{Edit; da:Rediger}" disabled="true"/>
+				<field label="Startdato">
+					<datetime-input name="startDate"/>
+				</field>
+				<field label="Slutdato">
+					<datetime-input name="endDate"/>
+				</field>
 			</toolbar>
 		</top>
 		<middle>

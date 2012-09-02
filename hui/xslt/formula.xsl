@@ -177,7 +177,7 @@
 <datetime-input name="«text»" key="«text»" return-type="«'date' | 'seconds'»"/>
 -->
 <xsl:template name="gui:datetime" match="gui:datetime-input">
-	<div class="hui_field" id="{generate-id()}">
+	<div class="hui_field hui_datetime" id="{generate-id()}">
 		<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
 		<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
 			<span class="hui_field_singleline">

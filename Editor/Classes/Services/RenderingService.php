@@ -259,8 +259,7 @@ class RenderingService {
 					$redirect = StringUtils::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
 				}
 			}
-			
-			if ($row['dynamic']) {
+			else if ($row['dynamic']) {
 				$content = RenderingService::applyContentDynamism($row['id'],$template,$data);
 				$data = $content['data'];
 				$redirect = $content['redirect'];

@@ -143,6 +143,12 @@
 	<link rel="stylesheet" href="{$context}/hui/ext/pages.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script src="{$context}/hui/ext/Pages.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
+<xsl:if test="//gui:chart">
+	<!--
+	<link rel="stylesheet" href="{$context}/hui/ext/chart.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+	-->
+	<script src="{$context}/hui/ext/Chart.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
 <xsl:for-each select="gui:localize[@source]">
 	<script src="{@source}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:for-each>

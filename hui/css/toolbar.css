@@ -358,6 +358,11 @@ span.hui_toolbar_item span.hui_searchfield
 	margin-top: 8px;
 }
 
+span.hui_toolbar_item div.hui_datetime
+{
+	width: 170px;
+}
+
 /*span.hui_toolbar_item .hui_checkboxes
 {
 	padding-top: 11px;

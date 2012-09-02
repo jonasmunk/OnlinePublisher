@@ -38,4 +38,9 @@ class StatisticsService {
 		}
 		return $counts;
 	}
+	
+	function search($query) {
+		$sql = 'SELECT count(distinct statistics.session) as sessions, count(distinct statistics.ip) as ips, count(statistics.id) as hits,date_format(statistics.time, "%Y%m%d") as `key`,date_format(statistics.time, "%d-%m-%Y") as label FROM statistics group by label order by `key` desc limit 100';
+		return Database::selectAll($sql);
+	}
 }
