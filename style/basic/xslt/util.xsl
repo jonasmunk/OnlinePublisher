@@ -447,6 +447,27 @@
 	</ul>
 </xsl:template>
 
+<xsl:template name="util:hierarchy-second-level">
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+		<ul class="case_sub_navigation">
+			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+				<xsl:if test="not(@hidden='true')">
+					<li>
+					<xsl:choose>
+						<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+						<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+					</xsl:choose>
+					<a>
+						<xsl:call-template name="util:link"/>
+						<span><xsl:value-of select="@title"/></span>
+					</a>
+					</li>
+				</xsl:if>
+			</xsl:for-each>
+		</ul>
+	</xsl:if>
+</xsl:template>
+
 <xsl:template name="util:hierarchy-after-first-level">
 	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
 		<ul>

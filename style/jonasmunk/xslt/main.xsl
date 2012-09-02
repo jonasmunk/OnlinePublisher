@@ -38,6 +38,7 @@
 			<div class="layout">
 				<div class="layout_navigation">
 					<xsl:call-template name="util:hierarchy-first-level"/>
+					<xsl:call-template name="util:hierarchy-second-level"/>
 				</div>
 				<div class="layout_content">
 					<xsl:apply-templates select="p:content"/>
@@ -98,11 +99,11 @@
 </xsl:template>
 
 <xsl:template name="secondlevel">
-<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-	<ul class="case_sub_navigation">
-		<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-	</ul>
-</xsl:if>
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+		<ul class="case_sub_navigation">
+			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
+		</ul>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="thirdlevel">
