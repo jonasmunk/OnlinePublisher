@@ -69,9 +69,9 @@ class DatabaseUtil {
 	 * @return array Array of table names
 	 */
 	function getTables() {
-		global $database;
+		$config = ConfigurationService::getDatabase();
 		$out = array();
-		$sql = "show tables from ".$database;
+		$sql = "show tables from ".$config['database'];
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$out[] = $row[0];
@@ -86,8 +86,8 @@ class DatabaseUtil {
 	 * @return array An array of column info TODO: Format of array??
 	 */
 	function getTableColumns($table) {
-		global $database;
-		$sql = "SHOW FULL COLUMNS FROM ".$table." FROM ".$database;
+		$config = ConfigurationService::getDatabase();
+		$sql = "SHOW FULL COLUMNS FROM ".$table." FROM ".$config['database'];
 		$out = array();
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -265,6 +265,8 @@ class DatabaseUtil {
 		$log = array();
 		$log[] = "== Starting update ==";
 		$missingTables = DatabaseUtil::findMissingTables($tables);
+		Log::debug($tables);
+		Log::debug($missingTables);
 		foreach ($missingTables as $table) {
 			$action = "CREATE TABLE `".$table."` (";
 			$columns = DatabaseUtil::getExpectedColumns($table);

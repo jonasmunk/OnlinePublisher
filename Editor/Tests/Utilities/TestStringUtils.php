@@ -58,7 +58,7 @@ class TestStringUtils extends UnitTestCase {
 		$this->assertEqual("Ã¦",$obj['first']);
 		$this->assertEqual("Ã¦",$obj['sub']['one']);
 		
-		$group = new ImageGroup();
+		$group = new Imagegroup();
 		$group->setTitle('æ');
 		StringUtils::toUnicode($group);
 		$this->assertEqual("Ã¦",$group->getTitle());

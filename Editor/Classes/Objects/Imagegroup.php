@@ -10,9 +10,9 @@ if (!isset($GLOBALS['basePath'])) {
 
 Object::$schema['imagegroup'] = array();
 
-class ImageGroup extends Object {
+class Imagegroup extends Object {
 
-	function ImageGroup() {
+	function Imagegroup() {
 		parent::Object('imagegroup');
 	}
 
