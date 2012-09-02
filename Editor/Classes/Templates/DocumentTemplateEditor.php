@@ -97,8 +97,8 @@ class DocumentTemplateEditor
 	/**
 	 * @return The id of the section
 	 */
-	function addSection($columnId,$index,$part) {
-		$ctrl = PartService::getController($part);
+	function addSection($columnId,$index,$partType) {
+		$ctrl = PartService::getController($partType);
 		if (!$ctrl) {
 			Log::debug('Controller not found');
 			return null;
@@ -130,6 +130,37 @@ class DocumentTemplateEditor
 		
 		return $sectionId;
 	}
+	
+	/**
+	 * @return The id of the section
+	 */
+	function addSectionFromPart($columnId,$index,$part) {		
+		$sql="select page_id from document_column where id=".Database::int($columnId);
+		if ($row = Database::selectFirst($sql)) {
+			$pageId = $row['page_id'];
+		} else {
+			Log::debug('Column not found');
+			return null;
+		}
+		
+		$sql="select * from document_section where column_id=".Database::int($columnId)." and `index`>=".Database::int($index);
+		$result = Database::select($sql);
+		while ($row = Database::next($result)) {
+			$sql="update document_section set `index`=".Database::int($row['index']+1)." where id=".Database::int($row['id']);
+			Database::update($sql);
+		}
+		Database::free($result);
+		
+		$sql = "insert into document_section (`page_id`,`column_id`,`index`,`type`,`part_id`) values (".Database::int($pageId).",".Database::int($columnId).",".Database::int($index).",'part',".Database::int($part->getId()).")";
+		$sectionId = Database::insert($sql);
+
+		$sql="update page set changed=now() where id=".Database::int($pageId);
+		Database::update($sql);
+		
+		return $sectionId;
+	}
+	
+	
 	
 	function deleteColumn($columnId) {
 		$sql="select * from document_column where id=".Database::int($columnId);
@@ -177,10 +208,14 @@ class DocumentTemplateEditor
 		Database::update($sql);
 	}
 	
+	function getSection($sectionId) {
+		$sql="select document_section.*,part.type as part_type from document_section left join part on part.id = document_section.part_id where document_section.id=".Database::int($sectionId);
+		return Database::selectFirst($sql);
+	}
+	
 	function deleteSection($sectionId) {
 
-		$sql="select document_section.*,part.type as part_type from document_section left join part on part.id = document_section.part_id where document_section.id=".Database::int($sectionId);
-		$row = Database::selectFirst($sql);
+		$row = DocumentTemplateEditor::getSection($sectionId);
 		if (!$row) {
 			Log::debug('Unable to find section with id='.$sectionId);
 			return;

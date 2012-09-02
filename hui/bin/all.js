@@ -5674,7 +5674,7 @@ hui.ui.request = function(options) {
 			options.parameters[key]=hui.string.toJSON(options.json[key]);
 		}
 	}
-	var onSuccess = options.onSuccess;
+	var onSuccess = options.onSuccess || options.$success;
 	var message = options.message;
 	options.onSuccess=function(t) {
 		if (message) {
@@ -5713,7 +5713,7 @@ hui.ui.request = function(options) {
 			options.onText(t.responseText);
 		}
 	};
-	var onFailure = options.onFailure;
+	var onFailure = options.onFailure || options.$failure;
 	options.onFailure = function(t) {
 		if (typeof(onFailure)=='string') {
 			hui.ui.callDelegates(t,'failure$'+onFailure)
@@ -10969,6 +10969,9 @@ hui.ui.Menu.prototype = {
 		};
 		this.visible = false;
 		this.fire('hide');
+	},
+	isVisible : function() {
+		return this.visible;
 	},
 	_isSubMenuVisible : function() {
 		for (var i=0; i < this.subMenus.length; i++) {

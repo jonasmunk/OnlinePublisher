@@ -147,6 +147,9 @@ if ($section==null) {
 			<item text="{Move section up; da:Flyt sektion op}" value="moveSectionUp"/>
 			<item text="{Move section down; da:Flyt sektion ned}" value="moveSectionDown"/>
 			<divider/>
+			<item text="{Copy section; da:Kopiér sektion}" value="copySection"/>
+			<item text="{Cut section; da:Klip sektion}" value="cutSection"/>
+			<divider/>
 			<item text="{Column ; da:Kolonne}">
 				<item text="{Add column; da:Tilføj kolonne}" value="addColumn"/>
 				<item text="{Edit column; da:Instil kolonne}" value="editColumn"/>
@@ -180,6 +183,8 @@ if ($section==null) {
 			$gui.='</item>';
 		}
 		$gui.='
+			<divider/>
+			<item text="{Paste; da:Indsæt}" value="paste"/>
 		</menu>
 
 		<window width="300" name="columnWindow" padding="5" title="{Column; da:Kolonne}">

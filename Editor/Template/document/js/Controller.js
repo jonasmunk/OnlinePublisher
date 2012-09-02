@@ -38,6 +38,10 @@ var controller = {
 					controller.detailsMode = false;
 				}
 			});
+			hui.listen(document.body,'mouseup',function(e) {
+				this.selectedText = hui.selection.getText();
+			}.bind(this));
+			
 			hui.ui.tellContainers('pageChanged',this.pageId);		
 		}
 		this.ready = true;		
@@ -180,6 +184,8 @@ var controller = {
 	},
 	_onMenu : function(value) {
 		switch (value) {
+			case 'cutSection' : this.cutSection(this.menuInfo.sectionId); break;
+			case 'copySection' : this.copySection(this.menuInfo.sectionId); break;
 			case 'editSection' : this.editSection(this.menuInfo.sectionId); break;
 			case 'deleteSection' : this.deleteSection(this.menuInfo.sectionId); break;
 			case 'moveSectionUp' : this.moveSection(this.menuInfo.sectionId,-1); break;
@@ -198,9 +204,26 @@ var controller = {
 		}
 	},
 	$select$partMenu : function(value) {
+		if (value=='paste') {
+			hui.ui.request({
+				url : 'actions/Paste.php',
+				message : {start:{en:'Pasting',da:'Indsætter'},delay:300},
+				parameters : {
+					column : this.menuInfo.columnId,
+					index : this.menuInfo.sectionIndex
+				},
+				onJSON : function(obj) {
+					document.location = 'Editor.php';//'Editor.php?section='+obj.sectionId;
+				},
+				$failure : function() {
+					hui.ui.showMessage({icon:'common/warning',text:{en:'Pasting failed',da:'Kunne ikke indsætte'},duration:2000})
+				}
+			})			
+			return;
+		}
 		hui.ui.request({
 			url : 'data/AddSection.php',
-			message : {start:'Tilføjer sektion',delay:300},
+			message : {start:{en:'Adding section',da:'Tilføjer sektion'},delay:300},
 			parameters : {
 				type: 'part',
 				part : value,
@@ -215,6 +238,14 @@ var controller = {
 	
 	//////////////////// Sections ///////////////////
 	
+	_hideMenus : function() {
+		if (this.menuInfo) {
+			var old = hui.get('section'+this.menuInfo.sectionId);
+			if (old) {
+				hui.cls.remove(old,'editor_part_highlighted');
+			}
+		}		
+	},
 	sectionOver : function(cell,sectionId,columnId,sectionIndex) {
 		if (this.activeSection || this.menuMode || !this.ready) return;
 		this.hoverInfo = {
@@ -232,7 +263,7 @@ var controller = {
 		if (this.activeSection || this.selectedText) {
 			return true;
 		}
-		
+		this._hideMenus();
 		var section = hui.get('section'+sectionId);
 		hui.cls.add(section,'editor_part_highlighted');
 		this.menuInfo = {
@@ -250,6 +281,30 @@ var controller = {
 		if (info.event.altKey) {
 			document.location = 'Editor.php?section='+info.id;
 		}
+	},
+	copySection : function(id) {
+		hui.ui.request({
+			url : '../../Services/Clipboard/Copy.php',
+			parameters : {sectionId : id},
+			$success : function() {
+				hui.ui.showMessage({icon:'common/success',text:{en:'Copied',da:'Kopieret'},duration:2000});
+			},
+			$failure : function() {
+				hui.ui.showMessage({icon:'common/warning',text:{en:'Unable to copy',da:'Kopieringen mislykkedes'},duration:2000});
+			}
+		})
+	},
+	cutSection : function(id) {
+		hui.ui.request({
+			url : '../../Services/Clipboard/Cut.php',
+			parameters : {sectionId : id},
+			$success : function() {
+				hui.ui.showMessage({icon:'common/success',text:{en:'Cutted',da:'Klippet'},duration:2000});
+			},
+			$failure : function() {
+				hui.ui.showMessage({icon:'common/warning',text:{en:'Unable to cut',da:'Klipningen mislykkedes'},duration:2000});
+			}
+		})
 	},
 	editSection : function(id) {
 		document.location = 'Editor.php?section='+id;
@@ -274,6 +329,7 @@ var controller = {
 		this.menuInfo = null;
 	},
 	showNewPartMenu : function(info) {
+		this._hideMenus();
 		this.lastSectionMode = true;
 		this.menuInfo = {
 	    	columnId : info.columnId,

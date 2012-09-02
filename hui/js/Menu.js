@@ -139,6 +139,9 @@ hui.ui.Menu.prototype = {
 		this.visible = false;
 		this.fire('hide');
 	},
+	isVisible : function() {
+		return this.visible;
+	},
 	_isSubMenuVisible : function() {
 		for (var i=0; i < this.subMenus.length; i++) {
 			if (this.subMenus[i].visible) return true;
