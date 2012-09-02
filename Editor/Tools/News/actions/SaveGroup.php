@@ -8,9 +8,9 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 
 if ($data->id>0) {
-	$design = NewsGroup::load($data->id);
+	$design = Newsgroup::load($data->id);
 } else {
-	$design = new NewsGroup();
+	$design = new Newsgroup();
 }
 $design->setTitle($data->title);
 $design->save();

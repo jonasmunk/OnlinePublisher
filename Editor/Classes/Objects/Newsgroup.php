@@ -10,9 +10,9 @@ if (!isset($GLOBALS['basePath'])) {
 
 Object::$schema['newsgroup'] = array();
 
-class NewsGroup extends Object {
+class Newsgroup extends Object {
 	
-	function NewsGroup() {
+	function Newsgroup() {
 		parent::Object('newsgroup');
 	}
 	
