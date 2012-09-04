@@ -1,5 +1,10 @@
 {
 	"name" : "Jonas Munk",
 	"description" : "Design for jonasmunk.com",
-	"owner" : "Property of Marianne"
+	"owner" : "Property of Marianne",
+	"parameters" : [
+		{"key" : "theme", "type" : "selection", "label" : "Theme", "options" : [
+			{"label" : "CV", "value" : "cv"}
+		]}
+	]
 }

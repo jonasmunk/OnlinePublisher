@@ -6,13 +6,7 @@ body
 	text-align: center;
 }
 
-div.layout_top
-{
-	/*'Neucha','*/
-	font-family: 'Nobile',Arial,Helvetica,sans-serif;
-	background: #87c221 url('../gfx/top.png') left top repeat-x;
-	height: 39px;
-}
+
 
 div.layout_top strong
 {
@@ -150,4 +144,42 @@ div.layout_content
 {
 	padding: 20px 0 20px 0;
 	overflow: hidden;
+}
+
+
+body.theme_cv
+{
+	background: url('../gfx/white_plaster.png');
+}
+
+body.theme_cv div.layout
+{
+	width: 964px;
+	background: url('../gfx/white_plaster.png');
+}
+
+body.theme_cv div.layout_top
+{
+	background: url('../gfx/paper.png');
+	height: 26px;
+}
+
+body.theme_cv div.layout_content
+{
+	background: url('../gfx/paper.png') -1928px 0 repeat-y;
+	padding: 10px 20px;
+}
+
+body.theme_cv div.layout_bottom
+{
+	background: url('../gfx/paper.png') -964px 0 no-repeat;
+	height: 26px;
+}
+
+body.theme_cv a.layout_designed
+{
+/*	position: absolute;*/
+	height: 181px;
+	width: 162px;
+	background: url('../gfx/handmade.png');
 }
