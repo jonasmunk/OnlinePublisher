@@ -27,16 +27,24 @@ hui.ui.Drawing.create = function(options) {
 
 hui.ui.Drawing.prototype = {
 	addLine : function(options) {
+		var attributes = {
+			x1 : options.x1,
+			y1 : options.y1,
+			x2 : options.x2,
+			y2 : options.y2,
+			style : 'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
+		};
+		if (options.from && options.to) {
+			attributes.x1 = options.from.x,
+			attributes.y1 = options.from.y,
+			attributes.x2 = options.to.x,
+			attributes.y2 = options.to.y
+		}
+		
 		var node = this._build({
-			tag:'line',
-			parent:this.svg,
-			attributes:{
-				x1 : options.x1,
-				y1 : options.y1,
-				x2 : options.x2,
-				y2 : options.y2,
-				style:'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
-			}
+			tag : 'line',
+			parent : this.svg,
+			attributes : attributes
 		});
 		return new hui.ui.Drawing.Line(node);
 	},

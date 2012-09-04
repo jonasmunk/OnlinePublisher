@@ -1,5 +1,3 @@
-if (!N2i) var N2i = {};
-
 hui.ui.Chart = function() {
 	this.body  = { width: 380, height: 250, paddingTop: 10, paddingBottom: 30, paddingLeft: 40, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
 	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};

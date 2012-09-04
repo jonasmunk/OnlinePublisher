@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>HUI</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/alert.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/message.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/button.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../ext/diagram.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Drawing.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../ext/Diagram.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.context='../../..';
+	</script>
+</head>
+
+<body>
+	<div id="container">
+		
+	</div>
+	<script>
+		hui.ui.listen({
+			$ready : function() {
+				var diagram = new hui.ui.Diagram.create();
+				hui.get('container').appendChild(diagram.element);
+				
+				var person = diagram.addBox({
+					id : 'person',
+					title : 'Person',
+					properties : [
+						{label:'First name',value:'String'},
+						{label:'Middle name',value:'String'},
+						{label:'Last name',value:'String'},
+						{label:'Initials',value:'String'},
+						{label:'Gender',value:'Boolean'}
+					]
+				});
+				
+				var email = diagram.addBox({
+					id : 'email',
+					title : 'E-mail',
+					properties : [
+						{label:'Address',value:'String'},
+						{label:'Context',value:'String'}
+					]
+				});
+				
+				var phone = diagram.addBox({
+					id : 'phone',
+					title : 'Phone number',
+					properties : [
+						{label:'Address',value:'String'},
+						{label:'Context',value:'String'}
+					]
+				});
+				
+				diagram.addLine({from:'person',to:'email'});
+				diagram.addLine({from:'person',to:'phone'});
+				
+			}
+		})
+	</script>
+</body>
+</html>

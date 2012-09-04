@@ -1,0 +1,49 @@
+div.hui_diagram
+{
+	position: relative;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.hui_diagram_box
+{
+	position: absolute;
+	border: 1px solid #eee;
+	border-radius: 3px;
+	background: #fff;
+	top: 0;
+	left: 0;
+	box-shadow: 0 1px 4px rgba(0,0,0,.1);
+	cursor: move;
+	cursor: -webkit-grab;
+}
+
+div.hui_diagram_box_dragging
+{
+	cursor: move;
+	cursor: -webkit-grabbing;
+}
+
+div.hui_diagram_box h1
+{
+	margin: 0;
+	font-size: 12px;
+	text-align: center;
+	background: #fafafa;
+	border-bottom: 1px solid #eee;
+	border-radius: 2px 2px 0 0;
+	padding: 3px 5px;
+	color: #333;
+}
+
+div.hui_diagram_box table
+{
+	font-size: 10px;
+	margin: 0 5px;
+}
+
+div.hui_diagram_box th
+{
+	font-weight: normal;
+	color: #999;
+	text-align: right;
+}
