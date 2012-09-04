@@ -56,6 +56,7 @@ hui.ui.Window.prototype = {
 		}
 		hui.drag.register({
 			element : this.titlebar,
+			onStart : this._onDragStart.bind(this) ,
 			onBeforeMove : this._onBeforeMove.bind(this) ,
  			onMove : this._onMove.bind(this),
 			onAfterMove : this._onAfterMove.bind(this)
@@ -148,9 +149,11 @@ hui.ui.Window.prototype = {
 		}
 	},
 
+	_onDragStart : function(e) {
+		this.element.style.zIndex = hui.ui.nextPanelIndex();
+	},
 	_onBeforeMove : function(e) {
 		e = hui.event(e);
-		this.element.style.zIndex = hui.ui.nextPanelIndex();
 		var pos = hui.position.get(this.element);
 		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
 		this.element.style.right = 'auto';

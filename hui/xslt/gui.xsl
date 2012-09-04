@@ -57,6 +57,9 @@
 <xsl:comment><![CDATA[[if IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/css/msie7.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
 <![endif]]]></xsl:comment>
+<xsl:if test="//gui:graph">
+	<link rel="stylesheet" href="{$context}/hui/ext/diagram.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+</xsl:if>
 <xsl:for-each select="//gui:css">
 	<link rel="stylesheet" href="{@url}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 </xsl:for-each>
@@ -134,6 +137,10 @@
 <xsl:if test="//gui:graph">
 	<link rel="stylesheet" href="{$context}/hui/ext/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script src="{$context}/hui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
+<xsl:if test="//gui:diagram">
+	<script src="{$context}/hui/ext/Diagram.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+	<script src="{$context}/hui/js/Drawing.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:tiles">
 	<link rel="stylesheet" href="{$context}/hui/ext/tiles.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
@@ -1136,6 +1143,30 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 
 
+<!--doc title:'Diagram' class:'hui.ui.Diagram' module:'visalization'
+<diagram name="«name»"/>
+-->
+<xsl:template match="gui:diagram">
+	<div class="hui_diagram" id="{generate-id()}">
+		<xsl:attribute name="style">
+			<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
+		</xsl:attribute>
+		<xsl:comment/></div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Diagram({
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>'
+			<xsl:if test="@source">
+				,source:<xsl:value-of select="@source"/>
+			</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+
+
+
 
 <!--doc title:'Segmented' class:'hui.ui.Segmented' module:'input'
 <segmented name="«name»" value="«text»" allow-null="«boolean»">
@@ -1190,7 +1221,15 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 </xsl:template>
 
-
+<!--doc title:'Menu' class:'hui.ui.Menu' module:'layout'
+<menu name="«name»">
+    <item text="«text»" value="«text»"/>
+    <divider>
+    <item text="«text»" value="«text»">
+    	<item text="«text»" value="«text»"/>
+	</item>
+</menu>
+-->
 <xsl:template match="gui:menu">
 	<script type="text/javascript">
 		(function() {

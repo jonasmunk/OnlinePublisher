@@ -9,6 +9,9 @@ hui.ui.listen({
 		} else if (item.value=='graph') {
 			iframe.clear();
 			hui.ui.changeState('graph');
+		} else if (item.value=='diagram') {
+			iframe.clear();
+			hui.ui.changeState('diagram');
 		} else if (item.value=='classes') {
 			hui.ui.changeState('list');
 		} else {

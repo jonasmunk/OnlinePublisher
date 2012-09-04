@@ -6146,6 +6146,7 @@ hui.ui.Window.prototype = {
 		}
 		hui.drag.register({
 			element : this.titlebar,
+			onStart : this._onDragStart.bind(this) ,
 			onBeforeMove : this._onBeforeMove.bind(this) ,
  			onMove : this._onMove.bind(this),
 			onAfterMove : this._onAfterMove.bind(this)
@@ -6238,9 +6239,11 @@ hui.ui.Window.prototype = {
 		}
 	},
 
+	_onDragStart : function(e) {
+		this.element.style.zIndex = hui.ui.nextPanelIndex();
+	},
 	_onBeforeMove : function(e) {
 		e = hui.event(e);
-		this.element.style.zIndex = hui.ui.nextPanelIndex();
 		var pos = hui.position.get(this.element);
 		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
 		this.element.style.right = 'auto';
@@ -19591,6 +19594,13 @@ hui.ui.Drawing.create = function(options) {
 }
 
 hui.ui.Drawing.prototype = {
+	setSize : function(width,height) {
+		this.svg.style.width = width+'px';
+		this.svg.style.height = height+'px';
+	},
+	clear : function() {
+		hui.dom.clear(this.svg);
+	},
 	addLine : function(options) {
 		var attributes = {
 			x1 : options.x1,
@@ -20585,8 +20595,13 @@ hui.ui.Diagram = function(options) {
 	this.name = options.name;
 	this.nodes = [];
 	this.lines = [];
-	this.element = hui.get(options.element);	
+	this.element = hui.get(options.element);
+	this.width = this.element.clientWidth;	
+	this.height = this.element.clientHeight;	
 	hui.ui.extend(this);
+	if (options.source) {
+		options.source.listen(this);
+	}
 	this._init();
 }
 
@@ -20607,6 +20622,44 @@ hui.ui.Diagram.prototype = {
 		this.element.appendChild(this.background.element);
 	},
 	
+	// Data ...
+	
+	/** @private */
+	$objectsLoaded : function(data) {
+		this.clear();
+		var nodes = data.nodes,
+			lines = data.lines;
+		for (var i=0; i < nodes.length; i++) {
+			this.addBox(nodes[i]);
+		};
+		for (var i=0; i < lines.length; i++) {
+			this.addLine(lines[i]);
+		};
+	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			this.width = this.element.clientWidth;	
+			this.height = this.element.clientHeight;
+			this.background.setSize(this.width,this.height);
+			if (this.options.source) {
+				this.options.source.refreshFirst();
+			}
+		}
+	},
+	clear : function() {
+		this.background.clear();
+		this.lines = [];
+		for (var i = this.nodes.length - 1; i >= 0; i--){
+			hui.dom.remove(this.nodes[i].element);
+		};
+		this.nodes = [];
+	},
+	
 	addBox : function(options) {
 		options.container = this;
 		var box = hui.ui.Diagram.Box.create(options);
@@ -20615,14 +20668,19 @@ hui.ui.Diagram.prototype = {
 	add : function(widget) {
 		var e = widget.element;
 		this.element.appendChild(e);
-		e.style.left = (Math.random()*(this.options.width - e.clientWidth))+'px';
-		e.style.top = (Math.random()*(this.options.height - e.clientHeight))+'px';
+		e.style.left = (Math.random()*(this.width - e.clientWidth))+'px';
+		e.style.top = (Math.random()*(this.height - e.clientHeight))+'px';
 		this.nodes.push(widget);
 	},
 	addLine : function(options) {
 		var from = this.getNode(options.from),
-			to = this.getNode(options.to),
-			fromCenter = this._getCenter(from),
+			to = this.getNode(options.to);
+		if (from==null || to==null) {
+			hui.log('Unable to build line...');
+			hui.log(options);
+			return;
+		}
+		var fromCenter = this._getCenter(from),
 			toCenter = this._getCenter(to);
 			
 		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: '#999' });
@@ -20670,14 +20728,17 @@ hui.ui.Diagram.Box = function(options) {
 }
 
 hui.ui.Diagram.Box.create = function(options) {
-	var html = '<h1>'+options.title+'</h1>';
-	html+='<table>';
-	for (var i=0; i < options.properties.length; i++) {
-		var p = options.properties[i];
-		html+='<tr><th>'+p.label+'</th><td>'+p.value+'</td></tr>';
-	};
-	html+='</table>';
-	options.element = hui.build('div',{'class':'hui_diagram_box',html:html});
+	var e = options.element = hui.build('div',{'class':'hui_diagram_box'});
+	hui.build('h1',{text:options.title || 'Untitled',parent:e});
+	if (options.properties) {
+		var table = hui.build('table',{parent:e})
+		for (var i=0; i < options.properties.length; i++) {
+			var p = options.properties[i];
+			var tr = hui.build('tr',{parent:table});
+			hui.build('th',{parent:tr,text:p.label});
+			hui.build('td',{parent:tr,text:p.value});
+		};
+	}
 	return new hui.ui.Diagram.Box(options);
 }
 
@@ -20685,17 +20746,21 @@ hui.ui.Diagram.Box.prototype = {
 	_addBehavior : function() {
 		hui.drag.register({
 			element : this.element,
+			onStart : this._onDragStart.bind(this),
 			onBeforeMove : this._onBeforeMove.bind(this) ,
  			onMove : this._onMove.bind(this),
-			onAfterMove : this._onAfterMove.bind(this)
+			onEnd : this._onDragEnd.bind(this)
 		});
 	},
-
+	_onDragStart : function() {
+		hui.cls.add(this.element,'hui_diagram_box_dragging');
+	},
 	_onBeforeMove : function(e) {
 		e = hui.event(e);
 		this.element.style.zIndex = hui.ui.nextPanelIndex();
 		var pos = hui.position.get(this.element);
-		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
+		var container = hui.position.get(this.options.container.element);
+		this.dragState = {left: e.getLeft() - pos.left + container.left,top:e.getTop()-pos.top + container.top};
 		this.element.style.right = 'auto';
 	},
 	_onMove : function(e) {
@@ -20705,7 +20770,8 @@ hui.ui.Diagram.Box.prototype = {
 		this.element.style.left = Math.max(left,0)+'px';
 		this.options.container.__nodeMoved(this);
 	},
-	_onAfterMove : function() {
+	_onDragEnd : function() {
+		hui.cls.remove(this.element,'hui_diagram_box_dragging');
 		//hui.ui.callDescendants(this,'$$parentMoved');
 	}
 }/** A diagram
@@ -20716,8 +20782,13 @@ hui.ui.Diagram = function(options) {
 	this.name = options.name;
 	this.nodes = [];
 	this.lines = [];
-	this.element = hui.get(options.element);	
+	this.element = hui.get(options.element);
+	this.width = this.element.clientWidth;	
+	this.height = this.element.clientHeight;	
 	hui.ui.extend(this);
+	if (options.source) {
+		options.source.listen(this);
+	}
 	this._init();
 }
 
@@ -20738,6 +20809,44 @@ hui.ui.Diagram.prototype = {
 		this.element.appendChild(this.background.element);
 	},
 	
+	// Data ...
+	
+	/** @private */
+	$objectsLoaded : function(data) {
+		this.clear();
+		var nodes = data.nodes,
+			lines = data.lines;
+		for (var i=0; i < nodes.length; i++) {
+			this.addBox(nodes[i]);
+		};
+		for (var i=0; i < lines.length; i++) {
+			this.addLine(lines[i]);
+		};
+	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			this.width = this.element.clientWidth;	
+			this.height = this.element.clientHeight;
+			this.background.setSize(this.width,this.height);
+			if (this.options.source) {
+				this.options.source.refreshFirst();
+			}
+		}
+	},
+	clear : function() {
+		this.background.clear();
+		this.lines = [];
+		for (var i = this.nodes.length - 1; i >= 0; i--){
+			hui.dom.remove(this.nodes[i].element);
+		};
+		this.nodes = [];
+	},
+	
 	addBox : function(options) {
 		options.container = this;
 		var box = hui.ui.Diagram.Box.create(options);
@@ -20746,14 +20855,19 @@ hui.ui.Diagram.prototype = {
 	add : function(widget) {
 		var e = widget.element;
 		this.element.appendChild(e);
-		e.style.left = (Math.random()*(this.options.width - e.clientWidth))+'px';
-		e.style.top = (Math.random()*(this.options.height - e.clientHeight))+'px';
+		e.style.left = (Math.random()*(this.width - e.clientWidth))+'px';
+		e.style.top = (Math.random()*(this.height - e.clientHeight))+'px';
 		this.nodes.push(widget);
 	},
 	addLine : function(options) {
 		var from = this.getNode(options.from),
-			to = this.getNode(options.to),
-			fromCenter = this._getCenter(from),
+			to = this.getNode(options.to);
+		if (from==null || to==null) {
+			hui.log('Unable to build line...');
+			hui.log(options);
+			return;
+		}
+		var fromCenter = this._getCenter(from),
 			toCenter = this._getCenter(to);
 			
 		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: '#999' });
@@ -20801,14 +20915,17 @@ hui.ui.Diagram.Box = function(options) {
 }
 
 hui.ui.Diagram.Box.create = function(options) {
-	var html = '<h1>'+options.title+'</h1>';
-	html+='<table>';
-	for (var i=0; i < options.properties.length; i++) {
-		var p = options.properties[i];
-		html+='<tr><th>'+p.label+'</th><td>'+p.value+'</td></tr>';
-	};
-	html+='</table>';
-	options.element = hui.build('div',{'class':'hui_diagram_box',html:html});
+	var e = options.element = hui.build('div',{'class':'hui_diagram_box'});
+	hui.build('h1',{text:options.title || 'Untitled',parent:e});
+	if (options.properties) {
+		var table = hui.build('table',{parent:e})
+		for (var i=0; i < options.properties.length; i++) {
+			var p = options.properties[i];
+			var tr = hui.build('tr',{parent:table});
+			hui.build('th',{parent:tr,text:p.label});
+			hui.build('td',{parent:tr,text:p.value});
+		};
+	}
 	return new hui.ui.Diagram.Box(options);
 }
 
@@ -20816,17 +20933,21 @@ hui.ui.Diagram.Box.prototype = {
 	_addBehavior : function() {
 		hui.drag.register({
 			element : this.element,
+			onStart : this._onDragStart.bind(this),
 			onBeforeMove : this._onBeforeMove.bind(this) ,
  			onMove : this._onMove.bind(this),
-			onAfterMove : this._onAfterMove.bind(this)
+			onEnd : this._onDragEnd.bind(this)
 		});
 	},
-
+	_onDragStart : function() {
+		hui.cls.add(this.element,'hui_diagram_box_dragging');
+	},
 	_onBeforeMove : function(e) {
 		e = hui.event(e);
 		this.element.style.zIndex = hui.ui.nextPanelIndex();
 		var pos = hui.position.get(this.element);
-		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
+		var container = hui.position.get(this.options.container.element);
+		this.dragState = {left: e.getLeft() - pos.left + container.left,top:e.getTop()-pos.top + container.top};
 		this.element.style.right = 'auto';
 	},
 	_onMove : function(e) {
@@ -20836,7 +20957,8 @@ hui.ui.Diagram.Box.prototype = {
 		this.element.style.left = Math.max(left,0)+'px';
 		this.options.container.__nodeMoved(this);
 	},
-	_onAfterMove : function() {
+	_onDragEnd : function() {
+		hui.cls.remove(this.element,'hui_diagram_box_dragging');
 		//hui.ui.callDescendants(this,'$$parentMoved');
 	}
 }/**

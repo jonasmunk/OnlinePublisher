@@ -26,6 +26,13 @@ hui.ui.Drawing.create = function(options) {
 }
 
 hui.ui.Drawing.prototype = {
+	setSize : function(width,height) {
+		this.svg.style.width = width+'px';
+		this.svg.style.height = height+'px';
+	},
+	clear : function() {
+		hui.dom.clear(this.svg);
+	},
 	addLine : function(options) {
 		var attributes = {
 			x1 : options.x1,

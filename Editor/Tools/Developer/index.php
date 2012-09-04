@@ -10,6 +10,9 @@ $gui='
 	<controller source="controller.js"/>
 	<source name="testsSource" url="data/ListTests.php"/>
 	<source name="graphSource" url="data/GraphData.php"/>
+	<source name="diagramSource" url="data/DiagramData.php">
+		<parameter key="parent" value="@diagramSubset.value"/>
+	</source>
 	<source name="classesSource" url="data/ListClasses.php"/>
 	<structure>
 		<top>
@@ -25,6 +28,7 @@ $gui='
 						<item icon="common/time" title="Session" value="session"/>
 						<item icon="common/tools" title="Settings" value="settings"/>
 						<item icon="monochrome/nuclear" title="Graph" value="graph"/>
+						<item icon="common/hierarchy" title="Diagram" value="diagram"/>
 						<item icon="common/object" title="Classes" value="classes"/>
 						<title>Tests</title>
 						<items name="testSelection" source="testsSource"/>
@@ -56,6 +60,17 @@ $gui='
 				</bar>
 				<overflow state="graph">
 					<graph source="graphSource" name="graph" layout="d3"/>
+				</overflow> 
+				<bar variant="layout" state="diagram">
+					<segmented value="all" name="diagramSubset">
+						<item value="all" text="All"/> 
+						<item value="Object" text="Objects"/> 
+						<item value="Part" text="Parts"/> 
+						<item value="TemplateController" text="Template controllers"/> 
+					</segmented>
+				</bar>
+				<overflow state="diagram">
+					<diagram source="diagramSource" name="diagram" width="2000" height="2000"/>
 				</overflow> 
 				<iframe source="data/PhpInfo.php" name="iframe" state="frame"/>
 			</center>
