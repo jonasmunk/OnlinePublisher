@@ -106,19 +106,22 @@ hui.ui.Diagram.Box.prototype = {
 	_addBehavior : function() {
 		hui.drag.register({
 			element : this.element,
+			onStart : this._onDragStart.bind(this),
 			onBeforeMove : this._onBeforeMove.bind(this) ,
  			onMove : this._onMove.bind(this),
-			onAfterMove : this._onAfterMove.bind(this)
+			onEnd : this._onDragEnd.bind(this)
 		});
 	},
-
+	_onDragStart : function() {
+		hui.cls.add(this.element,'hui_diagram_box_dragging');
+	},
 	_onBeforeMove : function(e) {
 		e = hui.event(e);
 		this.element.style.zIndex = hui.ui.nextPanelIndex();
 		var pos = hui.position.get(this.element);
-		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
+		var container = hui.position.get(this.options.container.element);
+		this.dragState = {left: e.getLeft() - pos.left + container.left,top:e.getTop()-pos.top + container.top};
 		this.element.style.right = 'auto';
-		hui.cls.add(this.element,'hui_diagram_box_dragging');
 	},
 	_onMove : function(e) {
 		var top = (e.getTop()-this.dragState.top);
@@ -127,7 +130,7 @@ hui.ui.Diagram.Box.prototype = {
 		this.element.style.left = Math.max(left,0)+'px';
 		this.options.container.__nodeMoved(this);
 	},
-	_onAfterMove : function() {
+	_onDragEnd : function() {
 		hui.cls.remove(this.element,'hui_diagram_box_dragging');
 		//hui.ui.callDescendants(this,'$$parentMoved');
 	}
