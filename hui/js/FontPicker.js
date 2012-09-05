@@ -7,9 +7,12 @@ hui.ui.FontPicker = function(options) {
 	this.element = hui.get(options.element);
 	this.fonts = options.fonts.concat(options.additionalFonts);
 	this.previews = {};
-	this.options = options;
+	this.options = options || {};
 	hui.override(this.options,options);
 	hui.ui.extend(this);
+	if (this.options.listener) {
+		this.listen(this.options.listener);
+	}
 	this._addBehavior();
 }
 
@@ -86,8 +89,8 @@ hui.ui.FontPicker.prototype = {
 		}
 	},
 	_buildPreview : function(font) {
-		if (this.previews[font.name]) {
-			this.previews[font.name].show();
+		if (this.previews[font.text]) {
+			this.previews[font.text].show();
 			return;
 		}
 		var e = hui.build('div',{className:'hui_fontpicker_example',style:'font-family:'+font.value+';'});
@@ -117,7 +120,7 @@ hui.ui.FontPicker.prototype = {
 		e.innerHTML = html;
 		var win = hui.ui.Window.create({title:font.text,padding:3});
 		win.add(e);
-		this.previews[font.name] = win;
+		this.previews[font.text] = win;
 		win.show();
 	}
 }

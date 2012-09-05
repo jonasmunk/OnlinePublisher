@@ -28,6 +28,16 @@ span.hui_segmented a
 	outline: none;
 }
 
+span.hui_segmented a:focus
+{
+	outline: 4px auto #2678ff;
+}
+
+span.hui_segmented a:hover
+{
+	background: #eee;
+}
+
 span.hui_segmented .hui_icon_16
 {
 	margin-top: 2px;
@@ -40,7 +50,8 @@ span.hui_segmented_text
 	padding: 0 4px;
 }
 
-a.hui_segmented_selected
+a.hui_segmented_selected,
+span.hui_segmented a.hui_segmented_selected:hover
 {
 	background: #ddd;
 	background: -moz-linear-gradient(top, #EFF2F4, #C0C9CF);

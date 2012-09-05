@@ -350,7 +350,17 @@ span.hui_toolbar_item a.hui_checkbox
 
 span.hui_toolbar_item a.hui_dropdown
 {
-	margin-top: 7px;
+	margin-top: 8px;
+}
+
+span.hui_toolbar_item span.hui_fontinput
+{
+	margin-top: 8px;
+}
+
+span.hui_toolbar_item span.hui_fontinput a.hui_dropdown
+{
+	margin-top: 0px;
 }
 
 span.hui_toolbar_item span.hui_searchfield
