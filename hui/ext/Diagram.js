@@ -27,10 +27,78 @@ hui.ui.Diagram.create = function(options) {
 hui.ui.Diagram.prototype = {
 	_init : function() {
 		this.background = hui.ui.Drawing.create({
-			width: this.options.width,
-			height: this.options.height
+			width: this.options.width || 0,
+			height: this.options.height || 0
 		});
 		this.element.appendChild(this.background.element);
+		hui.onReady(function() {
+			this.width = this.element.clientWidth;	
+			this.height = this.element.clientHeight;
+			this.background.setSize(this.width,this.height)
+		}.bind(this))
+
+	},
+	
+	_initParticleSystem : function() {
+		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
+			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
+				var repulsion = 100,	// the force repelling nodes from each other
+					stiffness = 600,	// the rigidity of the edges
+					friction = 0.5,		// the amount of damping in the system
+					gravity = false,	// an additional force attracting nodes to the origin
+					fps = 55,			// frames per second
+					dt = 0.02,			// timestep to use for stepping the simulation
+					precision = 0.6;	// accuracy vs. speed in force calculations
+		
+				var myRenderer = {
+		  			init:  function(system){ console.log("starting",system) },
+		  			redraw : function() {
+						hui.log('redraw')
+						system.eachNode(function(node,point) {
+							//if (draggedNode==node) {
+							//	return;
+							//}
+							node.data.setCenter(point);
+						});
+						system.eachEdge(function(edge,point1,point2) {
+							var line = edge.data.node;
+							//hui.log(hui.toJSON(point1))
+							line.setFrom(point1);
+							line.setTo(point2);
+							return;
+							if (edge.source!==draggedNode) {
+								line.setFrom(point1);
+							} else {
+								line.setFrom(draggedPoint);
+							}
+							if (edge.target!==draggedNode) {
+								line.setTo(point2);
+							} else {
+								line.setTo(draggedPoint);
+							}
+						});
+					}
+				}
+				var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
+				system.stop();
+				system.screenSize(this.element.clientWidth, this.element.clientHeight);
+				system.screenPadding(50,100);
+				system.renderer = myRenderer
+		
+				for (var i=0; i < this.nodes.length; i++) {
+					system.addNode(this.nodes[i].id, this.nodes[i]);
+				};
+		
+				hui.each(this.lines,function(line) {
+					system.addEdge(line.from, line.to, line);
+			
+				})
+				system.start();
+				window.setTimeout(function() {
+					system.stop();
+				},2000)
+			}.bind(this))
+		}.bind(this));
 	},
 	
 	// Data ...
@@ -46,6 +114,7 @@ hui.ui.Diagram.prototype = {
 		for (var i=0; i < lines.length; i++) {
 			this.addLine(lines[i]);
 		};
+		this._initParticleSystem();
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
@@ -63,6 +132,9 @@ hui.ui.Diagram.prototype = {
 		}
 	},
 	clear : function() {
+		if (this.particleSystem) {
+			this.particleSystem.stop();
+		}
 		this.background.clear();
 		this.lines = [];
 		for (var i = this.nodes.length - 1; i >= 0; i--){
@@ -162,6 +234,11 @@ hui.ui.Diagram.Box.prototype = {
  			onMove : this._onMove.bind(this),
 			onEnd : this._onDragEnd.bind(this)
 		});
+	},
+	setCenter : function(point) {
+		var e = this.element;
+		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
+		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
 	},
 	_onDragStart : function() {
 		hui.cls.add(this.element,'hui_diagram_box_dragging');

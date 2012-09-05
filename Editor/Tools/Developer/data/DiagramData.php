@@ -16,6 +16,7 @@ $diagram = array(
 
 $classes = ClassService::getClasses();
 
+$num = 1;
 foreach ($classes as $class) {
 	if ($parent!='all' && !($class['parent']==$parent || $class['name']==$parent)) {
 		continue;
@@ -33,6 +34,8 @@ foreach ($classes as $class) {
 	if ($class['parent']) {
 		$diagram['lines'][] = array('from'=>$class['name'],'to'=>$class['parent']);
 	}
+
+	$num++;
 }
 
 Response::sendObject($diagram);

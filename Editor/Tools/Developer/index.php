@@ -62,7 +62,7 @@ $gui='
 					<graph source="graphSource" name="graph" layout="d3"/>
 				</overflow> 
 				<bar variant="layout" state="diagram">
-					<segmented value="all" name="diagramSubset">
+					<segmented value="Object" name="diagramSubset">
 						<item value="all" text="All"/> 
 						<item value="Object" text="Objects"/> 
 						<item value="Part" text="Parts"/> 

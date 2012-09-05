@@ -139,6 +139,10 @@
 	<script src="{$context}/hui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:diagram">
+	<!--
+	<script charset="utf-8" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"><xsl:comment/></script>
+	<script src="{$context}/hui/lib/arbor/lib/arbor.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+	-->
 	<script src="{$context}/hui/ext/Diagram.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	<script src="{$context}/hui/js/Drawing.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>

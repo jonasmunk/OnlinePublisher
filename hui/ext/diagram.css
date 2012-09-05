@@ -2,6 +2,7 @@ div.hui_diagram
 {
 	position: relative;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	overflow: hidden;
 }
 
 div.hui_diagram_box
@@ -12,7 +13,7 @@ div.hui_diagram_box
 	background: #fff;
 	top: 0;
 	left: 0;
-	box-shadow: 0 1px 4px rgba(0,0,0,.1);
+/*	box-shadow: 0 1px 4px rgba(0,0,0,.1);*/
 	cursor: move;
 	cursor: -webkit-grab;
 }
