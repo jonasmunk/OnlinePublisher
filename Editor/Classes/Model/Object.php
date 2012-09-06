@@ -8,8 +8,8 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class Object {
-	var $id;
+class Object extends Entity {
+
 	var $title;
 	var $created;
 	var $updated;
@@ -24,10 +24,6 @@ class Object {
 		$this->type = $type;
 		$this->searchable = true;
 		$this->ownerId = InternalSession::getUserId();
-	}
-	
-	function getId() {
-		return $this->id;
 	}
 	
 	function getType() {

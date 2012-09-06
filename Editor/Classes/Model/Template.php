@@ -8,21 +8,12 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class Template {
+class Template extends Entity {
         
-	var $id;
 	var $unique;
 
     function Template() {
     }
-
-	function setId($id) {
-	    $this->id = $id;
-	}
-
-	function getId() {
-	    return $this->id;
-	}
 	
 	function setUnique($unique) {
 	    $this->unique = $unique;

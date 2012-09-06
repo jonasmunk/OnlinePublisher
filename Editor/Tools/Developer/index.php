@@ -6,7 +6,7 @@
 require_once '../../Include/Private.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="Developer" state="list">
+<gui xmlns="uri:hui" padding="10" title="Developer" state="diagram">
 	<controller source="controller.js"/>
 	<source name="testsSource" url="data/ListTests.php"/>
 	<source name="graphSource" url="data/GraphData.php"/>
@@ -62,8 +62,9 @@ $gui='
 					<graph source="graphSource" name="graph" layout="d3"/>
 				</overflow> 
 				<bar variant="layout" state="diagram">
-					<segmented value="Object" name="diagramSubset">
+					<segmented value="Entity" name="diagramSubset">
 						<item value="all" text="All"/> 
+						<item value="Entity" text="Entity"/> 
 						<item value="Object" text="Objects"/> 
 						<item value="Part" text="Parts"/> 
 						<item value="TemplateController" text="Template controllers"/> 

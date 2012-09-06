@@ -4,9 +4,16 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 		
-class Page {
+Entity::$schema['Page'] = array(
+	'table' => 'page',
+	'properties' => array(
+		'title' => array('type'=>'string'),
+		'templateId' => array('type'=>'int','relation'=>array('class'=>'Template','property'=>'id')),
+		'designId' => array('type'=>'int','relation'=>array('class'=>'Design','property'=>'id'))
+	)
+);
+class Page extends Entity {
 
-    var $id;
     var $title;
     var $description;
     var $keywords;
@@ -28,14 +35,6 @@ class Page {
     function Page() {
     }
 	    
-    function setId($id) {
-        $this->id = $id;
-    }
-    
-    function getId() {
-        return $this->id;
-    }
-    
     function setName($name) {
         $this->name = $name;
     }

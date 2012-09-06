@@ -1,4 +1,4 @@
-.hui_window
+div.hui_window
 {
 	position: absolute;
 	top: 50px;
@@ -12,9 +12,15 @@
 	font-family: 'Lucida Grande','Verdana',sans-serif;
 	background: url('../gfx/window_grey.png') left -27px no-repeat;
 	font-size: 0;
-	height:27px;
+	height: 27px;
 	cursor: default;
-	text-align:center;
+	text-align: center;
+	cursor: -webkit-grab;
+}
+
+div.hui_window_dragging .hui_window_titlebar
+{
+	cursor: -webkit-grabbing;
 }
 
 .hui_window_titlebar div

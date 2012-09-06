@@ -157,6 +157,7 @@ hui.ui.Window.prototype = {
 		var pos = hui.position.get(this.element);
 		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
 		this.element.style.right = 'auto';
+		hui.cls.add(this.element,'hui_window_dragging');
 	},
 	_onMove : function(e) {
 		var top = (e.getTop()-this.dragState.top);
@@ -166,6 +167,7 @@ hui.ui.Window.prototype = {
 	},
 	_onAfterMove : function() {
 		hui.ui.callDescendants(this,'$$parentMoved');
+		hui.cls.remove(this.element,'hui_window_dragging');
 	}
 }
 
