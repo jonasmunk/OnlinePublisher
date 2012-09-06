@@ -298,7 +298,7 @@
 <xsl:template match="gui:font-input">
 	<span class="hui_fontinput" id="{generate-id()}">
 		<a class="hui_dropdown" href="javascript://"><span><span><strong><xsl:comment/></strong></span></span></a>
-		<a class="hui_fontinput" href="javascript://" tabindex="-1"><xsl:comment/></a>
+		<a class="hui_fontinput" href="javascript://" tabindex="-1">a</a>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.FontInput({

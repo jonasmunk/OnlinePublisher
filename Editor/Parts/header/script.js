@@ -19,6 +19,19 @@ var partController = {
 		}
 		this.colorWindow.show();
 	},
+	showFontWindow : function(callback) {
+		this.fontCallback = callback;
+		if (!this.fontWindow) {
+			this.fontWindow = hui.ui.Window.create({padding:3,title:{en:'Font',da:'Skrift'}});
+			this.fontWindow.add(
+				hui.ui.FontPicker.create({listener:{$select:this._selectFont.bind(this)}})
+			);
+		}
+		this.fontWindow.show();
+	},
+	_selectFont : function(font) {
+		this.fontCallback(font.value);
+	},
 	$colorWasSelected : function(color) {
 		this.colorCallback(color)
 	},

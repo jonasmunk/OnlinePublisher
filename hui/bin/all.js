@@ -17153,7 +17153,8 @@ hui.ui.FontInput = function(options) {
 	this.button = hui.get.firstByClass(this.element,'hui_fontinput');
 	this.dropdown = new hui.ui.DropDown({
 		element : hui.get.firstByClass(this.element,'hui_dropdown'),
-		items : hui.ui.FontPicker.fonts
+		items : hui.ui.FontPicker.fonts,
+		listener : this
 	});
 	this.value = null;
 	hui.ui.extend(this);
@@ -17177,7 +17178,7 @@ hui.ui.FontInput.prototype = {
 	},
 	_fireChange : function() {
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
-		this.fire('valueChanged',this.value)		
+		this.fire('valueChanged',this.value);
 	},
 	_onBlur : function() {
 		hui.Color.parse(this.value);
@@ -17202,6 +17203,10 @@ hui.ui.FontInput.prototype = {
 		this.setValue(font.value);
 		this._fireChange();
 	},
+	$valueChanged : function(value) {
+		this.setValue(value);
+		this._fireChange();
+	},
 	
 	// Public...
 	
@@ -17211,6 +17216,7 @@ hui.ui.FontInput.prototype = {
 	setValue : function(value) {
 		this.value = value;
 		this._syncInput();
+		this.button.style.fontFamily = value;
 	},
 	focus : function() {
 		try {
@@ -17231,9 +17237,12 @@ hui.ui.FontPicker = function(options) {
 	this.element = hui.get(options.element);
 	this.fonts = options.fonts.concat(options.additionalFonts);
 	this.previews = {};
-	this.options = options;
+	this.options = options || {};
 	hui.override(this.options,options);
 	hui.ui.extend(this);
+	if (this.options.listener) {
+		this.listen(this.options.listener);
+	}
 	this._addBehavior();
 }
 
@@ -17310,8 +17319,8 @@ hui.ui.FontPicker.prototype = {
 		}
 	},
 	_buildPreview : function(font) {
-		if (this.previews[font.name]) {
-			this.previews[font.name].show();
+		if (this.previews[font.text]) {
+			this.previews[font.text].show();
 			return;
 		}
 		var e = hui.build('div',{className:'hui_fontpicker_example',style:'font-family:'+font.value+';'});
@@ -17341,7 +17350,7 @@ hui.ui.FontPicker.prototype = {
 		e.innerHTML = html;
 		var win = hui.ui.Window.create({title:font.text,padding:3});
 		win.add(e);
-		this.previews[font.name] = win;
+		this.previews[font.text] = win;
 		win.show();
 	}
 }

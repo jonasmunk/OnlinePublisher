@@ -11,7 +11,8 @@ hui.ui.FontInput = function(options) {
 	this.button = hui.get.firstByClass(this.element,'hui_fontinput');
 	this.dropdown = new hui.ui.DropDown({
 		element : hui.get.firstByClass(this.element,'hui_dropdown'),
-		items : hui.ui.FontPicker.fonts
+		items : hui.ui.FontPicker.fonts,
+		listener : this
 	});
 	this.value = null;
 	hui.ui.extend(this);
@@ -35,7 +36,7 @@ hui.ui.FontInput.prototype = {
 	},
 	_fireChange : function() {
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
-		this.fire('valueChanged',this.value)		
+		this.fire('valueChanged',this.value);
 	},
 	_onBlur : function() {
 		hui.Color.parse(this.value);
@@ -60,6 +61,10 @@ hui.ui.FontInput.prototype = {
 		this.setValue(font.value);
 		this._fireChange();
 	},
+	$valueChanged : function(value) {
+		this.setValue(value);
+		this._fireChange();
+	},
 	
 	// Public...
 	
@@ -69,6 +74,7 @@ hui.ui.FontInput.prototype = {
 	setValue : function(value) {
 		this.value = value;
 		this._syncInput();
+		this.button.style.fontFamily = value;
 	},
 	focus : function() {
 		try {

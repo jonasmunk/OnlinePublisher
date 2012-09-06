@@ -30,6 +30,11 @@
 	<xsl:call-template name="util:scripts"/>
 </head>
 <body>
+	<xsl:if test="//p:design/p:parameter[@key='theme']">
+		<xsl:attribute name="class">
+			<xsl:text>theme_</xsl:text><xsl:value-of select="//p:design/p:parameter[@key='theme']"/>
+		</xsl:attribute>
+	</xsl:if>
 	<xsl:choose>
 		<xsl:when test="//html:html">
 			<xsl:apply-templates select="p:content"/>
@@ -39,6 +44,9 @@
 				<div class="layout_navigation">
 					<xsl:call-template name="util:hierarchy-first-level"/>
 					<xsl:call-template name="util:hierarchy-second-level"/>
+				</div>
+				<div class="layout_top">
+					<xsl:comment/>
 				</div>
 				<div class="layout_content">
 					<xsl:apply-templates select="p:content"/>

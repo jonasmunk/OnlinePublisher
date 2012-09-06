@@ -24,6 +24,13 @@ hui.ui.listen({
 			this.form.text.style.color=value || '';
 		}.bind(this));
 	},
+	$clickPicker$fontFamily : function(value) {
+		partToolbar.getMainController().showFontWindow(function(value) {
+			fontFamily.setValue(value);
+			this.form.fontFamily.value=value || '';
+			this.form.text.style.fontFamily=value || '';
+		}.bind(this));
+	},
 	_updateInitialValues : function() {
 		fontSize.setInitialValue(hui.style.get(this.form.text,'font-size'));
 		lineHeight.setInitialValue(hui.style.get(this.form.text,'line-height'));
