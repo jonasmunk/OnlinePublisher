@@ -8,9 +8,20 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class Link {
+Entity::$schema['Link'] = array(
+	'table' => 'link',
+	'properties' => array(
+		'partId' => array('type'=>'int','relation'=>array('class'=>'Part','property'=>'id')),
+		'pageId' => array('type'=>'int','relation'=>array('class'=>'Page','property'=>'id')),
+		'targetId' => array('type'=>'int','relations'=>array(
+			array('class'=>'Page','property'=>'id'),
+			array('class'=>'File','property'=>'id')
+			)
+		)
+	)
+);
+class Link extends Entity {
     
-    var $id;
     var $text;
 	var $alternative;
 	var $targetType;
@@ -23,14 +34,6 @@ class Link {
         
     }
 
-	function setId($id) {
-	    $this->id = $id;
-	}
-
-	function getId() {
-	    return $this->id;
-	}
-	
 	function setPageId($pageId) {
 	    $this->pageId = $pageId;
 	}

@@ -28,7 +28,13 @@ Part::$schema['news'] = array(
 		'newsGroupIds' => array( 'table' => 'part_news_newsgroup', 'fromColumn' => 'part_id', 'toColumn' => 'newsgroup_id' )
 	)
 );
-
+Entity::$schema['NewsPart'] = array(
+	'table' => 'part_news',
+	'properties' => array(
+		'newsId' => array('type'=>'int','relation'=>array('class'=>'News','property'=>'id')),
+		'newsGroupIds' => array('type'=>'int','relation'=>array('class'=>'Newsgroup','property'=>'id'))
+	)
+);
 class NewsPart extends Part
 {
 	var $align;

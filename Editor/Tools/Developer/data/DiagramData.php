@@ -18,7 +18,7 @@ $classes = ClassService::getClasses();
 
 $num = 1;
 foreach ($classes as $class) {
-	if (!($class['parent']=='Object' || $class['name']=='Object' || $class['parent']=='Entity' || $class['name']=='Entity')) {
+	if (!($class['parent']=='Object' || $class['name']=='Object' || $class['parent']=='Entity' || $class['name']=='Entity' || $class['parent']=='Part' || $class['name']=='Part')) {
 	//if ($parent!='all' && !($class['parent']==$parent || $class['name']==$parent)) {
 		continue;
 	}
@@ -36,15 +36,20 @@ foreach ($classes as $class) {
 		$info = Entity::$schema[$class['name']];
 		if ($info['properties']) {
 			foreach ($info['properties'] as $key => $value) {
-				if ($value['relation']) {
+				if (isset($value['relation']) && is_array($value['relation'])) {
 					$diagram['lines'][] = array('from'=>$class['name'],'to'=>$value['relation']['class']);
+				}
+				if (isset($value['relations']) && is_array($value['relations'])) {
+					foreach ($value['relations'] as $relation) {
+						$diagram['lines'][] = array('from'=>$class['name'],'to'=>$relation['class']);
+					}
 				}
 			}
 		}
 	}
 	
 	if ($class['parent']) {
-		$diagram['lines'][] = array('from'=>$class['name'],'to'=>$class['parent']);
+		$diagram['lines'][] = array('from'=>$class['name'],'to'=>$class['parent'],'color'=>'#eee');
 	}
 
 	$num++;

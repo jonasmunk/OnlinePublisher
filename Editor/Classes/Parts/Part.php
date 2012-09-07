@@ -8,10 +8,9 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class Part
+class Part extends Entity
 {
 	static $schema = array();
-	protected $id;
 	protected $type;
 	protected $dynamic;
 	
@@ -19,14 +18,6 @@ class Part
 		$this->type = $type;
 	}
 	
-	function setId($id) {
-	    $this->id = $id;
-	}
-
-	function getId() {
-	    return $this->id;
-	}
-
 	function getType() {
 	    return $this->type;
 	}

@@ -8,9 +8,8 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class Hierarchy {
+class Hierarchy extends Entity {
     
-    var $id;
     var $name;
     var $language;
 	var $changed;
@@ -18,14 +17,6 @@ class Hierarchy {
     
     function Hierarchy() {
         
-    }
-    
-    function setId($id) {
-        $this->id = $id;
-    }
-
-    function getId() {
-        return $this->id;
     }
     
     function setName($name) {

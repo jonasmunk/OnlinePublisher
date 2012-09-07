@@ -8,23 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class SpecialPage {
+class SpecialPage extends Entity {
         
-	var $id;
 	var $pageId;
 	var $language;
 	var $type;
 
     function SpecialPage() {
     }
-
-	function setId($id) {
-	    $this->id = $id;
-	}
-
-	function getId() {
-	    return $this->id;
-	}
 	
 	function setPageId($pageId) {
 	    $this->pageId = $pageId;

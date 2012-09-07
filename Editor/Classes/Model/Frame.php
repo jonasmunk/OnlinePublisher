@@ -8,9 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class Frame {
-        
-	var $id;
+Entity::$schema['Frame'] = array(
+	'table' => 'page',
+	'properties' => array(
+		'title' => array('type'=>'string'),
+		'hierarchyId' => array('type'=>'int','relation'=>array('class'=>'Hierarchy','property'=>'id'))
+	)
+);
+class Frame extends Entity {
+       
 	var $title;
 	var $name;
 	var $bottomText;
@@ -26,14 +32,6 @@ class Frame {
 
 	function isPersistent() {
 		return $this->id>0;
-	}
-
-	function setId($id) {
-	    $this->id = $id;
-	}
-
-	function getId() {
-	    return $this->id;
 	}
 	
 	function setTitle($title) {
