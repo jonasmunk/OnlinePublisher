@@ -37,7 +37,7 @@ foreach ($products as $product) {
 	startRow(array('id'=>$product->getId(),'kind'=>$product->getType(),'icon'=>'common/product','title'=>$product->getTitle()))->
 		startCell(array('icon'=>'common/product'))->text($product->getTitle())->endCell()->
 		startCell()->text($product->getNumber())->endCell()->
-		startCell()->text($type->getTitle())->endCell()->
+		startCell()->text($type ? $type->getTitle() : '?')->endCell()->
 	endRow();
 }
 $writer->endList();

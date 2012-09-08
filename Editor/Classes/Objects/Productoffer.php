@@ -8,14 +8,24 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+Object::$schema['productoffer'] = array(
+	'offer' => array('type'=>'string'),
+	'productId' => array('type'=>'int','column'=>'product_id'),
+	'personId' => array('type'=>'int','column'=>'person_id'),
+	'expiry' => array('type'=>'datetime')
+);
 class ProductOffer extends Object {
 	var $offer;
-	var $productId=0;
-	var $personId=0;
+	var $productId = 0;
+	var $personId = 0;
 	var $expiry;
 
 	function ProductOffer() {
 		parent::Object('productoffer');
+	}
+
+	function load($id) {
+		return Object::get($id,'productoffer');
 	}
 
 	function updateTitle() {
@@ -111,7 +121,7 @@ class ProductOffer extends Object {
 	
 
     /////////////////////////// Persistence ////////////////////////
-
+/*
 	function load($id) {
 		$sql = "select offer,person_id,product_id,UNIX_TIMESTAMP(expiry) as expiry".
 		" from productoffer where object_id=".$id;
@@ -160,7 +170,7 @@ class ProductOffer extends Object {
 	function sub_remove() {
 		$sql = "delete from productoffer where object_id=".$this->id;
 		Database::delete($sql);
-	}
+	}*/
 	
 	/////////////////////////// GUI /////////////////////////
 	

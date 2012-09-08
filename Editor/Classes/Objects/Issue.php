@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 Object::$schema['issue'] = array(
-	'kind' => array('kind'=>'string')
+	'kind' => array('type'=>'string')
 );
 class Issue extends Object {
     

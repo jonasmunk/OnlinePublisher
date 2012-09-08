@@ -8,6 +8,12 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+Object::$schema['product'] = array(
+	'number' => array('type'=>'string'),
+	'productTypeId' => array('type'=>'int','column'=>'producttype_id'),
+	'imageId' => array('type'=>'int','column'=>'image_id'),
+	'allowOffer' => array('type'=>'boolean','column'=>'allow_offer')
+);
 class Product extends Object {
 	var $number;
 	var $productTypeId;
@@ -16,8 +22,12 @@ class Product extends Object {
 	
 	function Product() {
 		parent::Object('product');
-		$this->productTypeId=0;
-		$this->imageId=0;
+		$this->productTypeId = 0;
+		$this->imageId = 0;
+	}
+
+	function load($id) {
+		return Object::get($id,'product');
 	}
 	
 	function setNumber($number) {
@@ -48,39 +58,12 @@ class Product extends Object {
 		$this->allowOffer = $allow;
 	}
 	
-	function isAllowOffer() {
+	function getAllowOffer() {
 		return $this->allowOffer;
 	}
-	
-	function load($id) {
-		$sql = "select number,image_id,producttype_id,allow_offer from product where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj = new Product();
-			$obj->_load($id);
-			$obj->number=$row['number'];
-			$obj->imageId=$row['image_id'];
-			$obj->productTypeId=$row['producttype_id'];
-			$obj->allowOffer=$row['allow_offer']==1;
-			return $obj;
-		} else {
-			return null;
-		}
-	}
-	
-	function sub_create() {
-		$sql = "insert into product (object_id,number,image_id,producttype_id,allow_offer) values (".$this->id.",".Database::text($this->number).",".$this->imageId.",".$this->productTypeId.",".Database::boolean($this->allowOffer).")";
-		Database::insert($sql);
-	}
-	
-	function sub_update() {
-		$sql = "update product set ".
-		"number=".Database::text($this->number).
-		",image_id=".$this->imageId.
-		",producttype_id=".$this->productTypeId.
-		",allow_offer=".Database::boolean($this->allowOffer).
-		" where object_id=".$this->id;
-		Database::update($sql);
+
+	function isAllowOffer() {
+		return $this->allowOffer;
 	}
 	
 	function sub_publish() {
@@ -114,19 +97,18 @@ class Product extends Object {
 		$data.='</product>';
 		return $data;
 	}
-	
-	function sub_remove() {
-		$sql="delete from productgroup_product where product_id=".$this->id;
+
+	function removeMore() {
+		$sql="delete from productgroup_product where product_id=".Database::int($this->id);
 		Database::delete($sql);
-		$sql="delete from productattribute where product_id=".$this->id;
+		$sql="delete from productattribute where product_id=".Database::int($this->id);
 		Database::delete($sql);
-		$sql="delete from productprice where product_id=".$this->id;
+		$sql="delete from productprice where product_id=".Database::int($this->id);
 		Database::delete($sql);
-		$sql="delete from productoffer where product_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from product where object_id=".$this->id;
+		$sql="delete from productoffer where product_id=".Database::int($this->id);
 		Database::delete($sql);
 	}
+
 	
 	/////////////////////////////// Special ///////////////////////
 	

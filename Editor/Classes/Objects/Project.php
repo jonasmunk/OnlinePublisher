@@ -8,11 +8,19 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+Object::$schema['project'] = array(
+	'parentProjectId' => array('type'=>'int','column'=>'parent_project_id')
+);
 class Project extends Object {
-	var $parentProjectId=0;
+
+	var $parentProjectId = 0;
 
 	function Project() {
 		parent::Object('project');
+	}
+
+	function load($id) {
+		return Object::get($id,'project');
 	}
 
 	function setParentProjectId($projectId) {
@@ -25,36 +33,6 @@ class Project extends Object {
 	
     /////////////////////////// Persistence ////////////////////////
 
-	function load($id) {
-		$sql = "select * from project where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj = new Project();
-			$obj->_load($id);
-			$obj->_fillData($row);
-			return $obj;
-		}
-		return null;
-	}
-    
-    function _fillData($row) {
-		$this->parentProjectId=$row['parent_project_id'];        
-    }
-
-	function sub_create() {
-		$sql="insert into project (object_id,parent_project_id) values (".
-		$this->id.
-		",".Database::int($this->parentProjectId).
-		")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-		$sql = "update project set ".
-		"parent_project_id=".Database::int($this->parentProjectId).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
 
 	function sub_publish() {
 		$data =
@@ -63,14 +41,12 @@ class Project extends Object {
 		return $data;
 	}
 
-	function sub_remove() {
-		$sql = "delete from project where object_id=".$this->id;
-		Database::delete($sql);
+	function removeMore() {
 		// Set parent of subProjects to parent of this project
-		$sql = "update project set parent_project_id = ".$this->parentProjectId." where parent_project_id=".$this->id;
+		$sql = "update project set parent_project_id = ".Database::int($this->parentProjectId)." where parent_project_id=".Database::int($this->id);
 		Database::delete($sql);
 		// Move task to parent project (or no containing object)
-		$sql = "update task set containing_object_id = ".$this->parentProjectId." where containing_object_id=".$this->id;
+		$sql = "update task set containing_object_id = ".Database::int($this->parentProjectId)." where containing_object_id=".Database::int($this->id);
 		Database::delete($sql);
 	}
 	
@@ -83,7 +59,7 @@ class Project extends Object {
 	    }
 	    $parent = $this->parentProjectId;
 	    while ($parent>0) {
-    	    $sql = "select object.id,object.title,project.parent_project_id from project,object where project.object_id = object.id and object.id=".$parent;
+    	    $sql = "select object.id,object.title,project.parent_project_id from project,object where project.object_id = object.id and object.id=".Database::int($parent);
     	    if ($row=Database::selectFirst($sql)) {
     	        $output[] = array('id'=>$row['id'],'title'=>$row['title']);
     	        $parent = $row['parent_project_id'];
