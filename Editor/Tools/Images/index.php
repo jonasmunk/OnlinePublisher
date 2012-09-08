@@ -66,8 +66,6 @@ $gui='
 				<bar name="groupBar" variant="layout" visible="false">
 					<text name="groupTitle"/>
 					<right>
-						<slider width="200"/>
-						<space width="20"/>
 						<button text="Info" small="true" name="groupInfo"/>
 					</right>
 				</bar>

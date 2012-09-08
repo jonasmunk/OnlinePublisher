@@ -462,3 +462,43 @@ a.hui_button_mini_paper span span
 {
 	background-image: url('../gfx/button_overlay_highlighted.png');
 }
+
+
+/** Small bar **/
+
+a.hui_button_bar
+{
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	background: none;
+	height: 26px;
+	line-height: 26px;
+	font-family: Georgia,serif;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	font-size: 14px;
+	border-color: #ccc #d7d7d7 #ccc;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fdfdfd), to(#e6e6e6));
+	background: -moz-linear-gradient(top, #fafafa, #eee);
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fafafa, endColorstr=#eeeeee);
+}
+
+a.hui_button_bar span
+{
+	background: none;
+	color: #333;
+}
+
+a.hui_button_small_bar, a.hui_button_small_bar span
+{
+	height: 20px;
+	line-height: 20px;
+}
+
+a.hui_button_small_bar span span
+{
+	margin: 0;
+	padding: 0 7px;
+	font-size: 11px;
+	line-height: 17px;
+	text-shadow: 0 1px 0 #fff;
+}

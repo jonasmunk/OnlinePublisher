@@ -104,7 +104,7 @@ hui.ui.Gallery.prototype = {
 			item.appendChild(img);
 			hui.listen(item,'click',function(e) {
 				this._itemClicked(i,e);
-			});
+			}.bind(this));
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
 			item.onmousedown = function(e) {
 				hui.ui.startDrag(e,item);
@@ -112,7 +112,7 @@ hui.ui.Gallery.prototype = {
 			};
 			hui.listen(item,'dblclick',function() {
 				this._onItemDoubleClick(i);
-			});
+			}.bind(this));
 			this.body.appendChild(item);
 			this.nodes.push(item);
 		}.bind(this));

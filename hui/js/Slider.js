@@ -11,7 +11,7 @@ hui.ui.Slider = function(options) {
 	hui.ui.extend(this)
 	this.position = 0;
 	this.value = 0;
-	this.setValue(options.value);
+	this.setValue(this.options.value);
 	this._addBehavior();
 }
 
