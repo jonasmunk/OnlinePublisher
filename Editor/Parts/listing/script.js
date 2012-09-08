@@ -9,6 +9,18 @@ var partController = {
 	syncSize : function() {
 		this.resizer.resize();
 	},
+	showFontWindow : function(callback) {
+		this.fontCallback = callback;
+		if (!this.fontWindow) {
+			this.fontWindow = hui.ui.Window.create({padding:3,title:{en:'Font',da:'Skrift'}});
+			this.fontWindow.add(
+				hui.ui.FontPicker.create({listener:{$select:function(font) {
+					callback(font.value);
+				}}})
+			);
+		}
+		this.fontWindow.show();
+	},
 	showColorWindow : function(callback) {
 		this.colorCallback = callback;
 		if (!this.colorWindow) {
