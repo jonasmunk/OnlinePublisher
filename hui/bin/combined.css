@@ -2464,7 +2464,7 @@ span.hui_toolbar_more_content
 span.hui_toolbar_more_expanded span.hui_toolbar_more_content
 {
 	display: inline-block;
-}.hui_window
+}div.hui_window
 {
 	position: absolute;
 	top: 50px;
@@ -2478,9 +2478,15 @@ span.hui_toolbar_more_expanded span.hui_toolbar_more_content
 	font-family: 'Lucida Grande','Verdana',sans-serif;
 	background: url('../gfx/window_grey.png') left -27px no-repeat;
 	font-size: 0;
-	height:27px;
+	height: 27px;
 	cursor: default;
-	text-align:center;
+	text-align: center;
+	cursor: -webkit-grab;
+}
+
+div.hui_window_dragging .hui_window_titlebar
+{
+	cursor: -webkit-grabbing;
 }
 
 .hui_window_titlebar div
@@ -6069,6 +6075,16 @@ span.hui_segmented a
 	outline: none;
 }
 
+span.hui_segmented a:focus
+{
+	outline: 4px auto #2678ff;
+}
+
+span.hui_segmented a:hover
+{
+	background: #eee;
+}
+
 span.hui_segmented .hui_icon_16
 {
 	margin-top: 2px;
@@ -6081,7 +6097,8 @@ span.hui_segmented_text
 	padding: 0 4px;
 }
 
-a.hui_segmented_selected
+a.hui_segmented_selected,
+span.hui_segmented a.hui_segmented_selected:hover
 {
 	background: #ddd;
 	background: -moz-linear-gradient(top, #EFF2F4, #C0C9CF);
@@ -7202,6 +7219,7 @@ a.hui_fontinput
 	vertical-align: middle;
 	margin-left: 2px;
 	border-radius: 3px;
+	overflow: hidden;
 }
 
 a.hui_fontinput:hover

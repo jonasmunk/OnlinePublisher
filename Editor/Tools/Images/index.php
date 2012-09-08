@@ -66,6 +66,8 @@ $gui='
 				<bar name="groupBar" variant="layout" visible="false">
 					<text name="groupTitle"/>
 					<right>
+						<slider width="200"/>
+						<space width="20"/>
 						<button text="Info" small="true" name="groupInfo"/>
 					</right>
 				</bar>
@@ -75,7 +77,11 @@ $gui='
 				</overflow>
 			</center>
 		</middle>
-		<bottom/>
+		<bottom>
+			<div style="float: right; margin: 1px 8px 0 0;">
+				<slider width="200" name="sizeSlider" value="0.5"/>
+			</div>
+		</bottom>
 	</structure>
 	
 	<window title="{Group; da:Gruppe}" name="groupWindow" icon="common/folder" width="300" padding="5">
@@ -126,7 +132,7 @@ $gui='
 		<formula name="imageFormula">
 			<columns>
 				<column width="180px">
-					<div style="width: 150px; min-height: 50px; max-height: 300px; overflow: hidden; background: #fff no-repeat; font-size: 0; padding: 3px; border: 1px solid #ddd; margin: 5px;" id="photo"></div>
+					<div style="width: 150px; min-height: 50px; max-height: 300px; overflow: hidden; background: #fff no-repeat; font-size: 0; padding: 3px; border: 1px solid #ccc; border-color: #ddd #ccc #bbb; margin: 5px;" id="photo"></div>
 				</column>
 				<column>
 					<fields labels="above">

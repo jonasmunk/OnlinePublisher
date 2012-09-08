@@ -762,6 +762,9 @@
 			element : '<xsl:value-of select="generate-id()"/>',
 			name : '<xsl:value-of select="@name"/>',
 			'key' : '<xsl:value-of select="@key"/>'
+			<xsl:if test="@value">
+				,value:<xsl:value-of select="@value"/>
+			</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>

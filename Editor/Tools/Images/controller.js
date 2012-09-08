@@ -42,6 +42,12 @@ hui.ui.listen({
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
 	
+	$valueChanged$sizeSlider : function(value) {
+		gallery.setSize(value*280+20);
+	},
+	$valueChangedEnd$sizeSlider : function() {
+		gallery.reRender();
+	},
 	
 	$select$selector : function(item) {
 		list.resetState();

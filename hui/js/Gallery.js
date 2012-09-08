@@ -51,10 +51,22 @@ hui.ui.Gallery.prototype = {
 			this.options.source.refresh();
 		}
 	},
+	setSize : function(size) {
+		this.width = size;
+		this.height = size;
+		for (var i=0; i < this.nodes.length; i++) {
+			var node = this.nodes[i];
+			node.style.width = size+'px';
+			node.style.height = size+'px';
+		};
+	},
+	reRender : function() {
+		this._render();
+	},
 	setObjects : function(objects) {
 		this.selected = [];
 		this.objects = objects;
-		this.render();
+		this._render();
 		this.fire('selectionReset');
 	},
 	getObjects : function() {
@@ -73,26 +85,25 @@ hui.ui.Gallery.prototype = {
 		this.setObjects(objects);
 	},
 	/** @private */
-	render : function() {
+	_render : function() {
 		this.nodes = [];
-		this.maxRevealed=0;
-		this.body.innerHTML='';
-		var self = this;
+		this.maxRevealed = 0;
+		this.body.innerHTML = '';
 		hui.each(this.objects,function(object,i) {
-			var url = self._resolveImageUrl(object),
+			var url = this._resolveImageUrl(object),
 				top = 0;
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
 			}
-			if (!self.revealing && object.height<object.width) {
-				top = (self.height-(self.height*object.height/object.width))/2;
+			if (!this.revealing && object.height < object.width) {
+				top = (this.height-(this.height*object.height/object.width))/2;
 			}
 			var img = hui.build('img',{style:'margin:'+top+'px auto 0px'});
-			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
-			var item = hui.build('div',{'class' : 'hui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			img.setAttribute(this.revealing ? 'data-src' : 'src', url );
+			var item = hui.build('div',{'class' : 'hui_gallery_item',style:'width:'+this.width+'px; height:'+this.height+'px'});
 			item.appendChild(img);
 			hui.listen(item,'click',function(e) {
-				self._itemClicked(i,e);
+				this._itemClicked(i,e);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
 			item.onmousedown = function(e) {
@@ -100,11 +111,11 @@ hui.ui.Gallery.prototype = {
 				return false;
 			};
 			hui.listen(item,'dblclick',function() {
-				self._onItemDoubleClick(i);
+				this._onItemDoubleClick(i);
 			});
-			self.body.appendChild(item);
-			self.nodes.push(item);
-		});
+			this.body.appendChild(item);
+			this.nodes.push(item);
+		}.bind(this));
 		this._reveal();
 		this.fireSizeChange();
 	},

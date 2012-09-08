@@ -6247,6 +6247,7 @@ hui.ui.Window.prototype = {
 		var pos = hui.position.get(this.element);
 		this.dragState = {left: e.getLeft() - pos.left,top:e.getTop()-pos.top};
 		this.element.style.right = 'auto';
+		hui.cls.add(this.element,'hui_window_dragging');
 	},
 	_onMove : function(e) {
 		var top = (e.getTop()-this.dragState.top);
@@ -6256,6 +6257,7 @@ hui.ui.Window.prototype = {
 	},
 	_onAfterMove : function() {
 		hui.ui.callDescendants(this,'$$parentMoved');
+		hui.cls.remove(this.element,'hui_window_dragging');
 	}
 }
 
@@ -11997,10 +11999,22 @@ hui.ui.Gallery.prototype = {
 			this.options.source.refresh();
 		}
 	},
+	setSize : function(size) {
+		this.width = size;
+		this.height = size;
+		for (var i=0; i < this.nodes.length; i++) {
+			var node = this.nodes[i];
+			node.style.width = size+'px';
+			node.style.height = size+'px';
+		};
+	},
+	reRender : function() {
+		this._render();
+	},
 	setObjects : function(objects) {
 		this.selected = [];
 		this.objects = objects;
-		this.render();
+		this._render();
 		this.fire('selectionReset');
 	},
 	getObjects : function() {
@@ -12019,26 +12033,25 @@ hui.ui.Gallery.prototype = {
 		this.setObjects(objects);
 	},
 	/** @private */
-	render : function() {
+	_render : function() {
 		this.nodes = [];
-		this.maxRevealed=0;
-		this.body.innerHTML='';
-		var self = this;
+		this.maxRevealed = 0;
+		this.body.innerHTML = '';
 		hui.each(this.objects,function(object,i) {
-			var url = self._resolveImageUrl(object),
+			var url = this._resolveImageUrl(object),
 				top = 0;
 			if (url!==null) {
 				url = url.replace(/&amp;/,'&');
 			}
-			if (!self.revealing && object.height<object.width) {
-				top = (self.height-(self.height*object.height/object.width))/2;
+			if (!this.revealing && object.height < object.width) {
+				top = (this.height-(this.height*object.height/object.width))/2;
 			}
 			var img = hui.build('img',{style:'margin:'+top+'px auto 0px'});
-			img.setAttribute(self.revealing ? 'data-src' : 'src', url );
-			var item = hui.build('div',{'class' : 'hui_gallery_item',style:'width:'+self.width+'px; height:'+self.height+'px'});
+			img.setAttribute(this.revealing ? 'data-src' : 'src', url );
+			var item = hui.build('div',{'class' : 'hui_gallery_item',style:'width:'+this.width+'px; height:'+this.height+'px'});
 			item.appendChild(img);
 			hui.listen(item,'click',function(e) {
-				self._itemClicked(i,e);
+				this._itemClicked(i,e);
 			});
 			item.dragDropInfo = {kind:'image',icon:'common/image',id:object.id,title:object.name || object.title};
 			item.onmousedown = function(e) {
@@ -12046,11 +12059,11 @@ hui.ui.Gallery.prototype = {
 				return false;
 			};
 			hui.listen(item,'dblclick',function() {
-				self._onItemDoubleClick(i);
+				this._onItemDoubleClick(i);
 			});
-			self.body.appendChild(item);
-			self.nodes.push(item);
-		});
+			this.body.appendChild(item);
+			this.nodes.push(item);
+		}.bind(this));
 		this._reveal();
 		this.fireSizeChange();
 	},
@@ -16745,7 +16758,7 @@ hui.ui.Structure.prototype = {
  * @param {Object} options The options : {modal:false}
  */
 hui.ui.Slider = function(options) {
-	this.options = hui.override({value:0},options);
+	this.options = hui.override({value:0,min:0,max:1},options);
 	this.name = options.name;
 	
 	this.element = hui.get(options.element);
@@ -16753,7 +16766,7 @@ hui.ui.Slider = function(options) {
 	hui.ui.extend(this)
 	this.position = 0;
 	this.value = 0;
-	
+	this.setValue(options.value);
 	this._addBehavior();
 }
 
@@ -16796,7 +16809,7 @@ hui.ui.Slider.prototype = {
 	_onAfterMove : function() {
 		this.dragging = false;
 		hui.cls.remove(this.element,'hui_slider_active');
-		this.fire('valueChanged',this.position);
+		this.fire('valueChangedEnd',this.position);
 	},
 	
 	_setPosition : function(pos) {
@@ -19581,6 +19594,7 @@ hui.ui.FlashChart.prototype = {
 hui.ui.Drawing = function(options) {
 	this.options = hui.override({width:200,height:200},options);
 	this.element = hui.get(options.element);
+	hui.log({width:options.width,height:options.height})
 	this.svg = this._build({tag:'svg',parent:this.element,attributes:{width:options.width,height:options.height}});
 	this.element.appendChild(this.svg);
 	this.name = options.name;
@@ -19604,6 +19618,8 @@ hui.ui.Drawing.create = function(options) {
 
 hui.ui.Drawing.prototype = {
 	setSize : function(width,height) {
+		this.svg.setAttribute('width',width);
+		this.svg.setAttribute('height',height);
 		this.svg.style.width = width+'px';
 		this.svg.style.height = height+'px';
 	},
@@ -20625,10 +20641,78 @@ hui.ui.Diagram.create = function(options) {
 hui.ui.Diagram.prototype = {
 	_init : function() {
 		this.background = hui.ui.Drawing.create({
-			width: this.options.width,
-			height: this.options.height
+			width: this.options.width || 0,
+			height: this.options.height || 0
 		});
 		this.element.appendChild(this.background.element);
+		hui.onReady(function() {
+			this.width = this.element.clientWidth;	
+			this.height = this.element.clientHeight;
+			this.background.setSize(this.width,this.height)
+		}.bind(this))
+
+	},
+	
+	_initParticleSystem : function() {
+		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
+			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
+				var repulsion = 100,	// the force repelling nodes from each other
+					stiffness = 600,	// the rigidity of the edges
+					friction = 0.5,		// the amount of damping in the system
+					gravity = false,	// an additional force attracting nodes to the origin
+					fps = 55,			// frames per second
+					dt = 0.02,			// timestep to use for stepping the simulation
+					precision = 0.6;	// accuracy vs. speed in force calculations
+		
+				var myRenderer = {
+		  			init:  function(system){ console.log("starting",system) },
+		  			redraw : function() {
+						hui.log('redraw')
+						system.eachNode(function(node,point) {
+							//if (draggedNode==node) {
+							//	return;
+							//}
+							node.data.setCenter(point);
+						});
+						system.eachEdge(function(edge,point1,point2) {
+							var line = edge.data.node;
+							//hui.log(hui.toJSON(point1))
+							line.setFrom(point1);
+							line.setTo(point2);
+							return;
+							if (edge.source!==draggedNode) {
+								line.setFrom(point1);
+							} else {
+								line.setFrom(draggedPoint);
+							}
+							if (edge.target!==draggedNode) {
+								line.setTo(point2);
+							} else {
+								line.setTo(draggedPoint);
+							}
+						});
+					}
+				}
+				var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
+				system.stop();
+				system.screenSize(this.element.clientWidth, this.element.clientHeight);
+				system.screenPadding(50,100);
+				system.renderer = myRenderer
+		
+				for (var i=0; i < this.nodes.length; i++) {
+					system.addNode(this.nodes[i].id, this.nodes[i]);
+				};
+		
+				hui.each(this.lines,function(line) {
+					system.addEdge(line.from, line.to, line);
+			
+				})
+				system.start();
+				window.setTimeout(function() {
+					system.stop();
+				},2000)
+			}.bind(this))
+		}.bind(this));
 	},
 	
 	// Data ...
@@ -20644,6 +20728,7 @@ hui.ui.Diagram.prototype = {
 		for (var i=0; i < lines.length; i++) {
 			this.addLine(lines[i]);
 		};
+		this._initParticleSystem();
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
@@ -20661,6 +20746,9 @@ hui.ui.Diagram.prototype = {
 		}
 	},
 	clear : function() {
+		if (this.particleSystem) {
+			this.particleSystem.stop();
+		}
 		this.background.clear();
 		this.lines = [];
 		for (var i = this.nodes.length - 1; i >= 0; i--){
@@ -20760,6 +20848,11 @@ hui.ui.Diagram.Box.prototype = {
  			onMove : this._onMove.bind(this),
 			onEnd : this._onDragEnd.bind(this)
 		});
+	},
+	setCenter : function(point) {
+		var e = this.element;
+		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
+		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
 	},
 	_onDragStart : function() {
 		hui.cls.add(this.element,'hui_diagram_box_dragging');
@@ -20812,10 +20905,78 @@ hui.ui.Diagram.create = function(options) {
 hui.ui.Diagram.prototype = {
 	_init : function() {
 		this.background = hui.ui.Drawing.create({
-			width: this.options.width,
-			height: this.options.height
+			width: this.options.width || 0,
+			height: this.options.height || 0
 		});
 		this.element.appendChild(this.background.element);
+		hui.onReady(function() {
+			this.width = this.element.clientWidth;	
+			this.height = this.element.clientHeight;
+			this.background.setSize(this.width,this.height)
+		}.bind(this))
+
+	},
+	
+	_initParticleSystem : function() {
+		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
+			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
+				var repulsion = 100,	// the force repelling nodes from each other
+					stiffness = 600,	// the rigidity of the edges
+					friction = 0.5,		// the amount of damping in the system
+					gravity = false,	// an additional force attracting nodes to the origin
+					fps = 55,			// frames per second
+					dt = 0.02,			// timestep to use for stepping the simulation
+					precision = 0.6;	// accuracy vs. speed in force calculations
+		
+				var myRenderer = {
+		  			init:  function(system){ console.log("starting",system) },
+		  			redraw : function() {
+						hui.log('redraw')
+						system.eachNode(function(node,point) {
+							//if (draggedNode==node) {
+							//	return;
+							//}
+							node.data.setCenter(point);
+						});
+						system.eachEdge(function(edge,point1,point2) {
+							var line = edge.data.node;
+							//hui.log(hui.toJSON(point1))
+							line.setFrom(point1);
+							line.setTo(point2);
+							return;
+							if (edge.source!==draggedNode) {
+								line.setFrom(point1);
+							} else {
+								line.setFrom(draggedPoint);
+							}
+							if (edge.target!==draggedNode) {
+								line.setTo(point2);
+							} else {
+								line.setTo(draggedPoint);
+							}
+						});
+					}
+				}
+				var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
+				system.stop();
+				system.screenSize(this.element.clientWidth, this.element.clientHeight);
+				system.screenPadding(50,100);
+				system.renderer = myRenderer
+		
+				for (var i=0; i < this.nodes.length; i++) {
+					system.addNode(this.nodes[i].id, this.nodes[i]);
+				};
+		
+				hui.each(this.lines,function(line) {
+					system.addEdge(line.from, line.to, line);
+			
+				})
+				system.start();
+				window.setTimeout(function() {
+					system.stop();
+				},2000)
+			}.bind(this))
+		}.bind(this));
 	},
 	
 	// Data ...
@@ -20831,6 +20992,7 @@ hui.ui.Diagram.prototype = {
 		for (var i=0; i < lines.length; i++) {
 			this.addLine(lines[i]);
 		};
+		this._initParticleSystem();
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
@@ -20848,6 +21010,9 @@ hui.ui.Diagram.prototype = {
 		}
 	},
 	clear : function() {
+		if (this.particleSystem) {
+			this.particleSystem.stop();
+		}
 		this.background.clear();
 		this.lines = [];
 		for (var i = this.nodes.length - 1; i >= 0; i--){
@@ -20947,6 +21112,11 @@ hui.ui.Diagram.Box.prototype = {
  			onMove : this._onMove.bind(this),
 			onEnd : this._onDragEnd.bind(this)
 		});
+	},
+	setCenter : function(point) {
+		var e = this.element;
+		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
+		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
 	},
 	_onDragStart : function() {
 		hui.cls.add(this.element,'hui_diagram_box_dragging');

@@ -3,7 +3,7 @@
  * @param {Object} options The options : {modal:false}
  */
 hui.ui.Slider = function(options) {
-	this.options = hui.override({value:0},options);
+	this.options = hui.override({value:0,min:0,max:1},options);
 	this.name = options.name;
 	
 	this.element = hui.get(options.element);
@@ -11,7 +11,7 @@ hui.ui.Slider = function(options) {
 	hui.ui.extend(this)
 	this.position = 0;
 	this.value = 0;
-	
+	this.setValue(options.value);
 	this._addBehavior();
 }
 
@@ -54,7 +54,7 @@ hui.ui.Slider.prototype = {
 	_onAfterMove : function() {
 		this.dragging = false;
 		hui.cls.remove(this.element,'hui_slider_active');
-		this.fire('valueChanged',this.position);
+		this.fire('valueChangedEnd',this.position);
 	},
 	
 	_setPosition : function(pos) {

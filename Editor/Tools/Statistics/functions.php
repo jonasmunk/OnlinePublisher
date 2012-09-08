@@ -3,8 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Tools.Statistics
  */
-require_once($basePath.'Editor/Classes/UserAgentAnalyzer.php');
-require_once($basePath.'Editor/Classes/StatisticsUtil.php');
+require_once '../../Include/Private.php';
 
 function buildSql() {
 	$where = "";
