@@ -107,18 +107,18 @@ $gui='
 				</field>
 				<field label="Type">
 					<radiobuttons value="improvement" key="kind">
-						<item value="improvement" text="Forbedring"/>
-						<item value="error" text="Fejl"/>
-						<item value="unknown" text="Ukendt"/>
+						<item value="improvement" text="{Improvement; da:Forbedring}"/>
+						<item value="error" text="{Error; da:Fejl}"/>
+						<item value="unknown" text="{Unknown; da:Ukendt}"/>
 					</radiobuttons>
 				</field>
 			</fields>
 			<buttons>
-				<button text="Slet" name="deleteIssue" small="true">
-					<confirm text="Er du sikker?" ok="Ja, slet" cancel="Nej"/>
+				<button text="{Delete; da:Slet}" name="deleteIssue" small="true">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
 				</button>
-				<button text="Annuller" name="cancelIssue" small="true"/>
-				<button text="Gem" highlighted="true" submit="true" small="true" name="saveIssue"/>
+				<button text="{Cancel; da:Annuller}" name="cancelIssue" small="true"/>
+				<button text="{Save; da:Gem}" highlighted="true" submit="true" small="true" name="saveIssue"/>
 			</buttons>
 		</formula>
 	</boundpanel>
