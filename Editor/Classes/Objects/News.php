@@ -116,7 +116,7 @@ class News extends Object {
 			$data.=DateUtils::buildTag('enddate',$this->enddate);
 		}
 		if ($this->imageId) {
-			$data.=Object::getObjectData($this->imageId);
+			$data.=ObjectService::getObjectData($this->imageId);
 		}
 		$data.='</news>';
 		return $data;

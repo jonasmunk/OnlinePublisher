@@ -145,7 +145,7 @@ class TextPartController extends PartController
 		$xml = '<text xmlns="'.$this->getNamespace().'">';
 		$xml.= $this->buildXMLStyle($part);
 		if ($part->getImageId()>0) {
-			$data = Object::getObjectData($part->getImageId());
+			$data = ObjectService::getObjectData($part->getImageId());
 			if (StringUtils::isNotBlank($data)) {
 				$xml.='<image float="'.StringUtils::escapeXML($part->getImageFloat()).'"';
 				if ($part->getImageWidth() > 0) {

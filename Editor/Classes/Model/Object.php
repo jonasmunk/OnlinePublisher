@@ -127,28 +127,6 @@ class Object extends Entity {
 		return 'http://uri.in2isoft.com/onlinepublisher/class/'.$this->type.'/'.$version.'/';
 	}
 	
-	// TODO: Deprecated
-	function _load($id) {
-		Log::debug('Object::_load() is deprecated for ...');
-		Log::debug($this);
-		$sql = "select id,title,note,type,owner_id,UNIX_TIMESTAMP(created) as created,UNIX_TIMESTAMP(updated) as updated,UNIX_TIMESTAMP(published) as published,searchable from `object` where id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$this->id=$row['id'];
-			$this->title=$row['title'];
-			$this->created=$row['created'];
-			$this->updated=$row['updated'];
-			$this->published=$row['published'];
-			$this->type=$row['type'];
-			$this->note=$row['note'];
-			$this->ownerId=$row['owner_id'];
-			$this->searchable=($row['searchable']==1);
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
 	function get($id,$type) {
 		return ObjectService::load($id,$type);
 	}
@@ -171,28 +149,9 @@ class Object extends Entity {
     }
     
     ///////////////////////////// Static ///////////////////////////
-    
-	function getValidIds($ids) {
-		if (count($ids)==0) {
-			return array();
-		}
-		$sql = "select id from object where id in (".implode(',',$ids).")";
-		return Database::getIds($sql);
-	}
 
     function load($id) {
 		return ObjectService::loadAny($id);
-    }
-    
-    function getObjectData($id) {
-    	$data = null;
-		if ($id) {
-	    	$sql = "select data from object where id =".Database::int($id);
-	    	if ($row = Database::selectFirst($sql)) {
-	    		$data = $row['data'];
-	    	}
-		}
-    	return $data;
     }
 
 }

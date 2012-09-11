@@ -234,7 +234,7 @@ class Person extends Object {
 	}
 	
 	function updateMailinglistIds($ids) {
-		$ids = Object::getValidIds($ids);
+		$ids = ObjectService::getValidIds($ids);
 		$sql = "delete from person_mailinglist where person_id=".$this->id;
 		Database::delete($sql);
 		foreach ($ids as $id) {
@@ -249,7 +249,7 @@ class Person extends Object {
 	}
 	
 	function updateGroupIds($ids) {
-		$ids = Object::getValidIds($ids);
+		$ids = ObjectService::getValidIds($ids);
 		$sql = "delete from persongroup_person where person_id=".$this->id;
 		Database::delete($sql);
 		foreach ($ids as $id) {

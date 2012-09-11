@@ -83,7 +83,7 @@ class File extends Object {
 	}
 	
 	function updateGroupIds($ids) {
-		$ids = Object::getValidIds($ids);
+		$ids = ObjectService::getValidIds($ids);
 		$sql = "delete from filegroup_file where file_id=".Database::int($this->id);
 		Database::delete($sql);
 		foreach ($ids as $id) {

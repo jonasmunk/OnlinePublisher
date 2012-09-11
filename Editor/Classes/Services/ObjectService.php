@@ -18,6 +18,14 @@ class ObjectService {
 		return null;
 	}
 	
+	function getValidIds($ids) {
+		if (count($ids)==0) {
+			return array();
+		}
+		$sql = "select id from object where id in (".implode(',',$ids).")";
+		return Database::getIds($sql);
+	}
+	
 	function getInstance($type) {
 		if (!$type) {
 			return null;
@@ -29,6 +37,17 @@ class ObjectService {
 		}
 		return null;
 	}
+    
+    function getObjectData($id) {
+    	$data = null;
+		if ($id) {
+	    	$sql = "select data from object where id =".Database::int($id);
+	    	if ($row = Database::selectFirst($sql)) {
+	    		$data = $row['data'];
+	    	}
+		}
+    	return $data;
+    }
 	
 	function importType($type) {
 		global $basePath;

@@ -93,7 +93,7 @@ class Product extends Object {
 		}
 		Database::free($result);
 		$data.='</prices>';
-		$data.= Object::getObjectData($this->imageId);
+		$data.= ObjectService::getObjectData($this->imageId);
 		$data.='</product>';
 		return $data;
 	}
@@ -135,7 +135,7 @@ class Product extends Object {
 	}
 	
 	function updateGroupIds($ids) {
-		$ids = Object::getValidIds($ids);
+		$ids = ObjectService::getValidIds($ids);
 		$sql = "delete from productgroup_product where product_id=".$this->id;
 		Database::delete($sql);
 		foreach ($ids as $id) {

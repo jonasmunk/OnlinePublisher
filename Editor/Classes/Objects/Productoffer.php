@@ -119,59 +119,6 @@ class ProductOffer extends Object {
 		return $list;
 	}
 	
-
-    /////////////////////////// Persistence ////////////////////////
-/*
-	function load($id) {
-		$sql = "select offer,person_id,product_id,UNIX_TIMESTAMP(expiry) as expiry".
-		" from productoffer where object_id=".$id;
-		$row = Database::selectFirst($sql);
-		if ($row) {
-			$obj = new ProductOffer();
-			$obj->_load($id);
-			$obj->offer=$row['offer'];
-			$obj->productId=$row['product_id'];
-			$obj->personId=$row['person_id'];
-			$obj->expiry=$row['expiry'];
-			return $obj;
-		} else {
-			return null;
-		}
-	}
-
-	function sub_create() {
-		$sql="insert into productoffer (object_id,offer,product_id,person_id,expiry) values (".
-		$this->id.
-		",".Database::text($this->offer).
-		",".Database::int($this->productId).
-		",".Database::int($this->personId).
-		",".Database::datetime($this->expiry).
-		")";
-		Database::insert($sql);
-	}
-
-	function sub_update() {
-		$sql = "update productoffer set ".
-		"offer=".Database::text($this->offer).
-		",product_id=".Database::int($this->productId).
-		",person_id=".Database::int($this->personId).
-		",expiry=".Database::datetime($this->expiry).
-		" where object_id=".$this->id;
-		Database::update($sql);
-	}
-
-	function sub_publish() {
-		$data =
-		'<productoffer xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'</productoffer>';
-		return $data;
-	}
-
-	function sub_remove() {
-		$sql = "delete from productoffer where object_id=".$this->id;
-		Database::delete($sql);
-	}*/
-	
 	/////////////////////////// GUI /////////////////////////
 	
 	function getIcon() {

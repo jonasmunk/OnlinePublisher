@@ -99,7 +99,7 @@ class PersonPartController extends PartController
 		
 	function buildSub($part,$context) {
 		$data='<person xmlns="'.$this->getNamespace().'">';
-		if ($personData = Object::getObjectData($part->getPersonId())) {
+		if ($personData = ObjectService::getObjectData($part->getPersonId())) {
 			$data.= 
 			'<display firstname="'.($part->getShowFirstName() ? 'true' : 'false').'"'.
 			' middlename="'.($part->getShowMiddleName() ? 'true' : 'false').'"'.
