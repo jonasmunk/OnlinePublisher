@@ -17,6 +17,12 @@ Part::$schema['imagegallery'] = array(
 		'showTitle'		=> array( 'type' => 'boolean', 'column' => 'show_title' )
 	)
 );
+Entity::$schema['ImagegalleryPart'] = array(
+	'table' => 'part_imagegallery',
+	'properties' => array(
+		'imageGroupId' => array('type'=>'int','relation'=>array('class'=>'ImageGroup','property'=>'id'))
+	)
+);
 
 class ImagegalleryPart extends Part
 {

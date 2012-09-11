@@ -21,6 +21,12 @@ Part::$schema['image'] = array(
 		'scaleHeight' => array( 'type' => 'int', 'column' => 'scaleHeight' )
 	)
 );
+Entity::$schema['ImagePart'] = array(
+	'table' => 'part_image',
+	'properties' => array(
+		'imageId' => array('type'=>'int','relation'=>array('class'=>'Image','property'=>'id'))
+	)
+);
 
 class ImagePart extends Part
 {

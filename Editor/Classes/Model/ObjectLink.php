@@ -8,24 +8,27 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class ObjectLink {
+
+Entity::$schema['ObjectLink'] = array(
+	'table' => 'object_link',
+	'properties' => array(
+		'objectId' => array('type'=>'int','relation'=>array('class'=>'Object','property'=>'id')),
+		'value' => array('type'=>'int','relations'=>array(
+			array('class'=>'Page','property'=>'id'),
+			array('class'=>'File','property'=>'id')
+			)
+		)
+	)
+);
+class ObjectLink extends Entity {
 	
-	var $id;
 	var $type;
 	var $value;
 	var $position;
 	var $text;
 	var $objectId;
 	var $info;
-	
-	function setId($id) {
-	    $this->id = $id;
-	}
-
-	function getId() {
-	    return $this->id;
-	}
-	
+		
 	function setInfo($info) {
 	    $this->info = $info;
 	}

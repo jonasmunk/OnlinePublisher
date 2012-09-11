@@ -9,7 +9,8 @@ Entity::$schema['Page'] = array(
 	'properties' => array(
 		'title' => array('type'=>'string'),
 		'templateId' => array('type'=>'int','relation'=>array('class'=>'Template','property'=>'id')),
-		'designId' => array('type'=>'int','relation'=>array('class'=>'Design','property'=>'id'))
+		'designId' => array('type'=>'int','relation'=>array('class'=>'Design','property'=>'id')),
+		'frameId' => array('type'=>'int','relation'=>array('class'=>'Frame','property'=>'id'))
 	)
 );
 class Page extends Entity {

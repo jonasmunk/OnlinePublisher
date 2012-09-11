@@ -166,7 +166,7 @@ hui.ui.Diagram.prototype = {
 		var fromCenter = this._getCenter(from),
 			toCenter = this._getCenter(to);
 			
-		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: '#999' });
+		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: options.color || '#999' });
 		this.lines.push({ from: options.from, to: options.to, node: line });
 	},
 	_getCenter : function(widget) {

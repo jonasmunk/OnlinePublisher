@@ -30,6 +30,12 @@ Part::$schema['text'] = array(
 		'imageHeight' => array( 'type' => 'int', 'column' => 'imageheight' )
 	)
 );
+Entity::$schema['TextPart'] = array(
+	'table' => 'part_text',
+	'properties' => array(
+		'imageId' => array('type'=>'int','relation'=>array('class'=>'Image','property'=>'id'))
+	)
+);
 class TextPart extends Part
 {
 	var $text;
