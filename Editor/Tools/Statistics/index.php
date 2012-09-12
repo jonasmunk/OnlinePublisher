@@ -29,7 +29,8 @@ $gui='
 				<overflow>
 				<selection name="selector" value="pages">
 					<item icon="common/page" title="{Pages; da:Sider}" value="pages"/>
-					<item icon="common/page" title="{Paths; da:Stier}" value="pagePath"/>
+					<item icon="common/internet" title="{Paths; da:Stier}" value="pagePath"/>
+					<item icon="common/time" title="{Live; da:Live}" value="live"/>
 					<title>Teknik</title>
 					<item icon="common/settings" title="{Applications; da:Programmer}" value="browsers"/>
 					<item icon="common/settings" title="{Application versions; da:Programversioner}" value="browserVersions"/>
@@ -44,6 +45,15 @@ $gui='
 				</overflow>
 			</left>
 			<center>
+				<bar variant="layout">
+					<segmented>
+						<item text="Yearly" value="yearly"/>
+						<item text="Monthly" value="monthly"/>
+						<item text="Weekly" value="weekly"/>
+						<item text="Daily" value="daily"/>
+						<item text="Hourly" value="hourly"/>
+					</segmented>
+				</bar>
 				<overflow>
 					<list name="list" source="listSource">
 						<error text="{Unable to retrieve statistics, please check that the login is correct; da:Det lykkedes ikke at hente statistikken, kontrolér venligst at login\'et er korrekt}"/>

@@ -127,10 +127,10 @@ class Calendarsource extends Object {
 				if (($homeMode && strpos($event->getHomeTeam(),'Hals')===false) || ($guestMode && strpos($event->getGuestTeam(),'Hals')===false)) {
 					continue;
 				}
-				if ($filter['home'] && strpos($event->getHomeTeam(),$filter['home'])===false) {
+				if (isset($filter['home']) && strpos($event->getHomeTeam(),$filter['home'])===false) {
 					continue;
 				}
-				if ($filter['away'] && strpos($event->getGuestTeam(),$filter['away'])===false) {
+				if (isset($filter['away']) && strpos($event->getGuestTeam(),$filter['away'])===false) {
 					continue;
 				}
 				$summary = $event->getHomeTeam()." - ".$event->getGuestTeam();
