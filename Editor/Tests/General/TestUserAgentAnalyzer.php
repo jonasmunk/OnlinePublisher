@@ -112,6 +112,14 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
         $this->assertTrue($analyzer->getTechnologyVersion()=='418.9.1');
         $this->assertTrue(!$analyzer->isRobot());
         $this->assertTrue(!$analyzer->isSearchEngine());
+		
+		$analyzer->setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.10+ (KHTML, like Gecko) Version/6.0 Safari/536.25');
+        $this->assertEqual($analyzer->getApplicationVersion(),'536.25');
+        $this->assertEqual($analyzer->getApplicationName(),'Safari');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'537.10+');
+        $this->assertTrue(!$analyzer->isRobot());
+        $this->assertTrue(!$analyzer->isSearchEngine());
 
 		// Other apps than safari
 
@@ -130,6 +138,7 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
         $this->assertTrue($analyzer->getTechnologyVersion()=='418.8');
         $this->assertTrue(!$analyzer->isRobot());
         $this->assertTrue(!$analyzer->isSearchEngine());
+		
 		//
     }
 

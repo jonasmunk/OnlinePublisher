@@ -15,6 +15,7 @@ class UserAgentAnalyzer {
 	function UserAgentAnalyzer($userAgent=null) {
 		if (!is_null($userAgent)) {
 			$this->userAgent = $userAgent;
+			$this->_analyze();
 		}
 	}
 	
@@ -125,6 +126,16 @@ class UserAgentAnalyzer {
 			$this->technologyVersion = $result[1];
 			$this->applicationName = $result[2];
 			$this->applicationVersion = $result[3];
+			$this->isRobot = false;
+			$this->isSearchEngine = false;
+			return;
+		}
+		//Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.10+ (KHTML, like Gecko) Version/6.0 Safari/536.25
+		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; [\\w ]+ [0-9_]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Version\/([0-9\.]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
+			$this->technologyName = 'AppleWebKit';
+			$this->technologyVersion = $result[1];
+			$this->applicationName = $result[3];
+			$this->applicationVersion = $result[4];
 			$this->isRobot = false;
 			$this->isSearchEngine = false;
 			return;

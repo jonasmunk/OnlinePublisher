@@ -27,11 +27,13 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-				<selection name="selector" value="pages">
+				<selection name="selector" value="visits">
+					<item icon="common/page" title="{Visits; da:Besøgende}" value="visits"/>
 					<item icon="common/page" title="{Pages; da:Sider}" value="pages"/>
 					<item icon="common/internet" title="{Paths; da:Stier}" value="pagePath"/>
 					<item icon="common/time" title="{Live; da:Live}" value="live"/>
 					<title>Teknik</title>
+					<item icon="common/settings" title="{Application IDs; da:Program-IDer}" value="agents"/>
 					<item icon="common/settings" title="{Applications; da:Programmer}" value="browsers"/>
 					<item icon="common/settings" title="{Application versions; da:Programversioner}" value="browserVersions"/>
 				</selection>
