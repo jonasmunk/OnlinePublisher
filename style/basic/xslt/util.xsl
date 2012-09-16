@@ -58,7 +58,17 @@
 		<xsl:otherwise>
 			<xsl:choose>
 				<xsl:when test="@path and $preview='false'">
-					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/></xsl:attribute>
+					<xsl:attribute name="href">
+						<xsl:value-of select="$navigation-path"/>
+						<xsl:choose>
+							<xsl:when test="starts-with(@path,'/')">
+								<xsl:value-of select="substring(@path,2)"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="@path"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="@page">
 					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/></xsl:attribute>
