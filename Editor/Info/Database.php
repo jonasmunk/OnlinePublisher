@@ -790,7 +790,7 @@ $databaseTables = array(
 			array("domain","varchar(30)","YES","","",""),
 			array("subdomain","varchar(30)","YES","","",""),
 			array("key","varchar(30)","YES","","",""),
-			array("value","varchar(255)","YES","","",""),
+			array("value","text","YES","","",""),
 			array("user_id","int(11)","YES","","0",""),
 		),
 	'specialpage' => array(

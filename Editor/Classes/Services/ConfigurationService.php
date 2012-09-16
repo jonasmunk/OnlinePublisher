@@ -42,7 +42,7 @@ class ConfigurationService {
 	
 	function getSuperUsername() {
 		global $CONFIG,$superUser;
-		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['user'])) {
+		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['super']['user'])) {
 			return $CONFIG['super']['user'];
 		}
 		return $superUser;
@@ -50,7 +50,7 @@ class ConfigurationService {
 	
 	function getSuperPassword() {
 		global $CONFIG,$superPassword;
-		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['password'])) {
+		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['super']['password'])) {
 			return $CONFIG['super']['password'];
 		}
 		return $superPassword;
