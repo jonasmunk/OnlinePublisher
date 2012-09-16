@@ -6,7 +6,11 @@ $url = Request::getString('url');
 $file = Request::getString('file');
 $line = Request::getString('line');
 
-$note = $message."\n\nFile: ".$file."\nLine: ".$line."\n\nURL: ".$url;
+if (StringUitls::isBlank($message) && StringUitls::isBlank($url) && StringUitls::isBlank($file) && StringUitls::isBlank($line)) {
+	exit;
+}
+
+$note = $message."\n\nFile: ".$file."\nLine: ".$line."\n\nURL: ".$url."\n\nAgent: ".$_SERVER['HTTP_USER_AGENT'];
 
 $issue = new Issue();
 $issue->setTitle($message);
