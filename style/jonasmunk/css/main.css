@@ -146,6 +146,7 @@ div.layout_content
 	overflow: hidden;
 }
 
+/*************** CV theme *****************/
 
 body.theme_cv
 {
@@ -182,4 +183,16 @@ body.theme_cv a.layout_designed
 	height: 181px;
 	width: 162px;
 	background: url('../gfx/handmade.png');
+}
+
+body.theme_cv h1.common, body.theme_cv h2.common
+{
+	font-family: 'Annie Use Your Telescope', cursive;
+}
+
+body.theme_cv div.part_text
+{
+	font-family: 'Helvetica Neue','Helvetica',Arial,sans-serif;
+	font-weight: 300;
+	font-size: 12pt;
 }
