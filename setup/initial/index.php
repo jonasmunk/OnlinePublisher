@@ -24,7 +24,7 @@ $gui='
 			<p>The configuration file "Config/Setup.php" was not found, this will help you create it...</p>
 			'.($canWrite
 				? '<p>It looks like we can create the file for you.</p>'
-				: '<p>It looks like we cannot wite the file so you have to create is yourself</p>'
+				: '<p>It looks like we cannot write the file so you have to create it yourself</p>'
 			).'
 		</text>
 		</space>
