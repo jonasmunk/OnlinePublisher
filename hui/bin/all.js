@@ -17166,7 +17166,7 @@ hui.ui.FontInput = function(options) {
 	this.button = hui.get.firstByClass(this.element,'hui_fontinput');
 	this.dropdown = new hui.ui.DropDown({
 		element : hui.get.firstByClass(this.element,'hui_dropdown'),
-		items : hui.ui.FontPicker.fonts,
+		items : [{text:'',value:''}].concat(hui.ui.FontPicker.fonts),
 		listener : this
 	});
 	this.value = null;
@@ -20780,7 +20780,7 @@ hui.ui.Diagram.prototype = {
 		var fromCenter = this._getCenter(from),
 			toCenter = this._getCenter(to);
 			
-		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: '#999' });
+		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: options.color || '#999' });
 		this.lines.push({ from: options.from, to: options.to, node: line });
 	},
 	_getCenter : function(widget) {
@@ -21044,7 +21044,7 @@ hui.ui.Diagram.prototype = {
 		var fromCenter = this._getCenter(from),
 			toCenter = this._getCenter(to);
 			
-		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: '#999' });
+		var line = this.background.addLine({ from: fromCenter, to: toCenter, color: options.color || '#999' });
 		this.lines.push({ from: options.from, to: options.to, node: line });
 	},
 	_getCenter : function(widget) {

@@ -26,7 +26,9 @@
 		<xsl:value-of select="f:frame/@title"/>
 	</title>
 	<xsl:call-template name="util:metatags"/>
+	<link href='http://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'/>
 	<xsl:call-template name="util:style"/>
+	
 	<xsl:call-template name="util:scripts"/>
 </head>
 <body>

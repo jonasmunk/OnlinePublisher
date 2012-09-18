@@ -204,10 +204,6 @@ class TextPartController extends PartController
 			<divider/>
 			<field label="{Font; da:Skrift}">
 				<font-input name="fontFamily"/>
-			<!--
-				<dropdown name="fontFamily" width="120">
-					'.$this->getFontItems().'
-				</dropdown>-->
 			</field>
 			<field label="{Line height; da:Linjehøjde}">
 				<style-length-input name="lineHeight" width="90"/>
