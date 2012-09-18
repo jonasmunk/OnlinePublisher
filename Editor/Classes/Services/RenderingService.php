@@ -237,7 +237,7 @@ class RenderingService {
 			$sql.=" and page.id=".Database::int($id);
 		} else {
 			//Log::debug('Paths: ('.$path.') ('.$path.'/) (/'.$path.')');
-			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/')." or page.path=".Database::text('/'.$path).")";
+			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/')." or page.path=".Database::text('/'.$path).") order by page.path desc";
 		}
 		if ($row = Database::selectFirst($sql)) {
 			if (Request::getBoolean('ajax')) {
