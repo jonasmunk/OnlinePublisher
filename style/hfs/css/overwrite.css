@@ -24,7 +24,7 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
 	color: #f00;
-	font-family: "Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-family: 'Play','Helvetica Neue',Arial;
 	font-weight: normal;
 }
 
@@ -48,7 +48,7 @@ p.common, ul.common
 
 h1.part_header, textarea.part_header_1
 {
-	font-size: 18pt;
+	font-size: 24pt;
 }
 
 h2.part_header, textarea.part_header_2
@@ -115,4 +115,16 @@ div.part_text, textarea.part_text
 	font-size: 9pt;
 	line-height: 1.4em;
 	color: #333;
+}
+
+hr.part_horizontalrule {
+	border: none;
+	border-bottom: solid 1px #DDD;
+}
+
+div.part_list h2
+{
+	font-family: 'Play','Helvetica Neue',Arial;
+	font-size: 20px;
+	line-height: 32px;
 }
