@@ -21,8 +21,28 @@
 		<xsl:attribute name="align"><xsl:value-of select="../../../pp:style/@align"/></xsl:attribute>
 	</xsl:if>
 	<tr>
+		
 		<xsl:if test="../../../pp:display/@image='true'">
-			<xsl:apply-templates select="p:image"/>
+			<td class="part_person_image">
+				<a>
+					<xsl:if test="p:image">
+					<xsl:attribute name="href">
+						<xsl:value-of select="$path"/><xsl:text>services/images/?id=</xsl:text><xsl:value-of select="p:image/o:object/@id"/>
+					</xsl:attribute>
+					<img src="{$path}services/images/?id={p:image/o:object/@id}&amp;width=60&amp;height=80&amp;method=crop" alt="" id="{generate-id(p:image/o:object)}"/>
+			<script type="text/javascript">
+				try {
+					op.registerImageViewer('<xsl:value-of select="generate-id(p:image/o:object)"/>',{
+						id : <xsl:value-of select="p:image/o:object/@id"/>,
+						width : <xsl:value-of select="p:image/o:object/o:sub/i:image/i:width"/>,
+						height : <xsl:value-of select="p:image/o:object/o:sub/i:image/i:height"/>
+					});
+					hui.get('<xsl:value-of select="generate-id(p:image/o:object)"/>').onerror=function() {this.style.display='none'}
+				} catch (ignore) {}
+			</script>
+					</xsl:if>
+				</a>
+			</td>
 		</xsl:if>
 		<td>
 		<div class="vcard">
@@ -144,14 +164,7 @@
 </xsl:template>
 
 <xsl:template match="p:image">
-	<td class="part_person_image">
-		<a href="{$path}services/images/?id={o:object/@id}"><img src="{$path}services/images/?id={o:object/@id}&amp;width=60&amp;height=80&amp;method=crop" alt="" id="{generate-id(o:object)}"/></a>
-	<script type="text/javascript">
-	try {
-	op.registerImageViewer('<xsl:value-of select="generate-id(o:object)"/>',{id:<xsl:value-of select="o:object/@id"/>,width:<xsl:value-of select="o:object/o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:object/o:sub/i:image/i:height"/>});
-	} catch (ignore) {}
-	</script>
-	</td>
+	
 </xsl:template>
 
 </xsl:stylesheet>
