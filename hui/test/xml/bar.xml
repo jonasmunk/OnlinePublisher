@@ -24,6 +24,7 @@
 			<button icon="common/delete" text="Hep hey!"/>
 		</right>
 	</bar>
+	
 	<bar variant="layout">
 		<button icon="common/edit" text="Edit"/>
 		<button icon="common/delete" text="Delete" selected="true"/>
@@ -47,7 +48,9 @@
 			<button icon="common/delete" text="Hep hey!"/>
 		</right>
 	</bar>
+	
 	<space all="50">
+	
 	<bar variant="mini">
 		<button icon="common/edit" text="Edit"/>
 		<button icon="common/delete" text="Delete"/>
@@ -74,9 +77,8 @@
 	
 	<window name="win2" height="200" width="400">
 		<bar variant="window">
-			<right>
-				<searchfield/>
-			</right>
+			<searchfield/>
+			<button icon="common/delete" text="Delete"/>
 		</bar>
 		<space all="20">
 			<text>

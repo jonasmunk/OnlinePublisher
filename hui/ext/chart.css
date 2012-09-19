@@ -1,0 +1,36 @@
+div.hui_chart
+{
+	overflow: hidden;
+}
+
+div.hui_chart_legends
+{
+	float: right;
+	border: 1px solid #ddd;
+	font-family: Arial,sans-serif;
+	font-size: 10px;
+	background: #fff;
+	margin-right: 5px;
+	margin-top: 5px;
+	position: relative;
+	padding: 3px;
+	border-radius: 3px;
+}
+
+div.hui_chart_legend em
+{
+	display: inline-block;
+	border-radius: 2px;
+	width: 12px;
+	height: 12px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+
+
+div.hui_chart_legend span
+{
+	display: inline-block;
+	vertical-align: middle;
+}

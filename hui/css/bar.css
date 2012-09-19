@@ -48,6 +48,7 @@ a.hui_bar_button
 	background: url('../gfx/bar_light.png') right -30px no-repeat;
 	text-decoration: none;
 	vertical-align: top;
+	cursor: pointer;
 }
 
 a.hui_bar_button:focus
@@ -117,11 +118,13 @@ div.hui_bar_window, div.hui_bar_window div.hui_bar_body, div.hui_bar_window div.
 div.hui_bar_window
 {
 	border-top: 1px solid #D6D6D6;
+	border-bottom: 1px solid #D6D6D6;
 }
 
 div.hui_bar_window div.hui_bar_body
 {
 	border-top: 1px solid #F3F3F3;
+	border-bottom: 1px solid #F3F3F3;
 }
 
 div.hui_bar_window span.hui_segmented
@@ -325,7 +328,7 @@ div.hui_bar_mini span.hui_bar_divider
 }
 
 
-/******************* window mini variant ***************/
+/******************* Layout mini variant ***************/
 
 div.hui_bar_layout_mini
 {

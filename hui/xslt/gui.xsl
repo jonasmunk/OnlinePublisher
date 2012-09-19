@@ -58,7 +58,13 @@
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/css/msie7.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
 <![endif]]]></xsl:comment>
 <xsl:if test="//gui:graph">
+	<link rel="stylesheet" href="{$context}/hui/ext/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+</xsl:if>
+<xsl:if test="//gui:diagram">
 	<link rel="stylesheet" href="{$context}/hui/ext/diagram.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+</xsl:if>
+<xsl:if test="//gui:chart">
+	<link rel="stylesheet" href="{$context}/hui/ext/chart.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 </xsl:if>
 <xsl:for-each select="//gui:css">
 	<link rel="stylesheet" href="{@url}" type="text/css" media="screen" title="no title" charset="utf-8"/>
@@ -135,8 +141,10 @@
 	</xsl:otherwise>
 </xsl:choose>
 <xsl:if test="//gui:graph">
-	<link rel="stylesheet" href="{$context}/hui/ext/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 	<script src="{$context}/hui/ext/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
+<xsl:if test="//gui:chart">
+	<script src="{$context}/hui/ext/Chart.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:diagram">
 	<!--
@@ -1169,6 +1177,32 @@ doc title:'Rich text' class:'hui.ui.RichText'
 </xsl:template>
 
 
+
+<!--doc title:'Chart' class:'hui.ui.Chart' module:'visalization'
+<chart name="«name»" source="«name»"/>
+-->
+<xsl:template match="gui:chart">
+	<div class="hui_chart" id="{generate-id()}">
+		<xsl:attribute name="style">
+			<xsl:if test="@width">
+				<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
+			</xsl:if>
+			<xsl:if test="@height">
+				<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
+		<xsl:comment/></div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Chart({
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>'
+			<xsl:if test="@source">
+				,source:<xsl:value-of select="@source"/>
+			</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
 
 
 

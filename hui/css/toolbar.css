@@ -460,6 +460,7 @@ a.hui_toolbar_more
 	color: #666;
 	text-decoration: none;
 	margin: 0 5px;
+	cursor: pointer;
 }
 
 a.hui_toolbar_more:hover
