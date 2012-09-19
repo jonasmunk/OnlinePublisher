@@ -1,6 +1,8 @@
 div.hui_chart
 {
 	overflow: hidden;
+	position: relative;
+	width: 100%;
 }
 
 div.hui_chart_legends

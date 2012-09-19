@@ -17,7 +17,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Source.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../ext/Chart.js"></script>
 	<script type="text/javascript" charset="utf-8">
@@ -25,16 +25,22 @@
 	</script>
 </head>
 
-<body>
+<body style="padding: 50px;">
+
 	<div id="chart" style="height: 300px;"></div>
 	<div id="pieChart" style="height: 300px;"></div>
 	<div id="columnChart" style="height: 300px;"></div>
+	<div id="chartUsingSource" style="height: 300px;"></div>
+
+
+
 	<script>
 		hui.ui.listen({
 			$ready : function() {
 				this.buildLineChart();
 				this.buildPieChart();
 				this.buildColumnChart();
+				this.buildChartUsingSource();
 			},
 			buildLineChart : function() {
 				
@@ -82,7 +88,11 @@
 				chart.setData(data);
 				
 				chart.render();
-			}
+			},
+			buildChartUsingSource : function() {
+				
+				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart.json'})});
+			},
 		})
 	</script>
 </body>

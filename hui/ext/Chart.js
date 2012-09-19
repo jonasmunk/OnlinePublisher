@@ -1,4 +1,5 @@
 hui.ui.Chart = function(options) {
+	this.options = options = options || {};
 	this.element = options.element;
 	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 40, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
 	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
@@ -9,6 +10,9 @@ hui.ui.Chart = function(options) {
 	this.dataSets = [];
 	this.data = null;
 	hui.ui.extend(this);
+	if (this.options.source) {
+		this.options.source.listen(this);
+	}
 }
 
 hui.ui.Chart.create = function(options) {	
@@ -37,6 +41,11 @@ hui.ui.Chart.prototype = {
 		renderer.render();
 	},
 	$$resize : function() {
+		this.render();
+	},
+	$objectsLoaded : function(data) {
+		hui.log(data)
+		this.setData(data);
 		this.render();
 	},
 	_convertData : function(obj) {
@@ -209,6 +218,10 @@ hui.ui.Chart.Renderer.prototype.render = function() {
 	hui.dom.clear(this.chart.element);
 	this.canvas = hui.build('canvas',{parent:this.chart.element,width:this.width,height:this.height});
 	this.ctx = this.canvas.getContext("2d");
+	
+	if (this.chart.data==null) {
+		return;
+	}
 	
 	// Extract basic info about the chart
 	for (var i=0;i<this.chart.data.dataSets.length;i++) {
