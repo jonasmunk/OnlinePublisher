@@ -1187,9 +1187,14 @@ doc title:'Rich text' class:'hui.ui.RichText'
 			<xsl:if test="@width">
 				<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
 			</xsl:if>
-			<xsl:if test="@height">
-				<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
-			</xsl:if>
+			<xsl:choose>
+				<xsl:when test="substring(@height, string-length(@height))='%'">
+					<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>;</xsl:text>
+				</xsl:when>
+				<xsl:when test="@height">
+					<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
+				</xsl:when>
+			</xsl:choose>
 		</xsl:attribute>
 		<xsl:comment/></div>
 	<script type="text/javascript">

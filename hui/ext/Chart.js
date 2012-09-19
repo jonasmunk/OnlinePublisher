@@ -1,6 +1,6 @@
 hui.ui.Chart = function(options) {
 	this.options = options = options || {};
-	this.element = options.element;
+	this.element = hui.get(options.element);
 	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 40, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
 	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
 	this.style.legends = { position: 'right' , left: 0, top: 0 };
@@ -39,6 +39,9 @@ hui.ui.Chart.prototype = {
 	render : function() {
 		var renderer = new hui.ui.Chart.Renderer(this);
 		renderer.render();
+	},
+	$$layout : function() {
+		this.render();
 	},
 	$$resize : function() {
 		this.render();
