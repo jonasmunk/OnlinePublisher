@@ -51,7 +51,15 @@
 				});
 				data.addDataSet(new hui.ui.Chart.DataSet({
 					type : 'line',
-					entries : [{key:'A', value:50}, {key:'B', value:20}, {key:'C', value:80}]
+					entries : [{key:'A', value:150}, {key:'B', value:20}, {key:'C', value:80}]
+				}));
+				data.addDataSet(new hui.ui.Chart.DataSet({
+					type : 'line',
+					entries : [{key:'A', value:50}, {key:'B', value:0}, {key:'C', value:80}]
+				}));
+				data.addDataSet(new hui.ui.Chart.DataSet({
+					type : 'line',
+					entries : [{key:'A', value:1050}, {key:'B', value:1200}, {key:'C', value:80}]
 				}));
 				
 				chart.setData(data);
@@ -91,7 +99,7 @@
 			},
 			buildChartUsingSource : function() {
 				
-				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart.json'})});
+				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart_stats.json'})});
 			},
 		})
 	</script>
