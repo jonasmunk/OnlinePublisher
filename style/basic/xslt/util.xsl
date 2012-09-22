@@ -217,6 +217,9 @@
 		<xsl:attribute name="lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
 		<xsl:attribute name="xml:lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
 	</xsl:if>
+	<xsl:if test="$agent!=''">
+	</xsl:if>
+		<xsl:attribute name="class"><xsl:value-of select="$agent"/></xsl:attribute>
 </xsl:template>
 
 <xsl:template name="util:style-ie6">

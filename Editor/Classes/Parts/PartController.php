@@ -103,7 +103,7 @@ class PartController
 		'<xsl:variable name="navigation-path"></xsl:variable>'.
 		'<xsl:variable name="page-path"></xsl:variable>'.
 		'<xsl:variable name="template"></xsl:variable>'.
-		'<xsl:variable name="agent">'.StringUtils::escapeSimpleXML($_SERVER['HTTP_USER_AGENT']).'</xsl:variable>'.
+		'<xsl:variable name="agent">'.StringUtils::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
 		'<xsl:variable name="userid"></xsl:variable>'.
 		'<xsl:variable name="username"></xsl:variable>'.
 		'<xsl:variable name="usertitle"></xsl:variable>'.

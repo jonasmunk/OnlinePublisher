@@ -171,7 +171,7 @@ div.layout_inner_content
 
 div.layout_content_sidebar div.layout_inner_content
 {
-	width: 735px;
+	width: 730px;
 }
 
 div.layout_sidebar
@@ -312,7 +312,7 @@ ul.layout_sub_navigation a
 	padding: 4px 4px;
 	display: inline-block;
 	cursor: pointer;
-	font-size: 10pt;
+	font-size: 11pt;
 }
 
 ul.layout_sub_navigation a span

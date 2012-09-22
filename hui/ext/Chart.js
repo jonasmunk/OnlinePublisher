@@ -216,6 +216,9 @@ hui.ui.Chart.Renderer.prototype.render = function() {
 	
 	hui.dom.clear(this.chart.element);
 	this.canvas = hui.build('canvas',{parent:this.chart.element,width:this.width,height:this.height});
+	if (!this.canvas.getContext) {
+		return;
+	}
 	this.ctx = this.canvas.getContext("2d");
 	
 	if (this.chart.data==null) {

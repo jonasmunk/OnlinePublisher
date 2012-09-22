@@ -19,6 +19,27 @@ class UserAgentAnalyzer {
 		}
 	}
 	
+	function getShortID() {
+		$str = '';
+		if (is_string($this->applicationName)) {
+			$str.=strtolower($this->applicationName).' '.strtolower($this->applicationName).$this->_toInt($this->applicationVersion);
+		}
+		if (is_string($this->technologyName)) {
+			if ($str) {
+				$str.=' ';
+			}
+			$str.=strtolower($this->technologyName).' '.strtolower($this->technologyName).$this->_toInt($this->technologyVersion);
+		}
+		return $str;
+	}
+	
+	function _toInt($val) {
+		if ($val) {
+			return intval($val);
+		}
+		return '';
+	}
+	
 	function setUserAgent($userAgent) {
 		$this->userAgent = $userAgent;
 		$this->_analyze();

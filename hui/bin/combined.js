@@ -1245,6 +1245,8 @@ hui.Event = function(event) {
 	this.escapeKey = event.keyCode==27;
 	/** If the space key was pressed */
 	this.spaceKey = event.keyCode==32;
+	/** If the backspace was pressed */
+	this.backspaceKey = event.keyCode==8;
 	/** If the up key was pressed */
 	this.upKey = event.keyCode==38;
 	/** If the down key was pressed */
@@ -1977,6 +1979,7 @@ hui.drag = {
 	
 	/** Listen for native drops
 	 * <pre><strong>options:</strong> {
+	 *  elements : «Element»,
 	 *  hoverClass : «String»,
 	 *  onDrop : function(event),
 	 *  onFiles : function(fileArray),
@@ -2033,6 +2036,8 @@ hui.drag = {
 						if (options.onURL && !hui.string.startsWith(url,'data:')) {
 							options.onURL(url);
 						}
+					} else if (options.onText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
+						options.onText(e.dataTransfer.getData('text/plain'))
 					}
 				}
 			}
