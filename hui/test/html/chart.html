@@ -37,9 +37,9 @@
 	<script>
 		hui.ui.listen({
 			$ready : function() {
-				this.buildLineChart();
-				this.buildPieChart();
-				this.buildColumnChart();
+				//this.buildLineChart();
+				//this.buildPieChart();
+				//this.buildColumnChart();
 				this.buildChartUsingSource();
 			},
 			buildLineChart : function() {
@@ -91,7 +91,7 @@
 			},
 			buildChartUsingSource : function() {
 				
-				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart.json'})});
+				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart_statistics.json'})});
 			},
 		})
 	</script>
