@@ -140,6 +140,17 @@ class UserAgentAnalyzer {
 			$this->isSearchEngine = false;
 			return;
 		}
+		//Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
+		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; [\\w ]+ [0-9_]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Chrome\/([0-9\.]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
+			$this->technologyName = 'AppleWebKit';
+			$this->technologyVersion = $result[1];
+			$this->applicationName = 'Chrome';
+			$this->applicationVersion = $result[2];
+			$this->isRobot = false;
+			$this->isSearchEngine = false;
+			return;
+		}
+		
 		//Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-US) AppleWebKit/125.4 (KHTML, like Gecko, Safari) OmniWeb/v563.34
 		elseif (preg_match ("/Mozilla\/5.0 \(Macintosh; U; [a-zA-Z-]+ Mac OS X; [a-zA-Z-]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko, Safari\) OmniWeb\/v([0-9\.]+)\z/i",$this->userAgent,$result)) {
 			$this->technologyName = 'AppleWebKit';

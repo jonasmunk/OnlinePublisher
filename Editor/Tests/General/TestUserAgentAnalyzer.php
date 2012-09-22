@@ -142,6 +142,21 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
 		//
     }
 
+	/*
+	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
+	*/
+	function testChrome() {
+		$analyzer = new UserAgentAnalyzer();
+
+		$analyzer->setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1');
+        $this->assertEqual($analyzer->getApplicationVersion(),'21.0.1180.89');
+        $this->assertEqual($analyzer->getApplicationName(),'Chrome');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'537.1');
+        $this->assertTrue(!$analyzer->isRobot());
+        $this->assertTrue(!$analyzer->isSearchEngine());		
+	}
+
 /*
 Mozilla/4.0 (compatible; MSIE 5.00; Windows 98)
 Mozilla/4.0 (compatible; MSIE 5.01; Windows 98; SYMPA)
