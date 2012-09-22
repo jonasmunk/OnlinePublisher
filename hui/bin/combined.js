@@ -201,16 +201,6 @@ hui.isArray = function(obj) {
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
 ///////////////////////// Strings ///////////////////////
 
 /** @namespace */
@@ -868,6 +858,8 @@ hui.build = function(name,options,doc) {
 				e.className=options.className;
 			} else if (prop=='class') {
 				e.className=options['class'];
+			} else if (prop=='style' && typeof(options[prop])=='object') {
+				hui.style.set(e,options[prop]);
 			} else if (prop=='style' && (hui.browser.msie7 || hui.browser.msie6)) {
 				e.style.setAttribute('cssText',options[prop]);
 			} else if (hui.isDefined(options[prop])) {

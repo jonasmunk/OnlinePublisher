@@ -51,6 +51,7 @@ td.part_person_image
 
 td.part_person_image a
 {
+	background: url('../../basic/gfx/person_placeholder.png') center center no-repeat;
 	border: 1px solid #DDDDDD;
 	border-bottom: 1px solid #bbb;
 	border-top: 1px solid #eee;
@@ -59,4 +60,6 @@ td.part_person_image a
 	font-size: 0;
 	line-height: 0;
 	margin-right: 10px;
+	width: 60px;
+	height: 80px;
 }

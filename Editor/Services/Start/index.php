@@ -17,6 +17,8 @@ $gui='
 	<source name="newsFeed" url="data/NewsFeedArticles.php"/>
 	<source name="warningsList" url="data/WarningsList.php?status=warning"/>
 	<source name="errorsList" url="data/WarningsList.php?status=error"/>
+	<source name="chartSource" url="data/StatisticsChart.php"/>
+	
 	<div class="box">
 		<div class="header">
 			<span class="date"> version: '.SystemInfo::getFormattedDate().'</span>
@@ -63,7 +65,14 @@ $gui='
 						</page>
 					</pages>
 				</tile>
-				<tile width="30" height="100" top="0" left="30" variant="light" name="developmentTile">
+				<tile width="30" height="40" top="0" left="30" variant="light">
+					<actions>
+						<icon icon="monochrome/expand" key="expand"/>
+					</actions>
+					<title>{Statistics; da:Statistik}</title>
+					<chart name="stats" source="chartSource" height="100%"/>
+				</tile>
+				<tile width="30" height="60" top="40" left="30" variant="light" name="developmentTile">
 					<actions>
 						<icon icon="monochrome/round_arrow_left" key="previous"/>
 						<icon icon="monochrome/round_arrow_right" key="next"/>
@@ -94,6 +103,7 @@ $gui='
 						</page>
 					</pages>
 				</tile>
+				
 				<tile width="40" height="50" top="0" left="60" variant="light">
 					<actions>
 						<icon icon="monochrome/expand" key="expand"/>

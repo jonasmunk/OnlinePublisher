@@ -50,13 +50,13 @@ hui.ui.Pages.prototype = {
 	_transition : function(options) {
 		var hide = options.hide,
 			show = options.show;
-		hui.style.set(hide,{position:'absolute',width:this.element.clientWidth+'px'});
-		hui.style.set(show,{position:'absolute',width:this.element.clientWidth+'px',display:'block',opacity:0});
+		hui.style.set(hide,{position:'absolute',width:this.element.clientWidth+'px',height:this.element.clientHeight+'px'});
+		hui.style.set(show,{position:'absolute',width:this.element.clientWidth+'px',display:'block',opacity:0,height:this.element.clientHeight+'px'});
 		hui.effect.fadeOut({element:hide,onComplete:function() {
-			hui.style.set(hide,{width : '',position:'',display:'none'});
+			hui.style.set(hide,{width : '',position:'',height:'',display:'none'});
 		}});
 		hui.effect.fadeIn({element:show,onComplete:function() {
-			hui.style.set(show,{width : '',position:''});
+			hui.style.set(show,{width : '',position:'',height:''});
 			hui.ui.reLayout();
 			hui.ui.callVisible(this);
 		}.bind(this)});

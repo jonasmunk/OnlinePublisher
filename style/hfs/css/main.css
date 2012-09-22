@@ -18,8 +18,84 @@ body
 	padding: 0px;
 	margin: 0px;
 	text-align: center;
-	background: #f9f9f9;
-	background: url('../gfx/background_grass.jpg') 50% 50% fixed;
+	background: #f9f9f9 ;
+	grunge_wall.png
+}
+
+body.design_theme_soccer
+{
+	background: url('../gfx/backgrounds/grass.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/soccer_blur2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/soccer2.jpg') 50% 50% fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_soccer div.layout
+{
+	box-shadow: 0 0 20px rgba(0,30,0,.8);	
+	box-shadow: 0 0 20px rgba(0,0,0,.4);	
+}
+/*
+body.design_theme_soccer
+{
+	background: url('../gfx/backgrounds/soccer_blur.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+}*/
+
+body.design_theme_handball
+{
+	background: url('../gfx/backgrounds/handball_blur.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/gymnasium.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/gym.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/gymnasium2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/handball_blur3.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/handball2.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_tennis
+{
+	background: url('../gfx/backgrounds/tennis_blur2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/tennis2.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_badminton
+{
+	background: url('../gfx/backgrounds/badminton.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/badminton2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/badminton3.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/badminton4.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_volleyball
+{
+	background: url('../gfx/backgrounds/volleyball.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_gymnastics
+{
+	background: url('../gfx/backgrounds/gymnastics.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
 }
 
 body,html
@@ -40,7 +116,7 @@ div.layout
 	width: 960px;
 	margin: 0 auto;
 	background: #fff;
-	box-shadow: 0 0 20px rgba(0,30,0,.8);
+	box-shadow: 0 0 20px rgba(0,0,0,.2);	
 }
 
 div.layout_sidebar
@@ -49,7 +125,7 @@ div.layout_sidebar
 
 div.layout_base
 {
-	padding-bottom: 110px;
+	padding-bottom: 280px;
 	width: 100%;
 }
 
@@ -62,10 +138,10 @@ div.layout_header
 
 div.layout_logo
 {
-	background: white url('../gfx/sprite.png') -9px -320px no-repeat;
+	background: white url('../gfx/sprite.png') 0px -320px no-repeat;
 	position: absolute;
 	box-shadow: 0 1px 3px #AAA;
-	width: 150px;
+	width: 170px;
 	right: 20px;
 	top: 31px;
 	height: 160px;
@@ -100,7 +176,7 @@ div.layout_content_sidebar div.layout_inner_content
 
 div.layout_sidebar
 {
-	width: 185px;
+	width: 190px;
 	float: right;
 	font-size: 11pt;
 }
@@ -110,11 +186,18 @@ div.layout_sidebar
 div.layout_footer
 {
 	font-size: 9pt;
-	position: relative;
-	top: -110px;
-	height: 100px;
-	padding-top: 10px;
-	background: url('../gfx/line.png') 0 top repeat-x;
+	position: absolute;
+	text-align: center;
+	background: #f2f2f2 url('../gfx/sprite.png') 0 -148px no-repeat;
+	padding-top: 141px;
+	bottom: 0;
+	width: 100%;
+}
+
+div.layout_footer_body
+{
+	background: #f2f2f2;
+	padding: 20px 0;
 }
 
 div.layout_footer span
@@ -142,24 +225,24 @@ div.layout_links
 
 ul.layout_navigation
 {
-	font-family: Arial;
+	font-family: 'Contrail One', cursive;
+	font-family: 'Play','Helvetica Neue',Arial;
 	position: absolute;
 	bottom: 10px;
-	left: 10px;
+	left: 6px;
 	margin: 0px;
 	padding: 0;
 	display: block;
-	height: 24px;
+	overflow: hidden;
 	cursor: default;
 	list-style: none;
-	width: 960px;
+	width: 760px;
 	margin: 0 auto;
 }
 
 ul.layout_navigation li
 {
 	display: inline-block;
-	height: 43px;
 }
 
 ul.layout_navigation li a
@@ -167,11 +250,12 @@ ul.layout_navigation li a
 	display: block;
 	color: #fff;
 	text-decoration: none;
-	font-size: 14pt;
+	font-size: 16pt;
+	font-weight: 400;
 	height: 24px;
 	line-height: 24px;
 	cursor: pointer;
-	padding: 0px 5px;
+	padding: 4px 5px 0px;
 }
 
 ul.layout_navigation li span
@@ -207,14 +291,13 @@ ul.layout_sub_navigation
 {
 
 	margin: 0;
-	padding: 0 0 0 10px;
+	padding: 0 0 0 5px;
 	display: block;
 	overflow: hidden;
-	height: 32px;
-	line-height: 32px;
 	list-style: none;
-	font-size: 10pt;
+	font-size:0;
 	cursor: default;
+	font-family: 'Play','Helvetica Neue',Arial;
 }
 
 ul.layout_sub_navigation li
@@ -226,27 +309,26 @@ ul.layout_sub_navigation a
 {
 	text-decoration: none;
 	color: #333;
-	height: 25px;
+	padding: 4px 4px;
 	display: inline-block;
-	margin-right: 4px;
 	cursor: pointer;
+	font-size: 10pt;
 }
 
 ul.layout_sub_navigation a span
 {
 	display: inline-block;
-	height: 25px;
+	height: 26px;
+	line-height: 26px;
 	padding: 0 8px;
-}
-
-ul.layout_sub_navigation a:hover
-{
-	background: url('../gfx/menu_sub_selection.png');
+	border: 1px solid #fff;
 }
 
 ul.layout_sub_navigation a:hover span
 {
-	background: url('../gfx/menu_sub_selection.png') right -25px no-repeat;
+	background: #fafafa;
+	border-radius: 3px;
+	border: 1px solid #eee;
 }
 
 ul.layout_sub_navigation a.selected, ul.layout_sub_navigation a.highlighted
@@ -266,19 +348,21 @@ ul.layout_sub_navigation a.selected span, ul.layout_sub_navigation a.highlighted
 
 ul.layout_side_navigation
 {
-	box-shadow: 0 1px 4px #AAA;
+	box-shadow: inset 0 1px 4px rgba(0, 0, 0, .1);
 	list-style: none;
-	margin: 35px 20px 30px 15px;
-	padding: 10px 0px;
+	margin: 5px 20px 30px 0;
+	padding: 5px 0px;
 	font-size: 10pt;
-	line-height: 22px;
+	border-radius: 4px;
+	background: #FAFAFA;
 }
 
 ul.layout_side_navigation a
 {
 	color: #333;
 	text-decoration: none;
-	padding: 1px 5px 1px 10px;
+	display: block;
+	padding: 3px 5px 3px 10px;
 }
 
 ul.layout_side_navigation a:hover

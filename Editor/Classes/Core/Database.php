@@ -96,11 +96,15 @@ class Database {
 		return $output;
 	}
 	
-	function selectAll($sql) {
+	function selectAll($sql,$key=null) {
 		$output = array();
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output[] = $row;
+			if ($key!=null) {
+				$output[$row['key']] = $row;
+			} else {
+				$output[] = $row;
+			}
 		}
 		Database::free($result);
 		return $output;

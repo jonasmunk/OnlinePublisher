@@ -20,11 +20,20 @@
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
 	<xsl:call-template name="util:metatags"/>
+	<link href='http://fonts.googleapis.com/css?family=Contrail+One' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'/>
 	<xsl:call-template name="util:style"/>
 	<xsl:call-template name="util:style-ie6"/>
 	<xsl:call-template name="util:scripts"/>
 </head>
 <body>
+	<xsl:if test="//p:design/p:parameter[@key='theme']">
+		<xsl:attribute name="class">
+			<xsl:text>design_theme_</xsl:text><xsl:value-of select="//p:design/p:parameter[@key='theme']"/>
+		</xsl:attribute>
+	</xsl:if>
 	<div class="layout">
 		<div class="layout_header">
 			<div class="layout_header_content">
@@ -34,8 +43,6 @@
 			<div class="layout_logo"><xsl:comment/></div>
 				<ul class="layout_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
 		</div>
-		<div class="layout_head">
-		</div>
 		<div class="layout_base">
 			<xsl:call-template name="secondlevel"/>
 			<div class="layout_content">
@@ -43,11 +50,13 @@
 				<xsl:apply-templates select="p:content"/>
 			</div>
 		</div>
-	</div>
-	<div class="layout_footer">
-		<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
-		<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
-		<a class="layout_design" href="http://www.in2isoft.dk/">Designet og udviklet af In2iSoft</a>
+		<div class="layout_footer">
+			<div class="layout_footer_body">
+			<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
+			<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
+			<a class="layout_design" href="http://www.in2isoft.dk/">Designet og udviklet af In2iSoft</a>
+			</div>
+		</div>
 	</div>
 	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-7'"/></xsl:call-template>
 </body>
