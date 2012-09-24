@@ -125,6 +125,10 @@ if (hui.browser.msie8) {
 	document.namespaces.add('v', 'urn:schemas-microsoft-com:vml', "#default#VML");
 }
 
+
+
+// Drawing
+
 hui.ui.Drawing.Line = function(node) {
 	this.node = node;
 }
@@ -140,13 +144,24 @@ hui.ui.Drawing.Line.prototype = {
 	}
 }
 
+
+
+// Circle
+
 hui.ui.Drawing.Circle = function(node) {
 	this.node = node;
 }
 
 hui.ui.Drawing.Circle.prototype = {
+	setCenter : function(point) {
+		this.node.setAttribute('cx',point.x);
+		this.node.setAttribute('cy',point.y);
+	}
 }
 
+
+
+// Element
 
 hui.ui.Drawing.Element = function(node) {
 	this.node = node;

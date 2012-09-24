@@ -109,7 +109,7 @@ class RenderingService {
 		'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.
 		'<xsl:variable name="page-path">'.$pagePath.'</xsl:variable>'.
 		'<xsl:variable name="template">'.$template.'</xsl:variable>'.
-		'<xsl:variable name="agent">'.StringUtils::escapeXML(@$_SERVER['HTTP_USER_AGENT']).'</xsl:variable>'.
+		'<xsl:variable name="agent">'.StringUtils::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
 		'<xsl:variable name="userid">'.StringUtils::escapeXML($userId).'</xsl:variable>'.
 		'<xsl:variable name="username">'.StringUtils::escapeXML($userName).'</xsl:variable>'.
 		'<xsl:variable name="usertitle">'.StringUtils::escapeXML($userTitle).'</xsl:variable>'.
@@ -308,6 +308,15 @@ class RenderingService {
 		else {
 			return false;
 		}
+	}
+
+	function _getAgent() {
+		if (isset($_SERVER['HTTP_USER_AGENT'])) {
+			$str = $_SERVER['HTTP_USER_AGENT'];
+			$analyzer = new UserAgentAnalyzer($str);
+			return $analyzer->getShortID();
+		}
+		return '';
 	}
 	
 	function findPage($type) {

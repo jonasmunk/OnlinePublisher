@@ -171,7 +171,7 @@ div.layout_inner_content
 
 div.layout_content_sidebar div.layout_inner_content
 {
-	width: 735px;
+	width: 730px;
 }
 
 div.layout_sidebar
@@ -291,13 +291,14 @@ ul.layout_sub_navigation
 {
 
 	margin: 0;
-	padding: 0 0 0 5px;
+	padding: 4px 0 0 5px;
 	display: block;
 	overflow: hidden;
 	list-style: none;
 	font-size:0;
 	cursor: default;
 	font-family: 'Play','Helvetica Neue',Arial;
+	margin-right: 200px;
 }
 
 ul.layout_sub_navigation li
@@ -309,10 +310,10 @@ ul.layout_sub_navigation a
 {
 	text-decoration: none;
 	color: #333;
-	padding: 4px 4px;
+	padding: 0px 4px;
 	display: inline-block;
 	cursor: pointer;
-	font-size: 10pt;
+	font-size: 11pt;
 }
 
 ul.layout_sub_navigation a span

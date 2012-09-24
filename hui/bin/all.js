@@ -1245,6 +1245,8 @@ hui.Event = function(event) {
 	this.escapeKey = event.keyCode==27;
 	/** If the space key was pressed */
 	this.spaceKey = event.keyCode==32;
+	/** If the backspace was pressed */
+	this.backspaceKey = event.keyCode==8;
 	/** If the up key was pressed */
 	this.upKey = event.keyCode==38;
 	/** If the down key was pressed */
@@ -1977,6 +1979,7 @@ hui.drag = {
 	
 	/** Listen for native drops
 	 * <pre><strong>options:</strong> {
+	 *  elements : «Element»,
 	 *  hoverClass : «String»,
 	 *  onDrop : function(event),
 	 *  onFiles : function(fileArray),
@@ -2033,6 +2036,8 @@ hui.drag = {
 						if (options.onURL && !hui.string.startsWith(url,'data:')) {
 							options.onURL(url);
 						}
+					} else if (options.onText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
+						options.onText(e.dataTransfer.getData('text/plain'))
 					}
 				}
 			}
@@ -20194,15 +20199,11 @@ hui.ui.Chart.DataSet.prototype = {
 		} else {
 			vals = this.keysToValues(keys);
 		}
-		var min = Number.MAX_VALUE;
-		var max = Number.MIN_VALUE;
+		var min = Number.MAX_VALUE,
+			max = Number.MIN_VALUE;
 		for (var i=0;i<vals.length;i++) {
-			if (vals[i]<min) {
-				min = vals[i];
-			}
-			if (vals[i]>max) {
-				max = vals[i];
-			}
+			min = Math.min(min,vals[i]);
+			max = Math.max(max,vals[i]);
 		}
 		return {min:min,max:max};
 	},
@@ -20257,7 +20258,7 @@ hui.ui.Chart.Renderer.prototype.render = function() {
 	}
 	
 	this.state.xLabels = this.chart.data.xAxis.labels;
-	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart.data);
+	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart);
 	this.state.innerBody = this.getInnerBody();
 
 	// Render the coordinate system (below)
@@ -20637,24 +20638,21 @@ hui.ui.Chart.Util.generateYLabels = function(graph) {
 }
 
 hui.ui.Chart.Util.getYrange = function(graph) {
-	var min=graph.yAxis.min;
-	var max=graph.yAxis.max;
-	for (var i=0;i<graph.dataSets.length;i++) {
-		var range = graph.dataSets[i].getValueRange(graph.xAxis.labels);
-		if (range.min<min) {
-			min=range.min;
-		}
-		if (range.max>max) {
-			max=range.max;
-		}
+	var min = graph.yAxis.min,
+		max = graph.yAxis.max,
+		data = graph.data;
+	for (var i=0;i<data.dataSets.length;i++) {
+		var range = data.dataSets[i].getValueRange(data.xAxis.labels);
+		min = Math.min(min,range.min);
+		max = Math.max(max,range.max);
 	}
 	var factor = max/graph.yAxis.steps;
-	if (factor<graph.yAxis.factor) {
+	if (factor < graph.yAxis.factor) {
 		factor = Math.ceil(factor);
 	} else {
 		factor = graph.yAxis.factor;
 	}
-	if (max!=Number.MIN_VALUE) {
+	if (max != Number.MIN_VALUE) {
 		max = Math.ceil(max/factor/graph.yAxis.steps)*factor*graph.yAxis.steps;
 	} else {
 		max = graph.yAxis.steps;
