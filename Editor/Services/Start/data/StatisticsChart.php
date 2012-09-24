@@ -32,7 +32,7 @@ function fillGaps($rows,$days) {
 		if (array_key_exists($key,$rows)) {
 			$filled[$key] = $rows[$key];
 		} else {
-			$filled[$key] = array('hits'=>0,'session'=>0,'ips'=>0,'key'=>$key,'label'=>date('j',$date));
+			$filled[$key] = array('hits'=>0,'sessions'=>0,'ips'=>0,'key'=>$key,'label'=>date('j',$date));
 		}
 	}
 	return $filled;
