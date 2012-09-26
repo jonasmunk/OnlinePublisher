@@ -8622,8 +8622,7 @@ hui.ui.Selection.Items.prototype = {
 		};
 		return null;
 	},
-	/** @private */
-	updateUI : function() {
+	_updateUI : function() {
 		for (var i=0; i < this.items.length; i++) {
 			hui.cls.set(this.items[i].element,'hui_selected',this.parent.isSelection(this.items[i]));
 		};
