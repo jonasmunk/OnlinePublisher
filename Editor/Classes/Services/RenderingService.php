@@ -116,6 +116,7 @@ class RenderingService {
 		'<xsl:variable name="internal-logged-in">'.(InternalSession::isLoggedIn() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="editor">false</xsl:variable>'.
+		'<xsl:variable name="mini">'.(Request::getBoolean('mini') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="development">'.(Request::getBoolean('dev') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.

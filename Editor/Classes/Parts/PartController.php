@@ -108,6 +108,7 @@ class PartController
 		'<xsl:variable name="username"></xsl:variable>'.
 		'<xsl:variable name="usertitle"></xsl:variable>'.
 		'<xsl:variable name="preview"></xsl:variable>'.
+		'<xsl:variable name="mini">false</xsl:variable>'.
 		'<xsl:variable name="editor">'.($editor ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
