@@ -42,9 +42,9 @@
 					<div class="layout_box layout_contact">
 						<div class="layout_box_top"><div><xsl:comment/></div></div>
 						<div class="layout_box_middle">
-							<h2>Green Benefit</h2>
-							<p>Vossvej 29 A</p>
-							<p>9000 Aalborg</p>
+							<h2>Greenbenefit.dk</h2>
+							<p>Helsingforsgade 25</p>
+							<p>8200 Århus N</p>
 							<p>Denmark</p>
 							<p><a href="mailto:info@greenbenefit.dk"><span>info@greenbenefit.dk</span></a></p>
 							<p>Tlf: 70 20 60 77</p>
