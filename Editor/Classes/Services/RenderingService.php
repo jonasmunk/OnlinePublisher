@@ -477,7 +477,7 @@ class RenderingService {
 			'</content>'.
 			'</page>';
 			$relativeUrl = isset($options['relativeUrl']) ? $options['relativeUrl'] : $options['relativePath'];
-			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true,'en');
+			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true,strtolower($row['language']));
 		}
 		Log::debug('Unable to query: '.$pageId);
 		Log::debug($sql);
