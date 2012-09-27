@@ -165,7 +165,7 @@ function agents() {
 	$result = Database::selectAll($sql);
 	foreach ($result as $row) {
 		$analyzer = new UserAgentAnalyzer($row['agent']);
-		$app = $analyzer->getApplicationName();
+		$app = $analyzer->getApplicationName().' '.$analyzer->getApplicationVersion();
 		$writer->startRow();
 		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
 		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell();

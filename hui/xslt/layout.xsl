@@ -138,40 +138,6 @@
 
 
 
-<!--doc title:'Split' module:'layout'
-<split>
-    <sidebar>
-        ···
-    </sidebar>
-    <content>
-        ···
-    </content>
-    <content>
-        ···
-    </content>
-</split>
--->
-<xsl:template match="gui:split">
-<table class="split" cellpadding="0" cellspacing="0">
-<tr>
-	<xsl:apply-templates select="gui:sidebar"/>
-	<xsl:for-each select="gui:content">
-		<td class="split_content">
-			<xsl:apply-templates/>
-		</td>
-	</xsl:for-each>
-</tr>
-</table>
-</xsl:template>
-
-<xsl:template match="gui:split/gui:sidebar">
-	<td class="split_sidebar"><xsl:apply-templates/><div class="split_sidebar"><xsl:comment/></div></td>
-</xsl:template>
-
-
-
-
-
 <!--doc title:'Overflow' class:'hui.ui.Overflow' module:'layout'
 <overflow background="«background»" vertical="«pixels»" height="«pixels»" min-height="«pixels»" max-height="«pixels»" state="«text»">
     ···
@@ -222,6 +188,25 @@
 </xsl:template>
 
 
+
+
+<!--doc title:'Split' module:'layout'
+<split>
+    <row>···</row>
+    <row>···</row>
+</split>
+-->
+<xsl:template match="gui:split">
+	<div class="hui_split">
+		<xsl:apply-templates select="gui:row"/>
+	</div>
+</xsl:template>
+
+<xsl:template match="gui:split/gui:row">
+	<div class="hui_split_row">
+		<xsl:apply-templates/>
+	</div>
+</xsl:template>
 
 
 

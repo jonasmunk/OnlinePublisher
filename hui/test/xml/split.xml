@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" title="Layout" padding="10">
+	<source name="itemsSource" url="data/source_items.xml"/>
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="common/refresh" title="Refresh" click="list.refresh()"/>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<overflow>
+				<selection value="user" name="selector">
+					<item icon="common/person" title="Brugere" value="user"/>
+					<item icon="common/folder" title="Database" value="database" kind="folder"/>
+					<item icon="common/person" title="Alle objekter" value="object"/>
+					<title>Hey</title>
+					<items source="itemsSource"/>
+				</selection>
+				</overflow>
+			</left>
+			<center>
+				<split>
+					<row>
+						<div style="">Top</div>
+					</row>
+					<row>
+						<div style="">Middle</div>
+					</row>
+					<row>
+						<div style="">Bottom</div>
+					</row>
+				</split>
+			</center>
+		</middle>
+		<bottom>
+			
+		</bottom>
+	</structure>
+</gui>

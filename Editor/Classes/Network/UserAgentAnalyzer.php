@@ -91,7 +91,17 @@ class UserAgentAnalyzer {
 			return;
 		}
 		//Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
-		elseif (preg_match ("/Mozilla\/[1-4].0 \(compatible; MSIE ([0-9\.bB]+); (Windows NT [5-9]\.[0-9]|Windows NT|Windows 98|Windows XP|Windows 95|Mac_PowerPC)(; [a-zA-Z-0-9\(\)\. =\{\},\/:\|#%]+)*\)\z/i",$this->userAgent,$result)) {
+		elseif (preg_match ("/Mozilla\/[1-9].0 \(compatible; MSIE ([0-9\.bB]+); (Windows NT [5-9]\.[0-9]|Windows NT|Windows 98|Windows XP|Windows 95|Mac_PowerPC)(; [a-zA-Z-0-9\(\)\. =\{\},\/:\|#%]+)*\)\z/i",$this->userAgent,$result)) {
+			$this->technologyName = 'InternetExplorer';
+			$this->technologyVersion = $result[1];
+			$this->applicationName = 'InternetExplorer';
+			$this->applicationVersion = $result[1];
+			$this->isRobot = false;
+			$this->isSearchEngine = false;
+			return;
+		}
+		//Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
+		elseif (preg_match ("/Mozilla\/[1-9].0 \(compatible; MSIE ([0-9\.bB]+); (Windows NT [5-9]\.[0-9]|Windows NT|Windows 98|Windows XP|Windows 95|Mac_PowerPC)(; [a-zA-Z-0-9\(\)\. =\{\},\/:\|#%]+)*\)\z/i",$this->userAgent,$result)) {
 			$this->technologyName = 'InternetExplorer';
 			$this->technologyVersion = $result[1];
 			$this->applicationName = 'InternetExplorer';
@@ -116,6 +126,16 @@ class UserAgentAnalyzer {
 			$this->technologyVersion = $result[1];
 			$this->applicationName = $result[2];
 			$this->applicationVersion = $result[3];
+			$this->isRobot = false;
+			$this->isSearchEngine = false;
+			return;
+		}
+		// Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20100101 Firefox/13.0.1
+		elseif (preg_match ("/Mozilla\/5.0 \(([^;\)]+;)+ rv:([^\)]+)\) Gecko\/[0-9]+ ([a-zA-Z]+)\/([0-9\.a-zA-Z\+]+)/",$this->userAgent,$result)) {
+			$this->technologyName = 'Gecko';
+			$this->technologyVersion = $result[2];
+			$this->applicationName = $result[3];
+			$this->applicationVersion = $result[4];
 			$this->isRobot = false;
 			$this->isSearchEngine = false;
 			return;
@@ -162,11 +182,11 @@ class UserAgentAnalyzer {
 			return;
 		}
 		//Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
-		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; [\\w ]+ [0-9_]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Chrome\/([0-9\.]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
+		elseif (preg_match ("/Mozilla\/5.0 \(([^;]+;)*[^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Chrome\/([0-9\.]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
 			$this->technologyName = 'AppleWebKit';
-			$this->technologyVersion = $result[1];
+			$this->technologyVersion = $result[2];
 			$this->applicationName = 'Chrome';
-			$this->applicationVersion = $result[2];
+			$this->applicationVersion = $result[3];
 			$this->isRobot = false;
 			$this->isSearchEngine = false;
 			return;

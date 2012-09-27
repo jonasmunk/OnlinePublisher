@@ -15,6 +15,9 @@ var baseController = {
 		this.refresh();
 	},
 	$pageChanged : function() {
+		this._updateStatus();
+	},
+	_updateStatus : function() {
 		hui.log('Fetching status');
 		hui.ui.request({
 			url : 'Services/Base/data/Status.php',
@@ -33,6 +36,9 @@ var baseController = {
 		})
 	},
 	changeSelection : function(key) {
+	},
+	$modelChanged : function() {
+		this._updateStatus();
 	},
 	$refreshBase : function() {
 		this.refresh();

@@ -14,15 +14,13 @@
 		</top>
 		<middle>
 			<left>
-				<split>
-					<sidebar>
-						<selection value="all" name="selector">
-							<item icon="common/time" title="Altid" value="all"/>
-							<item icon="common/folder" title="Database" value="database"/>
-							<item icon="common/person" title="Alle objekter" value="object"/>
-						</selection>
-					</sidebar>
-				</split>
+				<sidebar>
+					<selection value="all" name="selector">
+						<item icon="common/time" title="Altid" value="all"/>
+						<item icon="common/folder" title="Database" value="database"/>
+						<item icon="common/person" title="Alle objekter" value="object"/>
+					</selection>
+				</sidebar>
 			</left>
 			<center>
 				<overflow>
