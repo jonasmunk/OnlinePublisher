@@ -109,13 +109,14 @@ class RenderingService {
 		'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.
 		'<xsl:variable name="page-path">'.$pagePath.'</xsl:variable>'.
 		'<xsl:variable name="template">'.$template.'</xsl:variable>'.
-		'<xsl:variable name="agent">'.StringUtils::escapeXML(@$_SERVER['HTTP_USER_AGENT']).'</xsl:variable>'.
+		'<xsl:variable name="agent">'.StringUtils::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
 		'<xsl:variable name="userid">'.StringUtils::escapeXML($userId).'</xsl:variable>'.
 		'<xsl:variable name="username">'.StringUtils::escapeXML($userName).'</xsl:variable>'.
 		'<xsl:variable name="usertitle">'.StringUtils::escapeXML($userTitle).'</xsl:variable>'.
 		'<xsl:variable name="internal-logged-in">'.(InternalSession::isLoggedIn() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="editor">false</xsl:variable>'.
+		'<xsl:variable name="mini">'.(Request::getBoolean('mini') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="development">'.(Request::getBoolean('dev') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
@@ -308,6 +309,15 @@ class RenderingService {
 		else {
 			return false;
 		}
+	}
+
+	function _getAgent() {
+		if (isset($_SERVER['HTTP_USER_AGENT'])) {
+			$str = $_SERVER['HTTP_USER_AGENT'];
+			$analyzer = new UserAgentAnalyzer($str);
+			return $analyzer->getShortID();
+		}
+		return '';
 	}
 	
 	function findPage($type) {

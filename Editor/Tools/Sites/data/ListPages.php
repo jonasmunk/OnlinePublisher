@@ -34,14 +34,25 @@ function listHierarhy() {
 			header(array('title'=>array('Path','da'=>'Sti')))->
 			header(array('width'=>1))->
 		endHeaders();
+
 	if ($kind=='hierarchy') {
 		$hierarchyId = intval($value);
 		$parent = null;
+		$hierarchy = Hierarchy::load($hierarchyId);
+		
+		$writer->startRow(array('id'=>$hierarchyId,'kind'=>'hierarchy','level'=>1))->
+			startCell(array('icon'=>'common/hierarchy'))->text($hierarchy->getName())->endCell()->
+			startCell()->endCell()->
+			startCell()->endCell()->
+		endRow();
 	} else {
 		$hierarchyId = null;
 		$parent = intval($value);
+		$item = HierarchyItem::load($parent);
+		$row = Database::selectFirst(buildHierarchySql(null,null,$parent));
+		_writeHierarchyItem($row,1,$writer);
 	}
-	listHierarhyLevel($writer,$hierarchyId,$parent,1);
+	listHierarhyLevel($writer,$hierarchyId,$parent,2);
 	
 	$writer->endList();	
 }
@@ -109,11 +120,73 @@ and review_user.to_type='object' and review_user.to_object_id=user.id";
 	$writer->endList();	
 }
 
+function _writeHierarchyItem($row,$level,$writer) {
+	$icon = Hierarchy::getItemIcon($row['target_type']);
+	$options = array('id'=>$row['id'],'kind'=>'hierarchyItem','level'=>$level);
+	if ($row['target_type']=='page' && $row['pageid']) {
+		$options['data'] = array('page'=>intval($row['pageid']));
+	}
+	$writer->
+	startRow($options)->
+	startCell(array('icon'=>'monochrome/dot'));
+	if ($row['hidden']) {
+		$writer->startDelete()->text($row['title'])->endDelete();
+	} else {
+		$writer->text($row['title']);
+	}
+	$writer->endCell();
+	if ($row['target_type']=='page') {
+		if (!$row['pageid']) {
+			$writer->startCell(array('icon'=>'common/warning'))->text(array('No page','da'=>'Ingen side!'))->endCell();
+		} else {
+			$writer->
+				startCell(array('icon'=>$icon));
+				if ($row['page_disabled']) {
+					$writer->startDelete()->text($row['pagetitle'])->endDelete();
+				} else {
+					$writer->text($row['pagetitle']);
+				}
+				$writer->startIcons()->
+					icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
+					icon(array('icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editPage','id'=>$row['pageid'])))->
+					icon(array('icon'=>'monochrome/view','revealing'=>true,'action'=>true,'data'=>array('action'=>'viewPage','id'=>$row['pageid'])))->
+					icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'action'=>true,'data'=>array('action'=>'previewPage','id'=>$row['pageid'])))->
+				endIcons()->
+			endCell();
+		}
+	} else if ($row['target_type']=='pageref') {
+		$writer->startCell(array('icon'=>$icon))->text($row['pagetitle'].'')->endCell();
+	} else if ($row['target_type']=='url') {
+		$writer->startCell(array('icon'=>$icon))->text($row['target_value'].'')->
+			startIcons()->
+				icon(array('icon'=>'monochrome/round_arrow_right','revealing'=>true,'data'=>array('action'=>'visitLink','url'=>$row['target_value'])))->
+			endIcons()->
+		endCell();
+	} else if ($row['target_type']=='email') {
+		$writer->startCell(array('icon'=>'monochrome/email'))->text($row['target_value'].'')->endCell();
+	} else if ($row['target_type']=='file') {
+		$writer->startCell(array('icon'=>$icon))->text($row['filetitle'].'')->endCell();
+	} else {
+		$writer->startCell(array('icon'=>'monochrome/round_question'))->text($row['target_type'].'')->endCell();
+	}
+	$writer->
+	startCell()->startLine(array('dimmed'=>true))->startWrap()->text($row['page_path'])->endWrap()->endLine()->endCell()->
+	startCell(array('wrap'=>false))->
+	startIcons()->
+		icon(array('icon'=>'monochrome/round_arrow_up','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'up')))->
+		icon(array('icon'=>'monochrome/round_arrow_down','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'down')))->
+	endIcons()->
+	endCell()->
+	endRow();
+}
+
 function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 	$sql = buildHierarchySql($hierarchyId,$parent);
-	$result = Database::select($sql['list']);
+	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$icon=Hierarchy::getItemIcon($row['target_type']);
+		_writeHierarchyItem($row,$level,$writer);
+		/*
+		$icon = Hierarchy::getItemIcon($row['target_type']);
 		$options = array('id'=>$row['id'],'kind'=>'hierarchyItem','level'=>$level);
 		if ($row['target_type']=='page' && $row['pageid']) {
 			$options['data'] = array('page'=>intval($row['pageid']));
@@ -122,7 +195,6 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		startRow($options)->
 		startCell(array('icon'=>'monochrome/dot'));
 		if ($row['hidden']) {
-			//$writer->startIcons()->icon(array('icon'=>'monochrome/invisible','data'=>array('action'=>'invisible')))->endIcons();
 			$writer->startDelete()->text($row['title'])->endDelete();
 		} else {
 			$writer->text($row['title']);
@@ -171,20 +243,23 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 		endIcons()->
 		endCell()->
 		endRow();
+		*/
 		listHierarhyLevel($writer,$hierarchyId,$row['id'],$level+1);
 	}
 	Database::free($result);
 }
 
-function buildHierarchySql($hierarchyId,$parent) {
+function buildHierarchySql($hierarchyId,$parent,$hierarchItemId=null) {
 	$sql="select hierarchy_item.*,page.id as pageid,page.title as pagetitle,page.path as page_path,page.disabled as page_disabled,template.unique as templateunique,file.object_id as fileid,file.filename,fileobject.title as filetitle from hierarchy_item left join page on page.id = hierarchy_item.target_id left join file on file.object_id = hierarchy_item.target_id left join object as fileobject on file.object_id=fileobject.id left join template on template.id=page.template_id";
 	if ($parent===null && $hierarchyId!==null) {
 		$sql.=" where hierarchy_id=".Database::int($hierarchyId)." and parent=0";
+	} else if ($hierarchItemId!==null) {
+			$sql.=" where hierarchy_item.id=".Database::int($hierarchItemId);
 	} else {
 		$sql.=" where parent=".Database::int($parent);
 	}
 	$sql.=" order by `index`";
-	return array('list'=>$sql);
+	return $sql;
 }
 
 function listPages() {

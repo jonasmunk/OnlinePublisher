@@ -37,10 +37,14 @@ class ToolService {
 		$installed = ToolService::getInstalled();
 		foreach ($installed as $key) {
 			$info = ToolService::getInfo($key);
-			if (!isset($categorized[$info->category])) {
-				$categorized[$info->category] = array();
+			if ($info) {
+				if (!isset($categorized[$info->category])) {
+					$categorized[$info->category] = array();
+				}
+				$categorized[$info->category][$key] = $info;
+			} else {
+				Log::debug('Tool not found: '.$key);
 			}
-			$categorized[$info->category][$key] = $info;
 		}
 		foreach ($categorized as $key => &$value) {
 			usort($value,array('ToolService','_priorityComparator'));

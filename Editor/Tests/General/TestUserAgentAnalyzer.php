@@ -142,6 +142,31 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
 		//
     }
 
+	/*
+	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
+	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
+	*/
+	function testChrome() {
+		$analyzer = new UserAgentAnalyzer();
+
+		$analyzer->setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1');
+        $this->assertEqual($analyzer->getApplicationVersion(),'21.0.1180.89');
+        $this->assertEqual($analyzer->getApplicationName(),'Chrome');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'537.1');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
+
+		$analyzer->setUserAgent('Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1');
+        $this->assertEqual($analyzer->getApplicationVersion(),'21.0.1180.89');
+        $this->assertEqual($analyzer->getApplicationName(),'Chrome');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'537.1');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+	}
+
 /*
 Mozilla/4.0 (compatible; MSIE 5.00; Windows 98)
 Mozilla/4.0 (compatible; MSIE 5.01; Windows 98; SYMPA)
@@ -176,6 +201,8 @@ Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; InfoP
 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; FunWebProducts; SIMBAR Enabled; SIMBAR=0; SIMBAR={3D7C862C-1B8B-4e9b-BE7E-490350C8A7AF}; .NET CLR 1.1.4322)
 
 Mozilla/4.0 (compatible; MSIE 6.0; Windows XP)
+
+Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)
 	
 Mozilla/4.0 (compatible; MSIE 5.0b1; Mac_PowerPC)
 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; acc=kimochiz; acc=none; (none); (); .NET CLR 1.1.4322)
@@ -423,6 +450,16 @@ Mozilla/2.0 (compatible; MSIE 3.0B; Windows NT)
         $this->assertTrue($analyzer->getTechnologyVersion()=='7.0');
         $this->assertTrue(!$analyzer->isRobot());
         $this->assertTrue(!$analyzer->isSearchEngine());
+
+		$analyzer->setUserAgent('Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)');
+        $this->assertEqual($analyzer->getApplicationVersion(),'9.0');
+        $this->assertEqual($analyzer->getApplicationName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'9.0');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
+
 //
 
 	}
@@ -542,6 +579,8 @@ Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.8.0.1) Gecko/20060111 Firef
 Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20051010 Firefox/1.0.4 (Ubuntu package 1.0.7)
 
 Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8b) Gecko/20050217
+
+Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20100101 Firefox/13.0.1
 */
 	function testGecko() {
 		$analyzer = new UserAgentAnalyzer();
@@ -625,6 +664,16 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8b) Gecko/20050217
         $this->assertEqual($analyzer->getTechnologyVersion(),'1.8b');
         $this->assertTrue(!$analyzer->isRobot());
         $this->assertTrue(!$analyzer->isSearchEngine());
+
+		$analyzer->setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20100101 Firefox/13.0.1');
+        $this->assertEqual($analyzer->getApplicationVersion(),'13.0.1');
+        $this->assertEqual($analyzer->getApplicationName(),'Firefox');
+        $this->assertEqual($analyzer->getTechnologyName(),'Gecko');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'13.0');
+        $this->assertTrue(!$analyzer->isRobot());
+        $this->assertTrue(!$analyzer->isSearchEngine());
+
+
 	}
 /*
 Googlebot/2.1 (+http://www.google.com/bot.html)

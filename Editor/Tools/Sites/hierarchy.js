@@ -26,6 +26,7 @@ hui.ui.listen({
 				onSuccess:function() {
 					list.refresh();
 					hierarchySource.refresh();
+					hui.ui.tellContainers('modelChanged');
 				}
 			});
 		} else if (info.data.action=='visitLink') {

@@ -330,7 +330,7 @@ class Hierarchy extends Entity {
 		}
 
 		// Find largest position of items under new parent
-		if ($targetHierarchy>0) {
+		if ($targetHierarchy>0 && $targetItem==0) {
 			$sql = "select max(`index`) as `index` from hierarchy_item where parent=0 and hierarchy_id=".Database::int($targetHierarchy);
 			$newParent = 0;
 		} else {

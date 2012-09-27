@@ -18,16 +18,19 @@
 
 <body>
 	<script type="text/javascript" charset="utf-8">
+		var line1,circle;
 		hui.onReady(function() {
 			var d = hui.ui.Drawing.create({width:500,height:400,parent:document.body});
 			document.body.appendChild(d.element);
 			d.addLine({x1:0,y1:0,x2:300,y2:300,color:'#f00'});
-			window.line1 = d.addLine({x1:20,y1:30,x2:100,y2:300,width:2});
 			
-			d.addCircle({cx:100,cy:100,r:50,fill:'#48f',width:0});
+			line1 = d.addLine({x1:20,y1:30,x2:100,y2:300,width:2});
+			
+			circle = d.addCircle({cx:100,cy:100,r:50,fill:'#48f',width:0});
 		})
 	</script>
-	<button onclick="window.line1.setFrom(100,200)">Change line</button>
-	<button onclick="window.line1.setTo(400,50)">Change line</button>
+	<button onclick="line1.setFrom({x:Math.random()*400,y:Math.random()*400})">Change line from</button>
+	<button onclick="line1.setTo({x:Math.random()*400,y:Math.random()*400})">Change line to</button>
+	<button onclick="circle.setCenter({x:Math.random()*400,y:Math.random()*400})">Change circle</button>
 </body>
 </html>

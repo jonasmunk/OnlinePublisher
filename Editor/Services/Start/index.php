@@ -55,12 +55,28 @@ $gui='
 						</page>
 						<page>
 							<overflow full="true" shadow-variant="white">
-								<list source="warningsList" selectable="false"/>
+								<list source="warningsList" selectable="false">
+								<empty>
+									<space all="10">
+									<text>
+										<p><strong>Der er ingen advarsler</strong></p>
+									</text>
+									</space>
+								</empty>
+								</list>
 							</overflow>
 						</page>
 						<page>
 							<overflow full="true" shadow-variant="white">
-								<list source="errorsList" selectable="false"/>
+								<list source="errorsList" selectable="false">
+									<empty>
+										<space all="10">
+										<text>
+											<p><strong>Der er ikke fundet fejl</strong></p>
+										</text>
+										</space>
+									</empty>
+								</list>
 							</overflow>
 						</page>
 					</pages>

@@ -811,7 +811,7 @@ $databaseTables = array(
 			array("value","int(11)","YES","","",""),
 			array("session","varchar(255)","YES","","",""),
 			array("time","datetime","YES","","",""),
-			array("referer","varchar(255)","YES","","",""),
+			array("referer","varchar(3000)","YES","","",""),
 			array("host","varchar(255)","YES","","",""),
 			array("robot","tinyint(4)","YES","","",""),
 			array("known","tinyint(4)","YES","","","")

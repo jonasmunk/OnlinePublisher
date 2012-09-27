@@ -141,7 +141,7 @@ class InspectionService {
 				$entity = array('type'=>$row['type'],'title'=>$row['title'],'id'=>$row['id'],'icon'=>'common/object');
 				$inspection = new Inspection();
 				$inspection->setCategory('model');
-				$inspection->setEntity($netity);
+				$inspection->setEntity($entity);
 				$inspection->setStatus('error');
 				$inspection->setText('The object could not be loaded ('.$row['id'].' / '.$row['type'].')');
 				$inspections[] = $inspection;

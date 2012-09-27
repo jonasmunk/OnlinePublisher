@@ -12,6 +12,28 @@ var mainController = {
 		if (pageInfo) {
 			this.loadPage(pageInfo);
 		}
+		//window.setTimeout(this._restore.bind(this),2000)
+	},
+	$loaded$selector : function() {
+		this._restore();
+	},
+	_restore : function() {
+		return;
+		if (this._restored) {
+			return;
+		}
+		if(typeof(Storage)!=="undefined") {
+			if (localStorage['selector.value']) {
+				selector.setValue(localStorage['selector.value']);
+			}
+		}
+		this._restored = true;
+	},
+	_store : function(key,value) {
+		return;
+		if(typeof(Storage)!=="undefined") {
+			localStorage[key] = value;
+		}
 	},
 	
 	//////////////// Search //////////////
@@ -25,8 +47,11 @@ var mainController = {
 	},
 	
 	$select$selector : function(item) {
-		list.resetState();
-		reviewBar.setVisible(item.value=='review');
+		if (item) {
+			this._store('selector.value',item.value);
+			list.resetState();
+			reviewBar.setVisible(item.value=='review');
+		}
 	},
 	
 	///////////////// List ///////////////

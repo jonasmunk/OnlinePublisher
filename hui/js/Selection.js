@@ -19,7 +19,7 @@ hui.ui.Selection = function(options) {
 			this.addItemBehavior(element,item);
 		};
 		this.selection = this._getSelectionWithValue(this.options.value);
-		this.updateUI();
+		this._updateUI();
 	} else if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
 	}
@@ -63,7 +63,7 @@ hui.ui.Selection.prototype = {
 			this.selection = item;
 			this.kind=item.kind;
 		}
-		this.updateUI();
+		this._updateUI();
 		this.fireChange();
 	},
 	_getSelectionWithValue : function(value) {
@@ -110,15 +110,13 @@ hui.ui.Selection.prototype = {
 		this.subItems.push(items);
 	},
 	
-	
-	/** @private */
-	updateUI : function() {
+	_updateUI : function() {
 		var i;
 		for (i=0; i < this.items.length; i++) {
 			hui.cls.set(this.items[i].element,'hui_selected',this.isSelection(this.items[i]));
 		};
 		for (i=0; i < this.subItems.length; i++) {
-			this.subItems[i].updateUI();
+			this.subItems[i]._updateUI();
 		};
 	},
 	/** @private */
@@ -127,7 +125,7 @@ hui.ui.Selection.prototype = {
 			this.subItems[i].selectionChanged(this.selection,item);
 		};
 		this.selection = item;
-		this.updateUI();
+		this._updateUI();
 		this.fireChange();
 	},
 	/** @private */
@@ -219,6 +217,7 @@ hui.ui.Selection.prototype = {
 			},300);
 		} else {
 			hui.cls.remove(this.element,'hui_selection_busy');
+			this.fire('loaded');
 		}
 	},
 	_checkValue : function() {
@@ -283,7 +282,7 @@ hui.ui.Selection.Items.prototype = {
 		if (this.title) {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
 		}
-		this.parent.updateUI();
+		this.parent._updateUI();
 		this.parent._checkValue();
 		this.fireSizeChange();
 	},
@@ -393,8 +392,7 @@ hui.ui.Selection.Items.prototype = {
 		};
 		return null;
 	},
-	/** @private */
-	updateUI : function() {
+	_updateUI : function() {
 		for (var i=0; i < this.items.length; i++) {
 			hui.cls.set(this.items[i].element,'hui_selected',this.parent.isSelection(this.items[i]));
 		};

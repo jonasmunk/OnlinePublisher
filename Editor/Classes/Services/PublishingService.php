@@ -67,11 +67,11 @@ class PublishingService {
 	
 	function getTotalUnpublishedCount() {
 		$count = 0;
-		$sql = "select count(page.id) as count from page where changed>published
+		$sql = "select count(page.id) as `count`,'page' from page where page.changed>page.published
 			union
-			select count(hierarchy.id) as count from hierarchy where changed>published
+			select count(hierarchy.id) as `count`,'hierarchy' from hierarchy where changed>published
 			union
-			select count(object.id) as count from object where updated>published";
+			select count(object.id) as `count`,'object' from object where updated>published";
 		$rows = Database::selectAll($sql);
 		foreach ($rows as $row) {
 			$count+=intval($row['count']);

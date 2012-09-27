@@ -36,3 +36,11 @@ div.hui_chart_legend span
 	display: inline-block;
 	vertical-align: middle;
 }
+
+span.hui_chart_label
+{
+	position: absolute;
+	text-align: center;
+	width: 50px;
+	font: 9px Tahoma;
+}

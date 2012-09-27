@@ -854,6 +854,8 @@ hui.build = function(name,options,doc) {
 				} else {
 					options.parentFirst.insertBefore(e,options.parentFirst.childNodes[0]);
 				}
+			} else if (prop=='before') {
+				options.before.parentNode.insertBefore(e,options.before);
 			} else if (prop=='className') {
 				e.className=options.className;
 			} else if (prop=='class') {
@@ -1245,6 +1247,8 @@ hui.Event = function(event) {
 	this.escapeKey = event.keyCode==27;
 	/** If the space key was pressed */
 	this.spaceKey = event.keyCode==32;
+	/** If the backspace was pressed */
+	this.backspaceKey = event.keyCode==8;
 	/** If the up key was pressed */
 	this.upKey = event.keyCode==38;
 	/** If the down key was pressed */
@@ -1977,6 +1981,7 @@ hui.drag = {
 	
 	/** Listen for native drops
 	 * <pre><strong>options:</strong> {
+	 *  elements : «Element»,
 	 *  hoverClass : «String»,
 	 *  onDrop : function(event),
 	 *  onFiles : function(fileArray),
@@ -2033,6 +2038,8 @@ hui.drag = {
 						if (options.onURL && !hui.string.startsWith(url,'data:')) {
 							options.onURL(url);
 						}
+					} else if (options.onText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
+						options.onText(e.dataTransfer.getData('text/plain'))
 					}
 				}
 			}
@@ -8242,7 +8249,7 @@ hui.ui.Selection = function(options) {
 			this.addItemBehavior(element,item);
 		};
 		this.selection = this._getSelectionWithValue(this.options.value);
-		this.updateUI();
+		this._updateUI();
 	} else if (this.options.value!=null) {
 		this.selection = {value:this.options.value};
 	}
@@ -8286,7 +8293,7 @@ hui.ui.Selection.prototype = {
 			this.selection = item;
 			this.kind=item.kind;
 		}
-		this.updateUI();
+		this._updateUI();
 		this.fireChange();
 	},
 	_getSelectionWithValue : function(value) {
@@ -8333,15 +8340,13 @@ hui.ui.Selection.prototype = {
 		this.subItems.push(items);
 	},
 	
-	
-	/** @private */
-	updateUI : function() {
+	_updateUI : function() {
 		var i;
 		for (i=0; i < this.items.length; i++) {
 			hui.cls.set(this.items[i].element,'hui_selected',this.isSelection(this.items[i]));
 		};
 		for (i=0; i < this.subItems.length; i++) {
-			this.subItems[i].updateUI();
+			this.subItems[i]._updateUI();
 		};
 	},
 	/** @private */
@@ -8350,7 +8355,7 @@ hui.ui.Selection.prototype = {
 			this.subItems[i].selectionChanged(this.selection,item);
 		};
 		this.selection = item;
-		this.updateUI();
+		this._updateUI();
 		this.fireChange();
 	},
 	/** @private */
@@ -8442,6 +8447,7 @@ hui.ui.Selection.prototype = {
 			},300);
 		} else {
 			hui.cls.remove(this.element,'hui_selection_busy');
+			this.fire('loaded');
 		}
 	},
 	_checkValue : function() {
@@ -8506,7 +8512,7 @@ hui.ui.Selection.Items.prototype = {
 		if (this.title) {
 			this.title.style.display=this.items.length>0 ? 'block' : 'none';
 		}
-		this.parent.updateUI();
+		this.parent._updateUI();
 		this.parent._checkValue();
 		this.fireSizeChange();
 	},
@@ -8616,8 +8622,7 @@ hui.ui.Selection.Items.prototype = {
 		};
 		return null;
 	},
-	/** @private */
-	updateUI : function() {
+	_updateUI : function() {
 		for (var i=0; i < this.items.length; i++) {
 			hui.cls.set(this.items[i].element,'hui_selected',this.parent.isSelection(this.items[i]));
 		};
@@ -19707,6 +19712,10 @@ if (hui.browser.msie8) {
 	document.namespaces.add('v', 'urn:schemas-microsoft-com:vml', "#default#VML");
 }
 
+
+
+// Drawing
+
 hui.ui.Drawing.Line = function(node) {
 	this.node = node;
 }
@@ -19722,13 +19731,24 @@ hui.ui.Drawing.Line.prototype = {
 	}
 }
 
+
+
+// Circle
+
 hui.ui.Drawing.Circle = function(node) {
 	this.node = node;
 }
 
 hui.ui.Drawing.Circle.prototype = {
+	setCenter : function(point) {
+		this.node.setAttribute('cx',point.x);
+		this.node.setAttribute('cy',point.y);
+	}
 }
 
+
+
+// Element
 
 hui.ui.Drawing.Element = function(node) {
 	this.node = node;
@@ -20194,15 +20214,11 @@ hui.ui.Chart.DataSet.prototype = {
 		} else {
 			vals = this.keysToValues(keys);
 		}
-		var min = Number.MAX_VALUE;
-		var max = Number.MIN_VALUE;
+		var min = Number.MAX_VALUE,
+			max = Number.MIN_VALUE;
 		for (var i=0;i<vals.length;i++) {
-			if (vals[i]<min) {
-				min = vals[i];
-			}
-			if (vals[i]>max) {
-				max = vals[i];
-			}
+			min = Math.min(min,vals[i]);
+			max = Math.max(max,vals[i]);
 		}
 		return {min:min,max:max};
 	},
@@ -20239,6 +20255,9 @@ hui.ui.Chart.Renderer.prototype.render = function() {
 	
 	hui.dom.clear(this.chart.element);
 	this.canvas = hui.build('canvas',{parent:this.chart.element,width:this.width,height:this.height});
+	if (!this.canvas.getContext) {
+		return;
+	}
 	this.ctx = this.canvas.getContext("2d");
 	
 	if (this.chart.data==null) {
@@ -20257,7 +20276,7 @@ hui.ui.Chart.Renderer.prototype.render = function() {
 	}
 	
 	this.state.xLabels = this.chart.data.xAxis.labels;
-	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart.data);
+	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart);
 	this.state.innerBody = this.getInnerBody();
 
 	// Render the coordinate system (below)
@@ -20333,11 +20352,16 @@ hui.ui.Chart.Renderer.prototype.renderLegends = function() {
  * Renders the body of the chart
  */
 hui.ui.Chart.Renderer.prototype.renderBody = function() {
-
-	var body = this.chart.body;
+	
+	var body = this.chart.body,
+		stroke = 'rgb(255,255,255)',
+		background = 'rgb(240,240,240)';
+	
+	stroke = 'rgb(240,240,240)';
+	background = 'rgb(255,255,255)';
 
 	if (this.chart.style.background) {
-		this.ctx.fillStyle='rgb(240,240,240)';
+		this.ctx.fillStyle=background;
 		this.ctx.fillRect(body.paddingLeft,body.paddingTop,this.width-body.paddingLeft-body.paddingRight,this.height-body.paddingTop-body.paddingBottom);
 	}
 	var innerBody = this.state.innerBody;
@@ -20348,7 +20372,7 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 	if (xLabels.length>this.chart.data.xAxis.maxLabels) {
 		mod = Math.ceil(xLabels.length/this.chart.data.xAxis.maxLabels);
 	}
-	this.ctx.strokeStyle='rgb(255,255,255)';
+	this.ctx.strokeStyle=stroke;
 	for (var i=0;i<xLabels.length;i++) {
 		var left = i*((innerBody.width)/(xLabels.length-1))+innerBody.left;
 		var left = Math.round(left);
@@ -20362,19 +20386,19 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 			this.ctx.closePath();
 		}
 		if ((i % mod) ==0) {
-		// Draw label
-		var label = document.createElement('span');
-		label.appendChild(document.createTextNode(xLabels[i].label));
-		label.style.position='absolute';
-		label.style.marginLeft=left-25+'px';
-		label.style.textAlign = 'center';
-		label.style.width = '50px';
-		label.style.font='9px Tahoma';
-		label.style.marginTop=this.height-body.paddingBottom+4+'px';
-		this.canvas.parentNode.insertBefore(label,this.canvas);
+			// Draw label
+			var label = hui.build('span',{
+				'class' : 'hui_chart_label',
+				text : xLabels[i].label,
+				before : this.canvas,
+				style : {
+					marginLeft : left-25+'px',
+					marginTop : this.height-body.paddingBottom+4+'px'
+				}
+			});
 		}
 	}
-	this.ctx.strokeStyle='rgb(255,255,255)';
+	this.ctx.strokeStyle=stroke;
 	
 	/* Build Y-axis*/
 	var yLabels = this.state.yLabels.concat();
@@ -20405,7 +20429,7 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		var top = (this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)*yLabels[0]/(yLabels[0]-yLabels[yLabels.length-1])+body.paddingTop+body.innerPaddingVertical;
 		top = Math.round(top);
 		this.ctx.lineWidth = 2;
-		this.ctx.strokeStyle='rgb(255,255,255)';
+		this.ctx.strokeStyle=stroke;
 		this.ctx.beginPath();
 		this.ctx.moveTo(.5+body.paddingLeft,top);
 		this.ctx.lineTo(.5+this.width-body.paddingRight,top);
@@ -20637,24 +20661,21 @@ hui.ui.Chart.Util.generateYLabels = function(graph) {
 }
 
 hui.ui.Chart.Util.getYrange = function(graph) {
-	var min=graph.yAxis.min;
-	var max=graph.yAxis.max;
-	for (var i=0;i<graph.dataSets.length;i++) {
-		var range = graph.dataSets[i].getValueRange(graph.xAxis.labels);
-		if (range.min<min) {
-			min=range.min;
-		}
-		if (range.max>max) {
-			max=range.max;
-		}
+	var min = graph.yAxis.min,
+		max = graph.yAxis.max,
+		data = graph.data;
+	for (var i=0;i<data.dataSets.length;i++) {
+		var range = data.dataSets[i].getValueRange(data.xAxis.labels);
+		min = Math.min(min,range.min);
+		max = Math.max(max,range.max);
 	}
 	var factor = max/graph.yAxis.steps;
-	if (factor<graph.yAxis.factor) {
+	if (factor < graph.yAxis.factor) {
 		factor = Math.ceil(factor);
 	} else {
 		factor = graph.yAxis.factor;
 	}
-	if (max!=Number.MIN_VALUE) {
+	if (max != Number.MIN_VALUE) {
 		max = Math.ceil(max/factor/graph.yAxis.steps)*factor*graph.yAxis.steps;
 	} else {
 		max = graph.yAxis.steps;

@@ -201,7 +201,7 @@
 		op.preview=<xsl:value-of select="$preview"/>;
 		op.ignite();
 	</xsl:comment></script>
-	<xsl:if test="$preview='true'">
+	<xsl:if test="$preview='true' and $mini!='true'">
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}Editor/Template/{$template}/js/editor.php?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
