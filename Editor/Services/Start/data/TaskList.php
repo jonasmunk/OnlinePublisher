@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$list = Query::after('issue')->get();
+$list = Query::after('issue')->withoutProperty('kind',Issue::$error)->get();
 
 //$list = array();
 
@@ -18,7 +18,7 @@ foreach($list as $item) {
 	$writer->startRow()->
 		startCell(array('variant'=>'card'));
 		$writer->startLine(array('mini'=>false))->text(StringUtils::shortenString($item->getNote(),300))->endLine();
-		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text(IssueService::translateKind($item->getKind()))->endLine();
+		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text(DateUtils::formatDateTime($item->getCreated()))->text(' - ')->text(IssueService::translateKind($item->getKind()))->endLine();
 		if ($page) {
 			$writer->startLine(array('class'=>'task_page'))->
 				object(array('icon'=>'common/page','text'=>$page['title']))->

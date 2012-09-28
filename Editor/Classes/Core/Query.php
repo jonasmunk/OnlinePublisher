@@ -99,6 +99,11 @@ class Query {
 		$this->fields[$field] = $value;
 		return $this;
 	}
+	
+	function withoutProperty($field,$value) {
+		$this->fields[$field] = array('value'=>$value,'comparison'=>'not');
+		return $this;
+	}
 
 	function withIds($ids) {
 		$this->ids = $ids;

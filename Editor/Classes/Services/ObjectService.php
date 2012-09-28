@@ -452,7 +452,15 @@ class ObjectService {
 							$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::datetime($value);
 						}
 					} else {
-						$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
+						if (is_array($value)) {
+							if (@$value['comparison']=='not') {
+								$parts['limits'][] = '`'.$type.'`.`'.$field.'`!='.Database::text($value['value']);
+							} else {
+								$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value['value']);
+							}
+						} else {
+							$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
+						}
 					}
 				} else {
 					$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
