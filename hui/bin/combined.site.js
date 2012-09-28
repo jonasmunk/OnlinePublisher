@@ -1233,6 +1233,11 @@ hui.Event = function(event) {
 	this.huiEvent = true;
 	/** The event */
 	this.event = event = event || window.event;
+	
+	if (!event) {
+		hui.log('No event');
+	}
+	
 	/** The target element */
 	this.element = event.target ? event.target : event.srcElement;
 	/** If the shift key was pressed */
@@ -3796,10 +3801,10 @@ hui.ui.getElement = function(widgetOrElement) {
 }
 
 hui.ui.isWithin = function(e,element) {
-	e = new hui.Event(e);
-	var offset = {left:hui.position.getLeft(element),top:hui.position.getTop(element)};
-	var dims = {width:element.clientWidth,height:element.clientHeight};
-	return e.getLeft()>offset.left && e.getLeft()<offset.left+dims.width && e.getTop()>offset.top && e.getTop()<offset.top+dims.height;
+	e = hui.event(e);
+	var offset = { left : hui.position.getLeft(element), top : hui.position.getTop(element) };
+	var dims = { width : element.clientWidth, height : element.clientHeight };
+	return e.getLeft() > offset.left && e.getLeft() < offset.left+dims.width && e.getTop() > offset.top && e.getTop() < offset.top+dims.height;
 };
 
 hui.ui.getIconUrl = function(icon,size) {

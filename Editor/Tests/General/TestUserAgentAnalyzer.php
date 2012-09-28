@@ -143,6 +143,48 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
     }
 
 	/*
+	Mozilla/5.0 (Linux; U; Android 4.0.4; da-dk; GT-P5110 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
+	Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; HTC_DesireS_S510e Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1
+	Mozilla/5.0 (Linux; U; Android 4.0.3; da-dk; Sensation_Z710e Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30
+	Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3
+	*/
+	function testMobile() {
+		$analyzer = new UserAgentAnalyzer();
+
+		$analyzer->setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3');
+        $this->assertEqual($analyzer->getApplicationVersion(),'5.1');
+        $this->assertEqual($analyzer->getApplicationName(),'Safari');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'534.46');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
+		$analyzer->setUserAgent('Mozilla/5.0 (Linux; U; Android 4.0.4; da-dk; GT-P5110 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30');
+        $this->assertEqual($analyzer->getApplicationVersion(),'4.0.4');
+        $this->assertEqual($analyzer->getApplicationName(),'Android');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'534.46');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
+		$analyzer->setUserAgent('Mozilla/5.0 (Linux; U; Android 2.3.5; da-dk; HTC_DesireS_S510e Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1');
+        $this->assertEqual($analyzer->getApplicationVersion(),'2.3.5');
+        $this->assertEqual($analyzer->getApplicationName(),'Android');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'533.1');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
+		$analyzer->setUserAgent('Mozilla/5.0 (Linux; U; Android 4.0.3; da-dk; Sensation_Z710e Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
+        $this->assertEqual($analyzer->getApplicationVersion(),'4.0.3');
+        $this->assertEqual($analyzer->getApplicationName(),'Android');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'534.30');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+	}	
+
+	/*
 	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
 	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
 	*/
@@ -207,6 +249,8 @@ Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)
 Mozilla/4.0 (compatible; MSIE 5.0b1; Mac_PowerPC)
 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; acc=kimochiz; acc=none; (none); (); .NET CLR 1.1.4322)
 Mozilla/2.0 (compatible; MSIE 3.0B; Windows NT)
+
+Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.4; Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) ; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30
 */
 	function testInternetExplorer() {
 		$analyzer = new UserAgentAnalyzer();
@@ -459,8 +503,17 @@ Mozilla/2.0 (compatible; MSIE 3.0B; Windows NT)
         $this->assertFalse($analyzer->isRobot());
         $this->assertFalse($analyzer->isSearchEngine());
 
+		$analyzer->setUserAgent('Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.4; Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) ; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30');
+        $this->assertEqual($analyzer->getApplicationVersion(),'8.0');
+        $this->assertEqual($analyzer->getApplicationName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'8.0');
+        $this->assertFalse($analyzer->isPhone());
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
 
-//
+
+// 
 
 	}
 

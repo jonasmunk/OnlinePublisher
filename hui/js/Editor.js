@@ -87,8 +87,8 @@ hui.ui.Editor.prototype = {
 			hui.listen(column,'mouseover',function() {
 				self._onHoverColumn(column);
 			});
-			hui.listen(column,'mouseout',function() {
-				self._onBlurColumn();
+			hui.listen(column,'mouseout',function(e) {
+				self._onBlurColumn(e);
 			});
 			/*
 			hui.listen(column,'contextmenu',function(e) {
@@ -346,7 +346,9 @@ hui.ui.Editor.prototype = {
 		});
 		window.clearTimeout(this.partControlTimer);
 		this._hidePartControls();
-		this._onBlurColumn();
+		if (this.hoveredColumn) {
+			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
+		}
 		this._showPartEditor();
 	},
 	_showPartEditor : function() {

@@ -1233,6 +1233,11 @@ hui.Event = function(event) {
 	this.huiEvent = true;
 	/** The event */
 	this.event = event = event || window.event;
+	
+	if (!event) {
+		hui.log('No event');
+	}
+	
 	/** The target element */
 	this.element = event.target ? event.target : event.srcElement;
 	/** If the shift key was pressed */
@@ -5297,10 +5302,10 @@ hui.ui.getElement = function(widgetOrElement) {
 }
 
 hui.ui.isWithin = function(e,element) {
-	e = new hui.Event(e);
-	var offset = {left:hui.position.getLeft(element),top:hui.position.getTop(element)};
-	var dims = {width:element.clientWidth,height:element.clientHeight};
-	return e.getLeft()>offset.left && e.getLeft()<offset.left+dims.width && e.getTop()>offset.top && e.getTop()<offset.top+dims.height;
+	e = hui.event(e);
+	var offset = { left : hui.position.getLeft(element), top : hui.position.getTop(element) };
+	var dims = { width : element.clientWidth, height : element.clientHeight };
+	return e.getLeft() > offset.left && e.getLeft() < offset.left+dims.width && e.getTop() > offset.top && e.getTop() < offset.top+dims.height;
 };
 
 hui.ui.getIconUrl = function(icon,size) {
@@ -10059,8 +10064,8 @@ hui.ui.Editor.prototype = {
 			hui.listen(column,'mouseover',function() {
 				self._onHoverColumn(column);
 			});
-			hui.listen(column,'mouseout',function() {
-				self._onBlurColumn();
+			hui.listen(column,'mouseout',function(e) {
+				self._onBlurColumn(e);
 			});
 			/*
 			hui.listen(column,'contextmenu',function(e) {
@@ -10318,7 +10323,9 @@ hui.ui.Editor.prototype = {
 		});
 		window.clearTimeout(this.partControlTimer);
 		this._hidePartControls();
-		this._onBlurColumn();
+		if (this.hoveredColumn) {
+			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
+		}
 		this._showPartEditor();
 	},
 	_showPartEditor : function() {

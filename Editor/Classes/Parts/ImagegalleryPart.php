@@ -20,7 +20,7 @@ Part::$schema['imagegallery'] = array(
 Entity::$schema['ImagegalleryPart'] = array(
 	'table' => 'part_imagegallery',
 	'properties' => array(
-		'imageGroupId' => array('type'=>'int','relation'=>array('class'=>'ImageGroup','property'=>'id'))
+		'imageGroupId' => array('type'=>'int','relation'=>array('class'=>'Imagegroup','property'=>'id'))
 	)
 );
 

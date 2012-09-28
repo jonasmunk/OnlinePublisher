@@ -253,7 +253,7 @@ class Calendarsource extends Object {
 		}
 		Database::free($result);
 		
-		if ($query['sort'] == 'startDate') {
+		if (@$query['sort'] == 'startDate') {
 			usort($events,array('Calendarsource','_startDateComparator'));
 		}
 		
