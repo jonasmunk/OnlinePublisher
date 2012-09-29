@@ -131,16 +131,26 @@ if (hui.browser.msie8) {
 
 hui.ui.Drawing.Line = function(node) {
 	this.node = node;
+	this.from = {x:0,y:0};
+	this.to = {x:0,y:0};
 }
 
 hui.ui.Drawing.Line.prototype = {
 	setFrom : function(point) {
+		this.from = point;
 		this.node.setAttribute('x1',point.x);
 		this.node.setAttribute('y1',point.y);
 	},
+	getFrom : function() {
+		return this.from;
+	},
 	setTo : function(point) {
+		this.to = point;
 		this.node.setAttribute('x2',point.x);
 		this.node.setAttribute('y2',point.y);
+	},
+	getTo : function() {
+		return this.to;
 	}
 }
 

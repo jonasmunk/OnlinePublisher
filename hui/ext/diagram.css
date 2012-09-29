@@ -5,6 +5,14 @@ div.hui_diagram
 	overflow: hidden;
 }
 
+span.hui_diagram_line_label
+{
+	position: absolute;
+	font-size: 11px;
+	background: #fff;
+	padding: 2px;
+}
+
 div.hui_diagram_box
 {
 	position: absolute;
@@ -22,6 +30,13 @@ div.hui_diagram_box_dragging
 {
 	cursor: move;
 	cursor: -webkit-grabbing;
+}
+
+div.hui_diagram_box_selected
+{
+	border: 3px solid #2678ff;
+	margin: -2px 0 0 -2px;
+	border-radius: 5px;
 }
 
 div.hui_diagram_box h1

@@ -17,6 +17,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_require.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Drawing.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../ext/Diagram.js"></script>
@@ -26,14 +27,16 @@
 </head>
 
 <body>
-	<div id="container">
+	<div id="container" style="border: 1px solid #eee;">
 		
 	</div>
 	<script>
 		hui.ui.listen({
 			$ready : function() {
-				var diagram = new hui.ui.Diagram.create();
-				hui.get('container').appendChild(diagram.element);
+				var diagram = new hui.ui.Diagram.create({
+					parent : hui.get('container'),
+					height : 300
+				});
 				
 				var person = diagram.addBox({
 					id : 'person',
@@ -65,9 +68,9 @@
 					]
 				});
 				
-				diagram.addLine({from:'person',to:'email'});
-				diagram.addLine({from:'person',to:'phone'});
-				
+				diagram.addLine({from:'person',to:'email',label:'Work'});
+				diagram.addLine({from:'person',to:'phone',label:'Private'});
+				diagram.play();
 			}
 		})
 	</script>

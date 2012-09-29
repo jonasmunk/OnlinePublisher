@@ -81,7 +81,14 @@ hui.browser.opacity = !hui.browser.msie || hui.browser.msie9;
  */
 hui.log = function(obj) {
 	try {
-		console.log(obj);
+		if (arguments.length==1) {
+			console.log(obj);
+		}
+		else if (arguments.length==2) {
+			console.log(arguments[0],arguments[1]);
+		} else {
+			console.log(arguments);			
+		}
 	} catch (ignore) {};
 }
 
