@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" title="Layout" padding="10">
-	<source name="itemsSource" url="data/source_items.xml"/>
+
+	<source name="listSource" url="data/list_news.xml"/>
+	<source name="chartSource" url="data/chart_statistics.json"/>
+
 	<structure>
 		<top>
 			<toolbar>
@@ -16,20 +19,31 @@
 					<item icon="common/folder" title="Database" value="database" kind="folder"/>
 					<item icon="common/person" title="Alle objekter" value="object"/>
 					<title>Hey</title>
-					<items source="itemsSource"/>
 				</selection>
 				</overflow>
 			</left>
 			<center>
 				<split>
-					<row>
-						<div style="">Top</div>
+					<row height="40%">
+						<!--
+						<bar variant="layout">
+						<segmented>
+							<item title="Brugere" value="user"/>
+							<item title="Brugere" value="user"/>
+							<item title="Brugere" value="user"/>
+						</segmented>
+						</bar>-->
+						<chart source="chartSource" height="100%"/>
 					</row>
 					<row>
-						<div style="">Middle</div>
+						<overflow>
+							<list source="listSource"/>
+						</overflow>
 					</row>
-					<row>
-						<div style="">Bottom</div>
+					<row height="10%">
+						<overflow>
+							<list source="listSource"/>
+						</overflow>
 					</row>
 				</split>
 			</center>
