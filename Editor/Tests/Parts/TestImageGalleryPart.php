@@ -36,5 +36,26 @@ class TestImageGalleryPart extends UnitTestCase {
 		
 		$obj2->remove();
 	}
+
+	function testImport() {
+		$obj = new ImagegalleryPart();
+		$obj->setImageGroupId(10);
+		$obj->setHeight(400);
+		$obj->setFramed(true);
+		$obj->setVariant('floating');
+		$ctrl = new ImageGalleryPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getImageGroupId(),$obj->getImageGroupId());
+		$this->assertIdentical($imported->getFramed(),$obj->getFramed());
+		$this->assertIdentical($imported->getVariant(),$obj->getVariant());
+		$this->assertIdentical($imported->getHeight(),$obj->getHeight());
+	}
 }
 ?>

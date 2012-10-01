@@ -48,7 +48,7 @@ class ImagegalleryPartController extends PartController
 	}
 		
 	function buildSub($part,$context) {
-		$data = '<imagegallery xmlns="'.$this->getNamespace().'">';
+		$data = '<imagegallery xmlns="'.$this->getNamespace().'" image-group="'.$part->getImageGroupId().'">';
 		$data.='<display height="'.$part->getHeight().'" variant="'.StringUtils::escapeXML($part->getVariant()).'" framed="'.StringUtils::toBoolean($part->getFramed()).'" show-title="'.StringUtils::toBoolean($part->getShowTitle()).'"/>';
 		if ($part->getImageGroupId()) {
 			$sql="SELECT object.data from object,imagegroup_image where imagegroup_image.image_id = object.id and imagegroup_image.imagegroup_id=".Database::int($part->getImageGroupId())." order by object.title";
@@ -60,6 +60,19 @@ class ImagegalleryPartController extends PartController
 		}
 		$data.='</imagegallery>';
 		return $data;
+	}
+	
+	function importSub($node,$part) {
+		$imagegallery = DOMUtils::getFirstDescendant($node,'imagegallery');
+		if ($imagegallery) {
+			$part->setImageGroupId(intval($imagegallery->getAttribute('image-group')));
+			$display = DOMUtils::getFirstDescendant($imagegallery,'display');
+			if ($display) {
+				$part->setHeight(intval($display->getAttribute('height')));
+				$part->setVariant($display->getAttribute('variant'));
+				$part->setFramed($display->getAttribute('framed')=='true' ? true : false);
+			}
+		}
 	}
 	
 	function getToolbars() {
