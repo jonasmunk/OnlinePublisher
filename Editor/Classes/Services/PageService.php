@@ -369,7 +369,7 @@ class PageService {
 		} else if ($controller = TemplateService::getController($page->getTemplateUnique())) {
 			$sql = "select data from page_history where id=".Database::int($historyId);
 			if ($row = Database::selectFirst($sql)) {
-				if ($doc = DOMUtils::parse($row['data'])) {
+				if ($doc = DOMUtils::parse(StringUtils::toUnicode($row['data']))) {
 					$controller->import($page->getId(),$doc);
 					PageService::markChanged($page->getId());
 					return true;
