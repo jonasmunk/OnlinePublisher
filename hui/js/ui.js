@@ -7,7 +7,6 @@ hui.ui = {
 	context : '',
 	language : 'en',
 
-	layoutWidgets : [],
 	objects : [],
 	delegates : [],
 
@@ -40,7 +39,7 @@ hui.onReady(function() {
 	}
 	hui.ui.callSuperDelegates(this,'ready');
 	hui.listen(window,'resize',hui.ui._resize);
-	hui.ui._resize();
+	hui.ui.reLayout();
 	hui.ui.domReady = true;
 	if (window.parent && window.parent.hui && window.parent.hui.ui) {
 		window.parent.hui.ui._frameLoaded(window);
@@ -96,18 +95,13 @@ hui.ui._frameLoaded = function(win) {
 	hui.ui.callSuperDelegates(this,'frameLoaded',win);
 }
 
-hui.ui._resizeFirst = true;
-
 /** @private */
 hui.ui._resize = function() {
-	for (var i = hui.ui.layoutWidgets.length - 1; i >= 0; i--) {
-		hui.ui.layoutWidgets[i]['$$resize']();
-	};
+	hui.ui.reLayout();
 	window.clearTimeout(this._delayedResize);
 	if (!hui.ui._resizeFirst) {
 		this._delayedResize = window.setTimeout(hui.ui._afterResize,1000);
 	}
-	hui.ui._resizeFirst = false;
 }
 
 hui.ui._afterResize = function() {
@@ -732,9 +726,6 @@ hui.ui.extend = function(obj,options) {
 	}
 	if (!obj.valueForProperty) {
 		obj.valueForProperty = function(p) {return this[p]};
-	}
-	if (obj['$$resize']) {
-		hui.ui.layoutWidgets.push(obj);
 	}
 };
 

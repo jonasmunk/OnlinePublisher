@@ -59,7 +59,7 @@ hui.ui.Split.prototype = {
 	_addBehavior : function() {
 		
 	},
-	$$resize : function() {
+	$$layout : function() {
 		this._layout();
 	},
 	_layout : function() {

@@ -1,3 +1,49 @@
+div.hui_dock_body iframe
+{
+	height: 100%;
+	width: 100%;
+	border: none;
+	font-size: 0px;
+	background: #fff;
+	display: block;
+}
+
+div.hui_dock_internals
+{
+	height: 100%;
+	position: relative;
+}
+
+div.hui_dock_bar
+{
+	position: absolute;
+	width: 100%;
+} 
+
+div.hui_dock_body
+{
+	position: absolute;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+} 
+
+div.hui_dock_internals_bottom div.hui_dock_body
+{
+	bottom: 82px;
+}
+
+div.hui_dock_internals_bottom div.hui_dock_bar
+{
+	bottom: 0;
+}
+
+
+div.hui_dock_internals_top div.hui_dock_body
+{
+	top: 82px;
+}
+
 table.hui_dock
 {
 	height: 100%;

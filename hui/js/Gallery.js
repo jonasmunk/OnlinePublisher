@@ -248,7 +248,7 @@ hui.ui.Gallery.prototype = {
 		}
 	},
 	/** @private */
-	$$resize : function() {
+	$$layout : function() {
 		if (this.nodes.length > 0) {
 			this._reveal();
 		}

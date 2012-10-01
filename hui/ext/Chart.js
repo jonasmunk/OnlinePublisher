@@ -43,9 +43,6 @@ hui.ui.Chart.prototype = {
 	$$layout : function() {
 		this.render();
 	},
-	$$resize : function() {
-		this.render();
-	},
 	$objectsLoaded : function(data) {
 		hui.log(data)
 		this.setData(data);

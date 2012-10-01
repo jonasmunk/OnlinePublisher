@@ -11,13 +11,13 @@ hui.ui.Layout = function(options) {
 
 hui.ui.Layout.create = function(options) {
 	options = hui.override({text:'',highlighted:false,enabled:true},options);
-	options.element = hui.build('table',{'class' : 'hui_layout'});
-	options.element.innerHTML = '<tbody class="hui_layout"><tr class="hui_layout_middle"><td class="hui_layout_middle">'+
+	
+	options.element = hui.dom.parseToNode('<table class="hui_layout"><tbody class="hui_layout"><tr class="hui_layout_middle"><td class="hui_layout_middle">'+
 			'<table class="hui_layout_middle"><tr>'+
 			'<td class="hui_layout_left hui_context_sidebar"><div class="hui_layout_left"></div></td>'+
 			'<td class="hui_layout_center"></td>'+
 			'</tr></table>'+
-			'</td></tr></tbody>';
+			'</td></tr></tbody></table>');
 	return new hui.ui.Layout(options);
 }
 
@@ -34,7 +34,7 @@ hui.ui.Layout.prototype = {
 	},
 	
 	/** @private */
-	$$resize : function() {
+	$$layout : function() {
 		if (hui.browser.gecko) {
 			var center = hui.get.firstByClass(this.element,'hui_layout_center');
 			if (center) {

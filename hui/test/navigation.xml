@@ -19,11 +19,14 @@
         <item icon="common/page" title="bar" value="html/bar.html"/>
         <item icon="common/page" title="boundpanel" value="html/boundpanel.html"/>
         <item icon="common/page" title="boundpanel_long" value="html/boundpanel_long.html"/>
+        <item icon="common/page" title="chart" value="html/chart.html"/>
         <item icon="common/page" title="colorpicker" value="html/colorpicker.html"/>
+        <item icon="common/page" title="diagram" value="html/diagram.html"/>
         <item icon="common/page" title="drawing" value="html/drawing.html"/>
         <item icon="common/page" title="editor" value="html/editor.html"/>
         <item icon="common/page" title="effects" value="html/effects.html"/>
         <item icon="common/page" title="finder" value="html/finder.html"/>
+        <item icon="common/page" title="fontpicker" value="html/fontpicker.html"/>
         <item icon="common/page" title="force" value="html/force.html"/>
         <item icon="common/page" title="formula" value="html/formula.html"/>
         <item icon="common/page" title="graphviz" value="html/graphviz.html"/>
@@ -68,6 +71,7 @@
         <item icon="common/page" title="pages" value="xml/pages.xml"/>
         <item icon="common/page" title="picker" value="xml/picker.xml"/>
         <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
+        <item icon="common/page" title="split" value="xml/split.xml"/>
         <item icon="common/page" title="structure" value="xml/structure.xml"/>
         <item icon="common/page" title="style" value="xml/style.xml"/>
         <item icon="common/page" title="tabs" value="xml/tabs.xml"/>

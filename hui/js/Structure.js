@@ -10,7 +10,8 @@ hui.ui.Structure = function(options) {
 }
 
 hui.ui.Structure.prototype = {
-	$$resize : function() {
+	$$layout : function() {
+		hui.log('layout structure')
 		var t = hui.get.firstByClass(this.element,'hui_structure_top');
 		var b = hui.get.firstByClass(this.element,'hui_structure_bottom');
 		var m = hui.get.firstByClass(this.element,'hui_structure_middle');

@@ -468,6 +468,10 @@ hui.dom = {
 		};
 		return null;
 	},
+	parseToNode : function(html) {
+		var dummy = hui.build('div',{html:html});
+		return hui.get.firstChild(dummy,'table');
+	},
 	clear : function(node) {
 		var children = node.childNodes;
 		for (var i = children.length - 1; i >= 0; i--) {

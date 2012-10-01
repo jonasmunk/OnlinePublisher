@@ -123,7 +123,8 @@ hui.ui.Dock.prototype = {
 		}
 	},
 	/** @private */
-	$$resize : function() {
+	$$layout : function() {
+		return;
 		var height = hui.window.getViewHeight();
 		this.iframe.style.height=(height+this.diff)+'px';
 		this.progress.style.width=(this.iframe.clientWidth)+'px';

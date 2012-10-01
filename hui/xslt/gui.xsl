@@ -385,6 +385,32 @@
 </xsl:template>
 
 <xsl:template name="gui:dock-internals">
+	<div class="">
+		<xsl:attribute name="class">
+			<xsl:text>hui_dock_internals</xsl:text>
+			<xsl:choose>
+				<xsl:when test="@position='top' or not(@position)">
+					<xsl:text> hui_dock_internals_top</xsl:text>
+				</xsl:when>
+				<xsl:when test="@position='bottom'">
+					<xsl:text> hui_dock_internals_bottom</xsl:text>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:attribute>
+		<xsl:if test="not(gui:sidebar)">
+			<xsl:attribute name="id"><xsl:value-of select="generate-id()"/></xsl:attribute>
+		</xsl:if>
+		<div class="hui_dock_bar">
+			<xsl:apply-templates select="child::*[not(name()='sidebar')]"/>
+		</div>
+		<div class="hui_dock_body">			
+			<div class="hui_dock_progress"><xsl:comment/></div>
+			<iframe src="{@url}" frameborder="0" name="{@frame-name}"/>
+		</div>
+	</div>
+</xsl:template>
+
+<xsl:template name="gui:dock-internalsx">
 	<table class="hui_dock">
 		<xsl:if test="not(gui:sidebar)">
 			<xsl:attribute name="id"><xsl:value-of select="generate-id()"/></xsl:attribute>

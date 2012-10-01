@@ -41,13 +41,13 @@ hui.ui.Overflow.prototype = {
 	},
 	_checkShadows : function() {
 		if (hui.browser.msie) {return}
-		if (this.element.scrollTop>0) {
+		if (this.element.scrollTop > 0) {
 			this.topShadow.style.display = 'block';
 			this.topShadow.style.top = this.element.scrollTop+'px';
 		} else {
 			this.topShadow.style.display = 'none';
 		}
-		if(this.element.scrollHeight-this.element.scrollTop-this.element.clientHeight>0) {
+		if(this.element.scrollHeight-this.element.scrollTop-this.element.clientHeight > 0) {
 			this.bottomShadow.style.display = 'block';
 			this.bottomShadow.style.top = (this.element.scrollTop+this.element.clientHeight-this.bottomShadow.clientHeight)+'px';
 		} else {
@@ -79,29 +79,7 @@ hui.ui.Overflow.prototype = {
 			this._checkShadows();
 			return
 		}
-		/*
-		var hasSiblings = false;
-		var sibs = this.element.parentNode.childNodes;
-		for (var i=0; i < sibs.length; i++) {
-			if (sibs[i]!==this.element && hui.dom.isElement(sibs[i]) && sibs[i].nodeName!='script' && hui.style.get(sibs[i],'position')!='absolute') {
-				hasSiblings = true;
-				hui.log(sibs[i])
-				break;
-			}
-		};
-		if (!hasSiblings) {
-			hui.log('Fast path!');
-			this.$$resize();
-			return;
-		}*/
-		this.element.style.height='0px';
-		window.setTimeout(function() {
-			this._calculate();
-			this.$$resize();
-		}.bind(this))
-	},
-	/** @private */
-	$$resize : function() {
+		this._calculate();
 		var height;
 		if (!this.options.dynamic) {
 			if (this.options.vertical) {
@@ -110,9 +88,6 @@ hui.ui.Overflow.prototype = {
 			}
 			this._checkShadows();
 			return;
-		}
-		if (this.diff===undefined) {
-			this._calculate();
 		}
 		height = hui.window.getViewHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';

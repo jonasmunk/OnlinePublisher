@@ -50,7 +50,7 @@ hui.ui.Finder.prototype = {
 		}
 	},
 	_build : function() {
-		var win = this.window = hui.ui.Window.create({title:this.options.title,width:600});
+		var win = this.window = hui.ui.Window.create({title:this.options.title,icon:'common/search',width:600});
 
 		
 		var layout = hui.ui.Layout.create();
@@ -58,19 +58,6 @@ hui.ui.Finder.prototype = {
 
 		var left = hui.ui.Overflow.create({height:400});
 		layout.addToLeft(left);
-		
-		if (this.options.search) {
-			var bar = hui.ui.Bar.create({variant:'layout'});
-			var search = hui.ui.SearchField.create({expandedWidth:200});
-			bar.addToRight(search);
-			layout.addToCenter(bar);
-		}
-		
-		
-
-		var right = hui.ui.Overflow.create({height:400});
-		layout.addToCenter(right);
-		
 		
 		var list = this.list = hui.ui.List.create();
 		
@@ -81,9 +68,29 @@ hui.ui.Finder.prototype = {
 			
 			$select : this._selectionChanged.bind(this)
 		})
+		
+		
+		if (this.options.search) {
+			var bar = hui.ui.Bar.create({variant:'layout'});
+			var search = hui.ui.SearchField.create({expandedWidth:200});
+			search.listen({
+				$valueChanged : function() {
+					list.resetState();
+				}
+			})
+			bar.addToRight(search);
+			layout.addToCenter(bar);
+		}
+		var right = hui.ui.Overflow.create({height:400});
+		layout.addToCenter(right);
 		right.add(this.list);
 		
 		this.selection = hui.ui.Selection.create({value : this.options.selection.value});
+		this.selection.listen({
+			$select : function() {
+				list.resetState();
+			}
+		})
 		var src = new hui.ui.Source({url : this.options.selection.url});
 		this.selection.addItems({source:src})
 		left.add(this.selection);
