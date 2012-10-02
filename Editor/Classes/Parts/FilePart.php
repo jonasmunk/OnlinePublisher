@@ -10,13 +10,15 @@ if (!isset($GLOBALS['basePath'])) {
 
 Part::$schema['file'] = array(
 	'fields' => array(
-		'fileId' => array( 'type' => 'int', 'column' => 'file_id' )
+		'fileId' => array( 'type' => 'int', 'column' => 'file_id' ),
+		'text' => array( 'type' => 'text' )
 	)
 );
 
 class FilePart extends Part
 {
 	var $fileId;
+	var $text;
 	
 	function FilePart() {
 		parent::Part('file');
@@ -34,5 +36,12 @@ class FilePart extends Part
 	    return $this->fileId;
 	}
 	
+	function setText($text) {
+	    $this->text = $text;
+	}
+
+	function getText() {
+	    return $this->text;
+	}
 }
 ?>

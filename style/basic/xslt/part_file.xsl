@@ -20,7 +20,16 @@
 		</xsl:choose>
 	</xsl:variable>
 	<div class="part_file common_font" id="{generate-id()}"><div><div><div>
-		<p class="part_file_title"><a href="{$href}"><span><xsl:value-of select=".//o:title"/></span></a></p>
+		<p class="part_file_title"><a href="{$href}"><span>
+		<xsl:choose>
+			<xsl:when test="p:text">
+				<xsl:value-of select="p:text"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select=".//o:title"/>
+			</xsl:otherwise>
+		</xsl:choose>
+		</span></a></p>
 		<p class="part_file_info"><xsl:call-template name="p:size"/><xsl:if test="p:info/@type!=''">, <xsl:value-of select="p:info/@type"/></xsl:if><xsl:comment/></p>
 	</div></div></div></div>
 </xsl:template>

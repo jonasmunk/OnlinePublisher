@@ -139,6 +139,9 @@
 		</xsl:when>
 		<xsl:otherwise>
 			<div class="hui_field" id="{generate-id()}">
+				<xsl:if test="@width">
+					<xsl:attribute name="style">width: <xsl:value-of select="@width"/>px;</xsl:attribute>
+				</xsl:if>
 			<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
 			<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
 				<span class="hui_field_singleline">

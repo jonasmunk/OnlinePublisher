@@ -1,6 +1,13 @@
 var partController = {
 	$ready : function() {
-		//this.showFinder();
+
+		fileUpload.addDropTarget({
+			element : hui.get('part_file_container'),
+			hoverClass : 'editor_drop',
+			$drop : function() {
+				fileUploadWindow.show();
+			}
+		});
 	},
 	showFinder : function() {
 		if (!this.finder) {
@@ -19,11 +26,12 @@ var partController = {
 		}
 		this.finder.show();
 	},
-	preview : function() {
+	preview : function(delayed) {
 		op.part.utils.updatePreview({
 			node : 'part_file_container',
 			form : document.forms.PartForm,
-			type : 'file'
+			type : 'file',
+			delay : delayed ? 300 : 0
 		});
 	},
 	addFile : function() {

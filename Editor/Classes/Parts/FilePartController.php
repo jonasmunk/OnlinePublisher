@@ -27,14 +27,17 @@ class FilePartController extends PartController
 	
 	function editor($part,$context) {
 		return '<div id="part_file_container">'.$this->render($part,$context).'</div>'.
-		'<input type="hidden" name="fileId" value="'.$part->getFileId().'"/>'.
+
+		$this->buildHiddenFields(array(
+			'fileId' => $part->getFileId(),
+			'text' => $part->getText())).
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/file/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function getFromRequest($id) {
-		$fileId = Request::getInt('fileId');
 		$part = FilePart::load($id);
-		$part->setFileId($fileId);
+		$part->setFileId(Request::getInt('fileId'));
+		$part->setText(Request::getString('text'));
 		return $part;
 	}
 	
@@ -43,6 +46,9 @@ class FilePartController extends PartController
 		$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".Database::int($part->getFileId());
 		if ($row = Database::selectFirst($sql)) {
 			$xml.='<info type="'.FileService::mimeTypeToLabel($row['type']).'"/>';
+			if (StringUtils::isNotBlank($part->getText())) {
+				$xml.='<text>'.StringUtils::escapeXML($part->getText()).'</text>';
+			}
 			$xml.=$row['data'];
 		}
 		$xml.='</file>';
@@ -55,6 +61,9 @@ class FilePartController extends PartController
 				$part->setFileId($id);
 			}
 		}
+		if ($text = DOMUtils::getFirstDescendant($node,'text')) {
+			$part->setText(DOMUtils::getText($text));
+		}
 	}
 	
 	
@@ -64,6 +73,10 @@ class FilePartController extends PartController
 			'<script source="../../Parts/file/toolbar.js"/>
 			<icon icon="common/new" title="{Add file; da:Tilføj fil}" name="addFile"/>
 			<icon icon="common/search" title="{Select file; da:Vælg fil}" name="chooseFile"/>
+			<divider/>
+			<field label="{Text; da:Tekst}">
+				<text-input name="text" width="200"/>
+			</field>
 		'
 		);
 	}

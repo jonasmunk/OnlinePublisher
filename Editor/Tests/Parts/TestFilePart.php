@@ -45,6 +45,7 @@ class TestFilePart extends UnitTestCase {
 			return;
 		}
 		$obj->setFileId($latest);
+		$obj->setText('Get me back!');
 		$ctrl = new FilePartController();
 		
 		$xml = $ctrl->build($obj,new PartContext());
@@ -55,6 +56,7 @@ class TestFilePart extends UnitTestCase {
 		
 		$this->assertNotNull($imported);
 		$this->assertIdentical($imported->getFileId(),$obj->getFileId());
+		$this->assertIdentical($imported->getText(),$obj->getText());
 	}
 }
 ?>

@@ -83,7 +83,12 @@ hui.ui.Upload.prototype = {
 			hui.drag.listen({
 				element : options.element,
 				hoverClass : options.hoverClass,
-				onFiles : this._transferFiles.bind(this)
+				onFiles : function(files) {
+					if (options.$drop) {
+						options.$drop();
+					}
+					this._transferFiles(files);
+				}.bind(this)
 			});
 		}
 	},

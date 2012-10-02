@@ -12,7 +12,7 @@ var partController = {
 		imageUpload.addDropTarget({
 			element : hui.get('part_image_container'),
 			hoverClass : 'editor_drop',
-			onDrop : function() {
+			$drop : function() {
 				imageUploadWindow.show();
 			}
 		});
@@ -31,7 +31,6 @@ var partController = {
 		imageChooser.show();
 	},
 	preview : function() {
-		var self = this;
 		op.part.utils.updatePreview({
 			node : hui.get('part_image_container'),
 			form : document.forms.PartForm,
