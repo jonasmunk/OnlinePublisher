@@ -53,7 +53,35 @@ var controller = {
 		if (scroll) {
 			window.scrollTo(0,parseInt(scroll,10));
 		}
+		this._initDrop();
 	},
+	
+	_hoverDrop : function(e) {
+		e = hui.event(e);
+		var adder = e.findByClass('editor_section_adder');
+		if (adder && adder!=this.latestAdder) {
+			hui.cls.add(adder,'editor_section_adder_sticky')
+			hui.log('new');
+		}
+		else if (this.latestAdder) {
+			hui.cls.remove(this.latestAdder,'editor_section_adder_sticky')
+			hui.log('remove');
+		}
+		this.latestAdder = adder;
+	},
+	
+	_initDrop : function() {
+		if (this.activeSection) {return};
+		hui.drag.listen({
+			element : document.body,
+			hoverClass : 'editor_dropping',
+			$hover : this._hoverDrop.bind(this),
+			onFiles : function(files) {
+				alert(files.length);
+			}.bind(this)
+		});
+	},
+	
 	$$afterResize : function() {
 		this._buildSectionAdders();
 	},

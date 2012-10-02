@@ -2028,7 +2028,10 @@ hui.drag = {
 				//var foundElement = found ? found.element : null;
 				if (hui.drag._activeDrop!=found) {
 					hui.cls.remove(hui.drag._activeDrop.element,hui.drag._activeDrop.hoverClass);
+				} else if (hui.drag._activeDrop.$hover) {
+					hui.drag._activeDrop.$hover(e);
 				}
+				
 			}
 			hui.drag._activeDrop = found;
 		});
