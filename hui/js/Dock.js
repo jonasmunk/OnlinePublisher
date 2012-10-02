@@ -9,16 +9,13 @@ hui.ui.Dock = function(options) {
 	this.iframe = hui.get.firstByTag(this.element,'iframe');
 	this.progress = hui.get.firstByClass(this.element,'hui_dock_progress');
 	this.resizer = hui.get.firstByClass(this.element,'hui_dock_sidebar_line');
+	this.bar = hui.get.firstByClass(this.element,'hui_dock_bar');
 	hui.listen(this.iframe,'load',this._load.bind(this));
 	//if (this.iframe.contentWindow) {
 	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();hui.log('Fast path!')}.bind(this));
 	//}
 	this.name = options.name;
 	hui.ui.extend(this);
-	this.diff = -69;
-	if (this.options.tabs) {
-		this.diff-=15;
-	}
 	this.busy = true;
 	hui.ui.listen(this);
 	this._addBehavior();
@@ -126,9 +123,10 @@ hui.ui.Dock.prototype = {
 	$$layout : function() {
 		return;
 		var height = hui.window.getViewHeight();
-		this.iframe.style.height=(height+this.diff)+'px';
+		hui.log(height,this.bar.clientHeight);
+		this.iframe.style.height=(height-this.bar.clientHeight)+'px';
 		this.progress.style.width=(this.iframe.clientWidth)+'px';
-		this.progress.style.height=(height+this.diff)+'px';
+		this.progress.style.height=(height-this.bar.clientHeight)+'px';
 	}
 }
 

@@ -391,9 +391,15 @@
 			<xsl:choose>
 				<xsl:when test="@position='top' or not(@position)">
 					<xsl:text> hui_dock_internals_top</xsl:text>
+					<xsl:if test="gui:tabs">
+						<xsl:text> hui_dock_internals_top_tabs</xsl:text>
+					</xsl:if>
 				</xsl:when>
 				<xsl:when test="@position='bottom'">
 					<xsl:text> hui_dock_internals_bottom</xsl:text>
+					<xsl:if test="gui:tabs">
+						<xsl:text> hui_dock_internals_bottom_tabs</xsl:text>
+					</xsl:if>
 				</xsl:when>
 			</xsl:choose>
 		</xsl:attribute>
@@ -423,7 +429,10 @@
 		</xsl:attribute>
 		<xsl:if test="@position='top' or not(@position)">
 			<thead>
-				<tr><td>
+				<tr><td class="hui_dock_bar">
+					<xsl:if test="gui:toolbar">
+						<xsl:attribute name="style">height: 57px;</xsl:attribute>
+					</xsl:if>
 					<xsl:apply-templates/>
 				</td></tr>
 			</thead>
@@ -431,7 +440,7 @@
 		<xsl:if test="@position='bottom'">
 			<tfoot>
 				<xsl:if test="gui:tabs"><xsl:attribute name="class">hui_dock_tabs</xsl:attribute></xsl:if>
-				<tr><td>
+				<tr><td class="hui_dock_bar">
 					<xsl:apply-templates select="child::*[not(name()='sidebar')]"/>
 				</td></tr>
 			</tfoot>

@@ -21,11 +21,11 @@ hui.ui.BoundPanel = function(options) {
 
 /**
  * Creates a new bound panel
- * <br/><strong>options:</strong> { name: «name», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
+ * <br/><strong>options:</strong> { name: «name», top: «pixels», left: «pixels», padding: «pixels», width: «pixels», hideOnClick: «boolean» }
  * @param {Object} options The options
  */
 hui.ui.BoundPanel.create = function(options) {
-	options = hui.override({name:null, top:0, left:0, width:null, padding: null, modal: false}, options);
+	options = hui.override({name:null, top:0, left:0, width:null, padding: null, modal: false, hideOnClick: false}, options);
 
 	
 	var html = 
@@ -105,6 +105,13 @@ hui.ui.BoundPanel.prototype = {
 		if (this.options.modal) {
 			hui.ui.showCurtain({widget:this,zIndex:index-1,color:'auto'});
 		}
+		if (this.options.hideOnClick) {
+			this.hideListener = hui.listen(document.body,'click',function(e) {
+				if (!hui.ui.isWithin(e,this.element)) {
+					this.hide();
+				}
+			}.bind(this))
+		}
 	},
 	/** @private */
 	$curtainWasClicked : function() {
@@ -129,6 +136,7 @@ hui.ui.BoundPanel.prototype = {
 			hui.ui.hideCurtain(this);
 		}
 		this.visible=false;
+		hui.unListen(document.body,'click',this.hideListener);
 	},
 	/**
 	 * If the panel is currently visible

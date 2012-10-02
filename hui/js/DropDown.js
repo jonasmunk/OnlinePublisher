@@ -79,6 +79,14 @@ hui.ui.DropDown.prototype = {
 	_click : function(e) {
 		if (this.busy) {return}
 		hui.stop(e);
+		if (this._selectorVisible) {
+			this._hideSelector();
+			//this.element.blur();
+		} else {
+			this._showSelector();			
+		}
+	},
+	_showSelector : function() {
 		this._buildSelector();
 		var el = this.element, s=this.selector;
 		el.focus();
@@ -103,6 +111,12 @@ hui.ui.DropDown.prototype = {
 		var space = hui.window.getViewWidth()-hui.position.getLeft(el)-20;
 		width = Math.min(width,space);
 		hui.style.set(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
+		this._selectorVisible = true;
+	},
+	_hideSelector : function() {
+		if (!this.selector) {return}
+		this.selector.style.display = 'none';
+		this._selectorVisible = false;
 	},
 	_keyDown : function(e) {
 		if (this.busy) {return}
@@ -213,11 +227,6 @@ hui.ui.DropDown.prototype = {
 		} else {
 			this._hideSelector();
 		}
-	},
-	/** @private */
-	_hideSelector : function() {
-		if (!this.selector) {return}
-		this.selector.style.display='none';
 	},
 	_buildSelector : function() {
 		if (!this.dirty || !this.items) {return};

@@ -36,7 +36,7 @@ hui.ui.Diagram.prototype = {
 			this.height = this.element.clientHeight;
 			this.background.setSize(this.width,this.height)
 		}.bind(this))
-
+		this.fire('added');
 	},
 	
 	_initParticleSystem : function() {
@@ -67,7 +67,7 @@ hui.ui.Diagram.prototype = {
 					}.bind(this)
 				}
 				var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
-				system.stop();
+				//system.stop();
 				system.screenSize(this.element.clientWidth, this.element.clientHeight);
 				system.screenPadding(50,100);
 				system.renderer = myRenderer
@@ -79,9 +79,8 @@ hui.ui.Diagram.prototype = {
 				hui.each(this.lines,function(line) {
 					system.addEdge(line.from, line.to, line);
 				})
-				system.start();
 				window.setTimeout(function() {
-					system.stop();
+					//system.stop();
 				},4000)
 			}.bind(this))
 		}.bind(this));
@@ -93,7 +92,7 @@ hui.ui.Diagram.prototype = {
 	$objectsLoaded : function(data) {
 		this.clear();
 		var nodes = data.nodes,
-			lines = data.lines;
+			lines = data.lines || data.edges;
 		for (var i=0; i < nodes.length; i++) {
 			this.addBox(nodes[i]);
 		};
@@ -140,8 +139,8 @@ hui.ui.Diagram.prototype = {
 	add : function(widget) {
 		var e = widget.element;
 		this.element.appendChild(e);
-		e.style.left = (Math.random()*(this.element.clientWidth - e.clientWidth))+'px';
-		e.style.top = (Math.random()*(this.element.clientHeight - e.clientHeight))+'px';
+		e.style.left = (.5*(this.element.clientWidth - e.clientWidth))+'px';
+		e.style.top = (.5*(this.element.clientHeight - e.clientHeight))+'px';
 		this.nodes.push(widget);
 	},
 	addLine : function(options) {
@@ -271,8 +270,8 @@ hui.ui.Diagram.Box.prototype = {
 	_onMove : function(e) {
 		var top = (e.getTop()-this.dragState.top);
 		var left = (e.getLeft()-this.dragState.left);
-		this.element.style.top = Math.max(top,0)+'px';
-		this.element.style.left = Math.max(left,0)+'px';
+		this.element.style.top = Math.max(top,5)+'px';
+		this.element.style.left = Math.max(left,5)+'px';
 		this.options.container.__nodeMoved(this);
 	},
 	_onDragEnd : function() {

@@ -73,6 +73,14 @@ div.hui_toolbar_window div.hui_toolbar_body
 	padding-left: 3px;
 }
 
+div.hui_toolbar_dock
+{
+	border-bottom: 1px solid #ddd;
+	background: #CCC -webkit-gradient(linear, 0% 0%, 0% 100% , from(white), to(#F0F0F0));
+	background: -moz-linear-gradient(top, white, #F0F0F0);
+	filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#F0F0F0);
+}
+
 /********************************** Icon ************************/
 
 

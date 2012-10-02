@@ -7720,6 +7720,14 @@ hui.ui.DropDown.prototype = {
 	_click : function(e) {
 		if (this.busy) {return}
 		hui.stop(e);
+		if (this._selectorVisible) {
+			this._hideSelector();
+			//this.element.blur();
+		} else {
+			this._showSelector();			
+		}
+	},
+	_showSelector : function() {
 		this._buildSelector();
 		var el = this.element, s=this.selector;
 		el.focus();
@@ -7744,6 +7752,12 @@ hui.ui.DropDown.prototype = {
 		var space = hui.window.getViewWidth()-hui.position.getLeft(el)-20;
 		width = Math.min(width,space);
 		hui.style.set(s,{visibility:'visible',width:width+'px',zIndex:hui.ui.nextTopIndex(),maxHeight:height+'px'});
+		this._selectorVisible = true;
+	},
+	_hideSelector : function() {
+		if (!this.selector) {return}
+		this.selector.style.display = 'none';
+		this._selectorVisible = false;
 	},
 	_keyDown : function(e) {
 		if (this.busy) {return}
@@ -7854,11 +7868,6 @@ hui.ui.DropDown.prototype = {
 		} else {
 			this._hideSelector();
 		}
-	},
-	/** @private */
-	_hideSelector : function() {
-		if (!this.selector) {return}
-		this.selector.style.display='none';
 	},
 	_buildSelector : function() {
 		if (!this.dirty || !this.items) {return};
@@ -9045,11 +9054,11 @@ hui.ui.BoundPanel = function(options) {
 
 /**
  * Creates a new bound panel
- * <br/><strong>options:</strong> { name: «name», top: «pixels», left: «pixels», padding: «pixels», width: «pixels» }
+ * <br/><strong>options:</strong> { name: «name», top: «pixels», left: «pixels», padding: «pixels», width: «pixels», hideOnClick: «boolean» }
  * @param {Object} options The options
  */
 hui.ui.BoundPanel.create = function(options) {
-	options = hui.override({name:null, top:0, left:0, width:null, padding: null, modal: false}, options);
+	options = hui.override({name:null, top:0, left:0, width:null, padding: null, modal: false, hideOnClick: false}, options);
 
 	
 	var html = 
@@ -9129,6 +9138,13 @@ hui.ui.BoundPanel.prototype = {
 		if (this.options.modal) {
 			hui.ui.showCurtain({widget:this,zIndex:index-1,color:'auto'});
 		}
+		if (this.options.hideOnClick) {
+			this.hideListener = hui.listen(document.body,'click',function(e) {
+				if (!hui.ui.isWithin(e,this.element)) {
+					this.hide();
+				}
+			}.bind(this))
+		}
 	},
 	/** @private */
 	$curtainWasClicked : function() {
@@ -9153,6 +9169,7 @@ hui.ui.BoundPanel.prototype = {
 			hui.ui.hideCurtain(this);
 		}
 		this.visible=false;
+		hui.unListen(document.body,'click',this.hideListener);
 	},
 	/**
 	 * If the panel is currently visible
@@ -12733,16 +12750,13 @@ hui.ui.Dock = function(options) {
 	this.iframe = hui.get.firstByTag(this.element,'iframe');
 	this.progress = hui.get.firstByClass(this.element,'hui_dock_progress');
 	this.resizer = hui.get.firstByClass(this.element,'hui_dock_sidebar_line');
+	this.bar = hui.get.firstByClass(this.element,'hui_dock_bar');
 	hui.listen(this.iframe,'load',this._load.bind(this));
 	//if (this.iframe.contentWindow) {
 	//	this.iframe.contentWindow.addEventListener('DOMContentLoaded',function() {this._load();hui.log('Fast path!')}.bind(this));
 	//}
 	this.name = options.name;
 	hui.ui.extend(this);
-	this.diff = -69;
-	if (this.options.tabs) {
-		this.diff-=15;
-	}
 	this.busy = true;
 	hui.ui.listen(this);
 	this._addBehavior();
@@ -12850,9 +12864,10 @@ hui.ui.Dock.prototype = {
 	$$layout : function() {
 		return;
 		var height = hui.window.getViewHeight();
-		this.iframe.style.height=(height+this.diff)+'px';
+		hui.log(height,this.bar.clientHeight);
+		this.iframe.style.height=(height-this.bar.clientHeight)+'px';
 		this.progress.style.width=(this.iframe.clientWidth)+'px';
-		this.progress.style.height=(height+this.diff)+'px';
+		this.progress.style.height=(height-this.bar.clientHeight)+'px';
 	}
 }
 
@@ -15601,7 +15616,7 @@ hui.ui.TokenField.create = function(o) {
 
 hui.ui.TokenField.prototype = {
 	setValue : function(objects) {
-		this.value = objects;
+		this.value = objects || [];
 		this.value.push('');
 		this.updateUI();
 	},

@@ -26,9 +26,14 @@ div.hui_dock_body
 	width: 100%;
 	top: 0;
 	bottom: 0;
-} 
+}
 
 div.hui_dock_internals_bottom div.hui_dock_body
+{
+	bottom: 57px;
+}
+
+div.hui_dock_internals_bottom_tabs div.hui_dock_body
 {
 	bottom: 82px;
 }
@@ -38,65 +43,26 @@ div.hui_dock_internals_bottom div.hui_dock_bar
 	bottom: 0;
 }
 
-
 div.hui_dock_internals_top div.hui_dock_body
+{
+	top: 57px;
+}
+
+div.hui_dock_internals_top_tabs div.hui_dock_body
 {
 	top: 82px;
 }
 
-table.hui_dock
-{
-	height: 100%;
-	width: 100%;
-	border-collapse: collapse;
-}
-
-table.hui_dock thead td
-{
-	height: 78px;
-	padding: 0;
-}
-
-table.hui_dock tfoot.hui_dock_tabs td
-{
-	height: 78px;
-	padding: 0;
-}
-
-table.hui_dock tfoot td div.hui_toolbar
-{
-}
-
-table.hui_dock tbody td
-{
-	font-size: 0px;
-	padding: 0;
-	vertical-align: top;
-	position: relative;
-}
-
-table.hui_dock iframe
-{
-	height: 100%;
-	width: 100%;
-	border: none;
-	font-size: 0px;
-	background: #fff;
-	display: block;
-}
 
 div.hui_dock_progress
 {
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	/*top: 50%;
-	left: 50%;
-	width: 48px;
-	height: 48px;*/
 	background: url('../gfx/progress/spinner_white_48.gif') center center no-repeat;
-	/* rgba(243,245,247,.5) */
 }
+
+/* Sidebar */
 
 div.hui_dock_sidebar
 {

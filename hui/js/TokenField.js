@@ -19,7 +19,7 @@ hui.ui.TokenField.create = function(o) {
 
 hui.ui.TokenField.prototype = {
 	setValue : function(objects) {
-		this.value = objects;
+		this.value = objects || [];
 		this.value.push('');
 		this.updateUI();
 	},
