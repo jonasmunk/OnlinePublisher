@@ -212,11 +212,15 @@ if ($section==null) {
 			</formula>
 		</window>
 
-		<menu name="columnMenu">
-			<item title="{Add column; da:Tilføj kolonne}" key="addColumn"/>
-		</menu>
-
-
+		<window width="300" name="importWindow" padding="5" title="{Import; da:Importering}">
+			<upload name="importUpload" url="actions/ImportUpload.php" widget="upload">
+				<placeholder title="{Select an file on you computer...; da:Vælg en fil på din computer...}" text="{Image can be in the format JPEG, PNG or GIF. The file size can at most be; da: Billeders format skal være JPEG, PNG eller GIF. Filens størrelse må højest være} '.GuiUtils::bytesToString(FileSystemService::getMaxUploadSize()).'."/>
+			</upload>
+			<buttons align="center" top="10">
+				<button name="cancelImport" title="{Close; da:Luk}"/>
+				<button name="upload" title="{Select image...; da:Vælg billede...}" highlighted="true"/>
+			</buttons>
+		</window>
 	';
 	echo In2iGui::renderFragment($gui);
 }

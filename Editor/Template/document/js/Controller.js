@@ -58,6 +58,7 @@ var controller = {
 	
 	_hoverDrop : function(e) {
 		e = hui.event(e);
+		hui.log(e.element.className);
 		var adder = e.findByClass('editor_section_adder');
 		if (adder && adder!=this.latestAdder) {
 			hui.cls.add(adder,'editor_section_adder_sticky')
@@ -73,11 +74,12 @@ var controller = {
 	_initDrop : function() {
 		if (this.activeSection) {return};
 		hui.drag.listen({
-			element : document.body,
+			element : hui.get.firstByClass(document.body,'editor_body'),
 			hoverClass : 'editor_dropping',
 			$hover : this._hoverDrop.bind(this),
 			onFiles : function(files) {
-				alert(files.length);
+				importWindow.show();
+				importUpload.uploadFiles(files);
 			}.bind(this)
 		});
 	},
