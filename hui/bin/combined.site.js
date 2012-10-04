@@ -2028,6 +2028,9 @@ hui.drag = {
 				//var foundElement = found ? found.element : null;
 				if (hui.drag._activeDrop!=found) {
 					hui.cls.remove(hui.drag._activeDrop.element,hui.drag._activeDrop.hoverClass);
+					if (hui.drag._activeDrop.$leave) {
+						hui.drag._activeDrop.$leave(e);
+					}
 				} else if (hui.drag._activeDrop.$hover) {
 					hui.drag._activeDrop.$hover(e);
 				}
@@ -2038,7 +2041,21 @@ hui.drag = {
 		
 		hui.listen(document.body,'dragover',function(e) {
 			hui.stop(e);
+			if (hui.drag._activeDrop) {
+				if (hui.drag._activeDrop.$hover) {
+					hui.drag._activeDrop.$hover(e);
+				}
+			}
 		});
+		
+		hui.listen(document.body,'dragend',function(e) {
+			hui.log('drag end');
+		});
+		
+		hui.listen(document.body,'dragstart',function(e) {
+			hui.log('drag start');
+		});
+		
 		hui.listen(document.body,'drop',function(e) {
 			hui.stop(e);
 			var options = hui.drag._activeDrop;
@@ -3947,9 +3964,6 @@ hui.ui.extend = function(obj,options) {
 	}
 	if (hui.ui.objects[obj.name]) {
 		hui.log('Widget replaced: '+obj.name);
-		try {
-			console.trace()
-		} catch(ignore) {}
 	}
 	hui.ui.objects[obj.name] = obj;
 	obj.delegates = [];

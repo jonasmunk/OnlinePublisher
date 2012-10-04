@@ -2028,6 +2028,9 @@ hui.drag = {
 				//var foundElement = found ? found.element : null;
 				if (hui.drag._activeDrop!=found) {
 					hui.cls.remove(hui.drag._activeDrop.element,hui.drag._activeDrop.hoverClass);
+					if (hui.drag._activeDrop.$leave) {
+						hui.drag._activeDrop.$leave(e);
+					}
 				} else if (hui.drag._activeDrop.$hover) {
 					hui.drag._activeDrop.$hover(e);
 				}
@@ -2038,7 +2041,21 @@ hui.drag = {
 		
 		hui.listen(document.body,'dragover',function(e) {
 			hui.stop(e);
+			if (hui.drag._activeDrop) {
+				if (hui.drag._activeDrop.$hover) {
+					hui.drag._activeDrop.$hover(e);
+				}
+			}
 		});
+		
+		hui.listen(document.body,'dragend',function(e) {
+			hui.log('drag end');
+		});
+		
+		hui.listen(document.body,'dragstart',function(e) {
+			hui.log('drag start');
+		});
+		
 		hui.listen(document.body,'drop',function(e) {
 			hui.stop(e);
 			var options = hui.drag._activeDrop;
@@ -5448,9 +5465,6 @@ hui.ui.extend = function(obj,options) {
 	}
 	if (hui.ui.objects[obj.name]) {
 		hui.log('Widget replaced: '+obj.name);
-		try {
-			console.trace()
-		} catch(ignore) {}
 	}
 	hui.ui.objects[obj.name] = obj;
 	obj.delegates = [];
@@ -11037,7 +11051,7 @@ hui.ui.Overlay = function(options) {
 	this.icons = {};
 	this.visible = false;
 	hui.ui.extend(this);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 /**
@@ -11051,8 +11065,7 @@ hui.ui.Overlay.create = function(options) {
 }
 
 hui.ui.Overlay.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_addBehavior : function() {
 		var self = this;
 		this.hider = function(e) {
 			if (self.boundElement) {
@@ -11071,7 +11084,7 @@ hui.ui.Overlay.prototype = {
 		var element = hui.build('div',{className:'hui_overlay_icon'});
 		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,32)+')';
 		hui.listen(element,'click',function(e) {
-			self.iconWasClicked(key,e);
+			self._iconWasClicked(key,e);
 		});
 		this.icons[key]=element;
 		this.content.appendChild(element);
@@ -11092,7 +11105,7 @@ hui.ui.Overlay.prototype = {
 			this.icons[keys[i]].style.display='';
 		};
 	},
-	iconWasClicked : function(key,e) {
+	_iconWasClicked : function(key,e) {
 		hui.ui.callDelegates(this,'iconWasClicked',key,e);
 	},
 	showAtElement : function(element,options) {
@@ -11136,8 +11149,20 @@ hui.ui.Overlay.prototype = {
 		this.visible = true;
 		if (options.autoHide && options.element) {
 			this.boundElement = options.element;
-			hui.listen(options.element,'mouseout',this.hider);
+			//hui.listen(options.element,'mouseout',this.hider);
 			hui.cls.add(options.element,'hui_overlay_bound');
+			var hider = null;
+			hider = function(e) {
+				if (!hui.ui.isWithin(e,options.element)) {
+					this.hide();
+					try {
+						hui.unListen(document.body,'mousemove',hider);
+					} catch (e) {
+						hui.log('unable to stop listening: document='+document);
+					}
+				}
+			}.bind(this)
+			hui.listen(document.body,'mousemove',hider);
 		}
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();

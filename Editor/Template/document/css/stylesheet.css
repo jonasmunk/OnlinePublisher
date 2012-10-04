@@ -188,6 +188,18 @@ div.editor_section_adder_sticky div span
 	display: block;
 }
 
+div.editor_section_adder_drop div
+{
+  	-webkit-transition-delay: 200ms;
+	background: #0065FF;
+	opacity: .5;
+}
+
+div.editor_section_adder_drop div span
+{
+	display: vlock;
+}
+
 div.editor_section_adder_sticky div,
 div.editor_section_adder_sticky:hover div
 {
