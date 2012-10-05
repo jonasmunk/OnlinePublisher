@@ -71,23 +71,40 @@ hui.ui.Overlay.prototype = {
 		hui.ui.positionAtElement(this.element,element,options);
 		if (this.visible) return;
 		if (hui.browser.msie) {
-			this.element.style.display='block';
+			this.element.style.display = 'block';
 		} else {
 			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
 		}
 		this.visible = true;
 		if (options.autoHide) {
-			this.boundElement = element;
-			hui.listen(element,'mouseout',this.hider);
-			hui.cls.add(element,'hui_overlay_bound');
+			this._autoHide(element);
 		}
+		var zIndex = hui.ui.nextAlertIndex();
 		if (this.options.modal) {
-			var zIndex = hui.ui.nextAlertIndex();
-			this.element.style.zIndex = zIndex+1;
+			this.element.style.zIndex = hui.ui.nextAlertIndex();
 			hui.ui.showCurtain({ widget : this, zIndex : zIndex });
+		} else {
+			this.element.style.zIndex = zIndex;
 		}
-		return;
+		hui.log('after showAtElement');
+	},
+	_autoHide : function(element) {
+		this.boundElement = element;
+		hui.cls.add(element,'hui_overlay_bound');
+		var hider = null;
+		hider = function(e) {
+			if (!hui.ui.isWithin(e,element) && !hui.ui.isWithin(e,this.element)) {
+				hui.log('Autohiding');
+				this.hide();
+				try {
+					hui.unListen(document.body,'mousemove',hider);
+				} catch (e) {
+					hui.log('unable to stop listening: document='+document);
+				}
+			}
+		}.bind(this)
+		hui.listen(document.body,'mousemove',hider);
 	},
 	show : function(options) {
 		options = options || {};
@@ -106,21 +123,7 @@ hui.ui.Overlay.prototype = {
 		hui.effect.bounceIn({element:this.element});
 		this.visible = true;
 		if (options.autoHide && options.element) {
-			this.boundElement = options.element;
-			//hui.listen(options.element,'mouseout',this.hider);
-			hui.cls.add(options.element,'hui_overlay_bound');
-			var hider = null;
-			hider = function(e) {
-				if (!hui.ui.isWithin(e,options.element)) {
-					this.hide();
-					try {
-						hui.unListen(document.body,'mousemove',hider);
-					} catch (e) {
-						hui.log('unable to stop listening: document='+document);
-					}
-				}
-			}.bind(this)
-			hui.listen(document.body,'mousemove',hider);
+			this._autoHide(options.element);
 		}
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();
@@ -136,6 +139,7 @@ hui.ui.Overlay.prototype = {
 		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 		this.visible = false;
+		hui.log('hide');
 	},
 	clear : function() {
 		hui.ui.destroyDescendants(this.content);

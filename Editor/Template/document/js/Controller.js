@@ -53,66 +53,6 @@ var controller = {
 		if (scroll) {
 			window.scrollTo(0,parseInt(scroll,10));
 		}
-		this._initDrop();
-	},
-	
-	_hoverDrop : function(e) {
-		e = hui.event(e);
-		var top = e.getTop(),
-			left = e.getLeft();
-		
-		var closestDist = Number.MAX_VALUE;
-		var adder = null;
-		for (var i=0; i < this._dropPoints.length; i++) {
-			var point = this._dropPoints[i];
-			var dist = this._getDistance({left:left,top:top},point);
-			if (dist<closestDist) {
-				closestDist = dist;
-				adder = point.element;
-			}
-		};
-		if (adder && adder!=this.latestAdder) {
-			hui.cls.remove(this.latestAdder,'editor_section_adder_drop')
-			hui.cls.add(adder,'editor_section_adder_drop')
-		}
-		this.latestAdder = adder;
-	},
-	_leaveDrop : function(e) {
-		hui.log('_leaveDrop')
-		if (this.latestAdder) {
-			hui.cls.remove(this.latestAdder,'editor_section_adder_drop')
-		}
-		this.latestAdder = null;
-	},
-	
-	_getDistance : function( point1, point2 ) {
-	  var xs = point2.left - point1.left;
-	  xs = xs * xs;
-
-	  var ys = point2.top - point1.top;
-	  ys = ys * ys;
-
-	  return Math.sqrt( xs + ys );
-	},
-	_initDrop : function() {
-		if (this.activeSection) {return};
-		hui.drag.listen({
-			element : hui.get.firstByClass(document.body,'editor_body'),
-			hoverClass : 'editor_dropping',
-			$hover : this._hoverDrop.bind(this),
-			$leave : this._leaveDrop.bind(this),
-			onFiles : function(files) {
-				importWindow.show();
-				importUpload.uploadFiles(files);
-			}.bind(this)
-		});
-		this._dropPoints = [];
-		var adders = hui.get.byClass(document.body,'editor_section_adder');
-		for (var i=0; i < adders.length; i++) {
-			var adder = adders[i];
-			var pos = hui.position.get(adder);
-			this._dropPoints.push({left:pos.left+adder.clientWidth/2,top:pos.top+adder.clientHeight/2,element:adder});
-		};
 	},
 	
 	$$afterResize : function() {
@@ -173,6 +113,8 @@ var controller = {
 			columnId : options.columnId,
 			sectionIndex : options.sectionIndex
 		};
+		this.menuInfo = hui.string.fromJSON(options.element.getAttribute('data'));
+		hui.log(this.menuInfo)
 		this.stickyAdder = options.element;
 		hui.cls.add(options.element,'editor_section_adder_sticky');
 		partMenu.showAtPointer(options.event);
@@ -312,15 +254,15 @@ var controller = {
 			hui.cls.remove(this.stickyAdder,'editor_section_adder_sticky');
 		}
 	},
-	sectionOver : function(cell,sectionId,columnId,sectionIndex) {
+	sectionOver : function(element,sectionId,columnId,sectionIndex) {
 		if (this.activeSection || this.menuMode || !this.ready) return;
 		this.hoverInfo = {
 			sectionId : sectionId,
 			sectionIndex : sectionIndex,
 			columnId : columnId
 		}
-		this.partControls.showAtElement(cell,{'horizontal':'right',autoHide:true,top:2});
-		addHoverClass(cell,'editor_section_hover');
+		this.partControls.showAtElement(element,{'horizontal':'right',autoHide:true,top:2});
+		addHoverClass(element,'editor_section_hover');
 	},
 	sectionOut : function(cell,event) {
 		return;

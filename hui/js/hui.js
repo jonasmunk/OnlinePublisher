@@ -899,26 +899,26 @@ hui.position = {
 	getTop : function(element) {
 	    element = hui.get(element);
 		if (element) {
-			var yPos = element.offsetTop,
+			var top = element.offsetTop,
 				tempEl = element.offsetParent;
 			while (tempEl != null) {
-				yPos += tempEl.offsetTop;
+				top += tempEl.offsetTop;
 				tempEl = tempEl.offsetParent;
 			}
-			return yPos;
+			return top;
 		}
 		else return 0;
 	},
 	getLeft : function(element) {
 	    element = hui.get(element);
 		if (element) {
-			var xPos = element.offsetLeft,
+			var left = element.offsetLeft,
 				tempEl = element.offsetParent;
 			while (tempEl != null) {
-				xPos += tempEl.offsetLeft;
+				left += tempEl.offsetLeft;
 				tempEl = tempEl.offsetParent;
 			}
-			return xPos;
+			return left;
 		}
 		else return 0;
 	},

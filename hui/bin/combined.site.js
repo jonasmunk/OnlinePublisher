@@ -899,26 +899,26 @@ hui.position = {
 	getTop : function(element) {
 	    element = hui.get(element);
 		if (element) {
-			var yPos = element.offsetTop,
+			var top = element.offsetTop,
 				tempEl = element.offsetParent;
 			while (tempEl != null) {
-				yPos += tempEl.offsetTop;
+				top += tempEl.offsetTop;
 				tempEl = tempEl.offsetParent;
 			}
-			return yPos;
+			return top;
 		}
 		else return 0;
 	},
 	getLeft : function(element) {
 	    element = hui.get(element);
 		if (element) {
-			var xPos = element.offsetLeft,
+			var left = element.offsetLeft,
 				tempEl = element.offsetParent;
 			while (tempEl != null) {
-				xPos += tempEl.offsetLeft;
+				left += tempEl.offsetLeft;
 				tempEl = tempEl.offsetParent;
 			}
-			return xPos;
+			return left;
 		}
 		else return 0;
 	},
@@ -3827,9 +3827,11 @@ hui.ui.getElement = function(widgetOrElement) {
 
 hui.ui.isWithin = function(e,element) {
 	e = hui.event(e);
-	var offset = { left : hui.position.getLeft(element), top : hui.position.getTop(element) };
-	var dims = { width : element.clientWidth, height : element.clientHeight };
-	return e.getLeft() > offset.left && e.getLeft() < offset.left+dims.width && e.getTop() > offset.top && e.getTop() < offset.top+dims.height;
+	var offset = hui.position.get(element),
+		dims = { width : element.offsetWidth, height : element.offsetHeight },
+		left = e.getLeft(),
+		top = e.getTop();
+	return left > offset.left && left < offset.left+dims.width && top > offset.top && top < offset.top+dims.height;
 };
 
 hui.ui.getIconUrl = function(icon,size) {

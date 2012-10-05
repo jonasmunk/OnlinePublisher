@@ -262,6 +262,17 @@ class ImageService {
 		return $output;
 	}
 	
+	function isUploadedFileValid($name='file') {
+		$path = $_FILES[$name]['tmp_name'];
+		$info = ImageTransformationService::getImageInfo($path);
+		if ($info) {
+			if (in_array($info['mime'],ImageService::$validTypes)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	function createImageFromFile($tempPath,$fileName=null,$title=null,$group=null) {
 		global $basePath;
 		

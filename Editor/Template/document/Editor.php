@@ -301,7 +301,11 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	while ($row = Database::next($result)) {
 		$style=buildSectionStyle($row);
 		if ($section==null) {
-			echo '<div class="editor_section_adder_container"><div class="editor_section_adder" onclick="controller.showAdderMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($row['index']).'}); return false"><div><span><em></em><strong></strong></span></div></div></div>';
+			echo '<div class="editor_section_adder_container">'.
+					'<div class="editor_section_adder" data=\'{"columnId":'.$columnId.',"sectionIndex":'.$row['index'].'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
+						'<div><span><em></em><strong></strong></span></div>'.
+					'</div>'.
+				'</div>';
 		}
 		echo '<div id="section'.$row['id'].'"';
 		if ($row['width']) {
@@ -319,7 +323,11 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	}
 	Database::free($result);
 	if ($section==null) {
-		echo '<div class="editor_section_adder_container"><div class="editor_section_adder" onclick="controller.showAdderMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.(($lastIndex+1)).'}); return false"><div><span><em></em><strong></strong></span></div></div></div>';
+		echo '<div class="editor_section_adder_container">'.
+				'<div class="editor_section_adder" data=\'{"columnId":'.$columnId.',"sectionIndex":'.($lastIndex+1).'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
+					'<div><span><em></em><strong></strong></span></div>'.
+				'</div>'.
+			'</div>';
 	}
 	if ($section==null) {
 		echo '<div style="padding: 5px;">'.

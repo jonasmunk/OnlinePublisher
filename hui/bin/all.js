@@ -899,26 +899,26 @@ hui.position = {
 	getTop : function(element) {
 	    element = hui.get(element);
 		if (element) {
-			var yPos = element.offsetTop,
+			var top = element.offsetTop,
 				tempEl = element.offsetParent;
 			while (tempEl != null) {
-				yPos += tempEl.offsetTop;
+				top += tempEl.offsetTop;
 				tempEl = tempEl.offsetParent;
 			}
-			return yPos;
+			return top;
 		}
 		else return 0;
 	},
 	getLeft : function(element) {
 	    element = hui.get(element);
 		if (element) {
-			var xPos = element.offsetLeft,
+			var left = element.offsetLeft,
 				tempEl = element.offsetParent;
 			while (tempEl != null) {
-				xPos += tempEl.offsetLeft;
+				left += tempEl.offsetLeft;
 				tempEl = tempEl.offsetParent;
 			}
-			return xPos;
+			return left;
 		}
 		else return 0;
 	},
@@ -5328,9 +5328,11 @@ hui.ui.getElement = function(widgetOrElement) {
 
 hui.ui.isWithin = function(e,element) {
 	e = hui.event(e);
-	var offset = { left : hui.position.getLeft(element), top : hui.position.getTop(element) };
-	var dims = { width : element.clientWidth, height : element.clientHeight };
-	return e.getLeft() > offset.left && e.getLeft() < offset.left+dims.width && e.getTop() > offset.top && e.getTop() < offset.top+dims.height;
+	var offset = hui.position.get(element),
+		dims = { width : element.offsetWidth, height : element.offsetHeight },
+		left = e.getLeft(),
+		top = e.getTop();
+	return left > offset.left && left < offset.left+dims.width && top > offset.top && top < offset.top+dims.height;
 };
 
 hui.ui.getIconUrl = function(icon,size) {
@@ -11113,23 +11115,40 @@ hui.ui.Overlay.prototype = {
 		hui.ui.positionAtElement(this.element,element,options);
 		if (this.visible) return;
 		if (hui.browser.msie) {
-			this.element.style.display='block';
+			this.element.style.display = 'block';
 		} else {
 			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
 		}
 		this.visible = true;
 		if (options.autoHide) {
-			this.boundElement = element;
-			hui.listen(element,'mouseout',this.hider);
-			hui.cls.add(element,'hui_overlay_bound');
+			this._autoHide(element);
 		}
+		var zIndex = hui.ui.nextAlertIndex();
 		if (this.options.modal) {
-			var zIndex = hui.ui.nextAlertIndex();
-			this.element.style.zIndex = zIndex+1;
+			this.element.style.zIndex = hui.ui.nextAlertIndex();
 			hui.ui.showCurtain({ widget : this, zIndex : zIndex });
+		} else {
+			this.element.style.zIndex = zIndex;
 		}
-		return;
+		hui.log('after showAtElement');
+	},
+	_autoHide : function(element) {
+		this.boundElement = element;
+		hui.cls.add(element,'hui_overlay_bound');
+		var hider = null;
+		hider = function(e) {
+			if (!hui.ui.isWithin(e,element) && !hui.ui.isWithin(e,this.element)) {
+				hui.log('Autohiding');
+				this.hide();
+				try {
+					hui.unListen(document.body,'mousemove',hider);
+				} catch (e) {
+					hui.log('unable to stop listening: document='+document);
+				}
+			}
+		}.bind(this)
+		hui.listen(document.body,'mousemove',hider);
 	},
 	show : function(options) {
 		options = options || {};
@@ -11148,21 +11167,7 @@ hui.ui.Overlay.prototype = {
 		hui.effect.bounceIn({element:this.element});
 		this.visible = true;
 		if (options.autoHide && options.element) {
-			this.boundElement = options.element;
-			//hui.listen(options.element,'mouseout',this.hider);
-			hui.cls.add(options.element,'hui_overlay_bound');
-			var hider = null;
-			hider = function(e) {
-				if (!hui.ui.isWithin(e,options.element)) {
-					this.hide();
-					try {
-						hui.unListen(document.body,'mousemove',hider);
-					} catch (e) {
-						hui.log('unable to stop listening: document='+document);
-					}
-				}
-			}.bind(this)
-			hui.listen(document.body,'mousemove',hider);
+			this._autoHide(options.element);
 		}
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();
@@ -11178,6 +11183,7 @@ hui.ui.Overlay.prototype = {
 		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 		this.visible = false;
+		hui.log('hide');
 	},
 	clear : function() {
 		hui.ui.destroyDescendants(this.content);

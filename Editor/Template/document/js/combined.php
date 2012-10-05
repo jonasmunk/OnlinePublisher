@@ -23,6 +23,8 @@ if (Request::getBoolean('dev')) {
 	echo "\n";
 	require_once('LinksController.js');
 	echo "\n";
+	require_once('DropController.js');
+	echo "\n";
 	require_once('Columns.js');
 	echo "\n";
 	require_once('../../../Services/Parts/js/parts.js');

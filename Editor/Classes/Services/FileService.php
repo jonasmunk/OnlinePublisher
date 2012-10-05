@@ -223,9 +223,9 @@ class FileService {
 	function createUploadedFile($title='',$group=0) {
 		global $basePath;
 		$fileName = $_FILES['file']['name'];
-		$fileType=$_FILES["file"]["type"];
-		$tempFile=$_FILES['file']['tmp_name'];
-		$fileSize=$_FILES["file"]["size"];
+		$fileType = $_FILES["file"]["type"];
+		$tempFile = $_FILES['file']['tmp_name'];
+		$fileSize = $_FILES["file"]["size"];
 		
 		if ($fileType=='application/octet-stream') {
 			$fileType = FileService::fileNameToMimeType($fileName);
