@@ -17,7 +17,8 @@ var linkController = {
 
 	linkId : null,
 	
-	newLink : function() {
+	newLink : function(options) {
+		options = options || {};
 		this.linkId = null;
 		if (this.selectedTextInfo) {
 			this.linkPartId = this.selectedTextInfo.part;
@@ -29,7 +30,8 @@ var linkController = {
 		linkFormula.reset();
 		linkFormula.setValues({
 			text : hui.selection.getText(),
-			scope : this.linkPartId ? 'part' : 'page'
+			scope : this.linkPartId ? 'part' : 'page',
+			url : options.url
 		});
 		linkWindow.show();
 		deleteLink.disable();

@@ -2069,13 +2069,23 @@ hui.drag = {
 					if (options.onFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 						options.onFiles(e.dataTransfer.files);
 					}
+					else if (options.$dropFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
+						options.$dropFiles(e.dataTransfer.files);
+					}
 					else if (options.onURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
 						var url = e.dataTransfer.getData('public.url');
-						if (options.onURL && !hui.string.startsWith(url,'data:')) {
+						if (!hui.string.startsWith(url,'data:')) {
 							options.onURL(url);
+						}
+					} else if (options.$dropURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
+						var url = e.dataTransfer.getData('public.url');
+						if (!hui.string.startsWith(url,'data:')) {
+							options.$dropURL(url);
 						}
 					} else if (options.onText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
 						options.onText(e.dataTransfer.getData('text/plain'))
+					} else if (options.$dropText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
+						options.$dropText(e.dataTransfer.getData('text/plain'))
 					}
 				}
 			}

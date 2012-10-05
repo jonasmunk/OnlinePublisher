@@ -2069,13 +2069,23 @@ hui.drag = {
 					if (options.onFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 						options.onFiles(e.dataTransfer.files);
 					}
+					else if (options.$dropFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
+						options.$dropFiles(e.dataTransfer.files);
+					}
 					else if (options.onURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
 						var url = e.dataTransfer.getData('public.url');
-						if (options.onURL && !hui.string.startsWith(url,'data:')) {
+						if (!hui.string.startsWith(url,'data:')) {
 							options.onURL(url);
+						}
+					} else if (options.$dropURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
+						var url = e.dataTransfer.getData('public.url');
+						if (!hui.string.startsWith(url,'data:')) {
+							options.$dropURL(url);
 						}
 					} else if (options.onText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
 						options.onText(e.dataTransfer.getData('text/plain'))
+					} else if (options.$dropText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
+						options.$dropText(e.dataTransfer.getData('text/plain'))
 					}
 				}
 			}
@@ -11069,7 +11079,7 @@ hui.ui.Overlay.create = function(options) {
 hui.ui.Overlay.prototype = {
 	_addBehavior : function() {
 		var self = this;
-		this.hider = function(e) {
+/*		this.hider = function(e) {
 			if (self.boundElement) {
 				if (hui.ui.isWithin(e,self.boundElement) || hui.ui.isWithin(e,self.element)) return;
 				// TODO: should be unreg'ed but it fails
@@ -11079,7 +11089,7 @@ hui.ui.Overlay.prototype = {
 				self.hide();
 			}
 		}
-		hui.listen(this.element,'mouseout',this.hider);
+		hui.listen(this.element,'mouseout',this.hider);*/
 	},
 	addIcon : function(key,icon) {
 		var self = this;
@@ -11113,16 +11123,18 @@ hui.ui.Overlay.prototype = {
 	showAtElement : function(element,options) {
 		options = options || {};
 		hui.ui.positionAtElement(this.element,element,options);
-		if (this.visible) return;
+		if (options.autoHide) {
+			// important to do even if visible, sine element may have changed
+			this._autoHide(element);
+		}
+		if (this.visible) {
+			return;
+		}
 		if (hui.browser.msie) {
 			this.element.style.display = 'block';
 		} else {
 			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
-		}
-		this.visible = true;
-		if (options.autoHide) {
-			this._autoHide(element);
 		}
 		var zIndex = hui.ui.nextAlertIndex();
 		if (this.options.modal) {
@@ -11131,24 +11143,23 @@ hui.ui.Overlay.prototype = {
 		} else {
 			this.element.style.zIndex = zIndex;
 		}
-		hui.log('after showAtElement');
+		this.visible = true;
 	},
 	_autoHide : function(element) {
-		this.boundElement = element;
 		hui.cls.add(element,'hui_overlay_bound');
-		var hider = null;
-		hider = function(e) {
+		hui.unListen(document.body,'mousemove',this._hider);
+		this._hider = function(e) {
 			if (!hui.ui.isWithin(e,element) && !hui.ui.isWithin(e,this.element)) {
-				hui.log('Autohiding');
-				this.hide();
 				try {
-					hui.unListen(document.body,'mousemove',hider);
+					hui.unListen(document.body,'mousemove',this._hider);
+					hui.cls.remove(element,'hui_overlay_bound');
+					this.hide();
 				} catch (e) {
 					hui.log('unable to stop listening: document='+document);
 				}
 			}
 		}.bind(this)
-		hui.listen(document.body,'mousemove',hider);
+		hui.listen(document.body,'mousemove',this._hider);
 	},
 	show : function(options) {
 		options = options || {};
@@ -11163,12 +11174,12 @@ hui.ui.Overlay.prototype = {
 				viewPartMargin : 9
 			});
 		}
-		if (this.visible) return;
-		hui.effect.bounceIn({element:this.element});
-		this.visible = true;
 		if (options.autoHide && options.element) {
 			this._autoHide(options.element);
 		}
+		if (this.visible) return;
+		hui.effect.bounceIn({element:this.element});
+		this.visible = true;
 		if (this.options.modal) {
 			var zIndex = hui.ui.nextAlertIndex();
 			this.element.style.zIndex=zIndex+1;
@@ -11183,7 +11194,6 @@ hui.ui.Overlay.prototype = {
 		hui.ui.hideCurtain(this);
 		this.element.style.display='none';
 		this.visible = false;
-		hui.log('hide');
 	},
 	clear : function() {
 		hui.ui.destroyDescendants(this.content);

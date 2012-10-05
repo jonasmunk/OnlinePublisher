@@ -1,6 +1,7 @@
 hui.ui.listen({
 	$ready : function() {
 		this._initDrop();
+		//this._dropURL('http://www.dr.dk/php/p3/komma-nul-wordpress/mama/media/images/21802/620/348/Mariekey.jpg');
 	},
 	_initDrop : function() {
 		if (this.activeSection) {return};
@@ -9,7 +10,9 @@ hui.ui.listen({
 			hoverClass : 'editor_dropping',
 			$hover : this._hover.bind(this),
 			$leave : this._leave.bind(this),
-			onFiles : this._dropFiles.bind(this),
+			$dropFiles : this._dropFiles.bind(this),
+			$dropText : this._dropText.bind(this),
+			$dropURL : this._dropURL.bind(this)
 		});
 		this._dropPoints = [];
 		var adders = hui.get.byClass(document.body,'editor_section_adder');
@@ -18,6 +21,74 @@ hui.ui.listen({
 			var pos = hui.position.get(adder);
 			this._dropPoints.push({left:pos.left+adder.clientWidth/2,top:pos.top+adder.clientHeight/2,element:adder});
 		};
+	},
+	_dropURL : function(url) {
+		if (!this.latestAdder) {
+			return;
+		}
+		var info = hui.string.fromJSON(this.latestAdder.getAttribute('data'));
+		var overlay = hui.ui.Overlay.create({modal:true});
+		overlay.addText(hui.ui.getTranslated({en:'What should be done?',da:'Hvad skal gøres?'}));
+		overlay.add(hui.ui.Button.create({text:'Insæt link',listener:{
+			$click : function() {
+				overlay.hide();
+				linkController.newLink({url:url});
+			}
+		}}))
+		overlay.add(hui.ui.Button.create({text:'Insæt billede',listener:{
+			$click : function() {
+				overlay.hide();
+				this._uploadUrl(url,info);
+			}.bind(this)
+		}}))
+		overlay.show({element:this.latestAdder});
+		this._reset();
+	},
+	_uploadUrl : function(url,info) {
+		info.url = url;
+		hui.ui.request({
+			url : 'actions/ImportUpload.php',
+			parameters : info,
+			$success : function() {
+				document.location='Editor.php';
+			}
+		})		
+	},
+	_dropText : function(text) {
+		if (!this.latestAdder) {
+			return;
+		}
+		
+		var info = hui.string.fromJSON(this.latestAdder.getAttribute('data'));
+		info.text = text;
+		
+		var overlay = hui.ui.Overlay.create({modal:true});
+		overlay.addText(hui.ui.getTranslated({en:'What should be done?',da:'Hvad skal gøres?'}));
+		overlay.add(hui.ui.Button.create({text:'Insæt som tekst',listener:{
+			$click : function() {
+				overlay.hide();
+				info.type = 'text';
+				this._importText(info);
+			}.bind(this)
+		}}))
+		overlay.add(hui.ui.Button.create({text:'Insæt som overskrift',listener:{
+			$click : function() {
+				overlay.hide();
+				info.type = 'header';
+				this._importText(info);
+			}.bind(this)
+		}}))
+		overlay.show({element:this.latestAdder});
+		this._reset();
+	},
+	_importText : function(parameters) {
+		hui.ui.request({
+			url : 'actions/ImportUpload.php',
+			parameters : parameters,
+			$success : function() {
+				document.location='Editor.php';
+			}
+		})
 	},
 	_dropFiles : function(files) {
 		if (!this.latestAdder) {
@@ -31,6 +102,12 @@ hui.ui.listen({
 	},
 	$uploadDidCompleteQueue$importUpload : function() {
 		document.location='Editor.php';
+	},
+	_reset : function() {
+		if (this.latestAdder) {
+			hui.cls.remove(this.latestAdder,'editor_section_adder_drop');
+		}
+		this.latestAdder = null;
 	},
 	_hover : function(e) {
 		e = hui.event(e);
