@@ -94,11 +94,36 @@ hui.ui.listen({
 		if (!this.latestAdder) {
 			return;
 		}
+		
 		var info = hui.string.fromJSON(this.latestAdder.getAttribute('data'));
-		importUpload.setParameter('columnId',info.columnId);
-		importUpload.setParameter('sectionIndex',info.sectionIndex);
-		importWindow.show();
-		importUpload.uploadFiles(files);
+
+		var overlay = hui.ui.Overlay.create({modal:true});
+		overlay.addText(hui.ui.getTranslated({en:'What should be done?',da:'Hvad skal gøres?'}));
+		
+		overlay.add(hui.ui.Button.create({text:{en:'Insert as image',da:'Indsæt som billede'},listener:{
+			$click : function() {
+				overlay.hide();
+				importUpload.setParameter('columnId',info.columnId);
+				importUpload.setParameter('sectionIndex',info.sectionIndex);
+				importUpload.setParameter('type','image');
+				importWindow.show();
+				importUpload.uploadFiles(files);
+			}.bind(this)
+		}}))
+		
+		overlay.add(hui.ui.Button.create({text:{en:'Insert as file',da:'Indsæt som fil'},listener:{
+			$click : function() {
+				overlay.hide();
+				importUpload.setParameter('columnId',info.columnId);
+				importUpload.setParameter('sectionIndex',info.sectionIndex);
+				importUpload.setParameter('type','file');
+				importWindow.show();
+				importUpload.uploadFiles(files);
+			}.bind(this)
+		}}))
+		
+		overlay.show({element:this.latestAdder});
+		this._reset();
 	},
 	$uploadDidCompleteQueue$importUpload : function() {
 		document.location='Editor.php';

@@ -276,19 +276,24 @@
 -->
 <xsl:template match="gui:source">
 	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Source({name:'<xsl:value-of select="@name"/>'
-			<xsl:choose>
-				<xsl:when test="@url">,url:'<xsl:value-of select="@url"/>'</xsl:when>
-				<xsl:when test="@dwr">,dwr:'<xsl:value-of select="@dwr"/>'</xsl:when>
-			</xsl:choose>
-			<xsl:if test="@lazy='true'">,lazy:true</xsl:if>
-		});
-		<xsl:call-template name="gui:createobject"/>
-		with (<xsl:value-of select="generate-id()"/>_obj) {
+		(function() {
+			var parameters = [];
 			<xsl:for-each select="gui:parameter">
-				addParameter({key:'<xsl:value-of select="@key"/>',value:'<xsl:value-of select="@value"/>'})
+				parameters.push({key:'<xsl:value-of select="@key"/>',value:'<xsl:value-of select="@value"/>'})
 			</xsl:for-each>
-		}
+			
+		
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Source({
+				name : '<xsl:value-of select="@name"/>',
+				parameters : parameters
+				<xsl:choose>
+					<xsl:when test="@url">,url:'<xsl:value-of select="@url"/>'</xsl:when>
+					<xsl:when test="@dwr">,dwr:'<xsl:value-of select="@dwr"/>'</xsl:when>
+				</xsl:choose>
+				<xsl:if test="@lazy='true'">,lazy:true</xsl:if>
+			});
+			<xsl:call-template name="gui:createobject"/>
+		})()
 	</script>
 </xsl:template>
 

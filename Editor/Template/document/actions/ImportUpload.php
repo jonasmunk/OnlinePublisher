@@ -31,14 +31,14 @@ if (StringUtils::isNotBlank($text)) {
 		$part = $ctrl::createPart();
 	}	
 	
-} else if (ImageService::isUploadedFileValid()) {
+} else if ($type=='image' && ImageService::isUploadedFileValid()) {
 	$response = ImageService::createUploadedImage();
 	if ($response->getSuccess()) {
 		$image = $response->getObject();
 		$ctrl = new ImagePartController();
 		$part = $ctrl::createPart();
 	}
-} else {
+} else if ($type=='file') {
 
 	$response = FileService::createUploadedFile();
 	if ($response->getSuccess()) {
