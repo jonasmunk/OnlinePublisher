@@ -1999,9 +1999,10 @@ hui.drag = {
 	 * <pre><strong>options:</strong> {
 	 *  elements : «Element»,
 	 *  hoverClass : «String»,
-	 *  onDrop : function(event),
-	 *  onFiles : function(fileArray),
-	 *  onURL : function(url)
+	 *  $drop : function(event),
+	 *  $dropFiles : function(fileArray),
+	 *  $dropURL : function(url),
+	 *  $dropText : function(url)
 	 * }
 	 * @param {Object} options The options
 	 */
@@ -2062,28 +2063,17 @@ hui.drag = {
 			hui.drag._activeDrop = null;
 			if (options) {
 				hui.cls.remove(options.element,options.hoverClass);
-				if (options.onDrop) {
-					options.onDrop(e);
+				if (options.$drop) {
+					options.$drop(e);
 				}
 				if (e.dataTransfer) {
-					if (options.onFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
-						options.onFiles(e.dataTransfer.files);
-					}
-					else if (options.$dropFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
+					if (options.$dropFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 						options.$dropFiles(e.dataTransfer.files);
-					}
-					else if (options.onURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
-						var url = e.dataTransfer.getData('public.url');
-						if (!hui.string.startsWith(url,'data:')) {
-							options.onURL(url);
-						}
 					} else if (options.$dropURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
 						var url = e.dataTransfer.getData('public.url');
 						if (!hui.string.startsWith(url,'data:')) {
 							options.$dropURL(url);
 						}
-					} else if (options.onText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
-						options.onText(e.dataTransfer.getData('text/plain'))
 					} else if (options.$dropText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
 						options.$dropText(e.dataTransfer.getData('text/plain'))
 					}
@@ -6575,10 +6565,10 @@ hui.ui.List.prototype = {
 		hui.drag.listen({
 			element : this.element,
 			hoverClass : 'hui_list_drop',
-			onFiles : function(files) {
+			$dropFiles : function(files) {
 				this.fire('filesDropped',files);
 			}.bind(this),
-			onURL : function(url) {
+			$dropURL : function(url) {
 				this.fire('urlDropped',url);
 			}.bind(this)
 		})
@@ -11291,7 +11281,7 @@ hui.ui.Upload.prototype = {
 			hui.drag.listen({
 				element : options.element,
 				hoverClass : options.hoverClass,
-				onFiles : function(files) {
+				$dropFiles : function(files) {
 					if (options.$drop) {
 						options.$drop();
 					}
@@ -11342,7 +11332,7 @@ hui.ui.Upload.prototype = {
 			hui.drag.listen({
 				element : this.element,
 				hoverClass : 'hui_upload_drop',
-				onFiles : this._transferFiles.bind(this)
+				$dropFiles : this._transferFiles.bind(this)
 			});
 		}.bind(this));
 	},
@@ -12061,10 +12051,10 @@ hui.ui.Gallery.prototype = {
 		hui.drag.listen({
 			element : this.element,
 			hoverClass : 'hui_gallery_drop',
-			onFiles : function(files) {
+			$dropFiles : function(files) {
 				this.fire('filesDropped',files);
 			}.bind(this),
-			onURL : function(url) {
+			$dropURL : function(url) {
 				this.fire('urlDropped',url);
 			}.bind(this)
 		})

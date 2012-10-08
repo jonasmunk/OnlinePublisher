@@ -4,7 +4,7 @@ hui.ui.listen({
 		//this._dropURL('http://www.dr.dk/php/p3/komma-nul-wordpress/mama/media/images/21802/620/348/Mariekey.jpg');
 	},
 	_initDrop : function() {
-		if (this.activeSection) {return};
+		if (controller.activeSection) {return};
 		hui.drag.listen({
 			element : hui.get.firstByClass(document.body,'editor_body'),
 			hoverClass : 'editor_dropping',

@@ -19,7 +19,7 @@ if (StringUtils::isNotBlank($text)) {
 	} else {
 		$ctrl = new TextPartController();
 	}
-	$part = $ctrl::createPart();
+	$part = $ctrl->createPart();
 	$part->setText($text);
 	$part->save();
 
@@ -28,7 +28,7 @@ if (StringUtils::isNotBlank($text)) {
 	if ($response->getSuccess()) {
 		$image = $response->getObject();
 		$ctrl = new ImagePartController();
-		$part = $ctrl::createPart();
+		$part = $ctrl->createPart();
 	}	
 	
 } else if ($type=='image' && ImageService::isUploadedFileValid()) {
@@ -36,7 +36,7 @@ if (StringUtils::isNotBlank($text)) {
 	if ($response->getSuccess()) {
 		$image = $response->getObject();
 		$ctrl = new ImagePartController();
-		$part = $ctrl::createPart();
+		$part = $ctrl->createPart();
 	}
 } else if ($type=='file') {
 
@@ -45,7 +45,7 @@ if (StringUtils::isNotBlank($text)) {
 		$file = $response->getObject();
 	
 		$ctrl = new FilePartController();
-		$part = $ctrl::createPart();	
+		$part = $ctrl->createPart();	
 	}	
 }
 

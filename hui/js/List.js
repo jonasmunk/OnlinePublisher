@@ -89,10 +89,10 @@ hui.ui.List.prototype = {
 		hui.drag.listen({
 			element : this.element,
 			hoverClass : 'hui_list_drop',
-			onFiles : function(files) {
+			$dropFiles : function(files) {
 				this.fire('filesDropped',files);
 			}.bind(this),
-			onURL : function(url) {
+			$dropURL : function(url) {
 				this.fire('urlDropped',url);
 			}.bind(this)
 		})

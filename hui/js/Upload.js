@@ -83,7 +83,7 @@ hui.ui.Upload.prototype = {
 			hui.drag.listen({
 				element : options.element,
 				hoverClass : options.hoverClass,
-				onFiles : function(files) {
+				$dropFiles : function(files) {
 					if (options.$drop) {
 						options.$drop();
 					}
@@ -134,7 +134,7 @@ hui.ui.Upload.prototype = {
 			hui.drag.listen({
 				element : this.element,
 				hoverClass : 'hui_upload_drop',
-				onFiles : this._transferFiles.bind(this)
+				$dropFiles : this._transferFiles.bind(this)
 			});
 		}.bind(this));
 	},
