@@ -5956,6 +5956,7 @@ hui.ui.Source.prototype = {
 			args[args.length-1]=function(r) {self.parseDWR(r)};
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
+			hui.log(args)
 			facade[method].apply(facade,args);
 		}
 	},
@@ -6000,6 +6001,10 @@ hui.ui.Source.prototype = {
 	},
 	addParameter : function(parm) {
 		this.parameters.push(parm);
+		var val = hui.ui.bind(parm.value,function(value) {
+			this.changeParameter(parm.key,value);
+		}.bind(this));
+		parm.value = this.convertValue(val);
 	},
 	changeParameter : function(key,value) {
 		value = this.convertValue(value);
@@ -9258,7 +9263,6 @@ hui.ui.BoundPanel.prototype = {
 		} else {
 			node = hui.get(options);
 		}
-		
 		var nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};
 		var nodeScrollOffset = hui.position.getScrollOffset(node);
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};
@@ -12775,7 +12779,10 @@ hui.ui.Layout.prototype = {
 			var foot = hui.get.firstByTag(hui.get.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
 			if (foot) {
-				bottom = hui.get.firstByTag(foot,'*').clientHeight;
+				var inner = hui.get.firstByTag(foot,'*');
+				if (inner) {
+					bottom = inner.clientHeight;
+				}
 			}
 			top += hui.position.getTop(this.element);
 			this.diff = bottom+top;
@@ -16664,6 +16671,7 @@ hui.ui.Columns.prototype = {
  */
 hui.ui.Finder = function(options) {
 	this.options = hui.override({title:'Finder',selection:{},list:{}},options);
+	this.name = options.name;
 	hui.ui.extend(this);
 	if (options.listener) {
 		this.listen(options.listener);
@@ -16753,13 +16761,15 @@ hui.ui.Finder.prototype = {
 		this.selection.addItems({source:src})
 		left.add(this.selection);
 		
-		var parameters = [
-			{key:'windowSize',value:10},
-			{key:'windowPage',value:'@'+list.name+'.window.page'},
-			{key:'direction',value:'@'+list.name+'.sort.direction'},
-			{key:'sort',value:'@'+list.name+'.sort.key'}
-		];
-		
+		var parameters = [];
+		if (this.options.list.url) {
+			parameters = [
+				{key:'windowSize',value:10},
+				{key:'windowPage',value:'@'+list.name+'.window.page'},
+				{key:'direction',value:'@'+list.name+'.sort.direction'},
+				{key:'sort',value:'@'+list.name+'.sort.key'}
+			];
+		}
 		if (this.options.selection.parameter) {
 			parameters.push({key:this.options.selection.parameter || 'text',value:'@'+this.selection.name+'.value'})
 		}
@@ -16770,11 +16780,23 @@ hui.ui.Finder.prototype = {
 		if (this.options.search) {
 			parameters.push({key:this.options.search.parameter || 'text',value:'@'+search.name+'.value'})
 		}
+		if (this.options.list.pageParameter) {
+			parameters.push({key:this.options.list.pageParameter,value:'@'+list.name+'.window.page'})
+		}
 		
-		var listSource = new hui.ui.Source({
-			url : this.options.list.url,
-			parameters : parameters
-		});
+		var listSource = this.options.list.source;
+		if (listSource) {
+			hui.log(parameters)
+			for (var i=0; i < parameters.length; i++) {
+				listSource.addParameter(parameters[i]);
+			};
+		}
+		if (this.options.list.url) {
+			listSource = new hui.ui.Source({
+				url : this.options.list.url,
+				parameters : parameters
+			});
+		}
 		this.list.setSource(listSource);
 		
 		src.refresh();

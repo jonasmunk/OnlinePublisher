@@ -55,7 +55,10 @@ hui.ui.Layout.prototype = {
 			var foot = hui.get.firstByTag(hui.get.firstByTag(this.element,'tfoot'),'td');
 			var bottom = 0;
 			if (foot) {
-				bottom = hui.get.firstByTag(foot,'*').clientHeight;
+				var inner = hui.get.firstByTag(foot,'*');
+				if (inner) {
+					bottom = inner.clientHeight;
+				}
 			}
 			top += hui.position.getTop(this.element);
 			this.diff = bottom+top;

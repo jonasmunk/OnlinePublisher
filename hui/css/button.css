@@ -447,6 +447,28 @@ a.hui_button_mini_paper span span
 }
 
 
+/** Tiny paper **/
+
+a.hui_button_tiny_paper
+{
+	border-radius: 14px;
+}
+
+a.hui_button_tiny_paper, a.hui_button_tiny_paper span
+{
+	height: 14px;
+	line-height: 14px;
+	font-size: 0;
+}
+
+a.hui_button_tiny_paper span span
+{
+	margin: 0;
+	padding: 0 8px;
+	font-size: 10px;
+	line-height: 14px;
+}
+
 
 
 

@@ -193,7 +193,6 @@ hui.ui.BoundPanel.prototype = {
 		} else {
 			node = hui.get(options);
 		}
-		
 		var nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};
 		var nodeScrollOffset = hui.position.getScrollOffset(node);
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};

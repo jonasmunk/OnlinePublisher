@@ -109,6 +109,7 @@ hui.ui.Source.prototype = {
 			args[args.length-1]=function(r) {self.parseDWR(r)};
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
+			hui.log(args)
 			facade[method].apply(facade,args);
 		}
 	},
@@ -153,6 +154,10 @@ hui.ui.Source.prototype = {
 	},
 	addParameter : function(parm) {
 		this.parameters.push(parm);
+		var val = hui.ui.bind(parm.value,function(value) {
+			this.changeParameter(parm.key,value);
+		}.bind(this));
+		parm.value = this.convertValue(val);
 	},
 	changeParameter : function(key,value) {
 		value = this.convertValue(value);
