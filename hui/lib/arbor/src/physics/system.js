@@ -4,8 +4,8 @@
 // the main controller object for creating/modifying graphs 
 //
 
-  var ParticleSystem = function(repulsion, stiffness, friction, centerGravity, targetFps, dt, precision){
-  // also callable with ({stiffness:, repulsion:, friction:, timestep:, fps:, dt:, gravity:})
+  var ParticleSystem = function(repulsion, stiffness, friction, centerGravity, targetFps, dt, precision, integrator){
+  // also callable with ({integrator:, stiffness:, repulsion:, friction:, timestep:, fps:, dt:, gravity:})
     
     var _changes=[]
     var _notification=null
@@ -17,8 +17,8 @@
     var _bounds = null
     var _boundsTarget = null
 
-    if (typeof stiffness=='object'){
-      var _p = stiffness
+    if (typeof repulsion=='object'){
+      var _p = repulsion
       friction = _p.friction
       repulsion = _p.repulsion
       targetFps = _p.fps
@@ -26,8 +26,11 @@
       stiffness = _p.stiffness
       centerGravity = _p.gravity
       precision = _p.precision
+      integrator = _p.integrator
     }
 
+    // param validation and defaults
+    if (integrator!='verlet' && integrator!='euler') integrator='verlet'
     friction = isNaN(friction) ? .5 : friction
     repulsion = isNaN(repulsion) ? 1000 : repulsion
     targetFps = isNaN(targetFps) ? 55 : targetFps
@@ -35,8 +38,9 @@
     dt = isNaN(dt) ? 0.02 : dt
     precision = isNaN(precision) ? .6 : precision
     centerGravity = (centerGravity===true)
+
     var _systemTimeout = (targetFps!==undefined) ? 1000/targetFps : 1000/50
-    var _parameters = {repulsion:repulsion, stiffness:stiffness, friction:friction, dt:dt, gravity:centerGravity, precision:precision, timeout:_systemTimeout}
+    var _parameters = {integrator:integrator, repulsion:repulsion, stiffness:stiffness, friction:friction, dt:dt, gravity:centerGravity, precision:precision, timeout:_systemTimeout}
     var _energy
 
     var state = {
@@ -68,10 +72,10 @@
         else that.parameters({timeout:1000/(newFPS||50)})
       },
 
-
       start:function(){
         state.kernel.start()
       },
+
       stop:function(){
         state.kernel.stop()
       },
@@ -89,8 +93,8 @@
           //   'fixed' overrides the default of false
           //   'x' & 'y' will set a starting position rather than 
           //             defaulting to random placement
-          var x = (data.x!=undefined && !isNaN(data.x)) ? data.x : null
-          var y = (data.y!=undefined && !isNaN(data.y)) ? data.y : null
+          var x = (data.x!=undefined) ? data.x : null
+          var y = (data.y!=undefined) ? data.y : null
           var fixed = (data.fixed) ? 1 : 0
 
           var node = new Node(data)
@@ -580,36 +584,49 @@
     state.tween = state.kernel.tween || null
     
     // some magic attrs to make the Node objects phone-home their physics-relevant changes
-    Node.prototype.__defineGetter__("p", function() { 
-      var self = this
-      var roboPoint = {}
-      roboPoint.__defineGetter__('x', function(){ return self._p.x; })
-      roboPoint.__defineSetter__('x', function(newX){ state.kernel.particleModified(self._id, {x:newX}) })
-      roboPoint.__defineGetter__('y', function(){ return self._p.y; })
-      roboPoint.__defineSetter__('y', function(newY){ state.kernel.particleModified(self._id, {y:newY}) })
-      roboPoint.__proto__ = Point.prototype
-      return roboPoint
+    Object.defineProperty(Node.prototype, "p", {
+      get: function() {
+        var self = this
+        var roboPoint = Object.create(Point.prototype)
+        
+        Object.defineProperty(roboPoint, 'x', {
+          get: function() { return self._p.x; },
+          set: function(newX) { state.kernel.particleModified(self._id, {x:newX}) }
+        })
+        Object.defineProperty(roboPoint, 'y', {
+          get: function () { return self._p.y; },
+          set: function(newY) { state.kernel.particleModified(self._id, {y:newY}) }
+        })
+        
+        return roboPoint
+      },
+      set: function(newP) {
+        this._p.x = newP.x
+        this._p.y = newP.y
+        state.kernel.particleModified(this._id, {x:newP.x, y:newP.y})
+      }
     })
-    Node.prototype.__defineSetter__("p", function(newP) { 
-      this._p.x = newP.x
-      this._p.y = newP.y
-      state.kernel.particleModified(this._id, {x:newP.x, y:newP.y})
+    
+    Object.defineProperty(Node.prototype, "mass", {
+      get: function() { return this._mass; },
+      set: function(newM) {
+        this._mass = newM
+        state.kernel.particleModified(this._id, {m:newM})
+      }
     })
-
-    Node.prototype.__defineGetter__("mass", function() { return this._mass; });
-    Node.prototype.__defineSetter__("mass", function(newM) { 
-      this._mass = newM
-      state.kernel.particleModified(this._id, {m:newM})
+    
+    Object.defineProperty(Node.prototype, "tempMass", {
+      set: function(newM) {
+        state.kernel.particleModified(this._id, {_m:newM})
+      }
     })
-
-    Node.prototype.__defineSetter__("tempMass", function(newM) { 
-      state.kernel.particleModified(this._id, {_m:newM})
-    })
-      
-    Node.prototype.__defineGetter__("fixed", function() { return this._fixed; });
-    Node.prototype.__defineSetter__("fixed", function(isFixed) { 
-      this._fixed = isFixed
-      state.kernel.particleModified(this._id, {f:isFixed?1:0})
+    
+    Object.defineProperty(Node.prototype, "fixed", {
+      get: function() { return this._fixed; },
+      set: function(isFixed) {
+        this._fixed = isFixed
+        state.kernel.particleModified(this._id, {f:isFixed?1:0})
+      }
     })
     
     return that

@@ -5,6 +5,19 @@ div.hui_diagram
 	overflow: hidden;
 }
 
+div.hui_diagram_dragable
+{
+	cursor: move;
+	cursor: -webkit-grab;
+}
+
+div.hui_diagram_dragging
+{
+	cursor: move;
+	cursor: -webkit-grabbing;
+}
+
+
 span.hui_diagram_line_label
 {
 	position: absolute;
@@ -14,6 +27,36 @@ span.hui_diagram_line_label
 	color: #888;
 }
 
+/*** Icon ***/
+
+div.hui_diagram_icon
+{
+	position: absolute;
+	padding: 2px;
+}
+
+div.hui_diagram_icon strong
+{
+	position: absolute;
+	font-weight: normal;
+	top: 36px;
+	font-size: 10px;
+	width: 100px;
+	left: 0;
+	margin-left: -32px;
+	text-align: center;
+}
+
+div.hui_diagram_icon_selected
+{
+	border: 2px solid #2678ff;
+	margin: -2px 0 0 -2px;
+	border-radius: 5px;
+}
+
+
+/*** Box ***/
+
 div.hui_diagram_box
 {
 	position: absolute;
@@ -22,16 +65,7 @@ div.hui_diagram_box
 	background: #fff;
 	top: 0;
 	left: 0;
-/*	box-shadow: 0 1px 4px rgba(0,0,0,.1);*/
-	cursor: move;
-	cursor: -webkit-grab;
 	z-index: 1;
-}
-
-div.hui_diagram_box_dragging
-{
-	cursor: move;
-	cursor: -webkit-grabbing;
 }
 
 div.hui_diagram_box_selected

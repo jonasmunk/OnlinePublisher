@@ -68,8 +68,36 @@
 					]
 				});
 				
+				diagram.addIcon({
+					id : 'folder',
+					title : 'Phone number',
+					icon : 'common/folder'
+				});
+				
+				diagram.addIcon({
+					id : 'image1',
+					title : 'Image',
+					icon : 'common/image'
+				});
+				
+				diagram.addIcon({
+					id : 'image2',
+					title : 'Image',
+					icon : 'common/image'
+				});
+				
+				diagram.addIcon({
+					id : 'page',
+					title : 'Image',
+					icon : 'common/page'
+				});
+				
 				diagram.addLine({from:'person',to:'email',label:'Work'});
 				diagram.addLine({from:'person',to:'phone',label:'Private'});
+				diagram.addLine({from:'folder',to:'phone',label:'Hey'});
+				diagram.addLine({from:'folder',to:'image1',label:'Hey'});
+				diagram.addLine({from:'folder',to:'image2',label:'Hey'});
+				diagram.addLine({from:'page',to:'image2',label:'Hey'});
 				diagram.play();
 			}
 		})
