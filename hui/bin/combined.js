@@ -6271,6 +6271,9 @@ hui.ui.Window.prototype = {
 			hui.effect.flip({element:this.element});
 		}
 	},
+	move : function(point) {
+		hui.style.set(this.element,{top:point.top+'px',left:point.left+'px'});
+	},
 
 	_onDragStart : function(e) {
 		this.element.style.zIndex = hui.ui.nextPanelIndex();
@@ -16907,9 +16910,18 @@ hui.ui.CodeInput = function(options) {
 	this.name = options.name;
 	var e = this.element = hui.get(options.element);
 	this.textarea = hui.get.firstByTag(e,'textarea');
+	if (options.value) {
+		this.textarea.value = options.value;
+	}
 	this.value = this.textarea.value;
 	hui.ui.extend(this);
 	this._addBehavior();
+}
+
+hui.ui.CodeInput.create = function(options) {
+	options = options || {};
+	options.element = hui.build('div',{className:'hui_codeinput',html:'<textarea spellcheck="false"></textarea>'});
+	return new hui.ui.CodeInput(options);
 }
 
 hui.ui.CodeInput.prototype = {

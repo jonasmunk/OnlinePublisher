@@ -22,9 +22,15 @@ span.hui_diagram_line_label
 {
 	position: absolute;
 	font-size: 11px;
+	line-height: 11px;
+	height: 13px;
 	background: #fff;
 	padding: 2px;
 	color: #888;
+	overflow: hidden;
+	text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 /*** Icon ***/

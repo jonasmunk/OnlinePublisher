@@ -21,7 +21,7 @@ hui.ui.Drawing.create = function(options) {
 		e.style.width = options.width+'px';
 	}
 	if (options.parent) {
-		options.parent.appendChild(e);
+		hui.get(options.parent).appendChild(e);
 	}
 	return new hui.ui.Drawing(options);
 }
@@ -40,17 +40,13 @@ hui.ui.Drawing.prototype = {
 		options.parent = this.svg;
 		return hui.ui.Drawing.Line.create(options);
 	},
+	addRect : function(options) {
+		options.parent = this.svg;
+		return hui.ui.Drawing.Rect.create(options);
+	},
 	addCircle : function(options) {
-		var node = hui.ui.Drawing._build({
-			tag:'circle',
-			parent:this.svg,
-			attributes : {
-				cx : options.cx,
-				cy : options.cy,
-				r : options.r,
-				style : 'stroke:'+(options.color || '#000')+'; fill:'+(options.fill || '#fff')+'; stroke-width:'+(options.width==undefined ? 1 : options.width)}
-		});
-		return new hui.ui.Drawing.Circle(node);
+		options.parent = this.svg;
+		return hui.ui.Drawing.Circle.create(options);
 	},
 	addElement : function(options) {
 		var node = hui.build('div',{style:'position:absolute;left:0;top:0;',parent:this.element,html:options.html}),
@@ -110,7 +106,7 @@ if (hui.browser.msie8) {
 
 
 
-// Drawing
+// Line
 
 hui.ui.Drawing.Line = function(options) {
 	this.node = options.node;
@@ -141,13 +137,11 @@ hui.ui.Drawing.Line.create = function(options) {
 		parent : options.parent,
 		attributes : attributes
 	});
-	
-
 	if (options.end) {
 		options.endNode = hui.ui.Drawing._build({
 			tag : 'path',
 			parent : options.parent,
-			attributes : {d:'M 0 -5 L 5 5 L -5 5',fill:options.color || '#000'}
+			attributes : {d:'M 0 0 L 5 10 L -5 10',fill:options.color || '#000'}
 		})
 	}
 	return new hui.ui.Drawing.Line(options);
@@ -189,14 +183,69 @@ hui.ui.Drawing.Line.prototype = {
 
 // Circle
 
-hui.ui.Drawing.Circle = function(node) {
-	this.node = node;
+hui.ui.Drawing.Circle = function(options) {
+	this.node = options.node;
 }
+
+hui.ui.Drawing.Circle.create = function(options) {
+	options.node = hui.ui.Drawing._build({
+		tag : 'circle',
+		parent : options.parent,
+		attributes : {
+			cx : options.cx,
+			cy : options.cy,
+			r : options.r,
+			style : 'stroke:'+(options.color || '#000')+'; fill:'+(options.fill || '#fff')+'; stroke-width:'+(options.width==undefined ? 1 : options.width)}
+	});
+	return new hui.ui.Drawing.Circle(options);
+};
 
 hui.ui.Drawing.Circle.prototype = {
 	setCenter : function(point) {
 		this.node.setAttribute('cx',point.x);
 		this.node.setAttribute('cy',point.y);
+	}
+}
+
+
+
+// Rect
+
+hui.ui.Drawing.Rect = function(options) {
+	this.node = options.node;
+}
+
+hui.ui.Drawing.Rect.create = function(options) {
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	if (options.fill) {
+		css.push('fill:'+options.fill);
+	}
+	options.node = hui.ui.Drawing._build({
+		tag : 'rect',
+		parent : options.parent,
+		attributes : {
+			x : options.x,
+			y : options.y,
+			width : options.width,
+			height : options.height,
+			style : css.join(';')
+		}
+	});
+	return new hui.ui.Drawing.Circle(options);
+};
+
+hui.ui.Drawing.Rect.prototype = {
+	setPosition : function(point) {
+		this.node.setAttribute('x',point.x);
+		this.node.setAttribute('y',point.y);
 	}
 }
 
@@ -216,5 +265,55 @@ hui.ui.Drawing.Element.prototype = {
 	setCenter : function(point) {
 		this.node.style.left = (point.x - this.node.clientWidth/2)+'px';
 		this.node.style.top = (point.y - this.node.clientHeight/2)+'px';
+	}
+}
+
+
+hui.geometry = {
+	intersectLineLine : function(a1, a2, b1, b2) {
+    
+	    var ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x);
+	    var ub_t = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x);
+	    var u_b  = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
+
+	    if ( u_b != 0 ) {
+	        var ua = ua_t / u_b;
+	        var ub = ub_t / u_b;
+
+	        if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
+				return {
+	                    x : a1.x + ua * (a2.x - a1.x),
+	                    y : a1.y + ua * (a2.y - a1.y)
+	               }
+	        }
+	    }
+
+	    return null;
+	},
+	intersectLineRectangle : function(a1, a2, r1, r2) {
+	    var min        = {x : Math.min(r1.x,r2.x),y : Math.min(r1.y,r2.y)};
+	    var max        = {x : Math.max(r1.x,r2.x),y : Math.max(r1.y,r2.y)};
+	    var topRight   = {x: max.x, y: min.y };
+	    var bottomLeft = {x: min.x, y: max.y };
+    
+	    var inter1 = hui.geometry.intersectLineLine(min, topRight, a1, a2);
+	    var inter2 = hui.geometry.intersectLineLine(topRight, max, a1, a2);
+	    var inter3 = hui.geometry.intersectLineLine(max, bottomLeft, a1, a2);
+	    var inter4 = hui.geometry.intersectLineLine(bottomLeft, min, a1, a2);
+    
+	    var result = [];
+
+		if (inter1!=null) result.push(inter1);
+		if (inter2!=null) result.push(inter2);
+		if (inter3!=null) result.push(inter3);
+		if (inter4!=null) result.push(inter4);
+	    return result;
+	},
+	distance : function( point1, point2 ) {
+		var xs = point2.x - point1.x;
+
+		var ys = point2.y - point1.y;
+
+		return Math.sqrt( xs * xs + ys * ys );
 	}
 }
