@@ -26,11 +26,14 @@
 			
 			line1 = d.addLine({x1:20,y1:30,x2:100,y2:300,width:2});
 			
+			line2 = d.addLine({from:{x:10,y:50},to:{x:120,y:230},width:3,color:'#0f0',end:{symbol:'arrow'}});
+			
 			circle = d.addCircle({cx:100,cy:100,r:50,fill:'#48f',width:0});
 		})
 	</script>
 	<button onclick="line1.setFrom({x:Math.random()*400,y:Math.random()*400})">Change line from</button>
 	<button onclick="line1.setTo({x:Math.random()*400,y:Math.random()*400})">Change line to</button>
+	<button onclick="line2.setFrom({x:Math.random()*400,y:Math.random()*400}); line2.setTo({x:Math.random()*400,y:Math.random()*400})">Change line 2</button>
 	<button onclick="circle.setCenter({x:Math.random()*400,y:Math.random()*400})">Change circle</button>
 </body>
 </html>

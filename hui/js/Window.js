@@ -148,6 +148,9 @@ hui.ui.Window.prototype = {
 			hui.effect.flip({element:this.element});
 		}
 	},
+	move : function(point) {
+		hui.style.set(this.element,{top:point.top+'px',left:point.left+'px'});
+	},
 
 	_onDragStart : function(e) {
 		this.element.style.zIndex = hui.ui.nextPanelIndex();

@@ -2,10 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>HUI</title>
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/master.css" rel="stylesheet" />
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/alert.css" rel="stylesheet" />
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/message.css" rel="stylesheet" />
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/button.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../ext/diagram.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../ext/diagram.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../ext/diagram.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
@@ -20,6 +19,8 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_require.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Drawing.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/CodeInput.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../ext/Diagram.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		hui.ui.context='../../..';
@@ -35,9 +36,9 @@
 			$ready : function() {
 				var diagram = new hui.ui.Diagram.create({
 					parent : hui.get('container'),
-					height : 300
+					height : 400
 				});
-				
+				/*
 				var person = diagram.addBox({
 					id : 'person',
 					title : 'Person',
@@ -98,7 +99,37 @@
 				diagram.addLine({from:'folder',to:'image1',label:'Hey'});
 				diagram.addLine({from:'folder',to:'image2',label:'Hey'});
 				diagram.addLine({from:'page',to:'image2',label:'Hey'});
-				diagram.play();
+				*/
+				
+				var data = {
+					nodes : [
+						{id:'jonas',type:'box',title:'Jonas Munk',properties:[{label:'gender',value:'Male'}]},
+						{id:'info',type:'icon',icon:'common/info',title:'Infomation'},
+						{id:'group',type:'icon',icon:'common/folder',title:'My stuff'}
+					],
+					edges : [
+						{from:'jonas',to:'info',label:'Vehicula Dolor'},
+						{from:'jonas',to:'group',label:'Vehicula Dolor'}
+					]
+				};
+				var json = hui.string.toJSON(data);
+				diagram.setData(data);
+				//diagram.play();
+				
+				
+				var win = hui.ui.Window.create({width:600});
+				var code = hui.ui.CodeInput.create({value:json});
+				code.listen({
+					$valueChanged : function(str) {
+						var obj = hui.string.fromJSON(str);
+						if (obj) {
+							diagram.setData(obj);
+						}
+					}
+				})
+				win.add(code);
+				win.show();
+				win.move({top:400,left:50})
 			}
 		})
 	</script>

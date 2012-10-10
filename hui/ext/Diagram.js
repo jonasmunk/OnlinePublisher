@@ -39,67 +39,105 @@ hui.ui.Diagram.prototype = {
 		this.fire('added');
 	},
 	
-	_initParticleSystem : function() {
+	_loadParticleSystem : function() {
 		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
 			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
-				var repulsion = 50,
-					stiffness = 600,
-					friction = 0.5,
-					gravity = true,
-					fps = 55,
-					dt = 0.02,			// timestep to use for stepping the simulation
-					precision = 0.6;	// accuracy vs. speed in force calculations
-		
-				var myRenderer = {
-		  			init:  function(system) {
-						hui.log("starting",system);
-					},
-		  			redraw : function() {
-						system.eachNode(function(node,point) {
-							node.data.setCenter(point);
-						});
-						system.eachEdge(function(edge,point1,point2) {
-							var line = edge.data.node;
-							line.setFrom(point1);
-							line.setTo(point2);
-							this._updateLine(edge.data);
-						}.bind(this));
-					}.bind(this)
-				}
-				var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
-				//system.stop();
-				system.screenSize(this.element.clientWidth, this.element.clientHeight);
-				system.screenPadding(50,100);
-				system.renderer = myRenderer
-		
-				for (var i=0; i < this.nodes.length; i++) {
-					system.addNode(this.nodes[i].id, this.nodes[i]);
-				};
-		
-				hui.each(this.lines,function(line) {
-					system.addEdge(line.from, line.to, line);
-				})
-				window.setTimeout(function() {
-					system.stop();
-				},6000)
+				this._particleSystemLoaded = true;
+				this._initParticleSystem();
 			}.bind(this))
-		}.bind(this));
+		}.bind(this));		
+	},
+	
+	_initParticleSystem : function() {
+		//return;
+		if (!this._particleSystemLoaded) {
+			this._loadParticleSystem();
+			return;
+		}
+		var repulsion = 50,
+			stiffness = 600,
+			friction = 0.5,
+			gravity = true,
+			fps = 55,
+			dt = 0.02,			// timestep to use for stepping the simulation
+			precision = 0.6;	// accuracy vs. speed in force calculations
+		
+		var myRenderer = {
+  			init:  function(system) {
+				hui.log("starting",system);
+			},
+  			redraw : function() {
+				var sel = this.selection ? this.selection.id : null;
+				system.eachNode(function(node,point) {
+					if (node.name!=sel) {
+						node.data.setCenter(point);						
+					}
+				});
+				system.eachEdge(function(edge,point1,point2) {
+					var line = edge.data.node;
+					if (edge.source.name!=sel) {
+						line.setFrom(point1);
+					}
+					if (edge.target.name!=sel) {
+						line.setTo(point2);						
+					}
+					this._updateLine(edge.data);
+				}.bind(this));
+			}.bind(this)
+		}
+		var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
+		//system.stop();
+		system.screenSize(this.element.clientWidth, this.element.clientHeight);
+		system.screenPadding(50,100);
+		system.renderer = myRenderer
+		
+		this._addToSystem();
+	},
+	_addToSystem : function() {
+		
+		var system = this.particleSystem;
+		
+		for (var i=0; i < this.nodes.length; i++) {
+			system.addNode(this.nodes[i].id, this.nodes[i]);
+		};
+		
+		hui.each(this.lines,function(line) {
+			system.addEdge(line.from, line.to, line);
+		}.bind(this))
+		
+		window.setTimeout(function() {
+			system.stop();
+		},6000)
 	},
 	
 	// Data ...
 	
 	/** @private */
 	$objectsLoaded : function(data) {
+		this.setData(data);
+	},
+	setData : function(data) {
 		this.clear();
 		var nodes = data.nodes,
 			lines = data.lines || data.edges;
+		if (!nodes || !lines) {
+			return;
+		}
 		for (var i=0; i < nodes.length; i++) {
-			this.addBox(nodes[i]);
+			if (nodes[i].type=='icon') {
+				this.addIcon(nodes[i]);
+			} else {
+				this.addBox(nodes[i]);				
+			}
 		};
 		for (var i=0; i < lines.length; i++) {
 			this.addLine(lines[i]);
 		};
-		this._initParticleSystem();
+		if (this.particleSystem) {
+			this._addToSystem();
+		} else {
+			this._initParticleSystem();
+		}
 	},
 	play : function() {
 		this._initParticleSystem();
@@ -121,14 +159,20 @@ hui.ui.Diagram.prototype = {
 	},
 	clear : function() {
 		if (this.particleSystem) {
+			this.particleSystem.prune(function() {return true});
 			this.particleSystem.stop();
 		}
+		this.selection = null;
 		this.background.clear();
 		this.lines = [];
 		for (var i = this.nodes.length - 1; i >= 0; i--){
 			hui.dom.remove(this.nodes[i].element);
 		};
 		this.nodes = [];
+		var lines = hui.get.byClass(this.element,'hui_diagram_line_label');
+		for (var i = lines.length - 1; i >= 0; i--){
+			hui.dom.remove(lines[i]);
+		};
 	},
 	
 	addBox : function(options) {
@@ -159,7 +203,7 @@ hui.ui.Diagram.prototype = {
 		}
 		var fromCenter = this._getCenter(from),
 			toCenter = this._getCenter(to);
-		var lineNode = this.background.addLine({ from: fromCenter, to: toCenter, color: options.color || '#999' }),
+		var lineNode = this.background.addLine({ from: fromCenter, to: toCenter, color: options.color || '#999' ,end:{}}),
 			line = { from: options.from, to: options.to, node: lineNode };
 		if (options.label) {
 			line.label = hui.build('span',{parent:this.element,'class':'hui_diagram_line_label',text:options.label});
@@ -190,8 +234,8 @@ hui.ui.Diagram.prototype = {
 		var from = line.node.getFrom(),
 			to = line.node.getTo();
 		var middle = { x : from.x+(to.x-from.x)/2, y : from.y+(to.y-from.y)/2 };
-		var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
-		line.label.style.webkitTransform='rotate('+deg+'deg)';
+		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
+		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
 		hui.style.set(line.label,{left : (middle.x-line.label.clientWidth/2)+'px',top : (middle.y-line.label.clientHeight/2)+'px'});
 	},
 	__nodeMoved : function(widget) {

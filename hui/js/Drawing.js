@@ -5,7 +5,7 @@ hui.ui.Drawing = function(options) {
 	this.options = hui.override({width:200,height:200},options);
 	this.element = hui.get(options.element);
 	hui.log({width:options.width,height:options.height})
-	this.svg = this._build({tag:'svg',parent:this.element,attributes:{width:options.width,height:options.height}});
+	this.svg = hui.ui.Drawing._build({tag:'svg',parent:this.element,attributes:{width:options.width,height:options.height}});
 	this.element.appendChild(this.svg);
 	this.name = options.name;
 	hui.ui.extend(this);
@@ -37,29 +37,11 @@ hui.ui.Drawing.prototype = {
 		hui.dom.clear(this.svg);
 	},
 	addLine : function(options) {
-		var attributes = {
-			x1 : options.x1,
-			y1 : options.y1,
-			x2 : options.x2,
-			y2 : options.y2,
-			style : 'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
-		};
-		if (options.from && options.to) {
-			attributes.x1 = options.from.x,
-			attributes.y1 = options.from.y,
-			attributes.x2 = options.to.x,
-			attributes.y2 = options.to.y
-		}
-		
-		var node = this._build({
-			tag : 'line',
-			parent : this.svg,
-			attributes : attributes
-		});
-		return new hui.ui.Drawing.Line(node);
+		options.parent = this.svg;
+		return hui.ui.Drawing.Line.create(options);
 	},
 	addCircle : function(options) {
-		var node = this._build({
+		var node = hui.ui.Drawing._build({
 			tag:'circle',
 			parent:this.svg,
 			attributes : {
@@ -90,35 +72,36 @@ hui.ui.Drawing.prototype = {
 			})
 		}
 		return element;
-	},
-	_build : function(options) {
-		if (false && (hui.browser.msie8 || hui.browser.msie7 || hui.browser.msie6)) {
-			var line = document.createElement("v:line");
-			line.setAttribute('from','0 0');
-			line.setAttribute('to','100 100');
-			line.setAttribute("fillcolor","#FF0000");
-			line.setAttribute("strokeweight","2pt");
-			return line;
-			
-			var frag = document.createDocumentFragment();
-			frag.insertAdjacentHTML('beforeEnd',
-				'<v:rect id="myRect" fillcolor="blue" style="top:10px;left:15px;width:50px;height:30px;position:absolute;"></biv:rect>'
-			);
-			document.body.appendChild(frag);
-			return document.getElementById('myRect');
-		} else {
-			var node = document.createElementNS('http://www.w3.org/2000/svg',options.tag);
-		}
-		if (options.attributes) {
-			for (att in options.attributes) {
-				node.setAttribute(att,options.attributes[att]);
-			}
-		}
-		if (options.parent) {
-			options.parent.appendChild(node);
-		}
-		return node;
 	}
+}
+
+hui.ui.Drawing._build = function(options) {
+	if (false && (hui.browser.msie8 || hui.browser.msie7 || hui.browser.msie6)) {
+		var line = document.createElement("v:line");
+		line.setAttribute('from','0 0');
+		line.setAttribute('to','100 100');
+		line.setAttribute("fillcolor","#FF0000");
+		line.setAttribute("strokeweight","2pt");
+		return line;
+			
+		var frag = document.createDocumentFragment();
+		frag.insertAdjacentHTML('beforeEnd',
+			'<v:rect id="myRect" fillcolor="blue" style="top:10px;left:15px;width:50px;height:30px;position:absolute;"></biv:rect>'
+		);
+		document.body.appendChild(frag);
+		return document.getElementById('myRect');
+	} else {
+		var node = document.createElementNS('http://www.w3.org/2000/svg',options.tag);
+	}
+	if (options.attributes) {
+		for (att in options.attributes) {
+			node.setAttribute(att,options.attributes[att]);
+		}
+	}
+	if (options.parent) {
+		options.parent.appendChild(node);
+	}
+	return node;
 }
 
 if (hui.browser.msie8) {
@@ -129,10 +112,45 @@ if (hui.browser.msie8) {
 
 // Drawing
 
-hui.ui.Drawing.Line = function(node) {
-	this.node = node;
-	this.from = {x:0,y:0};
-	this.to = {x:0,y:0};
+hui.ui.Drawing.Line = function(options) {
+	this.node = options.node;
+	this.endNode = options.endNode;
+	this.from = options.from;
+	this.to = options.to;
+	this._updateEnds();
+}
+
+hui.ui.Drawing.Line.create = function(options) {
+	if (!options.from) {
+		options.from = {x:options.x1,y:options.y1};
+	}
+	if (!options.to) {
+		options.to = {x:options.x2,y:options.y2};
+	}
+	
+	var attributes = {
+		x1 : options.from.x,
+		y1 : options.from.y,
+		x2 : options.to.x,
+		y2 : options.to.y,
+		style : 'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
+	};
+		
+	options.node = hui.ui.Drawing._build({
+		tag : 'line',
+		parent : options.parent,
+		attributes : attributes
+	});
+	
+
+	if (options.end) {
+		options.endNode = hui.ui.Drawing._build({
+			tag : 'path',
+			parent : options.parent,
+			attributes : {d:'M 0 -5 L 5 5 L -5 5',fill:options.color || '#000'}
+		})
+	}
+	return new hui.ui.Drawing.Line(options);
 }
 
 hui.ui.Drawing.Line.prototype = {
@@ -140,6 +158,7 @@ hui.ui.Drawing.Line.prototype = {
 		this.from = point;
 		this.node.setAttribute('x1',point.x);
 		this.node.setAttribute('y1',point.y);
+		this._updateEnds();
 	},
 	getFrom : function() {
 		return this.from;
@@ -148,9 +167,21 @@ hui.ui.Drawing.Line.prototype = {
 		this.to = point;
 		this.node.setAttribute('x2',point.x);
 		this.node.setAttribute('y2',point.y);
+		this._updateEnds();
 	},
 	getTo : function() {
 		return this.to;
+	},
+	_updateEnds : function() {
+		//var deg = Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
+		if (this.endNode) {
+			var deg = -90+Math.atan2(this.from.y-this.to.y, this.from.x-this.to.x)*180/Math.PI
+			this.endNode.setAttribute('transform','translate('+this.to.x+','+this.to.y+') rotate('+(deg)+')')
+
+		}
+	},
+	getDegree : function() {
+		return Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
 	}
 }
 
