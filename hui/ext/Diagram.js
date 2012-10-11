@@ -58,8 +58,8 @@ hui.ui.Diagram.prototype = {
 			stiffness = 600,
 			friction = 0.5,
 			gravity = true,
-			fps = 55,
-			dt = 0.02,			// timestep to use for stepping the simulation
+			fps = 40,
+			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
 			precision = 0.6;	// accuracy vs. speed in force calculations
 		
 		var myRenderer = {
@@ -311,7 +311,10 @@ hui.ui.Diagram.Box.create = function(options) {
 			var p = options.properties[i];
 			var tr = hui.build('tr',{parent:table});
 			hui.build('th',{parent:tr,text:p.label});
-			hui.build('td',{parent:tr,text:p.value});
+			var td = hui.build('td',{parent:tr,text:p.value});
+			if (p.hint) {
+				hui.build('em',{parent:td,text:p.hint});
+			}
 		};
 	}
 	return new hui.ui.Diagram.Box(options);

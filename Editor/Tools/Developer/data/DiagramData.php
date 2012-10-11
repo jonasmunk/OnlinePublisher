@@ -5,54 +5,43 @@
  */
 require_once '../../../Include/Private.php';
 
-$parent = Request::getString('parent');
+$super = Request::getString('parent');
 
-$diagram = array(
-	"nodes" => array(
-	),
-	"lines" => array(
-	)
-);
+$diagram = new DiagramData();
 
-$classes = ClassService::getClasses();
+$classes = ClassService::getClassInfo();
 
-$num = 1;
 foreach ($classes as $class) {
-	if (!($class['parent']=='Object' || $class['name']=='Object' || $class['parent']=='Entity' || $class['name']=='Entity' || $class['parent']=='Part' || $class['name']=='Part')) {
-	//if ($parent!='all' && !($class['parent']==$parent || $class['name']==$parent)) {
+	$parent = $class->getParent();
+	
+	if ($super && !in_array($super,$class->getHierarchy())) {
+		//Log::debug('Skipping: '.$class->getName());
 		continue;
 	}
-	$node = array(
-		'id' => $class['name'],
-		'title' => $class['name'],
-		'properties' => array()
-	);
-	foreach ($class['properties'] as $key => $value) {
-		$node['properties'][] = array('label'=>$key,'value'=>$value); //$value
-	}
-	$diagram['nodes'][] = $node;
-	
-	if (isset(Entity::$schema[$class['name']])) {
-		$info = Entity::$schema[$class['name']];
-		if ($info['properties']) {
-			foreach ($info['properties'] as $key => $value) {
-				if (isset($value['relation']) && is_array($value['relation'])) {
-					$diagram['lines'][] = array('from'=>$class['name'],'to'=>$value['relation']['class']);
-				}
-				if (isset($value['relations']) && is_array($value['relations'])) {
-					foreach ($value['relations'] as $relation) {
-						$diagram['lines'][] = array('from'=>$class['name'],'to'=>$relation['class']);
-					}
-				}
-			}
+	$node = new DiagramNode();
+	$node->setId($class->getName());
+	$node->setTitle($class->getName());
+	$properties = array();
+
+	foreach ($class->getProperties() as $property) {
+		if ($property->getOrigin()==$class->getName()) {
+			$properties[] = array('label'=>$property->getName(),'value'=>$property->getValue(),'hint'=>$property->getType());
 		}
 	}
-	
-	if ($class['parent']) {
-		$diagram['lines'][] = array('from'=>$class['name'],'to'=>$class['parent'],'color'=>'#eee');
-	}
 
-	$num++;
+	$node->setProperties($properties);
+	
+	$diagram->addNode($node);
+	
+	$relations = $class->getRelations();
+	
+	foreach ($relations as $relation) {
+		$diagram->addEdge()->from($relation->getFromClass())->to($relation->getToClass())->withLabel($relation->getFromProperty());
+	}
+	
+	if ($class->getParent()) {
+		$diagram->addEdge()->from($class->getName())->to($class->getParent())->withColor('#eee');
+	}
 }
 
 Response::sendObject($diagram);

@@ -106,3 +106,9 @@ div.hui_diagram_box th
 	color: #999;
 	text-align: right;
 }
+
+div.hui_diagram_box td em
+{
+	color: #999;
+	margin-left: 3px;
+}

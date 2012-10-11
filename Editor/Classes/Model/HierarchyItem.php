@@ -8,6 +8,19 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+Entity::$schema['HierarchyItem'] = array(
+	'table' => 'hierarchy_item',
+	'properties' => array(
+		'title' => array('type'=>'string'),
+		'hidden' => array('type'=>'boolean'),
+		'targetType' => array('type'=>'string'),
+		'targetValue' => array('type'=>'int','relations'=>array(
+			array('class'=>'Page','property'=>'id'),
+			array('class'=>'File','property'=>'id')
+			)
+		)
+	)
+);
 class HierarchyItem extends Entity {
         
 	var $title;

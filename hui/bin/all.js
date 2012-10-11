@@ -21304,7 +21304,10 @@ hui.ui.Diagram.Box.create = function(options) {
 			var p = options.properties[i];
 			var tr = hui.build('tr',{parent:table});
 			hui.build('th',{parent:tr,text:p.label});
-			hui.build('td',{parent:tr,text:p.value});
+			var td = hui.build('td',{parent:tr,text:p.value});
+			if (p.hint) {
+				hui.build('em',{parent:td,text:p.hint});
+			}
 		};
 	}
 	return new hui.ui.Diagram.Box(options);
@@ -21713,7 +21716,10 @@ hui.ui.Diagram.Box.create = function(options) {
 			var p = options.properties[i];
 			var tr = hui.build('tr',{parent:table});
 			hui.build('th',{parent:tr,text:p.label});
-			hui.build('td',{parent:tr,text:p.value});
+			var td = hui.build('td',{parent:tr,text:p.value});
+			if (p.hint) {
+				hui.build('em',{parent:td,text:p.hint});
+			}
 		};
 	}
 	return new hui.ui.Diagram.Box(options);

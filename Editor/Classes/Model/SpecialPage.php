@@ -7,7 +7,14 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-
+Entity::$schema['SpecialPage'] = array(
+	'table' => 'specialpage',
+	'properties' => array(
+		'language' => array('type'=>'string'),
+		'type' => array('type'=>'string'),
+		'pageId' => array('type'=>'int','relation'=>array('class'=>'Page','property'=>'id'))
+	)
+);
 class SpecialPage extends Entity {
         
 	var $pageId;

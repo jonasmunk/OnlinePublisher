@@ -11,8 +11,8 @@ if (!isset($GLOBALS['basePath'])) {
 class Part extends Entity
 {
 	static $schema = array();
-	protected $type;
-	protected $dynamic;
+	var $type;
+	var $dynamic;
 	
 	function Part($type) {
 		$this->type = $type;
