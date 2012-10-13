@@ -9,7 +9,7 @@ rm -rf ${DIR}/../api/symbols/*.html
 
 echo "Documenting"
 
-java -Xmx256m -jar jsdoc_toolkit/jsrun.jar jsdoc_toolkit/app/run.js -a -s -t=jsdoc_toolkit/templates/jsdoc -d=../api ${DIR}/../bin/all.js
+java -Xmx256m -jar jsdoc_toolkit/jsrun.jar jsdoc_toolkit/app/run.js -a -s -t=jsdoc_toolkit/templates/clean -d=../api ${DIR}/../bin/all.js
 
 
 #		-a or --allfunctions

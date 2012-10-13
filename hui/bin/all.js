@@ -21051,8 +21051,8 @@ hui.ui.Diagram.prototype = {
 			stiffness = 600,
 			friction = 0.5,
 			gravity = true,
-			fps = 55,
-			dt = 0.02,			// timestep to use for stepping the simulation
+			fps = 40,
+			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
 			precision = 0.6;	// accuracy vs. speed in force calculations
 		
 		var myRenderer = {
@@ -21463,8 +21463,8 @@ hui.ui.Diagram.prototype = {
 			stiffness = 600,
 			friction = 0.5,
 			gravity = true,
-			fps = 55,
-			dt = 0.02,			// timestep to use for stepping the simulation
+			fps = 40,
+			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
 			precision = 0.6;	// accuracy vs. speed in force calculations
 		
 		var myRenderer = {
