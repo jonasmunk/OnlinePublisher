@@ -10,19 +10,27 @@ $gui='
 	<controller source="controller.js"/>
 	<source name="listSource" url="data/ListIssues.php">
 		<parameter key="windowPage" value="@list.window.page"/>
-		<parameter key="kind" value="@selector.value"/>
+		<parameter key="filter" value="@selector.value"/>
+		<parameter key="text" value="@search.value"/>
 	</source>
+	<source name="sidebarSource" url="data/Sidebar.php"/>
 	<structure>
 		<top>
 			<toolbar>
+				<icon icon="common/note" overlay="new" title="Ny sag" name="addIssue"/>
 				<icon icon="common/info" title="Info" name="info"/>
+				<right>
+					<field label="{Search; da:Søgning}">
+						<searchfield expanded-width="200" name="search"/>
+					</field>
+				</right>
 			</toolbar>
 		</top>
 		<middle>
 			<left>
 				<overflow>
-				<selection value="overview" name="selector">
-					<item icon="view/list" title="{Overview; da:Oversigt}" value="overview"/>
+				<selection value="all" name="selector">
+					<items source="sidebarSource"/>
 				</selection>
 				</overflow>
 			</left>
@@ -35,7 +43,7 @@ $gui='
 		<bottom/>
 	</structure>
 
-	<window title="{Issue; da:Sag}" name="issueWindow" icon="common/folder" width="300" padding="5">
+	<window title="{Issue; da:Sag}" name="issueWindow" icon="common/folder" width="300" padding="10">
 		<formula name="issueFormula">
 			<fields labels="above">
 				<field label="{Title; da:Titel}">

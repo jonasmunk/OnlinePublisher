@@ -5,9 +5,15 @@
  */
 require_once '../../../Include/Private.php';
 
-$list = Query::after('issue')->get();
+$text = Request::getString('text');
+$filter = Request::getString('filter');
 
-//$list = array();
+$query = Query::after('issue')->withText($text);
+if ($filter!='all') {
+	$query->withProperty('kind',$filter);
+}
+
+$list = $query->get();
 
 $writer = new ListWriter();
 
@@ -35,6 +41,7 @@ foreach($list as $item) {
 			endIcons();
 		}
 		$writer->endCell()->
+		startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($item->getCreated()))->endCell()->
 	endRow();
 }
 $writer->endList();

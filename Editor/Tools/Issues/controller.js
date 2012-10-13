@@ -6,16 +6,34 @@ hui.ui.listen({
 	_issueId : null,
 	
 	$open$list : function(row) {
+		this._loadIssue(row.id);
+	},
+	
+	$click$addIssue : function() {
+		this._issueId = null;
+		issueFormula.reset();
+		issueWindow.show();
+		issueFormula.focus();
+	},
+	$valueChanged$search : function() {
+		selector.setValue('all');
+	},
+	$click$info : function() {
+		var row = list.getFirstSelection();
+		this._loadIssue(row.id);
+	},
+	_loadIssue : function(id) {
 		hui.ui.request({
 			url : 'data/LoadIssue.php',
-			parameters : { id : row.id },
+			parameters : { id : id },
 			onJSON : function(obj) {
 				this._issueId = obj.id;
 				issueFormula.setValues(obj);
 				issueWindow.show();				
 			}.bind(this)
-		})
+		})		
 	},
+	
 	$click$cancelIssue : function() {
 		this.clearIssue();
 	},
@@ -26,7 +44,6 @@ hui.ui.listen({
 			url : 'actions/SaveIssue.php',
 			json : {data : values},
 			onSuccess : function() {
-				list.refresh();
 				this.clearIssue();
 			}.bind(this)
 		})
@@ -36,12 +53,13 @@ hui.ui.listen({
 			url : 'actions/DeleteIssue.php',
 			parameters : {id : this._issueId},
 			onSuccess : function() {
-				list.refresh();
 				this.clearIssue();
 			}.bind(this)
 		})
 	},
 	clearIssue : function() {
+		list.refresh();
+		sidebarSource.refresh();
 		this._issueId = null;
 		issueFormula.reset();
 		issueWindow.hide();
