@@ -197,7 +197,7 @@ class UserAgentAnalyzer {
 			$this->searchEngine = false;
 			return;
 		}
-		//Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3
+		//Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 AMQPConnection/9B206 Safari/7534.48.3
 		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; [^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Version\/([0-9\.]+) Mobile\/([^ ]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
 			$this->technologyName = 'AppleWebKit';
 			$this->technologyVersion = $result[1];
@@ -207,6 +207,31 @@ class UserAgentAnalyzer {
 			$this->searchEngine = false;
 			return;
 		}
+		//Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 AMQPConnection/9B206 Safari/7534.48.3
+		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; [^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Version\/([0-9\.]+) Mobile\/([^ ]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
+			$this->technologyName = 'AppleWebKit';
+			$this->technologyVersion = $result[1];
+			$this->applicationName = $result[4];
+			$this->applicationVersion = $result[2];
+			$this->robot = false;
+			$this->searchEngine = false;
+			return;
+		}
+		
+		//Mozilla/5.0 (Linux; U; Android 4.0.4; da-dk; GT-P5110 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
+		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; U; Android ([0-9\.+]+); [^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Version\/([0-9\.]+) (Mobile )?Safari\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
+			$this->technologyName = 'AppleWebKit';
+			$this->technologyVersion = $result[2];
+			$this->applicationName = 'Android';
+			$this->applicationVersion = $result[1];
+			$this->robot = false;
+			$this->searchEngine = false;
+			return;
+		}
+		
+		
+		
+		
 		//Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1
 		elseif (preg_match ("/Mozilla\/5.0 \(([^;]+;)*[^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Chrome\/([0-9\.]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
 			$this->technologyName = 'AppleWebKit';

@@ -163,7 +163,7 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
         $this->assertEqual($analyzer->getApplicationVersion(),'4.0.4');
         $this->assertEqual($analyzer->getApplicationName(),'Android');
         $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
-        $this->assertEqual($analyzer->getTechnologyVersion(),'534.46');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'534.30');
         $this->assertFalse($analyzer->isRobot());
         $this->assertFalse($analyzer->isSearchEngine());
 
@@ -512,7 +512,16 @@ Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.4; Mozilla/
         $this->assertFalse($analyzer->isRobot());
         $this->assertFalse($analyzer->isSearchEngine());
 
+		$analyzer->setUserAgent('Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)');
+        $this->assertEqual($analyzer->getApplicationVersion(),'9.0');
+        $this->assertEqual($analyzer->getApplicationName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'9.0');
+        $this->assertFalse($analyzer->isPhone());
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
 
+		
 // 
 
 	}
