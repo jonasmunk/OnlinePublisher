@@ -38,83 +38,27 @@
 					parent : hui.get('container'),
 					height : 400
 				});
-				/*
-				var person = diagram.addBox({
-					id : 'person',
-					title : 'Person',
-					properties : [
-						{label:'First name',value:'String'},
-						{label:'Middle name',value:'String'},
-						{label:'Last name',value:'String'},
-						{label:'Initials',value:'String'},
-						{label:'Gender',value:'Boolean'}
-					]
-				});
-				
-				var email = diagram.addBox({
-					id : 'email',
-					title : 'E-mail',
-					properties : [
-						{label:'Address',value:'String'},
-						{label:'Context',value:'String'}
-					]
-				});
-				
-				var phone = diagram.addBox({
-					id : 'phone',
-					title : 'Phone number',
-					properties : [
-						{label:'Address',value:'String'},
-						{label:'Context',value:'String'}
-					]
-				});
-				
-				diagram.addIcon({
-					id : 'folder',
-					title : 'Phone number',
-					icon : 'common/folder'
-				});
-				
-				diagram.addIcon({
-					id : 'image1',
-					title : 'Image',
-					icon : 'common/image'
-				});
-				
-				diagram.addIcon({
-					id : 'image2',
-					title : 'Image',
-					icon : 'common/image'
-				});
-				
-				diagram.addIcon({
-					id : 'page',
-					title : 'Image',
-					icon : 'common/page'
-				});
-				
-				diagram.addLine({from:'person',to:'email',label:'Work'});
-				diagram.addLine({from:'person',to:'phone',label:'Private'});
-				diagram.addLine({from:'folder',to:'phone',label:'Hey'});
-				diagram.addLine({from:'folder',to:'image1',label:'Hey'});
-				diagram.addLine({from:'folder',to:'image2',label:'Hey'});
-				diagram.addLine({from:'page',to:'image2',label:'Hey'});
-				*/
 				
 				var data = {
 					nodes : [
-						{id:'jonas',type:'box',title:'Jonas Munk',properties:[{label:'gender',value:'Male'}]},
+						{id:'jonas',type:'box',title:'Jonas Munk',properties:[{label:'Gender',value:'Male'}]},
+						{id:'address',type:'box',title:'Home',properties:[{label:'Street',value:'H/F Sundbyvester'},{label:'City',value:'Copenhagen S'}]},
 						{id:'info',type:'icon',icon:'common/info',title:'Infomation'},
-						{id:'group',type:'icon',icon:'common/folder',title:'My stuff'}
+						{id:'group',type:'icon',icon:'common/folder',title:'My stuff'},
+						{id:'avatar',type:'icon',icon:'common/image',title:'Avatar'},
+						{id:'images',type:'icon',icon:'application/photos',title:'Gallery'}
 					],
 					edges : [
 						{from:'jonas',to:'info',label:'Vehicula Dolor'},
-						{from:'jonas',to:'group',label:'Vehicula Dolor'}
+						{from:'jonas',to:'group',label:'Sit Ipsum Vulputate Ullamcorper Egestas'},
+						{from:'jonas',to:'avatar',label:'Avatar',color:'#69f'},
+						{from:'avatar',to:'group'},
+						{from:'avatar',to:'images'},
+						{from:'jonas',to:'address'}
 					]
 				};
-				var json = hui.string.toJSON(data);
+				var json = JSON.stringify(data,null,4)
 				diagram.setData(data);
-				//diagram.play();
 				
 				
 				var win = hui.ui.Window.create({width:600});

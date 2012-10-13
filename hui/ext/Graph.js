@@ -209,10 +209,7 @@ hui.ui.Graph.D3 = {
 			link.source = this._findById(nodes,link.from);
 			link.target = this._findById(nodes,link.to);
 		};
-		hui.log(data);
-		return data;
-		
-		return {"nodes":[{"name":"Person","group":1,"icon":"monochrome/person"},{"name":"Email","group":1},{"name":"Group","group":1}],"links":[{"source":1,"target":0,"value":1},{"source":0,"target":0,"value":2},{"source":1,"target":2,"value":2}]};
+		return data;		
 	},
 	
 	clear : function() {

@@ -17746,10 +17746,7 @@ hui.ui.Graph.D3 = {
 			link.source = this._findById(nodes,link.from);
 			link.target = this._findById(nodes,link.to);
 		};
-		hui.log(data);
-		return data;
-		
-		return {"nodes":[{"name":"Person","group":1,"icon":"monochrome/person"},{"name":"Email","group":1},{"name":"Group","group":1}],"links":[{"source":1,"target":0,"value":1},{"source":0,"target":0,"value":2},{"source":1,"target":2,"value":2}]};
+		return data;		
 	},
 	
 	clear : function() {
@@ -21001,7 +20998,9 @@ hui.ui.Diagram = function(options) {
 	this.lines = [];
 	this.element = hui.get(options.element);
 	this.width = this.element.clientWidth;	
-	this.height = this.element.clientHeight;	
+	this.height = this.element.clientHeight;
+	this.layout = hui.ui.Diagram.Arbor;
+	this.layout.diagram = this;
 	hui.ui.extend(this);
 	if (options.source) {
 		options.source.listen(this);
@@ -21031,63 +21030,6 @@ hui.ui.Diagram.prototype = {
 		}.bind(this))
 		this.fire('added');
 	},
-	
-	_loadParticleSystem : function() {
-		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
-			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
-				this._particleSystemLoaded = true;
-				this._initParticleSystem();
-			}.bind(this))
-		}.bind(this));		
-	},
-	
-	_initParticleSystem : function() {
-		//return;
-		if (!this._particleSystemLoaded) {
-			this._loadParticleSystem();
-			return;
-		}
-		var repulsion = 50,
-			stiffness = 600,
-			friction = 0.5,
-			gravity = true,
-			fps = 40,
-			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
-			precision = 0.6;	// accuracy vs. speed in force calculations
-		
-		var myRenderer = {
-  			init:  function(system) {
-				hui.log("starting",system);
-			},
-  			redraw : function() {
-				var sel = this.selection ? this.selection.id : null;
-				system.eachNode(function(node,point) {
-					if (node.name!=sel) {
-						node.data.setCenter(point);						
-					}
-				});
-				system.eachEdge(function(edge,point1,point2) {
-					var line = edge.data.node;
-					if (edge.source.name!=sel) {
-						var magnet = this._getMagnet(point2,point1,edge.source.data)
-						line.setFrom(magnet);
-					}
-					if (edge.target.name!=sel) {
-						var magnet = this._getMagnet(point1,point2,edge.target.data)
-						line.setTo(magnet);						
-					}
-					this._updateLine(edge.data);
-				}.bind(this));
-			}.bind(this)
-		}
-		var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
-		//system.stop();
-		system.screenSize(this.element.clientWidth, this.element.clientHeight);
-		system.screenPadding(50,100);
-		system.renderer = myRenderer
-		
-		this._addToSystem();
-	},
 	_getMagnet : function(from,to,node) {
 		var margin = 1;
 		var topLeft = {
@@ -21104,22 +21046,6 @@ hui.ui.Diagram.prototype = {
 			return hits[0];
 		}
 		return to;
-	},
-	_addToSystem : function() {
-		
-		var system = this.particleSystem;
-		
-		for (var i=0; i < this.nodes.length; i++) {
-			system.addNode(this.nodes[i].id, this.nodes[i]);
-		};
-		
-		hui.each(this.lines,function(line) {
-			system.addEdge(line.from, line.to, line);
-		}.bind(this))
-		
-		window.setTimeout(function() {
-			system.stop();
-		},6000)
 	},
 	
 	// Data ...
@@ -21145,14 +21071,14 @@ hui.ui.Diagram.prototype = {
 		for (var i=0; i < lines.length; i++) {
 			this.addLine(lines[i]);
 		};
-		if (this.particleSystem) {
-			this._addToSystem();
+		if (this.layout.loaded) {
+			this.layout.populate();
 		} else {
-			this._initParticleSystem();
+			this.play();
 		}
 	},
 	play : function() {
-		this._initParticleSystem();
+		this.layout.start();
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
@@ -21170,10 +21096,7 @@ hui.ui.Diagram.prototype = {
 		}
 	},
 	clear : function() {
-		if (this.particleSystem) {
-			this.particleSystem.prune(function() {return true});
-			this.particleSystem.stop();
-		}
+		this.layout.clear();
 		this.selection = null;
 		this.background.clear();
 		this.lines = [];
@@ -21282,6 +21205,258 @@ hui.ui.Diagram.prototype = {
 }
 
 
+hui.ui.Diagram.Arbor = {
+	running : false,
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
+			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
+				this.loaded = true;
+				this.start();
+			}.bind(this))
+		}.bind(this));		
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var repulsion = 50,
+			stiffness = 600,
+			friction = 0.5,
+			gravity = true,
+			fps = 40,
+			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
+			precision = 0.6;	// accuracy vs. speed in force calculations
+		
+		var diagram = this.diagram;
+		
+		var renderer = {
+  			init:  function(system) {
+				hui.log("starting",system);
+			},
+  			redraw : function() {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				system.eachNode(function(node,point) {
+					if (node.name!=sel) {
+						node.data.setCenter(point);						
+					}
+				});
+				system.eachEdge(function(edge,point1,point2) {
+					var line = edge.data.node;
+					if (edge.source.name!=sel) {
+						var magnet = diagram._getMagnet(point2,point1,edge.source.data)
+						line.setFrom(magnet);
+					}
+					if (edge.target.name!=sel) {
+						var magnet = diagram._getMagnet(point1,point2,edge.target.data)
+						line.setTo(magnet);						
+					}
+					diagram._updateLine(edge.data);
+				}.bind(this));
+			}.bind(this)
+		}
+		var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
+		system.screenSize(diagram.element.clientWidth, diagram.element.clientHeight);
+		system.screenPadding(50,100);
+		system.renderer = renderer
+		
+		this.populate();
+	},
+	populate : function() {
+		var system = this.particleSystem,
+			nodes = this.diagram.nodes,
+			lines = this.diagram.lines;
+		
+		for (var i=0; i < nodes.length; i++) {
+			system.addNode(nodes[i].id, nodes[i]);
+		};
+		
+		hui.each(lines,function(line) {
+			system.addEdge(line.from, line.to, line);
+		})
+		
+		window.setTimeout(function() {
+			system.stop();
+		},6000)
+	},
+	clear : function() {
+		if (this.particleSystem) {
+			this.particleSystem.prune(function() {return true});
+			this.particleSystem.stop();
+		}
+	}
+}
+
+
+
+hui.ui.Diagram.D3 = {
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require('http://d3js.org/d3.v2.js',function() {
+			this.loaded = true;
+			this.start();
+		}.bind(this))
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var diagram = this.diagram,
+			nodes = diagram.nodes,
+			lines = diagram.lines,
+			width = diagram.element.clientWidth,
+			height = diagram.element.clientHeight;
+		
+		for (var i=0; i < lines.length; i++) {
+			lines[i].source = this._findById(nodes,lines[i].from);
+			lines[i].target = this._findById(nodes,lines[i].to);
+		};
+		
+		var force = this.layout = d3.layout.force()
+			.charge(-1000)
+			.gravity(0.20)
+			.distance(width/3)
+			.nodes(this.diagram.nodes)
+			.links(this.diagram.lines)
+			.size([width, height]);
+		force.on("tick", function() {
+			var nodes = force.nodes(),
+				links = force.links();
+			for (var i=0; i < nodes.length; i++) {
+				var node = diagram.nodes[nodes[i].index];
+				node.setCenter(nodes[i]);
+			};
+			for (var i=0; i < links.length; i++) {
+				var link = links[i];
+				var from = diagram._getMagnet(link.source.center,link.target.center,link.source)
+				var to = diagram._getMagnet(link.target.center,link.source.center,link.target)
+				link.node.setFrom(from);
+				link.node.setTo(to);
+				diagram._updateLine(link);
+			};
+		});
+		force.start()
+	},
+	_findById : function(nodes,id) {
+		for (var i = nodes.length - 1; i >= 0; i--){
+			if (nodes[i].id===id) {
+				return i;
+			}
+		};
+		return null;
+	},
+	_convert : function(data) {
+		var nodes = data.nodes;
+		data.links = data.edges;
+		for (var i = data.links.length - 1; i >= 0; i--){
+			var link = data.links[i];
+			link.source = this._findById(nodes,link.from);
+			link.target = this._findById(nodes,link.to);
+		};
+		return data;		
+	},
+	populate : function() {
+		
+	},
+	clear : function() {
+		
+	}
+	
+}
+
+
+
+hui.ui.Diagram.Springy = {
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require(hui.ui.context+'/hui/lib/springy/springy.js',function() {
+			this.loaded = true;
+			this.start();
+		}.bind(this))
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var diagram = this.diagram,
+			nodes = diagram.nodes,
+			lines = diagram.lines,
+			width = diagram.element.clientWidth,
+			height = diagram.element.clientHeight;
+		
+		var graph = new Graph();
+		var cachedNodes = {},
+			cachedLines = {};
+		for (var i=0; i < nodes.length; i++) {
+			cachedNodes[nodes[i].id] = graph.newNode(nodes[i]);
+		};
+		
+		for (var i=0; i < lines.length; i++) {
+			var edge = graph.newEdge(
+				cachedNodes[lines[i].from],
+				cachedNodes[lines[i].to]
+			);
+			cachedLines[edge.id] = lines[i];
+		};
+		
+		var layout = new Layout.ForceDirected(graph, width, height, 0.1);
+		
+		var toScreen = function(p) {
+			  return {
+				  x : (p.x*width/10)+width/2,
+				  y : (p.y*height/10)+height/2
+			  }
+		  }
+		
+		var renderer = new Renderer(100, layout,
+		  function clear() {
+			  
+		  },
+		  function drawEdge(edge, p1, p2) {
+			  p1 = toScreen(p1);
+			  p2 = toScreen(p2);
+			  var line = cachedLines[edge.id];
+				var from = diagram._getMagnet(p1,p2,edge.source.data)
+				var to = diagram._getMagnet(p1,p2,edge.target.data)
+			  line.node.setFrom(from);
+			  line.node.setTo(to);
+				diagram._updateLine(line);
+		  },
+		  function drawNode(node, p) {
+			  node.data.setCenter(toScreen(p));
+		  }
+		);
+		renderer.start();
+	},
+	_findById : function(nodes,id) {
+		for (var i = nodes.length - 1; i >= 0; i--){
+			if (nodes[i].id===id) {
+				return nodes[i];
+			}
+		};
+		return null;
+	},
+	populate : function() {
+		
+	},
+	clear : function() {
+		
+	}
+	
+}
+
 
 /** A box in a diagram
  * @constructor
@@ -21291,6 +21466,7 @@ hui.ui.Diagram.Box = function(options) {
 	this.id = options.id;
 	this.name = options.name;
 	this.element = hui.get(options.element);	
+	this.center = {};
 	hui.ui.extend(this);
 	hui.ui.Diagram.util.enableDragging(this)
 }
@@ -21318,6 +21494,7 @@ hui.ui.Diagram.Box.prototype = {
 		var e = this.element;
 		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
 		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		this.center = point;
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_box_selected',selected);
@@ -21340,6 +21517,7 @@ hui.ui.Diagram.Icon = function(options) {
 	this.id = options.id;
 	this.name = options.name;
 	this.element = hui.get(options.element);	
+	this.center = {};
 	hui.ui.extend(this);
 	hui.ui.Diagram.util.enableDragging(this)
 }
@@ -21358,6 +21536,7 @@ hui.ui.Diagram.Icon.prototype = {
 		var e = this.element;
 		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
 		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		this.center = point;
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_icon_selected',selected);
@@ -21413,7 +21592,9 @@ hui.ui.Diagram = function(options) {
 	this.lines = [];
 	this.element = hui.get(options.element);
 	this.width = this.element.clientWidth;	
-	this.height = this.element.clientHeight;	
+	this.height = this.element.clientHeight;
+	this.layout = hui.ui.Diagram.Arbor;
+	this.layout.diagram = this;
 	hui.ui.extend(this);
 	if (options.source) {
 		options.source.listen(this);
@@ -21443,63 +21624,6 @@ hui.ui.Diagram.prototype = {
 		}.bind(this))
 		this.fire('added');
 	},
-	
-	_loadParticleSystem : function() {
-		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
-			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
-				this._particleSystemLoaded = true;
-				this._initParticleSystem();
-			}.bind(this))
-		}.bind(this));		
-	},
-	
-	_initParticleSystem : function() {
-		//return;
-		if (!this._particleSystemLoaded) {
-			this._loadParticleSystem();
-			return;
-		}
-		var repulsion = 50,
-			stiffness = 600,
-			friction = 0.5,
-			gravity = true,
-			fps = 40,
-			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
-			precision = 0.6;	// accuracy vs. speed in force calculations
-		
-		var myRenderer = {
-  			init:  function(system) {
-				hui.log("starting",system);
-			},
-  			redraw : function() {
-				var sel = this.selection ? this.selection.id : null;
-				system.eachNode(function(node,point) {
-					if (node.name!=sel) {
-						node.data.setCenter(point);						
-					}
-				});
-				system.eachEdge(function(edge,point1,point2) {
-					var line = edge.data.node;
-					if (edge.source.name!=sel) {
-						var magnet = this._getMagnet(point2,point1,edge.source.data)
-						line.setFrom(magnet);
-					}
-					if (edge.target.name!=sel) {
-						var magnet = this._getMagnet(point1,point2,edge.target.data)
-						line.setTo(magnet);						
-					}
-					this._updateLine(edge.data);
-				}.bind(this));
-			}.bind(this)
-		}
-		var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
-		//system.stop();
-		system.screenSize(this.element.clientWidth, this.element.clientHeight);
-		system.screenPadding(50,100);
-		system.renderer = myRenderer
-		
-		this._addToSystem();
-	},
 	_getMagnet : function(from,to,node) {
 		var margin = 1;
 		var topLeft = {
@@ -21516,22 +21640,6 @@ hui.ui.Diagram.prototype = {
 			return hits[0];
 		}
 		return to;
-	},
-	_addToSystem : function() {
-		
-		var system = this.particleSystem;
-		
-		for (var i=0; i < this.nodes.length; i++) {
-			system.addNode(this.nodes[i].id, this.nodes[i]);
-		};
-		
-		hui.each(this.lines,function(line) {
-			system.addEdge(line.from, line.to, line);
-		}.bind(this))
-		
-		window.setTimeout(function() {
-			system.stop();
-		},6000)
 	},
 	
 	// Data ...
@@ -21557,14 +21665,14 @@ hui.ui.Diagram.prototype = {
 		for (var i=0; i < lines.length; i++) {
 			this.addLine(lines[i]);
 		};
-		if (this.particleSystem) {
-			this._addToSystem();
+		if (this.layout.loaded) {
+			this.layout.populate();
 		} else {
-			this._initParticleSystem();
+			this.play();
 		}
 	},
 	play : function() {
-		this._initParticleSystem();
+		this.layout.start();
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
@@ -21582,10 +21690,7 @@ hui.ui.Diagram.prototype = {
 		}
 	},
 	clear : function() {
-		if (this.particleSystem) {
-			this.particleSystem.prune(function() {return true});
-			this.particleSystem.stop();
-		}
+		this.layout.clear();
 		this.selection = null;
 		this.background.clear();
 		this.lines = [];
@@ -21694,6 +21799,258 @@ hui.ui.Diagram.prototype = {
 }
 
 
+hui.ui.Diagram.Arbor = {
+	running : false,
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
+			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
+				this.loaded = true;
+				this.start();
+			}.bind(this))
+		}.bind(this));		
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var repulsion = 50,
+			stiffness = 600,
+			friction = 0.5,
+			gravity = true,
+			fps = 40,
+			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
+			precision = 0.6;	// accuracy vs. speed in force calculations
+		
+		var diagram = this.diagram;
+		
+		var renderer = {
+  			init:  function(system) {
+				hui.log("starting",system);
+			},
+  			redraw : function() {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				system.eachNode(function(node,point) {
+					if (node.name!=sel) {
+						node.data.setCenter(point);						
+					}
+				});
+				system.eachEdge(function(edge,point1,point2) {
+					var line = edge.data.node;
+					if (edge.source.name!=sel) {
+						var magnet = diagram._getMagnet(point2,point1,edge.source.data)
+						line.setFrom(magnet);
+					}
+					if (edge.target.name!=sel) {
+						var magnet = diagram._getMagnet(point1,point2,edge.target.data)
+						line.setTo(magnet);						
+					}
+					diagram._updateLine(edge.data);
+				}.bind(this));
+			}.bind(this)
+		}
+		var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
+		system.screenSize(diagram.element.clientWidth, diagram.element.clientHeight);
+		system.screenPadding(50,100);
+		system.renderer = renderer
+		
+		this.populate();
+	},
+	populate : function() {
+		var system = this.particleSystem,
+			nodes = this.diagram.nodes,
+			lines = this.diagram.lines;
+		
+		for (var i=0; i < nodes.length; i++) {
+			system.addNode(nodes[i].id, nodes[i]);
+		};
+		
+		hui.each(lines,function(line) {
+			system.addEdge(line.from, line.to, line);
+		})
+		
+		window.setTimeout(function() {
+			system.stop();
+		},6000)
+	},
+	clear : function() {
+		if (this.particleSystem) {
+			this.particleSystem.prune(function() {return true});
+			this.particleSystem.stop();
+		}
+	}
+}
+
+
+
+hui.ui.Diagram.D3 = {
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require('http://d3js.org/d3.v2.js',function() {
+			this.loaded = true;
+			this.start();
+		}.bind(this))
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var diagram = this.diagram,
+			nodes = diagram.nodes,
+			lines = diagram.lines,
+			width = diagram.element.clientWidth,
+			height = diagram.element.clientHeight;
+		
+		for (var i=0; i < lines.length; i++) {
+			lines[i].source = this._findById(nodes,lines[i].from);
+			lines[i].target = this._findById(nodes,lines[i].to);
+		};
+		
+		var force = this.layout = d3.layout.force()
+			.charge(-1000)
+			.gravity(0.20)
+			.distance(width/3)
+			.nodes(this.diagram.nodes)
+			.links(this.diagram.lines)
+			.size([width, height]);
+		force.on("tick", function() {
+			var nodes = force.nodes(),
+				links = force.links();
+			for (var i=0; i < nodes.length; i++) {
+				var node = diagram.nodes[nodes[i].index];
+				node.setCenter(nodes[i]);
+			};
+			for (var i=0; i < links.length; i++) {
+				var link = links[i];
+				var from = diagram._getMagnet(link.source.center,link.target.center,link.source)
+				var to = diagram._getMagnet(link.target.center,link.source.center,link.target)
+				link.node.setFrom(from);
+				link.node.setTo(to);
+				diagram._updateLine(link);
+			};
+		});
+		force.start()
+	},
+	_findById : function(nodes,id) {
+		for (var i = nodes.length - 1; i >= 0; i--){
+			if (nodes[i].id===id) {
+				return i;
+			}
+		};
+		return null;
+	},
+	_convert : function(data) {
+		var nodes = data.nodes;
+		data.links = data.edges;
+		for (var i = data.links.length - 1; i >= 0; i--){
+			var link = data.links[i];
+			link.source = this._findById(nodes,link.from);
+			link.target = this._findById(nodes,link.to);
+		};
+		return data;		
+	},
+	populate : function() {
+		
+	},
+	clear : function() {
+		
+	}
+	
+}
+
+
+
+hui.ui.Diagram.Springy = {
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require(hui.ui.context+'/hui/lib/springy/springy.js',function() {
+			this.loaded = true;
+			this.start();
+		}.bind(this))
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var diagram = this.diagram,
+			nodes = diagram.nodes,
+			lines = diagram.lines,
+			width = diagram.element.clientWidth,
+			height = diagram.element.clientHeight;
+		
+		var graph = new Graph();
+		var cachedNodes = {},
+			cachedLines = {};
+		for (var i=0; i < nodes.length; i++) {
+			cachedNodes[nodes[i].id] = graph.newNode(nodes[i]);
+		};
+		
+		for (var i=0; i < lines.length; i++) {
+			var edge = graph.newEdge(
+				cachedNodes[lines[i].from],
+				cachedNodes[lines[i].to]
+			);
+			cachedLines[edge.id] = lines[i];
+		};
+		
+		var layout = new Layout.ForceDirected(graph, width, height, 0.1);
+		
+		var toScreen = function(p) {
+			  return {
+				  x : (p.x*width/10)+width/2,
+				  y : (p.y*height/10)+height/2
+			  }
+		  }
+		
+		var renderer = new Renderer(100, layout,
+		  function clear() {
+			  
+		  },
+		  function drawEdge(edge, p1, p2) {
+			  p1 = toScreen(p1);
+			  p2 = toScreen(p2);
+			  var line = cachedLines[edge.id];
+				var from = diagram._getMagnet(p1,p2,edge.source.data)
+				var to = diagram._getMagnet(p1,p2,edge.target.data)
+			  line.node.setFrom(from);
+			  line.node.setTo(to);
+				diagram._updateLine(line);
+		  },
+		  function drawNode(node, p) {
+			  node.data.setCenter(toScreen(p));
+		  }
+		);
+		renderer.start();
+	},
+	_findById : function(nodes,id) {
+		for (var i = nodes.length - 1; i >= 0; i--){
+			if (nodes[i].id===id) {
+				return nodes[i];
+			}
+		};
+		return null;
+	},
+	populate : function() {
+		
+	},
+	clear : function() {
+		
+	}
+	
+}
+
 
 /** A box in a diagram
  * @constructor
@@ -21703,6 +22060,7 @@ hui.ui.Diagram.Box = function(options) {
 	this.id = options.id;
 	this.name = options.name;
 	this.element = hui.get(options.element);	
+	this.center = {};
 	hui.ui.extend(this);
 	hui.ui.Diagram.util.enableDragging(this)
 }
@@ -21730,6 +22088,7 @@ hui.ui.Diagram.Box.prototype = {
 		var e = this.element;
 		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
 		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		this.center = point;
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_box_selected',selected);
@@ -21752,6 +22111,7 @@ hui.ui.Diagram.Icon = function(options) {
 	this.id = options.id;
 	this.name = options.name;
 	this.element = hui.get(options.element);	
+	this.center = {};
 	hui.ui.extend(this);
 	hui.ui.Diagram.util.enableDragging(this)
 }
@@ -21770,6 +22130,7 @@ hui.ui.Diagram.Icon.prototype = {
 		var e = this.element;
 		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
 		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		this.center = point;
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_icon_selected',selected);
