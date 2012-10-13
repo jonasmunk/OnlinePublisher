@@ -199,6 +199,7 @@ var controller = {
 			case 'moveColumnLeft' : columnsController.moveColumn(this.menuInfo.columnId,-1); break;
 			case 'moveColumnRight' : columnsController.moveColumn(this.menuInfo.columnId,1); break;
 			
+			case 'editRow' : rowsController.editRow(this.menuInfo.rowId); break;
 			case 'addRow' : this.addRow(this.menuInfo.rowIndex+1); break;
 			case 'deleteRow' : this.deleteRow(this.menuInfo.rowId); break;
 			case 'moveRowUp' : this.moveRow(this.menuInfo.rowId,-1); break;

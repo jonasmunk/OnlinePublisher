@@ -3,23 +3,22 @@ var columnsController = {
 	columnId : null,
 	
 	editColumn : function(columnId) {
-		if (this.editedColumn) {
-			this._resetColumn();
-		}
+		rowsController.reset();
+		this.reset();
 		this.columnId = columnId;
 		var node = hui.get('column'+this.columnId);
 		hui.cls.add(node,'editor_column_highlighted');
 		this.editedColumn = {
 			id : this.columnId,
-			initialWidth : node.style.width,
+			style : node.getAttribute('style'),
 			node : node
 		}
 		hui.ui.request({
-			message : {start : 'Åbner kolonne...',delay:300},
+			message : {start : {en:'Loading column...',da:'Åbner kolonne...'},delay:300},
 			url : 'data/LoadColumn.php',
 			parameters : { id : this.editedColumn.id },
 			onJSON : function(obj) {
-				var values = {preset:'dynamic',width:''};
+				var values = {preset:'dynamic',width:'',left:obj.left,right:obj.right,top:obj.top,bottom:obj.bottom};
 				if (obj.width=='min') {
 					values.preset='min';
 				} else if (obj.width=='max') {
@@ -77,22 +76,29 @@ var columnsController = {
 			} else {
 				node.style.width=values.width || 'auto';
 			}
+			node.style.paddingLeft = values.left;
+			node.style.paddingRight = values.right;
+			node.style.paddingTop = values.top;
+			node.style.paddingBottom = values.bottom;
 		} else {
 			hui.log('Column node not found');
 		}
 	},
-	_resetColumn : function() {
-		this.editedColumn.node.style.width = this.editedColumn.initialWidth;
+	reset : function() {
+		if (!this.editedColumn) {
+			return;
+		}
+		this.editedColumn.node.setAttribute('style',this.editedColumn.style);
 		hui.cls.remove(this.editedColumn.node,'editor_column_highlighted');
 		this.editedColumn = null;
 		columnFormula.reset();
 		columnWindow.hide();
 	},
 	$userClosedWindow$columnWindow : function() {
-		this._resetColumn();
+		this.reset();
 	},
 	$click$cancelColumn : function() {
-		this._resetColumn();
+		this.reset();
 	},
 	$click$deleteColumn : function() {
 		document.location='data/DeleteColumn.php?column='+this.editedColumn.id;
@@ -100,7 +106,11 @@ var columnsController = {
 	$submit$columnFormula : function(form) {
 		var values = form.getValues();
 		var p = {
-			id : this.editedColumn.id
+			id : this.editedColumn.id,
+			left : values.left,
+			right : values.right,
+			top : values.top,
+			bottom : values.bottom
 		};
 		if (values.preset=='min' || values.preset=='max') {
 			p.width = values.preset;
@@ -113,13 +123,10 @@ var columnsController = {
 			message : {start : {en:'Saving column...',da:'Gemmer kolonne...'},delay:300},
 			onSuccess : function() {
 				hui.ui.showMessage({text:{en:'The column is saved',da:'Kolonnen er gemt'},duration:2000,icon:'common/success'});
-				this._markToolbarChanged();
+				controller._markToolbarChanged();
 			}.bind(this)
 		});
-		hui.cls.remove(this.editedColumn.node,'editor_column_highlighted');
-		this.editedColumn = null;
-		columnFormula.reset();
-		columnWindow.hide();
+		this.reset();
 	}
 }
 

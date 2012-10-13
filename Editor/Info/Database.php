@@ -99,12 +99,18 @@ $databaseTables = array(
 			array("row_id","int(11)","","","0",""),
 			array("index","int(11)","","","0",""),
 			array("page_id","int(11)","","","0",""),
-			array("width","varchar(50)","","","","")
+			array("width","varchar(50)","","","",""),
+			array("top","varchar(10)","YES","","",""),
+			array("bottom","varchar(10)","YES","","",""),
+			array("left","varchar(10)","YES","","",""),
+			array("right","varchar(10)","YES","","","")
 		),
 	'document_row' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("page_id","int(11)","","","0",""),
-			array("index","int(11)","","","0","")
+			array("index","int(11)","","","0",""),
+			array("top","varchar(10)","YES","","",""),
+			array("bottom","varchar(10)","YES","","","")
 		),
 	'document_section' => array(
 			array("id","int(11)","","PRI","","auto_increment"),

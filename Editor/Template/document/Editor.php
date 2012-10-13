@@ -135,6 +135,7 @@ if ($section==null) {
 			<item text="{Move left; da:Flyt kolonne til venstre}" value="moveColumnLeft"/>
 			<item text="{Delete column; da:Slet kolonne}" value="deleteColumn"/>
 			<divider/>
+			<item text="{Edit row; da:Instil række}" value="editRow"/>
 			<item text="{Move up; da:Flyt op}" value="moveRowUp"/>
 			<item text="{Move down; da:Flyt ned}" value="moveRowDown"/>
 			<item text="{Add row; da:Tilføj række}" value="addRow"/>
@@ -158,6 +159,7 @@ if ($section==null) {
 				<item text="{Delete column; da:Slet kolonne}" value="deleteColumn"/>
 			</item>
 			<item text="{Row ; da:Række}">
+				<item text="{Edit row; da:Instil række}" value="editRow"/>
 				<item text="{Move up; da:Flyt op}" value="moveRowUp"/>
 				<item text="{Move down; da:Flyt ned}" value="moveRowDown"/>
 				<item text="{Add row; da:Tilføj række}" value="addRow"/>
@@ -186,9 +188,30 @@ if ($section==null) {
 			<divider/>
 			<item text="{Paste; da:Indsæt}" value="paste"/>
 		</menu>
+		
+		<window width="300" name="rowWindow" padding="5" title="{Row; da:Række}">
+			<formula name="rowFormula">
+				<fields>
+					<field label="{Top; da:Top}">
+						<style-length-input key="top"/>
+					</field>
+					<field label="{Bottom; da:Bund}">
+						<style-length-input key="bottom"/>
+					</field>
+				</fields>
+				<buttons top="5">
+					<button text="{Delete; da:Slet}" name="deleteRow">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
+					</button>
+					<button text="{Cancel; da:Annuller}" name="cancelRow"/>
+					<button text="{Update; da:Opdater}" submit="true" highlighted="true" name="saveRow"/>
+				</buttons>
+			</formula>
+		</window>
 
 		<window width="300" name="columnWindow" padding="5" title="{Column; da:Kolonne}">
 			<formula name="columnFormula">
+				<space all="5">
 				<fields labels="above">
 					<field label="{Width...; da:Bredde...}">
 						<radiobuttons key="preset" name="columnPreset">
@@ -198,10 +221,29 @@ if ($section==null) {
 							<item value="specific" text="{Special; da:Speciel...}"/>
 						</radiobuttons>
 					</field>
-					<field label="{Width; da:Bredde}">
+					<field label="{Special width; da:Speciel bredde}">
 						<style-length-input key="width" name="columnWidth"/>
 					</field>
 				</fields>
+				<columns>
+					<column>
+						<field label="{Left; da:Venstre}">
+							<style-length-input key="left"/>
+						</field>
+						<field label="{Right; da:Højre}">
+							<style-length-input key="right"/>
+						</field>
+					</column>
+					<column>
+						<field label="{Top; da:Top}">
+							<style-length-input key="top"/>
+						</field>
+						<field label="{Bottom; da:Bund}">
+							<style-length-input key="bottom"/>
+						</field>
+					</column>
+				</columns>
+				</space>
 				<buttons top="5">
 					<button text="{Delete; da:Slet}" name="deleteColumn">
 						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
@@ -269,25 +311,37 @@ function displayColumns($rowId,$rowIndex) {
 	$sql="select * from document_column where row_id=".Database::int($rowId)." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$columnWidth=$row['width'];
+		$style = '';
+		$columnWidth = $row['width'];
 		if ($columnWidth!='') {
 			if ($columnWidth=='min') {
-				$columnWidth=' style="width: 1%"';
+				$style.= 'width: 1%;';
 			}
 			elseif ($columnWidth=='max') {
-				$columnWidth=' style="width: 100%"';
+				$style.= 'width: 100%;';
 			}
 			else {
-				$columnWidth=' style="width: '.$columnWidth.'"';
+				$style.= 'width: '.$columnWidth.';';
 			}
 		}
+		if ($row['left']) {
+			$style.= 'padding-left: '.$row['left'].';';
+		}
+		if ($row['right']) {
+			$style.= 'padding-right: '.$row['right'].';';
+		}
+		if ($row['top']) {
+			$style.= 'padding-top: '.$row['top'].';';
+		}
+		if ($row['bottom']) {
+			$style.= 'padding-bottom: '.$row['bottom'].';';
+		}
 		echo "\n";
-		echo '<td class="editor_column" data-id="'.$row['id'].'" id="column'.$row['id'].'"'.$columnWidth;
+		echo '<td class="editor_column" data-id="'.$row['id'].'" id="column'.$row['id'].'" style="'.$style.'"';
 		echo ' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"';
 		echo ' oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
 		displaySections($row['id'],$row['index'],$rowId,$rowIndex);
-		echo '</td>';
-		echo "\n";
+		echo "</td>\n";
 	}
 	Database::free($result);
 }

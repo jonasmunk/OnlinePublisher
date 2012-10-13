@@ -430,15 +430,32 @@ class DocumentTemplateEditor
 	function loadColumn($id) {
 		$sql = "select * from document_column where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
-			return array( 'id' => intval($row['id']), 'width' => $row['width'] );
+			return array(
+				'id' => intval($row['id']),
+				'width' => $row['width'],
+				'top' => $row['top'],
+				'bottom' => $row['bottom'],
+				'left' => $row['left'],
+				'right' => $row['right']
+			);
 		}
 		return null;
+	}
+	
+	function loadRow($id) {
+		$sql = "select * from document_row where id=".Database::int($id);
+		return Database::selectFirst($sql);
 	}
 	
 	function updateColumn($column) {
 		$sql = "select * from document_column where id=".Database::int($column['id']);
 		if ($row = Database::selectFirst($sql)) {
-			$sql="update document_column set width=".Database::text($column['width'])." where id=".Database::int($column['id']);
+			$sql="update document_column set width=".Database::text($column['width']).
+				",`top`=".Database::text($column['top']).
+				",`bottom`=".Database::text($column['bottom']).
+				",`left`=".Database::text($column['left']).
+				",`right`=".Database::text($column['right']).
+				" where id=".Database::int($column['id']);
 			Database::update($sql);
 			$sql="update page set changed=now() where id=".Database::int($row['page_id']);
 			Database::update($sql);

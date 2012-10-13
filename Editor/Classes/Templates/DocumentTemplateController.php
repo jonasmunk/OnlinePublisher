@@ -110,7 +110,13 @@ class DocumentTemplateController extends TemplateController
 			$sql="select * from document_column where row_id=".$row['id']." order by `index`";
 			$result_col = Database::select($sql);
 			while ($col = Database::next($result_col)) {
-				$output.= '<column'.($col['width']!='' ? ' width="'.$col['width'].'"' : '').'>';
+				$output.= '<column';
+				$output.= ($col['width']!='' ? ' width="'.$col['width'].'"' : '');
+				$output.= ($col['left']!='' ? ' left="'.$col['left'].'"' : '');
+				$output.= ($col['right']!='' ? ' right="'.$col['right'].'"' : '');
+				$output.= ($col['top']!='' ? ' top="'.$col['top'].'"' : '');
+				$output.= ($col['bottom']!='' ? ' bottom="'.$col['bottom'].'"' : '');
+				$output.= '>';
 				$sql="select document_section.*,part.type as part_type from document_section left join part on part.id = document_section.part_id where document_section.column_id=".$col['id']." order by document_section.`index`";
 				$result_sec = Database::select($sql);
 				while ($sec = Database::next($result_sec)) {

@@ -59,20 +59,34 @@
 				<xsl:text>document_column</xsl:text>
 				<xsl:if test="position()=1"> document_column_first</xsl:if>
 			</xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="@width='min'">
-					<xsl:attribute name="style">width: 1%;</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@width='max'">
-					<xsl:attribute name="style">width: 100%;</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="contains(@width,'%') or contains(@width,'px')">
-					<xsl:attribute name="style">width: <xsl:value-of select="@width"/>;</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@width">
-					<xsl:attribute name="style">width: <xsl:value-of select="@width"/>px;</xsl:attribute>
-				</xsl:when>
-			</xsl:choose>
+			<xsl:attribute name="style">
+				<xsl:choose>
+					<xsl:when test="@width='min'">
+						<xsl:text>width: 1%;</xsl:text>
+					</xsl:when>
+					<xsl:when test="@width='max'">
+						<xsl:text>width: 100%;</xsl:text>
+					</xsl:when>
+					<xsl:when test="contains(@width,'%') or contains(@width,'px')">
+						<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>;</xsl:text>
+					</xsl:when>
+					<xsl:when test="@width">
+						<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
+					</xsl:when>
+				</xsl:choose>
+					<xsl:if test="@top!=''">
+						<xsl:text>padding-top: </xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
+					</xsl:if>
+					<xsl:if test="@bottom!=''">
+						<xsl:text>padding-bottom: </xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
+					</xsl:if>
+					<xsl:if test="@left!=''">
+						<xsl:text>padding-left: </xsl:text><xsl:value-of select="@left"/><xsl:text>;</xsl:text>
+					</xsl:if>
+					<xsl:if test="@right!=''">
+						<xsl:text>padding-right: </xsl:text><xsl:value-of select="@right"/><xsl:text>;</xsl:text>
+					</xsl:if>
+			</xsl:attribute>
 			<xsl:apply-templates/>
 			<xsl:comment/>
 		</td>

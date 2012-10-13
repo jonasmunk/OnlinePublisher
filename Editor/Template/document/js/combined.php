@@ -25,7 +25,9 @@ if (Request::getBoolean('dev')) {
 	echo "\n";
 	require_once('DropController.js');
 	echo "\n";
-	require_once('Columns.js');
+	require_once('ColumnsController.js');
+	echo "\n";
+	require_once('RowsController.js');
 	echo "\n";
 	require_once('../../../Services/Parts/js/parts.js');
 	echo "\n";
