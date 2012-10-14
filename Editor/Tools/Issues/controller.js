@@ -20,8 +20,11 @@ hui.ui.listen({
 	},
 	$click$info : function() {
 		var row = list.getFirstSelection();
-		this._loadIssue(row.id);
+		if (row) {
+			this._loadIssue(row.id);			
+		}
 	},
+	
 	_loadIssue : function(id) {
 		hui.ui.request({
 			url : 'data/LoadIssue.php',

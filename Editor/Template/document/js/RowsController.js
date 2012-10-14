@@ -10,7 +10,7 @@ var rowsController = {
 		var node = hui.get('row'+rowId);
 		hui.cls.add(node,'editor_row_highlighted');
 		this.editedRow = {
-			id : this.columnId,
+			id : rowId,
 			style : node.getAttribute('style'),
 			node : node
 		}
@@ -25,15 +25,21 @@ var rowsController = {
 			}
 		})
 	},
+	clear : function() {
+		if (!this.editedRow) {
+			return;
+		}
+		hui.cls.remove(this.editedRow.node,'editor_row_highlighted');
+		this.editedRow = null;
+		rowFormula.reset();
+		rowWindow.hide();
+	},
 	reset : function() {
 		if (!this.editedRow) {
 			return;
 		}
 		this.editedRow.node.setAttribute('style',this.editedRow.style);
-		hui.cls.remove(this.editedRow.node,'editor_row_highlighted');
-		this.editedRow = null;
-		rowFormula.reset();
-		rowWindow.hide();
+		this.clear();
 	},
 	$valuesChanged$rowFormula : function(values) {
 
@@ -51,8 +57,9 @@ var rowsController = {
 	$submit$rowFormula : function(form) {
 		var values = form.getValues();
 		values.id = this.editedRow.id;
+		hui.log(values)
 		hui.ui.request({
-			url : 'data/UpdateRow.php',
+			url : 'actions/UpdateRow.php',
 			parameters : values,
 			message : {start : {en:'Saving row...',da:'Gemmer række...'},delay:300},
 			onSuccess : function() {
@@ -60,7 +67,32 @@ var rowsController = {
 				controller._markToolbarChanged();
 			}.bind(this)
 		});
+		this.clear();
+	},
+	
+	$click$deleteRow : function() {
+		this.deleteRow(this.editedRow.id);
 		this.reset();
+		
+	},
+	
+	deleteRow : function(id) {
+		
+		controller.partControls.hide();
+		var node = hui.get('row'+id);
+		hui.cls.add(node,'editor_row_highlighted');
+		hui.ui.confirmOverlay({
+			element : node,
+			text : {da:'Vil du slette r\u00e6kken? Det kan ikke fortrydes.',en:'Delete the row? It cannot be undone.'},
+			okText : {da : 'Ja, slet',en : 'Yes, delete'},
+			cancelText : { da : 'Annuller', en : 'Cancel' },
+			onOk : function() {
+				document.location='data/DeleteRow.php?row='+id;
+			},
+			onCancel : function() {
+				hui.cls.remove(node,'editor_row_highlighted');
+			}
+		})
 	}
 	
 }

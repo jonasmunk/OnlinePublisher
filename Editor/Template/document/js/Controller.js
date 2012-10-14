@@ -201,7 +201,7 @@ var controller = {
 			
 			case 'editRow' : rowsController.editRow(this.menuInfo.rowId); break;
 			case 'addRow' : this.addRow(this.menuInfo.rowIndex+1); break;
-			case 'deleteRow' : this.deleteRow(this.menuInfo.rowId); break;
+			case 'deleteRow' : rowsController.deleteRow(this.menuInfo.rowId); break;
 			case 'moveRowUp' : this.moveRow(this.menuInfo.rowId,-1); break;
 			case 'moveRowDown' : this.moveRow(this.menuInfo.rowId,1); break;
 		}
@@ -384,25 +384,6 @@ var controller = {
 	
 	addRow : function(index) {
 		document.location='data/AddRow.php?index='+index+'&pageId='+this.pageId;
-	},
-	
-	deleteRow : function(id) {
-		
-		controller.partControls.hide();
-		var node = hui.get('row'+id);
-		hui.cls.add(node,'editor_row_highlighted');
-		hui.ui.confirmOverlay({
-			element : node,
-			text : {da:'Vil du slette r\u00e6kken? Det kan ikke fortrydes.',en:'Delete the row? It cannot be undone.'},
-			okText : {da : 'Ja, slet',en : 'Yes, delete'},
-			cancelText : { da : 'Annuller', en : 'Cancel' },
-			onOk : function() {
-				document.location='data/DeleteRow.php?row='+id;
-			},
-			onCancel : function() {
-				hui.cls.remove(node,'editor_row_highlighted');
-			}
-		})
 	}
 
 };

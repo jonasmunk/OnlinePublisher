@@ -27,11 +27,12 @@ foreach($list as $item) {
 	}
 	$writer->startRow(array('id'=>$item->getId()))->
 		startCell();
-		$writer->startLine(array('mini'=>false))->text($item->getNote())->endLine();
+	$writer->startLine()->startStrong()->text($item->getTitle())->endStrong()->endLine();
+		$writer->startLine(array('top'=>3))->text($item->getNote())->endLine();
 		if ($page) {
-			$writer->startLine(array('top'=>3))->object(array('icon'=>'common/page','text'=>$page['title']))->endLine();
+			$writer->startLine(array('top'=>10))->object(array('icon'=>'common/page','text'=>$page['title']))->endLine();
 		}
-		$writer->startLine(array('dimmed'=>true,'mini'=>true))->text(IssueService::translateKind($item->getKind()))->endLine();
+		$writer->startLine(array('dimmed'=>true,'mini'=>true,'top'=>3))->text(IssueService::translateKind($item->getKind()))->endLine();
 		$writer->endCell()->
 		startCell(array('width'=>1));
 		if ($page!==null) {
@@ -41,7 +42,7 @@ foreach($list as $item) {
 			endIcons();
 		}
 		$writer->endCell()->
-		startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($item->getCreated()))->endCell()->
+			startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($item->getCreated()))->endCell()->
 	endRow();
 }
 $writer->endList();

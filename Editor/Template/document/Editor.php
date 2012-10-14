@@ -297,7 +297,14 @@ function displayRows($pageId) {
 	$sql="select * from document_row where page_id=".$pageId." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'"><tr>';
+		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
+		if ($row['top']) {
+			echo 'margin-top: '.$row['top'].';';
+		}
+		if ($row['bottom']) {
+			echo 'margin-bottom: '.$row['bottom'].';';
+		}
+		echo '"><tr>';
 		displayColumns($row['id'],$row['index']);
 		echo '</tr></table>';
 		echo "\n";
@@ -308,9 +315,12 @@ function displayRows($pageId) {
 }
 
 function displayColumns($rowId,$rowIndex) {
-	$sql="select * from document_column where row_id=".Database::int($rowId)." order by `index`";
+	$sql = "select * from document_column where row_id=".Database::int($rowId)." order by `index`";
 	$result = Database::select($sql);
+	$found = false;
 	while ($row = Database::next($result)) {
+		
+		$found = true;
 		$style = '';
 		$columnWidth = $row['width'];
 		if ($columnWidth!='') {
@@ -344,6 +354,9 @@ function displayColumns($rowId,$rowIndex) {
 		echo "</td>\n";
 	}
 	Database::free($result);
+	if (!$found) {
+		Log::debug('No columns found in row='.$rowId);
+	}
 }
 
 function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {

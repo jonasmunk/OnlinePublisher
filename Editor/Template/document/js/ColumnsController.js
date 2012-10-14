@@ -84,15 +84,21 @@ var columnsController = {
 			hui.log('Column node not found');
 		}
 	},
+	clear : function() {
+		if (!this.editedColumn) {
+			return;
+		}
+		hui.cls.remove(this.editedColumn.node,'editor_column_highlighted');
+		this.editedColumn = null;
+		columnFormula.reset();
+		columnWindow.hide();
+	},
 	reset : function() {
 		if (!this.editedColumn) {
 			return;
 		}
 		this.editedColumn.node.setAttribute('style',this.editedColumn.style);
-		hui.cls.remove(this.editedColumn.node,'editor_column_highlighted');
-		this.editedColumn = null;
-		columnFormula.reset();
-		columnWindow.hide();
+		this.clear();
 	},
 	$userClosedWindow$columnWindow : function() {
 		this.reset();
@@ -126,7 +132,7 @@ var columnsController = {
 				controller._markToolbarChanged();
 			}.bind(this)
 		});
-		this.reset();
+		this.clear();
 	}
 }
 

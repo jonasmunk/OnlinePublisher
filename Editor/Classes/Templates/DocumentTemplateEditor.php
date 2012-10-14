@@ -172,6 +172,17 @@ class DocumentTemplateEditor
 		$rowId = $row['row_id'];
 		$pageId = $row['page_id'];
 		
+		$sql = "select count(id) as num from document_column where row_id=".Database::int($rowId);
+		$c = Database::selectFirst($sql);
+		if (!$c) {
+			Log::debug('No columns found in row');
+			return;
+		}
+		if ($c['num']<2) {
+			Log::debug('Aborting delete of last column');
+			return;
+		}
+		
 
 		$sql="select * from document_column where row_id=".Database::int($rowId)." and `index`>".Database::int($index);
 		$result = Database::select($sql);
@@ -461,7 +472,23 @@ class DocumentTemplateEditor
 			Database::update($sql);
 		} else {
 			Log::debug('Column not found...');
-			Log::debugJSON($column);
+		}
+	}
+	
+	function updateRow($info) {
+		
+		$sql = "select * from document_row where id=".Database::int($info['id']);
+		if ($row = Database::selectFirst($sql)) {
+			$sql="update document_row set ".
+				"`top`=".Database::text($info['top']).
+				",`bottom`=".Database::text($info['bottom']).
+				" where id=".Database::int($info['id']);
+			Database::update($sql);
+			Log::debug($sql);
+			$sql="update page set changed=now() where id=".Database::int($row['page_id']);
+			Database::update($sql);
+		} else {
+			Log::debug('Row not found...');
 		}
 	}
 }
