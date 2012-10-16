@@ -14,6 +14,8 @@ if (Request::getBoolean('dev')) {
 	echo "\n";
 	require_once('../../../../hui/js/Overlay.js');
 	echo "\n";
+	require_once('../../../../hui/js/Window.js');
+	echo "\n";
 } else {
 	echo "\n";
 	require_once('../../../../hui/bin/minimized.js');

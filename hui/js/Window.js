@@ -68,13 +68,16 @@ hui.ui.Window.prototype = {
 	setTitle : function(title) {
 		hui.dom.setText(this.title,title);
 	},
+	_positionInView : function() {
+		var scrollTop = hui.window.getScrollTop();
+		var winTop = hui.position.getTop(this.element);
+		if (winTop < scrollTop || winTop+this.element.clientHeight > hui.window.getViewHeight()+scrollTop) {
+			hui.animate({node:this.element,css:{top:(scrollTop+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
+		}
+	},
 	show : function(options) {
 		if (this.visible) {
-			var scrollTop = hui.window.getScrollTop();
-			var winTop = hui.position.getTop(this.element);
-			if (winTop < scrollTop || winTop+this.element.clientHeight > hui.window.getViewHeight()+scrollTop) {
-				hui.animate({node:this.element,css:{top:(scrollTop+40)+'px'},duration:500,ease:hui.ease.slowFastSlow});
-			}
+			this._positionInView();
 			this.element.style.zIndex=hui.ui.nextPanelIndex();
 			return;
 		}
@@ -91,6 +94,8 @@ hui.ui.Window.prototype = {
 		} else {
 			if (!this.element.style.top) {
 				this.element.style.top = (hui.window.getScrollTop()+40)+'px';
+			} else {
+				this._positionInView();
 			}
 			if (!this.element.style.left) {
 				this.element.style.left = Math.round((hui.window.getViewWidth()-width)/2)+'px';

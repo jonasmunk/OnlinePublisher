@@ -126,7 +126,7 @@ hui.ui.Menu.prototype = {
 	},
 	hide : function(options) {
 		if (!this.visible) {return};
-		if (options && options.immediate) {
+		if (true || options && options.immediate) {
 			this.element.style.display='none';
 		} else {
 			hui.animate(this.element, 'opacity', 0, 200, {

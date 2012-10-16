@@ -106,7 +106,10 @@ class DocumentTemplateController extends TemplateController
 		$sql="select * from document_row where page_id=".$id." order by `index`";
 		$result_row = Database::select($sql);
 		while ($row = Database::next($result_row)) {
-			$output.= '<row>';
+			$output.= '<row';
+			$output.= ($row['top']!='' ? ' top="'.$row['top'].'"' : '');
+			$output.= ($row['bottom']!='' ? ' bottom="'.$row['bottom'].'"' : '');
+			$output.= '>';
 			$sql="select * from document_column where row_id=".$row['id']." order by `index`";
 			$result_col = Database::select($sql);
 			while ($col = Database::next($result_col)) {

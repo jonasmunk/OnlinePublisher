@@ -29,9 +29,11 @@
 	function showMenu(element,e) {
 		if (!window.menu) {
 			window.menu = hui.ui.Menu.create();
-			window.menu.addItem({title:'Slet kolonne',value:'removeColumn'});
-			window.menu.addItem({title:'Tilføj kolonne',value:'addColumn'});
-			window.menu.listen({$itemWasClicked:function(value) {alert(value)}});
+			window.menu.addItem({title:'Delete column',value:'removeColumn'});
+			window.menu.addItem({title:'Add column',value:'addColumn'});
+			window.menu.listen({$select:function(value) {
+				hui.ui.showMessage({text:value,duration:2000})
+			}});
 		}
 		menu.showAtElement(element,e);
 	}

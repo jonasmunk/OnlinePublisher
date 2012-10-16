@@ -38,6 +38,14 @@
 
 	<xsl:template match="doc:row">
 		<table width="100%" class="document_row">
+			<xsl:attribute name="style">
+				<xsl:if test="@top!=''">
+					<xsl:text>margin-top:</xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
+				</xsl:if>
+				<xsl:if test="@bottom!=''">
+					<xsl:text>margin-bottom:</xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
 			<tr>
 				<xsl:apply-templates/>
 			</tr>
@@ -46,6 +54,14 @@
 
 	<xsl:template match="doc:row[count(doc:column)=1]">
 		<div class="document_row">
+			<xsl:attribute name="style">
+				<xsl:if test="@top!=''">
+					<xsl:text>margin-top:</xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
+				</xsl:if>
+				<xsl:if test="@bottom!=''">
+					<xsl:text>margin-bottom:</xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
 			<div class="document_column">
 				<xsl:apply-templates select="doc:column/doc:section"/>
 				<xsl:comment/>
