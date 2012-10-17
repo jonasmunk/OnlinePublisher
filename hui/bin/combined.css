@@ -2723,6 +2723,7 @@ div.hui_list table
 {
 	width: 100%;
 	border-collapse: collapse;
+	border-spacing: 0;
 	background: #fff;
 }
 
@@ -2843,6 +2844,7 @@ div.hui_list tbody tr:hover .hui_list_revealing
 div.hui_list table tbody.hui_list_selectable tr:hover
 {
 	background-color: #EBF0F7;
+	background-color: #fafafa;
 	cursor: pointer;
 }
 
@@ -2867,7 +2869,7 @@ div.hui_list table tbody tr.hui_list_selected
 	background-color: #3875d7;
 	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
 	background: -webkit-gradient(linear, left top, left bottom, from(#92BCFA), to(#5580ee));
-	text-shadow: 0 -1px 1px #5070cc;
+	text-shadow: 0 -1px 0px #5070cc;
 }
 
 div.hui_list table tbody tr.hui_list_selected td
@@ -3104,9 +3106,26 @@ a.hui_list_checkbox
 	text-shadow: none;
 }
 
+a.hui_list_checkbox:hover
+{
+	border: 1px solid #bbb;
+}
+
 tr.hui_list_checked
 {
 	background: #ffe;
+	background: #eaf3ff;
+}
+
+div.hui_list table tbody.hui_list_selectable tr.hui_list_checked:hover
+{
+	background: #f6f6e5;
+	background: #ddeafd;
+}
+
+div.hui_list table tbody tr.hui_list_checked td
+{
+	border-color: #d6e6fa;
 }
 
 tr.hui_list_checked a.hui_list_checkbox

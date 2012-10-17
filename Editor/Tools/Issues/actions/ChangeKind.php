@@ -6,6 +6,7 @@
 require_once '../../../Include/Private.php';
 
 $ids = Request::getObject('ids');
+$kind = Request::getObject('kind');
 
 if (!is_array($ids)) {
 	Log::debug($ids);
@@ -15,7 +16,9 @@ if (!is_array($ids)) {
 
 foreach ($ids as $id) {
 	if ($object = Issue::load($id)) {
-		$object->remove();
+		$object->setKind($kind);
+		$object->save();
+		$object->publish();
 	}
 }
 ?>

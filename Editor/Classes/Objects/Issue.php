@@ -8,8 +8,16 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+Entity::$schema['Issue'] = array(
+	'table' => 'issue',
+	'properties' => array(
+		'kind' => array('type'=>'string'),
+		'statusId' => array('type'=>'int','column'=>'issuestatus_id','relation'=>array('class'=>'Issuestatus','property'=>'id'))
+	)
+);
 Object::$schema['issue'] = array(
-	'kind' => array('type'=>'string')
+	'kind' => array('type'=>'string'),
+	'statusId' => array('type'=>'int','column'=>'issuestatus_id')
 );
 class Issue extends Object {
     
@@ -20,6 +28,7 @@ class Issue extends Object {
 	static $error = 'error';
 
     var $kind;
+	var $statusId;
     
     function Issue() {
 		parent::Object('issue');
@@ -37,6 +46,13 @@ class Issue extends Object {
 	    return $this->kind;
 	}
 	
+	function setStatusId($statusId) {
+	    $this->statusId = $statusId;
+	}
+
+	function getStatusId() {
+	    return $this->statusId;
+	}
 	
 	
 	function getIcon() {

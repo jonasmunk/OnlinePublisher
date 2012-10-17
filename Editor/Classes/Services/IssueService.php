@@ -37,4 +37,20 @@ class IssueService {
 		return Database::selectAll($sql);
 	}
 	
+	function getStatusCounts() {
+		$sql = "select count(issue.object_id) as count,object.title,object.id from issue left join object on issue.issuestatus_id=object.id group by object.id order by object.title";
+		return Database::selectAll($sql);
+	}
+	
+	function getStatusMap() {
+		$map = array();
+		$sql = "select id,title from object where type='issuestatus' order by title";
+		$result = Database::select($sql);
+		while($row = Database::next($result)) {
+			$map[$row['id']] = $row['title'];
+		}
+		Database::free($result);
+		return $map;
+	}
+	
 }

@@ -134,6 +134,7 @@ div.hui_list tbody tr:hover .hui_list_revealing
 div.hui_list table tbody.hui_list_selectable tr:hover
 {
 	background-color: #EBF0F7;
+	background-color: #fafafa;
 	cursor: pointer;
 }
 
@@ -395,14 +396,26 @@ a.hui_list_checkbox
 	text-shadow: none;
 }
 
+a.hui_list_checkbox:hover
+{
+	border: 1px solid #bbb;
+}
+
 tr.hui_list_checked
 {
 	background: #ffe;
+	background: #eaf3ff;
 }
 
 div.hui_list table tbody.hui_list_selectable tr.hui_list_checked:hover
 {
 	background: #f6f6e5;
+	background: #ddeafd;
+}
+
+div.hui_list table tbody tr.hui_list_checked td
+{
+	border-color: #d6e6fa;
 }
 
 tr.hui_list_checked a.hui_list_checkbox

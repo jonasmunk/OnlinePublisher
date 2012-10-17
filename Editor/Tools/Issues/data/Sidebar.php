@@ -8,6 +8,7 @@ require_once '../../../Include/Private.php';
 
 
 $kinds = IssueService::getKindCounts();
+$states = IssueService::getStatusCounts();
 
 $total = 0;
 foreach ($kinds as $row) {
@@ -26,7 +27,7 @@ if ($kinds) {
 }
 foreach ($kinds as $row) {
 	$writer->item(array(
-		'title' => IssueService::translateKind($row['kind']),
+		'title' => $row['kind'] ? IssueService::translateKind($row['kind']) : array('No type','da'=>'Ingen type'),
 		'icon' => 'view/list',
 		'badge' => $row['count'],
 		'kind' => 'kind',
@@ -34,24 +35,17 @@ foreach ($kinds as $row) {
 	));
 }
 
-$statuses = Query::after('issuestatus')->get();
-
-
 $writer->title(array('Status','da'=>'Status'));
 
-foreach ($statuses as $status) {
+foreach ($states as $row) {
 	$writer->item(array(
-		'title'=>$status->getTitle(),
-		'value'=>$status->getId(),
-		'icon'=>'common/object',
-		'kind' => $status->getType()
+		'title' => $row['title'] ? $row['title'] : array('No status','da'=>'Ingen status'),
+		'icon' => 'view/list',
+		'badge' => $row['count'],
+		'kind' => 'status',
+		'value' => $row['id'] ? $row['id'] : 'nostatus'
 	));
 }
 
-$writer->item(array(
-	'title'=>array('No status','da'=>'Ingen status'),
-	'value'=>'nostatus',
-	'icon'=>'monochrome/round_question'
-));
 $writer->endItems();
 ?>

@@ -15,6 +15,7 @@ if ($data->id > 0) {
 $object->setTitle($data->title);
 $object->setNote($data->note);
 $object->setKind($data->kind);
+$object->setStatusId($data->statusId);
 $object->save();
 $object->publish();
 ?>

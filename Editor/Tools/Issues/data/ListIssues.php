@@ -7,11 +7,17 @@ require_once '../../../Include/Private.php';
 
 $text = Request::getString('text');
 $filter = Request::getString('filter');
+$kind = Request::getString('filterKind');
 
-$query = Query::after('issue')->withText($text);
-if ($filter!='all') {
+$query = Query::after('issue')->withText($text)->orderByCreated()->descending();
+if ($kind=='kind') {
 	$query->withProperty('kind',$filter);
 }
+if ($kind=='status') {
+	$query->withProperty('statusId',$filter);
+}
+
+$states = IssueService::getStatusMap();
 
 $list = $query->get();
 
@@ -21,7 +27,8 @@ $writer->startList(array('checkboxes'=>true));
 
 $writer->startHeaders()->
 	header()->
-	header()->
+	header('Status')->
+	header('Oprettet')->
 endHeaders();
 
 foreach($list as $item) {
@@ -31,9 +38,9 @@ foreach($list as $item) {
 		$page = $pages[0];
 	}
 	$writer->startRow(array('id'=>$item->getId()))->
-		startCell();
-	$writer->startLine()->startStrong()->text($item->getTitle())->endStrong()->endLine();
-		$writer->startLine(array('top'=>3))->text($item->getNote())->endLine();
+		startCell()->
+		startLine()->startStrong()->text($item->getTitle())->endStrong()->endLine()->
+		startLine(array('top'=>3))->text($item->getNote())->endLine();
 		if ($page) {
 			$writer->startLine(array('top'=>10))->object(array('icon'=>'common/page','text'=>$page['title']));
 			$writer->startIcons()->
@@ -42,8 +49,9 @@ foreach($list as $item) {
 			endIcons();
 			$writer->endLine();
 		}
-		$writer->startLine(array('dimmed'=>true,'mini'=>true,'top'=>3))->text(IssueService::translateKind($item->getKind()))->endLine();
-		$writer->endCell()->
+		$writer->startLine(array('dimmed'=>true,'mini'=>true,'top'=>3))->text(IssueService::translateKind($item->getKind()))->endLine()->
+		endCell()->
+		startCell()->text(@$states[$item->getStatusId()])->endCell()->
 		startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($item->getCreated()))->endCell()->
 	endRow();
 }

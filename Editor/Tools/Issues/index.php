@@ -12,11 +12,15 @@ $gui='
 	
 	<source name="listSource" url="data/ListIssues.php">
 		<parameter key="windowPage" value="@list.window.page"/>
+		<parameter key="filterKind" value="@selector.kind"/>
 		<parameter key="filter" value="@selector.value"/>
 		<parameter key="text" value="@search.value"/>
 	</source>
 	
+	<source name="statusListSource" url="data/ListStates.php"/>
+	
 	<source name="sidebarSource" url="data/Sidebar.php"/>
+	<source name="statusSource" url="data/StatusItems.php"/>
 	
 	<structure>
 		<top>
@@ -27,6 +31,11 @@ $gui='
 				<icon icon="common/delete" title="{Delete; da:Slet}" name="delete" disabled="true">
 					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete issue; da:Ja, slet sagen}" cancel="{No; da:Nej}"/>
 				</icon>
+				<field label="{Change type; da:Skift type}">
+					<dropdown name="changeKind" placeholder="{Change type...;da:Skift type...}">
+					'.GuiUtils::buildTranslatedItems(IssueService::getKinds()).'
+					</dropdown>
+				</field>
 				<right>
 					<field label="{Search; da:Søgning}">
 						<searchfield expanded-width="200" name="search"/>
@@ -48,14 +57,15 @@ $gui='
 				<pages height="full" name="pages">
 					<page>
 						<overflow>
-							<list name="list" source="listSource"/>
+							<list name="list" source="listSource" variant="light"/>
 						</overflow>
 					</page>
 					<page background="sand_grey">
-						<box title="Settings" width="400" top="20">
+						<box title="{Settings; da:Indstillinger}" width="400" top="20">
 							<toolbar>
 								<icon icon="common/object" overlay="new" title="{New status; da:Ny status}" name="newStatus"/>
 							</toolbar>
+							<!--
 							<formula name="settingsFormula" padding="10">
 								<fields labels="above">
 									<field label="{E-mail; da:E-post}">
@@ -66,6 +76,8 @@ $gui='
 									</buttons>
 								</fields>
 							</formula>
+							-->
+							<list name="statusList" source="statusListSource" variant="light"/>
 						</box>
 					</page>
 				</pages>
@@ -87,6 +99,9 @@ $gui='
 					<dropdown key="kind">
 						'.GuiUtils::buildTranslatedItems(IssueService::getKinds()).'
 					</dropdown>
+				</field>
+				<field label="Status">
+					<dropdown key="statusId" source="statusSource"/>
 				</field>
 				<buttons>
 					<button name="cancelIssue" title="{Cancel; da:Annuller}"/>

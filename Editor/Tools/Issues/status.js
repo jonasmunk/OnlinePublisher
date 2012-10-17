@@ -1,7 +1,7 @@
 hui.ui.listen({
 	
 	$ready : function() {
-		pages.next();
+		//pages.next();
 	},
 	_statusId : null,
 	
@@ -16,12 +16,15 @@ hui.ui.listen({
 			this._loadStatus(obj.value);
 		}
 	},
+	$open$statusList : function(row) {
+		this._loadStatus(row.id);
+	},
 	
 	_loadStatus : function(id) {
 		hui.ui.request({
 			url : '../../Services/Model/LoadObject.php',
 			parameters : { id : id },
-			onJSON : function(obj) {
+			$object : function(obj) {
 				this._statusId = obj.id;
 				statusFormula.setValues(obj);
 				statusWindow.show();
@@ -39,7 +42,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'actions/SaveStatus.php',
 			json : {data : values},
-			onSuccess : function() {
+			$success : function() {
 				this.clearStatus();
 				this.refresh();
 			}.bind(this)
@@ -49,7 +52,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'actions/DeleteStatus.php',
 			parameters : {id : this._statusId},
-			onSuccess : function() {
+			$success : function() {
 				this.clearStatus();
 				this.refresh();
 			}.bind(this)
@@ -63,5 +66,7 @@ hui.ui.listen({
 	refresh : function() {
 		list.refresh();
 		sidebarSource.refresh();
+		statusSource.refresh();
+		statusList.refresh();
 	}
 });

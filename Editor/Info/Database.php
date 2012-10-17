@@ -294,7 +294,8 @@ $databaseTables = array(
 		),
 	'issue' => array(
 			array("object_id","int(11)","","","0",""),
-			array("kind","varchar(255)","YES","","","")
+			array("kind","varchar(255)","YES","","",""),
+			array("issuestatus_id","int(11)","","","0","")
 		),
 	'issuestatus' => array(
 			array("object_id","int(11)","","","0","")

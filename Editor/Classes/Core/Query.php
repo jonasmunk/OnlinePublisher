@@ -37,6 +37,16 @@ class Query {
 		return $this;
 	}
 	
+	function orderByCreated() {
+		$this->ordering[] = 'created';
+		return $this;
+	}
+	
+	function orderByTitle() {
+		$this->ordering[] = 'title';
+		return $this;
+	}
+	
 	function ascending() {
 		$this->direction = 'ascending';
 		return $this;

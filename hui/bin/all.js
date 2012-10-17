@@ -976,8 +976,8 @@ hui.position = {
 				vertMin = hui.window.getScrollTop();
 			top = Math.max(Math.min(top,vertMax),vertMin);
 		}
-		src.style.top = top+'px';
-		src.style.left = left+'px';
+		src.style.top = Math.round(top)+'px';
+		src.style.left = Math.round(left)+'px';
 	}
 }
 
@@ -5702,8 +5702,9 @@ hui.ui.request = function(options) {
 			options.parameters[key]=hui.string.toJSON(options.json[key]);
 		}
 	}
-	var onSuccess = options.onSuccess || options.$success;
-	var message = options.message;
+	var onSuccess = options.onSuccess || options.$success,
+		onJSON = options.onJSON || options.$object,
+		message = options.message;
 	options.onSuccess=function(t) {
 		if (message) {
 			if (message.success) {
@@ -5727,14 +5728,14 @@ hui.ui.request = function(options) {
 			}
 		} else if (hui.request.isXMLResponse(t) && options.onXML) {
 			options.onXML(t.responseXML);
-		} else if (options.onJSON) {
+		} else if (onJSON) {
 			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
 				json = hui.string.fromJSON(t.responseText);
 			} else {
 				json = null;
 			}
-			options.onJSON(json);
+			onJSON(json);
 		} else if (typeof(onSuccess)=='function') {
 			onSuccess(t);
 		} else if (options.onText) {
@@ -8440,6 +8441,7 @@ hui.ui.Selection.prototype = {
 		}.bind(this));
 		hui.listen(node,'dblclick',function(e) {
 			hui.stop(e);
+			hui.selection.clear();
 			this._onDoubleClick(item);
 		}.bind(this));
 		node.dragDropInfo = item;
@@ -8628,6 +8630,7 @@ hui.ui.Selection.Items.prototype = {
 			}.bind(this));
 			hui.listen(node,'dblclick',function(e) {
 				hui.stop(e);
+				hui.selection.clear();
 				this.parent._onDoubleClick(item);
 			}.bind(this));
 			level.appendChild(node);
@@ -11019,7 +11022,7 @@ hui.ui.Menu.prototype = {
 	},
 	hide : function(options) {
 		if (!this.visible) {return};
-		if (options && options.immediate) {
+		if (true || options && options.immediate) {
 			this.element.style.display='none';
 		} else {
 			hui.animate(this.element, 'opacity', 0, 200, {
@@ -20335,6 +20338,7 @@ hui.ui.Pages.prototype = {
 			show = options.show;
 		hui.style.set(hide,{position:'absolute',width:this.element.clientWidth+'px',height:this.element.clientHeight+'px'});
 		hui.style.set(show,{position:'absolute',width:this.element.clientWidth+'px',display:'block',opacity:0,height:this.element.clientHeight+'px'});
+			hui.ui.reLayout();
 		hui.effect.fadeOut({element:hide,onComplete:function() {
 			hui.style.set(hide,{width : '',position:'',height:'',display:'none'});
 		}});

@@ -10,9 +10,9 @@ if (!isset($GLOBALS['basePath'])) {
 
 Object::$schema['issuestatus'] = array(
 );
-class IssueStatus extends Object {
+class Issuestatus extends Object {
     
-    function IssueStatus() {
+    function Issuestatus() {
 		parent::Object('issuestatus');
     }
 
