@@ -476,6 +476,12 @@
 		</xsl:attribute>
 		<xsl:for-each select="gui:page">
 			<div class="hui_pages_page">
+				<xsl:attribute name="class">
+					<xsl:text>hui_pages_page</xsl:text>
+					<xsl:if test="@background">
+						<xsl:text> hui_bg_</xsl:text><xsl:value-of select="@background"/>
+					</xsl:if>
+				</xsl:attribute>
 				<xsl:if test="position()>1">
 					<xsl:attribute name="style">display:none;</xsl:attribute>
 				</xsl:if>

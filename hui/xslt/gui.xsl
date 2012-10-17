@@ -548,7 +548,10 @@
 </selection>
 -->
 <xsl:template match="gui:selection">
-	<div class="hui_selection" id="{generate-id()}">	
+	<div class="hui_selection" id="{generate-id()}">
+		<xsl:if test="@top">
+			<xsl:attribute name="style">margin-top: <xsl:value-of select="@top"/>px;</xsl:attribute>
+		</xsl:if>
 		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state)">
 			<xsl:attribute name="style">display:none</xsl:attribute>
 		</xsl:if>

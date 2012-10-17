@@ -976,8 +976,8 @@ hui.position = {
 				vertMin = hui.window.getScrollTop();
 			top = Math.max(Math.min(top,vertMax),vertMin);
 		}
-		src.style.top = top+'px';
-		src.style.left = left+'px';
+		src.style.top = Math.round(top)+'px';
+		src.style.left = Math.round(left)+'px';
 	}
 }
 

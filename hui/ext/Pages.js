@@ -52,6 +52,7 @@ hui.ui.Pages.prototype = {
 			show = options.show;
 		hui.style.set(hide,{position:'absolute',width:this.element.clientWidth+'px',height:this.element.clientHeight+'px'});
 		hui.style.set(show,{position:'absolute',width:this.element.clientWidth+'px',display:'block',opacity:0,height:this.element.clientHeight+'px'});
+			hui.ui.reLayout();
 		hui.effect.fadeOut({element:hide,onComplete:function() {
 			hui.style.set(hide,{width : '',position:'',height:'',display:'none'});
 		}});

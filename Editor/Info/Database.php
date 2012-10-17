@@ -296,6 +296,9 @@ $databaseTables = array(
 			array("object_id","int(11)","","","0",""),
 			array("kind","varchar(255)","YES","","","")
 		),
+	'issuestatus' => array(
+			array("object_id","int(11)","","","0","")
+		),
 	'link' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("page_id","int(11)","","","0",""),

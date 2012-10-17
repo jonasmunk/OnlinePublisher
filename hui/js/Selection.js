@@ -159,6 +159,7 @@ hui.ui.Selection.prototype = {
 		}.bind(this));
 		hui.listen(node,'dblclick',function(e) {
 			hui.stop(e);
+			hui.selection.clear();
 			this._onDoubleClick(item);
 		}.bind(this));
 		node.dragDropInfo = item;
@@ -347,6 +348,7 @@ hui.ui.Selection.Items.prototype = {
 			}.bind(this));
 			hui.listen(node,'dblclick',function(e) {
 				hui.stop(e);
+				hui.selection.clear();
 				this.parent._onDoubleClick(item);
 			}.bind(this));
 			level.appendChild(node);

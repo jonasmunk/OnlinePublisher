@@ -13,6 +13,7 @@ div.hui_list table
 {
 	width: 100%;
 	border-collapse: collapse;
+	border-spacing: 0;
 	background: #fff;
 }
 
@@ -157,7 +158,7 @@ div.hui_list table tbody tr.hui_list_selected
 	background-color: #3875d7;
 	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
 	background: -webkit-gradient(linear, left top, left bottom, from(#92BCFA), to(#5580ee));
-	text-shadow: 0 -1px 1px #5070cc;
+	text-shadow: 0 -1px 0px #5070cc;
 }
 
 div.hui_list table tbody tr.hui_list_selected td
@@ -397,6 +398,11 @@ a.hui_list_checkbox
 tr.hui_list_checked
 {
 	background: #ffe;
+}
+
+div.hui_list table tbody.hui_list_selectable tr.hui_list_checked:hover
+{
+	background: #f6f6e5;
 }
 
 tr.hui_list_checked a.hui_list_checkbox

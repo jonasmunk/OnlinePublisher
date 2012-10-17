@@ -8,6 +8,11 @@ hui.ui.listen({
 	$open$list : function(row) {
 		this._loadIssue(row.id);
 	},
+	$select$list : function() {
+		var count = list.getSelectionSize();
+		hui.ui.get('delete').setEnabled(count>0);
+		hui.ui.get('info').setEnabled(count==1);
+	},
 	
 	$click$addIssue : function() {
 		this._issueId = null;
@@ -32,7 +37,8 @@ hui.ui.listen({
 			onJSON : function(obj) {
 				this._issueId = obj.id;
 				issueFormula.setValues(obj);
-				issueWindow.show();				
+				issueWindow.show();			
+				issueFormula.focus();	
 			}.bind(this)
 		})		
 	},
@@ -48,6 +54,7 @@ hui.ui.listen({
 			json : {data : values},
 			onSuccess : function() {
 				this.clearIssue();
+				this.refresh();
 			}.bind(this)
 		})
 	},
@@ -57,14 +64,17 @@ hui.ui.listen({
 			parameters : {id : this._issueId},
 			onSuccess : function() {
 				this.clearIssue();
+				this.refresh();
 			}.bind(this)
 		})
 	},
 	clearIssue : function() {
-		list.refresh();
-		sidebarSource.refresh();
 		this._issueId = null;
 		issueFormula.reset();
 		issueWindow.hide();
+	},
+	refresh : function() {
+		list.refresh();
+		sidebarSource.refresh();
 	}
 });
