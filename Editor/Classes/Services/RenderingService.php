@@ -261,6 +261,16 @@ class RenderingService {
 				//Log::debug('Redirect: requested:('.$path.') page:('.$row['path'].') id:('.$id.')');
 				if ($row['path']) {
 					$redirect = StringUtils::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
+					$parameters = Request::getParameters();
+					$query = array();
+					foreach ($parameters as $parameter) {
+						if ($parameter['name']!='id') {
+							$query[] = $parameter['name'].'='.$parameter['value'];
+						}
+					}
+					if (count($query)>0) {
+						$redirect.='?'.join($query,'&');
+					}
 				}
 			}
 			else if ($row['dynamic']) {

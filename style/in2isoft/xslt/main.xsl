@@ -414,7 +414,7 @@
 				</script>
 				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
 				<xsl:for-each select="f:frame/f:search/f:types/f:type">
-				<input type="hidden" name="{@unique}" value="on"/>
+					<input type="hidden" name="{@unique}" value="on"/>
 				</xsl:for-each>
 				<input type="submit" class="submit" value="Søg"/>
 			</div>
