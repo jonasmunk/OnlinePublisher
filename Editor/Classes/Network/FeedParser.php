@@ -65,9 +65,9 @@ class FeedParser {
 		for ($i=0; $i < $len; $i++) {
 			$node =& $nodes->item($i);
 			$item = new FeedItem();
-			$item->setTitle(DOMUtils::getFirstChildText($node,'title'));
-			$item->setDescription(DOMUtils::getFirstChildText($node,'description'));
-			$item->setLink(DOMUtils::getFirstChildText($node,'link'));
+			$item->setTitle(StringUtils::fromUnicode(DOMUtils::getFirstChildText($node,'title')));
+			$item->setDescription(StringUtils::fromUnicode(DOMUtils::getFirstChildText($node,'description')));
+			$item->setLink(StringUtils::fromUnicode(DOMUtils::getFirstChildText($node,'link')));
 			$item->setPubDate(DateUtils::parseRFC822(DOMUtils::getFirstChildText($node,'pubDate')));
 			$item->setGuid(DOMUtils::getFirstChildText($node,'guid'));
 			$feed->addItem($item);
