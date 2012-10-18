@@ -45,7 +45,7 @@ class WeblogTemplateController extends TemplateController
 		$sql="select webloggroup_id as id from weblog_webloggroup where page_id=".Database::int($id);
 		$selectedGroups = Database::getIds($sql);
 		
-		$groups = WeblogGroup::search(array('page'=>$this->id));
+		$groups = WeblogGroup::search(array('page'=>$id));
 		foreach ($groups as $group) {
 			$xml.='<group id="'.$group->getId().'" title="'.StringUtils::escapeXML($group->getTitle()).'" />';
 		}

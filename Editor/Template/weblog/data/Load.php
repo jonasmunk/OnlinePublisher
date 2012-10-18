@@ -7,12 +7,16 @@ require_once '../../../Include/Private.php';
 
 $weblog = WeblogTemplate::load(Request::getId());
 
-$values = array(
-	'id' => $weblog->getId(),
-	'title' => $weblog->getTitle(),
-	'blueprint' => $weblog->getPageBlueprintId(),
-	'groups' => $weblog->getGroupIds()
-);
+if ($weblog) {	
+	$values = array(
+		'id' => $weblog->getId(),
+		'title' => $weblog->getTitle(),
+		'blueprint' => $weblog->getPageBlueprintId(),
+		'groups' => $weblog->getGroupIds()
+	);
 
-Response::sendObject($values);
+	Response::sendObject($values);
+} else {
+	Response::notFound();
+}
 ?>
