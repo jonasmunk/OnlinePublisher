@@ -18,7 +18,13 @@
 <html>
 	<xsl:call-template name="util:html-attributes"/>
 <head>
-	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
+	<title>
+		<xsl:if test="not(//p:page/@id=//p:context/p:home/@page)"> 
+			<xsl:value-of select="@title"/>
+			<xsl:text> - </xsl:text>
+		</xsl:if>
+		<xsl:value-of select="f:frame/@title"/>
+	</title>
 	<xsl:call-template name="util:metatags"/>
 	<link href='http://fonts.googleapis.com/css?family=Nobile:regular,bold|Reenie+Beanie&amp;subset=latin' rel='stylesheet' type='text/css'/>
 	<xsl:call-template name="util:style"/>
@@ -31,7 +37,7 @@
 	<div class="layout">
 		<div class="layout_top">
 			<div class="layout_centered">
-				<strong>Kvalitetstorvet</strong>
+				<strong>Torvedag - Aalborg</strong>
 				<ul class="layout_navigation">
 					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
 				</ul>

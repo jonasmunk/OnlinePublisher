@@ -20,11 +20,11 @@ div.layout_top strong
 	letter-spacing: 1px;
 	color: #fff;
 	background: url('../gfx/top.png') left -39px no-repeat;
-	padding-left: 40px;
+	padding-left: 45px;
 	position: absolute;
 	height: 39px;
 	font-weight: bold;
-	line-height: 37px;
+	line-height: 41px;
 }
 
 div.layout_bottom
@@ -130,7 +130,7 @@ ul.layout_navigation a
 	color: #fff;
 	text-decoration: none;
 	height: 14px;
-	line-height: 37px;
+	line-height: 41px;
 	height: 39px;
 	display: inline-block;
 	vertical-align: middle;
