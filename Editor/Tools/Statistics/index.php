@@ -27,7 +27,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-				<selection name="selector" value="visits">
+				<selection name="selector" value="visits" top="5">
 					<item icon="common/page" title="{Visits; da:Besøgende}" value="visits"/>
 					<item icon="common/page" title="{Pages; da:Sider}" value="pages"/>
 					<item icon="common/internet" title="{Paths; da:Stier}" value="paths"/>

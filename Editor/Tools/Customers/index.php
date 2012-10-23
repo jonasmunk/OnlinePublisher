@@ -49,7 +49,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-					<selection value="person" name="selector">
+					<selection value="person" name="selector" top="5">
 						<item icon="common/person" title="{All people; da:Alle personer}" value="person"/>
 						<item icon="common/email" title="{All mailing lists; da:Alle postlister}" value="mailinglist"/>
 						<item icon="common/folder" title="{All groups; da:Alle grupper}" value="persongroup"/>

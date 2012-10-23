@@ -32,7 +32,7 @@ $gui='
 		</top>
 		<middle>
 			<left>
-				<selection value="all" name="selector">
+				<selection value="all" name="selector" top="5">
 					<item icon="common/folder" title="{All; da:Alle}" value="all"/>
 				</selection>
 			</left>

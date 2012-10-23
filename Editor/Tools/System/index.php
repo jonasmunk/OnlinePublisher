@@ -50,7 +50,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-					<selection value="object" name="selector">
+					<selection value="object" name="selector" top="5">
 						<item icon="common/object" title="{All objects; da:Alle objekter}" value="object"/>
 						<item icon="common/user" title="{Users; da:Brugere}" value="user"/>
 						<item icon="file/generic" title="Log" value="log"/>

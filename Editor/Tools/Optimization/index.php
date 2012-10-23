@@ -23,7 +23,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-				<selection value="overview" name="selector">
+				<selection value="overview" name="selector" top="5">
 					<item icon="common/info" title="{Overview; da:Oversigt}" value="overview"/>
 					<title>{Warnings; da:Advarsler}</title>
 					<item icon="common/warning" title="{Requests; da:Forespørgsler}" value="pagenotfound"/>

@@ -68,6 +68,11 @@ var mainController = {
 			hui.ui.get('info').enable();
 			hui.ui.get('delete').enable();
 			hui.ui.get('view').setEnabled(page);
+		} else if (item.kind=='hierarchy') {
+			hui.ui.get('edit').disable();
+			hui.ui.get('info').enable();
+			hui.ui.get('delete').disabke();
+			hui.ui.get('view').disable();
 		} else {
 			hui.ui.get('edit').disable()
 			hui.ui.get('info').disable()

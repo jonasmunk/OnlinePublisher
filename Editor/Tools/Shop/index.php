@@ -22,7 +22,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-				<selection value="product" name="selector">
+				<selection value="product" name="selector" top="5">
 					<item icon="common/product" title="{All products; da:Alle produkter}" value="product"/>
 					<item icon="common/email" title="{All offers; da:Alle bud}" value="productoffer"/>
 					<item icon="common/folder" title="{All groups; da:Alle grupper}" value="productgroup"/>

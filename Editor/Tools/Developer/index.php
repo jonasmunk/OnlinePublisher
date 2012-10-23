@@ -23,7 +23,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-					<selection value="classes" name="selector">
+					<selection value="classes" name="selector" top="5">
 						<item icon="common/info" title="PHP info" value="phpInfo"/>
 						<item icon="common/time" title="Session" value="session"/>
 						<item icon="common/tools" title="Settings" value="settings"/>

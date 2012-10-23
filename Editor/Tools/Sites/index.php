@@ -92,7 +92,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-					<selection value="all" name="selector">
+					<selection value="all" name="selector" top="5">
 						<item icon="common/page" title="{All pages; da:Alle sider}" value="all"/>
 						<item icon="common/time" title="{Latest; da:Seneste}" value="latest"/>
 						<title>{Hierarchies;da:Hierarkier}</title>

@@ -61,6 +61,9 @@ hui.ui.listen({
 		if (obj.kind=='hierarchyItem') {
 			this.loadHierarchyItem(obj.id);
 		}
+		else if (obj.kind=='hierarchy') {
+			this.loadHierarchy(obj.id);
+		}
 	},
 	
 	////////////////// Hierarchy //////////////////

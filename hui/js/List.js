@@ -315,7 +315,8 @@ hui.ui.List.prototype = {
 			this.sortDirection = sort[0].getAttribute('direction');
 		}
 		if (this.checkboxMode) {
-			var th = hui.build('th',{className:'list_check',parent:headTr,text:'\u00D7'});
+			var th = hui.build('th',{className:'list_check',parent:headTr});
+			var a = hui.build('a',{className:'list_check_all',parent:th})
 			hui.listen(th,'click',this._checkAll.bind(this));
 		}
 		var headers = doc.getElementsByTagName('header');
@@ -358,7 +359,7 @@ hui.ui.List.prototype = {
 			
 			if (this.checkboxMode) {
 				var td = hui.build('td',{parent:row,className:'hui_list_checkbox'});
-				hui.build('a',{className:'hui_list_checkbox',parent:td,text:'\u00D7'});
+				hui.build('a',{className:'hui_list_checkbox',parent:td});
 			}
 			
 			var icon = rows[i].getAttribute('icon');

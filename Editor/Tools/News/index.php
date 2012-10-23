@@ -51,7 +51,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-				<selection value="all" name="selector">
+				<selection value="all" name="selector" top="5">
 					<item icon="common/files" title="{All; da:Alle}" value="all"/>
 					<item icon="common/time" title="{Latest 24 hours; da:Seneste døgn}" value="latest"/>
 					<item icon="common/play" title="{Active; da:Aktive}" value="active"/>

@@ -44,6 +44,7 @@ function listHierarhy() {
 			startCell(array('icon'=>'common/hierarchy'))->text($hierarchy->getName())->endCell()->
 			startCell()->endCell()->
 			startCell()->endCell()->
+			startCell()->endCell()->
 		endRow();
 	} else {
 		$hierarchyId = null;

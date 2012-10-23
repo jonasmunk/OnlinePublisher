@@ -67,7 +67,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-				<selection value="overview" name="selector">
+				<selection value="overview" name="selector" top="5">
 					<item icon="common/files" title="{Overview; da:Oversigt}" value="overview"/>
 					<items source="calendarItemsSource" name="calendarSelection" title="{Calendars; da:Kalendere}"/>
 					<items source="sourcesItemsSource" name="sourceSelection" title="{Sources; da:Kilder}"/>

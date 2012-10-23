@@ -17,7 +17,7 @@ div.hui_list table
 	background: #fff;
 }
 
-div.hui_list table thead th
+div.hui_list th
 {
 	text-align: left;
 	font-size: 9pt;
@@ -26,7 +26,7 @@ div.hui_list table thead th
 	color: #334455;
 	vertical-align: top;
 	line-height: 21px;
-	height: 22px;
+	height: 21px;
 	background: url('../gfx/list_header.png') repeat-x;
 	cursor: default;
 	padding: 0px 5px;
@@ -34,7 +34,7 @@ div.hui_list table thead th
 	white-space: nowrap;
 }
 
-div.hui_list table thead th span
+div.hui_list th span
 {
 	display: block;
 }
@@ -45,13 +45,15 @@ div.hui_list th.sortable:hover
 	background: url('../gfx/list_header.png') left -21px repeat-x;
 }
 
-div.hui_list th.sort_ascending, div.hui_list th.sort_descending
+div.hui_list th.sort_ascending, 
+div.hui_list th.sort_descending
 {
 	background: url('../gfx/list_header.png') left -42px repeat-x;
 	color: #000;
 }
 
-div.hui_list th.sort_ascending:hover, div.hui_list th.sort_descending:hover
+div.hui_list th.sort_ascending:hover, 
+div.hui_list th.sort_descending:hover
 {
 	background: url('../gfx/list_header.png') left -63px repeat-x;
 }
@@ -66,7 +68,7 @@ div.hui_list th.sort_descending span
 	background: url('../gfx/list_descending.png') right center no-repeat;
 }
 
-div.hui_list table tbody td
+div.hui_list td
 {
 	font-size: 9pt;
 	border-bottom: 1px solid #eee;
@@ -138,23 +140,13 @@ div.hui_list table tbody.hui_list_selectable tr:hover
 	cursor: pointer;
 }
 
-/*div.hui_list tr:hover .hui_icon_16
-{
-	background-position: 0px -16px;
-}
-
-div.hui_list tr:hover span.hui_list_icons .hui_icon_16
-{
-	background-position: 0px 0px;
-}*/
-
 .hui_list_icon_action:hover
 {
 	background-position: 0px -16px;
 	cursor: pointer;
 }
 
-div.hui_list table tbody tr.hui_list_selected
+div.hui_list tr.hui_list_selected
 {
 	background-color: #3875d7;
 	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
@@ -162,12 +154,12 @@ div.hui_list table tbody tr.hui_list_selected
 	text-shadow: 0 -1px 0px #5070cc;
 }
 
-div.hui_list table tbody tr.hui_list_selected td
+div.hui_list tr.hui_list_selected td
 {
 	color: #fff;
 }
 
-div.hui_list table tbody tr.hui_list_selected p.hui_list_dimmed
+div.hui_list tr.hui_list_selected p.hui_list_dimmed
 {
 	color: #def;
 }
@@ -263,7 +255,8 @@ p.hui_list_line
 	overflow: hidden;
 }
 
-p.hui_list_dimmed, td.hui_list_dimmed
+p.hui_list_dimmed, 
+td.hui_list_dimmed
 {
 	color: #999;
 }
@@ -384,16 +377,15 @@ a.hui_list_checkbox
 	width: 12px;
 	height: 12px;
 	margin-top: 2px;
-    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: #eee;
+    background: #eee -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
 	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
-	text-align: center;
-	line-height: 11px;
 	font-weight: bold;
-	color: #333;
 	overflow: hidden;
 	text-indent: -20px;
 	text-shadow: none;
+	cursor: pointer;
 }
 
 a.hui_list_checkbox:hover
@@ -407,20 +399,24 @@ tr.hui_list_checked
 	background: #eaf3ff;
 }
 
-div.hui_list table tbody.hui_list_selectable tr.hui_list_checked:hover
+div.hui_list tbody.hui_list_selectable tr.hui_list_checked:hover
 {
 	background: #f6f6e5;
 	background: #ddeafd;
 }
 
-div.hui_list table tbody tr.hui_list_checked td
+div.hui_list tr.hui_list_checked td
 {
 	border-color: #d6e6fa;
 }
 
 tr.hui_list_checked a.hui_list_checkbox
 {
-	text-indent: 0px;
+	background-image: url('../gfx/sprite.png'), -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background-image: url('../gfx/sprite.png'), -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	background-image: url('../gfx/sprite.png'), -ms-linear-gradient(top, #fff, rgb(240,240,240));
+	background-position: -2px 0;
+	border: 1px solid #bbb;
 }
 
 td.hui_list_checkbox
@@ -430,9 +426,18 @@ td.hui_list_checkbox
 
 div.hui_list table thead th.list_check
 {
-	width: 1%;
-	color: #666;
 	text-align: center;
+	cursor: pointer;
+	width: 1%;
+}
+
+a.list_check_all
+{
+	display: inline-block;
+	width: 16px;
+	height: 12px;
+	background: url('../gfx/sprite.png') 0px -14px;
+	cursor: pointer;
 }
 
 /* Native drop */
@@ -453,7 +458,7 @@ div.hui_list_drop table
 
 /*** Light variant ***/
 
-div.hui_list_light table thead th
+div.hui_list_light th
 {
 	background: none;
 	border-bottom: 1px solid #ddd;
@@ -466,14 +471,16 @@ div.hui_list_light th.sortable:hover
 	color: #666;
 }
 
-div.hui_list_light th.sort_ascending, div.hui_list_light th.sort_descending
+div.hui_list_light th.sort_ascending, 
+div.hui_list_light th.sort_descending
 {
 	background: none;
 	color: #000;
 	font-weight: bold;
 }
 
-div.hui_list_light th.sort_ascending:hover, div.hui_list_light th.sort_descending:hover
+div.hui_list_light th.sort_ascending:hover, 
+div.hui_list_light th.sort_descending:hover
 {
 	background: #f6f6f6;
 	color: #000;
@@ -489,7 +496,7 @@ div.hui_list_white table
 	color: #fff;
 }
 
-div.hui_list_white table tbody tr:hover
+div.hui_list_white tr:hover
 {
 	background-color: rgba(255,255,255,.1);
 }
@@ -500,7 +507,7 @@ div.hui_list_white td.hui_list_dimmed
 	color: rgba(255,255,255,.7);
 }
 
-div.hui_list_white table tbody td
+div.hui_list_white td
 {
 	border-color: rgba(255,255,255,.1);
 }
@@ -510,9 +517,9 @@ div.hui_list_empty
 	display: none;
 }
 
-/*** White variant ***/
+/*** Transparent variant ***/
 
-div.hui_list_transparent table tbody td
+div.hui_list_transparent td
 {
 	border: none;
 	padding: 0;
