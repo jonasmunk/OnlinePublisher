@@ -350,7 +350,7 @@ ul.tabbar a.selected, ul.tabbar a.highlighted
 .footer
 {
 	height: 30px;
-	border-top: 1px solid #e3e3e3;
+	/*border-top: 1px solid #e3e3e3;*/
 	text-align: center;
 	padding-top: 10px;
 	font-size: 10pt;
@@ -370,6 +370,49 @@ ul.tabbar a.selected, ul.tabbar a.highlighted
 {
 	color: #0033AA;
 }
+
+
+/****************************** copyright ************************/
+
+div.copyright
+{
+	margin-top: 15px;
+}
+
+div.copyright p
+{
+	margin: 0 0 5px;
+	color: #aaa;
+	font-size: 11px;
+}
+
+div.copyright a
+{
+	color: #aaa;
+}
+
+div.copyright:hover p
+{
+	color: #666;
+}
+
+div.copyright:hover a
+{
+	color: #004EFF;
+	text-decoration: underline;
+}
+
+div.copyright a:hover
+{
+	color: #0033AA;
+}
+
+div.copyright span.links
+{
+	color: #ddd;
+	margin-right: 10px;
+}
+
 
 /****************************** middle ************************/
 

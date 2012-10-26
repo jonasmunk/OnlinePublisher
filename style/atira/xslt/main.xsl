@@ -71,6 +71,16 @@
 		</div>
 	</div>
 	<xsl:call-template name="extra"/>
+	<div class="copyright">
+		<p>Copyright &#169; 2012 Atira A/S, a Reed Elsevier Company. All rights reserved.</p>
+		<p>
+			<span class="links">
+				<a href="http://www.elsevier.com/wps/find/privacypolicy.cws_home/privacypolicy">Privacy Policy</a>
+				 | 
+				<a href="http://www.elsevier.com/wps/find/termsconditions.cws_home/termsconditions">Terms and Conditions</a>
+			</span>
+			Cookies are set by this site. To decline them or learn more, visit our <a href="http://info.scival.com/cookies">Cookies</a> page.</p>
+	</div>
 	<div class="footer">
 		<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
 		<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
