@@ -56,9 +56,25 @@ hui.ui.Gallery.prototype = {
 		this.height = size;
 		for (var i=0; i < this.nodes.length; i++) {
 			var node = this.nodes[i];
+			var obj = this.objects[i];
 			node.style.width = size+'px';
 			node.style.height = size+'px';
+			var img = hui.get.firstChild(node);
+			if (img.height && img.width) {
+				var rect = this._findSize(obj,size);
+				hui.style.set(img,{width:rect.width+'px',height:rect.height+'px',marginTop:((size-rect.height)/2)+'px'})
+			}
 		};
+	},
+	_findSize : function(obj,size) {
+		var rect = {width:size,height:size};
+		if (obj.width>obj.height) {
+			rect.height = obj.height/obj.width * size;
+		}
+		if (obj.width<obj.height) {
+			rect.width = obj.width/obj.height * size;
+		}
+		return rect;
 	},
 	reRender : function() {
 		this._render();

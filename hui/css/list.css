@@ -128,12 +128,12 @@ div.hui_list .hui_icon_12
 	visibility: hidden;
 }
 
-div.hui_list tbody tr:hover .hui_list_revealing
+div.hui_list tr:hover .hui_list_revealing
 {
 	visibility: visible;
 }
 
-div.hui_list table tbody.hui_list_selectable tr:hover
+tbody.hui_list_selectable tr:hover
 {
 	background-color: #EBF0F7;
 	background-color: #fafafa;
@@ -146,7 +146,8 @@ div.hui_list table tbody.hui_list_selectable tr:hover
 	cursor: pointer;
 }
 
-div.hui_list tr.hui_list_selected
+div.hui_list tr.hui_list_selected,
+div.hui_list tr.hui_list_selected:hover
 {
 	background-color: #3875d7;
 	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
@@ -412,6 +413,8 @@ div.hui_list tr.hui_list_checked td
 
 tr.hui_list_checked a.hui_list_checkbox
 {
+	filter: none;
+	background: #fafafa url('../gfx/sprite.png');
 	background-image: url('../gfx/sprite.png'), -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
 	background-image: url('../gfx/sprite.png'), -moz-linear-gradient(top, #fff, rgb(240,240,240));
 	background-image: url('../gfx/sprite.png'), -ms-linear-gradient(top, #fff, rgb(240,240,240));

@@ -15,12 +15,15 @@ div.hui_window
 	height: 27px;
 	cursor: default;
 	text-align: center;
+	cursor: move;
 	cursor: -webkit-grab;
+	cursor: -moz-grab;
 }
 
 div.hui_window_dragging .hui_window_titlebar
 {
 	cursor: -webkit-grabbing;
+	cursor: -moz-grabbing;
 }
 
 .hui_window_titlebar div

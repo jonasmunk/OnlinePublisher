@@ -43,7 +43,7 @@ hui.ui.listen({
 	},
 	
 	$valueChanged$sizeSlider : function(value) {
-		gallery.setSize(value*280+20);
+		gallery.setSize(20+value*180);
 	},
 	$valueChangedEnd$sizeSlider : function() {
 		gallery.reRender();
