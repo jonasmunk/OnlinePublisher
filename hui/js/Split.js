@@ -62,9 +62,22 @@ hui.ui.Split.prototype = {
 	$$layout : function() {
 		this._layout();
 	},
+	_getSiblingHeight : function(e) {
+		var height = e.parentNode.clientHeight;
+		var siblings = e.parentNode.childNodes;
+		for (var i=0; i < siblings.length; i++) {
+			var sib = siblings[i];
+			if (sib!==e && hui.dom.isElement(siblings[i])) {
+				if (hui.style.get(sib,'position')!='absolute') {
+					height-=sib.offsetHeight;
+				}
+			}
+		};
+		return height;
+	},
 	_layout : function() {
 		var pos = 0,
-			full = this.element.clientHeight;
+			full = hui.position.getRemainingHeight(this.element);
 		for (var i=0; i < this.rows.length; i++) {
 			this.rows[i].style.top = (pos*full)+'px';
 			var height = (this.sizes[i]*full);
@@ -77,6 +90,5 @@ hui.ui.Split.prototype = {
 				this.handles[i].style.top = (pos*full)+'px';
 			}
 		};
-		//hui.ui.reLayout()
 	}
 }

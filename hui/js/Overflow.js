@@ -23,22 +23,6 @@ hui.ui.Overflow.create = function(options) {
 }
 
 hui.ui.Overflow.prototype = {
-	_calculate : function() {
-		var viewport = hui.window.getViewHeight(),
-			parent = this.element.parentNode,
-			top = hui.position.getTop(this.element),
-			bottom = hui.position.getTop(parent)+parent.clientHeight,
-			sibs = hui.get.after(this.element);
-		for (var i=0; i < sibs.length; i++) {
-			if (hui.style.get(sibs[i],'position')!='absolute') {
-				bottom-=sibs[i].clientHeight;
-			}
-		}
-		this.diff = -1 * (top + (viewport - bottom));
-		if (hui.browser.webkit && (this.element.parentNode.className=='hui_layout_center' || hui.cls.has(this.element.parentNode,'hui_layout_left'))) {
-			this.diff++;
-		}
-	},
 	_checkShadows : function() {
 		if (hui.browser.msie) {return}
 		if (this.element.scrollTop > 0) {
@@ -73,24 +57,13 @@ hui.ui.Overflow.prototype = {
 	$$childSizeChanged : function() {
 		this._checkShadows();
 	},
-	/** @private */
 	$$layout : function() {
 		if (!this.options.dynamic) {
 			this._checkShadows();
 			return
 		}
-		this._calculate();
-		var height;
-		if (!this.options.dynamic) {
-			if (this.options.vertical) {
-				height = hui.window.getViewHeight();
-				this.element.style.height = Math.max(0,height-this.options.vertical)+'px';
-			}
-			this._checkShadows();
-			return;
-		}
-		height = hui.window.getViewHeight();
-		this.element.style.height = Math.max(0,height+this.diff)+'px';
+		hui.log(this.element.parentNode.clientHeight)
+		this.element.style.height = hui.position.getRemainingHeight(this.element)+'px';
 		this._checkShadows();
 	}
 }

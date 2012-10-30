@@ -262,6 +262,14 @@ hui.ui.changeState = function(state) {
 }
 
 hui.ui.reLayout = function() {
+	var widgets = hui.ui.getDescendants(document.body);
+	for (var i=0; i < widgets.length; i++) {
+		var obj = widgets[i];
+		if (obj['$$layout']) {
+			obj['$$layout']();
+		}
+	};
+	return;
 	var all = hui.ui.objects,
 		obj;
 	for (key in all) {

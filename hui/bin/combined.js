@@ -978,6 +978,20 @@ hui.position = {
 		}
 		src.style.top = Math.round(top)+'px';
 		src.style.left = Math.round(left)+'px';
+	},
+	/** Get the remaining height within parent when all siblings has used their height */
+	getRemainingHeight : function(e) {
+		var height = e.parentNode.clientHeight;
+		var siblings = e.parentNode.childNodes;
+		for (var i=0; i < siblings.length; i++) {
+			var sib = siblings[i];
+			if (sib!==e && hui.dom.isElement(siblings[i])) {
+				if (hui.style.get(sib,'position')!='absolute') {
+					height-=sib.offsetHeight;
+				}
+			}
+		};
+		return height;
 	}
 }
 
@@ -5035,6 +5049,14 @@ hui.ui.changeState = function(state) {
 }
 
 hui.ui.reLayout = function() {
+	var widgets = hui.ui.getDescendants(document.body);
+	for (var i=0; i < widgets.length; i++) {
+		var obj = widgets[i];
+		if (obj['$$layout']) {
+			obj['$$layout']();
+		}
+	};
+	return;
 	var all = hui.ui.objects,
 		obj;
 	for (key in all) {
@@ -13396,6 +13418,7 @@ hui.ui.Overflow.prototype = {
 		this._checkShadows();
 	},
 	/** @private */
+	/*
 	$$layout : function() {
 		if (!this.options.dynamic) {
 			this._checkShadows();
@@ -13413,6 +13436,15 @@ hui.ui.Overflow.prototype = {
 		}
 		height = hui.window.getViewHeight();
 		this.element.style.height = Math.max(0,height+this.diff)+'px';
+		this._checkShadows();
+	},*/
+	$$layout : function() {
+		if (!this.options.dynamic) {
+			this._checkShadows();
+			return
+		}
+		hui.log(this.element.parentNode.clientHeight)
+		this.element.style.height = hui.position.getRemainingHeight(this.element)+'px';
 		this._checkShadows();
 	}
 }
@@ -17543,9 +17575,22 @@ hui.ui.Split.prototype = {
 	$$layout : function() {
 		this._layout();
 	},
+	_getSiblingHeight : function(e) {
+		var height = e.parentNode.clientHeight;
+		var siblings = e.parentNode.childNodes;
+		for (var i=0; i < siblings.length; i++) {
+			var sib = siblings[i];
+			if (sib!==e && hui.dom.isElement(siblings[i])) {
+				if (hui.style.get(sib,'position')!='absolute') {
+					height-=sib.offsetHeight;
+				}
+			}
+		};
+		return height;
+	},
 	_layout : function() {
 		var pos = 0,
-			full = this.element.clientHeight;
+			full = hui.position.getRemainingHeight(this.element);
 		for (var i=0; i < this.rows.length; i++) {
 			this.rows[i].style.top = (pos*full)+'px';
 			var height = (this.sizes[i]*full);
@@ -17558,6 +17603,5 @@ hui.ui.Split.prototype = {
 				this.handles[i].style.top = (pos*full)+'px';
 			}
 		};
-		//hui.ui.reLayout()
 	}
 }

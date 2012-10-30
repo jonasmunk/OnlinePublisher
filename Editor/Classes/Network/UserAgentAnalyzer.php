@@ -127,7 +127,7 @@ class UserAgentAnalyzer {
 			return;
 		}
 		//Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)
-		elseif (preg_match ("/Mozilla\/[1-9].0 \(compatible; MSIE ([0-9\.bB]+); (Windows NT [5-9]\.[0-9]|Windows NT|Windows 98|Windows XP|Windows 95|Mac_PowerPC)(; [a-zA-Z-0-9\(\)\. =\{\},\/:\|#%]+)*\)/i",$this->userAgent,$result)) {
+		elseif (preg_match ("/Mozilla\/[1-9].0 \(compatible; MSIE ([0-9\.bB]+); (Windows NT [5-9]\.[0-9]|Windows NT|Windows 98|Windows XP|Windows 95|Mac_PowerPC)(;[a-zA-Z-0-9\(\)\. =\{\},\/:\|#%]+)*/i",$this->userAgent,$result)) {
 			$this->technologyName = 'InternetExplorer';
 			$this->technologyVersion = $result[1];
 			$this->applicationName = 'InternetExplorer';
@@ -198,7 +198,7 @@ class UserAgentAnalyzer {
 			return;
 		}
 		//Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 AMQPConnection/9B206 Safari/7534.48.3
-		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; [^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Version\/([0-9\.]+) Mobile\/([^ ]+) ([\w]+)\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
+		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; [^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Version\/([0-9\.]+) [^\/]+\/([^ ]+) ([\w]+)\/([0-9\.]+)/i",$this->userAgent,$result)) {
 			$this->technologyName = 'AppleWebKit';
 			$this->technologyVersion = $result[1];
 			$this->applicationName = $result[4];

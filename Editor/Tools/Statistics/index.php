@@ -56,11 +56,18 @@ $gui='
 						<item text="Hourly" value="hourly"/>
 					</segmented>
 				</bar>
-				<overflow>
-					<list name="list" source="listSource">
-						<error text="{Unable to retrieve statistics, please check that the login is correct; da:Det lykkedes ikke at hente statistikken, kontrolér venligst at login\'et er korrekt}"/>
-					</list>
-				</overflow>
+				<split>
+				<row height="20%">
+					
+				</row>
+					<row>
+					<overflow>
+						<list name="list" source="listSource">
+							<error text="{Unable to retrieve statistics, please check that the login is correct; da:Det lykkedes ikke at hente statistikken, kontrolér venligst at login\'et er korrekt}"/>
+						</list>
+					</overflow>
+					</row>
+				</split>
 			</center>
 		</middle>
 		<bottom/>

@@ -521,6 +521,15 @@ Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.4; Mozilla/
         $this->assertFalse($analyzer->isRobot());
         $this->assertFalse($analyzer->isSearchEngine());
 
+		$analyzer->setUserAgent('Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; MAAU; BOIE9;ENUS)');
+        $this->assertEqual($analyzer->getApplicationVersion(),'9.0');
+        $this->assertEqual($analyzer->getApplicationName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyName(),'InternetExplorer');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'9.0');
+        $this->assertFalse($analyzer->isPhone());
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
 		
 // 
 
