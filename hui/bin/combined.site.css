@@ -1468,6 +1468,12 @@ input.hui_formula_text
 	height: 18px;
 }
 
+span.hui_formula_text_multiline
+{
+	display: block;
+	font-size: 0;
+}
+
 textarea.hui_formula_text
 {
 	text-indent: 0;

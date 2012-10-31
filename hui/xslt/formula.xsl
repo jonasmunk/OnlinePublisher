@@ -50,12 +50,6 @@
 -->
 <xsl:template match="gui:fields[not(@labels='above')]">
 	<table class="hui_formula_fields">
-		<xsl:attribute name="class">
-			<xsl:text>hui_formula_fields</xsl:text>
-			<xsl:if test="@labels='above'">
-				<xsl:text> hui_formula_fields_above</xsl:text>
-			</xsl:if>
-		</xsl:attribute>
 		<xsl:apply-templates/>
 	</table>
 </xsl:template>
