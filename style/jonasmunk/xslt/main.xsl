@@ -44,13 +44,14 @@
 		<xsl:otherwise>
 			<div class="layout">
 				<div class="layout_navigation">
-					<xsl:call-template name="util:hierarchy-first-level"/>
-					<xsl:call-template name="util:hierarchy-second-level"/>
+					<xsl:call-template name="util:navigation-first-level"/>
 				</div>
 				<div class="layout_top">
 					<xsl:comment/>
 				</div>
 				<div class="layout_content">
+					<xsl:call-template name="util:navigation-second-level"/>
+					<xsl:call-template name="util:navigation-third-level"/>
 					<xsl:apply-templates select="p:content"/>
 					<xsl:comment/>
 				</div>
