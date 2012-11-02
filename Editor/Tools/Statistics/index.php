@@ -15,7 +15,10 @@ $gui='
 		<parameter key="kind" value="@selector.value"/>
 		<parameter key="time" value="@time.value"/>
 	</source>
-	<source name="chartSource" url="data/Chart.php"/>
+	<source name="chartSource" url="data/Chart.php">
+		<parameter key="kind" value="@selector.value"/>
+		<parameter key="time" value="@time.value"/>
+	</source>
 	
 	<structure>
 		<top>

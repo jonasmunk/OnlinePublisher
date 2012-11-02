@@ -45,6 +45,8 @@ div.hui_tile_content
 	height: 100%;
 	padding-top: 40px;
 	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	overflow: hidden;
 }
 
