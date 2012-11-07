@@ -208,6 +208,9 @@ hui.ui.List.prototype = {
 		this.options.source = null;
 		this.url = null;
 	},
+	clearSelection : function() {
+		this._changeSelection([]);
+	},
 	_empty : function() {
 		this.selected = [];
 		this.checked = [];

@@ -64,13 +64,19 @@ hui.ui.BoundPanel.prototype = {
 		}
 	},
 	/** Shows the panel */
-	show : function() {
+	show : function(options) {
+		options = options || {};
+		var target = options.target || this.options.target;
 		if (this.visible) {
 			this.element.style.zIndex = hui.ui.nextPanelIndex();
 			return;
 		}
-		if (this.options.target) {
-			this.position(hui.ui.get(this.options.target));
+		if (target) {
+			if (target.nodeName) {
+				this.position(target);
+			} else {
+				this.position(hui.ui.get(this.options.target));
+			}
 		}
 		if (hui.browser.opacity) {
 			hui.style.setOpacity(this.element,0);
@@ -103,7 +109,7 @@ hui.ui.BoundPanel.prototype = {
 		hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
 		this.visible=true;
 		if (this.options.modal) {
-			hui.ui.showCurtain({widget:this,zIndex:index-1,color:'auto'});
+			hui.ui.showCurtain({widget:this,zIndex:index-1,transparent:this.options.modal=='transparent',color:'auto'});
 		}
 		if (this.options.hideOnClick) {
 			this.hideListener = hui.listen(document.body,'click',function(e) {

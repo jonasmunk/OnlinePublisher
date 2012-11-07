@@ -50,6 +50,9 @@ hui.ui.Finder.prototype = {
 			this.window.hide();
 		}
 	},
+	clear : function() {
+		this.list.clearSelection();
+	},
 	_build : function() {
 		var win = this.window = hui.ui.Window.create({title:this.options.title,icon:'common/search',width:600});
 

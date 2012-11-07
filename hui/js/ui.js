@@ -344,30 +344,38 @@ hui.ui.showCurtain = function(options) {
 			}
 		});
 	}
-	if (options.color) {
+	var curtain = widget.curtain;
+	if (options.transparent) {
+		curtain.style.background='none';
+	}
+	else if (options.color) {
 		if (options.color=='auto') {
 			var color = hui.style.get(document.body,'background-color');
 			if (color=='transparent' || color=='rgba(0, 0, 0, 0)') {
 				color='#fff';
 			}
-			widget.curtain.style.backgroundColor=color;
+			curtain.style.backgroundColor=color;
 		} else {
-			widget.curtain.style.backgroundColor=options.color;
+			curtain.style.backgroundColor=options.color;
 		}
 	}
 	if (hui.browser.msie) {
-		widget.curtain.style.height=hui.document.getHeight()+'px';
+		curtain.style.height=hui.document.getHeight()+'px';
 	} else {
-		widget.curtain.style.position='fixed';
-		widget.curtain.style.top='0';
-		widget.curtain.style.left='0';
-		widget.curtain.style.bottom='0';
-		widget.curtain.style.right='0';
+		curtain.style.position='fixed';
+		curtain.style.top='0';
+		curtain.style.left='0';
+		curtain.style.bottom='0';
+		curtain.style.right='0';
 	}
-	widget.curtain.style.zIndex=options.zIndex;
-	hui.style.setOpacity(widget.curtain,0);
-	widget.curtain.style.display='block';
-	hui.animate(widget.curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
+	curtain.style.zIndex=options.zIndex;
+	if (options.transparent) {
+		curtain.style.display='block';		
+	} else {
+		hui.style.setOpacity(curtain,0);
+		curtain.style.display='block';
+		hui.animate(curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
+	}
 }
 
 hui.ui.hideCurtain = function(widget) {
