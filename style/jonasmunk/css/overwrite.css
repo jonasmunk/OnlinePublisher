@@ -40,3 +40,10 @@ p.common, ul.common
 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 }
+
+hr.part_horizontalrule
+{
+	border: none;
+	border-bottom: solid 1px #eee;
+	margin: 10px -20px;
+}

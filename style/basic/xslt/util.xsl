@@ -438,6 +438,7 @@
 	</xsl:if>
 </xsl:template>
 
+<!-- deprecated -->
 <xsl:template name="util:hierarchy-first-level">
 	<ul>
 		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
@@ -457,6 +458,7 @@
 	</ul>
 </xsl:template>
 
+<!-- Deprecated -->
 <xsl:template name="util:hierarchy-second-level">
 	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
 		<ul class="case_sub_navigation">
@@ -471,6 +473,69 @@
 						<xsl:call-template name="util:link"/>
 						<span><xsl:value-of select="@title"/></span>
 					</a>
+					</li>
+				</xsl:if>
+			</xsl:for-each>
+		</ul>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="util:navigation-first-level">
+	<xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
+		<ul class="layout_navigation_first">
+			<xsl:for-each select="//f:frame/h:hierarchy/h:item">
+				<xsl:if test="not(@hidden='true')">
+					<li>
+						<xsl:choose>
+							<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
+							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
+						</xsl:choose>
+						<a>
+							<xsl:call-template name="util:link"/>
+							<span><xsl:value-of select="@title"/></span>
+						</a>
+					</li>
+				</xsl:if>
+			</xsl:for-each>
+		</ul>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="util:navigation-second-level">
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
+		<ul class="layout_navigation_second">
+			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+				<xsl:if test="not(@hidden='true')">
+					<li>
+						<xsl:choose>
+							<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
+							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
+						</xsl:choose>
+						<a>
+							<xsl:call-template name="util:link"/>
+							<span><xsl:value-of select="@title"/></span>
+						</a>
+					</li>
+				</xsl:if>
+			</xsl:for-each>
+		</ul>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="util:navigation-third-level">
+	<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
+		<ul class="layout_navigation_third">
+			<xsl:for-each select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+				<xsl:if test="not(@hidden='true')">
+					<li>
+						<xsl:choose>
+							<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
+							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
+						</xsl:choose>
+						<a>
+							<xsl:call-template name="util:link"/>
+							<span><xsl:value-of select="@title"/></span>
+						</a>
 					</li>
 				</xsl:if>
 			</xsl:for-each>

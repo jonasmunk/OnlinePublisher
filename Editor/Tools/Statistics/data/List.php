@@ -211,29 +211,60 @@ function pages() {
 function paths() {
 	$writer = new ListWriter();
 
-	$writer->startList();
-	$writer->startHeaders();
-	$writer->header(array('title'=>array('From','da'=>'Fra')));
-	$writer->header(array('title'=>array('To','da'=>'Til')));
-	$writer->header(array('title'=>array('Path','da'=>'Sti')));
-	$writer->header(array('title'=>array('Page','da'=>'Side')));
-	$writer->header(array('title'=>array('Visits','da'=>'Besøg')));
-	$writer->header(array('title'=>array('Sessions','da'=>'Sessioner')));
-	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
-	$writer->endHeaders();
+	$writer->startList()->
+		startHeaders()->
+		header(array('title'=>array('From','da'=>'Fra')))->
+		header(array('title'=>array('To','da'=>'Til')))->
+		header(array('title'=>array('Path','da'=>'Sti')))->
+		header(array('title'=>array('Page','da'=>'Side')))->
+		header(array('title'=>array('Visits','da'=>'Besøg')))->
+		header(array('title'=>array('Sessions','da'=>'Sessioner')))->
+		header(array('title'=>array('Devices','da'=>'Maskiner')))->
+	endHeaders();
 
 	$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,statistics.uri,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page' group by statistics.uri order by statistics.time desc limit 100";
 	$result = Database::select($sql);
 	while($row = Database::next($result)) {
-		$writer->startRow();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell();
-		$writer->startCell()->text($row['uri'])->endCell();
-		$writer->startCell()->icon('common/page')->text($row['page_title'])->endCell();
-		$writer->startCell()->text($row['visits'])->endCell();
-		$writer->startCell()->text($row['sessions'])->endCell();
-		$writer->startCell()->text($row['ips'])->endCell();
-		$writer->endRow();
+		$writer->startRow()->
+			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell()->
+			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell()->
+			startCell()->text($row['uri'])->endCell()->
+			startCell()->icon('common/page')->text($row['page_title'])->endCell()->
+			startCell()->text($row['visits'])->endCell()->
+			startCell()->text($row['sessions'])->endCell()->
+			startCell()->text($row['ips'])->endCell()->
+		endRow();
+	}
+	Database::free($result);
+	$writer->endList();
+}
+
+function refererers() {
+	$writer = new ListWriter();
+
+	$writer->startList()->
+		startHeaders()->
+		header(array('title'=>array('From','da'=>'Fra')))->
+		header(array('title'=>array('To','da'=>'Til')))->
+		header(array('title'=>array('Path','da'=>'Sti')))->
+		header(array('title'=>array('Page','da'=>'Side')))->
+		header(array('title'=>array('Visits','da'=>'Besøg')))->
+		header(array('title'=>array('Sessions','da'=>'Sessioner')))->
+		header(array('title'=>array('Devices','da'=>'Maskiner')))->
+	endHeaders();
+
+	$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,statistics.`referer` from statistics group by statistics.`referer` order by statistics.time";
+	$result = Database::select($sql);
+	while($row = Database::next($result)) {
+		$writer->startRow()->
+			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell()->
+			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell()->
+			startCell()->text($row['uri'])->endCell()->
+			startCell()->icon('common/page')->text($row['page_title'])->endCell()->
+			startCell()->text($row['visits'])->endCell()->
+			startCell()->text($row['sessions'])->endCell()->
+			startCell()->text($row['ips'])->endCell()->
+		endRow();
 	}
 	Database::free($result);
 	$writer->endList();

@@ -7,12 +7,19 @@ require_once '../../Include/Private.php';
 
 $gui='
 <gui xmlns="uri:hui" padding="10" title="Statistics">
+	
 	<controller source="controller.js"/>
+	
 	<source name="listSource" url="data/List.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="kind" value="@selector.value"/>
 		<parameter key="time" value="@time.value"/>
 	</source>
+	<source name="chartSource" url="data/Chart.php">
+		<parameter key="kind" value="@selector.value"/>
+		<parameter key="time" value="@time.value"/>
+	</source>
+	
 	<structure>
 		<top>
 			<toolbar>
@@ -57,8 +64,8 @@ $gui='
 					</segmented>
 				</bar>
 				<split>
-				<row height="20%">
-					
+				<row height="50%">
+					<chart name="stats" source="chartSource" height="100%"/>
 				</row>
 					<row>
 					<overflow>

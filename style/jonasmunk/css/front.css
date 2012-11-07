@@ -10,11 +10,11 @@ div.front
 div.front_title
 {
 	position: absolute;
-	background: url('../gfx/front.png') -453px -4px;
+	background: url('../gfx/front.png') -453px 0px;
 	left: 453px;
-	top: 4px;
-	height: 49px;
-	width: 326px;
+	top: -10px;
+	height: 65px;
+	width: 335px;
 	z-index: 1;
 }
 
@@ -29,6 +29,20 @@ div.front_photo
 	position: absolute;
 	width: 488px;
 	height: 341px;
+}
+
+div.front_photo span
+{
+	background: url('../gfx/effect.png');
+	position: absolute;
+	width: 274px;
+	height: 327px;
+	opacity: .5;
+	left: 110px;
+    -webkit-animation-name: effect;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
 }
 
 div.front ul
@@ -174,7 +188,7 @@ li.front_onlineme em
          opacity: 1;
          -webkit-transform: scale(1) rotate(-5deg);
        }
-       80% {
+       90% {
          opacity: 1;
          -webkit-transform: scale(1) rotate(5deg);
        }
@@ -183,6 +197,23 @@ li.front_onlineme em
          -webkit-transform: scale(.5) rotate(0deg);
        }
       }
-
-      .pulsedbox {
+      @-webkit-keyframes effect {
+       0% {
+         opacity: 0;
+       }
+       40% {
+         opacity: 0;
+       }
+       50% {
+         opacity: 1;
+       }
+       60% {
+         opacity: 1;
+       }
+       90% {
+         opacity: 1;
+       }
+       100% {
+         opacity: 0;
+       }
       }

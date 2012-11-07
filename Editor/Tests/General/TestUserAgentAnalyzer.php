@@ -150,6 +150,16 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
 	*/
 	function testMobile() {
 		$analyzer = new UserAgentAnalyzer();
+		
+		
+
+		$analyzer->setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206');
+        $this->assertEqual($analyzer->getApplicationVersion(),'5.1.1');
+        $this->assertEqual($analyzer->getApplicationName(),'Safari');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'534.46');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
 
 		$analyzer->setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B206 Safari/7534.48.3');
         $this->assertEqual($analyzer->getApplicationVersion(),'5.1');

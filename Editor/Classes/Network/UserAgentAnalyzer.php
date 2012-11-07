@@ -217,6 +217,16 @@ class UserAgentAnalyzer {
 			$this->searchEngine = false;
 			return;
 		}
+		//Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206
+		elseif (preg_match ("/Mozilla\/5.0 \(iPhone; CPU iPhone OS ([0-9_]+) [^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\)/i",$this->userAgent,$result)) {
+			$this->technologyName = 'AppleWebKit';
+			$this->technologyVersion = $result[2];
+			$this->applicationName = 'Safari';
+			$this->applicationVersion = str_replace('_','.',$result[1]);
+			$this->robot = false;
+			$this->searchEngine = false;
+			return;
+		}
 		
 		//Mozilla/5.0 (Linux; U; Android 4.0.4; da-dk; GT-P5110 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
 		elseif (preg_match ("/Mozilla\/5.0 \([\w]+; U; Android ([0-9\.+]+); [^\)]+\) AppleWebKit\/([0-9\.+]+) \(KHTML, like Gecko\) Version\/([0-9\.]+) (Mobile )?Safari\/([0-9\.]+)\z/i",$this->userAgent,$result)) {
@@ -303,6 +313,17 @@ class UserAgentAnalyzer {
 			$this->searchEngine = true;
 			return;
 		}
+		//Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534+ (KHTML, like Gecko) BingPreview/1.0b
+		elseif (preg_match ("/BingPreview\/([0-9\.a-z]+)/i",$this->userAgent,$result)) {
+			$this->technologyName = 'BingPreview';
+			$this->technologyVersion = $result[1];
+			$this->applicationName = 'BingPreview';
+			$this->applicationVersion = $result[1];
+			$this->robot = true;
+			$this->searchEngine = true;
+			return;
+		}
+		
 		//msnbot/1.0 (+http://search.msn.com/msnbot.htm)
 		elseif (preg_match ("/msnbot\/([0-9\.]+)/i",$this->userAgent,$result)) {
 			$this->technologyName = 'msnbot';
@@ -470,6 +491,9 @@ class UserAgentAnalyzer {
 		}
 		//[name]/[version]
 		elseif (preg_match ("/([a-zA-Z\-\. ]*)\/([0-9a-zA-Z\.\-]+)( \([.]*\))?/i",$this->userAgent,$result)) {
+			if ($result[1]=='Mozilla') {
+				return;
+			}
 			$this->technologyName = $result[1];
 			$this->technologyVersion = $result[2];
 			$this->applicationName = $result[1];
