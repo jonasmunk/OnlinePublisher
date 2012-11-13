@@ -30,15 +30,15 @@
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/>
 		<!--
 		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
-		-->
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+		<xsl:call-template name="util:scripts-adaptive"/>
+		-->
 		<meta name="google-site-verification" content="WMeBqZoNf7fYYk8Yvu8p05cFXnskJt1_Y6SJtXE-Ym0" />
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:style"/>
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
 		<xsl:call-template name="util:scripts"/>
-		<xsl:call-template name="util:scripts-adaptive"/>
 	</head>
 	<body>
 		<script type="text/javascript">
@@ -414,7 +414,7 @@
 				</script>
 				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
 				<xsl:for-each select="f:frame/f:search/f:types/f:type">
-					<input type="hidden" name="{@unique}" value="on"/>
+				<input type="hidden" name="{@unique}" value="on"/>
 				</xsl:for-each>
 				<input type="submit" class="submit" value="Søg"/>
 			</div>
