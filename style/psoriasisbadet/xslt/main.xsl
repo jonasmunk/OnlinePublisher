@@ -40,8 +40,7 @@
 							<p>9000 Aalborg</p>
 							<p>Denmark</p>
 							</div>
-							<p>E-mail: <a href="mailto:info@greenbenefit.dk">info@greenbenefit.dk</a></p>
-							<p>Tlf: 70 20 60 77</p>
+							<p>Tlf: 23 62 33 59</p>
 						</div>
 						<div class="layout_box">
 							<h3>Nyhedsbrev</h3>
