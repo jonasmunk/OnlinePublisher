@@ -666,6 +666,7 @@ hui.ui.List.prototype = {
 		this._buildNavigation();
 		this._buildHeaders(data.headers);
 		this._buildRows(data.rows);
+		this._setEmpty(!data.rows || data.rows.length==0);
 	},
 	/** @private */
 	_buildHeaders : function(headers) {

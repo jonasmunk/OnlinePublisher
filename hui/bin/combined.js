@@ -4824,7 +4824,6 @@ hui.onReady(function() {
 			hui.log(e);
 		});
 	}
-	hui.ui.callSuperDelegates(this,'ready');
 	hui.listen(window,'resize',hui.ui._resize);
 	hui.ui.reLayout();
 	hui.ui.domReady = true;
@@ -4834,6 +4833,8 @@ hui.onReady(function() {
 	for (var i=0; i < hui.ui.delayedUntilReady.length; i++) {
 		hui.ui.delayedUntilReady[i]();
 	};
+	// Call super delegates after delayedUntilReady...
+	hui.ui.callSuperDelegates(this,'ready');
 });
 
 /**
@@ -5131,30 +5132,38 @@ hui.ui.showCurtain = function(options) {
 			}
 		});
 	}
-	if (options.color) {
+	var curtain = widget.curtain;
+	if (options.transparent) {
+		curtain.style.background='none';
+	}
+	else if (options.color) {
 		if (options.color=='auto') {
 			var color = hui.style.get(document.body,'background-color');
 			if (color=='transparent' || color=='rgba(0, 0, 0, 0)') {
 				color='#fff';
 			}
-			widget.curtain.style.backgroundColor=color;
+			curtain.style.backgroundColor=color;
 		} else {
-			widget.curtain.style.backgroundColor=options.color;
+			curtain.style.backgroundColor=options.color;
 		}
 	}
 	if (hui.browser.msie) {
-		widget.curtain.style.height=hui.document.getHeight()+'px';
+		curtain.style.height=hui.document.getHeight()+'px';
 	} else {
-		widget.curtain.style.position='fixed';
-		widget.curtain.style.top='0';
-		widget.curtain.style.left='0';
-		widget.curtain.style.bottom='0';
-		widget.curtain.style.right='0';
+		curtain.style.position='fixed';
+		curtain.style.top='0';
+		curtain.style.left='0';
+		curtain.style.bottom='0';
+		curtain.style.right='0';
 	}
-	widget.curtain.style.zIndex=options.zIndex;
-	hui.style.setOpacity(widget.curtain,0);
-	widget.curtain.style.display='block';
-	hui.animate(widget.curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
+	curtain.style.zIndex=options.zIndex;
+	if (options.transparent) {
+		curtain.style.display='block';		
+	} else {
+		hui.style.setOpacity(curtain,0);
+		curtain.style.display='block';
+		hui.animate(curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
+	}
 }
 
 hui.ui.hideCurtain = function(widget) {
@@ -6715,6 +6724,9 @@ hui.ui.List.prototype = {
 		this.options.source = null;
 		this.url = null;
 	},
+	clearSelection : function() {
+		this._changeSelection([]);
+	},
 	_empty : function() {
 		this.selected = [];
 		this.checked = [];
@@ -7170,6 +7182,7 @@ hui.ui.List.prototype = {
 		this._buildNavigation();
 		this._buildHeaders(data.headers);
 		this._buildRows(data.rows);
+		this._setEmpty(!data.rows || data.rows.length==0);
 	},
 	/** @private */
 	_buildHeaders : function(headers) {
@@ -9158,13 +9171,19 @@ hui.ui.BoundPanel.prototype = {
 		}
 	},
 	/** Shows the panel */
-	show : function() {
+	show : function(options) {
+		options = options || {};
+		var target = options.target || this.options.target;
 		if (this.visible) {
 			this.element.style.zIndex = hui.ui.nextPanelIndex();
 			return;
 		}
-		if (this.options.target) {
-			this.position(hui.ui.get(this.options.target));
+		if (target) {
+			if (target.nodeName) {
+				this.position(target);
+			} else {
+				this.position(hui.ui.get(this.options.target));
+			}
 		}
 		if (hui.browser.opacity) {
 			hui.style.setOpacity(this.element,0);
@@ -9197,7 +9216,7 @@ hui.ui.BoundPanel.prototype = {
 		hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
 		this.visible=true;
 		if (this.options.modal) {
-			hui.ui.showCurtain({widget:this,zIndex:index-1,color:'auto'});
+			hui.ui.showCurtain({widget:this,zIndex:index-1,transparent:this.options.modal=='transparent',color:'auto'});
 		}
 		if (this.options.hideOnClick) {
 			this.hideListener = hui.listen(document.body,'click',function(e) {
@@ -13557,7 +13576,7 @@ hui.ui.LocationPicker = function(options) {
 	this.name = options.name;
 	this.options = options.options || {};
 	this.element = hui.get(options.element);
-	this.backendLoaded = false;
+	this.backendLoaded = window.google!==undefined && window.google.maps!==undefined;
 	this.defered = [];
 	hui.ui.extend(this);
 }
@@ -13569,7 +13588,7 @@ hui.ui.LocationPicker.prototype = {
 			var mapContainer = hui.build('div',{style:'width:300px;height:300px;border:1px solid #bbb;'});
 			panel.add(mapContainer);
 			var buttons = hui.ui.Buttons.create({align:'right',top:5});
-			var button = hui.ui.Button.create({text:'Luk',small:true});
+			var button = hui.ui.Button.create({text:{en:'Close',da:'Luk'},small:true});
 			button.listen({$click:function() {panel.hide()}});
 			panel.add(buttons.add(button));
 			hui.style.set(panel.element,{left:'-10000px',top:'-10000px',display:''});
@@ -16728,6 +16747,9 @@ hui.ui.Finder.prototype = {
 		if (this.window) {
 			this.window.hide();
 		}
+	},
+	clear : function() {
+		this.list.clearSelection();
 	},
 	_build : function() {
 		var win = this.window = hui.ui.Window.create({title:this.options.title,icon:'common/search',width:600});

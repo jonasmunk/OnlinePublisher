@@ -14,7 +14,23 @@ hui.ui.Pages = function(options) {
 	//hui.listen(this.element,'click',this.next.bind(this));
 }
 
+hui.ui.Pages.create = function(options) {
+	options = options || {};
+	options.element = hui.build('div',{'class':'hui_pages'});
+	return new hui.ui.Pages(options);
+}
+
 hui.ui.Pages.prototype = {
+	add : function(widgetOrElement) {
+		var element = hui.dom.isElement(widgetOrElement) ? element : widgetOrElement.element;
+		var page = hui.build('div',{'class':'hui_pages_page'});
+		page.appendChild(element);
+		this.element.appendChild(page);
+		if (this.pages.length>0) {
+			page.style.display = 'none';
+		}
+		this.pages = hui.get.children(this.element);
+	},
 	next : function() {
 		if (this.expanded) {return}
 		var current = this.pages[this.index];
@@ -26,6 +42,16 @@ hui.ui.Pages.prototype = {
 		var current = this.pages[this.index];
 		this.index = this.index == 0 ? this.pages.length-1 : this.index-1;
 		this._transition({hide:current,show:this.pages[this.index]});
+	},
+	goTo : function(key) {
+		for (var i=0; i < this.pages.length; i++) {
+			if (this.pages[i].getAttribute('data-key')==key && i!=this.index) {
+				var current = this.pages[this.index];
+				this.index = i;
+				this._transition({hide:current,show:this.pages[i]});
+				return;
+			}
+		};
 	},
 	expand : function() {
 		var l = this.pages.length;

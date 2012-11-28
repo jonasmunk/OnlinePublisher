@@ -7,7 +7,7 @@ hui.ui.LocationPicker = function(options) {
 	this.name = options.name;
 	this.options = options.options || {};
 	this.element = hui.get(options.element);
-	this.backendLoaded = false;
+	this.backendLoaded = window.google!==undefined && window.google.maps!==undefined;
 	this.defered = [];
 	hui.ui.extend(this);
 }
