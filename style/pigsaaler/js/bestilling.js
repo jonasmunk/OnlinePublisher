@@ -46,8 +46,10 @@ Bestilling.prototype = {
 		var large8 = parseInt(this.form['large_8'].value);
 		var small10 = parseInt(this.form['small_10'].value);
 		var large10 = parseInt(this.form['large_10'].value);
+		var small24 = parseInt(this.form['small_24'].value);
+		var large24 = parseInt(this.form['large_24'].value);
 		var modelE = parseInt(this.form['model_E'].value);
-		if (!(small8>0) && !(large8>0) && !(small10>0) && !(large10>0) && !(modelE>0)) {
+		if (!(small8>0) && !(large8>0) && !(small10>0) && !(large10>0) && !(small24>0) && !(large24>0) && !(modelE>0)) {
 			this.form['small_8'].focus();
 			hui.ui.showMessage({text:'Udfyld venligst antal for mindst een af modellerne',duration:2000});
 			return;
@@ -65,6 +67,9 @@ Bestilling.prototype = {
 			'10 pigge:',
 			'  Antal små: '+this.form['small_10'].value,
 			'  Antal store: '+this.form['large_10'].value,
+			'24 pigge:',
+			'  Antal små: '+this.form['small_24'].value,
+			'  Antal store: '+this.form['large_24'].value,
 			'Model E:',
 			'  Antal små: '+this.form['model_E'].value,
 			'Besked: '+this.form['message'].value
