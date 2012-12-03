@@ -152,7 +152,7 @@ class WaterusageService {
 				$email->setAddress($address);
 				$email->save();
 				$email->publish();
-			} else {
+			} else if (!StringUtils::isBlank($address)) {
 				$email = new EmailAddress();
 				$email->setAddress($address);
 				$email->save();
@@ -171,7 +171,7 @@ class WaterusageService {
 				$phone->setNumber($number);
 				$phone->save();
 				$phone->publish();
-			} else {
+			} else if (!StringUtils::isBlank($number)) {
 				$phone = new Phonenumber();
 				$phone->setNumber($number);
 				$phone->save();

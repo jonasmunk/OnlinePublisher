@@ -49,10 +49,10 @@ $gui='
 				<overflow>
 					<list name="list" source="listSource" state="list"/>
 					<fragment state="meter" height="full" background="linen">
-						<bar>
+						<bar variant="layout">
 							<button text="Luk" icon="common/close" name="closeMeter"/>
 						</bar>
-						<block all="20">
+						<space all="20">
 							<columns space="20">
 								<column width="300px">
 									<box variant="rounded" padding="10">
@@ -100,7 +100,7 @@ $gui='
 								</column>
 								<column>
 									<box variant="rounded">
-										<bar>
+										<bar variant="clear">
 											<button text="Tilføj aflæsning" name="addSubUsage" icon="common/new"/>
 										</bar>
 										<overflow height="200">
@@ -109,7 +109,7 @@ $gui='
 									</box>
 								</column>
 							</columns>
-						</block>
+						</space>
 					</fragment>
 				</overflow>
 			</center>
