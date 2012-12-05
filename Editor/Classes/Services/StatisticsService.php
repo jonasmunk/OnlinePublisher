@@ -83,15 +83,17 @@ class StatisticsService {
 		return '';
 	}
 	
-	function getChart($query) {
+	function getVisitsChart($query) {
 		$patterns = array(
-			'day'=>array('sql' => '%Y%m%d','php' => 'Ymd'),
-			'hour'=>array('sql' => '%Y%m%d%H','php' => 'YmdH')
+			'daily' => array('sql' => '%Y%m%d','php' => 'Ymd', 'div' => 60*60*24),
+			'hourly' => array('sql' => '%Y%m%d%H','php' => 'YmdH', 'div' => 60*60),
+			'monthly' => array('sql' => '%Y%m','php' => 'Ym', 'div' => 60*60*24*31),
+			'yearly' => array('sql' => '%Y','php' => 'Y', 'div' => 60*60*24*365)
 		);
 		
 		$days = 100;
 
-		$resolution = 'day';
+		$resolution = $query->getResolution();
 
 		$sql = 'SELECT count(distinct statistics.session) as sessions, count(distinct statistics.ip) as ips, count(statistics.id) as hits,date_format(statistics.time, "'.$patterns[$resolution]['sql'].'") as `key`,date_format(statistics.time, "%e") as label FROM statistics';
 		$sql.= StatisticsService::_buildWhere($query);
@@ -107,7 +109,7 @@ class StatisticsService {
 		}
 		$end = DateUtils::getDayEnd();
 		
-		$days = floor(($end-$start)/60/60/24);
+		$days = floor(($end-$start)/$patterns[$resolution]['div']);
 		
 		$rows = StatisticsService::_fillGaps($rows,$days,$patterns,$resolution);
 		$sets = array();
@@ -119,7 +121,7 @@ class StatisticsService {
 			foreach ($rows as $row) {
 				$entries[$row['key']] = $row[$dim];
 			}
-			$sets[] = array('type'=>'line','entries'=>$entries);
+			$sets[] = array('type'=>'column','entries'=>$entries);
 		}
 		return array('sets'=>$sets);
 	}
@@ -128,8 +130,12 @@ class StatisticsService {
 		$filled = array();
 		$now = time();
 		for ($i=$days; $i >= 0; $i--) {
-			if ($resolution=='day') {
+			if ($resolution=='daily') {
 				$date = DateUtils::addDays($now,$i*-1);
+			} else if ($resolution=='monthly') {
+				$date = DateUtils::addMonths($now,$i*-1);
+			} else if ($resolution=='yearly') {
+				$date = DateUtils::addYears($now,$i*-1);
 			} else {
 				$date = DateUtils::addHours($now,$i*-1);
 			}

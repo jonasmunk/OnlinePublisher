@@ -5,7 +5,10 @@
  */
 require_once '../../../Include/Private.php';
 
-$chart = StatisticsService::getChart(array('days'=>21));
+$query = new StatisticsQuery();
+$query->setStartTime(DateUtils::addDays(time(),-21));
+
+$chart = StatisticsService::getChart($query);
 
 Response::sendObject($chart);
 ?>

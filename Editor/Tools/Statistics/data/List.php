@@ -115,12 +115,12 @@ function unknownAgents() {
 			continue;
 		}
 		$writer->startRow()->
-			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell()->
-			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell()->
-			startCell()->icon('common/page')->text($row['agent'])->endCell()->
-			startCell()->text($row['visits'])->endCell()->
-			startCell()->text($row['sessions'])->endCell()->
-			startCell()->text($row['ips'])->endCell()->
+			startCell(array('icon'=>'common/time')) -> text(DateUtils::formatFuzzy($row['firsttime'])) -> endCell() ->
+			startCell(array('icon'=>'common/time')) -> text(DateUtils::formatFuzzy($row['lasttime'])) -> endCell() ->
+			startCell() -> icon('common/page') -> text($row['agent']) -> endCell() ->
+			startCell() -> text($row['visits']) -> endCell() ->
+			startCell() -> text($row['sessions']) -> endCell() ->
+			startCell() -> text($row['ips']) -> endCell() ->
 		endRow();
 	}
 	$writer->endList();
@@ -329,23 +329,21 @@ function visits() {
 
 	$writer = new ListWriter();
 
-	$writer->startList();
-	if ($result) {
-		$writer->startHeaders();
-		$writer->header(array('title'=>array('Date','da'=>'Dato')));
-		$writer->header(array('title'=>array('Pageviews','da'=>'Sidevisninger')));
-		$writer->header(array('title'=>array('Sessioner','da'=>'Sessions')));
-		$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
-		$writer->endHeaders();
+	$writer->startList() ->
+		startHeaders() ->
+			header(array('title'=>array('Date','da'=>'Dato'))) ->
+			header(array('title'=>array('Pageviews','da'=>'Sidevisninger'))) ->
+			header(array('title'=>array('Sessioner','da'=>'Sessions'))) ->
+			header(array('title'=>array('Devices','da'=>'Maskiner'))) ->
+		endHeaders();
 
-		foreach ($result as $row) {
-			$writer->startRow();
-			$writer->startCell(array('icon'=>'common/time'))->text($row['label'])->endCell();
-			$writer->startCell()->text($row['hits'])->endCell();
-			$writer->startCell()->text($row['sessions'])->endCell();
-			$writer->startCell()->text($row['ips'])->endCell();
-			$writer->endRow();
-		}
+	foreach ($result as $row) {
+		$writer->startRow()->
+			startCell(array('icon'=>'common/time')) -> text($row['label']) -> endCell()->
+			startCell() -> text($row['hits']) -> endCell() ->
+			startCell() -> text($row['sessions']) -> endCell() ->
+			startCell() -> text($row['ips']) -> endCell() ->
+		endRow();
 	}
 	$writer->endList();
 }

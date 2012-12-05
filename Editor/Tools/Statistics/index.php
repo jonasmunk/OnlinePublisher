@@ -18,10 +18,12 @@ $gui='
 	<source name="chartSource" url="data/Chart.php">
 		<parameter key="kind" value="@selector.value"/>
 		<parameter key="time" value="@time.value"/>
+		<parameter key="resolution" value="@resolution.value"/>
 	</source>
 	
 	<structure>
 		<top>
+			<!--
 			<toolbar>
 				<field label="Startdato">
 					<datetime-input name="startDate"/>
@@ -30,6 +32,7 @@ $gui='
 					<datetime-input name="endDate"/>
 				</field>
 			</toolbar>
+			-->
 		</top>
 		<middle>
 			<left>
@@ -56,10 +59,12 @@ $gui='
 			</left>
 			<center>
 				<bar variant="layout">
-					<segmented variant="inset">
+					<segmented variant="inset" name="resolution" value="daily">
 						<item text="Yearly" value="yearly"/>
 						<item text="Monthly" value="monthly"/>
+						<!--
 						<item text="Weekly" value="weekly"/>
+						-->
 						<item text="Daily" value="daily"/>
 						<item text="Hourly" value="hourly"/>
 					</segmented>

@@ -9,8 +9,10 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class StatisticsQuery {
+	
 	var $startTime;
 	var $endTime;
+	var $resolution;
 	
 	function withTime($time) {
 		if ($time=='year') {
@@ -23,8 +25,14 @@ class StatisticsQuery {
 			$this->startTime = DateUtils::getWeekStart();
 			$this->endTime = DateUtils::getWeekEnd();
 		}
+		return $this;
 	}
 	
+	function withResolution($resolution) {
+	    $this->resolution = $resolution;
+		return $this;
+	}
+
 	function setStartTime($startTime) {
 	    $this->startTime = $startTime;
 	}
@@ -39,6 +47,11 @@ class StatisticsQuery {
 
 	function getEndTime() {
 	    return $this->endTime;
+	}
+	
+
+	function getResolution() {
+	    return $this->resolution;
 	}
 	
 }
