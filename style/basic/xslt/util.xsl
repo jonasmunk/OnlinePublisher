@@ -212,10 +212,11 @@
 </xsl:template>
 
 <xsl:template name="util:html-attributes">
-	<xsl:attribute name="xmlns">http://www.w3.org/1999/xhtml</xsl:attribute>
 	<xsl:if test="//p:page/p:meta/p:language">
-		<xsl:attribute name="lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
-		<xsl:attribute name="xml:lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
+		<xsl:if test="//p:page/p:meta/p:language/text()">
+			<xsl:attribute name="lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
+			<xsl:attribute name="xml:lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
+		</xsl:if>
 	</xsl:if>
 </xsl:template>
 

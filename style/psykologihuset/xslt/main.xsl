@@ -14,7 +14,7 @@
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
 <xsl:template match="p:page">
-	<html>
+	<html xmlns="http://www.w3.org/1999/xhtml">
 		<xsl:call-template name="util:html-attributes"/>
 		<head> 
 			<title><xsl:if test="not(//p:page/@id=//p:context/p:home/@page)"><xsl:value-of select="@title"/> » </xsl:if><xsl:value-of select="f:frame/@title"/></title>
