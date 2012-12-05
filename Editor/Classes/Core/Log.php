@@ -16,6 +16,12 @@ class Log {
 		}
 	}
 	
+	function debugRequest() {
+		Log::debug($_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI']);
+		Log::debug("Get: ".print_r($_GET,true));
+		Log::debug("Post: ".print_r($_POST,true));
+	}
+	
 	function debugJSON($object) {
 		Log::debug(StringUtils::toJSON($object));
 	}

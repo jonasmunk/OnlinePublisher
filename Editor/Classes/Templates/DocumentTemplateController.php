@@ -103,7 +103,7 @@ class DocumentTemplateController extends TemplateController
 		$dynamic=false;
 		$index = '';
 		$output = '<content xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/document/1.0/">';
-		$sql="select * from document_row where page_id=".$id." order by `index`";
+		$sql = "select * from document_row where page_id=".$id." order by `index`";
 		$result_row = Database::select($sql);
 		while ($row = Database::next($result_row)) {
 			$output.= '<row';

@@ -90,21 +90,24 @@ function getAgentAppVersion($agent) {
 }
 
 function browsers($version) {
+	
+	$query = new StatisticsQuery();
+	$query->withTime(Request::getString('time'));
+	$result = StatisticsService::searchAgents($query);
+	$result = aggregateBrowsers($result,$version);
+	
 	$writer = new ListWriter();
 
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>array('Time','da'=>'Fra')));
-	$writer->header(array('title'=>array('Time','da'=>'Til')));
+	$writer->header(array('title'=>array('From','da'=>'Fra')));
+	$writer->header(array('title'=>array('To','da'=>'Til')));
 	$writer->header(array('title'=>array('Browser','da'=>'Browser')));
 	$writer->header(array('title'=>array('Visits','da'=>'Besøg')));
 	$writer->header(array('title'=>array('Sessions','da'=>'Sessioner')));
 	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
 	$writer->endHeaders();
 
-	$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime, count(distinct id) as visits,count(distinct ip) as ips,count(distinct session) as sessions,agent from statistics group by agent order by lasttime desc";
-	$result = Database::selectAll($sql);
-	$result = aggregateBrowsers($result,$version);
 	foreach ($result as $row) {
 		$writer->startRow();
 		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
@@ -119,6 +122,11 @@ function browsers($version) {
 }
 
 function browserVersions() {
+	$query = new StatisticsQuery();
+	$query->withTime(Request::getString('time'));
+	$result = StatisticsService::searchAgents($query);
+	$result = aggregateBrowsers($result);
+	
 	$writer = new ListWriter();
 
 	$writer->startList();
@@ -131,9 +139,6 @@ function browserVersions() {
 	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
 	$writer->endHeaders();
 
-	$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime, count(distinct id) as visits,count(distinct ip) as ips,count(distinct session) as sessions,agent from statistics group by agent order by lasttime desc";
-	$result = Database::selectAll($sql);
-	$result = aggregateBrowsers($result);
 	foreach ($result as $row) {
 		$writer->startRow();
 		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
@@ -148,12 +153,16 @@ function browserVersions() {
 }
 
 function agents() {
+	$query = new StatisticsQuery();
+	$query->withTime(Request::getString('time'));
+	$result = StatisticsService::searchAgents($query);
+
 	$writer = new ListWriter();
 
 	$writer->startList();
 	$writer->startHeaders();
-	$writer->header(array('title'=>array('Time','da'=>'Fra')));
-	$writer->header(array('title'=>array('Time','da'=>'Til')));
+	$writer->header(array('title'=>array('From','da'=>'Fra')));
+	$writer->header(array('title'=>array('To','da'=>'Til')));
 	$writer->header(array('title'=>array('Browser','da'=>'Browser')));
 	$writer->header();
 	$writer->header(array('title'=>array('Visits','da'=>'Besøg')));
@@ -161,8 +170,6 @@ function agents() {
 	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
 	$writer->endHeaders();
 
-	$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime, count(distinct id) as visits,count(distinct ip) as ips,count(distinct session) as sessions,agent from statistics group by agent order by lasttime desc";
-	$result = Database::selectAll($sql);
 	foreach ($result as $row) {
 		$analyzer = new UserAgentAnalyzer($row['agent']);
 		$app = $analyzer->getApplicationName().' '.$analyzer->getApplicationVersion().' / '.$analyzer->getTechnologyName().' '.$analyzer->getTechnologyVersion();
@@ -180,35 +187,43 @@ function agents() {
 }
 
 function pages() {
+	$query = new StatisticsQuery();
+	$query -> withTime(Request::getString('time'));
+	
+	$result = StatisticsService::searchPages($query);
+	
 	$writer = new ListWriter();
 
-	$writer->startList();
-	$writer->startHeaders();
-	$writer->header(array('title'=>array('Time','da'=>'Fra')));
-	$writer->header(array('title'=>array('Time','da'=>'Til')));
-	$writer->header(array('title'=>array('Page','da'=>'Side')));
-	$writer->header(array('title'=>array('Visits','da'=>'Besøg')));
-	$writer->header(array('title'=>array('Sessions','da'=>'Sessioner')));
-	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
-	$writer->endHeaders();
+	$writer->startList() ->
+		startHeaders() ->
+			header(array( 'title' => array('From','da'=>'Fra') )) ->
+			header(array( 'title' => array('To','da'=>'Til') )) ->
+			header(array( 'title' => array('Page','da'=>'Side') )) ->
+			header(array( 'title' => array('Visits','da'=>'Besøg') )) ->
+			header(array( 'title' => array('Sessions','da'=>'Sessioner') )) ->
+			header(array( 'title' => array('Devices','da'=>'Maskiner') )) ->
+		endHeaders();
 
-	$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page' group by statistics.value order by statistics.time desc limit 100";
-	$result = Database::select($sql);
 	while($row = Database::next($result)) {
-		$writer->startRow();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell();
-		$writer->startCell()->icon('common/page')->text($row['page_title'])->endCell();
-		$writer->startCell()->text($row['visits'])->endCell();
-		$writer->startCell()->text($row['sessions'])->endCell();
-		$writer->startCell()->text($row['ips'])->endCell();
-		$writer->endRow();
+		$writer -> startRow() ->
+			startCell(array( 'icon' => 'common/time', 'dimmed' => true)) -> text(DateUtils::formatFuzzy($row['firsttime'])) -> endCell() ->
+			startCell(array( 'icon' => 'common/time', 'dimmed' => true)) -> text(DateUtils::formatFuzzy($row['lasttime'])) -> endCell() ->
+			startCell() -> icon('common/page') -> text($row['page_title']) -> endCell() ->
+			startCell() -> text($row['visits']) -> endCell() ->
+			startCell() -> text($row['sessions']) -> endCell() ->
+			startCell() -> text($row['ips']) -> endCell() ->
+		endRow();
 	}
 	Database::free($result);
+
 	$writer->endList();
 }
 
 function paths() {
+	$query = new StatisticsQuery();
+	$query -> withTime(Request::getString('time'));
+	$result = StatisticsService::searchPaths($query);
+	
 	$writer = new ListWriter();
 
 	$writer->startList()->
@@ -222,8 +237,6 @@ function paths() {
 		header(array('title'=>array('Devices','da'=>'Maskiner')))->
 	endHeaders();
 
-	$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,statistics.uri,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page' group by statistics.uri order by statistics.time desc limit 100";
-	$result = Database::select($sql);
 	while($row = Database::next($result)) {
 		$writer->startRow()->
 			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell()->
@@ -272,8 +285,9 @@ function refererers() {
 
 function visits() {
 	$query = new StatisticsQuery();
-
-	$result = StatisticsService::search($query);
+	$query->withTime(Request::getString('time'));
+	
+	$result = StatisticsService::searchVisits($query);
 
 	$writer = new ListWriter();
 

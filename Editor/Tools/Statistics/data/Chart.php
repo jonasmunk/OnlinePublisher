@@ -7,10 +7,13 @@ require_once '../../../Include/Private.php';
 
 $kind = Request::getString('kind');
 
+$query = new StatisticsQuery();
+$query -> withTime(Request::getString('time'));
+
 if ($kind=='browsers') {
-	$chart = StatisticsService::getChart(array('days'=>10));
+	$chart = StatisticsService::getChart($query);
 } else {
-	$chart = StatisticsService::getChart(array('days'=>90));
+	$chart = StatisticsService::getChart($query);
 }
 
 Response::sendObject($chart);

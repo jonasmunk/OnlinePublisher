@@ -43,6 +43,7 @@ $gui='
 					<item icon="common/settings" title="{Application IDs; da:Program-IDer}" value="agents"/>
 					<item icon="common/settings" title="{Applications; da:Programmer}" value="browsers"/>
 					<item icon="common/settings" title="{Application versions; da:Programversioner}" value="browserVersions"/>
+					<item icon="common/settings" title="{Unknown; da:Ukendte}" value="unknownAgents"/>
 				</selection>
 				<selection name="time" value="always">
 					<title>{Time; da:Tid}</title>

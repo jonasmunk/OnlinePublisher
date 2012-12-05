@@ -185,7 +185,10 @@ class DateUtils {
 	/**
 	 * Gets the start time of the week of the provided timestamp
 	 */
-	function getWeekStart($timestamp) {
+	function getWeekStart($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
 		$year = date('Y',$timestamp);
 		$weekday = date('w',$timestamp);
 		if ($weekday==0) {
@@ -198,7 +201,10 @@ class DateUtils {
 		return mktime(0,0,0,$month,$date-$weekday,$year);
 	}
 	
-	function getWeekDay($timestamp) {
+	function getWeekDay($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
 		$weekday = date('w',$timestamp);
 		if ($weekday==0) {
 			$weekday=6;
@@ -208,7 +214,10 @@ class DateUtils {
 		return $weekday;
 	}
 	
-	function getWeekEnd($timestamp) {
+	function getWeekEnd($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
 		$year = date('Y',$timestamp);
 		$weekday = date('w',$timestamp);
 		$month = date('n',$timestamp);
@@ -216,13 +225,29 @@ class DateUtils {
 		return mktime(23,59,59,$month,$date-$weekday+7,$year);
 	}
 	
-	function getMonthStart($timestamp) {
+	function getDayEnd($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime(23,59,59,$month,$date,$year);
+	}
+	
+	function getMonthStart($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
 		$year = date('Y',$timestamp);
 		$month = date('n',$timestamp);
 		return mktime(0,0,0,$month,1,$year);
 	}
 	
-	function getMonthEnd($timestamp) {
+	function getMonthEnd($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
 		$year = date('Y',$timestamp);
 		$month = date('n',$timestamp);
 		return mktime(0,0,-1,$month+1,1,$year);
@@ -236,12 +261,18 @@ class DateUtils {
 		return mktime(0,0,-1,1,1,$year+1);
 	}
 	
-	function getYearStart($timestamp) {
+	function getYearStart($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
 		$year = date('Y',$timestamp);
 		return mktime(0,0,0,1,1,$year);
 	}
 	
-	function getYearEnd($timestamp) {
+	function getYearEnd($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
 		$year = date('Y',$timestamp);
 		return mktime(0,0,-1,1,1,$year+1);
 	}

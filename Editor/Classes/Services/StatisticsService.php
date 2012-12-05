@@ -39,9 +39,49 @@ class StatisticsService {
 		return $counts;
 	}
 	
-	function search($query) {
-		$sql = 'SELECT count(distinct statistics.session) as sessions, count(distinct statistics.ip) as ips, count(statistics.id) as hits,date_format(statistics.time, "%Y%m%d") as `key`,date_format(statistics.time, "%d-%m-%Y") as label FROM statistics group by label order by `key` desc limit 100';
+	function searchVisits($query) {
+		$sql = 'SELECT count(distinct statistics.session) as sessions, count(distinct statistics.ip) as ips, count(statistics.id) as hits,date_format(statistics.time, "%Y%m%d") as `key`,date_format(statistics.time, "%d-%m-%Y") as label';
+		$sql.= ' FROM statistics';
+		$sql.= StatisticsService::_buildWhere($query);
+		$sql.= ' group by label order by `key` desc limit 500';
 		return Database::selectAll($sql);
+	}
+	
+	function searchAgents($query) {
+		$sql = "SELECT UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime, count(distinct id) as visits,count(distinct ip) as ips,count(distinct session) as sessions,agent from statistics";
+		$sql.= StatisticsService::_buildWhere($query);
+		$sql.= " group by agent order by lasttime desc";
+		return Database::selectAll($sql);
+	}
+	
+	function searchPages($query) {
+		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
+		$sql.= StatisticsService::_buildWhere($query,false);
+		$sql.= " group by statistics.value order by visits desc";
+	 	return Database::select($sql);
+	}
+	
+	function searchPaths($query) {
+		
+		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,statistics.uri,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
+		$sql.= StatisticsService::_buildWhere($query);
+		$sql.= " group by statistics.uri order by statistics.time desc limit 100";
+		Log::debug($sql);
+		$result = Database::select($sql);
+	}
+	
+	function _buildWhere($query,$prepend=true) {
+		$where = array();
+		if ($query->getStartTime()) {
+			$where[] = 'statistics.time>='.Database::datetime($query->getStartTime());
+		}
+		if ($query->getEndTime()) {
+			$where[] = 'statistics.time<='.Database::datetime($query->getEndTime());
+		}
+		if ($where) {
+			return ($prepend ? ' where ' : ' and ').implode($where,' and ');
+		}
+		return '';
 	}
 	
 	function getChart($query) {
@@ -49,12 +89,27 @@ class StatisticsService {
 			'day'=>array('sql' => '%Y%m%d','php' => 'Ymd'),
 			'hour'=>array('sql' => '%Y%m%d%H','php' => 'YmdH')
 		);
+		
+		$days = 100;
 
 		$resolution = 'day';
-		$days = $query['days'];
 
-		$sql = 'SELECT count(distinct statistics.session) as sessions, count(distinct statistics.ip) as ips, count(statistics.id) as hits,date_format(statistics.time, "'.$patterns[$resolution]['sql'].'") as `key`,date_format(statistics.time, "%e") as label FROM statistics where statistics.time>DATE_SUB(now(), INTERVAL '.$days.' DAY)  group by `key` order by `key`';
+		$sql = 'SELECT count(distinct statistics.session) as sessions, count(distinct statistics.ip) as ips, count(statistics.id) as hits,date_format(statistics.time, "'.$patterns[$resolution]['sql'].'") as `key`,date_format(statistics.time, "%e") as label FROM statistics';
+		$sql.= StatisticsService::_buildWhere($query);
+		$sql.= '  group by `key` order by `key`';
 		$rows = Database::selectAll($sql,'key');
+		
+		if ($query->getStartTime()) {
+			$start = $query->getStartTime();
+		} else {
+			$sql = "SELECT UNIX_TIMESTAMP(min(statistics.time)) as `min` from statistics ".StatisticsService::_buildWhere($query);
+			$row = Database::selectFirst($sql);
+			$start = intval($row['min']);
+		}
+		$end = DateUtils::getDayEnd();
+		
+		$days = floor(($end-$start)/60/60/24);
+		
 		$rows = StatisticsService::_fillGaps($rows,$days,$patterns,$resolution);
 		$sets = array();
 		$dimensions = array('sessions','ips','hits');
