@@ -64,10 +64,9 @@ class StatisticsService {
 	function searchPaths($query) {
 		
 		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,statistics.uri,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
-		$sql.= StatisticsService::_buildWhere($query);
-		$sql.= " group by statistics.uri order by statistics.time desc limit 100";
-		Log::debug($sql);
-		$result = Database::select($sql);
+		$sql.= StatisticsService::_buildWhere($query,false);
+		$sql.= " group by statistics.uri order by visits desc limit 100";
+		return Database::select($sql);
 	}
 	
 	function _buildWhere($query,$prepend=true) {

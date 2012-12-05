@@ -50,6 +50,7 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/312.8 (KHTML, like G
 Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/420+ (KHTML, like Gecko) Safari/417.8
 Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-US) AppleWebKit/85 (KHTML, like Gecko) OmniWeb/v496
 Mozilla/5.0 (Macintosh; U; PPC Mac OS X; fr) AppleWebKit/125.5.6 (KHTML, like Gecko) Safari/125.12
+Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_4_11; en) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/4.1.2 Safari/533.18.5
 
 Very rare!
 Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like Gecko)
@@ -121,6 +122,18 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
         $this->assertTrue(!$analyzer->isRobot());
         $this->assertTrue(!$analyzer->isSearchEngine());
 
+		$analyzer->setUserAgent('Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_4_11; en) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/4.1.2 Safari/533.18.5');
+        $this->assertEqual($analyzer->getApplicationVersion(),'533.18.5');
+        $this->assertEqual($analyzer->getApplicationName(),'Safari');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'533.18.1');
+        $this->assertFalse($analyzer->isPhone());
+        $this->assertFalse($analyzer->isTablet());
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
+
+
 		// Other apps than safari
 
 		$analyzer->setUserAgent('Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-US) AppleWebKit/125.4 (KHTML, like Gecko, Safari) OmniWeb/v563.34');
@@ -151,13 +164,21 @@ Mozilla/5.0 (Macintosh; U; PPC Mac OS X; da-dk) AppleWebKit/412.7 (KHTML, like G
 	function testMobile() {
 		$analyzer = new UserAgentAnalyzer();
 		
-		
-
 		$analyzer->setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206');
         $this->assertEqual($analyzer->getApplicationVersion(),'5.1.1');
         $this->assertEqual($analyzer->getApplicationName(),'Safari');
         $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
         $this->assertEqual($analyzer->getTechnologyVersion(),'534.46');
+        $this->assertFalse($analyzer->isRobot());
+        $this->assertFalse($analyzer->isSearchEngine());
+
+		$analyzer->setUserAgent('Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403');
+        $this->assertEqual($analyzer->getApplicationVersion(),'6.0');
+        $this->assertEqual($analyzer->getApplicationName(),'Safari');
+        $this->assertEqual($analyzer->getTechnologyName(),'AppleWebKit');
+        $this->assertEqual($analyzer->getTechnologyVersion(),'536.26');
+        $this->assertFalse($analyzer->isPhone());
+        $this->assertTrue($analyzer->isTablet());
         $this->assertFalse($analyzer->isRobot());
         $this->assertFalse($analyzer->isSearchEngine());
 

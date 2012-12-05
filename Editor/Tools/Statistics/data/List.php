@@ -20,6 +20,8 @@ if ($kind=='live') {
 	browsers(false);
 } else if ($kind=='browserVersions') {
 	browsers(true);
+} else if ($kind=='unknownAgents') {
+	unknownAgents();
 } else {
 	visits();
 }
@@ -74,7 +76,7 @@ function getAgentApp($agent) {
 	if (strlen($app)>0) {
 		return $app;
 	} else {
-		return $agent;
+		return '!!!'.$agent;
 	}
 }
 
@@ -85,8 +87,44 @@ function getAgentAppVersion($agent) {
 	if (strlen($app)>0) {
 		return $app.' '.$analyzer->getApplicationVersion();
 	} else {
-		return $agent;
+		return '!!!'.$agent;
 	}
+}
+
+function unknownAgents() {
+	
+	$query = new StatisticsQuery();
+	$query->withTime(Request::getString('time'));
+	$result = StatisticsService::searchAgents($query);
+
+	$writer = new ListWriter();
+
+	$writer->startList() ->
+		startHeaders() ->
+			header(array('title'=>array('From','da'=>'Fra'))) ->
+			header(array('title'=>array('To','da'=>'Til'))) ->
+			header(array('title'=>array('Browser','da'=>'Browser'))) ->
+			header(array('title'=>array('Visits','da'=>'BesÃ¸g'))) ->
+			header(array('title'=>array('Sessions','da'=>'Sessioner'))) ->
+			header(array('title'=>array('Devices','da'=>'Maskiner'))) ->
+		endHeaders();
+
+	foreach ($result as $row) {
+		$analyzer = new UserAgentAnalyzer($row['agent']);
+		if ($analyzer->getApplicationName()) {
+			continue;
+		}
+		$writer->startRow()->
+			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell()->
+			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell()->
+			startCell()->icon('common/page')->text($row['agent'])->endCell()->
+			startCell()->text($row['visits'])->endCell()->
+			startCell()->text($row['sessions'])->endCell()->
+			startCell()->text($row['ips'])->endCell()->
+		endRow();
+	}
+	$writer->endList();
+	
 }
 
 function browsers($version) {
@@ -103,7 +141,7 @@ function browsers($version) {
 	$writer->header(array('title'=>array('From','da'=>'Fra')));
 	$writer->header(array('title'=>array('To','da'=>'Til')));
 	$writer->header(array('title'=>array('Browser','da'=>'Browser')));
-	$writer->header(array('title'=>array('Visits','da'=>'Besøg')));
+	$writer->header(array('title'=>array('Visits','da'=>'BesÃ¸g')));
 	$writer->header(array('title'=>array('Sessions','da'=>'Sessioner')));
 	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
 	$writer->endHeaders();
@@ -134,7 +172,7 @@ function browserVersions() {
 	$writer->header(array('title'=>array('From','da'=>'Fra')));
 	$writer->header(array('title'=>array('To','da'=>'Til')));
 	$writer->header(array('title'=>array('Browser','da'=>'Browser')));
-	$writer->header(array('title'=>array('Visits','da'=>'Besøg')));
+	$writer->header(array('title'=>array('Visits','da'=>'BesÃ¸g')));
 	$writer->header(array('title'=>array('Sessions','da'=>'Sessioner')));
 	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
 	$writer->endHeaders();
@@ -165,7 +203,7 @@ function agents() {
 	$writer->header(array('title'=>array('To','da'=>'Til')));
 	$writer->header(array('title'=>array('Browser','da'=>'Browser')));
 	$writer->header();
-	$writer->header(array('title'=>array('Visits','da'=>'Besøg')));
+	$writer->header(array('title'=>array('Visits','da'=>'BesÃ¸g')));
 	$writer->header(array('title'=>array('Sessions','da'=>'Sessioner')));
 	$writer->header(array('title'=>array('Devices','da'=>'Maskiner')));
 	$writer->endHeaders();
@@ -199,7 +237,7 @@ function pages() {
 			header(array( 'title' => array('From','da'=>'Fra') )) ->
 			header(array( 'title' => array('To','da'=>'Til') )) ->
 			header(array( 'title' => array('Page','da'=>'Side') )) ->
-			header(array( 'title' => array('Visits','da'=>'Besøg') )) ->
+			header(array( 'title' => array('Visits','da'=>'BesÃ¸g') )) ->
 			header(array( 'title' => array('Sessions','da'=>'Sessioner') )) ->
 			header(array( 'title' => array('Devices','da'=>'Maskiner') )) ->
 		endHeaders();
@@ -232,7 +270,7 @@ function paths() {
 		header(array('title'=>array('To','da'=>'Til')))->
 		header(array('title'=>array('Path','da'=>'Sti')))->
 		header(array('title'=>array('Page','da'=>'Side')))->
-		header(array('title'=>array('Visits','da'=>'Besøg')))->
+		header(array('title'=>array('Visits','da'=>'BesÃ¸g')))->
 		header(array('title'=>array('Sessions','da'=>'Sessioner')))->
 		header(array('title'=>array('Devices','da'=>'Maskiner')))->
 	endHeaders();
@@ -261,7 +299,7 @@ function refererers() {
 		header(array('title'=>array('To','da'=>'Til')))->
 		header(array('title'=>array('Path','da'=>'Sti')))->
 		header(array('title'=>array('Page','da'=>'Side')))->
-		header(array('title'=>array('Visits','da'=>'Besøg')))->
+		header(array('title'=>array('Visits','da'=>'BesÃ¸g')))->
 		header(array('title'=>array('Sessions','da'=>'Sessioner')))->
 		header(array('title'=>array('Devices','da'=>'Maskiner')))->
 	endHeaders();

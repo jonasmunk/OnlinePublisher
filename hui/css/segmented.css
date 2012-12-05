@@ -1,17 +1,7 @@
 span.hui_segmented
 {
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	background: #fff;
-	border: 1px solid #AAAAAA;
-	border-color: #ddd #ccc #aaa;
 	display: inline-block;
 	vertical-align: middle;
-	font-size: 0;
-	height: 20px;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
-	background: -moz-linear-gradient(top, #fff, #eee);
 }
 
 span.hui_segmented a
@@ -50,10 +40,59 @@ span.hui_segmented_text
 	padding: 0 4px;
 }
 
-a.hui_segmented_selected,
-span.hui_segmented a.hui_segmented_selected:hover
+
+
+/* Standard variant */
+
+span.hui_segmented_standard
+{
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background: #fff;
+	border: 1px solid #AAAAAA;
+	border-color: #ddd #ccc #aaa;
+	font-size: 0;
+	height: 20px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+	background: -moz-linear-gradient(top, #fff, #eee);	
+}
+
+span.hui_segmented_standard a.hui_segmented_selected,
+span.hui_segmented_standard a.hui_segmented_selected:hover
 {
 	background: #ddd;
 	background: -moz-linear-gradient(top, #EFF2F4, #C0C9CF);
 	background: -webkit-gradient(linear, left top, left bottom, from(#EFF2F4), to(#C0C9CF));
+}
+
+
+/* Inset variant */
+
+span.hui_segmented_inset
+{
+	font-size: 0;
+	height: 20px;
+}
+
+span.hui_segmented_inset a
+{
+	height: 18px;
+	border-radius: 9px;
+	border: 1px solid #ddd;
+	border-color: #ccc #ccc #ddd;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+	background: -moz-linear-gradient(top, #fff, #eee);
+	margin: 0 2px;
+}
+
+span.hui_segmented_inset a.hui_segmented_selected,
+span.hui_segmented_inset a.hui_segmented_selected:hover
+{
+	border-color: #555 #666 #888;
+	background: #ddd;
+	background: -moz-linear-gradient(top, #EFF2F4, #C0C9CF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#777), to(#99a));
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
+	color: #fff;
 }

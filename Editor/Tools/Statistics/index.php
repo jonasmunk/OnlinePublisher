@@ -56,7 +56,7 @@ $gui='
 			</left>
 			<center>
 				<bar variant="layout">
-					<segmented>
+					<segmented variant="inset">
 						<item text="Yearly" value="yearly"/>
 						<item text="Monthly" value="monthly"/>
 						<item text="Weekly" value="weekly"/>

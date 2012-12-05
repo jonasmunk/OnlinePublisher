@@ -1261,7 +1261,16 @@ doc title:'Rich text' class:'hui.ui.RichText'
 </segmented>
 -->
 <xsl:template match="gui:segmented" name="gui:segmented">
-	<span class="hui_segmented" id="{generate-id()}">
+	<span id="{generate-id()}">
+		<xsl:attribute name="class">
+			<xsl:text>hui_segmented</xsl:text>
+			<xsl:if test="@variant">
+				<xsl:text> hui_segmented_</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+			<xsl:if test="not(@variant)">
+				<xsl:text> hui_segmented_standard</xsl:text><xsl:value-of select="@variant"/>
+			</xsl:if>
+		</xsl:attribute>
 		<xsl:for-each select="gui:item">
 			<a href="javascript:void(0)" rel="{@value}">
 				<xsl:if test="@value=../@value">
