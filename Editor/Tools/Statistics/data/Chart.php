@@ -10,8 +10,8 @@ $kind = Request::getString('kind');
 $query = new StatisticsQuery();
 $query -> withTime(Request::getString('time')) -> withResolution(Request::getString('resolution'));
 
-if ($kind=='browsers') {
-	$chart = StatisticsService::getVisitsChart($query);
+if ($kind=='pages') {
+	$chart = StatisticsService::getPagesChart($query);
 } else {
 	$chart = StatisticsService::getVisitsChart($query);
 }

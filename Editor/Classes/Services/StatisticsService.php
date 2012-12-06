@@ -62,7 +62,6 @@ class StatisticsService {
 	}
 	
 	function searchPaths($query) {
-		
 		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,statistics.uri,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
 		$sql.= StatisticsService::_buildWhere($query,false);
 		$sql.= " group by statistics.uri order by visits desc limit 100";
@@ -121,9 +120,24 @@ class StatisticsService {
 			foreach ($rows as $row) {
 				$entries[$row['key']] = $row[$dim];
 			}
-			$sets[] = array('type'=>'column','entries'=>$entries);
+			$sets[] = array('type'=>'line','entries'=>$entries);
 		}
 		return array('sets'=>$sets);
+	}
+	
+	function getPagesChart($query) {
+		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
+		$sql.= StatisticsService::_buildWhere($query,false);
+		$sql.= " group by statistics.value order by visits desc limit 20";
+		
+		$rows = Database::selectAll($sql);
+		
+		$entries = array();
+		foreach ($rows as $row) {
+			$entries[$row['page_title']] = intval($row['visits']);
+		}
+		
+		return array('sets' => array(array('type'=>'column','entries'=>$entries)));
 	}
 
 	function _fillGaps($rows,$days,$patterns,$resolution) {

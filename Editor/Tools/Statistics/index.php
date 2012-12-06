@@ -59,7 +59,7 @@ $gui='
 			</left>
 			<center>
 				<bar variant="layout">
-					<segmented variant="inset" name="resolution" value="daily">
+					<segmented variant="inset" name="resolution" value="daily" top="4">
 						<item text="Yearly" value="yearly"/>
 						<item text="Monthly" value="monthly"/>
 						<!--

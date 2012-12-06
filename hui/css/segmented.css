@@ -87,6 +87,12 @@ span.hui_segmented_inset a
 	margin: 0 2px;
 }
 
+span.hui_segmented_inset span.hui_segmented_text
+{
+	line-height: 18px;
+	padding: 0 7px;
+}
+
 span.hui_segmented_inset a.hui_segmented_selected,
 span.hui_segmented_inset a.hui_segmented_selected:hover
 {

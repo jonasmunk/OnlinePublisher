@@ -56,7 +56,8 @@ class StringUtils {
 			}
 		} else if (is_array($obj)) {
 			foreach ($obj as $key => $value) {
-				$obj[$key] = StringUtils::toUnicode($value);
+				unset($obj[$key]);
+				$obj[StringUtils::toUnicode($key)] = StringUtils::toUnicode($value);
 			}
 		}
 		return $obj;

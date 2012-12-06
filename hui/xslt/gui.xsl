@@ -1262,6 +1262,11 @@ doc title:'Rich text' class:'hui.ui.RichText'
 -->
 <xsl:template match="gui:segmented" name="gui:segmented">
 	<span id="{generate-id()}">
+		<xsl:if test="@top">
+			<xsl:attribute name="style">
+				<xsl:text>margin-top: </xsl:text><xsl:value-of select="@top"/><xsl:text>px;</xsl:text>
+			</xsl:attribute>
+		</xsl:if>
 		<xsl:attribute name="class">
 			<xsl:text>hui_segmented</xsl:text>
 			<xsl:if test="@variant">
