@@ -1,0 +1,28 @@
+div.water
+{
+	border: 1px solid #ddd;
+}
+
+#chart
+{
+	border: 1px solid #aaa; width: 200px; height: 200px;
+	padding: 10px;
+}
+
+#record
+{
+	border: 1px solid #aaa; width: 200px; height: 200px;
+	padding: 10px;
+}
+
+#record table
+{
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#record table thead th
+{
+	vertical-align: top;
+	border-bottom: 1px solid #ddd;
+}
