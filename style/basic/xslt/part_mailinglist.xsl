@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:ml="http://uri.in2isoft.com/onlinepublisher/part/mailinglist/1.0/"
-	xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
-	exclude-result-prefixes="ml p">
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:ml="http://uri.in2isoft.com/onlinepublisher/part/mailinglist/1.0/"
+ xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
+ exclude-result-prefixes="ml p">
 	
 	<xsl:template match="ml:mailinglist">
 		<div class="part_mailinglist common_font">

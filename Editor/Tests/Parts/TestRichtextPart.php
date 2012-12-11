@@ -44,7 +44,7 @@ class TestRichtextPart extends UnitTestCase {
 		$ctrl = new RichtextPartController();
 		
 		$html = $ctrl->display($obj,new PartContext());
-		$this->assertEqual(trim($html),'<div class="part_richtext common_font"><h1>Please get me back!</h1></div>');
+		$this->assertEqual(trim($html),'<div xmlns="http://www.w3.org/1999/xhtml" class="part_richtext common_font"><h1>Please get me back!</h1></div>');
 	}
 
 	function testImportValid() {

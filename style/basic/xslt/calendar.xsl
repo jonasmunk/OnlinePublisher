@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0"
+ xmlns="http://www.w3.org/1999/xhtml"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:c="http://uri.in2isoft.com/onlinepublisher/publishing/calendar/1.0/"
  xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
@@ -8,31 +9,31 @@
  >
 
 <xsl:template match="c:calendar">
-<div class="calendar">
-<script type="text/javascript" src="{$path}style/basic/js/templates/Calendar.js"><xsl:text> </xsl:text></script>
-<a name="calendar"><xsl:comment/></a>
-<xsl:apply-templates/>
-</div>
+	<div class="calendar">
+		<script type="text/javascript" src="{$path}style/basic/js/templates/Calendar.js"><xsl:text> </xsl:text></script>
+		<a name="calendar"><xsl:comment/></a>
+		<xsl:apply-templates/>
+	</div>
 </xsl:template>
 
 <xsl:template name="c:views">
-<div class="views">
-<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=list" class="common"><span>Liste</span></a> &#183; 
-<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=week" class="common"><span>Uge</span></a> &#183; 
-<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=month" class="common"><span>Måned</span></a> &#183; 
-<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=agenda" class="common"><span>Agenda</span></a>
-</div>
+	<div class="views">
+		<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=list" class="common"><span>Liste</span></a> &#183; 
+		<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=week" class="common"><span>Uge</span></a> &#183; 
+		<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=month" class="common"><span>Måned</span></a> &#183; 
+		<a href="?id={//p:page/@id}&amp;date={//c:state/c:date/@year}{//c:state/c:date/@month}{//c:state/c:date/@day}&amp;view=agenda" class="common"><span>Agenda</span></a>
+	</div>
 </xsl:template>
 
 <xsl:template match="c:weekview">
 	<div class="weekview">
-	<div class="navigation">
-	<xsl:call-template name="c:views"/>
-	<div class="jumps">
-	<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=week" class="common"><span>Forrige uge</span></a>
-	 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=week" class="common"><span>Idag</span></a>
-	 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=week" class="common"><span>Naeste uge</span></a>
-	</div>
+		<div class="navigation">
+			<xsl:call-template name="c:views"/>
+			<div class="jumps">
+			<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=week" class="common"><span>Forrige uge</span></a>
+			 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=week" class="common"><span>Idag</span></a>
+			 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=week" class="common"><span>Naeste uge</span></a>
+		</div>
 	</div>
 	<table cellspacing="0" cellpadding="0" class="calendar_weekview">
 	<thead>
@@ -80,38 +81,38 @@
 </xsl:template>
 
 <xsl:template match="c:weekview/c:day/c:event">
-<div class="event event{@collision-number}-{@collision-count}">
-<xsl:attribute name="style">margin-top: <xsl:value-of select="number(@top)*45*(count(../../c:hour)-1)"/>px; height: <xsl:value-of select="number(@height)*45*(count(../../c:hour)-1)-1"/>px;</xsl:attribute>
-<div class="title"><xsl:value-of select="@time-from"/></div>
-<div class="body"><xsl:value-of select="c:summary"/> <span class="calendar_title"><xsl:text> - </xsl:text><xsl:value-of select="c:calendar"/></span></div>
-</div>
+	<div class="event event{@collision-number}-{@collision-count}">
+		<xsl:attribute name="style">margin-top: <xsl:value-of select="number(@top)*45*(count(../../c:hour)-1)"/>px; height: <xsl:value-of select="number(@height)*45*(count(../../c:hour)-1)-1"/>px;</xsl:attribute>
+		<div class="title"><xsl:value-of select="@time-from"/></div>
+		<div class="body"><xsl:value-of select="c:summary"/> <span class="calendar_title"><xsl:text> - </xsl:text><xsl:value-of select="c:calendar"/></span></div>
+	</div>
 </xsl:template>
 
 <!-- Month view -->
 
 <xsl:template match="c:monthview">
-<div class="monthview">
-<div class="navigation">
-<xsl:call-template name="c:views"/>
-<div class="jumps">
-<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=month" class="common"><span>Forrige måned</span></a>
- &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=month#calendar" class="common"><span>Idag</span></a>
- &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=month" class="common"><span>Næste måned</span></a>
-</div>
-</div>
-<table cellspacing="0" cellpadding="0">
-<tr>
-	<th>Mandag</th>
-	<th>Tirsdag</th>
-	<th>Onsdag</th>
-	<th>Torsdag</th>
-	<th>Fredag</th>
-	<th>Lørdag</th>
-	<th>Søndag</th>
-</tr>
-<xsl:apply-templates/>
-</table>
-</div>
+	<div class="monthview">
+		<div class="navigation">
+			<xsl:call-template name="c:views"/>
+			<div class="jumps">
+				<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=month" class="common"><span>Forrige måned</span></a>
+				 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=month#calendar" class="common"><span>Idag</span></a>
+				 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=month" class="common"><span>Næste måned</span></a>
+			</div>
+		</div>
+		<table cellspacing="0" cellpadding="0">
+		<tr>
+			<th>Mandag</th>
+			<th>Tirsdag</th>
+			<th>Onsdag</th>
+			<th>Torsdag</th>
+			<th>Fredag</th>
+			<th>Lørdag</th>
+			<th>Søndag</th>
+		</tr>
+		<xsl:apply-templates/>
+		</table>
+	</div>
 </xsl:template>
 
 <xsl:template name="c:getMonth">
@@ -141,39 +142,39 @@
 
 
 <xsl:template match="c:monthview/c:week/c:day">
-<td>
-<xsl:attribute name="class">day <xsl:if test="@selected='true'">selected</xsl:if></xsl:attribute>
-<a href="?id={//p:page/@id}&amp;date={@date}&amp;view=month" class="monthday"><span><xsl:value-of select="c:date/@day"/></span></a>
-<xsl:apply-templates select="c:event"/>
-</td>
+	<td>
+		<xsl:attribute name="class">day <xsl:if test="@selected='true'">selected</xsl:if></xsl:attribute>
+		<a href="?id={//p:page/@id}&amp;date={@date}&amp;view=month" class="monthday"><span><xsl:value-of select="c:date/@day"/></span></a>
+		<xsl:apply-templates select="c:event"/>
+	</td>
 </xsl:template>
 
 
 <xsl:template match="c:monthview//c:event">
-<div>
-	<xsl:attribute name="class"><xsl:text>event</xsl:text><xsl:if test="number(@collision-count)>0"><xsl:text> collision</xsl:text></xsl:if></xsl:attribute>
-	<span class="time"><xsl:value-of select="@time-from"/>: </span>
-	<xsl:value-of select="c:summary"/>
-	<span class="calendar_title"><xsl:text> - </xsl:text><xsl:value-of select="c:calendar"/></span>
-</div>
+	<div>
+		<xsl:attribute name="class"><xsl:text>event</xsl:text><xsl:if test="number(@collision-count)>0"><xsl:text> collision</xsl:text></xsl:if></xsl:attribute>
+		<span class="time"><xsl:value-of select="@time-from"/>: </span>
+		<xsl:value-of select="c:summary"/>
+		<span class="calendar_title"><xsl:text> - </xsl:text><xsl:value-of select="c:calendar"/></span>
+	</div>
 </xsl:template>
 
 <!--               List view                -->
 
 <xsl:template match="c:listview">
-<div class="listview">
-<div class="navigation">
-<xsl:call-template name="c:views"/>
-<div class="jumps">
-<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=list" class="common"><span>Forrige måned</span></a>
- &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=list#selected" class="common"><span>Idag</span></a>
- &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=list" class="common"><span>Næste måned</span></a>
-</div>
-</div>
-<table cellspacing="0" cellpadding="0">
-<xsl:apply-templates/>
-</table>
-</div>
+	<div class="listview">
+	<div class="navigation">
+	<xsl:call-template name="c:views"/>
+	<div class="jumps">
+	<a href="?id={//p:page/@id}&amp;date={../c:state/c:previous/@year}{../c:state/c:previous/@month}{../c:state/c:previous/@day}&amp;view=list" class="common"><span>Forrige måned</span></a>
+	 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:today/@year}{../c:state/c:today/@month}{../c:state/c:today/@day}&amp;view=list#selected" class="common"><span>Idag</span></a>
+	 &#183; <a href="?id={//p:page/@id}&amp;date={../c:state/c:next/@year}{../c:state/c:next/@month}{../c:state/c:next/@day}&amp;view=list" class="common"><span>Næste måned</span></a>
+	</div>
+	</div>
+	<table cellspacing="0" cellpadding="0">
+	<xsl:apply-templates/>
+	</table>
+	</div>
 </xsl:template>
 
 <xsl:template match="c:listview/c:day">

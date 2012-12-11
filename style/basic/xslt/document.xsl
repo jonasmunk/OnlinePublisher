@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet version="1.0"
+ xmlns="http://www.w3.org/1999/xhtml"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:doc="http://uri.in2isoft.com/onlinepublisher/publishing/document/1.0/"
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"

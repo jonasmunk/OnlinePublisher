@@ -40,12 +40,17 @@ class TestValidation extends UnitTestCase {
 		
 		$page->publish();
 		$this->assertFalse(PageService::isChanged($page->getId()));
+
+		$loaded = Page::load($page->getId());
+		$this->assertNotNull($loaded);
 				
 		$designs = DesignService::getAvailableDesigns();
 		foreach ($designs as $name => $info) {
 			$url = ConfigurationService::getCompleteBaseUrl().'?id='.$page->getId().'&design='.$name;
+			Log::debug('Checking: '.$url);
 			$file = new RemoteFile($url);
 			$html = $file->getData();
+			Log::debug($html);
 			$this->assertTrue(strpos($html, '<meta http-equiv="content-type" content="text/html; charset=utf-8"/>')!==false,'The design "'.$name.'" has no content-type');
 			$this->assertTrue(strpos($html, '<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">')!==false,'The design "'.$name.'" does not have correct html tag');
 			$this->assertFalse(strpos($html, 'http://uri.in2isoft.com')!==false,'The design "'.$name.'" may contain xml namespaces');

@@ -1687,7 +1687,7 @@ hui.style = {
 				value = element.currentStyle[cameled];
 			}
 		}
-		if (window.opera && ['left', 'top', 'right', 'bottom'].include(style)) {
+		if (window.opera && hui.array.contains(['left', 'top', 'right', 'bottom'],style)) {
 			if (hui.style.get(element, 'position') == 'static') {
 				value = 'auto';
 			}

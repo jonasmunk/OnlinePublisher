@@ -1,16 +1,12 @@
 hui.ui.listen({
 	$ready : function() {
-		hui.ui.request({
-			url : 'services/waterusage/load.php',
-			parameters : {number:'20116254'},
-			$object : function(obj) {
-				this._renderRecord(obj);
-				this._renderChart(obj);
-			}.bind(this),
-			$failure : function() {
-				alert('Something terrible happened')
-			}
-		});
+		this.numberInput = new hui.ui.Input({element:'number'});
+		this.numberInput.listen({
+			$valueChanged : function(value) {
+				this._fetch(value);
+			}.bind(this)
+		})
+		//this._fetch('20116254');
 		return;
 		
 		this._renderChart();
@@ -20,12 +16,29 @@ hui.ui.listen({
 			{date:'15/4-2012',value:65464}
 		]);
 	},
-	_renderChart : function(entries) {
+	_fetch : function(number) {
+		hui.ui.request({
+			url : 'services/waterusage/load.php',
+			parameters : {number:number},
+			$object : function(obj) {
+				this._renderRecord(obj);
+				this._renderChart(obj);
+			}.bind(this),
+			$failure : function() {
+				alert('Something terrible happened')
+			}
+		});		
+	},
+	_renderChart : function(obj) {
+		hui.get('chart').innerHTML = '';
 		var chart = new hui.ui.Chart.create({parent:'chart'});
-				
+		var entries = {};
+		for (var i=0; i < obj.length; i++) {
+			entries[obj[i].date] = obj[i].value;
+		};
 		chart.setData({
 			sets : [
-				{type:'column', entries:entires} //w {'January':10,'February':20,'March':15,'April':45,'May':56}
+				{type:'line', entries:entries} //w {'January':10,'February':20,'March':15,'April':45,'May':56}
 			]
 		});
 		
@@ -34,6 +47,7 @@ hui.ui.listen({
 	_renderRecord : function(data) {
 		var record = hui.get('record');
 		var body = hui.get.firstByTag(record,'tbody');
+		hui.dom.clear(body)
 		for (var i=0; i < data.length; i++) {
 			var row = hui.build('tr',{parent:body});
 			hui.build('th',{parent:row,text:data[i].date});
