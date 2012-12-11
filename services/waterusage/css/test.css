@@ -1,28 +1,162 @@
-div.water
+div.columns
+{
+	overflow: hidden;
+}
+
+div.column
+{
+	float: left;
+	width: 50%;
+}
+
+div.box
 {
 	border: 1px solid #ddd;
+	padding: 10px;
+	margin: 15px;
+	background: #fff;
+	text-align: left;
+	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+div.box h3
+{
+	font-weight: normal;
+	margin: 0 0 10px;
+	color: #999;
+	font-weight: 200;
 }
 
 #chart
 {
-	border: 1px solid #aaa; width: 200px; height: 200px;
-	padding: 10px;
+	height: 200px;
 }
 
-#record
-{
-	border: 1px solid #aaa; width: 200px; height: 200px;
-	padding: 10px;
-}
+
+
+/**** Record ****/
 
 #record table
 {
 	width: 100%;
 	border-collapse: collapse;
+	font-size: 10pt;
 }
 
 #record table thead th
 {
 	vertical-align: top;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #aaa;
+	font-weight: normal;
+	color: #999;
+	padding: 0 5px;
+}
+
+#record table thead th sup
+{
+	position: relative;
+	top: -3px;
+}
+
+#record table tbody th,
+#record table tbody td
+{
+	font-weight: normal;
+	padding: 4px 5px;
+	border-bottom: 1px solid #eee;
+}
+
+
+#record th.m3,
+#record table tbody td
+{
+	text-align: right;
+}
+
+
+/**** Info ****/
+
+#info p
+{
+	font-size: 11pt;
+	margin: 5px 0 0;
+}
+
+#info strong
+{
+	font-weight: 200;
+	display: inline-block;
+	width: 100px;
+	color: #999;
+}
+
+#map
+{
+	margin-top: 15px;
+	height: 100px;
+	max-width: 640px;
+	height: 200px;
+	border: 1px solid #ddd;
+	background-position: center center;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+#pin
+{
+	background: url('../../../style/basic/gfx/part_map_pin.png');
+	position: absolute;
+	width: 29px;
+	height: 30px;
+	left: 50%;
+	top: 50%;
+	margin: -15px 0 0 -15px;
+}
+
+/**** Registration ****/
+
+#registration p
+{
+	margin: 0;
+}
+
+#registration label
+{
+	font-size: 12px;
+}
+
+#registration input.input
+{
+	display: block;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	font-size: 14px;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+#registration p.input
+{
+	margin: 0 0 10px;
+}
+
+#registration p.button
+{
+	text-align: right;
+}
+
+input.submit
+{
+	margin: 0;
+	font-size: 18px;
+	padding: 0 10px;
+	height: 30px;
+	line-height: 30px;
+	display: inline-block;
+	background: #4B8DF7;
+	border: 1px solid #3079ED;
+	color: white;
+	border-radius: 3px;
 }

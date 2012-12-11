@@ -6,26 +6,24 @@ hui.ui.listen({
 				this._fetch(value);
 			}.bind(this)
 		})
-		//this._fetch('20116254');
-		return;
 		
-		this._renderChart();
-		this._renderRecord([
-			{date:'15/4-2010',value:3242},
-			{date:'15/4-2011',value:54343},
-			{date:'15/4-2012',value:65464}
-		]);
+		this.numberInput.setValue('26108502');
+		this._fetch('20116254');
 	},
 	_fetch : function(number) {
 		hui.ui.request({
-			url : 'services/waterusage/load.php',
+			url : 'load.php',
 			parameters : {number:number},
 			$object : function(obj) {
-				this._renderRecord(obj);
-				this._renderChart(obj);
+				this._renderRecord(obj.usage);
+				this._renderChart(obj.usage);
+				this._renderInfo(obj.info);
 			}.bind(this),
 			$failure : function() {
 				alert('Something terrible happened')
+			},
+			$exception : function(e) {
+				throw e;
 			}
 		});		
 	},
@@ -53,5 +51,25 @@ hui.ui.listen({
 			hui.build('th',{parent:row,text:data[i].date});
 			hui.build('td',{parent:row,text:data[i].value});
 		};
+	},
+	_renderInfo : function(info) {
+		info = info || {};
+		var box = hui.get('info');
+		var address = info.street;
+		if (info.zipcode) {
+			address+=', '+info.zipcode;
+		}
+		if (info.city) {
+			address+=', '+info.city;
+		}
+		hui.dom.setText(hui.get('infoNumber'),info.number);
+		hui.dom.setText(hui.get('infoAddress'),address);
+		hui.dom.setText(hui.get('infoMail'),info.email);
+		hui.dom.setText(hui.get('infoPhone'),info.phone);
+		address+=', Danmark'
+		var map = hui.get('map');
+		var loc = 'http://maps.googleapis.com/maps/api/staticmap?center='+address.replace(/[\W]+/g,'%20')+'&zoom=16&size=640x300&sensor=false';
+		map.style.backgroundImage = 'url("'+loc+'")';
+		//hui.build('img',{src:loc,parent:map})
 	}
 })

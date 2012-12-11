@@ -5786,7 +5786,7 @@ hui.ui.request = function(options) {
 			hui.ui.handleRequestError();
 		}
 	}
-	options.onException = function(t,e) {
+	options.onException = options.$exception || function(t,e) {
 		hui.log(t);
 		hui.log(e);
 	};

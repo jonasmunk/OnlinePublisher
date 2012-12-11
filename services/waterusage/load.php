@@ -7,5 +7,10 @@ $sql = "select DATE_FORMAT(waterusage.date, '%d-%m-%Y') as `date`,`value`,UNIX_T
 	" from waterusage,watermeter where waterusage.`watermeter_id`=watermeter.`object_id` and number = ".Database::text($number)." order by waterusage.`date`";
 $rows = Database::selectAll($sql);
 
-Response::sendObject($rows);
+$summary = WaterusageService::getSummary($number);
+
+Response::sendObject(array(
+	'usage' => $rows,
+	'info' => $summary
+));
 ?>
