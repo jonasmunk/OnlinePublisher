@@ -45,7 +45,7 @@
 			buildLineChart : function() {
 				
 				var chart = new hui.ui.Chart.create({parent:'chart'});
-				
+				chart.body.paddingLeft = 0;
 				var data = new hui.ui.Chart.Data({
 					xAxis : {labels:[{key:'A',label:'A'},{key:'B',label:'B'},{key:'C',label:'C'}]}
 				});
@@ -98,8 +98,6 @@
 				chart.render();
 			},
 			buildChartUsingSource : function() {
-				
-				//var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart_stats.json'})});
 				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart_statistics.json'})});
 			},
 		})
