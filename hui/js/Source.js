@@ -41,6 +41,13 @@ hui.ui.Source.prototype = {
 			this.refresh();
 		}
 	},
+	/** Will refresh, but wait a little to let others contribute */
+	refreshLater : function() {
+		window.clearTimeout(this.paramDelay);
+		this.paramDelay = window.setTimeout(function() {
+			this.refresh();
+		}.bind(this),100)
+	},
 	/** Refreshes the data source */
 	refresh : function() {
 		if (this.delegates.length==0) {
@@ -168,13 +175,6 @@ hui.ui.Source.prototype = {
 			}
 		};
 		this.refreshLater();
-	},
-	/** Will refresh, but wait a little to let others contribute */
-	refreshLater : function() {
-		window.clearTimeout(this.paramDelay);
-		this.paramDelay = window.setTimeout(function() {
-			this.refresh();
-		}.bind(this),100)
 	}
 }
 

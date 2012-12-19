@@ -28,6 +28,16 @@ class TestStringUtils extends UnitTestCase {
     function testToString() {
         $this->assertEqual("0",StringUtils::toString(0));
 	}
+
+    function testSplitIntegers() {
+        $this->assertIdentical(array(0),StringUtils::splitIntegers("0"));
+        $this->assertIdentical(array(),StringUtils::splitIntegers(""));
+        $this->assertIdentical(array(),StringUtils::splitIntegers(null));
+        $this->assertIdentical(array(0),StringUtils::splitIntegers(0));
+        $this->assertIdentical(array(0,-23,56),StringUtils::splitIntegers("0,-23,56"));
+        $this->assertIdentical(array(0,-23,56),StringUtils::splitIntegers("0 ,  -23 , 56   ,x"));
+        $this->assertIdentical(array(-23,56),StringUtils::splitIntegers("0xx ,  -23 , 56   ,x"));
+	}
 	
     function testEscaping() {
         $this->assertEqual("0",StringUtils::escapeXML(0));

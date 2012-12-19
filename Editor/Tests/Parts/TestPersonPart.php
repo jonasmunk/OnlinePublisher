@@ -35,7 +35,6 @@ class TestPersonPart extends UnitTestCase {
 		$obj2->remove();
 	}
 	
-
 	function testDisplay() {
 		$obj = new PersonPart();
 		$obj->setPersonId(ObjectService::getLatestId('person'));
@@ -43,6 +42,29 @@ class TestPersonPart extends UnitTestCase {
 		
 		$html = $ctrl->display($obj,new PartContext());
 		$this->assertNotNull($html);
+	}
+
+	function testImport() {
+		$person = new Person();
+		$person->setFullName('Jonas Brinkmann Munk');
+		$person->save();
+		$person->publish();
+		
+		$obj = new PersonPart();
+		$obj->setPersonId($person->getId());
+		$ctrl = new PersonPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$person->remove();
+		
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getPersonId(),$obj->getPersonId());
 	}
 }
 ?>

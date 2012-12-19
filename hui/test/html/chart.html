@@ -45,7 +45,6 @@
 			buildLineChart : function() {
 				
 				var chart = new hui.ui.Chart.create({parent:'chart'});
-				chart.body.paddingLeft = 0;
 				var data = new hui.ui.Chart.Data({
 					xAxis : {labels:[{key:'A',label:'Aber'},{key:'B',label:'Banditter'},{key:'C',label:'Citroner'},{key:'D',label:'Dalmatinere'}]}
 				});
@@ -72,7 +71,9 @@
 				
 				chart.setData({
 					sets : [
-						{type:'column', entries:[{key:'January',value:10},{key:'February',value:20},{key:'March',value:15},{key:'April',value:45},{key:'May',value:56}]},
+						{type:'column', entries:[
+							{key:'January',value:10},{key:'February',value:20},{key:'March',value:15},{key:'April',value:45},{key:'May',value:56}]
+						},
 						{type:'column', entries:{'January':24,'February':5,'March':59,'April':30,'June':56}},
 						{type:'column', entries:{'January':Math.random()*100,'February':Math.random()*100,'March':Math.random()*100,'April':Math.random()*100,'June':Math.random()*100}}
 					]
@@ -98,7 +99,9 @@
 				chart.render();
 			},
 			buildChartUsingSource : function() {
-				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:new hui.ui.Source({url:'data/chart2.json'})});
+				var src = new hui.ui.Source({url:'data/chart2.json'});
+				var chart = new hui.ui.Chart.create({parent:'chartUsingSource',source:src});
+				src.refresh();
 			},
 		})
 	</script>
