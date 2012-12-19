@@ -1,22 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
 <gui xmlns="uri:hui" padding="10" title="Box">
-	<box width="300" padding="10" top="100" variant="textured">
-		<formula>
-			<header>OnlinePublisher Login</header>
+	
+	<box width="300" padding="10" top="100" variant="rounded">
+		<formula name="formula">
+			<header>Log in to the system...</header>
 			<space height="5"/>
 			<fields>
 				<field label="Brugernavn:">
-					<text-input/>
+					<text-input name="username"/>
 				</field>
 				<field label="Kodeord:">
-					<text-input secret="true"/>
+					<text-input secret="true" name="password"/>
 				</field>
 				<buttons top="5">
 					<button title="Annuller"/>
-					<button title="Log in" highlighted="true" action="hui.ui.alert({title:'The user does not exist',emotion:'gasp',button:'Hey!'});"/>
+					<button title="Log in" name="login" submit="true" highlighted="true"/>
 				</buttons>
 			</fields>
 		</formula>
 	</box>
+	<listen>
+		$ready : function() {
+			formula.focus();
+		},
+		$valueChanged$username : function(value) {
+			username.setError(hui.isBlank(value) ? 'The user name is required' : null);
+		},
+		$valueChanged$password : function(value) {
+			password.setError(hui.isBlank(value) ? 'The password is required' : null);
+		},
+		$submit$formula : function(form) {
+			var values = form.getValues();
+			if (hui.isBlank(values.username)) {
+				username.stress();
+				username.setError('The username is required');
+				username.focus();
+			}
+			else if (hui.isBlank(values.password)) {
+				password.stress();
+				password.setError('The password is required');
+				password.focus();
+			} else {
+				hui.ui.showMessage({text:'Logging in...',busy:true,duration:4000});
+				window.setTimeout(function() {
+					hui.ui.alert({title:'The user does not exist',emotion:'gasp',button:'OK'});
+				},4000)
+			}
+		}
+	</listen>
+	
 </gui>
