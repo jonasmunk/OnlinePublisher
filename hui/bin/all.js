@@ -15252,7 +15252,7 @@ hui.ui.ColorPicker.prototype = {
 /* EOF *//////////////////////////// Style length /////////////////////////
 
 /**
- * A component for geo-location
+ * An input component for geo-location
  * @constructor
  */
 hui.ui.LocationField = function(options) {
@@ -15267,7 +15267,7 @@ hui.ui.LocationField = function(options) {
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	this.setValue(this.value);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 hui.ui.LocationField.create = function(options) {
@@ -15280,9 +15280,8 @@ hui.ui.LocationField.create = function(options) {
 }
 
 hui.ui.LocationField.prototype = {
-	/** @private */
-	addBehavior : function() {
-		hui.listen(this.chooser,'click',this.showPicker.bind(this));
+	_addBehavior : function() {
+		hui.listen(this.chooser,'click',this._showPicker.bind(this));
 		hui.ui.addFocusClass({element:this.latField.element,classElement:this.element,'class':'hui_field_focused'});
 		hui.ui.addFocusClass({element:this.lngField.element,classElement:this.element,'class':'hui_field_focused'});
 	},
@@ -15295,6 +15294,9 @@ hui.ui.LocationField.prototype = {
 	getValue : function() {
 		return this.value;
 	},
+	/** Set the value 
+	 * 
+	 */
 	setValue : function(loc) {
 		if (loc) {
 			this.latField.setValue(loc.latitude);
@@ -15305,26 +15307,27 @@ hui.ui.LocationField.prototype = {
 			this.lngField.setValue();
 			this.value = null;
 		}
-		this.updatePicker();
+		this._updatePicker();
 	},
-	updatePicker : function() {
+	_updatePicker : function() {
 		if (this.picker) {
 			this.picker.setLocation(this.value);
 		}
 	},
-	/** @private */
-	showPicker : function() {
+	_showPicker : function() {
 		if (!this.picker) {
 			this.picker = new hui.ui.LocationPicker();
 			this.picker.listen(this);
 		}
 		this.picker.show({node:this.chooser,location:this.value});
 	},
+	/** @private */
 	$locationChanged : function(loc) {
 		this.setValue(loc);
 		this.fire('valueChanged',this.value);
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 	},
+	/** @private */
 	$valueChanged : function() {
 		var lat = this.latField.getValue();
 		var lng = this.lngField.getValue();
@@ -15333,7 +15336,7 @@ hui.ui.LocationField.prototype = {
 		} else {
 			this.value = {latitude:lat,longitude:lng};
 		}
-		this.updatePicker();
+		this._updatePicker();
 		this.fire('valueChanged',this.value);
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 	}
@@ -19928,10 +19931,10 @@ hui.ui.Drawing.Line.create = function(options) {
 	}
 	
 	var attributes = {
-		x1 : options.from.x,
-		y1 : options.from.y,
-		x2 : options.to.x,
-		y2 : options.to.y,
+		x1 : options.from.x.toFixed(10),
+		y1 : options.from.y.toFixed(10),
+		x2 : options.to.x.toFixed(10),
+		y2 : options.to.y.toFixed(10),
 		style : 'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
 	};
 		
@@ -19953,8 +19956,8 @@ hui.ui.Drawing.Line.create = function(options) {
 hui.ui.Drawing.Line.prototype = {
 	setFrom : function(point) {
 		this.from = point;
-		this.node.setAttribute('x1',point.x);
-		this.node.setAttribute('y1',point.y);
+		this.node.setAttribute('x1',point.x.toFixed(-1));
+		this.node.setAttribute('y1',point.y.toFixed(-1));
 		this._updateEnds();
 	},
 	getFrom : function() {
@@ -19962,8 +19965,8 @@ hui.ui.Drawing.Line.prototype = {
 	},
 	setTo : function(point) {
 		this.to = point;
-		this.node.setAttribute('x2',point.x);
-		this.node.setAttribute('y2',point.y);
+		this.node.setAttribute('x2',point.x.toFixed(-1));
+		this.node.setAttribute('y2',point.y.toFixed(-1));
 		this._updateEnds();
 	},
 	getTo : function() {
@@ -19973,7 +19976,7 @@ hui.ui.Drawing.Line.prototype = {
 		//var deg = Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
 		if (this.endNode) {
 			var deg = -90+Math.atan2(this.from.y-this.to.y, this.from.x-this.to.x)*180/Math.PI
-			this.endNode.setAttribute('transform','translate('+this.to.x+','+this.to.y+') rotate('+(deg)+')')
+			this.endNode.setAttribute('transform','translate('+this.to.x.toFixed(10)+','+this.to.y.toFixed(10)+') rotate('+(deg)+')')
 
 		}
 	},
@@ -20437,7 +20440,7 @@ hui.ui.Pages.prototype = {
 }hui.ui.Chart = function(options) {
 	this.options = options = options || {};
 	this.element = hui.get(options.element);
-	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 40, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
+	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 0, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
 	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
 	this.style.legends = { position: 'right' , left: 0, top: 0 };
 	this.style.pie = { radiusFactor: .9 , valueInLegend: false , left: 0, top: 0 };
@@ -20448,6 +20451,7 @@ hui.ui.Pages.prototype = {
 	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
+		this.options.source.refreshLater();
 	}
 }
 
@@ -20480,7 +20484,6 @@ hui.ui.Chart.prototype = {
 		this.render();
 	},
 	$objectsLoaded : function(data) {
-		hui.log(data)
 		this.setData(data);
 		this.render();
 	},
@@ -20633,13 +20636,42 @@ hui.ui.Chart.Renderer = function(chart) {
 	this.chart = chart;
 	this.crisp = false;
 	this.legends = [];
-	this.state = { numColumns:0, currColumn:0, xLabels:[], yLabels:[], innerBody:{}, coordinateSystem: false, currColor:0 };
+	this.state = { numColumns:0, currColumn:0, xLabels:[], yLabels:[], body:{left:0}, innerBody:{}, coordinateSystem: false, currColor:0 };
 	this.width = null;
 	this.height = null;
 }
 
-hui.ui.Chart.Renderer.prototype.registerLegend = function(color,label) {
-	this.legends[this.legends.length] = {color:color,label:label};
+hui.ui.Chart.Renderer.prototype = {
+	_registerLegend : function(color,label) {
+		this.legends[this.legends.length] = {color:color,label:label};
+	},
+	_buildInnerBody : function() {
+		var body = this.chart.body;
+		var xLabels = this.state.xLabels;
+		var space = 0;
+		if (this.state.numColumns>0) {
+			space = ( this.width - 2 * body.innerPaddingHorizontal - body.paddingLeft - body.paddingRight ) / xLabels.length;
+		}
+		var innerBody = {
+			left : (body.innerPaddingHorizontal + this.state.body.left + space/2),
+			top : (body.paddingTop + body.innerPaddingVertical),
+			width : (this.state.body.width-2 * body.innerPaddingHorizontal - space),
+			height : (this.state.body.height - body.innerPaddingVertical * 2 )
+		};
+		return innerBody;
+	},
+	_buildBody : function() {
+		var body = this.chart.body,
+			left = body.paddingLeft + this.state.yLabelWidth
+		return {
+			left : left,
+			top : body.paddingTop,
+			width : this.width - left - body.paddingRight,
+			height : this.height - body.paddingTop - body.paddingBottom,
+			right : this.width - body.paddingRight,
+			bottom : this.height - body.paddingBottom
+		}
+	}
 }
 
 hui.ui.Chart.Renderer.prototype.render = function() {
@@ -20671,7 +20703,13 @@ hui.ui.Chart.Renderer.prototype.render = function() {
 	
 	this.state.xLabels = this.chart.data.xAxis.labels;
 	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart);
-	this.state.innerBody = this.getInnerBody();
+	this.state.yLabelWidth = 0;
+	for (var i=0; i < this.state.yLabels.length; i++) {
+		this.state.yLabelWidth = Math.max(this.state.yLabelWidth,new String(this.state.yLabels[i]).length*5);
+	};
+	this.state.yLabelWidth+=5;
+	this.state.body = this._buildBody();
+	this.state.innerBody = this._buildInnerBody();
 
 	// Render the coordinate system (below)
 	if (this.state.coordinateSystem) {
@@ -20749,16 +20787,23 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 	
 	var body = this.chart.body,
 		stroke = 'rgb(255,255,255)',
-		background = 'rgb(240,240,240)';
+		background = 'rgb(240,240,240)',
+		state = this.state,
+		innerBody = this.state.innerBody;
 	
-	stroke = 'rgb(240,240,240)';
-	background = 'rgb(255,255,255)';
+	//stroke = 'rgb(240,240,240)';
+	//background = 'rgb(255,255,255)';
+	
 
 	if (this.chart.style.background) {
 		this.ctx.fillStyle=background;
-		this.ctx.fillRect(body.paddingLeft,body.paddingTop,this.width-body.paddingLeft-body.paddingRight,this.height-body.paddingTop-body.paddingBottom);
+		this.ctx.fillRect(
+			state.body.left,
+			state.body.top,
+			state.body.width,
+			state.body.height
+		);
 	}
-	var innerBody = this.state.innerBody;
 	
 	var mod = 1;
 	/* Build X-axis*/
@@ -20774,8 +20819,8 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		// Draw grid
 		if (this.chart.data.xAxis.grid) {
 			this.ctx.beginPath();
-			this.ctx.moveTo(.5+left,body.paddingTop+.5);
-			this.ctx.lineTo(.5+left,body.paddingTop+.5+this.height-body.paddingTop-body.paddingBottom);
+			this.ctx.moveTo(.5+left,state.body.top+.5);
+			this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
 			this.ctx.stroke();
 			this.ctx.closePath();
 		}
@@ -20787,7 +20832,7 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 				before : this.canvas,
 				style : {
 					marginLeft : left-25+'px',
-					marginTop : this.height-body.paddingBottom+4+'px'
+					marginTop : state.body.bottom + 4 + 'px'
 				}
 			});
 		}
@@ -20797,36 +20842,38 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 	/* Build Y-axis*/
 	var yLabels = this.state.yLabels.concat();
 	yLabels.reverse();
-	for (var i=0;i<yLabels.length;i++) {
+	for (var i=0; i < yLabels.length ; i++) {
 		// Draw grid
-		var top = i*((this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
+		var top = i*((state.body.height-body.innerPaddingVertical*2)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
 		top = Math.round(top);
 		if (!this.chart.data.yAxis.above) {
 			this.ctx.beginPath();
-			this.ctx.moveTo(.5+body.paddingLeft,top+.5);
-			this.ctx.lineTo(.5+this.width-body.paddingRight,top+.5);
+			this.ctx.moveTo(.5+state.body.left,top+.5);
+			this.ctx.lineTo(.5+state.body.right,top+.5);
 			this.ctx.stroke();
 			this.ctx.closePath();
 		}
 		// Draw label
-		var label = document.createElement('span');
-		label.appendChild(document.createTextNode(yLabels[i]));
-		label.style.position='absolute';
-		label.style.textAlign='right';
-		label.style.width=body.paddingLeft-3+'px';
-		label.style.font='9px Tahoma';
-		label.style.marginTop=top-5+'px';
+		var label = hui.build('span',{text:yLabels[i],style:{
+			position: 'absolute',
+			textAlign : 'right',
+			width : this.state.yLabelWidth-5+'px',
+			font : '9px Tahoma',
+			marginTop : top-5+'px'
+		}});
 		this.canvas.parentNode.insertBefore(label,this.canvas);
+		body.paddingLeft = Math.max(body.paddingLeft || 0,label.offsetWidth)
 	}
+	
 	// Draw a line at 0 if 
-	if (!this.chart.data.yAxis.above && yLabels[0]>0 && yLabels[yLabels.length-1]<0) {
-		var top = (this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)*yLabels[0]/(yLabels[0]-yLabels[yLabels.length-1])+body.paddingTop+body.innerPaddingVertical;
+	if (!this.chart.data.yAxis.above && yLabels[0] > 0 && yLabels[yLabels.length-1] < 0) {
+		var top = (state.body.height - body.innerPaddingVertical*2) * yLabels[0] / (yLabels[0] - yLabels[yLabels.length-1]) + body.paddingTop + body.innerPaddingVertical;
 		top = Math.round(top);
 		this.ctx.lineWidth = 2;
 		this.ctx.strokeStyle=stroke;
 		this.ctx.beginPath();
-		this.ctx.moveTo(.5+body.paddingLeft,top);
-		this.ctx.lineTo(.5+this.width-body.paddingRight,top);
+		this.ctx.moveTo(.5+state.body.left,top);
+		this.ctx.lineTo(.5+state.body.right,top);
 		this.ctx.stroke();
 		this.ctx.closePath();
 	}
@@ -20868,22 +20915,6 @@ hui.ui.Chart.Renderer.prototype.renderPostBody = function() {
 	}
 }
 
-hui.ui.Chart.Renderer.prototype.getInnerBody = function() {
-	var body = this.chart.body;
-	var xLabels = this.state.xLabels;
-	var space = 0;
-	if (this.state.numColumns>0) {
-		space = (this.width-2*body.innerPaddingHorizontal-body.paddingLeft-body.paddingRight)/xLabels.length;
-	}
-	var innerBody = {
-		left:(body.innerPaddingHorizontal+body.paddingLeft+space/2),
-		top:(body.paddingTop+body.innerPaddingVertical),
-		width:(this.width-2*body.innerPaddingHorizontal-body.paddingLeft-body.paddingRight-space),
-		height:(this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)
-	};
-	return innerBody;
-}
-
 hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
 	var values = data.values;
 	var xLabels = this.state.xLabels;
@@ -20907,9 +20938,8 @@ hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
 	this.ctx.lineCap = this.ctx.lineJoin = 'round';
 	this.ctx.beginPath();
 	for (var i=0;i<xLabels.length;i++) {
-		var amount = (values[i]==undefined ? 0 : values[i]);
+		var amount = (values[i] == undefined ? 0 : values[i]);
 		var value = (amount-yMin)/(yMax-yMin);
-		//alert(value);
 		var top = this.height-value*(innerBody.height)-body.innerPaddingVertical-body.paddingBottom;
 		var left = i*(innerBody.width/(xLabels.length-1))+innerBody.left;
 		if (i==0) {
@@ -20922,7 +20952,7 @@ hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
 	this.ctx.closePath();
 	
 	if (data.legend) {
-		this.registerLegend(color,data.legend);
+		this._registerLegend(color,data.legend);
 	}
 }
 
@@ -20966,10 +20996,10 @@ hui.ui.Chart.Renderer.prototype.renderColumnGraph = function(data) {
 	
 	if (data.legend && data.legend instanceof Array) {
 		for (var i=0; i < data.legend.length; i++) {
-			this.registerLegend(colors[i],data.legend[i]);
+			this._registerLegend(colors[i],data.legend[i]);
 		};
 	} else if (data.legend) {
-		this.registerLegend(colors[0],data.legend);
+		this._registerLegend(colors[0],data.legend);
 	}
 }
 
@@ -21022,9 +21052,9 @@ hui.ui.Chart.Renderer.prototype.renderPie = function(data) {
 		current+=rads;
 		
 		if (!true) {
-			this.registerLegend(color,this.state.xLabels[i].label);
+			this._registerLegend(color,this.state.xLabels[i].label);
 		} else {
-			this.registerLegend(color,values[i]+' '+this.state.xLabels[i].label);
+			this._registerLegend(color,values[i]+' '+this.state.xLabels[i].label);
 		}
 		if (colorIndex+2>colors.length) {
 			colorIndex = 0;
@@ -21095,6 +21125,7 @@ hui.ui.Diagram = function(options) {
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
 	this.layout = hui.ui.Diagram.Arbor;
+	//this.layout = hui.ui.Diagram.Springy;
 	this.layout.diagram = this;
 	hui.ui.extend(this);
 	if (options.source) {
@@ -21474,7 +21505,7 @@ hui.ui.Diagram.Springy = {
 	diagram : null,
 
 	_load : function() {
-		hui.require(hui.ui.context+'/hui/lib/springy/springy.js',function() {
+		hui.require(hui.ui.context+'/hui/lib/springy-master/springy.js',function() {
 			this.loaded = true;
 			this.start();
 		}.bind(this))
@@ -21515,23 +21546,30 @@ hui.ui.Diagram.Springy = {
 			  }
 		  }
 		
-		var renderer = new Renderer(100, layout,
-		  function clear() {
+		var renderer = new Renderer(layout,
+			function clear() {
 			  
-		  },
-		  function drawEdge(edge, p1, p2) {
-			  p1 = toScreen(p1);
-			  p2 = toScreen(p2);
-			  var line = cachedLines[edge.id];
-				var from = diagram._getMagnet(p1,p2,edge.source.data)
-				var to = diagram._getMagnet(p1,p2,edge.target.data)
-			  line.node.setFrom(from);
-			  line.node.setTo(to);
+			},
+			function drawEdge(edge, p1, p2) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				p1 = toScreen(p1);
+				p2 = toScreen(p2);
+				var line = cachedLines[edge.id];
+				if (sel!=edge.source.data.id) {
+					var from = diagram._getMagnet(p1,p2,edge.source.data)
+					line.node.setFrom(from);
+				}
+				if (sel!=edge.target.data.id) {
+					var to = diagram._getMagnet(p1,p2,edge.target.data)
+					line.node.setTo(to);
+				}
 				diagram._updateLine(line);
-		  },
-		  function drawNode(node, p) {
-			  node.data.setCenter(toScreen(p));
-		  }
+			},
+			function drawNode(node, p) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				if (node.data.id==sel) return;
+				node.data.setCenter(toScreen(p));
+			}
 		);
 		renderer.start();
 	},
@@ -21689,6 +21727,7 @@ hui.ui.Diagram = function(options) {
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
 	this.layout = hui.ui.Diagram.Arbor;
+	//this.layout = hui.ui.Diagram.Springy;
 	this.layout.diagram = this;
 	hui.ui.extend(this);
 	if (options.source) {
@@ -22068,7 +22107,7 @@ hui.ui.Diagram.Springy = {
 	diagram : null,
 
 	_load : function() {
-		hui.require(hui.ui.context+'/hui/lib/springy/springy.js',function() {
+		hui.require(hui.ui.context+'/hui/lib/springy-master/springy.js',function() {
 			this.loaded = true;
 			this.start();
 		}.bind(this))
@@ -22109,23 +22148,30 @@ hui.ui.Diagram.Springy = {
 			  }
 		  }
 		
-		var renderer = new Renderer(100, layout,
-		  function clear() {
+		var renderer = new Renderer(layout,
+			function clear() {
 			  
-		  },
-		  function drawEdge(edge, p1, p2) {
-			  p1 = toScreen(p1);
-			  p2 = toScreen(p2);
-			  var line = cachedLines[edge.id];
-				var from = diagram._getMagnet(p1,p2,edge.source.data)
-				var to = diagram._getMagnet(p1,p2,edge.target.data)
-			  line.node.setFrom(from);
-			  line.node.setTo(to);
+			},
+			function drawEdge(edge, p1, p2) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				p1 = toScreen(p1);
+				p2 = toScreen(p2);
+				var line = cachedLines[edge.id];
+				if (sel!=edge.source.data.id) {
+					var from = diagram._getMagnet(p1,p2,edge.source.data)
+					line.node.setFrom(from);
+				}
+				if (sel!=edge.target.data.id) {
+					var to = diagram._getMagnet(p1,p2,edge.target.data)
+					line.node.setTo(to);
+				}
 				diagram._updateLine(line);
-		  },
-		  function drawNode(node, p) {
-			  node.data.setCenter(toScreen(p));
-		  }
+			},
+			function drawNode(node, p) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				if (node.data.id==sel) return;
+				node.data.setCenter(toScreen(p));
+			}
 		);
 		renderer.start();
 	},

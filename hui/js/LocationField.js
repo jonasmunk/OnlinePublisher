@@ -1,7 +1,7 @@
 /////////////////////////// Style length /////////////////////////
 
 /**
- * A component for geo-location
+ * An input component for geo-location
  * @constructor
  */
 hui.ui.LocationField = function(options) {
@@ -16,7 +16,7 @@ hui.ui.LocationField = function(options) {
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	this.setValue(this.value);
-	this.addBehavior();
+	this._addBehavior();
 }
 
 hui.ui.LocationField.create = function(options) {
@@ -29,9 +29,8 @@ hui.ui.LocationField.create = function(options) {
 }
 
 hui.ui.LocationField.prototype = {
-	/** @private */
-	addBehavior : function() {
-		hui.listen(this.chooser,'click',this.showPicker.bind(this));
+	_addBehavior : function() {
+		hui.listen(this.chooser,'click',this._showPicker.bind(this));
 		hui.ui.addFocusClass({element:this.latField.element,classElement:this.element,'class':'hui_field_focused'});
 		hui.ui.addFocusClass({element:this.lngField.element,classElement:this.element,'class':'hui_field_focused'});
 	},
@@ -44,6 +43,9 @@ hui.ui.LocationField.prototype = {
 	getValue : function() {
 		return this.value;
 	},
+	/** Set the value 
+	 * 
+	 */
 	setValue : function(loc) {
 		if (loc) {
 			this.latField.setValue(loc.latitude);
@@ -54,26 +56,27 @@ hui.ui.LocationField.prototype = {
 			this.lngField.setValue();
 			this.value = null;
 		}
-		this.updatePicker();
+		this._updatePicker();
 	},
-	updatePicker : function() {
+	_updatePicker : function() {
 		if (this.picker) {
 			this.picker.setLocation(this.value);
 		}
 	},
-	/** @private */
-	showPicker : function() {
+	_showPicker : function() {
 		if (!this.picker) {
 			this.picker = new hui.ui.LocationPicker();
 			this.picker.listen(this);
 		}
 		this.picker.show({node:this.chooser,location:this.value});
 	},
+	/** @private */
 	$locationChanged : function(loc) {
 		this.setValue(loc);
 		this.fire('valueChanged',this.value);
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 	},
+	/** @private */
 	$valueChanged : function() {
 		var lat = this.latField.getValue();
 		var lng = this.lngField.getValue();
@@ -82,7 +85,7 @@ hui.ui.LocationField.prototype = {
 		} else {
 			this.value = {latitude:lat,longitude:lng};
 		}
-		this.updatePicker();
+		this._updatePicker();
 		this.fire('valueChanged',this.value);
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 	}

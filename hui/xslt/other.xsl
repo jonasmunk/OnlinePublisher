@@ -7,7 +7,7 @@
     exclude-result-prefixes="gui"
 >
 
-<!--doc title:'Graph' class:'hui.ui.Graph' module:'Unknown'
+<!--doc title:'Graph' class:'hui.ui.Graph' module:'visalization'
 <graph name="«name»" layout="«?»" source="«source»"/>
 -->
 <xsl:template match="gui:graph">

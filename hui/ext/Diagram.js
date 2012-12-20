@@ -10,6 +10,7 @@ hui.ui.Diagram = function(options) {
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
 	this.layout = hui.ui.Diagram.Arbor;
+	//this.layout = hui.ui.Diagram.Springy;
 	this.layout.diagram = this;
 	hui.ui.extend(this);
 	if (options.source) {
@@ -389,7 +390,7 @@ hui.ui.Diagram.Springy = {
 	diagram : null,
 
 	_load : function() {
-		hui.require(hui.ui.context+'/hui/lib/springy/springy.js',function() {
+		hui.require(hui.ui.context+'/hui/lib/springy-master/springy.js',function() {
 			this.loaded = true;
 			this.start();
 		}.bind(this))
@@ -430,23 +431,30 @@ hui.ui.Diagram.Springy = {
 			  }
 		  }
 		
-		var renderer = new Renderer(100, layout,
-		  function clear() {
+		var renderer = new Renderer(layout,
+			function clear() {
 			  
-		  },
-		  function drawEdge(edge, p1, p2) {
-			  p1 = toScreen(p1);
-			  p2 = toScreen(p2);
-			  var line = cachedLines[edge.id];
-				var from = diagram._getMagnet(p1,p2,edge.source.data)
-				var to = diagram._getMagnet(p1,p2,edge.target.data)
-			  line.node.setFrom(from);
-			  line.node.setTo(to);
+			},
+			function drawEdge(edge, p1, p2) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				p1 = toScreen(p1);
+				p2 = toScreen(p2);
+				var line = cachedLines[edge.id];
+				if (sel!=edge.source.data.id) {
+					var from = diagram._getMagnet(p1,p2,edge.source.data)
+					line.node.setFrom(from);
+				}
+				if (sel!=edge.target.data.id) {
+					var to = diagram._getMagnet(p1,p2,edge.target.data)
+					line.node.setTo(to);
+				}
 				diagram._updateLine(line);
-		  },
-		  function drawNode(node, p) {
-			  node.data.setCenter(toScreen(p));
-		  }
+			},
+			function drawNode(node, p) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				if (node.data.id==sel) return;
+				node.data.setCenter(toScreen(p));
+			}
 		);
 		renderer.start();
 	},
