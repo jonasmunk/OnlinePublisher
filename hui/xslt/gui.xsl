@@ -479,7 +479,7 @@
 
 
 
-<!--doc title:'Space' module:'layout'
+<!--doc title:'Frames' module:'layout'
 <frames>
 	<frame name="«text»" source="«url»" scrolling="«boolean»"/>
 </frames>

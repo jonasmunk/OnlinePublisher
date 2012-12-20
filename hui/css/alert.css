@@ -1,15 +1,17 @@
 div.hui_alert
 {
 	width: 500px;
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
+	border-bottom-color: #d3d3d3;
+	border-top-color: #e3e3e3;
 	position: absolute;
 	top: 20%;
 	left: 50%;
 	margin-left: -250px;
 	margin-top: 0px;
-	background: #eee;
-	-moz-box-shadow:0 5px 20px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow:0 5px 20px rgba(0, 0, 0, 0.3);
+	background: #fafafa;
+	-moz-box-shadow:0 5px 20px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow:0 5px 20px rgba(0, 0, 0, 0.1);
 	display: none;
 	opacity: 0;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;

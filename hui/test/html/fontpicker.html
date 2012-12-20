@@ -11,7 +11,12 @@
 	<!--[if IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
 	<![endif]-->
+	
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Sacramento' rel='stylesheet' type='text/css'/>
+	<link href='http://fonts.googleapis.com/css?family=Codystar:300,400' rel='stylesheet' type='text/css'/>
+	<script src="http://use.edgefonts.net/chunk.js"></script>
+	<script src="http://use.edgefonts.net/crete-round.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
@@ -24,32 +29,46 @@
 		hui.ui.state = '';
 		hui.ui.context = '../../..';
 	</script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.listen({
+			$ready : function() {
+				var hov = hui.get('hov');
+				var win = hui.ui.Window.create({padding:3,title:'Fonts'});
+				var picker = hui.ui.FontPicker.create({additionalFonts:[
+					{text:'Lato',value:'Lato,sans-serif'},
+					{text:'Sacramento',value:'Sacramento,sans-serif'},
+					{text:'Sacramento',value:'Codystar,sans-serif'},
+					{text:'Chunk',value:'chunk,sans-serif'},
+					{text:'Crete round',value:'crete-round,sans-serif'}
+				]});
+				picker.listen({
+					$select : function(obj) {
+						hui.log(obj)
+						document.body.style.fontFamily=obj.value;
+					}
+				})
+				win.add(picker);
+				win.show();
+				picker._buildPreview({text:'Lato',value:'Lato,sans-serif'})
+			}
+		})
+	</script>
+	<style>
+		body {
+			font-family: Lato;
+			padding: 30px;
+		}
+	</style>
 </head>
 
-<body style="font-family: Lato;">
-<script type="text/javascript" charset="utf-8">
-	hui.ui.listen({
-		$ready : function() {
-			var hov = hui.get('hov');
-			var win = hui.ui.Window.create({padding:3,title:'Fonts'});
-			var picker = hui.ui.FontPicker.create({additionalFonts:[{name:'Lato',css:'Lato,sans-serif'}]});
-			picker.listen({
-				$select : function(obj) {
-					hui.log(obj)
-					document.body.style.fontFamily=obj.css;
-				}
-			})
-			win.add(picker);
-			win.show();
-			picker._buildPreview({name:'Lato',css:'Lato,sans-serif'})
-		}
-	})
-</script>
-<p>
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
-<p style="font-size: 18pt">
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
+<body>
+	<h1>This page is a test of the font picker</h1>
+	<ul><li><a href="http://edgefonts.toekneestuck.com">Edge fonts</a></li></ul>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</p>
+	<p style="font-size: 18pt">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</p>
 </body>
 </html>
