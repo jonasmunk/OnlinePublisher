@@ -286,10 +286,17 @@
 	<div class="hui_wizard" id="{generate-id()}">
 		<table class="hui_wizard"><tr>
 			<th class="hui_wizard">
+				<xsl:if test="@selection-width">
+				</xsl:if>
 				<ul class="hui_wizard">
+					<xsl:attribute name="style">
+						<xsl:text>width: </xsl:text>
+						<xsl:value-of select="@selection-width"/>
+						<xsl:text>px;</xsl:text>
+					</xsl:attribute>
 				<xsl:for-each select="gui:step">
 					<li>
-						<a href="#">
+						<a href="javascript://">
 							<xsl:attribute name="class">
 								<xsl:text>hui_wizard_selection</xsl:text>
 								<xsl:if test="position()=1">

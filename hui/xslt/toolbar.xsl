@@ -64,7 +64,12 @@
 			<xsl:apply-templates/>
 			<xsl:comment/>
 		</span>
-		<a class="hui_toolbar_more"><xsl:value-of select="@text"/></a>
+		<xsl:if test="@text">
+			<a class="hui_toolbar_more"><xsl:value-of select="@text"/></a>
+		</xsl:if>
+		<xsl:if test="not(@text)">
+			<a class="hui_toolbar_more hui_toolbar_more_default">···</a>
+		</xsl:if>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Toolbar.More({

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
 <gui xmlns="uri:hui" title="System" padding="10">
-	<controller name="controller" source="list.js"/>
-	<source name="itemsSource" url="data/source_items.xml"/>
-	<source name="listSource" url="data/list_icons.xml"/>
-	<source name="languagesSource" url="data/items_languages.xml"/>
-	<script>
-		hui.ui.listen({
-			$ready : function() {
-				newPage.show();
-			}
-		})
-	</script>
+	<source name="hierarchySource" url="data/hierarchy.xml"/>
+	<source name="listSource" url="data/list_pages.xml"/>
+	<source name="languagesSource" url="data/languages.xml"/>
+	
 	<structure>
 		<top>
 			<toolbar>
-				<icon icon="common/page" title="Opret side" overlay="new" click="newPage.show()"/>
+				<icon icon="common/page" title="Ny side" overlay="new" click="newPage.show()"/>
+				<more>
+					<icon icon="common/hierarchy_item" title="Nyt punkt" overlay="new" click="newPage.show()"/>
+					<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" click="newPage.show()"/>
+					<icon icon="common/template" title="Ny skabelon" overlay="new" click="newPage.show()"/>
+				</more>
 				<divider/>
-				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="box.show()"/>
+				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="pages.next()"/>
 				<right>
-					<search title="Søgning"/>
+					<field label="Søgning">
+						<searchfield/>
+					</field>
 				</right>
 			</toolbar>
 		</top>
@@ -27,28 +27,78 @@
 			<left>
 				<overflow>
 					<selection value="user" name="selector">
-						<item icon="file/generic" title="Alle sider" value="user"/>
+						<item icon="common/page" title="Alle sider" value="all"/>
+						<item icon="common/time" title="Seneste" badge="10" value="latest"/>
+						<item icon="common/draft" title="Klader" badge="5" value="drafts"/>
+						<item icon="common/duplicate" title="Skabeloner" badge="2" value="templates"/>
+						<item icon="common/star" title="Favorites" badge="12" value="favorites"/>
 						<title>Hierarkier</title>
-						<item icon="common/hierarchy" title="Hovedsite" value="danish" kind="hierarchy"/>
-						<item icon="common/hierarchy" title="Support" value="english" kind="hierarchy"/>
+						<items source="hierarchySource"/>
 						<title>Sprog</title>
 						<item icon="flag/dk" title="Dansk" value="da"/>
 						<item icon="flag/gb" title="Engelsk" value="en"/>
 						<title>Grupper</title>
-						<items source="itemsSource"/>
+						<item icon="common/folder" title="Mine sider" value="warnings"/>
 						<title>Oversigter</title>
-						<item icon="part/news" title="Nyheder" value="news"/>
-						<item icon="common/warning" title="Advarsler" value="warnings"/>
-						<item icon="common/edit" title="Ændret" value="changed"/>
-						<item icon="common/delete" title="Uden menupunk" value="nomenu"/>
-						<item icon="common/time" title="Arkiveret" value="archive"/>
+						<item icon="monochrome/news" title="Nyheder" value="news"/>
+						<item icon="monochrome/warning" title="Advarsler" value="warnings"/>
+						<item icon="monochrome/edit" title="Ændret" value="changed"/>
+						<item icon="monochrome/delete" title="Uden menupunk" value="nomenu"/>
+						<item icon="monochrome/archive" title="Arkiveret" value="archive"/>
 					</selection>
 				</overflow>
 			</left>
 			<center>
-				<overflow height="300" resize="-58">
-					<list name="list" source="listSource"/>
-				</overflow>
+				<pages height="full" name="pages">
+					<page key="list">
+						<overflow>
+							<list name="list" source="listSource"/>
+						</overflow>
+					</page>
+					<page key="viewpage" background="wood">
+						<bar variant="layout">
+							<button text="Close" click="pages.next()" small="true"/>
+						</bar>
+						<columns>
+							<column width="200px">
+							</column>
+							<column>
+								<box>
+								<formula>
+									<fields>
+										<field label="Beskrivelse:">
+											<text-input lines="6"/>
+										</field>
+										<field label="Sti:">
+											<text-input/>
+										</field>
+										<!--
+										<field label="Nøgleord:">
+											<text-input/>
+										</field>
+										<field label="Dato:">
+											<datetime-input/>
+										</field>
+										-->
+										<field label="Sprog:">
+											<dropdown source="languagesSource"/>
+										</field>
+										<field label="Design:">
+											<dropdown source="designsSource"/>
+										</field>
+										<field label="Opsætning:">
+											<dropdown source="setupsSource"/>
+										</field>
+										<field label="Inaktiv:">
+											<checkbox/>
+										</field>
+									</fields>
+								</formula>
+								</box>
+							</column>
+						</columns>
+					</page>
+				</pages>
 			</center>
 		</middle>
 		<bottom>
@@ -65,16 +115,21 @@
 			</fields>
 		</formula>
 		<div style="padding: 10px; margin: 4px; background: #eee; box-shadow: inset 0 1px 5px rgba(0,0,0,.2); border-radius: 4px">
-		<wizard>
-			<step title="Menu" border="true">
+		<wizard selection-width="150" name="wizard">
+			<step title="Menupunkt" icon="common/hierarchy" border="true">
 				<overflow height="200">
 					<text align="center">
 						<p>Vælg det menu-punkt den nye side vises under...</p>
 					</text>
-					<selection name="hierarchySelection"/>
+					<selection name="hierarchySelection">
+						<items source="hierarchySource"/>
+					</selection>
 				</overflow>
+				<buttons small="true" top="5">
+					<button text="Intet menupunkt"/>
+				</buttons>
 			</step>
-			<step title="Info" border="true">
+			<step title="Info" icon="common/info" border="true">
 				<overflow height="200">
 				<formula>
 					<fields>
@@ -84,22 +139,22 @@
 						<field label="Sti:">
 							<text-input/>
 						</field>
+						<!--
 						<field label="Nøgleord:">
 							<text-input/>
 						</field>
 						<field label="Dato:">
 							<datetime-input/>
 						</field>
+						-->
 						<field label="Sprog:">
-							<dropdown>
-								<item text="Dansk" value="da"/>
-							</dropdown>
+							<dropdown source="languagesSource"/>
 						</field>
 						<field label="Design:">
-							<dropdown source="languagesSource"/>
+							<dropdown source="designsSource"/>
 						</field>
 						<field label="Opsætning:">
-							<dropdown source="languagesSource"/>
+							<dropdown source="setupsSource"/>
 						</field>
 						<field label="Inaktiv:">
 							<checkbox/>
@@ -113,17 +168,18 @@
 		<columns>
 			<column>
 				<div style="margin: 3px;">
-					<checkbox/><span style="vertical-align: middle; font-size: 12px; color:#777;">Avanceret</span>
+					<checkbox label="Avanceret"/>
 				</div>
 			</column>
 			<column>
 				<buttons align="right">
 					<button title="Annuller"/>
-					<button title="Gem" highlighted="true"/>
+					<button title="Opret" highlighted="true"/>
 				</buttons>
 			</column>
 		</columns>
 	</window>
+	
 	<box absolute="true" name="box" padding="10" modal="true" width="500" variant="textured" title="Ny side">
 		<wizard>
 			<step title="Vælg skabelon" icon="file/generic">
@@ -149,4 +205,14 @@
 			<button title="Gem" highlighted="true"/>
 		</buttons>
 	</box>
+	
+	<listen>
+		$ready : function() {
+			//newPage.show();
+		},
+		$select$hierarchySelection : function() {
+			wizard.next();
+		}
+	</listen>
+
 </gui>

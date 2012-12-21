@@ -5910,6 +5910,13 @@ hui.ui.Source.prototype = {
 			this.refresh();
 		}
 	},
+	/** Will refresh, but wait a little to let others contribute */
+	refreshLater : function() {
+		window.clearTimeout(this.paramDelay);
+		this.paramDelay = window.setTimeout(function() {
+			this.refresh();
+		}.bind(this),100)
+	},
 	/** Refreshes the data source */
 	refresh : function() {
 		if (this.delegates.length==0) {
@@ -6037,13 +6044,6 @@ hui.ui.Source.prototype = {
 			}
 		};
 		this.refreshLater();
-	},
-	/** Will refresh, but wait a little to let others contribute */
-	refreshLater : function() {
-		window.clearTimeout(this.paramDelay);
-		this.paramDelay = window.setTimeout(function() {
-			this.refresh();
-		}.bind(this),100)
 	}
 }
 
@@ -20440,7 +20440,7 @@ hui.ui.Pages.prototype = {
 }hui.ui.Chart = function(options) {
 	this.options = options = options || {};
 	this.element = hui.get(options.element);
-	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 0, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
+	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 10, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
 	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
 	this.style.legends = { position: 'right' , left: 0, top: 0 };
 	this.style.pie = { radiusFactor: .9 , valueInLegend: false , left: 0, top: 0 };
@@ -20451,7 +20451,7 @@ hui.ui.Pages.prototype = {
 	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
-		this.options.source.refreshLater();
+		//this.options.source.refreshFirst();
 	}
 }
 
@@ -20491,10 +20491,20 @@ hui.ui.Chart.prototype = {
 		var labels = [],keys = [];
 		for (var i=0; i < obj.sets.length; i++) {
 			var set = obj.sets[i];
-			for (key in set.entries) {
-				if (!hui.array.contains(keys,key)) {
-					keys.push(key)
-					labels.push({key:key,label:key});
+			if (hui.isArray(set.entries)) {
+				for (var j=0; j < set.entries.length; j++) {
+					var entry = set.entries[i];
+					if (!hui.array.contains(keys,entry.key)) {
+						keys.push(entry.key)
+						labels.push({key:entry.key,label:entry.key});					
+					}
+				}
+			} else {
+				for (key in set.entries) {
+					if (!hui.array.contains(keys,key)) {
+						keys.push(key)
+						labels.push({key:key,label:key});
+					}
 				}
 			}
 		};
@@ -20503,11 +20513,19 @@ hui.ui.Chart.prototype = {
 		for (var i=0; i < obj.sets.length; i++) {
 			var set = obj.sets[i];
 			var dataSet = new hui.ui.Chart.DataSet({type:set.type});
-			for (key in set.entries) {
-				dataSet.addEntry(key,set.entries[key]);
+			if (hui.isArray(set.entries)) {
+				for (var j=0; j < set.entries.length; j++) {
+					var entry = set.entries[j];
+					dataSet.addEntry(entry.key,entry.value);
+				};
+			} else {
+				for (key in set.entries) {
+					dataSet.addEntry(key,set.entries[key]);
+				}
 			}
 			data.addDataSet(dataSet);
 		}
+		hui.log(data)
 		return data;
 	}
 }
@@ -20859,10 +20877,10 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 			textAlign : 'right',
 			width : this.state.yLabelWidth-5+'px',
 			font : '9px Tahoma',
-			marginTop : top-5+'px'
+			marginTop : top-5+'px',
+			marginLeft : body.paddingLeft+'px'
 		}});
 		this.canvas.parentNode.insertBefore(label,this.canvas);
-		body.paddingLeft = Math.max(body.paddingLeft || 0,label.offsetWidth)
 	}
 	
 	// Draw a line at 0 if 
