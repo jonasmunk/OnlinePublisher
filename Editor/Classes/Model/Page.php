@@ -8,9 +8,17 @@ Entity::$schema['Page'] = array(
 	'table' => 'page',
 	'properties' => array(
 		'title' => array('type'=>'string'),
+		'description' => array('type'=>'string'),
+		'keywords' => array('type'=>'string'),
 		'templateId' => array('type'=>'int','relation'=>array('class'=>'Template','property'=>'id')),
+		'templateUnique' => array('type'=>'string'),
+		'frameId' => array('type'=>'int','relation'=>array('class'=>'Frame','property'=>'id')),
 		'designId' => array('type'=>'int','relation'=>array('class'=>'Design','property'=>'id')),
-		'frameId' => array('type'=>'int','relation'=>array('class'=>'Frame','property'=>'id'))
+		'language' => array('type'=>'string'),
+		'searchable' => array('type'=>'boolean'),
+		'disabled' => array('type'=>'boolean'),
+		'changed' => array('type'=>'datetime'),
+		'published' => array('type'=>'datetime')
 	)
 );
 class Page extends Entity {

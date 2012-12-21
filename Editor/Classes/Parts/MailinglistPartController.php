@@ -81,8 +81,14 @@ class MailinglistPartController extends PartController
 				}
 			}
 		}
-		return 
+		$ids = $part->getMailinglistIds();
+		$xml = 
 		'<mailinglist xmlns="'.$this->getNamespace().'">'.
+		'<lists>';
+		foreach ($ids as $id) {
+			$xml.='<id>'.$id.'</id>';
+		}
+		$xml.='</lists>'.
 		'<subscribe>'.
 		($subscribe_error!='' ? '<error key="'.$subscribe_error.'"/>' : '').
 		$subscribe_body.
@@ -92,6 +98,19 @@ class MailinglistPartController extends PartController
 		$unsubscribe_body.
 		'</unsubscribe>'.
 		'</mailinglist>';
+		return $xml;
+	}
+	
+	function importSub($node,$part) {
+		$mailinglistIds = array();
+		if ($lists = DOMUtils::getFirstDescendant($node,'lists')) {
+			$ids = DOMUtils::getChildElements($lists,'id');
+			foreach ($ids as $idNode) {
+				$str = DOMUtils::getText($idNode);
+				$mailinglistIds[] = intval($str);
+			}
+		}
+		$part->setMailinglistIds($mailinglistIds);
 	}
 	
 	function subscribe($part,$name,$address) {

@@ -3,30 +3,33 @@
 <gui xmlns="uri:hui" pad="10" title="Box">
 	<box width="400" padding="10" top="100" variant="textured">
 		<formula name="formula">
-			<header>Ny begvienhed</header>
+			<header>New event</header>
 			<space height="5"/>
 			<fields>
-				<field label="Betegnelse:">
+				<field label="Title:">
 					<text-input/>
 				</field>
-				<field label="Sted:">
+				<field label="Place:">
 					<text-input/>
 				</field>
 				<field label="Type:">
-					<dropdown>
-						<item title="Anden" value="0"/>
-						<item title="Arbejdsfunktion" value="0"/>
+					<dropdown value="0">
+						<item title="Other" value="0"/>
+						<item title="Work function" value="1"/>
 					</dropdown>
 				</field>
-				<field label="Startdato:">
+				<field label="Start date:">
 					<datetime-input/>
 				</field>
-				<field label="Slutdato:">
+				<field label="End date:">
 					<datetime-input/>
 				</field>
 				<buttons top="5">
-					<button title="Annuller" action="hui.log(formula.getValues());"/>
-					<button title="Opret" highlighted="true"/>
+					<button title="Cancel"/>
+					<button title="Delete" click="hui.ui.showMessage({text:'Deleting...',busy:true,duration:3000})">
+						<confirm text="Are you sure?" ok="Yes, delete"/>
+					</button>
+					<button title="Create" highlighted="true"/>
 				</buttons>
 			</fields>
 		</formula>

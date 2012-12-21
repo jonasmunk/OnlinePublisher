@@ -10,7 +10,11 @@
  >
 
 <xsl:template match="txt:text">
-	<div class="part_text common_font">
+	<div>
+		<xsl:attribute name="class">
+			<xsl:text>part_text common_font</xsl:text>
+			<xsl:if test="txt:image"> part_text_image</xsl:if>
+		</xsl:attribute>
 		<xsl:apply-templates/>
 	</div>
 </xsl:template>

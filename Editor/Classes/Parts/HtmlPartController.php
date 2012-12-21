@@ -55,7 +55,6 @@ class HtmlPartController extends PartController
 				$part->setHtml($child->data);
 			}
 		}
-		
 	}
 }
 ?>

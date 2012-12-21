@@ -6,6 +6,7 @@
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/colorpicker.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/bar.css" rel="stylesheet" />
+	<link charset="utf-8" media="screen" type="text/css" href="style.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
 	<![endif]-->
@@ -26,28 +27,33 @@
 		hui.ui.state = '';
 		hui.ui.context = '../../..';
 	</script>
+	
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.listen({
+			$ready : function() {
+				var hov = hui.get('hov');
+				var win = hui.ui.Window.create({padding:3});
+				var picker = hui.ui.ColorPicker.create();
+				picker.listen({
+					$colorWasSelected : function(color) {
+						document.body.style.background=color;
+					},
+					$colorWasHovered : function(color) {
+						hov.style.background=color;
+					}
+				})
+				win.add(picker);
+				win.show();
+			}
+		})
+	</script>
 </head>
 
 <body>
+	<div class="description">
+		<p>How to use the color picker</p>
+		<h1>Color picker</h1>
+	</div>
 	<div id="hov" style="width: 200px; height: 200px;"></div>
-<script type="text/javascript" charset="utf-8">
-	hui.ui.listen({
-		$ready : function() {
-			var hov = hui.get('hov');
-			var win = hui.ui.Window.create({padding:3});
-			var picker = hui.ui.ColorPicker.create();
-			picker.listen({
-				$colorWasSelected : function(color) {
-					document.body.style.background=color;
-				},
-				$colorWasHovered : function(color) {
-					hov.style.background=color;
-				}
-			})
-			win.add(picker);
-			win.show();
-		}
-	})
-</script>
 </body>
 </html>

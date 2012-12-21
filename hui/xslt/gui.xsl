@@ -337,13 +337,22 @@
 -->
 <xsl:template match="gui:listen">
 	<script type="text/javascript">
-		(function() {
-			var listener = {};
-			<xsl:for-each select="*">
-				listener['$<xsl:value-of select="local-name()"/>$<xsl:value-of select="../@for"/>']=function() {<xsl:apply-templates/>};
-			</xsl:for-each>
-			hui.ui.listen(listener);
-		})()
+		<xsl:choose>
+			<xsl:when test="@for">
+				(function() {
+					var listener = {};
+					<xsl:for-each select="*">
+						listener['$<xsl:value-of select="local-name()"/>$<xsl:value-of select="../@for"/>']=function() {<xsl:apply-templates/>};
+					</xsl:for-each>
+					hui.ui.listen(listener);
+				})()		
+			</xsl:when>
+			<xsl:otherwise>
+				hui.ui.listen({
+					<xsl:value-of select="."/>
+				});
+			</xsl:otherwise>
+		</xsl:choose>
 	</script>	
 </xsl:template>
 
@@ -470,7 +479,7 @@
 
 
 
-<!--doc title:'Space' module:'layout'
+<!--doc title:'Frames' module:'layout'
 <frames>
 	<frame name="«text»" source="«url»" scrolling="«boolean»"/>
 </frames>

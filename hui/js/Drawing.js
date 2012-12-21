@@ -125,10 +125,10 @@ hui.ui.Drawing.Line.create = function(options) {
 	}
 	
 	var attributes = {
-		x1 : options.from.x,
-		y1 : options.from.y,
-		x2 : options.to.x,
-		y2 : options.to.y,
+		x1 : options.from.x.toFixed(10),
+		y1 : options.from.y.toFixed(10),
+		x2 : options.to.x.toFixed(10),
+		y2 : options.to.y.toFixed(10),
 		style : 'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
 	};
 		
@@ -150,8 +150,8 @@ hui.ui.Drawing.Line.create = function(options) {
 hui.ui.Drawing.Line.prototype = {
 	setFrom : function(point) {
 		this.from = point;
-		this.node.setAttribute('x1',point.x);
-		this.node.setAttribute('y1',point.y);
+		this.node.setAttribute('x1',point.x.toFixed(-1));
+		this.node.setAttribute('y1',point.y.toFixed(-1));
 		this._updateEnds();
 	},
 	getFrom : function() {
@@ -159,8 +159,8 @@ hui.ui.Drawing.Line.prototype = {
 	},
 	setTo : function(point) {
 		this.to = point;
-		this.node.setAttribute('x2',point.x);
-		this.node.setAttribute('y2',point.y);
+		this.node.setAttribute('x2',point.x.toFixed(-1));
+		this.node.setAttribute('y2',point.y.toFixed(-1));
 		this._updateEnds();
 	},
 	getTo : function() {
@@ -170,7 +170,7 @@ hui.ui.Drawing.Line.prototype = {
 		//var deg = Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
 		if (this.endNode) {
 			var deg = -90+Math.atan2(this.from.y-this.to.y, this.from.x-this.to.x)*180/Math.PI
-			this.endNode.setAttribute('transform','translate('+this.to.x+','+this.to.y+') rotate('+(deg)+')')
+			this.endNode.setAttribute('transform','translate('+this.to.x.toFixed(10)+','+this.to.y.toFixed(10)+') rotate('+(deg)+')')
 
 		}
 	},

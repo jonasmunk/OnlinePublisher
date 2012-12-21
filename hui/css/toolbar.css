@@ -478,6 +478,21 @@ a.hui_toolbar_more:hover
 	color: #333;
 }
 
+a.hui_toolbar_more_default
+{
+	background: #CCC -webkit-linear-gradient(top, #eee, #F0F0F0);
+	padding: 0 5px;
+	box-shadow: inset 0 0 3px rgba(0,0,0,.1);
+	font-size: 12px;
+	text-align: center;
+}
+
+a.hui_toolbar_more_default:hover
+{
+	box-shadow: inset 0 0 3px rgba(0,0,0,.3);
+	background: #CCC -webkit-linear-gradient(top, #ccc, #F0F0F0);
+}
+
 .hui_tabs_tab_light a.hui_toolbar_more
 {
 	background: #f3f3f3;

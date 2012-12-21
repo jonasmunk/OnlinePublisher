@@ -49,9 +49,22 @@ body.theme_cv h4.common,
 body.theme_cv h5.common,
 body.theme_cv h6.common,
 body.theme_cv div.part_text,
-body.theme_cv div.part_listing
+body.theme_cv div.part_listing,
+body.theme_cv div.part_poster
 {
 	font-family: 'Helvetica Neue','Helvetica',Arial,sans-serif;	
+}
+
+body.theme_cv p.part_poster_title
+{
+	font-weight: 200;
+	font-size: 18pt;
+}
+
+body.theme_cv p.part_poster_text
+{
+	font-weight: 200;
+	font-size: 11pt;
 }
 
 

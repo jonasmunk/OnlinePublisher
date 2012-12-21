@@ -12,8 +12,9 @@ div.hui_fontpicker_item
 {
 	border-bottom: 1px solid #ddd;
 	padding: 4px 8px;
-	font-size: 14pt;
+	font-size: 12pt;
 	position: relative;
+	color: #333;
 }
 
 div.hui_fontpicker_item:hover

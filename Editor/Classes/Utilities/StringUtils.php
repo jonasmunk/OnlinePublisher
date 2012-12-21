@@ -125,6 +125,18 @@ class StringUtils {
 		return $var ? 'true' : 'false';
 	}
 	
+	function splitIntegers($str) {
+		$arr = array();
+		$parts = preg_split('/\\,/',$str);
+		foreach ($parts as $part) {
+			$part = trim($part);
+			if (is_numeric($part)) {
+				$arr[] = intval($part);
+			}
+		}
+		return $arr;
+	}
+	
 	/**
 	 * Appends a word to a string using a separator if neither are empty
 	 * @param string $str The text to append to

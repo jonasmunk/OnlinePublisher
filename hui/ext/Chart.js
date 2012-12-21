@@ -1,7 +1,7 @@
 hui.ui.Chart = function(options) {
 	this.options = options = options || {};
 	this.element = hui.get(options.element);
-	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 40, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
+	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 10, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
 	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
 	this.style.legends = { position: 'right' , left: 0, top: 0 };
 	this.style.pie = { radiusFactor: .9 , valueInLegend: false , left: 0, top: 0 };
@@ -12,6 +12,7 @@ hui.ui.Chart = function(options) {
 	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
+		//this.options.source.refreshFirst();
 	}
 }
 
@@ -44,7 +45,6 @@ hui.ui.Chart.prototype = {
 		this.render();
 	},
 	$objectsLoaded : function(data) {
-		hui.log(data)
 		this.setData(data);
 		this.render();
 	},
@@ -52,10 +52,20 @@ hui.ui.Chart.prototype = {
 		var labels = [],keys = [];
 		for (var i=0; i < obj.sets.length; i++) {
 			var set = obj.sets[i];
-			for (key in set.entries) {
-				if (!hui.array.contains(keys,key)) {
-					keys.push(key)
-					labels.push({key:key,label:key});
+			if (hui.isArray(set.entries)) {
+				for (var j=0; j < set.entries.length; j++) {
+					var entry = set.entries[i];
+					if (!hui.array.contains(keys,entry.key)) {
+						keys.push(entry.key)
+						labels.push({key:entry.key,label:entry.key});					
+					}
+				}
+			} else {
+				for (key in set.entries) {
+					if (!hui.array.contains(keys,key)) {
+						keys.push(key)
+						labels.push({key:key,label:key});
+					}
 				}
 			}
 		};
@@ -64,11 +74,19 @@ hui.ui.Chart.prototype = {
 		for (var i=0; i < obj.sets.length; i++) {
 			var set = obj.sets[i];
 			var dataSet = new hui.ui.Chart.DataSet({type:set.type});
-			for (key in set.entries) {
-				dataSet.addEntry(key,set.entries[key]);
+			if (hui.isArray(set.entries)) {
+				for (var j=0; j < set.entries.length; j++) {
+					var entry = set.entries[j];
+					dataSet.addEntry(entry.key,entry.value);
+				};
+			} else {
+				for (key in set.entries) {
+					dataSet.addEntry(key,set.entries[key]);
+				}
 			}
 			data.addDataSet(dataSet);
 		}
+		hui.log(data)
 		return data;
 	}
 }
@@ -197,13 +215,42 @@ hui.ui.Chart.Renderer = function(chart) {
 	this.chart = chart;
 	this.crisp = false;
 	this.legends = [];
-	this.state = { numColumns:0, currColumn:0, xLabels:[], yLabels:[], innerBody:{}, coordinateSystem: false, currColor:0 };
+	this.state = { numColumns:0, currColumn:0, xLabels:[], yLabels:[], body:{left:0}, innerBody:{}, coordinateSystem: false, currColor:0 };
 	this.width = null;
 	this.height = null;
 }
 
-hui.ui.Chart.Renderer.prototype.registerLegend = function(color,label) {
-	this.legends[this.legends.length] = {color:color,label:label};
+hui.ui.Chart.Renderer.prototype = {
+	_registerLegend : function(color,label) {
+		this.legends[this.legends.length] = {color:color,label:label};
+	},
+	_buildInnerBody : function() {
+		var body = this.chart.body;
+		var xLabels = this.state.xLabels;
+		var space = 0;
+		if (this.state.numColumns>0) {
+			space = ( this.width - 2 * body.innerPaddingHorizontal - body.paddingLeft - body.paddingRight ) / xLabels.length;
+		}
+		var innerBody = {
+			left : (body.innerPaddingHorizontal + this.state.body.left + space/2),
+			top : (body.paddingTop + body.innerPaddingVertical),
+			width : (this.state.body.width-2 * body.innerPaddingHorizontal - space),
+			height : (this.state.body.height - body.innerPaddingVertical * 2 )
+		};
+		return innerBody;
+	},
+	_buildBody : function() {
+		var body = this.chart.body,
+			left = body.paddingLeft + this.state.yLabelWidth
+		return {
+			left : left,
+			top : body.paddingTop,
+			width : this.width - left - body.paddingRight,
+			height : this.height - body.paddingTop - body.paddingBottom,
+			right : this.width - body.paddingRight,
+			bottom : this.height - body.paddingBottom
+		}
+	}
 }
 
 hui.ui.Chart.Renderer.prototype.render = function() {
@@ -235,7 +282,13 @@ hui.ui.Chart.Renderer.prototype.render = function() {
 	
 	this.state.xLabels = this.chart.data.xAxis.labels;
 	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart);
-	this.state.innerBody = this.getInnerBody();
+	this.state.yLabelWidth = 0;
+	for (var i=0; i < this.state.yLabels.length; i++) {
+		this.state.yLabelWidth = Math.max(this.state.yLabelWidth,new String(this.state.yLabels[i]).length*5);
+	};
+	this.state.yLabelWidth+=5;
+	this.state.body = this._buildBody();
+	this.state.innerBody = this._buildInnerBody();
 
 	// Render the coordinate system (below)
 	if (this.state.coordinateSystem) {
@@ -313,16 +366,23 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 	
 	var body = this.chart.body,
 		stroke = 'rgb(255,255,255)',
-		background = 'rgb(240,240,240)';
+		background = 'rgb(240,240,240)',
+		state = this.state,
+		innerBody = this.state.innerBody;
 	
-	stroke = 'rgb(240,240,240)';
-	background = 'rgb(255,255,255)';
+	//stroke = 'rgb(240,240,240)';
+	//background = 'rgb(255,255,255)';
+	
 
 	if (this.chart.style.background) {
 		this.ctx.fillStyle=background;
-		this.ctx.fillRect(body.paddingLeft,body.paddingTop,this.width-body.paddingLeft-body.paddingRight,this.height-body.paddingTop-body.paddingBottom);
+		this.ctx.fillRect(
+			state.body.left,
+			state.body.top,
+			state.body.width,
+			state.body.height
+		);
 	}
-	var innerBody = this.state.innerBody;
 	
 	var mod = 1;
 	/* Build X-axis*/
@@ -338,8 +398,8 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		// Draw grid
 		if (this.chart.data.xAxis.grid) {
 			this.ctx.beginPath();
-			this.ctx.moveTo(.5+left,body.paddingTop+.5);
-			this.ctx.lineTo(.5+left,body.paddingTop+.5+this.height-body.paddingTop-body.paddingBottom);
+			this.ctx.moveTo(.5+left,state.body.top+.5);
+			this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
 			this.ctx.stroke();
 			this.ctx.closePath();
 		}
@@ -351,7 +411,7 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 				before : this.canvas,
 				style : {
 					marginLeft : left-25+'px',
-					marginTop : this.height-body.paddingBottom+4+'px'
+					marginTop : state.body.bottom + 4 + 'px'
 				}
 			});
 		}
@@ -361,36 +421,38 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 	/* Build Y-axis*/
 	var yLabels = this.state.yLabels.concat();
 	yLabels.reverse();
-	for (var i=0;i<yLabels.length;i++) {
+	for (var i=0; i < yLabels.length ; i++) {
 		// Draw grid
-		var top = i*((this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
+		var top = i*((state.body.height-body.innerPaddingVertical*2)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
 		top = Math.round(top);
 		if (!this.chart.data.yAxis.above) {
 			this.ctx.beginPath();
-			this.ctx.moveTo(.5+body.paddingLeft,top+.5);
-			this.ctx.lineTo(.5+this.width-body.paddingRight,top+.5);
+			this.ctx.moveTo(.5+state.body.left,top+.5);
+			this.ctx.lineTo(.5+state.body.right,top+.5);
 			this.ctx.stroke();
 			this.ctx.closePath();
 		}
 		// Draw label
-		var label = document.createElement('span');
-		label.appendChild(document.createTextNode(yLabels[i]));
-		label.style.position='absolute';
-		label.style.textAlign='right';
-		label.style.width=body.paddingLeft-3+'px';
-		label.style.font='9px Tahoma';
-		label.style.marginTop=top-5+'px';
+		var label = hui.build('span',{text:yLabels[i],style:{
+			position: 'absolute',
+			textAlign : 'right',
+			width : this.state.yLabelWidth-5+'px',
+			font : '9px Tahoma',
+			marginTop : top-5+'px',
+			marginLeft : body.paddingLeft+'px'
+		}});
 		this.canvas.parentNode.insertBefore(label,this.canvas);
 	}
+	
 	// Draw a line at 0 if 
-	if (!this.chart.data.yAxis.above && yLabels[0]>0 && yLabels[yLabels.length-1]<0) {
-		var top = (this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)*yLabels[0]/(yLabels[0]-yLabels[yLabels.length-1])+body.paddingTop+body.innerPaddingVertical;
+	if (!this.chart.data.yAxis.above && yLabels[0] > 0 && yLabels[yLabels.length-1] < 0) {
+		var top = (state.body.height - body.innerPaddingVertical*2) * yLabels[0] / (yLabels[0] - yLabels[yLabels.length-1]) + body.paddingTop + body.innerPaddingVertical;
 		top = Math.round(top);
 		this.ctx.lineWidth = 2;
 		this.ctx.strokeStyle=stroke;
 		this.ctx.beginPath();
-		this.ctx.moveTo(.5+body.paddingLeft,top);
-		this.ctx.lineTo(.5+this.width-body.paddingRight,top);
+		this.ctx.moveTo(.5+state.body.left,top);
+		this.ctx.lineTo(.5+state.body.right,top);
 		this.ctx.stroke();
 		this.ctx.closePath();
 	}
@@ -432,22 +494,6 @@ hui.ui.Chart.Renderer.prototype.renderPostBody = function() {
 	}
 }
 
-hui.ui.Chart.Renderer.prototype.getInnerBody = function() {
-	var body = this.chart.body;
-	var xLabels = this.state.xLabels;
-	var space = 0;
-	if (this.state.numColumns>0) {
-		space = (this.width-2*body.innerPaddingHorizontal-body.paddingLeft-body.paddingRight)/xLabels.length;
-	}
-	var innerBody = {
-		left:(body.innerPaddingHorizontal+body.paddingLeft+space/2),
-		top:(body.paddingTop+body.innerPaddingVertical),
-		width:(this.width-2*body.innerPaddingHorizontal-body.paddingLeft-body.paddingRight-space),
-		height:(this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)
-	};
-	return innerBody;
-}
-
 hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
 	var values = data.values;
 	var xLabels = this.state.xLabels;
@@ -471,9 +517,8 @@ hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
 	this.ctx.lineCap = this.ctx.lineJoin = 'round';
 	this.ctx.beginPath();
 	for (var i=0;i<xLabels.length;i++) {
-		var amount = (values[i]==undefined ? 0 : values[i]);
+		var amount = (values[i] == undefined ? 0 : values[i]);
 		var value = (amount-yMin)/(yMax-yMin);
-		//alert(value);
 		var top = this.height-value*(innerBody.height)-body.innerPaddingVertical-body.paddingBottom;
 		var left = i*(innerBody.width/(xLabels.length-1))+innerBody.left;
 		if (i==0) {
@@ -486,7 +531,7 @@ hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
 	this.ctx.closePath();
 	
 	if (data.legend) {
-		this.registerLegend(color,data.legend);
+		this._registerLegend(color,data.legend);
 	}
 }
 
@@ -530,10 +575,10 @@ hui.ui.Chart.Renderer.prototype.renderColumnGraph = function(data) {
 	
 	if (data.legend && data.legend instanceof Array) {
 		for (var i=0; i < data.legend.length; i++) {
-			this.registerLegend(colors[i],data.legend[i]);
+			this._registerLegend(colors[i],data.legend[i]);
 		};
 	} else if (data.legend) {
-		this.registerLegend(colors[0],data.legend);
+		this._registerLegend(colors[0],data.legend);
 	}
 }
 
@@ -586,9 +631,9 @@ hui.ui.Chart.Renderer.prototype.renderPie = function(data) {
 		current+=rads;
 		
 		if (!true) {
-			this.registerLegend(color,this.state.xLabels[i].label);
+			this._registerLegend(color,this.state.xLabels[i].label);
 		} else {
-			this.registerLegend(color,values[i]+' '+this.state.xLabels[i].label);
+			this._registerLegend(color,values[i]+' '+this.state.xLabels[i].label);
 		}
 		if (colorIndex+2>colors.length) {
 			colorIndex = 0;

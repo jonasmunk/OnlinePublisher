@@ -19,8 +19,8 @@
 <body>
 	<script>
 		hui.require(['../../js/Picker.js','../../js/Window.js'],function() {
-			alert(hui.ui.Picker ? 'Picker is loaded' : 'Picker not loaded');
-			alert(hui.ui.Window ? 'Window is loaded' : 'Window not loaded');
+			hui.build('div',{text:hui.ui.Picker ? 'Picker is loaded' : 'Picker not loaded',parent:document.body});
+			hui.build('div',{text:hui.ui.Window ? 'Window is loaded' : 'Window not loaded',parent:document.body});
 		});
 	</script>
 </body>

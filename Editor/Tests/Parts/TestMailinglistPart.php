@@ -40,5 +40,20 @@ class TestMailinglistPart extends UnitTestCase {
 		
 		$obj2->remove();
 	}
+
+	function testImport() {
+		$obj = new MailinglistPart();
+		$obj->setMailinglistIds(array(10,12,345));
+		$ctrl = new MailinglistPartController();
+		
+		$xml = $ctrl->build($obj,new PartContext());
+		
+		$this->assertNull($ctrl->importFromString(null));
+		
+		$imported = $ctrl->importFromString($xml);
+		
+		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getMailinglistIds(),$obj->getMailinglistIds());
+	}
 }
 ?>

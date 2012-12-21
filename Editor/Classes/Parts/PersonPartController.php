@@ -120,9 +120,9 @@ class PersonPartController extends PartController
 			' image="'.($part->getShowImage() ? 'true' : 'false').'"'.
 			'/>';
 			if ($part->getAlign()!='') {
-				$data.='<style align="'.$part->getAlign().'"/>';
+				$data.= '<style align="'.$part->getAlign().'"/>';
 			}
-			$data.=$personData;
+			$data.= $personData;
 		}
 		$data.='</person>';
 		return $data;

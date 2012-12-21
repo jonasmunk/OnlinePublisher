@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>HUI</title>
-	<!--<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />-->
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="style.css" rel="stylesheet" />
+	
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/markupeditor.css" rel="stylesheet" />
@@ -33,50 +34,54 @@
 		hui.ui.state = '';
 		hui.ui.context = '../../..';
 	</script>
+	<script type="text/javascript" charset="utf-8">
+
+		hui.ui.onReady(function() {
+			var things = [
+					{key:'bold',icon:'edit/text_bold'},
+					{key:'italic',icon:'edit/text_italic'},
+					{key:'underline',icon:'edit/text_underline'},
+					{divider:true},
+					{key:'color',icon:'common/color'},
+					{key:'addLink',icon:'monochrome/link'},
+					{key:'addLink',icon:'monochrome/image'},
+					{divider:true},
+					{key:'align',value:'left',icon:'edit/text_align_left'},
+					{key:'align',value:'center',icon:'edit/text_align_center'},
+					{key:'align',value:'right',icon:'edit/text_align_right'},
+					{key:'align',value:'justify',icon:'edit/text_align_justify'},
+					{divider:true},
+					{key:'clear',icon:'edit/clear'}
+				]
+			
+			var bar = hui.ui.Bar.create({absolute:true,variant:'mini',small:true});
+			hui.each(things,function(info) {
+				if (info.divider) {
+					bar.addDivider();
+				} else {
+					var button = new hui.ui.Bar.Button.create({icon:info.icon,stopEvents:true});
+					bar.add(button);
+					button.listen({
+						$click : function() {
+							hui.ui.showMessage({text:info.key+'='+info.value,duration:2000})
+						}
+					})
+				}
+			}.bind(this));
+			bar.addToDocument();
+			bar.placeAbove(hui.get('something'));
+			bar.show();
+		})
+	</script>
 </head>
 
 <body>
-<script type="text/javascript" charset="utf-8">
+	<div class="description">
+		<h1>Bar</h1>
+		<p>How to build a bar</p>
+	</div>
 
-	hui.ui.onReady(function() {
-		var things = [
-				{key:'bold',icon:'edit/text_bold'},
-				{key:'italic',icon:'edit/text_italic'},
-				{key:'underline',icon:'edit/text_underline'},
-				{divider:true},
-				{key:'color',icon:'common/color'},
-				{key:'addLink',icon:'monochrome/link'},
-				{key:'addLink',icon:'monochrome/image'},
-				{divider:true},
-				{key:'align',value:'left',icon:'edit/text_align_left'},
-				{key:'align',value:'center',icon:'edit/text_align_center'},
-				{key:'align',value:'right',icon:'edit/text_align_right'},
-				{key:'align',value:'justify',icon:'edit/text_align_justify'},
-				{divider:true},
-				{key:'clear',icon:'edit/clear'}/*,
-				{key:'strong',icon:'edit/text_bold'}*/
-				
-				
-				/*,
-				{key:'insert-table',icon:'edit/text_italic'}*/
-			]
-			
-		var bar = hui.ui.Bar.create({absolute:true,variant:'mini',small:true});
-		hui.each(things,function(info) {
-			if (info.divider) {
-				bar.addDivider();
-			} else {
-				var button = new hui.ui.Bar.Button.create({icon:info.icon,stopEvents:true});
-				bar.add(button);
-			}
-		}.bind(this));
-		bar.addToDocument();
-		bar.placeAbove(hui.get('something'));
-		bar.show();
-	})
-</script>
-
-<div id="something" style="height: 40px; background: #eee; margin: 50px;">
-</div>
+	<div id="something" style="height: 40px; background: #eee; margin: 50px;">
+	</div>
 </body>
 </html>
