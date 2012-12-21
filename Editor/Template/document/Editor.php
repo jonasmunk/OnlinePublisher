@@ -293,8 +293,7 @@ echo '</body></html>';
 
 <?php
 function displayRows($pageId) {
-	$lastIndex = 0;
-	$sql="select * from document_row where page_id=".$pageId." order by `index`";
+	$sql = "select * from document_row where page_id=".Database::int($pageId)." order by `index`";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
@@ -308,10 +307,8 @@ function displayRows($pageId) {
 		displayColumns($row['id'],$row['index']);
 		echo '</tr></table>';
 		echo "\n";
-		$lastIndex = $row['index'];
 	}
 	Database::free($result);
-	return $lastIndex;
 }
 
 function displayColumns($rowId,$rowIndex) {

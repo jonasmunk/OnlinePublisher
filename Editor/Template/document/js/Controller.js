@@ -317,6 +317,7 @@ var controller = {
 		})
 	},
 	editSection : function(id) {
+		alert(id)
 		document.location = 'Editor.php?section='+id;
 	},
 	deleteSection : function(id) {
