@@ -791,6 +791,9 @@ hui.ui.callVisible = function(widget) {
 
 /** Listen for global events */
 hui.ui.listen = function(delegate) {
+	if (hui.ui.domReady && delegate.$ready) {
+		delegate.$ready();
+	}
 	hui.ui.delegates.push(delegate);
 }
 

@@ -114,7 +114,6 @@ var controller = {
 			sectionIndex : options.sectionIndex
 		};
 		this.menuInfo = hui.string.fromJSON(options.element.getAttribute('data'));
-		hui.log(this.menuInfo)
 		this.stickyAdder = options.element;
 		hui.cls.add(options.element,'editor_section_adder_sticky');
 		partMenu.showAtPointer(options.event);
@@ -305,6 +304,7 @@ var controller = {
 		})
 	},
 	cutSection : function(id) {
+		
 		hui.ui.request({
 			url : '../../Services/Clipboard/Cut.php',
 			parameters : {sectionId : id},
@@ -316,8 +316,28 @@ var controller = {
 			}
 		})
 	},
+	editSectionAsync : function(id) {
+		hui.ui.request({
+			url : 'data/SectionEditor.php',
+			parameters : {id : id},
+			$object : function(obj) {
+				var section = hui.get('section'+id);
+				hui.cls.add(section,'section_selected');
+				section.innerHTML = obj.html;
+				hui.dom.runScripts(section);
+				parent.frames[0].location='PartToolbar.php?sectionId='+id+'&partId='+obj.partId+'&partType='+obj.partType;
+				hui.require('../../Parts/'+obj.partType+'/script.js',function() {
+					hui.log('Part controller loaded');
+				})
+			},
+			$exception : function(e) {
+				throw e
+			}
+		})
+		
+	},
 	editSection : function(id) {
-		alert(id)
+		//this.editSectionAsync(id); return;
 		document.location = 'Editor.php?section='+id;
 	},
 	deleteSection : function(id) {

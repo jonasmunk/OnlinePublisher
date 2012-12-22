@@ -16,6 +16,7 @@ class FormulaPartController extends PartController
 	
 	function createPart() {
 		$part = new FormulaPart();
+		$part->setRecipe('<form><field label="This is the label"><input/></field></form>');
 		$part->save();
 		return $part;
 	}

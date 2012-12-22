@@ -430,7 +430,12 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 	if ($ctrl) {
 		$part = PartService::load($partType,$partId);
 		if ($part) {
-			echo '<div id="part'.$partId.'" style="'.$sectionStyle.'" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section '.($section!=null ? 'editor_section_inactive' : '').'"  oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');" onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')" onmouseout="controller.sectionOut(this,event)" data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
+			echo '<div id="part'.$partId.'" style="'.$sectionStyle.'"';
+				echo ' class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section '.($section!=null ? 'editor_section_inactive' : '').'"';
+				echo ' oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');"';
+				echo ' onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')"';
+				echo ' onmouseout="controller.sectionOut(this,event)"';
+				echo ' data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
 			echo $ctrl->display($part,$partContext);
 			echo '</div>';			
 		} else {

@@ -16,7 +16,7 @@ var partController = {
 				imageUploadWindow.show();
 			}
 		});
-		pasteImage.setEnabled(hui.ui.ImagePaster.isSupported());
+		//pasteImage.setEnabled(hui.ui.ImagePaster.isSupported());
 		this.suppressLink();
 	},
 	$resolveImageUrl : function(obj,width,height) {
