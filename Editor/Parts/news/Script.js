@@ -1,4 +1,4 @@
-op.part.News = {
+var partController = {
 	$ready : function() {
 		newsWindow.show();
 		this.form = document.forms.PartForm;
@@ -56,4 +56,4 @@ op.part.News = {
 		});
 	}
 }
-hui.ui.listen(op.part.News);
+hui.ui.listen(partController);

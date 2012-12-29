@@ -1,4 +1,4 @@
-hui.ui.listen({
+var partController = {
 	$ready : function() {
 		var container = hui.get('part_richtext');
 		var node = hui.get.firstByClass(container,'part_richtext') || container;
@@ -9,4 +9,6 @@ hui.ui.listen({
 	$blur : function() {
 		document.forms.PartForm.html.value = this.editor.getValue();
 	}
-})
+};
+
+hui.ui.listen(partController);

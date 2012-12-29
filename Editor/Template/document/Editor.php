@@ -48,7 +48,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		}
 		echo '</script>
 	</head>
-	<body class="editor">
+	<body class="editor'.($section!=null ? ' editor_edit_section_mode' : '').'">
 	<div class="editor_body">
 		';
 	
@@ -431,7 +431,7 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 		$part = PartService::load($partType,$partId);
 		if ($part) {
 			echo '<div id="part'.$partId.'" style="'.$sectionStyle.'"';
-				echo ' class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section editor_section '.($section!=null ? 'editor_section_inactive' : '').'"';
+				echo ' class="editor_section part_section_'.$partType.' '.$ctrl->getSectionClass($part).'"';
 				echo ' oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');"';
 				echo ' onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')"';
 				echo ' onmouseout="controller.sectionOut(this,event)"';
@@ -461,7 +461,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 		return;
 	}
 	echo
-	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' section_selected">'.
+	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' editor_section_selected">'.
 	'<form name="PartForm" action="data/UpdatePart.php" method="post" charset="utf-8">'.
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
 	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.

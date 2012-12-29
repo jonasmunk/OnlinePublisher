@@ -97,7 +97,7 @@ class NewsPartController extends PartController
 		'<div id="part_news_preview">'.
 		$this->render($part,$context).
 		'</div>'.
-		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/news/Script.js"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/news/script.js"></script>';
 	}
 	
 	function editorGui($part,$context) {
@@ -116,6 +116,7 @@ class NewsPartController extends PartController
 									<item label="{Box; da:Boks}" value="box"/>
 								</radiobuttons>
 							</field>
+							<!--
 							<field label="{Alignment; da:Justering}">
 								<radiobuttons value="'.$part->getAlign().'" name="newsAlign">
 									<item label="{Left; da:Venstre}" value="left"/>
@@ -123,6 +124,7 @@ class NewsPartController extends PartController
 									<item label="{Right; da:Højre}" value="right"/>
 								</radiobuttons>
 							</field>
+							-->
 						</fields>
 						<space height="10"/>
 						<fieldset legend="{News; da:Nyheder}">

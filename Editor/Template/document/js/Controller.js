@@ -19,12 +19,9 @@ var controller = {
 		this.partControls.addIcon('new','common/new');
 		this.partControls.addIcon('delete','common/delete');
 		
-		if (this.activeSection) {
-			this.partEditControls = hui.ui.Overlay.create({name:'sectionEditActions'});
-			this.partEditControls.addIcon('save','common/save');
-			this.partEditControls.addIcon('cancel','common/stop');
-			this.partEditControls.showAtElement(hui.get.firstByClass(document.body,'section_selected'),{'horizontal':'left','vertical':'topOutside'});
-		} else {
+		this._showPartEditControls();
+		
+		if (!this.activeSection) {
 			hui.listen(document.body,'keydown',function(e) {
 				e = hui.event(e);
 				if (e.shiftKey) {
@@ -53,6 +50,16 @@ var controller = {
 		if (scroll) {
 			window.scrollTo(0,parseInt(scroll,10));
 		}
+	},
+	_showPartEditControls : function() {
+		if (this.activeSection) {
+			if (!this.partEditControls) {
+				this.partEditControls = hui.ui.Overlay.create({name:'sectionEditActions'});
+				this.partEditControls.addIcon('save','common/save');
+				this.partEditControls.addIcon('cancel','common/stop');
+			}
+			this.partEditControls.showAtElement(hui.get.firstByClass(document.body,'editor_section_selected'),{'horizontal':'left','vertical':'topOutside'});
+		}		
 	},
 	
 	$$afterResize : function() {
@@ -288,7 +295,7 @@ var controller = {
 	},
 	clickSection : function(info) {
 		if (info.event.altKey) {
-			document.location = 'Editor.php?section='+info.id;
+			this.editSection(info.id);
 		}
 	},
 	copySection : function(id) {
@@ -317,23 +324,41 @@ var controller = {
 		})
 	},
 	editSectionAsync : function(id) {
+		var section;
+		if (this.activeSection) {
+			section = hui.get('section'+this.activeSection);
+			if (section) {
+				hui.cls.remove(section,'editor_section_selected');
+				if (this._oldMarkup) {
+					//alert(this._oldMarkup)
+					section.innerHTML = this._oldMarkup;
+				}
+			}
+		}
+		section = hui.get('section'+id);
+		this._oldMarkup = section.innerHTML;
+		hui.cls.add(document.body,'editor_edit_section_mode');
+		this.activeSection = id;
+		this.partControls.hide();
 		hui.ui.request({
 			url : 'data/SectionEditor.php',
 			parameters : {id : id},
 			$object : function(obj) {
-				var section = hui.get('section'+id);
-				hui.cls.add(section,'section_selected');
+				hui.cls.add(section,'editor_section_selected');
 				section.innerHTML = obj.html;
 				hui.dom.runScripts(section);
 				parent.frames[0].location='PartToolbar.php?sectionId='+id+'&partId='+obj.partId+'&partType='+obj.partType;
 				hui.require('../../Parts/'+obj.partType+'/script.js',function() {
 					hui.log('Part controller loaded');
 				})
-			},
+				this._showPartEditControls();
+			}.bind(this),
 			$exception : function(e) {
 				throw e
 			}
 		})
+	},
+	_markSectionSelected : function(id) {
 		
 	},
 	editSection : function(id) {

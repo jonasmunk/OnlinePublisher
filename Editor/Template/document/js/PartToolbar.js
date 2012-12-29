@@ -32,7 +32,7 @@ var partToolbar = {
 		sectionFloat.setValue(this.partForm['float'].value);
 	},
 	syncSize : function() {
-		var ctrl = this.getMainController().partController;
+		var ctrl = this.getMainController();
 		if (ctrl && ctrl.syncSize) {
 			ctrl.syncSize();
 		}
@@ -50,12 +50,17 @@ var partToolbar = {
 		this.getMainController().preview();
 	},
 	getMainController : function() {
+		if (!this.editorFrame.partController) {
+			hui.log('No editorFrame.partController found!');
+		}
 		return this.editorFrame.partController;
+		/*
 		var win = this.editorFrame.partController;
 		if (!win) {
 			hui.log('Window not found');
 		}
 		return hui.frame.getWindow(this.editorFrame).partController;
+		*/
 	},
 	$valueChanged$marginLeft : function(value) {
 		this.partForm.left.value=value;
@@ -90,10 +95,10 @@ var partToolbar = {
 		}
 		this.partForm.width.value=value;
 		if (value==='') {
-			this.section.style.width='';
-				this.syncSize();
+			this.section.parentNode.style.width='';
+			this.syncSize();
 		} else {
-			hui.animate(this.section,'width',value,200,{ease:hui.ease.slowFastSlow,onComplete : function() {
+			hui.animate(this.section.parentNode,'width',value,200,{ease:hui.ease.slowFastSlow,onComplete : function() {
 				this.syncSize();
 			}.bind(this)})
 		}

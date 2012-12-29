@@ -49,14 +49,6 @@ td.editor_column_hover
   	-webkit-transition-duration: 400ms;
 }
 
-div.section_selected
-{
-	border: 1px solid #0065FF;
-	border-radius: 3px;
-	margin: -1px;
-	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
-}
-
 div.editor_section
 {
 	border: 1px solid transparent;
@@ -65,11 +57,27 @@ div.editor_section
 	min-height: 10px;
 }
 
+body.editor_edit_section_mode div.editor_section
+{
+	-webkit-filter: saturate(0);
+	opacity: .5;	
+}
+
+div.editor_section_selected
+{
+	border: 1px solid #0065FF;
+	border-radius: 3px;
+	margin: -1px;
+	box-shadow: 0 0 5px #0065FF, inset 0 0 5px #0065FF;
+	opacity: 1;
+	-webkit-filter: none;
+}
+/*
 div.editor_section_inactive
 {
 	-webkit-filter: saturate(0);
 	opacity: .5;
-}
+}*/
 
 div.editor_section_hover
 {
