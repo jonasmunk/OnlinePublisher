@@ -67,6 +67,7 @@ hui.ui.listen({
 			json : {data:{id:this.groupId}},
 			url : '../../Services/Model/DeleteObject.php',
 			onSuccess : function() {
+				selector.setValue('all')
 				groupSource.refresh();
 				groupOptionsSource.refresh();
 			}
