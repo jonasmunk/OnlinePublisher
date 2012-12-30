@@ -209,7 +209,7 @@
 		</xsl:if>
 		<xsl:attribute name="class">
 			<xsl:text>hui_numberfield</xsl:text>
-			<xsl:if test="@adaptive='true'"><xsl:text> hui_numberfield_adaptive</xsl:text></xsl:if>
+			<xsl:if test="@adaptive='true' or @width"><xsl:text> hui_numberfield_adaptive</xsl:text></xsl:if>
 		</xsl:attribute>
 		<span><span><input type="text" value="{@value}"/><em class="hui_numberfield_units"><xsl:comment/></em><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
 	</span>

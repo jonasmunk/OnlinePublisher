@@ -281,10 +281,10 @@ op.part.ImageGallery.changing = {
 				index = 0;
 			}
 			if (!first) {
-			hui.style.setOpacity(nodes[index],0)
-			nodes[index].style.zIndex=zIndex;
-			nodes[index].style.display='block';
-			hui.animate(nodes[index],'opacity',1,1000,{ease:hui.ease.slowFastSlow});
+				hui.style.setOpacity(nodes[index],0)
+				nodes[index].style.zIndex=zIndex;
+				nodes[index].style.display='block';
+				hui.animate(nodes[index],'opacity',1,1000,{ease:hui.ease.slowFastSlow});
 			}
 			window.setTimeout(timer,3000);
 			zIndex++;
@@ -355,6 +355,26 @@ op.part.Formula.prototype = {
 		hui.ui.showMessage({text:'Beskeden kunne desværre ikke afleveres',duration:5000});
 	}
 }
+
+
+///////////////// Poster //////////////////
+
+op.part.Image = function(options) {
+	var img = this.element = hui.get(options.element);
+	var src = img.src;
+	var parent = img.parentNode;
+	parent.style.position = 'relative';
+	parent.style.display = 'block';
+	var effect = hui.build('img',{src:img.src+'&contrast=-20&brightness=80&blur=30',style:'position: absolute; left: 0; top: 0;',parent:parent});
+	hui.animate({node:effect,duration:1000,delay:1000,ease:hui.ease.flicker,css:{opacity:0}})
+	hui.listen(effect,'mouseover',function() {
+		hui.animate({node:effect,duration:500,delay:0,ease:hui.ease.fastSlow,css:{opacity:1}})
+	})
+	hui.listen(effect,'mouseout',function() {
+		hui.animate({node:effect,duration:1000,delay:1000,ease:hui.ease.flicker,css:{opacity:0}})
+	})
+}
+
 
 ///////////////// Poster //////////////////
 

@@ -167,7 +167,7 @@ span.shared_frame_shadow_slant_bottom span
 span.shared_frame_shadow_slant_bottom span span
 {
 	position: absolute;
-	background: url('../../basic/gfx/frames/shadow.png') 100% -22px;
+	background: #fff url('../../basic/gfx/frames/shadow.png') 100% -22px;
 	width: 50%;
 	display: block;
 	height: 10px;

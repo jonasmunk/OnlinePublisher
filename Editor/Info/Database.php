@@ -490,6 +490,7 @@ $databaseTables = array(
 			array("part_id","int(11)","","","0",""),
 			array("imagegroup_id","int(11)","","","0",""),
 			array("height","int(11)","NO","","64",""),
+			array("width","int(11)","NO","","64",""),
 			array("framed","tinyint(4)","YES","","0",""),
 			array("show_title","tinyint(4)","YES","","0",""),
 			array("variant","varchar(10)","YES","","","")

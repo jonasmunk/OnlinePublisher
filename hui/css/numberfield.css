@@ -22,6 +22,7 @@ span.hui_numberfield span span
 	margin: 0 17px 0 6px;
 	background: url('../gfx/number.png') left -25px repeat-x;
 	line-height: 0;
+	padding-right: 2px;
 }
 
 span.hui_numberfield input

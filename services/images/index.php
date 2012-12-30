@@ -17,7 +17,7 @@ $recipe = array(
 	'width' => Request::getInt('width',null),
 	'height' => Request::getInt('height',null),
 	'scale' => Request::getInt('scale',null),
-	'quality' => Request::getInt('quality',null),
+	'quality' => Request::getInt('quality',90),
 	'method' => Request::getString('method'),
 	'format' => Request::getString('format'),
 	'filters' => array()
@@ -39,6 +39,8 @@ foreach ($parameters as $parameter) {
 		$recipe['filters'][] = array('name' => 'contrast', 'amount' => intval($value));
 	} else if ($name === 'brightness') {
 		$recipe['filters'][] = array('name' => 'brightness', 'amount' => intval($value));
+	} else if ($name == 'border') {
+		$recipe['filters'][] = array('name' => 'border', 'width' => intval($value));
 	}
 }
 // Bypass transformation if not required

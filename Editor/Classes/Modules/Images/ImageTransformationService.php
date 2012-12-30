@@ -108,7 +108,7 @@ class ImageTransformationService {
 		imageconvolution($image, $sharpenMatrix, $divisor, $offset);
 	}
 	
-	function applyFilter($image,$filter) {
+	function applyFilter($image,$filter,$width,$height) {
 		if ($filter['name']=='blur') {
 			ImageTransformationService::blur($image,$filter['amount']);
 		}
@@ -123,6 +123,11 @@ class ImageTransformationService {
 		}
 		else if ($filter['name']=='brightness') {
 			imagefilter($image,IMG_FILTER_BRIGHTNESS,$filter['amount']);
+		}
+		else if ($filter['name']=='border') {
+			for ($i=0; $i < $filter['width']; $i++) { 
+				imagerectangle($image,$i,$i,$width-$i,$height-$i,imagecolorallocate($image,255,255,255));
+			}
 		}
 	}
 	
@@ -178,7 +183,7 @@ class ImageTransformationService {
 		if (isset($recipe['filters']) && is_array($recipe['filters'])) {
 			$filters = $recipe['filters'];
 			foreach ($filters as $filter) {
-				ImageTransformationService::applyFilter($image,$filter);
+				ImageTransformationService::applyFilter($image,$filter,$finalWidth, $finalHeight);
 			}
 		}
 		if (isset($recipe['format'])) {
@@ -260,6 +265,9 @@ class ImageTransformationService {
 			$path.='_'.$filter['name'];
 			if (isset($filter['amount'])) {
 				$path.='-'.$filter['amount'];
+			}
+			if (isset($filter['width'])) {
+				$path.='-'.$filter['width'];
 			}
 		}
 		if ($recipe['format']) {

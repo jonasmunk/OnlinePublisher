@@ -46,7 +46,18 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="width">
-			<xsl:value-of select="round(number(o:sub/i:image/i:width) div number(o:sub/i:image/i:height) * $height)"/>
+			<xsl:choose>
+				<xsl:when test="../ig:display/@width"><xsl:value-of select="../ig:display/@width"/></xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="round(number(o:sub/i:image/i:width) div number(o:sub/i:image/i:height) * $height)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="method">
+			<xsl:choose>
+				<xsl:when test="../ig:display/@width">crop</xsl:when>
+				<xsl:otherwise>fit</xsl:otherwise>
+			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="url">
 			<xsl:choose>
@@ -54,6 +65,7 @@
 				<xsl:otherwise><xsl:value-of select="$path"/>services/images/?id=<xsl:value-of select="@id"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
+
 		<a href="{$url}">
 			<xsl:if test="../ig:display/@variant='changing' and position()=2">
 				<xsl:attribute name="style">
@@ -63,7 +75,7 @@
 			<xsl:if test="../ig:display/@show-title='true'">
 				<span class="common_font"><xsl:value-of select="o:title"/></span>
 			</xsl:if>
-			<img src="{$path}services/images/?id={@id}&amp;height={$height}" style="height: {$height}px; width: {$width}px;" alt="" id="part_image_{generate-id()}"/>
+			<img src="{$path}services/images/?id={@id}&amp;height={$height}&amp;width={$width}&amp;method={$method}" style="height: {$height}px; width: {$width}px;" alt="" id="part_image_{generate-id()}"/>
 		</a>
 	</xsl:template>
 

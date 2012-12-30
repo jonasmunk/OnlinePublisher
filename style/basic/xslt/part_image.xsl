@@ -20,16 +20,9 @@
 			</xsl:if>
 			<xsl:call-template name="img:buildimage"/>
 		</a>
-
-		<xsl:if test="img:link/@image and $editor!='true'">
-			<script type="text/javascript">
-			try {
-				op.registerImageViewer('part_image_<xsl:value-of select="generate-id()"/>',{id:<xsl:value-of select="img:link/@image"/><xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if><xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>,text:'<xsl:value-of select="img:link/@note"/>'});
-			} catch (ignore) {}
-			</script>
-		</xsl:if>
 		<xsl:apply-templates select="img:text"/>
 	</div>
+	<xsl:call-template name="img:script"/>
 </xsl:template>
 
 <xsl:template match="img:image">
@@ -58,6 +51,34 @@
 		</xsl:choose>
 		<xsl:apply-templates select="img:text"/>
 	</div>
+	<xsl:call-template name="img:script"/>
+</xsl:template>
+
+<xsl:template name="img:script">
+	<xsl:if test="img:link/@image and $editor!='true'">
+		<script type="text/javascript">
+		try {
+			op.registerImageViewer('part_image_<xsl:value-of select="generate-id()"/>',{
+					id : <xsl:value-of select="img:link/@image"/>,
+					text : '<xsl:value-of select="img:link/@note"/>'
+					<xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if>
+					<xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>
+			});
+		} catch (ignore) {}
+		</script>
+	</xsl:if>
+	<!--
+	<xsl:if test="o:object">
+		<script type="text/javascript">
+			new op.part.Image({
+				element : 'part_image_<xsl:value-of select="generate-id()"/>',
+				image : {
+					id : <xsl:value-of select="o:object/@id"/>
+				}
+			})
+		</script>
+	</xsl:if>
+	-->
 </xsl:template>
 
 <xsl:template name="img:buildimage">
