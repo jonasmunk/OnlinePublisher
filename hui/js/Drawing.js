@@ -150,8 +150,8 @@ hui.ui.Drawing.Line.create = function(options) {
 hui.ui.Drawing.Line.prototype = {
 	setFrom : function(point) {
 		this.from = point;
-		this.node.setAttribute('x1',point.x.toFixed(-1));
-		this.node.setAttribute('y1',point.y.toFixed(-1));
+		this.node.setAttribute('x1',point.x.toFixed(10));
+		this.node.setAttribute('y1',point.y.toFixed(10));
 		this._updateEnds();
 	},
 	getFrom : function() {
@@ -159,8 +159,8 @@ hui.ui.Drawing.Line.prototype = {
 	},
 	setTo : function(point) {
 		this.to = point;
-		this.node.setAttribute('x2',point.x.toFixed(-1));
-		this.node.setAttribute('y2',point.y.toFixed(-1));
+		this.node.setAttribute('x2',point.x.toFixed(10));
+		this.node.setAttribute('y2',point.y.toFixed(10));
 		this._updateEnds();
 	},
 	getTo : function() {
