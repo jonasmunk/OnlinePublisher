@@ -46,7 +46,7 @@ div.box h3
 #record table thead th
 {
 	vertical-align: top;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1px solid #ccc;
 	font-weight: normal;
 	color: #999;
 	padding: 0 5px;
@@ -75,6 +75,11 @@ div.box h3
 
 
 /**** Info ****/
+
+#info
+{
+	position: relative;
+}
 
 #info p
 {
@@ -111,6 +116,22 @@ div.box h3
 	left: 50%;
 	top: 50%;
 	margin: -15px 0 0 -15px;
+}
+
+#edit
+{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 12px;
+	text-decoration: underline;
+	color: #eee;
+	color: rgba(0,0,0,.1);
+}
+
+#edit span
+{
+	color: #4B8DF7;
 }
 
 /**** Registration ****/

@@ -14,6 +14,10 @@
 	<link rel="stylesheet" type="text/css" href="../../hui/css/msie7.css?version=1350079200"></link>
 	<![endif]-->
 	<script xmlns="" src="../../hui/bin/minimized.site.js?version=1350079200" type="text/javascript"></script>
+	<script xmlns="" src="../../hui/lib/date.js?version=1350079200" type="text/javascript"></script>
+	<script xmlns="" src="../../hui/js/Formula.js?version=1350079200" type="text/javascript"></script>
+	<script xmlns="" src="../../hui/js/TextField.js?version=1350079200" type="text/javascript"></script>
+	<script xmlns="" src="../../hui/js/Button.js?version=1350079200" type="text/javascript"></script>
 	<!--[if lt IE 8]>
 	<script type="text/javascript" src="../../hui/lib/json2.js?version=1350079200"></script>
 	<![endif]-->
@@ -41,7 +45,8 @@
 	<div class="water">
 		<form style="border-bottom: 1px solid #ddd; margin: 0 15px 10px; padding-bottom: 10px; font-size: 11pt">
 			<label>Målernummer:</label>
-			<input type="text" id="number"/><!--<input type="submit"/>-->
+			<input type="text" id="number"/>
+			<input type="submit" id="sendNumber" onclick="return false"/>
 		</form>
 		<div class="columns">
 			<div class="column">
@@ -55,6 +60,7 @@
 							<tr>
 								<th>Dato</th>
 								<th class="m3">m<sup>3</sup></th>
+								<th class="m3">m<sup>3</sup> / uge</th>
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -63,16 +69,17 @@
 			</div>
 			<div class="column">
 				<div id="registration" class="box">
-					<h3>Ny regsitrering</h3>
-					<form>
+					<h3>Ny registrering</h3>
+					<form onsubmit="return false;">
 					<p><label for="date">Dato:</label></p>
 					<p class="input"><input type="text" id="date" class="input"/></p>
 					<p><label for="value">Værdi:</label></p>
 					<p class="input"><input type="text" id="value" class="input"/></p>
-					<p class="button"><input type="submit" value="Registrer" class="submit"/></p>
+					<p class="button"><input type="submit" value="Registrer" id="submit" class="submit" onclick="return false;"/></p>
 					</form>
 				</div>
 				<div id="info" class="box">
+					<a id="edit" href="javascript://"><span>Rediger oplysninger</span></a>
 					<h3>Kontaktinformation</h3>
 					<p><strong>Nummer:</strong> <span id="infoNumber"></span></p>
 					<p><strong>Adresse:</strong> <span id="infoAddress"></span></p>
