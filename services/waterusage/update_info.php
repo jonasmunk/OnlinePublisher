@@ -1,8 +1,6 @@
 <?php
 require_once('../../Editor/Include/Public.php');
 
-sleep(1);
-
 $number = Request::getString('number');
 $phone = Request::getString('phone');
 $email = Request::getString('email');

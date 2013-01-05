@@ -5,13 +5,13 @@ hui.ui.listen({
 	
 	$ready : function() {
 		this.numberInput = new hui.ui.Input({element:'number'});
-		this.numberInput.listen({
+		/*this.numberInput.listen({
 			$valueChanged : function(value) {
-				//this._fetch(value);
+				this._fetch(value);
 			}.bind(this)
-		})
+		})*/
 		
-		this.numberInput.setValue('20116254');
+		this.numberInput.setValue();
 		
 		this.dateInput = new hui.ui.Input({element:'date',validator:this._validateDate});
 		this.dateInput.setValue(new Date().dateFormat('d-m-Y'));
@@ -22,7 +22,8 @@ hui.ui.listen({
 		
 		new hui.ui.Input({element:'sendNumber',name:'sendNumber'})
 
-		this.$click$sendNumber();
+		this.numberInput.focus();
+		//this.$click$sendNumber();
 	},
 	
 	
@@ -54,11 +55,12 @@ hui.ui.listen({
 		}
 		hui.ui.showMessage({text:'Gemmer værdi...',busy:true})
 		hui.ui.request({
-			url : 'register.php',
+			url : op.context+'services/waterusage/register.php',
 			parameters : data,
 			$success : function() {
-				hui.ui.showMessage({text:'Den nye værdi er gemt',icon:'common/success',duration:2000})
-				this._fetch(this.number);
+				this._fetch(this.number,function() {
+					hui.ui.showMessage({text:'Den nye værdi er gemt',icon:'common/success',duration:2000})
+				});
 			}.bind(this),
 			$failure : function() {
 				hui.ui.showMessage({text:'Det lykkedes desværre ikke at gemme værdien',icon:'common/warning',duration:3000})
@@ -70,21 +72,30 @@ hui.ui.listen({
 		this._fetch(this.numberInput.getValue());
 	},
 	
-	_fetch : function(number) {
+	_fetch : function(number,callback) {
 		this.number = number;
 		hui.ui.request({
-			url : 'load.php',
+			url : op.context+'services/waterusage/load.php',
+			message : {start:'Henter information...'},
 			parameters : {number:number},
 			$object : function(obj) {
+				hui.log(obj)
 				this.data = obj;
 				this._renderRecord(obj.usage);
 				this._renderChart(obj.usage);
 				this._renderInfo(obj.info);
+				hui.get('result').style.display='block';
+				hui.ui.reLayout();
 				this.valueInput.focus();
+				if (callback) {
+					callback();
+				}
 			}.bind(this),
 			$failure : function() {
-				hui.ui.showMessage({text:'Det lykkedes desværre ikke at hente data',icon:'common/warning',duration:3000})
-			},
+				hui.get('result').style.display='none';
+				hui.ui.showMessage({text:'Målernummeret kunne ikke findes',icon:'common/warning',duration:3000})
+				this.numberInput.focus();
+			}.bind(this),
 			$exception : function(e) {
 				throw e;
 			}
@@ -117,7 +128,7 @@ hui.ui.listen({
 			box = this.infoBox;
 		values.number = this.number;
 		hui.ui.request({
-			url : 'update_info.php',
+			url : op.context+'services/waterusage/update_info.php',
 			parameters : values,
 			message : {start:'Gemmer information...',success:'De nye kontaktoplysninger er gemt'},
 			$success : function() {

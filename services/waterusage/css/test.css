@@ -134,6 +134,11 @@ div.box h3
 	color: #4B8DF7;
 }
 
+#result
+{
+	display: none;
+}
+
 /**** Registration ****/
 
 #registration p

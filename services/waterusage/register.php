@@ -1,7 +1,7 @@
 <?php
 require_once('../../Editor/Include/Public.php');
 
-sleep(1);
+//sleep(1);
 
 $number = Request::getString('number');
 $date = Request::getString('date');
