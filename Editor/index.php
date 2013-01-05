@@ -76,7 +76,7 @@ $gui='
 			foreach ($tabs as $tab => $tabTitle) {
 				$tools = @$categorized[$tab];
 				if ($tools) {
-					$gui.='<tab title="'.$tabTitle.'" background="light"><toolbar name="'.$tab.'Toolbar">';
+					$gui.='<tab title="'.$tabTitle.'" background="light"><toolbar name="'.$tab.'Toolbar" left="5">';
 					foreach ($tools as $key => $tool) {
 						$deprecated = $tool->key == 'Pages';
 						$gui.='<icon title="'.$tool->name->$lang.'" icon="'.$tool->icon.'" click="dock.setUrl(\'Tools/'.$tool->key.'/\')" key="tool:'.$tool->key.'"'.($deprecated ? ' overlay="warning"' : '').'/>';

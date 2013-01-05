@@ -36,6 +36,11 @@
 					<xsl:text> hui_toolbar_body_fixed_height</xsl:text>
 				</xsl:if>
 			</xsl:attribute>
+			<xsl:if test="@left">
+				<xsl:attribute name="style">
+					<xsl:text>padding-left: </xsl:text><xsl:value-of select="@left"/><xsl:text>px;</xsl:text>
+				</xsl:attribute>
+			</xsl:if>
 			<xsl:apply-templates select="child::*[not(name()='right')]"/>
 			<xsl:apply-templates select="gui:right"/>
 		</div>
