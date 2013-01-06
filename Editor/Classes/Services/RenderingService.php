@@ -7,12 +7,12 @@ if (!isset($GLOBALS['basePath'])) {
 class RenderingService {
 	
 	function sendNotFound() {
-		$error = '<title>Page not found</title>'.
-		'<note>The requested page was not found on this website</note>';
 		$uri = $_SERVER['REQUEST_URI'];
 		if ($uri!='/favicon.ico' && $uri!='/robots.txt' && $uri!='/apple-touch-icon.png' && $uri!='/apple-touch-icon-precomposed.png') {
 			Log::logPublic('pagenotfound','uri='.$_SERVER['REQUEST_URI']);
 		}
+		$error = '<title>Page not found</title>'.
+		'<note>The requested page was not found on this website</note>';
 		RenderingService::displayError($error);	
 	}
 	
@@ -220,7 +220,7 @@ class RenderingService {
 		}
 	}
 	
-	function buildPage($id,$path=null) {
+	function buildPage($id,$path=null,$parameters) {
 		//Log::debug('buildPage: id:('.$id.') path:('.$path.')');
 		$sql="select page.id,page.path,page.secure,UNIX_TIMESTAMP(page.published) as published,".
 		" page.title,page.description,page.language,page.keywords,page.data,page.dynamic,page.next_page,page.previous_page,".
@@ -261,7 +261,6 @@ class RenderingService {
 				//Log::debug('Redirect: requested:('.$path.') page:('.$row['path'].') id:('.$id.')');
 				if ($row['path']) {
 					$redirect = StringUtils::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
-					$parameters = Request::getParameters();
 					$query = array();
 					foreach ($parameters as $parameter) {
 						if ($parameter['name']!='id') {
@@ -271,6 +270,8 @@ class RenderingService {
 					if (count($query)>0) {
 						$redirect.='?'.join($query,'&');
 					}
+					//Log::debug('Redirect::: '.$redirect);
+					//Log::debug($row);
 				}
 			}
 			else if ($row['dynamic']) {

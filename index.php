@@ -52,8 +52,8 @@ if (strlen($relative)==0) {
 	$relative = './';
 }
 
-$page = RenderingService::buildPage($id,$path);
-if (!$page && ($page>0 || StringUtils::isNotBlank($path))) {
+$page = RenderingService::buildPage($id,$path,Request::getParameters());
+if (!$page && ($id==0 && StringUtils::isBlank($path))) {
 	$id = RenderingService::findPage('home');
 	if ($id==null) {
 		$error = '<title>Ingen forside!</title>'.
