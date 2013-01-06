@@ -24,6 +24,10 @@ class HttpRequest {
 	function getUrl() {
 		return $this->url;
 	}
+	
+	function addParameter($name,$value) {
+		$this->parameters[$name] = $value;
+	}
 
 	function setParameters($parameters) {
 		$this->parameters = $parameters;
