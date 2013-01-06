@@ -11,10 +11,16 @@
 				<icon icon="common/page" title="Ny side" overlay="new" click="newPage.show()"/>
 				<more>
 					<icon icon="common/hierarchy_item" title="Nyt punkt" overlay="new" click="newPage.show()"/>
-					<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" click="newPage.show()"/>
+					<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" click="box.show()"/>
 					<icon icon="common/template" title="Ny skabelon" overlay="new" click="newPage.show()"/>
 				</more>
 				<divider/>
+				<icon icon="common/edit" title="Edit" name="edit" disabled="true"/>
+				<icon icon="common/info" title="Info" name="info" disabled="true"/>
+				<icon icon="common/view" title="Show" name="view" disabled="true"/>
+				<icon icon="common/delete" title="Delete" name="delete" disabled="true">
+					<confirm text="Are you sure? It cannot be undone" ok="Yes, delete" cancel="Cancel"/>
+				</icon>
 				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="pages.next()"/>
 				<right>
 					<field label="Søgning">

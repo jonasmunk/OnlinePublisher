@@ -61,6 +61,7 @@ $gui='
 	<source name="pagesSource" url="../../Services/Model/Items.php?type=page"/>
 	<source name="filesSource" url="../../Services/Model/Items.php?type=file"/>
 	<source name="languageSource" url="data/LanguageItems.php"/>
+	<source name="selectionSource" url="data/NavigationItems.php"/>
 	<source name="hierarchySource" url="data/HierarchyMenuItems.php"/>
 	<source name="newPageHierarchySource" url="data/FrameHierarchyItems.php">
 		<parameter key="frame" value="@frameSelection.value"/>
@@ -70,8 +71,11 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="common/page" title="{New page;da:Ny side}" overlay="new" name="newPage"/>
-				<icon icon="common/hierarchy_item" title="{New menu item;da:Nyt menupunkt}" overlay="new" name="newHierarchyItem" disabled="true"/>
-				<icon icon="common/hierarchy" title="{New hierarchy;da:Nyt hierarki}" overlay="new" name="newHierarchy"/>
+				<more>
+					<icon icon="common/hierarchy_item" title="{New menu item;da:Nyt menupunkt}" overlay="new" name="newHierarchyItem" disabled="true"/>
+					<icon icon="common/hierarchy" title="{New hierarchy;da:Nyt hierarki}" overlay="new" name="newHierarchy"/>
+					<icon icon="common/settings" title="{Advanced...;da:Avanceret...}" name="advanced"/>
+				</more>
 				<divider/>
 				<!--<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="box.show()"/>-->
 				<icon icon="common/edit" title="{Edit ; da:Rediger}" name="edit" disabled="true"/>
@@ -84,8 +88,6 @@ $gui='
 					<field label="{Search; da:Søgning}">
 						<searchfield name="search" expanded-width="200"/>
 					</field>
-					<divider/>
-					<icon icon="common/settings" title="{Advanced;da:Avanceret}" name="advanced"/>
 				</right>
 			</toolbar>
 		</top>
@@ -93,6 +95,7 @@ $gui='
 			<left>
 				<overflow>
 					<selection value="all" name="selector" top="5">
+					<!--
 						<item icon="common/page" title="{All pages; da:Alle sider}" value="all"/>
 						<item icon="common/time" title="{Latest; da:Seneste}" value="latest"/>
 						<title>{Hierarchies;da:Hierarkier}</title>
@@ -105,6 +108,8 @@ $gui='
 						<item icon="monochrome/edit" title="{Modified ; da:Ændret}" value="changed" kind="subset"/>
 						<item icon="monochrome/delete" title="{No menu item ; da:Uden menupunkt}" value="nomenu" kind="subset"/>
 						<item icon="monochrome/stamp" title="{Review ; da:Revidering}" value="review" kind="subset"/>
+						-->
+						<items source="selectionSource"/>
 					</selection>
 				</overflow>
 			</left>

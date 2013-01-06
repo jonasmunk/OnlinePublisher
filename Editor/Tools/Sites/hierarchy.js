@@ -25,7 +25,7 @@ hui.ui.listen({
 				parameters:{id:info.row.id,direction:info.data.direction},
 				onSuccess:function() {
 					list.refresh();
-					hierarchySource.refresh();
+					selectionSource.refresh();
 					hui.ui.tellContainers('modelChanged');
 				}
 			});
@@ -98,7 +98,7 @@ hui.ui.listen({
 			url : 'actions/SaveHierarchy.php',
 			onSuccess : function() {
 				list.refresh();
-				hierarchySource.refresh();
+				selectionSource.refresh();
 				hui.ui.showMessage({text:{en:'The hierarchy is saved', da:'Hierarkiet er gemt'},duration:2000,icon:'common/success'});
 			}
 		});
@@ -121,7 +121,7 @@ hui.ui.listen({
 			},
 			onSuccess : function() {
 				list.refresh();
-				hierarchySource.refresh();
+				selectionSource.refresh();
 				hui.ui.showMessage({text : {en:'The hierarchy has been deleted', da:'Hierarkiet er slettet'},icon : 'common/success',duration : 2000});
 			}
 		});
@@ -146,7 +146,7 @@ hui.ui.listen({
 			onJSON : function(response) {
 				if (response.success) {
 					list.refresh();
-					hierarchySource.refresh();
+					selectionSource.refresh();
 					hui.ui.showMessage({text : {en:'The menu item has been moved', da:'Menupunktet er flyttet'},icon:'common/success',duration:3000});
 				} else {
 					hui.ui.showMessage({text:response.message,icon:'common/warning',duration:3000});
@@ -234,7 +234,7 @@ hui.ui.listen({
 			url : 'actions/SaveHierarchyItem.php',
 			onSuccess : function() {
 				list.refresh();
-				hierarchySource.refresh();
+				selectionSource.refresh();
 				hui.ui.showMessage({text:{en:'The menu item has been saved', da:'Menupunktet er gemt'},duration:2000,icon:'common/success'});
 			}
 		});
@@ -281,7 +281,7 @@ hui.ui.listen({
 			},
 			onSuccess : function() {
 				list.refresh();
-				hierarchySource.refresh();
+				selectionSource.refresh();
 				hui.ui.showMessage({text : {en:'The menu item has been deleted', da:'Menupunktet er slettet'},icon : 'common/success',duration : 2000});
 			}
 		});

@@ -133,8 +133,7 @@ var mainController = {
 			parameters : { id : id },
 			onSuccess : function() {
 				list.refresh();
-				languageSource.refresh();
-				hierarchySource.refresh();				
+				selectionSource.refresh();
 			}
 		});
 	},
@@ -157,7 +156,7 @@ var mainController = {
 			onSuccess : function() {
 				hui.ui.showMessage({text:{en:'The language is changed', da:'Sproget er ændret'},icon:'common/success',duration:2000});
 				list.refresh();
-				languageSource.refresh();
+				selectionSource.refresh();
 			}
 		});
 	},
@@ -201,8 +200,7 @@ var mainController = {
 			json : {data:values},
 			onSuccess : function() {
 				list.refresh();
-				languageSource.refresh();
-				hierarchySource.refresh();				
+				selectionSource.refresh();			
 			}
 		});
 		this.activePage = 0;
@@ -332,8 +330,7 @@ var mainController = {
 	$success$pageCreated : function(info) {
 		newPageBox.hide();
 		list.refresh();
-		languageSource.refresh();
-		hierarchySource.refresh();
+		selectionSource.refresh();
 		this.loadPage(info.id);
 	},
 	

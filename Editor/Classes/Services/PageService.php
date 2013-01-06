@@ -12,11 +12,11 @@ class PageService {
 	}
 	
 	function exists($id) {
-		return !Database::isEmpty("select id from page where id=".Database::int($id));
+		return !Database::isEmpty("SELECT id from page where id=".Database::int($id));
 	}
 
 	function getLatestPageId() {
-		$sql="select id from page order by changed desc limit 1";
+		$sql="SELECT id from page order by changed desc limit 1";
 		$row = Database::selectFirst($sql);
 		if ($row) {
 			return intval($row['id']);
@@ -25,15 +25,64 @@ class PageService {
 	}
 	
 	function getLanguage($id) {
-		$sql = "select language from page where id=".Database::int($id);
+		$sql = "SELECT language from page where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			return strtolower($row['language']);
 		}
 		return null;
 	}
 	
+	function getTotalPageCount() {
+		$sql = "SELECT count(id) as count from page";
+		$row = Database::selectFirst($sql);
+		return intval($row['count']);
+	}
+	
+	function getChangedPageCount() {
+		$sql = "SELECT count(id) as count from page where page.changed>page.published";
+		$row = Database::selectFirst($sql);
+		return intval($row['count']);
+	}
+	
+	function getLatestPageCount() {
+		$sql = "SELECT count(id) as count from page	where page.changed>".Database::datetime(DateUtils::addDays(time(),-1));
+		$row = Database::selectFirst($sql);
+		return intval($row['count']);
+	}
+	
+	function getNewsPageCount() {
+		$sql = "SELECT count(page.id) as total from page,template,news, object_link where page.template_id=template.id  and object_link.object_id=news.object_id and object_link.target_value=page.ID and object_link.target_type='page'";
+		$row = Database::selectFirst($sql);
+		return intval($row['total']);
+	}
+	
+	function getWarningsPageCount() {
+		$sql = "SELECT count(page.id) as total from page,template where page.template_id=template.id  and (page.changed>page.published or page.path is null or page.path='')";
+		$row = Database::selectFirst($sql);
+		return intval($row['total']);
+	}
+	
+	function getNoItemPageCount() {
+		$sql = "SELECT count(page.id) as total from page,template where page.template_id=template.id  and page.id not in (select target_id from `hierarchy_item` where `target_type`='page')";
+		$row = Database::selectFirst($sql);
+		return intval($row['total']);
+	}
+	
+	function getReviewPageCount() {
+		$sql = "SELECT count(page.id) as total
+			from page,relation as page_review,relation as review_user,review,object as user 
+			where page_review.from_type='page' and page_review.from_object_id=page.id
+			and page_review.to_type='object' and page_review.to_object_id=review.object_id
+			and review_user.from_type='object' and review_user.from_object_id=review.object_id
+			and review_user.to_type='object' and review_user.to_object_id=user.id
+			and review.accepted = 0";
+		$row = Database::selectFirst($sql);
+		return intval($row['total']);
+	}
+
+	
 	function getLanguageCounts() {
-		$sql="select language,count(id) as count from page group by language order by language";
+		$sql="SELECT language,count(id) as count from page group by language order by language";
 		return Database::selectAll($sql);
 	}
 	
@@ -58,7 +107,7 @@ class PageService {
 	}
 	
 	function getBlueprintsByTemplate($template) {
-		$sql = "select object_id as id from pageblueprint,template where pageblueprint.template_id = template.`id` and template.`unique`=".Database::text($template);
+		$sql = "SELECT object_id as id from pageblueprint,template where pageblueprint.template_id = template.`id` and template.`unique`=".Database::text($template);
 		$ids = Database::getIds($sql);
 		if (count($ids)>0) {
 			return Query::after('pageblueprint')->withIds($ids)->orderBy('title')->get();
@@ -67,18 +116,18 @@ class PageService {
 	}
 	
 	function getPageTranslationList($id) {
-		$sql="select page_translation.id,page.title,page.language from page,page_translation where page.id=page_translation.translation_id and page_translation.page_id=".Database::int($id);
+		$sql="SELECT page_translation.id,page.title,page.language from page,page_translation where page.id=page_translation.translation_id and page_translation.page_id=".Database::int($id);
 		return Database::selectAll($sql);
 	}
 	
 	function addPageTranslation($page,$translation) {
-		$sql = "insert into page_translation (page_id,translation_id) values (".Database::int($page).",".Database::int($translation).")";
+		$sql = "INSERT into page_translation (page_id,translation_id) values (".Database::int($page).",".Database::int($translation).")";
 		Database::insert($sql);
 		PageService::markChanged($page);
 	}
 	
 	function removePageTranslation($id) {
-		$sql = "select * from page_translation where id=".Database::int($id);
+		$sql = "SELECT * from page_translation where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			$sql = "delete from page_translation where id=".Database::int($id);
 			Database::delete($sql);
@@ -87,12 +136,12 @@ class PageService {
 	}
 	
 	function markChanged($id) {
-	    $sql = "update page set changed=now() where id=".Database::int($id);
+	    $sql = "UPDATE page set changed=now() where id=".Database::int($id);
 		Database::update($sql);
 	}
 	
 	function isChanged($id) {
-		$sql="select changed-published as delta from page where id=".Database::int($id);
+		$sql="SELECT changed-published as delta from page where id=".Database::int($id);
 		$row = Database::selectFirst($sql);
 		if ($row['delta']>0) {
 			return true;
@@ -102,7 +151,7 @@ class PageService {
 
 	function getLinkText($pageId) {
 		$text = '';
-		$sql = "select text,document_section.page_id from part_text,document_section where document_section.part_id=part_text.part_id and page_id=".Database::int($pageId)."
+		$sql = "SELECT text,document_section.page_id from part_text,document_section where document_section.part_id=part_text.part_id and page_id=".Database::int($pageId)."
 			union select text,document_section.page_id from part_header,document_section where document_section.part_id=part_header.part_id and page_id=".Database::int($pageId)."
 			union select text,document_section.page_id from part_listing,document_section where document_section.part_id=part_listing.part_id and page_id=".Database::int($pageId)."
 			union select html as text,document_section.page_id from part_table,document_section where document_section.part_id=part_table.part_id and page_id=".Database::int($pageId);
