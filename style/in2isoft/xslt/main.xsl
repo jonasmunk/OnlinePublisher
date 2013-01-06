@@ -66,6 +66,7 @@
 			<div class="layout_middle">
 				<div class="layout_middle_top">
 					<xsl:call-template name="secondlevel"/>
+					<xsl:call-template name="util:languages"/>
 					<xsl:comment/>
 				</div>
 				<div class="layout_body">
@@ -160,7 +161,17 @@
 			<xsl:for-each select="//p:context/p:translation">
 				<a class="common">
 					<xsl:call-template name="util:link"/>
-					<span>This page in <xsl:value-of select="@language"/></span>
+					<xsl:choose>
+						<xsl:when test="@language='da'">
+							<span><xsl:text>Denne side på dansk</xsl:text></span>
+						</xsl:when>
+						<xsl:when test="@language='en'">
+							<span><xsl:text>This page in english</xsl:text></span>
+						</xsl:when>
+						<xsl:otherwise>
+							<span>This page in <xsl:value-of select="@language"/></span>
+						</xsl:otherwise>
+					</xsl:choose>
 				</a>
 			</xsl:for-each>
 			</p>

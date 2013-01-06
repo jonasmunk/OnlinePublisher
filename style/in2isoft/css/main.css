@@ -84,6 +84,7 @@ div.layout_middle_top
 {
 	border-bottom: 1px solid #ddd;
 	height: 31px;
+	position: relative;
 }
 
 div.layout_content
@@ -124,11 +125,42 @@ div.layout_sidebar
 
 /******** Translation ********/
 
+span.layout_languages
+{
+	position: absolute;
+	right: 10px;
+	top: 7px;
+	font-size: 12px;
+	line-height: 16px;
+}
+
 p.layout_translation
 {
-	margin: 0;
+	margin: -5px 0 0 0;
 	font-size: 11px;
 }
+
+span.layout_languages a,
+p.layout_translation a
+{
+	color: #ddd;
+}
+
+span.layout_languages a span,
+p.layout_translation a span
+{
+	color: #666;
+}
+
+span.layout_languages a:hover ,
+p.layout_translation a:hover ,
+span.layout_languages a:hover span,
+p.layout_translation a:hover span
+{
+	color: #0169B2;
+}
+
+
 
 /******** Footer ********/
 
