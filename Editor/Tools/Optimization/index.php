@@ -16,6 +16,7 @@ $gui='
 		<top>
 			<toolbar>
 				<icon icon="common/new" title="{Add control word; da:Tilføj kontrolord}" name="newWord"/>
+				<icon icon="common/info" title="{Analyze; da:Analysér}" name="analyse"/>
 				<!--icon icon="common/edit" title="Rediger"/>
 				-->
 			</toolbar>
@@ -92,6 +93,10 @@ $gui='
 			<list name="phrasePageList" variant="light" selectable="false"/>
 		</overflow>
 	</boundpanel>
+	
+	<window name="analysisWindow" title="Analysis" width="400">
+		<div id="analysis" style="height: 400px; overflow: auto;"></div>
+	</window>
 	
 </gui>';
 

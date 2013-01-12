@@ -90,6 +90,35 @@ hui.ui.listen({
 				wordFormula.focus();
 			}
 		})
+	},
+	
+	
+	////////////// Analysis /////////////
+	
+	$click$analyse : function() {
+		var row = list.getFirstSelection();
+		hui.ui.request({
+			url : 'data/PageInfo.php',
+			message : {start:{en:'Analyzing...',da:'Analyserer...'},delay:300},
+			parameters : {id:row.id},
+			$object : function(obj) {
+				var html = '<p><strong>Language:</strong> '+obj.language+'</p>';
+				html+='<h2>Ukendte ord</h2>';
+				html+='<ul>';
+				for (var i=0; i < obj.unknownWords.length; i++) {
+					html+='<li>'+obj.unknownWords[i]+'</li>';
+				};
+				html+='</ul>';
+				html+='<h2>Kendte ord</h2>';
+				html+='<ul>';
+				for (var i=0; i < obj.knownWords.length; i++) {
+					html+='<li>'+obj.knownWords[i].text+'</li>';
+				};
+				html+='</ul>';
+				hui.get('analysis').innerHTML = html;
+				analysisWindow.show();
+			}
+		})
 	}
 	
 });

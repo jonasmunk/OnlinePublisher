@@ -24,8 +24,6 @@ class HttpClient {
 		if(!$errorNumber)
 		{
 			$info = curl_getinfo($session);
-			Log::debug($info);
-			Log::debug('Status: '.$info['http_code']);
 		} else {
 			Log::debug('Error number: '.$errorNumber.' / URL: '.$request->getUrl());
 		}
