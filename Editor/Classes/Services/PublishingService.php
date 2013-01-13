@@ -13,32 +13,47 @@ class PublishingService {
 	
 	function publishPage($id) {
 		
-		$dynamic=false;
-		$data='';
-		$index='';
+		$result = PublishingService::buildPage($id);
+		if (!$result) {
+			return;
+		}
+		
+		$sql="update page set".
+			" data=".Database::text($result['data']).
+			",`index`=".Database::text($result['index']).
+			",dynamic=".Database::boolean($result['dynamic']).
+			",published=now()".
+			" where id=".Database::int($id);
+		Database::update($sql);
+		$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".InternalSession::getUserId().",".Database::text($result['data']).",now())";
+		Database::insert($sql);
+		
+		// Clear page cache
+		CacheService::clearPageCache($id);
+	}
+	
+	function reIndexPage($id) {
+		
+		$result = PublishingService::buildPage($id);
+		if (!$result) {
+			return;
+		}
+		
+		$sql="update page set `index`=".Database::text($result['index'])." where id=".Database::int($id);
+		Database::update($sql);
+	}
+	
+	function buildPage($id) {
 		$sql="select template.unique from page,template where page.template_id=template.id and page.id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			if ($controller = TemplateService::getController($row['unique'])) {
 				if (method_exists($controller,'build')) {
 			        $result = $controller->build($id);
-			        $data = $result['data'];
-			        $index = $result['index'];
-			        $dynamic = $result['dynamic'];
+			        return $result;
 				}	
 			}
 		}
-		$sql="update page set".
-			" data=".Database::text($data).
-			",`index`=".Database::text($index).
-			",dynamic=".Database::boolean($dynamic).
-			",published=now()".
-			" where id=".$id;
-		Database::update($sql);
-		$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".InternalSession::getUserId().",".Database::text($data).",now())";
-		Database::insert($sql);
-		
-		// Clear page cache
-		CacheService::clearPageCache($id);
+		return null;
 	}
 
 	function publishAll() {

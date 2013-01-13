@@ -280,6 +280,12 @@ class StringUtils {
 		return preg_replace("/<[\/a-z]+[^>]*>/i", '', $string);
 	}
 	
+	function convertMarkupToText($string) {
+		$text = preg_replace("/<[\/a-z]+[^>]*>/i", ' ', $string);
+		$text = html_entity_decode($text);
+		return $text;
+	}
+	
 	function toJSON($obj) {
 		global $basePath;
 		if (function_exists('json_encode')) {

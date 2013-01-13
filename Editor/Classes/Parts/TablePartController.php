@@ -26,7 +26,7 @@ class TablePartController extends PartController
 	}
 	
 	function getIndex($part) {
-		return StringUtils::removeTags($part->getHtml());
+		return StringUtils::convertMarkupToText($part->getHtml());
 	}
 		
 	function editor($part,$context) {

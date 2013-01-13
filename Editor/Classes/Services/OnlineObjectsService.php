@@ -18,7 +18,7 @@ class OnlineObjectsService {
 		if (!$response->isSuccess()) {
 			return null;
 		}
-		return StringUtils::fromJSON($response->getData());
+		return StringUtils::fromUnicode(StringUtils::fromJSON($response->getData()));
 	}
 	
 	function getServiceUrl($service,$method) {

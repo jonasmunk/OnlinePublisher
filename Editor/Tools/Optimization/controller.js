@@ -93,6 +93,20 @@ hui.ui.listen({
 	},
 	
 	
+	////////////// Re-index /////////////
+	
+	$click$reindex : function() {
+		var row = list.getFirstSelection();
+		hui.ui.request({
+			url : 'actions/ReIndex.php',
+			message : {start:{en:'Analyzing...',da:'Analyserer...'},delay:300},
+			parameters : {id:row.id},
+			$success : function(obj) {
+				list.refresh();
+			}
+		})
+	},
+	
 	////////////// Analysis /////////////
 	
 	$click$analyse : function() {
@@ -102,6 +116,10 @@ hui.ui.listen({
 			message : {start:{en:'Analyzing...',da:'Analyserer...'},delay:300},
 			parameters : {id:row.id},
 			$object : function(obj) {
+				if (obj==null) {
+					hui.ui.showMessage({text:{da:'Ingen data',en:'No data'},icon:'common/warning',duration:4000});
+					return;
+				}
 				var html = '<p><strong>Language:</strong> '+obj.language+'</p>';
 				html+='<h2>Ukendte ord</h2>';
 				html+='<ul>';
@@ -117,6 +135,9 @@ hui.ui.listen({
 				html+='</ul>';
 				hui.get('analysis').innerHTML = html;
 				analysisWindow.show();
+			},
+			$failure : function() {
+				hui.ui.showMessage({text:{da:'Der skete en uventet fejl',en:'An unexpected error occurred'},icon:'common/warning',duration:4000});
 			}
 		})
 	}
