@@ -23,7 +23,6 @@ hui.ui.SearchField.create = function(options) {
 }
 
 hui.ui.SearchField.prototype = {
-	/** @private */
 	_addBehavior : function() {
 		var self = this;
 		hui.listen(this.field,'keyup',this._onKeyUp.bind(this));
@@ -68,6 +67,9 @@ hui.ui.SearchField.prototype = {
 		if (e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
 		}
+	},
+	focus : function() {
+		this.field.focus();
 	},
 	setValue : function(value) {
 		this.field.value = value===undefined || value===null ? '' : value;

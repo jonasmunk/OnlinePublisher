@@ -229,9 +229,15 @@ hui.ui.List.prototype = {
 	/** @private */
 	valueForProperty : function(p) {
 		if (p=='window.page') return this.window.page;
-		if (p=='window.page') return this.window.page;
 		else if (p=='sort.key') return this.sortKey;
 		else if (p=='sort.direction') return (this.sortDirection || 'ascending');
+		else if (p=='selection.id') {
+			var s = this.getFirstSelection();
+			if (s) {
+				return s.id;
+			}
+			return null;
+		}
 		else return this[p];
 	},
 	/** @private */
@@ -832,6 +838,7 @@ hui.ui.List.prototype = {
 		}
 		this.selected = indexes;
 		this.fire('select',this.rows[indexes[0]]);
+		hui.ui.firePropertyChange(this,'selection.id',this.rows[indexes[0]].id);
 		if (indexes.length>0) {
 			this._clearChecked();
 		}

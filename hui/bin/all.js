@@ -1215,10 +1215,10 @@ hui.listen = function(element,type,listener,useCapture) {
  * @param {Function} listener The function to be called
  */
 hui.listenOnce = function(element,type,listener) {	
-	var func;
-	func = function() {
-		listener();
+	var func = null;
+	func = function(e) {
 		hui.unListen(element,type,func)
+		listener(e);
 	}
 	hui.listen(element,type,func);
 }
@@ -1233,6 +1233,7 @@ hui.listenOnce = function(element,type,listener) {
 hui.unListen = function(el,type,listener,useCapture) {
 	el = hui.get(el);
 	if(document.removeEventListener) {
+		hui.log('removing',listener, 'from', el)
 		el.removeEventListener(type,listener,useCapture ? true : false);
 	} else {
 		el.detachEvent('on'+type, listener);
@@ -6038,6 +6039,17 @@ hui.ui.Source.prototype = {
 		}.bind(this));
 		parm.value = this.convertValue(val);
 	},
+	setParameter : function(key,value) {
+		value = this.convertValue(value);
+		for (var i=0; i < this.parameters.length; i++) {
+			var p = this.parameters[i]
+			if (p.key==key) {
+				p.value=value;
+				return;
+			}
+		}
+		this.parameters.push({key:key,value:value});
+	},
 	changeParameter : function(key,value) {
 		value = this.convertValue(value);
 		for (var i=0; i < this.parameters.length; i++) {
@@ -6748,9 +6760,15 @@ hui.ui.List.prototype = {
 	/** @private */
 	valueForProperty : function(p) {
 		if (p=='window.page') return this.window.page;
-		if (p=='window.page') return this.window.page;
 		else if (p=='sort.key') return this.sortKey;
 		else if (p=='sort.direction') return (this.sortDirection || 'ascending');
+		else if (p=='selection.id') {
+			var s = this.getFirstSelection();
+			if (s) {
+				return s.id;
+			}
+			return null;
+		}
 		else return this[p];
 	},
 	/** @private */
@@ -7351,6 +7369,7 @@ hui.ui.List.prototype = {
 		}
 		this.selected = indexes;
 		this.fire('select',this.rows[indexes[0]]);
+		hui.ui.firePropertyChange(this,'selection.id',this.rows[indexes[0]].id);
 		if (indexes.length>0) {
 			this._clearChecked();
 		}
@@ -13460,7 +13479,6 @@ hui.ui.SearchField.create = function(options) {
 }
 
 hui.ui.SearchField.prototype = {
-	/** @private */
 	_addBehavior : function() {
 		var self = this;
 		hui.listen(this.field,'keyup',this._onKeyUp.bind(this));
@@ -13505,6 +13523,9 @@ hui.ui.SearchField.prototype = {
 		if (e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
 		}
+	},
+	focus : function() {
+		this.field.focus();
 	},
 	setValue : function(value) {
 		this.field.value = value===undefined || value===null ? '' : value;

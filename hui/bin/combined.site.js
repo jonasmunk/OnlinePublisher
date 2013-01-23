@@ -1215,10 +1215,10 @@ hui.listen = function(element,type,listener,useCapture) {
  * @param {Function} listener The function to be called
  */
 hui.listenOnce = function(element,type,listener) {	
-	var func;
-	func = function() {
-		listener();
+	var func = null;
+	func = function(e) {
 		hui.unListen(element,type,func)
+		listener(e);
 	}
 	hui.listen(element,type,func);
 }
@@ -1233,6 +1233,7 @@ hui.listenOnce = function(element,type,listener) {
 hui.unListen = function(el,type,listener,useCapture) {
 	el = hui.get(el);
 	if(document.removeEventListener) {
+		hui.log('removing',listener, 'from', el)
 		el.removeEventListener(type,listener,useCapture ? true : false);
 	} else {
 		el.detachEvent('on'+type, listener);
@@ -5002,7 +5003,6 @@ hui.ui.SearchField.create = function(options) {
 }
 
 hui.ui.SearchField.prototype = {
-	/** @private */
 	_addBehavior : function() {
 		var self = this;
 		hui.listen(this.field,'keyup',this._onKeyUp.bind(this));
@@ -5047,6 +5047,9 @@ hui.ui.SearchField.prototype = {
 		if (e.keyCode===hui.KEY_RETURN) {
 			this.fire('submit');
 		}
+	},
+	focus : function() {
+		this.field.focus();
 	},
 	setValue : function(value) {
 		this.field.value = value===undefined || value===null ? '' : value;

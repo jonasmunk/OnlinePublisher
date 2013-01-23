@@ -166,6 +166,17 @@ hui.ui.Source.prototype = {
 		}.bind(this));
 		parm.value = this.convertValue(val);
 	},
+	setParameter : function(key,value) {
+		value = this.convertValue(value);
+		for (var i=0; i < this.parameters.length; i++) {
+			var p = this.parameters[i]
+			if (p.key==key) {
+				p.value=value;
+				return;
+			}
+		}
+		this.parameters.push({key:key,value:value});
+	},
 	changeParameter : function(key,value) {
 		value = this.convertValue(value);
 		for (var i=0; i < this.parameters.length; i++) {
