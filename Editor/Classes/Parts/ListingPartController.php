@@ -70,8 +70,14 @@ class ListingPartController extends PartController
 	}
 	
 	function getIndex($part) {
-		// TODO Strip tags etc.
-		return $part->getText();
+		$parsed = $this->_parse($part->getText());
+		$text = '';
+		foreach ($parsed as $line) {
+			$text.= join("\n",$line)."\n";
+		}
+		$context = new PartContext();
+		$text = $context->decorateForIndex($text);
+		return $text;
 	}
 	
 	function getFromRequest($id) {

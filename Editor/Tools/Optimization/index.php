@@ -17,6 +17,7 @@ $gui='
 			<toolbar>
 				<icon icon="common/new" title="{Add control word; da:Tilføj kontrolord}" name="newWord"/>
 				<icon icon="common/info" title="{Analyze; da:Analysér}" name="analyse"/>
+				<icon icon="common/refresh" title="{Re-index; da:Indekser}" name="reindex"/>
 				<!--icon icon="common/edit" title="Rediger"/>
 				-->
 			</toolbar>

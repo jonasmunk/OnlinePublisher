@@ -10,6 +10,10 @@ $row = Database::selectFirst($sql);
 if ($row) {
 	$response = OnlineObjectsService::analyseText($row['index']);
 	Response::sendObject($response);
+	
+} else {
+	Log::debug($sql);
+	Response::notFound();
+	
 }
-Response::notFound();
 ?>
