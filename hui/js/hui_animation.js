@@ -22,8 +22,12 @@ hui.animate = function(options,property,value,duration,delegate) {
 		hui.animation.get(options).animate(null,value,property,duration,delegate);
 	} else {
 		var item = hui.animation.get(options.node);
-		for (prop in options.css) {
-			item.animate(null,options.css[prop],prop,options.duration,options);
+		if (!options.css) {
+			item.animate(null,'','',options.duration,options);
+		} else {
+			for (prop in options.css) {
+				item.animate(null,options.css[prop],prop,options.duration,options);
+			}
 		}
 	}
 }

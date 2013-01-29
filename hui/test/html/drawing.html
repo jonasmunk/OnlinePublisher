@@ -16,7 +16,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Drawing.js"></script>
 
 	<script type="text/javascript" charset="utf-8">
-		var line1,circle;
+		var line1,circle,arc;
 		hui.onReady(function() {
 			var d = hui.ui.Drawing.create({width:500,height:400,parent:'drawing1'});
 			
@@ -27,6 +27,16 @@
 			line2 = d.addLine({from:{x:10,y:50},to:{x:120,y:230},width:3,color:'#0f0',end:{symbol:'arrow'}});
 			
 			circle = d.addCircle({cx:100,cy:100,r:50,fill:'#48f',width:0});
+			
+			arc = d.addArc({
+				center : {x:100,y:100},
+		  		startDegrees : -90,
+				endDegrees : 220,
+		  		innerRadius : 60, 
+				outerRadius : 100,
+				fill : '#eee'
+			});
+			hui.log(arc)
 		})
 		hui.onReady(function() {
 			var d = hui.ui.Drawing.create({width:500,height:400,parent:'drawing2'});
