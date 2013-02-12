@@ -12,7 +12,7 @@ class Request {
 		$parts = explode('&',$query);
 		foreach ($parts as $part) {
 			$pair = explode('=',$part);
-			$parameters[] = array('name' => $pair[0] , 'value'=>$pair[1]);
+			$parameters[] = array('name' => @$pair[0] , 'value' => @$pair[1]);
 		}
 		return $parameters;
 	}
