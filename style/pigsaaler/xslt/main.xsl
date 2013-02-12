@@ -34,7 +34,7 @@
 	<div class="case">
 		<div class="case_head">
 			<div class="case_head_body">
-				<p style="position: absolute; margin: 0; font-size: 36px; font-weight: bold; top: 7px;">Pigsåler.dk</p>
+				<p style="position: absolute; margin: 0; font-size: 36px; font-weight: bold; top: 7px;">GBPigsåler.dk</p>
 				<ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
 			</div>
 		</div>
@@ -42,9 +42,9 @@
 			<div class="case_sidebar">
 				<xsl:call-template name="thirdlevel"/>
 				<div class="case_contact">
-					<h2>Pigsåler.dk</h2>
-					<p><em>Tlf:</em> 23 62 97 92</p>
-					<p><em>E-post: </em> <a href="mailto:info@pigsaaler.dk"><span>info@pigsaaler.dk</span></a></p>
+					<h2>GBPigsåler.dk</h2>
+					<p><em>Tlf:</em> 23 62 33 59 </p>
+					<p><em>E-post: </em> <a href="mailto:info@pigsaaler.dk"><span>gbpigsaaler@gbpigsaaler.dk</span></a></p>
 					<blockquote>
 						"Kontakt os venligst hvis du er interesseret."
 					</blockquote>
