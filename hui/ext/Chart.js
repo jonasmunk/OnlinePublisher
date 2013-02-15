@@ -12,7 +12,6 @@ hui.ui.Chart = function(options) {
 	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
-		//this.options.source.refreshFirst();
 	}
 }
 
@@ -32,7 +31,7 @@ hui.ui.Chart.prototype = {
 	},
 	setData : function(data) {
 		if (!data.dataSets) {
-			this.data = this._convertData(data);
+			this.data = hui.ui.Chart.Util.convertData(data);
 		} else {
 			this.data = data;
 		}
@@ -47,47 +46,6 @@ hui.ui.Chart.prototype = {
 	$objectsLoaded : function(data) {
 		this.setData(data);
 		this.render();
-	},
-	_convertData : function(obj) {
-		var labels = [],keys = [];
-		for (var i=0; i < obj.sets.length; i++) {
-			var set = obj.sets[i];
-			if (hui.isArray(set.entries)) {
-				for (var j=0; j < set.entries.length; j++) {
-					var entry = set.entries[i];
-					if (!hui.array.contains(keys,entry.key)) {
-						keys.push(entry.key)
-						labels.push({key:entry.key,label:entry.key});					
-					}
-				}
-			} else {
-				for (key in set.entries) {
-					if (!hui.array.contains(keys,key)) {
-						keys.push(key)
-						labels.push({key:key,label:key});
-					}
-				}
-			}
-		};
-		var data = new hui.ui.Chart.Data({xAxis:{labels:labels}});
-		
-		for (var i=0; i < obj.sets.length; i++) {
-			var set = obj.sets[i];
-			var dataSet = new hui.ui.Chart.DataSet({type:set.type});
-			if (hui.isArray(set.entries)) {
-				for (var j=0; j < set.entries.length; j++) {
-					var entry = set.entries[j];
-					dataSet.addEntry(entry.key,entry.value);
-				};
-			} else {
-				for (key in set.entries) {
-					dataSet.addEntry(key,set.entries[key]);
-				}
-			}
-			data.addDataSet(dataSet);
-		}
-		hui.log(data)
-		return data;
 	}
 }
 
@@ -368,14 +326,10 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		stroke = 'rgb(255,255,255)',
 		background = 'rgb(240,240,240)',
 		state = this.state,
-		innerBody = this.state.innerBody;
-	
-	//stroke = 'rgb(240,240,240)';
-	//background = 'rgb(255,255,255)';
-	
+		innerBody = this.state.innerBody;	
 
 	if (this.chart.style.background) {
-		this.ctx.fillStyle=background;
+		this.ctx.fillStyle = background;
 		this.ctx.fillRect(
 			state.body.left,
 			state.body.top,
@@ -692,4 +646,51 @@ hui.ui.Chart.Util.arraySum = function(values) {
 		total+=values[i];
 	}
 	return total;
+}
+
+/** Converts a simple data-representation into a class-based stucture */
+hui.ui.Chart.Util.convertData = function(obj) {
+	var labels = [],keys = [];
+	for (var i=0; i < obj.sets.length; i++) {
+		var set = obj.sets[i];
+		if (hui.isArray(set.entries)) {
+			for (var j=0; j < set.entries.length; j++) {
+				var entry = set.entries[j];
+				if (!hui.array.contains(keys,entry.key)) {
+					keys.push(entry.key)
+					labels.push({key:entry.key,label:entry.key});					
+				}
+			}
+		} else {
+			for (key in set.entries) {
+				if (!hui.array.contains(keys,key)) {
+					keys.push(key)
+					labels.push({key:key,label:key});
+				}
+			}
+		}
+	};
+	var options = {xAxis:{labels:labels}};
+	if (obj.axis && obj.axis.x && obj.axis.x.time===true) {
+		options.xAxis.resolution = 'time';
+	}
+	var data = new hui.ui.Chart.Data(options);
+		
+	for (var i=0; i < obj.sets.length; i++) {
+		var set = obj.sets[i];
+		var dataSet = new hui.ui.Chart.DataSet({type:set.type});
+		if (hui.isArray(set.entries)) {
+			for (var j=0; j < set.entries.length; j++) {
+				var entry = set.entries[j];
+				dataSet.addEntry(entry.key,entry.value);
+			};
+		} else {
+			for (key in set.entries) {
+				dataSet.addEntry(key,set.entries[key]);
+			}
+		}
+		data.addDataSet(dataSet);
+	}
+	hui.log(data)
+	return data;
 }
