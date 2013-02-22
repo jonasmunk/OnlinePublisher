@@ -27,6 +27,7 @@
 
 <body style="padding: 50px;">
 
+	<div id="chartTime" style="height: 300px;"></div>
 	<div id="chart" style="height: 300px;"></div>
 	<div id="pieChart" style="height: 300px;"></div>
 	<div id="columnChart" style="height: 300px;"></div>
@@ -37,11 +38,28 @@
 	<script>
 		hui.ui.listen({
 			$ready : function() {
+				this.buildTimeBased();
+				return;
 				this.buildLineChart();
 				this.buildPieChart();
 				this.buildColumnChart();
 				this.buildChartUsingSource();
 			},
+			buildTimeBased : function() {
+				var chart = new hui.ui.Chart.create({parent:'chartTime'});
+				chart.setData({
+					axis : {
+						x : {time:true}
+					},
+					sets : [
+						{type:'line',entries:[
+							{key:12345,value:10},{key:12350,value:12},{key:12550,value:12435252354}
+						]}
+					]
+				})
+				chart.render();
+			},
+			
 			buildLineChart : function() {
 				
 				var chart = new hui.ui.Chart.create({parent:'chart'});
