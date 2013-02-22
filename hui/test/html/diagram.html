@@ -36,6 +36,7 @@
 			$ready : function() {
 				var diagram = new hui.ui.Diagram.create({
 					parent : hui.get('container'),
+					layout : hui.location.getParameter('layout') || 'Arbor',
 					height : 400
 				});
 				
@@ -57,11 +58,11 @@
 						{from:'jonas',to:'address'}
 					]
 				};
-				var json = JSON.stringify(data,null,4)
+				var json = JSON.stringify(data,null,4)	
 				diagram.setData(data);
 				
-				
-				var win = hui.ui.Window.create({width:600});
+							
+				var win = hui.ui.Window.create({width:600,title:'Data'});
 				var code = hui.ui.CodeInput.create({value:json});
 				code.listen({
 					$valueChanged : function(str) {
@@ -74,6 +75,19 @@
 				win.add(code);
 				win.show();
 				win.move({top:400,left:50})
+
+				var logWin = hui.ui.Window.create({width:600,title:'Log'});
+				var log = hui.ui.CodeInput.create();
+				logWin.add(log);
+
+				logWin.show();
+				logWin.move({top:400,left:700})
+				
+				diagram.listen({
+					$select : function(obj) {
+						log.setValue(obj)
+					}
+				})
 			}
 		})
 	</script>

@@ -2,14 +2,14 @@
  * @constructor
  */
 hui.ui.Diagram = function(options) {
-	this.options = options;
+	this.options = hui.override({layout:'Arbor'},options);;
 	this.name = options.name;
 	this.nodes = [];
 	this.lines = [];
 	this.element = hui.get(options.element);
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
-	this.layout = hui.ui.Diagram.Arbor;
+	this.layout = hui.ui.Diagram[this.options.layout];
 	//this.layout = hui.ui.Diagram.Springy;
 	this.layout.diagram = this;
 	hui.ui.extend(this);
@@ -173,6 +173,9 @@ hui.ui.Diagram.prototype = {
 		};
 		return null;
 	},
+	
+	// Drawing...
+	
 	_updateLine : function(line) {
 		if (!line.label) {
 			return;
@@ -262,14 +265,18 @@ hui.ui.Diagram.Arbor = {
 					}
 				});
 				system.eachEdge(function(edge,point1,point2) {
+					if (edge.target.name==sel) {
+						point2 = diagram._getCenter(diagram.selection)
+					}
+					if (edge.source.name==sel) {
+						point1 = diagram._getCenter(diagram.selection)
+					}
 					var line = edge.data.node;
 					if (edge.source.name!=sel) {
-						var magnet = diagram._getMagnet(point2,point1,edge.source.data)
-						line.setFrom(magnet);
+						line.setFrom(diagram._getMagnet(point2,point1,edge.source.data));
 					}
 					if (edge.target.name!=sel) {
-						var magnet = diagram._getMagnet(point1,point2,edge.target.data)
-						line.setTo(magnet);						
+						line.setTo(diagram._getMagnet(point1,point2,edge.target.data));						
 					}
 					diagram._updateLine(edge.data);
 				}.bind(this));
@@ -427,7 +434,7 @@ hui.ui.Diagram.Springy = {
 			cachedLines[edge.id] = lines[i];
 		};
 		
-		var layout = new Layout.ForceDirected(graph, width, height, 0.1);
+		var layout = new Layout.ForceDirected(graph, width, height, 0.4);
 		
 		var toScreen = function(p) {
 			  return {
@@ -577,28 +584,32 @@ hui.ui.Diagram.Icon.prototype = {
 
 hui.ui.Diagram.util = {
 	enableDragging : function(obj) {
+		var diagram = obj.options.container;
 		hui.cls.add(obj.element,'hui_diagram_dragable');
 		var dragState = null;
 		hui.drag.register({
 			element : obj.element,
 			onStart : function() {
 				hui.cls.add(obj.element,'hui_diagram_dragging');
-				obj.options.container.__select(obj);
+				diagram.__select(obj);
+				diagram.fire('select',obj.id);
 			},
 			onBeforeMove : function(e) {
 				e = hui.event(e);
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
 				var pos = hui.position.get(obj.element);
-				var container = hui.position.get(obj.options.container.element);
+				var container = hui.position.get(diagram.element);
 				dragState = {left: e.getLeft() - pos.left + container.left,top:e.getTop()-pos.top + container.top};
 				obj.element.style.right = 'auto';
 			},
  			onMove : function(e) {
+				obj.x = dragState.top;
+				obj.y = dragState.left;
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
 				obj.element.style.top = Math.max(top,5)+'px';
 				obj.element.style.left = Math.max(left,5)+'px';
-				obj.options.container.__nodeMoved(obj);
+				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {
 				hui.cls.remove(obj.element,'hui_diagram_dragging');
