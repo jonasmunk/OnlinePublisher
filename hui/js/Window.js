@@ -153,6 +153,26 @@ hui.ui.Window.prototype = {
 			hui.effect.flip({element:this.element});
 		}
 	},
+	setBusy : function(stringOrBoolean) {
+		window.clearTimeout(this._busyTimer);
+		if (stringOrBoolean===false) {
+			if (this._busyCurtain) {
+				this._busyCurtain.style.display = 'none';
+			}
+			return;
+		}
+		this._busyTimer = window.setTimeout(function() {
+			var curtain = this._busyCurtain;
+			if (!curtain) {
+				curtain = this._busyCurtain = hui.build('div',{'class':'hui_window_busy',parentFirst:hui.get.firstByClass(this.element,'hui_window_content')})
+			}
+			curtain.innerHTML = hui.isString(stringOrBoolean) ? '<span>'+stringOrBoolean+'</span>' : '<span></span>';
+			curtain.style.display = '';
+			curtain.style.height = this.content.clientHeight+'px';
+			curtain.style.width = this.content.clientWidth+'px';			
+		}.bind(this),300);
+	},
+	
 	move : function(point) {
 		hui.style.set(this.element,{top:point.top+'px',left:point.left+'px'});
 	},

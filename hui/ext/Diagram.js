@@ -222,7 +222,7 @@ hui.ui.Diagram.Arbor = {
 	diagram : null,
 
 	_load : function() {
-		hui.require('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',function() {
+		hui.require(hui.ui.context+'/hui/lib/jquery.min.js',function() {
 			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
 				this.loaded = true;
 				this.start();
@@ -235,6 +235,11 @@ hui.ui.Diagram.Arbor = {
 			this._load();
 			return;
 		}
+		if (window.arbor==undefined) {
+			hui.log('Arbor is not available!');
+			return;
+		}
+		
 		var repulsion = 50,
 			stiffness = 600,
 			friction = 0.5,

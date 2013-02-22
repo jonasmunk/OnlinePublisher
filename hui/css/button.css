@@ -351,7 +351,7 @@ a.hui_button_paper, a.hui_button_paper span
 	font-size: 14px;
 }
 
-a.hui_button_paper
+a.hui_button_paper, a.hui_button_paper:focus
 {
 	border: 1px solid #ddd;
 	border-radius: 4px;
@@ -382,6 +382,7 @@ a.hui_button_paper:active
 a.hui_button_paper:focus
 {
 	border-color: rgb(1,105,255);
+	box-shadow: 0 0 4px rgb(1,105,255);
 }
 
 

@@ -78,7 +78,7 @@ hui.ui.TextField.prototype = {
 				},500);
 			});
 		}
-		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused'});
+		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused',widget:this});
 		hui.listen(this.input,'keyup',this._onKeyUp.bind(this));
 		hui.listen(this.input,'keydown',this._onKeyDown.bind(this));
 		var p = this.element.getElementsByTagName('em')[0];

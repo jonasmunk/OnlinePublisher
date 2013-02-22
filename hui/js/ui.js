@@ -601,15 +601,28 @@ hui.ui.wrapInField = function(element) {
  * Add focus class to an element
  * @param options {Object} {element : «Element», class : «String»}
  */
-hui.ui.addFocusClass = function(o) {
-	var ce = o.classElement || o.element, c = o['class'];
-	hui.listen(o.element,'focus',function() {
+hui.ui.addFocusClass = function(options) {
+	var ce = options.classElement || options.element, c = options['class'];
+	hui.listen(options.element,'focus',function() {
 		hui.cls.add(ce,c);
+		if (options.widget) {
+			hui.ui.setKeyboardTarget(options.widget);
+		}
 	});
-	hui.listen(o.element,'blur',function() {
+	hui.listen(options.element,'blur',function() {
 		hui.cls.remove(ce,c);
+		if (options.widget) {
+			hui.ui.setKeyboardTarget(null);
+		}
 	});
 };
+
+hui.ui.keyboardTarget = null; // The widget currently accepting keyboard input
+
+hui.ui.setKeyboardTarget = function(widget) {
+	hui.ui.keyboardTarget = widget;
+}
+
 
 /**
  * Make a widget draw attention to itself
@@ -1002,9 +1015,10 @@ hui.ui.request = function(options) {
 			hui.ui.handleRequestError();
 		}
 	}
-	options.onException = options.$exception || function(t,e) {
-		hui.log(t);
+	options.onException = options.$exception || function(e,t) {
 		hui.log(e);
+		hui.log(t);
+		throw e;
 	};
 	var onForbidden = options.onForbidden;
 	options.onForbidden = function(t) {

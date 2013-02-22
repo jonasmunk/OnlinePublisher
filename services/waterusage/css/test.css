@@ -1,3 +1,29 @@
+div.water
+{
+	text-align: center;
+	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+form.top
+{
+	border-bottom: 1px solid #ddd;
+	margin: 0 15px 10px;
+	padding-bottom: 10px;
+	font-size: 11pt
+}
+
+#intro h1
+{
+	font-weight: normal;
+	margin: 20px 0 10px;
+}
+
+#intro p
+{
+	font-size: 11pt;
+}
+
+
 div.columns
 {
 	overflow: hidden;
@@ -16,7 +42,6 @@ div.box
 	margin: 15px;
 	background: #fff;
 	text-align: left;
-	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
 div.box h3
@@ -81,13 +106,13 @@ div.box h3
 	position: relative;
 }
 
-#info p
+#info div.properties p
 {
 	font-size: 11pt;
 	margin: 5px 0 0;
 }
 
-#info strong
+#info div.properties strong
 {
 	font-weight: 200;
 	display: inline-block;
@@ -116,6 +141,13 @@ div.box h3
 	left: 50%;
 	top: 50%;
 	margin: -15px 0 0 -15px;
+}
+
+#info p.disclaimer
+{
+	margin: 5px 0 0;
+	font-size: 10pt;
+	color: #999;
 }
 
 #edit

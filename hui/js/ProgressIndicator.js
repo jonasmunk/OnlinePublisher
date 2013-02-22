@@ -34,6 +34,9 @@ hui.ui.ProgressIndicator.prototype = {
 		})
 	},
 	setValue : function(value) {
+		if (value==this.value) {
+			return;
+		}
 		var start = this._renderedValue;
 		var dur = Math.abs(value-start)*2000;
 		hui.animate({
@@ -57,6 +60,10 @@ hui.ui.ProgressIndicator.prototype = {
 			outerRadius : this.size/2,
 			fill : '#eee'
 		})		
+	},
+	destroy : function() {
+		hui.ui.destroy(this);
+		hui.dom.remove(this.element);
 	},
 	reset : function() {
 		var start = this._renderedValue;

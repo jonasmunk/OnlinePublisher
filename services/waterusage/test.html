@@ -39,11 +39,16 @@
 <body>
 	
 	<div class="water">
-		<form style="border-bottom: 1px solid #ddd; margin: 0 15px 10px; padding-bottom: 10px; font-size: 11pt">
+		<form class="top">
 			<label>Målernummer:</label>
 			<input type="text" id="number"/>
 			<input type="submit" id="sendNumber" value="Afsend" onclick="return false"/>
 		</form>
+		<div id="intro">
+			<h1>Aflæsning</h1>
+			<p>Her kan du løbende registrere dit vandforbrug og holde øje med dit forbrug.</p>
+			<p>Indtast dit målernummer i feltet foroven.</p>
+		</div>
 		<div class="columns" id="result">
 			<div class="column">
 				<div id="chart" class="box">
@@ -77,13 +82,16 @@
 				<div id="info" class="box">
 					<a id="edit" href="javascript://"><span>Rediger oplysninger</span></a>
 					<h3>Kontaktinformation</h3>
-					<p><strong>Nummer:</strong> <span id="infoNumber"></span></p>
-					<p><strong>Adresse:</strong> <span id="infoAddress"></span></p>
-					<p><strong>E-mail:</strong> <span id="infoMail"></span></p>
-					<p><strong>Telefon:</strong> <span id="infoPhone"></span></p>
+					<div class="properties">
+						<p><strong>Nummer:</strong> <span id="infoNumber"></span></p>
+						<p><strong>Adresse:</strong> <span id="infoAddress"></span></p>
+						<p><strong>E-mail:</strong> <span id="infoMail"></span></p>
+						<p><strong>Telefon:</strong> <span id="infoPhone"></span></p>
+					</div>
 					<div id="map">
 						<span id="pin"></span>
 					</div>
+					<p class="disclaimer"><strong>Bemærk:</strong> Kortet viser ikke nødvendigvis den helt korrekte placering</p>
 				</div>
 			</div>
 		</div>

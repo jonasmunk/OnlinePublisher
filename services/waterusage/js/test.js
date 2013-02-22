@@ -79,12 +79,12 @@ hui.ui.listen({
 			message : {start:'Henter information...'},
 			parameters : {number:number},
 			$object : function(obj) {
-				hui.log(obj)
 				this.data = obj;
 				this._renderRecord(obj.usage);
 				this._renderChart(obj.usage);
 				this._renderInfo(obj.info);
 				hui.get('result').style.display='block';
+				hui.get('intro').style.display='none';
 				hui.ui.reLayout();
 				this.valueInput.focus();
 				if (callback) {
@@ -93,6 +93,7 @@ hui.ui.listen({
 			}.bind(this),
 			$failure : function() {
 				hui.get('result').style.display='none';
+				hui.get('intro').style.display='block';
 				hui.ui.showMessage({text:'Målernummeret kunne ikke findes',icon:'common/warning',duration:3000})
 				this.numberInput.focus();
 			}.bind(this),

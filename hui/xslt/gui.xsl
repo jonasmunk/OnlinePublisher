@@ -63,6 +63,9 @@
 <xsl:if test="//gui:diagram">
 	<link rel="stylesheet" href="{$context}/hui/ext/diagram.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 </xsl:if>
+<xsl:if test="//gui:keyboard-navigator">
+	<link rel="stylesheet" href="{$context}/hui/ext/keyboardnavigator.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+</xsl:if>
 <xsl:if test="//gui:chart">
 	<link rel="stylesheet" href="{$context}/hui/ext/chart.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 </xsl:if>
@@ -98,6 +101,7 @@
 		<script src="{$context}/hui/js/ColorPicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Upload.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/ProgressBar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+		<script src="{$context}/hui/js/ProgressIndicator.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Gallery.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/Calendar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 		<script src="{$context}/hui/js/DatePicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -147,13 +151,21 @@
 <xsl:if test="//gui:chart">
 	<script src="{$context}/hui/ext/Chart.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
+<xsl:if test="//gui:keyboard-navigator">
+	<script src="{$context}/hui/ext/KeyboardNavigator.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
+<xsl:for-each select="//gui:require">
+	<script src="{$context}/hui/{@path}" type="text/javascript" charset="utf-8"><xsl:comment/></script>	
+</xsl:for-each>
+<xsl:if test="//gui:diagram or //gui:require[@path='js/Diagram.js']">
+</xsl:if>
 <xsl:if test="//gui:diagram">
 	<!--
 	<script charset="utf-8" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"><xsl:comment/></script>
 	<script src="{$context}/hui/lib/arbor/lib/arbor.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 	-->
+	<script src="{$context}/hui/js/Drawing.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>	
 	<script src="{$context}/hui/ext/Diagram.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-	<script src="{$context}/hui/js/Drawing.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
 <xsl:if test="//gui:tiles">
 	<link rel="stylesheet" href="{$context}/hui/ext/tiles.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
@@ -709,6 +721,7 @@
 			windowSize:'<xsl:value-of select="gui:window/@size"/>'
 			<xsl:if test="@drop-files='true'">,dropFiles:true</xsl:if>
 			<xsl:if test="@indent">,indent:<xsl:value-of select="@indent"/></xsl:if>
+			<xsl:if test="@remember='true'">,rememberSelection:true</xsl:if>
 		});
 		with (<xsl:value-of select="generate-id()"/>_obj) {
 			<xsl:for-each select="gui:column">
@@ -1208,161 +1221,171 @@ doc title:'Rich text' class:'hui.ui.RichText'
 
 
 
-<!--doc title:'Diagram' class:'hui.ui.Diagram' module:'visalization'
-<diagram name="«name»"/>
--->
-<xsl:template match="gui:diagram">
-	<div class="hui_diagram" id="{generate-id()}">
-		<xsl:attribute name="style">
-			<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
-		</xsl:attribute>
-		<xsl:comment/></div>
-	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Diagram({
-			element : '<xsl:value-of select="generate-id()"/>',
-			name : '<xsl:value-of select="@name"/>'
-			<xsl:if test="@source">
-				,source:<xsl:value-of select="@source"/>
-			</xsl:if>
-		});
-		<xsl:call-template name="gui:createobject"/>
-	</script>
-</xsl:template>
-
-
-
-<!--doc title:'Chart' class:'hui.ui.Chart' module:'visalization'
-<chart name="«name»" source="«name»"/>
--->
-<xsl:template match="gui:chart">
-	<div class="hui_chart" id="{generate-id()}">
-		<xsl:attribute name="style">
-			<xsl:if test="@width">
-				<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
-			</xsl:if>
-			<xsl:choose>
-				<xsl:when test="substring(@height, string-length(@height))='%'">
-					<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>;</xsl:text>
-				</xsl:when>
-				<xsl:when test="@height">
-					<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
-				</xsl:when>
-			</xsl:choose>
-		</xsl:attribute>
-		<xsl:comment/></div>
-	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Chart({
-			element : '<xsl:value-of select="generate-id()"/>',
-			name : '<xsl:value-of select="@name"/>'
-			<xsl:if test="@source">
-				,source:<xsl:value-of select="@source"/>
-			</xsl:if>
-		});
-		<xsl:call-template name="gui:createobject"/>
-	</script>
-</xsl:template>
-
-
-
-<!--doc title:'Segmented' class:'hui.ui.Segmented' module:'input'
-<segmented name="«name»" value="«text»" allow-null="«boolean»">
-    <item text="«text»" value="«text»" icon="«icon»" />
-</segmented>
--->
-<xsl:template match="gui:segmented" name="gui:segmented">
-	<span id="{generate-id()}">
-		<xsl:if test="@top">
+	<!--doc title:'Diagram' class:'hui.ui.Diagram' module:'visalization'
+	<diagram name="«name»"/>
+	-->
+	<xsl:template match="gui:diagram">
+		<div class="hui_diagram" id="{generate-id()}">
 			<xsl:attribute name="style">
-				<xsl:text>margin-top: </xsl:text><xsl:value-of select="@top"/><xsl:text>px;</xsl:text>
+				<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
 			</xsl:attribute>
-		</xsl:if>
-		<xsl:attribute name="class">
-			<xsl:text>hui_segmented</xsl:text>
-			<xsl:if test="@variant">
-				<xsl:text> hui_segmented_</xsl:text><xsl:value-of select="@variant"/>
+			<xsl:comment/></div>
+		<script type="text/javascript">
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Diagram({
+				element : '<xsl:value-of select="generate-id()"/>',
+				name : '<xsl:value-of select="@name"/>'
+				<xsl:if test="@source">
+					,source:<xsl:value-of select="@source"/>
+				</xsl:if>
+			});
+			<xsl:call-template name="gui:createobject"/>
+		</script>
+	</xsl:template>
+
+
+
+	<!--doc title:'Chart' class:'hui.ui.Chart' module:'visalization'
+	<chart name="«name»" source="«name»"/>
+	-->
+	<xsl:template match="gui:chart">
+		<div class="hui_chart" id="{generate-id()}">
+			<xsl:attribute name="style">
+				<xsl:if test="@width">
+					<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
+				</xsl:if>
+				<xsl:choose>
+					<xsl:when test="substring(@height, string-length(@height))='%'">
+						<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>;</xsl:text>
+					</xsl:when>
+					<xsl:when test="@height">
+						<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
+					</xsl:when>
+				</xsl:choose>
+			</xsl:attribute>
+			<xsl:comment/></div>
+		<script type="text/javascript">
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Chart({
+				element : '<xsl:value-of select="generate-id()"/>',
+				name : '<xsl:value-of select="@name"/>'
+				<xsl:if test="@source">
+					,source:<xsl:value-of select="@source"/>
+				</xsl:if>
+			});
+			<xsl:call-template name="gui:createobject"/>
+		</script>
+	</xsl:template>
+
+
+
+	<!--doc title:'Segmented' class:'hui.ui.Segmented' module:'input'
+	<segmented name="«name»" value="«text»" allow-null="«boolean»">
+	    <item text="«text»" value="«text»" icon="«icon»" />
+	</segmented>
+	-->
+	<xsl:template match="gui:segmented" name="gui:segmented">
+		<span id="{generate-id()}">
+			<xsl:if test="@top">
+				<xsl:attribute name="style">
+					<xsl:text>margin-top: </xsl:text><xsl:value-of select="@top"/><xsl:text>px;</xsl:text>
+				</xsl:attribute>
 			</xsl:if>
-			<xsl:if test="not(@variant)">
-				<xsl:text> hui_segmented_standard</xsl:text><xsl:value-of select="@variant"/>
-			</xsl:if>
-		</xsl:attribute>
-		<xsl:for-each select="gui:item">
-			<a href="javascript:void(0)" rel="{@value}">
-				<xsl:if test="@value=../@value">
-					<xsl:attribute name="class">hui_segmented_selected</xsl:attribute>
+			<xsl:attribute name="class">
+				<xsl:text>hui_segmented</xsl:text>
+				<xsl:if test="@variant">
+					<xsl:text> hui_segmented_</xsl:text><xsl:value-of select="@variant"/>
 				</xsl:if>
-				<xsl:if test="@icon">
-					<span class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></span>
+				<xsl:if test="not(@variant)">
+					<xsl:text> hui_segmented_standard</xsl:text><xsl:value-of select="@variant"/>
 				</xsl:if>
-				<xsl:if test="@title or @text">
-					<span class="hui_segmented_text"><xsl:value-of select="@title"/><xsl:value-of select="@text"/></span>
-				</xsl:if>
-			</a>
-		</xsl:for-each>
-	<xsl:comment/></span>
-	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Segmented({
-			element:'<xsl:value-of select="generate-id()"/>',
-			name:'<xsl:value-of select="@name"/>'
-			<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
-			<xsl:if test="@allow-null='true'">,allowNull:true</xsl:if>
-		});
-		<xsl:call-template name="gui:createobject"/>
-	</script>
-</xsl:template>
+			</xsl:attribute>
+			<xsl:for-each select="gui:item">
+				<a href="javascript:void(0)" rel="{@value}">
+					<xsl:if test="@value=../@value">
+						<xsl:attribute name="class">hui_segmented_selected</xsl:attribute>
+					</xsl:if>
+					<xsl:if test="@icon">
+						<span class="hui_icon_16" style="background-image: url('{$context}/hui/icons/{@icon}16.png')"><xsl:comment/></span>
+					</xsl:if>
+					<xsl:if test="@title or @text">
+						<span class="hui_segmented_text"><xsl:value-of select="@title"/><xsl:value-of select="@text"/></span>
+					</xsl:if>
+				</a>
+			</xsl:for-each>
+		<xsl:comment/></span>
+		<script type="text/javascript">
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Segmented({
+				element:'<xsl:value-of select="generate-id()"/>',
+				name:'<xsl:value-of select="@name"/>'
+				<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
+				<xsl:if test="@allow-null='true'">,allowNull:true</xsl:if>
+			});
+			<xsl:call-template name="gui:createobject"/>
+		</script>
+	</xsl:template>
 
 
 
 
 
-<!--doc title:'Rendering' class:'hui.ui.Rendering' module:'layout'
-<rendering name="«name»"/>
--->
-<xsl:template match="gui:rendering">
-	<div class="hui_rendering" id="{generate-id()}">
-		<xsl:apply-templates/>
-	</div>
-	<script type="text/javascript">
-		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Rendering({
-			element : '<xsl:value-of select="generate-id()"/>',
-			name : '<xsl:value-of select="@name"/>'
-		});
-		<xsl:call-template name="gui:createobject"/>
-	</script>
+	<!--doc title:'Rendering' class:'hui.ui.Rendering' module:'layout'
+	<rendering name="«name»"/>
+	-->
+	<xsl:template match="gui:rendering">
+		<div class="hui_rendering" id="{generate-id()}">
+			<xsl:apply-templates/>
+		</div>
+		<script type="text/javascript">
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Rendering({
+				element : '<xsl:value-of select="generate-id()"/>',
+				name : '<xsl:value-of select="@name"/>'
+			});
+			<xsl:call-template name="gui:createobject"/>
+		</script>
 
-</xsl:template>
+	</xsl:template>
 
-<!--doc title:'Menu' class:'hui.ui.Menu' module:'layout'
-<menu name="«name»">
-    <item text="«text»" value="«text»"/>
-    <divider>
-    <item text="«text»" value="«text»">
-    	<item text="«text»" value="«text»"/>
-	</item>
-</menu>
--->
-<xsl:template match="gui:menu">
-	<script type="text/javascript">
-		(function() {
-			var menu = <xsl:value-of select="generate-id()"/>_obj = hui.ui.Menu.create({name:'<xsl:value-of select="@name"/>'});
+	<!--doc title:'Menu' class:'hui.ui.Menu' module:'layout'
+	<menu name="«name»">
+	    <item text="«text»" value="«text»"/>
+	    <divider>
+	    <item text="«text»" value="«text»">
+	    	<item text="«text»" value="«text»"/>
+		</item>
+	</menu>
+	-->
+	<xsl:template match="gui:menu">
+		<script type="text/javascript">
+			(function() {
+				var menu = <xsl:value-of select="generate-id()"/>_obj = hui.ui.Menu.create({name:'<xsl:value-of select="@name"/>'});
+				var items = [];
+				<xsl:apply-templates/>
+				menu.addItems(items);
+				<xsl:call-template name="gui:createobject"/>
+			})();
+		</script>
+	
+	</xsl:template>
+
+	<xsl:template match="gui:menu//gui:item">
+		items.push({text:'<xsl:value-of select="@text"/>',value:'<xsl:value-of select="@value"/>',children:(function() {
 			var items = [];
 			<xsl:apply-templates/>
-			menu.addItems(items);
+			return items;
+		})()});
+	</xsl:template>
+
+	<xsl:template match="gui:menu//gui:divider">
+		items.push(null);
+	</xsl:template>
+
+	<xsl:template match="gui:keyboard-navigator">
+		<script type="text/javascript">
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.KeyboardNavigator({
+				element : '<xsl:value-of select="generate-id()"/>',
+				name : '<xsl:value-of select="@name"/>'
+			});
 			<xsl:call-template name="gui:createobject"/>
-		})();
-	</script>
-	
-</xsl:template>
-
-<xsl:template match="gui:menu//gui:item">
-	items.push({text:'<xsl:value-of select="@text"/>',value:'<xsl:value-of select="@value"/>',children:(function() {
-		var items = [];
-		<xsl:apply-templates/>
-		return items;
-	})()});
-</xsl:template>
-
-<xsl:template match="gui:menu//gui:divider">
-	items.push(null);
-</xsl:template>
+		</script>
+	</xsl:template>
 
 </xsl:stylesheet>

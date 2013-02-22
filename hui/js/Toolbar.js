@@ -155,6 +155,14 @@ hui.ui.Toolbar.Icon.prototype = {
 			hui.dom.setText(node,value);
 		}
 	},
+	setLabel : function(label) {
+		var e = hui.get.firstByTag(this.element,'strong');
+		hui.dom.setText(e,label);
+	},
+	setIcon : function(icon) {
+		var e = hui.get.firstByClass(this.element,'hui_icon');
+		e.style.backgroundImage = 'url('+hui.ui.getIconUrl(icon,32)+')';
+	},
 	/** Sets wether the icon should be selected */
 	setSelected : function(selected) {
 		if (selected) {

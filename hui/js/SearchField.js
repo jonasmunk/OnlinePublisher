@@ -46,6 +46,7 @@ hui.ui.SearchField.prototype = {
 		hui.listen(this.field,'blur',this._onBlur.bind(this));
 	},
 	_onFocus : function() {
+		hui.ui.setKeyboardTarget(this);
 		this.focused = true;
 		this._updateClass();
 		if (this.options.expandedWidth > 0) {
@@ -56,6 +57,7 @@ hui.ui.SearchField.prototype = {
 		}
 	},
 	_onBlur : function() {
+		hui.ui.setKeyboardTarget(null);
 		this.focused = false;
 		this._updateClass();
 		if (this.initialWidth!==null) {

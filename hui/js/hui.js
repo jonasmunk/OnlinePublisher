@@ -1233,7 +1233,6 @@ hui.listenOnce = function(element,type,listener) {
 hui.unListen = function(el,type,listener,useCapture) {
 	el = hui.get(el);
 	if(document.removeEventListener) {
-		hui.log('removing',listener, 'from', el)
 		el.removeEventListener(type,listener,useCapture ? true : false);
 	} else {
 		el.detachEvent('on'+type, listener);
@@ -1959,6 +1958,9 @@ hui.drag = {
 	 */
 	register : function(options) {
 		hui.listen(options.element,'mousedown',function(e) {
+			if (options.$check && options.$check(e)===false) {
+				return;
+			}
 			hui.stop(e);
 			hui.drag.start(options);
 		})
@@ -2073,24 +2075,29 @@ hui.drag = {
 		});
 		
 		hui.listen(document.body,'drop',function(e) {
-			hui.stop(e);
+			var event = hui.event(e)
+			event.stop();
 			var options = hui.drag._activeDrop;
 			hui.drag._activeDrop = null;
 			if (options) {
 				hui.cls.remove(options.element,options.hoverClass);
 				if (options.$drop) {
-					options.$drop(e);
+					options.$drop(e,{event:event});
 				}
 				if (e.dataTransfer) {
+					hui.log(e.dataTransfer.types)
 					if (options.$dropFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
-						options.$dropFiles(e.dataTransfer.files);
-					} else if (options.$dropURL && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'public.url')) {
+						options.$dropFiles(e.dataTransfer.files,{event:event});
+					} else if (options.$dropURL && e.dataTransfer.types!=null && (hui.array.contains(e.dataTransfer.types,'public.url') || hui.array.contains(e.dataTransfer.types,'text/uri-list'))) {
 						var url = e.dataTransfer.getData('public.url');
-						if (!hui.string.startsWith(url,'data:')) {
-							options.$dropURL(url);
+						var uriList = e.dataTransfer.getData('text/uri-list');
+						if (url && !hui.string.startsWith(url,'data:')) {
+							options.$dropURL(url,{event:event});
+						} else if (uriList && !hui.string.startsWith(url,'data:')) {
+							options.$dropURL(uriList,{event:event});
 						}
 					} else if (options.$dropText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
-						options.$dropText(e.dataTransfer.getData('text/plain'))
+						options.$dropText(e.dataTransfer.getData('text/plain'),{event:event})
 					}
 				}
 			}

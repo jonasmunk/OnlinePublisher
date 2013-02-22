@@ -431,6 +431,11 @@
 -->
 <xsl:template name="gui:checkbox"  match="gui:checkbox">
 	<a id="{generate-id()}" href="javascript://">
+		<xsl:if test="@right">
+			<xsl:attribute name="style">
+				<xsl:text>margin-right:</xsl:text><xsl:value-of select="@right"/><xsl:text>px;</xsl:text>
+			</xsl:attribute>
+		</xsl:if>
 		<xsl:attribute name="class">
 			<xsl:text>hui_checkbox</xsl:text>
 			<xsl:if test="@value='true'"> hui_checkbox_selected</xsl:if>

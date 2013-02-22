@@ -244,3 +244,28 @@ div.hui_window_news div.hui_window_body
 {
 	margin: 0;
 }
+
+div.hui_window_busy
+{
+	position: absolute;
+	margin-left: 5px;
+	background: rgba(233, 233, 234, .7);
+}
+
+div.hui_window_busy span
+{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: 30%;
+	background:  url('../gfx/progress/spinner_white_32.gif') center top no-repeat;
+	padding-top: 35px;
+	font-size: 12px;
+	text-shadow: 0 1px white;
+}
+
+div.hui_window_news div.hui_window_busy
+{
+	background: rgba(255, 255, 255, .7);
+	margin: 0;
+}

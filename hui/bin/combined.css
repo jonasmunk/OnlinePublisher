@@ -608,7 +608,7 @@ a.hui_button_paper, a.hui_button_paper span
 	font-size: 14px;
 }
 
-a.hui_button_paper
+a.hui_button_paper, a.hui_button_paper:focus
 {
 	border: 1px solid #ddd;
 	border-radius: 4px;
@@ -639,6 +639,7 @@ a.hui_button_paper:active
 a.hui_button_paper:focus
 {
 	border-color: rgb(1,105,255);
+	box-shadow: 0 0 4px rgb(1,105,255);
 }
 
 
@@ -2734,6 +2735,31 @@ div.hui_window_news div.hui_window_content div.hui_window_content
 div.hui_window_news div.hui_window_body
 {
 	margin: 0;
+}
+
+div.hui_window_busy
+{
+	position: absolute;
+	margin-left: 5px;
+	background: rgba(233, 233, 234, .7);
+}
+
+div.hui_window_busy span
+{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: 30%;
+	background:  url('../gfx/progress/spinner_white_32.gif') center top no-repeat;
+	padding-top: 35px;
+	font-size: 12px;
+	text-shadow: 0 1px white;
+}
+
+div.hui_window_news div.hui_window_busy
+{
+	background: rgba(255, 255, 255, .7);
+	margin: 0;
 }div.hui_list
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -3035,6 +3061,27 @@ div.hui_list_busy td
 	color: #999;
 }
 
+span.hui_list_progress
+{
+	display: inline-block;
+	width: 100%;
+	height: 10px;
+	padding: 1px;
+	border: 1px solid #ddd;
+	background: #fff;
+	border-radius: 7px;
+	margin-top: 2px;
+}
+
+span.hui_list_progress span
+{
+	height: 100%;
+	display: block;
+	background: #ddd;
+	border-radius: 5px;
+}
+
+
 /** errors **/
 
 div.hui_list_error_content
@@ -3192,6 +3239,7 @@ div.hui_list_drop table
 {
 	background: none;
 }
+
 
 
 

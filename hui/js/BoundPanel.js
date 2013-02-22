@@ -161,6 +161,10 @@ hui.ui.BoundPanel.prototype = {
 			this.content.appendChild(child);
 		}
 	},
+	clear : function() {
+		hui.ui.destroyDescendants(this.content);
+		this.content.innerHTML='';
+	},
 	/**
 	 * Adds som vertical space to the panel
 	 * @param {pixels} height The height of the space in pixels
