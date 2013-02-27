@@ -145,7 +145,7 @@ hui.ui.Drawing.Line.create = function(options) {
 		options.endNode = hui.ui.Drawing._build({
 			tag : 'path',
 			parent : options.parent,
-			attributes : {d:'M 0 0 L 5 10 L -5 10',fill:options.color || '#000'}
+			attributes : {d:'M 0 -1 L 5 10 L -5 10',fill:options.color || '#000'}
 		})
 	}
 	return new hui.ui.Drawing.Line(options);
@@ -174,7 +174,7 @@ hui.ui.Drawing.Line.prototype = {
 		//var deg = Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
 		if (this.endNode) {
 			var deg = -90+Math.atan2(this.from.y-this.to.y, this.from.x-this.to.x)*180/Math.PI
-			this.endNode.setAttribute('transform','translate('+this.to.x.toFixed(10)+','+this.to.y.toFixed(10)+') rotate('+(deg)+')')
+			this.endNode.setAttribute('transform','translate('+(this.to.x.toFixed(10))+','+(this.to.y.toFixed(10))+') rotate('+(deg)+')')
 
 		}
 	},

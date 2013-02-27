@@ -350,17 +350,31 @@ hui.ui.Diagram.D3 = {
 			.nodes(this.diagram.nodes)
 			.links(this.diagram.lines)
 			.size([width, height]);
+		
 		force.on("tick", function() {
+			var sel = diagram.selection ? diagram.selection.id : null;
 			var nodes = force.nodes(),
 				links = force.links();
 			for (var i=0; i < nodes.length; i++) {
 				var node = diagram.nodes[nodes[i].index];
-				node.setCenter(nodes[i]);
+				if (node.id!=sel) {
+					node.setCenter(nodes[i]);
+				}
 			};
 			for (var i=0; i < links.length; i++) {
 				var link = links[i];
-				var from = diagram._getMagnet(link.source.center,link.target.center,link.source)
-				var to = diagram._getMagnet(link.target.center,link.source.center,link.target)
+				var source = link.source,
+					sourceCenter = link.source.center;
+				var target = link.target,
+					targetCenter = link.target;
+				if (source==diagram.selection) {
+					sourceCenter = diagram._getCenter(diagram.selection)
+				}
+				if (target==diagram.selection) {
+					targetCenter = diagram._getCenter(diagram.selection)
+				}
+				var from = diagram._getMagnet(sourceCenter,targetCenter,source)
+				var to = diagram._getMagnet(targetCenter,sourceCenter,target)
 				link.node.setFrom(from);
 				link.node.setTo(to);
 				diagram._updateLine(link);
