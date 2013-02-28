@@ -74,7 +74,7 @@
 					<div class="layout_box">
 						<div class="layout_box_top"><xsl:comment/></div>
 						<div class="layout_box_middle">
-							<img src="{$path}services/images/?id=16&amp;width=175" style="width: 175px; border: 0px;"/>
+							<img src="{$path}services/images/?id=32&amp;width=175" style="width: 175px; border: 0px;"/>
 						</div>
 						<div class="layout_box_bottom"><xsl:comment/></div>
 					</div>
@@ -88,7 +88,7 @@
 					<div class="layout_content_bottom"><xsl:comment/></div>
 				</div>
 				<div class="layout_bottom">
-					Benevita, Dalby Allé, Dall Villaby, 9230 Svenstrup, (+45) 22 41 44 47, <a href="mailto:kontakt@benevita.dk">kontakt@benevita.dk</a>
+					Benevita, Dalby Allé 33, Dall Villaby, 9230 Svenstrup, (+45) 22 41 44 47, <a href="mailto:kontakt@benevita.dk">kontakt@benevita.dk</a>
 				</div>
 			</div>
 			<script src="{$path}style/{$design}/js/layout.js" type="text/javascript"><xsl:text> </xsl:text></script>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
- xmlns="http://www.w3.org/1999/xhtml"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
  xmlns:f="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/"
@@ -16,7 +15,7 @@
 
 
 <xsl:template match="p:page">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<xsl:call-template name="util:html-attributes"/>
 <head>
 	<title><xsl:value-of select="@title"/> » <xsl:value-of select="f:frame/@title"/></title>
@@ -34,7 +33,7 @@
 	<div class="case">
 		<div class="case_head">
 			<div class="case_head_body">
-				<p style="position: absolute; margin: 0; font-size: 36px; font-weight: bold; top: 7px;">GBPigsåler.dk</p>
+				<p style="position: absolute; margin: 0; font-size: 36px; font-weight: bold; top: 10px; left: 20px; color: #fff;">GB Pigsåler</p>
 				<ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
 			</div>
 		</div>
@@ -42,7 +41,7 @@
 			<div class="case_sidebar">
 				<xsl:call-template name="thirdlevel"/>
 				<div class="case_contact">
-					<h2>GBPigsåler.dk</h2>
+					<h2>GB Pigsåler</h2>
 					<p><em>Tlf:</em> 23 62 33 59 </p>
 					<p><em>E-post: </em> <a href="mailto:info@pigsaaler.dk"><span>gbpigsaaler@gbpigsaaler.dk</span></a></p>
 					<blockquote>
@@ -91,24 +90,24 @@
 
 
 <xsl:template match="h:hierarchy/h:item">
-<xsl:if test="not(@hidden='true')">
-<xsl:variable name="style">
-<xsl:choose>
-<xsl:when test="position()=1 and (//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id)"><xsl:text>first_selected</xsl:text></xsl:when>
-<xsl:when test="position()=last() and (//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id)"><xsl:text>last_selected</xsl:text></xsl:when>
-<xsl:when test="//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id"><xsl:text>selected</xsl:text></xsl:when>
-<xsl:when test="position()=1"><xsl:text>first</xsl:text></xsl:when>
-<xsl:when test="position()=last()"><xsl:text>last</xsl:text></xsl:when>
-<xsl:otherwise><xsl:text>middle</xsl:text></xsl:otherwise>
-</xsl:choose>
-</xsl:variable>
-<li class="{$style}">
-<a>
-<xsl:call-template name="util:link"/>
-<span><span><xsl:value-of select="@title"/></span></span>
-</a>
-</li>
-</xsl:if>
+	<xsl:if test="not(@hidden='true')">
+		<xsl:variable name="style">
+			<xsl:choose>
+				<xsl:when test="position()=1 and (//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id)"><xsl:text>first_selected</xsl:text></xsl:when>
+				<xsl:when test="position()=last() and (//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id)"><xsl:text>last_selected</xsl:text></xsl:when>
+				<xsl:when test="//p:page/@id=@page or descendant-or-self::*/@page=//p:page/@id"><xsl:text>selected</xsl:text></xsl:when>
+				<xsl:when test="position()=1"><xsl:text>first</xsl:text></xsl:when>
+				<xsl:when test="position()=last()"><xsl:text>last</xsl:text></xsl:when>
+				<xsl:otherwise><xsl:text>middle</xsl:text></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<li class="{$style}">
+			<a>
+			<xsl:call-template name="util:link"/>
+			<span><span><xsl:value-of select="@title"/></span></span>
+			</a>
+		</li>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="secondlevel">
