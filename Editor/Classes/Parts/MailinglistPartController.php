@@ -119,7 +119,7 @@ class MailinglistPartController extends PartController
 		$person->save();
 		$person->publish();
 
-		$email = new EmailAddress();
+		$email = new Emailaddress();
 		$email->setAddress($address);
 		$email->setContainingObjectId($person->getId());
 		$email->save();
