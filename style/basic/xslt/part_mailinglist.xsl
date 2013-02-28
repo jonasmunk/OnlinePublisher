@@ -8,7 +8,7 @@
 	
 	<xsl:template match="ml:mailinglist">
 		<div class="part_mailinglist common_font">
-			<xsl:apply-templates/>
+			<xsl:apply-templates select="ml:subscribe | ml:unsubscribe"/>
 		</div>
 	</xsl:template>
 	
@@ -29,7 +29,6 @@
 			<xsl:when test="$language='en'">Subscribe</xsl:when>
 			<xsl:otherwise>Tilmeld</xsl:otherwise>
 		</xsl:choose></xsl:variable>
-		<xsl:copy-of select="child::*|child::text()"/>
 		<div class="part_mailinglist_box part_mailinglist_subscribe">
 			<div class="part_mailinglist_box_top"><div><div><xsl:comment/></div></div></div>
 			<div class="part_mailinglist_box_middle"><div class="part_mailinglist_box_middle">
