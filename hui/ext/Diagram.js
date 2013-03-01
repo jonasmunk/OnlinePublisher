@@ -607,6 +607,7 @@ hui.ui.Diagram.util = {
 				hui.cls.add(obj.element,'hui_diagram_dragging');
 				diagram.__select(obj);
 				diagram.fire('select',obj.id);
+				obj.fixed = true;
 			},
 			onBeforeMove : function(e) {
 				e = hui.event(e);
@@ -617,16 +618,17 @@ hui.ui.Diagram.util = {
 				obj.element.style.right = 'auto';
 			},
  			onMove : function(e) {
-				obj.x = dragState.top;
-				obj.y = dragState.left;
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
+				obj.px = top;
+				obj.py = left;
 				obj.element.style.top = Math.max(top,5)+'px';
 				obj.element.style.left = Math.max(left,5)+'px';
 				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {
 				hui.cls.remove(obj.element,'hui_diagram_dragging');
+				obj.fixed = false;
 			}
 		});
 	}
