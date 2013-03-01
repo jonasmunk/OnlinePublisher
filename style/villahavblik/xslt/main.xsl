@@ -64,7 +64,7 @@
 		<hr/>
 		<h2>Kontakt</h2>
 		<p>Buster Munk</p>
-		<p>Tlf: 53 74 01 02</p>
+		<p>Tlf: 61 42 42 27</p>
 		<p><a href="mailto:bustermunk@gmail.com">bustermunk@gmail.com</a></p>
 	</div>
 	<script type="text/javascript">
@@ -121,27 +121,27 @@
 
 
 <xsl:template match="h:hierarchy">
-<ul class="navigation">
-	<xsl:apply-templates select="h:item"/>
-</ul>
+	<ul class="navigation">
+		<xsl:apply-templates select="h:item"/>
+	</ul>
 </xsl:template>
 
 <xsl:template match="h:hierarchy/h:item">
-<xsl:variable name="style">
-<xsl:choose>
-<xsl:when test="//p:page/@id=@page"><xsl:text>Selected</xsl:text></xsl:when>
-<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>Hilited</xsl:text></xsl:when>
-<xsl:otherwise>Standard</xsl:otherwise>
-</xsl:choose>
-</xsl:variable>
-<xsl:if test="not(@hidden='true')">
-<li class="{$style}">
-<a>
-<xsl:call-template name="util:link"/>
-<xsl:value-of select="@title"/>
-</a>
-</li>
-</xsl:if>
+	<xsl:variable name="style">
+		<xsl:choose>
+			<xsl:when test="//p:page/@id=@page"><xsl:text>Selected</xsl:text></xsl:when>
+			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>Hilited</xsl:text></xsl:when>
+		<xsl:otherwise>Standard</xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
+	<xsl:if test="not(@hidden='true')">
+		<li class="{$style}">
+			<a>
+				<xsl:call-template name="util:link"/>
+				<xsl:value-of select="@title"/>
+			</a>
+		</li>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="secondlevel">
