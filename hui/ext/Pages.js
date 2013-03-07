@@ -60,14 +60,14 @@ hui.ui.Pages.prototype = {
 				hui.style.set(this.pages[i],{
 					width : (100 / l)+'%',
 					display : 'block',
-					float : 'left',
+					'float' : 'left',
 					opacity: 1
 				});
 			} else {
 				hui.style.set(this.pages[i],{
 					width : '',
 					display : i==this.index ? 'block' : 'none',
-					float : ''
+					'float' : ''
 				});
 			}
 		};

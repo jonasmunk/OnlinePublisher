@@ -506,9 +506,15 @@ hui.dom = {
 		node.innerHTML = html;
 	},
 	runScripts : function(node) {
-		var scripts = node.getElementsByTagName('script');
-		for (var i=0; i < scripts.length; i++) {
-			eval(scripts[i].innerHTML);
+		if (hui.dom.isElement(node)) {
+			if (hui.dom.isElement(node,'script')) {
+				eval(node.innerHTML);
+			} else {
+				var scripts = node.getElementsByTagName('script');
+				for (var i=0; i < scripts.length; i++) {
+					eval(scripts[i].innerHTML);
+				}
+			}
 		}
 	},
 	setText : function(node,text) {

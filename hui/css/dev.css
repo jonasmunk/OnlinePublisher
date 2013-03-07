@@ -1,4 +1,10 @@
-@import url('master.css');
+@import url('body.css');
+@import url('dragproxy.css');
+@import url('icon.css');
+@import url('disclosure.css');
+@import url('bg.css');
+@import url('tooltip.css');
+@import url('curtain.css');
 @import url('button.css');
 @import url('dropdown.css');
 @import url('common.css');

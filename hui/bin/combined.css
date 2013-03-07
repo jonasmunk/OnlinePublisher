@@ -23,11 +23,22 @@ div.hui_body
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+}div.hui_dragproxy
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: left top no-repeat;
+	padding-left: 18px;
+	height: 16px;
+	font-size: 9pt;
 }
 
-/************************* Links ********************/
-
-a.hui_link
+div.hui_dragproxy span
+{
+	padding: 1px 3px;
+	background: rgba(255,255,255,.8);
+}a.hui_link
 {
 	color: #ccc;
 	text-decoration: underline;
@@ -43,9 +54,6 @@ a.hui_link:hover, a.hui_link:hover span
 {
 	color: #0033aa;
 }
-
-/*********************** text **********************/
-
 div.hui_text
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
@@ -62,9 +70,109 @@ div.hui_text p
 	font-size: 9pt;
 	margin: 5px 0px;
 }
+.hui_bg_white, body.hui_bg_white
+{
+	background: #fff;
+}
 
-/************************* icons **********************/
+.hui_bg_brushed, body.hui_bg_brushed
+{
+	background: url('../gfx/backgrounds/brushed_light.jpg');
+}
 
+.hui_bg_linen, body.hui_bg_linen
+{
+	background: url('../gfx/backgrounds/linen.png');
+}
+
+.hui_bg_wood, body.hui_bg_wood
+{
+	background: url('../gfx/backgrounds/wood.jpg');	
+}
+
+.hui_bg_leather, body.hui_bg_leather
+{
+	background: url('../gfx/backgrounds/leather.jpg');	
+}
+
+.hui_bg_vichy, body.hui_bg_vichy
+{
+	background: url('../gfx/backgrounds/vichy.png');	
+}
+
+.hui_bg_aluminum, body.hui_bg_aluminum
+{
+	background: url('../gfx/backgrounds/brushed_alu.png');	
+}
+
+.hui_bg_sand_light, body.hui_bg_sand_light
+{
+	background: url('../gfx/backgrounds/sand_light.png');
+}
+
+.hui_bg_sand_grey, body.hui_bg_sand_grey
+{
+	background: url('../gfx/backgrounds/sand_grey.png');
+}
+div.hui_curtain
+{
+	width: 100%;
+	background: #000;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+div.hui_tooltip
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 31px;
+	background: url('../gfx/tooltip.png') -7px top no-repeat;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	line-height: 28px;
+	color: #433909;
+	font-size: 8pt;
+	opacity: 0;
+	cursor: default;
+}
+
+div.hui_tooltip div
+{
+	background: url('../gfx/tooltip.png') right -62px no-repeat;
+	height: 31px;
+}
+
+div.hui_tooltip div div
+{
+	background: url('../gfx/tooltip.png') left -31px repeat-x;
+	margin: 0px 18px 0px 11px;
+}span.hui_disclosure
+{
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	vertical-align: middle;
+	background: url('../gfx/disclosure.png');
+	font-size: 0;
+	line-height: 0;
+	cursor: default;
+}
+
+span.hui_disclosure:hover
+{
+	background-position: 0 -11px;
+}
+
+span.hui_disclosure_open
+{
+	background-position: 0 -22px;
+}
+
+span.hui_disclosure_open:hover
+{
+	background-position: 0 -33px;
+}
 span.hui_icon_1, span.hui_icon_16, a.hui_icon_16
 {
 	display: inline-block;
@@ -149,113 +257,6 @@ a.hui_icon_labeled:hover span.hui_icon_128
 {
 	background-position: 0 -128px;
 }
-
-/************************* disclosure **********************/
-
-span.hui_disclosure
-{
-	display: inline-block;
-	width: 11px;
-	height: 11px;
-	vertical-align: middle;
-	background: url('../gfx/disclosure.png');
-	font-size: 0;
-	line-height: 0;
-	cursor: default;
-}
-
-span.hui_disclosure:hover
-{
-	background-position: 0 -11px;
-}
-
-span.hui_disclosure_open
-{
-	background-position: 0 -22px;
-}
-
-span.hui_disclosure_open:hover
-{
-	background-position: 0 -33px;
-}
-
-/*********************** tooltip **********************/
-
-div.hui_tooltip
-{
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	height: 31px;
-	background: url('../gfx/tooltip.png') -7px top no-repeat;
-	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
-	line-height: 28px;
-	color: #433909;
-	font-size: 8pt;
-	opacity: 0;
-	cursor: default;
-}
-
-div.hui_tooltip div
-{
-	background: url('../gfx/tooltip.png') right -62px no-repeat;
-	height: 31px;
-}
-
-div.hui_tooltip div div
-{
-	background: url('../gfx/tooltip.png') left -31px repeat-x;
-	margin: 0px 18px 0px 11px;
-}
-
-/****************************************** Backgrounds *******************************/
-
-.hui_bg_white, body.hui_bg_white
-{
-	background: #fff;
-}
-
-.hui_bg_brushed, body.hui_bg_brushed
-{
-	background: url('../gfx/backgrounds/brushed_light.jpg');
-}
-
-.hui_bg_linen, body.hui_bg_linen
-{
-	background: url('../gfx/backgrounds/linen.png');
-}
-
-.hui_bg_wood, body.hui_bg_wood
-{
-	background: url('../gfx/backgrounds/wood.jpg');	
-}
-
-.hui_bg_leather, body.hui_bg_leather
-{
-	background: url('../gfx/backgrounds/leather.jpg');	
-}
-
-.hui_bg_vichy, body.hui_bg_vichy
-{
-	background: url('../gfx/backgrounds/vichy.png');	
-}
-
-.hui_bg_aluminum, body.hui_bg_aluminum
-{
-	background: url('../gfx/backgrounds/brushed_alu.png');	
-}
-
-.hui_bg_sand_light, body.hui_bg_sand_light
-{
-	background: url('../gfx/backgrounds/sand_light.png');
-}
-
-.hui_bg_sand_grey, body.hui_bg_sand_grey
-{
-	background: url('../gfx/backgrounds/sand_grey.png');
-}
-
-
 div.hui_buttons
 {
 	overflow: hidden;
@@ -782,31 +783,7 @@ a.hui_button_small_bar span span
 	line-height: 17px;
 	text-shadow: 0 1px 0 #fff;
 }
-div.hui_curtain
-{
-	width: 100%;
-	background: #000;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-}
-
-div.hui_dragproxy
-{
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	background: left top no-repeat;
-	padding-left: 18px;
-	height: 16px;
-	font-size: 9pt;
-}
-
-div.hui_dragproxy span
-{
-	padding: 1px 3px;
-	background: rgba(255,255,255,.8);
-}.tabbox
+.tabbox
 {
 	width: 600px;
 	position: relative;

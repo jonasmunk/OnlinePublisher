@@ -186,8 +186,13 @@ hui.ui.Diagram.prototype = {
 		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
 		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
 		//line.label.innerHTML = Math.round(hui.geometry.distance(from,to));
-		line.label.style.maxWidth = Math.round(hui.geometry.distance(from,to)-20)+'px';
-		hui.style.set(line.label,{left : (middle.x-line.label.clientWidth/2)+'px',top : (middle.y-line.label.clientHeight/2)+'px'});
+		var width = Math.round(hui.geometry.distance(from,to)-30);
+		hui.style.set(line.label,{
+			left : (middle.x-line.label.clientWidth/2)+'px',
+			top : (middle.y-line.label.clientHeight/2)+'px',
+			maxWidth : Math.max(0,width)+'px',
+			visibility : width>10 ? '' : 'hidden'
+		});
 	},
 	__nodeMoved : function(widget) {
 		var center = this._getCenter(widget);
@@ -536,8 +541,8 @@ hui.ui.Diagram.Box.create = function(options) {
 hui.ui.Diagram.Box.prototype = {
 	setCenter : function(point) {
 		var e = this.element;
-		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
-		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		e.style.top = Math.round(point.y - e.offsetHeight/2)+'px';
+		e.style.left = Math.round(point.x - e.offsetWidth/2)+'px';
 		this.center = point;
 	},
 	setSelected : function(selected) {

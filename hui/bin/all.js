@@ -506,9 +506,15 @@ hui.dom = {
 		node.innerHTML = html;
 	},
 	runScripts : function(node) {
-		var scripts = node.getElementsByTagName('script');
-		for (var i=0; i < scripts.length; i++) {
-			eval(scripts[i].innerHTML);
+		if (hui.dom.isElement(node)) {
+			if (hui.dom.isElement(node,'script')) {
+				eval(node.innerHTML);
+			} else {
+				var scripts = node.getElementsByTagName('script');
+				for (var i=0; i < scripts.length; i++) {
+					eval(scripts[i].innerHTML);
+				}
+			}
 		}
 	},
 	setText : function(node,text) {
@@ -3183,7 +3189,7 @@ hui.Color.rgb2hex = function(rgbary) {
   	return c;
 }
 
-/*!
+/*
   * $script.js v1.3
   * https://github.com/ded/script.js
   * Copyright: @ded & @fat - Dustin Diaz, Jacob Thornton 2011
@@ -5522,7 +5528,7 @@ hui.ui.extend = function(obj,options) {
 		obj.name = options.name;
 	}
 	if (hui.ui.objects[obj.name]) {
-		hui.log('Widget replaced: '+obj.name);
+		hui.log('Widget replaced: '+obj.name,hui.ui.objects[obj.name]);
 	}
 	hui.ui.objects[obj.name] = obj;
 	obj.delegates = [];
@@ -20056,7 +20062,7 @@ hui.ui.Drawing.Line.create = function(options) {
 		options.endNode = hui.ui.Drawing._build({
 			tag : 'path',
 			parent : options.parent,
-			attributes : {d:'M 0 0 L 5 10 L -5 10',fill:options.color || '#000'}
+			attributes : {d:'M 0 -1 L 5 10 L -5 10',fill:options.color || '#000'}
 		})
 	}
 	return new hui.ui.Drawing.Line(options);
@@ -20085,7 +20091,7 @@ hui.ui.Drawing.Line.prototype = {
 		//var deg = Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
 		if (this.endNode) {
 			var deg = -90+Math.atan2(this.from.y-this.to.y, this.from.x-this.to.x)*180/Math.PI
-			this.endNode.setAttribute('transform','translate('+this.to.x.toFixed(10)+','+this.to.y.toFixed(10)+') rotate('+(deg)+')')
+			this.endNode.setAttribute('transform','translate('+(this.to.x.toFixed(10))+','+(this.to.y.toFixed(10))+') rotate('+(deg)+')')
 
 		}
 	},
@@ -20570,14 +20576,14 @@ hui.ui.Pages.prototype = {
 				hui.style.set(this.pages[i],{
 					width : (100 / l)+'%',
 					display : 'block',
-					float : 'left',
+					'float' : 'left',
 					opacity: 1
 				});
 			} else {
 				hui.style.set(this.pages[i],{
 					width : '',
 					display : i==this.index ? 'block' : 'none',
-					float : ''
+					'float' : ''
 				});
 			}
 		};
@@ -20625,7 +20631,6 @@ hui.ui.Pages.prototype = {
 	hui.ui.extend(this);
 	if (this.options.source) {
 		this.options.source.listen(this);
-		//this.options.source.refreshFirst();
 	}
 }
 
@@ -20645,7 +20650,7 @@ hui.ui.Chart.prototype = {
 	},
 	setData : function(data) {
 		if (!data.dataSets) {
-			this.data = this._convertData(data);
+			this.data = hui.ui.Chart.Util.convertData(data);
 		} else {
 			this.data = data;
 		}
@@ -20660,47 +20665,6 @@ hui.ui.Chart.prototype = {
 	$objectsLoaded : function(data) {
 		this.setData(data);
 		this.render();
-	},
-	_convertData : function(obj) {
-		var labels = [],keys = [];
-		for (var i=0; i < obj.sets.length; i++) {
-			var set = obj.sets[i];
-			if (hui.isArray(set.entries)) {
-				for (var j=0; j < set.entries.length; j++) {
-					var entry = set.entries[i];
-					if (!hui.array.contains(keys,entry.key)) {
-						keys.push(entry.key)
-						labels.push({key:entry.key,label:entry.key});					
-					}
-				}
-			} else {
-				for (key in set.entries) {
-					if (!hui.array.contains(keys,key)) {
-						keys.push(key)
-						labels.push({key:key,label:key});
-					}
-				}
-			}
-		};
-		var data = new hui.ui.Chart.Data({xAxis:{labels:labels}});
-		
-		for (var i=0; i < obj.sets.length; i++) {
-			var set = obj.sets[i];
-			var dataSet = new hui.ui.Chart.DataSet({type:set.type});
-			if (hui.isArray(set.entries)) {
-				for (var j=0; j < set.entries.length; j++) {
-					var entry = set.entries[j];
-					dataSet.addEntry(entry.key,entry.value);
-				};
-			} else {
-				for (key in set.entries) {
-					dataSet.addEntry(key,set.entries[key]);
-				}
-			}
-			data.addDataSet(dataSet);
-		}
-		hui.log(data)
-		return data;
 	}
 }
 
@@ -20981,14 +20945,10 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		stroke = 'rgb(255,255,255)',
 		background = 'rgb(240,240,240)',
 		state = this.state,
-		innerBody = this.state.innerBody;
-	
-	//stroke = 'rgb(240,240,240)';
-	//background = 'rgb(255,255,255)';
-	
+		innerBody = this.state.innerBody;	
 
 	if (this.chart.style.background) {
-		this.ctx.fillStyle=background;
+		this.ctx.fillStyle = background;
 		this.ctx.fillRect(
 			state.body.left,
 			state.body.top,
@@ -21305,18 +21265,65 @@ hui.ui.Chart.Util.arraySum = function(values) {
 		total+=values[i];
 	}
 	return total;
+}
+
+/** Converts a simple data-representation into a class-based stucture */
+hui.ui.Chart.Util.convertData = function(obj) {
+	var labels = [],keys = [];
+	for (var i=0; i < obj.sets.length; i++) {
+		var set = obj.sets[i];
+		if (hui.isArray(set.entries)) {
+			for (var j=0; j < set.entries.length; j++) {
+				var entry = set.entries[j];
+				if (!hui.array.contains(keys,entry.key)) {
+					keys.push(entry.key)
+					labels.push({key:entry.key,label:entry.key});					
+				}
+			}
+		} else {
+			for (key in set.entries) {
+				if (!hui.array.contains(keys,key)) {
+					keys.push(key)
+					labels.push({key:key,label:key});
+				}
+			}
+		}
+	};
+	var options = {xAxis:{labels:labels}};
+	if (obj.axis && obj.axis.x && obj.axis.x.time===true) {
+		options.xAxis.resolution = 'time';
+	}
+	var data = new hui.ui.Chart.Data(options);
+		
+	for (var i=0; i < obj.sets.length; i++) {
+		var set = obj.sets[i];
+		var dataSet = new hui.ui.Chart.DataSet({type:set.type});
+		if (hui.isArray(set.entries)) {
+			for (var j=0; j < set.entries.length; j++) {
+				var entry = set.entries[j];
+				dataSet.addEntry(entry.key,entry.value);
+			};
+		} else {
+			for (key in set.entries) {
+				dataSet.addEntry(key,set.entries[key]);
+			}
+		}
+		data.addDataSet(dataSet);
+	}
+	hui.log(data)
+	return data;
 }/** A diagram
  * @constructor
  */
 hui.ui.Diagram = function(options) {
-	this.options = options;
+	this.options = hui.override({layout:'Arbor'},options);;
 	this.name = options.name;
 	this.nodes = [];
 	this.lines = [];
 	this.element = hui.get(options.element);
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
-	this.layout = hui.ui.Diagram.Arbor;
+	this.layout = hui.ui.Diagram[this.options.layout];
 	//this.layout = hui.ui.Diagram.Springy;
 	this.layout.diagram = this;
 	hui.ui.extend(this);
@@ -21480,6 +21487,9 @@ hui.ui.Diagram.prototype = {
 		};
 		return null;
 	},
+	
+	// Drawing...
+	
 	_updateLine : function(line) {
 		if (!line.label) {
 			return;
@@ -21490,8 +21500,13 @@ hui.ui.Diagram.prototype = {
 		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
 		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
 		//line.label.innerHTML = Math.round(hui.geometry.distance(from,to));
-		line.label.style.maxWidth = Math.round(hui.geometry.distance(from,to)-20)+'px';
-		hui.style.set(line.label,{left : (middle.x-line.label.clientWidth/2)+'px',top : (middle.y-line.label.clientHeight/2)+'px'});
+		var width = Math.round(hui.geometry.distance(from,to)-30);
+		hui.style.set(line.label,{
+			left : (middle.x-line.label.clientWidth/2)+'px',
+			top : (middle.y-line.label.clientHeight/2)+'px',
+			maxWidth : Math.max(0,width)+'px',
+			visibility : width>10 ? '' : 'hidden'
+		});
 	},
 	__nodeMoved : function(widget) {
 		var center = this._getCenter(widget);
@@ -21569,14 +21584,18 @@ hui.ui.Diagram.Arbor = {
 					}
 				});
 				system.eachEdge(function(edge,point1,point2) {
+					if (edge.target.name==sel) {
+						point2 = diagram._getCenter(diagram.selection)
+					}
+					if (edge.source.name==sel) {
+						point1 = diagram._getCenter(diagram.selection)
+					}
 					var line = edge.data.node;
 					if (edge.source.name!=sel) {
-						var magnet = diagram._getMagnet(point2,point1,edge.source.data)
-						line.setFrom(magnet);
+						line.setFrom(diagram._getMagnet(point2,point1,edge.source.data));
 					}
 					if (edge.target.name!=sel) {
-						var magnet = diagram._getMagnet(point1,point2,edge.target.data)
-						line.setTo(magnet);						
+						line.setTo(diagram._getMagnet(point1,point2,edge.target.data));						
 					}
 					diagram._updateLine(edge.data);
 				}.bind(this));
@@ -21650,17 +21669,31 @@ hui.ui.Diagram.D3 = {
 			.nodes(this.diagram.nodes)
 			.links(this.diagram.lines)
 			.size([width, height]);
+		
 		force.on("tick", function() {
+			var sel = diagram.selection ? diagram.selection.id : null;
 			var nodes = force.nodes(),
 				links = force.links();
 			for (var i=0; i < nodes.length; i++) {
 				var node = diagram.nodes[nodes[i].index];
-				node.setCenter(nodes[i]);
+				if (node.id!=sel) {
+					node.setCenter(nodes[i]);
+				}
 			};
 			for (var i=0; i < links.length; i++) {
 				var link = links[i];
-				var from = diagram._getMagnet(link.source.center,link.target.center,link.source)
-				var to = diagram._getMagnet(link.target.center,link.source.center,link.target)
+				var source = link.source,
+					sourceCenter = link.source.center;
+				var target = link.target,
+					targetCenter = link.target;
+				if (source==diagram.selection) {
+					sourceCenter = diagram._getCenter(diagram.selection)
+				}
+				if (target==diagram.selection) {
+					targetCenter = diagram._getCenter(diagram.selection)
+				}
+				var from = diagram._getMagnet(sourceCenter,targetCenter,source)
+				var to = diagram._getMagnet(targetCenter,sourceCenter,target)
 				link.node.setFrom(from);
 				link.node.setTo(to);
 				diagram._updateLine(link);
@@ -21734,7 +21767,7 @@ hui.ui.Diagram.Springy = {
 			cachedLines[edge.id] = lines[i];
 		};
 		
-		var layout = new Layout.ForceDirected(graph, width, height, 0.1);
+		var layout = new Layout.ForceDirected(graph, width, height, 0.4);
 		
 		var toScreen = function(p) {
 			  return {
@@ -21822,8 +21855,8 @@ hui.ui.Diagram.Box.create = function(options) {
 hui.ui.Diagram.Box.prototype = {
 	setCenter : function(point) {
 		var e = this.element;
-		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
-		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		e.style.top = Math.round(point.y - e.offsetHeight/2)+'px';
+		e.style.left = Math.round(point.x - e.offsetWidth/2)+'px';
 		this.center = point;
 	},
 	setSelected : function(selected) {
@@ -21884,31 +21917,37 @@ hui.ui.Diagram.Icon.prototype = {
 
 hui.ui.Diagram.util = {
 	enableDragging : function(obj) {
+		var diagram = obj.options.container;
 		hui.cls.add(obj.element,'hui_diagram_dragable');
 		var dragState = null;
 		hui.drag.register({
 			element : obj.element,
 			onStart : function() {
 				hui.cls.add(obj.element,'hui_diagram_dragging');
-				obj.options.container.__select(obj);
+				diagram.__select(obj);
+				diagram.fire('select',obj.id);
+				obj.fixed = true;
 			},
 			onBeforeMove : function(e) {
 				e = hui.event(e);
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
 				var pos = hui.position.get(obj.element);
-				var container = hui.position.get(obj.options.container.element);
+				var container = hui.position.get(diagram.element);
 				dragState = {left: e.getLeft() - pos.left + container.left,top:e.getTop()-pos.top + container.top};
 				obj.element.style.right = 'auto';
 			},
  			onMove : function(e) {
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
+				obj.px = top;
+				obj.py = left;
 				obj.element.style.top = Math.max(top,5)+'px';
 				obj.element.style.left = Math.max(left,5)+'px';
-				obj.options.container.__nodeMoved(obj);
+				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {
 				hui.cls.remove(obj.element,'hui_diagram_dragging');
+				obj.fixed = false;
 			}
 		});
 	}
@@ -21916,14 +21955,14 @@ hui.ui.Diagram.util = {
  * @constructor
  */
 hui.ui.Diagram = function(options) {
-	this.options = options;
+	this.options = hui.override({layout:'Arbor'},options);;
 	this.name = options.name;
 	this.nodes = [];
 	this.lines = [];
 	this.element = hui.get(options.element);
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
-	this.layout = hui.ui.Diagram.Arbor;
+	this.layout = hui.ui.Diagram[this.options.layout];
 	//this.layout = hui.ui.Diagram.Springy;
 	this.layout.diagram = this;
 	hui.ui.extend(this);
@@ -22087,6 +22126,9 @@ hui.ui.Diagram.prototype = {
 		};
 		return null;
 	},
+	
+	// Drawing...
+	
 	_updateLine : function(line) {
 		if (!line.label) {
 			return;
@@ -22097,8 +22139,13 @@ hui.ui.Diagram.prototype = {
 		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
 		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
 		//line.label.innerHTML = Math.round(hui.geometry.distance(from,to));
-		line.label.style.maxWidth = Math.round(hui.geometry.distance(from,to)-20)+'px';
-		hui.style.set(line.label,{left : (middle.x-line.label.clientWidth/2)+'px',top : (middle.y-line.label.clientHeight/2)+'px'});
+		var width = Math.round(hui.geometry.distance(from,to)-30);
+		hui.style.set(line.label,{
+			left : (middle.x-line.label.clientWidth/2)+'px',
+			top : (middle.y-line.label.clientHeight/2)+'px',
+			maxWidth : Math.max(0,width)+'px',
+			visibility : width>10 ? '' : 'hidden'
+		});
 	},
 	__nodeMoved : function(widget) {
 		var center = this._getCenter(widget);
@@ -22176,14 +22223,18 @@ hui.ui.Diagram.Arbor = {
 					}
 				});
 				system.eachEdge(function(edge,point1,point2) {
+					if (edge.target.name==sel) {
+						point2 = diagram._getCenter(diagram.selection)
+					}
+					if (edge.source.name==sel) {
+						point1 = diagram._getCenter(diagram.selection)
+					}
 					var line = edge.data.node;
 					if (edge.source.name!=sel) {
-						var magnet = diagram._getMagnet(point2,point1,edge.source.data)
-						line.setFrom(magnet);
+						line.setFrom(diagram._getMagnet(point2,point1,edge.source.data));
 					}
 					if (edge.target.name!=sel) {
-						var magnet = diagram._getMagnet(point1,point2,edge.target.data)
-						line.setTo(magnet);						
+						line.setTo(diagram._getMagnet(point1,point2,edge.target.data));						
 					}
 					diagram._updateLine(edge.data);
 				}.bind(this));
@@ -22257,17 +22308,31 @@ hui.ui.Diagram.D3 = {
 			.nodes(this.diagram.nodes)
 			.links(this.diagram.lines)
 			.size([width, height]);
+		
 		force.on("tick", function() {
+			var sel = diagram.selection ? diagram.selection.id : null;
 			var nodes = force.nodes(),
 				links = force.links();
 			for (var i=0; i < nodes.length; i++) {
 				var node = diagram.nodes[nodes[i].index];
-				node.setCenter(nodes[i]);
+				if (node.id!=sel) {
+					node.setCenter(nodes[i]);
+				}
 			};
 			for (var i=0; i < links.length; i++) {
 				var link = links[i];
-				var from = diagram._getMagnet(link.source.center,link.target.center,link.source)
-				var to = diagram._getMagnet(link.target.center,link.source.center,link.target)
+				var source = link.source,
+					sourceCenter = link.source.center;
+				var target = link.target,
+					targetCenter = link.target;
+				if (source==diagram.selection) {
+					sourceCenter = diagram._getCenter(diagram.selection)
+				}
+				if (target==diagram.selection) {
+					targetCenter = diagram._getCenter(diagram.selection)
+				}
+				var from = diagram._getMagnet(sourceCenter,targetCenter,source)
+				var to = diagram._getMagnet(targetCenter,sourceCenter,target)
 				link.node.setFrom(from);
 				link.node.setTo(to);
 				diagram._updateLine(link);
@@ -22341,7 +22406,7 @@ hui.ui.Diagram.Springy = {
 			cachedLines[edge.id] = lines[i];
 		};
 		
-		var layout = new Layout.ForceDirected(graph, width, height, 0.1);
+		var layout = new Layout.ForceDirected(graph, width, height, 0.4);
 		
 		var toScreen = function(p) {
 			  return {
@@ -22429,8 +22494,8 @@ hui.ui.Diagram.Box.create = function(options) {
 hui.ui.Diagram.Box.prototype = {
 	setCenter : function(point) {
 		var e = this.element;
-		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
-		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		e.style.top = Math.round(point.y - e.offsetHeight/2)+'px';
+		e.style.left = Math.round(point.x - e.offsetWidth/2)+'px';
 		this.center = point;
 	},
 	setSelected : function(selected) {
@@ -22491,31 +22556,37 @@ hui.ui.Diagram.Icon.prototype = {
 
 hui.ui.Diagram.util = {
 	enableDragging : function(obj) {
+		var diagram = obj.options.container;
 		hui.cls.add(obj.element,'hui_diagram_dragable');
 		var dragState = null;
 		hui.drag.register({
 			element : obj.element,
 			onStart : function() {
 				hui.cls.add(obj.element,'hui_diagram_dragging');
-				obj.options.container.__select(obj);
+				diagram.__select(obj);
+				diagram.fire('select',obj.id);
+				obj.fixed = true;
 			},
 			onBeforeMove : function(e) {
 				e = hui.event(e);
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
 				var pos = hui.position.get(obj.element);
-				var container = hui.position.get(obj.options.container.element);
+				var container = hui.position.get(diagram.element);
 				dragState = {left: e.getLeft() - pos.left + container.left,top:e.getTop()-pos.top + container.top};
 				obj.element.style.right = 'auto';
 			},
  			onMove : function(e) {
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
+				obj.px = top;
+				obj.py = left;
 				obj.element.style.top = Math.max(top,5)+'px';
 				obj.element.style.left = Math.max(left,5)+'px';
-				obj.options.container.__nodeMoved(obj);
+				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {
 				hui.cls.remove(obj.element,'hui_diagram_dragging');
+				obj.fixed = false;
 			}
 		});
 	}

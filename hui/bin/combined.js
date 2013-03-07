@@ -506,9 +506,15 @@ hui.dom = {
 		node.innerHTML = html;
 	},
 	runScripts : function(node) {
-		var scripts = node.getElementsByTagName('script');
-		for (var i=0; i < scripts.length; i++) {
-			eval(scripts[i].innerHTML);
+		if (hui.dom.isElement(node)) {
+			if (hui.dom.isElement(node,'script')) {
+				eval(node.innerHTML);
+			} else {
+				var scripts = node.getElementsByTagName('script');
+				for (var i=0; i < scripts.length; i++) {
+					eval(scripts[i].innerHTML);
+				}
+			}
 		}
 	},
 	setText : function(node,text) {
@@ -3183,7 +3189,7 @@ hui.Color.rgb2hex = function(rgbary) {
   	return c;
 }
 
-/*!
+/*
   * $script.js v1.3
   * https://github.com/ded/script.js
   * Copyright: @ded & @fat - Dustin Diaz, Jacob Thornton 2011
@@ -5522,7 +5528,7 @@ hui.ui.extend = function(obj,options) {
 		obj.name = options.name;
 	}
 	if (hui.ui.objects[obj.name]) {
-		hui.log('Widget replaced: '+obj.name);
+		hui.log('Widget replaced: '+obj.name,hui.ui.objects[obj.name]);
 	}
 	hui.ui.objects[obj.name] = obj;
 	obj.delegates = [];
