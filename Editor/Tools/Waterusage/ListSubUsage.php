@@ -9,7 +9,8 @@ $meterId = Request::getInt('meterId');
 $windowSize = Request::getInt('windowSize',30);
 $windowPage = Request::getInt('windowPage',0);
 
-$query = Query::after('waterusage')->orderBy('title')->withWindowPage($windowPage)->withWindowSize($windowSize)->withProperty('watermeterId',$meterId)->orderBy('date');
+$query = Query::after('waterusage')->withWindowPage($windowPage)->withWindowSize($windowSize)->withProperty('watermeterId',$meterId)->orderBy('date');
+
 $result = $query->search();
 
 $writer = new ListWriter();

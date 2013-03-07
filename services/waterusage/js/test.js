@@ -24,6 +24,8 @@ hui.ui.listen({
 
 		this.numberInput.focus();
 		//this.$click$sendNumber();
+		
+		//this._fetch(12345678)
 	},
 	
 	
@@ -81,7 +83,7 @@ hui.ui.listen({
 			$object : function(obj) {
 				this.data = obj;
 				this._renderRecord(obj.usage);
-				this._renderChart(obj.usage);
+				this._renderChart(obj);
 				this._renderInfo(obj.info);
 				hui.get('result').style.display='block';
 				hui.get('intro').style.display='none';
@@ -148,6 +150,9 @@ hui.ui.listen({
 	_renderChart : function(obj) {
 		hui.get('chart').innerHTML = '';
 		var chart = new hui.ui.Chart.create({parent:'chart'});
+		chart.setData(obj.graph)
+		chart.data.xAxis.maxLabels = 5;
+		/*
 		var entries = {};
 		for (var i=0; i < obj.length; i++) {
 			entries[obj[i].date] = obj[i].value;
@@ -157,7 +162,7 @@ hui.ui.listen({
 				{type:'line', entries:entries} //w {'January':10,'February':20,'March':15,'April':45,'May':56}
 			]
 		});
-		
+		*/
 		chart.render();
 	},
 	_renderRecord : function(data) {

@@ -349,13 +349,15 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		var left = i*((innerBody.width)/(xLabels.length-1))+innerBody.left;
 		var left = Math.round(left);
 
-		// Draw grid
-		if (this.chart.data.xAxis.grid) {
-			this.ctx.beginPath();
-			this.ctx.moveTo(.5+left,state.body.top+.5);
-			this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
-			this.ctx.stroke();
-			this.ctx.closePath();
+		if (mod<10 || (i % mod) ==0) {
+			// Draw grid
+			if (this.chart.data.xAxis.grid) {
+				this.ctx.beginPath();
+				this.ctx.moveTo(.5+left,state.body.top+.5);
+				this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
+				this.ctx.stroke();
+				this.ctx.closePath();
+			}
 		}
 		if ((i % mod) ==0) {
 			// Draw label
@@ -658,7 +660,7 @@ hui.ui.Chart.Util.convertData = function(obj) {
 				var entry = set.entries[j];
 				if (!hui.array.contains(keys,entry.key)) {
 					keys.push(entry.key)
-					labels.push({key:entry.key,label:entry.key});					
+					labels.push({key:entry.key,label:entry.label || entry.key});					
 				}
 			}
 		} else {

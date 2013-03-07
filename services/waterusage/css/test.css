@@ -118,6 +118,15 @@ div.box h3
 	display: inline-block;
 	width: 100px;
 	color: #999;
+	position: absolute;
+}
+
+#info div.properties span
+{
+	display: block;
+	margin-left: 100px;
+	min-height: 20px;
+	_height: 20px;
 }
 
 #map
