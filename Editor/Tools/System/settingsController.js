@@ -32,8 +32,26 @@ hui.ui.listen({
 	$success$saveOnlineObjects : function() {
 		saveOnlineObjects.setEnabled(true);
 	},
+	$click$testOnlineObjects : function() {
+		var url = onlineobjectsFormula.getValues().url;
+		hui.ui.showMessage({text:'Testing connection to OnlineObjects!',busy:true});
+		hui.ui.request({
+			parameters : {url:url},
+			url : 'actions/TestOnlineObjects.php',
+			$object : function(obj) {
+				if (obj.success) {
+					hui.ui.showMessage({text:'I can talk to OnlineObjects',icon:'common/success',duration:3000});
+				} else {
+					hui.ui.showMessage({text:'I cannot talk to OnlineObjects',icon:'common/warning',duration:3000});
+				}
+			},
+			$failure : function() {
+				hui.ui.showMessage({text:'An unexpected failure occurred!',duration:3000});
+			}
+		});
+	},
 	
-	// OnlineObjects
+	// Analytics
 	$click$saveAnalytics : function() {
 		saveAnalytics.setEnabled(false);
 		var data = {'analytics':analyticsFormula.getValues()};
@@ -47,7 +65,7 @@ hui.ui.listen({
 		hui.ui.request({json:{},url:'actions/TestAnalytics.php',onSuccess:'testAnalytics'});
 	},
 	$success$testAnalytics : function(success) {
-		hui.ui.showMessage({text:success ? 'Det virkede!' : 'Det virkede ikke!',duration:2000});
+		hui.ui.showMessage({text:success ? 'It works!' : 'It does not work!',duration:2000});
 	},
 	
 	// Email

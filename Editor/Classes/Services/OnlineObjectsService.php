@@ -21,8 +21,18 @@ class OnlineObjectsService {
 		return StringUtils::fromUnicode(StringUtils::fromJSON($response->getData()));
 	}
 	
-	function getServiceUrl($service,$method) {
-		$base = SettingService::getOnlineObjectsUrl();
-		return StringUtils::concatUrl($base,'service/'.$service.'/'.$method);
+	function getServiceUrl($service,$method,$baseUrl=null) {
+		if ($baseUrl==null) {
+			$baseUrl = SettingService::getOnlineObjectsUrl();
+		}
+		return StringUtils::concatUrl($baseUrl,'v1.0/'.$service.'/'.$method);
+	}
+	
+	function test($url) {
+		$serviceUrl = OnlineObjectsService::getServiceUrl('language','analyse',$url);
+		$request = new HttpRequest($serviceUrl);
+		$request->addParameter('text','Hello world');
+		$response = HttpClient::send($request);
+		return $response->isSuccess();
 	}
 }
