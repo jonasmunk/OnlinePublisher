@@ -31,7 +31,7 @@ function listIndex() {
 	$sql = "select id,`index`,title from page order by title";
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
-		$writer->startRow(array('id'=>$row['id']));
+		$writer->startRow(array('id'=>$row['id'],'kind'=>'page'));
 		$writer->startCell(array('icon'=>'common/page'))->text($row['title'])->endCell();
 		$writer->startCell()->text($row['index'])->endCell();
 		$writer->endRow();

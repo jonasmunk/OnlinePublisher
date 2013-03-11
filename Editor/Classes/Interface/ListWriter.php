@@ -213,7 +213,7 @@ class ListWriter {
 		}
 		echo '<icon icon="'.$options['icon'].'"';
 		if (isset($options['data'])) {
-			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
+			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON(StringUtils::toUnicode($options['data']))).'"';
 		}
 		if (@$options['revealing']) {
 			echo ' revealing="true"';
