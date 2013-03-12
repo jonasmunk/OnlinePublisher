@@ -76,5 +76,13 @@ class SettingService {
 	function setSharedSecret($value) {
 		return SettingService::setSetting('system','security','sharedsecret',$value);
 	}
+	
+	function getLatestHeartBeat() {
+		return SettingService::getSetting('system','heartbeat','latest');
+	}
+	
+	function setLatestHeartBeat($value) {
+		return SettingService::setSetting('system','heartbeat','latest',$value);
+	}
 }
 ?>

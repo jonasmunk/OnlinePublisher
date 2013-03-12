@@ -2525,14 +2525,18 @@ hui.animation._render = function() {
 				if (work.delegate && work.delegate.ease) {
 					v = work.delegate.ease(v);
 				}
-				if (work.delegate && work.delegate.callback) {
+				if (work.delegate && work.delegate.$render) {
+					work.delegate.$render(element,v);
+				} else if (work.delegate && work.delegate.callback) {
 					work.delegate.callback(element,v);
 				} else if (work.updater) {
 					work.updater(element,v,work);
 				}
 				if (place==1) {
 					work.finished = true;
-					if (work.delegate && work.delegate.onComplete) {
+					if (work.delegate && work.delegate.$complete) {
+						window.setTimeout(work.delegate.$complete);
+					} else if (work.delegate && work.delegate.onComplete) {
 						window.setTimeout(work.delegate.onComplete);
 					} else if (work.delegate && work.delegate.hideOnComplete) {
 						element.style.display='none';
@@ -2594,7 +2598,7 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 	var work = this.getWork(hui.string.camelize(property));
 	work.delegate = delegate;
 	work.finished = false;
-	var css = !(property=='scrollLeft' || property=='scrollTop');
+	var css = !(property=='scrollLeft' || property=='scrollTop' || property=='');
 	if (from!==null) {
 		work.from = from;
 	} else if (property=='transform') {

@@ -2525,14 +2525,18 @@ hui.animation._render = function() {
 				if (work.delegate && work.delegate.ease) {
 					v = work.delegate.ease(v);
 				}
-				if (work.delegate && work.delegate.callback) {
+				if (work.delegate && work.delegate.$render) {
+					work.delegate.$render(element,v);
+				} else if (work.delegate && work.delegate.callback) {
 					work.delegate.callback(element,v);
 				} else if (work.updater) {
 					work.updater(element,v,work);
 				}
 				if (place==1) {
 					work.finished = true;
-					if (work.delegate && work.delegate.onComplete) {
+					if (work.delegate && work.delegate.$complete) {
+						window.setTimeout(work.delegate.$complete);
+					} else if (work.delegate && work.delegate.onComplete) {
 						window.setTimeout(work.delegate.onComplete);
 					} else if (work.delegate && work.delegate.hideOnComplete) {
 						element.style.display='none';
@@ -2594,7 +2598,7 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 	var work = this.getWork(hui.string.camelize(property));
 	work.delegate = delegate;
 	work.finished = false;
-	var css = !(property=='scrollLeft' || property=='scrollTop');
+	var css = !(property=='scrollLeft' || property=='scrollTop' || property=='');
 	if (from!==null) {
 		work.from = from;
 	} else if (property=='transform') {
@@ -20108,9 +20112,22 @@ hui.ui.Drawing.Line.prototype = {
 
 hui.ui.Drawing.Circle = function(options) {
 	this.node = options.node;
+	this.properties = {};
 }
 
 hui.ui.Drawing.Circle.create = function(options) {
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	if (options.fill) {
+		css.push('fill:'+options.fill);
+	}
 	options.node = hui.ui.Drawing._build({
 		tag : 'circle',
 		parent : options.parent,
@@ -20118,12 +20135,17 @@ hui.ui.Drawing.Circle.create = function(options) {
 			cx : options.cx,
 			cy : options.cy,
 			r : options.r,
-			style : 'stroke:'+(options.color || '#000')+'; fill:'+(options.fill || '#fff')+'; stroke-width:'+(options.width==undefined ? 1 : options.width)}
+			style : css.join(';')
+		}
 	});
 	return new hui.ui.Drawing.Circle(options);
 };
 
 hui.ui.Drawing.Circle.prototype = {
+	setRadius : function(radius) {
+		this.node.setAttribute("r",radius);
+	},
+	
 	setCenter : function(point) {
 		this.node.setAttribute('cx',point.x);
 		this.node.setAttribute('cy',point.y);
@@ -20176,65 +20198,77 @@ hui.ui.Drawing.Rect.prototype = {
 // Arc
 hui.ui.Drawing.Arc = function(options) {
 	this.node = options.node;
+	this.options = hui.override({
+		center : {x:100,y:100},
+  		startDegrees : 0,
+		endDegrees : 0,
+  		innerRadius : 0, 
+		outerRadius : 0,
+		fill : '#eee'
+	},options);
+	this._redraw();
 }
 
 hui.ui.Drawing.Arc.create = function(options) {
-	options.node = hui.ui.Drawing._build({ tag : 'path' ,parent : options.parent, attributes : {fill : options.fill || '#000'}});
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	options.node = hui.ui.Drawing._build({ tag : 'path' ,parent : options.parent, attributes : {fill : options.fill || '#000', style:css.join(';')}});
 	var arc = new hui.ui.Drawing.Arc(options);
-	arc.update(options);
 	return arc;
 }
 
 hui.ui.Drawing.Arc.prototype = {
 	
-	
-	update : function(options){
-		var opts = optionsWithDefaults(options);
-		var p = [ // points
-			[opts.cx + opts.r2*Math.cos(opts.startRadians),
-				opts.cy + opts.r2*Math.sin(opts.startRadians)],
-			[opts.cx + opts.r2*Math.cos(opts.closeRadians),
-				opts.cy + opts.r2*Math.sin(opts.closeRadians)],
-			[opts.cx + opts.r1*Math.cos(opts.closeRadians),
-				opts.cy + opts.r1*Math.sin(opts.closeRadians)],
-			[opts.cx + opts.r1*Math.cos(opts.startRadians),
-				opts.cy + opts.r1*Math.sin(opts.startRadians)],
+	update : function(options) {
+		this.options = hui.override(this.options,options);
+		this._redraw();
+	},
+	_redraw : function() {
+		var o = this.options,
+			cx = o.center.x,
+			cy = o.center.y,
+			startRadians = (o.startDegrees || 0) * Math.PI/180,
+			closeRadians = (o.endDegrees   || 0) * Math.PI/180,
+			r1 = o.innerRadius,
+			r2 = o.outerRadius;
+		
+		var points = [
+			[
+				cx + r2 * Math.cos(startRadians),
+				cy + r2 * Math.sin(startRadians)
+			],
+			[
+				cx + r2 * Math.cos(closeRadians),
+				cy + r2 * Math.sin(closeRadians)
+			],
+			[
+				cx + r1 * Math.cos(closeRadians),
+				cy + r1 * Math.sin(closeRadians)
+			],
+			[
+				cx + r1 * Math.cos(startRadians),
+				cy + r1 * Math.sin(startRadians)
+			]
 		];
 
-		var angleDiff = opts.closeRadians - opts.startRadians;
+		var angleDiff = closeRadians - startRadians;
 		var largeArc = (angleDiff % (Math.PI*2)) > Math.PI ? 1 : 0;
-		var cmds = [];
-		cmds.push("M"+p[0].join());                                // Move to P0
-		cmds.push("A"+[opts.r2,opts.r2,0,largeArc,1,p[1]].join()); // Arc to  P1
-		cmds.push("L"+p[2].join());                                // Line to P2
-		cmds.push("A"+[opts.r1,opts.r1,0,largeArc,0,p[3]].join()); // Arc to  P3
-		cmds.push("z");                                // Close path (Line to P0)
+		var cmds = [
+			"M"+points[0].join(),									// Move to P0
+			"A"+[r2,r2,0,largeArc,1,points[1]].join(),				// Arc to  P1
+			"L"+points[2].join(),									// Line to P2
+			"A"+[r1,r1,0,largeArc,0,points[3]].join(),				// Arc to  P3
+			"z" 		                               				// Close path (Line to P0)
+		];		
 		this.node.setAttribute('d',cmds.join(' '));
-
-		function optionsWithDefaults(o){
-			// Create a new object so that we don't mutate the original
-			var o2 = {
-				cx           : o.center.x || 0,
-				cy           : o.center.y || 0,
-				startRadians : (o.startDegrees || 0) * Math.PI/180,
-				closeRadians : (o.endDegrees   || 0) * Math.PI/180,
-			};
-
-			var t = o.thickness!==undefined ? o.thickness : 100;
-			if (o.innerRadius!==undefined)      o2.r1 = o.innerRadius;
-			else if (o.outerRadius!==undefined) o2.r1 = o.outerRadius - t;
-			else                                o2.r1 = 200           - t;
-			if (o.outerRadius!==undefined)      o2.r2 = o.outerRadius;
-				else                                o2.r2 = o2.r1         + t;
-
-			if (o2.r1<0) o2.r1 = 0;
-			if (o2.r2<0) o2.r2 = 0;
-
-			return o2;
-		}
-}
-	
-	
+	}
 }
 
 
@@ -20970,13 +21004,15 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		var left = i*((innerBody.width)/(xLabels.length-1))+innerBody.left;
 		var left = Math.round(left);
 
-		// Draw grid
-		if (this.chart.data.xAxis.grid) {
-			this.ctx.beginPath();
-			this.ctx.moveTo(.5+left,state.body.top+.5);
-			this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
-			this.ctx.stroke();
-			this.ctx.closePath();
+		if (mod<10 || (i % mod) ==0) {
+			// Draw grid
+			if (this.chart.data.xAxis.grid) {
+				this.ctx.beginPath();
+				this.ctx.moveTo(.5+left,state.body.top+.5);
+				this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
+				this.ctx.stroke();
+				this.ctx.closePath();
+			}
 		}
 		if ((i % mod) ==0) {
 			// Draw label
@@ -21279,7 +21315,7 @@ hui.ui.Chart.Util.convertData = function(obj) {
 				var entry = set.entries[j];
 				if (!hui.array.contains(keys,entry.key)) {
 					keys.push(entry.key)
-					labels.push({key:entry.key,label:entry.key});					
+					labels.push({key:entry.key,label:entry.label || entry.key});					
 				}
 			}
 		} else {

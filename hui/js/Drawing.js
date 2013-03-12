@@ -193,6 +193,18 @@ hui.ui.Drawing.Circle = function(options) {
 }
 
 hui.ui.Drawing.Circle.create = function(options) {
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	if (options.fill) {
+		css.push('fill:'+options.fill);
+	}
 	options.node = hui.ui.Drawing._build({
 		tag : 'circle',
 		parent : options.parent,
@@ -200,7 +212,8 @@ hui.ui.Drawing.Circle.create = function(options) {
 			cx : options.cx,
 			cy : options.cy,
 			r : options.r,
-			style : 'stroke:'+(options.color || '#000')+'; fill:'+(options.fill || '#fff')+'; stroke-width:'+(options.width==undefined ? 1 : options.width)}
+			style : css.join(';')
+		}
 	});
 	return new hui.ui.Drawing.Circle(options);
 };
@@ -274,7 +287,16 @@ hui.ui.Drawing.Arc = function(options) {
 }
 
 hui.ui.Drawing.Arc.create = function(options) {
-	options.node = hui.ui.Drawing._build({ tag : 'path' ,parent : options.parent, attributes : {fill : options.fill || '#000'}});
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	options.node = hui.ui.Drawing._build({ tag : 'path' ,parent : options.parent, attributes : {fill : options.fill || '#000', style:css.join(';')}});
 	var arc = new hui.ui.Drawing.Arc(options);
 	return arc;
 }

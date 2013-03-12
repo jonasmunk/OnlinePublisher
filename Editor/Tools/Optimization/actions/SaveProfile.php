@@ -5,13 +5,16 @@
  */
 require_once '../../../Include/Private.php';
 
-$data = Request::getObject('data');
-
 $settings = OptimizationService::getSettings();
 
-$settings->purpose = $data->purpose;
-$settings->successcriteria = $data->successcriteria;
-$settings->audiences = $data->audiences;
+$name = Request::getString('name');
+$url = Request::getString('url');
+
+if (!is_array($settings->profiles)) {
+	$settings->profiles = array();
+}
+
+$settings->profiles[] = array('name'=>$name,'url'=>$url);
 
 OptimizationService::setSettings($settings);
 ?>
