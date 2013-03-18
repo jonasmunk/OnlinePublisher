@@ -9,12 +9,11 @@ class HeartBeatService {
 	
 	function beat() {
 		$latest = SettingService::getLatestHeartBeat();
-		$now = time();
 		if (!$latest) {
 			HeartBeatService::run();
 			return;
 		}
-		$duration = $now - intval($latest);
+		$duration = time() - intval($latest);
 		if ($duration > 60 * 15) {
 			HeartBeatService::run();
 		} else {
