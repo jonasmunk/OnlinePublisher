@@ -7,6 +7,8 @@ require_once '../../../Include/Private.php';
 
 $data = Request::getObject('data');
 
+Log::debug($data);
+
 if ($data->ui) {
 	SettingService::setSetting('part','richtext','experimetal',$data->ui->experimentalRichText);
 	SettingService::setSharedSecret($data->ui->sharedSecret);

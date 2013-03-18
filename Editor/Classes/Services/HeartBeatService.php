@@ -23,9 +23,7 @@ class HeartBeatService {
 	}
 	
 	private function run() {
-		Log::debug('Running heart beat');
 		SettingService::setLatestHeartBeat(time());
-		$url = ConfigurationService::getCompleteBaseUrl();
-		MailService::sendToFeedback('Heart beat from '.$url,'This is a beat from the heart of '.$url);
+		ReportService::heartBeat();
 	}
 }

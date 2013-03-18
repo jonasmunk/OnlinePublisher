@@ -29,6 +29,9 @@ $settings = array(
 		'password' => GoogleAnalytics::getPassword(),
 		'profile' => GoogleAnalytics::getProfile(),
 		'webProfile' => GoogleAnalytics::getWebProfile()
+	),
+	'reports' => array(
+		'email' => ReportService::getEmail()
 	)
 );
 

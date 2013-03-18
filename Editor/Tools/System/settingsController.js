@@ -3,16 +3,19 @@ hui.ui.listen({
 		if (obj.value=='settings') {
 			if (!this.loaded) {
 				this.loaded = true;
-				hui.ui.request({url:'data/LoadSettings.php',onSuccess:'loadSettings'});
+				this._reloadSettings();
 			}
 		}
 	},
-	$success$loadSettings : function(data) {
-		emailFormula.setValues(data.email);
-		onlineobjectsFormula.setValues(data.onlineobjects);
-		analyticsFormula.setValues(data.analytics);
-		reportsFormula.setValues(data.reports);
-		uiFormula.setValues(data.ui);
+	_reloadSettings : function() {
+		hui.ui.request({url:'data/LoadSettings.php',$object : function(data) {
+			hui.log(data)
+			emailFormula.setValues(data.email);
+			onlineobjectsFormula.setValues(data.onlineobjects);
+			analyticsFormula.setValues(data.analytics);
+			reportsFormula.setValues(data.reports);
+			uiFormula.setValues(data.ui);			
+		}});		
 	},
 	
 	//UI
@@ -98,6 +101,19 @@ hui.ui.listen({
 		var data = {'reports':form.getValues()};
 		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',$success:function() {
 			saveReports.setEnabled(true);
-		}});
+			this._reloadSettings();
+		}.bind(this)});
+	},
+	$click$testReports : function() {
+		hui.ui.showMessage({text:'Sending report',busy:true});
+		hui.ui.request({
+			url : 'actions/SendTestReport.php',
+			$success : function() {
+				hui.ui.showMessage({text:'The report has been delivered',icon:'common/success',duration:3000});
+			},
+			$failure : function() {
+				hui.ui.showMessage({text:'Could not send report',icon:'common/warning',duration:3000});
+			}
+		})
 	}
 });
