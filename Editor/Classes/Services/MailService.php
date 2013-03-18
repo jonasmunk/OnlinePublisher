@@ -21,7 +21,7 @@ class MailService {
 		return MailService::send(MailService::getFeedbackEmail(), MailService::getFeedbackName(),$subject,$body);
 	}
 	
-	function send($email,$name,$subject,$body) {
+	function send($email,$name,$subject,$body,$html=null) {
 		$username = MailService::getUsername();
 		$password = MailService::getPassword();
 		$port = MailService::getPort();
@@ -43,6 +43,9 @@ class MailService {
 
 		$mail = new Zend_Mail('UTF-8');
 		$mail->setBodyText($body);
+		if ($html!=null) {
+			$mail->setBodyHtml($html);
+		}
 		$mail->setFrom(MailService::getStandardEmail(), MailService::getStandardName());
 		$mail->addTo($email, $name);
 		$mail->setSubject($subject);

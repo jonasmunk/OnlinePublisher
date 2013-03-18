@@ -42,7 +42,56 @@ class ReportService {
 		}
 		$name = '';
 		$subject = 'Report from '.$url;
-		$body = 'This is a beat from the heart of '.$url;
-		return MailService::send($email,$name,$subject,$body);
+		$body = 'This is an HTML mail!';
+		$html = ReportService::generateFullReport();
+		return MailService::send($email,$name,$subject,$body,$html);
+	}
+	
+	function generateFullReport() {
+		global $basePath;
+		$html = '<!DOCTYPE html>
+		<html>
+		<head>
+		<meta xmlns="http://www.w3.org/1999/xhtml" http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<style>';
+		
+		$filename = $basePath."Editor/Resources/report.css";
+		$handle = fopen($filename, "rb");
+		$contents = fread($handle, filesize($filename));
+		fclose($handle);
+		$html.=$contents;
+		$html.='</style>
+		</head>
+		<body>';
+		$html.= ReportService::generateReport();
+		$html.='</body></html>';
+		return $html;
+	}
+	
+	function generateReport() {
+		$url = ConfigurationService::getCompleteBaseUrl();
+		
+		$query = new StatisticsQuery();
+		$query->setStartTime(DateUtils::addDays(time(),-7));
+		$stats = StatisticsService::searchVisits($query);
+
+		
+		$report = '<div class="report">';
+		$report.= '<h1>Report</h1><p class="info">'.DateUtils::formatLongDate(time()).' for <a href="'.$url.'">'.$url.'</a></p>';
+		$report.= '<div class="statistics">';
+		$report.= '<h2>Statistics</h2>';
+		$report.= '<table>'.
+			'<thead><th class="date">Date</th><th>Sessions</th><th>IPs</th><th>Hits</th></thead><tbody>';
+		foreach ($stats as $stat) {
+			$report.='<tr>'.
+				'<th class="date">'.$stat['label'].'</th>'.
+				'<td>'.$stat['sessions'].'</td>'.
+				'<td>'.$stat['ips'].'</td>'.
+				'<td>'.$stat['hits'].'</td>'.
+				'</tr>';
+		}
+		$report.= '</tbody></table>';
+		$report.= '</div>';
+		return $report;
 	}
 }

@@ -6,7 +6,7 @@
 require_once '../../Include/Private.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="Developer" state="diagram">
+<gui xmlns="uri:hui" padding="10" title="Developer" state="frame">
 	<controller source="controller.js"/>
 	<source name="testsSource" url="data/ListTests.php"/>
 	<source name="graphSource" url="data/GraphData.php"/>
@@ -23,9 +23,10 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-					<selection value="classes" name="selector" top="5">
+					<selection value="phpInfo" name="selector" top="5">
 						<item icon="common/info" title="PHP info" value="phpInfo"/>
 						<item icon="common/time" title="Session" value="session"/>
+						<item icon="common/time" title="Report" value="report"/>
 						<item icon="common/tools" title="Settings" value="settings"/>
 						<item icon="monochrome/nuclear" title="Graph" value="graph"/>
 						<item icon="common/hierarchy" title="Diagram" value="diagram"/>

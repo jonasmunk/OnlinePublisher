@@ -23,6 +23,9 @@ hui.ui.listen({
 		} else if (item.value=='session') {
 			iframe.clear();
 			iframe.setUrl('data/Session.php');
+		} else if (item.value=='report') {
+			iframe.clear();
+			iframe.setUrl('data/Report.php');
 		} else if (item.kind=='test') {
 			iframe.clear();
 			iframe.setUrl('data/RunTest.php?test='+item.value);

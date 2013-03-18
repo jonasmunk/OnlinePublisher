@@ -1,0 +1,66 @@
+body
+{
+	margin: 0;
+	padding: 20px;
+}
+div.report
+{
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+}
+
+div.report h1
+{
+	margin: 0;
+	color: #999;
+	font-size: 32px;
+	font-weight: normal;
+}
+
+div.report p.info
+{
+	margin: 5px 0 0;
+}
+
+div.report h2
+{
+	color: #666;
+	margin: 0;
+	font-weight: normal;
+}
+
+div.statistics
+{
+	margin-top: 20px;
+	background: #fafafa;
+	border: 1px solid #eee;
+	padding: 10px;
+}
+
+div.report div.statistics table
+{
+	margin: 10px -3px 0;
+	font-size: 12px;
+	width: 100%;
+}
+
+div.report div.statistics table thead th
+{
+	border-bottom: 1px solid #eee;
+	font-weight: normal;
+	color: #999;
+	text-align: right;
+	padding: 2px 3px;
+}
+
+div.report div.statistics table tbody th,
+div.report div.statistics table tbody td
+{
+	text-align: right;
+	padding: 2px 3px;
+}
+
+div.report div.statistics table th.date
+{
+	text-align: left;
+}
