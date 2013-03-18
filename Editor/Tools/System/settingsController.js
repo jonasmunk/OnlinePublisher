@@ -11,6 +11,7 @@ hui.ui.listen({
 		emailFormula.setValues(data.email);
 		onlineobjectsFormula.setValues(data.onlineobjects);
 		analyticsFormula.setValues(data.analytics);
+		reportsFormula.setValues(data.reports);
 		uiFormula.setValues(data.ui);
 	},
 	
@@ -55,17 +56,15 @@ hui.ui.listen({
 	$click$saveAnalytics : function() {
 		saveAnalytics.setEnabled(false);
 		var data = {'analytics':analyticsFormula.getValues()};
-		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',onSuccess:'saveAnalytics'});
-	},
-	$success$saveAnalytics : function() {
-		saveAnalytics.setEnabled(true);
+		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',$success:function() {
+			saveAnalytics.setEnabled(true);
+		}});
 	},
 	$click$testAnalytics : function() {
 		hui.ui.showMessage({text:'Tester forbindelse til Google Analytics...'});
-		hui.ui.request({json:{},url:'actions/TestAnalytics.php',onSuccess:'testAnalytics'});
-	},
-	$success$testAnalytics : function(success) {
-		hui.ui.showMessage({text:success ? 'It works!' : 'It does not work!',duration:2000});
+		hui.ui.request({json:{},url:'actions/TestAnalytics.php',$success:function() {
+			hui.ui.showMessage({text:success ? 'It works!' : 'It does not work!',duration:2000});
+		}});
 	},
 	
 	// Email
@@ -91,5 +90,14 @@ hui.ui.listen({
 		} else {
 			hui.ui.showMessage({text:'Det lykkedes ikke at sende email!',duration:2000});
 		}
+	},
+	
+	// Reports
+	$submit$reportsFormula : function(form) {
+		saveReports.setEnabled(false);
+		var data = {'reports':form.getValues()};
+		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',$success:function() {
+			saveReports.setEnabled(true);
+		}});
 	}
 });

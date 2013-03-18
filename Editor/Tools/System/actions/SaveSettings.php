@@ -14,6 +14,9 @@ if ($data->ui) {
 if ($data->onlineobjects) {
 	SettingService::setOnlineObjectsUrl($data->onlineobjects->url);
 }
+if ($data->reports) {
+	ReportService::setEmail($data->reports->email);
+}
 if ($data->email) {
 	MailService::setEnabled($data->email->enabled);
 	MailService::setServer($data->email->server);

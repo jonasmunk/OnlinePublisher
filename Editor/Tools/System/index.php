@@ -106,7 +106,7 @@ $gui='
 						</box>
 					</fragment>
 					<fragment state="settings" height="full" background="vichy">
-						<box width="500" top="30" variant="rounded">
+						<box width="600" top="30" variant="rounded">
 							<tabs small="true" centered="true">
 								<tab title="{User interface; da:Brugergrænseflade}">
 									<space all="10" bottom="5">
@@ -151,7 +151,7 @@ $gui='
 													<text-input key="standardEmail"/>
 												</field>
 											</fields>
-											<fieldset legend="{Feedback; da:Tilbagemelding}">
+											<fieldset legend="{Feedback; da:Tilbagemelding}" top="10">
 											<fields>
 												<field label="{Name; da:Navn}:">
 													<text-input key="feedbackName"/>
@@ -204,6 +204,21 @@ $gui='
 												<buttons>
 													<button name="testOnlineObjects" title="{Afprøv; da:Test}"/>
 													<button name="saveOnlineObjects" title="{Update; da:Opdater}" highlighted="true"/>
+												</buttons>
+											</fields>
+										</formula>
+									</space>
+								</tab>
+								<tab title="Rapport">
+									<space all="10" bottom="5">
+										<formula name="reportsFormula">
+											<fields>
+												<field label="{E-post; da:E-mail}:">
+													<text-input key="email"/>
+												</field>
+												<buttons>
+													<button name="testReports" title="{Afprøv; da:Test}"/>
+													<button name="saveReports" title="{Update; da:Opdater}" submit="true" highlighted="true"/>
 												</buttons>
 											</fields>
 										</formula>
