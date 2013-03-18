@@ -882,14 +882,14 @@ div.hui_formula_fieldset
 	border: 1px solid #ddd;
 	padding: 10px 10px 5px;
 	margin-top: 4px;
-	background: #f6f6f6;
+	background: #fff;
 }
 
 strong.hui_formula_fieldset
 {
 	position: absolute;
 	margin-top: -19px;
-	background: #f3f3f3;
+	background: #fff;
 	font-size: 12px;
 	padding: 0 4px;
 	margin-left: -2px;
