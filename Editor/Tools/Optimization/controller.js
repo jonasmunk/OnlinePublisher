@@ -1,8 +1,4 @@
 hui.ui.listen({
-	$ready : function() {
-		hui.ui.tellContainers('changeSelection','tool:Optimization');
-		this._loadSettings();
-	},
 	
 	$select$selector : function(item) {
 		if (item.value=='overview') {
@@ -24,27 +20,13 @@ hui.ui.listen({
 			}
 		}
 	},
+	$select$list : function(obj) {
+		reindex.setEnabled(obj.kind=='page');
+		analyse.setEnabled(obj.kind=='page');
+	},
 	$click$newWord : function() {
 		newWordPanel.show();
 		wordFormula.focus();
-	},
-	
-	$click$saveSettings : function() {
-		var values = settingsFormula.getValues();
-		hui.ui.request({
-			message : {start:{en:'Saving overview...',da:'Gemmer oversigt...'},delay:300,success:{en:'The overview has been saved',da:'Oversigten er gemt'}},
-			url : 'actions/SaveSettings.php',
-			json : {data:values}
-		})
-	},
-	_loadSettings : function() {
-		hui.ui.request({
-			message : {start:{en:'Loading overview...',da:'Henter oversigt...'},delay:300},
-			url : 'data/LoadSettings.php',
-			onJSON : function(values) {
-				settingsFormula.setValues(values);
-			}
-		});
 	},
 	$clickIcon$phrasePageList : function(info) {
 		if (info.data.action=='edit' && info.row.kind=='page') {

@@ -37,9 +37,10 @@
 				line-height: 90px;
 				margin-top: 150px;
 				cursor: default;
+				display: none;
 			}
 			
-			p
+			#slogan
 			{
 				font-family: 'Helvetica Neue';
 				font-size: 24px;
@@ -56,6 +57,23 @@
 				padding-top: 30px;
 				cursor: default;
 			}
+			
+			#counter
+			{
+				font-family: 'Helvetica Neue';
+				font-size: 50px;
+				line-height: 50px;
+				font-weight: 100;
+				color: #ccc;
+				position: absolute;
+				top: 40%;
+				width: 100%;
+				text-align: center;
+				margin-top: -40px;
+				letter-spacing: 1px;
+				padding-top: 30px;
+				cursor: default;
+			}
 		</style>
 	</head>
 
@@ -63,7 +81,7 @@
 		<div id="drawing"></div>
 		<h1 id="title">OnlineObjects</h1>
 		<p id="slogan" style="padding-top: 20px;">You know the boogie is for real</p>
-
+		<p id="counter"></p>
 		
 		<script type="text/javascript" charset="utf-8">
 			var line1,circle,arc;
@@ -72,31 +90,48 @@
 			
 				var center = {x:250,y:250};
 			
-			
-				var arc1 = d.addArc({center : center,fill : 'rgba(0,0,0,.08)'});
-				var arc2 = d.addArc({center : center,fill : 'rgba(0,0,0,.05)'});
-				var arc3 = d.addArc({center : center,fill : 'rgba(0,0,0,.08)'});
-				var arc4 = d.addArc({center : center,fill : 'rgba(0,0,0,.05)'});
+				var counter = hui.get('counter');
+				var c = document.createTextNode('1000000');
+				counter.appendChild(c);
+				hui.animate({ node : document,
+					duration: 3000,
+					ease : hui.ease.fastSlow,
+					$render : function(shape,pos) {
+						c.nodeValue = 1000000 - Math.round(1000000*pos*pos);
+					},
+					$complete : function() { 
+						counter.style.display='none'
+						var arc1 = d.addArc({center : center,fill : 'rgba(0,0,0,.08)'});
+						var arc2 = d.addArc({center : center,fill : 'rgba(0,0,0,.05)'});
+						var arc3 = d.addArc({center : center,fill : 'rgba(0,0,0,.08)'});
+						var arc4 = d.addArc({center : center,fill : 'rgba(0,0,0,.05)'});
 				
-				var circle = d.addCircle({cx:250,cy:250,r:0,fill:'rgba(0,0,0,.1)',width:0});
-				startArc(arc1,-90,0,0)
-				startArc(arc2,0,90,10)
-				startArc(arc3,90,180,0)
-				startArc(arc4,180,270,10)
-				startCircle(circle)
-				var title = hui.get('title');
-				var text = hui.dom.getText(title);
-				hui.dom.clear(title);
-				var chars = [];
-				for (var i=0; i < text.length; i++) {
-					chars.push(hui.build('span',{text:text[i],parent:title,style:{opacity:0}}));
-				};
-				for (var i=0; i < chars.length; i++) {
-					var x = Math.random()*2000;
-					hui.animate({node:chars[i],css:{opacity:1},delay:1500+x,ease:hui.ease.flicker,duration:4000-x})
+						var circle = d.addCircle({cx:250,cy:250,r:0,fill:'rgba(0,0,0,.1)',width:0});
+						startArc(arc1,-90,0,0)
+						startArc(arc2,0,90,10)
+						startArc(arc3,90,180,0)
+						startArc(arc4,180,270,10)
+						startCircle(circle)
+						var title = hui.get('title');
+						var text = hui.dom.getText(title);
+						hui.dom.clear(title);
+						var chars = [];
+						for (var i=0; i < text.length; i++) {
+							chars.push(hui.build('span',{text:text[i],parent:title,style:{opacity:0}}));
+						};
+						title.style.display = 'block'
+						for (var i=0; i < chars.length; i++) {
+							var x = Math.random()*2000;
+							hui.animate({node:chars[i],css:{opacity:1},delay:1500+x,ease:hui.ease.flicker,duration:4000-x})
 					
-				};
-				hui.animate({node:'slogan',css:{opacity:1,paddingTop:'0px'},delay:6000,ease:hui.ease.fastSlow,duration:2000})
+						};
+						hui.animate({node:'slogan',css:{opacity:1,paddingTop:'0px'},delay:6000,ease:hui.ease.fastSlow,duration:2000})
+						
+					}
+				})
+			
+			
+
 			})
 			
 			var skew = 30;
