@@ -84,6 +84,10 @@ class Calendarsource extends Object {
 		if ($this->isInSync() && $force==false) {
 			return;
 		}
+		Log::debug('Syncing: '.$this->url);
+		$this->synchronized = time();
+		$sql = "update calendarsource set synchronized=".Database::datetime(time())." where object_id=".Database::int($this->id);
+		Database::update($sql);
 		if (strpos($this->url,'dbu.dk')!==false) {
 			$this->synchronizeDBU();
 		} else if (strpos($this->url,'kampe.dhf.dk')!==false) {
@@ -91,9 +95,6 @@ class Calendarsource extends Object {
 		} else {
 			$this->synchronizeVCal();
 		}
-		$this->synchronized = time();
-		$sql = "update calendarsource set synchronized=".Database::datetime(time())." where object_id=".Database::int($this->id);
-		Database::update($sql);
 	}
 	
 	function getParsedFilter() {

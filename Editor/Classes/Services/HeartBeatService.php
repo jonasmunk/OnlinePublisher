@@ -24,5 +24,10 @@ class HeartBeatService {
 	private function run() {
 		SettingService::setLatestHeartBeat(time());
 		ReportService::heartBeat();
+		
+		$sources = Query::after('calendarsource')->orderBy('title')->get();
+		foreach ($sources as $source) {
+			$source->synchronize();
+		}
 	}
 }
