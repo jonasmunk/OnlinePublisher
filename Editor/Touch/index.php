@@ -1,5 +1,5 @@
 <?php
-require_once '../Include/Private.php';
+require_once '../Include/Public.php';
 
 header("Content-Type: text/html; charset=UTF-8");
 ?><!DOCTYPE html>
@@ -11,20 +11,32 @@ header("Content-Type: text/html; charset=UTF-8");
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="apple-touch-icon" href="icon.png" />
 	<title>OnlinePublisher</title>
-	<style>
-		<?php
-		include('style.css.php')
-		?>
-	</style>
-	<script src="../../hui/js/hui.js"></script>
-	<script src="../../hui/js/ui.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/base.css"/>
+	<link type="text/css" rel="stylesheet" href="css/login.css"/>
+	<link type="text/css" rel="stylesheet" href="../../hui/css/dev.css"/>
+	<script src="../../hui/bin/combined.js"></script>
 </head>
 
 <body style="overflow: hidden;">
+	<?php
+	InternalSession::startSession();
+	if (!InternalSession::isLoggedIn()) {
+		?>
+		<div id="login">
+			<h1>OnlinePublisher</h1>
+			<p><label>Username</label><input class="text" autocapitalize="off" id="username"/></p>
+			<p><label>Password</label><input class="text" type="password" id="password"/></p>
+			<p><button>Log in</button></p>
+			<p><a onclick="document.location=document.location">Reload</a></p>
+		</div>
+		<?php
+	}
+	?>
 	<div class="bar">
 		<a>←Back</a>
 		<a>◀</a>
 		<a>▶</a>
+		<a id="logout">Log out</a>
 	</div>
 	<div class="sidebar">
 		<div class="bar">

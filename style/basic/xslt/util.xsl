@@ -390,6 +390,7 @@
 
 <xsl:template name="util:metatags">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"></meta>
 	<xsl:if test="p:meta/p:description">
 		<meta name="Description" content="{p:meta/p:description}"></meta>
 	</xsl:if>
