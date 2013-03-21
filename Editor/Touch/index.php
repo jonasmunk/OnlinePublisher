@@ -56,7 +56,7 @@ header("Content-Type: text/html; charset=UTF-8");
 	<div id="mover" style="display: none; width: 100px; height: 100px; background: blue; position: absolute; left: 200px; top: 200px;"></div>
 	<script>
 	<?php
-	include('script.js')
+	include('js/script.js')
 	?>
 	</script>
 </body>
