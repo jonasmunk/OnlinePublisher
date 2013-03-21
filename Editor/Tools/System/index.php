@@ -213,7 +213,7 @@ $gui='
 									<space all="10" bottom="5">
 										<formula name="reportsFormula">
 											<fields>
-												<field label="{E-post; da:E-mail}:">
+												<field label="{E-mail-addresse; da:E-post-adresser}:" hint="{Separate by space, comma or colon;da:Adskil med mellemrum, komma eller kolon}">
 													<text-input key="email"/>
 												</field>
 												<buttons>

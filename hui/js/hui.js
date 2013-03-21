@@ -1629,17 +1629,12 @@ hui.request.createTransport = function() {
 
 hui.request._getActiveX = function() {
 	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
-	var o;
 	for (var i = 0; i < prefixes.length; i++) {
 		try {
-			// try to create the objects
-			o = new ActiveXObject(prefixes[i] + ".XmlHttp");
-			return o;
+			return new ActiveXObject(prefixes[i] + ".XmlHttp");
 		}
 		catch (ex) {};
 	}
-	
-	throw new Error("Could not find an installed XML parser");
 }
 
 
