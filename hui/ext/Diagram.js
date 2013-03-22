@@ -349,8 +349,12 @@ hui.ui.Diagram.D3 = {
 		};
 		
 		var force = this.layout = d3.layout.force()
+            .linkDistance(100)
+            .friction(0.9)
+            .gravity(0.1)
+            .theta(0.2)
+            .linkStrength(0.1)
 			.charge(-1000)
-			.gravity(0.20)
 			.distance(width/3)
 			.nodes(this.diagram.nodes)
 			.links(this.diagram.lines)
