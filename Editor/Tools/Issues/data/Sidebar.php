@@ -21,6 +21,8 @@ $writer->startItems();
 
 $writer->item(array('title'=>array('All issues','da'=>'Alle sager'),'value'=>'all','icon'=>'view/list','badge'=>$total));
 
+$writer->item(array('title'=>array('Feedback','da'=>'Feedback'),'value'=>'feedback','icon'=>'view/list'));
+
 
 if ($kinds) {
 	$writer->title(array('Types','da'=>'Typer'));

@@ -10,6 +10,7 @@ hui.ui.listen({
 	},
 	$select$list : function() {
 		var count = list.getSelectionSize();
+		hui.log('Selection size: '+count);
 		hui.ui.get('delete').setEnabled(count>0);
 		hui.ui.get('info').setEnabled(count==1);
 	},
@@ -31,7 +32,7 @@ hui.ui.listen({
 	},
 	$click$delete : function() {
 		var ids = list.getSelectionIds();
-		this._deleteIssues(ids);
+		this._deleteObjects(ids);
 	},
 	$valueChanged$changeKind : function(value) {
 		var ids = list.getSelectionIds();
@@ -77,11 +78,11 @@ hui.ui.listen({
 		})
 	},
 	$click$deleteIssue : function() {
-		this._deleteIssues([this._issueId]);
+		this._deleteObjects([this._issueId]);
 	},
-	_deleteIssues : function(ids) {
+	_deleteObjects : function(ids) {
 		hui.ui.request({
-			url : 'actions/DeleteIssue.php',
+			url : '../../Services/Model/DeleteObjects.php',
 			json : {ids : ids},
 			$success : function() {
 				this.clearIssue();

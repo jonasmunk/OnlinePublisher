@@ -11,7 +11,7 @@ if (!$summary) {
 	exit;
 }
 
-$sql = "select DATE_FORMAT(waterusage.date, '%d-%m-%Y') as `date`,`value`,UNIX_TIMESTAMP(waterusage.date) as time".
+$sql = "select DATE_FORMAT(waterusage.date, '%d-%m-%Y') as `date`,`value`,UNIX_TIMESTAMP(waterusage.date) as time, waterusage.status, waterusage.object_id as id".
 	" from waterusage,watermeter where waterusage.`watermeter_id`=watermeter.`object_id` and number = ".Database::text($number)." order by waterusage.`date`";
 $rows = Database::selectAll($sql);
 
@@ -30,6 +30,7 @@ foreach ($rows as &$row) {
 			$row['perweek'] = '?';
 		}
 	}
+	$row['status'] = intval($row['status']);
 	$latest = intval($row['time']);
 	$previousValue = intval($row['value']);
 }

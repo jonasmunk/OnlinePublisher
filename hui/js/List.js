@@ -852,14 +852,14 @@ hui.ui.List.prototype = {
 	_changeSelection : function(indexes) {
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
-		for (i=0;i<this.selected.length;i++) {
+		for (i = 0 ; i < this.selected.length; i++) {
 			hui.cls.remove(rows[this.selected[i]],'hui_list_selected');
 		}
-		for (i=0;i<indexes.length;i++) {
+		for (i = 0; i < indexes.length; i++) {
 			hui.cls.add(rows[indexes[i]],'hui_list_selected');
 		}
 		this.selected = indexes;
-		if (indexes.length>0) {
+		if (indexes.length > 0) {
 			this.fire('select',this.rows[indexes[0]]);
 			hui.ui.firePropertyChange(this,'selection.id',this.rows[indexes[0]].id);
 			this._clearChecked();
