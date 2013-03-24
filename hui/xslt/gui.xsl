@@ -72,6 +72,10 @@
 <xsl:for-each select="//gui:css">
 	<link rel="stylesheet" href="{@url}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 </xsl:for-each>
+<xsl:for-each select="//gui:style[@source]">
+	<link rel="stylesheet" href="{@source}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+</xsl:for-each>
+
 <xsl:choose>
 	<xsl:when test="$dev='true'">
 		<script src="{$context}/hui/lib/swfupload/swfupload.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -204,7 +208,7 @@
 	</xsl:for-each>
 </script>
 <xsl:call-template name="dwr-setup"/>
-<xsl:for-each select="//gui:style">
+<xsl:for-each select="//gui:style[not[@source]]">
 	<style>
 		<xsl:value-of select="."/>
 	</style>

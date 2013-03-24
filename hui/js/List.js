@@ -434,7 +434,7 @@ hui.ui.List.prototype = {
 		} else {
 			this.fire('selectionReset');
 			if (hadSelection) {
-				this.fire('select');
+				this.fire('select',null);
 			}			
 		}
 		this.fireSizeChange();
