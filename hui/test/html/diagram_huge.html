@@ -49,13 +49,15 @@
 					]
 				};
 				
-				for (var i=0; i < 100; i++) {
+				var num = 50;
+				
+				for (var i=0; i < num; i++) {
 					data.nodes.push({id:i+'',type:'box',title:i,properties:[{label:'ID',value:i}]});
 				};
-				for (var i=0; i < 200; i++) {
+				for (var i=0; i < num*2; i++) {
 					data.edges.push({
-						from : Math.round(Math.random()*99)+'', 
-						to : Math.round(Math.random()*99)+'',
+						from : Math.round(Math.random()*(num-1))+'', 
+						to : Math.round(Math.random()*(num-1))+'',
 						label : i
 					});
 				}

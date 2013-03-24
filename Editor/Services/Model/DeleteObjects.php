@@ -1,9 +1,9 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Tools.Issues
+ * @subpackage Services.Objects
  */
-require_once '../../../Include/Private.php';
+require_once '../../Include/Private.php';
 
 $ids = Request::getObject('ids');
 
@@ -13,8 +13,10 @@ if (!is_array($ids)) {
 }
 
 foreach ($ids as $id) {
-	if ($object = Issue::load($id)) {
+	if ($object = Object::load($id)) {
 		$object->remove();
+	} else {
+		Log::debug('Unable to load object with id='.$id);
 	}
 }
 ?>

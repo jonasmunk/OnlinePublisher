@@ -14,11 +14,12 @@ $CONFIG = array(
 		'database' => 'onlinepubisher'
 	),
 	
-	'baseUrl' => '/~username/path/to/site/', // The root url of your site, it must and with a slash (/)
+	'baseUrl' => '/~username/path/to/site/', // The root url of your site, it must end with a slash (/)
 	
 	'super' => array( // A super user hat can be used to perform admin tasks like creating users and updating the database scheme
 		'user' => 'peter',
 		'password' => '$u9er$ecr3t'
-	)
+	),
+	'debug' => false
 );
 ?>

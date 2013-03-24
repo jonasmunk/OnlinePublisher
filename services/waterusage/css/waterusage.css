@@ -93,10 +93,18 @@ div.box h3
 
 
 #record th.m3,
-#record table tbody td
+#record table tbody td,
+#record th.status
 {
 	text-align: right;
 }
+
+#record a.delete
+{
+	color: #4B8DF7;
+	text-decoration: underline;
+}
+
 
 
 /**** Info ****/

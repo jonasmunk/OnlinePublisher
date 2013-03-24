@@ -1629,17 +1629,12 @@ hui.request.createTransport = function() {
 
 hui.request._getActiveX = function() {
 	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
-	var o;
 	for (var i = 0; i < prefixes.length; i++) {
 		try {
-			// try to create the objects
-			o = new ActiveXObject(prefixes[i] + ".XmlHttp");
-			return o;
+			return new ActiveXObject(prefixes[i] + ".XmlHttp");
 		}
 		catch (ex) {};
 	}
-	
-	throw new Error("Could not find an installed XML parser");
 }
 
 
@@ -7022,7 +7017,7 @@ hui.ui.List.prototype = {
 		} else {
 			this.fire('selectionReset');
 			if (hadSelection) {
-				this.fire('select');
+				this.fire('select',null);
 			}			
 		}
 		this.fireSizeChange();
@@ -7440,14 +7435,14 @@ hui.ui.List.prototype = {
 	_changeSelection : function(indexes) {
 		var rows = this.body.getElementsByTagName('tr'),
 			i;
-		for (i=0;i<this.selected.length;i++) {
+		for (i = 0 ; i < this.selected.length; i++) {
 			hui.cls.remove(rows[this.selected[i]],'hui_list_selected');
 		}
-		for (i=0;i<indexes.length;i++) {
+		for (i = 0; i < indexes.length; i++) {
 			hui.cls.add(rows[indexes[i]],'hui_list_selected');
 		}
 		this.selected = indexes;
-		if (indexes.length>0) {
+		if (indexes.length > 0) {
 			this.fire('select',this.rows[indexes[0]]);
 			hui.ui.firePropertyChange(this,'selection.id',this.rows[indexes[0]].id);
 			this._clearChecked();
@@ -13681,6 +13676,9 @@ hui.ui.Fragment.prototype = {
 	hide : function() {
 		this.element.style.display='none';
 		hui.ui.callVisible(this);
+	},
+	setHTML : function(html) {
+		this.element.innerHTML = html;
 	}
 }
 

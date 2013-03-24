@@ -32,18 +32,31 @@ class ReportService {
 		}
 	}
 	
-	function sendReport() {
-		$url = ConfigurationService::getCompleteBaseUrl();
-		
-		$email = ReportService::getEmail();
-		if (!ValidateUtils::validateEmail($email)) {
-			Log::debug('The email is not valid');
+	function sendReport() {		
+		$emails = ReportService::getEmail();
+		if (StringUtils::isBlank($emails)) {
 			return false;
 		}
-		$name = '';
-		$subject = 'Report from '.$url;
-		$body = 'This is an HTML mail!';
+		$success = true;
+
 		$html = ReportService::generateFullReport();
+		$parts = preg_split("/[\s,;]+/", $emails);
+		foreach ($parts as $email) {
+			if (ValidateUtils::validateEmail($email)) {
+				ReportService::_sendReportToEmail($email,$html);
+			} else {
+				$success = false;
+				Log::debug('The email is not valid: '.$email);
+			}
+		}
+		return $success;
+	}
+
+	function _sendReportToEmail($email,$html) {
+		Log::debug('Sending report to: '.$email);
+		$name = '';
+		$subject = 'Report from '.ConfigurationService::getCompleteBaseUrl();
+		$body = 'This is an HTML-only mail';
 		return MailService::send($email,$name,$subject,$body,$html);
 	}
 	

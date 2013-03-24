@@ -13,7 +13,7 @@ if (!is_array($ids)) {
 }
 
 foreach ($ids as $id) {
-	if ($object = Issue::load($id)) {
+	if ($object = Feedback::load($id)) {
 		$object->remove();
 	}
 }
