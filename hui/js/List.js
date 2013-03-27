@@ -809,7 +809,10 @@ hui.ui.List.prototype = {
 					self._toggleChecked(index);
 				} else {
 					self._onRowDown(index,event);
-					hui.ui.startDrag(e,row);
+					if (hui.ui.startDrag) {
+						// Only if available
+						hui.ui.startDrag(e,row);
+					}
 					return false;
 				}
 			}

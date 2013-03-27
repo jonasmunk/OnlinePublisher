@@ -105,7 +105,7 @@ hui.ui.Button.prototype = {
 		}
 	},
 	_fireClick : function() {
-		this.fire('click');
+		this.fire('click',this);
 		if (this.options.submit) {
 			var form = hui.ui.getAncestor(this,'hui_formula');
 			if (form) {

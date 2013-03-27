@@ -75,7 +75,7 @@ hui.ui.BoundPanel.prototype = {
 			if (target.nodeName) {
 				this.position(target);
 			} else {
-				this.position(hui.ui.get(this.options.target));
+				this.position(hui.ui.get(target));
 			}
 		}
 		if (hui.browser.opacity) {
