@@ -97,7 +97,13 @@
 </columns>
 -->
 <xsl:template match="gui:columns">
-	<table cellspacing="0" cellpadding="0" class="hui_columns">
+	<table cellspacing="0" cellpadding="0">
+		<xsl:attribute name="class">
+			<xsl:text>hui_columns</xsl:text>
+			<xsl:if test="@height='full'">
+				<xsl:text> hui_columns_full</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<tr>
 			<xsl:apply-templates select="gui:column"/>
 		</tr>
