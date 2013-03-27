@@ -35,10 +35,10 @@
 						<xsl:comment/>
 						<div class="layout_box">
 							<h3>Kontakt</h3>
-							<p><strong>Green Benefit</strong></p>
+							<p><strong>Psoriasisbadet</strong></p>
 							<div class="layout_address">
-							<p>Vossvej 29 A</p>
-							<p>9000 Aalborg</p>
+							<p>Ikarosvej 39</p>
+							<p>9210 Aalborg SØ</p>
 							<p>Denmark</p>
 							</div>
 							<p>Tlf: 23 62 33 59</p>

@@ -112,15 +112,15 @@ if ($section==null) {
 				<rendering name="linkInfo"/>
 			</space>
 			<buttons align="center">
-				<button text="{Edit; da:Rediger}" name="editLink" highlighted="true" variant="paper" small="true"/>
-				<button text="{Delete; da:Slet}" name="deleteLinkPanel" variant="paper" small="true">
+				<button text="{Edit; da:Rediger}" name="editLink" highlighted="true" variant="light" small="true"/>
+				<button text="{Delete; da:Slet}" name="deleteLinkPanel" variant="light" small="true">
 					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
 				</button>
-				<button text="{Visit; da:Besøg}" name="visitLink" variant="paper" small="true"/>
+				<button text="{Visit; da:Besøg}" name="visitLink" variant="light" small="true"/>
 				<!--
-				<button text="{Only this section; da:Kun dette afsnit}" name="limitLinkToPart" variant="paper"/>
+				<button text="{Only this section; da:Kun dette afsnit}" name="limitLinkToPart" variant="light"/>
 				-->
-				<button text="{Cancel; da:Annuller}" name="cancelLinkPanel" variant="paper" small="true"/>
+				<button text="{Cancel; da:Annuller}" name="cancelLinkPanel" variant="light" small="true"/>
 			</buttons>
 		</boundpanel>
 	
@@ -395,12 +395,12 @@ function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
 	}
 	if ($section==null) {
 		echo '<div style="padding: 5px;">'.
-		'<a onclick="controller.showNewPartMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($lastIndex+1).'}); return false" href="#" class="hui_button hui_button_paper hui_button_small hui_button_small_paper">'.
+		'<a onclick="controller.showNewPartMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($lastIndex+1).'}); return false" href="#" class="hui_button hui_button_light hui_button_small hui_button_small_light">'.
 		'<span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span>'.
 		'</a>'.
 		'</div>';
 	} else {
-		echo '<div style="padding: 5px;"><a class="hui_button hui_button_paper hui_button_small hui_button_small_paper '.($section!=null ? 'hui_button_disabled' : '').'"><span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span></a></div>';
+		echo '<div style="padding: 5px;"><a class="hui_button hui_button_light hui_button_small hui_button_small_light '.($section!=null ? 'hui_button_disabled' : '').'"><span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span></a></div>';
 	}
 }
 

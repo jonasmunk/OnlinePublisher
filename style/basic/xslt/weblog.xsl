@@ -47,7 +47,7 @@
 	<xsl:template match="wl:list">
 		<xsl:if test="$username!=''">
 			<div class="actions">
-				<a class="hui_button hui_button_paper" id="weblog_new" href="#"><span><span>Opret ny</span></span></a>
+				<a class="hui_button hui_button_light" id="weblog_new" href="#"><span><span>Opret ny</span></span></a>
 			</div>
 		</xsl:if>
 		<xsl:apply-templates select="../wl:title"/>
@@ -92,8 +92,8 @@
 			</xsl:choose>
 			<xsl:if test="$username!=''">
 				<div class="operations">
-					<a href="#" onclick="op.WeblogTemplate.edit({o:object/@id}); return false;" class="hui_button hui_button_paper hui_button_small_paper" style="margin-right: 5px;"><span><span>Rediger</span></span></a>
-					<a href="#" onclick="op.WeblogTemplate.deleteEntry({o:object/@id},this); return false;" class="hui_button hui_button_paper hui_button_small_paper"><span><span>Slet</span></span></a>
+					<a href="#" onclick="op.WeblogTemplate.edit({o:object/@id}); return false;" class="hui_button hui_button_light hui_button_small_light" style="margin-right: 5px;"><span><span>Rediger</span></span></a>
+					<a href="#" onclick="op.WeblogTemplate.deleteEntry({o:object/@id},this); return false;" class="hui_button hui_button_light hui_button_small_light"><span><span>Slet</span></span></a>
 				</div>
 			</xsl:if>
 		</div>

@@ -925,7 +925,7 @@ a.hui_button_highlighted {
 	}
 }*/
 
-a.hui_button_paper, a.hui_button_paper span
+a.hui_button_light, a.hui_button_light span
 {
 	background: none;
 	height: 26px;
@@ -935,7 +935,7 @@ a.hui_button_paper, a.hui_button_paper span
 	font-size: 14px;
 }
 
-a.hui_button_paper, a.hui_button_paper:focus
+a.hui_button_light, a.hui_button_light:focus
 {
 	border: 1px solid #ddd;
 	border-radius: 4px;
@@ -947,7 +947,7 @@ a.hui_button_paper, a.hui_button_paper:focus
 	/*-webkit-box-shadow: 0px 1px 3px #eee;*/
 }
 
-a.hui_button_paper:hover
+a.hui_button_light:hover
 {
 	border-color: #dadada;
     background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fafafa), to(#eee));
@@ -955,7 +955,7 @@ a.hui_button_paper:hover
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fafafa, endColorstr=#eeeeee);
 }
 
-a.hui_button_paper:active
+a.hui_button_light:active
 {
 	border-color: #dadada;
     background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#eee), to(#fafafa));
@@ -963,7 +963,7 @@ a.hui_button_paper:active
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#fafafa);
 }
 
-a.hui_button_paper:focus
+a.hui_button_light:focus
 {
 	border-color: rgb(1,105,255);
 	box-shadow: 0 0 4px rgb(1,105,255);
@@ -973,14 +973,14 @@ a.hui_button_paper:focus
 
 /** Icon **/
 
-a.hui_button_paper em.hui_button_icon
+a.hui_button_light em.hui_button_icon
 {
 	margin-left: -6px;
     margin-right: 5px;
     margin-top: 5px;
 }
 
-a.hui_button_paper em.hui_button_icon_notext
+a.hui_button_light em.hui_button_icon_notext
 {
     margin-right: -5px;
 }
@@ -989,15 +989,15 @@ a.hui_button_paper em.hui_button_icon_notext
 
 
 
-/** Small paper **/
+/** Small light **/
 
-a.hui_button_small_paper, a.hui_button_small_paper span
+a.hui_button_small_light, a.hui_button_small_light span
 {
 	height: 20px;
 	line-height: 18px;
 }
 
-a.hui_button_small_paper span span
+a.hui_button_small_light span span
 {
 	margin: 0;
 	padding: 0 5px;
@@ -1009,21 +1009,21 @@ a.hui_button_small_paper span span
 
 
 
-/** Mini paper **/
+/** Mini light **/
 
-a.hui_button_mini_paper
+a.hui_button_mini_light
 {
 	border-radius: 16px;
 }
 
-a.hui_button_mini_paper, a.hui_button_mini_paper span
+a.hui_button_mini_light, a.hui_button_mini_light span
 {
 	height: 16px;
 	line-height: 16px;
 	font-size: 0;
 }
 
-a.hui_button_mini_paper span span
+a.hui_button_mini_light span span
 {
 	margin: 0;
 	padding: 0 10px;
@@ -1032,21 +1032,21 @@ a.hui_button_mini_paper span span
 }
 
 
-/** Tiny paper **/
+/** Tiny light **/
 
-a.hui_button_tiny_paper
+a.hui_button_tiny_light
 {
 	border-radius: 14px;
 }
 
-a.hui_button_tiny_paper, a.hui_button_tiny_paper span
+a.hui_button_tiny_light, a.hui_button_tiny_light span
 {
 	height: 14px;
 	line-height: 14px;
 	font-size: 0;
 }
 
-a.hui_button_tiny_paper span span
+a.hui_button_tiny_light span span
 {
 	margin: 0;
 	padding: 0 8px;

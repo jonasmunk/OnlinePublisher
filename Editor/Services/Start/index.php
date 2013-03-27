@@ -26,7 +26,7 @@ $gui='
 				<icon icon="common/user" size="16"/>
 				<strong>'.StringUtils::escapeXml($user->getTitle()).'</strong>
 				<em>('.StringUtils::escapeXml($user->getUsername()).')</em>
-				<button mini="true" variant="paper" text="{Settings ; da:Indstillinger}" name="userSettings"/>
+				<button mini="true" variant="light" text="{Settings ; da:Indstillinger}" name="userSettings"/>
 			</span>
 		</div>
 		<div style="position: absolute; top: 76px; bottom: 5px; left: 5px; right: 5px; overflow: hidden;">
@@ -181,12 +181,12 @@ $gui='
 					</dropdown>
 				</field>
 				<field label="{Password ; da: Kode}">
-					<button text="{Change password; da:Skift kodeord}" variant="paper" mini="true" name="changePassword"/>
+					<button text="{Change password; da:Skift kodeord}" variant="light" mini="true" name="changePassword"/>
 				</field>
 			</fields>
 		</formula>
 		<buttons align="right">
-			<button variant="paper" text="OK" small="true" name="saveSettings"/>
+			<button variant="light" text="OK" small="true" name="saveSettings"/>
 		</buttons>
 	</boundpanel>
 	

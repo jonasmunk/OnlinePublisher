@@ -38,7 +38,7 @@
 	<div class="layout">
 		<div class="layout_top">
 			<div class="layout_centered">
-				<strong>Torvedag - Aalborg</strong>
+				<strong>Grønttorvet - Aalborg</strong>
 				<ul class="layout_navigation">
 					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
 				</ul>
