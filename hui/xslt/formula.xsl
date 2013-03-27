@@ -549,7 +549,7 @@
 </xsl:template>
 
 <!--doc title:'Button' class:'hui.ui.Button' module:'action'
-<button text="«text»" icon="«icon»" name="«text»" small="«boolean»" mini="«boolean»" highlighted="«boolean»" disabled="«boolean»" variant="«'paper'»" submit="«boolean»" click="«script»" url="«url»">
+<button text="«text»" icon="«icon»" name="«text»" small="«boolean»" mini="«boolean»" highlighted="«boolean»" disabled="«boolean»" variant="«'light'»" submit="«boolean»" click="«script»" url="«url»">
     <confirm text="«text»" ok="«text»" cancel="«text»"/>
 </button>
 -->

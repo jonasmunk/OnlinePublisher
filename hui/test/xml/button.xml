@@ -27,15 +27,15 @@
 		
 		<space height="20"/>
 		
-		<header>Paper variant</header>
-		<button variant="paper" text="Paper variant"/>
-		<button variant="paper" text="Paper variant disabled" disabled="true"/>
-		<button variant="paper" text="Paper variant" icon="monochrome/delete"/>
-		<button variant="paper" icon="monochrome/delete"/>
-		<button variant="paper" text="Paper variant (small)" small="true"/>
-		<button variant="paper" text="Paper variant (small + disabled)" small="true" disabled="true"/>
-		<button variant="paper" text="Paper variant (mini)" mini="true"/>
-		<button variant="paper" text="Paper variant (mini + disabled)" mini="true" disabled="true"/>
+		<header>light variant</header>
+		<button variant="light" text="Light variant"/>
+		<button variant="light" text="light variant disabled" disabled="true"/>
+		<button variant="light" text="light variant" icon="monochrome/delete"/>
+		<button variant="light" icon="monochrome/delete"/>
+		<button variant="light" text="light variant (small)" small="true"/>
+		<button variant="light" text="light variant (small + disabled)" small="true" disabled="true"/>
+		<button variant="light" text="light variant (mini)" mini="true"/>
+		<button variant="light" text="light variant (mini + disabled)" mini="true" disabled="true"/>
 		<header>Actions</header>
 		<button title="Confirmation" click="hui.ui.showMessage({text:'Action approved!',duration:2000})">
 			<confirm text="Are you sure?" ok="Yes" cancel="No"/>

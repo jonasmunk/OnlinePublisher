@@ -70,7 +70,7 @@ $gui='
 								
 							</list>
 							<buttons top="10">
-								<button variant="paper" small="true" text="{Add profile;da:Tilføj profil}" name="newSite" click="profilePanel.show(); profileFormula.focus()"/>
+								<button variant="light" small="true" text="{Add profile;da:Tilføj profil}" name="newSite" click="profilePanel.show(); profileFormula.focus()"/>
 							</buttons>
 						</box>
 						</space>

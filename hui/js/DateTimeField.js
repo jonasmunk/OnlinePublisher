@@ -118,38 +118,38 @@ hui.ui.DateTimeField.prototype = {
 			b.add(hui.ui.Button.create({
 				text : 'Idag',
 				small : true,
-				variant : 'paper',
+				variant : 'light',
 				listener : {$click:this.goToday.bind(this)}
 			}));
 			b.add(hui.ui.Button.create({
 				text : '+ dag',
 				small : true,
-				variant : 'paper',
+				variant : 'light',
 				listener : {$click:function() {this.addDays(1)}.bind(this)}
 			}));
 			b.add(hui.ui.Button.create({
 				text : '+ uge',
 				small : true,
-				variant : 'paper',
+				variant : 'light',
 				listener : {$click:function() {this.addDays(7)}.bind(this)}
 			}));
 			b.add(hui.ui.Button.create({
 				text : '12:00',
 				small : true,
-				variant : 'paper',
+				variant : 'light',
 				listener : {$click:function() {this.setHour(12)}.bind(this)}
 			}));
 			b.add(hui.ui.Button.create({
 				text : '00:00',
 				small : true,
-				variant : 'paper',
+				variant : 'light',
 				listener : {$click:function() {this.setHour(0)}.bind(this)}
 			}));
 			/*
 			b.add(hui.ui.Button.create({
 				text : 'Kalender',
 				small : true,
-				variant : 'paper',
+				variant : 'light',
 				listener : {$click:this._showPicker.bind(this)}
 			}));*/
 			this.panel.add(b)
