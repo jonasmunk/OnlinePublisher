@@ -116,7 +116,8 @@ class PartController
 		'<xsl:variable name="language">'.strtolower($context->getLanguage()).'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-		return XslService::transform($xmlData,$xslData);
+		$html = XslService::transform($xmlData,$xslData);
+		return str_replace("<br></br>","<br/>",$html);
 	}
 	
 	function buildHiddenFields($items) {
