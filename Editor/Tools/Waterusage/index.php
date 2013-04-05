@@ -53,7 +53,7 @@ $gui='
 							<button text="Luk" icon="common/close" name="closeMeter"/>
 						</bar>
 						<space all="20">
-							<columns space="20">
+							<columns flexible="true" space="20">
 								<column width="300px">
 									<box variant="rounded" padding="10">
 									<formula name="summaryFormula">
@@ -65,7 +65,7 @@ $gui='
 												<text-input key="street"/>
 											</field>
 										</fields>
-										<columns>
+										<columns flexible="true">
 											<column width="100px">
 												<fields labels="above">
 													<field label="Postnummer">

@@ -148,7 +148,7 @@ $gui='
 							<text-input key="note" multiline="true"/>
 						</field>
 					</fields>
-					<columns space="10">
+					<columns flexible="true" space="10">
 						<column>
 							<field label="{From; da:Fra}">
 								<datetime-input key="startdate" return-type="seconds"/>
@@ -212,7 +212,7 @@ $gui='
 					<dropdown key="blueprint" name="articleBlueprint">'.$blueprintItems.'</dropdown>
 				</field>
 			</fields>
-			<columns>
+			<columns flexible="true">
 				<column>
 					<field label="{From; da:Fra}">
 						<datetime-input key="startdate"/>

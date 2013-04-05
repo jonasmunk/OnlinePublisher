@@ -13,7 +13,7 @@
 			</div>
 		</html>
 		<space all="25" bottom="15">
-			<columns space="30">
+			<columns flexible="true" space="30">
 				<column>
 					<header icon="monochrome/message">Udvikling</header>
 					<overflow vertical="180">

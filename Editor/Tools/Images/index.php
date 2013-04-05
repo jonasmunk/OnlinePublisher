@@ -128,7 +128,7 @@ $gui='
 	
 	<window title="{Image; da:Billede}" name="imageWindow" icon="common/image" width="450" padding="5">
 		<formula name="imageFormula">
-			<columns>
+			<columns flexible="true">
 				<column width="180px">
 					<div style="width: 150px; min-height: 50px; max-height: 300px; overflow: hidden; background: #fff no-repeat; font-size: 0; padding: 3px; border: 1px solid #ccc; border-color: #ddd #ccc #bbb; margin: 5px;" id="photo"></div>
 				</column>

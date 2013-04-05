@@ -155,6 +155,9 @@
 <xsl:if test="//gui:chart">
 	<script src="{$context}/hui/ext/Chart.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
+<xsl:if test="//gui:columns">
+	<script src="{$context}/hui/js/Columns.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+</xsl:if>
 <xsl:if test="//gui:keyboard-navigator">
 	<script src="{$context}/hui/ext/KeyboardNavigator.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 </xsl:if>
