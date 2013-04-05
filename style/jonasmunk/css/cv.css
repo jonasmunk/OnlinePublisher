@@ -9,26 +9,33 @@ body.theme_cv
 
 body.theme_cv div.layout
 {
-	width: 964px;
+	width: 1004px;
 	background: url('../gfx/white_plaster.png');
 }
 
 body.theme_cv div.layout_top
 {
-	background: url('../gfx/paper.png');
-	height: 26px;
+	height: 14px;
+	background: url('../gfx/layout_paper.png') -2008px 0;
 }
 
 body.theme_cv div.layout_content
 {
-	background: url('../gfx/paper.png') -1928px 0 repeat-y;
+	background: url('../gfx/layout_paper.png') 0 0 repeat-y;
 	padding: 20px 40px 40px;
 }
 
 body.theme_cv div.layout_bottom
 {
-	background: url('../gfx/paper.png') -964px 0 no-repeat;
-	height: 220px;
+	background: url('../gfx/layout_paper.png') -1004px 0;
+	height: 14px;
+	padding: 0;
+}
+
+body.theme_cv div.layout_footer
+{
+	padding: 60px 0;
+	height: auto;
 }
 
 body.theme_cv a.layout_designed
@@ -41,7 +48,16 @@ body.theme_cv a.layout_designed
 body.theme_cv h1.common,
 body.theme_cv h2.common
 {
-	font-family: 'Annie Use Your Telescope', cursive;
+	font-family: 'Source Sans Pro','Open Sans','Roboto','Raleway','Helvetica Neue','Helvetica',Arial,sans-serif;	
+	font-weight: 200;
+	color: #999;
+	letter-spacing: -3px;
+	text-indent: -2px;
+}
+
+body.theme_cv h2.common
+{
+	letter-spacing: -2px;
 }
 
 body.theme_cv h3.common,
@@ -52,7 +68,7 @@ body.theme_cv div.part_text,
 body.theme_cv div.part_listing,
 body.theme_cv div.part_poster
 {
-	font-family: 'Helvetica Neue','Helvetica',Arial,sans-serif;	
+	font-family: 'Open Sans','Helvetica Neue','Helvetica',Arial,sans-serif;	
 }
 
 body.theme_cv p.part_poster_title
@@ -64,7 +80,7 @@ body.theme_cv p.part_poster_title
 body.theme_cv p.part_poster_text
 {
 	font-weight: 200;
-	font-size: 11pt;
+	font-size: 12pt;
 }
 
 
@@ -72,6 +88,11 @@ body.theme_cv h1.common
 {
 	font-size: 42pt;
 	line-height: 1em;
+}
+
+body.theme_cv strong
+{
+	font-weight: 600;
 }
 
 body.theme_cv h2.common
@@ -90,14 +111,14 @@ body.theme_cv div.part_text,
 body.theme_cv div.part_listing
 {
 	font-weight: 300;
-	font-size: 11pt;
+	font-size: 12pt;
 	line-height: 1.4em;
 	color: #333;
 }
 
 body.theme_cv span.part_listing_first
 {
-	font-size: 11pt;
+	font-size: 12pt;
 	font-weight: 400;
 }
 
@@ -105,9 +126,11 @@ body.theme_cv span.part_listing_first
 body.theme_cv ul.layout_navigation_second,
 body.theme_cv ul.layout_navigation_third
 {
+	font-family: 'Open Sans','Helvetica Neue','Helvetica',Arial,sans-serif;	
 	list-style: none;
-	margin: -10px 0 20px -10px;
-	padding: 0;
+	margin: -15px -20px 20px -25px;
+	padding: 0 5px 4px;
+	border-bottom: 1px solid #eee;
 }
 
 body.theme_cv ul.layout_navigation_second li,
@@ -121,13 +144,22 @@ body.theme_cv ul.layout_navigation_third a
 {
 	text-decoration: none;
 	color: #888;
-	font-size: 12px;
+	font-size: 11pt;
 	padding: 0 10px;
+	font-weight: 300;
+	height: 24px;
+	line-height: 24px;
+	display: inline-block;
+	border-radius: 5px;
 }
 
-body.theme_cv li.layout_selected a,
-body.theme_cv li.layout_highlighted a
+body.theme_cv ul.layout_navigation_second li.layout_selected a,
+body.theme_cv ul.layout_navigation_second li.layout_highlighted a,
+body.theme_cv ul.layout_navigation_third li.layout_selected a,
+body.theme_cv ul.layout_navigation_third li.layout_highlighted a
 {
-	font-weight: bold;
+	font-weight: 400;
 	color: #000;
+	background: #fafafa;
+	border: 1px solid #eee;
 }

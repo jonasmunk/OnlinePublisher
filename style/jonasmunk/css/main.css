@@ -21,14 +21,14 @@ div.layout_top strong
 	line-height: 37px;
 }
 
-div.layout_bottom
+div.layout_footer
 {
 	text-align: center;
 	height: 100px;
 	padding-top: 20px;
 }
 
-div.layout_bottom a.layout_designed
+a.layout_designed
 {
 	background: url('../gfx/designed.png');
 	display: inline-block;
