@@ -24,7 +24,7 @@ class FormulaPartController extends PartController
 	<space height="10"/>
 	<fieldset legend="This is a fieldset">
 		<space height="10"/>
-		<columns>
+		<columns flexible="true">
 			<column>
 				<field label="A number field"><number/></field>
 			</column>

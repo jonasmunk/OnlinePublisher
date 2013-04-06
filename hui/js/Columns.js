@@ -15,11 +15,29 @@ hui.ui.Columns = function(options) {
  */
 hui.ui.Columns.create = function(options) {
 	options = options || {};
+	options.flexible = true;
 	options.element = hui.build('table',{'class' : 'hui_columns',html : '<tbody><tr></tr></tbody>'});
 	return new hui.ui.Columns(options);
 }
 
 hui.ui.Columns.prototype = {
+	$$layout : function() {
+		if (this.options.flexible) {
+			return;
+		}
+		this.element.style.height = hui.position.getRemainingHeight(this.element)+'px';
+		var children = hui.get.children(this.element);
+		var left = 0;
+		for (var i=0; i < children.length; i++) {
+			var child = children[i];
+			var width = (this.element.clientWidth/children.length);
+			child.style.width = width+'px'
+			child.style.position = 'absolute'
+			child.style.marginLeft = left+'px';
+			child.style.height = this.element.clientHeight+'px'
+			left+=width;
+		};
+	},
 	addToColumn : function(index,widget) {
 		var c = this._ensureColumn(index);
 		c.appendChild(widget.getElement());

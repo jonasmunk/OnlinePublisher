@@ -157,7 +157,7 @@ $gui='
 					</actions>
 					<title>{Help ; da: Hjælp}</title>
 					<div class="help">
-						<columns>
+						<columns flexible="true">
 							<column>
 								<icon icon="common/lifebuoy" size="64" text="{User manual ; da: Brugervejledning}" name="userManual"/>
 							</column>

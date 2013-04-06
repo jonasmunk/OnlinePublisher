@@ -107,7 +107,7 @@ $gui='
 		<formula name="productFormula">
 			<tabs small="true" centered="true">
 				<tab title="{Product; da:Produkt}" padding="5">
-					<columns space="10">
+					<columns space="10" flexible="true">
 						<column>
 							<field label="{Title; da:Titel}:">
 								<text-input name="productTitle"/>
@@ -168,7 +168,7 @@ $gui='
 				</fields>
 				</tab>
 				<tab title="{Settings; da:Indstillinger}" padding="5">
-					<columns>
+					<columns flexible="true">
 						<column>
 							<fields>
 								<field label="{Searchable; da:Søgbar}:">

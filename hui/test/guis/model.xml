@@ -64,6 +64,7 @@
 								</overflow>
 							</row>
 							<row>
+								
 								<bar variant="layout">
 									<text text="Jonas Munk"/>
 									<right>
@@ -84,14 +85,16 @@
 										</column>
 									</columns>
 								</overflow>
+								
 							</row>
 						</split>
 					</page>
+					
 					<page key="viewpage" background="wood">
 						<bar variant="layout">
 							<button text="Close" click="pages.next()" small="true"/>
 						</bar>
-						<columns>
+						<columns flexible="true">
 							<column width="200px">
 							</column>
 							<column>
@@ -113,13 +116,13 @@
 										</field>
 										-->
 										<field label="Sprog:">
-											<dropdown source="languagesSource"/>
+											<dropdown/>
 										</field>
 										<field label="Design:">
-											<dropdown source="designsSource"/>
+											<dropdown/>
 										</field>
 										<field label="Opsætning:">
-											<dropdown source="setupsSource"/>
+											<dropdown/>
 										</field>
 										<field label="Inaktiv:">
 											<checkbox/>
@@ -137,114 +140,5 @@
 			
 		</bottom>
 	</structure>
-	
-	<window name="newPage" width="500" title="Ny side" padding="5">
-		<formula>
-			<fields labels="besides">
-				<field label="Titel:">
-					<text-input/>
-				</field>
-			</fields>
-		</formula>
-		<div style="padding: 10px; margin: 4px; background: #eee; box-shadow: inset 0 1px 5px rgba(0,0,0,.2); border-radius: 4px">
-		<wizard selection-width="150" name="wizard">
-			<step title="Menupunkt" icon="common/hierarchy" border="true">
-				<overflow height="200">
-					<text align="center">
-						<p>Vælg det menu-punkt den nye side vises under...</p>
-					</text>
-					<selection name="hierarchySelection">
-						<items source="hierarchySource"/>
-					</selection>
-				</overflow>
-				<buttons small="true" top="5">
-					<button text="Intet menupunkt"/>
-				</buttons>
-			</step>
-			<step title="Info" icon="common/info" border="true">
-				<overflow height="200">
-				<formula>
-					<fields>
-						<field label="Beskrivelse:">
-							<text-input lines="6"/>
-						</field>
-						<field label="Sti:">
-							<text-input/>
-						</field>
-						<!--
-						<field label="Nøgleord:">
-							<text-input/>
-						</field>
-						<field label="Dato:">
-							<datetime-input/>
-						</field>
-						-->
-						<field label="Sprog:">
-							<dropdown source="languagesSource"/>
-						</field>
-						<field label="Design:">
-							<dropdown source="designsSource"/>
-						</field>
-						<field label="Opsætning:">
-							<dropdown source="setupsSource"/>
-						</field>
-						<field label="Inaktiv:">
-							<checkbox/>
-						</field>
-					</fields>
-				</formula>
-				</overflow>
-			</step>
-		</wizard>
-		</div>
-		<columns>
-			<column>
-				<div style="margin: 3px;">
-					<checkbox label="Avanceret"/>
-				</div>
-			</column>
-			<column>
-				<buttons align="right">
-					<button title="Annuller"/>
-					<button title="Opret" highlighted="true"/>
-				</buttons>
-			</column>
-		</columns>
-	</window>
-	
-	<box absolute="true" name="box" padding="10" modal="true" width="500" variant="textured" title="Ny side">
-		<wizard>
-			<step title="Vælg skabelon" icon="file/generic">
-				<picker title="Vælg skabelon"/>
-			</step>
-			<step title="Egenskaber">
-				<formula>
-					<fields labels="above">
-						<field label="Titel:">
-							<text-input/>
-						</field>
-						<field label="Sti:">
-							<text-input/>
-						</field>
-					</fields>
-				</formula>
-			</step>
-		</wizard>
-		<buttons top="10" align="right">
-			<button title="Forrige" click="box.hide()"/>
-			<button title="Næste" click="box.hide()"/>
-			<button title="Annuller" click="box.hide()"/>
-			<button title="Gem" highlighted="true"/>
-		</buttons>
-	</box>
-	
-	<listen>
-		$ready : function() {
-			//newPage.show();
-		},
-		$select$hierarchySelection : function() {
-			wizard.next();
-		}
-	</listen>
 
 </gui>

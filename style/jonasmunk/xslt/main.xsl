@@ -27,7 +27,10 @@
 		<xsl:value-of select="f:frame/@title"/>
 	</title>
 	<xsl:call-template name="util:metatags"/>
-	<link href='http://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'/>
+	<xsl:if test="//p:design/p:parameter[@key='theme']">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,600,300,200' rel='stylesheet' type='text/css'/>
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'/>
+	</xsl:if>
 	<xsl:call-template name="util:style"/>
 	
 	<xsl:call-template name="util:scripts"/>
@@ -57,6 +60,9 @@
 					<xsl:comment/>
 				</div>
 				<div class="layout_bottom">
+					<xsl:comment/>
+				</div>
+				<div class="layout_footer">
 					<a href="http://www.in2isoft.dk/" class="layout_designed">Designet og udviklet af In2iSoft</a>
 				</div>
 			</div>

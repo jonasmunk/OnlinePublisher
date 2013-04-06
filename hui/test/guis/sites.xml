@@ -65,7 +65,7 @@
 						<bar variant="layout">
 							<button text="Close" click="pages.next()" small="true"/>
 						</bar>
-						<columns>
+						<columns flexible="true">
 							<column width="200px">
 							</column>
 							<column>
@@ -171,7 +171,7 @@
 			</step>
 		</wizard>
 		</div>
-		<columns>
+		<columns flexible="true">
 			<column>
 				<div style="margin: 3px;">
 					<checkbox label="Avanceret"/>

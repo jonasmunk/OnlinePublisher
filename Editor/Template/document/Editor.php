@@ -225,7 +225,7 @@ if ($section==null) {
 						<style-length-input key="width" name="columnWidth"/>
 					</field>
 				</fields>
-				<columns>
+				<columns flexible="true">
 					<column>
 						<field label="{Left; da:Venstre}">
 							<style-length-input key="left"/>

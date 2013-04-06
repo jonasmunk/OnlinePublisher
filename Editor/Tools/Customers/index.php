@@ -73,7 +73,7 @@ $gui='
 				<tab title="Person" padding="10">
 					<columns flexible="true" space="10">
 						<column>
-							<columns space="10">
+							<columns space="10" flexible="true">
 								<column>
 									<field label="{First name; da:Fornavn}:">
 										<text-input name="personFirstname"/>
@@ -90,7 +90,7 @@ $gui='
 									</field>
 								</column>
 							</columns>
-							<columns space="10">
+							<columns space="10" flexible="true">
 								<column>
 									<field label="{Job title; da:Jobtitel}:">
 										<text-input name="personJobtitle"/>
@@ -122,7 +122,7 @@ $gui='
 							</field>
 						</column>
 					</columns>
-					<columns space="10">
+					<columns space="10" flexible="true">
 						<column>
 							<fields labels="above">
 								<field label="{E-mail; da:E-post}:">
@@ -150,7 +150,7 @@ $gui='
 							<field label="{Address; da:Adresse}:">
 								<text-input name="personStreetname"/>
 							</field>
-							<columns space="10">
+							<columns space="10" flexible="true">
 								<column>
 									<field label="{Postal code; da:Postnr}:">
 										<text-input name="personZipcode"/>
@@ -174,7 +174,7 @@ $gui='
 					</columns>
 				</tab>
 				<tab title="{Settings; da:Indstillinger}" padding="10">
-					<columns space="5">
+					<columns space="5" flexible="true">
 						<column>
 							<fields>
 								<field label="{Mailing lists; da:Postlister}:">

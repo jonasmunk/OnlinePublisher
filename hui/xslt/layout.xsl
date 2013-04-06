@@ -87,7 +87,7 @@
 
 
 <!--doc title:'Columns' module:'layout'
-<columns space="«pixels»">
+<columns space="«pixels»" flexible="«boolean»" height="«'full'»">
     <column width="«css-length»">
         ···
     </column>
@@ -96,15 +96,21 @@
     </column>
 </columns>
 -->
-<xsl:template match="gui:columns">
-	<table cellspacing="0" cellpadding="0" class="hui_columns">
+<xsl:template match="gui:columns[flexible='true']">
+	<table cellspacing="0" cellpadding="0">
+		<xsl:attribute name="class">
+			<xsl:text>hui_columns</xsl:text>
+			<xsl:if test="@height='full'">
+				<xsl:text> hui_columns_full</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<tr>
 			<xsl:apply-templates select="gui:column"/>
 		</tr>
 	</table>
 </xsl:template>
 
-<xsl:template match="gui:columns/gui:column">
+<xsl:template match="gui:columns[flexible='true']/gui:column">
 	<td class="hui_columns_column">
 		<xsl:if test="(position()>1 and ../@space) or @width">
 			<xsl:attribute name="style">
@@ -116,7 +122,25 @@
 	</td>
 </xsl:template>
 
+<xsl:template match="gui:columns">
+	<div class="hui_columns" id="{generate-id()}">
+		<xsl:apply-templates/>
+	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Columns({
+			element : '<xsl:value-of select="generate-id()"/>',
+			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
 
+<xsl:template match="gui:columns/gui:column">
+	<div class="hui_columns_column">
+		<xsl:apply-templates/>
+		<xsl:comment/>
+	</div>
+</xsl:template>
 
 
 
