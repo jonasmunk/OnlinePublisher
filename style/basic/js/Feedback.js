@@ -7,11 +7,12 @@ op.feedback.Controller = {
 		a.style.display = 'none';
 		var html = 
 			'<h1>Send besked</h1>'+
-			'<p class="layout_feedback_form_hint">Beskriv venligst hvordan denne side kan gøres bedre...</p>'+
-			'<p><label>Din e-post-adresse (ikke krævet)</label><input type="text" name="email"></p>'+
+			'<p class="layout_feedback_form_hint">Beskriv venligst hvordan vi kan gøre siden bedre...</p>'+
+			'<p><label>Din e-post-adresse - ikke krævet</label><input type="text" name="email"></p>'+
 			'<p><label>Tekst</label><textarea></textarea></p>'+
-			'<p><a href="javascript://" onclick="op.feedback.Controller.send(this)">Send feedback</a><a href="javascript://" onclick="op.feedback.Controller.cancel()">Annuller</a></p>';
-		this.element = hui.build('div',{parent:a.parentNode,className:'layout_feedback_form',html:html});
+			'<p><a href="javascript://" onclick="op.feedback.Controller.send(this)">Send besked</a><a href="javascript://" onclick="op.feedback.Controller.cancel()">Annuller</a></p>';
+		this.element = hui.build('div',{before:a.parentNode,className:'layout_feedback_form',html:html});
+		
 		this.email = hui.get.firstByTag(this.element,'input');
 		this.message = hui.get.firstByTag(this.element,'textarea');
 		this.email.focus();
