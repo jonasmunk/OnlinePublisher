@@ -63,6 +63,12 @@ class AuthenticationService {
 		if ($row = Database::selectFirst($sql)) {
 			return User::load($row['id']);
 		}
+		return null;
+	}
+	
+	function isInternalUser($username,$password) {
+		$user = AuthenticationService::getUser($username,$password,true);
+		return $user!==null;
 	}
 	
 	function getUserByEmailOrUsername($emailOrUsername) {
