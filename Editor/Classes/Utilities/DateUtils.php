@@ -235,6 +235,16 @@ class DateUtils {
 		return mktime(23,59,59,$month,$date,$year);
 	}
 	
+	function getDayStart($timestamp=null) {
+		if ($timestamp==null) {
+			$timestamp = mktime();
+		}
+		$year = date('Y',$timestamp);
+		$month = date('n',$timestamp);
+		$date = date('j',$timestamp);
+		return mktime(0,0,0,$month,$date,$year);
+	}
+	
 	function getMonthStart($timestamp=null) {
 		if ($timestamp==null) {
 			$timestamp = mktime();

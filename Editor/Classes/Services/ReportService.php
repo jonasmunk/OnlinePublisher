@@ -85,26 +85,49 @@ class ReportService {
 		$url = ConfigurationService::getCompleteBaseUrl();
 		
 		$query = new StatisticsQuery();
-		$query->setStartTime(DateUtils::addDays(time(),-7));
+		$query->setStartTime(DateUtils::addDays(time(),-14));
+		$query->setEndTime(DateUtils::getDayStart(time()));
 		$stats = StatisticsService::searchVisits($query);
 
-		
 		$report = '<div class="report">';
 		$report.= '<h1>Report</h1><p class="info">'.DateUtils::formatLongDate(time()).' for <a href="'.$url.'">'.$url.'</a></p>';
-		$report.= '<div class="statistics">';
-		$report.= '<h2>Statistics</h2>';
+		$report.= '<div class="block statistics">';
+		$report.= '<h2>Statistics for the last two weeks</h2>';
 		$report.= '<table>'.
 			'<thead><th class="date">Date</th><th>Sessions</th><th>IPs</th><th>Hits</th></thead><tbody>';
+		$max = array('sessions'=>0,'ips'=>0,'hits'=>0);
+		foreach ($stats as $stat) {
+			$max['sessions'] = max($max['sessions'],$stat['sessions']);
+			$max['ips'] = max($max['ips'],$stat['ips']);
+			$max['hits'] = max($max['hits'],$stat['hits']);
+		}
+		
 		foreach ($stats as $stat) {
 			$report.='<tr>'.
 				'<th class="date">'.$stat['label'].'</th>'.
-				'<td>'.$stat['sessions'].'</td>'.
-				'<td>'.$stat['ips'].'</td>'.
-				'<td>'.$stat['hits'].'</td>'.
+				'<td class="value"><div><strong style="width: '.($stat['sessions']/$max['sessions']*100).'%;"></strong><span>'.$stat['sessions'].'</span></div></td>'.
+				'<td class="value"><div><strong style="width: '.($stat['ips']/$max['ips']*100).'%;"></strong><span>'.$stat['ips'].'</span></div></td>'.
+				'<td class="value"><div><strong style="width: '.($stat['hits']/$max['hits']*100).'%;"></strong><span>'.$stat['hits'].'</span></div></td>'.
 				'</tr>';
 		}
 		$report.= '</tbody></table>';
 		$report.= '</div>';
+		
+		
+		$issues = Query::after('issue')->withCreatedMin(DateUtils::addDays(time(),-2))->orderByCreated()->descending()->get();
+		if ($issues) {
+			$report.= '<div class="block issues">';
+			$report.= '<h2>Issues the last two days</h2>';
+			$report.= '<ul>';
+			foreach ($issues as $issue) {
+				$report.='<li class="'.$issue->getKind().'">';
+				$report.='<p><strong>'.StringUtils::escapeXML($issue->getTitle()).'</strong></p>';
+				$report.='<p>'.StringUtils::escapeXML($issue->getNote()).'</p>';
+				$report.='</li>';
+			}
+			$report.= '</ul>';
+			$report.= '</div>';
+		}
 		return $report;
 	}
 }
