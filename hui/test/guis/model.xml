@@ -81,7 +81,22 @@
 											</overflow>
 										</column>
 										<column width="30%">
-											<button text="Hey"/>
+											<split>
+												<row>
+													<bar variant="layout">
+													</bar>
+													<overflow>
+														<list source="listSource"/>
+													</overflow>
+												</row>
+												<row>
+													<bar variant="layout">
+													</bar>
+													<overflow>
+														<list source="listSource"/>
+													</overflow>
+												</row>
+											</split>
 										</column>
 									</columns>
 								</overflow>

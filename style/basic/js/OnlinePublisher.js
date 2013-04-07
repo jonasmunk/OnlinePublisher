@@ -226,6 +226,16 @@ if (op.part===undefined) {
 	op.part = {};
 }
 
+
+/************* Feedback *************/
+
+op.feedback = function(a) {
+	hui.require(op.page.path+'style/basic/js/Feedback.js',function() {
+		op.feedback.Controller.init(a);
+	})
+}
+
+
 /************* Image gallery *************/
 
 op.part.ImageGallery = function(options) {

@@ -585,6 +585,14 @@
 		</li>
 	</xsl:if>
 </xsl:template>
+
+<xsl:template name="util:feedback">
+	<xsl:param name="text">Feedback</xsl:param>
+	<p class="layout_feedback">
+		<a class="common" href="javascript://" onclick="op.feedback(this)"><span><xsl:value-of select="$text"/></span></a>
+	</p>
+</xsl:template>
+
 <!--
 	<xsl:template name="util:share">
 		<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>

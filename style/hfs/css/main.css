@@ -143,7 +143,7 @@ div.layout_logo
 	box-shadow: 0 1px 3px #AAA;
 	width: 170px;
 	right: 20px;
-	top: 31px;
+	top: 18px;
 	height: 160px;
 }
 
@@ -196,7 +196,14 @@ div.layout_footer
 
 div.layout_footer_body
 {
-	background: #f2f2f2;
+	background: #eeeeee;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#ffffff));
+	background: -webkit-linear-gradient(top, #eeeeee 0%,#ffffff 100%);
+	background: -o-linear-gradient(top, #eeeeee 0%,#ffffff 100%);
+	background: -ms-linear-gradient(top, #eeeeee 0%,#ffffff 100%);
+	background: linear-gradient(to bottom, #eeeeee 0%,#ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
 	padding: 20px 0;
 }
 
@@ -692,4 +699,76 @@ p.layout_news_links
 	font-size: 8pt;
 	margin-top: 3px;
 	margin: 0;
+}
+
+
+/***************** Feedback ***************/
+
+div.layout_feedback_form
+{
+	background: #fafafa;
+	border: 1px solid #eee;
+	padding: 5px 10px;
+}
+
+div.layout_feedback_form h1
+{
+	font-size: 24pt;
+	line-height: 24pt;
+	margin: 3px 0 10px;
+	font-weight: normal;
+	font-family: 'Play',sans-serif;
+	color: #bbb;
+}
+
+div.layout_feedback_form p
+{
+	margin: 5px 0;
+}
+
+div.layout_feedback_form label
+{
+	display: block;
+	font-size: 9pt;
+}
+
+div.layout_feedback_form input,
+div.layout_feedback_form textarea
+{
+	margin: 0;
+	padding: 4px;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	background: #fff;
+	font-size: 12pt;
+}
+
+div.layout_feedback_form textarea
+{
+	height: 200px;
+}
+
+div.layout_feedback_form p.layout_feedback_form_hint
+{
+	font-size: 9pt;
+	font-style: italic;
+	margin: 0 0 15px;
+}
+
+div.layout_feedback_form a
+{
+	text-decoration: none;
+	display: inline-block;
+	background: #eee;
+	color: #333;
+	margin-right: 5px;
+	border: 1px solid #ddd;
+	font-size: 10pt;
+	line-height: 10pt;
+	padding: 0 10px;
+	height: 26px;
+	line-height: 26px;
+	border-radius: 3px;
 }
