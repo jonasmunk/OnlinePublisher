@@ -114,7 +114,7 @@ class ReportService {
 		$report.= '</div>';
 		
 		
-		$issues = Query::after('issue')->withCreatedMin(DateUtils::addDays(time(),-2))->orderByCreated()->descending()->get();
+		$issues = Query::after('issue')->withCreatedMin(DateUtils::addDays(time(),-2))->withoutProperty('kind',Issue::$error)->orderByCreated()->descending()->get();
 		if ($issues) {
 			$report.= '<div class="block issues">';
 			$report.= '<h2>Issues the last two days</h2>';
