@@ -311,11 +311,12 @@ ul.layout_navigation li.first a
 	height: 51px;
 	margin: -5px 10px 0 0;
 	background: url('../gfx/graphics.png') -7px -637px;
-	/*background: url('../gfx/graphics.png') -140px -637px;*/
 	border-radius: 0;
 	box-shadow: none;
 	-webkit-box-shadow: none;
 }
+
+
 
 ul.layout_navigation li.first span
 {
