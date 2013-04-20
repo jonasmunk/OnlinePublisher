@@ -41,7 +41,7 @@ hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9') !== -1;
 /** If the browser is InternetExplorer 9 in compatibility mode */
 hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0') !== -1;
 /** If the browser is InternetExplorer 10 */
-hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 10') !== -1;
+hui.browser.msie10 = navigator.userAgent.indexOf('MSIE 10') !== -1;
 /** If the browser is WebKit based */
 hui.browser.webkit = navigator.userAgent.indexOf('WebKit') !== -1;
 /** If the browser is any version of Safari */
@@ -5126,6 +5126,366 @@ hui.ui.SearchField.prototype = {
 			this._updateClass();
 			this.fireValueChange();
 		}
+	}
+}
+
+/* EOF *//**
+ * @constructor
+ */
+hui.ui.Overlay = function(options) {
+	this.options = options;
+	this.element = hui.get(options.element);
+	this.content = hui.get.byClass(this.element,'hui_inner_overlay')[1];
+	this.name = options.name;
+	this.icons = {};
+	this.visible = false;
+	hui.ui.extend(this);
+	this._addBehavior();
+}
+
+/**
+ * Creates a new overlay
+ */
+hui.ui.Overlay.create = function(options) {
+	options = options || {};
+	var e = options.element = hui.build('div',{className:'hui_overlay'+(options.variant ? ' hui_overlay_'+options.variant : ''),style:'display:none',html:'<div class="hui_inner_overlay"><div class="hui_inner_overlay"></div></div>'});
+	document.body.appendChild(e);
+	return new hui.ui.Overlay(options);
+}
+
+hui.ui.Overlay.prototype = {
+	_addBehavior : function() {
+		var self = this;
+/*		this.hider = function(e) {
+			if (self.boundElement) {
+				if (hui.ui.isWithin(e,self.boundElement) || hui.ui.isWithin(e,self.element)) return;
+				// TODO: should be unreg'ed but it fails
+				//self.boundElement.stopObserving(self.hider);
+				hui.cls.remove(self.boundElement,'hui_overlay_bound');
+				self.boundElement = null;
+				self.hide();
+			}
+		}
+		hui.listen(this.element,'mouseout',this.hider);*/
+	},
+	addIcon : function(key,icon) {
+		var self = this;
+		var element = hui.build('div',{className:'hui_overlay_icon'});
+		element.style.backgroundImage='url('+hui.ui.getIconUrl(icon,32)+')';
+		hui.listen(element,'click',function(e) {
+			self._iconWasClicked(key,e);
+		});
+		this.icons[key]=element;
+		this.content.appendChild(element);
+	},
+	addText : function(text) {
+		this.content.appendChild(hui.build('span',{'class':'hui_overlay_text',text:text}));
+	},
+	add : function(widget) {
+		this.content.appendChild(widget.getElement());
+	},
+	hideIcons : function(keys) {
+		for (var i=0; i < keys.length; i++) {
+			this.icons[keys[i]].style.display='none';
+		};
+	},
+	showIcons : function(keys) {
+		for (var i=0; i < keys.length; i++) {
+			this.icons[keys[i]].style.display='';
+		};
+	},
+	_iconWasClicked : function(key,e) {
+		hui.ui.callDelegates(this,'iconWasClicked',key,e);
+	},
+	showAtElement : function(element,options) {
+		options = options || {};
+		hui.ui.positionAtElement(this.element,element,options);
+		if (options.autoHide) {
+			// important to do even if visible, sine element may have changed
+			this._autoHide(element);
+		}
+		if (this.visible) {
+			return;
+		}
+		if (hui.browser.msie) {
+			this.element.style.display = 'block';
+		} else {
+			hui.style.set(this.element,{display : 'block',opacity : 0});
+			hui.animate(this.element,'opacity',1,150);
+		}
+		var zIndex = hui.ui.nextAlertIndex();
+		if (this.options.modal) {
+			this.element.style.zIndex = hui.ui.nextAlertIndex();
+			hui.ui.showCurtain({ widget : this, zIndex : zIndex });
+		} else {
+			this.element.style.zIndex = zIndex;
+		}
+		this.visible = true;
+	},
+	_autoHide : function(element) {
+		hui.cls.add(element,'hui_overlay_bound');
+		hui.unListen(document.body,'mousemove',this._hider);
+		this._hider = function(e) {
+			if (!hui.ui.isWithin(e,element) && !hui.ui.isWithin(e,this.element)) {
+				try {
+					hui.unListen(document.body,'mousemove',this._hider);
+					hui.cls.remove(element,'hui_overlay_bound');
+					this.hide();
+				} catch (e) {
+					hui.log('unable to stop listening: document='+document);
+				}
+			}
+		}.bind(this)
+		hui.listen(document.body,'mousemove',this._hider);
+	},
+	show : function(options) {
+		options = options || {};
+		if (!this.visible) {
+			hui.style.set(this.element,{'display':'block',visibility:'hidden'});
+		}
+		if (options.element) {
+			hui.position.place({
+				source : {element:this.element,vertical:0,horizontal:.5},
+				target : {element:options.element,vertical:.5,horizontal:.5},
+				insideViewPort : true,
+				viewPartMargin : 9
+			});
+		}
+		if (options.autoHide && options.element) {
+			this._autoHide(options.element);
+		}
+		if (this.visible) return;
+		hui.effect.bounceIn({element:this.element});
+		this.visible = true;
+		if (this.options.modal) {
+			var zIndex = hui.ui.nextAlertIndex();
+			this.element.style.zIndex=zIndex+1;
+			hui.ui.showCurtain({widget:this,zIndex:zIndex,color:'auto'});
+		}
+	},
+	/** private */
+	$curtainWasClicked : function() {
+		this.hide();
+	},
+	hide : function() {
+		hui.ui.hideCurtain(this);
+		this.element.style.display='none';
+		this.visible = false;
+	},
+	clear : function() {
+		hui.ui.destroyDescendants(this.content);
+		this.content.innerHTML='';
+	}
+}
+
+/* EOF */
+/**
+ * A push button
+ * <pre><strong>options:</strong> {
+ *  element : «Element | ID»,
+ *  name : «String»,
+ *  data : «Object»,
+ *  confirm : {text : «String», okText : «String», cancelText : «String»},
+ *  submit : «Boolean»
+ * }
+ *
+ * <strong>Events:</strong>
+ * $click(button) - When the button is clicked (and possibly confirmed)
+ * </pre>
+ * @param options {Object} The options
+ * @constructor
+ */
+hui.ui.Button = function(options) {
+	this.options = options;
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
+	hui.ui.extend(this);
+	this.addBehavior();
+	if (options.listener) {
+		this.listen(options.listener);
+	}
+}
+
+/**
+ * Creates a new button
+ * <pre><strong>options:</strong> {
+ *  text : «String»,
+ *  title : «String», // deprecated
+ *  highlighted : «true | <strong>false</strong>»,
+ *  enabled : «<strong>true</strong> | false»,
+ *  icon : «String»,
+ *
+ *  name : «String»,
+ *  data : «Object»,
+ *  confirm : {text : «String», okText : «String», cancelText : «String»},
+ *  submit : «Boolean»
+ * }
+ * </pre>
+ */
+hui.ui.Button.create = function(options) {
+	options = hui.override({text:'',highlighted:false,enabled:true},options);
+	var className = 'hui_button'+(options.highlighted ? ' hui_button_highlighted' : '');
+	if (options.variant) {
+		className+=' hui_button_'+options.variant;
+	}
+	if (options.small && options.variant) {
+		className+=' hui_button_small_'+options.variant;
+	}
+	if (options.small) {
+		className+=' hui_button_small'+(options.highlighted ? ' hui_button_small_highlighted' : '');
+	}
+	if (!options.enabled) {
+		className+=' hui_button_disabled';
+	}
+	var text = options.text ? hui.ui.getTranslated(options.text) : null;
+	if (options.title) { // Deprecated
+		text = hui.ui.getTranslated(options.title);
+	}
+	var element = options.element = hui.build('a',{'class':className,href:'javascript://'});
+	var inner = hui.build('span',{parent:hui.build('span',{parent:element})});
+	if (options.icon) {
+		var icon = hui.build('em',{parent:inner,'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(options.icon,16)+')'});
+		if (!text) {
+			hui.cls.add(icon,'hui_button_icon_notext');
+		}
+	}
+	if (text) {
+		hui.dom.addText(inner,text);
+	}
+	return new hui.ui.Button(options);
+}
+
+hui.ui.Button.prototype = {
+	/** @private */
+	addBehavior : function() {
+		var self = this;
+		hui.listen(this.element,'mousedown',function(e) {
+			hui.stop(e);
+		});
+		hui.listen(this.element,'click',function(e) {
+			hui.stop(e);
+			self._onClick();
+		});
+	},
+	_onClick : function() {
+		if (this.enabled) {
+			if (this.options.confirm) {
+				hui.ui.confirmOverlay({
+					widget : this,
+					text : this.options.confirm.text,
+					okText : this.options.confirm.okText,
+					cancelText : this.options.confirm.cancelText,
+					onOk : this._fireClick.bind(this)
+				});
+			} else {
+				this._fireClick();
+			}
+		} else {
+			this.element.blur();
+		}
+	},
+	_fireClick : function() {
+		this.fire('click',this);
+		if (this.options.submit) {
+			var form = hui.ui.getAncestor(this,'hui_formula');
+			if (form) {
+				form.submit();
+			} else {
+				hui.log('No form found to submit');
+			}
+		}
+	},
+	/** Registers a function as a click listener or issues a click
+	 * @param func? {Function} The function to run when clicked, leave out to issue a click
+	 */
+	click : function(func) {
+		if (func) {
+			this.listen({$click:func});
+			return this;
+		} else {
+			this._onClick();
+		}
+	},
+	/** Focus the button */
+	focus : function() {
+		this.element.focus();
+	},
+	/** Registers a function as a click handler
+	 * @param func {Function} The fundtion to invoke when clicked click
+	 */
+	onClick : function(func) {
+		this.listen({$click:func});
+	},
+	/** Enables or disables the button
+	 * @param enabled {Boolean} If the button should be enabled
+	 */
+	setEnabled : function(enabled) {
+		this.enabled = enabled;
+		this._updateUI();
+	},
+	/** Enables the button */
+	enable : function() {
+		this.setEnabled(true);
+	},
+	/** Disables the button */
+	disable : function() {
+		this.setEnabled(false);
+	},
+	/** Sets whether the button is highlighted
+	 * @param highlighted {Boolean} If the button should be highlighted
+	 */
+	setHighlighted : function(highlighted) {
+		hui.cls.set(this.element,'hui_button_highlighted',highlighted);
+	},
+	_updateUI : function() {
+		hui.cls.set(this.element,'hui_button_disabled',!this.enabled);
+	},
+	/** Sets the button text
+	 * @param
+	 */
+	setText : function(text) {
+		hui.dom.setText(this.element.getElementsByTagName('span')[1], hui.ui.getTranslated(text));
+	},
+	/**
+	 * Get the data object for the button
+	 * @returns {Object} The data object
+	 */
+	getData : function() {
+		return this.options.data;
+	}
+}
+
+////////////////////////////////// Buttons /////////////////////////////
+
+/** @constructor */
+hui.ui.Buttons = function(options) {
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
+	hui.ui.extend(this);
+}
+
+hui.ui.Buttons.create = function(options) {
+	options = hui.override({top:0},options);
+	var e = options.element = hui.build('div',{'class':'hui_buttons'});
+	if (options.align=='right') {
+		hui.cls.add(e,'hui_buttons_right');
+	}
+	if (options.align=='center') {
+		hui.cls.add(e,'hui_buttons_center');
+	}
+	if (options.top > 0) {
+		e.style.paddingTop=options.top+'px';
+	}
+	hui.build('div',{'class':'hui_buttons_body',parent:e});
+	return new hui.ui.Buttons(options);
+}
+
+hui.ui.Buttons.prototype = {
+	add : function(widget) {
+		this.body.appendChild(widget.element);
+		return this;
 	}
 }
 

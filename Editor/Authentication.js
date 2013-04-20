@@ -5,7 +5,7 @@ var controller = {
 		} else {
 			username.focus();
 		}
-		if (hui.browser.msie && (!hui.browser.msie8 && !hui.browser.msie9)) {
+		if (hui.browser.msie && (!hui.browser.msie8 && !hui.browser.msie9 && !hui.browser.msie10)) {
 			if (hui.browser.msie9compat) {
 				hui.ui.alert({
 					emotion : 'gasp',

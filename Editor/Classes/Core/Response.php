@@ -37,8 +37,8 @@ class Response {
 		Response::sendStatus(502,'Bad Gateway',$text);
 	}
 	
-	static function badRequest() {
-		header('HTTP/1.1 400 Bad Request');
+	static function badRequest($text=null) {
+		Response::sendStatus(400,'Bad Request',$text);
 	}
 	
 	static function notFound($text=null) {

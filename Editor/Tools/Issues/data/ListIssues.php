@@ -9,7 +9,7 @@ $text = Request::getString('text');
 $filter = Request::getString('filter');
 $kind = Request::getString('filterKind');
 
-if ($filter=='feedback') {
+if ($kind=='feedback') {
 	listFeedback();
 } else {
 	listIssues();
@@ -28,8 +28,8 @@ function listFeedback() {
 
 	$writer->startHeaders()->
 		header()->
-		header('Status')->
-		header('Oprettet')->
+		header(array('title'=>'Status','width'=>1))->
+		header(array('title'=>'Oprettet','width'=>1))->
 	endHeaders();
 	
 	foreach($list as $item) {
@@ -66,8 +66,8 @@ function listIssues() {
 
 	$writer->startHeaders()->
 		header()->
-		header('Status')->
-		header('Oprettet')->
+		header(array('title'=>'Status','width'=>1))->
+		header(array('title'=>'Oprettet','width'=>1))->
 	endHeaders();
 
 	foreach($list as $item) {

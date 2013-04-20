@@ -7,7 +7,7 @@ require_once '../../../Editor/Include/Client.php';
 
 
 $query = new StatisticsQuery();
-$query->setStartTime(DateUtils::addDays(time(),-7));
+$query->setStartTime(DateUtils::addDays(time(),-30));
 $stats = StatisticsService::searchVisits($query);
 
 $result = array();

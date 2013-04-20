@@ -96,31 +96,6 @@
     </column>
 </columns>
 -->
-<xsl:template match="gui:columns[flexible='true']">
-	<table cellspacing="0" cellpadding="0">
-		<xsl:attribute name="class">
-			<xsl:text>hui_columns</xsl:text>
-			<xsl:if test="@height='full'">
-				<xsl:text> hui_columns_full</xsl:text>
-			</xsl:if>
-		</xsl:attribute>
-		<tr>
-			<xsl:apply-templates select="gui:column"/>
-		</tr>
-	</table>
-</xsl:template>
-
-<xsl:template match="gui:columns[flexible='true']/gui:column">
-	<td class="hui_columns_column">
-		<xsl:if test="(position()>1 and ../@space) or @width">
-			<xsl:attribute name="style">
-				<xsl:if test="position()>1 and ../@space">padding-left: <xsl:value-of select="../@space"/>px;</xsl:if>
-				<xsl:if test="@width">width: <xsl:value-of select="@width"/>;</xsl:if>
-			</xsl:attribute>
-		</xsl:if>
-		<xsl:apply-templates/>
-	</td>
-</xsl:template>
 
 <xsl:template match="gui:columns">
 	<div class="hui_columns" id="{generate-id()}">
@@ -140,6 +115,32 @@
 		<xsl:apply-templates/>
 		<xsl:comment/>
 	</div>
+</xsl:template>
+
+<xsl:template match="gui:columns[@flexible='true']">
+	<table cellspacing="0" cellpadding="0">
+		<xsl:attribute name="class">
+			<xsl:text>hui_columns</xsl:text>
+			<xsl:if test="@height='full'">
+				<xsl:text> hui_columns_full</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
+		<tr>
+			<xsl:apply-templates select="gui:column"/>
+		</tr>
+	</table>
+</xsl:template>
+
+<xsl:template match="gui:columns[@flexible='true']/gui:column">
+	<td class="hui_columns_column">
+		<xsl:if test="(position()>1 and ../@space) or @width">
+			<xsl:attribute name="style">
+				<xsl:if test="position()>1 and ../@space">padding-left: <xsl:value-of select="../@space"/>px;</xsl:if>
+				<xsl:if test="@width">width: <xsl:value-of select="@width"/>;</xsl:if>
+			</xsl:attribute>
+		</xsl:if>
+		<xsl:apply-templates/>
+	</td>
 </xsl:template>
 
 

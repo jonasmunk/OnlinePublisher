@@ -29,13 +29,35 @@ div.report h2
 	font-weight: normal;
 }
 
-div.statistics
+div.report div.block
 {
 	margin-top: 20px;
 	background: #fafafa;
 	border: 1px solid #eee;
 	padding: 10px;
+	border-radius: 3px;
 }
+
+div.report div.block ul
+{
+	list-style: none;
+	margin: 10px 0 0;
+	padding: 0;
+	border-top: 1px solid #eee;
+}
+
+div.report div.block ul p
+{
+	margin: 2px 0;
+}
+
+div.report div.block li
+{
+	border-bottom: 1px solid #eee;
+	padding: 5px 3px;
+}
+
+/*** Statistics ***/
 
 div.report div.statistics table
 {
@@ -63,4 +85,41 @@ div.report div.statistics table tbody td
 div.report div.statistics table th.date
 {
 	text-align: left;
+}
+
+div.report div.statistics table tbody td
+{
+	width: 20%;
+	vertical-align: top;
+}
+
+div.report div.statistics tbody div
+{
+	position: relative;
+}
+
+div.report div.statistics tbody strong
+{
+	height: 14px;
+	background: #e6e6e6;
+	display: block;
+	border-radius: 7px;
+}
+
+div.report div.statistics tbody span
+{
+	position: absolute;
+	text-align: right;
+	display: block;
+	top: 0;
+	right: 0;
+	line-height: 14px;
+	text-shadow: 0 0 10px #fafafa;
+}
+
+/*** Issues ***/
+
+div.report div.issues li.error
+{
+	color: #999;
 }

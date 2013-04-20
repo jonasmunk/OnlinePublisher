@@ -68,27 +68,30 @@
 
 
 <xsl:template match="p:content">
-<div>
-<xsl:choose>
-<xsl:when test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
-<xsl:attribute name="class">layout_content layout_content_sidebar</xsl:attribute>
-</xsl:when>
-<xsl:otherwise>
-<xsl:attribute name="class">layout_content</xsl:attribute>
-</xsl:otherwise>
-</xsl:choose>
-<xsl:if test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
-<div class="layout_sidebar">
-<xsl:call-template name="thirdlevel"/>
-<xsl:apply-templates select="../f:frame/f:newsblock"/>
-<xsl:comment/>
-</div>
-</xsl:if>
-<div class="layout_inner_content">
-<xsl:apply-templates/>
-<xsl:comment/>
-</div>
-</div>
+	<div>
+		<xsl:choose>
+			<xsl:when test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
+				<xsl:attribute name="class">layout_content layout_content_sidebar</xsl:attribute>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:attribute name="class">layout_content</xsl:attribute>
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:if test="../f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item or ../f:frame/f:newsblock or ../f:frame/f:userstatus">
+			<div class="layout_sidebar">
+				<xsl:call-template name="thirdlevel"/>
+				<xsl:apply-templates select="../f:frame/f:newsblock"/>
+				<xsl:comment/>
+			</div>
+		</xsl:if>
+		<div class="layout_inner_content">
+			<xsl:apply-templates/>
+			<xsl:comment/>
+			<xsl:call-template name="util:feedback">
+				<xsl:with-param name="text">Er der noget galt med denne side?</xsl:with-param>
+			</xsl:call-template>
+		</div>
+	</div>
 </xsl:template>
 
 
