@@ -1498,6 +1498,9 @@ hui.request = function(options) {
 				} else if (transport.status == 0 && options.onAbort) {
 					options.onAbort(transport);
 				}
+				if (options['$finally']) {
+					options['$finally']();
+				}
 			}
 			//hui.request._forget(transport);
 		} catch (e) {
@@ -4270,7 +4273,7 @@ hui.ui.request = function(options) {
 	var onSuccess = options.onSuccess || options.$success,
 		onJSON = options.onJSON || options.$object,
 		message = options.message;
-	options.onSuccess=function(t) {
+	options.onSuccess = function(t) {
 		if (message) {
 			if (message.success) {
 				hui.ui.showMessage({text:message.success,icon:'common/success',duration:message.duration || 2000});

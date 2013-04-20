@@ -1530,22 +1530,6 @@ a.hui_dropdown_adaptive
 	color: #fff;
 	
 }
-
-
-/******************** Columns *********************/
-
-table.hui_columns
-{
-	border-spacing: 0;
-	width: 100%;
-	table-layout: fixed; 
-}
-
-td.hui_columns_column
-{
-	vertical-align: top;
-}
-
 /******************** Header *********************/
 
 h2.hui_header
@@ -3247,7 +3231,16 @@ div.hui_list_light th.sort_descending:hover
 	color: #000;
 }
 
+div.hui_list_light div.hui_list_navigation
+{
+	background: none;
+	border-bottom: 1px solid #eee;
+}
 
+div.hui_list_light div.hui_list_selection a.hui_list_selected
+{
+	box-shadow: none;
+}
 
 /*** White variant ***/
 
