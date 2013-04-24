@@ -60,7 +60,7 @@ body.theme_cv a.layout_designed
 body.theme_cv h1.common,
 body.theme_cv h2.common
 {
-	font-family: 'Source Sans Pro','Open Sans','Helvetica Neue','Helvetica',Arial,sans-serif;	/**/
+	font-family: 'Open Sans','Helvetica Neue','Helvetica',Arial,sans-serif;	/*'Source Sans Pro',*/
 	font-weight: 200;
 	color: #999;
 	letter-spacing: -0px;

@@ -25,6 +25,12 @@
 			element : 'part_poster_<xsl:value-of select="../../@id"/>',
 			name : 'part_poster_<xsl:value-of select="../../@id"/>',
 			editmode : <xsl:value-of select="$editor='true'"/>
+			<xsl:if test="p:recipe/p:pages/@delay">
+				,delay : <xsl:value-of select="p:recipe/p:pages/@delay"/>
+			</xsl:if>
+			<xsl:if test="p:recipe/p:pages/@interval">
+				,interval : <xsl:value-of select="p:recipe/p:pages/@interval"/>
+			</xsl:if>
 		});
 	} catch (e) {
 		hui.log(e)
