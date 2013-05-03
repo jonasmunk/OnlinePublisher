@@ -367,7 +367,7 @@ op.part.Formula.prototype = {
 }
 
 
-///////////////// Poster //////////////////
+///////////////// Image //////////////////
 
 op.part.Image = function(options) {
 	var img = this.element = hui.get(options.element);
@@ -389,7 +389,7 @@ op.part.Image = function(options) {
 ///////////////// Poster //////////////////
 
 op.part.Poster = function(options) {
-	this.options = hui.override({duration:1500,delay:5000},options);
+	this.options = hui.override({duration:1500,interval:5000,delay:0},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
 	this.container = hui.get.firstByClass(this.element,'part_poster_pages');
@@ -398,7 +398,7 @@ op.part.Poster = function(options) {
 	this.indicators = [];
 	this._buildNavigator();
 	if (!this.options.editmode) {
-		this._callNext();
+		window.setTimeout(this._callNext.bind(this),this.options.delay);
 	}
 	hui.listen(this.element,'click',this._onClick.bind(this));
 	hui.ui.extend(this);
@@ -452,7 +452,7 @@ op.part.Poster.prototype = {
 		this.fire('pageChanged',index);
 	},
 	_callNext : function() {
-		this.timer = window.setTimeout(this.next.bind(this),this.options.delay);
+		this.timer = window.setTimeout(this.next.bind(this),this.options.interval);
 	},
 	_onClick : function(e) {
 		e = hui.event(e);

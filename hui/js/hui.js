@@ -1498,6 +1498,9 @@ hui.request = function(options) {
 				} else if (transport.status == 0 && options.onAbort) {
 					options.onAbort(transport);
 				}
+				if (options['$finally']) {
+					options['$finally']();
+				}
 			}
 			//hui.request._forget(transport);
 		} catch (e) {
