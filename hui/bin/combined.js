@@ -7452,6 +7452,8 @@ hui.ui.List.prototype = {
 			this.fire('select',this.rows[indexes[0]]);
 			hui.ui.firePropertyChange(this,'selection.id',this.rows[indexes[0]].id);
 			this._clearChecked();
+		} else {
+			this.fire('select');
 		}
 	},
 	_onRowClick : function(index,e) {
