@@ -2,10 +2,11 @@
  * @constructor
  */
 hui.ui.Diagram = function(options) {
-	this.options = hui.override({layout:'Arbor'},options);;
+	this.options = hui.override({layout:'D3'},options);;
 	this.name = options.name;
 	this.nodes = [];
 	this.lines = [];
+	this.data = {};
 	this.element = hui.get(options.element);
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
@@ -66,6 +67,7 @@ hui.ui.Diagram.prototype = {
 		this.setData(data);
 	},
 	setData : function(data) {
+		this.data = data;
 		this.clear();
 		var nodes = data.nodes,
 			lines = data.lines || data.edges;
@@ -122,14 +124,12 @@ hui.ui.Diagram.prototype = {
 	},
 	
 	addBox : function(options) {
-		options.container = this;
-		var box = hui.ui.Diagram.Box.create(options);
+		var box = hui.ui.Diagram.Box.create(options,this);
 		this.add(box);
 	},
 	
 	addIcon : function(options) {
-		options.container = this;
-		var box = hui.ui.Diagram.Icon.create(options);
+		var box = hui.ui.Diagram.Icon.create(options,this);
 		this.add(box);
 	},
 	add : function(widget) {
@@ -166,12 +166,20 @@ hui.ui.Diagram.prototype = {
 		};
 	},
 	getNode : function(id) {
-		for (var i=0; i < this.nodes.length; i++) {
-			if (this.nodes[i].id == id) {
-				return this.nodes[i];
-			}
-		};
-		return null;
+		return this._getNode(id,this.nodes);
+	},
+	getDataNode : function(id) {
+		return this._getNode(id,this.data.nodes);
+	},
+	_getNode : function(id,nodes) {
+		if (nodes) {
+			for (var i=0; i < nodes.length; i++) {
+				if (nodes[i].id == id) {
+					return nodes[i];
+				}
+			};
+		}
+		return null;		
 	},
 	
 	// Drawing...
@@ -220,6 +228,9 @@ hui.ui.Diagram.prototype = {
 		}
 		this.selection = widget;
 		this.selection.setSelected(true);
+	},
+	__nodeOpen : function(widget) {
+		this.fire('open',this.getDataNode(widget.id));
 	}
 }
 
@@ -352,15 +363,15 @@ hui.ui.Diagram.D3 = {
             .linkDistance(100)
             .friction(0.9)
             .gravity(0.1)
-            .theta(0.2)
-            .linkStrength(0.1)
+            .theta(0.3)
+            .linkStrength(0.2)
 			.charge(-1000)
-			.distance(width/3)
+			.distance(100)
 			.nodes(this.diagram.nodes)
 			.links(this.diagram.lines)
 			.size([width, height]);
 		
-		force.on("tick", function() {
+		var ticker = function() {
 			var sel = diagram.selection ? diagram.selection.id : null;
 			var nodes = force.nodes(),
 				links = force.links();
@@ -388,7 +399,16 @@ hui.ui.Diagram.D3 = {
 				link.node.setTo(to);
 				diagram._updateLine(link);
 			};
-		});
+		};
+		force.start();
+		force.gravity(0.5);
+		for (var i=0; i < 10000; i++) {
+			force.tick()
+		};
+		force.gravity(0.1);
+		
+		force.on("tick", ticker);
+		
 		force.start()
 	},
 	_findById : function(nodes,id) {
@@ -524,9 +544,10 @@ hui.ui.Diagram.Box = function(options) {
 	hui.ui.Diagram.util.enableDragging(this)
 }
 
-hui.ui.Diagram.Box.create = function(options) {
+hui.ui.Diagram.Box.create = function(options,diagram) {
+	options = hui.override({title:'Untitled',diagram:diagram},options);
 	var e = options.element = hui.build('div',{'class':'hui_diagram_box'});
-	hui.build('h1',{text:options.title || 'Untitled',parent:e});
+	hui.build('h1',{text:options.title,parent:e});
 	if (options.properties) {
 		var table = hui.build('table',{parent:e})
 		for (var i=0; i < options.properties.length; i++) {
@@ -575,7 +596,8 @@ hui.ui.Diagram.Icon = function(options) {
 	hui.ui.Diagram.util.enableDragging(this)
 }
 
-hui.ui.Diagram.Icon.create = function(options) {
+hui.ui.Diagram.Icon.create = function(options,diagram) {
+	options = hui.override({icon:'common/folder',diagram:diagram},options);
 	var e = options.element = hui.build('div',{'class':'hui_diagram_icon'});
 	e.appendChild(hui.ui.createIcon(options.icon,32));
 	if (options.title) {
@@ -607,7 +629,7 @@ hui.ui.Diagram.Icon.prototype = {
 
 hui.ui.Diagram.util = {
 	enableDragging : function(obj) {
-		var diagram = obj.options.container;
+		var diagram = obj.options.diagram;
 		hui.cls.add(obj.element,'hui_diagram_dragable');
 		var dragState = null;
 		hui.drag.register({
@@ -622,8 +644,8 @@ hui.ui.Diagram.util = {
 				e = hui.event(e);
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
 				var pos = hui.position.get(obj.element);
-				var container = hui.position.get(diagram.element);
-				dragState = {left: e.getLeft() - pos.left + container.left,top:e.getTop()-pos.top + container.top};
+				var diagramPosition = hui.position.get(diagram.element);
+				dragState = {left: e.getLeft() - pos.left + diagramPosition.left,top:e.getTop()-pos.top + diagramPosition.top};
 				obj.element.style.right = 'auto';
 			},
  			onMove : function(e) {
@@ -639,6 +661,9 @@ hui.ui.Diagram.util = {
 				hui.cls.remove(obj.element,'hui_diagram_dragging');
 				obj.fixed = false;
 			}
+		});
+		hui.listen(obj.element,'dblclick',function(e) {
+			diagram.__nodeOpen(obj);
 		});
 	}
 }
