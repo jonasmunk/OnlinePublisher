@@ -8,9 +8,9 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 
 if ($data->id > 0) {
-	$object = IssueStatus::load($data->id);
+	$object = Issuestatus::load($data->id);
 } else {
-	$object = new IssueStatus();
+	$object = new Issuestatus();
 }
 $object->setTitle($data->title);
 $object->save();
