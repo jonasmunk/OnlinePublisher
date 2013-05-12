@@ -6,13 +6,23 @@ hui.ui.listen({
 	_issueId : null,
 	
 	$open$list : function(row) {
-		this._loadIssue(row.id);
+		if (row.kind=='issue') {
+			this._loadIssue(row.id);
+		}
 	},
 	$select$list : function() {
 		var count = list.getSelectionSize();
-		hui.log('Selection size: '+count);
-		hui.ui.get('delete').setEnabled(count>0);
-		hui.ui.get('info').setEnabled(count==1);
+		hui.ui.get('delete').setEnabled(count > 0);
+		hui.ui.get('info').setEnabled(count == 1);
+	},
+	$clickIcon$list : function(info) {
+		var data = info.data;
+		if (data.action=='edit') {
+			document.location = '../../Template/Edit.php?id='+data.id;
+		}
+		if (data.action=='view') {
+			document.location = '../../Services/Preview/?id='+data.id;
+		}
 	},
 	
 	$click$addIssue : function() {
@@ -29,6 +39,9 @@ hui.ui.listen({
 		if (row) {
 			this._loadIssue(row.id);			
 		}
+	},
+	$select$selector : function() {
+		pages.goTo('list');
 	},
 	$click$delete : function() {
 		var ids = list.getSelectionIds();

@@ -55,12 +55,12 @@ $gui='
 			</left>
 			<center>
 				<pages height="full" name="pages">
-					<page>
+					<page key="list">
 						<overflow>
 							<list name="list" source="listSource" variant="light"/>
 						</overflow>
 					</page>
-					<page background="sand_grey">
+					<page key="settings" background="sand_grey">
 						<box title="{Settings; da:Indstillinger}" width="400" top="20">
 							<toolbar>
 								<icon icon="common/object" overlay="new" title="{New status; da:Ny status}" name="newStatus"/>
