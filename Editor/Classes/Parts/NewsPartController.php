@@ -97,7 +97,7 @@ class NewsPartController extends PartController
 		'<div id="part_news_preview">'.
 		$this->render($part,$context).
 		'</div>'.
-		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/news/script.js"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/news/editor.js"></script>';
 	}
 	
 	function editorGui($part,$context) {
