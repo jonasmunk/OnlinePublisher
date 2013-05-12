@@ -273,6 +273,11 @@ div.hui_bar_layout span.hui_segmented
 	vertical-align: top;
 }
 
+div.hui_bar_layout span.hui_segmented_inset
+{
+	margin-top: 4px;	
+}
+
 div.hui_bar_layout span.hui_searchfield
 {
 	margin-top: 2px;

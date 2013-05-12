@@ -46,5 +46,14 @@ hui.ui.listen({
 	},
 	$clickNode$graph : function(node) {
 		hui.ui.showMessage({text:node.label,duration:2000});
+	},
+	$click$playDiagram : function() {
+		diagram.resume();
+	},
+	$click$expandDiagram : function() {
+		diagram.expand();
+	},
+	$click$contractDiagram : function() {
+		diagram.contract();
 	}
 });

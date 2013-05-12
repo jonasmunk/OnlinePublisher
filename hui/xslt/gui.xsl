@@ -1234,9 +1234,20 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	<xsl:template match="gui:diagram">
 		<div class="hui_diagram" id="{generate-id()}">
 			<xsl:attribute name="style">
-				<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
+				<xsl:choose>
+				<xsl:when test="not(@height) or @height='full'">
+					<xsl:text>height:100%;</xsl:text>
+				</xsl:when>
+				<xsl:when test="@height">
+					<xsl:text>height:</xsl:text><xsl:value-of select="@height"/><xsl:text>px;</xsl:text>
+				</xsl:when>
+				</xsl:choose>
+				<xsl:if test="@width">
+					<xsl:text>width:</xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
+				</xsl:if>
 			</xsl:attribute>
-			<xsl:comment/></div>
+			<xsl:comment/>
+		</div>
 		<script type="text/javascript">
 			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Diagram({
 				element : '<xsl:value-of select="generate-id()"/>',

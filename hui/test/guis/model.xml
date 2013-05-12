@@ -63,6 +63,11 @@
 									<list name="list" source="listSource"/>
 								</overflow>
 							</row>
+							<row height="20%">
+								<overflow>
+									<list name="list" source="listSource"/>
+								</overflow>
+							</row>
 							<row>
 								
 								<bar variant="layout">
@@ -71,7 +76,7 @@
 									<button text="Hey" small="true"/>
 									</right>
 								</bar>
-								<overflow background="wood">
+								<overflow>
 									<columns height="full">
 										<column>
 											<bar variant="layout">
@@ -84,6 +89,7 @@
 											<split>
 												<row>
 													<bar variant="layout">
+														<text text="Parents"/>
 													</bar>
 													<overflow>
 														<list source="listSource"/>
@@ -91,6 +97,22 @@
 												</row>
 												<row>
 													<bar variant="layout">
+														<text text="Children"/>
+													</bar>
+													<overflow>
+														<list source="listSource"/>
+													</overflow>
+												</row>
+												<row>
+													<bar variant="layout">
+														<text text="Permissions"/>
+														<right>
+															<segmented variant="inset">
+																<item text="Hep"/>
+																<item text="Hey"/>
+															</segmented>
+															<button text="Add permission" small="true"/>
+														</right>
 													</bar>
 													<overflow>
 														<list source="listSource"/>

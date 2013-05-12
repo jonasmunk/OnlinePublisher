@@ -63,16 +63,21 @@ $gui='
 					<graph source="graphSource" name="graph" layout="d3"/>
 				</overflow> 
 				<bar variant="layout" state="diagram">
-					<segmented value="Entity" name="diagramSubset">
+					<segmented value="Entity" name="diagramSubset" variant="inset">
 						<item value="all" text="All"/> 
 						<item value="Entity" text="Entity"/> 
 						<item value="Object" text="Objects"/> 
 						<item value="Part" text="Parts"/> 
 						<item value="TemplateController" text="Template controllers"/> 
 					</segmented>
+					<right>
+						<button text="Play" name="playDiagram" small="true"/>
+						<button text="Expand" name="expandDiagram" small="true"/>
+						<button text="Contract" name="contractDiagram" small="true"/>
+					</right>
 				</bar>
 				<overflow state="diagram">
-					<diagram source="diagramSource" name="diagram" width="2000" height="2000"/>
+					<diagram source="diagramSource" name="diagram"/>
 				</overflow> 
 				<iframe source="data/PhpInfo.php" name="iframe" state="frame"/>
 			</center>
