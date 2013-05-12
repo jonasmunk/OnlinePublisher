@@ -71,8 +71,8 @@ class ImageTransformationService {
 	}
 	
 	function cropInside($size,$box) {
-		$sizeRatio = $size['width']/$size['height'];
-		$boxRatio = $box['width']/$box['height'];
+		$sizeRatio = $size['width'] / $size['height'];
+		$boxRatio = $box['width'] / $box['height'];
 		$top = 0;
 		$left = 0;
 		// If the size is more "wide" than the box
