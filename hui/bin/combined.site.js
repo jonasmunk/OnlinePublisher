@@ -3426,7 +3426,7 @@ hui.ui._afterResize = function() {
  *  text : «String», // the text message
  *  okText : «String», // text of OK button
  *  cancelText «String», // text of cancel button
- *  onOk: «Function» // called when user clicks the OK button
+ *  $ok: «Function» // called when user clicks the OK button
  * }
  * </pre>
  * @param options {Object} The options
