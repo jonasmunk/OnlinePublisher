@@ -127,7 +127,7 @@ ul.layout_placards strong
 	line-height: 30px;
 	font-weight: normal;
 	color: #89a;
-	padding: 8px 10px 15px;
+	padding: 8px 10px 10px;
 	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: 300;
 }
@@ -143,7 +143,7 @@ ul.layout_placards span
 	display: block;
 	font-size: 18px;
 	line-height: 22px;
-	padding: 0 20px 0 150px;
+	padding: 5px 20px 0 150px;
 	height: 120px;
 	color: #567;
 	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
@@ -162,7 +162,7 @@ ul.layout_placards li.onlineme span
 
 ul.layout_placards li.onlinepublisher span
 {
-	background: url('../gfx/graphics.png') -44px -34px;
+	background: url('../gfx/graphics.png') -40px -5px;
 }
 
 ul.layout_placards li.onlineobjects span

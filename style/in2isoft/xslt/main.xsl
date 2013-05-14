@@ -10,11 +10,12 @@
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="p f h n o util"
  >
-<xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
+<xsl:output encoding="UTF-8" method="xml" indent="yes"/>
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
 <xsl:template match="p:page">
+	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
 <html>
 	<xsl:call-template name="util:html-attributes"/>
 	<head>
@@ -91,7 +92,7 @@
 							</div>
 							<ul class="layout_placards">
 								<li class="onlinepublisher">
-									<a href="{$path}produkter/onlinepublisher/"><strong>Online<em>Publisher</em></strong> - <span>Simpelt værktøj til opbygning og redigering af hjemmesider</span></a>
+									<a href="{$path}produkter/onlinepublisher/"><strong>Humanise <em>Editor</em></strong> - <span>Simpelt værktøj til opbygning og redigering af hjemmesider</span></a>
 								</li>
 								<li class="onlineobjects">
 									<a href="{$path}produkter/onlineobjects/"><strong>Online<em>Objects</em></strong> - <span>Fleksibelt grundsystem til web-applikationer</span></a>
@@ -108,7 +109,7 @@
 			<div class="layout_base">
 				<div class="layout_info">
 					<div class="about">
-						<h2>Om In2iSoft</h2>
+						<h2>Om Humanise</h2>
 						<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
 							den mest enkle og essentielle løsning. Vi tror på at maskinen skal
 							arbejde for mennesket. Vi mener at viden bør være frit
@@ -130,8 +131,10 @@
 		</div>
 		<div class="layout_footer">
 			<a class="layout_design">Designet og udviklet af In2iSoft</a>
+			<!--
 				<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
 				<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
+				-->
 		</div>
 		<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-2'"/></xsl:call-template>
 	</body>
