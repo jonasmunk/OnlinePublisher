@@ -26,8 +26,8 @@ $writer->startList(array('unicode'=>true));
 
 foreach($feed->getItems() as $item) {
 	$writer->startRow()->
-		startCell(array('class'=>'news'))->startLine()->startStrong()->text(StringUtils::fromUnicode($item->getTitle()))->endStrong()->endLine()->
-			startLine(array('minor'=>true))->text(StringUtils::fromUnicode($item->getDescription()))->endline()->
+		startCell(array('class'=>'news'))->startLine()->startStrong()->text($item->getTitle())->endStrong()->endLine()->
+			startLine(array('minor'=>true))->text($item->getDescription())->endline()->
 			startLine(array('dimmed'=>true,'mini'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
 		endCell()->
 		startCell(array('class'=>'news'));

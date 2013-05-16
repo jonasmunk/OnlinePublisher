@@ -7,6 +7,7 @@ hui.ui.Diagram = function(options) {
 	this.nodes = [];
 	this.lines = [];
 	this.data = {};
+	this.translation = {x:0,y:0};
 	this.element = hui.get(options.element);
 	this.width = this.element.clientWidth;	
 	this.height = this.element.clientHeight;
@@ -35,14 +36,12 @@ hui.ui.Diagram.prototype = {
 			height: this.height || 0
 		});
 		this.element.appendChild(this.background.element);
-		hui.onReady(function() {
-		}.bind(this))
 		this.fire('added');
 	},
 	$$layout : function() {
-			this.width = this.element.clientWidth;	
-			this.height = this.element.clientHeight;
-			this.background.setSize(this.width,this.height)
+		this.width = this.element.clientWidth;	
+		this.height = this.element.clientHeight;
+		this.background.setSize(this.width,this.height)
 	},
 	_getMagnet : function(from,to,node) {
 		var margin = 1;
@@ -688,8 +687,8 @@ hui.ui.Diagram.util = {
 				var left = (e.getLeft()-dragState.left);
 				obj.px = top;
 				obj.py = left;
-				obj.element.style.top = Math.max(top,5)+'px';
-				obj.element.style.left = Math.max(left,5)+'px';
+				obj.element.style.top = top+'px';
+				obj.element.style.left = left+'px';
 				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {

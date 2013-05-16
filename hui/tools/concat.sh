@@ -24,4 +24,4 @@ echo "Concatenating site scripts"
 cat ${JS_PATH}hui.js ${JS_PATH}hui_animation.js ${JS_PATH}hui_color.js ${JS_PATH}hui_require.js ${JS_PATH}ui.js ${JS_PATH}ImageViewer.js ${JS_PATH}Box.js ${JS_PATH}SearchField.js ${JS_PATH}Overlay.js ${JS_PATH}Button.js > ${BIN_PATH}combined.site.js
 
 echo "Concatenating all scripts"
-cat ${BIN_PATH}combined.js ${EXT_PATH}Graph.js ${EXT_PATH}Graphviz.js ${EXT_PATH}Test.js ${EXT_PATH}FlashChart.js ${JS_PATH}Drawing.js ${EXT_PATH}ImagePaster.js ${EXT_PATH}Tiles.js ${JS_PATH}Pages.js ${EXT_PATH}Chart.js ${EXT_PATH}Diagram.js ${EXT_PATH}Diagram.js ${EXT_PATH}RichText.js > ${BIN_PATH}all.js
+cat ${BIN_PATH}combined.js ${JS_PATH}Graph.js ${EXT_PATH}Graphviz.js ${EXT_PATH}Test.js ${EXT_PATH}FlashChart.js ${JS_PATH}Drawing.js ${EXT_PATH}ImagePaster.js ${JS_PATH}Tiles.js ${JS_PATH}Pages.js ${JS_PATH}Chart.js ${JS_PATH}Diagram.js ${EXT_PATH}RichText.js > ${BIN_PATH}all.js

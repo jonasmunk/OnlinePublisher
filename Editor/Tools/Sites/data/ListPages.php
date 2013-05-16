@@ -186,65 +186,6 @@ function listHierarhyLevel($writer,$hierarchyId,$parent,$level) {
 	$result = Database::select($sql);
 	while ($row = Database::next($result)) {
 		_writeHierarchyItem($row,$level,$writer);
-		/*
-		$icon = Hierarchy::getItemIcon($row['target_type']);
-		$options = array('id'=>$row['id'],'kind'=>'hierarchyItem','level'=>$level);
-		if ($row['target_type']=='page' && $row['pageid']) {
-			$options['data'] = array('page'=>intval($row['pageid']));
-		}
-		$writer->
-		startRow($options)->
-		startCell(array('icon'=>'monochrome/dot'));
-		if ($row['hidden']) {
-			$writer->startDelete()->text($row['title'])->endDelete();
-		} else {
-			$writer->text($row['title']);
-		}
-		$writer->endCell();
-		if ($row['target_type']=='page') {
-			if (!$row['pageid']) {
-				$writer->startCell(array('icon'=>'common/warning'))->text(array('No page','da'=>'Ingen side!'))->endCell();
-			} else {
-				$writer->
-					startCell(array('icon'=>$icon));
-					if ($row['page_disabled']) {
-						$writer->startDelete()->text($row['pagetitle'])->endDelete();
-					} else {
-						$writer->text($row['pagetitle']);
-					}
-					$writer->startIcons()->
-						icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['pageid'])))->
-						icon(array('icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editPage','id'=>$row['pageid'])))->
-						icon(array('icon'=>'monochrome/view','revealing'=>true,'action'=>true,'data'=>array('action'=>'viewPage','id'=>$row['pageid'])))->
-						icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'action'=>true,'data'=>array('action'=>'previewPage','id'=>$row['pageid'])))->
-					endIcons()->
-				endCell();
-			}
-		} else if ($row['target_type']=='pageref') {
-			$writer->startCell(array('icon'=>$icon))->text($row['pagetitle'].'')->endCell();
-		} else if ($row['target_type']=='url') {
-			$writer->startCell(array('icon'=>$icon))->text($row['target_value'].'')->
-				startIcons()->
-					icon(array('icon'=>'monochrome/round_arrow_right','revealing'=>true,'data'=>array('action'=>'visitLink','url'=>$row['target_value'])))->
-				endIcons()->
-			endCell();
-		} else if ($row['target_type']=='email') {
-			$writer->startCell(array('icon'=>'monochrome/email'))->text($row['target_value'].'')->endCell();
-		} else if ($row['target_type']=='file') {
-			$writer->startCell(array('icon'=>$icon))->text($row['filetitle'].'')->endCell();
-		} else {
-			$writer->startCell(array('icon'=>'monochrome/round_question'))->text($row['target_type'].'')->endCell();
-		}
-		$writer->
-		startCell()->startLine(array('dimmed'=>true))->startWrap()->text($row['page_path'])->endWrap()->endLine()->endCell()->
-		startCell(array('wrap'=>false))->
-		startIcons()->
-			icon(array('icon'=>'monochrome/round_arrow_up','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'up')))->
-			icon(array('icon'=>'monochrome/round_arrow_down','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'down')))->
-		endIcons()->
-		endCell()->
-		endRow();
-		*/
 		listHierarhyLevel($writer,$hierarchyId,$row['id'],$level+1);
 	}
 	Database::free($result);
@@ -269,7 +210,7 @@ function listPages() {
 	if ($sort=='') $sort='page.title';
 
 
-	$sql=buildPagesSql();
+	$sql = buildPagesSql();
 
 	$total = Database::selectFirst($sql['total']);
 
@@ -280,7 +221,12 @@ function listPages() {
 		window(array( 'total' => $total['total'], 'size' => $windowSize, 'page' => $windowPage ))->
 		startHeaders()->
 			header(array('title'=>array('Title','da'=>'Titel'),'width'=>40,'key'=>'page.title','sortable'=>'true'))->
-			header(array('title'=>'Type','key'=>'template.unique','sortable'=>'true'))->
+			header(array('title'=>'Type','key'=>'template.unique','sortable'=>'true'));
+
+	if ($kind=='subset' && $value=='news') {
+		$writer->header(array('title'=>array('News','da'=>'Nyhed')));
+	}
+	$writer->
 			header(array('title'=>array('Language','da'=>'Sprog'),'key'=>'page.language','sortable'=>'true'))->
 			header(array('title'=>array('Modified','da'=>'Ændret'),'width'=>1,'key'=>'page.changed','sortable'=>'true'))->
 			header(array('title'=>array('Hits','da'=>'Hits'),'width'=>1))->
@@ -298,7 +244,21 @@ function listPages() {
 				$writer->startLine(array('dimmed'=>true,'mini'=>true))->startWrap()->text($row['path'])->endWrap()->endLine();
 			}
 			$writer->endCell()->
-			startCell(array('dimmed'=>true))->text($templates[$row['unique']]['name'])->endCell()->
+			startCell(array('dimmed'=>true))->text($templates[$row['unique']]['name'])->endCell();
+
+			if ($kind=='subset' && $value=='news') {
+				$writer->startCell();
+				$news = News::load($row['news_id']);
+				if ($news) {
+					$writer->text($news->getTitle());
+
+					$writer->startIcons()->
+						icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'newsInfo','id'=>$news->getId())))->
+					endIcons();
+				}
+				$writer->endCell();
+			}
+			$writer->
 			startCell(array('icon'=>GuiUtils::getLanguageIcon($row['language'])))->endCell()->
 			startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($row['changed']));
 		if ($row['publishdelta']>0) {
@@ -336,6 +296,7 @@ function buildPagesSql() {
 
 	$sqlLimits = " from page,template";
 	if ($kind=='subset' && $value=='news') {
+		$sql.=",news.object_id as news_id";
 		$sqlLimits.=",news, object_link";
 	}
 	$sqlLimits .= " where page.template_id=template.id ";
