@@ -26,8 +26,8 @@ class NewsService {
 				$items = $feed->getItems();
 				foreach ($items as $item) {
 					$srcItem = new Newssourceitem();
-					$srcItem->setTitle($item->getTitle());
-					$srcItem->setText($item->getDescription());
+					$srcItem->setTitle(trim($item->getTitle()));
+					$srcItem->setText(trim($item->getDescription()));
 					$srcItem->setNewssourceId($source->getId());
 					$srcItem->setGuid($item->getGuid());
 					$srcItem->setDate($item->getPubDate());

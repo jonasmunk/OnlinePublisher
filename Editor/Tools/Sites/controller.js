@@ -97,6 +97,8 @@ var mainController = {
 			document.location='../../Template/Edit.php?id='+info.data.id;
 		} else if (info.data.action=='pageInfo') {
 			this.loadPage(info.data.id);
+		} else if (info.data.action=='newsInfo') {
+			document.location='../News/?newsInfo='+info.data.id;
 		}
 	},
 	

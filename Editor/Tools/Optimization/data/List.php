@@ -33,7 +33,7 @@ function listIndex() {
 	while ($row = Database::next($result)) {
 		$writer->startRow(array('id'=>$row['id'],'kind'=>'page'));
 		$writer->startCell(array('icon'=>'common/page'))->text($row['title'])->endCell();
-		$writer->startCell()->text($row['index'])->endCell();
+		$writer->startCell()->startWrap()->text($row['index'])->endWrap()->endCell();
 		$writer->endRow();
 	}
 	Database::free($result);

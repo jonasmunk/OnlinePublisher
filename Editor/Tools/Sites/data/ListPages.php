@@ -72,7 +72,7 @@ function listReview() {
 			header(array('title'=>array('Time','da'=>'Tidspunkt'),'width'=>20))->
 			header(array('width'=>1))->
 		endHeaders();
-	$sql = "select page.id as page_id,page.title as page_title,user.title as user_title,UNIX_TIMESTAMP(review.date) as date,review.accepted
+	$sql = "SELECT page.id as page_id,page.title as page_title,user.title as user_title,UNIX_TIMESTAMP(review.date) as date,review.accepted
 from page,relation as page_review,relation as review_user,review,object as user 
 where page_review.from_type='page' and page_review.from_object_id=page.id
 and page_review.to_type='object' and page_review.to_object_id=review.object_id
@@ -247,14 +247,16 @@ function listPages() {
 			startCell(array('dimmed'=>true))->text($templates[$row['unique']]['name'])->endCell();
 
 			if ($kind=='subset' && $value=='news') {
-				$writer->startCell();
 				$news = News::load($row['news_id']);
 				if ($news) {
+					$writer->startCell(array('icon'=>$news->getIcon()));
 					$writer->text($news->getTitle());
 
 					$writer->startIcons()->
 						icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'newsInfo','id'=>$news->getId())))->
 					endIcons();
+				} else {
+					$writer->startCell();
 				}
 				$writer->endCell();
 			}
