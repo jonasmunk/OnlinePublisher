@@ -67,8 +67,8 @@
 		<p>Produktionsvirksomhed med speciale i formstøbt terrazzo og beton.</p>
 		<address>
 			<strong>TerrazzoForum</strong>
-			<br/>Nørremarksvej 12-14
-			<br/>9270 Klarup
+			<br/>Tagholm 2
+			<br/>9400 Nørresundby
 			<br/><a class="common" href="mailto:info@terrazzoforum.dk">info@terrazzoforum.dk</a>
 			<br/><strong class="phone">tlf: 98 31 40 96</strong>
 		</address>
