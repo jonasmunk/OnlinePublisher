@@ -24,7 +24,7 @@ if ($sourceId) {
 		$writer->startRow()->
 		startCell(array('icon'=>'common/page'))->
 			startLine()->text($item->getTitle())->endLine()->
-			startLine(array('dimmed'=>true))->text(StringUtils::shortenString(StringUtils::removeTags($item->getText()),400))->endLine()->
+			startLine(array('dimmed'=>true))->text(StringUtils::shortenString(trim(StringUtils::removeTags($item->getText())),400))->endLine()->
 		endCell()->
 		startCell()->
 			text(DateUtils::formatFuzzy($item->getDate()))->

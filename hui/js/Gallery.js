@@ -46,6 +46,7 @@ hui.ui.Gallery.prototype = {
 		this.element.style.display='none';
 	},
 	show : function() {
+		hui.log('show');
 		this.element.style.display='';
 		if (this.options.source) {
 			this.options.source.refresh();
@@ -90,7 +91,7 @@ hui.ui.Gallery.prototype = {
 	},
 	/** @private */
 	$sourceShouldRefresh : function() {
-		return this.element.style.display!='none';
+		return hui.dom.isVisible(this.element);
 	},
 	/** @private */
 	$objectsLoaded : function(objects) {
@@ -102,6 +103,7 @@ hui.ui.Gallery.prototype = {
 	},
 	/** @private */
 	_render : function() {
+		hui.log('render')
 		this.nodes = [];
 		this.maxRevealed = 0;
 		this.body.innerHTML = '';
@@ -136,6 +138,7 @@ hui.ui.Gallery.prototype = {
 		this.fireSizeChange();
 	},
 	_reveal : function() {
+		hui.log('reveal');		
 		if (!this.revealing) {
 			return;
 		}

@@ -182,6 +182,10 @@
 			<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
+	<!-- html5 -->
+	<xsl:comment><![CDATA[[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if lt IE 8]>
 	<script type="text/javascript" src="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
 	<![endif]]]></xsl:comment>

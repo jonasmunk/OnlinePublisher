@@ -148,6 +148,15 @@ class PageService {
 		}
 		return false;
 	}
+	
+	function getIndex($pageId) {
+		$sql = "SELECT `index` from page where id=".Database::int($pageId);
+		$row = Database::selectFirst($sql);
+		if ($row) {
+			return $row['index'];
+		}
+		return null;
+	}
 
 	function getLinkText($pageId) {
 		$text = '';
@@ -164,9 +173,9 @@ class PageService {
 	}
 	
 	function updateSecureStateOfAllPages() {
-		$sql = "update page set secure=1";
+		$sql = "UPDATE page set secure=1";
 		Database::update($sql);
-		$sql = "update page left join securityzone_page on page.id=securityzone_page.page_id set page.secure=0 where securityzone_page.securityzone_id is null";
+		$sql = "UPDATE page left join securityzone_page on page.id=securityzone_page.page_id set page.secure=0 where securityzone_page.securityzone_id is null";
 		Database::update($sql);
 	}
 	
@@ -249,11 +258,11 @@ class PageService {
 		if (!$page->getTemplateId()) {
 			return false;
 		}
-		$sql = "select id from template where id=".Database::int($page->getTemplateId());
+		$sql = "SELECT id from template where id=".Database::int($page->getTemplateId());
 		if (Database::isEmpty($sql)) {
 			return false;
 		}
-		$sql = "select id from frame where id=".Database::int($page->getFrameId());
+		$sql = "SELECT id from frame where id=".Database::int($page->getFrameId());
 		if (Database::isEmpty($sql)) {
 			return false;
 		}
@@ -269,7 +278,7 @@ class PageService {
 			return false;
 		}
 		
-		$sql="insert into page (title,description,keywords,path,template_id,created,changed,published,frame_id,design_id,language,next_page,previous_page) values (".
+		$sql="INSERT into page (title,description,keywords,path,template_id,created,changed,published,frame_id,design_id,language,next_page,previous_page) values (".
 		Database::text($page->getTitle()).
 		",".Database::text($page->getDescription()).
 		",".Database::text($page->getKeywords()).
