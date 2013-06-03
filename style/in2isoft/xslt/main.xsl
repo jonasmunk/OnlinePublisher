@@ -115,7 +115,7 @@
 							arbejde for mennesket. Vi mener at viden bør være frit
 							og tilgængeligt for alle. Vi håber du er enig :-)
 						</p>
-						<p class="more"><a href="{$path}om/" class="common"><span>Mere om In2iSoft »</span></a></p>
+						<p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
 					</div>
 					<div class="contact">
 						<h2>Kontakt</h2>

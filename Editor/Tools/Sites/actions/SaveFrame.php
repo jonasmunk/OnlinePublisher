@@ -31,5 +31,6 @@ if ($object) {
 
 	FrameService::replaceLinks($object,$topLinks,$bottomLinks);
 	FrameService::replaceNewsBlocks($object,$newsBlocks);
+	PublishingService::publishFrame($id);
 }
 ?>
