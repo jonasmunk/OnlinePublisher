@@ -263,7 +263,7 @@ hui.ui.ImageViewer.prototype = {
 		this._setHash(true);
 	},
 	_setHash : function(visible) {
-		//return; // Disabled
+		return; // Disabled
 		if (!this._listening) {
 			this._listening = true;
 			if (!hui.browser.msie6 && !hui.browser.msie7) {

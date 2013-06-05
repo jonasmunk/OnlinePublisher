@@ -149,7 +149,7 @@
 			</div>
 		</div>
 		<div class="layout_footer">
-			<a class="layout_design">Designet og udviklet af In2iSoft</a>
+			<a class="layout_design">Designet og udviklet af Humanise</a>
 			<!--
 				<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
 				<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
