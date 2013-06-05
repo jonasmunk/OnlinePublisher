@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$url = 'http://www.in2isoft.dk/services/news/rss/?group=373';
+$url = 'http://www.humanise.dk/services/news/rss/?group=373';
 
 $data = RemoteDataService::getRemoteData($url,60*30); // 30 minutes
 if (!$data->isHasData()) {
