@@ -149,6 +149,7 @@ p.part_poster_title
 .part_text strong
 {
 	color: #000;
+	font-weight: 400;
 }
 
 div.part_listing, textarea.part_listing
