@@ -40,6 +40,11 @@
 
 @media screen and (max-width: 990px) {
 	
+	body ul.layout_navigation li.first a
+	{
+		margin-left: 0;
+	}
+	
 	div.layout
 	{
 		width: 100%;
@@ -87,7 +92,7 @@
 @media screen and (max-width: 880px) {
 	ul.layout_placards li.onlineme span
 	{
-		background-position: -64px -415px;
+		background-position: -64px -420px;
 	}
 
 	ul.layout_placards li.onlinepublisher span
@@ -97,7 +102,7 @@
 
 	ul.layout_placards li.onlineobjects span
 	{
-		background-position: -64px -207px;
+		background-position: -64px -200px;
 	}
 
 	ul.layout_placards span
@@ -176,7 +181,28 @@
 	}
 }
 
-@media screen and (max-width: 700px) {	
+@media screen and (max-width: 700px) {
+
+	ul.layout_navigation li.first
+	{
+		position: absolute;
+		top: 5px;
+	}
+	
+	ul.layout_navigation
+	{
+		padding-top: 45px;
+		height: auto;
+		padding-bottom: 10px;
+	}
+
+	td.document_column
+	{
+		display: block;
+		width: auto !important;
+		padding: 0 !important;
+	}
+
 	h1.part_header
 	{
 		font-size: 22px;
@@ -202,11 +228,6 @@
 		font-size: 12px;
 	}
 
-	ul.layout_navigation li a
-	{
-		font-size: 12px;
-		margin-right: 2px;
-	}
 	
 	div.part_text,
 	div.part_listing
@@ -218,6 +239,26 @@
 	{
 		font-size: 11pt;
 	}
+	
+	ul.layout_placards li.onlineme span
+	{
+		background-position: -100px -420px;
+	}
+
+	ul.layout_placards li.onlinepublisher span
+	{
+		background-position: -100px -5px;
+	}
+
+	ul.layout_placards li.onlineobjects span
+	{
+		background-position: -100px -200px;
+	}
+
+	ul.layout_placards span
+	{
+		padding-left: 100px;
+	}
 }
 
 @media screen and (max-width: 600px) {
@@ -228,21 +269,56 @@
 		width: auto;
 		float: none;
 	}
-	
-	ul.layout_navigation
-	{
-		height: auto;
-	}
-	
+		
 	div.layout_middle_top,
 	ul.layout_sub_navigation
 	{
 		height: auto;
 	}
-	
-	form.search
+		
+	ul.layout_placards li
 	{
-		position: static;
-		margin: 5px 10px;
+		float: none;
+		width: auto;
+	}
+	
+	ul.layout_placards a
+	{
+		border: none;
+		border-bottom: 1px solid #ddd;
+	}
+	
+	ul.layout_placards span
+	{
+		font-size: 18px;
+		line-height: 22px;
+	}
+	
+	ul.layout_placards strong
+	{
+		text-indent: 198px;
+		position: absolute;
+	}
+	
+	ul.layout_placards li.onlineme span
+	{
+		background-position: -10px -410px;
+	}
+
+	ul.layout_placards li.onlinepublisher span
+	{
+		background-position: -10px 5px;
+	}
+
+	ul.layout_placards li.onlineobjects span
+	{
+		background-position: -10px -190px;
+	}
+
+	ul.layout_placards span
+	{
+		padding-top: 45px;
+		padding-left: 200px;
+		height: 80px;
 	}
 }

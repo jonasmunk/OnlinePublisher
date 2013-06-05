@@ -35,9 +35,10 @@
 		</title>
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/>
 		<link href='{$path}style/basic/fonts/Colaborate/stylesheet.css' rel='stylesheet' type='text/css'/>
-		<!--
+		
 		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+		<!--
 		<xsl:call-template name="util:scripts-adaptive"/>
 		-->
 		<meta name="google-site-verification" content="WMeBqZoNf7fYYk8Yvu8p05cFXnskJt1_Y6SJtXE-Ym0" />
@@ -102,7 +103,7 @@
 									<a href="{$path}produkter/onlineobjects/"><strong>Online<em>Objects</em></strong> - <span>Fleksibelt grundsystem til web-applikationer</span></a>
 								</li>
 								<li class="onlineme">
-									<a href="{$path}teknologi/hui/"><strong>Humanise <em>UI</em></strong> - <span>Intuitiv og avanceret brugerflade</span></a>
+									<a href="{$path}teknologi/hui/"><strong>Humanise <em>UI</em></strong> - <span>Intuitiv, avanceret og effektiv brugerflade</span></a>
 								</li>
 							</ul>
 						</xsl:when>

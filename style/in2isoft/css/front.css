@@ -59,7 +59,7 @@
 	width: 50px;
 }
 
-/********************** Pacards ********************/
+/********************** Placards ********************/
 
 div.layout_placards
 {
@@ -127,9 +127,14 @@ ul.layout_placards strong
 	line-height: 30px;
 	font-weight: normal;
 	color: #89a;
-	padding: 8px 10px 10px;
+	padding: 8px 0px 10px;
 	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: 300;
+	white-space: nowrap;
+	width: 100%;
+	text-indent: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 ul.layout_placards em
@@ -157,15 +162,15 @@ ul.layout_placards li.onlineme a
 
 ul.layout_placards li.onlineme span
 {
-	background: url('../gfx/graphics.png') -44px -415px;
+	background: url('../gfx/graphics.png') -44px -420px no-repeat;
 }
 
 ul.layout_placards li.onlinepublisher span
 {
-	background: url('../gfx/graphics.png') -40px -5px;
+	background: url('../gfx/graphics.png') -40px -5px no-repeat;
 }
 
 ul.layout_placards li.onlineobjects span
 {
-	background: url('../gfx/graphics.png') -44px -207px;
+	background: url('../gfx/graphics.png') -44px -200px no-repeat;
 }

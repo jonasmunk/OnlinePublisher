@@ -29,7 +29,7 @@ $categorized = ToolService::getCategorized();
 $lang = InternalSession::getLanguage();
 
 $gui='
-<gui xmlns="uri:hui" title="OnlinePublisher editor">
+<gui xmlns="uri:hui" title="Humanise Editor">
 	<source name="searchSource" url="Services/Base/data/Search.php">
 		<parameter key="text" value="@search.value"/>
 	</source>
