@@ -98,7 +98,7 @@
 									<a href="{$path}produkter/onlineobjects/"><strong>Online<em>Objects</em></strong> - <span>Fleksibelt grundsystem til web-applikationer</span></a>
 								</li>
 								<li class="onlineme">
-									<a href="{$path}produkter/onlineme/"><strong>Online<em>Me</em></strong> - <span>Byg en personlig hjemmeside i 2 skridt</span></a>
+									<a href="{$path}teknologi/hui/"><strong>Humanise <em>UI</em></strong> - <span>Intuitiv og avanceret brugerflade</span></a>
 								</li>
 							</ul>
 						</xsl:when>
