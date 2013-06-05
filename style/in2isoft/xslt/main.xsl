@@ -21,8 +21,12 @@
 	<head>
 		<title>
 			<xsl:choose>
-				<xsl:when test="//p:page/@id=//p:context/p:home/@page">
-					<xsl:text>In2iSoft : Intuitive Internet Software</xsl:text>
+				<xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
+					<xsl:text>Humanise : </xsl:text>
+					<xsl:choose>
+						<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Software for humans</xsl:text></xsl:when>
+						<xsl:otherwise><xsl:text>Software til mennesker</xsl:text></xsl:otherwise>
+					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="@title"/><xsl:text> » </xsl:text><xsl:value-of select="f:frame/@title"/>
@@ -109,22 +113,37 @@
 			<div class="layout_base">
 				<div class="layout_info">
 					<div class="about">
-						<h2>Om Humanise</h2>
-						<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
-							den mest enkle og essentielle løsning. Vi tror på at maskinen skal
-							arbejde for mennesket. Vi mener at viden bør være frit
-							og tilgængeligt for alle. Vi håber du er enig :-)
-						</p>
-						<p class="more"><a href="{$path}om/" class="common"><span>Mere om In2iSoft »</span></a></p>
+						<xsl:choose>
+							<xsl:when test="//p:page/p:meta/p:language='en'">
+								<h2>About Humanise</h2>
+								<p>We focus on user experience and design. We seek out the most simple and essential solution. 
+									We believe that machines should work for people. We think that knowledge should be free and accessible to all. 
+									We hope you agree :-)
+								</p>
+								<p class="more"><a href="{$path}om/" class="common"><span>More about Humanise »</span></a></p>
+							</xsl:when>
+							<xsl:otherwise>
+								<h2>Om Humanise</h2>
+								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
+									den mest enkle og essentielle løsning. Vi tror på at maskinen skal
+									arbejde for mennesket. Vi mener at viden bør være frit
+									og tilgængeligt for alle. Vi håber du er enig :-)
+								</p>
+								<p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
+							</xsl:otherwise>
+						</xsl:choose>
 					</div>
 					<div class="contact">
-						<h2>Kontakt</h2>
+						<xsl:choose>
+							<xsl:when test="//p:page/p:meta/p:language='en'"><h2>Contact</h2></xsl:when>
+							<xsl:otherwise><h2>Kontakt</h2></xsl:otherwise>
+						</xsl:choose>
 						<p class="name"><strong>Jonas Brinkmann Munk</strong></p>
 						<p class="email"><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
-						<p class="phone">28 77 63 65</p>
+						<p class="phone">+45 28 77 63 65</p>
 						<p class="name"><strong>Kenni Graversen</strong></p>
 						<p class="email"><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
-						<p class="phone">22 48 61 53</p>
+						<p class="phone">+45 22 48 61 53</p>
 					</div>
 				</div>
 			</div>

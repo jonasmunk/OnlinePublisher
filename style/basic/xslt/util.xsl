@@ -250,8 +250,8 @@
 </xsl:template>
 
 <xsl:template name="util:style">
-	<link rel="stylesheet" type="text/css" href="{$path}style/basic/css/{$template}.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/style.php"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/basic/css/{$template}.css"/>
+	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/{$design}/css/style.php"/>
 	<!--
 	<xsl:choose>
 		<xsl:when test="$template='document'">
