@@ -57,6 +57,7 @@ var mainController = {
 	///////////////// List ///////////////
 	
 	$select$list : function(item) {
+		item = item || {};
 		if (item.kind=='page') {
 			hui.ui.get('edit').setEnabled(true);
 			hui.ui.get('info').enable();
