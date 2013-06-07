@@ -215,3 +215,8 @@ div.editor_section_adder_sticky:hover div
 	box-shadow: 0 0 5px #0065FF;
 	opacity: .7;
 }
+
+div.part_section_richtext
+{
+	min-height: 10px;
+}
