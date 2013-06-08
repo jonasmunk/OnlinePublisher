@@ -10,21 +10,30 @@ class In2iGui {
 		global $basePath;
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
 		if (@$_GET['xhtml']=='false') {
-			$xhtml=false;
+			$xhtml = false;
 		}
 		$dev = @$_GET['dev']=='true' ? 'true' : 'false';
-		//$dev='true';
+		$profile = @$_GET['profile']=='true' ? 'true' : 'false';
+		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
+		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
+
 		$xmlData='<?xml version="1.0" encoding="UTF-8"?>'.In2iGui::localize($gui,InternalSession::getLanguage());
+
 		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="'.($xhtml ? 'xml' : 'html').'"/>'.
+
 		'<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
-		'<xsl:variable name="profile">'.(@$_GET['profile']=='true' ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="context">'.substr(ConfigurationService::getBaseUrl(),0,-1).'</xsl:variable>'.
+		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
+		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
 		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>'.
-		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>';
-		$xslData.='<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
+
+		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>'.
+
+		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
+
 		'</xsl:stylesheet>';
 	
 		if (function_exists('xslt_create')) {
