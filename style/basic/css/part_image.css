@@ -6,6 +6,7 @@ div.part_image
 div.part_image img
 {
 	border-width: 0;
+	display: inline-block;
 }
 
 div.part_image p, div.part_image textarea

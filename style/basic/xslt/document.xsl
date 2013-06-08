@@ -38,75 +38,66 @@
 	</xsl:template>
 
 	<xsl:template match="doc:row">
-		<table width="100%" class="document_row">
-			<xsl:attribute name="style">
-				<xsl:if test="@top!=''">
-					<xsl:text>margin-top:</xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
-				</xsl:if>
-				<xsl:if test="@bottom!=''">
-					<xsl:text>margin-bottom:</xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
-				</xsl:if>
-			</xsl:attribute>
-			<tr>
-				<xsl:apply-templates/>
-			</tr>
-		</table>
-	</xsl:template>
-
-	<xsl:template match="doc:row[count(doc:column)=1]">
 		<div class="document_row">
-			<xsl:attribute name="style">
+			<xsl:variable name="style">
 				<xsl:if test="@top!=''">
 					<xsl:text>margin-top:</xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
 				</xsl:if>
 				<xsl:if test="@bottom!=''">
 					<xsl:text>margin-bottom:</xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
 				</xsl:if>
-			</xsl:attribute>
-			<div class="document_column">
-				<xsl:apply-templates select="doc:column/doc:section"/>
+			</xsl:variable>
+			<xsl:if test="$style!=''">
+				<xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
+			</xsl:if>
+			<div class="document_row_body">
+				<xsl:apply-templates/>
 				<xsl:comment/>
 			</div>
 		</div>
 	</xsl:template>
 
 	<xsl:template match="doc:column">
-		<td valign="top">
+		<xsl:variable name="style">
+			<xsl:choose>
+				<xsl:when test="@width='min'">
+					<xsl:text>width: 1%;</xsl:text>
+				</xsl:when>
+				<xsl:when test="@width='max'">
+					<xsl:text>width: 100%;</xsl:text>
+				</xsl:when>
+				<xsl:when test="contains(@width,'%') or contains(@width,'px')">
+					<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>;</xsl:text>
+				</xsl:when>
+				<xsl:when test="@width">
+					<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
+				</xsl:when>
+			</xsl:choose>
+				<xsl:if test="@top!=''">
+					<xsl:text>padding-top: </xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
+				</xsl:if>
+				<xsl:if test="@bottom!=''">
+					<xsl:text>padding-bottom: </xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
+				</xsl:if>
+				<xsl:if test="@left!=''">
+					<xsl:text>padding-left: </xsl:text><xsl:value-of select="@left"/><xsl:text>;</xsl:text>
+				</xsl:if>
+				<xsl:if test="@right!=''">
+					<xsl:text>padding-right: </xsl:text><xsl:value-of select="@right"/><xsl:text>;</xsl:text>
+				</xsl:if>
+		</xsl:variable>
+		<div>
+			<xsl:if test="$style!=''">
+				<xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
+			</xsl:if>
 			<xsl:attribute name="class">
 				<xsl:text>document_column</xsl:text>
 				<xsl:if test="position()=1"> document_column_first</xsl:if>
 			</xsl:attribute>
-			<xsl:attribute name="style">
-				<xsl:choose>
-					<xsl:when test="@width='min'">
-						<xsl:text>width: 1%;</xsl:text>
-					</xsl:when>
-					<xsl:when test="@width='max'">
-						<xsl:text>width: 100%;</xsl:text>
-					</xsl:when>
-					<xsl:when test="contains(@width,'%') or contains(@width,'px')">
-						<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>;</xsl:text>
-					</xsl:when>
-					<xsl:when test="@width">
-						<xsl:text>width: </xsl:text><xsl:value-of select="@width"/><xsl:text>px;</xsl:text>
-					</xsl:when>
-				</xsl:choose>
-					<xsl:if test="@top!=''">
-						<xsl:text>padding-top: </xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
-					</xsl:if>
-					<xsl:if test="@bottom!=''">
-						<xsl:text>padding-bottom: </xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
-					</xsl:if>
-					<xsl:if test="@left!=''">
-						<xsl:text>padding-left: </xsl:text><xsl:value-of select="@left"/><xsl:text>;</xsl:text>
-					</xsl:if>
-					<xsl:if test="@right!=''">
-						<xsl:text>padding-right: </xsl:text><xsl:value-of select="@right"/><xsl:text>;</xsl:text>
-					</xsl:if>
-			</xsl:attribute>
+			
 			<xsl:apply-templates/>
 			<xsl:comment/>
-		</td>
+		</div>
 	</xsl:template>
 
 	<xsl:template match="doc:section">
@@ -118,7 +109,10 @@
 			<xsl:if test="@float"> float: <xsl:value-of select="@float"/>;</xsl:if>
 			<xsl:if test="@width"> width: <xsl:value-of select="@width"/>;</xsl:if>
 		</xsl:variable>
-		<div style="{$style}">
+		<div>
+			<xsl:if test="$style!=''">
+				<xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
+			</xsl:if>
 			<xsl:if test="$preview='true'">
 				<xsl:attribute name="data">
 					<xsl:text>{&quot;id&quot;:</xsl:text><xsl:value-of select="@id"/><xsl:text>}</xsl:text>
