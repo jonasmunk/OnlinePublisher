@@ -20,7 +20,7 @@
 </xsl:template>
 
 <xsl:template match="txt:style">
-	<xsl:attribute name="style">
+	<xsl:variable name="style">
 		<xsl:if test="@font-size">font-size: <xsl:value-of select="@font-size"/>;</xsl:if>
 		<xsl:if test="@font-family">font-family: <xsl:value-of select="@font-family"/>;</xsl:if>
 		<xsl:if test="@font-style">font-style: <xsl:value-of select="@font-style"/>;</xsl:if>
@@ -34,7 +34,10 @@
 		<xsl:if test="@text-transform">text-transform: <xsl:value-of select="@text-transform"/>;</xsl:if>
 		<xsl:if test="@font-variant">font-variant: <xsl:value-of select="@font-variant"/>;</xsl:if>
 		<xsl:if test="@text-decoration">text-decoration: <xsl:value-of select="@text-decoration"/>;</xsl:if>
-	</xsl:attribute>
+	</xsl:variable>
+	<xsl:if test="$style!=''">
+		<xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
+	</xsl:if>
 </xsl:template>
 
 

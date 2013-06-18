@@ -38,37 +38,37 @@
 			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 			<xsl:choose>
 				<xsl:when test="$dev='true'">
-					<link rel="stylesheet" href="{$context}/hui/css/dev.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+					<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/dev.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<link rel="stylesheet" href="{$context}/hui/bin/minimized.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+					<link rel="stylesheet" href="{$context}/hui/{$pathVersion}bin/minimized.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 				</xsl:otherwise>
 			</xsl:choose>
 	
 			<xsl:comment><![CDATA[[if IE 8]>
-				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/css/msie8.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
+				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie8.css]]><xsl:value-of select="$version"/><![CDATA["> </link>
 			<![endif]]]></xsl:comment>
 			<xsl:comment><![CDATA[[if lt IE 7]>
-				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/css/msie6.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
+				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie6.css]]><xsl:value-of select="$version"/><![CDATA["> </link>
 			<![endif]]]></xsl:comment>
 			<xsl:comment><![CDATA[[if IE 7]>
-				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/css/msie7.css?version=]]><xsl:value-of select="$version"/><![CDATA["> </link>
+				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie7.css]]><xsl:value-of select="$version"/><![CDATA["> </link>
 			<![endif]]]></xsl:comment>
 	
 			<xsl:if test="//gui:graph">
-				<link rel="stylesheet" href="{$context}/hui/css/graph.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/graph.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:if>
 			<xsl:if test="//gui:diagram">
-				<link rel="stylesheet" href="{$context}/hui/css/diagram.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/diagram.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:if>
 			<xsl:if test="//gui:keyboard-navigator">
-				<link rel="stylesheet" href="{$context}/hui/css/keyboardnavigator.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/keyboardnavigator.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:if>
 			<xsl:if test="//gui:chart">
-				<link rel="stylesheet" href="{$context}/hui/css/chart.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/chart.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:if>
 			<xsl:if test="//gui:tiles">
-				<link rel="stylesheet" href="{$context}/hui/css/tiles.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/tiles.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:if>
 	
 			<xsl:for-each select="//gui:css">
@@ -148,36 +148,36 @@
 					<script src="{$context}/hui/js/Split.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 				</xsl:when>
 				<xsl:otherwise>
-					<script src="{$context}/hui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+					<script src="{$context}/hui/{$pathVersion}bin/minimized.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 				</xsl:otherwise>
 			</xsl:choose>
 
 			<xsl:for-each select="//gui:require">
-				<script src="{$context}/hui/{@path}" type="text/javascript" charset="utf-8"><xsl:comment/></script>	
+				<script src="{$context}/hui/{$pathVersion}{@path}" type="text/javascript" charset="utf-8"><xsl:comment/></script>	
 			</xsl:for-each>
 	
 			<xsl:if test="//gui:graph">
-				<script src="{$context}/hui/js/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+				<script src="{$context}/hui/{$pathVersion}js/Graph.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 			<xsl:if test="//gui:chart">
-				<script src="{$context}/hui/js/Chart.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+				<script src="{$context}/hui/{$pathVersion}js/Chart.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 			<xsl:if test="//gui:columns">
-				<script src="{$context}/hui/js/Columns.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+				<script src="{$context}/hui/{$pathVersion}js/Columns.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 			<xsl:if test="//gui:keyboard-navigator">
-				<script src="{$context}/hui/js/KeyboardNavigator.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+				<script src="{$context}/hui/{$pathVersion}js/KeyboardNavigator.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 			<xsl:if test="//gui:diagram">
-				<script src="{$context}/hui/js/Drawing.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>	
-				<script src="{$context}/hui/js/Diagram.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+				<script src="{$context}/hui/{$pathVersion}js/Drawing.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>	
+				<script src="{$context}/hui/{$pathVersion}js/Diagram.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 			<xsl:if test="//gui:tiles">
-				<script src="{$context}/hui/js/Tiles.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+				<script src="{$context}/hui/{$pathVersion}js/Tiles.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 			<xsl:if test="//gui:pages">
-				<link rel="stylesheet" href="{$context}/hui/css/pages.css?version={$version}" type="text/css" media="screen" title="no title" charset="utf-8"/>
-				<script src="{$context}/hui/js/Pages.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/pages.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+				<script src="{$context}/hui/{$pathVersion}js/Pages.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 	
 			<xsl:for-each select="gui:localize[@source]">
@@ -502,7 +502,7 @@
 <xsl:template match="gui:frames">
 	<html>
 		<head>
-			<script src="{$context}/hui/bin/minimized.js?version={$version}" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+			<script src="{$context}/hui/{$pathVersion}bin/minimized.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			<xsl:apply-templates select="gui:script"/>
 		</head>
 		<frameset rows="84,*" framespacing="0" frameborder="0" border="0">

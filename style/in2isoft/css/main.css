@@ -230,6 +230,7 @@ ul.layout_navigation li a
 	margin-right: 5px;
 	cursor: pointer;
 	border-radius: 3px;
+	font-weight: 200;
 }
 
 ul.layout_navigation li span
