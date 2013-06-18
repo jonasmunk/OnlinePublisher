@@ -329,7 +329,7 @@ ul.layout_navigation li.first span
 ul.layout_sub_navigation
 {
 	margin: 0;
-	padding: 3px 0 0 3px;
+	padding: 3px 0 3px 3px;
 	display: block;
 	overflow: hidden;
 	height: 28px;
