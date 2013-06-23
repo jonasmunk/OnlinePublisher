@@ -33,6 +33,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</title>
+		<link rel="shortcut icon" href="{$path}style/in2isoft/gfx/favicon.ico" type="image/x-icon" />
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/>
 		<link href='{$path}style/basic/fonts/Colaborate/stylesheet.css' rel='stylesheet' type='text/css'/>
 		
