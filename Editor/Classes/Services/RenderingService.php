@@ -263,7 +263,7 @@ class RenderingService {
 					$redirect = StringUtils::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
 					$query = array();
 					foreach ($parameters as $parameter) {
-						if ($parameter['name']!='id') {
+						if ($parameter['name']!='id' && StringUtils::isNotBlank($parameter['name'])) {
 							$query[] = $parameter['name'].'='.$parameter['value'];
 						}
 					}
