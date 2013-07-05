@@ -43,7 +43,7 @@ div.document
 
 div.layout_base
 {
-	padding-bottom: 110px;
+	padding-bottom: 220px;
 	width: 100%;
 }
 
@@ -167,7 +167,7 @@ p.layout_translation a:hover span
 div.layout_footer
 {
 	font-size: 9pt;
-	margin-top: -90px;
+	margin-top: -200px;
 }
 
 div.layout_footer span
