@@ -66,7 +66,7 @@ class TestWaterusageService extends UnitTestCase {
 				$words = preg_split('/;/',$line);
 				
 				$address = @$words[1];
-				if (StringUtils::startsWith($address,'Adresse') || StringUtils::isBlank($address)) {
+				if (Strings::startsWith($address,'Adresse') || Strings::isBlank($address)) {
 					continue;
 				}
 				$parsed = WaterusageService::parseAddress($address);

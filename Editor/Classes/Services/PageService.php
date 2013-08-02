@@ -45,7 +45,7 @@ class PageService {
 	}
 	
 	function getLatestPageCount() {
-		$sql = "SELECT count(id) as count from page	where page.changed>".Database::datetime(DateUtils::addDays(time(),-1));
+		$sql = "SELECT count(id) as count from page	where page.changed>".Database::datetime(Dates::addDays(time(),-1));
 		$row = Database::selectFirst($sql);
 		return intval($row['count']);
 	}
@@ -201,7 +201,7 @@ class PageService {
 		
 		// Free text search...
 		$text = $query->getText();
-		if (StringUtils::isNotBlank($text)) {
+		if (Strings::isNotBlank($text)) {
 			$select->addLimit(
 				"(page.title like ".Database::search($text).
 				" or page.`index` like ".Database::search($text).
@@ -252,7 +252,7 @@ class PageService {
 		if (!$page) {
 			return false;
 		}
-		if (StringUtils::isBlank($page->getTitle())) {
+		if (Strings::isBlank($page->getTitle())) {
 			return false;
 		}
 		if (!$page->getTemplateId()) {
@@ -369,7 +369,7 @@ class PageService {
 		if ($page->getId()>0) {
 			$existing = PageService::load($page->getId());
 			
-			if ($existing && StringUtils::isNotBlank($existing->getPath())) {
+			if ($existing && Strings::isNotBlank($existing->getPath())) {
 				if ($page->getPath()!==$existing->getPath()) {
 					Log::debug('The path has changed!');
 					$path = Query::after('path')->withProperty('path',$existing->getPath())->first();
@@ -410,7 +410,7 @@ class PageService {
 			$success = PageService::create($page);
 		}
 		if ($success) {
-			if (StringUtils::isNotBlank($page->getPath())) {
+			if (Strings::isNotBlank($page->getPath())) {
 				$paths = Query::after('path')->withProperty('path',$page->getPath())->get();
 				foreach ($paths as $path) {
 					$path->remove();
@@ -427,12 +427,12 @@ class PageService {
 		} else if ($controller = TemplateService::getController($page->getTemplateUnique())) {
 			$sql = "select data from page_history where id=".Database::int($historyId);
 			if ($row = Database::selectFirst($sql)) {
-				if ($doc = DOMUtils::parse(StringUtils::toUnicode($row['data']))) {
+				if ($doc = DOMUtils::parse(Strings::toUnicode($row['data']))) {
 					$controller->import($page->getId(),$doc);
 					PageService::markChanged($page->getId());
 					return true;
 				} else {
-					Log::debug('Unable to parse data: '.StringUtils::shortenString($row['data'],100));
+					Log::debug('Unable to parse data: '.Strings::shortenString($row['data'],100));
 					Log::debug('Valid: '.(DOMUtils::isValid($row['data']) ? 'true' : 'false'));
 					
 				}

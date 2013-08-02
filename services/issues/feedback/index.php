@@ -5,7 +5,7 @@ $text = Request::getString('text');
 $email = Request::getString('email');
 $pageId = Request::getInt('pageId');
 
-if (StringUtils::isBlank($text)) {
+if (Strings::isBlank($text)) {
 	Response::badRequest('No text!');
 	exit;
 }
@@ -16,7 +16,7 @@ $title = 'Feedback';
 if ($page) {
 	$title.=' : '.$page->getTitle();
 }
-if (StringUtils::isNotBlank($email)) {
+if (Strings::isNotBlank($email)) {
 	$title.=' : '.$email;
 }
 

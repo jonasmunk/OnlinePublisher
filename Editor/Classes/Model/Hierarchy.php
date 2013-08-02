@@ -169,31 +169,31 @@ class Hierarchy extends Entity {
     	$result = Database::select($sql);
     	while ($row = Database::next($result)) {
     	    if ($row['disabled']!=1 || $allowDisabled) {
-        		$output.='<item title="'.StringUtils::escapeXML($row['title']).
-        					'" alternative="'.StringUtils::escapeXML($row['alternative']).'"';
+        		$output.='<item title="'.Strings::escapeXML($row['title']).
+        					'" alternative="'.Strings::escapeXML($row['alternative']).'"';
         		if ($row['target_type']=='page') {
         			$output.=' page="'.$row['target_id'].'"';
 					if (strlen($row['path'])>0) {
-        				$output.=' path="'.StringUtils::escapeXML($row['path']).'"';
+        				$output.=' path="'.Strings::escapeXML($row['path']).'"';
 					}
         		}
         		if ($row['target_type']=='pageref') {
         			$output.=' page-reference="'.$row['target_id'].'"';
 					if (strlen($row['path'])>0) {
-        				$output.=' path="'.StringUtils::escapeXML($row['path']).'"';
+        				$output.=' path="'.Strings::escapeXML($row['path']).'"';
 					}
         		}
         		else if ($row['target_type']=='file') {
-        			$output.=' file="'.$row['target_id'].'" filename="'.StringUtils::escapeXML(FileService::getFileFilename($row['target_id'])).'"';
+        			$output.=' file="'.$row['target_id'].'" filename="'.Strings::escapeXML(FileService::getFileFilename($row['target_id'])).'"';
         		}
         		else if ($row['target_type']=='url') {
-        			$output.=' url="'.StringUtils::escapeXML($row['target_value']).'"';
+        			$output.=' url="'.Strings::escapeXML($row['target_value']).'"';
         		}
         		else if ($row['target_type']=='email') {
-        			$output.=' email="'.StringUtils::escapeXML($row['target_value']).'"';
+        			$output.=' email="'.Strings::escapeXML($row['target_value']).'"';
         		}
         		if ($row['target']!='') {
-        			$output.=' target="'.StringUtils::escapeXML($row['target']).'"';
+        			$output.=' target="'.Strings::escapeXML($row['target']).'"';
         		}
         		if ($row['hidden']) {
         			$output.=' hidden="true"';

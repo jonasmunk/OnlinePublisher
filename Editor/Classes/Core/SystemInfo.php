@@ -19,7 +19,7 @@ class SystemInfo {
 	
 	function getFormattedDate() {
 		$timestamp = mktime(0,0,0,SystemInfo::$month,SystemInfo::$date,SystemInfo::$year);
-		return DateUtils::formatDate(SystemInfo::getDate());
+		return Dates::formatDate(SystemInfo::getDate());
 	}
 	
 	function getTitle() {

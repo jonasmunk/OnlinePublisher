@@ -5,7 +5,7 @@ $number = Request::getString('number');
 $phone = Request::getString('phone');
 $email = Request::getString('email');
 
-if (StringUtils::isBlank($number)) {
+if (Strings::isBlank($number)) {
 	Response::sendObject(array('success'=>false,'message'=>'No number'));
 	exit;
 }

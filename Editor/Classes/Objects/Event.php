@@ -136,10 +136,10 @@ class Event extends Object {
 	function sub_publish() {
 		$data = '<event xmlns="'.parent::_buildnamespace('1.0').'">';
 		if (isset($this->startdate)) {
-			$data.=DateUtils::buildTag('startdate',$this->startdate);
+			$data.=Dates::buildTag('startdate',$this->startdate);
 		}
 		if (isset($this->enddate)) {
-			$data.=DateUtils::buildTag('enddate',$this->enddate);
+			$data.=Dates::buildTag('enddate',$this->enddate);
 		}
 		$data.='</event>';
 		return $data;

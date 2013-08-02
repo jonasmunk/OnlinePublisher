@@ -33,19 +33,19 @@ if ($row = Database::selectFirst($sql)) {
 	'<input type="hidden" name="id" value="'.$partId.'"/>'.
 	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.
 	'<input type="hidden" name="section" value="'.$sectionId.'"/>'.
-	'<input type="hidden" name="left" value="'.StringUtils::escapeXML($row['left']).'"/>'.
-	'<input type="hidden" name="right" value="'.StringUtils::escapeXML($row['right']).'"/>'.
-	'<input type="hidden" name="bottom" value="'.StringUtils::escapeXML($row['bottom']).'"/>'.
-	'<input type="hidden" name="top" value="'.StringUtils::escapeXML($row['top']).'"/>'.
-	'<input type="hidden" name="width" value="'.StringUtils::escapeXML($row['width']).'"/>'.
-	'<input type="hidden" name="float" value="'.StringUtils::escapeXML($row['float']).'"/>';
+	'<input type="hidden" name="left" value="'.Strings::escapeXML($row['left']).'"/>'.
+	'<input type="hidden" name="right" value="'.Strings::escapeXML($row['right']).'"/>'.
+	'<input type="hidden" name="bottom" value="'.Strings::escapeXML($row['bottom']).'"/>'.
+	'<input type="hidden" name="top" value="'.Strings::escapeXML($row['top']).'"/>'.
+	'<input type="hidden" name="width" value="'.Strings::escapeXML($row['width']).'"/>'.
+	'<input type="hidden" name="float" value="'.Strings::escapeXML($row['float']).'"/>';
 	$html.= $ctrl->editor($part,$partContext);
 	$html.= '</form>';
 	if (method_exists($ctrl,'editorGui')) {
 		$html.=$ctrl->editorGui($part,$partContext);
 	}
 	Response::sendObject(array(
-		'html' => StringUtils::fromUnicode($html),
+		'html' => Strings::fromUnicode($html),
 		'partType' => $partType,
 		'partId' => $partId,
 		'style' => array(

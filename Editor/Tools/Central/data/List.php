@@ -36,8 +36,8 @@ foreach ($objects as $site) {
 	$obj = null;
 	if ($data->isHasData()) {
 		$str = file_get_contents($data->getFile());
-		$obj = StringUtils::fromJSON($str);
-		$version = DateUtils::formatLongDate($obj->date);
+		$obj = Strings::fromJSON($str);
+		$version = Dates::formatLongDate($obj->date);
 	} else {
 		$version = 'Unknown';
 	}

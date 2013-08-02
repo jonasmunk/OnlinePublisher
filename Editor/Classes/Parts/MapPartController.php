@@ -52,7 +52,7 @@ class MapPartController extends PartController
 		'</div>
 		<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/map/editor.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-		//partController.setMarkers('.StringUtils::fromJSON($part->getMarkers()).');
+		//partController.setMarkers('.Strings::fromJSON($part->getMarkers()).');
 		</script>';
 	}
 	
@@ -99,9 +99,9 @@ class MapPartController extends PartController
 		}
 		$xml.='>';
 		if ($part->getText()) {
-			$xml.='<text>'.StringUtils::escapeXML($part->getText()).'</text>';
+			$xml.='<text>'.Strings::escapeXML($part->getText()).'</text>';
 		}
-		$markers = StringUtils::fromJSON(StringUtils::toUnicode($part->getMarkers()));
+		$markers = Strings::fromJSON(Strings::toUnicode($part->getMarkers()));
 		if (is_array($markers)) {
 			foreach ($markers as $marker) {
 				if ($marker->point) {
@@ -116,15 +116,15 @@ class MapPartController extends PartController
 	function importSub($node,$part) {
 		if ($map = DOMUtils::getFirstDescendant($node,'map')) {
 			$mapType = $map->getAttribute('maptype');
-			if (StringUtils::isNotBlank($mapType)) {
+			if (Strings::isNotBlank($mapType)) {
 				$part->setMaptype($mapType);
 			}
 			$longitude = $map->getAttribute('longitude');
-			if (StringUtils::isNotBlank($longitude)) {
+			if (Strings::isNotBlank($longitude)) {
 				$part->setLongitude(floatval($longitude));
 			}
 			$latitude = $map->getAttribute('latitude');
-			if (StringUtils::isNotBlank($latitude)) {
+			if (Strings::isNotBlank($latitude)) {
 				$part->setLatitude(floatval($latitude));
 			}
 		}

@@ -160,7 +160,7 @@ class ImageService {
 		$report = array('imported' => array(), 'problems' => array());
 		$error = false;
 
-		if (StringUtils::isBlank($url)) {
+		if (Strings::isBlank($url)) {
 			$result = new ImportResult();
 			$result->setSuccess(false);
 			$result->setMessage(array('en'=>'The address is invalid', 'da'=>'Adressen er ikke valid'));
@@ -202,7 +202,7 @@ class ImageService {
 		global $basePath;
 		$output = array('image'=>null,'success'=>false,'message'=>null);
 		
-		if (StringUtils::isBlank($data)) {
+		if (Strings::isBlank($data)) {
 			$output['message'] = 'No data';
 			return $output;
 		}
@@ -288,7 +288,7 @@ class ImageService {
 		}
 
 		// If no file name then extract it from the path
-		if (StringUtils::isBlank($fileName)) {
+		if (Strings::isBlank($fileName)) {
 			$fileName = FileSystemService::getFileBaseName($tempPath);
 		}
 		
@@ -315,7 +315,7 @@ class ImageService {
 		}
 
 		// If no title build one from filename
-		if (StringUtils::isBlank($title)) {
+		if (Strings::isBlank($title)) {
 			$title = FileSystemService::filenameToTitle($fileName);
 		}
 

@@ -8,14 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-class StringUtils {
+class Strings {
 	
 	function isBlank($str) {
 		return $str===null || strlen(trim($str))===0;
 	}
 	
 	function isNotBlank($str) {
-		return !StringUtils::isBlank($str);
+		return !Strings::isBlank($str);
 	}
 	
 	function escapeSimpleXML($input) {
@@ -52,12 +52,12 @@ class StringUtils {
 			return mb_convert_encoding($obj, "UTF-8","ISO-8859-1");
 		} else if (is_object($obj)) {
 			foreach ($obj as $key => $value) {
-				$obj->$key = StringUtils::toUnicode($value);
+				$obj->$key = Strings::toUnicode($value);
 			}
 		} else if (is_array($obj)) {
 			foreach ($obj as $key => $value) {
 				unset($obj[$key]);
-				$obj[StringUtils::toUnicode($key)] = StringUtils::toUnicode($value);
+				$obj[Strings::toUnicode($key)] = Strings::toUnicode($value);
 			}
 		}
 		return $obj;
@@ -73,11 +73,11 @@ class StringUtils {
 			return mb_convert_encoding($str,"ISO-8859-1", "UTF-8");
 		} else if (is_object($obj)) {
 			foreach ($obj as $key => $value) {
-				$obj->$key = StringUtils::fromUnicode($value);
+				$obj->$key = Strings::fromUnicode($value);
 			}
 		} else if (is_array($obj)) {
 			foreach ($obj as $key => $value) {
-				$obj[$key] = StringUtils::fromUnicode($value);
+				$obj[$key] = Strings::fromUnicode($value);
 			}
 		}
 		return $obj;
@@ -87,8 +87,8 @@ class StringUtils {
 		if (is_float($str)) {
 			$str = (string) $str;
 		}
-		$str = StringUtils::stripInvalidXml($str);
-		$str = StringUtils::htmlNumericEntities($str);
+		$str = Strings::stripInvalidXml($str);
+		$str = Strings::htmlNumericEntities($str);
 		$str = str_replace('&#151;', '-', $str);
 		$str = str_replace('&#146;', '&#39;', $str);
 		$str = str_replace('&#147;', '&#8220;', $str);
@@ -103,7 +103,7 @@ class StringUtils {
 	}
 	
 	function escapeXMLBreak($input,$break) {
-		$output = StringUtils::escapeXML($input);
+		$output = Strings::escapeXML($input);
 		$output = str_replace("&#13;&#10;", $break, $output);
 		$output = str_replace("&#13;", $break, $output);
 		$output = str_replace("&#10;", $break, $output);
@@ -112,7 +112,7 @@ class StringUtils {
 	}
 	
 	function escapeJavaScriptXML($input) {
-		$output = StringUtils::escapeXML($input);
+		$output = Strings::escapeXML($input);
 		$output = str_replace("'", "\'", $output);
 		return $output;
 	}
@@ -204,33 +204,33 @@ class StringUtils {
 				$dist = $pos-$lastPos;
 				if ($lastPos==0) {
 					if ($dist>17) {
-						$out.='... '.StringUtils::escapeXML(substr($text,$dist-14,14));
+						$out.='... '.Strings::escapeXML(substr($text,$dist-14,14));
 					}
 					else {
-						$out.=StringUtils::escapeXML(substr($text,0,$dist));
+						$out.=Strings::escapeXML(substr($text,0,$dist));
 					}
 				}
 				else {
 					$middle = substr($text,$lastPos,$dist);
 					if (strlen($middle)>30) {
 						$out.=
-						StringUtils::escapeXML(substr($middle,0,14)).
+						Strings::escapeXML(substr($middle,0,14)).
 						' ... '.
-						StringUtils::escapeXML(substr($middle,strlen($middle)-14,14));
+						Strings::escapeXML(substr($middle,strlen($middle)-14,14));
 					}
 					else {
-						$out.=StringUtils::escapeXML($middle);
+						$out.=Strings::escapeXML($middle);
 					}
 				}
-				$out.='<highlight>'.StringUtils::escapeXML($word).'</highlight>';
+				$out.='<highlight>'.Strings::escapeXML($word).'</highlight>';
 			}
 			$lastPos=$pos+strlen($word);
 		}
 		if ((strlen($text)-$lastPos)>14) {
-			$out.=StringUtils::escapeXML(substr($text,$lastPos,14)).' ...';
+			$out.=Strings::escapeXML(substr($text,$lastPos,14)).' ...';
 		}
 		else {
-			$out.=StringUtils::escapeXML(substr($text,$lastPos));
+			$out.=Strings::escapeXML(substr($text,$lastPos));
 		}
 		return $out;
 	}
@@ -314,7 +314,7 @@ class StringUtils {
 	}
 	
 	function stripInvalidXml($value) {
-		$value = StringUtils::toString($value);
+		$value = Strings::toString($value);
 	    $ret = ""; 
 	    $length = strlen($value);
 	    for ($i=0; $i < $length; $i++)
@@ -338,8 +338,8 @@ class StringUtils {
 	}
 	
 	function concatUrl($str1,$str2) {
-		$str1 = trim(StringUtils::toString($str1));
-		$str2 = trim(StringUtils::toString($str2));
+		$str1 = trim(Strings::toString($str1));
+		$str2 = trim(Strings::toString($str2));
 		if ($str1==='' && $str2==='') {
 			return '';
 		}
@@ -349,10 +349,10 @@ class StringUtils {
 		else if ($str2==='') {
 			return $str1;
 		}
-		else if (StringUtils::endsWith($str1,'/') && StringUtils::startsWith($str2,'/')) {
+		else if (Strings::endsWith($str1,'/') && Strings::startsWith($str2,'/')) {
 			return $str1.substr($str2,1);
 		}
-		else if (StringUtils::endsWith($str1,'/') || StringUtils::startsWith($str2,'/')) {
+		else if (Strings::endsWith($str1,'/') || Strings::startsWith($str2,'/')) {
 			return $str1.$str2;
 		}
 		return $str1.'/'.$str2;		

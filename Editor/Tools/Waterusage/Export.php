@@ -11,7 +11,7 @@ if ($view) {
 	header('Content-Type: text/plain');
 } else {
 	header('Content-Type: application/csv');
-	Response::contentDisposition('waterusage-'.DateUtils::formatCSV(time()).'.csv');
+	Response::contentDisposition('waterusage-'.Dates::formatCSV(time()).'.csv');
 }
 
 $sql = "SELECT UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(waterusage.date) AS `date`,watermeter.number,CONVERT(watermeter.number,UNSIGNED) AS numberformatted,waterusage.value FROM object,waterusage,watermeter WHERE object.id=waterusage.object_id and waterusage.watermeter_id=watermeter.object_id ORDER BY numberformatted,date";

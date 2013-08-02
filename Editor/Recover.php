@@ -11,7 +11,7 @@ if (Request::exists('language')) {
 $error = null;
 
 $key = Request::getString('key');
-if (StringUtils::isBlank($key)) {
+if (Strings::isBlank($key)) {
 	$error = array(
 		'title' => array('Illegal request','da'=>'Ukendt forespørgsel'),
 		'text' => 'Dette kan skyldes at din e-mail-klient har afskåret linket. Prøv at kopiere adressen fra e-mailen ind i browserens adresselinje.'

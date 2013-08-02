@@ -18,7 +18,7 @@ if (!$user || !$page) {
 	exit;
 }
 	$issue = new Issue();
-	$issue->setTitle(StringUtils::shortenString($text,30));
+	$issue->setTitle(Strings::shortenString($text,30));
 	$issue->setNote($text);
 	$issue->setKind($kind);
 	$issue->save();

@@ -59,7 +59,7 @@ class TestPHPFiles extends UnitTestCase {
 		$info = curl_getinfo($ch);
 		$httpCode = $info['http_code'];
 		$this->assertTrue($httpCode===403 || $httpCode===302,'Http response code for '.$url.' is: '.$httpCode);
-		$this->assertTrue(StringUtils::isBlank($result),'The result of url: '.$url.' should be blank, it is: '.$result);
+		$this->assertTrue(Strings::isBlank($result),'The result of url: '.$url.' should be blank, it is: '.$result);
 
 		curl_close($ch);		
 	}

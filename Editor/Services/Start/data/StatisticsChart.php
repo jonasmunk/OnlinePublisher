@@ -6,7 +6,7 @@
 require_once '../../../Include/Private.php';
 
 $query = new StatisticsQuery();
-$query->setStartTime(DateUtils::addDays(time(),-21));
+$query->setStartTime(Dates::addDays(time(),-21));
 $query->withResolution('daily');
 
 $chart = StatisticsService::getVisitsChart($query);

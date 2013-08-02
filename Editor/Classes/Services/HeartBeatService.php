@@ -17,7 +17,7 @@ class HeartBeatService {
 		if ($duration > 60 * 15) {
 			HeartBeatService::run();
 		} else {
-			Log::debug('Skipping beat, duration='.DateUtils::formatDuration($duration));
+			Log::debug('Skipping beat, duration='.Dates::formatDuration($duration));
 		}
 	}
 	

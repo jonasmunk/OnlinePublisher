@@ -103,7 +103,7 @@ class PartController
 		'<xsl:variable name="navigation-path"></xsl:variable>'.
 		'<xsl:variable name="page-path"></xsl:variable>'.
 		'<xsl:variable name="template"></xsl:variable>'.
-		'<xsl:variable name="agent">'.StringUtils::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
+		'<xsl:variable name="agent">'.Strings::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
 		'<xsl:variable name="userid"></xsl:variable>'.
 		'<xsl:variable name="username"></xsl:variable>'.
 		'<xsl:variable name="usertitle"></xsl:variable>'.
@@ -123,7 +123,7 @@ class PartController
 	function buildHiddenFields($items) {
 		$str = '';
 		foreach ($items as $key => $value) {
-			$str.='<input type="hidden" name="'.$key.'" value="'.StringUtils::escapeXML($value).'"/>';
+			$str.='<input type="hidden" name="'.$key.'" value="'.Strings::escapeXML($value).'"/>';
 		}
 		return $str;
 	}
@@ -153,7 +153,7 @@ class PartController
 		foreach (PartController::$methodToAttribute as $method => $attribute) {
 			if (method_exists($part,$method)) {
 				$value = $node->getAttribute($attribute);
-				if (StringUtils::isNotBlank($value)) {
+				if (Strings::isNotBlank($value)) {
 					$method = str_replace('get','set',$method);
 					$part->$method($value);
 				}
@@ -167,8 +167,8 @@ class PartController
 		foreach (PartController::$methodToAttribute as $method => $attribute) {
 			if (method_exists($part,$method)) {
 				$value = $part->$method();
-				if (StringUtils::isNotBlank($value)) {
-					$xml.=' '.$attribute.'="'.StringUtils::escapeXML($value).'"';
+				if (Strings::isNotBlank($value)) {
+					$xml.=' '.$attribute.'="'.Strings::escapeXML($value).'"';
 				}
 			}
 		}
@@ -181,8 +181,8 @@ class PartController
 		foreach (PartController::$methodToAttribute as $method => $attribute) {
 			if (method_exists($part,$method)) {
 				$value = $part->$method();
-				if (StringUtils::isNotBlank($value)) {
-					$css.=$attribute.': '.StringUtils::escapeXML($value).';';
+				if (Strings::isNotBlank($value)) {
+					$css.=$attribute.': '.Strings::escapeXML($value).';';
 				}
 			}
 		}

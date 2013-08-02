@@ -23,7 +23,7 @@ class Log {
 	}
 	
 	function debugJSON($object) {
-		Log::debug(StringUtils::toJSON($object));
+		Log::debug(Strings::toJSON($object));
 	}
 	
 	function info($object) {

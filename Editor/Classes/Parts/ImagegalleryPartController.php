@@ -43,8 +43,8 @@ class ImagegalleryPartController extends PartController
 	    '<input type="hidden" name="group" value="'.$part->getImageGroupId().'"/>'.
 	    '<input type="hidden" name="height" value="'.$part->getHeight().'"/>'.
 	    '<input type="hidden" name="imageWidth" value="'.$part->getWidth().'"/>'.
-	    '<input type="hidden" name="framed" value="'.StringUtils::toBoolean($part->getFramed()).'"/>'.
-	    '<input type="hidden" name="showTitle" value="'.StringUtils::toBoolean($part->getShowTitle()).'"/>'.
+	    '<input type="hidden" name="framed" value="'.Strings::toBoolean($part->getFramed()).'"/>'.
+	    '<input type="hidden" name="showTitle" value="'.Strings::toBoolean($part->getShowTitle()).'"/>'.
 	    '<input type="hidden" name="variant" value="'.$part->getVariant().'"/>'.
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/imagegallery/editor.js" type="text/javascript" charset="utf-8"></script>'.
 		'<div id="part_imagegallery_container">'.$this->render($part,$context).'</div>';
@@ -57,9 +57,9 @@ class ImagegalleryPartController extends PartController
 		if ($part->getWidth()) {
 			$data.= ' width="'.$part->getWidth().'"';			
 		}
-		$data.= ' variant="'.StringUtils::escapeXML($part->getVariant()).'"';
-		$data.= ' framed="'.StringUtils::toBoolean($part->getFramed()).'"';
-		$data.= ' show-title="'.StringUtils::toBoolean($part->getShowTitle()).'"/>';
+		$data.= ' variant="'.Strings::escapeXML($part->getVariant()).'"';
+		$data.= ' framed="'.Strings::toBoolean($part->getFramed()).'"';
+		$data.= ' show-title="'.Strings::toBoolean($part->getShowTitle()).'"/>';
 		if ($part->getImageGroupId()) {
 			$sql="SELECT object.data from object,imagegroup_image where imagegroup_image.image_id = object.id and imagegroup_image.imagegroup_id=".Database::int($part->getImageGroupId())." order by object.title";
 			$result = Database::select($sql);

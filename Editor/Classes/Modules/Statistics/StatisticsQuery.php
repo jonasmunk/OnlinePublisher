@@ -16,14 +16,14 @@ class StatisticsQuery {
 	
 	function withTime($time) {
 		if ($time=='year') {
-			$this->startTime = DateUtils::getYearStart();
-			$this->endTime = DateUtils::getYearEnd();			
+			$this->startTime = Dates::getYearStart();
+			$this->endTime = Dates::getYearEnd();			
 		} else if ($time=='month') {
-			$this->startTime = DateUtils::getMonthStart();
-			$this->endTime = DateUtils::getMonthEnd();
+			$this->startTime = Dates::getMonthStart();
+			$this->endTime = Dates::getMonthEnd();
 		} else if ($time=='week') {
-			$this->startTime = DateUtils::getWeekStart();
-			$this->endTime = DateUtils::getWeekEnd();
+			$this->startTime = Dates::getWeekStart();
+			$this->endTime = Dates::getWeekEnd();
 		}
 		return $this;
 	}

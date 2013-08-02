@@ -9,16 +9,16 @@ class HtmlTableParser {
 	
 	function parse($html) {
 		$parsed = array();
-		$tables = StringUtils::extract($html,'<table','table>');
+		$tables = Strings::extract($html,'<table','table>');
 		
 		foreach ($tables as $table) {
 			$parsedTable = array();
-			$rows = StringUtils::extract($table,'<tr','tr>');
+			$rows = Strings::extract($table,'<tr','tr>');
 			foreach ($rows as $row) {
 				$parsedRow = array();
-				$cells = StringUtils::extract($row,'<td','td>');
+				$cells = Strings::extract($row,'<td','td>');
 				foreach ($cells as $cell) {
-					$parsedRow[] = StringUtils::removeTags($cell);
+					$parsedRow[] = Strings::removeTags($cell);
 				}
 				$parsedTable[] = $parsedRow;
 			}

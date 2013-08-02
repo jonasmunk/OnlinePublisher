@@ -32,7 +32,7 @@ class AuthenticationTemplateController extends TemplateController
 		$data = '<authentication xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/authentication/1.0/">';
 		$sql="select * from authentication where page_id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
-			$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
+			$data.='<title>'.Strings::escapeXML($row['title']).'</title>';
 			$index = $row['title'];
 		}
 		$data.='<!--dynamic-->';

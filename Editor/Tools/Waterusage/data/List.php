@@ -67,7 +67,7 @@ function listMeters($windowSize, $windowPage, $text, $sort, $direction) {
 		$writer->endCell();
 		if ($usage) {
 			$writer->startCell()->text($usage->getValue())->endCell();
-			$writer->startCell()->text(DateUtils::formatDate($usage->getDate()))->endCell();
+			$writer->startCell()->text(Dates::formatDate($usage->getDate()))->endCell();
 		} else {
 			$writer->startCell()->text('?')->endCell();
 			$writer->startCell()->text('?')->endCell();
@@ -88,8 +88,8 @@ function listUsage($windowSize, $windowPage, $text, $filterKind, $year=null) {
 	
 	$query = Query::after('waterusage')->orderBy('date')->withWindowPage($windowPage)->withWindowSize($windowSize)->withText($text);
 	if ($filterKind=='year') {
-		$from = DateUtils::getFirstInstanceOfYear($year);
-		$to = DateUtils::getLastInstanceOfYear($year);
+		$from = Dates::getFirstInstanceOfYear($year);
+		$to = Dates::getLastInstanceOfYear($year);
 		$query->withPropertyBetween('date',$from,$to);
 	}
 	if ($filterKind=='status') {
@@ -129,8 +129,8 @@ function listUsage($windowSize, $windowPage, $text, $filterKind, $year=null) {
 				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'usageInfo','id'=>$object->getId())))->
 			endIcons()->
 		endCell()->
-		startCell()->text(DateUtils::formatLongDate($object->getDate()))->endCell()->
-		startCell()->text(DateUtils::formatFuzzy($object->getUpdated()))->endCell()->
+		startCell()->text(Dates::formatLongDate($object->getDate()))->endCell()->
+		startCell()->text(Dates::formatFuzzy($object->getUpdated()))->endCell()->
 		startCell(array('align'=>'center'))->
 			startIcons()->
 				icon(array('icon'=>WaterusageService::getStatusIcon($object->getStatus()),'action'=>true,'data'=>array('action'=>'usageStatus','id'=>$object->getId())))->
@@ -158,7 +158,7 @@ function listLog($windowSize, $windowPage, $text) {
 
 	foreach ($entries as $entry) {
 		$writer->startRow(array( 'kind'=>'logentry', 'icon'=>'common/file' ));
-		$writer->startCell()->text(DateUtils::formatDateTime($entry['time']))->endCell();
+		$writer->startCell()->text(Dates::formatDateTime($entry['time']))->endCell();
 		$writer->startCell()->text($entry['message'])->endCell();
 		$writer->endRow();
 	}

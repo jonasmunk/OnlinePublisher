@@ -28,10 +28,10 @@ class NewsPartController extends PartController
 	
 	function buildSub($part,$context) {
 		$data='<news xmlns="'.$this->getNamespace().'">';
-		if (StringUtils::isNotBlank($part->getVariant())) {
+		if (Strings::isNotBlank($part->getVariant())) {
 			$data.='<'.$part->getVariant().'>';
-			if (StringUtils::isNotBlank($part->getTitle())) {
-				$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
+			if (Strings::isNotBlank($part->getTitle())) {
+				$data.='<title>'.Strings::escapeXML($part->getTitle()).'</title>';
 			}
 			$maxitems = $part->getMaxItems(); // TODO: Build this into sql PERFORMANCE!
 			$sql = $this->buildSql($part);
@@ -83,7 +83,7 @@ class NewsPartController extends PartController
 		$groups = $part->getNewsGroupIds();
 
 		return
-		'<input type="hidden" name="title" value="'.StringUtils::escapeXML($part->getTitle()).'"/>'.
+		'<input type="hidden" name="title" value="'.Strings::escapeXML($part->getTitle()).'"/>'.
 		'<input type="hidden" name="mode" value="'.$part->getMode().'"/>'.
 		'<input type="hidden" name="news" value="'.$part->getNewsId().'"/>'.
 		'<input type="hidden" name="groups" value="'.implode(',',$groups).'"/>'.
@@ -108,7 +108,7 @@ class NewsPartController extends PartController
 					<formula>
 						<fields labels="above">
 							<field label="{Title; da:Titel}">
-								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" name="newsTitle"/>
+								<text-input value="'.Strings::escapeXML($part->getTitle()).'" name="newsTitle"/>
 							</field>
 							<field label="Variant">
 								<radiobuttons value="'.$part->getVariant().'" name="newsVariant">

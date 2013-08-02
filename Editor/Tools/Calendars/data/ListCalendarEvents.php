@@ -33,8 +33,8 @@ function listEvents($id,$force) {
 		$writer->startRow(array('kind'=>'event','id'=>$event->getId()));
 		$writer->startCell()->text($event->getTitle())->endCell();
 		$writer->startCell()->text($event->getLocation())->endCell();
-		$writer->startCell()->text(DateUtils::formatLongDateTime($event->getStartdate()))->endCell();
-		$writer->startCell()->text(DateUtils::formatLongDateTime($event->getEnddate()))->endCell();
+		$writer->startCell()->text(Dates::formatLongDateTime($event->getStartdate()))->endCell();
+		$writer->startCell()->text(Dates::formatLongDateTime($event->getEnddate()))->endCell();
 		$writer->endRow();
 	}
 	$writer->endList();

@@ -69,13 +69,13 @@ class Product extends Object {
 	function sub_publish() {
 		$data = '<product xmlns="'.parent::_buildnamespace('1.0').'">'.
 		'<allow-offer>'.($this->allowOffer ? 'true' : 'false').'</allow-offer>'.
-		'<number>'.StringUtils::escapeXML($this->number).'</number>'.
+		'<number>'.Strings::escapeXML($this->number).'</number>'.
 		'<attributes>';
 		$sql="select * from productattribute where product_id=".$this->id." order by `index`";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$data.='<attribute name="'.StringUtils::escapeXML($row['name']).'">'.
-			StringUtils::escapeXMLBreak($row['value'],'<break/>').
+			$data.='<attribute name="'.Strings::escapeXML($row['name']).'">'.
+			Strings::escapeXMLBreak($row['value'],'<break/>').
 			'</attribute>';
 		}
 		Database::free($result);
@@ -85,10 +85,10 @@ class Product extends Object {
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$data.='<price'.
-				' amount="'.StringUtils::escapeXML($row['amount']).'"'.
-				' type="'.StringUtils::escapeXML($row['type']).'"'.
-				' price="'.StringUtils::escapeXML($row['price']).'"'.
-				' currency="'.StringUtils::escapeXML($row['currency']).'"'.
+				' amount="'.Strings::escapeXML($row['amount']).'"'.
+				' type="'.Strings::escapeXML($row['type']).'"'.
+				' price="'.Strings::escapeXML($row['price']).'"'.
+				' currency="'.Strings::escapeXML($row['currency']).'"'.
 				'/>';
 		}
 		Database::free($result);

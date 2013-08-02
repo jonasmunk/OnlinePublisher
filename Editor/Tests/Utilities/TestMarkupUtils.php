@@ -14,7 +14,7 @@ class TestMarkupUtils extends UnitTestCase {
 	function testFindScriptSegments() {
 		$html = '<html><head><script type="text/javascript"></script></head><body><h1>Test</h1><script>if (true) {alert(0)}</script></body></html>';
 		$result = MarkupUtils::findScriptSegments($html);
-		//Log::debug(StringUtils::toJSON($result));
+		//Log::debug(Strings::toJSON($result));
 		$this->assertEqual(2,count($result));
 
 		$first = substr($html,$result[0]['from'],$result[0]['to']-$result[0]['from']);

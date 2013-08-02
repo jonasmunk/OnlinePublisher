@@ -35,7 +35,7 @@ foreach ($links as $link) {
 
 		$writer->endLine();
 			
-		if (StringUtils::isNotBlank($link->getSourceDescription())) {
+		if (Strings::isNotBlank($link->getSourceDescription())) {
 			$writer->startLine(array('dimmed'=>true))->text($link->getSourceDescription())->endLine();			
 		}
 		if ($link->getSourceSubId()) {

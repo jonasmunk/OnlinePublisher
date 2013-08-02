@@ -31,17 +31,17 @@ class SitemapTemplateController extends TemplateController
 		$sql="select * from sitemap where page_id=".Database::int($this->id);
 		if ($row = Database::selectFirst($sql)) {
 			if ($row['title']!='') {
-				$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
+				$data.='<title>'.Strings::escapeXML($row['title']).'</title>';
 			}
 			if ($row['text']!='') {
-				$data.='<text>'.StringUtils::escapeXMLBreak($row['text'],'<break/>').'</text>';
+				$data.='<text>'.Strings::escapeXMLBreak($row['text'],'<break/>').'</text>';
 			}
 		}
 
 		$sql="select sitemap_group.title,hierarchy.data from sitemap_group left join hierarchy on sitemap_group.hierarchy_id=hierarchy.id where page_id=".Database::int($this->id)." order by sitemap_group.position";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-		    $data.='<group title="'.StringUtils::escapeXML($row['title']).'">'.
+		    $data.='<group title="'.Strings::escapeXML($row['title']).'">'.
 		    $row['data'].
 		    '</group>';
 		}

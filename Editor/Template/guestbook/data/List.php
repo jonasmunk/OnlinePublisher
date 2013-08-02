@@ -20,7 +20,7 @@ while ($row = Database::next($result)) {
 	$writer->startRow(array('id'=>$row['id']))->
 		startCell(array('wrap'=>true))->
 			startLine()->text($row['name'])->endLine()->
-			startLine(array('minor'=>true,'dimmed'=>true,'top'=>5))->text(DateUtils::formatLongDateTime($row['time']))->endLine()->
+			startLine(array('minor'=>true,'dimmed'=>true,'top'=>5))->text(Dates::formatLongDateTime($row['time']))->endLine()->
 		endCell()->
 		startCell()->text($row['text'])->endCell()->
 		startCell()->startIcons()->icon(array('icon'=>'monochrome/delete','action'=>true,'revealing'=>true,'data'=>array('action'=>'delete')))->endIcons()->endCell()->

@@ -9,7 +9,7 @@ $page = Page::load(InternalSession::getPageId());
 
 if (strlen($page->getPath())>0) {
 	$path = $page->getPath();
-	if (StringUtils::startsWith($path,'/')) {
+	if (Strings::startsWith($path,'/')) {
 		Response::redirect('../../..'.$path);
 	} else {
 		Response::redirect('../../../'.$path);

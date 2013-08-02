@@ -6,7 +6,7 @@ $url = Request::getString('url');
 $file = Request::getString('file');
 $line = Request::getString('line');
 
-if (StringUtils::isBlank($message) && StringUtils::isBlank($url) && StringUtils::isBlank($file) && StringUtils::isBlank($line)) {
+if (Strings::isBlank($message) && Strings::isBlank($url) && Strings::isBlank($file) && Strings::isBlank($line)) {
 	exit;
 }
 

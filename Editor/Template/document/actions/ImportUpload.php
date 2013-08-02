@@ -13,7 +13,7 @@ $type = Request::getString('type');
 
 $part = null;
 
-if (StringUtils::isNotBlank($text)) {
+if (Strings::isNotBlank($text)) {
 	if ($type=='header') {
 		$ctrl = new HeaderPartController();
 	} else {
@@ -23,7 +23,7 @@ if (StringUtils::isNotBlank($text)) {
 	$part->setText($text);
 	$part->save();
 
-} else if (StringUtils::isNotBlank($url)) {
+} else if (Strings::isNotBlank($url)) {
 	$response = ImageService::createImageFromUrl($url);
 	if ($response->getSuccess()) {
 		$image = $response->getObject();

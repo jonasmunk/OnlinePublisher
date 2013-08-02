@@ -268,38 +268,38 @@ class ObjectService {
 	function toXml($object) {
 		$ns = 'http://uri.in2isoft.com/onlinepublisher/class/object/1.0/';
 		$xml = '<object xmlns="'.$ns.'" id="'.$object->id.'" type="'.$object->type.'">'.
-			'<title>'.StringUtils::escapeXML($object->title).'</title>'.
-			'<note>'.StringUtils::escapeXMLBreak($object->note,'<break/>').'</note>'.
-			DateUtils::buildTag('created',$object->created).
-			DateUtils::buildTag('updated',$object->updated).
-			DateUtils::buildTag('published',$object->published);
+			'<title>'.Strings::escapeXML($object->title).'</title>'.
+			'<note>'.Strings::escapeXMLBreak($object->note,'<break/>').'</note>'.
+			Dates::buildTag('created',$object->created).
+			Dates::buildTag('updated',$object->updated).
+			Dates::buildTag('published',$object->published);
 		
 		$links='';
 		
 		$sql = "select object_link.*,page.path from object_link left join page on page.id=object_link.target_value and object_link.target_type='page' where object_id=".$object->id." order by position";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$links.='<link title="'.StringUtils::escapeXML($row['title']).'"';
+			$links.='<link title="'.Strings::escapeXML($row['title']).'"';
 			if ($row['alternative']!='') {
-				$links.=' alternative="'.StringUtils::escapeXML($row['alternative']).'"';
+				$links.=' alternative="'.Strings::escapeXML($row['alternative']).'"';
 			}
 			if ($row['target']!='') {
-				$links.=' target="'.StringUtils::escapeXML($row['target']).'"';
+				$links.=' target="'.Strings::escapeXML($row['target']).'"';
 			}
 			if ($row['path']!='') {
-				$links.=' path="'.StringUtils::escapeXML($row['path']).'"';
+				$links.=' path="'.Strings::escapeXML($row['path']).'"';
 			}
 			if ($row['target_type']=='page') {
-				$links.=' page="'.StringUtils::escapeXML($row['target_value']).'"';
+				$links.=' page="'.Strings::escapeXML($row['target_value']).'"';
 			}
 			elseif ($row['target_type']=='file') {
-				$links.=' file="'.StringUtils::escapeXML($row['target_value']).'" filename="'.StringUtils::escapeXML(ObjectService::_getFilename($row['target_value'])).'"';
+				$links.=' file="'.Strings::escapeXML($row['target_value']).'" filename="'.Strings::escapeXML(ObjectService::_getFilename($row['target_value'])).'"';
 			}
 			elseif ($row['target_type']=='url') {
-				$links.=' url="'.StringUtils::escapeXML($row['target_value']).'"';
+				$links.=' url="'.Strings::escapeXML($row['target_value']).'"';
 			}
 			elseif ($row['target_type']=='email') {
-				$links.=' email="'.StringUtils::escapeXML($row['target_value']).'"';
+				$links.=' email="'.Strings::escapeXML($row['target_value']).'"';
 			}
 			$links.='/>';
 		}

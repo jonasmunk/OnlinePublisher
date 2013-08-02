@@ -18,13 +18,13 @@ class ItemsWriter {
 	function startItem($options) {
 		echo '<item';
 		if (isset($options['value'])) {
-			echo ' value="'.StringUtils::escapeXML($options['value']).'"';
+			echo ' value="'.Strings::escapeXML($options['value']).'"';
 		}
 		if (isset($options['title'])) {
-			echo ' title="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
+			echo ' title="'.Strings::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
 		}
 		if (isset($options['text'])) {
-			echo ' text="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['text'])).'"';
+			echo ' text="'.Strings::escapeXML(GuiUtils::getTranslated($options['text'])).'"';
 		}
 		if (isset($options['icon'])) {
 			echo ' icon="'.$options['icon'].'"';
@@ -54,7 +54,7 @@ class ItemsWriter {
 	}
 
 	function title($title=null) {
-		echo '<title title="'.StringUtils::escapeXML(GuiUtils::getTranslated($title)).'"/>';
+		echo '<title title="'.Strings::escapeXML(GuiUtils::getTranslated($title)).'"/>';
 		return $this;
 	}
 

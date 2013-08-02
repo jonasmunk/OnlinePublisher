@@ -36,7 +36,7 @@ $writer->endHeaders();
 
 foreach ($result->getList() as $row) {
 	$writer->startRow(array('kind'=>'logEntry','id'=>$row['id']));
-	$writer->startCell()->text(DateUtils::formatLongDateTime($row['time']))->endCell();
+	$writer->startCell()->text(Dates::formatLongDateTime($row['time']))->endCell();
 	$writer->startCell()->text($row['category'])->endCell();
 	$writer->startCell()->text($row['event'])->endCell();
 	$writer->startCell()->text($row['entity'])->endCell();

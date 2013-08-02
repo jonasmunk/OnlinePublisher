@@ -89,7 +89,7 @@ class LinkService {
 	}
 
 	function save($link) {
-		if (StringUtils::isBlank($link->getText())) {
+		if (Strings::isBlank($link->getText())) {
 			return;
 		}
 		if ($link->id) {

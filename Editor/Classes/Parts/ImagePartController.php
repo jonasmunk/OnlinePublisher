@@ -101,10 +101,10 @@ class ImagePartController extends PartController
 		if ($part->getAlign()!='' || $part->getFrame()!='') {
 			$xml.='<style';
 			if ($part->getAlign()!='') {
-				$xml.=' align="'.StringUtils::escapeXML($part->getAlign()).'"';
+				$xml.=' align="'.Strings::escapeXML($part->getAlign()).'"';
 			}
 			if ($part->getFrame()!='') {
-				$xml.=' frame="'.StringUtils::escapeXML($part->getFrame()).'"';
+				$xml.=' frame="'.Strings::escapeXML($part->getFrame()).'"';
 			}
 			$xml.='/>';
 		}
@@ -121,8 +121,8 @@ class ImagePartController extends PartController
 				Log::debug('Unable to load image with id='.$part->getImageId());
 			}
 		}
-		if (StringUtils::isNotBlank($part->getText())) {
-			$xml.='<text>'.StringUtils::escapeXML($part->getText()).'</text>';
+		if (Strings::isNotBlank($part->getText())) {
+			$xml.='<text>'.Strings::escapeXML($part->getText()).'</text>';
 		}
 		$xml.='</image>';
 		return $xml;
@@ -131,31 +131,31 @@ class ImagePartController extends PartController
 	function _buildLinkTag($link,$imageId) {
 	    $atts = '';
 	    if ($link['target_type']=='url') {
-			$atts.=' url="'.StringUtils::escapeXML($link['target_value']).'"';
+			$atts.=' url="'.Strings::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='page') {
-			$atts.=' page="'.StringUtils::escapeXML($link['target_value']).'"';
+			$atts.=' page="'.Strings::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='email') {
-			$atts.=' email="'.StringUtils::escapeXML($link['target_value']).'"';
+			$atts.=' email="'.Strings::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='file') {
-			$atts.=' file="'.StringUtils::escapeXML($link['target_value']).'"';
+			$atts.=' file="'.Strings::escapeXML($link['target_value']).'"';
 		}
 		else if ($link['target_type']=='image') {
 			$image = Image::load($link['target_value']);
 			if ($image) {
-				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.StringUtils::escapeXML($image->getNote()).'"';
+				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.Strings::escapeXML($image->getNote()).'"';
 			}
 		}
 		else if ($link['target_type']=='sameimage') {
 			$image = Image::load($imageId);
 			if ($image) {
-				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.StringUtils::escapeXML($image->getNote()).'"';
+				$atts.=' image="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'" note="'.Strings::escapeXML($image->getNote()).'"';
 			}
 		}
 	    if ($link['path']!='') {
-			$atts.=' path="'.StringUtils::escapeXML($link['path']).'"';
+			$atts.=' path="'.Strings::escapeXML($link['path']).'"';
 		}
 	    return '<link'.$atts.'/>';
 	}

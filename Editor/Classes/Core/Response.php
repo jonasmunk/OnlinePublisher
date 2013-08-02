@@ -7,9 +7,9 @@ if (!isset($GLOBALS['basePath'])) {
 class Response {
 		
 	static function sendObject($obj) {
-		$obj = StringUtils::toUnicode($obj);
+		$obj = Strings::toUnicode($obj);
 		header('Content-Type: text/plain; charset=utf-8');
-		echo StringUtils::toJSON($obj);
+		echo Strings::toJSON($obj);
 	}
 		
 	static function redirect($url) {

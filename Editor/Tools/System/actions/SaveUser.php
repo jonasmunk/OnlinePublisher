@@ -16,7 +16,7 @@ $user->setTitle($data->title);
 $user->setNote($data->note);
 $user->setUsername($data->username);
 $password = $data->password;
-if (StringUtils::isNotBlank($password)) {
+if (Strings::isNotBlank($password)) {
 	AuthenticationService::setPassword($user,$password);
 }
 $user->setEmail($data->email);

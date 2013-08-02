@@ -19,7 +19,7 @@ class TestRenderingService extends UnitTestCase {
 			'relativePath' => '../../../../'
 		));
 		
-		$this->assertTrue(StringUtils::isNotBlank($preview));
+		$this->assertTrue(Strings::isNotBlank($preview));
 		
 		TestService::removeTestPage($page);
     }

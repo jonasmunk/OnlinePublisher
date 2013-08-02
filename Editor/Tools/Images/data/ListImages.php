@@ -35,7 +35,7 @@ function listImages($text) {
 		$query->withCustom('group',$group);
 	}
 	if ($subset=='latest') {
-		$query->withCustom('createdAfter',DateUtils::addDays(mktime(),-1));
+		$query->withCustom('createdAfter',Dates::addDays(mktime(),-1));
 	} else if ($subset=='unused') {
 		$query->withCustom('unused',true);
 	}

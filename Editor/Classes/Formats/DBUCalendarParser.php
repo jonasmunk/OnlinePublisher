@@ -29,14 +29,14 @@ class DBUCalendarParser {
 				$location = @$row['Spillested'];
 				$score = @$row['Res'];
 			
-				if (StringUtils::isBlank($date) || StringUtils::isBlank($time)) {
+				if (Strings::isBlank($date) || Strings::isBlank($time)) {
 					continue;
 				}
 				$parts = preg_split('/:/',$time);
-				$parsed = DateUtils::parse($date);
-				$parsed = DateUtils::addHours($parsed,intval($parts[0]));
-				$startDate = DateUtils::addMinutes($parsed,intval($parts[1]));
-				$endDate = DateUtils::addMinutes($parsed,60*1.75);
+				$parsed = Dates::parse($date);
+				$parsed = Dates::addHours($parsed,intval($parts[0]));
+				$startDate = Dates::addMinutes($parsed,intval($parts[1]));
+				$endDate = Dates::addMinutes($parsed,60*1.75);
 						
 				$event = new DBUCalendarEvent();
 				$event->setStartDate($startDate);

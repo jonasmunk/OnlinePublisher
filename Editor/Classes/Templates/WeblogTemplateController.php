@@ -30,7 +30,7 @@ class WeblogTemplateController extends TemplateController
 		$sql="select * from weblog where page_id=".Database::int($id);
 		$row = Database::selectFirst($sql);
 		$data = '<weblog xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/weblog/1.0/">';
-		$data .= '<title>'.StringUtils::escapeXML($row['title']).'</title>';
+		$data .= '<title>'.Strings::escapeXML($row['title']).'</title>';
 		$data.= '<!--dynamic--></weblog>';
         return array('data' => $data, 'dynamic' => true, 'index' => '');
     }
@@ -47,7 +47,7 @@ class WeblogTemplateController extends TemplateController
 		
 		$groups = WeblogGroup::search(array('page'=>$id));
 		foreach ($groups as $group) {
-			$xml.='<group id="'.$group->getId().'" title="'.StringUtils::escapeXML($group->getTitle()).'" />';
+			$xml.='<group id="'.$group->getId().'" title="'.Strings::escapeXML($group->getTitle()).'" />';
 		}
 		$xml .= '<list>';
 		
@@ -64,7 +64,7 @@ class WeblogTemplateController extends TemplateController
 			$sql = "select object.title,object.id from webloggroup_weblogentry,object where webloggroup_weblogentry.webloggroup_id=object.id and weblogentry_id=".$row['id']." order by object.title";
 			$subResult = Database::select($sql);
 			while ($subRow = Database::next($subResult)) {
-				$xml.='<group id="'.$subRow['id'].'" title="'.StringUtils::escapeXML($subRow['title']).'"/>';
+				$xml.='<group id="'.$subRow['id'].'" title="'.Strings::escapeXML($subRow['title']).'"/>';
 			}
 			Database::free($subResult);
 			$xml.=$row['object_data'];

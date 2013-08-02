@@ -234,7 +234,7 @@ class FileSystemService {
 		else {
 			$path = substr($path,0,$pos);
 		}
-		if (StringUtils::isNotBlank($extension)) {
+		if (Strings::isNotBlank($extension)) {
 			$path = $path.'.'.$extension;
 		}
 		return $path;

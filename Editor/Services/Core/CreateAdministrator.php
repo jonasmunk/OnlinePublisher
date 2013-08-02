@@ -15,7 +15,7 @@ if (!AuthenticationService::isSuperUser($superUsername,$superPassword)) {
 	Response::forbidden();
 	exit;	
 }
-if (StringUtils::isBlank($adminUsername) || StringUtils::isBlank($adminPassword)) {
+if (Strings::isBlank($adminUsername) || Strings::isBlank($adminPassword)) {
 	Response::badRequest();
 	exit;
 }

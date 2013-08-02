@@ -11,7 +11,7 @@ $writer = new ItemsWriter();
 
 $writer->startItems();
 foreach($designs as $name => $info) {
-	$title = StringUtils::isNotBlank($info->name) ? $info->name : $name;
+	$title = Strings::isNotBlank($info->name) ? $info->name : $name;
 	$writer->startItem(array('value'=>$name,'title'=>$title))->endItem();
 }
 $writer->endItems();

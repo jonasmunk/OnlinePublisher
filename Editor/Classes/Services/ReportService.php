@@ -28,13 +28,13 @@ class ReportService {
 			SettingService::setSetting('system','reports','latest',time());
 			ReportService::sendReport();
 		} else {
-			Log::debug('Will not send report yet: '.DateUtils::formatDuration($seconds));
+			Log::debug('Will not send report yet: '.Dates::formatDuration($seconds));
 		}
 	}
 	
 	function sendReport() {		
 		$emails = ReportService::getEmail();
-		if (StringUtils::isBlank($emails)) {
+		if (Strings::isBlank($emails)) {
 			return false;
 		}
 		$success = true;
@@ -85,12 +85,12 @@ class ReportService {
 		$url = ConfigurationService::getCompleteBaseUrl();
 		
 		$query = new StatisticsQuery();
-		$query->setStartTime(DateUtils::addDays(time(),-14));
-		$query->setEndTime(DateUtils::getDayStart(time()));
+		$query->setStartTime(Dates::addDays(time(),-14));
+		$query->setEndTime(Dates::getDayStart(time()));
 		$stats = StatisticsService::searchVisits($query);
 
 		$report = '<div class="report">';
-		$report.= '<h1>Report</h1><p class="info">'.DateUtils::formatLongDate(time()).' for <a href="'.$url.'">'.$url.'</a></p>';
+		$report.= '<h1>Report</h1><p class="info">'.Dates::formatLongDate(time()).' for <a href="'.$url.'">'.$url.'</a></p>';
 		$report.= '<div class="block statistics">';
 		$report.= '<h2>Statistics for the last two weeks</h2>';
 		$report.= '<table>'.
@@ -114,15 +114,15 @@ class ReportService {
 		$report.= '</div>';
 		
 		
-		$issues = Query::after('issue')->withCreatedMin(DateUtils::addDays(time(),-2))->withoutProperty('kind',Issue::$error)->orderByCreated()->descending()->get();
+		$issues = Query::after('issue')->withCreatedMin(Dates::addDays(time(),-2))->withoutProperty('kind',Issue::$error)->orderByCreated()->descending()->get();
 		if ($issues) {
 			$report.= '<div class="block issues">';
 			$report.= '<h2>Issues the last two days</h2>';
 			$report.= '<ul>';
 			foreach ($issues as $issue) {
 				$report.='<li class="'.$issue->getKind().'">';
-				$report.='<p><strong>'.StringUtils::escapeXML($issue->getTitle()).'</strong></p>';
-				$report.='<p>'.StringUtils::escapeXML($issue->getNote()).'</p>';
+				$report.='<p><strong>'.Strings::escapeXML($issue->getTitle()).'</strong></p>';
+				$report.='<p>'.Strings::escapeXML($issue->getNote()).'</p>';
 				$report.='</li>';
 			}
 			$report.= '</ul>';

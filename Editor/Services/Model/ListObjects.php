@@ -45,7 +45,7 @@ foreach ($objects as $object) {
 		if ($type=='') {
 			$writer->cell($object->getType());
 		}
-		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatDateTime($object->getCreated()))->endCell();
+		$writer->startCell(array('wrap'=>false))->text(Dates::formatDateTime($object->getCreated()))->endCell();
 	$writer->endRow();
 }
 

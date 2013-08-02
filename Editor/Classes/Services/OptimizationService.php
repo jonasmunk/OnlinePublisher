@@ -16,14 +16,14 @@ class OptimizationService {
 	
 	function getSettings() {
 		$value = SettingService::getSetting('system','optimization','settings');
-		$value = StringUtils::fromJSON($value);
-		$value = StringUtils::fromUnicode($value);
+		$value = Strings::fromJSON($value);
+		$value = Strings::fromUnicode($value);
 		return $value;
 	}
 	
 	function setSettings($value) {
-		$value = StringUtils::toUnicode($value);
-		$value = StringUtils::toJSON($value);
+		$value = Strings::toUnicode($value);
+		$value = Strings::toJSON($value);
 		SettingService::setSetting('system','optimization','settings',$value);
 	}
 }

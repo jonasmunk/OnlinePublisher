@@ -106,7 +106,7 @@ class StatisticsService {
 			$row = Database::selectFirst($sql);
 			$start = intval($row['min']);
 		}
-		$end = DateUtils::getDayEnd();
+		$end = Dates::getDayEnd();
 		
 		$days = floor(($end-$start)/$patterns[$resolution]['div']);
 		
@@ -145,13 +145,13 @@ class StatisticsService {
 		$now = time();
 		for ($i=$days; $i >= 0; $i--) {
 			if ($resolution=='daily') {
-				$date = DateUtils::addDays($now,$i*-1);
+				$date = Dates::addDays($now,$i*-1);
 			} else if ($resolution=='monthly') {
-				$date = DateUtils::addMonths($now,$i*-1);
+				$date = Dates::addMonths($now,$i*-1);
 			} else if ($resolution=='yearly') {
-				$date = DateUtils::addYears($now,$i*-1);
+				$date = Dates::addYears($now,$i*-1);
 			} else {
-				$date = DateUtils::addHours($now,$i*-1);
+				$date = Dates::addHours($now,$i*-1);
 			}
 			$key = date($patterns[$resolution]['php'],$date);
 			if (array_key_exists($key,$rows)) {

@@ -31,7 +31,7 @@ function handleLine($line) {
 	}
 	$number = $words[0];
 	$value = $words[1];
-	$date = DateUtils::parse($words[2]);
+	$date = Dates::parse($words[2]);
 	if (!ValidateUtils::validateDigits($number)) {
 		Log::logTool('waterusage','import','The number is not made of pure digits: '.$line);
 		return;
@@ -64,7 +64,7 @@ function handleLine($line) {
 		$usage->save();
 		$usage->publish();
 	} else {
-		Log::logTool('waterusage','import','Usage already found: meter='.$meter->getNumber().', value='.$usage->getValue().', date='.DateUtils::formatLongDate($date));
+		Log::logTool('waterusage','import','Usage already found: meter='.$meter->getNumber().', value='.$usage->getValue().', date='.Dates::formatLongDate($date));
 	}
 }
 ?>

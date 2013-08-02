@@ -21,7 +21,7 @@ while ($row = Database::next($result)) {
 	$writer->item(array(
 		'icon' => 'common/time',
 		'value' => $row['id'],
-		'title' => DateUtils::formatLongDateTime($row['time'])
+		'title' => Dates::formatLongDateTime($row['time'])
 	));
 }
 Database::free($result);

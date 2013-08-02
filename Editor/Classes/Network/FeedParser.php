@@ -45,8 +45,8 @@ class FeedParser {
 			$feed->setLanguage(DOMUtils::getFirstChildText($channel,'language'));
 			$feed->setDescription(DOMUtils::getFirstChildText($channel,'description'));
 			$feed->setCopyright(DOMUtils::getFirstChildText($channel,'copyright'));
-			$feed->setPubDate(DateUtils::parseRFC822(DOMUtils::getFirstChildText($channel,'pubDate')));
-			$feed->setLastBuildDate(DateUtils::parseRFC822(DOMUtils::getFirstChildText($channel,'lastBuildDate')));
+			$feed->setPubDate(Dates::parseRFC822(DOMUtils::getFirstChildText($channel,'pubDate')));
+			$feed->setLastBuildDate(Dates::parseRFC822(DOMUtils::getFirstChildText($channel,'lastBuildDate')));
 			
 			$feed->setDocs(DOMUtils::getFirstChildText($channel,'docs'));
 			$feed->setGenerator(DOMUtils::getFirstChildText($channel,'generator'));
@@ -65,10 +65,10 @@ class FeedParser {
 		for ($i=0; $i < $len; $i++) {
 			$node =& $nodes->item($i);
 			$item = new FeedItem();
-			$item->setTitle(StringUtils::fromUnicode(DOMUtils::getFirstChildText($node,'title')));
-			$item->setDescription(StringUtils::fromUnicode(DOMUtils::getFirstChildText($node,'description')));
-			$item->setLink(StringUtils::fromUnicode(DOMUtils::getFirstChildText($node,'link')));
-			$item->setPubDate(DateUtils::parseRFC822(DOMUtils::getFirstChildText($node,'pubDate')));
+			$item->setTitle(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'title')));
+			$item->setDescription(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'description')));
+			$item->setLink(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'link')));
+			$item->setPubDate(Dates::parseRFC822(DOMUtils::getFirstChildText($node,'pubDate')));
 			$item->setGuid(DOMUtils::getFirstChildText($node,'guid'));
 			$feed->addItem($item);
 		}
@@ -82,7 +82,7 @@ class FeedParser {
 			$node =& $entries->item($i);
 			$item = new FeedItem();
 			$item->setTitle(DOMUtils::getFirstChildText($node,'title'));
-			$item->setPubDate(DateUtils::parseRFC3339(DOMUtils::getFirstChildText($node,'updated')));
+			$item->setPubDate(Dates::parseRFC3339(DOMUtils::getFirstChildText($node,'updated')));
 			$item->setDescription(DOMUtils::getFirstChildText($node,'content'));
 			$feed->addItem($item);
 		}

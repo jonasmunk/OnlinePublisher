@@ -5,15 +5,15 @@ $user = Request::getString('user');
 $site = Request::getString('site');
 $description = Request::getString('description');
 
-if (StringUtils::isBlank($user)) {
+if (Strings::isBlank($user)) {
 	Log::debug('No user!');
 	exit;
 }
-if (StringUtils::isBlank($site)) {
+if (Strings::isBlank($site)) {
 	Log::debug('No site!');
 	exit;
 }
-if (StringUtils::isBlank($description)) {
+if (Strings::isBlank($description)) {
 	Log::debug('No description!');
 	exit;
 }

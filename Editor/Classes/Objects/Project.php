@@ -181,8 +181,8 @@ class Project extends Object {
         $result = Database::select($sql);
         while ($row = Database::next($result)) {
             if ($row['id']!=$ignore) {
-                $title = $prefix.StringUtils::shortenString($row['title'],20);
-            	$gui.='<option title="'.StringUtils::escapeXML($title).'" value="'.$row['id'].'"/>'.
+                $title = $prefix.Strings::shortenString($row['title'],20);
+            	$gui.='<option title="'.Strings::escapeXML($title).'" value="'.$row['id'].'"/>'.
             	Project::optionSpider($prefix.'··',$row['id'],$ignore);
     	    }
         }

@@ -30,12 +30,12 @@ class RichtextPartController extends PartController
 		if ($modern) {
 			return
 			'<div id="part_richtext">'.$this->render($part,$context).'</div>'.
-			'<input type="hidden" name="html" value="'.StringUtils::escapeXML(StringUtils::fromUnicode($part->getHtml())).'"/>'.
+			'<input type="hidden" name="html" value="'.Strings::escapeXML(Strings::fromUnicode($part->getHtml())).'"/>'.
 			'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/richtext/script.js" type="text/javascript" charset="utf-8"></script>';
 		} else {
 			return
 			'<textarea class="Part-richtext" id="PartRichtextTextarea" name="html" style="width: 100%; height: 250px;">'.
-			StringUtils::escapeXML($part->getHtml()).
+			Strings::escapeXML($part->getHtml()).
 			'</textarea>'.
 			'<script language="javascript" type="text/javascript" src="'.ConfigurationService::getBaseUrl().'Editor/Libraries/tinymce/tiny_mce.js"></script>
 			<script language="javascript" type="text/javascript">
@@ -73,7 +73,7 @@ class RichtextPartController extends PartController
 	
 	function buildSub($part,$context) {
 		$html = $part->getHtml();
-		if (DOMUtils::isValidFragment(StringUtils::toUnicode($html))) {
+		if (DOMUtils::isValidFragment(Strings::toUnicode($html))) {
 			return '<richtext xmlns="'.$this->getNamespace().'" valid="true">'.
 			$html.
 			'</richtext>';

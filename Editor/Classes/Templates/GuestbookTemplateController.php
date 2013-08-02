@@ -40,8 +40,8 @@ class GuestbookTemplateController extends TemplateController
 		$data.= '</lang>';
 		$sql="select title,text from guestbook where page_id=".Database::int($id);
 		$row = Database::selectFirst($sql);
-		$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
-		$data.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
+		$data.='<title>'.Strings::escapeXML($row['title']).'</title>';
+		$data.='<text>'.Strings::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 		$data.='<!--dynamic-->';
 		$data.= '</guestbook>';
 		$index = $row['title'].' '.$row['text'];
@@ -66,8 +66,8 @@ class GuestbookTemplateController extends TemplateController
 			while ($row = Database::next($result)) {
 				$xml.='<item id="'.$row['id'].'">';
 				$xml.=RenderingService::buildDateTag('time',$row['unix']);
-				$xml.='<name>'.StringUtils::escapeXML($row['name']).'</name>';
-				$xml.='<text>'.StringUtils::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
+				$xml.='<name>'.Strings::escapeXML($row['name']).'</name>';
+				$xml.='<text>'.Strings::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
 				$xml.='</item>';
 			}
 			$xml.='</list>';

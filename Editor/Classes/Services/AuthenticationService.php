@@ -25,7 +25,7 @@ class AuthenticationService {
 	function isSuperUser($username,$password) {
 		$superUser = ConfigurationService::getSuperUsername();
 		$superPassword = ConfigurationService::getSuperPassword();
-		if (StringUtils::isBlank($username) || StringUtils::isBlank($password) || StringUtils::isBlank($superUser) || StringUtils::isBlank($superPassword)) {
+		if (Strings::isBlank($username) || Strings::isBlank($password) || Strings::isBlank($superUser) || Strings::isBlank($superPassword)) {
 			return false;
 		}
 		if ($superUser==$username && $superPassword==$password) {
@@ -72,7 +72,7 @@ class AuthenticationService {
 	}
 	
 	function getUserByEmailOrUsername($emailOrUsername) {
-		if (StringUtils::isBlank($emailOrUsername)) {
+		if (Strings::isBlank($emailOrUsername)) {
 			return null;
 		}
 		$sql="select object_id from user where username=".Database::text($emailOrUsername)." or email=".Database::text($emailOrUsername);
@@ -93,7 +93,7 @@ class AuthenticationService {
 
 	    $body = "Klik på følgende link for at ændre dit kodeord til brugeren \"".$user->getUsername()."\": \n\n".
 	    ConfigurationService::getBaseUrl()."Editor/Recover.php?key=".$unique;
-	    if (MailService::send(StringUtils::fromUnicode($user->getEmail()),StringUtils::fromUnicode($user->getTitle()),"OnlinePublisher - ændring af kodeord",$body)) {
+	    if (MailService::send(Strings::fromUnicode($user->getEmail()),Strings::fromUnicode($user->getTitle()),"OnlinePublisher - ændring af kodeord",$body)) {
 		    $sql = "insert into email_validation_session (`unique`,`user_id`,`email`,`timelimit`)".
 		    " values (".
 		    Database::text($unique).",".$user->getId().",".Database::text($user->getEmail()).",".Database::datetime($limit).
@@ -110,7 +110,7 @@ class AuthenticationService {
 	}
 	
 	function updatePasswordForEmailValidationSession($key,$password) {
-		if (StringUtils::isBlank($key) || StringUtils::isBlank($password)) {
+		if (Strings::isBlank($key) || Strings::isBlank($password)) {
 			Log::debug('key or password is blank');
 			return false;
 		}

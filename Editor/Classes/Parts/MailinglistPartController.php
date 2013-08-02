@@ -59,8 +59,8 @@ class MailinglistPartController extends PartController
 				$subscribe_error = 'invalidemail';
 			}
 			if ($subscribe_error!='') {
-				$subscribe_body .= '<value key="name" value="'.StringUtils::escapeXML($name).'"/>';
-				$subscribe_body .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
+				$subscribe_body .= '<value key="name" value="'.Strings::escapeXML($name).'"/>';
+				$subscribe_body .= '<value key="email" value="'.Strings::escapeXML($email).'"/>';
 			} else {
 				$this->subscribe($part,$name,$email);
 				$subscribe_body .= '<success/>';
@@ -68,16 +68,16 @@ class MailinglistPartController extends PartController
 		} else if ($action=='unsubscribe') {
 			if ($email=='') {
 				$unsubscribe_error = 'noemail';
-				$unsubscribe_body .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
+				$unsubscribe_body .= '<value key="email" value="'.Strings::escapeXML($email).'"/>';
 			} else if (!ValidateUtils::validateEmail($email)) {
 				$unsubscribe_error = 'invalidemail';
-				$unsubscribe_body .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
+				$unsubscribe_body .= '<value key="email" value="'.Strings::escapeXML($email).'"/>';
 			} else {
 				if ($this->unsubscribe($part,$email)) {
 					$unsubscribe_body .= '<success/>';
 				} else {
 					$unsubscribe_error = 'notsubscribed';
-					$unsubscribe_body .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
+					$unsubscribe_body .= '<value key="email" value="'.Strings::escapeXML($email).'"/>';
 				}
 			}
 		}

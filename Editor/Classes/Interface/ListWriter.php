@@ -52,11 +52,11 @@ class ListWriter {
 	function header($options=array()) {
 		echo '<header';
 		if (is_string($options)) {
-			echo ' title="'.StringUtils::escapeXML($options).'"';
+			echo ' title="'.Strings::escapeXML($options).'"';
 		}
 		else if (is_array($options)) {
 			if (isset($options['title'])) {
-				echo ' title="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
+				echo ' title="'.Strings::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
 			}
 			if (isset($options['width'])) {
 				echo ' width="'.$options['width'].'"';
@@ -90,7 +90,7 @@ class ListWriter {
 			echo ' level="'.$options['level'].'"';
 		}
 		if (isset($options['data'])) {
-			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
+			echo ' data="'.Strings::escapeXML(Strings::toJSON($options['data'])).'"';
 		}
 		echo '>';
 		return $this;
@@ -185,7 +185,7 @@ class ListWriter {
 
 	function text($text) {
 		$text = GuiUtils::getTranslated($text);
-		echo StringUtils::escapeXMLBreak($text,'<break/>');
+		echo Strings::escapeXMLBreak($text,'<break/>');
 		return $this;
 	}
 
@@ -213,7 +213,7 @@ class ListWriter {
 		}
 		echo '<icon icon="'.$options['icon'].'"';
 		if (isset($options['data'])) {
-			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON(StringUtils::toUnicode($options['data']))).'"';
+			echo ' data="'.Strings::escapeXML(Strings::toJSON(Strings::toUnicode($options['data']))).'"';
 		}
 		if (@$options['revealing']) {
 			echo ' revealing="true"';
@@ -222,19 +222,19 @@ class ListWriter {
 			echo ' action="true"';
 		}
 		if (isset($options['hint'])) {
-			echo ' hint="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['hint'])).'"';
+			echo ' hint="'.Strings::escapeXML(GuiUtils::getTranslated($options['hint'])).'"';
 		}
 		if (isset($options['size'])) {
-			echo ' size="'.StringUtils::escapeXML($options['size']).'"';
+			echo ' size="'.Strings::escapeXML($options['size']).'"';
 		}
 		echo '/>';
 		return $this;
 	}
 
 	function button($options=array()) {
-		echo '<button text="'.StringUtils::escapeXML(GuiUtils::getTranslated($options['text'])).'"';
+		echo '<button text="'.Strings::escapeXML(GuiUtils::getTranslated($options['text'])).'"';
 		if (isset($options['data'])) {
-			echo ' data="'.StringUtils::escapeXML(StringUtils::toJSON($options['data'])).'"';
+			echo ' data="'.Strings::escapeXML(Strings::toJSON($options['data'])).'"';
 		}
 		echo '/>';
 		return $this;
@@ -243,7 +243,7 @@ class ListWriter {
 	function startIcons($options=array()) {
 		echo '<icons';
 		if (isset($options['left'])) {
-			echo ' left="'.StringUtils::escapeXML($options['left']).'"';
+			echo ' left="'.Strings::escapeXML($options['left']).'"';
 		}		
 		echo '>';
 		return $this;

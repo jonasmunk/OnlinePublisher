@@ -10,7 +10,7 @@ $text = Request::getString('text');
 $kind = Request::getString('kind');
 
 if ($issue = Issue::load($id)) {
-	$issue->setTitle(StringUtils::shortenString($text,30));
+	$issue->setTitle(Strings::shortenString($text,30));
 	$issue->setNote($text);
 	$issue->setKind($kind);	
 	$issue->save();

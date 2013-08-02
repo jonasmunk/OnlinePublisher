@@ -67,7 +67,7 @@ m services/waterusage/write.php
     <content type="html">
       &lt;pre>m Editor/Classes/GuiUtils.php
 m Editor/Classes/Objects/Project.php
-m Editor/Classes/Utilities/StringUtils.php
+m Editor/Classes/Utilities/Strings.php
 m Editor/Include/Functions.php
 m Editor/Services/ImageChooser/Icons.php
 m Editor/Services/ImageChooser/Selection.php

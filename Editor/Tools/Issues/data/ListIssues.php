@@ -39,7 +39,7 @@ function listFeedback() {
 				startLine(array('top'=>3))->text($item->getNote())->endLine()->
 			endCell()->
 			startCell()->text('?')->endCell()->
-			startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($item->getCreated()))->endCell()->
+			startCell(array('wrap'=>false,'dimmed'=>true))->text(Dates::formatFuzzy($item->getCreated()))->endCell()->
 		endRow();
 	}
 	$writer->endList();
@@ -91,7 +91,7 @@ function listIssues() {
 			$writer->startLine(array('dimmed'=>true,'mini'=>true,'top'=>3))->text(IssueService::translateKind($item->getKind()))->endLine()->
 			endCell()->
 			startCell()->text(@$states[$item->getStatusId()])->endCell()->
-			startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($item->getCreated()))->endCell()->
+			startCell(array('wrap'=>false,'dimmed'=>true))->text(Dates::formatFuzzy($item->getCreated()))->endCell()->
 		endRow();
 	}
 	$writer->endList();

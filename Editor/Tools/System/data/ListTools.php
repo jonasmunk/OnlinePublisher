@@ -18,7 +18,7 @@ $writer->startList(array('unicode'=>true))->
 	endHeaders();
 
 foreach ($available as $key) {
-	$info = StringUtils::fromUnicode(ToolService::getInfo($key));
+	$info = Strings::fromUnicode(ToolService::getInfo($key));
 	$writer->
 	startRow(array('kind'=>'tool','id'=>$key))->
 		startCell(array('icon'=>$info ? $info->icon : 'common/tools'));

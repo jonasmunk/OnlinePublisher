@@ -10,7 +10,7 @@ $writer = new ItemsWriter();
 $pages = ImageService::getNumberOfPagesWithImages();
 $persons = ImageService::getNumberOfPersonsWithImages();
 $products = ImageService::getNumberOfProductsWithImages();
-$latest = Query::after('image')->withCustom('createdAfter',DateUtils::addDays(mktime(),-1))->search()->getTotal();
+$latest = Query::after('image')->withCustom('createdAfter',Dates::addDays(mktime(),-1))->search()->getTotal();
 
 $writer->
 startItems()->

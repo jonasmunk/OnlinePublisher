@@ -33,7 +33,7 @@ class RenderingService {
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			if ($row['type']=='home') {
-				$output.='<home page="'.$row['page_id'].'"'.($row['path']!='' ? ' path="'.StringUtils::escapeXML($row['path']).'"' : '').($row['language']!='' ? ' language="'.StringUtils::escapeXML(strtolower($row['language'])).'"' : '').'/>';
+				$output.='<home page="'.$row['page_id'].'"'.($row['path']!='' ? ' path="'.Strings::escapeXML($row['path']).'"' : '').($row['language']!='' ? ' language="'.Strings::escapeXML(strtolower($row['language'])).'"' : '').'/>';
 			}
 		}
 		Database::free($result);
@@ -43,7 +43,7 @@ class RenderingService {
 		" and page_translation.page_id=".$id." order by language";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<translation page="'.$row['id'].'"'.($row['path']!='' ? ' path="'.StringUtils::escapeXML($row['path']).'"' : '').($row['language']!='' ? ' language="'.StringUtils::escapeXML(strtolower($row['language'])).'"' : '').'/>';
+			$output.='<translation page="'.$row['id'].'"'.($row['path']!='' ? ' path="'.Strings::escapeXML($row['path']).'"' : '').($row['language']!='' ? ' language="'.Strings::escapeXML(strtolower($row['language'])).'"' : '').'/>';
 		}
 		Database::free($result);
 		if ($nextPage>0) {
@@ -109,10 +109,10 @@ class RenderingService {
 		'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.
 		'<xsl:variable name="page-path">'.$pagePath.'</xsl:variable>'.
 		'<xsl:variable name="template">'.$template.'</xsl:variable>'.
-		'<xsl:variable name="agent">'.StringUtils::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
-		'<xsl:variable name="userid">'.StringUtils::escapeXML($userId).'</xsl:variable>'.
-		'<xsl:variable name="username">'.StringUtils::escapeXML($userName).'</xsl:variable>'.
-		'<xsl:variable name="usertitle">'.StringUtils::escapeXML($userTitle).'</xsl:variable>'.
+		'<xsl:variable name="agent">'.Strings::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
+		'<xsl:variable name="userid">'.Strings::escapeXML($userId).'</xsl:variable>'.
+		'<xsl:variable name="username">'.Strings::escapeXML($userName).'</xsl:variable>'.
+		'<xsl:variable name="usertitle">'.Strings::escapeXML($userTitle).'</xsl:variable>'.
 		'<xsl:variable name="internal-logged-in">'.(InternalSession::isLoggedIn() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="editor">false</xsl:variable>'.
@@ -257,10 +257,10 @@ class RenderingService {
 			$template = $row['template'];
 			$redirect = false;
 		
-			if (StringUtils::isNotBlank($row['path']) && StringUtils::isBlank($path) && $id>0) {
+			if (Strings::isNotBlank($row['path']) && Strings::isBlank($path) && $id>0) {
 				//Log::debug('Redirect: requested:('.$path.') page:('.$row['path'].') id:('.$id.')');
 				if ($row['path']) {
-					$redirect = StringUtils::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
+					$redirect = Strings::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
 					$query = array();
 					foreach ($parameters as $parameter) {
 						if ($parameter['name']!='id') {
@@ -284,19 +284,19 @@ class RenderingService {
 				$framedata = RenderingService::applyFrameDynamism($row['frameid'],$framedata);
 			}
 			$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.
-			'<page xmlns="'.$pageNS.'" id="'.$row['id'].'" title="'.StringUtils::escapeXML($row['title']).'">'.
+			'<page xmlns="'.$pageNS.'" id="'.$row['id'].'" title="'.Strings::escapeXML($row['title']).'">'.
 			'<meta>'.
-			($row['description'] ? '<description>'.StringUtils::escapeXML(preg_replace('/\s+/', ' ', $row['description'])).'</description>' : '').
-			'<keywords>'.StringUtils::escapeXML($row['keywords']).'</keywords>'.
+			($row['description'] ? '<description>'.Strings::escapeXML(preg_replace('/\s+/', ' ', $row['description'])).'</description>' : '').
+			'<keywords>'.Strings::escapeXML($row['keywords']).'</keywords>'.
 			RenderingService::buildDateTag('published',$row['published']).
-			'<language>'.StringUtils::escapeXML(strtolower($row['language'])).'</language>'.
-			($row['analytics_key'] ? '<analytics key="'.StringUtils::escapeXML($row['analytics_key']).'"/>' : '').
+			'<language>'.Strings::escapeXML(strtolower($row['language'])).'</language>'.
+			($row['analytics_key'] ? '<analytics key="'.Strings::escapeXML($row['analytics_key']).'"/>' : '').
 			'</meta>'.
 			RenderingService::buildPageContext($row['id'],$row['next_page'],$row['previous_page']).
 			'<design>'.
 			$row['parameters'].
 			'</design>'.
-			'<frame xmlns="'.$frameNS.'" title="'.StringUtils::escapeXML($row['frametitle']).'">'.
+			'<frame xmlns="'.$frameNS.'" title="'.Strings::escapeXML($row['frametitle']).'">'.
 			$row['hierarchy'].
 			$framedata.
 			'</frame>'.
@@ -468,18 +468,18 @@ class RenderingService {
 				$design = $_SESSION['debug.design'];
 			}
 			$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.
-			'<page xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/" id="'.$id.'" title="'.StringUtils::escapeXML($row['title']).'">'.
+			'<page xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/" id="'.$id.'" title="'.Strings::escapeXML($row['title']).'">'.
 			'<meta>'.
-			'<description>'.StringUtils::escapeXML($row['description']).'</description>'.
-			'<keywords>'.StringUtils::escapeXML($row['keywords']).'</keywords>'.
+			'<description>'.Strings::escapeXML($row['description']).'</description>'.
+			'<keywords>'.Strings::escapeXML($row['keywords']).'</keywords>'.
 			RenderingService::buildDateTag('published',$row['published']).
-			'<language>'.StringUtils::escapeXML(strtolower($row['language'])).'</language>'.
+			'<language>'.Strings::escapeXML(strtolower($row['language'])).'</language>'.
 			'</meta>'.
 				'<design>'.
 				$row['parameters'].
 				'</design>'.
 			RenderingService::buildPageContext($id,$row['next_page'],$row['previous_page']).
-			'<frame xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/" title="'.StringUtils::escapeXML($row['frametitle']).'">'.
+			'<frame xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/" title="'.Strings::escapeXML($row['frametitle']).'">'.
 			Hierarchy::build($row['hierarchy']).
 			$framedata.
 			'</frame>'.

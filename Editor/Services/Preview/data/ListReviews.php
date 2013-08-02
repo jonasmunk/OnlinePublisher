@@ -23,7 +23,7 @@ foreach ($list as $review) {
 	$writer->startRow()->
 		startCell()->icon(array('icon' => $review->getAccepted() ? 'common/success' : 'common/stop'))->endCell()->
 		startCell()->text($user ? $user->getTitle() : 'Ukendt')->endCell()->
-		startCell()->text(DateUtils::formatFuzzy($review->getDate()))->endCell()->
+		startCell()->text(Dates::formatFuzzy($review->getDate()))->endCell()->
 	endRow();
 }
 $writer->endList();

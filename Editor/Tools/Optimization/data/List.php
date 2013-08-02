@@ -170,8 +170,8 @@ function listPageNotFound() {
 	foreach ($result->getList() as $row) {
 		$writer->startRow();
 		$writer->startCell()->text($row['count'])->endCell();
-		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($row['first']))->endCell();
-		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($row['last']))->endCell();
+		$writer->startCell(array('wrap'=>false))->text(Dates::formatFuzzy($row['first']))->endCell();
+		$writer->startCell(array('wrap'=>false))->text(Dates::formatFuzzy($row['last']))->endCell();
 		$writer->startCell()->text(substr($row['message'],4))->endCell();
 		$writer->endRow();
 	}

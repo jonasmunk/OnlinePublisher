@@ -24,8 +24,8 @@ $gui='
 			<span class="date"> version: '.SystemInfo::getFormattedDate().'</span>
 			<span class="user">
 				<icon icon="common/user" size="16"/>
-				<strong>'.StringUtils::escapeXml($user->getTitle()).'</strong>
-				<em>('.StringUtils::escapeXml($user->getUsername()).')</em>
+				<strong>'.Strings::escapeXml($user->getTitle()).'</strong>
+				<em>('.Strings::escapeXml($user->getUsername()).')</em>
 				<button mini="true" variant="light" text="{Settings ; da:Indstillinger}" name="userSettings"/>
 			</span>
 		</div>

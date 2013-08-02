@@ -23,7 +23,7 @@ class TestWater extends UnitTestCase {
 
 		$usage2 = new Waterusage();
 		$usage2->setWatermeterId($meter->getId());
-		$usage2->setDate(DateUtils::addYears(time(),-1));
+		$usage2->setDate(Dates::addYears(time(),-1));
 		$usage2->save();
 		
 		$summary = WaterusageService::getSummary($meter->getNumber());

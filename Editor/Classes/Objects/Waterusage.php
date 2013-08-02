@@ -90,7 +90,7 @@ class Waterusage extends Object {
 		if ($meter = Watermeter::load($this->watermeterId)) {
 			return $meter->getNumber();
 		}
-		return StringUtils::buildIndex($words);
+		return Strings::buildIndex($words);
 	}
 }
 ?>

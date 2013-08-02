@@ -41,7 +41,7 @@ function live() {
 	$result = Database::select($sql);
 	while($row = Database::next($result)) {
 		$writer->startRow();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['time']))->endCell();
+		$writer->startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['time']))->endCell();
 		$writer->startCell()->icon('common/page')->text($row['page_title'])->endCell();
 		$writer->startCell()->text($row['session'])->endCell();
 		$writer->startCell()->text($row['ip'])->endCell();
@@ -115,8 +115,8 @@ function unknownAgents() {
 			continue;
 		}
 		$writer->startRow()->
-			startCell(array('icon'=>'common/time')) -> text(DateUtils::formatFuzzy($row['firsttime'])) -> endCell() ->
-			startCell(array('icon'=>'common/time')) -> text(DateUtils::formatFuzzy($row['lasttime'])) -> endCell() ->
+			startCell(array('icon'=>'common/time')) -> text(Dates::formatFuzzy($row['firsttime'])) -> endCell() ->
+			startCell(array('icon'=>'common/time')) -> text(Dates::formatFuzzy($row['lasttime'])) -> endCell() ->
 			startCell() -> icon('common/page') -> text($row['agent']) -> endCell() ->
 			startCell() -> text($row['visits']) -> endCell() ->
 			startCell() -> text($row['sessions']) -> endCell() ->
@@ -148,8 +148,8 @@ function browsers($version) {
 
 	foreach ($result as $row) {
 		$writer->startRow();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell();
+		$writer->startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['firsttime']))->endCell();
+		$writer->startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['lasttime']))->endCell();
 		$writer->startCell()->icon('common/page')->text($row['agent'])->endCell();
 		$writer->startCell()->text($row['visits'])->endCell();
 		$writer->startCell()->text($row['sessions'])->endCell();
@@ -179,8 +179,8 @@ function browserVersions() {
 
 	foreach ($result as $row) {
 		$writer->startRow();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell();
+		$writer->startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['firsttime']))->endCell();
+		$writer->startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['lasttime']))->endCell();
 		$writer->startCell()->icon('common/page')->text($row['agent'])->endCell();
 		$writer->startCell()->text($row['visits'])->endCell();
 		$writer->startCell()->text($row['sessions'])->endCell();
@@ -212,8 +212,8 @@ function agents() {
 		$analyzer = new UserAgentAnalyzer($row['agent']);
 		$app = $analyzer->getApplicationName().' '.$analyzer->getApplicationVersion().' / '.$analyzer->getTechnologyName().' '.$analyzer->getTechnologyVersion();
 		$writer->startRow();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell();
-		$writer->startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell();
+		$writer->startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['firsttime']))->endCell();
+		$writer->startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['lasttime']))->endCell();
 		$writer->startCell()->text($row['agent'])->endCell();
 		$writer->startCell()->text($app)->endCell();
 		$writer->startCell()->text($row['visits'])->endCell();
@@ -244,8 +244,8 @@ function pages() {
 
 	while($row = Database::next($result)) {
 		$writer -> startRow() ->
-			startCell(array( 'icon' => 'common/time', 'dimmed' => true)) -> text(DateUtils::formatFuzzy($row['firsttime'])) -> endCell() ->
-			startCell(array( 'icon' => 'common/time', 'dimmed' => true)) -> text(DateUtils::formatFuzzy($row['lasttime'])) -> endCell() ->
+			startCell(array( 'icon' => 'common/time', 'dimmed' => true)) -> text(Dates::formatFuzzy($row['firsttime'])) -> endCell() ->
+			startCell(array( 'icon' => 'common/time', 'dimmed' => true)) -> text(Dates::formatFuzzy($row['lasttime'])) -> endCell() ->
 			startCell() -> icon('common/page') -> text($row['page_title']) -> endCell() ->
 			startCell() -> text($row['visits']) -> endCell() ->
 			startCell() -> text($row['sessions']) -> endCell() ->
@@ -277,8 +277,8 @@ function paths() {
 
 	while($row = Database::next($result)) {
 		$writer->startRow()->
-			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell()->
-			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell()->
+			startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['firsttime']))->endCell()->
+			startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['lasttime']))->endCell()->
 			startCell()->text($row['uri'])->endCell()->
 			startCell()->icon('common/page')->text($row['page_title'])->endCell()->
 			startCell()->text($row['visits'])->endCell()->
@@ -308,8 +308,8 @@ function refererers() {
 	$result = Database::select($sql);
 	while($row = Database::next($result)) {
 		$writer->startRow()->
-			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['firsttime']))->endCell()->
-			startCell(array('icon'=>'common/time'))->text(DateUtils::formatFuzzy($row['lasttime']))->endCell()->
+			startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['firsttime']))->endCell()->
+			startCell(array('icon'=>'common/time'))->text(Dates::formatFuzzy($row['lasttime']))->endCell()->
 			startCell()->text($row['uri'])->endCell()->
 			startCell()->icon('common/page')->text($row['page_title'])->endCell()->
 			startCell()->text($row['visits'])->endCell()->

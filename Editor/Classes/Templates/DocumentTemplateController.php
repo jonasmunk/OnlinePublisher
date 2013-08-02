@@ -161,7 +161,7 @@ class DocumentTemplateController extends TemplateController
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$context -> addBuildLink(
-				StringUtils::escapeSimpleXML($row['source_text']),
+				Strings::escapeSimpleXML($row['source_text']),
 				$row['target_type'],
 				$row['target_id'],
 				$row['target_value'],

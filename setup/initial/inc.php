@@ -10,7 +10,7 @@ function getBaseUrl() {
 	$uri = $_SERVER['REQUEST_URI'];
 	$find = 'setup/initial/';
 	$pos = strpos($uri,$find);
-	return StringUtils::concatUrl('http://'.$_SERVER['SERVER_NAME'],substr($uri,0,$pos));
+	return Strings::concatUrl('http://'.$_SERVER['SERVER_NAME'],substr($uri,0,$pos));
 }
 
 function buildConfig($values) {

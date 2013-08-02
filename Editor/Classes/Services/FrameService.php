@@ -216,8 +216,8 @@ class FrameService {
 		for ($i=0; $i < count($blocks); $i++) {
 			$block = $blocks[$i];
 			if ($block->startdate) {
-				//$block->startdate = DateUtils::parseRFC3339($block->startdate);
-				//$block->enddate = DateUtils::parseRFC3339($block->enddate);
+				//$block->startdate = Dates::parseRFC3339($block->startdate);
+				//$block->enddate = Dates::parseRFC3339($block->enddate);
 			}
 			$sql = array(
 				'table'=>'frame_newsblock',

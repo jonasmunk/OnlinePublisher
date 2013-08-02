@@ -18,7 +18,7 @@ if ($subset=='nogroup') {
 	$query->withCustom('nogroup',true);
 }
 if ($subset=='latest') {
-	$query->withCustom('createdAfter',DateUtils::addDays(mktime(),-1));
+	$query->withCustom('createdAfter',Dates::addDays(mktime(),-1));
 }
 if ($group===-1) {
 	$query->withCustom('nogroup',true);

@@ -195,7 +195,7 @@ class PosterPartController extends PartController
 	
 	function buildSub($part,$context) {
 		// Important to convert to unicode before validating
-		$valid = DOMUtils::isValidFragment(StringUtils::toUnicode($part->getRecipe()));
+		$valid = DOMUtils::isValidFragment(Strings::toUnicode($part->getRecipe()));
 		$xml =
 		'<poster xmlns="'.$this->getNamespace().'">'.
 		($valid ? '<recipe>'.$part->getRecipe().'</recipe>' : '<invalid/>').

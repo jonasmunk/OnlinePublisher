@@ -13,7 +13,7 @@ class ClientService {
 
 	function getStatistics() {
 		$query = new StatisticsQuery();
-		$query->setStartTime(DateUtils::addDays(time(),-30));
+		$query->setStartTime(Dates::addDays(time(),-30));
 		$stats = StatisticsService::searchVisits($query);
 
 		$result = array();

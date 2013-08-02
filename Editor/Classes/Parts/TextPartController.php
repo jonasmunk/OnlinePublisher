@@ -39,25 +39,25 @@ class TextPartController extends PartController
 	function editor($part,$context) {
 		return
 		'<textarea class="part_text common_font" name="text" id="PartTextTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;'.$this->buildCSSStyle($part).'">'.
-		StringUtils::escapeXML($part->getText()).
+		Strings::escapeXML($part->getText()).
 		'</textarea>'.
-		'<input type="hidden" name="fontSize" value="'.StringUtils::escapeXML($part->getFontSize()).'"/>'.
-		'<input type="hidden" name="fontFamily" value="'.StringUtils::escapeXML($part->getFontfamily()).'"/>'.
-		'<input type="hidden" name="textAlign" value="'.StringUtils::escapeXML($part->getTextAlign()).'"/>'.
-		'<input type="hidden" name="lineHeight" value="'.StringUtils::escapeXML($part->getLineHeight()).'"/>'.
-		'<input type="hidden" name="fontWeight" value="'.StringUtils::escapeXML($part->getFontWeight()).'"/>'.
-		'<input type="hidden" name="fontStyle" value="'.StringUtils::escapeXML($part->getFontStyle()).'"/>'.
-		'<input type="hidden" name="color" value="'.StringUtils::escapeXML($part->getColor()).'"/>'.
-		'<input type="hidden" name="wordSpacing" value="'.StringUtils::escapeXML($part->getWordSpacing()).'"/>'.
-		'<input type="hidden" name="letterSpacing" value="'.StringUtils::escapeXML($part->getLetterSpacing()).'"/>'.
-		'<input type="hidden" name="textIndent" value="'.StringUtils::escapeXML($part->getTextIndent()).'"/>'.
-		'<input type="hidden" name="textTransform" value="'.StringUtils::escapeXML($part->getTextTransform()).'"/>'.
-		'<input type="hidden" name="fontVariant" value="'.StringUtils::escapeXML($part->getFontVariant()).'"/>'.
-		'<input type="hidden" name="textDecoration" value="'.StringUtils::escapeXML($part->getTextDecoration()).'"/>'.
-		'<input type="hidden" name="imageId" value="'.StringUtils::escapeXML($part->getImageId()).'"/>'.
-		'<input type="hidden" name="imageFloat" value="'.StringUtils::escapeXML($part->getImageFloat()).'"/>'.
-		'<input type="hidden" name="imageWidth" value="'.StringUtils::escapeXML($part->getImageWidth()).'"/>'.
-		'<input type="hidden" name="imageHeight" value="'.StringUtils::escapeXML($part->getImageHeight()).'"/>'.
+		'<input type="hidden" name="fontSize" value="'.Strings::escapeXML($part->getFontSize()).'"/>'.
+		'<input type="hidden" name="fontFamily" value="'.Strings::escapeXML($part->getFontfamily()).'"/>'.
+		'<input type="hidden" name="textAlign" value="'.Strings::escapeXML($part->getTextAlign()).'"/>'.
+		'<input type="hidden" name="lineHeight" value="'.Strings::escapeXML($part->getLineHeight()).'"/>'.
+		'<input type="hidden" name="fontWeight" value="'.Strings::escapeXML($part->getFontWeight()).'"/>'.
+		'<input type="hidden" name="fontStyle" value="'.Strings::escapeXML($part->getFontStyle()).'"/>'.
+		'<input type="hidden" name="color" value="'.Strings::escapeXML($part->getColor()).'"/>'.
+		'<input type="hidden" name="wordSpacing" value="'.Strings::escapeXML($part->getWordSpacing()).'"/>'.
+		'<input type="hidden" name="letterSpacing" value="'.Strings::escapeXML($part->getLetterSpacing()).'"/>'.
+		'<input type="hidden" name="textIndent" value="'.Strings::escapeXML($part->getTextIndent()).'"/>'.
+		'<input type="hidden" name="textTransform" value="'.Strings::escapeXML($part->getTextTransform()).'"/>'.
+		'<input type="hidden" name="fontVariant" value="'.Strings::escapeXML($part->getFontVariant()).'"/>'.
+		'<input type="hidden" name="textDecoration" value="'.Strings::escapeXML($part->getTextDecoration()).'"/>'.
+		'<input type="hidden" name="imageId" value="'.Strings::escapeXML($part->getImageId()).'"/>'.
+		'<input type="hidden" name="imageFloat" value="'.Strings::escapeXML($part->getImageFloat()).'"/>'.
+		'<input type="hidden" name="imageWidth" value="'.Strings::escapeXML($part->getImageWidth()).'"/>'.
+		'<input type="hidden" name="imageHeight" value="'.Strings::escapeXML($part->getImageHeight()).'"/>'.
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/text/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
@@ -138,16 +138,16 @@ class TextPartController extends PartController
 	
 	function buildSub($part,$context) {
 		$text = $part->getText();
-		$text = StringUtils::escapeSimpleXML($text);
+		$text = Strings::escapeSimpleXML($text);
 		$text = $context->decorateForBuild($text,$part->getId());
-		$text = StringUtils::insertLineBreakTags($text,'<break/>');
+		$text = Strings::insertLineBreakTags($text,'<break/>');
 		$text = str_replace('<break/><break/>', '</p><p>', $text);
 		$xml = '<text xmlns="'.$this->getNamespace().'">';
 		$xml.= $this->buildXMLStyle($part);
 		if ($part->getImageId()>0) {
 			$data = ObjectService::getObjectData($part->getImageId());
-			if (StringUtils::isNotBlank($data)) {
-				$xml.='<image float="'.StringUtils::escapeXML($part->getImageFloat()).'"';
+			if (Strings::isNotBlank($data)) {
+				$xml.='<image float="'.Strings::escapeXML($part->getImageFloat()).'"';
 				if ($part->getImageWidth() > 0) {
 					$xml.=' width="'.$part->getImageWidth().'"';
 				}

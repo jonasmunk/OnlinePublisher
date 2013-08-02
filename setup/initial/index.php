@@ -31,7 +31,7 @@ $gui='
 		<formula name="formula">
 			<fields>
 				<field label="Base address:">
-					<text-input name="baseUrl" value="'.StringUtils::escapeXML($baseUrl).'"/>
+					<text-input name="baseUrl" value="'.Strings::escapeXML($baseUrl).'"/>
 				</field>
 				<field label="Database host:">
 					<text-input name="databaseHost" value="localhost"/>

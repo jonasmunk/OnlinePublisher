@@ -23,7 +23,7 @@ foreach ($hierarchies as $hierarchy) {
 	if ($hierarchy->getChanged()>$hierarchy->getPublished()) {
 		$title.=' !';
 	}
-	echo '<item icon="common/hierarchy" value="'.$hierarchy->getId().'" title="'.StringUtils::escapeXML($title).'" kind="hierarchy">';
+	echo '<item icon="common/hierarchy" value="'.$hierarchy->getId().'" title="'.Strings::escapeXML($title).'" kind="hierarchy">';
 	encodeLevel(0,$hierarchy->getId());
 	echo '</item>';
 }
@@ -42,7 +42,7 @@ function encodeLevel($parent,$hierarchyId) {
 		if ($row['target_type']=='page' && !$row['pageid']) {
 			$icon = "common/warning";
 		}
-		echo '<item icon="'.$icon.'" value="'.$row['target_id'].'" title="'.StringUtils::escapeXML($row['title']).'" kind="'.$row['target_type'].'">';
+		echo '<item icon="'.$icon.'" value="'.$row['target_id'].'" title="'.Strings::escapeXML($row['title']).'" kind="'.$row['target_type'].'">';
 		encodeLevel($row['id'],$hierarchyId);
 		echo '</item>';
 	}

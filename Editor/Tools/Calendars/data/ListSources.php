@@ -27,8 +27,8 @@ foreach ($sources as $source) {
 		->endCell()
 		->startCell()->startLine(array('dimmed'=>true,'mini'=>true))->startWrap()->text($source->getUrl())->endWrap()->endLine()->endCell()
 		->startCell()->startLine(array('mini'=>true))->text($source->getFilter())->endLine()->endCell()
-		->startCell(array('wrap'=>false))->text(DateUtils::formatDuration($source->getSyncInterval()))->endCell()
-		->startCell(array('wrap'=>false))->text(DateUtils::formatFuzzy($source->getSynchronized()))->endCell()
+		->startCell(array('wrap'=>false))->text(Dates::formatDuration($source->getSyncInterval()))->endCell()
+		->startCell(array('wrap'=>false))->text(Dates::formatFuzzy($source->getSynchronized()))->endCell()
 	->endRow();
 }
 $writer->endList();

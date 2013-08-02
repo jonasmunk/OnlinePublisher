@@ -26,13 +26,13 @@ class TablePartController extends PartController
 	}
 	
 	function getIndex($part) {
-		return StringUtils::convertMarkupToText($part->getHtml());
+		return Strings::convertMarkupToText($part->getHtml());
 	}
 		
 	function editor($part,$context) {
 		return
 		'<div id="part_table" class="part_table common_font">'.$part->getHtml().'</div>'.
-		'<input type="hidden" name="html" value="'.StringUtils::escapeXML(StringUtils::fromUnicode($part->getHtml())).'"/>'.
+		'<input type="hidden" name="html" value="'.Strings::escapeXML(Strings::fromUnicode($part->getHtml())).'"/>'.
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/table/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	

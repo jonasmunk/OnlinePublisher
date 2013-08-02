@@ -34,7 +34,7 @@ class CSVWriter {
 			echo ",";
 		}
 		echo "\"";
-		echo DateUtils::formatCSV($date);
+		echo Dates::formatCSV($date);
 		echo "\"";
 		$this->dirty = true;
 		return $this;

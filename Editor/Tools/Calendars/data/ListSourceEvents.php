@@ -43,8 +43,8 @@ function listSource($id,$force) {
 			endCell();
 		$writer->startCell()->text($event['location'])->endCell();
 		$writer->startCell()->startWrap()->text($event['url'])->endWrap()->endCell();
-		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatLongDateTime($event['startDate']))->endCell();
-		$writer->startCell(array('wrap'=>false))->text(DateUtils::formatLongDateTime($event['endDate']))->endCell();
+		$writer->startCell(array('wrap'=>false))->text(Dates::formatLongDateTime($event['startDate']))->endCell();
+		$writer->startCell(array('wrap'=>false))->text(Dates::formatLongDateTime($event['endDate']))->endCell();
 		$writer->startCell();
 		if ($event['recurring']) {
 			$writer->icon(array('icon'=>'common/recycle'));

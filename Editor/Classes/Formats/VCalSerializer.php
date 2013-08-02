@@ -54,7 +54,7 @@ class VCalSerializer {
 	
 	function buildTextTag($tagName,$value) {
 		if ($value) {
-			return '<'.$tagName.'>'.StringUtils::escapeXML($value).'</'.$tagName.'>';
+			return '<'.$tagName.'>'.Strings::escapeXML($value).'</'.$tagName.'>';
 		}
 	}
 	

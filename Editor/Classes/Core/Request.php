@@ -32,7 +32,7 @@ class Request {
 	 * @return string The value of the variable, '' if variable not set
 	 */
 	function getString($key,$default='') {
-		return StringUtils::fromUnicode(Request::getStringAsUnicode($key,$default));
+		return Strings::fromUnicode(Request::getStringAsUnicode($key,$default));
 	}
 
 	function getStringAsUnicode($key,$default='') {
@@ -43,7 +43,7 @@ class Request {
 		} else {
 			return $default;
 		}
-		if ($default!=='' && StringUtils::isBlank($output)) {
+		if ($default!=='' && Strings::isBlank($output)) {
 			return $default;
 		}
 		$output=str_replace('\\"', '"', $output);
@@ -170,9 +170,9 @@ class Request {
 	}
 	
 	function getObject($key) {
-		$obj = StringUtils::fromJSON(Request::getStringAsUnicode($key));
+		$obj = Strings::fromJSON(Request::getStringAsUnicode($key));
 		if ($obj!==null) {
-			StringUtils::fromUnicode($obj);
+			Strings::fromUnicode($obj);
 		}
 		return $obj;
 	}

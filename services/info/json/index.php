@@ -12,13 +12,13 @@ Response::sendObject(array(
 	),
 	'email' => array(
 		'enabled' => MailService::getEnabled(),
-		'server' => StringUtils::isNotBlank(MailService::getServer()),
-		'username' => StringUtils::isNotBlank(MailService::getUsername()),
-		'password' => StringUtils::isNotBlank(MailService::getPassword()),
-		'standardEmail' => StringUtils::isNotBlank(MailService::getStandardEmail()),
-		'standardName' => StringUtils::isNotBlank(MailService::getStandardName()),
-		'feedbackEmail' => StringUtils::isNotBlank(MailService::getFeedbackEmail()),
-		'feedbackName' => StringUtils::isNotBlank(MailService::getFeedbackName())
+		'server' => Strings::isNotBlank(MailService::getServer()),
+		'username' => Strings::isNotBlank(MailService::getUsername()),
+		'password' => Strings::isNotBlank(MailService::getPassword()),
+		'standardEmail' => Strings::isNotBlank(MailService::getStandardEmail()),
+		'standardName' => Strings::isNotBlank(MailService::getStandardName()),
+		'feedbackEmail' => Strings::isNotBlank(MailService::getFeedbackEmail()),
+		'feedbackName' => Strings::isNotBlank(MailService::getFeedbackName())
 	)
 ));
 ?>

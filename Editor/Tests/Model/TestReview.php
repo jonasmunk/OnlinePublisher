@@ -16,7 +16,7 @@ class TestReview extends AbstractObjectTest {
 	}
 
 	function testProperties() {
-		$date = DateUtils::parse('15-04-1980');
+		$date = Dates::parse('15-04-1980');
 		$this->assertNotNull($date);
 		$obj = new Review();
 		$obj->setTitle('My review');
@@ -45,7 +45,7 @@ class TestReview extends AbstractObjectTest {
 		$review = new Review();
 		$review->setTitle('My review');
 		$review->setAccepted(true);
-		$review->setDate(DateUtils::parse('15-04-1980'));
+		$review->setDate(Dates::parse('15-04-1980'));
 		$review->save();
 		
 		RelationsService::relatePageToObject($page,$review,'reviewed');

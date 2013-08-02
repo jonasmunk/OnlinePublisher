@@ -15,20 +15,20 @@ if ($simulate) {
 }
 
 foreach ($designs as $design) {
-	$designItems.='<item title="'.StringUtils::escapeXML($design->getTitle()).'" image="../../../style/'.$design->getUnique().'/info/Preview128.png" value="'.$design->getId().'"/>';
+	$designItems.='<item title="'.Strings::escapeXML($design->getTitle()).'" image="../../../style/'.$design->getUnique().'/info/Preview128.png" value="'.$design->getId().'"/>';
 }
 
 $frameItems='';
 $frames = Frame::search();
 foreach ($frames as $frame) {
-	$frameItems.='<item icon="common/settings" title="'.StringUtils::escapeXML($frame->getName()).'" value="'.$frame->getId().'"/>';
+	$frameItems.='<item icon="common/settings" title="'.Strings::escapeXML($frame->getName()).'" value="'.$frame->getId().'"/>';
 }
 
 $templateItems='';
 $templates = TemplateService::getInstalledTemplates();
 foreach ($templates as $template) {
 	$info = TemplateService::getTemplateInfo($template['unique']);
-	$templateItems.='<item title="'.StringUtils::toUnicode($info['name']).'" image="../../Template/'.$template['unique'].'/thumbnail128.jpg" value="'.$template['id'].'"/>';
+	$templateItems.='<item title="'.Strings::toUnicode($info['name']).'" image="../../Template/'.$template['unique'].'/thumbnail128.jpg" value="'.$template['id'].'"/>';
 }
 
 $languageItems = '

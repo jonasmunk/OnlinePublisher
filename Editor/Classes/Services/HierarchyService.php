@@ -59,7 +59,7 @@ class HierarchyService {
 	}
 
 	function createItem($options) {
-		if (StringUtils::isBlank(@$options['title'])) {
+		if (Strings::isBlank(@$options['title'])) {
 			Log::debug('No title');
 			return false;
 		}

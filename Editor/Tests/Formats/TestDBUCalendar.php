@@ -24,8 +24,8 @@ class TestDBUCalendar extends UnitTestCase {
 		$this->assertEqual(1302278400,$first->getStartDate());
 		$this->assertEqual(1302284700,$first->getEndDate());
 
-		$this->assertEqual(' 8. Apr 2011 kl. 18:00',DateUtils::formatLongDateTime($first->getStartDate()));
-		$this->assertEqual(' 8. Apr 2011 kl. 19:45',DateUtils::formatLongDateTime($first->getEndDate()));
+		$this->assertEqual(' 8. Apr 2011 kl. 18:00',Dates::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual(' 8. Apr 2011 kl. 19:45',Dates::formatLongDateTime($first->getEndDate()));
 
 
     }
@@ -43,8 +43,8 @@ class TestDBUCalendar extends UnitTestCase {
 		$this->assertEqual("Hals FS (1)",$first->getGuestTeam());
 		$this->assertEqual(1334336400,$first->getStartDate());
 		$this->assertEqual(1334342700,$first->getEndDate());
-		$this->assertEqual('13. Apr 2012 kl. 19:00',DateUtils::formatLongDateTime($first->getStartDate()));
-		$this->assertEqual('13. Apr 2012 kl. 20:45',DateUtils::formatLongDateTime($first->getEndDate()));
+		$this->assertEqual('13. Apr 2012 kl. 19:00',Dates::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual('13. Apr 2012 kl. 20:45',Dates::formatLongDateTime($first->getEndDate()));
     }
 
     function testHandball() {
@@ -60,8 +60,8 @@ class TestDBUCalendar extends UnitTestCase {
 		$this->assertEqual(1317556200,$first->getStartDate());
 		$this->assertEqual(1317559500,$first->getEndDate());
 
-		$this->assertEqual(' 2. Okt 2011 kl. 13:50',DateUtils::formatLongDateTime($first->getStartDate()));
-		$this->assertEqual(' 2. Okt 2011 kl. 14:45',DateUtils::formatLongDateTime($first->getEndDate()));
+		$this->assertEqual(' 2. Okt 2011 kl. 13:50',Dates::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual(' 2. Okt 2011 kl. 14:45',Dates::formatLongDateTime($first->getEndDate()));
     }
 
     function testU19drenge() {
@@ -78,8 +78,8 @@ class TestDBUCalendar extends UnitTestCase {
 		$this->assertEqual(1334334600,$first->getStartDate());
 		$this->assertEqual(1334339100,$first->getEndDate());
 
-		$this->assertEqual('13. Apr 2012 kl. 18:30',DateUtils::formatLongDateTime($first->getStartDate()));
-		$this->assertEqual('13. Apr 2012 kl. 19:45',DateUtils::formatLongDateTime($first->getEndDate()));
+		$this->assertEqual('13. Apr 2012 kl. 18:30',Dates::formatLongDateTime($first->getStartDate()));
+		$this->assertEqual('13. Apr 2012 kl. 19:45',Dates::formatLongDateTime($first->getEndDate()));
     }
 
 }

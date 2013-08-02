@@ -157,7 +157,7 @@ class InspectionService {
 		while ($row = Database::next($result)) {
 			$valid = true;
 			$entity = array('type'=>'page','title'=>$row['title'],'id'=>$row['id'],'icon'=>'common/page');
-			if (StringUtils::isBlank($row['description'])) {
+			if (Strings::isBlank($row['description'])) {
 				$inspection = new Inspection();
 				$inspection->setCategory('content');
 				$inspection->setEntity($entity);
@@ -166,7 +166,7 @@ class InspectionService {
 				$inspections[] = $inspection;
 				$valid = false;
 			}
-			if (StringUtils::isBlank($row['path'])) {
+			if (Strings::isBlank($row['path'])) {
 				$inspection = new Inspection();
 				$inspection->setCategory('content');
 				$inspection->setEntity($entity);

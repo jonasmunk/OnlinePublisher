@@ -18,14 +18,14 @@ class OnlineObjectsService {
 		if (!$response->isSuccess()) {
 			return null;
 		}
-		return StringUtils::fromUnicode(StringUtils::fromJSON($response->getData()));
+		return Strings::fromUnicode(Strings::fromJSON($response->getData()));
 	}
 	
 	function getServiceUrl($service,$method,$baseUrl=null) {
 		if ($baseUrl==null) {
 			$baseUrl = SettingService::getOnlineObjectsUrl();
 		}
-		return StringUtils::concatUrl($baseUrl,'v1.0/'.$service.'/'.$method);
+		return Strings::concatUrl($baseUrl,'v1.0/'.$service.'/'.$method);
 	}
 	
 	function test($url) {

@@ -52,8 +52,8 @@ class ListPartController extends PartController
 	    '<input type="hidden" name="time_count" value="'.$part->getTimeCount().'"/>'.
 	    '<input type="hidden" name="maxitems" value="'.$part->getMaxItems().'"/>'.
 	    '<input type="hidden" name="maxtextlength" value="'.$part->getMaxTextLength().'"/>'.
-	    '<input type="hidden" name="title" value="'.StringUtils::escapeXML($part->getTitle()).'"/>'.
-	    '<input type="hidden" name="sort_direction" value="'.StringUtils::escapeXML($part->getSortDirection()).'"/>'.
+	    '<input type="hidden" name="title" value="'.Strings::escapeXML($part->getTitle()).'"/>'.
+	    '<input type="hidden" name="sort_direction" value="'.Strings::escapeXML($part->getSortDirection()).'"/>'.
 	    '<input type="hidden" name="objects" value="'.implode(',',$part->getObjectIds()).'"/>'.
 	    '<input type="hidden" name="show_source" value="'.($part->getShowSource() ? 'true' : 'false').'"/>'.
 	    '<input type="hidden" name="show_text" value="'.($part->getShowText() ? 'true' : 'false').'"/>'.
@@ -69,7 +69,7 @@ class ListPartController extends PartController
 	
 	function editorGui($part,$context) {
 		$zoneItems = '';
-		foreach (DateUtils::getTimeZones() as $zone) {
+		foreach (Dates::getTimeZones() as $zone) {
 			$zoneItems.='<item title="'.$zone.'" value="'.$zone.'"/>';
 		}
 		$gui='
@@ -79,7 +79,7 @@ class ListPartController extends PartController
 					<formula name="formula">
 						<fields labels="above">
 							<field label="{Title; da:Titel}">
-								<text-input value="'.StringUtils::escapeXML($part->getTitle()).'" key="title"/>
+								<text-input value="'.Strings::escapeXML($part->getTitle()).'" key="title"/>
 							</field>
 						</fields>
 						<fieldset legend="{Limitation; da:Begrænsning}">
@@ -96,7 +96,7 @@ class ListPartController extends PartController
 						<fieldset legend="{Appearance; da:Visning}">
 							<fields>
 								<field label="{Direction; da:Retning}">
-									<radiobuttons key="sort_direction" value="'.StringUtils::escapeXML($part->getSortDirection()).'">
+									<radiobuttons key="sort_direction" value="'.Strings::escapeXML($part->getSortDirection()).'">
 										<item value="descending" text="{Descending; da:Faldende}"/>
 										<item value="ascending" text="{Ascending; da:Stigende}"/>
 									</radiobuttons>
@@ -161,7 +161,7 @@ class ListPartController extends PartController
 		$data['calendars'] = $this->buildValues('calendar',$part);
 		$data['newsGroups'] = $this->buildValues('newsgroup',$part);
 		$data['newsSources'] = $this->buildValues('newssource',$part);
-		return StringUtils::toJSON($data);
+		return Strings::toJSON($data);
 	}
 	
 	function buildValues($type,$part) {
@@ -174,7 +174,7 @@ class ListPartController extends PartController
 		if (count($part->getObjectIds())>0) {
 			$objects = Database::selectAll("select id,type from object where id in (".implode($part->getObjectIds(),',').")");
 			$from = time();
-			$to = DateUtils::addDays($from,$part->getTimeCount());
+			$to = Dates::addDays($from,$part->getTimeCount());
 			foreach ($objects as $object) {
 				$type = $object['type'];
 				$id = $object['id'];
@@ -225,7 +225,7 @@ class ListPartController extends PartController
 							//Log::debug('Newssource is dirty: '.$id);
 							$dirty = true;
 						}
-						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',DateUtils::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
+						$newsItems = Query::after('newssourceitem')->withProperty('newssource_id',$id)->withCustom('minDate',Dates::addDays(time(),$part->getTimeCount()*-1))->orderBy('date')->descending()->get();
 						foreach ($newsItems as $newsItem) {
 							$item = new PartListItem();
 							$item->setDate($newsItem->getDate());
@@ -245,8 +245,8 @@ class ListPartController extends PartController
 
 		$data = '<list xmlns="'.$this->getNamespace().'" dirty="'.($dirty ? 'true' : 'false').'">';
 		$data.='<settings show-timezone="'.($part->getShowTimeZone() ? 'true' : 'false').'"/>';
-		if (StringUtils::isNotBlank($part->getTitle())) {
-			$data.='<title>'.StringUtils::escapeXML($part->getTitle()).'</title>';
+		if (Strings::isNotBlank($part->getTitle())) {
+			$data.='<title>'.Strings::escapeXML($part->getTitle()).'</title>';
 		}
 		$this->sortItems($items);
 		if ($part->getSortDirection()=='ascending') {
@@ -255,28 +255,28 @@ class ListPartController extends PartController
 		$items = array_slice($items,0,$part->getMaxItems());
 		foreach ($items as $item) {
 			$data.='<item>'.
-			'<title>'.StringUtils::escapeXML($item->getTitle()).'</title>';
-			if (StringUtils::isNotBlank($item->getText())) {
-				$text = StringUtils::removeTags($item->getText());
+			'<title>'.Strings::escapeXML($item->getTitle()).'</title>';
+			if (Strings::isNotBlank($item->getText())) {
+				$text = Strings::removeTags($item->getText());
 				if ($part->getMaxTextLength()) {
-					$text = StringUtils::shortenString($text,$part->getMaxTextLength());
+					$text = Strings::shortenString($text,$part->getMaxTextLength());
 				}
-				$data.='<text>'.StringUtils::escapeXMLBreak($text,'<break/>').'</text>';
+				$data.='<text>'.Strings::escapeXMLBreak($text,'<break/>').'</text>';
 			}
-			if (StringUtils::isNotBlank($item->getUrl())) {
-				$data.='<url>'.StringUtils::escapeXML($item->getUrl()).'</url>';
+			if (Strings::isNotBlank($item->getUrl())) {
+				$data.='<url>'.Strings::escapeXML($item->getUrl()).'</url>';
 			}
 			if ($item->getSource()) {
-				$data.='<source>'.StringUtils::escapeXML($item->getSource()).'</source>';
+				$data.='<source>'.Strings::escapeXML($item->getSource()).'</source>';
 			}
 			if ($item->getDate()) {
-				$data.=DateUtils::buildTag('date',$item->getDate());
+				$data.=Dates::buildTag('date',$item->getDate());
 			}
 			if ($item->getStartDate()) {
-				$data.=DateUtils::buildTag('start-date',$item->getStartDate());
+				$data.=Dates::buildTag('start-date',$item->getStartDate());
 			}
 			if ($item->getEndDate()) {
-				$data.=DateUtils::buildTag('end-date',$item->getEndDate());
+				$data.=Dates::buildTag('end-date',$item->getEndDate());
 			}
 			$data.='</item>';
 		}

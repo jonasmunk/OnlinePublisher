@@ -24,10 +24,10 @@ if ($sourceId) {
 		$writer->startRow()->
 		startCell(array('icon'=>'common/page'))->
 			startLine()->text($item->getTitle())->endLine()->
-			startLine(array('dimmed'=>true))->text(StringUtils::shortenString(trim(StringUtils::removeTags($item->getText())),400))->endLine()->
+			startLine(array('dimmed'=>true))->text(Strings::shortenString(trim(Strings::removeTags($item->getText())),400))->endLine()->
 		endCell()->
 		startCell()->
-			text(DateUtils::formatFuzzy($item->getDate()))->
+			text(Dates::formatFuzzy($item->getDate()))->
 		endCell()->
 		endRow();
 	}
@@ -53,7 +53,7 @@ $query->withText($queryString);
 $query->withCustom('group',$group);
 
 if ($main=='latest') {
-	$query->withCreatedMin(DateUtils::addDays(mktime(),-1));
+	$query->withCreatedMin(Dates::addDays(mktime(),-1));
 } else if ($main=='active') {
 	$query->withCustom('active',true);
 } else if ($main=='inactive') {
@@ -93,8 +93,8 @@ foreach ($objects as $object) {
 	$writer->startRow(array('kind'=>'news','id'=>$object->getId(),'icon'=>$object->getIcon(),'title'=>$object->getTitle()));
 	$writer->startCell(array('icon'=>$object->getIcon()))->text($object->getTitle())->endCell();
 	$writer->startCell();
-	$writer->text(DateUtils::formatDateTime($object->getStartdate()))->endCell();
-	$writer->startCell()->text(DateUtils::formatDateTime($object->getEnddate()))->endCell();
+	$writer->text(Dates::formatDateTime($object->getStartdate()))->endCell();
+	$writer->startCell()->text(Dates::formatDateTime($object->getEnddate()))->endCell();
 	$writer->startCell()->startIcons();
 	if (!$active) {
 		$writer->icon(array('icon'=>'monochrome/invisible'));	

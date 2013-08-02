@@ -134,7 +134,7 @@ class PartService {
 		$schema = Part::$schema[$part->getType()];
 		$setters = SchemaService::buildSqlSetters($part,$schema);
 		
-		if (StringUtils::isNotBlank($setters)) {
+		if (Strings::isNotBlank($setters)) {
 			$sql = "update part_".$part->getType()." set ".$setters." where part_id=".Database::int($part->getId());
 			Database::update($sql);
 		}
@@ -196,7 +196,7 @@ class PartService {
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$context -> addBuildLink(
-				StringUtils::escapeSimpleXML($row['source_text']),
+				Strings::escapeSimpleXML($row['source_text']),
 				$row['target_type'],
 				$row['target_id'],
 				$row['target_value'],

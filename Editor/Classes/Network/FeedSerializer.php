@@ -59,7 +59,7 @@ class FeedSerializer {
 	
 	function buildTextTag($tagName,$value) {
 		if ($value) {
-			return "\n<".$tagName.">".StringUtils::escapeXML($value)."</".$tagName.">";
+			return "\n<".$tagName.">".Strings::escapeXML($value)."</".$tagName.">";
 		}
 	}
 	

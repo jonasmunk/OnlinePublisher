@@ -22,7 +22,7 @@ foreach ($list as $item) {
 			startLine(array('dimmed'=>true,'minor'=>true))->text($item['relativePath'])->endLine()->
 		endCell()->
 		startCell()->text($item['parent'])->endCell()->
-		startCell()->text(StringUtils::toJSON($item['properties']))->endCell()->
+		startCell()->text(Strings::toJSON($item['properties']))->endCell()->
 	endRow();
 }
 $writer->endList();

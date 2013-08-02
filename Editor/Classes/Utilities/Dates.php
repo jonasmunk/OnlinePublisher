@@ -8,7 +8,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-class DateUtils {
+class Dates {
 	
 	function parseRFC822($str) {
 		preg_match("/(.+)\, (\d+) (\w+) (\d+) (\d+):(\d+):(\d+) (.+)/i",$str, $matches);
@@ -21,7 +21,7 @@ class DateUtils {
 	}
 	
 	function parseRFC3339($date) {
-		if (StringUtils::isBlank($date)) {
+		if (Strings::isBlank($date)) {
 			return null;
 		}
 		if (preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})-([0-9]{2}):([0-9]{2})/mi",$date, $matches)) {
@@ -162,16 +162,16 @@ class DateUtils {
 				} else if ($diff<3600*24*4) {
 					$days = floor($diff/3600/24);
 					if (InternalSession::getLanguage()=='da') {
-						return 'for '.$days.($days==1 ? ' dag' : ' dage').' siden kl. '.DateUtils::formatShortTime($timestamp,$locale);
+						return 'for '.$days.($days==1 ? ' dag' : ' dage').' siden kl. '.Dates::formatShortTime($timestamp,$locale);
 					} else {
-						return 'about '.$days.($days==1 ? ' day' : ' days').' ago at '.DateUtils::formatShortTime($timestamp,$locale);
+						return 'about '.$days.($days==1 ? ' day' : ' days').' ago at '.Dates::formatShortTime($timestamp,$locale);
 					}
 				}
 			}
 			if (strftime('%Y',time())!==strftime('%Y',$timestamp)) {
-				return DateUtils::formatLongDateTime($timestamp,$locale);
+				return Dates::formatLongDateTime($timestamp,$locale);
 			} else {
-				return DateUtils::formatDateTime($timestamp,$locale);
+				return Dates::formatDateTime($timestamp,$locale);
 			}
 		} else {
 			return '';

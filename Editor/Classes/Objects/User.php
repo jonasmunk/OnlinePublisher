@@ -115,7 +115,7 @@ class User extends Object {
 	function sub_publish() {
 		$data =
 		'<user xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<username>'.StringUtils::escapeXML($this->username).'</username>'.
+		'<username>'.Strings::escapeXML($this->username).'</username>'.
 		'</user>';
 		return $data;
 	}

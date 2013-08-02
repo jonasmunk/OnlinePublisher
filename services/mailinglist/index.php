@@ -12,8 +12,8 @@ if (strlen($name)==0) {
 	$error = '<error key="invalidemail"/>';
 }
 if ($error!='') {
-	$values .= '<value key="name" value="'.StringUtils::escapeXML($name).'"/>';
-	$values .= '<value key="email" value="'.StringUtils::escapeXML($email).'"/>';
+	$values .= '<value key="name" value="'.Strings::escapeXML($name).'"/>';
+	$values .= '<value key="email" value="'.Strings::escapeXML($email).'"/>';
 } else {
 	//$this->subscribe($name,$email);
 }

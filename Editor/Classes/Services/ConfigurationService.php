@@ -58,7 +58,7 @@ class ConfigurationService {
 	
 	function getCompleteBaseUrl() {
 		$url = ConfigurationService::getBaseUrl();
-		if (!StringUtils::startsWith($url,'http')) {
+		if (!Strings::startsWith($url,'http')) {
 			$url = 'http://localhost'.$url;
 		}
 		return $url;

@@ -74,7 +74,7 @@ class DesignService {
 			$type = DesignService::_getType($key,$info);
 			$sql = "insert into design_parameter (design_id,`key`,`value`) values (".Database::int($id).",".Database::text($key).",".Database::text($value).")";
 			Database::insert($sql);
-			if (StringUtils::isNotBlank($value)) {				
+			if (Strings::isNotBlank($value)) {				
 				$xml.='<parameter key="'.$key.'">';
 				if ($type=='image') {
 					$image = Image::load($value);
@@ -82,7 +82,7 @@ class DesignService {
 						$xml.='<image id="'.$image->getId().'" width="'.$image->getWidth().'" height="'.$image->getHeight().'"/>';
 					}
 				} else {
-					$xml.=StringUtils::escapeXML($value);
+					$xml.=Strings::escapeXML($value);
 				}
 				$xml.='</parameter>';
 			}
@@ -99,9 +99,9 @@ class DesignService {
 		$valid = true;
 		$info = DesignService::getInfo($name);
 		if ($info!==null) {
-			$valid = $valid && StringUtils::isNotBlank($info->name);
-			$valid = $valid && StringUtils::isNotBlank($info->description);
-			$valid = $valid && StringUtils::isNotBlank($info->owner);
+			$valid = $valid && Strings::isNotBlank($info->name);
+			$valid = $valid && Strings::isNotBlank($info->description);
+			$valid = $valid && Strings::isNotBlank($info->owner);
 		} else {
 			$valid = false;
 		}

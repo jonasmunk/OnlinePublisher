@@ -85,7 +85,7 @@ class PartContext {
 		//$this->buildLinks[] = array('text' => $text, 'type' => $type, 'id' => $id, 'value' => $value , 'target' => $target, 'title' => $title, 'linkId' => $linkId, 'partId' => $partId);
 		$atts='';
 		if ($type=='url') {
-			$atts.=' url="'.StringUtils::escapeXML($value).'"';
+			$atts.=' url="'.Strings::escapeXML($value).'"';
 		}
 		else if ($type=='page') {
 			$atts.=' page="'.$id.'"';
@@ -102,8 +102,8 @@ class PartContext {
 		if ($path!='') {
 			$atts.=' path="'.$path.'"';
 		}
-		if (StringUtils::isNotBlank($title)) {
-			$atts.=' title="'.StringUtils::escapeXML($title).'"';
+		if (Strings::isNotBlank($title)) {
+			$atts.=' title="'.Strings::escapeXML($title).'"';
 		}
 		if ($linkId>0) {
 			$atts.=' id="'.$linkId.'"';

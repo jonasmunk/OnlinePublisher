@@ -66,8 +66,8 @@ class Weblogentry extends Object {
 	function sub_publish() {
 		$data =
 		'<weblogentry xmlns="'.parent::_buildnamespace('1.0').'">'.
-		DateUtils::buildTag('date',$this->date).
-		'<text><![CDATA['.StringUtils::escapeSimpleXMLwithLineBreak($this->text,'<br/>').']]></text>';
+		Dates::buildTag('date',$this->date).
+		'<text><![CDATA['.Strings::escapeSimpleXMLwithLineBreak($this->text,'<br/>').']]></text>';
 		$data.='</weblogentry>';
 		return $data;
 	}

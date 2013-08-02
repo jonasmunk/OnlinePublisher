@@ -28,7 +28,7 @@ class HtmlPartController extends PartController
 	function editor($part,$context) {
 		return
 		'<textarea id="PartHtmlTextarea" name="html" style="width: 100%; height: 300px; border: none; padding: 0;">'.
-		StringUtils::escapeXML($part->getHtml()).
+		Strings::escapeXML($part->getHtml()).
 		'</textarea>'.
 		'<script type="text/javascript">'.
 		'document.getElementById("PartHtmlTextarea").focus();'.

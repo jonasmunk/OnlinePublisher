@@ -15,7 +15,7 @@ class HtmlTemplateController extends TemplateController
 	}
 
 	function create($page) {
-		$sql="insert into html (page_id,html,valid) values (".$page->getId().",".Database::text('<h1>'.StringUtils::escapeXML($page->getTitle()).'</h1>').",1)";
+		$sql="insert into html (page_id,html,valid) values (".$page->getId().",".Database::text('<h1>'.Strings::escapeXML($page->getTitle()).'</h1>').",1)";
 		Database::insert($sql);
 	}
 
@@ -29,7 +29,7 @@ class HtmlTemplateController extends TemplateController
 		$row = Database::selectFirst($sql);
 		$data = '<html xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/html/1.0/">';
 		if (strlen($row['title'])>0) {
-			$data.='<title>'.StringUtils::escapeXML($row['title']).'</title>';
+			$data.='<title>'.Strings::escapeXML($row['title']).'</title>';
 		}
 		if ($row['valid']) {
 			$data.='<content valid="true">'.$row['html'].'</content>';

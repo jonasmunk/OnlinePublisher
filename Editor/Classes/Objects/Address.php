@@ -79,7 +79,7 @@ class Address extends Object {
 	}
 	
 	function sub_index() {
-		return StringUtils::buildIndex(array($this->street,$this->zipcode,$this->city,$this->country));
+		return Strings::buildIndex(array($this->street,$this->zipcode,$this->city,$this->country));
 	}
 }
 ?>

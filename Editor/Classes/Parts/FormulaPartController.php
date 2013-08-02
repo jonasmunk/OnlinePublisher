@@ -65,7 +65,7 @@ class FormulaPartController extends PartController
 	}
 	
 	function buildSub($part,$context) {
-		$valid = DOMUtils::isValidFragment(StringUtils::toUnicode($part->getRecipe()));
+		$valid = DOMUtils::isValidFragment(Strings::toUnicode($part->getRecipe()));
 		return '<formula xmlns="'.$this->getNamespace().'">'.
 			($valid ? '<recipe>'.$part->getRecipe().'</recipe>' : '<invalid/>').
 			'</formula>';

@@ -42,7 +42,7 @@ class PageQuery {
 	}
 	
 	function orderBy($order) {
-		if (StringUtils::isNotBlank($order)) {
+		if (Strings::isNotBlank($order)) {
 			$this->ordering[] = $order;
 		}
 		return $this;

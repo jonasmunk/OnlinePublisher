@@ -25,13 +25,13 @@ $writer->startList();
 
 foreach($feed->getItems() as $item) {
 	$title = $item->getTitle();
-	if (StringUtils::startsWith($title,'Merge branch')) {
+	if (Strings::startsWith($title,'Merge branch')) {
 		continue;
 	}
 	$writer->startRow()->
 		startCell(array('class'=>'news'))->
 			startLine()->text($title)->endLine()->
-			startLine(array('dimmed'=>true,'mini'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
+			startLine(array('dimmed'=>true,'mini'=>true))->text(Dates::formatFuzzy($item->getPubDate()))->endLine()->
 		endCell()->
 	endRow();
 	

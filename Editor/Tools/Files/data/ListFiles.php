@@ -34,7 +34,7 @@ if ($type) {
 	$query['mimetypes'] = FileService::kindToMimeTypes($type);
 }
 if ($main=='latest') {
-	$query['createdMin'] = DateUtils::addDays(mktime(),-1);
+	$query['createdMin'] = Dates::addDays(mktime(),-1);
 }
 
 $list = File::find($query);
@@ -63,7 +63,7 @@ foreach ($objects as $object) {
 			//startLine(array('dimmed'=>true))->text($object->getFilename())->endLine()->
 		endCell()->
 		startCell()->startLine(array('dimmed'=>true))->text(GuiUtils::bytesToString($object->getSize()))->endLine()->endCell()->
-		startCell()->startLine(array('dimmed'=>true))->text(DateUtils::formatDateTime($object->getUpdated()))->endLine()->endCell()->
+		startCell()->startLine(array('dimmed'=>true))->text(Dates::formatDateTime($object->getUpdated()))->endLine()->endCell()->
 	endRow();
 }
 $writer->endList();

@@ -145,14 +145,14 @@ class WaterusageService {
 	
 	function updateEmailOfMeter($meter,$address) {
 		$email = Query::after('emailaddress')->withRelationFrom($meter)->first();
-		if (StringUtils::isBlank($address) && $email) {
+		if (Strings::isBlank($address) && $email) {
 			$email->remove();
 		} else {
 			if ($email) {
 				$email->setAddress($address);
 				$email->save();
 				$email->publish();
-			} else if (!StringUtils::isBlank($address)) {
+			} else if (!Strings::isBlank($address)) {
 				$email = new EmailAddress();
 				$email->setAddress($address);
 				$email->save();
@@ -164,14 +164,14 @@ class WaterusageService {
 	
 	function updatePhoneOfMeter($meter,$number) {
 		$phone = Query::after('phonenumber')->withRelationFrom($meter)->first();
-		if (StringUtils::isBlank($number) && $phone) {
+		if (Strings::isBlank($number) && $phone) {
 			$phone->remove();
 		} else {
 			if ($phone) {
 				$phone->setNumber($number);
 				$phone->save();
 				$phone->publish();
-			} else if (!StringUtils::isBlank($number)) {
+			} else if (!Strings::isBlank($number)) {
 				$phone = new Phonenumber();
 				$phone->setNumber($number);
 				$phone->save();

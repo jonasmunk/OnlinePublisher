@@ -165,11 +165,11 @@ class Image extends Object {
 	function sub_publish() {
 		$data =
 		'<image xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<filename>'.StringUtils::escapeXML($this->filename).'</filename>'.
-		'<size>'.StringUtils::escapeXML($this->size).'</size>'.
-		'<width>'.StringUtils::escapeXML($this->width).'</width>'.
-		'<height>'.StringUtils::escapeXML($this->height).'</height>'.
-		'<mimetype>'.StringUtils::escapeXML($this->mimetype).'</mimetype>'.
+		'<filename>'.Strings::escapeXML($this->filename).'</filename>'.
+		'<size>'.Strings::escapeXML($this->size).'</size>'.
+		'<width>'.Strings::escapeXML($this->width).'</width>'.
+		'<height>'.Strings::escapeXML($this->height).'</height>'.
+		'<mimetype>'.Strings::escapeXML($this->mimetype).'</mimetype>'.
 		'</image>';
 		return $data;
 	}

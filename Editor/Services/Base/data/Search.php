@@ -8,7 +8,7 @@ require_once '../../../Include/Private.php';
 $text = Request::getString('text');
 
 $writer = new ListWriter();
-if (StringUtils::isBlank($text)) {
+if (Strings::isBlank($text)) {
 	$writer->startList()->endList();
 	exit;
 }

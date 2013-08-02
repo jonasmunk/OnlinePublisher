@@ -79,9 +79,9 @@ and page_review.to_type='object' and page_review.to_object_id=review.object_id
 and review_user.from_type='object' and review_user.from_object_id=review.object_id
 and review_user.to_type='object' and review_user.to_object_id=user.id";
 	if ($span=='day') {
-		$sql.=' and review.date<'.Database::datetime(DateUtils::addDays(time(),-1));
+		$sql.=' and review.date<'.Database::datetime(Dates::addDays(time(),-1));
 	} else if ($span=='week') {
-		$sql.=' and review.date<'.Database::datetime(DateUtils::addDays(time(),-7));
+		$sql.=' and review.date<'.Database::datetime(Dates::addDays(time(),-7));
 	}
 	$sql.=" union
 		select page.id as page_id, page.title as page_title,'' as user_title, null as date, -1 as accepted 
@@ -107,7 +107,7 @@ and review_user.to_type='object' and review_user.to_object_id=user.id";
 			} else {
 				$writer->startCell()->endCell();
 			}
-			$writer->startCell()->text(DateUtils::formatFuzzy($row['date']))->endCell()->
+			$writer->startCell()->text(Dates::formatFuzzy($row['date']))->endCell()->
 			startCell();
 			if ($row['accepted']!=-1) {
 				$writer->icon(array('icon' => $row['accepted'] ? 'common/success' : 'common/stop'));
@@ -262,7 +262,7 @@ function listPages() {
 			}
 			$writer->
 			startCell(array('icon'=>GuiUtils::getLanguageIcon($row['language'])))->endCell()->
-			startCell(array('wrap'=>false,'dimmed'=>true))->text(DateUtils::formatFuzzy($row['changed']));
+			startCell(array('wrap'=>false,'dimmed'=>true))->text(Dates::formatFuzzy($row['changed']));
 		if ($row['publishdelta']>0) {
 			$writer->startIcons(array('left'=>3))->icon(array('icon'=>'monochrome/warning','size'=>12))->endIcons();
 		}
@@ -324,7 +324,7 @@ function buildPagesSql() {
 	} else if ($value=='warnings') {
 		$sqlLimits.=" and (page.changed>page.published or page.path is null or page.path='')";
 	} else if ($value=='latest') {
-		$sqlLimits.=" and page.changed>".Database::datetime(DateUtils::addDays(time(),-1));
+		$sqlLimits.=" and page.changed>".Database::datetime(Dates::addDays(time(),-1));
 	}
 	$sqlLimits.=" order by ".$sort.($direction=='ascending' ? ' asc' : ' desc');
 

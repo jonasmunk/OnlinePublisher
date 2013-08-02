@@ -12,7 +12,7 @@ if (Request::isPost()) {
 		if (!$user->getInternal()) {
 			Response::sendObject(array('success' => false,'message' => 'Brugeren har ikke adgang'));
 			exit;
-		} else if (!StringUtils::isBlank($user->getEmail())) {
+		} else if (!Strings::isBlank($user->getEmail())) {
 			if (AuthenticationService::createValidationSession($user)) {
 				Response::sendObject(array('success' => true));
 				exit;

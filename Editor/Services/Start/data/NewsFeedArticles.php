@@ -28,14 +28,14 @@ foreach($feed->getItems() as $item) {
 	$writer->startRow()->
 		startCell(array('class'=>'news'))->startLine()->startStrong()->text($item->getTitle())->endStrong()->endLine()->
 			startLine(array('minor'=>true))->text($item->getDescription())->endline()->
-			startLine(array('dimmed'=>true,'mini'=>true))->text(DateUtils::formatFuzzy($item->getPubDate()))->endLine()->
+			startLine(array('dimmed'=>true,'mini'=>true))->text(Dates::formatFuzzy($item->getPubDate()))->endLine()->
 		endCell()->
 		startCell(array('class'=>'news'));
-		if (StringUtils::isNotBlank($item->getLink())) {
+		if (Strings::isNotBlank($item->getLink())) {
 			$writer->startIcons()->
 				icon(array('icon'=>'monochrome/round_arrow_right','action'=>true,'revealing'=>true,'data'=>array('url'=>$item->getLink())))->
 			endIcons();
-			//$writer->button(array('text'=>StringUtils::fromUnicode('Læs'),'data'=>array('url'=>$item->getLink())));
+			//$writer->button(array('text'=>Strings::fromUnicode('Læs'),'data'=>array('url'=>$item->getLink())));
 		}
 		$writer->endCell()->
 	endRow();

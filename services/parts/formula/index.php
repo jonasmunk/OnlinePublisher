@@ -27,7 +27,7 @@ $issue->publish();
 $receiverName = $part->getReceiverName();
 $receiverEmail = $part->getReceiverEmail();
 
-if (!StringUtils::isBlank($receiverName) || !StringUtils::isBlank($receiverEmail)) {
+if (!Strings::isBlank($receiverName) || !Strings::isBlank($receiverEmail)) {
 	MailService::send($receiverEmail,$receiverName,"New form submission",$body);
 }
 

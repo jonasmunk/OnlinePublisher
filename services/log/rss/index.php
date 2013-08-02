@@ -8,7 +8,7 @@ require_once '../../../Editor/Include/Public.php';
 $requestSecret = Request::getString('secret');
 $secret = SettingService::getSharedSecret();
 
-if (StringUtils::isBlank($secret) || StringUtils::isBlank($requestSecret) || $requestSecret!==$secret) {
+if (Strings::isBlank($secret) || Strings::isBlank($requestSecret) || $requestSecret!==$secret) {
 	exit;
 }
 

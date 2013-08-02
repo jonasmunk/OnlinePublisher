@@ -35,9 +35,9 @@ class ReviewService {
 				$sql.=' and review.accepted=0';
 			}
 			if ($span=='day') {
-				$sql.=' and review.date<'.Database::datetime(DateUtils::addDays(time(),-1));
+				$sql.=' and review.date<'.Database::datetime(Dates::addDays(time(),-1));
 			} else if ($span=='week') {
-				$sql.=' and review.date<'.Database::datetime(DateUtils::addDays(time(),-7));
+				$sql.=' and review.date<'.Database::datetime(Dates::addDays(time(),-7));
 			}
 			
 		}	

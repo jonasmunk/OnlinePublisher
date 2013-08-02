@@ -33,7 +33,7 @@ Log::logTool('waterusage','import','Import complete (meters)');
 In2iGui::respondUploadSuccess();
 
 function handleLine($line) {
-	$line = StringUtils::fromUnicode($line);
+	$line = Strings::fromUnicode($line);
 	$words = preg_split('/;/',$line);
 	$street = '';
 	$zipcode = '';
