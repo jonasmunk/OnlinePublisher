@@ -52,8 +52,12 @@ if (strlen($relative)==0) {
 	$relative = './';
 }
 
+if ($id==-1 && StringUtils::isBlank($path)) {
+	$id = RenderingService::findPage('home');
+}
+
 $page = RenderingService::buildPage($id,$path,Request::getParameters());
-if (!$page && ($id==0 && Strings::isBlank($path))) {
+if (!$page) {
 	$id = RenderingService::findPage('home');
 	if ($id==null) {
 		$error = '<title>Ingen forside!</title>'.
@@ -64,7 +68,6 @@ if (!$page && ($id==0 && Strings::isBlank($path))) {
 		RenderingService::displayError($error,'');
 		exit;
 	}
-	//Log::debug('Found home: '.$id);
 	$page = RenderingService::buildPage($id);
 }
 

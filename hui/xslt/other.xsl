@@ -28,4 +28,21 @@
 	</script>
 </xsl:template>
 
+<!--doc title:'TimeLine' class:'hui.ui.Graph' module:'visalization'
+<graph name="«name»" layout="«?»" source="«source»"/>
+-->
+<xsl:template match="gui:timeline">
+	<div class="hui_timeline" id="{generate-id()}">
+		<xsl:comment/>
+	</div>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.TimeLine({
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>'
+			<xsl:if test="@source">,source : <xsl:value-of select="@source"/></xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
 </xsl:stylesheet>

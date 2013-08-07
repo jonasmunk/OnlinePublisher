@@ -86,9 +86,11 @@
 		<xsl:apply-templates select="f:frame/f:text/f:bottom"/>
 		<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
 	</div>
+	<!--
 	<xsl:call-template name="util:googleanalytics">
 		<xsl:with-param name="code" select="'UA-183873-1'"/>
 	</xsl:call-template>
+	-->
 </body>
 </html>
 </xsl:template>

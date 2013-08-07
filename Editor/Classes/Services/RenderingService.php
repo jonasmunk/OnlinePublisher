@@ -220,7 +220,7 @@ class RenderingService {
 		}
 	}
 	
-	function buildPage($id,$path=null,$parameters) {
+	function buildPage($id,$path=null,$parameters=array()) {
 		//Log::debug('buildPage: id:('.$id.') path:('.$path.')');
 		$sql="select page.id,page.path,page.secure,UNIX_TIMESTAMP(page.published) as published,".
 		" page.title,page.description,page.language,page.keywords,page.data,page.dynamic,page.next_page,page.previous_page,".
@@ -263,7 +263,7 @@ class RenderingService {
 					$redirect = Strings::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
 					$query = array();
 					foreach ($parameters as $parameter) {
-						if ($parameter['name']!='id') {
+						if ($parameter['name']!='id' && StringUtils::isNotBlank($parameter['name'])) {
 							$query[] = $parameter['name'].'='.$parameter['value'];
 						}
 					}
