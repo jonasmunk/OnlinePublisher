@@ -12,14 +12,17 @@ $gui='
 	
 	<source name="listSource" url="data/ListIssues.php">
 		<parameter key="windowPage" value="@list.window.page"/>
-		<parameter key="filterKind" value="@selector.kind"/>
-		<parameter key="filter" value="@selector.value"/>
+		<parameter key="type" value="@selector.value"/>
+		<parameter key="kind" value="@kindSelector.value"/>
+		<parameter key="status" value="@statusSelector.value"/>
 		<parameter key="text" value="@search.value"/>
 	</source>
 	
 	<source name="statusListSource" url="data/ListStates.php"/>
 	
 	<source name="sidebarSource" url="data/Sidebar.php"/>
+	<source name="kindSelectorSource" url="data/SidebarKinds.php"/>
+	<source name="statusSelectorSource" url="data/SidebarStates.php"/>
 	<source name="statusSource" url="data/StatusItems.php"/>
 	
 	<structure>
@@ -50,6 +53,12 @@ $gui='
 				<overflow>
 				<selection value="all" name="selector" top="5">
 					<items source="sidebarSource"/>
+				</selection>
+				<selection value="any" name="statusSelector" top="5">
+					<items source="statusSelectorSource"/>
+				</selection>
+				<selection value="any" name="kindSelector" top="5">
+					<items source="kindSelectorSource"/>
 				</selection>
 				</overflow>
 			</left>

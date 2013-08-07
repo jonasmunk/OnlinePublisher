@@ -56,6 +56,7 @@ hui.ui.listen({
 				$success : function(obj) {
 					list.refresh();
 					sidebarSource.refresh();
+					kindSelectorSource.refresh();
 				}.bind(this)
 			})		
 		}
@@ -111,5 +112,7 @@ hui.ui.listen({
 	refresh : function() {
 		list.refresh();
 		sidebarSource.refresh();
+		kindSelectorSource.refresh();
+		statusSelectorSource.refresh();
 	}
 });

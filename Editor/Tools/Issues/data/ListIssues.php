@@ -6,17 +6,18 @@
 require_once '../../../Include/Private.php';
 
 $text = Request::getString('text');
-$filter = Request::getString('filter');
-$kind = Request::getString('filterKind');
+$type = Request::getString('type');
+$kind = Request::getString('kind');
+$status = Request::getString('status');
 
-if ($kind=='feedback') {
+if ($type=='feedback') {
 	listFeedback();
 } else {
 	listIssues();
 }
 
 function listFeedback() {
-	global $text,$filter,$kind;
+	global $text;
 	
 	$query = Query::after('feedback')->withText($text)->orderByCreated()->descending();
 	
@@ -46,14 +47,14 @@ function listFeedback() {
 }
 
 function listIssues() {
-	global $text,$filter,$kind;
+	global $text,$kind,$status;
 	
 	$query = Query::after('issue')->withText($text)->orderByCreated()->descending();
-	if ($kind=='kind') {
-		$query->withProperty('kind',$filter);
+	if ($kind!='any') {
+		$query->withProperty('kind',$kind);
 	}
-	if ($kind=='status') {
-		$query->withProperty('statusId',$filter);
+	if ($status!='any') {
+		$query->withProperty('statusId',$status);
 	}
 
 	$states = IssueService::getStatusMap();
@@ -66,7 +67,7 @@ function listIssues() {
 
 	$writer->startHeaders()->
 		header()->
-		header(array('title'=>'Status','width'=>1))->
+		header(array('title'=>'Status'.$type,'width'=>1))->
 		header(array('title'=>'Oprettet','width'=>1))->
 	endHeaders();
 

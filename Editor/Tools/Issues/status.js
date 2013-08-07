@@ -66,7 +66,7 @@ hui.ui.listen({
 	refresh : function() {
 		list.refresh();
 		sidebarSource.refresh();
-		statusSource.refresh();
+		statusSelectorSource.refresh();
 		statusList.refresh();
 	}
 });

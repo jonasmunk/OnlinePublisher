@@ -31,6 +31,12 @@ class IssueService {
 		}
 		return $kind;
 	}
+
+	function getTotalIssueCount() {
+		$sql = "select count(object_id) as `count` from issue";
+		$row = Database::selectFirst($sql);
+		return intval($row['count']);
+	}
 	
 	function getKindCounts() {
 		$sql = "select count(object_id) as count,kind from issue group by kind";
