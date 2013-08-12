@@ -26,7 +26,9 @@ if (!Database::testConnection()) {
 $file = Request::getInt('file',-1);
 $id = Request::getInt('id',-1);
 $path = Request::getString('path');
-
+if (Strings::isBlank($path)) {
+	$path = '/';
+}
 
 if ($file>0) {
 	RenderingService::showFile($file);
@@ -41,7 +43,7 @@ if (Request::getBoolean('logout')) {
 //	exit;
 //}
 
-if (strlen($path)>0) {
+if (strlen($path)>1) {
 	$relative = str_repeat('../',substr_count($path,'/'));
 	$samePageBaseUrl = $relative.$path.'?';
 } else {
@@ -52,10 +54,10 @@ if (strlen($relative)==0) {
 	$relative = './';
 }
 
-if ($id==-1 && StringUtils::isBlank($path)) {
+if ($id==-1 && Strings::isBlank($path)) {
 	$id = RenderingService::findPage('home');
 }
-
+//echo $id;
 $page = RenderingService::buildPage($id,$path,Request::getParameters());
 if (!$page) {
 	$id = RenderingService::findPage('home');
@@ -76,6 +78,8 @@ if (!$page) {
 }
 // If the page has redirect
 else if ($page['redirect']!==false) {
+	//echo $page['redirect'];
+	//exit;
 	Response::redirect($page['redirect']);
 }
 // If the page is secure

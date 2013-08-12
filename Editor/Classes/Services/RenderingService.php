@@ -238,7 +238,11 @@ class RenderingService {
 			$sql.=" and page.id=".Database::int($id);
 		} else {
 			//Log::debug('Paths: ('.$path.') ('.$path.'/) (/'.$path.')');
-			$sql.=" and (page.path=".Database::text($path)." or page.path=".Database::text($path.'/')." or page.path=".Database::text('/'.$path).") order by page.path desc";
+			$sql.=" and (page.path=".Database::text($path);
+			if (Strings::isNotBlank($path)) {
+				$sql.=" or page.path=".Database::text($path.'/')." or page.path=".Database::text('/'.$path);
+			}
+			$sql.=") order by page.path desc";
 		}
 		if ($row = Database::selectFirst($sql)) {
 			if (Request::getBoolean('ajax')) {
@@ -263,7 +267,7 @@ class RenderingService {
 					$redirect = Strings::concatUrl(ConfigurationService::getBaseUrl(),$row['path']);
 					$query = array();
 					foreach ($parameters as $parameter) {
-						if ($parameter['name']!='id' && StringUtils::isNotBlank($parameter['name'])) {
+						if ($parameter['name']!='id' && Strings::isNotBlank($parameter['name'])) {
 							$query[] = $parameter['name'].'='.$parameter['value'];
 						}
 					}
