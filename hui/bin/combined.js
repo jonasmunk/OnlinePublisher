@@ -1528,9 +1528,10 @@ hui.request = function(options) {
 				}
 			}
 		}
-		if (options.onProgress) {
+		var prog = options.onProgress || options.$progress;
+		if (prog) {
 			transport.upload.addEventListener("progress", function(e) {
-				options.onProgress(e.loaded,e.total);
+				prog(e.loaded,e.total);
 			}, false);
 		}
 		if (options.onLoad) {
@@ -2408,7 +2409,7 @@ if (!Function.prototype.argumentNames) {
  *  css : { fontSize : '11px', color : '#f00', opacity : 0.5 }, 
  *  duration : 1000, // 1sec 
  *  ease : function(num) {},
- *  onComplete : function() {}
+ *  $complete : function() {}
  *}
  * 
  * @param {Element | Object} options Options or an element
@@ -2423,11 +2424,17 @@ hui.animate = function(options,property,value,duration,delegate) {
 		hui.animation.get(options).animate(null,value,property,duration,delegate);
 	} else {
 		var item = hui.animation.get(options.node);
-		if (!options.css) {
+		if (options.property) {
+			item.animate(null,options.value,options.property,options.duration,options);
+		}
+		else if (!options.css) {
 			item.animate(null,'','',options.duration,options);
 		} else {
+			var o = options;
 			for (prop in options.css) {
-				item.animate(null,options.css[prop],prop,options.duration,options);
+				item.animate(null,options.css[prop],prop,options.duration,o);
+				o = hui.override({},options);
+				o.$complete = undefined;
 			}
 		}
 	}
@@ -5303,6 +5310,19 @@ hui.ui.showMessage = function(options) {
 		hui.ui.messageTimer = window.setTimeout(hui.ui.hideMessage,options.duration);
 	}
 };
+
+hui.ui.msg = hui.ui.showMessage;
+
+hui.ui.msg.success = function(options) {
+	options = hui.override({icon:'common/success',duration:2000},options);
+	hui.ui.msg(options);
+}
+
+hui.ui.msg.fail = function(options) {
+	options = hui.override({icon:'common/warning',duration:3000},options);
+	hui.ui.msg(options);
+}
+
 
 hui.ui.getTranslated = function(value) {
 	if (!hui.isDefined(value) || hui.isString(value)) {
@@ -12427,6 +12447,7 @@ hui.ui.Gallery.prototype = {
 			return;
 		}
 		this.fire('itemOpened',this.objects[index]);
+		this.fire('open',this.objects[index]);
 	},
 	/**
 	 * Sets the lists data source and refreshes it if it is new
@@ -12453,6 +12474,9 @@ hui.ui.Gallery.prototype = {
 	/** @private */
 	$visibilityChanged : function() {
 		if (hui.dom.isVisible(this.element)) {
+			if (this.options.source) {
+				this.options.source.refreshFirst();
+			}
 			this._reveal();
 		}
 	},
@@ -15829,7 +15853,7 @@ hui.ui.TokenField = function(o) {
 	this.name = o.name;
 	this.value = [''];
 	hui.ui.extend(this);
-	this.updateUI();
+	this._updateUI();
 }
 
 hui.ui.TokenField.create = function(o) {
@@ -15842,11 +15866,11 @@ hui.ui.TokenField.prototype = {
 	setValue : function(objects) {
 		this.value = objects || [];
 		this.value.push('');
-		this.updateUI();
+		this._updateUI();
 	},
 	reset : function() {
 		this.value = [''];
-		this.updateUI();
+		this._updateUI();
 	},
 	getValue : function() {
 		var out = [];
@@ -15861,7 +15885,7 @@ hui.ui.TokenField.prototype = {
 	getLabel : function() {
 		return this.options.label;
 	},
-	updateUI : function() {
+	_updateUI : function() {
 		this.element.innerHTML='';
 		hui.each(this.value,function(value,i) {
 			var input = hui.build('input',{'class':'hui_tokenfield_token',parent:this.element});
@@ -15870,20 +15894,30 @@ hui.ui.TokenField.prototype = {
 			}
 			input.value = value;
 			hui.listen(input,'keyup',function() {
-				this.inputChanged(input,i)
+				this._inputChanged(input,i)
 			}.bind(this));
 		}.bind(this));
 	},
-	/** @private */
-	inputChanged : function(input,index) {
+	_inputChanged : function(input,index) {
 		if (index==this.value.length-1 && input.value!=this.value[index]) {
-			this.addField();
+			this._addField();
 		}
 		this.value[index] = input.value;
 		hui.animate({node:input,css:{width:Math.min(Math.max(input.value.length*7+3,50),150)+'px'},duration:200});
 	},
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			this.$$layout();
+		}
+	},
 	/** @private */
-	addField : function() {
+	$$layout : function() {
+		var inputs = hui.get.byTag(this.element,'input');
+		for (var i=0; i < inputs.length; i++) {
+			inputs[i].style.width = Math.min(Math.max(inputs[i].value.length*7+3,50),150)+'px';
+		};
+	},
+	_addField : function() {
 		var input = hui.build('input',{'class':'hui_tokenfield_token'});
 		if (this.options.width) {
 			input.style.width = this.options.width+'px';
@@ -15892,7 +15926,7 @@ hui.ui.TokenField.prototype = {
 		this.value.push('');
 		this.element.appendChild(input);
 		var self = this;
-		hui.listen(input,'keyup',function() {self.inputChanged(input,i)});
+		hui.listen(input,'keyup',function() {self._inputChanged(input,i)});
 	}
 }
 
