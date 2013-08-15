@@ -7208,6 +7208,10 @@ hui.ui.List.prototype = {
 				var percent = Math.round(parseFloat(child.getAttribute('value'))*100);
 				hui.build('span',{style:{width:percent+'%'},parent:progress});
 				this._parseCell(child,progress);
+			} else if (hui.dom.isElement(child,'html')) {
+				var frag = document.createDocumentFragment();
+				frag.innerHTML = child.innerHTML;
+				cell.appendChild(frag);
 			}
 		};
 	},

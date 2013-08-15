@@ -2,36 +2,32 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" title="List" padding="10">
 	<controller name="controller" source="list.js"/>
-	<source name="itemsSource" url="data/source_items.xml"/>
 	<structure>
 		<top>
 		<toolbar>
 			<icon icon="common/refresh" title="Refresh" click="list.refresh()"/>
 			<divider/>
-			<icon icon="common/user" title="List users" click="list.setUrl('data/list_users.xml')"/>
-			<icon icon="common/color" title="List icons" click="list.setUrl('data/list_icons.xml')"/>
-			<icon icon="common/folder" title="List icons (json)" click="list.setUrl('data/list_icons.json')"/>
-			<icon icon="common/settings" title="List buttons" click="list.setUrl('data/list_buttons.xml')"/>
-			<icon icon="common/settings" title="List hierarchy" click="list.setUrl('data/list_hierarchy.xml')"/>
-			<icon icon="common/settings" title="List mixed" click="list.setUrl('data/list_mixed.xml')"/>
-			<search title="Søgning"/>
 		</toolbar>
 		</top>
 		<middle>
 			<left>
-				<selection value="user" name="selector">
-					<item icon="common/person" title="Brugere" value="user"/>
-					<item icon="common/folder" title="Database" value="database" kind="folder"/>
-					<item icon="common/person" title="Alle objekter" value="object"/>
-					<title>Hey</title>
-					<items source="itemsSource"/>
+				<selection value="data/list_mixed.xml" name="selector">
+					<title>XML</title>
+					<item icon="common/folder" title="Users" value="data/list_users.xml"/>
+					<item icon="common/folder" title="Buttons" value="data/list_buttons.xml"/>
+					<item icon="common/folder" title="Icons" value="data/list_icons.xml"/>
+					<item icon="common/folder" title="Hierarchy" value="data/list_hierarchy.xml"/>
+					<item icon="common/folder" title="Mixed" value="data/list_mixed.xml"/>
+					<title>JSON</title>
+					<item icon="common/folder" title="Icons" value="data/list_icons.json"/>
 				</selection>
 			</left>
 			<center>
 				<overflow>
-					<list name="list" url="data/list_users.xml"/>
+					<list name="list" url="data/list_mixed.xml"/>
 				</overflow>
 			</center>
 		</middle>
+		<bottom/>
 	</structure>
 </gui>
