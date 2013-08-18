@@ -973,9 +973,8 @@ table.hui_formula_fields th
 {
 	width: 1%;
 	vertical-align: top;
-	padding: 0px 5px 0px 0px;
+	padding: 5px 5px 0px 0px;
 	text-align: right;
-	line-height: 20px;
 	white-space: nowrap;
 }
 
@@ -984,6 +983,7 @@ table.hui_formula_fields th.hui_formula_middle
 	vertical-align: middle;
 	line-height: normal;
 	padding-bottom: 5px;
+	padding-top: 0;
 }
 
 table.hui_formula_fields_above th
@@ -6739,13 +6739,13 @@ span.hui_locationfield_longitude
 div.hui_tokenfield
 {
 	overflow: hidden;
-	padding-top: 1px;
+	padding-top: 2px;
 	padding-left: 3px;
 }
 
 input.hui_tokenfield_token
 {
-	border-color:#BBBBBB #CCCCCC #DDDDDD;
+	border-color: #BBBBBB #CCCCCC #DDDDDD;
 	border-style:solid;
 	border-width: 1px;
 	width: 50px;
@@ -6755,6 +6755,7 @@ input.hui_tokenfield_token
 	-webkit-border-radius: 2px;
 	-webkit-box-shadow: inset 0 1px 3px #ddd;
 	font-size: 9pt;
+	text-indent: 2px;
 }
 
 input.hui_tokenfield_token:focus

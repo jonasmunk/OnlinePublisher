@@ -1528,9 +1528,10 @@ hui.request = function(options) {
 				}
 			}
 		}
-		if (options.onProgress) {
+		var prog = options.onProgress || options.$progress;
+		if (prog) {
 			transport.upload.addEventListener("progress", function(e) {
-				options.onProgress(e.loaded,e.total);
+				prog(e.loaded,e.total);
 			}, false);
 		}
 		if (options.onLoad) {
