@@ -495,6 +495,19 @@ hui.ui.showMessage = function(options) {
 	}
 };
 
+hui.ui.msg = hui.ui.showMessage;
+
+hui.ui.msg.success = function(options) {
+	options = hui.override({icon:'common/success',duration:2000},options);
+	hui.ui.msg(options);
+}
+
+hui.ui.msg.fail = function(options) {
+	options = hui.override({icon:'common/warning',duration:3000},options);
+	hui.ui.msg(options);
+}
+
+
 hui.ui.getTranslated = function(value) {
 	if (!hui.isDefined(value) || hui.isString(value)) {
 		return value;

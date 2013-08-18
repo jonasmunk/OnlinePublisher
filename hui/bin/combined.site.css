@@ -1213,9 +1213,8 @@ table.hui_formula_fields th
 {
 	width: 1%;
 	vertical-align: top;
-	padding: 0px 5px 0px 0px;
+	padding: 5px 5px 0px 0px;
 	text-align: right;
-	line-height: 20px;
 	white-space: nowrap;
 }
 
@@ -1224,6 +1223,7 @@ table.hui_formula_fields th.hui_formula_middle
 	vertical-align: middle;
 	line-height: normal;
 	padding-bottom: 5px;
+	padding-top: 0;
 }
 
 table.hui_formula_fields_above th

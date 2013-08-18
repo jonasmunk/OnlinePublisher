@@ -25,8 +25,9 @@ body
 body.design_theme_soccer
 {
 	background: url('../gfx/backgrounds/grass.jpg') 50% 50% fixed;
-	background: url('../gfx/backgrounds/soccer_blur2.jpg') 50% 50% fixed;
 	background: url('../gfx/backgrounds/soccer2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/soccer_blur2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/soccer.jpg') 50% 50% fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
@@ -51,7 +52,7 @@ body.design_theme_handball
 	background: url('../gfx/backgrounds/gym.jpg') 50% 50% fixed;
 	background: url('../gfx/backgrounds/gymnasium2.jpg') 50% 50% fixed;
 	background: url('../gfx/backgrounds/handball_blur3.jpg') 50% 50% fixed;
-	background: url('../gfx/backgrounds/handball2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/handball.jpg') 50% 50% fixed;
 	background-size: 100% 100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -60,8 +61,7 @@ body.design_theme_handball
 
 body.design_theme_tennis
 {
-	background: url('../gfx/backgrounds/tennis_blur2.jpg') 50% 50% fixed;
-	background: url('../gfx/backgrounds/tennis2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/tennis.jpg') 50% 50% fixed;
 	background-size: 100% 100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -71,9 +71,6 @@ body.design_theme_tennis
 body.design_theme_badminton
 {
 	background: url('../gfx/backgrounds/badminton.jpg') 50% 50% fixed;
-	background: url('../gfx/backgrounds/badminton2.jpg') 50% 50% fixed;
-	background: url('../gfx/backgrounds/badminton3.jpg') 50% 50% fixed;
-	background: url('../gfx/backgrounds/badminton4.jpg') 50% 50% fixed;
 	background-size: 100% 100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -92,6 +89,24 @@ body.design_theme_volleyball
 body.design_theme_gymnastics
 {
 	background: url('../gfx/backgrounds/gymnastics.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_floorball
+{
+	background: url('../gfx/backgrounds/floorball.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_boxing
+{
+	background: url('../gfx/backgrounds/boxing.jpg') 50% 50% fixed;
 	background-size: 100% 100%;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;

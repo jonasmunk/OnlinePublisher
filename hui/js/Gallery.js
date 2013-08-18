@@ -237,6 +237,7 @@ hui.ui.Gallery.prototype = {
 			return;
 		}
 		this.fire('itemOpened',this.objects[index]);
+		this.fire('open',this.objects[index]);
 	},
 	/**
 	 * Sets the lists data source and refreshes it if it is new
@@ -263,6 +264,9 @@ hui.ui.Gallery.prototype = {
 	/** @private */
 	$visibilityChanged : function() {
 		if (hui.dom.isVisible(this.element)) {
+			if (this.options.source) {
+				this.options.source.refreshFirst();
+			}
 			this._reveal();
 		}
 	},

@@ -3,7 +3,7 @@
 	"window" : {"total":500,"size":14,"page":4},
 	"headers" : [
 		{"title":"Icon","width":70},
-		{"title":"test","sortable":true}
+		{"title":"Test","sortable":true}
 	],
 	"rows" : [
 		{"id":1,"kind":"icon","cells":
@@ -14,7 +14,8 @@
 		},
 		{"id":2,"kind":"icon","cells":
 			[
-				{"icon":"common/delete","text":"common/delete"}
+				{"icon":"common/delete","text":"common/delete"},
+				{}
 			]
 		}
 	]

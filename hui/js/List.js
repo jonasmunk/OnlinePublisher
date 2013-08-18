@@ -602,6 +602,12 @@ hui.ui.List.prototype = {
 				var percent = Math.round(parseFloat(child.getAttribute('value'))*100);
 				hui.build('span',{style:{width:percent+'%'},parent:progress});
 				this._parseCell(child,progress);
+			} else if (hui.dom.isElement(child,'html')) {
+				for (var j = 0; j < child.childNodes.length; j++) {
+					var clone = child.childNodes[j].cloneNode(true);
+					clone.namespaceURI = child.namespaceURI;
+					cell.appendChild(clone);
+				}
 			}
 		};
 	},
