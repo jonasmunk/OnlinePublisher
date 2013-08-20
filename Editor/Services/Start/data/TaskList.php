@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$list = Query::after('issue')->withoutProperty('kind',Issue::$error)->get();
+$list = Query::after('issue')->withoutProperty('kind',Issue::$error)->withProperty('statusId',0)->get();
 
 //$list = array();
 
