@@ -491,35 +491,6 @@ div.chrome_info div.about p.more
 	width: 50px;
 }
 
-/********************** Pacards ********************/
-
-div.chrome_placards
-{
-	overflow: hidden;
-	height: 170px;
-	border-top: 1px solid #ddd;
-	padding-top: 15px;
-}
-
-a.chrome_placard
-{
-	margin-left: 13px;
-	float: left;
-	width: 282px;
-	height: 164px;
-	background: url('../gfx/placards.png');
-}
-
-a.chrome_placard_center
-{
-	background-position: left -164px;
-}
-
-a.chrome_placard_right
-{
-	background-position: left -328px;
-}
-
 
 /************************** Search *********************/
 
