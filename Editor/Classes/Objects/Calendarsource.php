@@ -100,11 +100,11 @@ class Calendarsource extends Object {
 	function getParsedFilter() {
 		$parsed = array();
 		if ($this->filter) {
-			preg_match('/home=([a-zA-Z ]+)/i', $this->filter, $result);
+			preg_match('/home=([\w\W]+)/i', $this->filter, $result);
 			if ($result) {
 				$parsed['home'] = $result[1];
 			}
-			preg_match('/away=([a-zA-Z ]+)/i', $this->filter, $result);
+			preg_match('/away=([\w\W]+)/i', $this->filter, $result);
 			if ($result) {
 				$parsed['away'] = $result[1];
 			}
