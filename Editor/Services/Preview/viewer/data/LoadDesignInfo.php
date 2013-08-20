@@ -15,7 +15,7 @@ $designId = $page->getDesignId();
 
 $info = DesignService::loadParameters($designId);
 
-
+Log::debug($info);
 
 Response::sendObject($info);
 ?>
