@@ -108,6 +108,14 @@ class Calendarsource extends Object {
 			if ($result) {
 				$parsed['away'] = $result[1];
 			}
+			preg_match('/location=([\w\W]+)/i', $this->filter, $result);
+			if ($result) {
+				$parsed['location'] = $result[1];
+			}
+			preg_match('/location!=([\w\W]+)/i', $this->filter, $result);
+			if ($result) {
+				$parsed['!location'] = $result[1];
+			}
 		}
 		return $parsed;
 	}
@@ -132,6 +140,12 @@ class Calendarsource extends Object {
 					continue;
 				}
 				if (isset($filter['away']) && strpos($event->getGuestTeam(),$filter['away'])===false) {
+					continue;
+				}
+				if (isset($filter['location']) && strpos($event->getLocation(),$filter['location'])===false) {
+					continue;
+				}
+				if (isset($filter['!location']) && strpos($event->getLocation(),$filter['!location'])!==false) {
 					continue;
 				}
 				$summary = $event->getHomeTeam()." - ".$event->getGuestTeam();
