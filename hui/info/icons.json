@@ -187,6 +187,9 @@
         "pagereference": [
             16
         ], 
+        "pause": [
+            32
+        ], 
         "person": [
             16, 
             32
@@ -464,6 +467,9 @@
         "next": [
             16
         ], 
+        "nomenu": [
+            16
+        ], 
         "nosearch": [
             16
         ], 
@@ -566,6 +572,17 @@
     }, 
     "part": {
         "news": [
+            16
+        ]
+    }, 
+    "status": {
+        "paused": [
+            16
+        ], 
+        "running": [
+            16
+        ], 
+        "waiting": [
             16
         ]
     }, 

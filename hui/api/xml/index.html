@@ -69,7 +69,7 @@
 &lt;/buttons&gt;
 </pre></div><div class="component action"><h2>Button <span class="module">action</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Button.html"><span>hui.ui.Button</span></a></p>
-<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;button text="«text»" icon="«icon»" name="«text»" small="«boolean»" mini="«boolean»" highlighted="«boolean»" disabled="«boolean»" variant="«'paper'»" submit="«boolean»" click="«script»" url="«url»"&gt;
+<p class="file">File: <a href="../../xslt/formula.xsl"><span>formula.xsl</span></a></p><pre>&lt;button text="«text»" icon="«icon»" name="«text»" small="«boolean»" mini="«boolean»" highlighted="«boolean»" disabled="«boolean»" variant="«'light'»" submit="«boolean»" click="«script»" url="«url»"&gt;
     &lt;confirm text="«text»" ok="«text»" cancel="«text»"/&gt;
 &lt;/button&gt;
 </pre></div><div class="component input"><h2>Image input <span class="module">input</span></h2>
@@ -216,29 +216,6 @@
 <p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;link name="«name»"&gt;
     ····
 &lt;/link&gt;
-</pre></div><div class="component visalization"><h2>Diagram <span class="module">visalization</span></h2>
-<p class="class">Class: <a href="../symbols/hui.ui.Diagram.html"><span>hui.ui.Diagram</span></a></p>
-<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;diagram name="«name»"/&gt;
-</pre></div><div class="component visalization"><h2>Chart <span class="module">visalization</span></h2>
-<p class="class">Class: <a href="../symbols/hui.ui.Chart.html"><span>hui.ui.Chart</span></a></p>
-<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;chart name="«name»" source="«name»"/&gt;
-</pre></div><div class="component input"><h2>Segmented <span class="module">input</span></h2>
-<p class="class">Class: <a href="../symbols/hui.ui.Segmented.html"><span>hui.ui.Segmented</span></a></p>
-<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;segmented name="«name»" value="«text»" allow-null="«boolean»"&gt;
-    &lt;item text="«text»" value="«text»" icon="«icon»" /&gt;
-&lt;/segmented&gt;
-</pre></div><div class="component layout"><h2>Rendering <span class="module">layout</span></h2>
-<p class="class">Class: <a href="../symbols/hui.ui.Rendering.html"><span>hui.ui.Rendering</span></a></p>
-<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;rendering name="«name»"/&gt;
-</pre></div><div class="component layout"><h2>Menu <span class="module">layout</span></h2>
-<p class="class">Class: <a href="../symbols/hui.ui.Menu.html"><span>hui.ui.Menu</span></a></p>
-<p class="file">File: <a href="../../xslt/gui.xsl"><span>gui.xsl</span></a></p><pre>&lt;menu name="«name»"&gt;
-    &lt;item text="«text»" value="«text»"/&gt;
-    &lt;divider&gt;
-    &lt;item text="«text»" value="«text»"&gt;
-    	&lt;item text="«text»" value="«text»"/&gt;
-	&lt;/item&gt;
-&lt;/menu&gt;
 </pre></div><div class="component action"><h2>Icon <span class="module">action</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Icon.html"><span>hui.ui.Icon</span></a></p>
 <p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;icon name="«text»" icon="«icon»" size="«pixels»" text="«text»"/&gt;
@@ -247,7 +224,7 @@
     ···
 &lt;/space&gt;
 </pre></div><div class="component layout"><h2>Columns <span class="module">layout</span></h2>
-<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;columns space="«pixels»"&gt;
+<p class="file">File: <a href="../../xslt/layout.xsl"><span>layout.xsl</span></a></p><pre>&lt;columns space="«pixels»" flexible="«boolean»" height="«'full'»"&gt;
     &lt;column width="«css-length»"&gt;
         ···
     &lt;/column&gt;
@@ -347,6 +324,9 @@
     &lt;/bottom&gt;
 &lt;/structure&gt;
 </pre></div><div class="component visalization"><h2>Graph <span class="module">visalization</span></h2>
+<p class="class">Class: <a href="../symbols/hui.ui.Graph.html"><span>hui.ui.Graph</span></a></p>
+<p class="file">File: <a href="../../xslt/other.xsl"><span>other.xsl</span></a></p><pre>&lt;graph name="«name»" layout="«?»" source="«source»"/&gt;
+</pre></div><div class="component visalization"><h2>TimeLine <span class="module">visalization</span></h2>
 <p class="class">Class: <a href="../symbols/hui.ui.Graph.html"><span>hui.ui.Graph</span></a></p>
 <p class="file">File: <a href="../../xslt/other.xsl"><span>other.xsl</span></a></p><pre>&lt;graph name="«name»" layout="«?»" source="«source»"/&gt;
 </pre></div><div class="component bar"><h2>Toolbar <span class="module">bar</span></h2>

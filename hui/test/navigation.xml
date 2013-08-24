@@ -22,7 +22,11 @@
         <item icon="common/page" title="chart" value="html/chart.html"/>
         <item icon="common/page" title="colorpicker" value="html/colorpicker.html"/>
         <item icon="common/page" title="diagram" value="html/diagram.html"/>
+        <item icon="common/page" title="diagram_huge" value="html/diagram_huge.html"/>
         <item icon="common/page" title="drawing" value="html/drawing.html"/>
+        <item icon="common/page" title="drawing_animation" value="html/drawing_animation.html"/>
+        <item icon="common/page" title="drawing_animation_blue" value="html/drawing_animation_blue.html"/>
+        <item icon="common/page" title="drawing_line" value="html/drawing_line.html"/>
         <item icon="common/page" title="editor" value="html/editor.html"/>
         <item icon="common/page" title="effects" value="html/effects.html"/>
         <item icon="common/page" title="finder" value="html/finder.html"/>
@@ -42,6 +46,7 @@
         <item icon="common/page" title="plupload" value="html/plupload.html"/>
         <item icon="common/page" title="positions" value="html/positions.html"/>
         <item icon="common/page" title="progressbar" value="html/progressbar.html"/>
+        <item icon="common/page" title="progressindicator" value="html/progressindicator.html"/>
         <item icon="common/page" title="protovis" value="html/protovis.html"/>
         <item icon="common/page" title="require" value="html/require.html"/>
         <item icon="common/page" title="scrollto" value="html/scrollto.html"/>
@@ -76,12 +81,14 @@
         <item icon="common/page" title="style" value="xml/style.xml"/>
         <item icon="common/page" title="tabs" value="xml/tabs.xml"/>
         <item icon="common/page" title="tiles" value="xml/tiles.xml"/>
+        <item icon="common/page" title="timeline" value="xml/timeline.xml"/>
         <item icon="common/page" title="toolbar" value="xml/toolbar.xml"/>
         <item icon="common/page" title="windows" value="xml/windows.xml"/>
     </item>
     <item icon="common/folder" title="Complete GUIs" value="Complete GUIs">
         <item icon="common/page" title="competence" value="guis/competence.xml"/>
         <item icon="common/page" title="login" value="guis/login.xml"/>
+        <item icon="common/page" title="model" value="guis/model.xml"/>
         <item icon="common/page" title="object_finder" value="guis/object_finder.xml"/>
         <item icon="common/page" title="objectchooser" value="guis/objectchooser.html"/>
         <item icon="common/page" title="person_part" value="guis/person_part.xml"/>
