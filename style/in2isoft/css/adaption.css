@@ -158,13 +158,6 @@
 		border-radius: 5px;
 	}
 	
-	/*
-	div.part_text,
-	div.part_listing
-	{
-		font-family: 'Helvetica Neue','Helvetica','Arial',sans-serif;
-	}*/
-	
 	ul.layout_side_navigation
 	{
 		margin: 0;
@@ -201,6 +194,11 @@
 		display: block;
 		width: auto !important;
 		padding: 0 !important;
+	}
+	
+	div.part_image img
+	{
+		max-width: 100%;
 	}
 
 	h1.part_header
@@ -275,6 +273,17 @@
 	{
 		height: auto;
 	}
+	
+	ul.layout_navigation li
+	{
+		height: 24px;
+	}
+	
+	ul.layout_navigation li a
+	{
+		height: 24px;
+		line-height: 24px;
+	}
 		
 	ul.layout_placards li
 	{
@@ -290,35 +299,36 @@
 	
 	ul.layout_placards span
 	{
-		font-size: 18px;
-		line-height: 22px;
+		font-size: 16px;
+		line-height: 18px;
 	}
 	
 	ul.layout_placards strong
 	{
-		text-indent: 198px;
+		text-indent: 143px;
 		position: absolute;
+		letter-spacing: -2px;
 	}
 	
 	ul.layout_placards li.onlineme span
 	{
-		background-position: -10px -410px;
+		background-position: -60px -410px;
 	}
 
 	ul.layout_placards li.onlinepublisher span
 	{
-		background-position: -10px 5px;
+		background-position: -50px 5px;
 	}
 
 	ul.layout_placards li.onlineobjects span
 	{
-		background-position: -10px -190px;
+		background-position: -60px -190px;
 	}
 
 	ul.layout_placards span
 	{
-		padding-top: 45px;
-		padding-left: 200px;
-		height: 80px;
+		padding-top: 40px;
+		padding-left: 145px;
+		height: 90px;
 	}
 }
