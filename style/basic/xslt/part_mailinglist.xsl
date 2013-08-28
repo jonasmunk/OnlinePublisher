@@ -30,60 +30,56 @@
 			<xsl:otherwise>Tilmeld</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<div class="part_mailinglist_box part_mailinglist_subscribe">
-			<div class="part_mailinglist_box_top"><div><div><xsl:comment/></div></div></div>
-			<div class="part_mailinglist_box_middle"><div class="part_mailinglist_box_middle">
-				<xsl:choose>
-					<xsl:when test="$editor='true'">
-						<div>
-						<input type="hidden" name="{../../../@id}_action" value="subscribe"/>
-						<h2 class="common"><xsl:value-of select="$lang_title"/></h2>
-						<xsl:if test="ml:error">
-							<p class="error"><xsl:apply-templates select="ml:error"/></p>
-						</xsl:if>
-						<xsl:if test="ml:success">
-							<p class="success"><xsl:value-of select="$lang_success"/></p>
-						</xsl:if>
-						<p>
-							<label><xsl:value-of select="$lang_name"/>:</label>
-							<span class="common_field"><span><span><input class="text" name="{../../../@id}_name" value="{ml:value[@key='name']/@value}"/></span></span></span>
-						</p>
-						<p>
-							<label>E-mail:</label>
-							<span class="common_field"><span><span><input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/></span></span></span>
-						</p>
-						<p class="buttons">
-							<input type="submit" class="submit" value="{$lang_subscribe}"/>
-						</p>
-						</div>
-					</xsl:when>
-					<xsl:otherwise>
-						<form action="./?id={//p:page/@id}" method="post" accept-charset="UTF-8">
-						<div>
-						<input type="hidden" name="{../../../@id}_action" value="subscribe"/>
-						<h2 class="common"><xsl:value-of select="$lang_title"/></h2>
-						<xsl:if test="ml:error">
-							<p class="error"><xsl:apply-templates select="ml:error"/></p>
-						</xsl:if>
-						<xsl:if test="ml:success">
-							<p class="success"><xsl:value-of select="$lang_success"/></p>
-						</xsl:if>
-						<p>
-							<label><xsl:value-of select="$lang_name"/>:</label>
-							<span class="common_field"><span><span><input class="text" name="{../../../@id}_name" value="{ml:value[@key='name']/@value}"/></span></span></span>
-						</p>
-						<p>
-							<label>E-mail:</label>
-							<span class="common_field"><span><span><input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/></span></span></span>
-						</p>
-						<p class="buttons">
-							<input type="submit" class="submit" value="{$lang_subscribe}"/>
-						</p>
-						</div>
-						</form>
-					</xsl:otherwise>
-				</xsl:choose>
-			</div></div>
-			<div class="part_mailinglist_box_bottom"><div><div><xsl:comment/></div></div></div>
+			<xsl:choose>
+				<xsl:when test="$editor='true'">
+					<div>
+					<input type="hidden" name="{../../../@id}_action" value="subscribe"/>
+					<h2 class="common"><xsl:value-of select="$lang_title"/></h2>
+					<xsl:if test="ml:error">
+						<p class="error"><xsl:apply-templates select="ml:error"/></p>
+					</xsl:if>
+					<xsl:if test="ml:success">
+						<p class="success"><xsl:value-of select="$lang_success"/></p>
+					</xsl:if>
+					<p>
+						<label><xsl:value-of select="$lang_name"/>:</label>
+						<input class="text" name="{../../../@id}_name" value="{ml:value[@key='name']/@value}"/>
+					</p>
+					<p>
+						<label>E-mail:</label>
+						<input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/>
+					</p>
+					<p class="buttons">
+						<input type="submit" class="submit" value="{$lang_subscribe}"/>
+					</p>
+					</div>
+				</xsl:when>
+				<xsl:otherwise>
+					<form action="./?id={//p:page/@id}" method="post" accept-charset="UTF-8">
+					<div>
+					<input type="hidden" name="{../../../@id}_action" value="subscribe"/>
+					<h2 class="common"><xsl:value-of select="$lang_title"/></h2>
+					<xsl:if test="ml:error">
+						<p class="error"><xsl:apply-templates select="ml:error"/></p>
+					</xsl:if>
+					<xsl:if test="ml:success">
+						<p class="success"><xsl:value-of select="$lang_success"/></p>
+					</xsl:if>
+					<p>
+						<label><xsl:value-of select="$lang_name"/>:</label>
+						<input class="text" name="{../../../@id}_name" value="{ml:value[@key='name']/@value}"/>
+					</p>
+					<p>
+						<label>E-mail:</label>
+						<input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/>
+					</p>
+					<p class="buttons">
+						<input type="submit" class="submit" value="{$lang_subscribe}"/>
+					</p>
+					</div>
+					</form>
+				</xsl:otherwise>
+			</xsl:choose>
 		</div>
 	</xsl:template>
 	
@@ -101,10 +97,26 @@
 			<xsl:otherwise>Frameld</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 		<div class="part_mailinglist_box part_mailinglist_unsubscribe">
-			<div class="part_mailinglist_box_top"><div><div><xsl:comment/></div></div></div>
-			<div class="part_mailinglist_box_middle"><div class="part_mailinglist_box_middle">
-				<xsl:choose>
-					<xsl:when test="$editor='true'">
+			<xsl:choose>
+				<xsl:when test="$editor='true'">
+					<div>
+					<input type="hidden" name="{../../../@id}_action" value="unsubscribe"/>
+					<h2 class="common"><xsl:value-of select="$lang_title"/></h2>
+					<xsl:if test="ml:error">
+						<p class="error"><xsl:apply-templates select="ml:error"/></p>
+					</xsl:if>
+					<xsl:if test="ml:success">
+						<p class="success"><xsl:value-of select="$lang_success"/></p>
+					</xsl:if>
+					<p>
+						<label>E-mail:</label>
+						<input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/>
+					</p>
+					<p class="buttons"><input type="submit" class="submit" value="{$lang_unsubscribe}"/></p>
+					</div>
+				</xsl:when>
+				<xsl:otherwise>
+					<form action="./?id={//p:page/@id}" method="post" accept-charset="UTF-8">
 						<div>
 						<input type="hidden" name="{../../../@id}_action" value="unsubscribe"/>
 						<h2 class="common"><xsl:value-of select="$lang_title"/></h2>
@@ -120,29 +132,9 @@
 						</p>
 						<p class="buttons"><input type="submit" class="submit" value="{$lang_unsubscribe}"/></p>
 						</div>
-					</xsl:when>
-					<xsl:otherwise>
-						<form action="./?id={//p:page/@id}" method="post" accept-charset="UTF-8">
-							<div>
-							<input type="hidden" name="{../../../@id}_action" value="unsubscribe"/>
-							<h2 class="common"><xsl:value-of select="$lang_title"/></h2>
-							<xsl:if test="ml:error">
-								<p class="error"><xsl:apply-templates select="ml:error"/></p>
-							</xsl:if>
-							<xsl:if test="ml:success">
-								<p class="success"><xsl:value-of select="$lang_success"/></p>
-							</xsl:if>
-							<p>
-								<label>E-mail:</label>
-								<span class="common_field"><span><span><input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/></span></span></span>
-							</p>
-							<p class="buttons"><input type="submit" class="submit" value="{$lang_unsubscribe}"/></p>
-							</div>
-						</form>
-					</xsl:otherwise>
-				</xsl:choose>
-			</div></div>
-			<div class="part_mailinglist_box_bottom"><div><div><xsl:comment/></div></div></div>
+					</form>
+				</xsl:otherwise>
+			</xsl:choose>
 		</div>
 	</xsl:template>
 	

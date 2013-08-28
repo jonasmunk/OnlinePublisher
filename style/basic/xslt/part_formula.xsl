@@ -14,6 +14,7 @@
 	</xsl:if>
 	<xsl:if test="$editor!='true'">
 		<form id="{generate-id()}" onsubmit="return false">
+			<xsl:comment/>
 			<xsl:call-template name="p:content"/>
 		</form>
 		<script type="text/javascript">

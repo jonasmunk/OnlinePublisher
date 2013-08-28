@@ -107,8 +107,9 @@ class In2iGui {
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
 		$result = XslService::transform($gui,$xsl);
+		$result = preg_replace("/<!DOCTYPE[^>]+>/u", "", $result);
 		$result = str_replace(
-			array('<!DOCTYPE div PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">','xmlns="http://www.w3.org/1999/xhtml"','xmlns:html="http://www.w3.org/1999/xhtml"')
+			array(' xmlns="http://www.w3.org/1999/xhtml"',' xmlns:html="http://www.w3.org/1999/xhtml"')
 			,'',$result);
 		return $result;
 	}
