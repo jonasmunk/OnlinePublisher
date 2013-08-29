@@ -14,6 +14,10 @@ class HtmlPartController extends PartController
 		parent::PartController('html');
 	}
 	
+	function isLiveEnabled() {
+		return true;
+	}
+	
 	function createPart() {
 		$part = new HtmlPart();
 		$part->setHtml('<div>HTML-kode</div>');

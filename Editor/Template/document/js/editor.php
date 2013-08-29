@@ -17,6 +17,7 @@ hui.ui.listen({
 		});
 		editor.addPartController('header','Overskrift',op.Editor.Header);
 		editor.addPartController('text','Text',op.Editor.Text);
+		editor.addPartController('html','HTML',op.Editor.Html);
 		editor.ignite();
 		editor.activate();
 	}
