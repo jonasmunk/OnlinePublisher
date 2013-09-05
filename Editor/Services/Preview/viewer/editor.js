@@ -121,7 +121,7 @@ op.Editor = {
 	},
 	
 	_buildDesignForm : function(parameters) {
-		var win = this.designWindow = hui.ui.Window.create({width:300,title:'Design',icon:'common/info',padding:10,variant:'dark'});
+		var win = this.designWindow = hui.ui.Window.create({width:300,title:'Design',icon:'common/info',padding:10});
 		var form = this.designFormula = hui.ui.Formula.create();
 		form.listen({
 			$submit : function() {

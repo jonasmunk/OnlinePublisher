@@ -92,6 +92,7 @@
 					<script src="{$context}/hui/js/hui_color.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 					<script src="{$context}/hui/js/hui_color_table.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 					<script src="{$context}/hui/js/hui_require.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+					<script src="{$context}/hui/js/hui_store.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 					<script src="{$context}/hui/js/Source.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 					<script src="{$context}/hui/js/DragDrop.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 					<script src="{$context}/hui/js/Window.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>

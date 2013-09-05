@@ -20,6 +20,7 @@ class JsonService {
 		if (file_exists($path)) {
 			$json = file_get_contents($path);
 			$obj = JsonService::decode($json);
+			$obj = Strings::fromUnicode($obj);
 			return $obj;
 		}
 		return null;
