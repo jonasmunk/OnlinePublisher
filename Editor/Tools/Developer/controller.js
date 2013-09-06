@@ -2,6 +2,15 @@ hui.ui.listen({
 	$ready : function() {
 		hui.ui.tellContainers('changeSelection','tool:Developer');
 	},
+	$click$rebuildClasses : function() {
+		hui.ui.request({
+			message : {start:'Rebuilding'},
+			url : 'data/Rebuild.php',
+			$success : function() {
+				hui.ui.msg.success({text:'It is fresh!'});
+			}
+		})
+	},
 	$select$selector : function(item) {
 		if (item.value=='settings') {
 			iframe.clear();
@@ -20,6 +29,9 @@ hui.ui.listen({
 		if (item.value=='phpInfo') {
 			iframe.clear();
 			iframe.setUrl('data/PhpInfo.php');
+		} else if (item.value=='actions') {
+			iframe.clear();
+			iframe.setUrl('actions.php');
 		} else if (item.value=='session') {
 			iframe.clear();
 			iframe.setUrl('data/Session.php');

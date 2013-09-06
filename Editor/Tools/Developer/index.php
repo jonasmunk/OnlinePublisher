@@ -6,7 +6,7 @@
 require_once '../../Include/Private.php';
 
 $gui='
-<gui xmlns="uri:hui" padding="10" title="Developer" state="frame">
+<gui xmlns="uri:hui" padding="10" title="Developer" state="settings">
 	<controller source="controller.js"/>
 	<source name="testsSource" url="data/ListTests.php"/>
 	<source name="graphSource" url="data/GraphData.php"/>
@@ -23,7 +23,7 @@ $gui='
 		<middle>
 			<left>
 				<overflow>
-					<selection value="phpInfo" name="selector" top="5">
+					<selection value="settings" name="selector" top="5">
 						<item icon="common/info" title="PHP info" value="phpInfo"/>
 						<item icon="common/time" title="Session" value="session"/>
 						<item icon="common/time" title="Report" value="report"/>
@@ -44,6 +44,7 @@ $gui='
 					<fragment height="full" background="wood">
 						<box width="300" top="30" title="Settings" padding="10">
 							<formula name="settingsFormula">
+								<button text="Rebuild classes" name="rebuildClasses"/>
 								<fields>
 									<field label="Simulate network latency:">
 										<checkbox key="simulateLatency" value="'.(@$_SESSION['core.debug.simulateLatency'] ? 'true' : 'false').'"/>

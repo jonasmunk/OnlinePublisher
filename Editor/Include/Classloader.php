@@ -5,10 +5,19 @@ if (!isset($GLOBALS['basePath'])) {
 }
 function __autoload($class_name) {
 	global $basePath;
+	
+	
 	if (class_exists($class_name)) {
 		return;
 	}
-	$folders = array('','Templates/','Services/','Utilities/','Objects/','Parts/','Core/','Model/','Network/','Interface/','Modules/News/','Modules/Images/','Modules/Links/','Modules/Graphs/','Modules/Review/','Modules/Statistics/','Modules/Water/','Formats/','Integration/','Modules/Inspection/'/*,'Tests/'*/);
+	include $basePath.'Editor/Info/Classpaths.php';
+	if (is_array($classes)) {
+		if (array_key_exists($class_name,$classes)) {
+			require_once $basePath.'Editor/Classes/'.$classes[$class_name];
+			return;
+		}
+	}
+	$folders = array('', 'Templates/', 'Services/', 'Utilities/', 'Objects/', 'Parts/', 'Core/', 'Model/', 'Network/', 'Interface/', 'Modules/News/', 'Modules/Images/', 'Modules/Links/', 'Modules/Graphs/', 'Modules/Review/', 'Modules/Statistics/', 'Modules/Water/', 'Formats/', 'Integration/', 'Modules/Inspection/'/*,'Tests/'*/);
 	foreach ($folders as $folder) {
 		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';
 		if (file_exists($path)) {
