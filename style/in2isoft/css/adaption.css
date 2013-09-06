@@ -87,6 +87,13 @@
 	{
 		width: 100%;
 	}
+	
+	div.part_image img
+	{
+		max-width: 100%;
+		height: auto;
+	}
+	
 }
 
 @media screen and (max-width: 880px) {
@@ -196,11 +203,6 @@
 		padding: 0 !important;
 	}
 	
-	div.part_image img
-	{
-		max-width: 100%;
-	}
-
 	h1.part_header
 	{
 		font-size: 22px;
