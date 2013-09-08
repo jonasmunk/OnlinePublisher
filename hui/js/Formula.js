@@ -60,10 +60,10 @@ hui.ui.Formula.prototype = {
 		}
 	},
 	/** Sets focus in the first found child */
-	focus : function() {
+	focus : function(key) {
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
-			if (d[i].focus) {
+			if (d[i].focus && (!key || (d[i].options && d[i].options.key==key) || d[i].name==key)) {
 				d[i].focus();
 				return;
 			}

@@ -6522,10 +6522,10 @@ hui.ui.Formula.prototype = {
 		}
 	},
 	/** Sets focus in the first found child */
-	focus : function() {
+	focus : function(key) {
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
-			if (d[i].focus) {
+			if (d[i].focus && (!key || d[i].key==key || d[i].name==key) {
 				d[i].focus();
 				return;
 			}
@@ -10601,8 +10601,9 @@ hui.ui.Editor.prototype = {
 		this.activePart = part;
 		this.showPartEditControls();
 		hui.cls.add(part.element,'hui_editor_part_active');
+		hui.ui.msg({text:{en:'Loading...',da:'Indlæser...'},delay:300,busy:true});
 		part.activate(function() {
-			//hui.ui.showMessage({text:'Loaded',duration:2000});
+			hui.ui.hideMessage();
 		});
 		window.clearTimeout(this.partControlTimer);
 		this._hidePartControls();
@@ -10654,9 +10655,11 @@ hui.ui.Editor.prototype = {
 	},
 	savePart : function(part) {
 		this.busy = true;
+		hui.ui.msg({text:{en:'Saving...',da:'Gemmer...'},delay:300,busy:true});
+		this.hidePartEditor();
 		part.save({
 			callback : function() {
-				this.hidePartEditor();
+				hui.ui.hideMessage();
 				this.activePart = null;
 				this.busy = false;
 				this._deactivatePart(part);
@@ -10673,10 +10676,10 @@ hui.ui.Editor.prototype = {
 	},
 	_deactivatePart : function(part) {
 		part.deactivate(function() {
-			this.partDidDeacivate(part);
+			this.partDidDeactivate(part);
 		}.bind(this))
 	},
-	partDidDeacivate : function(part) {
+	partDidDeactivate : function(part) {
 		hui.cls.remove(part.element,'hui_editor_part_active');
 		this.activePart = null;
 		this._hidePartEditControls();
@@ -11058,7 +11061,7 @@ hui.ui.Editor.Header.prototype = {
 	deactivate : function() {
 		this.header.style.visibility='';
 		this.element.removeChild(this.field);
-		hui.ui.Editor.get().partDidDeacivate(this);
+		hui.ui.Editor.get().partDidDeactivate(this);
 	},
 	updateFieldStyle : function() {
 		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
@@ -11118,7 +11121,7 @@ hui.ui.Editor.Html.prototype = {
 			this.editor.destroy();
 			this.element.innerHTML = this.value;
 		}
-		hui.ui.Editor.get().partDidDeacivate(this);
+		hui.ui.Editor.get().partDidDeactivate(this);
 	},
 	richTextDidChange : function() {
 		//this.deactivate();
