@@ -113,11 +113,17 @@ class User extends Object {
 	}
 
 	function sub_publish() {
-		$data =
-		'<user xmlns="'.parent::_buildnamespace('1.0').'">'.
-		'<username>'.Strings::escapeXML($this->username).'</username>'.
-		'</user>';
-		return $data;
+		return '<user xmlns="'.parent::_buildnamespace('1.0').'">'.
+			'<username>'.Strings::escapeXML($this->username).'</username>'.
+			'</user>';
+	}
+	
+	function isValid() {
+		if (!AuthenticationService::isValidUsername($this->username)) {
+			Log::debug('Invalid username: '.$this->username);
+			return false;
+		}
+		return true;
 	}
 }
 ?>

@@ -9,17 +9,23 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+
 class TestUser extends AbstractObjectTest {
     
 	function TestUser() {
 		parent::AbstractObjectTest('user');
 	}
+	
+	function makeValid($obj) {
+		$obj->setUsername('testuser');
+	}
 
 	function testProperties() {
 		$obj = new User();
+		$obj->setUsername('testuser');
 		$obj->setTitle('Jonas Munk');
 		$obj->setLanguage('en');
-		$obj->save();
+		$this->assertTrue($obj->save(),'Saving user');
 		
 		$loaded = User::load($obj->getId());
 		$this->assertEqual($loaded->getTitle(),$obj->getTitle());
@@ -35,7 +41,7 @@ class TestUser extends AbstractObjectTest {
 		$obj->setUsername($username);
 		$obj->setPassword(AuthenticationService::encryptPassword('$ecret'));
 		$obj->setSecure(true);
-		$obj->save();
+		$this->assertTrue($obj->save(),'Saving user');
 		
 		$this->assertNull(AuthenticationService::getUser('dsfgashfsahdfghaj','fsdhagdfjhgdfjhgfja'));
 

@@ -76,9 +76,9 @@ class Object extends Entity {
 	
 	function save() {
 		if ($this->id > 0) {
-			$this->update();
+			return $this->update();
 		} else {
-			$this->create();
+			return $this->create();
 		}
 	}
 	
@@ -98,6 +98,13 @@ class Object extends Entity {
 	 * Override this to prevent removal
 	 */
 	function canRemove() {
+		return true;
+	}
+	
+	/**
+	 * Override this to prevent creating/updating invalid data
+	 */
+	function isValid() {
 		return true;
 	}
 	

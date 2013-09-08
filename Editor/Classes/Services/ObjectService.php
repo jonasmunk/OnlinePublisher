@@ -190,7 +190,12 @@ class ObjectService {
 		if ($object->isPersistent()) {
 			Log::debug('Tried creating object already persisted...');
 			Log::debug($object);
-			return;
+			return false;
+		}
+		if (!$object->isValid()) {
+			Log::debug('Tried creating invalid object...');
+			Log::debug($object);
+			return false;
 		}
 		$sql = "insert into `object` (title,type,note,created,updated,searchable,owner_id) values (".
 		Database::text($object->title).",".
@@ -231,6 +236,7 @@ class ObjectService {
 			$object->sub_create();
 		}
 		EventService::fireEvent('create','object',$object->type,$object->id);
+		return true;
 	}
 
 	
@@ -238,7 +244,12 @@ class ObjectService {
 		if (!$object->isPersistent()) {
 			Log::debug('Tried updating object not persisted...');
 			Log::debug($object);
-			return;
+			return false;
+		}
+		if (!$object->isValid()) {
+			Log::debug('Tried saving invalid object...');
+			Log::debug($object);
+			return false;
 		}
 		$sql = "update `object` set ".
 			"title=".Database::text($object->getTitle()).
@@ -263,6 +274,7 @@ class ObjectService {
 			$object->sub_update();
 		}
 		EventService::fireEvent('update','object',$object->type,$object->id);
+		return true;
 	}
 	
 	function toXml($object) {

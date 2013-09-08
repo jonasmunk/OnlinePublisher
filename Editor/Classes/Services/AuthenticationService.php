@@ -104,6 +104,10 @@ class AuthenticationService {
 		return false;
 	}
 	
+	function isValidUsername($username) {
+		return preg_match("/^[\\S]{2,}$/u", $username);
+	}
+	
 	function isValidEmailValidationSession($key) {
 		$sql = "select id from email_validation_session where `unique`=".Database::text($key)." and timelimit>now()";
 		return !Database::isEmpty($sql);
