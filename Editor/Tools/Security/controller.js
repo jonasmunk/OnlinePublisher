@@ -68,7 +68,7 @@ hui.ui.listen({
 			json : {data:{id:this.userId}},
 			url : '../../Services/Model/DeleteObject.php',
 			$success:function() {
-				userEditor.hide();
+				userWindow.hide();
 				userFormula.reset();
 				list.refresh();
 			}
