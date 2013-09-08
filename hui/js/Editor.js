@@ -136,9 +136,11 @@ hui.ui.Editor.prototype = {
 	deactivate : function() {
 		this.active = false;
 		if (this.activePart) {
-			this.activePart.deactivate();
+			this._deactivatePart(this.activePart);
 		}
-		if (this.partControls) this.partControls.hide();
+		if (this.partControls) {
+			this.partControls.hide();
+		}
 	},
 	
 	
@@ -334,15 +336,18 @@ hui.ui.Editor.prototype = {
 	},
 	_editPart : function(part) {
 		if (!this.active || this.activePart) return;
-		if (this.activePart) this.activePart.deactivate();
+		if (this.activePart) {
+			this._deactivatePart(this.activePart);
+		}
 		if (this.hoveredPart) {
 			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
 		}
 		this.activePart = part;
 		this.showPartEditControls();
 		hui.cls.add(part.element,'hui_editor_part_active');
+		hui.ui.msg({text:{en:'Loading...',da:'Indlæser...'},delay:300,busy:true});
 		part.activate(function() {
-			//hui.ui.showMessage({text:'Loaded',duration:2000});
+			hui.ui.hideMessage();
 		});
 		window.clearTimeout(this.partControlTimer);
 		this._hidePartControls();
@@ -389,15 +394,19 @@ hui.ui.Editor.prototype = {
 	cancelPart : function(part) {
 		part.cancel();
 		this.hidePartEditor();
+		this._deactivatePart(this.activePart);
 		this.activePart = null;
 	},
 	savePart : function(part) {
 		this.busy = true;
+		hui.ui.msg({text:{en:'Saving...',da:'Gemmer...'},delay:300,busy:true});
+		this.hidePartEditor();
 		part.save({
 			callback : function() {
-				this.hidePartEditor();
+				hui.ui.hideMessage();
 				this.activePart = null;
 				this.busy = false;
+				this._deactivatePart(part);
 			}.bind(this)
 		});
 	},
@@ -409,7 +418,12 @@ hui.ui.Editor.prototype = {
 		};
 		return null;
 	},
-	partDidDeacivate : function(part) {
+	_deactivatePart : function(part) {
+		part.deactivate(function() {
+			this.partDidDeactivate(part);
+		}.bind(this))
+	},
+	partDidDeactivate : function(part) {
 		hui.cls.remove(part.element,'hui_editor_part_active');
 		this.activePart = null;
 		this._hidePartEditControls();
@@ -791,7 +805,7 @@ hui.ui.Editor.Header.prototype = {
 	deactivate : function() {
 		this.header.style.visibility='';
 		this.element.removeChild(this.field);
-		hui.ui.Editor.get().partDidDeacivate(this);
+		hui.ui.Editor.get().partDidDeactivate(this);
 	},
 	updateFieldStyle : function() {
 		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
@@ -851,7 +865,7 @@ hui.ui.Editor.Html.prototype = {
 			this.editor.destroy();
 			this.element.innerHTML = this.value;
 		}
-		hui.ui.Editor.get().partDidDeacivate(this);
+		hui.ui.Editor.get().partDidDeactivate(this);
 	},
 	richTextDidChange : function() {
 		//this.deactivate();

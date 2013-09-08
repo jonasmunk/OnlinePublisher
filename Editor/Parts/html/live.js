@@ -6,6 +6,7 @@ op.Editor.Html = function(options) {
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.partElement = hui.get.firstChild(this.element);
 	this.part = null;
+	this.original = null;
 }
 
 op.Editor.Html.prototype = {
@@ -13,12 +14,10 @@ op.Editor.Html.prototype = {
 		this._load(callback);
 	},
 	save : function(options) {
-		hui.ui.Editor.get().partChanged(this);
 		hui.ui.request({
 			url : 'parts/update.php',
 			parameters : {id:this.id,pageId:op.page.id,html:this.part.html,type:'html'},
-			onText : function(html) {
-				this.deactivate();
+			$text : function(html) {
 				this.element.innerHTML = html;
 				this.partElement = hui.dom.firstChild(this.element);
 				options.callback();
@@ -26,11 +25,12 @@ op.Editor.Html.prototype = {
 		});
 	},
 	cancel : function() {
-		this.deactivate();
+		this.partElement.innerHTML = this.original;
+		this.part = null;
 	},
-	deactivate : function() {
+	deactivate : function(callback) {
 		this.win.hide();
-		hui.ui.Editor.get().partDidDeacivate(this);
+		callback();
 	},
 	getValue : function() {
 		return this.value;
@@ -40,31 +40,32 @@ op.Editor.Html.prototype = {
 	_load : function(callback) {
 		hui.ui.request({url:'parts/load.php',parameters:{type:'html',id:this.id},onJSON:function(part) {
 			this.part = part;
+			this.original = part.html;
 			this._edit();
 			callback();
 		}.bind(this)});
 	},
 	_buildUI : function() {
 		if (!this.win) {
-			this.win = hui.ui.Window.create({width:500});
+			this.win = hui.ui.Window.create({width:500,title:'HTML',close:false});
 			this.code = hui.ui.CodeInput.create();
 			this.code.listen({
-				$valueChanged : function(value) {
-					hui.log(value)
-					this.partElement.innerHTML = value;
-					this.part.html = value;
-				}.bind(this)
+				$valueChanged : this._valueChanged.bind(this)
 			})
 			this.win.add(this.code);
+			this.msg = hui.build('div',{style:'font-size: 11px; color: red; text-align: left; padding: 2px 0 0 3px'});
+			this.win.add(this.msg);
 		}
+	},
+	_valueChanged : function(value) {
+		var valid = hui.xml.parse(value)!=null;
+		this.partElement.innerHTML = value;
+		this.part.html = value;
+		hui.dom.setText(this.msg,valid ? '' : 'Ikke valid');
 	},
 	_edit : function() {
 		this._buildUI();
 		this.code.setValue(this.part.html);
 		this.win.show();
-	},
-	_updateFieldStyle : function() {
-		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
-		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	}
 }

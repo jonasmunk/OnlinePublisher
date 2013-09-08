@@ -17,32 +17,33 @@ op.Editor.Header.prototype = {
 		if (value!=this.value) {
 			this.value = value;
 			this.header.innerHTML = value;
-			hui.ui.Editor.get().partChanged(this);
 			hui.ui.request({
 				url : 'parts/update.php',
 				parameters : {id:this.id,pageId:op.page.id,text:this.value,type:'header'},
-				onText : function(html) {
-					this.deactivate();
+				$text : function(html) {
 					this.element.innerHTML = html;
+					this.field = null;
 					this.header = hui.dom.firstChild(this.element);
 					options.callback();
 				}.bind(this)
 			});
+		} else {
+			options.callback();
 		}
 	},
 	cancel : function() {
-		this.deactivate();
+		
 	},
-	deactivate : function() {
+	deactivate : function(callback) {
 		this.header.style.visibility='';
-		this.element.removeChild(this.field);
-		hui.ui.Editor.get().partDidDeacivate(this);
+		if (this.field) {
+			this.element.removeChild(this.field);
+		}
+		callback();
 	},
 	getValue : function() {
 		return this.value;
 	},
-	
-	
 	_load : function(callback) {
 		hui.ui.request({url:'parts/load.php',parameters:{type:'header',id:this.id},onJSON:function(part) {
 			this.part = part;

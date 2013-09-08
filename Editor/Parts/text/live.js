@@ -33,28 +33,29 @@ op.Editor.Text.prototype = {
 		var value = this.field.value;
 		if (value!=this.value) {
 			this.value = value;
-			//this.header.innerHTML = value;
-			hui.ui.Editor.get().partChanged(this);
 			hui.ui.request({
 				url : 'parts/update.php',
 				message : {start:'Gemmer afsnit'},
 				parameters : {id:this.id,pageId:op.page.id,text:this.value,type:'text'},
-				onText : function(html) {
-					this.deactivate();
+				$text : function(html) {
 					this.element.innerHTML = html;
 					this.header = hui.get.firstByTag(this.element,'*');
 					options.callback();
 				}.bind(this)
 			});
+		} else {
+			options.callback();
 		}
 	},
 	cancel : function() {
-		this.deactivate();
+		
 	},
-	deactivate : function() {
+	deactivate : function(callback) {
 		this.header.style.display='';
-		this.element.removeChild(this.field);
-		hui.ui.Editor.get().partDidDeacivate(this);
+		if (this.field) {
+			hui.dom.remove(this.field);
+		}
+		callback();
 	},
 	getValue : function() {
 		return this.value;

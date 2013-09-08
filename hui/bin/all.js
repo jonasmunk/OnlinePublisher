@@ -2339,6 +2339,7 @@ hui.xml = {
 	},
 	parse : function(xml) {
 		var doc;
+		try {
 		if (window.DOMParser) {
   			var parser = new DOMParser();
   			doc = parser.parseFromString(xml,"text/xml");
@@ -2352,6 +2353,9 @@ hui.xml = {
 			doc.async = false;
   			doc.loadXML(xml); 
   		}
+		} catch (e) {
+			return null;
+		}
 		return doc;
 	},
 	serialize : function(node) {
@@ -5823,6 +5827,10 @@ hui.ui.request = function(options) {
 	}
 	var onSuccess = options.onSuccess || options.$success,
 		onJSON = options.onJSON || options.$object,
+		onText = options.onText || options.$text,
+		onXML = options.onXML || options.$xml,
+		onFailure = options.onFailure || options.$failure,
+		onForbidden = options.onForbidden || options.$forbidden,
 		message = options.message;
 	options.onSuccess = function(t) {
 		if (message) {
@@ -5845,8 +5853,8 @@ hui.ui.request = function(options) {
 			} else {
 				hui.ui.callDelegates(t,'success$'+onSuccess);
 			}
-		} else if (hui.request.isXMLResponse(t) && options.onXML) {
-			options.onXML(t.responseXML);
+		} else if (onXML && hui.request.isXMLResponse(t)) {
+			onXML(t.responseXML);
 		} else if (onJSON) {
 			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
@@ -5857,11 +5865,10 @@ hui.ui.request = function(options) {
 			onJSON(json);
 		} else if (typeof(onSuccess)=='function') {
 			onSuccess(t);
-		} else if (options.onText) {
-			options.onText(t.responseText);
+		} else if (onText) {
+			onText(t.responseText);
 		}
 	};
-	var onFailure = options.onFailure || options.$failure;
 	options.onFailure = function(t) {
 		if (typeof(onFailure)=='string') {
 			hui.ui.callDelegates(t,'failure$'+onFailure)
@@ -5879,7 +5886,6 @@ hui.ui.request = function(options) {
 		hui.log(t);
 		throw e;
 	};
-	var onForbidden = options.onForbidden;
 	options.onForbidden = function(t) {
 		if (options.message && options.message.start) {
 			hui.ui.hideMessage();
@@ -5892,7 +5898,7 @@ hui.ui.request = function(options) {
 		}
 	}
 	if (options.message && options.message.start) {
-		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
+		hui.ui.msg({text:options.message.start,busy:true,delay:options.message.delay});
 	}
 	hui.request(options);
 };
@@ -10386,9 +10392,11 @@ hui.ui.Editor.prototype = {
 	deactivate : function() {
 		this.active = false;
 		if (this.activePart) {
-			this.activePart.deactivate();
+			this._deactivatePart(this.activePart);
 		}
-		if (this.partControls) this.partControls.hide();
+		if (this.partControls) {
+			this.partControls.hide();
+		}
 	},
 	
 	
@@ -10584,7 +10592,9 @@ hui.ui.Editor.prototype = {
 	},
 	_editPart : function(part) {
 		if (!this.active || this.activePart) return;
-		if (this.activePart) this.activePart.deactivate();
+		if (this.activePart) {
+			this._deactivatePart(this.activePart);
+		}
 		if (this.hoveredPart) {
 			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
 		}
@@ -10639,6 +10649,7 @@ hui.ui.Editor.prototype = {
 	cancelPart : function(part) {
 		part.cancel();
 		this.hidePartEditor();
+		this._deactivatePart(this.activePart);
 		this.activePart = null;
 	},
 	savePart : function(part) {
@@ -10648,6 +10659,7 @@ hui.ui.Editor.prototype = {
 				this.hidePartEditor();
 				this.activePart = null;
 				this.busy = false;
+				this._deactivatePart(part);
 			}.bind(this)
 		});
 	},
@@ -10658,6 +10670,11 @@ hui.ui.Editor.prototype = {
 			}
 		};
 		return null;
+	},
+	_deactivatePart : function(part) {
+		part.deactivate(function() {
+			this.partDidDeacivate(part);
+		}.bind(this))
 	},
 	partDidDeacivate : function(part) {
 		hui.cls.remove(part.element,'hui_editor_part_active');

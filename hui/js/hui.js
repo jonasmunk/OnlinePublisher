@@ -2339,6 +2339,7 @@ hui.xml = {
 	},
 	parse : function(xml) {
 		var doc;
+		try {
 		if (window.DOMParser) {
   			var parser = new DOMParser();
   			doc = parser.parseFromString(xml,"text/xml");
@@ -2352,6 +2353,9 @@ hui.xml = {
 			doc.async = false;
   			doc.loadXML(xml); 
   		}
+		} catch (e) {
+			return null;
+		}
 		return doc;
 	},
 	serialize : function(node) {

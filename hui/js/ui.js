@@ -977,6 +977,10 @@ hui.ui.request = function(options) {
 	}
 	var onSuccess = options.onSuccess || options.$success,
 		onJSON = options.onJSON || options.$object,
+		onText = options.onText || options.$text,
+		onXML = options.onXML || options.$xml,
+		onFailure = options.onFailure || options.$failure,
+		onForbidden = options.onForbidden || options.$forbidden,
 		message = options.message;
 	options.onSuccess = function(t) {
 		if (message) {
@@ -999,8 +1003,8 @@ hui.ui.request = function(options) {
 			} else {
 				hui.ui.callDelegates(t,'success$'+onSuccess);
 			}
-		} else if (hui.request.isXMLResponse(t) && options.onXML) {
-			options.onXML(t.responseXML);
+		} else if (onXML && hui.request.isXMLResponse(t)) {
+			onXML(t.responseXML);
 		} else if (onJSON) {
 			str = t.responseText.replace(/^\s+|\s+$/g, '');
 			if (str.length>0) {
@@ -1011,11 +1015,10 @@ hui.ui.request = function(options) {
 			onJSON(json);
 		} else if (typeof(onSuccess)=='function') {
 			onSuccess(t);
-		} else if (options.onText) {
-			options.onText(t.responseText);
+		} else if (onText) {
+			onText(t.responseText);
 		}
 	};
-	var onFailure = options.onFailure || options.$failure;
 	options.onFailure = function(t) {
 		if (typeof(onFailure)=='string') {
 			hui.ui.callDelegates(t,'failure$'+onFailure)
@@ -1033,7 +1036,6 @@ hui.ui.request = function(options) {
 		hui.log(t);
 		throw e;
 	};
-	var onForbidden = options.onForbidden;
 	options.onForbidden = function(t) {
 		if (options.message && options.message.start) {
 			hui.ui.hideMessage();
@@ -1046,7 +1048,7 @@ hui.ui.request = function(options) {
 		}
 	}
 	if (options.message && options.message.start) {
-		hui.ui.showMessage({text:options.message.start,busy:true,delay:options.message.delay});
+		hui.ui.msg({text:options.message.start,busy:true,delay:options.message.delay});
 	}
 	hui.request(options);
 };
