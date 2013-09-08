@@ -7,7 +7,10 @@ hui.ui.listen({
 			message : {start:'Rebuilding'},
 			url : 'data/Rebuild.php',
 			$success : function() {
-				hui.ui.msg.success({text:'It is fresh!'});
+				hui.ui.msg.success({text:'Class path is rebuild!'});
+			},
+			$failure : function() {
+				hui.ui.msg.fail({text:'Unable to rebuild classes!'})
 			}
 		})
 	},

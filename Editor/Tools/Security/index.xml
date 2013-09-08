@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gui xmlns="uri:hui" title="{Security; da:Sikkerhed}" padding="10" state="list">
+
+	<controller source="controller.js"/>
+	
+	<source name="selectionSource" url="data/Selection.php"/>
+		
+	<source name="listSource" url="data/ListUsers.php">
+		<parameter key="windowPage" value="@list.window.page"/>
+		<parameter key="sort" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
+		<parameter key="text" value="@search.value"/>
+	</source>
+	
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="common/user" title="{New user; da:Ny bruger}" overlay="new" name="newUser"/>
+				<divider/>
+				<icon icon="common/delete" title="{Delete; da:Slet}" disabled="true" name="deleteItem">
+					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+				</icon>
+				<icon icon="common/edit" title="{Edit; da:Rediger}" disabled="true" name="editItem"/>
+				<divider/>
+				<right>
+					<field label="{Search; da:Søgning}">
+						<searchfield name="search" expanded-width="200"/>
+					</field>
+				</right>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<overflow>
+				<selection value="overview" name="selector" top="5">
+					<item icon="common/files" title="{Overview; da:Oversigt}" value="overview"/>
+					<items source="selectionSource"/>
+				</selection>
+				</overflow>
+			</left>
+			<center>
+				<overflow>
+					<list name="list" source="listSource" state="list"/>
+				</overflow>
+			</center>
+		</middle>
+		<bottom/>
+	</structure>
+	
+	<window name="userWindow" width="300" title="{User; da:Bruger}" padding="5">
+		<formula name="userFormula">
+			<overflow height="200">
+			<fields>
+				<field label="{Title; da:Titel}:">
+					<text-input key="title"/>
+				</field>
+				<field label="{Username; da:Brugernavn}:">
+					<text-input key="username"/>
+				</field>
+				<field label="{Password; da:Kodeord}:">
+					<text-input key="password" secret="true"/>
+				</field>
+				<field label="{Language; da:Sprog}:">
+					<dropdown key="language">
+						<item title="{Danish; da: Dansk}" value="da"/>
+						<item title="{English; da: Engelsk}" value="en"/>
+					</dropdown>
+				</field>
+				<field label="{E-post; da:E-mail}:">
+					<text-input key="email"/>
+				</field>
+				<field label="{Note; da:Notat}:">
+					<text-input key="note" lines="6"/>
+				</field>
+				<field label="{Internal access; da:Intern adgang}:">
+					<checkbox key="internal"/>
+				</field>
+				<field label="{External access; da:Ekstern adgang}:">
+					<checkbox key="external"/>
+				</field>
+				<field label="Administrator:">
+					<checkbox key="administrator"/>
+				</field>
+			</fields>
+			</overflow>
+			<fields>
+				<buttons>
+					<button name="cancelUser" title="{Cancel; da:Annuller}"/>
+					<button name="deleteUser" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete user; da:Ja, slet brugeren}" cancel="{No; da:Nej}"/>
+					</button>
+					<button name="saveUser" title="{Save; da:Gem}" highlighted="true"/>
+				</buttons>
+			</fields>
+		</formula>
+	</window>
+	
+</gui>
