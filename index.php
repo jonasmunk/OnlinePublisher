@@ -38,6 +38,7 @@ if (Request::getBoolean('logout')) {
 	ExternalSession::logOut();
 }
 
+//Log::debug('Path : "'.$path.'", id : "'.$id.'"');
 
 //if (CacheService::sendCachedPage($id,$path)) {
 //	exit;
@@ -59,7 +60,8 @@ if ($id==-1 && Strings::isBlank($path)) {
 }
 //echo $id;
 $page = RenderingService::buildPage($id,$path,Request::getParameters());
-if (!$page) {
+if (!$page && !(Strings::isNotBlank($path) || $id>0)) {
+	//Log::debug('No page : '.$path);
 	$id = RenderingService::findPage('home');
 	if ($id==null) {
 		$error = '<title>Ingen forside!</title>'.
