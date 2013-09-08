@@ -5,9 +5,15 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class In2iGui {
+	
+	static function renderFile($file) {
+		$gui = file_get_contents($file);
+		In2iGui::render($gui);
+	}
 
 	static function render(&$gui) {
 		global $basePath;
+		
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
 		if (@$_GET['xhtml']=='false') {
 			$xhtml = false;
@@ -17,7 +23,11 @@ class In2iGui {
 		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
 		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
 
-		$xmlData='<?xml version="1.0" encoding="UTF-8"?>'.In2iGui::localize($gui,InternalSession::getLanguage());
+		$xmlData = In2iGui::localize($gui,InternalSession::getLanguage());
+		
+		if (!Strings::startsWith($xmlData,'<?xml')) {
+			$xmlData = '<?xml version="1.0" encoding="UTF-8"?>'.$xmlData;
+		}
 
 		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
