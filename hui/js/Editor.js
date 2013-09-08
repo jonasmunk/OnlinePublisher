@@ -407,6 +407,7 @@ hui.ui.Editor.prototype = {
 				this.activePart = null;
 				this.busy = false;
 				this._deactivatePart(part);
+				this.partChanged(part); // hello
 			}.bind(this)
 		});
 	},
