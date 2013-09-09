@@ -28,10 +28,12 @@
 		<xsl:value-of select="f:frame/@title"/>
 	</title>
 	<xsl:call-template name="util:metatags"/>
+	<!--
 	<link href='http://fonts.googleapis.com/css?family=Neuton:300,700,400,200' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Merriweather:400,300' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Crimson+Text' rel='stylesheet' type='text/css'/>
 	<link href='http://fonts.googleapis.com/css?family=Ovo' rel='stylesheet' type='text/css'/>
+	-->
 	<xsl:call-template name="util:style"/>
 	<xsl:call-template name="util:style-ie6"/>
 	<xsl:call-template name="util:style-ie7"/>
