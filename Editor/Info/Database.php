@@ -565,6 +565,11 @@ $databaseTables = array(
 			array("height","varchar(11)","YES","","",""),
 			array("frame","varchar(50)","YES","","","")
 		),
+	'part_movie' => array(
+			array("part_id","int(11)","","","0",""),
+			array("file_id","int(11)","","","0",""),
+			array("text","varchar(255)","YES","","","")
+		),
 	'part_news' => array(
 			array("part_id","int(11)","","","0",""),
 			array("align","varchar(20)","YES","","",""),

@@ -7,6 +7,7 @@
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
  xmlns:header="http://uri.in2isoft.com/onlinepublisher/part/header/1.0/"
  xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
+ xmlns:movie="http://uri.in2isoft.com/onlinepublisher/part/movie/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:part="http://uri.in2isoft.com/onlinepublisher/part/1.0/"
  exclude-result-prefixes="p f h header text util part"
@@ -211,6 +212,9 @@
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 		<script src="{$path}Editor/Template/{$template}/js/editor.php?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
+	<xsl:if test="//movie:movie">
+		<script src="http://vjs.zencdn.net/4.1/video.js"><xsl:comment/></script>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="util:scripts-adaptive">
@@ -280,7 +284,9 @@
 	<xsl:if test="//header:style[contains(@font-family,'Dancing Script')] or //text:style[contains(@font-family,'Dancing Script')]">
 		<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css' />
 	</xsl:if>
-	
+	<xsl:if test="//movie:movie">
+		<link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet"/>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="util:weekday">

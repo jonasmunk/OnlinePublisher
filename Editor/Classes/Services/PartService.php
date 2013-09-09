@@ -242,7 +242,8 @@ class PartService {
 			'mailinglist' => array ( 'name' => array('da'=>'Postliste','en'=>'Mailing list') ),
 			'html' => array ( 'name' => array('da'=>'HTML','en'=>'HTML') ),
 			'poster' => array ( 'name' => array('da'=>'Plakat','en'=>'Poster') ),
-			'map' => array ( 'name' => array('da'=>'Kort','en'=>'Map') )
+			'map' => array ( 'name' => array('da'=>'Kort','en'=>'Map') ),
+			'movie' => array ( 'name' => array('da'=>'Film','en'=>'Movie') )
 		);
 	}
 	
@@ -269,7 +270,8 @@ class PartService {
 				'mailinglist' => $parts['mailinglist'],
 				'html' => $parts['html'],
 				'poster' => $parts['poster'],
-				'map' => $parts['map']				
+				'map' => $parts['map'],
+				'movie' => $parts['movie']				
 			))
 		);
 		return $menu;

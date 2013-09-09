@@ -82,9 +82,15 @@ class FileService {
 		array('kind' => 'audio.windowsmedia.playlist', 'category' => 'audio', 'label' => 'Windows Media Playlist',
 			'mimetypes' => array('application/vnd.ms-wpl'),
 			'extensions'=>array('wpl')
+		),
+		array('kind' => 'video.mpeg4', 'category' => 'video', 'label' => 'MPEG-4 film',
+			'mimetypes' => array('video/mp4'),
+			'extensions'=>array('mp4')
+		),
+		array('kind' => 'document.ibooks', 'category' => 'document', 'label' => 'iBooks bog',
+			'mimetypes' => array('application/x-ibooks+zip'),
+			'extensions'=>array('ibooks')
 		)
-		
-		
 	);
 	
 	public static $categories = array(

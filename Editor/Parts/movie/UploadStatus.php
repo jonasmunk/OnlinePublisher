@@ -5,7 +5,7 @@
  */
 require_once '../../Include/Private.php';
 
-$id = MoviePartController::getLatestUploadId();
+$id = FilePartController::getLatestUploadId();
 
 Response::sendObject(array('id'=>$id));
 ?>

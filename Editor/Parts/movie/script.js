@@ -30,7 +30,7 @@ var partController = {
 		op.part.utils.updatePreview({
 			node : 'part_movie_container',
 			form : document.forms.PartForm,
-			type : 'file',
+			type : 'movie',
 			delay : delayed ? 300 : 0
 		});
 	},
@@ -39,7 +39,7 @@ var partController = {
 	},
 	$uploadDidCompleteQueue$fileUpload : function() {
 		hui.ui.request({
-			'url' : '../../Parts/movie/UploadStatus.php',
+			'url' : '../../Parts/file/UploadStatus.php',
 			onJSON : function(status) {
 				if (status.id) {
 					document.forms.PartForm.fileId.value = status.id;
