@@ -60,7 +60,7 @@
 		<xsl:apply-templates select="p:content"/>
 		<div class="layout_bottom">
 			<div class="layout_bottom_effect"><xsl:comment/></div>
-			<p>Designet og udviklet af <a href="http://www.in2isoft.dk/" title="In2iSoft"><span>In2iSoft</span></a></p>
+			<p><a href="http://www.humanise.dk/" title="Humanise"><span>Designet og udviklet af Humanise</span></a></p>
 		</div>
 	</div>
 	</div>

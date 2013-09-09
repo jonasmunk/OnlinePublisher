@@ -53,31 +53,22 @@ div.layout_bottom_effect
 	top: 20px;
 }
 
-div.layout_bottom p
+div.layout_bottom a
 {
-	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-	font-size: 14px;
+	background: url('../gfx/sprite.jpg') 0px -429px no-repeat;
 	position: absolute;
-	right: 20px;
-	bottom: 20px;
+	width: 438px;
+	height: 155px;
+	bottom: 15px;
+	right: 15px;
 	margin: 0;
 	color: #999;
 }
 
-div.layout_bottom p a
+div.layout_bottom a span
 {
-	color: #ddd;	
-}
-
-div.layout_bottom p a span
-{
-	color: #999;
-}
-
-div.layout_bottom:hover a span,
-div.layout_bottom p a:hover
-{
-	color: #0073b9;
+	position: absolute;
+	left: -10000px;
 }
 
 
