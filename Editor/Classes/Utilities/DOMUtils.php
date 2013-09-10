@@ -43,6 +43,30 @@ class DOMUtils {
 		return null;
 	}
 	
+	function parseHTML($str) {
+		$doc = new DOMDocument();
+		$success = @$doc->loadHtml($str);
+		if ($success) {
+			return $doc;
+		} else {
+			return null;
+		}
+	}
+	
+	function parseAnything($str) {
+		global $basePath;
+		require_once($basePath.'Editor/Libraries/htmlawed/htmLawed.php');
+		$str = htmLawed($str); 
+		$doc = new DOMDocument();
+		$doc->recover = TRUE;
+		try {
+			$success = @$doc->loadXML($str);			
+		} catch (Exception $e) {
+			Log::debug($e);
+		}
+		return $doc;
+	}
+
 	function parse($str) {
 		$doc = new DOMDocument();
 		$success = @$doc->loadXML($str);

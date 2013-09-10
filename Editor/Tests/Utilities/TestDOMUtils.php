@@ -79,6 +79,23 @@ class TestDOMUtils extends UnitTestCase {
 		$this->assertEqual(DOMUtils::getFirstChildElement($people,'dog')->tagName,'dog');
 		$this->assertEqual(count(DOMUtils::getChildElements($people,'person')),2);
 		$this->assertEqual(count(DOMUtils::getChildElements($people)),3);
-		
+	}
+
+	function testParseAnything() {
+		$doc = DOMUtils::parseAnything('<p>');
+		$this->assertNotNull($doc->documentElement);
+		$this->assertEqual("<?xml version=\"1.0\"?>\n<p/>\n",$doc->saveXML());
+
+		$doc = DOMUtils::parseAnything('<p><</p>');
+		$this->assertNotNull($doc->documentElement);
+		Log::debug($doc->saveXML());
+		$this->assertEqual("<?xml version=\"1.0\"?>\n<p>&lt;&lt;/p&gt;</p>\n",$doc->saveXML());
+	}
+	
+	function testParseHTML() {
+		$doc = DOMUtils::parseHTML('<p>Hep hey</p>');
+		$this->assertNotNull($doc);
+		$this->assertNotNull($doc->documentElement);
+		$this->assertEqual("<?xml version=\"1.0\" standalone=\"yes\"?>\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p>Hep hey</p></body></html>\n",$doc->saveXML());
 	}
 }
