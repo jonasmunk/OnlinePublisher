@@ -88,8 +88,8 @@ class TestDOMUtils extends UnitTestCase {
 
 		$doc = DOMUtils::parseAnything('<p><</p>');
 		$this->assertNotNull($doc->documentElement);
-		Log::debug($doc->saveXML());
 		$this->assertEqual("<?xml version=\"1.0\"?>\n<p>&lt;&lt;/p&gt;</p>\n",$doc->saveXML());
+
 	}
 	
 	function testParseHTML() {
