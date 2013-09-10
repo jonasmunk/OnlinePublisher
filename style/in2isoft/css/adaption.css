@@ -87,13 +87,7 @@
 	{
 		width: 100%;
 	}
-	
-	div.part_image img
-	{
-		max-width: 100%;
-		height: auto;
-	}
-	
+		
 }
 
 @media screen and (max-width: 880px) {
@@ -156,13 +150,18 @@
 	div.layout_sidebar
 	{
 		position: static;
-		float: right;
-		border: 1px solid #ddd;
+		border: none;
+		border-bottom: 1px solid #ddd;
 		background: #fafafa;
-		margin: 20px;
+		margin: 0px;
 		padding: 10px;
-		width: 160px;
-		border-radius: 5px;
+		width: auto;
+		border-radius: 0px;
+	}
+
+	div.layout_sidebar li
+	{
+		display: inline-block;
 	}
 	
 	ul.layout_side_navigation
@@ -262,6 +261,12 @@
 }
 
 @media screen and (max-width: 600px) {
+
+	div.part_image img
+	{
+		max-width: 100%;
+		height: auto;
+	}
 
 	div.layout_info div.contact,
 	div.layout_info div.about
