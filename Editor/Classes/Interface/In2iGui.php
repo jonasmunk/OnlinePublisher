@@ -15,11 +15,11 @@ class In2iGui {
 		global $basePath;
 		
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
-		if (@$_GET['xhtml']=='false') {
+		if (Request::exists('xhtml','false')) {
 			$xhtml = false;
 		}
-		$dev = @$_GET['dev']=='true' ? 'true' : 'false';
-		$profile = @$_GET['profile']=='true' ? 'true' : 'false';
+		$dev = Request::getBoolean('dev');
+		$profile = Request::getBoolean('profile');
 		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
 		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
 

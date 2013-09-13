@@ -40,12 +40,14 @@ function listHierarhy() {
 		$parent = null;
 		$hierarchy = Hierarchy::load($hierarchyId);
 		
-		$writer->startRow(array('id'=>$hierarchyId,'kind'=>'hierarchy','level'=>1))->
-			startCell(array('icon'=>'common/hierarchy'))->text($hierarchy->getName())->endCell()->
-			startCell()->endCell()->
-			startCell()->endCell()->
-			startCell()->endCell()->
-		endRow();
+		if ($hierarchy) {
+			$writer->startRow(array('id'=>$hierarchyId,'kind'=>'hierarchy','level'=>1))->
+				startCell(array('icon'=>'common/hierarchy'))->text($hierarchy->getName())->endCell()->
+				startCell()->endCell()->
+				startCell()->endCell()->
+				startCell()->endCell()->
+			endRow();			
+		}
 	} else {
 		$hierarchyId = null;
 		$parent = intval($value);

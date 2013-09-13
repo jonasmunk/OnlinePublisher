@@ -22,30 +22,30 @@ class Database {
 			return false;
 		}
 		
-		$con = @mysql_connect($host, $user,$password);
+		$con = mysql_connect($host, $user,$password);
 		if (!$con) {
 			return false;
 		}
-		if (@mysql_errno($con)>0) {
+		if (mysql_errno($con)>0) {
 			return false;
 		}
 		return true;
 	}
 	
 	static function testDatabaseConnection($host,$user,$password,$name) {
-		$con = @mysql_connect($host, $user,$password);
+		$con = mysql_connect($host, $user,$password);
 		if (!$con) {
 			return false;
 		}
-		@mysql_select_db($name,$con);
-		if (@mysql_errno($con)>0) {
+		mysql_select_db($name,$con);
+		if (mysql_errno($con)>0) {
 			return false;
 		}
 		return true;
 	}
 	
 	static function debug($sql) {
-		if (@$_SESSION['core.debug.logDatabaseQueries']) {
+		if (isset($_SESSION['core.debug.logDatabaseQueries']) && $_SESSION['core.debug.logDatabaseQueries']) {
 			error_log($sql);
 		}
 	}
@@ -53,11 +53,11 @@ class Database {
 	static function getConnection() {
 		$config = ConfigurationService::getDatabase();
 		if (!isset($GLOBALS['OP_CON'])) {
-			$con = @mysql_connect($config['host'], $config['user'],$config['password'],false);
+			$con = mysql_connect($config['host'], $config['user'],$config['password'],false);
 			if (!$con) {
 				return false;
 			}
-			@mysql_select_db($config['database'],$con);
+			mysql_select_db($config['database'],$con);
 			if (mysql_errno($con)>0) {
 				return false;
 			}
@@ -73,7 +73,7 @@ class Database {
 			return false;
 		}
 		Database::debug($sql);
-		$result = @mysql_query($sql,$con);
+		$result = mysql_query($sql,$con);
 		if (mysql_errno($con)>0) {
 			error_log(mysql_error($con).': '.$sql);
 			return false;
@@ -108,7 +108,7 @@ class Database {
 	}
 	
 	static function size($result) {
-		return @mysql_num_rows($result);
+		return mysql_num_rows($result);
 	}
 	
 	static function isEmpty($sql) {
@@ -126,14 +126,14 @@ class Database {
 			$sql = Database::buildUpdateSql($sql);
 		}
 		$con = Database::getConnection();
-		@mysql_query($sql,$con);
+		mysql_query($sql,$con);
 		return Database::_checkError($sql,$con);
 	}
 	
 	static function delete($sql) {
 		Database::debug($sql);
 		$con = Database::getConnection();
-		@mysql_query($sql,$con);
+		mysql_query($sql,$con);
 		Database::_checkError($sql,$con);
 		return mysql_affected_rows($con);
 	}
@@ -144,7 +144,7 @@ class Database {
 		}
 		Database::debug($sql);
 		$con = Database::getConnection();
-		@mysql_query($sql,$con);
+		mysql_query($sql,$con);
 		$id=mysql_insert_id();
 		if (Database::_checkError($sql,$con)) {
 			return $id;
@@ -164,11 +164,11 @@ class Database {
 	}
 	
 	static function next($result) {
-		return @mysql_fetch_array($result);
+		return mysql_fetch_array($result);
 	}
 	
 	static function free($result) {
-		@mysql_free_result($result);
+		mysql_free_result($result);
 	}
 	
 	static function selectArray($sql) {

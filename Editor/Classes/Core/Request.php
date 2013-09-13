@@ -22,7 +22,10 @@ class Request {
 	 * @param string $key The name of the variable
 	 * @return boolean True if variable was set, False otherwise
 	 */
-	static function exists($key) {
+	static function exists($key,$value=null) {
+		if ($value!=null) {
+			return isset($_REQUEST[$key]) && $_REQUEST[$key]==$value;
+		}
 		return isset($_REQUEST[$key]);
 	}
 

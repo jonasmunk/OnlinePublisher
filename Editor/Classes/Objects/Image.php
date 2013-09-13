@@ -144,7 +144,7 @@ class Image extends Object {
 			$parts['limits'][] = 'imagegroup_image.image_id=object.id';
 			$parts['limits'][] = 'imagegroup_image.imagegroup_id='.$custom['group'];
 		}
-		if (@$custom['nogroup']===true) {
+		if (isset($custom['nogroup']) && $custom['nogroup']===true) {
 			$parts['joins'][] = 'left join imagegroup_image on imagegroup_image.image_id=image.object_id';
 			$parts['limits'][] = 'object.id = image.object_id';
 			$parts['limits'][] = 'imagegroup_image.imagegroup_id is null';
@@ -152,7 +152,7 @@ class Image extends Object {
 		if (isset($custom['createdAfter'])) {
 			$parts['limits'][] = '`object`.`created` > '.Database::datetime($custom['createdAfter']);
 		}
-		if (@$custom['unused']===true) {
+		if (isset($custom['unused']) && $custom['unused']===true) {
 			$ids = ImageService::getUsedImageids();
 			if (count($ids)>0) {
 				$parts['limits'][] = 'object.id not in ('.implode(',',$ids).')';

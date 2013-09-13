@@ -5,7 +5,6 @@
  */
 require_once '../../Include/Private.php';
 
-Log::debug('Exists',Request::exists('id'));
 if (Request::exists('id')) {
 	InternalSession::setPageId(Request::getInt('id'));
 }

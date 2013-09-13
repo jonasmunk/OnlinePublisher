@@ -128,7 +128,7 @@ class File extends Object {
 		if (isset($query['type'])) {
 			$parts['limits'][]='`file`.`type` = '.Database::text($query['type']);
 		}
-		if (is_array($query['mimetypes'])) {
+		if (isset($query['mimetypes']) && is_array($query['mimetypes'])) {
 			$ors = array();
 			foreach ($query['mimetypes'] as $type) {
 				$ors[]='`file`.`type` = '.Database::text($type);
@@ -141,7 +141,7 @@ class File extends Object {
 		if (isset($query['createdMin'])) {
 			$parts['limits'][]='`object`.`created` > '.Database::datetime($query['createdMin']);
 		}
-		if ($query['sort']=='title') {
+		if (isset($query['sort']) && $query['sort']=='title') {
 			$parts['ordering']="object.title";
 		}
 		$list = ObjectService::_find($parts,$query);

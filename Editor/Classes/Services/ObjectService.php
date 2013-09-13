@@ -444,34 +444,35 @@ class ObjectService {
 		if (isset($query['direction'])) {
 			$parts['direction'] = $query['direction'];
 		}
-		if (is_array(@$query['limits'])) {
+		if (isset($query['limits']) && is_array($query['limits'])) {
 			$parts['limits'] = array_merge($parts['limits'],$query['limits']);
 		}
-		if (is_array(@$query['joins'])) {
+		if (isset($query['joins']) && is_array($query['joins'])) {
 			$parts['joins'] = array_merge($parts['joins'],$query['joins']);
 		}
-		if (is_array(@$query['fields'])) {
+		if (isset($query['fields']) && is_array($query['fields'])) {
 			foreach ($query['fields'] as $field => $value) {
 				if (isset($schema[$field])) {
+					$column = $field;
 					if (isset($schema[$field]['column'])) {
-						$field = $schema[$field]['column'];
+						$column = $schema[$field]['column'];
 					}
 					if ($schema[$field]['type']=='datetime') {
 						if (is_array($value)) {
-							$parts['limits'][] = '`'.$type.'`.`'.$field.'`>='.Database::datetime($value['from']);
-							$parts['limits'][] = '`'.$type.'`.`'.$field.'`<='.Database::datetime($value['to']);
+							$parts['limits'][] = '`'.$type.'`.`'.$column.'`>='.Database::datetime($value['from']);
+							$parts['limits'][] = '`'.$type.'`.`'.$column.'`<='.Database::datetime($value['to']);
 						} else {
-							$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::datetime($value);
+							$parts['limits'][] = '`'.$type.'`.`'.$column.'`='.Database::datetime($value);
 						}
 					} else {
 						if (is_array($value)) {
 							if (@$value['comparison']=='not') {
-								$parts['limits'][] = '`'.$type.'`.`'.$field.'`!='.Database::text($value['value']);
+								$parts['limits'][] = '`'.$type.'`.`'.$column.'`!='.Database::text($value['value']);
 							} else {
-								$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value['value']);
+								$parts['limits'][] = '`'.$type.'`.`'.$column.'`='.Database::text($value['value']);
 							}
 						} else {
-							$parts['limits'][] = '`'.$type.'`.`'.$field.'`='.Database::text($value);
+							$parts['limits'][] = '`'.$type.'`.`'.$column.'`='.Database::text($value);
 						}
 					}
 				} else {
