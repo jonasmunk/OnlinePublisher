@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class RelationsService {
 	
-	function relateObjectToObject($fromObject,$toObject,$kind='') {
+	static function relateObjectToObject($fromObject,$toObject,$kind='') {
 		if (!$fromObject || !$toObject) {
 			return false;
 		}
@@ -28,7 +28,7 @@ class RelationsService {
 		return true;
 	}
 	
-	function relatePageToObject($fromPage,$toObject,$kind='') {
+	static function relatePageToObject($fromPage,$toObject,$kind='') {
 		if (!$fromPage || !$toObject) {
 			return false;
 		}
@@ -46,7 +46,7 @@ class RelationsService {
 		return true;
 	}
 	
-	function relateObjectToPage($fromObject,$toPage,$kind='') {
+	static function relateObjectToPage($fromObject,$toPage,$kind='') {
 		if (!$fromObject || !$toPage) {
 			return false;
 		}

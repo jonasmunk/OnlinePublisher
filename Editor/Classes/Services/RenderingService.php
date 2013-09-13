@@ -6,7 +6,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class RenderingService {
 	
-	function sendNotFound() {
+	static function sendNotFound() {
 		$uri = $_SERVER['REQUEST_URI'];
 		if ($uri!='/favicon.ico' && $uri!='/robots.txt' && $uri!='/apple-touch-icon.png' && $uri!='/apple-touch-icon-precomposed.png') {
 			Log::logPublic('pagenotfound','uri='.$_SERVER['REQUEST_URI']);
@@ -16,7 +16,7 @@ class RenderingService {
 		RenderingService::displayError($error);	
 	}
 	
-	function displayError($message,$path="") {
+	static function displayError($message,$path="") {
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml.= '<message xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/error/1.0/">';
 		$xml.= $message;
@@ -26,7 +26,7 @@ class RenderingService {
 		echo RenderingService::applyStylesheet($xml,"basic","error",$path,$path,$path,'',false,'en');
 	}
 	
-	function buildPageContext($id,$nextPage,$previousPage) {
+	static function buildPageContext($id,$nextPage,$previousPage) {
 		$output='<context>';
 		// Front pages
 		$sql="select specialpage.*,page.path from specialpage,page where page.disabled=0 and specialpage.page_id = page.id";
@@ -56,7 +56,7 @@ class RenderingService {
 		return $output;
 	}
 	
-	function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationPath,$pagePath,$preview,$language) {
+	static function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationPath,$pagePath,$preview,$language) {
 		global $basePath;
 
 		$agent='xslt';
@@ -128,7 +128,7 @@ class RenderingService {
 		return XslService::transform($xmlData,$xslData);
 	}
 	
-	function applyFrameDynamism($id,&$data) {
+	static function applyFrameDynamism($id,&$data) {
 		$sql = "select id,maxitems,sortdir,sortby,timetype,timecount,UNIX_TIMESTAMP(startdate) as startdate,UNIX_TIMESTAMP(enddate) as enddate from frame_newsblock where frame_id=".$id;
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -158,23 +158,23 @@ class RenderingService {
 				}
 				else if ($timetype=='hours') {
 					$start = mktime(date("H")-$count,date("i"),date("s"),date("m"),date("d"),date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='days') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m"),date("d")-$count,date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='weeks') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m"),date("d")-($count*7),date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='months') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m")-$count,date("d"),date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='years') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y")-$count);
-					$end = mktime();
+					$end = time();
 				}
 				$timeSql=" and ((news.startdate is null and news.enddate is null) or (news.startdate>=".Database::datetime($start)." and news.startdate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.enddate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.startdate is null) or (news.startdate<=".Database::datetime($end)." and news.enddate is null))";
 			}
@@ -193,7 +193,7 @@ class RenderingService {
 		return $data;
 	}
 	
-	function applyContentDynamism($id,$template,&$data) {
+	static function applyContentDynamism($id,$template,&$data) {
 		$state = array('data' => $data,'redirect' => false,'override' => false);
 		if ($controller = TemplateService::getController($template)) {
 			if (method_exists($controller,'dynamic')) {
@@ -204,7 +204,7 @@ class RenderingService {
 		return $state;
 	}
 	
-	function handleMissingPage($path) {
+	static function handleMissingPage($path) {
 		// See if there is a page redirect
 		$sql = "select page.id,page.path from path left join page on page.id=path.page_id where path.path=".Database::text($path);
 		if ($row = Database::selectFirst($sql)) {
@@ -220,7 +220,7 @@ class RenderingService {
 		}
 	}
 	
-	function buildPage($id,$path=null,$parameters=array()) {
+	static function buildPage($id,$path=null,$parameters=array()) {
 		//Log::debug('buildPage: id:('.$id.') path:('.$path.')');
 		$sql="select page.id,page.path,page.secure,UNIX_TIMESTAMP(page.published) as published,".
 		" page.title,page.description,page.language,page.keywords,page.data,page.dynamic,page.next_page,page.previous_page,".
@@ -326,7 +326,7 @@ class RenderingService {
 		}
 	}
 
-	function _getAgent() {
+	static function _getAgent() {
 		if (isset($_SERVER['HTTP_USER_AGENT'])) {
 			$str = $_SERVER['HTTP_USER_AGENT'];
 			$analyzer = new UserAgentAnalyzer($str);
@@ -335,24 +335,24 @@ class RenderingService {
 		return '';
 	}
 	
-	function findPage($type) {
+	static function findPage($type) {
 		$sql="select page_id from specialpage where type=".Database::text($type)." order by language asc";
 		$row = Database::selectFirst($sql);
 		if ($row) {
-			return $row['page_id'];
+			return intval($row['page_id']);
 		}
 		return null;
 	}
 	
 
-	function buildDateTag($tag,$stamp) {
+	static function buildDateTag($tag,$stamp) {
 		return '<'.$tag.' unix="'.$stamp.'" day="'.date('d',$stamp).'" weekday="'.date('d',$stamp).'" yearday="'.date('z',$stamp).'" month="'.date('m',$stamp).'" year="'.date('Y',$stamp).'" hour="'.date('H',$stamp).'" minute="'.date('i',$stamp).'" second="'.date('s',$stamp).'" offset="'.date('Z',$stamp).'" timezone="'.date('T',$stamp).'"/>';
 	}
 	
 
 
 	// Returns true if the user has access to the page
-	function userHasAccessToPage($user,$page) {
+	static function userHasAccessToPage($user,$page) {
 		$sql = "select * from securityzone_page,securityzone_user where securityzone_page.securityzone_id=securityzone_user.securityzone_id and page_id=".$page." and user_id=".$user;
 		if ($row = Database::selectFirst($sql)) {
 			return true;
@@ -364,7 +364,7 @@ class RenderingService {
 	
 	// finds and redirects to the appropriate authentication page for the provided page
 	// displays error otherwise
-	function goToAuthenticationPage($id) {
+	static function goToAuthenticationPage($id) {
 		if ($authId = RenderingService::findAuthenticationPageForPage($id)) {
 			Response::redirect('./?id='.$authId.'&page='.$id);
 		}
@@ -376,7 +376,7 @@ class RenderingService {
 	// Finds the appropriate authentication page for a given page
 	// returns the id of the authentication page
 	// returns false otherwise
-	function findAuthenticationPageForPage($id) {
+	static function findAuthenticationPageForPage($id) {
 		$sql = "select authentication_page_id,page.id from securityzone, securityzone_page,page,page as authpage where securityzone.object_id=securityzone_page.securityzone_id and page.id= securityzone_page.page_id and authpage.id = authentication_page_id and page.id=".$id;
 		if ($row = Database::selectFirst($sql)) {
 			return $row['authentication_page_id'];
@@ -386,7 +386,7 @@ class RenderingService {
 		}
 	}
 	
-	function showFile($id) {
+	static function showFile($id) {
 		$sql = "select * from file where object_id = ".$id;
 		if ($row = Database::selectFirst($sql)) {
 			Response::redirect('files/'.$row['filename']);
@@ -398,7 +398,7 @@ class RenderingService {
 		}
 	}
 	
-	function getDesign($design) {
+	static function getDesign($design) {
 		if (Request::exists('designsession')) {
 			$_SESSION['debug.design']=Request::getString('designsession');
 		}
@@ -414,7 +414,7 @@ class RenderingService {
 		return $design;
 	}
 
-	function writePage($id,$path,&$page,$relative,$samePageBaseUrl) {
+	static function writePage($id,$path,&$page,$relative,$samePageBaseUrl) {
 		if (Request::getBoolean('viewsource')) {
 			header('Content-type: text/xml');
 			echo $page['xml'];
@@ -431,7 +431,7 @@ class RenderingService {
 		}
 	}
 	
-	function previewPage($options) {
+	static function previewPage($options) {
 		$pageId = $options['pageId'];
 		$historyId = @$options['historyId'];
 		

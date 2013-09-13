@@ -72,7 +72,7 @@ class HierarchyItem extends Entity {
 	    return $this->targetValue;
 	}
 	
-	function load($id) {
+	static function load($id) {
 		$sql = "select id,title,hidden,target_type,target_value,target_id from hierarchy_item where id=".Database::int($id);
 		$result = Database::select($sql);
 		$item = null;

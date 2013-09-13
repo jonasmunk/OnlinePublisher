@@ -16,7 +16,7 @@ class SettingService {
 	 * @param int $user Optinal User ID, defaults to all users (0)
 	 * @return boolean True on success, False otherwise
 	 */
-	function setSetting($domain,$subdomain,$key,$value,$user=0) {
+	static function setSetting($domain,$subdomain,$key,$value,$user=0) {
 		$sql="select * from `setting` where ".
 		"`domain`=".Database::text($domain)." and ".
 		"`subdomain`=".Database::text($subdomain)." and ".
@@ -37,18 +37,18 @@ class SettingService {
 		}
 	}
 	
-	function setServiceSetting($service,$key,$value) {
+	static function setServiceSetting($service,$key,$value) {
 		SettingService::setSetting('service',$service,$key,$value,InternalSession::getUserId());
 	}
 	
-	function getServiceSetting($service,$key) {
+	static function getServiceSetting($service,$key) {
 		return SettingService::getSetting('service',$service,$key,InternalSession::getUserId());
 	}
 	
 	/**
 	 * @static
 	 */
-	function getSetting($domain,$subdomain,$key,$user=0) {
+	static function getSetting($domain,$subdomain,$key,$user=0) {
 		$sql="select * from `setting` where ".
 		"`domain`=".Database::text($domain)." and ".
 		"`subdomain`=".Database::text($subdomain)." and ".
@@ -61,27 +61,27 @@ class SettingService {
 		}
 	}
 	
-	function getOnlineObjectsUrl() {
+	static function getOnlineObjectsUrl() {
 		return SettingService::getSetting('system','onlineobjects','url');
 	}
 	
-	function setOnlineObjectsUrl($value) {
+	static function setOnlineObjectsUrl($value) {
 		return SettingService::setSetting('system','onlineobjects','url',$value);
 	}
 	
-	function getSharedSecret() {
+	static function getSharedSecret() {
 		return SettingService::getSetting('system','security','sharedsecret');
 	}
 	
-	function setSharedSecret($value) {
+	static function setSharedSecret($value) {
 		return SettingService::setSetting('system','security','sharedsecret',$value);
 	}
 	
-	function getLatestHeartBeat() {
+	static function getLatestHeartBeat() {
 		return SettingService::getSetting('system','heartbeat','latest');
 	}
 	
-	function setLatestHeartBeat($value) {
+	static function setLatestHeartBeat($value) {
 		return SettingService::setSetting('system','heartbeat','latest',$value);
 	}
 }

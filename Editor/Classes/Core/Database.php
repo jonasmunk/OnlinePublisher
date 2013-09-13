@@ -9,18 +9,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 class Database {
-	
-	function Database() {
-	}
-	
-	function testConnection() {
+		
+	static function testConnection() {
 		if (!function_exists('mysql_connect')) {
 			return false;
 		}
 		return Database::getConnection()!==false;
 	}
 	
-	function testServerConnection($host,$user,$password) {
+	static function testServerConnection($host,$user,$password) {
 		if (!function_exists('mysql_connect')) {
 			return false;
 		}
@@ -35,7 +32,7 @@ class Database {
 		return true;
 	}
 	
-	function testDatabaseConnection($host,$user,$password,$name) {
+	static function testDatabaseConnection($host,$user,$password,$name) {
 		$con = @mysql_connect($host, $user,$password);
 		if (!$con) {
 			return false;
@@ -47,13 +44,13 @@ class Database {
 		return true;
 	}
 	
-	function debug($sql) {
+	static function debug($sql) {
 		if (@$_SESSION['core.debug.logDatabaseQueries']) {
 			error_log($sql);
 		}
 	}
 	
-	function getConnection() {
+	static function getConnection() {
 		$config = ConfigurationService::getDatabase();
 		if (!isset($GLOBALS['OP_CON'])) {
 			$con = @mysql_connect($config['host'], $config['user'],$config['password'],false);
@@ -69,7 +66,7 @@ class Database {
 		return $GLOBALS['OP_CON'];
 	}
 	
-	function select($sql) {
+	static function select($sql) {
 		$con = Database::getConnection();
 		if (!$con) {
 			error_log('No database connection');
@@ -86,7 +83,7 @@ class Database {
 		}
 	}
 	
-	function selectFirst($sql) {
+	static function selectFirst($sql) {
 		$output = false;
 		$result = Database::select($sql);
 		if ($row = Database::next($result)) {
@@ -96,7 +93,7 @@ class Database {
 		return $output;
 	}
 	
-	function selectAll($sql,$key=null) {
+	static function selectAll($sql,$key=null) {
 		$output = array();
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -110,11 +107,11 @@ class Database {
 		return $output;
 	}
 	
-	function size($result) {
+	static function size($result) {
 		return @mysql_num_rows($result);
 	}
 	
-	function isEmpty($sql) {
+	static function isEmpty($sql) {
 		$output = true;
 		$result = Database::select($sql);
 		if ($row = Database::next($result)) {
@@ -124,7 +121,7 @@ class Database {
 		return $output;
 	}
 	
-	function update($sql) {
+	static function update($sql) {
 		if (is_array($sql)) {
 			$sql = Database::buildUpdateSql($sql);
 		}
@@ -133,7 +130,7 @@ class Database {
 		return Database::_checkError($sql,$con);
 	}
 	
-	function delete($sql) {
+	static function delete($sql) {
 		Database::debug($sql);
 		$con = Database::getConnection();
 		@mysql_query($sql,$con);
@@ -141,7 +138,7 @@ class Database {
 		return mysql_affected_rows($con);
 	}
 
-	function insert($sql) {
+	static function insert($sql) {
 		if (is_array($sql)) {
 			$sql = Database::buildInsertSql($sql);
 		}
@@ -156,7 +153,7 @@ class Database {
 		}
 	}
 	
-	function _checkError($sql,&$con) {
+	static function _checkError($sql,&$con) {
 		if (mysql_errno($con)>0) {
 			error_log(mysql_error($con).': '.$sql);
 			return false;
@@ -166,15 +163,15 @@ class Database {
 		}
 	}
 	
-	function next($result) {
+	static function next($result) {
 		return @mysql_fetch_array($result);
 	}
 	
-	function free($result) {
+	static function free($result) {
 		@mysql_free_result($result);
 	}
 	
-	function selectArray($sql) {
+	static function selectArray($sql) {
 		$result = Database::select($sql);
 		$ids = array();
 		while($row = Database::next($result)) {
@@ -184,7 +181,7 @@ class Database {
 		return $ids;
 	}
 	
-	function selectIntArray($sql) {
+	static function selectIntArray($sql) {
 		$result = Database::select($sql);
 		$ids = array();
 		while($row = Database::next($result)) {
@@ -194,7 +191,7 @@ class Database {
 		return $ids;
 	}
 	
-	function getIds($sql) {
+	static function getIds($sql) {
 		$result = Database::select($sql);
 		$ids = array();
 		while($row = Database::next($result)) {
@@ -205,7 +202,7 @@ class Database {
 		return $ids;
 	}
 	
-	function buildArray($sql) {
+	static function buildArray($sql) {
 		$result = Database::select($sql);
 		$ids = array();
 		while($row = Database::next($result)) {
@@ -215,7 +212,7 @@ class Database {
 		return $ids;
 	}
 	
-	function getRow($sql) {
+	static function getRow($sql) {
 		return Database::selectFirst($sql);
 	}
 	
@@ -224,7 +221,7 @@ class Database {
 	 * @param string $text The text to format
 	 * @return string The formattet string
 	 */
-	function text($text) {
+	static function text($text) {
 		return "'".mysql_escape_string($text)."'";
 	}
 
@@ -233,7 +230,7 @@ class Database {
 	 * @param int $value The number to format
 	 * @return string The formatet string
 	 */
-	function int($value) {
+	static function int($value) {
 		return intval($value);
 	}
 
@@ -242,7 +239,7 @@ class Database {
 	 * @param float $value The number to format
 	 * @return string The formatet string
 	 */
-	function float($value) {
+	static function float($value) {
 		return floatval($value);
 	}
 
@@ -251,7 +248,7 @@ class Database {
 	 * @param boolean $bool The boolean to format
 	 * @return string The formattet string
 	 */
-	function boolean($bool) {
+	static function boolean($bool) {
 		if ($bool) {
 			return '1';
 		} else {
@@ -264,7 +261,7 @@ class Database {
 	 * @param int $stamp The number to format
 	 * @return string The formattet string
 	 */
-	function datetime($stamp) {
+	static function datetime($stamp) {
 		if (is_numeric($stamp)) {
 			return "'".date('Y-m-d H:i:s',intval($stamp))."'";
 		}
@@ -278,7 +275,7 @@ class Database {
 	 * @param int $stamp The number to format
 	 * @return string The formattet string
 	 */
-	function date($stamp) {
+	static function date($stamp) {
 		if (is_numeric($stamp)) {
 			return "'".date('Y-m-d',intval($stamp))."'";
 		}
@@ -292,11 +289,11 @@ class Database {
 	 * @param string $text The text to format
 	 * @return string The formattet string
 	 */
-	function search($text) {
+	static function search($text) {
 		return "'%".mysql_escape_string($text)."%'";
 	}
 	
-	function buildUpdateSql($arr) {
+	static function buildUpdateSql($arr) {
 		$sql = "update ".$arr['table']." set ";
 		$num = 0;
 		foreach ($arr['values'] as $column => $value) {
@@ -317,7 +314,7 @@ class Database {
 		return $sql;
 	}
 	
-	function buildInsertSql($arr) {
+	static function buildInsertSql($arr) {
 		$sql = "insert into ".$arr['table']." (";
 		$num = 0;
 		foreach ($arr['values'] as $column => $value) {

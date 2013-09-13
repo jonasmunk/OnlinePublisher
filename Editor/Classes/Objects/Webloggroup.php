@@ -16,7 +16,7 @@ class WeblogGroup extends Object {
 		parent::Object('webloggroup');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'webloggroup');
 	}
 	

@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ImageTransformationService {
 	
-	function loadImage($path,$ext=null) {
+	static function loadImage($path,$ext=null) {
 		if (file_exists($path) && is_readable($path)) {
 			if ($ext==null) {
 				$ext = FileSystemService::getFileExtension($path);
@@ -46,7 +46,7 @@ class ImageTransformationService {
 		return null;
 	}
 	
-	function getImageInfo($path) {
+	static function getImageInfo($path) {
 		if (!file_exists($path)) {
 			return null;
 		}
@@ -57,7 +57,7 @@ class ImageTransformationService {
 		return array('width'=>$size[0],'height'=>$size[1],'mime'=>$size['mime']);
 	}
 	
-	function fitInside($size,$box) {
+	static function fitInside($size,$box) {
 		// If the width is one to focus on
 		if ($size['width']/$size['height'] > $box['width']/$box['height']) {
 			$width = $box['width'];
@@ -70,7 +70,7 @@ class ImageTransformationService {
 		return array('width'=>$width,'height'=>$height);
 	}
 	
-	function cropInside($size,$box) {
+	static function cropInside($size,$box) {
 		$sizeRatio = $size['width'] / $size['height'];
 		$boxRatio = $box['width'] / $box['height'];
 		$top = 0;
@@ -89,7 +89,7 @@ class ImageTransformationService {
 		return array('top' => $top, 'left' => $left, 'width' => $width, 'height' => $height);
 	}
 
-	function blur(&$image,$level=1) {
+	static function blur(&$image,$level=1) {
 		if (true) {
 			for ($i=0; $i < $level; $i++) { 
 				imagefilter($image,IMG_FILTER_GAUSSIAN_BLUR);
@@ -101,14 +101,14 @@ class ImageTransformationService {
 		}
 	}
 	
-	function sharpen(&$image) {
+	static function sharpen(&$image) {
 		$sharpenMatrix = array(array(-1,-1,-1),array(-1,16,-1),array(-1,-1,-1));
 		$divisor = 8;
 		$offset = 0;
 		imageconvolution($image, $sharpenMatrix, $divisor, $offset);
 	}
 	
-	function applyFilter($image,$filter,$width,$height) {
+	static function applyFilter($image,$filter,$width,$height) {
 		if ($filter['name']=='blur') {
 			ImageTransformationService::blur($image,$filter['amount']);
 		}
@@ -131,7 +131,7 @@ class ImageTransformationService {
 		}
 	}
 	
-	function transform($recipe) {
+	static function transform($recipe) {
 		$image = ImageTransformationService::loadImage($recipe['path']);
 		if ($image==null) {
 			Log::debug('Unable to load image: '.$recipe['path']);
@@ -214,7 +214,7 @@ class ImageTransformationService {
 		@imagedestroy($image);
 	}
 	
-	function sendFile($path,$mimeType) {
+	static function sendFile($path,$mimeType) {
 		if (!file_exists($path)) {
 			error_log('Cannot send image, path does not exist: '.$path);
 			return;
@@ -243,7 +243,7 @@ class ImageTransformationService {
 		readfile($path);
 	}
 	
-	function buildCachePath($id,$recipe) {
+	static function buildCachePath($id,$recipe) {
 		global $basePath;
 		$path = $basePath.'local/cache/images/'.$id;
 		if ($recipe['width']) {

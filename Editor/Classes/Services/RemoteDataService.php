@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class RemoteDataService {
 	
-	function _getUrlAsFile($url) {
+	static function _getUrlAsFile($url) {
 		global $basePath;
 		$path = RemoteDataService::getPathOfUrl($url);
 		if (!file_exists($path)) {
@@ -28,7 +28,7 @@ class RemoteDataService {
 		return $path;
 	}
 	
-	function writeUrlToFile($url,$path) {
+	static function writeUrlToFile($url,$path) {
 		$existing = file_exists($path);
 		$success = false;
 		if (!function_exists('curl_init')) {
@@ -68,7 +68,7 @@ class RemoteDataService {
 		return $success;
 	}
 	
-	function getPathOfUrl($url) {
+	static function getPathOfUrl($url) {
 		global $basePath;
 		return $basePath.'local/cache/urls/'.sha1($url);
 	}
@@ -76,8 +76,8 @@ class RemoteDataService {
 	/**
 	 * @param $maxAge The number of seconds 
 	 */
-	function getRemoteData($url,$maxAge=0) {
-		$now = mktime();
+	static function getRemoteData($url,$maxAge=0) {
+		$now = time();
 		$cached = Query::after('cachedurl')->withProperty('url',$url)->first();
 		$path = RemoteDataService::getPathOfUrl($url);
 		$success = false;
@@ -94,7 +94,7 @@ class RemoteDataService {
 			$success = RemoteDataService::writeUrlToFile($url,$path);
 			if ($success) {
 				$cached->setTitle($url);
-				$cached->setSynchronized(mktime());
+				$cached->setSynchronized(time());
 				$cached->save();
 				$cached->publish();
 			}

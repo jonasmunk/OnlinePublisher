@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class AuthenticationService {
 	
-	function ensureSecurity() {
+	static function ensureSecurity() {
 		$sql = "select object_id as id from user where secure=0";
 		$ids = Database::getIds($sql);
 		foreach ($ids as $id) {
@@ -22,7 +22,7 @@ class AuthenticationService {
 		}
 	}
 	
-	function isSuperUser($username,$password) {
+	static function isSuperUser($username,$password) {
 		$superUser = ConfigurationService::getSuperUsername();
 		$superPassword = ConfigurationService::getSuperPassword();
 		if (Strings::isBlank($username) || Strings::isBlank($password) || Strings::isBlank($superUser) || Strings::isBlank($superPassword)) {
@@ -34,24 +34,24 @@ class AuthenticationService {
 		return false;
 	}
 	
-	function setPassword($user,$password) {
+	static function setPassword($user,$password) {
 		$user->setPassword(AuthenticationService::encryptPassword($password));
 		$user->setSecure(true);
 	}
 	
-	function encryptPassword($str) {
+	static function encryptPassword($str) {
 		return sha1($str);
 	}
 	
-	function getInternalUser($username,$password) {
+	static function getInternalUser($username,$password) {
 		return AuthenticationService::getUser($username,$password,true);
 	}
 	
-	function getExternalUser($username,$password) {
+	static function getExternalUser($username,$password) {
 		return AuthenticationService::getUser($username,$password,false);
 	}
 	
-	function getUser($username,$password,$internal=null) {
+	static function getUser($username,$password,$internal=null) {
     	$sql="select object_id as id from user where ".
 			" username=".Database::text($username)." and ((secure=0 and password=".Database::text($password).") or (secure=1 and password=".Database::text(AuthenticationService::encryptPassword($password))."))";
 		if ($internal===true) {
@@ -66,12 +66,12 @@ class AuthenticationService {
 		return null;
 	}
 	
-	function isInternalUser($username,$password) {
+	static function isInternalUser($username,$password) {
 		$user = AuthenticationService::getUser($username,$password,true);
 		return $user!==null;
 	}
 	
-	function getUserByEmailOrUsername($emailOrUsername) {
+	static function getUserByEmailOrUsername($emailOrUsername) {
 		if (Strings::isBlank($emailOrUsername)) {
 			return null;
 		}
@@ -87,7 +87,7 @@ class AuthenticationService {
 		return null;
 	}
 
-	function createValidationSession($user) {
+	static function createValidationSession($user) {
 	    $unique = md5(uniqid(rand(), true));
 	    $limit = time() + 60*60; // 1 hour into future
 
@@ -104,16 +104,16 @@ class AuthenticationService {
 		return false;
 	}
 	
-	function isValidUsername($username) {
+	static function isValidUsername($username) {
 		return preg_match("/^[\\S]{2,}$/u", $username);
 	}
 	
-	function isValidEmailValidationSession($key) {
+	static function isValidEmailValidationSession($key) {
 		$sql = "select id from email_validation_session where `unique`=".Database::text($key)." and timelimit>now()";
 		return !Database::isEmpty($sql);
 	}
 	
-	function updatePasswordForEmailValidationSession($key,$password) {
+	static function updatePasswordForEmailValidationSession($key,$password) {
 		if (Strings::isBlank($key) || Strings::isBlank($password)) {
 			Log::debug('key or password is blank');
 			return false;

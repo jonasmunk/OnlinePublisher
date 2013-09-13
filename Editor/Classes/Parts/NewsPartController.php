@@ -215,23 +215,23 @@ class NewsPartController extends PartController
 				}
 				else if ($timetype=='hours') {
 					$start = mktime(date("H")-$count,date("i"),date("s"),date("m"),date("d"),date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='days') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m"),date("d")-$count,date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='weeks') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m"),date("d")-($count*7),date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='months') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m")-$count,date("d"),date("Y"));
-					$end = mktime();
+					$end = time();
 				}
 				else if ($timetype=='years') {
 					$start = mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y")-$count);
-					$end = mktime();
+					$end = time();
 				}
 				$timeSql=" and ((news.startdate is null and news.enddate is null) or (news.startdate>=".Database::datetime($start)." and news.startdate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.enddate<=".Database::datetime($end).") or (news.enddate>=".Database::datetime($start)." and news.startdate is null) or (news.startdate<=".Database::datetime($end)." and news.enddate is null))";
 			}

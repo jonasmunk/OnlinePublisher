@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class MarkupUtils {
 	
-	function findScriptSegments($str) {
+	static function findScriptSegments($str) {
 		$start = '<script';
 		$stop = '</script>';
 		$segments = array();

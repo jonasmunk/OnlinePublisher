@@ -18,7 +18,7 @@ class SecurityZone extends Object {
 		parent::Object('securityzone');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'securityzone');
 	}
 	

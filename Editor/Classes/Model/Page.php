@@ -181,7 +181,7 @@ class Page extends Entity {
     
 ///////////////////////// Persistence /////////////////////////
     
-    function load($id) {
+    static function load($id) {
 		return PageService::load($id);
     }
 

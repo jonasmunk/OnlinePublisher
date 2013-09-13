@@ -46,7 +46,7 @@ class Person extends Object {
 		parent::Object('person');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'person');
 	}
 	
@@ -280,7 +280,7 @@ class Person extends Object {
 		}
 	}
 	
-	function loadByEmail($email) {
+	static function loadByEmail($email) {
 		$sql = "select object.id from emailaddress, object where emailaddress.containing_object_id=object.id and object.type='person' and emailaddress.address=".Database::text($email);
 		$row = Database::selectFirst($sql);
 		if ($row) {

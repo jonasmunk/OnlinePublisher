@@ -75,7 +75,7 @@ class RemoteFile {
 
 	function writeToTempFile() {
 		global $basePath;
-	    $path = $basePath.'local/cache/temp/'.mktime();
+	    $path = $basePath.'local/cache/temp/'.time();
 		$this->writeToFile($path);
 		return $path;
 	}

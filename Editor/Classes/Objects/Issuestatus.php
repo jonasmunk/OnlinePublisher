@@ -16,7 +16,7 @@ class Issuestatus extends Object {
 		parent::Object('issuestatus');
     }
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'issuestatus');
 	}
 }

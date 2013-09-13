@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ObjectLinkService {
 
-	function search($query = array()) {
+	static function search($query = array()) {
 		$sql = "select object_link.*,page.title as page_title, object.title as file_title from object_link ".
 		 		"left join page on page.id=object_link.target_value ".
 				"left join object on object.id=object_link.target_value and object.type='file'";
@@ -39,11 +39,11 @@ class ObjectLinkService {
 		return $list;
 	}
 	
-	function getLinks($object) {
+	static function getLinks($object) {
 		return ObjectLinkService::search(array('objectId'=>$object->getId()));
 	}
 	
-	function updateLinks($id,$links) {
+	static function updateLinks($id,$links) {
 		$sql = "delete from object_link where object_id=".$id;
 		Database::delete($sql);
 		$position = 1;
@@ -55,7 +55,7 @@ class ObjectLinkService {
 		}
 	}
 	
-	function getLinkCounts($objects) {
+	static function getLinkCounts($objects) {
 		if (count($objects)==0) {
 			return array();
 		}
@@ -71,7 +71,7 @@ class ObjectLinkService {
 		return $counts;
 	}
 	
-	function deleteLink($object,$linkId) {
+	static function deleteLink($object,$linkId) {
 
 		// Delete item
 		$sql="delete from object_link where id=".Database::int($linkId);
@@ -92,7 +92,7 @@ class ObjectLinkService {
 		Database::update($sql);
 	}
 	
-	function moveLink($object,$linkId,$dir) {
+	static function moveLink($object,$linkId,$dir) {
 
 		$sql="select * from object_link where id=".Database::int($linkId);
 		$row = Database::selectFirst($sql);
@@ -115,11 +115,11 @@ class ObjectLinkService {
 		Database::update($sql);
 	}
 	
-	function addPageLink($object,$page,$linkText) {
+	static function addPageLink($object,$page,$linkText) {
 		ObjectLinkService::addLink($object,$linkText,'','','page',$page->getId());
 	}
 
-	function addLink($object,$title,$alternative,$target,$targetType,$targetValue) {
+	static function addLink($object,$title,$alternative,$target,$targetType,$targetValue) {
 		$sql="select max(`position`) as `position` from object_link where object_id=".Database::int($object->id);
 		if ($row = Database::selectFirst($sql)) {
 			$pos=$row['position']+1;
@@ -142,7 +142,7 @@ class ObjectLinkService {
 		Database::update($sql);
 	}
 
-	function updateLink($object,$id,$title,$alternative,$target,$targetType,$targetValue) {
+	static function updateLink($object,$id,$title,$alternative,$target,$targetType,$targetValue) {
 		
 		$sql="update object_link set title=".Database::text($title).
 		",alternative=".Database::text($alternative).

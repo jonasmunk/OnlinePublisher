@@ -44,8 +44,8 @@ class ImagePart extends Part
 		parent::Part('image');
 	}
 	
-	function load($id) {
-		return Part::load('image',$id);
+	static function load($id) {
+		return Part::get('image',$id);
 	}
 	
 	function setImageId($imageId) {

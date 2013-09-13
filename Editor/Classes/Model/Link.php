@@ -114,7 +114,7 @@ class Link extends Entity {
 		}
 	}
 
-	function load($id) {
+	static function load($id) {
 		return LinkService::load($id);
 	}
 	

@@ -22,7 +22,7 @@ class Event extends Object {
 		parent::Object('event');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'event');
 	}
 

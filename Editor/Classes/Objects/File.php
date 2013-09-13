@@ -27,7 +27,7 @@ class File extends Object {
         return "file/generic";
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'file');
 	}
 

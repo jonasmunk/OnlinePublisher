@@ -56,8 +56,8 @@ class NewsPart extends Part
 		parent::Part('news');
 	}
 	
-	function load($id) {
-		return Part::load('news',$id);
+	static function load($id) {
+		return Part::get('news',$id);
 	}
 	
 	function setAlign($align) {

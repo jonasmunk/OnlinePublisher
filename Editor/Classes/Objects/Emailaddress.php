@@ -20,7 +20,7 @@ class EmailAddress extends Object {
 		parent::Object('emailaddress');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'emailaddress');
 	}
 	

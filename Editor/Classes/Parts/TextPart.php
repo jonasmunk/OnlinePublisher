@@ -61,8 +61,8 @@ class TextPart extends Part
 		parent::Part('text');
 	}
 		
-	function load($id) {
-		return Part::load('text',$id);
+	static function load($id) {
+		return Part::get('text',$id);
 	}
 	
 	function setText($text) {

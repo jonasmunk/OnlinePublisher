@@ -35,7 +35,7 @@ class Waterusage extends Object {
 		parent::Object('waterusage');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'waterusage');
 	}
 	

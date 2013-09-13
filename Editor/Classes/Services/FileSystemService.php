@@ -16,7 +16,7 @@ class FileSystemService {
 	 * @param string $str The filename to analyze
 	 * @return string A safe filename
 	 */
-	function safeFilename($str){
+	static function safeFilename($str){
 		$str = str_replace("\xe6","ae",$str);
 		$str = str_replace("\xf8","oe",$str);
 		$str = str_replace("\xe5","aa",$str);
@@ -32,7 +32,7 @@ class FileSystemService {
 	 * @param string $dir Path of the dir to analyze
 	 * @return array An array of the names of the directories inside the directory
 	 */
-	function listDirs($dir) {
+	static function listDirs($dir) {
 		$out=array();
 		if (is_dir($dir)) {
 			if ($dh = opendir($dir)) {
@@ -53,7 +53,7 @@ class FileSystemService {
 	 * @return array Array of files inside the dir
 	 * @todo Filenames or paths?
 	 */
-	function listFiles($dir) {
+	static function listFiles($dir) {
 		$out=array();
 		if (is_dir($dir)) {
 			if ($dh = opendir($dir)) {
@@ -68,7 +68,7 @@ class FileSystemService {
 		return $out;
 	}
 	
-	function join($base,$end) {
+	static function join($base,$end) {
 		$out = '';
 		if (substr($base,-1)=='/') {
 			$base = substr($base,0,-1);
@@ -84,7 +84,7 @@ class FileSystemService {
 		return $out;
 	}
 	
-	function remove($path) {
+	static function remove($path) {
 		if (!file_exists($path)) {
 			error_log('Not found: '.$path);
 			return true;
@@ -111,11 +111,11 @@ class FileSystemService {
 		return file_exists($path);
 	}
 	
-	function find($query) {
+	static function find($query) {
 		return FileSystemService::_find($query['dir'],$query);
 	}
 	
-	function _find($dir,$query) {
+	static function _find($dir,$query) {
 		if ($dir[strlen($dir)-1]!='/') {
 			$dir = $dir.'/';
 		}
@@ -158,7 +158,7 @@ class FileSystemService {
 	 * @param string $file The path of the file to write to
 	 * @return boolean True on success, False otherwise
 	 */
-	function writeStringToFile($string,$file) {
+	static function writeStringToFile($string,$file) {
 		if (!$handle = fopen($file, 'w')) {
 			return false;
 		}
@@ -174,7 +174,7 @@ class FileSystemService {
 	 * @param string $filename The filename to analyze
 	 * @return string The extension of the filename
 	 */
-	function getFileExtension($filename) {
+	static function getFileExtension($filename) {
 		$pos = strrpos($filename,'.');
 		if ($pos === false) {
 			return '';
@@ -184,7 +184,7 @@ class FileSystemService {
 		}
 	}
 	
-	function getMaxUploadSize() {
+	static function getMaxUploadSize() {
 	    $maxPost = FileSystemService::parseBytes(ini_get('post_max_size'));
 	    $maxUpload = FileSystemService::parseBytes(ini_get('upload_max_filesize'));
 	    if ($maxPost<$maxUpload) {
@@ -194,7 +194,7 @@ class FileSystemService {
 	    }
 	}
 	
-	function getFreeTempPath() {
+	static function getFreeTempPath() {
 		global $basePath;
 		$path = $basePath.'local/cache/temp/'.time();
 		return FileSystemService::findFreeFilePath($path);
@@ -205,7 +205,7 @@ class FileSystemService {
 	 * @param string $path The path to be used
 	 * @return string A free path
 	 */
-	function findFreeFilePath($path) {
+	static function findFreeFilePath($path) {
 		$path_parts = pathinfo($path);
 		$dir = $path_parts['dirname'];
 		$file = $path_parts['basename'];
@@ -225,7 +225,7 @@ class FileSystemService {
 		return $path;
 	}
 	
-	function overwriteExtension($path,$extension) {
+	static function overwriteExtension($path,$extension) {
 		$offset = strrpos($path,'/');
 		$pos = strpos($path,'.',$offset);
 		if ($pos === false) {
@@ -245,7 +245,7 @@ class FileSystemService {
 	 * @param string $path The path to analyze
 	 * @return string The base filename
 	 */
-	function getFileBaseName($path) {
+	static function getFileBaseName($path) {
 		$path_parts = pathinfo($path);
 		return $path_parts['basename'];
 	}
@@ -255,7 +255,7 @@ class FileSystemService {
 	 * @param string $filename The filename to convert
 	 * @return string A nice looking title
 	 */
-	function filenameToTitle($filename) {
+	static function filenameToTitle($filename) {
 		$pos = strpos($filename,'.');
 		if ($pos === false) {
 			$title = $filename;
@@ -268,7 +268,7 @@ class FileSystemService {
 	}
 	
 
-	function parseBytes($val) {
+	static function parseBytes($val) {
 	    $val = trim($val);
 	    $last = strtolower($val{strlen($val)-1});
 	    switch($last) {
@@ -284,7 +284,7 @@ class FileSystemService {
 	    return $val;
 	}
 
-	function getPermissionString($path) {
+	static function getPermissionString($path) {
 		$perms = fileperms($path);
 		$info = '';
 		$info .= (($perms & 0x0100) ? 'r' : '-');

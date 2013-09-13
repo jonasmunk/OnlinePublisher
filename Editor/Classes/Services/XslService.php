@@ -19,8 +19,12 @@ class XslService {
 		}
 		else {
 			$xslt = new xsltProcessor;
-			$xslt->importStyleSheet(DomDocument::loadXML($xslData));
-			$result = $xslt->transformToXML(DomDocument::loadXML($xmlData));
+			$doc = new DOMDocument();
+			$doc->loadXML($xslData);
+			$xslt->importStyleSheet($doc);
+			$doc = new DOMDocument();
+			$doc->loadXML($xmlData);
+			$result = $xslt->transformToXML($doc);
 		}
 		return $result;
 	}

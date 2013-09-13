@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 class ClientService {
 
 
-	function getStatistics() {
+	static function getStatistics() {
 		$query = new StatisticsQuery();
 		$query->setStartTime(Dates::addDays(time(),-30));
 		$stats = StatisticsService::searchVisits($query);

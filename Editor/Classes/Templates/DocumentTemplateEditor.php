@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class DocumentTemplateEditor
 {
-	function deleteRow($rowId) {
+	static function deleteRow($rowId) {
 		$sql="select * from document_row where id=".Database::int($rowId);
 		$row = Database::selectFirst($sql);
 		if (!$row) {
@@ -46,7 +46,7 @@ class DocumentTemplateEditor
 			$partId=$row['part_id'];
 			$partType=$row['part_type'];
 			if ($type=='part') {
-				if ($part = Part::load($partType,$partId)) {
+				if ($part = Part::get($partType,$partId)) {
 					$part->remove();
 				}
 			}
@@ -65,7 +65,7 @@ class DocumentTemplateEditor
 		Database::update($sql);
 	}
 	
-	function addPartAtEnd($pageId,$part) {
+	static function addPartAtEnd($pageId,$part) {
 		if (!$part->isPersistent()) {
 			Log::debug('The part is not persistent!');
 			return;
@@ -97,7 +97,7 @@ class DocumentTemplateEditor
 	/**
 	 * @return The id of the section
 	 */
-	function addSection($columnId,$index,$partType) {
+	static function addSection($columnId,$index,$partType) {
 		$ctrl = PartService::getController($partType);
 		if (!$ctrl) {
 			Log::debug('Controller not found');
@@ -134,7 +134,7 @@ class DocumentTemplateEditor
 	/**
 	 * @return The id of the section
 	 */
-	function addSectionFromPart($columnId,$index,$part) {		
+	static function addSectionFromPart($columnId,$index,$part) {		
 		$sql="select page_id from document_column where id=".Database::int($columnId);
 		if ($row = Database::selectFirst($sql)) {
 			$pageId = $row['page_id'];
@@ -162,7 +162,7 @@ class DocumentTemplateEditor
 	
 	
 	
-	function deleteColumn($columnId) {
+	static function deleteColumn($columnId) {
 		$sql="select * from document_column where id=".Database::int($columnId);
 		$row = Database::selectFirst($sql);
 		if (!$row) {
@@ -201,7 +201,7 @@ class DocumentTemplateEditor
 			$partType = $row['part_type'];
 			$partId = $row['part_id'];
 			if ($type=='part') {
-				if ($part = Part::load($partType,$partId)) {
+				if ($part = Part::get($partType,$partId)) {
 					$part->remove();
 				}
 			}
@@ -219,12 +219,12 @@ class DocumentTemplateEditor
 		Database::update($sql);
 	}
 	
-	function getSection($sectionId) {
+	static function getSection($sectionId) {
 		$sql="select document_section.*,part.type as part_type from document_section left join part on part.id = document_section.part_id where document_section.id=".Database::int($sectionId);
 		return Database::selectFirst($sql);
 	}
 	
-	function deleteSection($sectionId) {
+	static function deleteSection($sectionId) {
 
 		$row = DocumentTemplateEditor::getSection($sectionId);
 		if (!$row) {
@@ -253,13 +253,13 @@ class DocumentTemplateEditor
 		Database::update($sql);
 
 		if ($type=='part') {
-			if ($part = Part::load($partType,$partId)) {
+			if ($part = Part::get($partType,$partId)) {
 				$part->remove();
 			}
 		}
 	}
 	
-	function addRow($pageId,$index) {
+	static function addRow($pageId,$index) {
 		if (!PageService::exists($pageId)) {
 			Log::debug('The page with id='.$pageId.' does not exist');
 			return;
@@ -282,7 +282,7 @@ class DocumentTemplateEditor
 		return $rowId;
 	}
 	
-	function addColumn($rowId,$index) {
+	static function addColumn($rowId,$index) {
 		$sql="select * from document_row where id=".Database::int($rowId);
 		$row = Database::selectFirst($sql);
 		if (!$row) {
@@ -309,7 +309,7 @@ class DocumentTemplateEditor
 		return $columnId;
 	}
 	
-	function moveSection($sectionId,$direction) {
+	static function moveSection($sectionId,$direction) {
 		$sql="select * from document_section where id=".Database::int($sectionId);
 		$row = Database::selectFirst($sql);
 		if (!$row || ($direction!==1 && $direction!==-1)) {
@@ -337,7 +337,7 @@ class DocumentTemplateEditor
 	 * The indices are Zero-based!
 	 * @param $params Example: array('sectionId' => «id»,'rowIndex' => «int»,'columnIndex' => «int»,'sectionIndex' => «int»)
 	 */
-	function moveSectionFar($params) {
+	static function moveSectionFar($params) {
 		Log::debug($params);
 		$sql="select * from document_section where id=".Database::int($params['sectionId']);
 		$section = Database::selectFirst($sql);
@@ -381,7 +381,7 @@ class DocumentTemplateEditor
 		Database::update($sql);
 	}
 	
-	function _rebuildColumn($id) {
+	static function _rebuildColumn($id) {
 		$sql="select * from document_section where column_id=".Database::int($id)." order by `index`";
 		$sections = Database::selectAll($sql);
 		for ($i=0; $i < count($sections); $i++) { 
@@ -391,7 +391,7 @@ class DocumentTemplateEditor
 	}
 
 	
-	function moveRow($rowId,$direction) {
+	static function moveRow($rowId,$direction) {
 		$sql="select * from document_row where id=".Database::int($rowId);
 		$row = Database::selectFirst($sql);
 		if (!$row || ($direction!==1 && $direction!==-1)) {
@@ -415,7 +415,7 @@ class DocumentTemplateEditor
 		}
 	}
 	
-	function moveColumn($columnId,$direction) {
+	static function moveColumn($columnId,$direction) {
 		$sql = "select * from document_column where id=".Database::int($columnId);
 		$row = Database::selectFirst($sql);
 		if (!$row || ($direction!==1 && $direction!==-1)) {
@@ -438,7 +438,7 @@ class DocumentTemplateEditor
 		}
 	}
 	
-	function loadColumn($id) {
+	static function loadColumn($id) {
 		$sql = "select * from document_column where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			return array(
@@ -453,12 +453,12 @@ class DocumentTemplateEditor
 		return null;
 	}
 	
-	function loadRow($id) {
+	static function loadRow($id) {
 		$sql = "select * from document_row where id=".Database::int($id);
 		return Database::selectFirst($sql);
 	}
 	
-	function updateColumn($column) {
+	static function updateColumn($column) {
 		$sql = "select * from document_column where id=".Database::int($column['id']);
 		if ($row = Database::selectFirst($sql)) {
 			$sql="update document_column set width=".Database::text($column['width']).
@@ -475,7 +475,7 @@ class DocumentTemplateEditor
 		}
 	}
 	
-	function updateRow($info) {
+	static function updateRow($info) {
 		
 		$sql = "select * from document_row where id=".Database::int($info['id']);
 		if ($row = Database::selectFirst($sql)) {

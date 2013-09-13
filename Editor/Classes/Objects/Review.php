@@ -21,7 +21,7 @@ class Review extends Object {
 		parent::Object('review');
     }
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'review');
 	}
 	

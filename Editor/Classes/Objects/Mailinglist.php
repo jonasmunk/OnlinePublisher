@@ -19,7 +19,7 @@ class Mailinglist extends Object {
 		return 'common/email';
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'mailinglist');
 	}
 

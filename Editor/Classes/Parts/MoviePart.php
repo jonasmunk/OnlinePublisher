@@ -24,8 +24,8 @@ class MoviePart extends Part
 		parent::Part('movie');
 	}
 	
-	function load($id) {
-		return Part::load('movie',$id);
+	static function load($id) {
+		return Part::get('movie',$id);
 	}
 	
 	function setFileId($fileId) {

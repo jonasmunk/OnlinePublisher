@@ -42,7 +42,7 @@ class Part extends Entity
 		return $this->id!=null;
 	}
 	
-	function load($type,$id) {
+	static function get($type,$id) {
 		return PartService::load($type,$id);
 	}
 }

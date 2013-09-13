@@ -22,8 +22,8 @@ class HtmlPart extends Part
 		parent::Part('html');
 	}
 	
-	function load($id) {
-		return Part::load('html',$id);
+	static function load($id) {
+		return Part::get('html',$id);
 	}
 
 	function setHtml($html) {

@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class InspectionService {
 	
-	function performInspection($query) {
+	static function performInspection($query) {
 		$inspections = array();
 		
 		InspectionService::checkFolders($inspections);
@@ -32,7 +32,7 @@ class InspectionService {
 		return $filtered;
 	}
 	
-	function checkEnvironment(&$inspections) {
+	static function checkEnvironment(&$inspections) {
 		{
 			$ok = class_exists('XSLTProcessor');
 			$inspection = new Inspection();
@@ -83,7 +83,7 @@ class InspectionService {
 		
 	}
 
-	function checkLinks(&$inspections) {
+	static function checkLinks(&$inspections) {
 		$query = new LinkQuery();
 		$query->withTextCheck()->withOnlyWarnings();
 		$links = LinkService::search($query);
@@ -102,7 +102,7 @@ class InspectionService {
 		}
 	}
 	
-	function checkPageStructure(&$inspections) {
+	static function checkPageStructure(&$inspections) {
 		$sql = "select title,id from page where design_id not in (select object_id from design)";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -117,7 +117,7 @@ class InspectionService {
 		Database::free($result);
 	}
 	
-	function checkFrameStructure(&$inspections) {
+	static function checkFrameStructure(&$inspections) {
 		$sql = "select name,id from frame where hierarchy_id not in (select id from hierarchy)";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -132,7 +132,7 @@ class InspectionService {
 		Database::free($result);
 	}
 	
-	function checkObjects(&$inspections) {
+	static function checkObjects(&$inspections) {
 		$sql = "select id,title,type from object";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -151,7 +151,7 @@ class InspectionService {
 		Database::free($result);
 	}
 	
-	function checkPageContent(&$inspections) {
+	static function checkPageContent(&$inspections) {
 		$sql = "select title,id,description,path from page order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
@@ -187,7 +187,7 @@ class InspectionService {
 		Database::free($result);
 	}
 	
-	function checkFolders(&$inspections) {
+	static function checkFolders(&$inspections) {
 		global $basePath;
 		$folders = array("files","images","local/cache/images","local/cache/urls","local/cache/temp");
 		foreach ($folders as $folder) {

@@ -18,11 +18,11 @@ class IssueService {
 		'error' => array('da' => 'Fejl', 'en' => 'Error')
 	);
 	
-	function getKinds() {
+	static function getKinds() {
 		return IssueService::$KINDS;
 	}
 	
-	function translateKind($kind,$lang=null) {
+	static function translateKind($kind,$lang=null) {
 		if ($lang==null) {
 			$lang = InternalSession::getLanguage();
 		}
@@ -32,23 +32,23 @@ class IssueService {
 		return $kind;
 	}
 
-	function getTotalIssueCount() {
+	static function getTotalIssueCount() {
 		$sql = "select count(object_id) as `count` from issue";
 		$row = Database::selectFirst($sql);
 		return intval($row['count']);
 	}
 	
-	function getKindCounts() {
+	static function getKindCounts() {
 		$sql = "select count(object_id) as count,kind from issue group by kind";
 		return Database::selectAll($sql);
 	}
 	
-	function getStatusCounts() {
+	static function getStatusCounts() {
 		$sql = "select count(issue.object_id) as count,object.title,object.id from issue left join object on issue.issuestatus_id=object.id group by object.id order by object.title";
 		return Database::selectAll($sql);
 	}
 	
-	function getStatusMap() {
+	static function getStatusMap() {
 		$map = array();
 		$sql = "select id,title from object where type='issuestatus' order by title";
 		$result = Database::select($sql);

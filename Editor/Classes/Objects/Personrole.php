@@ -19,7 +19,7 @@ class Personrole extends Object {
 		parent::Object('personrole');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'personrole');
 	}
 

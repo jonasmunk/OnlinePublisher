@@ -26,7 +26,7 @@ class Newssourceitem extends Object {
 		parent::Object('newssourceitem');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'newssourceitem');
 	}
 		

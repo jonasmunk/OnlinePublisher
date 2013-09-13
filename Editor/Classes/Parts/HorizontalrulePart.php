@@ -19,8 +19,8 @@ class HorizontalrulePart extends Part
 		parent::Part('horizontalrule');
 	}
 	
-	function load($id) {
-		return Part::load('horizontalrule',$id);
+	static function load($id) {
+		return Part::get('horizontalrule',$id);
 	}
 }
 ?>

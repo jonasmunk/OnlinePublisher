@@ -35,7 +35,7 @@ class AuthenticationTemplate {
 		PageService::markChanged($this->id);
 	}
 	
-	function load($id) {
+	static function load($id) {
 		$sql="select title,page_id from authentication where page_id=".Database::int($id);
 		if ($row = Database::getRow($sql)) {
 			$obj = new AuthenticationTemplate();

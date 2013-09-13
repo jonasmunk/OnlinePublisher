@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ClipboardService {
 	
-	function copySection($id) {
+	static function copySection($id) {
 		$_SESSION['core.clipboard'] = array(
 			'action' => 'copy',
 			'type' => 'section',
@@ -18,7 +18,7 @@ class ClipboardService {
 		);
 	}
 
-	function cutSection($id) {
+	static function cutSection($id) {
 		$_SESSION['core.clipboard'] = array(
 			'action' => 'cut',
 			'type' => 'section',
@@ -26,11 +26,11 @@ class ClipboardService {
 		);
 	}
 	
-	function getClipboard() {
+	static function getClipboard() {
 		return @$_SESSION['core.clipboard'];
 	}
 	
-	function clear() {
+	static function clear() {
 		$_SESSION['core.clipboard'] = null;
 	}
 }

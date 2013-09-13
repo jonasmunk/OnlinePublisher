@@ -6,7 +6,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class Request {
 	
-	function getParameters() {
+	static function getParameters() {
 		$query = $_SERVER['QUERY_STRING'];
 		$parameters = array();
 		$parts = explode('&',$query);
@@ -22,7 +22,7 @@ class Request {
 	 * @param string $key The name of the variable
 	 * @return boolean True if variable was set, False otherwise
 	 */
-	function exists($key) {
+	static function exists($key) {
 		return isset($_REQUEST[$key]);
 	}
 
@@ -31,11 +31,11 @@ class Request {
 	 * @param string $key The name of the variable
 	 * @return string The value of the variable, '' if variable not set
 	 */
-	function getString($key,$default='') {
+	static function getString($key,$default='') {
 		return Strings::fromUnicode(Request::getStringAsUnicode($key,$default));
 	}
 
-	function getStringAsUnicode($key,$default='') {
+	static function getStringAsUnicode($key,$default='') {
 		if (isset($_POST[$key])) {
 			$output=$_POST[$key];
 		} else if (isset($_GET[$key])) {
@@ -57,7 +57,7 @@ class Request {
 	 * @param string $key The name of the checkbox
 	 * @return boolean True if the checkbox was checked, false otherwise
 	 */
-	function getCheckbox($key) {
+	static function getCheckbox($key) {
 		return Request::getString($key)=='on';
 	}
 
@@ -68,7 +68,7 @@ class Request {
 	 * or not a number. Defaults to 0.
 	 * @return int The value of the variable, $default if variable not set or not numeric
 	 */
-	function getInt($key,$default=0) {
+	static function getInt($key,$default=0) {
 		if (isset($_POST[$key]) && is_numeric($_POST[$key])) {
 			return intval($_POST[$key]);
 		} else if (isset($_GET[$key]) && is_numeric($_GET[$key])) {
@@ -85,7 +85,7 @@ class Request {
 	 * or not a number. Defaults to 0.
 	 * @return int The value of the variable, $default if variable not set or not numeric
 	 */
-	function getFloat($key,$default=0) {
+	static function getFloat($key,$default=0) {
 		if (isset($_POST[$key]) && is_numeric($_POST[$key])) {
 			return floatval($_POST[$key]);
 		} else if (isset($_GET[$key]) && is_numeric($_GET[$key])) {
@@ -98,14 +98,14 @@ class Request {
 	/**
 	 * Gets an int with name id;
 	 */
-	function getId() {
+	static function getId() {
 		return Request::getInt('id');
 	}
 	
 	/**
 	 * Gets "1,9,3" as array(1,9,3)
 	 */
-	function getIntArrayComma($key) {
+	static function getIntArrayComma($key) {
 		$str = Request::getString($key);
 		$out = array();
 		$parts = explode(",",$str);
@@ -122,7 +122,7 @@ class Request {
 	 * @param string $key The name of the variable
 	 * @return boolean True if the value equals "true", false otherwise
 	 */
-	function getBoolean($key) {
+	static function getBoolean($key) {
 		if (isset($_GET[$key])) {
 			if ($_GET[$key]=='true') {
 				return true;
@@ -140,7 +140,7 @@ class Request {
 	 * @param string $key The name of the variable
 	 * @return string The value of the variable, '' if variable not set
 	 */
-	function getDate($key) {
+	static function getDate($key) {
 		if (isset($_GET[$key])) {
 			$d=$_GET[$key];
 			return mktime(0,0,0,substr($d,4,2),substr($d,6,2),substr($d,0,4));
@@ -159,7 +159,7 @@ class Request {
 	 * @param string $key The name of the variable
 	 * @return string The value of the variable, '' if variable not set
 	 */
-	function getDateTime($key) {
+	static function getDateTime($key) {
 		if (isset($_POST[$key])) {
 			$d=$_POST[$key];
 			return mktime(substr($d,8,2),substr($d,10,2),substr($d,12,2),substr($d,4,2),substr($d,6,2),substr($d,0,4));
@@ -169,7 +169,7 @@ class Request {
 		}
 	}
 	
-	function getObject($key) {
+	static function getObject($key) {
 		$obj = Strings::fromJSON(Request::getStringAsUnicode($key));
 		if ($obj!==null) {
 			Strings::fromUnicode($obj);
@@ -178,7 +178,7 @@ class Request {
 	}
 
 	
-	function isPost() {
+	static function isPost() {
 		return $_SERVER['REQUEST_METHOD']=='POST';
 	}
 
@@ -188,7 +188,7 @@ class Request {
 	 * @return array the array value of the variable,
 	 *         an empty array if variable is not an array
 	 */
-	function getArray($key) {
+	static function getArray($key) {
 		if (isset($_POST[$key]) && is_array($_POST[$key])) {
 			return $_POST[$key];
 		}
@@ -200,11 +200,11 @@ class Request {
 		}
 	}
 	
-	function isLocalhost() {
+	static function isLocalhost() {
 		return $_SERVER['SERVER_NAME']==='localhost';
 	}
 
-	function getHeader($name) {
+	static function getHeader($name) {
 	    foreach ($_SERVER as $k => $v)
 	    {
 	        if (substr($k, 0, 5) == "HTTP_")
@@ -219,7 +219,7 @@ class Request {
 		return null;
 	}
 	
-	function getHeaders() {
+	static function getHeaders() {
 	    $headers = array();
 	    foreach ($_SERVER as $k => $v)
 	    {

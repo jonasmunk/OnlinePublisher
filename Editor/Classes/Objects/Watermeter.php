@@ -18,7 +18,7 @@ class Watermeter extends Object {
 		parent::Object('watermeter');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'watermeter');
 	}
 	

@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class HttpClient {
 
-	function send($request) {
+	static function send($request) {
 		$body = http_build_query($request->getParameters(),'','&');
 	
 		$session = curl_init($request->getUrl());

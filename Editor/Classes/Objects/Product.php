@@ -26,7 +26,7 @@ class Product extends Object {
 		$this->imageId = 0;
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'product');
 	}
 	

@@ -14,7 +14,7 @@ class WaterusageService {
 	static $STATUS_TEXT = array(0 => 'Ukendt',1 => 'Valideret',-1 => 'Afvist');
 	static $SOURCE_TEXT = array(0 => 'Administrator',1 => 'Import',2 => 'Kunde');
 	
-	function overwrite($dummy) {
+	static function overwrite($dummy) {
 		$sql="select object_id from waterusage where number=".Database::text($dummy->getNumber())." and year=".Database::int($dummy->getYear());
 		if ($row = Database::selectFirst($sql)) {
 			$usage = Waterusage::load($row['object_id']);
@@ -29,7 +29,7 @@ class WaterusageService {
 		$usage->publish();
 	}
 	
-	function getSummary($number) {
+	static function getSummary($number) {
 		$meter = Query::after('watermeter')->withProperty('number',$number)->first();
 		if ($meter) {
 			return WaterusageService::getSummaryByMeter($meter);
@@ -37,7 +37,7 @@ class WaterusageService {
 		return null;
 	}
 	
-	function getLatestUsage($number) {
+	static function getLatestUsage($number) {
 		$meter = Query::after('watermeter')->withProperty('number',$number)->first();
 		if ($meter) {
 			$meter = Query::after('waterusage')->withProperty('watermeterId',$meter->getId())->orderBy('date')->descending()->withWindowSize(1)->first();
@@ -46,7 +46,7 @@ class WaterusageService {
 		return null;
 	}
 	
-	function removeMeter($id) {
+	static function removeMeter($id) {
 		$meter = Watermeter::load($id);
 		if ($meter) {
 			$address = Query::after('address')->withRelationFrom($meter)->first();
@@ -63,7 +63,7 @@ class WaterusageService {
 	
 	//select * from watermeter where not LENGTH(number)=8
 	
-	function getSummaryByMeter($meter) {
+	static function getSummaryByMeter($meter) {
 		$summary = new WatermeterSummary();
 		$summary->setNumber($meter->getNumber());
 		$address = Query::after('address')->withRelationFrom($meter)->first();
@@ -83,7 +83,7 @@ class WaterusageService {
 		return $summary;
 	}
 
-	function getSummaryById($id) {
+	static function getSummaryById($id) {
 		$meter = Watermeter::load($id);
 		if ($meter) {
 			return WaterusageService::getSummaryByMeter($meter);
@@ -93,7 +93,7 @@ class WaterusageService {
 		return null;
 	}
 	
-	function getYears() {
+	static function getYears() {
 		$years = array();
 		$sql = "select distinct DATE_FORMAT(waterusage.date, '%Y') as year from waterusage where date is not null order by year";
 		$result = Database::select($sql);
@@ -104,17 +104,17 @@ class WaterusageService {
 		return $years;
 	}
 	
-	function getYearCounts() {
+	static function getYearCounts() {
 		$sql = "select DATE_FORMAT(waterusage.date, '%Y') as year,count(object_id) as count from waterusage group by DATE_FORMAT(waterusage.date, '%Y')";
 		return Database::selectAll($sql);
 	}
 	
-	function getStatusCounts() {
+	static function getStatusCounts() {
 		$sql = "select status as status,count(object_id) as count from waterusage group by status order by status";
 		return Database::selectAll($sql);
 	}
 	
-	function saveSummary($summary) {
+	static function saveSummary($summary) {
 		$meter = Watermeter::load($summary->getWatermeterId());
 		if ($meter) {
 			$meter->setNumber($summary->getNumber());
@@ -143,7 +143,7 @@ class WaterusageService {
 		}
 	}
 	
-	function updateEmailOfMeter($meter,$address) {
+	static function updateEmailOfMeter($meter,$address) {
 		$email = Query::after('emailaddress')->withRelationFrom($meter)->first();
 		if (Strings::isBlank($address) && $email) {
 			$email->remove();
@@ -162,7 +162,7 @@ class WaterusageService {
 		}
 	}
 	
-	function updatePhoneOfMeter($meter,$number) {
+	static function updatePhoneOfMeter($meter,$number) {
 		$phone = Query::after('phonenumber')->withRelationFrom($meter)->first();
 		if (Strings::isBlank($number) && $phone) {
 			$phone->remove();
@@ -181,7 +181,7 @@ class WaterusageService {
 		}
 	}
 	
-	function parseAddress($str) {
+	static function parseAddress($str) {
 		if (preg_match("/([^,]+),([\\w ]+,)[ ]?([0-9]+) ([\\w]+)/", $str,$matches)) {
 			return array('street'=>$matches[1],'zipcode'=>$matches[3],'city'=>$matches[4]);
 		}
@@ -191,15 +191,15 @@ class WaterusageService {
 		return null;
 	}
 		
-	function getStatusIcon($status) {
+	static function getStatusIcon($status) {
 		return WaterusageService::$STATUS_ICONS[$status];
 	}
 	
-	function getStatusText($status) {
+	static function getStatusText($status) {
 		return WaterusageService::$STATUS_TEXT[$status];
 	}
 	
-	function getSourceText($source) {
+	static function getSourceText($source) {
 		return WaterusageService::$SOURCE_TEXT[$source];
 	}
 }

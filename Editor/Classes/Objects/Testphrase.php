@@ -15,7 +15,7 @@ class Testphrase extends Object {
 		parent::Object('testphrase');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'testphrase');
 	}
 		

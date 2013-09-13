@@ -14,7 +14,7 @@ class HorizontalrulePartController extends PartController
 		parent::PartController('horizontalrule');
 	}
 	
-	function createPart() {
+	static function createPart() {
 		$part = new HorizontalrulePart();
 		$part->save();
 		return $part;

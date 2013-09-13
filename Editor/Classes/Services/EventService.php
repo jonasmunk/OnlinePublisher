@@ -17,7 +17,7 @@ class EventService {
 	 * @param string $subType The sub type of the entity that changed (image,person,document,...)
 	 * @param int $id The ID of the entity that changed
 	 */
-	function fireEvent($event,$type,$subType,$id) {
+	static function fireEvent($event,$type,$subType,$id) {
 		if (($event=='publish' || $event=='delete') && $type=='object' && $subType=='image') {
 			$sql = "select distinct page_id from document_section,part_image where document_section.part_id=part_image.part_id and part_image.image_id=".$id;
 			$result = Database::select($sql);

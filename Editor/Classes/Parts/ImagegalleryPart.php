@@ -38,8 +38,8 @@ class ImagegalleryPart extends Part
 		parent::Part('imagegallery');
 	}
 	
-	function load($id) {
-		return Part::load('imagegallery',$id);
+	static function load($id) {
+		return Part::get('imagegallery',$id);
 	}
 	
 	function setVariant($variant) {

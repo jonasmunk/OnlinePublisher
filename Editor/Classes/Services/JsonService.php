@@ -10,13 +10,13 @@ if (!isset($GLOBALS['basePath'])) {
 
 class JsonService {
 	
-	function decode($data) {
+	static function decode($data) {
 		global $basePath;
 		require_once($basePath.'Editor/Libraries/json/JSON2.php');
 		return json_decode($data);
 	}
 	
-	function readFile($path) {
+	static function readFile($path) {
 		if (file_exists($path)) {
 			$json = file_get_contents($path);
 			$obj = JsonService::decode($json);

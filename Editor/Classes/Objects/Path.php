@@ -20,7 +20,7 @@ class Path extends Object {
 		parent::Object('path');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'path');
 	}
 

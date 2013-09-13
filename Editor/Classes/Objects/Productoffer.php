@@ -24,7 +24,7 @@ class ProductOffer extends Object {
 		parent::Object('productoffer');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'productoffer');
 	}
 

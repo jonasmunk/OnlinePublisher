@@ -16,7 +16,7 @@ class Newsgroup extends Object {
 		parent::Object('newsgroup');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'newsgroup');
 	}
 	

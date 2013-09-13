@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ToolService {
 
-	function getInstalled() {
+	static function getInstalled() {
 		$arr = array();
 		$sql = "select id,`unique` from `tool`";
 		$result = Database::select($sql);
@@ -21,7 +21,7 @@ class ToolService {
 		return $arr;
 	}
 	
-	function getAvailable() {
+	static function getAvailable() {
 		global $basePath;
 		$arr = FileSystemService::listDirs($basePath."Editor/Tools/");
 		for ($i=0;$i<count($arr);$i++) {
@@ -32,7 +32,7 @@ class ToolService {
 		return $arr;
 	}
 	
-	function getCategorized() {
+	static function getCategorized() {
 		$categorized = array();
 		$installed = ToolService::getInstalled();
 		foreach ($installed as $key) {
@@ -52,7 +52,7 @@ class ToolService {
 		return $categorized;
 	}
 	
-	function _priorityComparator($toolA, $toolB) {
+	static function _priorityComparator($toolA, $toolB) {
 		$a = $toolA->priority;
 		$b = $toolB->priority;
 		if ($a == $b) {
@@ -61,13 +61,13 @@ class ToolService {
 		return ($a < $b) ? -1 : 1;
 	}
 
-	function getInfo($key) {
+	static function getInfo($key) {
 		global $basePath;
 		$path = $basePath."Editor/Tools/".$key."/info.json";
 		return JsonService::readFile($path);
 	}
 	
-	function install($key) {
+	static function install($key) {
 		$sql = "select id from `tool` where `unique`=".Database::text($key);
 		if (Database::isEmpty($sql)) {
 			$sql="insert into tool (`unique`) values (".Database::text($key).")";
@@ -75,7 +75,7 @@ class ToolService {
 		}
 	}
 	
-	function uninstall($key) {
+	static function uninstall($key) {
 		$sql = "delete from `tool` where `unique`=".Database::text($key);
 		Database::delete($sql);
 	}

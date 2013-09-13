@@ -10,16 +10,16 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ConfigurationService {
 	
-	function isDebug() {
+	static function isDebug() {
 		global $CONFIG;
 		return (isset($CONFIG) && isset($CONFIG['debug']) && $CONFIG['debug']==true);
 	}
 	
-	function isUrlRewrite() {
+	static function isUrlRewrite() {
 		return isset($GLOBALS['CONFIG']) && @$GLOBALS['CONFIG']['urlrewrite'];
 	}
 	
-	function getBaseUrl() {
+	static function getBaseUrl() {
 		global $CONFIG,$baseUrl;
 		if (isset($CONFIG) && isset($CONFIG['baseUrl'])) {
 			return $CONFIG['baseUrl'];
@@ -27,7 +27,7 @@ class ConfigurationService {
 		return $baseUrl;
 	}
 	
-	function getDatabase() {
+	static function getDatabase() {
 		global $CONFIG,$database_host, $database_user,$database_password,$database;
 		if (isset($CONFIG) && isset($CONFIG['database'])) {
 			return $CONFIG['database'];
@@ -40,7 +40,7 @@ class ConfigurationService {
 		);
 	}
 	
-	function getSuperUsername() {
+	static function getSuperUsername() {
 		global $CONFIG,$superUser;
 		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['super']['user'])) {
 			return $CONFIG['super']['user'];
@@ -48,7 +48,7 @@ class ConfigurationService {
 		return $superUser;
 	}
 	
-	function getSuperPassword() {
+	static function getSuperPassword() {
 		global $CONFIG,$superPassword;
 		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['super']['password'])) {
 			return $CONFIG['super']['password'];
@@ -56,7 +56,7 @@ class ConfigurationService {
 		return $superPassword;
 	}
 	
-	function getCompleteBaseUrl() {
+	static function getCompleteBaseUrl() {
 		$url = ConfigurationService::getBaseUrl();
 		if (!Strings::startsWith($url,'http')) {
 			$url = 'http://localhost'.$url;

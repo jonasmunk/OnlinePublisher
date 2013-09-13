@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ClassService {
 	
-	function getClassInfo() {
+	static function getClassInfo() {
 		global $basePath;
 		$infos = array();
 		$files = ClassService::_getFiles();
@@ -80,7 +80,7 @@ class ClassService {
 		return $infos;
 	}
 	
-	function _getOrigin($property,$hierarchy) {
+	static function _getOrigin($property,$hierarchy) {
 		foreach ($hierarchy as $class) {
 			if (property_exists($class,$property)) {
 				return $class;
@@ -89,7 +89,7 @@ class ClassService {
 		return $null;
 	}
 	
-	function _getHierarchy($name) {
+	static function _getHierarchy($name) {
 		$hier = array($name);
 		$parent = $name;
 		while ($parent) {
@@ -101,7 +101,7 @@ class ClassService {
 		return array_reverse($hier);
 	}
 	
-	function _getFiles() {
+	static function _getFiles() {
 		global $basePath;
 		$dir = $basePath.'Editor/Classes/';
 		$files = FileSystemService::find(array(
@@ -111,7 +111,7 @@ class ClassService {
 		return $files;
 	}
 	
-	function getClasses() {
+	static function getClasses() {
 		global $basePath;
 		$dir = $basePath.'Editor/Classes/';
 		$files = ClassService::_getFiles();

@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class PartService {
 	
-	function load($type,$id) {
+	static function load($type,$id) {
 		if (!$id) {
 			return null;
 		}
@@ -60,7 +60,7 @@ class PartService {
 		return null;
 	}
 
-	function remove($part) {
+	static function remove($part) {
 		
 		$sql = "delete from part where id=".Database::int($part->getId());
 		Database::delete($sql);
@@ -84,7 +84,7 @@ class PartService {
 		}
 	}
 	
-	function save($part) {
+	static function save($part) {
 		if ($part->isPersistent()) {
 			PartService::update($part);
 		} else {
@@ -126,7 +126,7 @@ class PartService {
 		}
 	}
 	
-	function update($part) {
+	static function update($part) {
 		$sql = "update part set updated=now(),dynamic=".Database::boolean($part->isDynamic())." where id=".Database::int($part->getId());
 		Database::update($sql);
 		
@@ -159,7 +159,7 @@ class PartService {
 	/**
 	 * Creates a new part based on the type
 	 */
-	function newInstance($type) {
+	static function newInstance($type) {
 		global $basePath;
 		$class = ucfirst($type).'Part';
 		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
@@ -171,7 +171,7 @@ class PartService {
 	}
 	
 	/** Gets the controller for a type */
-	function getController($type) {
+	static function getController($type) {
 		global $basePath;
 		if (!$type) {
 			Log::debug('Unable to get controller for no type');
@@ -188,7 +188,7 @@ class PartService {
 	}
 
 	/** Builds the context for a page */
-	function buildPartContext($pageId) {
+	static function buildPartContext($pageId) {
 		$context = new PartContext();
 	
 		$sql = "select link.*,page.path from link left join page on page.id=link.target_id and link.target_type='page' where page_id=".$pageId." and source_type='text'";
@@ -212,7 +212,7 @@ class PartService {
 	
 
 	/** Get a list of all available parts */
-	function getAvailableParts() {
+	static function getAvailableParts() {
 		global $basePath;
 		$arr = FileSystemService::listDirs($basePath."Editor/Parts/");
 		for ($i=0;$i<count($arr);$i++) {
@@ -224,7 +224,7 @@ class PartService {
 	}
 
 	/** A map of all available parts */
-	function getParts() {
+	static function getParts() {
 		return array(
 			'header' => array ( 'name' => array('da'=>'Overskrift','en'=>'Header') ),
 			'text' => array ( 'name' => array('da'=>'Tekst','en'=>'Text') ),
@@ -248,7 +248,7 @@ class PartService {
 	}
 	
 	/** The part menu structure */
-	function getPartMenu() {
+	static function getPartMenu() {
 		$parts = PartService::getParts();
 		$menu = array(
 			'header' => $parts['header'],
@@ -278,7 +278,7 @@ class PartService {
 	}
 	
 	/** Gets all available controllers */
-	function getAllControllers() {
+	static function getAllControllers() {
 		$controllers = array();
 		$parts = PartService::getParts();
 		foreach ($parts as $key => $value) {
@@ -290,7 +290,7 @@ class PartService {
 	/**
 	 * Used to sort arrays of tools
 	 */
-	function compareParts($partA, $partB) {
+	static function compareParts($partA, $partB) {
 		$a = $partA['priority'];
 		$b = $partB['priority'];
 		if ($a == $b) {
@@ -301,7 +301,7 @@ class PartService {
 
 
 	/** Get part info based on its unique ID */
-	function getPartInfo($unique) {
+	static function getPartInfo($unique) {
 		global $basePath;
 		$file = $basePath."Editor/Parts/".$unique."/info.xml";
 		if (file_exists($file)) {
@@ -323,7 +323,7 @@ class PartService {
 	}
 	
 	/** Get the possible link text for a certain part */
-	function getLinkText($partId) {
+	static function getLinkText($partId) {
 		$text = '';
 		$sql = "select text,document_section.part_id from part_text,document_section where document_section.part_id=part_text.part_id and document_section.part_id=".Database::int($partId)."
 union select text,document_section.part_id from part_header,document_section where document_section.part_id=part_header.part_id and document_section.part_id=".Database::int($partId)."
@@ -338,7 +338,7 @@ union select html as text,document_section.part_id from part_table,document_sect
 	}
 	
 	/** Get the first link for a part */
-	function getSingleLink($part,$sourceType=null) {
+	static function getSingleLink($part,$sourceType=null) {
 	    $sql = "select part_link.*,page.path from part_link left join page on page.id=part_link.target_value and part_link.target_type='page' where part_id=".Database::int($part->getId());
 	    if (!is_null($sourceType)) {
 	        $sql.=" and source_type=".Database::text($sourceType);
@@ -351,13 +351,13 @@ union select html as text,document_section.part_id from part_table,document_sect
 	}
 	
 	/** Remove all existing links for a part */
-	function removeLinks($part) {
+	static function removeLinks($part) {
 		$sql = "delete from part_link where part_id=".Database::int($part->getId());
 		Database::delete($sql);
 	}
 	
 	/** Gets all links for a part */
-	function getLinks($part) {
+	static function getLinks($part) {
 		$links = array();
 		$sql = "select * from part_link where part_id=".Database::int($part->getId());
 		$result = Database::select($sql);
@@ -376,7 +376,7 @@ union select html as text,document_section.part_id from part_table,document_sect
 	}
 	
 	/** Saves a link */
-	function saveLink($link) { /* PartLink */
+	static function saveLink($link) { /* PartLink */
 		Log::debug($link);
 		if ($link->id) {
 			$sql="update part_link set ".

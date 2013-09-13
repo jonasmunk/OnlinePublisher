@@ -16,7 +16,7 @@ class ProductType extends Object {
 		parent::Object('producttype');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'producttype');
 	}
 	

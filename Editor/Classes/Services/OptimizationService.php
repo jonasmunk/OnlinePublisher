@@ -10,18 +10,18 @@ if (!isset($GLOBALS['basePath'])) {
 
 class OptimizationService {
 	
-	function addControlWord($word) {
+	static function addControlWord($word) {
 		
 	}
 	
-	function getSettings() {
+	static function getSettings() {
 		$value = SettingService::getSetting('system','optimization','settings');
 		$value = Strings::fromJSON($value);
 		$value = Strings::fromUnicode($value);
 		return $value;
 	}
 	
-	function setSettings($value) {
+	static function setSettings($value) {
 		$value = Strings::toUnicode($value);
 		$value = Strings::toJSON($value);
 		SettingService::setSetting('system','optimization','settings',$value);

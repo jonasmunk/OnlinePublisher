@@ -17,7 +17,7 @@ class LinkService {
 		'email' => array('da' => 'E-mail-adresse', 'en' => 'E-mail address')
 	);
 	
-	function getLinkInfo($linkId) {
+	static function getLinkInfo($linkId) {
 		$sql = "select link.*,page.title as page_title,object.title as object_title from link left join page on link.target_id=page.id left join object on link.target_id=object.id where link.id=".Database::int($linkId);
 		if ($row = Database::selectFirst($sql)) {
 			return LinkService::_rowToInfo($row);
@@ -25,7 +25,7 @@ class LinkService {
 		return null;
 	}
 
-	function getPageLinks($pageId) {
+	static function getPageLinks($pageId) {
 		$list = array();
 		$sql = "select link.*,page.title as page_title,object.title as object_title from link left join page on link.target_id=page.id left join object on link.target_id=object.id where page_id=".Database::int($pageId)." order by link.source_text";
 		$result = Database::select($sql);
@@ -37,7 +37,7 @@ class LinkService {
 		return $list;
 	}
 	
-	function _rowToInfo($row) {
+	static function _rowToInfo($row) {
 		$link = new LinkInfo();
 		$link->setId(intval($row['id']));
 		$link->setSourceType($row['source_type']);
@@ -62,11 +62,11 @@ class LinkService {
 		return $link;
 	}
 	
-	function translateLinkType($type) {
+	static function translateLinkType($type) {
 		return GuiUtils::getTranslated(LinkService::$types[$type]);
 	}
 	
-	function load($id) {
+	static function load($id) {
 		$sql = "select * from link where id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
 			$link = new Link();
@@ -83,12 +83,12 @@ class LinkService {
 		return null;
 	}
 
-	function remove($link) {
-		$sql="delete from link where id=".Database::int($this->getId());
+	static function remove($link) {
+		$sql="delete from link where id=".Database::int($link->getId());
 		return Database::delete($sql);
 	}
 
-	function save($link) {
+	static function save($link) {
 		if (Strings::isBlank($link->getText())) {
 			return;
 		}
@@ -116,11 +116,11 @@ class LinkService {
 				Database::int($link->targetId).",".
 				Database::text($link->alternative).
 			")";
-			$this->id = Database::insert($sql);
+			$link->id = Database::insert($sql);
 		}
 	}
 	
-	function getSourceIcon($view) {
+	static function getSourceIcon($view) {
 		$icons = array(
 			'hierarchy' => 'monochrome/hierarchy',
 			'file' => 'monochrome/file',
@@ -132,7 +132,7 @@ class LinkService {
 		return $icons[$view->getSourceType()];
 	}
 
-	function getTargetIcon($view) {
+	static function getTargetIcon($view) {
 		$icons = array(
 			'hierarchy' => 'monochrome/hierarchy',
 			'file' => 'monochrome/file',
@@ -144,7 +144,7 @@ class LinkService {
 		return $icons[$view->getTargetType()];
 	}
 	
-	function search($query) {
+	static function search($query) {
 		$unions = array();
 		$pageId = $query->getSourcePage();
 		if (!$pageId) {
@@ -270,7 +270,7 @@ class LinkService {
 		return $list;
 	}
 	
-	function _checkText($view) {
+	static function _checkText($view) {
 		if ($view->getSourceType()=='page' && $view->getSourceSubType()=='text') {
 			$text = '';
 			if ($view->getSourceSubId()) {
@@ -285,7 +285,7 @@ class LinkService {
 		}
 	}
 	
-	function _buildView($row) {
+	static function _buildView($row) {
 		$view = new LinkView();
 		$view->setId(intval($row['id']));
 		$view->setSourceType($row['source_type']);

@@ -101,7 +101,7 @@ class FileService {
 		,'text' => 'Tekst'
 	);
 	
-	function mimeTypeToInfo($mime) {
+	static function mimeTypeToInfo($mime) {
 		foreach (FileService::$types as $type) {
 			foreach ($type['mimetypes'] as $mimeType) {
 				if ($mime===$mimeType) {
@@ -112,7 +112,7 @@ class FileService {
 		return null;
 	}
 	
-	function extensionToInfo($ext) {
+	static function extensionToInfo($ext) {
 		foreach (FileService::$types as $type) {
 			foreach ($type['extensions'] as $extension) {
 				if ($ext===$extension) {
@@ -123,21 +123,21 @@ class FileService {
 		return null;
 	}
 	
-	function mimeTypeToLabel($mime) {
+	static function mimeTypeToLabel($mime) {
 		if ($info = FileService::mimeTypeToInfo($mime)) {
 			return $info['label'];
 		}
 		return $mime;
 	}
 	
-	function mimeTypeToKind($mime) {
+	static function mimeTypeToKind($mime) {
 		if ($info = FileService::mimeTypeToInfo($mime)) {
 			return $info['kind'];
 		}
 		return '';
 	}
 	
-	function mimeTypeToExtension($mime) {
+	static function mimeTypeToExtension($mime) {
 		if ($info = FileService::mimeTypeToInfo($mime)) {
 			$ext = $info['extensions'];
 			if (count($ext)>0) {
@@ -147,7 +147,7 @@ class FileService {
 		return '';
 	}
 	
-	function kindToMimeTypes($kind) {
+	static function kindToMimeTypes($kind) {
 		foreach (FileService::$types as $type) {
 			if ($type['kind']===$kind) {
 				return $type['mimetypes'];
@@ -156,7 +156,7 @@ class FileService {
 		return null;
 	}
 	
-	function extensionToMimeType($ext) {
+	static function extensionToMimeType($ext) {
 		if ($info = FileService::extensionToInfo($ext)) {
 			$mimes = $info['mimetypes'];
 			if (count($mimes)>0) {
@@ -166,7 +166,7 @@ class FileService {
 		return '';
 	}
 	
-	function fileNameToMimeType($filename) {
+	static function fileNameToMimeType($filename) {
 		$ext = FileSystemService::getFileExtension($filename);
 		return FileService::extensionToMimeType($ext);
 	}
@@ -176,7 +176,7 @@ class FileService {
 	 * @param int $id The ID of the existing File object
 	 * @return array An array describing the success of the procedure
 	 */
-	function replaceUploadedFile($id) {
+	static function replaceUploadedFile($id) {
 		global $basePath;
 		$fileName = FileSystemService::safeFilename($_FILES['file']['name']);
 		$fileType = $_FILES["file"]["type"];
@@ -226,7 +226,7 @@ class FileService {
 	 * @param int $group Optional ID of FileGroup to place the file in
 	 * @return array An array describing the success of the procedure
 	 */
-	function createUploadedFile($title='',$group=0) {
+	static function createUploadedFile($title='',$group=0) {
 		global $basePath;
 		$fileName = $_FILES['file']['name'];
 		$fileType = $_FILES["file"]["type"];
@@ -280,7 +280,7 @@ class FileService {
 		return $result;
 	}
 	
-	function createFromUrl($url) {
+	static function createFromUrl($url) {
 		global $basePath;
 		$remote = new RemoteFile($url);
 		$path = $remote->writeToTempFile();
@@ -318,7 +318,7 @@ class FileService {
 		return array('success' => true);
 	}
 	
-	function getLatestFileId() {
+	static function getLatestFileId() {
 		$sql = "select max(object_id) as id from file";
 		if ($row = Database::selectFirst($sql)) {
 			return intval($row['id']);
@@ -326,7 +326,7 @@ class FileService {
 		return null;
 	}
 	
-	function getFileFilename($id) {
+	static function getFileFilename($id) {
 		$sql = "select filename from file where object_id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			return $row['filename'];
@@ -334,7 +334,7 @@ class FileService {
 		return NULL;
 	}
 	
-	function getGroupCounts() {
+	static function getGroupCounts() {
 		$out = array();
 		$sql="select distinct object.id,object.title,count(file.object_id) as filecount from filegroup, filegroup_file, file,object  where filegroup_file.filegroup_id=filegroup.object_id and filegroup_file.file_id = file.object_id and object.id=filegroup.object_id group by filegroup.object_id union select object.id,object.title,'0' from object left join filegroup_file on filegroup_file.filegroup_id=object.id where object.type='filegroup' and filegroup_file.file_id is null order by title";
 		$result = Database::select($sql);

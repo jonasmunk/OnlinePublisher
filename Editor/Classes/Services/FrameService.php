@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class FrameService {
 	
-	function save($frame) {
+	static function save($frame) {
 		$hierarchy = Hierarchy::load($frame->getHierarchyId());
 		if (!$hierarchy) {
 			return false;
@@ -38,7 +38,7 @@ class FrameService {
 		return true;
 	}
 	
-	function getLinks($frame,$position) {
+	static function getLinks($frame,$position) {
 		$links = array();
 		$sql = "select frame_link.*,page.title as page_title,object.title as object_title from frame_link left join page on page.id=`frame_link`.`target_id` left join object on object.id=`frame_link`.`target_id` where frame_link.frame_id=".Database::int($frame->getId())." and frame_link.position=".Database::text($position)." order by frame_link.`index`";
 		$result = Database::select($sql);
@@ -69,7 +69,7 @@ class FrameService {
 		return $links;
 	}
 	
-	function replaceLinks($frame,$topLinks,$bottomLinks) {
+	static function replaceLinks($frame,$topLinks,$bottomLinks) {
 		if (!is_object($frame)) {
 			Log::debug('No frame provided');
 			return;
@@ -80,7 +80,7 @@ class FrameService {
 		FrameService::_createLinks($frame,$bottomLinks,'bottom');
 	}
 		
-	function _createLinks($frame,$links,$position) {
+	static function _createLinks($frame,$links,$position) {
 		$index = 0;
 		foreach ($links as $link) {
 			$id = 0;
@@ -117,7 +117,7 @@ class FrameService {
 		}
 	}
 	
-	function load($id) {
+	static function load($id) {
 		$sql = "select id,title,bottomtext,name,hierarchy_id,UNIX_TIMESTAMP(changed) as changed,searchenabled,searchpage_id,userstatusenabled,userstatuspage_id from frame where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			$frame = new Frame();
@@ -136,7 +136,7 @@ class FrameService {
 		return null;
 	}
 	
-    function canRemove($frame) {
+    static function canRemove($frame) {
         $sql="select count(id) as num from page where frame_id=".Database::int($frame->getId());
         if ($row = Database::selectFirst($sql)) {
             return $row['num']==0;
@@ -144,7 +144,7 @@ class FrameService {
         return true;
     }
 	
-	function remove($frame) {
+	static function remove($frame) {
 		if ($frame->getId()>0 && FrameService::canRemove($frame)) {
 			$sql = "delete from frame where id=".Database::int($frame->getId());
 			Database::delete($sql);
@@ -167,7 +167,7 @@ class FrameService {
 		return false;
 	}
 
-	function search() {
+	static function search() {
 		$list = array();
 		$sql = "select id,title,bottomtext,name,hierarchy_id,UNIX_TIMESTAMP(changed) as changed from frame order by name";
 		$result = Database::select($sql);
@@ -185,7 +185,7 @@ class FrameService {
 		return $list;
 	}
 	
-	function getNewsBlocks($frame) {
+	static function getNewsBlocks($frame) {
 		$sql = "select id,`index`,title,sortby,sortdir,maxitems,timetype,timecount,UNIX_TIMESTAMP(startdate) as startdate,UNIX_TIMESTAMP(enddate) as enddate from frame_newsblock where frame_id=".Database::int($frame->getId())." order by `index`";
 		$blocks = Database::selectAll($sql);
 		foreach ($blocks as &$block) {
@@ -195,7 +195,7 @@ class FrameService {
 		return $blocks;
 	}
 	
-	function replaceNewsBlocks($frame,$blocks) {
+	static function replaceNewsBlocks($frame,$blocks) {
 		Log::debug($blocks);
 		
 		if (!is_object($frame)) {

@@ -23,7 +23,7 @@ class Feedback extends Object {
 		parent::Object('feedback');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'feedback');
 	}
 	

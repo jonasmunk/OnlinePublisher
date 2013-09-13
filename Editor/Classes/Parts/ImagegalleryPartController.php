@@ -25,7 +25,7 @@ class ImagegalleryPartController extends PartController
 		return $part;
 	}
 	
-	function createPart() {
+	static function createPart() {
 		$part = new ImagegalleryPart();
 		$part->setHeight(100);
 		$part->setWidth(100);

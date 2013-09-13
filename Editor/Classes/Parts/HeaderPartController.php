@@ -19,7 +19,7 @@ class HeaderPartController extends PartController
 	}
 
 	
-	function createPart() {
+	static function createPart() {
 		$part = new HeaderPart();
 		$part->setText('Velkommen');
 		$part->setLevel(1);

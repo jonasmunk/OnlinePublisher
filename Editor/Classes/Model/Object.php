@@ -134,9 +134,6 @@ class Object extends Entity {
 		return 'http://uri.in2isoft.com/onlinepublisher/class/'.$this->type.'/'.$version.'/';
 	}
 	
-	function get($id,$type) {
-		return ObjectService::load($id,$type);
-	}
 		
     /*=========================== links =======================*/
 
@@ -157,7 +154,11 @@ class Object extends Entity {
     
     ///////////////////////////// Static ///////////////////////////
 
-    function load($id) {
+	static function get($id,$type) {
+		return ObjectService::load($id,$type);
+	}
+
+    static function load($id) {
 		return ObjectService::loadAny($id);
     }
 

@@ -19,7 +19,7 @@ class PersonGroup extends Object {
 		return 'common/folder';
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'persongroup');
 	}
 	

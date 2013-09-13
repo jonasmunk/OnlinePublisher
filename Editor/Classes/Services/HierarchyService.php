@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class HierarchyService {
 	    	
-	function createHierarchy($hierarchy) {
+	static function createHierarchy($hierarchy) {
 		if (!$hierarchy) {
 			Log::debug('No hierarchy');
 			return;
@@ -26,12 +26,12 @@ class HierarchyService {
 		$hierarchy->setId(Database::insert($sql));
     }
     
-    function getHierarchyItemForPage($page) {
+    static function getHierarchyItemForPage($page) {
         $sql="select * from hierarchy_item where target_type='page' and target_id=".Database::int($page->getId());
         return Database::selectFirst($sql);
     }
 
-    function updateHierarchy($hierarchy) {
+    static function updateHierarchy($hierarchy) {
 		if (!$hierarchy) {
 			Log::debug('No hierarchy');
 			return;
@@ -43,7 +43,7 @@ class HierarchyService {
         return Database::update($sql);
     }
 
-    function canDeleteHierarchy($id) {
+    static function canDeleteHierarchy($id) {
         $sql="select count(id) as num from hierarchy_item where hierarchy_id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
             if ($row['num']==0) {
@@ -53,12 +53,12 @@ class HierarchyService {
         return false;
     }
 
-	function markHierarchyChanged($id) {
+	static function markHierarchyChanged($id) {
 		$sql="update hierarchy set changed=now() where id=".Database::int($id);
 		Database::update($sql);
 	}
 
-	function createItem($options) {
+	static function createItem($options) {
 		if (Strings::isBlank(@$options['title'])) {
 			Log::debug('No title');
 			return false;
@@ -126,7 +126,7 @@ class HierarchyService {
 		return $id;
 	}
     
-    function deleteItem($id) {
+    static function deleteItem($id) {
 
         // Load info about item
         $sql="select * from hierarchy_item where id=".Database::int($id);

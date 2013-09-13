@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class SchemaService {
 	
-	function buildSqlSetters($obj,$schema) {
+	static function buildSqlSetters($obj,$schema) {
 		$sql = '';
 		$fields = isset($schema['fields']) ? $schema['fields'] : $schema;
 		if (!is_array($fields)) {
@@ -33,7 +33,7 @@ class SchemaService {
 		return $sql;
 	}
 	
-	function _formatValue($type,$value) {
+	static function _formatValue($type,$value) {
 		if ($type == 'int') {
 			return Database::int($value);
 		} else if ($type == 'float') {
@@ -46,7 +46,7 @@ class SchemaService {
 		return Database::text($value);
 	}
 	
-	function getRowValue($type,$value) {
+	static function getRowValue($type,$value) {
 		if ($type == 'int') {
 			return intval($value);
 		} else if ($type == 'float') {
@@ -59,14 +59,14 @@ class SchemaService {
 		return $value;
 	}
 	
-	function getColumn($property,$info) {
+	static function getColumn($property,$info) {
 		if (isset($info['column'])) {
 			return $info['column'];
 		}
 		return $property;
 	}
 
-	function buildSqlColumns($schema) {
+	static function buildSqlColumns($schema) {
 		$sql = '';
 		foreach ($schema['fields'] as $field => $info) {
 			$column = $field;
@@ -81,7 +81,7 @@ class SchemaService {
 		return $sql;
 	}
 	
-	function buildSqlValues($obj,$schema) {
+	static function buildSqlValues($obj,$schema) {
 		$sql = '';
 		foreach ($schema['fields'] as $field => $info) {
 			$column = $field;

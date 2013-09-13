@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class ReviewService {
 	
-	function search($query) {
+	static function search($query) {
 		$sql = '';
 		if ($query['unreviewed']) {
 			$sql = "select page.id as page_id, page.title as page_title,'' as user_title, null as date, -1 as accepted 

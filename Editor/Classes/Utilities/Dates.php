@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class Dates {
 	
-	function parseRFC822($str) {
+	static function parseRFC822($str) {
 		preg_match("/(.+)\, (\d+) (\w+) (\d+) (\d+):(\d+):(\d+) (.+)/i",$str, $matches);
 		if (!$matches) {
 			return null;
@@ -20,7 +20,7 @@ class Dates {
 		return gmmktime ( $matches[5],$matches[6],$matches[7], $months[$matches[3]],$matches[2], $matches[4]);
 	}
 	
-	function parseRFC3339($date) {
+	static function parseRFC3339($date) {
 		if (Strings::isBlank($date)) {
 			return null;
 		}
@@ -35,7 +35,7 @@ class Dates {
 	}
 	
 	/** The goal of this method is to parse anything */
-	function parse($str) {
+	static function parse($str) {
 		// DD-MM-YYYY
 		if (preg_match("/([0-9]{2})[-\/\.]([0-9]{2})[-\/\.]([0-9]{4})/mi",$str, $matches)) {
 			return mktime( 0,0, 0, $matches[2],$matches[1], $matches[3]);
@@ -51,18 +51,18 @@ class Dates {
 		return null;
 	}
 	
-	function buildTag($tagName,$stamp) {
+	static function buildTag($tagName,$stamp) {
 		return '<'.$tagName.' unix="'.$stamp.'" day="'.date('d',$stamp).'" weekday="'.date('w',$stamp).'" yearday="'.date('z',$stamp).'" month="'.date('m',$stamp).'" year="'.date('Y',$stamp).'" hour="'.date('H',$stamp).'" minute="'.date('i',$stamp).'" second="'.date('s',$stamp).'" offset="'.date('Z',$stamp).'" timezone="'.date('T',$stamp).'"/>';
 	}
 	
-	function formatCSV($stamp) {
+	static function formatCSV($stamp) {
 		if ($stamp) {
 			return date("Y-m-d H:i:s",$stamp);
 		}
 		return '';
 	}
 	
-	function formatLongDateTime($timestamp,$locale="da_DK") {
+	static function formatLongDateTime($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			setlocale(LC_TIME, $locale);
 			return strftime("%e. %b %Y kl. %H:%M",$timestamp);
@@ -71,14 +71,14 @@ class Dates {
 		}
 	}
 		
-	function formatShortDate($timestamp) {
+	static function formatShortDate($timestamp) {
 		if ($timestamp) {
 			setlocale(LC_TIME, "da_DK");
 			return strftime("%e. %b",$timestamp);
 		}
 	}
 	
-	function formatLongDate($timestamp,$locale="da_DK") {
+	static function formatLongDate($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			setlocale(LC_TIME, $locale);
 			return strftime("%e. %b %Y",$timestamp);
@@ -87,7 +87,7 @@ class Dates {
 		}
 	}
 	
-	function formatDate($timestamp,$options=array()) {
+	static function formatDate($timestamp,$options=array()) {
 		if ($timestamp==null) return '';
 		$format = "%e. %B";
 		if (isset($options['shortWeekday'])) {
@@ -100,7 +100,7 @@ class Dates {
 		return strftime($format,$timestamp);
 	}
 	
-	function formatDateTime($timestamp,$locale="da_DK") {
+	static function formatDateTime($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			setlocale(LC_TIME, $locale);
 			return strftime("%e. %b kl. %H:%M",$timestamp);
@@ -109,14 +109,14 @@ class Dates {
 		}
 	}
 		
-	function formatShortTime($timestamp,$locale="da_DK") {
+	static function formatShortTime($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			setlocale(LC_TIME, $locale);
 			return strftime("%H:%M",$timestamp);
 		}
 	}
 	
-	function formatLongDateTimeGM($timestamp,$locale="da_DK") {
+	static function formatLongDateTimeGM($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			setlocale(LC_TIME, $locale);
 			return gmstrftime("%e. %b %Y kl. %H:%M",$timestamp);
@@ -125,7 +125,7 @@ class Dates {
 		}
 	}
 	
-	function formatDuration($seconds,$locale="da_DK") {
+	static function formatDuration($seconds,$locale="da_DK") {
 		if ($seconds<60) {
 			return $seconds.' sekunder';
 		}
@@ -135,7 +135,7 @@ class Dates {
 		return round($seconds/60/60,2).' timer';
 	}
 	
-	function formatFuzzy($timestamp,$locale="da_DK") {
+	static function formatFuzzy($timestamp,$locale="da_DK") {
 		if ($timestamp) {
 			$diff = time()-$timestamp;
 			if ($diff>0) {
@@ -178,16 +178,16 @@ class Dates {
 		}
 	}
 
-	function getCurrentYear() {
-		return date('Y',mktime());
+	static function getCurrentYear() {
+		return date('Y',time());
 	}
 	
 	/**
 	 * Gets the start time of the week of the provided timestamp
 	 */
-	function getWeekStart($timestamp=null) {
+	static function getWeekStart($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		$weekday = date('w',$timestamp);
@@ -201,9 +201,9 @@ class Dates {
 		return mktime(0,0,0,$month,$date-$weekday,$year);
 	}
 	
-	function getWeekDay($timestamp=null) {
+	static function getWeekDay($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$weekday = date('w',$timestamp);
 		if ($weekday==0) {
@@ -214,9 +214,9 @@ class Dates {
 		return $weekday;
 	}
 	
-	function getWeekEnd($timestamp=null) {
+	static function getWeekEnd($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		$weekday = date('w',$timestamp);
@@ -225,9 +225,9 @@ class Dates {
 		return mktime(23,59,59,$month,$date-$weekday+7,$year);
 	}
 	
-	function getDayEnd($timestamp=null) {
+	static function getDayEnd($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		$month = date('n',$timestamp);
@@ -235,9 +235,9 @@ class Dates {
 		return mktime(23,59,59,$month,$date,$year);
 	}
 	
-	function getDayStart($timestamp=null) {
+	static function getDayStart($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		$month = date('n',$timestamp);
@@ -245,63 +245,63 @@ class Dates {
 		return mktime(0,0,0,$month,$date,$year);
 	}
 	
-	function getMonthStart($timestamp=null) {
+	static function getMonthStart($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		$month = date('n',$timestamp);
 		return mktime(0,0,0,$month,1,$year);
 	}
 	
-	function getMonthEnd($timestamp=null) {
+	static function getMonthEnd($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		$month = date('n',$timestamp);
 		return mktime(0,0,-1,$month+1,1,$year);
 	}
 	
-	function getFirstInstanceOfYear($year) {
+	static function getFirstInstanceOfYear($year) {
 		return mktime(0,0,0,1,1,$year);
 	}
 	
-	function getLastInstanceOfYear($year) {
+	static function getLastInstanceOfYear($year) {
 		return mktime(0,0,-1,1,1,$year+1);
 	}
 	
-	function getYearStart($timestamp=null) {
+	static function getYearStart($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		return mktime(0,0,0,1,1,$year);
 	}
 	
-	function getYearEnd($timestamp=null) {
+	static function getYearEnd($timestamp=null) {
 		if ($timestamp==null) {
-			$timestamp = mktime();
+			$timestamp = time();
 		}
 		$year = date('Y',$timestamp);
 		return mktime(0,0,-1,1,1,$year+1);
 	}
 	
-	function getSecondsSinceMidnight($timestamp) {
+	static function getSecondsSinceMidnight($timestamp) {
 		$hours = date('H',$timestamp);
 		$minutes = date('i',$timestamp);
 		$seconds = date('s',$timestamp);
 		return $hours*60*60+$minutes*60+$seconds;
 	}
 	
-	function stripTime($timestamp) {
+	static function stripTime($timestamp) {
 		$year = date('Y',$timestamp);
 		$month = date('n',$timestamp);
 		$date = date('j',$timestamp);
 		return mktime(0,0,0,$month,$date,$year);
 	}
 	
-	function addSeconds($timestamp,$secs) {
+	static function addSeconds($timestamp,$secs) {
 		$hours = date('H',$timestamp);
 		$minutes = date('i',$timestamp);
 		$seconds = date('s',$timestamp);
@@ -311,7 +311,7 @@ class Dates {
 		return mktime($hours,$minutes,$seconds+$secs,$month,$date,$year);
 	}
 	
-	function addMinutes($timestamp,$mins) {
+	static function addMinutes($timestamp,$mins) {
 		$hours = date('H',$timestamp);
 		$minutes = date('i',$timestamp);
 		$seconds = date('s',$timestamp);
@@ -321,7 +321,7 @@ class Dates {
 		return mktime($hours,$minutes+$mins,$seconds,$month,$date,$year);
 	}
 	
-	function addHours($timestamp,$hrs) {
+	static function addHours($timestamp,$hrs) {
 		$hours = date('H',$timestamp);
 		$minutes = date('i',$timestamp);
 		$seconds = date('s',$timestamp);
@@ -331,7 +331,7 @@ class Dates {
 		return mktime($hours+$hrs,$minutes,$seconds,$month,$date,$year);
 	}
 	
-	function addDays($timestamp,$days) {
+	static function addDays($timestamp,$days) {
 		$hours = date('H',$timestamp);
 		$minutes = date('i',$timestamp);
 		$seconds = date('s',$timestamp);
@@ -341,7 +341,7 @@ class Dates {
 		return mktime($hours,$minutes,$seconds,$month,$date+$days,$year);
 	}
 	
-	function addYears($timestamp,$years) {
+	static function addYears($timestamp,$years) {
 		$hours = date('H',$timestamp);
 		$minutes = date('i',$timestamp);
 		$seconds = date('s',$timestamp);
@@ -351,7 +351,7 @@ class Dates {
 		return mktime($hours,$minutes,$seconds,$month,$date,$year+$years);
 	}
 	
-	function addMonths($timestamp,$months) {
+	static function addMonths($timestamp,$months) {
 		$hours = date('H',$timestamp);
 		$minutes = date('i',$timestamp);
 		$seconds = date('s',$timestamp);
@@ -361,7 +361,7 @@ class Dates {
 		return mktime($hours,$minutes,$seconds,$month+$months,$date,$year);
 	}
 	
-	function getTimeZones() {
+	static function getTimeZones() {
 		return DateTimeZone::listIdentifiers();
 	}
 }

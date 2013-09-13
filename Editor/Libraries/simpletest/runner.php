@@ -170,7 +170,7 @@
          */
         function run() {
             $methods = get_class_methods(get_class($this->_test_case));
-            $invoker = &$this->_test_case->createInvoker();
+            $invoker = $this->_test_case->createInvoker();
             foreach ($methods as $method) {
                 if (! $this->_isTest($method)) {
                     continue;

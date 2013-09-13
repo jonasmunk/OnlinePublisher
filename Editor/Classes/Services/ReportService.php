@@ -10,15 +10,15 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ReportService {
 	
-	function setEmail($value) {
+	static function setEmail($value) {
 		SettingService::setSetting('system','reports','email',$value);
 	}
 
-	function getEmail() {
+	static function getEmail() {
 		return SettingService::getSetting('system','reports','email');
 	}
 	
-	function heartBeat() {
+	static function heartBeat() {
 		$latest = intval(SettingService::getSetting('system','reports','latest'));
 		Log::debug('Latest: '.$latest);
 		$seconds = time() - intval($latest);
@@ -32,7 +32,7 @@ class ReportService {
 		}
 	}
 	
-	function sendReport() {		
+	static function sendReport() {		
 		$emails = ReportService::getEmail();
 		if (Strings::isBlank($emails)) {
 			return false;
@@ -52,7 +52,7 @@ class ReportService {
 		return $success;
 	}
 
-	function _sendReportToEmail($email,$html) {
+	static function _sendReportToEmail($email,$html) {
 		Log::debug('Sending report to: '.$email);
 		$name = '';
 		$subject = 'Report from '.ConfigurationService::getCompleteBaseUrl();
@@ -60,7 +60,7 @@ class ReportService {
 		return MailService::send($email,$name,$subject,$body,$html);
 	}
 	
-	function generateFullReport() {
+	static function generateFullReport() {
 		global $basePath;
 		$html = '<!DOCTYPE html>
 		<html>
@@ -81,7 +81,7 @@ class ReportService {
 		return $html;
 	}
 	
-	function generateReport() {
+	static function generateReport() {
 		$url = ConfigurationService::getCompleteBaseUrl();
 		
 		$query = new StatisticsQuery();

@@ -27,7 +27,7 @@ class Image extends Object {
 		parent::Object('image');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'image');
 	}
 	

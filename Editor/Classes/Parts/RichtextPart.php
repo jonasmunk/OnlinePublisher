@@ -22,8 +22,8 @@ class RichtextPart extends Part
 		parent::Part('richtext');
 	}
 	
-	function load($id) {
-		return Part::load('richtext',$id);
+	static function load($id) {
+		return Part::get('richtext',$id);
 	}
 
 	function setHtml($html) {

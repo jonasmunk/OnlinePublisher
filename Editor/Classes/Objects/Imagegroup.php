@@ -16,7 +16,7 @@ class Imagegroup extends Object {
 		parent::Object('imagegroup');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'imagegroup');
 	}
 	

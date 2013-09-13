@@ -152,7 +152,7 @@ class DocumentTemplateController extends TemplateController
 		return array('xml'=>$output,'index'=>$index,'dynamic'=>$dynamic);
 	}
 
-	function buildPartContext($pageId) {
+	static function buildPartContext($pageId) {
 		$context = new PartContext();
 		$context->setLanguage(PageService::getLanguage($pageId));
 		

@@ -33,7 +33,7 @@ class User extends Object {
 		parent::Object('user');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'user');
 	}
 

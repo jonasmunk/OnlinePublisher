@@ -151,7 +151,7 @@ class GuiUtils {
 	 * @param int $maxSize The maximum number of chars in the title
 	 * @return string Option-tags for use with XmlWebGui
 	 */
-	function buildObjectOptions($type,$maxSize=100) {
+	static function buildObjectOptions($type,$maxSize=100) {
 		$output='';
 		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
@@ -166,7 +166,7 @@ class GuiUtils {
 	 * Builds select-options for a particular type of object
 	 * @param string $type The type of object
 	 */
-	function buildObjectItems($type) {
+	static function buildObjectItems($type) {
 		$output='';
 		if (is_array($type)) {
 			foreach ($type as $object) {
@@ -185,7 +185,7 @@ class GuiUtils {
 		return $output;
 	}
 	
-	function getTranslated($value) {
+	static function getTranslated($value) {
 		if (is_array($value)) {
 			$lang = InternalSession::getLanguage();
 			if (isset($value[$lang])) {
@@ -203,7 +203,7 @@ class GuiUtils {
 		return $value;		
 	}
 	
-	function buildTranslatedItems($items) {
+	static function buildTranslatedItems($items) {
 		$output = '';
 		
 		foreach ($items as $key => $texts) {
@@ -221,7 +221,7 @@ class GuiUtils {
 	 * @param int $maxSize The maximum number of chars in the title
 	 * @return string Option-tags for use with XmlWebGui
 	 */
-	function buildPageOptions($template=null) {
+	static function buildPageOptions($template=null) {
 		$output='';
 		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "")." order by page.title";
 		$result = Database::select($sql);
@@ -238,7 +238,7 @@ class GuiUtils {
 	 * @param int $maxSize The maximum number of chars in the title
 	 * @return string Option-tags for use with XmlWebGui
 	 */
-	function buildPageItems($template=null) {
+	static function buildPageItems($template=null) {
 		$output='';
 		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "")." order by page.title";
 		$result = Database::select($sql);
@@ -249,7 +249,7 @@ class GuiUtils {
 		return $output;
 	}
 	
-	function getLanguageIcon($lang) {
+	static function getLanguageIcon($lang) {
 		$languageIcons = array(
 			'EN' => 'flag/gb',
 			'DA' => 'flag/dk',
@@ -258,11 +258,11 @@ class GuiUtils {
 		return @$languageIcons[$lang];
 	}
 	
-	function getLanguageName($lang) {
+	static function getLanguageName($lang) {
 		return @GuiUtils::getTranslated(GuiUtils::$languages[$lang]);
 	}
 	
-	function getLanguages() {
+	static function getLanguages() {
 		$out = array();
 		foreach (GuiUtils::$languages as $key => $value) {
 			$out[$key] = GuiUtils::getTranslated($value);
@@ -275,7 +275,7 @@ class GuiUtils {
 	 * @param int $input The bytes to format
 	 * @return string Human readable bytes
 	 */
-	function bytesToString($input) {
+	static function bytesToString($input) {
 		if ($input<1024) {
 			return $input.' b';
 		}
@@ -295,7 +295,7 @@ class GuiUtils {
 	 * @param int $input The bytes to format
 	 * @return string Human readable bytes
 	 */
-	function bytesToLongString($input) {
+	static function bytesToLongString($input) {
 		if ($input<1024) {
 			return $input.' bytes';
 		}

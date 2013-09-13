@@ -35,7 +35,7 @@ class DOMUtils {
 		XML_ERROR_EXTERNAL_ENTITY_HANDLING => 'XML_ERROR_EXTERNAL_ENTITY_HANDLING'
 	);
 	
-	function getFirstDescendant($node,$name) {
+	static function getFirstDescendant($node,$name) {
 		$nodes = $node->getElementsByTagName($name);
 		if ($nodes->length>0) {
 			return $nodes->item(0);
@@ -43,7 +43,7 @@ class DOMUtils {
 		return null;
 	}
 	
-	function parseHTML($str) {
+	static function parseHTML($str) {
 		$doc = new DOMDocument();
 		$success = @$doc->loadHtml($str);
 		if ($success) {
@@ -53,7 +53,7 @@ class DOMUtils {
 		}
 	}
 	
-	function parseAnything($str) {
+	static function parseAnything($str) {
 		global $basePath;
 		require_once($basePath.'Editor/Libraries/htmlawed/htmLawed.php');
 		$str = htmLawed($str); 
@@ -67,7 +67,7 @@ class DOMUtils {
 		return $doc;
 	}
 
-	function parse($str) {
+	static function parse($str) {
 		$doc = new DOMDocument();
 		$success = @$doc->loadXML($str);
 		if ($success) {
@@ -77,7 +77,7 @@ class DOMUtils {
 		}
 	}
 	
-	function getChildElements($node,$name=null) {
+	static function getChildElements($node,$name=null) {
 		$result = array();
 		for ($i=0; $i < $node->childNodes->length; $i++) { 
 			$child = $node->childNodes->item($i);
@@ -91,7 +91,7 @@ class DOMUtils {
 		return $result;
 	}
 	
-	function getFirstChildElement($node,$name=null) {
+	static function getFirstChildElement($node,$name=null) {
 		for ($i=0; $i < $node->childNodes->length; $i++) { 
 			$child = $node->childNodes->item($i);
 			if ($child->nodeType == XML_ELEMENT_NODE) {
@@ -104,18 +104,18 @@ class DOMUtils {
 		return null;
 	}
 	
-	function getFirstChildText($node,$name) {
+	static function getFirstChildText($node,$name) {
 		if ($child = DOMUtils::getFirstChildElement($node,$name)) {
 			return DOMUtils::getText($child);
 		}
 		return null;
 	}
 	
-	function getText($node) {
+	static function getText($node) {
 		return $node->textContent;
 	}
 	
-	function getPathText(&$node,$path) {
+	static function getPathText(&$node,$path) {
 		$xpath = new DOMXPath($node->ownerDocument);
 		if ($child =& $xpath->query($path,$node)->item(0)) {
 			return $child->textContent;
@@ -124,11 +124,11 @@ class DOMUtils {
 		}
 	}
 	
-	function stripNamespaces($str) {
+	static function stripNamespaces($str) {
 		return preg_replace('/ xmlns="[\\w:\\/.]*"/e','',$str);
 	}
 	
-	function getInnerXML($node) {
+	static function getInnerXML($node) {
 		$doc = DOMUtils::parse('<xml></xml>');
 		for ($i=0; $i < $node->childNodes->length; $i++) { 
 			$clone = $doc->importNode($node->childNodes->item($i),true);
@@ -139,7 +139,7 @@ class DOMUtils {
 		return substr($xml, 27, -7);
 	}
 	
-	function getXML($node) {
+	static function getXML($node) {
 		$doc = DOMUtils::parse('<xml></xml>');
 		$clone = $doc->importNode($node,true);
 		$doc->documentElement->appendChild($clone);
@@ -148,7 +148,7 @@ class DOMUtils {
 		return substr($xml, 27, -7);
 	}
 	
-	function isValid($data) {
+	static function isValid($data) {
 		$code=0;
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser,XML_OPTION_CASE_FOLDING,0);
@@ -165,7 +165,7 @@ class DOMUtils {
 		}
 	}
 	
-	function isValidFragment($data) {
+	static function isValidFragment($data) {
 		return DOMUtils::isValid('<x>'.$data.'</x>');
 	}
 }

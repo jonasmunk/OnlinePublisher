@@ -7,7 +7,7 @@ if (!isset($GLOBALS['basePath'])) {
 class HeartBeatService {
 	
 	
-	function beat() {
+	static function beat() {
 		$latest = SettingService::getLatestHeartBeat();
 		if (!$latest) {
 			HeartBeatService::run();
@@ -21,7 +21,7 @@ class HeartBeatService {
 		}
 	}
 	
-	private function run() {
+	private static function run() {
 		SettingService::setLatestHeartBeat(time());
 		ReportService::heartBeat();
 		

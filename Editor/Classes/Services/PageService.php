@@ -6,16 +6,16 @@ if (!isset($GLOBALS['basePath'])) {
 
 class PageService {
 	
-	function createPageHistory($id,$data) {
+	static function createPageHistory($id,$data) {
 		$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".InternalSession::getUserId().",".Database::text($data).",now())";
 		Database::insert($sql);
 	}
 	
-	function exists($id) {
+	static function exists($id) {
 		return !Database::isEmpty("SELECT id from page where id=".Database::int($id));
 	}
 
-	function getLatestPageId() {
+	static function getLatestPageId() {
 		$sql="SELECT id from page order by changed desc limit 1";
 		$row = Database::selectFirst($sql);
 		if ($row) {
@@ -24,7 +24,7 @@ class PageService {
 		return null;
 	}
 	
-	function getLanguage($id) {
+	static function getLanguage($id) {
 		$sql = "SELECT language from page where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			return strtolower($row['language']);
@@ -32,43 +32,43 @@ class PageService {
 		return null;
 	}
 	
-	function getTotalPageCount() {
+	static function getTotalPageCount() {
 		$sql = "SELECT count(id) as count from page";
 		$row = Database::selectFirst($sql);
 		return intval($row['count']);
 	}
 	
-	function getChangedPageCount() {
+	static function getChangedPageCount() {
 		$sql = "SELECT count(id) as count from page where page.changed>page.published";
 		$row = Database::selectFirst($sql);
 		return intval($row['count']);
 	}
 	
-	function getLatestPageCount() {
+	static function getLatestPageCount() {
 		$sql = "SELECT count(id) as count from page	where page.changed>".Database::datetime(Dates::addDays(time(),-1));
 		$row = Database::selectFirst($sql);
 		return intval($row['count']);
 	}
 	
-	function getNewsPageCount() {
+	static function getNewsPageCount() {
 		$sql = "SELECT count(page.id) as total from page,template,news, object_link where page.template_id=template.id  and object_link.object_id=news.object_id and object_link.target_value=page.ID and object_link.target_type='page'";
 		$row = Database::selectFirst($sql);
 		return intval($row['total']);
 	}
 	
-	function getWarningsPageCount() {
+	static function getWarningsPageCount() {
 		$sql = "SELECT count(page.id) as total from page,template where page.template_id=template.id  and (page.changed>page.published or page.path is null or page.path='')";
 		$row = Database::selectFirst($sql);
 		return intval($row['total']);
 	}
 	
-	function getNoItemPageCount() {
+	static function getNoItemPageCount() {
 		$sql = "SELECT count(page.id) as total from page,template where page.template_id=template.id  and page.id not in (select target_id from `hierarchy_item` where `target_type`='page')";
 		$row = Database::selectFirst($sql);
 		return intval($row['total']);
 	}
 	
-	function getReviewPageCount() {
+	static function getReviewPageCount() {
 		$sql = "SELECT count(page.id) as total
 			from page,relation as page_review,relation as review_user,review,object as user 
 			where page_review.from_type='page' and page_review.from_object_id=page.id
@@ -81,12 +81,12 @@ class PageService {
 	}
 
 	
-	function getLanguageCounts() {
+	static function getLanguageCounts() {
 		$sql="SELECT language,count(id) as count from page group by language order by language";
 		return Database::selectAll($sql);
 	}
 	
-	function getPagePreview($id,$template) {
+	static function getPagePreview($id,$template) {
 		$data = '';
 		if ($controller = TemplateService::getController($template)) {
 			if (method_exists($controller,'build')) {
@@ -97,7 +97,7 @@ class PageService {
 		return $data;
 	}
 	
-	function saveSnapshot($id) {
+	static function saveSnapshot($id) {
 		$page = Page::load($id);
 		if ($page) {
 			$template = $page->getTemplateUnique();
@@ -106,7 +106,7 @@ class PageService {
 		}
 	}
 	
-	function getBlueprintsByTemplate($template) {
+	static function getBlueprintsByTemplate($template) {
 		$sql = "SELECT object_id as id from pageblueprint,template where pageblueprint.template_id = template.`id` and template.`unique`=".Database::text($template);
 		$ids = Database::getIds($sql);
 		if (count($ids)>0) {
@@ -115,18 +115,18 @@ class PageService {
 		return array();
 	}
 	
-	function getPageTranslationList($id) {
+	static function getPageTranslationList($id) {
 		$sql="SELECT page_translation.id,page.title,page.language from page,page_translation where page.id=page_translation.translation_id and page_translation.page_id=".Database::int($id);
 		return Database::selectAll($sql);
 	}
 	
-	function addPageTranslation($page,$translation) {
+	static function addPageTranslation($page,$translation) {
 		$sql = "INSERT into page_translation (page_id,translation_id) values (".Database::int($page).",".Database::int($translation).")";
 		Database::insert($sql);
 		PageService::markChanged($page);
 	}
 	
-	function removePageTranslation($id) {
+	static function removePageTranslation($id) {
 		$sql = "SELECT * from page_translation where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			$sql = "delete from page_translation where id=".Database::int($id);
@@ -135,12 +135,12 @@ class PageService {
 		}
 	}
 	
-	function markChanged($id) {
+	static function markChanged($id) {
 	    $sql = "UPDATE page set changed=now() where id=".Database::int($id);
 		Database::update($sql);
 	}
 	
-	function isChanged($id) {
+	static function isChanged($id) {
 		$sql="SELECT changed-published as delta from page where id=".Database::int($id);
 		$row = Database::selectFirst($sql);
 		if ($row['delta']>0) {
@@ -149,7 +149,7 @@ class PageService {
 		return false;
 	}
 	
-	function getIndex($pageId) {
+	static function getIndex($pageId) {
 		$sql = "SELECT `index` from page where id=".Database::int($pageId);
 		$row = Database::selectFirst($sql);
 		if ($row) {
@@ -158,7 +158,7 @@ class PageService {
 		return null;
 	}
 
-	function getLinkText($pageId) {
+	static function getLinkText($pageId) {
 		$text = '';
 		$sql = "SELECT text,document_section.page_id from part_text,document_section where document_section.part_id=part_text.part_id and page_id=".Database::int($pageId)."
 			union select text,document_section.page_id from part_header,document_section where document_section.part_id=part_header.part_id and page_id=".Database::int($pageId)."
@@ -172,14 +172,14 @@ class PageService {
 		return $text;
 	}
 	
-	function updateSecureStateOfAllPages() {
+	static function updateSecureStateOfAllPages() {
 		$sql = "UPDATE page set secure=1";
 		Database::update($sql);
 		$sql = "UPDATE page left join securityzone_page on page.id=securityzone_page.page_id set page.secure=0 where securityzone_page.securityzone_id is null";
 		Database::update($sql);
 	}
 	
-	function search($query) {
+	static function search($query) {
 
 		$select = new SelectBuilder();
 		
@@ -248,7 +248,7 @@ class PageService {
 		return $result;
 	}
 	
-	function validate($page) {
+	static function validate($page) {
 		if (!$page) {
 			return false;
 		}
@@ -273,7 +273,7 @@ class PageService {
 		return true;
 	}
 	
-	function create($page) {
+	static function create($page) {
 		if (!PageService::validate($page)) {
 			return false;
 		}
@@ -298,7 +298,7 @@ class PageService {
 		return true;
 	}
 
-	function _createTemplate($page) {
+	static function _createTemplate($page) {
 		$template = TemplateService::getTemplateById($page->getTemplateId());
 		$page->templateUnique = $template->getUnique();
 		if ($controller = TemplateService::getController($page->getTemplateUnique())) {
@@ -308,7 +308,7 @@ class PageService {
 		}
 	}
 	
-	function delete($page) {
+	static function delete($page) {
 		if ($controller = TemplateService::getController($page->getTemplateUnique())) {
 			if (method_exists($controller,'delete')) {
 				$controller->delete($page);
@@ -336,7 +336,7 @@ class PageService {
 		EventService::fireEvent('delete','page',$page->getTemplateUnique(),$id);
 	}
 
-    function load($id) {
+    static function load($id) {
 		$sql = "select page.*,UNIX_TIMESTAMP(page.changed) as changed_unix,UNIX_TIMESTAMP(page.published) as published_unix,template.unique".
 		" from page,template where template.id=page.template_id and page.id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
@@ -364,7 +364,7 @@ class PageService {
 		return null;
 	}
 
-	function save($page) {
+	static function save($page) {
 		$success = false;
 		if ($page->getId()>0) {
 			$existing = PageService::load($page->getId());
@@ -420,7 +420,7 @@ class PageService {
 	}
 
 	
-	function reconstruct($pageId,$historyId) {		
+	static function reconstruct($pageId,$historyId) {		
 		$page = PageService::load($pageId);
 		if (!$page) {
 			Log::debug('Page not found: '.$pageId);

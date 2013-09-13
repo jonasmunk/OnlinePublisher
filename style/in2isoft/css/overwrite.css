@@ -137,7 +137,8 @@ p.part_poster_title
 
 /*************** text *************/
 
-.part_text
+.part_text,
+div.part_richtext
 {
 	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-size: 12pt;
@@ -146,7 +147,8 @@ p.part_poster_title
 	word-spacing: 1px;
 }
 
-.part_text strong
+.part_text strong,
+div.part_richtext strong
 {
 	color: #000;
 	font-weight: 400;

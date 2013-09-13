@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class DBUCalendarParser {
 
-	function parseURL($url) {
+	static function parseURL($url) {
 		$string = @file_get_contents($url);
 		if (!$string) {
 			return false;

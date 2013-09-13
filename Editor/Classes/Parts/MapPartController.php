@@ -25,7 +25,6 @@ class MapPartController extends PartController
 		$part->setWidth('500px');
 		$part->setHeight('300px');
 		$part->save();
-		Log::debug($part);
 		return $part;
 	}
 	
@@ -68,7 +67,6 @@ class MapPartController extends PartController
 		$part->setWidth(Request::getString('mapwidth'));
 		$part->setHeight(Request::getString('mapheight'));
 		$part->setFrame(Request::getString('frame'));
-		Log::debug($part);
 		return $part;
 	}
 	

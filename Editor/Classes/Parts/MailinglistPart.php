@@ -24,8 +24,8 @@ class MailinglistPart extends Part
 		parent::Part('mailinglist');
 	}
 	
-	function load($id) {
-		return Part::load('mailinglist',$id);
+	static function load($id) {
+		return Part::get('mailinglist',$id);
 	}
 	
 	function setMailinglistIds($mailinglistIds) {

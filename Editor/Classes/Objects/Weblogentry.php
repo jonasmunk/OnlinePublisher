@@ -23,7 +23,7 @@ class Weblogentry extends Object {
 		parent::Object('weblogentry');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'weblogentry');
 	}
 	

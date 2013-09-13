@@ -67,7 +67,7 @@ class SpecialPage extends Entity {
 	}
 	
 
-	function load($id) {
+	static function load($id) {
 		$sql = "select * from specialpage where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			$item = new SpecialPage();

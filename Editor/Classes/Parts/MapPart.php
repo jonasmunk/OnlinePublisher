@@ -40,8 +40,8 @@ class MapPart extends Part
 		parent::Part('map');
 	}
 	
-	function load($id) {
-		return Part::load('map',$id);
+	static function load($id) {
+		return Part::get('map',$id);
 	}
 	
 	function setLatitude($latitude) {

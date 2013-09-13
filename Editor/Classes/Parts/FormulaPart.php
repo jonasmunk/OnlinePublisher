@@ -25,8 +25,8 @@ class FormulaPart extends Part
 		parent::Part('formula');
 	}
 	
-	function load($id) {
-		return Part::load('formula',$id);
+	static function load($id) {
+		return Part::get('formula',$id);
 	}
 	
 	function setReceiverName($receiverName) {

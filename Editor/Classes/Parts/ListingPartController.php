@@ -14,7 +14,7 @@ class ListingPartController extends PartController
 		parent::PartController('listing');
 	}
 	
-	function createPart() {
+	static function createPart() {
 		$part = new ListingPart();
 		$part->setText("* Punkt 1\n* Punkt 2");
 		$part->setListStyle('disc');

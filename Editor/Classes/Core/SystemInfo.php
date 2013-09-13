@@ -12,25 +12,25 @@ class SystemInfo {
 	private static $feedbackMail = "jonasmunk@mac.com";
 	private static $feedbackName = "Jonas Munk";
 	
-	function getDate() {
+	static function getDate() {
 		$timestamp = mktime(0,0,0,SystemInfo::$month,SystemInfo::$date,SystemInfo::$year);
 		return $timestamp;
 	}
 	
-	function getFormattedDate() {
+	static function getFormattedDate() {
 		$timestamp = mktime(0,0,0,SystemInfo::$month,SystemInfo::$date,SystemInfo::$year);
 		return Dates::formatDate(SystemInfo::getDate());
 	}
 	
-	function getTitle() {
+	static function getTitle() {
 		return 'OnlinePublisher '.SystemInfo::getFormattedDate();
 	}
 	
-	function getFeedbackMail() {
+	static function getFeedbackMail() {
 		return SystemInfo::$feedbackMail;
 	}
 	
-	function getFeedbackName() {
+	static function getFeedbackName() {
 		return SystemInfo::$feedbackName;
 	}
 }

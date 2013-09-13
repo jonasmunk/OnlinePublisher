@@ -38,7 +38,7 @@ class FeedParser {
 	function parseRSS(&$doc,&$feed) {
 		$feed->format = "RSS ".$doc->documentElement->getAttribute('version');
 		$xpath = new DOMXPath($doc);
-		$channel =& $xpath->query('/rss/channel',$doc)->item(0);
+		$channel = $xpath->query('/rss/channel',$doc)->item(0);
 		if ($channel) {
 			$feed->setTitle(DOMUtils::getFirstChildText($channel,'title'));
 			$feed->setLink(DOMUtils::getFirstChildText($channel,'link'));
@@ -60,10 +60,10 @@ class FeedParser {
 	}
 	
 	function parseRSSItems(&$doc,&$feed) {
-		$nodes =& $doc->getElementsByTagName('item');
+		$nodes = $doc->getElementsByTagName('item');
 		$len = $nodes->length;
 		for ($i=0; $i < $len; $i++) {
-			$node =& $nodes->item($i);
+			$node = $nodes->item($i);
 			$item = new FeedItem();
 			$item->setTitle(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'title')));
 			$item->setDescription(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'description')));
@@ -79,7 +79,7 @@ class FeedParser {
 		$feed->setTitle(DOMUtils::getFirstChildText($root,'title'));
 		$entries = $doc->getElementsByTagName('entry');
 		for ($i=0,$len=$entries->length; $i < $len; $i++) {
-			$node =& $entries->item($i);
+			$node = $entries->item($i);
 			$item = new FeedItem();
 			$item->setTitle(DOMUtils::getFirstChildText($node,'title'));
 			$item->setPubDate(Dates::parseRFC3339(DOMUtils::getFirstChildText($node,'updated')));

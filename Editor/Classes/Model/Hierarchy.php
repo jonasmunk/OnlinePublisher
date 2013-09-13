@@ -61,7 +61,7 @@ class Hierarchy extends Entity {
     
     ////////////////// Persistence //////////////////
     
-    function load($id) {
+    static function load($id) {
         $sql = "select id,name,language,UNIX_TIMESTAMP(changed) as changed,UNIX_TIMESTAMP(published) as published from hierarchy where id=".Database::int($id);
         if ($row = Database::selectFirst($sql)) {
             return Hierarchy::_populate($row);
@@ -70,7 +70,7 @@ class Hierarchy extends Entity {
         }
     }
 	
-	function loadFromItemId($id) {
+	static function loadFromItemId($id) {
 		$sql="select hierarchy_id from hierarchy_item where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			return Hierarchy::load($row['hierarchy_id']);
@@ -78,7 +78,7 @@ class Hierarchy extends Entity {
 		return null;		
 	}
     
-    function _populate(&$row) {
+    static function _populate(&$row) {
         $hier = new Hierarchy();
         $hier->setId($row['id']);
         $hier->setName($row['name']);
@@ -88,7 +88,7 @@ class Hierarchy extends Entity {
         return $hier;        
     }
     
-    function search() {
+    static function search() {
         $out = array();
         $sql = "select id,name,language,UNIX_TIMESTAMP(changed) as changed,UNIX_TIMESTAMP(published) as published from hierarchy order by name";
         $result = Database::select($sql);
@@ -151,15 +151,13 @@ class Hierarchy extends Entity {
 		CacheService::clearCompletePageCache();
     }
     
-    // Static!
-    function build($id,$allowDisabled=true) {
+    static function build($id,$allowDisabled=true) {
     	return '<hierarchy xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/">'.
     	Hierarchy::hierarchyTraveller($id,0,$allowDisabled).
     	'</hierarchy>';
     }
 
-    // Static
-    function hierarchyTraveller($id,$parent,$allowDisabled) {
+    static function hierarchyTraveller($id,$parent,$allowDisabled) {
     	$output="";
     	$sql="select hierarchy_item.*,page.disabled,page.path from hierarchy_item".
     	" left join page on page.id = hierarchy_item.target_id and (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')".
@@ -208,12 +206,12 @@ class Hierarchy extends Entity {
     
     ///////////////////// Static ////////////////////
 
-	function getItemIcon($type) {
+	static function getItemIcon($type) {
 		$icons = array('page'=>'common/page','pageref'=>'common/pagereference','email'=>'common/email','url'=>'monochrome/globe','file'=>'monochrome/file');
 		return $icons[$type];
 	}
     
-    function moveItem($id,$dir) {
+    static function moveItem($id,$dir) {
 		if ($dir<0) {
 			$dir = -1;
 		} else {
@@ -249,11 +247,11 @@ class Hierarchy extends Entity {
         return $output;
     }
     
-    function deleteItem($id) {
+    static function deleteItem($id) {
 		return HierarchyService::deleteItem($id);
     }
     
-    function getAncestorPath($id) {
+    static function getAncestorPath($id) {
 	    $output = array();
 	    $parent = $id;
 	    while ($parent>0) {
@@ -268,7 +266,7 @@ class Hierarchy extends Entity {
 	    return array_reverse($output);
 	}
 
-    function getItemPath($id) {
+    static function getItemPath($id) {
 	    $output = array();
 	    $parent = $id;
 	    while ($parent>0) {
@@ -287,17 +285,17 @@ class Hierarchy extends Entity {
 	    return array_reverse($output);
 	}
 	
-	function markHierarchyOfItemChanged($id) {
+	static function markHierarchyOfItemChanged($id) {
 	    $sql = "update hierarchy,hierarchy_item set hierarchy.changed=now() where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".Database::int($id);
         Database::update($sql);
 	}
 	
-	function markHierarchyOfPageChanged($id) {
+	static function markHierarchyOfPageChanged($id) {
 		$sql = "update hierarchy,hierarchy_item set hierarchy.changed=now() where hierarchy_item.hierarchy_id=hierarchy.id and hierarchy_item.target_id = ".Database::int($id)." and (target_type in ('page','pageref'))";
         Database::update($sql);
 	}
 	
-	function relocateItem($move,$targetItem=0,$targetHierarchy=0) {
+	static function relocateItem($move,$targetItem=0,$targetHierarchy=0) {
 
 		// Get info about hierarchy item
 		$sql = "select * from hierarchy_item where id=".Database::int($move);

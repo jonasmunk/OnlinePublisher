@@ -18,7 +18,7 @@ class Remotepublisher extends Object {
 		parent::Object('remotepublisher');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'remotepublisher');
 	}
 	

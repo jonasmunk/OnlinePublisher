@@ -95,7 +95,7 @@ class SearchTemplate {
 		PageService::markChanged($this->id);
 	}
 	
-	function load($id) {
+	static function load($id) {
 		$sql="select * from search where page_id=".Database::int($id);
 		if ($row = Database::getRow($sql)) {
 			$obj = new SearchTemplate();

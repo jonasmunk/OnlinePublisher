@@ -15,7 +15,7 @@ class DesignService {
 	 * @return array An array of the unique names of all available designs
 	 * @static
 	 */
-	function getAvailableDesigns() {
+	static function getAvailableDesigns() {
 		global $basePath;
 		$names = FileSystemService::listDirs($basePath."style/");
 		$out = array();
@@ -25,14 +25,14 @@ class DesignService {
 		return $out;
 	}
 	
-	function getInfo($name) {
+	static function getInfo($name) {
 		global $basePath;
 		$path = $basePath."style/".$name."/info/info.json";
 		$info = JsonService::readFile($path);
 		return $info;
 	}
 
-	function loadParameters($id) {
+	static function loadParameters($id) {
 		$out = array();
 		$design = Design::load($id);
 		$info = DesignService::getInfo($design->getUnique());
@@ -53,7 +53,7 @@ class DesignService {
 		return $out;
 	}
 	
-	function _getType($key,$info) {
+	static function _getType($key,$info) {
 		if ($info->parameters) {
 			foreach ($info->parameters as $parameter) {
 				if ($parameter->key == $key) {
@@ -64,7 +64,7 @@ class DesignService {
 		return null;
 	}
 	
-	function saveParameters($id,$parameters) {
+	static function saveParameters($id,$parameters) {
 		$design = Design::load($id);
 		$info = DesignService::getInfo($design->getUnique());
 		$sql = "delete from design_parameter where design_id=".Database::int($id);
@@ -94,7 +94,7 @@ class DesignService {
 		Log::debug($design);
 	}
 	
-	function validate($name) {
+	static function validate($name) {
 		global $basePath;
 		$valid = true;
 		$info = DesignService::getInfo($name);

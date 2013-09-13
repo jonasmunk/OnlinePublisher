@@ -28,7 +28,7 @@ class Address extends Object {
 		$this->title = $this->toString();
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'address');
 	}
 	

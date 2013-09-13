@@ -22,7 +22,7 @@ class Milestone extends Object {
 		parent::Object('milestone');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'milestone');
 	}
 

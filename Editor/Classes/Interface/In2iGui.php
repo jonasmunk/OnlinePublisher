@@ -61,8 +61,12 @@ class In2iGui {
 			}
 			header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html'));
 			$xslt = new xsltProcessor;
-			$xslt->importStyleSheet(DomDocument::loadXML($xslData));
-			echo $xslt->transformToXML(DomDocument::loadXML($xmlData));
+			$doc = new DOMDocument();
+			$doc->loadXML($xslData);
+			$xslt->importStyleSheet($doc);
+			$doc = new DOMDocument();
+			$doc->loadXML($xmlData);
+			echo $xslt->transformToXML($doc);
 		}
 	}
 	

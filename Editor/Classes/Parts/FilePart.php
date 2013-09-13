@@ -24,8 +24,8 @@ class FilePart extends Part
 		parent::Part('file');
 	}
 	
-	function load($id) {
-		return Part::load('file',$id);
+	static function load($id) {
+		return Part::get('file',$id);
 	}
 	
 	function setFileId($fileId) {

@@ -15,7 +15,7 @@ class Calendar extends Object {
 		parent::Object('calendar');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'calendar');
 	}
 

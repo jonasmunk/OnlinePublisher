@@ -6,7 +6,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class StatisticsService {
 	
-	function registerPage($options) {
+	static function registerPage($options) {
 		$ip = getenv("REMOTE_ADDR");
 		$method = 'GET';//getenv('REQUEST_METHOD');
 		//$uri = getenv('REQUEST_URI');
@@ -23,7 +23,7 @@ class StatisticsService {
 		Database::insert($sql);
 	}
 	
-	function getPageHits($rows) {
+	static function getPageHits($rows) {
 		$ids = array();
 		$counts = array();
 		foreach ($rows as $row) {
@@ -39,7 +39,7 @@ class StatisticsService {
 		return $counts;
 	}
 	
-	function searchVisits($query) {
+	static function searchVisits($query) {
 		$sql = 'SELECT count(distinct statistics.session) as sessions, count(distinct statistics.ip) as ips, count(statistics.id) as hits,date_format(statistics.time, "%Y%m%d") as `key`,date_format(statistics.time, "%d-%m-%Y") as label';
 		$sql.= ' FROM statistics';
 		$sql.= StatisticsService::_buildWhere($query);
@@ -47,28 +47,28 @@ class StatisticsService {
 		return Database::selectAll($sql);
 	}
 	
-	function searchAgents($query) {
+	static function searchAgents($query) {
 		$sql = "SELECT UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime, count(distinct id) as visits,count(distinct ip) as ips,count(distinct session) as sessions,agent from statistics";
 		$sql.= StatisticsService::_buildWhere($query);
 		$sql.= " group by agent order by lasttime desc";
 		return Database::selectAll($sql);
 	}
 	
-	function searchPages($query) {
+	static function searchPages($query) {
 		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
 		$sql.= StatisticsService::_buildWhere($query,false);
 		$sql.= " group by statistics.value order by visits desc";
 	 	return Database::select($sql);
 	}
 	
-	function searchPaths($query) {
+	static function searchPaths($query) {
 		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,statistics.uri,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
 		$sql.= StatisticsService::_buildWhere($query,false);
 		$sql.= " group by statistics.uri order by visits desc limit 100";
 		return Database::select($sql);
 	}
 	
-	function _buildWhere($query,$prepend=true) {
+	static function _buildWhere($query,$prepend=true) {
 		$where = array();
 		if ($query->getStartTime()) {
 			$where[] = 'statistics.time>='.Database::datetime($query->getStartTime());
@@ -82,7 +82,7 @@ class StatisticsService {
 		return '';
 	}
 	
-	function getVisitsChart($query) {
+	static function getVisitsChart($query) {
 		$patterns = array(
 			'daily' => array('sql' => '%Y%m%d','php' => 'Ymd', 'div' => 60*60*24),
 			'hourly' => array('sql' => '%Y%m%d%H','php' => 'YmdH', 'div' => 60*60),
@@ -125,7 +125,7 @@ class StatisticsService {
 		return array('sets'=>$sets);
 	}
 	
-	function getPagesChart($query) {
+	static function getPagesChart($query) {
 		$sql = "select UNIX_TIMESTAMP(max(statistics.time)) as lasttime,UNIX_TIMESTAMP(min(statistics.time)) as firsttime,count(distinct statistics.id) as visits,count(distinct statistics.session) as sessions,count(distinct statistics.ip) as ips,page.title as page_title,page.id as page_id from statistics left join page on statistics.value=page.id where statistics.type='page'";
 		$sql.= StatisticsService::_buildWhere($query,false);
 		$sql.= " group by statistics.value order by visits desc limit 20";
@@ -140,7 +140,7 @@ class StatisticsService {
 		return array('sets' => array(array('type'=>'column','entries'=>$entries)));
 	}
 
-	function _fillGaps($rows,$days,$patterns,$resolution) {
+	static function _fillGaps($rows,$days,$patterns,$resolution) {
 		$filled = array();
 		$now = time();
 		for ($i=$days; $i >= 0; $i--) {

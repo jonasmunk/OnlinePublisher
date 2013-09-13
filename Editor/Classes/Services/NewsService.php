@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class NewsService {
 	
-	function synchronizeSource($id,$force=false) {
+	static function synchronizeSource($id,$force=false) {
 		// TODO: Dont remove old items, only update existing
 		$source = Newssource::load($id);
 		if (!$source) return;
@@ -41,14 +41,14 @@ class NewsService {
 		Database::update($sql);
 	}
 	
-	function clearSource($id) {
+	static function clearSource($id) {
 		$items = Query::after('newssourceitem')->withProperty('newssource_id',$id)->get();
 		foreach ($items as $item) {
 			$item->remove();
 		}
 	}
 	
-	function createArticle($article) {
+	static function createArticle($article) {
 		$blueprint = Pageblueprint::load($article->getPageBlueprintId());
 		if (!$blueprint) {
 			Log::debug('Unable to load blueprint with id='.$article->getPageBlueprintId());

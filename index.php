@@ -4,7 +4,7 @@
  * @subpackage Public
  */
 if (!ini_get('display_errors')) {
-    ini_set('display_errors', 1);
+    ini_set('display_errors', 0);
 }
 // If no setup, go to setup UI
 if (!file_exists('Config/Setup.php')) {

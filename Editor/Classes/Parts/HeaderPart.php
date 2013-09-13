@@ -49,8 +49,8 @@ class HeaderPart extends Part
 		parent::Part('header');
 	}
 		
-	function load($id) {
-		return Part::load('header',$id);
+	static function load($id) {
+		return Part::get('header',$id);
 	}
 	
 	function setText($text) {

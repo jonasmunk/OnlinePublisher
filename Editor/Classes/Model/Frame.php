@@ -108,7 +108,7 @@ class Frame extends Entity {
 		
 	// Utils...
 
-	function load($id) {
+	static function load($id) {
 		return FrameService::load($id);
 	}
 
@@ -124,7 +124,7 @@ class Frame extends Entity {
 		return FrameService::canRemove($this);
     }
 
-	function search() {
+	static function search() {
 		return FrameService::search();
 	}
 }

@@ -22,7 +22,7 @@ class Cachedurl extends Object {
 		parent::Object('cachedurl');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'cachedurl');
 	}
 	

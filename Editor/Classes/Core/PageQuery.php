@@ -18,11 +18,11 @@ class PageQuery {
 	private $relationsFrom = array();
 	private $relationsTo = array();
 	
-	function rows() {
+	static function rows() {
 		return new PageQuery();
 	}
 
-	function getRows() {
+	static function getRows() {
 		return new PageQuery();
 	}
 	

@@ -6,7 +6,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ExternalSession {
 	
-	function logIn($username,$password) {
+	static function logIn($username,$password) {
 		
 		if ($user = AuthenticationService::getExternalUser($username,$password)) {
 			$_SESSION['external.user']=array('id'=>$user->getId(),'username'=>$user->getUsername(),'title'=>$user->getTitle());
@@ -17,11 +17,11 @@ class ExternalSession {
 		}
 	}
 
-	function logOut() {
+	static function logOut() {
 		unset($_SESSION['external.user']);
 	}
 
-	function getUser() {
+	static function getUser() {
 		if (isset($_SESSION['external.user'])) {
 			return $_SESSION['external.user'];
 		}

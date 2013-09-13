@@ -14,7 +14,7 @@ class FormulaPartController extends PartController
 		parent::PartController('formula');
 	}
 	
-	function createPart() {
+	static function createPart() {
 		$part = new FormulaPart();
 		$part->setRecipe('<form>
 	<field label="Text field"><input/></field>

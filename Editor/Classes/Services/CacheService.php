@@ -10,23 +10,23 @@ if (!isset($GLOBALS['basePath'])) {
 
 class CacheService {
 
-	function clearPageCache($id) {
+	static function clearPageCache($id) {
 		$sql = "delete from page_cache where page_id=".Database::int($id);
 		Database::delete($sql);		
 	}
 	
-	function getNumberOfCachedPages() {
+	static function getNumberOfCachedPages() {
 		$sql = "select count(page_id) as num from page_cache";
 		$row = Database::selectFirst($sql);
 		return intval($row['num']);
 	}
 	
-	function clearCompletePageCache() {
+	static function clearCompletePageCache() {
 		$sql = "delete from page_cache";
 		Database::delete($sql);		
 	}
 	
-	function sendCachedPage($id,$path) {
+	static function sendCachedPage($id,$path) {
 		return false;
 		if (Request::getBoolean('viewsource') || Request::getBoolean('mini') || Request::getString('design') || @$_SESSION['debug.design']) {
 			return false;
@@ -50,7 +50,7 @@ class CacheService {
 		return false;
 	}
 	
-	function createPageCache($id,$path,$html) {
+	static function createPageCache($id,$path,$html) {
 		if (Request::getBoolean('viewsource') || Request::getString('design') || @$_SESSION['debug.design']) {
 			return;
 		}
@@ -71,7 +71,7 @@ class CacheService {
 	
 	////// Images //////
 	
-    function clearCompleteImageCache() {
+    static function clearCompleteImageCache() {
         global $basePath;
         $dir = $basePath.'local/cache/images/';
         $files = FileSystemService::listFiles($dir);
@@ -80,7 +80,7 @@ class CacheService {
         }
     }
 
-    function getImageCacheInfo() {
+    static function getImageCacheInfo() {
         global $basePath;
         $dir = $basePath.'local/cache/images/';
         $files = FileSystemService::listFiles($dir);
@@ -93,7 +93,7 @@ class CacheService {
 	
 	////// Temp //////
 	
-    function clearCompleteTempCache() {
+    static function clearCompleteTempCache() {
         global $basePath;
         $dir = $basePath.'local/cache/temp/';
         $files = FileSystemService::listFiles($dir);
@@ -102,7 +102,7 @@ class CacheService {
         }
     }
 
-    function getTempCacheInfo() {
+    static function getTempCacheInfo() {
         global $basePath;
         $dir = $basePath.'local/cache/temp/';
         $files = FileSystemService::listFiles($dir);
@@ -115,7 +115,7 @@ class CacheService {
 	
 	////// URLs //////
 	
-    function clearCompleteUrlCache() {
+    static function clearCompleteUrlCache() {
         global $basePath;
         $dir = $basePath.'local/cache/urls/';
         $files = FileSystemService::listFiles($dir);
@@ -124,7 +124,7 @@ class CacheService {
         }
     }
 
-    function getUrlCacheInfo() {
+    static function getUrlCacheInfo() {
         global $basePath;
         $dir = $basePath.'local/cache/urls/';
         $files = FileSystemService::listFiles($dir);

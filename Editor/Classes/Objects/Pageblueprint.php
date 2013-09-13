@@ -22,7 +22,7 @@ class PageBlueprint extends Object {
 		parent::Object('pageblueprint');
 	}
 	
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'pageblueprint');
 	}
 		

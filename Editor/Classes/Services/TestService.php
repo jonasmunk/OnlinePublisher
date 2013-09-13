@@ -13,7 +13,7 @@ require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
 
 class TestService {
 	
-	function getResourceUrl($name) {
+	static function getResourceUrl($name) {
 		$url = ConfigurationService::getBaseUrl().'Editor/Tests/Resources/'.$name;
 		if ($url[0]=='/') {
 			$url = 'http://localhost'.$url;
@@ -21,7 +21,7 @@ class TestService {
 		return $url;
 	}
 	
-	function getGroups() {
+	static function getGroups() {
 		global $basePath;
 		$out = array();
 		$groups = FileSystemService::listDirs($basePath.'Editor/Tests/');
@@ -33,12 +33,12 @@ class TestService {
 		return $out;//$groups;
 	}
 
-	function getTestsInGroup($group) {
+	static function getTestsInGroup($group) {
 		global $basePath;
 		return FileSystemService::listFiles($basePath.'Editor/Tests/'.$group.'/');
 	}
 	
-	function runTest($test) {
+	static function runTest($test) {
 		global $basePath;
 		$path = $basePath.'Editor/Tests/'.$test.'.php';
 		$test = new GroupTest($test);
@@ -46,7 +46,7 @@ class TestService {
 		$test->run(new HtmlReporter());
 	}
 	
-	function runTestsInGroup($group) {
+	static function runTestsInGroup($group) {
 		global $basePath;
 		$paths = array();
 		
@@ -62,7 +62,7 @@ class TestService {
 		$test->run(new HtmlReporter());
 	}
 	
-	function runAllTests() {
+	static function runAllTests() {
 		global $basePath;
 		$paths = array();
 		$groups = TestService::getGroups();
@@ -82,7 +82,7 @@ class TestService {
 		$test->run(new HtmlReporter());
 	}
 	
-	function createTestPage() {
+	static function createTestPage() {
 		$template = TemplateService::getTemplateByUnique('document');
 		if (!$template) {
 			TemplateService::install('document');
@@ -112,7 +112,7 @@ class TestService {
 		return $page;
 	}
 	
-	function removeTestPage($page) {
+	static function removeTestPage($page) {
 		$frame = Frame::load($page->getFrameId());
 		$hierarchy = Hierarchy::load($frame->getHierarchyId());
 		$design = Design::load($page->getDesignId());

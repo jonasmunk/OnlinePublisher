@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class PublishingService {
 	
-	function publishPage($id) {
+	static function publishPage($id) {
 		
 		$result = PublishingService::buildPage($id);
 		if (!$result) {
@@ -32,7 +32,7 @@ class PublishingService {
 		CacheService::clearPageCache($id);
 	}
 	
-	function reIndexPage($id) {
+	static function reIndexPage($id) {
 		
 		$result = PublishingService::buildPage($id);
 		if (!$result) {
@@ -43,7 +43,7 @@ class PublishingService {
 		Database::update($sql);
 	}
 	
-	function buildPage($id) {
+	static function buildPage($id) {
 		$sql="select template.unique from page,template where page.template_id=template.id and page.id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			if ($controller = TemplateService::getController($row['unique'])) {
@@ -56,7 +56,7 @@ class PublishingService {
 		return null;
 	}
 
-	function publishAll() {
+	static function publishAll() {
 
 		$pages = PublishingService::getUnpublishedPages();
 		foreach ($pages as $page) {
@@ -80,7 +80,7 @@ class PublishingService {
 		
 	}
 	
-	function getTotalUnpublishedCount() {
+	static function getTotalUnpublishedCount() {
 		$count = 0;
 		$sql = "select count(page.id) as `count`,'page' from page where page.changed>page.published
 			union
@@ -94,17 +94,17 @@ class PublishingService {
 		return $count;
 	}
 	
-	function getUnpublishedPages() {
+	static function getUnpublishedPages() {
 		$sql="select page.id,page.title,template.unique as template from page,template where page.template_id=template.id and changed>published";
 		return Database::selectAll($sql);
 	}
 	
-	function getUnpublishedHierarchies() {
+	static function getUnpublishedHierarchies() {
 		$sql="select id,name from hierarchy where changed>published";
 		return Database::selectAll($sql);
 	}
 	
-	function getUnpublishedObjects() {
+	static function getUnpublishedObjects() {
 		$result = array();
 		$sql = "select id from object where updated>published";
 		$ids = Database::getIds($sql);
@@ -124,7 +124,7 @@ class PublishingService {
 		return $result;
 	}
 	
-	function publishFrame($id) {
+	static function publishFrame($id) {
 		$sql="select * from frame where id=".$id;
 		$row = Database::selectFirst($sql);
 		$data='';
@@ -169,7 +169,7 @@ class PublishingService {
 		CacheService::clearPageCache($id);
 	}
 	
-	function buildFrameLinks($id,$position) {
+	static function buildFrameLinks($id,$position) {
 		$out='';
 		$sql="select * from frame_link where position='".$position."' and frame_id=".$id." order by `index`";
 		$result = Database::select($sql);
@@ -193,7 +193,7 @@ class PublishingService {
 		return $out;
 	}
 
-	function buildFrameNews($id) {
+	static function buildFrameNews($id) {
 		$out='';
 		$sql="select * from frame_newsblock where frame_id=".$id." order by `index`";
 		$result = Database::select($sql);

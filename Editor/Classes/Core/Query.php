@@ -28,7 +28,7 @@ class Query {
 		$this->type = $type;
 	}
 	
-	function after($type) {
+	static function after($type) {
 		return new Query($type);
 	}
 	
@@ -86,8 +86,11 @@ class Query {
 	}
 	
 	function withRelationToPage($page,$kind=null) {
-		$id = is_int($page) ? $page : $page->getId();
-		$this->relationsTo[] = array('id'=>$id,'kind'=>$kind,'toType'=>'page');
+		if ($page) {
+			Log::debug(gettype($page));
+			$id = is_int($page) ? $page : $page->getId();
+			$this->relationsTo[] = array('id'=>$id,'kind'=>$kind,'toType'=>'page');
+		}
 		return $this;
 	}
 

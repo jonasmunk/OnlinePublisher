@@ -22,7 +22,7 @@ class ImagePartController extends PartController
 		return $_SESSION['part.image.latest_upload_id'];
 	}
 	
-	function createPart() {
+	static function createPart() {
 		$part = new ImagePart();
 		$part->setScaleMethod('max');
 		$part->setScaleHeight(200);

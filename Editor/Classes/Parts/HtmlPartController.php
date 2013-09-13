@@ -18,7 +18,7 @@ class HtmlPartController extends PartController
 		return true;
 	}
 	
-	function createPart() {
+	static function createPart() {
 		$part = new HtmlPart();
 		$part->setHtml('<div>HTML-kode</div>');
 		$part->save();

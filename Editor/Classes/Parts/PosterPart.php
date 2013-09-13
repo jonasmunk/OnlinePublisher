@@ -22,8 +22,8 @@ class PosterPart extends Part
 		parent::Part('poster');
 	}
 	
-	function load($id) {
-		return Part::load('poster',$id);
+	static function load($id) {
+		return Part::get('poster',$id);
 	}
 
 	function setRecipe($recipe) {

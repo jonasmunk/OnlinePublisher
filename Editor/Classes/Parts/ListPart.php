@@ -51,8 +51,8 @@ class ListPart extends Part
 		parent::Part('list');
 	}
 	
-	function load($id) {
-		return Part::load('list',$id);
+	static function load($id) {
+		return Part::get('list',$id);
 	}
 	
 	function setAlign($align) {

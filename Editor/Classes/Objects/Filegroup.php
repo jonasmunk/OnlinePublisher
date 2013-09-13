@@ -17,7 +17,7 @@ class Filegroup extends Object {
 		parent::Object('filegroup');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'filegroup');
 	}
 

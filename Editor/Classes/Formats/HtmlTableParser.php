@@ -7,7 +7,7 @@ class HtmlTableParser {
 	
 	var $hey = 'hep';
 	
-	function parse($html) {
+	static function parse($html) {
 		$parsed = array();
 		$tables = Strings::extract($html,'<table','table>');
 		
@@ -27,7 +27,7 @@ class HtmlTableParser {
 		return $parsed;
 	}
 	
-	function parseUsingHeader($html) {
+	static function parseUsingHeader($html) {
 		$out = array();
 		$parsed = HtmlTableParser::parse($html);
 		foreach ($parsed as $rows) {

@@ -49,8 +49,8 @@ class ListingPart extends Part
 		parent::Part('listing');
 	}
 		
-	function load($id) {
-		return Part::load('listing',$id);
+	static function load($id) {
+		return Part::get('listing',$id);
 	}
 	
 	function setText($text) {

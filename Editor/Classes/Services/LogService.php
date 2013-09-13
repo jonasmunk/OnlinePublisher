@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class LogService {
 
-	function getEntries($query=array()) {
+	static function getEntries($query=array()) {
 		$page = 0;
 		$size = 10;
 		if (isset($query['page'])) {
@@ -47,18 +47,18 @@ class LogService {
 		return $result;
 	}
 	
-	function getPageNotFoundOverview() {
+	static function getPageNotFoundOverview() {
 		$sql = "select count(id) as `count`,UNIX_TIMESTAMP(min(time)) as first,UNIX_TIMESTAMP(max(time)) as last,message from log where event='pagenotfound' group by message order by max(time) desc";
 		$result = new SearchResult();
 		$result->setList(Database::selectAll($sql));
 		return $result;
 	}
 	
-	function getUsedCategories() {
+	static function getUsedCategories() {
 		return Database::selectArray("select distinct category from log order by category");
 	}
 
-	function getUsedEvents() {
+	static function getUsedEvents() {
 		return Database::selectArray("select distinct event from log order by event");
 	}
 }

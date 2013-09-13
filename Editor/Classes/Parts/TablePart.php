@@ -22,8 +22,8 @@ class TablePart extends Part
 		parent::Part('table');
 	}
 	
-	function load($id) {
-		return Part::load('table',$id);
+	static function load($id) {
+		return Part::get('table',$id);
 	}
 
 	function setHtml($html) {

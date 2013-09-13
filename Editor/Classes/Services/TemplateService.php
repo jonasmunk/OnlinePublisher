@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class TemplateService {
 	
-	function getTemplateByUnique($unique) {
+	static function getTemplateByUnique($unique) {
 		$sql = "select id,`unique` from `template` where `unique`=".Database::text($unique);
 		if ($row = Database::selectFirst($sql)) {
 			$template = new Template();
@@ -21,7 +21,7 @@ class TemplateService {
 		return null;
 	}
 	
-	function getTemplateById($id) {
+	static function getTemplateById($id) {
 		$sql = "select id,`unique` from `template` where id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			$template = new Template();
@@ -32,7 +32,7 @@ class TemplateService {
 		return null;
 	}
 	
-	function getController($type) {
+	static function getController($type) {
 		global $basePath;
 		$class = ucfirst($type).'TemplateController';
 		$path = $basePath.'Editor/Classes/Templates/'.$class.'.php';
@@ -43,7 +43,7 @@ class TemplateService {
 		return new $class;
 	}
 		
-	function getAvailableTemplates() {
+	static function getAvailableTemplates() {
 		global $basePath;
 		$arr = FileSystemService::listDirs($basePath."Editor/Template/");
 		for ($i=0;$i<count($arr);$i++) {
@@ -54,7 +54,7 @@ class TemplateService {
 		return $arr;
 	}
 	
-	function install($key) {
+	static function install($key) {
 		$sql = "select id from `template` where `unique`=".Database::text($key);
 		if (Database::isEmpty($sql)) {
 			$sql = "insert into template (`unique`) values (".Database::text($key).")";
@@ -64,7 +64,7 @@ class TemplateService {
 		}
 	}
 	
-	function uninstall($key) {
+	static function uninstall($key) {
 		$sql = "select `template`.`id` from `template`,`page` where page.template_id=template.id and `template`.`unique`=".Database::text($key);
 		if (Database::isEmpty($sql)) {
 			$sql = "delete from `template` where `unique`=".Database::text($key);
@@ -74,7 +74,7 @@ class TemplateService {
 		}
 	}
 	
-	function getInstalledTemplates() {
+	static function getInstalledTemplates() {
 		$arr = array();
 		$sql = "select id,`unique` from `template`";
 		$result = Database::select($sql);
@@ -85,7 +85,7 @@ class TemplateService {
 		return $arr;
 	}
 	
-	function getInstalledTemplateKeys() {
+	static function getInstalledTemplateKeys() {
 		$arr = array();
 		$sql = "select `unique` from `template`";
 		$result = Database::select($sql);
@@ -96,7 +96,7 @@ class TemplateService {
 		return $arr;
 	}
 	
-	function getUsedTemplates() {		
+	static function getUsedTemplates() {		
 		$arr = array();
 		$sql = "select distinct `template`.`unique` from `template`,`page` where page.template_id=template.id";
 		$result = Database::select($sql);
@@ -110,7 +110,7 @@ class TemplateService {
 	/**
 	 * @static
 	 */
-	function getTemplatesKeyed() {
+	static function getTemplatesKeyed() {
 		$output = array();
 		$templates = TemplateService::getInstalledTemplates();
 		for ($i=0;$i<count($templates);$i++) {
@@ -123,7 +123,7 @@ class TemplateService {
 	}
 
 	// returns all installed templates sorted by name
-	function getTemplatesSorted() {
+	static function getTemplatesSorted() {
 		$output = array();
 		$templates = TemplateService::getInstalledTemplates();
 		for ($i=0;$i<count($templates);$i++) {
@@ -137,7 +137,7 @@ class TemplateService {
 	}
 
 	// Used to sort arrays of tools
-	function compareTemplates($templateA, $templateB) {
+	static function compareTemplates($templateA, $templateB) {
 		$a = $templateA['name'];
 		$b = $templateB['name'];
 		if ($a == $b) {
@@ -146,7 +146,7 @@ class TemplateService {
 		return ($a < $b) ? -1 : 1;
 	}
 	
-	function getTemplateInfo($unique) {
+	static function getTemplateInfo($unique) {
 		global $basePath;
 		if ($out = InternalSession::getSessionCacheVar('template.info.'.$unique)) {
 			return $out;

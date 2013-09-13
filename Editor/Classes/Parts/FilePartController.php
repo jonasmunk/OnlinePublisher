@@ -14,7 +14,7 @@ class FilePartController extends PartController
 		parent::PartController('file');
 	}
 	
-	function createPart() {
+	static function createPart() {
 		$part = new FilePart();
 		$part->setFileId(FileService::getLatestFileId());
 		$part->save();

@@ -21,7 +21,7 @@ class Design extends Object {
 		parent::Object('design');
     }
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'design');
 	}
     

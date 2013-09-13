@@ -14,7 +14,7 @@ class DatabaseUtil {
 	 * Checks whether the database is up to date
 	 * @return boolean True if the database is up to date
 	 */
-	function isUpToDate() {
+	static function isUpToDate() {
 		global $basePath;
 		$output = false;
 		$hash = md5_file($basePath.'/Editor/Info/Database.php');
@@ -31,7 +31,7 @@ class DatabaseUtil {
 	 * Checks if the database is correct (matches the schema)
 	 * @return boolean True if the database is correct, false otherwise
 	 */
-	function isCorrect() {
+	static function isCorrect() {
 		$correct = true;
 		$tables = DatabaseUtil::getTables();
 		foreach ($tables as $table) {
@@ -49,7 +49,7 @@ class DatabaseUtil {
 	}
 	
 
-	function setAsUpToDate() {
+	static function setAsUpToDate() {
 		global $basePath;
 		$hash = md5_file($basePath.'/Editor/Info/Database.php');
 		$sql = "select `value` from `setting` where `domain`='system' and `subdomain`='database' and `key`='database-hash'";
@@ -68,7 +68,7 @@ class DatabaseUtil {
 	 * Find all tables in the database
 	 * @return array Array of table names
 	 */
-	function getTables() {
+	static function getTables() {
 		$config = ConfigurationService::getDatabase();
 		$out = array();
 		$sql = "show tables from ".$config['database'];
@@ -85,7 +85,7 @@ class DatabaseUtil {
 	 * @param string $table The name of the table
 	 * @return array An array of column info TODO: Format of array??
 	 */
-	function getTableColumns($table) {
+	static function getTableColumns($table) {
 		$config = ConfigurationService::getDatabase();
 		$sql = "SHOW FULL COLUMNS FROM ".$table." FROM ".$config['database'];
 		$out = array();
@@ -103,7 +103,7 @@ class DatabaseUtil {
 	 * @param string $table The name of the table
 	 * @return array A definition of the table
 	 */
-	function getExpectedColumns($table) {
+	static function getExpectedColumns($table) {
 		global $databaseTables;
 		return $databaseTables[$table];
 	}
@@ -114,7 +114,7 @@ class DatabaseUtil {
 	 * @param array $columns An array of columns describing how the table is now
 	 * @return array An array of SQL-sentences
 	 */
-	function updateTable($table,$columns) {
+	static function updateTable($table,$columns) {
 		global $databaseTables;
 		$errors = array();
 		if (array_key_exists($table,$databaseTables)) {
@@ -168,7 +168,7 @@ class DatabaseUtil {
 	 * @param array $columns An array of columns describing how the table is now
 	 * @return array An array of problems describing what is wrong with the table
 	 */
-	function checkTable($table,$columns) {
+	static function checkTable($table,$columns) {
 		global $databaseTables, $basePath;
 		require_once($basePath.'/Editor/Info/Database.php');
 		$errors = array();
@@ -215,7 +215,7 @@ class DatabaseUtil {
 	 * @param array $tables An array of the tables that already exists
 	 * @return array An array of the table names missing in the database
 	 */
-	function findMissingTables($tables) {
+	static function findMissingTables($tables) {
 		global $databaseTables, $basePath;
 		require_once($basePath.'/Editor/Info/Database.php');
 		$out = array();
@@ -234,7 +234,7 @@ class DatabaseUtil {
 	 * @param array $columns An array of column definitions
 	 * @param array The deffinition of the collumn, False if not found
 	 */
-	function findColumnInColumns($columnName,$columns) {
+	static function findColumnInColumns($columnName,$columns) {
 		$found = false;
 		foreach ($columns as $column) {
 			if ($column[0]==$columnName) {
@@ -249,17 +249,17 @@ class DatabaseUtil {
 	 * @param array $cols The column definition
 	 * @return string The PHP definition
 	 */
-	function buildColumnConfig($cols) {
+	static function buildColumnConfig($cols) {
 		return 'array('.
 		'"'.$cols[0].'","'.$cols['Type'].'","'.$cols['Null'].'","'.$cols['Key'].'","'.$cols['Default'].'","'.$cols['Extra'].'"'.
 		')';
 	}
 
-	function buildColumnProps($cols) {
+	static function buildColumnProps($cols) {
 		return "type=".$cols[0].",null=".$cols[1].",key=".$cols[2].",default=".$cols[3].",extra=".$cols[4];
 	}
 	
-	function update() {
+	static function update() {
 		$tables = DatabaseUtil::getTables();
 
 		$log = array();

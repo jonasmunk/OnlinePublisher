@@ -6,26 +6,22 @@ if (!isset($GLOBALS['basePath'])) {
 
 class InternalSession {
     
-    function InternalSession() {
-    }
-
 	/**
 	 * Starts a session in the appropriate way, should be used instead
 	 * of calling session_start() directly
 	 */
-	function startSession() {
+	static function startSession() {
 		session_set_cookie_params(0);
 		session_start();
 	}
     
-    function logIn($username,$password) {
+    static function logIn($username,$password) {
     	if ($user = AuthenticationService::getInternalUser($username,$password)) {
     	    InternalSession::startSession();
-    		$_SESSION['core.user.id']=$user->getId();
-    		$_SESSION['core.user.username']=$user->getUsername();
-    		$_SESSION['core.user.administrator']=$user->getAdministrator();
+    		$_SESSION['core.user.id'] = $user->getId();
+    		$_SESSION['core.user.username'] = $user->getUsername();
+    		$_SESSION['core.user.administrator'] = $user->getAdministrator();
     		$_SESSION['core.user.language'] = $user->getLanguage() | 'da';
-			Log::debug($_SESSION['core.user.language']);
     		InternalSession::registerActivity();
     		Log::logUser('login','');
     		return true;
@@ -34,7 +30,7 @@ class InternalSession {
     	}
     }
     
-    function logOut() {
+    static function logOut() {
 		session_start();
 		Log::logUser('logout','');
 		$_SESSION['core.user.id']=0;
@@ -43,7 +39,7 @@ class InternalSession {
     }
     
     // Static
-    function registerActivity() {
+    static function registerActivity() {
         $_SESSION['core.user.lastaccesstime']=time();
     }
 
@@ -66,7 +62,7 @@ class InternalSession {
 	 * @return int ID of the user
 	 * @static
 	 */
-	function getUserId() {
+	static function getUserId() {
 		if (isset($_SESSION['core.user.id'])) {
 			return $_SESSION['core.user.id'];
 		}
@@ -79,17 +75,20 @@ class InternalSession {
 	 * Sets the ID of the active page
 	 * @param int $id The pages ID
 	 */
-	function setPageId($id) {
-		$_SESSION['core.page.id']=$id;
+	static function setPageId($id) {
+		if (!is_int($id)) {
+			Log::debug('Not an int: ' . gettype($id) . '('.$id.')');
+		}
+		$_SESSION['core.page.id'] = intval($id);
 	}
 
 	/**
  	* Get the ID of the active page
 	 * @return The id of active page, -1 of not yet set
 	 */
-	function getPageId() {
+	static function getPageId() {
 		if (isset($_SESSION['core.page.id'])) {
-			return $_SESSION['core.page.id'];
+			return intval($_SESSION['core.page.id']);
 		}
 		else {
 			return -1;
@@ -100,7 +99,7 @@ class InternalSession {
 	 * Sets the design of the active page
 	 * @param string $unique The unique name of the design
 	 */
-	function setPageDesign($unique) {
+	static function setPageDesign($unique) {
 		$_SESSION['core.page.design']=$unique;
 	}
 
@@ -108,7 +107,7 @@ class InternalSession {
 	 * Gets the design of the active page (if set) or a special sticky design
 	 * @return string The design of the active page if set, false otherwise
 	 */
-	function getPageDesign() {
+	static function getPageDesign() {
 		if (isset($_SESSION['debug.design'])) {
 			return $_SESSION['debug.design'];
 		}
@@ -124,7 +123,7 @@ class InternalSession {
 	 * Get the username of the active internal user
 	 * @return string Username of the user
 	 */
-	function getUsername() {
+	static function getUsername() {
 		if (isset($_SESSION['core.user.username'])) {
 			return $_SESSION['core.user.username'];
 		}
@@ -133,19 +132,19 @@ class InternalSession {
 		}
 	}
     
-    function isLoggedIn() {
+    static function isLoggedIn() {
         return (isset($_SESSION['core.user.id']) && $_SESSION['core.user.id']>0);
     }
     
-    function isTimedOut() {
+    static function isTimedOut() {
         return (time()-($_SESSION['core.user.lastaccesstime'])>86400);
     }
     
-    function isAdministrator() {
+    static function isAdministrator() {
         return $_SESSION['core.user.administrator'];
     }
     
-    function getPermissions($type) {
+    static function getPermissions($type) {
         $permissions = array();
         $userId = InternalSession::getUserId();
         $sql = "select entity_id from user_permission where user_id=".$userId." and entity_type='tool'";
@@ -158,7 +157,7 @@ class InternalSession {
     }
 
 
-	function getToolSessionVar($tool,$key,$default=NULL) {
+	static function getToolSessionVar($tool,$key,$default=NULL) {
 		if (isset($_SESSION['tools.'.$tool.'.'.$key])) {
 			return $_SESSION['tools.'.$tool.'.'.$key];
 		}
@@ -168,22 +167,22 @@ class InternalSession {
 		}
 	}
 
-	function switchToolSessionVar($tool,$key) {
+	static function switchToolSessionVar($tool,$key) {
 		InternalSession::setToolSessionVar($tool,$key,!InternalSession::getToolSessionVar($tool,$key));
 	}
 
-	function getRequestToolSessionVar($tool,$key,$query,$default=NULL) {
+	static function getRequestToolSessionVar($tool,$key,$query,$default=NULL) {
 		if (Request::exists($query)) {
 			InternalSession::setToolSessionVar($tool,$key,Request::getString($query));
 		}
 		return InternalSession::getToolSessionVar($tool,$key,$default);
 	}
 
-	function setToolSessionVar($tool,$key,$value) {
+	static function setToolSessionVar($tool,$key,$value) {
 		$_SESSION['tools.'.$tool.'.'.$key]=$value;
 	}
 	
-	function getSessionCacheVar($key) {
+	static function getSessionCacheVar($key) {
 		if (isset($_SESSION['cache.'.$key])) {
 			return $_SESSION['cache.'.$key];
 		}
@@ -192,7 +191,7 @@ class InternalSession {
 		}
 	}
 
-	function setSessionCacheVar($key,$value) {
+	static function setSessionCacheVar($key,$value) {
 		$_SESSION['cache.'.$key]=$value;
 	}
 	
@@ -200,14 +199,14 @@ class InternalSession {
 	/**************** services ****************/
 
 
-	function getRequestServiceSessionVar($service,$key,$query,$default=NULL) {
+	static function getRequestServiceSessionVar($service,$key,$query,$default=NULL) {
 		if (Request::exists($query)) {
 			InternalSession::setServiceSessionVar($service,$key,Request::getString($query));
 		}
 		return InternalSession::getServiceSessionVar($service,$key,$default);
 	}
 
-	function getServiceSessionVar($service,$key,$default=NULL) {
+	static function getServiceSessionVar($service,$key,$default=NULL) {
 		if (isset($_SESSION['services.'.$service.'.'.$key])) {
 			return $_SESSION['services.'.$service.'.'.$key];
 		}
@@ -217,7 +216,7 @@ class InternalSession {
 		}
 	}
 
-	function setServiceSessionVar($service,$key,$value) {
+	static function setServiceSessionVar($service,$key,$value) {
 		$_SESSION['services.'.$service.'.'.$key]=$value;
 	}
 }

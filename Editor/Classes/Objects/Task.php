@@ -27,7 +27,7 @@ class Task extends Object {
 		parent::Object('task');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'task');
 	}
 

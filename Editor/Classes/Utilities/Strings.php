@@ -10,15 +10,15 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class Strings {
 	
-	function isBlank($str) {
+	static function isBlank($str) {
 		return $str===null || strlen(trim($str))===0;
 	}
 	
-	function isNotBlank($str) {
+	static function isNotBlank($str) {
 		return !Strings::isBlank($str);
 	}
 	
-	function escapeSimpleXML($input) {
+	static function escapeSimpleXML($input) {
 		$output=$input;
 		$output=str_replace('&', '&amp;', $output);
 		$output=str_replace('<', '&lt;', $output);
@@ -32,7 +32,7 @@ class Strings {
 	 * @param string $tag The break tag to use
 	 * @return string Escaped XML string with break tags
 	 */
-	function escapeSimpleXMLwithLineBreak($input,$tag) {
+	static function escapeSimpleXMLwithLineBreak($input,$tag) {
 		$output=$input;
 		$output=str_replace('&', '&amp;', $output);
 		$output=str_replace('<', '&lt;', $output);
@@ -43,11 +43,11 @@ class Strings {
 		return $output;
 	}
 	/*
-	function toUnicode($str) {
+	static function toUnicode($str) {
 		return mb_convert_encoding($str, "UTF-8","ISO-8859-1");
 	}*/
 	
-	function toUnicode($obj) {
+	static function toUnicode($obj) {
 		if (is_string($obj)) {
 			return mb_convert_encoding($obj, "UTF-8","ISO-8859-1");
 		} else if (is_object($obj)) {
@@ -63,7 +63,7 @@ class Strings {
 		return $obj;
 	}
 	
-	function fromUnicode($obj) {
+	static function fromUnicode($obj) {
 		if (is_string($obj)) {
 			$str = str_replace("\xe2\x80\x9c",'"',$obj);
 			$str = str_replace("\xe2\x80\x9d",'"',$str);
@@ -83,7 +83,7 @@ class Strings {
 		return $obj;
 	}
 	
-	function escapeXML($str) {
+	static function escapeXML($str) {
 		if (is_float($str)) {
 			$str = (string) $str;
 		}
@@ -98,11 +98,11 @@ class Strings {
 		return $str;
 	}
 
-	function htmlNumericEntities(&$str){
+	static function htmlNumericEntities(&$str){
 	  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
 	}
 	
-	function escapeXMLBreak($input,$break) {
+	static function escapeXMLBreak($input,$break) {
 		$output = Strings::escapeXML($input);
 		$output = str_replace("&#13;&#10;", $break, $output);
 		$output = str_replace("&#13;", $break, $output);
@@ -111,21 +111,21 @@ class Strings {
 		return $output;
 	}
 	
-	function escapeJavaScriptXML($input) {
+	static function escapeJavaScriptXML($input) {
 		$output = Strings::escapeXML($input);
 		$output = str_replace("'", "\'", $output);
 		return $output;
 	}
 	
-	function insertLineBreakTags($input,$tag) {
+	static function insertLineBreakTags($input,$tag) {
 		return str_replace(array("\r\n","\r","\n"), $tag, $input);
 	}
 	
-	function toBoolean($var) {
+	static function toBoolean($var) {
 		return $var ? 'true' : 'false';
 	}
 	
-	function splitIntegers($str) {
+	static function splitIntegers($str) {
 		$arr = array();
 		$parts = preg_split('/\\,/',$str);
 		foreach ($parts as $part) {
@@ -144,7 +144,7 @@ class Strings {
 	 * @param string $separator The separator to use (may be more than 1 char)
 	 * @return string The resulting text
 	 */
-	function appendWordToString($str,$word,$separator) {
+	static function appendWordToString($str,$word,$separator) {
 		if (strlen($word)==0) {
 			return $str;
 		}
@@ -156,7 +156,7 @@ class Strings {
 		}
 	}
 	
-	function buildIndex($array) {
+	static function buildIndex($array) {
 		$str = '';
 		if (is_array($array)) {
 			foreach ($array as $value) {
@@ -178,7 +178,7 @@ class Strings {
 	 * @param string $text The text to analyze
 	 * @return string A highlighted summary of the text
 	 */
-	function summarizeAndHighlight($keywords,$text) {
+	static function summarizeAndHighlight($keywords,$text) {
 		$lower=strtolower($text);
 		$positions = array();
 		$out = '';
@@ -243,7 +243,7 @@ class Strings {
 	 * @param string $protocol The protocol prefix to use, fx: mailto: og "nothing"
 	 * @return string The text with inserted email links
 	 */
-	function insertEmailLinks($string,$tag='a',$attr='href',$protocol='mailto:',$class='') {
+	static function insertEmailLinks($string,$tag='a',$attr='href',$protocol='mailto:',$class='') {
 		$pattern = "/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4}))\b/i";
 		$replacement = '<'.$tag.' '.$attr.'="'.$protocol.'${1}"'.($class!='' ? ' class="'.$class.'"' : '').'>${1}</'.$tag.'>';
 		return preg_replace($pattern, $replacement, $string);
@@ -256,7 +256,7 @@ class Strings {
 	 * @param int $maxLength The maximum length before shortening occurs
 	 * @return string The shortened string
 	 */
-	function shortenString($str,$maxLength) {
+	static function shortenString($str,$maxLength) {
 		if (strlen($str)>$maxLength) {
 			$half = floor($maxLength/2);
 			$first = substr($str,0,$half);
@@ -268,25 +268,25 @@ class Strings {
 		}
 	}
 	
-	function startsWith($str,$find) {
+	static function startsWith($str,$find) {
 		return strpos($str,$find)===0;
 	}
 	
-	function endsWith($str,$find) {
+	static function endsWith($str,$find) {
 		return strrpos($str,$find)===strlen($str)-strlen($find);
 	}
 	
-	function removeTags($string) {
+	static function removeTags($string) {
 		return preg_replace("/<[\/a-z]+[^>]*>/i", '', $string);
 	}
 	
-	function convertMarkupToText($string) {
+	static function convertMarkupToText($string) {
 		$text = preg_replace("/<[\/a-z]+[^>]*>/i", ' ', $string);
 		$text = html_entity_decode($text);
 		return $text;
 	}
 	
-	function toJSON($obj) {
+	static function toJSON($obj) {
 		global $basePath;
 		if (function_exists('json_encode')) {
 			return json_encode($obj);
@@ -296,7 +296,7 @@ class Strings {
 		return $json->encode($obj);
 	}
 	
-	function fromJSON($str) {
+	static function fromJSON($str) {
 		global $basePath;
 		if (function_exists('json_decode')) {
 			return json_decode($str);
@@ -306,14 +306,14 @@ class Strings {
 		return $json->decode($str);
 	}
 	
-	function toString($val) {
+	static function toString($val) {
 		if ($val===0) {
 			//return '0';
 		}
 		return strval($val);
 	}
 	
-	function stripInvalidXml($value) {
+	static function stripInvalidXml($value) {
 		$value = Strings::toString($value);
 	    $ret = ""; 
 	    $length = strlen($value);
@@ -337,7 +337,7 @@ class Strings {
 	    return $ret;
 	}
 	
-	function concatUrl($str1,$str2) {
+	static function concatUrl($str1,$str2) {
 		$str1 = trim(Strings::toString($str1));
 		$str2 = trim(Strings::toString($str2));
 		if ($str1==='' && $str2==='') {
@@ -358,7 +358,7 @@ class Strings {
 		return $str1.'/'.$str2;		
 	}
 	
-	function extract($str,$start,$stop) {
+	static function extract($str,$start,$stop) {
 		$extracted = array();
 		$pos = 0;
 		while ($pos!==false) {

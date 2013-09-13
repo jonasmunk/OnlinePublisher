@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class ObjectService {
 	
-	function getLatestId($type) {
+	static function getLatestId($type) {
 		$sql = "select max(id) as id from object where type=".Database::text($type);
 		if ($row = Database::selectFirst($sql)) {
 			return intval($row['id']);
@@ -18,7 +18,7 @@ class ObjectService {
 		return null;
 	}
 	
-	function getValidIds($ids) {
+	static function getValidIds($ids) {
 		if (count($ids)==0) {
 			return array();
 		}
@@ -26,7 +26,7 @@ class ObjectService {
 		return Database::getIds($sql);
 	}
 	
-	function getInstance($type) {
+	static function getInstance($type) {
 		if (!$type) {
 			return null;
 		}
@@ -38,7 +38,7 @@ class ObjectService {
 		return null;
 	}
     
-    function getObjectData($id) {
+    static function getObjectData($id) {
     	$data = null;
 		if ($id) {
 	    	$sql = "select data from object where id =".Database::int($id);
@@ -49,7 +49,7 @@ class ObjectService {
     	return $data;
     }
 	
-	function importType($type) {
+	static function importType($type) {
 		global $basePath;
 		$class = ucfirst($type);
 		if (class_exists($class,false)) {
@@ -66,12 +66,12 @@ class ObjectService {
 		return true;
 	}
 	
-	function addRelation($fromObject,$toObject,$kind='') {
+	static function addRelation($fromObject,$toObject,$kind='') {
 		$sql = "insert into relation (from_object_id,to_object_id,kind) values (".Database::int($fromObject->getId()).",".Database::int($toObject->getId()).",".Database::text($kind).")";
 		Database::insert($sql);
 	}
 	
-	function remove($object) {
+	static function remove($object) {
 		if ($object->isPersistent() && $object->canRemove()) {
 			$sql = "delete from `object` where id=".Database::int($object->getId());
 			$row = Database::delete($sql);
@@ -96,7 +96,7 @@ class ObjectService {
 		return false;
 	}
 
-	function isChanged($id) {
+	static function isChanged($id) {
 		$sql="select updated-published as delta from object where id=".Database::int($id);
 		$row = Database::selectFirst($sql);
 		if ($row['delta'] > 0) {
@@ -105,7 +105,7 @@ class ObjectService {
 		return false;
 	}
 	
-	function publish($object) {
+	static function publish($object) {
 		if (!$object->isPersistent()) {
 			return;
 		}
@@ -116,7 +116,7 @@ class ObjectService {
 		EventService::fireEvent('publish','object',$object->getType(),$object->getId());
 	}
 	
-	function loadAny($id) {
+	static function loadAny($id) {
     	$sql = "select type from object where id =".Database::int($id);
     	if ($row = Database::selectFirst($sql)) {
     		$unique = ucfirst($row['type']);
@@ -133,7 +133,7 @@ class ObjectService {
     }
 
 	
-	function load($id,$type) {
+	static function load($id,$type) {
 		ObjectService::importType($type);
 		$schema = Object::$schema[$type];
 		if (is_array($schema)) {
@@ -186,7 +186,7 @@ class ObjectService {
 		return null;
 	}
 	
-	function create($object) {
+	static function create($object) {
 		if ($object->isPersistent()) {
 			Log::debug('Tried creating object already persisted...');
 			Log::debug($object);
@@ -240,7 +240,7 @@ class ObjectService {
 	}
 
 	
-	function update($object) {
+	static function update($object) {
 		if (!$object->isPersistent()) {
 			Log::debug('Tried updating object not persisted...');
 			Log::debug($object);
@@ -277,7 +277,7 @@ class ObjectService {
 		return true;
 	}
 	
-	function toXml($object) {
+	static function toXml($object) {
 		$ns = 'http://uri.in2isoft.com/onlinepublisher/class/object/1.0/';
 		$xml = '<object xmlns="'.$ns.'" id="'.$object->id.'" type="'.$object->type.'">'.
 			'<title>'.Strings::escapeXML($object->title).'</title>'.
@@ -329,7 +329,7 @@ class ObjectService {
 		return $xml;
 	}
 
-	function _getFilename($id) {
+	static function _getFilename($id) {
 		$sql = "select filename from file where object_id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
 			return $row['filename'];
@@ -341,7 +341,7 @@ class ObjectService {
 	/**
 	 * @param query Query
 	 */
-	function search($query) {
+	static function search($query) {
 		$parts = array( 
 			'type' => $query->getType(), 
 			'query' => $query->getText(), 
@@ -419,7 +419,7 @@ class ObjectService {
 		return $result;
 	}
 
-	function find($query = array()) {
+	static function find($query = array()) {
 		$type = $query['type'];
 		if (!$type) {
 			return null;
@@ -528,7 +528,7 @@ class ObjectService {
 		return $list;
 	}
 	
-	function findAny($query = array()) {
+	static function findAny($query = array()) {
     	$parts = array();
 		$parts['columns'] = 'object.id,object.type';
 		$parts['tables'] = 'object';
@@ -569,7 +569,7 @@ class ObjectService {
 		return $list;
 	}
 	
-	function _find($parts,$query) {
+	static function _find($parts,$query) {
 		$list = array('result' => array(),'rows' => array(),'windowPage' => 0,'windowSize' => 0,'total' => 0);
 
 		$sql = "select ".$parts['columns']." from ".$parts['tables'];

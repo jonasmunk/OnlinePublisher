@@ -22,7 +22,7 @@ class Phonenumber extends Object {
 		parent::Object('phonenumber');
 	}
 
-	function load($id) {
+	static function load($id) {
 		return Object::get($id,'phonenumber');
 	}
 	

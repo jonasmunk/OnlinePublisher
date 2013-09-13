@@ -13,7 +13,7 @@ class ImageService {
 	static $validTypes = array("image/pjpeg","image/jpeg","image/gif","image/png","image/x-png");
 	static $validExtensions = array("jpeg","jpg","gif","png");
 	
-	function getUsedImageIds() {
+	static function getUsedImageIds() {
 		// Image parts
 	    $sql = "select image_id as id from part_image".
 		// Persons
@@ -28,7 +28,7 @@ class ImageService {
         return Database::getIds($sql);
 	}
 	
-	function addImageToGroup($imageId,$groupId) {
+	static function addImageToGroup($imageId,$groupId) {
 		$image = Image::load($imageId);
 		$group = Imagegroup::load($groupId);
 		if ($image && $group) {
@@ -41,7 +41,7 @@ class ImageService {
 		}
 	}
 	
-	function getGroupCounts() {
+	static function getGroupCounts() {
 		$out = array();
 		$sql="select distinct object.id,object.title,count(image.object_id) as imagecount from imagegroup, imagegroup_image, image,object  where imagegroup_image.imagegroup_id=imagegroup.object_id and imagegroup_image.image_id = image.object_id and object.id=imagegroup.object_id group by imagegroup.object_id union select object.id,object.title,'0' from object left join imagegroup_image on imagegroup_image.imagegroup_id=object.id where object.type='imagegroup' and imagegroup_image.image_id is null order by title";
 		$result = Database::select($sql);
@@ -57,7 +57,7 @@ class ImageService {
 	}
 
 	
-	function getTotalImageCount() {
+	static function getTotalImageCount() {
     	$sql= "select count(object.id) as num FROM object,image where image.object_id=object.id";
         if ($row = Database::selectFirst($sql)) {
             return intval($row['num']);
@@ -66,7 +66,7 @@ class ImageService {
         }
 	}
 	
-	function getNumberOfPagesWithImages() {
+	static function getNumberOfPagesWithImages() {
 		$count = 0;
 		$sql = "select count(distinct page.id) as num from `part_image`,object,document_section,page where part_image.part_id=document_section.part_id and page.id=document_section.page_id and `part_image`.`image_id`=object.`id`";
 		if ($row = Database::selectFirst($sql)) {
@@ -79,7 +79,7 @@ class ImageService {
 		return $count;
 	}
 	
-	function getNumberOfProductsWithImages() {
+	static function getNumberOfProductsWithImages() {
 		$sql = "select count(object_id) as num from product,object where object.id=product.image_id";
 		if ($row = Database::selectFirst($sql)) {
             return intval($row['num']);
@@ -88,7 +88,7 @@ class ImageService {
         }
 	}
 	
-	function getNumberOfPersonsWithImages() {
+	static function getNumberOfPersonsWithImages() {
 		$sql = "select count(object_id) as num from person,object where object.id=person.image_id";
 		if ($row = Database::selectFirst($sql)) {
             return intval($row['num']);
@@ -99,7 +99,7 @@ class ImageService {
 	
 	
 	
-	function getPageImageRelations() {
+	static function getPageImageRelations() {
 		$sql = "select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'image' as part,'document' as template".
 			" from `part_image`,document_section,page,object".
 			" where part_image.part_id=document_section.part_id and page.id=document_section.page_id and part_image.image_id=object.id".
@@ -115,12 +115,12 @@ class ImageService {
  		return Database::selectAll($sql);
 	}
 	
-	function getProductImageRelations() {
+	static function getProductImageRelations() {
 		$sql = "select image_object.id as image_id, image_object.title as image_title, product_object.id as product_id, product_object.title as product_title from product,object as image_object,object as product_object where image_object.id=product.image_id and product_object.id=product.object_id";
 		return Database::selectAll($sql);
 	}
 	
-	function getPersonImageRelations() {
+	static function getPersonImageRelations() {
 		$sql = "select image_object.id as image_id, image_object.title as image_title, person_object.id as person_id, person_object.title as person_title from person,object as image_object,object as person_object where image_object.id=person.image_id and person_object.id=person.object_id";
 		return Database::selectAll($sql);
 	}
@@ -128,7 +128,7 @@ class ImageService {
 	
 	
 	
-	function getNumberOfImagesNotInGroup() {
+	static function getNumberOfImagesNotInGroup() {
 		$sql = "select count(object.id) as num from object,image".
 			" left join imagegroup_image on imagegroup_image.image_id=image.object_id".
         	" where object.id = image.object_id and imagegroup_image.imagegroup_id is null".
@@ -140,7 +140,7 @@ class ImageService {
         }
 	}
 	
-	function getUnusedImagesCount() {
+	static function getUnusedImagesCount() {
         $used = ImageService::getUsedImageIds();
     	$sql= "SELECT count(object.id) as num FROM object,image".
     	" where image.object_id=object.id".
@@ -153,7 +153,7 @@ class ImageService {
         }
 	}
 
-	function createImageFromUrl($url) {
+	static function createImageFromUrl($url) {
 		global $basePath;
 		error_reporting(E_ERROR);
 
@@ -187,7 +187,7 @@ class ImageService {
 	 * @param int $group Optional ID of ImageGroup to place the Image in
 	 * @return array An array describing the success of the procedure
 	 */
-	function createUploadedImage($title="",$group=0) {
+	static function createUploadedImage($title="",$group=0) {
 		global $basePath;
 	
 		$fileName = $_FILES['file']['name'];
@@ -198,7 +198,7 @@ class ImageService {
 		return ImageService::createImageFromFile($tempFile,$fileName,$title,$group);
 	}
 	
-	function createImageFromBase64($data,$fileName=null,$title=null) {
+	static function createImageFromBase64($data,$fileName=null,$title=null) {
 		global $basePath;
 		$output = array('image'=>null,'success'=>false,'message'=>null);
 		
@@ -262,7 +262,7 @@ class ImageService {
 		return $output;
 	}
 	
-	function isUploadedFileValid($name='file') {
+	static function isUploadedFileValid($name='file') {
 		$path = $_FILES[$name]['tmp_name'];
 		$info = ImageTransformationService::getImageInfo($path);
 		if ($info) {
@@ -273,7 +273,7 @@ class ImageService {
 		return false;
 	}
 	
-	function createImageFromFile($tempPath,$fileName=null,$title=null,$group=null) {
+	static function createImageFromFile($tempPath,$fileName=null,$title=null,$group=null) {
 		global $basePath;
 		
 		if (!file_exists($tempPath)) {
@@ -340,7 +340,7 @@ class ImageService {
 		return $result;
 	}
 	
-	function getLatestImageId() {
+	static function getLatestImageId() {
 		$sql = "select max(object_id) as id from image";
 		if ($row = Database::selectFirst($sql)) {
 			return intval($row['id']);
@@ -355,7 +355,7 @@ class ImageService {
 	 * @param string $mimeType Optional mimetype of the file
 	 * @return boolean True if file supported, false otherwise
 	 */
-	function isSupportedImageFile($fileName,$mimeType="") {
+	static function isSupportedImageFile($fileName,$mimeType="") {
 		$extension = strtolower(FileSystemService::getFileExtension($fileName));
 		return (in_array($mimeType,ImageService::$validTypes) || in_array($extension,ImageService::$validExtensions));
 	}

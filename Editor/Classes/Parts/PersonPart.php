@@ -58,8 +58,8 @@ class PersonPart extends Part
 		parent::Part('person');
 	}
 	
-	function load($id) {
-		return Part::load('person',$id);
+	static function load($id) {
+		return Part::get('person',$id);
 	}
 
 	function setAlign($align) {
