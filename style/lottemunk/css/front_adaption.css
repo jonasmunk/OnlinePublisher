@@ -1,0 +1,43 @@
+@media screen and (min-width: 1586px) {
+
+	header
+	{
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		background-size: cover;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	html {
+		font-size: 80%;
+	}
+}
+
+@media screen and (max-width: 900px) {
+	html {
+		font-size: 70%;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	html {
+		font-size: 60%;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	html {
+		font-size: 55%;
+	}
+	#video article h2
+	{
+		
+	}
+}
+
+@media screen and (max-width: 600px) {
+	html {
+		font-size: 50%;
+	}
+}
