@@ -30,16 +30,19 @@
 			</title>
 			<xsl:call-template name="util:metatags"/>
 			<xsl:call-template name="util:style"/>
-			<link rel="stylesheet" href="{$path}style/lottemunk{$timestamp-url}/fonts/icons/style.css{$timestamp-query}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+			<link rel="stylesheet" href="{$path}style/lottemunk{$timestamp-url}/fonts/Lotte-Munk/style.css{$timestamp-query}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			<xsl:call-template name="util:style-ie6"/>
 			<xsl:call-template name="util:style-ie7"/>
 			<xsl:call-template name="util:style-ie8"/>
 			<xsl:call-template name="util:scripts"/>
-			<script src="{$path}style/lottemunk{$timestamp-url}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
+				<script src="{$path}style/lottemunk{$timestamp-url}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			</xsl:if>
 		</head>
 		<body>
 			<xsl:choose>
 			<xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
+				<xsl:attribute name="class">front</xsl:attribute>
 				<xsl:call-template name="front"/>
 			</xsl:when>
 			<xsl:otherwise>
@@ -52,31 +55,23 @@
 </xsl:template>
 
 <xsl:template name="page">
-	<div class="layout_bg">
-		<div class="layout">
-			<div class="layout_top">
-				<div class="layout_top_fade"><xsl:comment/></div>
-				<p>Østerlide ferielejlighed</p>
-				<div class="layout_navigation">
-					<ul class="layout_navigation">
-						<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
-					</ul>
-				</div>
-				<xsl:call-template name="util:languages"/>
-			</div>
+	<div class="layout">
+		<header id="head">
+			<h1 id="title">Lotte Munk</h1>
+			<p>Skuespiller</p>
+		</header>
+		<nav id="navigation">
+			<ul>
+				<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
+			</ul>				
+		</nav>
+		<div class="layout_content">
 			<xsl:apply-templates select="p:content"/>
-			<div class="layout_bottom">
-				<div class="layout_bottom_effect"><xsl:comment/></div>
-				<p><a href="http://www.humanise.dk/" title="Humanise"><span>Designet og udviklet af Humanise</span></a></p>
-			</div>
+			<xsl:comment/>
 		</div>
-	</div>
-</xsl:template>
-
-<xsl:template match="p:content">
-	<div class="layout_content">
-		<xsl:apply-templates/>
-		<xsl:comment/>
+		<footer>
+			<p><a href="http://www.humanise.dk/" title="Humanise"><span>Designet og udviklet af Humanise</span></a></p>
+		</footer>
 	</div>
 </xsl:template>
 

@@ -1,21 +1,6 @@
-section,header,h,p
-{
-	display: block;
-	margin: 0;
-}
 
-html
+body.front
 {
-	font-size: 100%;
-}
-
-body
-{
-	font-size: 87.5%;
-	margin: 0;
-	padding: 0;
-	font-family: Merriweather;
-	font-weight: 300;
 	padding-top: 246px;
 	height: 5000px;
 	-webkit-transition: background-color 1s ease-out;
@@ -39,36 +24,25 @@ h1, h2
 	margin: 0;
 }
 
-header
+body.front header
 {
 	height: 246px;
-	background: #333;
-	background: url('../gfx/header.jpg') 50% 50%;
-	color: #351a38;
+	z-index: 1;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	overflow: hidden;
-	z-index: 1;
 	-webkit-transform: translate-3d(0,0,0);
 	-webkit-transition: margin-top 2s ease-in-out;
 	-moz-transition: margin-top 2s ease-in-out;
 }
 
-header h1
+body.front header h1
 {
 	font-size: 80px;
-	width: 400px;
-	display: block;
-	text-align: center;
-	line-height: .9em;
-	position: absolute;
-	left: 10px;
-	top: 28px;
-	text-shadow: 0 0 30px #fff; 
 }
 
-header p
+body.front header p
 {
 	position: absolute;
 	left: 10px;
@@ -77,8 +51,9 @@ header p
 	width: 400px;
 	margin: 0;
 	text-align: center;
-	text-shadow: 0 0 30px #fff; 
+	text-shadow: 0 0 30px #fff; 	
 }
+
 
 section
 {
@@ -231,7 +206,7 @@ div.broen_photo3
 
 #about p
 {
-	font-size: 18pt;
+	font-size: 1.5em;
 	color: #999;
 	padding: 0 10%;
 	-webkit-transform: scale(.7) translate(0,-50px);
@@ -247,13 +222,42 @@ div.broen_photo3
 	color: #666;
 }
 
-div.icons
+#about p.cv
+{
+	margin: 20px 0;
+	font-size: 1.3em;
+}
+
+#about p a
+{
+	color: rgba(0,0,0,.2);
+}
+
+#about p a span
+{
+	color: #0076a3;
+	text-decoration: none;
+}
+
+#about p a:hover
+{
+	color: #0076a3;
+}
+
+ul.icons
 {
 	text-align: center;
 	margin-top: 30px;
+	list-style: none;
+	padding: 0;
 }
 
-div.icons a
+ul.icons li
+{
+	display: inline-block;
+}
+
+ul.icons a
 {
 	font-size: 48px;
 	text-decoration: none;
@@ -261,23 +265,53 @@ div.icons a
 	-moz-transition: all .5s ease-in-out;
 }
 
-div.icons a
+ul.icons a
 {
 	margin-left: 40px;
 	margin-right: 40px;
 	color: #fff;
 }
 
-#about.visible div.icons a
+#about.visible ul.icons a
 {
 	margin-left: 10px;
 	margin-right: 10px;
 	color: #2585c9;
 }
 
-#about.visible div.icons a:hover
+#about.visible ul.icons a:hover
 {
 	color: #1d689e;
+}
+
+#about div.contact
+{
+	margin-top: 40px;
+}
+
+#about div.contact p
+{
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0 40px 0 40px;
+	position: relative;
+	min-height: 32px;
+	text-align: left;
+}
+
+#about div.contact p.address
+{
+	font-size: 1em;
+}
+
+#about div.contact span.icon
+{
+	font-size: 32px;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 
 
@@ -404,20 +438,7 @@ div.icons a
 {
 	height: 480px;
 	margin: 200px 0;
-	background: #462758;
-	background-image: linear-gradient(bottom, rgb(49,39,87) 5%, rgb(70,39,88) 77%);
-	background-image: -o-linear-gradient(bottom, rgb(49,39,87) 5%, rgb(70,39,88) 77%);
-	background-image: -moz-linear-gradient(bottom, rgb(49,39,87) 5%, rgb(70,39,88) 77%);
-	background-image: -webkit-linear-gradient(bottom, rgb(49,39,87) 5%, rgb(70,39,88) 77%);
-	background-image: -ms-linear-gradient(bottom, rgb(49,39,87) 5%, rgb(70,39,88) 77%);
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0.05, rgb(49,39,87)),
-		color-stop(0.77, rgb(70,39,88))
-	);
+	background: #000;
 	position: relative;
 }
 
@@ -433,6 +454,7 @@ div.icons a
 	right: 0;
 	bottom: 0;
 	left: 852px;
+	background: -webkit-linear-gradient(#123e5a,#122f5a);
 }
 
 #video article h2
@@ -440,7 +462,7 @@ div.icons a
 	color: #fff;
 	text-align: center;
 	font-size: 5em;
-	padding-top: 50px;
+	padding-top: 90px;
 	line-height: 1em;
 }
 
@@ -471,6 +493,7 @@ div.icons a
 	left: 0;
 	right: 0;
 	top: 5%;
+	z-index: 1;
 }
 
 #theater p
@@ -478,7 +501,7 @@ div.icons a
 	color: #fff;
 	margin: 0;
 	text-align: center;
-	font-size: 12pt;
+	font-size: 1.3em;
 	position: absolute;
 	left: 20%;
 	right: 20%;
@@ -498,3 +521,51 @@ div.icons a
 	opacity: 0;
 }
 
+ul.theaters
+{
+	color: rgba(255,255,255,.3);
+	position: absolute;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	font-size: 2em;
+	z-index: 1;
+	font-family: Cinzel;
+}
+
+ul.theaters li
+{
+	position: absolute;
+}
+
+li.theater1
+{
+	top: 50%;
+	right: 2%;
+}
+
+li.theater2
+{
+	top: 30%;
+	left: 2%;
+}
+
+li.theater3
+{
+	top: 10%;
+	right: 6%;
+}
+
+li.theater4
+{
+	bottom: 35%;
+	left: 5%;
+}
+
+li.theater5
+{
+	bottom: 5%;
+	right: 5%;
+}

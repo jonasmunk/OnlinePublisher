@@ -8,6 +8,37 @@
 	}
 }
 
+@media screen and (max-width: 1200px) {
+	
+	#video
+	{
+		height: auto;
+	}
+	
+	#video iframe
+	{
+		width: 100%;
+	}
+	
+	#video article
+	{
+		position: static;
+		margin: 0;
+		background: #000;
+	}
+	
+	#video article h2 span
+	{
+		display: inline;
+	}
+	
+	#video article h2
+	{
+		padding: 20px 0;
+	}
+	
+}
+
 @media screen and (max-width: 1000px) {
 	html {
 		font-size: 80%;

@@ -3,7 +3,7 @@
  * @package OnlinePublisher
  * @subpackage Public
  */
-if (!ini_get('display_errors')) {
+if (ini_get('display_errors')) {
     ini_set('display_errors', 0);
 }
 // If no setup, go to setup UI

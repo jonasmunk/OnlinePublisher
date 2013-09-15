@@ -1,0 +1,80 @@
+section,header,p,header,footer
+{
+	display: block;
+	margin: 0;
+}
+
+html
+{
+	font-size: 100%;
+}
+
+body
+{
+	font-size: 87.5%;
+	margin: 0;
+	padding: 0;
+	font-family: Merriweather;
+	font-weight: 300;
+}
+
+header
+{
+	height: 100px;
+	background: #333;
+	background: url('../gfx/header.jpg') 50% 50%;
+	color: #351a38;
+	overflow: hidden;
+}
+
+header h1
+{
+	font-size: 50px;
+	width: 400px;
+	display: block;
+	text-align: center;
+	line-height: .9em;
+	position: absolute;
+	left: 10px;
+	top: 28px;
+	text-shadow: 0 0 30px #fff; 
+}
+
+header p
+{
+	display: none;
+}
+
+#navigation ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+#navigation ul li
+{
+	display: inline-block;
+}
+
+#navigation ul li a
+{
+	display: inline-block;
+	text-decoration: none;
+	padding: 0 10px;
+	height: 30px;
+	line-height: 30px;
+	color: #333;
+}
+
+footer
+{
+	text-align: center;
+}
+
+
+div.layout_content
+{
+	padding: 20px 0;
+	width: 900px;
+	margin: 0 auto;
+}

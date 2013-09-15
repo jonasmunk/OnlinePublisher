@@ -23,7 +23,8 @@ var ctrl = {
 		hui.parallax.listen({
 			element : about,
 			$ : function(pos) {
-				hui.cls.set(about,'visible',pos>.2 && pos<.8)
+				hui.log(pos)
+				hui.cls.set(about,'visible',pos<.8)
 			}
 		})
 		hui.parallax.listen({
