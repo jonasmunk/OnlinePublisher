@@ -533,6 +533,14 @@ ul.theaters
 	font-size: 2em;
 	z-index: 1;
 	font-family: Cinzel;
+	opacity: 0;
+	-webkit-transition: opacity 2s ease-in;
+	-moz-transition: opacity 2s ease-in;
+}
+
+#theater.final ul.theaters
+{
+	opacity: 1;
 }
 
 ul.theaters li

@@ -43,7 +43,9 @@ var ctrl = {
 				if (this.shown!=show) {
 					hui.cls.set(document.body,'full',show);
 					if (show) {
-						hui.animate({node:theater_photo,css:{opacity:show ? 1 : 0},ease:hui.ease.flicker,duration:3000});
+						hui.animate({node:theater_photo,css:{opacity:show ? 1 : 0},ease:hui.ease.flicker,duration:3000,$complete : function() {
+							hui.cls.set(theater,'final',pos>0 && pos<1);
+						}});
 					}
 					this.shown = show;
 				}
