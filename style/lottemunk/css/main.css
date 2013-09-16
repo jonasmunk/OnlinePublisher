@@ -42,7 +42,15 @@ header h1
 
 header p
 {
-	display: none;
+	left: 270px;
+	top: 37px;
+	position: absolute;
+	font-size: 30px;
+	width: 400px;
+	margin: 0;
+	text-align: center;
+	text-shadow: 0 0 10px rgba(0,0,0,.5);
+	color: #fff;
 }
 
 #navigation ul

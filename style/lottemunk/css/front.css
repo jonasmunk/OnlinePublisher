@@ -2,7 +2,7 @@
 body.front
 {
 	padding-top: 246px;
-	height: 5000px;
+	padding-bottom: 300px;
 	-webkit-transition: background-color 1s ease-out;
 	-moz-transition: background-color 1s ease-out;
 	background-color: #fff;
@@ -13,28 +13,34 @@ body.dark
 	background-color: #000;
 }
 
-body.full header
-{
-	margin-top: -100px;
-}
 
-h1, h2
+
+body.front h1, 
+body.front h2
 {
 	font-family: Cinzel;
 	margin: 0;
+	font-weight: normal;
 }
 
 body.front header
 {
 	height: 246px;
-	z-index: 1;
+	z-index: 2;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	overflow: hidden;
-	-webkit-transform: translate-3d(0,0,0);
-	-webkit-transition: margin-top 2s ease-in-out;
-	-moz-transition: margin-top 2s ease-in-out;
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-webkit-transition: -webkit-transform 2s ease-in-out;
+	-moz-transition: -moz-transform 2s ease-in-out;
+}
+
+body.full header
+{
+	-webkit-transform: translate3d(0,-100px,0);
+	-moz-transform: translate3d(0,-100px,0);
 }
 
 body.front header h1
@@ -44,14 +50,8 @@ body.front header h1
 
 body.front header p
 {
-	position: absolute;
 	left: 10px;
 	top: 170px;
-	font-size: 30px;
-	width: 400px;
-	margin: 0;
-	text-align: center;
-	text-shadow: 0 0 30px #fff; 	
 }
 
 
@@ -204,21 +204,29 @@ div.broen_photo3
 	font-weight: normal;
 }
 
-#about p
+#about p.text
 {
 	font-size: 1.5em;
 	color: #999;
 	padding: 0 10%;
+}
+
+#about div.text
+{
 	-webkit-transform: scale(.7) translate(0,-50px);
 	-webkit-transition: -webkit-transform .5s ease-in-out;
 	-moz-transform: scale(.7) translate(0,-50px);
 	-moz-transition: all .5s ease-in-out;
 }
 
-#about.visible p
+#about.visible div.text
 {
 	-webkit-transform: scale(1);
 	-moz-transform: scale(1);
+}
+
+#about p.text
+{
 	color: #666;
 }
 
@@ -230,7 +238,7 @@ div.broen_photo3
 
 #about p a
 {
-	color: rgba(0,0,0,.2);
+	color: rgba(0,0,0,.1);
 }
 
 #about p a span
@@ -239,9 +247,9 @@ div.broen_photo3
 	text-decoration: none;
 }
 
-#about p a:hover
+#about p a:hover span
 {
-	color: #0076a3;
+	text-decoration: underline;
 }
 
 ul.icons
@@ -304,8 +312,25 @@ ul.icons a
 	font-size: 1em;
 }
 
+#about div.contact p.email,
+#about div.contact p.phone
+{
+	font-size: 1.6em;
+}
+
+#about div.contact p.phone
+{
+	color: #999;
+}
+
+#about div.contact p.phone strong
+{
+	color: #333;
+}
+
 #about div.contact span.icon
 {
+	color: #999;
 	font-size: 32px;
 	width: 32px;
 	height: 32px;
@@ -313,6 +338,65 @@ ul.icons a
 	left: 0;
 	top: 0;
 }
+
+
+
+
+/************ Backgrounds ************/
+
+
+#background1
+{
+	height: 500px;
+	background: #eee;
+	overflow: hidden;
+	margin: 200px 0;
+}
+
+#background1 div
+{
+	background: url('../gfx/background1.jpg') 50% 50%;
+	height: 800px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;	
+}
+
+#background2
+{
+	height: 500px;
+	background: #eee;
+	overflow: hidden;
+	margin: 200px 0;
+}
+
+#background2 div
+{
+	background: url('../gfx/background2.jpg') 50% 50%;
+	height: 800px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;	
+}
+
+#background3
+{
+	height: 500px;
+	background: #eee;
+	overflow: hidden;
+	margin: 200px 0;
+}
+
+#background3 div
+{
+	background: url('../gfx/background3.jpg') 50% 50%;
+	height: 800px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;	
+}
+
+
 
 
 /************ Presse ************/
@@ -455,6 +539,7 @@ ul.icons a
 	bottom: 0;
 	left: 852px;
 	background: -webkit-linear-gradient(#123e5a,#122f5a);
+	background: -moz-linear-gradient(#123e5a,#122f5a);
 }
 
 #video article h2
@@ -523,7 +608,7 @@ ul.icons a
 
 ul.theaters
 {
-	color: rgba(255,255,255,.3);
+	color: rgba(255,255,255,.7);
 	position: absolute;
 	list-style: none;
 	margin: 0;
@@ -546,6 +631,12 @@ ul.theaters
 ul.theaters li
 {
 	position: absolute;
+	-webkit-animation-duration: 15s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-in-out;
+	-moz-animation-duration: 15s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-in-out;
 }
 
 li.theater1
@@ -554,10 +645,22 @@ li.theater1
 	right: 2%;
 }
 
+#theater.final li.theater1
+{
+	-webkit-animation-name: zero;
+	-moz-animation-name: zero;
+}
+
 li.theater2
 {
 	top: 30%;
 	left: 2%;
+}
+
+#theater.final li.theater2
+{
+	-webkit-animation-name: zero;
+	-moz-animation-name: zero;
 }
 
 li.theater3
@@ -566,14 +669,128 @@ li.theater3
 	right: 6%;
 }
 
+#theater.final li.theater3
+{
+	-webkit-animation-name: two;
+	-moz-animation-name: two;
+}
+
 li.theater4
 {
 	bottom: 35%;
 	left: 5%;
 }
 
+#theater.final li.theater4
+{
+	-webkit-animation-name: two;
+	-moz-animation-name: two;
+}
+
 li.theater5
 {
 	bottom: 5%;
 	right: 5%;
+}
+
+#theater.final li.theater5
+{
+	-webkit-animation-name: one;
+	-moz-animation-name: one;
+}
+
+
+
+@-webkit-keyframes zero {
+	0% {
+		opacity: 1;
+		-webkit-transform: scale(1) rotate(0deg);
+	}
+	50% {
+		opacity: .2;
+		-webkit-transform: scale(.7) rotate(-5deg);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: scale(1) rotate(0deg);
+	}
+}
+
+@-webkit-keyframes one {
+	0% {
+		opacity: .2;
+		-webkit-transform: scale(.7) rotate(0deg);
+	}
+	50% {
+		opacity: 1;
+		-webkit-transform: scale(1) rotate(-5deg);
+	}
+	100% {
+		opacity: .2;
+		-webkit-transform: scale(.7) rotate(0deg);
+	}
+}
+
+
+
+@-webkit-keyframes two {
+	0% {
+		opacity: .2;
+		-webkit-transform: scale(.9) rotate(-3deg);
+	}
+	50% {
+		opacity: 1;
+		-webkit-transform: scale(1) rotate(7deg);
+	}
+	100% {
+		opacity: .2;
+		-webkit-transform: scale(.9) rotate(-3deg);
+	}
+}
+
+@-moz-keyframes zero {
+	0% {
+		opacity: 1;
+		-moz-transform: scale(1) rotate(0deg);
+	}
+	50% {
+		opacity: .2;
+		-moz-transform: scale(.7) rotate(-5deg);
+	}
+	100% {
+		opacity: 1;
+		-moz-transform: scale(1) rotate(0deg);
+	}
+}
+
+@-moz-keyframes one {
+	0% {
+		opacity: .2;
+		-moz-transform: scale(.7) rotate(0deg);
+	}
+	50% {
+		opacity: 1;
+		-moz-transform: scale(1) rotate(-5deg);
+	}
+	100% {
+		opacity: .2;
+		-moz-transform: scale(.7) rotate(0deg);
+	}
+}
+
+
+
+@-moz-keyframes two {
+	0% {
+		opacity: .2;
+		-moz-transform: scale(.9) rotate(-3deg);
+	}
+	50% {
+		opacity: 1;
+		-moz-transform: scale(1) rotate(7deg);
+	}
+	100% {
+		opacity: .2;
+		-moz-transform: scale(.9) rotate(-3deg);
+	}
 }

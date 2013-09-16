@@ -24,15 +24,18 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		<head>
 		<title>Editor</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version='.$stamp.'" />
+		';
+		if (file_exists($basePath.'style/'.$design.'/css/fonts.css')) {
+			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$design.'/css/fonts.css?version='.$stamp.'" />';
+		}
+		echo '<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version='.$stamp.'" />
 		<link rel="stylesheet" type="text/css" href="../../../style/basic/css/parts.php?version='.$stamp.'" />
 		<link rel="stylesheet" type="text/css" href="../../../style/basic/css/document.css?version='.$stamp.'" />
 		<link rel="stylesheet" type="text/css" href="../../../style/'.$design.'/css/overwrite.css?version='.$stamp.'" />
 		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version='.$stamp.'" />
 		<!--[if IE 8]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version='.$stamp.'"> </link><![endif]-->
 		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version='.$stamp.'"> </link><![endif]-->
-		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version='.$stamp.'"> </link><![endif]-->		
-		<!--<link href="http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here|Cabin+Sketch:bold|Droid+Sans|Crimson+Text:regular,bold|Luckiest+Guy|Dancing+Script" rel="stylesheet" type="text/css" />-->
+		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version='.$stamp.'"> </link><![endif]-->
 		<script type="text/javascript" src="js/combined.php?version='.$stamp.(Request::getBoolean('dev') ? '&dev=true' : '').'" charset="UTF-8"></script>
 		<script type="text/javascript">
 			op.context = "../../../";

@@ -5,10 +5,17 @@ var ctrl = {
 	attach : function() {
 		var head = hui.get('head'),
 			title = hui.get('title'),
+			job = hui.get('job'),
 			broen = hui.get('broen'),
 			about = hui.get('about'),
 			press = hui.get('pressphotos'),
 			theater = hui.get('theater'),
+			background1 = hui.get('background1'),
+			background1_body = hui.get.firstByTag(background1,'div'),
+			background2 = hui.get('background2'),
+			background2_body = hui.get.firstByTag(background2,'div'),
+			background3 = hui.get('background3'),
+			background3_body = hui.get.firstByTag(background3,'div'),
 			theater_photo = hui.get.firstByClass(theater,'photo');
 		
 		hui.parallax.listen({
@@ -17,13 +24,21 @@ var ctrl = {
 			$ : function(pos) {
 				head.style.height = ((1-pos)*146+100)+'px';
 				title.style.fontSize = ((1-pos)*30+50)+'px';
+				job.style.left = (hui.ease.fastSlow(pos)*260+10)+'px';
+				job.style.top = ((pos)*-133+170)+'px';
 				broen.style.opacity = 1-hui.ease.quadOut(pos);
 			}
 		})
 		hui.parallax.listen({
+			min : 0,
+			max : 700,
+			$ : function(pos) {
+				hui.cls.set(document.body,'full',pos==1);
+			}
+		});
+		hui.parallax.listen({
 			element : about,
 			$ : function(pos) {
-				hui.log(pos)
 				hui.cls.set(about,'visible',pos<.8)
 			}
 		})
@@ -35,13 +50,30 @@ var ctrl = {
 			}
 		})
 		hui.parallax.listen({
+			element : background1,
+			$ : function(pos) {
+				background1_body.style.marginTop = (pos*200-250)+'px';
+			}
+		})
+		hui.parallax.listen({
+			element : background2,
+			$ : function(pos) {
+				background2_body.style.marginTop = (pos*200-250)+'px';
+			}
+		})
+		hui.parallax.listen({
+			element : background3,
+			$ : function(pos) {
+				background3_body.style.marginTop = (pos*200-250)+'px';
+			}
+		})
+		hui.parallax.listen({
 			element : theater,
 			$ : function(pos) {
-				//hui.log(pos)
 				hui.cls.set(document.body,'dark',pos>0 && pos<1);
 				var show = pos>.3 && pos<.7;
 				if (this.shown!=show) {
-					hui.cls.set(document.body,'full',show);
+					//hui.cls.set(document.body,'full',show);
 					if (show) {
 						hui.animate({node:theater_photo,css:{opacity:show ? 1 : 0},ease:hui.ease.flicker,duration:3000,$complete : function() {
 							hui.cls.set(theater,'final',pos>0 && pos<1);

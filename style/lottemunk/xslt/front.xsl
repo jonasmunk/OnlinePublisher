@@ -6,13 +6,15 @@
  xmlns:f="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/"
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+ xmlns:header="http://uri.in2isoft.com/onlinepublisher/part/header/1.0/"
+ xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
  exclude-result-prefixes="p f h util "
  >
  
 <xsl:template name="front">
 	<header id="head">
 		<h1 id="title">Lotte Munk</h1>
-		<p>Skuespiller</p>
+		<p id="job">Skuespiller</p>
 	</header>
 	
 	<section id="broen">
@@ -30,9 +32,22 @@
 	</section>
 	
 	<section id="about">
-		<h2>Om mig</h2>
-		<p>Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.</p>
+		<h2><xsl:value-of select="//header:header[1]"/></h2>
+		<div class="text">
+		<p class="text">
+		<xsl:choose>
+			<xsl:when test="//text:text[1]">
+				<xsl:value-of select="//text:text[1]"/>
+		  	</xsl:when>
+		  	<xsl:otherwise>
+				<xsl:text>
+					Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit non mi porta gravida at eget metus.
+				</xsl:text>
+		  	</xsl:otherwise>
+		</xsl:choose>
+		</p>
 		<p class="cv"><a href="{$path}cv/"><span>Curriculum Vitae</span></a></p>
+		</div>
 		<ul class="icons">
 			<li><a href="http://www.linkedin.com/pub/dir/Lotte/Munk" class="icon-linkedin"><xsl:comment/></a></li>
 			<li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
@@ -48,16 +63,24 @@
 		</div>
 	</section>
 	
+	<div id="background1">
+		<div><xsl:comment/></div>
+	</div>
+	
 	<section id="pressphotos">
 		<div class="press_left"><xsl:comment/></div>
 		<article>
-			<h2>Fotografier</h2>
-			<p><a href="javascript://" class="cv"><span>Flere fotos</span></a></p>
-			<p class="links"><a href="javascript://" class="cv"><span>Hent pressekit</span></a></p>
-			<p><a href="javascript://" class="cv"><span>Lysbilleder</span></a></p>
+			<h2><xsl:value-of select="//header:header[2]"/></h2>
+			<p><a href="{$path}photos/"><span>Flere fotos</span></a></p>
+			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Hent pressekit</span></a></p>
+			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Lysbilleder</span></a></p>
 		</article>
 		<div class="press_right"><xsl:comment/></div>
 	</section>
+	
+	<div id="background2">
+		<div><xsl:comment/></div>
+	</div>
 
 	<section id="video">
 		<article>
@@ -67,6 +90,10 @@
 			<iframe width="640" height="480" src="http://www.youtube.com/embed/9q-HBMSSbp4" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>
 		</div>
 	</section>
+	
+	<div id="background3">
+		<div><xsl:comment/></div>
+	</div>
 
 
 	<section id="theater">
