@@ -35,6 +35,7 @@
 			<xsl:call-template name="util:style-ie7"/>
 			<xsl:call-template name="util:style-ie8"/>
 			<xsl:call-template name="util:scripts"/>
+			<script src="{$path}hui{$timestamp-url}/js/hui_parallax.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
 				<script src="{$path}style/lottemunk{$timestamp-url}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			</xsl:if>

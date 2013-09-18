@@ -70,7 +70,7 @@
 	<section id="pressphotos">
 		<div class="press_left"><xsl:comment/></div>
 		<article>
-			<h2><xsl:value-of select="//header:header[2]"/></h2>
+			<h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
 			<p><a href="{$path}photos/"><span>Flere fotos</span></a></p>
 			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Hent pressekit</span></a></p>
 			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Lysbilleder</span></a></p>
@@ -97,14 +97,15 @@
 
 
 	<section id="theater">
-		<h2>Theater</h2>
-		<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Curabitur blandit tempus porttitor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+		<h2>Teater</h2>
+		<p>Kunsten kan fortælle indviklede historier om menneskets væsen og vilkår i verden, den kan drømme stort og skandaløst, folde eksistensen ud i al sin storhed og gru.</p>
 		<ul class="theaters">
 			<li class="theater1">Teamteatret</li>
-			<li class="theater2">Anemoneteatret</li>
+			<li class="theater2">Det Kongelige Teater</li>
 			<li class="theater3">Teater FÅR302</li>
 			<li class="theater4">Husets Teater</li>
 			<li class="theater5">Århus Teater</li>
+			<li class="theater6">Anemoneteatret</li>
 		</ul>
 		<div class="photo"><xsl:comment/></div>
 	</section>

@@ -37,7 +37,10 @@ header h1
 	position: absolute;
 	left: 10px;
 	top: 28px;
-	text-shadow: 0 0 30px #fff; 
+	text-shadow: 0 0 5px #fff; 
+	font-family: Cinzel;
+	margin: 0;
+	font-weight: normal;
 }
 
 header p
@@ -49,7 +52,7 @@ header p
 	width: 400px;
 	margin: 0;
 	text-align: center;
-	text-shadow: 0 0 10px rgba(0,0,0,.5);
+	text-shadow: 0 0 5px rgba(0,0,0,.5);
 	color: #fff;
 }
 
@@ -57,6 +60,8 @@ header p
 {
 	margin: 0;
 	padding: 0;
+	width: 920px;
+	margin: 0 auto;
 }
 
 #navigation ul li
@@ -72,6 +77,11 @@ header p
 	height: 30px;
 	line-height: 30px;
 	color: #333;
+}
+
+#navigation ul li.selected a
+{
+	font-weight: bold;
 }
 
 footer

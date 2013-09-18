@@ -21,7 +21,7 @@ var ctrl = {
 		hui.parallax.listen({
 			min : 0,
 			max : 246,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				head.style.height = ((1-pos)*146+100)+'px';
 				title.style.fontSize = ((1-pos)*30+50)+'px';
 				job.style.left = (hui.ease.fastSlow(pos)*260+10)+'px';
@@ -32,44 +32,44 @@ var ctrl = {
 		hui.parallax.listen({
 			min : 0,
 			max : 700,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				hui.cls.set(document.body,'full',pos==1);
 			}
 		});
 		hui.parallax.listen({
 			element : about,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				hui.cls.set(about,'visible',pos<.8)
 			}
 		})
 		hui.parallax.listen({
 			element : press,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				hui.cls.set(press,'visible',pos>.2 && pos<.8);
 				hui.cls.set(press,'saturated',pos>.1 && pos<.9)
 			}
 		})
 		hui.parallax.listen({
 			element : background1,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				background1_body.style.marginTop = (pos*200-250)+'px';
 			}
 		})
 		hui.parallax.listen({
 			element : background2,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				background2_body.style.marginTop = (pos*200-250)+'px';
 			}
 		})
 		hui.parallax.listen({
 			element : background3,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				background3_body.style.marginTop = (pos*200-250)+'px';
 			}
 		})
 		hui.parallax.listen({
 			element : theater,
-			$ : function(pos) {
+			$scroll : function(pos) {
 				hui.cls.set(document.body,'dark',pos>0 && pos<1);
 				var show = pos>.3 && pos<.7;
 				if (this.shown!=show) {
@@ -86,12 +86,7 @@ var ctrl = {
 				theater.style.height = Math.round(height*.8)+'px';
 			}
 		})
-		hui.parallax._resize();
-/*		var change = function() {
-			theater.style.height = Math.round(hui.window.getViewHeight()*.8)+'px';
-		}
-		hui.listen(window,'resize',change);
-		change();*/
+		hui.parallax.start();
 	},
 	_scroll : function() {
 		var pos = document.body.scrollTop,
@@ -103,59 +98,6 @@ var ctrl = {
 }
 
 hui.onReady(ctrl.attach.bind(ctrl))
-
-
-hui.parallax = {
-	
-	_listeners : [],
-	
-	_init : function() {
-		if (this._listening) {
-			return;
-		}
-		this._listening = true;
-		hui.listen(window,'scroll',this._scroll.bind(this));
-		hui.listen(window,'resize',this._resize.bind(this));
-	},
-	_resize : function() {
-		for (var i = this._listeners.length - 1; i >= 0; i--) {
-			var l = this._listeners[i];
-			if (l.$resize) {
-				l.$resize(hui.window.getViewWidth(),hui.window.getViewHeight());
-			}
-		}
-		this._scroll();
-	},
-	_scroll : function() {
-		hui.log(this._listeners.length)
-		var pos = hui.window.getScrollTop(),
-			viewHeight = hui.window.getViewHeight();
-		for (var i = this._listeners.length - 1; i >= 0; i--) {
-			var l = this._listeners[i];
-			
-			if (l.element) {
-				var top = hui.position.getTop(l.element);
-				top+= l.element.clientHeight/2;
-				var diff = top-pos;
-				l.$( diff / viewHeight);
-				continue;
-			}
-			
-			var x = (pos-l.min)/(l.max-l.min);
-			var y = hui.between(0,x,1);
-			
-			if (l._latest!==y) {
-				l.$(y);
-				l._latest=y;			
-			}
-		}
-	},
-	
-	listen : function(info) {
-		this._listeners.push(info);
-		this._init();
-	}
-}
 
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));

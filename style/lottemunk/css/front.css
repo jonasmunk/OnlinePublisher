@@ -310,7 +310,16 @@ ul.icons a
 #about div.contact p.address
 {
 	font-size: 1em;
+	padding: 5px 40px 5px 44px;
 }
+
+#about div.contact p.address span.icon
+{
+	font-size: 40px;
+	width: 40px;
+	height: 40px;
+	top: 0px;
+} 
 
 #about div.contact p.email,
 #about div.contact p.phone
@@ -405,7 +414,7 @@ ul.icons a
 #pressphotos
 {
 	margin: 250px 0;
-	background: url('../gfx/eyes.jpg') 50% 50%;
+	background: url('../gfx/eyes2.jpg') 50% 50%;
 	-webkit-filter: saturate(0);
 	-webkit-transition: all .5s ease-in-out;
 	-moz-filter: saturate(0);
@@ -694,6 +703,18 @@ li.theater5
 }
 
 #theater.final li.theater5
+{
+	-webkit-animation-name: one;
+	-moz-animation-name: one;
+}
+
+li.theater6
+{
+	top: 5%;
+	left: 5%;
+}
+
+#theater.final li.theater6
 {
 	-webkit-animation-name: one;
 	-moz-animation-name: one;
