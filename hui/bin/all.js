@@ -61,6 +61,8 @@ hui.browser.windows = navigator.userAgent.indexOf('Windows') !== -1;
 
 /** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
+/** If the browser supports CSS animations */
+hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9;
 
 (function() {
 	var result = /Safari\/([\d.]+)/.exec(navigator.userAgent);
@@ -6525,7 +6527,7 @@ hui.ui.Formula.prototype = {
 	focus : function(key) {
 		var d = hui.ui.getDescendants(this);
 		for (var i=0; i < d.length; i++) {
-			if (d[i].focus && (!key || d[i].key==key || d[i].name==key) {
+			if (d[i].focus && (!key || (d[i].options && d[i].options.key==key) || d[i].name==key)) {
 				d[i].focus();
 				return;
 			}
@@ -10663,6 +10665,7 @@ hui.ui.Editor.prototype = {
 				this.activePart = null;
 				this.busy = false;
 				this._deactivatePart(part);
+				this.partChanged(part); // hello
 			}.bind(this)
 		});
 	},

@@ -25,7 +25,9 @@ hui.parallax = {
 			viewHeight = hui.window.getViewHeight();
 		for (var i = this._listeners.length - 1; i >= 0; i--) {
 			var l = this._listeners[i];
-			
+			if (!l.$scroll) {
+				continue;
+			}
 			if (l.debug && !l.debugElement) {
 				l.debugElement = hui.build('div',{style:'position: absolute; border-top: 1px solid red; left: 0; right: 0;',parent:document.body});
 			}

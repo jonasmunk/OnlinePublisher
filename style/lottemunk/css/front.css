@@ -134,6 +134,7 @@ div.broen_text h2
 {
 	font-size: 4em;
 	text-align: center;
+	color: #fff;
 	color: rgba(255,255,255,.8);
 	margin-top: 74px;
 	line-height: 1em;
@@ -145,6 +146,7 @@ div.broen_text p
 	font-size: 1em;
 	margin: 10px 0;
 	text-align: center;
+	color: #fff;
 	color: rgba(255,255,255,.5);
 }
 
@@ -152,6 +154,7 @@ div.broen_text a
 {
 	margin-top: 10px;
 	display: inline-block;
+	color: #fff;
 	color: rgba(255,255,255,.8);
 	text-decoration: none;
 }
@@ -354,55 +357,38 @@ ul.icons a
 /************ Backgrounds ************/
 
 
-#background1
+#background1,
+#background2,
+#background3
 {
 	height: 500px;
-	background: #eee;
 	overflow: hidden;
 	margin: 200px 0;
+}
+
+#background1 div,
+#background2 div,
+#background3 div
+{
+	height: 800px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;	
 }
 
 #background1 div
 {
 	background: url('../gfx/background1.jpg') 50% 50%;
-	height: 800px;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	background-size: cover;	
-}
-
-#background2
-{
-	height: 500px;
-	background: #eee;
-	overflow: hidden;
-	margin: 200px 0;
 }
 
 #background2 div
 {
 	background: url('../gfx/background2.jpg') 50% 50%;
-	height: 800px;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	background-size: cover;	
-}
-
-#background3
-{
-	height: 500px;
-	background: #eee;
-	overflow: hidden;
-	margin: 200px 0;
 }
 
 #background3 div
 {
 	background: url('../gfx/background3.jpg') 50% 50%;
-	height: 800px;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	background-size: cover;	
 }
 
 
@@ -419,8 +405,12 @@ ul.icons a
 	-webkit-transition: all .5s ease-in-out;
 	-moz-filter: saturate(0);
 	-moz-transition: all .5s ease-in-out;
-	opacity: 0;
 	position: relative;
+}
+
+#pressphotos.invisble
+{
+	opacity: 0;
 }
 
 #pressphotos.saturated
@@ -447,7 +437,7 @@ ul.icons a
 		color-stop(0.09, rgb(0,81,87)),
 		color-stop(0.78, rgb(0,89,82))
 	);
-	opacity: 0;
+	opacity: 1;
 	-webkit-transition: all .5s ease-in-out;
 	-moz-transition: all .5s ease-in-out;
 }
@@ -457,13 +447,14 @@ ul.icons a
 	font-size: 5em;
 	line-height: 1em;
 	text-align: center;
+	color: #fff;
 	color: rgba(255,255,255,.8);
 	padding-top: 74px;	
 }
 
-#pressphotos.visible article
+#pressphotos.invisible article
 {
-	opacity: 1;
+	opacity: 0;
 }
 
 #pressphotos p
@@ -491,19 +482,19 @@ ul.icons a
 #pressphotos div.press_right
 {
 	position: absolute;
-	right: -240px;
 	top: 0;
 	width: 240px;
 	height: 360px;
 	background: url('../gfx/press2.jpg');
 	-webkit-transition: all .2s ease-in-out;
 	-moz-transition: all .2s ease-in-out;
+	right: 0px;
 }
 
 #pressphotos div.press_left
 {
+	left: 0px;	
 	position: absolute;
-	left: -240px;
 	top: 0;
 	width: 240px;
 	height: 360px;
@@ -512,14 +503,14 @@ ul.icons a
 	-moz-transition: all .2s ease-in-out;
 }
 
-#pressphotos.visible div.press_left
+#pressphotos.invisible div.press_left
 {
-	left: 0px;	
+	left: -240px;
 }
 
-#pressphotos.visible div.press_right
+#pressphotos.invisible div.press_right
 {
-	right: 0px;
+	right: -240px;
 }
 
 
@@ -567,6 +558,59 @@ ul.icons a
 	opacity: .5;
 }
 
+
+#reel
+{
+	height: auto;
+	font-size: 0;
+}
+
+#reel div.holes
+{
+	height: 35px;
+	background: #000 url('../gfx/hole.png') 0 50% repeat-x;
+	width: 100%;
+	overflow: hidden;
+}
+
+#reel div.content
+{
+	width: 10000px;
+}
+
+#reel figure
+{
+	display: inline-block;
+	border: 4px solid black;
+	height: 300px;
+	width: 400px;
+	background: #eee;
+}
+
+#reel figure.frame1
+{
+	background: url('../gfx/frame1.jpg');
+}
+#reel figure.frame2
+{
+	background: url('../gfx/frame2.jpg');
+}
+#reel figure.frame3
+{
+	background: url('../gfx/frame4.jpg');
+}
+#reel figure.frame4
+{
+	background: url('../gfx/frame3.jpg');
+}
+#reel figure.frame5
+{
+	background: url('../gfx/frame1.jpg');
+}
+#reel figure.frame6
+{
+	background: url('../gfx/frame4.jpg');
+}
 
 /***** Theater *****/
 
@@ -617,6 +661,7 @@ ul.icons a
 
 ul.theaters
 {
+	color: #ddd;
 	color: rgba(255,255,255,.7);
 	position: absolute;
 	list-style: none;
@@ -814,4 +859,59 @@ li.theater6
 		opacity: .2;
 		-moz-transform: scale(.9) rotate(-3deg);
 	}
+}
+
+
+
+
+#communication
+{
+	margin: 200px 0 0;
+	text-align: center;
+	height: auto;
+	background: #fff;
+	padding-bottom: 200px;
+}
+
+#communication h2
+{
+
+	font-size: 36pt;
+	color: #005952;
+	padding: 40px 0 10px;
+	font-weight: normal;	
+}
+
+#communication p
+{
+	margin: 0 10%;
+	font-size: 1.3em;
+}
+
+#communication p.link
+{
+	margin: 20px 0;
+	font-size: 1.1em;
+}
+
+#communication a
+{
+	color: rgba(0,0,0,.1);
+}
+
+#communication a span
+{
+	color: #0076a3;
+	text-decoration: none;
+}
+
+#communication a:hover span
+{
+	text-decoration: underline;
+}
+
+#communication figure
+{
+	background: url('../gfx/train.png') 50% 50% no-repeat;
+	height: 410px;
 }

@@ -78,6 +78,21 @@
 		<div class="press_right"><xsl:comment/></div>
 	</section>
 	
+	<section id="reel">
+		<div class="content" id="reelContent">
+		<div class="holes"><xsl:comment/></div>
+		<div class="frames">
+			<figure class="frame1"><xsl:comment/></figure>
+			<figure class="frame2"><xsl:comment/></figure>
+			<figure class="frame3"><xsl:comment/></figure>
+			<figure class="frame4"><xsl:comment/></figure>
+			<figure class="frame5"><xsl:comment/></figure>
+			<figure class="frame6"><xsl:comment/></figure>
+		</div>
+		<div class="holes"><xsl:comment/></div>
+		</div>
+	</section>
+	
 	<div id="background2">
 		<div><xsl:comment/></div>
 	</div>
@@ -110,7 +125,14 @@
 		<div class="photo"><xsl:comment/></div>
 	</section>
 	
-	
+	<section id="communication">
+		<article>
+			<h2>Kommunktionstræning</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<p class="link"><a href="{$path}kommunikation/"><span>Mere om kommunktionstræning</span></a></p>
+			<figure><xsl:comment/></figure>
+		</article>
+	</section>
 	
 </xsl:template>
  

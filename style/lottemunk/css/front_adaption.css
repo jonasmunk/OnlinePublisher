@@ -39,6 +39,34 @@
 	
 }
 
+body.small #video
+{
+	height: auto;
+}
+
+body.small #video iframe
+{
+	width: 100%;
+}
+
+body.small #video article
+{
+	position: static;
+	margin: 0;
+	background: #000;
+}
+
+body.small #video article h2 span
+{
+	display: inline;
+}
+
+body.small #video article h2
+{
+	padding: 20px 0;
+}
+
+
 @media screen and (max-width: 1000px) {
 	html {
 		font-size: 80%;
@@ -53,22 +81,16 @@
 
 @media screen and (max-width: 800px) {
 	html {
-		font-size: 60%;
+		font-size: 65%;
 	}
 }
 
 @media screen and (max-width: 700px) {
 	html {
-		font-size: 55%;
+		font-size: 60%;
 	}
 	#video article h2
 	{
 		
-	}
-}
-
-@media screen and (max-width: 600px) {
-	html {
-		font-size: 50%;
 	}
 }

@@ -1,4 +1,4 @@
-section,header,p,header,footer
+section,header,p,header,footer,figure
 {
 	display: block;
 	margin: 0;
@@ -16,6 +16,7 @@ body
 	padding: 0;
 	font-family: Merriweather;
 	font-weight: 300;
+	background: #fff;
 }
 
 header
