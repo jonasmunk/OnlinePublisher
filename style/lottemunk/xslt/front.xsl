@@ -71,7 +71,7 @@
 		<div class="press_left"><xsl:comment/></div>
 		<article>
 			<h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
-			<p><a href="{$path}photos/"><span>Flere fotos</span></a></p>
+			<p><a href="{$path}fotografier/"><span>Flere fotos</span></a></p>
 			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Hent pressekit</span></a></p>
 			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Lysbilleder</span></a></p>
 		</article>
