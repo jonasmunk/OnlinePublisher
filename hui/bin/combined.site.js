@@ -61,6 +61,8 @@ hui.browser.windows = navigator.userAgent.indexOf('Windows') !== -1;
 
 /** If the browser supports CSS opacity */
 hui.browser.opacity = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
+/** If the browser supports CSS Media Queries */
+hui.browser.mediaQueries = hui.browser.opacity;
 /** If the browser supports CSS animations */
 hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9;
 
