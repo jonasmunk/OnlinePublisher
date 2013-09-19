@@ -59,7 +59,7 @@ class In2iGui {
 				echo $vars['gui'];
 				exit;
 			}
-			header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html'));
+			header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html').'; charset=UTF-8');
 			$xslt = new xsltProcessor;
 			$doc = new DOMDocument();
 			$doc->loadXML($xslData);
