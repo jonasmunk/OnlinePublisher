@@ -25,10 +25,6 @@ class TextPartController extends PartController
 		return $part;
 	}
 	
-	function display($part,$context) {
-		return $this->render($part,$context);
-	}
-	
 	function getIndex($part) {
 		$context = new PartContext();
 		$text = $part->getText();

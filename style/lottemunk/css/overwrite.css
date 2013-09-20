@@ -69,94 +69,31 @@ h1.part_header, textarea.part_header_1
 }
 
 
-div.part_section_horizontalrule
+
+
+div.part_table table
 {
-	padding: 10px 0;
-	position: relative;
+	font-size: 1em;
+	border-spacing: 0;
+	border-collapse: collapse;
 }
 
-div.part_section_horizontalrule div
+div.part_table thead th
 {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #eee;
+	padding: 1px 3px;
+	text-align: left;
 }
 
-hr.part_horizontalrule
+div.part_table tfoot th
 {
-	display: none;
+	border-bottom: 1px solid #eee;
+	padding: 1px 3px;
+	text-align: left;
 }
 
-div.part_section_horizontalrule span
+div.part_table td
 {
-	background: url('../gfx/sprite.jpg') -272px -7px;
-	position: absolute;
-	width: 121px;
-	height: 18px;
-	left: 50%;
-	margin-left: -60px;
-	margin-top: -8px;
-}
-
-
-
-div.effect_contact
-{
-	width: 266px;
-	background: url('../gfx/sprite.jpg') 0 0 no-repeat;
-}
-
-div.effect_contact_bottom
-{
-	background: url('../gfx/sprite.jpg') 0 -300px;
-	height: 10px;
-}
-
-div.effect_contact_body
-{
-	padding: 30px 15px 10px;
-}
-
-div.effect_contact p
-{
-	margin: 0;
-}
-
-div.effect_contact_address
-{
-	font-size: 16pt;
-	font-style: italic;
-	color: #333;
-}
-
-div.effect_contact p.effect_contact_phone
-{
-	color: #999;
-	font-size: 22pt;
-	margin: 5px 0;
-}
-
-p.effect_contact_phone strong
-{
-	font-weight: normal;
-	color: #000;
-}
-
-div.effect_contact p.effect_contact_mail
-{
-	margin-top: 10px;
-}
-
-/************* Ornaments *************/
-
-div.effect_ornament_top
-{
-	height: 56px;
-	width: 400px;
-	background: url('../gfx/sprite.jpg') 0 -315px;
-}
-
-div.effect_ornament_bottom
-{
-	height: 42px;
-	width: 400px;
-	background: url('../gfx/sprite.jpg') 0 -380px;
+	border-bottom: 1px solid #eee;
+	padding: 3px 3px;
 }

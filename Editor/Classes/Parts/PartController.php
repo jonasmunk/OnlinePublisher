@@ -36,7 +36,11 @@ class PartController
 	
 	function getType() {
 	    return $this->type;
-	}	
+	}
+	
+	function display($part,$context) {
+		return $this->render($part,$context);
+	}
 	
 	function build($part,$context) {
 		if (!$part) {
