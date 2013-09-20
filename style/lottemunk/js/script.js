@@ -37,6 +37,7 @@ var ctrl = {
 				hui.style.setOpacity(broen,1-hui.ease.quadOut(pos));
 			}
 		})
+		/*
 		hui.parallax.listen({
 			min : 0,
 			max : 700,
@@ -52,7 +53,7 @@ var ctrl = {
 					});
 				}
 			}
-		});
+		});*/
 		hui.parallax.listen({
 			element : about,
 			$scroll : function(pos) {
@@ -65,6 +66,7 @@ var ctrl = {
 				reelContent.style.marginLeft = (pos*-400-100)+'px';
 			}
 		})
+		/*
 		if (hui.browser.animation) {
 			hui.parallax.listen({
 				element : press,
@@ -73,7 +75,7 @@ var ctrl = {
 					hui.cls.set(press,'saturated',pos>.1 && pos<.9)
 				}
 			})
-		}
+		}*/
 		hui.parallax.listen({
 			element : background1,
 			$scroll : function(pos) {
@@ -99,6 +101,7 @@ var ctrl = {
 				
 				var dark = pos>0 && pos<1;
 				if (this.darkened!=dark) {
+					hui.cls.set(document.body,'full',dark);
 					if (hui.browser.animation) {
 						hui.cls.set(document.body,'dark',dark);
 					} else {

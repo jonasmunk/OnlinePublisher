@@ -15,6 +15,9 @@
 	<header id="head">
 		<h1 id="title">Lotte Munk</h1>
 		<p id="job">Skuespiller</p>
+		<nav>
+			Forside · Om mig · Fotografier · Film/TV · Kommunikationstræning
+		</nav>
 	</header>
 	
 	<section id="broen">
@@ -49,7 +52,7 @@
 		<p class="cv"><a href="{$path}cv/"><span>Curriculum Vitae</span></a></p>
 		</div>
 		<ul class="icons">
-			<li><a href="http://www.linkedin.com/pub/dir/Lotte/Munk" class="icon-linkedin"><xsl:comment/></a></li>
+			<li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
 			<li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
 			<li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
 			<!--
@@ -119,8 +122,8 @@
 			<li class="theater2">Det Kongelige Teater</li>
 			<li class="theater3">Teater FÅR302</li>
 			<li class="theater4">Husets Teater</li>
-			<li class="theater5">Århus Teater</li>
-			<li class="theater6">Anemoneteatret</li>
+			<li class="theater5">Anemoneteatret</li>
+			<li class="theater6">Århus Teater</li>
 		</ul>
 		<div class="photo"><xsl:comment/></div>
 	</section>

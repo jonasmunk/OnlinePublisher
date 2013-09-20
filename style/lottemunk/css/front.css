@@ -25,7 +25,7 @@ body.front h2
 
 body.front header
 {
-	height: 246px;
+	height: 286px;
 	z-index: 2;
 	position: fixed;
 	top: 0;
@@ -35,6 +35,16 @@ body.front header
 	-moz-transform: translate3d(0,0,0);
 	-webkit-transition: -webkit-transform 2s ease-in-out;
 	-moz-transition: -moz-transform 2s ease-in-out;
+}
+
+body.front header nav
+{
+	height: 40px;
+	background: #aaa;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	display: none;
 }
 
 body.full header
@@ -364,6 +374,11 @@ ul.icons a
 	height: 500px;
 	overflow: hidden;
 	margin: 200px 0;
+	display: none;
+}
+
+#background1
+{
 }
 
 #background1 div,
@@ -401,7 +416,7 @@ ul.icons a
 {
 	margin: 250px 0;
 	background: url('../gfx/eyes2.jpg') 50% 50%;
-	-webkit-filter: saturate(0);
+/*	-webkit-filter: saturate(0);*/
 	-webkit-transition: all .5s ease-in-out;
 	-moz-filter: saturate(0);
 	-moz-transition: all .5s ease-in-out;
@@ -415,7 +430,7 @@ ul.icons a
 
 #pressphotos.saturated
 {
-	-webkit-filter: saturate(1);
+/*	-webkit-filter: saturate(1);*/
 	opacity: 1;
 }
 
