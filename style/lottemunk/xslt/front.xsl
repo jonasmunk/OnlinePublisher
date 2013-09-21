@@ -194,6 +194,19 @@
 		</article>
 	</section>
 	
+	<section id="humanise">
+		<article>
+			<p>This has been carefully crafted<br/>
+			analysed and executed<br/>
+			from the engineering inside<br/>
+			to the design on the outside<br/>
+			by hand and mind<br/>
+			- by Humanise</p>
+			<p><a href="http://www.humanise.dk/"><span>Visit Humanise</span></a></p>
+		</article>
+	</section>
+	
+	
 </xsl:template>
  
 </xsl:stylesheet>

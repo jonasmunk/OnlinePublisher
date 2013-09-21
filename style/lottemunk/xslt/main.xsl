@@ -39,6 +39,8 @@
 			<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
 				<script src="{$path}style/lottemunk{$timestamp-url}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			</xsl:if>
+			<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+			<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		</head>
 		<body>
 			<xsl:choose>
@@ -50,6 +52,9 @@
 				<xsl:call-template name="page"/>
 			</xsl:otherwise>
 			</xsl:choose>
+			<footer>
+				<p><a href="http://www.humanise.dk/" title="Humanise" id="handmade"><span>Designet og udviklet af Humanise</span></a></p>
+			</footer>
 			<xsl:call-template name="util:googleanalytics"/>
 		</body>
 	</html>
@@ -70,9 +75,6 @@
 			<xsl:apply-templates select="p:content"/>
 			<xsl:comment/>
 		</div>
-		<footer>
-			<p><a href="http://www.humanise.dk/" title="Humanise"><span>Designet og udviklet af Humanise</span></a></p>
-		</footer>
 	</div>
 </xsl:template>
 

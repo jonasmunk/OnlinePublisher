@@ -66,6 +66,8 @@ hui.browser.mediaQueries = hui.browser.opacity;
 /** If the browser supports CSS animations */
 hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9;
 
+hui.browser.touch = "ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch;
+
 (function() {
 	var result = /Safari\/([\d.]+)/.exec(navigator.userAgent);
 	if (result) {
@@ -1039,9 +1041,10 @@ hui.window = {
 	},
 	/**
 	 * Scroll to an element, will try to show the element in the middle of the screen and only scroll if it makes sence
-	 * @param {Object} options {element:«the element to scroll to»}
+	 * @param {Object} options {element:«the element to scroll to»,duration:«milliseconds»,top:«disregarded pixels at top»}
 	 */
 	scrollTo : function(options) {
+		options = hui.override({duration:0,top:0},options);
 		var node = options.element;
 		var pos = hui.position.get(node);
 		var viewTop = hui.window.getScrollTop();
@@ -1049,8 +1052,23 @@ hui.window = {
 		var viewBottom = viewTop+viewHeight;
 		if (viewTop < pos.top + node.clientHeight || (pos.top)<viewBottom) {
 			var top = pos.top - Math.round((viewHeight - node.clientHeight) / 2);
+			top-= options.top/2;
 			top = Math.max(0, top);
-			window.scrollTo(0, top);
+		
+			var startTime = new Date().getTime();
+			var func;
+		
+			func = function() {
+				var pos = (new Date().getTime()-startTime)/options.duration;
+				if (pos>1) {
+					pos = 1;
+				}
+				window.scrollTo(0, viewTop+Math.round((top-viewTop)*hui.ease.fastSlow(pos)));
+				if (pos<1) {
+					window.setTimeout(func);
+				}
+			}
+			func();
 		}
 	},
 	/**

@@ -1,10 +1,9 @@
 
 
 var ctrl = {
-	
-	nodes : {},
-	
+		
 	attach : function() {
+		
 		var head = hui.get('head'),
 			title = hui.get('title'),
 			job = hui.get('job'),
@@ -45,7 +44,7 @@ var ctrl = {
 				var links = hui.get.byTag(document.body,'a');
 				for (var i = 0; i < links.length; i++) {
 					if (hash == links[i].getAttribute('name')) {
-						hui.scroll({
+						hui.window.scrollTo({
 							element : links[i].parentNode,
 							duration : 1000,
 							top : hash=='theater' ? 40 : 140
@@ -171,41 +170,23 @@ var ctrl = {
 			}
 		})
 		hui.parallax.start();
+		
+		hui.listen('handmade','click',function(e) {
+			hui.stop(e);
+			var hum = hui.get('humanise');
+			hum.style.display='block'
+			window.setTimeout(function() {
+				hui.cls.add(hum,'visible');
+			})
+		})
 	}
 }
 
-hui.onReady(ctrl.attach.bind(ctrl))
+if (!hui.browser.touch) {
+	hui.onReady(ctrl.attach.bind(ctrl))
+}
 
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));
 	return isNaN(result) ? min : result;
-}
-
-hui.scroll = function(options) {
-	options = hui.override({duration:0,top:0},options);
-	var node = options.element;
-	var pos = hui.position.get(node);
-	var viewTop = hui.window.getScrollTop();
-	var viewHeight = hui.window.getViewHeight();
-	var viewBottom = viewTop+viewHeight;
-	if (viewTop < pos.top + node.clientHeight || (pos.top)<viewBottom) {
-		var top = pos.top - Math.round((viewHeight - node.clientHeight) / 2);
-		top-= options.top/2;
-		top = Math.max(0, top);
-		
-		var startTime = new Date().getTime();
-		var func;
-		
-		func = function() {
-			var pos = (new Date().getTime()-startTime)/options.duration;
-			if (pos>1) {
-				pos = 1;
-			}
-			window.scrollTo(0, viewTop+Math.round((top-viewTop)*hui.ease.fastSlow(pos)));
-			if (pos<1) {
-				window.setTimeout(func);
-			}
-		}
-		func();
-	}
 }

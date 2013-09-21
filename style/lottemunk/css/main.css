@@ -115,15 +115,33 @@ header nav a:hover
 	background: #123;
 }
 
-footer
-{
-	text-align: center;
-}
 
 
 div.layout_content
 {
-	padding: 20px 0;
+	padding: 60px 0;
 	width: 900px;
 	margin: 0 auto;
+}
+
+
+footer
+{
+	text-align: center;
+	padding: 20px 0 40px;
+}
+
+footer a
+{
+	display: inline-block;
+	width: 300px;
+	height: 150px;
+	background: url('../gfx/humanise.png') 50% 50% no-repeat;
+}
+
+footer a span
+{
+	position: absolute;
+	left: -1000px;
+	top: -1000px;
 }

@@ -97,3 +97,12 @@ div.part_table td
 	border-bottom: 1px solid #eee;
 	padding: 3px 3px;
 }
+
+
+
+
+hr.part_horizontalrule
+{
+	border: none;
+	border-bottom: solid 1px #ddd;
+}

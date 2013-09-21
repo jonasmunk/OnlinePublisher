@@ -2,7 +2,6 @@
 body.front
 {
 	padding-top: 286px;
-	padding-bottom: 300px;
 	-webkit-transition: background-color 1s ease-out;
 	-moz-transition: background-color 1s ease-out;
 	background-color: #fff;
@@ -60,6 +59,12 @@ body.front header p
 	top: 170px;
 }
 
+body.front footer
+{
+	padding: 100px 0;
+	background: #fff;
+}
+
 
 section
 {
@@ -100,7 +105,7 @@ a.button
 	background: #fafafa;
 	text-decoration: none;
 	border: 1px solid #eee;
-	color: #36d;
+	color: #36a;
 }
 
 a.button:hover
@@ -989,4 +994,44 @@ li.theater6
 {
 	background: url('../gfx/train.png') 50% 50% no-repeat;
 	height: 410px;
+}
+
+
+
+
+
+#humanise
+{
+	height: 0px;
+	background: url('../gfx/hand.jpg') 50% 50%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	overflow: hidden;
+	-webkit-transition: height 2s ease-in;
+	-moz-transition: height 2s ease-in;
+	display: none;
+}
+
+#humanise article
+{
+	font-family: 'Gloria Hallelujah', cursive;
+	padding: 30px;
+	font-size: 1.8em;
+	line-height: 1.5em;
+}
+
+#humanise p
+{
+	margin-bottom: 20px;
+}
+
+#humanise p a
+{
+	color: #36f;
+}
+
+#humanise.visible
+{
+	height: 600px;
 }

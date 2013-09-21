@@ -110,3 +110,31 @@ body.small #video article p
 		font-size: 60%;
 	}
 }
+
+
+
+@media screen and (max-width: 600px) {
+	body.front
+	{
+		padding-top: 0;
+	}
+	body.front header
+	{
+		position: static;
+	}
+	
+	body.front header nav
+	{
+		height: auto;
+	}
+	
+	body.front header h1#title
+	{
+		width: 100%;
+		left: 0;
+		font-size: 32pt;
+		top: 0;
+		line-height: 1.3em;
+	}
+	
+}

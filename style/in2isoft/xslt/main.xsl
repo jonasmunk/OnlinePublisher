@@ -38,9 +38,10 @@
 		<!--
 		<link href='{$path}style/basic/fonts/Colaborate/stylesheet.css' rel='stylesheet' type='text/css'/>
 			-->
-		
+			<!--
 		<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+				-->
 		<!--
 		<xsl:call-template name="util:scripts-adaptive"/>
 		-->
