@@ -25,6 +25,8 @@ header
 	background: #333;
 	background: url('../gfx/header.jpg') 50% 50%;
 	color: #351a38;
+	position: relative;
+	margin-bottom: 40px;
 }
 
 header h1
@@ -56,32 +58,61 @@ header p
 	color: #fff;
 }
 
-#navigation ul
+
+header nav
 {
+	height: 40px;
+	background: #1a2128; /* Old browsers */
+
+	background: -moz-linear-gradient(top,  #1a2128 0%, #0d0d0d 100%); /* FF3.6+ */
+
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1a2128), color-stop(100%,#0d0d0d)); /* Chrome,Safari4+ */
+
+	background: -webkit-linear-gradient(top,  #1a2128 0%,#0d0d0d 100%); /* Chrome10+,Safari5.1+ */
+
+	background: -o-linear-gradient(top,  #1a2128 0%,#0d0d0d 100%); /* Opera 11.10+ */
+
+	background: -ms-linear-gradient(top,  #1a2128 0%,#0d0d0d 100%); /* IE10+ */
+
+	background: linear-gradient(to bottom,  #1a2128 0%,#0d0d0d 100%); /* W3C */
+
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a2128', endColorstr='#0d0d0d',GradientType=0 ); /* IE6-9 */
+
+	
+	position: absolute;
+	bottom: -40px;
+	right: 0;
+	width: 100%;
+}
+
+header nav ul
+{
+	list-style: none;
 	margin: 0;
 	padding: 0;
-	width: 920px;
-	margin: 0 auto;
 }
 
-#navigation ul li
+header nav li
 {
 	display: inline-block;
 }
 
-#navigation ul li a
+header nav a
 {
-	display: inline-block;
 	text-decoration: none;
-	padding: 0 10px;
-	height: 30px;
-	line-height: 30px;
-	color: #333;
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px;
+	color: #fff;
+	text-transform: uppercase;
+	font-family: Cinzel;
+	font-size: 14pt;
 }
 
-#navigation ul li.selected a
+header nav a:hover
 {
-	font-weight: bold;
+	background: #123;
 }
 
 footer

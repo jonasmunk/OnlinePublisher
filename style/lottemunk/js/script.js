@@ -23,12 +23,25 @@ var ctrl = {
 			nav = hui.get.firstByTag(head,'nav'),
 			reelContent = hui.get('reelContent');
 		
+			var paths = {
+				'/' : 'top',
+				'/cv/' : 'about',
+				'' : 'theater',
+				'/fotografier/' : 'photos',
+				'/kommunikation/' : 'communication',
+				'/film/' : 'movies'
+			}
+		
+		
 		hui.listen(nav,'click',function(e) {
 			e = hui.event(e);
 			e.stop();
 			var a = e.findByTag('a');
 			if (a) {
-				var hash = a.href.substring(a.href.indexOf('#')+1);
+				var hash = paths[a.getAttribute('data-path')]
+				if (!hash) {
+					return;
+				}
 				var links = hui.get.byTag(document.body,'a');
 				for (var i = 0; i < links.length; i++) {
 					if (hash == links[i].getAttribute('name')) {
@@ -41,7 +54,7 @@ var ctrl = {
 					}
 				}
 			}
-		})
+		});
 		
 		var currentWidth = hui.window.getViewWidth();
 		var menuWidth = 0;
@@ -116,18 +129,6 @@ var ctrl = {
 			element : background1,
 			$scroll : function(pos) {
 				background1_body.style.marginTop = (pos*200-250)+'px';
-			}
-		})
-		hui.parallax.listen({
-			element : background2,
-			$scroll : function(pos) {
-				background2_body.style.marginTop = (pos*200-250)+'px';
-			}
-		})
-		hui.parallax.listen({
-			element : background3,
-			$scroll : function(pos) {
-				background3_body.style.marginTop = (pos*200-250)+'px';
 			}
 		})
 		hui.parallax.listen({

@@ -12,7 +12,9 @@
  *  easeReturn : «Function»,
  *  transition : «Integer»,
  *  transitionEnd : «Integer»,
- *  transitionReturn : «Integer»
+ *  transitionReturn : «Integer»,
+ *  images : «Array»,
+ *  listener : «Object»
  * }
  * </pre>
  * @constructor
@@ -31,7 +33,8 @@ hui.ui.ImageViewer = function(options) {
 		easeReturn : hui.ease.cubicInOut,
 		transition : 400,
 		transitionEnd : 1000,
-		transitionReturn : 300
+		transitionReturn : 300,
+		images : []
 	},options);
 	
 	// Collect elements ...
@@ -57,12 +60,16 @@ hui.ui.ImageViewer = function(options) {
 	this.index = 0;
 	this.playing = false;
 	this.name = options.name;
-	this.images = [];
+	this.images = options.images;
 	
 	// Behavior ...
 	this.box.listen(this);
 	this._addBehavior();
 	hui.ui.extend(this);
+	
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 /**

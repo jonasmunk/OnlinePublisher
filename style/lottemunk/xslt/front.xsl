@@ -8,13 +8,23 @@
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:header="http://uri.in2isoft.com/onlinepublisher/part/header/1.0/"
  xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
+ xmlns:i="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
+ xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
+ xmlns:imagegallery="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
  exclude-result-prefixes="p f h util "
  >
  
 <xsl:template name="front">
 	<header id="head">
+		<a name="top"><xsl:comment/></a>
 		<h1 id="title">Lotte Munk</h1>
 		<p id="job">Skuespiller</p>
+		<nav id="navigation">
+			<ul>
+				<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
+			</ul>				
+		</nav>
+		<!--
 		<nav>
 			<ul>
 				<li><a href="#about">Om mig</a></li>
@@ -23,7 +33,7 @@
 				<li><a href="#theater">Teater</a></li>
 				<li><a href="#communication">Kommunikationstræning</a></li>
 			</ul>
-		</nav>
+		</nav>-->
 	</header>
 	
 	<section id="broen">
@@ -31,7 +41,7 @@
 			<h2>Broen II</h2>
 			<p>Donec id elit non mi porta gravida at eget metus. Curabitur blandit tempus porttitor.</p>
 			<p>DR1, søndag d. 22. september kl. 20:00</p>
-			<p><a class="button" href="http://www.dr.dk/DR1/Broen/Artikler_med_billeder/201307072112564545.htm">Mere om Broen II &#8250;</a></p>
+			<p><a class="button" href="http://www.dr.dk/dr1/broen">Mere om Broen II &#8250;</a></p>
 		</div>
 		<div class="right" style="background: #eee">
 			<div class="vert50  broen_photo2"><xsl:comment/></div>
@@ -73,20 +83,46 @@
 		</div>
 	</section>
 	
-	<div id="background1">
-		<div><xsl:comment/></div>
-	</div>
+	
 	
 	<section id="pressphotos">
+		<div id="background1">
+			<div><xsl:comment/></div>
+		</div>
+		<div class="block">
 		<a name="photos"><xsl:comment/></a>
-		<div class="press_left"><xsl:comment/></div>
-		<article>
-			<h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
-			<p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
-			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Hent pressekit &#8250;</span></a></p>
-			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Lysbilleder &#8250;</span></a></p>
-		</article>
-		<div class="press_right"><xsl:comment/></div>
+			<div class="press_left"><xsl:comment/></div>
+			<article>
+				<h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
+				<p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
+				<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Hent pressekit &#8250;</span></a></p>
+				<p><a href="javascript://" onclick="photoGallery.show();"><span>Lysbilleder &#8250;</span></a></p>
+			</article>
+			<div class="press_right"><xsl:comment/></div>
+		</div>
+		
+		<script type="text/javascript">
+			(function() {
+				var images = [];
+				<xsl:for-each select="//imagegallery:imagegallery//o:object">
+					images.push({
+						id : <xsl:value-of select="@id"/>,
+						width : <xsl:value-of select="o:sub/i:image/i:width"/>,
+						height : <xsl:value-of select="o:sub/i:image/i:height"/>,
+						text : '<xsl:value-of select="o:note"/>'
+					})
+				</xsl:for-each>
+
+				window.photoGallery = hui.ui.ImageViewer.create({
+					maxWidth : 2000,
+					maxHeight : 2000,
+					perimeter : 40,
+					sizeSnap : 10,
+					images : images,
+					listener : op.imageViewerDelegate
+				});
+			})();
+		</script>
 	</section>
 	
 	<section id="reel">
@@ -105,11 +141,11 @@
 		<div class="holes"><xsl:comment/></div>
 		</div>
 	</section>
-	
+	<!--
 	<div id="background2">
 		<div><xsl:comment/></div>
 	</div>
-
+-->
 	<section id="video">
 		<a name="movies"><xsl:comment/></a>
 		<article>
@@ -120,11 +156,11 @@
 			<iframe width="640" height="480" src="http://www.youtube.com/embed/9q-HBMSSbp4" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>
 		</div>
 	</section>
-	
+<!--	
 	<div id="background3">
 		<div><xsl:comment/></div>
 	</div>
-
+-->
 
 	<section id="theater">
 		<a name="theater"><xsl:comment/></a>
@@ -145,11 +181,13 @@
 	</section>
 	
 	<section id="communication">
-		<a name="communication"><xsl:comment/></a>
 		<article>
+			<div>
+				<a name="communication"><xsl:comment/></a>
 			<h2>Kommunikationstræning</h2>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 			<p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunktionstræning &#8250;</span></a></p>
+			</div>
 			<figure><xsl:comment/></figure>
 		</article>
 	</section>
