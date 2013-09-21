@@ -39,8 +39,8 @@
 	<section id="broen">
 		<div class="left broen_text">
 			<h2>Broen II</h2>
-			<p>Donec id elit non mi porta gravida at eget metus. Curabitur blandit tempus porttitor.</p>
-			<p>DR1, søndag d. 22. september kl. 20:00</p>
+			<p>Aktuel i Broen II - spiller Caroline Brandstrup i afsnittene 3-10</p>
+			<p>Starter på DR1, søndag d. 22. september kl. 20:00</p>
 			<p><a class="button" href="http://www.dr.dk/dr1/broen">Mere om Broen II &#8250;</a></p>
 		</div>
 		<div class="right" style="background: #eee">
@@ -184,9 +184,11 @@
 		<article>
 			<div>
 				<a name="communication"><xsl:comment/></a>
-			<h2>Kommunikationstræning</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunktionstræning &#8250;</span></a></p>
+				<h2>Kommunikationstræning</h2>
+				<p>Vi levendegør de problemstillinger der skal sættes fokus på.</p>
+				<p>Vi skaber en fælles "her og nu oplevelse" som I kan diskutere ud fra, og som helt konkret tydeliggør udfordringen, eller hvad der går galt i kommunikationen. Ud fra det fælles afsæt gives ny inspiration til andre handlemuligheder.</p>
+				<p>Vi kommer gerne til et uforpligtende møde, hvor vi sammen kan diskutere indhold og form. Vi kan komme med konkrete ideer, så vi sammen kan skabe og finde frem til det set -up, som I har brug for.</p>
+				<p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunktionstræning &#8250;</span></a></p>
 			</div>
 			<figure><xsl:comment/></figure>
 		</article>
