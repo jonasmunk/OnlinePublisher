@@ -20,7 +20,35 @@ var ctrl = {
 			background3_body = hui.get.firstByTag(background3,'div'),
 			theater_photo = hui.get.firstByClass(theater,'photo'),
 			theaters = hui.get.firstByClass(theater,'theaters'),
+			nav = hui.get.firstByTag(head,'nav'),
 			reelContent = hui.get('reelContent');
+		
+		hui.listen(nav,'click',function(e) {
+			e = hui.event(e);
+			e.stop();
+			var a = e.findByTag('a');
+			if (a) {
+				var hash = a.href.substring(a.href.indexOf('#')+1);
+				var links = hui.get.byTag(document.body,'a');
+				for (var i = 0; i < links.length; i++) {
+					if (hash == links[i].getAttribute('name')) {
+						hui.scroll({
+							element : links[i].parentNode,
+							duration : 1000,
+							top : hash=='theater' ? 40 : 140
+						});
+						return;
+					}
+				}
+			}
+		})
+		
+		var currentWidth = hui.window.getViewWidth();
+		var menuWidth = 0;
+		var items = hui.get.byTag(nav,'li');
+		for (var i = items.length - 1; i >= 0; i--) {
+			menuWidth+=items[i].clientWidth+10;
+		}
 		
 		if (!hui.browser.animation) {
 			hui.style.setOpacity(theater_photo,0);
@@ -38,6 +66,14 @@ var ctrl = {
 			}
 		})
 		/*
+		hui.parallax.listen({
+			min : 300,
+			max : 500,
+			$scroll : function(pos) {
+				nav.style.width = Math.max(menuWidth,(1-hui.ease.slowFastSlow(pos))*currentWidth)+'px';
+				nav.style.bottom = (hui.ease.slowFastSlow(pos)*40-40)+'px';
+			}
+		});
 		hui.parallax.listen({
 			min : 0,
 			max : 700,
@@ -126,10 +162,11 @@ var ctrl = {
 		})
 		hui.parallax.listen({
 			$resize : function(width,height) {
-				theater.style.height = Math.round(height*.8)+'px';
+				theater.style.height = Math.round(height*.9)+'px';
 				if (!hui.browser.mediaQueries) {
 					hui.cls.set(document.body,'small',width<1200);
 				}
+				currentWidth = width;
 			}
 		})
 		hui.parallax.start();
@@ -141,4 +178,33 @@ hui.onReady(ctrl.attach.bind(ctrl))
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));
 	return isNaN(result) ? min : result;
+}
+
+hui.scroll = function(options) {
+	options = hui.override({duration:0,top:0},options);
+	var node = options.element;
+	var pos = hui.position.get(node);
+	var viewTop = hui.window.getScrollTop();
+	var viewHeight = hui.window.getViewHeight();
+	var viewBottom = viewTop+viewHeight;
+	if (viewTop < pos.top + node.clientHeight || (pos.top)<viewBottom) {
+		var top = pos.top - Math.round((viewHeight - node.clientHeight) / 2);
+		top-= options.top/2;
+		top = Math.max(0, top);
+		
+		var startTime = new Date().getTime();
+		var func;
+		
+		func = function() {
+			var pos = (new Date().getTime()-startTime)/options.duration;
+			if (pos>1) {
+				pos = 1;
+			}
+			window.scrollTo(0, viewTop+Math.round((top-viewTop)*hui.ease.fastSlow(pos)));
+			if (pos<1) {
+				window.setTimeout(func);
+			}
+		}
+		func();
+	}
 }

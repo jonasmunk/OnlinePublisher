@@ -16,7 +16,13 @@
 		<h1 id="title">Lotte Munk</h1>
 		<p id="job">Skuespiller</p>
 		<nav>
-			Forside · Om mig · Fotografier · Film/TV · Kommunikationstræning
+			<ul>
+				<li><a href="#about">Om mig</a></li>
+				<li><a href="#photos">Fotos</a></li>
+				<li><a href="#movies">Film &amp; TV</a></li>
+				<li><a href="#theater">Teater</a></li>
+				<li><a href="#communication">Kommunikationstræning</a></li>
+			</ul>
 		</nav>
 	</header>
 	
@@ -25,7 +31,7 @@
 			<h2>Broen II</h2>
 			<p>Donec id elit non mi porta gravida at eget metus. Curabitur blandit tempus porttitor.</p>
 			<p>DR1, søndag d. 22. september kl. 20:00</p>
-			<p><a href="http://www.dr.dk/DR1/Broen/Artikler_med_billeder/201307072112564545.htm">Mere om Broen II »</a></p>
+			<p><a class="button" href="http://www.dr.dk/DR1/Broen/Artikler_med_billeder/201307072112564545.htm">Mere om Broen II &#8250;</a></p>
 		</div>
 		<div class="right" style="background: #eee">
 			<div class="vert50  broen_photo2"><xsl:comment/></div>
@@ -35,6 +41,7 @@
 	</section>
 	
 	<section id="about">
+		<a name="about"><xsl:comment/></a>
 		<h2><xsl:value-of select="//header:header[1]"/></h2>
 		<div class="text">
 		<p class="text">
@@ -49,7 +56,7 @@
 		  	</xsl:otherwise>
 		</xsl:choose>
 		</p>
-		<p class="cv"><a href="{$path}cv/"><span>Curriculum Vitae</span></a></p>
+		<p class="cv"><a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a></p>
 		</div>
 		<ul class="icons">
 			<li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
@@ -71,12 +78,13 @@
 	</div>
 	
 	<section id="pressphotos">
+		<a name="photos"><xsl:comment/></a>
 		<div class="press_left"><xsl:comment/></div>
 		<article>
 			<h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
-			<p><a href="{$path}fotografier/"><span>Flere fotos</span></a></p>
-			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Hent pressekit</span></a></p>
-			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Lysbilleder</span></a></p>
+			<p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
+			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Hent pressekit &#8250;</span></a></p>
+			<p><a href="javascript://"><xsl:attribute name="onclick">hui.ui.msg({text:'Kommer snart',duration:2000})</xsl:attribute><span>Lysbilleder &#8250;</span></a></p>
 		</article>
 		<div class="press_right"><xsl:comment/></div>
 	</section>
@@ -91,6 +99,8 @@
 			<figure class="frame4"><xsl:comment/></figure>
 			<figure class="frame5"><xsl:comment/></figure>
 			<figure class="frame6"><xsl:comment/></figure>
+			<figure class="frame7"><xsl:comment/></figure>
+			<figure class="frame8"><xsl:comment/></figure>
 		</div>
 		<div class="holes"><xsl:comment/></div>
 		</div>
@@ -101,8 +111,10 @@
 	</div>
 
 	<section id="video">
+		<a name="movies"><xsl:comment/></a>
 		<article>
 			<h2>TV<span> · </span>reklame<span> · </span>film</h2>
+			<p><a href="{$path}film/"><span>Flere filmklip &#8250;</span></a></p>
 		</article>
 		<div class="teaser">
 			<iframe width="640" height="480" src="http://www.youtube.com/embed/9q-HBMSSbp4" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>
@@ -115,8 +127,12 @@
 
 
 	<section id="theater">
-		<h2>Teater</h2>
-		<p>Kunsten kan fortælle indviklede historier om menneskets væsen og vilkår i verden, den kan drømme stort og skandaløst, folde eksistensen ud i al sin storhed og gru.</p>
+		<a name="theater"><xsl:comment/></a>
+		<article>
+			<h2>Teater</h2>
+			<p>Kunsten kan fortælle indviklede historier om menneskets væsen og vilkår i verden, den kan drømme stort og skandaløst, folde eksistensen ud i al sin storhed og gru.</p>
+			<p class="link"><a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a></p>
+		</article>
 		<ul class="theaters">
 			<li class="theater1">Teamteatret</li>
 			<li class="theater2">Det Kongelige Teater</li>
@@ -129,10 +145,11 @@
 	</section>
 	
 	<section id="communication">
+		<a name="communication"><xsl:comment/></a>
 		<article>
-			<h2>Kommunktionstræning</h2>
+			<h2>Kommunikationstræning</h2>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<p class="link"><a href="{$path}kommunikation/"><span>Mere om kommunktionstræning</span></a></p>
+			<p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunktionstræning &#8250;</span></a></p>
 			<figure><xsl:comment/></figure>
 		</article>
 	</section>

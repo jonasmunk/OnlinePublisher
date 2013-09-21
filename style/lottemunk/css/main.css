@@ -25,7 +25,6 @@ header
 	background: #333;
 	background: url('../gfx/header.jpg') 50% 50%;
 	color: #351a38;
-	overflow: hidden;
 }
 
 header h1

@@ -37,6 +37,11 @@
 		padding: 20px 0;
 	}
 	
+	#video article p
+	{
+		margin: -10px 0 10px;
+	}
+	
 }
 
 body.small #video
@@ -66,6 +71,11 @@ body.small #video article h2
 	padding: 20px 0;
 }
 
+body.small #video article p
+{
+	margin: -10px 0 10px;
+}
+
 
 @media screen and (max-width: 1000px) {
 	html {
@@ -83,14 +93,20 @@ body.small #video article h2
 	html {
 		font-size: 65%;
 	}
+	
+	body.front header nav a
+	{
+		font-size: 12pt;
+	}
 }
 
 @media screen and (max-width: 700px) {
 	html {
 		font-size: 60%;
 	}
-	#video article h2
+	
+	body.front header nav a
 	{
-		
+		padding: 0 10px;
 	}
 }
