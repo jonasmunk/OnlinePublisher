@@ -209,7 +209,7 @@ class RenderingService {
 		$sql = "select page.id,page.path from path left join page on page.id=path.page_id where path.path=".Database::text($path);
 		if ($row = Database::selectFirst($sql)) {
 			if ($row['path']!='') {
-				Response::redirectMoved(ConfigurationService::getBaseUrl().$row['path']);
+				Response::redirectMoved(Strings::concatUrl(ConfigurationService::getBaseUrl(),$row['path']));
 			} else if ($row['id']>0) {
 				Response::redirectMoved(ConfigurationService::getBaseUrl().'?id='.$row['id']);
 			} else {
