@@ -167,7 +167,6 @@
 		<article>
 			<h2>Teater</h2>
 			<p>Kunsten kan fortælle indviklede historier om menneskets væsen og vilkår i verden, den kan drømme stort og skandaløst, folde eksistensen ud i al sin storhed og gru.</p>
-			<p class="link"><a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a></p>
 		</article>
 		<ul class="theaters">
 			<li class="theater1">Teamteatret</li>
@@ -178,6 +177,7 @@
 			<li class="theater6">Århus Teater</li>
 		</ul>
 		<div class="photo"><xsl:comment/></div>
+		<p class="link"><a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a></p>
 	</section>
 	
 	<section id="communication">

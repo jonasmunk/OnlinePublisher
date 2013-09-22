@@ -727,12 +727,16 @@ ul.icons a
 
 #theater p.link
 {
-	margin-top: 20px;
+	position: absolute;
+	bottom: 2%;
+	left: 0;
+	right: 0;
+	z-index: 1;
 }
 
 #theater p.link a
 {
-	border: 1px solid #555;
+	border: 1px solid #999;
 	background: #000;
 	color: #fff;
 }
@@ -748,7 +752,7 @@ ul.icons a
 	position: absolute;
 	width: 683px;
 	height: 394px;
-	bottom: 5%;
+	bottom: 7%;
 	left: 50%;
 	margin: -197px 0 0 -342px;
 	background: url('../gfx/theater.jpg');
@@ -803,7 +807,7 @@ li.theater1
 
 li.theater2
 {
-	top: 30%;
+	top: 40%;
 	left: 2%;
 }
 
@@ -827,7 +831,7 @@ li.theater3
 
 li.theater4
 {
-	bottom: 35%;
+	bottom: 5%;
 	left: 5%;
 }
 
