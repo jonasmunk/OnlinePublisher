@@ -188,7 +188,7 @@
 				<p>Vi levendegør de problemstillinger der skal sættes fokus på.</p>
 				<p>Vi skaber en fælles "her og nu oplevelse" som I kan diskutere ud fra, og som helt konkret tydeliggør udfordringen, eller hvad der går galt i kommunikationen. Ud fra det fælles afsæt gives ny inspiration til andre handlemuligheder.</p>
 				<p>Vi kommer gerne til et uforpligtende møde, hvor vi sammen kan diskutere indhold og form. Vi kan komme med konkrete ideer, så vi sammen kan skabe og finde frem til det set -up, som I har brug for.</p>
-				<p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunktionstræning &#8250;</span></a></p>
+				<p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunikationstræning &#8250;</span></a></p>
 			</div>
 			<figure><xsl:comment/></figure>
 		</article>
