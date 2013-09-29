@@ -10,9 +10,9 @@ header('Content-Type: text/html; charset=UTF-8');
 $design = InternalSession::getPageDesign();
 $language = InternalSession::getLanguage();
 
-$section = null;
+$editedSection = null;
 if (Request::exists('section')) {
-	$section = Request::getInt('section',null);
+	$editedSection = Request::getInt('section',null);
 }
 
 $pageId = InternalSession::getPageId();
@@ -49,14 +49,14 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 			controller.context = "'.ConfigurationService::getBaseUrl().'";
 			controller.pageId = '.$pageId.';
 			controller.changed = '.(PageService::isChanged($pageId) ? 'true' : 'false')."\n";
-		if ($section==null) {
+		if ($editedSection==null) {
 			echo "controller.setMainToolbar();\n";
-		} else if ($section>0) {
-			echo "controller.activeSection=".$section.";\n";
+		} else if ($editedSection>0) {
+			echo "controller.activeSection=".$editedSection.";\n";
 		}
 		echo '</script>
 	</head>
-	<body class="editor'.($section!=null ? ' editor_edit_section_mode' : '').'">
+	<body class="editor'.($editedSection!=null ? ' editor_edit_section_mode' : '').'">
 	<div class="editor_body">
 		';
 	
@@ -66,7 +66,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 	
 	echo '</div>';
 
-if ($section==null) {
+if ($editedSection==null) {
 	$gui = '
 		<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
 		<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
@@ -272,9 +272,7 @@ if ($section==null) {
 			</buttons>
 		</window>
 	';
-	$watch->log('GUI - build');
 	echo In2iGui::renderFragment($gui);
-	$watch->log('GUI - render');
 }
 echo '</body></html>';
 ?>
@@ -359,12 +357,12 @@ function displayColumns(&$row) {
 }
 
 function displaySections(&$column,&$row) {
-	global $language,$section;
+	global $language,$editedSection;
 	$lastIndex=0;
 		
 	foreach ($column['sections'] as $sectionRow) {
 		$style=buildSectionStyle($sectionRow);
-		if ($section==null) {
+		if ($editedSection==null) {
 			echo '<div class="editor_section_adder_container">'.
 					'<div class="editor_section_adder" data=\'{"columnId":'.$column['id'].',"sectionIndex":'.$sectionRow['index'].'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
 						'<div><span><em></em><strong></strong></span></div>'.
@@ -376,7 +374,7 @@ function displaySections(&$column,&$row) {
 			echo ' style="width: '.$sectionRow['width'].'"';
 		}
 		echo '>';
-		if ($sectionRow['id']==$section) {
+		if ($sectionRow['id']==$editedSection) {
 			partEditor($sectionRow);
 		}
 		else {
@@ -385,7 +383,7 @@ function displaySections(&$column,&$row) {
 		echo '</div>';
 		$lastIndex = $sectionRow['index'];
 	}
-	if ($section==null) {
+	if ($editedSection==null) {
 		echo '<div class="editor_section_adder_container">'.
 				'<div class="editor_section_adder" data=\'{"columnId":'.$column['id'].',"sectionIndex":'.($lastIndex+1).'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
 					'<div><span><em></em><strong></strong></span></div>'.
@@ -397,7 +395,7 @@ function displaySections(&$column,&$row) {
 		'</a>'.
 		'</div>';
 	} else {
-		echo '<div style="padding: 5px;"><a class="hui_button hui_button_light hui_button_small hui_button_small_light '.($section!=null ? 'hui_button_disabled' : '').'"><span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span></a></div>';
+		echo '<div style="padding: 5px;"><a class="hui_button hui_button_light hui_button_small hui_button_small_light '.($editedSection!=null ? 'hui_button_disabled' : '').'"><span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span></a></div>';
 	}
 }
 
