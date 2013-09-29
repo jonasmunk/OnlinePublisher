@@ -57,7 +57,7 @@ class Database {
 			if (!$con) {
 				return false;
 			}
-      mysql_set_charset('latin1',$con);
+            mysql_set_charset('latin1',$con);
 			mysql_select_db($config['database'],$con);
 			if (mysql_errno($con)>0) {
 				return false;
