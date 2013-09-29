@@ -31,10 +31,12 @@
 				document.body.appendChild(list.element)
 			},
 			1000,
+            
 			function() {
 				assert.true(state.selectionWasReset,'The $selectionReset event was fired');
 			},
-			function() {
+			
+            function() {
 				list.clearListeners();
 				list.listen({
 					$select : function() {
@@ -45,7 +47,14 @@
 				assert.defined(tbody);
 				hui.test.click(hui.get.firstByTag(tbody,'td'));
 				assert.true(state.itemWasSelected,'$select should have fired at this point')
-			}
+			},
+            
+            function() {
+                list.hide();
+                assert.false(hui.dom.isVisible(list.element),'The list should be hidden');
+                list.show();
+                assert.true(hui.dom.isVisible(list.element),'The list should be visible');
+            }
 		]);
 	</script>
 </body>

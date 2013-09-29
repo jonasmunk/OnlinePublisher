@@ -273,8 +273,8 @@ hui.ui.Editor.prototype = {
 	showPartEditControls : function() {
 		if (!this.partEditControls) {
 			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions'});
-			this.partEditControls.addIcon('save','common/save');
-			this.partEditControls.addIcon('cancel','common/close');
+			this.partEditControls.addIcon('save','common/ok');
+			this.partEditControls.addIcon('cancel','common/stop');
 			this.partEditControls.listen(this);
 		}
 		this.partEditControls.showAtElement(this.activePart.element,{'horizontal':'right','vertical':'topOutside'});
@@ -776,7 +776,7 @@ hui.ui.Editor.Header = function(options) {
 }
 
 hui.ui.Editor.Header.prototype = {
-	activate : function() {
+	activate : function(callback) {
 		this.value = this.header.innerHTML;
 		this.field = hui.build('textarea',{className:'hui_editor_header'});
 		this.field.value = this.value;
@@ -790,27 +790,27 @@ hui.ui.Editor.Header.prototype = {
 				this.save();
 			}
 		}.bind(this));
+        callback();
 	},
-	save : function() {
+	save : function(options) {
 		var value = this.field.value;
 		this.header.innerHTML = value;
-		this.deactivate();
 		if (value!=this.value) {
 			this.value = value;
-			hui.ui.Editor.get().partChanged(this);
 		}
+        options.callback();
 	},
 	cancel : function() {
-		this.deactivate();
+		
 	},
-	deactivate : function() {
+	deactivate : function(callback) {
 		this.header.style.visibility='';
 		this.element.removeChild(this.field);
-		hui.ui.Editor.get().partDidDeactivate(this);
+        callback();
 	},
 	updateFieldStyle : function() {
 		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
-		hui.style.copy(this.header,this.field,['fontSize','lineHeight','marginTop','fontWeight','fontFamily','textAlign','color','fontStyle']);
+		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	},
 	getValue : function() {
 		return this.value;
@@ -829,7 +829,7 @@ hui.ui.Editor.Html = function(options) {
 }
 
 hui.ui.Editor.Html.prototype = {
-	activate : function() {
+	activate : function(callback) {
 		this.value = this.element.innerHTML;
 		this.element.innerHTML='';
 		var style = this.buildStyle();
@@ -838,6 +838,7 @@ hui.ui.Editor.Html.prototype = {
 		this.editor.listen(this);
 		this.editor.setValue(this.value);
 		this.editor.focus();
+		callback();
 	},
 	buildStyle : function() {
 		return {
@@ -849,24 +850,22 @@ hui.ui.Editor.Html.prototype = {
 		}
 	},
 	cancel : function() {
-		this.deactivate();
 		this.element.innerHTML = this.value;
 	},
-	save : function() {
-		this.deactivate();
+	save : function(options) {
 		var value = this.editor.getValue();
 		if (value!=this.value) {
 			this.value = value;
-			hui.ui.Editor.get().partChanged(this);
 		}
 		this.element.innerHTML = this.value;
+        options.callback();
 	},
-	deactivate : function() {
+	deactivate : function(callback) {
 		if (this.editor) {
 			this.editor.destroy();
 			this.element.innerHTML = this.value;
 		}
-		hui.ui.Editor.get().partDidDeactivate(this);
+		callback();
 	},
 	richTextDidChange : function() {
 		//this.deactivate();
