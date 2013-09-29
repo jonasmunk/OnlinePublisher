@@ -49,7 +49,7 @@ class SpecialPage extends Entity {
 	}
 	
 
-	function search() {
+	static function search() {
 		$list = array();
 		
 		$sql = "select * from specialpage order by `type`,language,id";
