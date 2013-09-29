@@ -278,6 +278,9 @@ op.part.ImageGallery.prototype = {
 op.part.ImageGallery.changing = {
 	init : function(element) {
 		var nodes = element.getElementsByTagName('a');
+		if (nodes.length==0) {
+			return;
+		}
 		var timer;
 		var index = -1;
 		var zIndex = 1;

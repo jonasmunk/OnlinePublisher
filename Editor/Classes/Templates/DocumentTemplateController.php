@@ -212,5 +212,8 @@ class DocumentTemplateController extends TemplateController
 		}
 		Database::free($result);
 	}
+	
+	
+	
 
 }

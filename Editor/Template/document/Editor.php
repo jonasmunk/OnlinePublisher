@@ -21,9 +21,7 @@ $stamp = SystemInfo::getDate();
 $cacheUrl = 'version'.$stamp.'/';
 $cachePrefix = '?version='.$stamp;
 if (ConfigurationService::isUrlRewrite()) {
-    
-} else {
-    
+    $cachePrefix = '';
 }
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -274,7 +272,9 @@ if ($section==null) {
 			</buttons>
 		</window>
 	';
+	$watch->log('GUI - build');
 	echo In2iGui::renderFragment($gui);
+	$watch->log('GUI - render');
 }
 echo '</body></html>';
 ?>
@@ -303,9 +303,10 @@ echo '</body></html>';
 
 <?php
 function displayRows($pageId) {
-	$sql = "select * from document_row where page_id=".Database::int($pageId)." order by `index`";
-	$result = Database::select($sql);
-	while ($row = Database::next($result)) {
+	
+	$structure = DocumentTemplateEditor::getStructure($pageId);
+	
+	foreach ($structure as $row) {
 		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
 		if ($row['top']) {
 			echo 'margin-top: '.$row['top'].';';
@@ -314,22 +315,17 @@ function displayRows($pageId) {
 			echo 'margin-bottom: '.$row['bottom'].';';
 		}
 		echo '"><tr>';
-		displayColumns($row['id'],$row['index']);
+		displayColumns($row);
 		echo '</tr></table>';
 		echo "\n";
 	}
-	Database::free($result);
 }
 
-function displayColumns($rowId,$rowIndex) {
-	$sql = "select * from document_column where row_id=".Database::int($rowId)." order by `index`";
-	$result = Database::select($sql);
-	$found = false;
-	while ($row = Database::next($result)) {
-		
-		$found = true;
+function displayColumns(&$row) {
+	
+	foreach ($row['columns'] as $column) {
 		$style = '';
-		$columnWidth = $row['width'];
+		$columnWidth = $column['width'];
 		if ($columnWidth!='') {
 			if ($columnWidth=='min') {
 				$style.= 'width: 1%;';
@@ -341,71 +337,62 @@ function displayColumns($rowId,$rowIndex) {
 				$style.= 'width: '.$columnWidth.';';
 			}
 		}
-		if ($row['left']) {
-			$style.= 'padding-left: '.$row['left'].';';
+		if ($column['left']) {
+			$style.= 'padding-left: '.$column['left'].';';
 		}
-		if ($row['right']) {
-			$style.= 'padding-right: '.$row['right'].';';
+		if ($column['right']) {
+			$style.= 'padding-right: '.$column['right'].';';
 		}
-		if ($row['top']) {
-			$style.= 'padding-top: '.$row['top'].';';
+		if ($column['top']) {
+			$style.= 'padding-top: '.$column['top'].';';
 		}
-		if ($row['bottom']) {
-			$style.= 'padding-bottom: '.$row['bottom'].';';
+		if ($column['bottom']) {
+			$style.= 'padding-bottom: '.$column['bottom'].';';
 		}
 		echo "\n";
-		echo '<td class="editor_column" data-id="'.$row['id'].'" id="column'.$row['id'].'" style="'.$style.'"';
+		echo '<td class="editor_column" data-id="'.$column['id'].'" id="column'.$column['id'].'" style="'.$style.'"';
 		echo ' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"';
-		echo ' oncontextmenu="return controller.showColumnMenu(this,event,'.$row['id'].','.$row['index'].','.$rowId.','.$rowIndex.');">';
-		displaySections($row['id'],$row['index'],$rowId,$rowIndex);
+		echo ' oncontextmenu="return controller.showColumnMenu(this,event,'.$column['id'].','.$row['index'].','.$row['id'].','.$row['index'].');">';
+		displaySections($column,$row);
 		echo "</td>\n";
-	}
-	Database::free($result);
-	if (!$found) {
-		Log::debug('No columns found in row='.$rowId);
 	}
 }
 
-function displaySections($columnId,$columnIndex,$rowId,$rowIndex) {
+function displaySections(&$column,&$row) {
 	global $language,$section;
 	$lastIndex=0;
-	
-	$sql="select document_section.*,part.type as part_type from document_section left join part on document_section.part_id=part.id where column_id=".$columnId." order by `index`";
-	$result = Database::select($sql);
-	while ($row = Database::next($result)) {
-		$style=buildSectionStyle($row);
+		
+	foreach ($column['sections'] as $sectionRow) {
+		$style=buildSectionStyle($sectionRow);
 		if ($section==null) {
 			echo '<div class="editor_section_adder_container">'.
-					'<div class="editor_section_adder" data=\'{"columnId":'.$columnId.',"sectionIndex":'.$row['index'].'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
+					'<div class="editor_section_adder" data=\'{"columnId":'.$column['id'].',"sectionIndex":'.$sectionRow['index'].'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
 						'<div><span><em></em><strong></strong></span></div>'.
 					'</div>'.
 				'</div>';
 		}
-		echo '<div id="section'.$row['id'].'"';
-		if ($row['width']) {
-			echo ' style="width: '.$row['width'].'"';
+		echo '<div id="section'.$sectionRow['id'].'"';
+		if ($sectionRow['width']) {
+			echo ' style="width: '.$sectionRow['width'].'"';
 		}
 		echo '>';
-		if ($row['id']==$section) {
-			sectionEditor($row['id'],$row['type'],$style,$row['part_id'],$row['part_type'],$row);
+		if ($sectionRow['id']==$section) {
+			partEditor($sectionRow);
 		}
 		else {
-			displaySection($row['id'],$row['type'],$row['index'],$style,$row['part_id'],$row['part_type'],$columnId,$columnIndex,$rowId,$rowIndex);
+			displayPart($sectionRow,$column,$row);
 		}
 		echo '</div>';
-		$lastIndex = $row['index'];
+		$lastIndex = $sectionRow['index'];
 	}
-	Database::free($result);
 	if ($section==null) {
 		echo '<div class="editor_section_adder_container">'.
-				'<div class="editor_section_adder" data=\'{"columnId":'.$columnId.',"sectionIndex":'.($lastIndex+1).'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
+				'<div class="editor_section_adder" data=\'{"columnId":'.$column['id'].',"sectionIndex":'.($lastIndex+1).'}\' onclick="controller.showAdderMenu({element:this,event:event}); return false">'.
 					'<div><span><em></em><strong></strong></span></div>'.
 				'</div>'.
 			'</div>';
-	}
-	if ($section==null) {
 		echo '<div style="padding: 5px;">'.
-		'<a onclick="controller.showNewPartMenu({element:this,event:event,columnId:'.$columnId.',sectionIndex:'.($lastIndex+1).'}); return false" href="#" class="hui_button hui_button_light hui_button_small hui_button_small_light">'.
+		'<a onclick="controller.showNewPartMenu({element:this,event:event,columnId:'.$column['id'].',sectionIndex:'.($lastIndex+1).'}); return false" href="#" class="hui_button hui_button_light hui_button_small hui_button_small_light">'.
 		'<span><span>'.GuiUtils::getTranslated(array('Add section','da'=>'Tilføj afsnit')).'</span></span>'.
 		'</a>'.
 		'</div>';
@@ -423,29 +410,23 @@ function buildSectionStyle(&$row) {
 	return $style;
 }
 
-function displaySection($sectionId,$type,$sectionIndex,$sectionStyle,$partId,$partType,$columnId,$columnIndex,$rowId,$rowIndex) {
-	if ($type=='part') {
-		displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex);
-	}
-}
-
-function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$columnId,$columnIndex,$rowId,$rowIndex) {
-	global $partContext,$section;
-	if (!$partType) {
+function displayPart(&$sectionRow,&$column,&$row) {
+	global $partContext;
+	if (!$sectionRow['partType']) {
 		echo '<div class="editor_error">Error: The part could not be loaded (no type)</div>';
 		return;
 	}
 	
-	$ctrl = PartService::getController($partType);
+	$ctrl = PartService::getController($sectionRow['partType']);
 	if ($ctrl) {
-		$part = PartService::load($partType,$partId);
+		$part = PartService::load($sectionRow['partType'],$sectionRow['partId']);
 		if ($part) {
-			echo '<div id="part'.$partId.'" style="'.$sectionStyle.'"';
-				echo ' class="editor_section part_section_'.$partType.' '.$ctrl->getSectionClass($part).'"';
-				echo ' oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionId.','.$sectionIndex.','.$columnId.','.$columnIndex.','.$rowId.','.$rowIndex.');"';
-				echo ' onmouseover="controller.sectionOver(this,'.$sectionId.','.$columnId.','.$sectionIndex.')"';
+			echo '<div id="part'.$part->getId().'" style="'.buildSectionStyle($sectionRow).'"';
+				echo ' class="editor_section part_section_'.$part->getType().' '.$ctrl->getSectionClass($part).'"';
+				echo ' oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionRow['id'].','.$sectionRow['index'].','.$column['id'].','.$column['index'].','.$row['id'].','.$row['index'].');"';
+				echo ' onmouseover="controller.sectionOver(this,'.$sectionRow['id'].','.$column['id'].','.$sectionRow['index'].')"';
 				echo ' onmouseout="controller.sectionOut(this,event)"';
-				echo ' data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionId.'})">';
+				echo ' data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionRow['id'].'})">';
 			echo $ctrl->display($part,$partContext);
 			echo '</div>';			
 		} else {
@@ -454,34 +435,28 @@ function displayPart($partId,$partType,$sectionIndex,$sectionStyle,$sectionId,$c
 	}
 }
 
-function sectionEditor($sectionId,$type,$sectionStyle,$partId,$partType,$row) {
-	if ($type=='part') {
-		partEditor($partId,$partType,$sectionId,$sectionStyle,$row);
-	}
-}
-
-function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
+function partEditor($section) {
 	global $partContext;
-	$ctrl = PartService::getController($partType);
+	$ctrl = PartService::getController($section['partType']);
 	if (!$ctrl) {
 		return;
 	}
-	$part = PartService::load($partType,$partId);
+	$part = PartService::load($section['partType'],$section['partId']);
 	if (!$part) {
 		return;
 	}
 	echo
-	'<div style="'.$sectionStyle.'" id="selectedSection" class="part_section_'.$partType.' '.$ctrl->getSectionClass($part).' editor_section_selected">'.
+	'<div style="'.buildSectionStyle($section).'" id="selectedSection" class="part_section_'.$section['partType'].' '.$ctrl->getSectionClass($part).' editor_section_selected">'.
 	'<form name="PartForm" action="data/UpdatePart.php" method="post" charset="utf-8">'.
-	'<input type="hidden" name="id" value="'.$partId.'"/>'.
-	'<input type="hidden" name="part_type" value="'.$partType.'"/>'.
-	'<input type="hidden" name="section" value="'.$sectionId.'"/>'.
-	'<input type="hidden" name="left" value="'.Strings::escapeXML($row['left']).'"/>'.
-	'<input type="hidden" name="right" value="'.Strings::escapeXML($row['right']).'"/>'.
-	'<input type="hidden" name="bottom" value="'.Strings::escapeXML($row['bottom']).'"/>'.
-	'<input type="hidden" name="top" value="'.Strings::escapeXML($row['top']).'"/>'.
-	'<input type="hidden" name="width" value="'.Strings::escapeXML($row['width']).'"/>'.
-	'<input type="hidden" name="float" value="'.Strings::escapeXML($row['float']).'"/>';
+	'<input type="hidden" name="id" value="'.$part->getId().'"/>'.
+	'<input type="hidden" name="part_type" value="'.$part->getType().'"/>'.
+	'<input type="hidden" name="section" value="'.$section['id'].'"/>'.
+	'<input type="hidden" name="left" value="'.Strings::escapeXML($section['left']).'"/>'.
+	'<input type="hidden" name="right" value="'.Strings::escapeXML($section['right']).'"/>'.
+	'<input type="hidden" name="bottom" value="'.Strings::escapeXML($section['bottom']).'"/>'.
+	'<input type="hidden" name="top" value="'.Strings::escapeXML($section['top']).'"/>'.
+	'<input type="hidden" name="width" value="'.Strings::escapeXML($section['width']).'"/>'.
+	'<input type="hidden" name="float" value="'.Strings::escapeXML($section['float']).'"/>';
 	echo $ctrl->editor($part,$partContext);
 	echo '</form></div>';
 	if (method_exists($ctrl,'editorGui')) {
@@ -489,7 +464,7 @@ function partEditor($partId,$partType,$sectionId,$sectionStyle,$row) {
 	}
 	echo '<script type="text/javascript">
 	try {
-		parent.frames[0].location="PartToolbar.php?sectionId='.$sectionId.'&partId='.$partId.'&partType='.$partType.'&'.time().'"
+		parent.frames[0].location="PartToolbar.php?sectionId='.$section['id'].'&partId='.$part->getId().'&partType='.$part->getType().'&'.time().'"
 	} catch(e) {
 		hui.log("Unable to set toolbar");hui.log(e);
 	};'.

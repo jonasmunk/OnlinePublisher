@@ -491,4 +491,94 @@ class DocumentTemplateEditor
 			Log::debug('Row not found...');
 		}
 	}
+	
+	static function getStructure($id) {
+		$sql = "select 
+			document_row.id as row_id, 
+			document_row.index as row_index, 
+			document_row.top as row_top,
+			document_row.bottom as row_bottom,
+
+			document_column.id as column_id, 
+			document_column.index as column_index, 
+			document_column.top as column_top,
+			document_column.bottom as column_bottom, 
+			document_column.left as column_left,
+			document_column.right as column_right,
+			document_column.width as column_width,
+
+			document_section.id as section_id,
+			document_section.index as section_index,
+			document_section.type as section_type,
+			document_section.top as section_top, 
+			document_section.bottom as section_bottom, 
+			document_section.left as section_left,
+			document_section.right as section_right,
+			document_section.width as section_width,
+			document_section.float as section_float,
+			document_section.part_id as part_id,
+			part.type as part_type
+
+			from document_row 
+
+			left join document_column on document_row.id = row_id
+			left join document_section on document_column.id = column_id 
+			left join part on document_section.part_id = part.id
+
+			where document_row.page_id=".Database::int($id)." 
+
+			order by document_row.index, document_column.index, document_section.index";
+		
+		$structure = array();	
+		
+		$result = Database::select($sql);
+		while ($line = Database::next($result)) {
+			$row = null;
+			$column = null;
+			$rowIndex = intval($line['row_index']);
+			$columnIndex = intval($line['column_index']);
+			$sectionIndex = intval($line['section_index']);
+			
+			if (!isset($structure[$rowIndex])) {
+				$structure[$rowIndex] = array(
+					'id' => intval($line['row_id']),
+					'index' => $rowIndex,
+					'top' => $line['row_top'],
+					'bottom' => $line['row_bottom'],
+					'columns' => array()
+				);
+			}			
+			
+			if (!isset($structure[$rowIndex]['columns'][$columnIndex])) {
+				$structure[$rowIndex]['columns'][$columnIndex] = array(
+					'id' => $line['column_id'],
+					'index' => $columnIndex,
+					'width' => $line['column_width'],
+					'top' => $line['column_top'],
+					'bottom' => $line['column_bottom'],
+					'left' => $line['column_left'],
+					'right' => $line['column_right'],
+					'sections' => array()
+				);
+			}
+			
+			if (!isset($structure[$rowIndex]['columns'][$columnIndex]['sections'][$sectionIndex])) {
+				$structure[$rowIndex]['columns'][$columnIndex]['sections'][$sectionIndex] = array(
+					'id' => $line['section_id'],
+					'index' => $sectionIndex,
+					'width' => $line['section_width'],
+					'float' => $line['section_float'],
+					'top' => $line['section_top'],
+					'bottom' => $line['section_bottom'],
+					'left' => $line['section_left'],
+					'right' => $line['section_right'],
+					'partType' => $line['part_type'],
+					'partId' => $line['part_id']
+				);
+			}
+		}
+		Database::free($result);
+		
+		return $structure;
+	}
 }
