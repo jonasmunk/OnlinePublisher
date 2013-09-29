@@ -131,8 +131,8 @@
 								<h2>Om Humanise</h2>
 								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
 									den mest enkle og essentielle løsning. Vi tror på at maskinen skal
-									arbejde for mennesket. Vi mener at viden bør være frit
-									og tilgængeligt for alle. Vi håber du er enig :-)
+									arbejde for mennesket. Vi mener at viden bør være fri
+									og tilgængelig for alle. Vi håber du er enig :-)
 								</p>
 								<p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
 							</xsl:otherwise>
