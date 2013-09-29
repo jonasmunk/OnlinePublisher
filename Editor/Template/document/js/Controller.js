@@ -55,7 +55,7 @@ var controller = {
 		if (this.activeSection) {
 			if (!this.partEditControls) {
 				this.partEditControls = hui.ui.Overlay.create({name:'sectionEditActions'});
-				this.partEditControls.addIcon('save','common/save');
+				this.partEditControls.addIcon('save','common/ok');
 				this.partEditControls.addIcon('cancel','common/stop');
 			}
 			this.partEditControls.showAtElement(hui.get.firstByClass(document.body,'editor_section_selected'),{'horizontal':'left','vertical':'topOutside'});

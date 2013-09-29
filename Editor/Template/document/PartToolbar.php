@@ -32,7 +32,7 @@ $gui='
 				$gui.='<tab title="'.$title.'" background="light">
 				<toolbar fixed-height="true">
 					<icon icon="common/stop" title="{Cancel; da:Annuller}" click="partToolbar.cancel()"/>
-					<icon icon="common/save" title="{Save; da:Gem}" click="partToolbar.save()"/>
+					<icon icon="common/ok" title="{Save; da:Gem}" click="partToolbar.save()"/>
 					<icon icon="common/delete" title="{Delete; da:Slet}" click="partToolbar.deletePart()">
 						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 					</icon>
@@ -45,7 +45,7 @@ $gui='
 		<tab title="{Positioning; da:Afstande}" background="light">
 			<toolbar fixed-height="true">
 				<icon icon="common/stop" title="{Cancel; da:Annuller}" click="partToolbar.cancel()"/>
-				<icon icon="common/save" title="{Save; da:Gem}" click="partToolbar.save()"/>
+				<icon icon="common/ok" title="{Save; da:Gem}" click="partToolbar.save()"/>
 				<icon icon="common/delete" title="{Delete; da:Slet}" click="partToolbar.deletePart()">
 						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
 				</icon>
