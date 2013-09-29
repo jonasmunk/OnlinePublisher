@@ -18,6 +18,13 @@ if (Request::exists('section')) {
 $pageId = InternalSession::getPageId();
 
 $stamp = SystemInfo::getDate();
+$cacheUrl = 'version'.$stamp.'/';
+$cachePrefix = '?version='.$stamp;
+if (ConfigurationService::isUrlRewrite()) {
+    
+} else {
+    
+}
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 	<html>
@@ -26,17 +33,17 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		';
 		if (file_exists($basePath.'style/'.$design.'/css/fonts.css')) {
-			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$design.'/css/fonts.css?version='.$stamp.'" />';
+			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$design.'/css/fonts.css'.$cachePrefix.'" />';
 		}
-		echo '<link rel="stylesheet" type="text/css" href="../../../hui/bin/minimized.css?version='.$stamp.'" />
-		<link rel="stylesheet" type="text/css" href="../../../style/basic/css/parts.php?version='.$stamp.'" />
-		<link rel="stylesheet" type="text/css" href="../../../style/basic/css/document.css?version='.$stamp.'" />
-		<link rel="stylesheet" type="text/css" href="../../../style/'.$design.'/css/overwrite.css?version='.$stamp.'" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css?version='.$stamp.'" />
-		<!--[if IE 8]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie8.css?version='.$stamp.'"> </link><![endif]-->
-		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie6.css?version='.$stamp.'"> </link><![endif]-->
-		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/css/msie7.css?version='.$stamp.'"> </link><![endif]-->
-		<script type="text/javascript" src="js/combined.php?version='.$stamp.(Request::getBoolean('dev') ? '&dev=true' : '').'" charset="UTF-8"></script>
+		echo '<link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'bin/minimized.css'.$cachePrefix.'" />
+		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/parts.php'.$cachePrefix.'" />
+		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/document.css'.$cachePrefix.'" />
+		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.$design.'/css/overwrite.css'.$cachePrefix.'" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css'.$cachePrefix.'" />
+		<!--[if IE 8]><link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'css/msie8.css'.$cachePrefix.'"></link><![endif]-->
+		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'css/msie6.css'.$cachePrefix.'"></link><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'css/msie7.css'.$cachePrefix.'"></link><![endif]-->
+		<script type="text/javascript" src="'.$cacheUrl.'js/combined.php'.$cachePrefix.'" charset="UTF-8"></script>
 		<script type="text/javascript">
 			op.context = "../../../";
 			hui.ui.context = "../../../";

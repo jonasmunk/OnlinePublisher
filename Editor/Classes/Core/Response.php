@@ -11,6 +11,13 @@ class Response {
 		header('Content-Type: text/plain; charset=utf-8');
 		echo Strings::toJSON($obj);
 	}
+    
+    static function setExpiresInHours($hours=0) {
+        $offset = 60 * 60 * $hours;
+
+        header("Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT");
+        header("Cache-Control: max-age=$offset, must-revalidate");
+    }
 		
 	static function redirect($url) {
 		session_write_close();

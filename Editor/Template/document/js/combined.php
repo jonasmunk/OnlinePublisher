@@ -6,6 +6,7 @@
 require_once '../../../Include/Private.php';
 
 header('Content-type: text/javascript');
+Response::setExpiresInHours(16);
 
 if (Request::getBoolean('dev')) {
 	require_once('../../../../hui/bin/combined.js');
