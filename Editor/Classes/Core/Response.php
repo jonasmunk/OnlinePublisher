@@ -14,9 +14,12 @@ class Response {
     
     static function setExpiresInHours($hours=0) {
         $offset = 60 * 60 * $hours;
-
-        header("Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT");
-        header("Cache-Control: max-age=$offset, must-revalidate");
+		
+		$modified = SystemInfo::getDate();
+	    header('Last-Modified: '.gmdate('D, d M Y H:i:s', $modified).' GMT', true, 200);
+       	header("Expires: " . gmdate("D, d M Y H:i:s", time() + $offset) . " GMT");
+       	header("Cache-Control: max-age=$offset, must-revalidate");
+        header("Pragma: hack");
     }
 		
 	static function redirect($url) {
