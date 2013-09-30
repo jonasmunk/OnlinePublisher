@@ -19447,6 +19447,7 @@ hui.ui.Editor.prototype = {
 			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions'});
 			this.partEditControls.addIcon('save','common/ok');
 			this.partEditControls.addIcon('cancel','common/stop');
+			//this.partEditControls.addIcon('settings','common/settings');
 			this.partEditControls.listen(this);
 		}
 		this.partEditControls.showAtElement(this.activePart.element,{'horizontal':'right','vertical':'topOutside'});
@@ -19532,6 +19533,7 @@ hui.ui.Editor.prototype = {
 		part.cancel();
 		this._deactivatePart(this.activePart);
 		this.activePart = null;
+		this.fire('cancelPart',part);
 	},
 	savePart : function(part) {
 		this.busy = true;
@@ -19542,7 +19544,8 @@ hui.ui.Editor.prototype = {
 				this.activePart = null;
 				this.busy = false;
 				this._deactivatePart(part);
-				this.partChanged(part); // hello
+				this.partChanged(part);
+				this.fire('savePart',part);
 			}.bind(this)
 		});
 	},
@@ -19557,6 +19560,7 @@ hui.ui.Editor.prototype = {
 	_deactivatePart : function(part) {
 		part.deactivate(function() {
 			this.partDidDeactivate(part);
+			this.fire('deactivatePart',part);
 		}.bind(this))
 	},
 	partDidDeactivate : function(part) {

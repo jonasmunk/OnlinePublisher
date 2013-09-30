@@ -12,6 +12,7 @@ $classes = array (
   'GuiUtils' => 'Utilities/GuiUtils.php',
   'MarkupUtils' => 'Utilities/MarkupUtils.php',
   'SelectBuilder' => 'Utilities/SelectBuilder.php',
+  'StopWatch' => 'Utilities/StopWatch.php',
   'StringBuilder' => 'Utilities/StringBuilder.php',
   'Strings' => 'Utilities/Strings.php',
   'TextDecorator' => 'Utilities/TextDecorator.php',
