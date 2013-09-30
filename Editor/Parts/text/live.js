@@ -5,19 +5,26 @@ op.Editor.Text = function(options) {
 	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.header = hui.get.firstByTag(this.element,'*');
+	this.section = {};
 	this.field = null;
 }
 
 op.Editor.Text.prototype = {
+	
+	type : 'text',
+	
 	activate : function(callback) {
 		this._load(callback);
 	},
 	_load : function(callback) {
-		hui.ui.request({url:'parts/load.php',parameters:{type:'text',id:this.id},onJSON:function(part) {
-			this.part = part;
-			this._edit();
-			callback();
-		}.bind(this)});
+		op.DocumentEditor.loadPart({
+			part : this,
+			$success : function(part) {
+				this.part = part;
+				this._edit();
+			}.bind(this),
+			callback : callback
+		})
 	},
 	_edit : function() {
 		this.field = hui.build('textarea',{style:'resize: none; overflow: hidden; background: none; border: none; padding: 0; display: block; outline: none;'});
@@ -33,15 +40,15 @@ op.Editor.Text.prototype = {
 		var value = this.field.value;
 		if (value!=this.value) {
 			this.value = value;
-			hui.ui.request({
-				url : 'parts/update.php',
-				message : {start:'Gemmer afsnit'},
-				parameters : {id:this.id,pageId:op.page.id,text:this.value,type:'text'},
-				$text : function(html) {
+			op.DocumentEditor.savePart({
+				part : this,
+				parameters : {text : this.value},
+				$success : function(html) {
 					this.element.innerHTML = html;
-					this.header = hui.get.firstByTag(this.element,'*');
-					options.callback();
-				}.bind(this)
+					this.field = null;
+					this.header = hui.dom.firstChild(this.element);
+				}.bind(this),
+				callback : options.callback
 			});
 		} else {
 			options.callback();

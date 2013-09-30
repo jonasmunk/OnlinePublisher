@@ -1,9 +1,9 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Services.Preview
+ * @subpackage Templates.Document
  */
-require_once '../../../../Include/Private.php';
+require_once '../../../Include/Private.php';
 
 $id = Request::getInt('id');
 $type = Request::getString('type');

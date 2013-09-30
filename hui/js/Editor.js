@@ -275,6 +275,7 @@ hui.ui.Editor.prototype = {
 			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions'});
 			this.partEditControls.addIcon('save','common/ok');
 			this.partEditControls.addIcon('cancel','common/stop');
+			//this.partEditControls.addIcon('settings','common/settings');
 			this.partEditControls.listen(this);
 		}
 		this.partEditControls.showAtElement(this.activePart.element,{'horizontal':'right','vertical':'topOutside'});
@@ -354,60 +355,25 @@ hui.ui.Editor.prototype = {
 		if (this.hoveredColumn) {
 			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
 		}
-		this._showPartEditor();
-	},
-	_showPartEditor : function() {
-		 // TODO: Disabled!
-		/*if (!this.partEditor) {
-			var w = this.partEditor = hui.ui.Window.create({padding:5,title:'Afstande',close:false,variant:'dark',width: 200});
-			var f = this.partEditorForm = hui.ui.Formula.create();
-			f.buildGroup({above:false},[
-				{type:'TextField',options:{label:'Top',key:'top'}},
-				{type:'TextField',options:{label:'Bottom',key:'bottom'}},
-				{type:'TextField',options:{label:'Left',key:'left'}},
-				{type:'TextField',options:{label:'Right',key:'right'}}
-			]);
-			w.add(f);
-			f.listen({valuesChanged:this.updatePartProperties.bind(this)});
-		}
-		var e = this.activePart.element;
-		this.partEditorForm.setValues({
-			top: e.getStyle('marginTop'),
-			bottom: e.getStyle('marginBottom'),
-			left: e.getStyle('marginLeft'),
-			right: e.getStyle('marginRight')
-		});
-		this.partEditor.show();*/
-	},
-	updatePartProperties : function(values) {
-		hui.style.set(this.activePart.element,{
-			marginTop:values.top,
-			marginBottom:values.bottom,
-			marginLeft:values.left,
-			marginRight:values.right
-		});
-		this.activePart.properties = values;
-	},
-	hidePartEditor : function() {
-		if (this.partEditor) this.partEditor.hide();
+		this.fire('editPart',part);
 	},
 	cancelPart : function(part) {
 		part.cancel();
-		this.hidePartEditor();
 		this._deactivatePart(this.activePart);
 		this.activePart = null;
+		this.fire('cancelPart',part);
 	},
 	savePart : function(part) {
 		this.busy = true;
 		hui.ui.msg({text:{en:'Saving...',da:'Gemmer...'},delay:300,busy:true});
-		this.hidePartEditor();
 		part.save({
 			callback : function() {
 				hui.ui.hideMessage();
 				this.activePart = null;
 				this.busy = false;
 				this._deactivatePart(part);
-				this.partChanged(part); // hello
+				this.partChanged(part);
+				this.fire('savePart',part);
 			}.bind(this)
 		});
 	},
@@ -422,6 +388,7 @@ hui.ui.Editor.prototype = {
 	_deactivatePart : function(part) {
 		part.deactivate(function() {
 			this.partDidDeactivate(part);
+			this.fire('deactivatePart',part);
 		}.bind(this))
 	},
 	partDidDeactivate : function(part) {

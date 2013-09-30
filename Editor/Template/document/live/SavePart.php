@@ -1,13 +1,24 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Services.Preview
+ * @subpackage Templates.Document
  */
-require_once '../../../../Include/Private.php';
-//usleep(2000000);
+require_once '../../../Include/Private.php';
+
 $id = Request::getInt('id');
 $pageId = Request::getInt('pageId');
 $type = Request::getString('type');
+
+$section = Request::getObject('section');
+
+
+$sql="update document_section set".
+" `left`=".Database::text($section->left).
+",`right`=".Database::text($section->right).
+",`top`=".Database::text($section->top).
+",`bottom`=".Database::text($section->bottom).
+" where id=".Database::int($section->id);
+Database::update($sql);
 
 if ($ctrl = PartService::getController($type)) {
 	$part = $ctrl->getFromRequest($id);

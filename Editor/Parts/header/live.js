@@ -5,10 +5,13 @@ op.Editor.Header = function(options) {
 	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.header = hui.get.firstByTag(this.element,'*');
+	this.section = {};
 	this.field = null;
 }
 
 op.Editor.Header.prototype = {
+	type : 'header',
+	
 	activate : function(callback) {
 		this._load(callback);
 	},
@@ -17,16 +20,16 @@ op.Editor.Header.prototype = {
 		if (value!=this.value) {
 			this.value = value;
 			this.header.innerHTML = value;
-			hui.ui.request({
-				url : 'parts/update.php',
-				parameters : {id:this.id,pageId:op.page.id,text:this.value,type:'header'},
-				$text : function(html) {
+			op.DocumentEditor.savePart({
+				part : this,
+				parameters : {text : this.value},
+				$success : function(html) {
 					this.element.innerHTML = html;
 					this.field = null;
 					this.header = hui.dom.firstChild(this.element);
-					options.callback();
-				}.bind(this)
-			});
+				}.bind(this),
+				callback : options.callback
+			})
 		} else {
 			options.callback();
 		}
@@ -45,11 +48,14 @@ op.Editor.Header.prototype = {
 		return this.value;
 	},
 	_load : function(callback) {
-		hui.ui.request({url:'parts/load.php',parameters:{type:'header',id:this.id},onJSON:function(part) {
-			this.part = part;
-			this._edit();
-			callback();
-		}.bind(this)});
+		op.DocumentEditor.loadPart({
+			part : this,
+			$success : function(part) {
+				this.part = part;
+				this._edit();
+			}.bind(this),
+			callback : callback
+		})
 	},
 	_edit : function() {
 		this.field = hui.build('textarea',{'class':'hui_editor_header',style:'resize: none;'});

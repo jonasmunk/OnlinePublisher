@@ -17,6 +17,11 @@ hui.ui.StyleLength = function(o) {
 	this._addBehavior();
 }
 
+hui.ui.StyleLength.create = function(options) {
+	options.element = hui.build('span',{'class':'hui_style_length hui_numberfield',html:'<span><span><input type="text"/><a class="hui_numberfield_up"></a><a class="hui_numberfield_down"></a></span></span>'})
+	return new hui.ui.StyleLength(options);
+}
+
 hui.ui.StyleLength.prototype = {
 	/** @private */
 	_addBehavior : function() {

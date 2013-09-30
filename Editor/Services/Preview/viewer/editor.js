@@ -15,27 +15,10 @@ op.Editor = {
 			hui.log('Unable to find toolbar controller');
 		}
 	},
-	$partWasMoved : function(info) {
-		var data = hui.string.fromJSON(info.dragged.getAttribute('data'));
-		var p = {
-			sectionId : data.id,
-			rowIndex : info.rowIndex,
-			columnIndex : info.columnIndex,
-			sectionIndex : info.partIndex
-		}
-		hui.ui.request({
-			url : op.context+'Editor/Template/document/live/MoveSection.php',
-			parameters : p,
-			onSuccess : function() {
-				info.onSuccess();
-				this._signalChange();
-			}.bind(this)
-		})
-	},
 	$partChanged : function() {
-		this._signalChange();
+		this.signalChange();
 	},
-	_signalChange : function() {
+	signalChange : function() {
 		hui.ui.tellContainers('pageChanged',op.page.id);
 	},
 	

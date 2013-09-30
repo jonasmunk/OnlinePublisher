@@ -5,23 +5,27 @@ op.Editor.Html = function(options) {
 	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.partElement = hui.get.firstChild(this.element);
+	this.section = {};
 	this.part = null;
 	this.original = null;
 }
 
 op.Editor.Html.prototype = {
+	
+	type : 'html',
+	
 	activate : function(callback) {
 		this._load(callback);
 	},
 	save : function(options) {
-		hui.ui.request({
-			url : 'parts/update.php',
-			parameters : {id:this.id,pageId:op.page.id,html:this.part.html,type:'html'},
-			$text : function(html) {
+		op.DocumentEditor.savePart({
+			part : this,
+			parameters : {html : this.part.html},
+			$success : function(html) {
 				this.element.innerHTML = html;
 				this.partElement = hui.dom.firstChild(this.element);
-				options.callback();
-			}.bind(this)
+			}.bind(this),
+			callback : options.callback
 		});
 	},
 	cancel : function() {
@@ -35,15 +39,16 @@ op.Editor.Html.prototype = {
 	getValue : function() {
 		return this.value;
 	},
-	
-	
 	_load : function(callback) {
-		hui.ui.request({url:'parts/load.php',parameters:{type:'html',id:this.id},onJSON:function(part) {
-			this.part = part;
-			this.original = part.html;
-			this._edit();
-			callback();
-		}.bind(this)});
+		op.DocumentEditor.loadPart({
+			part : this,
+			$success : function(part) {
+				this.part = part;
+				this.original = part.html;
+				this._edit();
+			}.bind(this),
+			callback : callback
+		})
 	},
 	_buildUI : function() {
 		if (!this.win) {
@@ -58,7 +63,7 @@ op.Editor.Html.prototype = {
 		}
 	},
 	_valueChanged : function(value) {
-		var valid = hui.xml.parse(value)!=null;
+		var valid = hui.xml.parse('<div>'+value+'</div>')!=null;
 		this.partElement.innerHTML = value;
 		this.part.html = value;
 		hui.dom.setText(this.msg,valid ? '' : 'Ikke valid');
