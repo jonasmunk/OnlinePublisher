@@ -13,6 +13,10 @@ class ListingPartController extends PartController
 	function ListingPartController() {
 		parent::PartController('listing');
 	}
+
+	function isLiveEnabled() {
+		return true;
+	}
 	
 	static function createPart() {
 		$part = new ListingPart();
