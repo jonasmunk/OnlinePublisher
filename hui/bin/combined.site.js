@@ -1681,10 +1681,10 @@ hui.style = {
 	 */
 	copy : function(source,target,styles) {
 		for (var i=0; i < styles.length; i++) {
-			var s = styles[i];
-			var r = hui.style.get(source,s);
-			if (r) {
-				target.style[s] = r;
+			var property = styles[i];
+			var value = hui.style.get(source,property);
+			if (value) {
+				target.style[hui.string.camelize(property)] = value;
 			}
 		};
 	},

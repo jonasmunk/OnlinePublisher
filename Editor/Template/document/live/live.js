@@ -25,10 +25,10 @@ op.DocumentEditor = {
 		var e = part.element;
 		this.part = part;
 		this._partEditorForm.setValues({
-			top: hui.style.get(e,'paddingTop'),
-			bottom: hui.style.get(e,'paddingBottom'),
-			left: hui.style.get(e,'paddingLeft'),
-			right: hui.style.get(e,'paddingRight')
+			top: hui.style.get(e,'padding-top'),
+			bottom: hui.style.get(e,'padding-bottom'),
+			left: hui.style.get(e,'padding-left'),
+			right: hui.style.get(e,'padding-right')
 		});
 		this._partWindow.show();
 	},
