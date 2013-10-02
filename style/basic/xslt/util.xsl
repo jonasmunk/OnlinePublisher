@@ -90,7 +90,7 @@
 			</xsl:choose>
 			<xsl:choose>
 				<xsl:when test="@target='_blank'">
-					<xsl:attribute name="onclick">try {window.open(this.getAttribute('href')); return false;} catch (igonre) {}</xsl:attribute>
+					<xsl:attribute name="onclick">try {window.open(this.getAttribute('href')); return false;} catch (ignore) {}</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="@target and @target!='_self' and @target!='_download'">
 					<xsl:attribute name="target"><xsl:value-of select="@target"/></xsl:attribute>

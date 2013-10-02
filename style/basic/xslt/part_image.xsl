@@ -113,7 +113,17 @@
 	<xsl:attribute name="title"><xsl:value-of select="img:link/@alternative"/></xsl:attribute>
 	<xsl:choose>
 		<xsl:when test="img:link/@path and $preview='false'">
-			<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/><xsl:value-of select="img:link/@path"/></xsl:attribute>
+			<xsl:attribute name="href">
+				<xsl:value-of select="$navigation-path"/>
+				<xsl:choose>
+					<xsl:when test="starts-with(img:link/@path,'/')">
+						<xsl:value-of select="substring(img:link/@path,2)"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="img:link/@path"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
 		</xsl:when>
 		<xsl:when test="img:link/@page">
 			<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="img:link/@page"/></xsl:attribute>
