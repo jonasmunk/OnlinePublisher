@@ -3,7 +3,6 @@ function Bestilling() {
 	this.form.onsubmit = function() {
 		try {this.submit();}
 		catch (e) {
-			
 			hui.ui.showMessage({text:'Der skete en fejl og bestillingen kunne ikke afsendes',icon:'common/warning',duration:2000});
 		}
 		return false;
@@ -48,8 +47,8 @@ Bestilling.prototype = {
 		var large10 = parseInt(this.form['large_10'].value);
 		var small24 = parseInt(this.form['small_24'].value);
 		var large24 = parseInt(this.form['large_24'].value);
-		var modelE = parseInt(this.form['model_E'].value);
-		if (!(small8>0) && !(large8>0) && !(small10>0) && !(large10>0) && !(small24>0) && !(large24>0) && !(modelE>0)) {
+		//var modelE = parseInt(this.form['model_E'].value);
+		if (!(small8>0) && !(large8>0) && !(small10>0) && !(large10>0) && !(small24>0) && !(large24>0)) { // && !(modelE>0)
 			this.form['small_8'].focus();
 			hui.ui.showMessage({text:'Udfyld venligst antal for mindst een af modellerne',duration:2000});
 			return;
@@ -70,8 +69,8 @@ Bestilling.prototype = {
 			'24 pigge:',
 			'  Antal små: '+this.form['small_24'].value,
 			'  Antal store: '+this.form['large_24'].value,
-			'Model E:',
-			'  Antal små: '+this.form['model_E'].value,
+			//'Model E:',
+			//'  Antal små: '+this.form['model_E'].value,
 			'Besked: '+this.form['message'].value
 		];
 		message = message.join('\n');
@@ -81,12 +80,17 @@ Bestilling.prototype = {
 			message : message
 		}
 		hui.ui.showMessage({text:'Sender bestilling, vent venligst...'});
-		hui.ui.request({url:op.page.path+'services/feedback/',parameters:parameters,onSuccess:function() {
-			hui.ui.showMessage({text:'Bestillingen er afsendt',icon:'common/success',duration:4000});
-			hui.ui.alert({title:'Bestillingen er modtaget',text:'Vi kontakter dig hurtigst muligt med yderligere information '});
-		},onFailure:function() {
-			hui.ui.showMessage({text:'Sender bestilling, vent venligst... Fejl!',duration:2000});
-			alert('Der skete en uventet fejl, kontakt venligst via email eller telefon istedet');
-		}})
+		hui.ui.request({
+			url : op.page.path+'services/feedback/',
+			parameters : parameters,
+			$success:function() {
+				hui.ui.showMessage({text:'Bestillingen er afsendt',icon:'common/success',duration:4000});
+				hui.ui.alert({title:'Bestillingen er modtaget',text:'Vi kontakter dig hurtigst muligt med yderligere information '});
+			},
+			$failure:function() {
+				hui.ui.showMessage({text:'Sender bestilling, vent venligst... Fejl!',duration:2000});
+				alert('Der skete en uventet fejl, kontakt venligst via email eller telefon istedet');
+			}
+		})
 	}
 }
