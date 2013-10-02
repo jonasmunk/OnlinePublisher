@@ -14,6 +14,11 @@ class FeedSerializer {
 		
 	}
 	
+	function send($feed) {
+		$this->sendHeaders();
+		echo $this->serialize($feed);
+	}
+	
 	function sendHeaders() {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s",gmmktime()) . " GMT");
 		header('Content-type: application/rss+xml; charset=utf-8');

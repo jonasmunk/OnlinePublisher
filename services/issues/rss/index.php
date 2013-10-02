@@ -1,10 +1,10 @@
 <?php
 require_once '../../../Editor/Include/Public.php';
 
-$requestSecret = Request::getString('secret');
-$secret = SettingService::getSharedSecret();
+$secret = Request::getString('secret');
 
-if (Strings::isBlank($secret) || Strings::isBlank($requestSecret) || $requestSecret!==$secret) {
+if (!AuthenticationService::isSharedSecret($secret)) {
+	Response::forbidden("The secret code was incorrect");
 	exit;
 }
 
@@ -27,6 +27,5 @@ foreach ($list as $issue) {
 }
 
 $serializer = new FeedSerializer();
-$serializer->sendHeaders();
-echo $serializer->serialize($feed);
+$serializer->send($feed);
 ?>

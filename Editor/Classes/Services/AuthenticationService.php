@@ -22,6 +22,21 @@ class AuthenticationService {
 		}
 	}
 	
+	static function isSharedSecret($key) {
+		$secret = SettingService::getSharedSecret();
+		if (Strings::isBlank($secret)) {
+			Log::debug('No shared secret is configured');
+			return false;
+		} else if (Strings::isBlank($key)) {
+			Log::debug('The secret is blank');
+			return false;
+		} else if ($key!==$secret) {
+			Log::debug('The secret is incorrect');
+			return false;
+		}
+		return true;
+	}
+	
 	static function isSuperUser($username,$password) {
 		$superUser = ConfigurationService::getSuperUsername();
 		$superPassword = ConfigurationService::getSuperPassword();
