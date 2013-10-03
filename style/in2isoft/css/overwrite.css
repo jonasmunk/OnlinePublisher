@@ -1,5 +1,12 @@
 
-body
+body,
+.common_font,
+p.common, 
+ul.common,
+h1.common,h2.common,h3.common,h4.common,h5.common,h6.common,
+.part_header,
+.part_text,
+div.part_richtext
 {
 	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
 }
@@ -30,30 +37,21 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
 	color: #333;
-	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: 300;
 }
 
 h1.common
 {
 	color: #3080CB;
-	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: 300;
 }
 
 p.common, ul.common
 {
-	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-size: 12pt;
 	line-height: 160%;
 	text-align: justify;
 }
-
-.common_font
-{
-	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
-}
-
 
 
 
@@ -64,7 +62,6 @@ p.common, ul.common
 .part_header
 {
 	color: #333;
-	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-weight: 300;
 }
 
@@ -140,7 +137,6 @@ p.part_poster_title
 .part_text,
 div.part_richtext
 {
-	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
 	font-size: 12pt;
 	font-weight: 300;
 	/*letter-spacing: 1px;*/
