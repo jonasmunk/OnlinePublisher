@@ -11,11 +11,9 @@ ul.case_navigation
 	font-family: Arial;
 	font-size: 12px;
 	position: absolute;
-	left: 50%;
+	left: 15px;
 	text-align: right;
-	top: 56px;
-	width: 900px;
-	margin-left: -450px;
+	top: 54px;
 }
 
 ul.case_navigation li
