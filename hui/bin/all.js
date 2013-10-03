@@ -13952,6 +13952,9 @@ hui.ui.MarkupEditor.prototype = {
 	destroy : function() {
 		hui.dom.remove(this.element);
 		hui.ui.destroy(this);
+		if (this.options.replace) {
+			this.options.replace.style.display='';
+		}
 	},
 	/** Get the HTML value */
 	getValue : function() {
