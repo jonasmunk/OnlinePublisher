@@ -21,6 +21,10 @@ class RichtextPartController extends PartController
 		return $part;
 	}
 	
+	function isLiveEnabled() {
+		return true;
+	}
+	
 	function display($part,$context) {
 		return $this->render($part,$context);
 	}

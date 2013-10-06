@@ -154,6 +154,11 @@ div.part_richtext strong
 	font-weight: 400;
 }
 
+div.part_richtext p
+{
+	margin: 10px 0;
+}
+
 div.part_listing, textarea.part_listing
 {
 	font-size: 11pt;
