@@ -8,16 +8,24 @@ require_once '../../../Include/Private.php';
 $showTools = Request::getBoolean('tools');
 $showTemplates = Request::getBoolean('templates');
 $showEmail = Request::getBoolean('email');
+$order = Request::getString('order');
+$direction = Request::getString('direction');
+
+if (!$order) {
+	$order = 'title';
+}
 
 $time = 60*60;
-//$time = 0;
+
+$objects = Query::after('remotepublisher')->orderBy($order)->withDirection($direction)->get();
 
 $writer = new ListWriter();
 
-$writer->startList(array('unicode'=>true));
-$writer->startHeaders();
-$writer->header(array('title'=>array('Title','da'=>'Titel')));
-$writer->header(array('title'=>array('Address','da'=>'Adresse')));
+$writer->startList(array('unicode'=>true))->
+	sort($order,$direction)->
+	startHeaders()->
+	header(array('title'=>array('Title','da'=>'Titel'),'key'=>'title','sortable'=>true))->
+	header(array('title'=>array('Address','da'=>'Adresse'),'key'=>'url','sortable'=>true));
 $writer->header(array('title'=>'Version'));
 if ($showTools) {
 	$writer->header(array('title'=>array('Tools','da'=>'Værktøjer')));
@@ -30,14 +38,19 @@ if ($showEmail) {
 }
 $writer->endHeaders();
 
-$objects = Query::after('remotepublisher')->orderBy('title')->get();
+$sites = array();
+
 foreach ($objects as $site) {
 	$data = RemoteDataService::getRemoteData($site->getUrl().'services/info/json/',$time);
 	$obj = null;
 	if ($data->isHasData()) {
 		$str = file_get_contents($data->getFile());
 		$obj = Strings::fromJSON($str);
-		$version = Dates::formatLongDate($obj->date);
+		if ($obj) {
+			$version = Dates::formatLongDate($obj->date);			
+		} else {
+			$version = 'Not set';
+		}
 	} else {
 		$version = 'Unknown';
 	}

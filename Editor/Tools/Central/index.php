@@ -13,6 +13,8 @@ $gui='
 		<parameter key="templates" value="@showTemplates.value"/>
 		<parameter key="tools" value="@showTools.value"/>
 		<parameter key="email" value="@showEmail.value"/>
+		<parameter key="order" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
 	</source>
 	<structure>
 		<top>
