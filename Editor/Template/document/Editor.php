@@ -424,7 +424,7 @@ function displayPart(&$sectionRow,&$column,&$row) {
 				echo ' oncontextmenu="return controller.showSectionMenu(this,event,'.$sectionRow['id'].','.$sectionRow['index'].','.$column['id'].','.$column['index'].','.$row['id'].','.$row['index'].');"';
 				echo ' onmouseover="controller.sectionOver(this,'.$sectionRow['id'].','.$column['id'].','.$sectionRow['index'].')"';
 				echo ' onmouseout="controller.sectionOut(this,event)"';
-				echo ' data=\'{"part":'.$partId.'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionRow['id'].'})">';
+				echo ' data=\'{"part":'.$part->getId().'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionRow['id'].'})">';
 			echo $ctrl->display($part,$partContext);
 			echo '</div>';			
 		} else {
