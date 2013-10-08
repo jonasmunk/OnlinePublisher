@@ -45,13 +45,15 @@ hui.ui.Diagram.prototype = {
 	},
 	_getMagnet : function(from,to,node) {
 		var margin = 1;
+		var size = node.getSize();
+		var center = node.getCenter();
 		var topLeft = {
-				x : node.element.offsetLeft - margin,
-				y : node.element.offsetTop - margin
+				x : center.x - size.width/2 - margin,
+				y : center.y - size.height/2 - margin
 			},
 			bottomRight = {
-				x : topLeft.x + node.element.offsetWidth + margin * 2,
-				y : topLeft.y + node.element.offsetHeight + margin * 2
+				x : topLeft.x + size.width + margin * 2,
+				y : topLeft.y + size.height + margin * 2
 			};
 		var hits = [];
 		hits = hui.geometry.intersectLineRectangle(from,to,topLeft,bottomRight);
@@ -146,8 +148,9 @@ hui.ui.Diagram.prototype = {
 	add : function(widget) {
 		var e = widget.element;
 		this.element.appendChild(e);
-		e.style.left = (.5*(this.element.clientWidth - e.clientWidth))+'px';
-		e.style.top = (.5*(this.element.clientHeight - e.clientHeight))+'px';
+		var size = widget.getSize();
+		e.style.left = (.5*(this.width - size.width))+'px';
+		e.style.top = (.5*(this.height - size.height))+'px';
 		this.nodes.push(widget);
 	},
 	addLine : function(options) {
@@ -202,15 +205,19 @@ hui.ui.Diagram.prototype = {
 			return;
 		}
 		var from = line.node.getFrom(),
-			to = line.node.getTo();
+			to = line.node.getTo(),
+			label = line.label;
 		var middle = { x : from.x+(to.x-from.x)/2, y : from.y+(to.y-from.y)/2 };
 		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
 		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
 		//line.label.innerHTML = Math.round(hui.geometry.distance(from,to));
 		var width = Math.round(hui.geometry.distance(from,to)-30);
+		// TODO: cache width + height
+		var w = label.huiWidth = label.huiWidth || label.clientWidth;
+		var h = label.huiHeight = label.huiHeight || label.clientHeight;
 		hui.style.set(line.label,{
-			left : (middle.x-line.label.clientWidth/2)+'px',
-			top : (middle.y-line.label.clientHeight/2)+'px',
+			left : (middle.x-w/2)+'px',
+			top : (middle.y-h/2)+'px',
 			maxWidth : Math.max(0,width)+'px',
 			visibility : width>10 ? '' : 'hidden'
 		});
@@ -574,6 +581,7 @@ hui.ui.Diagram.Box = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);	
 	this.center = {};
+	this.size = null;
 	hui.ui.extend(this);
 	hui.ui.Diagram.util.enableDragging(this)
 }
@@ -598,21 +606,31 @@ hui.ui.Diagram.Box.create = function(options,diagram) {
 }
 
 hui.ui.Diagram.Box.prototype = {
+	_syncSize : function() {
+		if (this.size) {
+			return;
+		}
+		this.size = {
+			width : this.element.offsetWidth,
+			height : this.element.offsetHeight
+		};
+	},
+	getSize : function() {
+		this._syncSize();
+		return this.size;
+	},
+	getCenter : function() {
+		return this.center;
+	},
 	setCenter : function(point) {
+		this._syncSize();
 		var e = this.element;
-		e.style.top = Math.round(point.y - e.offsetHeight/2)+'px';
-		e.style.left = Math.round(point.x - e.offsetWidth/2)+'px';
-		this.center = point;
+		e.style.top = Math.round(point.y - this.size.height/2)+'px';
+		e.style.left = Math.round(point.x - this.size.width/2)+'px';
+		this.center = {x : point.x, y : point.y};
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_box_selected',selected);
-	},
-	getMagnet : function(point) {
-		var e = this.element;
-		return {
-			x : Math.round(parseInt(e.style.left)+e.clientWidth/2),
-			y : Math.round(parseInt(e.style.top)+e.clientHeight/2)
-		};
 	}
 }
 
@@ -641,21 +659,30 @@ hui.ui.Diagram.Icon.create = function(options,diagram) {
 }
 
 hui.ui.Diagram.Icon.prototype = {
+	_syncSize : function() {
+		if (this.size) {
+			return;
+		}
+		this.size = {
+			width : this.element.offsetWidth,
+			height : this.element.offsetHeight
+		};
+	},
+	getSize : function() {
+		this._syncSize();
+		return this.size;
+	},
+	getCenter : function() {
+		return this.center;
+	},
 	setCenter : function(point) {
 		var e = this.element;
 		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
 		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
-		this.center = point;
+		this.center = {x : point.x, y : point.y};
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_icon_selected',selected);
-	},
-	getMagnet : function(point) {
-		var e = this.element;
-		return {
-			x : Math.round(parseInt(e.style.left)+e.clientWidth/2),
-			y : Math.round(parseInt(e.style.top)+e.clientHeight/2)
-		};
 	}
 }
 
@@ -679,16 +706,23 @@ hui.ui.Diagram.util = {
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
 				var pos = hui.position.get(obj.element);
 				var diagramPosition = hui.position.get(diagram.element);
-				dragState = {left: e.getLeft() - pos.left + diagramPosition.left,top:e.getTop()-pos.top + diagramPosition.top};
+				dragState = {
+					left : e.getLeft() - pos.left + diagramPosition.left,
+					top : e.getTop()-pos.top + diagramPosition.top
+				};
 				obj.element.style.right = 'auto';
 			},
  			onMove : function(e) {
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
+				var size = obj.getSize();
 				obj.px = top;
 				obj.py = left;
-				obj.element.style.top = top+'px';
-				obj.element.style.left = left+'px';
+				//obj.element.style.top = top+'px';
+				//obj.element.style.left = left+'px';
+				top += size.height/2;
+				left += size.width/2;
+				obj.setCenter({x:left,y:top});
 				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {
