@@ -3,9 +3,7 @@
 <head>
 	<title>HUI</title>
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../ext/diagram.css" rel="stylesheet" />
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../ext/diagram.css" rel="stylesheet" />
-	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../ext/diagram.css" rel="stylesheet" />
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/diagram.css" rel="stylesheet" />
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
 	<![endif]-->
@@ -21,7 +19,7 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/CodeInput.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../ext/Diagram.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Diagram.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		hui.ui.context='../../..';
 	</script>
@@ -36,7 +34,7 @@
 			$ready : function() {
 				var diagram = new hui.ui.Diagram.create({
 					parent : hui.get('container'),
-					layout : hui.location.getParameter('layout') || 'Arbor',
+					//layout : hui.location.getParameter('layout') || 'Arbor',
 					height : 800
 				});
 				

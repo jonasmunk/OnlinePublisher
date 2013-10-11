@@ -215,6 +215,7 @@ hui.ui.Diagram.prototype = {
 		// TODO: cache width + height
 		var w = label.huiWidth = label.huiWidth || label.clientWidth;
 		var h = label.huiHeight = label.huiHeight || label.clientHeight;
+		w = Math.min(w,width);
 		hui.style.set(line.label,{
 			left : (middle.x-w/2)+'px',
 			top : (middle.y-h/2)+'px',
@@ -716,8 +717,8 @@ hui.ui.Diagram.util = {
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
 				var size = obj.getSize();
-				obj.px = top;
-				obj.py = left;
+				obj.px = left;
+				obj.py = top;
 				//obj.element.style.top = top+'px';
 				//obj.element.style.left = left+'px';
 				top += size.height/2;

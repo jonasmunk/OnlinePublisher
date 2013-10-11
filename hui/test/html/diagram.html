@@ -83,7 +83,10 @@
 				
 				diagram.listen({
 					$select : function(obj) {
-						log.setValue(obj)
+						log.addLine('select :' + hui.string.toJSON(obj))
+					},
+					$open : function(obj) {
+						log.addLine('open :' + hui.string.toJSON(obj))
 					}
 				})
 			}

@@ -34,6 +34,13 @@ hui.ui.CodeInput.prototype = {
 		this.textarea.value = value;
 		this.value = value;
 	},
+	addLine : function(line) {
+		if (this.value==='') {
+			this.setValue(line);
+		} else {
+			this.setValue(this.value+"\n"+line);
+		}
+	},
 	reset : function() {
 		this.setValue('');
 	},
