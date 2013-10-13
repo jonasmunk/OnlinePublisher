@@ -55,7 +55,7 @@
 	hui.ui.onReady(function() {
 		var linkForm;
 		var linkDelegate = {
-			editLink : function(options) {
+			$editLink : function(options) {
 				this.options = options;
 				linkForm.reset();
 				var node = options.node;
@@ -69,11 +69,21 @@
 				this.options.node.setAttribute('data',hui.string.toJSON(linkForm.getValues()));
 				linkForm.reset();
 				linkEditor.hide();
-				this.options.onSuccess();
+				this.options.$changed();
 			},
 			$userClosedWindow : function() {
-				this.options.onCancel();
-			}
+				this.options.$cancel();
+			},
+            $click$removeLink : function() {
+				linkForm.reset();
+				linkEditor.hide();
+                this.options.$remove();
+            },
+            $click$cancelLink : function() {
+				linkForm.reset();
+				linkEditor.hide();
+                this.options.$cancel();
+            }
 		}
 		
 		
@@ -94,7 +104,11 @@
 			}}
 		]);
 		var buttons = group.createButtons();
+		var remove = hui.ui.Button.create({text:'Remove',name:'removeLink',listener:linkDelegate});
+		var cancel = hui.ui.Button.create({text:'Cancel',name:'cancelLink',listener:linkDelegate});
 		var ok = hui.ui.Button.create({text:'OK',submit:true});
+		buttons.add(remove);
+		buttons.add(cancel);
 		buttons.add(ok);
 		
 		linkForm.listen(linkDelegate);
@@ -106,6 +120,7 @@
 			value : '<h1>Lorem ipsum</h1><p>Lorem ipsum</p><p>Lorem ipsum dolor sit amet, <a href="#" data=\'{"page":"1"}\'>consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',
 			linkDelegate : linkDelegate
 		});
+        editor.listen(linkDelegate);
 		var source = hui.ui.TextField.create({multiline:true});
 		var view = hui.ui.Button.create({text:'View source'}).listen({
 			$click:function() {
