@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" padding="10" title="Calendar">
 	<controller name="controller" source="diagram.js"/>
+    <source name="diagramSource" url="data/diagram_model.json"/>
 	<structure>
 		<top>
 			<toolbar>
@@ -23,7 +24,7 @@
 				</sidebar>
 			</left>
 			<center>
-				<diagram name="diagram"/>
+				<diagram name="diagram" source="diagramSource"/>
 			</center>
 		</middle>
 		<bottom>
