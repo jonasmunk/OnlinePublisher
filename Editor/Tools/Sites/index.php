@@ -142,9 +142,9 @@ $gui='
 			-->
 			<icon icon="common/flag" text="{Language; da:Sprog}" name="pageTranslation"/>
 			<right>
-			<icon icon="common/internet" text="{Publish; da:Udgiv}" overlay="upload" name="publishPage" disabled="true"/>
-			<icon icon="common/edit" text="{Edit ; da:Rediger}" name="editPage"/>
-			<icon icon="common/view" text="{Show ; da:Vis}" name="viewPage"/>
+    			<icon icon="common/internet" text="{Publish; da:Udgiv}" overlay="upload" name="publishPage" disabled="true"/>
+    			<icon icon="common/edit" text="{Edit ; da:Rediger}" name="editPage"/>
+    			<icon icon="common/view" text="{Show ; da:Vis}" name="viewPage"/>
 			</right>
 		</toolbar>
 		<fragment name="pageInfoFragment">
@@ -210,7 +210,7 @@ $gui='
 	<window name="pageFinder" width="400" title="{Choose page; da:Vælg side}">
 		<searchfield adaptive="true" name="pageFinderSearch"/>
 		<overflow max-height="200">
-		<list source="pageFinderListSource" name="pageFinderList"/>
+		    <list source="pageFinderListSource" name="pageFinderList"/>
 		</overflow>
 	</window>
 
