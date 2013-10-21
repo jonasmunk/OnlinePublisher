@@ -187,7 +187,7 @@ class RenderingService {
 				if ($maxitems==0) break;
 			}
 			Database::free($resultNews);
-			$data=str_replace("<!--newsblock#".$blockId."-->", $newsData, $data);
+			$data = str_replace("<!--newsblock#".$blockId."-->", $newsData, $data);
 		}
 		Database::free($result);
 		return $data;

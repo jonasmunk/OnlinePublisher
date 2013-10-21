@@ -5,7 +5,6 @@ op.Editor.Html = function(options) {
 	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.partElement = hui.get.firstChild(this.element);
-	this.section = {};
 	this.part = null;
 	this.original = null;
 }

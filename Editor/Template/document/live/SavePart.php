@@ -17,6 +17,8 @@ $sql="update document_section set".
 ",`right`=".Database::text($section->right).
 ",`top`=".Database::text($section->top).
 ",`bottom`=".Database::text($section->bottom).
+",`float`=".Database::text($section->float).
+",`width`=".Database::text($section->width).
 " where id=".Database::int($section->id);
 Database::update($sql);
 

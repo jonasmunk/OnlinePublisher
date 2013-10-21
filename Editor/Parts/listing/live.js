@@ -5,7 +5,6 @@ op.Editor.Listing = function(options) {
 	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.header = hui.get.firstByTag(this.element,'*');
-	this.section = {};
 	this.field = null;
 }
 
@@ -37,22 +36,17 @@ op.Editor.Listing.prototype = {
 		this.field.select();
 	},
 	save : function(options) {
-		var value = this.field.value;
-		if (value!=this.value) {
-			this.value = value;
-			op.DocumentEditor.savePart({
-				part : this,
-				parameters : {text : this.value},
-				$success : function(html) {
-					this.element.innerHTML = html;
-					this.field = null;
-					this.header = hui.dom.firstChild(this.element);
-				}.bind(this),
-				callback : options.callback
-			});
-		} else {
-			options.callback();
-		}
+		this.value = this.field.value;
+		op.DocumentEditor.savePart({
+			part : this,
+			parameters : {text : this.value},
+			$success : function(html) {
+				this.element.innerHTML = html;
+				this.field = null;
+				this.header = hui.dom.firstChild(this.element);
+			}.bind(this),
+			callback : options.callback
+		});
 	},
 	cancel : function() {
 		

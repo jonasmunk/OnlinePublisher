@@ -121,6 +121,19 @@ hui.ui.Bar.prototype = {
 			}
 		}
 		return this.right;
+	},
+	select : function(key) {
+		var children = hui.ui.getDescendants(this);
+		hui.log(children);
+		for (var i = 0; i < children.length; i++) {
+			var child = children[i];
+			if (child.getKey && child.setSelected) {
+				child.setSelected(child.getKey()==key);
+			}
+		}
+	},
+	$clickButton : function(button) {
+		this.fire('clickButton',button);
 	}
 }
 
@@ -178,12 +191,16 @@ hui.ui.Bar.Button.prototype = {
 		if (this.options.stopEvents) {
 			hui.stop(e);
 		}
+		hui.ui.callAncestors(this,'$clickButton');
 	},
 	/** Mark the button as selected
 	 * @param {Boolean} selected If it should be marked selected
 	 */
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_bar_button_selected',selected);
+	},
+	getKey : function() {
+		return this.options.key;
 	}
 }
 

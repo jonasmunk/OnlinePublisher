@@ -210,6 +210,11 @@ div.hui_formula_field_body
 	line-height: 0;
 }
 
+div.hui_formula_field_compact div.hui_formula_field_body
+{
+	padding: 0;
+}
+
 /*************************************** Field **********************************/
 
 span.hui_field
@@ -344,7 +349,7 @@ em.hui_field_placeholder
 }
 
 /******* Special lenght for style *******/
-
+/*
 span.hui_style_length
 {
 	width: 120px;
@@ -356,7 +361,7 @@ body span.hui_style_length input
 	padding-right: 0;
 	padding-left: 0;
 	margin-left: -3px;
-}
+}*/
 
 /************************************** Buttons *********************************/
 
@@ -453,7 +458,7 @@ div.hui_window_news label.hui_formula_field
 div.hui_window_light label.hui_formula_field
 {
 	color: #004A80;
-	background: rgb(229,229,229);
+	background: none;
 }
 
 

@@ -5695,6 +5695,10 @@ hui.ui.listen = function(delegate) {
 	hui.ui.delegates.push(delegate);
 }
 
+hui.ui.unListen = function(listener) {
+	hui.array.remove(hui.ui.delegates,listener);
+}
+
 hui.ui.callDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
@@ -5778,6 +5782,18 @@ hui.ui.resolveImageUrl = function(widget,img,width,height) {
 	}
 	return null;
 };
+
+/** Load som UI from an URL */
+hui.ui.include = function(options) {
+	hui.ui.request({
+		url : options.url,
+		$text : function(html) {
+			var container = hui.build('div',{html:html,parent:document.body});
+			hui.dom.runScripts(container);
+			options.$success();
+		}
+	})
+},
 
 ////////////////////////////// Bindings ///////////////////////////
 
@@ -13145,6 +13161,19 @@ hui.ui.Bar.prototype = {
 			}
 		}
 		return this.right;
+	},
+	select : function(key) {
+		var children = hui.ui.getDescendants(this);
+		hui.log(children);
+		for (var i = 0; i < children.length; i++) {
+			var child = children[i];
+			if (child.getKey && child.setSelected) {
+				child.setSelected(child.getKey()==key);
+			}
+		}
+	},
+	$clickButton : function(button) {
+		this.fire('clickButton',button);
 	}
 }
 
@@ -13202,12 +13231,16 @@ hui.ui.Bar.Button.prototype = {
 		if (this.options.stopEvents) {
 			hui.stop(e);
 		}
+		hui.ui.callAncestors(this,'$clickButton');
 	},
 	/** Mark the button as selected
 	 * @param {Boolean} selected If it should be marked selected
 	 */
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_bar_button_selected',selected);
+	},
+	getKey : function() {
+		return this.options.key;
 	}
 }
 
@@ -13495,12 +13528,11 @@ hui.ui.Segmented = function(options) {
 	this.name = options.name;
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	hui.listen(this.element,'mousedown',this.onClick.bind(this));
+	hui.listen(this.element,'mousedown',this._click.bind(this));
 }
 
 hui.ui.Segmented.prototype = {
-	/** @private */
-	onClick : function(e) {
+	_click : function(e) {
 		e = new hui.Event(e);
 		var a = e.findByTag('a');
 		if (a) {
@@ -13519,8 +13551,7 @@ hui.ui.Segmented.prototype = {
 				this.value = value;
 			}
 			if (changed) {
-				this.fire('valueChanged',this.value);
-				hui.ui.firePropertyChange(this,'value',this.value);
+				this.fireValueChange();
 			}
 		}
 	},
@@ -16379,6 +16410,13 @@ hui.ui.CodeInput.prototype = {
 	setValue : function(value) {
 		this.textarea.value = value;
 		this.value = value;
+	},
+	addLine : function(line) {
+		if (this.value==='') {
+			this.setValue(line);
+		} else {
+			this.setValue(this.value+"\n"+line);
+		}
 	},
 	reset : function() {
 		this.setValue('');
@@ -19447,17 +19485,17 @@ hui.ui.Editor.prototype = {
 	},
 	showPartEditControls : function() {
 		if (!this.partEditControls) {
-			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions'});
+			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions',variant:'light'});
 			this.partEditControls.addIcon('save','common/ok');
 			this.partEditControls.addIcon('cancel','common/stop');
-			//this.partEditControls.addIcon('settings','common/settings');
+			this.partEditControls.addIcon('info','common/info');
 			this.partEditControls.listen(this);
 		}
 		this.partEditControls.showAtElement(this.activePart.element,{'horizontal':'right','vertical':'topOutside'});
 	},
 	showPartControls : function() {
 		if (!this.partControls) {
-			this.partControls = hui.ui.Overlay.create({name:'huiEditorPartActions'});
+			this.partControls = hui.ui.Overlay.create({name:'huiEditorPartActions',variant:'light'});
 			this.partControls.addIcon('edit','common/edit');
 			this.partControls.addIcon('new','common/new');
 			this.partControls.addIcon('delete','common/delete');
@@ -19498,6 +19536,8 @@ hui.ui.Editor.prototype = {
 			this.cancelPart(this.activePart);
 		} else if (key=='save') {
 			this.savePart(this.activePart);
+		} else if (key=='info') {
+			this.fire('toggleInfo');
 		}
 	},
 	_hidePartControls : function() {
@@ -20729,6 +20769,9 @@ hui.ui.Pages.prototype = {
 			}
 		};
 	},
+	getPageKey : function() {
+		return this.pages[this.index].getAttribute('data-key');
+	},
 	expand : function() {
 		var l = this.pages.length;
 		for (var i=0; i < l; i++) {
@@ -21521,13 +21564,15 @@ hui.ui.Diagram.prototype = {
 	},
 	_getMagnet : function(from,to,node) {
 		var margin = 1;
+		var size = node.getSize();
+		var center = node.getCenter();
 		var topLeft = {
-				x : node.element.offsetLeft - margin,
-				y : node.element.offsetTop - margin
+				x : center.x - size.width/2 - margin,
+				y : center.y - size.height/2 - margin
 			},
 			bottomRight = {
-				x : topLeft.x + node.element.offsetWidth + margin * 2,
-				y : topLeft.y + node.element.offsetHeight + margin * 2
+				x : topLeft.x + size.width + margin * 2,
+				y : topLeft.y + size.height + margin * 2
 			};
 		var hits = [];
 		hits = hui.geometry.intersectLineRectangle(from,to,topLeft,bottomRight);
@@ -21622,8 +21667,9 @@ hui.ui.Diagram.prototype = {
 	add : function(widget) {
 		var e = widget.element;
 		this.element.appendChild(e);
-		e.style.left = (.5*(this.element.clientWidth - e.clientWidth))+'px';
-		e.style.top = (.5*(this.element.clientHeight - e.clientHeight))+'px';
+		var size = widget.getSize();
+		e.style.left = (.5*(this.width - size.width))+'px';
+		e.style.top = (.5*(this.height - size.height))+'px';
 		this.nodes.push(widget);
 	},
 	addLine : function(options) {
@@ -21678,15 +21724,20 @@ hui.ui.Diagram.prototype = {
 			return;
 		}
 		var from = line.node.getFrom(),
-			to = line.node.getTo();
+			to = line.node.getTo(),
+			label = line.label;
 		var middle = { x : from.x+(to.x-from.x)/2, y : from.y+(to.y-from.y)/2 };
 		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
 		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
 		//line.label.innerHTML = Math.round(hui.geometry.distance(from,to));
 		var width = Math.round(hui.geometry.distance(from,to)-30);
+		// TODO: cache width + height
+		var w = label.huiWidth = label.huiWidth || label.clientWidth;
+		var h = label.huiHeight = label.huiHeight || label.clientHeight;
+		w = Math.min(w,width);
 		hui.style.set(line.label,{
-			left : (middle.x-line.label.clientWidth/2)+'px',
-			top : (middle.y-line.label.clientHeight/2)+'px',
+			left : (middle.x-w/2)+'px',
+			top : (middle.y-h/2)+'px',
 			maxWidth : Math.max(0,width)+'px',
 			visibility : width>10 ? '' : 'hidden'
 		});
@@ -22050,6 +22101,7 @@ hui.ui.Diagram.Box = function(options) {
 	this.name = options.name;
 	this.element = hui.get(options.element);	
 	this.center = {};
+	this.size = null;
 	hui.ui.extend(this);
 	hui.ui.Diagram.util.enableDragging(this)
 }
@@ -22074,21 +22126,31 @@ hui.ui.Diagram.Box.create = function(options,diagram) {
 }
 
 hui.ui.Diagram.Box.prototype = {
+	_syncSize : function() {
+		if (this.size) {
+			return;
+		}
+		this.size = {
+			width : this.element.offsetWidth,
+			height : this.element.offsetHeight
+		};
+	},
+	getSize : function() {
+		this._syncSize();
+		return this.size;
+	},
+	getCenter : function() {
+		return this.center;
+	},
 	setCenter : function(point) {
+		this._syncSize();
 		var e = this.element;
-		e.style.top = Math.round(point.y - e.offsetHeight/2)+'px';
-		e.style.left = Math.round(point.x - e.offsetWidth/2)+'px';
-		this.center = point;
+		e.style.top = Math.round(point.y - this.size.height/2)+'px';
+		e.style.left = Math.round(point.x - this.size.width/2)+'px';
+		this.center = {x : point.x, y : point.y};
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_box_selected',selected);
-	},
-	getMagnet : function(point) {
-		var e = this.element;
-		return {
-			x : Math.round(parseInt(e.style.left)+e.clientWidth/2),
-			y : Math.round(parseInt(e.style.top)+e.clientHeight/2)
-		};
 	}
 }
 
@@ -22117,21 +22179,30 @@ hui.ui.Diagram.Icon.create = function(options,diagram) {
 }
 
 hui.ui.Diagram.Icon.prototype = {
+	_syncSize : function() {
+		if (this.size) {
+			return;
+		}
+		this.size = {
+			width : this.element.offsetWidth,
+			height : this.element.offsetHeight
+		};
+	},
+	getSize : function() {
+		this._syncSize();
+		return this.size;
+	},
+	getCenter : function() {
+		return this.center;
+	},
 	setCenter : function(point) {
 		var e = this.element;
 		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
 		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
-		this.center = point;
+		this.center = {x : point.x, y : point.y};
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_icon_selected',selected);
-	},
-	getMagnet : function(point) {
-		var e = this.element;
-		return {
-			x : Math.round(parseInt(e.style.left)+e.clientWidth/2),
-			y : Math.round(parseInt(e.style.top)+e.clientHeight/2)
-		};
 	}
 }
 
@@ -22155,16 +22226,23 @@ hui.ui.Diagram.util = {
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
 				var pos = hui.position.get(obj.element);
 				var diagramPosition = hui.position.get(diagram.element);
-				dragState = {left: e.getLeft() - pos.left + diagramPosition.left,top:e.getTop()-pos.top + diagramPosition.top};
+				dragState = {
+					left : e.getLeft() - pos.left + diagramPosition.left,
+					top : e.getTop()-pos.top + diagramPosition.top
+				};
 				obj.element.style.right = 'auto';
 			},
  			onMove : function(e) {
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
-				obj.px = top;
-				obj.py = left;
-				obj.element.style.top = top+'px';
-				obj.element.style.left = left+'px';
+				var size = obj.getSize();
+				obj.px = left;
+				obj.py = top;
+				//obj.element.style.top = top+'px';
+				//obj.element.style.left = left+'px';
+				top += size.height/2;
+				left += size.width/2;
+				obj.setCenter({x:left,y:top});
 				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {

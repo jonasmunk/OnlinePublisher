@@ -81,7 +81,7 @@
 <xsl:template match="gui:fields/gui:field">
 	<tr>
 		<th>
-			<xsl:if test="gui:text-input[not(@multiline='true')] | gui:dropdown | gui:checkbox | gui:datetime-input | gui:style-length-input | gui:number-input | gui:radiobuttons">
+			<xsl:if test="gui:text-input[not(@multiline='true') and not(@breaks='true')] | gui:dropdown | gui:checkbox | gui:datetime-input | gui:style-length-input | gui:number-input | gui:radiobuttons">
 				<xsl:attribute name="class">hui_formula_middle</xsl:attribute>
 			</xsl:if>
 			<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
@@ -105,7 +105,13 @@
 </xsl:template>
 
 <xsl:template match="gui:field" name="gui:field">
-	<div class="hui_formula_field">
+	<div>
+		<xsl:attribute name="class">
+			<xsl:text>hui_formula_field</xsl:text>
+			<xsl:if test="@compact='true'">
+				<xsl:text> hui_formula_field_compact</xsl:text>
+			</xsl:if>
+		</xsl:attribute>
 		<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
 		<div class="hui_formula_field_body"><xsl:apply-templates/></div>
 		<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
@@ -122,7 +128,7 @@
 -->
 <xsl:template name="gui:text" match="gui:textfield | gui:text-input">
 	<xsl:choose>
-		<xsl:when test="@lines>1 or @multiline='true'">
+		<xsl:when test="@lines>1 or @multiline='true' or @breaks='true'">
 			<div class="hui_field hui_longfield" id="{generate-id()}">
 			
 			<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
@@ -243,11 +249,19 @@
 -->
 <xsl:template name="gui:style-length" match="gui:style-length-input">
 	<span id="{generate-id()}">
-		<xsl:if test="@width">
-			<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
-		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="@width">
+				<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
+			</xsl:when>
+			<xsl:when test="@adaptive!='true'">
+				<xsl:attribute name="style">width:120px;</xsl:attribute>
+			</xsl:when>
+		</xsl:choose>
 		<xsl:attribute name="class">
 			<xsl:text>hui_style_length hui_numberfield</xsl:text>
+			<xsl:if test="@adaptive='true'">
+				<xsl:text> hui_numberfield_adaptive</xsl:text>
+			</xsl:if>
 		</xsl:attribute>
 		<span><span><input type="text" value="{@value}"/><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
 	</span>

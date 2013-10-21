@@ -29,7 +29,7 @@ span.hui_numberfield input
 {
 	border: none;
 	background: none;
-	width: 80px;
+	width: 100%;
 	font-family: Verdana, sans-serif;
 	font-size: 9pt;
 	padding: 0 4px 0;
@@ -92,6 +92,20 @@ em.hui_numberfield_units
 span.hui_numberfield_adaptive
 {
 	width: 100%;
+}
+
+span.hui_numberfield_adaptive span
+{
+	width: 100%;
+	padding-left: 6px;
+	box-sizing: border-box;
+	padding-right: 17px;
+}
+
+span.hui_numberfield_adaptive span span
+{
+	padding: 0 2px 0 0;
+	margin: 0;
 }
 
 span.hui_numberfield_adaptive input

@@ -10,6 +10,22 @@ class In2iGui {
 		$gui = file_get_contents($file);
 		In2iGui::render($gui);
 	}
+	
+	static function _parameters() {
+
+		$dev = Request::getBoolean('dev');
+		$profile = Request::getBoolean('profile');
+		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
+		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
+		
+		return '<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
+		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
+		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
+		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
+		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
+		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>';
+		
+	}
 
 	static function render(&$gui) {
 		global $basePath;
@@ -18,10 +34,6 @@ class In2iGui {
 		if (Request::exists('xhtml','false')) {
 			$xhtml = false;
 		}
-		$dev = Request::getBoolean('dev');
-		$profile = Request::getBoolean('profile');
-		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
-		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
 
 		$xmlData = In2iGui::localize($gui,InternalSession::getLanguage());
 		
@@ -33,12 +45,7 @@ class In2iGui {
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="'.($xhtml ? 'xml' : 'html').'"/>'.
 
-		'<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
-		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
-		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
-		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
-		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>'.
+		In2iGui::_parameters().
 
 		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>'.
 
@@ -109,14 +116,17 @@ class In2iGui {
 	
 	static function renderFragment($gui) {
 		global $basePath;
-		$gui='<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:hui">'.In2iGui::localize($gui,InternalSession::getLanguage()).'</subgui>';
+		if (Strings::startsWith($gui,'<?xml')) {
+			$gui = In2iGui::localize($gui,InternalSession::getLanguage());
+		} else {
+			$gui = '<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:hui">'.In2iGui::localize($gui,InternalSession::getLanguage()).'</subgui>';			
+		}
 		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="xml"/>'.
-		'<xsl:variable name="dev">false</xsl:variable>'.
-		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="context">'.substr(ConfigurationService::getBaseUrl(),0,-1).'</xsl:variable>'.
-		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>'.
+		
+		In2iGui::_parameters().
+		
 		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';

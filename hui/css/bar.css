@@ -2,6 +2,7 @@ div.hui_bar
 {
 	background: url('../gfx/bar_light.png');
 	height: 30px;
+	text-align: left;
 }
 
 div.hui_bar_body
@@ -140,6 +141,14 @@ div.hui_bar_window_mini
 	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
 	height: 24px;
+}
+
+div.hui_window_light div.hui_bar_window_mini
+{
+    background: #fafafa;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 0 5px;
 }
 
 div.hui_bar_window_mini div.hui_bar_body

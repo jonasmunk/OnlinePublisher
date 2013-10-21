@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:hui" padding="10" title="Editor properties">
+	<window width="300" name="win" title="Properties" icon="monochrome/info_light" variant="light">
+		<bar variant="window_mini" name="bar">
+			<button icon="monochrome/text" key="text" name="barText" selected="true"/>
+			<button icon="monochrome/layout" key="layout" name="barLayout"/>
+			<button icon="monochrome/info" key="info" name="barInfo"/>
+			<button icon="monochrome/gear" key="advanced" name="barAdvanced"/>
+		</bar>
+		<pages name="pages">
+			<page key="text">
+				<formula name="textFormula" padding="10">
+					<fields>
+					<field label="Size">
+						<style-length-input adaptive="true"/>
+					</field>
+					<field label="Line">
+						<style-length-input adaptive="true"/>
+					</field>
+					<field label="Color">
+						<color-input/>
+					</field>
+					<field label="Font">
+						<font-input/>
+					</field>
+					<field label="Alignment">
+						<segmented>
+							<item icon="style/text_align_left"/>
+							<item icon="style/text_align_center"/>
+							<item icon="style/text_align_right"/>
+							<item icon="style/text_align_justify"/>
+						</segmented>
+					</field>
+					<field label="Weight">
+						<segmented>
+							<item icon="style/text_bold"/>
+							<item icon="style/text_normal"/>
+							<item text="300"/>
+							<item text="200"/>
+							<item text="100"/>
+						</segmented>
+					</field>
+					</fields>
+				</formula>
+			</page>
+			<page key="layout">
+				<formula name="layoutFormula" padding="10">
+					<fields>
+						<field label="Width:">
+							<style-length-input adaptive="true"/>
+						</field>
+						<field label="Float:">
+							<segmented>
+								<item icon="style/float_left"/>
+								<item icon="style/float_right"/>
+								<item icon="style/float_none"/>
+							</segmented>
+						</field>
+						<field label="Margin:">
+							<space height="5"/>
+							<columns flexible="true" space="10">
+								<column>
+									<field label="Top" compact="true">
+										<style-length-input adaptive="true"/>
+									</field>
+								</column>
+								<column>
+									<field label="Bottom" compact="true">
+										<style-length-input adaptive="true"/>
+									</field>
+								</column>
+							</columns>
+							<space height="5"/>
+							<columns flexible="true" space="10">
+								<column>
+									<field label="Left" compact="true">
+										<style-length-input adaptive="true"/>
+									</field>
+								</column>
+								<column>
+									<field label="Right" compact="true">
+										<style-length-input adaptive="true"/>
+									</field>
+								</column>
+							</columns>
+						</field>
+					</fields>
+				</formula>
+			</page>
+			<page key="info">
+				<space height="200"/>
+			</page>
+			<page key="advanced">
+				<formula name="layoutFormula" padding="10">
+					<fields>
+						<field label="Class">
+							<text-input/>
+						</field>
+						<field label="Style">
+							<text-input breaks="true"/>
+						</field>
+					</fields>
+				</formula>
+			</page>
+		</pages>
+	</window>
+	<listen>
+		$ready : function() {
+			win.show()
+			//this.$click$barLayout();
+		},
+		$clickButton$bar : function(button) {
+			pages.goTo(button.getKey());
+			bar.select(button.getKey());
+		}
+	</listen>
+</gui>

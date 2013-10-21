@@ -193,6 +193,10 @@ class PartController
 		return $css;
 	}
 	
+	function getUI() {
+		return null;
+	}
+	
 	function getToolbars() {
 		return null;
 	}

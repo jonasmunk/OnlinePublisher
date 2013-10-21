@@ -336,7 +336,9 @@
 	</a>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Bar.Button({
-			element:'<xsl:value-of select="generate-id()"/>',name:'<xsl:value-of select="@name"/>'
+			element : '<xsl:value-of select="generate-id()"/>',
+			name : '<xsl:value-of select="@name"/>'
+			<xsl:if test="@key">,key : '<xsl:value-of select="@key"/>'</xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 		<xsl:if test="@click">
