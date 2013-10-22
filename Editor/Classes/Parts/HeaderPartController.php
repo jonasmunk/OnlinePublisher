@@ -33,11 +33,21 @@ class HeaderPartController extends PartController
 		// Until Ajax posts all vars
 		if (Request::exists('level')) {
 			$part->setLevel(Request::getInt('level'));
-			$part->setFontSize(Request::getString('fontSize'));
-			$part->setFontFamily(Request::getString('fontFamily'));
-			$part->setTextAlign(Request::getString('textAlign'));
-			$part->setLineHeight(Request::getString('lineHeight'));
+		}
+		if (Request::exists('color')) {
 			$part->setColor(Request::getString('color'));
+		}
+		if (Request::exists('fontSize')) {
+			$part->setFontSize(Request::getString('fontSize'));
+		}
+		if (Request::exists('lineHeight')) {
+			$part->setLineHeight(Request::getString('lineHeight'));
+		}
+		if (Request::exists('textAlign')) {
+			$part->setTextAlign(Request::getString('textAlign'));
+		}
+		if (Request::exists('fontFamily')) {
+			$part->setFontFamily(Request::getString('fontFamily'));
 			$part->setLetterSpacing(Request::getString('letterSpacing'));
 			$part->setFontWeight(Request::getString('fontWeight'));
 			$part->setFontStyle(Request::getString('fontStyle'));
@@ -127,6 +137,64 @@ class HeaderPartController extends PartController
 		$part->setText($text);
 	}
 	
+	function getUI() {
+		return array(
+			array(
+				'icon' => 'monochrome/text',
+				'key' => 'text',
+				'body' => '
+					<formula name="textFormula" padding="10">
+						<fields>
+						<field label="Level">
+							<segmented key="level">
+								<item text="1" value="1"/>
+								<item text="2" value="2"/>
+								<item text="3" value="3"/>
+								<item text="4" value="4"/>
+								<item text="5" value="5"/>
+								<item text="6" value="6"/>
+							</segmented>
+						</field>
+						<field label="Size">
+							<style-length-input adaptive="true" key="fontSize"/>
+						</field>
+						<field label="Line">
+							<style-length-input adaptive="true" key="lineHeight"/>
+						</field>
+						<field label="Color">
+							<color-input key="color"/>
+						</field>
+						<field label="Font">
+							<font-input key="fontFamily"/>
+						</field>
+						<field label="Alignment">
+							<segmented key="textAlign" allow-null="true">
+								<item icon="style/text_align_left" value="left"/>
+								<item icon="style/text_align_center" value="center"/>
+								<item icon="style/text_align_right" value="right"/>
+								<item icon="style/text_align_justify" value="justify"/>
+							</segmented>
+						</field>
+						<field label="Weight">
+							<segmented allow-null="true" key="fontWeight">
+								<item icon="style/text_bold" value="bold"/>
+								<item icon="style/text_normal" value="normal"/>
+								<item text="300" value="300"/>
+								<item text="200" value="200"/>
+								<item text="100" value="100"/>
+							</segmented>
+						</field>
+						</fields>
+					</formula>
+				'
+			),
+			array(
+				'icon' => 'common/color',
+				'key' => 'color',
+				'body' => '<div style="height:300px;background:red"></div>'
+			)
+		);
+	}
 		
 	function getToolbars() {
 		return array(

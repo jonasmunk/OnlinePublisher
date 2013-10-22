@@ -128,6 +128,7 @@
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/bin/minimized.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/css/pages.css{$timestamp-query}"/>
 			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/css/editor.css{$timestamp-query}"/>
 		</xsl:when>
 		<xsl:otherwise>
@@ -169,6 +170,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			<script src="{$path}hui{$timestamp-url}/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/Pages.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:when test="$development='true'">
 			<script src="{$path}hui{$timestamp-url}/js/hui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>

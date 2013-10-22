@@ -272,17 +272,17 @@ hui.ui.Editor.prototype = {
 	},
 	showPartEditControls : function() {
 		if (!this.partEditControls) {
-			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions'});
+			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions',variant:'light'});
 			this.partEditControls.addIcon('save','common/ok');
 			this.partEditControls.addIcon('cancel','common/stop');
-			this.partEditControls.addIcon('settings','common/info');
+			this.partEditControls.addIcon('info','common/info_small');
 			this.partEditControls.listen(this);
 		}
 		this.partEditControls.showAtElement(this.activePart.element,{'horizontal':'right','vertical':'topOutside'});
 	},
 	showPartControls : function() {
 		if (!this.partControls) {
-			this.partControls = hui.ui.Overlay.create({name:'huiEditorPartActions'});
+			this.partControls = hui.ui.Overlay.create({name:'huiEditorPartActions',variant:'light'});
 			this.partControls.addIcon('edit','common/edit');
 			this.partControls.addIcon('new','common/new');
 			this.partControls.addIcon('delete','common/delete');
@@ -323,6 +323,8 @@ hui.ui.Editor.prototype = {
 			this.cancelPart(this.activePart);
 		} else if (key=='save') {
 			this.savePart(this.activePart);
+		} else if (key=='info') {
+			this.fire('toggleInfo');
 		}
 	},
 	_hidePartControls : function() {

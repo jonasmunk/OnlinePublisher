@@ -5695,6 +5695,10 @@ hui.ui.listen = function(delegate) {
 	hui.ui.delegates.push(delegate);
 }
 
+hui.ui.unListen = function(listener) {
+	hui.array.remove(hui.ui.delegates,listener);
+}
+
 hui.ui.callDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
@@ -5778,6 +5782,18 @@ hui.ui.resolveImageUrl = function(widget,img,width,height) {
 	}
 	return null;
 };
+
+/** Load som UI from an URL */
+hui.ui.include = function(options) {
+	hui.ui.request({
+		url : options.url,
+		$text : function(html) {
+			var container = hui.build('div',{html:html,parent:document.body});
+			hui.dom.runScripts(container);
+			options.$success();
+		}
+	})
+},
 
 ////////////////////////////// Bindings ///////////////////////////
 
@@ -13145,6 +13161,19 @@ hui.ui.Bar.prototype = {
 			}
 		}
 		return this.right;
+	},
+	select : function(key) {
+		var children = hui.ui.getDescendants(this);
+		hui.log(children);
+		for (var i = 0; i < children.length; i++) {
+			var child = children[i];
+			if (child.getKey && child.setSelected) {
+				child.setSelected(child.getKey()==key);
+			}
+		}
+	},
+	$clickButton : function(button) {
+		this.fire('clickButton',button);
 	}
 }
 
@@ -13202,12 +13231,16 @@ hui.ui.Bar.Button.prototype = {
 		if (this.options.stopEvents) {
 			hui.stop(e);
 		}
+		hui.ui.callAncestors(this,'$clickButton');
 	},
 	/** Mark the button as selected
 	 * @param {Boolean} selected If it should be marked selected
 	 */
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_bar_button_selected',selected);
+	},
+	getKey : function() {
+		return this.options.key;
 	}
 }
 
@@ -13495,12 +13528,11 @@ hui.ui.Segmented = function(options) {
 	this.name = options.name;
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	hui.listen(this.element,'mousedown',this.onClick.bind(this));
+	hui.listen(this.element,'mousedown',this._click.bind(this));
 }
 
 hui.ui.Segmented.prototype = {
-	/** @private */
-	onClick : function(e) {
+	_click : function(e) {
 		e = new hui.Event(e);
 		var a = e.findByTag('a');
 		if (a) {
@@ -13519,8 +13551,7 @@ hui.ui.Segmented.prototype = {
 				this.value = value;
 			}
 			if (changed) {
-				this.fire('valueChanged',this.value);
-				hui.ui.firePropertyChange(this,'value',this.value);
+				this.fireValueChange();
 			}
 		}
 	},
@@ -16379,6 +16410,13 @@ hui.ui.CodeInput.prototype = {
 	setValue : function(value) {
 		this.textarea.value = value;
 		this.value = value;
+	},
+	addLine : function(line) {
+		if (this.value==='') {
+			this.setValue(line);
+		} else {
+			this.setValue(this.value+"\n"+line);
+		}
 	},
 	reset : function() {
 		this.setValue('');

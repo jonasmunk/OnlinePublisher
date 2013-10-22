@@ -5,7 +5,6 @@ op.Editor.Richtext = function(options) {
 	this.element = hui.get(options.element);
 	this.id = hui.ui.Editor.getPartId(this.element);
 	this.container = hui.dom.firstChild(this.element);
-	this.section = {};
 	this.field = null;
 }
 

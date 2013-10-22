@@ -53,6 +53,9 @@ hui.ui.Pages.prototype = {
 			}
 		};
 	},
+	getPageKey : function() {
+		return this.pages[this.index].getAttribute('data-key');
+	},
 	expand : function() {
 		var l = this.pages.length;
 		for (var i=0; i < l; i++) {

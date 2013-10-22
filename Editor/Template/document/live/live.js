@@ -1,6 +1,7 @@
 op.DocumentEditor = {
 	
 	part : null,
+	section : null,
 
 	$partWasMoved$huiEditor : function(info) {
 		var data = hui.string.fromJSON(info.dragged.getAttribute('data'));
@@ -20,62 +21,84 @@ op.DocumentEditor = {
 			}.bind(this)
 		})
 	},
+	
 	$editPart$huiEditor : function(part) {
-		this._getPartEditor();
-		var e = part.element;
 		this.part = part;
-		this._partEditorForm.setValues({
-			top: hui.style.get(e,'padding-top'),
-			bottom: hui.style.get(e,'padding-bottom'),
-			left: hui.style.get(e,'padding-left'),
-			right: hui.style.get(e,'padding-right')
-		});
-		this._partWindow.show();
+	},
+	_initiatePartWindow : function() {
+		hui.ui.get('layoutFormula').setValues(this.section);
+		if (this.part.$partWindowLoaded) {
+			this.part.$partWindowLoaded()			
+		}
+		// Select the current page
+		hui.ui.get('bar').select(hui.ui.get('pages').getPageKey());
+		hui.ui.get('partWindow').show();
 	},
 	$deactivatePart$huiEditor : function() {
-		this._partWindow.hide();
+		var partWindow = hui.ui.get('partWindow');
+		if (partWindow) {
+			partWindow.hide();
+			hui.ui.destroy(partWindow);
+			hui.ui.destroyDescendants(partWindow);
+			hui.dom.remove(partWindow.element);
+		}
 	},
-	_updatePartProperties : function(values) {
+	$clickButton$bar : function(button) {
+		hui.ui.get('pages').goTo(button.getKey());
+		hui.ui.get('bar').select(button.getKey());
+	},
+	$valuesChanged$layoutFormula : function(values) {
+		this._updateSection(values);
+		this.section = values;
+	},
+	_updateSection : function(values) {
 		hui.style.set(this.part.element,{
 			paddingTop : values.top,
 			paddingBottom : values.bottom,
 			paddingLeft : values.left,
-			paddingRight : values.right
+			paddingRight : values.right,
+			'float' : values.float,
+			'width' : values.width
 		});
-		values.id = hui.string.fromJSON(this.part.element.getAttribute('data')).id;
-		this.part.section = values;
 	},
-	_getPartEditor : function() {
-	   	if (!this._partWindow) {
-	   		var w = this._partWindow = hui.ui.Window.create({padding:5,title:'Afsnit',close:false,width: 200});
-	   		var f = this._partEditorForm = hui.ui.Formula.create();
-	   		f.buildGroup({above:false},[
-	   			{type:'StyleLength',label:'Top',options:{key:'top'}},
-	   			{type:'StyleLength',label:'Bottom',options:{key:'bottom'}},
-	   			{type:'StyleLength',label:'Left',options:{key:'left'}},
-	   			{type:'StyleLength',label:'Right',options:{key:'right'}}
-	   		]);
-	   		w.add(f);
-	   		f.listen({$valuesChanged:this._updatePartProperties.bind(this)});
-	   	}
+	$toggleInfo$huiEditor : function() {
+		if (hui.ui.get('partWindow')) {
+			this._initiatePartWindow();
+			return;
+		}
+		hui.ui.include({
+			url : op.context+'Editor/Template/document/live/gui/properties.php?type=' + this.part.type,
+			$success : this._initiatePartWindow.bind(this)
+		})		
 	},
-	
 	
 	loadPart : function(options) {
+		this.section = {};
 		hui.ui.request({
 			url : op.context+'Editor/Template/document/live/LoadPart.php',
 			parameters : {type:options.part.type,id:options.part.id},
-			$object : function(part) {
-				options.$success(part);
+			$object : function(data) {
+				options.$success(data.part);
+				this.section = data.section;
+				var form = hui.ui.get('layoutFormula');
+				if (form) {
+					form.setValues(this.section)
+				}
 				options.callback();
-			},
+			}.bind(this),
 			$failure : function() {
 				options.callback();
 			}
 		});
 	},
 	savePart : function(options) {
-		var parameters = hui.override({id:options.part.id,pageId:op.page.id,type:options.part.type,section:hui.string.toJSON(options.part.section)},options.parameters);
+		var parameters = hui.override({
+			id : options.part.id,
+			pageId : op.page.id,
+			type : options.part.type,
+			section : hui.string.toJSON(this.section)
+		},options.parameters);
+		hui.log(this.section)
 		hui.ui.request({
 			url : op.context+'Editor/Template/document/live/SavePart.php',
 			parameters : parameters,

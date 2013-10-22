@@ -8,12 +8,11 @@ hui.ui.Segmented = function(options) {
 	this.name = options.name;
 	this.value = this.options.value;
 	hui.ui.extend(this);
-	hui.listen(this.element,'mousedown',this.onClick.bind(this));
+	hui.listen(this.element,'mousedown',this._click.bind(this));
 }
 
 hui.ui.Segmented.prototype = {
-	/** @private */
-	onClick : function(e) {
+	_click : function(e) {
 		e = new hui.Event(e);
 		var a = e.findByTag('a');
 		if (a) {
@@ -32,8 +31,7 @@ hui.ui.Segmented.prototype = {
 				this.value = value;
 			}
 			if (changed) {
-				this.fire('valueChanged',this.value);
-				hui.ui.firePropertyChange(this,'value',this.value);
+				this.fireValueChange();
 			}
 		}
 	},

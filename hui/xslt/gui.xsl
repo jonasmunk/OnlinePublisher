@@ -265,7 +265,7 @@
 
 
 <xsl:template name="gui:createobject">
-	<xsl:if test="@name and @name!=''">
+	<xsl:if test="@name and @name!='' and not(//gui:subgui[@globals='false'])">
 		if (window['<xsl:value-of select="@name"/>']===undefined) {
 			window['<xsl:value-of select="@name"/>'] = <xsl:value-of select="generate-id()"/>_obj;
 		}
@@ -1337,6 +1337,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Segmented({
 				element:'<xsl:value-of select="generate-id()"/>',
 				name:'<xsl:value-of select="@name"/>'
+				<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
 				<xsl:if test="@value">,value:'<xsl:value-of select="@value"/>'</xsl:if>
 				<xsl:if test="@allow-null='true'">,allowNull:true</xsl:if>
 			});

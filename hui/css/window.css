@@ -130,9 +130,38 @@ div.hui_window_back
 
 /********************************** Light **************************/
 
+div.hui_window_light
+{
+	border: 1px solid #ddd;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 3px 20px rgba(0,0,0,.1);
+}
+
+div.hui_window_light .hui_window_close
+{
+	margin-left: 6px;
+	margin-top: 5px;
+}
+
+div.hui_window_light .hui_window_titlebar div div
+{
+	line-height: 26px;
+}
+
+div.hui_window_light div.hui_window_content
+{
+	padding: 0;
+}
+
+div.hui_window_light div.hui_window_body
+{
+	margin: 0;
+}
+
 div.hui_window_light div.hui_window_titlebar, div.hui_window_light div.hui_window_titlebar div
 {
-	background-image: url('../gfx/window_light.png');
+	background-image: none;
 }
 
 div.hui_window_light .hui_window_titlebar span
@@ -142,17 +171,17 @@ div.hui_window_light .hui_window_titlebar span
 
 div.hui_window_light div.hui_window_bottom
 {
-	background-image: url('../gfx/window_light.png');
+	display: none;
 }
 
 div.hui_window_light div.hui_window_content
 {
-	background-image: url('../gfx/window_light_middle_right.png');
+	background-image: none;
 }
 
 div.hui_window_light div.hui_window_content div.hui_window_content
 {
-	background-image: url('../gfx/window_light_middle.png');
+	background-image: none;
 }
 
 
