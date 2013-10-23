@@ -148,9 +148,7 @@ hui.ui.Diagram.prototype = {
 	add : function(widget) {
 		var e = widget.element;
 		this.element.appendChild(e);
-		var size = widget.getSize();
-		e.style.left = (.5*(this.width - size.width))+'px';
-		e.style.top = (.5*(this.height - size.height))+'px';
+		widget.setCenter({x:this.width/2,y:this.height/2});
 		this.nodes.push(widget);
 	},
 	addLine : function(options) {
@@ -626,6 +624,7 @@ hui.ui.Diagram.Box.prototype = {
 	setCenter : function(point) {
 		this._syncSize();
 		var e = this.element;
+		// e.style.WebkitTransform = 'translate3d(' + Math.round(point.x - this.size.width/2) + 'px,' + Math.round(point.y - this.size.height/2) + 'px,0)';
 		e.style.top = Math.round(point.y - this.size.height/2)+'px';
 		e.style.left = Math.round(point.x - this.size.width/2)+'px';
 		this.center = {x : point.x, y : point.y};

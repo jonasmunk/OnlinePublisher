@@ -3582,8 +3582,8 @@ hui.ui.destroy = function(widget) {
 	delete(objects[widget.name]);
 }
 
-hui.ui.destroyDescendants = function(element) {
-	var desc = hui.ui.getDescendants(element);
+hui.ui.destroyDescendants = function(widgetOrElement) {
+	var desc = hui.ui.getDescendants(widgetOrElement);
 	var objects = hui.ui.objects;
 	for (var i=0; i < desc.length; i++) {
 		var obj  = delete(objects[desc[i].name]);
