@@ -238,7 +238,9 @@ class ImageTransformationService {
 		header('Content-Type: '.$mimeType);
 		header("Content-Length: ".filesize($path));
 		header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($path)).' GMT');
-		header('Expires: '.gmdate('D, d M Y H:i:s',time()+(60*60)) . ' GMT');
+		header('Pragma: public');
+		header("Cache-Control: public");
+		header('Expires: '.gmdate('D, d M Y H:i:s',time()+(7*24*60*60)) . ' GMT');
 		header('Date: '.gmdate('D, d M Y H:i:s') . ' GMT');
 		readfile($path);
 	}
