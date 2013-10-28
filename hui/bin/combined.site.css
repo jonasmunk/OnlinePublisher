@@ -1459,21 +1459,6 @@ em.hui_field_placeholder
 	display: none;
 }
 
-/******* Special lenght for style *******/
-/*
-span.hui_style_length
-{
-	width: 120px;
-}
-
-body span.hui_style_length input
-{
-	width: 100%;
-	padding-right: 0;
-	padding-left: 0;
-	margin-left: -3px;
-}*/
-
 /************************************** Buttons *********************************/
 
 form.hui_formula div.hui_buttons_body

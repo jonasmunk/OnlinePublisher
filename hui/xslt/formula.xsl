@@ -249,21 +249,17 @@
 -->
 <xsl:template name="gui:style-length" match="gui:style-length-input">
 	<span id="{generate-id()}">
-		<xsl:choose>
-			<xsl:when test="@width">
-				<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
-			</xsl:when>
-			<xsl:when test="@adaptive!='true'">
-				<xsl:attribute name="style">width:120px;</xsl:attribute>
-			</xsl:when>
-		</xsl:choose>
+		<xsl:if test="@width">
+			<xsl:attribute name="style">width:<xsl:value-of select="@width"/>px;</xsl:attribute>
+		</xsl:if>
 		<xsl:attribute name="class">
-			<xsl:text>hui_style_length hui_numberfield</xsl:text>
-			<xsl:if test="@adaptive='true'">
-				<xsl:text> hui_numberfield_adaptive</xsl:text>
-			</xsl:if>
+			<xsl:text>hui_style_length hui_numberfield x</xsl:text>
 		</xsl:attribute>
-		<span><span><input type="text" value="{@value}"/><a class="hui_numberfield_up"><xsl:comment/></a><a class="hui_numberfield_down"><xsl:comment/></a></span></span>
+		<span><span>
+			<input type="text" value="{@value}"/>
+			<a class="hui_numberfield_up"><xsl:comment/></a>
+			<a class="hui_numberfield_down"><xsl:comment/></a>
+		</span></span>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.StyleLength({
