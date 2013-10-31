@@ -234,6 +234,31 @@ class Request {
 	        }
 	    }
 	    return $headers;
-	}  
+	}
+	
+	/**
+	 * Transfers request parameters to an object if the parameter exists and a corresponding setter exists.
+	 * The keys can be just the parameters or parameter => type (string, int etc.) - or mixed.
+	 * @param object $object The object to change
+	 * @param array $keys The parameters to transfer
+	 */
+	static function transfer($object,$keys) {
+		foreach ($keys as $key=>$type) {
+			if (is_int($key)) {
+				$key = $type;
+				$type = 'string';
+			}
+			if (Request::exists($key)) {
+				$method = 'set'.ucfirst($key);
+				$value = $type=='int' ? Request::getInt($key) : Request::getString($key);
+				if (method_exists($object,$method)) {
+					$object->$method($value);
+				} else {
+					Log::debug('Method: '.$method.' does not exists on...');
+					Log::debug($object);
+				}
+			}
+		}
+	}
 }
 ?>

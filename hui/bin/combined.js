@@ -498,6 +498,26 @@ hui.dom = {
 		oldNode.parentNode.insertBefore(newNode,oldNode);
 		oldNode.parentNode.removeChild(oldNode);
 	},
+	changeTag : function(node,tagName) {
+		var replacement = hui.build(tagName);
+	
+		// Copy the children
+		while (node.firstChild) {
+		    replacement.appendChild(node.firstChild); // *Moves* the child
+		}
+
+		// Copy the attributes
+		for (var i = node.attributes.length - 1; i >= 0; --i) {
+		    replacement.attributes.setNamedItem(node.attributes[i].cloneNode());
+		}
+
+		// Insert it
+		node.parentNode.insertBefore(replacement, node);
+
+		// Remove the wns
+		node.parentNode.removeChild(node);
+		return replacement;
+	},
 	insertBefore : function(target,newNode) {
 		target.parentNode.insertBefore(newNode,target);
 	},

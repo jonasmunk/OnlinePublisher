@@ -7,10 +7,13 @@ op.Editor.Header = function(options) {
 	this.header = hui.get.firstByTag(this.element,'*');
 	this.style = {};
 	this.field = null;
+	this.originalStyle = null;
+	this.originalTag = null;
 }
 
 op.Editor.Header.prototype = {
 	type : 'header',
+	properties : ['color','fontSize','lineHeight','fontWeight','fontFamily','textAlign'],
 	
 	activate : function(callback) {
 		this._load(callback);
@@ -18,16 +21,17 @@ op.Editor.Header.prototype = {
 	},
 	save : function(options) {
 		this.value = this.field.value;
-		this.header.innerHTML = this.value;
+		var parameters = {
+			text : this.value, 
+			level : this.part.level
+		}
+		for (var i = 0; i < this.properties.length; i++) {
+			var p = this.properties[i];
+			parameters[p] = this.part[p];
+		}
 		op.DocumentEditor.savePart({
 			part : this,
-			parameters : {
-				text : this.value, 
-				level : this.part.level, 
-				color : this.part.color, 
-				fontSize : this.part.fontSize, 
-				lineHeight : this.part.lineHeight
-			},
+			parameters : parameters,
 			$success : function(html) {
 				this.element.innerHTML = html;
 				this.field = null;
@@ -37,7 +41,9 @@ op.Editor.Header.prototype = {
 		});
 	},
 	cancel : function() {
-		
+		this.header = hui.dom.changeTag(this.header,'h'+this.originalLevel);
+		this.header.setAttribute('style',this.originalStyle);
+		this._changeSectionClass(this.originalLevel);
 	},
 	deactivate : function(callback) {
 		this.header.style.visibility='';
@@ -61,8 +67,10 @@ op.Editor.Header.prototype = {
 		})
 	},
 	_edit : function() {
-		this.field = hui.build('textarea',{'class':'hui_editor_header',style:'resize: none;'});
+		this.field = hui.build('textarea',{style:'resize: none; background: none; border: none; position: absolute; padding: 0px; display: block; outline: none;'});
 		this.field.value = this.part.text;
+		this.originalStyle = this.header.getAttribute('style');
+		this.originalLevel = this.part.level;
 		this.header.style.visibility='hidden';
 		this._updateFieldStyle();
 		this.element.insertBefore(this.field,this.header);
@@ -86,14 +94,23 @@ op.Editor.Header.prototype = {
 			hui.log('No field',this);
 			return;
 		}
-		this.part.level = values.level;
-		this.part.color = values.color;
-		this.part.fontSize = values.fontSize;
-		this.part.lineHeight = values.lineHeight;
-		this.field.style.color = values.color;
-		this.field.style.fontSize = values.fontSize;
-		this.field.style.textAlign = values.textAlign;
-		this.field.style.fontWeight = values.fontWeight;
-		this.field.style.lineHeight = values.lineHeight;
+		if (this.part.level!=values.level) {
+			this.header = hui.dom.changeTag(this.header,'h'+values.level);
+			this._changeSectionClass(values.level);
+			this.part.level = values.level;
+		}
+		for (var i = 0; i < this.properties.length; i++) {
+			var p = this.properties[i];
+			this.part[p] = values[p];
+			this.header.style[p] = values[p];
+		}
+		
+		this._updateFieldStyle();
+	},
+	_changeSectionClass : function(level) {
+		for (var i = 1; i <= 6; i++) {
+			hui.cls.remove(this.element,'part_section_header_'+i);
+		}
+		hui.cls.add(this.element,'part_section_header_'+level);
 	}
 }

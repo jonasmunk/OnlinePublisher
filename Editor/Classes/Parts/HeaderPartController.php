@@ -27,36 +27,44 @@ class HeaderPartController extends PartController
 		return $part;
 	}
 	
+	function _transfer($object,$keys) {
+		foreach ($keys as $key=>$type) {
+			if (is_int($key)) {
+				$key = $type;
+				$type = 'string';
+			}
+			if (Request::exists($key)) {
+				$method = 'set'.ucfirst($key);
+				$value = $type=='int' ? Request::getInt($key) : Request::getString($key);
+				if (method_exists($object,$method)) {
+					$object->$method($value);
+				} else {
+					Log::debug('Method: '.$method.' does not exists on...');
+					Log::debug($object);
+				}
+			}
+		}
+	}
+	
 	function getFromRequest($id) {
 		$part = HeaderPart::load($id);
-		$part->setText(Request::getString('text'));
-		// Until Ajax posts all vars
-		if (Request::exists('level')) {
-			$part->setLevel(Request::getInt('level'));
-		}
-		if (Request::exists('color')) {
-			$part->setColor(Request::getString('color'));
-		}
-		if (Request::exists('fontSize')) {
-			$part->setFontSize(Request::getString('fontSize'));
-		}
-		if (Request::exists('lineHeight')) {
-			$part->setLineHeight(Request::getString('lineHeight'));
-		}
-		if (Request::exists('textAlign')) {
-			$part->setTextAlign(Request::getString('textAlign'));
-		}
-		if (Request::exists('fontFamily')) {
-			$part->setFontFamily(Request::getString('fontFamily'));
-			$part->setLetterSpacing(Request::getString('letterSpacing'));
-			$part->setFontWeight(Request::getString('fontWeight'));
-			$part->setFontStyle(Request::getString('fontStyle'));
-			$part->setWordSpacing(Request::getString('wordSpacing'));
-			$part->setTextIndent(Request::getString('textIndent'));
-			$part->setTextTransform(Request::getString('textTransform'));
-			$part->setFontVariant(Request::getString('fontVariant'));
-			$part->setTextDecoration(Request::getString('textDecoration'));
-		}
+		$this->_transfer($part,array(
+			'text',
+			'level'=>'int',
+			'color',
+			'fontSize',
+			'lineHeight',
+			'textAlign',
+			'fontFamily',
+			'letterSpacing',
+			'fontWeight',
+			'fontStyle',
+			'wordSpacing',
+			'textIndent',
+			'textTransform',
+			'fontVariant',
+			'textDecoration'
+		));
 		return $part;
 	}
 	
