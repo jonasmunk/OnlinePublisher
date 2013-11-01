@@ -5,20 +5,20 @@ div.hui_diagram
 	overflow: hidden;
 }
 
-div.hui_diagram_dragable
+.hui_diagram_dragable
 {
 	cursor: move;
 	cursor: -webkit-grab;
 }
 
-div.hui_diagram_dragging
+.hui_diagram_dragging
 {
 	cursor: move;
 	cursor: -webkit-grabbing;
 }
 
 
-span.hui_diagram_line_label
+.hui_diagram_line_label
 {
 	position: absolute;
 	font-size: 11px;
@@ -30,7 +30,7 @@ span.hui_diagram_line_label
 	overflow: hidden;
 	text-align: center;
 	white-space: nowrap;
-	text-overflow: ellipsis;
+	/*text-overflow: ellipsis;*/
 }
 
 /*** Icon ***/
@@ -68,7 +68,7 @@ div.hui_diagram_box
 {
 	position: absolute;
 	border: 1px solid #eee;
-	border-radius: 3px;
+	/*border-radius: 3px;*/
 	background: #fff;
 	top: 0;
 	left: 0;

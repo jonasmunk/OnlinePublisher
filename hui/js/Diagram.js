@@ -624,9 +624,14 @@ hui.ui.Diagram.Box.prototype = {
 	setCenter : function(point) {
 		this._syncSize();
 		var e = this.element;
-		// e.style.WebkitTransform = 'translate3d(' + Math.round(point.x - this.size.width/2) + 'px,' + Math.round(point.y - this.size.height/2) + 'px,0)';
-		e.style.top = Math.round(point.y - this.size.height/2)+'px';
-		e.style.left = Math.round(point.x - this.size.width/2)+'px';
+        if (!true) {
+          e.style.top='0';
+          e.style.left='0';
+      		e.style.WebkitTransform = 'translate3d(' + Math.round(point.x - this.size.width/2) + 'px,' + Math.round(point.y - this.size.height/2) + 'px,0)';      
+        } else {
+      		e.style.top = Math.round(point.y - this.size.height/2)+'px';
+      		e.style.left = Math.round(point.x - this.size.width/2)+'px';      
+        }
 		this.center = {x : point.x, y : point.y};
 	},
 	setSelected : function(selected) {
@@ -705,6 +710,9 @@ hui.ui.Diagram.util = {
 				e = hui.event(e);
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
 				var pos = hui.position.get(obj.element);
+                //var pos2 = obj.getCenter();
+				//var size = obj.getSize();
+                //pos = {left:pos2.x - size.width/2,top:pos2.y - size.height/2};
 				var diagramPosition = hui.position.get(diagram.element);
 				dragState = {
 					left : e.getLeft() - pos.left + diagramPosition.left,
@@ -718,8 +726,6 @@ hui.ui.Diagram.util = {
 				var size = obj.getSize();
 				obj.px = left;
 				obj.py = top;
-				//obj.element.style.top = top+'px';
-				//obj.element.style.left = left+'px';
 				top += size.height/2;
 				left += size.width/2;
 				obj.setCenter({x:left,y:top});

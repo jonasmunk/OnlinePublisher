@@ -76,16 +76,16 @@
 					}
 				})
 				win.add(code);
-				win.show();
-				win.move({top:400,left:50})
+				/*win.show();
+				win.move({top:400,left:50})*/
 
 				var logWin = hui.ui.Window.create({width:600,title:'Log'});
 				var log = hui.ui.CodeInput.create();
 				logWin.add(log);
-
+                /*
 				logWin.show();
 				logWin.move({top:400,left:700})
-				
+				*/
 				diagram.listen({
 					$select : function(obj) {
 						log.setValue(obj)
