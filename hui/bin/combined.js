@@ -2051,6 +2051,9 @@ hui.drag = {
 			if (moved && options.onAfterMove) {
 				options.onAfterMove();
 			}
+			if (!moved && options.onNotMoved) {
+				options.onNotMoved();
+			}
 			hui.selection.enable(true);
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);

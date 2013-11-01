@@ -2051,6 +2051,9 @@ hui.drag = {
 			if (moved && options.onAfterMove) {
 				options.onAfterMove();
 			}
+			if (!moved && options.onNotMoved) {
+				options.onNotMoved();
+			}
 			hui.selection.enable(true);
 		}.bind(this)
 		hui.listen(target,'mouseup',upper);
@@ -21732,6 +21735,7 @@ hui.ui.Diagram.prototype = {
 	
 	
 	_getCenter : function(widget) {
+		return widget.getCenter();
 		var e = widget.element;
 		return {
 			x : Math.round(parseInt(e.style.left)+e.clientWidth/2),
@@ -22182,16 +22186,25 @@ hui.ui.Diagram.Box.prototype = {
 	},
 	setCenter : function(point) {
 		this._syncSize();
-		var e = this.element;
-		// e.style.WebkitTransform = 'translate3d(' + Math.round(point.x - this.size.width/2) + 'px,' + Math.round(point.y - this.size.height/2) + 'px,0)';
-		e.style.top = Math.round(point.y - this.size.height/2)+'px';
-		e.style.left = Math.round(point.x - this.size.width/2)+'px';
 		this.center = {x : point.x, y : point.y};
+		this._updateCenter();
+	},
+	_updateCenter : function() {
+		this.element.style.top = Math.round(this.center.y - this.size.height/2)+'px';
+		this.element.style.left = Math.round(this.center.x - this.size.width/2)+'px';
 	},
 	setSelected : function(selected) {
 		hui.cls.set(this.element,'hui_diagram_box_selected',selected);
 	}
 }
+
+if (hui.browser.webkit) {
+	hui.ui.Diagram.Box.prototype._updateCenter = function() {
+		this.element.style.WebkitTransform = 'translate3d(' + Math.round(this.center.x - this.size.width/2) + 'px,' + Math.round(this.center.y - this.size.height/2) + 'px,0)';      
+	}
+}
+
+
 
 
 /** A box in a diagram
@@ -22256,18 +22269,23 @@ hui.ui.Diagram.util = {
 			element : obj.element,
 			onStart : function() {
 				hui.cls.add(obj.element,'hui_diagram_dragging');
-				diagram.__select(obj);
-				diagram.fire('select',obj.id);
 				obj.fixed = true;
 			},
+			onNotMoved : function() {
+				diagram.__select(obj);
+				diagram.fire('select',obj.id);
+			},
 			onBeforeMove : function(e) {
+				diagram.__nodeMoved(obj);
 				e = hui.event(e);
 				obj.element.style.zIndex = hui.ui.nextPanelIndex();
-				var pos = hui.position.get(obj.element);
+                var pos = obj.getCenter();
+				var size = obj.getSize();
+                pos = {left:pos.x - size.width/2,top:pos.y - size.height/2};
 				var diagramPosition = hui.position.get(diagram.element);
 				dragState = {
-					left : e.getLeft() - pos.left + diagramPosition.left,
-					top : e.getTop()-pos.top + diagramPosition.top
+					left : e.getLeft() - pos.left,
+					top : e.getTop()-pos.top
 				};
 				obj.element.style.right = 'auto';
 			},
@@ -22275,18 +22293,17 @@ hui.ui.Diagram.util = {
 				var top = (e.getTop()-dragState.top);
 				var left = (e.getLeft()-dragState.left);
 				var size = obj.getSize();
-				obj.px = left;
-				obj.py = top;
-				//obj.element.style.top = top+'px';
-				//obj.element.style.left = left+'px';
 				top += size.height/2;
 				left += size.width/2;
 				obj.setCenter({x:left,y:top});
+				obj.px = left;
+				obj.py = top;
 				diagram.__nodeMoved(obj);
  			},
 			onEnd : function() {
 				hui.cls.remove(obj.element,'hui_diagram_dragging');
 				obj.fixed = false;
+				hui.log('end')
 			}
 		});
 		hui.listen(obj.element,'dblclick',function(e) {

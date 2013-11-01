@@ -30,7 +30,7 @@ div.hui_diagram
 	overflow: hidden;
 	text-align: center;
 	white-space: nowrap;
-	/*text-overflow: ellipsis;*/
+	text-overflow: ellipsis;
 }
 
 /*** Icon ***/
@@ -68,7 +68,7 @@ div.hui_diagram_box
 {
 	position: absolute;
 	border: 1px solid #eee;
-	/*border-radius: 3px;*/
+	border-radius: 3px;
 	background: #fff;
 	top: 0;
 	left: 0;

@@ -26,13 +26,15 @@
 </head>
 
 <body>
-	<div id="container" style="border: 1px solid #eee;">
+	<button onclick="hui.ui.get('diagram').resume()">Resume</button>
+	<div id="container" style="border: 1px solid #eee; margin: 50px">
 		
 	</div>
 	<script>
 		hui.ui.listen({
 			$ready : function() {
 				var diagram = new hui.ui.Diagram.create({
+					name : 'diagram',
 					parent : hui.get('container'),
 					//layout : hui.location.getParameter('layout') || 'Arbor',
 					height : 800
