@@ -86,16 +86,20 @@
 	
 	
 	<section id="pressphotos">
+		<!--
 		<div id="background1">
 			<div><xsl:comment/></div>
 		</div>
+			-->
 		<div class="block">
 		<a name="photos"><xsl:comment/></a>
 			<div class="press_left"><xsl:comment/></div>
 			<article>
 				<h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
 				<p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
+				<!--
 				<p><a href="{$path}?file=493"><span>Hent pressekit &#8250;</span></a></p>
+				-->
 				<p><a href="javascript://" onclick="photoGallery.show();"><span>Lysbilleder &#8250;</span></a></p>
 			</article>
 			<div class="press_right"><xsl:comment/></div>
@@ -185,9 +189,12 @@
 			<div>
 				<a name="communication"><xsl:comment/></a>
 				<h2>Kommunikationstræning</h2>
+				<p>Skuespillerteknikken anvender jeg også som kommunikationsrådgiver, hvor jeg bruger <strong>teaterets redskaber</strong> til at give en <strong>oplevelsesbaseret læring</strong>.  Jeg prøver altid  at formidle en indsigt i det enkelte menneskes måde at kommunikere på. At give en meget personlig og <strong>konstruktiv feedback</strong>, er noget jeg vægter meget højt.</p>
+				
+				<!--
 				<p>Vi levendegør de problemstillinger der skal sættes fokus på.</p>
 				<p>Vi skaber en fælles "her og nu oplevelse" som I kan diskutere ud fra, og som helt konkret tydeliggør udfordringen, eller hvad der går galt i kommunikationen. Ud fra det fælles afsæt gives ny inspiration til andre handlemuligheder.</p>
-				<p>Vi kommer gerne til et uforpligtende møde, hvor vi sammen kan diskutere indhold og form. Vi kan komme med konkrete ideer, så vi sammen kan skabe og finde frem til det set -up, som I har brug for.</p>
+				<p>Vi kommer gerne til et uforpligtende møde, hvor vi sammen kan diskutere indhold og form. Vi kan komme med konkrete ideer, så vi sammen kan skabe og finde frem til det set -up, som I har brug for.</p>-->
 				<p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunikationstræning &#8250;</span></a></p>
 			</div>
 			<figure><xsl:comment/></figure>
@@ -196,7 +203,7 @@
 	
 	<section id="humanise">
 		<article>
-			<p>This has been carefully crafted<br/>
+			<p>This site has been carefully crafted<br/>
 			analysed and executed<br/>
 			from the engineering inside<br/>
 			to the design on the outside<br/>

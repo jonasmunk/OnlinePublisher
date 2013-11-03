@@ -124,12 +124,13 @@ var ctrl = {
 				}
 			})
 		}*/
+		/*
 		hui.parallax.listen({
 			element : background1,
 			$scroll : function(pos) {
 				background1_body.style.marginTop = (pos*200-250)+'px';
 			}
-		})
+		})*/
 		hui.parallax.listen({
 			element : theater,
 			darkened : false,
@@ -162,7 +163,7 @@ var ctrl = {
 		})
 		hui.parallax.listen({
 			$resize : function(width,height) {
-				theater.style.height = Math.round(height*.9)+'px';
+				theater.style.height = Math.round(height*1)+'px';
 				if (!hui.browser.mediaQueries) {
 					hui.cls.set(document.body,'small',width<1200);
 				}

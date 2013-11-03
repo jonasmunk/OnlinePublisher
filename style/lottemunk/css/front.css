@@ -12,7 +12,13 @@ body.dark
 	background-color: #000;
 }
 
-
+body.front {
+	background: url('../gfx/bg.jpg') 50% 50%;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;	
+}
 
 body.front h1, 
 body.front h2
@@ -154,10 +160,6 @@ a.button:hover
 	height: 100%;
 }
 
-
-div.broen_text
-{
-}
 
 div.broen_text h2
 {
@@ -435,7 +437,7 @@ ul.icons a
 
 #pressphotos
 {
-	margin: 250px 0;
+	margin: 450px 0;
 	background: url('../gfx/eyes2.jpg') 50% 50%;
 /*	-webkit-filter: saturate(0);*/
 	-webkit-transition: all .5s ease-in-out;
@@ -562,7 +564,7 @@ ul.icons a
 #video
 {
 	height: 480px;
-	margin: 0 0 200px 0;
+	margin: 0 0 500px 0;
 	background: #000;
 	position: relative;
 }
@@ -728,7 +730,7 @@ ul.icons a
 #theater p.link
 {
 	position: absolute;
-	bottom: 2%;
+	bottom: 5%;
 	left: 0;
 	right: 0;
 	z-index: 1;
@@ -752,7 +754,7 @@ ul.icons a
 	position: absolute;
 	width: 683px;
 	height: 394px;
-	bottom: 7%;
+	bottom: 12%;
 	left: 50%;
 	margin: -197px 0 0 -342px;
 	background: url('../gfx/theater.jpg');
@@ -966,11 +968,11 @@ li.theater6
 
 #communication
 {
-	margin: 200px 0 0;
+	margin: 500px 0 0;
 	text-align: center;
 	height: auto;
 	background: #fff;
-	padding-bottom: 50px;
+	padding: 50px 0;
 }
 
 #communication h2
@@ -986,6 +988,7 @@ li.theater6
 {
 	margin: 0 10%;
 	font-size: 1.3em;
+	line-height: 1.5em;
 }
 
 #communication p.link
@@ -1012,8 +1015,8 @@ li.theater6
 	-moz-background-size: cover;
 	background-size: cover;
 	overflow: hidden;
-	-webkit-transition: height 2s ease-in;
-	-moz-transition: height 2s ease-in;
+	-webkit-transition: height 1s ease-in;
+	-moz-transition: height 1s ease-in;
 	display: none;
 }
 
