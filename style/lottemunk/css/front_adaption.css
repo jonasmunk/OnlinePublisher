@@ -44,6 +44,9 @@
 	
 }
 
+
+
+
 body.small #video
 {
 	height: auto;
@@ -77,16 +80,22 @@ body.small #video article p
 }
 
 
+
+
+
+
 @media screen and (max-width: 1000px) {
-	html {
-		font-size: 80%;
+	#pressphotos h2 {
+		font-size: 42pt;
 	}
 }
 
 @media screen and (max-width: 900px) {
-	html {
-		font-size: 70%;
+	
+	#pressphotos h2 {
+		font-size: 28pt;
 	}
+	
 	body.front header nav a
 	{
 		font-size: 12pt;
@@ -94,8 +103,9 @@ body.small #video article p
 }
 
 @media screen and (max-width: 800px) {
-	html {
-		font-size: 65%;
+	
+	#pressphotos h2 {
+		font-size: 24pt;
 	}
 	
 	body.front header nav a
@@ -106,9 +116,6 @@ body.small #video article p
 }
 
 @media screen and (max-width: 700px) {
-	html {
-		font-size: 80%;
-	}
 }
 
 
@@ -315,6 +322,7 @@ body.small #video article p
 	#communication {
 		margin-top: 100px;
 		padding: 0;
+		margin-bottom: 50px;
 	}
 	
 	#communication h2 {
@@ -353,5 +361,20 @@ body.small #video article p
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
 		background-size: cover;	
+	}
+	
+	#humanise.visible {
+		height: 300px;
+		background-position: 0 50%;
+	}
+	
+	#humanise article {
+		font-size: 1em;
+		padding: 10px 50% 0 10px;
+		text-align: center;
+	}
+	
+	body.front footer {
+		padding: 50px 0;
 	}
 }

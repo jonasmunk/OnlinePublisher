@@ -186,8 +186,8 @@
 	
 	<section id="communication">
 		<article>
-			<div>
 				<a name="communication"><xsl:comment/></a>
+			<div>
 				<h2>Kommunikations<span>træning</span></h2>
 				<p>Skuespillerteknikken anvender jeg også som kommunikationsrådgiver, hvor jeg bruger <strong>teaterets redskaber</strong> til at give en <strong>oplevelsesbaseret læring</strong>.  Jeg prøver altid  at formidle en indsigt i det enkelte menneskes måde at kommunikere på. At give en meget personlig og <strong>konstruktiv feedback</strong>, er noget jeg vægter meget højt.</p>
 				
@@ -209,7 +209,7 @@
 			to the design on the outside<br/>
 			by hand and mind<br/>
 			- by Humanise</p>
-			<p><a href="http://www.humanise.dk/"><span>Visit Humanise</span></a></p>
+			<p><a href="http://www.humanise.dk/"><span>Visit Humanise »</span></a></p>
 		</article>
 	</section>
 	

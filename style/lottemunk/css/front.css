@@ -1,9 +1,6 @@
 
 body.front
 {
-	padding-top: 286px;
-	-webkit-transition: background-color 1s ease-out;
-	-moz-transition: background-color 1s ease-out;
 	background-color: #fff;
 }
 
@@ -18,6 +15,9 @@ html.desktop body.front {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;	
+	padding-top: 286px;
+	-webkit-transition: background-color 1s ease-out;
+	-moz-transition: background-color 1s ease-out;
 }
 
 body.front h1, 
@@ -32,9 +32,12 @@ body.front header
 {
 	height: 246px;
 	z-index: 3;
-	position: fixed;
 	top: 0;
 	width: 100%;
+}
+
+.desktop .front header {
+	position: fixed;
 	-webkit-transform: translate3d(0,0,0);
 	-moz-transform: translate3d(0,0,0);
 	-webkit-transition: -webkit-transform 2s ease-in-out;
@@ -43,7 +46,7 @@ body.front header
 
 
 
-body.full header
+html.desktop body.full header
 {
 	-webkit-transform: translate3d(0,-100px,0);
 	-moz-transform: translate3d(0,-100px,0);
@@ -248,7 +251,7 @@ div.broen_photo3
 	padding: 0 10%;
 }
 
-html.desktop #about div.text
+.desktop #about div.text
 {
 	-webkit-transform: scale(.7) translate(0,-50px);
 	-webkit-transition: -webkit-transform .5s ease-in-out;
@@ -256,7 +259,7 @@ html.desktop #about div.text
 	-moz-transition: all .5s ease-in-out;
 }
 
-html.desktop #about.visible div.text
+.desktop #about.visible div.text
 {
 	-webkit-transform: scale(1);
 	-moz-transform: scale(1);
@@ -292,9 +295,12 @@ ul.icons a
 	text-decoration: none;
 	-webkit-transition: all .5s ease-in-out;
 	-moz-transition: all .5s ease-in-out;
+	color: #2585c9;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
-ul.icons a
+.desktop ul.icons a
 {
 	margin-left: 40px;
 	margin-right: 40px;
@@ -438,13 +444,15 @@ ul.icons a
 
 #pressphotos
 {
+	margin: 150px 0;
+	position: relative;
+}
+
+.desktop #pressphotos {
 	margin: 450px 0;
-	/*background: url('../gfx/eyes2.jpg') 50% 50%;*/
-/*	-webkit-filter: saturate(0);*/
 	-webkit-transition: all .5s ease-in-out;
 	-moz-filter: saturate(0);
-	-moz-transition: all .5s ease-in-out;
-	position: relative;
+	-moz-transition: all .5s ease-in-out;	
 }
 
 #pressphotos.invisble
@@ -565,9 +573,13 @@ ul.icons a
 #video
 {
 	height: 480px;
-	margin: 0 0 500px 0;
 	background: #000;
 	position: relative;
+	margin: 0 0 150px 0;
+}
+
+.desktop #video {
+	margin: 0 0 500px 0;
 }
 
 #video iframe
@@ -694,11 +706,16 @@ ul.icons a
 	background: url('../gfx/frame3.jpg');
 }
 
+
+
+
+
+
 /***** Theater *****/
 
 #theater
 {
-	height: 300px;
+	height: 700px;
 	background: #000;
 	position: relative;
 }
@@ -759,7 +776,11 @@ ul.icons a
 	left: 50%;
 	margin: -197px 0 0 -342px;
 	background: url('../gfx/theater.jpg');
-	opacity: 0;
+}
+
+.desktop #theater div.photo
+{
+	opacity: 0;	
 }
 
 ul.theaters
@@ -969,11 +990,14 @@ li.theater6
 
 #communication
 {
-	margin: 500px 0 0;
 	text-align: center;
 	height: auto;
 	background: #fff;
 	padding: 50px 0;
+}
+
+.desktop #communication {
+	margin: 500px 0 0;	
 }
 
 #communication h2
@@ -1018,7 +1042,7 @@ li.theater6
 	overflow: hidden;
 	-webkit-transition: height 1s ease-in;
 	-moz-transition: height 1s ease-in;
-	display: none;
+	/*display: none;*/
 }
 
 #humanise article
@@ -1036,7 +1060,8 @@ li.theater6
 
 #humanise p a
 {
-	color: #36f;
+	color: #679;
+	text-decoration: none;
 }
 
 #humanise.visible

@@ -3,36 +3,17 @@
 var ctrl = {
 		
 	attach : function() {
+		var nav = hui.get.firstByTag(head,'nav');
 		
-		hui.cls.add(document.body.parentNode,'desktop');
-		
-		var head = hui.get('head'),
-			title = hui.get('title'),
-			job = hui.get('job'),
-			broen = hui.get('broen'),
-			about = hui.get('about'),
-			press = hui.get('pressphotos'),
-			theater = hui.get('theater'),
-			background1 = hui.get('background1'),
-			background1_body = hui.get.firstByTag(background1,'div'),
-			background2 = hui.get('background2'),
-			background2_body = hui.get.firstByTag(background2,'div'),
-			background3 = hui.get('background3'),
-			background3_body = hui.get.firstByTag(background3,'div'),
-			theater_photo = hui.get.firstByClass(theater,'photo'),
-			theaters = hui.get.firstByClass(theater,'theaters'),
-			nav = hui.get.firstByTag(head,'nav'),
-			reelContent = hui.get('reelContent');
-		
-			var paths = {
-				'/' : 'top',
-				'/cv/' : 'about',
-				'' : 'theater',
-				'/fotografier/' : 'photos',
-				'/kommunikation/' : 'communication',
-				'/film/' : 'movies'
-			}
-		
+	
+		var paths = {
+			'/' : 'top',
+			'/cv/' : 'about',
+			'' : 'theater',
+			'/fotografier/' : 'photos',
+			'/kommunikation/' : 'communication',
+			'/film/' : 'movies'
+		};
 		
 		hui.listen(nav,'click',function(e) {
 			e = hui.event(e);
@@ -56,6 +37,43 @@ var ctrl = {
 				}
 			}
 		});
+
+		hui.listen('handmade','click',function(e) {
+			hui.stop(e);
+			var hum = hui.get('humanise');
+			hum.style.display='block'
+			window.setTimeout(function() {
+				hui.cls.add(hum,'visible');
+			})
+		})
+
+		// The rest is just non-touch...
+		
+		if (hui.browser.touch) {
+			return;
+		}
+		hui.cls.add(document.body.parentNode,'desktop');
+		
+		var head = hui.get('head'),
+			title = hui.get('title'),
+			job = hui.get('job'),
+			broen = hui.get('broen'),
+			about = hui.get('about'),
+			press = hui.get('pressphotos'),
+			theater = hui.get('theater'),
+			background1 = hui.get('background1'),
+			background1_body = hui.get.firstByTag(background1,'div'),
+			background2 = hui.get('background2'),
+			background2_body = hui.get.firstByTag(background2,'div'),
+			background3 = hui.get('background3'),
+			background3_body = hui.get.firstByTag(background3,'div'),
+			theater_photo = hui.get.firstByClass(theater,'photo'),
+			theaters = hui.get.firstByClass(theater,'theaters'),
+			reelContent = hui.get('reelContent');
+		
+		
+		
+		
 		
 		var currentWidth = hui.window.getViewWidth();
 		var menuWidth = 0;
@@ -173,21 +191,10 @@ var ctrl = {
 			}
 		})
 		hui.parallax.start();
-		
-		hui.listen('handmade','click',function(e) {
-			hui.stop(e);
-			var hum = hui.get('humanise');
-			hum.style.display='block'
-			window.setTimeout(function() {
-				hui.cls.add(hum,'visible');
-			})
-		})
 	}
 }
 
-if (!hui.browser.touch) {
-	hui.onReady(ctrl.attach.bind(ctrl))
-}
+hui.onReady(ctrl.attach.bind(ctrl))
 
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));
