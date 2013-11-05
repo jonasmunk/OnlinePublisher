@@ -104,6 +104,11 @@ body.small #video article p
 
 @media screen and (max-width: 800px) {
 	
+	body.front header h1,
+	body.front header p {
+		width: 300px;
+	}
+	
 	#pressphotos h2 {
 		font-size: 24pt;
 	}
@@ -206,7 +211,7 @@ body.small #video article p
 	
 	#about
 	{
-		padding: 0;
+		padding: 0 0 40px;
 	}
 	
 	#about div.contact {
@@ -217,7 +222,7 @@ body.small #video article p
 	#about div.contact p
 	{
 		display: block;
-		margin: 15px 0;
+		margin: 0 0;
 		padding-right: 0;
 	}
 	

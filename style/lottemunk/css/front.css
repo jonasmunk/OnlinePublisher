@@ -328,7 +328,7 @@ ul.icons a
 {
 	display: inline-block;
 	vertical-align: middle;
-	padding: 0 40px 0 40px;
+	padding: 10px 40px 10px 40px;
 	position: relative;
 	min-height: 32px;
 	text-align: left;
@@ -337,7 +337,6 @@ ul.icons a
 #about div.contact p.address
 {
 	font-size: 1em;
-	padding: 5px 40px 5px 40px;
 }
 
 #about div.contact p.address span.icon
@@ -345,7 +344,7 @@ ul.icons a
 	font-size: 40px;
 	width: 40px;
 	height: 40px;
-	top: 0px;
+	top: 5px;
 	left: -4px;
 } 
 
@@ -373,7 +372,7 @@ ul.icons a
 	height: 32px;
 	position: absolute;
 	left: 0;
-	top: 0;
+	top: 10px;
 }
 
 
