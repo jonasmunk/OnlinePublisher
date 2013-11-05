@@ -107,20 +107,63 @@ body.small #video article p
 
 @media screen and (max-width: 700px) {
 	html {
-		font-size: 60%;
+		font-size: 80%;
 	}
 }
 
 
-
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px){
+	html {
+		font-size: 100%;
+	}
 	body.front
 	{
 		padding-top: 0;
 	}
+	
 	body.front header
 	{
 		position: static;
+		height: auto;
+		background: #000;
+		margin: 0;
+	}
+	
+	body.front header h1 {
+		position: static;
+	}
+	
+	body.front #job {
+		position: static;
+		width: auto;
+		left: 0;
+		top: 0;
+		display: block;
+		font-size: 1.3em;
+		margin: -10px 0 8px;
+		line-height: 1em;
+		color: #948fa3;
+	}
+	
+	body.front #navigation {
+		position: static;
+		background: none;
+		text-align: center;
+		padding-bottom: 10px
+	}
+	
+	#title {
+		color: #fff;
+		text-shadow: none;
+	}
+	
+	#job {
+		display: none;
+	}
+	
+	#broen div.left {
+		float: none;
+		width: auto;
 	}
 	
 	body.front header nav
@@ -137,4 +180,178 @@ body.small #video article p
 		line-height: 1.3em;
 	}
 	
+	#about p.text
+	{
+		font-size: 11pt;
+		margin: 0 5%;
+	}
+	
+	ul.icons {
+		margin: 50px 0 0;		
+	}
+	
+	ul.icons a
+	{
+		margin-left: 10px;
+		margin-right: 10px;
+		color: #2585c9;
+	}
+	
+	#about
+	{
+		padding: 0;
+	}
+	
+	#about div.contact {
+		display: inline-block;
+		text-align: left;
+	}
+	
+	#about div.contact p
+	{
+		display: block;
+		margin: 15px 0;
+		padding-right: 0;
+	}
+	
+	#pressphotos {
+		margin: 100px 0;
+	}
+	
+	#pressphotos div.block {
+		height: auto;
+	}
+	
+	
+	/** Photos **/
+	
+	#pressphotos div.press_right,
+	#pressphotos div.press_left
+	{
+		position: static;
+		width: auto;
+		height: 300px;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		background-size: cover;	
+	}
+	
+	#pressphotos article {
+		margin: 0;
+		height: 200px;
+	}
+	
+	#pressphotos h2 {
+		font-size: 30pt;
+		padding-top: 35px;
+	}
+	
+	
+	
+	/** Video **/
+	
+	#reel {
+		display: none;
+	}
+	
+	#video {
+		margin-bottom: 100px;
+	}
+	
+	#video article {
+		padding: 10px 0;
+	}
+	
+	#video article h2 {
+		font-size: 4em;
+		padding: 20px 20px 40px;
+	}
+	
+	#video article h2 span {
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
+	
+	#video iframe {
+		height: 240px;
+	}
+
+
+
+	/** Theater **/
+	
+	#theater {
+		height: 520px;
+	}
+	
+	#theater div.photo {
+		opacity: 1;
+		bottom: 70px;
+		width: 342px;
+		height: 197px;
+		margin-left: -170px;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		background-size: cover;	
+	}
+	
+	#theater p.link {
+		bottom: 25px;
+	}
+	
+	#theater article {
+		left: 10px;
+		right: 10px;
+	}
+	
+	#theater p {
+		line-height: 1.2em;
+	}
+	
+	
+	/** Communication **/
+	
+	#communication {
+		margin-top: 100px;
+		padding: 0;
+	}
+	
+	#communication h2 {
+		font-size: 2.2em;
+		line-height: 1em;
+	}
+	
+	#communication p {
+		margin: 0 5%;
+		font-size: 1.2em;
+		line-height: 1.3em;
+	}
+	
+	#communication h2 span {
+		display: block;
+	}
+	
+	#communication a.button {
+		padding: 0 10px;
+		font-size: .9em;
+	}
+	
+	#communication figure {
+		height: 205px;
+		width: 175px;
+		margin: 0 auto;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		background-size: cover;	
+	}
+	
+	
+	#handmade {
+		width: 149px;
+		height: 74px;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		background-size: cover;	
+	}
 }

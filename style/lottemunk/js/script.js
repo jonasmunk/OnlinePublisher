@@ -4,6 +4,8 @@ var ctrl = {
 		
 	attach : function() {
 		
+		hui.cls.add(document.body.parentNode,'desktop');
+		
 		var head = hui.get('head'),
 			title = hui.get('title'),
 			job = hui.get('job'),

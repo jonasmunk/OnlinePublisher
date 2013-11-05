@@ -77,9 +77,9 @@
 			-->
 		</ul>
 		<div class="contact">
-			<p class="address"><span class="icon icon-map"><xsl:comment/></span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</p>
+			<p class="address"><span class="icon icon-map"><xsl:comment/></span><a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527"><span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span></a></p>
 			<p class="email"><span class="icon icon-mail"><xsl:comment/></span><a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a></p>
-			<p class="phone"><span class="icon icon-phone"><xsl:comment/></span>+45 <strong>26 36 84 12</strong></p>
+			<p class="phone"><span class="icon icon-phone"><xsl:comment/></span><a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a></p>
 		</div>
 	</section>
 	
@@ -188,7 +188,7 @@
 		<article>
 			<div>
 				<a name="communication"><xsl:comment/></a>
-				<h2>Kommunikationstræning</h2>
+				<h2>Kommunikations<span>træning</span></h2>
 				<p>Skuespillerteknikken anvender jeg også som kommunikationsrådgiver, hvor jeg bruger <strong>teaterets redskaber</strong> til at give en <strong>oplevelsesbaseret læring</strong>.  Jeg prøver altid  at formidle en indsigt i det enkelte menneskes måde at kommunikere på. At give en meget personlig og <strong>konstruktiv feedback</strong>, er noget jeg vægter meget højt.</p>
 				
 				<!--

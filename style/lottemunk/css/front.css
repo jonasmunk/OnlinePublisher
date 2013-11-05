@@ -12,7 +12,7 @@ body.dark
 	background-color: #000;
 }
 
-body.front {
+html.desktop body.front {
 	background: url('../gfx/bg.jpg') 50% 50%;
 	background-attachment: fixed;
 	-webkit-background-size: cover;
@@ -248,7 +248,7 @@ div.broen_photo3
 	padding: 0 10%;
 }
 
-#about div.text
+html.desktop #about div.text
 {
 	-webkit-transform: scale(.7) translate(0,-50px);
 	-webkit-transition: -webkit-transform .5s ease-in-out;
@@ -256,7 +256,7 @@ div.broen_photo3
 	-moz-transition: all .5s ease-in-out;
 }
 
-#about.visible div.text
+html.desktop #about.visible div.text
 {
 	-webkit-transform: scale(1);
 	-moz-transform: scale(1);
@@ -331,7 +331,7 @@ ul.icons a
 #about div.contact p.address
 {
 	font-size: 1em;
-	padding: 5px 40px 5px 44px;
+	padding: 5px 40px 5px 40px;
 }
 
 #about div.contact p.address span.icon
@@ -340,6 +340,7 @@ ul.icons a
 	width: 40px;
 	height: 40px;
 	top: 0px;
+	left: -4px;
 } 
 
 #about div.contact p.email,
@@ -438,7 +439,7 @@ ul.icons a
 #pressphotos
 {
 	margin: 450px 0;
-	background: url('../gfx/eyes2.jpg') 50% 50%;
+	/*background: url('../gfx/eyes2.jpg') 50% 50%;*/
 /*	-webkit-filter: saturate(0);*/
 	-webkit-transition: all .5s ease-in-out;
 	-moz-filter: saturate(0);
