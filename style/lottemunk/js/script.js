@@ -153,9 +153,9 @@ var ctrl = {
 		})*/
 		hui.parallax.listen({
 			element : theater,
-			darkened : false,
+			//darkened : false,
 			$scroll : function(pos) {
-				
+				/*
 				var dark = pos>0 && pos<1;
 				if (this.darkened!=dark) {
 					hui.cls.set(document.body,'full',dark);
@@ -165,7 +165,7 @@ var ctrl = {
 						hui.animate({node:document.body,css:{'background-color':dark ? '#000' : '#fff'},duration:1000});
 					}
 					this.darkened = dark;
-				}
+				}*/
 				var show = pos>.3 && pos<.7;
 				if (this.shown!=show) {
 					if (show) {

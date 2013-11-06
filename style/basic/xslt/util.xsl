@@ -175,6 +175,7 @@
 		<xsl:when test="$development='true'">
 			<script src="{$path}hui{$timestamp-url}/js/hui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}hui{$timestamp-url}/js/hui_animation.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}hui{$timestamp-url}/js/hui_parallax.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}hui{$timestamp-url}/js/hui_color.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}hui{$timestamp-url}/js/hui_require.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}hui{$timestamp-url}/js/ui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
