@@ -8,8 +8,18 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+Entity::$schema['Waterusage'] = array(
+	'table' => 'waterusage',
+	'properties' => array(
+    	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id','relation'=>array('class'=>'Watermeter','property'=>'id')),
+    	'value'  => array('type'=>'int'),
+    	'date'  => array('type'=>'datetime'),
+    	'status'  => array('type'=>'int'),
+    	'source'  => array('type'=>'int')
+	)
+);
 Object::$schema['waterusage'] = array(
-	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id'),
+	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id','relation'=>array('class'=>'Watermeter','property'=>'id')),
 	'value'  => array('type'=>'int'),
 	'date'  => array('type'=>'datetime'),
 	'status'  => array('type'=>'int'),
