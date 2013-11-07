@@ -65,9 +65,17 @@ if (file_exists($cache)) {
 		} else {
 			$recipe['destination'] = $cache;
 			ImageTransformationService::transform($recipe);
-			ImageTransformationService::sendFile($cache,$recipe['format']);
+            if (file_exists($cache)) {
+    			ImageTransformationService::sendFile($cache,$recipe['format']);                
+        	} else if (ConfigurationService::isDebug()) {
+                Response::redirect('http://placeimg.com/640/480/arch/grayscale');
+            } else {
+        		Response::internalServerError('Unable to transform image');
+            }
 		}
-	} else {
+	} else if (ConfigurationService::isDebug()) {
+        Response::redirect('http://placeimg.com/640/480/arch/grayscale');
+    } else {
 		Response::notFound();
 	}
 }
