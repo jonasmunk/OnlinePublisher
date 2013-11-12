@@ -3022,26 +3022,28 @@ hui.ease = {
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    if (!hui.browser.chrome) {
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+                                       || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
     }
- 
-    if (!window.requestAnimationFrame)
+    if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = function(callback, element) {
             var currTime = new Date().getTime();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
             var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-              timeToCall);
+              0);
             lastTime = currTime + timeToCall;
             return id;
         };
- 
-    if (!window.cancelAnimationFrame)
+    }
+    if (!window.cancelAnimationFrame) {
         window.cancelAnimationFrame = function(id) {
             clearTimeout(id);
         };
+    }
 }());
 /** @constructor
  * @param str The color like red or rgb(255, 0, 0) or #ff0000 or rgb(100%, 0%, 0%)
@@ -20870,17 +20872,17 @@ hui.ui.Pages.prototype = {
 			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px'});
 			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0});
 			hui.style.set(e,{height:hide.offsetHeight+'px',overflow:'hidden',position:'relative'});
-			hui.animate({node:e,css:{height:show.offsetHeight+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+			hui.animate({node:e,css:{height:show.offsetHeight+'px'},duration:500,ease:hui.ease.slowFastSlow,$complete:function() {
 				hui.style.set(e,{height:'',overflow:'',position:''});
 			}})
 		}
 		hui.ui.reLayout();
 		
-		hui.effect.fadeOut({element:hide,duration:500,onComplete:function() {
+		hui.effect.fadeOut({element:hide,duration:500,$complete:function() {
 			hui.style.set(hide,{width : '',position:'',height:'',display:'none'});
 		}});
 		
-		hui.effect.fadeIn({element:show,duration:500,onComplete:function() {
+		hui.effect.fadeIn({element:show,duration:500,$complete:function() {
 			hui.style.set(show,{width : '',position:'',height:''});
 			hui.ui.reLayout();
 			hui.ui.callVisible(this);
