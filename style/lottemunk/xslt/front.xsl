@@ -106,7 +106,7 @@
 		</div>
 		
 		<script type="text/javascript">
-			(function() {
+			hui.onReady(function() {
 				var images = [];
 				<xsl:for-each select="//imagegallery:imagegallery//o:object">
 					images.push({
@@ -125,7 +125,7 @@
 					images : images,
 					listener : op.imageViewerDelegate
 				});
-			})();
+			});
 		</script>
 	</section>
 	
