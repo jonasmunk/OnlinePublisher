@@ -88,17 +88,17 @@ hui.ui.Pages.prototype = {
 			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px'});
 			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0});
 			hui.style.set(e,{height:hide.offsetHeight+'px',overflow:'hidden',position:'relative'});
-			hui.animate({node:e,css:{height:show.offsetHeight+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+			hui.animate({node:e,css:{height:show.offsetHeight+'px'},duration:500,ease:hui.ease.slowFastSlow,$complete:function() {
 				hui.style.set(e,{height:'',overflow:'',position:''});
 			}})
 		}
 		hui.ui.reLayout();
 		
-		hui.effect.fadeOut({element:hide,duration:500,onComplete:function() {
+		hui.effect.fadeOut({element:hide,duration:500,$complete:function() {
 			hui.style.set(hide,{width : '',position:'',height:'',display:'none'});
 		}});
 		
-		hui.effect.fadeIn({element:show,duration:500,onComplete:function() {
+		hui.effect.fadeIn({element:show,duration:500,$complete:function() {
 			hui.style.set(show,{width : '',position:'',height:''});
 			hui.ui.reLayout();
 			hui.ui.callVisible(this);

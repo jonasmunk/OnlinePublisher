@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" pad="10" title="Pages">
+<gui xmlns="uri:hui" padding="20" title="Pages">
 	<box width="600" title="Pages" variant="textured">
 		<toolbar>
-			<icon icon="inset/view" title="Next" click="pages.next()"/>
-			<icon icon="common/folder" title="Previous" click="pages.previous()"/>
-			<field>
-				<segmented>
-					<item icon="monochrome/round_arrow_left"/>
-					<item icon="monochrome/round_arrow_right"/>
+			<icon icon="common/previous" title="Previous" click="pages.next()"/>
+			<icon icon="common/next" title="Next" click="pages.previous()"/>
+			<field label="Effect">
+				<segmented value="fade">
+					<item text="Fade" value="fade"/>
+					<item text="Slide" value="slide"/>
 				</segmented>
 			</field>
 		</toolbar>
 		<div style="height: 400px">
 			<pages name="pages">
 				<page> 
-					<div style="background: url('http://farm1.staticflickr.com/103/263966036_ee04032cc8_z.jpg?zz=1'); height: 400px;"></div>
+					<div style="height: 400px;">
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <img src="http://placeimg.com/584/400/nature" width="584" height="400"/>
+                        </html>
+					</div>
 				</page>
 				<page> 
-					<div style="background: url('http://farm8.staticflickr.com/7175/6470586439_11461583a7_z.jpg'); height: 400px;"></div>
+					<div style="height: 400px;">
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <img src="http://placeimg.com/584/400/people" width="584" height="400"/>
+                        </html>
+					</div>
 				</page>
 				<page> 
-					<div style="background: url('http://farm8.staticflickr.com/7166/6509690011_4dbb8d9f8b_z.jpg'); height: 400px;"></div>
+					<div style="height: 400px;">
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <img src="http://placeimg.com/584/400/arch" width="584" height="400"/>
+                        </html>
+					</div>
+				</page>
+				<page> 
+					<div style="height: 400px;">
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <img src="http://placeimg.com/584/400/tech" width="584" height="400"/>
+                        </html>
+					</div>
+				</page>
+				<page> 
+					<div style="height: 400px;">
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <img src="http://placeimg.com/584/400/animals" width="584" height="400"/>
+                        </html>
+					</div>
 				</page>
 			</pages>
 		</div>
