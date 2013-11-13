@@ -64,3 +64,5 @@ hui.parallax = {
 		this._resize();
 	}
 }
+
+/* EOF */

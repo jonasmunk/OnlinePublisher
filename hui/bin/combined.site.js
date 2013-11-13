@@ -3452,7 +3452,9 @@ hui.parallax = {
 		this._init();
 		this._resize();
 	}
-}/**
+}
+
+/* EOF *//**
   The namespace of the HUI framework
   @namespace
  */
