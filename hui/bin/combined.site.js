@@ -2600,7 +2600,7 @@ hui.animation._render = function() {
 		}
 	}
 	if (next) {
-		window.requestAnimationFrame(hui.animation._render);
+		window.setTimeout(hui.animation._render);
 	} else {
 		hui.animation.running = false;
 	}

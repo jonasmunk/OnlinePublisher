@@ -2600,7 +2600,7 @@ hui.animation._render = function() {
 		}
 	}
 	if (next) {
-		window.requestAnimationFrame(hui.animation._render);
+		window.setTimeout(hui.animation._render);
 	} else {
 		hui.animation.running = false;
 	}
@@ -9543,7 +9543,7 @@ hui.ui.BoundPanel.prototype = {
 		if (hui.browser.opacity) {
 			hui.animate(this.element,'opacity',1,400,{ease:hui.ease.fastSlow});
 		}
-		hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
+		hui.animate(this.element,vert ? 'marginTop' : 'marginLeft','0px',800,{ease:hui.ease.bounce});
 		this.visible=true;
 		if (this.options.modal) {
 			hui.ui.showCurtain({widget:this,zIndex:index-1,transparent:this.options.modal=='transparent',color:'auto'});

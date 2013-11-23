@@ -223,10 +223,10 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 			work.updater = hui.animation._ieOpacityUpdater;
 		} else if (property=='transform') {
 			work.updater = hui.browser.msie ? function() {} : hui.animation._transformUpater;
-		} else if (parsed.value && parsed.value.red===undefined) {
-			work.updater = hui.animation._lengthUpater;
-		} else {
+		} else if (parsed.type=='color') {
 			work.updater = hui.animation._colorUpater;
+		} else {
+			work.updater = hui.animation._lengthUpater;
 		}
 	} else {
 		work.to = to;
