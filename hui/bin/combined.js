@@ -1895,7 +1895,7 @@ hui.effect = {
 	},
 	/**
 	 * Fade an element in - making it visible
-	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», onComplete : «Function» }
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», $complete : «Function» }
 	 */
 	fadeIn : function(options) {
 		var node = options.element;
@@ -1907,12 +1907,12 @@ hui.effect = {
 			css : { opacity : 1 },
 			delay : options.delay || null,
 			duration : options.duration || 500,
-			onComplete : options.onComplete
+			$complete : options.onComplete || options.$complete
 		});
 	},
 	/**
 	 * Fade an element out - making it invisible
-	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», onComplete : «Function» }
+	 * @param {Object} options {element : «Element», duration : «milliseconds», delay : «milliseconds», $complete : «Function» }
 	 */
 	fadeOut : function(options) {
 		hui.animate({
@@ -1921,7 +1921,7 @@ hui.effect = {
 			delay : options.delay || null,
 			duration : options.duration || 500,
 			hideOnComplete : true,
-			onComplete : options.onComplete
+			complete : options.onComplete || options.$complete
 		});
 	},
 	/**
