@@ -108,7 +108,7 @@ class AuthenticationService {
 
 	    $body = "Klik på følgende link for at ændre dit kodeord til brugeren \"".$user->getUsername()."\": \n\n".
 	    ConfigurationService::getBaseUrl()."Editor/Recover.php?key=".$unique;
-	    if (MailService::send(Strings::fromUnicode($user->getEmail()),Strings::fromUnicode($user->getTitle()),"OnlinePublisher - ændring af kodeord",$body)) {
+	    if (MailService::send(Strings::fromUnicode($user->getEmail()),Strings::fromUnicode($user->getTitle()),"Humanise Editor - ændring af kodeord",$body)) {
 		    $sql = "insert into email_validation_session (`unique`,`user_id`,`email`,`timelimit`)".
 		    " values (".
 		    Database::text($unique).",".$user->getId().",".Database::text($user->getEmail()).",".Database::datetime($limit).
