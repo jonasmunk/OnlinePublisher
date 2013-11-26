@@ -68,15 +68,22 @@ if (file_exists($cache)) {
             if (file_exists($cache)) {
     			ImageTransformationService::sendFile($cache,$recipe['format']);                
         	} else if (ConfigurationService::isDebug()) {
-                Response::redirect('http://placeimg.com/640/480/arch/grayscale');
+                Response::redirect(getPlaceholder($recipe,$row));
             } else {
         		Response::internalServerError('Unable to transform image');
             }
 		}
 	} else if (ConfigurationService::isDebug()) {
-        Response::redirect('http://placeimg.com/640/480/arch/grayscale');
+        Response::redirect(getPlaceholder($recipe,$row));
     } else {
 		Response::notFound();
 	}
+}
+
+function getPlaceholder($recipe,$row) {
+    $height = $recipe['height'] | $row['height'];
+    $width = $recipe['width'] | $row['height'];
+    Log::error('hey');
+    return 'http://placeimg.com/' . $height . '/' . $width . '/arch/grayscale';
 }
 ?>
