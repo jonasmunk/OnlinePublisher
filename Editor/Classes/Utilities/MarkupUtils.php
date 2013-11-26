@@ -32,4 +32,30 @@ class MarkupUtils {
 		}
 		return $segments;
 	}
+  
+  static function moveScriptsToBottom($html) {
+    if (strpos($html,'</body>')===FALSE) {
+      return $html;
+    }
+    preg_match_all("/<script[^>]+\\/>|<script[^>]*>[\s\S]*<\\/script>/uU", $html, $matches);
+    $found = $matches[0];
+    $html = str_replace($found,'<!-- moved script -->',$html);
+    $pos = strpos($html,'</body>');    
+    $html = substr($html,0,$pos) . join($found,'') . substr($html,$pos);
+    return $html;
+    
+  }
+	
+	static function _moveScriptsToBottom($html) {
+    $result = MarkupUtils::findScriptSegments($html);
+    $found = array();
+    foreach ($result as $row) {
+      $found[] = substr($html,$row['from'],$row['to']-$row['from']);
+    }
+    $html = str_replace($found,'<!-- moved script -->',$html);
+    $pos = strpos($html,'</body>');
+    
+    $html = substr($html,0,$pos) . join($found,'') . substr($html,$pos);
+    return $html;
+  }
 }

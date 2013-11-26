@@ -73,7 +73,7 @@ class In2iGui {
 			$xslt->importStyleSheet($doc);
 			$doc = new DOMDocument();
 			$doc->loadXML($xmlData);
-			echo $xslt->transformToXML($doc);
+			echo MarkupUtils::moveScriptsToBottom($xslt->transformToXML($doc));
 		}
 	}
 	
