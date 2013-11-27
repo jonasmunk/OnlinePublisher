@@ -22,6 +22,12 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/Diagram.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		hui.ui.context='../../..';
+        if (hui.location.getBoolean('debug')) {
+            console.profile();
+            window.setTimeout(function() {
+                console.profileEnd();
+            },5000);        
+        }
 	</script>
 </head>
 
