@@ -83,7 +83,6 @@ if (file_exists($cache)) {
 function getPlaceholder($recipe,$row) {
     $height = $recipe['height'] | $row['height'];
     $width = $recipe['width'] | $row['height'];
-    Log::error('hey');
     return 'http://placeimg.com/' . $height . '/' . $width . '/arch/grayscale';
 }
 ?>
