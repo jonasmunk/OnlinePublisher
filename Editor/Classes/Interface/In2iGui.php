@@ -53,7 +53,7 @@ class In2iGui {
 
 		'</xsl:stylesheet>';
 	
-    header('X-UA-Compatible: IE=edge');
+        header('X-UA-Compatible: IE=edge');
 		if (function_exists('xslt_create')) {
 			$arguments = array('/_xml' => &$xmlData,'/_xsl' => &$xslData);
 			$xp = xslt_create();
