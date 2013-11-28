@@ -67,7 +67,7 @@ function listIssues() {
 
 	$writer->startHeaders()->
 		header()->
-		header(array('title'=>'Status'.$type,'width'=>1))->
+		header(array('title'=>'Status','width'=>1))->
 		header(array('title'=>'Oprettet','width'=>1))->
 	endHeaders();
 
