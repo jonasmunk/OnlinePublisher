@@ -38,8 +38,9 @@ class LogService {
 		$sql.= " limit ".($page * $size).",".$size;
 		
 		$countSql = "select count(id) as num from log".($where!='' ? ' where '.$where : '');
-		
 		$result = new SearchResult();
+    $result->setWindowSize($size);
+    $result->setWindowPage($page);
 		$result->setList(Database::selectAll($sql));
 		$row = Database::selectFirst($countSql);
 		$result->setTotal(intval($row['num']));

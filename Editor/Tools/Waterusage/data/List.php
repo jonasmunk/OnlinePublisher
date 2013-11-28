@@ -143,20 +143,22 @@ function listUsage($windowSize, $windowPage, $text, $filterKind, $year=null) {
 	$writer->endList();
 }
 
-function listLog($windowSize, $windowPage, $text) {
-	$entries = LogService::getEntries(array('category'=>'waterusage'));
+function listLog($size, $page, $text) {
+	$result = LogService::getEntries(array('category'=>'waterusage','page'=>$page, 'size'=>$size));
 
 	$writer = new ListWriter();
 
 	$writer->startList();
-	//$writer->sort($sort,$direction);
-	//$writer->window(array( 'total' => $result->getTotal(), 'size' => $windowSize, 'page' => $windowPage ));
+	$writer->sort($sort,$direction);
+	$writer->window(array( 'total' => $result->getTotal(), 'size' => $result->getWindowSize(), 'page' => $result->getWindowPage() ));
 	$writer->startHeaders();
 	$writer->header(array('title'=>'Tid','width'=>30));
 	$writer->header(array('title'=>'Besked'));
 	$writer->endHeaders();
 
-	foreach ($entries as $entry) {
+	Log::debug($entries);
+
+	foreach ($result->getList() as $entry) {
 		$writer->startRow(array( 'kind'=>'logentry', 'icon'=>'common/file' ));
 		$writer->startCell()->text(Dates::formatDateTime($entry['time']))->endCell();
 		$writer->startCell()->text($entry['message'])->endCell();

@@ -96,7 +96,7 @@ class Waterusage extends Object {
 	
 	
 	function sub_index() {
-		$words = array($this->number);
+		$words = array();
 		if ($meter = Watermeter::load($this->watermeterId)) {
 			return $meter->getNumber();
 		}
