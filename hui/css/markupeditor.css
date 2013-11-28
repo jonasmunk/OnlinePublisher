@@ -12,3 +12,9 @@ div.hui_markupeditor
 	box-shadow: 0 0 5px #abf, 0 0 5px #abf;
 	border-radius: 3px;
 }
+
+div.hui_markupeditor_path
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    font-size: 12px;
+}

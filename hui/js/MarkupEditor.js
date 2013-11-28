@@ -54,6 +54,15 @@ hui.ui.MarkupEditor.prototype = {
 	implValueChanged : function() {
 		this._valueChanged();
 	},
+    implSelectionChanged : function() {
+        if (this.options.linkDelegate) {
+            this.options.linkDelegate.$cancel();
+        }
+		this._highlightNode(null)
+		this.temporaryLink = null;
+		this._valueChanged();
+        this._refreshInfoWindow();
+    },
 	/** Remove the widget from the DOM */
 	destroy : function() {
 		hui.dom.remove(this.element);
@@ -99,7 +108,8 @@ hui.ui.MarkupEditor.prototype = {
 				{key:'align',value:'right',icon:'edit/text_align_right'},
 				{key:'align',value:'justify',icon:'edit/text_align_justify'},
 				{divider:true},
-				{key:'clear',icon:'edit/clear'}/*,
+				{key:'clear',icon:'edit/clear'},
+				{key:'info',icon:'monochrome/info'}/*,
 				{key:'strong',icon:'edit/text_bold'}*/
 				
 				
@@ -121,7 +131,6 @@ hui.ui.MarkupEditor.prototype = {
 			}.bind(this));
 			this.bar.addToDocument();
 		}
-		hui.log('Showing bar');
 		this.bar.placeAbove(this);
 		this.bar.show();
 	},
@@ -135,10 +144,13 @@ hui.ui.MarkupEditor.prototype = {
 			this.impl.align(info.value);
 		} else if (info.key=='clear') {
 			this.impl.removeFormat();
+		} else if (info.key=='info') {
+			this._toggleInfoWindow();
 		} else {
 			this.impl.format(info);
 		}
 		this._valueChanged();
+        this._refreshInfoWindow();
 		this.impl.restoreSelection();
 	},
 	_showColorPicker : function() {
@@ -186,6 +198,7 @@ hui.ui.MarkupEditor.prototype = {
                 $remove : function() {
                     // TODO: Standardise this
                     this.impl._unWrap(this.temporaryLink);
+                    this._refreshInfoWindow();
                 }.bind(this)
 			});
 		} else if (!this.linkEditor) {
@@ -215,8 +228,32 @@ hui.ui.MarkupEditor.prototype = {
 		this._valueChanged();
 	},
 	_valueChanged : function() {
-		this.fire('valueChanged',this.impl.getHTML());		
+		this.fire('valueChanged',this.impl.getHTML());
+        this._refreshInfoWindow();
 	},
+    
+    // Info window
+    
+    _toggleInfoWindow : function() {
+        if (!this._infoWindow) {
+            this._infoWindow = hui.ui.Window.create({title:'Info',width:400});
+            this._infoPath = hui.build('div',{'class':'hui_markupeditor_path'});
+            this._infoWindow.add(this._infoPath);
+        }
+        this._infoWindow.toggle({avoid:this});
+        this._refreshInfoWindow();
+    },
+    
+    _refreshInfoWindow : function() {
+        hui.log('_refreshInfoWindow');
+        if (!this._infoWindow) {return};
+        var html = '';
+        var path = this.impl.getPath();
+        for (var i = path.length - 1; i >= 0; i--) {
+            html+='<a data-index="' + i + '">' + path[i].tagName + '<a> ';
+        }
+        this._infoPath.innerHTML = html;
+    },
 	
 	/** @private */
 	$colorWasSelected : function(color) {
@@ -224,11 +261,21 @@ hui.ui.MarkupEditor.prototype = {
 			this.impl.colorize(color);
 			this._valueChanged();
 		}.bind(this));
-	}
+	},
+    
+	/** @private */
+	$$parentMoved : function() {
+        if (this.bar) {
+    		this.bar.placeAbove(this);
+        }
+    }
 }
 
 /** @namespace */
 hui.ui.MarkupEditor.webkit = {
+    
+    path : [],
+    
 	initialize : function(options) {
 		this.element = options.element;
 		this.element.style.overflow='auto';
@@ -261,7 +308,18 @@ hui.ui.MarkupEditor.webkit = {
 			this._insertHTML('<table><tbody><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td></tr></tbody></table>');
 		} else {
 			document.execCommand(info.key,null,info.value);
+            var node = this._getSelectedNode();
+            if (node.tagName=='B') {
+                node = hui.dom.changeTag(node,'strong');
+        		var selection = window.getSelection();
+    			selection.selectAllChildren(node);
+            } else if (node.tagName=='I') {
+                node = hui.dom.changeTag(node,'em');
+        		var selection = window.getSelection();
+    			selection.selectAllChildren(node);
+            }
 		}
+        this._selectionChanged();
 	},
 	getOrCreateLink : function() {
 		var node = this._getSelectedNode();
@@ -282,6 +340,14 @@ hui.ui.MarkupEditor.webkit = {
 	},
 	colorize : function(color) {
 		document.execCommand('forecolor',null,color);
+        var node = this._getSelectedNode();
+        if (node.tagName=='FONT') {
+            node = hui.dom.changeTag(node,'span');
+            node.style.color = color;
+            node.removeAttribute('color');
+    		var selection = window.getSelection();
+			selection.selectAllChildren(node);
+        }
         this._selectionChanged();
 	},
 	align : function(value) {
@@ -314,6 +380,10 @@ hui.ui.MarkupEditor.webkit = {
 		if (selection.rangeCount<1) {return}
 		
 	},
+    removeLink : function(node) {
+        this._unWrap(node);
+        this._selectionChanged();
+    },
 	_unWrap : function(node) {
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
@@ -343,10 +413,12 @@ hui.ui.MarkupEditor.webkit = {
             path.push(tag);
             tag = tag.parentNode;
         }
-        hui.log(path);
+        this.path = path;
+        this.controller.implSelectionChanged();
 	},
 	removeFormat : function() {
 		document.execCommand('removeFormat',null,null);
+        this._selectionChanged();
 	},
 	setHTML : function(html) {
 		this.element.innerHTML = html;
@@ -354,7 +426,10 @@ hui.ui.MarkupEditor.webkit = {
 	getHTML : function() {
 		var cleaned = hui.ui.MarkupEditor.util.clean(this.element);
 		return cleaned.innerHTML;
-	}
+	},
+    getPath : function() {
+        return this.path;
+    }
 }
 
 /** @namespace */
@@ -427,7 +502,10 @@ hui.ui.MarkupEditor.MSIE = {
 	getHTML : function() {
 		var cleaned = hui.ui.MarkupEditor.util.clean(this.body);
 		return cleaned.innerHTML;
-	}
+	},
+    getPath : function() {
+        return [];
+    }
 }
 
 /** @namespace */

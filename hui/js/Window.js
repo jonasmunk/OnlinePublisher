@@ -107,8 +107,8 @@ hui.ui.Window.prototype = {
 		this.visible = true;
 		hui.ui.callVisible(this);
 	},
-	toggle : function() {
-		(this.visible ? this.hide() : this.show() );
+	toggle : function(options) {
+		(this.visible ? this.hide() : this.show(options) );
 	},
 	hide : function() {
 		if (!this.visible) return;

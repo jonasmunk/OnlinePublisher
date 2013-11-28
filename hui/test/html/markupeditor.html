@@ -65,6 +65,13 @@
 				}
 				linkEditor.show();
 			},
+            $cancel : function() {
+				linkForm.reset();
+				linkEditor.hide();                
+            },
+            
+            // UI listeners...
+            
 			$submit : function() {
 				this.options.node.setAttribute('data',hui.string.toJSON(linkForm.getValues()));
 				linkForm.reset();
