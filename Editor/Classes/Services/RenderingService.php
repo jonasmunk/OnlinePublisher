@@ -99,9 +99,9 @@ class RenderingService {
 		$mainPath = $incPath.'style/'.$mainDesign.'/xslt/'.$mainFile.'.xsl';
 		$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
 	
-		$xslData='<?xml version="1.0" encoding="ISO-8859-1"?>'.
+		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
-		'<xsl:output method="html" indent="no" encoding="ISO-8859-1"/>'.
+		'<xsl:output method="html" indent="no" encoding="UTF-8"/>'.
 		'<xsl:include href="'.$templatePath.'"/>'.
 		'<xsl:include href="'.$mainPath.'"/>'.
 		'<xsl:variable name="design">'.$design.'</xsl:variable>'.
@@ -287,7 +287,7 @@ class RenderingService {
 			if ($row['framedynamic']) {
 				$framedata = RenderingService::applyFrameDynamism($row['frameid'],$framedata);
 			}
-			$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.
+			$xml = '<?xml version="1.0" encoding="UTF-8"?>'.
 			'<page xmlns="'.$pageNS.'" id="'.$row['id'].'" title="'.Strings::escapeXML($row['title']).'">'.
 			'<meta>'.
 			($row['description'] ? '<description>'.Strings::escapeXML(preg_replace('/\s+/', ' ', $row['description'])).'</description>' : '').
@@ -472,7 +472,7 @@ class RenderingService {
 			else if (isset($_SESSION['debug.design'])) {
 				$design = $_SESSION['debug.design'];
 			}
-			$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>'.
+			$xml = '<?xml version="1.0" encoding="UTF-8"?>'.
 			'<page xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/" id="'.$id.'" title="'.Strings::escapeXML($row['title']).'">'.
 			'<meta>'.
 			'<description>'.Strings::escapeXML($row['description']).'</description>'.
