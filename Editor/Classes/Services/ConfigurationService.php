@@ -14,6 +14,11 @@ class ConfigurationService {
 		global $CONFIG;
 		return (isset($CONFIG) && isset($CONFIG['debug']) && $CONFIG['debug']==true);
 	}
+
+	static function isUnicode() {
+		global $CONFIG;
+		return (isset($CONFIG) && isset($CONFIG['unicode']) && $CONFIG['unicode']==true);
+	}
 	
 	static function isUrlRewrite() {
 		return isset($GLOBALS['CONFIG']) && @$GLOBALS['CONFIG']['urlrewrite'];
