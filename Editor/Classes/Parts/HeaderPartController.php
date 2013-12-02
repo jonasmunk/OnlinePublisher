@@ -195,11 +195,6 @@ class HeaderPartController extends PartController
 						</fields>
 					</formula>
 				'
-			),
-			array(
-				'icon' => 'common/color',
-				'key' => 'color',
-				'body' => '<div style="height:300px;background:red"></div>'
 			)
 		);
 	}
