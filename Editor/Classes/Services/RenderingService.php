@@ -98,10 +98,10 @@ class RenderingService {
 		}
 		$mainPath = $incPath.'style/'.$mainDesign.'/xslt/'.$mainFile.'.xsl';
 		$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
-	
-		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
+        $encoding = ConfigurationService::isUnicode() ? 'UTF-8' : 'ISO-8859-1';
+		$xslData='<?xml version="1.0" encoding="'.$encoding.'"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
-		'<xsl:output method="html" indent="no" encoding="UTF-8"/>'.
+		'<xsl:output method="html" indent="no" encoding="'.$encoding.'"/>'.
 		'<xsl:include href="'.$templatePath.'"/>'.
 		'<xsl:include href="'.$mainPath.'"/>'.
 		'<xsl:variable name="design">'.$design.'</xsl:variable>'.
@@ -287,7 +287,8 @@ class RenderingService {
 			if ($row['framedynamic']) {
 				$framedata = RenderingService::applyFrameDynamism($row['frameid'],$framedata);
 			}
-			$xml = '<?xml version="1.0" encoding="UTF-8"?>'.
+            $encoding = ConfigurationService::isUnicode() ? 'UTF-8' : 'ISO-8859-1';
+			$xml = '<?xml version="1.0" encoding="'.$encoding.'"?>'.
 			'<page xmlns="'.$pageNS.'" id="'.$row['id'].'" title="'.Strings::escapeXML($row['title']).'">'.
 			'<meta>'.
 			($row['description'] ? '<description>'.Strings::escapeXML(preg_replace('/\s+/', ' ', $row['description'])).'</description>' : '').

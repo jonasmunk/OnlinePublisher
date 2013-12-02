@@ -109,7 +109,7 @@ class ListingPartController extends PartController
 	function editor($part,$context) {
 		return
 		'<textarea class="part_listing common_font" name="text" id="PartListingTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;'.$this->buildCSSStyle($part).'">'.
-		Strings::escapeXML($part->getText()).
+		Strings::escapeEncodedXML($part->getText()).
 		'</textarea>'.
 		'<input type="hidden" name="type" value="'.Strings::escapeXML($part->getListStyle()).'"/>'.
 		'<input type="hidden" name="fontSize" value="'.Strings::escapeXML($part->getFontSize()).'"/>'.

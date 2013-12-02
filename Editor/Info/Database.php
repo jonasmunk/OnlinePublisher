@@ -904,4 +904,5 @@ $databaseTables = array(
 			array("webloggroup_id","int(11)","","","0","")
 		)
 );
+
 ?>

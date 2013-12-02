@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class ListWriter {
 	function startList($options=array()) {
-		if (@$options['unicode']==true) {
+		if (@$options['unicode']==true || ConfigurationService::isUnicode()) {
 			header('Content-Type: text/xml; charset=utf-8');
 			echo '<?xml version="1.0" encoding="UTF-8"?>';
 		} else {

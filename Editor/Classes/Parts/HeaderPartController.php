@@ -75,7 +75,7 @@ class HeaderPartController extends PartController
 	function editor($part,$context) {
 		return
 		'<textarea class="part_header common_font part_header_'.$part->getLevel().'" name="text" id="part_header_textarea" style="border: 1px solid lightgrey; width: 100%; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; '.$this->buildCSSStyle($part).'">'.
-		Strings::escapeXML($part->getText()).
+        Strings::escapeEncodedXML($part->getText()).
 		'</textarea>'.
 		'<input type="hidden" name="level" value="'.$part->getLevel().'"/>'.
 		'<input type="hidden" name="fontSize" value="'.Strings::escapeXML($part->getFontSize()).'"/>'.

@@ -35,7 +35,7 @@ class TextPartController extends PartController
 	function editor($part,$context) {
 		return
 		'<textarea class="part_text common_font" name="text" id="PartTextTextarea" style="border: 1px solid lightgrey; width: 100%; height: 200px; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;'.$this->buildCSSStyle($part).'">'.
-		Strings::escapeXML($part->getText()).
+		(ConfigurationService::isUnicode() ? Strings::escapeSimpleXML($part->getText()) : Strings::escapeXML($part->getText())).
 		'</textarea>'.
 		'<input type="hidden" name="fontSize" value="'.Strings::escapeXML($part->getFontSize()).'"/>'.
 		'<input type="hidden" name="fontFamily" value="'.Strings::escapeXML($part->getFontfamily()).'"/>'.

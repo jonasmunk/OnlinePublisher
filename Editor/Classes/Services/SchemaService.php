@@ -32,7 +32,7 @@ class SchemaService {
 		}
 		return $sql;
 	}
-	
+    	
 	static function _formatValue($type,$value) {
 		if ($type == 'int') {
 			return Database::int($value);

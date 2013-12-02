@@ -52,7 +52,7 @@ class ListPartController extends PartController
 	    '<input type="hidden" name="time_count" value="'.$part->getTimeCount().'"/>'.
 	    '<input type="hidden" name="maxitems" value="'.$part->getMaxItems().'"/>'.
 	    '<input type="hidden" name="maxtextlength" value="'.$part->getMaxTextLength().'"/>'.
-	    '<input type="hidden" name="title" value="'.Strings::escapeXML($part->getTitle()).'"/>'.
+	    '<input type="hidden" name="title" value="'.Strings::escapeEncodedXML($part->getTitle()).'"/>'.
 	    '<input type="hidden" name="sort_direction" value="'.Strings::escapeXML($part->getSortDirection()).'"/>'.
 	    '<input type="hidden" name="objects" value="'.implode(',',$part->getObjectIds()).'"/>'.
 	    '<input type="hidden" name="show_source" value="'.($part->getShowSource() ? 'true' : 'false').'"/>'.
@@ -79,7 +79,7 @@ class ListPartController extends PartController
 					<formula name="formula">
 						<fields labels="above">
 							<field label="{Title; da:Titel}">
-								<text-input value="'.Strings::escapeXML($part->getTitle()).'" key="title"/>
+								<text-input value="'.Strings::escapeEncodedXML($part->getTitle()).'" key="title"/>
 							</field>
 						</fields>
 						<fieldset legend="{Limitation; da:Begrænsning}">
@@ -96,7 +96,7 @@ class ListPartController extends PartController
 						<fieldset legend="{Appearance; da:Visning}">
 							<fields>
 								<field label="{Direction; da:Retning}">
-									<radiobuttons key="sort_direction" value="'.Strings::escapeXML($part->getSortDirection()).'">
+									<radiobuttons key="sort_direction" value="'.Strings::escapeEncodedXML($part->getSortDirection()).'">
 										<item value="descending" text="{Descending; da:Faldende}"/>
 										<item value="ascending" text="{Ascending; da:Stigende}"/>
 									</radiobuttons>
@@ -246,7 +246,7 @@ class ListPartController extends PartController
 		$data = '<list xmlns="'.$this->getNamespace().'" dirty="'.($dirty ? 'true' : 'false').'">';
 		$data.='<settings show-timezone="'.($part->getShowTimeZone() ? 'true' : 'false').'"/>';
 		if (Strings::isNotBlank($part->getTitle())) {
-			$data.='<title>'.Strings::escapeXML($part->getTitle()).'</title>';
+			$data.='<title>'.Strings::escapeEncodedXML($part->getTitle()).'</title>';
 		}
 		$this->sortItems($items);
 		if ($part->getSortDirection()=='ascending') {
@@ -255,7 +255,7 @@ class ListPartController extends PartController
 		$items = array_slice($items,0,$part->getMaxItems());
 		foreach ($items as $item) {
 			$data.='<item>'.
-			'<title>'.Strings::escapeXML($item->getTitle()).'</title>';
+			'<title>'.Strings::escapeEncodedXML($item->getTitle()).'</title>';
 			if (Strings::isNotBlank($item->getText())) {
 				$text = Strings::removeTags($item->getText());
 				if ($part->getMaxTextLength()) {
@@ -264,10 +264,10 @@ class ListPartController extends PartController
 				$data.='<text>'.Strings::escapeXMLBreak($text,'<break/>').'</text>';
 			}
 			if (Strings::isNotBlank($item->getUrl())) {
-				$data.='<url>'.Strings::escapeXML($item->getUrl()).'</url>';
+				$data.='<url>'.Strings::escapeEncodedXML($item->getUrl()).'</url>';
 			}
 			if ($item->getSource()) {
-				$data.='<source>'.Strings::escapeXML($item->getSource()).'</source>';
+				$data.='<source>'.Strings::escapeEncodedXML($item->getSource()).'</source>';
 			}
 			if ($item->getDate()) {
 				$data.=Dates::buildTag('date',$item->getDate());
