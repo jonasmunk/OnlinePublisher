@@ -5,7 +5,7 @@
  * @constructor
  */
 hui.ui.DropDown = function(options) {
-	this.options = hui.override({label:null,placeholder:null,url:null,source:null},options);
+	this.options = hui.override({label:null,placeholder:null,url:null,source:null,focus:false},options);
 	this.name = options.name;
 	var e = this.element = hui.get(options.element);
 	this.inner = e.getElementsByTagName('strong')[0];
@@ -30,8 +30,12 @@ hui.ui.DropDown = function(options) {
 
 hui.ui.DropDown.create = function(options) {
 	options = options || {};
+	var cls = 'hui_dropdown';
+	if (options.variant) {
+		cls+=' hui_dropdown_'+options.variant;
+	}
 	options.element = hui.build('a',{
-		'class':'hui_dropdown',href:'javascript://',
+		'class':cls,href:'javascript://',
 		html:'<span><span><strong></strong></span></span>'
 	});
 	return new hui.ui.DropDown(options);
@@ -43,6 +47,11 @@ hui.ui.DropDown.prototype = {
 		hui.listen(this.element,'click',this._click.bind(this));
 		hui.listen(this.element,'blur',this._hideSelector.bind(this));
 		hui.listen(this.element,'keydown',this._keyDown.bind(this));
+		if (!this.options.focus) {
+			hui.listen(this.element,'mousedown',function(e) {
+				hui.stop(e);
+			});
+		}
 	},
 	_updateIndex : function() {
 		this.index=-1;
@@ -89,7 +98,9 @@ hui.ui.DropDown.prototype = {
 	_showSelector : function() {
 		this._buildSelector();
 		var el = this.element, s=this.selector;
-		el.focus();
+		if (this.options.focus) {
+			el.focus();			
+		}
 		if (!this.items) return;
 		var docHeight = hui.document.getHeight();
 		if (docHeight<200) {

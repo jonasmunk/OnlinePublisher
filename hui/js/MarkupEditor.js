@@ -118,6 +118,13 @@ hui.ui.MarkupEditor.prototype = {
 			]
 			
 			this.bar = hui.ui.Bar.create({absolute:true,variant:'mini',small:true});
+			var drop = hui.ui.DropDown.create({focus:false,variant:'bar_mini',items:[
+				{value:'p',text:'Paragraph'},
+				{value:'h1',text:'Header 1'},
+				{value:'h2',text:'Header 2'},
+				{value:'blockquote',text:'Blockquote'}
+			]});
+			this.bar.add(drop);
 			hui.each(things,function(info) {
 				if (info.divider) {
 					this.bar.addDivider();
