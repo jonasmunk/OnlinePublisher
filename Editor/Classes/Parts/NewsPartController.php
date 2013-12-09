@@ -131,12 +131,16 @@ class NewsPartController extends PartController
 							<fields labels="above">
 								<field label="{Groups; da:Grupper}">
 									<checkboxes name="newsGroups">
-									'.GuiUtils::buildObjectItems('newsgroup').'
+									'.
+                                    GuiUtils::buildObjectItems('newsgroup').
+                                    '
 									</checkboxes>
 								</field>
 								<field label="{News; da:Nyheder}">
 									<dropdown name="newsNews">
-									'.GuiUtils::buildObjectItems('news').'
+									'.
+                                    GuiUtils::buildObjectItems('news').
+                                    '
 									</dropdown>
 								</field>
 							</fields>

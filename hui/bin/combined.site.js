@@ -3470,7 +3470,7 @@ hui.ui = {
 	context : '',
 	language : 'en',
 
-	objects : [],
+	objects : {},
 	delegates : [],
 
 	state : 'default',

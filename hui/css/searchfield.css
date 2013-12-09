@@ -50,6 +50,7 @@ a.hui_searchfield_reset
 	display: none;
 	font-size: 0;
 	background: url('../gfx/search_field.png') left -300px;
+    cursor: pointer;
 }
 
 a.hui_searchfield_reset:hover

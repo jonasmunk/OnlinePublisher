@@ -23,6 +23,7 @@ class Strings {
 		$output=str_replace('&', '&amp;', $output);
 		$output=str_replace('<', '&lt;', $output);
 		$output=str_replace('>', '&gt;', $output);
+		$output=str_replace('"', '&quot;', $output);
 		return $output;
 	}
 
@@ -119,7 +120,7 @@ class Strings {
 	}
 	
 	static function escapeJavaScriptXML($input) {
-		$output = Strings::escapeXML($input);
+		$output = Strings::escapeEncodedXML($input);
 		$output = str_replace("'", "\'", $output);
 		return $output;
 	}

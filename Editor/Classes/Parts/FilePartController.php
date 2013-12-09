@@ -47,7 +47,7 @@ class FilePartController extends PartController
 		if ($row = Database::selectFirst($sql)) {
 			$xml.='<info type="'.FileService::mimeTypeToLabel($row['type']).'"/>';
 			if (Strings::isNotBlank($part->getText())) {
-				$xml.='<text>'.Strings::escapeXML($part->getText()).'</text>';
+				$xml.='<text>'.Strings::escapeEncodedXML($part->getText()).'</text>';
 			}
 			$xml.=$row['data'];
 		}
