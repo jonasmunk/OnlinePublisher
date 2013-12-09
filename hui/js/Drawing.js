@@ -32,6 +32,8 @@ hui.ui.Drawing.prototype = {
 		this.svg.setAttribute('height',height);
 		this.svg.style.width = width+'px';
 		this.svg.style.height = height+'px';
+		this.element.style.width = width+'px';
+		this.element.style.height = height+'px';
 	},
 	clear : function() {
 		hui.dom.clear(this.svg);

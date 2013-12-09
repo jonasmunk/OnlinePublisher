@@ -1368,7 +1368,7 @@ body .hui_context_dark label.hui_formula_field,
 	line-height: 26px;
 	vertical-align: middle;
 	text-align: left;
-	
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
 a.hui_dropdown span

@@ -2303,6 +2303,13 @@ hui.location = {
 		}
 		return false;
 	},
+	getHash : function() {
+		var h = document.location.hash;
+		if (h!=='') {
+			return h.substring(1);
+		}
+		return null;
+	},
 	/** Gets a hash parameter (#name=value&other=text) */
 	getHashParameter : function(name) {
 		var h = document.location.hash;

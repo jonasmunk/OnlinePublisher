@@ -41,7 +41,10 @@ hui.ui.Diagram.prototype = {
 	$$layout : function() {
 		this.width = this.element.clientWidth;	
 		this.height = this.element.clientHeight;
-		this.background.setSize(this.width,this.height)
+		hui.log(this.width,this.height)
+		this.background.setSize(this.width,this.height);
+		this.layout.resize();
+		this.layout.resume();
 	},
 	_getMagnet : function(from,to,node) {
 		var margin = 1;
@@ -361,6 +364,12 @@ hui.ui.Diagram.D3 = {
 			this.loaded = true;
 			this.start();
 		}.bind(this))
+	},
+	
+	resize : function() {
+		if (this.layout) {
+			this.layout.size([this.diagram.width,this.diagram.height]);
+		}
 	},
 	
 	start : function() {

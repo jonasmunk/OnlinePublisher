@@ -21,6 +21,10 @@ hui.ui.Fragment.prototype = {
 	},
 	setHTML : function(html) {
 		this.element.innerHTML = html;
+	},
+	setContent : function(htmlWidgetOrNode) {
+		this.element.innerHTML = '';
+		this.element.appendChild(htmlWidgetOrNode);
 	}
 }
 

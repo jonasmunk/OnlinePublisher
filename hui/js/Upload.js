@@ -34,7 +34,7 @@ hui.ui.Upload = function(options) {
 	this._addBehavior();
 }
 
-hui.ui.Upload.implementations = ['Frame','HTML5','Flash'];
+hui.ui.Upload.implementations = ['HTML5','Frame','Flash'];
 
 hui.ui.Upload.nameIndex = 0;
 
@@ -108,7 +108,7 @@ hui.ui.Upload.prototype = {
 			var impl = hui.ui.Upload[impls[i]];
 			var support = impl.support();
 			if (support.supported) {
-				if (!this.options.multiple && !support.multiple) {
+				if (!this.options.multiple) {
 					this.impl = new impl(this);
 					hui.log('Selected impl (single): '+impls[i]);
 					break;
@@ -743,7 +743,11 @@ hui.ui.Upload.HTML5.prototype = {
 	initialize : function() {
 		var options = this.parent.options;
 		var span = hui.build('span',{'class':'hui_upload_button_input'});
-		this.fileInput = hui.build('input',{'type':'file','name':options.fieldName,'multiple':'multiple',parent:span});
+		var ps = {'type':'file','name':options.fieldName,parent:span};
+		if (options.multiple) {
+			ps.multiple = 'multiple';
+		}
+		this.fileInput = hui.build('input',ps);
 		var c = this.parent.$_getButtonContainer();		
 		c.insertBefore(span,c.firstChild);
 		hui.listen(this.fileInput,'change',this._submit.bind(this));
