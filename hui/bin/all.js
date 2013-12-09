@@ -2303,6 +2303,13 @@ hui.location = {
 		}
 		return false;
 	},
+	getHash : function() {
+		var h = document.location.hash;
+		if (h!=='') {
+			return h.substring(1);
+		}
+		return null;
+	},
 	/** Gets a hash parameter (#name=value&other=text) */
 	getHashParameter : function(name) {
 		var h = document.location.hash;
@@ -6521,8 +6528,8 @@ hui.ui.Window.prototype = {
 		this.visible = true;
 		hui.ui.callVisible(this);
 	},
-	toggle : function() {
-		(this.visible ? this.hide() : this.show() );
+	toggle : function(options) {
+		(this.visible ? this.hide() : this.show(options) );
 	},
 	hide : function() {
 		if (!this.visible) return;
@@ -8037,7 +8044,7 @@ hui.ui.ObjectList.Select.prototype = {
  * @constructor
  */
 hui.ui.DropDown = function(options) {
-	this.options = hui.override({label:null,placeholder:null,url:null,source:null},options);
+	this.options = hui.override({label:null,placeholder:null,url:null,source:null,focus:false},options);
 	this.name = options.name;
 	var e = this.element = hui.get(options.element);
 	this.inner = e.getElementsByTagName('strong')[0];
@@ -8062,8 +8069,12 @@ hui.ui.DropDown = function(options) {
 
 hui.ui.DropDown.create = function(options) {
 	options = options || {};
+	var cls = 'hui_dropdown';
+	if (options.variant) {
+		cls+=' hui_dropdown_'+options.variant;
+	}
 	options.element = hui.build('a',{
-		'class':'hui_dropdown',href:'javascript://',
+		'class':cls,href:'javascript://',
 		html:'<span><span><strong></strong></span></span>'
 	});
 	return new hui.ui.DropDown(options);
@@ -8075,6 +8086,11 @@ hui.ui.DropDown.prototype = {
 		hui.listen(this.element,'click',this._click.bind(this));
 		hui.listen(this.element,'blur',this._hideSelector.bind(this));
 		hui.listen(this.element,'keydown',this._keyDown.bind(this));
+		if (!this.options.focus) {
+			hui.listen(this.element,'mousedown',function(e) {
+				hui.stop(e);
+			});
+		}
 	},
 	_updateIndex : function() {
 		this.index=-1;
@@ -8121,7 +8137,9 @@ hui.ui.DropDown.prototype = {
 	_showSelector : function() {
 		this._buildSelector();
 		var el = this.element, s=this.selector;
-		el.focus();
+		if (this.options.focus) {
+			el.focus();			
+		}
 		if (!this.items) return;
 		var docHeight = hui.document.getHeight();
 		if (docHeight<200) {
@@ -13056,6 +13074,10 @@ hui.ui.Fragment.prototype = {
 	},
 	setHTML : function(html) {
 		this.element.innerHTML = html;
+	},
+	setContent : function(htmlWidgetOrNode) {
+		this.element.innerHTML = '';
+		this.element.appendChild(htmlWidgetOrNode);
 	}
 }
 
@@ -14094,6 +14116,15 @@ hui.ui.MarkupEditor.prototype = {
 	implValueChanged : function() {
 		this._valueChanged();
 	},
+    implSelectionChanged : function() {
+        if (this.options.linkDelegate) {
+            this.options.linkDelegate.$cancel();
+        }
+		this._highlightNode(null)
+		this.temporaryLink = null;
+		this._valueChanged();
+        this._refreshInfoWindow();
+    },
 	/** Remove the widget from the DOM */
 	destroy : function() {
 		hui.dom.remove(this.element);
@@ -14139,7 +14170,8 @@ hui.ui.MarkupEditor.prototype = {
 				{key:'align',value:'right',icon:'edit/text_align_right'},
 				{key:'align',value:'justify',icon:'edit/text_align_justify'},
 				{divider:true},
-				{key:'clear',icon:'edit/clear'}/*,
+				{key:'clear',icon:'edit/clear'},
+				{key:'info',icon:'monochrome/info'}/*,
 				{key:'strong',icon:'edit/text_bold'}*/
 				
 				
@@ -14148,6 +14180,13 @@ hui.ui.MarkupEditor.prototype = {
 			]
 			
 			this.bar = hui.ui.Bar.create({absolute:true,variant:'mini',small:true});
+			var drop = hui.ui.DropDown.create({focus:false,variant:'bar_mini',items:[
+				{value:'p',text:'Paragraph'},
+				{value:'h1',text:'Header 1'},
+				{value:'h2',text:'Header 2'},
+				{value:'blockquote',text:'Blockquote'}
+			]});
+			this.bar.add(drop);
 			hui.each(things,function(info) {
 				if (info.divider) {
 					this.bar.addDivider();
@@ -14161,7 +14200,6 @@ hui.ui.MarkupEditor.prototype = {
 			}.bind(this));
 			this.bar.addToDocument();
 		}
-		hui.log('Showing bar');
 		this.bar.placeAbove(this);
 		this.bar.show();
 	},
@@ -14175,10 +14213,13 @@ hui.ui.MarkupEditor.prototype = {
 			this.impl.align(info.value);
 		} else if (info.key=='clear') {
 			this.impl.removeFormat();
+		} else if (info.key=='info') {
+			this._toggleInfoWindow();
 		} else {
 			this.impl.format(info);
 		}
 		this._valueChanged();
+        this._refreshInfoWindow();
 		this.impl.restoreSelection();
 	},
 	_showColorPicker : function() {
@@ -14226,6 +14267,7 @@ hui.ui.MarkupEditor.prototype = {
                 $remove : function() {
                     // TODO: Standardise this
                     this.impl._unWrap(this.temporaryLink);
+                    this._refreshInfoWindow();
                 }.bind(this)
 			});
 		} else if (!this.linkEditor) {
@@ -14255,8 +14297,32 @@ hui.ui.MarkupEditor.prototype = {
 		this._valueChanged();
 	},
 	_valueChanged : function() {
-		this.fire('valueChanged',this.impl.getHTML());		
+		this.fire('valueChanged',this.impl.getHTML());
+        this._refreshInfoWindow();
 	},
+    
+    // Info window
+    
+    _toggleInfoWindow : function() {
+        if (!this._infoWindow) {
+            this._infoWindow = hui.ui.Window.create({title:'Info',width:400});
+            this._infoPath = hui.build('div',{'class':'hui_markupeditor_path'});
+            this._infoWindow.add(this._infoPath);
+        }
+        this._infoWindow.toggle({avoid:this});
+        this._refreshInfoWindow();
+    },
+    
+    _refreshInfoWindow : function() {
+        hui.log('_refreshInfoWindow');
+        if (!this._infoWindow) {return};
+        var html = '';
+        var path = this.impl.getPath();
+        for (var i = path.length - 1; i >= 0; i--) {
+            html+='<a data-index="' + i + '">' + path[i].tagName + '<a> ';
+        }
+        this._infoPath.innerHTML = html;
+    },
 	
 	/** @private */
 	$colorWasSelected : function(color) {
@@ -14264,11 +14330,21 @@ hui.ui.MarkupEditor.prototype = {
 			this.impl.colorize(color);
 			this._valueChanged();
 		}.bind(this));
-	}
+	},
+    
+	/** @private */
+	$$parentMoved : function() {
+        if (this.bar) {
+    		this.bar.placeAbove(this);
+        }
+    }
 }
 
 /** @namespace */
 hui.ui.MarkupEditor.webkit = {
+    
+    path : [],
+    
 	initialize : function(options) {
 		this.element = options.element;
 		this.element.style.overflow='auto';
@@ -14301,7 +14377,18 @@ hui.ui.MarkupEditor.webkit = {
 			this._insertHTML('<table><tbody><tr><td>Lorem ipsum dolor</td><td>Lorem ipsum dolor</td></tr></tbody></table>');
 		} else {
 			document.execCommand(info.key,null,info.value);
+            var node = this._getSelectedNode();
+            if (node.tagName=='B') {
+                node = hui.dom.changeTag(node,'strong');
+        		var selection = window.getSelection();
+    			selection.selectAllChildren(node);
+            } else if (node.tagName=='I') {
+                node = hui.dom.changeTag(node,'em');
+        		var selection = window.getSelection();
+    			selection.selectAllChildren(node);
+            }
 		}
+        this._selectionChanged();
 	},
 	getOrCreateLink : function() {
 		var node = this._getSelectedNode();
@@ -14322,6 +14409,14 @@ hui.ui.MarkupEditor.webkit = {
 	},
 	colorize : function(color) {
 		document.execCommand('forecolor',null,color);
+        var node = this._getSelectedNode();
+        if (node.tagName=='FONT') {
+            node = hui.dom.changeTag(node,'span');
+            node.style.color = color;
+            node.removeAttribute('color');
+    		var selection = window.getSelection();
+			selection.selectAllChildren(node);
+        }
         this._selectionChanged();
 	},
 	align : function(value) {
@@ -14354,6 +14449,10 @@ hui.ui.MarkupEditor.webkit = {
 		if (selection.rangeCount<1) {return}
 		
 	},
+    removeLink : function(node) {
+        this._unWrap(node);
+        this._selectionChanged();
+    },
 	_unWrap : function(node) {
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
@@ -14383,10 +14482,12 @@ hui.ui.MarkupEditor.webkit = {
             path.push(tag);
             tag = tag.parentNode;
         }
-        hui.log(path);
+        this.path = path;
+        this.controller.implSelectionChanged();
 	},
 	removeFormat : function() {
 		document.execCommand('removeFormat',null,null);
+        this._selectionChanged();
 	},
 	setHTML : function(html) {
 		this.element.innerHTML = html;
@@ -14394,7 +14495,10 @@ hui.ui.MarkupEditor.webkit = {
 	getHTML : function() {
 		var cleaned = hui.ui.MarkupEditor.util.clean(this.element);
 		return cleaned.innerHTML;
-	}
+	},
+    getPath : function() {
+        return this.path;
+    }
 }
 
 /** @namespace */
@@ -14467,7 +14571,10 @@ hui.ui.MarkupEditor.MSIE = {
 	getHTML : function() {
 		var cleaned = hui.ui.MarkupEditor.util.clean(this.body);
 		return cleaned.innerHTML;
-	}
+	},
+    getPath : function() {
+        return [];
+    }
 }
 
 /** @namespace */
@@ -20254,6 +20361,8 @@ hui.ui.Drawing.prototype = {
 		this.svg.setAttribute('height',height);
 		this.svg.style.width = width+'px';
 		this.svg.style.height = height+'px';
+		this.element.style.width = width+'px';
+		this.element.style.height = height+'px';
 	},
 	clear : function() {
 		hui.dom.clear(this.svg);
@@ -21695,7 +21804,10 @@ hui.ui.Diagram.prototype = {
 	$$layout : function() {
 		this.width = this.element.clientWidth;	
 		this.height = this.element.clientHeight;
-		this.background.setSize(this.width,this.height)
+		hui.log(this.width,this.height)
+		this.background.setSize(this.width,this.height);
+		this.layout.resize();
+		this.layout.resume();
 	},
 	_getMagnet : function(from,to,node) {
 		var margin = 1;
@@ -22015,6 +22127,12 @@ hui.ui.Diagram.D3 = {
 			this.loaded = true;
 			this.start();
 		}.bind(this))
+	},
+	
+	resize : function() {
+		if (this.layout) {
+			this.layout.size([this.diagram.width,this.diagram.height]);
+		}
 	},
 	
 	start : function() {

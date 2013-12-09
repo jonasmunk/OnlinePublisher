@@ -6,7 +6,6 @@ if (!isset($GLOBALS['basePath'])) {
 function __autoload($class_name) {
 	global $basePath;
 	
-	
 	if (class_exists($class_name)) {
 		return;
 	}
@@ -17,6 +16,20 @@ function __autoload($class_name) {
 			return;
 		}
 	}
+	
+	// Special Twig handling
+	if (Strings::startsWith($class_name,'Twig_')) {
+		$parts = explode('_',$class_name);
+		array_shift($parts);
+		$path = $basePath.'Editor/Libraries/twig/'.implode('/',$parts).'.php';
+		if (file_exists($path)) {
+	    	require_once $path;
+			return;
+		} else {
+			Log::debug('Not found: '.$path.' ('.$class_name.')');
+		}
+	}
+	
 	$folders = array('', 'Templates/', 'Services/', 'Utilities/', 'Objects/', 'Parts/', 'Core/', 'Model/', 'Network/', 'Interface/', 'Modules/News/', 'Modules/Images/', 'Modules/Links/', 'Modules/Graphs/', 'Modules/Review/', 'Modules/Statistics/', 'Modules/Water/', 'Formats/', 'Integration/', 'Modules/Inspection/'/*,'Tests/'*/);
 	foreach ($folders as $folder) {
 		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';
