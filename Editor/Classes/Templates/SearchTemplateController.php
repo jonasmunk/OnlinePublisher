@@ -29,27 +29,27 @@ class SearchTemplateController extends TemplateController
 
 		$sql="select * from search where page_id=".Database::int($id);
 		$row = Database::selectFirst($sql);
-		$data.='<title>'.Strings::escapeXML($row['title']).'</title>';
+		$data.='<title>'.Strings::escapeEncodedXML($row['title']).'</title>';
 		$data.='<text>'.Strings::escapeSimpleXMLwithLineBreak($row['text'],'<break/>').'</text>';
-		$data.='<buttontitle>'.Strings::escapeXML($row['buttontitle']).'</buttontitle>';
+		$data.='<buttontitle>'.Strings::escapeEncodedXML($row['buttontitle']).'</buttontitle>';
 		$data.='<types>';
 		if ($row['pagesenabled']) {
-			$data.='<type label="'.Strings::escapeXML($row['pageslabel']).'" default="'.($row['pagesdefault'] ? 'true' : 'false').'" hidden="'.($row['pageshidden'] ? 'true' : 'false').'" unique="page"/>';
+			$data.='<type label="'.Strings::escapeEncodedXML($row['pageslabel']).'" default="'.($row['pagesdefault'] ? 'true' : 'false').'" hidden="'.($row['pageshidden'] ? 'true' : 'false').'" unique="page"/>';
 		}
 		if ($row['imagesenabled']) {
-			$data.='<type label="'.Strings::escapeXML($row['imageslabel']).'" default="'.($row['imagesdefault'] ? 'true' : 'false').'" hidden="'.($row['imageshidden'] ? 'true' : 'false').'" unique="image"/>';
+			$data.='<type label="'.Strings::escapeEncodedXML($row['imageslabel']).'" default="'.($row['imagesdefault'] ? 'true' : 'false').'" hidden="'.($row['imageshidden'] ? 'true' : 'false').'" unique="image"/>';
 		}
 		if ($row['filesenabled']) {
-			$data.='<type label="'.Strings::escapeXML($row['fileslabel']).'" default="'.($row['filesdefault'] ? 'true' : 'false').'" hidden="'.($row['fileshidden'] ? 'true' : 'false').'" unique="file"/>';
+			$data.='<type label="'.Strings::escapeEncodedXML($row['fileslabel']).'" default="'.($row['filesdefault'] ? 'true' : 'false').'" hidden="'.($row['fileshidden'] ? 'true' : 'false').'" unique="file"/>';
 		}
 		if ($row['personsenabled']) {
-			$data.='<type label="'.Strings::escapeXML($row['personslabel']).'" default="'.($row['personsdefault'] ? 'true' : 'false').'" hidden="'.($row['personshidden'] ? 'true' : 'false').'" unique="person"/>';
+			$data.='<type label="'.Strings::escapeEncodedXML($row['personslabel']).'" default="'.($row['personsdefault'] ? 'true' : 'false').'" hidden="'.($row['personshidden'] ? 'true' : 'false').'" unique="person"/>';
 		}
 		if ($row['newsenabled']) {
-			$data.='<type label="'.Strings::escapeXML($row['newslabel']).'" default="'.($row['newsdefault'] ? 'true' : 'false').'" hidden="'.($row['newshidden'] ? 'true' : 'false').'" unique="news"/>';
+			$data.='<type label="'.Strings::escapeEncodedXML($row['newslabel']).'" default="'.($row['newsdefault'] ? 'true' : 'false').'" hidden="'.($row['newshidden'] ? 'true' : 'false').'" unique="news"/>';
 		}
 		if ($row['productsenabled']) {
-			$data.='<type label="'.Strings::escapeXML($row['productslabel']).'" default="'.($row['productsdefault'] ? 'true' : 'false').'" hidden="'.($row['productshidden'] ? 'true' : 'false').'" unique="product"/>';
+			$data.='<type label="'.Strings::escapeEncodedXML($row['productslabel']).'" default="'.($row['productsdefault'] ? 'true' : 'false').'" hidden="'.($row['productshidden'] ? 'true' : 'false').'" unique="product"/>';
 		}
 		$data.='</types>';
 		$data.='<!--dynamic-->';
@@ -71,7 +71,7 @@ class SearchTemplateController extends TemplateController
 			}
 			$query = Request::getString('query');
 			$xml = '<parameters method="'.$method.'">';
-			$xml .= '<query>'.Strings::escapeXML($query).'</query>';
+			$xml .= '<query>'.Strings::escapeEncodedXML($query).'</query>';
 			$xml .= '<types>';
 			$xml .= '<type unique="page" selected="'.($searchPages ? 'true' : 'false').'"/>';
 			$xml .= '<type unique="image" selected="'.($searchImages ? 'true' : 'false').'"/>';
@@ -125,7 +125,7 @@ class SearchTemplateController extends TemplateController
 					$xml.='<group type="page" count="'.$num.'">';
 					while ($row = Database::next($result)) {
 						$xml.='<page id="'.$row['id'].'">';
-						$xml.='<title>'.Strings::escapeXML($row['title']).'</title>';
+						$xml.='<title>'.Strings::escapeEncodedXML($row['title']).'</title>';
 						$xml.='<description>'.Strings::escapeSimpleXMLwithLineBreak($row['description'],'<break/>').'</description>';
 						$xml.='<summary>'.Strings::summarizeAndHighlight($highlight,$row['index']).'</summary>';
 						$xml.='</page>';
