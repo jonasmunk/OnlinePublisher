@@ -19,7 +19,7 @@ if (!isset(\$GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-\n\$classes = ".$text."\n?>";
+\n\$HUI_EDITOR_CLASSES = ".$text."\n?>";
 
 $success = FileSystemService::writeStringToFile($text,$basePath.'Editor/Info/Classpaths.php');
 if (!$success) {

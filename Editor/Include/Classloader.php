@@ -3,16 +3,16 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
+require_once $basePath.'Editor/Info/Classpaths.php';
 function __autoload($class_name) {
-	global $basePath;
+	global $basePath,$HUI_EDITOR_CLASSES;
 	
 	if (class_exists($class_name)) {
 		return;
 	}
-	include $basePath.'Editor/Info/Classpaths.php';
-	if (is_array($classes)) {
-		if (array_key_exists($class_name,$classes)) {
-			require_once $basePath.'Editor/Classes/'.$classes[$class_name];
+	if (is_array($HUI_EDITOR_CLASSES)) {
+		if (array_key_exists($class_name,$HUI_EDITOR_CLASSES)) {
+			require_once $basePath.'Editor/Classes/'.$HUI_EDITOR_CLASSES[$class_name];
 			return;
 		}
 	}
