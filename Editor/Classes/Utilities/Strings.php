@@ -238,7 +238,7 @@ class Strings {
 			$out.=Strings::escapeEncodedXML(mb_substr($text,$lastPos,14,'UTF-8')).' ...';
 		}
 		else {
-			$out.=Strings::escapeEncodedXML(mb_substr($text,$lastPos,'UTF-8'));
+			$out.=Strings::escapeEncodedXML(mb_substr($text,$lastPos,null,'UTF-8'));
 		}
 		return $out;
 	}

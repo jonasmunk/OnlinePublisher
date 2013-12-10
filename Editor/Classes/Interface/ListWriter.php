@@ -52,11 +52,11 @@ class ListWriter {
 	function header($options=array()) {
 		echo '<header';
 		if (is_string($options)) {
-			echo ' title="'.Strings::escapeXML($options).'"';
+			echo ' title="'.Strings::escapeEncodedXML($options).'"';
 		}
 		else if (is_array($options)) {
 			if (isset($options['title'])) {
-				echo ' title="'.Strings::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
+				echo ' title="'.Strings::escapeEncodedXML(GuiUtils::getTranslated($options['title'])).'"';
 			}
 			if (isset($options['width'])) {
 				echo ' width="'.$options['width'].'"';

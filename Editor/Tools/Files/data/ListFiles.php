@@ -48,8 +48,8 @@ $writer->window(array( 'total' => $list['total'], 'size' => $windowSize, 'page' 
 $writer->startHeaders();
 $writer->header(array('title'=>array('Title','da'=>'Titel'),'width'=>40));
 $writer->header(array('title'=>'Type'));
-$writer->header(array('title'=>array('Size','da'=>'Størrelse')));
-$writer->header(array('title'=>array('Modified','da'=>'Ændret')));
+$writer->header(array('title'=>array('Size','da'=>'StÃ¸rrelse')));
+$writer->header(array('title'=>array('Modified','da'=>'Ã†ndret')));
 $writer->endHeaders();
 
 foreach ($objects as $object) {

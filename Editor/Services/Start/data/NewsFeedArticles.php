@@ -23,7 +23,7 @@ if (!$feed) {
 $writer = new ListWriter();
 
 if (ConfigurationService::isUnicode()) {
-  Strings::toUnicode($feed);
+  //Strings::toUnicode($feed);
 }
 
 $writer->startList(array('unicode'=>true));
