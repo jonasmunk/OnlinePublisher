@@ -29,7 +29,7 @@ var hui = {
 /** If the browser is opera */
 hui.browser.opera = /opera/i.test(navigator.userAgent);
 /** If the browser is any version of InternetExplorer */
-hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent);
+hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent) || /Trident/.test(navigator.userAgent);
 /** If the browser is InternetExplorer 6 */
 hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6') !== -1;
 /** If the browser is InternetExplorer 7 */
@@ -51,7 +51,7 @@ hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** The version of WebKit (null if not WebKit) */
 hui.browser.webkitVersion = null;
 /** If the browser is Gecko based */
-hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko') !== -1;
+hui.browser.gecko = !hui.browser.webkit && !hui.browser.msie && navigator.userAgent.indexOf('Gecko') !== -1;
 /** If the browser is Gecko based */
 hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** If the browser is safari on iPad */
