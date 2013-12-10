@@ -29,7 +29,7 @@ var hui = {
 /** If the browser is opera */
 hui.browser.opera = /opera/i.test(navigator.userAgent);
 /** If the browser is any version of InternetExplorer */
-hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent);
+hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent) || /Trident/.test(navigator.userAgent);
 /** If the browser is InternetExplorer 6 */
 hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6') !== -1;
 /** If the browser is InternetExplorer 7 */
@@ -51,7 +51,7 @@ hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** The version of WebKit (null if not WebKit) */
 hui.browser.webkitVersion = null;
 /** If the browser is Gecko based */
-hui.browser.gecko = !hui.browser.webkit && navigator.userAgent.indexOf('Gecko') !== -1;
+hui.browser.gecko = !hui.browser.webkit && !hui.browser.msie && navigator.userAgent.indexOf('Gecko') !== -1;
 /** If the browser is Gecko based */
 hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
 /** If the browser is safari on iPad */
@@ -5001,7 +5001,7 @@ hui.ui = {
 	context : '',
 	language : 'en',
 
-	objects : [],
+	objects : {},
 	delegates : [],
 
 	state : 'default',
@@ -10781,7 +10781,7 @@ hui.ui.Upload = function(options) {
 	this._addBehavior();
 }
 
-hui.ui.Upload.implementations = ['Frame','HTML5','Flash'];
+hui.ui.Upload.implementations = ['HTML5','Frame','Flash'];
 
 hui.ui.Upload.nameIndex = 0;
 
@@ -10855,7 +10855,7 @@ hui.ui.Upload.prototype = {
 			var impl = hui.ui.Upload[impls[i]];
 			var support = impl.support();
 			if (support.supported) {
-				if (!this.options.multiple && !support.multiple) {
+				if (!this.options.multiple) {
 					this.impl = new impl(this);
 					hui.log('Selected impl (single): '+impls[i]);
 					break;
@@ -11490,7 +11490,11 @@ hui.ui.Upload.HTML5.prototype = {
 	initialize : function() {
 		var options = this.parent.options;
 		var span = hui.build('span',{'class':'hui_upload_button_input'});
-		this.fileInput = hui.build('input',{'type':'file','name':options.fieldName,'multiple':'multiple',parent:span});
+		var ps = {'type':'file','name':options.fieldName,parent:span};
+		if (options.multiple) {
+			ps.multiple = 'multiple';
+		}
+		this.fileInput = hui.build('input',ps);
 		var c = this.parent.$_getButtonContainer();		
 		c.insertBefore(span,c.firstChild);
 		hui.listen(this.fileInput,'change',this._submit.bind(this));
