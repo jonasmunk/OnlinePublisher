@@ -12,6 +12,7 @@ class HttpRequest {
 	
 	private $url;
 	private $parameters = array();
+	private $unicode;
 	
 	function HttpRequest($url=null) {
 		$this->url = $url;
@@ -36,5 +37,13 @@ class HttpRequest {
 	function getParameters() {
 		return $this->parameters;
 	}
-
+	
+	function setUnicode($unicode) {
+	    $this->unicode = $unicode;
+	}
+	
+	function getUnicode() {
+	    return $this->unicode;
+	}
+	
 }

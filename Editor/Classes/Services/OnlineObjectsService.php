@@ -13,12 +13,13 @@ class OnlineObjectsService {
 	static function analyseText($text) {
 		$url = OnlineObjectsService::getServiceUrl('language','analyse');
 		$request = new HttpRequest($url);
+		$request->setUnicode(true);
 		$request->addParameter('text',$text);
 		$response = HttpClient::send($request);
 		if (!$response->isSuccess()) {
 			return null;
 		}
-		return Strings::fromUnicode(Strings::fromJSON($response->getData()));
+		return Strings::fromJSON($response->getData());
 	}
 	
 	static function getServiceUrl($service,$method,$baseUrl=null) {
