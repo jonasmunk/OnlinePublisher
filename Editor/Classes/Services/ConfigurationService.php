@@ -17,7 +17,7 @@ class ConfigurationService {
 
 	static function isUnicode() {
 		global $CONFIG;
-		return (isset($CONFIG) && isset($CONFIG['unicode']) && $CONFIG['unicode']==true);
+		return (isset($CONFIG) && (!isset($CONFIG['unicode']) || $CONFIG['unicode']==true));
 	}
 	
 	static function isUrlRewrite() {
