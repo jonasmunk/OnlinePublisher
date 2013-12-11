@@ -230,7 +230,7 @@ function listPages() {
 	}
 	$writer->
 			header(array('title'=>array('Language','da'=>'Sprog'),'key'=>'page.language','sortable'=>'true'))->
-			header(array('title'=>array('Modified','da'=>'Ændret'),'width'=>1,'key'=>'page.changed','sortable'=>'true'))->
+			header(array('title'=>array('Modified','da'=>'Ã†ndret'),'width'=>1,'key'=>'page.changed','sortable'=>'true'))->
 			header(array('title'=>array('Hits','da'=>'Hits'),'width'=>1))->
 			header(array('width'=>1))->
 		endHeaders();

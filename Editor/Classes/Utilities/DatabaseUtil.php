@@ -321,11 +321,23 @@ class DatabaseUtil {
 				}
 			}
 		}
+        if (ConfigurationService::isUnicode()) {
+            DatabaseUtil::convertAllTablesToUnicode($log);            
+        }
 		DatabaseUtil::setAsUpToDate();
-
 		$log[] = "";
 		$log[] = "== Update finished ==";
 		return $log;
 	}
+    
+    static function convertAllTablesToUnicode(&$log) {
+        $tables = DatabaseUtil::getTables();
+        foreach ($tables as $table) {
+            $sql = 'ALTER TABLE `'.$table.'` CONVERT TO CHARACTER SET utf8 COLLATE utf8_danish_ci';
+            $log[] = $sql;
+            Database::update($sql);
+        }
+    }
+    
 }
 ?>

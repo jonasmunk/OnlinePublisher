@@ -122,7 +122,7 @@ class ImagePartController extends PartController
 			}
 		}
 		if (Strings::isNotBlank($part->getText())) {
-			$xml.='<text>'.Strings::escapeXML($part->getText()).'</text>';
+			$xml.='<text>'.Strings::escapeEncodedXML($part->getText()).'</text>';
 		}
 		$xml.='</image>';
 		return $xml;

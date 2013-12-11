@@ -23,6 +23,7 @@ class Strings {
 		$output=str_replace('&', '&amp;', $output);
 		$output=str_replace('<', '&lt;', $output);
 		$output=str_replace('>', '&gt;', $output);
+		$output=str_replace('"', '&quot;', $output);
 		return $output;
 	}
 
@@ -97,14 +98,21 @@ class Strings {
 		$str = str_replace('"', '&quot;', $str);
 		return $str;
 	}
+    
+    static function escapeEncodedXML($str) {
+        if (ConfigurationService::isUnicode()) {
+            return Strings::escapeSimpleXML($str);
+        }
+        return Strings::escapeXML($str);
+    }
 
 	static function htmlNumericEntities(&$str){
 	  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
 	}
 	
 	static function escapeXMLBreak($input,$break) {
-		$output = Strings::escapeXML($input);
-		$output = str_replace("&#13;&#10;", $break, $output);
+        $output = Strings::escapeEncodedXML($input);
+        $output = str_replace("&#13;&#10;", $break, $output);
 		$output = str_replace("&#13;", $break, $output);
 		$output = str_replace("&#10;", $break, $output);
 		$output = str_replace("\n", $break, $output);
@@ -112,7 +120,7 @@ class Strings {
 	}
 	
 	static function escapeJavaScriptXML($input) {
-		$output = Strings::escapeXML($input);
+		$output = Strings::escapeEncodedXML($input);
 		$output = str_replace("'", "\'", $output);
 		return $output;
 	}
@@ -179,18 +187,18 @@ class Strings {
 	 * @return string A highlighted summary of the text
 	 */
 	static function summarizeAndHighlight($keywords,$text) {
-		$lower=strtolower($text);
+		$lower=mb_strtolower($text,'UTF-8');
 		$positions = array();
 		$out = '';
 		for ($i=0;$i<count($keywords);$i++) {
-			$word=strtolower($keywords[$i]);
+			$word=mb_strtolower($keywords[$i],'UTF-8');
 			$index=0;
 			$endIsReached = false;
 			while(!$endIsReached) {
-				$pos = strpos($lower, $word,$index);
+				$pos = mb_strpos($lower, $word,$index,'UTF-8');
 				if ($pos!==false) {
 					$positions[$pos] = $word;
-					$index=$pos+strlen($word);
+					$index=$pos+mb_strlen($word,'UTF-8');
 				}
 				else {
 					$endIsReached = true;
@@ -204,33 +212,33 @@ class Strings {
 				$dist = $pos-$lastPos;
 				if ($lastPos==0) {
 					if ($dist>17) {
-						$out.='... '.Strings::escapeXML(substr($text,$dist-14,14));
+						$out.='... '.Strings::escapeEncodedXML(mb_substr($text,$dist-14,14,'UTF-8'));
 					}
 					else {
-						$out.=Strings::escapeXML(substr($text,0,$dist));
+						$out.=Strings::escapeEncodedXML(mb_substr($text,0,$dist,'UTF-8'));
 					}
 				}
 				else {
-					$middle = substr($text,$lastPos,$dist);
-					if (strlen($middle)>30) {
+					$middle = mb_substr($text,$lastPos,$dist,'UTF-8');
+					if (mb_strlen($middle,'UTF-8')>30) {
 						$out.=
-						Strings::escapeXML(substr($middle,0,14)).
+						Strings::escapeEncodedXML(mb_substr($middle,0,14,'UTF-8')).
 						' ... '.
-						Strings::escapeXML(substr($middle,strlen($middle)-14,14));
+						Strings::escapeEncodedXML(mb_substr($middle,strlen($middle)-14,14,'UTF-8'));
 					}
 					else {
-						$out.=Strings::escapeXML($middle);
+						$out.=Strings::escapeEncodedXML($middle);
 					}
 				}
-				$out.='<highlight>'.Strings::escapeXML($word).'</highlight>';
+				$out.='<highlight>'.Strings::escapeEncodedXML($word).'</highlight>';
 			}
 			$lastPos=$pos+strlen($word);
 		}
-		if ((strlen($text)-$lastPos)>14) {
-			$out.=Strings::escapeXML(substr($text,$lastPos,14)).' ...';
+		if ((mb_strlen($text,'UTF-8')-$lastPos)>14) {
+			$out.=Strings::escapeEncodedXML(mb_substr($text,$lastPos,14,'UTF-8')).' ...';
 		}
 		else {
-			$out.=Strings::escapeXML(substr($text,$lastPos));
+			$out.=Strings::escapeEncodedXML(mb_substr($text,$lastPos,null,'UTF-8'));
 		}
 		return $out;
 	}

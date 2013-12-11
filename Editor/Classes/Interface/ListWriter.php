@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class ListWriter {
 	function startList($options=array()) {
-		if (@$options['unicode']==true) {
+		if (@$options['unicode']==true || ConfigurationService::isUnicode()) {
 			header('Content-Type: text/xml; charset=utf-8');
 			echo '<?xml version="1.0" encoding="UTF-8"?>';
 		} else {
@@ -52,11 +52,11 @@ class ListWriter {
 	function header($options=array()) {
 		echo '<header';
 		if (is_string($options)) {
-			echo ' title="'.Strings::escapeXML($options).'"';
+			echo ' title="'.Strings::escapeEncodedXML($options).'"';
 		}
 		else if (is_array($options)) {
 			if (isset($options['title'])) {
-				echo ' title="'.Strings::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
+				echo ' title="'.Strings::escapeEncodedXML(GuiUtils::getTranslated($options['title'])).'"';
 			}
 			if (isset($options['width'])) {
 				echo ' width="'.$options['width'].'"';

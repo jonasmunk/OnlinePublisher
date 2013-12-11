@@ -35,7 +35,10 @@ class Request {
 	 * @return string The value of the variable, '' if variable not set
 	 */
 	static function getString($key,$default='') {
-		return Strings::fromUnicode(Request::getStringAsUnicode($key,$default));
+        if (!ConfigurationService::isUnicode()) {
+            return Strings::fromUnicode(Request::getStringAsUnicode($key,$default));
+        }
+		return Request::getStringAsUnicode($key,$default);
 	}
 
 	static function getStringAsUnicode($key,$default='') {
@@ -175,7 +178,9 @@ class Request {
 	static function getObject($key) {
 		$obj = Strings::fromJSON(Request::getStringAsUnicode($key));
 		if ($obj!==null) {
-			Strings::fromUnicode($obj);
+            if (!ConfigurationService::isUnicode()) {
+			    Strings::fromUnicode($obj);
+            }
 		}
 		return $obj;
 	}

@@ -53,6 +53,7 @@
 				<p>Hedensted</p>
 				<p>Horsens</p>
 				<p>Struer</p>
+				<p>Aarhus</p>
 				<p>Tlf.: 61 26 50 49</p>
 				<hr/>
 				<h2>Mail</h2>

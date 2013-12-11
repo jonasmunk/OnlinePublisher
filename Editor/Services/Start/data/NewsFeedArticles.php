@@ -22,6 +22,10 @@ if (!$feed) {
 
 $writer = new ListWriter();
 
+if (ConfigurationService::isUnicode()) {
+  //Strings::toUnicode($feed);
+}
+
 $writer->startList(array('unicode'=>true));
 
 foreach($feed->getItems() as $item) {

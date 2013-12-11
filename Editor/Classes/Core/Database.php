@@ -57,7 +57,11 @@ class Database {
 			if (!$con) {
 				return false;
 			}
-            mysql_set_charset('latin1',$con);
+            if (ConfigurationService::isUnicode()) {
+                mysql_set_charset('utf8',$con);
+            } else {
+                mysql_set_charset('latin1',$con);
+            }
 			mysql_select_db($config['database'],$con);
 			if (mysql_errno($con)>0) {
 				return false;

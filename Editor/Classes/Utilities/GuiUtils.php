@@ -156,7 +156,7 @@ class GuiUtils {
 		$sql="select id,title from object where type=".Database::text($type)." order by title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<option title="'.Strings::escapeXML(Strings::shortenString($row['title'],$maxSize)).'" value="'.$row['id'].'"/>';
+			$output.='<option title="'.Strings::escapeEncodedXML(Strings::shortenString($row['title'],$maxSize)).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;
@@ -170,7 +170,7 @@ class GuiUtils {
 		$output='';
 		if (is_array($type)) {
 			foreach ($type as $object) {
-				$output.='<item title="'.Strings::escapeXML($object->getTitle()).'" value="'.$object->getId().'"/>';
+				$output.='<item title="'.Strings::escapeEncodedXML($object->getTitle()).'" value="'.$object->getId().'"/>';
 			}
 		} else {
 			$sql="select id,title from object where type=".Database::text($type)." order by title";
@@ -209,7 +209,7 @@ class GuiUtils {
 		foreach ($items as $key => $texts) {
 			$lang = InternalSession::getLanguage();
 			$title = isset($texts[$lang]) ? $texts[$lang] : $texts['en'];
-			$output.='<item text="'.Strings::escapeXML($title).'" value="'.$key.'"/>';
+			$output.='<item text="'.Strings::escapeEncodedXML($title).'" value="'.$key.'"/>';
 		}
 		
 		return $output;
@@ -226,7 +226,7 @@ class GuiUtils {
 		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "")." order by page.title";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
-			$output.='<option title="'.Strings::escapeXML($row['title']).'" value="'.$row['id'].'"/>';
+			$output.='<option title="'.Strings::escapeEncodedXML($row['title']).'" value="'.$row['id'].'"/>';
 		}
 		Database::free($result);
 		return $output;

@@ -10,21 +10,21 @@ if (!isset($GLOBALS['basePath'])) {
 }
 class ItemsWriter {
 	function startItems() {
-		header('Content-Type: text/xml; charset=iso-8859-1');
-		echo '<?xml version="1.0" encoding="ISO-8859-1"?><items>';
+		header('Content-Type: text/xml; charset=utf-8');
+		echo '<?xml version="1.0" encoding="UTF-8"?><items>';
 		return $this;
 	}
 
 	function startItem($options) {
 		echo '<item';
 		if (isset($options['value'])) {
-			echo ' value="'.Strings::escapeXML($options['value']).'"';
+			echo ' value="'.Strings::escapeEncodedXML($options['value']).'"';
 		}
 		if (isset($options['title'])) {
-			echo ' title="'.Strings::escapeXML(GuiUtils::getTranslated($options['title'])).'"';
+			echo ' title="'.Strings::escapeEncodedXML(GuiUtils::getTranslated($options['title'])).'"';
 		}
 		if (isset($options['text'])) {
-			echo ' text="'.Strings::escapeXML(GuiUtils::getTranslated($options['text'])).'"';
+			echo ' text="'.Strings::escapeEncodedXML(GuiUtils::getTranslated($options['text'])).'"';
 		}
 		if (isset($options['icon'])) {
 			echo ' icon="'.$options['icon'].'"';
@@ -54,7 +54,7 @@ class ItemsWriter {
 	}
 
 	function title($title=null) {
-		echo '<title title="'.Strings::escapeXML(GuiUtils::getTranslated($title)).'"/>';
+		echo '<title title="'.Strings::escapeEncodedXML(GuiUtils::getTranslated($title)).'"/>';
 		return $this;
 	}
 

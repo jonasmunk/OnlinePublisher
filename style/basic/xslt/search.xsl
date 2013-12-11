@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
  xmlns="http://www.w3.org/1999/xhtml"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -14,21 +14,21 @@
  >
 
 <xsl:template match="s:search">
-<div class="search">
-<h1 class="common"><xsl:value-of select="s:title"/></h1>
-<xsl:if test="s:text!=''">
-<p class="common"><xsl:apply-templates select="s:text"/></p>
-</xsl:if>
-<form method="get" action="." accept-charset="UTF-8">
-<input type="hidden" name="id" value="{/p:page/@id}"/>
-<input name="query" value="{s:parameters/s:query/.}" class="text"/>
-<input type="submit" value="{s:buttontitle/.}" class="submit"/>
-<xsl:call-template name="method"/>
-<xsl:apply-templates select="s:types"/>
-</form>
-<xsl:apply-templates select="s:results"/>
-</div>
-<script type="text/javascript" src="{$path}style/basic/js/templates/Search.js"><xsl:comment/></script>
+    <div class="search">
+        <h1 class="common"><xsl:value-of select="s:title"/></h1>
+        <xsl:if test="s:text!=''">
+        <p class="common"><xsl:apply-templates select="s:text"/></p>
+        </xsl:if>
+        <form method="get" action="." accept-charset="UTF-8">
+        <input type="hidden" name="id" value="{/p:page/@id}"/>
+        <input name="query" value="{s:parameters/s:query/.}" class="text"/>
+        <input type="submit" value="{s:buttontitle/.}" class="submit"/>
+        <xsl:call-template name="method"/>
+        <xsl:apply-templates select="s:types"/>
+        </form>
+        <xsl:apply-templates select="s:results"/>
+    </div>
+    <script type="text/javascript" src="{$path}style/basic/js/templates/Search.js"><xsl:comment/></script>
 </xsl:template>
 
 <xsl:template match="s:break">
@@ -51,7 +51,7 @@
 <xsl:if test="s:parameters/@method='sentence'">
 <xsl:attribute name="checked">checked</xsl:attribute>
 </xsl:if>
-</input> <label for="sentence">Sætning</label>
+</input> <label for="sentence">SÃ¦tning</label>
 </div>
 </xsl:template>
 

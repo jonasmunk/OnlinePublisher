@@ -6,6 +6,7 @@
 require_once '../../../Include/Private.php';
 
 $subset = Request::getString('subset');
+$text = Request::getString('text');
 
 if ($subset=='pages') {
 	listPages();
@@ -52,8 +53,8 @@ function listImages($text) {
 		window(array('total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage))->
 		startHeaders()->
 			header(array('title'=>array('Image','da'=>'Billede'),'width'=>40))->
-			header(array('title'=>array('Size', 'da'=>'Størrelse')))->
-			header(array('title'=>array('Height', 'da'=>'Højde')))->
+			header(array('title'=>array('Size', 'da'=>'StÃ¸rrelse')))->
+			header(array('title'=>array('Height', 'da'=>'HÃ¸jde')))->
 			header(array('title'=>array('Width', 'da'=>'Bredde')))->
 			header(array('title'=>'Type'))->
 		endHeaders();
@@ -79,7 +80,6 @@ function listImages($text) {
 			endCell()->
 		endRow();	
 	}
-	Database::free($result);
 
 	$writer->endList();
 }
@@ -116,7 +116,6 @@ function listProducts() {
 			endCell()->
 		endRow();	
 	}
-	Database::free($result);
 
 	$writer->endList();
 }
@@ -153,7 +152,6 @@ function listPersons() {
 			endCell()->
 		endRow();	
 	}
-	Database::free($result);
 
 	$writer->endList();
 }
@@ -194,7 +192,6 @@ function listPages() {
 			startCell()->text($parts[$row['part']]['name']['da'])->endCell()->
 		endRow();	
 	}
-	Database::free($result);
 
 	$writer->endList();
 }

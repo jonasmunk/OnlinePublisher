@@ -4,7 +4,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-$classes = array (
+$HUI_EDITOR_CLASSES = array (
   'DatabaseUtil' => 'Utilities/DatabaseUtil.php',
   'Dates' => 'Utilities/Dates.php',
   'DOMUtils' => 'Utilities/DOMUtils.php',

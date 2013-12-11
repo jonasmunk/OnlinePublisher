@@ -75,22 +75,22 @@ class HeaderPartController extends PartController
 	function editor($part,$context) {
 		return
 		'<textarea class="part_header common_font part_header_'.$part->getLevel().'" name="text" id="part_header_textarea" style="border: 1px solid lightgrey; width: 100%; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; '.$this->buildCSSStyle($part).'">'.
-		Strings::escapeXML($part->getText()).
+        Strings::escapeEncodedXML($part->getText()).
 		'</textarea>'.
 		'<input type="hidden" name="level" value="'.$part->getLevel().'"/>'.
-		'<input type="hidden" name="fontSize" value="'.Strings::escapeXML($part->getFontSize()).'"/>'.
-		'<input type="hidden" name="fontFamily" value="'.Strings::escapeXML($part->getFontFamily()).'"/>'.
-		'<input type="hidden" name="textAlign" value="'.Strings::escapeXML($part->getTextAlign()).'"/>'.
-		'<input type="hidden" name="lineHeight" value="'.Strings::escapeXML($part->getLineHeight()).'"/>'.
-		'<input type="hidden" name="fontWeight" value="'.Strings::escapeXML($part->getFontWeight()).'"/>'.
-		'<input type="hidden" name="fontStyle" value="'.Strings::escapeXML($part->getFontStyle()).'"/>'.
-		'<input type="hidden" name="color" value="'.Strings::escapeXML($part->getColor()).'"/>'.
-		'<input type="hidden" name="wordSpacing" value="'.Strings::escapeXML($part->getWordSpacing()).'"/>'.
-		'<input type="hidden" name="letterSpacing" value="'.Strings::escapeXML($part->getLetterSpacing()).'"/>'.
-		'<input type="hidden" name="textIndent" value="'.Strings::escapeXML($part->getTextIndent()).'"/>'.
-		'<input type="hidden" name="textTransform" value="'.Strings::escapeXML($part->getTextTransform()).'"/>'.
-		'<input type="hidden" name="fontVariant" value="'.Strings::escapeXML($part->getFontVariant()).'"/>'.
-		'<input type="hidden" name="textDecoration" value="'.Strings::escapeXML($part->getTextDecoration()).'"/>'.
+		'<input type="hidden" name="fontSize" value="'.Strings::escapeEncodedXML($part->getFontSize()).'"/>'.
+		'<input type="hidden" name="fontFamily" value="'.Strings::escapeEncodedXML($part->getFontFamily()).'"/>'.
+		'<input type="hidden" name="textAlign" value="'.Strings::escapeEncodedXML($part->getTextAlign()).'"/>'.
+		'<input type="hidden" name="lineHeight" value="'.Strings::escapeEncodedXML($part->getLineHeight()).'"/>'.
+		'<input type="hidden" name="fontWeight" value="'.Strings::escapeEncodedXML($part->getFontWeight()).'"/>'.
+		'<input type="hidden" name="fontStyle" value="'.Strings::escapeEncodedXML($part->getFontStyle()).'"/>'.
+		'<input type="hidden" name="color" value="'.Strings::escapeEncodedXML($part->getColor()).'"/>'.
+		'<input type="hidden" name="wordSpacing" value="'.Strings::escapeEncodedXML($part->getWordSpacing()).'"/>'.
+		'<input type="hidden" name="letterSpacing" value="'.Strings::escapeEncodedXML($part->getLetterSpacing()).'"/>'.
+		'<input type="hidden" name="textIndent" value="'.Strings::escapeEncodedXML($part->getTextIndent()).'"/>'.
+		'<input type="hidden" name="textTransform" value="'.Strings::escapeEncodedXML($part->getTextTransform()).'"/>'.
+		'<input type="hidden" name="fontVariant" value="'.Strings::escapeEncodedXML($part->getFontVariant()).'"/>'.
+		'<input type="hidden" name="textDecoration" value="'.Strings::escapeEncodedXML($part->getTextDecoration()).'"/>'.
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/header/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	

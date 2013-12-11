@@ -105,7 +105,7 @@ $writer->item(array(
 ));
 
 $writer->item(array(
-	'title' => array('Modified','da'=>'Ændret'),
+	'title' => array('Modified','da'=>'Ã†ndret'),
 	'icon' => 'monochrome/edit',
 	'value' => 'changed',
 	'kind' => 'subset',
