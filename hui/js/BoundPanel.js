@@ -133,7 +133,7 @@ hui.ui.BoundPanel.prototype = {
 			this.element.style.display='none';
 			hui.ui.callVisible(this);
 		} else {
-			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,onComplete:function() {
+			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,$complete:function() {
 				this.element.style.display='none';
 				hui.ui.callVisible(this);
 			}.bind(this)});
