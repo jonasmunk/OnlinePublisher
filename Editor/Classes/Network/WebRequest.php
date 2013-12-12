@@ -8,13 +8,13 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class HttpRequest {
+class WebRequest {
 	
 	private $url;
 	private $parameters = array();
 	private $unicode;
 	
-	function HttpRequest($url=null) {
+	function WebRequest($url=null) {
 		$this->url = $url;
 	}
 

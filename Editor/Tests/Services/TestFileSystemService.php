@@ -11,6 +11,11 @@ if (!isset($GLOBALS['basePath'])) {
 
 class TestFileSystemService extends UnitTestCase {
     
+    function testSafeFileName() {
+        //$this->assertEqual(FileSystemService::safeFileName('æøå.pdf'),'aeoeaa.pdf');
+        $this->assertEqual(FileSystemService::safeFileName('filnavn.php'),'filnavn.php.txt');
+    }
+    
     function testGetFileExtension() {
         $this->assertTrue(FileSystemService::getFileExtension('filnavn.php')=='php');
         $this->assertTrue(FileSystemService::getFileExtension('filnavn.php.xml')=='xml');

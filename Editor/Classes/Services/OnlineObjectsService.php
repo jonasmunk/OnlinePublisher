@@ -12,7 +12,7 @@ class OnlineObjectsService {
 	
 	static function analyseText($text) {
 		$url = OnlineObjectsService::getServiceUrl('language','analyse');
-		$request = new HttpRequest($url);
+		$request = new WebRequest($url);
 		$request->setUnicode(true);
 		$request->addParameter('text',$text);
 		$response = HttpClient::send($request);
@@ -31,7 +31,7 @@ class OnlineObjectsService {
 	
 	static function test($url) {
 		$serviceUrl = OnlineObjectsService::getServiceUrl('language','analyse',$url);
-		$request = new HttpRequest($serviceUrl);
+		$request = new WebRequest($serviceUrl);
 		$request->addParameter('text','Hello world');
 		$response = HttpClient::send($request);
 		return $response->isSuccess();

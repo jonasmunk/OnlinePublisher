@@ -32,10 +32,11 @@ class HttpClient {
 			Log::debug('Error number: '.$errorNumber.' / URL: '.$request->getUrl());
 		}
 		curl_close ($session);
-		$response = new HttpResponse();
+		$response = new WebResponse();
 		$response->setData($data);
 		if ($info!==null) {
 			$response->setStatusCode($info['http_code']);
+		} else {
 		}
 		return $response;
 	}

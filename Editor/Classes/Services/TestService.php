@@ -38,12 +38,15 @@ class TestService {
 		return FileSystemService::listFiles($basePath.'Editor/Tests/'.$group.'/');
 	}
 	
-	static function runTest($test) {
+	static function runTest($test,$reporter = null) {
 		global $basePath;
 		$path = $basePath.'Editor/Tests/'.$test.'.php';
 		$test = new GroupTest($test);
 		$test->addTestFile($path);
-		$test->run(new HtmlReporter());
+    if ($reporter==null) {
+      $reporter = new HtmlReporter();
+    }
+		$test->run($reporter);
 	}
 	
 	static function runTestsInGroup($group) {
@@ -62,7 +65,7 @@ class TestService {
 		$test->run(new HtmlReporter());
 	}
 	
-	static function runAllTests() {
+	static function runAllTests($reporter = null) {
 		global $basePath;
 		$paths = array();
 		$groups = TestService::getGroups();
@@ -79,7 +82,10 @@ class TestService {
 		foreach ($paths as $path) {
 			$test->addTestFile($path);
 		}
-		$test->run(new HtmlReporter());
+    if ($reporter==null) {
+      $reporter = new HtmlReporter();
+    }
+		$test->run($reporter);
 	}
 	
 	static function createTestPage() {

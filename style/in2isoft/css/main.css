@@ -6,6 +6,10 @@ img
 	border: none;
 }
 
+a {
+    word-break: break-word;
+}
+
 body
 {
 	padding: 0px;

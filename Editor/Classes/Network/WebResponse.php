@@ -8,12 +8,12 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class HttpResponse {
+class WebResponse {
 	
 	private $statusCode;
 	private $data;
 	
-	function HttpResponse() {
+	function WebResponse() {
 	}
 
 	function setStatusCode($statusCode) {

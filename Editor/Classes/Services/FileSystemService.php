@@ -16,7 +16,7 @@ class FileSystemService {
 	 * @param string $str The filename to analyze
 	 * @return string A safe filename
 	 */
-	static function safeFilename($str){
+	static function safeFilename($str) {
 		$str = str_replace("\xe6","ae",$str);
 		$str = str_replace("\xf8","oe",$str);
 		$str = str_replace("\xe5","aa",$str);
@@ -24,7 +24,11 @@ class FileSystemService {
 		$str = str_replace('"','x',$str);
 		$str = str_replace('#','x',$str);
 		$str = str_replace('?','x',$str);
-		return preg_replace('/[^!-%\x27-;?-~ ]/e', '"x"', $str);
+		$str = preg_replace('/[^!-%\x27-;?-~ ]/e', '"x"', $str);
+        if (FileSystemService::getFileExtension($str)=='php') {
+            $str = FileSystemService::overwriteExtension($str,'php.txt');
+        }
+        return $str;
 	}
 	
 	/**

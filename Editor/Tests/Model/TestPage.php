@@ -170,13 +170,13 @@ class TestPage extends UnitTestCase {
 		
 		$url = ConfigurationService::getCompleteBaseUrl().'?id='.$page->getId();
 		
-		$response = HttpClient::send(new HttpRequest($url));
+		$response = HttpClient::send(new WebRequest($url));
 		$this->assertEqual($response->getStatusCode(),200);
 		
 		$page->setDisabled(true);
 		$page->save();
 		
-		$response = HttpClient::send(new HttpRequest($url));
+		$response = HttpClient::send(new WebRequest($url));
 		$this->assertEqual($response->getStatusCode(),404);
 		
 		TestService::removeTestPage($page);

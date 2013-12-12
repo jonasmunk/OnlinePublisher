@@ -5,6 +5,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 $HUI_EDITOR_CLASSES = array (
+  'Console' => 'Utilities/Console.php',
   'DatabaseUtil' => 'Utilities/DatabaseUtil.php',
   'Dates' => 'Utilities/Dates.php',
   'DOMUtils' => 'Utilities/DOMUtils.php',
@@ -159,13 +160,14 @@ $HUI_EDITOR_CLASSES = array (
   'FeedSerializer' => 'Network/FeedSerializer.php',
   'FileUpload' => 'Network/FileUpload.php',
   'HttpClient' => 'Network/HttpClient.php',
-  'HttpRequest' => 'Network/HttpRequest.php',
-  'HttpResponse' => 'Network/HttpResponse.php',
   'ImportResult' => 'Network/ImportResult.php',
   'RemoteData' => 'Network/RemoteData.php',
   'RemoteFile' => 'Network/RemoteFile.php',
   'UserAgentAnalyzer' => 'Network/UserAgentAnalyzer.php',
+  'WebRequest' => 'Network/WebRequest.php',
+  'WebResponse' => 'Network/WebResponse.php',
   'WatermeterSummary' => 'Modules/Water/WatermeterSummary.php',
+  'ConsoleReporter' => 'Modules/Testing/ConsoleReporter.php',
   'StatisticsQuery' => 'Modules/Statistics/StatisticsQuery.php',
   'ReviewCombo' => 'Modules/Review/ReviewCombo.php',
   'ReviewService' => 'Modules/Review/ReviewService.php',

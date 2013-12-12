@@ -24,6 +24,7 @@ class TestPHPFiles extends UnitTestCase {
 		$this->assertTrue(is_dir($base));
 		$excluded = array(
 			'Authentication.php',
+			'cli.php',
 			'Recover.php',
 			'Include/Public.php',
 			'Touch/index.php',

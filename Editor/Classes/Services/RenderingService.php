@@ -59,21 +59,18 @@ class RenderingService {
 	static function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationPath,$pagePath,$preview,$language) {
 		global $basePath;
 
-		$agent='xslt';
 		if (function_exists('xslt_create')) {
 			$incPath = '../../';
 		}
 		else {
 			$incPath = $path;
 		}
+        if (Console::isFromConsole()) {
+            $incPath = $basePath;            
+        }
+		$contentDesign='basic';
 		if (file_exists($basePath.'style/'.$design.'/xslt/'.$template.'.xsl')) {
 			$contentDesign = $design;
-			$agent='xslt';
-		} else if (file_exists($basePath.'style/basic/xslt/'.$template.'.xsl')) {
-			$contentDesign = 'basic';
-			$agent = 'xslt';
-		} else {
-			$contentDesign='basic';
 		}
 		if (Request::getBoolean('print')) {
 			$mainFile='main_print';
@@ -124,7 +121,6 @@ class RenderingService {
 		'<xsl:variable name="language">'.$language.'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-	
 		return XslService::transform($xmlData,$xslData);
 	}
 	
