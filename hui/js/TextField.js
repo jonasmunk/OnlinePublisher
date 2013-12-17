@@ -24,6 +24,7 @@ hui.ui.TextField = function(options) {
 	this.multiline = this.input.tagName.toLowerCase() == 'textarea';
 	this.placeholder = hui.get.firstByClass(this.element,'hui_field_placeholder');
 	this.value = this.input.value;
+    this.modified = false;
 	this._addBehavior();
 }
 
@@ -115,6 +116,7 @@ hui.ui.TextField.prototype = {
 		this._expand(this.options.animateUserChange);
 		hui.ui.callAncestors(this,'childValueChanged',this.input.value);
 		this.fire('valueChanged',this.input.value);
+        this.modified = true;
 	},
 	/** Focus the text field */
 	focus : function() {
@@ -133,6 +135,9 @@ hui.ui.TextField.prototype = {
 	reset : function() {
 		this.setValue('');
 	},
+    isModified : function() {
+        return this.modified;
+    },
 	/** Draw attention to the field */
 	stress : function() {
 		hui.ui.stress(this);
@@ -147,6 +152,7 @@ hui.ui.TextField.prototype = {
 		this.value = value;
 		this.input.value = value;
 		this._expand(this.options.animateValueChange);
+        this.modified = false;
 	},
 	/** Get the value
 	 * @returns {String} The value

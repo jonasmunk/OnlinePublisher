@@ -4,6 +4,9 @@
 	<source name="hierarchySource" url="data/hierarchy.xml"/>
 	<source name="listSource" url="data/list_pages.xml"/>
 	<source name="languagesSource" url="data/languages.xml"/>
+	<source name="designsSource" url="data/languages.xml"/>
+	<source name="setupsSource" url="data/languages.xml"/>
+    <controller source="sites.js"/>
 	
 	<structure>
 		<top>
@@ -116,12 +119,12 @@
 		<formula>
 			<fields labels="besides">
 				<field label="Titel:">
-					<text-input/>
+					<text-input name="newPageTitle"/>
 				</field>
 			</fields>
 		</formula>
-		<div style="padding: 10px; margin: 4px; background: #eee; box-shadow: inset 0 1px 5px rgba(0,0,0,.2); border-radius: 4px">
-		<wizard selection-width="150" name="wizard">
+		<div style="background: #eee; margin: 0 -5px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin-bottom: 6px;">
+		<wizard selection-width="150" name="wizard" bordered="true">
 			<step title="Menupunkt" icon="common/hierarchy" border="true">
 				<overflow height="200">
 					<text align="center">
@@ -131,19 +134,19 @@
 						<items source="hierarchySource"/>
 					</selection>
 				</overflow>
-				<buttons small="true" top="5">
-					<button text="Intet menupunkt"/>
+				<buttons small="true" top="5" bottom="5">
+					<button text="Intet menupunkt" name="noMenuItem"/>
 				</buttons>
 			</step>
-			<step title="Info" icon="common/info" border="true">
-				<overflow height="200">
-				<formula>
+			<step title="Info" icon="common/info" frame="true">
+				<overflow height="220">
+				<formula padding="10">
 					<fields>
 						<field label="Beskrivelse:">
 							<text-input lines="6"/>
 						</field>
 						<field label="Sti:">
-							<text-input/>
+							<text-input name="newPagePath"/>
 						</field>
 						<!--
 						<field label="Nøgleord:">
@@ -211,14 +214,5 @@
 			<button title="Gem" highlighted="true"/>
 		</buttons>
 	</box>
-	
-	<listen>
-		$ready : function() {
-			//newPage.show();
-		},
-		$select$hierarchySelection : function() {
-			wizard.next();
-		}
-	</listen>
 
 </gui>
