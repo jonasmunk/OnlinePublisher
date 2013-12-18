@@ -179,3 +179,22 @@ hui.ui.Formula.Group.prototype = {
 		return b;
 	}
 }
+
+///////////////////////// Field //////////////////////////
+
+
+/**
+ * A form field
+ * @constructor
+ */
+hui.ui.Formula.Field = function(options) {
+	this.name = options.name;
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
+}
+
+hui.ui.Formula.Field.prototype = {
+    setVisible : function(visible) {
+        this.element.style.display = visible ? '' : 'none';
+    }
+}

@@ -80,6 +80,16 @@
 -->
 <xsl:template match="gui:fields/gui:field">
 	<tr>
+    	<xsl:attribute name="style">
+    		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state) or @visible='false'">
+    			<xsl:text>display:none;</xsl:text>
+    		</xsl:if>
+    	</xsl:attribute>
+        <xsl:if test="@name">
+            <xsl:attribute name="id">
+                <xsl:value-of select="generate-id()"/>
+            </xsl:attribute>
+        </xsl:if>
 		<th>
 			<xsl:if test="gui:text-input[not(@multiline='true') and not(@breaks='true')] | gui:dropdown | gui:checkbox | gui:datetime-input | gui:style-length-input | gui:number-input | gui:radiobuttons">
 				<xsl:attribute name="class">hui_formula_middle</xsl:attribute>
@@ -91,6 +101,20 @@
 			<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
 		</td>
 	</tr>
+    <xsl:if test="@name">
+    	<script type="text/javascript">
+    		(function() {
+    			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Formula.Field({
+    				element:'<xsl:value-of select="generate-id()"/>',
+    				name:'<xsl:value-of select="@name"/>'
+    				<xsl:if test="@state">
+    					,state:'<xsl:value-of select="@state"/>'
+    				</xsl:if>
+    			});
+    			<xsl:call-template name="gui:createobject"/>		
+    		}());
+    	</script>        
+    </xsl:if>
 </xsl:template>
 
 <xsl:template match="gui:fields[@labels='above']/gui:field">

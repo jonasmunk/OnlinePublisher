@@ -165,7 +165,7 @@
 						<field label="Opsætning:">
 							<dropdown source="setupsSource"/>
 						</field>
-						<field label="Inaktiv:">
+						<field label="Inaktiv:" name="inactiveField">
 							<checkbox/>
 						</field>
 					</fields>
@@ -177,7 +177,7 @@
 		<columns flexible="true">
 			<column>
 				<div style="margin: 3px;">
-					<checkbox label="Avanceret"/>
+					<checkbox label="Avanceret" name="advanced"/>
 				</div>
 			</column>
 			<column>
