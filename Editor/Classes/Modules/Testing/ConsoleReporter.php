@@ -25,7 +25,7 @@ class ConsoleReporter extends SimpleReporter {
      *    @access public
      */
     function paintHeader($test_name) {
-        echo "x$test_name\n";
+        echo "$test_name\n";
         flush();
     }
     

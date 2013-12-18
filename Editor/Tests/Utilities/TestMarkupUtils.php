@@ -30,4 +30,11 @@ class TestMarkupUtils extends UnitTestCase {
         $expected = '<html><head></head><body><h1>Test</h1><script type="text/javascript" src="path.js"/><script type="text/javascript"></script><script>if (true) {alert(0)}</script></body></html>';
         $this->assertEqual($expected,$result);
     }
+    /*
+	function testMoveScriptsToBottomIgnoreIE() {
+		$html = '<html><head><!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><script type="text/javascript" src="path.js"/><script type="text/javascript"></script></head><body><h1>Test</h1><script>if (true) {alert(0)}</script></body></html>';
+        $result = MarkupUtils::moveScriptsToBottom($html);
+        $expected = '<html><head><!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--></head><body><h1>Test</h1><script type="text/javascript" src="path.js"/><script type="text/javascript"></script><script>if (true) {alert(0)}</script></body></html>';
+        $this->assertEqual($expected,$result);
+    }*/
 }
