@@ -80,16 +80,41 @@ class TestDOMUtils extends UnitTestCase {
 		$this->assertEqual(count(DOMUtils::getChildElements($people,'person')),2);
 		$this->assertEqual(count(DOMUtils::getChildElements($people)),3);
 	}
+  
+    function _testParseAnything($input,$xml) {
+        if (!is_array($input)) {
+            $input = array($input);
+        }
+        
+        foreach ($input as $value) {
+    		$doc = DOMUtils::parseAnything($value);
+    		$this->assertNotNull($doc->documentElement);
+    		$this->assertEqual($xml,$doc->saveXML());
+        }
+    }
 
 	function testParseAnything() {
-		$doc = DOMUtils::parseAnything('<p>');
-		$this->assertNotNull($doc->documentElement);
-		$this->assertEqual("<?xml version=\"1.0\"?>\n<p/>\n",$doc->saveXML());
+        $this->_testParseAnything(
+            array('<p>','<p></p>','<p/>'),
+            "<?xml version=\"1.0\"?>\n<p/>\n"
+        );
+        
+        $this->_testParseAnything(
+            array('<p><</p>'),
+            "<?xml version=\"1.0\"?>\n<p>&lt;&lt;/p&gt;</p>\n"
+        );
+        
+		$doc = DOMUtils::parseAnything('');
+		$this->assertNull($doc->documentElement);
+		$this->assertEqual("<?xml version=\"1.0\"?>\n",$doc->saveXML());
+    
+		$doc = DOMUtils::parseAnything(' ');
+		$this->assertNull($doc->documentElement);
+		$this->assertEqual("<?xml version=\"1.0\"?>\n",$doc->saveXML());
 
-		$doc = DOMUtils::parseAnything('<p><</p>');
-		$this->assertNotNull($doc->documentElement);
-		$this->assertEqual("<?xml version=\"1.0\"?>\n<p>&lt;&lt;/p&gt;</p>\n",$doc->saveXML());
-
+		$doc = DOMUtils::parseAnything('abc');
+		$this->assertNull($doc->documentElement);
+		$this->assertEqual("<?xml version=\"1.0\"?>\n",$doc->saveXML());
 	}
 	
 	function testParseHTML() {

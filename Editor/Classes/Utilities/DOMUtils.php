@@ -60,9 +60,10 @@ class DOMUtils {
 		$doc = new DOMDocument();
 		$doc->recover = TRUE;
 		try {
-			$success = @$doc->loadXML($str);			
+			$success = @$doc->loadXML($str,LIBXML_NOERROR);			
 		} catch (Exception $e) {
 			Log::debug($e);
+			Log::debug($str);
 		}
 		return $doc;
 	}
