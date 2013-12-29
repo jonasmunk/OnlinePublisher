@@ -607,6 +607,21 @@
 	</p>
 </xsl:template>
 
+<xsl:template name="util:watermark">
+	<xsl:comment>
+    _    _                             _          
+   | |  | |                           (_)         
+   | |__| |_   _ _ __ ___   __ _ _ __  _ ___  ___ 
+   |  __  | | | | '_ ` _ \ / _` | '_ \| / __|/ _ \
+   | |  | | |_| | | | | | | (_| | | | | \__ \  __/
+   |_|  |_|\__,_|_| |_| |_|\__,_|_| |_|_|___/\___|
+   
+   SOFTWARE FOR HUMANS     http://www.humanise.dk/
+    </xsl:comment>
+</xsl:template>
+                                               
+                                               
+
 <!--
 	<xsl:template name="util:share">
 		<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>

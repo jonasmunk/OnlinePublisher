@@ -36,6 +36,7 @@
 		<link rel="shortcut icon" href="{$path}style/in2isoft/gfx/favicon.ico" type="image/x-icon" />
 		<meta name="google-site-verification" content="WMeBqZoNf7fYYk8Yvu8p05cFXnskJt1_Y6SJtXE-Ym0" />
 		<xsl:call-template name="util:metatags"/>
+		<xsl:call-template name="util:watermark"/>
 		<xsl:call-template name="util:style"/>
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
