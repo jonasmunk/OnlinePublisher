@@ -18,7 +18,7 @@ class In2iGui {
 		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
 		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
 		
-		return '<xsl:variable name="dev">'.$dev.'</xsl:variable>'.
+		return '<xsl:variable name="dev">'.($dev ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
