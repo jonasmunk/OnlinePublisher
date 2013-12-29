@@ -129,16 +129,7 @@ class Request {
 	 * @return boolean True if the value equals "true", false otherwise
 	 */
 	static function getBoolean($key) {
-		if (isset($_GET[$key])) {
-			if ($_GET[$key]=='true') {
-				return true;
-			}
-		} else if (isset($_POST[$key])) {
-			if ($_POST[$key]=='true') {
-				return true;
-			}
-		}
-		return false;
+    return Request::getString($key)=='true';
 	}
 
 	/**
