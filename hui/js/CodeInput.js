@@ -18,6 +18,9 @@ hui.ui.CodeInput = function(options) {
 hui.ui.CodeInput.create = function(options) {
 	options = options || {};
 	options.element = hui.build('div',{className:'hui_codeinput',html:'<textarea spellcheck="false"></textarea>'});
+    if (options.height) {
+        hui.get.firstByTag(options.element,'textarea').style.height = hui.style.length(options.height);
+    }
 	return new hui.ui.CodeInput(options);
 }
 

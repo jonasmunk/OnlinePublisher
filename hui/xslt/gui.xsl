@@ -80,7 +80,7 @@
 			<xsl:for-each select="//gui:style[@source]">
 				<link rel="stylesheet" href="{@source}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:for-each>
-
+            <xsl:comment><xsl:value-of select="$dev" /></xsl:comment>
 			<xsl:choose>
 				<xsl:when test="$dev='true'">
 					<script src="{$context}/hui/lib/swfupload/swfupload.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>

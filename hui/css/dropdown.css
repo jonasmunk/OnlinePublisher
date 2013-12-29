@@ -162,3 +162,35 @@ a.hui_dropdown_adaptive
 	color: #fff;
 	
 }
+
+/** Mini bar variant **/
+
+a.hui_dropdown_bar_mini
+{
+    vertical-align: top;
+    margin-top: 0px;
+    background: none;
+    height: 22px;
+    font-size: 11px;
+    line-height: 22px;
+    padding: 0 4px;
+}
+a.hui_dropdown_bar_mini:hover
+{
+    background: #eee;
+}
+
+a.hui_dropdown_bar_mini span,
+a.hui_dropdown_bar_mini:hover span
+{
+    padding: 0;
+    background: url('../gfx/dropdown_arrow.png') right 7px no-repeat;
+}
+
+a.hui_dropdown_bar_mini span span,
+a.hui_dropdown_bar_mini:hover span span
+{
+    padding: 0 20px 0 0;
+    margin: 0;
+    background: none;
+}

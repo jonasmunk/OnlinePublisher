@@ -1520,7 +1520,13 @@ a.hui_dropdown_adaptive
 	color: #fff;
 	
 }
-/******************** Header *********************/
+
+/** Mini bar variant **/
+
+a.hui_dropdown_bar_mini {
+    vertical-align: top;
+    margin-top: -2px;
+}/******************** Header *********************/
 
 h2.hui_header
 {
@@ -7514,4 +7520,32 @@ table.hui_columns_full
 td.hui_columns_column
 {
 	vertical-align: top;
+}div.hui_markupeditor
+{
+	border: 1px solid #eee;
+	height: 200px;
+	background: #fff;
+	outline: none;
+	cursor: text;
+}
+
+.hui_markupeditor_highlighted
+{
+	box-shadow: 0 0 5px #abf, 0 0 5px #abf;
+	border-radius: 3px;
+}
+
+div.hui_markupeditor_path
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    font-size: 12px;
+}
+
+div.hui_markupeditor_inlinepanel a
+{
+    color: #333;
+    padding: 3px 5px;
+    display: inline-block;
+    font-size: 12px;
+    text-decoration: none;
 }

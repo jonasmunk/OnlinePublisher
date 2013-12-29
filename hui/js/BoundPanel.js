@@ -193,32 +193,52 @@ hui.ui.BoundPanel.prototype = {
 	 */
 	position : function(options) {
 		var node,
-			position;
+			position,
+            nodeOffset,
+            nodeScrollOffset;
 		if (options.getElement) {
 			node = options.getElement();
-		}
-		if (options.element) {
+		} else if (options.element) {
 			node = options.element;
 			position = options.position;
+		} else if (options.rect) {
+			position = options.position;
+            node = {
+                offsetWidth : options.rect.width,
+                offsetHeight : options.rect.height
+            }
+            nodeOffset = {
+                left : options.rect.left, 
+                top : options.rect.top,                
+            }
+            node.scrollOffset = {left: 0, top: 0};
 		} else {
 			node = hui.get(options);
 		}
-		var nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};
-		var nodeScrollOffset = hui.position.getScrollOffset(node);
+		
+        if (!nodeOffset) {
+            nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};            
+        }
+        if (!nodeScrollOffset) {
+            nodeScrollOffset = hui.position.getScrollOffset(node);
+        }
+        
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};
-				
-		var panelDimensions = this.getDimensions();
-		var viewportWidth = hui.window.getViewWidth();
-		var viewportHeight = hui.window.getViewHeight();
 		var nodeLeft = nodeOffset.left-windowScrollOffset.left+hui.window.getScrollLeft();
 		var nodeWidth = node.clientWidth || node.offsetWidth;
 		var nodeHeight = node.clientHeight || node.offsetHeight;
+        
+		
+        
+		var panelDimensions = this.getDimensions();
+		var viewportWidth = hui.window.getViewWidth();
+		var viewportHeight = hui.window.getViewHeight();
+        
 		var arrowLeft, arrowTop, left, top;
 		var positionOnScreen = {
 			top : nodeOffset.top-windowScrollOffset.top-(nodeScrollOffset.top-windowScrollOffset.top)
 		}
-		var vertical = (nodeOffset.top-windowScrollOffset.top+nodeScrollOffset.top)/viewportHeight;
-		vertical = positionOnScreen.top / viewportHeight;
+		var vertical = positionOnScreen.top / viewportHeight;
 		
 		if (position=='vertical') {
 			vertical = vertical>.5 ? .9 : .1;
@@ -250,8 +270,8 @@ hui.ui.BoundPanel.prototype = {
 		}
 		else if ((nodeLeft+nodeWidth/2)/viewportWidth<.5) {
 			this.relativePosition='left';
-			left = nodeLeft+nodeWidth+10;
-			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_left';
+			left = nodeLeft + nodeWidth + 10;
+			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_left';
 			top = nodeOffset.top+(nodeHeight-panelDimensions.height)/2;
 			//top = Math.min(top,viewportHeight-panelDimensions.height+(windowScrollOffset.top+nodeScrollOffset.top));
 			top-= (nodeScrollOffset.top-windowScrollOffset.top);
@@ -269,10 +289,10 @@ hui.ui.BoundPanel.prototype = {
 				arrowLeft=-14;
 			}
 		} else {
-			this.relativePosition='right';
+			this.relativePosition = 'right';
 			left = nodeLeft-panelDimensions.width-10;
-			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_right';
-			top = nodeOffset.top+(nodeHeight-panelDimensions.height)/2;
+			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_right';
+			top = nodeOffset.top + (nodeHeight-panelDimensions.height) / 2;
 			//top = Math.min(top,viewportHeight-panelDimensions.height+(windowScrollOffset.top+nodeScrollOffset.top));
 			top-= (nodeScrollOffset.top-windowScrollOffset.top);
 			var min = windowScrollOffset.top+3;

@@ -1754,7 +1754,13 @@ hui.style = {
 		} else {
 			element.style['opacity']=opacity;
 		}
-	}
+	},
+    length : function(value) {
+        if (typeof(value)==='number') {
+            return value+'px';
+        }
+        return value;
+    }
 }
 
 
