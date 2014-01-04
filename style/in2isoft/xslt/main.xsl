@@ -30,7 +30,7 @@
 					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="@title"/><xsl:text> » </xsl:text><xsl:value-of select="f:frame/@title"/>
+					<xsl:value-of select="@title"/><xsl:text> - </xsl:text><xsl:value-of select="f:frame/@title"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</title>
@@ -51,6 +51,9 @@
 			}
 			if (hui.browser.msie) {
 				hui.cls.add(document.body,'msie');
+			}
+			if (window.devicePixelRatio==2) {
+				hui.cls.add(document.body,'retina');
 			}
 		</script>
 		<div class="layout">

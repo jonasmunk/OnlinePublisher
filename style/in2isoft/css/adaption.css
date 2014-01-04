@@ -1,4 +1,9 @@
-
+body.retina ul.layout_navigation li.first a,
+body.retina a.layout_design,
+body.retina ul.layout_placards li span {
+	background-image: url('../gfx/graphics_2x.png');
+	background-size: 400px 907px;
+}
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
 
@@ -327,30 +332,30 @@
 	
 	ul.layout_placards strong
 	{
-		text-indent: 143px;
+		text-indent: 103px;
 		position: absolute;
-		letter-spacing: -2px;
+		letter-spacing: -1px;
 	}
 	
 	ul.layout_placards li.onlineme span
 	{
-		background-position: -60px -410px;
+		background-position: -70px -410px;
 	}
 
 	ul.layout_placards li.onlinepublisher span
 	{
-		background-position: -50px 5px;
+		background-position: -60px 5px;
 	}
 
 	ul.layout_placards li.onlineobjects span
 	{
-		background-position: -60px -190px;
+		background-position: -70px -190px;
 	}
 
 	ul.layout_placards span
 	{
-		padding-top: 40px;
-		padding-left: 145px;
-		height: 90px;
+		padding-top: 50px;
+		padding-left: 127px;
+		height: 80px;
 	}
 }
