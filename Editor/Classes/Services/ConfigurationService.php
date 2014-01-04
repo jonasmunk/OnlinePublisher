@@ -24,6 +24,10 @@ class ConfigurationService {
 		return isset($GLOBALS['CONFIG']) && @$GLOBALS['CONFIG']['urlrewrite'];
 	}
 	
+	static function isOptimizeHTML() {
+		return true;
+	}
+	
 	static function getBaseUrl() {
 		global $CONFIG,$baseUrl;
 		if (isset($CONFIG) && isset($CONFIG['baseUrl'])) {

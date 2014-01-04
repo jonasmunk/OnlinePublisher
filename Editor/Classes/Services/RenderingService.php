@@ -422,8 +422,8 @@ class RenderingService {
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
 			header("Content-Type: text/html; charset=UTF-8");   
             header('X-UA-Compatible: IE=edge');
-			if (true) {
-				$html = MarkupUtils::moveScriptsToBottom($html);
+			if (ConfigurationService::isOptimizeHTML()) {
+				$html = MarkupUtils::moveScriptsToBottom($html);				
 			}
 			echo $html;
 			if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
@@ -493,7 +493,11 @@ class RenderingService {
 			'</content>'.
 			'</page>';
 			$relativeUrl = isset($options['relativeUrl']) ? $options['relativeUrl'] : $options['relativePath'];
-			return RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true,strtolower($row['language']));
+			$html = RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true,strtolower($row['language']));
+			if (ConfigurationService::isOptimizeHTML()) {
+				$html = MarkupUtils::moveScriptsToBottom($html);				
+			}
+			return $html;
 		}
 		Log::debug('Unable to query: '.$pageId);
 		Log::debug($sql);
