@@ -10,12 +10,13 @@
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="p f h n o util"
  >
-<xsl:output encoding="UTF-8" method="xml" indent="yes"/>
+<xsl:output encoding="UTF-8" method="xml" indent="yes" omit-xml-declaration="yes"/>
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
 <xsl:template match="p:page">
-	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
+	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;
+</xsl:text>
 <html>
 	<xsl:call-template name="util:html-attributes"/>
 	<head>
