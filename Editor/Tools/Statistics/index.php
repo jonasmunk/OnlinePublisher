@@ -70,9 +70,9 @@ $gui='
 					</segmented>
 				</bar>
 				<split>
-				<row height="50%">
-					<chart name="stats" source="chartSource" height="100%"/>
-				</row>
+					<row height="50%">
+						<chart name="stats" source="chartSource" height="100%"/>
+					</row>
 					<row>
 					<overflow>
 						<list name="list" source="listSource">

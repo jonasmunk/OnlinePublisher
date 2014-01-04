@@ -37,11 +37,28 @@ class MarkupUtils {
 		if (strpos($html,'</body>')===FALSE) {
 			return $html;
 		}
+		
+		$moved = array();
+
+		preg_match_all("/<!--[if[\s\S]*endif]-->/uU", $html, $matches);
+		$found = $matches[0];
+		foreach ($found as $thing) {
+			if (strpos($thing,'<script')===FALSE) {
+				continue;
+			}
+			$html = str_replace($thing,'',$html);
+			$moved[] = $thing;
+		}
+		
+		
 		preg_match_all("/<script[^>]+\\/>|<script[^>]*>[\s\S]*<\\/script>/uU", $html, $matches);
 		$found = $matches[0];
 		$html = str_replace($found,'',$html);
-		$pos = strpos($html,'</body>');    
-		$html = substr($html,0,$pos) . join($found,'') . substr($html,$pos);
+		$pos = strpos($html,'</body>');
+		
+		$moved = array_merge($moved,$found);
+		
+		$html = substr($html,0,$pos) . join($moved,'') . substr($html,$pos);
 		return $html;
 
 	}

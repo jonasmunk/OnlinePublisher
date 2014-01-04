@@ -422,6 +422,9 @@ class RenderingService {
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
 			header("Content-Type: text/html; charset=UTF-8");   
             header('X-UA-Compatible: IE=edge');
+			if (true) {
+				$html = MarkupUtils::moveScriptsToBottom($html);
+			}
 			echo $html;
 			if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
 				CacheService::createPageCache($page['id'],$path,$html);
