@@ -133,7 +133,7 @@
 			<script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:otherwise>
-			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" async="async" type="text/javascript"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
     <xsl:call-template name="util:_scripts-config"/>
@@ -305,11 +305,33 @@
 	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.private.css"/>
 		</xsl:when>
 		<xsl:otherwise>
-	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.css"/>
+            <xsl:call-template name="util:lazy-style">
+                <xsl:with-param name="href">
+                    <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.css</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
 		</xsl:otherwise>
 	</xsl:choose>
     <xsl:call-template name="util:_style-dynamic"/>
     <xsl:call-template name="util:_style-hui-msie"/>
+</xsl:template>
+
+<xsl:template name="util:lazy-style">
+    <xsl:param name="href"/>
+    <link rel="stylesheet" type="text/css" href="{$href}"/>
+    <!--
+    <script type="text/javascript">
+        (function() {
+            var e = document.createElement('link');
+            e.setAttribute('rel','stylesheet');
+            e.setAttribute('type','text/css');
+            e.setAttribute('href','<xsl:value-of select="$href"/>');
+            document.head.appendChild(e);
+        })()
+    </script>
+    <noscript>
+    <link rel="stylesheet" type="text/css" href="{$href}"/>
+    </noscript>    -->
 </xsl:template>
 
 <xsl:template name="util:_style-hui-msie">
