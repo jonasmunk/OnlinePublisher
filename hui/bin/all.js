@@ -9696,7 +9696,7 @@ hui.ui.BoundPanel.prototype = {
 			node = hui.get(options);
 		}
 		
-        if (!node) {
+        if (!nodeOffset) {
             nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};            
         }
         if (!nodeScrollOffset) {
