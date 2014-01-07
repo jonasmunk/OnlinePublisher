@@ -318,8 +318,8 @@
 
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
-    <link rel="stylesheet" type="text/css" href="{$href}"/>
     <!--
+    <link rel="stylesheet" type="text/css" href="{$href}"/>-->
     <script type="text/javascript">
         (function() {
             var e = document.createElement('link');
@@ -331,7 +331,7 @@
     </script>
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
-    </noscript>    -->
+    </noscript>
 </xsl:template>
 
 <xsl:template name="util:_style-hui-msie">
