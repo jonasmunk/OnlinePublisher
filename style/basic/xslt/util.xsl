@@ -201,25 +201,28 @@
 
 <xsl:template name="util:_scripts-config">
 	<script type="text/javascript"><xsl:comment>
-		hui.ui.context = '<xsl:value-of select="$path"/>';
-		hui.ui.language = '<xsl:value-of select="$language"/>';
-		op.context = '<xsl:value-of select="$path"/>';
-		op.page.id=<xsl:value-of select="@id"/>;
-		op.page.template='<xsl:value-of select="$template"/>';
-		op.page.path='<xsl:value-of select="$path"/>';
-		op.page.pagePath='<xsl:value-of select="$page-path"/>';
-		op.user = {
-			username : '<xsl:value-of select="$username"/>',
-			id : <xsl:value-of select="$userid"/>,
-			internal : <xsl:value-of select="$internal-logged-in"/>
-		};
-		op.preview=<xsl:value-of select="$preview"/>;
-		op.ignite();
+        _op[_op.length] = function() {
+    		hui.ui.context = '<xsl:value-of select="$path"/>';
+    		hui.ui.language = '<xsl:value-of select="$language"/>';
+    		op.context = '<xsl:value-of select="$path"/>';
+    		op.page.id=<xsl:value-of select="@id"/>;
+    		op.page.template='<xsl:value-of select="$template"/>';
+    		op.page.path='<xsl:value-of select="$path"/>';
+    		op.page.pagePath='<xsl:value-of select="$page-path"/>';
+    		op.user = {
+    			username : '<xsl:value-of select="$username"/>',
+    			id : <xsl:value-of select="$userid"/>,
+    			internal : <xsl:value-of select="$internal-logged-in"/>
+    		};
+    		op.preview=<xsl:value-of select="$preview"/>;
+    		op.ignite();
+        }
 	</xsl:comment></script>
 </xsl:template>
 
 <xsl:template name="util:_scripts-errorhandler">
 	<script type="text/javascript">
+        window._op = [];
 		window.onerror = function(errorMsg, url, lineNumber) {
 			try {
 				hui.request({
@@ -318,8 +321,8 @@
 
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
-    <link rel="stylesheet" type="text/css" href="{$href}"/>
     <!--
+    <link rel="stylesheet" type="text/css" href="{$href}"/>-->
     <script type="text/javascript">
         (function() {
             var e = document.createElement('link');
@@ -331,7 +334,7 @@
     </script>
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
-    </noscript>    -->
+    </noscript>    
 </xsl:template>
 
 <xsl:template name="util:_style-hui-msie">

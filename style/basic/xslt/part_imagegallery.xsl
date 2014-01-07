@@ -26,7 +26,7 @@
 			<xsl:comment/>
 		</div>
 		<script type="text/javascript">
-			(function() {
+			_op[_op.length] = function() {
 				var part = new op.part.ImageGallery({
 					element : 'part_imagegallery_<xsl:value-of select="generate-id()"/>',
 					variant : '<xsl:value-of select="ig:display/@variant"/>',
@@ -40,8 +40,8 @@
 						text : '<xsl:value-of select="o:note"/>'
 					});
 				</xsl:for-each>
-				hui.onReady(part.init.bind(part));
-			})();
+				part.init();
+			}
 		</script>
 	</xsl:template>
 

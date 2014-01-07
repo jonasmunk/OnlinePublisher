@@ -667,3 +667,9 @@ op.Dissolver.prototype = {
 		}.bind(this)});
 	}
 }
+
+if (window._op) {
+    for (var i = 0; i < _op.length; i++) {
+        _op[i]();
+    }
+}

@@ -57,14 +57,14 @@
 <xsl:template name="img:script">
 	<xsl:if test="img:link/@image and $editor!='true'">
 		<script type="text/javascript">
-		try {
-			op.registerImageViewer('part_image_<xsl:value-of select="generate-id()"/>',{
-					id : <xsl:value-of select="img:link/@image"/>,
-					text : '<xsl:value-of select="img:link/@note"/>'
-					<xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if>
-					<xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>
-			});
-		} catch (ignore) {}
+            _op[_op.length] = function() {
+    			op.registerImageViewer('part_image_<xsl:value-of select="generate-id()"/>',{
+    					id : <xsl:value-of select="img:link/@image"/>,
+    					text : '<xsl:value-of select="img:link/@note"/>'
+    					<xsl:if test="img:link/@width">,width:<xsl:value-of select="img:link/@width"/></xsl:if>
+    					<xsl:if test="img:link/@height">,height:<xsl:value-of select="img:link/@height"/></xsl:if>
+    			});
+            }
 		</script>
 	</xsl:if>
 	<!--
