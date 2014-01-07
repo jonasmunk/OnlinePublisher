@@ -7,7 +7,6 @@
             "style/in2isoft/js/Poster.js"
         ],
         "css" : [
-            "style/in2isoft/css/fonts.css",
             "style/basic/css/shared.css",
             "@parts",
             "style/in2isoft/css/main.css",

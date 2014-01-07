@@ -1855,9 +1855,7 @@ div.hui_checkboxes_vertical a.hui_checkbox
 {
 	display: block;
 	padding: 1px 5px 0px 0px;
-}/* ["style\/in2isoft\/css\/fonts.css","style\/basic\/css\/shared.css","@parts","style\/in2isoft\/css\/main.css","style\/in2isoft\/css\/front.css","style\/in2isoft\/css\/overwrite.css","style\/in2isoft\/css\/adaption.css","style\/in2isoft\/css\/humanise.css"] */
-/* style/in2isoft/css/fonts.css */
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+}/* ["style\/basic\/css\/shared.css","@parts","style\/in2isoft\/css\/main.css","style\/in2isoft\/css\/front.css","style\/in2isoft\/css\/overwrite.css","style\/in2isoft\/css\/adaption.css","style\/in2isoft\/css\/humanise.css"] */
 /* style/basic/css/shared.css */
 span.shared_frame_adaptive
 {
@@ -4386,7 +4384,7 @@ body.retina ul.layout_placards li span {
 	div.part_text,
 	div.part_listing
 	{
-		font-size: 10pt;
+		font-size: 11pt;
 	}
 	
 	div.part_listing span.part_listing_first

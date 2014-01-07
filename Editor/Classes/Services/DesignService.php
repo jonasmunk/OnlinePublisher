@@ -116,7 +116,7 @@ class DesignService {
     
 	static function _compress($in,$out) {
         global $basePath;
-        $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.2.4.jar ".$in." --charset UTF-8 -o ".$out;
+        $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.4.8.jar ".$in." --charset UTF-8 -o ".$out;
         shell_exec($cmd);
     }
 
