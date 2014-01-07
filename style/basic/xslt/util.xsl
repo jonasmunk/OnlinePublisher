@@ -133,7 +133,7 @@
 			<script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:otherwise>
-			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" async="async" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
     <xsl:call-template name="util:_scripts-config"/>
