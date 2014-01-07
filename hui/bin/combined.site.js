@@ -3472,7 +3472,7 @@ hui.parallax = {
   @namespace
  */
 hui.ui = {
-	domReady : false,
+	domReady : document.readyState == 'complete',
 	context : '',
 	language : 'en',
 
