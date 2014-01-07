@@ -26,6 +26,9 @@ if ($args[1]=='test') {
   }
   
 }
+if ($args[1]=='rebuild') {
+  DesignService::rebuild();
+}
 
 
 exit;

@@ -1,9 +1,8 @@
-hui.ui.onReady(function() {
-	Poster.getInstance().preload();
-});
-
 Poster = function() {
 	this.poster = hui.get('poster');
+  if (!this.poster) {
+    return;
+  }
 	this.left = hui.get('poster_left');
 	this.right = hui.get('poster_right');
 	this.progress = hui.get('poster_loader');
@@ -21,13 +20,7 @@ Poster = function() {
 	this.poster.onclick = function() {
 		document.location=op.page.path+self.links[self.leftPos];
 	}
-}
-
-Poster.getInstance = function() {
-	if (!Poster.instance) {
-		Poster.instance = new Poster();
-	}
-	return Poster.instance;
+  this.preload();
 }
 
 Poster.prototype.start = function() {

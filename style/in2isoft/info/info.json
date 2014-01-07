@@ -1,5 +1,20 @@
 {
 	"name" : "In2iSoft",
 	"description" : "New design for In2iSoft I/S",
-	"owner" : "The design is the property of In2iSoft I/S"
+	"owner" : "The design is the property of In2iSoft I/S",
+    "build" : {
+        "js" : [
+            "style/in2isoft/js/Poster.js"
+        ],
+        "css" : [
+            "style/in2isoft/css/fonts.css",
+            "style/basic/css/shared.css",
+            "@parts",
+            "style/in2isoft/css/main.css",
+            "style/in2isoft/css/front.css",
+            "style/in2isoft/css/overwrite.css",
+            "style/in2isoft/css/adaption.css",
+            "style/in2isoft/css/humanise.css"
+        ]
+  }
 }

@@ -31,6 +31,94 @@ class DesignService {
 		$info = JsonService::readFile($path);
 		return $info;
 	}
+    
+    static function _getPartStyleFiles() {
+		global $basePath;
+        $files = array();
+		$names = FileSystemService::listFiles($basePath."style/basic/css/");
+        foreach ($names as $name) {
+            if (Strings::startsWith($name,'part_')) {
+                $files[] = "style/basic/css/".$name;
+            }
+        }
+        return $files;
+    }
+  
+	static function rebuild() {
+		global $basePath;
+        
+        $designs = DesignService::getAvailableDesigns();
+        foreach ($designs as $key => $info) {
+            if (!isset($info->build)) {
+                continue;
+            }
+            if (isset($info->build->css)) {
+                
+                
+                $data = '/* '.Strings::toJSON($info->build->css).' */';
+                
+                foreach ($info->build->css as $file) {
+                    if ($file[0]=='@') {
+                        if ($file=='@parts') {
+                            $data .= PHP_EOL . '/* style/basic/css/document.css */' . PHP_EOL;
+        			        $data .= file_get_contents($basePath . 'style/basic/css/document.css');
+                            
+                            $partFiles = DesignService::_getPartStyleFiles();
+                            foreach ($partFiles as $partFile) {
+                                $data .= PHP_EOL . '/* '.$partFile.' */' . PHP_EOL;
+            			        $data .= file_get_contents($basePath . $partFile);      
+                            }
+                        }
+                    } else {
+                        $data .= PHP_EOL . '/* '.$file.' */' . PHP_EOL;
+            			$data .= file_get_contents($basePath.$file);                        
+                    }
+                }
+                {
+                    $cssFile = $basePath."style/".$key."/css/style.private.tmp.css";
+                    FileSystemService::writeStringToFile($data,$cssFile);
+                    DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.private.css");
+                }
+                {
+        			$huiCss = file_get_contents($basePath.'hui/bin/combined.site.css');
+                    $huiCss = preg_replace("/(url\\(['\"]?)(..\/gfx\/)([^\\)]+\\))/u", "$1../../../hui/gfx/$3", $huiCss);
+                    $data = $huiCss . $data;
+                    $cssFile = $basePath."style/".$key."/css/style.tmp.css";
+                    FileSystemService::writeStringToFile($data,$cssFile);
+                    DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.css");
+                }
+            }
+            if (isset($info->build->js)) {
+                $data = '/* '.Strings::toJSON($info->build->js).' */' . PHP_EOL . PHP_EOL;
+                
+                $data .= PHP_EOL . '/* style/basic/js/OnlinePublisher.js */' . PHP_EOL;
+    			$data .= file_get_contents($basePath."style/basic/js/OnlinePublisher.js");
+                
+                
+                foreach ($info->build->js as $file) {
+                    $data .= PHP_EOL . '/* '.$file.' */' . PHP_EOL;
+        			$data .= file_get_contents($basePath.$file);
+                }
+                {
+                    $jsFile = $basePath."style/".$key."/js/script.private.tmp.js";
+                    FileSystemService::writeStringToFile($data,$jsFile);
+                    DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.private.js");
+                }
+                {
+                    $jsFile = $basePath."style/".$key."/js/script.tmp.js";
+                    $data = file_get_contents($basePath.'hui/bin/combined.site.js') . $data;
+                    FileSystemService::writeStringToFile($data,$jsFile);
+                    DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.js");
+                }
+            }
+        }
+	}
+    
+	static function _compress($in,$out) {
+        global $basePath;
+        $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.2.4.jar ".$in." --charset UTF-8 -o ".$out;
+        shell_exec($cmd);
+    }
 
 	static function loadParameters($id) {
 		$out = array();

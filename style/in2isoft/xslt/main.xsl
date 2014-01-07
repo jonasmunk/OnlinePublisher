@@ -10,8 +10,8 @@
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="p f h n o util"
  >
-<xsl:output encoding="UTF-8" method="xml" indent="yes" omit-xml-declaration="yes"/>
-
+<xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
+<!--  indent="yes"-->
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
 <xsl:template match="p:page">
@@ -39,10 +39,10 @@
 		<link rel="shortcut icon" href="{$path}style/in2isoft/gfx/favicon.ico" type="image/x-icon" />
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:watermark"/>
-		<xsl:call-template name="util:style"/>
+		<xsl:call-template name="util:style-build"/>
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
-		<xsl:call-template name="util:scripts"/>
+		<xsl:call-template name="util:scripts-build"/>
 	</head>
 	<body>
 		<script type="text/javascript">
@@ -84,7 +84,9 @@
 							<div class="right" id="poster_right"><div id="poster_inner_right"><xsl:comment/></div></div>
 							</div>
 						</div>
-						<script type="text/javascript" src="{$path}style/{$design}/js/Poster.js"><xsl:comment/></script>
+                        <script type="text/javascript">
+                            hui.ui.onReady(function() {new Poster();});
+                        </script>
 					</xsl:if>
 					<xsl:apply-templates select="p:content"/>
 					<xsl:choose>

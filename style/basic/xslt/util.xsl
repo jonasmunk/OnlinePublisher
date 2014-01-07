@@ -21,7 +21,7 @@
 
 <xsl:variable name="timestamp-url">
 	<xsl:if test="$urlrewrite='true'">
-		<xsl:text>/version</xsl:text><xsl:value-of select="$timestamp"/>
+		<xsl:text>version</xsl:text><xsl:value-of select="$timestamp"/><xsl:text>/</xsl:text>
 	</xsl:if>
 </xsl:variable> 
 
@@ -123,24 +123,102 @@
 	</xsl:choose>
 </xsl:template>
 
-
-<xsl:template name="util:scripts">
+<xsl:template name="util:scripts-build">
+    <xsl:call-template name="util:_scripts-errorhandler"/>
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
-			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/bin/minimized.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/css/pages.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/css/editor.css{$timestamp-query}"/>
+			<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:otherwise>
-			<link rel="stylesheet" type="text/css" href="{$path}hui{$timestamp-url}/bin/minimized.site.css{$timestamp-query}"/>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
-	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+    <xsl:call-template name="util:_scripts-config"/>
+    <xsl:call-template name="util:_scripts-preview"/>
+</xsl:template>
+
+<xsl:template name="util:scripts">
+    <xsl:call-template name="util:_scripts-errorhandler"/>
+	<xsl:choose>
+		<xsl:when test="$preview='true'">
+			<xsl:choose>
+				<xsl:when test="$development='true'">
+					<script src="{$path}{$timestamp-url}hui/bin/combined.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+				</xsl:when>
+				<xsl:otherwise>
+					<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+				</xsl:otherwise>
+			</xsl:choose>
+			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+		</xsl:when>
+		<xsl:when test="$development='true'">
+			<script src="{$path}{$timestamp-url}hui/js/hui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_animation.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_parallax.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_color.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_require.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/ui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/ImageViewer.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Box.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/SearchField.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+		</xsl:when>
+		<xsl:otherwise>
+			<script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+		</xsl:otherwise>
+	</xsl:choose>
+	<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+    <xsl:call-template name="util:_scripts-config"/>
+    <xsl:call-template name="util:_scripts-preview"/>
+</xsl:template>
+
+
+<xsl:template name="util:_scripts-preview">
+    
+	<xsl:if test="$preview='true' and $mini!='true'">
+		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}Editor/Template/{$template}/js/editor.php?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+	</xsl:if>
+    
+	<xsl:if test="//movie:movie">
+		<script src="http://vjs.zencdn.net/4.1/video.js"><xsl:comment/></script>
+	</xsl:if>
+    
+</xsl:template>
+
+<xsl:template name="util:_scripts-msie">
+	<!-- html5 -->
+	<xsl:comment><![CDATA[[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+	<xsl:comment><![CDATA[[if lt IE 8]>
+	<script type="text/javascript" src="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
 	<![endif]]]></xsl:comment>
+</xsl:template>
+
+<xsl:template name="util:_scripts-config">
+	<script type="text/javascript"><xsl:comment>
+		hui.ui.context = '<xsl:value-of select="$path"/>';
+		hui.ui.language = '<xsl:value-of select="$language"/>';
+		op.context = '<xsl:value-of select="$path"/>';
+		op.page.id=<xsl:value-of select="@id"/>;
+		op.page.template='<xsl:value-of select="$template"/>';
+		op.page.path='<xsl:value-of select="$path"/>';
+		op.page.pagePath='<xsl:value-of select="$page-path"/>';
+		op.user = {
+			username : '<xsl:value-of select="$username"/>',
+			id : <xsl:value-of select="$userid"/>,
+			internal : <xsl:value-of select="$internal-logged-in"/>
+		};
+		op.preview=<xsl:value-of select="$preview"/>;
+		op.ignite();
+	</xsl:comment></script>
+</xsl:template>
+
+<xsl:template name="util:_scripts-errorhandler">
 	<script type="text/javascript">
 		window.onerror = function(errorMsg, url, lineNumber) {
 			try {
@@ -158,70 +236,11 @@
 				})
 			} catch (ignore) {}
 		}
-	</script>
-	<xsl:choose>
-		<xsl:when test="$preview='true'">
-			<xsl:choose>
-				<xsl:when test="$development='true'">
-					<script src="{$path}hui{$timestamp-url}/bin/combined.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-				</xsl:when>
-				<xsl:otherwise>
-					<script src="{$path}hui{$timestamp-url}/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-				</xsl:otherwise>
-			</xsl:choose>
-			<script src="{$path}hui{$timestamp-url}/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/Pages.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-		</xsl:when>
-		<xsl:when test="$development='true'">
-			<script src="{$path}hui{$timestamp-url}/js/hui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/hui_animation.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/hui_parallax.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/hui_color.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/hui_require.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/ui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/ImageViewer.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/Box.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}hui{$timestamp-url}/js/SearchField.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-		</xsl:when>
-		<xsl:otherwise>
-			<script src="{$path}hui{$timestamp-url}/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-		</xsl:otherwise>
-	</xsl:choose>
-	<!-- html5 -->
-	<xsl:comment><![CDATA[[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if lt IE 8]>
-	<script type="text/javascript" src="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
-	<![endif]]]></xsl:comment>
-	<script src="{$path}style{$timestamp-url}/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-	<script type="text/javascript"><xsl:comment>
-		hui.ui.context = '<xsl:value-of select="$path"/>';
-		hui.ui.language = '<xsl:value-of select="$language"/>';
-		op.context = '<xsl:value-of select="$path"/>';
-		op.page.id=<xsl:value-of select="@id"/>;
-		op.page.template='<xsl:value-of select="$template"/>';
-		op.page.path='<xsl:value-of select="$path"/>';
-		op.page.pagePath='<xsl:value-of select="$page-path"/>';
-		op.user = {
-			username : '<xsl:value-of select="$username"/>',
-			id : <xsl:value-of select="$userid"/>,
-			internal : <xsl:value-of select="$internal-logged-in"/>
-		};
-		op.preview=<xsl:value-of select="$preview"/>;
-		op.ignite();
-	</xsl:comment></script>
-	<xsl:if test="$preview='true' and $mini!='true'">
-		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}Editor/Template/{$template}/js/editor.php?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-	</xsl:if>
-	<xsl:if test="//movie:movie">
-		<script src="http://vjs.zencdn.net/4.1/video.js"><xsl:comment/></script>
-	</xsl:if>
+	</script>    
 </xsl:template>
 
 <xsl:template name="util:scripts-adaptive">
-	<script src="{$path}hui{$timestamp-url}/lib/ios-orientationchange-fix.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}{$timestamp-url}hui/lib/ios-orientationchange-fix.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 </xsl:template>
 
 <xsl:template name="util:html-attributes">
@@ -258,17 +277,54 @@
 </xsl:template>
 
 <xsl:template name="util:style">
-	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/basic/css/{$template}.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}style{$timestamp-url}/{$design}/css/style.php"/>
-	<!--
+	<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
+	<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.php"/>
 	<xsl:choose>
-		<xsl:when test="$template='document'">
-			<link rel="stylesheet" type="text/css" href="{$path}style/{$design}/css/{$template}.php"/>
+		<xsl:when test="$preview='true'">
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
 		</xsl:when>
 		<xsl:otherwise>
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
 		</xsl:otherwise>
 	</xsl:choose>
-	-->
+    <xsl:call-template name="util:_style-dynamic"/>
+    <xsl:call-template name="util:_style-hui-msie"/>
+</xsl:template>
+
+<xsl:template name="util:style-build">
+    <xsl:if test="$template!='document'">
+        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
+    </xsl:if>
+	<xsl:choose>
+		<xsl:when test="$preview='true'">
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
+	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.private.css"/>
+		</xsl:when>
+		<xsl:otherwise>
+	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.css"/>
+		</xsl:otherwise>
+	</xsl:choose>
+    <xsl:call-template name="util:_style-dynamic"/>
+    <xsl:call-template name="util:_style-hui-msie"/>
+</xsl:template>
+
+<xsl:template name="util:_style-hui-msie">
+	<xsl:comment><![CDATA[[if lt IE 7]>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+	<![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+	<![endif]]]></xsl:comment>
+</xsl:template>
+
+<xsl:template name="util:_style-dynamic">
+	<xsl:if test="//movie:movie">
+		<link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet"/>
+	</xsl:if>
 	<xsl:if test="//header:style[contains(@font-family,'Cabin Sketch')] or //text:style[contains(@font-family,'Cabin Sketch')]">
 		<link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'/>
 	</xsl:if>
@@ -286,9 +342,6 @@
 	</xsl:if>
 	<xsl:if test="//header:style[contains(@font-family,'Dancing Script')] or //text:style[contains(@font-family,'Dancing Script')]">
 		<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css' />
-	</xsl:if>
-	<xsl:if test="//movie:movie">
-		<link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet"/>
 	</xsl:if>
 </xsl:template>
 
