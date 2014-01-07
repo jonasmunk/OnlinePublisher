@@ -6366,9 +6366,11 @@ op.Dissolver.prototype = {
 }
 
 if (window._op) {
-    for (var i = 0; i < _op.length; i++) {
-        _op[i]();
-    }
+    hui.ui.onReady(function() {
+        for (var i = 0; i < _op.length; i++) {
+            _op[i]();
+        }        
+    })
 }
 /* style/in2isoft/js/Poster.js */
 Poster = function() {
