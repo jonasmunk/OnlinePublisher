@@ -114,7 +114,7 @@ class RenderingService {
 		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="editor">false</xsl:variable>'.
 		'<xsl:variable name="mini">'.(Request::getBoolean('mini') ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="development">'.(Request::getBoolean('dev') ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="development">'.(Request::getBoolean('dev') || ConfigurationService::isDebug() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
@@ -420,6 +420,7 @@ class RenderingService {
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
 			header("Cache-Control: public");
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
+            header('Pragma: cache');
 			header("Content-Type: text/html; charset=UTF-8");   
             header('X-UA-Compatible: IE=edge');
 			if (ConfigurationService::isOptimizeHTML()) {

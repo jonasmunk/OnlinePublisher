@@ -131,12 +131,19 @@
 			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+            <xsl:call-template name="util:_scripts-config"/>
 		</xsl:when>
+		<xsl:when test="$development='true'">
+			<script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+            <xsl:call-template name="util:_scripts-config"/>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+        </xsl:when>
 		<xsl:otherwise>
 			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+            <xsl:call-template name="util:_scripts-config"/>
 		</xsl:otherwise>
 	</xsl:choose>
-    <xsl:call-template name="util:_scripts-config"/>
     <xsl:call-template name="util:_scripts-preview"/>
 </xsl:template>
 
@@ -195,7 +202,7 @@
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if lt IE 8]>
-	<script type="text/javascript" src="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
+	<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
 	<![endif]]]></xsl:comment>
 </xsl:template>
 
@@ -254,25 +261,25 @@
 
 <xsl:template name="util:style-ie6">
 	<xsl:comment><![CDATA[[if lt IE 7]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style<xsl:value-of select="$timestamp-url"/>/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
 	<![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-ie7">
 	<xsl:comment><![CDATA[[if IE 7]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style<xsl:value-of select="$timestamp-url"/>/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link>
 	<![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-ie8">
 	<xsl:comment><![CDATA[[if IE 8]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style<xsl:value-of select="$timestamp-url"/>/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
 	<![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-lt-ie9">
 	<xsl:comment><![CDATA[[if lt IE 9]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>style<xsl:value-of select="$timestamp-url"/>/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link>
+		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link>
 	<![endif]]]></xsl:comment>
 </xsl:template>
 
@@ -298,12 +305,22 @@
         <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
     </xsl:if>
 	<xsl:choose>
+		<xsl:when test="$preview='true' and $development='true'">
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
+	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css"/>
+		</xsl:when>
 		<xsl:when test="$preview='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
 	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.private.css"/>
 		</xsl:when>
+		<xsl:when test="$development='true'">
+			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
+	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css"/>
+        </xsl:when>
 		<xsl:otherwise>
             <xsl:call-template name="util:lazy-style">
                 <xsl:with-param name="href">
@@ -326,7 +343,7 @@
             e.setAttribute('rel','stylesheet');
             e.setAttribute('type','text/css');
             e.setAttribute('href','<xsl:value-of select="$href"/>');
-            document.head.appendChild(e);
+            document.getElementsByTagName('head')[0].appendChild(e);
         })()
     </script>
     <noscript>
@@ -336,10 +353,10 @@
 
 <xsl:template name="util:_style-hui-msie">
 	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/>hui<xsl:value-of select="$timestamp-url"/>/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
+	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
 	<![endif]]]></xsl:comment>
 </xsl:template>
 

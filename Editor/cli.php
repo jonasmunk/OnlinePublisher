@@ -26,8 +26,21 @@ if ($args[1]=='test') {
   }
   
 }
-if ($args[1]=='rebuild') {
-  DesignService::rebuild();
+else if ($args[1]=='style') {
+    DesignService::rebuild();
+}
+else if ($args[1]=='hui') {
+    hui();
+}
+else if ($args[1]=='full') {
+    hui();
+    DesignService::rebuild();
+}
+
+function hui() {
+    global $basePath;
+    $cmd = $basePath."hui/tools/compile.sh";
+    echo shell_exec($cmd);
 }
 
 

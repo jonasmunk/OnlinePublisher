@@ -54,24 +54,25 @@ class DesignService {
             }
             if (isset($info->build->css)) {
                 
+                $imports = array();
                 
                 $data = '/* '.Strings::toJSON($info->build->css).' */';
                 
                 foreach ($info->build->css as $file) {
                     if ($file[0]=='@') {
                         if ($file=='@parts') {
-                            $data .= PHP_EOL . '/* style/basic/css/document.css */' . PHP_EOL;
-        			        $data .= file_get_contents($basePath . 'style/basic/css/document.css');
+        			        $data .= DesignService::_read('style/basic/css/document.css');
+                            $imports[] = 'style/basic/css/document.css';
                             
                             $partFiles = DesignService::_getPartStyleFiles();
                             foreach ($partFiles as $partFile) {
-                                $data .= PHP_EOL . '/* '.$partFile.' */' . PHP_EOL;
-            			        $data .= file_get_contents($basePath . $partFile);      
+            			        $data .= DesignService::_read($partFile);      
+                                $imports[] = $partFile;
                             }
                         }
                     } else {
-                        $data .= PHP_EOL . '/* '.$file.' */' . PHP_EOL;
-            			$data .= file_get_contents($basePath.$file);                        
+            			$data .= DesignService::_read($file);     
+                        $imports[] = $file;                      
                     }
                 }
                 {
@@ -80,24 +81,32 @@ class DesignService {
                     DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.private.css");
                 }
                 {
-        			$huiCss = file_get_contents($basePath.'hui/bin/combined.site.css');
+        			$huiCss = DesignService::_read('hui/bin/combined.site.css');
                     $huiCss = preg_replace("/(url\\(['\"]?)(..\/gfx\/)([^\\)]+\\))/u", "$1../../../hui/gfx/$3", $huiCss);
                     $data = $huiCss . $data;
                     $cssFile = $basePath."style/".$key."/css/style.tmp.css";
                     FileSystemService::writeStringToFile($data,$cssFile);
                     DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.css");
                 }
+                {
+                    $data = '';
+                    foreach ($imports as $path) {
+                        $data .= '@import url(../../../' . $path . ');' . PHP_EOL;
+                    }
+                    $cssFile = $basePath."style/".$key."/css/style.dev.css";
+                    FileSystemService::writeStringToFile($data,$cssFile);
+                }
             }
             if (isset($info->build->js)) {
+                
+                $imports = array();
                 $data = '/* '.Strings::toJSON($info->build->js).' */' . PHP_EOL . PHP_EOL;
-                
-                $data .= PHP_EOL . '/* style/basic/js/OnlinePublisher.js */' . PHP_EOL;
-    			$data .= file_get_contents($basePath."style/basic/js/OnlinePublisher.js");
-                
+                                
+                $data .= DesignService::_read('style/basic/js/OnlinePublisher.js');
                 
                 foreach ($info->build->js as $file) {
-                    $data .= PHP_EOL . '/* '.$file.' */' . PHP_EOL;
-        			$data .= file_get_contents($basePath.$file);
+                    $data .= DesignService::_read($file);
+                    $imports[] = $file;
                 }
                 {
                     $jsFile = $basePath."style/".$key."/js/script.private.tmp.js";
@@ -106,13 +115,28 @@ class DesignService {
                 }
                 {
                     $jsFile = $basePath."style/".$key."/js/script.tmp.js";
-                    $data = file_get_contents($basePath.'hui/bin/combined.site.js') . $data;
+                    $data = DesignService::_read('hui/bin/combined.site.js') . $data;
                     FileSystemService::writeStringToFile($data,$jsFile);
                     DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.js");
+                }
+                {
+                    $data = '';
+                    $jsFile = $basePath."style/".$key."/js/script.dev.js";
+                    foreach ($imports as $path) {
+                        $data.= 'document.write(\'<script type="text/javascript" src="\' + op.context + \'' . $path . '"></script>\')';
+                    }
+                    FileSystemService::writeStringToFile($data,$jsFile);
                 }
             }
         }
 	}
+    
+    static function _read($path) {
+        global $basePath;
+        $data = PHP_EOL . '/* '.$path.' */' . PHP_EOL;
+		$data .= file_get_contents($basePath.$path);
+        return $data;
+    }
     
 	static function _compress($in,$out) {
         global $basePath;
