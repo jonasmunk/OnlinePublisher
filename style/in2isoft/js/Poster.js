@@ -1,8 +1,5 @@
 Poster = function() {
 	this.poster = hui.get('poster');
-  if (!this.poster) {
-    return;
-  }
 	this.left = hui.get('poster_left');
 	this.right = hui.get('poster_right');
 	this.progress = hui.get('poster_loader');
@@ -20,7 +17,7 @@ Poster = function() {
 	this.poster.onclick = function() {
 		document.location=op.page.path+self.links[self.leftPos];
 	}
-  this.preload();
+  	this.preload();
 }
 
 Poster.prototype.start = function() {
@@ -50,17 +47,16 @@ Poster.prototype.start = function() {
 
 Poster.prototype.preload = function() {
 	var loader = new hui.Preloader({context:op.page.path+this.context});
-	loader.setDelegate(this);
+	loader.setDelegate({
+		allImagesDidLoad : function() {
+			this.progress.style.display='none';
+			this.start();
+		}.bind(this),
+		imageDidLoad : function(loaded,total) {
+			this.progress.innerHTML = Math.round(loaded/total*100)+'%';
+		}.bind(this)
+	});
 	loader.addImages(this.leftImages);
 	loader.addImages(this.rightImages);
 	loader.load();
-}
-
-Poster.prototype.allImagesDidLoad = function() {
-	this.progress.style.display='none';
-	this.start();
-}
-
-Poster.prototype.imageDidLoad = function(loaded,total) {
-	this.progress.innerHTML=Math.round(loaded/total*100)+'%';
 }

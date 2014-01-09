@@ -3812,14 +3812,15 @@ p.layout_news_links
 #poster_loader
 {
 	background: #000;
-	color:#FFFFFF;
+	color: #FFFFFF;
 	left: 50%;
 	margin-left: -25px;
-	padding: 2px 5px;
 	position: absolute;
 	text-align: center;
-	top: 200px;
+	top: 150px;
 	width: 50px;
+	height: 24px;
+	line-height: 22px;
 }
 
 /********************** Placards ********************/

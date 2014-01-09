@@ -12995,7 +12995,10 @@ hui.ui.SearchField = function(options) {
 	this.initialWidth = null;
 	hui.ui.extend(this);
 	this._addBehavior();
-	this._updateClass()
+
+	if (this.value!=='') {
+		this._updateClass()
+	}
 }
 
 hui.ui.SearchField.create = function(options) {
