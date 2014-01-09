@@ -49,7 +49,6 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-            
 			if (hui.browser.windows) {
 				hui.cls.add(document.body,'windows');
 			}

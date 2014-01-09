@@ -17,13 +17,16 @@
 	<xsl:if test="$urlrewrite!='true'">
 		<xsl:text>?version=</xsl:text><xsl:value-of select="$timestamp"/>
 	</xsl:if>
-</xsl:variable> 
+</xsl:variable>
 
 <xsl:variable name="timestamp-url">
 	<xsl:if test="$urlrewrite='true'">
 		<xsl:text>version</xsl:text><xsl:value-of select="$timestamp"/><xsl:text>/</xsl:text>
 	</xsl:if>
-</xsl:variable> 
+</xsl:variable>
+
+
+<!-- Links -->
 
 <xsl:template name="util:link">
 	<xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
@@ -123,6 +126,83 @@
 	</xsl:choose>
 </xsl:template>
 
+
+
+
+<!-- Uncategorized -->
+
+<xsl:template name="util:googleanalytics">
+	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
+	<xsl:if test="not($preview='true') and $code!=''">
+		<script type="text/javascript">
+		try {
+			if (document.location.hostname!=="localhost") {
+				//,'_trackPageLoadTime'
+				var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview']];
+				 (function() {
+    				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0];
+					s.parentNode.insertBefore(ga, s);
+				})();
+			}
+		} catch(ex) {}
+		</script>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="util:metatags">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"></meta>
+	<xsl:if test="p:meta/p:description">
+		<meta name="Description" content="{p:meta/p:description}"></meta>
+	</xsl:if>
+	<meta name="robots" content="index,follow"></meta>
+</xsl:template>
+
+<xsl:template name="util:feedback">
+	<xsl:param name="text">Feedback</xsl:param>
+	<p class="layout_feedback">
+		<a class="common" href="javascript://" onclick="op.feedback(this)"><span><xsl:value-of select="$text"/></span></a>
+	</p>
+</xsl:template>
+
+<xsl:template name="util:watermark">
+	<xsl:comment>
+    _    _                             _          
+   | |  | |                           (_)         
+   | |__| |_   _ _ __ ___   __ _ _ __  _ ___  ___ 
+   |  __  | | | | '_ ` _ \ / _` | '_ \| / __|/ _ \
+   | |  | | |_| | | | | | | (_| | | | | \__ \  __/
+   |_|  |_|\__,_|_| |_| |_|\__,_|_| |_|_|___/\___|
+   
+   SOFTWARE FOR HUMANS     http://www.humanise.dk/
+    </xsl:comment>
+</xsl:template>
+
+<xsl:template name="util:userstatus">
+	<xsl:if test="//f:userstatus">
+		<div class="layout_userstatus">
+			<xsl:choose>
+				<xsl:when test="$userid>0">
+					<strong><xsl:text>Bruger: </xsl:text></strong><xsl:value-of select="$usertitle"/>
+					<xsl:text> </xsl:text>
+					<a href="{$path}?id={//f:userstatus/@page}&amp;logout=true"><xsl:text>log ud</xsl:text></a>
+				</xsl:when>
+				<xsl:otherwise>
+				<span>Ikke logget ind</span>
+				<xsl:text> </xsl:text>
+				<a href="{$path}?id={//f:userstatus/@page}">log ind</a>
+				</xsl:otherwise>
+			</xsl:choose>
+		</div>
+	</xsl:if>
+</xsl:template>
+
+
+
+<!-- Scripts -->
+
 <xsl:template name="util:scripts-build">
     <xsl:call-template name="util:_scripts-errorhandler"/>
 	<xsl:choose>
@@ -181,7 +261,6 @@
     <xsl:call-template name="util:_scripts-config"/>
     <xsl:call-template name="util:_scripts-preview"/>
 </xsl:template>
-
 
 <xsl:template name="util:_scripts-preview">
     
@@ -259,6 +338,11 @@
 	</xsl:if>
 </xsl:template>
 
+
+
+
+<!-- Style -->
+
 <xsl:template name="util:style-ie6">
 	<xsl:comment><![CDATA[[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
@@ -333,6 +417,11 @@
     <xsl:call-template name="util:_style-hui-msie"/>
 </xsl:template>
 
+<xsl:template name="util:css">
+    <xsl:param name="path"/>
+    <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}{$path}{$timestamp-query}"/>
+</xsl:template>
+
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
     <!--
@@ -383,6 +472,13 @@
 		<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css' />
 	</xsl:if>
 </xsl:template>
+
+
+
+
+
+
+<!-- Dates -->
 
 <xsl:template name="util:weekday">
 	<xsl:param name="node"/>
@@ -474,34 +570,13 @@
 	</xsl:choose>
 </xsl:template>
 
-<xsl:template name="util:googleanalytics">
-	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
-	<xsl:if test="not($preview='true') and $code!=''">
-		<script type="text/javascript">
-		try {
-			if (document.location.hostname!=="localhost") {
-				//,'_trackPageLoadTime'
-				var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview']];
-				 (function() {
-    				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-					var s = document.getElementsByTagName('script')[0];
-					s.parentNode.insertBefore(ga, s);
-				})();
-			}
-		} catch(ex) {}
-		</script>
-	</xsl:if>
-</xsl:template>
 
-<xsl:template name="util:metatags">
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge"></meta>
-	<xsl:if test="p:meta/p:description">
-		<meta name="Description" content="{p:meta/p:description}"></meta>
-	</xsl:if>
-	<meta name="robots" content="index,follow"></meta>
-</xsl:template>
+
+
+
+
+
+<!-- Languages -->
 
 <xsl:template name="util:languages">
 	<span class="layout_languages">
@@ -528,66 +603,11 @@
 	</a><xsl:text> </xsl:text>
 </xsl:template>
 
-<xsl:template name="util:userstatus">
-	<xsl:if test="//f:userstatus">
-		<div class="layout_userstatus">
-			<xsl:choose>
-				<xsl:when test="$userid>0">
-					<strong><xsl:text>Bruger: </xsl:text></strong><xsl:value-of select="$usertitle"/>
-					<xsl:text> </xsl:text>
-					<a href="{$path}?id={//f:userstatus/@page}&amp;logout=true"><xsl:text>log ud</xsl:text></a>
-				</xsl:when>
-				<xsl:otherwise>
-				<span>Ikke logget ind</span>
-				<xsl:text> </xsl:text>
-				<a href="{$path}?id={//f:userstatus/@page}">log ind</a>
-				</xsl:otherwise>
-			</xsl:choose>
-		</div>
-	</xsl:if>
-</xsl:template>
 
-<!-- deprecated -->
-<xsl:template name="util:hierarchy-first-level">
-	<ul>
-		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
-			<xsl:if test="not(@hidden='true')">
-				<li>
-				<xsl:choose>
-					<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
-					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
-				</xsl:choose>
-				<a>
-					<xsl:call-template name="util:link"/>
-					<span><xsl:value-of select="@title"/></span>
-				</a>
-				</li>
-			</xsl:if>
-		</xsl:for-each>
-	</ul>
-</xsl:template>
 
-<!-- Deprecated -->
-<xsl:template name="util:hierarchy-second-level">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul class="case_sub_navigation">
-			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-				<xsl:if test="not(@hidden='true')">
-					<li>
-					<xsl:choose>
-						<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
-						<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
-					</xsl:choose>
-					<a>
-						<xsl:call-template name="util:link"/>
-						<span><xsl:value-of select="@title"/></span>
-					</a>
-					</li>
-				</xsl:if>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
-</xsl:template>
+
+
+<!-- Navigation -->
 
 <xsl:template name="util:navigation-first-level">
 	<xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
@@ -692,27 +712,52 @@
 	</xsl:if>
 </xsl:template>
 
-<xsl:template name="util:feedback">
-	<xsl:param name="text">Feedback</xsl:param>
-	<p class="layout_feedback">
-		<a class="common" href="javascript://" onclick="op.feedback(this)"><span><xsl:value-of select="$text"/></span></a>
-	</p>
+                                               
+                                               
+
+
+<!-- deprecated -->
+<xsl:template name="util:hierarchy-first-level">
+	<ul>
+		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
+			<xsl:if test="not(@hidden='true')">
+				<li>
+				<xsl:choose>
+					<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+				</xsl:choose>
+				<a>
+					<xsl:call-template name="util:link"/>
+					<span><xsl:value-of select="@title"/></span>
+				</a>
+				</li>
+			</xsl:if>
+		</xsl:for-each>
+	</ul>
 </xsl:template>
 
-<xsl:template name="util:watermark">
-	<xsl:comment>
-    _    _                             _          
-   | |  | |                           (_)         
-   | |__| |_   _ _ __ ___   __ _ _ __  _ ___  ___ 
-   |  __  | | | | '_ ` _ \ / _` | '_ \| / __|/ _ \
-   | |  | | |_| | | | | | | (_| | | | | \__ \  __/
-   |_|  |_|\__,_|_| |_| |_|\__,_|_| |_|_|___/\___|
-   
-   SOFTWARE FOR HUMANS     http://www.humanise.dk/
-    </xsl:comment>
+<!-- Deprecated -->
+<xsl:template name="util:hierarchy-second-level">
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+		<ul class="case_sub_navigation">
+			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+				<xsl:if test="not(@hidden='true')">
+					<li>
+					<xsl:choose>
+						<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+						<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+					</xsl:choose>
+					<a>
+						<xsl:call-template name="util:link"/>
+						<span><xsl:value-of select="@title"/></span>
+					</a>
+					</li>
+				</xsl:if>
+			</xsl:for-each>
+		</ul>
+	</xsl:if>
 </xsl:template>
-                                               
-                                               
+
 
 <!--
 	<xsl:template name="util:share">
