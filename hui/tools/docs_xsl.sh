@@ -67,7 +67,7 @@ for file in files :
 
 print modules
 
-dest.write('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">')
+dest.write('<!DOCTYPE html>')
 dest.write('<html>\n<head>\n<meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n')
 dest.write('<link rel="stylesheet" href="stylesheet.css" type="text/css"/>')
 dest.write('<link rel="stylesheet" href="../../bin/minimized.css" type="text/css"/>')
