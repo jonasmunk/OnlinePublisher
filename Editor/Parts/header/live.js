@@ -67,13 +67,14 @@ op.Editor.Header.prototype = {
 		})
 	},
 	_edit : function() {
-		this.field = hui.build('textarea',{style:'resize: none; background: none; border: none; position: absolute; padding: 0px; display: block; outline: none;'});
+		this.field = hui.build('textarea',{style:'resize: none; background: none; border: none; width: 100%; padding: 0px; display: block; outline: none;'});
 		this.field.value = this.part.text;
 		this.originalStyle = this.header.getAttribute('style');
 		this.originalLevel = this.part.level;
-		this.header.style.visibility='hidden';
+		this.header.style.display='none';
 		this._updateFieldStyle();
 		this.element.insertBefore(this.field,this.header);
+		new op.FieldResizer({field:this.field}).resize(true);
 		this.field.focus();
 		this.field.select();
 		hui.ui.listen(this.field,'keydown',function(e) {
@@ -83,7 +84,7 @@ op.Editor.Header.prototype = {
 		}.bind(this));
 	},
 	_updateFieldStyle : function() {
-		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		//hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
 		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	},
 	$partWindowLoaded : function() {

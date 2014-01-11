@@ -10854,7 +10854,9 @@ hui.ui.Upload.prototype = {
 	 */
 	setParameter : function(name,value) {
 		this.options.parameters[name] = value;
-		this.impl.setParameter(name,value);
+		if (this.impl.setParameter) {
+			this.impl.setParameter(name,value);			
+		}
 	},
 	
 	clear : function() {

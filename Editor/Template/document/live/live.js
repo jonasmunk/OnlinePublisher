@@ -24,6 +24,10 @@ op.DocumentEditor = {
 	
 	$editPart$huiEditor : function(part) {
 		this.part = part;
+		this.originalStyle = this.part.element.getAttribute('style');
+	},
+	$cancelPart$huiEditor : function(part) {
+		this.part.element.setAttribute('style',this.originalStyle);
 	},
 	_initiatePartWindow : function() {
 		hui.ui.get('layoutFormula').setValues(this.section);
