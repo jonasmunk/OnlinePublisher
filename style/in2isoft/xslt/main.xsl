@@ -39,6 +39,108 @@
 		<link rel="shortcut icon" href="{$path}style/in2isoft/gfx/favicon.ico" type="image/x-icon" />
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:watermark"/>
+		<style type="text/css">
+			body
+			{
+				padding: 0px;
+				margin: 0px;
+				background: #fafafa;
+				text-align: center;
+			}
+
+			body,html
+			{
+				height: 100%;
+			}
+			div.layout
+			{
+				margin: 0px auto;
+				width: 990px;
+				min-height: 100%;
+				position: relative;
+				text-align: left;
+			}
+
+			div.document
+			{
+				text-align: left;
+			}
+
+			div.layout_base
+			{
+				padding-bottom: 220px;
+				width: 100%;
+			}
+
+			div.layout_head
+			{
+				overflow: hidden;
+			}
+
+			div.layout_middle
+			{
+				box-shadow: 0px 1px 3px 0px #999;
+				-webkit-box-shadow: 0px 1px 3px #999;
+				background: #fff;
+				border-radius: 5px;
+			}
+
+			body.msie div.layout_middle
+			{
+				box-shadow: 0px 1px 6px 0px #bbb;
+			}
+
+			div.layout_info
+			{
+				margin-top: 20px;
+				box-shadow: inset 0 1px 3px #DDD;
+				-webkit-box-shadow: inset 0 1px 3px #DDD;
+				background: #F6F6F6;
+				border-radius: 5px;
+				overflow: hidden;
+			}
+
+			div.layout_middle_top
+			{
+				border-bottom: 1px solid #ddd;
+				height: 31px;
+				position: relative;
+			}
+
+			div.layout_content
+			{
+				overflow: hidden;
+				min-height: 400px;
+			}
+
+			div.layout_content_sidebar
+			{
+				padding-right: 0;
+				position: relative;
+			}
+
+			div.layout_inner_content
+			{
+				padding: 20px;
+			}
+
+			div.layout_content_sidebar div.layout_inner_content
+			{
+				margin-right: 200px;
+			}
+
+			div.layout_sidebar
+			{
+				width: 199px;
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				font-size: 11pt;
+				padding-top: 10px;
+				border-left: 1px solid #ddd;
+			}
+		</style>
 		<xsl:call-template name="util:style-build"/>
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
